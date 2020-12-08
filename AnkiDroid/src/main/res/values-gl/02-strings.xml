@@ -196,7 +196,9 @@
     <string name="export_unsuccessful">Produciuse un erro enviando o ficheiro apkg</string>
     <string name="import_hint">Coloca o ficheiro apkg no cartafol \"%s\" e preme \"Aceptar\" para importa cartóns</string>
     <string name="upgrade_import_no_file_found">Non se atopou ningún ficheiro %1$s para importar</string>
-    <string name="study_options" comment="Menu entry to open an options menu">Options</string>
+    <string name="study_options" comment="Name for a preference category in Filtered deck (aka Cram deck, aka Custom study) options">Options</string>
+    <string name="menu__deck_options">Deck options</string>
+    <string name="menu__study_options" comment="Menu item that opens options for a Filtered deck (aka Cram deck, aka Custom study)">Study options</string>
     <string name="select_tts">Definir idioma TTS</string>
     <string name="custom_study">Estudo personalizado</string>
     <string name="more_options">Máis</string>
@@ -337,4 +339,5 @@
     <string name="create_shortcut_error_vivo" comment="iManager is an app on Vivo phones">You may need to use iManager to allow AnkiDroid to add shortcuts</string>
     <string name="create_shortcut_failed" comment="home screen == launcher">Your home screen does not allow AnkiDroid to add shortcuts</string>
     <string name="create_shortcut_error">Error adding shortcut: %s</string>
+    <string name="note_editor_capitalize" comment="This is for a switch with a checkbox - on: enabled">Capitalize sentences</string>
 </resources>

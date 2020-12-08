@@ -60,7 +60,7 @@
     </string-array>
     <string-array name="add_to_cur_labels">
         <item>Use current deck</item>
-        <item>Decide by note type</item>
+        <item>Otsusta märketüübi järgi</item>
     </string-array>
     <string-array name="new_spread_labels">
         <item>Mix new cards and reviews</item>

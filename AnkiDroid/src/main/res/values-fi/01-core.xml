@@ -72,7 +72,7 @@
         <item quantity="other">%d päivää %d jäljellä</item>
     </plurals>
     <string name="no_cards_placeholder_title">Kokoelma on tyhjä</string>
-    <string name="no_cards_placeholder_description">Start adding cards\nusing the + icon.</string>
+    <string name="no_cards_placeholder_description">Aloita korttien lisääminen\nkäyttäen + kuvaketta</string>
     <!-- The deck picker via AnkiStatsTaskHandler.java -->
     <plurals name="studied_cards_today">
         <item quantity="one">Opiskelit tänään %1$d kortin ajassa %2$s</item>
@@ -113,7 +113,7 @@
     <string name="menu_flag_card_two">Oranssi lippu</string>
     <string name="menu_flag_card_three">Vihreä lippu</string>
     <string name="menu_flag_card_four">Sininen lippu</string>
-    <string name="menu_edit_tags">Edit tags</string>
+    <string name="menu_edit_tags">Muokkaa tageja</string>
     <string name="delete_note_message">Haluatko varmasti poistaa tämän merkinnän ja kaikki sen kortit?\n%s</string>
     <string name="menu_select">Valitse teksti</string>
     <string name="menu_search">Haku %1$s</string>
@@ -129,7 +129,7 @@
     The user is taken to the "App Info" screen, and needs to click "Permissions" and
     grant AnkiDroid the \'Storage\' permission. This needs to be a fairly generic message as implementations
     of the permissions/app info screen will differ between devices. -->
-    <string name="startup_no_storage_permission">Please grant AnkiDroid the ‘Storage’ permission to continue</string>
+    <string name="startup_no_storage_permission">Anna AnkiDroidille lupa ”Tallennustilalle” jatkaaksesi</string>
     <!--
         The time_quantities are units of time. They are used without
         plurals or dots.
@@ -146,15 +146,15 @@
     <string name="time_quantity_months">%.1f kk</string>
     <string name="time_quantity_years">%.1f v</string>
     <!-- or "%.1f a" -->
-    <string name="rebuild_filtered_deck">Rebuilding filtered deck&#8230;</string>
+    <string name="rebuild_filtered_deck">uudelleenrakennetaan suodatettu pakka&#8230;</string>
     <string name="rebuild_cram_label">Rakenna uudelleen</string>
     <string name="empty_cram_label">Tyhjä</string>
-    <string name="create_subdeck">Create subdeck</string>
+    <string name="create_subdeck">Luo johdannais pakka</string>
     <string name="empty_filtered_deck">Tyhjennetään suodatettu pakka&#8230;</string>
     <string name="custom_study_deck_name">Mukautettu istunto</string>
     <string name="custom_study_deck_exists">Nimeä olemassa oleva mukautettu pakka ensin</string>
     <string name="empty_deck">Tämä pakka on tyhjä</string>
-    <string name="invalid_deck_name">Invalid deck name</string>
+    <string name="invalid_deck_name">Pätemätön pakka nimi</string>
     <string name="studyoptions_empty">Tämä pakka on tyhjä. Paina + painiketta lisätäksesi uutta sisältöä.</string>
     <string name="studyoptions_limit_reached">Päivittäinen opiskeluraja saavutettu</string>
     <string name="studyoptions_empty_schedule">Ei opeteltavaksi ajoitettuja kortteja</string>
@@ -179,21 +179,21 @@
     <string name="card_template_editor_front">Etumalli</string>
     <string name="card_template_editor_back">Takamalli</string>
     <string name="card_template_editor_styling">Muotoilu</string>
-    <string name="card_template_editor_menu_card_browser_appearance">Card Browser Appearance</string>
-    <string name="card_template_editor_deck_override">Deck Override</string>
+    <string name="card_template_editor_menu_card_browser_appearance">Kortti Selaimen ulkonäkö</string>
+    <string name="card_template_editor_deck_override">Pakan Ohitus</string>
     <string name="card_template_editor_cant_delete">Valitse ainakin yksi korttityyppi</string>
     <plurals name="card_template_editor_confirm_delete">
         <item quantity="one">Poista ”%2$s” korttityyppi ja sen %1$d. kortti?</item>
         <item quantity="other">Poista ”%2$s” korttityyppi ja sen %1$d. kortit?</item>
     </plurals>
     <string name="invalid_template">Korttia ei voitu luoda</string>
-    <string name="card_template_editor_would_delete_note">Removing this card type would cause one or more notes to be deleted. Please create and save a new card type first.</string>
-    <string name="card_template_editor_save_error">Unable to save card template changes: %s</string>
+    <string name="card_template_editor_would_delete_note">Korttityypin poistaminen aiheuttaisi yhden tai useamman kortin poistamisen. Luo sekä tallenna uusikorttityyppi ensin.</string>
+    <string name="card_template_editor_save_error">Korttimallin muutoksia ei voitu tallentaa: %s</string>
     <string name="template_for_current_card_deleted">Tämän kortin korttityyppi poistettiin.</string>
     <!-- Card Browser Appearance -->
-    <string name="card_template_browser_appearance_title">Browser appearance</string>
+    <string name="card_template_browser_appearance_title">Selaimen ulkoasu</string>
     <!-- card Info -->
-    <string name="card_info_title">Card info</string>
+    <string name="card_info_title">Kortin tiedot</string>
     <!-- Permissions -->
     <string name="read_write_permission_label">Lue ja kirjoita AnkiDroidi-tietokantaan</string>
     <string name="read_write_permission_description">lupa päästä olemassaoleviin merkintöihin, kortteihin, merkintätyyppeihin ja pakkoihin, sekä luoda uusia</string>

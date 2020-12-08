@@ -208,7 +208,9 @@
     <string name="export_unsuccessful">حدث خطأ عند تصدير ملف apkg</string>
     <string name="import_hint">لاستيراد البطاقات، ضع ملف الـ apkg في المجلد “%s” وانقر «موافق»</string>
     <string name="upgrade_import_no_file_found">تعذر العثور على ملف %1$s يمكن استيراده</string>
-    <string name="study_options" comment="Menu entry to open an options menu">الخيارات</string>
+    <string name="study_options" comment="Name for a preference category in Filtered deck (aka Cram deck, aka Custom study) options">الخيارات</string>
+    <string name="menu__deck_options">Deck options</string>
+    <string name="menu__study_options" comment="Menu item that opens options for a Filtered deck (aka Cram deck, aka Custom study)">Study options</string>
     <string name="select_tts">تعيين لغة تحويل النص إلى كلام</string>
     <string name="custom_study">دراسة مخصصة</string>
     <string name="more_options">المزيد</string>
@@ -370,23 +372,24 @@
     <string name="ankidroid_init_failed_webview">يعتمد أنكيدرويد على عارض الويب الخاص بالنظام وهو غير متوفر. يمكن أن يحدث هذا إذا كان النظام ينصب تحديثات. الرجاء المحاولة مجددًا بعد بضع دقائق.\n\n%s</string>
     <!-- A Menu item to change the Font Size (currently in the Note Editor) -->
     <string name="menu_font_size">حجم الخط</string>
-    <string name="menu_show_toolbar" comment="Checkable item stating whether the note editor toolbar should be shown">Show Toolbar</string>
+    <string name="menu_show_toolbar" comment="Checkable item stating whether the note editor toolbar should be shown">إظهار شريط الأدوات</string>
     <string name="format_insert_bold">تنسيق كعريض</string>
     <string name="format_insert_italic">تنسيق كمائل</string>
-    <string name="format_insert_underline">Format as Underline</string>
-    <string name="insert_horizontal_line">Insert Horizontal Line</string>
-    <string name="insert_heading">Insert Heading</string>
-    <string name="format_font_size">Change Font Size</string>
-    <string name="insert_mathjax">Insert MathJax Equation</string>
-    <string name="insert_cloze">Insert Cloze Deletion</string>
-    <string name="before_text">HTML Before Selection</string>
-    <string name="after_text">HTML After Selection</string>
-    <string name="add_toolbar_item">Create Toolbar Item</string>
-    <string name="toolbar_item_explain_remove">Enter HTML to be inserted before and after the selected text\n\nLong press a toolbar item to remove it</string>
-    <string name="remove_toolbar_item">Remove Toolbar Item?</string>
-    <string name="note_editor_paste_too_large">The image is too large to paste, please insert the image manually</string>
-    <string name="ankidroid_cannot_open_after_backup_try_again" comment="After an Android backup is restored, AnkiDroid opens and shows this message.         Opening AnkiDroid again will work correctly">        Android backup in progress. Please try again</string>
-    <string name="create_shortcut_error_vivo" comment="iManager is an app on Vivo phones">You may need to use iManager to allow AnkiDroid to add shortcuts</string>
-    <string name="create_shortcut_failed" comment="home screen == launcher">Your home screen does not allow AnkiDroid to add shortcuts</string>
-    <string name="create_shortcut_error">Error adding shortcut: %s</string>
+    <string name="format_insert_underline">تنسيق كخط سفلي</string>
+    <string name="insert_horizontal_line">إضافة خط أفقي</string>
+    <string name="insert_heading">إضافة عنوان</string>
+    <string name="format_font_size">تغيير لون الخط</string>
+    <string name="insert_mathjax">إضافة معادلة MathJax</string>
+    <string name="insert_cloze">إضافة عبارة ملء فراغات</string>
+    <string name="before_text">HTML قبل المحدد</string>
+    <string name="after_text">HTML بعد المحدد</string>
+    <string name="add_toolbar_item">إنشاء عنصر شريط أدوات</string>
+    <string name="toolbar_item_explain_remove">أدخل HTML ليتم إدخاله قبل النص المحدد وبعده\n\nاضغط ضغطًا مطولًا على عنصر شريط أدوات لإزالته</string>
+    <string name="remove_toolbar_item">هل تريد حذف عنصر شريط الأدوات؟</string>
+    <string name="note_editor_paste_too_large">الصورة كبيرة جدًا للصق، أضف الصورة يدويًا</string>
+    <string name="ankidroid_cannot_open_after_backup_try_again" comment="After an Android backup is restored, AnkiDroid opens and shows this message.         Opening AnkiDroid again will work correctly">        النسخ الاحتياطي للأندرويد قيد التقدم. الرجاء المحاولة مجددًا</string>
+    <string name="create_shortcut_error_vivo" comment="iManager is an app on Vivo phones">قد تحتاج إلى استخدام iManager للسماح لأنكيدرويد بإضافة اختصارات</string>
+    <string name="create_shortcut_failed" comment="home screen == launcher">لا تسمح شاشتك الرئيسية لأنكيدرويد بإضافة اختصارات</string>
+    <string name="create_shortcut_error">حدث خطأ عند إضافة الاختصار: %s</string>
+    <string name="note_editor_capitalize" comment="This is for a switch with a checkbox - on: enabled">Capitalize sentences</string>
 </resources>

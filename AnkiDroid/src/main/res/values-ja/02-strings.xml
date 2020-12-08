@@ -192,7 +192,9 @@
     <string name="export_unsuccessful">Ankiファイルのエクスポートエラー</string>
     <string name="import_hint">取り込みたいデッキまたはコレクション（全デッキ）のファイル（*. apkg）をあらかじめ \"%s\" に保存した後、この画面で「OK」ボタンをタップしてください。</string>
     <string name="upgrade_import_no_file_found">読み込み可能な %1$s のファイルが見つかりません</string>
-    <string name="study_options" comment="Menu entry to open an options menu">オプション</string>
+    <string name="study_options" comment="Name for a preference category in Filtered deck (aka Cram deck, aka Custom study) options">オプション</string>
+    <string name="menu__deck_options">Deck options</string>
+    <string name="menu__study_options" comment="Menu item that opens options for a Filtered deck (aka Cram deck, aka Custom study)">Study options</string>
     <string name="select_tts">テキスト読み上げ機能の言語設定</string>
     <string name="custom_study">カスタム学習</string>
     <string name="more_options">その他</string>
@@ -248,7 +250,7 @@
     <string name="activity_start_failed">この操作を実行できるアプリがインストールされていません。</string>
     <string name="multimedia_editor_image_compression_failed"><![CDATA[画像が大きい可能性があります。メディアディレクトリ内の画像を圧縮してサイズを変更したほうがよいかもしれません。]]></string>
     <string name="no_browser_notification">ブラウザが見つかりません。PCまたはモバイルでWebページにアクセスしてください： </string>
-    <string name="web_page_error">Error loading page: %s</string>
+    <string name="web_page_error">読込みエラー: %s</string>
     <string name="no_outgoing_link_in_cardbrowser">カード内の外部ページリンクはサポートされていません。</string>
     <!-- The name of the deck which corrupt cards will be moved to -->
     <string name="check_integrity_recovered_deck_name">回復されたカード</string>
@@ -304,7 +306,7 @@
     <string name="ankidroid_init_failed_webview">AnkiDroid は利用できないWebシステム を検出しました。システムのアップデート中などに発生する可能性があります。 数分後にもう一度お試しください。\n\n%s</string>
     <!-- A Menu item to change the Font Size (currently in the Note Editor) -->
     <string name="menu_font_size">フォントサイズ</string>
-    <string name="menu_show_toolbar" comment="Checkable item stating whether the note editor toolbar should be shown">Show Toolbar</string>
+    <string name="menu_show_toolbar" comment="Checkable item stating whether the note editor toolbar should be shown">ツールバーを表示</string>
     <string name="format_insert_bold">太字</string>
     <string name="format_insert_italic">イタリック文字</string>
     <string name="format_insert_underline">下線文字</string>
@@ -320,7 +322,8 @@
     <string name="remove_toolbar_item">ツールバーのアイテムを削除しますか？</string>
     <string name="note_editor_paste_too_large">画像が大きすぎるため、手動で画像を挿入してください</string>
     <string name="ankidroid_cannot_open_after_backup_try_again" comment="After an Android backup is restored, AnkiDroid opens and shows this message.         Opening AnkiDroid again will work correctly">        Androidのバックアップが進行中です。もう一度やり直してください</string>
-    <string name="create_shortcut_error_vivo" comment="iManager is an app on Vivo phones">You may need to use iManager to allow AnkiDroid to add shortcuts</string>
-    <string name="create_shortcut_failed" comment="home screen == launcher">Your home screen does not allow AnkiDroid to add shortcuts</string>
-    <string name="create_shortcut_error">Error adding shortcut: %s</string>
+    <string name="create_shortcut_error_vivo" comment="iManager is an app on Vivo phones">AnkiDroidにショートカットを追加するには、iManagerを使用する必要があります。</string>
+    <string name="create_shortcut_failed" comment="home screen == launcher">ホーム画面にAnkiDroidのショートカットを追加することはできません。</string>
+    <string name="create_shortcut_error">ショートカット追加のエラー: %s</string>
+    <string name="note_editor_capitalize" comment="This is for a switch with a checkbox - on: enabled">Capitalize sentences</string>
 </resources>

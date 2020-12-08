@@ -94,8 +94,8 @@
     <string name="gestures_summ">تعيين إيماءات إلى إجراءات مثل إجابة البطاقات وتحريرها.</string>
     <string name="gestures_allow_links">تجاهل إيماءات اللمس على الروابط</string>
     <string name="gestures_allow_links_summary">لن تُعالَج إيماءات اللمس إذا ضُغِط على رابط/تلميح.</string>
-    <string name="gestures_corner_touch">9-point touch</string>
-    <string name="gestures_corner_touch_summary">Allow touch gestures in screen corners</string>
+    <string name="gestures_corner_touch">لمس بحجم 9 نقاط</string>
+    <string name="gestures_corner_touch_summary">السماح بإيماءات اللمس في حواف الشاشة</string>
     <string name="gestures_swipe_up">سحب للأعلى</string>
     <string name="gestures_swipe_down">سحب للأسفل</string>
     <string name="gestures_swipe_left">سحب لليسار</string>
@@ -105,15 +105,15 @@
     <string name="gestures_tap_left">نقر في اليسار</string>
     <string name="gestures_tap_right">نقر في اليمين</string>
     <string name="gestures_tap_bottom">نقر في الأسفل</string>
-    <string name="gestures_corner_tap_top_left">Touch top left</string>
-    <string name="gestures_corner_tap_top_center">Touch top center</string>
-    <string name="gestures_corner_tap_top_right">Touch top right</string>
-    <string name="gestures_corner_tap_middle_left">Touch middle left</string>
-    <string name="gestures_corner_tap_middle_center">Touch middle center</string>
-    <string name="gestures_corner_tap_middle_right">Touch middle right</string>
-    <string name="gestures_corner_tap_bottom_left">Touch bottom left</string>
-    <string name="gestures_corner_tap_bottom_center">Touch bottom center</string>
-    <string name="gestures_corner_tap_bottom_right">Touch bottom right</string>
+    <string name="gestures_corner_tap_top_left">النقر في أعلى اليسار</string>
+    <string name="gestures_corner_tap_top_center">اللمس في أعلى الوسط</string>
+    <string name="gestures_corner_tap_top_right">النقر في أعلى اليمين</string>
+    <string name="gestures_corner_tap_middle_left">النقر في وسط اليسار</string>
+    <string name="gestures_corner_tap_middle_center">النقر في الوسط</string>
+    <string name="gestures_corner_tap_middle_right">النقر في وسط اليمين</string>
+    <string name="gestures_corner_tap_bottom_left">النقر في أسفل اليسار</string>
+    <string name="gestures_corner_tap_bottom_center">النقر في أسفل الوسط</string>
+    <string name="gestures_corner_tap_bottom_right">النقر في أسفل اليمين</string>
     <string name="gestures_volume_up">رفع مستوى الصوت</string>
     <string name="gestures_volume_down">خفض مستوى الصوت</string>
     <string name="more_scrolling_buttons">القارئ الإلكتروني</string>
@@ -246,7 +246,7 @@
     <string name="deck_conf_use_general_timeout_settings">استخدم الإعدادات العامة</string>
     <string name="deck_conf_use_general_timeout_settings_summ">استخدم إعدادات «عرض الجواب التلقائي» العامة بدلًا من إعدادات هذه المجموعة.</string>
     <string name="deck_conf_easy_bonus">مكافأة البطاقات السهلة</string>
-    <string name="deck_conf_hard_factor">Hard interval</string>
+    <string name="deck_conf_hard_factor">الفاصل الزمني للبطاقات الصعبة</string>
     <string name="deck_conf_ivl_fct">مُعدِّل الفاصل الزمني</string>
     <string name="deck_conf_max_ivl">الفاصل الزمني الأقصى</string>
     <string name="deck_conf_new_lps_ivl">الفاصل الزمني الجديد</string>
@@ -294,6 +294,6 @@
     <string name="analytics_dialog_title">ساعد في تحسين أنكيدرويد!</string>
     <string name="analytics_title">مشاركة بيانات استخدام الميزات</string>
     <string name="analytics_summ">تستطيع المساهمة في أنكيدرويد من خلال مساعدة فريق التطوير على معرفة الميزات التي يستخدمها الناس</string>
-    <string name="note_editor_replace_newlines">Replace newlines with HTML</string>
-    <string name="note_editor_replace_newlines_summ">In the Note Editor, convert any instances of &lt;br&gt; to newlines when editing a card.</string>
+    <string name="note_editor_replace_newlines">استبدال السطور الجديدة بـ HTML</string>
+    <string name="note_editor_replace_newlines_summ">في محرر الملحوظات، حوّل أي ظهور لـ &lt;br&gt; إلى سطور جديدة عند تحرير بطاقة.</string>
 </resources>

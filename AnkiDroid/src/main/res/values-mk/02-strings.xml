@@ -197,7 +197,9 @@
     <string name="export_unsuccessful">Грешка при извоз на apkg датотека</string>
     <string name="import_hint">Ставете ја apkg датотеката во директоријата \"%s\" и допрете \"OK\" за да увезете картички</string>
     <string name="upgrade_import_no_file_found">%1$s Не е пронајден датотек што може да се увезува</string>
-    <string name="study_options" comment="Menu entry to open an options menu">Options</string>
+    <string name="study_options" comment="Name for a preference category in Filtered deck (aka Cram deck, aka Custom study) options">Options</string>
+    <string name="menu__deck_options">Deck options</string>
+    <string name="menu__study_options" comment="Menu item that opens options for a Filtered deck (aka Cram deck, aka Custom study)">Study options</string>
     <string name="select_tts">Поставете го јазикот на TTS</string>
     <string name="custom_study">Прилагодено студија</string>
     <string name="more_options">Повеќе</string>
@@ -338,4 +340,5 @@
     <string name="create_shortcut_error_vivo" comment="iManager is an app on Vivo phones">You may need to use iManager to allow AnkiDroid to add shortcuts</string>
     <string name="create_shortcut_failed" comment="home screen == launcher">Your home screen does not allow AnkiDroid to add shortcuts</string>
     <string name="create_shortcut_error">Error adding shortcut: %s</string>
+    <string name="note_editor_capitalize" comment="This is for a switch with a checkbox - on: enabled">Capitalize sentences</string>
 </resources>

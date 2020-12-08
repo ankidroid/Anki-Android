@@ -74,14 +74,14 @@
         <item quantity="other">%d שעות %d נותרו</item>
     </plurals>
     <plurals name="reviewer_window_title_days">
-        <item quantity="one">%d ימים ו %d שעות נותרו</item>
+        <item quantity="one">%d יום ו %d שעות נותרו</item>
         <item quantity="two">%d days %d left</item>
         <item quantity="many">%d days %d left</item>
         <item quantity="other">%d ימים ו %d שעות נותרו</item>
     </plurals>
     <string name="no_cards_placeholder_title">האוסף ריק</string>
-    <string name="no_cards_placeholder_description">התחל להוסיף כרטיסים \n
-באמצעות האייקון +</string>
+    <string name="no_cards_placeholder_description">אפשר להוסיף קלפים\n
+באמצעות הסמל +.</string>
     <!-- The deck picker via AnkiStatsTaskHandler.java -->
     <plurals name="studied_cards_today">
         <item quantity="one">למדת היום כרטיס %1$d במשך %2$s</item>
@@ -110,7 +110,7 @@
     <string name="menu_add_note">הוספת רשומה</string>
     <string name="menu_my_account" comment="Label of the window in which the user should enter their account. This text can\'t be found in AnkiDroid directly.">סנכרון חשבון</string>
     <string name="menu_dismiss_note">הסתרה / מחיקה</string>
-    <string name="menu_bury_card">דילוג על כרטיס</string>
+    <string name="menu_bury_card">לקבור קלף</string>
     <string name="menu_bury_note">דילוג על רשומה</string>
     <string name="menu_suspend_card">הקפאת כרטיס</string>
     <string name="menu_suspend_note">הקפאת רשומה</string>
@@ -118,7 +118,7 @@
     <string name="menu_suspend">הקפאה</string>
     <string name="menu_delete_note">מחיקת רשומה</string>
     <string name="menu_flag">דגל</string>
-    <string name="menu_flag_card">סמן כרטיס</string>
+    <string name="menu_flag_card">סימון קלף</string>
     <string name="menu_flag_card_zero">ללא סימון</string>
     <string name="menu_flag_card_one">דגל אדום</string>
     <string name="menu_flag_card_two">דגל כתום</string>
@@ -168,10 +168,10 @@
     <string name="invalid_deck_name">שם חפיסה לא חוקי</string>
     <string name="studyoptions_empty">החפיסה ריקה. לחץ על כפתור ה+ להוספת תוכן חדש.</string>
     <string name="studyoptions_limit_reached">יעד הלמידה היומי הושלם</string>
-    <string name="studyoptions_empty_schedule">אין קלפים מתוכננים ללמידה</string>
+    <string name="studyoptions_empty_schedule">אין קלפים מתוכנני ללמידה</string>
     <string name="studyoptions_congrats_finished">מזל טוב! סיימת לרגע.‏</string>
-    <string name="studyoptions_congrats_more_rev">יעד הלמידה היומי הושלם, אך עדיין יש כרטיסים לשינון. ניתן להגדיל את היעד באפשרויות.</string>
-    <string name="studyoptions_congrats_more_new">יעד הלמידה היומי הושלם. ישנם כרטיסים חדשים זמינים; ניתן להגדיל את היעד באפשרויות, אך זה יגדיל את עומס הסקירה לטווח קצר.</string>
+    <string name="studyoptions_congrats_more_rev">יעד הלמידה היומי הושלם, אך עדיין יש קלפים לשינון. ניתן להגדיל את היעד באפשרויות.</string>
+    <string name="studyoptions_congrats_more_new">יעד הלמידה היומי הושלם. ישנם קלפים חדשים זמינים; ניתן להגדיל את היעד באפשרויות, אך זה יגדיל את עומס הסקירה לטווח קצר.</string>
     <string name="studyoptions_congrats_custom">על מנת ללמוד מחוץ ללוח הזמנים הרגיל, לחץ על \"למידה מותאמת אישית\"</string>
     <string name="studyoptions_no_cards_due">אין קלפים נוספים</string>
     <string name="sd_card_not_mounted">התקן אחסון לא מחובר</string>
@@ -190,7 +190,7 @@
     <string name="card_template_editor_front">תבנית קדמית</string>
     <string name="card_template_editor_back">תבנית אחורית</string>
     <string name="card_template_editor_styling">סגנון</string>
-    <string name="card_template_editor_menu_card_browser_appearance">מראה דפדפן הכרטיסים</string>
+    <string name="card_template_editor_menu_card_browser_appearance">מראה דפדפן הקלפים</string>
     <string name="card_template_editor_deck_override">שכתוב חפיסה</string>
     <string name="card_template_editor_cant_delete">לפחות סוג קלף אחד נדרש</string>
     <plurals name="card_template_editor_confirm_delete">
@@ -212,5 +212,5 @@
     <string name="read_write_permission_description">תן לאפליקציה גישה להערות, כרטיסים, סוגי הערות, וחפיסות, וכן גישה ליצור חדשים</string>
     <!-- Context Menu -->
     <string name="card_browser_context_menu" comment="The value which appears in the system context menu. Note the casing difference">דפדפן הכרטיסים</string>
-    <string name="context_menu_anki_card_label">כרטיס Anki</string>
+    <string name="context_menu_anki_card_label">קלף של Anki</string>
 </resources>

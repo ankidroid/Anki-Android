@@ -63,7 +63,7 @@
     <string name="about_title">Об AnkiDroid</string>
     <string name="about_version">Версия: </string>
     <!-- preferences.xml entries-->
-    <string name="whiteboard_stroke_width">Толщина линни</string>
+    <string name="whiteboard_stroke_width">Толщина линии</string>
     <string name="whiteboard_black">Черные линии</string>
     <string name="whiteboard_black_summ">Использует меньше памяти, если не в ночном режиме</string>
     <string name="use_input_tag">Ввод ответа на карточке</string>
@@ -94,8 +94,8 @@
     <string name="gestures_summ">Назначает жесты действиям вроде ответа и правки</string>
     <string name="gestures_allow_links">Игнорировать жесты на ссылках</string>
     <string name="gestures_allow_links_summary">Жесты не будут учитываться, если нажата ссылка или подсказка.</string>
-    <string name="gestures_corner_touch">9-point touch</string>
-    <string name="gestures_corner_touch_summary">Allow touch gestures in screen corners</string>
+    <string name="gestures_corner_touch">9 зон касания</string>
+    <string name="gestures_corner_touch_summary">Разрешить сенсорные жесты в углах экрана</string>
     <string name="gestures_swipe_up">Смахивание вверх</string>
     <string name="gestures_swipe_down">Смахивание вниз</string>
     <string name="gestures_swipe_left">Смахивание влево</string>
@@ -105,15 +105,15 @@
     <string name="gestures_tap_left">Касание слева</string>
     <string name="gestures_tap_right">Касание справа</string>
     <string name="gestures_tap_bottom">Касание внизу</string>
-    <string name="gestures_corner_tap_top_left">Touch top left</string>
-    <string name="gestures_corner_tap_top_center">Touch top center</string>
-    <string name="gestures_corner_tap_top_right">Touch top right</string>
-    <string name="gestures_corner_tap_middle_left">Touch middle left</string>
-    <string name="gestures_corner_tap_middle_center">Touch middle center</string>
-    <string name="gestures_corner_tap_middle_right">Touch middle right</string>
-    <string name="gestures_corner_tap_bottom_left">Touch bottom left</string>
-    <string name="gestures_corner_tap_bottom_center">Touch bottom center</string>
-    <string name="gestures_corner_tap_bottom_right">Touch bottom right</string>
+    <string name="gestures_corner_tap_top_left">Касание вверху в левом углу</string>
+    <string name="gestures_corner_tap_top_center">Касание вверху по центру</string>
+    <string name="gestures_corner_tap_top_right">Касание вверху в правом углу</string>
+    <string name="gestures_corner_tap_middle_left">Касание по центру слева</string>
+    <string name="gestures_corner_tap_middle_center">Касание в центре экрана</string>
+    <string name="gestures_corner_tap_middle_right">Касание по центру справа</string>
+    <string name="gestures_corner_tap_bottom_left">Касание внизу в левом углу</string>
+    <string name="gestures_corner_tap_bottom_center">Касание внизу по центру</string>
+    <string name="gestures_corner_tap_bottom_right">Касание внизу в правом углу</string>
     <string name="gestures_volume_up">Увеличить громкость</string>
     <string name="gestures_volume_down">Уменьшить громкость</string>
     <string name="more_scrolling_buttons">eReader</string>
@@ -132,8 +132,8 @@
     <string name="sync_account_summ_logged_in">%s</string>
     <string name="automatic_sync_choice">Автоматическая синхронизация</string>
     <string name="automatic_sync_choice_summ">Автоматически синхронизирует при запуске и выходе, но не чаще, чем раз в 10 минут.</string>
-    <string name="sync_status_badge">Отображать статус синхронизации</string>
-    <string name="sync_status_badge_summ">Изменить значок синхронизации, когда можно выгрузить изменения</string>
+    <string name="sync_status_badge">Отображать состояние синхронизации</string>
+    <string name="sync_status_badge_summ">Добавлять точку на значок синхронизации, когда можно выгрузить изменения</string>
     <string name="day_theme">Дневная тема</string>
     <string name="night_theme">Ночная тема</string>
     <string name="default_font">Шрифт по умолчанию</string>
@@ -244,7 +244,7 @@
     <string name="deck_conf_use_general_timeout_settings">Использовать общие настройки</string>
     <string name="deck_conf_use_general_timeout_settings_summ">Использовать общие настройки «Автоматически показывать ответ» вместо настроек для этой группы.</string>
     <string name="deck_conf_easy_bonus">Множитель для \"Легко\"</string>
-    <string name="deck_conf_hard_factor">Hard interval</string>
+    <string name="deck_conf_hard_factor">Интервал для трудных</string>
     <string name="deck_conf_ivl_fct">Множитель интервалов</string>
     <string name="deck_conf_max_ivl">Максимальный интервал</string>
     <string name="deck_conf_new_lps_ivl">Новый интервал</string>
@@ -290,6 +290,6 @@
     <string name="analytics_dialog_title">Помогите сделать AnkiDroid лучше!</string>
     <string name="analytics_title">Делиться статистикой использования</string>
     <string name="analytics_summ">Отправляет информацию о функциях, которые предпочитают пользователи</string>
-    <string name="note_editor_replace_newlines">Replace newlines with HTML</string>
-    <string name="note_editor_replace_newlines_summ">In the Note Editor, convert any instances of &lt;br&gt; to newlines when editing a card.</string>
+    <string name="note_editor_replace_newlines">Заменять перенос строк на HTML</string>
+    <string name="note_editor_replace_newlines_summ">Заменять &lt;br&gt; в редакторе записей на перенос строки</string>
 </resources>

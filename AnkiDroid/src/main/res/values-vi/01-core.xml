@@ -65,7 +65,7 @@
         <item quantity="other">%d giờ còn lại</item>
     </plurals>
     <plurals name="reviewer_window_title_days">
-        <item quantity="other">%d days %d left</item>
+        <item quantity="other">Còn %d ngày</item>
     </plurals>
     <string name="no_cards_placeholder_title">Collection is empty</string>
     <string name="no_cards_placeholder_description">Start adding cards\nusing the + icon.</string>

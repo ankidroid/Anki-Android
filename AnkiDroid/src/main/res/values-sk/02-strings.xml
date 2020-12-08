@@ -202,7 +202,9 @@
     <string name="export_unsuccessful">Chyba pri exportovaní apkg súboru</string>
     <string name="import_hint">Ak chcete importovať kartičky, umiestnite súbor apkg do adresára %s a stlačte ok</string>
     <string name="upgrade_import_no_file_found">Žiaden importovateľný %1$s súbor nebol nájdený</string>
-    <string name="study_options" comment="Menu entry to open an options menu">Možnosti</string>
+    <string name="study_options" comment="Name for a preference category in Filtered deck (aka Cram deck, aka Custom study) options">Možnosti</string>
+    <string name="menu__deck_options">Deck options</string>
+    <string name="menu__study_options" comment="Menu item that opens options for a Filtered deck (aka Cram deck, aka Custom study)">Study options</string>
     <string name="select_tts">Nastaviť jazyk TTS (text na reč)</string>
     <string name="custom_study">Vlastné štúdium</string>
     <string name="more_options">Viac</string>
@@ -279,7 +281,7 @@
     <string name="activity_start_failed">Systém nemá nainštalovanú aplikáciu, ktorá by mohla uskutočniť túto operáciu.</string>
     <string name="multimedia_editor_image_compression_failed"><![CDATA[Obrázky fotoaparáta môžu byť priveľké. Môžete skúsiť kompresiu a zmenu veľkosti obrázkov v mediálnom priečinku]]></string>
     <string name="no_browser_notification">Nenašiel sa žiaden prehliadač，navštívte prosím webovú stránku cez PC alebo mobil: </string>
-    <string name="web_page_error">Error loading page: %s</string>
+    <string name="web_page_error">Chyba pri načítavaní %s</string>
     <string name="no_outgoing_link_in_cardbrowser">Externý odkaz v kartičke nie je podporovaný.</string>
     <!-- The name of the deck which corrupt cards will be moved to -->
     <string name="check_integrity_recovered_deck_name">Kartičky získané späť</string>
@@ -336,7 +338,7 @@
     <string name="about_ankidroid_error_copy_debug_info">Chyba pri kopírovaní chybových informácií do schránky</string>
     <!-- Card Viewer -->
     <string name="card_viewer_could_not_find_image">Chyba obsahu kartičky: Nepodarilo sa načítať ‘%s’</string>
-    <string name="card_viewer_media_relative_protocol">Card Content Error: Media update required</string>
+    <string name="card_viewer_media_relative_protocol">Chyba obsahu kartičky: Vyžaduje sa update médií</string>
     <!-- Deck Picker -->
     <string name="deck_picker_failed_deck_load">Nepodarilo sa načítať balíček ‘%s’</string>
     <string name="search_decks">Prehľadať balíčky</string>
@@ -344,7 +346,7 @@
     <string name="ankidroid_init_failed_webview">AnkiDroid sa spolieha na systém WebView, ktorý je nedostupný. Toto môže nastať, ak systém inštaluje aktualizácie. Skúste znovu, prosím, o pár minút.\n\n%s</string>
     <!-- A Menu item to change the Font Size (currently in the Note Editor) -->
     <string name="menu_font_size">Veľkosť fontu</string>
-    <string name="menu_show_toolbar" comment="Checkable item stating whether the note editor toolbar should be shown">Show Toolbar</string>
+    <string name="menu_show_toolbar" comment="Checkable item stating whether the note editor toolbar should be shown">Zobraziť panel s nástrojmi</string>
     <string name="format_insert_bold">Formatovať tučným</string>
     <string name="format_insert_italic">Formátovať kurzívou</string>
     <string name="format_insert_underline">Podčiarknuť</string>
@@ -360,7 +362,8 @@
     <string name="remove_toolbar_item">Vymazať položku nástrojovej lišty?</string>
     <string name="note_editor_paste_too_large">Obrázok je príliš veľký na to, aby bol prilepený, vložte, prosím, obrázok manuálne</string>
     <string name="ankidroid_cannot_open_after_backup_try_again" comment="After an Android backup is restored, AnkiDroid opens and shows this message.         Opening AnkiDroid again will work correctly">        Prebieha Android záloha. Prosím, skúste znovu</string>
-    <string name="create_shortcut_error_vivo" comment="iManager is an app on Vivo phones">You may need to use iManager to allow AnkiDroid to add shortcuts</string>
-    <string name="create_shortcut_failed" comment="home screen == launcher">Your home screen does not allow AnkiDroid to add shortcuts</string>
-    <string name="create_shortcut_error">Error adding shortcut: %s</string>
+    <string name="create_shortcut_error_vivo" comment="iManager is an app on Vivo phones">Budete musieť použiť iManager, aby umožnil AnkiDroid pridávať zástupcov</string>
+    <string name="create_shortcut_failed" comment="home screen == launcher">Vaša domovská obrazovka neumožňuje, aby AnkiDroid pridal zástupcov</string>
+    <string name="create_shortcut_error">Chyba pri pridávaní odkazu: %s</string>
+    <string name="note_editor_capitalize" comment="This is for a switch with a checkbox - on: enabled">Capitalize sentences</string>
 </resources>

@@ -80,13 +80,13 @@
         <item>Тёмный</item>
     </string-array>
     <string-array name="html_size_code_labels">
-        <item>xx-small</item>
-        <item>x-small</item>
-        <item>small</item>
-        <item>medium</item>
-        <item>large</item>
-        <item>x-large</item>
-        <item>xx-large</item>
+        <item>самый маленький</item>
+        <item>очень маленький</item>
+        <item>маленький</item>
+        <item>средний</item>
+        <item>большой</item>
+        <item>очень большой</item>
+        <item>самый большой</item>
     </string-array>
     <!--
     #7794 - it\'s better to use @string references in non-translated arrays as this handles
@@ -110,5 +110,5 @@
     <string name="gesture_flag_remove">Убрать флажок</string>
     <string name="gesture_page_up">На страницу вверх</string>
     <string name="gesture_page_down">На страницу вниз</string>
-    <string name="gesture_abort_sync">Abort Learning and Sync</string>
+    <string name="gesture_abort_sync">Отменить обучение и синхронизацию</string>
 </resources>

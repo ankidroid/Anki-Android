@@ -193,7 +193,9 @@
     <string name="export_unsuccessful">Galat mengekspor berkas apkg</string>
     <string name="import_hint">Untuk mengimpor kartu, taruh berkas apkg ke dalam direktori “%s” dan tekan “OK”</string>
     <string name="upgrade_import_no_file_found">Tidak ada berkas %1$s ditemukan yang dapat diimpor</string>
-    <string name="study_options" comment="Menu entry to open an options menu">Opsi</string>
+    <string name="study_options" comment="Name for a preference category in Filtered deck (aka Cram deck, aka Custom study) options">Opsi</string>
+    <string name="menu__deck_options">Deck options</string>
+    <string name="menu__study_options" comment="Menu item that opens options for a Filtered deck (aka Cram deck, aka Custom study)">Study options</string>
     <string name="select_tts">Tetapkan bahasa TTS</string>
     <string name="custom_study">Belajar kustom</string>
     <string name="more_options">Lainnya</string>
@@ -324,4 +326,5 @@
     <string name="create_shortcut_error_vivo" comment="iManager is an app on Vivo phones">You may need to use iManager to allow AnkiDroid to add shortcuts</string>
     <string name="create_shortcut_failed" comment="home screen == launcher">Your home screen does not allow AnkiDroid to add shortcuts</string>
     <string name="create_shortcut_error">Error adding shortcut: %s</string>
+    <string name="note_editor_capitalize" comment="This is for a switch with a checkbox - on: enabled">Capitalize sentences</string>
 </resources>

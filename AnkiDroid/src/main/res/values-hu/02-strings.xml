@@ -196,7 +196,9 @@
     <string name="export_unsuccessful">Hiba történt az apkg fájl exportálásakor</string>
     <string name="import_hint">Kártyák importálásához helyezd az apkg fájlt a %s könyvtárba és nyomd meg az OK gombot</string>
     <string name="upgrade_import_no_file_found">Nem importálható %1$s fájlt található</string>
-    <string name="study_options" comment="Menu entry to open an options menu">Beállítások</string>
+    <string name="study_options" comment="Name for a preference category in Filtered deck (aka Cram deck, aka Custom study) options">Beállítások</string>
+    <string name="menu__deck_options">Deck options</string>
+    <string name="menu__study_options" comment="Menu item that opens options for a Filtered deck (aka Cram deck, aka Custom study)">Study options</string>
     <string name="select_tts">TTS nyelv beállítása</string>
     <string name="custom_study">Egyéni tanulás</string>
     <string name="more_options">Több</string>
@@ -337,4 +339,5 @@
     <string name="create_shortcut_error_vivo" comment="iManager is an app on Vivo phones">You may need to use iManager to allow AnkiDroid to add shortcuts</string>
     <string name="create_shortcut_failed" comment="home screen == launcher">Your home screen does not allow AnkiDroid to add shortcuts</string>
     <string name="create_shortcut_error">Error adding shortcut: %s</string>
+    <string name="note_editor_capitalize" comment="This is for a switch with a checkbox - on: enabled">Capitalize sentences</string>
 </resources>

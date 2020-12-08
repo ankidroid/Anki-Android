@@ -131,7 +131,7 @@
     <string name="sync_account_summ_logged_out">Nejste přihlášen</string>
     <string name="sync_account_summ_logged_in">%s</string>
     <string name="automatic_sync_choice">Automatická synchronizace</string>
-    <string name="automatic_sync_choice_summ">Automaticky synchronizovat aplikaci při startu a při ukončení pokud od poslední synchronizace uplynulo více než 10 minut.</string>
+    <string name="automatic_sync_choice_summ">Automaticky synchronizovat při spuštění/ukončení aplikace, jestliže od poslední synchronizace uplynulo více než 10 minut.</string>
     <string name="sync_status_badge">Zobrazit stav synchronizace</string>
     <string name="sync_status_badge_summ">Změnit ikonu synchronizace, když lze nahrát změny</string>
     <string name="day_theme">Motivy vzhledu - den</string>
@@ -186,9 +186,9 @@
     <string name="convert_fen_text">Podpora šachové notace</string>
     <string name="convert_fen_text_summ">Vykreslení šachovnice z Forsyth-Edwardsovy notace. Notace musí být uzavřena mezi značky [fen][/fen].</string>
     <string name="enable_api_title">Povolit AnkiDroid API</string>
-    <string name="enable_api_summary">Umožnit ostatním aplikacím číst a zapisovat data AnkiDroid bez uživatelské intervence</string>
+    <string name="enable_api_summary">Umožnit ostatním aplikacím připojit se k AnkiDroid a číst/zapisovat data bez zásahu uživatele</string>
     <string name="custom_buttons">Tlačítka na panelu aplikace</string>
-    <string name="custom_buttons_summary">Vlastní akce, které se objeví v panelu aplikace</string>
+    <string name="custom_buttons_summary">Přizpůsobit, které akce se objeví v panelu aplikace</string>
     <string name="custom_buttons_setting_always_show">Vždy zobrazovat</string>
     <string name="custom_buttons_setting_if_room">Zobrazit pokud je místo</string>
     <string name="custom_buttons_setting_menu_only">Pouze nabídka</string>
@@ -207,7 +207,7 @@
     <!-- Custom sync server settings -->
     <string name="custom_sync_server_title">Vlastní synchronizační server</string>
     <string name="custom_sync_server_enable_title">Použij vlastní synchronizační server</string>
-    <string name="custom_sync_server_enable_summary">Pokud nechcete používat proprietární službu AnkiWeb, můžete zadat alternativní server zde</string>
+    <string name="custom_sync_server_enable_summary">Jestliže nechcete používat proprietární službu AnkiWeb, můžete zde zadat alternativní server</string>
     <string name="custom_sync_server_base_url_title">Synchronizovat url</string>
     <string name="custom_sync_server_base_url_invalid">Neplatná URL synchronizace</string>
     <string name="custom_sync_server_media_url_title">Sync url pro média</string>

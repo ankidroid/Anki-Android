@@ -68,16 +68,16 @@
         <item quantity="other">Zostało %d minut</item>
     </plurals>
     <plurals name="reviewer_window_title_hours">
-        <item quantity="one">%d hour %d left</item>
-        <item quantity="few">%d hours %d left</item>
-        <item quantity="many">%d hours %d left</item>
+        <item quantity="one">Została %d godzina %d</item>
+        <item quantity="few">Zostały %d godziny %d</item>
+        <item quantity="many">Zostało %d godzin %d</item>
         <item quantity="other">Zostało %d godzin %d</item>
     </plurals>
     <plurals name="reviewer_window_title_days">
-        <item quantity="one">Pozostał %d dzień %d</item>
-        <item quantity="few">%d days %d left</item>
-        <item quantity="many">%d days %d left</item>
-        <item quantity="other">%d days %d left</item>
+        <item quantity="one">Został %d dzień %d</item>
+        <item quantity="few">Zostały %d dni %d</item>
+        <item quantity="many">Zostało %d dni %d</item>
+        <item quantity="other">Zostało %d dni %d</item>
     </plurals>
     <string name="no_cards_placeholder_title">Kolekcja jest pusta</string>
     <string name="no_cards_placeholder_description">Zacznij dodawać karty używając przycisku +</string>

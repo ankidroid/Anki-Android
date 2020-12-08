@@ -40,16 +40,16 @@
 <resources>
     <!-- CardBrowser -->
     <plurals name="card_browser_subtitle">
-        <item quantity="one">מוצג כרטיס אחד</item>
-        <item quantity="two">מוצגים שני כרטיסים</item>
-        <item quantity="many">מוצגים כרטיסים רבים</item>
-        <item quantity="other">מוצגים %d כרטיסים</item>
+        <item quantity="one">מוצג קלף אחד</item>
+        <item quantity="two">מוצגים שני קלפים</item>
+        <item quantity="many">מוצגים %d קלפים</item>
+        <item quantity="other">מוצגים %d קלפים</item>
     </plurals>
     <string name="card_browser_all_decks">כל החפיסות</string>
     <string name="card_browser_delete_card">מחיקת הערות</string>
     <string name="card_browser_suspend_card">השהיית קלפים</string>
     <string name="card_browser_change_deck">החלפת חפיסה</string>
-    <string name="card_browser_unsuspend_card">ביטול השהיית כרטיסים</string>
+    <string name="card_browser_unsuspend_card">ביטול השהיית קלפים</string>
     <string name="card_browser_mark_card">סימון רשומות</string>
     <string name="card_browser_unmark_card">ביטול סימון רשומות</string>
     <string name="delete_card_title">למחוק את הרשומה?</string>

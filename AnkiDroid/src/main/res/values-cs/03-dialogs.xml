@@ -38,20 +38,20 @@
 ~ this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <resources xmlns:tools="http://schemas.android.com/tools">
-    <string name="check_db_title">Zkontrolovat databázi</string>
+    <string name="check_db_title">Zkontrolovat databázi?</string>
     <string name="check_db_warning">Toto může trvat dlouhou dobu</string>
     <string name="check_db_acknowledge">Databáze zkontrolována</string>
     <string name="check_db_acknowledge_shrunk">Databáze zkontrolována a optimalizována.\nZmenšena o %d MB.</string>
-    <string name="contextmenu_deckpicker_delete_deck">Smazat balíček</string>
+    <string name="contextmenu_deckpicker_delete_deck">Odstranit balíček</string>
     <string name="delete_deck_default_deck">Nelze odstranit výchozí balíček</string>
-    <string name="delete_deck_title">Smazat balíček</string>
+    <string name="delete_deck_title">Odstranit balíček?</string>
     <plurals name="delete_deck_message">
         <item quantity="one">Odstranit všechny karty v %1$s? Obsahuje %2$d kartu.</item>
         <item quantity="few">Odstranit všechny karty v %1$s? Obsahuje %2$d karty.</item>
         <item quantity="many">Odstranit všechny karty v %1$s? Obsahuje %2$d karty.</item>
         <item quantity="other">Odstranit všechny karty v %1$s? Obsahuje %2$d karet.</item>
     </plurals>
-    <string name="delete_cram_deck_message">Jste si jistý, že si přejete poslat všechny karty z balíčku %s zpátky do původního balíčku?</string>
+    <string name="delete_cram_deck_message">Poslat všechny karty z %s zpět do svých původních balíčků?</string>
     <string name="no_tts_available_message">Není dostupný žádný jazyk převodu textu na řeč</string>
     <string name="initializing_tts">Inicializuje se TTS&#8230;</string>
     <string name="tts_no_tts">Nemluv</string>
@@ -118,8 +118,8 @@
     <string name="custom_study_random">Vybrat náhodně x karet z balíčku:</string>
     <string name="custom_study_preview">Zkoušení nových karet přidaných v posledních x dnech:</string>
     <string name="custom_study_rebuild_deck_corrupt">Nelze znovu sestavit balíček vlastního učení</string>
-    <string name="importing_collection">Importování kolekce.\nProsím čekejte&#8230;</string>
-    <string name="import_media_count">Import multimediálních souborů %1$d%%\nProsím čekejte&#8230;</string>
+    <string name="importing_collection">Importuje se kolekce&#8230;</string>
+    <string name="import_media_count">Importují se multimediální soubory %1$d%%&#8230;</string>
     <string name="import_progress">• Importování poznámek: %1$d%%\n• Importování karet: %2$d%%\n• Post-processing: %3$d%%</string>
     <string name="import_update_details">Aktualizováno %1$d z %2$d existujících poznámek.</string>
     <string name="import_update_ignored">Některé aktualizace byly ignorovány, protože se změnil typ poznámky</string>
@@ -146,15 +146,15 @@
     <string name="dialog_collection_path_not_dir">Zadaná cesta není platný adresář</string>
     <!-- Media checking -->
     <string name="check_media_title">Zkontrolovat multimédia?</string>
-    <string name="check_media_warning">Toto může trvat dlouhou dobu u velké sbírky multimedií</string>
+    <string name="check_media_warning">Toto může trvat dlouhou dobu u velké sbírky multimédií</string>
     <string name="check_media_message">Kontrolují se multimédia&#8230;</string>
     <string name="check_media_acknowledge">Multimédia zkontrolována</string>
     <string name="check_media_failed">Kontrola multimédií se nezdařila</string>
     <string name="check_media_invalid">Soubory s neplatným kódováním: %d</string>
-    <string name="check_media_unused">Existují soubory ve složce s multimédii, ale nejsou používány na žádné kartě: %d</string>
+    <string name="check_media_unused">Soubory ve složce s multimédii, ale nejsou používány na žádné kartě: %d</string>
     <string name="check_media_nohave">Soubory jsou používané na kartách, ale nejsou ve složce s multimédii: %d</string>
-    <string name="check_media_no_unused_missing">Žádné nevyužité nebo chybějící soubory.</string>
-    <string name="check_media_db_updated">Multimediální databáze opravena.</string>
+    <string name="check_media_no_unused_missing">Nenalezeny žádné nepoužívané nebo chybějící soubory</string>
+    <string name="check_media_db_updated">Multimediální databáze opravena</string>
     <string name="check_media_delete_unused">Odstranit nepoužité</string>
     <string name="delete_media_message">Odstraňují se multimédia&#8230;</string>
     <string name="delete_media_result_title">Výsledek odstraňování</string>

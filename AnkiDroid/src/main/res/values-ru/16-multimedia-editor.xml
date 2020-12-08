@@ -39,7 +39,7 @@
     <string name="multimedia_editor_popup_audio">Записать звук</string>
     <string name="multimedia_editor_popup_text">Расширенный редактор</string>
     <string name="multimedia_editor_popup_cloze">Задание с пропусками</string>
-    <string name="multimedia_editor_popup_clear_field">Clear field</string>
+    <string name="multimedia_editor_popup_clear_field">Очистить поле</string>
     <!-- Translation activity (Glosbe) -->
     <string name="multimedia_editor_trans_poweredglosbe">Данные с glosbe.com</string>
     <!-- these are like translate f r o m  and t o  some othe languages -->

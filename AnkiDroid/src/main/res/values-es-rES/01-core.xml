@@ -38,7 +38,7 @@
 ~ this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <resources>
-    <string name="yes">yes</string>
+    <string name="yes">sí</string>
     <!-- Navigation drawer items-->
     <string name="decks">Mazos</string>
     <string name="card_browser" comment="The usage of card browser inside the app (note the casing)">Explorador de tarjetas</string>
@@ -94,7 +94,7 @@
     <string name="move_all_to_deck">Mover todo al mazo</string>
     <string name="unbury">Desenterrar</string>
     <string name="rename_deck">Renombrar mazo</string>
-    <string name="create_shortcut">Create shortcut</string>
+    <string name="create_shortcut">Crear acceso directo</string>
     <string name="menu_add" comment="A generic add button - Main Deck Picker and card templates. Please inform us if you need more specific strings">Añadir</string>
     <string name="menu_add_note">Añadir nota</string>
     <string name="menu_my_account" comment="Label of the window in which the user should enter their account. This text can\'t be found in AnkiDroid directly.">Cuenta de sincronización</string>
@@ -193,7 +193,7 @@
     <!-- Card Browser Appearance -->
     <string name="card_template_browser_appearance_title">Apariencia del navegador</string>
     <!-- card Info -->
-    <string name="card_info_title">Card info</string>
+    <string name="card_info_title">Información de la tarjeta</string>
     <!-- Permissions -->
     <string name="read_write_permission_label">Leer y escribir en la base de datos de AnkiDroid</string>
     <string name="read_write_permission_description">acceder a notas, tarjetas, tipo de notas, y mazos existentes, así como crear otros nuevos</string>
