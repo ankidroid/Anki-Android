@@ -149,8 +149,8 @@
     -->
     <string name="time_quantity_seconds">%d s</string>
     <string name="time_quantity_minutes">%d min</string>
-    <string name="time_quantity_hours_minutes">%1$d h %2$d m</string>
-    <string name="time_quantity_hours">%d hodin</string>
+    <string name="time_quantity_hours_minutes">%1$d h %2$d min</string>
+    <string name="time_quantity_hours">%d h</string>
     <string name="time_quantity_days">%d dní</string>
     <string name="time_quantity_days_hours">%1$d d %2$d h</string>
     <string name="time_quantity_months">%.1f měsíců</string>
@@ -165,13 +165,13 @@
     <string name="custom_study_deck_exists">Nejdříve přejmenujte stávající balíček vlastního učení</string>
     <string name="empty_deck">Tento balíček je prázdný</string>
     <string name="invalid_deck_name">Neplatný název balíčku</string>
-    <string name="studyoptions_empty">Tento balíček je prázdný. Stiskni tlačítko + pro přidání nového obsahu.</string>
+    <string name="studyoptions_empty">Tento balíček je prázdný. Stiskněte tlačítko +, abyste přidali nový obsah.</string>
     <string name="studyoptions_limit_reached">Denní limit studia dosažen</string>
     <string name="studyoptions_empty_schedule">Žádné další karty ke studiu</string>
     <string name="studyoptions_congrats_finished">Blahopřejeme! Prozatím jste hotov.</string>
     <string name="studyoptions_congrats_more_rev">Bylo dosaženo limitu dnešního opakování, ale stále existují karty pro přezkoušení. Pro optimální zapamatování zvažte zvýšení denního limitu v možnostech.</string>
-    <string name="studyoptions_congrats_more_new">Existuje více nových karet, ale byl dosažen denní limit. Můžete zvýšit tento limit v Nastavení, ale mějte na paměti, že se krátkodobě zvýší vaše zátěž na opakování.</string>
-    <string name="studyoptions_congrats_custom">Pro studium mimo normální plán klepněte na tlačítko \'Vlastní učení\'.</string>
+    <string name="studyoptions_congrats_more_new">Dnešní limit byl dosažen. K dispozici je více nových karet, v možnostech můžete zvýšit limit, ale to zvýší vaše krátkodobé vytížení.</string>
+    <string name="studyoptions_congrats_custom">Jestliže chcete studovat mimo normální plán, klepněte na tlačítko „Vlastní učení“</string>
     <string name="studyoptions_no_cards_due">Žádné karty ještě nejsou ke zkoušení</string>
     <string name="sd_card_not_mounted">Zařízení úložiště není připojeno</string>
     <string name="empty_cloze_warning">Upravte tuto poznámku a přidejte nějaké doplňovačky. (%1$s)</string>
@@ -191,7 +191,7 @@
     <string name="card_template_editor_styling">Styl</string>
     <string name="card_template_editor_menu_card_browser_appearance">Vzhled prohlížeče karet</string>
     <string name="card_template_editor_deck_override">Přepsat balíček</string>
-    <string name="card_template_editor_cant_delete">Je vyžadován alespoň jeden typ karty.</string>
+    <string name="card_template_editor_cant_delete">Je vyžadován alespoň jeden typ karty</string>
     <plurals name="card_template_editor_confirm_delete">
         <item quantity="one">Odstranit typ karty „%2$s“ a jeho %1$d kartu?</item>
         <item quantity="few">Odstranit typ karty „%2$s“ a jeho %1$d karty?</item>

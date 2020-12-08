@@ -196,7 +196,9 @@
     <string name="export_unsuccessful">Apkg ఫైల్ను ఎగుమతి చేయడంలో లోపం</string>
     <string name="import_hint">డైరెక్టరీలో \"%s\" లో apkg ఫైల్ను ఉంచండి మరియు కార్డ్లను దిగుమతి చేయడానికి \"సరే\" ను తాకండి</string>
     <string name="upgrade_import_no_file_found">దిగుమతి చెయ్యదగిన %1$s ఫైల్ కనుగొనబడలేదు</string>
-    <string name="study_options" comment="Menu entry to open an options menu">Options</string>
+    <string name="study_options" comment="Name for a preference category in Filtered deck (aka Cram deck, aka Custom study) options">Options</string>
+    <string name="menu__deck_options">Deck options</string>
+    <string name="menu__study_options" comment="Menu item that opens options for a Filtered deck (aka Cram deck, aka Custom study)">Study options</string>
     <string name="select_tts">TTS భాషను సెట్ చేయండి</string>
     <string name="custom_study">అనుకూల అధ్యయనం</string>
     <string name="more_options">ఎక్కువ</string>
@@ -337,4 +339,5 @@
     <string name="create_shortcut_error_vivo" comment="iManager is an app on Vivo phones">You may need to use iManager to allow AnkiDroid to add shortcuts</string>
     <string name="create_shortcut_failed" comment="home screen == launcher">Your home screen does not allow AnkiDroid to add shortcuts</string>
     <string name="create_shortcut_error">Error adding shortcut: %s</string>
+    <string name="note_editor_capitalize" comment="This is for a switch with a checkbox - on: enabled">Capitalize sentences</string>
 </resources>

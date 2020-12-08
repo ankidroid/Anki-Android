@@ -50,7 +50,7 @@
     <string name="model_field_editor_title">Edit fields</string>
     <string name="model_field_editor_add">Lisa väli</string>
     <string name="model_field_editor_delete">Kustuta väli</string>
-    <string name="model_field_editor_rename">Nimeta väli ümber</string>
+    <string name="model_field_editor_rename">Nimeta ümber väli</string>
     <string name="model_field_editor_language_hint">Set keyboard language hint</string>
     <string name="model_field_editor_reposition_menu">Reposition field</string>
     <string name="model_field_editor_reposition">Reposition field (enter a value %1$d–%2$d)</string>

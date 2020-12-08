@@ -147,8 +147,8 @@
     <string name="delete_media_message">Lösche Medien&#8230;</string>
     <string name="delete_media_result_title">Löschergebnis</string>
     <plurals name="delete_media_result_message">
-        <item quantity="one">%d Dateien gelöscht</item>
-        <item quantity="other">%d files deleted</item>
+        <item quantity="one">%d Datei gelöscht</item>
+        <item quantity="other">%d Dateien gelöscht</item>
     </plurals>
     <!-- Tags Dialog Options -->
     <string name="tags_dialog_option_all_cards">Alle Karten</string>
@@ -210,12 +210,12 @@
     <string name="locale_selection_dialog_title">Tastatur-Sprachauswahl</string>
     <string name="locale_selection_dialog_summary">Einige mehrsprachige Tastaturen, wie zum Beispiel GBoard unterstützten das Ändern der Sprache beim Bearbeiten von Text\n\nBitte fordern Sie die „setImeHintLocales“-Funktion Ihres Tastatur-Herstellers an, falls Ihre Tastatur keine Sprache ändert.</string>
     <!-- Help Dialog -->
-    <string name="help_title_using_ankidroid">Using AnkiDroid</string>
-    <string name="help_item_ankidroid_manual">AnkiDroid Manual</string>
+    <string name="help_title_using_ankidroid">Verwendung von AnkiDroid</string>
+    <string name="help_item_ankidroid_manual">AnkiDroid Handbuch</string>
     <string name="help_item_anki_manual">Anki Handbuch</string>
     <string name="help_item_ankidroid_faq">AnkiDroid FAQ</string>
-    <string name="help_title_get_help">Get Help</string>
-    <string name="help_item_mailing_list">Mailing List</string>
+    <string name="help_title_get_help">Hilfe erhalten</string>
+    <string name="help_item_mailing_list">Mailingliste</string>
     <string name="help_item_reddit">Reddit</string>
     <string name="help_item_report_bug">Einen Fehler melden</string>
     <string name="help_title_support_ankidroid">Unterstütze AnkiDroid</string>

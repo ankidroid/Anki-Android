@@ -235,7 +235,7 @@
     <string name="deck_conf_graduating_ivl">Interwał po nauce karty</string>
     <string name="deck_conf_days">XXX dni</string>
     <string name="deck_conf_easy_ivl">Interwał dla łatwych</string>
-    <string name="deck_conf_start_ease">Początkowa łatwość</string>
+    <string name="deck_conf_start_ease">Początkowa trudność</string>
     <string name="deck_conf_max_rev">Maksymalnie przejrzeń dziennie</string>
     <string name="deck_conf_new_bury">Zakop nowe karty powiązane</string>
     <string name="deck_conf_new_bury_summ">Nowe karty powiązane są zakopane do kolejnego dnia</string>

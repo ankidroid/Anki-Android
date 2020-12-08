@@ -91,8 +91,8 @@
         <item>Kertaukset</item>
         <item>Kertausväli</item>
         <item>Ease</item>
-        <item>Due</item>
-        <item>Card Modified</item>
+        <item>Erääntynyt</item>
+        <item>Korttia Muokattu</item>
         <item>Luotu</item>
         <item>Note Modified</item>
     </string-array>
@@ -132,7 +132,7 @@
         <item quantity="other">%1$d minuutissa</item>
     </plurals>
     <string name="fact_adder_intent_title" comment="Label of the \'Add Note\' window. This title can\'t be seen in AnkiDroid directly.">AnkiDroid-kortti</string>
-    <string name="note_editor_copy_note">Copy note</string>
+    <string name="note_editor_copy_note">Kopioi muistiinpano</string>
     <string name="card_editor_reposition_card">Reposition</string>
     <string name="card_editor_reset_card">Tyhjennä edistyminen</string>
     <string name="card_editor_reschedule_card" comment="Action to reschedule a card">Ajasta uudelleen</string>
@@ -196,7 +196,9 @@
     <string name="export_unsuccessful">Virhe apkg-tiedoston tuonnissa</string>
     <string name="import_hint">Tuodaksesi kortteja aseta apkg-tiedosto hakemistoon %s ja paina Ok-painiketta</string>
     <string name="upgrade_import_no_file_found">Tuotavaa tiedostoa %1$s ei löytynyt</string>
-    <string name="study_options" comment="Menu entry to open an options menu">Valinnat</string>
+    <string name="study_options" comment="Name for a preference category in Filtered deck (aka Cram deck, aka Custom study) options">Valinnat</string>
+    <string name="menu__deck_options">Deck options</string>
+    <string name="menu__study_options" comment="Menu item that opens options for a Filtered deck (aka Cram deck, aka Custom study)">Study options</string>
     <string name="select_tts">Määritä TTS-kieli</string>
     <string name="custom_study">Mukautettu opiskelu</string>
     <string name="more_options">Lisää</string>
@@ -262,13 +264,13 @@
     <string name="web_page_error">Error loading page: %s</string>
     <string name="no_outgoing_link_in_cardbrowser">External page link in card is not supported.</string>
     <!-- The name of the deck which corrupt cards will be moved to -->
-    <string name="check_integrity_recovered_deck_name">Recovered Cards</string>
+    <string name="check_integrity_recovered_deck_name">Palautetut Kortit</string>
     <!-- Deckpicker Background -->
-    <string name="background_image_title">Background</string>
+    <string name="background_image_title">Tausta</string>
     <string name="choose_an_image">Valitse kuva</string>
     <!-- Card Template Browser Appearance -->
-    <string name="restore_default">Restore Default</string>
-    <string name="reviewer_tts_cloze_spoken_replacement">Blank</string>
+    <string name="restore_default">Palauta oletusarvot</string>
+    <string name="reviewer_tts_cloze_spoken_replacement">Tyhjä</string>
     <!-- in options menu & Navigation Drawer -->
     <string name="ankidroid_turn_on_fullscreen_nav_drawer">Please turn on fullscreen to use Show Navigation Drawer using JavaScript.</string>
     <string name="ankidroid_turn_on_fullscreen_options_menu">Please turn on fullscreen to use Show Options Menu using JavaScript.</string>
@@ -337,4 +339,5 @@
     <string name="create_shortcut_error_vivo" comment="iManager is an app on Vivo phones">You may need to use iManager to allow AnkiDroid to add shortcuts</string>
     <string name="create_shortcut_failed" comment="home screen == launcher">Your home screen does not allow AnkiDroid to add shortcuts</string>
     <string name="create_shortcut_error">Error adding shortcut: %s</string>
+    <string name="note_editor_capitalize" comment="This is for a switch with a checkbox - on: enabled">Capitalize sentences</string>
 </resources>

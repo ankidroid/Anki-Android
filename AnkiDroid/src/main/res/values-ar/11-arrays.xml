@@ -80,13 +80,13 @@
         <item>غامق</item>
     </string-array>
     <string-array name="html_size_code_labels">
-        <item>xx-small</item>
-        <item>x-small</item>
-        <item>small</item>
-        <item>medium</item>
-        <item>large</item>
-        <item>x-large</item>
-        <item>xx-large</item>
+        <item>xx-صغير</item>
+        <item>x-صغير</item>
+        <item>صغير</item>
+        <item>متوسط</item>
+        <item>كبير</item>
+        <item>x-كبير</item>
+        <item>xx-كبير</item>
     </string-array>
     <!--
     #7794 - it\'s better to use @string references in non-translated arrays as this handles
@@ -110,5 +110,5 @@
     <string name="gesture_flag_remove">إزالة المؤشر</string>
     <string name="gesture_page_up">تمرير صفحة إلى الأعلى</string>
     <string name="gesture_page_down">تمرير صفحة إلى الأسفل</string>
-    <string name="gesture_abort_sync">Abort Learning and Sync</string>
+    <string name="gesture_abort_sync">إيقاف التعلم والمزامنة</string>
 </resources>

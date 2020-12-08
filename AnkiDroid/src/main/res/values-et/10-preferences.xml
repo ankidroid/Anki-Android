@@ -39,16 +39,16 @@
 -->
 <resources>
     <!-- generic strings -->
-    <string name="disabled">Disabled</string>
-    <string name="enabled">Enabled</string>
+    <string name="disabled">Keelatud</string>
+    <string name="enabled">Lubatud</string>
     <!-- preferences.xml categories-->
     <string name="pref_cat_general_summ">Üldised seaded</string>
-    <string name="pref_cat_reviewing">Reviewing</string>
-    <string name="pref_cat_reviewing_summ">Non-deck-specific reviewer settings</string>
-    <string name="pref_cat_reviewer_behaviour">Behavior</string>
-    <string name="pref_cat_flashcard">Display</string>
+    <string name="pref_cat_reviewing">Kordamine</string>
+    <string name="pref_cat_reviewing_summ">Mitte kaardipaki spetsiifilised korrdaja seaded</string>
+    <string name="pref_cat_reviewer_behaviour">Käitumine</string>
+    <string name="pref_cat_flashcard">Ekraan</string>
     <string name="pref_cat_whiteboard">Tahvel</string>
-    <string name="pref_cat_appearance">Appearance</string>
+    <string name="pref_cat_appearance">Välimus</string>
     <string name="pref_cat_appearance_summ">Change themes and default font</string>
     <string name="pref_cat_themes">Themes</string>
     <string name="pref_cat_fonts">Fonts</string>
@@ -60,15 +60,15 @@
     <string name="pref_cat_performance">Performance</string>
     <string name="pref_cat_workarounds">Workarounds</string>
     <string name="pref_cat_plugins">Plugins</string>
-    <string name="about_title">About AnkiDroid</string>
-    <string name="about_version">Version: </string>
+    <string name="about_title">AnkiDroidi kohta</string>
+    <string name="about_version">Versioon:</string>
     <!-- preferences.xml entries-->
-    <string name="whiteboard_stroke_width">Stroke width</string>
-    <string name="whiteboard_black">Black strokes</string>
+    <string name="whiteboard_stroke_width">Joone laius</string>
+    <string name="whiteboard_black">Mustad jooned</string>
     <string name="whiteboard_black_summ">Uses less memory, unless in night mode</string>
-    <string name="use_input_tag">Type answer into the card</string>
+    <string name="use_input_tag">Kirjuta vastus kaarti</string>
     <string name="use_input_tag_summ">Use a text input box inside the card to type in the answer</string>
-    <string name="dictionary">Lookup dictionary</string>
+    <string name="dictionary">Otsingusõnastik</string>
     <string name="reset_languages">Reset languages</string>
     <string name="reset_languages_summ">Reset language assignments (for text to speech and dictionaries) for all decks</string>
     <string name="reset_languages_question">Reset all language assignments?</string>
@@ -79,18 +79,18 @@
     <string name="card_browser_font_size">Card browser font scaling</string>
     <string name="card_browser_hide_media">Display filenames in card browser</string>
     <string name="card_browser_hide_media_summary">Display media filenames in the card browser question/answer fields</string>
-    <string name="col_path">AnkiDroid directory</string>
-    <string name="fullscreen_review">Fullscreen mode</string>
-    <string name="full_screen_off">Off</string>
+    <string name="col_path">AnkiDroidi kaust</string>
+    <string name="fullscreen_review">Täisekraani režiim</string>
+    <string name="full_screen_off">Väljas</string>
     <string name="full_screen_system">Hide the system bars</string>
     <string name="full_screen_complete">Hide the system bars and answer buttons</string>
-    <string name="full_screen_error_gestures">You must enable gestures to hide the answer buttons</string>
-    <string name="answer_buttons_position">Answer buttons position</string>
+    <string name="full_screen_error_gestures">Vastuse nuppude peitmiseks pead lubama žestid.</string>
+    <string name="answer_buttons_position">Vastuse nuppude asukoht</string>
     <string-array name="answer_buttons_position_labels">
-        <item>Top</item>
-        <item>Bottom</item>
+        <item>Ülal</item>
+        <item>All</item>
     </string-array>
-    <string name="gestures">Enable gestures</string>
+    <string name="gestures">Luba žestid</string>
     <string name="gestures_summ">Assign gestures to actions such as answering and editing cards.</string>
     <string name="gestures_allow_links">Ignore touch gestures on links</string>
     <string name="gestures_allow_links_summary">Touch gestures will not be processed if a link/hint is pressed.</string>

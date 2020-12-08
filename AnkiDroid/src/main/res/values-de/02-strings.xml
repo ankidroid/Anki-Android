@@ -196,7 +196,9 @@
     <string name="export_unsuccessful">Fehler beim Exportieren der APKG-Datei</string>
     <string name="import_hint">Speichern Sie die APKG-Datei ins Verzeichnis »%s« und tippen Sie dann auf »OK« zum Importieren der Karten</string>
     <string name="upgrade_import_no_file_found">Keine importierbare Datei %1$s gefunden</string>
-    <string name="study_options" comment="Menu entry to open an options menu">Optionen</string>
+    <string name="study_options" comment="Name for a preference category in Filtered deck (aka Cram deck, aka Custom study) options">Optionen</string>
+    <string name="menu__deck_options">Deck options</string>
+    <string name="menu__study_options" comment="Menu item that opens options for a Filtered deck (aka Cram deck, aka Custom study)">Study options</string>
     <string name="select_tts">Vorlesesprache festlegen</string>
     <string name="custom_study">Benutzer&#173;de&#173;fi&#173;nier&#173;tes Lernen</string>
     <string name="more_options">Mehr</string>
@@ -318,7 +320,7 @@
     <string name="ankidroid_init_failed_webview">AnkiDroid basiert auf dem System WebView, der nicht verfügbar ist. Dies kann passieren, wenn das System Updates installiert. Bitte versuchen Sie es in ein paar Minuten erneut.\n\n%s</string>
     <!-- A Menu item to change the Font Size (currently in the Note Editor) -->
     <string name="menu_font_size">Schriftgröße</string>
-    <string name="menu_show_toolbar" comment="Checkable item stating whether the note editor toolbar should be shown">Show Toolbar</string>
+    <string name="menu_show_toolbar" comment="Checkable item stating whether the note editor toolbar should be shown">Werkzeug zeigen</string>
     <string name="format_insert_bold">Als Fett formatieren</string>
     <string name="format_insert_italic">Als Kursiv formatieren</string>
     <string name="format_insert_underline">Als Unterstrich formatieren</string>
@@ -337,4 +339,5 @@
     <string name="create_shortcut_error_vivo" comment="iManager is an app on Vivo phones">Bitte verwenden Sie iManager, um AnkiDroid das Hinzufügen von Verknüpfungen zu erlauben</string>
     <string name="create_shortcut_failed" comment="home screen == launcher">Ihr Startbildschirm erlaubt AnkiDroid keine Verknüpfungen hinzuzufügen</string>
     <string name="create_shortcut_error">Fehler beim Hinzufügen der Verknüpfung: %s</string>
+    <string name="note_editor_capitalize" comment="This is for a switch with a checkbox - on: enabled">Capitalize sentences</string>
 </resources>

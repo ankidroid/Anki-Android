@@ -193,7 +193,9 @@
     <string name="export_unsuccessful">导出apkg文件时出错</string>
     <string name="import_hint">请把apkg文件放在%s目录中，然后按确定。</string>
     <string name="upgrade_import_no_file_found">没有找到可导入的 %1$s 文件</string>
-    <string name="study_options" comment="Menu entry to open an options menu">选项</string>
+    <string name="study_options" comment="Name for a preference category in Filtered deck (aka Cram deck, aka Custom study) options">选项</string>
+    <string name="menu__deck_options">Deck options</string>
+    <string name="menu__study_options" comment="Menu item that opens options for a Filtered deck (aka Cram deck, aka Custom study)">Study options</string>
     <string name="select_tts">设置 TTS 语言</string>
     <string name="custom_study">自定义学习</string>
     <string name="more_options">更多</string>
@@ -305,7 +307,7 @@
     <string name="ankidroid_init_failed_webview">AnkiDroid 依赖的系统 WebView 不可用。如果系统正在安装更新，可能会发生这种情况。请几分钟后再试。\n\n%s</string>
     <!-- A Menu item to change the Font Size (currently in the Note Editor) -->
     <string name="menu_font_size">字体大小</string>
-    <string name="menu_show_toolbar" comment="Checkable item stating whether the note editor toolbar should be shown">Show Toolbar</string>
+    <string name="menu_show_toolbar" comment="Checkable item stating whether the note editor toolbar should be shown">显示工具栏</string>
     <string name="format_insert_bold">粗体格式</string>
     <string name="format_insert_italic">斜体格式</string>
     <string name="format_insert_underline">下划线格式</string>
@@ -324,4 +326,5 @@
     <string name="create_shortcut_error_vivo" comment="iManager is an app on Vivo phones">请使用 iManager 来允许 AnkiDroid 添加快捷方式</string>
     <string name="create_shortcut_failed" comment="home screen == launcher">您的主屏幕不允许 AnkiDroid 添加快捷方式</string>
     <string name="create_shortcut_error">添加快捷方式时出错：%s</string>
+    <string name="note_editor_capitalize" comment="This is for a switch with a checkbox - on: enabled">Capitalize sentences</string>
 </resources>

@@ -39,7 +39,7 @@
     <string name="multimedia_editor_popup_audio">Grabar audio</string>
     <string name="multimedia_editor_popup_text">Editor avanzado</string>
     <string name="multimedia_editor_popup_cloze">Llenado de espacios en blanco</string>
-    <string name="multimedia_editor_popup_clear_field">Clear field</string>
+    <string name="multimedia_editor_popup_clear_field">Limpiar campo</string>
     <!-- Translation activity (Glosbe) -->
     <string name="multimedia_editor_trans_poweredglosbe">Con tecnología de glosbe.com</string>
     <!-- these are like translate f r o m  and t o  some othe languages -->

@@ -196,7 +196,9 @@
     <string name="export_unsuccessful">Error exporting apkg file</string>
     <string name="import_hint">For å importere kort, legg apkg-filen i mappen %s og trykk ok</string>
     <string name="upgrade_import_no_file_found">Ingen importerbar %1$s-fil funnet</string>
-    <string name="study_options" comment="Menu entry to open an options menu">Innstillinger</string>
+    <string name="study_options" comment="Name for a preference category in Filtered deck (aka Cram deck, aka Custom study) options">Innstillinger</string>
+    <string name="menu__deck_options">Deck options</string>
+    <string name="menu__study_options" comment="Menu item that opens options for a Filtered deck (aka Cram deck, aka Custom study)">Study options</string>
     <string name="select_tts">Set TTS language</string>
     <string name="custom_study">Tilpasset studie</string>
     <string name="more_options">Mer</string>
@@ -337,4 +339,5 @@
     <string name="create_shortcut_error_vivo" comment="iManager is an app on Vivo phones">You may need to use iManager to allow AnkiDroid to add shortcuts</string>
     <string name="create_shortcut_failed" comment="home screen == launcher">Your home screen does not allow AnkiDroid to add shortcuts</string>
     <string name="create_shortcut_error">Error adding shortcut: %s</string>
+    <string name="note_editor_capitalize" comment="This is for a switch with a checkbox - on: enabled">Capitalize sentences</string>
 </resources>

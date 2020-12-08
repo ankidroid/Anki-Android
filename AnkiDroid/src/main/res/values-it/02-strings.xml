@@ -196,7 +196,9 @@
     <string name="export_unsuccessful">Errore nell\'esportazione del file apkg</string>
     <string name="import_hint">Per importare carte, inserisci il file apkg nella cartella %s e premi ok</string>
     <string name="upgrade_import_no_file_found">Nessun file importabile %1$s trovato</string>
-    <string name="study_options" comment="Menu entry to open an options menu">Opzioni</string>
+    <string name="study_options" comment="Name for a preference category in Filtered deck (aka Cram deck, aka Custom study) options">Opzioni</string>
+    <string name="menu__deck_options">Deck options</string>
+    <string name="menu__study_options" comment="Menu item that opens options for a Filtered deck (aka Cram deck, aka Custom study)">Study options</string>
     <string name="select_tts">Imposta lingua TTS</string>
     <string name="custom_study">Studio personalizzato</string>
     <string name="more_options">Più</string>
@@ -318,7 +320,7 @@
     <string name="ankidroid_init_failed_webview">AnkiDroid si basa sulla WebView di Sistema che non è disponibile. Questo può verificarsi se il sistema sta installando aggiornamenti. Sei pregato di riprovare tra qualche minuto.\n\n%s</string>
     <!-- A Menu item to change the Font Size (currently in the Note Editor) -->
     <string name="menu_font_size">Dimensione Carattere</string>
-    <string name="menu_show_toolbar" comment="Checkable item stating whether the note editor toolbar should be shown">Show Toolbar</string>
+    <string name="menu_show_toolbar" comment="Checkable item stating whether the note editor toolbar should be shown">Mostra barra strumenti</string>
     <string name="format_insert_bold">Formatta in Grassetto</string>
     <string name="format_insert_italic">Formata in Corsivo</string>
     <string name="format_insert_underline">Formatta come Sottolineato</string>
@@ -337,4 +339,5 @@
     <string name="create_shortcut_error_vivo" comment="iManager is an app on Vivo phones">Utilizza iManager per consentire ad AnkiDroid di aggiungere scorciatoie</string>
     <string name="create_shortcut_failed" comment="home screen == launcher">La tua schermata iniziale non consente ad AnkiDroid di aggiungere scorciatoie</string>
     <string name="create_shortcut_error">Errore nell\'aggiunta della scorciatoia: %s</string>
+    <string name="note_editor_capitalize" comment="This is for a switch with a checkbox - on: enabled">Capitalize sentences</string>
 </resources>

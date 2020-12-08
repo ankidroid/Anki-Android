@@ -202,7 +202,9 @@
     <string name="export_unsuccessful">Napaka pri izvažanju datoteke apkg</string>
     <string name="import_hint">Vstavite datoteko apkg v mapo \"%s\" in pritisnite \"V redu\", da uvozite kartice</string>
     <string name="upgrade_import_no_file_found">Nobene uvozljive datoteke %1$s ni bilo mogoče najti</string>
-    <string name="study_options" comment="Menu entry to open an options menu">Options</string>
+    <string name="study_options" comment="Name for a preference category in Filtered deck (aka Cram deck, aka Custom study) options">Options</string>
+    <string name="menu__deck_options">Deck options</string>
+    <string name="menu__study_options" comment="Menu item that opens options for a Filtered deck (aka Cram deck, aka Custom study)">Study options</string>
     <string name="select_tts">Nastavi jezik TTS</string>
     <string name="custom_study">Učenje po meri</string>
     <string name="more_options">Več</string>
@@ -363,4 +365,5 @@
     <string name="create_shortcut_error_vivo" comment="iManager is an app on Vivo phones">You may need to use iManager to allow AnkiDroid to add shortcuts</string>
     <string name="create_shortcut_failed" comment="home screen == launcher">Your home screen does not allow AnkiDroid to add shortcuts</string>
     <string name="create_shortcut_error">Error adding shortcut: %s</string>
+    <string name="note_editor_capitalize" comment="This is for a switch with a checkbox - on: enabled">Capitalize sentences</string>
 </resources>

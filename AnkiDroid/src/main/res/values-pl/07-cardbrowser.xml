@@ -57,7 +57,7 @@
     <string name="card_browser_show_marked">Odfiltruj zaznaczone</string>
     <string name="card_browser_show_suspended">Odfiltruj zawieszone</string>
     <string name="card_browser_search_by_tag">Filtruj po etykiecie</string>
-    <string name="card_browser_search_by_flag">Filter by flag</string>
+    <string name="card_browser_search_by_flag">Filtruj po fladze</string>
     <string name="card_browser_list_my_searches">Moje wyszukiwania</string>
     <string name="card_browser_list_my_searches_save">Zapisz wyszukiwanie</string>
     <string name="card_browser_list_my_searches_title">Wybierz zapisane wyszukiwanie</string>
@@ -76,7 +76,7 @@
         <item>Wg utworzenia</item>
         <item>Wg czasu edycji notatek</item>
         <item>Wg czasu edycji kart</item>
-        <item>Według czasu powtórki</item>
+        <item>Wg czasu powtórki</item>
         <item>Wg przerw</item>
         <item>Wg łatwości</item>
         <item>Wg powtórek</item>
@@ -97,27 +97,27 @@
         <item quantity="other">Usunięto %d kart</item>
     </plurals>
     <!-- Card Info subscreen -->
-    <string name="card_info_added" comment="Label of the information showing at which date a card was added.">Added</string>
-    <string name="card_info_first_review">First Review</string>
-    <string name="card_info_latest_review">Latest Review</string>
-    <string name="card_info_interval">Interval</string>
-    <string name="card_info_ease">Ease</string>
-    <string name="card_info_reviews" comment="Number of times a card was reviewed">Reviews</string>
-    <string name="card_info_lapses" comment="Label indicating the number of lapses of a card.">Lapses</string>
-    <string name="card_info_average_time">Average Time</string>
-    <string name="card_info_total_time">Total Time</string>
-    <string name="card_info_card_type">Card Type</string>
-    <string name="card_info_note_type">Note Type</string>
-    <string name="card_info_deck_name">Deck Name</string>
-    <string name="card_info_card_id">Card Id</string>
-    <string name="card_info_note_id">Note Id</string>
-    <string name="card_info_revlog_time">Time</string>
-    <string name="card_info_revlog_date">Date</string>
-    <string name="card_info_revlog_rating">Rating</string>
-    <string name="card_info_revlog_type">Type</string>
-    <string name="card_info_revlog_learn" comment="Label indicating that a review in the log of a card occured while the card was in learning mode">Learn</string>
-    <string name="card_info_revlog_review">Review</string>
-    <string name="card_info_revlog_relearn" comment="Label of a log entry of a card, indicating that a review was done with a note in relearning mode">Relearn</string>
-    <string name="card_info_revlog_filtered">Filtered</string>
+    <string name="card_info_added" comment="Label of the information showing at which date a card was added.">Dodana</string>
+    <string name="card_info_first_review">Pierwsza powtórka</string>
+    <string name="card_info_latest_review">Ostatnia powtórka</string>
+    <string name="card_info_interval">Przerwa</string>
+    <string name="card_info_ease">Trudność</string>
+    <string name="card_info_reviews" comment="Number of times a card was reviewed">Powtórki</string>
+    <string name="card_info_lapses" comment="Label indicating the number of lapses of a card.">Pomyłki</string>
+    <string name="card_info_average_time">Średni czas</string>
+    <string name="card_info_total_time">Całkowity czas</string>
+    <string name="card_info_card_type">Typ karty</string>
+    <string name="card_info_note_type">Typ notatki</string>
+    <string name="card_info_deck_name">Talia</string>
+    <string name="card_info_card_id">ID karty</string>
+    <string name="card_info_note_id">ID notatki</string>
+    <string name="card_info_revlog_time">Czas</string>
+    <string name="card_info_revlog_date">Data</string>
+    <string name="card_info_revlog_rating">Ocena</string>
+    <string name="card_info_revlog_type">Typ</string>
+    <string name="card_info_revlog_learn" comment="Label indicating that a review in the log of a card occured while the card was in learning mode">Nienauczone</string>
+    <string name="card_info_revlog_review">Powtarzane</string>
+    <string name="card_info_revlog_relearn" comment="Label of a log entry of a card, indicating that a review was done with a note in relearning mode">Uczone ponownie</string>
+    <string name="card_info_revlog_filtered">Filtrowane</string>
     <string name="card_info_ease_not_applicable">N/A</string>
 </resources>

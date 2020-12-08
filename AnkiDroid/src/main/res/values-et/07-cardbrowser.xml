@@ -45,13 +45,13 @@
     </plurals>
     <string name="card_browser_all_decks">Kõik kaardipakid</string>
     <string name="card_browser_delete_card">Kustuta märkmed</string>
-    <string name="card_browser_suspend_card">Peata kaardid</string>
+    <string name="card_browser_suspend_card">Seiska kaardid</string>
     <string name="card_browser_change_deck">Change deck</string>
     <string name="card_browser_unsuspend_card">Unsuspend cards</string>
-    <string name="card_browser_mark_card">Mark notes</string>
-    <string name="card_browser_unmark_card">Unmark notes</string>
-    <string name="delete_card_title">Kustuta märge?</string>
-    <string name="changed_deck_message">Moved to %s</string>
+    <string name="card_browser_mark_card">Tähista märkmed</string>
+    <string name="card_browser_unmark_card">Eemalda tähistus märkmetelt</string>
+    <string name="delete_card_title">Kustutada märge?</string>
+    <string name="changed_deck_message">Liigutatud kausta %s</string>
     <string name="card_browser_show_marked">Filter marked</string>
     <string name="card_browser_show_suspended">Filter suspended</string>
     <string name="card_browser_search_by_tag">Filtreeri sildi järgi</string>

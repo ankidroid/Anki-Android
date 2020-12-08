@@ -97,8 +97,8 @@
         <item>Запись изменена</item>
     </string-array>
     <!-- Custom study options -->
-    <string name="custom_study_increase_new_limit">Изменить лимит новых карточек на сегодня</string>
-    <string name="custom_study_increase_review_limit">Изменить лимит повторяемых карточек на сегодня</string>
+    <string name="custom_study_increase_new_limit">Изменить лимит новых на сегодня</string>
+    <string name="custom_study_increase_review_limit">Изменить лимит повторяемых на сегодня</string>
     <string name="custom_study_review_forgotten">Повторить забытые</string>
     <string name="custom_study_review_ahead">Повторить с опережением</string>
     <string name="custom_study_random_selection">Учить случайный набор карточек</string>
@@ -201,7 +201,9 @@
     <string name="export_unsuccessful">Ошибка при экспорте файла apkg</string>
     <string name="import_hint">Чтобы импортировать карточки, поместите файл apkg в папку %s и нажмите ОК</string>
     <string name="upgrade_import_no_file_found">Файл для импорта %1$s не найден</string>
-    <string name="study_options" comment="Menu entry to open an options menu">Параметры</string>
+    <string name="study_options" comment="Name for a preference category in Filtered deck (aka Cram deck, aka Custom study) options">Параметры</string>
+    <string name="menu__deck_options">Deck options</string>
+    <string name="menu__study_options" comment="Menu item that opens options for a Filtered deck (aka Cram deck, aka Custom study)">Study options</string>
     <string name="select_tts">Язык синтеза речи</string>
     <string name="custom_study">Учить ещё</string>
     <string name="more_options">Ещё</string>
@@ -278,7 +280,7 @@
     <string name="activity_start_failed">В системе нет приложения, которое может выполнить это действие.</string>
     <string name="multimedia_editor_image_compression_failed"><![CDATA[Фотографии могут быть большими. Возможно, вы захотите сжать или изменить размер изображений в папке медиаданных]]></string>
     <string name="no_browser_notification">Браузер не найден. Посетите сайт с компьютера или телефона: </string>
-    <string name="web_page_error">Error loading page: %s</string>
+    <string name="web_page_error">Ошибка загрузки страницы: %s</string>
     <string name="no_outgoing_link_in_cardbrowser">В карточках не поддерживаются внешние ссылки</string>
     <!-- The name of the deck which corrupt cards will be moved to -->
     <string name="check_integrity_recovered_deck_name">Восстановленные карточки</string>
@@ -299,9 +301,9 @@
     <string name="note_importer_empty_cards_found"><![CDATA[Найдены пустые карточки. Нажмите «Инструменты» — »Пустые карточки».]]></string>
     <string name="note_importer_error_empty_first_field">Пустое первое поле: %s</string>
     <string name="note_importer_error_first_field_matched">Совпадение по первому полю: %s</string>
-    <string name="note_importer_error_added_duplicate_first_field">Добавлен дубликат с первым полем: %s</string>
+    <string name="note_importer_error_added_duplicate_first_field">Добавлен повтор с первым полем «%s»</string>
     <string name="note_importer_error_appeared_twice">Дважды встречается в файле: %s</string>
-    <string name="note_importer_error_empty_notes">Одно или несколько записей не были импортированы, потому что они не создали никаких карточек. Это может произойти, если есть пустые поля или если вы не сопоставили содержимое текстового файла с верными полями</string>
+    <string name="note_importer_error_empty_notes">Одна или несколько записей не были импортированы, потому что они не создали никаких карточек. Это могло произойти, если есть пустые поля или если вы не сопоставили содержимое текстового файла с верными полями</string>
     <string name="csv_importer_error_invalid_field_count">В «%1$s» %2$d поля, но должно быть %3$d</string>
     <string name="csv_importer_error_exception">Прервано: %s</string>
     <string name="user_is_a_robot">Обнаружен автоматический тест. Если вы человек, обратитесь в службу поддержки AnkiDroid</string>
@@ -324,10 +326,10 @@
         <item quantity="other">%d записей не изменено</item>
     </plurals>
     <!-- JS api -->
-    <string name="api_version_developer_contact">Эта карточка использует неподдерживаемые в AnkiDroid функции. Свяжитесь с разработчиком %1$s или обратитесь к вики-справке. %2$s</string>
-    <string name="invalid_json_data">В карточек недопустимые данные. %s</string>
-    <string name="valid_js_api_version">Недопустимый версия AnkiDroid JS API. Свяжитесь с разработчиком %s или обратитесь к вики-справке</string>
-    <string name="update_js_api_version">Доступна новая версия AnkiDroid JS API. Свяжитесь с разработчиком %s или обратитесь к вики-справке.</string>
+    <string name="api_version_developer_contact">Эта карточка использует неподдерживаемые в AnkiDroid функции. Свяжитесь с разработчиками %1$s или обратитесь к вики-справке. %2$s</string>
+    <string name="invalid_json_data">В карточке недопустимые данные. %s</string>
+    <string name="valid_js_api_version">Недопустимый версия AnkiDroid JS API. Свяжитесь с разработчиками %s или обратитесь к вики-справке</string>
+    <string name="update_js_api_version">Доступна новая версия AnkiDroid JS API. Свяжитесь с разработчиками %s или обратитесь к вики-справке.</string>
     <string name="reviewer_invalid_api_version_visit_documentation">Вид</string>
     <string name="anki_js_error_code">(Код ошибки: %d)</string>
     <!-- About AnkiDroid screen -->
@@ -335,31 +337,32 @@
     <string name="about_ankidroid_error_copy_debug_info">Ошибка при копировании отладочной информации в буфер обмена</string>
     <!-- Card Viewer -->
     <string name="card_viewer_could_not_find_image">Не удалось загрузить «%s»</string>
-    <string name="card_viewer_media_relative_protocol">Card Content Error: Media update required</string>
+    <string name="card_viewer_media_relative_protocol">Ошибка в содержимом карточки: требуется обновление медиафайлов</string>
     <!-- Deck Picker -->
     <string name="deck_picker_failed_deck_load">Не удалось загрузить колоду «%s»</string>
     <string name="search_decks">Найти колоду</string>
     <string name="ankidroid_init_failed_webview_title">Критическая ошибка</string>
-    <string name="ankidroid_init_failed_webview">AnkiDroid использует системный WebView, который сейчас не доступен. Это может произойти, если система устанавливает обновления. Пожалуйста, повторите попытку через несколько минут.\n\n%s</string>
+    <string name="ankidroid_init_failed_webview">AnkiDroid использует системный WebView, который сейчас не доступен. Это может произойти, если система устанавливает обновления. Повторите попытку через несколько минут.\n\n%s</string>
     <!-- A Menu item to change the Font Size (currently in the Note Editor) -->
     <string name="menu_font_size">Размер шрифта</string>
-    <string name="menu_show_toolbar" comment="Checkable item stating whether the note editor toolbar should be shown">Show Toolbar</string>
-    <string name="format_insert_bold">Format as Bold</string>
-    <string name="format_insert_italic">Format as Italic</string>
-    <string name="format_insert_underline">Format as Underline</string>
-    <string name="insert_horizontal_line">Insert Horizontal Line</string>
-    <string name="insert_heading">Insert Heading</string>
-    <string name="format_font_size">Change Font Size</string>
-    <string name="insert_mathjax">Insert MathJax Equation</string>
-    <string name="insert_cloze">Insert Cloze Deletion</string>
-    <string name="before_text">HTML Before Selection</string>
-    <string name="after_text">HTML After Selection</string>
-    <string name="add_toolbar_item">Create Toolbar Item</string>
-    <string name="toolbar_item_explain_remove">Enter HTML to be inserted before and after the selected text\n\nLong press a toolbar item to remove it</string>
-    <string name="remove_toolbar_item">Remove Toolbar Item?</string>
-    <string name="note_editor_paste_too_large">The image is too large to paste, please insert the image manually</string>
-    <string name="ankidroid_cannot_open_after_backup_try_again" comment="After an Android backup is restored, AnkiDroid opens and shows this message.         Opening AnkiDroid again will work correctly">        Android backup in progress. Please try again</string>
-    <string name="create_shortcut_error_vivo" comment="iManager is an app on Vivo phones">You may need to use iManager to allow AnkiDroid to add shortcuts</string>
-    <string name="create_shortcut_failed" comment="home screen == launcher">Your home screen does not allow AnkiDroid to add shortcuts</string>
-    <string name="create_shortcut_error">Error adding shortcut: %s</string>
+    <string name="menu_show_toolbar" comment="Checkable item stating whether the note editor toolbar should be shown">Показать панель инструментов</string>
+    <string name="format_insert_bold">Жирным</string>
+    <string name="format_insert_italic">Курсивом</string>
+    <string name="format_insert_underline">Подчеркнуть</string>
+    <string name="insert_horizontal_line">Вставить линейку</string>
+    <string name="insert_heading">Вставить заголовок</string>
+    <string name="format_font_size">Изменить размер шрифта</string>
+    <string name="insert_mathjax">Вставить уравнение MathJax</string>
+    <string name="insert_cloze">Вставить задание с пропусками</string>
+    <string name="before_text">HTML перед выделением</string>
+    <string name="after_text">HTML после выделения</string>
+    <string name="add_toolbar_item">Создать элемент панели инструментов</string>
+    <string name="toolbar_item_explain_remove">Введите HTML, который будет вставлен до и после выделенного текста.\n\nДолгое нажатие на элемент панели инструментов удалит его.</string>
+    <string name="remove_toolbar_item">Удалить элемент панели инструментов?</string>
+    <string name="note_editor_paste_too_large">Изображение слишком велико для вставки, пожалуйста, вставьте изображение вручную</string>
+    <string name="ankidroid_cannot_open_after_backup_try_again" comment="After an Android backup is restored, AnkiDroid opens and shows this message.         Opening AnkiDroid again will work correctly">        Выполняется резервное копирование Android. Попробуйте еще раз</string>
+    <string name="create_shortcut_error_vivo" comment="iManager is an app on Vivo phones">Возможно, вам потребуется использовать iManager, чтобы AnkiDroid мог добавлять ярлыки</string>
+    <string name="create_shortcut_failed" comment="home screen == launcher">Ваш домашний экран не позволяет AnkiDroid добавлять ярлыки</string>
+    <string name="create_shortcut_error">Ошибка при добавлении ярлыка: %s</string>
+    <string name="note_editor_capitalize" comment="This is for a switch with a checkbox - on: enabled">Capitalize sentences</string>
 </resources>

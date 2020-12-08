@@ -38,7 +38,7 @@
 ~ this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <resources>
-    <string name="yes">yes</string>
+    <string name="yes">بله</string>
     <!-- Navigation drawer items-->
     <string name="decks">دسته ها</string>
     <string name="card_browser" comment="The usage of card browser inside the app (note the casing)">مرورگر کارت</string>
@@ -71,8 +71,8 @@
         <item quantity="one">%d روز %d باقیمانده است</item>
         <item quantity="other">%d روز %d باقیمانده است</item>
     </plurals>
-    <string name="no_cards_placeholder_title">Collection is empty</string>
-    <string name="no_cards_placeholder_description">Start adding cards\nusing the + icon.</string>
+    <string name="no_cards_placeholder_title">مجموعه خالی است</string>
+    <string name="no_cards_placeholder_description">با استفاده از دکمه +\nشروع به اضافه کردن کارت‌ها کنيد</string>
     <!-- The deck picker via AnkiStatsTaskHandler.java -->
     <plurals name="studied_cards_today">
         <item quantity="one">امروز شما %1$d کارت را در %2$s مطالعه کردید</item>
@@ -81,7 +81,7 @@
     <!-- flashcard_portrait.xml -->
     <string name="type_answer_hint">پاسخ را تایپ کنید</string>
     <string name="show_answer">نمایش پاسخ</string>
-    <string name="hide_answer">Hide answer</string>
+    <string name="hide_answer">مخفی کردن پاسخ</string>
     <string name="ease_button_again">دوباره</string>
     <string name="ease_button_hard">سخت</string>
     <string name="ease_button_good">خوب</string>
@@ -94,7 +94,7 @@
     <string name="move_all_to_deck">انتقال همه به دسته</string>
     <string name="unbury">خروج از حالت مخفی</string>
     <string name="rename_deck">تغییر نام دسته</string>
-    <string name="create_shortcut">Create shortcut</string>
+    <string name="create_shortcut">ایجاد میانبر</string>
     <string name="menu_add" comment="A generic add button - Main Deck Picker and card templates. Please inform us if you need more specific strings">افزودن</string>
     <string name="menu_add_note">افزودن یادداشت</string>
     <string name="menu_my_account" comment="Label of the window in which the user should enter their account. This text can\'t be found in AnkiDroid directly.">همگام سازی حساب</string>
@@ -146,11 +146,11 @@
     <string name="time_quantity_months">%.1f ماه</string>
     <string name="time_quantity_years">%.1f سال</string>
     <!-- or "%.1f a" -->
-    <string name="rebuild_filtered_deck">Rebuilding filtered deck&#8230;</string>
+    <string name="rebuild_filtered_deck">درحال بازسازی دسته‌ی کارت انتخاب شده...</string>
     <string name="rebuild_cram_label">بازسازی</string>
     <string name="empty_cram_label">خالی</string>
     <string name="create_subdeck">ایجاد زیردسته</string>
-    <string name="empty_filtered_deck">Emptying filtered deck&#8230;</string>
+    <string name="empty_filtered_deck">درحال تخلیه دسته‌ی کارت انتخاب شده...</string>
     <string name="custom_study_deck_name">جلسه مطالعه سفارشی</string>
     <string name="custom_study_deck_exists">لطفا ابتدا دسته مطالعه سفارشی موجود را مجددا نام گذاری کنید.</string>
     <string name="empty_deck">این دسته خالی است</string>

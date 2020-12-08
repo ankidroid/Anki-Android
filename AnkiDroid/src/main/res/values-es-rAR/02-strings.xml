@@ -196,7 +196,9 @@
     <string name="export_unsuccessful">Error al exportar archivo apkg</string>
     <string name="import_hint">Para importar tarjetas coloque el archivo apkg en el directorio %s y presione OK</string>
     <string name="upgrade_import_no_file_found">No se ha hallado archivos %1$s para importar</string>
-    <string name="study_options" comment="Menu entry to open an options menu">Opciones</string>
+    <string name="study_options" comment="Name for a preference category in Filtered deck (aka Cram deck, aka Custom study) options">Opciones</string>
+    <string name="menu__deck_options">Deck options</string>
+    <string name="menu__study_options" comment="Menu item that opens options for a Filtered deck (aka Cram deck, aka Custom study)">Study options</string>
     <string name="select_tts">Setear lenguaje TTS</string>
     <string name="custom_study">Estudio personalizado</string>
     <string name="more_options">Más</string>
@@ -259,7 +261,7 @@
     <string name="activity_start_failed">El sistema no tiene una aplicación instalada que pueda realizar esta acción.</string>
     <string name="multimedia_editor_image_compression_failed"><![CDATA[Las imágenes de la cámara pueden ser grandes. Puede que desee comprimir y cambiar el tamaño de las imágenes en el directorio de medios]]></string>
     <string name="no_browser_notification">No hay ningún browser, por favor visite la página web por PC o móvil: </string>
-    <string name="web_page_error">Error loading page: %s</string>
+    <string name="web_page_error">Error al cargar la página: %s</string>
     <string name="no_outgoing_link_in_cardbrowser">Enlaces de páginas externas no son soportados en la tarjeta.</string>
     <!-- The name of the deck which corrupt cards will be moved to -->
     <string name="check_integrity_recovered_deck_name">Tarjetas recuperadas</string>
@@ -284,27 +286,27 @@
     <string name="note_importer_error_appeared_twice">Apareció dos veces en el archivo: %s</string>
     <string name="note_importer_error_empty_notes">Una o más notas no se importaron porque no generaron ninguna tarjeta. Esto puede suceder cuando hay campos vacíos o cuando no se ha mapeado el contenido del archivo de texto a los campos correctos</string>
     <string name="csv_importer_error_invalid_field_count">‘%1$s tenía %2$d campos, se esperaba %3$d</string>
-    <string name="csv_importer_error_exception">Aborted: %s</string>
+    <string name="csv_importer_error_exception">Abortado: %s</string>
     <string name="user_is_a_robot">Prueba automatizada detectada. Si eres un humano, ponte en contacto con el soporte de AnkiDroid</string>
     <plurals name="note_importer_notes_added">
         <item quantity="one">Se ha añadido %d nota</item>
         <item quantity="other">Se han añadido %d notas</item>
     </plurals>
     <plurals name="note_importer_notes_updated">
-        <item quantity="one">%d note updated</item>
-        <item quantity="other">%d notes updated</item>
+        <item quantity="one">%d nota actualizada</item>
+        <item quantity="other">%d notas actualizadas</item>
     </plurals>
     <plurals name="note_importer_notes_unchanged">
-        <item quantity="one">%d note unchanged</item>
-        <item quantity="other">%d notes unchanged</item>
+        <item quantity="one">%d nota sin cambios</item>
+        <item quantity="other">%d notas sin cambios</item>
     </plurals>
     <!-- JS api -->
-    <string name="api_version_developer_contact">This card uses unsupported AnkiDroid features. Contact developer %1$s, or view the wiki. %2$s</string>
+    <string name="api_version_developer_contact">Esta tarjeta utiliza características de AnkiDroid no compatibles. Contacte con el desarrollador %1$s o vea la wiki. %2$s</string>
     <string name="invalid_json_data">Card provided invalid data. %s</string>
     <string name="valid_js_api_version">Invalid AnkiDroid JS API version. Contact developer %s, or view wiki</string>
     <string name="update_js_api_version">AnkiDroid JS API update available. Contact developer %s, or view wiki</string>
     <string name="reviewer_invalid_api_version_visit_documentation">View</string>
-    <string name="anki_js_error_code">(Error Code: %d)</string>
+    <string name="anki_js_error_code">(Código de error: %d)</string>
     <!-- About AnkiDroid screen -->
     <string name="about_ankidroid_successfully_copied_debug">Copied debug information to clipboard</string>
     <string name="about_ankidroid_error_copy_debug_info">Error copying debug information to clipboard</string>
@@ -312,20 +314,20 @@
     <string name="card_viewer_could_not_find_image">Card Content Error: Failed to load ‘%s’</string>
     <string name="card_viewer_media_relative_protocol">Card Content Error: Media update required</string>
     <!-- Deck Picker -->
-    <string name="deck_picker_failed_deck_load">Failed to load deck ‘%s’</string>
-    <string name="search_decks">Search decks</string>
-    <string name="ankidroid_init_failed_webview_title">Fatal Error</string>
+    <string name="deck_picker_failed_deck_load">Error al cargar el mazo ‘%s’</string>
+    <string name="search_decks">Buscar mazos</string>
+    <string name="ankidroid_init_failed_webview_title">Error fatal</string>
     <string name="ankidroid_init_failed_webview">AnkiDroid relies on the System WebView which is unavailable. This can happen if the system is installing updates. Please try again in a few minutes.\n\n%s</string>
     <!-- A Menu item to change the Font Size (currently in the Note Editor) -->
-    <string name="menu_font_size">Font Size</string>
-    <string name="menu_show_toolbar" comment="Checkable item stating whether the note editor toolbar should be shown">Show Toolbar</string>
+    <string name="menu_font_size">Tamaño de Letra</string>
+    <string name="menu_show_toolbar" comment="Checkable item stating whether the note editor toolbar should be shown">Mostrar barra de herramientas</string>
     <string name="format_insert_bold">Format as Bold</string>
     <string name="format_insert_italic">Format as Italic</string>
     <string name="format_insert_underline">Format as Underline</string>
-    <string name="insert_horizontal_line">Insert Horizontal Line</string>
-    <string name="insert_heading">Insert Heading</string>
-    <string name="format_font_size">Change Font Size</string>
-    <string name="insert_mathjax">Insert MathJax Equation</string>
+    <string name="insert_horizontal_line">Insertar línea horizontal</string>
+    <string name="insert_heading">Insertar cabecera</string>
+    <string name="format_font_size">Cambia tamaño de letra</string>
+    <string name="insert_mathjax">Insertar ecuación MathJax</string>
     <string name="insert_cloze">Insert Cloze Deletion</string>
     <string name="before_text">HTML Before Selection</string>
     <string name="after_text">HTML After Selection</string>
@@ -337,4 +339,5 @@
     <string name="create_shortcut_error_vivo" comment="iManager is an app on Vivo phones">You may need to use iManager to allow AnkiDroid to add shortcuts</string>
     <string name="create_shortcut_failed" comment="home screen == launcher">Your home screen does not allow AnkiDroid to add shortcuts</string>
     <string name="create_shortcut_error">Error adding shortcut: %s</string>
+    <string name="note_editor_capitalize" comment="This is for a switch with a checkbox - on: enabled">Capitalize sentences</string>
 </resources>

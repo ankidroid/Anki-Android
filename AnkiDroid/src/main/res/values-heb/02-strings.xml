@@ -64,8 +64,8 @@
     <string name="hide_whiteboard">הסתר לוח ציור</string>
     <string name="clear_whiteboard">נקה לוח ציור</string>
     <string name="replay_audio">החזר שמע</string>
-    <string name="leech_suspend_notification">כרטיס מסומן כעלוקה ומושעה</string>
-    <string name="leech_notification">כרטיס מסומן כעלוקה</string>
+    <string name="leech_suspend_notification">קלף מסומן כעלוקה ומושעה</string>
+    <string name="leech_notification">קלף מסומן כעלוקה</string>
     <string name="corrupt_font">קובץ גופן %s פגום</string>
     <string name="webview_crash_unknown">שגיאה לא מוכרת</string>
     <string name="webview_crash_unknwon_detailed">זה נגרם בגלל שגיאה פנימית בWebView</string>
@@ -92,12 +92,12 @@
         <item>מרווח זמן</item>
         <item>קלות</item>
         <item>תזמון</item>
-        <item>כרטיס השתנה</item>
+        <item>קלף השתנה</item>
         <item>נוצר</item>
         <item>רשומה השתנתה</item>
     </string-array>
     <!-- Custom study options -->
-    <string name="custom_study_increase_new_limit">שינוי מגבלת כרטיסים חדשים להיום</string>
+    <string name="custom_study_increase_new_limit">שינוי מגבלת קלפים חדשים להיום</string>
     <string name="custom_study_increase_review_limit">שינוי מגבלת כרטיסים לחזרה להיום</string>
     <string name="custom_study_review_forgotten">לימוד הכרטסיות שנשכחו</string>
     <string name="custom_study_review_ahead">הקדם חזרה על כרטסיות</string>
@@ -130,9 +130,9 @@
     </plurals>
     <!-- minutes used in \'[studied in] x minutes\' context, causing inflexion in some languages -->
     <plurals name="in_minutes">
-        <item quantity="one">%1$d minute</item>
-        <item quantity="two">%1$d minutes</item>
-        <item quantity="many">%1$d minutes</item>
+        <item quantity="one">דקה אחת</item>
+        <item quantity="two">%1$d דקות</item>
+        <item quantity="many">%1$d דקות</item>
         <item quantity="other">%1$d דקות</item>
     </plurals>
     <string name="fact_adder_intent_title" comment="Label of the \'Add Note\' window. This title can\'t be seen in AnkiDroid directly.">קלף AnkiDroid</string>
@@ -170,30 +170,30 @@
     <string name="import_log_failed_validate">נכשל אימות החבילה</string>
     <string name="import_log_insufficient_space">אין זכרון פנוי לחלץ את החבילה. נדרש %1$d, פנוי%2$d</string>
     <string name="import_log_file_cache_cleared">שגיאה בייבוא קובץ, נראה שהמטמון נוקה באמצע התהליך.\nאנא נסה שנית</string>
-    <string name="import_succeeded_but_check_database">Data import succeeded but post-import cleanup failed. Run check database later. Root cause: %s</string>
-    <string name="import_error_unhandled_request">Unable to process import request</string>
-    <string name="import_error_corrupt_zip">The apkg file is corrupt. Please delete and re-download it.\n\nRoot cause: %s</string>
-    <string name="import_error_exception">Failed to import package\n\n%s</string>
+    <string name="import_succeeded_but_check_database">ייבוא הנתונים הצליח אבל תהליך הניקוי שלאחר הייבוא נכשל. יש להפעיל בדיקת מסד נתונים בהמשך. הגורם: %s</string>
+    <string name="import_error_unhandled_request">לא ניתן לעבד בקשת ייבוא</string>
+    <string name="import_error_corrupt_zip">קובץ ה־apkg פגום. נא למחוק ולהוריד אותו מחדש.\n\nגורם: %s</string>
+    <string name="import_error_exception">ייבוא החבילה נכשל\n\n%s</string>
     <string name="import_error_not_apkg_extension">Filename “%s” doesn’t have .apkg or .colpkg extension</string>
     <string name="import_error_load_imported_database">Anki Database (.anki2) replacements are not yet supported. Please see the manual for replacement instructions.</string>
     <string name="import_error_content_provider">הקובץ שנבחר לא יובא בהצלחה על ידי אנקידרוייד. נא עיין במדריך למשתמש לקבלת הסבר על יבוא ידיני של קבצי אנקי: \n%s</string>
-    <string name="import_error_copy_file_to_cache">copyFileToCache() failed (possibly out of storage space)</string>
-    <string name="import_error_unhandled_scheme">Unhandled import from: “%s”</string>
+    <string name="import_error_copy_file_to_cache">copyFileToCache()‎ נכשלה (כנראה שנגמר המקום)</string>
+    <string name="import_error_unhandled_scheme">ייבוא שלא טופל מאת: „%s”</string>
     <string name="import_replacing">האוסף מוחלף&#8230;</string>
-    <string name="import_interrupted">Import interrupted: AnkiDroid was closed</string>
+    <string name="import_interrupted">הייבוא נפסק: AnkiDroid נסגר</string>
     <string name="export_include_schedule">כולל תזמון</string>
     <string name="export_include_media">כולל מדיה</string>
-    <string name="confirm_apkg_export">Export collection as Anki package?</string>
+    <string name="confirm_apkg_export">לייצא את האוסף כחבילת Anki?</string>
     <string name="confirm_apkg_export_deck">יצא \"%s\" כקובץ apkg?</string>
-    <string name="export_in_progress">Exporting Anki package file&#8230;</string>
-    <string name="export_successful_title">Send Anki package?</string>
+    <string name="export_in_progress">קובץ חבילה של Anki מיוצא&#8230;</string>
+    <string name="export_successful_title">לשלוח חבילת Anki?</string>
     <string name="export_send_button">שלח</string>
     <string name="export_save_button">שמירה לקובץ</string>
     <string name="export_send_no_handlers">לא נמצא יישום התומך ב- apkg. שומר...</string>
-    <string name="export_save_apkg_successful">Successfully saved Anki package</string>
-    <string name="export_save_apkg_unsuccessful">Save Anki package failed</string>
+    <string name="export_save_apkg_successful">חבילת ה־Anki נשמרה בהצלחה</string>
+    <string name="export_save_apkg_unsuccessful">שמירת חבילת Anki נכשלה</string>
     <string name="export_successful">הקובץ %s יוּצא. לשלוח אותו בעזרת אפליקציה אחרת?</string>
-    <string name="export_email_subject">AnkiDroid יצא כרטיסים: %s</string>
+    <string name="export_email_subject">קלפי AnkiDroid שיוצאו: %s</string>
     <string name="export_email_text"><![CDATA[        היי!
         <br/><br/>         
         זו חפיסת כרטיסי Anki שנשלחה מ־<a href="https://ankidroid.org/docs/manual.html">AnkiDroid</a>.
@@ -202,7 +202,9 @@
     <string name="export_unsuccessful">שגיאה בייצוא קובץ apkg</string>
     <string name="import_hint">מקם את קובץ הapkg בתקייה %s ולחץ על \"אשר\" ליבוא הכרטסיות</string>
     <string name="upgrade_import_no_file_found">לא נמצא קובץ %1$s הניתן ליבוא</string>
-    <string name="study_options" comment="Menu entry to open an options menu">אפשרויות</string>
+    <string name="study_options" comment="Name for a preference category in Filtered deck (aka Cram deck, aka Custom study) options">אפשרויות</string>
+    <string name="menu__deck_options">Deck options</string>
+    <string name="menu__study_options" comment="Menu item that opens options for a Filtered deck (aka Cram deck, aka Custom study)">Study options</string>
     <string name="select_tts">הגדר שפת TTS</string>
     <string name="custom_study">אימון נוסף</string>
     <string name="more_options">עוד</string>
@@ -214,7 +216,7 @@
     <string name="sched_has_buried">חלק מהכרטסיות הקשורות או הקבורות נדחו למחר</string>
     <string name="tag_editor_add_feedback">לחץ \"%2$s\" לאישור הוספת \"%1$s\"</string>
     <string name="tag_editor_add_feedback_existing">תגית קיימת \"%1$s\" נבחרה</string>
-    <string name="lookup_hint">לאחר העתקת הטקסט, לחץ בכל מקום על הכרטיסיה להצגת כפתור החיפוש</string>
+    <string name="lookup_hint">לאחר העתקת הטקסט, יש ללחוץ על הקלף איפשהו כדי להציג את סמל החיפוש</string>
     <!-- Time spans -->
     <plurals name="time_span_seconds">
         <item quantity="one">%s שניה</item>
@@ -255,7 +257,7 @@
     <!-- A decimal number of seconds.
     Please give this a best-effort translation and explain the requirements for
     formatting decimals in your language in the CrowdIn comments -->
-    <string name="time_span_decimal_seconds">%s seconds</string>
+    <string name="time_span_decimal_seconds">%s שניות</string>
     <!-- The reason for making a simple “< x” translatable are RTL
          languages which apparently use the other symbol to mean less
          than. -->
@@ -273,21 +275,21 @@
     <!-- Currently only used if exporting APKG fails -->
     <string name="apk_share_error">שגיאה בשיתוף קובץ apkg</string>
     <!-- Import and export v2 feedback -->
-    <string name="export_v2_dummy_note">This file requires a newer version of Anki.</string>
+    <string name="export_v2_dummy_note">קובץ זה דורש גרסה חדשה יותר של Anki.</string>
     <!-- Placed in a snackbar with a long URL. Limit the length and move the URL to the start of the string -->
     <string name="activity_start_failed_load_url">Loading \'%s\' failed.</string>
-    <string name="activity_start_failed">The system does not have an app installed that can perform this action.</string>
-    <string name="multimedia_editor_image_compression_failed"><![CDATA[Camera images may be large. You may wish to compress & resize images in the media directory]]></string>
-    <string name="no_browser_notification">No browser found，please visit web page by pc or mobile: </string>
-    <string name="web_page_error">Error loading page: %s</string>
-    <string name="no_outgoing_link_in_cardbrowser">External page link in card is not supported.</string>
+    <string name="activity_start_failed">במערכת לא מותקן יישומון שיכול לבצע את הפעולה הזאת.</string>
+    <string name="multimedia_editor_image_compression_failed"><![CDATA[תמונות המצלמה גדולות מדי. אולי עדיף לך לדחוס ולשנות את גודל התמונות בתיקיית המדיה]]></string>
+    <string name="no_browser_notification">לא נמצא דפדפן, נא לבקר באתר במחשב או בנייד: </string>
+    <string name="web_page_error">טעינת העמוד נכשלה: %s</string>
+    <string name="no_outgoing_link_in_cardbrowser">אין תמיכה בקישור לעמוד חיצוני בכרטיס.</string>
     <!-- The name of the deck which corrupt cards will be moved to -->
-    <string name="check_integrity_recovered_deck_name">Recovered Cards</string>
+    <string name="check_integrity_recovered_deck_name">קלפים משוחזרים</string>
     <!-- Deckpicker Background -->
-    <string name="background_image_title">Background</string>
-    <string name="choose_an_image">Choose an Image</string>
+    <string name="background_image_title">רקע</string>
+    <string name="choose_an_image">נא לבחור תמונה</string>
     <!-- Card Template Browser Appearance -->
-    <string name="restore_default">Restore Default</string>
+    <string name="restore_default">שחזור בררת המחדל</string>
     <string name="reviewer_tts_cloze_spoken_replacement">Blank</string>
     <!-- in options menu & Navigation Drawer -->
     <string name="ankidroid_turn_on_fullscreen_nav_drawer">Please turn on fullscreen to use Show Navigation Drawer using JavaScript.</string>
@@ -329,8 +331,8 @@
     <string name="invalid_json_data">Card provided invalid data. %s</string>
     <string name="valid_js_api_version">Invalid AnkiDroid JS API version. Contact developer %s, or view wiki</string>
     <string name="update_js_api_version">AnkiDroid JS API update available. Contact developer %s, or view wiki</string>
-    <string name="reviewer_invalid_api_version_visit_documentation">View</string>
-    <string name="anki_js_error_code">(Error Code: %d)</string>
+    <string name="reviewer_invalid_api_version_visit_documentation">תצוגה</string>
+    <string name="anki_js_error_code">(קוד שגיאה: %d)</string>
     <!-- About AnkiDroid screen -->
     <string name="about_ankidroid_successfully_copied_debug">Copied debug information to clipboard</string>
     <string name="about_ankidroid_error_copy_debug_info">Error copying debug information to clipboard</string>
@@ -339,28 +341,29 @@
     <string name="card_viewer_media_relative_protocol">Card Content Error: Media update required</string>
     <!-- Deck Picker -->
     <string name="deck_picker_failed_deck_load">Failed to load deck ‘%s’</string>
-    <string name="search_decks">Search decks</string>
-    <string name="ankidroid_init_failed_webview_title">Fatal Error</string>
+    <string name="search_decks">חיפוש בחפיסות</string>
+    <string name="ankidroid_init_failed_webview_title">שגיאה מכרעת</string>
     <string name="ankidroid_init_failed_webview">AnkiDroid relies on the System WebView which is unavailable. This can happen if the system is installing updates. Please try again in a few minutes.\n\n%s</string>
     <!-- A Menu item to change the Font Size (currently in the Note Editor) -->
-    <string name="menu_font_size">Font Size</string>
-    <string name="menu_show_toolbar" comment="Checkable item stating whether the note editor toolbar should be shown">Show Toolbar</string>
-    <string name="format_insert_bold">Format as Bold</string>
-    <string name="format_insert_italic">Format as Italic</string>
-    <string name="format_insert_underline">Format as Underline</string>
-    <string name="insert_horizontal_line">Insert Horizontal Line</string>
-    <string name="insert_heading">Insert Heading</string>
-    <string name="format_font_size">Change Font Size</string>
-    <string name="insert_mathjax">Insert MathJax Equation</string>
+    <string name="menu_font_size">גודל גופן</string>
+    <string name="menu_show_toolbar" comment="Checkable item stating whether the note editor toolbar should be shown">הצגת סרגל הכלים</string>
+    <string name="format_insert_bold">לעצב כמודגש</string>
+    <string name="format_insert_italic">לעצב כנטוי</string>
+    <string name="format_insert_underline">לעצב עם קו תחתי</string>
+    <string name="insert_horizontal_line">הוספת קו אופקי</string>
+    <string name="insert_heading">הוספת כותרת</string>
+    <string name="format_font_size">שינוי גודל הגופן</string>
+    <string name="insert_mathjax">הוספת משוואת MathJax</string>
     <string name="insert_cloze">Insert Cloze Deletion</string>
-    <string name="before_text">HTML Before Selection</string>
-    <string name="after_text">HTML After Selection</string>
-    <string name="add_toolbar_item">Create Toolbar Item</string>
+    <string name="before_text">HTML לפני הבחירה</string>
+    <string name="after_text">HTML אחרי הבחירה</string>
+    <string name="add_toolbar_item">יצירת פריט סרגל כלים</string>
     <string name="toolbar_item_explain_remove">Enter HTML to be inserted before and after the selected text\n\nLong press a toolbar item to remove it</string>
-    <string name="remove_toolbar_item">Remove Toolbar Item?</string>
+    <string name="remove_toolbar_item">להסיר פריט סרגל כלים?</string>
     <string name="note_editor_paste_too_large">The image is too large to paste, please insert the image manually</string>
     <string name="ankidroid_cannot_open_after_backup_try_again" comment="After an Android backup is restored, AnkiDroid opens and shows this message.         Opening AnkiDroid again will work correctly">        Android backup in progress. Please try again</string>
     <string name="create_shortcut_error_vivo" comment="iManager is an app on Vivo phones">You may need to use iManager to allow AnkiDroid to add shortcuts</string>
     <string name="create_shortcut_failed" comment="home screen == launcher">Your home screen does not allow AnkiDroid to add shortcuts</string>
     <string name="create_shortcut_error">Error adding shortcut: %s</string>
+    <string name="note_editor_capitalize" comment="This is for a switch with a checkbox - on: enabled">Capitalize sentences</string>
 </resources>
