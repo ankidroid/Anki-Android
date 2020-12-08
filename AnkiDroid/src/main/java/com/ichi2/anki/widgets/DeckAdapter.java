@@ -227,7 +227,11 @@ public class DeckAdapter extends RecyclerView.Adapter<DeckAdapter.ViewHolder> im
                 setBackgroundAlpha(holder.deckLayout, SELECTED_DECK_ALPHA_AGAINST_BACKGROUND);
             }
         } else {
-            CompatHelper.getCompat().setSelectableBackground(holder.deckLayout);
+            // Ripple effect
+            int[] attrs = new int[] {android.R.attr.selectableItemBackground};
+            TypedArray ta = holder.deckLayout.getContext().obtainStyledAttributes(attrs);
+            holder.deckLayout.setBackgroundResource(ta.getResourceId(0, 0));
+            ta.recycle();
         }
         // Set deck name and colour. Filtered decks have their own colour
         holder.deckName.setText(node.getLastDeckNameComponent());

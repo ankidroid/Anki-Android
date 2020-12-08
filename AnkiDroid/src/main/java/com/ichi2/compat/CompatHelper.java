@@ -35,16 +35,8 @@ public class CompatHelper {
             mCompat = new CompatV24();
         } else if (getSdkVersion() >= 23) {
             mCompat = new CompatV23();
-        } else if (getSdkVersion() >= 21) {
-            mCompat = new CompatV21();
-        } else if (getSdkVersion() >= 19) {
-            mCompat = new CompatV19();
-        } else if (getSdkVersion() >= 18) {
-            mCompat = new CompatV18();
-        } else if (getSdkVersion() >= 17) {
-            mCompat = new CompatV17();
         } else {
-            mCompat = new CompatV16();
+            mCompat = new CompatV21();
         }
     }
 
@@ -53,10 +45,6 @@ public class CompatHelper {
         return Build.VERSION.SDK_INT;
     }
 
-    /** Determine if the device is running API level 21 or higher. */
-    public static boolean isLollipop() {
-        return getSdkVersion() >= Build.VERSION_CODES.LOLLIPOP;
-    }
     /** Determine if the device is running API level 23 or higher. */
     public static boolean isMarshmallow() {
         return getSdkVersion() >= Build.VERSION_CODES.M;

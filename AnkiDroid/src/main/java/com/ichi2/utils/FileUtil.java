@@ -23,7 +23,7 @@ public class FileUtil {
     /** Gets the free disk space given a file */
     public static long getFreeDiskSpace(File file, long defaultValue) {
         try {
-            return CompatHelper.getCompat().getAvailableBytes(new StatFs(file.getParentFile().getPath()));
+            return new StatFs(file.getParentFile().getPath()).getAvailableBytes();
         } catch (IllegalArgumentException e) {
             Timber.e(e, "Free space could not be retrieved");
             return defaultValue;

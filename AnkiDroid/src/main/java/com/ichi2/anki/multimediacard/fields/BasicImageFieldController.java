@@ -30,6 +30,8 @@ import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.Color;
+import android.hardware.camera2.CameraAccessException;
+import android.hardware.camera2.CameraManager;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
@@ -59,8 +61,6 @@ import com.ichi2.anki.AnkiDroidApp;
 import com.ichi2.anki.R;
 import com.ichi2.anki.UIUtils;
 import com.ichi2.compat.CompatHelper;
-import com.ichi2.libanki.utils.Time;
-import com.ichi2.libanki.utils.TimeUtils;
 import com.ichi2.ui.FixedEditText;
 import com.ichi2.utils.BitmapUtil;
 import com.ichi2.utils.ExifUtil;
@@ -70,11 +70,9 @@ import com.ichi2.utils.Permissions;
 import com.afollestad.materialdialogs.MaterialDialog;
 
 import java.io.File;
-import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.io.InputStream;
 
 import androidx.core.util.Pair;
 import timber.log.Timber;
@@ -201,12 +199,16 @@ public class BasicImageFieldController extends FieldControllerBase implements IF
         }
 
         // Some hardware has no camera or reports yes but has zero (e.g., cheap devices, and Chromebook emulator)
-        //noinspection RedundantIfStatement
-        if (CompatHelper.getCompat().getCameraCount() < 1) {
-            return false;
+        CameraManager cameraManager = (CameraManager)AnkiDroidApp.getInstance().getApplicationContext()
+                .getSystemService(Context.CAMERA_SERVICE);
+        try {
+            if (cameraManager != null) {
+                return cameraManager.getCameraIdList().length > 0;
+            }
+        } catch (CameraAccessException e) {
+            Timber.e(e, "Unable to enumerate cameras");
         }
-
-        return true;
+        return false;
     }
 
 
@@ -223,10 +225,10 @@ public class BasicImageFieldController extends FieldControllerBase implements IF
             toReturn = new ImageViewModel(image.getPath(), imageUri);
             cameraIntent.putExtra(MediaStore.EXTRA_OUTPUT, imageUri);
 
-            // Until Android API21 (maybe 22) you must manually handle permissions for image capture w/FileProvider
+            // Until Android API22 you must manually handle permissions for image capture w/FileProvider
             // This can be removed once minSDK is >= 22
             // https://medium.com/@quiro91/sharing-files-through-intents-part-2-fixing-the-permissions-before-lollipop-ceb9bb0eec3a
-            if (CompatHelper.getSdkVersion() <= Build.VERSION_CODES.LOLLIPOP) {
+            if (CompatHelper.getSdkVersion() < Build.VERSION_CODES.LOLLIPOP_MR1) {
                 cameraIntent.setClipData(ClipData.newRawUri("", imageUri));
                 cameraIntent.addFlags(Intent.FLAG_GRANT_WRITE_URI_PERMISSION | Intent.FLAG_GRANT_READ_URI_PERMISSION);
             }
@@ -711,7 +713,7 @@ public class BasicImageFieldController extends FieldControllerBase implements IF
     private @NonNull Pair<String, String> getImageInfoFromUri(Context context, Uri uri) {
         Timber.d("getImagePathFromUri() URI: %s", uri);
         Pair<String, String> imageInfo = new Pair<>(null, null);
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT && DocumentsContract.isDocumentUri(context, uri)) {
+        if (DocumentsContract.isDocumentUri(context, uri)) {
             String docId = DocumentsContract.getDocumentId(uri);
             if ("com.android.providers.media.documents".equals(uri.getAuthority())) {
                 String id = docId.split(":")[1];

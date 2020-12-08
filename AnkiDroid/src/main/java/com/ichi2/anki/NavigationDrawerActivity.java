@@ -18,7 +18,6 @@ package com.ichi2.anki;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.Configuration;
-import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import com.google.android.material.navigation.NavigationView;
@@ -38,7 +37,6 @@ import android.view.MenuItem;
 import android.view.View;
 
 import com.ichi2.anki.dialogs.HelpDialog;
-import com.ichi2.compat.CompatHelper;
 import com.ichi2.themes.Themes;
 import androidx.drawerlayout.widget.ClosableDrawerLayout;
 
@@ -81,7 +79,7 @@ public abstract class NavigationDrawerActivity extends AnkiActivity implements N
         // set a custom shadow that overlays the main content when the drawer opens
         mDrawerLayout.setDrawerShadow(R.drawable.drawer_shadow, GravityCompat.START);
         // Force transparent status bar with primary dark color underlayed so that the drawer displays under status bar
-        CompatHelper.getCompat().setStatusBarColor(getWindow(), ContextCompat.getColor(this, R.color.transparent));
+        getWindow().setStatusBarColor(ContextCompat.getColor(this, R.color.transparent));
         mDrawerLayout.setStatusBarBackgroundColor(Themes.getColorFromAttr(this, R.attr.colorPrimaryDark));
         // Setup toolbar and hamburger
         mNavigationView = mDrawerLayout.findViewById(R.id.navdrawer_items_container);

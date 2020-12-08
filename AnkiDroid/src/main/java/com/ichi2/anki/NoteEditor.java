@@ -1496,8 +1496,8 @@ public class NoteEditor extends AnkiActivity {
 
             edit_line_view.setEnableAnimation(animationEnabled());
 
-            // TODO: Remove the >= 23 check - one callback works on API 11.
-            if (Build.VERSION.SDK_INT >= 23) {
+            // TODO: Remove the >= M check - one callback works on API 11.
+            if (CompatHelper.getSdkVersion() >= Build.VERSION_CODES.M) {
                 // Use custom implementation of ActionMode.Callback customize selection and insert menus
                 Field f = new Field(getFieldByIndex(i), getCol());
                 ActionModeCallback actionModeCallback = new ActionModeCallback(newTextbox, f);
@@ -1755,10 +1755,6 @@ public class NoteEditor extends AnkiActivity {
 
 
     private Locale getHintLocaleForField(String name) {
-        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP) {
-            return null;
-        }
-
         JSONObject field = getFieldByName(name);
         if (field == null) {
             return null;
@@ -1937,12 +1933,6 @@ public class NoteEditor extends AnkiActivity {
         } else {
             clozeIcon.setVisibility(View.GONE);
         }
-
-        // Custom buttons are not supported until Lollipop due to possibly fixable DrawableCompat issue
-        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP) {
-            return;
-        }
-
 
         ArrayList<CustomToolbarButton> buttons = getToolbarButtons();
 

@@ -17,7 +17,6 @@
 package com.ichi2.anki.cardviewer;
 
 import android.net.Uri;
-import android.os.Build;
 import android.webkit.WebResourceRequest;
 
 import com.ichi2.utils.FunctionalInterfaces;
@@ -35,9 +34,7 @@ import androidx.test.ext.junit.runners.AndroidJUnit4;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.contains;
-import static org.hamcrest.Matchers.greaterThanOrEqualTo;
 import static org.hamcrest.Matchers.is;
-import static org.junit.Assume.assumeThat;
 
 // PERF:
 // Theoretically should be able to get away with not using this, but it requires WebResourceRequest (easy to mock)
@@ -51,8 +48,6 @@ public class MissingImageHandlerTest {
 
     @Before
     public void before() {
-        // couldn't get Config(minSDK) to work, as that produced multiple test calls.
-        assumeThat("Can't be executed < API 21", Build.VERSION.SDK_INT, greaterThanOrEqualTo(Build.VERSION_CODES.LOLLIPOP));
         mFileNames = new ArrayList<>();
         mSut = new MissingImageHandler();
     }

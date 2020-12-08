@@ -19,6 +19,8 @@
 package com.ichi2.anki;
 
 import android.Manifest;
+import android.animation.Animator;
+import android.animation.AnimatorListenerAdapter;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
@@ -66,11 +68,9 @@ import com.ichi2.anki.dialogs.RescheduleDialog;
 import com.ichi2.anki.reviewer.PeripheralKeymap;
 import com.ichi2.anki.reviewer.ReviewerUi;
 import com.ichi2.anki.workarounds.FirefoxSnackbarWorkaround;
-import com.ichi2.async.CollectionTask;
 import com.ichi2.anki.reviewer.ActionButtons;
 import com.ichi2.async.TaskListener;
 import com.ichi2.async.TaskManager;
-import com.ichi2.compat.CompatHelper;
 import com.ichi2.libanki.Collection;
 import com.ichi2.libanki.Collection.DismissType;
 import com.ichi2.libanki.Consts;
@@ -258,9 +258,6 @@ public class Reviewer extends AbstractFlashcardViewer {
 
     @Override
     protected int getContentViewAttr(int fullscreenMode) {
-        if (CompatHelper.getSdkVersion() < Build.VERSION_CODES.KITKAT) {
-            fullscreenMode = 0;     // The specific fullscreen layouts are only applicable for immersive mode
-        }
         switch (fullscreenMode) {
             case 1:
                 return R.layout.reviewer_fullscreen;
@@ -296,7 +293,7 @@ public class Reviewer extends AbstractFlashcardViewer {
 
         // Set full screen/immersive mode if needed
         if (mPrefFullscreenReview) {
-            CompatHelper.getCompat().setFullScreen(this);
+            setFullScreen(this);
         }
     }
 
@@ -829,7 +826,7 @@ public class Reviewer extends AbstractFlashcardViewer {
         // Note that it's necessary to set the resource dynamically as the ease2 / ease3 buttons
         // (which libanki expects ease to be 2 and 3) can either be hard, good, or easy - depending on num buttons shown
         int[] backgroundIds;
-        if (Build.VERSION.SDK_INT >= 21 && animationEnabled()) {
+        if (animationEnabled()) {
             backgroundIds = new int [] {
                     R.attr.againButtonRippleRef,
                     R.attr.hardButtonRippleRef,
@@ -1040,8 +1037,7 @@ public class Reviewer extends AbstractFlashcardViewer {
 
     @Override
     protected boolean onSingleTap() {
-        if (mPrefFullscreenReview &&
-                CompatHelper.getCompat().isImmersiveSystemUiVisible(this)) {
+        if (mPrefFullscreenReview && isImmersiveSystemUiVisible(this)) {
             delayedHide(INITIAL_HIDE_DELAY);
             return true;
         }
@@ -1050,8 +1046,7 @@ public class Reviewer extends AbstractFlashcardViewer {
 
     @Override
     protected void onFling() {
-        if (mPrefFullscreenReview &&
-                CompatHelper.getCompat().isImmersiveSystemUiVisible(this)) {
+        if (mPrefFullscreenReview && isImmersiveSystemUiVisible(this)) {
             delayedHide(INITIAL_HIDE_DELAY);
         }
     }
@@ -1061,7 +1056,7 @@ public class Reviewer extends AbstractFlashcardViewer {
         @Override
         public void handleMessage(Message msg) {
             if (mPrefFullscreenReview) {
-                CompatHelper.getCompat().setFullScreen(Reviewer.this);
+                setFullScreen(Reviewer.this);
             }
         }
     };
@@ -1079,6 +1074,78 @@ public class Reviewer extends AbstractFlashcardViewer {
         if (state && mWhiteboard == null) {
             createWhiteboard();
         }
+    }
+
+    private static final int FULLSCREEN_ALL_GONE = 2;
+
+    private void setFullScreen(final AbstractFlashcardViewer a) {
+        // Set appropriate flags to enable Sticky Immersive mode.
+        a.getWindow().getDecorView().setSystemUiVisibility(
+                View.SYSTEM_UI_FLAG_LAYOUT_STABLE
+                        //| View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION // temporarily disabled due to #5245
+                        | View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
+                        | View.SYSTEM_UI_FLAG_HIDE_NAVIGATION
+                        | View.SYSTEM_UI_FLAG_FULLSCREEN
+                        | View.SYSTEM_UI_FLAG_LOW_PROFILE
+                        | View.SYSTEM_UI_FLAG_IMMERSIVE
+        );
+        // Show / hide the Action bar together with the status bar
+        SharedPreferences prefs = AnkiDroidApp.getSharedPrefs(a);
+        final int fullscreenMode = Integer.parseInt(prefs.getString("fullscreenMode", "0"));
+        a.getWindow().setStatusBarColor(Themes.getColorFromAttr(a, R.attr.colorPrimaryDark));
+        View decorView = a.getWindow().getDecorView();
+        decorView.setOnSystemUiVisibilityChangeListener
+                (flags -> {
+                    final View toolbar = a.findViewById(R.id.toolbar);
+                    final View answerButtons = a.findViewById(R.id.answer_options_layout);
+                    final View topbar = a.findViewById(R.id.top_bar);
+                    if (toolbar == null || topbar == null || answerButtons == null) {
+                        return;
+                    }
+                    // Note that system bars will only be "visible" if none of the
+                    // LOW_PROFILE, HIDE_NAVIGATION, or FULLSCREEN flags are set.
+                    boolean visible = (flags & View.SYSTEM_UI_FLAG_HIDE_NAVIGATION) == 0;
+                    Timber.d("System UI visibility change. Visible: %b", visible);
+                    if (visible) {
+                        showViewWithAnimation(toolbar);
+                        if (fullscreenMode >= FULLSCREEN_ALL_GONE) {
+                            showViewWithAnimation(topbar);
+                            showViewWithAnimation(answerButtons);
+                        }
+                    } else {
+                        hideViewWithAnimation(toolbar);
+                        if (fullscreenMode >= FULLSCREEN_ALL_GONE) {
+                            hideViewWithAnimation(topbar);
+                            hideViewWithAnimation(answerButtons);
+                        }
+                    }
+                });
+    }
+
+    private static final int ANIMATION_DURATION = 200;
+    private static final float TRANSPARENCY = 0.90f;
+
+
+    private void showViewWithAnimation(final View view) {
+        view.setAlpha(0.0f);
+        view.setVisibility(View.VISIBLE);
+        view.animate().alpha(TRANSPARENCY).setDuration(ANIMATION_DURATION).setListener(null);
+    }
+
+    private void hideViewWithAnimation(final View view) {
+        view.animate()
+                .alpha(0f)
+                .setDuration(ANIMATION_DURATION)
+                .setListener(new AnimatorListenerAdapter() {
+                    @Override
+                    public void onAnimationEnd(Animator animation) {
+                        view.setVisibility(View.GONE);
+                    }
+                });
+    }
+
+    private boolean isImmersiveSystemUiVisible(AnkiActivity activity) {
+        return (activity.getWindow().getDecorView().getSystemUiVisibility() & View.SYSTEM_UI_FLAG_HIDE_NAVIGATION) == 0;
     }
 
     // Create the whiteboard
@@ -1103,7 +1170,7 @@ public class Reviewer extends AbstractFlashcardViewer {
         mWhiteboard.setOnTouchListener((v, event) -> {
             //If the whiteboard is currently drawing, and triggers the system UI to show, we want to continue drawing.
             if (!mWhiteboard.isCurrentlyDrawing() && (!mShowWhiteboard || (mPrefFullscreenReview
-                    && CompatHelper.getCompat().isImmersiveSystemUiVisible(Reviewer.this)))) {
+                    && isImmersiveSystemUiVisible(Reviewer.this)))) {
                 // Bypass whiteboard listener when it's hidden or fullscreen immersive mode is temporarily suspended
                 v.performClick();
                 return getGestureDetector().onTouchEvent(event);

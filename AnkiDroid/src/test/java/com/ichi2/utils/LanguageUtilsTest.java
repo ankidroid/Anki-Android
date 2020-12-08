@@ -16,8 +16,6 @@
 
 package com.ichi2.utils;
 
-import android.os.Build;
-
 import com.google.common.collect.Sets;
 import com.ichi2.anki.RobolectricTest;
 
@@ -40,9 +38,6 @@ import static org.hamcrest.Matchers.is;
 import static org.hamcrest.Matchers.isOneOf;
 
 @RunWith(AndroidJUnit4.class)
-@Config(sdk = { Build.VERSION_CODES.JELLY_BEAN,
-                Build.VERSION_CODES.JELLY_BEAN_MR1,
-                Build.VERSION_CODES.N })
 public class LanguageUtilsTest extends RobolectricTest {
 
     private static final String[] PREVIOUS_LANGUAGES = { "ar", "bg", "ca", "cs", "de", "el", "en", "eo", "es-AR", "es-ES", "et", "fa",

@@ -335,7 +335,7 @@ public class UsageAnalytics {
             // Instead they respond that they auto-parse User-Agent strings for analytics attribution
             // For maximum analytics built-in report compatibility we will send the official WebView User-Agent string
             try {
-                if (canGetDefaultUserAgent() && Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1) {
+                if (canGetDefaultUserAgent()) {
                     this.userAgent(WebSettings.getDefaultUserAgent(context));
                 } else {
                     this.userAgent(System.getProperty("http.agent"));

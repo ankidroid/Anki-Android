@@ -39,7 +39,6 @@ import java.util.Locale;
 import androidx.annotation.DrawableRes;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.annotation.RequiresApi;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.constraintlayout.widget.ConstraintSet;
 import androidx.core.view.ViewCompat;
@@ -75,7 +74,6 @@ public class FieldEditLine extends FrameLayout {
     }
 
 
-    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     public FieldEditLine(@NonNull Context context, @Nullable AttributeSet attrs, int defStyleAttr, int defStyleRes) {
         super(context, attrs, defStyleAttr, defStyleRes);
         init();

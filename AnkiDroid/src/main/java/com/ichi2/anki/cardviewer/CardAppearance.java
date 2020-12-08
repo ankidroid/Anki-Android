@@ -1,14 +1,10 @@
 package com.ichi2.anki.cardviewer;
 
 import android.content.SharedPreferences;
-import android.os.Build;
 
 import com.ichi2.anki.reviewer.ReviewerCustomFonts;
 import com.ichi2.libanki.Card;
 import com.ichi2.themes.Themes;
-
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 import androidx.annotation.CheckResult;
 
@@ -72,30 +68,6 @@ public class CardAppearance {
         // In order to display the bold style correctly, we have to change
         // font-weight to 700
         return content.replace("font-weight:600;", "font-weight:700;");
-    }
-
-    /**
-     * Converts characters in Unicode Supplementary Multilingual Plane (SMP) to their equivalent Html Entities. This is
-     * done because webview has difficulty displaying these characters.
-     *
-     * @param text the text co convert to HTML Entities
-     * @return The resultant text with SMP characters converted to entities
-     */
-    public static String convertSmpToHtmlEntity(String text) {
-        //This is believed to be unused on current WebViews. See discussion:
-        //SMP fails on my Anki Desktop, and displays fine to me without this patch.
-        //https://github.com/ankidroid/Anki-Android/pull/5988#issuecomment-612683552
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            return text;
-        }
-        StringBuffer sb = new StringBuffer();
-        Matcher m = Pattern.compile("([^\u0000-\uFFFF])").matcher(text);
-        while (m.find()) {
-            String a = "&#x" + Integer.toHexString(m.group(1).codePointAt(0)) + ";";
-            m.appendReplacement(sb, Matcher.quoteReplacement(a));
-        }
-        m.appendTail(sb);
-        return sb.toString();
     }
 
     /** Below could be in a better abstraction. **/

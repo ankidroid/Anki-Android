@@ -19,6 +19,7 @@
 package com.ichi2.anki;
 
 import android.annotation.SuppressLint;
+import android.app.Application;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
@@ -71,7 +72,6 @@ import java.util.Locale;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import androidx.multidex.MultiDexApplication;
 import timber.log.Timber;
 import static timber.log.Timber.DebugTree;
 
@@ -145,7 +145,7 @@ import static timber.log.Timber.DebugTree;
         exceptionClassLimit = 1000,
         stacktraceLimit = 1
 )
-public class AnkiDroidApp extends MultiDexApplication {
+public class AnkiDroidApp extends Application {
 
     public static final String XML_CUSTOM_NAMESPACE = "http://arbitrary.app.namespace/com.ichi2.anki";
 
@@ -318,9 +318,6 @@ public class AnkiDroidApp extends MultiDexApplication {
             return;
         }
 
-        // Prepare Cookies to be synchronized between RAM and permanent storage.
-        CompatHelper.getCompat().prepareWebViewCookies(this.getApplicationContext());
-
         // Set good default values for swipe detection
         final ViewConfiguration vc = ViewConfiguration.get(this);
         DEFAULT_SWIPE_MIN_DISTANCE = vc.getScaledPagingTouchSlop();
@@ -449,14 +446,7 @@ public class AnkiDroidApp extends MultiDexApplication {
                 preferences = getSharedPrefs(remoteContext);
             }
             Configuration langConfig = getLanguageConfig(remoteContext.getResources().getConfiguration(), preferences);
-            //API level >= 25: supported since API 17
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1) {
-                return remoteContext.createConfigurationContext(langConfig);
-            } else {
-                //API level < 25:
-                remoteContext.getResources().updateConfiguration(langConfig, remoteContext.getResources().getDisplayMetrics());
-                return remoteContext;
-            }
+            return remoteContext.createConfigurationContext(langConfig);
         } catch (Exception e) {
             Timber.e(e, "failed to update context with new language");
             //during AnkiDroidApp.attachBaseContext() ACRA is not initialized, so the exception report will not be sent
@@ -491,13 +481,8 @@ public class AnkiDroidApp extends MultiDexApplication {
             //first element of setLocales() is automatically setLocal()
             newConfig.setLocales(newLocaleList);
         } else {
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1) {
-                //API level >=17 but <24
-                newConfig.setLocale(newLocale);
-            } else {
-                //Legacy, API level <17
-                newConfig.locale = newLocale;
-            }
+            //API level >=17 but <24
+            newConfig.setLocale(newLocale);
         }
 
         return newConfig;

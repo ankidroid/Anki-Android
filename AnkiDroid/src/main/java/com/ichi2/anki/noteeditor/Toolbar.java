@@ -82,7 +82,6 @@ public class Toolbar extends FrameLayout {
     }
 
 
-    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     public Toolbar(@NonNull Context context, @Nullable AttributeSet attrs, int defStyleAttr, int defStyleRes) {
         super(context, attrs, defStyleAttr, defStyleRes);
         init();
@@ -153,16 +152,13 @@ public class Toolbar extends FrameLayout {
 
 
     public View getClozeIcon() {
-        // HACK until API 21
+        // HACK until API 21 FIXME can this be altered now?
         return mClozeIcon;
     }
 
 
     @NonNull
-    @RequiresApi(Build.VERSION_CODES.LOLLIPOP)
     public AppCompatImageButton insertItem(@IdRes int id, @DrawableRes int drawable, Runnable runnable) {
-        // This fails before API 21
-
         // we use the light theme here to ensure the tint is black on both
         // A null theme can be passed after colorControlNormal is defined (API 25)
         Context themeContext = new ContextThemeWrapper(getContext(), R.style.Theme_Light_Compat);

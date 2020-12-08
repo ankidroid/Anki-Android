@@ -28,11 +28,6 @@ env:
     - FINALIZE_COVERAGE=FALSE # by default we don't finalize coverage, it is done in one specific build
     - TERM=dumb
   matrix:
-   - API=16 ABI=x86 AUDIO=-no-audio LOCALE="ko_KR"
-   - API=17 ABI=x86 LOCALE="it_IT"
-   #- API=18 ABI=x86 # frequently flaky: test run failed: 'Instrumentation run failed due to 'java.lang.SecurityException''
-   - API=19 ABI=x86 LOCALE="vi_VN"
-   # API 20 was Android Wear only
    - API=21 LOCALE="pl_PL"
    - API=22 LOCALE="ja_JP"
    - API=23 LOCALE="ru_RU"

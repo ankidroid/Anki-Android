@@ -67,6 +67,7 @@ import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputMethodManager;
+import android.webkit.CookieManager;
 import android.webkit.JavascriptInterface;
 import android.webkit.JsResult;
 import android.webkit.RenderProcessGoneDetail;
@@ -954,7 +955,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
         mSoundPlayer.stopSounds();
 
         // Prevent loss of data in Cookies
-        CompatHelper.getCompat().flushWebViewCookies();
+        CookieManager.getInstance().flush();
     }
 
 
@@ -2210,8 +2211,6 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
             }
         }
 
-
-        content = CardAppearance.convertSmpToHtmlEntity(content);
         mCardContent = mCardTemplate.render(content, style, cardClass);
         Timber.d("base url = %s", mBaseUrl);
 
@@ -2384,7 +2383,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
 
     private void loadContentIntoCard(WebView card, String content) {
         if (card != null) {
-            CompatHelper.getCompat().setHTML5MediaAutoPlay(card.getSettings(), getConfigForCurrentCard().optBoolean("autoplay"));
+            card.getSettings().setMediaPlaybackRequiresUserGesture(!getConfigForCurrentCard().optBoolean("autoplay"));
             card.loadDataWithBaseURL(mViewerUrl, content, "text/html", "utf-8", null);
         }
     }
@@ -2835,7 +2834,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
 
         @Override
         public void loadDataWithBaseURL(@Nullable String baseUrl, String data, @Nullable String mimeType, @Nullable String encoding, @Nullable String historyUrl) {
-            if (!AbstractFlashcardViewer.this.wasDestroyed()) {
+            if (!AbstractFlashcardViewer.this.isDestroyed()) {
                 super.loadDataWithBaseURL(baseUrl, data, mimeType, encoding, historyUrl);
             } else {
                 Timber.w("Not loading card - Activity is in the process of being destroyed.");
