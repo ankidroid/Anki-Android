@@ -794,7 +794,7 @@ public class ContentProviderTest extends InstrumentedTest {
             col.reset();
             nextCard = sched.getCard();
             CollectionTask.waitToFinish();
-            if(nextCard.note().getId() == noteID && nextCard.getOrd() == cardOrd)break;
+            if(nextCard != null && nextCard.note().getId() == noteID && nextCard.getOrd() == cardOrd)break;
             CollectionTask.waitToFinish();
 
         }
@@ -832,7 +832,7 @@ public class ContentProviderTest extends InstrumentedTest {
             for(int i = 0; i < 10; i++) {//minimizing fails, when sched.reset() randomly chooses between multiple cards
                 col.reset();
                 nextCard = sched.getCard();
-                if(nextCard.note().getId() == noteID && nextCard.getOrd() == cardOrd)break;
+                if(nextCard != null && nextCard.note().getId() == noteID && nextCard.getOrd() == cardOrd)break;
                 try { Thread.sleep(500); } catch (Exception e) { Timber.e(e); } // Reset counts is executed in background.
             }
             assertNotNull("Check that there actually is a next scheduled card", nextCard);
