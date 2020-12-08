@@ -1,14 +1,10 @@
 package com.ichi2.anim;
 
-import android.annotation.TargetApi;
 import android.app.Activity;
 
 import com.ichi2.anki.R;
 
-import static com.ichi2.anim.ActivityTransitionAnimation.Direction.*;
-
 public class ActivityTransitionAnimation {
-    @TargetApi(5)
     public static void slide(Activity activity, Direction direction) {
         switch (direction) {
         case LEFT:

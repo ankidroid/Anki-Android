@@ -18,7 +18,6 @@ package com.ichi2.anki.dialogs;
 
 import android.app.Dialog;
 import android.graphics.drawable.Drawable;
-import android.os.Build;
 import android.os.Bundle;
 import android.os.Parcel;
 import android.os.Parcelable;
@@ -97,11 +96,7 @@ public class RecursivePictureMenu extends DialogFragment {
                 textView.setText(val.mText);
                 textView.setOnClickListener((l) -> val.execute((AnkiActivity) requireActivity()));
                 int mIcon = val.mIcon;
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1) {
-                    textView.setCompoundDrawablesRelativeWithIntrinsicBounds(mIcon, 0, 0, 0);
-                } else {
-                    textView.setCompoundDrawablesWithIntrinsicBounds(mIcon, 0, 0, 0);
-                }
+                textView.setCompoundDrawablesRelativeWithIntrinsicBounds(mIcon, 0, 0, 0);
             }
 
 

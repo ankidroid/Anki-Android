@@ -22,7 +22,6 @@
 package com.ichi2.anki;
 
 import android.Manifest;
-import android.annotation.TargetApi;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -37,7 +36,6 @@ import android.database.SQLException;
 import android.graphics.PixelFormat;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
-import android.os.Build;
 import android.os.Bundle;
 import android.os.Message;
 import android.os.ParcelFileDescriptor;
@@ -66,7 +64,6 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.text.TextUtils;
-import android.util.Pair;
 import android.util.TypedValue;
 import android.view.KeyEvent;
 import android.view.Menu;
@@ -154,7 +151,6 @@ import static com.ichi2.async.Connection.ConflictResolution.FULL_DOWNLOAD;
 import com.ichi2.async.TaskData;
 import static com.ichi2.anim.ActivityTransitionAnimation.Direction.*;
 
-import static com.ichi2.libanki.sync.Syncer.ConnectionResultType;
 
 public class DeckPicker extends NavigationDrawerActivity implements
         StudyOptionsListener, SyncErrorDialog.SyncErrorDialogListener, ImportDialog.ImportDialogListener,
@@ -275,7 +271,7 @@ public class DeckPicker extends NavigationDrawerActivity implements
         try {
             collectionIsOpen = colIsOpen();
             handleDeckSelection(deckId, selectionType);
-            if (mFragmented || !CompatHelper.isLollipop()) {
+            if (mFragmented) {
                 // Calling notifyDataSetChanged() will update the color of the selected deck.
                 // This interferes with the ripple effect, so we don't do it if lollipop and not tablet view
                 mDeckListAdapter.notifyDataSetChanged();
@@ -1508,26 +1504,16 @@ public class DeckPicker extends NavigationDrawerActivity implements
     }
 
 
-    @TargetApi(Build.VERSION_CODES.KITKAT)
     @Override
     public void showImportDialog(int id, String message) {
-        // On API19+ we only use import dialog to confirm, otherwise we use it the whole time
-        if ((CompatHelper.getSdkVersion() < 19)
-                || (id == ImportDialog.DIALOG_IMPORT_ADD_CONFIRM)
-                || (id == ImportDialog.DIALOG_IMPORT_REPLACE_CONFIRM)) {
-            Timber.d("showImportDialog() delegating to ImportDialog");
-            AsyncDialogFragment newFragment = ImportDialog.newInstance(id, message);
-            showAsyncDialogFragment(newFragment);
-        } else {
-            Timber.d("showImportDialog() delegating to file picker intent");
-            Intent intent = new Intent(Intent.ACTION_OPEN_DOCUMENT);
-            intent.addCategory(Intent.CATEGORY_OPENABLE);
-            intent.setType("*/*");
-            intent.putExtra("android.content.extra.SHOW_ADVANCED", true);
-            intent.putExtra("android.content.extra.FANCY", true);
-            intent.putExtra("android.content.extra.SHOW_FILESIZE", true);
-            startActivityForResultWithoutAnimation(intent, PICK_APKG_FILE);
-        }
+        Timber.d("showImportDialog() delegating to file picker intent");
+        Intent intent = new Intent(Intent.ACTION_OPEN_DOCUMENT);
+        intent.addCategory(Intent.CATEGORY_OPENABLE);
+        intent.setType("*/*");
+        intent.putExtra("android.content.extra.SHOW_ADVANCED", true);
+        intent.putExtra("android.content.extra.FANCY", true);
+        intent.putExtra("android.content.extra.SHOW_FILESIZE", true);
+        startActivityForResultWithoutAnimation(intent, PICK_APKG_FILE);
     }
 
     public void onSdCardNotMounted() {
@@ -2178,7 +2164,6 @@ public class DeckPicker extends NavigationDrawerActivity implements
     }
 
 
-    @TargetApi(19)
     public void saveExportFile(String path) {
         // Make sure the file actually exists
         File attachment = new File(path);
@@ -2187,28 +2172,17 @@ public class DeckPicker extends NavigationDrawerActivity implements
             UIUtils.showSimpleSnackbar(this, R.string.export_save_apkg_unsuccessful, false);
             return;
         }
-        if (CompatHelper.getSdkVersion() >= 19) {
-            // Let the user choose where to export the file on API19+
-            mExportFileName = path;
-            Intent saveIntent = new Intent(Intent.ACTION_CREATE_DOCUMENT);
-            saveIntent.addCategory(Intent.CATEGORY_OPENABLE);
-            saveIntent.setType("application/apkg");
-            saveIntent.putExtra(Intent.EXTRA_TITLE, attachment.getName());
-            saveIntent.putExtra("android.content.extra.SHOW_ADVANCED", true);
-            saveIntent.putExtra("android.content.extra.FANCY", true);
-            saveIntent.putExtra("android.content.extra.SHOW_FILESIZE", true);
-            startActivityForResultWithoutAnimation(saveIntent, PICK_EXPORT_FILE);
 
-        } else {
-            // Otherwise just export to AnkiDroid directory
-            File exportPath = new File(CollectionHelper.getCurrentAnkiDroidDirectory(this), new File(path).getName());
-            try {
-                CompatHelper.getCompat().copyFile(path, exportPath.getAbsolutePath());
-                UIUtils.showThemedToast(this, getString(R.string.export_save_apkg_successful), false);
-            } catch (IOException e) {
-                UIUtils.showThemedToast(this, getString(R.string.export_save_apkg_unsuccessful), false);
-            }
-        }
+        // Send the user to the standard Android file picker via Intent
+        mExportFileName = path;
+        Intent saveIntent = new Intent(Intent.ACTION_CREATE_DOCUMENT);
+        saveIntent.addCategory(Intent.CATEGORY_OPENABLE);
+        saveIntent.setType("application/apkg");
+        saveIntent.putExtra(Intent.EXTRA_TITLE, attachment.getName());
+        saveIntent.putExtra("android.content.extra.SHOW_ADVANCED", true);
+        saveIntent.putExtra("android.content.extra.FANCY", true);
+        saveIntent.putExtra("android.content.extra.SHOW_FILESIZE", true);
+        startActivityForResultWithoutAnimation(saveIntent, PICK_EXPORT_FILE);
     }
 
 

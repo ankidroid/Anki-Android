@@ -16,7 +16,6 @@
 
 package com.ichi2.anki.cardviewer;
 
-import android.os.Build;
 import android.webkit.URLUtil;
 import android.webkit.WebResourceRequest;
 
@@ -50,11 +49,6 @@ public class MissingImageHandler {
 
         // The UX of the snackbar is annoying, as it obscures the content. Assume that if a user ignores it twice, they don't care.
         if (mMissingMediaCount >= MAX_DISPLAY_TIMES) {
-            return;
-        }
-
-        // This code doesn't seem to be called anyway, but we can't use request.getUrl() on < API 21.
-        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP) {
             return;
         }
 

@@ -81,7 +81,7 @@ public abstract class NoteEditorTest {
         java.lang.AssertionError: Activity never becomes requested state "[DESTROYED]" (last lifecycle transition = "PAUSED")
         at androidx.test.core.app.ActivityScenario.waitForActivityToBecomeAnyOf(ActivityScenario.java:301)
          */
-        int invalid = 25;
+        int invalid = Build.VERSION_CODES.N_MR1;
         ArrayList<Integer> integers = new ArrayList<>(Collections.singletonList(invalid));
         integers.addAll(getInvalidSdks());
         return integers;

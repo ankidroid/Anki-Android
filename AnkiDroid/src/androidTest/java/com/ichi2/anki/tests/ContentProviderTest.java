@@ -449,6 +449,7 @@ public class ContentProviderTest extends InstrumentedTest {
 
     /**
      * Check that updating the flds column works as expected
+     * FIXME hanging sometimes. API30? API29?
      */
     @Test
     public void testUpdateNoteFields() {

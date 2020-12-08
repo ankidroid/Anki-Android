@@ -12,7 +12,6 @@ import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.media.AudioManager;
 import android.net.Uri;
-import android.os.Build;
 import android.os.Bundle;
 
 import androidx.annotation.Nullable;
@@ -65,8 +64,6 @@ public class AnkiActivity extends AppCompatActivity implements SimpleMessageDial
 
     // custom tabs
     private CustomTabActivityHelper mCustomTabActivityHelper;
-
-    private boolean mIsDestroyed = false;
 
     public AnkiActivity() {
         super();
@@ -128,7 +125,6 @@ public class AnkiActivity extends AppCompatActivity implements SimpleMessageDial
 
     @Override
     protected void onDestroy() {
-        this.mIsDestroyed = true;
         Timber.i("AnkiActivity::onDestroy - %s", mActivityName);
         super.onDestroy();
     }
@@ -281,15 +277,6 @@ public class AnkiActivity extends AppCompatActivity implements SimpleMessageDial
     protected void disableViewAnimation(View view) {
         view.clearAnimation();
     }
-
-    /** Compat shim for API 16 */
-    public boolean wasDestroyed() {
-        if (Build.VERSION.SDK_INT > Build.VERSION_CODES.JELLY_BEAN) {
-            return super.isDestroyed();
-        }
-        return mIsDestroyed;
-    }
-
 
     protected void enableViewAnimation(View view, Animation animation) {
         if (animationDisabled()) {

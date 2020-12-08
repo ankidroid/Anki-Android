@@ -31,11 +31,8 @@ import android.database.Cursor;
 import android.database.MatrixCursor;
 import android.database.sqlite.SQLiteQueryBuilder;
 import android.net.Uri;
-import android.os.Binder;
-import android.os.Build;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 
 import android.text.TextUtils;
 import android.webkit.MimeTypeMap;
@@ -1450,7 +1447,7 @@ public class CardContentProvider extends ContentProvider {
     private String getLogMessage(String methodName, Uri uri) {
         final String format = "%s.%s %s (%s)";
         String path = uri == null ? null : uri.getPath();
-        return String.format(format, getClass().getSimpleName(), methodName, path, getCallingPackageSafe());
+        return String.format(format, getClass().getSimpleName(), methodName, path, getCallingPackage());
     }
 
     @SuppressWarnings("BooleanMethodIsAlwaysInverted")
@@ -1467,7 +1464,7 @@ public class CardContentProvider extends ContentProvider {
     private boolean knownRogueClient() {
         final PackageManager pm = mContext.getPackageManager();
         try {
-            PackageInfo callingPi = pm.getPackageInfo(getCallingPackageSafe(), PackageManager.GET_PERMISSIONS);
+            PackageInfo callingPi = pm.getPackageInfo(getCallingPackage(), PackageManager.GET_PERMISSIONS);
              if (callingPi == null || callingPi.requestedPermissions == null) {
                  return false;
              }
@@ -1475,17 +1472,5 @@ public class CardContentProvider extends ContentProvider {
         } catch (PackageManager.NameNotFoundException e) {
             return false;
         }
-    }
-
-    @Nullable
-    private String getCallingPackageSafe() {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
-            return getCallingPackage();
-        }
-        String[] pkgs = mContext.getPackageManager().getPackagesForUid(Binder.getCallingUid());
-        if (pkgs.length == 1) {
-            return pkgs[0]; // This is usual case, unless multiple packages signed with same key & using "sharedUserId"
-        }
-        return null;
     }
 }

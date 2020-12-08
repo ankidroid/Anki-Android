@@ -256,7 +256,7 @@ public class NoteEditorTest extends RobolectricTest {
         assertThat(Arrays.asList(editor.getCurrentFieldStrings()), contains(newFirstField, initSecondField));
 
         saveNote(editor);
-        this.waitForAsyncTasksToComplete();
+        RobolectricTest.waitForAsyncTasksToComplete();
 
         List<String> actual = Arrays.asList(editor.getCurrentFieldStrings());
         assertThat("newlines should be preserved, second field should be blanked", actual, contains(newFirstField, ""));

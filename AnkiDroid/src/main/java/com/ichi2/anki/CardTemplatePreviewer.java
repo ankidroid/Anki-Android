@@ -16,14 +16,12 @@
 
 package com.ichi2.anki;
 
-import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
 
 import com.ichi2.libanki.Card;
 import com.ichi2.libanki.Collection;
 import com.ichi2.libanki.Model;
-import com.ichi2.libanki.Models;
 import com.ichi2.libanki.Note;
 import com.ichi2.libanki.utils.NoteUtils;
 import com.ichi2.themes.Themes;
@@ -157,7 +155,7 @@ public class CardTemplatePreviewer extends AbstractFlashcardViewer {
         mPreviewPrevCard.setVisibility(View.GONE);
         mPreviewNextCard.setVisibility(View.GONE);
 
-        if (Build.VERSION.SDK_INT >= 21 && animationEnabled()) {
+        if (animationEnabled()) {
             int resId = Themes.getResFromAttr(this, R.attr.hardButtonRippleRef);
             mPreviewButtonsLayout.setBackgroundResource(resId);
             mPreviewPrevCard.setBackgroundResource(resId);

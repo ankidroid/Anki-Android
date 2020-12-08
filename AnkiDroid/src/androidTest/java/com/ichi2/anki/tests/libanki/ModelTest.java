@@ -36,7 +36,7 @@ public class ModelTest extends InstrumentedTest {
 
     @Test
     public void bigQuery() {
-        assumeTrue("This test is flaky on API29, ignoring", Build.VERSION.SDK_INT != 29);
+        assumeTrue("This test is flaky on API29, ignoring", Build.VERSION.SDK_INT != Build.VERSION_CODES.Q);
         Models models = testCol.getModels();
         Model model = models.all().get(0);
         final String testString = "test";

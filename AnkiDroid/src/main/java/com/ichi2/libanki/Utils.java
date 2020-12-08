@@ -769,7 +769,7 @@ public class Utils {
      * @return long indicating the bytes available for that path
      */
     public static long determineBytesAvailable(String path) {
-        return CompatHelper.getCompat().getAvailableBytes(new StatFs(path));
+        return new StatFs(path).getAvailableBytes();
     }
 
 
