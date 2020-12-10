@@ -221,7 +221,7 @@ public class DeckPicker extends NavigationDrawerActivity implements
     @Nullable private CollectionTask mEmptyCardTask = null;
 
     @VisibleForTesting
-    public List<AbstractDeckTreeNode> mDueTree;
+    public List<? extends AbstractDeckTreeNode> mDueTree;
 
     /**
      * Flag to indicate whether the activity will perform a sync in its onResume.
@@ -2389,7 +2389,7 @@ public class DeckPicker extends NavigationDrawerActivity implements
                 deckPicker.showCollectionErrorDialog();
                 return;
             }
-            deckPicker.mDueTree = (List<AbstractDeckTreeNode>) result.getObjArray()[0];
+            deckPicker.mDueTree = (List<? extends AbstractDeckTreeNode>) result.getObjArray()[0];
 
             deckPicker.__renderPage();
             // Update the mini statistics bar as well
