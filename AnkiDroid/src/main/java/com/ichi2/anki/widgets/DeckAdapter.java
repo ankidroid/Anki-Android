@@ -168,7 +168,7 @@ public class DeckAdapter extends RecyclerView.Adapter<DeckAdapter.ViewHolder> im
      * Consume a list of {@link AbstractDeckTreeNode}s to render a new deck list.
      * @param filter The string to filter the deck by
      */
-    public void buildDeckList(List<AbstractDeckTreeNode> nodes, Collection col, @Nullable CharSequence filter) {
+    public void buildDeckList(List<? extends AbstractDeckTreeNode> nodes, Collection col, @Nullable CharSequence filter) {
         mCol = col;
         mDeckList.clear();
         mCurrentDeckList.clear();
@@ -298,7 +298,7 @@ public class DeckAdapter extends RecyclerView.Adapter<DeckAdapter.ViewHolder> im
     }
 
 
-    private void processNodes(List<AbstractDeckTreeNode> nodes) {
+    private void processNodes(List<? extends AbstractDeckTreeNode> nodes) {
         for (AbstractDeckTreeNode node : nodes) {
             // If the default deck is empty, hide it by not adding it to the deck list.
             // We don't hide it if it's the only deck or if it has sub-decks.
