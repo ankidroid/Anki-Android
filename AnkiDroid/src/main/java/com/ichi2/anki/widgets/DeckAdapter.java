@@ -382,7 +382,7 @@ public class DeckAdapter extends RecyclerView.Adapter<DeckAdapter.ViewHolder> im
 
 
     private class DeckFilter extends Filter {
-        private final ArrayList<AbstractDeckTreeNode> mFilteredDecks = new ArrayList<>(mCol.getDecks().count());
+        private final @NonNull ArrayList<AbstractDeckTreeNode> mFilteredDecks = new ArrayList<>();
         private DeckFilter() {
             super();
         }
@@ -394,6 +394,7 @@ public class DeckAdapter extends RecyclerView.Adapter<DeckAdapter.ViewHolder> im
         @Override
         protected FilterResults performFiltering(CharSequence constraint) {
             mFilteredDecks.clear();
+            mFilteredDecks.ensureCapacity(mCol.getDecks().count());
 
             List<AbstractDeckTreeNode> allDecks = getAllDecks();
             if (TextUtils.isEmpty(constraint)) {
