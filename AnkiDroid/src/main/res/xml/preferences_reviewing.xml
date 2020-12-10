@@ -132,11 +132,6 @@
             android:summary="@string/preference_summary_literal"
             android:text=""
             android:title="@string/whiteboard_stroke_width" />
-        <CheckBoxPreference
-            android:defaultValue="true"
-            android:key="blackWhiteboard"
-            android:summary="@string/whiteboard_black_summ"
-            android:title="@string/whiteboard_black" />
     </PreferenceCategory>
     <PreferenceCategory android:title="@string/timeout_answer_text" >
         <CheckBoxPreference
