@@ -90,10 +90,16 @@ public class Whiteboard extends View {
         super(cardViewer, null);
         mCardViewer = new WeakReference<>(cardViewer);
 
+        Button whitePenColorButton = cardViewer.findViewById(R.id.pen_color_white);
+        Button blackPenColorButton = cardViewer.findViewById(R.id.pen_color_black);
 
         if (!inverted) {
+                whitePenColorButton.setVisibility(View.GONE);
+                blackPenColorButton.setOnClickListener(this::onClick);
                 foregroundColor = Color.BLACK;
         } else {
+                blackPenColorButton.setVisibility(View.GONE);
+                whitePenColorButton.setOnClickListener(this::onClick);
                 foregroundColor = Color.WHITE;
         }
 
@@ -113,8 +119,6 @@ public class Whiteboard extends View {
         // selecting pen color to draw
         mColorPalette = cardViewer.findViewById(R.id.whiteboard_pen_color);
 
-        cardViewer.findViewById(R.id.pen_color_white).setOnClickListener(this::onClick);
-        cardViewer.findViewById(R.id.pen_color_black).setOnClickListener(this::onClick);
         cardViewer.findViewById(R.id.pen_color_red).setOnClickListener(this::onClick);
         cardViewer.findViewById(R.id.pen_color_green).setOnClickListener(this::onClick);
         cardViewer.findViewById(R.id.pen_color_blue).setOnClickListener(this::onClick);
