@@ -256,7 +256,7 @@ public class Whiteboard extends View {
 
     private void createBitmap() {
         // To fix issue #1336, just make the whiteboard big and square.
-        final Point p = getDisplayDimenions();
+        final Point p = getDisplayDimensions();
         int bitmapSize = Math.max(p.x, p.y);
         createBitmap(bitmapSize, bitmapSize);
     }
@@ -358,7 +358,7 @@ public class Whiteboard extends View {
         return false;
     }
 
-    private static Point getDisplayDimenions() {
+    private static Point getDisplayDimensions() {
         Display display = ((WindowManager) AnkiDroidApp.getInstance().getApplicationContext().
                 getSystemService(Context.WINDOW_SERVICE)).getDefaultDisplay();
         Point point = new Point();
