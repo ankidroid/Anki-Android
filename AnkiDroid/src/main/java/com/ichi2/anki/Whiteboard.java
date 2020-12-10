@@ -40,6 +40,7 @@ import android.view.Display;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.WindowManager;
+import android.widget.Button;
 import android.widget.LinearLayout;
 
 import com.ichi2.libanki.utils.Time;
@@ -85,23 +86,15 @@ public class Whiteboard extends View {
     @Nullable
     private OnPaintColorChangeListener mOnPaintColorChangeListener;
 
-    public Whiteboard(AbstractFlashcardViewer cardViewer, boolean inverted, boolean monochrome) {
+    public Whiteboard(AbstractFlashcardViewer cardViewer, boolean inverted) {
         super(cardViewer, null);
         mCardViewer = new WeakReference<>(cardViewer);
 
 
         if (!inverted) {
-            if (monochrome) {
                 foregroundColor = Color.BLACK;
-            } else {
-                foregroundColor = ContextCompat.getColor(cardViewer, R.color.wb_fg_color);
-            }
         } else {
-            if (monochrome) {
                 foregroundColor = Color.WHITE;
-            } else {
-                foregroundColor = ContextCompat.getColor(cardViewer, R.color.wb_fg_color_inv);
-            }
         }
 
         mPaint = new Paint();
