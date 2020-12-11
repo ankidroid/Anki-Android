@@ -516,7 +516,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
     protected final NextCardHandler<BooleanGetter> mDismissCardHandler = new NextCardHandler() { /* superclass is sufficient */ };
 
 
-    private final TaskListener<CardGetter, Boolean> mUpdateCardHandler = new TaskListener<CardGetter, Boolean>() {
+    private final TaskListener<CardGetter, BooleanGetter> mUpdateCardHandler = new TaskListener<CardGetter, BooleanGetter>() {
         private boolean mNoMoreCards;
 
 
@@ -566,8 +566,8 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
 
 
         @Override
-        public void onPostExecute(Boolean result) {
-            if (!result) {
+        public void onPostExecute(BooleanGetter result) {
+            if (!result.getBoolean()) {
                 // RuntimeException occurred on update cards
                 closeReviewer(DeckPicker.RESULT_DB_ERROR, false);
                 return;
@@ -1151,7 +1151,9 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
             if (resultCode == RESULT_OK) {
                 // content of note was changed so update the note and current card
                 Timber.i("AbstractFlashcardViewer:: Saving card...");
-                TaskManager.launchCollectionTask(new CollectionTask.UpdateNote(sEditorCard, true, canAccessScheduler()), mUpdateCardHandler);
+                TaskManager.launchCollectionTask(
+                        new CollectionTask.UpdateNote(sEditorCard, true, canAccessScheduler()),
+                        mUpdateCardHandler);
                 onEditedNoteChanged();
             } else if (resultCode == RESULT_CANCELED && !(data!=null && data.hasExtra("reloadRequired"))) {
                 // nothing was changed by the note editor so just redraw the card
