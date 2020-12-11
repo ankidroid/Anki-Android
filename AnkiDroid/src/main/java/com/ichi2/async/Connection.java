@@ -532,13 +532,16 @@ public class Connection extends BaseAsyncTask<Connection.Payload, Object, Connec
         } finally {
             Timber.i("Sync Finished - Closing Collection");
             // don't bump mod time unless we explicitly save
-            if (col != null) {
-                col.close(false);
-            }
+            closeCol(col);
             CollectionHelper.getInstance().unlockCollection();
         }
     }
 
+    private void closeCol(Collection col) {
+        if (col != null) {
+            col.close(false);
+        }
+    }
 
     public void publishProgress(int id) {
         super.publishProgress(id);
