@@ -500,6 +500,7 @@ public class Connection extends BaseAsyncTask<Connection.Payload, Object, Connec
             data.resultType = MEDIA_SYNC_SERVER_ERROR;
             data.result = new Object[]{e};
             AnkiDroidApp.sendExceptionReport(e, "doInBackgroundSync");
+            closeCol(col);
             return data;
         } catch (UnknownHttpResponseException e) {
             Timber.e(e, "doInBackgroundSync -- unknown response code error");
@@ -508,6 +509,7 @@ public class Connection extends BaseAsyncTask<Connection.Payload, Object, Connec
             String msg = e.getLocalizedMessage();
             data.resultType = ERROR;
             data.result = new Object[] {code , msg};
+            closeCol(col);
             return data;
         } catch (Exception e) {
             // Global error catcher.
@@ -528,11 +530,11 @@ public class Connection extends BaseAsyncTask<Connection.Payload, Object, Connec
                 data.resultType = ARBITRARY_STRING;
                 data.result = new Object[] {e.getLocalizedMessage(), e};
             }
+            closeCol(col);
             return data;
         } finally {
             Timber.i("Sync Finished - Closing Collection");
             // don't bump mod time unless we explicitly save
-            closeCol(col);
             CollectionHelper.getInstance().unlockCollection();
         }
     }
