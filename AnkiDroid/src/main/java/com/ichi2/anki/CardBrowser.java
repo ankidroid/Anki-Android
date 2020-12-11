@@ -84,6 +84,7 @@ import com.ichi2.utils.BooleanGetter;
 import com.ichi2.utils.FunctionalInterfaces;
 import com.ichi2.utils.LanguageUtil;
 import com.ichi2.utils.PairWithBoolean;
+import com.ichi2.utils.PairWithCard;
 import com.ichi2.utils.Permissions;
 import com.ichi2.widget.WidgetStatus;
 
@@ -1342,7 +1343,8 @@ public class CardBrowser extends NavigationDrawerActivity implements
 
         if (requestCode == EDIT_CARD && resultCode != RESULT_CANCELED) {
             Timber.i("CardBrowser:: CardBrowser: Saving card...");
-            TaskManager.launchCollectionTask(new CollectionTask.UpdateNote(sCardBrowserCard, false, false), updateCardHandler());
+            TaskManager.launchCollectionTask(new CollectionTask.UpdateNote(sCardBrowserCard, false, false),
+                    updateCardHandler());
         } else if (requestCode == ADD_NOTE && resultCode == RESULT_OK) {
             if (mSearchView != null) {
                 mSearchTerms = mSearchView.getQuery().toString();
@@ -1674,18 +1676,18 @@ public class CardBrowser extends NavigationDrawerActivity implements
         return new UpdateCardHandler(this);
     }
 
-    private static class UpdateCardHandler<Result extends BooleanGetter> extends ListenerWithProgressBarCloseOnFalse<Pair<Card, String>, Result> {
+    private static class UpdateCardHandler extends ListenerWithProgressBarCloseOnFalse<PairWithCard<String>, BooleanGetter> {
         public UpdateCardHandler(CardBrowser browser) {
             super("Card Browser - UpdateCardHandler.actualOnPostExecute(CardBrowser browser)", browser);
         }
 
         @Override
-        public void actualOnProgressUpdate(@NonNull CardBrowser browser, Pair<Card, String> value) {
-            browser.updateCardInList(value.first);
+        public void actualOnProgressUpdate(@NonNull CardBrowser browser, PairWithCard<String> value) {
+            browser.updateCardInList(value.getCard());
         }
 
         @Override
-        protected void actualOnValidPostExecute(CardBrowser browser, Result result) {
+        protected void actualOnValidPostExecute(CardBrowser browser, BooleanGetter result) {
             browser.hideProgressBar();
         }
     }

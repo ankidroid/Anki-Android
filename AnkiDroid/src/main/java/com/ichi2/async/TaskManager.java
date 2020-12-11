@@ -67,8 +67,9 @@ public class TaskManager {
      * @param listener to the status and result of the task, may be null
      * @return the newly created task
      */
-    public static <ProgressListener, ProgressBackground extends ProgressListener, ResultListener, ResultBackground extends ResultListener> CollectionTask<ProgressListener, ProgressBackground, ResultListener, ResultBackground> launchCollectionTask(@NonNull CollectionTask.Task<ProgressBackground, ResultBackground> task,
-                                                                                                                                                                                                                                                       @Nullable TaskListener<ProgressListener, ResultListener> listener) {
+    public static <ProgressListener, ProgressBackground extends ProgressListener, ResultListener, ResultBackground extends ResultListener> CollectionTask<ProgressListener, ProgressBackground, ResultListener, ResultBackground>
+        launchCollectionTask(@NonNull CollectionTask.Task<ProgressBackground, ResultBackground> task,
+        @Nullable TaskListener<ProgressListener, ResultListener> listener) {
         // Start new task
         CollectionTask<ProgressListener, ProgressBackground, ResultListener, ResultBackground> newTask = new CollectionTask<>(task, listener, sLatestInstance);
         newTask.execute();

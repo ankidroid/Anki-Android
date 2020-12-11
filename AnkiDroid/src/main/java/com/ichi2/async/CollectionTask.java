@@ -97,6 +97,8 @@ import static com.ichi2.libanki.Collection.DismissType.RESCHEDULE_CARDS;
 import static com.ichi2.libanki.Collection.DismissType.RESET_CARDS;
 import static com.ichi2.libanki.Collection.DismissType.SUSPEND_NOTE;
 import static com.ichi2.libanki.Undoable.*;
+import static com.ichi2.utils.BooleanGetter.False;
+import static com.ichi2.utils.BooleanGetter.True;
 import static com.ichi2.utils.BooleanGetter.fromBoolean;
 
 /**
@@ -286,7 +288,7 @@ public class CollectionTask<ProgressListener, ProgressBackground extends Progres
     }
 
 
-    public static class UpdateNote extends Task<PairWithCard<String>, Boolean> {
+    public static class UpdateNote extends Task<PairWithCard<String>, BooleanGetter> {
         private final Card editCard;
         private final boolean fromReviewer;
         private final boolean canAccessScheduler;
@@ -298,7 +300,7 @@ public class CollectionTask<ProgressListener, ProgressBackground extends Progres
             this.canAccessScheduler = canAccessScheduler;
         }
 
-        protected Boolean task(Collection col, ProgressSenderAndCancelListener<PairWithCard<String>> collectionTask) {
+        protected BooleanGetter task(Collection col, ProgressSenderAndCancelListener<PairWithCard<String>> collectionTask) {
             Timber.d("doInBackgroundUpdateNote");
             // Save the note
             AbstractSched sched = col.getSched();
@@ -328,9 +330,9 @@ public class CollectionTask<ProgressListener, ProgressBackground extends Progres
             } catch (RuntimeException e) {
                 Timber.e(e, "doInBackgroundUpdateNote - RuntimeException on updating note");
                 AnkiDroidApp.sendExceptionReport(e, "doInBackgroundUpdateNote");
-                return false;
+                return False;
             }
-            return true;
+            return True;
         }
 
         public boolean isFromReviewer() {
@@ -348,7 +350,7 @@ public class CollectionTask<ProgressListener, ProgressBackground extends Progres
                 newCard._getQA(true);
             }
             collectionTask.doProgress(newCard);
-            return fromBoolean(true);
+            return True;
         }
     }
 
@@ -539,9 +541,9 @@ public class CollectionTask<ProgressListener, ProgressBackground extends Progres
             } catch (RuntimeException e) {
                 Timber.e(e, "doInBackgroundDismissNote - RuntimeException on dismissing note, dismiss type %s", type);
                 AnkiDroidApp.sendExceptionReport(e, "doInBackgroundDismissNote");
-                return fromBoolean(false);
+                return False;
             }
-            return fromBoolean(true);
+            return True;
         }
     }
 
@@ -1018,9 +1020,9 @@ public class CollectionTask<ProgressListener, ProgressBackground extends Progres
             } catch (RuntimeException e) {
                 Timber.e(e, "doInBackgroundUndo - RuntimeException on undoing");
                 AnkiDroidApp.sendExceptionReport(e, "doInBackgroundUndo");
-                return fromBoolean(false);
+                return False;
             }
-            return fromBoolean(true);
+            return True;
         }
     }
 
@@ -1346,7 +1348,7 @@ public class CollectionTask<ProgressListener, ProgressBackground extends Progres
             } catch (IOException e) {
                 Timber.e(e, "doInBackgroundImportReplace - Error while unzipping");
                 AnkiDroidApp.sendExceptionReport(e, "doInBackgroundImportReplace0");
-                return fromBoolean(false);
+                return False;
             }
             try {
                 // v2 scheduler?
@@ -1356,11 +1358,11 @@ public class CollectionTask<ProgressListener, ProgressBackground extends Progres
                 Utils.unzipFiles(zip, dir.getAbsolutePath(), new String[] {colname, "media"}, null);
             } catch (IOException e) {
                 AnkiDroidApp.sendExceptionReport(e, "doInBackgroundImportReplace - unzip");
-                return fromBoolean(false);
+                return False;
             }
             String colFile = new File(dir, colname).getAbsolutePath();
             if (!(new File(colFile)).exists()) {
-                return fromBoolean(false);
+                return False;
             }
 
             Collection tmpCol = null;
@@ -1368,7 +1370,7 @@ public class CollectionTask<ProgressListener, ProgressBackground extends Progres
                 tmpCol = Storage.Collection(context, colFile);
                 if (!tmpCol.validCollection()) {
                     tmpCol.close();
-                    return fromBoolean(false);
+                    return False;
                 }
             } catch (Exception e) {
                 Timber.e("Error opening new collection file... probably it's invalid");
@@ -1378,7 +1380,7 @@ public class CollectionTask<ProgressListener, ProgressBackground extends Progres
                     // do nothing
                 }
                 AnkiDroidApp.sendExceptionReport(e, "doInBackgroundImportReplace - open col");
-                return fromBoolean(false);
+                return False;
             } finally {
                 if (tmpCol != null) {
                     tmpCol.close();
@@ -1400,7 +1402,7 @@ public class CollectionTask<ProgressListener, ProgressBackground extends Progres
             File f = new File(colFile);
             if (!f.renameTo(new File(colPath))) {
                 // Exit early if this didn't work
-                return fromBoolean(false);
+                return False;
             }
             int addedCount = -1;
             try {
@@ -1443,19 +1445,19 @@ public class CollectionTask<ProgressListener, ProgressBackground extends Progres
                 zip.close();
                 // delete tmp dir
                 BackupManager.removeDir(dir);
-                return fromBoolean(true);
+                return True;
             } catch (RuntimeException e) {
                 Timber.e(e, "doInBackgroundImportReplace - RuntimeException");
                 AnkiDroidApp.sendExceptionReport(e, "doInBackgroundImportReplace1");
-                return fromBoolean(false);
+                return False;
             } catch (FileNotFoundException e) {
                 Timber.e(e, "doInBackgroundImportReplace - FileNotFoundException");
                 AnkiDroidApp.sendExceptionReport(e, "doInBackgroundImportReplace2");
-                return fromBoolean(false);
+                return False;
             } catch (IOException e) {
                 Timber.e(e, "doInBackgroundImportReplace - IOException");
                 AnkiDroidApp.sendExceptionReport(e, "doInBackgroundImportReplace3");
-                return fromBoolean(false);
+                return False;
             }
         }
     }
