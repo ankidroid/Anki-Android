@@ -226,7 +226,7 @@ public class DeckPicker extends NavigationDrawerActivity implements
     @Nullable private CollectionTask<?, ?, ?, ?> mEmptyCardTask = null;
 
     @VisibleForTesting
-    public List<? extends AbstractDeckTreeNode> mDueTree;
+    public List<? extends AbstractDeckTreeNode<?>> mDueTree;
 
     /**
      * Flag to indicate whether the activity will perform a sync in its onResume.
@@ -2271,7 +2271,7 @@ public class DeckPicker extends NavigationDrawerActivity implements
         // Reset the schedule so that we get the counts for the currently selected deck
         mFocusedDeck = did;
         // Get some info about the deck to handle special cases
-        AbstractDeckTreeNode deckDueTreeNode = mDeckListAdapter.getNodeByDid(did);
+        AbstractDeckTreeNode<?> deckDueTreeNode = mDeckListAdapter.getNodeByDid(did);
         if (!deckDueTreeNode.shouldDisplayCounts() || deckDueTreeNode.knownToHaveRep()) {
             // If we don't yet have numbers, we trust the user that they knows what they opens, tries to open it.
             // If there is nothing to review, it'll come back to deck picker.
@@ -2352,7 +2352,7 @@ public class DeckPicker extends NavigationDrawerActivity implements
     private UpdateDeckListListener updateDeckListListener() {
         return new UpdateDeckListListener(this);
     }
-    private static class  UpdateDeckListListener<T extends AbstractDeckTreeNode> extends TaskListenerWithContext<DeckPicker, Void, List<T>>{
+    private static class  UpdateDeckListListener<T extends AbstractDeckTreeNode<T>> extends TaskListenerWithContext<DeckPicker, Void, List<T>>{
         public UpdateDeckListListener(DeckPicker deckPicker) {
             super(deckPicker);
         }

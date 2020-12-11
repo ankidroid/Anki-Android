@@ -590,7 +590,7 @@ public class SchedV2 extends AbstractSched {
         return _groupChildren(deckDueTree, true);
     }
 
-    private @NonNull <T extends AbstractDeckTreeNode> List<T> _groupChildren(@NonNull List<T> decks, boolean checkDone) {
+    private @NonNull <T extends AbstractDeckTreeNode<T>> List<T> _groupChildren(@NonNull List<T> decks, boolean checkDone) {
         // sort based on name's components
         Collections.sort(decks);
         // then run main function
@@ -598,7 +598,7 @@ public class SchedV2 extends AbstractSched {
     }
 
 
-    protected @NonNull  <T extends AbstractDeckTreeNode> List<T> _groupChildrenMain(@NonNull List<T> decks, boolean checkDone) {
+    protected @NonNull  <T extends AbstractDeckTreeNode<T>> List<T> _groupChildrenMain(@NonNull List<T> decks, boolean checkDone) {
         return _groupChildrenMain(decks, 0, checkDone);
     }
 
@@ -613,14 +613,14 @@ public class SchedV2 extends AbstractSched {
         false, we can't assume all decks have parents and that there
         is no duplicate. Instead, we'll ignore problems.
      */
-    protected @NonNull <T extends AbstractDeckTreeNode>List<T> _groupChildrenMain(@NonNull List<T> descendants, int depth, boolean checkDone) {
+    protected @NonNull <T extends AbstractDeckTreeNode<T>> List<T> _groupChildrenMain(@NonNull List<T> descendants, int depth, boolean checkDone) {
         List<T> children = new ArrayList<>();
         // group and recurse
         ListIterator<T> it = descendants.listIterator();
         while (it.hasNext()) {
             T child = it.next();
             String head = child.getDeckNameComponent(depth);
-            List<AbstractDeckTreeNode> descendantsOfChild  = new ArrayList<>();
+            List<T> descendantsOfChild  = new ArrayList<>();
             /* Compose the "children" node list. The children is a
              * list of all the nodes that proceed the current one that
              * contain the same at depth `depth`, except for the
@@ -633,7 +633,7 @@ public class SchedV2 extends AbstractSched {
                 continue;
             }
             while (it.hasNext()) {
-                AbstractDeckTreeNode descendantOfChild = it.next();
+                T descendantOfChild = it.next();
                 if (head.equals(descendantOfChild.getDeckNameComponent(depth))) {
                     // Same head - add to tail of current head.
                     if (!checkDone && descendantOfChild.getDepth() == depth) {
@@ -650,7 +650,8 @@ public class SchedV2 extends AbstractSched {
                 }
             }
             // the children_sDescendant set contains direct children_sDescendant but not the children_sDescendant of children_sDescendant...
-            child.setChildren(_groupChildrenMain(descendantsOfChild, depth + 1, checkDone), "std".equals(getName()));
+            List<T> childrenNode = _groupChildrenMain(descendantsOfChild, depth + 1, checkDone);
+            child.setChildren(childrenNode, "std".equals(getName()));
             children.add(child);
         }
         return children;
