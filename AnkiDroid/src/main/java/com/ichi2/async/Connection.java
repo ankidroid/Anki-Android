@@ -588,7 +588,7 @@ public class Connection extends BaseAsyncTask<Connection.Payload, Object, Connec
 
     public static class Payload {
         private int taskType;
-        public Object[] data;
+        @NonNull public Object[] data;
         public ConnectionResultType resultType;
         public Object[] result;
         public boolean success;
@@ -598,7 +598,7 @@ public class Connection extends BaseAsyncTask<Connection.Payload, Object, Connec
         public Collection col;
 
 
-        public Payload(Object[] data) {
+        public Payload(@NonNull Object[] data) {
             this.data = data;
             success = true;
         }
