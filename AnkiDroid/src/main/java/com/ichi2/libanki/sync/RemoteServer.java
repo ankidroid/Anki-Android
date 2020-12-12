@@ -41,7 +41,6 @@ public class RemoteServer extends HttpSyncer {
 
 
     /** Returns hkey or null if user/pw incorrect. */
-    @Override
     public Response hostKey(String user, String pw) throws UnknownHttpResponseException {
         try {
             mPostVars = new HashMap<>(0);
@@ -55,7 +54,6 @@ public class RemoteServer extends HttpSyncer {
     }
 
 
-    @Override
     public Response meta() throws UnknownHttpResponseException {
         mPostVars = new HashMap<>(2);
         mPostVars.put("k", mHKey);
@@ -68,42 +66,34 @@ public class RemoteServer extends HttpSyncer {
     }
 
 
-    @Override
     public JSONObject applyChanges(JSONObject kw) throws UnknownHttpResponseException {
         return parseDict(_run("applyChanges", kw));
     }
 
 
-    @Override
     public JSONObject start(JSONObject kw) throws UnknownHttpResponseException {
         return parseDict(_run("start", kw));
     }
 
 
-    @Override
     public JSONObject chunk() throws UnknownHttpResponseException {
         JSONObject co = new JSONObject();
         return parseDict(_run("chunk", co));
     }
 
 
-    @Override
     public void applyChunk(JSONObject sech) throws UnknownHttpResponseException {
         _run("applyChunk", sech);
     }
 
-
-    @Override
     public JSONObject sanityCheck2(JSONObject client) throws UnknownHttpResponseException {
         return parseDict(_run("sanityCheck2", client));
     }
 
-    @Override
     public long finish() throws UnknownHttpResponseException {
         return parseLong(_run("finish", new JSONObject()));
     }
 
-    @Override
     public void abort() throws UnknownHttpResponseException {
         _run("abort", new JSONObject());
     }
