@@ -47,15 +47,12 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.Locale;
 import java.util.Map;
 
 import androidx.annotation.NonNull;
 import okhttp3.Response;
 import timber.log.Timber;
 import static com.ichi2.libanki.sync.Syncer.ConnectionResultType.*;
-
-import static com.ichi2.utils.CollectionUtils.addAll;
 
 @SuppressWarnings({"deprecation", // tracking HTTP transport change in github already
                     "PMD.ExcessiveClassLength","PMD.AvoidThrowingRawExceptionTypes","PMD.AvoidReassigningParameters",
@@ -73,7 +70,7 @@ public class Syncer {
     private static final int SYNC_SCHEDULER_REPORT_LIMIT = 1000;
 
     private final Collection mCol;
-    private final HttpSyncer mServer;
+    private final RemoteServer mRemoteServer;
     //private long mRScm;
     private int mMaxUsn;
 
@@ -87,9 +84,9 @@ public class Syncer {
     private Cursor mCursor;
 
 
-    public Syncer(Collection col, HttpSyncer server, HostNum hostNum) {
+    public Syncer(Collection col, RemoteServer server, HostNum hostNum) {
         mCol = col;
-        mServer = server;
+        mRemoteServer = server;
         mHostNum = hostNum;
     }
 
@@ -145,7 +142,7 @@ public class Syncer {
         mCol.getSched()._updateCutoff();
         mCol.save();
         // step 1: login & metadata
-        Response ret = mServer.meta();
+        Response ret = mRemoteServer.meta();
         if (ret == null) {
             return null;
         }
@@ -214,7 +211,7 @@ public class Syncer {
                 o.put("graves", lrem);
 
                 Timber.i("Sync: sending and receiving removed data");
-                JSONObject rrem = mServer.start(o);
+                JSONObject rrem = mRemoteServer.start(o);
                 Timber.i("Sync: applying removed data");
                 throwExceptionIfCancelled(con);
                 remove(rrem);
@@ -227,13 +224,13 @@ public class Syncer {
                 sch.put("changes", lchg);
 
                 Timber.i("Sync: sending and receiving small changes");
-                JSONObject rchg = mServer.applyChanges(sch);
+                JSONObject rchg = mRemoteServer.applyChanges(sch);
                 throwExceptionIfCancelled(con);
                 Timber.i("Sync: merging small changes");
                 try {
                     mergeChanges(lchg, rchg);
                 } catch (UnexpectedSchemaChange e) {
-                    mServer.abort();
+                    mRemoteServer.abort();
                     _forceFullSync();
                 }
                 // step 3: stream large tables from server
@@ -241,7 +238,7 @@ public class Syncer {
                 while (true) {
                     throwExceptionIfCancelled(con);
                     Timber.i("Sync: downloading chunked data");
-                    JSONObject chunk = mServer.chunk();
+                    JSONObject chunk = mRemoteServer.chunk();
                     mCol.log("server chunk", chunk);
                     Timber.i("Sync: applying chunked data");
                     applyChunk(chunk);
@@ -259,21 +256,21 @@ public class Syncer {
                     JSONObject sech = new JSONObject();
                     sech.put("chunk", chunk);
                     Timber.i("Sync: sending chunked data");
-                    mServer.applyChunk(sech);
+                    mRemoteServer.applyChunk(sech);
                     if (chunk.getBoolean("done")) {
                         break;
                     }
                 }
                 // step 5: sanity check
                 JSONObject c = sanityCheck();
-                JSONObject sanity = mServer.sanityCheck2(c);
+                JSONObject sanity = mRemoteServer.sanityCheck2(c);
                 if (sanity == null || !"ok".equals(sanity.optString("status", "bad"))) {
                     return sanityCheckError(c, sanity);
                 }
                 // finalize
                 publishProgress(con, R.string.sync_finish_message);
                 Timber.i("Sync: sending finish command");
-                long mod = mServer.finish();
+                long mod = mRemoteServer.finish();
                 if (mod == 0) {
                     return new Pair<>( FINISH_ERROR , null);
                 }
@@ -931,7 +928,7 @@ public class Syncer {
             Timber.i("Sync was cancelled");
             publishProgress(con, R.string.sync_cancelled);
             try {
-                mServer.abort();
+                mRemoteServer.abort();
             } catch (UnknownHttpResponseException ignored) {
             }
             throw new RuntimeException(USER_ABORTED_SYNC.toString());
