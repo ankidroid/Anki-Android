@@ -305,6 +305,19 @@ public class Connection extends BaseAsyncTask<Connection.Payload, Object, Connec
         }
     }
 
+
+    /**
+     * Add generic error value to the payload
+     * @param data Some payload that should be transformed
+     * @return the original payload
+     */
+    private static Payload returnGenericError(Payload data) {
+        data.success = false;
+        data.resultType = GENERIC_ERROR;
+        data.result = new Object[0];
+        return data;
+    }
+
     /**
      * In the payload, success means that the sync did occur correctly and that a change did occur.
      * So success can be false without error, if no change occurred at all.*/
@@ -330,9 +343,7 @@ public class Connection extends BaseAsyncTask<Connection.Payload, Object, Connec
             if (FULL_DOWNLOAD == conflictResolution) {
                 colCorruptFullSync = true;
             } else {
-                data.success = false;
-                data.resultType = GENERIC_ERROR;
-                return data;
+                return returnGenericError(data);
             }
         }
         try {
@@ -348,9 +359,7 @@ public class Connection extends BaseAsyncTask<Connection.Payload, Object, Connec
                 Pair<ConnectionResultType, Object> ret = client.sync(this);
                 data.message = client.getSyncMsg();
                 if (ret == null) {
-                    data.success = false;
-                    data.resultType = GENERIC_ERROR;
-                    return data;
+                    return returnGenericError(data);
                 }
                 if (NO_CHANGES != ret.first && SUCCESS != ret.first) {
                     data.success = false;
@@ -382,9 +391,7 @@ public class Connection extends BaseAsyncTask<Connection.Payload, Object, Connec
                         ret = server.upload();
                         col.reopen();
                         if (ret == null) {
-                            data.success = false;
-                            data.resultType = GENERIC_ERROR;
-                            return data;
+                            return returnGenericError(data);
                         }
                         if (ret.first == ARBITRARY_STRING && !ret.second[0].equals(HttpSyncer.ANKIWEB_STATUS_OK)) {
                             data.success = false;
@@ -399,9 +406,7 @@ public class Connection extends BaseAsyncTask<Connection.Payload, Object, Connec
                         ret = server.download();
                         if (ret == null) {
                             Timber.w("Sync - fullsync - unknown error");
-                            data.success = false;
-                            data.resultType = GENERIC_ERROR;
-                            return data;
+                            return returnGenericError(data);
                         }
                         if (SUCCESS == ret.first) {
                             data.success = true;
