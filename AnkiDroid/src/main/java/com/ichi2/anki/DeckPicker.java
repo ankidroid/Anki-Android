@@ -1964,10 +1964,8 @@ public class DeckPicker extends NavigationDrawerActivity implements
                                     dialogMessage = res.getString(R.string.sync_log_error_specific,
                                             Integer.toString(code), result[2]);
                                 }
-                            } else if (result[0] instanceof String) {
-                                dialogMessage = res.getString(R.string.sync_log_error_specific, Integer.toString(-1), result[0]);
                             } else {
-                                dialogMessage = res.getString(R.string.sync_generic_error);
+                                dialogMessage = res.getString(R.string.sync_log_error_specific, Integer.toString(-1), result[0]);
                             }
                             showSyncErrorMessage(joinSyncMessages(dialogMessage, syncMessage));
                             break;
