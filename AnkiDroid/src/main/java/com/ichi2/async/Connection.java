@@ -424,6 +424,7 @@ public class Connection extends BaseAsyncTask<Connection.Payload, Object, Connec
                     AnkiDroidApp.sendExceptionReport(e, "doInBackgroundSync-fullSync");
                     data.success = false;
                     data.resultType = OUT_OF_MEMORY_ERROR;
+                    data.result = new Object[0];
                     return data;
                 } catch (RuntimeException e) {
                     if (timeoutOccurred(e)) {
@@ -487,6 +488,7 @@ public class Connection extends BaseAsyncTask<Connection.Payload, Object, Connec
                 // This means that there is no change at all, neither media nor collection. Not that there was an error.
                 data.success = false;
                 data.resultType = NO_CHANGES;
+                data.result = new Object[0];
             } else {
                 data.success = true;
                 data.data = new Object[] { conflictResolution, col, mediaError };
