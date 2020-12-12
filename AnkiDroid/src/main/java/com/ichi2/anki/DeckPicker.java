@@ -125,6 +125,7 @@ import com.ichi2.libanki.importer.AnkiPackageImporter;
 import com.ichi2.libanki.sched.AbstractDeckTreeNode;
 import com.ichi2.libanki.sched.DeckTreeNode;
 import com.ichi2.libanki.sync.CustomSyncServerUrlException;
+import com.ichi2.libanki.sync.Syncer;
 import com.ichi2.libanki.utils.TimeUtils;
 import com.ichi2.themes.StyledProgressDialog;
 import com.ichi2.ui.BadgeDrawableBuilder;
@@ -1850,10 +1851,10 @@ public class DeckPicker extends NavigationDrawerActivity implements
             String syncMessage = data.message;
             if (!data.success) {
                 Object[] result = data.result;
-                if (result[0] instanceof String) {
-                    String resultType = (String) result[0];
+                Syncer.ConnectionResultType resultType = data.resultType;
+                if (resultType != null) {
                     switch (resultType) {
-                        case "badAuth":
+                        case BAD_AUTH:
                             // delete old auth information
                             SharedPreferences preferences = AnkiDroidApp.getSharedPrefs(getBaseContext());
                             Editor editor = preferences.edit();
@@ -1863,13 +1864,13 @@ public class DeckPicker extends NavigationDrawerActivity implements
                             // then show not logged in dialog
                             showSyncErrorDialog(SyncErrorDialog.DIALOG_USER_NOT_LOGGED_IN_SYNC);
                             break;
-                        case "noChanges":
+                        case NO_CHANGES:
                             SyncStatus.markSyncCompleted();
                             // show no changes message, use false flag so we don't show "sync error" as the Dialog title
                             showSyncLogMessage(R.string.sync_no_changes_message, "");
                             break;
-                        case "clockOff":
-                            long diff = (Long) result[1];
+                        case CLOCK_OFF:
+                            long diff = (Long) result[0];
                             if (diff >= 86100) {
                                 // The difference if more than a day minus 5 minutes acceptable by ankiweb error
                                 dialogMessage = res.getString(R.string.sync_log_clocks_unsynchronized, diff,
@@ -1884,7 +1885,7 @@ public class DeckPicker extends NavigationDrawerActivity implements
                             }
                             showSyncErrorMessage(joinSyncMessages(dialogMessage, syncMessage));
                             break;
-                        case "fullSync":
+                        case FULL_SYNC:
                             if (getCol().isEmpty()) {
                                 // don't prompt user to resolve sync conflict if local collection empty
                                 sync(FULL_DOWNLOAD);
@@ -1895,77 +1896,77 @@ public class DeckPicker extends NavigationDrawerActivity implements
                                 showSyncErrorDialog(SyncErrorDialog.DIALOG_SYNC_CONFLICT_RESOLUTION);
                             }
                             break;
-                        case "basicCheckFailed":
+                        case BASIC_CHECK_FAILED:
                             dialogMessage = res.getString(R.string.sync_basic_check_failed, res.getString(R.string.check_db));
                             showSyncErrorMessage(joinSyncMessages(dialogMessage, syncMessage));
                             break;
-                        case "dbError":
+                        case DB_ERROR:
                             showSyncErrorDialog(SyncErrorDialog.DIALOG_SYNC_CORRUPT_COLLECTION, syncMessage);
                             break;
-                        case "overwriteError":
+                        case OVERWRITE_ERROR:
                             dialogMessage = res.getString(R.string.sync_overwrite_error);
                             showSyncErrorMessage(joinSyncMessages(dialogMessage, syncMessage));
                             break;
-                        case "remoteDbError":
+                        case REMOTE_DB_ERROR:
                             dialogMessage = res.getString(R.string.sync_remote_db_error);
                             showSyncErrorMessage(joinSyncMessages(dialogMessage, syncMessage));
                             break;
-                        case "sdAccessError":
+                        case SD_ACCESS_ERROR:
                             dialogMessage = res.getString(R.string.sync_write_access_error);
                             showSyncErrorMessage(joinSyncMessages(dialogMessage, syncMessage));
                             break;
-                        case "finishError":
+                        case FINISH_ERROR:
                             dialogMessage = res.getString(R.string.sync_log_finish_error);
                             showSyncErrorMessage(joinSyncMessages(dialogMessage, syncMessage));
                             break;
-                        case "connectionError":
+                        case CONNECTION_ERROR:
                             dialogMessage = res.getString(R.string.sync_connection_error);
-                            if (result.length >= 1 && result[1] instanceof Exception) {
-                                dialogMessage += "\n\n" + ((Exception) result[1]).getLocalizedMessage();
+                            if (result.length >= 0 && result[0] instanceof Exception) {
+                                dialogMessage += "\n\n" + ((Exception) result[0]).getLocalizedMessage();
                             }
                             showSyncErrorMessage(joinSyncMessages(dialogMessage, syncMessage));
                             break;
-                        case "IOException":
+                        case IO_EXCEPTION:
                             handleDbError();
                             break;
-                        case "genericError":
+                        case GENERIC_ERROR:
                             dialogMessage = res.getString(R.string.sync_generic_error);
                             showSyncErrorMessage(joinSyncMessages(dialogMessage, syncMessage));
                             break;
-                        case "OutOfMemoryError":
+                        case OUT_OF_MEMORY_ERROR:
                             dialogMessage = res.getString(R.string.error_insufficient_memory);
                             showSyncErrorMessage(joinSyncMessages(dialogMessage, syncMessage));
                             break;
-                        case "sanityCheckError":
+                        case SANITY_CHECK_ERROR:
                             dialogMessage = res.getString(R.string.sync_sanity_failed);
                             showSyncErrorDialog(SyncErrorDialog.DIALOG_SYNC_SANITY_ERROR,
                                     joinSyncMessages(dialogMessage, syncMessage));
                             break;
-                        case "serverAbort":
+                        case SERVER_ABORT:
                             // syncMsg has already been set above, no need to fetch it here.
                             showSyncErrorMessage(joinSyncMessages(dialogMessage, syncMessage));
                             break;
-                        case "mediaSyncServerError":
+                        case MEDIA_SYNC_SERVER_ERROR:
                             dialogMessage = res.getString(R.string.sync_media_error_check);
                             showSyncErrorDialog(SyncErrorDialog.DIALOG_MEDIA_SYNC_ERROR,
                                     joinSyncMessages(dialogMessage, syncMessage));
                             break;
-                        case "customSyncServerUrl":
-                            String url = result.length > 1 && result[1] instanceof CustomSyncServerUrlException
-                                    ? ((CustomSyncServerUrlException) result[1]).getUrl() : "unknown";
+                        case CUSTOM_SYNC_SERVER_URL:
+                            String url = result.length > 0 && result[0] instanceof CustomSyncServerUrlException
+                                    ? ((CustomSyncServerUrlException) result[0]).getUrl() : "unknown";
                             dialogMessage = res.getString(R.string.sync_error_invalid_sync_server, url);
                             showSyncErrorMessage(joinSyncMessages(dialogMessage, syncMessage));
                             break;
                         default:
-                            if (result.length > 1 && result[1] instanceof Integer) {
-                                int code = (Integer) result[1];
+                            if (result.length > 0 && result[0] instanceof Integer) {
+                                int code = (Integer) result[0];
                                 dialogMessage = rewriteError(code);
                                 if (dialogMessage == null) {
                                     dialogMessage = res.getString(R.string.sync_log_error_specific,
-                                            Integer.toString(code), result[2]);
+                                            Integer.toString(code), result[1]);
                                 }
                             } else {
-                                dialogMessage = res.getString(R.string.sync_log_error_specific, Integer.toString(-1), result[0]);
+                                dialogMessage = res.getString(R.string.sync_log_error_specific, Integer.toString(-1), resultType);
                             }
                             showSyncErrorMessage(joinSyncMessages(dialogMessage, syncMessage));
                             break;
