@@ -222,7 +222,7 @@ public class Connection extends BaseAsyncTask<Connection.Payload, Object, Connec
         String username = (String) data.data[0];
         String password = (String) data.data[1];
         HostNum hostNum = (HostNum) data.data[2];
-        HttpSyncer server = new RemoteServer(this, null, hostNum);
+        RemoteServer server = new RemoteServer(this, null, hostNum);
         Response ret;
         try {
             ret = server.hostKey(username, password);
@@ -348,8 +348,8 @@ public class Connection extends BaseAsyncTask<Connection.Payload, Object, Connec
         }
         try {
             CollectionHelper.getInstance().lockCollection();
-            HttpSyncer server = new RemoteServer(this, hkey, hostNum);
-            Syncer client = new Syncer(col, server, hostNum);
+            RemoteServer remoteServer = new RemoteServer(this, hkey, hostNum);
+            Syncer client = new Syncer(col, remoteServer, hostNum);
 
             // run sync and check state
             boolean noChanges = false;
@@ -382,12 +382,12 @@ public class Connection extends BaseAsyncTask<Connection.Payload, Object, Connec
                 try {
                     // Disable sync cancellation for full-sync
                     sIsCancellable = false;
-                    server = new FullSyncer(col, hkey, this, hostNum);
+                    FullSyncer fullSyncServer = new FullSyncer(col, hkey, this, hostNum);
                     switch (conflictResolution) {
                     case FULL_UPLOAD: {
                         Timber.i("Sync - fullsync - upload collection");
                         publishProgress(R.string.sync_preparing_full_sync_message);
-                        Pair<ConnectionResultType, Object[]> ret = server.upload();
+                        Pair<ConnectionResultType, Object[]> ret = fullSyncServer.upload();
                         col.reopen();
                         if (ret == null) {
                             return returnGenericError(data);
@@ -403,7 +403,7 @@ public class Connection extends BaseAsyncTask<Connection.Payload, Object, Connec
                     case FULL_DOWNLOAD: {
                         Timber.i("Sync - fullsync - download collection");
                         publishProgress(R.string.sync_downloading_message);
-                        ConnectionResultType ret = server.download();
+                        ConnectionResultType ret = fullSyncServer.download();
                         if (ret == null) {
                             Timber.w("Sync - fullsync - unknown error");
                             return returnGenericError(data);
@@ -455,8 +455,8 @@ public class Connection extends BaseAsyncTask<Connection.Payload, Object, Connec
             boolean noMediaChanges = false;
             String mediaError = null;
             if (media) {
-                server = new RemoteMediaServer(col, hkey, this, hostNum);
-                MediaSyncer mediaClient = new MediaSyncer(col, (RemoteMediaServer) server, this);
+                RemoteMediaServer mediaServer = new RemoteMediaServer(col, hkey, this, hostNum);
+                MediaSyncer mediaClient = new MediaSyncer(col, mediaServer, this);
                 Pair<ConnectionResultType, String> ret;
                 try {
                     Timber.i("Sync - Performing media sync");
