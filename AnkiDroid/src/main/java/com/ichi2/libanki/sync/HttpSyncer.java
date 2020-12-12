@@ -341,64 +341,6 @@ public class HttpSyncer {
         }
     }
 
-    public class ProgressByteEntity extends AbstractHttpEntity {
-
-        private InputStream mInputStream;
-        private final long mLength;
-
-
-        public ProgressByteEntity(File file) {
-            super();
-            mLength = file.length();
-            try {
-                mInputStream = new BufferedInputStream(new FileInputStream(file));
-            } catch (FileNotFoundException e) {
-                throw new RuntimeException(e);
-            }
-        }
-
-
-        @Override
-        public void writeTo(OutputStream outstream) throws IOException {
-            try {
-                byte[] tmp = new byte[4096];
-                int len;
-                while ((len = mInputStream.read(tmp)) != -1) {
-                    outstream.write(tmp, 0, len);
-                    bytesSent.addAndGet(len);
-                    publishProgress();
-                }
-                outstream.flush();
-            } finally {
-                mInputStream.close();
-            }
-        }
-
-
-        @Override
-        public InputStream getContent() throws IllegalStateException {
-            return mInputStream;
-        }
-
-
-        @Override
-        public long getContentLength() {
-            return mLength;
-        }
-
-
-        @Override
-        public boolean isRepeatable() {
-            return false;
-        }
-
-
-        @Override
-        public boolean isStreaming() {
-            return false;
-        }
-    }
-
 
     @SuppressWarnings("CharsetObjectCanBeUsed")
     public static ByteArrayInputStream getInputStream(String string) {
