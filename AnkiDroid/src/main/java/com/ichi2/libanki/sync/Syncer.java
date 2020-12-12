@@ -94,11 +94,6 @@ public class Syncer {
     }
 
 
-    /** Returns 'noChanges', 'fullSync', 'success', etc */
-    public Pair<ConnectionResultType, Object> sync() throws UnknownHttpResponseException {
-        return sync(null);
-    }
-
     public enum ConnectionResultType {
         BAD_AUTH("badAuth"),
         NO_CHANGES("noChanges"),
