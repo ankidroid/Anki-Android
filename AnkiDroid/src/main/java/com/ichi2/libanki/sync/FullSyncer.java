@@ -61,7 +61,7 @@ public class FullSyncer extends HttpSyncer {
     }
 
     @Override
-    public Pair<ConnectionResultType, Object[]> download() throws UnknownHttpResponseException {
+    public @NonNull ConnectionResultType download() throws UnknownHttpResponseException {
         InputStream cont;
         ResponseBody body = null;
         try {
@@ -96,14 +96,14 @@ public class FullSyncer extends HttpSyncer {
             FileInputStream fis = new FileInputStream(tpath);
             if ("upgradeRequired".equals(super.stream2String(fis, 15))) {
                 Timber.w("Full Sync - 'Upgrade Required' message received");
-                return new Pair<>(UPGRADE_REQUIRED, null);
+                return UPGRADE_REQUIRED;
             }
         } catch (FileNotFoundException e) {
             Timber.e(e, "Failed to create temp file when downloading collection.");
             throw new RuntimeException(e);
         } catch (IOException e) {
             Timber.e(e, "Full sync failed to download collection.");
-            return new Pair<>(SD_ACCESS_ERROR, null);
+            return SD_ACCESS_ERROR;
         } finally {
             body.close();
         }
@@ -115,11 +115,11 @@ public class FullSyncer extends HttpSyncer {
             tempDb = new DB(tpath);
             if (!"ok".equalsIgnoreCase(tempDb.queryString("PRAGMA integrity_check"))) {
                 Timber.e("Full sync - downloaded file corrupt");
-                return new Pair<>(REMOTE_DB_ERROR, null);
+                return REMOTE_DB_ERROR;
             }
         } catch (SQLiteDatabaseCorruptException e) {
             Timber.e("Full sync - downloaded file corrupt");
-            return new Pair<>(REMOTE_DB_ERROR, null);
+            return REMOTE_DB_ERROR;
         } finally {
             if (tempDb != null) {
                 tempDb.close();
@@ -130,10 +130,10 @@ public class FullSyncer extends HttpSyncer {
         File newFile = new File(tpath);
         if (newFile.renameTo(new File(path))) {
             Timber.i("Full Sync Success: Overwritten collection with downloaded file");
-            return new Pair<>(SUCCESS, null);
+            return SUCCESS;
         } else {
             Timber.w("Full Sync: Error overwriting collection with downloaded file");
-            return new Pair<>(OVERWRITE_ERROR, null);
+            return OVERWRITE_ERROR;
         }
     }
 

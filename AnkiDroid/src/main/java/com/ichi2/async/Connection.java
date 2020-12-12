@@ -374,12 +374,11 @@ public class Connection extends BaseAsyncTask<Connection.Payload, Object, Connec
                     // Disable sync cancellation for full-sync
                     sIsCancellable = false;
                     server = new FullSyncer(col, hkey, this, hostNum);
-                    Pair<ConnectionResultType, Object[]> ret;
                     switch (conflictResolution) {
-                    case FULL_UPLOAD:
+                    case FULL_UPLOAD: {
                         Timber.i("Sync - fullsync - upload collection");
                         publishProgress(R.string.sync_preparing_full_sync_message);
-                        ret = server.upload();
+                        Pair<ConnectionResultType, Object[]> ret = server.upload();
                         col.reopen();
                         if (ret == null) {
                             data.success = false;
@@ -393,31 +392,32 @@ public class Connection extends BaseAsyncTask<Connection.Payload, Object, Connec
                             return data;
                         }
                         break;
-                    case FULL_DOWNLOAD:
+                    }
+                    case FULL_DOWNLOAD: {
                         Timber.i("Sync - fullsync - download collection");
                         publishProgress(R.string.sync_downloading_message);
-                        ret = server.download();
+                        ConnectionResultType ret = server.download();
                         if (ret == null) {
                             Timber.w("Sync - fullsync - unknown error");
                             data.success = false;
                             data.resultType = GENERIC_ERROR;
                             return data;
                         }
-                        if (SUCCESS == ret.first) {
+                        if (SUCCESS == ret) {
                             data.success = true;
                             col.reopen();
                         }
-                        if (SUCCESS != ret.first) {
+                        if (SUCCESS != ret) {
                             Timber.w("Sync - fullsync - download failed");
                             data.success = false;
-                            data.resultType = ret.first;
-                            data.result = ret.second;
+                            data.resultType = ret;
                             if (!colCorruptFullSync) {
                                 col.reopen();
                             }
                             return data;
                         }
                         break;
+                    }
                     default:
                     }
                 } catch (OutOfMemoryError e) {
