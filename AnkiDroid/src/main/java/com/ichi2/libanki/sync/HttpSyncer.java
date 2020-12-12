@@ -377,7 +377,7 @@ public class HttpSyncer {
     }
 
 
-    public Pair<Syncer.ConnectionResultType, Object[]> download() throws UnknownHttpResponseException {
+    public @Nullable Syncer.ConnectionResultType download() throws UnknownHttpResponseException {
         return null;
     }
 
