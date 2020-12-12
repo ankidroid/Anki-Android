@@ -83,8 +83,8 @@ public class MediaSyncer {
         mCon = con;
     }
 
-
-    public Pair<ConnectionResultType, Object> sync() throws UnknownHttpResponseException, MediaSyncException {
+    // Returned string may be null. ConnectionResultType and Pair are not null
+    public Pair<ConnectionResultType, String> sync() throws UnknownHttpResponseException, MediaSyncException {
             // check if there have been any changes
             // If we haven't built the media db yet, do so on this sync. See note at the top
             // of this class about this difference to the original.

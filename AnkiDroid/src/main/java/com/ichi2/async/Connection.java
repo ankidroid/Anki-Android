@@ -457,7 +457,7 @@ public class Connection extends BaseAsyncTask<Connection.Payload, Object, Connec
             if (media) {
                 server = new RemoteMediaServer(col, hkey, this, hostNum);
                 MediaSyncer mediaClient = new MediaSyncer(col, (RemoteMediaServer) server, this);
-                Pair<ConnectionResultType, Object> ret;
+                Pair<ConnectionResultType, String> ret;
                 try {
                     Timber.i("Sync - Performing media sync");
                     ret = mediaClient.sync();
