@@ -464,7 +464,7 @@ public class Connection extends BaseAsyncTask<Connection.Payload, Object, Connec
                     if (ret == null || ret.first == null) {
                         mediaError = AnkiDroidApp.getAppResources().getString(R.string.sync_media_error);
                     } else {
-                        if ("corruptMediaDB".equals(ret)) {
+                        if (CORRUPT == ret.first) {
                             mediaError = AnkiDroidApp.getAppResources().getString(R.string.sync_media_db_error);
                             noMediaChanges = true;
                         }
