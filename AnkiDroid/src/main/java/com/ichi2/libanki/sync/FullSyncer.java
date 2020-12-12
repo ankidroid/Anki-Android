@@ -37,6 +37,8 @@ import java.io.InputStream;
 import java.util.HashMap;
 import java.util.Locale;
 
+import androidx.annotation.NonNull;
+
 import okhttp3.Response;
 import okhttp3.ResponseBody;
 import timber.log.Timber;

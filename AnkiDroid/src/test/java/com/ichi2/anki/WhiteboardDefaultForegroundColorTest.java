@@ -35,18 +35,13 @@ public class WhiteboardDefaultForegroundColorTest extends RobolectricTest {
     public boolean mIsInverted;
 
     @ParameterizedRobolectricTestRunner.Parameter(1)
-    public boolean mIsMonochrome;
-
-    @ParameterizedRobolectricTestRunner.Parameter(2)
     public int mExpectedResult;
 
     @ParameterizedRobolectricTestRunner.Parameters
     public static java.util.Collection<Object[]> initParameters() {
         return Arrays.asList(new Object[][] {
-                { true, true, Color.WHITE },
-                { true, false, 0xFF0099FF },       // obtained from colors.xml (FF for the alpha channel)
-                { false, true, Color.BLACK },
-                { false, false, 0xB00000FF } });   // obtained from colors.xml
+                { true, Color.WHITE },
+                { false, Color.BLACK } });
     }
 
     @Test
@@ -57,6 +52,6 @@ public class WhiteboardDefaultForegroundColorTest extends RobolectricTest {
 
     protected int getForegroundColor() {
         AbstractFlashcardViewer mock = super.startActivityNormallyOpenCollectionWithIntent(Reviewer.class, new Intent());
-        return new Whiteboard(mock, mIsInverted, mIsMonochrome).getForegroundColor();
+        return new Whiteboard(mock, mIsInverted).getForegroundColor();
     }
 }

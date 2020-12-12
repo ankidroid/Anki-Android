@@ -101,7 +101,6 @@ import static com.ichi2.anim.ActivityTransitionAnimation.Direction.*;
 public class Reviewer extends AbstractFlashcardViewer {
     private boolean mHasDrawerSwipeConflicts = false;
     private boolean mShowWhiteboard = true;
-    private boolean mBlackWhiteboard = true;
     private boolean mPrefFullscreenReview = false;
     private static final int ADD_NOTE = 12;
     private static final int REQUEST_AUDIO_PERMISSION = 0;
@@ -912,7 +911,6 @@ public class Reviewer extends AbstractFlashcardViewer {
         mPrefHideDueCount = preferences.getBoolean("hideDueCount", false);
         mPrefShowETA = preferences.getBoolean("showETA", true);
         this.mProcessor.setup();
-        mBlackWhiteboard = preferences.getBoolean("blackWhiteboard", true);
         mPrefFullscreenReview = Integer.parseInt(preferences.getString("fullscreenMode", "0")) > 0;
         mActionButtons.setup(preferences);
         return preferences;
@@ -1151,7 +1149,7 @@ public class Reviewer extends AbstractFlashcardViewer {
     // Create the whiteboard
     private void createWhiteboard() {
         SharedPreferences sharedPrefs = AnkiDroidApp.getSharedPrefs(this);
-        mWhiteboard = new Whiteboard(this, isInNightMode(), mBlackWhiteboard);
+        mWhiteboard = new Whiteboard(this, isInNightMode());
         FrameLayout.LayoutParams lp2 = new FrameLayout.LayoutParams(
                 ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
         mWhiteboard.setLayoutParams(lp2);

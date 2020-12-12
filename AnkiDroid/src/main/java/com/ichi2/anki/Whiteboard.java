@@ -40,6 +40,7 @@ import android.view.Display;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.WindowManager;
+import android.widget.Button;
 import android.widget.LinearLayout;
 
 import com.ichi2.libanki.utils.Time;
@@ -85,23 +86,21 @@ public class Whiteboard extends View {
     @Nullable
     private OnPaintColorChangeListener mOnPaintColorChangeListener;
 
-    public Whiteboard(AbstractFlashcardViewer cardViewer, boolean inverted, boolean monochrome) {
+    public Whiteboard(AbstractFlashcardViewer cardViewer, boolean inverted) {
         super(cardViewer, null);
         mCardViewer = new WeakReference<>(cardViewer);
 
+        Button whitePenColorButton = cardViewer.findViewById(R.id.pen_color_white);
+        Button blackPenColorButton = cardViewer.findViewById(R.id.pen_color_black);
 
         if (!inverted) {
-            if (monochrome) {
+                whitePenColorButton.setVisibility(View.GONE);
+                blackPenColorButton.setOnClickListener(this::onClick);
                 foregroundColor = Color.BLACK;
-            } else {
-                foregroundColor = ContextCompat.getColor(cardViewer, R.color.wb_fg_color);
-            }
         } else {
-            if (monochrome) {
+                blackPenColorButton.setVisibility(View.GONE);
+                whitePenColorButton.setOnClickListener(this::onClick);
                 foregroundColor = Color.WHITE;
-            } else {
-                foregroundColor = ContextCompat.getColor(cardViewer, R.color.wb_fg_color_inv);
-            }
         }
 
         mPaint = new Paint();
@@ -120,8 +119,6 @@ public class Whiteboard extends View {
         // selecting pen color to draw
         mColorPalette = cardViewer.findViewById(R.id.whiteboard_pen_color);
 
-        cardViewer.findViewById(R.id.pen_color_white).setOnClickListener(this::onClick);
-        cardViewer.findViewById(R.id.pen_color_black).setOnClickListener(this::onClick);
         cardViewer.findViewById(R.id.pen_color_red).setOnClickListener(this::onClick);
         cardViewer.findViewById(R.id.pen_color_green).setOnClickListener(this::onClick);
         cardViewer.findViewById(R.id.pen_color_blue).setOnClickListener(this::onClick);
@@ -259,7 +256,7 @@ public class Whiteboard extends View {
 
     private void createBitmap() {
         // To fix issue #1336, just make the whiteboard big and square.
-        final Point p = getDisplayDimenions();
+        final Point p = getDisplayDimensions();
         int bitmapSize = Math.max(p.x, p.y);
         createBitmap(bitmapSize, bitmapSize);
     }
@@ -361,7 +358,7 @@ public class Whiteboard extends View {
         return false;
     }
 
-    private static Point getDisplayDimenions() {
+    private static Point getDisplayDimensions() {
         Display display = ((WindowManager) AnkiDroidApp.getInstance().getApplicationContext().
                 getSystemService(Context.WINDOW_SERVICE)).getDefaultDisplay();
         Point point = new Point();
