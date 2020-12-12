@@ -1849,7 +1849,7 @@ public class DeckPicker extends NavigationDrawerActivity implements
             }
             String syncMessage = data.message;
             if (!data.success) {
-                Object[] result = (Object[]) data.result;
+                Object[] result = data.result;
                 if (result[0] instanceof String) {
                     String resultType = (String) result[0];
                     switch (resultType) {
