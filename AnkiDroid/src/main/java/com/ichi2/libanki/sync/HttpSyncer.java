@@ -341,62 +341,6 @@ public class HttpSyncer {
         }
     }
 
-
-    public Response hostKey(String arg1, String arg2) throws UnknownHttpResponseException {
-        return null;
-    }
-
-
-    public JSONObject applyChanges(JSONObject kw) throws UnknownHttpResponseException {
-        return null;
-    }
-
-
-    public JSONObject start(JSONObject kw) throws UnknownHttpResponseException {
-        return null;
-    }
-
-
-    public JSONObject chunk() throws UnknownHttpResponseException {
-        return null;
-    }
-
-
-    public long finish() throws UnknownHttpResponseException {
-        return 0;
-    }
-
-
-    public void abort() throws UnknownHttpResponseException {
-        // do nothing
-    }
-
-
-    public Response meta() throws UnknownHttpResponseException {
-        return null;
-    }
-
-
-    public @Nullable Syncer.ConnectionResultType download() throws UnknownHttpResponseException {
-        return null;
-    }
-
-
-    public Pair<Syncer.ConnectionResultType, Object[]> upload() throws UnknownHttpResponseException {
-        return null;
-    }
-
-
-    public JSONObject sanityCheck2(JSONObject client) throws UnknownHttpResponseException {
-        return null;
-    }
-
-
-    public void applyChunk(JSONObject sech) throws UnknownHttpResponseException {
-        // do nothing
-    }
-
-
     public class ProgressByteEntity extends AbstractHttpEntity {
 
         private InputStream mInputStream;
