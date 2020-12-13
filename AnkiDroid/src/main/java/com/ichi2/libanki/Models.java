@@ -1096,7 +1096,7 @@ public class Models {
         String[] fields = trimArray(sfld);
         JSONArray reqArray = m.getJSONArray("req");
         ArrayList<Integer> avail = new ArrayList<>(reqArray.length());
-        templates: for (int i = 0; i < reqArray.length(); i++) {
+        for (int i = 0; i < reqArray.length(); i++) {
             JSONArray sr = reqArray.getJSONArray(i);
 
             int ord = sr.getInt(0);
