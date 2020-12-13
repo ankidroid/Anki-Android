@@ -1502,7 +1502,7 @@ public class NoteEditor extends AnkiActivity {
 
             edit_line_view.setTypeface(mCustomTypeface);
             edit_line_view.setHintLocale(getHintLocaleForField(edit_line_view.getName()));
-            initFieldEditText(newTextbox, i, !editModelMode, clipboard);
+            initFieldEditText(newTextbox, i, !editModelMode);
             mEditFields.add(newTextbox);
             SharedPreferences prefs = AnkiDroidApp.getSharedPrefs(this);
             if (prefs.getInt("note_editor_font_size", -1) > 0) {
@@ -1720,7 +1720,7 @@ public class NoteEditor extends AnkiActivity {
     }
 
 
-    private void initFieldEditText(FieldEditText editText, final int index, boolean enabled, @Nullable ClipboardManager clipboard) {
+    private void initFieldEditText(FieldEditText editText, final int index, boolean enabled) {
         // Listen for changes in the first field so we can re-check duplicate status.
         editText.addTextChangedListener(new EditFieldTextWatcher(index));
         if (index == 0) {
