@@ -82,7 +82,7 @@ public class PeripheralCommand {
     }
 
     private static PeripheralCommand unicode(char unicodeChar, @ViewerCommandDef int command, CardSide side, ModifierKeys modifierKeys) {
-        return new PeripheralCommand((Character) unicodeChar, command, side, modifierKeys);
+        return new PeripheralCommand(unicodeChar, command, side, modifierKeys);
     }
 
     public static PeripheralCommand keyCode(int keyCode, @ViewerCommandDef int command, CardSide side) {

@@ -104,14 +104,14 @@ public class DeckAdapter<T extends AbstractDeckTreeNode<T>> extends RecyclerView
 
         public ViewHolder(View v) {
             super(v);
-            deckLayout = (RelativeLayout) v.findViewById(R.id.DeckPickerHoriz);
-            countsLayout = (LinearLayout) v.findViewById(R.id.counts_layout);
-            deckExpander = (ImageButton) v.findViewById(R.id.deckpicker_expander);
-            indentView = (ImageButton) v.findViewById(R.id.deckpicker_indent);
-            deckName = (TextView) v.findViewById(R.id.deckpicker_name);
-            deckNew = (TextView) v.findViewById(R.id.deckpicker_new);
-            deckLearn = (TextView) v.findViewById(R.id.deckpicker_lrn);
-            deckRev = (TextView) v.findViewById(R.id.deckpicker_rev);
+            deckLayout = v.findViewById(R.id.DeckPickerHoriz);
+            countsLayout = v.findViewById(R.id.counts_layout);
+            deckExpander = v.findViewById(R.id.deckpicker_expander);
+            indentView = v.findViewById(R.id.deckpicker_indent);
+            deckName = v.findViewById(R.id.deckpicker_name);
+            deckNew = v.findViewById(R.id.deckpicker_new);
+            deckLearn = v.findViewById(R.id.deckpicker_lrn);
+            deckRev = v.findViewById(R.id.deckpicker_rev);
         }
     }
 

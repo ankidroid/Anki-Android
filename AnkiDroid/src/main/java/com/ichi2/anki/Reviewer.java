@@ -1160,7 +1160,7 @@ public class Reviewer extends AbstractFlashcardViewer {
         // This is how all other whiteboard settings are
         Integer whiteboardPenColor = MetaDB.getWhiteboardPenColor(this, getParentDid()).fromPreferences(sharedPrefs);
         if (whiteboardPenColor != null) {
-            mWhiteboard.setPenColor((int) whiteboardPenColor);
+            mWhiteboard.setPenColor(whiteboardPenColor);
         }
 
         mWhiteboard.setOnPaintColorChangeListener(color -> MetaDB.storeWhiteboardPenColor(this, getParentDid(), !CardAppearance.isInNightMode(sharedPrefs), color));
