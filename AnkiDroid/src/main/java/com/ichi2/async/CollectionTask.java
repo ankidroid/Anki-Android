@@ -1204,17 +1204,17 @@ public class CollectionTask<ProgressListener, ProgressBackground extends Progres
         // Don't proceed if collection closed
         if (col == null) {
             Timber.e("doInBackgroundCheckDatabase :: supplied collection was null");
-            return new Pair(false, null);
+            return new Pair<>(false, null);
         }
 
         Collection.CheckDatabaseResult result = col.fixIntegrity(new TaskManager.ProgressCallback(collectionTask, AnkiDroidApp.getAppResources()));
         if (result.getFailed()) {
             //we can fail due to a locked database, which requires knowledge of the failure.
-            return new Pair(false, result);
+            return new Pair<>(false, result);
         } else {
             // Close the collection and we restart the app to reload
             CollectionHelper.getInstance().closeCollection(true, "Check Database Completed");
-            return new Pair(true, result);
+            return new Pair<>(true, result);
         }
     }
     }
@@ -1489,18 +1489,18 @@ public class CollectionTask<ProgressListener, ProgressBackground extends Progres
                 exporter.exportInto(apkgPath, col.getContext());
             } catch (FileNotFoundException e) {
                 Timber.e(e, "FileNotFoundException in doInBackgroundExportApkg");
-                return new Pair(false, null);
+                return new Pair<>(false, null);
             } catch (IOException e) {
                 Timber.e(e, "IOException in doInBackgroundExportApkg");
-                return new Pair(false, null);
+                return new Pair<>(false, null);
             } catch (JSONException e) {
                 Timber.e(e, "JSOnException in doInBackgroundExportApkg");
-                return new Pair(false, null);
+                return new Pair<>(false, null);
             } catch (ImportExportException e) {
                 Timber.e(e, "ImportExportException in doInBackgroundExportApkg");
-                return new Pair(true, e.getMessage());
+                return new Pair<>(true, e.getMessage());
             }
-            return new Pair(false, apkgPath);
+            return new Pair<>(false, apkgPath);
         }
     }
 
@@ -1746,7 +1746,7 @@ public class CollectionTask<ProgressListener, ProgressBackground extends Progres
             } finally {
                 DB.safeEndInTransaction(col.getDb());
             }
-            return new Pair(true, null);
+            return new Pair<>(true, null);
         }
     }
 

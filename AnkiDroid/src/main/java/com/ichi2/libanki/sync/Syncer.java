@@ -492,9 +492,9 @@ public class Syncer {
 
     private Pair<String, Object[]> usnLim() {
         if (mCol.getServer()) {
-            return new Pair("usn >= ?", new Object[] {mMinUsn});
+            return new Pair<>("usn >= ?", new Object[] {mMinUsn});
         } else {
-            return new Pair("usn = -1", null);
+            return new Pair<>("usn = -1", null);
         }
     }
 
