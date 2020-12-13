@@ -416,7 +416,7 @@ public class DeckAdapter<T extends AbstractDeckTreeNode<T>> extends RecyclerView
         }
 
 
-        private <T extends AbstractDeckTreeNode<T>> List<T> filterDecks(String filterPattern, List<T> allDecks) {
+        private List<T> filterDecks(String filterPattern, List<T> allDecks) {
             ArrayList<T> ret = new ArrayList<>(allDecks.size());
             for (T tag : allDecks) {
                 T node = filterDeckInternal(filterPattern, tag);
@@ -428,7 +428,7 @@ public class DeckAdapter<T extends AbstractDeckTreeNode<T>> extends RecyclerView
         }
 
         @Nullable
-        private <T extends AbstractDeckTreeNode<T>> T filterDeckInternal(String filterPattern, T root) {
+        private T filterDeckInternal(String filterPattern, T root) {
 
             // If a deck contains the string, then all its children are valid
             if (containsFilterString(filterPattern, root)) {
@@ -449,7 +449,7 @@ public class DeckAdapter<T extends AbstractDeckTreeNode<T>> extends RecyclerView
         }
 
 
-        private <T extends AbstractDeckTreeNode<T>> boolean containsFilterString(String filterPattern, T root) {
+        private boolean containsFilterString(String filterPattern, T root) {
             String deckName = root.getFullDeckName();
             return deckName.toLowerCase(Locale.getDefault()).contains(filterPattern) || deckName.toLowerCase(Locale.ROOT).contains(filterPattern);
         }
