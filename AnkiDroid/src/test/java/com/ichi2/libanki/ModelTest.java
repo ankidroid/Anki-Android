@@ -478,7 +478,7 @@ public class ModelTest extends RobolectricTest {
     public void test_getNamesOfFieldContainingCloze() {
         assertEquals(new ArrayList<>(), Models.getNamesOfFieldsContainingCloze(""));
         String example = "{{cloze::foo}} <%cloze:bar%>";
-        assertEquals(Arrays.asList(new String[] {"foo", "bar"}), Models.getNamesOfFieldsContainingCloze(example));
-        assertEquals(Arrays.asList(new String[] {"foo", "bar"}), Models.getNamesOfFieldsContainingCloze(example));
+        assertEquals(Arrays.asList("foo", "bar"), Models.getNamesOfFieldsContainingCloze(example));
+        assertEquals(Arrays.asList("foo", "bar"), Models.getNamesOfFieldsContainingCloze(example));
     }
 }
