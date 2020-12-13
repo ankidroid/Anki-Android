@@ -219,7 +219,7 @@ public class ReviewerTest extends RobolectricTest {
         MockTime time = (MockTime) col.getTime();
         nw.put("delays", new JSONArray(new int[] {1, 10, 60, 120}));
 
-        Card cards[] = new Card[4];
+        Card[] cards = new Card[4];
         cards[0] = addRevNoteUsingBasicModelDueToday("1", "bar").firstCard();
         cards[1] = addNoteUsingBasicModel("2", "bar").firstCard();
         cards[2] = addNoteUsingBasicModel("3", "bar").firstCard();
