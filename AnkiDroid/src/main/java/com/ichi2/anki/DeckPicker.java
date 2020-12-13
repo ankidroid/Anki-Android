@@ -2343,10 +2343,10 @@ public class DeckPicker extends NavigationDrawerActivity implements
     }
 
 
-    private UpdateDeckListListener updateDeckListListener() {
-        return new UpdateDeckListListener(this);
+    private <T extends AbstractDeckTreeNode<T>> UpdateDeckListListener<T> updateDeckListListener() {
+        return new UpdateDeckListListener<T>(this);
     }
-    private static class  UpdateDeckListListener<T extends AbstractDeckTreeNode<T>> extends TaskListenerWithContext<DeckPicker, Void, List<T>>{
+    private static class UpdateDeckListListener<T extends AbstractDeckTreeNode<T>> extends TaskListenerWithContext<DeckPicker, Void, List<T>>{
         public UpdateDeckListListener(DeckPicker deckPicker) {
             super(deckPicker);
         }
