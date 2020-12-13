@@ -64,8 +64,6 @@
     <string name="about_version">Phiên bản: </string>
     <!-- preferences.xml entries-->
     <string name="whiteboard_stroke_width">Chiều rộng không cố định</string>
-    <string name="whiteboard_black">Màu đen không cố định</string>
-    <string name="whiteboard_black_summ">Sử dụng ít bộ nhớ, trừ khi ở chế độ ban đêm</string>
     <string name="use_input_tag">Type answer into the card</string>
     <string name="use_input_tag_summ">Use a text input box inside the card to type in the answer</string>
     <string name="dictionary">Tra cứu từ điển</string>

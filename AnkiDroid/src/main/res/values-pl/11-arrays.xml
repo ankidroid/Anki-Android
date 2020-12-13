@@ -110,5 +110,5 @@
     <string name="gesture_flag_remove">Usuń flagę</string>
     <string name="gesture_page_up">Przewiń w górę</string>
     <string name="gesture_page_down">Przewiń w dół</string>
-    <string name="gesture_abort_sync">Abort Learning and Sync</string>
+    <string name="gesture_abort_sync">Przerwij naukę i synchronizuj</string>
 </resources>

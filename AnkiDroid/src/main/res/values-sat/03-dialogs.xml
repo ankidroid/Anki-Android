@@ -188,7 +188,7 @@
     <string name="database_locked_title">ᱥᱟᱫᱽᱠᱷᱤᱭᱟᱹ ᱵᱟᱹᱭᱥᱟᱣ ᱞᱚᱠ ᱮᱱᱟ</string>
     <string name="database_locked_summary">AnkiDroid ᱥᱟᱫᱽᱠᱷᱤᱭᱟᱹ ᱵᱟᱹᱭᱥᱟᱣ ᱫᱚ ᱚᱞᱜᱟ ᱮᱯᱞᱤᱠᱮᱥᱚᱱ ᱠᱟᱢᱤ ᱨᱮ ᱟᱜᱩᱭᱮᱫᱟᱭ ᱾ ᱫᱚᱭᱟᱠᱟᱛᱮ AnkiDroid ᱵᱚᱸᱫ ᱠᱟᱛᱮ ᱯᱦᱮᱨ ᱥᱮ ᱠᱷᱩᱞᱟᱹᱭ ᱢᱮ ᱾</string>
     <string name="incompatible_database_version_title">ᱵᱟᱝ ᱴᱷᱤᱠ ᱵᱟᱴᱟᱵᱮᱥ ᱵᱷᱟᱹᱨᱥᱟᱹᱱ</string>
-    <string name="incompatible_database_version_summary">ᱰᱟᱴᱟᱵᱮᱥ ᱫᱚ ᱱᱚᱶᱟ AnkiDroid ᱵᱷᱟᱹᱥᱚᱱ ᱠᱷᱚᱱ ᱡᱟᱹᱛᱤ ᱮᱰᱵᱷᱟᱱᱥ ᱜᱮᱭᱟ ᱾ ᱠᱷᱚᱞᱟ ᱞᱟᱹᱜᱤᱫᱽ ᱰᱟᱴᱟᱵᱮᱥ ᱟᱹᱯᱜᱮᱰ ᱟᱨ ᱵᱟᱝ ᱰᱟᱩᱱᱜᱨᱮᱰ ᱢᱮᱸ\n\n ᱥᱟᱹᱯᱚᱴ ᱵᱷᱟᱹᱨᱥᱚᱱᱺ %1$d\n ᱰᱟᱴᱟᱵᱮᱥ ᱵᱷᱟᱹᱥᱚᱱᱺ %2$d\n\n ᱱᱚᱶᱟ ᱠᱚ ᱨᱤᱥᱴᱚᱨ ᱚᱯᱥᱚᱱ ᱠᱚ ᱟᱢᱟᱜᱽ ᱱᱤᱛᱚᱜᱼᱟᱜ ᱛᱩᱢᱟᱹ ᱥᱟᱞᱟᱜᱽ ᱫᱩᱦᱲᱟᱹ ᱚᱞᱚᱜᱚᱜ ᱠᱚᱢᱯᱟᱴᱤᱵᱟᱹᱞ ᱰᱟᱴᱟᱵᱮᱥ ᱵᱷᱟᱹᱥᱚᱱ ᱥᱟᱞᱟᱜᱽ ᱛᱮᱺ</string>
+    <string name="incompatible_database_version_summary">ᱰᱟᱴᱟᱵᱮᱥ ᱫᱚ ᱱᱚᱶᱟ AnkiDroid ᱵᱷᱟᱹᱥᱚᱱ ᱠᱷᱚᱱ ᱡᱟᱹᱛᱤ ᱮᱰᱵᱷᱟᱱᱥ ᱜᱮᱭᱟ ᱾ ᱠᱷᱚᱞᱟ ᱞᱟᱹᱜᱤᱫᱽ ᱰᱟᱴᱟᱵᱮᱥ ᱟᱹᱯᱜᱮᱰ ᱟᱨ ᱵᱟᱝ ᱰᱟᱩᱱᱜᱨᱮᱰ ᱢᱮ\n\n ᱥᱟᱹᱯᱚᱴ ᱵᱷᱟᱹᱨᱥᱚᱱᱺ %1$d\n ᱰᱟᱴᱟᱵᱮᱥ ᱵᱷᱟᱹᱥᱚᱱᱺ %2$d\n\n ᱱᱚᱶᱟ ᱠᱚ ᱨᱤᱥᱴᱚᱨ ᱚᱯᱥᱚᱱ ᱠᱚ ᱟᱢᱟᱜᱽ ᱱᱤᱛᱚᱜᱼᱟᱜ ᱛᱩᱢᱟᱹ ᱥᱟᱞᱟᱜᱽ ᱫᱩᱦᱲᱟᱹ ᱚᱞᱚᱜᱚᱜ ᱠᱚᱢᱯᱟᱴᱤᱵᱟᱹᱞ ᱰᱟᱴᱟᱵᱮᱥ ᱵᱷᱟᱹᱥᱚᱱ ᱥᱟᱞᱟᱜᱽ ᱛᱮᱺ</string>
     <!-- Deck Picker Background-->
     <string name="background_image_applied">ᱚᱱᱚᱰ ᱪᱮᱛᱟᱨ ᱵᱟᱦᱟᱞᱮᱱᱟ</string>
     <string name="background_image_removed">ᱚᱱᱚᱰ ᱪᱤᱛᱟᱨ ᱦᱟᱴᱟᱣ ᱮᱱᱟ</string>
@@ -214,7 +214,7 @@
     <string name="help_item_ankidroid_manual">AnkiDroid ᱢᱮᱱᱩᱟᱞ</string>
     <string name="help_item_anki_manual">Anki ᱢᱮᱱᱩᱟᱞ</string>
     <string name="help_item_ankidroid_faq">AnkiDroid FAQ</string>
-    <string name="help_title_get_help">ᱜᱚᱲᱚ ᱧᱟᱢ ᱢᱮᱸ</string>
+    <string name="help_title_get_help">ᱜᱚᱲᱚ ᱧᱟᱢ ᱢᱮ</string>
     <string name="help_item_mailing_list">ᱢᱮᱞᱤᱝ ᱞᱤᱥᱴ</string>
     <string name="help_item_reddit">Reddit</string>
     <string name="help_item_report_bug">ᱵᱟᱹᱜ ᱨᱤᱯᱚᱴ</string>

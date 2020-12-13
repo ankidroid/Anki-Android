@@ -64,8 +64,6 @@
     <string name="about_version">גרסה: </string>
     <!-- preferences.xml entries-->
     <string name="whiteboard_stroke_width">עובי הקו</string>
-    <string name="whiteboard_black">קווים שחורים</string>
-    <string name="whiteboard_black_summ">חוסך בזכרון, חוץ במצב לילה</string>
     <string name="use_input_tag">הקלדת התשובה אל הקלף</string>
     <string name="use_input_tag_summ">להשתמש בתיבת הטקסט שבתוך הקלף כדי להקליד בה את התשובה</string>
     <string name="dictionary">מילון</string>

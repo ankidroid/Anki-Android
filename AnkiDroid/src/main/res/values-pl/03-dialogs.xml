@@ -102,9 +102,9 @@
     </plurals>
     <string name="reschedule_card_dialog_new_card_warning">Karta zostanie ponownie zaplanowana. Ponowne zaplanowanie spowoduje zmianę statusu karty z \"nowa\" na \"powtarzana\". Użyj opcji \"przestaw kartę\" by zmienić pozycję nowej karty karty w kolejce bez zmiany jej statusu</string>
     <string name="reschedule_card_dialog_warning_ease_reset">Ponowne zaplanowanie karty spowoduje także zresetowanie poziomu trudności (zostanie ustawiona na: %d%%)</string>
-    <string name="firefox_workaround_launched_reviewer_opening_deck">Select the deck in your file manager or visit the about:downloads page to import it</string>
+    <string name="firefox_workaround_launched_reviewer_opening_deck">Wybierz talię w twoim menedżerze plików lub odwiedź stronę about:downloads, by ją zaimportować</string>
     <string name="answering_error_title">Błąd bazy danych</string>
-    <string name="answering_error_message">Writing to the collection failed. The database could be corrupt or there may not to be enough empty space on disk.\n\nIf this happens more often, try checking the database, repairing the collection or restoring it from a backup. Touch “options” for that.\n\Or it could be an AnkiDroid bug as well; please report the error so that we can check this.</string>
+    <string name="answering_error_message">Wystąpił błąd podczas zapisywania do kolekcji. Powodem może być uszkodzenie bazy danych albo niewystarczająca ilość miejsca na dysku.\n\nJeśli błąd ten występuje często, spróbuj użyć opcji \"sprawdź bazę danych\" oraz naprawić kolekcję lub przywróć ją z kopii zapasowej (by tego dokonać kliknij „opcje”).\n\nRównie dobrze może to być też błąd AnkiDroid; zgłoś go abyśmy mogli to sprawdzić.</string>
     <string name="answering_error_report">Zgłoś błąd</string>
     <string name="repair_deck_dialog">Czy na pewno chcesz próbować naprawić bazę danych? \n\nPrzed próbą naprawy zostanie utworzona kopia w katalogu \'%s\'.</string>
     <string name="intent_aedict_empty">Kategoria \'Domyślne\' jest pusta</string>
@@ -157,7 +157,7 @@
     <string name="check_media_db_updated">Baza mediów przebudowana.</string>
     <string name="check_media_delete_unused">Usuń nieużywane</string>
     <string name="delete_media_message">Usuwanie mediów&#8230;</string>
-    <string name="delete_media_result_title">Deletion result</string>
+    <string name="delete_media_result_title">Wynik usuwania</string>
     <plurals name="delete_media_result_message">
         <item quantity="one">Usunięto %d plik</item>
         <item quantity="few">Usunięto %d pliki</item>
@@ -221,7 +221,7 @@
     <string name="boot_service_failed_to_schedule_notifications">Nie udało się ustawić przypomnień</string>
     <string name="boot_service_too_many_notifications">Ustawiono zbyt dużo przypomnień. Niektóre się nie pojawią</string>
     <!-- Locale Selection Dialog -->
-    <string name="locale_selection_dialog_title">Keyboard Language Selection</string>
+    <string name="locale_selection_dialog_title">Wybór języka klawiatury</string>
     <string name="locale_selection_dialog_summary">Niektóre wielojęzyczne klawiatury takie jak GBoard obsługują zmianę języka podczas edycji tekstu\n\nJeśli twoja klawiatura automatycznie nie zmienia języka, możesz spróbować poprosić jej twórcę o włączenie funkcji „setImeHintLocales”.</string>
     <!-- Help Dialog -->
     <string name="help_title_using_ankidroid">Używanie AnkiDroid</string>
@@ -229,7 +229,7 @@
     <string name="help_item_anki_manual">Podręcznik Anki</string>
     <string name="help_item_ankidroid_faq">AnkiDroid FAQ</string>
     <string name="help_title_get_help">Uzyskaj pomoc</string>
-    <string name="help_item_mailing_list">Mailing List</string>
+    <string name="help_item_mailing_list">Lista mailingowa</string>
     <string name="help_item_reddit">Reddit</string>
     <string name="help_item_report_bug">Zgłoś błąd</string>
     <string name="help_title_support_ankidroid">Wesprzyj AnkiDroid</string>

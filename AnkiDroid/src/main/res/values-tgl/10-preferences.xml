@@ -64,8 +64,6 @@
     <string name="about_version">Bersyon: </string>
     <!-- preferences.xml entries-->
     <string name="whiteboard_stroke_width">Lapad ng stroke</string>
-    <string name="whiteboard_black">Itim na stroke</string>
-    <string name="whiteboard_black_summ">Gumagamit ng kaunting memorya, maliban kung sa gabing kalakaran</string>
     <string name="use_input_tag">I-type ang sagot sa card</string>
     <string name="use_input_tag_summ">Gumamit ng isang kahon ng pag-input ng teksto sa loob ng card upang i-type ang sagot</string>
     <string name="dictionary">Paghahanap ng diksyunaryo</string>

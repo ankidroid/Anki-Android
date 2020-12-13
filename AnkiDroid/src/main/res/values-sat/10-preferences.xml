@@ -64,8 +64,6 @@
     <string name="about_version">ᱦᱟᱹᱞᱤᱭᱟᱜ: </string>
     <!-- preferences.xml entries-->
     <string name="whiteboard_stroke_width">ᱥᱴᱨᱚᱠ ᱨᱮᱭᱟᱜ ᱚᱥᱟᱨ</string>
-    <string name="whiteboard_black">ᱦᱮᱸᱫᱮ ᱥᱴᱨᱚᱠᱥ</string>
-    <string name="whiteboard_black_summ">ᱧᱤᱸᱫᱟᱹ ᱢᱚᱰ ᱵᱟᱝ ᱦᱩᱭᱩᱜ ᱦᱟᱹᱵᱤᱡ, ᱠᱚᱢ ᱡᱟᱭᱜᱟ ᱤᱫᱤᱭᱟ</string>
     <string name="use_input_tag">ᱠᱟᱰ ᱨᱮ ᱛᱮᱞᱟ ᱚᱞ ᱛᱟᱢ</string>
     <string name="use_input_tag_summ">ᱛᱮᱞᱟ ᱚᱞ ᱞᱟᱹᱜᱤᱫ ᱠᱟᱰ ᱨᱮᱭᱟᱜ ᱚᱞ ᱟᱫᱮᱨ ᱵᱚᱠᱥᱟ ᱵᱮᱵᱦᱟᱨ ᱢᱮ</string>
     <string name="dictionary">ᱥᱟᱵᱟᱫ ᱢᱚᱱᱮ ᱯᱩᱛᱷᱤ ᱧᱮᱞᱢᱮ</string>

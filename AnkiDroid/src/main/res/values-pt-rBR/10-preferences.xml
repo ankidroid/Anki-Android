@@ -64,8 +64,6 @@
     <string name="about_version">Versão: </string>
     <!-- preferences.xml entries-->
     <string name="whiteboard_stroke_width">Largura do traço</string>
-    <string name="whiteboard_black">Traçados pretos</string>
-    <string name="whiteboard_black_summ">Utilizar menos memória, exceto no modo noturno</string>
     <string name="use_input_tag">Digite a resposta no card</string>
     <string name="use_input_tag_summ">Use um espaço dentro do card para digitar a resposta</string>
     <string name="dictionary">Dicionário de busca</string>

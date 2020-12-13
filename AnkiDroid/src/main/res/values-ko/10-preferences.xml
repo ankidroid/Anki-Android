@@ -64,8 +64,6 @@
     <string name="about_version">버전: </string>
     <!-- preferences.xml entries-->
     <string name="whiteboard_stroke_width">획 두께</string>
-    <string name="whiteboard_black">검은 획</string>
-    <string name="whiteboard_black_summ">야간 모드가 아니라면 메모리를 적게 사용</string>
     <string name="use_input_tag">카드에 정답 입력</string>
     <string name="use_input_tag_summ">카드 안의 텍스트 입력 상자에다가 정답을 입력하도록 사용</string>
     <string name="dictionary">색인 사전</string>

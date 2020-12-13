@@ -64,8 +64,6 @@
     <string name="about_version">Versie: </string>
     <!-- preferences.xml entries-->
     <string name="whiteboard_stroke_width">Lijnbreedte</string>
-    <string name="whiteboard_black">Zwarte lijnen</string>
-    <string name="whiteboard_black_summ">Gebruikt minder geheugen, tenzij in de nachtmodus</string>
     <string name="use_input_tag">Typ het antwoord op de kaart</string>
     <string name="use_input_tag_summ">Een tekstinvoervak gebruiken op de kaart om het antwoord te typen</string>
     <string name="dictionary">Opzoeken in woordenlijst</string>

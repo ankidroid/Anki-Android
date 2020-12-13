@@ -64,8 +64,6 @@
     <string name="about_version">Versión: </string>
     <!-- preferences.xml entries-->
     <string name="whiteboard_stroke_width">Ancho del trazo</string>
-    <string name="whiteboard_black">Trazos negros</string>
-    <string name="whiteboard_black_summ">Utiliza menos memoria, excepto en modo nocturno</string>
     <string name="use_input_tag">Tipear la respuesta en la tarjeta</string>
     <string name="use_input_tag_summ">Utilice un cuadro de ingreso de texto dentro de la tarjeta para tipear la respuesta</string>
     <string name="dictionary">Diccionario de búsqueda</string>

@@ -64,8 +64,6 @@
     <string name="about_version">Versão: </string>
     <!-- preferences.xml entries-->
     <string name="whiteboard_stroke_width">Espessura do traço</string>
-    <string name="whiteboard_black">Traços pretos</string>
-    <string name="whiteboard_black_summ">Usa menos memória, exceto quando no modo noturno</string>
     <string name="use_input_tag">Escrever a resposta na ficha</string>
     <string name="use_input_tag_summ">Use a text input box inside the card to type in the answer</string>
     <string name="dictionary">Procurar dicionário</string>

@@ -203,8 +203,8 @@
     <string name="import_hint">Aby zaimportować karty, umieść plik apkg w katalogu %s i naciśnij ok</string>
     <string name="upgrade_import_no_file_found">Nie znaleziono żadnych plików do zaimportowania (%1$s)</string>
     <string name="study_options" comment="Name for a preference category in Filtered deck (aka Cram deck, aka Custom study) options">Opcje</string>
-    <string name="menu__deck_options">Deck options</string>
-    <string name="menu__study_options" comment="Menu item that opens options for a Filtered deck (aka Cram deck, aka Custom study)">Study options</string>
+    <string name="menu__deck_options">Opcje talii</string>
+    <string name="menu__study_options" comment="Menu item that opens options for a Filtered deck (aka Cram deck, aka Custom study)">Opcje nauki</string>
     <string name="select_tts">Ustaw język TTS</string>
     <string name="custom_study">Nauka niestandardowa</string>
     <string name="more_options">Więcej</string>
@@ -257,7 +257,7 @@
     <!-- A decimal number of seconds.
     Please give this a best-effort translation and explain the requirements for
     formatting decimals in your language in the CrowdIn comments -->
-    <string name="time_span_decimal_seconds">%s seconds</string>
+    <string name="time_span_decimal_seconds">%s sekund</string>
     <!-- The reason for making a simple “< x” translatable are RTL
          languages which apparently use the other symbol to mean less
          than. -->
@@ -293,7 +293,7 @@
     <string name="reviewer_tts_cloze_spoken_replacement">Blank</string>
     <!-- in options menu & Navigation Drawer -->
     <string name="ankidroid_turn_on_fullscreen_nav_drawer">Włącz tryb pełnoekranowy by pokazywać menu boczne przy użyciu JavaScript</string>
-    <string name="ankidroid_turn_on_fullscreen_options_menu">Please turn on fullscreen to use Show Options Menu using JavaScript.</string>
+    <string name="ankidroid_turn_on_fullscreen_options_menu">Włącz tryb pełnoekranowy by pokazywać menu opcji przy użyciu JavaScript</string>
     <!-- Whiteboard save image message in Reviewer -->
     <string name="white_board_image_save_failed">Nie udało się zapisać obrazu tablicy. %s</string>
     <string name="white_board_image_saved">Obraz tablicy zapisany w %s</string>
@@ -303,7 +303,7 @@
     <string name="note_importer_error_empty_first_field">Pierwsze pole puste: %s</string>
     <string name="note_importer_error_first_field_matched">First field matched: %s</string>
     <string name="note_importer_error_added_duplicate_first_field">Dodano duplikat w pierwszym polu: %s</string>
-    <string name="note_importer_error_appeared_twice">Appeared twice in file: %s</string>
+    <string name="note_importer_error_appeared_twice">Pojawił się dwukrotnie w pliku: %s</string>
     <string name="note_importer_error_empty_notes">Jedna lub więcej notatek nie została zaimportowana, ponieważ nie wygenerowały żadnych kart. Może się tak zdarzyć, gdy pola kart są puste lub gdy w pliku tekstowym zawartość nie jest przypisana do odpowiedniego pola</string>
     <string name="csv_importer_error_invalid_field_count">„%1$s” posiada %2$d pól, oczekiwano %3$d</string>
     <string name="csv_importer_error_exception">Przerwano: %s</string>
@@ -338,10 +338,10 @@
     <string name="about_ankidroid_error_copy_debug_info">Błąd kopiowania informacji debugowania do schowka</string>
     <!-- Card Viewer -->
     <string name="card_viewer_could_not_find_image">Błąd zawartości karty, nie udało się załadować: %s</string>
-    <string name="card_viewer_media_relative_protocol">Card Content Error: Media update required</string>
+    <string name="card_viewer_media_relative_protocol">Błąd zawartości karty: Wymagana aktualizacja mediów</string>
     <!-- Deck Picker -->
     <string name="deck_picker_failed_deck_load">Nie udało się załadować talii: %s</string>
-    <string name="search_decks">Search decks</string>
+    <string name="search_decks">Przeszukaj talie</string>
     <string name="ankidroid_init_failed_webview_title">Błąd krytyczny</string>
     <string name="ankidroid_init_failed_webview">AnkiDroid do działania wymaga System WebView który jest teraz niedostępny. Może być to spowodowane trwającą teraz instalacją aktualizacji przez system. Spróbuj ponownie za kilka minut.\n\n%s</string>
     <!-- A Menu item to change the Font Size (currently in the Note Editor) -->

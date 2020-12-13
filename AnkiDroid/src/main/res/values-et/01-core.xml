@@ -83,15 +83,15 @@
     <string name="show_answer">Kuva vastus</string>
     <string name="hide_answer">Peida vastus</string>
     <string name="ease_button_again">Uuesti</string>
-    <string name="ease_button_hard">Keeruline</string>
+    <string name="ease_button_hard">Raske</string>
     <string name="ease_button_good">Hea</string>
     <string name="ease_button_easy">Lihtne</string>
     <string name="studyoptions_congrats_undo">Võta tagasi %s</string>
     <string name="menu_import">Impordi</string>
     <string name="undo">Võta tagasi</string>
     <string name="undo_action_review">viimane ülevaade</string>
-    <string name="undo_action_change_deck_multi">vaheta kogu</string>
-    <string name="move_all_to_deck">Liiguta kõik kogusse</string>
+    <string name="undo_action_change_deck_multi">vaheta kaardipakki</string>
+    <string name="move_all_to_deck">Liiguta kõik kaardipakki</string>
     <string name="unbury">Taasta</string>
     <string name="rename_deck">Nimeta ümber kaardipakk</string>
     <string name="create_shortcut">Loo otsetee</string>
@@ -101,10 +101,10 @@
     <string name="menu_dismiss_note">Peida / kustuta</string>
     <string name="menu_bury_card">Peida kaart</string>
     <string name="menu_bury_note">Peida märge</string>
-    <string name="menu_suspend_card">Peata kaart</string>
+    <string name="menu_suspend_card">Seiska kaart</string>
     <string name="menu_suspend_note">Seiska märge</string>
-    <string name="menu_bury">Mata</string>
-    <string name="menu_suspend">Peata</string>
+    <string name="menu_bury">Peida</string>
+    <string name="menu_suspend">Seiska</string>
     <string name="menu_delete_note">Kustuta märge</string>
     <string name="menu_flag">Lipp</string>
     <string name="menu_flag_card">Pane kaardile lipp</string>
@@ -151,15 +151,15 @@
     <string name="empty_cram_label">Tühi</string>
     <string name="create_subdeck">Loo alakaardipakk</string>
     <string name="empty_filtered_deck">Tühjendan filtritud kaardipakki...</string>
-    <string name="custom_study_deck_name">Kohandatud õppe seanss</string>
-    <string name="custom_study_deck_exists">Esmalt nimeta ümber juba olemasolev kohandatud õppe kaardipakk</string>
+    <string name="custom_study_deck_name">Kohandatud õppesessioon</string>
+    <string name="custom_study_deck_exists">Esmalt nimeta ümber juba olemasolev täiendava õppe kaardipakk</string>
     <string name="empty_deck">See kaardipakk on tühi</string>
     <string name="invalid_deck_name">Vigane kaardipaki nimi</string>
     <string name="studyoptions_empty">See kaardipakk on tühi. Vajuta + nupule uue sisu lisamiseks.</string>
     <string name="studyoptions_limit_reached">Päevalimiit on saavutatud</string>
     <string name="studyoptions_empty_schedule">Enam pole kaarte õppeks plaanitud</string>
     <string name="studyoptions_congrats_finished">Palju õnne! Sa oled praeguseks lõpetanud.</string>
-    <string name="studyoptions_congrats_more_rev">Tänane limiit on saavutatud, kuid on ikka veel üle korratavaid kaarte. Limiiti saad muuta seadetes.</string>
+    <string name="studyoptions_congrats_more_rev">Tänane limiit on saavutatud, kuid on ikka veel kaarte, mida üle korrata. Limiiti saad muuta seadetes.</string>
     <string name="studyoptions_congrats_more_new">Tänane limiit on saavutatud. On olemas veel uusi kaarte; limiiti saad muuta seadetes, kuid see muudab ka su lühiajalist kordamiskoormust.</string>
     <string name="studyoptions_congrats_custom">Õppimiseks väljaspool tavalist ajakava vajuta \"Kohandatud õpe\" nuppu</string>
     <string name="studyoptions_no_cards_due">Veel pole kaart ootel</string>
@@ -175,13 +175,13 @@
     <string name="export_deck">Ekspordi kaardipakk</string>
     <string name="nothing">Mitte midagi</string>
     <!-- Card template editor -->
-    <string name="title_activity_template_editor">Kaardi tüübid</string>
+    <string name="title_activity_template_editor">Kaarditüübid</string>
     <string name="card_template_editor_front">Esikülje mall</string>
     <string name="card_template_editor_back">Tagakülje mall</string>
     <string name="card_template_editor_styling">Stiil</string>
     <string name="card_template_editor_menu_card_browser_appearance">Kaardibrauseri välimus</string>
     <string name="card_template_editor_deck_override">Kaardipaki pealejäämine</string>
-    <string name="card_template_editor_cant_delete">Vähemalt üks kaarditüüp peab olema valitud</string>
+    <string name="card_template_editor_cant_delete">Vähemalt üks kaardi tüüp peab olema valitud</string>
     <plurals name="card_template_editor_confirm_delete">
         <item quantity="one">Kustutada “%2$s” kaarditüüp ja selle %1$d kaart?</item>
         <item quantity="other">Kustutada “%2$s” kaarditüüp ja selle %1$d kaarti?</item>
@@ -189,7 +189,7 @@
     <string name="invalid_template">Kaarti ei suudetud tekitada</string>
     <string name="card_template_editor_would_delete_note">Selle kaarditüübi eemaldamine võib põhjustada ühe või rohkema märkme kaotsiminekut. Esmalt looge ja salvestage uus kaarditüüp.</string>
     <string name="card_template_editor_save_error">Ei suuda salvestada kaardimalli muudatusi: %s</string>
-    <string name="template_for_current_card_deleted">Käesoleva kaardi kaarditüüp kustutati.</string>
+    <string name="template_for_current_card_deleted">Käesoleva kaardi tüüp kustutati.</string>
     <!-- Card Browser Appearance -->
     <string name="card_template_browser_appearance_title">Brauseri välimus</string>
     <!-- card Info -->

@@ -64,8 +64,6 @@
     <string name="about_version">Верзија: </string>
     <!-- preferences.xml entries-->
     <string name="whiteboard_stroke_width">Ширина капи</string>
-    <string name="whiteboard_black">Црни капи</string>
-    <string name="whiteboard_black_summ">Користи мање меморије, осим у ноћном режиму</string>
     <string name="use_input_tag">Type answer into the card</string>
     <string name="use_input_tag_summ">Use a text input box inside the card to type in the answer</string>
     <string name="dictionary">Кориснички речник</string>

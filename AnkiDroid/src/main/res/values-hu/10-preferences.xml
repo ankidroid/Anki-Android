@@ -64,8 +64,6 @@
     <string name="about_version">Verzió: </string>
     <!-- preferences.xml entries-->
     <string name="whiteboard_stroke_width">Ceruza vastagsága</string>
-    <string name="whiteboard_black">Rajzolás fekete színnel</string>
-    <string name="whiteboard_black_summ">Kevesebb memóriát használ, kivéve éjszakai módban</string>
     <string name="use_input_tag">Válasz begépelése</string>
     <string name="use_input_tag_summ">A kártyán megjelenő beviteli mezőbe kell begépelni a választ</string>
     <string name="dictionary">Szótár keresés</string>

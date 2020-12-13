@@ -89,7 +89,7 @@
     <string name="card_browser_search_all_decks">In allen Stapeln suchen</string>
     <string name="card_browser_unknown_deck_name">Unbekannt</string>
     <plurals name="card_browser_cards_deleted">
-        <item quantity="one">%d card deleted</item>
+        <item quantity="one">%d Karte gelöscht</item>
         <item quantity="other">%d Karten gelöscht</item>
     </plurals>
     <!-- Card Info subscreen -->
@@ -111,9 +111,9 @@
     <string name="card_info_revlog_date">Datum</string>
     <string name="card_info_revlog_rating">Bewertung</string>
     <string name="card_info_revlog_type">Typ</string>
-    <string name="card_info_revlog_learn" comment="Label indicating that a review in the log of a card occured while the card was in learning mode">Learn</string>
-    <string name="card_info_revlog_review">Review</string>
-    <string name="card_info_revlog_relearn" comment="Label of a log entry of a card, indicating that a review was done with a note in relearning mode">Relearn</string>
+    <string name="card_info_revlog_learn" comment="Label indicating that a review in the log of a card occured while the card was in learning mode">Lernen</string>
+    <string name="card_info_revlog_review">Wiederholung</string>
+    <string name="card_info_revlog_relearn" comment="Label of a log entry of a card, indicating that a review was done with a note in relearning mode">Erneut lernen</string>
     <string name="card_info_revlog_filtered">Gefiltert</string>
-    <string name="card_info_ease_not_applicable">N/A</string>
+    <string name="card_info_ease_not_applicable">entf.</string>
 </resources>

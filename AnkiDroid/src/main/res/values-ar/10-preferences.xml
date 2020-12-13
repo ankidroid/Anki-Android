@@ -64,8 +64,6 @@
     <string name="about_version">الإصدار: </string>
     <!-- preferences.xml entries-->
     <string name="whiteboard_stroke_width">عرض الخط</string>
-    <string name="whiteboard_black">خط أسود</string>
-    <string name="whiteboard_black_summ">يستخدم ذاكرة أقل، إلا إذا كان في الوضع الليلي</string>
     <string name="use_input_tag">إدخال الجواب في البطاقة</string>
     <string name="use_input_tag_summ">استخدام مربع إدخال نصي داخل البطاقة لكتابة الجواب</string>
     <string name="dictionary">قاموس البحث</string>

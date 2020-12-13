@@ -64,8 +64,6 @@
     <string name="about_version">نسخه: </string>
     <!-- preferences.xml entries-->
     <string name="whiteboard_stroke_width">عرض حاشیه</string>
-    <string name="whiteboard_black">حاشیه‌های تک‌رنگ</string>
-    <string name="whiteboard_black_summ">حافظه کمتری استفاده می‌کند، اما در حالت شب کار نمی‌کند</string>
     <string name="use_input_tag">پاسخ را در کارت بنویسید</string>
     <string name="use_input_tag_summ">از یک کادر نوشتن متن درون کارت برای نوشتن پاسخ استفاده کنید</string>
     <string name="dictionary">فرهنگ لغت برای مراجعه</string>

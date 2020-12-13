@@ -64,8 +64,6 @@
     <string name="about_version">వెర్షన్: </string>
     <!-- preferences.xml entries-->
     <string name="whiteboard_stroke_width">స్ట్రోక్ వెడల్పు</string>
-    <string name="whiteboard_black">బ్లాక్ స్ట్రోక్స్</string>
-    <string name="whiteboard_black_summ">రాత్రి మోడ్లో మినహా తక్కువ మెమరీని ఉపయోగిస్తుంది</string>
     <string name="use_input_tag">కార్డుకు సమాధానం టైప్ చేయండి</string>
     <string name="use_input_tag_summ">సమాధానం టైప్ చేయడానికి కార్డు లోపల టెక్స్ట్ ఇన్పుట్ బాక్స్ ఉపయోగించండి</string>
     <string name="dictionary">నిఘంటువును చూడండి</string>

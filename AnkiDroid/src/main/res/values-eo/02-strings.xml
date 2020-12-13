@@ -197,8 +197,8 @@
     <string name="import_hint">Enmetu apkg-dosieron en la dosierujo “%s” kaj frapetu “bone” por enporti kartojn</string>
     <string name="upgrade_import_no_file_found">Ne trovis iujn ajn dosierojn por enporti (%1$s)</string>
     <string name="study_options" comment="Name for a preference category in Filtered deck (aka Cram deck, aka Custom study) options">Agordoj</string>
-    <string name="menu__deck_options">Deck options</string>
-    <string name="menu__study_options" comment="Menu item that opens options for a Filtered deck (aka Cram deck, aka Custom study)">Study options</string>
+    <string name="menu__deck_options">Agordoj pri kartaro</string>
+    <string name="menu__study_options" comment="Menu item that opens options for a Filtered deck (aka Cram deck, aka Custom study)">Agordoj pri lernado</string>
     <string name="select_tts">Agordi lingvon por parol-sintezi</string>
     <string name="custom_study">Propra lernado</string>
     <string name="more_options">Pli</string>
@@ -339,5 +339,5 @@
     <string name="create_shortcut_error_vivo" comment="iManager is an app on Vivo phones">Uzu iManager por permesi al AnkiDroid krei simbolajn ligilojn</string>
     <string name="create_shortcut_failed" comment="home screen == launcher">Via hejma ekrano ne permesas al AnkiDroid krei simbolajn ligilojn</string>
     <string name="create_shortcut_error">Eraro dum krei simbolan ligilon: %s</string>
-    <string name="note_editor_capitalize" comment="This is for a switch with a checkbox - on: enabled">Capitalize sentences</string>
+    <string name="note_editor_capitalize" comment="This is for a switch with a checkbox - on: enabled">Majuskligi frazojn</string>
 </resources>

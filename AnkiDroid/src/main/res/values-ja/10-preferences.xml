@@ -64,8 +64,6 @@
     <string name="about_version">バージョン：</string>
     <!-- preferences.xml entries-->
     <string name="whiteboard_stroke_width">線の太さ</string>
-    <string name="whiteboard_black">黒色の線</string>
-    <string name="whiteboard_black_summ">カラーの線ではなく黒色の線を描き、メモリを節約します（ナイトモードでは白色の線になります）</string>
     <string name="use_input_tag">カード内にキーボード入力で解答する</string>
     <string name="use_input_tag_summ">解答をキーボード入力で行うよう設定されているカードの内部に文字入力欄を表示します</string>
     <string name="dictionary">検索辞書</string>
