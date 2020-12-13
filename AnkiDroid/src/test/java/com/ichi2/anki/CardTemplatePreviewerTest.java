@@ -79,7 +79,7 @@ public class CardTemplatePreviewerTest extends RobolectricTest {
     }
 
     @Test
-    public void testPreviewNormal() throws Exception {
+    public void testPreviewNormal() {
 
         // Make sure we test previewing a new card template
         String modelName = "Basic (and reversed card)";
