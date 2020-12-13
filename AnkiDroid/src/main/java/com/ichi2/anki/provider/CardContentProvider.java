@@ -240,7 +240,8 @@ public class CardContentProvider extends ContentProvider {
                 /* Search for notes using direct SQL query */
                 String[] proj = sanitizeNoteProjection(projection);
                 String sql = SQLiteQueryBuilder.buildQueryString(false, "notes", proj, selection, null, null, order, null);
-                return col.getDb().query(sql, (Object[]) selectionArgs);
+                //noinspection RedundantCast
+                return col.getDb().query(sql, (Object[]) selectionArgs); // Needed for varargs of query
             }
             case NOTES: {
                 /* Search for notes using the libanki browser syntax */
