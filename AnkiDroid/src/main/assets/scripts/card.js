@@ -201,10 +201,11 @@ var onPageFinished = function() {
         window.location.href = "#answer";
     }
 
+    var card = document.querySelector('.card');
+
     _runHook(onUpdateHook)
         .then(() => {
             if (window.MathJax != null) {
-                var card = document.querySelector('.card');
                 /* Anki-Android adds mathjax-needs-to-render" as a class to the card when
                    it detects both \( and \) or \[ and \].
 
