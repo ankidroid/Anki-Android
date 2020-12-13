@@ -431,11 +431,7 @@ public class ModelFieldEditor extends AnkiActivity implements LocaleSelectionDia
         // Get the current field
         JSONObject field = mNoteFields.getJSONObject(mCurrentPos);
         // If the sticky setting is enabled then disable it, otherwise enable it
-        if (field.getBoolean("sticky")) {
-            field.put("sticky", false);
-        } else {
-            field.put("sticky", true);
-        }
+        field.put("sticky", !field.getBoolean("sticky"));
     }
 
 
