@@ -316,7 +316,7 @@ public class Sched extends SchedV2 {
         if (_preloadLrnCard(true)) {
             return new CardQueue<?>[]{mLrnQueue};
         }
-        return new CardQueue[]{};
+        return new CardQueue<?>[]{};
     }
     /**
      * Learning queues *********************************************************** ************************************
