@@ -387,7 +387,7 @@ public class RobolectricTest {
      * @see org.junit.matchers.JUnitMatchers
      */
     public <T> void assumeThat(T actual, Matcher<T> matcher) {
-        this.advanceRobolectricLooperWithSleep();
+        advanceRobolectricLooperWithSleep();
         Assume.assumeThat(actual, matcher);
     }
 
@@ -409,7 +409,7 @@ public class RobolectricTest {
      * @see org.junit.matchers.JUnitMatchers
      */
     public <T> void assumeThat(String message, T actual, Matcher<T> matcher) {
-        this.advanceRobolectricLooperWithSleep();
+        advanceRobolectricLooperWithSleep();
         Assume.assumeThat(message, actual, matcher);
     }
 
@@ -423,7 +423,7 @@ public class RobolectricTest {
      * @param message A message to pass to {@link AssumptionViolatedException}.
      */
     public void assumeTrue(String message, boolean b) {
-        this.advanceRobolectricLooperWithSleep();
+        advanceRobolectricLooperWithSleep();
         Assume.assumeTrue(message, b);
     }
 

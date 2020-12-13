@@ -164,7 +164,7 @@ public class ReviewerTest extends RobolectricTest {
 
         assumeTrue("Whiteboard should now be enabled", reviewer.mPrefWhiteboard);
 
-        super.advanceRobolectricLooperWithSleep();
+        advanceRobolectricLooperWithSleep();
     }
 
 
