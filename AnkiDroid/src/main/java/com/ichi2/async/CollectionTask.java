@@ -1063,8 +1063,8 @@ public class CollectionTask<ProgressListener, ProgressBackground extends Progres
 
 
         @Override
-        public void doProgress(@NonNull List<Long>... values) {
-            add(values[0]);
+        public void doProgress(@NonNull List<Long> value) {
+            add(value);
             for (CardBrowser.CardCache card : mCards) {
                 if (isCancelled()) {
                     Timber.d("doInBackgroundSearchCards was cancelled so return");
