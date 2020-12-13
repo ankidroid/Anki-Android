@@ -12,7 +12,7 @@ android {
     compileSdkVersion 29
 
     defaultConfig {
-        minSdkVersion 14
+        minSdkVersion 21
         //noinspection OldTargetApi
         targetSdkVersion 29
         versionCode 11016   // 4th digit: 1=alpha, 2=beta, 3=official
