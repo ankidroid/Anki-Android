@@ -2271,11 +2271,7 @@ public class CardBrowser extends NavigationDrawerActivity implements
             // if in multi-select mode, be sure to show the checkboxes
             if(mInMultiSelectMode) {
                 checkBox.setVisibility(View.VISIBLE);
-                if (mCheckedCards.contains(card)) {
-                    checkBox.setChecked(true);
-                } else {
-                    checkBox.setChecked(false);
-                }
+                checkBox.setChecked(mCheckedCards.contains(card));
                 // this prevents checkboxes from showing an animation from selected -> unselected when
                 // checkbox was selected, then selection mode was ended and now restarted
                 checkBox.jumpDrawablesToCurrentState();

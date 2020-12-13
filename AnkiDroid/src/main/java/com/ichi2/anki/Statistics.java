@@ -183,24 +183,21 @@ public class Statistics extends NavigationDrawerActivity implements DeckDropDown
         }
         int itemId = item.getItemId();
         if (itemId == R.id.item_time_month) {
-            if (item.isChecked()) item.setChecked(false);
-            else item.setChecked(true);
+            item.setChecked(!item.isChecked());
             if (mTaskHandler.getStatType() != Stats.AxisType.TYPE_MONTH) {
                 mTaskHandler.setStatType(Stats.AxisType.TYPE_MONTH);
                 mSectionsPagerAdapter.notifyDataSetChanged();
             }
             return true;
         } else if (itemId == R.id.item_time_year) {
-            if (item.isChecked()) item.setChecked(false);
-            else item.setChecked(true);
+            item.setChecked(!item.isChecked());
             if (mTaskHandler.getStatType() != Stats.AxisType.TYPE_YEAR) {
                 mTaskHandler.setStatType(Stats.AxisType.TYPE_YEAR);
                 mSectionsPagerAdapter.notifyDataSetChanged();
             }
             return true;
         } else if (itemId == R.id.item_time_all) {
-            if (item.isChecked()) item.setChecked(false);
-            else item.setChecked(true);
+            item.setChecked(!item.isChecked());
             if (mTaskHandler.getStatType() != Stats.AxisType.TYPE_LIFE) {
                 mTaskHandler.setStatType(Stats.AxisType.TYPE_LIFE);
                 mSectionsPagerAdapter.notifyDataSetChanged();
