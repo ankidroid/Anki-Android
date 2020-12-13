@@ -3603,8 +3603,8 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
 
 
         @TargetApi(Build.VERSION_CODES.O)
-        private void displayRenderLoopDialog(Card mCurrentCard, RenderProcessGoneDetail detail) {
-            String cardInformation = Long.toString(mCurrentCard.getId());
+        private void displayRenderLoopDialog(Card currentCard, RenderProcessGoneDetail detail) {
+            String cardInformation = Long.toString(currentCard.getId());
             Resources res = getResources();
 
             String errorDetails = detail.didCrash()
