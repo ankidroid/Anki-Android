@@ -1716,7 +1716,7 @@ public class CollectionTask<ProgressListener, ProgressBackground extends Progres
                                 col.getModels().addTemplate(oldModel, newTemplates.getJSONObject((int) change[0]));
                             } catch (Exception e) {
                                 Timber.e(e, "Unable to add template %s to model %s", change[0], model.getLong("id"));
-                                return new Pair(e.getLocalizedMessage(), false);
+                                return new Pair<>(false, e.getLocalizedMessage());
                             }
                             break;
                         case DELETE:
@@ -1725,7 +1725,7 @@ public class CollectionTask<ProgressListener, ProgressBackground extends Progres
                                 col.getModels().remTemplate(oldModel, oldTemplates.getJSONObject((int) change[0]));
                             } catch (Exception e) {
                                 Timber.e(e, "Unable to delete template %s from model %s", change[0], model.getLong("id"));
-                                return new Pair(e.getLocalizedMessage(), false);
+                                return new Pair<>(false, e.getLocalizedMessage());
                             }
                             break;
                         default:
