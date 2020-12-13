@@ -209,8 +209,7 @@ public final class AddContentApi {
             Uri returnUri = mResolver.insert(AnkiMedia.CONTENT_URI, contentValues);
             // get the filename from Uri, return [sound:%s] % file.getName()
             String fname = new File(returnUri.getPath()).toString();
-            String formatted_fname = formatMediaName(fname, mimeType);
-            return formatted_fname;
+            return formatMediaName(fname, mimeType);
         } catch (Exception e){
             return null;
         }
