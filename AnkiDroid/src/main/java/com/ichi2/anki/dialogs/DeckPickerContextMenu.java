@@ -65,7 +65,8 @@ public class DeckPickerContextMenu extends AnalyticsDialogFragment {
             CONTEXT_MENU_CREATE_SUBDECK,
             CONTEXT_MENU_CREATE_SHORTCUT,
     })
-    public @interface DECK_PICKER_CONTEXT_MENU {};
+    public @interface DECK_PICKER_CONTEXT_MENU {}
+
 
     public static DeckPickerContextMenu newInstance(long did) {
         DeckPickerContextMenu f = new DeckPickerContextMenu();

@@ -49,7 +49,8 @@ public class ReadText {
     private static int mOrd;
     private static Sound.SoundSide mQuestionAnswer;
     public static final String NO_TTS = "0";
-    private static final Bundle mTtsParams = new Bundle();;
+    private static final Bundle mTtsParams = new Bundle();
+
 
     public static Sound.SoundSide getmQuestionAnswer() {
         return mQuestionAnswer;
