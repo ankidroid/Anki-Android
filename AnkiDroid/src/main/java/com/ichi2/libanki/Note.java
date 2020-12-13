@@ -38,9 +38,9 @@ import timber.log.Timber;
 @SuppressWarnings({"PMD.AvoidThrowingRawExceptionTypes","PMD.MethodNamingConventions"})
 public class Note implements Cloneable {
 
-    private Collection mCol;
+    private final Collection mCol;
 
-    private long mId;
+    private final long mId;
     private String mGuId;
     private Model mModel;
     private long mMid;

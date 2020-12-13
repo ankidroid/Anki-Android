@@ -1122,9 +1122,9 @@ public class Models {
     /**
      * Cache of getNamesOfFieldsContainingCloze
      * Computing hash of string is costly. However, hash is cashed in the string object, so this virtually ensure that
-     * given a card type, we don't nede to recompute the hash.
+     * given a card type, we don't need to recompute the hash.
      */
-    private static WeakHashMap<String, List<String>> namesOfFieldsContainingClozeCache = new WeakHashMap<>();
+    private static final WeakHashMap<String, List<String>> namesOfFieldsContainingClozeCache = new WeakHashMap<>();
 
     /** The name of all fields that are used as cloze in the question.
      * It is not guaranteed that the field found are actually the name of any field of the note type.*/
