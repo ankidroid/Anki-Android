@@ -131,7 +131,7 @@ public class CardInfo extends AnkiActivity {
             addWithText(row, entry.getRating(this)).setGravity(Gravity.CENTER_HORIZONTAL);
             addWithText(row, Utils.timeQuantityNextIvl(this, entry.intervalAsTimeSeconds())).setGravity(Gravity.START);
             addWithText(row, entry.getEase(this)).setGravity(Gravity.CENTER_HORIZONTAL);
-            addWithText(row, entry.getTimeTaken(this)).setGravity(Gravity.END);
+            addWithText(row, entry.getTimeTaken()).setGravity(Gravity.END);
 
             tl.addView(row);
         }
@@ -526,7 +526,7 @@ public class CardInfo extends AnkiActivity {
                 return ivl * SECONDS_PER_DAY;
             }
 
-            public String getTimeTaken(Context context) {
+            public String getTimeTaken() {
                 // saves space if we just use seconds rather than a "s" suffix
                 //return Utils.timeQuantityNextIvl(context, timeTakenMs / 1000);
                 return Long.toString(timeTakenMs / 1000);
