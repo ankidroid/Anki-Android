@@ -64,8 +64,6 @@
     <string name="about_version">Версія: </string>
     <!-- preferences.xml entries-->
     <string name="whiteboard_stroke_width">Шырыня штрыха</string>
-    <string name="whiteboard_black">Чорныя штрыхі</string>
-    <string name="whiteboard_black_summ">Выкарыстоўвае менш памяці, акрамя начнога рэжыму</string>
     <string name="use_input_tag">Уводзіць адказ на картцы</string>
     <string name="use_input_tag_summ">Скарыстайцеся формай тэксту, каб увесці адказ</string>
     <string name="dictionary">Паглядзець у слоўніку</string>

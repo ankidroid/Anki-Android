@@ -169,8 +169,8 @@
     <string name="import_error_corrupt_zip">apkg  ᱫᱚ ᱠᱷᱟᱨᱟᱯ ᱜᱮᱭᱟ ᱾ ᱫᱚᱭᱟᱠᱟᱛᱮ ᱜᱮᱫ ᱜᱤᱰᱤ ᱵᱤᱱ ᱟᱨ ᱫᱩᱦᱲᱟᱹ ᱰᱟᱩᱱᱞᱳᱰ ᱵᱤᱱ ᱾ \n\n ᱢᱩᱞ ᱠᱟᱨᱚᱬ:%s</string>
     <string name="import_error_exception">ᱯᱟᱠᱟᱡ \n\n%s ᱞᱟᱫᱮ ᱵᱷᱩᱞ</string>
     <string name="import_error_not_apkg_extension">ᱨᱮᱫᱧᱩᱛᱩᱢ “%s” ᱴᱷᱮᱱ .apkg or .colpkg extension ᱵᱟᱱᱩᱜᱽᱟ</string>
-    <string name="import_error_load_imported_database">Anki Database (.anki2) ᱵᱚᱫᱚᱞ ᱥᱟᱹᱯᱚᱴ ᱵᱟᱹᱱᱩᱜᱼᱟ ᱾ ᱨᱤᱯᱞᱮᱥᱢᱮᱸᱴ ᱞᱟᱹᱜᱤᱫ ᱢᱮᱱᱩᱟᱞ ᱧᱮᱞᱯᱮ</string>
-    <string name="import_error_content_provider">ᱪᱚᱭᱚᱱᱟᱠᱟᱱ ᱨᱮᱫ AnkiDroid ᱛᱮ ᱵᱟᱭ ᱞᱟᱫᱮᱜ ᱠᱟᱱᱟ ᱾ ᱫᱚᱭᱟᱠᱟᱛᱮ ᱨᱤᱯᱞᱮᱥᱢᱮᱸᱴ ᱞᱟᱹᱜᱤᱫ ᱢᱮᱱᱩᱟᱞ ᱧᱮᱞᱯᱮ anki ᱨᱮᱫ: \n%s</string>
+    <string name="import_error_load_imported_database">Anki Database (.anki2) ᱵᱚᱫᱚᱞ ᱥᱟᱹᱯᱚᱴ ᱵᱟᱹᱱᱩᱜᱼᱟ ᱾ ᱨᱤᱯᱞᱮᱥᱢᱮᱴ ᱞᱟᱹᱜᱤᱫ ᱢᱮᱱᱩᱟᱞ ᱧᱮᱞᱯᱮ</string>
+    <string name="import_error_content_provider">ᱪᱚᱭᱚᱱᱟᱠᱟᱱ ᱨᱮᱫ AnkiDroid ᱛᱮ ᱵᱟᱭ ᱞᱟᱫᱮᱜ ᱠᱟᱱᱟ ᱾ ᱫᱚᱭᱟᱠᱟᱛᱮ ᱨᱤᱯᱞᱮᱥᱢᱮᱴ ᱞᱟᱹᱜᱤᱫ ᱢᱮᱱᱩᱟᱞ ᱧᱮᱞᱯᱮ anki ᱨᱮᱫ: \n%s</string>
     <string name="import_error_copy_file_to_cache">copyFileToCache() ᱦᱩᱲᱟᱜ (ᱫᱚᱦᱚ ᱡᱟᱭᱜᱟ ᱵᱟᱹᱱᱩᱜᱼᱟ ᱯᱟᱞᱮ)</string>
     <string name="import_error_unhandled_scheme">ᱵᱟᱝ ᱡᱩᱛ ᱟᱭᱟᱛ:“%s”</string>
     <string name="import_replacing">ᱴᱩᱢᱟᱹ ᱳᱪᱳᱜᱳᱜ ᱠᱟᱱᱟ&#8230;</string>
@@ -317,20 +317,20 @@
     <!-- A Menu item to change the Font Size (currently in the Note Editor) -->
     <string name="menu_font_size">ᱪᱤᱠᱤ ᱢᱟᱯ</string>
     <string name="menu_show_toolbar" comment="Checkable item stating whether the note editor toolbar should be shown">Show Toolbar</string>
-    <string name="format_insert_bold">ᱵᱚᱞ-ᱰ ᱛᱮ ᱥᱮᱴ ᱢᱮᱸ</string>
-    <string name="format_insert_italic">ᱤᱴᱟᱞᱤᱠ ᱛᱮ ᱥᱮᱴ ᱢᱮᱸ</string>
-    <string name="format_insert_underline">ᱜᱟᱨᱞᱟᱭᱤᱱ ᱛᱮ ᱥᱮᱴ ᱢᱮᱸ</string>
-    <string name="insert_horizontal_line">ᱜᱤᱛᱤᱡᱽ ᱞᱟᱭᱤᱱ ᱠᱷᱟᱲ ᱢᱮᱸ</string>
-    <string name="insert_heading">ᱦᱮᱰᱤᱝ ᱵᱚᱞᱚ ᱪᱷᱚᱭ ᱢᱮᱸ</string>
-    <string name="format_font_size">ᱯᱪᱤᱠᱤ ᱢᱟᱯ ᱵᱚᱫᱚᱞ ᱢᱮᱸ</string>
-    <string name="insert_mathjax">MathJax ᱤᱠᱣᱨᱥᱚᱱ ᱵᱚᱞᱚ ᱪᱷᱚᱭ ᱢᱮᱸ</string>
-    <string name="insert_cloze">ᱠᱞᱚᱡᱽ ᱢᱮᱴᱟᱣ ᱵᱚᱞᱚ ᱪᱷᱚᱭ ᱢᱮᱸ</string>
+    <string name="format_insert_bold">ᱵᱚᱞ-ᱰ ᱛᱮ ᱥᱮᱴ ᱢᱮ</string>
+    <string name="format_insert_italic">ᱤᱴᱟᱞᱤᱠ ᱛᱮ ᱥᱮᱴ ᱢᱮ</string>
+    <string name="format_insert_underline">ᱜᱟᱨᱞᱟᱭᱤᱱ ᱛᱮ ᱥᱮᱴ ᱢᱮ</string>
+    <string name="insert_horizontal_line">ᱜᱤᱛᱤᱡᱽ ᱞᱟᱭᱤᱱ ᱠᱷᱟᱲ ᱢᱮ</string>
+    <string name="insert_heading">ᱦᱮᱰᱤᱝ ᱵᱚᱞᱚ ᱪᱷᱚᱭ ᱢᱮ</string>
+    <string name="format_font_size">ᱯᱪᱤᱠᱤ ᱢᱟᱯ ᱵᱚᱫᱚᱞ ᱢᱮ</string>
+    <string name="insert_mathjax">MathJax ᱤᱠᱣᱨᱥᱚᱱ ᱵᱚᱞᱚ ᱪᱷᱚᱭ ᱢᱮ</string>
+    <string name="insert_cloze">ᱠᱞᱚᱡᱽ ᱢᱮᱴᱟᱣ ᱵᱚᱞᱚ ᱪᱷᱚᱭ ᱢᱮ</string>
     <string name="before_text">HTML ᱢᱟᱲᱟᱝ ᱪᱚᱭᱚᱱ</string>
     <string name="after_text">HTML ᱞᱟᱦᱟᱛᱮᱭᱟᱜ ᱪᱚᱭᱚᱱ</string>
     <string name="add_toolbar_item">ᱴᱩᱞᱵᱟᱨ ᱡᱤᱱᱤᱥ ᱛᱮᱭᱟᱨ</string>
     <string name="toolbar_item_explain_remove">ᱵᱟᱪᱷᱟᱣ ᱟᱠᱟᱱ ᱚᱞ ᱞᱟᱦᱟ ᱟᱨ ᱛᱟᱭᱚᱢ ᱨᱮ ᱥᱮᱞᱮᱫ ᱠᱟᱱ HTML ᱟᱫᱮᱨ ᱢᱮ\n\nᱱᱚᱶᱟ ᱚᱪᱚᱜ ᱞᱟᱹᱜᱤᱫ ᱴᱩᱞᱵᱟᱨ ᱟᱭᱴᱮᱢ ᱚᱛᱟ ᱫᱚᱦᱚᱭ ᱢᱮ</string>
     <string name="remove_toolbar_item">ᱴᱩᱞᱵᱟᱨ ᱡᱤᱱᱤᱥ ᱚᱪᱚᱜᱽ ᱟᱢ ᱥᱮ?</string>
-    <string name="note_editor_paste_too_large">ᱪᱤᱛᱟᱹᱨ ᱞᱟᱴᱷᱟ ᱞᱟᱹᱜᱤᱫ ᱟᱹᱰᱤ ᱢᱟᱨᱟᱝ ᱜᱮᱭᱟ, ᱫᱚᱭᱟᱠᱟᱛᱮ ᱪᱤᱛᱟᱹᱨ ᱛᱤ ᱛᱮ ᱵᱚᱞᱚ ᱪᱷᱚᱭ ᱢᱮᱸ</string>
+    <string name="note_editor_paste_too_large">ᱪᱤᱛᱟᱹᱨ ᱞᱟᱴᱷᱟ ᱞᱟᱹᱜᱤᱫ ᱟᱹᱰᱤ ᱢᱟᱨᱟᱝ ᱜᱮᱭᱟ, ᱫᱚᱭᱟᱠᱟᱛᱮ ᱪᱤᱛᱟᱹᱨ ᱛᱤ ᱛᱮ ᱵᱚᱞᱚ ᱪᱷᱚᱭ ᱢᱮ</string>
     <string name="ankidroid_cannot_open_after_backup_try_again" comment="After an Android backup is restored, AnkiDroid opens and shows this message.         Opening AnkiDroid again will work correctly">       ᱮᱱᱰᱨᱚᱭᱮᱰ ᱵᱮᱠᱟᱯ ᱪᱟᱞᱟᱜ ᱠᱟᱱᱟ, ᱫᱟᱭᱟ ᱠᱟᱛᱮᱡᱽ ᱟᱨᱦᱚᱸ ᱨᱤᱠᱟᱹᱭ ᱢᱮ</string>
     <string name="create_shortcut_error_vivo" comment="iManager is an app on Vivo phones">You may need to use iManager to allow AnkiDroid to add shortcuts</string>
     <string name="create_shortcut_failed" comment="home screen == launcher">Your home screen does not allow AnkiDroid to add shortcuts</string>

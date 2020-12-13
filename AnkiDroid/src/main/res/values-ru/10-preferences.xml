@@ -64,8 +64,6 @@
     <string name="about_version">Версия: </string>
     <!-- preferences.xml entries-->
     <string name="whiteboard_stroke_width">Толщина линии</string>
-    <string name="whiteboard_black">Черные линии</string>
-    <string name="whiteboard_black_summ">Использует меньше памяти, если не в ночном режиме</string>
     <string name="use_input_tag">Ввод ответа на карточке</string>
     <string name="use_input_tag_summ">Добавляет на карточку поле ввода для ответа</string>
     <string name="dictionary">Посмотреть в словаре</string>

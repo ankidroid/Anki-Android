@@ -64,8 +64,6 @@
     <string name="about_version">Версия: </string>
     <!-- preferences.xml entries-->
     <string name="whiteboard_stroke_width">Ширина на щриха</string>
-    <string name="whiteboard_black">Черни щрихи</string>
-    <string name="whiteboard_black_summ">Използва по-малко памет, освен в нощен режим</string>
     <string name="use_input_tag">Пиши отговорът в картата</string>
     <string name="use_input_tag_summ">Използване на текстово поле за въвеждане на отговора в картата</string>
     <string name="dictionary">Речник за справка</string>

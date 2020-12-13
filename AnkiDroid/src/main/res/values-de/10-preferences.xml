@@ -64,8 +64,6 @@
     <string name="about_version">Version: </string>
     <!-- preferences.xml entries-->
     <string name="whiteboard_stroke_width">Pinselbreite</string>
-    <string name="whiteboard_black">Schwarzer Pinsel</string>
-    <string name="whiteboard_black_summ">Verwendet weniger Speicher, außer im Nachtmodus</string>
     <string name="use_input_tag">Antwort in Karte eintippen</string>
     <string name="use_input_tag_summ">Innerhalb der Karte ein Texteingabefeld verwenden, um die Antwort einzutippen</string>
     <string name="dictionary">Nachschlagen in Wörterbuch</string>
@@ -94,7 +92,7 @@
     <string name="gestures_summ">Weise Aktionen, wie zum Beispiel Beantworten oder Bearbeiten der Karten, Gesten zu.</string>
     <string name="gestures_allow_links">Berührungsgesten auf Weblinks ignorieren</string>
     <string name="gestures_allow_links_summary">Berührungsgesten werden nicht verarbeitet, falls ein Weblink/Hinweis angetippt wird.</string>
-    <string name="gestures_corner_touch">9-point touch</string>
+    <string name="gestures_corner_touch">9-Punkt-Berührung</string>
     <string name="gestures_corner_touch_summary">Berührungsgesten in Bildschirmecken erlauben</string>
     <string name="gestures_swipe_up">Nach oben wischen</string>
     <string name="gestures_swipe_down">Nach unten wischen</string>

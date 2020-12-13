@@ -64,8 +64,6 @@
     <string name="about_version">Versi: </string>
     <!-- preferences.xml entries-->
     <string name="whiteboard_stroke_width">Strok lebar</string>
-    <string name="whiteboard_black">Pukulan hitam</string>
-    <string name="whiteboard_black_summ">Menggunakan memori kurang, kecuali di malam mod</string>
     <string name="use_input_tag">Jenis menjawab ke kad</string>
     <string name="use_input_tag_summ">Menggunakan teks input kotak di dalam kad untuk masuk ke dalam menjawab</string>
     <string name="dictionary">Pencarian kamus</string>

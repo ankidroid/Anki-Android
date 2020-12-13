@@ -64,8 +64,6 @@
     <string name="about_version">Versija: </string>
     <!-- preferences.xml entries-->
     <string name="whiteboard_stroke_width">Linijos plotis</string>
-    <string name="whiteboard_black">Juodos linijos</string>
-    <string name="whiteboard_black_summ">Naudoja mažiau atminties, nebent įjungtas naktinis režimas</string>
     <string name="use_input_tag">Įvesti atsakymą į kortelę</string>
     <string name="use_input_tag_summ">Norėdami įvesti atsakymą į kortelę naudokite teksto įvesties laukelį</string>
     <string name="dictionary">Ieškoti žodyne</string>

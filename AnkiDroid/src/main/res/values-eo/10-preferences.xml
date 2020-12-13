@@ -64,8 +64,6 @@
     <string name="about_version">Versio: </string>
     <!-- preferences.xml entries-->
     <string name="whiteboard_stroke_width">Larĝo de streko</string>
-    <string name="whiteboard_black">Nigra skribilo</string>
-    <string name="whiteboard_black_summ">Uzi malpli memoron, escepte se en nokta reĝimo</string>
     <string name="use_input_tag">Entajpi respondon al karto</string>
     <string name="use_input_tag_summ">Uzi tekstan enigan kampon en la karto por entajpi respondon</string>
     <string name="dictionary">Vortaro</string>

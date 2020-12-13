@@ -64,8 +64,6 @@
     <string name="about_version">Različica: </string>
     <!-- preferences.xml entries-->
     <string name="whiteboard_stroke_width">Debelina črte</string>
-    <string name="whiteboard_black">Črne črte</string>
-    <string name="whiteboard_black_summ">Uporabi manj pomnilnika razen v nočnem načinu</string>
     <string name="use_input_tag">Vtipkaj odgovor v kartico</string>
     <string name="use_input_tag_summ">Uporabi besedilno polje v kartici za vnos odgovora</string>
     <string name="dictionary">Slovar za iskanje</string>

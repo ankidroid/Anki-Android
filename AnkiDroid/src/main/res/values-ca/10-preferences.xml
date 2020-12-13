@@ -64,8 +64,6 @@
     <string name="about_version">Versió: </string>
     <!-- preferences.xml entries-->
     <string name="whiteboard_stroke_width">Amplada del traç</string>
-    <string name="whiteboard_black">Traços negres</string>
-    <string name="whiteboard_black_summ">Utilitza menys memòria, llevat que estigui en el mode de nit</string>
     <string name="use_input_tag">Tipus de resposta a la targeta</string>
     <string name="use_input_tag_summ">Utilitzar un quadre d\'entrada de text dins de la targeta per escriure la resposta</string>
     <string name="dictionary">Diccionari de cerca</string>

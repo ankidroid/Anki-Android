@@ -64,8 +64,6 @@
     <string name="about_version">Versi: </string>
     <!-- preferences.xml entries-->
     <string name="whiteboard_stroke_width">Tebal garis</string>
-    <string name="whiteboard_black">Garis hitam</string>
-    <string name="whiteboard_black_summ">Menggunakan lebih sedikit memori, kecuali dalam mode malam</string>
     <string name="use_input_tag">Ketik jawaban ke dalam kartu</string>
     <string name="use_input_tag_summ">Gunakan kotak input teks di dalam kartu untuk mengetik jawaban</string>
     <string name="dictionary">Kamus pencarian</string>

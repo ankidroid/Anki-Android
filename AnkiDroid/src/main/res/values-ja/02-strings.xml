@@ -193,8 +193,8 @@
     <string name="import_hint">取り込みたいデッキまたはコレクション（全デッキ）のファイル（*. apkg）をあらかじめ \"%s\" に保存した後、この画面で「OK」ボタンをタップしてください。</string>
     <string name="upgrade_import_no_file_found">読み込み可能な %1$s のファイルが見つかりません</string>
     <string name="study_options" comment="Name for a preference category in Filtered deck (aka Cram deck, aka Custom study) options">オプション</string>
-    <string name="menu__deck_options">Deck options</string>
-    <string name="menu__study_options" comment="Menu item that opens options for a Filtered deck (aka Cram deck, aka Custom study)">Study options</string>
+    <string name="menu__deck_options">デッキオプション</string>
+    <string name="menu__study_options" comment="Menu item that opens options for a Filtered deck (aka Cram deck, aka Custom study)">学習オプション</string>
     <string name="select_tts">テキスト読み上げ機能の言語設定</string>
     <string name="custom_study">カスタム学習</string>
     <string name="more_options">その他</string>
@@ -301,7 +301,7 @@
     <string name="card_viewer_media_relative_protocol">カードコンテンツエラー: メディアの更新が必要です</string>
     <!-- Deck Picker -->
     <string name="deck_picker_failed_deck_load">\'%s\'デッキの読み込みに失敗しました</string>
-    <string name="search_decks">デッキを検索</string>
+    <string name="search_decks">デッキ名を検索</string>
     <string name="ankidroid_init_failed_webview_title">致命的なエラー</string>
     <string name="ankidroid_init_failed_webview">AnkiDroid は利用できないWebシステム を検出しました。システムのアップデート中などに発生する可能性があります。 数分後にもう一度お試しください。\n\n%s</string>
     <!-- A Menu item to change the Font Size (currently in the Note Editor) -->
@@ -325,5 +325,5 @@
     <string name="create_shortcut_error_vivo" comment="iManager is an app on Vivo phones">AnkiDroidにショートカットを追加するには、iManagerを使用する必要があります。</string>
     <string name="create_shortcut_failed" comment="home screen == launcher">ホーム画面にAnkiDroidのショートカットを追加することはできません。</string>
     <string name="create_shortcut_error">ショートカット追加のエラー: %s</string>
-    <string name="note_editor_capitalize" comment="This is for a switch with a checkbox - on: enabled">Capitalize sentences</string>
+    <string name="note_editor_capitalize" comment="This is for a switch with a checkbox - on: enabled">文章を大文字にする</string>
 </resources>

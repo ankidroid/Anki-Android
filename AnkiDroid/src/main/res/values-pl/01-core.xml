@@ -56,10 +56,10 @@
     <string name="collapse">Zwiń</string>
     <string name="study_more">Studiuj więcej</string>
     <plurals name="deckpicker_title">
-        <item quantity="one">Oczekuje %1$d karta (%2$s)</item>
-        <item quantity="few">Oczekują %1$d karty (%2$s)</item>
-        <item quantity="many">Oczekuje %1$d kart (%2$s)</item>
-        <item quantity="other">Oczekuje %1$d kart (%2$s)</item>
+        <item quantity="one">Czeka %1$d karta (%2$s)</item>
+        <item quantity="few">Czekają %1$d karty (%2$s)</item>
+        <item quantity="many">Czeka %1$d kart (%2$s)</item>
+        <item quantity="other">Czeka %1$d kart (%2$s)</item>
     </plurals>
     <plurals name="reviewer_window_title">
         <item quantity="one">Została %d minuta</item>

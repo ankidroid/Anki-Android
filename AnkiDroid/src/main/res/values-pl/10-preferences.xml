@@ -64,8 +64,6 @@
     <string name="about_version">Wersja: </string>
     <!-- preferences.xml entries-->
     <string name="whiteboard_stroke_width">Szerokość kreski</string>
-    <string name="whiteboard_black">Czarne kreski</string>
-    <string name="whiteboard_black_summ">Oszczędzaj pamięć z wyjątkiem trybu nocnego</string>
     <string name="use_input_tag">Wprowadź odpowiedź do karty</string>
     <string name="use_input_tag_summ">Użyj pola tekstowego na karcie do wprowadzenia odpowiedzi</string>
     <string name="dictionary">Słownik</string>
@@ -78,7 +76,7 @@
     <string name="button_size">Rozmiar przycisku odpowiedzi</string>
     <string name="card_browser_font_size">Skalowanie fontu przeglądania kart</string>
     <string name="card_browser_hide_media">Wyświetlaj nazwy plików w przeglądarce kart</string>
-    <string name="card_browser_hide_media_summary">Display media filenames in the card browser question/answer fields</string>
+    <string name="card_browser_hide_media_summary">Wyświetlaj nazwy plików mediów w polach pytania/odpowiedzi w przeglądarce kart</string>
     <string name="col_path">Katalog AnkiDroid</string>
     <string name="fullscreen_review">Tryb pełnoekranowy</string>
     <string name="full_screen_off">Wyłączony</string>
@@ -92,10 +90,10 @@
     </string-array>
     <string name="gestures">Włącz obsługę gestów</string>
     <string name="gestures_summ">Przydziel gesty do akcji takich jak odpowiedzi lub edycja kart.</string>
-    <string name="gestures_allow_links">Ignore touch gestures on links</string>
+    <string name="gestures_allow_links">Ignoruj gesty przy dotknięciu linków</string>
     <string name="gestures_allow_links_summary">Touch gestures will not be processed if a link/hint is pressed.</string>
     <string name="gestures_corner_touch">9-point touch</string>
-    <string name="gestures_corner_touch_summary">Allow touch gestures in screen corners</string>
+    <string name="gestures_corner_touch_summary">Zezwalaj na gesty dotykowe w rogach ekranu</string>
     <string name="gestures_swipe_up">Przesuń w górę</string>
     <string name="gestures_swipe_down">Przesuń w dół</string>
     <string name="gestures_swipe_left">Przesuń w lewo</string>
@@ -235,7 +233,7 @@
     <string name="deck_conf_graduating_ivl">Interwał po nauce karty</string>
     <string name="deck_conf_days">XXX dni</string>
     <string name="deck_conf_easy_ivl">Interwał dla łatwych</string>
-    <string name="deck_conf_start_ease">Początkowa trudność</string>
+    <string name="deck_conf_start_ease">Początkowa łatwość</string>
     <string name="deck_conf_max_rev">Maksymalnie przejrzeń dziennie</string>
     <string name="deck_conf_new_bury">Zakop nowe karty powiązane</string>
     <string name="deck_conf_new_bury_summ">Nowe karty powiązane są zakopane do kolejnego dnia</string>

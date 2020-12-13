@@ -89,7 +89,7 @@
     <!-- for buttons -->
     <string name="multimedia_editor_image_field_editing_galery">Սրահ</string>
     <string name="multimedia_editor_image_field_editing_photo">Տեսախցիկ</string>
-    <string name="multimedia_editor_image_field_editing_library">Library</string>
+    <string name="multimedia_editor_image_field_editing_library">Գրադարան</string>
     <!-- General -->
     <!-- message on the progress dialog for the user to wait, means process -->
     <string name="multimedia_editor_general_downloading">Ներբեռնվում է</string>

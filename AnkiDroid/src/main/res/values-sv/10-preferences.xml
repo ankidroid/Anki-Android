@@ -64,8 +64,6 @@
     <string name="about_version">Version: </string>
     <!-- preferences.xml entries-->
     <string name="whiteboard_stroke_width">Streckbredd</string>
-    <string name="whiteboard_black">Monokroma streck</string>
-    <string name="whiteboard_black_summ">Använder mindre arbetsminne, men fungerar inte i nattläge</string>
     <string name="use_input_tag">Skriv svar i kortet</string>
     <string name="use_input_tag_summ">Använd en textinmatningsruta i kortet för att skriva in svaret</string>
     <string name="dictionary">Ordbok</string>

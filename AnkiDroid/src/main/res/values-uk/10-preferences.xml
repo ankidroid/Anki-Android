@@ -64,8 +64,6 @@
     <string name="about_version">Версія: </string>
     <!-- preferences.xml entries-->
     <string name="whiteboard_stroke_width">Ширина штриха</string>
-    <string name="whiteboard_black">Чорні штрихи</string>
-    <string name="whiteboard_black_summ">Використовує менше пам\'яті, якщо не в нічному режимі</string>
     <string name="use_input_tag">Введіть відповідь на картці</string>
     <string name="use_input_tag_summ">Додає на картку поле введення для відповіді</string>
     <string name="dictionary">Подивитися у словнику</string>

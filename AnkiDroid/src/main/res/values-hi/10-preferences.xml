@@ -64,8 +64,6 @@
     <string name="about_version">संस्करण: </string>
     <!-- preferences.xml entries-->
     <string name="whiteboard_stroke_width">अंकन की चौड़ाई</string>
-    <string name="whiteboard_black">काले लिखावट</string>
-    <string name="whiteboard_black_summ">रात मोड में जब तक कम स्मृति का उपयोग करता है</string>
     <string name="use_input_tag">पत्ता में उत्तर दर्ज करें</string>
     <string name="use_input_tag_summ">जवाब में टाइप करने के लिए कार्ड के अंदर एक पाठ इनपुट बॉक्स का उपयोग करें</string>
     <string name="dictionary">शब्दकोष खोजें</string>

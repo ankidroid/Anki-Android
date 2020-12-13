@@ -64,8 +64,6 @@
     <string name="about_version">Versioon:</string>
     <!-- preferences.xml entries-->
     <string name="whiteboard_stroke_width">Joone laius</string>
-    <string name="whiteboard_black">Mustad jooned</string>
-    <string name="whiteboard_black_summ">Uses less memory, unless in night mode</string>
     <string name="use_input_tag">Kirjuta vastus kaarti</string>
     <string name="use_input_tag_summ">Use a text input box inside the card to type in the answer</string>
     <string name="dictionary">Otsingusõnastik</string>
@@ -73,8 +71,8 @@
     <string name="reset_languages_summ">Reset language assignments (for text to speech and dictionaries) for all decks</string>
     <string name="reset_languages_question">Reset all language assignments?</string>
     <string name="reset_confirmation">All states reset</string>
-    <string name="card_zoom">Card zoom</string>
-    <string name="image_zoom">Image zoom</string>
+    <string name="card_zoom">Kaardi suum</string>
+    <string name="image_zoom">Kujutise suum</string>
     <string name="button_size">Answer button size</string>
     <string name="card_browser_font_size">Card browser font scaling</string>
     <string name="card_browser_hide_media">Display filenames in card browser</string>
@@ -127,10 +125,10 @@
     <string name="tts_summ">Reads out question and answer if no sound file is included</string>
     <string name="sync_fetch_missing_media">Fetch media on sync</string>
     <string name="sync_fetch_missing_media_summ">Automatically fetch missing media when syncing</string>
-    <string name="sync_account">AnkiWeb account</string>
-    <string name="sync_account_summ_logged_out">Not logged in</string>
+    <string name="sync_account">AnkiWeb konto</string>
+    <string name="sync_account_summ_logged_out">Sisse logimata</string>
     <string name="sync_account_summ_logged_in">%s</string>
-    <string name="automatic_sync_choice">Automatic synchronization</string>
+    <string name="automatic_sync_choice">Automaatne sünkroonimine</string>
     <string name="automatic_sync_choice_summ">Sync automatically on app start/exit if the last sync was more than 10
         minutes ago.</string>
     <string name="sync_status_badge">Display synchronization status</string>
@@ -140,13 +138,13 @@
     <string name="default_font">Default font</string>
     <string name="override_font">Default font applicability</string>
     <string name="language">Language</string>
-    <string name="language_system">System language</string>
-    <string name="notification_pref">Notifications</string>
-    <string name="notification_pref_title">Notify when</string>
-    <string name="never_notify">Never notify</string>
+    <string name="language_system">Süsteemi keel</string>
+    <string name="notification_pref">Teavitused</string>
+    <string name="notification_pref_title">Teavita kui</string>
+    <string name="never_notify">Ära teavita kunagi</string>
     <string name="notify_when_pending">Pending messages available</string>
     <string name="notification_minimum_cards_due">More than %d cards due</string>
-    <string name="notification_minimum_cards_due_vibrate">Vibrate</string>
+    <string name="notification_minimum_cards_due_vibrate">Vibreeri</string>
     <string name="notification_minimum_cards_due_blink">Blink light</string>
     <string name="timeout_answer_text">Automatic display answer</string>
     <string name="timeout_answer_summ">Show answer automatically without user input. Delay includes time for automatically played audio files.</string>
@@ -179,7 +177,7 @@
     <string name="day_offset_summ">XXX hours past midnight</string>
     <string name="sched_ver">Experimental V2 scheduler</string>
     <string name="sched_ver_summ">Enable the experimental scheduler. Forces changes in one direction on next sync</string>
-    <string name="sched_ver_toggle_title">Confirm</string>
+    <string name="sched_ver_toggle_title">Kinnita</string>
     <string name="sched_ver_2to1">This will reset any cards in learning, clear filtered decks, and change the scheduler version. Proceed?</string>
     <string name="sched_ver_1to2">The experimental scheduler could cause incorrect scheduling. Please ensure you have read the documentation first. Proceed?</string>
     <string name="pref_keep_screen_on">Keep screen on</string>
@@ -192,7 +190,7 @@
     <string name="custom_buttons_summary">Customize which actions appear in the app bar</string>
     <string name="custom_buttons_setting_always_show">Always show</string>
     <string name="custom_buttons_setting_if_room">Show if room</string>
-    <string name="custom_buttons_setting_menu_only">Menu only</string>
+    <string name="custom_buttons_setting_menu_only">Ainult menüü</string>
     <string name="reset_custom_buttons">Reset to default</string>
     <string name="thirdparty_apps_title">Third-party API apps</string>
     <string name="thirdparty_apps_summary">See a list of applications which make use of the AnkiDroid API such as dictionaries, utilities.</string>

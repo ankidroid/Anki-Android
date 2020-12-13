@@ -64,8 +64,6 @@
     <string name="about_version">Version : </string>
     <!-- preferences.xml entries-->
     <string name="whiteboard_stroke_width">Largeur des traits</string>
-    <string name="whiteboard_black">Traits noirs</string>
-    <string name="whiteboard_black_summ">Utilise moins de mémoire, mais ne fonctionne pas en mode nuit</string>
     <string name="use_input_tag">Saisir la réponse dans la carte</string>
     <string name="use_input_tag_summ">Utiliser la saisie de la réponse directement dans la carte</string>
     <string name="dictionary">Dictionnaire de recherche</string>

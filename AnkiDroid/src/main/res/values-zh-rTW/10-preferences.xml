@@ -64,8 +64,6 @@
     <string name="about_version">版本： </string>
     <!-- preferences.xml entries-->
     <string name="whiteboard_stroke_width">筆跡寬度</string>
-    <string name="whiteboard_black">黑色筆跡</string>
-    <string name="whiteboard_black_summ">使用較少的記憶體，除非使用夜間模式</string>
     <string name="use_input_tag">在卡片中輸入答案</string>
     <string name="use_input_tag_summ">在卡片中使用一個文本框裡輸入答案</string>
     <string name="dictionary">查找字典</string>

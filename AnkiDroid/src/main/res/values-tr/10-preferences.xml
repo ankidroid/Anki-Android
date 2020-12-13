@@ -64,8 +64,6 @@
     <string name="about_version">Sürüm: </string>
     <!-- preferences.xml entries-->
     <string name="whiteboard_stroke_width">Kontur genişliği</string>
-    <string name="whiteboard_black">Siyah konturlar</string>
-    <string name="whiteboard_black_summ">Daha az hafıza kullanır, gece modu hariç</string>
     <string name="use_input_tag">Cevabı karta yaz</string>
     <string name="use_input_tag_summ">Cevabı yazmak için kartın içinde bir metin giriş kutusu kullan</string>
     <string name="dictionary">Sözlüğe bak</string>

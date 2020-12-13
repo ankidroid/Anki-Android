@@ -64,8 +64,6 @@
     <string name="about_version">Verzia: </string>
     <!-- preferences.xml entries-->
     <string name="whiteboard_stroke_width">Hrúbka ťahu</string>
-    <string name="whiteboard_black">Čierne ťahy</string>
-    <string name="whiteboard_black_summ">Využije menej pamäte, ak nie je v nočnom režime</string>
     <string name="use_input_tag">Napíšte odpoveď do kartičky</string>
     <string name="use_input_tag_summ">Odpoveď vložte do textového poľa kartičky</string>
     <string name="dictionary">Slovník</string>

@@ -64,8 +64,6 @@
     <string name="about_version">Versio: </string>
     <!-- preferences.xml entries-->
     <string name="whiteboard_stroke_width">Viivan leveys</string>
-    <string name="whiteboard_black">Mustat viivat</string>
-    <string name="whiteboard_black_summ">Käyttää vähemmän muistia, mutta ei silloin, kun yötila on päällä</string>
     <string name="use_input_tag">Kirjoita vastaus korttiin</string>
     <string name="use_input_tag_summ">Kirjoita vastaus kortin sisällä olevaan vastauskenttään</string>
     <string name="dictionary">Sanakirja</string>

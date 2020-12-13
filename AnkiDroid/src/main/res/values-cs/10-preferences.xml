@@ -64,8 +64,6 @@
     <string name="about_version">Verze: </string>
     <!-- preferences.xml entries-->
     <string name="whiteboard_stroke_width">Šířka tahu</string>
-    <string name="whiteboard_black">Černé tahy</string>
-    <string name="whiteboard_black_summ">Využívá méně paměti, pokud není v nočním režimu</string>
     <string name="use_input_tag">Napište odpověď do karty</string>
     <string name="use_input_tag_summ">Odpověď vložte do textového pole na kartě</string>
     <string name="dictionary">Slovník</string>

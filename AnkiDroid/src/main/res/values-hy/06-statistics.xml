@@ -43,11 +43,11 @@
     <string name="statistics_young_and_learn">Young+Learn</string>
     <string name="statistics_unlearned">Unseen</string>
     <string name="statistics_suspended">Suspended</string>
-    <string name="statistics_buried">Buried</string>
-    <string name="statistics_relearn" comment="Labbel of the axis in the graph indicating the number of reviews of cards while they are in relearning mode.">Relearn</string>
-    <string name="statistics_learn" comment="Label of the number of review of card in learning done in some amount of time">Learn</string>
+    <string name="statistics_buried">Թաղված</string>
+    <string name="statistics_relearn" comment="Labbel of the axis in the graph indicating the number of reviews of cards while they are in relearning mode.">Կրկնել</string>
+    <string name="statistics_learn" comment="Label of the number of review of card in learning done in some amount of time">Սովորել</string>
     <string name="statistics_cram">Cram</string>
-    <string name="stats_cards">Cards</string>
+    <string name="stats_cards">Քարտեր</string>
     <string name="stats_cards_intervals">Cards with given interval</string>
     <string name="stats_cumulative_cards">Cumulative cards</string>
     <string name="stats_cumulative_answers">Cumulative answers</string>
@@ -56,17 +56,17 @@
     <string name="stats_cumulative">Cumulative</string>
     <string name="stats_cumulative_percentage">Cumulative percentage</string>
     <string formatted="false" name="stats_cumulative_correct_percentage">Cumulative correct %</string>
-    <string name="stats_answers">Answers</string>
-    <string name="stats_minutes">Minutes</string>
-    <string name="stats_hours">Hours</string>
-    <string name="stats_percentage">Percentage</string>
-    <string name="stats_period_month">1 month</string>
-    <string name="stats_period_year">1 year</string>
+    <string name="stats_answers">Պատասխաններ</string>
+    <string name="stats_minutes">Րոպե</string>
+    <string name="stats_hours">Ժամ</string>
+    <string name="stats_percentage">Տոկոս</string>
+    <string name="stats_period_month">1 ամիս</string>
+    <string name="stats_period_year">1 տարի</string>
     <string name="stats_period_lifetime">deck life</string>
     <string name="stats_deck_collection">collection</string>
     <string name="stats_time_of_day">Time of day</string>
     <string name="stats_day_of_week">Day of week</string>
-    <string formatted="false" name="stats_percentage_correct">% correct</string>
+    <string formatted="false" name="stats_percentage_correct">% ճիշտ</string>
     <string name="stats_reviews" comment="Label of a graph, indicating cumulative number of review of all cards">Reviews</string>
     <string name="stats_answer_type">Answer type</string>
     <string name="stats_today_again_count">Again count: &lt;b&gt;%d&lt;/b&gt;</string>
