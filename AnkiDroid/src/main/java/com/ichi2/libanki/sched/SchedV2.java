@@ -2661,7 +2661,8 @@ public class SchedV2 extends AbstractSched {
                 "select id from cards where id in " + Utils.ids2str(ids) + " and (queue != " + Consts.QUEUE_TYPE_NEW + " or type != " + Consts.CARD_TYPE_NEW + ")");
         mCol.getDb().execute("update cards set reps=0, lapses=0 where id in " + Utils.ids2str(nonNew));
         forgetCards(nonNew);
-        mCol.log((Object[]) ids);
+        //noinspection RedundantCast
+        mCol.log((Object[]) ids); // Cast useful to indicate to indicate how to interpret varargs
     }
 
 

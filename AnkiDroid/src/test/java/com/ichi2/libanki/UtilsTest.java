@@ -42,7 +42,7 @@ public class UtilsTest {
             ZipFile zipFile = new ZipFile(file);
             Enumeration<ZipArchiveEntry> zipEntries = zipFile.getEntries();
             while (zipEntries.hasMoreElements()) {
-                ZipArchiveEntry ze2 = (ZipArchiveEntry) zipEntries.nextElement();
+                ZipArchiveEntry ze2 = zipEntries.nextElement();
                 Utils.unzipFiles(zipFile, "/tmp", new String[]{ze2.getName()}, null);
             }
             Assert.fail("Expected an IOException");
