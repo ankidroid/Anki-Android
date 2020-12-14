@@ -1510,14 +1510,21 @@ public class DeckPicker extends NavigationDrawerActivity implements
 
     @Override
     public void showImportDialog(int id, String message) {
-        Timber.d("showImportDialog() delegating to file picker intent");
-        Intent intent = new Intent(Intent.ACTION_OPEN_DOCUMENT);
-        intent.addCategory(Intent.CATEGORY_OPENABLE);
-        intent.setType("*/*");
-        intent.putExtra("android.content.extra.SHOW_ADVANCED", true);
-        intent.putExtra("android.content.extra.FANCY", true);
-        intent.putExtra("android.content.extra.SHOW_FILESIZE", true);
-        startActivityForResultWithoutAnimation(intent, PICK_APKG_FILE);
+        // On API19+ we only use import dialog to confirm, otherwise we use it the whole time
+        if ((id == ImportDialog.DIALOG_IMPORT_ADD_CONFIRM) || (id == ImportDialog.DIALOG_IMPORT_REPLACE_CONFIRM)) {
+            Timber.d("showImportDialog() delegating to ImportDialog");
+            AsyncDialogFragment newFragment = ImportDialog.newInstance(id, message);
+            showAsyncDialogFragment(newFragment);
+        } else {
+            Timber.d("showImportDialog() delegating to file picker intent");
+            Intent intent = new Intent(Intent.ACTION_OPEN_DOCUMENT);
+            intent.addCategory(Intent.CATEGORY_OPENABLE);
+            intent.setType("*/*");
+            intent.putExtra("android.content.extra.SHOW_ADVANCED", true);
+            intent.putExtra("android.content.extra.FANCY", true);
+            intent.putExtra("android.content.extra.SHOW_FILESIZE", true);
+            startActivityForResultWithoutAnimation(intent, PICK_APKG_FILE);
+        }
     }
 
     public void onSdCardNotMounted() {
