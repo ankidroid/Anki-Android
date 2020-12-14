@@ -16,7 +16,7 @@
 
 package com.ichi2.utils;
 
-import android.text.Html;
+import android.text.TextUtils;
 
 import org.bitbucket.cowwoc.diffmatchpatch.DiffMatchPatch;
 
@@ -81,6 +81,6 @@ public class DiffEngine {
     /** Escapes dangerous HTML tags (for XSS-like issues/rendering problems) */
     @NonNull
     protected static String escapeHtml(String in) {
-        return Html.escapeHtml(in).replace("\\", "&#x5c;");
+        return TextUtils.htmlEncode(in).replace("\\", "&#x5c;");
     }
 }

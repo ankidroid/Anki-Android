@@ -19,7 +19,6 @@ package com.ichi2.utils;
 import com.ichi2.anki.RobolectricTest;
 import com.ichi2.testutils.EmptyApplication;
 
-import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.robolectric.annotation.Config;
@@ -37,15 +36,25 @@ public class DiffEngineTest extends RobolectricTest {
     public void checkEscapedHtmlCharacters() {
         // The HTML escaping that used to occur in 13c27a6a1fa8465cc6656c67bd9db25afc7a51fa (CompatV15.detagged)
         // This was the original intention of the escaping.
-        String input = "<>\"&' \\ aa";
+        String input = "<>& \\ aa";
 
         String output = DiffEngine.wrapMissing(input);
 
-        assertThat(output, containsString("&lt;&gt;\"&amp;' &#x5c; aa"));
+        assertThat(output, containsString("&lt;&gt;&amp; &#x5c; aa"));
     }
 
     @Test
-    @Ignore("#7896")
+    public void quoteEscaping() {
+        // This is an interesting one - escaping a bare quote is not necessary but escaping a quote in an attribute is
+        // A breakage here may be acceptable, but should flag the issue for investigation.
+        String input = "\"'";
+
+        String output = DiffEngine.wrapMissing(input);
+
+        assertThat(output, containsString("&quot;&#39;"));
+    }
+
+    @Test
     public void polytonicGreekIsNotEscaped() {
         // #7896 - this should not be necessary after a WebView upgrade.
         String input = "αὐτός";
