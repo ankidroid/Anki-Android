@@ -27,7 +27,8 @@ public class ImportDialog extends AsyncDialogFragment {
     public static final int DIALOG_IMPORT_REPLACE_CONFIRM = 3;
 
     public interface ImportDialogListener {
-        void showImportDialog();
+        void showImportDialog(int id, String message);
+        void showImportDialog(int id);
         void importAdd(String importPath);
         void importReplace(String importPath);
         void dismissAllDialogFragments();
@@ -67,7 +68,7 @@ public class ImportDialog extends AsyncDialogFragment {
                         .content(res.getString(R.string.import_hint, CollectionHelper.getCurrentAnkiDroidDirectory(getActivity())))
                         .positiveText(R.string.dialog_ok)
                         .negativeText(R.string.dialog_cancel)
-                        .onPositive((dialog, which) -> ((ImportDialogListener) getActivity()).showImportDialog())
+                        .onPositive((dialog, which) -> ((ImportDialogListener) getActivity()).showImportDialog(DIALOG_IMPORT_SELECT))
                         .onNegative((dialog, which) -> dismissAllDialogFragments())
                         .show();
             }
@@ -91,10 +92,10 @@ public class ImportDialog extends AsyncDialogFragment {
                                 String importPath = importValues[i];
                                 // If collection package, we assume the collection will be replaced
                                 if (ImportUtils.isCollectionPackage(filenameFromPath(importPath))) {
-                                    ((ImportDialogListener) getActivity()).showImportDialog();
+                                    ((ImportDialogListener) getActivity()).showImportDialog(DIALOG_IMPORT_REPLACE_CONFIRM, importPath);
                                     // Otherwise we add the file since exported decks / shared decks can't be imported via replace anyway
                                 } else {
-                                    ((ImportDialogListener) getActivity()).showImportDialog();
+                                    ((ImportDialogListener) getActivity()).showImportDialog(DIALOG_IMPORT_ADD_CONFIRM, importPath);
                                 }
                             })
                             .show();
