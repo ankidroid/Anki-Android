@@ -20,6 +20,9 @@ import android.text.Html;
 
 import org.bitbucket.cowwoc.diffmatchpatch.DiffMatchPatch;
 
+import androidx.annotation.CheckResult;
+import androidx.annotation.NonNull;
+
 /**
  * Functions for diff, match and patch. Computes the difference between two texts to create a patch. Applies the patch
  * onto another text, allowing for errors.
@@ -61,16 +64,23 @@ public class DiffEngine {
         // We do the comparison with “<”s &c. in the strings, but should of course not just put those in the HTML
         // output. Also, it looks like the Android WebView swallows single “\”s, so replace those with the entity by
         // hand.
-        return "<span class=\"typeBad\">" + Html.escapeHtml(in).replace("\\", "&#x5c;") + "</span>";
+        return "<span class=\"typeBad\">" + escapeHtml(in) + "</span>";
     }
 
-
+    @CheckResult
     public static String wrapGood(String in) {
-        return "<span class=\"typeGood\">" + Html.escapeHtml(in).replace("\\", "&#x5c;") + "</span>";
+        return "<span class=\"typeGood\">" + escapeHtml(in) + "</span>";
+    }
+
+    @CheckResult
+    public static String wrapMissing(String in) {
+        return "<span class=\"typeMissed\">" + escapeHtml(in) + "</span>";
     }
 
 
-    public static String wrapMissing(String in) {
-        return "<span class=\"typeMissed\">" + Html.escapeHtml(in).replace("\\", "&#x5c;") + "</span>";
+    /** Escapes dangerous HTML tags (for XSS-like issues/rendering problems) */
+    @NonNull
+    protected static String escapeHtml(String in) {
+        return Html.escapeHtml(in).replace("\\", "&#x5c;");
     }
 }
