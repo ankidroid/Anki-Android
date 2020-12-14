@@ -246,6 +246,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
     protected int mOptWaitQuestionSecond;
 
     protected boolean mUseInputTag;
+    private boolean mDoNotUseCodeFormatting;
 
     // Default short animation duration, provided by Android framework
     protected int mShortAnimDuration;
@@ -776,7 +777,8 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
         Matcher m = sTypeAnsPat.matcher(buf);
         DiffEngine diffEngine = new DiffEngine();
         StringBuilder sb = new StringBuilder();
-        sb.append("<div><code id=\"typeans\">");
+        sb.append(mDoNotUseCodeFormatting ? "<div><span id=\"typeans\">" : "<div><code id=\"typeans\">");
+
 
         // We have to use Matcher.quoteReplacement because the inputs here might have $ or \.
 
@@ -803,7 +805,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
                 sb.append(Matcher.quoteReplacement(correctAnswer));
             }
         }
-        sb.append("</code></div>");
+        sb.append(mDoNotUseCodeFormatting ? "</span></div>" : "</code></div>");
         return m.replaceAll(sb.toString());
     }
 
@@ -1765,6 +1767,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
         SharedPreferences preferences = AnkiDroidApp.getSharedPrefs(getBaseContext());
 
         mUseInputTag = preferences.getBoolean("useInputTag", false);
+        mDoNotUseCodeFormatting = preferences.getBoolean("noCodeFormatting", false);
         // On newer Androids, ignore this setting, which should be hidden in the prefs anyway.
         mDisableClipboard = "0".equals(preferences.getString("dictionary", "0"));
         // mDeckFilename = preferences.getString("deckFilename", "");

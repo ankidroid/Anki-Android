@@ -56,7 +56,8 @@ public class DiffEngineTest extends RobolectricTest {
 
     @Test
     public void polytonicGreekIsNotEscaped() {
-        // #7896 - this should not be necessary after a WebView upgrade.
+        // Implies too much escaping is being performed, which will degrade performance
+        // Not required for #7896 - this behaviour could be reversed without negative impact.
         String input = "αὐτός";
 
         String output = DiffEngine.wrapMissing(input);
