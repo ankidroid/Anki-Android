@@ -796,7 +796,7 @@ public class DeckPicker extends NavigationDrawerActivity implements
             return true;
         } else if (itemId == R.id.action_import) {
             Timber.i("DeckPicker:: Import button pressed");
-            showImportDialog();
+            showImportDialog(ImportDialog.DIALOG_IMPORT_HINT);
             return true;
         } else if (itemId == R.id.action_new_filtered_deck) {
             Timber.i("DeckPicker:: New filtered deck button pressed");
@@ -1503,7 +1503,13 @@ public class DeckPicker extends NavigationDrawerActivity implements
     }
 
     @Override
-    public void showImportDialog() {
+    public void showImportDialog(int id) {
+        showImportDialog(id, "");
+    }
+
+
+    @Override
+    public void showImportDialog(int id, String message) {
         Timber.d("showImportDialog() delegating to file picker intent");
         Intent intent = new Intent(Intent.ACTION_OPEN_DOCUMENT);
         intent.addCategory(Intent.CATEGORY_OPENABLE);

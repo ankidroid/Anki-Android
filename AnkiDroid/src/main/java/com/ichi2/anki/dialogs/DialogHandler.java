@@ -78,10 +78,10 @@ public class DialogHandler extends Handler {
             ((DeckPicker) mActivity.get()).showDatabaseErrorDialog(DatabaseErrorDialog.DIALOG_LOAD_FAILED);
         } else if (msg.what == MSG_SHOW_COLLECTION_IMPORT_REPLACE_DIALOG) {
             // Handle import of collection package APKG
-            ((DeckPicker) mActivity.get()).showImportDialog();
+            ((DeckPicker) mActivity.get()).showImportDialog(ImportDialog.DIALOG_IMPORT_REPLACE_CONFIRM, msgData.getString("importPath"));
         } else if (msg.what == MSG_SHOW_COLLECTION_IMPORT_ADD_DIALOG) {
             // Handle import of deck package APKG
-            ((DeckPicker) mActivity.get()).showImportDialog();
+            ((DeckPicker) mActivity.get()).showImportDialog(ImportDialog.DIALOG_IMPORT_ADD_CONFIRM, msgData.getString("importPath"));
         } else if (msg.what == MSG_SHOW_SYNC_ERROR_DIALOG) {
             int id = msgData.getInt("dialogType");
             String message = msgData.getString("dialogMessage");
