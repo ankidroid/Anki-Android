@@ -2,7 +2,7 @@ apply plugin: 'com.android.library'
 
 def groupId = "com.ichi2.anki"
 def artifactId = "api"
-def version = "1.1.0alpha6"
+def version = "1.1.0"
 
 repositories {
     google()
