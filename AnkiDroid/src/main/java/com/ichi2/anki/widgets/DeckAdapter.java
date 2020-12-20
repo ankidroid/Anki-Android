@@ -51,6 +51,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
+import static android.view.View.IMPORTANT_FOR_ACCESSIBILITY_NO;
+import static android.view.View.IMPORTANT_FOR_ACCESSIBILITY_YES;
+
 public class DeckAdapter<T extends AbstractDeckTreeNode<T>> extends RecyclerView.Adapter<DeckAdapter.ViewHolder> implements Filterable {
 
     /* Make the selected deck roughly half transparent if there is a background */
@@ -284,6 +287,7 @@ public class DeckAdapter<T extends AbstractDeckTreeNode<T>> extends RecyclerView
         boolean collapsed = mCol.getDecks().get(node.getDid()).optBoolean("collapsed", false);
         // Apply the correct expand/collapse drawable
         if (node.hasChildren()) {
+            expander.setImportantForAccessibility(IMPORTANT_FOR_ACCESSIBILITY_YES);
             if (collapsed) {
                 expander.setImageDrawable(mExpandImage);
                 expander.setContentDescription(expander.getContext().getString(R.string.expand));
@@ -293,6 +297,7 @@ public class DeckAdapter<T extends AbstractDeckTreeNode<T>> extends RecyclerView
             }
         } else {
             expander.setImageDrawable(mNoExpander);
+            expander.setImportantForAccessibility(IMPORTANT_FOR_ACCESSIBILITY_NO);
         }
         // Add some indenting for each nested level
         int width = (int) indent.getResources().getDimension(R.dimen.keyline_1) * node.getDepth();
