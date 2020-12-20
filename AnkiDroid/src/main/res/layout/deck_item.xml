@@ -73,6 +73,7 @@
         android:layout_centerVertical="true" >
         <com.ichi2.ui.FixedTextView
             android:id="@+id/deckpicker_new"
+            android:contentDescription="@string/deck_picker_new"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
@@ -84,6 +85,7 @@
 
         <com.ichi2.ui.FixedTextView
             android:id="@+id/deckpicker_lrn"
+            android:contentDescription="@string/deck_picker_lrn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
@@ -95,6 +97,7 @@
 
         <com.ichi2.ui.FixedTextView
             android:id="@+id/deckpicker_rev"
+            android:contentDescription="@string/deck_picker_rev"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
