@@ -137,8 +137,8 @@ android {
     }
 
     dexOptions {
-        // Skip pre-dexing when running on Travis CI or when disabled via -Dpre-dex=false.
-        preDexLibraries = preDexEnabled && !travisBuild
+        // Skip pre-dexing when running in a CI environment or when disabled via -Dpre-dex=false.
+        preDexLibraries = preDexEnabled && !ciBuild
     }
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
