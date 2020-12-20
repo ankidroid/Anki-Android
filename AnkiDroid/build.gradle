@@ -228,7 +228,7 @@ dependencies {
     // noinspection GradleDependency - pinned at 1.12 until API26 minSdkVersion (File.toPath usage)
     implementation 'org.apache.commons:commons-compress:1.12' // #6419 - handle >2GB apkg files
     implementation 'androidx.constraintlayout:constraintlayout:2.0.4'
-    implementation 'androidx.webkit:webkit:1.2.0'
+    implementation 'androidx.webkit:webkit:1.4.0'
 
 
     // May need a resolution strategy for support libs to our versions
