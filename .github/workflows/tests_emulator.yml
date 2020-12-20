@@ -48,7 +48,11 @@ jobs:
       - name: Warm Gradle Cache
         # This makes sure we fetch gradle network resources with a retry
         uses: nick-invision/retry@v2
-        run: ./gradlew assembleDebug assembleAndroidTest
+        with:
+          timeout_minutes: 10
+          retry_wait_seconds: 60
+          max_attempts: 3
+          command: ./gradlew assembleDebug assembleAndroidTest
 
       - name: Download Emulator Image
         # This can fail on network request, wrap with retry

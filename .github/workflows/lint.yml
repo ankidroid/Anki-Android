@@ -45,7 +45,11 @@ jobs:
       - name: Warm Gradle Cache
         # This makes sure we fetch gradle network resources with a retry
         uses: nick-invision/retry@v2
-        run: ./gradlew :AnkiDroid:compileReleaseJavaWithJavac compileLint
+        with:
+          timeout_minutes: 10
+          retry_wait_seconds: 60
+          max_attempts: 3
+          command: ./gradlew :AnkiDroid:compileReleaseJavaWithJavac compileLint
 
       - name: Run Lint Release
         run: ./gradlew lintRelease
