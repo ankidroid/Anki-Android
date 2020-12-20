@@ -6,20 +6,22 @@ on:
     branches:
       - '**'
     paths:
-      - 'AnkiDroid'
-      - 'api'
+      - 'AnkiDroid/**'
+      - 'api/**'
+      - 'lint-rules/**'
+      - 'annotations/**'
       - '**/*.gradle'
-      - 'annotations'
-      - 'gradle'
+      - 'gradle/**'
   push:
     branches:
       - master
     paths:
-      - 'AnkiDroid'
-      - 'api'
+      - 'AnkiDroid/**'
+      - 'api/**'
+      - 'lint-rules/**'
+      - 'annotations/**'
       - '**/*.gradle'
-      - 'annotations'
-      - 'gradle'
+      - 'gradle/**'
 
 jobs:
   unit:
