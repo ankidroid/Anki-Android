@@ -175,7 +175,7 @@
     <string name="day_offset">日付更新時刻</string>
     <string name="day_offset_summ">XXX 時</string>
     <string name="sched_ver">実験的な新型スケジューラ</string>
-    <string name="sched_ver_summ">実験スケジューラを有効にします。次の同期時に強制的に変更されます。</string>
+    <string name="sched_ver_summ">実験的なスケジューラを有効にします。次の同期時に一方向の変更を強制実行します。</string>
     <string name="sched_ver_toggle_title">確認</string>
     <string name="sched_ver_2to1">学習中のカードがリセットされ、スケジューラのバージョンが変更されます。続行しますか？</string>
     <string name="sched_ver_1to2">実験的なスケジューラは間違ったスケジューリングを引き起こす可能性があります。最初に関係するドキュメントを読んで確認してください。続行しますか？</string>
@@ -284,4 +284,6 @@
     <string name="analytics_summ">各機能の使用傾向を開発チームが把握しやすくなり、AnkiDroidの機能向上に役立ちます。</string>
     <string name="note_editor_replace_newlines">改行を HTML に置き換え</string>
     <string name="note_editor_replace_newlines_summ">ノートエディターでは、カードを編集するときに &lt;br&gt; を改行に変換します。</string>
+    <string name="no_code_formatting">Simple typed answer formatting</string>
+    <string name="no_code_formatting_summ">Fixes ‘􏿾’ appearing in typed answer results</string>
 </resources>

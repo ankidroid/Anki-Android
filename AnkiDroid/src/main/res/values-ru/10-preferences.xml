@@ -290,4 +290,6 @@
     <string name="analytics_summ">Отправляет информацию о функциях, которые предпочитают пользователи</string>
     <string name="note_editor_replace_newlines">Заменять перенос строк на HTML</string>
     <string name="note_editor_replace_newlines_summ">Заменять &lt;br&gt; в редакторе записей на перенос строки</string>
+    <string name="no_code_formatting">Simple typed answer formatting</string>
+    <string name="no_code_formatting_summ">Fixes ‘􏿾’ appearing in typed answer results</string>
 </resources>

@@ -201,16 +201,17 @@
     </plurals>
     <string name="invalid_template">לא ניתן לייצר קלף</string>
     <string name="card_template_editor_would_delete_note">הסרת סוג כרטיס זה תגרום לרשומה אחת או יותר להמחק. אנא צור ושמור סוג כרטיס חדש תחילה.</string>
-    <string name="card_template_editor_save_error">לא ניתן לשמור שינויים בתבנית הכרטיס: %s</string>
-    <string name="template_for_current_card_deleted">סוג הכרטיס של הכרטיס הנוכחי נמחק.</string>
+    <string name="card_template_editor_save_error">לא ניתן לשמור שינויים לתבנית הקלף: %s</string>
+    <string name="template_for_current_card_deleted">סוג הקלף של הקלף הנוכחי נמחק.</string>
     <!-- Card Browser Appearance -->
     <string name="card_template_browser_appearance_title">מראה הדפדפן</string>
+    <string name="current_and_default_deck">%1$s (%2$s)</string>
     <!-- card Info -->
-    <string name="card_info_title">מידע על הכרטיס</string>
+    <string name="card_info_title">מידע על הקלף</string>
     <!-- Permissions -->
     <string name="read_write_permission_label">קרא ושמור לממסד הנתונים של אנקידרוייד</string>
     <string name="read_write_permission_description">תן לאפליקציה גישה להערות, כרטיסים, סוגי הערות, וחפיסות, וכן גישה ליצור חדשים</string>
     <!-- Context Menu -->
-    <string name="card_browser_context_menu" comment="The value which appears in the system context menu. Note the casing difference">דפדפן הכרטיסים</string>
+    <string name="card_browser_context_menu" comment="The value which appears in the system context menu. Note the casing difference">דפדפן הקלפים</string>
     <string name="context_menu_anki_card_label">קלף של Anki</string>
 </resources>

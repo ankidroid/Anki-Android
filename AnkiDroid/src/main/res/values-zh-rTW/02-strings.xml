@@ -153,8 +153,8 @@
     <string name="import_title">正在匯入……</string>
     <string name="import_select_title">選擇欲匯入的檔案</string>
     <string name="import_message_add" comment="Adding a new deck to the collection (import)">新增</string>
-    <string name="import_message_replace_confirm">這將會刪除你現有的收藏並以%s的內容取代，你確定嗎？</string>
-    <string name="import_message_add_confirm">新增「%s」到收藏嗎？這可能會花上好一段時間</string>
+    <string name="import_message_replace_confirm">這將會刪除你現有的集合並以%s的內容取代，你確定嗎？</string>
+    <string name="import_message_add_confirm">新增「%s」到集合嗎？這可能會花上好一段時間</string>
     <string name="import_log_no_apkg">這不是有效的 Anki 套件檔案</string>
     <string name="import_log_failed_unzip">解壓縮 Apkg 失敗：%s</string>
     <string name="import_log_failed_copy_to">複製 Apkg 至 %s 失敗</string>
@@ -167,14 +167,14 @@
     <string name="import_error_exception">無法匯入套件\n\n%s</string>
     <string name="import_error_not_apkg_extension">檔案名“%s”不包含 .apkg 或 .colpkg 副檔名</string>
     <string name="import_error_load_imported_database">Anki 資料庫 (.anki2) 替換還不受支援。請見用戶手冊以查找替換指引。</string>
-    <string name="import_error_content_provider">所選的檔案無法被 AnkiDroid 自動匯入。請參考使用者手冊瞭解如何手動匯入 anki 檔案：\n%s</string>
+    <string name="import_error_content_provider">所選的檔案無法被 AnkiDroid 自動匯入。請參考用戶手冊瞭解如何手動匯入 anki 檔案：\n%s</string>
     <string name="import_error_copy_file_to_cache">copyFileToCache() 失敗（可能是儲存空間溢出）</string>
     <string name="import_error_unhandled_scheme">無法處理來自“%s”的匯入</string>
     <string name="import_replacing">正在匯入牌組集合&#8230;&#8230;</string>
     <string name="import_interrupted">匯入中斷</string>
     <string name="export_include_schedule">包含進度</string>
     <string name="export_include_media">包含媒體</string>
-    <string name="confirm_apkg_export">是否匯出收藏為 Anki 套件？</string>
+    <string name="confirm_apkg_export">是否匯出集合為 Anki 包？</string>
     <string name="confirm_apkg_export_deck">將 \"%s\" 匯出成 apkg 檔案嗎？</string>
     <string name="export_in_progress">匯出 Anki 套件檔案中&#8230;</string>
     <string name="export_successful_title">發送 Anki 套件？</string>
@@ -188,14 +188,14 @@
     <string name="export_email_text"><![CDATA[        你好！
         <br/><br/>
         這是從 <a href="https://ankidroid.org/docs/manual.html">AnkiDroid</a> 分享的 Anki 單字卡牌組。
-        使用任一 <a href="http://ankisrs.net/#download">Anki 客戶端</a>打開它，享受輕鬆高效的學習吧！
+        使用任一 <a href="http://ankisrs.net/#download">Anki 用戶端</a>打開它，享受輕鬆高效的學習吧！
         ]]></string>
     <string name="export_unsuccessful">匯出 Apkg 檔案時出錯</string>
     <string name="import_hint">若你要匯入卡片，請將 apkg 檔案放在「%s」目錄下，然後按OK</string>
     <string name="upgrade_import_no_file_found">找不到可匯入的%1$s檔案</string>
     <string name="study_options" comment="Name for a preference category in Filtered deck (aka Cram deck, aka Custom study) options">選項</string>
-    <string name="menu__deck_options">Deck options</string>
-    <string name="menu__study_options" comment="Menu item that opens options for a Filtered deck (aka Cram deck, aka Custom study)">Study options</string>
+    <string name="menu__deck_options">牌組選項</string>
+    <string name="menu__study_options" comment="Menu item that opens options for a Filtered deck (aka Cram deck, aka Custom study)">學習選項</string>
     <string name="select_tts">設定 TTS 語言</string>
     <string name="custom_study">自訂學習</string>
     <string name="more_options">更多</string>
@@ -251,7 +251,7 @@
     <string name="activity_start_failed">此系統不包含能執行此操作的應用程式。</string>
     <string name="multimedia_editor_image_compression_failed"><![CDATA[相機圖像可能很龐大。你可能希望壓縮和重設媒體資料夾中的圖像大小]]></string>
     <string name="no_browser_notification">無瀏覽器已找到，請使用PC或行動裝置訪問網頁： </string>
-    <string name="web_page_error">Error loading page: %s</string>
+    <string name="web_page_error">載入頁面時發生錯誤：%s</string>
     <string name="no_outgoing_link_in_cardbrowser">卡片中的外部頁面連結不受支援。</string>
     <!-- The name of the deck which corrupt cards will be moved to -->
     <string name="check_integrity_recovered_deck_name">已恢復卡片</string>
@@ -299,7 +299,7 @@
     <string name="about_ankidroid_error_copy_debug_info">將錯誤資訊複製到剪貼簿時發生錯誤</string>
     <!-- Card Viewer -->
     <string name="card_viewer_could_not_find_image">卡片內容錯誤：載入 ‘%s’ 失敗</string>
-    <string name="card_viewer_media_relative_protocol">Card Content Error: Media update required</string>
+    <string name="card_viewer_media_relative_protocol">卡片內容錯誤：需要更新媒體</string>
     <!-- Deck Picker -->
     <string name="deck_picker_failed_deck_load">載入牌組 ‘%s’ 失敗</string>
     <string name="search_decks">搜尋牌組</string>
@@ -307,24 +307,24 @@
     <string name="ankidroid_init_failed_webview">AnkiDroid 依賴於系統 WebView，但其不可用。這可能在系統安裝更新時發生。請等待幾分鐘後再試。\n\n%s</string>
     <!-- A Menu item to change the Font Size (currently in the Note Editor) -->
     <string name="menu_font_size">字型大小</string>
-    <string name="menu_show_toolbar" comment="Checkable item stating whether the note editor toolbar should be shown">Show Toolbar</string>
-    <string name="format_insert_bold">Format as Bold</string>
-    <string name="format_insert_italic">Format as Italic</string>
-    <string name="format_insert_underline">Format as Underline</string>
-    <string name="insert_horizontal_line">Insert Horizontal Line</string>
-    <string name="insert_heading">Insert Heading</string>
-    <string name="format_font_size">Change Font Size</string>
-    <string name="insert_mathjax">Insert MathJax Equation</string>
-    <string name="insert_cloze">Insert Cloze Deletion</string>
-    <string name="before_text">HTML Before Selection</string>
-    <string name="after_text">HTML After Selection</string>
-    <string name="add_toolbar_item">Create Toolbar Item</string>
+    <string name="menu_show_toolbar" comment="Checkable item stating whether the note editor toolbar should be shown">顯示工具列</string>
+    <string name="format_insert_bold">格式化為粗體</string>
+    <string name="format_insert_italic">格式化為斜體</string>
+    <string name="format_insert_underline">格式化為底線</string>
+    <string name="insert_horizontal_line">插入水平線</string>
+    <string name="insert_heading">插入標題</string>
+    <string name="format_font_size">變更字型大小</string>
+    <string name="insert_mathjax">插入 MathJax 方程式</string>
+    <string name="insert_cloze">插入克漏字空格</string>
+    <string name="before_text">選取內容前的 HTML</string>
+    <string name="after_text">選取內容後的 HTML</string>
+    <string name="add_toolbar_item">建立工具列項目</string>
     <string name="toolbar_item_explain_remove">Enter HTML to be inserted before and after the selected text\n\nLong press a toolbar item to remove it</string>
-    <string name="remove_toolbar_item">Remove Toolbar Item?</string>
-    <string name="note_editor_paste_too_large">The image is too large to paste, please insert the image manually</string>
-    <string name="ankidroid_cannot_open_after_backup_try_again" comment="After an Android backup is restored, AnkiDroid opens and shows this message.         Opening AnkiDroid again will work correctly">        Android backup in progress. Please try again</string>
+    <string name="remove_toolbar_item">是否移除工具列項目？</string>
+    <string name="note_editor_paste_too_large">此圖像太大，無法貼上，請手動插入</string>
+    <string name="ankidroid_cannot_open_after_backup_try_again" comment="After an Android backup is restored, AnkiDroid opens and shows this message.         Opening AnkiDroid again will work correctly">        Android 備份進行中。請再試一次</string>
     <string name="create_shortcut_error_vivo" comment="iManager is an app on Vivo phones">You may need to use iManager to allow AnkiDroid to add shortcuts</string>
-    <string name="create_shortcut_failed" comment="home screen == launcher">Your home screen does not allow AnkiDroid to add shortcuts</string>
-    <string name="create_shortcut_error">Error adding shortcut: %s</string>
-    <string name="note_editor_capitalize" comment="This is for a switch with a checkbox - on: enabled">Capitalize sentences</string>
+    <string name="create_shortcut_failed" comment="home screen == launcher">您的主畫面不允許 AnkiDroid 新增捷徑</string>
+    <string name="create_shortcut_error">新增捷徑時發生錯誤：%s</string>
+    <string name="note_editor_capitalize" comment="This is for a switch with a checkbox - on: enabled">大寫句子</string>
 </resources>

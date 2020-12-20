@@ -56,7 +56,7 @@
     <string name="collapse">Згорнути</string>
     <string name="study_more">Вчити ще</string>
     <plurals name="deckpicker_title">
-        <item quantity="one">%1$d карток до (%2$s)</item>
+        <item quantity="one">%1$d картка до (%2$s)</item>
         <item quantity="few">%1$d картки до (%2$s)</item>
         <item quantity="many">%1$d карток до (%2$s)</item>
         <item quantity="other">%1$d картки до (%2$s)</item>
@@ -204,6 +204,7 @@
     <string name="template_for_current_card_deleted">Тип картки для поточної картки було видалено.</string>
     <!-- Card Browser Appearance -->
     <string name="card_template_browser_appearance_title">Зовнішній вигляд переглядача</string>
+    <string name="current_and_default_deck">%1$s (%2$s)</string>
     <!-- card Info -->
     <string name="card_info_title">Інформація про картку</string>
     <!-- Permissions -->

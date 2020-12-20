@@ -74,7 +74,7 @@
     <string name="webview_crash_nonfatal">הדמיית ה WebView קרסה. הסיבה: %s</string>
     <string name="webview_crash_fatal">שגיאה קריטית: הדמיית ה WebView קרסה. הסיבה: %s</string>
     <string name="webview_crash_loop_dialog_title">נכשלה הדמיית WebView של המערכת.</string>
-    <string name="webview_crash_loop_dialog_content">מנוע התצוגה נכשל להציג את הכרטיס: %1$s. \n %2$s</string>
+    <string name="webview_crash_loop_dialog_content">מנוע התצוגה נכשל להציג את הקלף: ‚%1$s‏’. \n %2$s</string>
     <!-- Browser -->
     <string-array name="browser_column1_headings">
         <item>שאלה</item>
@@ -98,16 +98,16 @@
     </string-array>
     <!-- Custom study options -->
     <string name="custom_study_increase_new_limit">שינוי מגבלת קלפים חדשים להיום</string>
-    <string name="custom_study_increase_review_limit">שינוי מגבלת כרטיסים לחזרה להיום</string>
+    <string name="custom_study_increase_review_limit">שינוי מגבלת קלפים לחזרה להיום</string>
     <string name="custom_study_review_forgotten">לימוד הכרטסיות שנשכחו</string>
     <string name="custom_study_review_ahead">הקדם חזרה על כרטסיות</string>
-    <string name="custom_study_random_selection">לימוד כרטיסים באקראי</string>
+    <string name="custom_study_random_selection">לימוד מספר קלפים אקראי</string>
     <string name="custom_study_preview_new">מעבר מקדים על כרטסיות חדשות</string>
     <string name="custom_study_limit_tags">הגבל לתיוג ספציפי</string>
     <!-- Card editor -->
     <string name="cardeditor_title_edit_card">ערוך הערה</string>
     <string name="discard_unsaved_changes">סגור ולאבד קלט הנוכחי?</string>
-    <string name="note_editor_no_cards_created">לא נוצרו כרטיסים. יש למלא יותר שדות</string>
+    <string name="note_editor_no_cards_created">לא נוצרו קלפים. יש למלא יותר שדות</string>
     <string name="note_editor_no_first_field">השדה הראשון ריק</string>
     <string name="note_editor_no_cloze_delations">סוג הרשומה חייב לכלול \'השלם את החסר\'</string>
     <string name="note_editor_set_field_language">הגדר שפה לשדה</string>
@@ -145,10 +145,10 @@
     <string name="rename" comment="Confirm that the renaming action should be processed.">שינוי שם</string>
     <string name="default_conf_delete_error">לא ניתן להסיר את קבוצת האפשרויות \'ברירת מחדל\'</string>
     <plurals name="factadder_cards_added">
-        <item quantity="one">%d כרטיסיה הוספה</item>
-        <item quantity="two">%d כרטיסיות הוספו</item>
-        <item quantity="many">%d כרטיסיות הוספו</item>
-        <item quantity="other">%d כרטיסיות הוספו</item>
+        <item quantity="one">נוסף קלף אחד</item>
+        <item quantity="two">נוספו %d קלפים</item>
+        <item quantity="many">נוספו %d קלפים</item>
+        <item quantity="other">נוספו %d קלפים</item>
     </plurals>
     <string name="check_db">בדוק מסד הנתונים</string>
     <string name="check_media">בדוק מדיה</string>

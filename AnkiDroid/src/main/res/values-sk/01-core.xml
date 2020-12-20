@@ -204,6 +204,7 @@
     <string name="template_for_current_card_deleted">Typ kartičky pre aktuálnu kartičku bol vymazaný.</string>
     <!-- Card Browser Appearance -->
     <string name="card_template_browser_appearance_title">Vzhľad prehliadača</string>
+    <string name="current_and_default_deck">%1$s (%2$s)</string>
     <!-- card Info -->
     <string name="card_info_title">Info o kartičke</string>
     <!-- Permissions -->

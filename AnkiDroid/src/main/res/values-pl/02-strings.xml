@@ -111,7 +111,7 @@
     <string name="note_editor_no_first_field">Pierwsze pole jest puste</string>
     <string name="note_editor_no_cloze_delations">Ten typ notatki musi zawierać luki do wypełnienia</string>
     <string name="note_editor_set_field_language">Ustaw język tego pola</string>
-    <string name="note_editor_no_cards_created_all_fields">The current note type did not produce any cards.\nPlease choose another note type, or click ‘Cards’ and add a field substitution</string>
+    <string name="note_editor_no_cards_created_all_fields">Obecny typ notatki nie wygenerował żadnych kart. Wybierz inny typ notatki, lub kliknij \'Karty\' i dodaj substytucję pola.</string>
     <string name="note_editor_insert_cloze_no_cloze_note_type">Luki do wypełnienia będą działały tylko w typie notatki \"luka\"</string>
     <string name="saving_facts">Zapisywanie notatki</string>
     <string name="saving_model">Zapis typu notatki</string>
@@ -290,7 +290,7 @@
     <string name="choose_an_image">Wybierz obraz</string>
     <!-- Card Template Browser Appearance -->
     <string name="restore_default">Przywróć domyślne</string>
-    <string name="reviewer_tts_cloze_spoken_replacement">Blank</string>
+    <string name="reviewer_tts_cloze_spoken_replacement">Pusto</string>
     <!-- in options menu & Navigation Drawer -->
     <string name="ankidroid_turn_on_fullscreen_nav_drawer">Włącz tryb pełnoekranowy by pokazywać menu boczne przy użyciu JavaScript</string>
     <string name="ankidroid_turn_on_fullscreen_options_menu">Włącz tryb pełnoekranowy by pokazywać menu opcji przy użyciu JavaScript</string>
@@ -301,7 +301,7 @@
     <!-- CSV/Note Import -->
     <string name="note_importer_empty_cards_found"><![CDATA[Znaleziono puste karty. Proszę uruchomić Narzędzia>Puste karty.]]></string>
     <string name="note_importer_error_empty_first_field">Pierwsze pole puste: %s</string>
-    <string name="note_importer_error_first_field_matched">First field matched: %s</string>
+    <string name="note_importer_error_first_field_matched">Pierwsze pole pasuje: %s</string>
     <string name="note_importer_error_added_duplicate_first_field">Dodano duplikat w pierwszym polu: %s</string>
     <string name="note_importer_error_appeared_twice">Pojawił się dwukrotnie w pliku: %s</string>
     <string name="note_importer_error_empty_notes">Jedna lub więcej notatek nie została zaimportowana, ponieważ nie wygenerowały żadnych kart. Może się tak zdarzyć, gdy pola kart są puste lub gdy w pliku tekstowym zawartość nie jest przypisana do odpowiedniego pola</string>
@@ -365,5 +365,5 @@
     <string name="create_shortcut_error_vivo" comment="iManager is an app on Vivo phones">Może być konieczne użycie iManager, by umożliwić AnkiDroid dodawanie skrótów</string>
     <string name="create_shortcut_failed" comment="home screen == launcher">Twój launcher nie pozwala AnkiDroid dodawać skrótów</string>
     <string name="create_shortcut_error">Błąd dodawania skrótu: %s</string>
-    <string name="note_editor_capitalize" comment="This is for a switch with a checkbox - on: enabled">Capitalize sentences</string>
+    <string name="note_editor_capitalize" comment="This is for a switch with a checkbox - on: enabled">Automatycznie wyświetlaj zdania z dużej litery</string>
 </resources>

@@ -86,7 +86,7 @@
     <string name="reschedule_card_dialog_warning_ease_reset">重新排程也會重設排程對卡片未來的影響改變（間格倍數會被設為%d%%）</string>
     <string name="firefox_workaround_launched_reviewer_opening_deck">選擇你的檔案管理器中的牌組，或訪問 about:downloads 頁面以匯入</string>
     <string name="answering_error_title">資料庫錯誤</string>
-    <string name="answering_error_message">寫入資料庫時發生錯誤。可能是資料庫毀損或是記憶卡空間不足。\n\n如果這經常發生的話，請嘗試檢查資料庫，修復你的收藏或從備份中還原。\n當然這也可能是 AnkiDroid 的程式錯誤，請回報錯誤讓我們知道。</string>
+    <string name="answering_error_message">寫入資料庫時發生錯誤。可能是資料庫毀損或是記憶卡空間不足。\n\n如果這經常發生的話，請嘗試檢查資料庫，修復你的集合或從備份中還原。\n當然這也可能是 AnkiDroid 的程式錯誤，請回報錯誤讓我們知道。</string>
     <string name="answering_error_report">回報錯誤</string>
     <string name="repair_deck_dialog">你真的想要修復資料庫嗎？\n\n在開始修復之前，會先複製一份備份檔案放置於資料夾\'%s\'中。</string>
     <string name="intent_aedict_empty">\'default\'類別是空的</string>
@@ -100,7 +100,7 @@
     <string name="custom_study_random">隨機選擇 x 張卡片，從牌組:</string>
     <string name="custom_study_preview">預覽過去 x 天新增的卡片:</string>
     <string name="custom_study_rebuild_deck_corrupt">無法重構自訂學習牌組</string>
-    <string name="importing_collection">匯入收藏中&#8230;</string>
+    <string name="importing_collection">匯入集合中&#8230;</string>
     <string name="import_media_count">匯入媒體檔案 %1$d%%\n 請稍後......</string>
     <string name="import_progress">• 正在匯入筆記: %1$d%%\n• 正在匯入卡片: %2$d%%\n• 正在後期處理: %3$d%%</string>
     <string name="import_update_details">現有筆記%2$d條，已更新%1$d條。</string>
@@ -109,7 +109,7 @@
     <string name="sd_card_full_title">SD 卡空間已滿</string>
     <string name="sd_card_almost_full_title">SD 卡空間快滿</string>
     <string name="restore_backup_title">回復備份嗎？</string>
-    <string name="restore_backup">你的收藏將會被較舊的版本給覆蓋。任何尚未儲存的進度都會遺失。</string>
+    <string name="restore_backup">你的集合將會被較舊的版本給覆蓋。任何尚未儲存的進度都會遺失。</string>
     <string name="dialog_cancel">取消</string>
     <string name="dialog_ok">確定</string>
     <string name="dialog_no">否</string>
@@ -128,7 +128,7 @@
     <string name="dialog_collection_path_not_dir">所選的路徑不是有效路徑</string>
     <!-- Media checking -->
     <string name="check_media_title">檢查媒體嗎？</string>
-    <string name="check_media_warning">因爲大量的媒體收藏，這可能會花上好一段時間</string>
+    <string name="check_media_warning">因爲大量的媒體集合，這可能會花上好一段時間</string>
     <string name="check_media_message">正在檢查媒體&#8230;</string>
     <string name="check_media_acknowledge">媒體已檢查</string>
     <string name="check_media_failed">媒體檢查失敗</string>
@@ -161,7 +161,7 @@
     <string name="multimedia_editor_audio_permission_denied">音訊錄製權限被拒絕</string>
     <!-- Initial collection load -->
     <string name="collection_load_welcome_request_permissions_title">歡迎使用 AnkiDroid!</string>
-    <string name="collection_load_welcome_request_permissions_details">AnkiDroid 需要儲存空間權限，我們僅用於儲存你的 AnkiDroid 收藏，單字卡媒體和備份。我們的原始碼完全開放，由志願者寫成，且被眾人信賴。\n\n如果你有任何問題，請查閱我們的程式內用戶手冊或訪問我們的支援論壇。\n\n感謝您使用 AnkiDroid！\n— AnkiDroid 開發團隊</string>
+    <string name="collection_load_welcome_request_permissions_details">AnkiDroid 需要儲存空間權限，我們僅用於儲存你的 AnkiDroid 集合，單字卡媒體和備份。我們的原始碼完全開放，由志願者寫成，且被眾人信賴。\n\n如果你有任何問題，請查閱我們的程式內用戶手冊或訪問我們的支援論壇。\n\n感謝您使用 AnkiDroid！\n— AnkiDroid 開發團隊</string>
     <string name="mutimedia_editor_assertion_failed">展示進階編輯器時發生未知錯誤</string>
     <!-- Database Integrity Check -->
     <string name="integrity_check_startup_title">Ankidroid 已更新</string>
@@ -181,12 +181,12 @@
     <string name="database_locked_title">資料庫已鎖定</string>
     <string name="database_locked_summary">AnkiDroid 的資料庫正在被其他應用程式使用中。請關閉其他程式再重新開啟 AnkiDroid。</string>
     <string name="incompatible_database_version_title">不相容的資料庫版本</string>
-    <string name="incompatible_database_version_summary">該資料庫比此版本的 AnkiDroid 可以使用的更高。升級 AnkiDroid 或降級資料庫以開啟它\n\n支援的版本：%1$d\n資料庫版本：%2$d\n\n以下還原選項將覆蓋您當前的收藏，通過使用可能相容的資料庫版本：</string>
+    <string name="incompatible_database_version_summary">該資料庫比此版本的 AnkiDroid 可以使用的更高。升級 AnkiDroid 或降級資料庫以開啟它\n\n支援的版本：%1$d\n資料庫版本：%2$d\n\n以下還原選項將覆蓋您當前的集合，通過使用可能相容的資料庫版本：</string>
     <!-- Deck Picker Background-->
     <string name="background_image_applied">背景圖像已套用</string>
     <string name="background_image_removed">背景圖像已移除</string>
     <string name="no_image_selected">未選擇圖像</string>
-    <string name="error_selecting_image">選擇圖像出錯。請查看使用手冊。%s</string>
+    <string name="error_selecting_image">選擇圖像出錯。請查看用戶手冊。%s</string>
     <string name="error_deleting_image">刪除圖像時出錯</string>
     <string name="failed_to_apply_background_image">套用背景圖像 %s 失敗</string>
     <string name="background_image_too_large">牌組選取器背景過大</string>
@@ -203,21 +203,21 @@
     <string name="locale_selection_dialog_title">鍵盤提示選擇</string>
     <string name="locale_selection_dialog_summary">有些多國語言鍵盤，想是GBoard支援編輯文字時切換語言。\n\n如果您的鍵盤不會切換語言，句請請求您的鍵盤開發人員提供「setImeHintLocales」功能。</string>
     <!-- Help Dialog -->
-    <string name="help_title_using_ankidroid">Using AnkiDroid</string>
-    <string name="help_item_ankidroid_manual">AnkiDroid Manual</string>
-    <string name="help_item_anki_manual">Anki Manual</string>
-    <string name="help_item_ankidroid_faq">AnkiDroid FAQ</string>
-    <string name="help_title_get_help">Get Help</string>
+    <string name="help_title_using_ankidroid">使用 AnkiDroid</string>
+    <string name="help_item_ankidroid_manual">AnkiDroid 用戶手冊</string>
+    <string name="help_item_anki_manual">Anki 用戶手冊</string>
+    <string name="help_item_ankidroid_faq">AnkiDroid 常見問題集</string>
+    <string name="help_title_get_help">取得幫助</string>
     <string name="help_item_mailing_list">Mailing List</string>
     <string name="help_item_reddit">Reddit</string>
-    <string name="help_item_report_bug">Report a Bug</string>
-    <string name="help_title_support_ankidroid">Support AnkiDroid</string>
-    <string name="help_item_support_opencollective_donate">Donate</string>
-    <string name="help_item_support_develop_ankidroid">Develop</string>
+    <string name="help_item_report_bug">回報錯誤</string>
+    <string name="help_title_support_ankidroid">支持 AnkiDroid</string>
+    <string name="help_item_support_opencollective_donate">捐贈</string>
+    <string name="help_item_support_develop_ankidroid">開發</string>
     <string name="help_item_support_rate_ankidroid">Rate</string>
-    <string name="help_item_support_other_ankidroid">Other</string>
-    <string name="help_title_community">Community</string>
-    <string name="help_item_anki_forums">Anki Forums</string>
+    <string name="help_item_support_other_ankidroid">其他</string>
+    <string name="help_title_community">社群</string>
+    <string name="help_item_anki_forums">Anki 論壇</string>
     <string name="help_item_discord">Discord</string>
     <string name="help_item_facebook">Facebook</string>
     <string name="help_item_twitter">Twitter</string>

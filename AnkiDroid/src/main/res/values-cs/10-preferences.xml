@@ -290,4 +290,6 @@
     <string name="analytics_summ">Můžete přispět do AnkiDroid tím, že pomůžete vývojovému týmu dozvědět se, které funkce lidé používají</string>
     <string name="note_editor_replace_newlines">Nahradit nové řádky HTML</string>
     <string name="note_editor_replace_newlines_summ">V editoru poznámek převede při úpravě karty každý výskyt &lt;br&gt; na nový řádek.</string>
+    <string name="no_code_formatting">Simple typed answer formatting</string>
+    <string name="no_code_formatting_summ">Fixes ‘􏿾’ appearing in typed answer results</string>
 </resources>

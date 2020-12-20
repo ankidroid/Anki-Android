@@ -286,4 +286,6 @@
     <string name="analytics_summ">Puoi contribuire ad AnkiDroid aiutando il team di sviluppo a vedere quali funzioni usano le persone</string>
     <string name="note_editor_replace_newlines">Sostituisci le nuove righe con HTML</string>
     <string name="note_editor_replace_newlines_summ">Nell\'Editor delle Note, converti ogni istanza di &lt;br&gt; in newline quando modifichi una carta.</string>
+    <string name="no_code_formatting">Simple typed answer formatting</string>
+    <string name="no_code_formatting_summ">Fixes ‘􏿾’ appearing in typed answer results</string>
 </resources>
