@@ -394,14 +394,14 @@ public final class AddContentApi {
     /**
      * Insert a new model into AnkiDroid.
      * See the <a href="http://ankisrs.net/docs/manual.html#cards-and-templates">Anki Desktop Manual</a> for more help
-     * @param name: name of model
-     * @param fields: array of field names
-     * @param cards: array of names for the card templates
-     * @param qfmt: array of formatting strings for the question side of each template in cards
-     * @param afmt: array of formatting strings for the answer side of each template in cards
-     * @param css: css styling information to be shared across all of the templates. Use null for default CSS.
-     * @param did: default deck to add cards to when using this model. Use null or #DEFAULT_DECK_ID for default deck.
-     * @param sortf: index of field to be used for sorting. Use null for unspecified (unsupported in provider spec v1)
+     * @param name name of model
+     * @param fields array of field names
+     * @param cards array of names for the card templates
+     * @param qfmt array of formatting strings for the question side of each template in cards
+     * @param afmt array of formatting strings for the answer side of each template in cards
+     * @param css css styling information to be shared across all of the templates. Use null for default CSS.
+     * @param did default deck to add cards to when using this model. Use null or #DEFAULT_DECK_ID for default deck.
+     * @param sortf index of field to be used for sorting. Use null for unspecified (unsupported in provider spec v1)
      * @return the mid of the model which was created, or null if it could not be created
      */
     public Long addNewCustomModel(String name, String[] fields, String[] cards, String[] qfmt,
