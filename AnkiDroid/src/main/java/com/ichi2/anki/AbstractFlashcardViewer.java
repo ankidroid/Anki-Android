@@ -2676,6 +2676,8 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
 
 
     protected void toggleWhiteboard() {
+        Timber.i("Toggle whiteboard: command called from Abstract FlashcardViewer rather than Reviewer");
+        // will it be overwritten by the child command?
 
     }
 
