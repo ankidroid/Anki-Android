@@ -58,7 +58,7 @@ dependencies {
 }
 
 // Borrowed from here:
-// http://blog.blundell-apps.com/locally-release-an-android-library-for-jcenter-or-maven-central-inclusion/
+// https://blog.blundellapps.co.uk/locally-release-an-android-library-for-jcenter-or-maven-central-inclusion/
 apply plugin: 'maven'
 
 
