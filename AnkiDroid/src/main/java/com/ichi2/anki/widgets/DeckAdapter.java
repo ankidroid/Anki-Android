@@ -39,7 +39,6 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.ichi2.anki.R;
-import com.ichi2.compat.CompatHelper;
 import com.ichi2.libanki.Collection;
 
 import com.ichi2.libanki.Deck;
@@ -86,7 +85,11 @@ public class DeckAdapter<T extends AbstractDeckTreeNode<T>> extends RecyclerView
     private boolean mNumbersComputed;
 
     // Flags
-    private boolean mHasSubdecks;
+    /**
+     * Whether the deck has a parent. I.e. it contains :: in it's name.
+     * The value is set i processNodes, so not immediately.
+     */
+    private boolean mHasParent;
 
     // Whether we have a background (so some items should be partially transparent).
     private boolean mPartiallyTransparentForBackground;
@@ -174,7 +177,7 @@ public class DeckAdapter<T extends AbstractDeckTreeNode<T>> extends RecyclerView
         mCurrentDeckList.clear();
         mNew = mLrn = mRev = 0;
         mNumbersComputed = true;
-        mHasSubdecks = false;
+        mHasParent = false;
         processNodes(nodes);
         // Filtering performs notifyDataSetChanged after the async work is complete
         getFilter().filter(filter);
@@ -201,7 +204,7 @@ public class DeckAdapter<T extends AbstractDeckTreeNode<T>> extends RecyclerView
         // Set the expander icon and padding according to whether or not there are any subdecks
         RelativeLayout deckLayout = holder.deckLayout;
         int rightPadding = (int) deckLayout.getResources().getDimension(R.dimen.deck_picker_right_padding);
-        if (mHasSubdecks) {
+        if (mHasParent) {
             int smallPadding = (int) deckLayout.getResources().getDimension(R.dimen.deck_picker_left_padding_small);
             deckLayout.setPadding(smallPadding, 0, rightPadding, 0);
             holder.deckExpander.setVisibility(View.VISIBLE);
@@ -309,7 +312,7 @@ public class DeckAdapter<T extends AbstractDeckTreeNode<T>> extends RecyclerView
             }
             // If any of this node's parents are collapsed, don't add it to the deck list
             for (Deck parent : mCol.getDecks().parents(node.getDid())) {
-                mHasSubdecks = true;    // If a deck has a parent it means it's a subdeck so set a flag
+                mHasParent = true;    // If a deck has a parent it means it's a subdeck so set a flag
                 if (parent.optBoolean("collapsed")) {
                     return;
                 }
