@@ -417,7 +417,6 @@ public class Reviewer extends AbstractFlashcardViewer {
 
 
     protected void toggleWhiteboard() {
-        // toggle whiteboard enabled state (and show/hide whiteboard item in action bar)
         mPrefWhiteboard = ! mPrefWhiteboard;
         Timber.i("Reviewer:: Whiteboard enabled state set to %b", mPrefWhiteboard);
         //Even though the visibility is now stored in its own setting, we want it to be dependent
@@ -1146,7 +1145,6 @@ public class Reviewer extends AbstractFlashcardViewer {
         return (activity.getWindow().getDecorView().getSystemUiVisibility() & View.SYSTEM_UI_FLAG_HIDE_NAVIGATION) == 0;
     }
 
-    // Create the whiteboard
     private void createWhiteboard() {
         SharedPreferences sharedPrefs = AnkiDroidApp.getSharedPrefs(this);
         mWhiteboard = new Whiteboard(this, isInNightMode());
