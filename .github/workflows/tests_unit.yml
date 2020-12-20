@@ -8,12 +8,18 @@ on:
     paths:
       - 'AnkiDroid'
       - 'api'
+      - '**/*.gradle'
+      - 'annotations'
+      - 'gradle'
   push:
     branches:
       - master
     paths:
       - 'AnkiDroid'
       - 'api'
+      - '**/*.gradle'
+      - 'annotations'
+      - 'gradle'
 
 jobs:
   unit:

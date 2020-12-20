@@ -8,13 +8,18 @@ on:
     paths:
       - 'AnkiDroid'
       - 'api'
+      - '**/*.gradle'
+      - 'annotations'
+      - 'gradle'
   push:
     branches:
       - master
-    paths-ignore:
     paths:
       - 'AnkiDroid'
       - 'api'
+      - '**/*.gradle'
+      - 'annotations'
+      - 'gradle'
 
 jobs:
   emulator_test:

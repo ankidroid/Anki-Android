@@ -5,9 +5,23 @@ on:
   pull_request:
     branches:
       - '**'
+    paths:
+      - 'AnkiDroid'
+      - 'api'
+      - 'lint-rules'
+      - 'annotations'
+      - '**/*.gradle'
+      - 'gradle'
   push:
     branches:
       - master
+    paths:
+      - 'AnkiDroid'
+      - 'api'
+      - 'lint-rules'
+      - 'annotations'
+      - '**/*.gradle'
+      - 'gradle'
 
 jobs:
   lintRelease:
