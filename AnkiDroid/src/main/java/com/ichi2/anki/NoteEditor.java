@@ -577,10 +577,17 @@ public class NoteEditor extends AnkiActivity {
         for (Deck d : decks) {
             // add current deck and all other non-filtered decks to deck list
             long thisDid = d.getLong("id");
-            if (d.getInt("dyn") == 0 || (!mAddNote && mCurrentEditedCard != null && mCurrentEditedCard.getDid() == thisDid)) {
-                deckNames.add(d.getString("name"));
-                mAllDeckIds.add(thisDid);
+            String currentName = d.getString("name");
+            String lineContent = null;
+            if (d.getInt("dyn") == 0) {
+                lineContent = currentName ;
+            } else if (!mAddNote && mCurrentEditedCard != null && mCurrentEditedCard.getDid() == thisDid) {
+                lineContent = getApplicationContext().getString(R.string.current_and_default_deck, currentName, col.getDecks().name(mCurrentEditedCard.getODid()));
+            } else {
+                continue;
             }
+            deckNames.add(lineContent);
+            mAllDeckIds.add(thisDid);
         }
 
         ArrayAdapter<String> noteDeckAdapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, deckNames);
