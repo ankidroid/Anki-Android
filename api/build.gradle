@@ -15,7 +15,7 @@ android {
         minSdkVersion 14
         //noinspection OldTargetApi
         targetSdkVersion 29
-        versionCode 11016   // 4th digit: 1=alpha, 2=beta, 3=official
+        versionCode 11030   // 4th digit: 1=alpha, 2=beta, 3=official
         versionName version
     }
     buildTypes {
