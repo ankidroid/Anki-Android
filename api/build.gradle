@@ -75,6 +75,12 @@ task androidJavadocs(type: Javadoc) {
     }
 }
 
+afterEvaluate {
+    androidJavadocs.classpath += files(android.libraryVariants.collect { variant ->
+        variant.javaCompileProvider.get().classpath.files
+    })
+}
+
 // Deprecation is an error. Use @SuppressWarnings("deprecation") and justify in the PR if you must
 tasks.withType(JavaCompile) {
     options.compilerArgs << "-Xlint:deprecation" << "-Xmaxwarns" << "1000" << "-Werror"
