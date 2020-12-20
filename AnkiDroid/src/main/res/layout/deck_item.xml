@@ -63,6 +63,7 @@
 
     <LinearLayout
         android:id="@+id/counts_layout"
+        android:contentDescription="@string/deck_picker_counts"
         android:background="?attr/selectableItemBackground"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
