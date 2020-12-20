@@ -416,6 +416,7 @@ public class Reviewer extends AbstractFlashcardViewer {
     }
 
 
+    @Override
     protected void toggleWhiteboard() {
         mPrefWhiteboard = ! mPrefWhiteboard;
         Timber.i("Reviewer:: Whiteboard enabled state set to %b", mPrefWhiteboard);
