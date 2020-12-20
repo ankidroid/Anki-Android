@@ -63,7 +63,7 @@
     <string name="stats_period_month">1個月</string>
     <string name="stats_period_year">1年</string>
     <string name="stats_period_lifetime">所有時間</string>
-    <string name="stats_deck_collection">收藏</string>
+    <string name="stats_deck_collection">集合</string>
     <string name="stats_time_of_day">時間</string>
     <string name="stats_day_of_week">星期幾</string>
     <string formatted="false" name="stats_percentage_correct">% 正確率</string>

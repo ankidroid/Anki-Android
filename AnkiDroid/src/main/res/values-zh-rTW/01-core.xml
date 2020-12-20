@@ -90,7 +90,7 @@
     <string name="move_all_to_deck">全部移動到牌組</string>
     <string name="unbury">取消暫時隱藏</string>
     <string name="rename_deck">重新命名牌組</string>
-    <string name="create_shortcut">Create shortcut</string>
+    <string name="create_shortcut">建立捷徑</string>
     <string name="menu_add" comment="A generic add button - Main Deck Picker and card templates. Please inform us if you need more specific strings">新增</string>
     <string name="menu_add_note">新增筆記</string>
     <string name="menu_my_account" comment="Label of the window in which the user should enter their account. This text can\'t be found in AnkiDroid directly.">同步帳號</string>
@@ -167,7 +167,7 @@
     <string name="sync_cancelled">同步已取消</string>
     <string name="sync_cancel_message">正在取消&#8230;\n這可能需要一點時間。</string>
     <string name="export">匯出</string>
-    <string name="export_collection">匯出收藏</string>
+    <string name="export_collection">匯出集合</string>
     <string name="export_deck">匯出牌組</string>
     <string name="nothing">無</string>
     <!-- Card template editor -->
@@ -187,6 +187,7 @@
     <string name="template_for_current_card_deleted">當前卡片的卡片類型已被刪除。</string>
     <!-- Card Browser Appearance -->
     <string name="card_template_browser_appearance_title">瀏覽器外觀</string>
+    <string name="current_and_default_deck">%1$s (%2$s)</string>
     <!-- card Info -->
     <string name="card_info_title">卡片資訊</string>
     <!-- Permissions -->

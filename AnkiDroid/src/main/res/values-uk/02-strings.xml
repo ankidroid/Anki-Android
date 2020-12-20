@@ -203,8 +203,8 @@
     <string name="import_hint">Щоб імпортувати картки, помістіть apkg файл в папку %s і натисніть ОК</string>
     <string name="upgrade_import_no_file_found">Файл для імпорту %1$s не знайдено</string>
     <string name="study_options" comment="Name for a preference category in Filtered deck (aka Cram deck, aka Custom study) options">Налаштування</string>
-    <string name="menu__deck_options">Deck options</string>
-    <string name="menu__study_options" comment="Menu item that opens options for a Filtered deck (aka Cram deck, aka Custom study)">Study options</string>
+    <string name="menu__deck_options">Параметри колоди</string>
+    <string name="menu__study_options" comment="Menu item that opens options for a Filtered deck (aka Cram deck, aka Custom study)">Навчальні налаштування</string>
     <string name="select_tts">Обрати TTS мову</string>
     <string name="custom_study">Додаткове навчання</string>
     <string name="more_options">Ще</string>
@@ -346,7 +346,7 @@
     <string name="ankidroid_init_failed_webview">AnkiDroid використовує системний WebView, який недоступний. Це можливе, якщо система встановлює оновлення. Будь ласка, спробуйте знову за кілька хвилин.\n\n%s</string>
     <!-- A Menu item to change the Font Size (currently in the Note Editor) -->
     <string name="menu_font_size">Розмір шрифту</string>
-    <string name="menu_show_toolbar" comment="Checkable item stating whether the note editor toolbar should be shown">Show Toolbar</string>
+    <string name="menu_show_toolbar" comment="Checkable item stating whether the note editor toolbar should be shown">Показати панель інструментів</string>
     <string name="format_insert_bold">Форматувати як жирний</string>
     <string name="format_insert_italic">Форматувати як курсив</string>
     <string name="format_insert_underline">Форматувати як підкреслений</string>
@@ -365,5 +365,5 @@
     <string name="create_shortcut_error_vivo" comment="iManager is an app on Vivo phones">Використовуйте iManager, щоб дозволити AnkiDroid додавати ярлики</string>
     <string name="create_shortcut_failed" comment="home screen == launcher">Ваш головний екран не дозволяє AnkiDroid додати ярлики</string>
     <string name="create_shortcut_error">Помилка при створенні ярлика: %s</string>
-    <string name="note_editor_capitalize" comment="This is for a switch with a checkbox - on: enabled">Capitalize sentences</string>
+    <string name="note_editor_capitalize" comment="This is for a switch with a checkbox - on: enabled">Підняти регістр речень</string>
 </resources>

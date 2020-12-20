@@ -198,6 +198,7 @@
     <string name="template_for_current_card_deleted">Tip kartice za trenutnu karticu je obrisan.</string>
     <!-- Card Browser Appearance -->
     <string name="card_template_browser_appearance_title">Izgled preglednika</string>
+    <string name="current_and_default_deck">%1$s (%2$s)</string>
     <!-- card Info -->
     <string name="card_info_title">Card info</string>
     <!-- Permissions -->

@@ -38,7 +38,7 @@
 ~ this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <resources>
-    <string name="yes">yes</string>
+    <string name="yes">já</string>
     <!-- Navigation drawer items-->
     <string name="decks">Decks</string>
     <string name="card_browser" comment="The usage of card browser inside the app (note the casing)">Card browser</string>
@@ -192,6 +192,7 @@
     <string name="template_for_current_card_deleted">The card type for the current card was deleted.</string>
     <!-- Card Browser Appearance -->
     <string name="card_template_browser_appearance_title">Browser appearance</string>
+    <string name="current_and_default_deck">%1$s (%2$s)</string>
     <!-- card Info -->
     <string name="card_info_title">Card info</string>
     <!-- Permissions -->

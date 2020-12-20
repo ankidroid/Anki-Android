@@ -202,8 +202,8 @@
     <string name="import_hint">Чтобы импортировать карточки, поместите файл apkg в папку %s и нажмите ОК</string>
     <string name="upgrade_import_no_file_found">Файл для импорта %1$s не найден</string>
     <string name="study_options" comment="Name for a preference category in Filtered deck (aka Cram deck, aka Custom study) options">Параметры</string>
-    <string name="menu__deck_options">Deck options</string>
-    <string name="menu__study_options" comment="Menu item that opens options for a Filtered deck (aka Cram deck, aka Custom study)">Study options</string>
+    <string name="menu__deck_options">Конфигурация колоды</string>
+    <string name="menu__study_options" comment="Menu item that opens options for a Filtered deck (aka Cram deck, aka Custom study)">Настройки обучения</string>
     <string name="select_tts">Язык синтеза речи</string>
     <string name="custom_study">Учить ещё</string>
     <string name="more_options">Ещё</string>
@@ -364,5 +364,5 @@
     <string name="create_shortcut_error_vivo" comment="iManager is an app on Vivo phones">Возможно, вам потребуется использовать iManager, чтобы AnkiDroid мог добавлять ярлыки</string>
     <string name="create_shortcut_failed" comment="home screen == launcher">Ваш домашний экран не позволяет AnkiDroid добавлять ярлыки</string>
     <string name="create_shortcut_error">Ошибка при добавлении ярлыка: %s</string>
-    <string name="note_editor_capitalize" comment="This is for a switch with a checkbox - on: enabled">Capitalize sentences</string>
+    <string name="note_editor_capitalize" comment="This is for a switch with a checkbox - on: enabled">Предложение с заглавной буквы</string>
 </resources>

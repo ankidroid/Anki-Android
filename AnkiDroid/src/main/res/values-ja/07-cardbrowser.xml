@@ -108,10 +108,10 @@
     <string name="card_info_revlog_time">秒</string>
     <string name="card_info_revlog_date">日時</string>
     <string name="card_info_revlog_rating">評価</string>
-    <string name="card_info_revlog_type">学習タイプ</string>
+    <string name="card_info_revlog_type">種類</string>
     <string name="card_info_revlog_learn" comment="Label indicating that a review in the log of a card occured while the card was in learning mode">基本学習</string>
     <string name="card_info_revlog_review">復習</string>
     <string name="card_info_revlog_relearn" comment="Label of a log entry of a card, indicating that a review was done with a note in relearning mode">再基本学習</string>
     <string name="card_info_revlog_filtered">フィルター</string>
-    <string name="card_info_ease_not_applicable">未定</string>
+    <string name="card_info_ease_not_applicable">-</string>
 </resources>

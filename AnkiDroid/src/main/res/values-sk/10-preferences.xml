@@ -291,4 +291,6 @@
     <string name="analytics_summ">Môžete prispieť pre AnkiDroid tak, že umožníte vývojovému tímu sledovať, ktoré prvky sa používajú</string>
     <string name="note_editor_replace_newlines">Nahradiť nové riadky s HTML</string>
     <string name="note_editor_replace_newlines_summ">Premeniť v editore poznámok každý prípad &lt;br&gt; do nového riadku pri editácii kartičky.</string>
+    <string name="no_code_formatting">Simple typed answer formatting</string>
+    <string name="no_code_formatting_summ">Fixes ‘􏿾’ appearing in typed answer results</string>
 </resources>

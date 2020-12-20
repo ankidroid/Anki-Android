@@ -192,6 +192,7 @@
     <string name="template_for_current_card_deleted">La speco de karto por la nuna karto estis forigita.</string>
     <!-- Card Browser Appearance -->
     <string name="card_template_browser_appearance_title">Aspekto de foliumilo</string>
+    <string name="current_and_default_deck">%1$s (%2$s)</string>
     <!-- card Info -->
     <string name="card_info_title">Informoj pri karto</string>
     <!-- Permissions -->

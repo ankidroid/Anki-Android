@@ -43,7 +43,7 @@
         <item quantity="one">%d card shown</item>
         <item quantity="other">%d cards shown</item>
     </plurals>
-    <string name="card_browser_all_decks">All decks</string>
+    <string name="card_browser_all_decks">Բոլոր կապուկները</string>
     <string name="card_browser_delete_card">Delete notes</string>
     <string name="card_browser_suspend_card">Suspend cards</string>
     <string name="card_browser_change_deck">Change deck</string>
@@ -80,13 +80,13 @@
         <item>By reviews</item>
         <item>By lapses</item>
     </string-array>
-    <string name="card_browser_select_all">Select all</string>
+    <string name="card_browser_select_all">Նշել բոլորը</string>
     <string name="card_browser_select_none">Select none</string>
     <string name="card_browser_interval_new_card" comment="Message indicating that a card is currently new, and so has no interval/ease.">(new)</string>
     <string name="card_browser_due_filtered_card">(filtered)</string>
     <string name="card_browser_interval_learning_card">(learning)</string>
     <string name="card_browser_no_cards_in_deck">No cards found in deck ‘%s’</string>
-    <string name="card_browser_search_all_decks">Search all decks</string>
+    <string name="card_browser_search_all_decks">Որոնել բոլոր կապուկներում</string>
     <string name="card_browser_unknown_deck_name">Unknown</string>
     <plurals name="card_browser_cards_deleted">
         <item quantity="one">%d card deleted</item>
