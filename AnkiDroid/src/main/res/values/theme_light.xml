@@ -37,7 +37,7 @@ APIs. It's visible when there aren't enough decks to fill the screen.
         <item name="navDrawerItemColor">@color/drawer_item_text_light</item>
         <item name="navDrawerItemBackgroundColor">@drawable/drawer_item_background_light</item>
         <!-- App buttons -->
-        <item name="largeButtonBackgroundColor">@color/material_light_blue_700</item>
+        <item name="largeButtonBackgroundColor">@color/material_light_blue_800</item>
         <item name="largeButtonBackgroundColorFocused">@color/material_light_blue_600</item>
         <item name="largeButtonBackgroundColorPressed">@color/material_light_blue_900</item>
         <item name="largeButtonTextColor">@color/white</item>
