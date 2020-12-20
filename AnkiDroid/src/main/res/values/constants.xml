@@ -115,6 +115,8 @@
         <item>@string/gesture_page_up</item>
         <item>@string/gesture_page_down</item>
         <item>@string/gesture_abort_sync</item>
+        <item>@string/record_voice</item>
+        <item>@string/replay_voice</item>
         <item>@string/gesture_toggle_whiteboard</item>
     </string-array>
     <string-array name="gestures_values">
@@ -148,9 +150,9 @@
         <item>30</item> <!-- Page Up -->
         <item>31</item> <!-- Page Down -->
         <item>34</item> <!-- Abort Learning and Sync -->
-        <!-- 35 Record Voice -->
-        <!-- 36 Replay Voice -->
-        <item>37</item><!-- 37 Toggle whiteboard -->
+        <item>35</item> <!-- Record voice -->
+        <item>36</item> <!-- Replay voice -->
+        <item>37</item> <!-- Toggle whiteboard -->
     </string-array>
     <string-array name="custom_button_values">
         <item>2</item>
