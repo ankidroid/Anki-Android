@@ -92,5 +92,6 @@
     <string name="gesture_page_up">Page Up</string>
     <string name="gesture_page_down">Page Down</string>
     <string name="gesture_abort_sync">Abort Learning and Sync</string>
+    <string name="gesture_toggle_whiteboard" translatable="false">Toggle Whiteboard</string>
 
 </resources>

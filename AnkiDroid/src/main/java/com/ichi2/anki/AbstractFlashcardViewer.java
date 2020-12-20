@@ -2655,6 +2655,8 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
             case COMMAND_REPLAY_VOICE:
                 replayVoice();
                 return true;
+            case COMMAND_TOGGLE_WHITEBOARD:
+
             default:
                 Timber.w("Unknown command requested: %s", which);
                 return false;
