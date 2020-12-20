@@ -2653,7 +2653,8 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
                 replayVoice();
                 return true;
             case COMMAND_TOGGLE_WHITEBOARD:
-
+                toggleWhiteboard();
+                return true;
             default:
                 Timber.w("Unknown command requested: %s", which);
                 return false;
@@ -2668,6 +2669,11 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
 
     protected void recordVoice() {
         // intentionally blank
+    }
+
+
+    protected void toggleWhiteboard() {
+
     }
 
 
