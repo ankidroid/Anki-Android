@@ -49,13 +49,6 @@ android {
         testApplicationId "com.ichi2.anki.tests"
         vectorDrawables.useSupportLibrary = true
         testInstrumentationRunner 'androidx.test.runner.AndroidJUnitRunner'
-
-        // This enables long timeouts required on slow ARM emulators, e.g. Travis
-        adbOptions {
-            //logLevel verbose // let's try to see what is happening
-            timeOutInMs 20 * 60 * 1000  // 20 minutes
-            DdmPreferences.setTimeOut(120000)
-        }
     }
     signingConfigs {
         release {
