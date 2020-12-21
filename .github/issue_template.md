@@ -1,3 +1,12 @@
+---
+name: Bug report
+about: Bug report
+title: "[Bug]"
+labels: bug
+assignees: ''
+
+---
+
 ###### Reproduction Steps
 
 1. 
