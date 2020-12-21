@@ -1758,8 +1758,8 @@ public class CollectionTask<ProgressListener, ProgressBackground extends Progres
      *
      * @return {ArrayList<JSONObject> models, ArrayList<Integer> cardCount}
      */
-    public static class CountModels extends Task<Void, Triple<Boolean, ArrayList<Model>, ArrayList<Integer>>> {
-        protected Triple<Boolean, ArrayList<Model>, ArrayList<Integer>> task(Collection col, ProgressSenderAndCancelListener<Void> collectionTask) {
+    public static class CountModels extends Task<Void, Pair<ArrayList<Model>, ArrayList<Integer>>> {
+        protected Pair<ArrayList<Model>, ArrayList<Integer>> task(Collection col, ProgressSenderAndCancelListener<Void> collectionTask) {
             Timber.d("doInBackgroundLoadModels");
 
             ArrayList<Model> models = col.getModels().all();
@@ -1775,7 +1775,7 @@ public class CollectionTask<ProgressListener, ProgressBackground extends Progres
                 cardCount.add(col.getModels().useCount(n));
             }
 
-            return new Triple<>(false, models, cardCount);
+            return new Pair<>(models, cardCount);
         }
     }
 
