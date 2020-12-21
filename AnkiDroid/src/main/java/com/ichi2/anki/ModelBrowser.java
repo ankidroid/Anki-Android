@@ -258,7 +258,7 @@ public class ModelBrowser extends AnkiActivity {
      */
     private void fillModelList() {
         //Anonymous class for handling list item clicks
-        mModelDisplayList = new ArrayList<>(mModelIds.size());
+        mModelDisplayList = new ArrayList<>(mModels.size());
         mModelIds = new ArrayList<>(mModels.size());
 
         for (int i = 0; i < mModels.size(); i++) {
