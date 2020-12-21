@@ -1214,7 +1214,9 @@ public class NoteEditor extends AnkiActivity {
     void performPreview() {
         Intent previewer = new Intent(NoteEditor.this, CardTemplatePreviewer.class);
 
-        previewer.putExtra("ordinal", 0);
+        if (mCurrentEditedCard != null) {
+            previewer.putExtra("ordinal", mCurrentEditedCard.getOrd());
+        }
         previewer.putExtra(TemporaryModel.INTENT_MODEL_FILENAME, TemporaryModel.saveTempModel(this, mEditorNote.model()));
 
         // Send the previewer all our current editing information
