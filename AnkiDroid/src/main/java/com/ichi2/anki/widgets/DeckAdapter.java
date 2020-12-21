@@ -283,12 +283,14 @@ public class DeckAdapter<T extends AbstractDeckTreeNode<T>> extends RecyclerView
     private void setDeckExpander(ImageButton expander, ImageButton indent, AbstractDeckTreeNode<?> node){
         boolean collapsed = mCol.getDecks().get(node.getDid()).optBoolean("collapsed", false);
         // Apply the correct expand/collapse drawable
-        if (collapsed) {
-            expander.setImageDrawable(mExpandImage);
-            expander.setContentDescription(expander.getContext().getString(R.string.expand));
-        } else if (node.hasChildren()) {
-            expander.setImageDrawable(mCollapseImage);
-            expander.setContentDescription(expander.getContext().getString(R.string.collapse));
+        if (node.hasChildren()) {
+            if (collapsed) {
+                expander.setImageDrawable(mExpandImage);
+                expander.setContentDescription(expander.getContext().getString(R.string.expand));
+            } else  {
+                expander.setImageDrawable(mCollapseImage);
+                expander.setContentDescription(expander.getContext().getString(R.string.collapse));
+            }
         } else {
             expander.setImageDrawable(mNoExpander);
         }
