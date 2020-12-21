@@ -73,7 +73,7 @@ public class NoteEditorTest extends RobolectricTest {
         assertThat("Bundle has fields", fieldsBundle, notNullValue());
         assertThat("Bundle has fields edited value", fieldsBundle.getString("0"), is("Preview Test"));
         assertThat("Bundle has empty tag list", noteEditorBundle.getStringArrayList("tags"), is(new ArrayList<>()));
-        assertThat("Bundle has ordinal 0 for ephemeral preview", intent.intent.getIntExtra("ordinal", -1), is(0));
+        assertThat("Bundle has no ordinal for ephemeral preview", intent.intent.hasExtra("ordinal"), is(false));
         assertThat("Bundle has a temporary model saved", intent.intent.hasExtra(TemporaryModel.INTENT_MODEL_FILENAME), is(true));
     }
 
