@@ -24,6 +24,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.ActionBar;
 
+import android.util.Pair;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -98,7 +99,7 @@ public class ModelBrowser extends AnkiActivity {
     private LoadingModelsHandler loadingModelsHandler() {
         return new LoadingModelsHandler(this);
     }
-    private static class LoadingModelsHandler extends TaskListenerWithContext<ModelBrowser, Void, Triple<Boolean, ArrayList<Model>, ArrayList<Integer>>> {
+    private static class LoadingModelsHandler extends TaskListenerWithContext<ModelBrowser, Void, Pair<ArrayList<Model>, ArrayList<Integer>>> {
         public LoadingModelsHandler(ModelBrowser browser) {
             super(browser);
         }
@@ -114,13 +115,13 @@ public class ModelBrowser extends AnkiActivity {
         }
 
         @Override
-        public void actualOnPostExecute(@NonNull ModelBrowser browser, Triple<Boolean, ArrayList<Model>, ArrayList<Integer>> result) {
-            if (!result.first) {
+        public void actualOnPostExecute(@NonNull ModelBrowser browser, Pair<ArrayList<Model>, ArrayList<Integer>> result) {
+            if (result == null) {
                 throw new RuntimeException();
             }
             browser.hideProgressBar();
-            browser.mModels = result.second;
-            browser.mCardCounts = result.third;
+            browser.mModels = result.first;
+            browser.mCardCounts = result.second;
 
             browser.fillModelList();
         }
