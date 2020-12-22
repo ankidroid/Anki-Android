@@ -143,11 +143,11 @@ jobs:
           name: adb_logs
           path: adb-log.txt.gz
 
-#      - name: Submit Coverage
-#        # This can fail on timeouts etc, wrap with retry
-#        uses: nick-invision/retry@v2
-#        with:
-#          timeout_minutes: 10
-#          retry_wait_seconds: 60
-#          max_attempts: 3
-#          command: ./node_modules/.bin/codecov
+      - name: Submit Coverage
+        # This can fail on timeouts etc, wrap with retry
+        uses: nick-invision/retry@v2
+        with:
+          timeout_minutes: 10
+          retry_wait_seconds: 60
+          max_attempts: 3
+          command: curl https://codecov.io/bash -o codecov.sh && bash ./codecov.sh 
