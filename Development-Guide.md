@@ -10,7 +10,7 @@ Feel free to join our Discord: [#dev-ankidroid](https://discord.gg/qjzcRTx) to j
   - [Issues to get started with](#issues-to-get-started-with)
   - [Submit Improvements](#submit-improvements)
   - [Git workflow](#git-workflow)
-  - [Inital setup (one time)](#inital-setup-one-time)
+  - [Initial setup (one time)](#initial-setup-one-time)
   - [Making a new pull request](#making-a-new-pull-request)
   - [Dealing with merge conflicts](#dealing-with-merge-conflicts)
   - [Running automated tests](#running-automated-tests)
@@ -84,7 +84,7 @@ If you have trouble with Git, you can paste the changed files as text to the [fo
 ## Git workflow
 Git can be a bit complicated to use in the beginning. This section describes the workflow that we recommend for regular contributors. The following assumes that you're using either linux, or the [linux subsystem for Windows](https://msdn.microsoft.com/en-us/commandline/wsl/about). We also assume you're [using SSH to authenticate with github](https://help.github.com/articles/generating-a-new-ssh-key/) (highly recommended) and that you've already forked the AnkiDroid repository on github.
 
-### Inital setup (one time)
+### Initial setup (one time)
 First let's set up our local repository
 
 ```
