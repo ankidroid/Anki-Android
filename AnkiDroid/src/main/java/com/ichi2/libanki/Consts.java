@@ -109,6 +109,13 @@ public class Consts {
     @IntDef({MODEL_STD, MODEL_CLOZE})
     public @interface MODEL_TYPE {}
 
+    // deck types
+    public static final int DECK_STD = 0;
+    public static final int DECK_DYN = 1;
+    @Retention(SOURCE)
+    @IntDef({DECK_STD, DECK_DYN})
+    public @interface DECK_TYPE {}
+
     public static final int STARTING_FACTOR = 2500;
 
     // deck schema & syncing vars

@@ -56,6 +56,8 @@ import com.ichi2.utils.HtmlUtils;
 import timber.log.Timber;
 
 import static com.ichi2.anim.ActivityTransitionAnimation.Direction.*;
+import static com.ichi2.libanki.Consts.DECK_DYN;
+import static com.ichi2.libanki.Consts.DECK_STD;
 
 public class StudyOptionsFragment extends Fragment implements Toolbar.OnMenuItemClickListener {
 
@@ -457,7 +459,7 @@ public class StudyOptionsFragment extends Fragment implements Toolbar.OnMenuItem
             if (mLoadWithDeckOptions) {
                 mLoadWithDeckOptions = false;
                 Deck deck = getCol().getDecks().current();
-                if (deck.getInt("dyn") != 0 && deck.has("empty")) {
+                if (deck.getInt("dyn") == DECK_DYN && deck.has("empty")) {
                     deck.remove("empty");
                 }
                     mProgressDialog = StyledProgressDialog.show(getActivity(), "",
@@ -588,7 +590,7 @@ public class StudyOptionsFragment extends Fragment implements Toolbar.OnMenuItem
                     }
 
                     // Switch between the empty view, the ordinary view, and the "congratulations" view
-                    boolean isDynamic = deck.optInt("dyn", 0) != 0;
+                    boolean isDynamic = deck.optInt("dyn", DECK_STD) == DECK_DYN;
                     if (totalCards == 0 && !isDynamic) {
                         mCurrentContentView = CONTENT_EMPTY;
                         mDeckInfoLayout.setVisibility(View.VISIBLE);

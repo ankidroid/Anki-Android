@@ -35,6 +35,8 @@ import java.util.Arrays;
 import androidx.annotation.NonNull;
 import timber.log.Timber;
 
+import static com.ichi2.libanki.Consts.DECK_STD;
+
 @SuppressWarnings({"PMD.AvoidThrowingRawExceptionTypes","PMD.AvoidReassigningParameters",
         "PMD.NPathComplexity","PMD.MethodNamingConventions","PMD.ExcessiveMethodLength","PMD.OneDeclarationPerLine",
         "PMD.SwitchStmtsShouldHaveDefault","PMD.EmptyIfStmt","PMD.SimplifyBooleanReturns","PMD.CollapsibleIfStatements"})
@@ -128,7 +130,7 @@ public class Storage {
             if (ver < 3) {
                 // new deck properties
                 for (Deck d : col.getDecks().all()) {
-                    d.put("dyn", 0);
+                    d.put("dyn", DECK_STD);
                     d.put("collapsed", false);
                     col.getDecks().save(d);
                 }
@@ -196,7 +198,7 @@ public class Storage {
             if (ver < 11) {
                 col.modSchemaNoCheck();
                 for (Deck d : col.getDecks().all()) {
-                    if (d.getInt("dyn") != 0) {
+                    if (d.getInt("dyn") == Consts.DECK_DYN) {
                         int order = d.getInt("order");
                         // failed order was removed
                         if (order >= 5) {
