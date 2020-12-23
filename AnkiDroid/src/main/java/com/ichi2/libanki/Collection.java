@@ -84,6 +84,7 @@ import timber.log.Timber;
 
 import static com.ichi2.async.CancelListener.isCancelled;
 import static com.ichi2.libanki.Collection.DismissType.REVIEW;
+import static com.ichi2.libanki.Consts.DECK_DYN;
 
 // Anki maintains a cache of used tags so it can quickly present a list of tags
 // for autocomplete and in the browser. For efficiency, deletions are not
@@ -940,7 +941,7 @@ public class Collection {
         card.setDid(did);
         // if invalid did, use default instead
         Deck deck = mDecks.get(card.getDid());
-        if (deck.getInt("dyn") == 1) {
+        if (deck.getInt("dyn") == DECK_DYN) {
             // must not be a filtered deck
             card.setDid(1);
         } else {

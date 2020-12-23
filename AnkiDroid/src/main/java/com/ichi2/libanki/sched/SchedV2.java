@@ -68,6 +68,8 @@ import androidx.annotation.VisibleForTesting;
 import timber.log.Timber;
 
 import static com.ichi2.libanki.Consts.CARD_TYPE_RELEARNING;
+import static com.ichi2.libanki.Consts.DECK_DYN;
+import static com.ichi2.libanki.Consts.DECK_STD;
 import static com.ichi2.libanki.Consts.QUEUE_TYPE_DAY_LEARN_RELEARN;
 import static com.ichi2.async.CancelListener.isCancelled;
 import static com.ichi2.libanki.sched.AbstractSched.UnburyType.*;
@@ -985,7 +987,7 @@ public class SchedV2 extends AbstractSched {
      * @param considerCurrentCard whether the current card should be taken from the limit (if it belongs to this deck)
      * */
     public int _deckNewLimitSingle(@NonNull Deck g, boolean considerCurrentCard) {
-        if (g.getInt("dyn") != 0) {
+        if (g.getInt("dyn") == DECK_DYN) {
             return mDynReportLimit;
         }
         long did = g.getLong("id");
@@ -1527,7 +1529,7 @@ public class SchedV2 extends AbstractSched {
         if (d == null) {
             return 0;
         }
-        if (d.getInt("dyn") != 0) {
+        if (d.getInt("dyn") == DECK_DYN) {
             return mDynReportLimit;
         }
         long did = d.getLong("id");
@@ -1880,7 +1882,7 @@ public class SchedV2 extends AbstractSched {
             did = mCol.getDecks().selected();
         }
         Deck deck = mCol.getDecks().get(did);
-        if (deck.getInt("dyn") == 0) {
+        if (deck.getInt("dyn") == DECK_STD) {
             Timber.e("error: deck is not a filtered deck");
             return;
         }
@@ -2155,7 +2157,7 @@ public class SchedV2 extends AbstractSched {
     private boolean _previewingCard(@NonNull Card card) {
         DeckConfig conf = _cardConf(card);
 
-        return conf.getInt("dyn") != 0 && !conf.getBoolean("resched");
+        return conf.getInt("dyn") == DECK_DYN && !conf.getBoolean("resched");
     }
 
 
@@ -2275,7 +2277,7 @@ public class SchedV2 extends AbstractSched {
             sb.append("\n\n");
             sb.append("").append(context.getString(R.string.sched_has_buried)).append(now);
         }
-        if (mCol.getDecks().current().getInt("dyn") == 0) {
+        if (mCol.getDecks().current().getInt("dyn") == DECK_STD) {
             sb.append("\n\n");
             sb.append(context.getString(R.string.studyoptions_congrats_custom));
         }
@@ -3082,7 +3084,7 @@ public class SchedV2 extends AbstractSched {
         // write old data
         oldCardData.flush(false);
         DeckConfig conf = _cardConf(oldCardData);
-        boolean previewing = conf.getInt("dyn") != 0 && ! conf.getBoolean("resched");
+        boolean previewing = conf.getInt("dyn") == DECK_DYN && ! conf.getBoolean("resched");
         if (! previewing) {
             // and delete revlog entry
             long last = mCol.getDb().queryLongScalar("SELECT id FROM revlog WHERE cid = ? ORDER BY id DESC LIMIT 1", oldCardData.getId());

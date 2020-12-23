@@ -852,7 +852,7 @@ public class DeckOptions extends AppCompatPreferenceActivity implements OnShared
         int count = 0;
         long conf = mDeck.getLong("conf");
         for (Deck deck : mCol.getDecks().all()) {
-            if (deck.getInt("dyn") == 1) {
+            if (deck.getInt("dyn") == Consts.DECK_DYN) {
                 continue;
             }
             if (deck.getLong("conf") == conf) {
@@ -881,7 +881,7 @@ public class DeckOptions extends AppCompatPreferenceActivity implements OnShared
         TreeMap<String, Long> children = mCol.getDecks().children(did);
         for (long childDid : children.values()) {
             Deck child = mCol.getDecks().get(childDid);
-            if (child.getInt("dyn") == 1) {
+            if (child.getInt("dyn") == Consts.DECK_DYN) {
                 continue;
             }
             count++;
