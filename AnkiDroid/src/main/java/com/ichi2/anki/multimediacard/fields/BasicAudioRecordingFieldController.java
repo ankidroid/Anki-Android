@@ -21,6 +21,7 @@ package com.ichi2.anki.multimediacard.fields;
 
 import android.content.Context;
 import android.content.Intent;
+import android.util.Log;
 import android.view.Gravity;
 import android.widget.LinearLayout;
 import android.widget.ScrollView;
@@ -31,6 +32,8 @@ import com.ichi2.ui.FixedTextView;
 import com.ichi2.utils.UiUtil;
 
 import java.io.File;
+
+import timber.log.Timber;
 
 public class BasicAudioRecordingFieldController extends FieldControllerBase implements IFieldController {
 
@@ -89,13 +92,20 @@ public class BasicAudioRecordingFieldController extends FieldControllerBase impl
         label.setText(UiUtil.makeBold(context.getString(R.string.audio_recording_field_list)));
         label.setGravity(Gravity.CENTER_HORIZONTAL);
         previewLayout.addView(label);
-        for (int i = 0; i < this.mNote.getInitialFieldCount(); i++) {
-            IField field = mNote.getInitialField(i);
-            FixedTextView textView = new FixedTextView(context);
-            textView.setText(field.getText());
-            textView.setTextSize(16);
-            textView.setPadding(16, 0, 16, 24);
-            previewLayout.addView(textView);
+
+        // NoSuchMethodError exception occur from visual editor
+        try {
+            for (int i = 0; i < this.mNote.getInitialFieldCount(); i++) {
+                Timber.tag("note number").e("%s", mNote.getInitialFieldCount());
+                IField field = mNote.getInitialField(i);
+                FixedTextView textView = new FixedTextView(context);
+                textView.setText(field.getText());
+                textView.setTextSize(16);
+                textView.setPadding(16, 0, 16, 24);
+                previewLayout.addView(textView);
+            }
+        } catch (NoSuchMethodError e) {
+            Timber.w(e);
         }
     }
 
