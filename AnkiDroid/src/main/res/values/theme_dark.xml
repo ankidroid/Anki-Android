@@ -114,6 +114,7 @@
         <item name="dialogErrorIcon">@drawable/ic_warning_white</item>
         <item name="dialogSyncErrorIcon">@drawable/ic_sync_problem_white</item>
         <item name="dialogSendIcon">@drawable/ic_send_white</item>
+        <item name="visualEditorImage">@drawable/ic_visual_editor_white</item>
         <!-- Dialog styles -->
         <item name="android:listPreferredItemHeight">56dip</item>
         <item name="md_dark_theme">true</item>

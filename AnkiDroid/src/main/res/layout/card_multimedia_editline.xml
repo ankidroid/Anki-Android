@@ -13,10 +13,23 @@
         android:freezesText="true"
         android:layout_alignParentStart="true"
         app:layout_constraintBottom_toTopOf="@+id/id_note_editText"
-        app:layout_constraintEnd_toStartOf="@id/id_media_button"
+        app:layout_constraintEnd_toStartOf="@id/id_visual_editor"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         tools:text="Front\nNewline" />
+
+    <ImageButton
+        android:id="@+id/id_visual_editor"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="?attr/visualEditorImage"
+        android:gravity="end|center_vertical"
+        android:nextFocusForward="@id/id_expand_button"
+        android:layout_marginEnd="16dp"
+        app:layout_constraintEnd_toStartOf="@+id/id_toggle_sticky_button"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:background="@drawable/ic_visual_editor_black"
+        />
 
     <ImageButton
         android:id="@+id/id_toggle_sticky_button"
@@ -57,7 +70,7 @@
         android:layout_width="0dp"
         android:layout_height="0dp"
         app:barrierDirection="bottom"
-        app:constraint_referenced_ids="id_label, id_media_button, id_expand_button" />
+        app:constraint_referenced_ids="id_label, id_media_button, id_visual_editor, id_expand_button" />
 
     <com.ichi2.anki.FieldEditText
         android:id="@+id/id_note_editText"

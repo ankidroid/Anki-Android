@@ -145,6 +145,13 @@ object NoteService {
         // }
     }
 
+    @JvmStatic
+    fun updateMultimediaNoteFromJsonNote(col: com.ichi2.libanki.Collection?, editorNoteSrc: Note, noteDst: IMultimediaEditableNote?) {
+        if (noteDst is MultimediaEditableNote) {
+            updateMultimediaNoteFromFields(col, editorNoteSrc.fields, editorNoteSrc.mid, (noteDst as MultimediaEditableNote?)!!)
+        }
+    }
+
     /**
      * Considering the field is new, if it has media handle it
      *

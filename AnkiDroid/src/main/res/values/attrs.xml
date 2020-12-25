@@ -108,6 +108,7 @@
     <attr name="buttonShadowColor" format="color"/>
     <attr name="buttonRippleColor" format="color"/>
     <attr name="buttonForegroundColor" format="color"/>
+    <attr name="visualEditorImage" format="integer"/>
     <!-- Images -->
     <attr name="navDrawerImage" format="integer"/>
     <attr name="attachFileImage" format="integer"/>
