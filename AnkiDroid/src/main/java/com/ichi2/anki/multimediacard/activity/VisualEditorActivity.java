@@ -12,20 +12,25 @@ import com.ichi2.anki.AnkiDroidApp;
 import com.ichi2.anki.R;
 import com.ichi2.anki.cardviewer.CardAppearance;
 import com.ichi2.anki.UIUtils;
+import com.ichi2.anki.multimediacard.IMultimediaEditableNote;
 import com.ichi2.anki.multimediacard.fields.IField;
+import com.ichi2.anki.multimediacard.fields.ImageField;
 import com.ichi2.anki.multimediacard.fields.TextField;
 import com.ichi2.anki.multimediacard.visualeditor.VisualEditorFunctionality;
 import com.ichi2.anki.multimediacard.visualeditor.VisualEditorWebView;
 import com.ichi2.anki.reviewer.ReviewerCustomFonts;
 import com.ichi2.anki.multimediacard.visualeditor.VisualEditorWebView.SelectionType;
+import com.ichi2.anki.servicelayer.NoteService;
 import com.ichi2.libanki.Collection;
 import com.ichi2.libanki.Models;
 import com.ichi2.libanki.Note;
 import com.ichi2.libanki.Utils;
+import com.ichi2.libanki.exception.EmptyMediaException;
 import com.ichi2.utils.AssetReader;
 import com.ichi2.utils.JSONObject;
 import com.ichi2.utils.WebViewDebugging;
 
+import java.io.File;
 import java.util.Arrays;
 import java.util.List;
 import java.io.IOException;
@@ -35,10 +40,13 @@ import androidx.annotation.CheckResult;
 import androidx.annotation.IdRes;
 import androidx.annotation.MenuRes;
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.widget.Toolbar;
 import timber.log.Timber;
 
 import static com.ichi2.anki.multimediacard.visualeditor.VisualEditorFunctionality.*;
+
+import static com.ichi2.anki.NoteEditor.REQUEST_MULTIMEDIA_EDIT;
 
 //NOTE: Remove formatting on "{{c1::" will cause a failure to detect the cloze deletion, this is the same as Anki.
 public class VisualEditorActivity extends AnkiActivity {
@@ -58,6 +66,8 @@ public class VisualEditorActivity extends AnkiActivity {
     @NonNull
     private SelectionType mSelectionType = SelectionType.REGULAR;
     private AssetReader mAssetReader = new AssetReader(this);
+    //Unsure if this is needed, or whether getCol will block until onCollectionLoaded completes.
+    private boolean mHasLoadedCol;
 
 
     @Override
@@ -106,6 +116,8 @@ public class VisualEditorActivity extends AnkiActivity {
         setupAction.apply(R.id.editor_button_align_justify, ALIGN_JUSTIFY);
         setupAction.apply(R.id.editor_button_view_html, EDIT_SOURCE); //this is a toggle.
 
+        findViewById(R.id.editor_button_add_image).setOnClickListener(v -> this.openAdvancedViewerForAddImage());
+
         findViewById(R.id.editor_button_cloze).setOnClickListener(v -> performCloze());
     }
 
@@ -119,6 +131,71 @@ public class VisualEditorActivity extends AnkiActivity {
         List<String> fields = Arrays.asList(mFields);
         fields.set(mIndex, mCurrentText);
         return Note.ClozeUtils.getNextClozeIndex(fields);
+    }
+
+
+    private void openAdvancedViewerForAddImage() {
+        //TODO; Copied from NoteEditor
+        if (mModelId == 0 || !mHasLoadedCol) {
+            //Haven't loaded yet.
+            UIUtils.showThemedToast(this, "Unable to add image", false);
+            return;
+        }
+
+        IField field = new ImageField();
+        IMultimediaEditableNote mNote = NoteService.createEmptyNote(getCol().getModels().get(mModelId));
+        mNote.setField(0, field);
+        Intent editCard = new Intent(this, MultimediaEditFieldActivity.class);
+        editCard.putExtra(MultimediaEditFieldActivity.EXTRA_FIELD_INDEX, 0);
+        editCard.putExtra(MultimediaEditFieldActivity.EXTRA_FIELD, field);
+        editCard.putExtra(MultimediaEditFieldActivity.EXTRA_WHOLE_NOTE, mNote);
+        startActivityForResultWithoutAnimation(editCard, REQUEST_MULTIMEDIA_EDIT);
+    }
+
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        if (data == null) {
+            Timber.d("data was null");
+            return;
+        }
+        if (requestCode == REQUEST_MULTIMEDIA_EDIT) {
+
+            if (resultCode != RESULT_OK) {
+                return;
+            }
+            if (data.getExtras() == null) {
+                return;
+            }
+            IField field = (IField) data.getExtras().get(MultimediaEditFieldActivity.EXTRA_RESULT_FIELD);
+
+            if (field == null) {
+                return;
+            }
+
+            if (!registerMediaForWebView(field.getImagePath())) {
+                return;
+            }
+
+            this.mWebView.pasteHtml(field.getFormattedValue());
+            return;
+        }
+        super.onActivityResult(requestCode, resultCode, data);
+    }
+
+    @SuppressWarnings( {"BooleanMethodIsAlwaysInverted", "RedundantSuppression"})
+    @CheckResult
+    private boolean registerMediaForWebView(String imagePath) {
+        //TODO: this is a little too early, ideally should be in a temp file which can't be cleared until we exit.
+        Timber.i("Adding media to collection: %s", imagePath);
+        File f = new File(imagePath);
+        try {
+            getCol().getMedia().addFile(f);
+            return true;
+        } catch (IOException | EmptyMediaException e) {
+            Timber.e(e, "Failed to add file");
+            return false;
+        }
     }
 
 
@@ -224,6 +301,7 @@ public class VisualEditorActivity extends AnkiActivity {
         }
 
         mWebView.injectCss(css);
+        mHasLoadedCol = true;
     }
 
 
