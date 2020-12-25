@@ -77,6 +77,7 @@ import com.ichi2.anki.dialogs.tags.TagsDialogListener;
 import com.ichi2.anki.exception.ConfirmModSchemaException;
 import com.ichi2.anki.multimediacard.IMultimediaEditableNote;
 import com.ichi2.anki.multimediacard.activity.MultimediaEditFieldActivity;
+import com.ichi2.anki.multimediacard.activity.VisualEditorActivity;
 import com.ichi2.anki.multimediacard.fields.AudioClipField;
 import com.ichi2.anki.multimediacard.fields.AudioRecordingField;
 import com.ichi2.anki.multimediacard.fields.EFieldType;
@@ -194,6 +195,7 @@ public class NoteEditor extends AnkiActivity implements
     public static final int REQUEST_MULTIMEDIA_EDIT = 2;
     public static final int REQUEST_TEMPLATE_EDIT = 3;
     public static final int REQUEST_PREVIEW = 4;
+    public static final int REQUEST_VISUAL_EDIT = 5;
 
     /** Whether any change are saved. E.g. multimedia, new card added, field changed and saved.*/
     private boolean mChanged = false;
@@ -1359,34 +1361,11 @@ public class NoteEditor extends AnkiActivity implements
                 }
                 break;
             }
+            case REQUEST_VISUAL_EDIT:
+                requestEdit(REQUEST_VISUAL_EDIT, resultCode, data);
+                break;
             case REQUEST_MULTIMEDIA_EDIT: {
-                if (resultCode != RESULT_CANCELED) {
-                    Collection col = getCol();
-                    Bundle extras = data.getExtras();
-                    if (extras == null) {
-                        break;
-                    }
-                    int index = extras.getInt(MultimediaEditFieldActivity.EXTRA_RESULT_FIELD_INDEX);
-                    IField field = (IField) extras.get(MultimediaEditFieldActivity.EXTRA_RESULT_FIELD);
-                    if (field == null) {
-                        break;
-                    }
-                    MultimediaEditableNote mNote = getCurrentMultimediaEditableNote(col);
-                    mNote.setField(index, field);
-                    FieldEditText fieldEditText = mEditFields.get(index);
-                    // Completely replace text for text fields (because current text was passed in)
-                    String formattedValue = field.getFormattedValue();
-                    if (field.getType() == EFieldType.TEXT) {
-                        fieldEditText.setText(formattedValue);
-                    }
-                    // Insert text at cursor position if the field has focus
-                    else if (fieldEditText.getText() != null) {
-                        insertStringInField(fieldEditText, formattedValue);
-                    }
-                    //DA - I think we only want to save the field here, not the note.
-                    NoteService.saveMedia(col, mNote);
-                    mChanged = true;
-                }
+                requestEdit(REQUEST_MULTIMEDIA_EDIT, resultCode, data);
                 break;
             }
             case REQUEST_TEMPLATE_EDIT: {
@@ -1412,6 +1391,43 @@ public class NoteEditor extends AnkiActivity implements
                         updateCards(mEditorNote.model());
                     }
                 break;
+            }
+        }
+    }
+
+    private void requestEdit(int requestCode, int resultCode, Intent data) {
+        if (resultCode != RESULT_CANCELED) {
+            Collection col = getCol();
+            Bundle extras = data.getExtras();
+            if (extras == null) {
+                return;
+            }
+            int index = extras.getInt(MultimediaEditFieldActivity.EXTRA_RESULT_FIELD_INDEX);
+            IField field = (IField) extras.get(MultimediaEditFieldActivity.EXTRA_RESULT_FIELD);
+            if (field == null) {
+                return;
+            }
+            if (requestCode == REQUEST_MULTIMEDIA_EDIT) {
+                MultimediaEditableNote mNote = getCurrentMultimediaEditableNote(col);
+                mNote.setField(index, field);
+                FieldEditText fieldEditText = mEditFields.get(index);
+                // Completely replace text for text fields (because current text was passed in)
+                 String formattedValue = field.getFormattedValue();
+                 if (field.getType() == EFieldType.TEXT) {
+                     fieldEditText.setText(formattedValue);
+                 }
+                 // Insert text at cursor position if the field has focus
+                 else if (fieldEditText.getText() != null) {
+                     insertStringInField(fieldEditText, formattedValue);
+                 }
+                 //DA - I think we only want to save the field here, not the note.
+                 NoteService.saveMedia(col, mNote);
+                 mChanged = true;
+            } else if (requestCode == REQUEST_VISUAL_EDIT) {
+                IMultimediaEditableNote mNote = NoteService.createEmptyNote(mEditorNote.model());
+                NoteService.updateMultimediaNoteFromJsonNote(col, mEditorNote, mNote);
+                mNote.setField(index, field);
+                mEditFields.get(index).setText(field.getFormattedValue());
             }
         }
     }
@@ -1529,6 +1545,10 @@ public class NoteEditor extends AnkiActivity implements
                 mediaButton.setBackgroundResource(icons[0]);
                 setMMButtonListener(mediaButton, i);
             }
+
+            ImageButton visualEditorButton = edit_line_view.getVisualEditorButton();
+            setVisualEditorListener(visualEditorButton, i);
+
             if (Build.VERSION.SDK_INT < Build.VERSION_CODES.O && previous != null) {
                 previous.getLastViewInTabOrder().setNextFocusForwardId(R.id.CardEditorTagButton);
             }
@@ -1546,6 +1566,24 @@ public class NoteEditor extends AnkiActivity implements
         insertStringInField(editText, imageTag);
         return true;
     }
+
+    private void setVisualEditorListener(ImageButton visualEditorButton, final int index) {
+        visualEditorButton.setOnClickListener(view -> {
+            Timber.i("NoteEditor:: Multimedia button pressed for field %d", index);
+            try {
+                String value = mEditFields.get(index).getText().toString();
+                Intent i = new Intent(this, VisualEditorActivity.class);
+                i.putExtra(VisualEditorActivity.EXTRA_FIELD, value);
+                i.putExtra(VisualEditorActivity.EXTRA_FIELD_INDEX, index);
+                i.putExtra(VisualEditorActivity.EXTRA_ALL_FIELDS, mEditorNote.getFields());
+                i.putExtra(VisualEditorActivity.EXTRA_MODEL_ID, mEditorNote.model().getLong("id"));
+                startActivityForResultWithoutAnimation(i, REQUEST_VISUAL_EDIT);
+            } catch (Exception e) {
+                UIUtils.showThemedToast(this, "Unable to open Visual Editor", false);
+            }
+        });
+    }
+
 
     private void setMMButtonListener(ImageButton mediaButton, final int index) {
         mediaButton.setOnClickListener(v -> {
