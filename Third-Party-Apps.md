@@ -36,3 +36,6 @@ Pleco is the ultimate Chinese learning companion - an integrated Chinese English
 Reader for foreign languages allowing you to create flashcards into AnkiDroid.
 ### [Takoboto Japanese Dictionary](https://play.google.com/store/apps/details?id=jp.takoboto)
 Takoboto is an offline Japanese-English, English-Japanese dictionary and Japanese language learning tool. It includes translations of some words in French, German and Russian and displays example sentences, kanji information and conjugated forms for each word.
+
+### [LanLe](https://play.google.com/store/apps/details?id=lanle.ru.lanle)
+Learn foreign languages by movies with subtitles. For all of the detected unknown words and phrases, LanLe will create cards for memorizing in AnkiDroid. The application available for Android, Windows and Linux [Read More](https://lanle.ru)
