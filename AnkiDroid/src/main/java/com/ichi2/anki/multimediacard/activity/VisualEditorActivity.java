@@ -17,6 +17,7 @@ import com.ichi2.anki.multimediacard.fields.TextField;
 import com.ichi2.anki.multimediacard.visualeditor.VisualEditorFunctionality;
 import com.ichi2.anki.multimediacard.visualeditor.VisualEditorWebView;
 import com.ichi2.anki.reviewer.ReviewerCustomFonts;
+import com.ichi2.anki.multimediacard.visualeditor.VisualEditorWebView.SelectionType;
 import com.ichi2.libanki.Collection;
 import com.ichi2.libanki.Models;
 import com.ichi2.libanki.Note;
@@ -31,7 +32,9 @@ import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 
+import androidx.annotation.CheckResult;
 import androidx.annotation.IdRes;
+import androidx.annotation.MenuRes;
 import androidx.annotation.NonNull;
 import androidx.appcompat.widget.Toolbar;
 import timber.log.Timber;
@@ -53,6 +56,8 @@ public class VisualEditorActivity extends AnkiActivity {
     private VisualEditorWebView mWebView;
     private long mModelId;
     private String[] mFields;
+    @NonNull
+    private SelectionType mSelectionType = SelectionType.REGULAR;
 
 
     @Override
@@ -124,11 +129,22 @@ public class VisualEditorActivity extends AnkiActivity {
         String css = cardAppearance.getStyle();
         webView.injectCss(css);
         webView.setOnTextChangeListener(s -> this.mCurrentText = s);
+        webView.setSelectionChangedListener(this::handleSelectionChanged);
 
         webView.setHtml(mCurrentText);
 
         //Could be better, this is done per card in AbstractFlashCardViewer
         webView.getSettings().setDefaultFontSize(CardAppearance.calculateDynamicFontSize(mCurrentText));
+    }
+
+
+    private void handleSelectionChanged(SelectionType selectionType) {
+        SelectionType previousSelectionType = this.mSelectionType;
+
+        this.mSelectionType = selectionType;
+        if (selectionType != previousSelectionType) {
+            invalidateOptionsMenu();
+        }
     }
 
 
@@ -268,19 +284,80 @@ public class VisualEditorActivity extends AnkiActivity {
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        // NOTE: This is called every time a new question is shown via invalidate options menu
-        getMenuInflater().inflate(R.menu.visual_editor, menu);
+        // NOTE: This is called every time the selection is changed to a new element type.
+        int menuResource = getSelectionMenuOptions();
+        //I decided it was best not to show "save/undo" while an image is visible, as it confuses the meaning of save.
+        //If we want so in the future, add another inflate call here.
+        getMenuInflater().inflate(menuResource, menu);
         return super.onCreateOptionsMenu(menu);
     }
 
+    /** Obtains an additional options menu for the current selection */
+    @CheckResult
+    private @MenuRes int getSelectionMenuOptions() {
+        switch (mSelectionType) {
+            case IMAGE:
+                Timber.i("Displaying Image Options Menu");
+                return R.menu.visual_editor_image;
+            case REGULAR:
+                Timber.i("Displaying Regular Options Menu");
+                return R.menu.visual_editor;
+            default:
+                Timber.w("Unknown Options Menu type: '%s'. Displaying Regular Menu", mSelectionType);
+                return R.menu.visual_editor;
+        }
+    }
+
+
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
+        SelectionType selectionType = this.mSelectionType;
         if (item.getItemId() == R.id.action_save) {
             Timber.i("Save button pressed");
             finishWithSuccess();
             return true;
         }
+        return onSpecificOptionsItemSelected(item, selectionType);
+    }
+
+
+    private boolean onSpecificOptionsItemSelected(MenuItem item, SelectionType selectionType) {
+        //CODE DESIGN: unsure if we want a if () .. return, or handle calling the superclass in the method
+        //so we just have a return.
+        switch (selectionType) {
+            case IMAGE:
+                if (imageOptionsItemSelected(item, selectionType)) {
+                    return true;
+                }
+                break;
+            case REGULAR:
+                return super.onOptionsItemSelected(item);
+            default:
+
+        }
         return super.onOptionsItemSelected(item);
+    }
+
+
+    private boolean imageOptionsItemSelected(MenuItem item, SelectionType selectionType) {
+        if (item.getItemId() == R.id.action_image_delete) {
+            deleteSelectedImage(selectionType);
+            return true;
+        }
+        return false;
+    }
+
+
+    private void deleteSelectedImage(SelectionType selectionType) {
+        mWebView.deleteImage(selectionType.getGuid());
+        resetSelectionType();
+    }
+
+
+    /** HACK: Resets the selection type when the UI doesn't fire an appropriate event */
+    private void resetSelectionType() {
+        mSelectionType = SelectionType.REGULAR;
+        invalidateOptionsMenu();
     }
 
 

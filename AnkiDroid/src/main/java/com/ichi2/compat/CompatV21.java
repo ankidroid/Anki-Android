@@ -122,7 +122,7 @@ public class CompatV21 implements Compat {
     }
 
     // Internal implementation under the API26 copyFile APIs
-    private long copyFile(@NonNull InputStream source, @NonNull OutputStream target) throws IOException {
+    public static long copyFile(@NonNull InputStream source, @NonNull OutputStream target) throws IOException {
         // balance memory and performance, it appears 32k is the best trade-off
         // https://stackoverflow.com/questions/10143731/android-optimal-buffer-size
         final byte[] buffer = new byte[1024 * 32];
