@@ -26,7 +26,6 @@ import android.util.Pair;
 
 import com.ichi2.anki.AnkiDroidApp;
 import com.ichi2.libanki.exception.EmptyMediaException;
-import com.ichi2.libanki.template.Template;
 import com.ichi2.libanki.template.TemplateFilters;
 import com.ichi2.utils.Assert;
 

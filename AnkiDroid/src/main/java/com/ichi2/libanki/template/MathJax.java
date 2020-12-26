@@ -4,9 +4,6 @@ import java.util.regex.Pattern;
 
 import androidx.annotation.NonNull;
 
-import static com.ichi2.libanki.template.Template.sCtag;
-import static com.ichi2.libanki.template.Template.sOtag;
-
 public class MathJax {
     // MathJax opening delimiters
     private static final String[] sMathJaxOpenings = {"\\(", "\\["};

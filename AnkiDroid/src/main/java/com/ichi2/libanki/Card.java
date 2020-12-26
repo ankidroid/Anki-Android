@@ -24,6 +24,7 @@ import android.text.TextUtils;
 
 import com.ichi2.anki.CollectionHelper;
 import com.ichi2.async.CancelListener;
+import com.ichi2.libanki.template.TemplateError;
 import com.ichi2.utils.Assert;
 import com.ichi2.anki.AnkiDroidApp;
 import com.ichi2.anki.R;
@@ -357,7 +358,12 @@ public class Card implements Cloneable {
 
 
     public boolean isEmpty() {
-        return Models.emptyCard(model(), mOrd, note().getFields());
+        try {
+            return Models.emptyCard(model(), mOrd, note().getFields());
+        } catch (TemplateError er) {
+            Timber.w("Card is empty because the card's template has an error: %s.", er.message(getCol().getContext()));
+            return true;
+        }
     }
 
 

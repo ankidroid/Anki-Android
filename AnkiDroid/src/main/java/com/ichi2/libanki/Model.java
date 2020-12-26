@@ -17,9 +17,14 @@
 package com.ichi2.libanki;
 
 
+import android.text.TextUtils;
+import android.util.Pair;
+
 import com.ichi2.utils.JSONObject;
 
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import androidx.annotation.CheckResult;
 
@@ -63,5 +68,20 @@ public class Model extends JSONObject {
 
     public boolean isCloze() {
         return getInt("type") == Consts.MODEL_CLOZE;
+    }
+
+    /**
+     * @param sfld Fields of a note of this note type
+     * @return The set of name of non-empty fields.
+     */
+    public Set<String> nonEmptyFields(String[] sfld) {
+        List<String> fieldNames = getFieldsNames();
+        Set<String> nonemptyFields = new HashSet<>(sfld.length);
+        for (int i = 0; i < sfld.length; i++) {
+            if (!TextUtils.isEmpty(Utils.stripHTMLMedia(sfld[i]).trim())) {
+                nonemptyFields.add(fieldNames.get(i));
+            }
+        }
+        return nonemptyFields;
     }
 }

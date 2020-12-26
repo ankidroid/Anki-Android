@@ -27,6 +27,8 @@ import androidx.annotation.VisibleForTesting;
 import timber.log.Timber;
 
 import com.ichi2.anki.exception.ConfirmModSchemaException;
+import com.ichi2.libanki.template.ParsedNode;
+import com.ichi2.libanki.template.TemplateError;
 import com.ichi2.utils.Assert;
 
 import com.ichi2.utils.JSONArray;
@@ -197,9 +199,6 @@ public class Models {
             m.put("mod", mCol.getTime().intTime());
             m.put("usn", mCol.usn());
             // TODO: fix empty id problem on _updaterequired (needed for model adding)
-            if (!isModelNew(m)) {
-                _updateRequired(m);
-            }
             if (templates) {
                 _syncTemplates(m);
             }
@@ -957,25 +956,6 @@ public class Models {
      * ***********************************************************************************************
      */
 
-    private void _updateRequired(Model m) {
-        if (m.isCloze()) {
-            // nothing to do
-            return;
-        }
-        JSONArray req = new JSONArray();
-        List<String> flds = m.getFieldsNames();
-        JSONArray templates = m.getJSONArray("tmpls");
-        for (JSONObject t: templates.jsonObjectIterable()) {
-            Object[] ret = _reqForTemplate(m, flds, t);
-            JSONArray r = new JSONArray();
-            r.put(t.getInt("ord"));
-            r.put(ret[0]);
-            r.put(ret[1]);
-            req.put(r);
-        }
-        m.put("req", req);
-    }
-
     @SuppressWarnings("PMD.UnusedLocalVariable") // 'String f' is unused upstream as well
     private Object[] _reqForTemplate(Model m, List<String> flds, JSONObject t) {
         int nbFields = flds.size();
@@ -1024,61 +1004,22 @@ public class Models {
      * @param sfld Fields of a note of this model. (Not trimmed)
      * @return Whether this card is empty
      */
-    public static boolean emptyCard(Model m, int ord, String[] sfld) {
+    public static boolean emptyCard(Model m, int ord, String[] sfld) throws TemplateError {
         if (m.isCloze()) {
             // For cloze, getting the list of cloze numbes is linear in the size of the template
             // So computing the full list is almost as efficient as checking for a particular number
             return !_availClozeOrds(m, sfld, false).contains(ord);
         }
-        return emptyStandardCard(m.getJSONArray("req").getJSONArray(ord), sfld);
+        return emptyStandardCard(m.getJSONArray("tmpls").getJSONObject(ord), m.nonEmptyFields(sfld));
     }
 
     /**
-     * @param sr The requirement telling whether a card should be generated.
-     * @param sfld The vector of fields of a note. (Not trimmed)
      * @return Whether the standard card is empty
      */
-    public static boolean emptyStandardCard(JSONArray sr, String[] sfld) {
-        String[] fields = trimArray(sfld);
-        String type = sr.getString(1);
-        JSONArray req = sr.getJSONArray(2);
-        return emptyStandardCard(type, req, fields);
+    public static boolean emptyStandardCard(JSONObject tmpl, Set<String> nonEmptyFields) throws TemplateError {
+        return ParsedNode.parse_inner(tmpl.getString("qfmt")).template_is_empty(nonEmptyFields);
     }
 
-    /**
-     * @param type Whether the rules to generate this card is is any, all, none
-     * @param req The fields that must be fill (all), or that suffices (any) to generate the card
-     * @param trimmedFields the field of a note. Fields are assumed to be trimmed
-     * @return Whether the card is empty
-     */
-    public static boolean emptyStandardCard(String type, JSONArray req, String[] trimmedFields) {
-        switch (type) {
-        case REQ_NONE:
-            // unsatisfiable template
-            return true;
-        case REQ_ALL:
-            // AND requirement?
-            for (int j = 0; j < req.length(); j++) {
-                int idx = req.getInt(j);
-                if (trimmedFields[idx] == null || trimmedFields[idx].length() == 0) {
-                    // missing and was required
-                    return true;
-                }
-            }
-            return false;
-        case REQ_ANY:
-            // OR requirement?
-            for (int j = 0; j < req.length(); j++) {
-                int idx = req.getInt(j);
-                if (trimmedFields[idx] != null && trimmedFields[idx].length() != 0) {
-                    // missing and was required
-                    return false;
-                }
-            }
-            return true;
-        }
-        return false;
-    }
 
     /**
      * @param m A model
@@ -1093,17 +1034,17 @@ public class Models {
 
     /** Given a joined field string and a standard note type, return available template ordinals */
     public static ArrayList<Integer> _availStandardOrds(Model m, String[] sfld) {
-        String[] fields = trimArray(sfld);
-        JSONArray reqArray = m.getJSONArray("req");
-        ArrayList<Integer> avail = new ArrayList<>(reqArray.length());
-        for (int i = 0; i < reqArray.length(); i++) {
-            JSONArray sr = reqArray.getJSONArray(i);
-
-            int ord = sr.getInt(0);
-            String type = sr.getString(1);
-            JSONArray req = sr.getJSONArray(2);
-            if (!emptyStandardCard(type, req, fields)) {
-                avail.add(ord);
+        Set<String> nonEmptyFields = m.nonEmptyFields(sfld);
+        JSONArray tmpls = m.getJSONArray("tmpls");
+        ArrayList<Integer> avail = new ArrayList<>(tmpls.length());
+        for (int i = 0 ; i < tmpls.length(); i++) {
+            JSONObject tmpl = tmpls.getJSONObject(i);
+            try {
+                if (!emptyStandardCard(tmpl, nonEmptyFields)) {
+                    avail.add(i);
+                }
+            } catch (TemplateError er) {
+                Timber.d("Card %d not generated because of template error %s.", i, er);
             }
         }
         return avail;

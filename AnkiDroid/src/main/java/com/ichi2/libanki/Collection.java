@@ -42,7 +42,8 @@ import com.ichi2.libanki.hooks.ChessFilter;
 import com.ichi2.libanki.sched.AbstractSched;
 import com.ichi2.libanki.sched.Sched;
 import com.ichi2.libanki.sched.SchedV2;
-import com.ichi2.libanki.template.Template;
+import com.ichi2.libanki.template.ParsedNode;
+import com.ichi2.libanki.template.TemplateError;
 import com.ichi2.libanki.utils.Time;
 import com.ichi2.upgrade.Upgrade;
 import com.ichi2.utils.DatabaseChangeDecorator;
@@ -1146,7 +1147,12 @@ public class Collection {
                 // the following line differs from libanki // TODO: why?
                 fields.put("FrontSide", d.get("q")); // fields.put("FrontSide", mMedia.stripAudio(d.get("q")));
             }
-            String html = new Template(format, fields).render();
+            String html;
+            try {
+                html = ParsedNode.parse_inner(format).render(fields, "q".equals(type), getContext());
+            } catch (TemplateError er) {
+                html = er.message(getContext());
+            }
             html = ChessFilter.fenToChessboard(html, getContext());
             if (!browser) {
                 // browser don't show image. So compiling LaTeX actually remove information.

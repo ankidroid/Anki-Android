@@ -118,7 +118,6 @@ import com.ichi2.libanki.Note;
 import com.ichi2.libanki.Sound;
 import com.ichi2.libanki.Utils;
 import com.ichi2.libanki.template.MathJax;
-import com.ichi2.libanki.template.Template;
 import com.ichi2.libanki.template.TemplateFilters;
 import com.ichi2.themes.HtmlColors;
 import com.ichi2.themes.Themes;
