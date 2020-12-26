@@ -2406,6 +2406,10 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
             Timber.w("fillFlashCard() called with no card content");
             return;
         }
+        // fill cards before and after
+        // check for activated addons
+        //mCardContent = "<div class='ch_onyomi'>Hello World</div><script>console.log(AnkiDroidJS.ankiGetNewCardCount())</script>" + mCardContent;
+        //mCardContent = mCardContent + "<div class='ch_onyomi'>Hello World</div><script>console.log(AnkiDroidJS.ankiGetNewCardCount())</script>";
         final String cardContent = mCardContent;
         processCardAction(cardWebView -> loadContentIntoCard(cardWebView, cardContent));
         mGestureDetectorImpl.onFillFlashcard();

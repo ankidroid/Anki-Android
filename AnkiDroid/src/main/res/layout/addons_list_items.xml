@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:background="?attr/selectableItemBackground"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:gravity="center_vertical"
+    android:orientation="horizontal">
+
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+    <com.ichi2.ui.FixedTextView
+        android:id="@+id/addon_name"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:textSize="20sp"
+        android:text="@string/app_name"
+        android:padding="4dp"/>
+
+        <LinearLayout
+            android:layout_alignRight="@+id/addon_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true">
+        <Switch
+            android:id="@+id/activate_addon"
+            android:backgroundTint="@color/material_green_500"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="4dp"/>
+
+        <ImageButton
+            android:id="@+id/delete_addon"
+            android:backgroundTint="@color/material_red_600"
+            android:background="@drawable/ic_delete_white_24dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="4dp"/>
+        <ImageButton
+            android:id="@+id/addon_info"
+            android:backgroundTint="@color/material_blue_600"
+            android:background="@drawable/ic_dialog_info"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="4dp"/>
+        </LinearLayout>
+    </RelativeLayout>
+</LinearLayout>
