@@ -1,6 +1,4 @@
 package com.ichi2.anki;
-
-import com.ichi2.libanki.template.Template;
 import com.ichi2.libanki.template.TemplateFilters;
 
 import org.jsoup.Jsoup;

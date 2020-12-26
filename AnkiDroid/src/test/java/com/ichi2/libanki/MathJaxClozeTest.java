@@ -4,7 +4,6 @@ import android.content.Context;
 
 import com.ichi2.anki.RobolectricTest;
 import com.ichi2.libanki.template.MathJax;
-import com.ichi2.libanki.template.Template;
 import com.ichi2.libanki.template.TemplateFilters;
 
 import org.junit.Test;

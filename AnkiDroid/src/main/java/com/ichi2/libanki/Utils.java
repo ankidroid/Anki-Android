@@ -31,6 +31,7 @@ import android.text.Spanned;
 
 import androidx.annotation.NonNull;
 import android.os.StatFs;
+import android.text.TextUtils;
 import android.util.Pair;
 
 import com.ichi2.anki.AnkiFont;
@@ -60,10 +61,12 @@ import java.util.Arrays;
 import java.util.Collection;
 import java.util.Enumeration;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Random;
+import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import org.apache.commons.compress.archivers.zip.ZipArchiveEntry;
@@ -1100,4 +1103,20 @@ public class Utils {
         return fields;
     }
 
+
+    /**
+     * @param fields A map from field name to field value
+     * @return The set of non empty field values.
+     */
+    public static Set<String> nonEmptyFields(Map<String, String> fields) {
+        Set<String> nonempty_fields = new HashSet<>(fields.size());
+        for (Map.Entry<String, String> kv: fields.entrySet()) {
+            String value = kv.getValue();
+            value = Utils.stripHTMLMedia(value).trim();
+            if (!TextUtils.isEmpty(value)) {
+                nonempty_fields.add(kv.getKey());
+            }
+        }
+        return nonempty_fields;
+    }
 }

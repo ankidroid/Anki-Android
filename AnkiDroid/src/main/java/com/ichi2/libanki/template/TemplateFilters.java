@@ -25,9 +25,17 @@ public class TemplateFilters {
     private static final Pattern fHookFieldMod = Pattern.compile("^(.*?)(?:\\((.*)\\))?$");
     public static final String clozeReg = "(?si)\\{\\{(c)%s::(.*?)(::(.*?))?\\}\\}";
 
-    public static @NonNull String apply_filters(@NonNull String txt, @NonNull List<String> filters, @NonNull String field_name) {
+
+    /**
+     * @param txt The content of the field field_name
+     * @param filters a list of filter to apply to this text
+     * @param field_name A name of a field
+     * @param tag The entire part between {{ and }}
+     * @return The result of applying each filter successively to txt
+     */
+    public static @NonNull String apply_filters(@NonNull String txt, @NonNull List<String> filters, @NonNull String field_name, @NonNull String tag) {
         for (String filter : filters) {
-            txt = TemplateFilters.apply_filter(txt, filter, field_name);
+            txt = TemplateFilters.apply_filter(txt, filter, field_name, tag);
             if (txt == null) {
                 txt = "";
             }
@@ -35,7 +43,15 @@ public class TemplateFilters {
         return txt;
     }
 
-    private static @Nullable String apply_filter(@NonNull String txt, @NonNull String filter, @NonNull String field_name) {
+
+    /**
+     * @param txt The current text the filter may change. It may be changed by multiple filter.
+     * @param filter The name of the filter to apply.
+     * @param field_name The name of the field whose text is shown
+     * @param tag The entire content of the tag.
+     * @return Result of filter on current txt.
+     */
+    protected static @Nullable String apply_filter(@NonNull String txt, @NonNull String filter, @NonNull String field_name, @NonNull String tag) {
         //Timber.d("Models.get():: Processing field: modifier=%s, extra=%s, tag=%s, txt=%s", mod, extra, tag, txt);
         // built-in modifiers
         if ("text".equals(filter)) {
@@ -48,7 +64,7 @@ public class TemplateFilters {
         } else if ("type".equals(filter)) {
             // type answer field; convert it to [[type:...]] for the gui code
             // to process
-            return String.format(Locale.US, "[[%s]]", field_name);
+            return String.format(Locale.US, "[[%s]]", tag);
         } else if (filter.startsWith("cq-") || filter.startsWith("ca-")) {
             // cloze deletion
             String[] split = filter.split("-");
