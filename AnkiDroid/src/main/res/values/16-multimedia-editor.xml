@@ -143,5 +143,6 @@
     <string name="visual_editor_tooltip_cut_image">Cut</string>
     <string name="visual_editor_tooltip_delete_image">Delete Image</string>
     <string name="visual_editor_tooltip_record_audio">Record Audio</string>
+    <string name="visual_editor_tooltip_mathjax">Insert MathJax Equation</string>
 
 </resources>

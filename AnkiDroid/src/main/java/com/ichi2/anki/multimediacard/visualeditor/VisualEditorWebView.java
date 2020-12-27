@@ -315,7 +315,8 @@ public abstract class VisualEditorWebView extends WebView {
 
 
         public static String escapeString(String s) {
-            return s.replace("'", "\\'");
+            //\ is for MathJax
+            return s.replace("\\", "\\\\").replace("'", "\\'");
         }
     }
 

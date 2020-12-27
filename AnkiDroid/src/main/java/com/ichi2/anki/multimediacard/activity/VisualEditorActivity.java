@@ -27,6 +27,7 @@ import com.ichi2.anki.multimediacard.visualeditor.VisualEditorWebView;
 import com.ichi2.anki.reviewer.ReviewerCustomFonts;
 import com.ichi2.anki.multimediacard.visualeditor.VisualEditorWebView.SelectionType;
 import com.ichi2.anki.servicelayer.NoteService;
+import com.ichi2.anki.web.MathJaxUtils;
 import com.ichi2.libanki.Collection;
 import com.ichi2.libanki.Models;
 import com.ichi2.libanki.Note;
@@ -172,11 +173,17 @@ public class VisualEditorActivity extends AnkiActivity {
             setTooltip(view, resources.getString(tooltipId));
         };
         setupAndroidListener.apply(R.id.editor_button_cloze, this::performCloze, R.string.visual_editor_tooltip_cloze);
+        setupAndroidListener.apply(R.id.editor_button_insert_mathjax, this::insertMathJax, R.string.visual_editor_tooltip_mathjax);
         setupAndroidListener.apply(R.id.editor_button_add_image, this::openAdvancedViewerForAddImage, R.string.visual_editor_tooltip_add_image);
         setupAndroidListener.apply(R.id.editor_button_record_audio, this::openAdvancedViewerForRecordAudio, R.string.visual_editor_tooltip_record_audio);
         setupAndroidListener.apply(R.id.editor_button_text_color, () -> this.openColorPicker(COLOR_PICKER_FOREGROUND, Color.BLACK), R.string.visual_editor_tooltip_text_color);
         setupAndroidListener.apply(R.id.editor_button_background_color, () -> this.openColorPicker(COLOR_PICKER_BACKGROUND, Color.YELLOW), R.string.visual_editor_tooltip_background_color);
     }
+
+    private void insertMathJax() {
+        mWebView.pasteHtml(MathJaxUtils.getMathJaxInsertionString());
+    }
+
 
     private void setTooltip(View view, String tooltip) {
         TooltipCompat.setTooltipText(view, tooltip);

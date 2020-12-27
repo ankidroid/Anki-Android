@@ -103,11 +103,12 @@ public class SummerNoteVisualEditor extends VisualEditorWebView {
         execUnsafe(safeCommand);
     }
 
+    // used ` instead of "/' double or single quotes. They can't be used to declare multiline string.
     @Override
     public void pasteHtml(String html) {
         Timber.v("pasting: %s", html);
         ExecEscaped safeString = ExecEscaped.fromString(html);
-        execUnsafe("pasteHTML('" + safeString.getEscapedValue() + "');");
+        execUnsafe("pasteHTML(`" + safeString.getEscapedValue() + "`);");
     }
 
     @Override
@@ -120,6 +121,6 @@ public class SummerNoteVisualEditor extends VisualEditorWebView {
     @Override
     public void setHtml(@NonNull String html) {
         ExecEscaped s = ExecEscaped.fromString(html);
-        execUnsafe("setHtml('" + s.getEscapedValue() + "');");
+        execUnsafe("setHtml(`" + s.getEscapedValue() + "`);");
     }
 }
