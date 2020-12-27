@@ -124,6 +124,23 @@
     <string name="title_activity_visual_editor">Visual Editor</string>
 
     <!-- Visual Editor -->
-    <string name="visual_editor_delete_image">Delete Image</string>
+    <string name="visual_editor_tooltip_bold">Bold</string>
+    <string name="visual_editor_tooltip_italic">Italic</string>
+    <string name="visual_editor_tooltip_underline">Underline</string>
+    <string name="visual_editor_tooltip_cloze">Cloze Deletion</string>
+    <string name="visual_editor_tooltip_clear_formatting">Clear Formatting</string>
+    <string name="visual_editor_tooltip_bullet_list">Bulleted List</string>
+    <string name="visual_editor_tooltip_numbered_list">Numbered List</string>
+    <string name="visual_editor_tooltip_text_color">Text Color</string>
+    <string name="visual_editor_tooltip_background_color">Background Color</string>
+    <string name="visual_editor_tooltip_horizontal_line">Horizontal Line</string>
+    <string name="visual_editor_tooltip_align_left">Left Align</string>
+    <string name="visual_editor_tooltip_align_center">Center Align</string>
+    <string name="visual_editor_tooltip_align_right">Right Align</string>
+    <string name="visual_editor_tooltip_align_justify">Justify</string>
+    <string name="visual_editor_tooltip_view_source">View Source</string>
+    <string name="visual_editor_tooltip_add_image">Add Image</string>
+    <string name="visual_editor_tooltip_delete_image">Delete Image</string>
+    <string name="visual_editor_tooltip_record_audio">Record Audio</string>
 
 </resources>
