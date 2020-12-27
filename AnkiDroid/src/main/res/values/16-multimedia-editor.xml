@@ -120,4 +120,8 @@
     <string name="activity_result_unexpected">App returned an unexpected value. You may need to use a different app</string>
 
     <string name="title_activity_visual_editor">Visual Editor</string>
+
+    <!-- Visual Editor -->
+    <string name="visual_editor_delete_image">Delete Image</string>
+
 </resources>

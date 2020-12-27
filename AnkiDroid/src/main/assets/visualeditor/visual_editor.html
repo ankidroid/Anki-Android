@@ -31,13 +31,13 @@ SOFTWARE.
     <title>AnkiDroid Visual Editor</title>
 
     <!-- include libraries(jQuery, bootstrap) -->
-    <link href="file:///android_asset/bootstrap/bootstrap.min.css" rel="stylesheet">
-    <script src="file:///android_asset/jquery/jquery-3.2.1.min.js"></script>
-    <script src="file:///android_asset/bootstrap/bootstrap.min.js"></script>
+    <link href="file:///android_asset/summernote/bootstrap.min.css" rel="stylesheet">
+    <script src="file:///android_asset/summernote/jquery-3.2.1.min.js"></script>
+    <script src="file:///android_asset/summernote/bootstrap.min.js"></script>
 
     <!-- include summernote css/js-->
-    <link href="file:///android_asset/summernote/dist/summernote.css" rel="stylesheet">
-    <script src="file:///android_asset/summernote/dist/summernote.js"></script>
+    <link href="file:///android_asset/summernote/summernote.css" rel="stylesheet">
+    <script src="file:///android_asset/summernote/summernote.js"></script>
 
     <!-- Style the page like an Anki Card-->
     <link href="file:///android_asset/flashcard.css" rel="stylesheet">
@@ -71,6 +71,9 @@ SOFTWARE.
                 var code = $('#summernote').summernote('code');
                 RTextEditorView.onEditorContentChanged(code);
               },
+              onMousedown: function(e) {
+                  sendMouseDownToClient(e);
+              },
               onChange: function(contents, $editable) {
                 RTextEditorView.onEditorContentChanged(contents);
               }
@@ -78,7 +81,8 @@ SOFTWARE.
         });
       });
     </script>
-<script src="file:///android_asset/editor.js"></script>
+<script src="file:///android_asset/summernote/editor.js"></script>
 <script src="file:///android_asset/visualeditor/visual_editor_functions.js"></script>
+<script src="file:///android_asset/visualeditor/visual_editor_image.js"></script>
 </body>
 </html>

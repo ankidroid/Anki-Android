@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:ankidroid="http://schemas.android.com/apk/res-auto">
+
+    <item
+        android:id="@+id/action_image_delete"
+        android:enabled="true"
+        android:icon="@drawable/ic_delete_white"
+        android:title="@string/visual_editor_delete_image"
+        ankidroid:showAsAction="ifRoom"/>
+
+    <!-- Plans: Edit/Crop/Rename/Resize -->
+
+</menu>
