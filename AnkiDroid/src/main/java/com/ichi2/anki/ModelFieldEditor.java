@@ -226,9 +226,7 @@ public class ModelFieldEditor extends AnkiActivity implements LocaleSelectionDia
                         c.setArgs(getResources().getString(R.string.full_sync_confirmation));
                         Runnable confirm = () -> {
                             mCol.modSchemaNoCheck();
-                            String fieldName1 = mFieldNameInput.getText().toString()
-                                    .replaceAll("[\\n\\r]", "");
-                            TaskManager.launchCollectionTask(new CollectionTask.AddField(mMod, fieldName1), listener);
+                            TaskManager.launchCollectionTask(new CollectionTask.AddField(mMod, fieldName), listener);
                             dismissContextMenu();
                         };
 
