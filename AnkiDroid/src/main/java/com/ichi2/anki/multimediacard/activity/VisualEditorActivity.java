@@ -477,9 +477,18 @@ public class VisualEditorActivity extends AnkiActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         SelectionType selectionType = this.mSelectionType;
-        if (item.getItemId() == R.id.action_save) {
+        int itemId = item.getItemId();
+        if (itemId == R.id.action_save) {
             Timber.i("Save button pressed");
             finishWithSuccess();
+            return true;
+        } else if (itemId == R.id.action_cut) {// document.execCommand("cut", ...) does not work for images, so we need to implement our own function.
+            // "Cut" does not appear on the CAB when selecting only an image in a contentEditable,
+            // but we can still cut via our JavaScript function, therefore we have the button in the ActionBar
+            // COULD_BE_BETTER: See if we can optionally add this functionality back into the CAB
+            // DEFECT: I was unable to disable the onClick menu for images provided by summernote, this makes it
+            // annoying for the user as the custom image UI get in the way. This is because I'm unfamiliar with JS
+            cut();
             return true;
         }
         return onSpecificOptionsItemSelected(item, selectionType);
@@ -510,6 +519,10 @@ public class VisualEditorActivity extends AnkiActivity {
             return true;
         }
         return false;
+    }
+
+    private void cut() {
+        mWebView.execFunction("cut");
     }
 
 

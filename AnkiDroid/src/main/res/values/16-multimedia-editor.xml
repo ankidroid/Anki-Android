@@ -140,6 +140,7 @@
     <string name="visual_editor_tooltip_align_justify">Justify</string>
     <string name="visual_editor_tooltip_view_source">View Source</string>
     <string name="visual_editor_tooltip_add_image">Add Image</string>
+    <string name="visual_editor_tooltip_cut_image">Cut</string>
     <string name="visual_editor_tooltip_delete_image">Delete Image</string>
     <string name="visual_editor_tooltip_record_audio">Record Audio</string>
 
