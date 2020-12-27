@@ -36,6 +36,10 @@ var cloze = function(clozeId) {
     insertAtPoint(endPoint, clozeSuffix, clozePrefix.length);
 };
 
+var pasteHTML = function(data) {
+    $("#summernote").summernote("pasteHTML", data);
+};
+
 /**
 https://gist.github.com/jed/982883
 https://gist.github.com/jed/982883#file-license-txt

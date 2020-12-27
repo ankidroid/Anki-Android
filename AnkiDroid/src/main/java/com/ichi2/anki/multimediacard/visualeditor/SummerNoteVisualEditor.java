@@ -94,6 +94,13 @@ public class SummerNoteVisualEditor extends VisualEditorWebView {
     }
 
     @Override
+    public void pasteHtml(String html) {
+        Timber.v("pasting: %s", html);
+        ExecEscaped safeString = ExecEscaped.fromString(html);
+        execUnsafe("pasteHTML('" + safeString.getEscapedValue() + "');");
+    }
+
+    @Override
     public void insertCloze(int clozeId) {
         ExecEscaped e = ExecEscaped.fromString(String.format(Locale.US, "cloze(%d)", clozeId));
         exec(e);
