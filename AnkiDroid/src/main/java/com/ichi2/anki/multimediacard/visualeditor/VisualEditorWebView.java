@@ -254,6 +254,9 @@ public abstract class VisualEditorWebView extends WebView {
     public abstract void insertCloze(int clozeId);
 
 
+    public abstract void pasteHtml(String html);
+
+
     public static class ExecEscaped {
         private final String mEscapedValue;
 

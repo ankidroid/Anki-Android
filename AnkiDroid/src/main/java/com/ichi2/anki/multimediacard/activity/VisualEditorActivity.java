@@ -10,8 +10,8 @@ import android.view.View;
 import com.ichi2.anki.AnkiActivity;
 import com.ichi2.anki.AnkiDroidApp;
 import com.ichi2.anki.R;
-import com.ichi2.anki.UIUtils;
 import com.ichi2.anki.cardviewer.CardAppearance;
+import com.ichi2.anki.UIUtils;
 import com.ichi2.anki.multimediacard.fields.IField;
 import com.ichi2.anki.multimediacard.fields.TextField;
 import com.ichi2.anki.multimediacard.visualeditor.VisualEditorFunctionality;
@@ -22,15 +22,14 @@ import com.ichi2.libanki.Collection;
 import com.ichi2.libanki.Models;
 import com.ichi2.libanki.Note;
 import com.ichi2.libanki.Utils;
+import com.ichi2.utils.AssetReader;
 import com.ichi2.utils.JSONObject;
 import com.ichi2.utils.WebViewDebugging;
 
 import java.util.Arrays;
 import java.util.List;
-
-import java.io.ByteArrayOutputStream;
 import java.io.IOException;
-import java.io.InputStream;
+import java.util.Locale;
 
 import androidx.annotation.CheckResult;
 import androidx.annotation.IdRes;
@@ -58,6 +57,7 @@ public class VisualEditorActivity extends AnkiActivity {
     private String[] mFields;
     @NonNull
     private SelectionType mSelectionType = SelectionType.REGULAR;
+    private AssetReader mAssetReader = new AssetReader(this);
 
 
     @Override
@@ -78,7 +78,7 @@ public class VisualEditorActivity extends AnkiActivity {
         if (toolbar != null) {
             setSupportActionBar(toolbar);
         }
-        
+
         startLoadingCollection();
     }
 
@@ -124,6 +124,7 @@ public class VisualEditorActivity extends AnkiActivity {
 
     private void setupWebView(VisualEditorWebView webView) {
         WebViewDebugging.initializeDebugging(AnkiDroidApp.getSharedPrefs(this));
+
 
         SharedPreferences preferences = AnkiDroidApp.getSharedPrefs(this);
         CardAppearance cardAppearance = CardAppearance.create(new ReviewerCustomFonts(this), preferences);
@@ -192,17 +193,28 @@ public class VisualEditorActivity extends AnkiActivity {
         return true;
     }
 
+
     private void failStartingVisualEditor() {
         UIUtils.showThemedToast(this, "Unable to start visual editor", false);
         finishCancel();
     }
 
 
+    private void cloze(int clozeId) {
+        mWebView.insertCloze(clozeId);
+    }
+
     @Override
     protected void onCollectionLoaded(Collection col) {
         super.onCollectionLoaded(col);
         Timber.d("onCollectionLoaded");
-        initWebView(col);
+        try {
+            initWebView(col);
+        } catch (IOException e) {
+            Timber.e(e, "Failed to init web view");
+            failStartingVisualEditor();
+            return;
+        }
 
         JSONObject model = col.getModels().get(mModelId);
         String css = getModelCss(model);
@@ -235,53 +247,12 @@ public class VisualEditorActivity extends AnkiActivity {
     }
 
 
-    private void initWebView(Collection col) {
+    private void initWebView(Collection col) throws IOException {
         String mBaseUrl = Utils.getBaseUrl(col.getMedia().dir());
-        InputStream is = getInputStream();
-        try {
-            byte[] inputData = readFile(is);
-            String asString = new String(inputData, "UTF-8");
-            mWebView.init(asString, mBaseUrl);
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
+        String assetAsString = mAssetReader.loadAsUtf8String("visualeditor/visual_editor.html");
+        mWebView.init(assetAsString, mBaseUrl);
     }
 
-
-    @NonNull
-    private InputStream getInputStream() {
-        InputStream is;
-        try {
-            is = getAssets().open("visualeditor/visual_editor.html");
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
-        return is;
-    }
-
-
-    private byte[] readFile(InputStream inputStream) throws IOException {
-        ByteArrayOutputStream buffer = null;
-        try {
-            buffer = new ByteArrayOutputStream();
-
-            int nRead;
-            byte[] data = new byte[16384];
-
-            while ((nRead = inputStream.read(data, 0, data.length)) != -1) {
-                buffer.write(data, 0, nRead);
-            }
-
-            return buffer.toByteArray();
-        } finally {
-            if (inputStream != null) {
-                inputStream.close();
-            }
-            if (buffer != null) {
-                buffer.close();
-            }
-        }
-    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
