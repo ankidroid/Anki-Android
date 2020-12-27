@@ -156,6 +156,15 @@
                 />
 
             <androidx.appcompat.widget.AppCompatImageButton
+                android:id="@+id/editor_button_add_image"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="?android:attr/selectableItemBackground"
+                android:padding="@dimen/toolbar_item_padding"
+                app:srcCompat="@drawable/ic_image_black_24dp"
+                />
+
+            <androidx.appcompat.widget.AppCompatImageButton
                 android:id="@+id/editor_button_view_html"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
