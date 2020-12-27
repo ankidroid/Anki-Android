@@ -226,9 +226,7 @@ public class ModelFieldEditor extends AnkiActivity implements LocaleSelectionDia
                         c.setArgs(getResources().getString(R.string.full_sync_confirmation));
                         Runnable confirm = () -> {
                             mCol.modSchemaNoCheck();
-                            String fieldName1 = mFieldNameInput.getText().toString()
-                                    .replaceAll("[\\n\\r]", "");
-                            TaskManager.launchCollectionTask(new CollectionTask.AddField(mMod, fieldName1), listener);
+                            TaskManager.launchCollectionTask(new CollectionTask.AddField(mMod, fieldName), listener);
                             dismissContextMenu();
                         };
 
@@ -368,10 +366,8 @@ public class ModelFieldEditor extends AnkiActivity implements LocaleSelectionDia
                                 Runnable confirm = () -> {
                                     try {
                                         mCol.modSchemaNoCheck();
-                                        String newPosition1 = mFieldNameInput.getText().toString();
-                                        int pos1 = Integer.parseInt(newPosition1);
                                         TaskManager.launchCollectionTask(new CollectionTask.RepositionField(mMod,
-                                                mNoteFields.getJSONObject(mCurrentPos), pos1 - 1),
+                                                mNoteFields.getJSONObject(mCurrentPos), pos - 1),
                                                 listener);
                                         dismissContextMenu();
                                     } catch (JSONException e1) {
