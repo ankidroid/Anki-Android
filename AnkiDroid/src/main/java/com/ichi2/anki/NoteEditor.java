@@ -52,6 +52,7 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup.MarginLayoutParams;
 import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
@@ -1908,6 +1909,13 @@ public class NoteEditor extends AnkiActivity {
         if (mToolbar == null) {
             return;
         }
+
+        View editorLayout = findViewById(R.id.note_editor_layout);
+        int bottomMargin = shouldHideToolbar() ? 0 : (int) getResources().getDimension(R.dimen.note_editor_toolbar_height);
+        MarginLayoutParams params = (MarginLayoutParams) editorLayout.getLayoutParams();
+        params.bottomMargin = bottomMargin;
+        editorLayout.setLayoutParams(params);
+
 
         if (shouldHideToolbar()) {
             mToolbar.setVisibility(View.GONE);

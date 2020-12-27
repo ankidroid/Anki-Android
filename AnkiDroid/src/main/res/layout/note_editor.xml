@@ -12,7 +12,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="vertical"
-            android:layout_marginBottom="28dp">
+            android:layout_marginBottom="@dimen/note_editor_toolbar_height">
 
         <include layout="@layout/toolbar" />
 
