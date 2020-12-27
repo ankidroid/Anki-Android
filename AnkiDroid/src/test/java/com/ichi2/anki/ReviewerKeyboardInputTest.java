@@ -25,6 +25,7 @@ import com.ichi2.libanki.Collection;
 import org.junit.Test;
 
 import androidx.annotation.CheckResult;
+import androidx.annotation.NonNull;
 import timber.log.Timber;
 
 import static com.ibm.icu.impl.Assert.fail;
@@ -44,7 +45,7 @@ public class ReviewerKeyboardInputTest {
     public void whenDisplayingQuestionTyping1DoesNothing() {
         KeyboardInputTestReviewer underTest = KeyboardInputTestReviewer.displayingQuestion();
 
-        underTest.handleUnicodeKeyPress('1');
+        underTest.handleAndroidKeyPress(KeyEvent.KEYCODE_1);
 
         assertThat("Answer should not be displayed", !underTest.didDisplayAnswer());
         assertThat("Answer should not be performed", !underTest.hasBeenAnswered());
@@ -54,7 +55,7 @@ public class ReviewerKeyboardInputTest {
     public void whenDisplayingAnswerTyping1AnswersFarLeftButton() {
         KeyboardInputTestReviewer underTest = KeyboardInputTestReviewer.displayingAnswer();
 
-        underTest.handleUnicodeKeyPress('1');
+        underTest.handleAndroidKeyPress(KeyEvent.KEYCODE_1);
 
         assertThat(underTest.processedAnswer(), equalTo(EASE_1));
     }
@@ -63,7 +64,7 @@ public class ReviewerKeyboardInputTest {
     public void whenDisplayingAnswerTyping2AnswersSecondButton() {
         KeyboardInputTestReviewer underTest = KeyboardInputTestReviewer.displayingAnswer();
 
-        underTest.handleUnicodeKeyPress('2');
+        underTest.handleAndroidKeyPress(KeyEvent.KEYCODE_2);
 
         assertThat(underTest.processedAnswer(), equalTo(EASE_2));
     }
@@ -72,7 +73,7 @@ public class ReviewerKeyboardInputTest {
     public void whenDisplayingAnswerTyping3AnswersThirdButton() {
         KeyboardInputTestReviewer underTest = KeyboardInputTestReviewer.displayingAnswer();
 
-        underTest.handleUnicodeKeyPress('3');
+        underTest.handleAndroidKeyPress(KeyEvent.KEYCODE_3);
 
         assertThat(underTest.processedAnswer(), equalTo(EASE_3));
     }
@@ -81,7 +82,7 @@ public class ReviewerKeyboardInputTest {
     public void whenDisplayingAnswerTyping4AnswersFarRightButton() {
         KeyboardInputTestReviewer underTest = KeyboardInputTestReviewer.displayingAnswer();
 
-        underTest.handleUnicodeKeyPress('4');
+        underTest.handleAndroidKeyPress(KeyEvent.KEYCODE_4);
 
         assertThat(underTest.processedAnswer(), equalTo(EASE_4));
     }
@@ -142,7 +143,7 @@ public class ReviewerKeyboardInputTest {
     public void pressingEWillEditCard() {
         KeyboardInputTestReviewer underTest = KeyboardInputTestReviewer.displayingAnswer();
 
-        underTest.handleUnicodeKeyPress('e');
+        underTest.handleAndroidKeyPress(KeyEvent.KEYCODE_E);
 
         assertThat("Edit Card was called", underTest.getEditCardCalled());
     }
@@ -187,7 +188,7 @@ public class ReviewerKeyboardInputTest {
     public void pressingRShouldReplayAudio() {
         KeyboardInputTestReviewer underTest = KeyboardInputTestReviewer.displayingAnswer();
 
-        underTest.handleUnicodeKeyPress('r');
+        underTest.handleAndroidKeyPress(KeyEvent.KEYCODE_R);
 
         assertThat("Replay Audio should be called", underTest.getReplayAudioCalled());
     }
@@ -205,7 +206,7 @@ public class ReviewerKeyboardInputTest {
     public void pressingZShouldUndoIfAvailable() {
         KeyboardInputTestReviewer underTest = KeyboardInputTestReviewer.displayingAnswer().withUndoAvailable(true);
 
-        underTest.handleUnicodeKeyPress('z');
+        underTest.handleAndroidKeyPress(KeyEvent.KEYCODE_Z);
 
         assertThat("Undo should be called", underTest.getUndoCalled());
     }
@@ -317,7 +318,7 @@ public class ReviewerKeyboardInputTest {
         public boolean didDisplayAnswer() { return mDisplayAnswer; }
 
         public void handleUnicodeKeyPress(char unicodeChar) {
-            KeyEvent key = mock(KeyEvent.class);
+            KeyEvent key = getMockKeyEvent();
             // COULD_BE_BETTER: We do not handle shift
             when(key.getUnicodeChar(anyInt())).thenReturn((int)unicodeChar);
 
@@ -337,7 +338,7 @@ public class ReviewerKeyboardInputTest {
         public void handleKeyPress(int keycode, char unicodeChar) {
             // COULD_BE_BETTER: Saves 20 seconds on tests to remove AndroidJUnit4,
             // but may let something slip through the cracks.
-            KeyEvent e = mock(KeyEvent.class);
+            KeyEvent e = getMockKeyEvent();
             // COULD_BE_BETTER: We do not handle shift
             when(e.getUnicodeChar(anyInt())).thenReturn((int)unicodeChar);
             when(e.getAction()).thenReturn(KeyEvent.ACTION_DOWN);
@@ -357,19 +358,42 @@ public class ReviewerKeyboardInputTest {
         }
 
 
+        protected KeyEvent getMockKeyEvent() {
+            KeyEvent key = mock(KeyEvent.class);
+            when(key.isShiftPressed()).thenReturn(false);
+            when(key.isCtrlPressed()).thenReturn(false);
+            when(key.isAltPressed()).thenReturn(false);
+            return key;
+        }
+
+
         @SuppressWarnings({"unused"}) //useful to obtain unicode for kecode if run under AndroidJUnit4.
         public void handleAndroidKeyPress(int keycode) {
             try {
-                this.onKeyDown(keycode, new KeyEvent(KeyEvent.ACTION_DOWN, keycode));
+                this.onKeyDown(keycode, createKeyEvent(KeyEvent.ACTION_DOWN, keycode));
             } catch (Exception ex) {
                 Timber.e(ex);
             }
             try {
-                this.onKeyUp(keycode, new KeyEvent(KeyEvent.ACTION_UP, keycode));
+                this.onKeyUp(keycode, createKeyEvent(KeyEvent.ACTION_UP, keycode));
             } catch (Exception ex) {
                 Timber.e(ex);
             }
         }
+
+
+        @NonNull
+        protected KeyEvent createKeyEvent(int action, int keycode) {
+            KeyEvent keyEvent = mock(KeyEvent.class);
+            when(keyEvent.getKeyCode()).thenReturn(keycode);
+            when(keyEvent.getAction()).thenReturn(action);
+            when(keyEvent.isShiftPressed()).thenReturn(false);
+            when(keyEvent.isCtrlPressed()).thenReturn(false);
+            when(keyEvent.isAltPressed()).thenReturn(false);
+            return keyEvent;
+        }
+
+
         @Override protected void setTitle() {
             //required for interface. Intentionally left blank
         }
@@ -394,7 +418,7 @@ public class ReviewerKeyboardInputTest {
 
 
         public int processedAnswer() {
-            if(mAnswered == null) {
+            if (mAnswered == null) {
                 fail("No card was answered");
             }
             return mAnswered;

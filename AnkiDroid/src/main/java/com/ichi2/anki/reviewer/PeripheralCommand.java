@@ -41,12 +41,12 @@ public class PeripheralCommand {
     private final ModifierKeys modifierKeys;
 
 
-    private PeripheralCommand(int keyCode, @ViewerCommandDef int command, @NonNull CardSide side) {
+    private PeripheralCommand(int keyCode, @ViewerCommandDef int command, @NonNull CardSide side, ModifierKeys modifierKeys) {
         this.mKeyCode = keyCode;
         this.mUnicodeCharacter = null;
         this.mCommand = command;
         this.mCardSide = side;
-        this.modifierKeys = ModifierKeys.none();
+        this.modifierKeys = modifierKeys;
     }
 
     private PeripheralCommand(@Nullable Character unicodeCharacter, @ViewerCommandDef int command, @NonNull CardSide side, ModifierKeys modifierKeys) {
@@ -78,24 +78,34 @@ public class PeripheralCommand {
     }
 
     public static PeripheralCommand unicode(char unicodeChar, @ViewerCommandDef int command, CardSide side) {
-        return unicode(unicodeChar, command, side, ModifierKeys.none());
+        return unicode(unicodeChar, command, side, ModifierKeys.allowShift());
     }
 
     private static PeripheralCommand unicode(char unicodeChar, @ViewerCommandDef int command, CardSide side, ModifierKeys modifierKeys) {
+        // Note: cast is needed to select the correct constructor
         return new PeripheralCommand((Character) unicodeChar, command, side, modifierKeys);
     }
 
     public static PeripheralCommand keyCode(int keyCode, @ViewerCommandDef int command, CardSide side) {
-        return new PeripheralCommand(keyCode, command, side);
+        return keyCode(keyCode, command, side, ModifierKeys.none());
+    }
+
+    private static PeripheralCommand keyCode(int keyCode, @ViewerCommandDef int command, CardSide side, ModifierKeys modifiers) {
+        return new PeripheralCommand(keyCode, command, side, modifiers);
     }
 
     public static List<PeripheralCommand> getDefaultCommands() {
         List<PeripheralCommand> ret = new ArrayList<>();
 
-        ret.add(PeripheralCommand.unicode('1', COMMAND_ANSWER_FIRST_BUTTON, CardSide.ANSWER));
-        ret.add(PeripheralCommand.unicode('2', COMMAND_ANSWER_SECOND_BUTTON, CardSide.ANSWER));
-        ret.add(PeripheralCommand.unicode('3', COMMAND_ANSWER_THIRD_BUTTON, CardSide.ANSWER));
-        ret.add(PeripheralCommand.unicode('4', COMMAND_ANSWER_FOURTH_BUTTON, CardSide.ANSWER));
+        ret.add(PeripheralCommand.keyCode(KeyEvent.KEYCODE_1, COMMAND_ANSWER_FIRST_BUTTON, CardSide.ANSWER));
+        ret.add(PeripheralCommand.keyCode(KeyEvent.KEYCODE_2, COMMAND_ANSWER_SECOND_BUTTON, CardSide.ANSWER));
+        ret.add(PeripheralCommand.keyCode(KeyEvent.KEYCODE_3, COMMAND_ANSWER_THIRD_BUTTON, CardSide.ANSWER));
+        ret.add(PeripheralCommand.keyCode(KeyEvent.KEYCODE_4, COMMAND_ANSWER_FOURTH_BUTTON, CardSide.ANSWER));
+
+        ret.add(PeripheralCommand.keyCode(KeyEvent.KEYCODE_NUMPAD_1, COMMAND_ANSWER_FIRST_BUTTON, CardSide.ANSWER));
+        ret.add(PeripheralCommand.keyCode(KeyEvent.KEYCODE_NUMPAD_2, COMMAND_ANSWER_SECOND_BUTTON, CardSide.ANSWER));
+        ret.add(PeripheralCommand.keyCode(KeyEvent.KEYCODE_NUMPAD_3, COMMAND_ANSWER_THIRD_BUTTON, CardSide.ANSWER));
+        ret.add(PeripheralCommand.keyCode(KeyEvent.KEYCODE_NUMPAD_4, COMMAND_ANSWER_FOURTH_BUTTON, CardSide.ANSWER));
 
         ret.add(PeripheralCommand.keyCode(KeyEvent.KEYCODE_BUTTON_Y, COMMAND_FLIP_OR_ANSWER_EASE1, CardSide.BOTH));
         ret.add(PeripheralCommand.keyCode(KeyEvent.KEYCODE_BUTTON_X, COMMAND_FLIP_OR_ANSWER_EASE2, CardSide.BOTH));
@@ -108,20 +118,28 @@ public class PeripheralCommand {
         // See: 1643 - Unsure if this will work - nothing came through on the emulator.
         ret.add(PeripheralCommand.keyCode(KeyEvent.KEYCODE_DPAD_CENTER, COMMAND_FLIP_OR_ANSWER_RECOMMENDED, CardSide.BOTH));
 
-        ret.add(PeripheralCommand.unicode('e', COMMAND_EDIT, CardSide.BOTH));
+        ret.add(PeripheralCommand.keyCode(KeyEvent.KEYCODE_E, COMMAND_EDIT, CardSide.BOTH));
+
+        // Using a char rather than "Ctrl + 1" is not ideal due to the potential need to handle Shift/Fn + character on
+        // international layouts but is what Anki Desktop does
         ret.add(PeripheralCommand.unicode('*', COMMAND_MARK, CardSide.BOTH));
         ret.add(PeripheralCommand.unicode('-', COMMAND_BURY_CARD, CardSide.BOTH));
         ret.add(PeripheralCommand.unicode('=', COMMAND_BURY_NOTE, CardSide.BOTH));
         ret.add(PeripheralCommand.unicode('@', COMMAND_SUSPEND_CARD, CardSide.BOTH));
         ret.add(PeripheralCommand.unicode('!', COMMAND_SUSPEND_NOTE, CardSide.BOTH));
-        ret.add(PeripheralCommand.unicode('r', COMMAND_PLAY_MEDIA, CardSide.BOTH));
+        ret.add(PeripheralCommand.keyCode(KeyEvent.KEYCODE_R, COMMAND_PLAY_MEDIA, CardSide.BOTH));
         ret.add(PeripheralCommand.keyCode(KeyEvent.KEYCODE_F5, COMMAND_PLAY_MEDIA, CardSide.BOTH));
-        ret.add(PeripheralCommand.unicode('z', COMMAND_UNDO, CardSide.BOTH));
+        ret.add(PeripheralCommand.keyCode(KeyEvent.KEYCODE_Z, COMMAND_UNDO, CardSide.BOTH));
 
-        ret.add(PeripheralCommand.unicode('1', COMMAND_TOGGLE_FLAG_RED, CardSide.BOTH, ModifierKeys.ctrl()));
-        ret.add(PeripheralCommand.unicode('2', COMMAND_TOGGLE_FLAG_ORANGE, CardSide.BOTH, ModifierKeys.ctrl()));
-        ret.add(PeripheralCommand.unicode('3', COMMAND_TOGGLE_FLAG_GREEN, CardSide.BOTH, ModifierKeys.ctrl()));
-        ret.add(PeripheralCommand.unicode('4', COMMAND_TOGGLE_FLAG_BLUE, CardSide.BOTH, ModifierKeys.ctrl()));
+        ret.add(PeripheralCommand.keyCode(KeyEvent.KEYCODE_1, COMMAND_TOGGLE_FLAG_RED, CardSide.BOTH, ModifierKeys.ctrl()));
+        ret.add(PeripheralCommand.keyCode(KeyEvent.KEYCODE_2, COMMAND_TOGGLE_FLAG_ORANGE, CardSide.BOTH, ModifierKeys.ctrl()));
+        ret.add(PeripheralCommand.keyCode(KeyEvent.KEYCODE_3, COMMAND_TOGGLE_FLAG_GREEN, CardSide.BOTH, ModifierKeys.ctrl()));
+        ret.add(PeripheralCommand.keyCode(KeyEvent.KEYCODE_4, COMMAND_TOGGLE_FLAG_BLUE, CardSide.BOTH, ModifierKeys.ctrl()));
+
+        ret.add(PeripheralCommand.keyCode(KeyEvent.KEYCODE_NUMPAD_1, COMMAND_TOGGLE_FLAG_RED, CardSide.BOTH, ModifierKeys.ctrl()));
+        ret.add(PeripheralCommand.keyCode(KeyEvent.KEYCODE_NUMPAD_2, COMMAND_TOGGLE_FLAG_ORANGE, CardSide.BOTH, ModifierKeys.ctrl()));
+        ret.add(PeripheralCommand.keyCode(KeyEvent.KEYCODE_NUMPAD_3, COMMAND_TOGGLE_FLAG_GREEN, CardSide.BOTH, ModifierKeys.ctrl()));
+        ret.add(PeripheralCommand.keyCode(KeyEvent.KEYCODE_NUMPAD_4, COMMAND_TOGGLE_FLAG_BLUE, CardSide.BOTH, ModifierKeys.ctrl()));
 
         return ret;
     }
@@ -141,12 +159,16 @@ public class PeripheralCommand {
 
 
     public static class ModifierKeys {
-        private final boolean mShift;
-        private final boolean mCtrl;
-        private final boolean mAlt;
+        // null == true/false works.
+        @Nullable
+        private final Boolean mShift;
+        @Nullable
+        private final Boolean mCtrl;
+        @Nullable
+        private final Boolean mAlt;
 
 
-        public ModifierKeys(boolean shift, boolean ctrl, boolean alt) {
+        private ModifierKeys(@Nullable Boolean shift, @Nullable Boolean ctrl, @Nullable Boolean alt) {
             this.mShift = shift;
             this.mCtrl = ctrl;
             this.mAlt = alt;
@@ -162,9 +184,17 @@ public class PeripheralCommand {
         }
 
 
+        /** Allows shift, but not Ctrl/Alt */
+        public static ModifierKeys allowShift() {
+            return new ModifierKeys(null, false, false);
+        }
+
+
         public boolean matches(KeyEvent event) {
             // return false if Ctrl+1 is pressed and 1 is expected
-            return mShift == event.isShiftPressed() && mCtrl == event.isCtrlPressed() && mAlt == event.isAltPressed();
+            return (mShift == null || mShift == event.isShiftPressed()) &&
+                    (mCtrl == null || mCtrl == event.isCtrlPressed()) &&
+                    (mAlt == null || mAlt == event.isAltPressed());
         }
     }
 }
