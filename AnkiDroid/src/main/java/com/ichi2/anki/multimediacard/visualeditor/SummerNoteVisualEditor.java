@@ -30,6 +30,8 @@ package com.ichi2.anki.multimediacard.visualeditor;
 import android.content.Context;
 import android.util.AttributeSet;
 
+import java.util.Locale;
+
 import androidx.annotation.NonNull;
 
 public class SummerNoteVisualEditor extends VisualEditorWebView {
@@ -75,6 +77,13 @@ public class SummerNoteVisualEditor extends VisualEditorWebView {
     protected void onPostInit(String utf8Content, String baseUrl) {
         addJavascriptInterface(this, "RTextEditorView");
         loadDataWithBaseURL(baseUrl + "__visual_editor__.html\"", utf8Content, "text/html; charset=utf-8", "UTF-8", null);
+    }
+
+
+    @Override
+    public void insertCloze(int clozeId) {
+        ExecEscaped e = ExecEscaped.fromString(String.format(Locale.US, "cloze(%d)", clozeId));
+        exec(e);
     }
 
 

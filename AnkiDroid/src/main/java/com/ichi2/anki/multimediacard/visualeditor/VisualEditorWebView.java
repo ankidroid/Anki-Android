@@ -220,6 +220,9 @@ public abstract class VisualEditorWebView extends WebView {
 
     public abstract String getJsFunctionName(@NonNull VisualEditorFunctionality functionality);
 
+    public abstract void insertCloze(int clozeId);
+
+
     public static class ExecEscaped {
         private final String escapedValue;
 
