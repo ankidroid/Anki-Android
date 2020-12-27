@@ -45,11 +45,13 @@ import com.ichi2.utils.JSONException;
 import com.ichi2.utils.JSONObject;
 
 
+
 import java.util.List;
 import java.util.ArrayList;
 import java.util.Locale;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
 import androidx.fragment.app.DialogFragment;
 import timber.log.Timber;
@@ -168,6 +170,25 @@ public class ModelFieldEditor extends AnkiActivity implements LocaleSelectionDia
     // ----------------------------------------------------------------------------
 
 
+    /**
+     * Clean the input field or explain why it's rejected
+     * @param mFieldNameInput Editor to get the input
+     * @return The value to use, or null in case of failure
+     */
+    private @Nullable String _uniqueName(@NonNull EditText mFieldNameInput) {
+        String input = mFieldNameInput.getText().toString()
+                .replaceAll("[\\n\\r]", "");
+        if (input.length() == 0) {
+            UIUtils.showThemedToast(this, getResources().getString(R.string.toast_empty_name), true);
+            return null;
+        }
+        if (containsField(input)) {
+            UIUtils.showThemedToast(this, getResources().getString(R.string.toast_duplicate_field), true);
+            return null;
+        }
+        return input;
+    }
+
     /*
     * Creates a dialog to create a field
     */
@@ -180,39 +201,34 @@ public class ModelFieldEditor extends AnkiActivity implements LocaleSelectionDia
                 .positiveText(R.string.dialog_ok)
                 .customView(mFieldNameInput, true)
                 .onPositive((dialog, which) -> {
-                    String fieldName = mFieldNameInput.getText().toString()
-                            .replaceAll("[\\n\\r]", "");
-
-                    if (fieldName.length() == 0) {
-                        UIUtils.showThemedToast(this, getResources().getString(R.string.toast_empty_name), true);
-                    } else if (containsField(fieldName)) {
-                        UIUtils.showThemedToast(this, getResources().getString(R.string.toast_duplicate_field), true);
-                    } else {
-                        //Name is valid, now field is added
-                        changeHandler listener = changeFieldHandler();
-                        try {
-                            mCol.modSchema();
-                            TaskManager.launchCollectionTask(new CollectionTask.AddField(mMod, fieldName), listener);
-                        } catch (ConfirmModSchemaException e) {
-
-                            //Create dialogue to for schema change
-                            ConfirmationDialog c = new ConfirmationDialog();
-                            c.setArgs(getResources().getString(R.string.full_sync_confirmation));
-                            Runnable confirm = () -> {
-                                mCol.modSchemaNoCheck();
-                                String fieldName1 = mFieldNameInput.getText().toString()
-                                        .replaceAll("[\\n\\r]", "");
-                                TaskManager.launchCollectionTask(new CollectionTask.AddField(mMod, fieldName1), listener);
-                                dismissContextMenu();
-                            };
-
-                            c.setConfirm(confirm);
-                            c.setCancel(mConfirmDialogCancel);
-                            ModelFieldEditor.this.showDialogFragment(c);
-                        }
-                        mCol.getModels().update(mMod);
-                        fullRefreshList();
+                    String fieldName = _uniqueName(mFieldNameInput);
+                    if (fieldName == null) {
+                        return;
                     }
+                    //Name is valid, now field is added
+                    changeHandler listener = changeFieldHandler();
+                    try {
+                        mCol.modSchema();
+                        TaskManager.launchCollectionTask(new CollectionTask.AddField(mMod, fieldName), listener);
+                    } catch (ConfirmModSchemaException e) {
+
+                        //Create dialogue to for schema change
+                        ConfirmationDialog c = new ConfirmationDialog();
+                        c.setArgs(getResources().getString(R.string.full_sync_confirmation));
+                        Runnable confirm = () -> {
+                            mCol.modSchemaNoCheck();
+                            String fieldName1 = mFieldNameInput.getText().toString()
+                                    .replaceAll("[\\n\\r]", "");
+                            TaskManager.launchCollectionTask(new CollectionTask.AddField(mMod, fieldName1), listener);
+                            dismissContextMenu();
+                        };
+
+                        c.setConfirm(confirm);
+                        c.setCancel(mConfirmDialogCancel);
+                        ModelFieldEditor.this.showDialogFragment(c);
+                    }
+                    mCol.getModels().update(mMod);
+                    fullRefreshList();
                 })
                 .negativeText(R.string.dialog_cancel)
                 .show();
@@ -269,37 +285,32 @@ public class ModelFieldEditor extends AnkiActivity implements LocaleSelectionDia
                 .positiveText(R.string.rename)
                 .customView(mFieldNameInput, true)
                 .onPositive((dialog, which) -> {
+                    String fieldName = _uniqueName(mFieldNameInput);
+                    if (fieldName == null) {
+                        return;
+                    }
+                    //Field is valid, now rename
+                    try {
+                        renameField();
+                    } catch (ConfirmModSchemaException e) {
 
-                        String fieldLabel = mFieldNameInput.getText().toString()
-                                .replaceAll("[\\n\\r]", "");
-                        if (fieldLabel.length() == 0) {
-                            UIUtils.showThemedToast(this, getResources().getString(R.string.toast_empty_name), true);
-                        } else if (containsField(fieldLabel)) {
-                            UIUtils.showThemedToast(this, getResources().getString(R.string.toast_duplicate_field), true);
-                        } else {
-                            //Field is valid, now rename
+                        // Handler mod schema confirmation
+                        ConfirmationDialog c = new ConfirmationDialog();
+                        c.setArgs(getResources().getString(R.string.full_sync_confirmation));
+                        Runnable confirm = () -> {
+                            mCol.modSchemaNoCheck();
                             try {
                                 renameField();
-                            } catch (ConfirmModSchemaException e) {
-
-                                // Handler mod schema confirmation
-                                ConfirmationDialog c = new ConfirmationDialog();
-                                c.setArgs(getResources().getString(R.string.full_sync_confirmation));
-                                Runnable confirm = () -> {
-                                    mCol.modSchemaNoCheck();
-                                    try {
-                                        renameField();
-                                    } catch (ConfirmModSchemaException e1) {
-                                        //This should never be thrown
-                                    }
-                                    dismissContextMenu();
-                                };
-                                c.setConfirm(confirm);
-                                c.setCancel(mConfirmDialogCancel);
-                                ModelFieldEditor.this.showDialogFragment(c);
+                            } catch (ConfirmModSchemaException e1) {
+                                //This should never be thrown
                             }
-                        }
-                    })
+                            dismissContextMenu();
+                        };
+                        c.setConfirm(confirm);
+                        c.setCancel(mConfirmDialogCancel);
+                        ModelFieldEditor.this.showDialogFragment(c);
+                    }
+                })
                 .negativeText(R.string.dialog_cancel)
                 .show();
     }
