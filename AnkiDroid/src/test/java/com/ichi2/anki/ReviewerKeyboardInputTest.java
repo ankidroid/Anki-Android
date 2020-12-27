@@ -28,6 +28,7 @@ import androidx.annotation.CheckResult;
 import androidx.annotation.NonNull;
 import timber.log.Timber;
 
+import static android.view.KeyEvent.*;
 import static com.ibm.icu.impl.Assert.fail;
 import static com.ichi2.anki.AbstractFlashcardViewer.EASE_1;
 import static com.ichi2.anki.AbstractFlashcardViewer.EASE_2;
@@ -45,7 +46,7 @@ public class ReviewerKeyboardInputTest {
     public void whenDisplayingQuestionTyping1DoesNothing() {
         KeyboardInputTestReviewer underTest = KeyboardInputTestReviewer.displayingQuestion();
 
-        underTest.handleAndroidKeyPress(KeyEvent.KEYCODE_1);
+        underTest.handleAndroidKeyPress(KEYCODE_1);
 
         assertThat("Answer should not be displayed", !underTest.didDisplayAnswer());
         assertThat("Answer should not be performed", !underTest.hasBeenAnswered());
@@ -55,7 +56,7 @@ public class ReviewerKeyboardInputTest {
     public void whenDisplayingAnswerTyping1AnswersFarLeftButton() {
         KeyboardInputTestReviewer underTest = KeyboardInputTestReviewer.displayingAnswer();
 
-        underTest.handleAndroidKeyPress(KeyEvent.KEYCODE_1);
+        underTest.handleAndroidKeyPress(KEYCODE_1);
 
         assertThat(underTest.processedAnswer(), equalTo(EASE_1));
     }
@@ -64,7 +65,7 @@ public class ReviewerKeyboardInputTest {
     public void whenDisplayingAnswerTyping2AnswersSecondButton() {
         KeyboardInputTestReviewer underTest = KeyboardInputTestReviewer.displayingAnswer();
 
-        underTest.handleAndroidKeyPress(KeyEvent.KEYCODE_2);
+        underTest.handleAndroidKeyPress(KEYCODE_2);
 
         assertThat(underTest.processedAnswer(), equalTo(EASE_2));
     }
@@ -73,7 +74,7 @@ public class ReviewerKeyboardInputTest {
     public void whenDisplayingAnswerTyping3AnswersThirdButton() {
         KeyboardInputTestReviewer underTest = KeyboardInputTestReviewer.displayingAnswer();
 
-        underTest.handleAndroidKeyPress(KeyEvent.KEYCODE_3);
+        underTest.handleAndroidKeyPress(KEYCODE_3);
 
         assertThat(underTest.processedAnswer(), equalTo(EASE_3));
     }
@@ -82,7 +83,7 @@ public class ReviewerKeyboardInputTest {
     public void whenDisplayingAnswerTyping4AnswersFarRightButton() {
         KeyboardInputTestReviewer underTest = KeyboardInputTestReviewer.displayingAnswer();
 
-        underTest.handleAndroidKeyPress(KeyEvent.KEYCODE_4);
+        underTest.handleAndroidKeyPress(KEYCODE_4);
 
         assertThat(underTest.processedAnswer(), equalTo(EASE_4));
     }
@@ -120,30 +121,30 @@ public class ReviewerKeyboardInputTest {
 
     @Test
     public void gamepadAAnswerFourthButtonOrShowsAnswer() {
-        assertGamepadButtonAnswers(KeyEvent.KEYCODE_BUTTON_A, EASE_4);
+        assertGamepadButtonAnswers(KEYCODE_BUTTON_A, EASE_4);
     }
 
     @Test
     public void gamepadBAnswersThirdButtonOrShowsAnswer() {
-        assertGamepadButtonAnswers(KeyEvent.KEYCODE_BUTTON_B, EASE_3);
+        assertGamepadButtonAnswers(KEYCODE_BUTTON_B, EASE_3);
     }
 
     @Test
     public void gamepadXAnswersSecondButtonOrShowsAnswer() {
-        assertGamepadButtonAnswers(KeyEvent.KEYCODE_BUTTON_X, EASE_2);
+        assertGamepadButtonAnswers(KEYCODE_BUTTON_X, EASE_2);
     }
 
 
     @Test
     public void gamepadYAnswersFirstButtonOrShowsAnswer() {
-        assertGamepadButtonAnswers(KeyEvent.KEYCODE_BUTTON_Y, EASE_1);
+        assertGamepadButtonAnswers(KEYCODE_BUTTON_Y, EASE_1);
     }
 
     @Test
     public void pressingEWillEditCard() {
         KeyboardInputTestReviewer underTest = KeyboardInputTestReviewer.displayingAnswer();
 
-        underTest.handleAndroidKeyPress(KeyEvent.KEYCODE_E);
+        underTest.handleAndroidKeyPress(KEYCODE_E);
 
         assertThat("Edit Card was called", underTest.getEditCardCalled());
     }
@@ -188,7 +189,7 @@ public class ReviewerKeyboardInputTest {
     public void pressingRShouldReplayAudio() {
         KeyboardInputTestReviewer underTest = KeyboardInputTestReviewer.displayingAnswer();
 
-        underTest.handleAndroidKeyPress(KeyEvent.KEYCODE_R);
+        underTest.handleAndroidKeyPress(KEYCODE_R);
 
         assertThat("Replay Audio should be called", underTest.getReplayAudioCalled());
     }
@@ -197,7 +198,7 @@ public class ReviewerKeyboardInputTest {
     public void pressingF5ShouldReplayAudio() {
         KeyboardInputTestReviewer underTest = KeyboardInputTestReviewer.displayingAnswer();
 
-        underTest.handleKeyPress(KeyEvent.KEYCODE_F5, '\0');
+        underTest.handleKeyPress(KEYCODE_F5, '\0');
 
         assertThat("Replay Audio should be called", underTest.getReplayAudioCalled());
     }
@@ -206,7 +207,7 @@ public class ReviewerKeyboardInputTest {
     public void pressingZShouldUndoIfAvailable() {
         KeyboardInputTestReviewer underTest = KeyboardInputTestReviewer.displayingAnswer().withUndoAvailable(true);
 
-        underTest.handleAndroidKeyPress(KeyEvent.KEYCODE_Z);
+        underTest.handleAndroidKeyPress(KEYCODE_Z);
 
         assertThat("Undo should be called", underTest.getUndoCalled());
     }
@@ -323,13 +324,13 @@ public class ReviewerKeyboardInputTest {
             when(key.getUnicodeChar(anyInt())).thenReturn((int)unicodeChar);
 
             try {
-                when(key.getAction()).thenReturn(KeyEvent.ACTION_DOWN);
+                when(key.getAction()).thenReturn(ACTION_DOWN);
                 this.onKeyDown(0, key);
             } catch (Exception e) {
                 Timber.e(e);
             }
             try {
-                when(key.getAction()).thenReturn(KeyEvent.ACTION_UP);
+                when(key.getAction()).thenReturn(ACTION_UP);
                 this.onKeyUp(0, key);
             } catch (Exception e) {
                 Timber.e(e);
@@ -341,7 +342,7 @@ public class ReviewerKeyboardInputTest {
             KeyEvent e = getMockKeyEvent();
             // COULD_BE_BETTER: We do not handle shift
             when(e.getUnicodeChar(anyInt())).thenReturn((int)unicodeChar);
-            when(e.getAction()).thenReturn(KeyEvent.ACTION_DOWN);
+            when(e.getAction()).thenReturn(ACTION_DOWN);
             when(e.getKeyCode()).thenReturn(keycode);
 
             try {
@@ -349,7 +350,7 @@ public class ReviewerKeyboardInputTest {
             } catch (Exception ex) {
                 Timber.e(ex);
             }
-            when(e.getAction()).thenReturn(KeyEvent.ACTION_UP);
+            when(e.getAction()).thenReturn(ACTION_UP);
             try {
                 this.onKeyUp(keycode, e);
             } catch (Exception ex) {
@@ -370,12 +371,12 @@ public class ReviewerKeyboardInputTest {
         @SuppressWarnings({"unused"}) //useful to obtain unicode for kecode if run under AndroidJUnit4.
         public void handleAndroidKeyPress(int keycode) {
             try {
-                this.onKeyDown(keycode, createKeyEvent(KeyEvent.ACTION_DOWN, keycode));
+                this.onKeyDown(keycode, createKeyEvent(ACTION_DOWN, keycode));
             } catch (Exception ex) {
                 Timber.e(ex);
             }
             try {
-                this.onKeyUp(keycode, createKeyEvent(KeyEvent.ACTION_UP, keycode));
+                this.onKeyUp(keycode, createKeyEvent(ACTION_UP, keycode));
             } catch (Exception ex) {
                 Timber.e(ex);
             }
@@ -432,7 +433,7 @@ public class ReviewerKeyboardInputTest {
 
 
         public void handleSpacebar() {
-            handleKeyPress(KeyEvent.KEYCODE_SPACE, ' ');
+            handleKeyPress(KEYCODE_SPACE, ' ');
         }
 
 
