@@ -122,4 +122,8 @@
     <string name="audio_recording_field_list" comment="Displays a list of the field data in the note editor while audio recording is taking place">Field Contents</string>
 
     <string name="title_activity_visual_editor">Visual Editor</string>
+
+    <!-- Visual Editor -->
+    <string name="visual_editor_delete_image">Delete Image</string>
+
 </resources>

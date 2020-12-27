@@ -33,7 +33,6 @@ import android.os.Build;
 import android.util.AttributeSet;
 import android.util.Base64;
 import android.webkit.ConsoleMessage;
-import android.webkit.ConsoleMessage.MessageLevel;
 import android.webkit.JavascriptInterface;
 import android.webkit.WebChromeClient;
 import android.webkit.WebResourceRequest;
@@ -42,7 +41,6 @@ import android.webkit.WebView;
 import android.webkit.WebViewClient;
 
 import com.ichi2.utils.FunctionalInterfaces.Consumer;
-import com.jkcarino.rtexteditorview.RTextEditorView;
 
 import java.util.Locale;
 
@@ -53,10 +51,11 @@ import timber.log.Timber;
 
 public abstract class VisualEditorWebView extends WebView {
 
-    private String content;
+    private String mContent;
 
-    private OnTextChangeListener onTextChangeListener;
-    private boolean isReady;
+    private OnTextChangeListener mOnTextChangeListener;
+    private SelectionChangeListener mSelectionChangedListener;
+    private boolean mIsReady;
 
     public VisualEditorWebView(Context context) {
         super(context);
@@ -95,25 +94,55 @@ public abstract class VisualEditorWebView extends WebView {
 
     @JavascriptInterface
     public void onEditorContentChanged(String content) {
-        if (onTextChangeListener != null) {
-            onTextChangeListener.onTextChanged(content);
+        if (mOnTextChangeListener != null) {
+            mOnTextChangeListener.onTextChanged(content);
         }
-        this.content = content;
+        this.mContent = content;
     }
 
+    /** SELECTION */
+
+    @JavascriptInterface
+    public void onImageSelection(String guid, String src) {
+        Timber.d("onImageSelection %s", src);
+        onSelectionChanged(SelectionType.imageFromSrc(guid, src));
+    }
+
+    @JavascriptInterface
+    public void onRegularSelection() {
+        onSelectionChanged(SelectionType.REGULAR);
+    }
+
+    protected void onSelectionChanged(SelectionType selection) {
+        SelectionChangeListener listener = getSelectionChangedListener();
+        if (listener == null) {
+            return;
+        }
+        listener.onSelectionChanged(selection);
+    }
+
+    public void setSelectionChangedListener(SelectionChangeListener listener) {
+        this.mSelectionChangedListener = listener;
+    }
+
+    public SelectionChangeListener getSelectionChangedListener() {
+        return this.mSelectionChangedListener;
+    }
+
+    /** END SELECTION */
 
     public boolean isReady() {
-        return isReady;
+        return mIsReady;
     }
 
 
     public OnTextChangeListener getOnTextChangeListener() {
-        return onTextChangeListener;
+        return mOnTextChangeListener;
     }
 
 
     public void setOnTextChangeListener(OnTextChangeListener onTextChangeListener) {
-        this.onTextChangeListener = onTextChangeListener;
+        this.mOnTextChangeListener = onTextChangeListener;
     }
 
 
@@ -173,7 +202,7 @@ public abstract class VisualEditorWebView extends WebView {
 
     private void execInternal(@NonNull final String valueToExec) {
         //Note: don't mutate valueToExec due to the postDelayed
-        if (isReady) {
+        if (mIsReady) {
             load(valueToExec);
         } else {
             postDelayed(() -> execInternal(valueToExec), 100);
@@ -196,7 +225,7 @@ public abstract class VisualEditorWebView extends WebView {
     }
 
     public String getContent() {
-        return content;
+        return mContent;
     }
 
     public void injectCss(String css) {
@@ -214,25 +243,27 @@ public abstract class VisualEditorWebView extends WebView {
                     "parent.appendChild(style)" +
                     "})()");
         } catch (Exception e) {
-            e.printStackTrace();
+            Timber.w(e);
         }
     }
 
     public abstract String getJsFunctionName(@NonNull VisualEditorFunctionality functionality);
 
+    public abstract void deleteImage(@NonNull String guid);
+
     public abstract void insertCloze(int clozeId);
 
 
     public static class ExecEscaped {
-        private final String escapedValue;
+        private final String mEscapedValue;
 
         protected ExecEscaped(@Nullable String value) {
-            this.escapedValue = value;
+            this.mEscapedValue = value;
         }
 
         @Nullable
         public String getEscapedValue() {
-            return escapedValue;
+            return mEscapedValue;
         }
 
         public static ExecEscaped fromString(String s) {
@@ -253,7 +284,7 @@ public abstract class VisualEditorWebView extends WebView {
 
         @Override
         public void onPageFinished(WebView view, String url) {
-            isReady = true; //TODO: ideally we should confirm the url
+            mIsReady = true; //TODO: ideally we should confirm the url
             super.onPageFinished(view, url);
         }
 
@@ -270,6 +301,36 @@ public abstract class VisualEditorWebView extends WebView {
         public boolean shouldOverrideUrlLoading(WebView view, WebResourceRequest request) {
             view.loadUrl(request.getUrl().toString());
             return true;
+        }
+    }
+
+    @FunctionalInterface
+    public interface SelectionChangeListener {
+        void onSelectionChanged(SelectionType selection);
+    }
+
+    public enum SelectionType {
+        REGULAR,
+        IMAGE;
+
+        private String mData;
+        private String mGuid;
+
+        public static SelectionType imageFromSrc(String guid, String src) {
+            SelectionType type = SelectionType.IMAGE;
+            type.mData = src;
+            type.mGuid = guid;
+            return type;
+        }
+
+
+        public String getImageSrc() {
+            return mData;
+        }
+
+
+        public String getGuid() {
+            return mGuid;
         }
     }
 

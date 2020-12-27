@@ -33,6 +33,7 @@ import android.util.AttributeSet;
 import java.util.Locale;
 
 import androidx.annotation.NonNull;
+import timber.log.Timber;
 
 public class SummerNoteVisualEditor extends VisualEditorWebView {
     public SummerNoteVisualEditor(Context context) {
@@ -79,6 +80,18 @@ public class SummerNoteVisualEditor extends VisualEditorWebView {
         loadDataWithBaseURL(baseUrl + "__visual_editor__.html\"", utf8Content, "text/html; charset=utf-8", "UTF-8", null);
     }
 
+
+    @Override
+    public void deleteImage(@NonNull String guid) {
+        //noinspection ConstantConditions
+        if (guid == null) {
+            Timber.w("Failed to delete image - no guid");
+            return;
+        }
+        ExecEscaped safeString =  ExecEscaped.fromString(guid);
+        String safeCommand = String.format("deleteImage('%s')", safeString.getEscapedValue());
+        execUnsafe(safeCommand);
+    }
 
     @Override
     public void insertCloze(int clozeId) {
