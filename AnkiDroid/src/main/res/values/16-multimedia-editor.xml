@@ -52,6 +52,7 @@
     <string name="multimedia_editor_field_editing_image">Image</string>
     <string name="multimedia_editor_field_editing_audio">Audio recording</string>
     <string name="multimedia_editor_field_editing_audio_clip">Audio Clip</string>
+    <string name="multimedia_editor_field_editing_visual_editor">Visual Editor</string>
     <string name="multimedia_editor_field_editing_done" comment="Label of a button to tell the app that the current action is 'Done'.">Done</string>
 
     <!-- Text field editing -->
@@ -120,4 +121,5 @@
     <string name="activity_result_unexpected">App returned an unexpected value. You may need to use a different app</string>
     <string name="audio_recording_field_list" comment="Displays a list of the field data in the note editor while audio recording is taking place">Field Contents</string>
 
+    <string name="title_activity_visual_editor">Visual Editor</string>
 </resources>

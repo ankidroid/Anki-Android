@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+
+    <include layout="@layout/toolbar"
+        android:id="@id/toolbar"
+        android:layout_alignParentTop="true"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        />
+
+    <!-- TODO: Add hover text for buttons -->
+    <!-- Set up the main editor -->
+    <!-- 24dp + 8dp padding to ensure that the scrollbar is fully visible -->
+    <androidx.appcompat.widget.LinearLayoutCompat
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/toolbar"
+        android:layout_marginBottom="32dp"
+        android:id="@+id/visual_editor_wrapper">
+
+        <com.ichi2.anki.multimediacard.visualeditor.SummerNoteVisualEditor
+            android:id="@+id/editor_view"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            />
+
+    </androidx.appcompat.widget.LinearLayoutCompat>
+
+    <HorizontalScrollView
+        android:id="@+id/toolbar_scrollview"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/material_grey_500"
+        android:layout_alignParentBottom="true"
+        android:scrollbarStyle="outsideOverlay"
+        android:scrollbars="horizontal">
+
+    <!-- Set up the toolbar -->
+        <com.ichi2.anki.multimediacard.visualeditor.VisualEditorToolbar
+            android:id="@+id/editor_toolbar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <androidx.appcompat.widget.AppCompatImageButton
+                android:id="@+id/editor_button_bold"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="?android:attr/selectableItemBackground"
+                android:padding="@dimen/toolbar_item_padding"
+                app:srcCompat="@drawable/ic_format_bold_black_24dp"
+                />
+
+            <androidx.appcompat.widget.AppCompatImageButton
+                android:id="@+id/editor_button_italic"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="?android:attr/selectableItemBackground"
+                android:padding="@dimen/toolbar_item_padding"
+                app:srcCompat="@drawable/ic_format_italic_black_24dp"
+                />
+
+            <androidx.appcompat.widget.AppCompatImageButton
+                android:id="@+id/editor_button_underline"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="?android:attr/selectableItemBackground"
+                android:padding="@dimen/toolbar_item_padding"
+                app:srcCompat="@drawable/ic_format_underlined_black_24dp"
+                />
+
+        </com.ichi2.anki.multimediacard.visualeditor.VisualEditorToolbar>
+        </HorizontalScrollView>
+    </RelativeLayout>

@@ -46,6 +46,7 @@ import com.ichi2.anki.VideoPlayer;
 import com.ichi2.anki.multimediacard.activity.LoadPronounciationActivity;
 import com.ichi2.anki.multimediacard.activity.MultimediaEditFieldActivity;
 import com.ichi2.anki.multimediacard.activity.TranslationActivity;
+import com.ichi2.anki.multimediacard.activity.VisualEditorActivity;
 import com.ichi2.anki.services.ReminderService;
 
 import org.robolectric.Robolectric;
@@ -93,6 +94,7 @@ public class ActivityList {
                 get(MultimediaEditFieldActivity.class),
                 get(TranslationActivity.class),
                 get(LoadPronounciationActivity.class),
+                get(VisualEditorActivity.class),
                 get(CardInfo.class),
                 get(CardTemplateEditor.class, ActivityList::intentForCardTemplateEditor),
                 get(CardTemplateBrowserAppearanceEditor.class, ActivityList::intentForCardTemplateBrowserAppearanceEditor),
