@@ -65,7 +65,7 @@ public class Template {
     private static final Pattern sSection_re = Pattern.compile(sOtag + "[#^]([^}]*)" + sCtag + "(.+?)" + sOtag + "/\\1" + sCtag, Pattern.MULTILINE | Pattern.DOTALL);
 
     // The regular expression used to find a tag.
-    private static final Pattern sTag_re = Pattern.compile(sOtag + "([#=&!>{])?(.+?)\\1?" + sCtag + "+");
+    private static final Pattern sTag_re = Pattern.compile(sOtag + "([#=&>{])?(.+?)\\1?" + sCtag + "+");
 
     // MathJax opening delimiters
     private static final String[] sMathJaxOpenings = {"\\(", "\\["};
@@ -177,8 +177,6 @@ public class Template {
                 replacement = render_unescaped(tag_name, context);
             } else if ("{".equals(tag_type)) {
                 replacement = render_tag(tag_name, context);
-            } else if ("!".equals(tag_type)) {
-                replacement = render_comment();
             } else {
                 return "{{invalid template}}";
             }
