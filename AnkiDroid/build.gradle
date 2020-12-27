@@ -12,6 +12,7 @@ apply plugin: 'app.brant.amazonappstorepublisher'
 repositories {
     google()
     jcenter()
+    maven { url 'https://www.jitpack.io' }
 }
 def homePath = System.properties['user.home']
 android {
@@ -231,6 +232,8 @@ dependencies {
     implementation 'androidx.webkit:webkit:1.4.0'
 
 
+    //#1377 - Visual Editor (incl android_assets)
+    implementation 'com.github.jkennethcarino:RTextEditorView:0.1.1'
     // May need a resolution strategy for support libs to our versions
     implementation'ch.acra:acra-http:5.5.1'
     implementation'ch.acra:acra-dialog:5.5.1'
