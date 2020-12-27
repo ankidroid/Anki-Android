@@ -35,6 +35,27 @@ import static org.hamcrest.Matchers.not;
 public class TemplateTest extends RobolectricTest {
 
     @Test
+    public void fieldStartingWithExclamation() {
+        // Ankidroid used not to display fields whose name start with !
+        HashMap<String, String> context = new HashMap<>();
+        context.put("!Front", "Test");
+        Template t = new Template("{{!Front}}", context);
+
+        String rendered = t.render();
+
+        assertThat(rendered, is("Test"));
+    }
+    @Test
+    public void missingExclamation() {
+        // Ankidroid used not to display fields whose name start with !
+        HashMap<String, String> context = new HashMap<>();
+        Template t = new Template("{{!Front}}", context);
+
+        String rendered = t.render();
+
+        assertThat(rendered, is("{unknown field !Front}"));
+    }
+    @Test
     public void typeInFieldRenders() {
         HashMap<String, String> context = new HashMap<>();
         context.put("Front", "AA{{type:Back}}");
