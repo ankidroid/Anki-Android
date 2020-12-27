@@ -436,6 +436,7 @@
             android:exported="false"
             android:configChanges="keyboardHidden|orientation|locale|screenSize"
             />
+        <!--Visual Editor: Test hunk to be removed -->
         <activity
             android:name=".CardInfo"
             android:label="@string/card_info_title"
