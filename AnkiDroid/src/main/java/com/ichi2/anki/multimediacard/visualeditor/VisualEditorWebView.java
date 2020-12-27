@@ -56,6 +56,7 @@ public abstract class VisualEditorWebView extends WebView {
     private String content;
 
     private OnTextChangeListener onTextChangeListener;
+    private SelectionChangeListener mSelectionChangedListener;
     private boolean isReady;
 
     public VisualEditorWebView(Context context) {
@@ -101,6 +102,36 @@ public abstract class VisualEditorWebView extends WebView {
         this.content = content;
     }
 
+    /** SELECTION */
+
+    @JavascriptInterface
+    public void onImageSelection(String guid, String src) {
+        Timber.d("onImageSelection %s", src);
+        onSelectionChanged(SelectionType.imageFromSrc(guid, src));
+    }
+
+    @JavascriptInterface
+    public void onRegularSelection() {
+        onSelectionChanged(SelectionType.REGULAR);
+    }
+
+    protected void onSelectionChanged(SelectionType selection) {
+        SelectionChangeListener listener = getSelectionChangedListener();
+        if (listener == null) {
+            return;
+        }
+        listener.onSelectionChanged(selection);
+    }
+
+    public void setSelectionChangedListener(SelectionChangeListener listener) {
+        this.mSelectionChangedListener = listener;
+    }
+
+    public SelectionChangeListener getSelectionChangedListener() {
+        return this.mSelectionChangedListener;
+    }
+
+    /** END SELECTION */
 
     public boolean isReady() {
         return isReady;
@@ -220,6 +251,8 @@ public abstract class VisualEditorWebView extends WebView {
 
     public abstract String getJsFunctionName(@NonNull VisualEditorFunctionality functionality);
 
+    public abstract void deleteImage(@NonNull String guid);
+
     public abstract void insertCloze(int clozeId);
 
 
@@ -270,6 +303,36 @@ public abstract class VisualEditorWebView extends WebView {
         public boolean shouldOverrideUrlLoading(WebView view, WebResourceRequest request) {
             view.loadUrl(request.getUrl().toString());
             return true;
+        }
+    }
+
+    @FunctionalInterface
+    public interface SelectionChangeListener {
+        void onSelectionChanged(SelectionType selection);
+    }
+
+    public enum SelectionType {
+        REGULAR,
+        IMAGE;
+
+        private String mData;
+        private String mGuid;
+
+        public static SelectionType imageFromSrc(String guid, String src) {
+            SelectionType type = SelectionType.IMAGE;
+            type.mData = src;
+            type.mGuid = guid;
+            return type;
+        }
+
+
+        public String getImageSrc() {
+            return mData;
+        }
+
+
+        public String getGuid() {
+            return mGuid;
         }
     }
 
