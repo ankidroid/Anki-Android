@@ -1032,6 +1032,9 @@ public class Models extends ModelManager {
         return avail;
     }
 
+    public static boolean isCloze(JSONObject model) {
+        return model.getInt("type") == Consts.MODEL_CLOZE;
+    }
 
     /**
      * @param m A note type with cloze

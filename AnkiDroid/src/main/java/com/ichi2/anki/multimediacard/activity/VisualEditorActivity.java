@@ -10,24 +10,26 @@ import android.view.View;
 import com.ichi2.anki.AnkiActivity;
 import com.ichi2.anki.AnkiDroidApp;
 import com.ichi2.anki.R;
-import com.ichi2.anki.cardviewer.CardAppearance;
 import com.ichi2.anki.UIUtils;
+import com.ichi2.anki.cardviewer.CardAppearance;
 import com.ichi2.anki.multimediacard.fields.IField;
 import com.ichi2.anki.multimediacard.fields.TextField;
 import com.ichi2.anki.multimediacard.visualeditor.VisualEditorFunctionality;
 import com.ichi2.anki.multimediacard.visualeditor.VisualEditorWebView;
 import com.ichi2.anki.reviewer.ReviewerCustomFonts;
 import com.ichi2.libanki.Collection;
+import com.ichi2.libanki.Models;
+import com.ichi2.libanki.Note;
 import com.ichi2.libanki.Utils;
+import com.ichi2.utils.JSONObject;
 import com.ichi2.utils.WebViewDebugging;
 
-import java.io.ByteArrayOutputStream;
 import java.util.Arrays;
 import java.util.List;
+
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.util.Locale;
 
 import androidx.annotation.IdRes;
 import androidx.annotation.NonNull;
@@ -89,6 +91,20 @@ public class VisualEditorActivity extends AnkiActivity {
         setupAction.apply(R.id.editor_button_bold, BOLD);
         setupAction.apply(R.id.editor_button_italic, ITALIC);
         setupAction.apply(R.id.editor_button_underline, UNDERLINE);
+
+        findViewById(R.id.editor_button_cloze).setOnClickListener(v -> performCloze());
+    }
+
+
+    private void performCloze() {
+        mWebView.insertCloze(getNextClozeId());
+    }
+
+
+    private int getNextClozeId() {
+        List<String> fields = Arrays.asList(mFields);
+        fields.set(mIndex, mCurrentText);
+        return Note.ClozeUtils.getNextClozeIndex(fields);
     }
 
 
@@ -156,20 +172,27 @@ public class VisualEditorActivity extends AnkiActivity {
         finishCancel();
     }
 
+
     @Override
     protected void onCollectionLoaded(Collection col) {
         super.onCollectionLoaded(col);
         Timber.d("onCollectionLoaded");
         initWebView(col);
 
-        String css = getModelCss(col);
+        JSONObject model = col.getModels().get(mModelId);
+        String css = getModelCss(model);
+        if (Models.isCloze(model)) {
+            Timber.d("Cloze detected. Enabling Cloze button");
+            findViewById(R.id.editor_button_cloze).setVisibility(View.VISIBLE);
+        }
+
         mWebView.injectCss(css);
     }
 
 
-    private String getModelCss(Collection col) {
+    private String getModelCss(JSONObject model) {
         try {
-            String css = col.getModels().get(mModelId).getString("css");
+            String css = model.getString("css");
             return css.replace(".card", ".note-editable ");
         } catch (Exception e) {
             UIUtils.showThemedToast(this, "Failed to load template CSS", false);
