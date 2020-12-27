@@ -7,6 +7,13 @@
         android:enabled="true"
         android:icon="@drawable/ic_delete_white_24dp"
         android:title="@string/visual_editor_tooltip_delete_image"
+        ankidroid:showAsAction="always"/>
+
+    <item
+        android:id="@+id/action_cut"
+        android:enabled="true"
+        android:icon="@drawable/ic_content_cut_white_24dp"
+        android:title="@string/visual_editor_tooltip_cut_image"
         ankidroid:showAsAction="ifRoom"/>
 
     <!-- Plans: Edit/Crop/Rename/Resize -->

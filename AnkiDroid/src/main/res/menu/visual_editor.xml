@@ -2,6 +2,12 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
       xmlns:ankidroid="http://schemas.android.com/apk/res-auto">
     <item
+        android:id="@+id/action_cut"
+        android:enabled="true"
+        android:icon="@drawable/ic_content_cut_white_24dp"
+        android:title="@string/visual_editor_tooltip_cut_image"
+        ankidroid:showAsAction="always"/>
+    <item
         android:id="@+id/action_save"
         android:icon="@drawable/ic_done_white"
         android:title="@string/save"
