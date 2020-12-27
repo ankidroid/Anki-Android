@@ -186,7 +186,7 @@ public class ModelFieldEditor extends AnkiActivity implements LocaleSelectionDia
             UIUtils.showThemedToast(this, getResources().getString(R.string.toast_duplicate_field), true);
             return null;
         }
-        return input;
+        return input.trim();
     }
 
     /*
