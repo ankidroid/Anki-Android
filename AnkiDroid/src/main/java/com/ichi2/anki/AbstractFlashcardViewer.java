@@ -117,6 +117,7 @@ import com.ichi2.libanki.DeckConfig;
 import com.ichi2.libanki.Note;
 import com.ichi2.libanki.Sound;
 import com.ichi2.libanki.Utils;
+import com.ichi2.libanki.template.MathJax;
 import com.ichi2.libanki.template.Template;
 import com.ichi2.themes.HtmlColors;
 import com.ichi2.themes.Themes;
@@ -2239,7 +2240,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
         // CSS class for card-specific styling
         String cardClass = mCardAppearance.getCardClass(mCurrentCard.getOrd() + 1, Themes.getCurrentTheme(this));
 
-        if (Template.textContainsMathjax(content)) {
+        if (MathJax.textContainsMathjax(content)) {
             cardClass += " mathjax-needs-to-render";
         }
 
