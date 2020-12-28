@@ -216,7 +216,7 @@ public class Template {
         List<String> mods;
         String tag;
         if (parts.size() == 1 || "".equals(parts.get(0))) {
-            return String.format("{unknown field %s}", tag_name);
+            return AnkiDroidApp.getAppResources().getString(R.string.unknown_field, tag_name);
         } else {
             mods = parts.subList(0, parts.size() - 1);
             tag = parts.get(parts.size() - 1);
@@ -299,7 +299,7 @@ public class Template {
                     return "Error in filter " + mod;
                 }
                 if (txt == null) {
-                    return String.format("{unknown field %s}", tag_name);
+                    return AnkiDroidApp.getAppResources().getString(R.string.unknown_field, tag_name);
                 }
             }
         }

@@ -1,5 +1,6 @@
 package com.ichi2.libanki;
 
+import com.ichi2.anki.R;
 import com.ichi2.anki.RobolectricTest;
 import com.ichi2.anki.exception.ConfirmModSchemaException;
 import com.ichi2.utils.JSONArray;
@@ -7,6 +8,7 @@ import com.ichi2.utils.JSONObject;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.robolectric.annotation.Config;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -462,6 +464,7 @@ public class ModelTest extends RobolectricTest {
     }
 
     @Test
+    @Config(qualifiers = "en")
     public void regression_test_pipe() {
         Collection col = getCol();
         Models mm = col.getModels();
@@ -471,7 +474,7 @@ public class ModelTest extends RobolectricTest {
         mm.save(basic, true);
         Note note = addNoteUsingBasicModel("foo", "bar");
         Card c = note.cards().get(0);
-        assertThat(c.q(), containsString("unknown field"));
+        assertThat(c.q(), containsString("Unknown field"));
     }
 
     @Test
