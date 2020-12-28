@@ -177,7 +177,7 @@ public class ModelFieldEditor extends AnkiActivity implements LocaleSelectionDia
      */
     private @Nullable String _uniqueName(@NonNull EditText mFieldNameInput) {
         String input = mFieldNameInput.getText().toString()
-                .replaceAll("[\\n\\r]", "");
+                .replaceAll("[\\n\\r{}:\"]", "");
         if (input.length() == 0) {
             UIUtils.showThemedToast(this, getResources().getString(R.string.toast_empty_name), true);
             return null;
@@ -186,7 +186,7 @@ public class ModelFieldEditor extends AnkiActivity implements LocaleSelectionDia
             UIUtils.showThemedToast(this, getResources().getString(R.string.toast_duplicate_field), true);
             return null;
         }
-        return input.trim();
+        return input;
     }
 
     /*
