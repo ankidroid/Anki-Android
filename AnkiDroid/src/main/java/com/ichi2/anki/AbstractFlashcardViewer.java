@@ -119,6 +119,7 @@ import com.ichi2.libanki.Sound;
 import com.ichi2.libanki.Utils;
 import com.ichi2.libanki.template.MathJax;
 import com.ichi2.libanki.template.Template;
+import com.ichi2.libanki.template.TemplateFilters;
 import com.ichi2.themes.HtmlColors;
 import com.ichi2.themes.Themes;
 import com.ichi2.utils.AdaptionUtil;
@@ -2373,7 +2374,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
 
     private String getTextForTts(String text) {
         String clozeReplacement = this.getString(R.string.reviewer_tts_cloze_spoken_replacement);
-        String clozeReplaced = text.replace(Template.CLOZE_DELETION_REPLACEMENT, clozeReplacement);
+        String clozeReplaced = text.replace(TemplateFilters.CLOZE_DELETION_REPLACEMENT, clozeReplacement);
         return Utils.stripHTML(clozeReplaced);
     }
 

@@ -27,6 +27,7 @@ import android.util.Pair;
 import com.ichi2.anki.AnkiDroidApp;
 import com.ichi2.libanki.exception.EmptyMediaException;
 import com.ichi2.libanki.template.Template;
+import com.ichi2.libanki.template.TemplateFilters;
 import com.ichi2.utils.Assert;
 
 import com.ichi2.utils.ExceptionUtil;
@@ -350,7 +351,7 @@ public class Media {
             ords.add(m.group(1));
         }
         ArrayList<String> strings = new ArrayList<>(ords.size() + 1);
-        String clozeReg = Template.clozeReg;
+        String clozeReg = TemplateFilters.clozeReg;
         
         for (String ord : ords) {
             StringBuffer buf = new StringBuffer();
@@ -359,7 +360,7 @@ public class Media {
                 if (!TextUtils.isEmpty(m.group(4))) {
                     m.appendReplacement(buf, "[$4]");
                 } else {
-                    m.appendReplacement(buf, Template.CLOZE_DELETION_REPLACEMENT);
+                    m.appendReplacement(buf, TemplateFilters.CLOZE_DELETION_REPLACEMENT);
                 }
             }
             m.appendTail(buf);

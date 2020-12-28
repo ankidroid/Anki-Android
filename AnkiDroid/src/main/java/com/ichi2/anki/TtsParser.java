@@ -1,6 +1,7 @@
 package com.ichi2.anki;
 
 import com.ichi2.libanki.template.Template;
+import com.ichi2.libanki.template.TemplateFilters;
 
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Element;
@@ -29,7 +30,7 @@ public final class TtsParser {
         parseTtsElements(elem, textsToRead);
         if (textsToRead.size() == 0) {
             // No <tts service="android"> elements found: return the text of the whole HTML fragment
-            textsToRead.add(new LocalisedText(elem.text().replace(Template.CLOZE_DELETION_REPLACEMENT, clozeReplacement)));
+            textsToRead.add(new LocalisedText(elem.text().replace(TemplateFilters.CLOZE_DELETION_REPLACEMENT, clozeReplacement)));
         }
 
         return textsToRead;

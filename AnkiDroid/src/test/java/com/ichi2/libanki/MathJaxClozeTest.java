@@ -5,6 +5,7 @@ import android.content.Context;
 import com.ichi2.anki.RobolectricTest;
 import com.ichi2.libanki.template.MathJax;
 import com.ichi2.libanki.template.Template;
+import com.ichi2.libanki.template.TemplateFilters;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -29,17 +30,17 @@ public class MathJaxClozeTest extends RobolectricTest {
     public void removeFormattingFromMathjax() {
         final String original_s = "{{c1::ok}} \\(2^2\\) {{c2::not ok}} \\(2^{{c3::2}}\\) \\(x^3\\) {{c4::blah}} {{c5::text with \\(x^2\\) jax}}";
 
-        assertEquals(original_s, Template.removeFormattingFromMathjax(original_s, "1"));
-        assertEquals(original_s, Template.removeFormattingFromMathjax(original_s, "2"));
-        assertEquals(original_s, Template.removeFormattingFromMathjax(original_s, "4"));
-        assertEquals(original_s, Template.removeFormattingFromMathjax(original_s, "5"));
+        assertEquals(original_s, TemplateFilters.removeFormattingFromMathjax(original_s, "1"));
+        assertEquals(original_s, TemplateFilters.removeFormattingFromMathjax(original_s, "2"));
+        assertEquals(original_s, TemplateFilters.removeFormattingFromMathjax(original_s, "4"));
+        assertEquals(original_s, TemplateFilters.removeFormattingFromMathjax(original_s, "5"));
 
         final String escaped_s = "{{c1::ok}} \\(2^2\\) {{c2::not ok}} \\(2^{{C3::2}}\\) \\(x^3\\) {{c4::blah}} {{c5::text with \\(x^2\\) jax}}";
-        assertEquals(escaped_s, Template.removeFormattingFromMathjax(original_s, "3"));
+        assertEquals(escaped_s, TemplateFilters.removeFormattingFromMathjax(original_s, "3"));
 
         final String original_s2 = "\\(a\\) {{c1::b}} \\[ {{c1::c}} \\]";
         final String escaped_s2 = "\\(a\\) {{c1::b}} \\[ {{C1::c}} \\]";
-        assertEquals(escaped_s2, Template.removeFormattingFromMathjax(original_s2, "1"));
+        assertEquals(escaped_s2, TemplateFilters.removeFormattingFromMathjax(original_s2, "1"));
     }
 
     @Test
