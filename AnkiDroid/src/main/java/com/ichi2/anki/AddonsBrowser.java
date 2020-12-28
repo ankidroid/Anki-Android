@@ -15,6 +15,7 @@ import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.List;
 
 import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -52,7 +53,7 @@ public class AddonsBrowser extends NavigationDrawerActivity implements DeckDropD
             success = addonsDir.mkdirs();
         }
 
-        ArrayList<String> addonsNames = new ArrayList<String>();
+        List<AddonModel> addonsNames = new ArrayList<AddonModel>();
 
         if (success) {
             File directory = new File(String.valueOf(addonsDir));
@@ -61,6 +62,8 @@ public class AddonsBrowser extends NavigationDrawerActivity implements DeckDropD
                 Timber.d("Addons:%s", files[i].getName());
 
                 File addonsFiles = new File(files[i], "manifest.json" );
+
+                AddonModel addonModel;
 
                 if (addonsFiles.exists()) {
                    Timber.d("Exist");
@@ -79,19 +82,24 @@ public class AddonsBrowser extends NavigationDrawerActivity implements DeckDropD
                        String response = stringBuilder.toString();
 
                        JSONObject jsonObject  = new JSONObject(response);
-                       String addon = String.valueOf(jsonObject.get("name"));
-                       addonsNames.add(addon);
+                       String addonId = jsonObject.optString("id", "");
+                       String addonName = jsonObject.optString("name", "");
+                       String addonVersion = jsonObject.optString("version", "");
+                       String addonDev = jsonObject.optString("developer", "");
+                       String addonAnkiDroidAPI = jsonObject.optString("ankidroid_api", "");
+
+                       addonModel = new AddonModel(addonId, addonName, addonVersion, addonDev, addonAnkiDroidAPI);
+                       addonsNames.add(addonModel);
                    } catch (IOException | JSONException e) {
                        e.printStackTrace();
                    }
                 }
             }
 
-            String[] addonsNameArray = addonsNames.toArray(new String[0]);
-            addonsList.setAdapter(new AddonsAdapter(addonsNameArray));
+            addonsList.setAdapter(new AddonsAdapter(addonsNames));
             hideProgressBar();
         } else {
-            UIUtils.showThemedToast(this, "Error getting list of addons", true);
+            UIUtils.showThemedToast(this, getString(R.string.error_listing_addons), true);
         }
     }
 

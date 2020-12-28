@@ -133,10 +133,13 @@ import com.ichi2.utils.JSONException;
 import com.ichi2.utils.JSONObject;
 import com.ichi2.utils.WebViewDebugging;
 
+import java.io.BufferedReader;
 import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
+import java.io.FileReader;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.lang.ref.WeakReference;
@@ -145,6 +148,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.LinkedHashSet;
+import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReadWriteLock;
@@ -2398,6 +2402,46 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
         return card.getODid() == 0 ? card.getDid() : card.getODid();
     }
 
+    public String getEnabledAddonsContent() {
+        StringBuilder content = new StringBuilder();
+
+        SharedPreferences preferences = AnkiDroidApp.getSharedPrefs(this);
+        String currentAnkiDroidDirectory = CollectionHelper.getCurrentAnkiDroidDirectory(this);
+        File addonsDir = new File(currentAnkiDroidDirectory, "addons" );
+
+        Map<String,?> keys = preferences.getAll();
+
+        for(Map.Entry<String,?> entry : keys.entrySet()){
+            Timber.d("map values %s",entry.getKey() + ": " + entry.getValue().toString());
+
+            // getting enabled status of addons in SharedPreferences with key containing 'addon'
+            if (entry.getKey().contains("addon") && entry.getValue().toString().equals("enabled")) {
+                try {
+                    // split value and getting latter part as it stored id for addon e.g addon:js12345... It is same as folder name for the addon
+                    // if id not present in manifest.json then it leads to exception
+                    File addonDirName = new File(String.valueOf(entry.getKey().split(":")[1]));
+                    File finalAddonPath = new File(addonsDir, String.valueOf(addonDirName));
+
+                    //Read text from file, content.html is starting point for the addon
+                    File addonsContentFile = new File(finalAddonPath, "content.html" );
+
+                    BufferedReader br = new BufferedReader(new FileReader(addonsContentFile));
+                    String line;
+
+                    while ((line = br.readLine()) != null) {
+                        content.append(line);
+                        content.append('\n');
+                    }
+                    br.close();
+                }
+                catch (ArrayIndexOutOfBoundsException | IOException e) {
+                    Timber.e(e, "AbstractFlashcardViewer::IOException");
+                }
+            }
+        }
+
+        return content.toString();
+    }
 
     public void fillFlashcard() {
         Timber.d("fillFlashcard()");
@@ -2406,11 +2450,10 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
             Timber.w("fillFlashCard() called with no card content");
             return;
         }
-        // fill cards before and after
-        // check for activated addons
-        //mCardContent = "<div class='ch_onyomi'>Hello World</div><script>console.log(AnkiDroidJS.ankiGetNewCardCount())</script>" + mCardContent;
-        //mCardContent = mCardContent + "<div class='ch_onyomi'>Hello World</div><script>console.log(AnkiDroidJS.ankiGetNewCardCount())</script>";
-        final String cardContent = mCardContent;
+
+        String addonsContent = getEnabledAddonsContent();
+        final String cardContent = mCardContent + addonsContent;
+
         processCardAction(cardWebView -> loadContentIntoCard(cardWebView, cardContent));
         mGestureDetectorImpl.onFillFlashcard();
         if (mShowTimer && mCardTimer.getVisibility() == View.INVISIBLE) {
