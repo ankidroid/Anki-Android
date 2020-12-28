@@ -212,7 +212,6 @@ public class Template {
 
         // field modifiers
         List<String> parts = Arrays.asList(tag_name.split(":"));
-        String extra = null;
         List<String> mods;
         String tag;
         if (parts.size() == 1 || "".equals(parts.get(0))) {
@@ -260,7 +259,7 @@ public class Template {
                 // cloze deletion
                 String[] split = mod.split("-");
                 mod = split[0];
-                extra = split[1];
+                String extra = split[1];
                 if (!TextUtils.isEmpty(txt) && !TextUtils.isEmpty(extra)) {
                     txt = clozeText(txt != null ? txt : "", extra, mod.charAt(1));
                 } else {
@@ -271,7 +270,7 @@ public class Template {
                 Matcher m = fHookFieldMod.matcher(mod);
                 if (m.matches()) {
                     mod = m.group(1);
-                    extra = m.group(2);
+                    String extra = m.group(2);
                 }
 
                 if (txt == null) {
