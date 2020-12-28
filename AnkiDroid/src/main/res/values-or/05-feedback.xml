@@ -38,29 +38,16 @@
 ~ this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <resources>
-    <!-- Widget -->
-    <string name="widget_minimum_cards_due_notification_ticker_title">Cards due</string>
-    <plurals name="widget_minimum_cards_due_notification_ticker_text">
-        <item quantity="one">%d AnkiDroid card due</item>
-        <item quantity="two">%d AnkiDroid cards due</item>
-        <item quantity="few">%d AnkiDroid cards due</item>
-        <item quantity="many">%d AnkiDroid cards due</item>
-        <item quantity="other">%d AnkiDroid cards due</item>
-    </plurals>
-    <string name="widget_small" comment="Label of the small ankidroid widget. This text can\'t be found directly in AnkiDroid">AnkiDroid beag</string>
-    <plurals name="widget_cards_due">
-        <item quantity="one">%d card due</item>
-        <item quantity="two">%d cards due</item>
-        <item quantity="few">%d cards due</item>
-        <item quantity="many">%d cards due</item>
-        <item quantity="other">%d cards due</item>
-    </plurals>
-    <plurals name="widget_eta">
-        <item quantity="one">%d minute remaining</item>
-        <item quantity="two">%d minutes remaining</item>
-        <item quantity="few">%d minutes remaining</item>
-        <item quantity="many">%d minutes remaining</item>
-        <item quantity="other">%d minutes remaining</item>
-    </plurals>
-    <string name="widget_add_note_button">Add new AnkiDroid note</string>
+    <!-- Feedback.java -->
+    <string name="empty_string"></string>
+    <string name="error_reporting_choice">ତ୍ରୁଟି ରିପୋର୍ଟକରିବା ମୋଡ୍</string>
+    <string name="feedback_disclaimer">Disclaimer: We don’t collect any personal information such as your email address, phone number, or your phone IMEI. We do collect some information about your device such as the manufacturer, model and version of Android, as well as the nature of reported errors themselves and the steps which led up to them occurring.</string>
+    <string name="feedback_title">AnkiDroid Feedback</string>
+    <string name="feedback_default_text">Enter your feedback or information about the nature of any errors you’re reporting.</string>
+    <string name="feedback_auto_toast_text">AnkiDroid has encountered a problem; a report is being sent to the developers&#8230;</string>
+    <string name="feedback_manual_toast_text">AnkiDroid has encountered a problem; a report is being generated&#8230;</string>
+    <string name="feedback_copy_debug">Copy debug info</string>
+    <string name="feedback_report">Report</string>
+    <string name="feedback_report_automatically">Send error reports automatically</string>
+    <string name="feedback_no_suitable_app_found">No suitable app found</string>
 </resources>

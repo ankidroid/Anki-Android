@@ -58,8 +58,8 @@
     <string name="updated_version">バージョン%sへアップデートしました</string>
     <!-- Reviewer.java -->
     <string name="save_whiteboard">ホワイトボードの内容を保存</string>
-    <string name="enable_whiteboard">ホワイトボードを有効にする</string>
-    <string name="disable_whiteboard">ホワイトボードを無効にする</string>
+    <string name="enable_whiteboard">ホワイトボード機能をオン</string>
+    <string name="disable_whiteboard">ホワイトボード機能をオフ</string>
     <string name="show_whiteboard">ホワイトボードを表示する</string>
     <string name="hide_whiteboard">ホワイトボードを隠す</string>
     <string name="clear_whiteboard">ホワイトボードの内容を全て消去</string>
