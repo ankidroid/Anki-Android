@@ -2314,10 +2314,8 @@ public class DeckPicker extends NavigationDrawerActivity implements
             openStudyOptions(false);
         } else if (!deckDueTreeNode.hasChildren() && getCol().isEmptyDeck(did)) {
             // If the deck is empty and has no children then show a message saying it's empty
-            final Uri helpUrl = Uri.parse(getResources().getString(R.string.link_manual_getting_started));
-            mayOpenUrl(helpUrl);
-            UIUtils.showSnackbar(this, R.string.empty_deck, false, R.string.help,
-                    v -> openHelpUrl(helpUrl), findViewById(R.id.root_layout), mSnackbarShowHideCallback);
+            UIUtils.showSnackbar(this, R.string.empty_deck, false, R.string.empty_deck_add_note,
+                    v -> addNote(), findViewById(R.id.root_layout), mSnackbarShowHideCallback);
             if (mFragmented) {
                 openStudyOptions(false);
             } else {
