@@ -178,7 +178,7 @@ public class Template {
             } else if ("{".equals(tag_type)) {
                 replacement = render_tag(tag_name, context);
             } else {
-                return "{{invalid template}}";
+                return AnkiDroidApp.getAppResources().getString(R.string.invalid_template_short);
             }
             match.appendReplacement(sb, Matcher.quoteReplacement(replacement));
         }
