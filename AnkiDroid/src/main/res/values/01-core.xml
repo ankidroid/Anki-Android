@@ -194,4 +194,5 @@
 
     <string name="context_menu_anki_card_label">Anki Card</string>
     <string name="unknown_field">{Unknown field %s}</string>
+    <string name="invalid_template_short">{{Invalid template}}</string>
 </resources>

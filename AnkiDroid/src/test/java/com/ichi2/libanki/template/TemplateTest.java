@@ -23,6 +23,7 @@ import org.hamcrest.Matchers;
 import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.robolectric.annotation.Config;
 
 import java.util.HashMap;
 
@@ -80,6 +81,7 @@ public class TemplateTest extends RobolectricTest {
     }
 
     @Test
+    @Config(qualifiers = "en")
     public void nestedTemplatesRenderWell() {
         //#6123
         String problematicTemplate = "{{#One}}\n" +
@@ -99,7 +101,7 @@ public class TemplateTest extends RobolectricTest {
         String result = template.render();
 
         //most important - that it does render
-        assertThat(result, not("{{invalid template}}"));
+        assertThat(result, not("{{Invalid template}}"));
         //Actual value (may be subject to change).
         assertThat(result, is("\n    \n        Card1 - One<br>\n    \n    \n        Card1 - Two\n    \n"));
     }
