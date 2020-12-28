@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="utf-8"?> 
+ <!-- 
+ ~ Copyright (c) 2009 Andrew <andrewdubya@gmail> 
+ ~ Copyright (c) 2009 Edu Zamora <edu.zasu@gmail.com> 
+ ~ Copyright (c) 2009 Daniel Svaerd <daniel.svard@gmail.com> 
+ ~ Copyright (c) 2009 Nicolas Raoul <nicolas.raoul@gmail.com> 
+ ~ Copyright (c) 2010 Norbert Nagold <norbert.nagold@gmail.com> 
+ ~ This program is free software; you can redistribute it and/or modify it under 
+ ~ the terms of the GNU General Public License as published by the Free Software 
+ ~ Foundation; either version 3 of the License, or (at your option) any later 
+ ~ version. 
+ ~ 
+ ~ This program is distributed in the hope that it will be useful, but WITHOUT ANY 
+ ~ WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A 
+ ~ PARTICULAR PURPOSE. See the GNU General Public License for more details. 
+ ~ 
+ ~ You should have received a copy of the GNU General Public License along with 
+ ~ this program.  If not, see <http://www.gnu.org/licenses/>. 
+ --> 
+ 
+<!--
+~ Copyright (c) 2009 Casey Link <unnamedrambler@gmail.com>
+~
+~ This program is free software; you can redistribute it and/or modify it under
+~ the terms of the GNU General Public License as published by the Free Software
+~ Foundation; either version 3 of the License, or (at your option) any later
+~ version.
+~
+~ This program is distributed in the hope that it will be useful, but WITHOUT ANY
+~ WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A
+~ PARTICULAR PURPOSE. See the GNU General Public License for more details.
+~
+~ You should have received a copy of the GNU General Public License along with
+~ this program.  If not, see <http://www.gnu.org/licenses/>.
+-->
+<resources>
+    <string-array name="error_reporting_choice_labels">
+        <item>Always report</item>
+        <item>Never report</item>
+        <item>Ask me</item>
+    </string-array>
+    <string-array name="leech_action_labels">
+        <item>Suspend card</item>
+        <item>Tag only</item>
+    </string-array>
+    <string-array name="new_order_labels">
+        <item>New cards in random order</item>
+        <item>New cards in order added</item>
+    </string-array>
+    <string-array name="cram_deck_conf_order_labels">
+        <item>Oldest seen first</item>
+        <item>Random</item>
+        <item>Increasing intervals</item>
+        <item>Decreasing intervals</item>
+        <item>Most lapsed</item>
+        <item>Order added</item>
+        <item>Order due</item>
+        <item>Latest added first</item>
+        <item>Relative overdueness</item>
+    </string-array>
+    <string-array name="add_to_cur_labels">
+        <item>Use current deck</item>
+        <item>Decide by note type</item>
+    </string-array>
+    <string-array name="new_spread_labels">
+        <item>Mix new cards and reviews</item>
+        <item>New cards after reviews</item>
+        <item>New cards before reviews</item>
+    </string-array>
+    <string-array name="override_font_labels">
+        <item>When no font specified on flashcards</item>
+        <item>Always</item>
+    </string-array>
+    <string-array name="day_theme_labels">
+        <item>Light</item>
+        <item>Plain</item>
+    </string-array>
+    <string-array name="night_theme_labels">
+        <item>Black</item>
+        <item>Dark</item>
+    </string-array>
+    <string-array name="html_size_code_labels">
+        <item>xx-small</item>
+        <item>x-small</item>
+        <item>small</item>
+        <item>medium</item>
+        <item>large</item>
+        <item>x-large</item>
+        <item>xx-large</item>
+    </string-array>
+    <!--
+    #7794 - it\'s better to use @string references in non-translated arrays as this handles
+    changes in the array ordering better
+     -->
+    <string name="gesture_no_action">No action</string>
+    <string name="gesture_answer_1">Answer button 1</string>
+    <string name="gesture_answer_2">Answer button 2</string>
+    <string name="gesture_answer_3">Answer button 3</string>
+    <string name="gesture_answer_4">Answer button 4</string>
+    <string name="gesture_answer_green">Answer recommended (green)</string>
+    <string name="gesture_answer_better_recommended">Answer better than recommended</string>
+    <string name="gesture_tag_note">Tag note</string>
+    <string name="gesture_lookup">Lookup expression</string>
+    <string name="gesture_play">Play media</string>
+    <string name="gesture_abort_learning">Abort learning</string>
+    <string name="gesture_flag_red">Toggle Red Flag</string>
+    <string name="gesture_flag_orange">Toggle Orange Flag</string>
+    <string name="gesture_flag_green">Toggle Green Flag</string>
+    <string name="gesture_flag_blue">Toggle Blue Flag</string>
+    <string name="gesture_flag_remove">Remove Flag</string>
+    <string name="gesture_page_up">Page Up</string>
+    <string name="gesture_page_down">Page Down</string>
+    <string name="gesture_abort_sync">Abort Learning and Sync</string>
+    <string name="gesture_toggle_whiteboard">Toggle Whiteboard</string>
+    <string name="record_voice">Record Voice</string>
+    <string name="replay_voice">Replay Voice</string>
+</resources>

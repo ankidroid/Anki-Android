@@ -20,17 +20,17 @@
  
 <resources>
     <!--Fields-->
-    <string name="front_field_name">Aghaidh</string>
-    <string name="back_field_name">Cúl</string>
-    <string name="text_field_name" comment="Field\'s name in Cloze Note type">Téacs</string>
-    <string name="extra_field_name">Breise</string>
-    <string name="field_to_ask_front_name">Cuir an cúl leis</string>
+    <string name="front_field_name">ସାମ୍ନା</string>
+    <string name="back_field_name">ପଛ</string>
+    <string name="text_field_name" comment="Field\'s name in Cloze Note type">ଟେକ୍ସଟ୍</string>
+    <string name="extra_field_name">ଅତିରିକ୍ତ</string>
+    <string name="field_to_ask_front_name">ବିପରୀତ ଯୋଗ କରନ୍ତୁ</string>
     <!--Card type-->
-    <string name="card_n_name">Cárta %d</string>
+    <string name="card_n_name">କାର୍ଡ %d</string>
     <!--Note type-->
-    <string name="basic_model_name">Bunúsach</string>
-    <string name="cloze_model_name">Iomlánú</string>
-    <string name="basic_typing_model_name">Bunúsach (clóscríobh an freagra)</string>
-    <string name="forward_reverse_model_name">Bunúsach (agus cárta aisiompaithe)</string>
-    <string name="forward_optional_reverse_model_name">Bunúsach (cárta aisiompaithe roghnach)</string>
+    <string name="basic_model_name">ମୌଳିକ</string>
+    <string name="cloze_model_name">କ୍ଲୋଜ୍</string>
+    <string name="basic_typing_model_name">ମୌଳିକ (ଉତ୍ତର ଟାଇପ୍ କରନ୍ତୁ)</string>
+    <string name="forward_reverse_model_name">Basic (and reversed card)</string>
+    <string name="forward_optional_reverse_model_name">Basic (optional reversed card)</string>
 </resources>
