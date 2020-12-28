@@ -202,26 +202,15 @@ public class Template {
     }
 
     private @NonNull String render_unescaped(@NonNull String tag_name, @NonNull Map<String, String> context) {
-        String txt = get_or_attr(context, tag_name);
-        if (txt != null) {
-            // some field names could have colons in them
-            // avoid interpreting these as field modifiers
-            // better would probably be to put some restrictions on field names
-            return txt;
-        }
-
         // field modifiers
         List<String> parts = Arrays.asList(tag_name.split(":"));
-        List<String> mods;
-        String tag;
-        if (parts.size() == 1 || "".equals(parts.get(0))) {
-            return AnkiDroidApp.getAppResources().getString(R.string.unknown_field, tag_name);
-        } else {
-            mods = parts.subList(0, parts.size() - 1);
-            tag = parts.get(parts.size() - 1);
-        }
+        List<String> mods = parts.subList(0, parts.size() - 1);
+        String tag = parts.get(parts.size() - 1);
 
-        txt = get_or_attr(context, tag);
+        String txt = get_or_attr(context, tag);
+        if (txt == null) {
+            return AnkiDroidApp.getAppResources().getString(R.string.unknown_field, tag_name);
+        }
 
         // Since 'text:' and other mods can affect html on which Anki relies to
         // process clozes, we need to make sure clozes are always
@@ -254,7 +243,7 @@ public class Template {
             } else if ("type".equals(mod)) {
                 // type answer field; convert it to [[type:...]] for the gui code
                 // to process
-                return String.format(Locale.US, "[[%s]]", tag_name);
+                return String.format(Locale.US, "[[type:%s]]", tag);
             } else if (mod.startsWith("cq-") || mod.startsWith("ca-")) {
                 // cloze deletion
                 String[] split = mod.split("-");
@@ -296,9 +285,6 @@ public class Template {
                 } catch (Exception e) {
                     Timber.e(e, "Exception while running hook %s", mod);
                     return "Error in filter " + mod;
-                }
-                if (txt == null) {
-                    return AnkiDroidApp.getAppResources().getString(R.string.unknown_field, tag_name);
                 }
             }
         }
