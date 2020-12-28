@@ -16,6 +16,7 @@
 
 package com.ichi2.libanki.template;
 
+import com.ichi2.anki.R;
 import com.ichi2.anki.RobolectricTest;
 
 import org.hamcrest.Matchers;
@@ -53,7 +54,7 @@ public class TemplateTest extends RobolectricTest {
 
         String rendered = t.render();
 
-        assertThat(rendered, is("{unknown field !Front}"));
+        assertThat(rendered, is("{Unknown field !Front}"));
     }
     @Test
     public void typeInFieldRenders() {

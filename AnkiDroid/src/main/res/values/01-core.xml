@@ -193,4 +193,5 @@
     <string name="card_browser_context_menu" comment="The value which appears in the system context menu. Note the casing difference">Card Browser</string>
 
     <string name="context_menu_anki_card_label">Anki Card</string>
+    <string name="unknown_field">{Unknown field %s}</string>
 </resources>
