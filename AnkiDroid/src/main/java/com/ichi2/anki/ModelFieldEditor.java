@@ -45,7 +45,7 @@ import com.ichi2.utils.JSONException;
 import com.ichi2.utils.JSONObject;
 
 
-
+import java.util.Arrays;
 import java.util.List;
 import java.util.ArrayList;
 import java.util.Locale;
@@ -178,6 +178,14 @@ public class ModelFieldEditor extends AnkiActivity implements LocaleSelectionDia
     private @Nullable String _uniqueName(@NonNull EditText mFieldNameInput) {
         String input = mFieldNameInput.getText().toString()
                 .replaceAll("[\\n\\r{}:\"]", "");
+        // The number of #, ^, /, space, tab, starting the input
+        int offset;
+        for (offset = 0; offset < input.length(); offset++) {
+            if (!Arrays.asList('#', '^', '/',' ', '\t').contains(input.charAt(offset))) {
+                break;
+            }
+        }
+        input = input.substring(offset).trim();
         if (input.length() == 0) {
             UIUtils.showThemedToast(this, getResources().getString(R.string.toast_empty_name), true);
             return null;
