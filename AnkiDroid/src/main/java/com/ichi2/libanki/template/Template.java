@@ -50,28 +50,24 @@ import timber.log.Timber;
  */
 @SuppressWarnings({"PMD.AvoidReassigningParameters","PMD.NPathComplexity","PMD.MethodNamingConventions"})
 public class Template {
+
     public static final String clozeReg = "(?si)\\{\\{(c)%s::(.*?)(::(.*?))?\\}\\}";
     public static final String CLOZE_DELETION_REPLACEMENT = "[...]";
 
     private static final Pattern fHookFieldMod = Pattern.compile("^(.*?)(?:\\((.*)\\))?$");
 
     // Opening tag delimiter
-    private static final String sOtag = Pattern.quote("{{");
+    protected static final String sOtag = Pattern.quote("{{");
 
     // Closing tag delimiter
-    private static final String sCtag = Pattern.quote("}}");
+    protected static final String sCtag = Pattern.quote("}}");
+
+    public static final Pattern sTag_re = Pattern.compile(sOtag + "([#=&>{])?(.+?)\\1?" + sCtag + "+");
 
     // The regular expression used to find a #section
     private static final Pattern sSection_re = Pattern.compile(sOtag + "[#^]([^}]*)" + sCtag + "(.+?)" + sOtag + "/\\1" + sCtag, Pattern.MULTILINE | Pattern.DOTALL);
 
     // The regular expression used to find a tag.
-    private static final Pattern sTag_re = Pattern.compile(sOtag + "([#=&>{])?(.+?)\\1?" + sCtag + "+");
-
-    // MathJax opening delimiters
-    private static final String[] sMathJaxOpenings = {"\\(", "\\["};
-
-    // MathJax closing delimiters
-    private static final String[] sMathJaxClosings = {"\\)", "\\]"};
 
     private final String mTemplate;
     private final Map<String, String> mContext;
@@ -338,34 +334,6 @@ public class Template {
         return txt.replaceAll(String.format(Locale.US, clozeReg, "\\d+"), "$2");
     }
 
-    public static boolean textContainsMathjax(@NonNull String txt) {
-        // Do you have the first opening and then the first closing,
-        // or the second opening and the second closing...?
-
-        //This assumes that the openings and closings are the same length.
-
-        String opening;
-        String closing;
-        for (int i = 0; i < sMathJaxOpenings.length; i++) {
-            opening = sMathJaxOpenings[i];
-            closing = sMathJaxClosings[i];
-
-            //What if there are more than one thing?
-            //Let's look for the first opening, and the last closing, and if they're in the right order,
-            //we are good.
-
-            int first_opening_index = txt.indexOf(opening);
-            int last_closing_index = txt.lastIndexOf(closing);
-
-            if (first_opening_index != -1
-                    && last_closing_index != -1
-                    && first_opening_index < last_closing_index)
-            {
-                return true;
-            }
-        }
-        return false;
-    }
 
     /**
      * Marks all clozes within MathJax to prevent formatting them.

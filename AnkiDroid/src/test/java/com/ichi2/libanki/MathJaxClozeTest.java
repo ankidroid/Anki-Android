@@ -3,6 +3,7 @@ package com.ichi2.libanki;
 import android.content.Context;
 
 import com.ichi2.anki.RobolectricTest;
+import com.ichi2.libanki.template.MathJax;
 import com.ichi2.libanki.template.Template;
 
 import org.junit.Test;
@@ -112,12 +113,12 @@ public class MathJaxClozeTest extends RobolectricTest {
     @Test
     public void textContainsMathjax()
     {
-        assertFalse(Template.textContainsMathjax("Hello world."));
-        assertFalse(Template.textContainsMathjax(""));
-        assertTrue(Template.textContainsMathjax("This is an inline! \\(1 \\div 2 =\\){{c1::\\(\\frac{1}{2}\\)}}"));
-        assertTrue(Template.textContainsMathjax("This is two inlines! \\(1 \\div 2 =\\)\\(1 \\div 2 \\)"));
-        assertTrue(Template.textContainsMathjax("This is an block equation! \\[1 \\div 2 = 1 \\div 2 \\]"));
-        assertFalse(Template.textContainsMathjax("This has mismatched brackets! \\[1 \\div 2 = 1 \\div 2 \\)"));
-        assertFalse(Template.textContainsMathjax("This has mismatched brackets too! \\(1 \\div 2 = 1 \\div 2 \\]"));
+        assertFalse(MathJax.textContainsMathjax("Hello world."));
+        assertFalse(MathJax.textContainsMathjax(""));
+        assertTrue(MathJax.textContainsMathjax("This is an inline! \\(1 \\div 2 =\\){{c1::\\(\\frac{1}{2}\\)}}"));
+        assertTrue(MathJax.textContainsMathjax("This is two inlines! \\(1 \\div 2 =\\)\\(1 \\div 2 \\)"));
+        assertTrue(MathJax.textContainsMathjax("This is an block equation! \\[1 \\div 2 = 1 \\div 2 \\]"));
+        assertFalse(MathJax.textContainsMathjax("This has mismatched brackets! \\[1 \\div 2 = 1 \\div 2 \\)"));
+        assertFalse(MathJax.textContainsMathjax("This has mismatched brackets too! \\(1 \\div 2 = 1 \\div 2 \\]"));
     }
 }
