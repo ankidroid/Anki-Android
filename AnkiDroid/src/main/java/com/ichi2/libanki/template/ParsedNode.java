@@ -15,6 +15,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.WeakHashMap;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -48,6 +49,10 @@ public abstract class ParsedNode {
     public abstract void render_into(Map<String, String> fields, Set<String> nonempty_fields, StringBuilder builder) throws TemplateError;
 
 
+    /**
+     * Associate to each template its node, or the error it generates
+     */
+    private static WeakHashMap<String, Pair<ParsedNode, TemplateError>> parse_inner_cache = new WeakHashMap<>();
 
     /**
      * @param template A question or answer template
@@ -55,7 +60,21 @@ public abstract class ParsedNode {
      * @throws TemplateError if the template is not valid
      */
     public static @NonNull ParsedNode parse_inner(@NonNull String template) throws TemplateError{
-        return parse_inner(new Tokenizer(template));
+        if (!parse_inner_cache.containsKey(template)) {
+            Pair<ParsedNode, TemplateError> res;
+            try {
+                ParsedNode node = parse_inner(new Tokenizer(template));
+                res = new Pair<>(node, null);
+            } catch (TemplateError er) {
+                res = new Pair<>(null, er);
+            }
+            parse_inner_cache.put(template, res);
+        }
+        Pair<ParsedNode, TemplateError> res = parse_inner_cache.get(template);
+        if (res.first != null) {
+            return res.first;
+        }
+        throw res.second;
     }
 
     /**

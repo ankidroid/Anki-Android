@@ -78,7 +78,7 @@ public class Model extends JSONObject {
         List<String> fieldNames = getFieldsNames();
         Set<String> nonemptyFields = new HashSet<>(sfld.length);
         for (int i = 0; i < sfld.length; i++) {
-            if (!TextUtils.isEmpty(Utils.stripHTMLMedia(sfld[i]).trim())) {
+            if (!TextUtils.isEmpty(sfld[i].trim())) {
                 nonemptyFields.add(fieldNames.get(i));
             }
         }
