@@ -1450,7 +1450,7 @@ public class Collection {
 
         executeIntegrityTask.consume(this::deleteNotesWithMissingModel);
         // for each model
-        for (JSONObject m : getModels().all()) {
+        for (Model m : getModels().all()) {
             executeIntegrityTask.consume((callback) -> deleteCardsWithInvalidModelOrdinals(callback, m));
             executeIntegrityTask.consume((callback) -> deleteNotesWithWrongFieldCounts(callback, m));
         }
@@ -1838,7 +1838,7 @@ public class Collection {
     }
 
 
-    private ArrayList<String> deleteCardsWithInvalidModelOrdinals(Runnable notifyProgress, JSONObject m) throws JSONException {
+    private ArrayList<String> deleteCardsWithInvalidModelOrdinals(Runnable notifyProgress, Model m) throws JSONException {
         Timber.d("deleteCardsWithInvalidModelOrdinals()");
         ArrayList<String> problems = new ArrayList<>(1);
         notifyProgress.run();

@@ -713,7 +713,7 @@ public class Finder {
         }
         // search for template names
         List<String> lims = new ArrayList<>();
-        for (JSONObject m : mCol.getModels().all()) {
+        for (Model m : mCol.getModels().all()) {
             JSONArray tmpls = m.getJSONArray("tmpls");
             for (JSONObject t: tmpls.jsonObjectIterable()) {
                 String templateName = t.getString("name");

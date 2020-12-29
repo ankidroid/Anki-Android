@@ -108,6 +108,7 @@ import com.ichi2.async.TaskListener;
 import com.ichi2.async.TaskManager;
 import com.ichi2.compat.CompatHelper;
 import com.ichi2.libanki.Decks;
+import com.ichi2.libanki.Model;
 import com.ichi2.libanki.sched.AbstractSched;
 import com.ichi2.libanki.Card;
 import com.ichi2.libanki.Collection;
@@ -2177,7 +2178,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
      * getAnswerFormat returns the answer part of this card's template as entered by user, without any parsing
      */
     public String getAnswerFormat() {
-        JSONObject model = mCurrentCard.model();
+        Model model = mCurrentCard.model();
         JSONObject template;
         if (model.isStd()) {
             template = model.getJSONArray("tmpls").getJSONObject(mCurrentCard.getOrd());
