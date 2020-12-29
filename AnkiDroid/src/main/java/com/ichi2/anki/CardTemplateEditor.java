@@ -223,7 +223,7 @@ public class CardTemplateEditor extends AnkiActivity implements DeckSelectionDia
     /** When a deck is selected via Deck Override */
     @Override
     public void onDeckSelected(@Nullable SelectableDeck deck) {
-        if (Models.isCloze(getTempModel().getModel())) {
+        if (getTempModel().getModel().isCloze()) {
             Timber.w("Attempted to set deck for cloze model");
             UIUtils.showThemedToast(this, getString(R.string.multimedia_editor_something_wrong), true);
             return;
@@ -547,7 +547,7 @@ public class CardTemplateEditor extends AnkiActivity implements DeckSelectionDia
 
         private void displayDeckOverrideDialog(Collection col, TemporaryModel tempModel) {
             AnkiActivity activity = (AnkiActivity) requireActivity();
-            if (Models.isCloze(tempModel.getModel())) {
+            if (tempModel.getModel().isCloze()) {
                 UIUtils.showThemedToast(activity, getString(R.string.multimedia_editor_something_wrong), true);
                 return;
             }

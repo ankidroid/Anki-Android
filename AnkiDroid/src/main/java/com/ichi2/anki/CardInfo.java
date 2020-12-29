@@ -388,7 +388,7 @@ public class CardInfo extends AnkiActivity {
         protected static String getCardType(Card c, Model model) {
             try {
                 int ord = c.getOrd();
-                if (Models.isCloze(c.model())) {
+                if (c.model().isCloze()) {
                     ord = 0;
                 }
                 return model.getJSONArray("tmpls").getJSONObject(ord).getString("name");

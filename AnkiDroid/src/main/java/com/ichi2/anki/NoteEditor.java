@@ -1927,7 +1927,7 @@ public class NoteEditor extends AnkiActivity {
         mToolbar.clearCustomItems();
 
         View clozeIcon = mToolbar.getClozeIcon();
-        if (Models.isCloze(mEditorNote.model())) {
+        if (mEditorNote.model().isCloze()) {
             Toolbar.TextFormatter clozeFormatter = s -> {
                 Toolbar.TextWrapper.StringFormat stringFormat = new Toolbar.TextWrapper.StringFormat();
                 String prefix = "{{c" + getNextClozeIndex() + "::";
