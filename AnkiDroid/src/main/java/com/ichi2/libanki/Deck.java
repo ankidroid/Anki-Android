@@ -39,4 +39,12 @@ public class Deck extends JSONObject {
         Deck clone = new Deck();
         return deepClonedInto(clone);
     }
+
+    public boolean isDyn() {
+        return getInt("dyn") == Consts.DECK_DYN;
+    }
+
+    public boolean isStd() {
+        return getInt("dyn") == Consts.DECK_STD;
+    }
 }

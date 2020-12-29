@@ -433,7 +433,7 @@ public class CustomStudyDialog extends AnalyticsDialogFragment {
         Deck cur = col.getDecks().byName(customStudyDeck);
         if (cur != null) {
             Timber.i("Found deck: '%s'", customStudyDeck);
-            if (cur.getInt("dyn") == Consts.DECK_STD) {
+            if (cur.isStd()) {
                 Timber.w("Deck: '%s' was non-dynamic", customStudyDeck);
                 UIUtils.showThemedToast(getActivity(), getString(R.string.custom_study_deck_exists), true);
                 return;
