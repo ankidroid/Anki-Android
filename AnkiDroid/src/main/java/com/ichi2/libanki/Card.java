@@ -323,7 +323,7 @@ public class Card implements Cloneable {
 
 
     public JSONObject template() {
-        JSONObject m = model();
+        Model m = model();
         if (m.isStd()) {
             return m.getJSONArray("tmpls").getJSONObject(mOrd);
         } else {

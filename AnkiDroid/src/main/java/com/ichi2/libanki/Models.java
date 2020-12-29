@@ -1270,7 +1270,7 @@ public class Models {
 		return (count == 0);
 	}
 
-	public static boolean isCloze(JSONObject model) {
+	public static boolean isCloze(Model model) {
 	    return model.isCloze();
     }
 }
