@@ -1044,7 +1044,7 @@ public class Models {
                     avail.add(i);
                 }
             } catch (TemplateError er) {
-                Timber.d("Card %d not generated because of template error %s.", i, er);
+                Timber.d(er, "Card %d not generated because of template error.", i);
             }
         }
         return avail;
