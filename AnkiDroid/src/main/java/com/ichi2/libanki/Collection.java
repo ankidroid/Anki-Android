@@ -793,6 +793,10 @@ public class Collection {
         HashMap<Long, Long> dids = new HashMap<>(nbCount);
         // For each note, an arbitrary due of one of its due card processed, if any exists
         HashMap<Long, Long> dues = new HashMap<>(nbCount);
+        List<ParsedNode> nodes = null;
+        if (model.getInt("type") != Consts.MODEL_CLOZE) {
+            nodes = model.parsedNodes();
+        }
         try (Cursor cur = mDb.query("select id, nid, ord, (CASE WHEN odid != 0 THEN odid ELSE did END), (CASE WHEN odid != 0 THEN odue ELSE due END), type from cards where nid in " + snids)) {
             while (cur.moveToNext()) {
                 if (isCancelled(task)) {
@@ -840,7 +844,7 @@ public class Collection {
                 }
                 @NonNull Long nid = cur.getLong(0);
                 String flds = cur.getString(1);
-                ArrayList<Integer> avail = Models.availOrds(model, Utils.splitFields(flds));
+                ArrayList<Integer> avail = Models.availOrds(model, Utils.splitFields(flds), nodes);
                 if (task != null) {
                     task.doProgress(avail.size());
                 }
