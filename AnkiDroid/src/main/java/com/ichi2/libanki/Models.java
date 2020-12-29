@@ -1024,7 +1024,15 @@ public class Models {
     /**
      * @param m A model
      * @param sfld Fields of a note
+     * @param nodes Nodes used for parsing the variaous templates. Null for cloze
      * @return The index of the cards that are generated. For cloze cards, if no card is generated, then {0} */
+    public static ArrayList<Integer> availOrds(Model m, String[] sfld, List<ParsedNode> nodes) {
+        if (m.getInt("type") == Consts.MODEL_CLOZE) {
+            return _availClozeOrds(m, sfld);
+        }
+        return _availStandardOrds(m, sfld, nodes);
+    }
+
     public static ArrayList<Integer> availOrds(Model m, String[] sfld) {
         if (m.isCloze()) {
             return _availClozeOrds(m, sfld);
@@ -1032,19 +1040,18 @@ public class Models {
         return _availStandardOrds(m, sfld);
     }
 
-    /** Given a joined field string and a standard note type, return available template ordinals */
     public static ArrayList<Integer> _availStandardOrds(Model m, String[] sfld) {
+        return _availStandardOrds(m, sfld, m.parsedNodes());
+    }
+
+    /** Given a joined field string and a standard note type, return available template ordinals */
+    public static ArrayList<Integer> _availStandardOrds(Model m, String[] sfld, List<ParsedNode> nodes) {
         Set<String> nonEmptyFields = m.nonEmptyFields(sfld);
-        JSONArray tmpls = m.getJSONArray("tmpls");
-        ArrayList<Integer> avail = new ArrayList<>(tmpls.length());
-        for (int i = 0 ; i < tmpls.length(); i++) {
-            JSONObject tmpl = tmpls.getJSONObject(i);
-            try {
-                if (!emptyStandardCard(tmpl, nonEmptyFields)) {
-                    avail.add(i);
-                }
-            } catch (TemplateError er) {
-                Timber.d(er, "Card %d not generated because of template error.", i);
+        ArrayList<Integer> avail = new ArrayList<>(nodes.size());
+        for (int i = 0 ; i < nodes.size(); i++) {
+            ParsedNode node = nodes.get(i);
+            if (node != null && !node.template_is_empty(nonEmptyFields)) {
+                avail.add(i);
             }
         }
         return avail;
