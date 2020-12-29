@@ -718,7 +718,7 @@ public class Collection {
      */
     private ArrayList<JSONObject> _tmplsFromOrds(Model model, ArrayList<Integer> avail) {
         JSONArray tmpls;
-        if (model.getInt("type") == Consts.MODEL_STD) {
+        if (model.isStd()) {
             tmpls = model.getJSONArray("tmpls");
             ArrayList<JSONObject> ok = new ArrayList<>(avail.size());
             for (Integer ord : avail) {
@@ -1122,7 +1122,7 @@ public class Collection {
         fields.put("Subdeck", baseName);
         fields.put("CardFlag", _flagNameFromCardFlags(flags));
         JSONObject template;
-        if (model.getInt("type") == Consts.MODEL_STD) {
+        if (model.isStd()) {
             template = model.getJSONArray("tmpls").getJSONObject(ord);
         } else {
             template = model.getJSONArray("tmpls").getJSONObject(0);
@@ -1154,7 +1154,7 @@ public class Collection {
             }
             d.put(type, html);
             // empty cloze?
-            if ("q".equals(type) && model.getInt("type") == Consts.MODEL_CLOZE) {
+            if ("q".equals(type) && model.isCloze()) {
                 if (Models._availClozeOrds(model, flist, false).size() == 0) {
                     String link = String.format("<a href=%s#cloze>%s</a>", Consts.HELP_SITE, "help");
                     d.put("q", mContext.getString(R.string.empty_cloze_warning, link));
@@ -1842,7 +1842,7 @@ public class Collection {
         Timber.d("deleteCardsWithInvalidModelOrdinals()");
         ArrayList<String> problems = new ArrayList<>(1);
         notifyProgress.run();
-        if (m.getInt("type") == Consts.MODEL_STD) {
+        if (m.isStd()) {
             JSONArray tmpls = m.getJSONArray("tmpls");
             ArrayList<Integer> ords = new ArrayList<>(tmpls.length());
             for (JSONObject tmpl: tmpls.jsonObjectIterable()) {

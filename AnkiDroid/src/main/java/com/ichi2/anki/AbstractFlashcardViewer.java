@@ -2179,7 +2179,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
     public String getAnswerFormat() {
         JSONObject model = mCurrentCard.model();
         JSONObject template;
-        if (model.getInt("type") == Consts.MODEL_STD) {
+        if (model.isStd()) {
             template = model.getJSONArray("tmpls").getJSONObject(mCurrentCard.getOrd());
         } else {
             template = model.getJSONArray("tmpls").getJSONObject(0);

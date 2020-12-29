@@ -311,7 +311,7 @@ public class Media {
         List<String> l = new ArrayList<>();
         Model model = mCol.getModels().get(mid);
         List<String> strings = new ArrayList<>();
-        if (model.getInt("type") == Consts.MODEL_CLOZE && string.contains("{{c")) {
+        if (model.isCloze() && string.contains("{{c")) {
             // if the field has clozes in it, we'll need to expand the
             // possibilities so we can render latex
             strings = _expandClozes(string);

@@ -958,7 +958,7 @@ public class Models {
      */
 
     private void _updateRequired(Model m) {
-        if (m.getInt("type") == Consts.MODEL_CLOZE) {
+        if (m.isCloze()) {
             // nothing to do
             return;
         }
@@ -1025,7 +1025,7 @@ public class Models {
      * @return Whether this card is empty
      */
     public static boolean emptyCard(Model m, int ord, String[] sfld) {
-        if (m.getInt("type") == Consts.MODEL_CLOZE) {
+        if (m.isCloze()) {
             // For cloze, getting the list of cloze numbes is linear in the size of the template
             // So computing the full list is almost as efficient as checking for a particular number
             return !_availClozeOrds(m, sfld, false).contains(ord);
@@ -1085,7 +1085,7 @@ public class Models {
      * @param sfld Fields of a note
      * @return The index of the cards that are generated. For cloze cards, if no card is generated, then {0} */
     public static ArrayList<Integer> availOrds(Model m, String[] sfld) {
-        if (m.getInt("type") == Consts.MODEL_CLOZE) {
+        if (m.isCloze()) {
             return _availClozeOrds(m, sfld);
         }
         return _availStandardOrds(m, sfld);
@@ -1271,6 +1271,6 @@ public class Models {
 	}
 
 	public static boolean isCloze(JSONObject model) {
-	    return model.getInt("type") == Consts.MODEL_CLOZE;
+	    return model.isCloze();
     }
 }
