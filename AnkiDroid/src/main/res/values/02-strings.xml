@@ -365,4 +365,8 @@
     <string name="note_editor_capitalize" comment="This is for a switch with a checkbox - on: enabled">Capitalize sentences</string>
 
     <string name="error_listing_addons">Error in listing addons</string>
+    <string name="install_js_addon">Import Addon</string>
+    <string name="not_valid_jsaddon">Not a valid .jsaddon file</string>
+    <string name="importing_addon">Importing addon</string>
+    <string name="confirm_remove_addon">Do you want to remove %s ?</string>
 </resources>

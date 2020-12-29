@@ -293,6 +293,9 @@ public class Template {
                     case "furigana" :
                         txt = FuriganaFilters.furiganaFilter(txt);
                         break;
+                    case "Deck":
+                        txt = "Hello";
+                            break;
                     default :
                         break;
                     }

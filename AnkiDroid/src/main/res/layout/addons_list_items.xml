@@ -12,7 +12,7 @@
 
         <TextView
             android:id="@+id/addon_name"
-            android:layout_width="260dp"
+            android:layout_width="270dp"
             android:layout_height="wrap_content"
             android:padding="4dp"
             android:singleLine="true"

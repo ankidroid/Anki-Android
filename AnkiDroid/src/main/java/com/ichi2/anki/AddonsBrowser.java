@@ -1,8 +1,11 @@
 package com.ichi2.anki;
 
+import android.app.Activity;
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
-import android.widget.ImageButton;
-import android.widget.Switch;
+import android.view.Menu;
+import android.view.MenuItem;
 
 import com.ichi2.anki.widgets.DeckDropDownAdapter;
 import com.ichi2.themes.Themes;
@@ -10,21 +13,33 @@ import com.ichi2.themes.Themes;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.BufferedInputStream;
 import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.zip.ZipEntry;
+import java.util.zip.ZipInputStream;
 
-import androidx.recyclerview.widget.DividerItemDecoration;
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.ActionBar;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import timber.log.Timber;
 
+@SuppressWarnings("deprecation")
 public class AddonsBrowser extends NavigationDrawerActivity implements DeckDropDownAdapter.SubtitleListener {
 
     private RecyclerView addonsList;
+    @Nullable
+    private Menu mActionBarMenu;
+    private MenuItem mInstallAddon;
+    private int ADDON_REQUEST_CODE = 100;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -114,4 +129,98 @@ public class AddonsBrowser extends NavigationDrawerActivity implements DeckDropD
     public void onBackPressed() {
         super.onBackPressed();
     }
+
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        mActionBarMenu = menu;
+        getMenuInflater().inflate(R.menu.addon_browser, menu);
+        mInstallAddon = menu.findItem(R.id.action_install_addon);
+        mInstallAddon.setOnMenuItemClickListener(item -> {
+
+            Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
+            intent.setType("*/*");
+            intent = Intent.createChooser(intent, "Choose a file");
+            startActivityForResult(intent, ADDON_REQUEST_CODE);
+
+            return true;
+        });
+        return super.onCreateOptionsMenu(menu);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if (requestCode == ADDON_REQUEST_CODE) {
+            if(resultCode == Activity.RESULT_OK){
+                Uri selectedFileuri = data.getData();
+
+                // Getting addon file path using RealPathUtil
+                String addonFilePath = RealPathUtil.getRealPath(this, selectedFileuri);
+
+                if (addonFilePath.endsWith(".jsaddon")) {
+                    try {
+                        startInstallAddon(addonFilePath);
+                    } catch (IOException e) {
+                        Timber.e(e.getLocalizedMessage(), "AddonBrowser::onActivityResult");
+                    }
+                } else {
+                    UIUtils.showThemedToast(this, getString(R.string.not_valid_jsaddon), false);
+                }
+            }
+        }
+    }
+
+
+    private void startInstallAddon(String addonFile) throws IOException {
+        File file = new File(addonFile);
+
+        String currentAnkiDroidDirectory = CollectionHelper.getCurrentAnkiDroidDirectory(this);
+        File addonsDir = new File(currentAnkiDroidDirectory, "addons" );
+
+        // Extract .jsaddon zip file to AnkiDroid/addons folder
+        unzip(file, addonsDir);
+        UIUtils.showThemedToast(this, getString(R.string.importing_addon), false);
+    }
+
+
+    // https://stackoverflow.com/questions/3382996/how-to-unzip-files-programmatically-in-android/27050680#27050680
+    // Extract .jsaddon zip file
+    public static void unzip(File zipFile, File targetDirectory) throws IOException {
+        ZipInputStream zis = new ZipInputStream(new BufferedInputStream(new FileInputStream(zipFile)));
+
+        try {
+            ZipEntry ze;
+            int count;
+            byte[] buffer = new byte[8192];
+
+            while ((ze = zis.getNextEntry()) != null) {
+
+                File file = new File(targetDirectory, ze.getName());
+                File dir = ze.isDirectory() ? file : file.getParentFile();
+
+                if (!dir.isDirectory() && !dir.mkdirs()) {
+                    throw new FileNotFoundException("Failed to ensure directory: " + dir.getAbsolutePath());
+                }
+
+                if (ze.isDirectory()) {
+                    continue;
+                }
+
+                FileOutputStream fout = new FileOutputStream(file);
+
+                try {
+                    while ((count = zis.read(buffer)) != -1) {
+                        fout.write(buffer, 0, count);
+                    }
+                } finally {
+                    fout.close();
+                }
+            }
+        } finally {
+            zis.close();
+        }
+    }
+
 }

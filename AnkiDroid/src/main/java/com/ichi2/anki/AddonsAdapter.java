@@ -1,17 +1,18 @@
 package com.ichi2.anki;
 
+import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.SharedPreferences;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
-import android.widget.PopupWindow;
 import android.widget.Switch;
 import android.widget.TextView;
 
-import java.util.ArrayList;
+import java.io.File;
 import java.util.List;
 
 import androidx.annotation.NonNull;
@@ -81,8 +82,53 @@ public class AddonsAdapter extends RecyclerView.Adapter<AddonsAdapter.AddonsView
         });
 
         holder.addonDelete.setOnClickListener(v -> {
-            // Confirm delete, remove file and folder of respective addon
-            // TO-DO
+
+            String currentAnkiDroidDirectory = CollectionHelper.getCurrentAnkiDroidDirectory(context);
+            File addonsDir = new File(currentAnkiDroidDirectory, "addons" );
+
+            AlertDialog.Builder alertBuilder = new AlertDialog.Builder(context);
+            alertBuilder.setTitle(addonModel.getName());
+            alertBuilder.setMessage(context.getString(R.string.confirm_remove_addon, addonModel.getName()));
+            alertBuilder.setCancelable(true);
+
+            alertBuilder.setPositiveButton(
+                    context.getString(R.string.dialog_ok),
+                    new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int id)
+                        {
+                            // js addon id same as folder name, remove the folder
+                            File dir = new File(addonsDir, addonModel.getId());
+
+                            if (dir.exists() && dir.isDirectory())
+                            {
+                                String[] children = dir.list();
+                                for (int i = 0; i < children.length; i++)
+                                {
+                                    new File(dir, children[i]).delete();
+                                }
+
+                                dir.delete();
+                            }
+
+                            addonModels.remove(position);
+                            notifyItemRemoved(position);
+                            notifyItemRangeChanged(position, addonModels.size());
+                            notifyDataSetChanged();
+
+                        }
+                    });
+
+            alertBuilder.setNegativeButton(
+                    context.getString(R.string.dialog_cancel),
+                    new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int id) {
+                            dialog.cancel();
+                        }
+                    });
+
+            AlertDialog deleteAlert = alertBuilder.create();
+            deleteAlert.show();
+
         });
     }
 
