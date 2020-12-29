@@ -56,4 +56,12 @@ public class Model extends JSONObject {
     public List<String> getTemplatesNames() {
         return getJSONArray("tmpls").toStringList("name");
     }
+
+    public boolean isStd() {
+        return getInt("type") == Consts.MODEL_STD;
+    }
+
+    public boolean isCloze() {
+        return getInt("type") == Consts.MODEL_CLOZE;
+    }
 }

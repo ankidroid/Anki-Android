@@ -719,7 +719,7 @@ public class Finder {
                 String templateName = t.getString("name");
                 Normalizer.normalize(templateName, Normalizer.Form.NFC);
                 if (templateName.equalsIgnoreCase(val)) {
-                    if (m.getInt("type") == Consts.MODEL_CLOZE) {
+                    if (m.isCloze()) {
                         // if the user has asked for a cloze card, we want
                         // to give all ordinals, so we just limit to the
                         // model instead

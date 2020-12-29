@@ -431,7 +431,7 @@ public class CardTemplateEditor extends AnkiActivity implements DeckSelectionDia
             menu.clear();
             inflater.inflate(R.menu.card_template_editor, menu);
 
-            if (mTemplateEditor.getTempModel().getModel().getInt("type") == Consts.MODEL_CLOZE) {
+            if (mTemplateEditor.getTempModel().getModel().isCloze()) {
                 Timber.d("Editing cloze model, disabling add/delete card template and deck override functionality");
                 menu.findItem(R.id.action_add).setVisible(false);
                 menu.findItem(R.id.action_add_deck_override).setVisible(false);
