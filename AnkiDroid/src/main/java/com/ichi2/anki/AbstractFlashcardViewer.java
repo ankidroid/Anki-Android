@@ -2451,6 +2451,9 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
         }
 
         String addonsContent = getEnabledAddonsContent();
+        if (addonsContent == null) {
+            addonsContent = "";
+        }
         final String cardContent = mCardContent + addonsContent;
 
         processCardAction(cardWebView -> loadContentIntoCard(cardWebView, cardContent));
