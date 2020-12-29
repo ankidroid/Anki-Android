@@ -580,7 +580,7 @@ public class NoteEditor extends AnkiActivity {
             long thisDid = d.getLong("id");
             String currentName = d.getString("name");
             String lineContent = null;
-            if (d.getInt("dyn") == Consts.DECK_STD) {
+            if (d.isStd()) {
                 lineContent = currentName ;
             } else if (!mAddNote && mCurrentEditedCard != null && mCurrentEditedCard.getDid() == thisDid) {
                 lineContent = getApplicationContext().getString(R.string.current_and_default_deck, currentName, col.getDecks().name(mCurrentEditedCard.getODid()));

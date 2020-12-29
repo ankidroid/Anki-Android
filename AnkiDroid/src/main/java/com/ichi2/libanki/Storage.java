@@ -198,7 +198,7 @@ public class Storage {
             if (ver < 11) {
                 col.modSchemaNoCheck();
                 for (Deck d : col.getDecks().all()) {
-                    if (d.getInt("dyn") == Consts.DECK_DYN) {
+                    if (d.isDyn()) {
                         int order = d.getInt("order");
                         // failed order was removed
                         if (order >= 5) {
