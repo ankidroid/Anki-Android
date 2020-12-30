@@ -1,36 +1,42 @@
 package com.ichi2.anki;
 
-import android.app.Activity;
+import android.app.Dialog;
+import android.app.DownloadManager;
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
+import android.database.Cursor;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
+import android.os.Environment;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.Button;
+import android.widget.EditText;
 
 import com.ichi2.anki.widgets.DeckDropDownAdapter;
 import com.ichi2.themes.Themes;
 
 import org.json.JSONException;
 import org.json.JSONObject;
+import org.rauschig.jarchivelib.Archiver;
+import org.rauschig.jarchivelib.ArchiverFactory;
 
-import java.io.BufferedInputStream;
 import java.io.BufferedReader;
 import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.zip.ZipEntry;
-import java.util.zip.ZipInputStream;
 
 import androidx.annotation.Nullable;
-import androidx.appcompat.app.ActionBar;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import timber.log.Timber;
+
+import static com.ichi2.anim.ActivityTransitionAnimation.Direction.RIGHT;
 
 @SuppressWarnings("deprecation")
 public class AddonsBrowser extends NavigationDrawerActivity implements DeckDropDownAdapter.SubtitleListener {
@@ -39,7 +45,13 @@ public class AddonsBrowser extends NavigationDrawerActivity implements DeckDropD
     @Nullable
     private Menu mActionBarMenu;
     private MenuItem mInstallAddon;
-    private int ADDON_REQUEST_CODE = 100;
+
+    private long queueId;
+    DownloadManager downloadManager;
+
+    private String currentAnkiDroidDirectory;
+    private File addonsHomeDir;
+    private Dialog downloadDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,67 +67,15 @@ public class AddonsBrowser extends NavigationDrawerActivity implements DeckDropD
         // Add a home button to the actionbar
         getSupportActionBar().setHomeButtonEnabled(true);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        showBackIcon();
         setTitle(getResources().getText(R.string.addons));
 
         addonsList = (RecyclerView) findViewById(R.id.addons);
         addonsList.setLayoutManager(new LinearLayoutManager(this));
+        downloadDialog = new Dialog(this);
 
-        String currentAnkiDroidDirectory = CollectionHelper.getCurrentAnkiDroidDirectory(this);
-        File addonsDir = new File(currentAnkiDroidDirectory, "addons" );
+        listAddonsFromDir();
 
-        boolean success = true;
-        if (!addonsDir.exists()) {
-            success = addonsDir.mkdirs();
-        }
-
-        List<AddonModel> addonsNames = new ArrayList<AddonModel>();
-
-        if (success) {
-            File directory = new File(String.valueOf(addonsDir));
-            File[] files = directory.listFiles();
-            for (int i = 0; i < files.length; i++) {
-                Timber.d("Addons:%s", files[i].getName());
-
-                File addonsFiles = new File(files[i], "manifest.json" );
-
-                AddonModel addonModel;
-
-                if (addonsFiles.exists()) {
-                   Timber.d("Exist");
-
-                   try {
-                       FileReader fileReader = new FileReader(addonsFiles);
-                       BufferedReader bufferedReader = new BufferedReader(fileReader);
-                       StringBuilder stringBuilder = new StringBuilder();
-                       String line = bufferedReader.readLine();
-                       while (line != null){
-                           stringBuilder.append(line).append("\n");
-                           line = bufferedReader.readLine();
-                       }
-                       bufferedReader.close();
-
-                       String response = stringBuilder.toString();
-
-                       JSONObject jsonObject  = new JSONObject(response);
-                       String addonId = jsonObject.optString("id", "");
-                       String addonName = jsonObject.optString("name", "");
-                       String addonVersion = jsonObject.optString("version", "");
-                       String addonDev = jsonObject.optString("developer", "");
-                       String addonAnkiDroidAPI = jsonObject.optString("ankidroid_api", "");
-
-                       addonModel = new AddonModel(addonId, addonName, addonVersion, addonDev, addonAnkiDroidAPI);
-                       addonsNames.add(addonModel);
-                   } catch (IOException | JSONException e) {
-                       e.printStackTrace();
-                   }
-                }
-            }
-
-            addonsList.setAdapter(new AddonsAdapter(addonsNames));
-            hideProgressBar();
-        } else {
-            UIUtils.showThemedToast(this, getString(R.string.error_listing_addons), true);
-        }
     }
 
 
@@ -124,10 +84,14 @@ public class AddonsBrowser extends NavigationDrawerActivity implements DeckDropD
         return getResources().getString(R.string.addons);
     }
 
-
     @Override
     public void onBackPressed() {
         super.onBackPressed();
+        finishWithAnimation(RIGHT);
+
+        if (downloadDialog.isShowing()) {
+            downloadDialog.dismiss();
+        }
     }
 
 
@@ -138,89 +102,217 @@ public class AddonsBrowser extends NavigationDrawerActivity implements DeckDropD
         mInstallAddon = menu.findItem(R.id.action_install_addon);
         mInstallAddon.setOnMenuItemClickListener(item -> {
 
-            Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
-            intent.setType("*/*");
-            intent = Intent.createChooser(intent, "Choose a file");
-            startActivityForResult(intent, ADDON_REQUEST_CODE);
 
+            downloadDialog.setCanceledOnTouchOutside(true);
+            downloadDialog.setContentView(R.layout.addon_install_from_npm);
+
+            EditText downloadEditText = (EditText) downloadDialog.findViewById(R.id.addon_download_edit_text);
+            Button downloadButton = (Button) downloadDialog.findViewById(R.id.addon_download_button);
+
+            downloadButton.setOnClickListener(v->{
+
+                showProgressBar();
+
+                String npmAddonName = downloadEditText.getText().toString();
+
+                // if string is:  npm i ankidroid-js-addon-progress-bar
+                if (npmAddonName.startsWith("npm i")) {
+                    npmAddonName = npmAddonName.replace("npm i", "");
+                }
+
+                // if containing space
+                npmAddonName = npmAddonName.trim();
+                npmAddonName = npmAddonName.replaceAll("\u00A0", "");
+
+                String url = "https://registry.npmjs.org/" + npmAddonName + "/latest";
+
+                //getContentFromUrl(url, ankidroidAddonPackageJson);
+                downloadFileFromUrl(url, npmAddonName+".json");
+
+                downloadDialog.dismiss();
+            });
+
+            downloadDialog.show();
             return true;
         });
         return super.onCreateOptionsMenu(menu);
     }
 
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
 
-        if (requestCode == ADDON_REQUEST_CODE) {
-            if(resultCode == Activity.RESULT_OK){
-                Uri selectedFileuri = data.getData();
+    public void listAddonsFromDir() {
+        currentAnkiDroidDirectory = CollectionHelper.getCurrentAnkiDroidDirectory(this);
+        addonsHomeDir = new File(currentAnkiDroidDirectory, "addons" );
 
-                // Getting addon file path using RealPathUtil
-                String addonFilePath = RealPathUtil.getRealPath(this, selectedFileuri);
+        boolean success = true;
+        if (!addonsHomeDir.exists()) {
+            success = addonsHomeDir.mkdirs();
+        }
 
-                if (addonFilePath.endsWith(".jsaddon")) {
-                    try {
-                        startInstallAddon(addonFilePath);
-                    } catch (IOException e) {
-                        Timber.e(e.getLocalizedMessage(), "AddonBrowser::onActivityResult");
-                    }
-                } else {
-                    UIUtils.showThemedToast(this, getString(R.string.not_valid_jsaddon), false);
+        List<AddonModel> addonsNames = new ArrayList<AddonModel>();
+
+        if (success) {
+            File directory = new File(String.valueOf(addonsHomeDir));
+            File[] files = directory.listFiles();
+            for (int i = 0; i < files.length; i++) {
+                Timber.d("Addons:%s", files[i].getName());
+
+                // Read package.json from
+                // AnkiDroid/addons/ankidroid-addon-../package/package.json
+                File addonsPackageDir = new File(files[i], "package" );
+                File addonsPackageJson = new File(addonsPackageDir, "package.json");
+
+                AddonModel addonModel;
+
+                if (addonsPackageJson.exists()) {
+                    JSONObject jsonObject  = packageJsonReader(addonsPackageJson);
+
+                    String addonName = jsonObject.optString("name", "");
+                    String addonVersion = jsonObject.optString("version", "");
+                    String addonDev = jsonObject.optString("author", "");
+                    String addonAnkiDroidAPI = jsonObject.optString("ankidroid_api", "");
+                    String addonHomepage = jsonObject.optString("homepage", "");
+
+                    addonModel = new AddonModel(addonName, addonVersion, addonDev, addonAnkiDroidAPI, addonHomepage);
+                    addonsNames.add(addonModel);
                 }
             }
+
+            addonsList.setAdapter(new AddonsAdapter(addonsNames));
+            hideProgressBar();
+        } else {
+            UIUtils.showThemedToast(this, getString(R.string.error_listing_addons), true);
         }
     }
 
+    public void downloadFileFromUrl(String url, String fileName) {
+        downloadManager = (DownloadManager)getSystemService(DOWNLOAD_SERVICE);
+        DownloadManager.Request request = new DownloadManager.Request(Uri.parse(url));
+        request.setTitle(fileName);
 
-    private void startInstallAddon(String addonFile) throws IOException {
-        File file = new File(addonFile);
+//        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB) {
+//            request.allowScanningByMediaScanner();
+//            request.setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE_NOTIFY_COMPLETED);
+//        }
 
-        String currentAnkiDroidDirectory = CollectionHelper.getCurrentAnkiDroidDirectory(this);
-        File addonsDir = new File(currentAnkiDroidDirectory, "addons" );
+        File downloadFile = new File(Environment.DIRECTORY_DOWNLOADS + fileName);
 
-        // Extract .jsaddon zip file to AnkiDroid/addons folder
-        unzip(file, addonsDir);
-        UIUtils.showThemedToast(this, getString(R.string.importing_addon), false);
+        // remove old file
+        if (downloadFile.exists()) {
+            downloadFile.delete();
+        }
+
+        request.setDestinationInExternalPublicDir(Environment.DIRECTORY_DOWNLOADS, fileName);
+
+        queueId = downloadManager.enqueue(request);
+
+        registerReceiver(receiver, new IntentFilter(DownloadManager.ACTION_DOWNLOAD_COMPLETE));
     }
 
 
-    // https://stackoverflow.com/questions/3382996/how-to-unzip-files-programmatically-in-android/27050680#27050680
-    // Extract .jsaddon zip file
-    public static void unzip(File zipFile, File targetDirectory) throws IOException {
-        ZipInputStream zis = new ZipInputStream(new BufferedInputStream(new FileInputStream(zipFile)));
+    BroadcastReceiver receiver = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            String action = intent.getAction();
 
+            if (DownloadManager.ACTION_DOWNLOAD_COMPLETE.equals(action)) {
+                DownloadManager.Query query = new DownloadManager.Query();
+                query.setFilterById(queueId);
+
+                Cursor cursor = downloadManager.query(query);
+
+                if (cursor.moveToFirst()) {
+                    int columIndex = cursor.getColumnIndex(DownloadManager.COLUMN_STATUS);
+
+                    if (DownloadManager.STATUS_SUCCESSFUL == cursor.getInt(columIndex)) {
+                        String uri = cursor.getString(cursor.getColumnIndex(DownloadManager.COLUMN_TITLE));
+
+                        String tarballLink;
+
+                        if (uri.endsWith(".json")) {
+                            tarballLink = getNpmTarball(uri);
+                            downloadFileFromUrl(tarballLink, uri.replace(".json", "") + ".tgz");
+                        } else if (uri.endsWith(".tgz")) {
+                            extractTarball(uri);
+                        }
+
+                        UIUtils.showThemedToast(context, uri, true);
+                    }
+                }
+
+            }
+        }
+    };
+
+
+    private void extractTarball(String uri) {
+        File addonsDir = new File(addonsHomeDir, uri.replace(".tgz", ""));
+
+        String tarballPath = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS) + "/" + Uri.parse(uri).getPath();
+        File tarballFile = new File(tarballPath);
+
+        // https://github.com/thrau/jarchivelib
         try {
-            ZipEntry ze;
-            int count;
-            byte[] buffer = new byte[8192];
+            Archiver archiver = ArchiverFactory.createArchiver(new File(tarballPath));
+            archiver.extract(tarballFile, addonsDir);
 
-            while ((ze = zis.getNextEntry()) != null) {
-
-                File file = new File(targetDirectory, ze.getName());
-                File dir = ze.isDirectory() ? file : file.getParentFile();
-
-                if (!dir.isDirectory() && !dir.mkdirs()) {
-                    throw new FileNotFoundException("Failed to ensure directory: " + dir.getAbsolutePath());
-                }
-
-                if (ze.isDirectory()) {
-                    continue;
-                }
-
-                FileOutputStream fout = new FileOutputStream(file);
-
-                try {
-                    while ((count = zis.read(buffer)) != -1) {
-                        fout.write(buffer, 0, count);
-                    }
-                } finally {
-                    fout.close();
-                }
+            // remove after extract
+            if (tarballFile.exists()) {
+                tarballFile.delete();
             }
-        } finally {
-            zis.close();
+
+            listAddonsFromDir();
+            hideProgressBar();
+
+            UIUtils.showThemedToast(this, "Addons downloaded to addons folder", false);
+        } catch (IOException e) {
+            Timber.e(e);
         }
     }
 
+
+    private String getNpmTarball(String uri) {
+        String tarballUrl = "";
+        File packageJsonFile = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS), Uri.parse(uri).getPath());
+
+        if (packageJsonFile.exists()) {
+            try {
+                JSONObject jsonObject  = packageJsonReader(packageJsonFile);
+                JSONObject dist = jsonObject.getJSONObject("dist");
+                tarballUrl = dist.get("tarball").toString();
+                Timber.d("tarball link %s", dist.get("tarball"));
+
+                // remove after getting tarball link
+                if (packageJsonFile.exists()) {
+                    packageJsonFile.delete();
+                }
+            } catch (JSONException e) {
+                Timber.e(e.getLocalizedMessage());
+            }
+
+        }
+
+        return tarballUrl;
+    }
+    
+    public static JSONObject packageJsonReader(File addonsFiles) {
+        JSONObject jsonObject = null;
+        try {
+            FileReader fileReader = new FileReader(addonsFiles);
+            BufferedReader bufferedReader = new BufferedReader(fileReader);
+            StringBuilder stringBuilder = new StringBuilder();
+            String line = bufferedReader.readLine();
+            while (line != null){
+                stringBuilder.append(line).append("\n");
+                line = bufferedReader.readLine();
+            }
+            bufferedReader.close();
+
+            String response = stringBuilder.toString();
+            jsonObject  = new JSONObject(response);
+            
+        } catch (IOException | JSONException e) {
+            Timber.e(e.getLocalizedMessage());
+        }
+        return jsonObject;
+    }
 }

@@ -16,6 +16,7 @@ import java.io.File;
 import java.util.List;
 
 import androidx.annotation.NonNull;
+import androidx.core.text.HtmlCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
 public class AddonsAdapter extends RecyclerView.Adapter<AddonsAdapter.AddonsViewHolder> {
@@ -43,7 +44,7 @@ public class AddonsAdapter extends RecyclerView.Adapter<AddonsAdapter.AddonsView
 
         // while binding viewholder if preferences w.r.t viewholder store true value or enabled status then
         // turn on switch status else it is off by default
-        if (preferences.getString("addon:"+addonModel.getId(), "disabled").equals("enabled")) {
+        if (preferences.getString("addon:"+addonModel.getName(), "disabled").equals("enabled")) {
             holder.addonActivate.setChecked(true);
         }
 
@@ -52,11 +53,11 @@ public class AddonsAdapter extends RecyclerView.Adapter<AddonsAdapter.AddonsView
 
             // store enabled/disabled status as boolean true/false value in SharedPreferences
             if (holder.addonActivate.isChecked()) {
-                editor.putString("addon:"+addonModel.getId(), "enabled");
+                editor.putString("addon:"+addonModel.getName(), "enabled");
                 editor.apply();
                 UIUtils.showThemedToast(context, context.getString(R.string.enabled)+" "+addonModel.getName(), true);
             } else {
-                editor.putString("addon:"+addonModel.getId(), "disabled");
+                editor.putString("addon:"+addonModel.getName(), "disabled");
                 editor.apply();
                 UIUtils.showThemedToast(context, context.getString(R.string.disabled)+" "+addonModel.getName(), true);
             }
@@ -66,17 +67,20 @@ public class AddonsAdapter extends RecyclerView.Adapter<AddonsAdapter.AddonsView
         infoDialog.setCanceledOnTouchOutside(true);
         infoDialog.setContentView(R.layout.addon_info_popup);
         holder.addonInfo.setOnClickListener(v -> {
-            TextView id = infoDialog.findViewById(R.id.popup_addon_id_info);
             TextView name = infoDialog.findViewById(R.id.popup_addon_name_info);
             TextView ver = infoDialog.findViewById(R.id.popup_addon_version_info);
             TextView dev = infoDialog.findViewById(R.id.popup_addon_dev_info);
             TextView ankidroid_api = infoDialog.findViewById(R.id.popup_ankidroid_api_info);
+            TextView homepage = infoDialog.findViewById(R.id.popup_addon_homepage_info);
 
-            id.setText(addonModel.getId());
             name.setText(addonModel.getName());
             ver.setText(addonModel.getVersion());
             dev.setText(addonModel.getDeveloper());
             ankidroid_api.setText(addonModel.getAnkidroid_api());
+
+            String link = "<a href='" + addonModel.getHomepage() + "'>" + addonModel.getHomepage() + "</a>";
+            homepage.setClickable(true);
+            homepage.setText(HtmlCompat.fromHtml(link, HtmlCompat.FROM_HTML_MODE_LEGACY));
 
             infoDialog.show();
         });
@@ -94,27 +98,20 @@ public class AddonsAdapter extends RecyclerView.Adapter<AddonsAdapter.AddonsView
             alertBuilder.setPositiveButton(
                     context.getString(R.string.dialog_ok),
                     new DialogInterface.OnClickListener() {
-                        public void onClick(DialogInterface dialog, int id)
-                        {
-                            // js addon id same as folder name, remove the folder
-                            File dir = new File(addonsDir, addonModel.getId());
+                        public void onClick(DialogInterface dialog, int id) {
+                            // remove the js addon folder
+                            File dir = new File(addonsDir, addonModel.getName());
+                            deleteDirectory(dir);
 
-                            if (dir.exists() && dir.isDirectory())
-                            {
-                                String[] children = dir.list();
-                                for (int i = 0; i < children.length; i++)
-                                {
-                                    new File(dir, children[i]).delete();
-                                }
-
-                                dir.delete();
-                            }
+                            // remove enabled status
+                            SharedPreferences.Editor editor = preferences.edit();
+                            editor.remove("addon:"+addonModel.getName());
+                            editor.apply();
 
                             addonModels.remove(position);
                             notifyItemRemoved(position);
                             notifyItemRangeChanged(position, addonModels.size());
                             notifyDataSetChanged();
-
                         }
                     });
 
@@ -148,6 +145,24 @@ public class AddonsAdapter extends RecyclerView.Adapter<AddonsAdapter.AddonsView
             addonActivate = (Switch) itemView.findViewById(R.id.activate_addon);
             addonDelete = (ImageButton) itemView.findViewById(R.id.delete_addon);
             addonInfo = (ImageButton) itemView.findViewById(R.id.addon_info);
+        }
+    }
+
+    public static void deleteDirectory(File dir) {
+        if ( dir.isDirectory() ) {
+            String [] children = dir.list();
+            for ( int i = 0 ; i < children.length ; i ++ ) {
+                File child = new File( dir , children[i] );
+
+                if (child.isDirectory()){
+                    deleteDirectory(child);
+                    child.delete();
+                } else {
+                    child.delete();
+                }
+            }
+
+            dir.delete();
         }
     }
 }

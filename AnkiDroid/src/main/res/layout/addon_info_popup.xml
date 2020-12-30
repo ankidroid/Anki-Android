@@ -17,26 +17,6 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:padding="5dp"
-                android:text="Id"
-                android:textAppearance="?android:attr/textAppearanceMedium"/>
-
-            <TextView
-                android:id="@+id/popup_addon_id_info"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:padding="5dp"
-                android:text="12345"
-                android:textAppearance="?android:attr/textAppearanceMedium"/>
-        </TableRow>
-
-        <TableRow
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:padding="5dp"
                 android:text="Name"
                 android:textAppearance="?android:attr/textAppearanceMedium"/>
 
@@ -104,6 +84,27 @@
                 android:padding="5dp"
                 android:text="0.0.1"
                 android:textAppearance="?android:attr/textAppearanceMedium"/>
+        </TableRow>
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="5dp"
+                android:text="Homepage"
+                android:textAppearance="?android:attr/textAppearanceMedium"/>
+
+            <TextView
+                android:id="@+id/popup_addon_homepage_info"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="5dp"
+                android:text="https://"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:autoLink="web"/>
         </TableRow>
     </TableLayout>
 </RelativeLayout>

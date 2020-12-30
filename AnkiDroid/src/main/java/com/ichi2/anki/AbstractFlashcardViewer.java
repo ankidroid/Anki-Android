@@ -2403,10 +2403,15 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
 
     public String getEnabledAddonsContent() {
         StringBuilder content = new StringBuilder();
+        String mainJsFile = null;
 
         SharedPreferences preferences = AnkiDroidApp.getSharedPrefs(this);
         String currentAnkiDroidDirectory = CollectionHelper.getCurrentAnkiDroidDirectory(this);
-        File addonsDir = new File(currentAnkiDroidDirectory, "addons" );
+        File addonsHomeDir = new File(currentAnkiDroidDirectory, "addons" );
+
+        // wrap index.js content in script tag
+        content.append("<script>");
+        content.append("\n");
 
         Map<String,?> keys = preferences.getAll();
 
@@ -2416,22 +2421,40 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
             // getting enabled status of addons in SharedPreferences with key containing 'addon'
             if (entry.getKey().contains("addon") && entry.getValue().toString().equals("enabled")) {
                 try {
-                    // split value and getting latter part as it stored id for addon e.g addon:js12345... It is same as folder name for the addon
-                    // if id not present in manifest.json then it leads to exception
+                    /*
+                     split value and getting latter part as it stored id for addon e.g addon:ankidroid-js-addon-12345...
+                     It is same as folder name for the addon
+                     if id not present in manifest.json then it leads to exception
+                     */
                     File addonDirName = new File(String.valueOf(entry.getKey().split(":")[1]));
-                    File finalAddonPath = new File(addonsDir, String.valueOf(addonDirName));
+                    File finalAddonPath = new File(addonsHomeDir, String.valueOf(addonDirName));
 
-                    //Read text from file, content.html is starting point for the addon
-                    File addonsContentFile = new File(finalAddonPath, "content.html" );
+                    if (finalAddonPath.exists()) {
+                        //Read text from file, index.js is starting point for the addon
+                        File addonsPackageDir = new File(finalAddonPath, "package");
+                        File addonPackageJson = new File(addonsPackageDir, "package.json");
 
-                    BufferedReader br = new BufferedReader(new FileReader(addonsContentFile));
-                    String line;
+                        // get {'main': 'index.js'} from package.json file
+                        if (addonPackageJson.exists()) {
+                            org.json.JSONObject jsonObject  = AddonsBrowser.packageJsonReader(addonPackageJson);
+                            mainJsFile = jsonObject.optString("main", "");
+                        }
 
-                    while ((line = br.readLine()) != null) {
-                        content.append(line);
-                        content.append('\n');
+                        // read index.js file
+                        File addonsContentFile = new File(addonsPackageDir, mainJsFile);
+                        if (addonsContentFile.exists()) {
+                            BufferedReader br = new BufferedReader(new FileReader(addonsContentFile));
+                            String line;
+
+                            while ((line = br.readLine()) != null) {
+                                content.append(line);
+                                content.append('\n');
+                            }
+                            br.close();
+
+                            Timber.d("addon content path %s", addonsContentFile);
+                        }
                     }
-                    br.close();
                 }
                 catch (ArrayIndexOutOfBoundsException | IOException e) {
                     Timber.e(e, "AbstractFlashcardViewer::IOException");
@@ -2439,6 +2462,8 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
             }
         }
 
+        content.append("</script>");
+        content.append("\n");
         return content.toString();
     }
 
