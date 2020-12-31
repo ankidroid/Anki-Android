@@ -32,6 +32,7 @@ import com.ichi2.testutils.AnkiAssert;
 import com.ichi2.utils.JSONArray;
 
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.robolectric.ParameterizedRobolectricTestRunner;
@@ -47,6 +48,7 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.greaterThan;
 import static org.hamcrest.Matchers.is;
 import static org.hamcrest.Matchers.lessThanOrEqualTo;
+import static org.hamcrest.Matchers.notNullValue;
 import static org.junit.Assert.assertArrayEquals;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
@@ -405,5 +407,28 @@ mw.col.sched.extendLimits(1, 0)
         card = sched.getCard();
         sched.setCurrentCard(card);
         AnkiAssert.assertDoesNotThrow(sched::preloadNextCard);
+    }
+
+    @Test
+    @Ignore("Regression test that will be solved in next commit")
+    public void regression_7984() {
+        Collection col = getCol();
+        AbstractSched sched = col.getSched();
+        Card card1 = addNoteUsingBasicModel("One", "Two").cards().get(0);
+        Card card2 = addNoteUsingBasicModel("Three", "Four").cards().get(0);
+        Card gotten = sched.getCard();
+        assertThat(gotten, is(card1));
+        sched.answerCard(gotten, Consts.BUTTON_ONE);
+        gotten = sched.getCard();
+        assertThat(gotten, is(card2));
+        sched.answerCard(gotten, Consts.BUTTON_ONE);
+        sched.reset();
+        // Regression test success non deterministically without the sleep
+        advanceRobolectricLooperWithSleep();
+        gotten = sched.getCard();
+        assertThat(gotten, is(notNullValue()));
+        sched.answerCard(gotten, Consts.BUTTON_ONE);
+        gotten = sched.getCard();
+        assertThat(gotten, is(notNullValue()));
     }
 }
