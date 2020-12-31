@@ -366,6 +366,7 @@ public class Sched extends SchedV2 {
          * _getLrnCard which did remove the card from the queue. _sortIntoLrn will add the card back to the queue if
          * required when the card is reviewed.
          */
+        mLrnQueue.setFilled();
         try (Cursor cur = mCol.getDb().query(
                            "SELECT due, id FROM cards WHERE did IN " + _deckLimit() + " AND queue = " + Consts.QUEUE_TYPE_LRN + " AND due < ? AND id != ? LIMIT ?",
                            mDayCutoff, currentCardId(), mReportLimit)) {
