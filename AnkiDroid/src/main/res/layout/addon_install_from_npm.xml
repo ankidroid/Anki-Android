@@ -7,11 +7,15 @@
     android:layout_gravity="center"
     android:padding="20dp">
 
-
     <LinearLayout
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical">
+        <TextView
+            android:text="@string/enter_npm_install_text"
+            android:textSize="20sp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
     <EditText
         android:textSize="16sp"
         android:id="@+id/addon_download_edit_text"

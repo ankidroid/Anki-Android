@@ -22,7 +22,7 @@
 
             <TextView
                 android:id="@+id/popup_addon_name_info"
-                android:layout_width="wrap_content"
+                android:layout_width="245dp"
                 android:layout_height="wrap_content"
                 android:padding="5dp"
                 android:text="Cool Addon"
@@ -99,7 +99,7 @@
 
             <TextView
                 android:id="@+id/popup_addon_homepage_info"
-                android:layout_width="wrap_content"
+                android:layout_width="250dp"
                 android:layout_height="wrap_content"
                 android:padding="5dp"
                 android:text="https://"
