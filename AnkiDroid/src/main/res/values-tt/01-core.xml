@@ -149,6 +149,7 @@
     <string name="custom_study_deck_name">Шәхси өйрәнү сессиясе</string>
     <string name="custom_study_deck_exists">Башта булган артык өйрәнү колода исемен үзгәртегез</string>
     <string name="empty_deck">Бу колода буш</string>
+    <string name="empty_deck_add_note">Add card</string>
     <string name="invalid_deck_name">Шундый колода исеме була алмый</string>
     <string name="studyoptions_empty">Бу колода буш. Берәрнәрсә өстәү өчен + төймәсенә басыгыз.</string>
     <string name="studyoptions_limit_reached">Бүгенге өйрәнү үтәлде</string>
