@@ -1,51 +1,31 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:layout_width="fill_parent"
+    android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_margin="4dp"
     android:gravity="center_vertical"
     android:orientation="horizontal">
-    <LinearLayout
-        android:layout_width="wrap_content"
+    <RelativeLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
         <TextView
             android:id="@+id/addon_name"
-            android:layout_width="270dp"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:padding="4dp"
             android:singleLine="true"
+            android:layout_marginRight="40dp"
             android:text="@string/app_name"
             android:textSize="20sp" />
-    </LinearLayout>
 
-    <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerVertical="true">
         <Switch
             android:id="@+id/activate_addon"
             android:layout_width="wrap_content"
-            android:layout_height="30dp"
-            android:layout_margin="4dp"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_centerVertical="true"
             android:backgroundTint="@color/material_green_500" />
-        <ImageButton
-            android:id="@+id/delete_addon"
-            android:layout_width="30dp"
-            android:layout_height="30dp"
-            android:layout_margin="4dp"
-            android:background="@drawable/ic_delete_white_24dp"
-            android:backgroundTint="@color/material_red_600"
-            android:foreground="?attr/selectableItemBackground"/>
-
-        <ImageButton
-            android:id="@+id/addon_info"
-            android:layout_width="30dp"
-            android:layout_height="30dp"
-            android:layout_margin="4dp"
-            android:background="@drawable/ic_dialog_info"
-            android:backgroundTint="@color/material_blue_600"
-            android:foreground="?attr/selectableItemBackground"/>
-    </LinearLayout>
+    </RelativeLayout>
 </LinearLayout>

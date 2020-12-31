@@ -1,110 +1,136 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="400dp"
+    android:layout_width="fill_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical">
 
-    <TableLayout
-        android:padding="8dp"
+    <LinearLayout
+        android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
-        <TableRow
+
+        <TableLayout
+            android:padding="8dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
+            <TableRow
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:padding="5dp"
-                android:text="Name"
-                android:textAppearance="?android:attr/textAppearanceMedium"/>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:padding="5dp"
+                    android:text="Name"
+                    android:textAppearance="?android:attr/textAppearanceMedium"/>
 
-            <TextView
-                android:id="@+id/popup_addon_name_info"
-                android:layout_width="245dp"
-                android:layout_height="wrap_content"
-                android:padding="5dp"
-                android:text="Cool Addon"
-                android:textAppearance="?android:attr/textAppearanceMedium"/>
-        </TableRow>
-        <TableRow
-            android:layout_width="match_parent"
+                <TextView
+                    android:id="@+id/popup_addon_name_info"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="5dp"
+                    android:text="Cool Addon"
+                    android:textAppearance="?android:attr/textAppearanceMedium"/>
+            </TableRow>
+            <TableRow
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:padding="5dp"
+                    android:text="Version"
+                    android:textAppearance="?android:attr/textAppearanceMedium"/>
+
+                <TextView
+                    android:id="@+id/popup_addon_version_info"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:padding="5dp"
+                    android:text="1.0.0"
+                    android:textAppearance="?android:attr/textAppearanceMedium"/>
+            </TableRow>
+            <TableRow
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:padding="5dp"
+                    android:text="Developer"
+                    android:textAppearance="?android:attr/textAppearanceMedium"/>
+
+                <TextView
+                    android:id="@+id/popup_addon_dev_info"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:padding="5dp"
+                    android:text="dev@mail.com"
+                    android:textAppearance="?android:attr/textAppearanceMedium"/>
+            </TableRow>
+            <TableRow
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:padding="5dp"
+                    android:text="AnkiDroid API"
+                    android:textAppearance="?android:attr/textAppearanceMedium"/>
+
+                <TextView
+                    android:id="@+id/popup_ankidroid_api_info"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:padding="5dp"
+                    android:text="0.0.1"
+                    android:textAppearance="?android:attr/textAppearanceMedium"/>
+            </TableRow>
+
+            <TableRow
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:padding="5dp"
+                    android:text="Homepage"
+                    android:textAppearance="?android:attr/textAppearanceMedium"/>
+
+                <TextView
+                    android:id="@+id/popup_addon_homepage_info"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="5dp"
+                    android:text="https://"
+                    android:textAppearance="?android:attr/textAppearanceMedium"
+                    android:autoLink="web"/>
+            </TableRow>
+        </TableLayout>
+
+        <LinearLayout
+            android:layout_gravity="center"
+            android:orientation="horizontal"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content">
 
-            <TextView
+            <Button
+                android:id="@+id/btn_addon_update"
+                android:text="@string/addon_update"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:padding="5dp"
-                android:text="Version"
-                android:textAppearance="?android:attr/textAppearanceMedium"/>
+                android:layout_height="wrap_content"/>
 
-            <TextView
-                android:id="@+id/popup_addon_version_info"
+            <Button
+                android:id="@+id/btn_addon_delete"
+                android:text="@string/dialog_positive_delete"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:padding="5dp"
-                android:text="1.0.0"
-                android:textAppearance="?android:attr/textAppearanceMedium"/>
-        </TableRow>
-        <TableRow
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+                android:layout_height="wrap_content"/>
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:padding="5dp"
-                android:text="Developer"
-                android:textAppearance="?android:attr/textAppearanceMedium"/>
-
-            <TextView
-                android:id="@+id/popup_addon_dev_info"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:padding="5dp"
-                android:text="dev@mail.com"
-                android:textAppearance="?android:attr/textAppearanceMedium"/>
-        </TableRow>
-        <TableRow
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:padding="5dp"
-                android:text="AnkiDroid API"
-                android:textAppearance="?android:attr/textAppearanceMedium"/>
-
-            <TextView
-                android:id="@+id/popup_ankidroid_api_info"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:padding="5dp"
-                android:text="0.0.1"
-                android:textAppearance="?android:attr/textAppearanceMedium"/>
-        </TableRow>
-
-        <TableRow
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:padding="5dp"
-                android:text="Homepage"
-                android:textAppearance="?android:attr/textAppearanceMedium"/>
-
-            <TextView
-                android:id="@+id/popup_addon_homepage_info"
-                android:layout_width="250dp"
-                android:layout_height="wrap_content"
-                android:padding="5dp"
-                android:text="https://"
-                android:textAppearance="?android:attr/textAppearanceMedium"
-                android:autoLink="web"/>
-        </TableRow>
-    </TableLayout>
+        </LinearLayout>
+    </LinearLayout>
 </RelativeLayout>

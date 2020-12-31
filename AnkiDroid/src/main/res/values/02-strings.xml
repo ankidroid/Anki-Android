@@ -364,12 +364,15 @@
     <string name="create_shortcut_error">Error adding shortcut: %s</string>
     <string name="note_editor_capitalize" comment="This is for a switch with a checkbox - on: enabled">Capitalize sentences</string>
 
-    <string name="error_listing_addons">Error in listing addons</string>
+    <string name="error_listing_addons">Error listing addons</string>
     <string name="install_js_addon">Import Addon</string>
     <string name="get_more_addons">Get more addons</string>
-    <string name="not_valid_jsaddon">Not a valid .jsaddon file</string>
-    <string name="importing_addon">Importing addon</string>
+    <string name="not_valid_package">Not a valid package for AnkiDroid</string>
+    <string name="addon_download_success">Addon downloads successful</string>
+    <string name="downloading_addon">Downloading addon</string>
     <string name="confirm_remove_addon">Do you want to remove %s ?</string>
     <string name="enter_npm_install_text">Enter npm install text</string>
-    <string name="error_downloading_file">Error in downloading file.</string>
+    <string name="error_downloading_file">Error downloading file</string>
+    <string name="addon_update">Update</string>
+    <string name="updating_addon">Updating addon</string>
 </resources>
