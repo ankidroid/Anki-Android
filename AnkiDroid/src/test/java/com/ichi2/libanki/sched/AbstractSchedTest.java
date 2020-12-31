@@ -410,7 +410,6 @@ mw.col.sched.extendLimits(1, 0)
     }
 
     @Test
-    @Ignore("Regression test that will be solved in next commit")
     public void regression_7984() {
         Collection col = getCol();
         AbstractSched sched = col.getSched();

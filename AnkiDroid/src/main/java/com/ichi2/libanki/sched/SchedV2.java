@@ -1084,6 +1084,7 @@ public class SchedV2 extends AbstractSched {
                     .query(
                             "SELECT due, id FROM cards WHERE did IN " + _deckLimit() + " AND queue IN (" + Consts.QUEUE_TYPE_LRN + ", " + Consts.QUEUE_TYPE_PREVIEW + ") AND due < ?"
                             + " AND id != ? LIMIT ?", cutoff, currentCardId(), mReportLimit)) {
+            mLrnQueue.setFilled();
             while (cur.moveToNext()) {
                 mLrnQueue.add(cur.getLong(0), cur.getLong(1));
             }
@@ -3044,6 +3045,11 @@ public class SchedV2 extends AbstractSched {
      * Sorts a card into the lrn queue LIBANKI: not in libanki
      */
     protected void _sortIntoLrn(long due, long id) {
+        if (!mLrnQueue.isFilled()) {
+            // We don't want to add an element to the queue if it's not yet assumed to have its normal content.
+            // Adding anything is useless while the queue awaits beeing filled
+            return;
+        }
         ListIterator<LrnCard> i = mLrnQueue.listIterator();
         while (i.hasNext()) {
             if (i.next().getDue() > due) {
