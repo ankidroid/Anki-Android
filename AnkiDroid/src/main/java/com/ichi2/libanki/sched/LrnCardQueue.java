@@ -11,10 +11,6 @@ class LrnCardQueue extends CardQueue<LrnCard> {
         add(new LrnCard(getCol(), due, cid));
     }
 
-    public void add(int pos, LrnCard card) {
-        getQueue().add(pos, card);
-    }
-
     public void sort() {
         Collections.sort(getQueue());
     }
