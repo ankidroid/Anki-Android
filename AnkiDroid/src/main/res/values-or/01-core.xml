@@ -75,7 +75,7 @@
     <string name="no_cards_placeholder_description">+ ଆଇକନ୍ ବ୍ୟବହାର କରି\nକାର୍ଡ ଯୋଡିବା ଆରମ୍ଭ କରନ୍ତୁ |</string>
     <!-- The deck picker via AnkiStatsTaskHandler.java -->
     <plurals name="studied_cards_today">
-        <item quantity="one">ଆଜି %2$sରେ %1$dଟିଏ କାର୍ଡ ଅଧ୍ୟୟନ କଲେ</item>
+        <item quantity="one">ଆଜି %2$sରେ %1$d କାର୍ଡ ଅଧ୍ୟୟନ କଲେ</item>
         <item quantity="other">ଆଜି %2$sରେ %1$dଟି କାର୍ଡ ଅଧ୍ୟୟନ କଲେ</item>
     </plurals>
     <!-- flashcard_portrait.xml -->
@@ -99,15 +99,15 @@
     <string name="menu_add_note">ନୋଟ୍ ଯୋଡ଼ନ୍ତୁ</string>
     <string name="menu_my_account" comment="Label of the window in which the user should enter their account. This text can\'t be found in AnkiDroid directly.">ସିଙ୍କ୍ ଖାତା</string>
     <string name="menu_dismiss_note">ଲୁଚାନ୍ତୁ / ଅପସାରଣ କରନ୍ତୁ</string>
-    <string name="menu_bury_card">ପତ୍ରଟିକୁ ପୋତନ୍ତୁ</string>
-    <string name="menu_bury_note">ନୋଟଟିକୁ ପୋତନ୍ତୁ</string>
-    <string name="menu_suspend_card">ପତ୍ରଟିକୁ ବାସନ୍ଦ କରନ୍ତୁ</string>
-    <string name="menu_suspend_note">ନୋଟଟିକୁ ବାସନ୍ଦ କରନ୍ତୁ</string>
-    <string name="menu_bury">ପୋତନ୍ତୁ</string>
-    <string name="menu_suspend">ବାସନ୍ଦ କରନ୍ତୁ</string>
-    <string name="menu_delete_note">ନୋଟ ବିଲୋପ</string>
+    <string name="menu_bury_card">କାର୍ଡ ସ୍ଥଗିତ କରନ୍ତୁ</string>
+    <string name="menu_bury_note">ନୋଟ୍ ସ୍ଥଗିତ କରନ୍ତୁ</string>
+    <string name="menu_suspend_card">କାର୍ଡ ନିଲମ୍ବିତ କରନ୍ତୁ</string>
+    <string name="menu_suspend_note">ନୋଟ୍ ନିଲମ୍ବିତ କରନ୍ତୁ</string>
+    <string name="menu_bury">ସ୍ଥଗିତ ରଖନ୍ତୁ</string>
+    <string name="menu_suspend">ନିଲମ୍ବନ କରନ୍ତୁ</string>
+    <string name="menu_delete_note">ନୋଟ୍ ଅପସାରଣ କରନ୍ତୁ</string>
     <string name="menu_flag">ପତାକା</string>
-    <string name="menu_flag_card">ପତାକା ପତ୍ର</string>
+    <string name="menu_flag_card">ପତାକା ସହିତ ଆପଣଙ୍କର କାର୍ଡ ଚିହ୍ନିତ କରନ୍ତୁ</string>
     <string name="menu_flag_card_zero">କୌଣସି ପତାକା ନାହିଁ</string>
     <string name="menu_flag_card_one">ନାଲି ପତାକା</string>
     <string name="menu_flag_card_two">କମଳା ପତାକା</string>
@@ -124,7 +124,7 @@
     <string name="create" comment="Button to create a filtered deck">ସୃଷ୍ଟି କରନ୍ତୁ</string>
     <string name="new_dynamic_deck">ଫିଲ୍ଟର୍ ଡେକ୍ ସୃଷ୍ଟି କରନ୍ତୁ</string>
     <string name="night_mode">ରାତ୍ରି ମୋଡ୍</string>
-    <string name="directory_inaccessible">ଅଣ୍ଡରାଇଡ ନିର୍ଦେଶିକା ଅପ୍ରବେଶନୀୟ</string>
+    <string name="directory_inaccessible">AnkiDroid directory ଅପ୍ରବେଶନୀୟ ଅଟେ</string>
     <!--This is shown when AnkiDroid starts up with no storage permissions.
     The user is taken to the "App Info" screen, and needs to click "Permissions" and
     grant AnkiDroid the \'Storage\' permission. This needs to be a fairly generic message as implementations
@@ -151,37 +151,38 @@
     <string name="empty_cram_label">ଖାଲି</string>
     <string name="create_subdeck">ଉପତାସଖଣ୍ଡ ନିର୍ମାଣ</string>
     <string name="empty_filtered_deck">ଶୋଧିତ ଉପତାସଖଣ୍ଡ ଖାଲି ହଉଛି</string>
-    <string name="custom_study_deck_name">କଷ୍ଟମ୍ ଅଧ୍ୟୟନ ଅଧିବେଶନ</string>
-    <string name="custom_study_deck_exists">ଆଗ ସାମ୍ପ୍ରତିକ କଷ୍ଟମ୍ ଅଧ୍ୟୟନାଧିବେଶନକୁ ପୁନଃନାମିତ କରନ୍ତୁ</string>
+    <string name="custom_study_deck_name">ଇଚ୍ଛାରୂପିତ ଅଧ୍ୟୟନ ଅଧିବେଶନ</string>
+    <string name="custom_study_deck_exists">ଆଗ ସାମ୍ପ୍ରତିକ ଇଚ୍ଛାରୂପିତ ଅଧ୍ୟୟନାଧିବେଶନକୁ ପୁନଃନାମିତ କରନ୍ତୁ</string>
     <string name="empty_deck">ତାସଖଣ୍ଡଟି ଖାଲି ଅଛି</string>
+    <string name="empty_deck_add_note">Add card</string>
     <string name="invalid_deck_name">ଅବୈଧ ତାସଖଣ୍ଡ ନାମ</string>
-    <string name="studyoptions_empty">ତାସଖଣ୍ଡଟି ଖାଲି ଅଛି | ନୂଆ ବିଷୟବସ୍ତୁ ଯୋଡ଼ିବା ପାଇଁ + ଦବାନ୍ତୁ</string>
-    <string name="studyoptions_limit_reached">ଦୈନିକ ଅଧ୍ୟୟନ ସୀମା ପହଁଚିଗଲା</string>
-    <string name="studyoptions_empty_schedule">ଆଜି କୌଣସି ପତ୍ର ପଢିବା ପାଇଁ ନାହିଁ</string>
-    <string name="studyoptions_congrats_finished">ଅଭିନନ୍ଦନ | ଆପଣ ଏବେ ପାଇଁ ସବୁ ସମାପ୍ତ କରିଛନ୍ତି</string>
-    <string name="studyoptions_congrats_more_rev">ଦୈନିକ ସୀମା ଆସିଗଲା, କିନ୍ତୁ ଅଧିକ ପତ୍ର ସମୀକ୍ଷା କରିବା ପାଇଁ ବାକି ଅଛି | ଆପଣ ବିକଳ୍ପରେ ଏହି ସୀମାକୁ ବଢ଼େଇପାରିବେ |</string>
-    <string name="studyoptions_congrats_more_new">ଆପଣ ଦୈନିକ ସୀମା ଆସିଗଲା | ଅଧିକ ନୂତନ ପତ୍ର ଉପଲବ୍ଧ ଅଛି,ଆପଣ ବିକଳ୍ପରେ ଏହି ସୀମାକୁ ବଢ଼େଇପାରିବେ କିନ୍ତୁ ଏହା ଆପଣଙ୍କ ସ୍ୱଳ୍ପ ମିଆଦି ସମୀକ୍ଷା କର୍ମଭାର ବଢ଼େଇଦେବ</string>
-    <string name="studyoptions_congrats_custom">ସାଧାରଣ କାର୍ଯ୍ୟସୂଚୀରୁ ବାହାରେ ପଢିବାପାଇଁ, \"କଷ୍ଟମ୍ ଅଧ୍ୟୟନ\" ବଟନ ଦବାନ୍ତୁ</string>
-    <string name="studyoptions_no_cards_due">କୌଣସି ପତ୍ର ବାକି ନାହିଁ</string>
-    <string name="sd_card_not_mounted">USB ଷ୍ଟୋରେଜ ମାଉଣ୍ଟ ହୋଇନାହିଁ|</string>
-    <string name="empty_cloze_warning">ଏହି ନୋଟକୁ ସଂଶୋଧିତ କରନ୍ତୁ ଏବଂ କିଛି କ୍ଲୋଜ ଡିଲୀଶନ ଯୋଡ଼ନ୍ତୁ.  (%1$s)</string>
+    <string name="studyoptions_empty">ଏହି ଡେକ୍ ଖାଲି ଅଛି । ନୂତନ ବିଷୟବସ୍ତୁ ଯୋଗ କରିବା ପାଇଁ + ବଟନ୍ ଦବାନ୍ତୁ |</string>
+    <string name="studyoptions_limit_reached">ଦୈନିକ ଅଧ୍ୟୟନ ସୀମା ପହଞ୍ଚିଛି</string>
+    <string name="studyoptions_empty_schedule">ଅଧ୍ୟୟନ ପାଇଁ କୌଣସି କାର୍ଡ ନିର୍ଦ୍ଧାରିତ ହୋଇନାହିଁ</string>
+    <string name="studyoptions_congrats_finished">ଅଭିନନ୍ଦନ! ଆପଣ ଏବେ ପାଇଁ ସବୁ ସମାପ୍ତ କରିଛନ୍ତି |</string>
+    <string name="studyoptions_congrats_more_rev">ଆଜିର ସୀମା ପହଞ୍ଚିଯାଇଛି, କିନ୍ତୁ ସମୀକ୍ଷା ପାଇଁ ଏବେ ବି କାର୍ଡ ରହିଛି | ଆପଣ ବିକଳ୍ପଗୁଡ଼ିକରେ ସୀମା ବୃଦ୍ଧି କରିପାରିବେ |</string>
+    <string name="studyoptions_congrats_more_new">ଦୈନିକ ସୀମା ପହଞ୍ଚିଛି | ଅଧିକ ନୂଆ କାର୍ଡ ଉପଲବ୍ଧ ରହିଛି; ଆପଣ ବିକଳ୍ପଗୁଡ଼ିକରେ ସୀମା ବୃଦ୍ଧି କରିପାରିବେ, କିନ୍ତୁ ଏହା ଆପଣଙ୍କର ସ୍ୱଳ୍ପକାଳୀନ ସମୀକ୍ଷା କାର୍ଯ୍ୟଭାର ବୃଦ୍ଧି କରିବ |</string>
+    <string name="studyoptions_congrats_custom">ସାଧାରଣ କାର୍ଯ୍ୟସୂଚୀ ବାହାରେ ଅଧ୍ୟୟନ କରିବାକୁ, \"ଇଚ୍ଛାରୂପିତ ଅଧ୍ୟୟନ\" ବଟନ୍ ସ୍ପର୍ଶ କରନ୍ତୁ</string>
+    <string name="studyoptions_no_cards_due">କୌଣସି କାର୍ଡ ବାକି ନାହିଁ</string>
+    <string name="sd_card_not_mounted">Device storage ଭର୍ତ୍ତି କରାଯାଇ ନାହିଁ</string>
+    <string name="empty_cloze_warning">ଏହି ନୋଟ୍ କୁ ସଂପାଦନ କରନ୍ତୁ ଏବଂ କିଛି କ୍ଲୋଜ୍ ବିଲୋପ ଯୋଗ କରନ୍ତୁ | (%1$s)</string>
     <string name="button_sync">ସିଙ୍କ୍</string>
-    <string name="cancel_sync_confirm">ଆପଣ ଏହି ସିଂଙ୍କକୁ ବାତିଲ କରିବାକୁ ଚାହାନ୍ତି?</string>
-    <string name="continue_sync">ସିଂଙ୍କ ଜାରି ରଖନ୍ତୁ</string>
-    <string name="sync_cancelled">ସିଂଙ୍କ ବାତିଲ ହେଲା</string>
-    <string name="sync_cancel_message">ବାତିଲ ହେଉଛି &#8230;\n ଏହା କିଛି ସମୟ ନେଇପାରେ</string>
+    <string name="cancel_sync_confirm">ଆପଣ ସିଙ୍କ୍ କୁ ବାତିଲ କରିବାକୁ ଚାହୁଁଛନ୍ତି କି?</string>
+    <string name="continue_sync">ସିଙ୍କ୍ ଜାରି ରଖନ୍ତୁ</string>
+    <string name="sync_cancelled">ସିଙ୍କ୍ ବାତିଲ ହୋଇଛି</string>
+    <string name="sync_cancel_message">ବାତିଲ ହେଉଛି...\nଏହା କିଛି ସମୟ ନେଇପାରେ |</string>
     <string name="export">ରପ୍ତାନି</string>
     <string name="export_collection">ସଂଗ୍ରହର ରପ୍ତାନି</string>
     <string name="export_deck">ତାସଖଣ୍ଡର ରପ୍ତାନି</string>
     <string name="nothing">କିଛି ନାହିଁ</string>
     <!-- Card template editor -->
-    <string name="title_activity_template_editor">ପତ୍ର ପ୍ରକାର</string>
-    <string name="card_template_editor_front">ଆଗ ଟେମ୍ପଲେଟ</string>
-    <string name="card_template_editor_back">ପଛ ଟେମ୍ପଲେଟ</string>
+    <string name="title_activity_template_editor">କାର୍ଡ ପ୍ରକାର</string>
+    <string name="card_template_editor_front">ସାମ୍ନା ଟେମ୍ପଲେଟ୍</string>
+    <string name="card_template_editor_back">ପଛ ଟେମ୍ପଲେଟ୍</string>
     <string name="card_template_editor_styling">ଶୈଳିକରଣ</string>
-    <string name="card_template_editor_menu_card_browser_appearance">ପତ୍ର ସନ୍ଧାନକାରୀର ରୂପ</string>
+    <string name="card_template_editor_menu_card_browser_appearance">କାର୍ଡ ବ୍ରାଉଜରର ଦୃଶ୍ୟ</string>
     <string name="card_template_editor_deck_override">ତାସଖଣ୍ଡର ନବଲିଖନ</string>
-    <string name="card_template_editor_cant_delete">ଅତିକମରେ ଗୋଟେ ପତ୍ର ପ୍ରକାର ଦରକାର ଅଛି</string>
+    <string name="card_template_editor_cant_delete">ଅତିକମରେ ଗୋଟିଏ କାର୍ଡ ପ୍ରକାର ଆବଶ୍ୟକ</string>
     <plurals name="card_template_editor_confirm_delete">
         <item quantity="one">ପତ୍ର ପ୍ରକାର “%2$s” ଏବଂ ତାହାର %1$d ପତ୍ରକୁ ବିଲୋପ କରନ୍ତୁ?</item>
         <item quantity="other">ପତ୍ର ପ୍ରକାର “%2$s” ଏବଂ ତାହାର %1$d ପତ୍ରଗୁଡ଼ିକୁ ବିଲୋପ କରନ୍ତୁ?</item>
@@ -196,9 +197,9 @@
     <!-- card Info -->
     <string name="card_info_title">କାର୍ଡ ସୂଚନା</string>
     <!-- Permissions -->
-    <string name="read_write_permission_label">ଅଣ୍ଡରାଇଡ ଡାଟାବେଶକୁ ପଢନ୍ତୁ ଏବଂ ଲେଖନ୍ତୁ</string>
+    <string name="read_write_permission_label">Ankidroid ଡାଟାବେସ୍ କୁ ପଢ଼ନ୍ତୁ ଏବଂ ଲେଖନ୍ତୁ</string>
     <string name="read_write_permission_description">ସାମ୍ପ୍ରତିକ ନୋଟ, ପତ୍ର, ନୋଟ ପ୍ରକାର ଏବଂ ତାସଖଣ୍ଡ କୁ ପ୍ରବେଶ ରଖନ୍ତୁ ଏବଂ ନୂଆଗୁଡ଼ିକୁ ବନାନ୍ତୁ</string>
     <!-- Context Menu -->
-    <string name="card_browser_context_menu" comment="The value which appears in the system context menu. Note the casing difference">ପତ୍ର ସନ୍ଧାନକାରୀ</string>
-    <string name="context_menu_anki_card_label">ଆଙ୍କି କାର୍ଡ</string>
+    <string name="card_browser_context_menu" comment="The value which appears in the system context menu. Note the casing difference">କାର୍ଡ ବ୍ରାଉଜର୍</string>
+    <string name="context_menu_anki_card_label">Anki କାର୍ଡ</string>
 </resources>
