@@ -64,7 +64,7 @@ CREATE TABLE cards (
      -- Due is used differently for different card types: 
      --   new: note id or random int
      --   due: integer day, relative to the collection's creation time
-     --   learning: integer timestamp
+     --   learning: integer timestamp in second
     ivl             integer not null,
       -- interval (used in SRS algorithm). Negative = seconds, positive = days
     factor          integer not null,
