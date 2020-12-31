@@ -28,6 +28,7 @@ import com.ichi2.libanki.Decks;
 import com.ichi2.libanki.Model;
 import com.ichi2.libanki.Models;
 import com.ichi2.libanki.Note;
+import com.ichi2.libanki.utils.Time;
 import com.ichi2.testutils.AnkiAssert;
 import com.ichi2.utils.JSONArray;
 
@@ -412,22 +413,27 @@ mw.col.sched.extendLimits(1, 0)
     @Test
     public void regression_7984() {
         Collection col = getCol();
-        AbstractSched sched = col.getSched();
-        Card card1 = addNoteUsingBasicModel("One", "Two").cards().get(0);
-        Card card2 = addNoteUsingBasicModel("Three", "Four").cards().get(0);
-        Card gotten = sched.getCard();
-        assertThat(gotten, is(card1));
-        sched.answerCard(gotten, Consts.BUTTON_ONE);
-        gotten = sched.getCard();
-        assertThat(gotten, is(card2));
-        sched.answerCard(gotten, Consts.BUTTON_ONE);
-        sched.reset();
+        SchedV2 sched = (SchedV2) col.getSched();
+        Time time = getCol().getTime();
+        Card[] cards = new Card[2];
+        for (int i = 0; i < 2; i++) {
+            cards[i] = addNoteUsingBasicModel(Integer.toString(i), "").cards().get(0);
+            cards[i].setQueue(Consts.QUEUE_TYPE_LRN);
+            cards[i].setType(Consts.CARD_TYPE_LRN);
+            cards[i].setDue(time.intTime() - 20 * 60 + i);
+            cards[i].flush();
+        }
+        col.reset();
         // Regression test success non deterministically without the sleep
+        Card gotten = sched.getCard();
         advanceRobolectricLooperWithSleep();
+        assertThat(gotten, is(cards[0]));
+        sched.answerCard(gotten, Consts.BUTTON_ONE);
+
         gotten = sched.getCard();
-        assertThat(gotten, is(notNullValue()));
+        assertThat(gotten, is(cards[1]));
         sched.answerCard(gotten, Consts.BUTTON_ONE);
         gotten = sched.getCard();
-        assertThat(gotten, is(notNullValue()));
+        assertThat(gotten, is(cards[0]));
     }
 }
