@@ -7,6 +7,7 @@
     android:gravity="center_vertical"
     android:orientation="horizontal">
     <RelativeLayout
+        android:padding="6dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 

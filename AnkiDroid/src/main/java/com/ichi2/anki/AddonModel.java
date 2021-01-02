@@ -6,13 +6,15 @@ public class AddonModel {
     private String developer;
     private String ankidroid_api;
     private String homepage;
+    private String addonType;
 
-    public AddonModel(String name, String version, String developer, String ankidroid_api, String homepage) {
+    public AddonModel(String name, String version, String developer, String ankidroid_api, String homepage, String addonType) {
         this.name = name;
         this.version = version;
         this.developer = developer;
         this.ankidroid_api = ankidroid_api;
         this.homepage = homepage;
+        this.addonType = addonType;
     }
 
     public String getName() {
@@ -33,5 +35,9 @@ public class AddonModel {
 
     public String getHomepage() {
         return homepage;
+    }
+
+    public String getAddonType() {
+        return addonType;
     }
 }

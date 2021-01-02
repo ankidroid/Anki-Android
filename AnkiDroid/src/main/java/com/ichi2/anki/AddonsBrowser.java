@@ -11,21 +11,19 @@ import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.net.Uri;
-import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
+import android.os.StrictMode;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
-import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
 import com.github.zafarkhaja.semver.Version;
 import com.ichi2.anki.widgets.DeckDropDownAdapter;
+import com.ichi2.async.Connection;
 import com.ichi2.themes.Themes;
-import com.ichi2.utils.UiUtil;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -43,8 +41,14 @@ import java.util.Objects;
 
 import androidx.annotation.Nullable;
 import androidx.core.text.HtmlCompat;
+import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import okhttp3.Call;
+import okhttp3.Callback;
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.Response;
 import timber.log.Timber;
 
 import static com.ichi2.anim.ActivityTransitionAnimation.Direction.RIGHT;
@@ -57,6 +61,8 @@ public class AddonsBrowser extends NavigationDrawerActivity implements DeckDropD
     private Menu mActionBarMenu;
     private MenuItem mInstallAddon;
     private MenuItem mGetMoreAddons;
+    private MenuItem mReviewerAddons;
+    private MenuItem mNoteEditorAddons;
 
     private long queueId;
     DownloadManager downloadManager;
@@ -73,6 +79,9 @@ public class AddonsBrowser extends NavigationDrawerActivity implements DeckDropD
 
     private  SharedPreferences preferences;
 
+    private String[] addonTypes = {"reviewer", "note_editor"};
+    private String listAddonType = addonTypes[0];
+    
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         Themes.setThemeLegacy(this);
@@ -84,14 +93,18 @@ public class AddonsBrowser extends NavigationDrawerActivity implements DeckDropD
         setContentView(R.layout.addons_browser);
         initNavigationDrawer(findViewById(android.R.id.content));
 
+
         // Add a home button to the actionbar
         getSupportActionBar().setHomeButtonEnabled(true);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         showBackIcon();
-        setTitle(getResources().getText(R.string.addons));
 
         addonsListRecyclerView = findViewById(R.id.addons);
         addonsListRecyclerView.setLayoutManager(new LinearLayoutManager(this));
+
+        DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(this, DividerItemDecoration.VERTICAL);
+        addonsListRecyclerView.addItemDecoration(dividerItemDecoration);
+
         downloadDialog = new Dialog(this);
 
         currentAnkiDroidDirectory = CollectionHelper.getCurrentAnkiDroidDirectory(this);
@@ -99,7 +112,9 @@ public class AddonsBrowser extends NavigationDrawerActivity implements DeckDropD
 
         preferences = AnkiDroidApp.getSharedPrefs(this);
 
-        listAddonsFromDir();
+        // default list reviewer addons
+        getSupportActionBar().setTitle(getString(R.string.reviewer_addons));
+        listAddonsFromDir(addonTypes[0]);
     }
 
 
@@ -118,14 +133,27 @@ public class AddonsBrowser extends NavigationDrawerActivity implements DeckDropD
         }
     }
 
-
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         mActionBarMenu = menu;
         getMenuInflater().inflate(R.menu.addon_browser, menu);
         mInstallAddon = menu.findItem(R.id.action_install_addon);
         mGetMoreAddons = menu.findItem(R.id.action_get_more_addons);
+        mReviewerAddons = menu.findItem(R.id.action_addon_reviewer);
+        mNoteEditorAddons = menu.findItem(R.id.action_addon_note_editor);
 
+        mReviewerAddons.setOnMenuItemClickListener(item -> {
+            getSupportActionBar().setTitle(getString(R.string.reviewer_addons));
+            listAddonsFromDir(addonTypes[0]);
+            return true;
+        });
+
+        mNoteEditorAddons.setOnMenuItemClickListener(item -> {
+            getSupportActionBar().setTitle(getString(R.string.note_editor_addons));
+            listAddonsFromDir(addonTypes[1]);
+            return true;
+        });
+        
         mInstallAddon.setOnMenuItemClickListener(item -> {
 
             downloadDialog.setCanceledOnTouchOutside(true);
@@ -135,9 +163,6 @@ public class AddonsBrowser extends NavigationDrawerActivity implements DeckDropD
             Button downloadButton = downloadDialog.findViewById(R.id.addon_download_button);
 
             downloadButton.setOnClickListener(v->{
-
-                showProgressBar();
-
                 String npmAddonName = downloadEditText.getText().toString();
 
                 // if string is:  npm i ankidroid-js-addon-progress-bar
@@ -149,12 +174,17 @@ public class AddonsBrowser extends NavigationDrawerActivity implements DeckDropD
                 npmAddonName = npmAddonName.trim();
                 npmAddonName = npmAddonName.replaceAll("\u00A0", "");
 
-                String url = "https://registry.npmjs.org/" + npmAddonName + "/latest";
-
-                //getContentFromUrl(url, ankidroidAddonPackageJson);
-                downloadFileFromUrl(url, npmAddonName+".json");
-
                 downloadDialog.dismiss();
+
+                String finalNpmAddonName = npmAddonName;
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        showProgressBar();
+                        JSONObject jsonObject = getLatestPackageJson(finalNpmAddonName);
+                        downloadAddonPackageFile(jsonObject, finalNpmAddonName);
+                    }
+                });
             });
 
             downloadDialog.show();
@@ -177,13 +207,17 @@ public class AddonsBrowser extends NavigationDrawerActivity implements DeckDropD
        and non empty string.
        Then that addon will available for enable/disable
      */
-    public void listAddonsFromDir() {
+    public void listAddonsFromDir(String addonType) {
         boolean success = true;
         if (!addonsHomeDir.exists()) {
             success = addonsHomeDir.mkdirs();
         }
 
         if (success) {
+
+            // reset for new view create
+            addonsNames.clear();
+
             File directory = new File(String.valueOf(addonsHomeDir));
             File[] files = directory.listFiles();
             for (File file : files) {
@@ -193,19 +227,23 @@ public class AddonsBrowser extends NavigationDrawerActivity implements DeckDropD
                 // AnkiDroid/addons/ankidroid-addon-../package/package.json
                 File addonsPackageDir = new File(file, "package");
                 File addonsPackageJson = new File(addonsPackageDir, "package.json");
+                
+                JSONObject jsonObject  = packageJsonReader(addonsPackageJson);
 
                 AddonModel addonModel;
-                if (isValidAddonPackage(addonsPackageJson)) {
-
-                    JSONObject jsonObject = packageJsonReader(addonsPackageJson);
+                if (isValidAddonPackage(jsonObject)) {
+                    
                     String addonName = jsonObject.optString("name", "");
                     String addonVersion = jsonObject.optString("version", "");
                     String addonDev = jsonObject.optString("author", "");
                     String addonAnkiDroidAPI = jsonObject.optString("ankidroid_js_api", "");
                     String addonHomepage = jsonObject.optString("homepage", "");
+                    String typeOfAddon = jsonObject.optString("addon_type", "");
 
-                    addonModel = new AddonModel(addonName, addonVersion, addonDev, addonAnkiDroidAPI, addonHomepage);
-                    addonsNames.add(addonModel);
+                    if (addonType.equals(typeOfAddon)) {
+                        addonModel = new AddonModel(addonName, addonVersion, addonDev, addonAnkiDroidAPI, addonHomepage, addonType);
+                        addonsNames.add(addonModel);                        
+                    }
                 }
             }
 
@@ -216,26 +254,85 @@ public class AddonsBrowser extends NavigationDrawerActivity implements DeckDropD
         hideProgressBar();
     }
 
-    // download package.json and addon.tgz file from url
-    public void downloadFileFromUrl(String url, String fileName) {
-        downloadManager = (DownloadManager)getSystemService(DOWNLOAD_SERVICE);
-        DownloadManager.Request request = new DownloadManager.Request(Uri.parse(url));
-        request.setTitle(fileName);
 
-        File downloadFile = new File(Environment.DIRECTORY_DOWNLOADS + fileName);
+    public JSONObject getLatestPackageJson(String npmAddonName) {
+        OkHttpClient client = new OkHttpClient();
 
-        // remove old file
-        if (downloadFile.exists()) {
-            downloadFile.delete();
+        String url = "https://registry.npmjs.org/" + npmAddonName + "/latest";
+
+        StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
+        StrictMode.setThreadPolicy(policy);
+
+        Request request = new Request.Builder()
+                .url(url)
+                .build();
+
+        Response responses = null;
+        JSONObject jsonObject = null;
+
+        try {
+            responses = client.newCall(request).execute();
+            String strResponse = responses.body().string();
+
+            Timber.d("json::%s", strResponse);
+
+            jsonObject = new JSONObject(strResponse);
+            if (isValidAddonPackage(jsonObject)) {
+                return jsonObject;
+            } else {
+                hideProgressBar();
+                UIUtils.showThemedToast(getApplicationContext(), getString(R.string.not_valid_package), false);
+            }
+
+        } catch (IOException | JSONException e) {
+            hideProgressBar();
+            Timber.e(e.getLocalizedMessage());
+            UIUtils.showThemedToast(getApplicationContext(), getString(R.string.not_valid_package), false);
         }
 
-        request.setDestinationInExternalPublicDir(Environment.DIRECTORY_DOWNLOADS, fileName);
-
-        queueId = downloadManager.enqueue(request);
-
-        registerReceiver(receiver, new IntentFilter(DownloadManager.ACTION_DOWNLOAD_COMPLETE));
+        return jsonObject;
     }
 
+    public void downloadAddonPackageFile(JSONObject jsonObject, String npmAddonName) {
+        if (Connection.isOnline()) {
+
+            if (isValidAddonPackage(jsonObject)) {
+                try {
+                    String typeOfAddon = jsonObject.optString("addon_type", "");
+                    listAddonType = typeOfAddon;
+                    JSONObject dist = jsonObject.getJSONObject("dist");
+                    String tarballUrl = dist.get("tarball").toString();
+                    Timber.d("tarball link %s", tarballUrl);
+
+                    if (!tarballUrl.isEmpty() && tarballUrl.startsWith("https://") && tarballUrl.endsWith(".tgz")) {
+                        downloadManager = (DownloadManager)getSystemService(DOWNLOAD_SERVICE);
+                        DownloadManager.Request request = new DownloadManager.Request(Uri.parse(tarballUrl));
+
+                        request.setTitle(npmAddonName);
+                        request.setDestinationInExternalPublicDir(Environment.DIRECTORY_DOWNLOADS, npmAddonName+".tgz");
+
+                        queueId = downloadManager.enqueue(request);
+                        registerReceiver(receiver, new IntentFilter(DownloadManager.ACTION_DOWNLOAD_COMPLETE));
+                    } else {
+                        hideProgressBar();
+                        UIUtils.showThemedToast(getApplicationContext(), getString(R.string.not_valid_package), true);
+                    }
+
+                } catch (JSONException e) {
+                    hideProgressBar();
+                    Timber.e(e.getLocalizedMessage());
+                    UIUtils.showThemedToast(getApplicationContext(), getString(R.string.error_downloading_file), true);
+                }
+            } else {
+                hideProgressBar();
+                UIUtils.showThemedToast(getApplicationContext(), getString(R.string.not_valid_package), true);
+            }
+
+        } else {
+            hideProgressBar();
+            UIUtils.showThemedToast(getApplicationContext(), getString(R.string.network_no_connection), true);
+        }
+    }
 
     BroadcastReceiver receiver = new BroadcastReceiver() {
         @Override
@@ -252,96 +349,48 @@ public class AddonsBrowser extends NavigationDrawerActivity implements DeckDropD
                     int columIndex = cursor.getColumnIndex(DownloadManager.COLUMN_STATUS);
 
                     if (DownloadManager.STATUS_SUCCESSFUL == cursor.getInt(columIndex)) {
-                        String uri = cursor.getString(cursor.getColumnIndex(DownloadManager.COLUMN_TITLE));
+                        String addonName = cursor.getString(cursor.getColumnIndex(DownloadManager.COLUMN_TITLE));
+                        File addonsDir = new File(addonsHomeDir, addonName);
+                        String tarballPath = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS)
+                                + "/" + Uri.parse(addonName).getPath() + ".tgz";
+                        File tarballFile = new File(tarballPath);
 
-                        String tarballLink;
+                        if (tarballFile.exists()) {
+                            // extracting using library https://github.com/thrau/jarchivelib
+                            try {
+                                Archiver archiver = ArchiverFactory.createArchiver(new File(tarballPath));
+                                archiver.extract(tarballFile, addonsDir);
 
-                        if (uri.endsWith(".json")) {
+                                hideProgressBar();
+                                UIUtils.showThemedToast(context, getString(R.string.addon_download_success), true);
+                            } catch (IOException e) {
+                                Timber.e(e);
+                                UIUtils.showThemedToast(context, getString(R.string.error_downloading_file), true);
+                            } finally {
+                                listAddonsFromDir(listAddonType);
 
-                            File addonDir = new File(addonsHomeDir, uri.replace(".json", ""));
-                            File addonsPackageDir = new File(addonDir, "package");
-                            File oldPackageJson = new File(addonsPackageDir, "package.json");
-
-                            File newPackageJson = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS), Uri.parse(uri).getPath());
-
-                            if (checkAddonUpdate(oldPackageJson, newPackageJson)) {
-                                UIUtils.showThemedToast(context, getString(R.string.updating_addon), true);
-                            } else {
-                                UIUtils.showThemedToast(context, getString(R.string.downloading_addon), true);
+                                if (tarballFile.exists()) {
+                                    tarballFile.delete();
+                                }
                             }
-
-                            tarballLink = getNpmTarball(newPackageJson);
-                            // tarball contains valid url for download
-                            if (!tarballLink.isEmpty()) {
-                                downloadFileFromUrl(tarballLink, uri.replace(".json", "") + ".tgz");
-                            }
-
-                        } else if (uri.endsWith(".tgz")) {
-                            extractTarball(uri);
+                        } else {
+                            hideProgressBar();
                         }
+
+                    } else if (DownloadManager.STATUS_FAILED == cursor.getInt(columIndex)) {
+                        hideProgressBar();
+                        downloadManager.remove(queueId);
+                        UIUtils.showThemedToast(context, getString(R.string.error_downloading_file_check_name), false);
                     }
                 }
 
             } else {
                 hideProgressBar();
-                UIUtils.showThemedToast(context, getString(R.string.error_downloading_file), false);
+                downloadManager.remove(queueId);
+                UIUtils.showThemedToast(context, getString(R.string.error_downloading_file_check_name), false);
             }
         }
     };
-
-    // extract ankidroid-js-addon....tgz file and copy it AnkiDroid/addons folder
-    private void extractTarball(String uri) {
-        File addonsDir = new File(addonsHomeDir, uri.replace(".tgz", ""));
-
-        String tarballPath = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS) + "/" + Uri.parse(uri).getPath();
-        File tarballFile = new File(tarballPath);
-
-        // extracting using library https://github.com/thrau/jarchivelib
-        try {
-            Archiver archiver = ArchiverFactory.createArchiver(new File(tarballPath));
-            archiver.extract(tarballFile, addonsDir);
-
-            // remove after extract
-            if (tarballFile.exists()) {
-                tarballFile.delete();
-            }
-
-            listAddonsFromDir();
-            hideProgressBar();
-
-            UIUtils.showThemedToast(this, getString(R.string.addon_download_success), true);
-        } catch (IOException e) {
-            Timber.e(e);
-        } finally {
-            hideProgressBar();
-        }
-    }
-
-    // get tarball info from package.json of ankidroid-js-addon...
-    private String getNpmTarball(File packageJsonFile) {
-        String tarballUrl = "";
-
-        if (isValidAddonPackage(packageJsonFile)) {
-            try {
-                JSONObject jsonObject  = packageJsonReader(packageJsonFile);
-                JSONObject dist = jsonObject.getJSONObject("dist");
-                tarballUrl = dist.get("tarball").toString();
-                Timber.d("tarball link %s", dist.get("tarball"));
-            } catch (JSONException e) {
-                Timber.e(e.getLocalizedMessage());
-            }
-        } else {
-            hideProgressBar();
-            UIUtils.showThemedToast(this, getString(R.string.not_valid_package), false);
-        }
-
-        // remove after getting tarball link
-        if (packageJsonFile.exists()) {
-            packageJsonFile.delete();
-        }
-
-        return tarballUrl;
-    }
 
     // read package.json file of ankidroid-js-addon...
     public static JSONObject packageJsonReader(File addonsFiles) {
@@ -359,7 +408,7 @@ public class AddonsBrowser extends NavigationDrawerActivity implements DeckDropD
 
             String response = stringBuilder.toString();
             jsonObject  = new JSONObject(response);
-            
+
         } catch (IOException | JSONException e) {
             Timber.e(e.getLocalizedMessage());
         }
@@ -367,65 +416,41 @@ public class AddonsBrowser extends NavigationDrawerActivity implements DeckDropD
     }
 
     // is package.json of ankidroid-js-addon... contains valid ankidroid_js_api==0.0.1 and keywords 'ankidroid-js-addon'
-    public boolean isValidAddonPackage(File addonsPackageJson) {
+    public boolean isValidAddonPackage(JSONObject jsonObject) {
 
-        if (addonsPackageJson.exists()) {
+        if (jsonObject == null) {
+            return false;
+        }
+        
+        String addonName = jsonObject.optString("name", "");
+        String addonVersion = jsonObject.optString("version", "");
+        String addonDev = jsonObject.optString("author", "");
+        String addonAnkiDroidAPI = jsonObject.optString("ankidroid_js_api", "");
+        String addonHomepage = jsonObject.optString("homepage", "");
+        boolean jsAddonKeywordsPresent = false;
 
-            JSONObject jsonObject  = packageJsonReader(addonsPackageJson);
-
-            String addonName = jsonObject.optString("name", "");
-            String addonVersion = jsonObject.optString("version", "");
-            String addonDev = jsonObject.optString("author", "");
-            String addonAnkiDroidAPI = jsonObject.optString("ankidroid_js_api", "");
-            String addonHomepage = jsonObject.optString("homepage", "");
-            boolean jsAddonKeywordsPresent = false;
-
-            try {
-                JSONArray keywords = jsonObject.getJSONArray("keywords");
-                for (int j = 0; j < keywords.length(); j++) {
-                    String addonKeyword = keywords.getString(j);
-                    if (addonKeyword.equals(AnkiDroidJsAddonKeywords)) {
-                        jsAddonKeywordsPresent = true;
-                        break;
-                    }
-                }
-                Timber.d("keywords %s", keywords.toString());
-            } catch (JSONException e) {
-                Timber.e(e.getLocalizedMessage());
-            }
-
-            // if ankidroid_js_api == 0.0.1 (current js api version) and package.json contains ankidroid-js-addon keywords
-            Version ankidroidJsApiVersion = Version.valueOf(AnkiDroidJsAPI);
-            Version addonJsApiVerion = Version.valueOf(addonAnkiDroidAPI);
-
-            if (addonJsApiVerion.lessThan(ankidroidJsApiVersion)) {
-                return false;
-            }
-
-            if (addonAnkiDroidAPI.equals(AnkiDroidJsAPI) && jsAddonKeywordsPresent) {
-                // if other strings are non empty
-                if (!addonName.isEmpty() && !addonVersion.isEmpty() && !addonDev.isEmpty() && !addonHomepage.isEmpty()) {
-                    return true;
+        try {
+            
+            JSONArray keywords = jsonObject.getJSONArray("keywords");
+            for (int j = 0; j < keywords.length(); j++) {
+                String addonKeyword = keywords.getString(j);
+                if (addonKeyword.equals(AnkiDroidJsAddonKeywords)) {
+                    jsAddonKeywordsPresent = true;
+                    break;
                 }
             }
+            Timber.d("keywords %s", keywords.toString());
+        } catch (JSONException e) {
+            Timber.e(e.getLocalizedMessage());
         }
-        return false;
-    }
 
-    public boolean checkAddonUpdate(File oldAddonPackageJson, File newAddonPackageJson) {
-        if (oldAddonPackageJson.exists() && newAddonPackageJson.exists()) {
-
-            JSONObject oldJsonObject  = packageJsonReader(oldAddonPackageJson);
-            JSONObject newJsonObject  = packageJsonReader(newAddonPackageJson);
-
-            String oldAddonVersion = oldJsonObject.optString("version", "");
-            String newAddonVersion = newJsonObject.optString("version", "");
-
-            Version oldVersion = Version.valueOf(oldAddonVersion);
-            Version newVersion = Version.valueOf(newAddonVersion);
-
-            return newVersion.greaterThan(oldVersion);
+        if (addonAnkiDroidAPI.equals(AnkiDroidJsAPI) && jsAddonKeywordsPresent) {
+            // if other strings are non empty
+            if (!addonName.isEmpty() && !addonVersion.isEmpty() && !addonDev.isEmpty() && !addonHomepage.isEmpty()) {
+                return true;
+            }
         }
+    
         return false;
     }
 
@@ -496,9 +521,45 @@ public class AddonsBrowser extends NavigationDrawerActivity implements DeckDropD
         });
 
         buttonUpdate.setOnClickListener(v -> {
-            infoDialog.dismiss();
-            String url = "https://registry.npmjs.org/" + addonModel.getName() + "/latest";
-            downloadFileFromUrl(url, addonModel.getName()+".json");
+            UIUtils.showThemedToast(this, getString(R.string.checking_addon_update), false);
+
+            JSONObject jsonObject = getLatestPackageJson(addonModel.getName());
+
+            String strLatestVersion = jsonObject.optString("version", "");
+            String strCurrentVersion = addonModel.getVersion();
+
+            Version latestVersion = Version.valueOf(strLatestVersion);
+            Version currentVersion = Version.valueOf(strCurrentVersion);
+
+            if (latestVersion.greaterThan(currentVersion)) {
+                AlertDialog.Builder alertBuilder = new AlertDialog.Builder(this);
+                alertBuilder.setTitle(addonModel.getName());
+                alertBuilder.setMessage(getString(R.string.confirm_update_addon, addonModel.getName()));
+                alertBuilder.setCancelable(true);
+
+                alertBuilder.setPositiveButton(
+                        getString(R.string.dialog_ok),
+                        new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int id) {
+                                // download latest addon
+                                downloadAddonPackageFile(jsonObject, addonModel.getName());
+                            }
+                        });
+
+                alertBuilder.setNegativeButton(
+                        getString(R.string.dialog_cancel),
+                        new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int id) {
+                                dialog.cancel();
+                            }
+                        });
+
+                AlertDialog updateAlert = alertBuilder.create();
+                updateAlert.show();
+                infoDialog.dismiss();
+            } else {
+                UIUtils.showThemedToast(this, getString(R.string.no_updates_available), false);
+            }
 
         });
 

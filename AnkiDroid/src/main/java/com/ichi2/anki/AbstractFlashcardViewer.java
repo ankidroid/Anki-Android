@@ -2419,7 +2419,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
             Timber.d("map values %s",entry.getKey() + ": " + entry.getValue().toString());
 
             // getting enabled status of addons in SharedPreferences with key containing 'addon'
-            if (entry.getKey().contains("addon") && entry.getValue().toString().equals("enabled")) {
+            if (entry.getKey().contains("reviewer_addon") && entry.getValue().toString().equals("enabled")) {
                 try {
                     /*
                      split value and getting latter part as it stored id for addon e.g addon:ankidroid-js-addon-12345...
@@ -2437,6 +2437,10 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
                         // get {'main': 'index.js'} from package.json file
                         if (addonPackageJson.exists()) {
                             org.json.JSONObject jsonObject  = AddonsBrowser.packageJsonReader(addonPackageJson);
+                            if (jsonObject == null) {
+                                // return empty
+                                return "";
+                            }
                             mainJsFile = jsonObject.optString("main", "");
                         }
 
