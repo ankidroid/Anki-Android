@@ -1,6 +1,4 @@
-Krktkitii87
-Ittj
-Mrk# What should I do if AnkiDroid **crashes** every time I try to open it?
+# What should I do if AnkiDroid **crashes** every time I try to open it?
 
 Try this first:
 1. Uninstall AnkiDroid -> reboot your device -> reinstall AnkiDroid
