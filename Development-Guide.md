@@ -234,6 +234,19 @@ To look at the HTML & JavaScript live you can use [Chrome WebView Remote debuggi
 * Using Chrome on the same PC, browse to: `chrome://inspect` and you should see the WebView on your phone/emulator. 
 * Click `Inspect` for that WebView and you'll get a full Chrome remote debugging console.
 
+### Via Eruda Console for Mobile Browsers
+https://github.com/liriliri/eruda
+
+This can be used inside the AnkiDroid to view console log like Chrome dev tools.
+* Add following lines to Front/Back of card templates
+```
+<script src="https://cdn.jsdelivr.net/npm/eruda"></script>
+<script>eruda.init();</script>
+```
+* Save the templates and open deck again.
+* At bottom right corner, there will be button to open console log
+* [View Demo](https://user-images.githubusercontent.com/12841290/103353056-c00bdf80-4ae2-11eb-941e-e652e05e8345.gif)
+
 # Checking database modifications
 
 On Ubuntu Linux:
