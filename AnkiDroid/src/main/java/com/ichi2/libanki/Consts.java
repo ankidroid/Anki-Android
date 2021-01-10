@@ -140,8 +140,9 @@ public class Consts {
     public static final int REVLOG_REV = 1;
     public static final int REVLOG_RELRN = 2;
     public static final int REVLOG_CRAM = 3;
+    public static final int REVLOG_MANUAL = 4;
     @Retention(SOURCE)
-    @IntDef({REVLOG_LRN, REVLOG_REV, REVLOG_RELRN, REVLOG_CRAM})
+    @IntDef({REVLOG_LRN, REVLOG_REV, REVLOG_RELRN, REVLOG_CRAM, REVLOG_MANUAL})
     public @interface REVLOG_TYPE {}
 
     // The labels defined in consts.py are in AnkiDroid's resources files.
