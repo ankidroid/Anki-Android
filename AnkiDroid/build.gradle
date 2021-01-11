@@ -273,4 +273,7 @@ dependencies {
     // for untar .tgz file downloaded from npmjs for AnkiDroid addon support
     implementation 'org.rauschig:jarchivelib:1.1.0'
 
+    // for note editor addon support
+    implementation 'com.github.evgenyneu:js-evaluator-for-android:v5.0.0'
+
 }

@@ -569,10 +569,10 @@ public class AddonsBrowser extends NavigationDrawerActivity implements DeckDropD
     public static void deleteDirectory(File dir) {
         if ( dir.isDirectory() ) {
             String [] children = dir.list();
-            for ( int i = 0 ; i < children.length ; i ++ ) {
-                File child = new File( dir , children[i] );
+            for (String s : children) {
+                File child = new File(dir, s);
 
-                if (child.isDirectory()){
+                if (child.isDirectory()) {
                     deleteDirectory(child);
                     child.delete();
                 } else {

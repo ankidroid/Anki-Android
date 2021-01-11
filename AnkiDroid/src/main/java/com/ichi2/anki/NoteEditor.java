@@ -64,6 +64,8 @@ import android.widget.Spinner;
 import android.widget.TextView;
 
 import com.afollestad.materialdialogs.MaterialDialog;
+import com.evgenii.jsevaluator.JsEvaluator;
+import com.evgenii.jsevaluator.interfaces.JsCallback;
 import com.ichi2.anki.dialogs.ConfirmationDialog;
 import com.ichi2.anki.dialogs.DiscardChangesDialog;
 import com.ichi2.anki.dialogs.IntegerDialog;
@@ -79,6 +81,8 @@ import com.ichi2.anki.multimediacard.fields.IField;
 import com.ichi2.anki.multimediacard.fields.ImageField;
 import com.ichi2.anki.multimediacard.fields.TextField;
 import com.ichi2.anki.multimediacard.impl.MultimediaEditableNote;
+import com.ichi2.anki.noteeditor.AddonToolsAdapter;
+import com.ichi2.anki.noteeditor.AddonToolsModel;
 import com.ichi2.anki.noteeditor.FieldState;
 import com.ichi2.anki.noteeditor.FieldState.FieldChangeType;
 import com.ichi2.anki.noteeditor.CustomToolbarButton;
@@ -116,7 +120,10 @@ import com.ichi2.widget.WidgetStatus;
 import com.ichi2.utils.JSONArray;
 import com.ichi2.utils.JSONObject;
 
+import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
@@ -128,11 +135,16 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Set;
 
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.DialogFragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 import timber.log.Timber;
+
+import static com.ichi2.anki.AddonsBrowser.packageJsonReader;
 import static com.ichi2.compat.Compat.ACTION_PROCESS_TEXT;
 import static com.ichi2.compat.Compat.EXTRA_PROCESS_TEXT;
 
@@ -146,7 +158,7 @@ import static com.ichi2.libanki.Models.NOT_FOUND_NOTE_TYPE;
  *
  * @see <a href="http://ankisrs.net/docs/manual.html#cards">the Anki Desktop manual</a>
  */
-public class NoteEditor extends AnkiActivity {
+public class NoteEditor extends AnkiActivity implements AddonToolsAdapter.OnAddonClickListener {
     // DA 2020-04-13 - Refactoring Plans once tested:
     // * There is a difference in functionality depending on whether we are editing
     // * Extract mAddNote and mCurrentEditedCard into inner class. Gate mCurrentEditedCard on edit state.
@@ -247,6 +259,11 @@ public class NoteEditor extends AnkiActivity {
 
     // Use the same HTML if the same image is pasted multiple times.
     private HashMap<String, String> mPastedImageCache = new HashMap<>();
+
+    // addon tools list
+    private List<AddonToolsModel> addonToolsModelList = new ArrayList<AddonToolsModel>();
+    private RecyclerView addonToolsRecyclerView;
+    JsEvaluator jsEvaluator;
 
     private SaveNoteHandler saveNoteHandler() {
         return new SaveNoteHandler(this);
@@ -1097,6 +1114,8 @@ public class NoteEditor extends AnkiActivity {
         menu.findItem(R.id.action_show_toolbar).setChecked(!shouldHideToolbar());
         menu.findItem(R.id.action_capitalize).setChecked(AnkiDroidApp.getSharedPrefs(this).getBoolean("note_editor_capitalize", true));
 
+        showAddonToolbar(!shouldHideToolbar());
+
         return super.onCreateOptionsMenu(menu);
     }
 
@@ -1143,6 +1162,9 @@ public class NoteEditor extends AnkiActivity {
             item.setChecked(!item.isChecked());
             AnkiDroidApp.getSharedPrefs(this).edit().putBoolean("noteEditorShowToolbar", item.isChecked()).apply();
             updateToolbar();
+
+            showAddonToolbar(item.isChecked());
+
         } else if (itemId == R.id.action_capitalize) {
             Timber.i("NoteEditor:: Capitalize button pressed. New State: %b", !item.isChecked());
             item.setChecked(!item.isChecked()); // Needed for Android 9
@@ -2458,5 +2480,165 @@ public class NoteEditor extends AnkiActivity {
                 Timber.w(e, "Failed to save hint locale");
             }
         }
+    }
+
+
+    private void showAddonToolbar(boolean isChecked) {
+
+        addonToolsRecyclerView = findViewById(R.id.addon_tools_list);
+        addonToolsRecyclerView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
+
+        if (isChecked) {
+            addonToolsRecyclerView.setVisibility(View.VISIBLE);
+
+            try {
+                jsEvaluator = new JsEvaluator(this);
+                listEnabledAddonsFromDir();
+            } catch (IOException | NullPointerException e) {
+                Timber.e(e.getLocalizedMessage(), "NoteEditor::listEnabledAddonsFromDir");
+            }
+
+        } else {
+            addonToolsRecyclerView.setVisibility(View.GONE);
+        }
+    }
+
+    public void listEnabledAddonsFromDir() throws IOException {
+
+        String addonType = "note_editor";
+
+        String currentAnkiDroidDirectory = CollectionHelper.getCurrentAnkiDroidDirectory(this);
+        File addonsHomeDir = new File(currentAnkiDroidDirectory, "addons" );
+
+        boolean success = true;
+        if (!addonsHomeDir.exists()) {
+            success = addonsHomeDir.mkdirs();
+        }
+
+        if (success) {
+
+            SharedPreferences preferences = AnkiDroidApp.getSharedPrefs(this);
+            Map<String,?> keys = preferences.getAll();
+
+            // for creating new list from scratch
+            addonToolsModelList.clear();
+
+            for(Map.Entry<String,?> entry : keys.entrySet()) {
+                Timber.d("map values %s", entry.getKey() + ": " + entry.getValue().toString());
+
+                // getting enabled status of addons in SharedPreferences with key containing 'addon', so only enabled addon added to list
+                if (entry.getKey().contains(addonType) && entry.getValue().toString().equals("enabled")) {
+
+                    File addonDirName = new File(addonsHomeDir, String.valueOf(entry.getKey().split(":")[1]));
+                    Timber.d("Addons:%s", addonDirName);
+
+                    // Read package.json from
+                    // AnkiDroid/addons/ankidroid-addon-../package/package.json
+                    File addonsPackageDir = new File(addonDirName, "package");
+                    File addonsPackageJson = new File(addonsPackageDir, "package.json");
+
+                    org.json.JSONObject jsonObject  = packageJsonReader(addonsPackageJson);
+
+                    AddonToolsModel addonToolsModel;
+
+                    String addonName = jsonObject.optString("name", "");
+                    String typeOfAddon = jsonObject.optString("addon_type", "");
+                    String addonIcon = jsonObject.optString("addon_icon", "");
+
+                    char icon;
+
+                    if (addonIcon.isEmpty()) {
+                        // default text to addon
+                        icon = 'A';
+                    } else {
+                        icon = addonIcon.charAt(0);
+                    }
+
+                    if (addonType.equals(typeOfAddon)) {
+                        addonToolsModel = new AddonToolsModel(addonName, icon);
+                        addonToolsModelList.add(addonToolsModel);
+                    }
+
+                }
+            }
+
+            addonToolsRecyclerView.setAdapter(new AddonToolsAdapter(addonToolsModelList, this));
+
+        } else {
+            UIUtils.showThemedToast(this, getString(R.string.error_listing_addons), true);
+        }
+    }
+
+    @Override
+    public void onAddonClick(int position) {
+        AddonToolsModel addonToolsModel = addonToolsModelList.get(position);
+        Timber.d("Clicked on addon %s", addonToolsModel.getName());
+
+        String selectedText = getSelectedText();
+
+        String currentAnkiDroidDirectory = CollectionHelper.getCurrentAnkiDroidDirectory(this);
+        File addonsHomeDir = new File(currentAnkiDroidDirectory, "addons" );
+        File finalAddonPath = new File(addonsHomeDir, addonToolsModel.getName());
+        File addonsPackageDir = new File(finalAddonPath, "package");
+        File addonsContentFile = new File(addonsPackageDir, "index.js");
+
+        StringBuilder content = new StringBuilder();
+
+        if (!addonsContentFile.exists()) {
+            return;
+        }
+
+        try {
+            BufferedReader br = new BufferedReader(new FileReader(addonsContentFile));
+            String line;
+
+            while ((line = br.readLine()) != null) {
+                content.append(line);
+                content.append('\n');
+            }
+            br.close();
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        if (content.toString().isEmpty()) {
+            return;
+        }
+
+        jsEvaluator.callFunction(content.toString(),
+                new JsCallback() {
+
+                    @Override
+                    public void onResult(String result) {
+                        addonAddToEditText(result);
+                    }
+
+                    @Override
+                    public void onError(String errorMessage) {
+                        UIUtils.showThemedToast(getApplicationContext(), "Error calling addon function\n"+errorMessage, false);
+                    }
+                }, "AnkiJSFunction", selectedText); // name in index.js in addon folder must be AnkiJSFunction
+    }
+
+    private void addonAddToEditText(String result) {
+        Toolbar.TextWrapper formatter = new Toolbar.TextWrapper(result, "");
+        mToolbar.onFormat(formatter);
+        Timber.d("format %s", result);
+    }
+
+    private String getSelectedText() {
+        int startSelection = 0;
+        int endSelection = 0;
+        String selectedText = "";
+        for (FieldEditText e : mEditFields) {
+            if (e.isFocused()) {
+                startSelection=e.getSelectionStart();
+                endSelection=e.getSelectionEnd();
+                selectedText = Objects.requireNonNull(e.getText()).toString().substring(startSelection, endSelection);
+                break;
+            }
+        }
+        return selectedText;
     }
 }

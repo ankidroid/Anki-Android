@@ -144,7 +144,17 @@
         android:layout_gravity="bottom"
         android:id="@+id/editor_toolbar"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="34dp"/>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/addon_tools_list"
+        android:layout_width="match_parent"
+        android:layout_height="34dp"
+        android:scrollbars="horizontal"
+        android:layout_gravity="bottom"
+        android:orientation="horizontal"
+        android:background="#D6D7D7"/>
 
     <include layout="@layout/anki_progress"/>
 </androidx.coordinatorlayout.widget.CoordinatorLayout>
