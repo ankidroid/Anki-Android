@@ -101,7 +101,7 @@ public class TemplateFilters {
                 }
             } catch (Exception e) {
                 Timber.e(e, "Exception while running hook %s", filter);
-                return "Error in filter " + filter;
+                return AnkiDroidApp.getAppResources().getString(R.string.filter_error, filter);
             }
         }
     }

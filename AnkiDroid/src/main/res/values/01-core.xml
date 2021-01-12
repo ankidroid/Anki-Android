@@ -200,4 +200,5 @@
     <string name="missing_closing_bracket">Missing \'}}\' in \'%s\'.</string>
     <string name="open_tag_not_closed">Missing \'{{%s}}\'.</string>
     <string name="wrong_tag_closed">Found \'{{/%1$s}}\', but expected \'{{/%2$s}}\'</string>
+    <string name="filter_error">Error in filter %s</string>
 </resources>
