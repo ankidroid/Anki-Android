@@ -149,7 +149,7 @@
     <string name="tags_dialog_option_due_cards" comment="Name of cards that are already been reviewed in the past, and that should be reviewed again">Tới hạn</string>
     <!-- Empty cards -->
     <string name="emtpy_cards_finding">Đang tìm thẻ rỗng&#8230;</string>
-    <string name="confirm_cancel">Do you want to cancel?</string>
+    <string name="confirm_cancel">Bạn có thực sự muốn hủy?</string>
     <string name="empty_cards_none">Không có thẻ rỗng</string>
     <string name="empty_cards_count">Thẻ sẽ được xóa: %d</string>
     <string name="empty_cards_deleted">Đã xoá các thẻ: %d</string>
@@ -180,12 +180,12 @@
     <!-- Database Errors-->
     <string name="database_locked_title">Database Locked</string>
     <string name="database_locked_summary">The AnkiDroid database is in use by another application. Please close the other application then reopen AnkiDroid.</string>
-    <string name="incompatible_database_version_title">Incompatible Database Version</string>
+    <string name="incompatible_database_version_title">Phiên bản Database không tương thích</string>
     <string name="incompatible_database_version_summary">The database is a more advanced version than this version of AnkiDroid can work with. Upgrade AnkiDroid or downgrade the database to open it\n\nSupported version: %1$d\nDatabase version: %2$d\n\nThe following restore options will overwrite your current collection, possibly with a compatible database version:</string>
     <!-- Deck Picker Background-->
     <string name="background_image_applied">Background image applied</string>
     <string name="background_image_removed">Background image removed</string>
-    <string name="no_image_selected">No image selected</string>
+    <string name="no_image_selected">Chưa chọn ảnh nào</string>
     <string name="error_selecting_image">Error selecting image. Please see manual. %s</string>
     <string name="error_deleting_image">Error deleting image</string>
     <string name="failed_to_apply_background_image">Failed to apply background image %s</string>
@@ -193,14 +193,14 @@
     <string name="image_max_size_allowed">Maximum image size %d MB allowed</string>
     <!-- Global Intent handler -->
     <!-- Also used by Card Browser, not renaming to save translators effort -->
-    <string name="intent_handler_failed_no_storage_permission">Missing required storage permission. Please grant storage permission then retry your action.</string>
+    <string name="intent_handler_failed_no_storage_permission">Không thể truy cập bộ nhớ. Hãy cấp quyền truy cập và thử lại.</string>
     <!-- Browser Appearance -->
-    <string name="card_template_editor_card_browser_appearance_failed">Could not load Card Browser Appearance</string>
+    <string name="card_template_editor_card_browser_appearance_failed">Không thể load giao diện thẻ</string>
     <!-- Boot Service -->
     <string name="boot_service_failed_to_schedule_notifications">Failed to schedule reminders</string>
     <string name="boot_service_too_many_notifications">Too many reminders scheduled. Some will not appear</string>
     <!-- Locale Selection Dialog -->
-    <string name="locale_selection_dialog_title">Keyboard Language Selection</string>
+    <string name="locale_selection_dialog_title">Ngôn ngữ của bàn phím</string>
     <string name="locale_selection_dialog_summary">Some multilingual keyboards, such as GBoard support changing language when editing text\n\nPlease request the “setImeHintLocales” feature from your keyboard manufacturer if your keyboard does not change language.</string>
     <!-- Help Dialog -->
     <string name="help_title_using_ankidroid">Using AnkiDroid</string>
@@ -210,14 +210,14 @@
     <string name="help_title_get_help">Get Help</string>
     <string name="help_item_mailing_list">Mailing List</string>
     <string name="help_item_reddit">Reddit</string>
-    <string name="help_item_report_bug">Report a Bug</string>
-    <string name="help_title_support_ankidroid">Support AnkiDroid</string>
+    <string name="help_item_report_bug">Báo cáo lỗi</string>
+    <string name="help_title_support_ankidroid">Hỗ trợ</string>
     <string name="help_item_support_opencollective_donate">Donate</string>
     <string name="help_item_support_develop_ankidroid">Develop</string>
-    <string name="help_item_support_rate_ankidroid">Rate</string>
-    <string name="help_item_support_other_ankidroid">Other</string>
+    <string name="help_item_support_rate_ankidroid">Đánh giá</string>
+    <string name="help_item_support_other_ankidroid">Khác</string>
     <string name="help_title_community">Community</string>
-    <string name="help_item_anki_forums">Anki Forums</string>
+    <string name="help_item_anki_forums">Diễn đàn Anki</string>
     <string name="help_item_discord">Discord</string>
     <string name="help_item_facebook">Facebook</string>
     <string name="help_item_twitter">Twitter</string>

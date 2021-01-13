@@ -154,7 +154,7 @@
     <string name="custom_study_deck_name">Session d\'étude personnalisée</string>
     <string name="custom_study_deck_exists">Merci de renommer d\'abord le paquet d\'étude personnalisée.</string>
     <string name="empty_deck">Le paquet est vide</string>
-    <string name="empty_deck_add_note">Add card</string>
+    <string name="empty_deck_add_note">Ajouter cartes</string>
     <string name="invalid_deck_name">Nom de paquet invalide</string>
     <string name="studyoptions_empty">Le paquet est vide. touchez le bouton + pour créer du contenu.</string>
     <string name="studyoptions_limit_reached">Vous avez atteint votre limite aujourd\'hui</string>
@@ -184,7 +184,7 @@
     <string name="card_template_editor_deck_override">Forcer le paquet</string>
     <string name="card_template_editor_cant_delete">Il faut au moins un type de carte.</string>
     <plurals name="card_template_editor_confirm_delete">
-        <item quantity="one">Supprimer le type de carte “%2$s” et sa %1$d carte ?</item>
+        <item quantity="one">Supprimer le type de carte “%2$s” et son unique carte ?</item>
         <item quantity="other">Supprimer le type de carte “%2$s” et ses %1$d cartes ?</item>
     </plurals>
     <string name="invalid_template">Une carte n\'a pas pu être générée</string>
@@ -202,4 +202,12 @@
     <!-- Context Menu -->
     <string name="card_browser_context_menu" comment="The value which appears in the system context menu. Note the casing difference">Navigateur de cartes</string>
     <string name="context_menu_anki_card_label">Carte Anki</string>
+    <string name="has_a_problem" comment="First field is either front template or back template. Second field is the error message.">%1$s has a problem:<br/>%2$s</string>
+    <string name="more_information">More information</string>
+    <string name="no_field">Found \'{{%1$s}}\', but there is no field called \'%1$s\'.</string>
+    <string name="closed_tag_not_open">Found \'{{/%1$s}}\', but missing \'{{#%1$s}}\' or \'{{^%1$s}}\'.</string>
+    <string name="missing_closing_bracket">Missing \'}}\' in \'%s\'.</string>
+    <string name="open_tag_not_closed">Missing \'{{%s}}\'.</string>
+    <string name="wrong_tag_closed">Found \'{{/%1$s}}\', but expected \'{{/%2$s}}\'</string>
+    <string name="filter_error">Error in filter %s</string>
 </resources>

@@ -72,7 +72,7 @@
         <item quantity="other">%d Tage %d verbleiben</item>
     </plurals>
     <string name="no_cards_placeholder_title">Sammlung ist leer</string>
-    <string name="no_cards_placeholder_description">Fügen Sie Karten \nmit dem + -Symbol hinzu.</string>
+    <string name="no_cards_placeholder_description">Fügen Sie Karten mit\ndem »+«-Symbol hinzu.</string>
     <!-- The deck picker via AnkiStatsTaskHandler.java -->
     <plurals name="studied_cards_today">
         <item quantity="one">Sie haben heute %1$d Karte in %2$s gelernt</item>
@@ -146,15 +146,15 @@
     <string name="time_quantity_months">%.1f Mo</string>
     <string name="time_quantity_years">%.1f Jr</string>
     <!-- or "%.1f a" -->
-    <string name="rebuild_filtered_deck">Wiederherstellung des gefilterten Stapels&#8230;</string>
+    <string name="rebuild_filtered_deck">Gefilterter Stapel wird wiederhergestellt &#8230;</string>
     <string name="rebuild_cram_label">Neu aufbauen</string>
     <string name="empty_cram_label">Leeren</string>
     <string name="create_subdeck">Unterstapel erstellen</string>
-    <string name="empty_filtered_deck">Löschen des gefilterten Stapels&#8230;</string>
+    <string name="empty_filtered_deck">Gefilterter Stapel wird geleert &#8230;</string>
     <string name="custom_study_deck_name">Benutzerdefinierte Sitzung</string>
     <string name="custom_study_deck_exists">Bitte benennen Sie zunächst den existierenden Stapel »Benutzerdefinierte Sitzung« um</string>
     <string name="empty_deck">Dieser Stapel ist leer</string>
-    <string name="empty_deck_add_note">Add card</string>
+    <string name="empty_deck_add_note">Karte hinzufügen</string>
     <string name="invalid_deck_name">Ungültiger Stapelname</string>
     <string name="studyoptions_empty">Dieser Stapel ist leer. Berühren Sie die »+«-Schaltfläche, um neue Inhalte hinzuzufügen.</string>
     <string name="studyoptions_limit_reached">Tageslimit erreicht</string>
@@ -181,7 +181,7 @@
     <string name="card_template_editor_back">Vorlage für Rückseite</string>
     <string name="card_template_editor_styling">Stil</string>
     <string name="card_template_editor_menu_card_browser_appearance">Aussehen der Kartenübersicht</string>
-    <string name="card_template_editor_deck_override">Stapel überschreiben</string>
+    <string name="card_template_editor_deck_override">Stapel übergehen</string>
     <string name="card_template_editor_cant_delete">Mindestens ein Kartentyp wird benötigt.</string>
     <plurals name="card_template_editor_confirm_delete">
         <item quantity="one">Kartentyp »%2$s« und seine %1$d Karte löschen?</item>
@@ -202,4 +202,12 @@
     <!-- Context Menu -->
     <string name="card_browser_context_menu" comment="The value which appears in the system context menu. Note the casing difference">Kartenübersicht</string>
     <string name="context_menu_anki_card_label">Anki-Karte</string>
+    <string name="has_a_problem" comment="First field is either front template or back template. Second field is the error message.">%1$s has a problem:<br/>%2$s</string>
+    <string name="more_information">More information</string>
+    <string name="no_field">Found \'{{%1$s}}\', but there is no field called \'%1$s\'.</string>
+    <string name="closed_tag_not_open">Found \'{{/%1$s}}\', but missing \'{{#%1$s}}\' or \'{{^%1$s}}\'.</string>
+    <string name="missing_closing_bracket">Missing \'}}\' in \'%s\'.</string>
+    <string name="open_tag_not_closed">Missing \'{{%s}}\'.</string>
+    <string name="wrong_tag_closed">Found \'{{/%1$s}}\', but expected \'{{/%2$s}}\'</string>
+    <string name="filter_error">Error in filter %s</string>
 </resources>

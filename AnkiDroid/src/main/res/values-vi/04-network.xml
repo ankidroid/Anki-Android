@@ -118,14 +118,14 @@
     <string name="force_full_sync_summary">Trong lần đồng bộ kế tiếp, buộc các thay đổi theo một hướng</string>
     <string name="full_sync_confirmation">Thay đổi theo yêu cầu đòi hỏi tải lên đầy đủ CSDL trong lần đồng bộ bộ sưu tập tiếp theo. Nếu có thẻ ôn tập hoặc các thay đổi đang chờ trên thiết bị khác mà chưa được đồng bộ ở đây, chúng sẽ bị mất. Vẫn tiếp tục chứ?</string>
     <string name="full_sync_confirmation_upgrade">Do lỗi của phiên bản AnkiDroid đã cài đặt trước đó, đề nghị thực hiện đồng bộ hoàn toàn.</string>
-    <string name="sync_error_407_proxy_required">Proxy authentication required.</string>
+    <string name="sync_error_407_proxy_required">Máy chủ proxy yêu cầu xác thực.</string>
     <string name="sync_error_409">Chỉ một máy trạm được phép truy cập AnkiWeb tại một thời điểm. Nếu đồng bộ trước thất bại, hãy thử lại trong vài phút.</string>
     <string name="sync_error_413_collection_size">Your collection or a media file is too large to sync.</string>
     <string name="sync_error_500_unknown">AnkiWeb encountered an error. Please try again in a few minutes, and if the problem persists, please file a bug report.</string>
     <string name="sync_error_501_upgrade_required">Xin nâng cấp lên phiên bản AnkiDroid mới nhất</string>
-    <string name="sync_error_502_maintenance">AnkiWeb is under maintenance. Please try again in a few minutes.</string>
-    <string name="sync_error_504_gateway_timeout">504 gateway timeout error received.</string>
+    <string name="sync_error_502_maintenance">AnkiWeb hiện đang bảo trì. Hãy thử lại sau ít phút.</string>
+    <string name="sync_error_504_gateway_timeout">Lỗi 504 gateway timeout</string>
     <!-- Deck Picker Sync Icon -->
     <string name="sync_menu_title_full_sync">Sync (full)</string>
-    <string name="sync_menu_title_no_account">Sync (log in)</string>
+    <string name="sync_menu_title_no_account">Đồng bộ (đăng nhập)</string>
 </resources>

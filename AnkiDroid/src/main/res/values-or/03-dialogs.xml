@@ -93,9 +93,9 @@
     <string name="reschedule_card_dialog_warning_ease_reset">ଭବିଷ୍ୟତରେ ନିର୍ଦ୍ଧାରକ କିପରି ପତ୍ରଙ୍କୁ ବ୍ୟବହାର କରେ ତାହା ମଧ୍ୟ ପୁନଃସେଟ୍ କଲେ ପୁନଃସେଟ୍ ହେଇଯାଏ (ସହଜତା %d%% ରେ ସେଟ୍ ହେବ)</string>
     <string name="firefox_workaround_launched_reviewer_opening_deck">ଆପଣଙ୍କର ଫାଇଲ୍ ମ୍ୟାନେଜର୍ ରେ ତାସଖଣ୍ଡ ଚୟନ କରନ୍ତୁ କିମ୍ବା ଏହାକୁ ପରିଦର୍ଶନ କରନ୍ତୁ: ଏହାକୁ ଆମଦାନୀ କରିବାକୁ ଡାଉନଲୋଡ୍ ପୃଷ୍ଠା </string>
     <string name="answering_error_title">ଡାଟାବେସ୍ ତ୍ରୁଟି</string>
-    <string name="answering_error_message">ସଂଗ୍ରହକୁ ଲେଖିବା ବିଫଳ ହେଲା | ଡାଟାବେସ୍ ଭ୍ରଷ୍ଟ ହୋଇପାରେ କିମ୍ବା ଡିସ୍କରେ ପର୍ଯ୍ୟାପ୍ତ ଖାଲି ସ୍ଥାନ ନ ଥାଇପାରେ | \n\n ଯଦି ଏହା ଅଧିକ ଘଟେ, ଡାଟାବେସ୍ ଯାଞ୍ଚ କରିବାକୁ ଚେଷ୍ଟା କରନ୍ତୁ, ସଂଗ୍ରହକୁ ମରାମତି କରନ୍ତୁ କିମ୍ବା ବ୍ୟାକଅପ୍ ରୁ ପୁନଃସ୍ଥାପନ କରନ୍ତୁ | ଏଥିପାଇଁ “ବିକଳ୍ପ” କୁ ବାଛନ୍ତୁ | \n କିମ୍ବା ଏହା ଏକ ଆଙ୍କିଡ୍ରଏଡ୍ ବଗ୍ ମଧ୍ୟ ହୋଇପାରେ | ଦୟାକରି ତ୍ରୁଟି ରିପୋର୍ଟ କରନ୍ତୁ ଯାହା ଦ୍ୱାରା ଆମେ ଏହାକୁ ଯାଞ୍ଚ କରିପାରିବା |</string>
+    <string name="answering_error_message">ସଂଗ୍ରହକୁ ଲେଖିବା ବିଫଳ ହେଲା | ଡାଟାବେସ୍ ଭ୍ରଷ୍ଟ ହୋଇପାରେ କିମ୍ବା ଡିସ୍କରେ ପର୍ଯ୍ୟାପ୍ତ ଖାଲି ସ୍ଥାନ ନ ଥାଇପାରେ |\n\nଯଦି ଏହା ଅଧିକ ଘଟେ, ଡାଟାବେସ୍ ଯାଞ୍ଚ କରିବାକୁ ଚେଷ୍ଟା କରନ୍ତୁ, ସଂଗ୍ରହକୁ ମରାମତି କରନ୍ତୁ କିମ୍ବା ବ୍ୟାକଅପ୍ ରୁ ପୁନଃସ୍ଥାପନ କରନ୍ତୁ | ଏଥିପାଇଁ “ବିକଳ୍ପ” କୁ ବାଛନ୍ତୁ |\nକିମ୍ବା ଏହା ଏକ ଆଙ୍କିଡ୍ରଏଡ୍ ବଗ୍ ମଧ୍ୟ ହୋଇପାରେ | ଦୟାକରି ତ୍ରୁଟି ରିପୋର୍ଟ କରନ୍ତୁ ଯାହା ଦ୍ୱାରା ଆମେ ଏହାକୁ ଯାଞ୍ଚ କରିପାରିବୁ |</string>
     <string name="answering_error_report">ତ୍ରୁଟି ରିପୋର୍ଟ କରନ୍ତୁ </string>
-    <string name="repair_deck_dialog">ଆପଣ ପ୍ରକୃତରେ ଡାଟାବେସ୍ ମରାମତି କରିବାକୁ ଚେଷ୍ଟା କରିବାକୁ ଚାହୁଁଛନ୍ତି କି? \n\n ପ୍ରୟାସ ଆରମ୍ଭ କରିବା ପୂର୍ବରୁ, ସବ୍ଫୋଲ୍ଡର୍ “%s” ରେ ଏକ କପି ସୃଷ୍ଟି ହେବ |</string>
+    <string name="repair_deck_dialog">ଆପଣ ପ୍ରକୃତରେ ଡାଟାବେସ୍ ମରାମତି କରିବାକୁ ଚେଷ୍ଟା କରିବାକୁ ଚାହୁଁଛନ୍ତି କି?\n\nପ୍ରୟାସ ଆରମ୍ଭ କରିବା ପୂର୍ବରୁ, “%s” subfolder ରେ ଏକ କପି ସୃଷ୍ଟି ହେବ |</string>
     <string name="intent_aedict_empty">ବର୍ଗ “ଡିଫଲ୍ଟ” ଖାଲି ଅଛି</string>
     <string name="intent_aedict_category">AnkiDroid ରେ ପତ୍ର ଯୋଡିବା ପାଇଁ ସମସ୍ତ ନୋଟପ୍ୟାଡ୍ ବର୍ଗଗୁଡିକ ଅପସାରଣ କରନ୍ତୁ କିମ୍ବା “ଡିଫଲ୍ଟ” ନାମକ ଏକ ଯୋଡନ୍ତୁ</string>
     <string name="custom_study_new_total_new">%d ତାସଖଣ୍ଡରେ ନୂଆ ପତ୍ର </string>
@@ -143,7 +143,7 @@
     <string name="check_media_unused">ମିଡିଆ ଫୋଲ୍ଡରରେ ଫାଇଲଗୁଡିକ କିନ୍ତୁ କୌଣସି ପତ୍ର ଦ୍ୱାରା ବ୍ୟବହୃତ ହୁଏ ନାହିଁ : %d</string>
     <string name="check_media_nohave">ପାତ୍ରରେ ବ୍ୟବହୃତ ଫାଇଲଗୁଡ଼ିକ କିନ୍ତୁ ମିଡିଆ ଫୋଲ୍ଡରରେ ନୁହେଁ: %d</string>
     <string name="check_media_no_unused_missing">କୌଣସି ଅବ୍ୟବହୃତ କିମ୍ବା ନିଖୋଜ ଫାଇଲ ମିଳିଲା ନାହିଁ</string>
-    <string name="check_media_db_updated">ମିଡିଆ ଡାଟାବେସ୍ ପୁନଃନିର୍ମିତ </string>
+    <string name="check_media_db_updated">ମିଡିଆ ଡାଟାବେସ୍ ପୁନଃନିର୍ମିତ</string>
     <string name="check_media_delete_unused">ଅବ୍ୟବହୃତ ବିଲୋପ କରନ୍ତୁ</string>
     <string name="delete_media_message">ମିଡିଆ ବିଲୋପ କରୁଛି&#8230;</string>
     <string name="delete_media_result_title">ବିଲୋପ ଫଳାଫଳ</string>
@@ -158,7 +158,7 @@
     <!-- Empty cards -->
     <string name="emtpy_cards_finding">ଖାଲି ପତ୍ର ଖୋଜାହଉଛି</string>
     <string name="confirm_cancel">ଆପଣ  ବାତିଲ କରିବାକୁ ଚାହାନ୍ତି?</string>
-    <string name="empty_cards_none">ଖାଲି ପତ୍ର ନାହିଁ</string>
+    <string name="empty_cards_none">କୌଣସି ଖାଲି କାର୍ଡ ନାହିଁ</string>
     <string name="empty_cards_count">ବିଲୋପ କରିବାକୁ ପତ୍ର : %d</string>
     <string name="empty_cards_deleted">ବିଲୋପିତ ପତ୍ର: %d</string>
     <!-- Multimedia - Edit Field Activity -->
@@ -173,9 +173,9 @@
     <string name="mutimedia_editor_assertion_failed">ଉନ୍ନତ ସମ୍ପାଦକ ପ୍ରଦର୍ଶନ କଲାବେଳେ ଅଜଣା ତ୍ରୁଟି ଘଟିଲା </string>
     <!-- Database Integrity Check -->
     <string name="integrity_check_startup_title">AnkiDroid ଅଦ୍ୟତନ ହେଲା </string>
-    <string name="integrity_check_startup_content">AnkiDroid କୁ ନବୀକରଣ କରାଯାଇଛି | ଏହି ଅପଗ୍ରେଡ୍ ସମ୍ଭାବ୍ୟ ଡାଟାବେସ୍ ସମସ୍ୟା ପାଇଁ ସମାଧାନ ଅନ୍ତର୍ଭୂକ୍ତ କରେ, ଏବଂ ଆମେ ବର୍ତ୍ତମାନ  ଡାଟାବେସ୍ ଚଲେଇ ପରୀକ୍ଷଣ କରିବାକୁ ଆପଣଙ୍କୁ ପରାମର୍ଶ ଦେଉ |</string>
+    <string name="integrity_check_startup_content">AnkiDroid କୁ ନବୀକରଣ କରାଯାଇଛି | ଏହି ଅପଗ୍ରେଡ୍ ସମ୍ଭାବ୍ୟ ଡାଟାବେସ୍ ସମସ୍ୟା ପାଇଁ ସମାଧାନ ଅନ୍ତର୍ଭୂକ୍ତ କରେ, ଏବଂ ଆମେ ବର୍ତ୍ତମାନ  ଡାଟାବେସ୍ ଯାଞ୍ଚ କରିବାକୁ ଆପଣଙ୍କୁ ପରାମର୍ଶ ଦେଉ |</string>
     <string name="integrity_check_continue_anyway">ଯାହା ବି ହେଉ ଜାରି ରଖନ୍ତୁ |</string>
-    <string name="integrity_check_insufficient_space">ଯାଞ୍ଚ ଡାଟାବେସ୍ ବହୁ ପରିମାଣର ଅସ୍ଥାୟୀ ଷ୍ଟୋରେଜ୍ ବ୍ୟବହାର କରେ |\n\n ଏହା ଜାରି ରଖିବା ପୂର୍ବରୁ ଆପଣଙ୍କ ଡିଭାଇସରେ ଅତି କମରେ %s ଖାଲି ସ୍ଥାନ ଥିବା ଦୃଢ଼ ଭାବରେ ପରାମର୍ଶ ଦିଆଯାଇଛି |</string>
+    <string name="integrity_check_insufficient_space">ଡାଟାବେସ୍ ଯାଞ୍ଚ ବହୁ ପରିମାଣର ଅସ୍ଥାୟୀ ଷ୍ଟୋରେଜ୍ ବ୍ୟବହାର କରେ |\n\nଏହା ଜାରି ରଖିବା ପୂର୍ବରୁ ଆପଣଙ୍କ ଡିଭାଇସରେ ଅତି କମରେ %s ଖାଲି ସ୍ଥାନ ଥିବା ଦୃଢ଼ ଭାବରେ ପରାମର୍ଶ ଦିଆଯାଇଛି |</string>
     <string name="integrity_check_insufficient_space_extra_content">\n\nଆପଣଙ୍କର ବର୍ତ୍ତମାନ %s ଖାଲି ଅଛି |    </string>
     <string name="integrity_check_fixed_no_home_deck">ଭୁଲ ଘରୋଇ ତାସଖଣ୍ଡ ସହିତ ସହିତ %d ଟି  ପତ୍ର ଉଦ୍ଧାର କରାଯାଇଛି | ଅଧିକ ସୂଚନା ପାଇଁ ଦୟାକରି ମାନୁଆଲ୍ ଦେଖନ୍ତୁ |</string>
     <string name="video_creation_error">ଭିଡିଓ ଚଲାଇ ହେଲା ନାହିଁ </string>
@@ -184,12 +184,12 @@
     <!-- AbstractFlashCardViewer -->
     <string name="card_viewer_url_decode_error">ପତ୍ରରୁ ତଥ୍ୟ ଡିକୋଡିଂ କରିବାରେ ତ୍ରୁଟି</string>
     <!-- Deck Options -->
-    <string name="deck_options_corrupt">ତାସଖଣ୍ଡ ବିକଳ୍ପଗୁଡିକ ପ୍ରକ୍ରିୟାକରଣ କରିବାରେ ବିଫଳ : %s</string>
+    <string name="deck_options_corrupt">ତାସଖଣ୍ଡ ବିକଳ୍ପଗୁଡ଼ିକ ପ୍ରକ୍ରିୟାକରଣ କରିବାରେ ବିଫଳ : %s</string>
     <!-- Database Errors-->
     <string name="database_locked_title">ଡାଟାବେସ୍ ଲକ୍ ହୋଇଛି</string>
     <string name="database_locked_summary">AnkiDroid ଡାଟାବେସ୍ ଅନ୍ୟ ଏକ ଆପ ଦ୍ୱାରା ବ୍ୟବହୃତ ହେଉଛି | ଦୟାକରି ଅନ୍ୟ ଆପକୁ ବନ୍ଦ କରନ୍ତୁ ଏବଂ AnkiDroid କୁ ଖୋଲନ୍ତୁ |</string>
     <string name="incompatible_database_version_title">ଅସଙ୍ଗତ ଡାଟାବେସ୍ ସଂସ୍କରଣ </string>
-    <string name="incompatible_database_version_summary">AnkiDroid ର ଏହି ସଂସ୍କରଣ  ଡାଟାବେସ୍ ସହିତ କାମ କରିପାରିବନାହିଁ  | ଏହାକୁ ଖୋଲିବା ପାଇଁ AnkiDroid କୁ ଅଦ୍ୟତନ କରନ୍ତୁ କିମ୍ବା ଡାଟାବେସ୍ କୁ ଡାଉନଗ୍ରେଡ୍ କରନ୍ତୁ \n\n ସମର୍ଥିତ ସଂସ୍କରଣ:%1$d\n ଡାଟାବେସ୍ ସଂସ୍କରଣ:%2$d\n\n ନିମ୍ନଲିଖିତ ପୁନରୁଦ୍ଧାର ବିକଳ୍ପଗୁଡ଼ିକ ଆପଣଙ୍କର ସାମ୍ପ୍ରତିକ ସଂଗ୍ରହକୁ ନବଲିଖନ କରିବ, ସମ୍ଭବତ a ଏକ ସୁସଙ୍ଗତ ଡାଟାବେସ୍ ସଂସ୍କରଣ ସହିତ:</string>
+    <string name="incompatible_database_version_summary">AnkiDroid ର ଏହି ସଂସ୍କରଣ ଡାଟାବେସ୍ ସହିତ କାମ କରିପାରିବନାହିଁ | ଏହାକୁ ଖୋଲିବା ପାଇଁ AnkiDroid କୁ ଅଦ୍ୟତନ କରନ୍ତୁ କିମ୍ବା ଡାଟାବେସ୍ କୁ ଡାଉନଗ୍ରେଡ୍ କରନ୍ତୁ\n\nସମର୍ଥିତ ସଂସ୍କରଣ: %1$d\nଡାଟାବେସ୍ ସଂସ୍କରଣ: %2$d\n\nନିମ୍ନଲିଖିତ ପୁନରୁଦ୍ଧାର ବିକଳ୍ପଗୁଡ଼ିକ ଆପଣଙ୍କର ସାମ୍ପ୍ରତିକ ସଂଗ୍ରହକୁ ନବଲିଖନ କରିବ, ସମ୍ଭବତଃ ଏକ ସୁସଙ୍ଗତ ଡାଟାବେସ୍ ସଂସ୍କରଣ ସହିତ:</string>
     <!-- Deck Picker Background-->
     <string name="background_image_applied">ପୃଷ୍ଠଭୂମି ପ୍ରତିଛବି ପ୍ରୟୋଗ ହୋଇଛି</string>
     <string name="background_image_removed">ପୃଷ୍ଠଭୂମି ପ୍ରତିଛବି ଅପସାରିତ ହୋଇଛି</string>

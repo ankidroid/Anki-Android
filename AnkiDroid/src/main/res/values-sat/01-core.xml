@@ -75,8 +75,8 @@
     <string name="no_cards_placeholder_description">+ᱟᱭᱠᱚᱱ ᱵᱮᱵᱷᱟᱵᱨ ᱠᱟᱛᱮ\nᱠᱟᱰ ᱠᱚ ᱥᱮᱞᱮᱫ ᱮᱦᱚᱵ ᱢᱮ ᱾</string>
     <!-- The deck picker via AnkiStatsTaskHandler.java -->
     <plurals name="studied_cards_today">
-        <item quantity="one">%1$d ᱠᱟᱰ %2$s ᱫᱤᱱ ᱨᱮ ᱯᱟᱰᱦᱟᱣ ᱠᱮᱟᱹᱧ</item>
-        <item quantity="other">%1$d ᱠᱟᱰ %2$s ᱫᱤᱱ ᱨᱮ ᱯᱟᱰᱦᱟᱣ ᱠᱮᱟᱹᱧ</item>
+        <item quantity="one">%1$d ᱠᱟᱰ %2$s ᱫᱤᱱ ᱨᱮ ᱯᱟᱲᱦᱟᱣ ᱠᱮᱟᱹᱧ</item>
+        <item quantity="other">%1$d ᱠᱟᱰᱠᱚ ᱫᱚ %2$s ᱫᱤᱱ ᱨᱮ ᱯᱟᱲᱦᱟᱣ ᱠᱮᱟᱹᱧ</item>
     </plurals>
     <!-- flashcard_portrait.xml -->
     <string name="type_answer_hint">ᱛᱮᱞᱟ ᱴᱟᱭᱯ ᱢᱮ</string>
@@ -154,11 +154,11 @@
     <string name="custom_study_deck_name">ᱱᱤᱡᱮᱛᱮ ᱯᱟᱲᱦᱟᱣᱜ ᱥᱚᱢᱚᱭ ᱛᱮᱭᱟᱨ ᱢᱮ</string>
     <string name="custom_study_deck_exists">ᱢᱟᱲᱟᱝ ᱠᱷᱚᱱ ᱢᱮᱱᱟᱜ ᱱᱤᱡᱮᱛᱮ ᱯᱟᱲᱦᱟᱣ ᱰᱮᱠ ᱟᱜ ᱧᱩᱛᱩᱢ ᱵᱚᱫᱚᱞ ᱢᱮ</string>
     <string name="empty_deck">ᱱᱚᱶᱟ ᱰᱮᱠ ᱫᱚ ᱠᱷᱟᱹᱞᱤ ᱜᱮᱭᱟ</string>
-    <string name="empty_deck_add_note">Add card</string>
+    <string name="empty_deck_add_note">ᱠᱟᱰ ᱥᱮᱞᱮᱫᱽ ᱢᱮ</string>
     <string name="invalid_deck_name">ᱰᱮᱠ ᱧᱩᱛᱩᱢ ᱵᱷᱩᱞ</string>
     <string name="studyoptions_empty">ᱱᱚᱶᱟ ᱰᱮᱠ ᱫᱚ ᱠᱷᱟᱹᱞᱤ ᱜᱮᱭᱟ ᱾ + ᱵᱚᱴᱚᱱ ᱯᱨᱮᱥ ᱠᱟᱛᱮ ᱱᱟᱶᱟ ᱡᱤᱱᱥᱚ ᱥᱮᱞᱮᱫ ᱪᱷᱚᱭ ᱢᱮ ᱾</string>
-    <string name="studyoptions_limit_reached">ᱰᱮᱞᱤ ᱯᱟᱰᱦᱟᱣ ᱚᱠᱛᱚ ᱥᱮᱴᱮᱨ ᱮᱱᱟ </string>
-    <string name="studyoptions_empty_schedule">ᱯᱟᱰᱦᱟᱣ ᱞᱟᱹᱜᱤᱫ ᱛᱮ ᱠᱟᱰ ᱵᱟᱹᱱᱩᱜᱼᱟ </string>
+    <string name="studyoptions_limit_reached">ᱫᱤᱱ ᱨᱮᱭᱟᱜ ᱯᱟᱲᱦᱟᱣ ᱚᱠᱛᱚ ᱥᱮᱴᱮᱨ ᱮᱱᱟ</string>
+    <string name="studyoptions_empty_schedule">ᱯᱟᱲᱦᱟᱣ ᱞᱟᱹᱜᱤᱫ ᱛᱮ ᱠᱟᱰ ᱵᱟᱹᱱᱩᱜᱼᱟ </string>
     <string name="studyoptions_congrats_finished">ᱥᱟᱨᱦᱟᱣ! ᱱᱤᱛᱚᱜ ᱞᱟᱹᱜᱤᱫ ᱪᱟᱵᱟ ᱠᱮᱟᱢ</string>
     <string name="studyoptions_congrats_more_rev">ᱛᱮᱦᱮᱸᱧ ᱞᱟᱹᱜᱤᱫ ᱤᱱᱟᱝᱜᱮ, ᱦᱮᱞᱮ ᱟᱨᱦᱚᱸ ᱠᱟᱰ ᱠᱚ ᱮᱢᱟᱱ ᱧᱮᱞ ᱨᱮᱭᱟᱜ ᱢᱮᱱᱟᱜᱟ ᱾ ᱟᱨᱦᱚᱸ ᱯᱟᱲᱦᱟᱣ ᱞᱟᱹᱜᱤᱫ ᱚᱯᱥᱚᱱ ᱨᱮ ᱞᱤᱢᱤᱴ ᱵᱚᱰᱷᱟᱣ ᱫᱟᱲᱮᱭᱟᱼᱜᱟᱢ ᱾ </string>
     <string name="studyoptions_congrats_more_new">ᱛᱮᱦᱮᱸᱧᱼᱟᱜ ᱞᱤᱢᱤᱴ ᱥᱮᱴᱮᱨ ᱮᱱᱟ ᱾ ᱟᱨᱦᱚᱸ ᱱᱟᱶᱟ ᱠᱟᱰ ᱢᱮᱱᱟᱜᱼᱟ; ᱟᱢ ᱚᱯᱥᱚᱱ ᱨᱮ ᱞᱤᱢᱤᱴ ᱵᱚᱰᱷᱟᱚ ᱫᱟᱲᱮᱟᱜᱼᱟᱢ, ᱦᱮᱞᱮ ᱵᱚᱰᱦᱟᱣ ᱞᱮᱠᱷᱟᱱ ᱢᱚᱱᱮ ᱫᱚᱦᱚ ᱞᱚᱰ ᱡᱟᱥᱛᱤ ᱛᱟᱢᱟ ᱾ </string>
@@ -202,4 +202,12 @@
     <!-- Context Menu -->
     <string name="card_browser_context_menu" comment="The value which appears in the system context menu. Note the casing difference">ᱠᱟᱰ ᱵᱨᱟᱩᱡᱚᱨ</string>
     <string name="context_menu_anki_card_label">Anki ᱠᱟᱰ</string>
+    <string name="has_a_problem" comment="First field is either front template or back template. Second field is the error message.">%1$s has a problem:<br/>%2$s</string>
+    <string name="more_information">More information</string>
+    <string name="no_field">Found \'{{%1$s}}\', but there is no field called \'%1$s\'.</string>
+    <string name="closed_tag_not_open">Found \'{{/%1$s}}\', but missing \'{{#%1$s}}\' or \'{{^%1$s}}\'.</string>
+    <string name="missing_closing_bracket">Missing \'}}\' in \'%s\'.</string>
+    <string name="open_tag_not_closed">Missing \'{{%s}}\'.</string>
+    <string name="wrong_tag_closed">Found \'{{/%1$s}}\', but expected \'{{/%2$s}}\'</string>
+    <string name="filter_error">Error in filter %s</string>
 </resources>
