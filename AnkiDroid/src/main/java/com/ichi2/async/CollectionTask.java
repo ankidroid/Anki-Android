@@ -150,7 +150,6 @@ public class CollectionTask<ProgressListener, ProgressBackground extends Progres
         mTask = task;
         mListener = listener;
         mPreviousTask = previousTask;
-        TaskManager.addTask(this);
     }
 
     @Override
