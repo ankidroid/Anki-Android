@@ -26,6 +26,8 @@ import com.ichi2.anki.dialogs.utils.FragmentTestActivity;
 import com.ichi2.anki.exception.ConfirmModSchemaException;
 import com.ichi2.anki.exception.FilteredAncestor;
 import com.ichi2.async.CollectionTask;
+import com.ichi2.async.ForegroundTaskManager;
+import com.ichi2.async.SingleTaskManager;
 import com.ichi2.async.TaskListener;
 import com.ichi2.async.TaskManager;
 import com.ichi2.compat.customtabs.CustomTabActivityHelper;
@@ -170,7 +172,28 @@ public class RobolectricTest implements CollectionGetter {
             //called on each AnkiDroidApp.onCreate(), and spams the build
             //there is no onDestroy(), so call it here.
             Timber.uprootAll();
+
+            runtTasksInBackground();
         }
+    }
+
+
+    /**
+     * Ensure that each task in backgrounds are executed immediately instead of being queued.
+     * This may help debugging test without requiring to guess where `advanceRobolectricLooper` are needed.
+     */
+    public void runTasksInForeground() {
+        TaskManager.setTaskManager(new ForegroundTaskManager(this));
+        mBackground = false;
+    }
+
+
+    /**
+     * Set back the standard background process
+     */
+    public void runtTasksInBackground() {
+        TaskManager.setTaskManager(new SingleTaskManager());
+        mBackground = true;
     }
 
 
@@ -203,12 +226,18 @@ public class RobolectricTest implements CollectionGetter {
 
     // Robolectric needs a manual advance with the new PAUSED looper mode
     public static void advanceRobolectricLooper() {
+        if (!mBackground) {
+            return;
+        }
         shadowOf(getMainLooper()).runToEndOfTasks();
         shadowOf(getMainLooper()).idle();
         shadowOf(getMainLooper()).runToEndOfTasks();
     }
     // Robolectric needs some help sometimes in form of a manual kick, then a wait, to stabilize UI activity
     public static void advanceRobolectricLooperWithSleep() {
+        if (!mBackground) {
+            return;
+        }
         advanceRobolectricLooper();
         try { Thread.sleep(500); } catch (Exception e) { Timber.e(e); }
         advanceRobolectricLooper();
