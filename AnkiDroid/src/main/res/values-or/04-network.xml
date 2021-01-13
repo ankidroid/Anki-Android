@@ -49,16 +49,16 @@
     <string name="not_logged_in_title">AnkiWeb ରେ ଲଗ୍ ଇନ୍ କରନ୍ତୁ</string>
     <string name="login_create_account_message">କ୍ଲାଉଡ୍ ସିଙ୍କ୍ ସେବା ବ୍ୟବହାର କରିବାକୁ ଆପଣ ନିଶ୍ଚିତ ଭାବରେ ଏକ ତୃତୀୟ ପକ୍ଷ ଆକାଉଣ୍ଟକୁ ଲଗ୍ ଇନ୍ କରିବେ | ପରବର୍ତ୍ତୀ ସୋପାନରେ ଆପଣ ଗୋଟିଏ ସୃଷ୍ଟି କରିପାରିବେ |</string>
     <!-- MyAccount.java -->
-    <string name="username">ଈମୈଲ ଠିକଣା</string>
+    <string name="username">ଇମେଲ୍ ଠିକଣା</string>
     <string name="password">ପାସୱାର୍ଡ</string>
     <string name="log_in"> ଲଗ୍ ଇନ୍</string>
     <string name="sign_up_description">AnkiWeb ଖାତା ନାହିଁ କି? ଏହା ମାଗଣା!</string>
-    <string name="sign_up_not_affiliated">ସୂଚନା: AnkiWeb AnkiDroid ସହିତ ଜଡିତ ନୁହେଁ </string>
+    <string name="sign_up_not_affiliated">ସୂଚନା: AnkiWeb AnkiDroid ସହିତ ଜଡ଼ିତ ନୁହେଁ</string>
     <string name="sign_up">ସାଇନ୍ ଅପ୍</string>
     <string name="logged_as">ଭାବେ ଲଗ୍ ଇନ୍ କରିଛନ୍ତି </string>
     <string name="log_out">ପ୍ରସ୍ଥାନ କର</string>
     <string name="alert_logging_message">ଲଗ୍ ହେଉଛି&#8230;</string>
-    <string name="invalid_username_password">ଅବୈଧ ଇମେଲ ଠିକଣା କିମ୍ବା ପାସୱାର୍ଡ </string>
+    <string name="invalid_username_password">ଅବୈଧ ଇମେଲ୍ ଠିକଣା କିମ୍ବା ପାସୱାର୍ଡ</string>
     <string name="reset_password">ପାସୱାର୍ଡ ପୁନଃସେଟ୍ କରନ୍ତୁ</string>
     <!-- AndroidManifest.xml -->
     <string name="preferences_title">ଅଭିରୁଚି</string>
@@ -82,7 +82,7 @@
     <string name="sync_no_changes_message">କୌଣସି ପରିବର୍ତ୍ତନ ମିଳିଲା ନାହିଁ |</string>
     <string name="sync_database_acknowledge">ସଂଗ୍ରହ ସମକାଳୀକ ହୋଇଛି |</string>
     <string name="sync_log_error_specific">ସିଙ୍କ୍ ତ୍ରୁଟି, ପ୍ରକାର: %1$s, ବାର୍ତ୍ତା: %2$s</string>
-    <string name="sync_corrupt_database">ଆପଣଙ୍କର ଡାଟାବେସ୍ ଭ୍ରଷ୍ଟ ଅଟେ | ସିଙ୍କ୍ କରିବାକୁ ପୁନର୍ବାର ଚେଷ୍ଟା କରିବା ପୂର୍ବରୁ ଦୟାକରି ଏହାକୁ ଠିକ୍ କରନ୍ତୁ | \n ଆପଣଙ୍କର ଡାଟାବେସ୍ ମରାମତି ବିଷୟରେ ସୂଚନା ପାଇଁ %sଦେଖନ୍ତୁ |</string>
+    <string name="sync_corrupt_database">ଆପଣଙ୍କର ଡାଟାବେସ୍ ଭ୍ରଷ୍ଟ ଅଟେ | ସିଙ୍କ୍ କରିବାକୁ ପୁନର୍ବାର ଚେଷ୍ଟା କରିବା ପୂର୍ବରୁ ଦୟାକରି ଏହାକୁ ଠିକ୍ କରନ୍ତୁ |\n\nଆପଣଙ୍କର ଡାଟାବେସ୍ ମରାମତି ବିଷୟରେ ସୂଚନା ପାଇଁ %s ଦେଖନ୍ତୁ |</string>
     <string name="sync_too_busy">ସର୍ଭର ବ୍ୟସ୍ତ | ପରେ ପୁନର୍ବାର ଚେଷ୍ଟା କରନ୍ତୁ |</string>
     <string name="sync_remote_db_error">ଡାଉନଲୋଡ୍ ହୋଇଥିବା ଡାଟାବେସ୍ ଭ୍ରଷ୍ଟ ହୋଇଛି | ଦୟାକରି ପୁଣିଥରେ ଚେଷ୍ଟା କରନ୍ତୁ।</string>
     <string name="sync_overwrite_error">ଡାଉନଲୋଡ୍ ହୋଇଥିବା ଫାଇଲ୍ ଦ୍ୱାରା ଆପଣଙ୍କର ସାମ୍ପ୍ରତିକ ସଂଗ୍ରହ ଓଭର୍ ରାଇଟ୍ ହୋଇପାରିବ ନାହିଁ |</string>

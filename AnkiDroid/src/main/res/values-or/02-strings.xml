@@ -50,12 +50,12 @@
     <string name="CardEditorTags">ଟ୍ୟାଗ୍: %1$s</string>
     <string name="CardEditorCards">କାର୍ଡ: %1$s</string>
     <string name="tag_name">ଟ୍ୟାଗ୍ ନାମ</string>
-    <string name="add_new_filter_tags">ଟ୍ୟାଗ୍ ଯୋଡନ୍ତୁ/ଫିଲ୍ଟର୍ କରନ୍ତୁ</string>
-    <string name="add_tag">ଟ୍ୟାଗ୍ ଯୋଡନ୍ତୁ</string>
-    <string name="check_all_tags">ପତ୍ର ସନ୍ଧାନକାରୀ</string>
+    <string name="add_new_filter_tags">ଟ୍ୟାଗ୍ ଯୋଡ଼ନ୍ତୁ/ଶୋଧନ କରନ୍ତୁ</string>
+    <string name="add_tag">ଟ୍ୟାଗ୍ ଯୋଡ଼ନ୍ତୁ</string>
+    <string name="check_all_tags">ସମସ୍ତ ଟ୍ୟାଗ୍ ଚୟନ/ଅଚୟନ କରନ୍ତୁ</string>
     <string name="filter_tags">ଟ୍ୟାଗର ଶୋଧନ</string>
     <string name="no_tags">ଆପଣ ଏ ଯାଏଁ କୌଣସି ଟ୍ୟାଗ ଯୋଡ଼ିନାହାନ୍ତି</string>
-    <string name="updated_version">ସଂସ୍କରଣ %s କୁ ଅଦ୍ୟତନ କରାଯାଇଛି</string>
+    <string name="updated_version">ସଂସ୍କରଣ %s କୁ ଅଦ୍ୟତନ କରାଗଲା</string>
     <!-- Reviewer.java -->
     <string name="save_whiteboard">ଧଳାପଟା ସଂରକ୍ଷିତ କରନ୍ତୁ</string>
     <string name="enable_whiteboard">ଧଳାପଟା ସକ୍ଷମ କରନ୍ତୁ</string>
@@ -68,13 +68,13 @@
     <string name="leech_notification">ପତ୍ରକୁ ଲିଚ ବୋଲି ଚିନ୍ହିତ ହେଇଛି</string>
     <string name="corrupt_font">ଖରାପ ଫୋଣ୍ଟ ଫାଇଲ %s</string>
     <string name="webview_crash_unknown">ଅଜଣା ତ୍ରୁଟି</string>
-    <string name="webview_crash_unknwon_detailed">ଏହା ୱେବଭିୟୁରେ ଏକ ଆନ୍ତରିକ ତ୍ରୁଟି ଯୋଗୁଁ ହେଇଛି</string>
-    <string name="webview_crash_oom">ସ୍ମୃତିରୁ ବାହାରେ</string>
-    <string name="webview_crash_oom_details">ୱେବ୍ ଭିୟୁ ସିଷ୍ଟମ୍ ଦ୍ୱାରା ସମାପ୍ତ ହେଲା | ଏହା ସାଧାରଣତ ଘଟେ ଯେତେବେଳେ ଆପର ମେମୋରୀସରିଯାଏ, ପ୍ରାୟତ  ବଡ଼ ଫଣ୍ଟ କିମ୍ବା ମିଡିଆ ହେତୁ | </string>
-    <string name="webview_crash_nonfatal">ୱେବ୍ ଭିଉ ରେଣ୍ଡରର୍ କ୍ରାଶ ହେଇଗଲା | କାରଣ: %s</string>
-    <string name="webview_crash_fatal">ଭୟଙ୍କର ତ୍ରୁଟି: ୱେବ୍ ଭିଉ ପ୍ରସ୍ତୁତକର୍ତ୍ତା କ୍ରାଶ ହେଇଗଲା | କାରଣ: %s</string>
-    <string name="webview_crash_loop_dialog_title">ସିଷ୍ଟମର ୱେବ ଭିୟୁ ପ୍ରସ୍ତୁତକର୍ତ୍ତାରେ ବିଫଳତା  </string>
-    <string name="webview_crash_loop_dialog_content">ସିଷ୍ଟମ ୱେବ ଭିୟୁ ପତ୍ରକୁ ପ୍ରସ୍ତୁତ କଲାନାହିଁ \'%1$s\'.\n %2$s </string>
+    <string name="webview_crash_unknwon_detailed">ଏହା WebView ରେ ଏକ ଆନ୍ତରିକ ତ୍ରୁଟି ଯୋଗୁଁ ହେଇଛି</string>
+    <string name="webview_crash_oom">ମେମୋରୀ ସରିଗଲା</string>
+    <string name="webview_crash_oom_details">WebView ସିଷ୍ଟମ୍ ଦ୍ୱାରା ସମାପ୍ତ ହେଲା | ଏହା ସାଧାରଣତଃ ଘଟେ ଯେତେବେଳେ ଆପ୍ ର ମେମୋରୀ ସରିଯାଏ, ପ୍ରାୟତଃ ବଡ଼ ଫଣ୍ଟ କିମ୍ବା ମିଡିଆ ହେତୁ |</string>
+    <string name="webview_crash_nonfatal">WebView ପ୍ରସ୍ତୁତକର୍ତ୍ତା ଦୁର୍ଘଟଣାଗ୍ରସ୍ତ ହୋଇଛି | କାରଣ: %s</string>
+    <string name="webview_crash_fatal">ସାଂଘାତିକ ତ୍ରୁଟି: WebView ପ୍ରସ୍ତୁତକର୍ତ୍ତା ଦୁର୍ଘଟଣାଗ୍ରସ୍ତ ହୋଇଛି | କାରଣ: %s</string>
+    <string name="webview_crash_loop_dialog_title">ସିଷ୍ଟମର WebView ପ୍ରସ୍ତୁତକର୍ତ୍ତାରେ ବିଫଳତା</string>
+    <string name="webview_crash_loop_dialog_content">ସିଷ୍ଟମ୍ WebView \'%1$s\' କାର୍ଡ କୁ ପ୍ରସ୍ତୁତ କଲାନାହିଁ |\n %2$s</string>
     <!-- Browser -->
     <string-array name="browser_column1_headings">
         <item>ପ୍ରଶ୍ନ</item>
@@ -92,7 +92,7 @@
         <item>ଅନ୍ତରାଳ</item>
         <item>ସହଜତା</item>
         <item>ବାକି</item>
-        <item>ସଂଶୋଧିତ ପତ୍ର</item>
+        <item>କାର୍ଡ ସଂଶୋଧିତ</item>
         <item>ସୃଷ୍ଟି ହୋଇଛି</item>
         <item>ନୋଟ୍ ସଂଶୋଧିତ</item>
     </string-array>
@@ -107,7 +107,7 @@
     <!-- Card editor -->
     <string name="cardeditor_title_edit_card">ନୋଟ୍ ସମ୍ପାଦନା</string>
     <string name="discard_unsaved_changes">ବନ୍ଦ କରି ଏବେର ଇନପୁଟ୍ ହରାନ୍ତୁ?</string>
-    <string name="note_editor_no_cards_created">ନୂଆ ପତ୍ର ବନାହେଇନି | ଅଧିକ କ୍ଷେତ୍ର ଭର୍ତ୍ତି କରନ୍ତୁ</string>
+    <string name="note_editor_no_cards_created">କୌଣସି କାର୍ଡ ସୃଷ୍ଟି ହୋଇନାହିଁ | ଦୟାକରି ଅଧିକ କ୍ଷେତ୍ର ପୂରଣ କରନ୍ତୁ</string>
     <string name="note_editor_no_first_field">ପ୍ରଥମ କ୍ଷେତ୍ର ଖାଲି ଅଛି</string>
     <string name="note_editor_no_cloze_delations">ଏହି ନୋଟ ପ୍ରକାରରେ କ୍ଲୋଜ ଡିଲିଶନ ରହିବା ନିହାତି ଆବଶ୍ୟକ</string>
     <string name="note_editor_set_field_language">ଭାଷା ନିର୍ଧାରଣ</string>
@@ -116,11 +116,11 @@
     <string name="saving_facts">ନୋଟ୍ ସଂରକ୍ଷିତ କରାଯାଉଛି </string>
     <string name="saving_model">ନୋଟ୍ ପ୍ରକାର ସଂରକ୍ଷିତ ହଉଛି </string>
     <string name="save">ସଞ୍ଚୟ</string>
-    <string name="close">ବନ୍ଦ </string>
-    <string name="select">ବାଛନ୍ତୁ </string>
-    <string name="saving_changes">ପରିବର୍ତ୍ତନ ସଂରକ୍ଷିତ ହେଉଛି...</string>
+    <string name="close">ବନ୍ଦ</string>
+    <string name="select">ବାଛନ୍ତୁ</string>
+    <string name="saving_changes">ପରିବର୍ତ୍ତନଗୁଡ଼ିକୁ ସଂରକ୍ଷଣ କରୁଛି...</string>
     <string name="reordering_cards">ପତ୍ର ପୁନଃବ୍ୟବସ୍ଥିତ ହଉଛି </string>
-    <string name="field_remapping">%1$s (%2$s ରୁ) </string>
+    <string name="field_remapping">%1$s (“%2$s” ରୁ)</string>
     <string name="confirm_map_cards_to_nothing">ବିନା କୌଣସି ଜିନିଷକୁ ମ୍ୟାପ୍ ହୋଇଥିବା ପତ୍ର ବିଲୋପ ହେଇଯିବ | ଯଦି କୌଣସି ନୋଟ୍ ର ଅବଶିଷ୍ଟ ପତ୍ର ନାହିଁ, ତେବେ ଏହା ନଷ୍ଟ ହୋଇଯିବ | ଆପଣ ଜାରି ରଖିବାକୁ ଚାହୁଁଛନ୍ତି କି?</string>
     <plurals name="timebox_reached">
         <item quantity="one">%1$d ପତ୍ର  %2$s ସମୟରେ ଅଧ୍ୟୟନ କଲେ</item>
@@ -141,13 +141,13 @@
     <string name="rename" comment="Confirm that the renaming action should be processed.">ନାମ ବଦଳାନ୍ତୁ</string>
     <string name="default_conf_delete_error">ଡିଫଲ୍ଟ ବିକଳ୍ପ ସମୂହକୁ ହଟାଯାଇ ପାରିବନାହିଁ</string>
     <plurals name="factadder_cards_added">
-        <item quantity="one">SIM କାର୍ଡ ଯୋଗ ହୋଇଛି</item>
-        <item quantity="other">%d ଟି ପତ୍ର ଯୋଡ଼ା ହୋଇଛି</item>
+        <item quantity="one">%dଟିଏ କାର୍ଡ ଯୋଗ କରାଯାଇଛି</item>
+        <item quantity="other">%dଟି କାର୍ଡ ଯୋଗ କରାଯାଇଛି</item>
     </plurals>
-    <string name="check_db">ଡାଟାବେସ୍ ଯାଞ୍ଚ କରିବେ କି?</string>
+    <string name="check_db">ଡାଟାବେସ୍ ଯାଞ୍ଚ</string>
     <string name="check_media">ମିଡ଼ିଆ ଯାଞ୍ଚ କରନ୍ତୁ</string>
-    <string name="empty_cards">ଖାଲି ପତ୍ରଗୁଡ଼ିକ</string>
-    <string name="check_db_message">ଡେଟାବେସ ଯାଞ୍ଚ ହଉଛି</string>
+    <string name="empty_cards">ଖାଲି କାର୍ଡଗୁଡ଼ିକ</string>
+    <string name="check_db_message">ଡାଟାବେସ୍ ଯାଞ୍ଚ କରାଯାଉଛି...</string>
     <string name="empty_card_warning">ଏହି ପତ୍ରଟି ଖାଲି ଅଛି | ତାସଖଣ୍ଡ ଚିଠାରୁ ମେନୁରେ  \"ଖାଲି ପତ୍ର\" ବିକଳ୍ପ ବାଛନ୍ତୁ</string>
     <string name="unknown_type_field_warning">ଉତ୍ତର ଜଣାନ୍ତୁ : ଅଜଣା କ୍ଷେତ୍ର %s</string>
     <string name="delete_deck">ଡେକ୍ ଅପସାରଣ କରୁଅଛି...</string>
@@ -159,16 +159,16 @@
     <string name="import_message_replace_confirm">ଏହା ଆପଣଙ୍କର ବିଦ୍ୟମାନ ସଂଗ୍ରହକୁ ବିଲୋପ କରିବ ଏବଂ ଏହାକୁ %s ଫାଇଲ୍ ତଥ୍ୟ ସହିତ ବଦଳାଇବ </string>
     <string name="import_message_add_confirm">%s କୁ ସଂଗ୍ରହରେ ଯୋଡ଼ନ୍ତୁ? ଏହା ବହୁତ ସମୟ ନେଇପାରେ</string>
     <string name="import_log_no_apkg">ଏହା ଏକ ବୈଧ Anki package ଫାଇଲ୍ ନୁହେଁ</string>
-    <string name="import_log_failed_unzip">ଏ.ପି.କେ.ଜି କୁ ଅନଜିପ କରିବାରେ ବିଫଳ :%s</string>
-    <string name="import_log_failed_copy_to">ଏ.ପି.କେ.ଜି କୁ %s କୁ କପି କରିବାରେ ବିଫଳ </string>
+    <string name="import_log_failed_unzip">apkg: %s କୁ unzip କରିବାରେ ବିଫଳ</string>
+    <string name="import_log_failed_copy_to">%s କୁ apkg ନକଲ କରିବାରେ ବିଫଳ</string>
     <string name="import_log_failed_validate">ଏ.ପି.କେ.ଜି ର ବିଫଳ ବୈଧତା</string>
     <string name="import_log_insufficient_space">ପ୍ୟାକେଜ୍ ଅନଜିପ କରିବାକୁ ପର୍ଯ୍ୟାପ୍ତ ସ୍ଥାନ ନାହିଁ | ଆବଶ୍ୟକ %1$d, ଉପଲବ୍ଧ %2$d</string>
     <string name="import_log_file_cache_cleared">ଫାଇଲ୍ ଆମଦାନି କରିବାରେ ତ୍ରୁଟି | ପ୍ରକ୍ରିୟାକରଣ ସମୟରେ ସମ୍ଭବତ ଏକ କ୍ୟାଶେ ସଫା ହେଇପାରେ |\n ଦୟାକରି ପୁନଃ ଚେଷ୍ଟା କରନ୍ତୁ </string>
-    <string name="import_succeeded_but_check_database">ଡାଟା ଆମଦାନୀ ସଫଳ ହେଲା କିନ୍ତୁ ଆମଦାନୀ ପରବର୍ତ୍ତୀ ସଫେଇ ବିଫଳ ହେଲା | ପରେ ଯାଞ୍ଚ ଡାଟାବେସ୍ ଚଲାନ୍ତୁ | ମୂଳ କାରଣ:%s</string>
+    <string name="import_succeeded_but_check_database">ଡାଟା ଆମଦାନୀ ସଫଳ ହେଲା କିନ୍ତୁ ଆମଦାନୀ ପରବର୍ତ୍ତୀ ସଫେଇ ବିଫଳ ହେଲା | ପରେ ଡାଟାବେସ୍ ଯାଞ୍ଚ ଚଲାନ୍ତୁ | ମୂଳ କାରଣ: %s</string>
     <string name="import_error_unhandled_request">ଆମଦାନୀ ଅନୁରୋଧ ପ୍ରକ୍ରିୟାକରଣ କରିବାରେ ଅସମର୍ଥ </string>
-    <string name="import_error_corrupt_zip">Apkg ଫାଇଲ୍ ଭ୍ରଷ୍ଟ ଅଟେ | ଦୟାକରି ଏହାକୁ ବିଲୋପ କରନ୍ତୁ ଏବଂ ପୁନ - ଡାଉନଲୋଡ୍ କରନ୍ତୁ |\n\nମୂଳ କାରଣ: %s</string>
+    <string name="import_error_corrupt_zip">apkg ଫାଇଲଟି ତ୍ରୁଟିଗ୍ରସ୍ତ ଅଟେ । ଦୟାକରି ଏହାକୁ ବିଲୋପ କରନ୍ତୁ ଏବଂ ପୁନଃ ଡାଉନଲୋଡ୍ କରନ୍ତୁ |\n\nମୂଳ କାରଣ: %s</string>
     <string name="import_error_exception">ପ୍ୟାକେଜ୍ ଆମଦାନି କରିବାରେ ବିଫଳ |\n\n%s</string>
-    <string name="import_error_not_apkg_extension">ଫାଇଲ୍ ନାମ \"%s\" ପାଖରେ .apkg କିମ୍ବା .colpkg ଏକ୍ସଟନସନ ନାହିଁ </string>
+    <string name="import_error_not_apkg_extension">ଫାଇଲ୍ ନାମ \"%s\" ପାଖରେ .apkg କିମ୍ବା .colpkg extension ନାହିଁ</string>
     <string name="import_error_load_imported_database">ଆଙ୍କି ଡାଟାବେସ୍ (.anki2) ସ୍ଥାନାନ୍ତରଗୁଡ଼ିକ ଏପର୍ଯ୍ୟନ୍ତ ସମର୍ଥିତ ନୁହେଁ | ବଦଳ ନିର୍ଦ୍ଦେଶାବଳୀ ପାଇଁ ଦୟାକରି ମାନୁଆଲ୍ ଦେଖନ୍ତୁ |</string>
     <string name="import_error_content_provider">ମନୋନୀତ ଫାଇଲ୍ AnkiDroid ଦ୍ୱାରା ସ୍ୱୟଂଚାଳିତ ଭାବରେ ଆମଦାନୀ ହୋଇପାରିବ ନାହିଁ | ଆଙ୍କି ଫାଇଲଗୁଡ଼ିକୁ କିପରି ମାନୁଆଲ ଆମଦାନୀ କରିବେ ଦୟାକରି ଉପଭୋକ୍ତା ମାନୁଆଲ୍ ଦେଖନ୍ତୁ: \n%s</string>
     <string name="import_error_copy_file_to_cache">copyFileToCache () ବିଫଳ ହେଲା (ସମ୍ଭବତ ଆଉ ଷ୍ଟୋରେଜ୍ ନାହିଁ)</string>
@@ -177,13 +177,13 @@
     <string name="import_interrupted">ଆମଦାନୀ ବାଧାପ୍ରାପ୍ତ: AnkiDroid ବନ୍ଦ ହୋଇଗଲା |</string>
     <string name="export_include_schedule">କାର୍ଯ୍ୟସୂଚୀ ଅନ୍ତର୍ଭୂକ୍ତ କରନ୍ତୁ </string>
     <string name="export_include_media">ମିଡିଆ ଅନ୍ତର୍ଭୂକ୍ତ କରନ୍ତୁ</string>
-    <string name="confirm_apkg_export">ଆଙ୍କି ପ୍ୟାକେଜ୍ ଭାବରେ ସଂଗ୍ରହକୁ ରପ୍ତାନି କରନ୍ତୁ?</string>
+    <string name="confirm_apkg_export">ସଂଗ୍ରହକୁ Anki package ଭାବରେ ରପ୍ତାନି କରିବେ କି?</string>
     <string name="confirm_apkg_export_deck">\"%s\" କୁ apkg ଫାଇଲ ଭାବରେ ରପ୍ତାନି କରିବେ କି?</string>
     <string name="export_in_progress">ଆଙ୍କି ପ୍ୟାକେଜ୍ ଫାଇଲ୍ ରପ୍ତାନି କରୁଛି&#8230;</string>
     <string name="export_successful_title">ଆଙ୍କି ପ୍ୟାକେଜ୍ ପଠାନ୍ତୁ?</string>
     <string name="export_send_button">ପଠାନ୍ତୁ</string>
     <string name="export_save_button">ଫାଇଲ ରେ ସଂରକ୍ଷିତ କରନ୍ତୁ</string>
-    <string name="export_send_no_handlers">Apkg ପରିଚାଳନା କରିବାକୁ କୌଣସି ଆପ ଉପଲବ୍ଧ ନାହିଁ | ସଂରକ୍ଷିତ ହଉଛି..</string>
+    <string name="export_send_no_handlers">apkg ପରିଚାଳନା କରିବା ପାଇଁ କୌଣସି ଆପ୍ ଉପଲବ୍ଧ ନାହିଁ | ସଂରକ୍ଷଣ କରାଯାଉଛି...</string>
     <string name="export_save_apkg_successful">ସଫଳତାର ସହିତ ଆଙ୍କି ପ୍ୟାକେଜ୍ ସଂରକ୍ଷିତ ହେଲା </string>
     <string name="export_save_apkg_unsuccessful">ଆଙ୍କି ପ୍ୟାକେଜ୍ ସଂରକ୍ଷିତ ହେବାରେ ବିଫଳ ହେଲା</string>
     <string name="export_successful">\"%s\" ଫାଇଲ୍ ରପ୍ତାନି ହୋଇଥିଲା | ଆପଣ ଏହାକୁ ଅନ୍ୟ ଏକ ଆପ୍ ସହିତ ପଠାଇବାକୁ ଚାହୁଁଛନ୍ତି କି?</string>
@@ -193,8 +193,8 @@
         ଏହା <a href="https://ankidroid.org/docs/manual.html">AnkiDroid</a> ରୁ ପଠାଯାଇଥିବା ଏକ Anki flashcards ଡେକ୍ |
         ଉପଲବ୍ଧ <a href="http://ankisrs.net/#download">Anki distributions</a> ମଧ୍ୟରୁ ଗୋଟିଏ ବ୍ୟବହାର କରି ଏହାକୁ ଖୋଲିବାକୁ ଚେଷ୍ଟା କରନ୍ତୁ ଏବଂ ସହଜ ଏବଂ ଦକ୍ଷ ଶିକ୍ଷା ଉପଭୋଗ କରନ୍ତୁ!
         ]]></string>
-    <string name="export_unsuccessful">apkg ଫାଇଲ୍ ଅଂଶୀଦାର କରିବାରେ ତ୍ରୁଟି</string>
-    <string name="import_hint">Apkg ଫାଇଲ୍ କୁ “%s” ନିର୍ଦେଶିକାରେ ରଖନ୍ତୁ ଏବଂ ପତ୍ର ଆମଦାନୀ କରିବାକୁ “ଠିକ ଅଛି” କୁ ସ୍ପର୍ଶ କରନ୍ତୁ</string>
+    <string name="export_unsuccessful">apkg ଫାଇଲ୍ ରପ୍ତାନି କରିବାରେ ତ୍ରୁଟି</string>
+    <string name="import_hint">apkg ଫାଇଲ୍ କୁ “%s” directory ରେ ରଖନ୍ତୁ ଏବଂ ପତ୍ର ଆମଦାନୀ କରିବାକୁ “ଠିକ ଅଛି” କୁ ସ୍ପର୍ଶ କରନ୍ତୁ</string>
     <string name="upgrade_import_no_file_found">କୌଣସି ଆମଦାନୀଯୋଗ୍ୟ %1$s ଫାଇଲ ମିଳିଲା ନାହିଁ </string>
     <string name="study_options" comment="Name for a preference category in Filtered deck (aka Cram deck, aka Custom study) options">ବିକଳ୍ପଗୁଡ଼ିକ</string>
     <string name="menu__deck_options">ଡେକ୍ ବିକଳ୍ପଗୁଡ଼ିକ</string>
@@ -213,38 +213,38 @@
     <string name="lookup_hint">ଲେଖାକୁ କପି କଲା ପରେ,ସନ୍ଧାନ-ଚିହ୍ନ ଦେଖିବାକୁ ଫ୍ଲାସକାର୍ଡର ଯେକୌଣସି ଜାଗା ଟିପନ୍ତୁ</string>
     <!-- Time spans -->
     <plurals name="time_span_seconds">
-        <item quantity="one">ସେକେଣ୍ଡ୍</item>
-        <item quantity="other">%sସେକେଣ୍ଡ୍</item>
+        <item quantity="one">%s ସେକେଣ୍ଡ୍</item>
+        <item quantity="other">%s ସେକେଣ୍ଡ୍</item>
     </plurals>
     <plurals name="time_span_minutes">
-        <item quantity="one">%sମିନିଟ୍</item>
-        <item quantity="other">%sମିନିଟ୍</item>
+        <item quantity="one">%s ମିନିଟ୍</item>
+        <item quantity="other">%s ମିନିଟ୍</item>
     </plurals>
     <plurals name="time_span_hours">
-        <item quantity="one">%sଘଣ୍ଟା</item>
-        <item quantity="other">%sଘଣ୍ଟା</item>
+        <item quantity="one">%s ଘଣ୍ଟା</item>
+        <item quantity="other">%s ଘଣ୍ଟା</item>
     </plurals>
     <plurals name="time_span_days">
-        <item quantity="one">%sଦିନ</item>
-        <item quantity="other">%sଦିନ</item>
+        <item quantity="one">%s ଦିନ</item>
+        <item quantity="other">%s ଦିନ</item>
     </plurals>
     <plurals name="time_span_months">
-        <item quantity="one">%sମାସ</item>
-        <item quantity="other">%sମାସ</item>
+        <item quantity="one">%s ମାସ</item>
+        <item quantity="other">%s ମାସ</item>
     </plurals>
     <plurals name="time_span_years">
-        <item quantity="one">%sବର୍ଷ</item>
-        <item quantity="other">%sବର୍ଷ</item>
+        <item quantity="one">%s ବର୍ଷ</item>
+        <item quantity="other">%s ବର୍ଷ</item>
     </plurals>
     <!-- A decimal number of seconds.
     Please give this a best-effort translation and explain the requirements for
     formatting decimals in your language in the CrowdIn comments -->
-    <string name="time_span_decimal_seconds">%sସେକେଣ୍ଡ୍</string>
+    <string name="time_span_decimal_seconds">%s ସେକେଣ୍ଡ୍</string>
     <!-- The reason for making a simple “< x” translatable are RTL
          languages which apparently use the other symbol to mean less
          than. -->
-    <string name="less_than_time">&lt;%s</string>
-    <string name="decks_rename_exists">ସେ ତାସଖଣ୍ଡଟି ଆଗରୁ ବିଦ୍ୟମାନ ଅଛି </string>
+    <string name="less_than_time">&lt; %s</string>
+    <string name="decks_rename_exists">ସେ ତାସଖଣ୍ଡଟି ଆଗରୁ ବିଦ୍ୟମାନ ଅଛି</string>
     <string name="decks_rename_filtered_nosubdecks">ଗୋଟେ ଶୋଧିତ ତାସଖଣ୍ଡ ପାଖରେ ଉପତାସଖଣ୍ଡ ରହିପାରିବନାହିଁ</string>
     <string name="filtered_deck_name">ଶୋଧିତ ତାସଖଣ୍ଡ</string>
     <string name="reminder_title">ଆଜି ପଢିବାକୁ ଭୁଲିବେନାହିଁ!</string>
@@ -253,7 +253,7 @@
         <item quantity="other">%1$sରେ %1$s ପତ୍ରଙ୍କର ସମୀକ୍ଷା ବାକି</item>
     </plurals>
     <!-- Currently only used if exporting APKG fails -->
-    <string name="apk_share_error">apkg ଫାଇଲ୍ | ଅଂଶୀଦାର କରିବାରେ ତ୍ରୁଟି</string>
+    <string name="apk_share_error">apkg ଫାଇଲ୍ ଅଂଶୀଦାର କରିବାରେ ତ୍ରୁଟି</string>
     <!-- Import and export v2 feedback -->
     <string name="export_v2_dummy_note">ଏହି ଫାଇଲ୍ ପାଇଁ ନୂତନତମ ଆଙ୍କି ସଂସ୍କରଣ ଆବଶ୍ୟକ</string>
     <!-- Placed in a snackbar with a long URL. Limit the length and move the URL to the start of the string -->
@@ -273,7 +273,7 @@
     <string name="reviewer_tts_cloze_spoken_replacement">ରିକ୍ତ</string>
     <!-- in options menu & Navigation Drawer -->
     <string name="ankidroid_turn_on_fullscreen_nav_drawer">ଜାଭାସ୍କ୍ରିପ୍ଟ ବ୍ୟବହାର କରି ଶୋ ନେଭିଗେସନ୍ ଡ୍ରୟର ବ୍ୟବହାର କରିବାକୁ ଦୟାକରି ପୂର୍ଣ ସ୍କ୍ରିନ୍ ଚାଲୁ କରନ୍ତୁ </string>
-    <string name="ankidroid_turn_on_fullscreen_options_menu">ଜାଭାସ୍କ୍ରିପ୍ଟ ବ୍ୟବହାର କରି ଶୋ ଅପ୍ସନ୍ ମେନୁ ବ୍ୟବହାର କରିବାକୁ ଦୟାକରି ପୂର୍ଣ ସ୍କ୍ରିନ୍ ଚାଲୁ କରନ୍ତୁ </string>
+    <string name="ankidroid_turn_on_fullscreen_options_menu">JavaScript ବ୍ୟବହାର କରି ବିକଳ୍ପ ମେନୁ ଦେଖାଇବାକୁ ପୂର୍ଣ୍ଣ ସ୍କ୍ରିନ୍ ଚାଲୁ କରନ୍ତୁ |</string>
     <!-- Whiteboard save image message in Reviewer -->
     <string name="white_board_image_save_failed">ଧଳାପଟା ଛବି ଦେଖିବାରେ ବିଫଳ | %s</string>
     <string name="white_board_image_saved">ଧଳାପଟା ଛବି %sରେ ସଂରକ୍ଷିତ</string>

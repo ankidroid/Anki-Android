@@ -63,7 +63,7 @@
     <!-- AndroidManifest.xml -->
     <string name="preferences_title">Einstellungen</string>
     <string name="deckpreferences_title">Optionen für XXX</string>
-    <string name="sync_conflict_message">Sie müssen entweder diese Sammlung hochladen oder sie von AnkiWeb herunterladen, da beide nicht zusammengeführt werden können. Die Sammlung auf einer Seite wird überschreiben.</string>
+    <string name="sync_conflict_message">Sie müssen entweder diese Sammlung hochladen oder sie von AnkiWeb herunterladen, da beide nicht zusammengeführt werden können. Die Sammlung auf einer Seite wird überschrieben.</string>
     <string name="sync_conflict_local">Hochladen</string>
     <string name="sync_conflict_remote">Herunterladen</string>
     <string name="sync_conflict_remote_confirm">Ihre lokale Sammlung überschreiben?</string>
