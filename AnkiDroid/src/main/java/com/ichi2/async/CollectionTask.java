@@ -111,27 +111,6 @@ public class CollectionTask<ProgressListener, ProgressBackground extends Progres
      */
     private Context mContext;
 
-    /**
-     * Block the current thread until all CollectionTasks have finished.
-     * @param timeoutSeconds timeout in seconds
-     * @return whether all tasks exited successfully
-     */
-    @SuppressWarnings("UnusedReturnValue")
-    public static boolean waitForAllToFinish(Integer timeoutSeconds) {
-        // HACK: This should be better - there is currently a race condition in sLatestInstance, and no means to obtain this information.
-        // This should work in all reasonable cases given how few tasks we have concurrently blocking.
-        boolean result;
-        result = TaskManager.waitToFinish(timeoutSeconds / 4);
-        ThreadUtil.sleep(10);
-        result &= TaskManager.waitToFinish(timeoutSeconds / 4);
-        ThreadUtil.sleep(10);
-        result &= TaskManager.waitToFinish(timeoutSeconds / 4);
-        ThreadUtil.sleep(10);
-        result &= TaskManager.waitToFinish(timeoutSeconds / 4);
-        ThreadUtil.sleep(10);
-        Timber.i("Waited for all tasks to finish");
-        return result;
-    }
 
     /** Cancel the current task.
      * @return whether cancelling did occur.*/
