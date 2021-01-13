@@ -1,9 +1,11 @@
 package com.ichi2.async;
 
 import com.ichi2.libanki.CollectionGetter;
+import com.ichi2.libanki.Collection;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import timber.log.Timber;
 
 public class ForegroundTaskManager extends TaskManager {
     private final CollectionGetter mColGetter;
@@ -13,57 +15,97 @@ public class ForegroundTaskManager extends TaskManager {
         mColGetter = colGetter;
     }
 
-
     @Override
-    protected boolean removeTask(CollectionTask task) {
+    protected boolean removeTaskConcrete(CollectionTask task) {
         return true;
     }
 
 
     @Override
-    protected void setLatestInstance(CollectionTask task) {
+    public <ProgressBackground, ResultBackground> CollectionTask<ProgressBackground, ProgressBackground, ResultBackground, ResultBackground> launchCollectionTaskConcrete(CollectionTask.Task<ProgressBackground, ResultBackground> task) {
+        return launchCollectionTaskConcrete(task, null);
     }
 
 
     @Override
-    public <ProgressListener, ProgressBackground extends ProgressListener, ResultListener, ResultBackground extends ResultListener> CollectionTask<ProgressListener, ProgressBackground, ResultListener, ResultBackground> launchCollectionTask(
+    protected void setLatestInstanceConcrete(CollectionTask task) {
+    }
+
+
+    @Override
+    public <ProgressListener, ProgressBackground extends ProgressListener, ResultListener, ResultBackground extends ResultListener> CollectionTask<ProgressListener, ProgressBackground, ResultListener, ResultBackground> launchCollectionTaskConcrete(
             @NonNull CollectionTask.Task<ProgressBackground, ResultBackground> task,
             @Nullable TaskListener<ProgressListener, ResultListener> listener) {
-        CollectionTask<ProgressListener, ProgressBackground, ResultListener, ResultBackground>  ct =
-                new CollectionTask<>(task, listener, null);
-        ct.execute();
-        try {
-            ct.wait();
-        } catch (InterruptedException e) {
-            throw new RuntimeException(e);
+        if (listener != null) {
+            listener.onPreExecute();
         }
-        return ct;
+        final ResultBackground res;
+        try {
+            res = task.task(mColGetter.getCol(), new MockTaskManager<>(listener));
+        } catch (Exception e) {
+            Timber.w(e, "A new failure may have something to do with running in the foreground.");
+            throw e;
+        }
+        if (listener != null) {
+            listener.onPostExecute(res);
+        }
+        return new EmptyTask<>(task, listener);
     }
 
 
     @Override
-    public void waitToFinish() {
+    public void waitToFinishConcrete() {
     }
 
 
     @Override
-    public boolean waitToFinish(Integer timeoutSeconds) {
+    public boolean waitToFinishConcrete(Integer timeoutSeconds) {
         return true;
     }
 
 
     @Override
-    public void cancelCurrentlyExecutingTask() {
+    public void cancelCurrentlyExecutingTaskConcrete() {
     }
 
 
     @Override
-    public void cancelAllTasks(Class taskType) {
+    public void cancelAllTasksConcrete(Class taskType) {
     }
 
 
     @Override
-    public boolean waitForAllToFinish(Integer timeoutSeconds) {
+    public boolean waitForAllToFinishConcrete(Integer timeoutSeconds) {
         return true;
+    }
+
+    public class MockTaskManager<ProgressListener, ProgressBackground extends ProgressListener> implements ProgressSenderAndCancelListener<ProgressBackground> {
+
+        private final @Nullable TaskListener<ProgressListener, ?> mTaskListener;
+
+
+        public MockTaskManager(@Nullable TaskListener<ProgressListener, ?> listener) {
+            mTaskListener = listener;
+        }
+
+
+        @Override
+        public boolean isCancelled() {
+            return false;
+        }
+
+
+        @Override
+        public void doProgress(@Nullable ProgressBackground value) {
+            mTaskListener.onProgressUpdate(value);
+        }
+    }
+
+    public class EmptyTask<ProgressListener, ProgressBackground extends ProgressListener, ResultListener, ResultBackground extends ResultListener> extends
+            CollectionTask<ProgressListener, ProgressBackground, ResultListener, ResultBackground> {
+
+        protected EmptyTask(Task<ProgressBackground, ResultBackground> task, TaskListener<ProgressListener, ResultListener> listener) {
+            super(task, listener, null);
+        }
     }
 }
