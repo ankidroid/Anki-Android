@@ -31,6 +31,7 @@ import com.ichi2.async.TaskManager;
 import com.ichi2.compat.customtabs.CustomTabActivityHelper;
 import com.ichi2.libanki.Card;
 import com.ichi2.libanki.Collection;
+import com.ichi2.libanki.CollectionGetter;
 import com.ichi2.libanki.Consts;
 import com.ichi2.libanki.DB;
 import com.ichi2.libanki.Model;
@@ -77,7 +78,9 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
 import static org.robolectric.Shadows.shadowOf;
 
-public class RobolectricTest {
+public class RobolectricTest implements CollectionGetter {
+
+    private static boolean mBackground = true;
 
     private final ArrayList<ActivityController<?>> controllersForCleanup = new ArrayList<>();
 
@@ -243,7 +246,7 @@ public class RobolectricTest {
     /** A collection. Created one second ago, not near cutoff time.
     * Each time time is checked, it advance by 10 ms. Not enough to create any change visible to user, but ensure
      * we don't get two equal time.*/
-    protected Collection getCol() {
+    public Collection getCol() {
         MockTime time = new MockTime(2020, 7, 7, 7, 0, 0, 0, 10);
         return CollectionHelper.getInstance().getCol(getTargetContext(), time);
     }

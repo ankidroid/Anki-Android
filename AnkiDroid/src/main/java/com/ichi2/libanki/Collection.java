@@ -99,7 +99,7 @@ import static com.ichi2.libanki.Consts.DECK_DYN;
 @SuppressWarnings({"PMD.ExcessiveClassLength", "PMD.AvoidThrowingRawExceptionTypes","PMD.AvoidReassigningParameters",
         "PMD.NPathComplexity","PMD.MethodNamingConventions","PMD.AvoidBranchingStatementAsLastInLoop",
         "PMD.SwitchStmtsShouldHaveDefault","PMD.CollapsibleIfStatements","PMD.EmptyIfStmt","PMD.ExcessiveMethodLength"})
-public class Collection {
+public class Collection implements CollectionGetter {
 
     private final Context mContext;
 
@@ -2287,5 +2287,14 @@ public class Collection {
     @NonNull
     public Time getTime() {
         return mTime;
+    }
+
+
+    /**
+     * Allows a collection to be used as a CollectionGetter
+     * @return Itself.
+     */
+    public Collection getCol() {
+        return this;
     }
 }
