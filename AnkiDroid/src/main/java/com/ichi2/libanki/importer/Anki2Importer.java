@@ -858,8 +858,6 @@ public class Anki2Importer extends Importer {
             byte[] result = new byte[MEDIAPICKLIMIT];
             System.arraycopy(baos.toByteArray(), 0, result, 0, Math.min(baos.size(), MEDIAPICKLIMIT));
             return result;
-        } catch (FileNotFoundException e) {
-            return null;
         } catch (IOException e) {
             return null;
         }

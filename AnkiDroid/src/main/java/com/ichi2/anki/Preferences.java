@@ -423,7 +423,7 @@ public class Preferences extends AppCompatPreferenceActivity implements Preferen
                 screen = listener.getPreferenceScreen();
                 android.preference.Preference syncUrlPreference = screen.findPreference("syncBaseUrl");
                 android.preference.Preference mSyncUrlPreference = screen.findPreference("syncMediaUrl");
-                syncUrlPreference.setOnPreferenceChangeListener((android.preference.Preference preference, Object newValue) -> {
+                syncUrlPreference.setOnPreferenceChangeListener((preference, newValue) -> {
                     String newUrl = newValue.toString();
                     if (!URLUtil.isValidUrl(newUrl)) {
                          new AlertDialog.Builder(this)
@@ -436,7 +436,7 @@ public class Preferences extends AppCompatPreferenceActivity implements Preferen
 
                     return true;
                 });
-                mSyncUrlPreference.setOnPreferenceChangeListener((android.preference.Preference preference, Object newValue) -> {
+                mSyncUrlPreference.setOnPreferenceChangeListener((preference, newValue) -> {
                     String newUrl = newValue.toString();
                     if (!URLUtil.isValidUrl(newUrl)) {
                         new AlertDialog.Builder(this)
