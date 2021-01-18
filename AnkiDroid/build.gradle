@@ -177,7 +177,7 @@ android {
             manifest.srcFile 'src/test/AndroidManifest.xml'
         }
     }
-    ndkVersion "21.3.6528147"
+    ndkVersion "22.0.7026061"
 }
 
 play {
