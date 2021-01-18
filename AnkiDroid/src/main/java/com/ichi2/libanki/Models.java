@@ -835,7 +835,7 @@ public class Models {
         }
         // apply
         save(m);
-        mCol.getDb().execute("update cards set ord = (case " + sb.toString() +
+        mCol.getDb().execute("update cards set ord = (case " + sb +
                              " end),usn=?,mod=? where nid in (select id from notes where mid = ?)",
                              mCol.usn(), mCol.getTime().intTime(), m.getLong("id"));
     }

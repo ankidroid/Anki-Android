@@ -54,8 +54,8 @@ public class ReminderServiceTest extends RobolectricTest {
 
     private void buildDefaultDeckReminders() {
         Intent defaultDeckIntent = new Intent();
-        defaultDeckIntent.putExtra(EXTRA_DECK_ID, (long) 1);
-        defaultDeckIntent.putExtra(EXTRA_DECK_OPTION_ID, (long) 1);
+        defaultDeckIntent.putExtra(EXTRA_DECK_ID, 1L);
+        defaultDeckIntent.putExtra(EXTRA_DECK_OPTION_ID, 1L);
         ReminderService reminders = new ReminderService();
         reminders.onReceive(getTargetContext(), defaultDeckIntent);
     }

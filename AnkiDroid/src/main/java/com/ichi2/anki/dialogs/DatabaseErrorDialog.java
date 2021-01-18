@@ -194,7 +194,7 @@ public class DatabaseErrorDialog extends AsyncDialogFragment {
             }
             case DIALOG_RESTORE_BACKUP: {
                 // Allow user to restore one of the backups
-                String path = CollectionHelper.getInstance().getCollectionPath(getActivity());
+                String path = CollectionHelper.getCollectionPath(getActivity());
                 File[] files = BackupManager.getBackups(new File(path));
                 mBackups = new File[files.length];
                 for (int i = 0; i < files.length; i++) {

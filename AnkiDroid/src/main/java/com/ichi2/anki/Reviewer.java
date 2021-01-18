@@ -715,9 +715,7 @@ public class Reviewer extends AbstractFlashcardViewer {
                 }
             }
 
-        } catch (Exception e) {
-            Timber.w(e, "Failed to display icons");
-        } catch (Error e) {
+        } catch (Exception | Error e) {
             Timber.w(e, "Failed to display icons");
         }
     }
