@@ -23,6 +23,8 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
 
+import androidx.core.view.inputmethod.EditorInfoCompat;
+import androidx.core.view.inputmethod.InputConnectionCompat;
 import timber.log.Timber;
 
 import com.ichi2.themes.Themes;
@@ -113,15 +115,15 @@ public class FieldEditText extends FixedEditText {
         if (inputConnection == null) {
             return null;
         }
-        androidx.core.view.inputmethod.EditorInfoCompat.setContentMimeTypes(editorInfo, IMAGE_MIME_TYPES);
-        return androidx.core.view.inputmethod.InputConnectionCompat.createWrapper(inputConnection, editorInfo, (contentInfo, flags, opts) -> {
+        EditorInfoCompat.setContentMimeTypes(editorInfo, IMAGE_MIME_TYPES);
+        return InputConnectionCompat.createWrapper(inputConnection, editorInfo, (contentInfo, flags, opts) -> {
 
             if (mImageListener == null) {
                 return false;
             }
 
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N_MR1  && (flags &
-                    androidx.core.view.inputmethod.InputConnectionCompat.INPUT_CONTENT_GRANT_READ_URI_PERMISSION) != 0) {
+                    InputConnection.INPUT_CONTENT_GRANT_READ_URI_PERMISSION) != 0) {
                 try {
                     contentInfo.requestPermission();
                 }
@@ -142,7 +144,7 @@ public class FieldEditText extends FixedEditText {
                 }
                 // There is a timeout on this line which occurs even if we're stopped in the debugger, if we take too long we get
                 // "Ankidroid doesn't support image insertion here"
-                androidx.core.view.inputmethod.InputConnectionCompat.commitContent(inputConnection, editorInfo, contentInfo, flags, opts);
+                InputConnectionCompat.commitContent(inputConnection, editorInfo, contentInfo, flags, opts);
                 return true;
             } catch (Exception e) {
                 AnkiDroidApp.sendExceptionReport(e, "NoteEditor::onImage");

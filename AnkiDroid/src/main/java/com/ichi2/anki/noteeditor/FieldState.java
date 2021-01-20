@@ -36,7 +36,6 @@ import java.util.List;
 import java.util.Map;
 
 import androidx.annotation.NonNull;
-import androidx.core.view.ViewCompat;
 
 import static com.ichi2.utils.MapUtil.getKeyByValue;
 
@@ -73,7 +72,7 @@ public class FieldState {
             fieldEditLines = createFields(type);
         }
         for (FieldEditLine l : fieldEditLines) {
-            l.setId(ViewCompat.generateViewId());
+            l.setId(View.generateViewId());
         }
 
         if (type.mType == Type.CLEAR_KEEP_STICKY) {
@@ -106,7 +105,7 @@ public class FieldState {
         for (AbsSavedState state : mSavedFieldData) {
             FieldEditLine edit_line_view = new FieldEditLine(mEditor);
             if (edit_line_view.getId() == 0) {
-                edit_line_view.setId(ViewCompat.generateViewId());
+                edit_line_view.setId(View.generateViewId());
             }
             edit_line_view.loadState(state);
             editLines.add(edit_line_view);

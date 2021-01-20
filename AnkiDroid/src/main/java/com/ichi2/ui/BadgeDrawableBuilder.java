@@ -25,7 +25,6 @@ import com.ichi2.anki.R;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.core.graphics.drawable.DrawableCompat;
 import androidx.vectordrawable.graphics.drawable.VectorDrawableCompat;
 import timber.log.Timber;
 
@@ -92,7 +91,7 @@ public class BadgeDrawableBuilder {
                 return;
             }
             Drawable mutableDrawable = badgeDrawable.mutate();
-            DrawableCompat.setTint(mutableDrawable, mColor);
+            mutableDrawable.setTint(mColor);
             badge.setBadgeDrawable(mutableDrawable);
             menuItem.setIcon(badge);
         }
