@@ -17,6 +17,7 @@
 package com.ichi2.utils;
 
 import android.content.SharedPreferences;
+import android.content.res.Resources;
 import android.text.TextUtils;
 
 import com.ichi2.anki.AnkiDroidApp;
@@ -28,6 +29,7 @@ import java.util.Locale;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.core.os.ConfigurationCompat;
 import timber.log.Timber;
 
 /**
@@ -112,4 +114,8 @@ public class LanguageUtil {
         return DateFormat.getDateInstance(DateFormat.SHORT, getLocale()).format(new Date(s * 1000L));
     }
 
+
+    public static Locale getLocaleCompat(Resources resources) {
+        return ConfigurationCompat.getLocales(resources.getConfiguration()).get(0);
+    }
 }

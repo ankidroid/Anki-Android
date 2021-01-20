@@ -41,7 +41,7 @@ public class BadgeDrawableBuilder {
 
 
     public static void removeBadge(MenuItem menuItem) {
-        if (android.os.Build.VERSION.SDK_INT < Build.VERSION_CODES.M) {
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.M) {
             return;
         }
 
@@ -69,7 +69,7 @@ public class BadgeDrawableBuilder {
 
 
     public void replaceBadge(@NonNull MenuItem menuItem) {
-        if (android.os.Build.VERSION.SDK_INT < android.os.Build.VERSION_CODES.M) {
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.M) {
             return;
         }
 
