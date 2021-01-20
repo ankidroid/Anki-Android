@@ -49,8 +49,6 @@ import androidx.annotation.StringRes;
 import androidx.annotation.VisibleForTesting;
 import androidx.coordinatorlayout.widget.CoordinatorLayout;
 import androidx.core.content.ContextCompat;
-import androidx.core.net.ConnectivityManagerCompat;
-import androidx.core.view.GestureDetectorCompat;
 import androidx.appcompat.app.ActionBar;
 import androidx.webkit.internal.AssetHelper;
 import androidx.webkit.WebViewAssetLoader;
@@ -58,6 +56,7 @@ import androidx.webkit.WebViewAssetLoader;
 import android.text.TextUtils;
 import android.util.Pair;
 import android.util.TypedValue;
+import android.view.GestureDetector;
 import android.view.GestureDetector.SimpleOnGestureListener;
 import android.view.Gravity;
 import android.view.KeyEvent;
@@ -323,7 +322,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
     /**
      * Swipe Detection
      */
-    private GestureDetectorCompat gestureDetector;
+    private GestureDetector gestureDetector;
     private MyGestureDetector mGestureDetectorImpl;
     private boolean mLinkOverridesTouchGesture;
 
@@ -1250,7 +1249,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
     }
 
 
-    public GestureDetectorCompat getGestureDetector() {
+    public GestureDetector getGestureDetector() {
         return gestureDetector;
     }
 
@@ -1507,7 +1506,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
 
         // Initialize swipe
         mGestureDetectorImpl = mLinkOverridesTouchGesture ? new LinkDetectingGestureDetector() : new MyGestureDetector();
-        gestureDetector = new GestureDetectorCompat(this, mGestureDetectorImpl);
+        gestureDetector = new GestureDetector(this, mGestureDetectorImpl);
 
         mEaseButtonsLayout = findViewById(R.id.ease_buttons);
 
@@ -4035,7 +4034,7 @@ see card.js for available functions
                     Timber.w("ConnectivityManager not found - assuming metered connection");
                     return true;
                 }
-                return ConnectivityManagerCompat.isActiveNetworkMetered(cm);
+                return cm.isActiveNetworkMetered();
             } catch (Exception e) {
                 Timber.w(e, "Exception obtaining metered connection - assuming metered connection");
                 return true;
