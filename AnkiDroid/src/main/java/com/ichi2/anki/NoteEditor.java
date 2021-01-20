@@ -132,6 +132,7 @@ import java.util.Map;
 import java.util.Set;
 
 import androidx.core.content.ContextCompat;
+import androidx.core.text.HtmlCompat;
 import androidx.fragment.app.DialogFragment;
 import timber.log.Timber;
 import static com.ichi2.compat.Compat.ACTION_PROCESS_TEXT;
@@ -2085,7 +2086,9 @@ public class NoteEditor extends AnkiActivity {
         if (!mAddNote && tmpls.length() < mEditorNote.model().getJSONArray("tmpls").length()) {
             cardsList = new StringBuilder("<font color='red'>" + cardsList + "</font>");
         }
-        mCardsButton.setText(CompatHelper.getCompat().fromHtml(getResources().getString(R.string.CardEditorCards, cardsList.toString())));
+        mCardsButton.setText(HtmlCompat.fromHtml(
+                getResources().getString(R.string.CardEditorCards, cardsList.toString()),
+                HtmlCompat.FROM_HTML_MODE_LEGACY));
     }
 
 

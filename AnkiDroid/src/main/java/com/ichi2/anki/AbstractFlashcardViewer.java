@@ -1543,7 +1543,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
         mFlipCardLayout = findViewById(R.id.flashcard_layout_flip);
         mFlipCardLayout.setOnClickListener(mFlipCardListener);
 
-        if (Build.VERSION.SDK_INT >= 21 && animationEnabled()) {
+        if (animationEnabled()) {
             mFlipCard.setBackgroundResource(Themes.getResFromAttr(this, R.attr.hardButtonRippleRef));
         }
 

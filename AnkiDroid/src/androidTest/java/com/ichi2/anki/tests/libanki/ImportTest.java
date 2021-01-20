@@ -50,6 +50,7 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
+import androidx.test.ext.junit.runners.AndroidJUnit4;
 import androidx.test.filters.SdkSuppress;
 import androidx.test.rule.GrantPermissionRule;
 
@@ -59,8 +60,7 @@ import static org.hamcrest.Matchers.hasSize;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
-@SuppressWarnings("deprecation")
-@RunWith(androidx.test.runner.AndroidJUnit4.class)
+@RunWith(AndroidJUnit4.class)
 public class ImportTest extends InstrumentedTest {
 
     private Collection testCol;
@@ -185,7 +185,7 @@ public class ImportTest extends InstrumentedTest {
         assertEquals(2, new File(testCol.getMedia().dir()).list().length);
     }
 
-    @Test		
+    @Test
     public void testAnki2DiffmodelTemplates() throws IOException, JSONException, ImportExportException {
         // different from the above as this one tests only the template text being
         // changed, not the number of cards/fields

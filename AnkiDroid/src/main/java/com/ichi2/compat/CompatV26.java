@@ -37,7 +37,7 @@ import timber.log.Timber;
 
 /** Implementation of {@link Compat} for SDK level 26 */
 @TargetApi(26)
-public class CompatV26 extends CompatV24 implements Compat {
+public class CompatV26 extends CompatV23 implements Compat {
 
     /**
      * In Oreo and higher, you must create a channel for all notifications.

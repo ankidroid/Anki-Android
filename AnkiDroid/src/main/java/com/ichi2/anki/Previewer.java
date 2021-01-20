@@ -20,7 +20,6 @@ package com.ichi2.anki;
 
 import android.content.Context;
 import android.content.Intent;
-import android.os.Build;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -145,7 +144,7 @@ public class Previewer extends AbstractFlashcardViewer {
         mPreviewPrevCard.setOnClickListener(mSelectScrollHandler);
         mPreviewNextCard.setOnClickListener(mSelectScrollHandler);
 
-        if (Build.VERSION.SDK_INT >= 21 && animationEnabled()) {
+        if (animationEnabled()) {
             int resId = Themes.getResFromAttr(this, R.attr.hardButtonRippleRef);
             mPreviewButtonsLayout.setBackgroundResource(resId);
             mPreviewPrevCard.setBackgroundResource(R.drawable.item_background_light_selectable_borderless);

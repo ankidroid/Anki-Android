@@ -23,6 +23,7 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.annotation.VisibleForTesting;
+import androidx.core.text.HtmlCompat;
 import androidx.fragment.app.Fragment;
 import androidx.appcompat.widget.Toolbar;
 
@@ -702,7 +703,7 @@ public class StudyOptionsFragment extends Fragment implements Toolbar.OnMenuItem
         String withStrippedTags = Utils.stripHTMLScriptAndStyleTags(desc);
         //#5188 - fromHtml displays newlines as " "
         String withFixedNewlines = HtmlUtils.convertNewlinesToHtml(withStrippedTags);
-        return CompatHelper.getCompat().fromHtml(withFixedNewlines);
+        return HtmlCompat.fromHtml(withFixedNewlines, HtmlCompat.FROM_HTML_MODE_LEGACY);
     }
 
     private Collection getCol() {

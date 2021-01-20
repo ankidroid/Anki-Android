@@ -17,10 +17,7 @@
 package com.ichi2.compat;
 
 import android.content.Context;
-import android.content.pm.PackageInfo;
 import android.os.Vibrator;
-import android.text.Html;
-import android.text.Spanned;
 import android.widget.TimePicker;
 
 import java.io.File;
@@ -39,13 +36,6 @@ public class CompatV21 implements Compat {
     // Until API26, ignore notification channels
     @Override
     public void setupNotificationChannel(Context context, String id, String name) { /* pre-API26, do nothing */ }
-
-    // Until API 24 we ignore flags
-    @Override
-    @SuppressWarnings("deprecation")
-    public Spanned fromHtml(String htmlString) {
-        return Html.fromHtml(htmlString);
-    }
 
     // Until API 23 the methods have "current" in the name
     @Override
@@ -115,13 +105,6 @@ public class CompatV21 implements Compat {
         }
         target.flush();
         return count;
-    }
-
-    // Until API28 getLongVersionCode is not available. May be able to use androidx PackageInfoCompat instead
-    @Override
-    @SuppressWarnings("deprecation")
-    public long getVersionCode(PackageInfo pInfo) {
-        return pInfo.versionCode;
     }
 
     // Until API 23 the methods have "current" in the name

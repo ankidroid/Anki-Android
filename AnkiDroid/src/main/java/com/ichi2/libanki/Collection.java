@@ -48,6 +48,7 @@ import com.ichi2.libanki.utils.Time;
 import com.ichi2.upgrade.Upgrade;
 import com.ichi2.utils.DatabaseChangeDecorator;
 import com.ichi2.utils.FunctionalInterfaces;
+import com.ichi2.utils.LanguageUtil;
 import com.ichi2.utils.VersionUtils;
 
 import com.ichi2.utils.JSONArray;
@@ -175,13 +176,8 @@ public class Collection {
             this.mUndoNameId = undoNameId;
         }
 
-        @SuppressWarnings("deprecation")
         private Locale getLocale(Resources resources) {
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-                return resources.getConfiguration().getLocales().get(0);
-            } else {
-                return resources.getConfiguration().locale;
-            }
+            return LanguageUtil.getLocaleCompat(resources);
         }
         public String getString(Resources res) {
             return res.getString(mUndoNameId).toLowerCase(getLocale(res));

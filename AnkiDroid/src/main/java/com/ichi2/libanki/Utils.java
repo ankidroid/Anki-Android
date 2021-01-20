@@ -73,6 +73,7 @@ import org.apache.commons.compress.archivers.zip.ZipArchiveEntry;
 import org.apache.commons.compress.archivers.zip.ZipFile;
 
 import androidx.annotation.Nullable;
+import androidx.core.text.HtmlCompat;
 import timber.log.Timber;
 
 import static com.ichi2.libanki.Consts.FIELD_SEPARATOR;
@@ -357,7 +358,7 @@ public class Utils {
         Matcher htmlEntities = htmlEntitiesPattern.matcher(html);
         StringBuffer sb = new StringBuffer();
         while (htmlEntities.find()) {
-            final Spanned spanned = CompatHelper.getCompat().fromHtml(htmlEntities.group());
+            final Spanned spanned = HtmlCompat.fromHtml(htmlEntities.group(), HtmlCompat.FROM_HTML_MODE_LEGACY);
             final String replacement = Matcher.quoteReplacement(spanned.toString());
             htmlEntities.appendReplacement(sb, replacement);
         }
@@ -1043,7 +1044,7 @@ public class Utils {
      * @return the unescaped text
      */
     public static String unescape(String htmlText) {
-        return CompatHelper.getCompat().fromHtml(htmlText).toString();
+        return HtmlCompat.fromHtml(htmlText, HtmlCompat.FROM_HTML_MODE_LEGACY).toString();
     }
 
 
