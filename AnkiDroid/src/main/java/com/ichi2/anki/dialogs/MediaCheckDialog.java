@@ -130,23 +130,23 @@ public class MediaCheckDialog extends AsyncDialogFragment {
 
     @Override
     public String getNotificationMessage() {
-        if (getArguments().getInt("dialogType") == DIALOG_CONFIRM_MEDIA_CHECK) {
-            return res().getString(R.string.check_media_warning);
-        }
-        return res().getString(R.string.app_name);
-    }
-
-
-    @Override
-    public String getNotificationTitle() {
-        switch (getArguments().getInt("dialogType")) {
+        switch (getArguments().getInt("dialogType") ) {
             case DIALOG_CONFIRM_MEDIA_CHECK:
-                return res().getString(R.string.check_media_title);
+                return res().getString(R.string.check_media_warning);
             case DIALOG_MEDIA_CHECK_RESULTS:
                 return res().getString(R.string.check_media_acknowledge);
             default:
                 return res().getString(R.string.app_name);
         }
+    }
+
+
+    @Override
+    public String getNotificationTitle() {
+        if (getArguments().getInt("dialogType") == DIALOG_CONFIRM_MEDIA_CHECK) {
+            return res().getString(R.string.check_media_title);
+        }
+        return res().getString(R.string.app_name);
     }
 
 
