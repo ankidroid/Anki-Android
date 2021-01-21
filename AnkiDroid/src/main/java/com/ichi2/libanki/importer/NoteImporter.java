@@ -379,7 +379,7 @@ public class NoteImporter extends Importer {
             }
         }
         note.fieldsStr = joinFields(fields);
-        ArrayList<Integer> ords = Models.availOrds(mModel, fields, mTemplateParsed, Models.AllowEmpty.ONLY_CLOZE);
+        ArrayList<Integer> ords = Models.availOrds(mModel, fields, mTemplateParsed, Models.AllowEmpty.TRUE);
         if (ords.isEmpty()) {
             mEmptyNotes = true;
             return false;
