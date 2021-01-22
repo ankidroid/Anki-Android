@@ -8,11 +8,22 @@ plugins {
 
 apply plugin: 'com.android.application'
 apply plugin: 'app.brant.amazonappstorepublisher'
+apply plugin: 'idea'
+
 
 repositories {
     google()
     jcenter()
 }
+
+
+idea {
+    module {
+        downloadJavadoc = System.getenv("CI") != "true"
+        downloadSources = System.getenv("CI") != "true"
+    }
+}
+
 def homePath = System.properties['user.home']
 android {
     compileSdkVersion 29 // change .travis.yml build tools at same time
