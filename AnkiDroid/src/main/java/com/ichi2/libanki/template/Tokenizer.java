@@ -175,7 +175,7 @@ public class Tokenizer implements Iterator<Tokenizer.Token> {
      */
     protected static @NonNull Token classify_handle(@NonNull String handle) {
         int start_pos = 0;
-        while (handle.charAt(start_pos) == '{') {
+        while (start_pos < handle.length() && handle.charAt(start_pos) == '{') {
             start_pos++;
         }
         String start = handle.substring(start_pos).trim();

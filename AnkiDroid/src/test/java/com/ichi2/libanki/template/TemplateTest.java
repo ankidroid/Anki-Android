@@ -154,7 +154,6 @@ public class TemplateTest extends RobolectricTest {
     }
 
     @Test
-    @Ignore("Corrected in next commit")
     public void empty_field_name() {
         Map m = new HashMap();
         // Empty field is not usually a valid field name and should be corrected.
