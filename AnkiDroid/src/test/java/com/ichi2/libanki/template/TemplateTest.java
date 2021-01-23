@@ -36,11 +36,11 @@ import static org.hamcrest.Matchers.containsString;
 import static org.hamcrest.Matchers.is;
 import static org.hamcrest.Matchers.not;
 import static org.hamcrest.Matchers.notNullValue;
+import static org.junit.Assert.assertThrows;
 import static org.junit.Assert.fail;
 
 @RunWith(AndroidJUnit4.class)
 public class TemplateTest extends RobolectricTest {
-
     private String render(String template, Map<String, String> fields) {
         return ParsedNode.parse_inner(template).render(fields, true, getTargetContext());
     }
@@ -154,15 +154,23 @@ public class TemplateTest extends RobolectricTest {
     }
 
     @Test
+    @Ignore("Corrected in next commit")
+    @Config(qualifiers = "en")
     public void empty_field_name() {
         Map m = new HashMap();
         // Empty field is not usually a valid field name and should be corrected.
         // However, if we have an empty field name in the collection, this test ensure
         // that it works as expected.
         // This is especially relevant because filter applied to no field is valid
+        m.put("Test", "Test");
+        m.put("Foo", "Foo");
+        assertThat(render("{{}}", m), containsString("there is no field called ''"));
+        assertThat(render("{{  }}", m), containsString("there is no field called ''"));
+        assertThat(render("{{filterName:}}", m), is(""));
+        assertThat(render("{{filterName:    }}", m), is(""));
+
         m.put("", "Test");
         assertThat(render("{{}}", m), is("Test"));
+        m.clear();
     }
-
-
 }
