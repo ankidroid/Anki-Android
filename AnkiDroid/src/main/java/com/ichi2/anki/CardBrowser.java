@@ -1486,7 +1486,7 @@ public class CardBrowser extends NavigationDrawerActivity implements
         if (mSearchTerms.contains("deck:")) {
             searchText = mSearchTerms;
         } else {
-            searchText = mRestrictOnDeck + mSearchTerms;
+            searchText = mRestrictOnDeck + "(" + mSearchTerms + ")";
         }
         if (colIsOpen() && mCardsAdapter!= null) {
             // clear the existing card list
