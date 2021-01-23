@@ -152,4 +152,18 @@ public class TemplateTest extends RobolectricTest {
         assertThat(render("{{^Foo}}{{Test}}{{/Foo}}", m),
                 is("Test"));
     }
+
+    @Test
+    @Ignore("Corrected in next commit")
+    public void empty_field_name() {
+        Map m = new HashMap();
+        // Empty field is not usually a valid field name and should be corrected.
+        // However, if we have an empty field name in the collection, this test ensure
+        // that it works as expected.
+        // This is especially relevant because filter applied to no field is valid
+        m.put("", "Test");
+        assertThat(render("{{}}", m), is("Test"));
+    }
+
+
 }
