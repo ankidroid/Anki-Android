@@ -84,7 +84,6 @@ public class TokenizerTest extends RobolectricTest {
     }
 
     @Test
-    @Ignore
     public void test_handlebar_token() {
         assertThat(handlebar_token("{{#foo}} bar"),
                 Matchers.is(new Tokenizer.IResult(
