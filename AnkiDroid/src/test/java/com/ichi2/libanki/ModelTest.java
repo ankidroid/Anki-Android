@@ -194,7 +194,6 @@ public class ModelTest extends RobolectricTest {
     }
 
     @Test
-    @Ignore("Corrected in next commit")
     public void test_cloze_empty() {
         Collection col = getCol();
         Models mm = col.getModels();
