@@ -6,6 +6,7 @@ import com.ichi2.anki.exception.ConfirmModSchemaException;
 import com.ichi2.utils.JSONArray;
 import com.ichi2.utils.JSONObject;
 
+import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.robolectric.annotation.Config;
@@ -190,6 +191,16 @@ public class ModelTest extends RobolectricTest {
         // first card should have first ord
         assertEquals(0, c.getOrd());
         assertEquals(1, c2.getOrd());
+    }
+
+    @Test
+    @Ignore("Corrected in next commit")
+    public void test_cloze_empty() {
+        Collection col = getCol();
+        Models mm = col.getModels();
+        Model cloze_model = mm.byName("Cloze");
+        mm.setCurrent(cloze_model);
+        assertEquals(new ArrayList<>(Arrays.asList(0, 1)), Models.availOrds(cloze_model, new String[]{"{{c1::Empty}} and {{c2::}}", ""}));
     }
 
 
