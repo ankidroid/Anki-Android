@@ -154,7 +154,6 @@ public class TemplateTest extends RobolectricTest {
     }
 
     @Test
-    @Ignore("Corrected in next commit")
     @Config(qualifiers = "en")
     public void empty_field_name() {
         Map m = new HashMap();

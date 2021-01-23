@@ -66,7 +66,11 @@ public class Replacement extends ParsedNode {
     public void render_into(Map<String, String> fields, Set<String> nonempty_fields, StringBuilder builder) throws TemplateError.FieldNotFound {
         String txt = fields.get(mKey);
         if (txt == null) {
-            throw new TemplateError.FieldNotFound(mFilters, mKey);
+            if (mKey.trim().isEmpty() && !mFilters.isEmpty()) {
+                txt = "";
+            } else {
+                throw new TemplateError.FieldNotFound(mFilters, mKey);
+            }
         }
         for (String filter: mFilters) {
             txt = TemplateFilters.apply_filter(txt, filter, mKey, mTag);
