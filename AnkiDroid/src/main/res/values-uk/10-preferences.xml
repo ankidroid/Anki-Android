@@ -171,7 +171,7 @@
     <string name="use_current">Колода для нових карт</string>
     <string name="new_spread">Позиція нових карток</string>
     <string name="learn_cutoff">Вчити наперед</string>
-    <string name="time_limit">Ліміт навчального часу</string>
+    <string name="time_limit">Період лічильника переглядів</string>
     <string name="time_limit_summ">XXX хв.</string>
     <string name="day_offset">Початок наступної доби</string>
     <string name="day_offset_summ">XXX год.</string>
@@ -292,5 +292,5 @@
     <string name="note_editor_replace_newlines">Замінити нові рядки на HTML</string>
     <string name="note_editor_replace_newlines_summ">Замінювати у Редакторі нотаток будь-які випадки &lt;br&gt;  на нові рядки під час редагування картки.</string>
     <string name="no_code_formatting">Просте форматування введених відповідей</string>
-    <string name="no_code_formatting_summ">Виправляє ‘􏿾’, що з\'являються у результатах введених відповідей</string>
+    <string name="no_code_formatting_summ">Виправляє «􏿾», що з\'являються у результатах введених відповідей</string>
 </resources>

@@ -240,7 +240,7 @@
     <string name="deck_conf_use_general_timeout_settings">Usar configurações gerais</string>
     <string name="deck_conf_use_general_timeout_settings_summ">Use as configurações gerais de \'Mostrar resposta automática\' em vez de usar as configurações deste grupo.</string>
     <string name="deck_conf_easy_bonus">Bônus fácil</string>
-    <string name="deck_conf_hard_factor">Hard interval</string>
+    <string name="deck_conf_hard_factor">Intervalo difícil</string>
     <string name="deck_conf_ivl_fct">Modificador de intervalo</string>
     <string name="deck_conf_max_ivl">Intervalo máximo</string>
     <string name="deck_conf_new_lps_ivl">Novo intervalo</string>
@@ -284,8 +284,8 @@
     <string name="analytics_dialog_title">Ajude a tornar o AnkiDroid melhor!</string>
     <string name="analytics_title">Compartilhar funções de uso</string>
     <string name="analytics_summ">Você pode contribuir para AnkiDroid ajudando a equipe de desenvolvimento a ver quais recursos as pessoas usam</string>
-    <string name="note_editor_replace_newlines">Replace newlines with HTML</string>
-    <string name="note_editor_replace_newlines_summ">In the Note Editor, convert any instances of &lt;br&gt; to newlines when editing a card.</string>
-    <string name="no_code_formatting">Simple typed answer formatting</string>
-    <string name="no_code_formatting_summ">Fixes ‘􏿾’ appearing in typed answer results</string>
+    <string name="note_editor_replace_newlines">Substituir novas linhas por HTML</string>
+    <string name="note_editor_replace_newlines_summ">No Editor de Notas, converta as ocorrências de &lt;br&gt; para uma quebra de linha ao editar um cartão.</string>
+    <string name="no_code_formatting">Formatação de resposta a ser digitada</string>
+    <string name="no_code_formatting_summ">Corrige \'􏿾\' que aparecer nas respostas digitadas</string>
 </resources>

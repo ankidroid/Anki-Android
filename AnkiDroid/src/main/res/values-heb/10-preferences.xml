@@ -75,7 +75,7 @@
     <string name="image_zoom">הגדלת תצוגת התמונות</string>
     <string name="button_size">גודל כפתורי התשובה</string>
     <string name="card_browser_font_size">קנה מידה להגדלת גופן הקלפים</string>
-    <string name="card_browser_hide_media">הצגת שמות הקלפים בדפדפן הקלפים</string>
+    <string name="card_browser_hide_media">הצגת שמות הקבצים בדפדפן הקלפים</string>
     <string name="card_browser_hide_media_summary">Display media filenames in the card browser question/answer fields</string>
     <string name="col_path">ספריית AnkiDroid</string>
     <string name="fullscreen_review">מצב מסך מלא</string>

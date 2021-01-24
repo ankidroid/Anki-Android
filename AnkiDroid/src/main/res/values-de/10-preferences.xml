@@ -199,7 +199,7 @@
     <string name="advanced_statistics_title">Erweiterte Statistik</string>
     <string name="enable_advanced_statistics_title">Erweiterte Statistik aktivieren</string>
     <string name="enable_advanced_statistics_summ">Anzeige von Prognosestatistiken, basierend auf einer Berechnung oder Simulation zukünftiger Wiederholungen (aktiviert) oder auf bereits eingeplanten zukünftigen Wiederholungen (deaktiviert).</string>
-    <string name="advanced_forecast_stats_compute_n_days_title">Ersten n Tage berechnen, verbleibende simulieren</string>
+    <string name="advanced_forecast_stats_compute_n_days_title">Erste n Tage berechnen, verbleibende simulieren</string>
     <string name="advanced_forecast_stats_compute_precision_title">Genauigkeit der Berechnung</string>
     <string name="advanced_forecast_stats_mc_n_iterations_title">Anzahl der Iterationen der Simulation</string>
     <!-- Custom sync server settings -->

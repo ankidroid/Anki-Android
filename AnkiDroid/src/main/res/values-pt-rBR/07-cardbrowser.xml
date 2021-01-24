@@ -97,9 +97,9 @@
     <string name="card_info_first_review">Primeira Revisão</string>
     <string name="card_info_latest_review">Última Revisão</string>
     <string name="card_info_interval">Intervalo</string>
-    <string name="card_info_ease">Ease</string>
+    <string name="card_info_ease">Facilidade</string>
     <string name="card_info_reviews" comment="Number of times a card was reviewed">Revisões</string>
-    <string name="card_info_lapses" comment="Label indicating the number of lapses of a card.">Lapses</string>
+    <string name="card_info_lapses" comment="Label indicating the number of lapses of a card.">Erros</string>
     <string name="card_info_average_time">Tempo Médio</string>
     <string name="card_info_total_time">Tempo Total</string>
     <string name="card_info_card_type">Tipo de Card</string>
@@ -109,11 +109,11 @@
     <string name="card_info_note_id">ID da Nota</string>
     <string name="card_info_revlog_time">Tempo</string>
     <string name="card_info_revlog_date">Data</string>
-    <string name="card_info_revlog_rating">Rating</string>
+    <string name="card_info_revlog_rating">Avaliação</string>
     <string name="card_info_revlog_type">Tipo</string>
     <string name="card_info_revlog_learn" comment="Label indicating that a review in the log of a card occured while the card was in learning mode">Aprender</string>
     <string name="card_info_revlog_review">Revisar</string>
     <string name="card_info_revlog_relearn" comment="Label of a log entry of a card, indicating that a review was done with a note in relearning mode">Reaprender</string>
-    <string name="card_info_revlog_filtered">Filtered</string>
-    <string name="card_info_ease_not_applicable">N/A</string>
+    <string name="card_info_revlog_filtered">Filtrado</string>
+    <string name="card_info_ease_not_applicable">N/D</string>
 </resources>

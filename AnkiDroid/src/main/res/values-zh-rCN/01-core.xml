@@ -196,12 +196,12 @@
     <!-- Context Menu -->
     <string name="card_browser_context_menu" comment="The value which appears in the system context menu. Note the casing difference">卡牌浏览器</string>
     <string name="context_menu_anki_card_label">Anki 卡</string>
-    <string name="has_a_problem" comment="First field is either front template or back template. Second field is the error message.">%1$s has a problem:<br/>%2$s</string>
-    <string name="more_information">More information</string>
-    <string name="no_field">Found \'{{%1$s}}\', but there is no field called \'%1$s\'.</string>
-    <string name="closed_tag_not_open">Found \'{{/%1$s}}\', but missing \'{{#%1$s}}\' or \'{{^%1$s}}\'.</string>
-    <string name="missing_closing_bracket">Missing \'}}\' in \'%s\'.</string>
-    <string name="open_tag_not_closed">Missing \'{{%s}}\'.</string>
-    <string name="wrong_tag_closed">Found \'{{/%1$s}}\', but expected \'{{/%2$s}}\'</string>
-    <string name="filter_error">Error in filter %s</string>
+    <string name="has_a_problem" comment="First field is either front template or back template. Second field is the error message.">%1$s 有一个问题：<br/>%2$s</string>
+    <string name="more_information">更多信息</string>
+    <string name="no_field">找到了 “{{%1$s}}”，但没有一个字段叫 “%1$s”。</string>
+    <string name="closed_tag_not_open">找到了 “{{/%1$s}}”，但缺少 “{{#%1$s}}” 或 “{{^%1$s}}”。</string>
+    <string name="missing_closing_bracket">在 “%s” 中缺少 “}}”。</string>
+    <string name="open_tag_not_closed">缺少 “{{%s}}”。</string>
+    <string name="wrong_tag_closed">找到了 “{{/%1$s}}”，但预期 “{{/%2$s}}”</string>
+    <string name="filter_error">过滤器 %s 出错</string>
 </resources>
