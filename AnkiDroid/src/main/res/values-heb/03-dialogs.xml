@@ -152,7 +152,7 @@
     <string name="check_media_failed">בדיקת קבצי המדיה נכשלה</string>
     <string name="check_media_invalid">קבצים בקידוד תקול: %d</string>
     <string name="check_media_unused">קבצים שנמצאים בספריית המדיה אבל אינם בשימוש על ידי אף קלף: %d</string>
-    <string name="check_media_nohave">קבצים שנמצאים בשימוש על ידי כרטיסים אבל לא נמצאים בספריית המדיה: %d</string>
+    <string name="check_media_nohave">קבצים בשימוש קלפים שאינם בתיקיית המדיה: %d</string>
     <string name="check_media_no_unused_missing">לא נמצאו קבצים חסרים או שאינם בשימוש</string>
     <string name="check_media_db_updated">מסד נתוני המדיה נבנה מחדש</string>
     <string name="check_media_delete_unused">מחיקת כאלו שאינם בשימוש</string>

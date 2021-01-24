@@ -214,12 +214,12 @@
     <!-- Context Menu -->
     <string name="card_browser_context_menu" comment="The value which appears in the system context menu. Note the casing difference">Prohlížeč karet</string>
     <string name="context_menu_anki_card_label">Anki karta</string>
-    <string name="has_a_problem" comment="First field is either front template or back template. Second field is the error message.">%1$s has a problem:<br/>%2$s</string>
-    <string name="more_information">More information</string>
-    <string name="no_field">Found \'{{%1$s}}\', but there is no field called \'%1$s\'.</string>
-    <string name="closed_tag_not_open">Found \'{{/%1$s}}\', but missing \'{{#%1$s}}\' or \'{{^%1$s}}\'.</string>
-    <string name="missing_closing_bracket">Missing \'}}\' in \'%s\'.</string>
-    <string name="open_tag_not_closed">Missing \'{{%s}}\'.</string>
-    <string name="wrong_tag_closed">Found \'{{/%1$s}}\', but expected \'{{/%2$s}}\'</string>
-    <string name="filter_error">Error in filter %s</string>
+    <string name="has_a_problem" comment="First field is either front template or back template. Second field is the error message.">%1$s má problém:<br/>%2$s</string>
+    <string name="more_information">Více informací</string>
+    <string name="no_field">Nalezeno „{{%1$s}}“, ale neexistuje žádné pole nazvané „%1$s“.</string>
+    <string name="closed_tag_not_open">Nalezeno „{{/%1$s}}“, ale chybí „{{#%1$s}}“ nebo “{{^%1$s}}“.</string>
+    <string name="missing_closing_bracket">Chybí „}}“ v „%s“.</string>
+    <string name="open_tag_not_closed">Chybí „{{%s}}“.</string>
+    <string name="wrong_tag_closed">Nalezeno „{{/%1$s}}“, ale očekává se „{{/%2$s}}“</string>
+    <string name="filter_error">Chyba filtru %s</string>
 </resources>

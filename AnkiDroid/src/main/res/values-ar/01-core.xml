@@ -226,12 +226,12 @@
     <!-- Context Menu -->
     <string name="card_browser_context_menu" comment="The value which appears in the system context menu. Note the casing difference">متصفح البطاقات</string>
     <string name="context_menu_anki_card_label">بطاقة أنكي</string>
-    <string name="has_a_problem" comment="First field is either front template or back template. Second field is the error message.">%1$s has a problem:<br/>%2$s</string>
-    <string name="more_information">More information</string>
-    <string name="no_field">Found \'{{%1$s}}\', but there is no field called \'%1$s\'.</string>
-    <string name="closed_tag_not_open">Found \'{{/%1$s}}\', but missing \'{{#%1$s}}\' or \'{{^%1$s}}\'.</string>
-    <string name="missing_closing_bracket">Missing \'}}\' in \'%s\'.</string>
-    <string name="open_tag_not_closed">Missing \'{{%s}}\'.</string>
-    <string name="wrong_tag_closed">Found \'{{/%1$s}}\', but expected \'{{/%2$s}}\'</string>
-    <string name="filter_error">Error in filter %s</string>
+    <string name="has_a_problem" comment="First field is either front template or back template. Second field is the error message.">هناك مشكلة في %1$s:<br/>%2$s</string>
+    <string name="more_information">مزيد من المعلومات</string>
+    <string name="no_field">وجد \'{{%1$s}}\'، لكن ليس هناك أي حقل باسم \'%1$s\'.</string>
+    <string name="closed_tag_not_open">وجد \'{{/%1$s}}\'، لكن يفتقد  \'{{#%1$s}}\' أو \'{{^%1$s}}\'.</string>
+    <string name="missing_closing_bracket">يفتقد \'{{\' في \'%s\'.</string>
+    <string name="open_tag_not_closed">يفتقد \'{{%s}}\'.</string>
+    <string name="wrong_tag_closed">وجد  \'{{/%1$s}}\'، لكن توقع  \'{{/%2$s}}\'</string>
+    <string name="filter_error">خطأ في الفلتر %s</string>
 </resources>

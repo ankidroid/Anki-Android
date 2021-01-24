@@ -35,7 +35,7 @@
 -->
 <resources>
     <string-array name="error_reporting_choice_labels">
-        <item>Toujours envoyer un rapport d’erreur</item>
+        <item>Toujours envoyer un rapport d\'erreur</item>
         <item>Ne jamais envoyer de rapport d’erreur</item>
         <item>Me demander</item>
     </string-array>
@@ -111,7 +111,7 @@
     <string name="gesture_page_up">Remonter</string>
     <string name="gesture_page_down">Descendre</string>
     <string name="gesture_abort_sync">Abandonner l\'apprentissage et la synchronisation</string>
-    <string name="gesture_toggle_whiteboard">Toggle Whiteboard</string>
-    <string name="record_voice">Record Voice</string>
-    <string name="replay_voice">Replay Voice</string>
+    <string name="gesture_toggle_whiteboard">Activer le tableau blanc</string>
+    <string name="record_voice">Enregistrer la voix</string>
+    <string name="replay_voice">Réentendre la voix</string>
 </resources>

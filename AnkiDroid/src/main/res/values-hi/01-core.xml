@@ -154,7 +154,7 @@
     <string name="custom_study_deck_name">कस्टम अध्ययन सत्र</string>
     <string name="custom_study_deck_exists">कृपया पहले मौजूदा कस्टम अध्ययन डेक का नाम बदलें।</string>
     <string name="empty_deck">इस डेक खाली है</string>
-    <string name="empty_deck_add_note">Add card</string>
+    <string name="empty_deck_add_note">कार्ड जोड़ें</string>
     <string name="invalid_deck_name">अमान्य डेक नाम</string>
     <string name="studyoptions_empty">यह डेक खाली है । नई सामग्री जोड़ने के लिए + बटन दबाएँ.</string>
     <string name="studyoptions_limit_reached">दैनिक अध्ययन सीमा तक पहुंच गई</string>
@@ -202,12 +202,12 @@
     <!-- Context Menu -->
     <string name="card_browser_context_menu" comment="The value which appears in the system context menu. Note the casing difference">कार्ड ब्राउज़र</string>
     <string name="context_menu_anki_card_label">Anki कार्ड</string>
-    <string name="has_a_problem" comment="First field is either front template or back template. Second field is the error message.">%1$s has a problem:<br/>%2$s</string>
-    <string name="more_information">More information</string>
-    <string name="no_field">Found \'{{%1$s}}\', but there is no field called \'%1$s\'.</string>
-    <string name="closed_tag_not_open">Found \'{{/%1$s}}\', but missing \'{{#%1$s}}\' or \'{{^%1$s}}\'.</string>
-    <string name="missing_closing_bracket">Missing \'}}\' in \'%s\'.</string>
-    <string name="open_tag_not_closed">Missing \'{{%s}}\'.</string>
-    <string name="wrong_tag_closed">Found \'{{/%1$s}}\', but expected \'{{/%2$s}}\'</string>
-    <string name="filter_error">Error in filter %s</string>
+    <string name="has_a_problem" comment="First field is either front template or back template. Second field is the error message.">%1$s में एक समस्या है:<br/>%2$s</string>
+    <string name="more_information">अधिक जानकारी</string>
+    <string name="no_field">\'{{%1$s}}\' मिला, लेकिन \'%1$s\' नामक कोई फ़ील्ड नहीं है।</string>
+    <string name="closed_tag_not_open"> \'{{/%1$s}}\' मिला, लेकिन \'{{#%1$s}}\' या \'{{^%1$s}}\' गायब है।</string>
+    <string name="missing_closing_bracket">\'%s\' में \'}}\' लापता है।</string>
+    <string name="open_tag_not_closed">\'{{%s}}\' लापता है।</string>
+    <string name="wrong_tag_closed">\'{{/%1$s}}\' मिला, लेकिन \'{{/%2$s}}\' अपेक्षित था</string>
+    <string name="filter_error">फ़िल्टर %s में त्रुटि</string>
 </resources>

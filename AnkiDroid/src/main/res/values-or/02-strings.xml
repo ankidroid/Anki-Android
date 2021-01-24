@@ -178,9 +178,9 @@
     <string name="export_include_schedule">କାର୍ଯ୍ୟସୂଚୀ ଅନ୍ତର୍ଭୂକ୍ତ କରନ୍ତୁ </string>
     <string name="export_include_media">ମିଡିଆ ଅନ୍ତର୍ଭୂକ୍ତ କରନ୍ତୁ</string>
     <string name="confirm_apkg_export">ସଂଗ୍ରହକୁ Anki package ଭାବରେ ରପ୍ତାନି କରିବେ କି?</string>
-    <string name="confirm_apkg_export_deck">\"%s\" କୁ apkg ଫାଇଲ ଭାବରେ ରପ୍ତାନି କରିବେ କି?</string>
-    <string name="export_in_progress">ଆଙ୍କି ପ୍ୟାକେଜ୍ ଫାଇଲ୍ ରପ୍ତାନି କରୁଛି&#8230;</string>
-    <string name="export_successful_title">ଆଙ୍କି ପ୍ୟାକେଜ୍ ପଠାନ୍ତୁ?</string>
+    <string name="confirm_apkg_export_deck">“%s” କୁ apkg ଫାଇଲ ଭାବରେ ରପ୍ତାନି କରିବେ କି?</string>
+    <string name="export_in_progress">Anki ପ୍ୟାକେଜ୍ ଫାଇଲ୍ ରପ୍ତାନି କରୁଛି&#8230;</string>
+    <string name="export_successful_title">Anki ପ୍ୟାକେଜ୍ ପଠାଇବେ କି?</string>
     <string name="export_send_button">ପଠାନ୍ତୁ</string>
     <string name="export_save_button">ଫାଇଲ ରେ ସଂରକ୍ଷିତ କରନ୍ତୁ</string>
     <string name="export_send_no_handlers">apkg ପରିଚାଳନା କରିବା ପାଇଁ କୌଣସି ଆପ୍ ଉପଲବ୍ଧ ନାହିଁ | ସଂରକ୍ଷଣ କରାଯାଉଛି...</string>
@@ -199,7 +199,7 @@
     <string name="study_options" comment="Name for a preference category in Filtered deck (aka Cram deck, aka Custom study) options">ବିକଳ୍ପଗୁଡ଼ିକ</string>
     <string name="menu__deck_options">ଡେକ୍ ବିକଳ୍ପଗୁଡ଼ିକ</string>
     <string name="menu__study_options" comment="Menu item that opens options for a Filtered deck (aka Cram deck, aka Custom study)">ଅଧ୍ୟୟନ ବିକଳ୍ପଗୁଡ଼ିକ</string>
-    <string name="select_tts">TTS ଭାଷା ସେଟ୍ କରନ୍ତୁ |</string>
+    <string name="select_tts">TTS ଭାଷା ସେଟ୍ କରନ୍ତୁ</string>
     <string name="custom_study">କଷ୍ଟମ୍ ଅଧ୍ୟୟନ </string>
     <string name="more_options">ଅଧିକ</string>
     <string name="dyn_deck_desc">ସାଧାରଣ କାର୍ଯ୍ୟସୂଚୀ ବାହାରେ ଅଧ୍ୟୟନ ପାଇଁ ଏହା ଏକ ସ୍ୱତନ୍ତ୍ର ତାସଖଣ୍ଡ | ଆପଣ ସମୀକ୍ଷା କରିବା ପରେ ପତ୍ରଗୁଡ଼ିକ ଆପେ ସେମାନଙ୍କର ମୂଳ ତାସଖଣ୍ଡକୁ ଫେରି ଆସିବେ | ତାସଖଣ୍ଡ  ତାଲିକାରୁ ଏହି ତାସଖଣ୍ଡ ବିଲୋପ କରିବା ସମସ୍ତ ଅବଶିଷ୍ଟ ପତ୍ରଗୁଡ଼ିକୁ ସେମାନଙ୍କର ମୂଳ ତାସଖଣ୍ଡକୁ ଫେରାଇବ</string>
