@@ -5,6 +5,7 @@ import com.ichi2.testutils.AnkiAssert;
 import com.ichi2.utils.Assert;
 
 import org.hamcrest.Matcher;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
@@ -26,10 +27,14 @@ import static org.junit.Assert.fail;
 @RunWith(AndroidJUnit4.class)
 public class ParserTest extends RobolectricTest {
     @Test
+    @Ignore("Corrected in next commit")
     public void parsing() {
         assertThat(ParsedNode.parse_inner(""), is(new EmptyNode()));
         assertThat(ParsedNode.parse_inner("Test"), is(new Text("Test")));
         assertThat(ParsedNode.parse_inner("{{Test}}"), is(new Replacement("Test")));
+        assertThat(ParsedNode.parse_inner("{{filter:Test}}"), is(new Replacement("Test", "filter")));
+        assertThat(ParsedNode.parse_inner("{{filter:}}"), is(new Replacement("", "filter")));
+        assertThat(ParsedNode.parse_inner("{{}}"), is(new Replacement("")));
         assertThat(ParsedNode.parse_inner("{{!Test}}"), is(new Replacement("!Test")));
         assertThat(ParsedNode.parse_inner("{{Filter2:Filter1:Test}}"), is(new Replacement("Test", "Filter1", "Filter2")));
         assertThat(ParsedNode.parse_inner("Foo{{Test}}"), is(
