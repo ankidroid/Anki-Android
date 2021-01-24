@@ -129,18 +129,20 @@ public class RobolectricTest {
         }
         controllersForCleanup.clear();
 
-        // If you don't tear down the database you'll get unexpected IllegalStateExceptions related to connections
-        CollectionHelper.getInstance().closeCollection(false, "RoboelectricTest: End");
+        try {
+            // If you don't tear down the database you'll get unexpected IllegalStateExceptions related to connections
+            CollectionHelper.getInstance().closeCollection(false, "RoboelectricTest: End");
+        } finally {
+            // After every test make sure the CollectionHelper is no longer overridden (done for null testing)
+            disableNullCollection();
 
-        // After every test make sure the CollectionHelper is no longer overridden (done for null testing)
-        disableNullCollection();
+            // After every test, make sure the sqlite implementation is set back to default
+            DB.setSqliteOpenHelperFactory(null);
 
-        // After every test, make sure the sqlite implementation is set back to default
-        DB.setSqliteOpenHelperFactory(null);
-
-        //called on each AnkiDroidApp.onCreate(), and spams the build
-        //there is no onDestroy(), so call it here.
-        Timber.uprootAll();
+            //called on each AnkiDroidApp.onCreate(), and spams the build
+            //there is no onDestroy(), so call it here.
+            Timber.uprootAll();
+        }
     }
 
 
