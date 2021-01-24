@@ -102,7 +102,7 @@ public abstract class ParsedNode {
                     break;
                 }
                 case Replacement: {
-                    String[] it = token.getText().split(":");
+                    String[] it = token.getText().split(":", -1);
                     String key = it[it.length - 1];
                     List<String> filters = new ArrayList<>(it.length - 1);
                     for (int i = it.length - 2; i >= 0; i--) {

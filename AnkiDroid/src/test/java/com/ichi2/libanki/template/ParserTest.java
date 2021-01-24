@@ -27,7 +27,6 @@ import static org.junit.Assert.fail;
 @RunWith(AndroidJUnit4.class)
 public class ParserTest extends RobolectricTest {
     @Test
-    @Ignore("Corrected in next commit")
     public void parsing() {
         assertThat(ParsedNode.parse_inner(""), is(new EmptyNode()));
         assertThat(ParsedNode.parse_inner("Test"), is(new Text("Test")));
