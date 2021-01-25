@@ -34,6 +34,7 @@ import com.ichi2.anki.analytics.UsageAnalytics;
 import com.ichi2.anki.exception.ConfirmModSchemaException;
 import com.ichi2.async.CancelListener;
 import com.ichi2.async.CollectionTask;
+import com.ichi2.libanki.backend.DroidBackend;
 import com.ichi2.async.ProgressSender;
 import com.ichi2.async.TaskManager;
 import com.ichi2.libanki.exception.NoSuchDeckException;
@@ -84,11 +85,6 @@ import androidx.sqlite.db.SupportSQLiteDatabase;
 import androidx.sqlite.db.SupportSQLiteStatement;
 import timber.log.Timber;
 
-
-import net.ankiweb.rsdroid.BackendException;
-import net.ankiweb.rsdroid.BackendFactory;
-import net.ankiweb.rsdroid.BackendUtils;
-
 import static com.ichi2.async.CancelListener.isCancelled;
 import static com.ichi2.libanki.Collection.DismissType.REVIEW;
 import static com.ichi2.libanki.Consts.DECK_DYN;
@@ -133,7 +129,7 @@ public class Collection {
     private LinkedBlockingDeque<Undoable> mUndo;
 
     private final String mPath;
-    private BackendFactory mBackendFactory;
+    private final DroidBackend mDroidBackend;
     private boolean mDebugLog;
     private PrintWriter mLogHnd;
 
@@ -193,13 +189,13 @@ public class Collection {
     private static final int UNDO_SIZE_MAX = 20;
 
     @VisibleForTesting
-    public Collection(Context context, DB db, String path, boolean server, boolean log, @NonNull Time time, @Nullable BackendFactory backendFactory) {
+    public Collection(Context context, DB db, String path, boolean server, boolean log, @NonNull Time time, @NonNull DroidBackend droidBackend) {
         mContext = context;
         mDebugLog = log;
         mDb = db;
         mPath = path;
         mTime = time;
-        mBackendFactory = backendFactory;
+        mDroidBackend = droidBackend;
         _openLog();
         log(path, VersionUtils.getPkgVersionName());
         mServer = server;
@@ -476,7 +472,7 @@ public class Collection {
     public void reopen() {
         Timber.i("Reopening Database");
         if (mDb == null) {
-            mDb = new DB(mPath, mBackendFactory);
+            mDb = mDroidBackend.openCollectionDatabase(mPath);
             mMedia.connect();
             _openLog();
         }
