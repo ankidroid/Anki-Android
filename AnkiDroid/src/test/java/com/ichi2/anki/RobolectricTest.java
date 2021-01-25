@@ -44,6 +44,7 @@ import com.ichi2.testutils.MockTime;
 import com.ichi2.utils.BooleanGetter;
 import com.ichi2.utils.JSONException;
 
+import net.ankiweb.rsdroid.BackendException;
 import net.ankiweb.rsdroid.testing.RustBackendLoader;
 
 import org.hamcrest.Matcher;
@@ -99,6 +100,7 @@ public class RobolectricTest {
         DB.setSqliteOpenHelperFactory(getHelperFactory());
         // But, don't use the helper unless useLegacyHelper is true
         Storage.setUseBackend(!useLegacyHelper());
+        Storage.setUseInMemory(useInMemoryDatabase());
 
         //Reset static variable for custom tabs failure.
         CustomTabActivityHelper.resetFailed();
@@ -145,6 +147,12 @@ public class RobolectricTest {
         try {
             // If you don't tear down the database you'll get unexpected IllegalStateExceptions related to connections
             CollectionHelper.getInstance().closeCollection(false, "RoboelectricTest: End");
+        } catch (BackendException ex) {
+            if ("CollectionNotOpen".equals(ex.getMessage())) {
+                Timber.w(ex, "Collection was already disposed - may have been a problem");
+            } else {
+                throw ex;
+            }
         } finally {
             // After every test make sure the CollectionHelper is no longer overridden (done for null testing)
             disableNullCollection();
