@@ -44,4 +44,10 @@ public class JavaDroidBackend implements DroidBackend {
     public boolean databaseCreationCreatesSchema() {
         return false;
     }
+
+
+    @Override
+    public boolean isUsingRustBackend() {
+        return false;
+    }
 }

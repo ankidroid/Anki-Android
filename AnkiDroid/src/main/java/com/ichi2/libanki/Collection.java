@@ -2166,6 +2166,10 @@ public class Collection {
         return mSched;
     }
 
+    public boolean isUsingRustBackend() {
+        return mDroidBackend.isUsingRustBackend();
+    }
+
     /** Allows a mock db to be inserted for testing */
     @VisibleForTesting
     public void setDb(DB database) {
