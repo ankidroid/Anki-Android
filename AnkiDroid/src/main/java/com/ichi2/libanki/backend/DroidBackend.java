@@ -27,4 +27,6 @@ public interface DroidBackend {
 
     /** Whether a call to {@link DroidBackend#openCollectionDatabase(String)} will generate a schema and indices for the database */
     boolean databaseCreationCreatesSchema();
+
+    boolean isUsingRustBackend();
 }

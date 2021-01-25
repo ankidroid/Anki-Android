@@ -189,11 +189,20 @@ public class Info extends AnkiActivity {
             Timber.e(e, "Sched name not found");
         }
 
+        Boolean dbV2Enabled = null;
+        try {
+            dbV2Enabled = getCol().isUsingRustBackend();
+        } catch (Throwable e) {
+            Timber.w(e, "Unable to detect Rust Backend");
+        }
+
+
         String debugInfo = "AnkiDroid Version = " + VersionUtils.getPkgVersionName() + "\n\n" +
                 "Android Version = " + Build.VERSION.RELEASE + "\n\n" +
                 "ACRA UUID = " + Installation.id(this) + "\n\n" +
                 "Scheduler = " + schedName + "\n\n" +
-                "Crash Reports Enabled = " + isSendingCrashReports() + "\n";
+                "Crash Reports Enabled = " + isSendingCrashReports() + "\n\n" +
+                "DatabaseV2 Enabled = " + dbV2Enabled + "\n";
 
         android.content.ClipboardManager clipboardManager = (android.content.ClipboardManager)getSystemService(Context.CLIPBOARD_SERVICE);
         if (clipboardManager != null) {

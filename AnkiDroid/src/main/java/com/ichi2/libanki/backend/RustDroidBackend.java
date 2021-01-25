@@ -50,4 +50,10 @@ public class RustDroidBackend implements DroidBackend {
     public boolean databaseCreationCreatesSchema() {
         return true;
     }
+
+
+    @Override
+    public boolean isUsingRustBackend() {
+        return true;
+    }
 }
