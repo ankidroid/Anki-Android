@@ -15,6 +15,8 @@
  ****************************************************************************************/
 
 package com.ichi2.libanki;
+import net.ankiweb.rsdroid.RustCleanup;
+
 import java.lang.annotation.Retention;
 
 import androidx.annotation.IntDef;
@@ -124,7 +126,9 @@ public class Consts {
     public static final int SYNC_ZIP_COUNT = 25;
     public static final String SYNC_BASE = "https://sync%s.ankiweb.net/";
     public static final Integer DEFAULT_HOST_NUM = null;
-    public static final int SYNC_VER = 9;
+    /* Note: 10 if using Rust backend, 9 if using Java. Set in BackendFactory.getInstance */
+    @RustCleanup("Use 10")
+    public static int SYNC_VER = 9;
 
     public static final String HELP_SITE = "http://ankisrs.net/docs/manual.html";
 

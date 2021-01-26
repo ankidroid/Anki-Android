@@ -17,6 +17,8 @@
 package com.ichi2.libanki.backend;
 
 import com.ichi2.libanki.DB;
+import com.ichi2.libanki.backend.exception.BackendNotSupportedException;
+import com.ichi2.libanki.backend.model.SchedTimingToday;
 
 import androidx.annotation.VisibleForTesting;
 
@@ -34,4 +36,27 @@ public interface DroidBackend {
 
     @VisibleForTesting(otherwise = VisibleForTesting.NONE)
     void debugEnsureNoOpenPointers();
+
+    /**
+     * Obtains Timing information for the current day.
+     *
+     * @param createdSecs A UNIX timestamp of the collection creation time
+     * @param createdMinsWest The offset west of UTC at the time of creation (eg UTC+10 hours is -600)
+     * @param nowSecs timestamp of the current time
+     * @param nowMinsWest The current offset west of UTC
+     * @param rolloverHour The hour of the day the rollover happens (eg 4 for 4am)
+     * @return Timing information for the current day. See {@link SchedTimingToday}.
+     */
+    SchedTimingToday sched_timing_today(long createdSecs, int createdMinsWest, long nowSecs, int nowMinsWest, int rolloverHour) throws BackendNotSupportedException;
+
+    /**
+     * For the given timestamp, return minutes west of UTC in the local timezone.<br/><br/>
+     *
+     * eg, Australia at +10 hours is -600.<br/>
+     * Includes the daylight savings offset if applicable.
+     *
+     * @param timestampSeconds The timestamp in seconds
+     * @return minutes west of UTC in the local timezone
+     */
+    int local_minutes_west(long timestampSeconds) throws BackendNotSupportedException;
 }

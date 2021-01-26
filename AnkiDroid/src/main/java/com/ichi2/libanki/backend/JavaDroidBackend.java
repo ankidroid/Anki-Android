@@ -17,6 +17,8 @@
 package com.ichi2.libanki.backend;
 
 import com.ichi2.libanki.DB;
+import com.ichi2.libanki.backend.exception.BackendNotSupportedException;
+import com.ichi2.libanki.backend.model.SchedTimingToday;
 
 import net.ankiweb.rsdroid.RustCleanup;
 
@@ -55,5 +57,17 @@ public class JavaDroidBackend implements DroidBackend {
     @Override
     public void debugEnsureNoOpenPointers() {
         // no-op
+    }
+
+
+    @Override
+    public SchedTimingToday sched_timing_today(long createdSecs, int createdMinsWest, long nowSecs, int nowMinsWest, int rolloverHour) throws BackendNotSupportedException {
+        throw new BackendNotSupportedException();
+    }
+
+
+    @Override
+    public int local_minutes_west(long timestampSeconds) throws BackendNotSupportedException {
+        throw new BackendNotSupportedException();
     }
 }
