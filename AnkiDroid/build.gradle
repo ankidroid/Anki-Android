@@ -242,15 +242,14 @@ dependencies {
     implementation 'androidx.webkit:webkit:1.4.0'
 
     // == Rust conversion (from Anki-Android-Backend on GitHub) ==
-    // use a variable as we want both testing and implementation on the same version
-    String backendVersion = "0.0.7"
+    String backendVersion = "0.1.0" // We want both testing and implementation on the same version
     // build with ./gradlew rsdroid:assembleRelease
     // In my experience, using `files()` currently requires a reindex operation, which is slow.
     // implementation files("C:\\GitHub\\Rust-Test\\rsdroid\\build\\outputs\\aar\\rsdroid-release.aar")
     implementation "io.github.david-allison-1:anki-android-backend:$backendVersion"
     // build with ./gradlew rsdroid-testing:assembleRelease
-    // add a one-time call to Runtime.getRuntime().load(path); to test locally
-    // TODO: Add method in RustBackendLoader to load native library on disk
+    // RobolectricTest.java: replace RustBackendLoader.init(); with RustBackendLoader.loadRsdroid(path);
+    // A path for a testing library is typically under rsdroid-testing/assets
     testImplementation "io.github.david-allison-1:anki-android-backend-testing:$backendVersion"
 
     // May need a resolution strategy for support libs to our versions
