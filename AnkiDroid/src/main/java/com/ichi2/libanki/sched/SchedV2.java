@@ -44,12 +44,16 @@ import com.ichi2.libanki.Utils;
 import com.ichi2.libanki.Deck;
 import com.ichi2.libanki.DeckConfig;
 
+import com.ichi2.libanki.backend.exception.BackendNotSupportedException;
+import com.ichi2.libanki.backend.model.SchedTimingToday;
 import com.ichi2.libanki.utils.Time;
 import com.ichi2.utils.Assert;
 import com.ichi2.utils.JSONArray;
 import com.ichi2.utils.JSONException;
 import com.ichi2.utils.JSONObject;
 import com.ichi2.utils.SyncStatus;
+
+import net.ankiweb.rsdroid.RustCleanup;
 
 import java.lang.ref.WeakReference;
 import java.util.ArrayList;
@@ -2173,12 +2177,23 @@ public class SchedV2 extends AbstractSched {
      */
 
     /* Overriden: other way to count time*/
+    @RustCleanup("remove timing == null check once JavaBackend is removed")
     public void _updateCutoff() {
         int oldToday = mToday == null ? 0 : mToday;
-        // days since col created
-        mToday = _daysSinceCreation();
-        // end of day cutoff
-        mDayCutoff = _dayCutoff();
+
+        SchedTimingToday timing = _timingToday();
+
+        if (timing == null) {
+            mToday = _daysSinceCreation();
+            mDayCutoff = _dayCutoff();
+        } else if (_new_timezone_enabled()) {
+            mToday = timing.days_elapsed();
+            mDayCutoff = timing.next_day_at();
+        } else {
+            mToday = _daysSinceCreation();
+            mDayCutoff = _dayCutoff();
+        }
+
         if (oldToday != mToday) {
             mCol.log(mToday, mDayCutoff);
         }
@@ -2217,7 +2232,7 @@ public class SchedV2 extends AbstractSched {
 
     private int _daysSinceCreation() {
         Calendar c = mCol.crtCalendar();
-        c.set(Calendar.HOUR, mCol.getConf().optInt("rollover", 4));
+        c.set(Calendar.HOUR, _rolloverHour());
         c.set(Calendar.MINUTE, 0);
         c.set(Calendar.SECOND, 0);
         c.set(Calendar.MILLISECOND, 0);
@@ -2225,6 +2240,60 @@ public class SchedV2 extends AbstractSched {
         return (int) (((getTime().intTimeMS() - c.getTimeInMillis()) / 1000) / SECONDS_PER_DAY);
     }
 
+    private int _rolloverHour() {
+        return getCol().getConf().optInt("rollover", 4);
+    }
+
+    // New timezone handling
+    //////////////////////////////////////////////////////////////////////////
+
+    @Override
+    public boolean _new_timezone_enabled() {
+        JSONObject conf = getCol().getConf();
+        return conf.has("creationOffset") && !conf.isNull("creationOffset");
+    }
+
+    @Nullable
+    private SchedTimingToday _timingToday() {
+        try {
+            return getCol().getBackend().sched_timing_today(
+                    getCol().getCrt(),
+                    _creation_timezone_offset(),
+                    getTime().intTime(),
+                    _current_timezone_offset(),
+                    _rolloverHour());
+        } catch (BackendNotSupportedException e) {
+            return null;
+        }
+    }
+
+    @Override
+    public int _current_timezone_offset() throws BackendNotSupportedException {
+        if (getCol().getServer()) {
+            return getCol().getConf().optInt("localOffset", 0);
+        } else {
+            return getCol().getBackend().local_minutes_west(getTime().intTime());
+        }
+    }
+
+    private int _creation_timezone_offset() {
+        return getCol().getConf().optInt("creationOffset", 0);
+    }
+
+    @Override
+    public void set_creation_offset() throws BackendNotSupportedException {
+        int mins_west = getCol().getBackend().local_minutes_west(getCol().getCrt());
+        getCol().getConf().put("creationOffset", mins_west);
+        getCol().setMod();
+    }
+
+    @Override
+    public void clear_creation_offset() {
+        if (getCol().getConf().has("creationOffset")) {
+            getCol().getConf().remove("creationOffset");
+            getCol().setMod();
+        }
+    }
 
     protected void update(@NonNull Deck g) {
         for (String t : new String[] { "new", "rev", "lrn", "time" }) {

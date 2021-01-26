@@ -29,6 +29,7 @@ import com.ichi2.libanki.Decks;
 import com.ichi2.libanki.Model;
 import com.ichi2.libanki.Models;
 import com.ichi2.libanki.Note;
+import com.ichi2.libanki.backend.exception.BackendNotSupportedException;
 import com.ichi2.testutils.MockTime;
 import com.ichi2.testutils.libanki.FilteredDeckUtil;
 import com.ichi2.utils.JSONArray;
@@ -272,6 +273,36 @@ public class SchedV2Test extends RobolectricTest {
         assertThat(c, notNullValue());
 
         getCol().getSched().answerCard(c, 1);
+    }
+
+    @Test
+    public void newTimezoneHandling() throws ConfirmModSchemaException, BackendNotSupportedException {
+        // #5805
+        assertThat("localOffset should not be set if using V1 Scheduler", getCol().getConf().has("localOffset"), is(false));
+
+        assertThat("Sync ver should be updated if we have a valid Rust collection", Consts.SYNC_VER, is(10));
+
+        getCol().changeSchedulerVer(2);
+
+        assertThat("localOffset should be set if using V2 Scheduler", getCol().getConf().has("localOffset"), is(true));
+
+        SchedV2 sched = (SchedV2) getCol().getSched();
+
+        assertThat("new timezone should not be enabled by default", sched._new_timezone_enabled(), is(false));
+
+        sched.set_creation_offset();
+
+        assertThat("new timezone should now be enabled", sched._new_timezone_enabled(), is(true));
+
+        // a second call should be fine
+        sched.set_creation_offset();
+
+        // we can obtain the offset from "crt" without an issue - do not test the return as it depends on the local timezone
+        sched._current_timezone_offset();
+
+        sched.clear_creation_offset();
+
+        assertThat("new timezone should be disabled after clear", sched._new_timezone_enabled(), is(false));
     }
 
 

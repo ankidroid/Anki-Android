@@ -17,9 +17,11 @@
 package com.ichi2.libanki.backend;
 
 import com.ichi2.anki.AnkiDroidApp;
+import com.ichi2.libanki.Consts;
 
 import net.ankiweb.rsdroid.BackendFactory;
 import net.ankiweb.rsdroid.RustBackendFailedException;
+import net.ankiweb.rsdroid.RustCleanup;
 
 import androidx.annotation.Nullable;
 import timber.log.Timber;
@@ -36,6 +38,7 @@ public class DroidBackendFactory {
      * Obtains an instance of a {@link DroidBackend}.
      * Each call to this method will generate a separate instance which can handle a new Anki collection
      */
+    @RustCleanup("Change back to a constant SYNC_VER")
     public static DroidBackend getInstance(boolean useBackend) {
 
         BackendFactory backendFactory = null;
@@ -47,7 +50,11 @@ public class DroidBackendFactory {
                 AnkiDroidApp.sendExceptionReport(e, "DroidBackendFactory::getInstance");
             }
         }
-        return getInstance(backendFactory);
+
+        DroidBackend instance = getInstance(backendFactory);
+        // Update the Sync version if we can load the Rust
+        Consts.SYNC_VER = backendFactory == null ? 9 : 10;
+        return instance;
     }
 
     private static DroidBackend getInstance(@Nullable BackendFactory backendFactory) {

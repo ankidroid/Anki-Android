@@ -54,6 +54,8 @@ import com.ichi2.anki.web.CustomSyncServer;
 import com.ichi2.compat.CompatHelper;
 import com.ichi2.libanki.Collection;
 import com.ichi2.libanki.Utils;
+import com.ichi2.libanki.backend.exception.BackendNotSupportedException;
+import com.ichi2.libanki.sched.AbstractSched;
 import com.ichi2.preferences.NumberRangePreference;
 import com.ichi2.themes.Themes;
 import com.ichi2.ui.AppCompatPreferenceActivity;
@@ -586,6 +588,14 @@ public class Preferences extends AppCompatPreferenceActivity implements Preferen
                             Calendar calendar = col.crtGregorianCalendar();
                             ((SeekBarPreference)pref).setValue(calendar.get(Calendar.HOUR_OF_DAY));
                             break;
+                        case "newTimezoneHandling":
+                            android.preference.CheckBoxPreference checkBox = (android.preference.CheckBoxPreference) pref;
+                            checkBox.setChecked(col.getSched()._new_timezone_enabled());
+                            if (col.schedVer() <= 1 || !col.isUsingRustBackend()) {
+                                Timber.d("Disabled 'newTimezoneHandling' box");
+                                checkBox.setEnabled(false);
+                            }
+                            break;
                         case "schedVer":
                             ((android.preference.CheckBoxPreference)pref).setChecked(conf.optInt("schedVer", 1) == 2);
                     }
@@ -720,6 +730,25 @@ public class Preferences extends AppCompatPreferenceActivity implements Preferen
                         Timber.i("AnkiDroid ContentProvider disabled by user");
                     }
                     pm.setComponentEnabledSetting(providerName, state, PackageManager.DONT_KILL_APP);
+                    break;
+                }
+                case "newTimezoneHandling" : {
+                    if (getCol().schedVer() != 1 && getCol().isUsingRustBackend()) {
+                        AbstractSched sched = getCol().getSched();
+                        boolean was_enabled = sched._new_timezone_enabled();
+                        boolean is_enabled = ((android.preference.CheckBoxPreference) pref).isChecked();
+                        if (was_enabled != is_enabled) {
+                            if (is_enabled) {
+                                try {
+                                    sched.set_creation_offset();
+                                } catch (BackendNotSupportedException e) {
+                                    throw e.alreadyUsingRustBackend();
+                                }
+                            } else {
+                                sched.clear_creation_offset();
+                            }
+                        }
+                    }
                     break;
                 }
                 case "schedVer": {

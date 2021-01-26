@@ -23,7 +23,6 @@ import android.content.Context;
 import android.content.res.Resources;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabaseLockedException;
-import android.os.Build;
 import android.text.TextUtils;
 import android.util.Pair;
 
@@ -37,6 +36,7 @@ import com.ichi2.async.CollectionTask;
 import com.ichi2.libanki.backend.DroidBackend;
 import com.ichi2.async.ProgressSender;
 import com.ichi2.async.TaskManager;
+import com.ichi2.libanki.backend.exception.BackendNotSupportedException;
 import com.ichi2.libanki.exception.NoSuchDeckException;
 import com.ichi2.libanki.exception.UnknownDatabaseVersionException;
 import com.ichi2.libanki.hooks.ChessFilter;
@@ -246,6 +246,13 @@ public class Collection {
             mSched = new Sched(this);
         } else if (ver == 2) {
             mSched = new SchedV2(this);
+            if (!getServer() && isUsingRustBackend()) {
+                try {
+                    getConf().put("localOffset", getSched()._current_timezone_offset());
+                } catch (BackendNotSupportedException e) {
+                    throw e.alreadyUsingRustBackend();
+                }
+            }
         }
     }
 
