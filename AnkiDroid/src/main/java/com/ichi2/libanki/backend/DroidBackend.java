@@ -18,6 +18,8 @@ package com.ichi2.libanki.backend;
 
 import com.ichi2.libanki.DB;
 
+import androidx.annotation.VisibleForTesting;
+
 /**
  * Interface to the rust backend listing all currently supported functionality.
  */
@@ -29,4 +31,7 @@ public interface DroidBackend {
     boolean databaseCreationCreatesSchema();
 
     boolean isUsingRustBackend();
+
+    @VisibleForTesting(otherwise = VisibleForTesting.NONE)
+    void debugEnsureNoOpenPointers();
 }
