@@ -1268,7 +1268,7 @@ public class SchedV2 extends AbstractSched {
         if (card.getDue() < mDayCutoff) {
             // Add some randomness, up to 5 minutes or 25%
             int maxExtra = Math.min(300, (int)(delay * 0.25));
-            int fuzz = new Random().nextInt(maxExtra);
+            int fuzz = new Random().nextInt(Math.max(maxExtra, 1));
             card.setDue(Math.min(mDayCutoff - 1, card.getDue() + fuzz));
             card.setQueue(Consts.QUEUE_TYPE_LRN);
             if (card.getDue() < (getTime().intTime() + mCol.getConf().getInt("collapseTime"))) {
