@@ -75,6 +75,7 @@ import static org.hamcrest.Matchers.is;
 import static org.hamcrest.Matchers.lessThan;
 import static org.hamcrest.Matchers.lessThanOrEqualTo;
 import static org.hamcrest.Matchers.not;
+import static org.hamcrest.Matchers.notNullValue;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotEquals;
@@ -255,6 +256,22 @@ public class SchedV2Test extends RobolectricTest {
 
         assertThat("Card should be moved to the home deck", getCol().getCard(cardId).getDid(), is(1L));
         assertThat("Card should not be in a filtered deck", getCol().getCard(cardId).getODid(), is(0L));
+    }
+
+    @Test
+    public void handlesSmallSteps() throws ConfirmModSchemaException {
+        // a delay of 0 crashed the app (step of 0.01).
+        getCol().changeSchedulerVer(2);
+
+        addNoteUsingBasicModel("Hello", "World");
+
+        getCol().getDecks().allConf().get(0).getJSONObject("new").put("delays", new JSONArray(Arrays.asList(0.01, 10)));
+
+        Card c = getCol().getSched().getCard();
+
+        assertThat(c, notNullValue());
+
+        getCol().getSched().answerCard(c, 1);
     }
 
 
