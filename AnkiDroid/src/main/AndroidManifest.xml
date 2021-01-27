@@ -461,6 +461,14 @@
             android:resource="@drawable/anki"
             />
 
+        <!--
+        Opt out of WebView Metrics: https://developer.android.com/guide/webapps/managing-webview#metrics
+        https://developer.android.com/guide/webapps/webview-privacy
+         -->
+        <meta-data android:name="android.webkit.WebView.MetricsOptOut" android:value="true" />
+
+
+
         <provider
             android:name=".provider.CardContentProvider"
             android:authorities="com.ichi2.anki.flashcards"
