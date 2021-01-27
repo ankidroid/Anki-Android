@@ -21,10 +21,13 @@ import com.ichi2.libanki.DB;
 import net.ankiweb.rsdroid.BackendFactory;
 import net.ankiweb.rsdroid.BackendUtils;
 
+import BackendProto.AdBackend;
 import timber.log.Timber;
 
 /** The Backend in Rust */
 public class RustDroidBackend implements DroidBackend {
+    public static final int UNUSED_VALUE = 0;
+
     // I think we can change this to BackendV1 once new DB() accepts it.
     private final BackendFactory mBackend;
 
@@ -55,5 +58,15 @@ public class RustDroidBackend implements DroidBackend {
     @Override
     public boolean isUsingRustBackend() {
         return true;
+    }
+
+
+    @Override
+    public void debugEnsureNoOpenPointers() {
+        AdBackend.DebugActiveDatabaseSequenceNumbersOut result = mBackend.getBackend().debugActiveDatabaseSequenceNumbers(UNUSED_VALUE);
+        if (result.getSequenceNumbersCount() > 0) {
+            String numbers = result.getSequenceNumbersList().toString();
+            throw new IllegalStateException("Contained unclosed sequence numbers: " + numbers);
+        }
     }
 }

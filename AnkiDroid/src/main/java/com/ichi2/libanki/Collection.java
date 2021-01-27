@@ -2170,6 +2170,10 @@ public class Collection {
         return mDroidBackend.isUsingRustBackend();
     }
 
+    public DroidBackend getBackend() {
+        return mDroidBackend;
+    }
+
     /** Allows a mock db to be inserted for testing */
     @VisibleForTesting
     public void setDb(DB database) {

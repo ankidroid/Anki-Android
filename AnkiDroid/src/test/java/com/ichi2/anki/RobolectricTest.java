@@ -145,6 +145,9 @@ public class RobolectricTest {
         controllersForCleanup.clear();
 
         try {
+            if (CollectionHelper.getInstance().colIsOpen()) {
+                CollectionHelper.getInstance().getCol(getTargetContext()).getBackend().debugEnsureNoOpenPointers();
+            }
             // If you don't tear down the database you'll get unexpected IllegalStateExceptions related to connections
             CollectionHelper.getInstance().closeCollection(false, "RoboelectricTest: End");
         } catch (BackendException ex) {

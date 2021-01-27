@@ -50,4 +50,10 @@ public class JavaDroidBackend implements DroidBackend {
     public boolean isUsingRustBackend() {
         return false;
     }
+
+
+    @Override
+    public void debugEnsureNoOpenPointers() {
+        // no-op
+    }
 }
