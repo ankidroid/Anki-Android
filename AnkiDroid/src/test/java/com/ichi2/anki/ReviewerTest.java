@@ -158,28 +158,6 @@ public class ReviewerTest extends RobolectricTest {
         assertThat("No menu items should be visible if all are disabled in Settings - Reviewer - App Bar Buttons", visibleButtons, empty());
     }
 
-
-    private void toggleWhiteboard(ReviewerForMenuItems reviewer) {
-        reviewer.toggleWhiteboard();
-
-        assumeTrue("Whiteboard should now be enabled", reviewer.mPrefWhiteboard);
-
-        advanceRobolectricLooperWithSleep();
-    }
-
-
-    private void disableAllReviewerAppBarButtons() {
-        Set<String> keys = PreferenceUtils.getAllCustomButtonKeys(getTargetContext());
-
-        SharedPreferences preferences = AnkiDroidApp.getSharedPrefs(getTargetContext());
-
-        SharedPreferences.Editor e =  preferences.edit();
-        for (String k : keys) {
-            e.putString(k, Integer.toString(ActionButtonStatus.MENU_DISABLED));
-        }
-        e.apply();
-    }
-
     @Test
     public synchronized void testMultipleCards() throws ConfirmModSchemaException {
         addNoteWithThreeCards();
@@ -253,6 +231,44 @@ public class ReviewerTest extends RobolectricTest {
         equalFirstField(cards[0], reviewer.mCurrentCard); // This failed in #6898 because this card was not in the queue
     }
 
+    @Test
+    public void baseDeckName() {
+        Collection col = getCol();
+        Models models = col.getModels();
+
+        Decks decks = col.getDecks();
+        Long didAb = decks.id("A::B");
+        Model basic = models.byName(AnkiDroidApp.getAppResources().getString(R.string.basic_model_name));
+        basic.put("did", didAb);
+        addNoteUsingBasicModel("foo", "bar");
+        Long didA = decks.id("A");
+        decks.select(didA);
+        Reviewer reviewer = startReviewer();
+        waitForAsyncTasksToComplete();
+        assertThat(reviewer.getSupportActionBar().getTitle(), is("B"));
+    }
+    
+
+    private void toggleWhiteboard(ReviewerForMenuItems reviewer) {
+        reviewer.toggleWhiteboard();
+
+        assumeTrue("Whiteboard should now be enabled", reviewer.mPrefWhiteboard);
+
+        advanceRobolectricLooperWithSleep();
+    }
+
+
+    private void disableAllReviewerAppBarButtons() {
+        Set<String> keys = PreferenceUtils.getAllCustomButtonKeys(getTargetContext());
+
+        SharedPreferences preferences = AnkiDroidApp.getSharedPrefs(getTargetContext());
+
+        SharedPreferences.Editor e =  preferences.edit();
+        for (String k : keys) {
+            e.putString(k, Integer.toString(ActionButtonStatus.MENU_DISABLED));
+        }
+        e.apply();
+    }
 
     private void assertCurrentOrdIsNot(Reviewer r, int i) {
         waitForAsyncTasksToComplete();
@@ -405,22 +421,4 @@ public class ReviewerTest extends RobolectricTest {
             return visibleButtons;
         }
     }
-
-    @Test
-    public void baseDeckName() {
-        Collection col = getCol();
-        Models models = col.getModels();
-
-        Decks decks = col.getDecks();
-        Long didAb = decks.id("A::B");
-        Model basic = models.byName(AnkiDroidApp.getAppResources().getString(R.string.basic_model_name));
-        basic.put("did", didAb);
-        addNoteUsingBasicModel("foo", "bar");
-        Long didA = decks.id("A");
-        decks.select(didA);
-        Reviewer reviewer = startReviewer();
-        waitForAsyncTasksToComplete();
-        assertThat(reviewer.getSupportActionBar().getTitle(), is("B"));
-    }
-
 }
