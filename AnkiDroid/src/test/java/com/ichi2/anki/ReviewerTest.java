@@ -13,7 +13,6 @@ import com.ichi2.anki.exception.ConfirmModSchemaException;
 import com.ichi2.libanki.Card;
 import com.ichi2.libanki.Collection;
 import com.ichi2.libanki.Consts;
-import com.ichi2.libanki.Deck;
 import com.ichi2.libanki.Decks;
 import com.ichi2.libanki.Model;
 import com.ichi2.libanki.Models;
@@ -48,7 +47,6 @@ import static org.hamcrest.Matchers.isEmptyString;
 import static org.hamcrest.Matchers.not;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
-import static org.junit.Assume.assumeTrue;
 
 @RunWith(ParameterizedRobolectricTestRunner.class)
 public class ReviewerTest extends RobolectricTest {
@@ -247,7 +245,6 @@ public class ReviewerTest extends RobolectricTest {
         waitForAsyncTasksToComplete();
         assertThat(reviewer.getSupportActionBar().getTitle(), is("B"));
     }
-    
 
     private void toggleWhiteboard(ReviewerForMenuItems reviewer) {
         reviewer.toggleWhiteboard();
@@ -368,7 +365,7 @@ public class ReviewerTest extends RobolectricTest {
         return startReviewer(this, clazz);
     }
 
-    private static <T extends Reviewer> T startReviewer(RobolectricTest testClass, Class<T> clazz) {
+    public static <T extends Reviewer> T startReviewer(RobolectricTest testClass, Class<T> clazz) {
         T reviewer = startActivityNormallyOpenCollectionWithIntent(testClass, clazz, new Intent());
         waitForAsyncTasksToComplete();
         return reviewer;

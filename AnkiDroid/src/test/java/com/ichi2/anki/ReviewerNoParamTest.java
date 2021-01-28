@@ -18,6 +18,7 @@ package com.ichi2.anki;
 
 import android.graphics.Color;
 
+import com.ichi2.anki.cardviewer.ViewerCommand;
 import com.ichi2.anki.model.WhiteboardPenColor;
 import com.ichi2.libanki.Consts;
 
@@ -30,6 +31,7 @@ import androidx.annotation.NonNull;
 import androidx.test.ext.junit.runners.AndroidJUnit4;
 
 import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.greaterThan;
 import static org.hamcrest.Matchers.is;
 
 /** A non-parmaterized ReviewerTest - we should probably rename ReviewerTest in future */
@@ -117,6 +119,61 @@ public class ReviewerNoParamTest extends RobolectricTest {
     }
 
 
+    @Test
+    public void flippingCardHidesFullscreen() {
+        addNoteUsingBasicModel("Hello", "World");
+        ReviewerExt reviewer = startReviewerFullScreen();
+
+        int hideCount = reviewer.getDelayedHideCount();
+
+        reviewer.displayCardAnswer();
+
+        assertThat("Hide should be called after flipping a card", reviewer.getDelayedHideCount(), greaterThan(hideCount));
+    }
+
+
+    @Test
+    public void showingCardHidesFullScreen() {
+        addNoteUsingBasicModel("Hello", "World");
+        ReviewerExt reviewer = startReviewerFullScreen();
+
+        reviewer.displayCardAnswer();
+        advanceRobolectricLooperWithSleep();
+
+        int hideCount = reviewer.getDelayedHideCount();
+
+        reviewer.answerCard(1);
+        advanceRobolectricLooperWithSleep();
+
+        assertThat("Hide should be called after answering a card", reviewer.getDelayedHideCount(), greaterThan(hideCount));
+    }
+
+    @Test
+    public void undoingCardHidesFullScreen() {
+        addNoteUsingBasicModel("Hello", "World");
+        ReviewerExt reviewer = startReviewerFullScreen();
+
+        reviewer.displayCardAnswer();
+        advanceRobolectricLooperWithSleep();
+        reviewer.answerCard(1);
+        advanceRobolectricLooperWithSleep();
+
+        int hideCount = reviewer.getDelayedHideCount();
+
+        reviewer.executeCommand(ViewerCommand.COMMAND_UNDO);
+        advanceRobolectricLooperWithSleep();
+
+
+        assertThat("Hide should be called after answering a card", reviewer.getDelayedHideCount(), greaterThan(hideCount));
+    }
+
+
+    private ReviewerExt startReviewerFullScreen() {
+        AnkiDroidApp.getSharedPrefs(getTargetContext()).edit().putString("fullscreenMode", "1").apply();
+        ReviewerExt reviewer = ReviewerTest.startReviewer(this, ReviewerExt.class);
+        return reviewer;
+    }
+
     protected void storeDarkModeColor(@SuppressWarnings("SameParameterValue") int value) {
         MetaDB.storeWhiteboardPenColor(getTargetContext(), Consts.DEFAULT_DECK_ID, false, value);
     }
@@ -144,7 +201,7 @@ public class ReviewerNoParamTest extends RobolectricTest {
         // we need a card for the reviewer to start
         addNoteUsingBasicModel("Hello", "World");
 
-        Reviewer reviewer = ReviewerTest.startReviewer(this);
+        Reviewer reviewer = startReviewer();
 
         reviewer.toggleWhiteboard();
 
@@ -155,4 +212,22 @@ public class ReviewerNoParamTest extends RobolectricTest {
         return whiteboard;
     }
 
+
+    private Reviewer startReviewer() {
+        return ReviewerTest.startReviewer(this);
+    }
+
+    private static class ReviewerExt extends Reviewer {
+
+        int mDelayedCount = 0;
+        @Override
+        protected void delayedHide(int delayMillis) {
+            mDelayedCount++;
+            super.delayedHide(delayMillis);
+        }
+
+        public int getDelayedHideCount() {
+            return mDelayedCount;
+        }
+    }
 }
