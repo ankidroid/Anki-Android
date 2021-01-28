@@ -4,6 +4,8 @@ import android.content.SharedPreferences;
 
 import com.ichi2.anki.reviewer.ReviewerCustomFonts;
 import com.ichi2.libanki.Card;
+import com.ichi2.preferences.PreferenceKeys;
+import com.ichi2.preferences.Prefs;
 import com.ichi2.themes.Themes;
 
 import androidx.annotation.CheckResult;
@@ -52,15 +54,16 @@ public class CardAppearance {
     }
 
     public static CardAppearance create(ReviewerCustomFonts customFonts, SharedPreferences preferences) {
-        int cardZoom = preferences.getInt("cardZoom", 100);
-        int imageZoom = preferences.getInt("imageZoom", 100);
+        Prefs prefs = new Prefs(preferences);
+        int cardZoom = prefs.getInt(PreferenceKeys.CardZoom);
+        int imageZoom = prefs.getInt(PreferenceKeys.ImageZoom);
         boolean nightMode = isInNightMode(preferences);
-        boolean centerVertically = preferences.getBoolean("centerVertically", false);
+        boolean centerVertically = prefs.getBoolean(PreferenceKeys.CenterVertically);
         return new CardAppearance(customFonts, cardZoom, imageZoom, nightMode, centerVertically);
     }
 
     public static boolean isInNightMode(SharedPreferences sharedPrefs) {
-        return sharedPrefs.getBoolean("invertedColors", false);
+        return Prefs.getBoolean(sharedPrefs, PreferenceKeys.InvertedColors);
     }
 
 

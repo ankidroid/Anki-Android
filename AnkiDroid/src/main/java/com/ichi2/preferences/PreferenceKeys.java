@@ -48,6 +48,12 @@ public class PreferenceKeys {
     public static PreferenceKey<Boolean> HtmlJavascriptDebugging = new PreferenceKey<>("html_javascript_debugging", false);
     public static PreferenceKey<String> AnswerButtonPosition = new PreferenceKey<>("answerButtonPosition", "bottom"); // This exists in constants.xml - remove?
 
+    // card appearance
+    public static PreferenceKey<Integer> CardZoom = new PreferenceKey<>("cardZoom", 100);
+    public static PreferenceKey<Integer> ImageZoom = new PreferenceKey<>("imageZoom", 100);
+    public static PreferenceKey<Boolean> CenterVertically = new PreferenceKey<>("centerVertically", false);
+    public static PreferenceKey<Boolean> InvertedColors = new PreferenceKey<>("invertedColors", false);
+
 
     public static class PreferenceKey<T> {
         public String key;
