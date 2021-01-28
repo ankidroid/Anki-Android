@@ -15,6 +15,8 @@ import com.ichi2.anki.R;
 import com.ichi2.async.Connection;
 import com.ichi2.libanki.Collection;
 import com.ichi2.anki.analytics.UsageAnalytics;
+import com.ichi2.preferences.PreferenceKeys;
+import com.ichi2.preferences.Prefs;
 
 import java.lang.ref.WeakReference;
 import java.util.ArrayList;
@@ -114,11 +116,11 @@ public class DialogHandler extends Handler {
             dialog.setArgs(msgData.getString("message"));
             (mActivity.get()).showDialogFragment(dialog);
         } else if (msg.what == MSG_DO_SYNC) {
-            SharedPreferences preferences = AnkiDroidApp.getSharedPrefs(mActivity.get());
+            Prefs preferences = new Prefs(AnkiDroidApp.getSharedPrefs(mActivity.get()));
             Resources res = mActivity.get().getResources();
             Collection col = mActivity.get().getCol();
-            String hkey = preferences.getString("hkey", "");
-            long millisecondsSinceLastSync = col.getTime().intTimeMS() - preferences.getLong("lastSyncTime", 0);
+            String hkey = preferences.getString(PreferenceKeys.HKey);
+            long millisecondsSinceLastSync = col.getTime().intTimeMS() - preferences.getLong(PreferenceKeys.LastSyncTime);
             boolean limited = millisecondsSinceLastSync < INTENT_SYNC_MIN_INTERVAL;
             if (!limited && hkey.length() > 0 && Connection.isOnline()) {
                 ((DeckPicker) mActivity.get()).sync();

@@ -61,6 +61,9 @@ public class PreferenceKeys {
     public static PreferenceKey<String> Username = new PreferenceKey<>("username", "");
     public static PreferenceKey<String> HKey = new PreferenceKey<>("hkey", "");
 
+    // DialogHandler
+    public static PreferenceKey<Long> LastSyncTime = new PreferenceKey<>("lastSyncTime", 0L);
+
 
 
     public static class PreferenceKey<T> {

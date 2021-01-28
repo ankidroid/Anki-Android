@@ -41,6 +41,10 @@ public class Prefs {
         return mPreferences.getString(key.key, key.defaultValue);
     }
 
+    public long getLong(PreferenceKeys.PreferenceKey<Long> key) {
+        return mPreferences.getLong(key.key, key.defaultValue);
+    }
+
     public static boolean getBoolean(Context context, PreferenceKeys.PreferenceKey<Boolean> key) {
         return new Prefs(AnkiDroidApp.getSharedPrefs(context)).getBoolean(key);
     }
@@ -53,6 +57,10 @@ public class Prefs {
         return new Prefs(AnkiDroidApp.getSharedPrefs(context)).getString(key);
     }
 
+    public static long getLong(Context context, PreferenceKeys.PreferenceKey<Long> key) {
+        return new Prefs(AnkiDroidApp.getSharedPrefs(context)).getLong(key);
+    }
+
     public static boolean getBoolean(SharedPreferences preferences, PreferenceKeys.PreferenceKey<Boolean> key) {
         return new Prefs(preferences).getBoolean(key);
     }
@@ -63,5 +71,8 @@ public class Prefs {
 
     public static String getString(SharedPreferences preferences, PreferenceKeys.PreferenceKey<String> key) {
         return new Prefs(preferences).getString(key);
+    }
+    public static long getLong(SharedPreferences preferences, PreferenceKeys.PreferenceKey<Long> key) {
+        return new Prefs(preferences).getLong(key);
     }
 }
