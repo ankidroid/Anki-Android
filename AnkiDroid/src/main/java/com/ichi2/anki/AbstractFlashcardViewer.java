@@ -894,7 +894,8 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
         return R.layout.reviewer;
     }
 
-    protected boolean isFullscreen() {
+    @VisibleForTesting(otherwise = VisibleForTesting.PROTECTED)
+    boolean isFullscreen() {
         return !getSupportActionBar().isShowing();
     }
 
