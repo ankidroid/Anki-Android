@@ -45,6 +45,8 @@ import android.widget.LinearLayout;
 
 import com.ichi2.libanki.utils.Time;
 import com.ichi2.libanki.utils.TimeUtils;
+import com.ichi2.preferences.PreferenceKeys;
+import com.ichi2.preferences.Prefs;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -110,7 +112,7 @@ public class Whiteboard extends View {
         mPaint.setStyle(Paint.Style.STROKE);
         mPaint.setStrokeJoin(Paint.Join.ROUND);
         mPaint.setStrokeCap(Paint.Cap.ROUND);
-        int wbStrokeWidth = AnkiDroidApp.getSharedPrefs(cardViewer).getInt("whiteBoardStrokeWidth", 6);
+        int wbStrokeWidth = Prefs.getInt(cardViewer, PreferenceKeys.WhiteBoardStrokeWidth);
         mPaint.setStrokeWidth((float) wbStrokeWidth);
         createBitmap();
         mPath = new Path();

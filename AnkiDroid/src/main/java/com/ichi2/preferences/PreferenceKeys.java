@@ -40,7 +40,7 @@ public class PreferenceKeys {
     public static PreferenceKey<String> GestureSwipeLeft = new PreferenceKey<>("gestureSwipeLeft", "8");
     public static PreferenceKey<String> GestureSwipeRight = new PreferenceKey<>("gestureSwipeRight", "17");
     public static PreferenceKey<String> GestureDoubleTap = new PreferenceKey<>("gestureDoubleTap", "7");
-    public static PreferenceKey<String> GestureLongClick = new PreferenceKey<>("gestureLongclick", "11");
+    public static PreferenceKey<String> GestureLongClick = new PreferenceKey<>("gestureLongclick", "11");  /* This appears to be unused */
     public static PreferenceKey<String> GestureVolumeUp = new PreferenceKey<>("gestureVolumeUp", "0");
     public static PreferenceKey<String> GestureVolumeDown = new PreferenceKey<>("gestureVolumeDown", "0");
 
@@ -53,6 +53,10 @@ public class PreferenceKeys {
     public static PreferenceKey<Integer> ImageZoom = new PreferenceKey<>("imageZoom", 100);
     public static PreferenceKey<Boolean> CenterVertically = new PreferenceKey<>("centerVertically", false);
     public static PreferenceKey<Boolean> InvertedColors = new PreferenceKey<>("invertedColors", false);
+
+    // Whiteboard
+    public static PreferenceKey<Integer> WhiteBoardStrokeWidth = new PreferenceKey<>("whiteBoardStrokeWidth", 6);
+
 
 
     public static class PreferenceKey<T> {
