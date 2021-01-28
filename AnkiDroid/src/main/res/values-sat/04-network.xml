@@ -44,17 +44,13 @@
     <string name="sync_error">ᱟᱹᱭᱩᱨ ᱢᱤᱫ ᱵᱷᱩᱞ</string>
     <string name="vague_error">ᱵᱷᱩᱞ</string>
     <string name="retry">ᱫᱼᱪᱮᱥᱴᱟ</string>
-    <string name="cancel">ᱵᱟᱰᱨᱟ</string>
-    <string name="terms_and_conditions"><a href="https://ankiweb.net/account/terms">ᱫᱚᱣ ᱟᱨ ᱚᱵᱚᱥᱛᱟ ᱠᱚ</a></string>
     <string name="menu_get_shared_decks">ᱥᱟᱡᱟᱣᱟ ᱠᱟᱱ ᱰᱮᱠ ᱠᱚ ᱧᱟᱢ ᱢᱮ</string>
     <string name="connection_error_message">ᱱᱮᱴᱣᱟᱨᱠ ᱦᱩᱰᱟᱹᱜ ᱦᱩᱭ ᱮᱱᱟ</string>
     <string name="not_logged_in_title">AnkiWeb ᱛᱮ ᱵᱷᱤᱛᱤᱨ ᱵᱚᱞᱚ</string>
     <string name="login_create_account_message">cloud ᱟᱹᱭᱩᱨ ᱢᱤᱫ ᱠᱟᱹᱢᱤ ᱨᱮ ᱵᱷᱤᱛᱤᱨ ᱵᱚᱞᱚ ᱞᱟᱹᱜᱤᱫ third party ᱠᱷᱟᱛᱟ ᱫᱚᱨᱠᱟᱨ ᱾ ᱱᱟᱶᱟ ᱛᱮᱭᱟᱨ ᱞᱟᱹᱜᱤᱫ ᱤᱱᱟ ᱛᱟᱭᱚᱢ ᱡᱷᱟᱸᱯ ᱠᱚ ᱧᱮᱞ ᱢᱮ ᱾ </string>
     <!-- MyAccount.java -->
     <string name="username">ᱤ-ᱢᱮᱞ ᱴᱷᱤᱠᱟᱹᱱᱟ</string>
-    <string name="username_repeat">ᱤ-ᱢᱮᱞ ᱴᱷᱤᱠᱟᱹᱱᱟ ᱫᱚᱯᱚᱲᱦᱟᱣᱢᱮ</string>
     <string name="password">ᱫᱟᱱᱟᱝ ᱥᱟᱵᱟᱫᱽ</string>
-    <string name="password_repeat">ᱫᱚᱯᱚᱲᱦᱟ ᱫᱟᱱᱟᱝ ᱥᱟᱵᱟᱫᱽ</string>
     <string name="log_in">ᱞᱚᱜᱤᱱ</string>
     <string name="sign_up_description">AnkiWeb ᱠᱷᱟᱛᱟ ᱵᱟᱹᱱᱩᱜ ᱟ ? ᱱᱚᱶᱟ ᱫᱚ  ᱥᱟᱹᱫᱷᱤᱱ ᱜᱮᱭᱟ!</string>
     <string name="sign_up_not_affiliated">ᱠᱷᱟᱴᱚ ᱵᱤᱪᱟᱹᱨ ᱢᱮ: AnkiWeb ᱟᱜ AnkiDroid ᱥᱟᱞᱟᱜ ᱪᱮᱫ ᱥᱚᱢᱯᱚᱨᱠᱚ ᱵᱟᱹᱱᱩᱜᱽᱟ</string>
@@ -65,7 +61,6 @@
     <string name="invalid_username_password">ᱵᱷᱩᱞ ᱤ-ᱢᱮᱞ ᱴᱷᱤᱠᱟᱹᱱᱟ ᱵᱟᱝᱠᱷᱟᱱ ᱫᱟᱱᱟᱝ ᱥᱟᱵᱟᱫᱽ</string>
     <string name="reset_password">ᱫᱚᱦᱲᱟ ᱫᱟᱱᱟᱝ ᱥᱟᱵᱟᱫᱽ</string>
     <!-- AndroidManifest.xml -->
-    <string name="downloaddeck_search">ᱥᱮᱸᱫᱽᱨᱟ</string>
     <string name="preferences_title">ᱟᱹᱲᱤ ᱠᱩᱥᱤᱭᱟᱠ</string>
     <string name="deckpreferences_title">XXX ᱞᱟᱹᱜᱤᱫ ᱟᱯᱟᱱᱟᱨ ᱢᱚᱱᱮᱛᱮᱭᱟᱜ</string>
     <string name="sync_conflict_message">ᱟᱢ ᱴᱩᱢᱟᱹᱞ ᱛᱮ ᱞᱟᱫᱮ ᱢᱮ ᱟᱨ ᱵᱟᱝᱠᱷᱟ Ankiweb ᱠᱷᱚᱱ ᱟᱹᱛᱩᱨ ᱟᱬᱜᱚᱭ ᱢᱮ, ᱚᱱᱠᱩ ᱫᱚ ᱠᱟᱠᱚ ᱢᱮᱥᱟᱜᱽᱟ ᱾ ᱢᱤᱫ ᱯᱟᱦᱴᱟ ᱨᱮᱭᱟᱜ ᱴᱩᱢᱟᱹᱞ ᱫᱮ ᱫᱩᱦᱰᱟ ᱚᱞᱚᱜᱚᱣᱟ ᱾</string>
@@ -80,7 +75,6 @@
     <string name="sync_title">ᱟᱭᱩᱨ ᱤᱫᱤᱜ ᱪᱟᱹᱞᱩᱜ ᱠᱟᱱᱟ</string>
     <string name="sync_downloading_media">%1$d/%2$d&#8230; ᱟᱹᱛᱩᱨ ᱟᱬᱜᱚ ᱠᱟᱱᱟ</string>
     <string name="sync_log_uploading_message">ᱞᱚᱠᱟᱞ ᱠᱷᱚᱱ ᱟᱹᱭᱩᱨ ᱢᱤᱫᱚᱜ</string>
-    <string name="sync_log_downloading_message">ᱥᱚᱨᱵᱷᱚᱨ ᱠᱷᱚᱱ ᱯᱩᱨᱟ ᱟᱹᱭᱩᱨ ᱢᱤᱫ</string>
     <string name="sync_log_clocks_unsynchronized">ᱟᱢᱟᱜ ᱥᱚᱢᱚᱭ %1$d ᱴᱤᱡ %2$s ᱠᱷᱚᱱ ᱵᱚᱸᱫ ᱜᱮᱭᱟ ᱾  Make sure that the date, time, and timezone on your phone are set correctly, then sync again.</string>
     <string name="sync_log_clocks_unsynchronized_tz">, ᱚᱠᱛᱚ ᱡᱟᱭᱜᱟ ᱵᱷᱩᱞᱽ</string>
     <string name="sync_log_clocks_unsynchronized_date">, ᱢᱟᱹᱦᱤᱛ ᱵᱷᱩᱞ</string>
@@ -94,7 +88,7 @@
     <string name="sync_overwrite_error">ᱱᱤᱛᱚᱜᱽᱟᱜ ᱴᱩᱢᱟᱹᱞ ᱟᱹᱛᱩᱨᱩᱨ ᱟᱬᱜᱚ ᱨᱮᱫ ᱥᱟᱞᱟᱜ ᱛᱮ ᱵᱟᱝ ᱫᱩᱦᱲᱟ ᱚᱞ ᱲᱫᱟᱲᱮᱟᱜᱟ</string>
     <string name="sync_connection_error">ᱡᱚᱲᱟᱣ ᱚᱠᱛᱚ ᱵᱟᱦᱨᱮ ᱾ ᱤᱱᱴᱚᱨᱱᱮᱴ ᱡᱚᱲᱟᱣ ᱰᱤᱜᱟᱹᱣ ᱮᱱᱟ, ᱟᱨ ᱵᱟᱝᱠᱦᱟᱱ ᱟᱢ ᱴᱷᱮᱱ ᱱᱟᱶᱟ ᱯᱚᱴᱚᱢ ᱨᱮ ᱢᱟᱨᱟᱝ ᱨᱚᱫ ᱢᱮᱰᱤᱭᱟ ᱛᱮᱦᱮᱸ ᱠᱚᱜᱽᱟ ᱾</string>
     <string name="sync_write_access_error">ᱟᱹᱛᱩᱨᱩᱨ ᱟᱬᱜᱚ ᱨᱮᱫ SD ᱠᱟᱰ ᱨᱮ ᱵᱟᱝ ᱥᱟᱱᱪᱟᱣᱚᱜ ᱠᱟᱱᱟ ᱾ ᱠᱟᱰ ᱫᱚ read-only ᱨᱮ ᱵᱟᱝ ᱢᱚᱩᱸᱴ ᱠᱟᱱᱟ ᱟᱨ ᱵᱟᱝᱠᱷᱟᱱ ᱡᱟᱭᱜᱟ ᱠᱚᱢ ᱯᱟᱲᱟᱣᱮᱱᱟ ᱾</string>
-    <string name="sync_error_invalid_sync_server">The Custom Sync Server in Advanced Settings is invalid (%s). Please enter a valid server, or disable the setting.</string>
+    <string name="sync_error_invalid_sync_server">ᱮᱰᱵᱷᱟᱸᱥᱼᱰ ᱥᱟᱡᱟᱣ ᱠᱚ ᱨᱮ ᱠᱟᱹᱥᱴᱚᱢ ᱥᱭᱸᱠ ᱥᱟᱹᱨᱣᱟᱹᱨ ᱵᱷᱩᱞ ᱜᱮᱭᱟ (%s) ᱾ ᱫᱚᱭᱟᱠᱟᱛᱮ ᱣᱮᱞᱤᱰ ᱥᱟᱹᱨᱣᱟᱹᱨ ᱟᱫᱮᱨ ᱢᱮ, ᱟᱨ ᱵᱟᱝ ᱥᱟᱡᱟᱣ ᱠᱷᱚᱱ ᱵᱚᱸᱫᱚᱭ ᱢᱮ ᱾</string>
     <string name="sync_deletions_message">ᱜᱮᱫ ᱜᱤᱰᱤ ᱠᱚ ᱟᱹᱭᱩᱨ ᱢᱤᱫᱚᱜ ᱠᱟᱱᱟ&#8230;</string>
     <string name="sync_small_objects_message">ᱠᱟᱴᱤᱡ ᱡᱤᱱᱤᱥ ᱠᱚ ᱟᱹᱭᱩᱨ ᱢᱤᱫᱚᱜ ᱠᱟᱱᱟ&#8230;</string>
     <string name="sync_finish_message">ᱟᱹᱭᱩᱨ ᱢᱤᱫᱚᱜ ᱪᱟᱵᱟᱜ ᱠᱟᱱᱟ&#8230;</string>
@@ -117,7 +111,7 @@
     <string name="sync_media_error">ᱢᱮᱰᱤᱭᱟ ᱥᱟᱠᱷᱤᱭᱟᱛ ᱟᱹᱭᱩᱨ ᱢᱤᱫ ᱵᱷᱩᱞ</string>
     <string name="sync_media_error_check">ᱢᱮᱰᱤᱭᱟ ᱟᱹᱭᱩᱨ ᱢᱤᱫ ᱡᱚᱠᱷᱟᱜ ᱵᱷᱩᱞ ᱾ ᱢᱮᱰᱩᱭᱟ ᱧᱮᱞ ᱵᱤᱰᱟᱣᱜ ᱫᱚᱨᱠᱟᱨᱚᱜ ᱠᱟᱱᱟ ᱾</string>
     <!-- Please run ‘Check database’ before syncing -->
-    <string name="sync_basic_check_failed">Please run ‘%s’ before syncing</string>
+    <string name="sync_basic_check_failed">ᱥᱭᱸᱠ ᱢᱟᱲᱟᱝ ᱨᱮ ᱫᱚᱭᱟᱠᱟᱛᱮ ‘%s’ ᱫᱟᱹᱲ ᱪᱷᱚᱭ ᱢᱮ</string>
     <string name="sync_sanity_local">ᱱᱚᱰᱮᱱᱟᱜ</string>
     <string name="sync_sanity_remote">ᱥᱟᱝᱜᱤᱧ ᱨᱮᱭᱟᱜ</string>
     <string name="force_full_sync_title">ᱫᱟᱲᱮ ᱛᱮ ᱟᱹᱭᱩᱨ ᱢᱤᱫ</string>
@@ -132,9 +126,7 @@
     <string name="sync_error_502_maintenance">AnkiWeb ᱫᱚ ᱧᱮᱞᱥᱟᱢᱴᱟᱣᱚᱜ ᱠᱟᱱᱟ ᱾ ᱫᱚᱭᱟᱠᱟᱛᱮ ᱠᱤᱪᱷᱤ ᱥᱚᱢᱚᱭ ᱯᱚᱨᱮ ᱪᱮᱥᱴᱟᱭ ᱢᱮ ᱾</string>
     <string name="sync_error_504_gateway_timeout">504 gateway timeout ᱵᱷᱩᱞ ᱪᱟᱢᱮᱱᱟ ᱾</string>
     <!-- Deck Picker Sync Icon -->
-    <string name="sync_menu_title">Sync</string>
-    <string name="sync_menu_title_full_sync">Sync (full)</string>
-    <string name="sync_menu_title_no_account">Sync (log in)</string>
-    <!-- An option on a message box to open the "corrupt collection" webpage -->
-    <string name="sync_corrupt_collection_get_help">Help</string>
+    <string name="sync_menu_title_full_sync">ᱥᱭᱸᱠ (ᱯᱩᱨᱟᱹ)</string>
+    <string name="sync_menu_title_no_account">ᱥᱭᱸᱠ (ᱵᱚᱞᱚᱱ ᱢᱮ)</string>
+    <string name="sync_error_unknown_host_readable">Could not connect to AnkiWeb. Is your internet working?\n\n%s</string>
 </resources>

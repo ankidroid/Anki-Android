@@ -131,21 +131,20 @@ public class Stats {
             lim = " and " + lim;
         }
 
-        Cursor cur = null;
         String query = "select count(), sum(time)/1000, "+
                 "sum(case when ease = 1 then 1 else 0 end), "+ /* failed */
                 "sum(case when type = " + Consts.CARD_TYPE_NEW + " then 1 else 0 end), "+ /* learning */
                 "sum(case when type = " + Consts.CARD_TYPE_LRN + " then 1 else 0 end), "+ /* review */
                 "sum(case when type = " + Consts.CARD_TYPE_REV + " then 1 else 0 end), "+ /* relearn */
                 "sum(case when type = " + Consts.CARD_TYPE_RELEARNING + " then 1 else 0 end) "+ /* filter */
-                "from revlog where id > " + ((mCol.getSched().getDayCutoff()-SECONDS_PER_DAY)*1000) + " " +  lim;
+                "from revlog "+
+                "where ease > 0 "+  // Anki Desktop logs a '0' ease for manual reschedules, ignore them https://github.com/ankidroid/Anki-Android/issues/8008
+                "and id > " + ((mCol.getSched().getDayCutoff()-SECONDS_PER_DAY)*1000) + " " +  lim;
         Timber.d("todays statistics query: %s", query);
 
         int cards, thetime, failed, lrn, rev, relrn, filt;
-        try {
-            cur = mCol.getDb()
-                    .getDatabase()
-                    .query(query, null);
+        try (Cursor cur = mCol.getDb()
+                    .query(query)) {
 
             cur.moveToFirst();
             cards = cur.getInt(0);
@@ -158,28 +157,19 @@ public class Stats {
 
 
 
-        } finally {
-            if (cur != null && !cur.isClosed()) {
-                cur.close();
-            }
         }
         query = "select count(), sum(case when ease = 1 then 0 else 1 end) from revlog " +
-        "where lastIvl >= 21 and id > " + ((mCol.getSched().getDayCutoff()-SECONDS_PER_DAY)*1000) + " " +  lim;
+                "where ease > 0 "+ // Anki Desktop logs a '0' ease for manual reschedules, ignore them https://github.com/ankidroid/Anki-Android/issues/8008
+                "and lastIvl >= 21 and id > " + ((mCol.getSched().getDayCutoff()-SECONDS_PER_DAY)*1000) + " " +  lim;
         Timber.d("todays statistics query 2: %s", query);
 
         int mcnt, msum;
-        try {
-            cur = mCol.getDb()
-                    .getDatabase()
-                    .query(query, null);
+        try (Cursor cur = mCol.getDb()
+                    .query(query)) {
 
             cur.moveToFirst();
             mcnt = cur.getInt(0);
             msum = cur.getInt(1);
-        } finally {
-            if (cur != null && !cur.isClosed()) {
-                cur.close();
-            }
         }
 
         return new int[]{cards, thetime, failed, lrn, rev, relrn, filt, mcnt, msum};
@@ -203,7 +193,7 @@ public class Stats {
     public Pair<Integer, Double> getNewCards(AxisType timespan) {
         int chunk = getChunk(timespan);
         int num = getNum(timespan);
-        List<String> lims = new ArrayList<>();
+        List<String> lims = new ArrayList<>(2);
         if (timespan != AxisType.TYPE_LIFE) {
             lims.add("id > " + (mCol.getSched().getDayCutoff() - (num * chunk * SECONDS_PER_DAY)) * 1000);
         }
@@ -224,19 +214,7 @@ public class Stats {
 
 
         long cut = mCol.getSched().getDayCutoff();
-        int cardCount = 0;
-        String query = "select " +
-                "(cast((id/1000.0 - ?) / " + SECONDS_PER_DAY + ".0 as int))/? as day," +
-                " count(id) " +
-                " from cards " + lim +
-                " group by day order by day";
-
-        try (Cursor c = mCol.getDb().getDatabase().query(query,
-                new Object[] {cut, chunk })) {
-            while (c.moveToNext()) {
-                cardCount += c.getLong(1);
-            }
-        }
+        int cardCount= mCol.getDb().queryScalar("select count(id) from cards " + lim);
 
         long periodDays = _periodDays(timespan); // 30|365|-1
         if (periodDays == -1) {
@@ -287,7 +265,7 @@ public class Stats {
 
 
     private String getRevlogFilter(AxisType timespan,boolean inverseTimeSpan){
-        ArrayList<String> lims = new ArrayList<>();
+        ArrayList<String> lims = new ArrayList<>(2);
         String dayFilter = getRevlogTimeFilter(timespan, inverseTimeSpan);
         if (!TextUtils.isEmpty(dayFilter)) {
             lims.add(dayFilter);
@@ -297,10 +275,11 @@ public class Stats {
             lims.add(lim);
         }
 
-        if (!lims.isEmpty()) {
-            lim = "WHERE ";
-            lim += TextUtils.join(" AND ", lims.toArray());
-        }
+        // Anki Desktop logs a '0' ease for manual reschedules, ignore them https://github.com/ankidroid/Anki-Android/issues/8008
+        lims.add("ease > 0");
+
+        lim = "WHERE ";
+        lim += TextUtils.join(" AND ", lims.toArray());
 
         return lim;
     }
@@ -308,16 +287,10 @@ public class Stats {
     public void calculateOverviewStatistics(AxisType timespan, OverviewStatsBuilder.OverviewStats oStats) {
         oStats.allDays = timespan.days;
         String lim = getRevlogFilter(timespan,false);
-        Cursor cur = null;
-        try {
-            cur = mCol.getDb().getDatabase().query(
-                    "SELECT COUNT(*) as num_reviews, sum(case when type = " + Consts.CARD_TYPE_NEW + " then 1 else 0 end) as new_cards FROM revlog " + lim, null);
+        try (Cursor cur = mCol.getDb().query(
+                    "SELECT COUNT(*) as num_reviews, sum(case when type = " + Consts.CARD_TYPE_NEW + " then 1 else 0 end) as new_cards FROM revlog " + lim)) {
             while (cur.moveToNext()) {
                 oStats.totalReviews = cur.getInt(0);
-            }
-        } finally {
-            if (cur != null && !cur.isClosed()) {
-                cur.close();
             }
         }
 
@@ -325,8 +298,7 @@ public class Stats {
                 " SELECT (cast((id/1000 - " + mCol.getSched().getDayCutoff() + ") / "+SECONDS_PER_DAY+" AS INT)) AS day,  sum(time/1000.0/60.0) AS time_per_day"
                 + " FROM revlog " + lim + " GROUP BY day ORDER BY day)";
         Timber.d("Count cntquery: %s", cntquery);
-        try {
-            cur = mCol.getDb().getDatabase().query(cntquery, null);
+        try (Cursor cur = mCol.getDb().query(cntquery)) {
             while (cur.moveToNext()) {
                 oStats.daysStudied = cur.getInt(0);
                 oStats.totalTime = cur.getDouble(2);
@@ -334,22 +306,13 @@ public class Stats {
                     oStats.allDays = Math.abs(cur.getInt(1)) + 1; // +1 for today
                 }
             }
-        } finally {
-            if (cur != null && !cur.isClosed()) {
-                cur.close();
-            }
         }
 
-        try {
-            cur = mCol.getDb().getDatabase().query(
-                    "select avg(ivl), max(ivl) from cards where did in " +_limit() + " and queue = " + Consts.QUEUE_TYPE_REV + "", null);
+        try (Cursor cur = mCol.getDb().query(
+                    "select avg(ivl), max(ivl) from cards where did in " +_limit() + " and queue = " + Consts.QUEUE_TYPE_REV + "")) {
             cur.moveToFirst();
             oStats.averageInterval = cur.getDouble(0);
             oStats.longestInterval = cur.getDouble(1);
-        } finally {
-            if (cur != null && !cur.isClosed()) {
-                cur.close();
-            }
         }
         oStats.reviewsPerDayOnAll = (double) oStats.totalReviews / oStats.allDays;
         oStats.reviewsPerDayOnStudyDays = oStats.daysStudied == 0 ? 0 : (double) oStats.totalReviews / oStats.daysStudied;
@@ -367,15 +330,10 @@ public class Stats {
         oStats.matureCardsOverview = toOverview(2, list);
 
         String totalCountQuery = "select count(id), count(distinct nid) from cards where did in " + this._limit();
-        try {
-            cur = mCol.getDb().getDatabase().query(totalCountQuery, null);
+        try (Cursor cur = mCol.getDb().query(totalCountQuery)) {
             if (cur.moveToFirst()) {
                 oStats.totalCards = cur.getLong(0);
                 oStats.totalNotes = cur.getLong(1);
-            }
-        } finally {
-            if (cur != null && !cur.isClosed()) {
-                cur.close();
             }
         }
 
@@ -384,16 +342,11 @@ public class Stats {
                 "avg(factor) / 10.0,\n" +
                 "max(factor) / 10.0\n" +
                 "from cards where did in " + _limit() + " and queue = " + Consts.QUEUE_TYPE_REV;
-        try {
-            cur = mCol.getDb().getDatabase().query(factorQuery, null);
+        try (Cursor cur = mCol.getDb().query(factorQuery)) {
             if (cur.moveToFirst()) {
                 oStats.lowestEase = cur.getLong(0);
                 oStats.averageEase = cur.getLong(1);
                 oStats.highestEase = cur.getLong(2);
-            }
-        } finally {
-            if (cur != null && !cur.isClosed()) {
-                cur.close();
             }
         }
     }
@@ -489,25 +442,17 @@ public class Stats {
         }
 
         ArrayList<int[]> dues = new ArrayList<>();
-        Cursor cur = null;
-        try {
-            String query = "SELECT (due - " + mCol.getSched().getToday() + ")/" + chunk
-                    + " AS day, " // day
-                    + "count(), " // all cards
-                    + "sum(CASE WHEN ivl >= 21 THEN 1 ELSE 0 END) " // mature cards
-                    + "FROM cards WHERE did IN " + _limit() + " AND queue IN (" + Consts.QUEUE_TYPE_REV + "," + Consts.QUEUE_TYPE_DAY_LEARN_RELEARN + ")" + lim
-                    + " GROUP BY day ORDER BY day";
-            Timber.d("Forecast query: %s", query);
-            cur = mCol
-                    .getDb()
-                    .getDatabase()
-                    .query(query, null);
+        String query = "SELECT (due - " + mCol.getSched().getToday() + ")/" + chunk
+                + " AS day, " // day
+                + "count(), " // all cards
+                + "sum(CASE WHEN ivl >= 21 THEN 1 ELSE 0 END) " // mature cards
+                + "FROM cards WHERE did IN " + _limit() + " AND queue IN (" + Consts.QUEUE_TYPE_REV + "," + Consts.QUEUE_TYPE_DAY_LEARN_RELEARN + ")" + lim
+                + " GROUP BY day ORDER BY day";
+        Timber.d("Forecast query: %s", query);
+        try (Cursor cur = mCol
+                    .getDb().query(query)) {
             while (cur.moveToNext()) {
                 dues.add(new int[] { cur.getInt(0), cur.getInt(1), cur.getInt(2) });
-            }
-        } finally {
-            if (cur != null && !cur.isClosed()) {
-                cur.close();
             }
         }
         // small adjustment for a proper chartbuilding with achartengine
@@ -618,7 +563,7 @@ public class Stats {
                 chunk = 30;
                 break;
         }
-        ArrayList<String> lims = new ArrayList<>();
+        ArrayList<String> lims = new ArrayList<>(2);
         if (num != -1) {
             lims.add("id > " + ((mCol.getSched().getDayCutoff() - ((num + 1) * chunk * SECONDS_PER_DAY)) * 1000));
         }
@@ -651,7 +596,6 @@ public class Stats {
             tf = "";
         }
         ArrayList<double[]> list = new ArrayList<>();
-        Cursor cur = null;
         String query = "SELECT (cast((id/1000 - " + mCol.getSched().getDayCutoff() + ") / "+SECONDS_PER_DAY+" AS INT))/"
                 + chunk + " AS day, " + "sum(CASE WHEN type = " + Consts.CARD_TYPE_NEW + " THEN " + ti + " ELSE 0 END)"
                 + tf
@@ -666,19 +610,12 @@ public class Stats {
 
         Timber.d("ReviewCount query: %s", query);
 
-        try {
-            cur = mCol
+        try (Cursor cur = mCol
                     .getDb()
-                    .getDatabase()
-                    .query(
-                            query, null);
+                    .query(query)) {
             while (cur.moveToNext()) {
                 list.add(new double[] { cur.getDouble(0), cur.getDouble(5), cur.getDouble(1), cur.getDouble(4),
                         cur.getDouble(2), cur.getDouble(3)});
-            }
-        } finally {
-            if (cur != null && !cur.isClosed()) {
-                cur.close();
             }
         }
 
@@ -828,35 +765,27 @@ public class Stats {
                 break;
         }
 
-        ArrayList<double[]> list = new ArrayList<>();
-        Cursor cur = null;
-        try {
-            cur = mCol
+        ArrayList<double[]> list = new ArrayList<>(52); // Max of `num`, given that we probably won't have card with more than 52 year interval
+        try (Cursor cur = mCol
                     .getDb()
-                    .getDatabase()
                     .query(
                             "select ivl / " + chunk + " as grp, count() from cards " +
                                     "where did in "+ _limit() +" and queue = " + Consts.QUEUE_TYPE_REV + " " + lim + " " +
                                     "group by grp " +
-                                    "order by grp", null);
+                                    "order by grp")) {
             while (cur.moveToNext()) {
-                list.add(new double[] { cur.getDouble(0), cur.getDouble(1) });
+                list.add(new double[] {cur.getDouble(0), cur.getDouble(1)});
             }
-            cur.close();
-            cur = mCol
+        }
+        try (Cursor cur = mCol
                     .getDb()
-                    .getDatabase()
                     .query(
                             "select count(), avg(ivl), max(ivl) from cards where did in " +_limit() +
-                                    " and queue = " + Consts.QUEUE_TYPE_REV + "", null);
+                                    " and queue = " + Consts.QUEUE_TYPE_REV + "")) {
             cur.moveToFirst();
             all = cur.getDouble(0);
             avg = cur.getDouble(1);
             max_ = cur.getDouble(2);
-        } finally {
-            if (cur != null && !cur.isClosed()) {
-                cur.close();
-            }
         }
 
         // small adjustment for a proper chartbuilding with achartengine
@@ -950,8 +879,7 @@ public class Stats {
         long cutoff = mCol.getSched().getDayCutoff();
         long cut = cutoff - rolloverHour * 3600;
 
-        ArrayList<double[]> list = new ArrayList<>();
-        Cursor cur = null;
+        ArrayList<double[]> list = new ArrayList<>(24); // number of hours
         String query = "select " +
                 "23 - ((cast((" + cut + " - id/1000) / 3600.0 as int)) % 24) as hour, " +
                 "sum(case when ease = 1 then 0 else 1 end) / " +
@@ -959,17 +887,11 @@ public class Stats {
                 "count() " +
                 "from revlog where type in (" + Consts.CARD_TYPE_NEW + "," + Consts.CARD_TYPE_LRN + "," + Consts.CARD_TYPE_REV + ") " + lim +" " +
                 "group by hour having count() > 30 order by hour";
-        Timber.d(rolloverHour + " : " +cutoff + " breakdown query: %s", query);
-        try {
-            cur = mCol.getDb()
-                    .getDatabase()
-                    .query(query, null);
+        Timber.d("%d : %d breakdown query: %s", rolloverHour, cutoff, query);
+        try (Cursor cur = mCol.getDb()
+                    .query(query)) {
             while (cur.moveToNext()) {
                 list.add(new double[] { cur.getDouble(0), cur.getDouble(1), cur.getDouble(2) });
-            }
-        } finally {
-            if (cur != null && !cur.isClosed()) {
-                cur.close();
             }
         }
 
@@ -1077,8 +999,7 @@ public class Stats {
         }
 
         long cutoff = mCol.getSched().getDayCutoff();
-        ArrayList<double[]> list = new ArrayList<>();
-        Cursor cur = null;
+        ArrayList<double[]> list = new ArrayList<>(7); // one by day of the week
         String query = "SELECT strftime('%w',datetime( cast(id/ 1000  -" + sd.get(Calendar.HOUR_OF_DAY) * 3600 +
                 " as int), 'unixepoch')) as wd, " +
                 "sum(case when ease = 1 then 0 else 1 end) / " +
@@ -1089,16 +1010,10 @@ public class Stats {
                 "group by wd " +
                 "order by wd";
         Timber.d(sd.get(Calendar.HOUR_OF_DAY) + " : " +cutoff + " weekly breakdown query: %s", query);
-        try {
-            cur = mCol.getDb()
-                    .getDatabase()
-                    .query(query, null);
+        try (Cursor cur = mCol.getDb()
+                    .query(query)) {
             while (cur.moveToNext()) {
                 list.add(new double[] { cur.getDouble(0), cur.getDouble(1), cur.getDouble(2) });
-            }
-        } finally {
-            if (cur != null && !cur.isClosed()) {
-                cur.close();
             }
         }
 
@@ -1243,13 +1158,13 @@ public class Stats {
         if (days > 0) {
             lims.add("id > " + ((mCol.getSched().getDayCutoff() - (days * SECONDS_PER_DAY)) * 1000));
         }
-        if (lims.size() > 0) {
-            lim = "where " + lims.get(0);
-            for (int i = 1; i < lims.size(); i++) {
-                lim += " and " + lims.get(i);
-            }
-        } else {
-            lim = "";
+
+        // Anki Desktop logs a '0' ease for manual reschedules, ignore them https://github.com/ankidroid/Anki-Android/issues/8008
+        lims.add("ease > 0");
+
+        lim = "where " + lims.get(0);
+        for (int i = 1; i < lims.size(); i++) {
+            lim += " and " + lims.get(i);
         }
 
         String ease4repl;
@@ -1258,8 +1173,7 @@ public class Stats {
         } else {
             ease4repl = "ease";
         }
-        ArrayList<double[]> list = new ArrayList<>();
-        Cursor cur = null;
+        ArrayList<double[]> list = new ArrayList<>(3 * 4); // 3 thetypes * 4 eases
         String query = "select (case " +
                 "                when type in (" + Consts.CARD_TYPE_NEW + "," + Consts.CARD_TYPE_REV + ") then 0 " +
                 "        when lastIvl < 21 then 1 " +
@@ -1269,16 +1183,10 @@ public class Stats {
                 "        order by thetype, ease";
         Timber.d("AnswerButtons query: %s", query);
 
-        try {
-            cur = mCol.getDb()
-                    .getDatabase()
-                    .query(query, null);
+        try (Cursor cur = mCol.getDb()
+                    .query(query)) {
             while (cur.moveToNext()) {
                 list.add(new double[]{cur.getDouble(0), cur.getDouble(1), cur.getDouble(2)});
-            }
-        } finally {
-            if (cur != null && !cur.isClosed()) {
-                cur.close();
             }
         }
         return list;
@@ -1288,15 +1196,14 @@ public class Stats {
     /**
      * Card Types
      */
-    public boolean calculateCardTypes(AxisType type) {
-        mTitle = R.string.stats_cards_types;
+    public void calculateCardTypes(AxisType type) {
+        mTitle = R.string.title_activity_template_editor;
         mBackwards = false;
         mAxisTitles = new int[] { R.string.stats_answer_type, R.string.stats_answers, R.string.stats_cumulative_correct_percentage };
         mValueLabels = new int[] {R.string.statistics_mature, R.string.statistics_young_and_learn, R.string.statistics_unlearned, R.string.statistics_suspended, R.string.statistics_buried};
         mColors = new int[] { R.attr.stats_mature, R.attr.stats_young, R.attr.stats_unseen, R.attr.stats_suspended, R.attr.stats_buried };
         mType = type;
         double[] pieData;
-        Cursor cur = null;
         String query = "select " +
                 "sum(case when queue=" + Consts.QUEUE_TYPE_REV + " and ivl >= 21 then 1 else 0 end), -- mtr\n" +
                 "sum(case when queue in (" + Consts.QUEUE_TYPE_LRN + "," + Consts.QUEUE_TYPE_DAY_LEARN_RELEARN + ") or (queue=" + Consts.QUEUE_TYPE_REV + " and ivl < 21) then 1 else 0 end), -- yng/lrn\n" +
@@ -1306,17 +1213,11 @@ public class Stats {
                 "from cards where did in " + _limit();
         Timber.d("CardsTypes query: %s", query);
 
-        try {
-            cur = mCol.getDb()
-                    .getDatabase()
-                    .query(query, null);
+        try (Cursor cur = mCol.getDb()
+                    .query(query)) {
 
             cur.moveToFirst();
             pieData = new double[]{ cur.getDouble(0), cur.getDouble(1), cur.getDouble(2), cur.getDouble(3), cur.getDouble(4) };
-        } finally {
-            if (cur != null && !cur.isClosed()) {
-                cur.close();
-            }
         }
 
         //TODO adjust for CardsTypes, for now only copied from intervals
@@ -1342,7 +1243,6 @@ public class Stats {
         if (mMaxCards == 0) {
             mMaxCards = 10;
         }
-        return false;
     }
 
     /**
@@ -1361,19 +1261,21 @@ public class Stats {
      * @param col collection
      * @return
      */
-    public static String deckLimit(Long deckId, Collection col) {
+    public static String deckLimit(long deckId, Collection col) {
         if (deckId == ALL_DECKS_ID) {
             // All decks
-            ArrayList<Long> ids = new ArrayList<>();
-            for (Deck d : col.getDecks().all()) {
+            ArrayList<Deck> decks = col.getDecks().all();
+            ArrayList<Long> ids = new ArrayList<>(decks.size());
+            for (Deck d : decks) {
                 ids.add(d.getLong("id"));
             }
-            return Utils.ids2str(Utils.collection2Array(ids));
+            return Utils.ids2str(ids);
         } else {
             // The given deck id and its children
-            ArrayList<Long> ids = new ArrayList<>();
+            java.util.Collection<Long> values = col.getDecks().children(deckId).values();
+            ArrayList<Long> ids = new ArrayList<>(values.size());
             ids.add(deckId);
-            ids.addAll(col.getDecks().children(deckId).values());
+            ids.addAll(values);
             return Utils.ids2str(ids);
         }
     }

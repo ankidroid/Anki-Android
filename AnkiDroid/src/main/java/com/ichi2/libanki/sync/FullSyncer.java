@@ -17,6 +17,7 @@
 package com.ichi2.libanki.sync;
 
 import android.database.sqlite.SQLiteDatabaseCorruptException;
+import android.util.Pair;
 
 import com.ichi2.anki.AnkiDroidApp;
 import com.ichi2.anki.CollectionHelper;
@@ -36,9 +37,13 @@ import java.io.InputStream;
 import java.util.HashMap;
 import java.util.Locale;
 
+import androidx.annotation.NonNull;
+
 import okhttp3.Response;
 import okhttp3.ResponseBody;
 import timber.log.Timber;
+import static com.ichi2.libanki.sync.Syncer.ConnectionResultType.*;
+import static com.ichi2.libanki.sync.Syncer.ConnectionResultType;
 
 @SuppressWarnings({"PMD.AvoidThrowingRawExceptionTypes","PMD.NPathComplexity"})
 public class FullSyncer extends HttpSyncer {
@@ -49,7 +54,7 @@ public class FullSyncer extends HttpSyncer {
 
     public FullSyncer(Collection col, String hkey, Connection con, HostNum hostNum) {
         super(hkey, con, hostNum);
-        mPostVars = new HashMap<>();
+        mPostVars = new HashMap<>(2);
         mPostVars.put("k", hkey);
         mPostVars.put("v",
                 String.format(Locale.US, "ankidroid,%s,%s", VersionUtils.getPkgVersionName(), Utils.platDesc()));
@@ -57,8 +62,7 @@ public class FullSyncer extends HttpSyncer {
         mCon = con;
     }
 
-    @Override
-    public Object[] download() throws UnknownHttpResponseException {
+    public @NonNull ConnectionResultType download() throws UnknownHttpResponseException {
         InputStream cont;
         ResponseBody body = null;
         try {
@@ -93,14 +97,14 @@ public class FullSyncer extends HttpSyncer {
             FileInputStream fis = new FileInputStream(tpath);
             if ("upgradeRequired".equals(super.stream2String(fis, 15))) {
                 Timber.w("Full Sync - 'Upgrade Required' message received");
-                return new Object[]{"upgradeRequired"};
+                return UPGRADE_REQUIRED;
             }
         } catch (FileNotFoundException e) {
             Timber.e(e, "Failed to create temp file when downloading collection.");
             throw new RuntimeException(e);
         } catch (IOException e) {
             Timber.e(e, "Full sync failed to download collection.");
-            return new Object[] { "sdAccessError" };
+            return SD_ACCESS_ERROR;
         } finally {
             body.close();
         }
@@ -112,11 +116,11 @@ public class FullSyncer extends HttpSyncer {
             tempDb = new DB(tpath);
             if (!"ok".equalsIgnoreCase(tempDb.queryString("PRAGMA integrity_check"))) {
                 Timber.e("Full sync - downloaded file corrupt");
-                return new Object[] { "remoteDbError" };
+                return REMOTE_DB_ERROR;
             }
         } catch (SQLiteDatabaseCorruptException e) {
             Timber.e("Full sync - downloaded file corrupt");
-            return new Object[] { "remoteDbError" };
+            return REMOTE_DB_ERROR;
         } finally {
             if (tempDb != null) {
                 tempDb.close();
@@ -127,23 +131,21 @@ public class FullSyncer extends HttpSyncer {
         File newFile = new File(tpath);
         if (newFile.renameTo(new File(path))) {
             Timber.i("Full Sync Success: Overwritten collection with downloaded file");
-            return new Object[] { "success" };
+            return SUCCESS;
         } else {
             Timber.w("Full Sync: Error overwriting collection with downloaded file");
-            return new Object[] { "overwriteError" };
+            return OVERWRITE_ERROR;
         }
     }
 
-
-    @Override
-    public Object[] upload() throws UnknownHttpResponseException {
+    public Pair<ConnectionResultType, Object[]> upload() throws UnknownHttpResponseException {
         // make sure it's ok before we try to upload
         mCon.publishProgress(R.string.sync_check_upload_file);
         if (!"ok".equalsIgnoreCase(mCol.getDb().queryString("PRAGMA integrity_check"))) {
-            return new Object[] { "dbError" };
+            return new Pair<>(DB_ERROR, null);
         }
         if (!mCol.basicCheck()) {
-            return new Object[] { "dbError" };
+            return new Pair<>(DB_ERROR, null);
         }
         // apply some adjustments, then upload
         mCol.beforeUpload();
@@ -158,9 +160,9 @@ public class FullSyncer extends HttpSyncer {
             int status = ret.code();
             if (status != 200) {
                 // error occurred
-                return new Object[] { "error", status, ret.message() };
+                return new Pair<>(ERROR, new Object[] {status, ret.message() });
             } else {
-                return new Object[] { ret.body().string() };
+                return new Pair<>(ARBITRARY_STRING, new Object[] { ret.body().string() });
             }
         } catch (IllegalStateException | IOException e) {
             throw new RuntimeException(e);

@@ -25,7 +25,6 @@ import com.ichi2.anki.R;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.core.graphics.drawable.DrawableCompat;
 import androidx.vectordrawable.graphics.drawable.VectorDrawableCompat;
 import timber.log.Timber;
 
@@ -41,7 +40,7 @@ public class BadgeDrawableBuilder {
 
 
     public static void removeBadge(MenuItem menuItem) {
-        if (android.os.Build.VERSION.SDK_INT < Build.VERSION_CODES.M) {
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.M) {
             return;
         }
 
@@ -69,7 +68,7 @@ public class BadgeDrawableBuilder {
 
 
     public void replaceBadge(@NonNull MenuItem menuItem) {
-        if (android.os.Build.VERSION.SDK_INT < android.os.Build.VERSION_CODES.M) {
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.M) {
             return;
         }
 
@@ -92,7 +91,7 @@ public class BadgeDrawableBuilder {
                 return;
             }
             Drawable mutableDrawable = badgeDrawable.mutate();
-            DrawableCompat.setTint(mutableDrawable, mColor);
+            mutableDrawable.setTint(mColor);
             badge.setBadgeDrawable(mutableDrawable);
             menuItem.setIcon(badge);
         }

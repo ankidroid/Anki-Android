@@ -19,6 +19,7 @@
 
 package com.ichi2.anki.multimediacard.beolingus.parsing;
 
+import java.util.Locale;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -44,7 +45,7 @@ public class BeolingusParser {
             //Perform .contains() due to #5376 (a "%20{noun}" suffix).
             //Perform .toLowerCase() due to #5810 ("hello" should match "Hello").
             //See #5810 for discussion on Locale complexities. Currently unhandled.
-            if (m.group(2).toLowerCase().contains(wordToSearchFor.toLowerCase())) {
+            if (m.group(2).toLowerCase(Locale.ROOT).contains(wordToSearchFor.toLowerCase(Locale.ROOT))) {
                 Timber.d("pronunciation URL is https://dict.tu-chemnitz.de%s", m.group(1));
                 return "https://dict.tu-chemnitz.de" + m.group(1);
             }
@@ -59,7 +60,7 @@ public class BeolingusParser {
      */
     public static String getMp3AddressFromPronounciation(String pronunciationPageHtml) {
         // Only log the page if you need to work with the regex
-        // Timber.d("pronunciationPageHtml is " + pronunciationPageHtml);
+        // Timber.d("pronunciationPageHtml is %s", pronunciationPageHtml);
         Matcher m = MP3_PATTERN.matcher(pronunciationPageHtml);
         if (m.find()) {
             Timber.d("MP3 address is https://dict.tu-chemnitz.de%s", m.group(1));

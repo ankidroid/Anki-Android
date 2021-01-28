@@ -44,17 +44,13 @@
     <string name="sync_error">Грешка во синхорнизација</string>
     <string name="vague_error">Грешка</string>
     <string name="retry">Обидете се повторно</string>
-    <string name="cancel">Откажи</string>
-    <string name="terms_and_conditions"><a href="https://ankiweb.net/account/terms">Услови и правила</a></string>
     <string name="menu_get_shared_decks">Добијте заеднички decks</string>
     <string name="connection_error_message">Се случи грешка во мрежата</string>
     <string name="not_logged_in_title">Логирај се на AnkiWeb</string>
     <string name="login_create_account_message">Мора да се најавите на сметка на трета страна за да ја користите услугата за синхронизација на облак. Можете да го креирате во следниов чекор.</string>
     <!-- MyAccount.java -->
     <string name="username">Имејл адреса</string>
-    <string name="username_repeat">Повтори имејл адреса</string>
     <string name="password">Лозинка</string>
-    <string name="password_repeat">Повторете ја лозинката</string>
     <string name="log_in">Логирај се</string>
     <string name="sign_up_description">Немате профил на AnkiWeb? Бесплатно е!</string>
     <string name="sign_up_not_affiliated">Забелешка: AnkiWeb не е поврзан со AnkiDroid</string>
@@ -65,7 +61,6 @@
     <string name="invalid_username_password">Неважечка имејл адреса или лозинка</string>
     <string name="reset_password">Ресетирај лозинка</string>
     <!-- AndroidManifest.xml -->
-    <string name="downloaddeck_search">Пребарување</string>
     <string name="preferences_title">Преференции</string>
     <string name="deckpreferences_title">Опции за XXX</string>
     <string name="sync_conflict_message">Мора да ја поставите оваа колекција или да ја преземете од Ankiweb, бидејќи тие не можат да се спојат. Колекција од една страна ќе биде препишана.</string>
@@ -80,7 +75,6 @@
     <string name="sync_title">Синхронизација</string>
     <string name="sync_downloading_media">Преземање на медиуми %1$d/%2$d&#8230;</string>
     <string name="sync_log_uploading_message">Целосна синхронизација од локално</string>
-    <string name="sync_log_downloading_message">Целосна синхронизација од серверот</string>
     <string name="sync_log_clocks_unsynchronized">Вашиот часовник е исклучен за %1$d секунди%2$s. Осигурајте се дека датумот, времето и временската зона на вашиот телефон се поставени правилно, а потоа повторно синхронизирајте.</string>
     <string name="sync_log_clocks_unsynchronized_tz">, временската зона е веројатно погрешна</string>
     <string name="sync_log_clocks_unsynchronized_date">, можеби е погрешен датумот</string>
@@ -132,9 +126,7 @@
     <string name="sync_error_502_maintenance">AnkiWeb is under maintenance. Please try again in a few minutes.</string>
     <string name="sync_error_504_gateway_timeout">504 gateway timeout error received.</string>
     <!-- Deck Picker Sync Icon -->
-    <string name="sync_menu_title">Sync</string>
     <string name="sync_menu_title_full_sync">Sync (full)</string>
     <string name="sync_menu_title_no_account">Sync (log in)</string>
-    <!-- An option on a message box to open the "corrupt collection" webpage -->
-    <string name="sync_corrupt_collection_get_help">Help</string>
+    <string name="sync_error_unknown_host_readable">Could not connect to AnkiWeb. Is your internet working?\n\n%s</string>
 </resources>

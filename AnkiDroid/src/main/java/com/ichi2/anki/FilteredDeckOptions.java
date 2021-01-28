@@ -52,6 +52,7 @@ import java.util.Set;
 import timber.log.Timber;
 
 import static com.ichi2.anim.ActivityTransitionAnimation.Direction.FADE;
+import static com.ichi2.libanki.Consts.DECK_STD;
 
 /**
  * Preferences for the current deck.
@@ -122,7 +123,7 @@ public class FilteredDeckOptions extends AppCompatPreferenceActivity implements 
                 Timber.d("commit() changes back to database");
 
                 for (Entry<String, Object> entry : mUpdate.valueSet()) {
-                    Timber.i("Change value for key '" + entry.getKey() + "': " + entry.getValue());
+                    Timber.i("Change value for key '%s': %s", entry.getKey(), entry.getValue());
                     if ("search".equals(entry.getKey())) {
                         JSONArray ar = mDeck.getJSONArray("terms");
                         ar.getJSONArray(0).put(0, entry.getValue());
@@ -356,7 +357,7 @@ public class FilteredDeckOptions extends AppCompatPreferenceActivity implements 
 
         registerExternalStorageListener();
 
-        if (mCol == null || mDeck.getInt("dyn") != 1) {
+        if (mCol == null || mDeck.getInt("dyn") == DECK_STD) {
             Timber.w("No Collection loaded or deck is not a dyn deck");
             finish();
             return;
@@ -441,7 +442,9 @@ public class FilteredDeckOptions extends AppCompatPreferenceActivity implements 
     protected void updateSummaries() {
         mAllowCommit = false;
         // for all text preferences, set summary as current database value
-        for (String key : mPref.mValues.keySet()) {
+
+        Set<String> keys = mPref.mValues.keySet();
+        for (String key : keys) {
             android.preference.Preference pref = this.findPreference(key);
             String value;
             if (pref == null) {

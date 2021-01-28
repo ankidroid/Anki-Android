@@ -32,7 +32,9 @@ import android.text.style.StyleSpan;
 import android.util.Pair;
 
 import com.ichi2.anki.R;
+import com.ichi2.async.CancelListener;
 import com.ichi2.async.CollectionTask;
+import com.ichi2.async.TaskManager;
 import com.ichi2.libanki.Card;
 import com.ichi2.libanki.Collection;
 import com.ichi2.libanki.Consts;
@@ -65,6 +67,11 @@ import androidx.annotation.Nullable;
 import androidx.annotation.VisibleForTesting;
 import timber.log.Timber;
 
+import static com.ichi2.libanki.Consts.CARD_TYPE_RELEARNING;
+import static com.ichi2.libanki.Consts.DECK_DYN;
+import static com.ichi2.libanki.Consts.DECK_STD;
+import static com.ichi2.libanki.Consts.QUEUE_TYPE_DAY_LEARN_RELEARN;
+import static com.ichi2.async.CancelListener.isCancelled;
 import static com.ichi2.libanki.sched.AbstractSched.UnburyType.*;
 import static com.ichi2.libanki.sched.Counts.Queue.*;
 import static com.ichi2.libanki.sched.Counts.Queue;
@@ -159,14 +166,17 @@ public class SchedV2 extends AbstractSched {
      */
     public @Nullable Card getCard() {
         _checkDay();
-        // check day deal with cutoff if required. No need to do it in resets
-        if (!mHaveCounts) {
-            resetCounts(false);
-        }
         if (!mHaveQueues) {
             resetQueues(false);
         }
         @Nullable Card card = _getCard();
+        if (card == null && !mHaveCounts) {
+            // maybe we didn't refill queues because counts were not
+            // set. This could only occur if the only card is a buried
+            // sibling. So let's try to set counts and check again.
+            reset();
+            card = _getCard();
+        }
         if (card != null) {
             mCol.log(card);
             incrReps();
@@ -181,6 +191,10 @@ public class SchedV2 extends AbstractSched {
             card.startTimer();
         } else {
             discardCurrentCard();
+        }
+        if (!mHaveCounts) {
+            // Need to reset queues once counts are reset
+            TaskManager.launchCollectionTask(new CollectionTask.Reset());
         }
         return card;
     }
@@ -198,25 +212,49 @@ public class SchedV2 extends AbstractSched {
         discardCurrentCard();
     }
 
-    protected void reset() {
+    public void reset() {
         _updateCutoff();
         resetCounts(false);
         resetQueues(false);
     }
 
     @Override
-    public void resetCounts() {
+    public void resetCounts(@NonNull CancelListener cancelListener) {
         resetCounts(true);
     }
 
+    public void resetCounts(boolean checkCutoff) {
+        resetCounts(null, checkCutoff);
+    }
+
+    public void resetCounts() {
+        resetCounts(null, true);
+    }
+
     /** @param checkCutoff whether we should check cutoff before resetting*/
-    private void resetCounts(boolean checkCutoff) {
+    private void resetCounts(@Nullable CancelListener cancelListener, boolean checkCutoff) {
         if (checkCutoff) {
             _updateCutoff();
         }
-        _resetLrnCount();
-        _resetRevCount();
-        _resetNewCount();
+
+        // Indicate that the counts can't be assumed to be correct since some are computed again and some not
+        // In theory it is useless, as anything that change counts should have set mHaveCounts to false
+        mHaveCounts = false;
+        _resetLrnCount(cancelListener);
+        if (isCancelled(cancelListener)) {
+            Timber.v("Cancel computing counts of deck %s", mCol.getDecks().current().getString("name"));
+            return;
+        }
+        _resetRevCount(cancelListener);
+        if (isCancelled(cancelListener)) {
+            Timber.v("Cancel computing counts of deck %s", mCol.getDecks().current().getString("name"));
+            return;
+        }
+        _resetNewCount(cancelListener);
+        if (isCancelled(cancelListener)) {
+            Timber.v("Cancel computing counts of deck %s", mCol.getDecks().current().getString("name"));
+            return;
+        }
         mHaveCounts = true;
     }
 
@@ -312,8 +350,11 @@ public class SchedV2 extends AbstractSched {
 
     /** new count, lrn count, rev count.  */
     public @NonNull Counts counts() {
+        return counts((CancelListener) null);
+    }
+    public @NonNull Counts counts(@Nullable CancelListener cancelListener) {
         if (!mHaveCounts) {
-            resetCounts();
+            resetCounts(cancelListener);
         }
         return new Counts (mNewCount, mLrnCount, mRevCount);
     }
@@ -365,7 +406,7 @@ public class SchedV2 extends AbstractSched {
      * Overridden */
     public int answerButtons(@NonNull Card card) {
         DeckConfig conf = _cardConf(card);
-        if (card.getODid() != 0 && !conf.getBoolean("resched")) {
+        if (card.isInDynamicDeck() && !conf.getBoolean("resched")) {
             return 2;
         }
         return 4;
@@ -398,9 +439,8 @@ public class SchedV2 extends AbstractSched {
 
     public void extendLimits(int newc, int rev) {
         Deck cur = mCol.getDecks().current();
-        ArrayList<Deck> decks = new ArrayList<>();
+        List<Deck> decks = mCol.getDecks().parents(cur.getLong("id"));
         decks.add(cur);
-        decks.addAll(mCol.getDecks().parents(cur.getLong("id")));
         for (long did : mCol.getDecks().children(cur.getLong("id")).values()) {
             decks.add(mCol.getDecks().get(did));
         }
@@ -416,10 +456,22 @@ public class SchedV2 extends AbstractSched {
 
 
     protected int _walkingCount(@NonNull LimitMethod limFn, @NonNull CountMethod cntFn) {
+        return _walkingCount(limFn, cntFn, null);
+    }
+
+
+    /**
+     * @param limFn Method sending a deck to the maximal number of card it can have. Normally into account both limits and cards seen today
+     * @param cntFn Method sending a deck to the number of card it has got to see today.
+     * @param cancelListener Whether the task is not useful anymore
+     * @return -1 if it's cancelled. Sum of the results of cntFn, limited by limFn,
+     */
+    protected int _walkingCount(@NonNull LimitMethod limFn, @NonNull CountMethod cntFn, @Nullable CancelListener cancelListener) {
         int tot = 0;
-        HashMap<Long, Integer> pcounts = new HashMap<>();
+        HashMap<Long, Integer> pcounts = new HashMap<>(mCol.getDecks().count());
         // for each of the active decks
         for (long did : mCol.getDecks().active()) {
+            if (isCancelled(cancelListener)) return -1;
             // get the individual deck's limit
             int lim = limFn.operation(mCol.getDecks().get(did));
             if (lim == 0) {
@@ -467,15 +519,15 @@ public class SchedV2 extends AbstractSched {
     }
 
     // Overridden
-    public @Nullable List<DeckDueTreeNode> deckDueList(@Nullable CollectionTask collectionTask) {
+    public @Nullable List<DeckDueTreeNode> deckDueList(@Nullable CancelListener collectionTask) {
         _checkDay();
         mCol.getDecks().checkIntegrity();
         ArrayList<Deck> decks = mCol.getDecks().allSorted();
-        HashMap<String, Integer[]> lims = new HashMap<>();
-        ArrayList<DeckDueTreeNode> deckNodes = new ArrayList<>();
-        HashMap<Long, HashMap> childMap = mCol.getDecks().childMap();
+        HashMap<String, Integer[]> lims = new HashMap<>(decks.size());
+        ArrayList<DeckDueTreeNode> deckNodes = new ArrayList<>(decks.size());
+        Decks.Node childMap = mCol.getDecks().childMap();
         for (Deck deck : decks) {
-            if (collectionTask != null && collectionTask.isCancelled()) {
+            if (isCancelled(collectionTask)) {
                 return null;
             }
             String deckName = deck.getString("name");
@@ -514,9 +566,10 @@ public class SchedV2 extends AbstractSched {
     public @NonNull List<DeckTreeNode> quickDeckDueTree() {
         // Similar to deckDueTree, ignoring the numbers
 
+        ArrayList<Deck> decks = mCol.getDecks().allSorted();
         // Similar to deckDueList
         ArrayList<DeckTreeNode> data = new ArrayList<>();
-        for (JSONObject deck : mCol.getDecks().allSorted()) {
+        for (JSONObject deck : decks) {
             DeckTreeNode g = new DeckTreeNode(mCol, deck.getString("name"), deck.getLong("id"));
             data.add(g);
         }
@@ -531,15 +584,15 @@ public class SchedV2 extends AbstractSched {
     }
 
     @Nullable
-    public List<DeckDueTreeNode> deckDueTree(@Nullable CollectionTask collectionTask) {
-        List<DeckDueTreeNode> deckDueTree = deckDueList(collectionTask);
+    public List<DeckDueTreeNode> deckDueTree(@Nullable CancelListener cancelListener) {
+        List<DeckDueTreeNode> deckDueTree = deckDueList(cancelListener);
         if (deckDueTree == null) {
             return null;
         }
         return _groupChildren(deckDueTree, true);
     }
 
-    private @NonNull <T extends AbstractDeckTreeNode> List<T> _groupChildren(@NonNull List<T> decks, boolean checkDone) {
+    private @NonNull <T extends AbstractDeckTreeNode<T>> List<T> _groupChildren(@NonNull List<T> decks, boolean checkDone) {
         // sort based on name's components
         Collections.sort(decks);
         // then run main function
@@ -547,7 +600,7 @@ public class SchedV2 extends AbstractSched {
     }
 
 
-    protected @NonNull  <T extends AbstractDeckTreeNode> List<T> _groupChildrenMain(@NonNull List<T> decks, boolean checkDone) {
+    protected @NonNull  <T extends AbstractDeckTreeNode<T>> List<T> _groupChildrenMain(@NonNull List<T> decks, boolean checkDone) {
         return _groupChildrenMain(decks, 0, checkDone);
     }
 
@@ -562,14 +615,14 @@ public class SchedV2 extends AbstractSched {
         false, we can't assume all decks have parents and that there
         is no duplicate. Instead, we'll ignore problems.
      */
-    protected @NonNull <T extends AbstractDeckTreeNode>List<T> _groupChildrenMain(@NonNull List<T> descendants, int depth, boolean checkDone) {
+    protected @NonNull <T extends AbstractDeckTreeNode<T>> List<T> _groupChildrenMain(@NonNull List<T> descendants, int depth, boolean checkDone) {
         List<T> children = new ArrayList<>();
         // group and recurse
         ListIterator<T> it = descendants.listIterator();
         while (it.hasNext()) {
             T child = it.next();
             String head = child.getDeckNameComponent(depth);
-            List<AbstractDeckTreeNode> descendantsOfChild  = new ArrayList<>();
+            List<T> descendantsOfChild  = new ArrayList<>();
             /* Compose the "children" node list. The children is a
              * list of all the nodes that proceed the current one that
              * contain the same at depth `depth`, except for the
@@ -577,16 +630,16 @@ public class SchedV2 extends AbstractSched {
              * from this descendant.  This is our version of python's
              * itertools.groupby. */
             if (!checkDone && child.getDepth() != depth) {
-                JSONObject deck = mCol.getDecks().get(child.getDid());
+                Deck deck = mCol.getDecks().get(child.getDid());
                 Timber.d("Deck %s (%d)'s parent is missing. Ignoring for quick display.", deck.getString("name"), child.getDid());
                 continue;
             }
             while (it.hasNext()) {
-                AbstractDeckTreeNode descendantOfChild = it.next();
+                T descendantOfChild = it.next();
                 if (head.equals(descendantOfChild.getDeckNameComponent(depth))) {
                     // Same head - add to tail of current head.
                     if (!checkDone && descendantOfChild.getDepth() == depth) {
-                        JSONObject deck = mCol.getDecks().get(descendantOfChild.getDid());
+                        Deck deck = mCol.getDecks().get(descendantOfChild.getDid());
                         Timber.d("Deck %s (%d)'s is a duplicate name. Ignoring for quick display.", deck.getString("name"), descendantOfChild.getDid());
                         continue;
                     }
@@ -599,7 +652,8 @@ public class SchedV2 extends AbstractSched {
                 }
             }
             // the children_sDescendant set contains direct children_sDescendant but not the children_sDescendant of children_sDescendant...
-            child.setChildren(_groupChildrenMain(descendantsOfChild, depth + 1, checkDone), "std".equals(getName()));
+            List<T> childrenNode = _groupChildrenMain(descendantsOfChild, depth + 1, checkDone);
+            child.setChildren(childrenNode, "std".equals(getName()));
             children.add(child);
         }
         return children;
@@ -617,7 +671,7 @@ public class SchedV2 extends AbstractSched {
      */
     protected @Nullable Card _getCard() {
         // learning card due?
-        @Nullable Card c = _getLrnCard();
+        @Nullable Card c = _getLrnCard(false);
         if (c != null) {
             return c;
         }
@@ -663,40 +717,40 @@ public class SchedV2 extends AbstractSched {
     protected @NonNull CardQueue<? extends Card.Cache>[] _fillNextCard() {
         // learning card due?
         if (_preloadLrnCard(false)) {
-            return new CardQueue[]{mLrnQueue};
+            return new CardQueue<?>[]{mLrnQueue};
         }
         // new first, or time for one?
         if (_timeForNewCard()) {
             if (_fillNew()) {
-                return new CardQueue[]{mLrnQueue, mNewQueue};
+                return new CardQueue<?>[]{mLrnQueue, mNewQueue};
             }
         }
         // Day learning first and card due?
         boolean dayLearnFirst = mCol.getConf().optBoolean("dayLearnFirst", false);
         if (dayLearnFirst) {
             if (_fillLrnDay()) {
-                return new CardQueue[]{mLrnQueue, mLrnDayQueue};
+                return new CardQueue<?>[]{mLrnQueue, mLrnDayQueue};
             }
         }
         // Card due for review?
         if (_fillRev()) {
-            return new CardQueue[]{mLrnQueue, mRevQueue};
+            return new CardQueue<?>[]{mLrnQueue, mRevQueue};
         }
         // day learning card due?
         if (!dayLearnFirst) {
             if (_fillLrnDay()) {
-                return new CardQueue[]{mLrnQueue, mLrnDayQueue};
+                return new CardQueue<?>[]{mLrnQueue, mLrnDayQueue};
             }
         }
         // New cards left?
         if (_fillNew()) {
-            return new CardQueue[]{mLrnQueue, mNewQueue};
+            return new CardQueue<?>[]{mLrnQueue, mNewQueue};
         }
         // collapse or finish
         if (_preloadLrnCard(true)) {
-            return new CardQueue[]{mLrnQueue};
+            return new CardQueue<?>[]{mLrnQueue};
         }
-        return new CardQueue[]{};
+        return new CardQueue<?>[]{};
     }
 
     /** pre load the potential next card. It may loads many card because, depending on the time taken, the next card may
@@ -720,8 +774,11 @@ public class SchedV2 extends AbstractSched {
      */
 
     protected void _resetNewCount() {
-        mNewCount = _walkingCount((Deck g) -> _deckNewLimitSingle(g, true),
-                                  this::_cntFnNew);
+        _resetNewCount(null);
+    }
+    protected void _resetNewCount(@Nullable CancelListener cancelListener) {
+        mNewCount = _walkingCount(g -> _deckNewLimitSingle(g, true),
+                                  this::_cntFnNew, cancelListener);
     }
 
 
@@ -784,16 +841,16 @@ public class SchedV2 extends AbstractSched {
         if (!mNewQueue.isEmpty()) {
             return true;
         }
-        if (mNewCount == 0) {
+        if (mHaveCounts && mNewCount == 0) {
             return false;
         }
         while (!mNewDids.isEmpty()) {
             long did = mNewDids.getFirst();
             int lim = Math.min(mQueueLimit, _deckNewLimit(did, true));
-            Cursor cur = null;
             if (lim != 0) {
                 mNewQueue.clear();
-                try {
+                String idName = (allowSibling) ? "id": "nid";
+                long id = (allowSibling) ? currentCardId(): currentCardNid();
                     /* Difference with upstream: we take current card into account.
                      *
                      * When current card is answered, the card is not due anymore, so does not belong to the queue.
@@ -804,16 +861,8 @@ public class SchedV2 extends AbstractSched {
                      * front of the queue contains distinct card.
                  */
                     // fill the queue with the current did
-                    String idName = (allowSibling) ? "id": "nid";
-                    long id = (allowSibling) ? currentCardId(): currentCardNid();
-                    cur = mCol.getDb().query("SELECT id FROM cards WHERE did = ? AND queue = " + Consts.QUEUE_TYPE_NEW + " AND " + idName + "!= ? ORDER BY due, ord LIMIT ?", did, id, lim);
-                    while (cur.moveToNext()) {
-                        mNewQueue.add(cur.getLong(0));
-                    }
-                } finally {
-                    if (cur != null && !cur.isClosed()) {
-                        cur.close();
-                    }
+                for (long cid : mCol.getDb().queryLongList("SELECT id FROM cards WHERE did = ? AND queue = " + Consts.QUEUE_TYPE_NEW + " AND " + idName + "!= ? ORDER BY due, ord LIMIT ?", did, id, lim)) {
+                    mNewQueue.add(cid);
                 }
                 if (!mNewQueue.isEmpty()) {
                     // Note: libanki reverses mNewQueue and returns the last element in _getNewCard().
@@ -825,11 +874,14 @@ public class SchedV2 extends AbstractSched {
             // nothing left in the deck; move to next
             mNewDids.remove();
         }
-        // if we didn't get a card, since the count is non-zero, we
-        // need to check again for any cards that were removed
-        // from the queue but not buried
-        _resetNew();
-        return _fillNew(true);
+        if (mHaveCounts && mNewCount != 0) {
+            // if we didn't get a card but the count is non-zero,
+            // we need to check again for any cards that were
+            // removed from the queue but not buried
+            _resetNew();
+            return _fillNew(true);
+        }
+        return false;
     }
 
 
@@ -861,7 +913,7 @@ public class SchedV2 extends AbstractSched {
      * @return True if it's time to display a new card when distributing.
      */
     protected boolean _timeForNewCard() {
-        if (mNewCount == 0) {
+        if (mHaveCounts && mNewCount == 0) {
             return false;
         }
         @Consts.NEW_CARD_ORDER int spread = mCol.getConf().getInt("newSpread");
@@ -870,6 +922,8 @@ public class SchedV2 extends AbstractSched {
         } else if (spread == Consts.NEW_CARDS_FIRST) {
             return true;
         } else if (mNewCardModulus != 0) {
+            // if the counter has not yet been resetted, this value is
+            // random. This will occur only for the first card of review.
             return (mReps != 0 && (mReps % mNewCardModulus == 0));
         } else {
             return false;
@@ -933,7 +987,7 @@ public class SchedV2 extends AbstractSched {
      * @param considerCurrentCard whether the current card should be taken from the limit (if it belongs to this deck)
      * */
     public int _deckNewLimitSingle(@NonNull Deck g, boolean considerCurrentCard) {
-        if (g.getInt("dyn") != 0) {
+        if (g.getInt("dyn") == DECK_DYN) {
             return mDynReportLimit;
         }
         long did = g.getLong("id");
@@ -975,17 +1029,21 @@ public class SchedV2 extends AbstractSched {
 
     // Overridden: V1 has less queues
     protected void _resetLrnCount() {
+        _resetLrnCount(null);
+    }
+
+    protected void _resetLrnCount(@Nullable CancelListener cancelListener) {
         _updateLrnCutoff(true);
         // sub-day
         mLrnCount = mCol.getDb().queryScalar(
                 "SELECT count() FROM cards WHERE did IN " + _deckLimit()
                 + " AND queue = " + Consts.QUEUE_TYPE_LRN + " AND id != ? AND due < ?", currentCardId(), mLrnCutoff);
-
+        if (isCancelled(cancelListener)) return;
         // day
         mLrnCount += mCol.getDb().queryScalar(
                 "SELECT count() FROM cards WHERE did IN " + _deckLimit() + " AND queue = " + Consts.QUEUE_TYPE_DAY_LEARN_RELEARN + " AND due <= ? AND id != ?",
                 mToday, currentCardId());
-
+        if (isCancelled(cancelListener)) return;
         // previews
         mLrnCount += mCol.getDb().queryScalar(
                 "SELECT count() FROM cards WHERE did IN " + _deckLimit() + " AND queue = " + Consts.QUEUE_TYPE_PREVIEW + " AND id != ? ", currentCardId());
@@ -1008,44 +1066,34 @@ public class SchedV2 extends AbstractSched {
     // sub-day learning
     // Overridden: a single kind of queue in V1
     protected boolean _fillLrn() {
-        if (mLrnCount == 0) {
+        if (mHaveCounts && mLrnCount == 0) {
             return false;
         }
         if (!mLrnQueue.isEmpty()) {
             return true;
         }
         long cutoff = getTime().intTime() + mCol.getConf().getLong("collapseTime");
-        Cursor cur = null;
         mLrnQueue.clear();
-        try {
-            /* Difference with upstream: Current card can't come in the queue.
+        /* Difference with upstream: Current card can't come in the queue.
              *
              * In standard usage, a card is not requested before the previous card is marked as reviewed. However, if we
              * decide to query a second card sooner, we don't want to get the same card a second time. This simulate
              * _getLrnCard which did remove the card from the queue. _sortIntoLrn will add the card back to the queue if
              * required when the card is reviewed.
              */
-            cur = mCol
+        try (Cursor cur = mCol
                     .getDb()
                     .query(
                             "SELECT due, id FROM cards WHERE did IN " + _deckLimit() + " AND queue IN (" + Consts.QUEUE_TYPE_LRN + ", " + Consts.QUEUE_TYPE_PREVIEW + ") AND due < ?"
-                            + " AND id != ? LIMIT ?", cutoff, currentCardId(), mReportLimit);
+                            + " AND id != ? LIMIT ?", cutoff, currentCardId(), mReportLimit)) {
+            mLrnQueue.setFilled();
             while (cur.moveToNext()) {
                 mLrnQueue.add(cur.getLong(0), cur.getLong(1));
             }
             // as it arrives sorted by did first, we need to sort it
             mLrnQueue.sort();
             return !mLrnQueue.isEmpty();
-        } finally {
-            if (cur != null && !cur.isClosed()) {
-                cur.close();
-            }
         }
-    }
-
-
-    protected @Nullable Card _getLrnCard() {
-        return _getLrnCard(false);
     }
 
 
@@ -1082,7 +1130,7 @@ public class SchedV2 extends AbstractSched {
 
     // daily learning
     protected boolean _fillLrnDay() {
-        if (mLrnCount == 0) {
+        if (mHaveCounts && mLrnCount == 0) {
             return false;
         }
         if (!mLrnDayQueue.isEmpty()) {
@@ -1092,8 +1140,6 @@ public class SchedV2 extends AbstractSched {
             long did = mLrnDids.getFirst();
             // fill the queue with the current did
             mLrnDayQueue.clear();
-            Cursor cur = null;
-            try {
                 /* Difference with upstream:
                  * Current card can't come in the queue.
                  *
@@ -1104,16 +1150,10 @@ public class SchedV2 extends AbstractSched {
                  * simulate _getLrnDayCard which did remove the card
                  * from the queue.
                  */
-                cur = mCol.getDb().query(
+            for (long cid : mCol.getDb().queryLongList(
                                 "SELECT id FROM cards WHERE did = ? AND queue = " + Consts.QUEUE_TYPE_DAY_LEARN_RELEARN + " AND due <= ? and id != ? LIMIT ?",
-                                did, mToday, currentCardId(), mQueueLimit);
-                while (cur.moveToNext()) {
-                    mLrnDayQueue.add(cur.getLong(0));
-                }
-            } finally {
-                if (cur != null && !cur.isClosed()) {
-                    cur.close();
-                }
+                                did, mToday, currentCardId(), mQueueLimit)) {
+                mLrnDayQueue.add(cid);
             }
             if (!mLrnDayQueue.isEmpty()) {
                 // order
@@ -1228,7 +1268,7 @@ public class SchedV2 extends AbstractSched {
         if (card.getDue() < mDayCutoff) {
             // Add some randomness, up to 5 minutes or 25%
             int maxExtra = Math.min(300, (int)(delay * 0.25));
-            int fuzz = new Random().nextInt(maxExtra);
+            int fuzz = new Random().nextInt(Math.max(maxExtra, 1));
             card.setDue(Math.min(mDayCutoff - 1, card.getDue() + fuzz));
             card.setQueue(Consts.QUEUE_TYPE_LRN);
             if (card.getDue() < (getTime().intTime() + mCol.getConf().getInt("collapseTime"))) {
@@ -1307,7 +1347,7 @@ public class SchedV2 extends AbstractSched {
             _rescheduleNew(card, conf, early);
         }
         // if we were dynamic, graduating means moving back to the old deck
-        if (card.getODid() != 0) {
+        if (card.isInDynamicDeck()) {
             _removeFromFiltered(card);
         }
     }
@@ -1402,6 +1442,11 @@ public class SchedV2 extends AbstractSched {
         log(card.getId(), mCol.usn(), ease, ivl, lastIvl, card.getFactor(), card.timeTaken(), type);
     }
 
+    @Override
+    public int logCount() {
+        return mCol.getDb().queryScalar("SELECT count() FROM revlog");
+    }
+
 
     protected void log(long id, int usn, @Consts.BUTTON_TYPE int ease, int ivl, int lastIvl, int factor, int timeTaken, @Consts.REVLOG_TYPE int type) {
         try {
@@ -1485,7 +1530,7 @@ public class SchedV2 extends AbstractSched {
         if (d == null) {
             return 0;
         }
-        if (d.getInt("dyn") != 0) {
+        if (d.getInt("dyn") == DECK_DYN) {
             return mDynReportLimit;
         }
         long did = d.getLong("id");
@@ -1511,7 +1556,7 @@ public class SchedV2 extends AbstractSched {
     }
 
 
-    protected int _revForDeck(long did, int lim, @NonNull HashMap<Long, HashMap> childMap) {
+    protected int _revForDeck(long did, int lim, @NonNull Decks.Node childMap) {
         List<Long> dids = mCol.getDecks().childDids(did, childMap);
         dids.add(0, did);
         lim = Math.min(lim, mReportLimit);
@@ -1521,7 +1566,11 @@ public class SchedV2 extends AbstractSched {
 
     // Overriden: V1 uses _walkingCount
     protected void _resetRevCount() {
+        _resetRevCount(null);
+    }
+    protected void _resetRevCount(@Nullable CancelListener cancelListener) {
         int lim = _currentRevLimit(true);
+        if (isCancelled(cancelListener)) return;
         mRevCount = mCol.getDb().queryScalar("SELECT count() FROM (SELECT id FROM cards WHERE did in " + _deckLimit() + " AND queue = " + Consts.QUEUE_TYPE_REV + " AND due <= ? AND id != ? LIMIT ?)",
                                              mToday, currentCardId(), lim);
     }
@@ -1547,15 +1596,15 @@ public class SchedV2 extends AbstractSched {
         if (!mRevQueue.isEmpty()) {
             return true;
         }
-        if (mRevCount == 0) {
+        if (mHaveCounts && mRevCount == 0) {
             return false;
         }
         int lim = Math.min(mQueueLimit, _currentRevLimit(true));
         if (lim != 0) {
-            Cursor cur = null;
             mRevQueue.clear();
             // fill the queue with the current did
-            try {
+            String idName = (allowSibling) ? "id": "nid";
+            long id = (allowSibling) ? currentCardId(): currentCardNid();
                 /* Difference with upstream: we take current card into account.
                  *
                  * When current card is answered, the card is not due anymore, so does not belong to the queue.
@@ -1566,17 +1615,11 @@ public class SchedV2 extends AbstractSched {
                  * contains distinct card.
                  */
                 // fill the queue with the current did
-                String idName = (allowSibling) ? "id": "nid";
-                long id = (allowSibling) ? currentCardId(): currentCardNid();
-                cur = mCol.getDb().query("SELECT id FROM cards WHERE did in " + _deckLimit() + " AND queue = " + Consts.QUEUE_TYPE_REV + " AND due <= ? AND " + idName + " != ?"
+            try (Cursor cur = mCol.getDb().query("SELECT id FROM cards WHERE did in " + _deckLimit() + " AND queue = " + Consts.QUEUE_TYPE_REV + " AND due <= ? AND " + idName + " != ?"
                                + " ORDER BY due, random()  LIMIT ?",
-                               mToday, id, lim);
+                               mToday, id, lim)) {
                 while (cur.moveToNext()) {
                     mRevQueue.add(cur.getLong(0));
-                }
-            } finally {
-                if (cur != null && !cur.isClosed()) {
-                    cur.close();
                 }
             }
             if (!mRevQueue.isEmpty()) {
@@ -1587,11 +1630,14 @@ public class SchedV2 extends AbstractSched {
                 return true;
             }
         }
-        // since we didn't get a card and the count is non-zero, we
-        // need to check again for any cards that were removed from
-        // the queue but not buried
-        _resetRev();
-        return _fillRev(true);
+        if (mHaveCounts && mRevCount != 0) {
+            // if we didn't get a card but the count is non-zero,
+            // we need to check again for any cards that were
+            // removed from the queue but not buried
+            _resetRev();
+            return _fillRev(true);
+        }
+        return false;
     }
 
 
@@ -1620,7 +1666,7 @@ public class SchedV2 extends AbstractSched {
     // Overridden: v1 does not deal with early
     protected void _answerRevCard(@NonNull Card card, @Consts.BUTTON_TYPE int ease) {
         int delay = 0;
-        boolean early = card.getODid() != 0 && (card.getODue() > mToday);
+        boolean early = card.isInDynamicDeck() && (card.getODue() > mToday);
         int type = early ? 3 : 1;
         if (ease == Consts.BUTTON_ONE) {
             delay = _rescheduleLapse(card);
@@ -1763,7 +1809,7 @@ public class SchedV2 extends AbstractSched {
      * Number of days later than scheduled.
      */
     protected long _daysLate(Card card) {
-        long due = card.getODid() != 0 ? card.getODue() : card.getDue();
+        long due = card.isInDynamicDeck() ? card.getODue() : card.getDue();
         return Math.max(0, mToday - due);
     }
 
@@ -1781,7 +1827,7 @@ public class SchedV2 extends AbstractSched {
 
     /** next interval for card when answered early+correctly */
     private int _earlyReviewIvl(@NonNull Card card, @Consts.BUTTON_TYPE int ease) {
-        if (card.getODid() == 0 || card.getType() != Consts.CARD_TYPE_REV || card.getFactor() == 0) {
+        if (!card.isInDynamicDeck() || card.getType() != Consts.CARD_TYPE_REV || card.getFactor() == 0) {
             throw new RuntimeException("Unexpected card parameters");
         }
         if (ease <= 1) {
@@ -1837,7 +1883,7 @@ public class SchedV2 extends AbstractSched {
             did = mCol.getDecks().selected();
         }
         Deck deck = mCol.getDecks().get(did);
-        if (deck.getInt("dyn") == 0) {
+        if (deck.getInt("dyn") == DECK_STD) {
             Timber.e("error: deck is not a filtered deck");
             return;
         }
@@ -1897,13 +1943,17 @@ public class SchedV2 extends AbstractSched {
         mCol.log(mCol.getDb().queryLongList("select id from cards where " + lim));
 
         mCol.getDb().execute(
-                "update cards set did = odid, " + _restoreQueueSnippet() +
+                "update cards set did = odid, " + _restoreQueueWhenEmptyingSnippet() +
                 ", due = (case when odue>0 then odue else due end), odue = 0, odid = 0, usn = ? where " + lim,
                 mCol.usn());
     }
 
 
     public void remFromDyn(long[] cids) {
+        emptyDyn(0, "id IN " + Utils.ids2str(cids) + " AND odid");
+    }
+
+    public void remFromDyn(List<Long> cids) {
         emptyDyn(0, "id IN " + Utils.ids2str(cids) + " AND odid");
     }
 
@@ -1956,7 +2006,7 @@ public class SchedV2 extends AbstractSched {
 
     protected void _moveToDyn(long did, @NonNull List<Long> ids, int start) {
         Deck deck = mCol.getDecks().get(did);
-        ArrayList<Object[]> data = new ArrayList<>();
+        ArrayList<Object[]> data = new ArrayList<>(ids.size());
         int u = mCol.usn();
         int due = start;
         for (Long id : ids) {
@@ -1977,7 +2027,7 @@ public class SchedV2 extends AbstractSched {
 
 
     private void _removeFromFiltered(@NonNull Card card) {
-        if (card.getODid() != 0) {
+        if (card.isInDynamicDeck()) {
             card.setDid(card.getODid());
             card.setODue(0);
             card.setODid(0);
@@ -1986,7 +2036,7 @@ public class SchedV2 extends AbstractSched {
 
 
     private void _restorePreviewCard(@NonNull Card card) {
-        if (card.getODid() == 0) {
+        if (!card.isInDynamicDeck()) {
             throw new RuntimeException("ODid wasn't set");
         }
 
@@ -2051,8 +2101,7 @@ public class SchedV2 extends AbstractSched {
     // Overridden: different delays for filtered cards.
     protected @NonNull JSONObject _newConf(@NonNull Card card) {
         DeckConfig conf = _cardConf(card);
-        // normal deck
-        if (card.getODid() == 0) {
+        if (!card.isInDynamicDeck()) {
             return conf.getJSONObject("new");
         }
         // dynamic deck; override some attributes, use original deck for others
@@ -2074,8 +2123,7 @@ public class SchedV2 extends AbstractSched {
     // Overridden: different delays for filtered cards.
     protected @NonNull JSONObject _lapseConf(@NonNull Card card) {
         DeckConfig conf = _cardConf(card);
-        // normal deck
-        if (card.getODid() == 0) {
+        if (!card.isInDynamicDeck()) {
             return conf.getJSONObject("lapse");
         }
         // dynamic deck; override some attributes, use original deck for others
@@ -2095,11 +2143,9 @@ public class SchedV2 extends AbstractSched {
 
     protected @NonNull JSONObject _revConf(@NonNull Card card) {
         DeckConfig conf = _cardConf(card);
-        // normal deck
-        if (card.getODid() == 0) {
+        if (!card.isInDynamicDeck()) {
             return conf.getJSONObject("rev");
         }
-        // dynamic deck
         return mCol.getDecks().confForDid(card.getODid()).getJSONObject("rev");
     }
 
@@ -2112,7 +2158,7 @@ public class SchedV2 extends AbstractSched {
     private boolean _previewingCard(@NonNull Card card) {
         DeckConfig conf = _cardConf(card);
 
-        return conf.getInt("dyn") != 0 && !conf.getBoolean("resched");
+        return conf.getInt("dyn") == DECK_DYN && !conf.getBoolean("resched");
     }
 
 
@@ -2232,7 +2278,7 @@ public class SchedV2 extends AbstractSched {
             sb.append("\n\n");
             sb.append("").append(context.getString(R.string.sched_has_buried)).append(now);
         }
-        if (mCol.getDecks().current().getInt("dyn") == 0) {
+        if (mCol.getDecks().current().getInt("dyn") == DECK_STD) {
             sb.append("\n\n");
             sb.append(context.getString(R.string.studyoptions_congrats_custom));
         }
@@ -2357,7 +2403,7 @@ public class SchedV2 extends AbstractSched {
             return _lapseIvl(card, conf) * SECONDS_PER_DAY;
         } else {
             // review
-            boolean early = card.getODid() != 0 && (card.getODue() > mToday);
+            boolean early = card.isInDynamicDeck() && (card.getODue() > mToday);
             if (early) {
                 return _earlyReviewIvl(card, ease) * SECONDS_PER_DAY;
             } else {
@@ -2410,6 +2456,21 @@ public class SchedV2 extends AbstractSched {
                 "else\n" +
                 "  type\n" +
                 "end)  ";
+    }
+
+    /**
+     * ugly fix for suspended cards being unsuspended when filtered deck emptied
+     * https://github.com/ankitects/anki/commit/fe493e31c4d73ae2bbd0c4d8c6b835974c0e290c
+     */
+    @NonNull
+    protected String _restoreQueueWhenEmptyingSnippet() {
+        return "queue = (case when queue < 0 then queue" +
+                "    when type in (1," + CARD_TYPE_RELEARNING + ") then " +
+                "(case when (case when odue then odue else due end) > 1000000000 then 1 else " +
+                "    " + QUEUE_TYPE_DAY_LEARN_RELEARN + " end) " +
+                "else " +
+                "    type " +
+                "end)";
     }
 
     /**
@@ -2525,11 +2586,9 @@ public class SchedV2 extends AbstractSched {
         JSONObject rconf = _revConf(card);
         boolean buryRev = rconf.optBoolean("bury", true);
         // loop through and remove from queues
-        Cursor cur = null;
-        try {
-            cur = mCol.getDb().query(
+        try (Cursor cur = mCol.getDb().query(
                     "select id, queue from cards where nid=? and id!=? "+
-                    "and (queue=" + Consts.QUEUE_TYPE_NEW + " or (queue=" + Consts.QUEUE_TYPE_REV + " and due<=?))", card.getNid(), card.getId(), mToday);
+                    "and (queue=" + Consts.QUEUE_TYPE_NEW + " or (queue=" + Consts.QUEUE_TYPE_REV + " and due<=?))", card.getNid(), card.getId(), mToday)) {
             while (cur.moveToNext()) {
                 long cid = cur.getLong(0);
                 int queue = cur.getInt(1);
@@ -2549,10 +2608,6 @@ public class SchedV2 extends AbstractSched {
                 // same-day spacing
                 queue_object.remove(cid);
             }
-        } finally {
-            if (cur != null && !cur.isClosed()) {
-                cur.close();
-            }
         }
         // then bury
         if (!toBury.isEmpty()) {
@@ -2566,7 +2621,7 @@ public class SchedV2 extends AbstractSched {
      */
 
     /** Put cards at the end of the new queue. */
-    public void forgetCards(@NonNull long[] ids) {
+    public void forgetCards(@NonNull List<Long> ids) {
         remFromDyn(ids);
         mCol.getDb().execute("update cards set type=" + Consts.CARD_TYPE_NEW + ",queue=" + Consts.QUEUE_TYPE_NEW + ",ivl=0,due=0,odue=0,factor="+Consts.STARTING_FACTOR +
                 " where id in " + Utils.ids2str(ids));
@@ -2584,8 +2639,8 @@ public class SchedV2 extends AbstractSched {
      * @param imin the minimum interval (inclusive)
      * @param imax The maximum interval (inclusive)
      */
-    public void reschedCards(@NonNull long[] ids, int imin, int imax) {
-        ArrayList<Object[]> d = new ArrayList<>();
+    public void reschedCards(@NonNull List<Long> ids, int imin, int imax) {
+        ArrayList<Object[]> d = new ArrayList<>(ids.size());
         int t = mToday;
         long mod = getTime().intTime();
         Random rnd = new Random();
@@ -2605,11 +2660,12 @@ public class SchedV2 extends AbstractSched {
      * Completely reset cards for export.
      */
     public void resetCards(@NonNull Long[] ids) {
-        long[] nonNew = Utils.collection2Array(mCol.getDb().queryLongList(
-                "select id from cards where id in " + Utils.ids2str(ids) + " and (queue != " + Consts.QUEUE_TYPE_NEW + " or type != " + Consts.CARD_TYPE_NEW + ")"));
+        List<Long> nonNew = mCol.getDb().queryLongList(
+                "select id from cards where id in " + Utils.ids2str(ids) + " and (queue != " + Consts.QUEUE_TYPE_NEW + " or type != " + Consts.CARD_TYPE_NEW + ")");
         mCol.getDb().execute("update cards set reps=0, lapses=0 where id in " + Utils.ids2str(nonNew));
         forgetCards(nonNew);
-        mCol.log((Object[]) ids);
+        //noinspection RedundantCast
+        mCol.log((Object[]) ids); // Cast useful to indicate to indicate how to interpret varargs
     }
 
 
@@ -2618,15 +2674,15 @@ public class SchedV2 extends AbstractSched {
      * *********************************************
      */
 
-    public void sortCards(@NonNull long[] cids, int start) {
+    public void sortCards(@NonNull List<Long> cids, int start) {
         sortCards(cids, start, 1, false, false);
     }
 
 
-    public void sortCards(@NonNull long[] cids, int start, int step, boolean shuffle, boolean shift) {
+    public void sortCards(@NonNull List<Long> cids, int start, int step, boolean shuffle, boolean shift) {
         String scids = Utils.ids2str(cids);
         long now = getTime().intTime();
-        ArrayList<Long> nids = new ArrayList<>();
+        ArrayList<Long> nids = new ArrayList<>(cids.size());
         for (long id : cids) {
             long nid = mCol.getDb().queryLongScalar("SELECT nid FROM cards WHERE id = ?", id);
             if (!nids.contains(nid)) {
@@ -2638,7 +2694,7 @@ public class SchedV2 extends AbstractSched {
             return;
         }
         // determine nid ordering
-        HashMap<Long, Long> due = new HashMap<>();
+        HashMap<Long, Long> due = new HashMap<>(nids.size());
         if (shuffle) {
             Collections.shuffle(nids);
         }
@@ -2660,18 +2716,12 @@ public class SchedV2 extends AbstractSched {
             }
         }
         // reorder cards
-        ArrayList<Object[]> d = new ArrayList<>();
-        Cursor cur = null;
-        try {
-            cur = mCol.getDb().getDatabase()
-                    .query("SELECT id, nid FROM cards WHERE type = " + Consts.CARD_TYPE_NEW + " AND id IN " + scids, null);
+        ArrayList<Object[]> d = new ArrayList<>(cids.size());
+        try (Cursor cur = mCol.getDb()
+                    .query("SELECT id, nid FROM cards WHERE type = " + Consts.CARD_TYPE_NEW + " AND id IN " + scids)) {
             while (cur.moveToNext()) {
                 long nid = cur.getLong(1);
                 d.add(new Object[] { due.get(nid), now, mCol.usn(), cur.getLong(0) });
-            }
-        } finally {
-            if (cur != null && !cur.isClosed()) {
-                cur.close();
             }
         }
         mCol.getDb().executeMany("UPDATE cards SET due = ?, mod = ?, usn = ? WHERE id = ?", d);
@@ -2680,13 +2730,13 @@ public class SchedV2 extends AbstractSched {
 
     public void randomizeCards(long did) {
         List<Long> cids = mCol.getDb().queryLongList("select id from cards where did = ?", did);
-        sortCards(Utils.toPrimitive(cids), 1, 1, true, false);
+        sortCards(cids, 1, 1, true, false);
     }
 
 
     public void orderCards(long did) {
         List<Long> cids = mCol.getDb().queryLongList("SELECT id FROM cards WHERE did = ? ORDER BY nid", did);
-        sortCards(Utils.toPrimitive(cids), 1, 1, false, false);
+        sortCards(cids, 1, 1, false, false);
     }
 
 
@@ -2709,7 +2759,7 @@ public class SchedV2 extends AbstractSched {
         maybeRandomizeDeck(null);
     }
 
-    public void maybeRandomizeDeck(@NonNull Long did) {
+    public void maybeRandomizeDeck(@Nullable Long did) {
         if (did == null) {
             did = mCol.getDecks().selected();
         }
@@ -2748,7 +2798,7 @@ public class SchedV2 extends AbstractSched {
 
 
         // remove new cards from learning
-        forgetCards(Utils.collection2Array(mCol.getDb().queryLongList("select id from cards where queue in (" + Consts.QUEUE_TYPE_LRN + "," + Consts.QUEUE_TYPE_DAY_LEARN_RELEARN + ")")));
+        forgetCards(mCol.getDb().queryLongList("select id from cards where queue in (" + Consts.QUEUE_TYPE_LRN + "," + Consts.QUEUE_TYPE_DAY_LEARN_RELEARN + ")"));
     }
 
 
@@ -2884,9 +2934,7 @@ public class SchedV2 extends AbstractSched {
         double relrnTime;
 
         if (reload || mEtaCache[0] == -1) {
-            Cursor cur = null;
-            try {
-                cur = mCol
+            try (Cursor cur = mCol
                         .getDb()
                         .query("select "
                                 + "avg(case when type = " + Consts.CARD_TYPE_NEW + " then case when ease > 1 then 1.0 else 0.0 end else null end) as newRate, avg(case when type = " + Consts.CARD_TYPE_NEW + " then time else null end) as newTime, "
@@ -2894,7 +2942,7 @@ public class SchedV2 extends AbstractSched {
                                 + "avg(case when type = " + Consts.CARD_TYPE_REV + " then case when ease > 1 then 1.0 else 0.0 end else null end) as relrnRate, avg(case when type = " + Consts.CARD_TYPE_REV + " then time else null end) as relrnTime "
                                 + "from revlog where id > "
                                 + "?",
-                               (mCol.getSched().getDayCutoff() - (10 * SECONDS_PER_DAY)) * 1000);
+                               (mCol.getSched().getDayCutoff() - (10 * SECONDS_PER_DAY)) * 1000)) {
                 if (!cur.moveToFirst()) {
                     return -1;
                 }
@@ -2910,10 +2958,6 @@ public class SchedV2 extends AbstractSched {
                     cur.close();
                 }
 
-            } finally {
-                if (cur != null && !cur.isClosed()) {
-                    cur.close();
-                }
             }
 
             // If the collection has no revlog data to work with, assume a 20 second average rep for that type
@@ -3003,6 +3047,11 @@ public class SchedV2 extends AbstractSched {
      * Sorts a card into the lrn queue LIBANKI: not in libanki
      */
     protected void _sortIntoLrn(long due, long id) {
+        if (!mLrnQueue.isFilled()) {
+            // We don't want to add an element to the queue if it's not yet assumed to have its normal content.
+            // Adding anything is useless while the queue awaits beeing filled
+            return;
+        }
         ListIterator<LrnCard> i = mLrnQueue.listIterator();
         while (i.hasNext()) {
             if (i.next().getDue() > due) {
@@ -3026,14 +3075,6 @@ public class SchedV2 extends AbstractSched {
 
     /** not in libAnki. Added due to #5666: inconsistent selected deck card counts on sync */
     @Override
-    public @NonNull int[] recalculateCounts() {
-        _resetLrnCount();
-        _resetNewCount();
-        _resetRevCount();
-        return new int[] { mNewCount, mLrnCount, mRevCount };
-    }
-
-    @Override
     public void setReportLimit(int reportLimit) {
         this.mReportLimit = reportLimit;
     }
@@ -3049,7 +3090,7 @@ public class SchedV2 extends AbstractSched {
         // write old data
         oldCardData.flush(false);
         DeckConfig conf = _cardConf(oldCardData);
-        boolean previewing = conf.getInt("dyn") != 0 && ! conf.getBoolean("resched");
+        boolean previewing = conf.getInt("dyn") == DECK_DYN && ! conf.getBoolean("resched");
         if (! previewing) {
             // and delete revlog entry
             long last = mCol.getDb().queryLongScalar("SELECT id FROM revlog WHERE cid = ? ORDER BY id DESC LIMIT 1", oldCardData.getId());

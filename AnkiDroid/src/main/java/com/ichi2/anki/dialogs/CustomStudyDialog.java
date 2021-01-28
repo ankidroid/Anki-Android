@@ -46,6 +46,7 @@ import com.ichi2.anki.analytics.AnalyticsDialogFragment;
 import com.ichi2.async.CollectionTask;
 import com.ichi2.async.TaskListener;
 import com.ichi2.async.TaskListenerWithContext;
+import com.ichi2.async.TaskManager;
 import com.ichi2.libanki.Collection;
 import com.ichi2.libanki.Consts;
 
@@ -57,8 +58,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
-import static com.ichi2.async.CollectionTask.TASK_TYPE.*;
-import com.ichi2.async.TaskData;
 
 
 public class CustomStudyDialog extends AnalyticsDialogFragment {
@@ -203,8 +202,8 @@ public class CustomStudyDialog extends AnalyticsDialogFragment {
         // Set builder parameters
         MaterialDialog.Builder builder = new MaterialDialog.Builder(getActivity())
                 .customView(v, true)
-                .positiveText(res.getString(R.string.dialog_ok))
-                .negativeText(res.getString(R.string.dialog_cancel))
+                .positiveText(R.string.dialog_ok)
+                .negativeText(R.string.dialog_cancel)
                 .onPositive((dialog, which) -> {
                     Collection col = CollectionHelper.getInstance().getCol(getActivity());
                     // Get the value selected by user
@@ -293,7 +292,7 @@ public class CustomStudyDialog extends AnalyticsDialogFragment {
 
     private HashMap<Integer, String> getKeyValueMap() {
         Resources res = getResources();
-        HashMap<Integer, String> keyValueMap = new HashMap<>();
+        HashMap<Integer, String> keyValueMap = new HashMap<>(10);
         keyValueMap.put(CONTEXT_MENU_STANDARD, res.getString(R.string.custom_study));
         keyValueMap.put(CUSTOM_STUDY_NEW, res.getString(R.string.custom_study_increase_new_limit));
         keyValueMap.put(CUSTOM_STUDY_REV, res.getString(R.string.custom_study_increase_review_limit));
@@ -302,7 +301,7 @@ public class CustomStudyDialog extends AnalyticsDialogFragment {
         keyValueMap.put(CUSTOM_STUDY_RANDOM, res.getString(R.string.custom_study_random_selection));
         keyValueMap.put(CUSTOM_STUDY_PREVIEW, res.getString(R.string.custom_study_preview_new));
         keyValueMap.put(CUSTOM_STUDY_TAGS, res.getString(R.string.custom_study_limit_tags));
-        keyValueMap.put(DECK_OPTIONS, res.getString(R.string.study_options));
+        keyValueMap.put(DECK_OPTIONS, res.getString(R.string.menu__deck_options));
         keyValueMap.put(MORE_OPTIONS, res.getString(R.string.more_options));
         return keyValueMap;
     }
@@ -320,7 +319,7 @@ public class CustomStudyDialog extends AnalyticsDialogFragment {
                 // Logging here might be appropriate : )
                 break;
         }
-        List<String> arr = new ArrayList<>();
+        List<String> arr = new ArrayList<>(selectedTags.size());
         if (selectedTags.size() > 0) {
             for (String tag : selectedTags) {
                 arr.add(String.format("tag:'%s'", tag));
@@ -434,12 +433,9 @@ public class CustomStudyDialog extends AnalyticsDialogFragment {
         Deck cur = col.getDecks().byName(customStudyDeck);
         if (cur != null) {
             Timber.i("Found deck: '%s'", customStudyDeck);
-            if (cur.getInt("dyn") != 1) {
+            if (cur.isStd()) {
                 Timber.w("Deck: '%s' was non-dynamic", customStudyDeck);
-                new MaterialDialog.Builder(getActivity())
-                    .content(R.string.custom_study_deck_exists)
-                    .negativeText(R.string.dialog_cancel)
-                    .build().show();
+                UIUtils.showThemedToast(getActivity(), getString(R.string.custom_study_deck_exists), true);
                 return;
             } else {
                 Timber.i("Emptying dynamic deck '%s' for custom study", customStudyDeck);
@@ -477,8 +473,7 @@ public class CustomStudyDialog extends AnalyticsDialogFragment {
         dyn.put("resched", resched);
         // Rebuild the filtered deck
         Timber.i("Rebuilding Custom Study Deck");
-        TaskListener listener = createCustomStudySessionListener();
-        CollectionTask.launchCollectionTask(REBUILD_CRAM, listener);
+        TaskManager.launchCollectionTask(new CollectionTask.RebuildCram(), createCustomStudySessionListener());
 
         // Hide the dialogs
         activity.dismissAllDialogFragments();
@@ -502,7 +497,7 @@ public class CustomStudyDialog extends AnalyticsDialogFragment {
     private CreateCustomStudySessionListener createCustomStudySessionListener(){
         return new CreateCustomStudySessionListener(getAnkiActivity());
     }
-    private static class CreateCustomStudySessionListener extends TaskListenerWithContext<AnkiActivity> {
+    private static class CreateCustomStudySessionListener extends TaskListenerWithContext<AnkiActivity, Void, int[]> {
         public CreateCustomStudySessionListener(AnkiActivity activity) {
             super(activity);
         }
@@ -515,7 +510,7 @@ public class CustomStudyDialog extends AnalyticsDialogFragment {
 
 
         @Override
-        public void actualOnPostExecute(@NonNull AnkiActivity activity, TaskData result) {
+        public void actualOnPostExecute(@NonNull AnkiActivity activity, int[] v) {
             activity.hideProgressBar();
             ((CustomStudyListener) activity).onCreateCustomStudySession();
         }

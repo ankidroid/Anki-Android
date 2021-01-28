@@ -3,7 +3,6 @@ package com.ichi2.libanki;
 import android.content.Context;
 
 import com.ichi2.anki.RobolectricTest;
-import com.ichi2.libanki.template.Template;
 
 import com.ichi2.utils.JSONException;
 import org.junit.Test;

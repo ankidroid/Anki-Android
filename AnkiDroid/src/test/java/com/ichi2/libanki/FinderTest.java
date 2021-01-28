@@ -16,8 +16,10 @@
 
 package com.ichi2.libanki;
 
+import android.content.Intent;
 import android.util.Pair;
 
+import com.ichi2.anki.CardBrowser;
 import com.ichi2.anki.RobolectricTest;
 import com.ichi2.anki.exception.ConfirmModSchemaException;
 import com.ichi2.libanki.sched.SchedV2;
@@ -298,11 +300,11 @@ public class FinderTest extends RobolectricTest {
         if (!isNearCutoff(col)) {
             assertEquals(0, col.findCards("rated:1:1").size());
             assertEquals(0, col.findCards("rated:1:2").size());
-            c = col.getSched().getCard();
+            c = getCard();
             col.getSched().answerCard(c, 2);
             assertEquals(0, col.findCards("rated:1:1").size());
             assertEquals(1, col.findCards("rated:1:2").size());
-            c = col.getSched().getCard();
+            c = getCard();
             col.getSched().answerCard(c, 1);
             assertEquals(1, col.findCards("rated:1:1").size());
             assertEquals(1, col.findCards("rated:1:2").size());
@@ -335,6 +337,25 @@ public class FinderTest extends RobolectricTest {
         // assertThrows(Exception.class, () -> col.findCards("flag:12"));
     }
 
+    @Test
+    public void test_deckNameContainingWildcardCanBeSearched() {
+        String val = "*Yr1::Med2::CAS4::F4: Renal::BRS (zanki)::HY";
+        Collection col = getCol();
+        long currentDid = col.getDecks().id(val);
+        col.getDecks().select(currentDid);
+        Note note = col.newNote();
+        note.setItem("Front", "foo");
+        note.setItem("Back", "bar");
+        note.model().put("did", currentDid);
+        col.addNote(note);
+        long did = note.firstCard().getDid();
+        assertEquals(currentDid, did);
+        CardBrowser cb = super.startActivityNormallyOpenCollectionWithIntent(CardBrowser.class, new Intent());
+        int pos = cb.getChangeDeckPositionFromId(currentDid);
+        cb.selectDropDownItem(pos + 1);    //Adjusting for All Decks option at position 0
+        advanceRobolectricLooperWithSleep();
+        assertEquals(1L, cb.getCardCount());
+    }
 
     @Test
     public void test_findReplace() {

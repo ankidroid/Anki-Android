@@ -44,17 +44,13 @@
     <string name="sync_error">Synkroniseringsfel</string>
     <string name="vague_error">Fel</string>
     <string name="retry">Försök igen</string>
-    <string name="cancel">Avbryt</string>
-    <string name="terms_and_conditions"><a href="https://ankiweb.net/account/terms">Användarvillkor</a></string>
     <string name="menu_get_shared_decks">Hämta delade kortlekar</string>
     <string name="connection_error_message">Ett nätverksfel har uppstått.</string>
     <string name="not_logged_in_title">Logga in på AnkiWeb</string>
     <string name="login_create_account_message">Du måste logga in till ett tredjeparts-konto för att använda molnsynkroniseringen. Du kan skapa ett i nästa steg.</string>
     <!-- MyAccount.java -->
     <string name="username">E-postadress</string>
-    <string name="username_repeat">Upprepa e-postadress</string>
     <string name="password">Lösenord</string>
-    <string name="password_repeat">Upprepa lösenord</string>
     <string name="log_in">Logga in</string>
     <string name="sign_up_description">Har du inget AnkiWeb-konto? Det är gratis!</string>
     <string name="sign_up_not_affiliated">OBS: AnkiWeb är inte anknuten till AnkiDroid</string>
@@ -65,7 +61,6 @@
     <string name="invalid_username_password">Ogiltig e-postadress eller lösenord.</string>
     <string name="reset_password">Återställ lösenord</string>
     <!-- AndroidManifest.xml -->
-    <string name="downloaddeck_search">Sök</string>
     <string name="preferences_title">Inställningar</string>
     <string name="deckpreferences_title">Alternativ för XXX</string>
     <string name="sync_conflict_message">Dina kortlekar här och på AnkiWeb skiljer sig på ett sätt så att de inte kan slås samman, så kortlekarna på ena sidan måste skrivas över med de från den andra sidan.\n\nVill du ladda upp kortlekarna som används här, eller hämta kortlekarna från AnkiWeb?</string>
@@ -80,7 +75,6 @@
     <string name="sync_title">Synkronisering</string>
     <string name="sync_downloading_media">Hämtar media %1$d/%2$d...</string>
     <string name="sync_log_uploading_message">Fullständig synkronisering från lokal sida</string>
-    <string name="sync_log_downloading_message">Full synk från servern</string>
     <string name="sync_log_clocks_unsynchronized">Klockan på din enhet gick fel med %1$d sekunder%2$s; Synkronisering kräver att både din klocka och tidszon är korrekt inställda för att undvika fel. Vänligen kontrollera att datum, tid och tidszon på din telefon är korrekt inställda och synkronisera igen.</string>
     <string name="sync_log_clocks_unsynchronized_tz">, enhetens tidszon kan vara felaktig</string>
     <string name="sync_log_clocks_unsynchronized_date">, enhetens datum kan vara felaktigt</string>
@@ -132,9 +126,7 @@
     <string name="sync_error_502_maintenance">AnkiWeb är i underhållsläge. Försök igen om ett par minuter.</string>
     <string name="sync_error_504_gateway_timeout">504 tidsgränsfel för gateway erhållet.</string>
     <!-- Deck Picker Sync Icon -->
-    <string name="sync_menu_title">Sync</string>
     <string name="sync_menu_title_full_sync">Sync (full)</string>
     <string name="sync_menu_title_no_account">Sync (log in)</string>
-    <!-- An option on a message box to open the "corrupt collection" webpage -->
-    <string name="sync_corrupt_collection_get_help">Help</string>
+    <string name="sync_error_unknown_host_readable">Could not connect to AnkiWeb. Is your internet working?\n\n%s</string>
 </resources>

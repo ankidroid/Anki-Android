@@ -24,8 +24,10 @@ import android.text.TextUtils;
 
 import android.util.Pair;
 
-import com.ichi2.async.CollectionTask;
+import com.ichi2.async.CancelListener;
 
+import com.ichi2.async.CollectionTask;
+import com.ichi2.async.ProgressSender;
 import com.ichi2.libanki.Deck;
 import com.ichi2.utils.JSONArray;
 import com.ichi2.utils.JSONObject;
@@ -46,7 +48,9 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import androidx.annotation.CheckResult;
+import timber.log.Timber;
 
+import static com.ichi2.async.CancelListener.isCancelled;
 import static com.ichi2.libanki.stats.Stats.SECONDS_PER_DAY;
 
 @SuppressWarnings({"PMD.ExcessiveClassLength", "PMD.AvoidThrowingRawExceptionTypes","PMD.AvoidReassigningParameters","PMD.NPathComplexity","PMD.MethodNamingConventions"})
@@ -82,7 +86,7 @@ public class Finder {
     }
 
     @CheckResult
-    public List<Long> findCards(String query, boolean _order, CollectionTask task) {
+    public List<Long> findCards(String query, boolean _order, CollectionTask.PartialSearch task) {
         return _findCards(query, _order, task);
     }
 
@@ -93,7 +97,7 @@ public class Finder {
     }
 
     @CheckResult
-    private List<Long> _findCards(String query, Object _order, CollectionTask task) {
+    private List<Long> _findCards(String query, Object _order, CollectionTask.PartialSearch task) {
         String[] tokens = _tokenize(query);
         Pair<String, String[]> res1 = _where(tokens);
         String preds = res1.first;
@@ -106,16 +110,22 @@ public class Finder {
         String order = res2.first;
         boolean rev = res2.second;
         String sql = _query(preds, order);
+        Timber.v("Search query '%s' is compiled as '%s'.", query, sql);
+        boolean sendProgress = task != null;
         try (Cursor cur = mCol.getDb().getDatabase().query(sql, args)) {
             while (cur.moveToNext()) {
-                if (task != null && task.isCancelled()) {
-                    return new ArrayList<>();
+                if (isCancelled(task)) {
+                    return new ArrayList<>(0);
                 }
                 res.add(cur.getLong(0));
+                if (sendProgress && res.size() > task.getNumCardsToRender()) {
+                    task.doProgress(res);
+                    sendProgress = false;
+                }
             }
         } catch (SQLException e) {
             // invalid grouping
-            return new ArrayList<>();
+            return new ArrayList<>(0);
         }
         if (rev) {
             Collections.reverse(res);
@@ -145,7 +155,7 @@ public class Finder {
             }
         } catch (SQLException e) {
             // invalid grouping
-            return new ArrayList<>();
+            return new ArrayList<>(0);
         }
         return res;
     }
@@ -296,7 +306,7 @@ public class Finder {
                 // commands
             } else if (token.contains(":")) {
                 String[] spl = token.split(":", 2);
-                String cmd = spl[0].toLowerCase(Locale.US);
+                String cmd = spl[0].toLowerCase(Locale.ROOT);
                 String val = spl[1];
 
                 switch (cmd) {
@@ -355,7 +365,12 @@ public class Finder {
     }
 
 
-    private String _query(String preds, String order) {
+    /**
+     * @param preds A sql predicate, or empty string, with c a card, n its note
+     * @param order A part of a query, ordering element of table Card, with c a card, n its note
+     * @return A query to return all card ids satifying the predicate and in the given order
+     */
+    private static String _query(String preds, String order) {
         // can we skip the note table?
         String sql;
         if (!preds.contains("n.") && !order.contains("n.")) {
@@ -550,7 +565,7 @@ public class Finder {
         if (!m.matches()) {
             return null;
         }
-        String prop = m.group(1).toLowerCase(Locale.US);
+        String prop = m.group(1).toLowerCase(Locale.ROOT);
         String cmp = m.group(2);
         String sval = m.group(3);
         int val;
@@ -633,10 +648,10 @@ public class Finder {
         if (did == null) {
             return null;
         }
-        TreeMap<String, Long> children = mCol.getDecks().children(did);
-        List<Long> res = new ArrayList<>();
+        java.util.Collection<Long> children = mCol.getDecks().children(did).values();
+        List<Long> res = new ArrayList<>(children.size() + 1);
         res.add(did);
-        res.addAll(children.values());
+        res.addAll(children);
         return res;
     }
 
@@ -658,16 +673,20 @@ public class Finder {
             ids = dids(mCol.getDecks().id(val, false));
         } else {
             // wildcard
-            ids = new ArrayList<>();
-            val = val.replace("*", ".*");
-            val = val.replace("+", "\\+");
-            for (Deck d : mCol.getDecks().all()) {
-                String deckName = d.getString("name");
-                deckName = Normalizer.normalize(deckName, Normalizer.Form.NFC);
-                if (deckName.matches("(?i)" + val)) {
-                    for (long id : dids(d.getLong("id"))) {
-                        if (!ids.contains(id)) {
-                            ids.add(id);
+            ids = dids(mCol.getDecks().id(val, false));
+            if (ids == null) {
+                ids = new ArrayList<>();
+                val = val.replace("*", ".*");
+                val = val.replace("+", "\\+");
+
+                for (Deck d : mCol.getDecks().all()) {
+                    String deckName = d.getString("name");
+                    deckName = Normalizer.normalize(deckName, Normalizer.Form.NFC);
+                    if (deckName.matches("(?i)" + val)) {
+                        for (long id : dids(d.getLong("id"))) {
+                            if (!ids.contains(id)) {
+                                ids.add(id);
+                            }
                         }
                     }
                 }
@@ -694,13 +713,13 @@ public class Finder {
         }
         // search for template names
         List<String> lims = new ArrayList<>();
-        for (JSONObject m : mCol.getModels().all()) {
+        for (Model m : mCol.getModels().all()) {
             JSONArray tmpls = m.getJSONArray("tmpls");
             for (JSONObject t: tmpls.jsonObjectIterable()) {
                 String templateName = t.getString("name");
                 Normalizer.normalize(templateName, Normalizer.Form.NFC);
                 if (templateName.equalsIgnoreCase(val)) {
-                    if (m.getInt("type") == Consts.MODEL_CLOZE) {
+                    if (m.isCloze()) {
                         // if the user has asked for a cloze card, we want
                         // to give all ordinals, so we just limit to the
                         // model instead
@@ -739,7 +758,7 @@ public class Finder {
         Pattern pattern = Pattern.compile("\\Q" + javaVal + "\\E", Pattern.CASE_INSENSITIVE | Pattern.DOTALL);
 
         // find models that have that field
-        Map<Long, Object[]> mods = new HashMap<>();
+        Map<Long, Object[]> mods = new HashMap<>(mCol.getModels().count());
         for (JSONObject m : mCol.getModels().all()) {
             JSONArray flds = m.getJSONArray("flds");
             for (JSONObject f: flds.jsonObjectIterable()) {
@@ -755,10 +774,10 @@ public class Finder {
             return null;
         }
         LinkedList<Long> nids = new LinkedList<>();
-        try (Cursor cur = mCol.getDb().getDatabase().query(
+        try (Cursor cur = mCol.getDb().query(
                 "select id, mid, flds from notes where mid in " +
                         Utils.ids2str(new LinkedList<>(mods.keySet())) +
-                        " and flds like ? escape '\\'", new String[] {"%" + sqlVal + "%"})) {
+                        " and flds like ? escape '\\'",  "%" + sqlVal + "%")) {
             /*
              * Here we use the sqlVal expression, that is required for LIKE syntax in sqllite.
              * There is no problem with special characters, because only % and _ are special
@@ -789,11 +808,11 @@ public class Finder {
         }
         String mid = split[0];
         val = split[1];
-        String csum = Long.toString(Utils.fieldChecksum(val));
+        String csum = Long.toString(Utils.fieldChecksumWithoutHtmlMedia(val));
         List<Long> nids = new ArrayList<>();
-        try (Cursor cur = mCol.getDb().getDatabase().query(
+        try (Cursor cur = mCol.getDb().query(
                 "select id, flds from notes where mid=? and csum=?",
-                new String[] {mid, csum})) {
+                mid, csum)) {
             long nid = cur.getLong(0);
             String flds = cur.getString(1);
             if (Utils.stripHTMLMedia(Utils.splitFields(flds)[0]).equals(val)) {
@@ -887,18 +906,18 @@ public class Finder {
         }
         Pattern regex = Pattern.compile(src);
 
-        ArrayList<Object[]> d = new ArrayList<>();
+        ArrayList<Object[]> d = new ArrayList<>(nids.size());
         String snids = Utils.ids2str(nids);
-        nids = new ArrayList<>();
-        try (Cursor cur = col.getDb().getDatabase().query(
-                "select id, mid, flds from notes where id in " + snids, null)) {
+        Map<Long, java.util.Collection<Long>> midToNid = new HashMap<>(col.getModels().count());
+        try (Cursor cur = col.getDb().query(
+                "select id, mid, flds from notes where id in " + snids)) {
             while (cur.moveToNext()) {
+                long mid = cur.getLong(1);
                 String flds = cur.getString(2);
                 String origFlds = flds;
                 // does it match?
                 String[] sflds = Utils.splitFields(flds);
                 if (field != null) {
-                    long mid = cur.getLong(1);
                     if (!mmap.containsKey(mid)) {
                         // note doesn't have that field
                         continue;
@@ -913,7 +932,10 @@ public class Finder {
                 flds = Utils.joinFields(sflds);
                 if (!flds.equals(origFlds)) {
                     long nid = cur.getLong(0);
-                    nids.add(nid);
+                    if (!midToNid.containsKey(mid)) {
+                        midToNid.put(mid, new ArrayList<>());
+                    }
+                    midToNid.get(mid).add(nid);
                     d.add(new Object[] { flds, col.getTime().intTime(), col.usn(), nid }); // order based on query below
                 }
             }
@@ -923,39 +945,24 @@ public class Finder {
         }
         // replace
         col.getDb().executeMany("update notes set flds=?,mod=?,usn=? where id=?", d);
-        long[] pnids = Utils.toPrimitive(nids);
-        col.updateFieldCache(pnids);
-        col.genCards(pnids);
+        for (Map.Entry<Long, java.util.Collection<Long>> entry : midToNid.entrySet()) {
+            long mid = entry.getKey();
+            java.util.Collection<Long> nids_ = entry.getValue();
+            col.updateFieldCache(nids_);
+            col.genCards(nids_, mid);
+        }
         return d.size();
-    }
-
-
-    public List<String> fieldNames(Collection col) {
-        return fieldNames(col, true);
-    }
-
-    public List<String> fieldNames(Collection col, boolean downcase) {
-        Set<String> fields = new HashSet<>();
-        List<String> names = new ArrayList<>();
-        for (JSONObject m : col.getModels().all()) {
-            JSONArray flds = m.getJSONArray("flds");
-            for (JSONObject f: flds.jsonObjectIterable()) {
-                if (!fields.contains(f.getString("name").toLowerCase(Locale.US))) {
-                    names.add(f.getString("name"));
-                    fields.add(f.getString("name").toLowerCase(Locale.US));
-                }
-            }
-        }
-        if (downcase) {
-            return new ArrayList<>(fields);
-        }
-        return names;
     }
 
 
     /**
      * Find duplicates
      * ***********************************************************
+     * @param col  The collection
+     * @param fields A map from some note type id to the ord of the field fieldName
+     * @param mid a note type id
+     * @param fieldName A name, assumed to be the name of a field of some note type
+     * @return The ord of the field fieldName in the note type whose id is mid. null if there is no such field. Save the information in fields
      */
 
     public static Integer ordForMid(Collection col, Map<Long, Integer> fields, long mid, String fieldName) {
@@ -966,9 +973,10 @@ public class Finder {
                 JSONObject f = flds.getJSONObject(c);
                 if (f.getString("name").equalsIgnoreCase(fieldName)) {
                     fields.put(mid, c);
-                    break;
+                    return c;
                 }
             }
+            fields.put(mid, null);
         }
         return fields.get(mid);
     }
@@ -980,7 +988,10 @@ public class Finder {
 
 
     /**
-     * @return List of Pair("dupestr", List[nids])
+     * @param col       the collection
+     * @param fieldName a name of a field of some note type(s)
+     * @param search A search query, as in the browser
+     * @return List of Pair("dupestr", List[nids]), with nids note satisfying the search query, and having a field fieldName with value duepstr. Each list has at least two elements.
      */
     public static List<Pair<String, List<Long>>> findDupes(Collection col, String fieldName, String search) {
         // limit search to notes with applicable field name
@@ -989,11 +1000,12 @@ public class Finder {
     	}
         search += "'" + fieldName + ":*'";
         // go through notes
-        Map<String, List<Long>> vals = new HashMap<>();
-        List<Pair<String, List<Long>>> dupes = new ArrayList<>();
+        List<Long> nids = col.findNotes(search);
+        Map<String, List<Long>> vals = new HashMap<>(nids.size());
+        List<Pair<String, List<Long>>> dupes = new ArrayList<>(nids.size());
         Map<Long, Integer> fields = new HashMap<>();
-        try (Cursor cur = col.getDb().getDatabase().query(
-                "select id, mid, flds from notes where id in " + Utils.ids2str(col.findNotes(search)), null)) {
+        try (Cursor cur = col.getDb().query(
+                "select id, mid, flds from notes where id in " + Utils.ids2str(col.findNotes(search)))) {
             while (cur.moveToNext()) {
                 long nid = cur.getLong(0);
                 long mid = cur.getLong(1);
@@ -1002,7 +1014,7 @@ public class Finder {
                 if (ord == null) {
                     continue;
                 }
-                String val = flds[fields.get(mid)];
+                String val = flds[ord];
                 val = Utils.stripHTMLMedia(val);
                 // empty does not count as duplicate
                 if (TextUtils.isEmpty(val)) {

@@ -66,8 +66,8 @@ public class ImportDialog extends AsyncDialogFragment {
                 // Instruct the user that they need to put their APKG files into the AnkiDroid directory
                 return builder.title(res.getString(R.string.import_title))
                         .content(res.getString(R.string.import_hint, CollectionHelper.getCurrentAnkiDroidDirectory(getActivity())))
-                        .positiveText(res.getString(R.string.dialog_ok))
-                        .negativeText(res.getString(R.string.dialog_cancel))
+                        .positiveText(R.string.dialog_ok)
+                        .negativeText(R.string.dialog_cancel)
                         .onPositive((dialog, which) -> ((ImportDialogListener) getActivity()).showImportDialog(DIALOG_IMPORT_SELECT))
                         .onNegative((dialog, which) -> dismissAllDialogFragments())
                         .show();
@@ -105,8 +105,8 @@ public class ImportDialog extends AsyncDialogFragment {
                 String displayFileName = convertToDisplayName(getArguments().getString("dialogMessage"));
                 return builder.title(res.getString(R.string.import_title))
                         .content(res.getString(R.string.import_message_add_confirm, filenameFromPath(displayFileName)))
-                        .positiveText(res.getString(R.string.import_message_add))
-                        .negativeText(res.getString(R.string.dialog_cancel))
+                        .positiveText(R.string.import_message_add)
+                        .negativeText(R.string.dialog_cancel)
                         .onPositive((dialog, which) -> {
                             ((ImportDialogListener) getActivity()).importAdd(getArguments().getString("dialogMessage"));
                             dismissAllDialogFragments();
@@ -117,8 +117,8 @@ public class ImportDialog extends AsyncDialogFragment {
                 String displayFileName = convertToDisplayName(getArguments().getString("dialogMessage"));
                 return builder.title(res.getString(R.string.import_title))
                         .content(res.getString(R.string.import_message_replace_confirm, displayFileName))
-                        .positiveText(res.getString(R.string.dialog_positive_replace))
-                        .negativeText(res.getString(R.string.dialog_cancel))
+                        .positiveText(R.string.dialog_positive_replace)
+                        .negativeText(R.string.dialog_cancel)
                         .onPositive((dialog, which) -> {
                             ((ImportDialogListener) getActivity()).importReplace(getArguments().getString("dialogMessage"));
                             dismissAllDialogFragments();

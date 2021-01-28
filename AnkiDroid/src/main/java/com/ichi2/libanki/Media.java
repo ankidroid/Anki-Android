@@ -24,9 +24,12 @@ import android.text.TextUtils;
 
 import android.util.Pair;
 
-import com.ichi2.libanki.template.Template;
+import com.ichi2.anki.AnkiDroidApp;
+import com.ichi2.libanki.exception.EmptyMediaException;
+import com.ichi2.libanki.template.TemplateFilters;
 import com.ichi2.utils.Assert;
 
+import com.ichi2.utils.ExceptionUtil;
 import com.ichi2.utils.JSONArray;
 import com.ichi2.utils.JSONObject;
 
@@ -129,7 +132,7 @@ public class Media {
         File fd = new File(mDir);
         if (!fd.exists()) {
             if (!fd.mkdir()) {
-                Timber.e("Cannot create media directory: " + mDir);
+                Timber.e("Cannot create media directory: %s", mDir);
             }
         }
         // change database
@@ -234,7 +237,10 @@ public class Media {
      * In AnkiDroid, adding a media file will not only copy it to the media directory, but will also insert an entry
      * into the media database marking it as a new addition.
      */
-    public String addFile(File ofile) throws IOException {
+    public String addFile(File ofile) throws IOException, EmptyMediaException {
+        if (ofile == null || ofile.length() == 0) {
+            throw new EmptyMediaException();
+        }
         String fname = writeData(ofile);
         markFileAdd(fname);
         return fname;
@@ -305,7 +311,7 @@ public class Media {
         List<String> l = new ArrayList<>();
         Model model = mCol.getModels().get(mid);
         List<String> strings = new ArrayList<>();
-        if (model.getInt("type") == Consts.MODEL_CLOZE && string.contains("{{c")) {
+        if (model.isCloze() && string.contains("{{c")) {
             // if the field has clozes in it, we'll need to expand the
             // possibilities so we can render latex
             strings = _expandClozes(string);
@@ -325,7 +331,7 @@ public class Media {
                 m = p.matcher(s);
                 while (m.find()) {
                     String fname = m.group(fnameIdx);
-                    boolean isLocal = !fRemotePattern.matcher(fname.toLowerCase(Locale.US)).find();
+                    boolean isLocal = !fRemotePattern.matcher(fname.toLowerCase(Locale.getDefault())).find();
                     if (isLocal || includeRemote) {
                         l.add(fname);
                     }
@@ -343,8 +349,8 @@ public class Media {
         while (m.find()) {
             ords.add(m.group(1));
         }
-        ArrayList<String> strings = new ArrayList<>();
-        String clozeReg = Template.clozeReg;
+        ArrayList<String> strings = new ArrayList<>(ords.size() + 1);
+        String clozeReg = TemplateFilters.clozeReg;
         
         for (String ord : ords) {
             StringBuffer buf = new StringBuffer();
@@ -353,7 +359,7 @@ public class Media {
                 if (!TextUtils.isEmpty(m.group(4))) {
                     m.appendReplacement(buf, "[$4]");
                 } else {
-                    m.appendReplacement(buf, Template.CLOZE_DELETION_REPLACEMENT);
+                    m.appendReplacement(buf, TemplateFilters.CLOZE_DELETION_REPLACEMENT);
                 }
             }
             m.appendTail(buf);
@@ -432,7 +438,7 @@ public class Media {
         File mdir = new File(dir());
         // gather all media references in NFC form
         Set<String> allRefs = new HashSet<>();
-        try (Cursor cur = mCol.getDb().getDatabase().query("select id, mid, flds from notes", null)) {
+        try (Cursor cur = mCol.getDb().query("select id, mid, flds from notes")) {
             while (cur.moveToNext()) {
                 long nid = cur.getLong(0);
                 long mid = cur.getLong(1);
@@ -510,7 +516,7 @@ public class Media {
         } catch (SQLException ignored) {
             _deleteDB();
         }
-        List<List<String>> result = new ArrayList<>();
+        List<List<String>> result = new ArrayList<>(3);
         result.add(nohave);
         result.add(unused);
         result.add(invalid);
@@ -691,8 +697,8 @@ public class Media {
 
 
     private Pair<List<String>, List<String>> _changes() {
-        Map<String, Object[]> cache = new HashMap<>();
-        try (Cursor cur = mDb.getDatabase().query("select fname, csum, mtime from media where csum is not null", null)) {
+        Map<String, Object[]> cache = new HashMap<>(mDb.queryScalar("SELECT count() FROM media WHERE csum IS NOT NULL"));
+        try (Cursor cur = mDb.query("select fname, csum, mtime from media where csum is not null")) {
             while (cur.moveToNext()) {
                 String name = cur.getString(0);
                 String csum = cur.getString(1);
@@ -781,7 +787,7 @@ public class Media {
 
 
     public Pair<String, Integer> syncInfo(String fname) {
-        try (Cursor cur = mDb.getDatabase().query("select csum, dirty from media where fname=?", new String[] {fname})) {
+        try (Cursor cur = mDb.query("select csum, dirty from media where fname=?", fname)) {
             if (cur.moveToNext()) {
                 String csum = cur.getString(0);
                 int dirty = cur.getInt(1);
@@ -852,11 +858,13 @@ public class Media {
      */
     public Pair<File, List<String>> mediaChangesZip() {
         File f = new File(mCol.getPath().replaceFirst("collection\\.anki2$", "tmpSyncToServer.zip"));
-        Cursor cur = null;
-        try (ZipOutputStream z = new ZipOutputStream(new BufferedOutputStream(new FileOutputStream(f)))) {
+        List<String> fnames = new ArrayList<>();
+        try (ZipOutputStream z = new ZipOutputStream(new BufferedOutputStream(new FileOutputStream(f)));
+             Cursor cur = mDb.query(
+                "select fname, csum from media where dirty=1 limit " + Consts.SYNC_ZIP_COUNT)
+        ) {
             z.setMethod(ZipOutputStream.DEFLATED);
 
-            List<String> fnames = new ArrayList<>();
             // meta is a list of (fname, zipname), where zipname of null is a deleted file
             // NOTE: In python, meta is a list of tuples that then gets serialized into json and added
             // to the zip as a string. In our version, we use JSON objects from the start to avoid the
@@ -864,8 +872,7 @@ public class Media {
             JSONArray meta = new JSONArray();
             int sz = 0;
             byte[] buffer = new byte[2048];
-            cur = mDb.getDatabase().query(
-                    "select fname, csum from media where dirty=1 limit " + Consts.SYNC_ZIP_COUNT, null);
+
 
             for (int c = 0; cur.moveToNext(); c++) {
                 String fname = cur.getString(0);
@@ -910,10 +917,6 @@ public class Media {
         } catch (IOException e) {
             Timber.e(e, "Failed to create media changes zip: ");
             throw new RuntimeException(e);
-        } finally {
-            if (cur != null) {
-                cur.close();
-            }
         }
     }
 
@@ -927,12 +930,13 @@ public class Media {
      */
     public int addFilesFromZip(ZipFile z) throws IOException {
         try {
-            List<Object[]> media = new ArrayList<>();
             // get meta info first
             JSONObject meta = new JSONObject(Utils.convertStreamToString(z.getInputStream(z.getEntry("_meta"))));
             // then loop through all files
             int cnt = 0;
-            for (ZipEntry i : Collections.list(z.entries())) {
+            ArrayList<? extends ZipEntry> zipEntries = Collections.list(z.entries());
+            List<Object[]> media = new ArrayList<>(zipEntries.size());
+            for (ZipEntry i : zipEntries) {
                 String fileName = i.getName();
                 if ("_meta".equals(fileName)) {
                      // ignore previously-retrieved meta
@@ -1018,4 +1022,35 @@ public class Media {
         long mod = mDb.queryLongScalar("select dirMod from meta");
         return mod == 0;
     }
+
+
+    public void rebuildIfInvalid() throws IOException {
+        try {
+            _changed();
+            return;
+        } catch (Exception e) {
+            if (!ExceptionUtil.containsMessage(e, "no such table: meta")) {
+                throw e;
+            }
+            AnkiDroidApp.sendExceptionReport(e, "media::rebuildIfInvalid");
+
+            // TODO: We don't know the root cause of the missing meta table
+            Timber.w(e, "Error accessing media database. Rebuilding");
+            // continue below
+        }
+
+
+        // Delete and recreate the file
+        mDb.getDatabase().close();
+
+        String path = mDb.getPath();
+        Timber.i("Deleted %s", path);
+
+        new File(path).delete();
+
+        mDb = new DB(path);
+        _initDB();
+    }
+
+
 }

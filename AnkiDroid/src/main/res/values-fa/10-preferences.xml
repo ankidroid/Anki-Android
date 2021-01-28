@@ -42,14 +42,12 @@
     <string name="disabled">غیر فعال شده</string>
     <string name="enabled">فعال شده</string>
     <!-- preferences.xml categories-->
-    <string name="pref_cat_general">AnkiDroid</string>
     <string name="pref_cat_general_summ">تنظیمات کلی</string>
     <string name="pref_cat_reviewing">بازبینی</string>
     <string name="pref_cat_reviewing_summ">تنظیمات مرور بدون اختصاص به دسته ای خاص</string>
     <string name="pref_cat_reviewer_behaviour">رفتار</string>
     <string name="pref_cat_flashcard">نمایش</string>
     <string name="pref_cat_whiteboard">تخته سفید</string>
-    <string name="pref_cat_automatic_display">نمایش پاسخ بصورت خودکار</string>
     <string name="pref_cat_appearance">ظاهر</string>
     <string name="pref_cat_appearance_summ">تغییر پس زمینه و خط پیش فرض</string>
     <string name="pref_cat_themes">پوسته ها</string>
@@ -66,8 +64,6 @@
     <string name="about_version">نسخه: </string>
     <!-- preferences.xml entries-->
     <string name="whiteboard_stroke_width">عرض حاشیه</string>
-    <string name="whiteboard_black">حاشیه‌های تک‌رنگ</string>
-    <string name="whiteboard_black_summ">حافظه کمتری استفاده می‌کند، اما در حالت شب کار نمی‌کند</string>
     <string name="use_input_tag">پاسخ را در کارت بنویسید</string>
     <string name="use_input_tag_summ">از یک کادر نوشتن متن درون کارت برای نوشتن پاسخ استفاده کنید</string>
     <string name="dictionary">فرهنگ لغت برای مراجعه</string>
@@ -96,15 +92,26 @@
     <string name="gestures_summ">استفاده از حرکات و ضربات لمسی برای انجام کارهایی مثل پاسخ دادن و ویرایش کارت‌ها.</string>
     <string name="gestures_allow_links">چشم‌پوشی از فرمان‌های لمسی روی لینک‌ها</string>
     <string name="gestures_allow_links_summary">هنگام لمس لینک/یادآور فشار داده شود فرمان لمسی عمل نخواهد کرد.</string>
+    <string name="gestures_corner_touch">9-point touch</string>
+    <string name="gestures_corner_touch_summary">Allow touch gestures in screen corners</string>
     <string name="gestures_swipe_up">ضربه به سمت بالا</string>
     <string name="gestures_swipe_down">ضربه به سمت پایین</string>
     <string name="gestures_swipe_left">ضربه سمت چپ</string>
     <string name="gestures_swipe_right">ضربه به سمت راست</string>
     <string name="gestures_double_tap">دو ضربه بزنید</string>
     <string name="gestures_tap_top">به بالا ضربه بزنید</string>
-    <string name="gestures_tap_bottom">به پایین ضربه بزنید</string>
     <string name="gestures_tap_left">به چپ ضربه بزنیدضربه چپ</string>
     <string name="gestures_tap_right">به راست ضربه بزنید</string>
+    <string name="gestures_tap_bottom">به پایین ضربه بزنید</string>
+    <string name="gestures_corner_tap_top_left">Touch top left</string>
+    <string name="gestures_corner_tap_top_center">Touch top center</string>
+    <string name="gestures_corner_tap_top_right">Touch top right</string>
+    <string name="gestures_corner_tap_middle_left">Touch middle left</string>
+    <string name="gestures_corner_tap_middle_center">Touch middle center</string>
+    <string name="gestures_corner_tap_middle_right">Touch middle right</string>
+    <string name="gestures_corner_tap_bottom_left">Touch bottom left</string>
+    <string name="gestures_corner_tap_bottom_center">Touch bottom center</string>
+    <string name="gestures_corner_tap_bottom_right">Touch bottom right</string>
     <string name="gestures_volume_up">افزایش صدا</string>
     <string name="gestures_volume_down">کاهش صدا</string>
     <string name="more_scrolling_buttons">خبرخوان</string>
@@ -141,9 +148,8 @@
     <string name="timeout_answer_text">نمایش پاسخ بصورت خودکار</string>
     <string name="timeout_answer_summ">نمایش خودکار پاسخ بدون درخواست کاربر. تأخیر شامل زمان پخش فایل صوتی نیز می‌شود.</string>
     <string name="timeout_answer_seconds">زمان نمایش پاسخ</string>
-    <string name="timeout_answer_seconds_summ">XXX ثانیه</string>
+    <string name="timeout_answer_seconds_summ" comment="The time to wait (in seconds) in the reviewer before automatically showing the next question or answer">XXX ثانیه</string>
     <string name="timeout_question_seconds">زمان نمایش پرسش بعدی</string>
-    <string name="timeout_question_seconds_summ">XXX ثانیه</string>
     <string name="select_locale_title">زبان را انتخاب کنید</string>
     <string name="safe_display">حالت نمایش محتاطانه</string>
     <string name="safe_display_summ">غیرفعال کردن همۀ انیمیشن‌ها و استفاده از حالت امن‌تر برای نقاشی روی کارت‌ها. دستگاه‌های E-ink ممکن است نیازمند از گزینه باشند.</string>
@@ -164,7 +170,6 @@
     <string name="use_current">دسته برای کارتهای جدید</string>
     <string name="new_spread">موقعیت کارت جدید</string>
     <string name="learn_cutoff">محدودیت های پیش رو را یاد بگیرید</string>
-    <string name="learn_cutoff_summ">XXX دقیقه</string>
     <string name="time_limit">محدوده زمانی جعبه زمان</string>
     <string name="time_limit_summ">XXX دقیقه</string>
     <string name="day_offset">شروع روز بعد</string>
@@ -216,8 +221,8 @@
         <item quantity="other">%1$s\n%2$d دسته از این گروه استفاده می کند</item>
     </plurals>
     <string name="deck_conf_new_cards">کارت های جدید</string>
-    <string name="deck_conf_rev_cards">مرورها</string>
-    <string name="deck_conf_lps_cards">خطاها</string>
+    <string name="deck_conf_rev_cards" comment="Name of the deck options submenu for configuring reviews of due cards.">مرورها</string>
+    <string name="deck_conf_lps_cards" comment="Label of the submenu stating how lapses cards are treated.">خطاها</string>
     <string name="deck_conf_general">عمومی</string>
     <string name="deck_conf_reminders">یادآورها</string>
     <string name="deck_conf_steps">مراحل (در دقیقه)</string>
@@ -235,6 +240,7 @@
     <string name="deck_conf_use_general_timeout_settings">استفاده از تنظیمات عمومی</string>
     <string name="deck_conf_use_general_timeout_settings_summ">استفاده از تنظیمات عمومی \'نمایش خودکار جواب\' به جای استفاده از تنظیمات این گروه</string>
     <string name="deck_conf_easy_bonus">جایزه آسان</string>
+    <string name="deck_conf_hard_factor">Hard interval</string>
     <string name="deck_conf_ivl_fct">اصلاح کننده فاصله</string>
     <string name="deck_conf_max_ivl">حداکثر فاصله</string>
     <string name="deck_conf_new_lps_ivl">فاصله جدید</string>
@@ -251,29 +257,24 @@
     <string name="deck_conf_manage">گروه مدیریت</string>
     <string name="deck_conf_manage_summ">Add and change options groups</string>
     <string name="deck_conf_current_group">گروه فعلی</string>
-    <string name="deck_conf_rename">تغییر نام</string>
+    <string name="deck_conf_rename" comment="Menu entry to rename a deck">تغییر نام</string>
     <string name="deck_conf_reset">بازیابی پیش فرضها</string>
-    <string name="deck_conf_reset_title">بازیابی پیش فرضها</string>
     <string name="deck_conf_reset_message">تنظیمات فعلی گروه را به مقادیر پیش فرض بازمی گردانید؟</string>
-    <string name="deck_conf_add">پیکربندی را اضافه کن</string>
+    <string name="deck_conf_add" comment="Adding a new deck option group">پیکربندی را اضافه کن</string>
     <string name="deck_conf_add_summ">ایجاد یک کپی از تنظیمات گروه فعلی</string>
-    <string name="deck_conf_remove">حذف</string>
-    <string name="deck_conf_remove_title">حذف</string>
     <string name="deck_conf_remove_message">تنظیمات فعلی گروه حذف شود؟</string>
     <string name="deck_conf_set_subdecks">برای تمام دسته ها تنظیم شود</string>
     <plurals name="deck_conf_set_subdecks_summ">
         <item quantity="one">%s زیر دسته از این گروه استفاده خواهند کرد</item>
         <item quantity="other">%s زیر دسته از این گروه استفاده خواهند کرد</item>
     </plurals>
-    <string name="deck_conf_set_subdecks_title">برای تمام دسته ها تنظیم شود</string>
     <string name="deck_conf_set_subdecks_message">تنظیمات گروه فعلی برای کل این دسته از دسته ها تنظیم شود؟</string>
     <string name="pref_browser_editor_font">فونت مرورگر و ویرایشگر</string>
     <string name="deck_conf_cram_filter">فیلتر</string>
-    <string name="deck_conf_cram_options">گزینه ها</string>
     <string name="deck_conf_cram_search">جستجو</string>
     <string name="deck_conf_cram_limit">محدود به</string>
     <string name="deck_conf_cram_order">کارتهای انتخاب شده بوسیله</string>
-    <string name="deck_conf_cram_reschedule">برنا مه ریزی مجدد</string>
+    <string name="deck_conf_cram_reschedule" comment="Title of the box labelled by deck_conf_cram_reschedule_summ">برنا مه ریزی مجدد</string>
     <string name="deck_conf_cram_reschedule_summ">برنامه ریزی مجدد کارتها براساس جوابهای من در این دسته</string>
     <string name="deck_conf_cram_steps">قدم‌های سفارشی (به دقیقه)</string>
     <string name="deck_conf_cram_steps_summ">تعریف مراحل سفارشی</string>
@@ -283,6 +284,8 @@
     <string name="analytics_dialog_title">کمک به بهتر شدن AnkiDroid!</string>
     <string name="analytics_title">به اشتراک گذاشتن ویژگی‌های مورد استفاده</string>
     <string name="analytics_summ">شما می‌توانید با به اشتراک گذاشتن ویژگی‌هایی که استفاده می‌کنید می‌توانید به توسعۀ آنکی‌دروید کمک کنید</string>
-    <string name="enable_miui_keyboard_hack">\'Paste\' to insert cloze deletion</string>
-    <string name="enable_miui_keyboard_hack_summ">In the Note Editor, \'Paste\' will turn the selected text into a cloze</string>
+    <string name="note_editor_replace_newlines">Replace newlines with HTML</string>
+    <string name="note_editor_replace_newlines_summ">In the Note Editor, convert any instances of &lt;br&gt; to newlines when editing a card.</string>
+    <string name="no_code_formatting">Simple typed answer formatting</string>
+    <string name="no_code_formatting_summ">Fixes ‘􏿾’ appearing in typed answer results</string>
 </resources>

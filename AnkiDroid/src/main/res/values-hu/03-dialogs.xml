@@ -37,7 +37,7 @@
 ~ You should have received a copy of the GNU General Public License along with
 ~ this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools">
     <string name="check_db_title">Adatbázis ellenőrzése</string>
     <string name="check_db_warning">Ez sokáig tarthat</string>
     <string name="check_db_acknowledge">Adatbázis ellenőrizve</string>
@@ -60,7 +60,7 @@
         <item><![CDATA[Ha nem vagy fejlesztő, akkor is segíthetsz. Például ezen az AnkiDroid oldalon<a href=\"%1$s\"> fordítással kapcsolatosan </a>, frissíthető a wiki, vagy írhatsz a blogra és képernyőképeket is megoszthatsz az AnkiDroid-ról.]]></item>
         <item><![CDATA[Az AnkiDroid megjelent a <a href=\"%1$s\">GNU-GPL v3 license</a> és a forráskód elérhető <a href=\"%2$s\">on GitHub</a>.]]></item>
     </string-array>
-    <string name="preview_title">Előnézet</string>
+    <string name="preview_title" comment="Title of the window allowing to preview card(s)">Előnézet</string>
     <string name="reposition_card_dialog_title">Helyezze át az új kártyát</string>
     <string name="reposition_card_dialog_message">Kiinduló helyzet:</string>
     <string name="reposition_card_not_new_error">Csak az új kártyákat lehet áthelyezni</string>
@@ -75,7 +75,6 @@
         <item quantity="other">%d kártyák visszaállítva</item>
     </plurals>
     <!-- Reschedule Card Dialog -->
-    <string name="reschedule_card_dialog_title">Kártya átütemezés</string>
     <plurals name="reschedule_cards_dialog_title">
         <item quantity="one">Kártya átütemezése</item>
         <item quantity="other">Kártyák átütemezése</item>
@@ -96,8 +95,6 @@
     <string name="answering_error_message">A gyűjteménybe írás sikertelen. Az adatbázis lehet, hogy korrupt vagy nincs elég hely a lemezen.\n\n. Ha gyakrabban történik ilyen, akkor próbálja ellenőrizni az adatbázist, javítsa meg a gyűjteményt vagy állítsa azt vissza egy biztonsági másolatból. Ehhez nyomjon rá a \"beállításokra\".\n. Vagy lehet, hogy ez egy AnkiDroid bug; kérjük jelentse a hibát, hogy le tudjuk ellenőrizni.</string>
     <string name="answering_error_report">Hibák jelentése</string>
     <string name="repair_deck_dialog">Tényleg megpróbálod megjavítani az adatbázist?\n\nEnnek megkísérlése előtt a program létrehoz egy másolatot a \'%s\' almappában.</string>
-    <string name="intent_add_saved_information">Mentett adatok</string>
-    <string name="intent_add_clear_all">Mindent töröl</string>
     <string name="intent_aedict_empty">Az \"alap\" kategória üres</string>
     <string name="intent_aedict_category">Hogy új kártyákat adj az AnkiDroid-hoz, távolítsd el az összes Jegyzettömb/Notepad/ kategóriát, vagy adj hozzá egyet \'default\' névvel</string>
     <string name="custom_study_new_total_new">Új kártyák a pakliban: %d</string>
@@ -109,7 +106,6 @@
     <string name="custom_study_random">A pakliból x kártya véletlen kiválasztása:</string>
     <string name="custom_study_preview">Az elmúlt x nap új kártyáinak előre átnézése:</string>
     <string name="custom_study_rebuild_deck_corrupt">Nem lehetett újraépíteni a jelenlegi egyéni tanulókártyákat</string>
-    <string name="rebuild_custom_study_deck">Egyéni gyakorlópakli újraépítése.\nKérlek, várj...</string>
     <string name="importing_collection">Gyűjtemény importálása.\nKérlek, várj&#8230;</string>
     <string name="import_media_count">Média fájlok importálása %1$d%%\nKérlek, várj&#8230;</string>
     <string name="import_progress">• Importált megjegyzések: %1$d%%\n• importált kártyák: %2$d%%\n• utómunka: %3$d%%</string>
@@ -124,9 +120,10 @@
     <string name="dialog_ok">OK</string>
     <string name="dialog_no">Nem</string>
     <string name="dialog_continue">Folytatás</string>
-    <string name="dialog_positive_create">Létrehoz</string>
+    <string name="dialog_positive_create" comment="Create a new collection, probably erasing the previous one, may be necessary in case of error.">Létrehoz</string>
     <string name="dialog_positive_delete">Töröl</string>
-    <string name="dialog_positive_disable">Letilt</string>
+    <!-- Currently unsued, should be useful in the future -->
+    <string name="dialog_positive_disable" tools:ignore="UnusedResources">Letilt</string>
     <string name="dialog_positive_overwrite">Felülír</string>
     <string name="dialog_positive_remove">Eltávolít</string>
     <string name="dialog_positive_repair">Javít</string>
@@ -147,18 +144,19 @@
     <string name="check_media_no_unused_missing">Nincs haszálaton kívüli, vagy hiányzó fájl.</string>
     <string name="check_media_db_updated">Média adatbázis újraépült.</string>
     <string name="check_media_delete_unused">Használaton kívüliek törlése</string>
-    <string name="delete_media_message">Deleting media&#8230;</string>
-    <string name="delete_media_result_title">Deletion result</string>
+    <string name="delete_media_message">Média törlése...</string>
+    <string name="delete_media_result_title">Törlés eredménye</string>
     <plurals name="delete_media_result_message">
-        <item quantity="one">%d file deleted</item>
-        <item quantity="other">%d files deleted</item>
+        <item quantity="one">%d fájl törölve</item>
+        <item quantity="other">%d fájl törölve</item>
     </plurals>
     <!-- Tags Dialog Options -->
     <string name="tags_dialog_option_all_cards">Minden kártya</string>
     <string name="tags_dialog_option_new_cards">Új</string>
-    <string name="tags_dialog_option_due_cards">Esedékes</string>
+    <string name="tags_dialog_option_due_cards" comment="Name of cards that are already been reviewed in the past, and that should be reviewed again">Esedékes</string>
     <!-- Empty cards -->
     <string name="emtpy_cards_finding">Üres kártyák keresése&#8230;</string>
+    <string name="confirm_cancel">Meg akarod szakítani?</string>
     <string name="empty_cards_none">Nem találtam üres kártyát</string>
     <string name="empty_cards_count">%d darab törlendő kártya</string>
     <string name="empty_cards_deleted">%d darab kártya törölve</string>
@@ -175,7 +173,6 @@
     <!-- Database Integrity Check -->
     <string name="integrity_check_startup_title">Frissített AnkiDroid</string>
     <string name="integrity_check_startup_content">Az AnkiDroid frissítve lett. Ez a frissítés lehetséges adatbázis problémákat orvosol, javasoljuk, hogy most futtassátok az adatbázis ellenőrzést.</string>
-    <string name="integrity_check_positive">Adatbázis Ellenőrzése</string>
     <string name="integrity_check_continue_anyway">Folytatás Mindenképpen</string>
     <string name="integrity_check_insufficient_space">Az Adatbázis ellenőrzés sok ideiglenes helyet használ.\n\n.Erősen ajánlott, hogy legalább %s szabad tárhelyed legyen a készüléken mielőtt folytatnád.</string>
     <string name="integrity_check_insufficient_space_extra_content">\n\nJelenleg %s szabad hely van.</string>
@@ -190,8 +187,8 @@
     <!-- Database Errors-->
     <string name="database_locked_title">Adatbázis zárolva</string>
     <string name="database_locked_summary">Az AnkiDroid adatbázist egy másik alkalmazás használja. Kérjük zárja be ezt az alkalmazást, majd nyissa meg újra az AnkiDroidot.</string>
-    <string name="incompatible_database_version_title">Incompatible Database Version</string>
-    <string name="incompatible_database_version_summary">The database is a more advanced version than this version of AnkiDroid can work with. Upgrade AnkiDroid or downgrade the database to open it\n\nSupported version: %1$d\nDatabase version: %2$d\n\nThe following restore options will overwrite your current collection, possibly with a compatible database version:</string>
+    <string name="incompatible_database_version_title">Nem megfelelő adatbázis verzió</string>
+    <string name="incompatible_database_version_summary">Az adatbázis verziója fejlettebb, mint amit az AnkiDroid ezen verziója támogat. Frissítsd az AnkiDroid-ot vagy válts egy régebbi adatbázis verzióra.\n\nTámogatott verzió: %1$d\nAdatbázis verziója: %2$d\n\nA következő visszaállítási opciók felülírják a jelenlegi gyűjteményt, lehetőleg egy támogatott adatbázis verzióra:</string>
     <!-- Deck Picker Background-->
     <string name="background_image_applied">Háttérkép ráillesztve</string>
     <string name="background_image_removed">Háttérkép eltávolítva</string>
@@ -210,8 +207,27 @@
     <string name="boot_service_failed_to_schedule_notifications">Az emlékeztetők ütemezése sikertelen</string>
     <string name="boot_service_too_many_notifications">Túl sok emlékeztető van beütemezve. Néhány nem fog megjelenni</string>
     <!-- Locale Selection Dialog -->
-    <string name="locale_selection_dialog_title">Keyboard Hint Selection</string>
+    <string name="locale_selection_dialog_title">Keyboard Language Selection</string>
     <string name="locale_selection_dialog_summary">Some multilingual keyboards, such as GBoard support changing language when editing text\n\nPlease request the “setImeHintLocales” feature from your keyboard manufacturer if your keyboard does not change language.</string>
+    <!-- Help Dialog -->
+    <string name="help_title_using_ankidroid">AnkiDroid használata</string>
+    <string name="help_item_ankidroid_manual">AnkiDroid útmutató</string>
+    <string name="help_item_anki_manual">Anki útmutató</string>
+    <string name="help_item_ankidroid_faq">AnkiDroid GYIK</string>
+    <string name="help_title_get_help">Kérj segítséget</string>
+    <string name="help_item_mailing_list">Levelezőlista</string>
+    <string name="help_item_reddit">Reddit</string>
+    <string name="help_item_report_bug">Hiba jelentése</string>
+    <string name="help_title_support_ankidroid">AnkiDroid támogatása</string>
+    <string name="help_item_support_opencollective_donate">Adományozás</string>
+    <string name="help_item_support_develop_ankidroid">Feljesztés</string>
+    <string name="help_item_support_rate_ankidroid">Értékelés</string>
+    <string name="help_item_support_other_ankidroid">Egyéb</string>
+    <string name="help_title_community">Közösség</string>
+    <string name="help_item_anki_forums">Anki fórumok</string>
+    <string name="help_item_discord">Discord</string>
+    <string name="help_item_facebook">Facebook</string>
+    <string name="help_item_twitter">Twitter</string>
     <!--Sync-->
     <plurals name="sync_automatic_sync_needs_more_time">
         <item quantity="one">Egy auto szinkronizálás elindulhat %d másodperc elteltével.</item>

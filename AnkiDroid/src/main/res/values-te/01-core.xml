@@ -38,14 +38,14 @@
 ~ this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <resources>
+    <string name="yes">yes</string>
     <!-- Navigation drawer items-->
     <string name="decks">డెక్స్</string>
-    <string name="card_browser">కార్డ్ బ్రౌజర్</string>
+    <string name="card_browser" comment="The usage of card browser inside the app (note the casing)">కార్డ్ బ్రౌజర్</string>
     <string name="statistics">గణాంకాలు</string>
     <string name="settings">సెట్టింగులు</string>
     <string name="help">సహాయం</string>
     <string name="send_feedback">స్పందన పంపండి</string>
-    <string name="studyoptions_title">డెక్ అవలోకనం</string>
     <string name="studyoptions_due_today">నేడు గడువు:</string>
     <string name="studyoptions_new_total">అన్ని కొత్త కార్డులు:</string>
     <string name="studyoptions_total_cards">మొత్తం కార్డులు:</string>
@@ -90,22 +90,14 @@
     <string name="menu_import">దిగుమతి</string>
     <string name="undo">చెరచు</string>
     <string name="undo_action_review">చివరి సమీక్ష</string>
-    <string name="undo_action_bury_card">గమనిక బరీ</string>
-    <string name="undo_action_bury_note">బరీ గమనిక</string>
-    <string name="undo_action_suspend_card">కార్డ్ను ఆపివేయి</string>
-    <string name="undo_action_suspend_note">గమనికని ఆపివేయి</string>
-    <string name="undo_action_delete">గమనికను తొలగించండి</string>
-    <string name="undo_action_delete_multi">delete notes</string>
     <string name="undo_action_change_deck_multi">change decks</string>
-    <string name="undo_action_reschedule_card">reschedule</string>
-    <string name="undo_action_reset_card">reset progress</string>
-    <string name="undo_action_reposition_card">reposition</string>
     <string name="move_all_to_deck">Move all to deck</string>
     <string name="unbury">త్రవ్వితీయు</string>
     <string name="rename_deck">పేరు మార్చండి</string>
-    <string name="menu_add">చేర్చు</string>
+    <string name="create_shortcut">Create shortcut</string>
+    <string name="menu_add" comment="A generic add button - Main Deck Picker and card templates. Please inform us if you need more specific strings">చేర్చు</string>
     <string name="menu_add_note">గమనిక చేర్చు</string>
-    <string name="menu_my_account">ఖాతాను సమకాలీకరించండి</string>
+    <string name="menu_my_account" comment="Label of the window in which the user should enter their account. This text can\'t be found in AnkiDroid directly.">ఖాతాను సమకాలీకరించండి</string>
     <string name="menu_dismiss_note">దాచు / తొలగించు</string>
     <string name="menu_bury_card">గమనిక బరీ</string>
     <string name="menu_bury_note">బరీ గమనిక</string>
@@ -129,7 +121,7 @@
     <string name="menu_unmark_note">గమనిక నుండి గుర్తు తీసివేయండి</string>
     <string name="menu_toggle_mic_tool_bar">Check pronunciation</string>
     <string name="new_deck">ఒక డెక్ సృష్టించండి</string>
-    <string name="create">సృష్టించు</string>
+    <string name="create" comment="Button to create a filtered deck">సృష్టించు</string>
     <string name="new_dynamic_deck">ఫిల్టర్ డెక్ను సృష్టించండి</string>
     <string name="night_mode">రాత్రి మోడ్</string>
     <string name="directory_inaccessible">AnkiDroid డైరెక్టరీ అందుబాటులో లేదు</string>
@@ -162,6 +154,7 @@
     <string name="custom_study_deck_name">కస్టమ్ అధ్యయనం సెషన్</string>
     <string name="custom_study_deck_exists">మొదటి సానుకూల అధ్యయనం డెక్ యొక్క పేరు మార్చండి</string>
     <string name="empty_deck">ఈ డెక్ ఖాళీగా ఉంది</string>
+    <string name="empty_deck_add_note">Add card</string>
     <string name="invalid_deck_name">Invalid deck name</string>
     <string name="studyoptions_empty">ఈ డెక్ ఖాళీగా ఉంది. క్రొత్త కంటెంట్ని జోడించడానికి + బటన్ నొక్కండి.</string>
     <string name="studyoptions_limit_reached">రోజువారీ అధ్యయనం పరిమితిని చేరుకుంది</string>
@@ -187,7 +180,6 @@
     <string name="card_template_editor_front">ముందు టెంప్లేట్</string>
     <string name="card_template_editor_back">బ్యాక్ టెంప్లేట్</string>
     <string name="card_template_editor_styling">స్టైలింగ్</string>
-    <string name="card_template_editor_menu_delete">తొలగించు</string>
     <string name="card_template_editor_menu_card_browser_appearance">Card Browser Appearance</string>
     <string name="card_template_editor_deck_override">Deck Override</string>
     <string name="card_template_editor_cant_delete">కనీసం ఒక కార్డు రకం అవసరం</string>
@@ -201,11 +193,21 @@
     <string name="template_for_current_card_deleted">The card type for the current card was deleted.</string>
     <!-- Card Browser Appearance -->
     <string name="card_template_browser_appearance_title">Browser appearance</string>
+    <string name="current_and_default_deck">%1$s (%2$s)</string>
+    <!-- card Info -->
+    <string name="card_info_title">Card info</string>
     <!-- Permissions -->
     <string name="read_write_permission_label">AnkiDroid డేటాబేస్కు చదవండి మరియు వ్రాయండి</string>
     <string name="read_write_permission_description">పొందు ప్రస్తుతం ఉన్న గమనికలు, కార్డులు, నోట్ రకాలు మరియు డెక్స్, కొత్త వాటిని సృష్టించడం</string>
     <!-- Context Menu -->
-    <string name="card_browser_label">Card Browser</string>
-    <string name="card_browser_context_menu">Card Browser</string>
+    <string name="card_browser_context_menu" comment="The value which appears in the system context menu. Note the casing difference">Card Browser</string>
     <string name="context_menu_anki_card_label">Anki Card</string>
+    <string name="has_a_problem" comment="First field is either front template or back template. Second field is the error message.">%1$s has a problem:<br/>%2$s</string>
+    <string name="more_information">More information</string>
+    <string name="no_field">Found \'{{%1$s}}\', but there is no field called \'%1$s\'.</string>
+    <string name="closed_tag_not_open">Found \'{{/%1$s}}\', but missing \'{{#%1$s}}\' or \'{{^%1$s}}\'.</string>
+    <string name="missing_closing_bracket">Missing \'}}\' in \'%s\'.</string>
+    <string name="open_tag_not_closed">Missing \'{{%s}}\'.</string>
+    <string name="wrong_tag_closed">Found \'{{/%1$s}}\', but expected \'{{/%2$s}}\'</string>
+    <string name="filter_error">Error in filter %s</string>
 </resources>

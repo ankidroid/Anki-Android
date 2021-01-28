@@ -85,6 +85,40 @@
         <item>200</item>
         <item>500</item>
     </string-array>
+    <string-array name="gestures_labels">
+        <item>@string/gesture_no_action</item>
+        <item>@string/show_answer</item>
+        <item>@string/gesture_answer_1</item>
+        <item>@string/gesture_answer_2</item>
+        <item>@string/gesture_answer_3</item>
+        <item>@string/gesture_answer_4</item>
+        <item>@string/gesture_answer_green</item>
+        <item>@string/gesture_answer_better_recommended</item>
+        <item>@string/undo</item>
+        <item>@string/cardeditor_title_edit_card</item>
+        <item>@string/card_info_title</item>
+        <item>@string/gesture_tag_note</item>
+        <item>@string/menu_mark_note</item>
+        <item>@string/gesture_lookup</item>
+        <item>@string/menu_bury_card</item>
+        <item>@string/menu_suspend_card</item>
+        <item>@string/menu_delete_note</item>
+        <item>@string/gesture_play</item>
+        <item>@string/gesture_abort_learning</item>
+        <item>@string/menu_bury_note</item>
+        <item>@string/menu_suspend_note</item>
+        <item>@string/gesture_flag_red</item>
+        <item>@string/gesture_flag_orange</item>
+        <item>@string/gesture_flag_green</item>
+        <item>@string/gesture_flag_blue</item>
+        <item>@string/gesture_flag_remove</item>
+        <item>@string/gesture_page_up</item>
+        <item>@string/gesture_page_down</item>
+        <item>@string/gesture_abort_sync</item>
+        <item>@string/record_voice</item>
+        <item>@string/replay_voice</item>
+        <item>@string/gesture_toggle_whiteboard</item>
+    </string-array>
     <string-array name="gestures_values">
         <item>0</item>
         <item>1</item>
@@ -96,7 +130,8 @@
         <item>7</item>
         <item>8</item>
         <item>9</item>
-        <item>32</item>
+        <item>33</item> <!-- Card Info -->
+        <item>32</item> <!-- Tag Note -->
         <item>10</item>
         <item>11</item>
         <item>12</item>
@@ -114,6 +149,10 @@
         <item>24</item> <!-- Unset Flag -->
         <item>30</item> <!-- Page Up -->
         <item>31</item> <!-- Page Down -->
+        <item>34</item> <!-- Abort Learning and Sync -->
+        <item>35</item> <!-- Record voice -->
+        <item>36</item> <!-- Replay voice -->
+        <item>37</item> <!-- Toggle whiteboard -->
     </string-array>
     <string-array name="custom_button_values">
         <item>2</item>
@@ -126,6 +165,8 @@
         <item>3</item>
     </string-array>
     <string name="link_anki">http://ankisrs.net</string>
+    <string name="link_anki_manual">https://docs.ankiweb.net/#/</string>
+    <string name="link_anki_forum">https://forums.ankiweb.net/</string>
     <string name="link_forum">http://groups.google.com/group/anki-android</string>
     <string name="link_wiki">https://github.com/ankidroid/Anki-Android/wiki</string>
     <string name="link_issue_tracker">https://github.com/ankidroid/Anki-Android/issues</string>
@@ -145,14 +186,22 @@
     <string name="link_manual_zh">https://docs.ankidroid.org/manual-zh.html</string>
     <string name="link_help_ar">https://docs.ankidroid.org/help-ar.html</string>
     <string name="link_manual_ar">https://docs.ankidroid.org/manual-ar.html</string>
-    <string name="link_manual_getting_started">https://docs.ankidroid.org/manual.html#gettingStarted</string>
+    <string name="link_manual_note_format_toolbar">https://docs.ankidroid.org/manual.html#noteFormatToolbar</string>
     <string name="link_faq_tts">https://github.com/ankidroid/Anki-Android/wiki/FAQ#tts--text-to-speech-is-not-speaking</string>
     <string name="link_faq_missing_media" tools:ignore="Typos">https://github.com/ankidroid/Anki-Android/wiki/FAQ#why-doesnt-my-sound-or-image-work-on-ankidroid</string>
+    <string name="link_faq_invalid_protocol_relative">https://github.com/ankidroid/Anki-Android/wiki/FAQ#why-do-my-images-need-a-protocol</string>
     <string name="shared_decks_url">https://ankiweb.net/shared/decks/</string>
     <string name="repair_deck">https://docs.ankiweb.net/#/files?id=corrupt-collections</string>
     <string name="resetpw_url">http://ankiweb.net/account/resetpw</string>
     <string name="register_url">https://ankiweb.net/account/register</string>
-    <string name="changelog_url">https://docs.ankidroid.org/changelog.html</string>
+    <string name="link_reddit">https://www.reddit.com/r/Anki/</string>
+    <!-- Link is in the name of Glutanimate - server admin -->
+    <string name="link_discord">https://discord.gg/qjzcRTx</string>
+    <string name="link_facebook">https://www.facebook.com/AnkiDroid/</string>
+    <string name="link_twitter">https://twitter.com/ankidroid</string>
+    <string name="link_ankidroid_development_guide">https://github.com/ankidroid/Anki-Android/wiki/Development-Guide</string>
+    <string name="link_ankidroid_faq">https://github.com/ankidroid/Anki-Android/wiki/FAQ</string>
+    <string name="link_opencollective_donate">https://opencollective.com/ankidroid#section-contribute</string>
 
     <string-array name="leech_action_values">
         <item>0</item>
@@ -199,16 +248,6 @@
         <item>@string/full_screen_complete</item>
     </string-array>
 
-    <string-array name="navigation_titles">
-        <item>@string/decks</item>
-        <item>@string/card_browser</item>
-        <item>@string/statistics</item>
-        <item>@string/settings</item>
-        <item>@string/night_mode</item>
-        <item>@string/help</item>
-        <item>@string/send_feedback</item>
-    </string-array>
-
     <string-array name="day_theme_values">
         <item>0</item>
         <item>1</item>
@@ -222,5 +261,14 @@
     <string-array name="answer_buttons_position" translatable="false">
         <item>top</item>
         <item>bottom</item>
+    </string-array>
+    <string-array name="html_size_codes">
+        <item>xx-small</item>
+        <item>x-small</item>
+        <item>small</item>
+        <item>medium</item>
+        <item>large</item>
+        <item>x-large</item>
+        <item>xx-large</item>
     </string-array>
 </resources>

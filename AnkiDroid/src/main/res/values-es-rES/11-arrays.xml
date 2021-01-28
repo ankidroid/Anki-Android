@@ -39,35 +39,6 @@
         <item>Nunca enviar</item>
         <item>Preguntarme</item>
     </string-array>
-    <string-array name="gestures_labels">
-        <item>Ninguna acción</item>
-        <item>Mostrar respuesta</item>
-        <item>Botón de respuesta 1</item>
-        <item>Botón de respuesta 2</item>
-        <item>Botón de respuesta 3</item>
-        <item>Botón de respuesta 4</item>
-        <item>Respuesta recomendada (verde)</item>
-        <item>Respuesta mejor que la recomendada</item>
-        <item>Deshacer</item>
-        <item>Editar nota</item>
-        <item>Etiquetar nota</item>
-        <item>Marcar nota</item>
-        <item>Buscar expresión</item>
-        <item>Enterrar tarjeta</item>
-        <item>Suspender Tarjeta</item>
-        <item>Eliminar nota</item>
-        <item>Reproducir multimedia</item>
-        <item>Abandonar aprendizaje</item>
-        <item>Enterrar nota</item>
-        <item>Suspender Nota</item>
-        <item>Cambiar Bandera Roja</item>
-        <item>Cambiar Bandera Naranja</item>
-        <item>Cambiar Bandera verde</item>
-        <item>Cambiar Bandera Azul</item>
-        <item>Eliminar Bandera</item>
-        <item>Página Arriba</item>
-        <item>Página Abajo</item>
-    </string-array>
     <string-array name="leech_action_labels">
         <item>Suspender tarjeta</item>
         <item>Sólo etiquetar</item>
@@ -108,4 +79,39 @@
         <item>Negro</item>
         <item>Oscuro</item>
     </string-array>
+    <string-array name="html_size_code_labels">
+        <item>xx-pequeño</item>
+        <item>x-pequeño</item>
+        <item>pequeño</item>
+        <item>medio</item>
+        <item>grande</item>
+        <item>x-grande</item>
+        <item>xx-grande</item>
+    </string-array>
+    <!--
+    #7794 - it\'s better to use @string references in non-translated arrays as this handles
+    changes in the array ordering better
+     -->
+    <string name="gesture_no_action">Ninguna acción</string>
+    <string name="gesture_answer_1">Botón de respuesta 1</string>
+    <string name="gesture_answer_2">Botón de respuesta 2</string>
+    <string name="gesture_answer_3">Botón de respuesta 3</string>
+    <string name="gesture_answer_4">Botón de respuesta 4</string>
+    <string name="gesture_answer_green">Respuesta recomendada (verde)</string>
+    <string name="gesture_answer_better_recommended">Respuesta mejor que la recomendada</string>
+    <string name="gesture_tag_note">Etiquetar nota</string>
+    <string name="gesture_lookup">Buscar expresión</string>
+    <string name="gesture_play">Reproducir multimedia</string>
+    <string name="gesture_abort_learning">Abandonar aprendizaje</string>
+    <string name="gesture_flag_red">Cambiar Bandera Roja</string>
+    <string name="gesture_flag_orange">Cambiar Bandera Naranja</string>
+    <string name="gesture_flag_green">Cambiar Bandera verde</string>
+    <string name="gesture_flag_blue">Cambiar Bandera Azul</string>
+    <string name="gesture_flag_remove">Eliminar Bandera</string>
+    <string name="gesture_page_up">Página Arriba</string>
+    <string name="gesture_page_down">Página Abajo</string>
+    <string name="gesture_abort_sync">Abort Learning and Sync</string>
+    <string name="gesture_toggle_whiteboard">Toggle Whiteboard</string>
+    <string name="record_voice">Record Voice</string>
+    <string name="replay_voice">Replay Voice</string>
 </resources>

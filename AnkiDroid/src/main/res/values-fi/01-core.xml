@@ -38,14 +38,14 @@
 ~ this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <resources>
+    <string name="yes">kyllä</string>
     <!-- Navigation drawer items-->
     <string name="decks">Pakat</string>
-    <string name="card_browser">Korttiselain</string>
+    <string name="card_browser" comment="The usage of card browser inside the app (note the casing)">Korttiselain</string>
     <string name="statistics">Tilastot</string>
     <string name="settings">Asetukset</string>
     <string name="help">Ohje</string>
     <string name="send_feedback">Anna palautetta</string>
-    <string name="studyoptions_title">Pakan yleiskatsaus</string>
     <string name="studyoptions_due_today">Tälle päivälle:</string>
     <string name="studyoptions_new_total">Uusia kortteja yhteensä:</string>
     <string name="studyoptions_total_cards">Kortteja yhteensä:</string>
@@ -71,8 +71,8 @@
         <item quantity="one">%d päivä %d jäljellä</item>
         <item quantity="other">%d päivää %d jäljellä</item>
     </plurals>
-    <string name="no_cards_placeholder_title">Collection is empty</string>
-    <string name="no_cards_placeholder_description">Start adding cards\nusing the + icon.</string>
+    <string name="no_cards_placeholder_title">Kokoelma on tyhjä</string>
+    <string name="no_cards_placeholder_description">Aloita korttien lisääminen\nkäyttäen + kuvaketta</string>
     <!-- The deck picker via AnkiStatsTaskHandler.java -->
     <plurals name="studied_cards_today">
         <item quantity="one">Opiskelit tänään %1$d kortin ajassa %2$s</item>
@@ -81,7 +81,7 @@
     <!-- flashcard_portrait.xml -->
     <string name="type_answer_hint">Kirjoita vastaus</string>
     <string name="show_answer">Näytä vastaus</string>
-    <string name="hide_answer">Hide answer</string>
+    <string name="hide_answer">Piilota vastaus</string>
     <string name="ease_button_again">Uudestaan</string>
     <string name="ease_button_hard">Vaikea</string>
     <string name="ease_button_good">Hyvä</string>
@@ -90,22 +90,14 @@
     <string name="menu_import">Tuo</string>
     <string name="undo">Kumoa</string>
     <string name="undo_action_review">edellinen kertaus</string>
-    <string name="undo_action_bury_card">piilota kortti</string>
-    <string name="undo_action_bury_note">piilota merkintä</string>
-    <string name="undo_action_suspend_card">jäädytä kortti</string>
-    <string name="undo_action_suspend_note">jäädytä merkintä</string>
-    <string name="undo_action_delete">poista merkintä</string>
-    <string name="undo_action_delete_multi">poista merkinnät</string>
     <string name="undo_action_change_deck_multi">vaihda pakkoja</string>
-    <string name="undo_action_reschedule_card">ajasta uudelleen</string>
-    <string name="undo_action_reset_card">nollaa edistyminen</string>
-    <string name="undo_action_reposition_card">reposition</string>
     <string name="move_all_to_deck">Siirrä kaikki pakkaan</string>
     <string name="unbury">Paljasta</string>
     <string name="rename_deck">Nimeä pakka uudelleen</string>
-    <string name="menu_add">Lisää</string>
+    <string name="create_shortcut">Luo pikakuvake</string>
+    <string name="menu_add" comment="A generic add button - Main Deck Picker and card templates. Please inform us if you need more specific strings">Lisää</string>
     <string name="menu_add_note">Lisää merkintä</string>
-    <string name="menu_my_account">Synkronoi tili</string>
+    <string name="menu_my_account" comment="Label of the window in which the user should enter their account. This text can\'t be found in AnkiDroid directly.">Synkronoi tili</string>
     <string name="menu_dismiss_note">Piilota / Poista</string>
     <string name="menu_bury_card">Piilota kortti</string>
     <string name="menu_bury_note">Piilota merkintä</string>
@@ -121,15 +113,15 @@
     <string name="menu_flag_card_two">Oranssi lippu</string>
     <string name="menu_flag_card_three">Vihreä lippu</string>
     <string name="menu_flag_card_four">Sininen lippu</string>
-    <string name="menu_edit_tags">Edit tags</string>
+    <string name="menu_edit_tags">Muokkaa tageja</string>
     <string name="delete_note_message">Haluatko varmasti poistaa tämän merkinnän ja kaikki sen kortit?\n%s</string>
     <string name="menu_select">Valitse teksti</string>
     <string name="menu_search">Haku %1$s</string>
     <string name="menu_mark_note">Merkitse merkintä</string>
     <string name="menu_unmark_note">Poista merkintä</string>
-    <string name="menu_toggle_mic_tool_bar">Check pronunciation</string>
+    <string name="menu_toggle_mic_tool_bar">Tarkista ääntäminen</string>
     <string name="new_deck">Uusi pakka</string>
-    <string name="create">Luo</string>
+    <string name="create" comment="Button to create a filtered deck">Luo</string>
     <string name="new_dynamic_deck">Uusi suodatettu pakka</string>
     <string name="night_mode">Yötila</string>
     <string name="directory_inaccessible">AnkiDroidin hakemisto ei ole käytettävissä</string>
@@ -137,7 +129,7 @@
     The user is taken to the "App Info" screen, and needs to click "Permissions" and
     grant AnkiDroid the \'Storage\' permission. This needs to be a fairly generic message as implementations
     of the permissions/app info screen will differ between devices. -->
-    <string name="startup_no_storage_permission">Please grant AnkiDroid the ‘Storage’ permission to continue</string>
+    <string name="startup_no_storage_permission">Anna AnkiDroidille lupa ”Tallennustilalle” jatkaaksesi</string>
     <!--
         The time_quantities are units of time. They are used without
         plurals or dots.
@@ -154,15 +146,16 @@
     <string name="time_quantity_months">%.1f kk</string>
     <string name="time_quantity_years">%.1f v</string>
     <!-- or "%.1f a" -->
-    <string name="rebuild_filtered_deck">Rebuilding filtered deck&#8230;</string>
+    <string name="rebuild_filtered_deck">uudelleenrakennetaan suodatettu pakka&#8230;</string>
     <string name="rebuild_cram_label">Rakenna uudelleen</string>
     <string name="empty_cram_label">Tyhjä</string>
-    <string name="create_subdeck">Create subdeck</string>
-    <string name="empty_filtered_deck">Emptying filtered deck&#8230;</string>
+    <string name="create_subdeck">Luo johdannais pakka</string>
+    <string name="empty_filtered_deck">Tyhjennetään suodatettu pakka&#8230;</string>
     <string name="custom_study_deck_name">Mukautettu istunto</string>
     <string name="custom_study_deck_exists">Nimeä olemassa oleva mukautettu pakka ensin</string>
     <string name="empty_deck">Tämä pakka on tyhjä</string>
-    <string name="invalid_deck_name">Invalid deck name</string>
+    <string name="empty_deck_add_note">Add card</string>
+    <string name="invalid_deck_name">Pätemätön pakka nimi</string>
     <string name="studyoptions_empty">Tämä pakka on tyhjä. Paina + painiketta lisätäksesi uutta sisältöä.</string>
     <string name="studyoptions_limit_reached">Päivittäinen opiskeluraja saavutettu</string>
     <string name="studyoptions_empty_schedule">Ei opeteltavaksi ajoitettuja kortteja</string>
@@ -187,25 +180,34 @@
     <string name="card_template_editor_front">Etumalli</string>
     <string name="card_template_editor_back">Takamalli</string>
     <string name="card_template_editor_styling">Muotoilu</string>
-    <string name="card_template_editor_menu_delete">Poista</string>
-    <string name="card_template_editor_menu_card_browser_appearance">Card Browser Appearance</string>
-    <string name="card_template_editor_deck_override">Deck Override</string>
+    <string name="card_template_editor_menu_card_browser_appearance">Kortti Selaimen ulkonäkö</string>
+    <string name="card_template_editor_deck_override">Pakan Ohitus</string>
     <string name="card_template_editor_cant_delete">Valitse ainakin yksi korttityyppi</string>
     <plurals name="card_template_editor_confirm_delete">
         <item quantity="one">Poista ”%2$s” korttityyppi ja sen %1$d. kortti?</item>
         <item quantity="other">Poista ”%2$s” korttityyppi ja sen %1$d. kortit?</item>
     </plurals>
     <string name="invalid_template">Korttia ei voitu luoda</string>
-    <string name="card_template_editor_would_delete_note">Removing this card type would cause one or more notes to be deleted. Please create and save a new card type first.</string>
-    <string name="card_template_editor_save_error">Unable to save card template changes: %s</string>
+    <string name="card_template_editor_would_delete_note">Korttityypin poistaminen aiheuttaisi yhden tai useamman kortin poistamisen. Luo sekä tallenna uusikorttityyppi ensin.</string>
+    <string name="card_template_editor_save_error">Korttimallin muutoksia ei voitu tallentaa: %s</string>
     <string name="template_for_current_card_deleted">Tämän kortin korttityyppi poistettiin.</string>
     <!-- Card Browser Appearance -->
-    <string name="card_template_browser_appearance_title">Browser appearance</string>
+    <string name="card_template_browser_appearance_title">Selaimen ulkoasu</string>
+    <string name="current_and_default_deck">%1$s (%2$s)</string>
+    <!-- card Info -->
+    <string name="card_info_title">Kortin tiedot</string>
     <!-- Permissions -->
     <string name="read_write_permission_label">Lue ja kirjoita AnkiDroidi-tietokantaan</string>
     <string name="read_write_permission_description">lupa päästä olemassaoleviin merkintöihin, kortteihin, merkintätyyppeihin ja pakkoihin, sekä luoda uusia</string>
     <!-- Context Menu -->
-    <string name="card_browser_label">Korttiselain</string>
-    <string name="card_browser_context_menu">Korttiselain</string>
-    <string name="context_menu_anki_card_label">Anki Card</string>
+    <string name="card_browser_context_menu" comment="The value which appears in the system context menu. Note the casing difference">Korttiselain</string>
+    <string name="context_menu_anki_card_label">Anki-kortti</string>
+    <string name="has_a_problem" comment="First field is either front template or back template. Second field is the error message.">%1$s has a problem:<br/>%2$s</string>
+    <string name="more_information">More information</string>
+    <string name="no_field">Found \'{{%1$s}}\', but there is no field called \'%1$s\'.</string>
+    <string name="closed_tag_not_open">Found \'{{/%1$s}}\', but missing \'{{#%1$s}}\' or \'{{^%1$s}}\'.</string>
+    <string name="missing_closing_bracket">Missing \'}}\' in \'%s\'.</string>
+    <string name="open_tag_not_closed">Missing \'{{%s}}\'.</string>
+    <string name="wrong_tag_closed">Found \'{{/%1$s}}\', but expected \'{{/%2$s}}\'</string>
+    <string name="filter_error">Error in filter %s</string>
 </resources>

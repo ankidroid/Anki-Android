@@ -42,12 +42,14 @@ jobs:
           git remote set-url origin git@github.com:$GITHUB_REPOSITORY
         shell: bash
 
-      - uses: webfactory/ssh-agent@v0.4.0
+      - uses: webfactory/ssh-agent@v0.4.1
         with:
           ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
 
       - name: Credential Prep
         run: |
+          echo "KSTOREPWD=${{ secrets.KEYSTORE_PASSWORD }}" >> $GITHUB_ENV
+          echo "KEYPWD=${{ secrets.KEYSTORE_KEY_PASSWORD }}" >> $GITHUB_ENV
           mkdir ~/src
           echo "${{ secrets.AMAZON_PUBLISH_CREDENTIALS }}" | base64 -d > ~/src/AnkiDroid-Amazon-Publish-Security-Profile.json.gz
           echo "${{ secrets.GOOGLE_PUBLISH_CREDENTIALS }}" | base64 -d > ~/src/AnkiDroid-GCP-Publish-Credentials.json.gz
@@ -59,6 +61,3 @@ jobs:
 
       - name: Build and Release
         run: ./tools/release.sh
-        env:
-          KSTOREPWD: ${{ secrets.KEYSTORE_PASSWORD }}
-          KEYPWD: ${{ secrets.KEYSTORE_KEY_PASSWORD }}

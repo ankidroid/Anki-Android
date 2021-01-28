@@ -37,13 +37,13 @@
 ~ You should have received a copy of the GNU General Public License along with
 ~ this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools">
     <!-- How to format a percentage shown in the summary field of a preference -->
     <string name="preference_summary_percentage">XXX%</string>
+    <!-- #7570: We should use these strings again -->
     <!-- Navigation drawer strings -->
-    <string name="drawer_open">Fiók megnyitása</string>
-    <string name="drawer_close">Fiók bezárása</string>
-    <string name="CardEditorLaterMessage">Információk későbbre elmentve</string>
+    <string tools:ignore="UnusedResources" name="drawer_open">Fiók megnyitása</string>
+    <string tools:ignore="UnusedResources" name="drawer_close">Fiók bezárása</string>
     <string name="CardEditorCardDeck">Kártyapakli:</string>
     <string name="CardEditorNoteDeck">Pakli:</string>
     <string name="CardEditorModel">Típus:</string>
@@ -55,7 +55,6 @@
     <string name="check_all_tags">Címkék jelölése ki/be</string>
     <string name="filter_tags">Címkék szűrése</string>
     <string name="no_tags">Még nem hoztál létre címkéket</string>
-    <string name="sdcard_missing_message">Az SD kártya nem elérhető, mert USB háttérként van használatban. Válaszd le az USB-ről a készüléket, hogy hozzáférhess a paklikhoz.</string>
     <string name="updated_version">%s verzióra frissítve</string>
     <!-- Reviewer.java -->
     <string name="save_whiteboard">Rajztábla mentése</string>
@@ -65,7 +64,6 @@
     <string name="hide_whiteboard">Rajztábla elrejtése</string>
     <string name="clear_whiteboard">Rajztábla törlése</string>
     <string name="replay_audio">Hang ismétlés</string>
-    <string name="toggle_mic_tool_bar">Kiejtés ellenőrzése</string>
     <string name="leech_suspend_notification">Kártya megjelölve piócaként és felfüggesztésre került</string>
     <string name="leech_notification">Kártya megjelölve piócaként</string>
     <string name="corrupt_font">Sérült font fájl %s</string>
@@ -107,18 +105,16 @@
     <string name="custom_study_preview_new">Új kártyák átnézése</string>
     <string name="custom_study_limit_tags">Szűkítés címkékre</string>
     <!-- Card editor -->
-    <string name="cardeditor_title_add_note">Jegyzet hozzáadása</string>
     <string name="cardeditor_title_edit_card">Jegyzet szerkesztése</string>
     <string name="discard_unsaved_changes">Bezár és mostani állást elvet?</string>
     <string name="note_editor_no_cards_created">A kártyák nem lettek létrehozva. Kérjük töltsön ki több mezőt</string>
     <string name="note_editor_no_first_field">Az első mező üres</string>
     <string name="note_editor_no_cloze_delations">Ennek a jegyzet típusnak részleges törléseket kell tartalmaznia</string>
-    <string name="note_editor_set_field_language">Set field language</string>
+    <string name="note_editor_set_field_language">Mező nyelvének beállítása</string>
     <string name="note_editor_no_cards_created_all_fields">A jelenlegi jegyzettípus nem hozott létre semmilyen kártyát.\nKérjük válasszon más jegyzettípust, vagy kattintson a \"Kártyákra\" és adjon hozzá egy mezőhelyettesítést</string>
     <string name="note_editor_insert_cloze_no_cloze_note_type">A kitöltő törlések csak a kitöltő jegyzet típuson működnek</string>
     <string name="saving_facts">Jegyzet mentése</string>
     <string name="saving_model">Jegyzettípus mentése</string>
-    <string name="add">Hozzáadás</string>
     <string name="save">Mentés</string>
     <string name="close">Bezárás</string>
     <string name="select">Kiválasztás</string>
@@ -135,23 +131,19 @@
         <item quantity="one">%1$d perc</item>
         <item quantity="other">%1$d perc</item>
     </plurals>
-    <string name="studyoptions_welcome_title">Üdv az AnkiDroidban!</string>
-    <string name="fact_adder_intent_title">AnkiDroid Kártya</string>
-    <string name="note_editor_add_note">Jegyzet hozzáadása</string>
+    <string name="fact_adder_intent_title" comment="Label of the \'Add Note\' window. This title can\'t be seen in AnkiDroid directly.">AnkiDroid Kártya</string>
     <string name="note_editor_copy_note">Jegyzet másolása</string>
-    <string name="card_editor_copy_card">Kártya másolása</string>
     <string name="card_editor_reposition_card">Áthelyezés</string>
     <string name="card_editor_reset_card">Reset folyamat</string>
-    <string name="card_editor_reschedule_card">Átütemezés</string>
-    <string name="card_editor_preview_card">Előnézet</string>
+    <string name="card_editor_reschedule_card" comment="Action to reschedule a card">Átütemezés</string>
+    <string name="card_editor_preview_card" comment="Button offering to preview some card(s)">Előnézet</string>
     <string name="error_insufficient_memory">A művelet nem végrhajtható:  a készülék nem rendelkezik elég memóriával</string>
-    <string name="rename">Átnevezés</string>
+    <string name="rename" comment="Confirm that the renaming action should be processed.">Átnevezés</string>
     <string name="default_conf_delete_error">Az alapértelmezett beállítások csoport nem távolítható el</string>
     <plurals name="factadder_cards_added">
         <item quantity="one">%d kártya hozzáadva</item>
         <item quantity="other">%d kártyák hozzáadva</item>
     </plurals>
-    <string name="help_title">Segítség</string>
     <string name="check_db">Adatbázis ellenőrzése</string>
     <string name="check_media">Média ellenőrzése</string>
     <string name="empty_cards">Üres kártyák listája</string>
@@ -161,10 +153,9 @@
     <string name="delete_deck">Pakli törlése...\nKérlek, várj...</string>
     <string name="show_hint">Mutass %s</string>
     <string name="info_rate">AnkiDroid értékelése</string>
-    <string name="col_load_failed">A gyűjtemény betöltése sikertelen.\nAz AnkiDroid bezárásához nyomd meg a vissza gombot.</string>
     <string name="import_title">Importálás</string>
     <string name="import_select_title">Válassz egy importálandó fájlt</string>
-    <string name="import_message_add">Hozzáadás</string>
+    <string name="import_message_add" comment="Adding a new deck to the collection (import)">Hozzáadás</string>
     <string name="import_message_replace_confirm">Ez a művelet törölni fogja a már meglévő gyűjteményed és lecseréli a %s fájl tartalmával. Biztos vagy benne?</string>
     <string name="import_message_add_confirm">\"%s\"-t felvenni a gyűjteménybe hosszú ideig tarthat</string>
     <string name="import_log_no_apkg">Ez nem egy érvényes Anki csomag fájl</string>
@@ -175,7 +166,7 @@
     <string name="import_log_file_cache_cleared">Hiba történt a fájl importálása során valószínű a cache törlés során.\n.Kérjük próbálja újra</string>
     <string name="import_succeeded_but_check_database">Adat importálás sikeres, de az import utáni takarítás sikertelen. Futass egy adatbázis ellenőrzést később. Hiba eredete: %s</string>
     <string name="import_error_unhandled_request">Nem sikerült feldolgozni az import folyamat kérést</string>
-    <string name="import_error_corrupt_zip">The apkg file is corrupt. Please delete and re-download it.\n\nRoot cause: %s</string>
+    <string name="import_error_corrupt_zip">Hibás apkg fájl. Próbáld meg törölni és újra letölteni.\n\nA hiba oka: %s</string>
     <string name="import_error_exception">Nem sikerült importálni a csomagot\n\n%s</string>
     <string name="import_error_not_apkg_extension">A \"%s\" fájlnévnek nincsen .apkg vagy .colpkg kiterjesztése</string>
     <string name="import_error_load_imported_database">Az Anki Adatbázis (.anki2) csere még nem támogatott. Kérjük olvassa el az útmutatót az instrukciókhoz.</string>
@@ -205,7 +196,9 @@
     <string name="export_unsuccessful">Hiba történt az apkg fájl exportálásakor</string>
     <string name="import_hint">Kártyák importálásához helyezd az apkg fájlt a %s könyvtárba és nyomd meg az OK gombot</string>
     <string name="upgrade_import_no_file_found">Nem importálható %1$s fájlt található</string>
-    <string name="study_options">Beállítások</string>
+    <string name="study_options" comment="Name for a preference category in Filtered deck (aka Cram deck, aka Custom study) options">Beállítások</string>
+    <string name="menu__deck_options">Pakli beállítások</string>
+    <string name="menu__study_options" comment="Menu item that opens options for a Filtered deck (aka Cram deck, aka Custom study)">Tanulási beállítások</string>
     <string name="select_tts">TTS nyelv beállítása</string>
     <string name="custom_study">Egyéni tanulás</string>
     <string name="more_options">Több</string>
@@ -243,6 +236,10 @@
         <item quantity="one">%s év</item>
         <item quantity="other">%s év</item>
     </plurals>
+    <!-- A decimal number of seconds.
+    Please give this a best-effort translation and explain the requirements for
+    formatting decimals in your language in the CrowdIn comments -->
+    <string name="time_span_decimal_seconds">%s másodperc</string>
     <!-- The reason for making a simple “< x” translatable are RTL
          languages which apparently use the other symbol to mean less
          than. -->
@@ -258,14 +255,13 @@
     <!-- Currently only used if exporting APKG fails -->
     <string name="apk_share_error">Hiba történt az apkg fájl megosztásakor</string>
     <!-- Import and export v2 feedback -->
-    <string name="import_needs_v2">A V2 ütemező be kell hogy legyen kapcsolva, hogy importálni tudja ezt a fájlt.</string>
-    <string name="import_cannot_with_v2">A V2 ütemező nem tudja importálni a V1-es kártyákat, ha be van kapcsolva az ütemező.</string>
     <string name="export_v2_dummy_note">A fájlhoz egy újabb Anki verzió szükséges.</string>
     <!-- Placed in a snackbar with a long URL. Limit the length and move the URL to the start of the string -->
     <string name="activity_start_failed_load_url">\'%s\' betöltése sikertelen.</string>
     <string name="activity_start_failed">Nincsen letöltve olyan alkalmazás, ami végre tudná hajtani ezt a műveletet.</string>
     <string name="multimedia_editor_image_compression_failed"><![CDATA[A kamera képei lehet túl nagyok. Lehet, hogy tömörítenie vagy újra kéne méreteznie őket a média mappájában.]]></string>
     <string name="no_browser_notification">Nem találtunk böngészőt, kérjük látogasson meg egy weblapot PC-n vagy mobilon: </string>
+    <string name="web_page_error">Az oldal betöltése sikertelen: %s</string>
     <string name="no_outgoing_link_in_cardbrowser">A kártyán külsős link nem támogatott.</string>
     <!-- The name of the deck which corrupt cards will be moved to -->
     <string name="check_integrity_recovered_deck_name">Visszaszerzett Kártya</string>
@@ -315,9 +311,33 @@
     <string name="about_ankidroid_successfully_copied_debug">A hibakeresési információ a vágólapra másolva</string>
     <string name="about_ankidroid_error_copy_debug_info">Hiba történt a hibakeresési információk vágólapra másolása közben</string>
     <!-- Card Viewer -->
-    <string name="card_viewer_could_not_find_image">Card Content Error: Failed to load ‘%s’</string>
-    <string name="card_viewer_could_not_find_image_get_help">Help</string>
+    <string name="card_viewer_could_not_find_image">Hibás kártya tartalom: \"%s\" betöltése sikertelen</string>
+    <string name="card_viewer_media_relative_protocol">Hiba a kártya tartalmában: a média frissítése szükséges</string>
     <!-- Deck Picker -->
-    <string name="deck_picker_failed_deck_load">Failed to load deck ‘%s’</string>
-    <string name="search_decks">Search decks</string>
+    <string name="deck_picker_failed_deck_load">A(z) \'%s\' pakli betöltése nem sikerült</string>
+    <string name="search_decks">Keresés a paklikban</string>
+    <string name="ankidroid_init_failed_webview_title">Végzetes hiba</string>
+    <string name="ankidroid_init_failed_webview">Az AnkiDroid a System WebView-t használja, ami jelenleg nem elérhető. Lehetséges, hogy a rendszer frissítéseket telepít. Próbáld újra pár perc múlva.\n\n%s</string>
+    <!-- A Menu item to change the Font Size (currently in the Note Editor) -->
+    <string name="menu_font_size">Betűméret</string>
+    <string name="menu_show_toolbar" comment="Checkable item stating whether the note editor toolbar should be shown">Eszköztár megjelenítése</string>
+    <string name="format_insert_bold">Félkövér</string>
+    <string name="format_insert_italic">Dőlt</string>
+    <string name="format_insert_underline">Aláhúzott</string>
+    <string name="insert_horizontal_line">Vízszintes vonal beszúrása</string>
+    <string name="insert_heading">Címsor beszúrása</string>
+    <string name="format_font_size">Betűméret módosítása</string>
+    <string name="insert_mathjax">MathJax egyenlet beszúrása</string>
+    <string name="insert_cloze">Insert Cloze Deletion</string>
+    <string name="before_text">HTML Before Selection</string>
+    <string name="after_text">HTML After Selection</string>
+    <string name="add_toolbar_item">Eszköztár Elem létrehozása</string>
+    <string name="toolbar_item_explain_remove">Enter HTML to be inserted before and after the selected text\n\nLong press a toolbar item to remove it</string>
+    <string name="remove_toolbar_item">Törlöd ezt az Eszköztár Elemet?</string>
+    <string name="note_editor_paste_too_large">The image is too large to paste, please insert the image manually</string>
+    <string name="ankidroid_cannot_open_after_backup_try_again" comment="After an Android backup is restored, AnkiDroid opens and shows this message.         Opening AnkiDroid again will work correctly">Android biztonsági mentés folyamatban. Próbálkozzon később</string>
+    <string name="create_shortcut_error_vivo" comment="iManager is an app on Vivo phones">You may need to use iManager to allow AnkiDroid to add shortcuts</string>
+    <string name="create_shortcut_failed" comment="home screen == launcher">Your home screen does not allow AnkiDroid to add shortcuts</string>
+    <string name="create_shortcut_error">Error adding shortcut: %s</string>
+    <string name="note_editor_capitalize" comment="This is for a switch with a checkbox - on: enabled">Capitalize sentences</string>
 </resources>

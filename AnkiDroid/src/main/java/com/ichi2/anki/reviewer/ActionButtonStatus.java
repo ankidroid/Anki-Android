@@ -22,7 +22,7 @@ public class ActionButtonStatus {
      * Custom button allocation
      */
     @NonNull
-    protected final Map<Integer, Integer> mCustomButtons = new HashMap<>();
+    protected final Map<Integer, Integer> mCustomButtons = new HashMap<>(25); // setup's size
     private final ReviewerUi mReviewerUi;
 
     public static final int SHOW_AS_ACTION_NEVER = MenuItem.SHOW_AS_ACTION_NEVER;
@@ -52,6 +52,7 @@ public class ActionButtonStatus {
         setupButton(preferences, R.id.action_edit, "customButtonEditCard", SHOW_AS_ACTION_IF_ROOM);
         setupButton(preferences, R.id.action_add_note_reviewer, "customButtonAddCard", MENU_DISABLED);
         setupButton(preferences, R.id.action_replay, "customButtonReplay", SHOW_AS_ACTION_IF_ROOM);
+        setupButton(preferences, R.id.action_card_info, "customButtonCardInfo", MENU_DISABLED);
         setupButton(preferences, R.id.action_clear_whiteboard, "customButtonClearWhiteboard", SHOW_AS_ACTION_IF_ROOM);
         setupButton(preferences, R.id.action_hide_whiteboard, "customButtonShowHideWhiteboard", SHOW_AS_ACTION_ALWAYS);
         setupButton(preferences, R.id.action_select_tts, "customButtonSelectTts", SHOW_AS_ACTION_NEVER);

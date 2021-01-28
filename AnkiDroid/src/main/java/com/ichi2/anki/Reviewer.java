@@ -18,8 +18,10 @@
 
 package com.ichi2.anki;
 
+import android.Manifest;
+import android.animation.Animator;
+import android.animation.AnimatorListenerAdapter;
 import android.annotation.SuppressLint;
-import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -32,6 +34,7 @@ import android.os.Handler;
 import android.os.Message;
 import android.text.SpannableString;
 import android.text.style.UnderlineSpan;
+import android.util.Pair;
 import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -44,6 +47,7 @@ import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import androidx.annotation.CheckResult;
 import androidx.annotation.DrawableRes;
 import androidx.annotation.IdRes;
 import androidx.annotation.MenuRes;
@@ -58,17 +62,19 @@ import androidx.core.view.ActionProvider;
 import androidx.core.view.MenuItemCompat;
 import androidx.vectordrawable.graphics.drawable.VectorDrawableCompat;
 
-import com.ichi2.anim.ActivityTransitionAnimation;
+import com.ichi2.anki.cardviewer.CardAppearance;
 import com.ichi2.anki.dialogs.ConfirmationDialog;
 import com.ichi2.anki.multimediacard.AudioView;
 import com.ichi2.anki.dialogs.RescheduleDialog;
 import com.ichi2.anki.reviewer.PeripheralKeymap;
 import com.ichi2.anki.reviewer.ReviewerUi;
 import com.ichi2.anki.workarounds.FirefoxSnackbarWorkaround;
-import com.ichi2.async.CollectionTask;
 import com.ichi2.anki.reviewer.ActionButtons;
+import com.ichi2.async.CollectionTask;
 import com.ichi2.async.TaskListener;
+import com.ichi2.async.TaskManager;
 import com.ichi2.compat.CompatHelper;
+import com.ichi2.libanki.Card;
 import com.ichi2.libanki.Collection;
 import com.ichi2.libanki.Collection.DismissType;
 import com.ichi2.libanki.Consts;
@@ -78,24 +84,23 @@ import com.ichi2.libanki.sched.Counts;
 import com.ichi2.themes.Themes;
 import com.ichi2.utils.AndroidUiUtils;
 import com.ichi2.utils.FunctionalInterfaces.Consumer;
+import com.ichi2.utils.PairWithBoolean;
 import com.ichi2.utils.Permissions;
 import com.ichi2.widget.WidgetStatus;
 
 import java.lang.ref.WeakReference;
+import java.util.Collections;
 
 import timber.log.Timber;
 
 import static com.ichi2.anki.reviewer.CardMarker.*;
 import static com.ichi2.anki.cardviewer.ViewerCommand.COMMAND_NOTHING;
-import static com.ichi2.async.CollectionTask.TASK_TYPE.*;
-import com.ichi2.async.TaskData;
 import static com.ichi2.anim.ActivityTransitionAnimation.Direction.*;
 
 
 public class Reviewer extends AbstractFlashcardViewer {
     private boolean mHasDrawerSwipeConflicts = false;
     private boolean mShowWhiteboard = true;
-    private boolean mBlackWhiteboard = true;
     private boolean mPrefFullscreenReview = false;
     private static final int ADD_NOTE = 12;
     private static final int REQUEST_AUDIO_PERMISSION = 0;
@@ -124,13 +129,13 @@ public class Reviewer extends AbstractFlashcardViewer {
     private final ActionButtons mActionButtons = new ActionButtons(this);
 
 
-    private final TaskListener mRescheduleCardHandler = new ScheduleCollectionTaskListener() {
+    private final ScheduleCollectionTaskListener mRescheduleCardHandler = new ScheduleCollectionTaskListener() {
         protected int getToastResourceId() {
             return R.plurals.reschedule_cards_dialog_acknowledge;
         }
     };
 
-    private final TaskListener mResetProgressCardHandler = new ScheduleCollectionTaskListener() {
+    private final ScheduleCollectionTaskListener mResetProgressCardHandler = new ScheduleCollectionTaskListener() {
         protected int getToastResourceId() {
             return R.plurals.reset_cards_dialog_acknowledge;
         }
@@ -140,16 +145,16 @@ public class Reviewer extends AbstractFlashcardViewer {
     protected final PeripheralKeymap mProcessor = new PeripheralKeymap(this, this);
 
     /** We need to listen for and handle reschedules / resets very similarly */
-    abstract class ScheduleCollectionTaskListener extends NextCardHandler {
+    abstract class ScheduleCollectionTaskListener extends NextCardHandler<PairWithBoolean<Card[]>> {
 
         abstract protected int getToastResourceId();
 
 
         @Override
-        public void onPostExecute(TaskData result) {
+        public void onPostExecute(PairWithBoolean<Card[]> result) {
             super.onPostExecute(result);
             invalidateOptionsMenu();
-            int cardCount = result.getObjArray().length;
+            int cardCount = result.other.length;
             UIUtils.showThemedToast(Reviewer.this,
                     getResources().getQuantityString(getToastResourceId(), cardCount, cardCount), true);
         }
@@ -157,6 +162,9 @@ public class Reviewer extends AbstractFlashcardViewer {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        if (showedActivityFailedScreen(savedInstanceState)) {
+            return;
+        }
         Timber.d("onCreate()");
         super.onCreate(savedInstanceState);
 
@@ -252,9 +260,6 @@ public class Reviewer extends AbstractFlashcardViewer {
 
     @Override
     protected int getContentViewAttr(int fullscreenMode) {
-        if (CompatHelper.getSdkVersion() < Build.VERSION_CODES.KITKAT) {
-            fullscreenMode = 0;     // The specific fullscreen layouts are only applicable for immersive mode
-        }
         switch (fullscreenMode) {
             case 1:
                 return R.layout.reviewer_fullscreen;
@@ -282,8 +287,7 @@ public class Reviewer extends AbstractFlashcardViewer {
 
         col.getSched().deferReset();     // Reset schedule in case card was previously loaded
         getCol().startTimebox();
-        CollectionTask.launchCollectionTask(ANSWER_CARD, mAnswerCardHandler(false),
-                new TaskData(null, 0));
+        TaskManager.launchCollectionTask(new CollectionTask.GetCard(), mAnswerCardHandler(false));
 
         disableDrawerSwipeOnConflicts();
         // Add a weak reference to current activity so that scheduler can talk to to Activity
@@ -291,176 +295,131 @@ public class Reviewer extends AbstractFlashcardViewer {
 
         // Set full screen/immersive mode if needed
         if (mPrefFullscreenReview) {
-            CompatHelper.getCompat().setFullScreen(this);
+            setFullScreen(this);
         }
     }
 
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
+        // 100ms was not enough on my device (Honor 9 Lite -  Android Pie)
+        delayedHide(1000);
         if (getDrawerToggle().onOptionsItemSelected(item)) {
             return true;
         }
-        switch (item.getItemId()) {
-
-            case android.R.id.home:
-                Timber.i("Reviewer:: Home button pressed");
-                closeReviewer(RESULT_OK, true);
-                break;
-
-            case R.id.action_undo:
-                Timber.i("Reviewer:: Undo button pressed");
-                if (mShowWhiteboard && mWhiteboard != null && !mWhiteboard.undoEmpty()) {
-                    mWhiteboard.undo();
-                } else {
-                    undo();
+        int itemId = item.getItemId();
+        if (itemId == android.R.id.home) {
+            Timber.i("Reviewer:: Home button pressed");
+            closeReviewer(RESULT_OK, true);
+        } else if (itemId == R.id.action_undo) {
+            Timber.i("Reviewer:: Undo button pressed");
+            if (mShowWhiteboard && mWhiteboard != null && !mWhiteboard.undoEmpty()) {
+                mWhiteboard.undo();
+            } else {
+                undo();
+            }
+        } else if (itemId == R.id.action_reset_card_progress) {
+            Timber.i("Reviewer:: Reset progress button pressed");
+            showResetCardDialog();
+        } else if (itemId == R.id.action_mark_card) {
+            Timber.i("Reviewer:: Mark button pressed");
+            onMark(mCurrentCard);
+        } else if (itemId == R.id.action_replay) {
+            Timber.i("Reviewer:: Replay audio button pressed (from menu)");
+            playSounds(true);
+        } else if (itemId == R.id.action_toggle_mic_tool_bar) {
+            Timber.i("Reviewer:: Record mic");
+            // Check permission to record and request if not granted
+            openOrToggleMicToolbar();
+        } else if (itemId == R.id.action_tag) {
+            Timber.i("Reviewer:: Tag button pressed");
+            showTagsDialog();
+        } else if (itemId == R.id.action_edit) {
+            Timber.i("Reviewer:: Edit note button pressed");
+            editCard();
+            return true;
+        } else if (itemId == R.id.action_bury) {
+            Timber.i("Reviewer:: Bury button pressed");
+            if (!MenuItemCompat.getActionProvider(item).hasSubMenu()) {
+                Timber.d("Bury card due to no submenu");
+                dismiss(DismissType.BURY_CARD);
+            }
+        } else if (itemId == R.id.action_suspend) {
+            Timber.i("Reviewer:: Suspend button pressed");
+            if (!MenuItemCompat.getActionProvider(item).hasSubMenu()) {
+                Timber.d("Suspend card due to no submenu");
+                dismiss(DismissType.SUSPEND_CARD);
+            }
+        } else if (itemId == R.id.action_delete) {
+            Timber.i("Reviewer:: Delete note button pressed");
+            showDeleteNoteDialog();
+        } else if (itemId == R.id.action_change_whiteboard_pen_color) {
+            Timber.i("Reviewer:: Pen Color button pressed");
+            if (colorPalette.getVisibility() == View.GONE) {
+                colorPalette.setVisibility(View.VISIBLE);
+            } else {
+                colorPalette.setVisibility(View.GONE);
+            }
+        } else if (itemId == R.id.action_save_whiteboard) {
+            Timber.i("Reviewer:: Save whiteboard button pressed");
+            if (mWhiteboard != null) {
+                try {
+                    String savedWhiteboardFileName = mWhiteboard.saveWhiteboard(getCol().getTime());
+                    UIUtils.showThemedToast(Reviewer.this, getString(R.string.white_board_image_saved, savedWhiteboardFileName), true);
+                } catch (Exception e) {
+                    UIUtils.showThemedToast(Reviewer.this, getString(R.string.white_board_image_save_failed, e.getLocalizedMessage()), true);
                 }
-                break;
-
-            case R.id.action_reset_card_progress:
-                Timber.i("Reviewer:: Reset progress button pressed");
-                showResetCardDialog();
-                break;
-
-            case R.id.action_mark_card:
-                Timber.i("Reviewer:: Mark button pressed");
-                onMark(mCurrentCard);
-                break;
-
-            case R.id.action_replay:
-                Timber.i("Reviewer:: Replay audio button pressed (from menu)");
-                playSounds(true);
-                break;
-
-            case R.id.action_toggle_mic_tool_bar:
-                Timber.i("Reviewer:: Record mic");
-                // Check permission to record and request if not granted
-                if (!Permissions.canRecordAudio(this)) {
-                    ActivityCompat.requestPermissions(this, new String[]{android.Manifest.permission.RECORD_AUDIO},
-                            REQUEST_AUDIO_PERMISSION);
-                } else {
-                    toggleMicToolBar();
-                }
-                break;
-
-            case R.id.action_tag:
-                Timber.i("Reviewer:: Tag button pressed");
-                showTagsDialog();
-                break;
-
-            case R.id.action_edit:
-                Timber.i("Reviewer:: Edit note button pressed");
-                return editCard();
-
-            case R.id.action_bury:
-                Timber.i("Reviewer:: Bury button pressed");
-                if (!MenuItemCompat.getActionProvider(item).hasSubMenu()) {
-                    Timber.d("Bury card due to no submenu");
-                    dismiss(DismissType.BURY_CARD);
-                }
-                break;
-
-            case R.id.action_suspend:
-                Timber.i("Reviewer:: Suspend button pressed");
-                if (!MenuItemCompat.getActionProvider(item).hasSubMenu()) {
-                    Timber.d("Suspend card due to no submenu");
-                    dismiss(DismissType.SUSPEND_CARD);
-                }
-                break;
-
-            case R.id.action_delete:
-                Timber.i("Reviewer:: Delete note button pressed");
-                showDeleteNoteDialog();
-                break;
-
-            case R.id.action_change_whiteboard_pen_color:
-                Timber.i("Reviewer:: Pen Color button pressed");
-                if (colorPalette.getVisibility() == View.GONE) {
-                    colorPalette.setVisibility(View.VISIBLE);
-                } else {
-                    colorPalette.setVisibility(View.GONE);
-                }
-                break;
-
-            case R.id.action_save_whiteboard:
-                Timber.i("Reviewer:: Save whiteboard button pressed");
-                if (mWhiteboard != null) {
-                    try {
-                        String savedWhiteboardFileName = mWhiteboard.saveWhiteboard(getCol().getTime());
-                        UIUtils.showThemedToast(Reviewer.this, getString(R.string.white_board_image_saved, savedWhiteboardFileName), true);
-                    } catch (Exception e) {
-                        UIUtils.showThemedToast(Reviewer.this, getString(R.string.white_board_image_save_failed, e.getLocalizedMessage()), true);
-                    }
-                }
-                break;
-
-            case R.id.action_clear_whiteboard:
-                Timber.i("Reviewer:: Clear whiteboard button pressed");
-                if (mWhiteboard != null) {
-                    mWhiteboard.clear();
-                }
-                break;
-
-            case R.id.action_hide_whiteboard:
-                // toggle whiteboard visibility
-                Timber.i("Reviewer:: Whiteboard visibility set to %b", !mShowWhiteboard);
-                setWhiteboardVisibility(!mShowWhiteboard);
-                refreshActionBar();
-                break;
-
-            case R.id.action_toggle_whiteboard:
-                toggleWhiteboard();
-                break;
-
-            case R.id.action_search_dictionary:
-                Timber.i("Reviewer:: Search dictionary button pressed");
-                lookUpOrSelectText();
-                break;
-
-            case R.id.action_open_deck_options:
-                Intent i = new Intent(this, DeckOptions.class);
-                startActivityForResultWithAnimation(i, DECK_OPTIONS, FADE);
-                break;
-
-            case R.id.action_select_tts:
-                Timber.i("Reviewer:: Select TTS button pressed");
-                showSelectTtsDialogue();
-                break;
-
-            case R.id.action_add_note_reviewer:
-                Timber.i("Reviewer:: Add note button pressed");
-                addNote();
-                break;
-
-            case R.id.action_flag_zero:
-                Timber.i("Reviewer:: No flag");
-                onFlag(mCurrentCard, FLAG_NONE);
-                break;
-            case R.id.action_flag_one:
-                Timber.i("Reviewer:: Flag one");
-                onFlag(mCurrentCard, FLAG_RED);
-                break;
-            case R.id.action_flag_two:
-                Timber.i("Reviewer:: Flag two");
-                onFlag(mCurrentCard, FLAG_ORANGE);
-                break;
-            case R.id.action_flag_three:
-                Timber.i("Reviewer:: Flag three");
-                onFlag(mCurrentCard, FLAG_GREEN);
-                break;
-            case R.id.action_flag_four:
-                Timber.i("Reviewer:: Flag four");
-                onFlag(mCurrentCard, FLAG_BLUE);
-                break;
-            default:
-                return super.onOptionsItemSelected(item);
+            }
+        } else if (itemId == R.id.action_clear_whiteboard) {
+            Timber.i("Reviewer:: Clear whiteboard button pressed");
+            if (mWhiteboard != null) {
+                mWhiteboard.clear();
+            }
+        } else if (itemId == R.id.action_hide_whiteboard) {// toggle whiteboard visibility
+            Timber.i("Reviewer:: Whiteboard visibility set to %b", !mShowWhiteboard);
+            setWhiteboardVisibility(!mShowWhiteboard);
+            refreshActionBar();
+        } else if (itemId == R.id.action_toggle_whiteboard) {
+            toggleWhiteboard();
+        } else if (itemId == R.id.action_search_dictionary) {
+            Timber.i("Reviewer:: Search dictionary button pressed");
+            lookUpOrSelectText();
+        } else if (itemId == R.id.action_open_deck_options) {
+            Intent i = new Intent(this, DeckOptions.class);
+            startActivityForResultWithAnimation(i, DECK_OPTIONS, FADE);
+        } else if (itemId == R.id.action_select_tts) {
+            Timber.i("Reviewer:: Select TTS button pressed");
+            showSelectTtsDialogue();
+        } else if (itemId == R.id.action_add_note_reviewer) {
+            Timber.i("Reviewer:: Add note button pressed");
+            addNote();
+        } else if (itemId == R.id.action_flag_zero) {
+            Timber.i("Reviewer:: No flag");
+            onFlag(mCurrentCard, FLAG_NONE);
+        } else if (itemId == R.id.action_flag_one) {
+            Timber.i("Reviewer:: Flag one");
+            onFlag(mCurrentCard, FLAG_RED);
+        } else if (itemId == R.id.action_flag_two) {
+            Timber.i("Reviewer:: Flag two");
+            onFlag(mCurrentCard, FLAG_ORANGE);
+        } else if (itemId == R.id.action_flag_three) {
+            Timber.i("Reviewer:: Flag three");
+            onFlag(mCurrentCard, FLAG_GREEN);
+        } else if (itemId == R.id.action_flag_four) {
+            Timber.i("Reviewer:: Flag four");
+            onFlag(mCurrentCard, FLAG_BLUE);
+        } else if (itemId == R.id.action_card_info) {
+            Timber.i("Card Viewer:: Card Info");
+            openCardInfo();
+        } else {
+            return super.onOptionsItemSelected(item);
         }
         return true;
     }
 
 
+    @Override
     protected void toggleWhiteboard() {
-        // toggle whiteboard enabled state (and show/hide whiteboard item in action bar)
         mPrefWhiteboard = ! mPrefWhiteboard;
         Timber.i("Reviewer:: Whiteboard enabled state set to %b", mPrefWhiteboard);
         //Even though the visibility is now stored in its own setting, we want it to be dependent
@@ -471,6 +430,51 @@ public class Reviewer extends AbstractFlashcardViewer {
             colorPalette.setVisibility(View.GONE);
         }
         refreshActionBar();
+    }
+
+
+    @Override
+    protected void replayVoice() {
+        if (!openMicToolbar()) {
+            return;
+        }
+
+        // COULD_BE_BETTER: this shows "Failed" if nothing was recorded
+
+        mMicToolBar.togglePlay();
+    }
+
+
+    @Override
+    protected void recordVoice() {
+        if (!openMicToolbar()) {
+            return;
+        }
+
+        mMicToolBar.toggleRecord();
+    }
+
+
+    /**
+     *
+     * @return Whether the mic toolbar is usable
+     */
+    @SuppressWarnings("BooleanMethodIsAlwaysInverted")
+    private boolean openMicToolbar() {
+        if (mMicToolBar == null || mMicToolBar.getVisibility() != View.VISIBLE) {
+            openOrToggleMicToolbar();
+        }
+        return mMicToolBar != null;
+    }
+
+
+    protected void openOrToggleMicToolbar() {
+        if (!Permissions.canRecordAudio(this)) {
+            ActivityCompat.requestPermissions(this, new String[] {Manifest.permission.RECORD_AUDIO},
+                    REQUEST_AUDIO_PERMISSION);
+        } else {
+            toggleMicToolBar();
+        }
     }
 
 
@@ -512,10 +516,7 @@ public class Reviewer extends AbstractFlashcardViewer {
 
     private void showRescheduleCardDialog() {
         Consumer<Integer> runnable = days ->
-            CollectionTask.launchCollectionTask(DISMISS_MULTI, mRescheduleCardHandler,
-                    new TaskData(new Object[]{new long[]{mCurrentCard.getId()},
-                    Collection.DismissType.RESCHEDULE_CARDS, days})
-            );
+            TaskManager.launchCollectionTask(new CollectionTask.RescheduleCards(Collections.singletonList(mCurrentCard.getId()), days), mRescheduleCardHandler);
         RescheduleDialog dialog = RescheduleDialog.rescheduleSingleCard(getResources(), mCurrentCard, runnable);
 
         showDialogFragment(dialog);
@@ -532,8 +533,8 @@ public class Reviewer extends AbstractFlashcardViewer {
         dialog.setArgs(title, message);
         Runnable confirm = () -> {
             Timber.i("NoteEditor:: ResetProgress button pressed");
-            CollectionTask.launchCollectionTask(DISMISS_MULTI, mResetProgressCardHandler,
-                    new TaskData(new Object[]{new long[]{mCurrentCard.getId()}, Collection.DismissType.RESET_CARDS}));
+            TaskManager.launchCollectionTask(new CollectionTask.ResetCards(Collections.singletonList(mCurrentCard.getId())),
+                    mResetProgressCardHandler);
         };
         dialog.setConfirm(confirm);
         showDialogFragment(dialog);
@@ -606,6 +607,9 @@ public class Reviewer extends AbstractFlashcardViewer {
         MenuItem undoIcon = menu.findItem(R.id.action_undo);
         undoIcon.setIcon(undoIconId);
         undoIcon.setEnabled(undoEnabled).getIcon().mutate().setAlpha(alpha_undo);
+        if (colIsOpen()) { // Required mostly because there are tests where `col` is null
+            undoIcon.setTitle(getResources().getString(R.string.studyoptions_congrats_undo, getCol().undoName(getResources())));
+        }
 
         MenuItem toggle_whiteboard_icon = menu.findItem(R.id.action_toggle_whiteboard);
         MenuItem hide_whiteboard_icon = menu.findItem(R.id.action_hide_whiteboard);
@@ -713,9 +717,7 @@ public class Reviewer extends AbstractFlashcardViewer {
                 }
             }
 
-        } catch (Exception e) {
-            Timber.w(e, "Failed to display icons");
-        } catch (Error e) {
+        } catch (Exception | Error e) {
             Timber.w(e, "Failed to display icons");
         }
     }
@@ -795,10 +797,15 @@ public class Reviewer extends AbstractFlashcardViewer {
 
 
     @Override
+    protected boolean canAccessScheduler() {
+        return true;
+    }
+
+
+    @Override
     protected void performReload() {
         getCol().getSched().deferReset();
-        CollectionTask.launchCollectionTask(ANSWER_CARD, mAnswerCardHandler(false),
-                new TaskData(null, 0));
+        TaskManager.launchCollectionTask(new CollectionTask.GetCard(), mAnswerCardHandler(false));
     }
 
 
@@ -818,7 +825,7 @@ public class Reviewer extends AbstractFlashcardViewer {
         // Note that it's necessary to set the resource dynamically as the ease2 / ease3 buttons
         // (which libanki expects ease to be 2 and 3) can either be hard, good, or easy - depending on num buttons shown
         int[] backgroundIds;
-        if (Build.VERSION.SDK_INT >= 21 && animationEnabled()) {
+        if (animationEnabled()) {
             backgroundIds = new int [] {
                     R.attr.againButtonRippleRef,
                     R.attr.hardButtonRippleRef,
@@ -904,7 +911,6 @@ public class Reviewer extends AbstractFlashcardViewer {
         mPrefHideDueCount = preferences.getBoolean("hideDueCount", false);
         mPrefShowETA = preferences.getBoolean("showETA", true);
         this.mProcessor.setup();
-        mBlackWhiteboard = preferences.getBoolean("blackWhiteboard", true);
         mPrefFullscreenReview = Integer.parseInt(preferences.getString("fullscreenMode", "0")) > 0;
         mActionButtons.setup(preferences);
         return preferences;
@@ -970,7 +976,14 @@ public class Reviewer extends AbstractFlashcardViewer {
     public void displayCardQuestion() {
         // show timer, if activated in the deck's preferences
         initTimer();
+        delayedHide(100);
         super.displayCardQuestion();
+    }
+
+    @Override
+    protected void displayCardAnswer() {
+        delayedHide(100);
+        super.displayCardAnswer();
     }
 
     @Override
@@ -1029,8 +1042,7 @@ public class Reviewer extends AbstractFlashcardViewer {
 
     @Override
     protected boolean onSingleTap() {
-        if (mPrefFullscreenReview &&
-                CompatHelper.getCompat().isImmersiveSystemUiVisible(this)) {
+        if (mPrefFullscreenReview && isImmersiveSystemUiVisible(this)) {
             delayedHide(INITIAL_HIDE_DELAY);
             return true;
         }
@@ -1039,8 +1051,7 @@ public class Reviewer extends AbstractFlashcardViewer {
 
     @Override
     protected void onFling() {
-        if (mPrefFullscreenReview &&
-                CompatHelper.getCompat().isImmersiveSystemUiVisible(this)) {
+        if (mPrefFullscreenReview && isImmersiveSystemUiVisible(this)) {
             delayedHide(INITIAL_HIDE_DELAY);
         }
     }
@@ -1050,11 +1061,12 @@ public class Reviewer extends AbstractFlashcardViewer {
         @Override
         public void handleMessage(Message msg) {
             if (mPrefFullscreenReview) {
-                CompatHelper.getCompat().setFullScreen(Reviewer.this);
+                setFullScreen(Reviewer.this);
             }
         }
     };
 
+    /** Hide the navigation if in full-screen mode after a given period of time */
     protected void delayedHide(int delayMillis) {
         Timber.d("Fullscreen delayed hide in %dms", delayMillis);
         mFullScreenHandler.removeMessages(0);
@@ -1070,19 +1082,100 @@ public class Reviewer extends AbstractFlashcardViewer {
         }
     }
 
-    // Create the whiteboard
+    private static final int FULLSCREEN_ALL_GONE = 2;
+
+    private void setFullScreen(final AbstractFlashcardViewer a) {
+        // Set appropriate flags to enable Sticky Immersive mode.
+        a.getWindow().getDecorView().setSystemUiVisibility(
+                View.SYSTEM_UI_FLAG_LAYOUT_STABLE
+                        //| View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION // temporarily disabled due to #5245
+                        | View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
+                        | View.SYSTEM_UI_FLAG_HIDE_NAVIGATION
+                        | View.SYSTEM_UI_FLAG_FULLSCREEN
+                        | View.SYSTEM_UI_FLAG_LOW_PROFILE
+                        | View.SYSTEM_UI_FLAG_IMMERSIVE
+        );
+        // Show / hide the Action bar together with the status bar
+        SharedPreferences prefs = AnkiDroidApp.getSharedPrefs(a);
+        final int fullscreenMode = Integer.parseInt(prefs.getString("fullscreenMode", "0"));
+        a.getWindow().setStatusBarColor(Themes.getColorFromAttr(a, R.attr.colorPrimaryDark));
+        View decorView = a.getWindow().getDecorView();
+        decorView.setOnSystemUiVisibilityChangeListener
+                (flags -> {
+                    final View toolbar = a.findViewById(R.id.toolbar);
+                    final View answerButtons = a.findViewById(R.id.answer_options_layout);
+                    final View topbar = a.findViewById(R.id.top_bar);
+                    if (toolbar == null || topbar == null || answerButtons == null) {
+                        return;
+                    }
+                    // Note that system bars will only be "visible" if none of the
+                    // LOW_PROFILE, HIDE_NAVIGATION, or FULLSCREEN flags are set.
+                    boolean visible = (flags & View.SYSTEM_UI_FLAG_HIDE_NAVIGATION) == 0;
+                    Timber.d("System UI visibility change. Visible: %b", visible);
+                    if (visible) {
+                        showViewWithAnimation(toolbar);
+                        if (fullscreenMode >= FULLSCREEN_ALL_GONE) {
+                            showViewWithAnimation(topbar);
+                            showViewWithAnimation(answerButtons);
+                        }
+                    } else {
+                        hideViewWithAnimation(toolbar);
+                        if (fullscreenMode >= FULLSCREEN_ALL_GONE) {
+                            hideViewWithAnimation(topbar);
+                            hideViewWithAnimation(answerButtons);
+                        }
+                    }
+                });
+    }
+
+    private static final int ANIMATION_DURATION = 200;
+    private static final float TRANSPARENCY = 0.90f;
+
+
+    private void showViewWithAnimation(final View view) {
+        view.setAlpha(0.0f);
+        view.setVisibility(View.VISIBLE);
+        view.animate().alpha(TRANSPARENCY).setDuration(ANIMATION_DURATION).setListener(null);
+    }
+
+    private void hideViewWithAnimation(final View view) {
+        view.animate()
+                .alpha(0f)
+                .setDuration(ANIMATION_DURATION)
+                .setListener(new AnimatorListenerAdapter() {
+                    @Override
+                    public void onAnimationEnd(Animator animation) {
+                        view.setVisibility(View.GONE);
+                    }
+                });
+    }
+
+    private boolean isImmersiveSystemUiVisible(AnkiActivity activity) {
+        return (activity.getWindow().getDecorView().getSystemUiVisibility() & View.SYSTEM_UI_FLAG_HIDE_NAVIGATION) == 0;
+    }
+
     private void createWhiteboard() {
-        mWhiteboard = new Whiteboard(this, isInNightMode(), mBlackWhiteboard);
+        SharedPreferences sharedPrefs = AnkiDroidApp.getSharedPrefs(this);
+        mWhiteboard = new Whiteboard(this, isInNightMode());
         FrameLayout.LayoutParams lp2 = new FrameLayout.LayoutParams(
                 ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
         mWhiteboard.setLayoutParams(lp2);
         FrameLayout fl = findViewById(R.id.whiteboard);
         fl.addView(mWhiteboard);
 
+        // We use the pen color of the selected deck at the time the whiteboard is enabled.
+        // This is how all other whiteboard settings are
+        Integer whiteboardPenColor = MetaDB.getWhiteboardPenColor(this, getParentDid()).fromPreferences(sharedPrefs);
+        if (whiteboardPenColor != null) {
+            mWhiteboard.setPenColor(whiteboardPenColor);
+        }
+
+        mWhiteboard.setOnPaintColorChangeListener(color -> MetaDB.storeWhiteboardPenColor(this, getParentDid(), !CardAppearance.isInNightMode(sharedPrefs), color));
+
         mWhiteboard.setOnTouchListener((v, event) -> {
             //If the whiteboard is currently drawing, and triggers the system UI to show, we want to continue drawing.
             if (!mWhiteboard.isCurrentlyDrawing() && (!mShowWhiteboard || (mPrefFullscreenReview
-                    && CompatHelper.getCompat().isImmersiveSystemUiVisible(Reviewer.this)))) {
+                    && isImmersiveSystemUiVisible(Reviewer.this)))) {
                 // Bypass whiteboard listener when it's hidden or fullscreen immersive mode is temporarily suspended
                 v.performClick();
                 return getGestureDetector().onTouchEvent(event);
@@ -1165,6 +1258,14 @@ public class Reviewer extends AbstractFlashcardViewer {
                 mCurrentCard.getNid(), mCurrentCard.getId()) == 1;
     }
 
+
+    @VisibleForTesting(otherwise = VisibleForTesting.NONE)
+    @CheckResult
+    Whiteboard getWhiteboard() {
+        return mWhiteboard;
+    }
+
+
     /**
      * Inner class which implements the submenu for the Suspend button
      */
@@ -1201,16 +1302,15 @@ public class Reviewer extends AbstractFlashcardViewer {
 
         @Override
         public boolean onMenuItemClick(MenuItem item) {
-            switch (item.getItemId()) {
-                case R.id.action_suspend_card:
-                    dismiss(DismissType.SUSPEND_CARD);
-                    return true;
-                case R.id.action_suspend_note:
-                    dismiss(DismissType.SUSPEND_NOTE);
-                    return true;
-                default:
-                    return false;
+            int itemId = item.getItemId();
+            if (itemId == R.id.action_suspend_card) {
+                dismiss(DismissType.SUSPEND_CARD);
+                return true;
+            } else if (itemId == R.id.action_suspend_note) {
+                dismiss(DismissType.SUSPEND_NOTE);
+                return true;
             }
+            return false;
         }
     }
 
@@ -1250,16 +1350,15 @@ public class Reviewer extends AbstractFlashcardViewer {
 
         @Override
         public boolean onMenuItemClick(MenuItem item) {
-            switch (item.getItemId()) {
-                case R.id.action_bury_card:
-                    dismiss(DismissType.BURY_CARD);
-                    return true;
-                case R.id.action_bury_note:
-                    dismiss(DismissType.BURY_NOTE);
-                    return true;
-                default:
-                    return false;
+            int itemId = item.getItemId();
+            if (itemId == R.id.action_bury_card) {
+                dismiss(DismissType.BURY_CARD);
+                return true;
+            } else if (itemId == R.id.action_bury_note) {
+                dismiss(DismissType.BURY_NOTE);
+                return true;
             }
+            return false;
         }
     }
 
@@ -1293,16 +1392,15 @@ public class Reviewer extends AbstractFlashcardViewer {
 
         @Override
         public boolean onMenuItemClick(MenuItem item) {
-            switch (item.getItemId()) {
-                case R.id.action_reschedule_card:
-                    showRescheduleCardDialog();
-                    return true;
-                case R.id.action_reset_card_progress:
-                    showResetCardDialog();
-                    return true;
-                default:
-                    return false;
+            int itemId = item.getItemId();
+            if (itemId == R.id.action_reschedule_card) {
+                showRescheduleCardDialog();
+                return true;
+            } else if (itemId == R.id.action_reset_card_progress) {
+                showResetCardDialog();
+                return true;
             }
+            return false;
         }
 
 

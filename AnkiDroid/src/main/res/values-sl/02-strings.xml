@@ -37,13 +37,13 @@
 ~ You should have received a copy of the GNU General Public License along with
 ~ this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools">
     <!-- How to format a percentage shown in the summary field of a preference -->
     <string name="preference_summary_percentage">XXX %</string>
+    <!-- #7570: We should use these strings again -->
     <!-- Navigation drawer strings -->
-    <string name="drawer_open">Odpri predal</string>
-    <string name="drawer_close">Zapri predal</string>
-    <string name="CardEditorLaterMessage">Informacija shranjena za pozneje</string>
+    <string tools:ignore="UnusedResources" name="drawer_open">Odpri predal</string>
+    <string tools:ignore="UnusedResources" name="drawer_close">Zapri predal</string>
     <string name="CardEditorCardDeck">Komplet kartic:</string>
     <string name="CardEditorNoteDeck">Komplet:</string>
     <string name="CardEditorModel">Vrsta:</string>
@@ -55,7 +55,6 @@
     <string name="check_all_tags">Označi/Odznači vse oznake</string>
     <string name="filter_tags">Filtriraj oznake</string>
     <string name="no_tags">Niste dodali še nobene oznake</string>
-    <string name="sdcard_missing_message">Izklopite pomnilniško napravo USB za dostop do svojih kompletov</string>
     <string name="updated_version">Posodobljen na različico %s</string>
     <!-- Reviewer.java -->
     <string name="save_whiteboard">Save whiteboard</string>
@@ -65,7 +64,6 @@
     <string name="hide_whiteboard">Skrij belo tablo</string>
     <string name="clear_whiteboard">Počisti belo tablo</string>
     <string name="replay_audio">Ponovno predvajaj zvok</string>
-    <string name="toggle_mic_tool_bar">Check Pronunciation</string>
     <string name="leech_suspend_notification">Kartica označena kot odvečna in je bila pridržana</string>
     <string name="leech_notification">Kartica označena kot odvečna</string>
     <string name="corrupt_font">Pokvarjena datoteka pisave %s</string>
@@ -107,7 +105,6 @@
     <string name="custom_study_preview_new">Predogled novih kartic</string>
     <string name="custom_study_limit_tags">Omeji na določene oznake</string>
     <!-- Card editor -->
-    <string name="cardeditor_title_add_note">Dodaj zapisek</string>
     <string name="cardeditor_title_edit_card">Uredi zapisek</string>
     <string name="discard_unsaved_changes">Zapri in izgubi trenutni vnos?</string>
     <string name="note_editor_no_cards_created">No cards created. Please fill in more fields</string>
@@ -118,7 +115,6 @@
     <string name="note_editor_insert_cloze_no_cloze_note_type">Cloze deletions will only work on a Cloze note type</string>
     <string name="saving_facts">Shranjevanje zapiska</string>
     <string name="saving_model">Saving note type</string>
-    <string name="add">Dodaj</string>
     <string name="save">Shrani</string>
     <string name="close">Zapri</string>
     <string name="select">Izberi</string>
@@ -139,17 +135,14 @@
         <item quantity="few">%1$d minutes</item>
         <item quantity="other">%1$d minutes</item>
     </plurals>
-    <string name="studyoptions_welcome_title">Dobrodošli v AnkiDroid</string>
-    <string name="fact_adder_intent_title">Kartica AnkiDroid</string>
-    <string name="note_editor_add_note">Add note</string>
+    <string name="fact_adder_intent_title" comment="Label of the \'Add Note\' window. This title can\'t be seen in AnkiDroid directly.">Kartica AnkiDroid</string>
     <string name="note_editor_copy_note">Copy note</string>
-    <string name="card_editor_copy_card">Kopiraj kartico</string>
     <string name="card_editor_reposition_card">Reposition</string>
     <string name="card_editor_reset_card">Ponastavi napredek</string>
-    <string name="card_editor_reschedule_card">Reschedule</string>
-    <string name="card_editor_preview_card">Predogled</string>
+    <string name="card_editor_reschedule_card" comment="Action to reschedule a card">Reschedule</string>
+    <string name="card_editor_preview_card" comment="Button offering to preview some card(s)">Predogled</string>
     <string name="error_insufficient_memory">Opravila ni mogoče izvesti, ker je na napravi na voljo premalo pomnilnika</string>
-    <string name="rename">Preimenuj</string>
+    <string name="rename" comment="Confirm that the renaming action should be processed.">Preimenuj</string>
     <string name="default_conf_delete_error">Privzete skupine možnosti ni mogoče premakniti</string>
     <plurals name="factadder_cards_added">
         <item quantity="one">%d kartica dodana</item>
@@ -157,7 +150,6 @@
         <item quantity="few">%d kartice dodane</item>
         <item quantity="other">%d kartic dodanih</item>
     </plurals>
-    <string name="help_title">Pomoč</string>
     <string name="check_db">Preveri podatkovno zbirko</string>
     <string name="check_media">Preveri predstavnost</string>
     <string name="empty_cards">Prazne kartice</string>
@@ -167,10 +159,9 @@
     <string name="delete_deck">Brisanje kompleta &#8230;</string>
     <string name="show_hint">Prikaži %s</string>
     <string name="info_rate">Oceni AnkiDroid</string>
-    <string name="col_load_failed">Nalaganje zbirke je spodletelo\n Pritisnite Nazaj, da zaprete AnkiDroid.</string>
     <string name="import_title">Uvažanje</string>
     <string name="import_select_title">Izberite datoteko za uvoz</string>
-    <string name="import_message_add">Dodaj</string>
+    <string name="import_message_add" comment="Adding a new deck to the collection (import)">Dodaj</string>
     <string name="import_message_replace_confirm">To bo izbrisalo vašo obstoječo zbirko in jo nadomestilo s podatki datoteke %s</string>
     <string name="import_message_add_confirm">Dodaj \"%s\" v zbirko? To lahko traja dolgo časa</string>
     <string name="import_log_no_apkg">This isn’t a valid Anki package file</string>
@@ -211,7 +202,9 @@
     <string name="export_unsuccessful">Napaka pri izvažanju datoteke apkg</string>
     <string name="import_hint">Vstavite datoteko apkg v mapo \"%s\" in pritisnite \"V redu\", da uvozite kartice</string>
     <string name="upgrade_import_no_file_found">Nobene uvozljive datoteke %1$s ni bilo mogoče najti</string>
-    <string name="study_options">Options</string>
+    <string name="study_options" comment="Name for a preference category in Filtered deck (aka Cram deck, aka Custom study) options">Options</string>
+    <string name="menu__deck_options">Deck options</string>
+    <string name="menu__study_options" comment="Menu item that opens options for a Filtered deck (aka Cram deck, aka Custom study)">Study options</string>
     <string name="select_tts">Nastavi jezik TTS</string>
     <string name="custom_study">Učenje po meri</string>
     <string name="more_options">Več</string>
@@ -261,6 +254,10 @@
         <item quantity="few">%s leta</item>
         <item quantity="other">%s let</item>
     </plurals>
+    <!-- A decimal number of seconds.
+    Please give this a best-effort translation and explain the requirements for
+    formatting decimals in your language in the CrowdIn comments -->
+    <string name="time_span_decimal_seconds">%s seconds</string>
     <!-- The reason for making a simple “< x” translatable are RTL
          languages which apparently use the other symbol to mean less
          than. -->
@@ -278,14 +275,13 @@
     <!-- Currently only used if exporting APKG fails -->
     <string name="apk_share_error">Napaka pri deljenju datoteke apkg</string>
     <!-- Import and export v2 feedback -->
-    <string name="import_needs_v2">V2 scheduler must be enabled to import this file.</string>
-    <string name="import_cannot_with_v2">V2 scheduler can not import V1 decks with scheduling included.</string>
     <string name="export_v2_dummy_note">This file requires a newer version of Anki.</string>
     <!-- Placed in a snackbar with a long URL. Limit the length and move the URL to the start of the string -->
     <string name="activity_start_failed_load_url">Loading \'%s\' failed.</string>
     <string name="activity_start_failed">The system does not have an app installed that can perform this action.</string>
     <string name="multimedia_editor_image_compression_failed"><![CDATA[Camera images may be large. You may wish to compress & resize images in the media directory]]></string>
     <string name="no_browser_notification">No browser found，please visit web page by pc or mobile: </string>
+    <string name="web_page_error">Error loading page: %s</string>
     <string name="no_outgoing_link_in_cardbrowser">External page link in card is not supported.</string>
     <!-- The name of the deck which corrupt cards will be moved to -->
     <string name="check_integrity_recovered_deck_name">Recovered Cards</string>
@@ -342,8 +338,32 @@
     <string name="about_ankidroid_error_copy_debug_info">Error copying debug information to clipboard</string>
     <!-- Card Viewer -->
     <string name="card_viewer_could_not_find_image">Card Content Error: Failed to load ‘%s’</string>
-    <string name="card_viewer_could_not_find_image_get_help">Help</string>
+    <string name="card_viewer_media_relative_protocol">Card Content Error: Media update required</string>
     <!-- Deck Picker -->
     <string name="deck_picker_failed_deck_load">Failed to load deck ‘%s’</string>
     <string name="search_decks">Search decks</string>
+    <string name="ankidroid_init_failed_webview_title">Fatal Error</string>
+    <string name="ankidroid_init_failed_webview">AnkiDroid relies on the System WebView which is unavailable. This can happen if the system is installing updates. Please try again in a few minutes.\n\n%s</string>
+    <!-- A Menu item to change the Font Size (currently in the Note Editor) -->
+    <string name="menu_font_size">Font Size</string>
+    <string name="menu_show_toolbar" comment="Checkable item stating whether the note editor toolbar should be shown">Show Toolbar</string>
+    <string name="format_insert_bold">Format as Bold</string>
+    <string name="format_insert_italic">Format as Italic</string>
+    <string name="format_insert_underline">Format as Underline</string>
+    <string name="insert_horizontal_line">Insert Horizontal Line</string>
+    <string name="insert_heading">Insert Heading</string>
+    <string name="format_font_size">Change Font Size</string>
+    <string name="insert_mathjax">Insert MathJax Equation</string>
+    <string name="insert_cloze">Insert Cloze Deletion</string>
+    <string name="before_text">HTML Before Selection</string>
+    <string name="after_text">HTML After Selection</string>
+    <string name="add_toolbar_item">Create Toolbar Item</string>
+    <string name="toolbar_item_explain_remove">Enter HTML to be inserted before and after the selected text\n\nLong press a toolbar item to remove it</string>
+    <string name="remove_toolbar_item">Remove Toolbar Item?</string>
+    <string name="note_editor_paste_too_large">The image is too large to paste, please insert the image manually</string>
+    <string name="ankidroid_cannot_open_after_backup_try_again" comment="After an Android backup is restored, AnkiDroid opens and shows this message.         Opening AnkiDroid again will work correctly">        Android backup in progress. Please try again</string>
+    <string name="create_shortcut_error_vivo" comment="iManager is an app on Vivo phones">You may need to use iManager to allow AnkiDroid to add shortcuts</string>
+    <string name="create_shortcut_failed" comment="home screen == launcher">Your home screen does not allow AnkiDroid to add shortcuts</string>
+    <string name="create_shortcut_error">Error adding shortcut: %s</string>
+    <string name="note_editor_capitalize" comment="This is for a switch with a checkbox - on: enabled">Capitalize sentences</string>
 </resources>

@@ -13,7 +13,6 @@ import com.ichi2.anki.exception.ConfirmModSchemaException;
 import com.ichi2.libanki.Card;
 import com.ichi2.libanki.Collection;
 import com.ichi2.libanki.Consts;
-import com.ichi2.libanki.Deck;
 import com.ichi2.libanki.Decks;
 import com.ichi2.libanki.Model;
 import com.ichi2.libanki.Models;
@@ -48,7 +47,6 @@ import static org.hamcrest.Matchers.isEmptyString;
 import static org.hamcrest.Matchers.not;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
-import static org.junit.Assume.assumeTrue;
 
 @RunWith(ParameterizedRobolectricTestRunner.class)
 public class ReviewerTest extends RobolectricTest {
@@ -68,7 +66,7 @@ public class ReviewerTest extends RobolectricTest {
     public void setUp() {
         super.setUp();
         try {
-            Timber.d("scheduler version is " + schedVersion);
+            Timber.d("scheduler version is %d", schedVersion);
             getCol().changeSchedulerVer(schedVersion);
         } catch (ConfirmModSchemaException e) {
             throw new RuntimeException("Could not change schedVer", e);
@@ -158,28 +156,6 @@ public class ReviewerTest extends RobolectricTest {
         assertThat("No menu items should be visible if all are disabled in Settings - Reviewer - App Bar Buttons", visibleButtons, empty());
     }
 
-
-    private void toggleWhiteboard(ReviewerForMenuItems reviewer) {
-        reviewer.toggleWhiteboard();
-
-        assumeTrue("Whiteboard should now be enabled", reviewer.mPrefWhiteboard);
-
-        super.advanceRobolectricLooperWithSleep();
-    }
-
-
-    private void disableAllReviewerAppBarButtons() {
-        Set<String> keys = PreferenceUtils.getAllCustomButtonKeys(getTargetContext());
-
-        SharedPreferences preferences = AnkiDroidApp.getSharedPrefs(getTargetContext());
-
-        SharedPreferences.Editor e =  preferences.edit();
-        for (String k : keys) {
-            e.putString(k, Integer.toString(ActionButtonStatus.MENU_DISABLED));
-        }
-        e.apply();
-    }
-
     @Test
     public synchronized void testMultipleCards() throws ConfirmModSchemaException {
         addNoteWithThreeCards();
@@ -212,6 +188,84 @@ public class ReviewerTest extends RobolectricTest {
         assertCurrentOrdIsNot(reviewer, 3); // Anki Desktop shows "1"
     }
 
+    @Test
+    public void testLrnQueueAfterUndo() {
+        Collection col = getCol();
+        JSONObject nw = col.getDecks().confForDid(1).getJSONObject("new");
+        MockTime time = (MockTime) col.getTime();
+        nw.put("delays", new JSONArray(new int[] {1, 10, 60, 120}));
+
+        Card[] cards = new Card[4];
+        cards[0] = addRevNoteUsingBasicModelDueToday("1", "bar").firstCard();
+        cards[1] = addNoteUsingBasicModel("2", "bar").firstCard();
+        cards[2] = addNoteUsingBasicModel("3", "bar").firstCard();
+
+        waitForAsyncTasksToComplete();
+
+        Reviewer reviewer = startReviewer();
+
+        waitForAsyncTasksToComplete();
+
+
+        equalFirstField(cards[0], reviewer.mCurrentCard);
+        reviewer.answerCard(Consts.BUTTON_ONE);
+        waitForAsyncTasksToComplete();
+
+        equalFirstField(cards[1], reviewer.mCurrentCard);
+        reviewer.answerCard(Consts.BUTTON_ONE);
+        waitForAsyncTasksToComplete();
+
+        undo(reviewer);
+        waitForAsyncTasksToComplete();
+
+        equalFirstField(cards[1], reviewer.mCurrentCard);
+        reviewer.answerCard(getCol().getSched().getGoodNewButton());
+        waitForAsyncTasksToComplete();
+
+        equalFirstField(cards[2], reviewer.mCurrentCard);
+        time.addM(2);
+        reviewer.answerCard(getCol().getSched().getGoodNewButton());
+        advanceRobolectricLooperWithSleep();
+        equalFirstField(cards[0], reviewer.mCurrentCard); // This failed in #6898 because this card was not in the queue
+    }
+
+    @Test
+    public void baseDeckName() {
+        Collection col = getCol();
+        Models models = col.getModels();
+
+        Decks decks = col.getDecks();
+        Long didAb = decks.id("A::B");
+        Model basic = models.byName(AnkiDroidApp.getAppResources().getString(R.string.basic_model_name));
+        basic.put("did", didAb);
+        addNoteUsingBasicModel("foo", "bar");
+        Long didA = decks.id("A");
+        decks.select(didA);
+        Reviewer reviewer = startReviewer();
+        waitForAsyncTasksToComplete();
+        assertThat(reviewer.getSupportActionBar().getTitle(), is("B"));
+    }
+
+    private void toggleWhiteboard(ReviewerForMenuItems reviewer) {
+        reviewer.toggleWhiteboard();
+
+        assumeTrue("Whiteboard should now be enabled", reviewer.mPrefWhiteboard);
+
+        advanceRobolectricLooperWithSleep();
+    }
+
+
+    private void disableAllReviewerAppBarButtons() {
+        Set<String> keys = PreferenceUtils.getAllCustomButtonKeys(getTargetContext());
+
+        SharedPreferences preferences = AnkiDroidApp.getSharedPrefs(getTargetContext());
+
+        SharedPreferences.Editor e =  preferences.edit();
+        for (String k : keys) {
+            e.putString(k, Integer.toString(ActionButtonStatus.MENU_DISABLED));
+        }
+        e.apply();
+    }
 
     private void assertCurrentOrdIsNot(Reviewer r, int i) {
         waitForAsyncTasksToComplete();
@@ -300,11 +354,19 @@ public class ReviewerTest extends RobolectricTest {
     }
 
     private Reviewer startReviewer() {
-        return startReviewer(Reviewer.class);
+        return startReviewer(this);
+    }
+
+    static Reviewer startReviewer(RobolectricTest testClass) {
+        return startReviewer(testClass, Reviewer.class);
     }
 
     private <T extends Reviewer> T startReviewer(Class<T> clazz) {
-        T reviewer = super.startActivityNormallyOpenCollectionWithIntent(clazz, new Intent());
+        return startReviewer(this, clazz);
+    }
+
+    public static <T extends Reviewer> T startReviewer(RobolectricTest testClass, Class<T> clazz) {
+        T reviewer = startActivityNormallyOpenCollectionWithIntent(testClass, clazz, new Intent());
         waitForAsyncTasksToComplete();
         return reviewer;
     }
@@ -356,23 +418,4 @@ public class ReviewerTest extends RobolectricTest {
             return visibleButtons;
         }
     }
-
-    @Test
-    public void baseDeckName() {
-        Collection col = getCol();
-        Models models = col.getModels();
-
-        Decks decks = col.getDecks();
-        Long didAb = decks.id("A::B");
-        Model basic = models.byName(AnkiDroidApp.getAppResources().getString(R.string.basic_model_name));
-        basic.put("did", didAb);
-        addNoteUsingBasicModel("foo", "bar");
-        Long didA = decks.id("A");
-        decks.select(didA);
-        Reviewer reviewer = startReviewer();
-        waitForAsyncTasksToComplete();
-        assertThat(reviewer.getSupportActionBar().getTitle(), is("B"));
-    }
-
 }
-

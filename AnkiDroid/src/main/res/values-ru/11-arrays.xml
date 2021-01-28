@@ -39,35 +39,6 @@
         <item>Никогда не сообщать</item>
         <item>Спрашивать меня</item>
     </string-array>
-    <string-array name="gestures_labels">
-        <item>Без действия</item>
-        <item>Показать ответ</item>
-        <item>Кнопка ответа 1</item>
-        <item>Кнопка ответа 2</item>
-        <item>Кнопка ответа 3</item>
-        <item>Кнопка ответа 4</item>
-        <item>Рекомендованный ответ (зелёный)</item>
-        <item>Лучше рекомендованного ответа</item>
-        <item>Отменить</item>
-        <item>Править запись</item>
-        <item>Добавить метку</item>
-        <item>Отметить запись</item>
-        <item>Посмотреть в словаре</item>
-        <item>Отложить карточку</item>
-        <item>Исключить карточку</item>
-        <item>Удалить запись</item>
-        <item>Воспроизвести медиафайл</item>
-        <item>Прервать обучение</item>
-        <item>Отложить запись</item>
-        <item>Исключить запись</item>
-        <item>Красный флажок</item>
-        <item>Оранжевый флажок</item>
-        <item>Зелёный флажок</item>
-        <item>Синий флажок</item>
-        <item>Убрать флажок</item>
-        <item>На страницу вверх</item>
-        <item>На страницу вниз</item>
-    </string-array>
     <string-array name="leech_action_labels">
         <item>Исключить карточку</item>
         <item>Добавить метку</item>
@@ -108,4 +79,39 @@
         <item>Чёрный</item>
         <item>Тёмный</item>
     </string-array>
+    <string-array name="html_size_code_labels">
+        <item>самый маленький</item>
+        <item>очень маленький</item>
+        <item>маленький</item>
+        <item>средний</item>
+        <item>большой</item>
+        <item>очень большой</item>
+        <item>самый большой</item>
+    </string-array>
+    <!--
+    #7794 - it\'s better to use @string references in non-translated arrays as this handles
+    changes in the array ordering better
+     -->
+    <string name="gesture_no_action">Без действия</string>
+    <string name="gesture_answer_1">Кнопка ответа 1</string>
+    <string name="gesture_answer_2">Кнопка ответа 2</string>
+    <string name="gesture_answer_3">Кнопка ответа 3</string>
+    <string name="gesture_answer_4">Кнопка ответа 4</string>
+    <string name="gesture_answer_green">Рекомендованный ответ (зелёный)</string>
+    <string name="gesture_answer_better_recommended">Лучше рекомендованного ответа</string>
+    <string name="gesture_tag_note">Добавить метку</string>
+    <string name="gesture_lookup">Посмотреть в словаре</string>
+    <string name="gesture_play">Воспроизвести медиафайл</string>
+    <string name="gesture_abort_learning">Прервать обучение</string>
+    <string name="gesture_flag_red">Красный флажок</string>
+    <string name="gesture_flag_orange">Оранжевый флажок</string>
+    <string name="gesture_flag_green">Зелёный флажок</string>
+    <string name="gesture_flag_blue">Синий флажок</string>
+    <string name="gesture_flag_remove">Убрать флажок</string>
+    <string name="gesture_page_up">На страницу вверх</string>
+    <string name="gesture_page_down">На страницу вниз</string>
+    <string name="gesture_abort_sync">Отменить обучение и синхронизацию</string>
+    <string name="gesture_toggle_whiteboard">Переключить доску</string>
+    <string name="record_voice">Записать голос</string>
+    <string name="replay_voice">Воспроизвести голос</string>
 </resources>

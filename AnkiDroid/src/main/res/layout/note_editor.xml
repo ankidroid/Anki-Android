@@ -2,14 +2,17 @@
 <androidx.coordinatorlayout.widget.CoordinatorLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/root_layout"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
     android:fitsSystemWindows="true">
     <LinearLayout
+            android:id="@+id/note_editor_layout"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            android:layout_marginBottom="@dimen/note_editor_toolbar_height">
 
         <include layout="@layout/toolbar" />
 
@@ -79,7 +82,9 @@
                     android:layout_height="wrap_content"
                     android:orientation="vertical"
                     android:focusable="true"
-                    android:padding="@dimen/keyline_1" />
+                    android:animateLayoutChanges="true"
+                    android:paddingVertical="@dimen/keyline_1"
+                    android:paddingHorizontal="6dip" />
 
                 <LinearLayout
                     android:layout_width="fill_parent"
@@ -101,7 +106,8 @@
                             android:layout_marginLeft="5dip"
                             android:layout_marginRight="5dip"
                             android:clickable="false"
-                            android:gravity="left|center_vertical" />
+                            android:gravity="left|center_vertical"
+                            tools:text="Tags: AnkiDroid"/>
                     </LinearLayout>
                 </LinearLayout>
                 <LinearLayout
@@ -124,6 +130,7 @@
                             android:layout_marginLeft="5dip"
                             android:layout_marginRight="5dip"
                             android:clickable="false"
+                            tools:text="Cards: Card 1"
                             android:gravity="left|center_vertical" />
                     </LinearLayout>
                 </LinearLayout>
@@ -131,5 +138,13 @@
 
         </ScrollView>
     </LinearLayout>
+
+    <com.ichi2.anki.noteeditor.Toolbar
+        android:background="#D6D7D7"
+        android:layout_gravity="bottom"
+        android:id="@+id/editor_toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+
     <include layout="@layout/anki_progress"/>
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

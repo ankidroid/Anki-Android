@@ -81,6 +81,11 @@
         android:icon="@drawable/ic_add_white_24dp"
         ankidroid:showAsAction="never"/>
     <item
+        android:id="@+id/action_card_info"
+        android:icon="@drawable/ic_dialog_info"
+        android:title="@string/card_info_title"
+        ankidroid:showAsAction="never"/>
+    <item
         android:id="@+id/action_tag"
         android:icon="@drawable/ic_tag"
         android:title="@string/menu_edit_tags"
@@ -92,7 +97,7 @@
         ankidroid:showAsAction="ifRoom"/>
     <item
         android:id="@+id/action_toggle_mic_tool_bar"
-        android:title="@string/toggle_mic_tool_bar"
+        android:title="@string/menu_toggle_mic_tool_bar"
         android:icon="@drawable/ic_action_mic"
         ankidroid:showAsAction="never"/>
     <item
@@ -124,7 +129,7 @@
         android:visible="false"/>
     <item
         android:id="@+id/action_open_deck_options"
-        android:title="@string/study_options" />
+        android:title="@string/menu__deck_options" />
     <item
         android:id="@+id/action_select_tts"
         android:title="@string/select_tts"

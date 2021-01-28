@@ -144,7 +144,7 @@ public final class AddContentApi {
         if (tagsList != null && fieldsList.size() != tagsList.size()) {
             throw new IllegalArgumentException("fieldsList and tagsList different length");
         }
-        List<ContentValues> newNoteValuesList = new ArrayList<>();
+        List<ContentValues> newNoteValuesList = new ArrayList<>(fieldsList.size());
         for (int i = 0; i < fieldsList.size(); i++) {
             ContentValues values = new ContentValues();
             values.put(Note.MID, modelId);
@@ -209,8 +209,7 @@ public final class AddContentApi {
             Uri returnUri = mResolver.insert(AnkiMedia.CONTENT_URI, contentValues);
             // get the filename from Uri, return [sound:%s] % file.getName()
             String fname = new File(returnUri.getPath()).toString();
-            String formatted_fname = formatMediaName(fname, mimeType);
-            return formatted_fname;
+            return formatMediaName(fname, mimeType);
         } catch (Exception e){
             return null;
         }
@@ -395,14 +394,14 @@ public final class AddContentApi {
     /**
      * Insert a new model into AnkiDroid.
      * See the <a href="http://ankisrs.net/docs/manual.html#cards-and-templates">Anki Desktop Manual</a> for more help
-     * @param name: name of model
-     * @param fields: array of field names
-     * @param cards: array of names for the card templates
-     * @param qfmt: array of formatting strings for the question side of each template in cards
-     * @param afmt: array of formatting strings for the answer side of each template in cards
-     * @param css: css styling information to be shared across all of the templates. Use null for default CSS.
-     * @param did: default deck to add cards to when using this model. Use null or #DEFAULT_DECK_ID for default deck.
-     * @param sortf: index of field to be used for sorting. Use null for unspecified (unsupported in provider spec v1)
+     * @param name name of model
+     * @param fields array of field names
+     * @param cards array of names for the card templates
+     * @param qfmt array of formatting strings for the question side of each template in cards
+     * @param afmt array of formatting strings for the answer side of each template in cards
+     * @param css css styling information to be shared across all of the templates. Use null for default CSS.
+     * @param did default deck to add cards to when using this model. Use null or #DEFAULT_DECK_ID for default deck.
+     * @param sortf index of field to be used for sorting. Use null for unspecified (unsupported in provider spec v1)
      * @return the mid of the model which was created, or null if it could not be created
      */
     public Long addNewCustomModel(String name, String[] fields, String[] cards, String[] qfmt,
@@ -525,16 +524,9 @@ public final class AddContentApi {
      * @param mid id of model
      * @return the name of the model, or null if no model was found
      */
-    public String getModelName(Long mid) {
-        if (mid != null && mid >= 0) {
-            Map<Long, String> modelList = getModelList();
-            for (Map.Entry<Long, String> entry : modelList.entrySet()) {
-                if (entry.getKey().equals(mid)) {
-                    return entry.getValue();
-                }
-            }
-        }
-        return null;
+    public String getModelName(long mid) {
+        Map<Long, String> modelList = getModelList();
+        return modelList.get(mid);
     }
 
     /**
@@ -603,16 +595,9 @@ public final class AddContentApi {
      * @param did ID of deck
      * @return the name of the deck, or null if no deck was found
      */
-    public String getDeckName(Long did) {
+    public String getDeckName(long did) {
         Map<Long, String> deckList = getDeckList();
-        if (did != null && did >= 0 && deckList != null) {
-            for (Map.Entry<Long, String> entry : deckList.entrySet()) {
-                if (entry.getKey().equals(did)) {
-                    return entry.getValue();
-                }
-            }
-        }
-        return null;
+        return deckList.get(did);
     }
 
 

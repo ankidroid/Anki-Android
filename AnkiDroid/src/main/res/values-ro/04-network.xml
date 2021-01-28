@@ -44,17 +44,13 @@
     <string name="sync_error">Eroare de sincronizare</string>
     <string name="vague_error">Error</string>
     <string name="retry">Reincearca</string>
-    <string name="cancel">Anuleaza</string>
-    <string name="terms_and_conditions">Termeni și condiții</string>
     <string name="menu_get_shared_decks">Obţinerea punţilor comune</string>
     <string name="connection_error_message">A network error has ocurred.</string>
     <string name="not_logged_in_title">Conectaţi-vă la AnkiWeb</string>
     <string name="login_create_account_message">Trebuie să va conectaţi la un terţ contul pentru a utiliza serviciul de sincronizare nor. Puteţi crea unul în pasul următor.</string>
     <!-- MyAccount.java -->
     <string name="username">Adresa de e-mail</string>
-    <string name="username_repeat">Repetaţi adresa de email</string>
     <string name="password">Parolă</string>
-    <string name="password_repeat">Repetă parola</string>
     <string name="log_in">Logare</string>
     <string name="sign_up_description">Nu aveţi un cont AnkiWeb? Este gratuit!</string>
     <string name="sign_up_not_affiliated">Notă: AnkiWeb nu este afiliat cu AnkiDroid</string>
@@ -65,7 +61,6 @@
     <string name="invalid_username_password">Adresă de e-mail sau parolă incorectă</string>
     <string name="reset_password">Resetare parolă</string>
     <!-- AndroidManifest.xml -->
-    <string name="downloaddeck_search">Căutare</string>
     <string name="preferences_title">Preferinţe</string>
     <string name="deckpreferences_title">Opţiuni pentru XXX</string>
     <string name="sync_conflict_message">Trebuie fie sa încărcati această colecţie fie sa o descărcati de pe Ankiweb, deoarece acestea nu pot fi îmbinate. Colecțiile vor fi suprascrise.</string>
@@ -80,7 +75,6 @@
     <string name="sync_title">Sincronizare</string>
     <string name="sync_downloading_media">Descărcare media %1$d/%2$d&#8230;</string>
     <string name="sync_log_uploading_message">Sincronizare completă din local</string>
-    <string name="sync_log_downloading_message">Total sincronizare de pe server</string>
     <string name="sync_log_clocks_unsynchronized">Ceasul off de %1$d seconds%2$s. Asiguraţi-vă că data, ora şi fusul orar pe telefon sunt stabilite corect, apoi sincronizați din nou.</string>
     <string name="sync_log_clocks_unsynchronized_tz">, fusul orar este eventual, greşit</string>
     <string name="sync_log_clocks_unsynchronized_date">, data este eventual greşita</string>
@@ -132,9 +126,7 @@
     <string name="sync_error_502_maintenance">AnkiWeb is under maintenance. Please try again in a few minutes.</string>
     <string name="sync_error_504_gateway_timeout">504 gateway timeout error received.</string>
     <!-- Deck Picker Sync Icon -->
-    <string name="sync_menu_title">Sync</string>
     <string name="sync_menu_title_full_sync">Sync (full)</string>
     <string name="sync_menu_title_no_account">Sync (log in)</string>
-    <!-- An option on a message box to open the "corrupt collection" webpage -->
-    <string name="sync_corrupt_collection_get_help">Help</string>
+    <string name="sync_error_unknown_host_readable">Could not connect to AnkiWeb. Is your internet working?\n\n%s</string>
 </resources>

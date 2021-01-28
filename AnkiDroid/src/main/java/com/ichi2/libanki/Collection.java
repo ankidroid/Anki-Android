@@ -23,6 +23,7 @@ import android.content.Context;
 import android.content.res.Resources;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabaseLockedException;
+import android.os.Build;
 import android.text.TextUtils;
 import android.util.Pair;
 
@@ -31,18 +32,24 @@ import com.ichi2.anki.R;
 import com.ichi2.anki.UIUtils;
 import com.ichi2.anki.analytics.UsageAnalytics;
 import com.ichi2.anki.exception.ConfirmModSchemaException;
+import com.ichi2.async.CancelListener;
 import com.ichi2.async.CollectionTask;
+import com.ichi2.libanki.backend.DroidBackend;
+import com.ichi2.async.ProgressSender;
+import com.ichi2.async.TaskManager;
 import com.ichi2.libanki.exception.NoSuchDeckException;
 import com.ichi2.libanki.exception.UnknownDatabaseVersionException;
 import com.ichi2.libanki.hooks.ChessFilter;
 import com.ichi2.libanki.sched.AbstractSched;
 import com.ichi2.libanki.sched.Sched;
 import com.ichi2.libanki.sched.SchedV2;
-import com.ichi2.libanki.template.Template;
+import com.ichi2.libanki.template.ParsedNode;
+import com.ichi2.libanki.template.TemplateError;
 import com.ichi2.libanki.utils.Time;
 import com.ichi2.upgrade.Upgrade;
 import com.ichi2.utils.DatabaseChangeDecorator;
 import com.ichi2.utils.FunctionalInterfaces;
+import com.ichi2.utils.LanguageUtil;
 import com.ichi2.utils.VersionUtils;
 
 import com.ichi2.utils.JSONArray;
@@ -62,11 +69,12 @@ import java.util.Collections;
 import java.util.GregorianCalendar;
 import java.util.HashMap;
 import java.util.HashSet;
-import java.util.LinkedList;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Random;
+import java.util.concurrent.LinkedBlockingDeque;
+import java.util.Set;
 import java.util.regex.Pattern;
 
 import androidx.annotation.CheckResult;
@@ -77,10 +85,9 @@ import androidx.sqlite.db.SupportSQLiteDatabase;
 import androidx.sqlite.db.SupportSQLiteStatement;
 import timber.log.Timber;
 
-import com.ichi2.async.TaskData;
-
+import static com.ichi2.async.CancelListener.isCancelled;
 import static com.ichi2.libanki.Collection.DismissType.REVIEW;
-import static com.ichi2.libanki.Collection.Previewing.*;
+import static com.ichi2.libanki.Consts.DECK_DYN;
 
 // Anki maintains a cache of used tags so it can quickly present a list of tags
 // for autocomplete and in the browser. For efficiency, deletions are not
@@ -118,9 +125,11 @@ public class Collection {
     private JSONObject mConf;
     // END: SQL table columns
 
-    private LinkedList<Undoable> mUndo;
+    // API 21: Use a ConcurrentLinkedDeque
+    private LinkedBlockingDeque<Undoable> mUndo;
 
     private final String mPath;
+    private final DroidBackend mDroidBackend;
     private boolean mDebugLog;
     private PrintWriter mLogHnd;
 
@@ -147,38 +156,46 @@ public class Collection {
 
     public enum DismissType {
         REVIEW(R.string.undo_action_review),
-        BURY_CARD(R.string.undo_action_bury_card),
-        BURY_NOTE(R.string.undo_action_bury_note),
-        SUSPEND_CARD(R.string.undo_action_suspend_card),
-        SUSPEND_CARD_MULTI(R.string.card_browser_suspend_card),
+        BURY_CARD(R.string.menu_bury_card),
+        BURY_NOTE(R.string.menu_bury_note),
+        SUSPEND_CARD(R.string.menu_suspend_card),
+        SUSPEND_CARD_MULTI(R.string.menu_suspend_card),
         UNSUSPEND_CARD_MULTI(R.string.card_browser_unsuspend_card),
-        SUSPEND_NOTE(R.string.undo_action_suspend_note),
-        DELETE_NOTE(R.string.undo_action_delete),
-        DELETE_NOTE_MULTI(R.string.undo_action_delete_multi),
+        SUSPEND_NOTE(R.string.menu_suspend_note),
+        DELETE_NOTE(R.string.menu_delete_note),
+        DELETE_NOTE_MULTI(R.string.card_browser_delete_card),
         CHANGE_DECK_MULTI(R.string.undo_action_change_deck_multi),
         MARK_NOTE_MULTI(R.string.card_browser_mark_card),
         UNMARK_NOTE_MULTI(R.string.card_browser_unmark_card),
-        FLAG(R.string.card_browser_flag),
-        REPOSITION_CARDS(R.string.undo_action_reposition_card),
-        RESCHEDULE_CARDS(R.string.undo_action_reschedule_card),
-        RESET_CARDS(R.string.undo_action_reset_card);
+        FLAG(R.string.menu_flag),
+        REPOSITION_CARDS(R.string.card_editor_reposition_card),
+        RESCHEDULE_CARDS(R.string.card_editor_reschedule_card),
+        RESET_CARDS(R.string.card_editor_reset_card);
 
-        public final int undoNameId;
+        private final int mUndoNameId;
 
         DismissType(int undoNameId) {
-            this.undoNameId = undoNameId;
+            this.mUndoNameId = undoNameId;
+        }
+
+        private Locale getLocale(Resources resources) {
+            return LanguageUtil.getLocaleCompat(resources);
+        }
+        public String getString(Resources res) {
+            return res.getString(mUndoNameId).toLowerCase(getLocale(res));
         }
     }
 
     private static final int UNDO_SIZE_MAX = 20;
 
     @VisibleForTesting
-    public Collection(Context context, DB db, String path, boolean server, boolean log, @NonNull Time time) {
+    public Collection(Context context, DB db, String path, boolean server, boolean log, @NonNull Time time, @NonNull DroidBackend droidBackend) {
         mContext = context;
         mDebugLog = log;
         mDb = db;
         mPath = path;
         mTime = time;
+        mDroidBackend = droidBackend;
         _openLog();
         log(path, VersionUtils.getPkgVersionName());
         mServer = server;
@@ -263,9 +280,9 @@ public class Collection {
         String deckConf = "";
         try {
             // Read in deck table columns
-            cursor = mDb.getDatabase().query(
+            cursor = mDb.query(
                     "SELECT crt, mod, scm, dty, usn, ls, " +
-                    "conf, dconf, tags FROM col", null);
+                    "conf, dconf, tags FROM col");
             if (!cursor.moveToFirst()) {
                 return;
             }
@@ -455,7 +472,7 @@ public class Collection {
     public void reopen() {
         Timber.i("Reopening Database");
         if (mDb == null) {
-            mDb = new DB(mPath);
+            mDb = mDroidBackend.openCollectionDatabase(mPath);
             mMedia.connect();
             _openLog();
         }
@@ -639,6 +656,7 @@ public class Collection {
     public int addNote(Note note) {
         // check we have card models available, then save
         ArrayList<JSONObject> cms = findTemplates(note);
+        // Todo: upstream, we accept to add a not even if it generates no card. Should be ported to ankidroid
         if (cms.size() == 0) {
             return 0;
         }
@@ -682,74 +700,123 @@ public class Collection {
      */
 
     /**
+     * @param note A note
      * @return (active), non-empty templates.
      */
     public ArrayList<JSONObject> findTemplates(Note note) {
         Model model = note.model();
-        ArrayList<Integer> avail = getModels().availOrds(model, note.getFields());
+        ArrayList<Integer> avail = Models.availOrds(model, note.getFields());
         return _tmplsFromOrds(model, avail);
     }
 
 
+    /**
+     * @param model A note type
+     * @param avail Ords of cards from this note type.
+     * @return One template by element i of avail, for the i-th card. For standard template, avail should contains only existing ords.
+     * for cloze, avail should contains only non-negative numbers, and the i-th card is a copy of the first card, with a different ord.
+     */
     private ArrayList<JSONObject> _tmplsFromOrds(Model model, ArrayList<Integer> avail) {
-        ArrayList<JSONObject> ok = new ArrayList<>();
         JSONArray tmpls;
-        if (model.getInt("type") == Consts.MODEL_STD) {
+        if (model.isStd()) {
             tmpls = model.getJSONArray("tmpls");
-            for (JSONObject t : tmpls.jsonObjectIterable()) {
-                if (avail.contains(t.getInt("ord"))) {
-                    ok.add(t);
-                }
+            ArrayList<JSONObject> ok = new ArrayList<>(avail.size());
+            for (Integer ord : avail) {
+                ok.add(tmpls.getJSONObject(ord));
             }
+            return ok;
         } else {
             // cloze - generate temporary templates from first
+            JSONObject template0 = model.getJSONArray("tmpls").getJSONObject(0);
+            ArrayList<JSONObject> ok = new ArrayList<>(avail.size());
             for (int ord : avail) {
-                JSONObject t = new JSONObject(model.getJSONArray("tmpls").getString(0));
+                JSONObject t = template0.deepClone();
                 t.put("ord", ord);
                 ok.add(t);
             }
+            return ok;
         }
-        return ok;
     }
 
 
     /**
      * Generate cards for non-empty templates, return ids to remove.
      */
-	public ArrayList<Long> genCards(List<Long> nids) {
-	    return genCards(Utils.collection2Array(nids));
+	public ArrayList<Long> genCards(java.util.Collection<Long> nids, @NonNull Model model) {
+	    return genCards(Utils.collection2Array(nids), model);
 	}
-    public ArrayList<Long> genCards(long[] nids) {
+
+    public <T extends ProgressSender<Integer> & CancelListener> ArrayList<Long> genCards(java.util.Collection<Long> nids, @NonNull Model model, @Nullable T task) {
+       return genCards(Utils.collection2Array(nids), model, task);
+    }
+
+    public ArrayList<Long> genCards(java.util.Collection<Long> nids, long mid) {
+        return genCards(nids, getModels().get(mid));
+    }
+
+    public ArrayList<Long> genCards(long[] nids, @NonNull Model model) {
+        return genCards(nids, model, null);
+    }
+
+    public ArrayList<Long> genCards(long nid, @NonNull Model model) {
+        return genCards(nid, model, null);
+    }
+
+    public <T extends ProgressSender<Integer> & CancelListener> ArrayList<Long> genCards(long nid, @NonNull Model model, @Nullable T task) {
+        return genCards("(" + nid + ")", model, task);
+    }
+
+    /**
+     * @param nids All ids of nodes of a note type
+     * @param task Task to check for cancellation and update number of card processed
+     * @return Cards that should be removed because they should not be generated
+     */
+    public <T extends ProgressSender<Integer> & CancelListener> ArrayList<Long> genCards(long[] nids, @NonNull Model model, @Nullable T task) {
         // build map of (nid,ord) so we don't create dupes
         String snids = Utils.ids2str(nids);
-        HashMap<Long, HashMap<Integer, Long>> have = new HashMap<>();
-        HashMap<Long, Long> dids = new HashMap<>();
-        HashMap<Long, Long> dues = new HashMap<>();
-        Cursor cur = null;
-        try {
-            cur = mDb.getDatabase().query("select id, nid, ord, did, due, odue, odid, type from cards where nid in " + snids, null);
+        return genCards(snids, model, task);
+    }
+
+    /**
+     * @param snids All ids of nodes of a note type, separated by comma
+     * @param model
+     * @param task Task to check for cancellation and update number of card processed
+     * @return Cards that should be removed because they should not be generated
+     * @param <T>
+     */
+    public <T extends ProgressSender<Integer> & CancelListener> ArrayList<Long> genCards(String snids, @NonNull Model model, @Nullable T task) {
+        int nbCount = noteCount();
+        // For each note, indicates ords of cards it contains
+        HashMap<Long, HashMap<Integer, Long>> have = new HashMap<>(nbCount);
+        // For each note, the deck containing all of its cards, or 0 if siblings in multiple deck
+        HashMap<Long, Long> dids = new HashMap<>(nbCount);
+        // For each note, an arbitrary due of one of its due card processed, if any exists
+        HashMap<Long, Long> dues = new HashMap<>(nbCount);
+        List<ParsedNode> nodes = null;
+        if (model.getInt("type") != Consts.MODEL_CLOZE) {
+            nodes = model.parsedNodes();
+        }
+        try (Cursor cur = mDb.query("select id, nid, ord, (CASE WHEN odid != 0 THEN odid ELSE did END), (CASE WHEN odid != 0 THEN odue ELSE due END), type from cards where nid in " + snids)) {
             while (cur.moveToNext()) {
-                long id = cur.getLong(0);
-                long nid = cur.getLong(1);
-                int ord = cur.getInt(2);
-                long did = cur.getLong(3);
-                long due = cur.getLong(4);
-                long odue = cur.getLong(5);
-                long odid = cur.getLong(6);
-                @Consts.CARD_TYPE int type = cur.getInt(7);
+                if (isCancelled(task)) {
+                    Timber.v("Empty card cancelled");
+                    return null;
+                }
+                @NonNull Long id = cur.getLong(0);
+                @NonNull Long nid = cur.getLong(1);
+                @NonNull Integer ord = cur.getInt(2);
+                @NonNull Long did = cur.getLong(3);
+                @NonNull Long due = cur.getLong(4);
+                @Consts.CARD_TYPE int type = cur.getInt(5);
 
                 // existing cards
                 if (!have.containsKey(nid)) {
                     have.put(nid, new HashMap<>());
                 }
                 have.get(nid).put(ord, id);
-                // if in a filtered deck, add new cards to original deck
-                if (odid != 0) {
-                    did = odid;
-                }
                 // and their dids
                 if (dids.containsKey(nid)) {
-                    if (dids.get(nid) != 0 && dids.get(nid) != did) {
+                    if (dids.get(nid) != 0 && !Utils.equals(dids.get(nid), did)) {
                         // cards are in two or more different decks; revert to model default
                         dids.put(nid, 0L);
                     }
@@ -757,47 +824,43 @@ public class Collection {
                     // first card or multiple cards in same deck
                     dids.put(nid, did);
                 }
-                // save due
-                if (odid != 0) {
-                    due = odue;
-                }
                 if (!dues.containsKey(nid) && type == Consts.CARD_TYPE_NEW) {
                     dues.put(nid, due);
                 }
-            }
-        } finally {
-            if (cur != null && !cur.isClosed()) {
-                cur.close();
             }
         }
         // build cards for each note
         ArrayList<Object[]> data = new ArrayList<>();
         long ts = getTime().maxID(mDb);
         long now = getTime().intTime();
-        ArrayList<Long> rem = new ArrayList<>();
+        ArrayList<Long> rem = new ArrayList<>(mDb.queryScalar("SELECT count() FROM notes where id in " + snids));
         int usn = usn();
-        cur = null;
-        try {
-            cur = mDb.getDatabase().query("SELECT id, mid, flds FROM notes WHERE id IN " + snids, null);
+        try (Cursor cur = mDb.query("SELECT id, flds FROM notes WHERE id IN " + snids)) {
             while (cur.moveToNext()) {
-                long nid = cur.getLong(0);
-                long mid = cur.getLong(1);
-                String flds = cur.getString(2);
-                Model model = getModels().get(mid);
-                ArrayList<Integer> avail = getModels().availOrds(model, Utils.splitFields(flds));
+                if (isCancelled(task)) {
+                    Timber.v("Empty card cancelled");
+                    return null;
+                }
+                @NonNull Long nid = cur.getLong(0);
+                String flds = cur.getString(1);
+                ArrayList<Integer> avail = Models.availOrds(model, Utils.splitFields(flds), nodes);
+                if (task != null) {
+                    task.doProgress(avail.size());
+                }
                 Long did = dids.get(nid);
                 // use sibling due if there is one, else use a new id
-                long due;
+                @NonNull Long due;
                 if (dues.containsKey(nid)) {
                     due = dues.get(nid);
                 } else {
-                    due = nextID("pos");
+                    due = (long) nextID("pos");
                 }
                 if (did == null || did == 0L) {
                     did = model.getLong("did");
                 }
                 // add any missing cards
-                for (JSONObject t : _tmplsFromOrds(model, avail)) {
+                ArrayList<JSONObject> tmpls = _tmplsFromOrds(model, avail);
+                for (JSONObject t : tmpls) {
                     int tord = t.getInt("ord");
                     boolean doHave = have.containsKey(nid) && have.get(nid).containsKey(tord);
                     if (!doHave) {
@@ -830,62 +893,10 @@ public class Collection {
                     }
                 }
             }
-        } finally {
-            if (cur != null && !cur.isClosed()) {
-                cur.close();
-            }
         }
         // bulk update
         mDb.executeMany("INSERT INTO cards VALUES (?,?,?,?,?,?,0,0,?,0,0,0,0,0,0,0,0,\"\")", data);
         return rem;
-    }
-
-    public enum Previewing {
-        ADD,
-        EDIT,
-        MODELS
-    }
-
-	/**
-	 * Return cards of a note, without saving them
-	 * @param note The note whose cards are going to be previewed
-     * @param type 0 - when previewing in add dialog, only non-empty
-     *             1 - when previewing edit, only existing
-     *             2 - when previewing in models dialog, all templates
-     * @return list of cards
-	 */
-	public List<Card> previewCards(Note note, Previewing type) {
-        int did = 0;
-        return previewCards(note, type, did);
-    }
-
-    public List<Card> previewCards(Note note, Previewing type, int did) {
-	    ArrayList<JSONObject> cms;
-	    switch (type) {
-            case ADD:
-    	        cms = findTemplates(note);
-    	        break;
-            case EDIT:
-    	        cms = new ArrayList<>();
-	            for (Card c : note.cards()) {
-	                cms.add(c.template());
-	            }
-	            break;
-            default: // MODELS
-    	        cms = new ArrayList<>();
-                JSONArray tmpls = note.model().getJSONArray("tmpls");
-                for (JSONObject tmpl: tmpls.jsonObjectIterable()) {
-                    cms.add(tmpl);
-                }
-	    }
-	    List<Card> cards = new ArrayList<>();
-	    for (JSONObject template : cms) {
-	        cards.add(_newCard(note, template, 1, did, false));
-	    }
-	    return cards;
-	}
-    public List<Card> previewCards(Note note) {
-        return previewCards(note, ADD);
     }
 
     /**
@@ -896,17 +907,17 @@ public class Collection {
         return _newCard(note, template, due, flush);
     }
 
-    private Card _newCard(Note note, JSONObject template, int due, int did) {
+    private Card _newCard(Note note, JSONObject template, int due, long did) {
         boolean flush = true;
         return _newCard(note, template, due, did, flush);
     }
 
     private Card _newCard(Note note, JSONObject template, int due, boolean flush) {
-        int did = 0;
+        long did = 0L;
         return _newCard(note, template, due, did, flush);
     }
 
-    private Card _newCard(Note note, JSONObject template, int due, int parameterDid, boolean flush) {
+    private Card _newCard(Note note, JSONObject template, int due, long parameterDid, boolean flush) {
         Card card = new Card(this);
         return getNewLinkedCard(card, note, template, due, parameterDid, flush);
     }
@@ -915,12 +926,12 @@ public class Collection {
     // you pass the Card object in. This allows you to work on 'Card' subclasses that may not have
     // actual backing store (for instance, if you are previewing unsaved changes on templates)
     // TODO: use an interface that we implement for card viewing, vs subclassing an active model to workaround libAnki
-    public Card getNewLinkedCard(Card card, Note note, JSONObject template, int due, int parameterDid, boolean flush) {
+    public Card getNewLinkedCard(Card card, Note note, JSONObject template, int due, long parameterDid, boolean flush) {
         long nid = note.getId();
         card.setNid(nid);
         int ord = template.getInt("ord");
         card.setOrd(ord);
-        long did = mDb.queryScalar("select did from cards where nid = ? and ord = ?", nid, ord);
+        long did = mDb.queryLongScalar("select did from cards where nid = ? and ord = ?", nid, ord);
         // Use template did (deck override) if valid, otherwise did in argument, otherwise model did
         if (did == 0) {
             did = template.optLong("did", 0);
@@ -934,7 +945,7 @@ public class Collection {
         card.setDid(did);
         // if invalid did, use default instead
         Deck deck = mDecks.get(card.getDid());
-        if (deck.getInt("dyn") == 1) {
+        if (deck.getInt("dyn") == DECK_DYN) {
             // must not be a filtered deck
             card.setDid(1);
         } else {
@@ -978,8 +989,12 @@ public class Collection {
 
 
     // NOT IN LIBANKI //
-    public int cardCount(Long[] ls) {
-        return mDb.queryScalar("SELECT count() FROM cards WHERE did IN " + Utils.ids2str(ls));
+    public int cardCount(Long... dids) {
+        return mDb.queryScalar("SELECT count() FROM cards WHERE did IN " + Utils.ids2str(dids));
+    }
+
+    public boolean isEmptyDeck(Long... dids) {
+        return cardCount(dids) == 0;
     }
 
 
@@ -1009,10 +1024,10 @@ public class Collection {
     }
 
 
-    public List<Long> emptyCids() {
+    public <T extends ProgressSender<Integer> & CancelListener> List<Long> emptyCids(@Nullable T task) {
         List<Long> rem = new ArrayList<>();
         for (Model m : getModels().all()) {
-            rem.addAll(genCards(getModels().nids(m)));
+            rem.addAll(genCards(getModels().nids(m), m, task));
         }
         return rem;
     }
@@ -1020,19 +1035,13 @@ public class Collection {
 
     public String emptyCardReport(List<Long> cids) {
         StringBuilder rep = new StringBuilder();
-        Cursor cur = null;
-        try {
-            cur = mDb.getDatabase().query("select group_concat(ord+1), count(), flds from cards c, notes n "
-                                           + "where c.nid = n.id and c.id in " + Utils.ids2str(cids) + " group by nid", null);
+        try (Cursor cur = mDb.query("select group_concat(ord+1), count(), flds from cards c, notes n "
+                                           + "where c.nid = n.id and c.id in " + Utils.ids2str(cids) + " group by nid")) {
             while (cur.moveToNext()) {
                 String ords = cur.getString(0);
                 //int cnt = cur.getInt(1);  // present but unused upstream as well
                 String flds = cur.getString(2);
                 rep.append(String.format("Empty card numbers: %s\nFields: %s\n\n", ords, flds.replace("\u001F", " / ")));
-            }
-        } finally {
-            if (cur != null && !cur.isClosed()) {
-                cur.close();
             }
         }
         return rep.toString();
@@ -1044,34 +1053,44 @@ public class Collection {
      */
 
     private ArrayList<Object[]> _fieldData(String snids) {
-        ArrayList<Object[]> result = new ArrayList<>();
-        Cursor cur = null;
-        try {
-            cur = mDb.getDatabase().query("SELECT id, mid, flds FROM notes WHERE id IN " + snids, null);
+        ArrayList<Object[]> result = new ArrayList<>(mDb.queryScalar("SELECT count() FROM notes WHERE id IN" + snids));
+        try (Cursor cur = mDb.query("SELECT id, mid, flds FROM notes WHERE id IN " + snids)) {
             while (cur.moveToNext()) {
                 result.add(new Object[] { cur.getLong(0), cur.getLong(1), cur.getString(2) });
-            }
-        } finally {
-            if (cur != null && !cur.isClosed()) {
-                cur.close();
             }
         }
         return result;
     }
 
 
-    /** Update field checksums and sort cache, after find&replace, etc. */
+    /** Update field checksums and sort cache, after find&replace, etc.
+     * @param nids*/
+    public void updateFieldCache(java.util.Collection<Long> nids) {
+        String snids = Utils.ids2str(nids);
+        updateFieldCache(snids);
+    }
+
+    /** Update field checksums and sort cache, after find&replace, etc.
+     * @param nids*/
     public void updateFieldCache(long[] nids) {
         String snids = Utils.ids2str(nids);
-        ArrayList<Object[]> r = new ArrayList<>();
-        for (Object[] o : _fieldData(snids)) {
+        updateFieldCache(snids);
+    }
+
+    /** Update field checksums and sort cache, after find&replace, etc.
+     * @param snids comma separated nids*/
+    public void updateFieldCache(String snids) {
+        ArrayList<Object[]> data = _fieldData(snids);
+        ArrayList<Object[]> r = new ArrayList<>(data.size());
+        for (Object[] o : data) {
             String[] fields = Utils.splitFields((String) o[2]);
             Model model = getModels().get((Long) o[1]);
             if (model == null) {
                 // note point to invalid model
                 continue;
             }
-            r.add(new Object[] { Utils.stripHTMLMedia(fields[getModels().sortIdx(model)]), Utils.fieldChecksum(fields[0]), o[0] });
+            Pair<String, Long> csumAndStrippedFieldField = Utils.sfieldAndCsum(fields, getModels().sortIdx(model));
+            r.add(new Object[] {csumAndStrippedFieldField.first, csumAndStrippedFieldField.second, o[0] });
         }
         // apply, relying on calling code to bump usn+mod
         mDb.executeMany("UPDATE notes SET sfld=?, csum=? WHERE id=?", r);
@@ -1093,9 +1112,10 @@ public class Collection {
     public HashMap<String, String> _renderQA(long cid, Model model, long did, int ord, String tags, String[] flist, int flags, boolean browser, String qfmt, String afmt) {
         // data is [cid, nid, mid, did, ord, tags, flds, cardFlags]
         // unpack fields and create dict
-        Map<String, String> fields = new HashMap<>();
         Map<String, Pair<Integer, JSONObject>> fmap = Models.fieldMap(model);
-        for (Map.Entry<String, Pair<Integer, JSONObject>> entry : fmap.entrySet()) {
+        Set<Map.Entry<String, Pair<Integer, JSONObject>>> maps = fmap.entrySet();
+        Map<String, String> fields = new HashMap<>(maps.size() + 8);
+        for (Map.Entry<String, Pair<Integer, JSONObject>> entry : maps) {
             fields.put(entry.getKey(), flist[entry.getValue().first]);
         }
         int cardNum = ord + 1;
@@ -1106,7 +1126,7 @@ public class Collection {
         fields.put("Subdeck", baseName);
         fields.put("CardFlag", _flagNameFromCardFlags(flags));
         JSONObject template;
-        if (model.getInt("type") == Consts.MODEL_STD) {
+        if (model.isStd()) {
             template = model.getJSONArray("tmpls").getJSONObject(ord);
         } else {
             template = model.getJSONArray("tmpls").getJSONObject(0);
@@ -1114,7 +1134,7 @@ public class Collection {
         fields.put("Card", template.getString("name"));
         fields.put(String.format(Locale.US, "c%d", cardNum), "1");
         // render q & a
-        HashMap<String, String> d = new HashMap<>();
+        HashMap<String, String> d = new HashMap<>(2);
         d.put("id", Long.toString(cid));
         qfmt = TextUtils.isEmpty(qfmt) ? template.getString("qfmt") : qfmt;
         afmt = TextUtils.isEmpty(afmt) ? template.getString("afmt") : afmt;
@@ -1130,7 +1150,12 @@ public class Collection {
                 // the following line differs from libanki // TODO: why?
                 fields.put("FrontSide", d.get("q")); // fields.put("FrontSide", mMedia.stripAudio(d.get("q")));
             }
-            String html = new Template(format, fields).render();
+            String html;
+            try {
+                html = ParsedNode.parse_inner(format).render(fields, "q".equals(type), getContext());
+            } catch (TemplateError er) {
+                html = er.message(getContext());
+            }
             html = ChessFilter.fenToChessboard(html, getContext());
             if (!browser) {
                 // browser don't show image. So compiling LaTeX actually remove information.
@@ -1138,8 +1163,8 @@ public class Collection {
             }
             d.put(type, html);
             // empty cloze?
-            if ("q".equals(type) && model.getInt("type") == Consts.MODEL_CLOZE) {
-                if (getModels()._availClozeOrds(model, flist, false).size() == 0) {
+            if ("q".equals(type) && model.isCloze()) {
+                if (Models._availClozeOrds(model, flist, false).size() == 0) {
                     String link = String.format("<a href=%s#cloze>%s</a>", Consts.HELP_SITE, "help");
                     d.put("q", mContext.getString(R.string.empty_cloze_warning, link));
                 }
@@ -1159,19 +1184,13 @@ public class Collection {
 
     public ArrayList<Object[]> _qaData(String where) {
         ArrayList<Object[]> data = new ArrayList<>();
-        Cursor cur = null;
-        try {
-            cur = mDb.getDatabase().query(
+        try (Cursor cur = mDb.query(
                     "SELECT c.id, n.id, n.mid, c.did, c.ord, "
-                            + "n.tags, n.flds, c.flags FROM cards c, notes n WHERE c.nid == n.id " + where, null);
+                            + "n.tags, n.flds, c.flags FROM cards c, notes n WHERE c.nid == n.id " + where)) {
             while (cur.moveToNext()) {
                 data.add(new Object[] { cur.getLong(0), cur.getLong(1),
                         getModels().get(cur.getLong(2)), cur.getLong(3), cur.getInt(4),
                         cur.getString(5), cur.getString(6), cur.getInt(7)});
-            }
-        } finally {
-            if (cur != null && !cur.isClosed()) {
-                cur.close();
             }
         }
         return data;
@@ -1204,7 +1223,7 @@ public class Collection {
         return findCards(search, order, null);
     }
 
-    public List<Long> findCards(String search, boolean order, CollectionTask task) {
+    public List<Long> findCards(String search, boolean order, CollectionTask.PartialSearch task) {
         return new Finder(this).findCards(search, order, task);
     }
 
@@ -1297,13 +1316,13 @@ public class Collection {
      * wasLeech should have been recorded for each card, not globally
      */
     public void clearUndo() {
-        mUndo = new LinkedList<>();
+        mUndo = new LinkedBlockingDeque<>();
     }
 
 
     /** Undo menu item name, or "" if undo unavailable. */
     @VisibleForTesting
-    public DismissType undoType() {
+    public @Nullable DismissType undoType() {
         if (mUndo.size() > 0) {
             return mUndo.getLast().getDismissType();
         }
@@ -1312,7 +1331,7 @@ public class Collection {
     public String undoName(Resources res) {
         DismissType type = undoType();
         if (type != null) {
-            return res.getString(type.undoNameId);
+            return type.getString(res);
         }
         return "";
     }
@@ -1328,7 +1347,7 @@ public class Collection {
         return lastUndo.undo(this);
     }
 
-    public void markUndo(Undoable undo) {
+    public void markUndo(@NonNull Undoable undo) {
         Timber.d("markUndo() of type %s", undo.getDismissType());
         mUndo.add(undo);
         while (mUndo.size() > UNDO_SIZE_MAX) {
@@ -1390,14 +1409,14 @@ public class Collection {
 
 
     /** Fix possible problems and rebuild caches. */
-    public CheckDatabaseResult fixIntegrity(CollectionTask.ProgressCallback progressCallback) {
+    public CheckDatabaseResult fixIntegrity(TaskManager.ProgressCallback<String> progressCallback) {
         File file = new File(mPath);
         CheckDatabaseResult result = new CheckDatabaseResult(file.length());
         final int[] currentTask = {1};
         int totalTasks = (getModels().all().size() * 4) + 27; // a few fixes are in all-models loops, the rest are one-offs
         Runnable notifyProgress = () -> fixIntegrityProgress(progressCallback, currentTask[0]++, totalTasks);
         FunctionalInterfaces.Consumer<FunctionalInterfaces.FunctionThrowable<Runnable, List<String>, JSONException>> executeIntegrityTask =
-                (FunctionalInterfaces.FunctionThrowable<Runnable, List<String>, JSONException> function) -> {
+                function -> {
                     //DEFECT: notifyProgress will lag if an exception is thrown.
                     try {
                         mDb.getDatabase().beginTransaction();
@@ -1440,7 +1459,7 @@ public class Collection {
 
         executeIntegrityTask.consume(this::deleteNotesWithMissingModel);
         // for each model
-        for (JSONObject m : getModels().all()) {
+        for (Model m : getModels().all()) {
             executeIntegrityTask.consume((callback) -> deleteCardsWithInvalidModelOrdinals(callback, m));
             executeIntegrityTask.consume((callback) -> deleteNotesWithWrongFieldCounts(callback, m));
         }
@@ -1487,7 +1506,7 @@ public class Collection {
 
         //obtain a list of all valid dconf IDs
         List<DeckConfig> allConf = getDecks().allConf();
-        HashSet<Long> configIds  = new HashSet<>();
+        HashSet<Long> configIds  = new HashSet<>(allConf.size());
 
         for (DeckConfig conf : allConf) {
             configIds.add(conf.getLong("id"));
@@ -1510,7 +1529,7 @@ public class Collection {
             }
         }
 
-        List<String> ret = new ArrayList<>();
+        List<String> ret = new ArrayList<>(1);
 
         if (changed > 0) {
             ret.add("Fixed " + changed + " decks with invalid config");
@@ -1562,14 +1581,14 @@ public class Collection {
         getDecks().flush();
 
         mDb.execute("update cards " +
-                        "set did = " + nextDeckId + ", " +
+                        "set did = ?, " +
                         "odid = 0," +
-                        "mod = " +  getTime().intTime() + ", " +
-                        "usn = " + usn() + " " +
+                        "mod = ?, " +
+                        "usn = ? " +
                         "where did in " +
                         Utils.ids2str(dynDeckIds) +
                         "and odid in " +
-                        Utils.ids2str(dynIdsAndZero));
+                        Utils.ids2str(dynIdsAndZero), nextDeckId, getTime().intTime(), usn());
 
 
         result.setCardsWithFixedHomeDeckCount(cardIds.size());
@@ -1581,7 +1600,7 @@ public class Collection {
 
     private ArrayList<String> ensureModelsAreNotEmpty(Runnable notifyProgress) {
         Timber.d("ensureModelsAreNotEmpty()");
-        ArrayList<String> problems = new ArrayList<>();
+        ArrayList<String> problems = new ArrayList<>(1);
         notifyProgress.run();
         if (getModels().ensureNotEmpty()) {
             problems.add("Added missing note type.");
@@ -1592,7 +1611,7 @@ public class Collection {
 
     private ArrayList<String> restoreMissingDatabaseIndices(Runnable notifyProgress) {
         Timber.d("restoreMissingDatabaseIndices");
-        ArrayList<String> problems = new ArrayList<>();
+        ArrayList<String> problems = new ArrayList<>(1);
         // DB must have indices. Older versions of AnkiDroid didn't create them for new collections.
         notifyProgress.run();
         int ixs = mDb.queryScalar("select count(name) from sqlite_master where type = 'index'");
@@ -1605,7 +1624,7 @@ public class Collection {
 
     private ArrayList<String> fixDecimalCardsData(Runnable notifyProgress) {
         Timber.d("fixDecimalCardsData");
-        ArrayList<String> problems = new ArrayList<>();
+        ArrayList<String> problems = new ArrayList<>(1);
         notifyProgress.run();
         SupportSQLiteStatement s = mDb.getDatabase().compileStatement(
                 "update cards set ivl=round(ivl),due=round(due) where ivl!=round(ivl) or due!=round(due)");
@@ -1619,7 +1638,7 @@ public class Collection {
 
     private ArrayList<String> fixDecimalRevLogData(Runnable notifyProgress) {
         Timber.d("fixDecimalRevLogData()");
-        ArrayList<String> problems = new ArrayList<>();
+        ArrayList<String> problems = new ArrayList<>(1);
         notifyProgress.run();
         SupportSQLiteStatement s = mDb.getDatabase().compileStatement(
                 "update revlog set ivl=round(ivl),lastIvl=round(lastIvl) where ivl!=round(ivl) or lastIvl!=round(lastIvl)");
@@ -1633,15 +1652,14 @@ public class Collection {
 
     private ArrayList<String> fixExcessiveReviewDueDates(Runnable notifyProgress) {
         Timber.d("fixExcessiveReviewDueDates()");
-        ArrayList<String> problems = new ArrayList<>();
+        ArrayList<String> problems = new ArrayList<>(1);
         notifyProgress.run();
         // reviews should have a reasonable due #
         ArrayList<Long> ids = mDb.queryLongList("SELECT id FROM cards WHERE queue = " + Consts.QUEUE_TYPE_REV + " AND due > 100000");
         notifyProgress.run();
         if (ids.size() > 0) {
             problems.add("Reviews had incorrect due date.");
-            mDb.execute("UPDATE cards SET due = " + mSched.getToday() + ", ivl = 1, mod = " +  getTime().intTime() +
-                    ", usn = " + usn() + " WHERE id IN " + Utils.ids2str(Utils.collection2Array(ids)));
+            mDb.execute("UPDATE cards SET due = ?, ivl = 1, mod = ?, usn = ? WHERE id IN " + Utils.ids2str(ids), mSched.getToday(), getTime().intTime(), usn());
         }
         return problems;
     }
@@ -1660,8 +1678,7 @@ public class Collection {
         Timber.d("fixNewCardDuePositionOverflow");
         // new cards can't have a due position > 32 bits
         notifyProgress.run();
-        mDb.execute("UPDATE cards SET due = 1000000, mod = " + getTime().intTime() + ", usn = " + usn()
-                + " WHERE due > 1000000 AND type = " + Consts.CARD_TYPE_NEW);
+        mDb.execute("UPDATE cards SET due = 1000000, mod = ?, usn = ? WHERE due > 1000000 AND type = " + Consts.CARD_TYPE_NEW, getTime().intTime(), usn());
         return Collections.emptyList();
     }
 
@@ -1671,7 +1688,7 @@ public class Collection {
         // field cache
         for (Model m : getModels().all()) {
             notifyProgress.run();
-            updateFieldCache(Utils.collection2Array(getModels().nids(m)));
+            updateFieldCache(getModels().nids(m));
         }
         return Collections.emptyList();
     }
@@ -1688,7 +1705,7 @@ public class Collection {
 
     private ArrayList<String> removeDeckOptionsFromDynamicDecks(Runnable notifyProgress) {
         Timber.d("removeDeckOptionsFromDynamicDecks()");
-        ArrayList<String> problems = new ArrayList<>();
+        ArrayList<String> problems = new ArrayList<>(1);
         //#5708 - a dynamic deck should not have "Deck Options"
         notifyProgress.run();
         int fixCount = 0;
@@ -1712,8 +1729,8 @@ public class Collection {
 
     private ArrayList<String> removeDynamicPropertyFromNonDynamicDecks(Runnable notifyProgress) {
         Timber.d("removeDynamicPropertyFromNonDynamicDecks()");
-        ArrayList<String> problems = new ArrayList<>();
-        ArrayList<Long> dids = new ArrayList<>();
+        ArrayList<String> problems = new ArrayList<>(1);
+        ArrayList<Long> dids = new ArrayList<>(mDecks.count());
         for (long id : mDecks.allIds()) {
             if (!mDecks.isDyn(id)) {
                 dids.add(id);
@@ -1734,7 +1751,7 @@ public class Collection {
 
     private ArrayList<String> removeOriginalDuePropertyWhereInvalid(Runnable notifyProgress) {
         Timber.d("removeOriginalDuePropertyWhereInvalid()");
-        ArrayList<String> problems = new ArrayList<>();
+        ArrayList<String> problems = new ArrayList<>(1);
         notifyProgress.run();
         // cards with odue set when it shouldn't be
         ArrayList<Long> ids = mDb.queryLongList(
@@ -1750,7 +1767,7 @@ public class Collection {
 
     private ArrayList<String> deleteCardsWithMissingNotes(Runnable notifyProgress) {
         Timber.d("deleteCardsWithMissingNotes()");
-        ArrayList<String> problems = new ArrayList<>();
+        ArrayList<String> problems = new ArrayList<>(1);
         notifyProgress.run();
         // cards with missing notes
         ArrayList<Long> ids = mDb.queryLongList(
@@ -1766,7 +1783,7 @@ public class Collection {
 
     private ArrayList<String> deleteNotesWithMissingCards(Runnable notifyProgress) {
         Timber.d("deleteNotesWithMissingCards()");
-        ArrayList<String> problems = new ArrayList<>();
+        ArrayList<String> problems = new ArrayList<>(1);
         notifyProgress.run();
         // delete any notes with missing cards
         ArrayList<Long> ids = mDb.queryLongList(
@@ -1782,13 +1799,11 @@ public class Collection {
 
     private ArrayList<String> deleteNotesWithWrongFieldCounts(Runnable notifyProgress, JSONObject m) throws JSONException {
         Timber.d("deleteNotesWithWrongFieldCounts");
-        ArrayList<String> problems = new ArrayList<>();
+        ArrayList<String> problems = new ArrayList<>(1);
         // notes with invalid field counts
         ArrayList<Long> ids = new ArrayList<>();
-        Cursor cur = null;
-        try {
-            notifyProgress.run();
-            cur = mDb.getDatabase().query("select id, flds from notes where mid = " + m.getLong("id"), null);
+        notifyProgress.run();
+        try (Cursor cur = mDb.query("select id, flds from notes where mid = ?",  m.getLong("id"))) {
             Timber.i("cursor size: %d", cur.getCount());
             int currentRow = 0;
 
@@ -1827,22 +1842,18 @@ public class Collection {
                 problems.add("Deleted " + ids.size() + " note(s) with wrong field count.");
                 _remNotes(ids);
             }
-        } finally {
-            if (cur != null && !cur.isClosed()) {
-                cur.close();
-            }
         }
         return problems;
     }
 
 
-    private ArrayList<String> deleteCardsWithInvalidModelOrdinals(Runnable notifyProgress, JSONObject m) throws JSONException {
+    private ArrayList<String> deleteCardsWithInvalidModelOrdinals(Runnable notifyProgress, Model m) throws JSONException {
         Timber.d("deleteCardsWithInvalidModelOrdinals()");
-        ArrayList<String> problems = new ArrayList<>();
+        ArrayList<String> problems = new ArrayList<>(1);
         notifyProgress.run();
-        if (m.getInt("type") == Consts.MODEL_STD) {
-            ArrayList<Integer> ords = new ArrayList<>();
+        if (m.isStd()) {
             JSONArray tmpls = m.getJSONArray("tmpls");
+            ArrayList<Integer> ords = new ArrayList<>(tmpls.length());
             for (JSONObject tmpl: tmpls.jsonObjectIterable()) {
                 ords.add(tmpl.getInt("ord"));
             }
@@ -1861,7 +1872,7 @@ public class Collection {
 
     private ArrayList<String> deleteNotesWithMissingModel(Runnable notifyProgress) {
         Timber.d("deleteNotesWithMissingModel()");
-        ArrayList<String> problems = new ArrayList<>();
+        ArrayList<String> problems = new ArrayList<>(1);
         // note types with a missing model
         notifyProgress.run();
         ArrayList<Long> ids = mDb.queryLongList(
@@ -1885,9 +1896,9 @@ public class Collection {
     }
 
 
-    private void fixIntegrityProgress(CollectionTask.ProgressCallback progressCallback, int current, int total) {
-        progressCallback.publishProgress(new TaskData(
-                progressCallback.getResources().getString(R.string.check_db_message) + " " + current + " / " + total));
+    private void fixIntegrityProgress(TaskManager.ProgressCallback<String> progressCallback, int current, int total) {
+        progressCallback.publishProgress(
+                progressCallback.getResources().getString(R.string.check_db_message) + " " + current + " / " + total);
     }
 
 
@@ -1979,7 +1990,7 @@ public class Collection {
     /**
      * Card Flags *****************************************************************************************************
      */
-    public void setUserFlag(int flag, long[] cids)  {
+    public void setUserFlag(int flag, List<Long> cids)  {
         assert (0<= flag && flag <= 7);
         mDb.execute("update cards set flags = (flags & ~?) | ?, usn=?, mod=? where id in " + Utils.ids2str(cids),
                     0b111, flag, usn(), getTime().intTime());
@@ -2153,6 +2164,14 @@ public class Collection {
         }
         mSched.setReportLimit(reportLimit);
         return mSched;
+    }
+
+    public boolean isUsingRustBackend() {
+        return mDroidBackend.isUsingRustBackend();
+    }
+
+    public DroidBackend getBackend() {
+        return mDroidBackend;
     }
 
     /** Allows a mock db to be inserted for testing */

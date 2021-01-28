@@ -37,7 +37,7 @@
 ~ You should have received a copy of the GNU General Public License along with
 ~ this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools">
     <string name="check_db_title">ᱰᱟᱴᱟᱵᱮᱥ ᱪᱮᱠ ᱢᱮ?</string>
     <string name="check_db_warning">ᱱᱚᱶᱟ ᱡᱟᱹᱥᱛᱤ ᱥᱚᱢᱚᱭ ᱤᱫᱤ ᱫᱟᱲᱮᱭᱟ</string>
     <string name="check_db_acknowledge">ᱰᱟᱴᱟᱵᱮᱥ ᱪᱮᱠ ᱦᱩᱭ ᱮᱱᱟ</string>
@@ -49,7 +49,7 @@
         <item quantity="one">%1$s ᱨᱮ ᱢᱮᱱᱟᱜ ᱡᱷᱚᱛ ᱠᱟᱰ ᱜᱮᱫ ᱜᱤᱰᱤᱭᱟ? ᱱᱚᱶᱟ ᱨᱮ %2$d ᱠᱟᱰ ᱢᱮᱱᱟᱼᱜᱟ ᱾</item>
         <item quantity="other">%1$s ᱨᱮ ᱢᱮᱱᱟᱜ ᱡᱷᱚᱛ ᱠᱟᱰ ᱜᱮᱫ ᱜᱤᱰᱤᱭᱟ? ᱱᱚᱶᱟ ᱨᱮ %2$d ᱠᱟᱰ ᱢᱮᱱᱟᱼᱜᱟ ᱾</item>
     </plurals>
-    <string name="delete_cram_deck_message">ᱡᱷᱚᱛᱟ %s ᱠᱟᱰ ᱟᱡᱟᱜ ᱢᱩᱞ ᱰᱮᱠ ᱚᱠ ᱛᱮ ᱵᱷᱮᱡᱟᱭᱟ ᱥᱮ?</string>
+    <string name="delete_cram_deck_message">ᱡᱷᱚᱛᱟ %s ᱠᱟᱰ ᱟᱡᱟᱜ ᱢᱩᱞ ᱰᱮᱠ ᱠᱚ ᱛᱮ ᱵᱷᱮᱡᱟᱭᱟ ᱥᱮ?</string>
     <string name="no_tts_available_message">text-to-speech ᱯᱟᱹᱨᱥᱤ ᱵᱟᱱᱩᱜᱼᱟ ᱾</string>
     <string name="initializing_tts">TTS ᱮᱛᱚᱷᱚᱵᱽᱚᱜ ᱠᱟᱱᱟ&#8230;</string>
     <string name="tts_no_tts">ᱟᱞᱚᱢ ᱨᱚᱲᱟ</string>
@@ -60,7 +60,7 @@
         <item><![CDATA[Non-developers ᱦᱚᱸ ᱜᱚᱸᱲᱚᱸ ᱢᱮᱥᱟ ᱫᱟᱲᱮᱭᱟᱜ ᱠᱚ. ᱡᱮᱢᱛᱤ ᱟᱢ&lt;a href=\&quot;%1$s\&quot;&gt;translate ᱠᱚᱨᱮ&lt;/a&gt; AnkiDroid ᱜᱚᱲᱚᱭᱯᱮ, ᱣᱤᱠᱤ ᱠᱚᱨᱮ ᱟᱹᱯᱰᱮᱴ ᱠᱟᱛᱮ, screenshots ᱮᱢ ᱟᱨᱦᱚᱸ AnkiDroid blog ᱠᱟᱛᱮ ᱾]]></item>
         <item><![CDATA[AnkiDroid ᱫᱚ&lt;a href=\&quot;%1$s\&quot;&gt;GNU-GPL v3 license&lt;/a&gt;ᱛᱮ ᱚᱰᱚᱠ ᱟᱠᱟᱱᱟ ᱟᱨ source code&lt;a href=\&quot;%2$s\&quot;&gt;ᱫᱚ GitHub ᱨᱮ ᱯᱮ ᱧᱟᱢᱟ&lt;/a&gt;.]]></item>
     </string-array>
-    <string name="preview_title">ᱞᱟᱦᱟᱛᱮᱭᱟᱜ ᱧᱮᱞ</string>
+    <string name="preview_title" comment="Title of the window allowing to preview card(s)">ᱞᱟᱦᱟᱛᱮᱭᱟᱜ ᱧᱮᱞ</string>
     <string name="reposition_card_dialog_title">ᱱᱟᱶᱟ ᱠᱟᱰ ᱥᱛᱷᱟᱱᱚᱱᱛᱚᱨ ᱯᱮ</string>
     <string name="reposition_card_dialog_message">ᱮᱛᱦᱚᱵ ᱡᱟᱭᱜᱟᱺ</string>
     <string name="reposition_card_not_new_error">ᱠᱷᱟᱹᱞᱤ ᱱᱟᱶᱟ ᱠᱟᱰ ᱜᱮ ᱥᱛᱷᱟᱱᱚᱱᱛᱚᱨ ᱫᱟᱲᱮᱭᱟᱜᱟᱢ</string>
@@ -75,7 +75,6 @@
         <item quantity="other">%d ᱠᱟᱰ ᱨᱤᱥᱮᱴ</item>
     </plurals>
     <!-- Reschedule Card Dialog -->
-    <string name="reschedule_card_dialog_title">ᱠᱟᱰ‌ ᱨᱤᱥᱮᱰᱭᱩᱞ</string>
     <plurals name="reschedule_cards_dialog_title">
         <item quantity="one">ᱠᱟᱰ ᱨᱤᱥᱮᱰᱭᱩᱞ ᱢᱮ</item>
         <item quantity="other">ᱠᱟᱰ ᱠᱚ ᱨᱤᱥᱮᱰᱭᱩᱞ ᱢᱮ</item>
@@ -89,27 +88,24 @@
         <item quantity="one">%d ᱠᱟᱰ ᱨᱤᱥᱮᱰᱭᱩᱞ ᱮᱱᱟ</item>
         <item quantity="other">%d ᱠᱟᱰ ᱨᱤᱥᱮᱰᱭᱩᱞ ᱮᱱᱟ</item>
     </plurals>
-    <string name="reschedule_card_dialog_new_card_warning">A new card is being rescheduled. Rescheduling also turns new cards into review cards. Use the ‘reposition card’ option to change a new card\'s position within the new queue</string>
-    <string name="reschedule_card_dialog_warning_ease_reset">Rescheduling also resets how the scheduler treats the card in the future (ease will be set to %d%%)</string>
+    <string name="reschedule_card_dialog_new_card_warning">ᱱᱟᱶᱟ ᱠᱟᱰ ᱨᱤᱥᱮᱰᱭᱩᱞ ᱠᱟᱱᱟ ᱾ ᱨᱤᱥᱮᱰᱭᱩᱞ ᱞᱮᱠᱷᱟᱱ ᱱᱟᱶᱟ ᱠᱟᱰ ᱠᱚ ᱨᱤᱵᱷᱭᱩ ᱠᱟᱰ ‌ᱛᱮ‌ ᱵᱚᱫᱚᱞᱚᱜᱼᱟ ᱾ ᱱᱟᱶᱟ ᱫᱷᱟᱲᱤ ᱨᱮ ᱱᱟᱶᱟ ᱡᱠᱟᱰ ᱨᱮᱭᱟᱜ ᱡᱟᱭᱜᱟ ᱵᱚᱫᱚᱞ‌ ᱞᱟᱹᱜᱤᱫ ᱨᱤᱯᱚᱡᱤᱥᱚᱱ ᱠᱟᱰ ᱵᱮᱵᱷᱟᱨ ᱢᱮ‌ᱸ</string>
+    <string name="reschedule_card_dialog_warning_ease_reset">ᱨᱤᱥᱮᱰᱭᱩᱞ ᱫᱚ ᱵᱷᱚᱵᱤᱥᱭᱚᱛ ᱨᱮ ᱚᱠᱟᱞᱠᱟᱛᱮ ᱠᱟᱰ ᱠᱚ ᱥᱮᱰᱭᱩᱞ ᱟ ᱚᱱᱟ ᱦᱚᱸ ᱨᱤᱥᱚᱴ ᱟᱭ (ᱮᱡᱽ ᱫᱚ %d%% ᱛᱮ ᱥᱮᱴᱚᱜᱼᱟ)</string>
     <string name="firefox_workaround_launched_reviewer_opening_deck">ᱨᱮᱫ ᱢᱮᱱᱮᱡᱟᱨ ᱛᱮ ᱰᱮᱠ ᱠᱷᱚᱱ ᱠᱟᱰ ᱪᱚᱭᱚᱱ ᱢᱮ ᱟᱨ ᱵᱟᱝᱠᱷᱟᱱ about:downloads ᱥᱟᱠᱟᱢ ᱠᱷᱟᱱ import ᱢᱮ</string>
     <string name="answering_error_title">ᱥᱟᱹᱠᱷᱭᱟᱛ ᱵᱟᱹᱭᱥᱟᱣ ᱵᱷᱩᱞ ᱦᱩᱭᱮᱱᱟ</string>
     <string name="answering_error_message">ᱴᱩᱢᱟᱹᱞ ᱛᱮ ᱚᱞ ᱵᱷᱩᱞ ᱾ database ᱫᱚ ᱠᱦᱟᱨᱟᱯ ᱜᱮᱭᱟ ᱟᱨ ᱵᱟᱝᱠᱷᱟᱱ ᱰᱤᱥᱠ ᱨᱮ ᱥᱯᱮᱥ ᱵᱟᱱᱩᱜᱟ ᱾ \n\nᱡᱚᱫᱤ ᱵᱟᱨᱚᱢᱵᱟᱨ ᱱᱚᱠᱟ ᱦᱩᱭᱩᱜ ᱠᱟᱱᱟ, ᱮᱱᱰᱮᱠᱷᱟᱱ ᱟᱨ ᱢᱤᱫ ᱡᱮᱠᱷᱟ ᱰᱟᱴᱟᱵᱮᱥ ᱪᱮᱠ ᱯᱮ ᱟᱨ ᱵᱟᱝᱠᱷᱟᱱ backup ᱠᱷᱚᱱ ᱰᱟᱴᱟ restore ᱛᱟᱵᱚᱱ ᱯᱮ ᱾ ᱚᱱᱟ ᱞᱟᱹᱜᱤᱫ \&quot;options\&quot; ᱨᱮ ᱚᱛᱟᱭ ᱯᱮ ᱾\n\ᱟᱨ ᱵᱟᱝᱠᱷᱟᱱ ᱱᱚᱟ ᱫᱚ bug ᱦᱩᱭ ᱫᱟᱲᱮᱭᱟᱜᱟ; ᱫᱚᱭᱟᱠᱟᱛᱮ report ᱯᱮ ᱾ </string>
     <string name="answering_error_report">ᱦᱩᱰᱟᱜ ᱥᱚᱱᱫᱮᱥ</string>
     <string name="repair_deck_dialog">ᱟᱢ ᱫᱚ ᱱᱚᱶᱟ database ᱥᱟᱡᱟᱣ ᱥᱮᱱᱟᱢ ᱠᱟᱱᱟ ᱥᱮ ? \n\nᱮᱛᱷᱚᱵ ᱢᱟᱲᱟᱝ ᱨᱮ, ᱢᱤᱫᱴᱟᱝ ᱠᱚᱯᱤ \&quot;%s\&quot; ᱥᱚᱵᱼᱯᱷᱚᱞᱰᱟᱨ ᱨᱮ ᱛᱮᱭᱨᱚᱜᱽᱟ ᱱᱟᱦ ᱾</string>
-    <string name="intent_add_saved_information">ᱰᱟᱴᱟ ᱥᱟᱝᱪᱟᱣ</string>
-    <string name="intent_add_clear_all">ᱡᱷᱚᱛᱚ ᱥᱟᱯᱷᱟᱭ ᱢᱮ</string>
     <string name="intent_aedict_empty">ᱴᱩᱢᱟᱹᱞ \&quot;default\&quot; ᱠᱷᱟᱹᱞᱤ ᱜᱮᱭᱟ</string>
     <string name="intent_aedict_category">AnkiDroid ᱛᱮ ᱠᱟᱰ ᱥᱮᱞᱮᱫ ᱞᱟᱹᱜᱤᱫ Notepad ᱴᱩᱢᱟᱹᱞ ᱵᱷᱮᱜᱟᱨ ᱠᱟᱜ ᱢᱮ ᱟᱨ ᱵᱟᱝᱠᱷᱟᱱ “default” ᱧᱩᱛᱩᱢ ᱠᱟᱜ ᱢᱮ</string>
     <string name="custom_study_new_total_new">ᱰᱮᱠ ᱨᱮ ᱱᱟᱶᱟ ᱠᱟᱰᱺ%d</string>
     <string name="custom_study_rev_total_rev">ᱰᱮᱠ ᱨᱮ ᱞᱟᱦᱟ ᱛᱮᱭᱟᱜ ᱮᱢᱚᱜ ᱥᱚᱢᱚᱭᱺ%d</string>
-    <string name="custom_study_new_extend">Increase/decrease (“-3”) today’s new card limit by</string>
-    <string name="custom_study_rev_extend">Increase/decrease (“-3”) today’s review limit by</string>
+    <string name="custom_study_new_extend">ᱵᱚᱰᱷᱟᱣ/ᱠᱚᱢᱢᱮ (“-3”) ᱛᱮᱦᱚᱸᱧᱟᱜᱽ ᱱᱟᱶᱟ ᱠᱟᱰ ᱥᱤᱢᱟᱹ</string>
+    <string name="custom_study_rev_extend">ᱵᱚᱰᱷᱟᱣ/ᱠᱚᱢᱢᱮ (“-3”) ᱛᱮᱦᱚᱸᱧᱟᱜᱽ ᱨᱤᱵᱷᱤᱣ ᱞᱤᱢᱤᱴ</string>
     <string name="custom_study_forgotten">ᱨᱤᱵᱷᱭᱩ ᱠᱟᱰ x ᱫᱤᱱ ᱨᱮ ᱦᱤᱲᱤᱧᱟᱜ ᱠᱚᱺ</string>
     <string name="custom_study_ahead">᱑᱐ ᱫᱤᱱ ᱢᱟᱲᱟᱝ ᱥᱮᱱ ᱨᱤᱵᱷᱤᱣᱺ</string>
     <string name="custom_study_random">ᱴᱟᱴᱠᱟ ᱡᱟᱱᱟᱢ(ᱟᱛᱷᱟᱹᱲᱤ) x ᱠᱟᱰ ᱨᱮᱭᱟᱜ ᱪᱚᱭᱚᱱ ᱠᱚᱨᱟᱣ ᱢᱮ ᱰᱮᱠ ᱠᱷᱚᱱᱺ</string>
     <string name="custom_study_preview">ᱢᱟᱲᱟᱝ xᱫᱤᱱ ᱨᱮ ᱥᱮᱞᱮᱫ ᱠᱟᱱ ᱠᱟᱰ ᱠᱚ preview ᱢᱮ</string>
     <string name="custom_study_rebuild_deck_corrupt">ᱱᱤᱡᱮᱛᱮ ᱯᱟᱲᱷᱟᱣᱜ ᱰᱮᱠ ᱫᱟᱭ ᱛᱮᱭᱟᱨ ᱞᱮᱱᱟ</string>
-    <string name="rebuild_custom_study_deck">ᱱᱤᱡᱮᱛᱮ ᱯᱟᱲᱷᱟᱣᱜ ᱰᱮᱠ ᱛᱮᱭᱟᱨᱚᱜᱠᱟᱱᱟ&#8230;</string>
     <string name="importing_collection">ᱴᱩᱢᱟᱹᱞ ᱟᱭᱟᱛᱚᱜ ᱠᱟᱱᱟ...</string>
     <string name="import_media_count">ᱢᱤᱰᱤᱭᱟ ᱨᱮᱫ %1$d%%&#8230; ᱟᱭᱟᱛᱚᱜ ᱠᱟᱱᱟ </string>
     <string name="import_progress">• ᱟᱭᱟᱛᱚᱜ ᱠᱟᱱ ᱱᱚᱥ: %1$d%%\n• ᱟᱭᱟᱛᱚᱜ ᱠᱟᱱ ᱠᱷᱟᱴᱚ ᱵᱤᱪᱟᱹᱨᱥ: %2$d%%\n• ᱠᱩᱞ-ᱠᱟᱹᱢᱤᱠᱟᱱᱟ: %3$d%%</string>
@@ -124,9 +120,10 @@
     <string name="dialog_ok">ᱴᱷᱤᱠ</string>
     <string name="dialog_no">ᱵᱟᱝ</string>
     <string name="dialog_continue">ᱞᱮᱛᱟᱲ</string>
-    <string name="dialog_positive_create">ᱛᱮᱭᱟᱨ</string>
+    <string name="dialog_positive_create" comment="Create a new collection, probably erasing the previous one, may be necessary in case of error.">ᱛᱮᱭᱟᱨ</string>
     <string name="dialog_positive_delete">ᱜᱮᱫ ᱜᱤᱰᱤ</string>
-    <string name="dialog_positive_disable">ᱵᱟᱝ ᱩᱥᱨᱟᱹᱣ</string>
+    <!-- Currently unsued, should be useful in the future -->
+    <string name="dialog_positive_disable" tools:ignore="UnusedResources">ᱵᱟᱝ ᱩᱥᱨᱟᱹᱣ</string>
     <string name="dialog_positive_overwrite">ᱚᱞ ᱪᱮᱛᱟᱱ ᱚᱞ</string>
     <string name="dialog_positive_remove">ᱚᱪᱚᱜᱽ</string>
     <string name="dialog_positive_repair">ᱡᱩᱛᱨᱟᱹᱣ</string>
@@ -147,18 +144,19 @@
     <string name="check_media_no_unused_missing">ᱵᱟᱝ ᱵᱮᱵᱦᱟᱨᱟᱜ ᱨᱮᱫ ᱵᱟᱭ ᱧᱟᱢᱞᱮᱱᱟ</string>
     <string name="check_media_db_updated">ᱢᱮᱰᱤᱭᱟ ᱥᱟᱫᱠᱷᱤᱭᱟᱽ ᱵᱟᱹᱭᱥᱟᱹᱣ ᱫᱩᱦᱲᱟᱛᱮᱭᱟᱨ</string>
     <string name="check_media_delete_unused">ᱵᱟᱝ ᱵᱮᱵᱷᱟᱨ ᱚᱠ ᱜᱮᱫ ᱜᱤᱰᱤ ᱢᱮ</string>
-    <string name="delete_media_message">Deleting media&#8230;</string>
-    <string name="delete_media_result_title">Deletion result</string>
+    <string name="delete_media_message">ᱢᱤᱰᱤᱭᱟ ᱜᱮᱫ ᱜᱤᱰᱤᱜ ᱠᱟᱱᱟ&#8230;</string>
+    <string name="delete_media_result_title">ᱜᱮᱫ ᱜᱤᱰᱤ‌ ᱛᱮᱞᱟ</string>
     <plurals name="delete_media_result_message">
-        <item quantity="one">%d file deleted</item>
-        <item quantity="other">%d files deleted</item>
+        <item quantity="one">%d ᱨᱮᱫ ᱜᱮᱫ ᱜᱤᱰᱤ ᱮᱱᱟ</item>
+        <item quantity="other">%d ᱨᱮᱫ ᱠᱚ ᱜᱮᱫ ᱜᱤᱰᱤ ᱮᱱᱟ</item>
     </plurals>
     <!-- Tags Dialog Options -->
     <string name="tags_dialog_option_all_cards">ᱡᱷᱚᱛᱚ ᱠᱟᱰ ᱠᱚ </string>
     <string name="tags_dialog_option_new_cards">ᱱᱟᱶᱟ</string>
-    <string name="tags_dialog_option_due_cards">ᱮᱢᱚᱜ ᱥᱚᱢᱚᱭ</string>
+    <string name="tags_dialog_option_due_cards" comment="Name of cards that are already been reviewed in the past, and that should be reviewed again">ᱮᱢᱚᱜ ᱥᱚᱢᱚᱭ</string>
     <!-- Empty cards -->
     <string name="emtpy_cards_finding">ᱠᱷᱟᱹᱞᱤ ᱠᱟᱰ ᱯᱟᱱᱛᱮ ᱪᱟᱹᱞᱩ ᱠᱟᱱᱟ&#8230;</string>
+    <string name="confirm_cancel">ᱵᱚᱸᱫ ᱥᱮᱱᱟᱢ ᱠᱟᱱᱟ ᱥᱮ?</string>
     <string name="empty_cards_none">ᱠᱷᱟᱹᱞᱤ ᱠᱟᱰ ᱵᱟᱹᱱᱩᱜᱼᱟ</string>
     <string name="empty_cards_count">ᱜᱮᱫ ᱜᱤᱰᱤ ᱞᱟᱹᱜᱤᱫ ᱠᱟᱰ: %d</string>
     <string name="empty_cards_deleted">ᱠᱟᱰ ᱜᱮᱫ ᱜᱤᱰᱤ ᱮᱱᱟᱺ %d</string>
@@ -175,7 +173,6 @@
     <!-- Database Integrity Check -->
     <string name="integrity_check_startup_title">AnkiDroid ᱦᱟᱹᱞᱤ ᱦᱚᱪᱚᱭᱮᱱᱟ</string>
     <string name="integrity_check_startup_content">AnkiDroid ᱦᱟᱹᱞᱤᱦᱚᱪᱚᱭᱮᱵᱟ ᱾ ᱱᱚᱶᱟ ᱦᱟᱹᱞᱤᱦᱚᱪᱚ ᱨᱮ  ᱰᱤᱜᱟᱹᱣ ᱠᱚ ᱨᱮᱭᱟᱜ ᱜᱚᱴᱟᱣ ᱢᱮᱱᱟᱜᱼᱟ , ᱟᱞᱮ ᱦᱤᱥᱟᱹᱵ ᱛᱮ ᱟᱢ ᱥᱟᱫᱽᱠᱷᱤᱭᱟᱹ ᱵᱟᱹᱭᱥᱟᱣ ᱧᱮᱞ ᱵᱤᱰᱟᱣᱜ ᱢᱮ</string>
-    <string name="integrity_check_positive">ᱥᱟᱫᱽᱠᱷᱤᱭᱟᱹ ᱵᱟᱹᱭᱥᱟᱣ ᱪᱮᱠ ᱢᱮ</string>
     <string name="integrity_check_continue_anyway">ᱡᱟᱦᱟᱸ ᱞᱮᱠᱟᱛᱮ ᱞᱮᱛᱟᱲ ᱢᱮ</string>
     <string name="integrity_check_insufficient_space">ᱧᱮᱞ ᱵᱤᱰᱟᱣᱜ ᱥᱟᱫᱽᱠᱷᱤᱭᱟᱹ ᱵᱟᱹᱭᱥᱟᱣ ᱫᱚ ᱟᱰᱤᱜᱟᱱ ᱥᱩᱭᱫᱚᱢᱟᱠ ᱡᱟᱭᱜᱟ ᱤᱫᱤᱟᱭ ᱾\n\n ᱞᱮᱛᱟᱲ ᱢᱟᱲᱟᱝ ᱨᱮ ᱟᱢ ᱴᱷᱮᱱ %s ᱠᱷᱟᱹᱞᱤ ᱡᱟᱭᱜᱟ ᱛᱟᱦᱮᱱ ᱠᱟᱛᱷᱟ ᱾</string>
     <string name="integrity_check_insufficient_space_extra_content">\n\nᱟᱢ ᱴᱷᱮᱱ %s ᱠᱷᱟᱞᱤ ᱡᱟᱭᱜᱟ ᱢᱮᱱᱟᱜᱼᱟ.</string>
@@ -190,8 +187,8 @@
     <!-- Database Errors-->
     <string name="database_locked_title">ᱥᱟᱫᱽᱠᱷᱤᱭᱟᱹ ᱵᱟᱹᱭᱥᱟᱣ ᱞᱚᱠ ᱮᱱᱟ</string>
     <string name="database_locked_summary">AnkiDroid ᱥᱟᱫᱽᱠᱷᱤᱭᱟᱹ ᱵᱟᱹᱭᱥᱟᱣ ᱫᱚ ᱚᱞᱜᱟ ᱮᱯᱞᱤᱠᱮᱥᱚᱱ ᱠᱟᱢᱤ ᱨᱮ ᱟᱜᱩᱭᱮᱫᱟᱭ ᱾ ᱫᱚᱭᱟᱠᱟᱛᱮ AnkiDroid ᱵᱚᱸᱫ ᱠᱟᱛᱮ ᱯᱦᱮᱨ ᱥᱮ ᱠᱷᱩᱞᱟᱹᱭ ᱢᱮ ᱾</string>
-    <string name="incompatible_database_version_title">Incompatible Database Version</string>
-    <string name="incompatible_database_version_summary">The database is a more advanced version than this version of AnkiDroid can work with. Upgrade AnkiDroid or downgrade the database to open it\n\nSupported version: %1$d\nDatabase version: %2$d\n\nThe following restore options will overwrite your current collection, possibly with a compatible database version:</string>
+    <string name="incompatible_database_version_title">ᱵᱟᱝ ᱴᱷᱤᱠ ᱵᱟᱴᱟᱵᱮᱥ ᱵᱷᱟᱹᱨᱥᱟᱹᱱ</string>
+    <string name="incompatible_database_version_summary">ᱰᱟᱴᱟᱵᱮᱥ ᱫᱚ ᱱᱚᱶᱟ AnkiDroid ᱵᱷᱟᱹᱥᱚᱱ ᱠᱷᱚᱱ ᱡᱟᱹᱛᱤ ᱮᱰᱵᱷᱟᱱᱥ ᱜᱮᱭᱟ ᱾ ᱠᱷᱚᱞᱟ ᱞᱟᱹᱜᱤᱫᱽ ᱰᱟᱴᱟᱵᱮᱥ ᱟᱹᱯᱜᱮᱰ ᱟᱨ ᱵᱟᱝ ᱰᱟᱩᱱᱜᱨᱮᱰ ᱢᱮ\n\n ᱥᱟᱹᱯᱚᱴ ᱵᱷᱟᱹᱨᱥᱚᱱᱺ %1$d\n ᱰᱟᱴᱟᱵᱮᱥ ᱵᱷᱟᱹᱥᱚᱱᱺ %2$d\n\n ᱱᱚᱶᱟ ᱠᱚ ᱨᱤᱥᱴᱚᱨ ᱚᱯᱥᱚᱱ ᱠᱚ ᱟᱢᱟᱜᱽ ᱱᱤᱛᱚᱜᱼᱟᱜ ᱛᱩᱢᱟᱹ ᱥᱟᱞᱟᱜᱽ ᱫᱩᱦᱲᱟᱹ ᱚᱞᱚᱜᱚᱜ ᱠᱚᱢᱯᱟᱴᱤᱵᱟᱹᱞ ᱰᱟᱴᱟᱵᱮᱥ ᱵᱷᱟᱹᱥᱚᱱ ᱥᱟᱞᱟᱜᱽ ᱛᱮᱺ</string>
     <!-- Deck Picker Background-->
     <string name="background_image_applied">ᱚᱱᱚᱰ ᱪᱮᱛᱟᱨ ᱵᱟᱦᱟᱞᱮᱱᱟ</string>
     <string name="background_image_removed">ᱚᱱᱚᱰ ᱪᱤᱛᱟᱨ ᱦᱟᱴᱟᱣ ᱮᱱᱟ</string>
@@ -210,8 +207,27 @@
     <string name="boot_service_failed_to_schedule_notifications">ᱠᱟᱹᱢᱤ ᱦᱚᱨᱟ ᱩᱭᱦᱟᱹᱨ ᱰᱤᱜᱟᱹᱣ</string>
     <string name="boot_service_too_many_notifications">ᱟᱹᱰᱤᱜᱟᱱ ᱠᱟᱹᱢᱤ ᱦᱚᱨᱟ ᱩᱭᱦᱟᱹᱨ ᱾ ᱛᱤᱱᱟᱹᱝᱜᱟᱱ ᱡᱤᱱᱥ ᱵᱟᱭ ᱫᱮᱠᱷᱟᱣᱟ</string>
     <!-- Locale Selection Dialog -->
-    <string name="locale_selection_dialog_title">Keyboard Hint Selection</string>
-    <string name="locale_selection_dialog_summary">Some multilingual keyboards, such as GBoard support changing language when editing text\n\nPlease request the “setImeHintLocales” feature from your keyboard manufacturer if your keyboard does not change language.</string>
+    <string name="locale_selection_dialog_title">ᱠᱤᱵᱚᱰ ᱦᱤᱸᱴ ᱪᱚᱭᱚᱱ</string>
+    <string name="locale_selection_dialog_summary">ᱠᱤᱪᱷᱤ ᱢᱟᱹᱞᱴᱤᱞᱤᱱᱜᱩᱟᱞ ᱠᱤᱭᱵᱚᱰ, ᱡᱮᱢᱚᱱ GBoard  ᱫᱚ ᱚᱞ ᱠᱚ ᱥᱟᱯᱲᱟᱣ ᱡᱷᱚᱜ ᱯᱟᱹᱨᱥᱤ ᱵᱚᱫᱚᱞ ᱠᱚ ᱜᱟᱱᱚᱜᱼᱟ \n\n ᱡᱩᱫᱤ ᱟᱢᱟᱜᱽ ᱠᱤᱭᱵᱚᱰ ᱯᱟᱹᱨᱥᱤ ᱵᱚᱫᱚᱞ ᱠᱚ ᱵᱟᱭ ᱜᱟᱱᱚᱜ ᱠᱟᱱ ᱠᱷᱟᱱ ᱫᱚᱭᱟ ᱠᱟᱛᱮ ᱠᱮᱭᱵᱚᱰ ᱢᱮᱱᱭᱩᱯᱷᱮᱠᱪᱚᱨᱟᱹᱨ ᱨᱮᱭᱟᱜ “setImeHintLocales” ᱱᱮᱦᱚᱨᱮᱢ ᱾</string>
+    <!-- Help Dialog -->
+    <string name="help_title_using_ankidroid">AnkiDroid ᱵᱮᱵᱷᱟᱨᱮᱫᱟᱹᱧ</string>
+    <string name="help_item_ankidroid_manual">AnkiDroid ᱢᱮᱱᱩᱟᱞ</string>
+    <string name="help_item_anki_manual">Anki ᱢᱮᱱᱩᱟᱞ</string>
+    <string name="help_item_ankidroid_faq">AnkiDroid FAQ</string>
+    <string name="help_title_get_help">ᱜᱚᱲᱚ ᱧᱟᱢ ᱢᱮ</string>
+    <string name="help_item_mailing_list">ᱢᱮᱞᱤᱝ ᱞᱤᱥᱴ</string>
+    <string name="help_item_reddit">Reddit</string>
+    <string name="help_item_report_bug">ᱵᱟᱹᱜ ᱨᱤᱯᱚᱴ</string>
+    <string name="help_title_support_ankidroid">AnkiDroid ᱥᱟᱹᱯᱚᱴ ᱠᱚᱢ</string>
+    <string name="help_item_support_opencollective_donate">ᱫᱟᱱ</string>
+    <string name="help_item_support_develop_ankidroid">ᱰᱮᱵᱷᱞᱚᱯ</string>
+    <string name="help_item_support_rate_ankidroid">ᱫᱚᱨ</string>
+    <string name="help_item_support_other_ankidroid">ᱚᱞᱜᱟ</string>
+    <string name="help_title_community">ᱡᱟᱹᱛ</string>
+    <string name="help_item_anki_forums">Anki ᱯᱷᱚᱨᱚᱱ</string>
+    <string name="help_item_discord">Discord</string>
+    <string name="help_item_facebook">Facebook</string>
+    <string name="help_item_twitter">Twitter</string>
     <!--Sync-->
     <plurals name="sync_automatic_sync_needs_more_time">
         <item quantity="one">%d ᱴᱤᱡ ᱨᱮ ᱟᱡ ᱛᱮᱜᱮ ᱟᱹᱛᱩᱨ ᱟᱬᱜᱚ ᱜᱮᱭᱟ</item>

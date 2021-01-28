@@ -42,14 +42,12 @@
     <string name="disabled">Onemogočeno</string>
     <string name="enabled">Omogočeno</string>
     <!-- preferences.xml categories-->
-    <string name="pref_cat_general">AnkiDroid</string>
     <string name="pref_cat_general_summ">Splošne nastavitve</string>
     <string name="pref_cat_reviewing">Pregledovanje</string>
     <string name="pref_cat_reviewing_summ">Nastavitve pregledovalcev, ki niso samo za komplete</string>
     <string name="pref_cat_reviewer_behaviour">Vedenje</string>
     <string name="pref_cat_flashcard">Prikaz</string>
     <string name="pref_cat_whiteboard">Bela tabla</string>
-    <string name="pref_cat_automatic_display">Samodejno prikaži odgovor</string>
     <string name="pref_cat_appearance">Videz</string>
     <string name="pref_cat_appearance_summ">Spremeni teme in privzeto pisavo</string>
     <string name="pref_cat_themes">Teme</string>
@@ -66,8 +64,6 @@
     <string name="about_version">Različica: </string>
     <!-- preferences.xml entries-->
     <string name="whiteboard_stroke_width">Debelina črte</string>
-    <string name="whiteboard_black">Črne črte</string>
-    <string name="whiteboard_black_summ">Uporabi manj pomnilnika razen v nočnem načinu</string>
     <string name="use_input_tag">Vtipkaj odgovor v kartico</string>
     <string name="use_input_tag_summ">Uporabi besedilno polje v kartici za vnos odgovora</string>
     <string name="dictionary">Slovar za iskanje</string>
@@ -96,15 +92,26 @@
     <string name="gestures_summ">Dodeli poteze dejanjem, kot sta odgovarjanje in urejanje kartic.</string>
     <string name="gestures_allow_links">Ignore touch gestures on links</string>
     <string name="gestures_allow_links_summary">Touch gestures will not be processed if a link/hint is pressed.</string>
+    <string name="gestures_corner_touch">9-point touch</string>
+    <string name="gestures_corner_touch_summary">Allow touch gestures in screen corners</string>
     <string name="gestures_swipe_up">Potegni gor</string>
     <string name="gestures_swipe_down">Potegni dol</string>
     <string name="gestures_swipe_left">Potegni levo</string>
     <string name="gestures_swipe_right">Potegni desno</string>
     <string name="gestures_double_tap">Dvojni dotik</string>
     <string name="gestures_tap_top">Dotik na vrhu</string>
-    <string name="gestures_tap_bottom">Dotik na dnu</string>
     <string name="gestures_tap_left">Dotik na levi</string>
     <string name="gestures_tap_right">Dotik na desni</string>
+    <string name="gestures_tap_bottom">Dotik na dnu</string>
+    <string name="gestures_corner_tap_top_left">Touch top left</string>
+    <string name="gestures_corner_tap_top_center">Touch top center</string>
+    <string name="gestures_corner_tap_top_right">Touch top right</string>
+    <string name="gestures_corner_tap_middle_left">Touch middle left</string>
+    <string name="gestures_corner_tap_middle_center">Touch middle center</string>
+    <string name="gestures_corner_tap_middle_right">Touch middle right</string>
+    <string name="gestures_corner_tap_bottom_left">Touch bottom left</string>
+    <string name="gestures_corner_tap_bottom_center">Touch bottom center</string>
+    <string name="gestures_corner_tap_bottom_right">Touch bottom right</string>
     <string name="gestures_volume_up">Volume up</string>
     <string name="gestures_volume_down">Volume down</string>
     <string name="more_scrolling_buttons">eReader</string>
@@ -142,9 +149,8 @@
     <string name="timeout_answer_text">Sam. prikaži odgovor</string>
     <string name="timeout_answer_summ">Samodejno prikaži odgovor brez uporabniškega vnosa. Zakasnitev vključuje čas za samodejno predvajanje zvočnih datotek.</string>
     <string name="timeout_answer_seconds">Čas za prikaz odgovora</string>
-    <string name="timeout_answer_seconds_summ">XXX s</string>
+    <string name="timeout_answer_seconds_summ" comment="The time to wait (in seconds) in the reviewer before automatically showing the next question or answer">XXX s</string>
     <string name="timeout_question_seconds">Časa do naslednjega vprašanja</string>
-    <string name="timeout_question_seconds_summ">XXX s</string>
     <string name="select_locale_title">Izberite jezik</string>
     <string name="safe_display">Način varnega prikaza</string>
     <string name="safe_display_summ">Disable all animations and use safer method for drawing cards. E-ink devices may require this.</string>
@@ -165,7 +171,6 @@
     <string name="use_current">Komplet za nove kartice</string>
     <string name="new_spread">Položaj novih kartic</string>
     <string name="learn_cutoff">Omejitev vnaprejšnjega učenja</string>
-    <string name="learn_cutoff_summ">XXX min.</string>
     <string name="time_limit">Omejitev časovnega obdobja</string>
     <string name="time_limit_summ">XXX min.</string>
     <string name="day_offset">Začetek naslednjega dne</string>
@@ -219,8 +224,8 @@
         <item quantity="other">%1$s\n%2$d kompletov uporablja to skupino</item>
     </plurals>
     <string name="deck_conf_new_cards">Nove kartice</string>
-    <string name="deck_conf_rev_cards">Pregledi</string>
-    <string name="deck_conf_lps_cards">Spodrsljaji</string>
+    <string name="deck_conf_rev_cards" comment="Name of the deck options submenu for configuring reviews of due cards.">Pregledi</string>
+    <string name="deck_conf_lps_cards" comment="Label of the submenu stating how lapses cards are treated.">Spodrsljaji</string>
     <string name="deck_conf_general">Splošno</string>
     <string name="deck_conf_reminders">Opomniki</string>
     <string name="deck_conf_steps">Koraki (v minutah)</string>
@@ -238,6 +243,7 @@
     <string name="deck_conf_use_general_timeout_settings">Use general settings</string>
     <string name="deck_conf_use_general_timeout_settings_summ">Use general \'Automatic display answer\' settings instead of using the settings for this group.</string>
     <string name="deck_conf_easy_bonus">Lahek dodatek</string>
+    <string name="deck_conf_hard_factor">Hard interval</string>
     <string name="deck_conf_ivl_fct">Spremenilnik razmika</string>
     <string name="deck_conf_max_ivl">Največji razmik</string>
     <string name="deck_conf_new_lps_ivl">Novi razmik</string>
@@ -254,14 +260,11 @@
     <string name="deck_conf_manage">Upravljanje skupin</string>
     <string name="deck_conf_manage_summ">Add and change options groups</string>
     <string name="deck_conf_current_group">Trenutna skupina</string>
-    <string name="deck_conf_rename">Preimenuj</string>
+    <string name="deck_conf_rename" comment="Menu entry to rename a deck">Preimenuj</string>
     <string name="deck_conf_reset">Obnovi privzete</string>
-    <string name="deck_conf_reset_title">Obnovi privzete</string>
     <string name="deck_conf_reset_message">Obnovi trenutno skupino možnosti na privzete vrednosti?</string>
-    <string name="deck_conf_add">Dodaj</string>
+    <string name="deck_conf_add" comment="Adding a new deck option group">Dodaj</string>
     <string name="deck_conf_add_summ">Ustvari kopijo trenutne skupine možnosti</string>
-    <string name="deck_conf_remove">Odstrani</string>
-    <string name="deck_conf_remove_title">Odstrani</string>
     <string name="deck_conf_remove_message">Odstrani trenutno skupino možnosti?</string>
     <string name="deck_conf_set_subdecks">Nastavi za vse podkomplete</string>
     <plurals name="deck_conf_set_subdecks_summ">
@@ -270,15 +273,13 @@
         <item quantity="few">%s podkompleti bodo uporabili to skupino</item>
         <item quantity="other">%s podkompletov bo uporabilo to skupino</item>
     </plurals>
-    <string name="deck_conf_set_subdecks_title">Nastavi za vse podkomplete</string>
     <string name="deck_conf_set_subdecks_message">Nastavi trenutno skupino možnosti za vse podkomplete tega kompleta?</string>
     <string name="pref_browser_editor_font">Pisava brskalnika in urejevalnika</string>
     <string name="deck_conf_cram_filter">Filter</string>
-    <string name="deck_conf_cram_options">Možnosti</string>
     <string name="deck_conf_cram_search">Poišči</string>
     <string name="deck_conf_cram_limit">Omeji na</string>
     <string name="deck_conf_cram_order">kartic, ki jih je izbral</string>
-    <string name="deck_conf_cram_reschedule">Spremeni urnik</string>
+    <string name="deck_conf_cram_reschedule" comment="Title of the box labelled by deck_conf_cram_reschedule_summ">Spremeni urnik</string>
     <string name="deck_conf_cram_reschedule_summ">Spremeni urnik kartic glede na moje odgovore v tem kompletu</string>
     <string name="deck_conf_cram_steps">Koraki po meri (v minutah)</string>
     <string name="deck_conf_cram_steps_summ">Določi korake po meri</string>
@@ -288,6 +289,8 @@
     <string name="analytics_dialog_title">Help make AnkiDroid better!</string>
     <string name="analytics_title">Share feature usage</string>
     <string name="analytics_summ">You can contribute to AnkiDroid by helping the development team see which features people use</string>
-    <string name="enable_miui_keyboard_hack">\'Paste\' to insert cloze deletion</string>
-    <string name="enable_miui_keyboard_hack_summ">In the Note Editor, \'Paste\' will turn the selected text into a cloze</string>
+    <string name="note_editor_replace_newlines">Replace newlines with HTML</string>
+    <string name="note_editor_replace_newlines_summ">In the Note Editor, convert any instances of &lt;br&gt; to newlines when editing a card.</string>
+    <string name="no_code_formatting">Simple typed answer formatting</string>
+    <string name="no_code_formatting_summ">Fixes ‘􏿾’ appearing in typed answer results</string>
 </resources>

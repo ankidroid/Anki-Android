@@ -31,15 +31,9 @@ import android.database.Cursor;
 import android.database.MatrixCursor;
 import android.database.sqlite.SQLiteQueryBuilder;
 import android.net.Uri;
-import android.os.Binder;
-import android.os.Build;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 
-import android.os.CancellationSignal;
-import android.os.Parcel;
-import android.os.ParcelFileDescriptor;
 import android.text.TextUtils;
 import android.webkit.MimeTypeMap;
 
@@ -55,6 +49,7 @@ import com.ichi2.libanki.Consts;
 import com.ichi2.libanki.Decks;
 import com.ichi2.libanki.Model;
 import com.ichi2.libanki.Media;
+import com.ichi2.libanki.exception.EmptyMediaException;
 import com.ichi2.libanki.sched.AbstractSched;
 import com.ichi2.libanki.Card;
 import com.ichi2.libanki.Collection;
@@ -71,10 +66,7 @@ import com.ichi2.utils.JSONException;
 import com.ichi2.utils.JSONObject;
 
 import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
@@ -87,6 +79,7 @@ import androidx.sqlite.db.SupportSQLiteDatabase;
 import timber.log.Timber;
 
 import static com.ichi2.anki.FlashCardsContract.READ_WRITE_PERMISSION;
+import static com.ichi2.libanki.Models.NOT_FOUND_NOTE_TYPE;
 
 /**
  * Supported URIs:
@@ -247,7 +240,8 @@ public class CardContentProvider extends ContentProvider {
                 /* Search for notes using direct SQL query */
                 String[] proj = sanitizeNoteProjection(projection);
                 String sql = SQLiteQueryBuilder.buildQueryString(false, "notes", proj, selection, null, null, order, null);
-                return col.getDb().getDatabase().query(sql, selectionArgs);
+                //noinspection RedundantCast
+                return col.getDb().query(sql, (Object[]) selectionArgs); // Needed for varargs of query
             }
             case NOTES: {
                 /* Search for notes using the libanki browser syntax */
@@ -267,7 +261,7 @@ public class CardContentProvider extends ContentProvider {
                 String noteId = uri.getPathSegments().get(1);
                 String[] proj = sanitizeNoteProjection(projection);
                 String sql = SQLiteQueryBuilder.buildQueryString(false, "notes", proj, "id=?", null, null, order, null);
-                return col.getDb().getDatabase().query(sql, new String[]{noteId});
+                return col.getDb().query(sql, noteId);
             }
 
             case NOTES_ID_CARDS: {
@@ -502,7 +496,7 @@ public class CardContentProvider extends ContentProvider {
             case NOTES_ID_CARDS_ORD: {
                 Card currentCard = getCardFromUri(uri, col);
                 boolean isDeckUpdate = false;
-                long did = -1;
+                long did = Decks.NOT_FOUND_DECK_ID;
                 // the key of the ContentValues contains the column name
                 // the value of the ContentValues contains the row value.
                 Set<Map.Entry<String, Object>> valueSet = values.valueSet();
@@ -734,7 +728,7 @@ public class CardContentProvider extends ContentProvider {
                 if (model == null) {
                     return -1;
                 }
-                List<Long> cids = col.genCards(col.getModels().nids(model));
+                List<Long> cids = col.genCards(col.getModels().nids(model), model);
                 col.remCards(cids);
                 return cids.size();
             default:
@@ -792,7 +786,7 @@ public class CardContentProvider extends ContentProvider {
         col.log(String.format(Locale.US, "bulkInsertNotes: %d items.\n%s", valuesArr.length, getLogMessage("bulkInsert", null)));
 
         // for caching model information (so we don't have to query for each note)
-        long modelId = -1L;
+        long modelId = NOT_FOUND_NOTE_TYPE;
         Model model = null;
 
         col.getDecks().flush(); // is it okay to move this outside the for-loop? Is it needed at all?
@@ -811,7 +805,7 @@ public class CardContentProvider extends ContentProvider {
                 }
                 Long thisModelId = values.getAsLong(FlashCardsContract.Note.MID);
                 if (thisModelId == null || thisModelId < 0) {
-                    Timber.d("Unable to get model at index: " + i);
+                    Timber.d("Unable to get model at index: %d", i);
                     continue;
                 }
                 String[] fldsArray = Utils.splitFields(flds);
@@ -1117,7 +1111,7 @@ public class CardContentProvider extends ContentProvider {
             Timber.d("insert -> MEDIA: uriFromF = %s", uriFromF);
             return Uri.fromFile(new File(fname));
 
-        } catch (IOException e) {
+        } catch (IOException | EmptyMediaException e) {
             Timber.w(e, "insert failed from %s", fileUri);
             return null;
         }
@@ -1127,7 +1121,7 @@ public class CardContentProvider extends ContentProvider {
         if (projection == null || projection.length == 0) {
             return sDefaultNoteProjectionDBAccess;
         }
-        List<String> sanitized = new ArrayList<>();
+        List<String> sanitized = new ArrayList<>(projection.length);
         for (String column : projection) {
             int idx = projSearch(FlashCardsContract.Note.DEFAULT_PROJECTION, column);
             if (idx >= 0) {
@@ -1454,7 +1448,7 @@ public class CardContentProvider extends ContentProvider {
     private String getLogMessage(String methodName, Uri uri) {
         final String format = "%s.%s %s (%s)";
         String path = uri == null ? null : uri.getPath();
-        return String.format(format, getClass().getSimpleName(), methodName, path, getCallingPackageSafe());
+        return String.format(format, getClass().getSimpleName(), methodName, path, getCallingPackage());
     }
 
     @SuppressWarnings("BooleanMethodIsAlwaysInverted")
@@ -1471,7 +1465,7 @@ public class CardContentProvider extends ContentProvider {
     private boolean knownRogueClient() {
         final PackageManager pm = mContext.getPackageManager();
         try {
-            PackageInfo callingPi = pm.getPackageInfo(getCallingPackageSafe(), PackageManager.GET_PERMISSIONS);
+            PackageInfo callingPi = pm.getPackageInfo(getCallingPackage(), PackageManager.GET_PERMISSIONS);
              if (callingPi == null || callingPi.requestedPermissions == null) {
                  return false;
              }
@@ -1479,17 +1473,5 @@ public class CardContentProvider extends ContentProvider {
         } catch (PackageManager.NameNotFoundException e) {
             return false;
         }
-    }
-
-    @Nullable
-    private String getCallingPackageSafe() {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
-            return getCallingPackage();
-        }
-        String[] pkgs = mContext.getPackageManager().getPackagesForUid(Binder.getCallingUid());
-        if (pkgs.length == 1) {
-            return pkgs[0]; // This is usual case, unless multiple packages signed with same key & using "sharedUserId"
-        }
-        return null;
     }
 }

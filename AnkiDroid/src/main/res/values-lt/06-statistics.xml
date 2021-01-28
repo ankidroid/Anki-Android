@@ -44,8 +44,8 @@
     <string name="statistics_unlearned">Nematytos</string>
     <string name="statistics_suspended">Suspended</string>
     <string name="statistics_buried">Buried</string>
-    <string name="statistics_relearn">Išmoktos iš naujo</string>
-    <string name="statistics_learn">Tebesimokomos</string>
+    <string name="statistics_relearn" comment="Labbel of the axis in the graph indicating the number of reviews of cards while they are in relearning mode.">Išmoktos iš naujo</string>
+    <string name="statistics_learn" comment="Label of the number of review of card in learning done in some amount of time">Tebesimokomos</string>
     <string name="statistics_cram">Išmoktos mintinai</string>
     <string name="stats_cards">Kortelės</string>
     <string name="stats_cards_intervals">Kortelės per nurodytą laikotarpį</string>
@@ -67,7 +67,7 @@
     <string name="stats_time_of_day">Dienos metas</string>
     <string name="stats_day_of_week">Savaitės diena</string>
     <string formatted="false" name="stats_percentage_correct">Teisingai atsakytų %</string>
-    <string name="stats_reviews">Pasikartojimai</string>
+    <string name="stats_reviews" comment="Label of a graph, indicating cumulative number of review of all cards">Pasikartojimai</string>
     <string name="stats_answer_type">Atsakymo tipas</string>
     <string name="stats_today_again_count">Pakartotos iš naujo: &lt;b&gt;%d&lt;/b&gt;</string>
     <string name="stats_today_correct_count">(&lt;b&gt;%.1f%%&lt;/b&gt; teisingai)</string>
@@ -78,7 +78,6 @@
     <string name="stats_overview_forecast_average">Vidutiniškai: &lt;b&gt;%1$.1f&lt;/b&gt; perž./dieną</string>
     <string name="stats_overview_forecast_due_tomorrow">Rytoj numatyta: &lt;b&gt;%1$d&lt;/b&gt;</string>
     <string name="stats_overview_days_studied">Mokymosi dienų skaičius: &lt;b&gt;%1$d%%&lt;/b&gt; (%2$d iš %3$d)</string>
-    <string name="stats_overview_total_reviews">Bendras pasikartojimų skaičius: &lt;b&gt;%1$d&lt;/b&gt;</string>
     <string name="stats_overview_reviews_per_day_studydays">Vidutiniškai mokytasi per dieną: &lt;b&gt;%1$.1f&lt;/b&gt; perž./d.</string>
     <string name="stats_overview_reviews_per_day_all">Jei mokytumėtės kasdien: &lt;b&gt;%1$.1f&lt;/b&gt; perž./d.</string>
     <string name="stats_overview_total_time_in_period">Total: &lt;b&gt;%d&lt;/b&gt; minutes</string>
@@ -101,7 +100,6 @@
     <string name="stats_overview_card_types_lowest_ease">Lowest ease: &lt;b&gt;%.0f%%&lt;/b&gt;</string>
     <string name="stats_overview_card_types_average_ease">Average ease: &lt;b&gt;%.0f%%&lt;/b&gt;</string>
     <string name="stats_overview_card_types_highest_ease">Highest ease: &lt;b&gt;%.0f%%&lt;/b&gt;</string>
-    <string name="deck_summary_all_decks">Visi rinkiniai</string>
     <string name="stats_select_time_scale">Pasirinkite laikotarpį</string>
     <string-array name="due_x_axis_title">
         <item>Dienos</item>
@@ -113,12 +111,11 @@
     <string name="stats_forecast">Prognozė</string>
     <string name="stats_review_count">Pasikartojimų skaičius</string>
     <string name="stats_review_time">Pasikartojimų laikas</string>
-    <string name="stats_added">Pridėta</string>
+    <string name="stats_added" comment="Label of the number of added card">Pridėta</string>
     <string name="stats_review_intervals">Laikotarpiai</string>
     <string name="stats_breakdown">Valandinis suskirstymas</string>
     <string name="stats_weekly_breakdown">Savaitinis suskirstymas</string>
     <string name="stats_answer_buttons">Atsakymų mygtukai</string>
-    <string name="stats_cards_types">Kortelių rūšys</string>
     <string-array name="stats_day_time_strings">
         <item>4:00</item>
         <item>10:00</item>

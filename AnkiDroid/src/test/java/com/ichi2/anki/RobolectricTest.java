@@ -22,22 +22,30 @@ import android.content.Intent;
 import com.afollestad.materialdialogs.DialogAction;
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.ichi2.anki.dialogs.DialogHandler;
+import com.ichi2.anki.dialogs.utils.FragmentTestActivity;
 import com.ichi2.anki.exception.ConfirmModSchemaException;
 import com.ichi2.async.CollectionTask;
-import com.ichi2.async.TaskData;
 import com.ichi2.async.TaskListener;
+import com.ichi2.async.TaskManager;
 import com.ichi2.compat.customtabs.CustomTabActivityHelper;
+import com.ichi2.libanki.Card;
 import com.ichi2.libanki.Collection;
+import com.ichi2.libanki.Consts;
 import com.ichi2.libanki.DB;
 import com.ichi2.libanki.Model;
 import com.ichi2.libanki.Models;
 
 import com.ichi2.libanki.Note;
+import com.ichi2.libanki.Storage;
 import com.ichi2.libanki.sched.AbstractSched;
 import com.ichi2.libanki.sched.Sched;
 import com.ichi2.libanki.sched.SchedV2;
 import com.ichi2.testutils.MockTime;
+import com.ichi2.utils.BooleanGetter;
 import com.ichi2.utils.JSONException;
+
+import net.ankiweb.rsdroid.BackendException;
+import net.ankiweb.rsdroid.testing.RustBackendLoader;
 
 import org.hamcrest.Matcher;
 import org.junit.After;
@@ -52,9 +60,12 @@ import org.robolectric.shadows.ShadowLog;
 
 import java.util.ArrayList;
 
+import androidx.annotation.CheckResult;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import com.ichi2.utils.InMemorySQLiteOpenHelperFactory;
+
+import androidx.fragment.app.DialogFragment;
 import androidx.sqlite.db.SupportSQLiteOpenHelper;
 import androidx.sqlite.db.framework.FrameworkSQLiteOpenHelperFactory;
 import androidx.test.core.app.ApplicationProvider;
@@ -62,13 +73,14 @@ import timber.log.Timber;
 
 import static android.os.Looper.getMainLooper;
 import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.is;
 import static org.robolectric.Shadows.shadowOf;
 
 public class RobolectricTest {
 
-    private final ArrayList<ActivityController> controllersForCleanup = new ArrayList<>();
+    private final ArrayList<ActivityController<?>> controllersForCleanup = new ArrayList<>();
 
-    protected void saveControllerForCleanup(ActivityController controller) {
+    protected void saveControllerForCleanup(ActivityController<?> controller) {
         controllersForCleanup.add(controller);
     }
 
@@ -78,17 +90,31 @@ public class RobolectricTest {
 
     @Before
     public void setUp() {
+
+        RustBackendLoader.init();
+
         // If you want to see the Android logging (from Timber), you need to set it up here
         ShadowLog.stream = System.out;
 
         // Robolectric can't handle our default sqlite implementation of requery, it needs the framework
         DB.setSqliteOpenHelperFactory(getHelperFactory());
+        // But, don't use the helper unless useLegacyHelper is true
+        Storage.setUseBackend(!useLegacyHelper());
+        Storage.setUseInMemory(useInMemoryDatabase());
 
         //Reset static variable for custom tabs failure.
         CustomTabActivityHelper.resetFailed();
 
         //See: #6140 - This global ideally shouldn't exist, but it will cause crashes if set.
         DialogHandler.discardMessage();
+
+        // BUG: We do not reset the MetaDB
+        MetaDB.closeDB();
+    }
+
+
+    protected boolean useLegacyHelper() {
+        return false;
     }
 
 
@@ -107,7 +133,7 @@ public class RobolectricTest {
     public void tearDown() {
 
         // If you don't clean up your ActivityControllers you will get OOM errors
-        for (ActivityController controller : controllersForCleanup) {
+        for (ActivityController<?> controller : controllersForCleanup) {
             Timber.d("Calling destroy on controller %s", controller.get().toString());
             try {
                 controller.destroy();
@@ -118,18 +144,29 @@ public class RobolectricTest {
         }
         controllersForCleanup.clear();
 
-        // If you don't tear down the database you'll get unexpected IllegalStateExceptions related to connections
-        CollectionHelper.getInstance().closeCollection(false, "RoboelectricTest: End");
+        try {
+            if (CollectionHelper.getInstance().colIsOpen()) {
+                CollectionHelper.getInstance().getCol(getTargetContext()).getBackend().debugEnsureNoOpenPointers();
+            }
+            // If you don't tear down the database you'll get unexpected IllegalStateExceptions related to connections
+            CollectionHelper.getInstance().closeCollection(false, "RoboelectricTest: End");
+        } catch (BackendException ex) {
+            if ("CollectionNotOpen".equals(ex.getMessage())) {
+                Timber.w(ex, "Collection was already disposed - may have been a problem");
+            } else {
+                throw ex;
+            }
+        } finally {
+            // After every test make sure the CollectionHelper is no longer overridden (done for null testing)
+            disableNullCollection();
 
-        // After every test make sure the CollectionHelper is no longer overridden (done for null testing)
-        disableNullCollection();
+            // After every test, make sure the sqlite implementation is set back to default
+            DB.setSqliteOpenHelperFactory(null);
 
-        // After every test, make sure the sqlite implementation is set back to default
-        DB.setSqliteOpenHelperFactory(null);
-
-        //called on each AnkiDroidApp.onCreate(), and spams the build
-        //there is no onDestroy(), so call it here.
-        Timber.uprootAll();
+            //called on each AnkiDroidApp.onCreate(), and spams the build
+            //there is no onDestroy(), so call it here.
+            Timber.uprootAll();
+        }
     }
 
 
@@ -161,20 +198,20 @@ public class RobolectricTest {
     }
 
     // Robolectric needs a manual advance with the new PAUSED looper mode
-    protected void advanceRobolectricLooper() {
+    public static void advanceRobolectricLooper() {
         shadowOf(getMainLooper()).runToEndOfTasks();
         shadowOf(getMainLooper()).idle();
         shadowOf(getMainLooper()).runToEndOfTasks();
     }
     // Robolectric needs some help sometimes in form of a manual kick, then a wait, to stabilize UI activity
-    protected void advanceRobolectricLooperWithSleep() {
+    public static void advanceRobolectricLooperWithSleep() {
         advanceRobolectricLooper();
         try { Thread.sleep(500); } catch (Exception e) { Timber.e(e); }
         advanceRobolectricLooper();
     }
 
     /** This can probably be implemented in a better manner */
-    protected void waitForAsyncTasksToComplete() {
+    protected static void waitForAsyncTasksToComplete() {
         advanceRobolectricLooperWithSleep();
     }
 
@@ -226,17 +263,30 @@ public class RobolectricTest {
         return new Model(collectionModels.byName(modelName).toString().trim());
     }
 
-    protected <T extends AnkiActivity> T startActivityNormallyOpenCollectionWithIntent(Class<T> clazz, Intent i) {
+    protected static <T extends AnkiActivity> T startActivityNormallyOpenCollectionWithIntent(RobolectricTest testClass, Class<T> clazz, Intent i) {
         ActivityController<T> controller = Robolectric.buildActivity(clazz, i)
                 .create().start().resume().visible();
         advanceRobolectricLooperWithSleep();
         advanceRobolectricLooperWithSleep();
-        saveControllerForCleanup(controller);
+        testClass.saveControllerForCleanup(controller);
         return controller.get();
+    }
+
+    protected <T extends AnkiActivity> T startActivityNormallyOpenCollectionWithIntent(Class<T> clazz, Intent i) {
+        return startActivityNormallyOpenCollectionWithIntent(this, clazz, i);
     }
 
     protected Note addNoteUsingBasicModel(String front, String back) {
         return addNoteUsingModelName("Basic", front, back);
+    }
+
+    protected Note addRevNoteUsingBasicModelDueToday(String front, String back) {
+        Note note = addNoteUsingBasicModel(front, back);
+        Card card = note.firstCard();
+        card.setQueue(Consts.QUEUE_TYPE_REV);
+        card.setType(Consts.CARD_TYPE_REV);
+        card.setDue(getCol().getSched().getToday());
+        return note;
     }
 
     protected Note addNoteUsingBasicAndReversedModel(String front, String back) {
@@ -314,14 +364,9 @@ public class RobolectricTest {
     }
 
 
-    protected synchronized void waitForTask(CollectionTask.TASK_TYPE taskType, int timeoutMs) throws InterruptedException {
-        waitForTask(taskType, null, timeoutMs);
-    }
-
-
-    protected synchronized void waitForTask(CollectionTask.TASK_TYPE taskType, @Nullable TaskData data, int timeoutMs) throws InterruptedException {
+    protected synchronized <Progress, Result extends BooleanGetter> void waitFortask(CollectionTask.Task<Progress, Result> task, int timeoutMs) throws InterruptedException {
         boolean[] completed = new boolean[] { false };
-        TaskListener listener = new TaskListener() {
+        TaskListener<Progress, Result> listener = new TaskListener<Progress, Result>() {
             @Override
             public void onPreExecute() {
 
@@ -329,7 +374,7 @@ public class RobolectricTest {
 
 
             @Override
-            public void onPostExecute(TaskData result) {
+            public void onPostExecute(Result result) {
 
                 if (result == null || !result.getBoolean()) {
                     throw new IllegalArgumentException("Task failed");
@@ -340,14 +385,14 @@ public class RobolectricTest {
                 }
             }
         };
-        CollectionTask.launchCollectionTask(taskType, listener, data);
+        TaskManager.launchCollectionTask(task, listener);
         advanceRobolectricLooper();
 
         wait(timeoutMs);
         advanceRobolectricLooper();
 
         if (!completed[0]) {
-            throw new IllegalStateException(String.format("Task %s didn't finish in %d ms", taskType, timeoutMs));
+            throw new IllegalStateException(String.format("Task %s didn't finish in %d ms", task.getClass(), timeoutMs));
         }
     }
     /**
@@ -368,7 +413,7 @@ public class RobolectricTest {
      * @see org.junit.matchers.JUnitMatchers
      */
     public <T> void assumeThat(T actual, Matcher<T> matcher) {
-        this.advanceRobolectricLooperWithSleep();
+        advanceRobolectricLooperWithSleep();
         Assume.assumeThat(actual, matcher);
     }
 
@@ -390,7 +435,7 @@ public class RobolectricTest {
      * @see org.junit.matchers.JUnitMatchers
      */
     public <T> void assumeThat(String message, T actual, Matcher<T> matcher) {
-        this.advanceRobolectricLooperWithSleep();
+        advanceRobolectricLooperWithSleep();
         Assume.assumeThat(message, actual, matcher);
     }
 
@@ -404,7 +449,31 @@ public class RobolectricTest {
      * @param message A message to pass to {@link AssumptionViolatedException}.
      */
     public void assumeTrue(String message, boolean b) {
-        this.advanceRobolectricLooperWithSleep();
+        advanceRobolectricLooperWithSleep();
         Assume.assumeTrue(message, b);
     }
+
+    public void equalFirstField(Card expected, Card obtained) {
+        assertThat(obtained.note().getFields()[0], is(expected.note().getFields()[0]));
+    }
+
+
+    @NonNull
+    @CheckResult
+    protected FragmentTestActivity openDialogFragmentUsingActivity(DialogFragment menu) {
+        Intent startActivityIntent = new Intent(getTargetContext(), FragmentTestActivity.class);
+
+        FragmentTestActivity activity = startActivityNormallyOpenCollectionWithIntent(FragmentTestActivity.class, startActivityIntent);
+
+        activity.showDialogFragment(menu);
+
+        return activity;
+    }
+
+    protected Card getCard() {
+        Card card = getCol().getSched().getCard();
+        advanceRobolectricLooperWithSleep();
+        return card;
+    }
+
 }

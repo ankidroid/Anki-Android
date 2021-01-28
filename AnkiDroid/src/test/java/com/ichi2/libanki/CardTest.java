@@ -15,6 +15,7 @@ import java.util.List;
 
 import androidx.test.ext.junit.runners.AndroidJUnit4;
 
+import static com.ichi2.utils.JSONObject.NULL;
 import static org.hamcrest.Matchers.hasItemInArray;
 import static org.hamcrest.Matchers.is;
 import static org.junit.Assert.assertEquals;
@@ -78,7 +79,7 @@ public class CardTest extends RobolectricTest {
         t = m.getJSONArray("tmpls").getJSONObject(1);
         t.put("qfmt", "{{Back}}");
         mm.save(m, true);
-        List<Long> rep = col.emptyCids();
+        List<Long> rep = col.emptyCids(null);
         col.remCards(rep);
         assertEquals(1, note.numberOfCards());
         // if we add to the note, a card should be automatically generated
@@ -130,7 +131,7 @@ public class CardTest extends RobolectricTest {
         models.renameField(model, flds.getJSONObject(0), "A");
         models.renameField(model, flds.getJSONObject(1), "B");
         JSONObject fld2 = models.newField("C");
-        fld2.put("ord", null);
+        fld2.put("ord", NULL);
         models.addField(model, fld2);
 
         JSONArray tmpls = model.getJSONArray("tmpls");

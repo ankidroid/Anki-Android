@@ -40,7 +40,6 @@
 <resources>
     <string name="backup_deck_no_space_left">Sicherung nicht gespeichert. Nicht genug Speicherplatz auf der SD-Karte. Geben Sie mehr Speicherplatz frei oder verringern Sie die Sicherungstiefe.</string>
     <string name="sd_space_warning">Auf Ihrer SD-Karte sind weniger als %d MB frei.\nGeben Sie mehr Platz frei, um Datenverluste zu vermeiden.</string>
-    <string name="backup_delete">Lösche Sicherungen&#8230;</string>
     <string name="backup_restore">Von Sicherung wiederherstellen</string>
     <string name="backup_new_collection">Neue Sammlung</string>
     <string name="backup_del_collection">Sammlung löschen und neue erstellen</string>
@@ -48,13 +47,11 @@
     <string name="backup_full_sync_from_server">Vollsynchronisierung vom Server</string>
     <string name="backup_full_sync_from_server_question">Sammlung mit der Version von AnkiWeb überschreiben? Dies setzt den Lernfortschritt und die hinzugefügten Informationen seit der letzten Synchronisierung zurück.</string>
     <string name="error_handling_title">Fehlerbehandlung</string>
-    <string name="error_handling_options">Optionen</string>
+    <string name="error_handling_options" comment="In a warning message, the label of the suggested action that the user should take">Optionen</string>
     <string name="backup_retry_opening">Öffnen erneut versuchen</string>
     <string name="backup_error_menu_repair">Repariere Datenbank</string>
-    <string name="backup_repair_deck">Reparieren</string>
     <!-- Collection used to be called deck. Name is kept for consistency with translation software -->
     <string name="backup_repair_deck_progress">Repariere Datenbank&#8230;</string>
-    <string name="backup_error">Fehler</string>
     <string name="backup_invalid_file_error">Die gewählte Sicherungsdatei war ungültig</string>
     <string name="backup_restore_select_title">Wählen Sie die Sicherungskopie, die wiederhergestellt werden soll</string>
     <string name="backup_restore_no_backups">Keine Sicherungen gefunden. Wenn Sie Sicherungen auf Ihrem Desktop-Computer haben, kopieren Sie sie manuell ins AnkiDroid-Verzeichnis.</string>

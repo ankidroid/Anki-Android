@@ -39,35 +39,6 @@
         <item>Jangan lapor</item>
         <item>Tanya aku</item>
     </string-array>
-    <string-array name="gestures_labels">
-        <item>Tidak ada tindakan</item>
-        <item>Tampilkan jawaban</item>
-        <item>Tombol jawaban 1</item>
-        <item>Tombol jawaban 2</item>
-        <item>Tombol jawaban 3</item>
-        <item>Tombol jawaban 4</item>
-        <item>Jawaban yang disarankan (hijau)</item>
-        <item>Jawaban yang lebih baik dari yang disarankan</item>
-        <item>Urungkan</item>
-        <item>Edit catatan</item>
-        <item>Beri catatan tag</item>
-        <item>Tandai catatan</item>
-        <item>Ekspresi pencarian</item>
-        <item>Pendam kartu</item>
-        <item>Tangguhkan kartu</item>
-        <item>Hapus catatan</item>
-        <item>Putar media</item>
-        <item>Batalkan belajar</item>
-        <item>Pendam catatan</item>
-        <item>Tangguhkan catatan</item>
-        <item>Setel Panji Merah</item>
-        <item>Setel Panji Jingga</item>
-        <item>Setel Panji Hijau</item>
-        <item>Setel Panji Biru</item>
-        <item>Hapus Panji</item>
-        <item>Halaman Atas</item>
-        <item>Halaman Bawah</item>
-    </string-array>
     <string-array name="leech_action_labels">
         <item>Tangguhkan kartu</item>
         <item>Hanya tag</item>
@@ -108,4 +79,39 @@
         <item>Hitam</item>
         <item>Gelap</item>
     </string-array>
+    <string-array name="html_size_code_labels">
+        <item>xx-small</item>
+        <item>x-small</item>
+        <item>small</item>
+        <item>medium</item>
+        <item>large</item>
+        <item>x-large</item>
+        <item>xx-large</item>
+    </string-array>
+    <!--
+    #7794 - it\'s better to use @string references in non-translated arrays as this handles
+    changes in the array ordering better
+     -->
+    <string name="gesture_no_action">Tidak ada tindakan</string>
+    <string name="gesture_answer_1">Tombol jawaban 1</string>
+    <string name="gesture_answer_2">Tombol jawaban 2</string>
+    <string name="gesture_answer_3">Tombol jawaban 3</string>
+    <string name="gesture_answer_4">Tombol jawaban 4</string>
+    <string name="gesture_answer_green">Jawaban yang disarankan (hijau)</string>
+    <string name="gesture_answer_better_recommended">Jawaban yang lebih baik dari yang disarankan</string>
+    <string name="gesture_tag_note">Beri catatan tag</string>
+    <string name="gesture_lookup">Ekspresi pencarian</string>
+    <string name="gesture_play">Putar media</string>
+    <string name="gesture_abort_learning">Batalkan belajar</string>
+    <string name="gesture_flag_red">Setel Panji Merah</string>
+    <string name="gesture_flag_orange">Setel Panji Jingga</string>
+    <string name="gesture_flag_green">Setel Panji Hijau</string>
+    <string name="gesture_flag_blue">Setel Panji Biru</string>
+    <string name="gesture_flag_remove">Hapus Panji</string>
+    <string name="gesture_page_up">Halaman Atas</string>
+    <string name="gesture_page_down">Halaman Bawah</string>
+    <string name="gesture_abort_sync">Abort Learning and Sync</string>
+    <string name="gesture_toggle_whiteboard">Toggle Whiteboard</string>
+    <string name="record_voice">Record Voice</string>
+    <string name="replay_voice">Replay Voice</string>
 </resources>

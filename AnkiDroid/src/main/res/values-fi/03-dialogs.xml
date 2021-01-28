@@ -37,7 +37,7 @@
 ~ You should have received a copy of the GNU General Public License along with
 ~ this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools">
     <string name="check_db_title">Tarkista tietokanta?</string>
     <string name="check_db_warning">Tähän voi mennä vähän aikaa</string>
     <string name="check_db_acknowledge">Tietokanta tarkistettu</string>
@@ -60,7 +60,7 @@
         <item><![CDATA[Muutkin kuin ohjelmistokehittäjät voivat auttaa. Esimerkiksi, voit <a href=\"%1$s\">auttaa Ankidroidin käännöstyössä</a>, päivittää wikiä, jakaa kuvakaappauksia tai kertoa Ankidroidista sosiaalisessa mediassa.]]></item>
         <item><![CDATA[Ankidroid on julkaistu <a href=\"%1$s\">GNU-GPL v3-lisenssin</a> alaisena ja lähdekoodi on saatavilla <a href=\"%2$s\">GitHub:ssa</a>.]]></item>
     </string-array>
-    <string name="preview_title">Esikatselu</string>
+    <string name="preview_title" comment="Title of the window allowing to preview card(s)">Esikatselu</string>
     <string name="reposition_card_dialog_title">Siirrä uusi kortti</string>
     <string name="reposition_card_dialog_message">Aloituspiste:</string>
     <string name="reposition_card_not_new_error">Ainoastaan uudet kortit voidaan siirtää</string>
@@ -75,7 +75,6 @@
         <item quantity="other">%d alusta kortit</item>
     </plurals>
     <!-- Reschedule Card Dialog -->
-    <string name="reschedule_card_dialog_title">Toista kortti</string>
     <plurals name="reschedule_cards_dialog_title">
         <item quantity="one">Reschedule card</item>
         <item quantity="other">Reschedule cards</item>
@@ -96,8 +95,6 @@
     <string name="answering_error_message">Writing to the collection failed. The database could be corrupt or there may not to be enough empty space on disk.\n\nIf this happens more often, try checking the database, repairing the collection or restoring it from a backup. Touch “options” for that.\n\Or it could be an AnkiDroid bug as well; please report the error so that we can check this.</string>
     <string name="answering_error_report">Ilmoita viasta</string>
     <string name="repair_deck_dialog">Haluatko varmasti yrittää korjata tietokannan?\n\nEnnen yritystä kopio tietokannasta luodaan alihakemistoon ”%s”.</string>
-    <string name="intent_add_saved_information">Tallennetut tiedot</string>
-    <string name="intent_add_clear_all">Tyhjennä kaikki</string>
     <string name="intent_aedict_empty">Oletus-luokka on tyhjä</string>
     <string name="intent_aedict_category">Lisätäksesi kortteja AnkiDroidiin poista kaikki Notepad-kategoriat tai lisää uusi nimellä ”default”</string>
     <string name="custom_study_new_total_new">Uusia kortteja pakassa: %d</string>
@@ -109,7 +106,6 @@
     <string name="custom_study_random">Valitse x korttia satunnaisesti pakasta:</string>
     <string name="custom_study_preview">Esikatsele viimeisinä x päivänä lisättyjä kortteja:</string>
     <string name="custom_study_rebuild_deck_corrupt">Could not rebuild custom study deck</string>
-    <string name="rebuild_custom_study_deck">Kasataan mukautettua pakkaa&#8230;</string>
     <string name="importing_collection">Tuodaan kokoelmaa.\nOdota&#8230;</string>
     <string name="import_media_count">Tuodaan mediatiedostoja %1$d%%\nOdota&#8230;</string>
     <string name="import_progress">• Tuodaan merkintöjä: %1$d%%\n• Tuodaan kortteja: %2$d%%\n• Jälkikäsittely: %3$d%%</string>
@@ -124,9 +120,10 @@
     <string name="dialog_ok">OK</string>
     <string name="dialog_no">No</string>
     <string name="dialog_continue">Jatka</string>
-    <string name="dialog_positive_create">Luo</string>
+    <string name="dialog_positive_create" comment="Create a new collection, probably erasing the previous one, may be necessary in case of error.">Luo</string>
     <string name="dialog_positive_delete">Poista</string>
-    <string name="dialog_positive_disable">Poista käytöstä</string>
+    <!-- Currently unsued, should be useful in the future -->
+    <string name="dialog_positive_disable" tools:ignore="UnusedResources">Poista käytöstä</string>
     <string name="dialog_positive_overwrite">Korvaa</string>
     <string name="dialog_positive_remove">Poista</string>
     <string name="dialog_positive_repair">Korjaa</string>
@@ -156,9 +153,10 @@
     <!-- Tags Dialog Options -->
     <string name="tags_dialog_option_all_cards">Kaikki kortit</string>
     <string name="tags_dialog_option_new_cards">Uusi</string>
-    <string name="tags_dialog_option_due_cards">Erääntyy</string>
+    <string name="tags_dialog_option_due_cards" comment="Name of cards that are already been reviewed in the past, and that should be reviewed again">Erääntyy</string>
     <!-- Empty cards -->
     <string name="emtpy_cards_finding">Etsitään tyhjiä kortteja&#8230;</string>
+    <string name="confirm_cancel">Do you want to cancel?</string>
     <string name="empty_cards_none">Ei tyhjiä kortteja</string>
     <string name="empty_cards_count">Poistettavat kortit: %d</string>
     <string name="empty_cards_deleted">Poistetut kortit: %d</string>
@@ -169,13 +167,12 @@
     <!-- Multimedia - Audio View -->
     <string name="multimedia_editor_audio_permission_denied">Audio recording permission denied</string>
     <!-- Initial collection load -->
-    <string name="collection_load_welcome_request_permissions_title">Welcome to AnkiDroid!</string>
+    <string name="collection_load_welcome_request_permissions_title">Tervetuloa AnkiDroidiin!</string>
     <string name="collection_load_welcome_request_permissions_details">AnkiDroid requires storage permission, which we use exclusively to store your AnkiDroid collection, flashcard media and backups. Our code is open-source, written by volunteers, and trusted by millions.\n\nIf you have any questions, please access our in-app manual or visit our support forums.\n\nThank you for trying AnkiDroid!\n—AnkiDroid Development Team</string>
     <string name="mutimedia_editor_assertion_failed">Unknown error occurred displaying Advanced Editor</string>
     <!-- Database Integrity Check -->
     <string name="integrity_check_startup_title">AnkiDroid Upgraded</string>
     <string name="integrity_check_startup_content">AnkiDroid has been upgraded. This upgrade includes fixes for possible database problems, and we advise you to run check database now.</string>
-    <string name="integrity_check_positive">Check Database</string>
     <string name="integrity_check_continue_anyway">Continue Anyway</string>
     <string name="integrity_check_insufficient_space">Check Database uses a large amount of temporary storage.\n\nIt is strongly recommended that you have at least %s free space on your device before continuing.</string>
     <string name="integrity_check_insufficient_space_extra_content">\n\nYou currently have %s free.</string>
@@ -210,8 +207,27 @@
     <string name="boot_service_failed_to_schedule_notifications">Failed to schedule reminders</string>
     <string name="boot_service_too_many_notifications">Too many reminders scheduled. Some will not appear</string>
     <!-- Locale Selection Dialog -->
-    <string name="locale_selection_dialog_title">Keyboard Hint Selection</string>
+    <string name="locale_selection_dialog_title">Keyboard Language Selection</string>
     <string name="locale_selection_dialog_summary">Some multilingual keyboards, such as GBoard support changing language when editing text\n\nPlease request the “setImeHintLocales” feature from your keyboard manufacturer if your keyboard does not change language.</string>
+    <!-- Help Dialog -->
+    <string name="help_title_using_ankidroid">Using AnkiDroid</string>
+    <string name="help_item_ankidroid_manual">AnkiDroid Manual</string>
+    <string name="help_item_anki_manual">Anki Manual</string>
+    <string name="help_item_ankidroid_faq">AnkiDroid FAQ</string>
+    <string name="help_title_get_help">Get Help</string>
+    <string name="help_item_mailing_list">Mailing List</string>
+    <string name="help_item_reddit">Reddit</string>
+    <string name="help_item_report_bug">Report a Bug</string>
+    <string name="help_title_support_ankidroid">Support AnkiDroid</string>
+    <string name="help_item_support_opencollective_donate">Donate</string>
+    <string name="help_item_support_develop_ankidroid">Develop</string>
+    <string name="help_item_support_rate_ankidroid">Rate</string>
+    <string name="help_item_support_other_ankidroid">Other</string>
+    <string name="help_title_community">Community</string>
+    <string name="help_item_anki_forums">Anki Forums</string>
+    <string name="help_item_discord">Discord</string>
+    <string name="help_item_facebook">Facebook</string>
+    <string name="help_item_twitter">Twitter</string>
     <!--Sync-->
     <plurals name="sync_automatic_sync_needs_more_time">
         <item quantity="one">An automatic sync may be triggered in %d second</item>

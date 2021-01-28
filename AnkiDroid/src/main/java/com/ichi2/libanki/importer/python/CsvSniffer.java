@@ -83,10 +83,10 @@ public class CsvSniffer {
 
 
     private List<Character> toList(@Nullable char[] delimiters) {
-        ArrayList<Character> ret = new ArrayList<>();
         if (delimiters == null) {
-            return ret;
+            return new ArrayList<>(0);
         }
+        ArrayList<Character> ret = new ArrayList<>(delimiters.length);
         for (char delimiter : delimiters) {
             ret.add(delimiter);
         }
@@ -105,7 +105,7 @@ public class CsvSniffer {
      *  this way.
      */
     private GuessQuoteAndDelimiter _guess_quote_and_delimiter(String data, List<Character> delimiters) {
-        ArrayList<String> regexes = new ArrayList<>();
+        ArrayList<String> regexes = new ArrayList<>(4);
         regexes.add("(?<delim>[^\\w\\n\"'])(?<space> ?)(?<quote>[\"']).*?\\k<quote>\\k<delim>"); // ,".*?",
         regexes.add("(?:^|\\n)(?<quote>[\"']).*?\\k<quote>(?<delim>[^\\w\\n\"'])(?<space> ?)");  //  ".*?",
         regexes.add("(?<delim>[^\\w\\n\"'])(?<space> ?)(?<quote>[\"']).*?\\k<quote>(?:$|\\n)");  // ,".*?"
@@ -133,7 +133,7 @@ public class CsvSniffer {
         }
 
 
-        Map<Character, Integer> quotes = new HashMap<>();
+        Map<Character, Integer> quotes = new HashMap<>(matches.size());
         Map<Character, Integer> delims = new HashMap<>();
         int spaces = 0;
         for (Group m : matches) {
@@ -212,7 +212,7 @@ public class CsvSniffer {
 
         // remove falsey values
         String[] samples = input.split("\n");
-        List<String> data = new ArrayList<>();
+        List<String> data = new ArrayList<>(samples.length);
         for (String s : samples) {
             if (s == null || s.length() == 0) {
                 continue;
@@ -250,7 +250,7 @@ public class CsvSniffer {
                 char c = e.getKey();
                 Set<Map.Entry<Integer, Integer>> bareList = e.getValue().entrySet();
 
-                List<Tuple> items = new ArrayList<>();
+                List<Tuple> items = new ArrayList<>(bareList.size());
 
                 for (Map.Entry<Integer, Integer> entry : bareList) {
                     items.add(new Tuple(entry));
@@ -282,9 +282,10 @@ public class CsvSniffer {
             double threshold = 0.9;
             while (delims.size() == 0 && consistency >= threshold) {
                 for (Map.Entry<Character, Tuple> entry : modeList) {
-                    if (entry.getValue().first > 0 && entry.getValue().second > 0) {
-                        if (((double) entry.getValue().second / total) >= consistency && (delimiters == null || delimiters.contains(entry.getKey()))) {
-                            delims.put(entry.getKey(), entry.getValue());
+                    Tuple value = entry.getValue();
+                    if (value.first > 0 && value.second > 0) {
+                        if (((double) value.second / total) >= consistency && (delimiters == null || delimiters.contains(entry.getKey()))) {
+                            delims.put(entry.getKey(), value);
                         }
                     }
                 }
@@ -317,7 +318,7 @@ public class CsvSniffer {
 
         // nothing else indicates a preference, pick the character that
         // dominates(?)
-        ArrayList<Map.Entry<Tuple, Character>> items = new ArrayList<>();
+        ArrayList<Map.Entry<Tuple, Character>> items = new ArrayList<>(delims.size());
         for(Map.Entry<Character, Tuple> i : delims.entrySet()) {
             items.add(new AbstractMap.SimpleEntry<>(i.getValue(), i.getKey()));
         }

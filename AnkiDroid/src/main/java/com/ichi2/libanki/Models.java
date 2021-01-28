@@ -27,6 +27,8 @@ import androidx.annotation.VisibleForTesting;
 import timber.log.Timber;
 
 import com.ichi2.anki.exception.ConfirmModSchemaException;
+import com.ichi2.libanki.template.ParsedNode;
+import com.ichi2.libanki.template.TemplateError;
 import com.ichi2.utils.Assert;
 
 import com.ichi2.utils.JSONArray;
@@ -37,20 +39,23 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Set;
+import java.util.WeakHashMap;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import androidx.annotation.NonNull;
+import static com.ichi2.libanki.Utils.trimArray;
 
 @SuppressWarnings({"PMD.ExcessiveClassLength", "PMD.AvoidThrowingRawExceptionTypes","PMD.AvoidReassigningParameters",
         "PMD.NPathComplexity","PMD.MethodNamingConventions",
         "PMD.SwitchStmtsShouldHaveDefault","PMD.CollapsibleIfStatements","PMD.EmptyIfStmt"})
 public class Models {
+    public static final long NOT_FOUND_NOTE_TYPE = -1L;
+
     @VisibleForTesting
     public static final String REQ_NONE = "none";
     @VisibleForTesting
@@ -61,7 +66,7 @@ public class Models {
     private static final Pattern fClozePattern1 = Pattern.compile("\\{\\{[^}]*?cloze:(?:[^}]?:)*(.+?)\\}\\}");
     private static final Pattern fClozePattern2 = Pattern.compile("<%cloze:(.+?)%>");
     @SuppressWarnings("RegExpRedundantEscape")
-    private static final Pattern fClozeOrdPattern = Pattern.compile("(?si)\\{\\{c(\\d+)::.+?\\}\\}");
+    private static final Pattern fClozeOrdPattern = Pattern.compile("(?si)\\{\\{c(\\d+)::.*?\\}\\}");
 
     public static final String defaultModel =
               "{'sortf': 0, "
@@ -194,9 +199,6 @@ public class Models {
             m.put("mod", mCol.getTime().intTime());
             m.put("usn", mCol.usn());
             // TODO: fix empty id problem on _updaterequired (needed for model adding)
-            if (!isModelNew(m)) {
-                _updateRequired(m);
-            }
             if (templates) {
                 _syncTemplates(m);
             }
@@ -277,7 +279,7 @@ public class Models {
 
 
     /** get model with ID, or null. */
-    public @Nullable Model get(long id) {
+    public @Nullable Model get(@NonNull Long id) {
         if (mModels.containsKey(id)) {
             return mModels.get(id);
         } else {
@@ -366,20 +368,13 @@ public class Models {
     }
 
 
-    public boolean have(long id) {
+    public boolean have(@NonNull Long id) {
         return mModels.containsKey(id);
     }
 
 
-    public long[] ids() {
-        Iterator<Long> it = mModels.keySet().iterator();
-        long[] ids = new long[mModels.size()];
-        int i = 0;
-        while (it.hasNext()) {
-            ids[i] = it.next();
-            i++;
-        }
-        return ids;
+    public Set<Long> ids() {
+        return mModels.keySet();
     }
 
 
@@ -437,25 +432,14 @@ public class Models {
 
     /** "Mapping of field name -> (ord, field). */
     @NonNull
-    public static Map<String, Pair<Integer, JSONObject>> fieldMap(@NonNull JSONObject m) {
+    public static Map<String, Pair<Integer, JSONObject>> fieldMap(@NonNull Model m) {
         JSONArray flds = m.getJSONArray("flds");
         // TreeMap<Integer, String> map = new TreeMap<Integer, String>();
-        Map<String, Pair<Integer, JSONObject>> result = new HashMap<>();
+        Map<String, Pair<Integer, JSONObject>> result = new HashMap<>(flds.length());
         for (JSONObject f: flds.jsonObjectIterable()) {
             result.put(f.getString("name"), new Pair<>(f.getInt("ord"), f));
         }
         return result;
-    }
-
-
-    public static ArrayList<String> fieldNames(Model m) {
-        JSONArray flds = m.getJSONArray("flds");
-        ArrayList<String> names = new ArrayList<>();
-        for (JSONObject fld: flds.jsonObjectIterable()) {
-            names.add(fld.getString("name"));
-        }
-        return names;
-
     }
 
 
@@ -467,7 +451,7 @@ public class Models {
     public void setSortIdx(Model m, int idx) throws ConfirmModSchemaException{
         mCol.modSchema();
         m.put("sortf", idx);
-        mCol.updateFieldCache(Utils.toPrimitive(nids(m)));
+        mCol.updateFieldCache(nids(m));
         save(m);
     }
 
@@ -540,7 +524,7 @@ public class Models {
         _transformFields(m, new TransformFieldDelete(idx));
         if (idx == sortIdx(m)) {
             // need to rebuild
-            mCol.updateFieldCache(Utils.toPrimitive(nids(m)));
+            mCol.updateFieldCache(nids(m));
         }
         renameField(m, field, null);
 
@@ -567,7 +551,7 @@ public class Models {
     public void moveField(Model m, JSONObject field, int idx) throws ConfirmModSchemaException {
         mCol.modSchema();
         JSONArray flds = m.getJSONArray("flds");
-        ArrayList<JSONObject> l = new ArrayList<>();
+        ArrayList<JSONObject> l = new ArrayList<>(flds.length());
         int oldidx = -1;
         for (int i = 0; i < flds.length(); ++i) {
             l.add(flds.getJSONObject(i));
@@ -664,8 +648,8 @@ public class Models {
         }
         ArrayList<Object[]> r = new ArrayList<>();
 
-        try (Cursor cur = mCol.getDb().getDatabase()
-                .query("select id, flds from notes where mid = " + m.getLong("id"), null)) {
+        try (Cursor cur = mCol.getDb()
+                .query("select id, flds from notes where mid = ?", m.getLong("id"))) {
             while (cur.moveToNext()) {
                 r.add(new Object[] {
                         Utils.joinFields(fn.transform(Utils.splitFields(cur.getString(1)))),
@@ -786,10 +770,9 @@ public class Models {
      * @return null if deleting ords would orphan notes, long[] of related card ids to delete if it is safe
      */
     public @Nullable List<Long> getCardIdsForModel(long modelId, int[] ords) {
-        String cardIdsToDeleteSql = "select c2.id from cards c2, notes n2 where c2.nid=n2.id and n2.mid = " +
-                modelId + " and c2.ord  in " + Utils.ids2str(ords);
-        List<Long> cids = mCol.getDb().queryLongList(cardIdsToDeleteSql);
-        //Timber.d("cardIdsToDeleteSql was '" + cardIdsToDeleteSql + "' and got %s", Utils.ids2str(cids));
+        String cardIdsToDeleteSql = "select c2.id from cards c2, notes n2 where c2.nid=n2.id and n2.mid = ? and c2.ord  in " + Utils.ids2str(ords);
+        List<Long> cids = mCol.getDb().queryLongList(cardIdsToDeleteSql, modelId);
+        //Timber.d("cardIdsToDeleteSql was ' %s' and got %s", cardIdsToDeleteSql, Utils.ids2str(cids));
         Timber.d("getCardIdsForModel found %s cards to delete for model %s and ords %s", cids.size(), modelId, Utils.ids2str(ords));
 
         // all notes with this template must have at least two cards, or we could end up creating orphaned notes
@@ -852,14 +835,14 @@ public class Models {
         }
         // apply
         save(m);
-        mCol.getDb().execute("update cards set ord = (case " + sb.toString() +
+        mCol.getDb().execute("update cards set ord = (case " + sb +
                              " end),usn=?,mod=? where nid in (select id from notes where mid = ?)",
                              mCol.usn(), mCol.getTime().intTime(), m.getLong("id"));
     }
 
     @SuppressWarnings("PMD.UnusedLocalVariable") // unused upstream as well
     private void _syncTemplates(Model m) {
-        ArrayList<Long> rem = mCol.genCards(Utils.collection2Array(nids(m)));
+        ArrayList<Long> rem = mCol.genCards(nids(m), m);
     }
 
 
@@ -870,64 +853,55 @@ public class Models {
     /**
      * Change a model
      * @param m The model to change.
-     * @param nids The list of notes that the change applies to.
+     * @param nid The notes that the change applies to.
      * @param newModel For replacing the old model with another one. Should be self if the model is not changing
      * @param fmap Map for switching fields. This is ord->ord and there should not be duplicate targets
      * @param cmap Map for switching cards. This is ord->ord and there should not be duplicate targets
      * @throws ConfirmModSchemaException 
      */
-    public void change(Model m, long[] nids, Model newModel, Map<Integer, Integer> fmap, Map<Integer, Integer> cmap) throws ConfirmModSchemaException {
+    public void change(Model m, long nid, Model newModel, Map<Integer, Integer> fmap, Map<Integer, Integer> cmap) throws ConfirmModSchemaException {
         mCol.modSchema();
         assert (newModel.getLong("id") == m.getLong("id")) || (fmap != null && cmap != null);
         if (fmap != null) {
-            _changeNotes(nids, newModel, fmap);
+            _changeNote(nid, newModel, fmap);
         }
         if (cmap != null) {
-            _changeCards(nids, m, newModel, cmap);
+            _changeCards(nid, m, newModel, cmap);
         }
-        mCol.genCards(nids);
+        mCol.genCards(nid, newModel);
     }
 
-    private void _changeNotes(long[] nids, Model newModel, Map<Integer, Integer> map) {
-        List<Object[]> d = new ArrayList<>();
+    private void _changeNote(long nid, Model newModel, Map<Integer, Integer> map) {
         int nfields = newModel.getJSONArray("flds").length();
         long mid = newModel.getLong("id");
-        try (Cursor cur = mCol.getDb().getDatabase().query(
-                "select id, flds from notes where id in " + Utils.ids2str(nids), null)) {
-            while (cur.moveToNext()) {
-                long nid = cur.getLong(0);
-                String[] flds = Utils.splitFields(cur.getString(1));
-                Map<Integer, String> newflds = new HashMap<>();
+        String sflds = mCol.getDb().queryString("select flds from notes where id = ?", nid);
+        String[] flds = Utils.splitFields(sflds);
+        Map<Integer, String> newflds = new HashMap<>(map.size());
 
-                for (Entry<Integer, Integer> entry : map.entrySet()) {
-                    newflds.put(entry.getValue(), flds[entry.getKey()]);
-                }
-                List<String> flds2 = new ArrayList<>();
-                for (int c = 0; c < nfields; ++c) {
-                    if (newflds.containsKey(c)) {
-                        flds2.add(newflds.get(c));
-                    } else {
-                        flds2.add("");
-                    }
-                }
-                String joinedFlds = Utils.joinFields(flds2.toArray(new String[flds2.size()]));
-                d.add(new Object[] { joinedFlds, mid, mCol.getTime().intTime(), mCol.usn(), nid });
+        for (Entry<Integer, Integer> entry : map.entrySet()) {
+            newflds.put(entry.getValue(), flds[entry.getKey()]);
+        }
+        List<String> flds2 = new ArrayList<>(nfields);
+        for (int c = 0; c < nfields; ++c) {
+            if (newflds.containsKey(c)) {
+                flds2.add(newflds.get(c));
+            } else {
+                flds2.add("");
             }
         }
-        mCol.getDb().executeMany("update notes set flds=?,mid=?,mod=?,usn=? where id = ?", d);
-        mCol.updateFieldCache(nids);
+        String joinedFlds = Utils.joinFields(flds2.toArray(new String[flds2.size()]));
+        mCol.getDb().execute("update notes set flds=?,mid=?,mod=?,usn=? where id = ?", joinedFlds, mid, mCol.getTime().intTime(), mCol.usn(), nid);
+        mCol.updateFieldCache(new long[] {nid});
     }
 
-    private void _changeCards(long[] nids, Model oldModel, Model newModel, Map<Integer, Integer> map) {
+    private void _changeCards(long nid, Model oldModel, Model newModel, Map<Integer, Integer> map) {
         List<Object[]> d = new ArrayList<>();
         List<Long> deleted = new ArrayList<>();
-        Cursor cur = null;
         int omType = oldModel.getInt("type");
         int nmType = newModel.getInt("type");
         int nflds = newModel.getJSONArray("tmpls").length();
-        try {
-            cur = mCol.getDb().getDatabase().query(
-                    "select id, ord from cards where nid in " + Utils.ids2str(nids), null);
+        try (Cursor cur = mCol.getDb().query(
+                    "select id, ord from cards where nid = ?", nid)) {
             while (cur.moveToNext()) {
                 // if the src model is a cloze, we ignore the map, as the gui doesn't currently
                 // support mapping them
@@ -952,10 +926,6 @@ public class Models {
                 } else {
                     deleted.add(cid);
                 }
-            }
-        } finally {
-            if (cur != null) {
-                cur.close();
             }
         }
         mCol.getDb().executeMany("update cards set ord=?,usn=?,mod=? where id=?", d);
@@ -986,31 +956,8 @@ public class Models {
      * ***********************************************************************************************
      */
 
-    private void _updateRequired(Model m) {
-        if (m.getInt("type") == Consts.MODEL_CLOZE) {
-            // nothing to do
-            return;
-        }
-        JSONArray req = new JSONArray();
-        ArrayList<String> flds = new ArrayList<>();
-        JSONArray fields = m.getJSONArray("flds");
-        for (JSONObject field: fields.jsonObjectIterable()) {
-            flds.add(field.getString("name"));
-        }
-        JSONArray templates = m.getJSONArray("tmpls");
-        for (JSONObject t: templates.jsonObjectIterable()) {
-            Object[] ret = _reqForTemplate(m, flds, t);
-            JSONArray r = new JSONArray();
-            r.put(t.getInt("ord"));
-            r.put(ret[0]);
-            r.put(ret[1]);
-            req.put(r);
-        }
-        m.put("req", req);
-    }
-
     @SuppressWarnings("PMD.UnusedLocalVariable") // 'String f' is unused upstream as well
-    private Object[] _reqForTemplate(Model m, ArrayList<String> flds, JSONObject t) {
+    private Object[] _reqForTemplate(Model m, List<String> flds, JSONObject t) {
         int nbFields = flds.size();
         String[] a = new String[nbFields];
         String[] b = new String[nbFields];
@@ -1051,86 +998,116 @@ public class Models {
     }
 
 
-    /** Given a joined field string, return available template ordinals */
-    public ArrayList<Integer> availOrds(Model m, String[] sfld) {
+    /**
+     * @param m A model
+     * @param ord a card type number of this model
+     * @param sfld Fields of a note of this model. (Not trimmed)
+     * @return Whether this card is empty
+     */
+    public static boolean emptyCard(Model m, int ord, String[] sfld) throws TemplateError {
+        if (m.isCloze()) {
+            // For cloze, getting the list of cloze numbes is linear in the size of the template
+            // So computing the full list is almost as efficient as checking for a particular number
+            return !_availClozeOrds(m, sfld, false).contains(ord);
+        }
+        return emptyStandardCard(m.getJSONArray("tmpls").getJSONObject(ord), m.nonEmptyFields(sfld));
+    }
+
+    /**
+     * @return Whether the standard card is empty
+     */
+    public static boolean emptyStandardCard(JSONObject tmpl, Set<String> nonEmptyFields) throws TemplateError {
+        return ParsedNode.parse_inner(tmpl.getString("qfmt")).template_is_empty(nonEmptyFields);
+    }
+
+
+    /**
+     * @param m A model
+     * @param sfld Fields of a note
+     * @param nodes Nodes used for parsing the variaous templates. Null for cloze
+     * @return The index of the cards that are generated. For cloze cards, if no card is generated, then {0} */
+    public static ArrayList<Integer> availOrds(Model m, String[] sfld, List<ParsedNode> nodes) {
         if (m.getInt("type") == Consts.MODEL_CLOZE) {
             return _availClozeOrds(m, sfld);
         }
-        int nbField = sfld.length;
-        String[] fields = new String[nbField];
-        for (int i = 0; i < nbField; i++) {
-            fields[i] = sfld[i].trim();
+        return _availStandardOrds(m, sfld, nodes);
+    }
+
+    public static ArrayList<Integer> availOrds(Model m, String[] sfld) {
+        if (m.isCloze()) {
+            return _availClozeOrds(m, sfld);
         }
-        ArrayList<Integer> avail = new ArrayList<>();
-        JSONArray reqArray = m.getJSONArray("req");
-        for (int i = 0; i < reqArray.length(); i++) {
-            JSONArray sr = reqArray.getJSONArray(i);
+        return _availStandardOrds(m, sfld);
+    }
 
-            int ord = sr.getInt(0);
-            String type = sr.getString(1);
-            JSONArray req = sr.getJSONArray(2);
+    public static ArrayList<Integer> _availStandardOrds(Model m, String[] sfld) {
+        return _availStandardOrds(m, sfld, m.parsedNodes());
+    }
 
-            if (REQ_NONE.equals(type)) {
-                // unsatisfiable template
-                continue;
-            } else if (REQ_ALL.equals(type)) {
-                // AND requirement?
-                boolean ok = true;
-                for (int j = 0; j < req.length(); j++) {
-                    int idx = req.getInt(j);
-                    if (fields[idx] == null || fields[idx].length() == 0) {
-                        // missing and was required
-                        ok = false;
-                        break;
-                    }
-                }
-                if (!ok) {
-                    continue;
-                }
-            } else if (REQ_ANY.equals(type)) {
-                // OR requirement?
-                boolean ok = false;
-                for (int j = 0; j < req.length(); j++) {
-                    int idx = req.getInt(j);
-                    if (fields[idx] != null && fields[idx].length() != 0) {
-                        // missing and was required
-                        ok = true;
-                        break;
-                    }
-                }
-                if (!ok) {
-                    continue;
-                }
+    /** Given a joined field string and a standard note type, return available template ordinals */
+    public static ArrayList<Integer> _availStandardOrds(Model m, String[] sfld, List<ParsedNode> nodes) {
+        Set<String> nonEmptyFields = m.nonEmptyFields(sfld);
+        ArrayList<Integer> avail = new ArrayList<>(nodes.size());
+        for (int i = 0 ; i < nodes.size(); i++) {
+            ParsedNode node = nodes.get(i);
+            if (node != null && !node.template_is_empty(nonEmptyFields)) {
+                avail.add(i);
             }
-            avail.add(ord);
         }
         return avail;
     }
 
 
-    public ArrayList<Integer> _availClozeOrds(Model m, String[] sflds) {
+    /**
+     * @param m A note type with cloze
+     * @param sflds The fields of a note of type m. (Assume the size of the array is the number of fields)
+     * @return The indexes (in increasing order) of cards that should be generated according to req rules.
+     */
+    public static ArrayList<Integer> _availClozeOrds(Model m, String[] sflds) {
         return _availClozeOrds(m, sflds, true);
     }
 
+    /**
+     * Cache of getNamesOfFieldsContainingCloze
+     * Computing hash of string is costly. However, hash is cashed in the string object, so this virtually ensure that
+     * given a card type, we don't need to recompute the hash.
+     */
+    private static final WeakHashMap<String, List<String>> namesOfFieldsContainingClozeCache = new WeakHashMap<>();
 
-    public ArrayList<Integer> _availClozeOrds(Model m, String[] sflds, boolean allowEmpty) {
+    /** The name of all fields that are used as cloze in the question.
+     * It is not guaranteed that the field found are actually the name of any field of the note type.*/
+    @VisibleForTesting
+    protected static List<String> getNamesOfFieldsContainingCloze(String question) {
+        if (! namesOfFieldsContainingClozeCache.containsKey(question)) {
+            List<String> matches = new ArrayList<>();
+            for (Pattern pattern : new Pattern[] {fClozePattern1, fClozePattern2}) {
+                Matcher mm = pattern.matcher(question);
+                while (mm.find()) {
+                    matches.add(mm.group(1));
+                }
+            }
+            namesOfFieldsContainingClozeCache.put(question, matches);
+        }
+        return namesOfFieldsContainingClozeCache.get(question);
+    }
+
+    /**
+     * @param m A note type with cloze
+     * @param sflds The fields of a note of type m. (Assume the size of the array is the number of fields)
+     * @param allowEmpty Whether we allow to generate at least one card even if they are all empty
+     * @return The indexes (in increasing order) of cards that should be generated according to req rules.
+     * If empty is not allowed, it will contains ord 1.*/
+    public static ArrayList<Integer> _availClozeOrds(Model m, String[] sflds, boolean allowEmpty) {
         Map<String, Pair<Integer, JSONObject>> map = fieldMap(m);
+        String question = m.getJSONArray("tmpls").getJSONObject(0).getString("qfmt");
         Set<Integer> ords = new HashSet<>();
-        List<String> matches = new ArrayList<>();
-        Matcher mm = fClozePattern1.matcher(m.getJSONArray("tmpls").getJSONObject(0).getString("qfmt"));
-        while (mm.find()) {
-            matches.add(mm.group(1));
-        }
-        mm = fClozePattern2.matcher(m.getJSONArray("tmpls").getJSONObject(0).getString("qfmt"));
-        while (mm.find()) {
-            matches.add(mm.group(1));
-        }
+        List<String> matches = getNamesOfFieldsContainingCloze(question);
         for (String fname : matches) {
             if (!map.containsKey(fname)) {
                 continue;
             }
             int ord = map.get(fname).first;
-            mm = fClozeOrdPattern.matcher(sflds[ord]);
+            Matcher mm = fClozeOrdPattern.matcher(sflds[ord]);
             while (mm.find()) {
                 ords.add(Integer.parseInt(mm.group(1)) - 1);
             }
@@ -1167,10 +1144,10 @@ public class Models {
 
 
     public HashMap<Long, HashMap<Integer, String>> getTemplateNames() {
-        HashMap<Long, HashMap<Integer, String>> result = new HashMap<>();
+        HashMap<Long, HashMap<Integer, String>> result = new HashMap<>(mModels.size());
         for (Model m : mModels.values()) {
             JSONArray templates = m.getJSONArray("tmpls");
-            HashMap<Integer, String> names = new HashMap<>();
+            HashMap<Integer, String> names = new HashMap<>(templates.length());
             for (JSONObject t: templates.jsonObjectIterable()) {
                 names.put(t.getInt("ord"), t.getString("name"));
             }
@@ -1188,22 +1165,22 @@ public class Models {
     }
 
 
-    /**
-     * @return the name
-     */
-    public String getName() {
-        return "";
-    }
-
-
     public HashMap<Long, Model> getModels() {
         return mModels;
     }
 
+
+    /**
+     * @return Number of models
+     */
+    public int count() {
+        return mModels.size();
+    }
+
     /** Validate model entries. */
 	public boolean validateModel() {
-        for (Entry<Long, Model> longJSONObjectEntry : mModels.entrySet()) {
-            if (!validateBrackets(longJSONObjectEntry.getValue())) {
+        for (Model model : mModels.values()) {
+            if (!validateBrackets(model)) {
                 return false;
             }
         }
@@ -1241,7 +1218,4 @@ public class Models {
 		return (count == 0);
 	}
 
-	public static boolean isCloze(JSONObject model) {
-	    return model.getInt("type") == Consts.MODEL_CLOZE;
-    }
 }

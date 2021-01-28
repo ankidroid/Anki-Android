@@ -40,21 +40,17 @@
 -->
 <resources>
     <string name="youre_offline">Ste offline</string>
-    <string name="sync_even_if_offline">Try Anyway</string>
+    <string name="sync_even_if_offline">Napriek tomu skúsiť</string>
     <string name="sync_error">Chyba synchronizácie</string>
     <string name="vague_error">Chyba</string>
     <string name="retry">Skúsiť znova</string>
-    <string name="cancel">Zrušiť</string>
-    <string name="terms_and_conditions"><a href="https://ankiweb.net/account/terms">Obchodné podmienky</a></string>
     <string name="menu_get_shared_decks">Stiahnuť zdieľané balíčky</string>
     <string name="connection_error_message">Vyskytla sa chyba siete.</string>
     <string name="not_logged_in_title">Prihlásiť sa do AnkiWeb</string>
     <string name="login_create_account_message">Musíte sa prihlásiť na účet tretej strany, ak chcete použiť synchronizáciu. Takýto účet vytvoríte v nasledujúcom kroku.</string>
     <!-- MyAccount.java -->
     <string name="username">E-mailová adresa</string>
-    <string name="username_repeat">Zopakovať e-mailovú adresu</string>
     <string name="password">Heslo</string>
-    <string name="password_repeat">Zopakovať heslo</string>
     <string name="log_in">Prihlásiť sa</string>
     <string name="sign_up_description">Nemáte AnkiWeb účet? Je zadarmo!</string>
     <string name="sign_up_not_affiliated">Poznámka: Služba AnkiWeb nie je súčasťou AnkiDroid a naopak. Ide o dve samostatné služby</string>
@@ -65,7 +61,6 @@
     <string name="invalid_username_password">Neplatná e-mailová adresa alebo heslo</string>
     <string name="reset_password">Obnoviť heslo</string>
     <!-- AndroidManifest.xml -->
-    <string name="downloaddeck_search">Hľadať</string>
     <string name="preferences_title">Preferencie</string>
     <string name="deckpreferences_title">Možnosti pre XXX</string>
     <string name="sync_conflict_message">Musíte buď nahrať túto zbierku na Ankiweb alebo stiahnuť zbierku z Ankiweb, nakoľko nemôžu byť zlúčené. Zbierka na jednej strane musí byť prepísaná.</string>
@@ -80,7 +75,6 @@
     <string name="sync_title">Synchronizácia</string>
     <string name="sync_downloading_media">Sťahovanie médií %1$d/%2$d...</string>
     <string name="sync_log_uploading_message">Úplná synchronizácia z AnkiDroid na server Ankiweb</string>
-    <string name="sync_log_downloading_message">Úplná synchronizácia zo servera</string>
     <string name="sync_log_clocks_unsynchronized">Čas vo vašom prístroji je nepresný o %1$d sekúnd%2$s. Prosím uistite sa, že dátum, čas a časové pásmo na vašom zariadení sú nastavené správne, potom synchronizáciu zopakujte.</string>
     <string name="sync_log_clocks_unsynchronized_tz">, časové pásmo zariadenia pravdepodobne nie je správne</string>
     <string name="sync_log_clocks_unsynchronized_date">, dátum zariadenia pravdepodobne nie je správny</string>
@@ -94,7 +88,7 @@
     <string name="sync_overwrite_error">Vašu aktuálnu zbierku sa nepodarilo prepísať stiahnutým súborom</string>
     <string name="sync_connection_error">Vypršal časový limit pripojenia. Buď máte problém s internetovým pripojením alebo máte veľký multimediálny súbor v priečinku.</string>
     <string name="sync_write_access_error">Stiahnutý súbor sa nepodarilo uložiť na SD kartu. Buď je vaša SD karta pripojená iba na čítanie alebo na nej nie je dostatok miesta.</string>
-    <string name="sync_error_invalid_sync_server">The Custom Sync Server in Advanced Settings is invalid (%s). Please enter a valid server, or disable the setting.</string>
+    <string name="sync_error_invalid_sync_server">Zvolený synchronizačný server v rozšírených nastaveniach je neplatný (%s). Zadajte, prosím, platný server, alebo vypnite toto nastavenie.</string>
     <string name="sync_deletions_message">Synchronizujú sa odstránené položky...</string>
     <string name="sync_small_objects_message">Synchronizujú sa malé objekty...</string>
     <string name="sync_finish_message">Dokončuje sa synchronizácia...</string>
@@ -102,7 +96,7 @@
     <string name="sync_writing_db">Zapisujem zmeny do databázy...</string>
     <string name="sync_download_chunk">Sťahovanie zmien...</string>
     <string name="sync_upload_chunk">Nahrávanie zmien...</string>
-    <string name="sync_up_down_size">Up: %1$d KB, down: %2$d KB</string>
+    <string name="sync_up_down_size">Odoslaných: %1$d KB, stiahnutých: %2$d KB</string>
     <string name="sync_generic_error">Vyskytla sa chyba. Skúste to znova neskôr.</string>
     <string name="sync_check_upload_file">Kontrola súboru pred nahrávaním...</string>
     <string name="sync_check_download_file">Kontrola stiahnutého súboru&#8230;</string>
@@ -117,7 +111,7 @@
     <string name="sync_media_error">Pri synchronizácií mediálnych súborov sa vyskytla chyba</string>
     <string name="sync_media_error_check">Vyskytla sa chyba pri synchronizácii médií. Odporúča sa kontrola médií.</string>
     <!-- Please run ‘Check database’ before syncing -->
-    <string name="sync_basic_check_failed">Please run ‘%s’ before syncing</string>
+    <string name="sync_basic_check_failed">Spustite, prosím, ‘%s’ pred synchronizáciou</string>
     <string name="sync_sanity_local">Miestnu</string>
     <string name="sync_sanity_remote">Vzdialenú</string>
     <string name="force_full_sync_title">Vynútiť úplnú synchronizáciu</string>
@@ -132,9 +126,7 @@
     <string name="sync_error_502_maintenance">Na serveri AnkiWeb prebieha údržba. Prosím, skúste opäť za niekoľko minút.</string>
     <string name="sync_error_504_gateway_timeout">Vyskytla sa chyba 504 gateway timeout error.</string>
     <!-- Deck Picker Sync Icon -->
-    <string name="sync_menu_title">Sync</string>
-    <string name="sync_menu_title_full_sync">Sync (full)</string>
-    <string name="sync_menu_title_no_account">Sync (log in)</string>
-    <!-- An option on a message box to open the "corrupt collection" webpage -->
-    <string name="sync_corrupt_collection_get_help">Help</string>
+    <string name="sync_menu_title_full_sync">Úplná synchronizácia</string>
+    <string name="sync_menu_title_no_account">Synchronizácia (prihlásiť)</string>
+    <string name="sync_error_unknown_host_readable">Could not connect to AnkiWeb. Is your internet working?\n\n%s</string>
 </resources>

@@ -146,9 +146,7 @@ public class StepsPreference extends android.preference.EditTextPreference {
                     stepsAr.put(f);
                 }
             }
-        } catch (NumberFormatException e) {
-            return null;
-        } catch (JSONException e) {
+        } catch (NumberFormatException | JSONException e) {
             // Can't serialize float. Value likely too big/small.
             return null;
         }

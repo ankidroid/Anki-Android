@@ -2,20 +2,20 @@ apply plugin: 'com.android.library'
 
 def groupId = "com.ichi2.anki"
 def artifactId = "api"
-def version = "1.1.0alpha6"
+def version = "1.1.0"
 
 repositories {
     google()
     jcenter()
 }
 android {
-    compileSdkVersion 29
+    compileSdkVersion 30
 
     defaultConfig {
         minSdkVersion 14
         //noinspection OldTargetApi
         targetSdkVersion 29
-        versionCode 11016   // 4th digit: 1=alpha, 2=beta, 3=official
+        versionCode 11030   // 4th digit: 1=alpha, 2=beta, 3=official
         versionName version
     }
     buildTypes {
@@ -58,7 +58,7 @@ dependencies {
 }
 
 // Borrowed from here:
-// http://blog.blundell-apps.com/locally-release-an-android-library-for-jcenter-or-maven-central-inclusion/
+// https://blog.blundellapps.co.uk/locally-release-an-android-library-for-jcenter-or-maven-central-inclusion/
 apply plugin: 'maven'
 
 
@@ -73,6 +73,12 @@ task androidJavadocs(type: Javadoc) {
     if(JavaVersion.current() >= JavaVersion.VERSION_1_10){
         options.addBooleanOption('html5', true)
     }
+}
+
+afterEvaluate {
+    androidJavadocs.classpath += files(android.libraryVariants.collect { variant ->
+        variant.javaCompileProvider.get().classpath.files
+    })
 }
 
 // Deprecation is an error. Use @SuppressWarnings("deprecation") and justify in the PR if you must

@@ -39,42 +39,13 @@
         <item>Nunca reportar</item>
         <item>Pergunte-me</item>
     </string-array>
-    <string-array name="gestures_labels">
-        <item>Nenhuma ação</item>
-        <item>Mostrar resposta</item>
-        <item>Botão de resposta 1</item>
-        <item>Botão de resposta 2</item>
-        <item>Botão de resposta 3</item>
-        <item>Botão de resposta 4</item>
-        <item>Responder recomendada (verde)</item>
-        <item>Resposta melhor que recomendada</item>
-        <item>Desfazer</item>
-        <item>Editar nota</item>
-        <item>Colocar tag no cartão</item>
-        <item>Marcar nota</item>
-        <item>Procurar expressão</item>
-        <item>Enterrar cartão</item>
-        <item>Suspender cartão</item>
-        <item>Deletar nota</item>
-        <item>Reproduzir mídia</item>
-        <item>Interromper a aprendizagem</item>
-        <item>Enterrar nota</item>
-        <item>Suspender nota</item>
-        <item>Alternar para marca vermelha</item>
-        <item>Alternar para marca laranja</item>
-        <item>Alternar para marca verde</item>
-        <item>Alternar para marca azul</item>
-        <item>Remover marca</item>
-        <item>Subir página</item>
-        <item>Descer página</item>
-    </string-array>
     <string-array name="leech_action_labels">
-        <item>Suspender cartão</item>
+        <item>Suspender card</item>
         <item>Por Tag somente em</item>
     </string-array>
     <string-array name="new_order_labels">
-        <item>Novos cartões em ordem aleatória</item>
-        <item>Novos cartões na ordem adicionada</item>
+        <item>Novos cards em ordem aleatória</item>
+        <item>Novos cards na ordem adicionada</item>
     </string-array>
     <string-array name="cram_deck_conf_order_labels">
         <item>Mais antigos primeiro</item>
@@ -92,12 +63,12 @@
         <item>Decidir pelo tipo de nota</item>
     </string-array>
     <string-array name="new_spread_labels">
-        <item>Misturar novos cartões e revisões</item>
-        <item>Novos cartões após revisões</item>
+        <item>Misturar novos cards e revisões</item>
+        <item>Novos cards após revisões</item>
         <item>Novos cartões antes das revisões</item>
     </string-array>
     <string-array name="override_font_labels">
-        <item>Quando nenhuma fonte especificada nos cartões</item>
+        <item>Quando não há fonte especificada nos cards</item>
         <item>Sempre</item>
     </string-array>
     <string-array name="day_theme_labels">
@@ -108,4 +79,39 @@
         <item>Preto</item>
         <item>Escuro</item>
     </string-array>
+    <string-array name="html_size_code_labels">
+        <item>xx-pequeno</item>
+        <item>x-pequeno</item>
+        <item>pequeno</item>
+        <item>médio</item>
+        <item>grande</item>
+        <item>x-grande</item>
+        <item>xx-grande</item>
+    </string-array>
+    <!--
+    #7794 - it\'s better to use @string references in non-translated arrays as this handles
+    changes in the array ordering better
+     -->
+    <string name="gesture_no_action">Nenhuma ação</string>
+    <string name="gesture_answer_1">Botão de resposta 1</string>
+    <string name="gesture_answer_2">Botão de resposta 2</string>
+    <string name="gesture_answer_3">Botão de resposta 3</string>
+    <string name="gesture_answer_4">Botão de resposta 4</string>
+    <string name="gesture_answer_green">Responder recomendada (verde)</string>
+    <string name="gesture_answer_better_recommended">Resposta melhor que recomendada</string>
+    <string name="gesture_tag_note">Colocar tag no cartão</string>
+    <string name="gesture_lookup">Procurar expressão</string>
+    <string name="gesture_play">Reproduzir mídia</string>
+    <string name="gesture_abort_learning">Interromper a aprendizagem</string>
+    <string name="gesture_flag_red">Alternar para marca vermelha</string>
+    <string name="gesture_flag_orange">Alternar para marca laranja</string>
+    <string name="gesture_flag_green">Alternar para marca verde</string>
+    <string name="gesture_flag_blue">Alternar para marca azul</string>
+    <string name="gesture_flag_remove">Remover marca</string>
+    <string name="gesture_page_up">Subir página</string>
+    <string name="gesture_page_down">Descer página</string>
+    <string name="gesture_abort_sync">Abortar Estudo e Sincronizar</string>
+    <string name="gesture_toggle_whiteboard">Habilitar whiteboard</string>
+    <string name="record_voice">Gravar voz</string>
+    <string name="replay_voice">Reproduzir voz</string>
 </resources>

@@ -48,26 +48,7 @@
         <item quantity="many">%d بطاقة أنكيدرويد مستحقة</item>
         <item quantity="other">%d بطاقة أنكيدرويد مستحقة</item>
     </plurals>
-    <string name="widget_no_cards_due">لا بطاقات مستحقة</string>
-    <string name="widget_loading">تحميل عنصر الواجهة&#8230;</string>
-    <plurals name="widget_cards_in_decks_due">
-        <item quantity="zero">%1$d بطاقة مستحقة في %2$s</item>
-        <item quantity="one">%1$d بطاقة مستحقة في %2$s</item>
-        <item quantity="two">%1$d بطاقة مستحقة في %2$s</item>
-        <item quantity="few">%1$d بطاقات مستحقة في %2$s</item>
-        <item quantity="many">%1$d بطاقة مستحقة في %2$s</item>
-        <item quantity="other">%1$d بطاقة مستحقة في %2$s</item>
-    </plurals>
-    <plurals name="widget_decks">
-        <item quantity="zero">%1$d رزمة</item>
-        <item quantity="one">%1$d رزمة</item>
-        <item quantity="two">%1$d رزمة</item>
-        <item quantity="few">%1$d رزمات</item>
-        <item quantity="many">%1$d رزمة</item>
-        <item quantity="other">%1$d رزمة</item>
-    </plurals>
-    <string name="widget_small">أنكيدرويد صغير</string>
-    <string name="widget_small_button">أنكيدرويد</string>
+    <string name="widget_small" comment="Label of the small ankidroid widget. This text can\'t be found directly in AnkiDroid">أنكيدرويد صغير</string>
     <plurals name="widget_cards_due">
         <item quantity="zero">%d بطاقة مستحقة</item>
         <item quantity="one">%d بطاقة مستحقة</item>
@@ -84,6 +65,5 @@
         <item quantity="many">تبقى %d دقيقة</item>
         <item quantity="other">تبقى %d دقيقة</item>
     </plurals>
-    <string name="widget_add_note">إضافة ملحوظة</string>
     <string name="widget_add_note_button">إضافة ملحوظة أنكيدرويد جديدة</string>
 </resources>

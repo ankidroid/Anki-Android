@@ -8,7 +8,7 @@ import android.widget.Toast;
 
 
 import com.ichi2.anki.R;
-import com.ichi2.async.CollectionTask;
+import com.ichi2.async.CancelListener;
 import com.ichi2.libanki.Card;
 import com.ichi2.libanki.Consts;
 import com.ichi2.libanki.Deck;
@@ -50,9 +50,12 @@ public abstract class AbstractSched {
      */
     public abstract @Nullable Card getCard();
 
-    /** Let the scheduler knows that the selected deck potentially changed and all pre-computed data (queue and counts)
-     * should be discarded. Should be called after getCard if the card is not answered. */
-    protected abstract void reset();
+    /**
+     * The collection saves some numbers such as counts, queues of cards to review, queues of decks potentially having some cards.
+     * Reset all of this and compute from scratch. This occurs because anything else than the sequence of getCard/answerCard did occur.
+     */
+    // Should ideally be protected. It's public only because CollectionTask should call it when the scheduler planned this task
+    public abstract void reset();
 
     /** Check whether we are a new day, and update if so. */
     public abstract void _updateCutoff();
@@ -62,6 +65,7 @@ public abstract class AbstractSched {
 
     /** Recompute the counts of the currently selected deck. */
     public abstract void resetCounts();
+    public abstract void resetCounts(CancelListener cancelListener);
 
     /** Ensure that reset will be called before returning any card or count. */
     public abstract void deferReset();
@@ -127,6 +131,7 @@ public abstract class AbstractSched {
      * @param card A card that should be added to the count result.
      * @return same array as counts(), apart that Card is added*/
     public abstract @NonNull Counts counts(@NonNull Card card);
+    public abstract @NonNull Counts counts(@NonNull CancelListener cancelListener);
 
     /**
      * @param days A number of day
@@ -166,9 +171,9 @@ public abstract class AbstractSched {
     public abstract @NonNull List<DeckDueTreeNode> deckDueList();
 
     /**
-     * @param collectionTask A task that is potentially cancelled
+     * @param cancelListener A task that is potentially cancelled
      * @return the due tree. null if task is cancelled*/
-    public abstract @Nullable List<DeckDueTreeNode> deckDueTree(CollectionTask collectionTask);
+    public abstract @Nullable List<DeckDueTreeNode> deckDueTree(CancelListener cancelListener);
 
     /**
      * @return the due tree. null if task is cancelled. */
@@ -216,6 +221,7 @@ public abstract class AbstractSched {
      *i @param cids Cards to remove from their dynamic deck (it is assumed they are in one)
      */
     // In this abstract class for testing purpose only
+    public abstract void remFromDyn(List<Long> cids);
     public abstract void remFromDyn(long[] cids);
 
     /**
@@ -303,7 +309,7 @@ public abstract class AbstractSched {
 
     /**
      * @param ids Ids of cards to put at the end of the new queue. */
-    public abstract void forgetCards(@NonNull long[] ids);
+    public abstract void forgetCards(@NonNull List<Long> ids);
 
     /**
      * Put cards in review queue with a new interval in days (min, max).
@@ -312,7 +318,7 @@ public abstract class AbstractSched {
      * @param imin the minimum interval (inclusive)
      * @param imax The maximum interval (inclusive)
      */
-    public abstract void reschedCards(@NonNull long[] ids, int imin, int imax);
+    public abstract void reschedCards(@NonNull List<Long> ids, int imin, int imax);
 
     /**
      * @param ids Ids of cards to reset for export
@@ -326,7 +332,7 @@ public abstract class AbstractSched {
      * @param shuffle Whether the list should be shuffled.
      * @param shift Whether the cards already new should be shifted to make room for cards of cids
      */
-    public abstract void sortCards(@NonNull long[] cids, int start, int step, boolean shuffle, boolean shift);
+    public abstract void sortCards(@NonNull List<Long> cids, int start, int step, boolean shuffle, boolean shift);
 
     /**
      * Randomize the cards of did
@@ -351,7 +357,7 @@ public abstract class AbstractSched {
      * This is used to deal which are imported
      * @param did Id of a deck
      */
-    public abstract void maybeRandomizeDeck(@NonNull Long did);
+    public abstract void maybeRandomizeDeck(@Nullable Long did);
 
     /**
      * @param did An id of a deck
@@ -439,11 +445,6 @@ public abstract class AbstractSched {
     public abstract void setContext(@Nullable WeakReference<Activity> contextReference);
 
     /**
-     * @return The counts, after having reseted them
-     */
-    public abstract @NonNull int[] recalculateCounts();
-
-    /**
      * Change the maximal number shown in counts.
      * @param reportLimit A maximal number of cards added in the queue at once.
      */
@@ -512,4 +513,9 @@ public abstract class AbstractSched {
     /** @return The button to press to enter "good" on a new card. */
     @VisibleForTesting
     public abstract @Consts.BUTTON_TYPE int getGoodNewButton();
+
+    /**
+     * @return The number of revlog in the collection
+     */
+    public abstract int logCount();
 }

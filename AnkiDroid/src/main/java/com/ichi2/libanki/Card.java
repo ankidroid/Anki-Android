@@ -22,6 +22,9 @@ import android.content.ContentValues;
 import android.database.Cursor;
 import android.text.TextUtils;
 
+import com.ichi2.anki.CollectionHelper;
+import com.ichi2.async.CancelListener;
+import com.ichi2.libanki.template.TemplateError;
 import com.ichi2.utils.Assert;
 import com.ichi2.anki.AnkiDroidApp;
 import com.ichi2.anki.R;
@@ -36,10 +39,12 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Locale;
 import java.util.Set;
+import java.util.concurrent.CancellationException;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.annotation.VisibleForTesting;
+import timber.log.Timber;
 
 import static com.ichi2.libanki.stats.Stats.SECONDS_PER_DAY;
 
@@ -148,7 +153,7 @@ public class Card implements Cloneable {
 
 
     public void load() {
-        try (Cursor cursor = mCol.getDb().getDatabase().query("SELECT * FROM cards WHERE id = " + mId, null)) {
+        try (Cursor cursor = mCol.getDb().query("SELECT * FROM cards WHERE id = ?", mId)) {
             if (!cursor.moveToFirst()) {
                 throw new WrongId(mId, "card");
             }
@@ -241,7 +246,7 @@ public class Card implements Cloneable {
         values.put("odid", mODid);
         values.put("did", mDid);
         // TODO: The update DB call sets mod=true. Verify if this is intended.
-        mCol.getDb().update("cards", values, "id = " + mId, null);
+        mCol.getDb().update("cards", values, "id = ?", new String[] {Long.toString(mId)});
         mCol.log(this);
     }
 
@@ -286,7 +291,7 @@ public class Card implements Cloneable {
             Note f = note(reload);
             Model m = model();
             JSONObject t = template();
-            long did = mODid != 0L ? mODid : mDid;
+            long did = isInDynamicDeck() ? mODid : mDid;
             if (browser) {
                 String bqfmt = t.getString("bqfmt");
                 String bafmt = t.getString("bafmt");
@@ -319,8 +324,8 @@ public class Card implements Cloneable {
 
 
     public JSONObject template() {
-        JSONObject m = model();
-        if (m.getInt("type") == Consts.MODEL_STD) {
+        Model m = model();
+        if (m.isStd()) {
             return m.getJSONArray("tmpls").getJSONObject(mOrd);
         } else {
             return model().getJSONArray("tmpls").getJSONObject(0);
@@ -337,7 +342,7 @@ public class Card implements Cloneable {
      * Time limit for answering in milliseconds.
      */
     public int timeLimit() {
-        DeckConfig conf = mCol.getDecks().confForDid(mODid == 0 ? mDid : mODid);
+        DeckConfig conf = mCol.getDecks().confForDid(!isInDynamicDeck() ? mDid : mODid);
         return conf.getInt("maxTaken") * 1000;
     }
 
@@ -353,8 +358,12 @@ public class Card implements Cloneable {
 
 
     public boolean isEmpty() {
-        ArrayList<Integer> ords = mCol.getModels().availOrds(model(), note().getFields());
-        return !ords.contains(mOrd);
+        try {
+            return Models.emptyCard(model(), mOrd, note().getFields());
+        } catch (TemplateError er) {
+            Timber.w("Card is empty because the card's template has an error: %s.", er.message(getCol().getContext()));
+            return true;
+        }
     }
 
 
@@ -606,7 +615,7 @@ public class Card implements Cloneable {
 
 
     public boolean showTimer() {
-        DeckConfig options = mCol.getDecks().confForDid(mODid == 0 ? mDid : mODid);
+        DeckConfig options = mCol.getDecks().confForDid(!isInDynamicDeck() ? mDid : mODid);
         return DeckConfig.parseTimerOpt(options, true);
     }
 
@@ -625,8 +634,9 @@ public class Card implements Cloneable {
             "TYPE_NEW", "TYPE_REV", "mNote", "mQA", "mCol", "mTimerStarted", "mTimerStopped"));
 
     public @NonNull String toString() {
-        List<String> members = new ArrayList<>();
-        for (Field f : this.getClass().getDeclaredFields()) {
+        Field[] declaredFields = this.getClass().getDeclaredFields();
+        List<String> members = new ArrayList<>(declaredFields.length);
+        for (Field f : declaredFields) {
             try {
                 // skip non-useful elements
                 if (SKIP_PRINT.contains(f.getName())) {
@@ -695,7 +705,7 @@ public class Card implements Cloneable {
     private String nextDue() {
         long date;
         long due = getDue();
-        if (getODid() != 0) {
+        if (isInDynamicDeck()) {
             return AnkiDroidApp.getAppResources().getString(R.string.card_browser_due_filtered_card);
         } else if (getQueue() == Consts.QUEUE_TYPE_LRN) {
             date = due;
@@ -712,9 +722,8 @@ public class Card implements Cloneable {
     }
 
     /** Non libAnki */
-    public boolean isDynamic() {
-        //I have cards in my collection with oDue <> 0 and oDid = 0.
-        //These are not marked as dynamic.
+    public boolean isInDynamicDeck() {
+        // In Anki Desktop, a card with oDue <> 0 && oDid == 0 is not marked as dynamic.
         return this.getODid() != 0;
     }
 
@@ -826,5 +835,21 @@ public class Card implements Cloneable {
         public void loadQA(boolean reload, boolean browser) {
             getCard()._getQA(reload, browser);
         }
+    }
+
+    public static @NonNull Card[] deepCopyCardArray(@NonNull Card[] originals, @NonNull CancelListener cancelListener) throws CancellationException {
+        Collection col = CollectionHelper.getInstance().getCol(AnkiDroidApp.getInstance());
+        Card[] copies = new Card[originals.length];
+        for (int i = 0; i < originals.length; i++) {
+            if (cancelListener.isCancelled()) {
+                Timber.i("Cancelled during deep copy, probably memory pressure?");
+                throw new CancellationException("Cancelled during deep copy");
+            }
+
+            // TODO: the performance-naive implementation loads from database instead of working in memory
+            // the high performance version would implement .clone() on Card and test it well
+            copies[i] = new Card(col, originals[i].getId());
+        }
+        return copies;
     }
 }

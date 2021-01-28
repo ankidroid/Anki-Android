@@ -42,14 +42,12 @@
     <string name="disabled">Выключено</string>
     <string name="enabled">Включено</string>
     <!-- preferences.xml categories-->
-    <string name="pref_cat_general">AnkiDroid</string>
     <string name="pref_cat_general_summ">Общие настроки</string>
     <string name="pref_cat_reviewing">Обучение</string>
     <string name="pref_cat_reviewing_summ">Настройки обучения, не зависящие от колоды</string>
     <string name="pref_cat_reviewer_behaviour">Поведение</string>
     <string name="pref_cat_flashcard">Экран</string>
     <string name="pref_cat_whiteboard">Доска</string>
-    <string name="pref_cat_automatic_display">Автоматически показывать ответ</string>
     <string name="pref_cat_appearance">Внешний вид</string>
     <string name="pref_cat_appearance_summ">Выбор темы и шрифтов</string>
     <string name="pref_cat_themes">Темы</string>
@@ -65,9 +63,7 @@
     <string name="about_title">Об AnkiDroid</string>
     <string name="about_version">Версия: </string>
     <!-- preferences.xml entries-->
-    <string name="whiteboard_stroke_width">Толщина линни</string>
-    <string name="whiteboard_black">Черные линии</string>
-    <string name="whiteboard_black_summ">Использует меньше памяти, если не в ночном режиме</string>
+    <string name="whiteboard_stroke_width">Толщина линии</string>
     <string name="use_input_tag">Ввод ответа на карточке</string>
     <string name="use_input_tag_summ">Добавляет на карточку поле ввода для ответа</string>
     <string name="dictionary">Посмотреть в словаре</string>
@@ -96,15 +92,26 @@
     <string name="gestures_summ">Назначает жесты действиям вроде ответа и правки</string>
     <string name="gestures_allow_links">Игнорировать жесты на ссылках</string>
     <string name="gestures_allow_links_summary">Жесты не будут учитываться, если нажата ссылка или подсказка.</string>
+    <string name="gestures_corner_touch">9 зон касания</string>
+    <string name="gestures_corner_touch_summary">Разрешить сенсорные жесты в углах экрана</string>
     <string name="gestures_swipe_up">Смахивание вверх</string>
     <string name="gestures_swipe_down">Смахивание вниз</string>
     <string name="gestures_swipe_left">Смахивание влево</string>
     <string name="gestures_swipe_right">Смахивание вправо</string>
     <string name="gestures_double_tap">Двойное касание</string>
     <string name="gestures_tap_top">Касание вверху</string>
-    <string name="gestures_tap_bottom">Касание внизу</string>
     <string name="gestures_tap_left">Касание слева</string>
     <string name="gestures_tap_right">Касание справа</string>
+    <string name="gestures_tap_bottom">Касание внизу</string>
+    <string name="gestures_corner_tap_top_left">Касание вверху в левом углу</string>
+    <string name="gestures_corner_tap_top_center">Касание вверху по центру</string>
+    <string name="gestures_corner_tap_top_right">Касание вверху в правом углу</string>
+    <string name="gestures_corner_tap_middle_left">Касание по центру слева</string>
+    <string name="gestures_corner_tap_middle_center">Касание в центре экрана</string>
+    <string name="gestures_corner_tap_middle_right">Касание по центру справа</string>
+    <string name="gestures_corner_tap_bottom_left">Касание внизу в левом углу</string>
+    <string name="gestures_corner_tap_bottom_center">Касание внизу по центру</string>
+    <string name="gestures_corner_tap_bottom_right">Касание внизу в правом углу</string>
     <string name="gestures_volume_up">Увеличить громкость</string>
     <string name="gestures_volume_down">Уменьшить громкость</string>
     <string name="more_scrolling_buttons">eReader</string>
@@ -123,8 +130,8 @@
     <string name="sync_account_summ_logged_in">%s</string>
     <string name="automatic_sync_choice">Автоматическая синхронизация</string>
     <string name="automatic_sync_choice_summ">Автоматически синхронизирует при запуске и выходе, но не чаще, чем раз в 10 минут.</string>
-    <string name="sync_status_badge">Отображать статус синхронизации</string>
-    <string name="sync_status_badge_summ">Изменить значок синхронизации, когда можно выгрузить изменения</string>
+    <string name="sync_status_badge">Отображать состояние синхронизации</string>
+    <string name="sync_status_badge_summ">Добавлять точку на значок синхронизации, когда можно выгрузить изменения</string>
     <string name="day_theme">Дневная тема</string>
     <string name="night_theme">Ночная тема</string>
     <string name="default_font">Шрифт по умолчанию</string>
@@ -141,9 +148,8 @@
     <string name="timeout_answer_text">Автоматически показывать ответ</string>
     <string name="timeout_answer_summ">Показывает ответ автоматически. Задержка включает в себя время для воспроизведения звука.</string>
     <string name="timeout_answer_seconds">Показать ответ через</string>
-    <string name="timeout_answer_seconds_summ">XXX с</string>
+    <string name="timeout_answer_seconds_summ" comment="The time to wait (in seconds) in the reviewer before automatically showing the next question or answer">XXX с</string>
     <string name="timeout_question_seconds">Показать следующий вопрос через</string>
-    <string name="timeout_question_seconds_summ">XXX с</string>
     <string name="select_locale_title">Выберите язык</string>
     <string name="safe_display">Статический режим экрана</string>
     <string name="safe_display_summ">Отключает всю анимацию и использует безопасную отрисовку. Может понадобиться для экранов на электронных чернилах</string>
@@ -164,7 +170,6 @@
     <string name="use_current">Колода для новых карточек</string>
     <string name="new_spread">Позиция новых карточек</string>
     <string name="learn_cutoff">Лимит опережения</string>
-    <string name="learn_cutoff_summ">XXX мин.</string>
     <string name="time_limit">Лимит учебного блока</string>
     <string name="time_limit_summ">XXX мин.</string>
     <string name="day_offset">Начало следующего дня</string>
@@ -218,16 +223,16 @@
         <item quantity="other">%1$s\n%2$d колод использует эту группу</item>
     </plurals>
     <string name="deck_conf_new_cards">Новые карточки</string>
-    <string name="deck_conf_rev_cards">Повторения</string>
-    <string name="deck_conf_lps_cards">Ошибки</string>
+    <string name="deck_conf_rev_cards" comment="Name of the deck options submenu for configuring reviews of due cards.">Повторения</string>
+    <string name="deck_conf_lps_cards" comment="Label of the submenu stating how lapses cards are treated.">Ошибки</string>
     <string name="deck_conf_general">Общие</string>
     <string name="deck_conf_reminders">Напоминания</string>
     <string name="deck_conf_steps">Шаги (в минутах)</string>
     <string name="deck_conf_order">Порядок</string>
     <string name="deck_conf_new_cards_day">Новых карточек в день</string>
-    <string name="deck_conf_graduating_ivl">Интервал для \"Хорошо\"</string>
+    <string name="deck_conf_graduating_ivl">Интервал для «Хорошо»</string>
     <string name="deck_conf_days">XXX дней</string>
-    <string name="deck_conf_easy_ivl">Интервал для \"Легко\"</string>
+    <string name="deck_conf_easy_ivl">Интервал для «Легко»</string>
     <string name="deck_conf_start_ease">Начальная лёгкость</string>
     <string name="deck_conf_max_rev">Максимум повторений в день</string>
     <string name="deck_conf_new_bury">Отложить связанные новые карточки</string>
@@ -237,6 +242,7 @@
     <string name="deck_conf_use_general_timeout_settings">Использовать общие настройки</string>
     <string name="deck_conf_use_general_timeout_settings_summ">Использовать общие настройки «Автоматически показывать ответ» вместо настроек для этой группы.</string>
     <string name="deck_conf_easy_bonus">Множитель для \"Легко\"</string>
+    <string name="deck_conf_hard_factor">Интервал для «Трудно»</string>
     <string name="deck_conf_ivl_fct">Множитель интервалов</string>
     <string name="deck_conf_max_ivl">Максимальный интервал</string>
     <string name="deck_conf_new_lps_ivl">Новый интервал</string>
@@ -253,14 +259,11 @@
     <string name="deck_conf_manage">Управление конфигурациями</string>
     <string name="deck_conf_manage_summ">Добавить или изменить конфигурации</string>
     <string name="deck_conf_current_group">Текущая конфигурация</string>
-    <string name="deck_conf_rename">Переименовать</string>
+    <string name="deck_conf_rename" comment="Menu entry to rename a deck">Переименовать</string>
     <string name="deck_conf_reset">Сбросить настройки</string>
-    <string name="deck_conf_reset_title">Сбросить настройки</string>
     <string name="deck_conf_reset_message">Сбросить эту конфигурацию?</string>
-    <string name="deck_conf_add">Добавить</string>
+    <string name="deck_conf_add" comment="Adding a new deck option group">Добавить</string>
     <string name="deck_conf_add_summ">Создать копию этой конфигурации</string>
-    <string name="deck_conf_remove">Удалить</string>
-    <string name="deck_conf_remove_title">Удалить</string>
     <string name="deck_conf_remove_message">Удалить текущую конфигурацию?</string>
     <string name="deck_conf_set_subdecks">Установить для всех подколод</string>
     <plurals name="deck_conf_set_subdecks_summ">
@@ -269,15 +272,13 @@
         <item quantity="many">%s подколод задействуют конфигурацию</item>
         <item quantity="other">%s подколод задействуют конфигурацию</item>
     </plurals>
-    <string name="deck_conf_set_subdecks_title">Установить для всех подколод</string>
     <string name="deck_conf_set_subdecks_message">Установить текущую конфигурацию для всех подколод этой колоды?</string>
     <string name="pref_browser_editor_font">Шрифт в списке и редакторе</string>
     <string name="deck_conf_cram_filter">Фильтр</string>
-    <string name="deck_conf_cram_options">Параметры</string>
     <string name="deck_conf_cram_search">Запрос</string>
     <string name="deck_conf_cram_limit">Количество</string>
     <string name="deck_conf_cram_order">Отобрать</string>
-    <string name="deck_conf_cram_reschedule">Перепланировать</string>
+    <string name="deck_conf_cram_reschedule" comment="Title of the box labelled by deck_conf_cram_reschedule_summ">Перепланировать</string>
     <string name="deck_conf_cram_reschedule_summ">Перепланировать карточки в зависимости от ответов</string>
     <string name="deck_conf_cram_steps">Заданные шаги (мин.)</string>
     <string name="deck_conf_cram_steps_summ">Задать свои шаги</string>
@@ -287,6 +288,8 @@
     <string name="analytics_dialog_title">Помогите сделать AnkiDroid лучше!</string>
     <string name="analytics_title">Делиться статистикой использования</string>
     <string name="analytics_summ">Отправляет информацию о функциях, которые предпочитают пользователи</string>
-    <string name="enable_miui_keyboard_hack">«Вставить» для заданий с пропусками</string>
-    <string name="enable_miui_keyboard_hack_summ">«Вставить» в редакторе превратит выделенный текст в задание с пропусками</string>
+    <string name="note_editor_replace_newlines">Заменять перенос строк на HTML</string>
+    <string name="note_editor_replace_newlines_summ">Заменять &lt;br&gt; в редакторе записей на перенос строки</string>
+    <string name="no_code_formatting">Простое форматирование ответа</string>
+    <string name="no_code_formatting_summ">Исправляет «􏿾» при вводе ответа</string>
 </resources>

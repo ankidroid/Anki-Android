@@ -20,6 +20,7 @@ import android.app.Activity;
 import android.app.Instrumentation;
 import android.content.Intent;
 import android.os.Bundle;
+import android.widget.EditText;
 import android.widget.TextView;
 
 import com.ichi2.anki.multimediacard.activity.MultimediaEditFieldActivity;
@@ -39,7 +40,6 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-import androidx.appcompat.view.menu.ActionMenuItemView;
 import androidx.test.core.app.ActivityScenario;
 import androidx.test.ext.junit.runners.AndroidJUnit4;
 
@@ -65,8 +65,7 @@ public class NoteEditorTest extends RobolectricTest {
     @Test
     public void verifyPreviewAddingNote() {
         NoteEditor n = getNoteEditorAdding(NoteType.BASIC).withFirstField("Preview Test").build();
-        ActionMenuItemView previewButton = n.findViewById(R.id.action_preview);
-        previewButton.performClick();
+        n.performPreview();
         ShadowActivity.IntentForResult intent = shadowOf(n).getNextStartedActivityForResult();
         Bundle noteEditorBundle = intent.intent.getBundleExtra("noteEditorBundle");
         assertThat("Bundle set to add note style", noteEditorBundle.getBoolean("addNote"), is(true));
@@ -74,7 +73,7 @@ public class NoteEditorTest extends RobolectricTest {
         assertThat("Bundle has fields", fieldsBundle, notNullValue());
         assertThat("Bundle has fields edited value", fieldsBundle.getString("0"), is("Preview Test"));
         assertThat("Bundle has empty tag list", noteEditorBundle.getStringArrayList("tags"), is(new ArrayList<>()));
-        assertThat("Bundle has ordinal 0 for ephemeral preview", intent.intent.getIntExtra("ordinal", -1), is(0));
+        assertThat("Bundle has no ordinal for ephemeral preview", intent.intent.hasExtra("ordinal"), is(false));
         assertThat("Bundle has a temporary model saved", intent.intent.hasExtra(TemporaryModel.INTENT_MODEL_FILENAME), is(true));
     }
 
@@ -257,7 +256,7 @@ public class NoteEditorTest extends RobolectricTest {
         assertThat(Arrays.asList(editor.getCurrentFieldStrings()), contains(newFirstField, initSecondField));
 
         saveNote(editor);
-        this.waitForAsyncTasksToComplete();
+        RobolectricTest.waitForAsyncTasksToComplete();
 
         List<String> actual = Arrays.asList(editor.getCurrentFieldStrings());
         assertThat("newlines should be preserved, second field should be blanked", actual, contains(newFirstField, ""));
@@ -278,6 +277,71 @@ public class NoteEditorTest extends RobolectricTest {
         // #6923 regression test - Low value - Could not make this fail as onSaveInstanceState did not crash under Robolectric.
         NoteEditor editor = getNoteEditorAddingNote(FromScreen.DECK_LIST, NoteEditor.class);
         assertDoesNotThrow(editor::performPreview);
+    }
+
+    @Test
+    public void clearFieldWorks() {
+        // #7522
+        NoteEditor editor = getNoteEditorAddingNote(FromScreen.DECK_LIST, NoteEditor.class);
+        editor.setFieldValueFromUi(1, "Hello");
+        assertThat(editor.getCurrentFieldStrings()[1], is("Hello"));
+        editor.clearField(1);
+        assertThat(editor.getCurrentFieldStrings()[1], is(""));
+
+    }
+
+    @Test
+    public void insertIntoFocusedFieldStartsAtSelection() {
+        NoteEditor editor = getNoteEditorAddingNote(FromScreen.DECK_LIST, NoteEditor.class);
+
+        EditText field = editor.getFieldForTest(0);
+
+        editor.insertStringInField(field, "Hello");
+
+        field.setSelection(3);
+
+        editor.insertStringInField(field, "World");
+
+        assertThat(editor.getFieldForTest(0).getText().toString(), is("HelWorldlo"));
+    }
+
+    @Test
+    public void insertIntoFocusedFieldReplacesSelection() {
+        NoteEditor editor = getNoteEditorAddingNote(FromScreen.DECK_LIST, NoteEditor.class);
+
+        EditText field = editor.getFieldForTest(0);
+
+        editor.insertStringInField(field, "12345");
+
+        field.setSelection(2, 3); //select "3"
+
+        editor.insertStringInField(field, "World");
+
+        assertThat(editor.getFieldForTest(0).getText().toString(), is("12World45"));
+    }
+
+    @Test
+    public void insertIntoFocusedFieldReplacesSelectionIfBackwards() {
+        // selections can be backwards if the user uses keyboards
+        NoteEditor editor = getNoteEditorAddingNote(FromScreen.DECK_LIST, NoteEditor.class);
+
+        EditText field = editor.getFieldForTest(0);
+
+        editor.insertStringInField(field, "12345");
+
+        field.setSelection(3, 2); //select "3" (right to left)
+
+        editor.insertStringInField(field, "World");
+
+        assertThat(editor.getFieldForTest(0).getText().toString(), is("12World45"));
+    }
+
+    @Test
+    public void defaultsToCapitalized() {
+        // Requested in #3758, this seems like a sensible default
+        NoteEditor editor = getNoteEditorAddingNote(FromScreen.DECK_LIST, NoteEditor.class);
+
+        assertThat("Fields should have their first word capitalized by default", editor.getFieldForTest(0).isCapitalized(), is(true));
     }
 
     private Intent getCopyNoteIntent(NoteEditor editor) {

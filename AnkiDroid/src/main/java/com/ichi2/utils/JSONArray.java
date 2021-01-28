@@ -43,8 +43,10 @@
 package com.ichi2.utils;
 
 import java.lang.reflect.Array;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Iterator;
+import java.util.List;
 
 import androidx.annotation.NonNull;
 
@@ -142,7 +144,7 @@ public class JSONArray extends org.json.JSONArray {
         }
     }
 
-    public JSONArray(Collection copyFrom) {
+    public JSONArray(Collection<?> copyFrom) {
         this();
         if (copyFrom != null) {
             for (Object o : copyFrom) {
@@ -383,5 +385,42 @@ public class JSONArray extends org.json.JSONArray {
                 return long_;
             }
         };
+    }
+
+    public List<JSONObject> toJSONObjectList() {
+        List<JSONObject> l = new ArrayList<>(length());
+        for (JSONObject object : jsonObjectIterable()) {
+            l.add(object);
+        }
+        return l;
+    }
+
+    public List<Long> toLongList() {
+        List<Long> l = new ArrayList<>(length());
+        for (Long object : longIterable()) {
+            l.add(object);
+        }
+        return l;
+    }
+
+    public List<String> toStringList() {
+        List<String> l = new ArrayList<>(length());
+        for (String object : stringIterable()) {
+            l.add(object);
+        }
+        return l;
+    }
+
+
+    /**
+     * @return Given an array of objects, return the array of the value with `key`, assuming that they are String.
+     * E.g. templates, fields are a JSONArray whose objects have name
+     */
+    public List<String> toStringList(String key) {
+        List<String> l = new ArrayList<>(length());
+        for (JSONObject object : jsonObjectIterable()) {
+            l.add(object.getString(key));
+        }
+        return l;
     }
 }

@@ -38,14 +38,14 @@
 ~ this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <resources>
+    <string name="yes">بله</string>
     <!-- Navigation drawer items-->
     <string name="decks">دسته ها</string>
-    <string name="card_browser">مرورگر کارت</string>
+    <string name="card_browser" comment="The usage of card browser inside the app (note the casing)">مرورگر کارت</string>
     <string name="statistics">آمار</string>
     <string name="settings">تنظیمات</string>
     <string name="help">راهنما</string>
     <string name="send_feedback">ارسال بازخورد</string>
-    <string name="studyoptions_title">مرور دسته</string>
     <string name="studyoptions_due_today">موعد مقرر امروز:</string>
     <string name="studyoptions_new_total">کل کارت های جدید:</string>
     <string name="studyoptions_total_cards">کل کارتها:</string>
@@ -71,8 +71,8 @@
         <item quantity="one">%d روز %d باقیمانده است</item>
         <item quantity="other">%d روز %d باقیمانده است</item>
     </plurals>
-    <string name="no_cards_placeholder_title">Collection is empty</string>
-    <string name="no_cards_placeholder_description">Start adding cards\nusing the + icon.</string>
+    <string name="no_cards_placeholder_title">مجموعه خالی است</string>
+    <string name="no_cards_placeholder_description">با استفاده از دکمه +\nشروع به اضافه کردن کارت‌ها کنيد</string>
     <!-- The deck picker via AnkiStatsTaskHandler.java -->
     <plurals name="studied_cards_today">
         <item quantity="one">امروز شما %1$d کارت را در %2$s مطالعه کردید</item>
@@ -81,7 +81,7 @@
     <!-- flashcard_portrait.xml -->
     <string name="type_answer_hint">پاسخ را تایپ کنید</string>
     <string name="show_answer">نمایش پاسخ</string>
-    <string name="hide_answer">Hide answer</string>
+    <string name="hide_answer">مخفی کردن پاسخ</string>
     <string name="ease_button_again">دوباره</string>
     <string name="ease_button_hard">سخت</string>
     <string name="ease_button_good">خوب</string>
@@ -90,22 +90,14 @@
     <string name="menu_import">وارد کردن</string>
     <string name="undo">بازگردانی</string>
     <string name="undo_action_review">آخرین بازنگری</string>
-    <string name="undo_action_bury_card">مخفی کردن کارت</string>
-    <string name="undo_action_bury_note">مخفی کردن یادداشت</string>
-    <string name="undo_action_suspend_card">تعلیق کارت</string>
-    <string name="undo_action_suspend_note">تعلیق یادداشت</string>
-    <string name="undo_action_delete">حذف یادداشت</string>
-    <string name="undo_action_delete_multi">حذف یادداشت‌ها</string>
     <string name="undo_action_change_deck_multi">تغییر دسته‌ها</string>
-    <string name="undo_action_reschedule_card">زمانبندی مجدد</string>
-    <string name="undo_action_reset_card">بازنشانی پیشرفت</string>
-    <string name="undo_action_reposition_card">تغییر مکان</string>
     <string name="move_all_to_deck">انتقال همه به دسته</string>
     <string name="unbury">خروج از حالت مخفی</string>
     <string name="rename_deck">تغییر نام دسته</string>
-    <string name="menu_add">افزودن</string>
+    <string name="create_shortcut">ایجاد میانبر</string>
+    <string name="menu_add" comment="A generic add button - Main Deck Picker and card templates. Please inform us if you need more specific strings">افزودن</string>
     <string name="menu_add_note">افزودن یادداشت</string>
-    <string name="menu_my_account">همگام سازی حساب</string>
+    <string name="menu_my_account" comment="Label of the window in which the user should enter their account. This text can\'t be found in AnkiDroid directly.">همگام سازی حساب</string>
     <string name="menu_dismiss_note">پنهان/حذف کردن</string>
     <string name="menu_bury_card">مخفی کردن کارت</string>
     <string name="menu_bury_note">مخفی کردن یادداشت</string>
@@ -129,7 +121,7 @@
     <string name="menu_unmark_note">برداشتن علامتگذاری یادداشت</string>
     <string name="menu_toggle_mic_tool_bar">بررسی تلفظ</string>
     <string name="new_deck">ایجاد دسته</string>
-    <string name="create">ساختن</string>
+    <string name="create" comment="Button to create a filtered deck">ساختن</string>
     <string name="new_dynamic_deck">ایجاد دسته فیلتر شده</string>
     <string name="night_mode">حالت شب</string>
     <string name="directory_inaccessible">فهرست AnkiDroid غیر قابل دسترس است</string>
@@ -154,14 +146,15 @@
     <string name="time_quantity_months">%.1f ماه</string>
     <string name="time_quantity_years">%.1f سال</string>
     <!-- or "%.1f a" -->
-    <string name="rebuild_filtered_deck">Rebuilding filtered deck&#8230;</string>
+    <string name="rebuild_filtered_deck">درحال بازسازی دسته‌ی کارت انتخاب شده...</string>
     <string name="rebuild_cram_label">بازسازی</string>
     <string name="empty_cram_label">خالی</string>
     <string name="create_subdeck">ایجاد زیردسته</string>
-    <string name="empty_filtered_deck">Emptying filtered deck&#8230;</string>
+    <string name="empty_filtered_deck">درحال تخلیه دسته‌ی کارت انتخاب شده...</string>
     <string name="custom_study_deck_name">جلسه مطالعه سفارشی</string>
     <string name="custom_study_deck_exists">لطفا ابتدا دسته مطالعه سفارشی موجود را مجددا نام گذاری کنید.</string>
     <string name="empty_deck">این دسته خالی است</string>
+    <string name="empty_deck_add_note">اضافه کردن کارت</string>
     <string name="invalid_deck_name">نام دسته نامعتبر است</string>
     <string name="studyoptions_empty">این دسته خالی است. دکمه + را فشار دهید تا مطلب جدید اضافه کنید.</string>
     <string name="studyoptions_limit_reached">به محدودیت مطالعه روزانه رسیده‌اید</string>
@@ -187,9 +180,8 @@
     <string name="card_template_editor_front">قالب جلو</string>
     <string name="card_template_editor_back">قالب پشت</string>
     <string name="card_template_editor_styling">طراحی</string>
-    <string name="card_template_editor_menu_delete">حذف</string>
     <string name="card_template_editor_menu_card_browser_appearance">ظاهر مروگر کارت</string>
-    <string name="card_template_editor_deck_override">Deck Override</string>
+    <string name="card_template_editor_deck_override">بازنویسی دسته</string>
     <string name="card_template_editor_cant_delete">وجود حداقل یک نوع کارت ضروری است</string>
     <plurals name="card_template_editor_confirm_delete">
         <item quantity="one">حذف نوع کارت \"%2$s\"، و %1$d کارت آن؟</item>
@@ -201,11 +193,21 @@
     <string name="template_for_current_card_deleted">نوع کارت برای کارت فعلی حذف شد.</string>
     <!-- Card Browser Appearance -->
     <string name="card_template_browser_appearance_title">ظاهر مرورگر کارت</string>
+    <string name="current_and_default_deck">%1$s (%2$s)</string>
+    <!-- card Info -->
+    <string name="card_info_title">مشخصات کارت</string>
     <!-- Permissions -->
     <string name="read_write_permission_label">خواندن و نوشتن داده‌ها روی دیتابیس AnkiDroid</string>
     <string name="read_write_permission_description">قابلیت دسترسی و ویرایش یادداشت‌ها، کارت‌ها، نوع یادداشت‌ها، و دسته‌ها</string>
     <!-- Context Menu -->
-    <string name="card_browser_label">مرورگر کارت</string>
-    <string name="card_browser_context_menu">مرورگر کارت</string>
-    <string name="context_menu_anki_card_label">Anki Card</string>
+    <string name="card_browser_context_menu" comment="The value which appears in the system context menu. Note the casing difference">مرورگر کارت</string>
+    <string name="context_menu_anki_card_label">کارت آنکی</string>
+    <string name="has_a_problem" comment="First field is either front template or back template. Second field is the error message.">%1$s has a problem:<br/>%2$s</string>
+    <string name="more_information">More information</string>
+    <string name="no_field">Found \'{{%1$s}}\', but there is no field called \'%1$s\'.</string>
+    <string name="closed_tag_not_open">Found \'{{/%1$s}}\', but missing \'{{#%1$s}}\' or \'{{^%1$s}}\'.</string>
+    <string name="missing_closing_bracket">Missing \'}}\' in \'%s\'.</string>
+    <string name="open_tag_not_closed">Missing \'{{%s}}\'.</string>
+    <string name="wrong_tag_closed">Found \'{{/%1$s}}\', but expected \'{{/%2$s}}\'</string>
+    <string name="filter_error">Error in filter %s</string>
 </resources>

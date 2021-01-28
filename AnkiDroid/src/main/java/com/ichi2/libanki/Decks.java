@@ -42,8 +42,10 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 import java.util.Objects;
+import java.util.Set;
 import java.util.TreeMap;
 import java.util.regex.Pattern;
 
@@ -53,12 +55,20 @@ import androidx.annotation.Nullable;
 import androidx.annotation.VisibleForTesting;
 import timber.log.Timber;
 
+import static com.ichi2.libanki.Consts.DECK_DYN;
+import static com.ichi2.libanki.Consts.DECK_STD;
+import static com.ichi2.utils.CollectionUtils.addAll;
+
 // fixmes:
 // - make sure users can't set grad interval < 1
 
 @SuppressWarnings({"PMD.AvoidThrowingRawExceptionTypes",
         "PMD.MethodNamingConventions","PMD.AvoidReassigningParameters","PMD.SimplifyBooleanReturns"})
 public class Decks {
+
+    // Invalid id, represents an id on an unfound deck
+    public static final long NOT_FOUND_DECK_ID = -1L;
+    
 
     //not in libAnki
     @SuppressWarnings("WeakerAccess")
@@ -148,12 +158,12 @@ public class Decks {
     private static class NameMap {
         private final HashMap<String, Deck> mNameMap;
 
-        private NameMap() {
-            mNameMap = new HashMap<>();
+        private NameMap(int size) {
+            mNameMap = new HashMap<>(size);
         }
 
         public static NameMap constructor(java.util.Collection<Deck> decks) {
-            NameMap map = new NameMap();
+            NameMap map = new NameMap(2 * decks.size());
             for (Deck deck: decks) {
                 map.add(deck);
             }
@@ -219,10 +229,9 @@ public class Decks {
 
 
     public void load(String decks, String dconf) {
-        mDecks = new HashMap<>();
-        mDconf = new HashMap<>();
         JSONObject decksarray = new JSONObject(decks);
         JSONArray ids = decksarray.names();
+        mDecks = new HashMap<>(decksarray.length());
         for (String id: ids.stringIterable()) {
             Deck o = new Deck(decksarray.getJSONObject(id));
             long longId = Long.parseLong(id);
@@ -231,6 +240,7 @@ public class Decks {
         mNameMap = NameMap.constructor(mDecks.values());
         JSONObject confarray = new JSONObject(dconf);
         ids = confarray.names();
+        mDconf = new HashMap<>(confarray.length());
         if (ids != null) {
             for (String id : ids.stringIterable()) {
                 mDconf.put(Long.parseLong(id), new DeckConfig(confarray.getJSONObject(id)));
@@ -360,7 +370,7 @@ public class Decks {
         if (deck == null) {
             return;
         }
-        if (deck.getInt("dyn") != 0) {
+        if (deck.getInt("dyn") == DECK_DYN) {
             // deleting a cramming deck returns cards to their previous deck
             // rather than deleting the cards
             mCol.getSched().emptyDyn(did);
@@ -404,14 +414,14 @@ public class Decks {
      * An unsorted list of all deck names.
      */
     public ArrayList<String> allNames(boolean dyn) {
-        ArrayList<String> list = new ArrayList<>();
+        ArrayList<String> list = new ArrayList<>(mDecks.size());
         if (dyn) {
             for (Deck x : mDecks.values()) {
                 list.add(x.getString("name"));
             }
         } else {
             for (Deck x : mDecks.values()) {
-                if (x.getInt("dyn") == 0) {
+                if (x.getInt("dyn") == DECK_STD) {
                     list.add(x.getString("name"));
                 }
             }
@@ -449,12 +459,12 @@ public class Decks {
     }
 
 
-    public Long[] allIds() {
-        return mDecks.keySet().toArray(new Long[mDecks.keySet().size()]);
+    public Set<Long> allIds() {
+        return mDecks.keySet();
     }
 
 
-    public void collpase(long did) {
+    public void collapse(long did) {
         Deck deck = get(did);
         deck.put("collapsed", !deck.getBoolean("collapsed"));
         save(deck);
@@ -545,7 +555,7 @@ public class Decks {
         if (newName.contains("::")) {
             List<String> parts = Arrays.asList(path(newName));
             String newParent = TextUtils.join("::", parts.subList(0, parts.size() - 1));
-            if (byName(newParent).getInt("dyn") != 0) {
+            if (byName(newParent).getInt("dyn") == DECK_DYN) {
                 throw new DeckRenameException(DeckRenameException.FILTERED_NOSUBDEKCS);
             }
         }
@@ -636,7 +646,7 @@ public class Decks {
     }
 
 
-    private static final HashMap<String, String[]> pathCache = new HashMap();
+    private static final HashMap<String, String[]> pathCache = new HashMap<>();
     public static String[] path(String name) {
         if (!pathCache.containsKey(name)) {
             pathCache.put(name, name.split("::", -1));
@@ -695,7 +705,7 @@ public class Decks {
         assert deck != null;
         if (deck.has("conf")) {
             DeckConfig conf = getConf(deck.getLong("conf"));
-            conf.put("dyn", 0);
+            conf.put("dyn", DECK_STD);
             return conf;
         }
         // dynamic decks have embedded conf
@@ -839,12 +849,11 @@ public class Decks {
         if (!children) {
             return Utils.list2ObjectArray(mCol.getDb().queryLongList("select id from cards where did=?", did));
         }
-        List<Long> dids = new ArrayList<>();
+        java.util.Collection<Long> values = children(did).values();
+        List<Long> dids = new ArrayList<>(values.size() + 1);
         dids.add(did);
-        for(Map.Entry<String, Long> entry : children(did).entrySet()) {
-            dids.add(entry.getValue());
-        }
-        return Utils.list2ObjectArray(mCol.getDb().queryLongList("select id from cards where did in " + Utils.ids2str(Utils.collection2Array(dids))));
+        dids.addAll(values);
+        return Utils.list2ObjectArray(mCol.getDb().queryLongList("select id from cards where did in " + Utils.ids2str(dids)));
     }
 
 
@@ -860,9 +869,8 @@ public class Decks {
     }
 
     private void _recoverOrphans() {
-        Long[] dids = allIds();
         boolean mod = mCol.getDb().getMod();
-        SyncStatus.ignoreDatabaseModification(() -> mCol.getDb().execute("update cards set did = 1 where did not in " + Utils.ids2str(dids)));
+        SyncStatus.ignoreDatabaseModification(() -> mCol.getDb().execute("update cards set did = 1 where did not in " + Utils.ids2str(allIds())));
         mCol.getDb().setMod(mod);
     }
 
@@ -951,9 +959,7 @@ public class Decks {
     public LinkedList<Long> active() {
         JSONArray activeDecks = mCol.getConf().getJSONArray("activeDecks");
         LinkedList<Long> result = new LinkedList<>();
-        for (Long l: activeDecks.longIterable()) {
-            result.add(l);
-        }
+        addAll(result, activeDecks.longIterable());
         return result;
     }
 
@@ -1008,26 +1014,26 @@ public class Decks {
         return actv;
     }
 
+    public static class Node extends HashMap<Long, Node> {}
 
-
-    private void gather(HashMap<Long, HashMap> node, List<Long> arr) {
-        for (Map.Entry<Long, HashMap> entry : node.entrySet()) {
-            HashMap child = entry.getValue();
+    private void gather(Node node, List<Long> arr) {
+        for (Map.Entry<Long, Node> entry : node.entrySet()) {
+            Node child = entry.getValue();
             arr.add(entry.getKey());
             gather(child, arr);
         }
     }
 
-    public List<Long> childDids(Long did, HashMap<Long, HashMap> childMap) {
+    public List<Long> childDids(long did, Node childMap) {
         List<Long> arr = new ArrayList<>();
         gather(childMap.get(did), arr);
         return arr;
     }
 
 
-    public HashMap<Long, HashMap> childMap() {
+    public Node childMap() {
 
-        HashMap<Long, HashMap> childMap = new HashMap<>();
+        Node childMap = new Node();
 
         // Go through all decks, sorted by name
         ArrayList<Deck> decks = all();
@@ -1035,7 +1041,7 @@ public class Decks {
         Collections.sort(decks, DeckComparator.instance);
 
         for (Deck deck : decks) {
-            HashMap node = new HashMap();
+            Node node = new Node();
             childMap.put(deck.getLong("id"), node);
 
             List<String> parts = Arrays.asList(path(deck.getString("name")));
@@ -1073,7 +1079,7 @@ public class Decks {
         // get parent and grandparent names
         String[] parents = parentsNames(get(did).getString("name"));
         // convert to objects
-        List<Deck> oParents = new ArrayList<>();
+        List<Deck> oParents = new ArrayList<>(parents.length);
         for (int i = 0; i < parents.length; i++) {
             String parentName = parents[i];
             Deck deck = mNameMap.get(parentName);
@@ -1117,7 +1123,7 @@ public class Decks {
 
 
     public boolean isDyn(long did) {
-        return get(did).getInt("dyn") != 0;
+        return get(did).getInt("dyn") == DECK_DYN;
     }
 
     /*
@@ -1128,7 +1134,7 @@ public class Decks {
     private static final HashMap<String, String> normalized = new HashMap<>();
     public static String normalizeName(String name) {
         if (!normalized.containsKey(name)) {
-            normalized.put(name, Normalizer.normalize(name, Normalizer.Form.NFC).toLowerCase());
+            normalized.put(name, Normalizer.normalize(name, Normalizer.Form.NFC).toLowerCase(Locale.ROOT));
         }
         return normalized.get(name);
     }
@@ -1148,7 +1154,7 @@ public class Decks {
     }
 
 
-    private static final HashMap<String, String> sParentCache = new HashMap();
+    private static final HashMap<String, String> sParentCache = new HashMap<>();
     public static String parent(String deckName) {
         // method parent, from sched's method deckDueList in python
         if (!sParentCache.containsKey(deckName)) {
@@ -1174,8 +1180,9 @@ public class Decks {
     }
 
     public Long[] allDynamicDeckIds() {
-        ArrayList<Long> validValues = new ArrayList<>();
-        for (Long did : allIds()) {
+        Set<Long> ids = allIds();
+        ArrayList<Long> validValues = new ArrayList<>(ids.size());
+        for (Long did : ids) {
             if (isDyn(did)) {
                 validValues.add(did);
             }
@@ -1205,7 +1212,7 @@ public class Decks {
     }
 
     public static boolean isDynamic(Deck deck) {
-        return deck.getInt("dyn") != 0;
+        return deck.getInt("dyn") == DECK_DYN;
     }
 
     /** Retruns the fully qualified name of the subdeck, or null if unavailable */

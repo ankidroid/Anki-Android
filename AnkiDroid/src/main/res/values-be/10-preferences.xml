@@ -42,14 +42,12 @@
     <string name="disabled">Адключана</string>
     <string name="enabled">Уключана</string>
     <!-- preferences.xml categories-->
-    <string name="pref_cat_general">AnkiDroid</string>
     <string name="pref_cat_general_summ">Агульныя налады</string>
     <string name="pref_cat_reviewing">Паўтор</string>
     <string name="pref_cat_reviewing_summ">Налады паўтарэнняў, якія не залежаць ад калоды</string>
     <string name="pref_cat_reviewer_behaviour">Паводзіны</string>
     <string name="pref_cat_flashcard">Паказаць</string>
     <string name="pref_cat_whiteboard">Дошка</string>
-    <string name="pref_cat_automatic_display">Аўтаматычна паказваць адказ</string>
     <string name="pref_cat_appearance">Знешні выгляд</string>
     <string name="pref_cat_appearance_summ">Змена тэмы і шрыфтоў</string>
     <string name="pref_cat_themes">Тэмы</string>
@@ -66,8 +64,6 @@
     <string name="about_version">Версія: </string>
     <!-- preferences.xml entries-->
     <string name="whiteboard_stroke_width">Шырыня штрыха</string>
-    <string name="whiteboard_black">Чорныя штрыхі</string>
-    <string name="whiteboard_black_summ">Выкарыстоўвае менш памяці, акрамя начнога рэжыму</string>
     <string name="use_input_tag">Уводзіць адказ на картцы</string>
     <string name="use_input_tag_summ">Скарыстайцеся формай тэксту, каб увесці адказ</string>
     <string name="dictionary">Паглядзець у слоўніку</string>
@@ -96,15 +92,26 @@
     <string name="gestures_summ">Прызначыць жэсты для такіх дзеянняў, як адказ і рэдагаванне картак.</string>
     <string name="gestures_allow_links">Ignore touch gestures on links</string>
     <string name="gestures_allow_links_summary">Touch gestures will not be processed if a link/hint is pressed.</string>
+    <string name="gestures_corner_touch">9-point touch</string>
+    <string name="gestures_corner_touch_summary">Allow touch gestures in screen corners</string>
     <string name="gestures_swipe_up">Чырканне ўверх</string>
     <string name="gestures_swipe_down">Чырканне ўніз</string>
     <string name="gestures_swipe_left">Чырканне ўлева</string>
     <string name="gestures_swipe_right">Чырканне ўправа</string>
     <string name="gestures_double_tap">Двайны дотык</string>
     <string name="gestures_tap_top">Дотык зверху</string>
-    <string name="gestures_tap_bottom">Дотык знізу</string>
     <string name="gestures_tap_left">Дотык злева</string>
     <string name="gestures_tap_right">Дотык справа</string>
+    <string name="gestures_tap_bottom">Дотык знізу</string>
+    <string name="gestures_corner_tap_top_left">Touch top left</string>
+    <string name="gestures_corner_tap_top_center">Touch top center</string>
+    <string name="gestures_corner_tap_top_right">Touch top right</string>
+    <string name="gestures_corner_tap_middle_left">Touch middle left</string>
+    <string name="gestures_corner_tap_middle_center">Touch middle center</string>
+    <string name="gestures_corner_tap_middle_right">Touch middle right</string>
+    <string name="gestures_corner_tap_bottom_left">Touch bottom left</string>
+    <string name="gestures_corner_tap_bottom_center">Touch bottom center</string>
+    <string name="gestures_corner_tap_bottom_right">Touch bottom right</string>
     <string name="gestures_volume_up">Volume up</string>
     <string name="gestures_volume_down">Volume down</string>
     <string name="more_scrolling_buttons">eReader</string>
@@ -142,9 +149,8 @@
     <string name="timeout_answer_text">Аўтаматычна паказваць адказ</string>
     <string name="timeout_answer_summ">Аўтаматычна паказваць адказ без уводу даных карыстальникам. Затрымка складаецца з часу аўтаматычнага прайгравання аўдыяфайлаў.</string>
     <string name="timeout_answer_seconds">Час паказу адказу</string>
-    <string name="timeout_answer_seconds_summ">XXX сек.</string>
+    <string name="timeout_answer_seconds_summ" comment="The time to wait (in seconds) in the reviewer before automatically showing the next question or answer">XXX сек.</string>
     <string name="timeout_question_seconds">Час паказу наступнага пытання</string>
-    <string name="timeout_question_seconds_summ">XXX сек.</string>
     <string name="select_locale_title">Выберыце мову</string>
     <string name="safe_display">Статычны рэжым экрана</string>
     <string name="safe_display_summ">Адключыць усю анімацыю і выкарыстоўваць бяспечны метад для адлюстравання картак. Гэта можа быць актуальна для прылад з электроннымі чарніламі.</string>
@@ -165,7 +171,6 @@
     <string name="use_current">Калода для новых картак</string>
     <string name="new_spread">Размяшчэнне новай карткі</string>
     <string name="learn_cutoff">Вучыць наперад</string>
-    <string name="learn_cutoff_summ">XXX хв.</string>
     <string name="time_limit">Абмежаванне навучальнага блока</string>
     <string name="time_limit_summ">XXX хв.</string>
     <string name="day_offset">Пачатак наступнага дня</string>
@@ -221,8 +226,8 @@
         <item quantity="other">канфігурацыя \"%1$s\" выкарыстоўваецца %2$d (раз)</item>
     </plurals>
     <string name="deck_conf_new_cards">Новыя карткі</string>
-    <string name="deck_conf_rev_cards">Паўтораў</string>
-    <string name="deck_conf_lps_cards">Абмылы</string>
+    <string name="deck_conf_rev_cards" comment="Name of the deck options submenu for configuring reviews of due cards.">Паўтораў</string>
+    <string name="deck_conf_lps_cards" comment="Label of the submenu stating how lapses cards are treated.">Абмылы</string>
     <string name="deck_conf_general">Агульныя</string>
     <string name="deck_conf_reminders">Напамінкі</string>
     <string name="deck_conf_steps">Крокі (у хвілінах)</string>
@@ -240,6 +245,7 @@
     <string name="deck_conf_use_general_timeout_settings">Use general settings</string>
     <string name="deck_conf_use_general_timeout_settings_summ">Use general \'Automatic display answer\' settings instead of using the settings for this group.</string>
     <string name="deck_conf_easy_bonus">Лёгкі бонус</string>
+    <string name="deck_conf_hard_factor">Hard interval</string>
     <string name="deck_conf_ivl_fct">Мадыфікацыя інтэрвалаў</string>
     <string name="deck_conf_max_ivl">Максімальны інтэрвал</string>
     <string name="deck_conf_new_lps_ivl">Новы інтэрвал</string>
@@ -256,14 +262,11 @@
     <string name="deck_conf_manage">Кіраванне канфігурацыямі</string>
     <string name="deck_conf_manage_summ">Add and change options groups</string>
     <string name="deck_conf_current_group">Цякучая група</string>
-    <string name="deck_conf_rename">Пераіменаваць</string>
+    <string name="deck_conf_rename" comment="Menu entry to rename a deck">Пераіменаваць</string>
     <string name="deck_conf_reset">Скінуць налады</string>
-    <string name="deck_conf_reset_title">Аднавіць па змаўчанні</string>
     <string name="deck_conf_reset_message">Аднавіць значэнні бягучых групавых параметраў па змаўчанні?</string>
-    <string name="deck_conf_add">Дадаць</string>
+    <string name="deck_conf_add" comment="Adding a new deck option group">Дадаць</string>
     <string name="deck_conf_add_summ">Стварыць копію бягучых групавых параметраў</string>
-    <string name="deck_conf_remove">Выдаліць</string>
-    <string name="deck_conf_remove_title">Выдаліць</string>
     <string name="deck_conf_remove_message">Выдаліць бягучыя групавыя параметры?</string>
     <string name="deck_conf_set_subdecks">Усталяваць для ўсіх падкалод</string>
     <plurals name="deck_conf_set_subdecks_summ">
@@ -272,15 +275,13 @@
         <item quantity="many">%s subdecks will use this group</item>
         <item quantity="other">%s падкалод будуць скарыстаць канфігурацыю</item>
     </plurals>
-    <string name="deck_conf_set_subdecks_title">Усталяваць для ўсіх падкалод</string>
     <string name="deck_conf_set_subdecks_message">Усталяваць бягучыя групавыя параметры для ўсіх падкалод гэтай калоды?</string>
     <string name="pref_browser_editor_font">Шрыфт аглядніка і рэдактара</string>
     <string name="deck_conf_cram_filter">Фільтр</string>
-    <string name="deck_conf_cram_options">Параметры</string>
     <string name="deck_conf_cram_search">Пошук</string>
     <string name="deck_conf_cram_limit">Абмежаваць</string>
     <string name="deck_conf_cram_order">карты адабраць па</string>
-    <string name="deck_conf_cram_reschedule">Змяніць расклад</string>
+    <string name="deck_conf_cram_reschedule" comment="Title of the box labelled by deck_conf_cram_reschedule_summ">Змяніць расклад</string>
     <string name="deck_conf_cram_reschedule_summ">Змяніць расклад картак на падставе маіх адказаў у гэтай калодзе</string>
     <string name="deck_conf_cram_steps">Карыстацкія крокі (у хвілінах)</string>
     <string name="deck_conf_cram_steps_summ">Вызначыць дадатковыя крокі</string>
@@ -290,6 +291,8 @@
     <string name="analytics_dialog_title">Дапамажыце зрабіць AnkiDroid яшчэ лепш!</string>
     <string name="analytics_title">Share feature usage</string>
     <string name="analytics_summ">You can contribute to AnkiDroid by helping the development team see which features people use</string>
-    <string name="enable_miui_keyboard_hack">\'Paste\' to insert cloze deletion</string>
-    <string name="enable_miui_keyboard_hack_summ">In the Note Editor, \'Paste\' will turn the selected text into a cloze</string>
+    <string name="note_editor_replace_newlines">Replace newlines with HTML</string>
+    <string name="note_editor_replace_newlines_summ">In the Note Editor, convert any instances of &lt;br&gt; to newlines when editing a card.</string>
+    <string name="no_code_formatting">Simple typed answer formatting</string>
+    <string name="no_code_formatting_summ">Fixes ‘􏿾’ appearing in typed answer results</string>
 </resources>

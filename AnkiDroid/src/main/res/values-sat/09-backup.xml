@@ -40,7 +40,6 @@
 <resources>
     <string name="backup_deck_no_space_left">ᱱᱚᱠᱚᱞ ᱡᱚᱜᱟᱣ ᱵᱟᱝ ᱥᱟᱱᱪᱟᱣ ᱠᱟᱱᱟ ᱾  SD card ᱨᱮ ᱡᱟᱭᱟᱜ ᱵᱟᱹᱱᱩᱜᱼᱟ ᱾ ᱱᱚᱠᱚᱞ ᱡᱚᱜᱟᱣ ᱜᱷᱟᱹᱛᱤᱨ ᱠᱚᱢ ᱢᱮ ᱟᱨ ᱵᱟᱝᱠᱷᱟᱱ ᱚᱞᱜᱟ ᱨᱮᱫ ᱠᱚ ᱚᱰᱚᱠ ᱛᱟᱢ ᱾</string>
     <string name="sd_space_warning">%d MB ᱠᱷᱚᱱ ᱠᱚᱢ ᱡᱟᱭᱟᱜ ᱟᱢᱟᱜ SD card ᱨᱮ ᱢᱮᱱᱟᱜᱼᱟ ᱾\nᱦᱟᱱᱤ ᱠᱚᱢ ᱞᱟᱹᱛᱜᱤᱫ ᱡᱟᱭᱜᱟ ᱠᱚᱢ ᱢᱮ ᱾</string>
-    <string name="backup_delete">ᱱᱚᱠᱚᱞ ᱡᱚᱜᱟᱣ ᱢᱮᱴᱟᱣ&#8230;</string>
     <string name="backup_restore">ᱱᱚᱠᱚᱞ-ᱡᱚ ᱫᱚᱦᱰᱟ ᱡᱚᱜᱟᱣ</string>
     <string name="backup_new_collection">ᱱᱟᱶᱟ ᱴᱩᱢᱟᱹᱞ</string>
     <string name="backup_del_collection">ᱴᱩᱢᱟᱹᱞ ᱜᱮᱫ ᱜᱤᱲᱤ ᱢᱮ ᱟᱨ ᱱᱟᱶᱟ ᱛᱮᱭᱟᱨ ᱢᱮ</string>
@@ -48,13 +47,11 @@
     <string name="backup_full_sync_from_server">ᱥᱚᱨᱵᱷᱚᱨ ᱠᱷᱚᱱ ᱯᱩᱨᱟ ᱟᱹᱭᱩᱨ ᱢᱤᱫ</string>
     <string name="backup_full_sync_from_server_question">ᱟᱢᱟᱜ ᱴᱩᱢᱟᱞ ᱟᱨ ᱢᱤᱫᱴᱟᱝ AnkiWeb ᱴᱩᱢᱟᱹᱞ ᱥᱟᱞᱟᱜ ᱫᱩᱦᱰᱟ ᱚᱞᱟᱭ? ᱱᱚᱶᱟ ᱟᱢᱟᱜ ᱪᱮᱫᱚᱜ ᱴᱷᱚᱠᱨᱟᱣᱟᱭ ᱟᱨ ᱞᱟᱹᱭ ᱥᱚᱫᱚᱨ ᱠᱚ ᱢᱮᱴᱮᱣᱚᱜ ᱛᱟᱢᱟ ᱢᱟᱲᱟᱝ ᱟᱹᱭᱩᱨ ᱢᱤᱫ ᱦᱟᱹᱵᱤᱡ ᱾</string>
     <string name="error_handling_title">ᱵᱮᱵᱦᱟᱨ ᱵᱷᱩᱞ</string>
-    <string name="error_handling_options">ᱟᱯᱱᱟᱨ ᱢᱚᱱᱮᱛᱮᱭᱟᱠ</string>
+    <string name="error_handling_options" comment="In a warning message, the label of the suggested action that the user should take">ᱟᱯᱱᱟᱨ ᱢᱚᱱᱮᱛᱮᱭᱟᱠ</string>
     <string name="backup_retry_opening">ᱫᱚᱦᱲᱟ ᱡᱷᱤᱡ ᱢᱮ</string>
     <string name="backup_error_menu_repair">ᱰᱟᱴᱟᱵᱮᱥ ᱡᱚᱛᱨᱟᱣ</string>
-    <string name="backup_repair_deck">ᱡᱚᱛᱨᱟᱹᱣ</string>
     <!-- Collection used to be called deck. Name is kept for consistency with translation software -->
     <string name="backup_repair_deck_progress">ᱰᱟᱴᱟᱵᱮᱥ ᱡᱚᱛᱨᱟᱣ&#8230;</string>
-    <string name="backup_error">ᱵᱷᱩᱞ</string>
     <string name="backup_invalid_file_error">ᱪᱚᱭᱚᱱᱠᱟᱱ ᱡᱚᱜᱟᱣ ᱨᱮᱫ ᱫᱚ ᱵᱷᱩᱞ ᱜᱮᱭᱟ</string>
     <string name="backup_restore_select_title">ᱫᱩᱼᱡᱚᱜᱟᱣ ᱞᱟᱹᱜᱤᱫ ᱪᱚᱭᱚᱱ ᱢᱮ</string>
     <string name="backup_restore_no_backups">ᱱᱚᱶᱟ ᱰᱮᱵᱷᱭᱤᱥ ᱞᱟᱹᱜᱤᱫ ᱡᱚᱜᱟᱣ ᱠᱚ ᱵᱟᱹᱱᱩᱜᱼᱟ ᱾ ᱰᱮᱠᱴᱚᱯ ᱠᱚᱢᱯᱩᱴᱚᱨ ᱨᱮ ᱡᱚᱜᱟᱣ ᱠᱚ ᱛᱟᱦᱮᱱ ᱠᱷᱟᱱ, AnkiDroid ᱯᱚᱴᱚᱢ ᱛᱮ ᱱᱚᱠᱚᱞ ᱢᱮ ᱾</string>

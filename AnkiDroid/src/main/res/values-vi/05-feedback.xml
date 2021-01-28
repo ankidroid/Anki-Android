@@ -42,12 +42,12 @@
     <string name="empty_string"></string>
     <string name="error_reporting_choice">Chế độ báo cáo lỗi</string>
     <string name="feedback_disclaimer">Miễn trừ trách nhiệm: Chúng tôi không thu thập bất kỳ thông tin cá nhân nào như địa chỉ email, số điện thoại hoặc số IMEI. Chúng tôi chỉ thu thập một số thông tin về thiết bị của bạn chẳng hạn như nhà sản xuất, đời máy và phiên bản Android cũng như nguyên bản báo cáo lỗi và từng bước xảy ra lỗi.</string>
-    <string name="feedback_title">AnkiDroid Feedback</string>
+    <string name="feedback_title">Phản hồi về AnkiDroid</string>
     <string name="feedback_default_text">Nhập phản hồi hoặc thông tin nguyên bản về các lỗi bạn đang báo cáo.</string>
     <string name="feedback_auto_toast_text">AnkiDroid gặp trục trặc; đang gửi báo cáo đến nhà phát triển&#8230;</string>
     <string name="feedback_manual_toast_text">AnkiDroid gặp trục trặc; đang tạo báo cáo&#8230;</string>
     <string name="feedback_copy_debug">Sao chép thông tin gỡ lỗi</string>
     <string name="feedback_report">Báo cáo</string>
     <string name="feedback_report_automatically">Tự động gửi báo cáo lỗi</string>
-    <string name="feedback_no_suitable_app_found">No suitable app found</string>
+    <string name="feedback_no_suitable_app_found">Không tìm thấy ứng dụng phù hợp.</string>
 </resources>

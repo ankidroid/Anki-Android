@@ -32,6 +32,7 @@ import android.provider.Settings;
 import com.ichi2.anki.AnkiDroidApp;
 
 import java.util.List;
+import java.util.Locale;
 
 public class AdaptionUtil {
     private static boolean sHasRunRestrictedLearningDeviceCheck = false;
@@ -86,6 +87,10 @@ public class AdaptionUtil {
         PackageManager pm = context.getPackageManager();
         List<ResolveInfo> list = pm.queryIntentActivities(intent, PackageManager.MATCH_DEFAULT_ONLY);
         for (ResolveInfo ri : list) {
+            if (!isValidBrowser(ri)) {
+                continue;
+            }
+
             // If we aren't a restricted device, any browser will do
             if (!isRestrictedLearningDevice()) {
                 return true;
@@ -97,6 +102,12 @@ public class AdaptionUtil {
         }
         // Either there are no web browsers, or we're a restricted learning device and there's no system browsers.
         return false;
+    }
+
+
+    private static boolean isValidBrowser(ResolveInfo ri) {
+        // https://stackoverflow.com/a/57223246/
+        return ri != null && ri.activityInfo != null && ri.activityInfo.exported;
     }
 
 
@@ -152,5 +163,15 @@ public class AdaptionUtil {
     @SuppressWarnings( {"unused", "RedundantSuppression"})
     public static boolean shouldCurrentUserBuyDifferentPhone() {
         return isRunningMiui();
+    }
+
+
+    /** See: https://en.wikipedia.org/wiki/Vivo_(technology_company) */
+    public static boolean isVivo() {
+        String manufacturer = Build.MANUFACTURER;
+        if (manufacturer == null) {
+            return false;
+        }
+        return manufacturer.toLowerCase(Locale.ROOT).equals("vivo");
     }
 }

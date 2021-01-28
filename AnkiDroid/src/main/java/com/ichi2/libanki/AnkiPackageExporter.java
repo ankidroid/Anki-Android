@@ -37,11 +37,14 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 import org.apache.commons.compress.archivers.zip.ZipArchiveEntry;
 import org.apache.commons.compress.archivers.zip.ZipArchiveOutputStream;
 
 import timber.log.Timber;
+
+import static com.ichi2.utils.CollectionUtils.addAll;
 
 class Exporter {
     protected final Collection mCol;
@@ -82,7 +85,8 @@ class AnkiExporter extends Exporter {
     protected boolean mIncludeMedia;
     private Collection mSrc;
     String mMediaDir;
-    final ArrayList<String> mMediaFiles = new ArrayList<>();
+    // Actual capacity will be set when known, if media are imported.
+    final ArrayList<String> mMediaFiles = new ArrayList<>(0);
     boolean _v2sched;
 
 
@@ -119,11 +123,10 @@ class AnkiExporter extends Exporter {
         Timber.d("Copy cards");
         mSrc.getDb().getDatabase()
                 .execSQL("INSERT INTO DST_DB.cards select * from cards where id in " + Utils.ids2str(cids));
-        Set<Long> nids = new HashSet<>(mSrc.getDb().queryLongList(
-                "select nid from cards where id in " + Utils.ids2str(cids)));
+        List<Long> uniqueNids = mSrc.getDb().queryLongList(
+                "select distinct nid from cards where id in " + Utils.ids2str(cids));
         // notes
         Timber.d("Copy notes");
-        ArrayList<Long> uniqueNids = new ArrayList<>(nids);
         String strnids = Utils.ids2str(uniqueNids);
         mSrc.getDb().getDatabase().execSQL("INSERT INTO DST_DB.notes select * from notes where id in " + strnids);
         // remove system tags if not exporting scheduling info
@@ -170,20 +173,20 @@ class AnkiExporter extends Exporter {
         }
         // decks
         Timber.d("Copy decks");
-        ArrayList<Long> dids = new ArrayList<>();
+        java.util.Collection<Long> dids = null;
         if (mDid != null) {
+            dids = new HashSet<>(mSrc.getDecks().children(mDid).values());
             dids.add(mDid);
-            dids.addAll(mSrc.getDecks().children(mDid).values());
         }
         JSONObject dconfs = new JSONObject();
         for (Deck d : mSrc.getDecks().all()) {
             if ("1".equals(d.getString("id"))) {
                 continue;
             }
-            if (mDid != null && !dids.contains(d.getLong("id"))) {
+            if (dids != null && !dids.contains(d.getLong("id"))) {
                 continue;
             }
-            if (d.getInt("dyn") != 1 && d.getLong("conf") != 1L) {
+            if (d.isStd() && d.getLong("conf") != 1L) {
                 if (mIncludeSched) {
                     dconfs.put(Long.toString(d.getLong("conf")), true);
                 }
@@ -240,9 +243,8 @@ class AnkiExporter extends Exporter {
         }
         JSONArray keys = media.names();
         if (keys != null) {
-            for (String key: keys.stringIterable()) {
-                mMediaFiles.add(key);
-            }
+            mMediaFiles.ensureCapacity(keys.length());
+            addAll(mMediaFiles, keys.stringIterable());
         }
         Timber.d("Cleanup");
         dst.setCrt(mSrc.getCrt());

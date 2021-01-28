@@ -16,15 +16,12 @@
 
 package com.ichi2.anki;
 
-import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
 
-import com.ichi2.anim.ActivityTransitionAnimation;
 import com.ichi2.libanki.Card;
 import com.ichi2.libanki.Collection;
 import com.ichi2.libanki.Model;
-import com.ichi2.libanki.Models;
 import com.ichi2.libanki.Note;
 import com.ichi2.libanki.utils.NoteUtils;
 import com.ichi2.themes.Themes;
@@ -32,6 +29,7 @@ import com.ichi2.utils.JSONObject;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.List;
 
 import androidx.annotation.Nullable;
 import timber.log.Timber;
@@ -55,6 +53,9 @@ public class CardTemplatePreviewer extends AbstractFlashcardViewer {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        if (showedActivityFailedScreen(savedInstanceState)) {
+            return;
+        }
         Timber.d("onCreate()");
         super.onCreate(savedInstanceState);
 
@@ -84,7 +85,7 @@ public class CardTemplatePreviewer extends AbstractFlashcardViewer {
             Timber.d("onCreate() CardTemplatePreviewer started with edited model and template index, displaying blank to preview formatting");
             mCurrentCard = getDummyCard(mEditedModel, mOrdinal);
             if (mCurrentCard == null) {
-                UIUtils.showSimpleSnackbar(this, R.string.invalid_template, false);
+                UIUtils.showThemedToast(getApplicationContext(), getString(R.string.invalid_template), false);
                 closeCardTemplatePreviewer();
             }
         }
@@ -154,7 +155,7 @@ public class CardTemplatePreviewer extends AbstractFlashcardViewer {
         mPreviewPrevCard.setVisibility(View.GONE);
         mPreviewNextCard.setVisibility(View.GONE);
 
-        if (Build.VERSION.SDK_INT >= 21 && animationEnabled()) {
+        if (animationEnabled()) {
             int resId = Themes.getResFromAttr(this, R.attr.hardButtonRippleRef);
             mPreviewButtonsLayout.setBackgroundResource(resId);
             mPreviewPrevCard.setBackgroundResource(resId);
@@ -273,13 +274,13 @@ public class CardTemplatePreviewer extends AbstractFlashcardViewer {
             return null;
         }
         Note n = getCol().newNote(model);
-        ArrayList<String> fieldNames = Models.fieldNames(model);
+        List<String> fieldNames = model.getFieldsNames();
         for (int i = 0; i < fieldNames.size() && i < n.getFields().length; i++) {
             n.setField(i, fieldNames.get(i));
         }
         try {
             JSONObject template = model.getJSONArray("tmpls").getJSONObject(ordinal);
-            PreviewerCard card = (PreviewerCard)getCol().getNewLinkedCard(new PreviewerCard(getCol()), n, template, 1, 0, false);
+            PreviewerCard card = (PreviewerCard)getCol().getNewLinkedCard(new PreviewerCard(getCol()), n, template, 1, 0L, false);
             card.setNote(n);
             return card;
         } catch (Exception e) {

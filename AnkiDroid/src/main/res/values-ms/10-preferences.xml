@@ -42,14 +42,12 @@
     <string name="disabled">Dimatikan</string>
     <string name="enabled">Didayakan</string>
     <!-- preferences.xml categories-->
-    <string name="pref_cat_general">AnkiDroid</string>
     <string name="pref_cat_general_summ">Pengaturan</string>
     <string name="pref_cat_reviewing">Mengkaji semula</string>
     <string name="pref_cat_reviewing_summ">Seting pengulas bebas dikhusus dek</string>
     <string name="pref_cat_reviewer_behaviour">Tingkah laku</string>
     <string name="pref_cat_flashcard">Paparan</string>
     <string name="pref_cat_whiteboard">Papan putih interaktif</string>
-    <string name="pref_cat_automatic_display">Jawapan Papar automatik</string>
     <string name="pref_cat_appearance">Penampilan</string>
     <string name="pref_cat_appearance_summ">Perubahan tema dan font</string>
     <string name="pref_cat_themes">Tema</string>
@@ -66,8 +64,6 @@
     <string name="about_version">Versi: </string>
     <!-- preferences.xml entries-->
     <string name="whiteboard_stroke_width">Strok lebar</string>
-    <string name="whiteboard_black">Pukulan hitam</string>
-    <string name="whiteboard_black_summ">Menggunakan memori kurang, kecuali di malam mod</string>
     <string name="use_input_tag">Jenis menjawab ke kad</string>
     <string name="use_input_tag_summ">Menggunakan teks input kotak di dalam kad untuk masuk ke dalam menjawab</string>
     <string name="dictionary">Pencarian kamus</string>
@@ -96,15 +92,26 @@
     <string name="gestures_summ">Berikan isyarat untuk tindakan seperti menjawab dan editing kad.</string>
     <string name="gestures_allow_links">Ignore touch gestures on links</string>
     <string name="gestures_allow_links_summary">Touch gestures will not be processed if a link/hint is pressed.</string>
+    <string name="gestures_corner_touch">9-point touch</string>
+    <string name="gestures_corner_touch_summary">Allow touch gestures in screen corners</string>
     <string name="gestures_swipe_up">Sapu ke atas</string>
     <string name="gestures_swipe_down">Swipe down</string>
     <string name="gestures_swipe_left">Leret ke kiri</string>
     <string name="gestures_swipe_right">Sapu tepat</string>
     <string name="gestures_double_tap">Double sentuh</string>
     <string name="gestures_tap_top">Sentuh atas</string>
-    <string name="gestures_tap_bottom">Sentuh bahagian bawah</string>
     <string name="gestures_tap_left">Sentuh kekunci</string>
     <string name="gestures_tap_right">Menyentuh hak</string>
+    <string name="gestures_tap_bottom">Sentuh bahagian bawah</string>
+    <string name="gestures_corner_tap_top_left">Touch top left</string>
+    <string name="gestures_corner_tap_top_center">Touch top center</string>
+    <string name="gestures_corner_tap_top_right">Touch top right</string>
+    <string name="gestures_corner_tap_middle_left">Touch middle left</string>
+    <string name="gestures_corner_tap_middle_center">Touch middle center</string>
+    <string name="gestures_corner_tap_middle_right">Touch middle right</string>
+    <string name="gestures_corner_tap_bottom_left">Touch bottom left</string>
+    <string name="gestures_corner_tap_bottom_center">Touch bottom center</string>
+    <string name="gestures_corner_tap_bottom_right">Touch bottom right</string>
     <string name="gestures_volume_up">Volume up</string>
     <string name="gestures_volume_down">Volume down</string>
     <string name="more_scrolling_buttons">eReader</string>
@@ -142,9 +149,8 @@ minit yang lalu.</string>
     <string name="timeout_answer_text">Automatik paparan menjawab</string>
     <string name="timeout_answer_summ">Menunjukkan menjawab secara automatik tanpa input pengguna. Kelewatan termasuk masa untuk automatik bermain fail audio.</string>
     <string name="timeout_answer_seconds">Masa untuk menunjukkan menjawab</string>
-    <string name="timeout_answer_seconds_summ">XXX s</string>
+    <string name="timeout_answer_seconds_summ" comment="The time to wait (in seconds) in the reviewer before automatically showing the next question or answer">XXX s</string>
     <string name="timeout_question_seconds">Masa untuk menunjukkan pertanyaan berikutnya</string>
-    <string name="timeout_question_seconds_summ">XXX s</string>
     <string name="select_locale_title">Pilih Bahasa</string>
     <string name="safe_display">Safe display mode</string>
     <string name="safe_display_summ">Disable all animations and use safer method for drawing cards. E-ink devices may require this.</string>
@@ -165,7 +171,6 @@ minit yang lalu.</string>
     <string name="use_current">Deck for new cards</string>
     <string name="new_spread">New card position</string>
     <string name="learn_cutoff">Learn ahead limit</string>
-    <string name="learn_cutoff_summ">XXX min</string>
     <string name="time_limit">Timebox time limit</string>
     <string name="time_limit_summ">XXX min</string>
     <string name="day_offset">Start of next day</string>
@@ -216,8 +221,8 @@ minit yang lalu.</string>
         <item quantity="other">%1$s\n%2$d decks use this group</item>
     </plurals>
     <string name="deck_conf_new_cards">New cards</string>
-    <string name="deck_conf_rev_cards">Reviews</string>
-    <string name="deck_conf_lps_cards">Kesilapan</string>
+    <string name="deck_conf_rev_cards" comment="Name of the deck options submenu for configuring reviews of due cards.">Reviews</string>
+    <string name="deck_conf_lps_cards" comment="Label of the submenu stating how lapses cards are treated.">Kesilapan</string>
     <string name="deck_conf_general">Umum</string>
     <string name="deck_conf_reminders">Peringatan</string>
     <string name="deck_conf_steps">Langkah-langkah (dalam beberapa minit)</string>
@@ -235,6 +240,7 @@ minit yang lalu.</string>
     <string name="deck_conf_use_general_timeout_settings">Use general settings</string>
     <string name="deck_conf_use_general_timeout_settings_summ">Use general \'Automatic display answer\' settings instead of using the settings for this group.</string>
     <string name="deck_conf_easy_bonus">Mudah bonus</string>
+    <string name="deck_conf_hard_factor">Hard interval</string>
     <string name="deck_conf_ivl_fct">Selang pengubah</string>
     <string name="deck_conf_max_ivl">Maximum interval</string>
     <string name="deck_conf_new_lps_ivl">Baru selang</string>
@@ -251,28 +257,23 @@ minit yang lalu.</string>
     <string name="deck_conf_manage">Kumpulan pengurusan</string>
     <string name="deck_conf_manage_summ">Add and change options groups</string>
     <string name="deck_conf_current_group">Semasa kumpulan</string>
-    <string name="deck_conf_rename">Menamakan</string>
+    <string name="deck_conf_rename" comment="Menu entry to rename a deck">Menamakan</string>
     <string name="deck_conf_reset">Memulihkan mungkir</string>
-    <string name="deck_conf_reset_title">Memulihkan mungkir</string>
     <string name="deck_conf_reset_message">Memulihkan semasa pilihan kumpulan untuk lalai nilai-nilai?</string>
-    <string name="deck_conf_add">Menambah</string>
+    <string name="deck_conf_add" comment="Adding a new deck option group">Menambah</string>
     <string name="deck_conf_add_summ">Membuat salinan semasa pilihan kumpulan</string>
-    <string name="deck_conf_remove">Membuang</string>
-    <string name="deck_conf_remove_title">Membuang</string>
     <string name="deck_conf_remove_message">Membuang pilihan semasa kumpulan?</string>
     <string name="deck_conf_set_subdecks">Set untuk semua subdecks</string>
     <plurals name="deck_conf_set_subdecks_summ">
         <item quantity="other">%s subdecks will use this group</item>
     </plurals>
-    <string name="deck_conf_set_subdecks_title">Set untuk semua subdecks</string>
     <string name="deck_conf_set_subdecks_message">Set semasa pilihan kumpulan untuk semua ini dek itu subdecks?</string>
     <string name="pref_browser_editor_font">Pelayar dan editor font</string>
     <string name="deck_conf_cram_filter">Penapis</string>
-    <string name="deck_conf_cram_options">Pilihan</string>
     <string name="deck_conf_cram_search">Cari</string>
     <string name="deck_conf_cram_limit">Had</string>
     <string name="deck_conf_cram_order">kad yang dipilih oleh</string>
-    <string name="deck_conf_cram_reschedule">Reschedule</string>
+    <string name="deck_conf_cram_reschedule" comment="Title of the box labelled by deck_conf_cram_reschedule_summ">Reschedule</string>
     <string name="deck_conf_cram_reschedule_summ">Reschedule cards based on my answers in this deck</string>
     <string name="deck_conf_cram_steps">Custom steps (in minutes)</string>
     <string name="deck_conf_cram_steps_summ">Define custom steps</string>
@@ -282,6 +283,8 @@ minit yang lalu.</string>
     <string name="analytics_dialog_title">Help make AnkiDroid better!</string>
     <string name="analytics_title">Share feature usage</string>
     <string name="analytics_summ">You can contribute to AnkiDroid by helping the development team see which features people use</string>
-    <string name="enable_miui_keyboard_hack">\'Paste\' to insert cloze deletion</string>
-    <string name="enable_miui_keyboard_hack_summ">In the Note Editor, \'Paste\' will turn the selected text into a cloze</string>
+    <string name="note_editor_replace_newlines">Replace newlines with HTML</string>
+    <string name="note_editor_replace_newlines_summ">In the Note Editor, convert any instances of &lt;br&gt; to newlines when editing a card.</string>
+    <string name="no_code_formatting">Simple typed answer formatting</string>
+    <string name="no_code_formatting_summ">Fixes ‘􏿾’ appearing in typed answer results</string>
 </resources>

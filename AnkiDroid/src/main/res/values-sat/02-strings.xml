@@ -37,13 +37,13 @@
 ~ You should have received a copy of the GNU General Public License along with
 ~ this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools">
     <!-- How to format a percentage shown in the summary field of a preference -->
     <string name="preference_summary_percentage">XXX%</string>
+    <!-- #7570: We should use these strings again -->
     <!-- Navigation drawer strings -->
-    <string name="drawer_open">ᱰᱨᱚᱣᱟᱹᱨ ᱠᱷᱩᱞᱟᱹᱭ ᱢᱮ</string>
-    <string name="drawer_close">ᱰᱨᱚᱣᱟᱹᱨ ᱵᱚᱸᱫᱚᱭ ᱢᱮ</string>
-    <string name="CardEditorLaterMessage">ᱠᱷᱚᱵᱚᱨ ᱯᱚᱨᱮ ᱞᱟᱹᱤᱫ ᱨᱩᱠᱷᱤᱭᱟᱹᱣᱠᱟᱱᱟ ᱾</string>
+    <string tools:ignore="UnusedResources" name="drawer_open">ᱰᱨᱚᱣᱟᱹᱨ ᱠᱷᱩᱞᱟᱹᱭ ᱢᱮ</string>
+    <string tools:ignore="UnusedResources" name="drawer_close">ᱰᱨᱚᱣᱟᱹᱨ ᱵᱚᱸᱫᱚᱭ ᱢᱮ</string>
     <string name="CardEditorCardDeck">ᱠᱟᱰ ᱰᱮᱠᱺ</string>
     <string name="CardEditorNoteDeck">ᱰᱮᱠᱺ</string>
     <string name="CardEditorModel">ᱯᱨᱚᱠᱟᱨᱺ</string>
@@ -55,7 +55,6 @@
     <string name="check_all_tags">ᱪᱮᱠ ᱢᱮ/ᱡᱷᱚᱛᱟ ᱴᱮᱜ uncheck ᱢᱮ</string>
     <string name="filter_tags">ᱴᱮᱜ ᱯᱷᱤᱞᱴᱚᱨ ᱢᱮ</string>
     <string name="no_tags">ᱟᱢ ᱴᱮᱜ ᱵᱟᱝ ᱥᱮᱞᱮᱫ ᱠᱟᱜᱼᱟᱢ</string>
-    <string name="sdcard_missing_message">USB ᱥᱴᱚᱨᱮᱡ ᱵᱚᱸᱫ ᱞᱮᱠᱷᱟᱱ ᱰᱮᱠ ᱚᱠ ᱨᱮ ᱦᱚᱠ ᱮᱢ ᱧᱮᱢ ᱟᱢ</string>
     <string name="updated_version">%s ᱵᱷᱟᱹᱨᱥᱚᱱ ᱛᱮ ᱟᱹᱯᱰᱮᱴ ᱮᱱᱟ </string>
     <!-- Reviewer.java -->
     <string name="save_whiteboard">ᱯᱩᱸᱰ ᱵᱚᱰ ᱥᱟᱱᱪᱟᱣ ᱢᱮ</string>
@@ -65,7 +64,6 @@
     <string name="hide_whiteboard">ᱥᱤᱠᱮᱴ ᱩᱠᱩᱭ ᱢᱮ</string>
     <string name="clear_whiteboard">ᱥᱤᱠᱮᱴ ᱤᱬᱤᱡ ᱢᱮ</string>
     <string name="replay_audio">Audio replay ᱢᱮ</string>
-    <string name="toggle_mic_tool_bar">ᱟᱢᱟᱜ ᱩᱪᱟᱨᱚᱬ ᱧᱮᱞ ᱢᱮ</string>
     <string name="leech_suspend_notification">ᱠᱟᱰ ᱫᱚ leech ᱟᱨ ᱵᱚᱸᱫ ᱛᱮ ᱢᱟᱨᱠ ᱮᱱᱟ</string>
     <string name="leech_notification">ᱠᱟᱰ ᱫᱚ leech ᱛᱮ ᱢᱟᱨᱠ ᱮᱱᱟ</string>
     <string name="corrupt_font">%s ᱯᱷᱚᱱᱴ ᱯᱷᱟᱤᱞ corrupt ᱜᱮᱭᱟ</string>
@@ -107,18 +105,16 @@
     <string name="custom_study_preview_new">ᱱᱟᱶᱟ ᱠᱟᱰ ᱧᱮᱞᱢᱚᱝ ᱢᱮ</string>
     <string name="custom_study_limit_tags">ᱱᱤᱥᱪᱤᱛ ᱴᱮᱜ ᱛᱮ ᱞᱤᱢᱤᱴ ᱢᱮ</string>
     <!-- Card editor -->
-    <string name="cardeditor_title_add_note">ᱠᱷᱟᱴᱚ ᱵᱤᱪᱟᱹᱨ ᱥᱮᱞᱮᱫ</string>
     <string name="cardeditor_title_edit_card">ᱠᱷᱟᱴᱚ ᱵᱤᱪᱟᱹᱨ ᱥᱟᱯᱲᱟᱣ</string>
     <string name="discard_unsaved_changes">ᱵᱚᱸᱫ ᱢᱮ ᱟᱨ ᱱᱤᱛᱚᱜ-ᱟ ᱤᱱᱯᱩᱴ ᱟᱫ ᱪᱷᱚᱭ ᱢᱮ?</string>
     <string name="note_editor_no_cards_created">ᱚᱠᱟ ᱠᱟᱰ ᱦᱚᱸ ᱵᱟᱭ ᱛᱮᱟᱛ ᱟᱠᱟᱱᱟ ᱾ ᱫᱚᱭᱟᱡᱟᱜᱮ ᱟᱨᱦᱚᱸ ᱡᱟᱭᱜᱟ ᱯᱩᱨᱚᱬ ᱢᱮ</string>
     <string name="note_editor_no_first_field">ᱯᱨᱩᱛᱷᱩᱢ ᱡᱟᱭᱜᱟ ᱠᱷᱟᱹᱞᱤ ᱜᱮᱭᱟ</string>
     <string name="note_editor_no_cloze_delations">ᱱᱚᱝᱠᱟᱱ ᱠᱷᱟᱴᱚ ᱵᱤᱪᱟᱹᱨ ᱯᱨᱚᱠᱟᱨ ᱨᱮ cloze ᱜᱮᱫ ᱜᱤᱲᱤ ᱢᱮ </string>
-    <string name="note_editor_set_field_language">Set field language</string>
+    <string name="note_editor_set_field_language">ᱡᱟᱭᱜᱟ ᱨᱮᱭᱟᱜ ᱯᱟᱹᱨᱥᱤ ᱵᱚᱫᱚᱞ ᱢᱮ</string>
     <string name="note_editor_no_cards_created_all_fields">ᱱᱚᱶᱟ ᱠᱷᱟᱴᱚ ᱵᱤᱪᱟᱹᱨ ᱯᱨᱚᱠᱟᱨ ᱠᱟᱰ ᱵᱟᱭ ᱛᱮᱭᱟᱨᱮᱟᱭ ᱾ \n ᱫᱚᱭᱠᱟᱛᱮ ᱱᱟᱶᱟ ᱠᱷᱟᱴᱚ ᱵᱤᱪᱟᱹᱨ ᱯᱨᱚᱠᱟᱨ ᱨᱮᱭᱟᱜ ᱪᱚᱭᱚᱱ ᱢᱮ, ᱟᱨ ᱵᱟᱝᱠᱷᱟᱱ \'ᱠᱟᱨᱰᱥ\' ᱨᱮ ᱚᱛᱟ ᱡᱟ ᱟᱨ field substitute ᱥᱮᱞᱮᱫ ᱢᱮ</string>
     <string name="note_editor_insert_cloze_no_cloze_note_type">ᱠᱞᱚᱡ ᱢᱮᱴᱟᱹᱣ ᱫᱚ ᱠᱞᱚᱡ ᱱᱚᱴ ᱯᱨᱚᱠᱟᱨ ᱴᱷᱮᱱ ᱮ ᱠᱟᱹᱢᱤ ᱟ</string>
     <string name="saving_facts">ᱠᱷᱟᱴᱚ ᱵᱤᱪᱟᱹᱨ ᱥᱚᱱᱪᱟᱣ ᱢᱮ </string>
     <string name="saving_model">ᱠᱷᱟᱴᱚ ᱵᱤᱪᱟᱹᱨ ᱯᱨᱚᱠᱟᱨ ᱥᱟᱱᱪᱟᱣ ᱢᱮ</string>
-    <string name="add">ᱥᱮᱞᱮᱫ</string>
     <string name="save">ᱥᱟᱝᱪᱚᱣ</string>
     <string name="close">ᱵᱚᱫᱽ</string>
     <string name="select">ᱪᱚᱭᱚᱱ</string>
@@ -135,23 +131,19 @@
         <item quantity="one">%1$d ᱴᱤᱯᱤᱡ</item>
         <item quantity="other">%1$d ᱴᱤᱯᱤᱡ</item>
     </plurals>
-    <string name="studyoptions_welcome_title">Ankidrod ᱛᱮ ᱥᱟᱹᱜᱩᱱ ᱫᱟᱨᱟᱢ</string>
-    <string name="fact_adder_intent_title">AnkiDroid ᱠᱟᱰ</string>
-    <string name="note_editor_add_note">ᱠᱷᱟᱴᱚ ᱵᱤᱪᱟᱹᱨ ᱥᱮᱞᱮᱫ ᱢᱮ</string>
+    <string name="fact_adder_intent_title" comment="Label of the \'Add Note\' window. This title can\'t be seen in AnkiDroid directly.">AnkiDroid ᱠᱟᱰ</string>
     <string name="note_editor_copy_note">ᱠᱷᱟᱴᱚ ᱵᱤᱪᱟᱹᱨ ᱠᱚᱯᱤ ᱢᱮ</string>
-    <string name="card_editor_copy_card">ᱠᱟᱰ ᱱᱚᱠᱚᱞ ᱢᱮ</string>
     <string name="card_editor_reposition_card">ᱥᱛᱷᱟᱱᱚᱱᱛᱚᱨ ᱢᱮ</string>
     <string name="card_editor_reset_card">ᱯᱨᱚᱜᱨᱮᱥ ᱨᱤᱥᱮᱴ ᱢᱮ</string>
-    <string name="card_editor_reschedule_card">ᱨᱤᱥᱮᱰᱭᱩᱞ ᱢᱮ</string>
-    <string name="card_editor_preview_card">ᱞᱟᱦᱟᱛᱮᱭᱟᱜ ᱧᱮᱞ</string>
+    <string name="card_editor_reschedule_card" comment="Action to reschedule a card">ᱨᱤᱥᱮᱰᱭᱩᱞ ᱢᱮ</string>
+    <string name="card_editor_preview_card" comment="Button offering to preview some card(s)">ᱞᱟᱦᱟᱛᱮᱭᱟᱜ ᱧᱮᱞ</string>
     <string name="error_insufficient_memory">ᱠᱟᱹᱢᱤ ᱠᱚᱢ ᱩᱭᱦᱟᱹᱨ ᱫᱟᱲᱮᱟᱼᱜ ᱠᱷᱟᱹᱛᱤᱨ ᱵᱟᱭ ᱚᱯᱨᱮᱥᱚᱱ ᱵᱟᱭ ᱦᱩᱭ ᱫᱟᱲᱮᱟᱜᱼᱟ</string>
-    <string name="rename">ᱫᱚᱦᱲᱟ ᱧᱩᱛᱩᱢ</string>
+    <string name="rename" comment="Confirm that the renaming action should be processed.">ᱫᱚᱦᱲᱟ ᱧᱩᱛᱩᱢ</string>
     <string name="default_conf_delete_error">ᱟᱯᱱᱟᱨ ᱢᱚᱱᱮ ᱛᱮᱭᱟᱜ ᱫᱚᱞ ᱵᱟᱭ ᱚᱰᱚᱠ ᱦᱩᱭᱩᱜᱼᱟ</string>
     <plurals name="factadder_cards_added">
         <item quantity="one">%d ᱠᱟᱰ ᱥᱮᱞᱮᱫ ᱮᱱᱟ</item>
         <item quantity="other">%d ᱠᱟᱰ ᱥᱮᱞᱮᱫ ᱮᱱᱟ</item>
     </plurals>
-    <string name="help_title">ᱜᱚᱸᱲᱚᱸ</string>
     <string name="check_db">ᱰᱟᱴᱟᱵᱮᱥ ᱪᱮᱠ ᱢᱮ</string>
     <string name="check_media">ᱢᱤᱰᱤᱭᱟ ᱪᱮᱠ ᱢᱮ</string>
     <string name="empty_cards">ᱱᱩᱬᱤᱭᱟᱹ ᱠᱟᱰ ᱠᱚ</string>
@@ -161,10 +153,9 @@
     <string name="delete_deck">ᱰᱮᱠ ᱢᱮᱴᱟᱣᱚᱜ ᱠᱟᱱᱟ&#8230;</string>
     <string name="show_hint">ᱫᱮᱠᱷᱟᱣ %s</string>
     <string name="info_rate">AnkiDroid ᱜᱚᱬᱚᱰ ᱢᱮ</string>
-    <string name="col_load_failed">ᱴᱩᱢᱟᱹᱞ ᱞᱚᱲ ᱦᱩᱲᱟᱜ ᱾\nAnkiDroid ᱵᱚᱸᱫ ᱞᱟᱹᱜᱤᱫ ᱯᱟᱪᱞᱟᱭ ᱢᱮ ᱾</string>
     <string name="import_title">ᱟᱹᱜᱩᱭᱮᱛ ᱟ</string>
     <string name="import_select_title">ᱛᱮᱛ ᱟᱹᱜᱩᱭᱮᱛ ᱞᱟᱹᱜᱤᱫ ᱪᱚᱭᱚᱱ</string>
-    <string name="import_message_add">ᱥᱮᱞᱮᱫ</string>
+    <string name="import_message_add" comment="Adding a new deck to the collection (import)">ᱥᱮᱞᱮᱫ</string>
     <string name="import_message_replace_confirm">ᱱᱚᱶᱟ ᱫᱚ ᱴᱩᱢᱟᱞ ᱜᱮᱫ ᱜᱤᱰᱤᱟᱭ ᱟᱨ ᱚᱱᱟ ᱵᱚᱫᱚᱞ ᱛᱮ ᱚᱱᱟ ᱨᱮᱛ ᱨᱮ ᱥᱟᱹᱠᱷᱤᱭᱟᱹᱛ ᱚᱞᱟᱭ  %s</string>
     <string name="import_message_add_confirm">“%s” ᱴᱩᱢᱟᱹᱞ ᱛᱮ ᱥᱮᱞᱮᱫ ᱟᱢ ? ᱱᱚᱶᱟ ᱡᱟᱥᱛᱤ ᱥᱚᱢᱚᱭ ᱤᱫᱤ ᱫᱟᱰᱮᱟᱜᱼᱟᱭ</string>
     <string name="import_log_no_apkg">ᱱᱚᱶᱟ ᱫᱚ ᱵᱦᱮᱞᱤᱰ Anki ᱯᱮᱠ ᱵᱟᱝ ᱠᱟᱱᱟ</string>
@@ -175,13 +166,13 @@
     <string name="import_log_file_cache_cleared">ᱨᱮᱫ ᱞᱟᱫᱮ ᱵᱷᱩᱞ, ᱠᱟᱨᱬ ᱠᱮᱪ ᱥᱟᱯᱷᱟ ᱦᱩᱭ ᱠᱚᱜᱼᱟ ᱾\n ᱫᱚᱭᱟᱠᱟᱛᱮ ᱫᱩᱦᱲᱟᱹ ᱪᱮᱥᱴᱟᱭ ᱢᱮ</string>
     <string name="import_succeeded_but_check_database">ᱰᱟᱴᱟ ᱟᱹᱜᱩ ᱦᱩᱭ ᱦᱮᱞᱮ ᱯᱚᱥᱴ-ᱟᱜᱩ ᱠᱞᱤᱱᱚᱯᱷ ᱰᱤᱜᱟᱹᱣ ᱾ ᱪᱮᱠ ᱰᱟᱴᱟᱵᱮᱥ ᱯᱚᱨᱮ ᱫᱟᱹᱲ ᱪᱷᱚᱭ ᱢᱮ ᱾ ᱢᱩᱞ ᱠᱟᱨᱚᱬ: %s</string>
     <string name="import_error_unhandled_request">ᱞᱟᱫᱮ ᱱᱮᱦᱚᱨ ᱵᱟᱝ ᱜᱟᱱᱚᱜ ᱠᱟᱱᱟ</string>
-    <string name="import_error_corrupt_zip">The apkg file is corrupt. Please delete and re-download it.\n\nRoot cause: %s</string>
+    <string name="import_error_corrupt_zip">apkg  ᱫᱚ ᱠᱷᱟᱨᱟᱯ ᱜᱮᱭᱟ ᱾ ᱫᱚᱭᱟᱠᱟᱛᱮ ᱜᱮᱫ ᱜᱤᱰᱤ ᱵᱤᱱ ᱟᱨ ᱫᱩᱦᱲᱟᱹ ᱰᱟᱩᱱᱞᱳᱰ ᱵᱤᱱ ᱾ \n\n ᱢᱩᱞ ᱠᱟᱨᱚᱬ:%s</string>
     <string name="import_error_exception">ᱯᱟᱠᱟᱡ \n\n%s ᱞᱟᱫᱮ ᱵᱷᱩᱞ</string>
     <string name="import_error_not_apkg_extension">ᱨᱮᱫᱧᱩᱛᱩᱢ “%s” ᱴᱷᱮᱱ .apkg or .colpkg extension ᱵᱟᱱᱩᱜᱽᱟ</string>
-    <string name="import_error_load_imported_database">Anki Database (.anki2) ᱵᱚᱫᱚᱞ ᱥᱟᱹᱯᱚᱴ ᱵᱟᱹᱱᱩᱜᱼᱟ ᱾ ᱨᱤᱯᱞᱮᱥᱢᱮᱸᱴ ᱞᱟᱹᱜᱤᱫ ᱢᱮᱱᱩᱟᱞ ᱧᱮᱞᱯᱮ</string>
-    <string name="import_error_content_provider">ᱪᱚᱭᱚᱱᱟᱠᱟᱱ ᱨᱮᱫ AnkiDroid ᱛᱮ ᱵᱟᱭ ᱞᱟᱫᱮᱜ ᱠᱟᱱᱟ ᱾ ᱫᱚᱭᱟᱠᱟᱛᱮ ᱨᱤᱯᱞᱮᱥᱢᱮᱸᱴ ᱞᱟᱹᱜᱤᱫ ᱢᱮᱱᱩᱟᱞ ᱧᱮᱞᱯᱮ anki ᱨᱮᱫ: \n%s</string>
+    <string name="import_error_load_imported_database">Anki Database (.anki2) ᱵᱚᱫᱚᱞ ᱥᱟᱹᱯᱚᱴ ᱵᱟᱹᱱᱩᱜᱼᱟ ᱾ ᱨᱤᱯᱞᱮᱥᱢᱮᱴ ᱞᱟᱹᱜᱤᱫ ᱢᱮᱱᱩᱟᱞ ᱧᱮᱞᱯᱮ</string>
+    <string name="import_error_content_provider">ᱪᱚᱭᱚᱱᱟᱠᱟᱱ ᱨᱮᱫ AnkiDroid ᱛᱮ ᱵᱟᱭ ᱞᱟᱫᱮᱜ ᱠᱟᱱᱟ ᱾ ᱫᱚᱭᱟᱠᱟᱛᱮ ᱨᱤᱯᱞᱮᱥᱢᱮᱴ ᱞᱟᱹᱜᱤᱫ ᱢᱮᱱᱩᱟᱞ ᱧᱮᱞᱯᱮ anki ᱨᱮᱫ: \n%s</string>
     <string name="import_error_copy_file_to_cache">copyFileToCache() ᱦᱩᱲᱟᱜ (ᱫᱚᱦᱚ ᱡᱟᱭᱜᱟ ᱵᱟᱹᱱᱩᱜᱼᱟ ᱯᱟᱞᱮ)</string>
-    <string name="import_error_unhandled_scheme">Unhandled import from: “%s”</string>
+    <string name="import_error_unhandled_scheme">ᱵᱟᱝ ᱡᱩᱛ ᱟᱭᱟᱛ:“%s”</string>
     <string name="import_replacing">ᱴᱩᱢᱟᱹ ᱳᱪᱳᱜᱳᱜ ᱠᱟᱱᱟ&#8230;</string>
     <string name="import_interrupted">ᱨᱮᱫ ᱟᱠᱚᱴ ᱮᱱᱟ</string>
     <string name="export_include_schedule">ᱥᱮᱰᱤᱭᱩᱞ ᱨᱮ ᱢᱮᱥᱟᱭ ᱯᱮ</string>
@@ -201,7 +192,9 @@
     <string name="export_unsuccessful">apkg ᱨᱮᱫ ᱵᱷᱮᱡ ᱵᱷᱩᱞ</string>
     <string name="import_hint">apkg ᱨᱮᱫ ᱫᱚ “%s” ᱩᱱᱩᱫᱩᱜ ᱨᱮ ᱫᱚᱦᱚᱭ ᱢᱮ ᱟᱨ “OK” ᱨᱮ ᱚᱛᱟᱭ ᱢᱮ ᱠᱟᱰ ᱵᱷᱮᱡᱟᱭ ᱞᱟᱹᱜᱤᱫ</string>
     <string name="upgrade_import_no_file_found">ᱪᱮᱫ ᱦᱚ ᱵᱷᱮᱡᱟ ᱞᱟᱭᱚᱠ %1$s ᱨᱮᱫ ᱵᱟᱝ ᱧᱟᱢ ᱞᱮᱱᱟ</string>
-    <string name="study_options">ᱟᱯᱟᱱᱟᱨ ᱢᱚᱱᱮᱛᱮᱭᱟᱜ</string>
+    <string name="study_options" comment="Name for a preference category in Filtered deck (aka Cram deck, aka Custom study) options">ᱟᱯᱟᱱᱟᱨ ᱢᱚᱱᱮᱛᱮᱭᱟᱜ</string>
+    <string name="menu__deck_options">ᱰᱮᱠ ᱚᱯᱥᱚᱱᱠᱚ</string>
+    <string name="menu__study_options" comment="Menu item that opens options for a Filtered deck (aka Cram deck, aka Custom study)">ᱯᱟᱲᱦᱟᱣ ᱚᱯᱥᱚᱱ ᱠᱚ</string>
     <string name="select_tts">TTS ᱯᱟᱹᱨᱥᱤ ᱥᱮᱴ ᱢᱮ</string>
     <string name="custom_study">ᱱᱤᱡᱮᱛᱮ ᱯᱟᱲᱦᱟᱣ</string>
     <string name="more_options">ᱰᱷᱮᱨ</string>
@@ -239,6 +232,10 @@
         <item quantity="one">%s ᱥᱮᱨᱢᱟ</item>
         <item quantity="other">%s ᱥᱮᱨᱢᱟ</item>
     </plurals>
+    <!-- A decimal number of seconds.
+    Please give this a best-effort translation and explain the requirements for
+    formatting decimals in your language in the CrowdIn comments -->
+    <string name="time_span_decimal_seconds">%s ᱴᱤᱡ ᱠᱚ</string>
     <!-- The reason for making a simple “< x” translatable are RTL
          languages which apparently use the other symbol to mean less
          than. -->
@@ -254,14 +251,13 @@
     <!-- Currently only used if exporting APKG fails -->
     <string name="apk_share_error">apkg ᱨᱮᱫ ᱵᱷᱮᱡᱟ ᱵᱷᱩᱞ</string>
     <!-- Import and export v2 feedback -->
-    <string name="import_needs_v2">ᱨᱮᱫ ᱵᱷᱮᱡᱟ ᱞᱟᱹᱜᱤᱫ V2 scheduler ᱮᱱᱮᱵᱟᱹᱞ ᱢᱮ ᱾</string>
-    <string name="import_cannot_with_v2">V2 scheduler V1 ᱰᱮᱠ ᱚᱠ ᱵᱟᱭ ᱵᱷᱮᱡᱟ ᱫᱟᱲᱮᱟᱜ ᱠᱟᱱᱟᱭ ᱥᱮᱰᱭᱩᱞ ᱛᱟᱦᱮᱸ ᱠᱟᱛᱮ ᱦᱚᱸ ᱾</string>
     <string name="export_v2_dummy_note">ᱱᱚᱶᱟ ᱨᱮᱫ ᱠᱷᱩᱞᱟᱹ ᱞᱟᱹᱜᱤᱫ Anki ᱨᱮᱭᱟᱜ ᱱᱟᱶᱟ ᱵᱷᱚᱨᱥᱚᱱ ᱫᱚᱨᱠᱟᱨ ᱾</string>
     <!-- Placed in a snackbar with a long URL. Limit the length and move the URL to the start of the string -->
     <string name="activity_start_failed_load_url">\'%s\' ᱞᱚᱰ ᱰᱤᱜᱟᱹᱣᱮᱱᱟ ᱾</string>
     <string name="activity_start_failed">ᱱᱚᱶᱟ ᱥᱮᱤᱴᱚᱢ ᱴᱷᱮᱱ ᱠᱟᱹᱢᱤ ᱠᱚᱨᱟᱣ ᱞᱟᱹᱜᱤᱫ ᱮᱯᱯ ᱵᱟᱹᱱᱩᱜᱼᱟ ᱾</string>
     <string name="multimedia_editor_image_compression_failed"><![CDATA[ᱠᱮᱢᱨᱟ ᱪᱤᱛᱟᱨ ᱢᱟᱨᱟᱝ ᱜᱮ ᱛᱟᱦᱮᱸ ᱫᱟᱲᱮᱟᱜᱼᱟ ᱾ ᱢᱮᱰᱤᱭᱟ ᱩᱱᱩᱫᱩᱜ ᱨᱮ ᱪᱤᱛᱟᱨ ᱠᱚᱥᱚᱴ ᱢᱮ]]></string>
     <string name="no_browser_notification">ᱵᱨᱚᱩᱡᱚᱨ ᱵᱟᱭ ᱧᱟᱢ ᱞᱮᱱᱟ，ᱣᱮᱵᱯᱮᱡ ᱥᱟᱦᱴᱟ ᱧᱮᱞ ᱞᱟᱹᱜᱤᱫ ᱠᱚᱢᱯᱩᱴᱚᱨ ᱟᱨ ᱵᱟᱝᱠᱷᱟᱱ ᱢᱚᱵᱚᱤᱞ ᱛᱮ ᱪᱟᱞᱟᱜ ᱢᱮ:</string>
+    <string name="web_page_error">ᱥᱟᱦᱴᱟ ᱞᱟᱫᱮ ᱵᱷᱩᱞ:%s</string>
     <string name="no_outgoing_link_in_cardbrowser">ᱵᱟᱦᱨᱮ ᱡᱟᱱᱟᱲ ᱠᱟᱰ ᱥᱟᱹᱯᱚᱴ ᱵᱟᱹᱱᱩᱜᱼᱟ</string>
     <!-- The name of the deck which corrupt cards will be moved to -->
     <string name="check_integrity_recovered_deck_name">ᱨᱤᱠᱚᱵᱷᱚᱨ ᱟᱠᱟᱱ ᱠᱟᱰ ᱠᱚ</string>
@@ -284,10 +280,10 @@
     <string name="note_importer_error_first_field_matched">ᱢᱟᱲᱟᱝ ᱡᱟᱭᱜᱟ ᱥᱟᱞᱟᱜ ᱥᱚᱢᱟᱱ ᱮᱱᱟ: %s</string>
     <string name="note_importer_error_added_duplicate_first_field">ᱢᱟᱲᱟᱝ ᱡᱟᱭᱜᱟ ᱨᱮ ᱱᱚᱠᱚᱞ ᱥᱮᱞᱮᱫ ᱮᱱᱟ: %s</string>
     <string name="note_importer_error_appeared_twice">ᱨᱮᱪ ᱨᱮ ᱵᱟᱨ ᱡᱮᱠᱷᱟ ᱧᱮᱞᱪᱷᱚᱭ ᱮᱱᱟ: %s</string>
-    <string name="note_importer_error_empty_notes">One or more notes were not imported, because they didn\'t generate any cards. This can happen when you have empty fields or when you have not mapped the content in the text file to the correct fields</string>
+    <string name="note_importer_error_empty_notes">ᱢᱤᱫᱴᱟᱹᱝ ᱠᱷᱚᱱ ᱰᱷᱮᱨ ᱱᱚᱴ ᱠᱚ ᱵᱟᱭ ᱞᱟᱫᱮ ᱟᱠᱟᱱᱟ, ᱪᱮᱫᱟᱜ ᱩᱱᱠᱩ ᱫᱚ ᱠᱟᱰ ᱠᱚ ᱵᱟᱠᱚ ᱛᱮᱭᱟᱨ ᱟᱠᱟᱫᱼᱟ ᱾ ᱱᱚᱶᱟ ᱫᱚ ᱠᱷᱟᱹᱞᱤ ᱡᱟᱭᱜᱟ ᱟᱨ ᱵᱟᱝ ᱡᱤᱱᱤᱥ ᱠᱚ ᱨᱮᱭᱟᱜ ᱚᱞ ᱨᱮᱫ ᱠᱚ ᱴᱷᱤᱠ ᱥᱮ ᱵᱟᱭ ᱢᱮᱯ ᱟᱠᱟᱱᱟ ᱴᱷᱤᱠ ᱡᱟᱭᱜᱟ ᱨᱮ </string>
     <string name="csv_importer_error_invalid_field_count">‘%1$s’ ᱴᱷᱮᱱ %2$d ᱡᱟᱭᱜᱟ, %3$d ᱟᱥᱟ ᱛᱟᱦᱮᱸ ᱠᱟᱱᱟ</string>
     <string name="csv_importer_error_exception">ᱰᱟᱫ ᱮᱱᱟ: %s</string>
-    <string name="user_is_a_robot">Detected automated test. If you are a human, contact AnkiDroid support</string>
+    <string name="user_is_a_robot">ᱟᱹᱴᱚᱢᱮᱴᱮᱰ ᱴᱮᱥᱴ ᱯᱟᱱᱛᱮ ᱚᱲᱚᱠ ᱾ ᱡᱩᱫᱤ ᱟᱢ ᱦᱚᱲ ᱠᱟᱱᱟᱢ AnkiDroid ᱥᱚᱢᱯᱚᱨᱠ ᱠᱚᱢ</string>
     <plurals name="note_importer_notes_added">
         <item quantity="one">%d ᱱᱚᱴ ᱯᱨᱚᱠᱟᱨ ᱥᱮᱞᱮᱫ ᱮᱱᱟ</item>
         <item quantity="other">%d ᱱᱚᱴ ᱯᱨᱚᱠᱟᱨ ᱠᱚ ᱥᱮᱞᱮᱫ ᱮᱱᱟ</item>
@@ -301,19 +297,43 @@
         <item quantity="other">%d ᱱᱚᱴ ᱠᱚ ᱵᱟᱝ ᱵᱚᱫᱚᱞᱟᱠᱟᱱᱟ</item>
     </plurals>
     <!-- JS api -->
-    <string name="api_version_developer_contact">This card uses unsupported AnkiDroid features. Contact developer %1$s, or view the wiki. %2$s</string>
+    <string name="api_version_developer_contact">ᱱᱚᱶᱟ ᱠᱟᱰ ᱫᱚ ᱵᱟᱝ ᱥᱟᱯᱯᱚᱨᱴ AnkiDroid ᱯᱷᱤᱪᱚᱨ ᱠᱚ ᱵᱮᱵᱷᱟᱨ ᱮᱫ ᱟᱭ ᱾ %1$s ᱰᱮᱵᱷᱞᱚᱯᱟᱹᱨ ᱥᱚᱢᱯᱚᱨᱠ ᱠᱚᱢ, ᱟᱨ ᱵᱟᱝ ᱣᱤᱠᱤ ᱧᱮᱞ ᱢᱮ ᱾ %2$s</string>
     <string name="invalid_json_data">ᱠᱟᱰ ᱵᱷᱩᱞ ᱰᱟᱴᱟ ᱮᱢᱠᱮᱫ ᱟ ᱾ %s</string>
-    <string name="valid_js_api_version">Invalid AnkiDroid JS API version. Contact developer %s, or view wiki</string>
-    <string name="update_js_api_version">AnkiDroid JS API update available. Contact developer %s, or view wiki</string>
+    <string name="valid_js_api_version"> ‌‌ᱵᱷᱩᱯ AnkiDroid JS API ᱵᱷᱟᱹᱨᱥᱚᱱ ᱾%s ᱰᱮᱵᱷᱞᱚᱯᱟᱹᱨ ᱥᱚᱢᱯᱚᱨᱠ ᱠᱚᱢ, ᱟᱨ ᱵᱟᱝ ᱣᱤᱠᱤ ᱧᱮᱞ ᱢᱮ ᱾</string>
+    <string name="update_js_api_version">AnkiDroid JS API ᱟᱹᱯᱰᱮᱴ ᱢᱮᱱᱟᱜᱼᱟ ᱾ %s ᱰᱮᱵᱷᱞᱚᱯᱟᱹᱨ ᱥᱚᱢᱯᱚᱨᱠ ᱠᱚᱢ, ᱟᱨ ᱵᱟᱝ ᱣᱤᱠᱤ ᱧᱮᱞ ᱢᱮ ᱾</string>
     <string name="reviewer_invalid_api_version_visit_documentation">ᱫᱮᱠᱷᱟᱣ</string>
     <string name="anki_js_error_code">(ᱵᱷᱩᱞ ᱠᱳᱰ: %d)</string>
     <!-- About AnkiDroid screen -->
-    <string name="about_ankidroid_successfully_copied_debug">Copied debug information to clipboard</string>
-    <string name="about_ankidroid_error_copy_debug_info">Error copying debug information to clipboard</string>
+    <string name="about_ankidroid_successfully_copied_debug">ᱠᱞᱤᱯᱵᱚᱰ ᱛᱮ ᱰᱮᱵᱩᱜ ᱵᱤᱵᱨᱚᱬ ᱱᱚᱠᱚᱞ ᱮᱱᱟ</string>
+    <string name="about_ankidroid_error_copy_debug_info">ᱠᱞᱤᱯᱵᱚᱰ ᱛᱮ ᱰᱮᱵᱩᱜ ᱵᱤᱵᱨᱚᱬ ᱱᱚᱠᱟᱞ ᱵᱷᱩᱞ</string>
     <!-- Card Viewer -->
-    <string name="card_viewer_could_not_find_image">Card Content Error: Failed to load ‘%s’</string>
-    <string name="card_viewer_could_not_find_image_get_help">Help</string>
+    <string name="card_viewer_could_not_find_image">ᱠᱟᱰ ᱡᱤᱱᱤᱥ ᱵᱷᱩᱞ:  ‘%s’ ᱞᱟᱫᱮ ᱰᱤᱜᱟᱹᱣ</string>
+    <string name="card_viewer_media_relative_protocol">ᱠᱟᱰ ᱡᱤᱱᱤᱥ ᱵᱷᱩᱞᱺ ᱢᱮᱰᱤᱭᱟ ᱟᱹᱯᱰᱮᱴ ᱫᱚᱨᱠᱟᱨ</string>
     <!-- Deck Picker -->
-    <string name="deck_picker_failed_deck_load">Failed to load deck ‘%s’</string>
-    <string name="search_decks">Search decks</string>
+    <string name="deck_picker_failed_deck_load">ᱰᱮᱠ ᱞᱟᱫᱮ ᱰᱤᱜᱟᱹᱣ ‘%s’</string>
+    <string name="search_decks">ᱰᱮᱠ ᱠᱚ ᱥᱮᱸᱫᱽᱨᱟ</string>
+    <string name="ankidroid_init_failed_webview_title">ᱯᱩᱨᱟᱹ ᱵᱷᱩᱞ</string>
+    <string name="ankidroid_init_failed_webview">Ankidroid ᱫᱚ ᱥᱭᱥᱴᱮᱢ ᱣᱮᱵᱼᱵᱷᱤᱭᱩ ᱪᱮᱛᱟᱱ ᱨᱮ ᱱᱤᱨᱵᱷᱚᱨᱚᱜ ᱠᱟᱱᱟᱭ ᱚᱠᱟ ᱫᱚ ᱱᱤᱛᱚᱜ ᱵᱟᱹᱱᱩᱜᱼᱟ ᱾ ᱱᱚᱶᱟ ᱫᱚ ᱛᱮᱵᱮ ᱦᱩᱭᱩᱜᱼᱟ ᱚᱠᱟ ᱡᱷᱚᱜ ᱥᱭᱥᱴᱟᱹᱢ ᱟᱹᱯᱰᱮᱴ ᱠᱚ ᱠᱚ ᱵᱚᱦᱟᱞ ᱮᱪᱟᱭ ᱾ ᱫᱚᱭᱟᱠᱟᱛᱮ ᱱᱟᱥᱮ ᱴᱤᱯᱤᱡ ᱜᱦᱟᱹᱬᱤᱡ ᱛᱟᱭᱚᱢ ᱫᱩᱦᱲᱟᱹ ᱪᱮᱥᱴᱟᱭ ᱢᱮ ᱾ \n\n%s</string>
+    <!-- A Menu item to change the Font Size (currently in the Note Editor) -->
+    <string name="menu_font_size">ᱪᱤᱠᱤ ᱢᱟᱯ</string>
+    <string name="menu_show_toolbar" comment="Checkable item stating whether the note editor toolbar should be shown">ᱴᱩᱞᱵᱟᱨ ᱫᱮᱠᱷᱟᱣᱢᱮ</string>
+    <string name="format_insert_bold">ᱵᱚᱞ-ᱰ ᱛᱮ ᱥᱮᱴ ᱢᱮ</string>
+    <string name="format_insert_italic">ᱤᱴᱟᱞᱤᱠ ᱛᱮ ᱥᱮᱴ ᱢᱮ</string>
+    <string name="format_insert_underline">ᱜᱟᱨᱞᱟᱭᱤᱱ ᱛᱮ ᱥᱮᱴ ᱢᱮ</string>
+    <string name="insert_horizontal_line">ᱜᱤᱛᱤᱡᱽ ᱞᱟᱭᱤᱱ ᱠᱷᱟᱲ ᱢᱮ</string>
+    <string name="insert_heading">ᱦᱮᱰᱤᱝ ᱵᱚᱞᱚ ᱪᱷᱚᱭ ᱢᱮ</string>
+    <string name="format_font_size">ᱯᱪᱤᱠᱤ ᱢᱟᱯ ᱵᱚᱫᱚᱞ ᱢᱮ</string>
+    <string name="insert_mathjax">MathJax ᱤᱠᱣᱨᱥᱚᱱ ᱵᱚᱞᱚ ᱪᱷᱚᱭ ᱢᱮ</string>
+    <string name="insert_cloze">ᱠᱞᱚᱡᱽ ᱢᱮᱴᱟᱣ ᱵᱚᱞᱚ ᱪᱷᱚᱭ ᱢᱮ</string>
+    <string name="before_text">HTML ᱢᱟᱲᱟᱝ ᱪᱚᱭᱚᱱ</string>
+    <string name="after_text">HTML ᱞᱟᱦᱟᱛᱮᱭᱟᱜ ᱪᱚᱭᱚᱱ</string>
+    <string name="add_toolbar_item">ᱴᱩᱞᱵᱟᱨ ᱡᱤᱱᱤᱥ ᱛᱮᱭᱟᱨ</string>
+    <string name="toolbar_item_explain_remove">ᱵᱟᱪᱷᱟᱣ ᱟᱠᱟᱱ ᱚᱞ ᱞᱟᱦᱟ ᱟᱨ ᱛᱟᱭᱚᱢ ᱨᱮ ᱥᱮᱞᱮᱫ ᱠᱟᱱ HTML ᱟᱫᱮᱨ ᱢᱮ\n\nᱱᱚᱶᱟ ᱚᱪᱚᱜ ᱞᱟᱹᱜᱤᱫ ᱴᱩᱞᱵᱟᱨ ᱟᱭᱴᱮᱢ ᱚᱛᱟ ᱫᱚᱦᱚᱭ ᱢᱮ</string>
+    <string name="remove_toolbar_item">ᱴᱩᱞᱵᱟᱨ ᱡᱤᱱᱤᱥ ᱚᱪᱚᱜᱽ ᱟᱢ ᱥᱮ?</string>
+    <string name="note_editor_paste_too_large">ᱪᱤᱛᱟᱹᱨ ᱞᱟᱴᱷᱟ ᱞᱟᱹᱜᱤᱫ ᱟᱹᱰᱤ ᱢᱟᱨᱟᱝ ᱜᱮᱭᱟ, ᱫᱚᱭᱟᱠᱟᱛᱮ ᱪᱤᱛᱟᱹᱨ ᱛᱤ ᱛᱮ ᱵᱚᱞᱚ ᱪᱷᱚᱭ ᱢᱮ</string>
+    <string name="ankidroid_cannot_open_after_backup_try_again" comment="After an Android backup is restored, AnkiDroid opens and shows this message.         Opening AnkiDroid again will work correctly">       ᱮᱱᱰᱨᱚᱭᱮᱰ ᱵᱮᱠᱟᱯ ᱪᱟᱞᱟᱜ ᱠᱟᱱᱟ, ᱫᱟᱭᱟ ᱠᱟᱛᱮᱡᱽ ᱟᱨᱦᱚᱸ ᱨᱤᱠᱟᱹᱭ ᱢᱮ</string>
+    <string name="create_shortcut_error_vivo" comment="iManager is an app on Vivo phones">You may need to use iManager to allow AnkiDroid to add shortcuts</string>
+    <string name="create_shortcut_failed" comment="home screen == launcher">Your home screen does not allow AnkiDroid to add shortcuts</string>
+    <string name="create_shortcut_error">Error adding shortcut: %s</string>
+    <string name="note_editor_capitalize" comment="This is for a switch with a checkbox - on: enabled">Capitalize sentences</string>
 </resources>

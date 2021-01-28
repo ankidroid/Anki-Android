@@ -33,10 +33,18 @@
         android:title="@string/gestures" />
     <CheckBoxPreference
         android:defaultValue="false"
+        android:dependency="gestures"
         android:disableDependentsState="false"
         android:key="linkOverridesTouchGesture"
         android:summary="@string/gestures_allow_links_summary"
         android:title="@string/gestures_allow_links" />
+    <CheckBoxPreference
+        android:defaultValue="false"
+        android:dependency="gestures"
+        android:disableDependentsState="false"
+        android:key="gestureCornerTouch"
+        android:summary="@string/gestures_corner_touch_summary"
+        android:title="@string/gestures_corner_touch" />
     <com.ichi2.ui.SeekBarPreference
         android:defaultValue="100"
         android:dependency="gestures"
@@ -85,6 +93,13 @@
             android:key="gestureDoubleTap"
             android:title="@string/gestures_double_tap" />
         <ListPreference
+            android:defaultValue="0"
+            android:dependency="gestureCornerTouch"
+            android:entries="@array/gestures_labels"
+            android:entryValues="@array/gestures_values"
+            android:key="gestureTapTopLeft"
+            android:title="@string/gestures_corner_tap_top_left" />
+        <ListPreference
             android:defaultValue="1"
             android:dependency="gestures"
             android:entries="@array/gestures_labels"
@@ -92,12 +107,12 @@
             android:key="gestureTapTop"
             android:title="@string/gestures_tap_top" />
         <ListPreference
-            android:defaultValue="1"
-            android:dependency="gestures"
+            android:defaultValue="0"
+            android:dependency="gestureCornerTouch"
             android:entries="@array/gestures_labels"
             android:entryValues="@array/gestures_values"
-            android:key="gestureTapBottom"
-            android:title="@string/gestures_tap_bottom" />
+            android:key="gestureTapTopRight"
+            android:title="@string/gestures_corner_tap_top_right" />
         <ListPreference
             android:defaultValue="1"
             android:dependency="gestures"
@@ -106,12 +121,40 @@
             android:key="gestureTapLeft"
             android:title="@string/gestures_tap_left" />
         <ListPreference
+            android:defaultValue="0"
+            android:dependency="gestureCornerTouch"
+            android:entries="@array/gestures_labels"
+            android:entryValues="@array/gestures_values"
+            android:key="gestureTapCenter"
+            android:title="@string/gestures_corner_tap_middle_center" />
+        <ListPreference
             android:defaultValue="1"
             android:dependency="gestures"
             android:entries="@array/gestures_labels"
             android:entryValues="@array/gestures_values"
             android:key="gestureTapRight"
             android:title="@string/gestures_tap_right" />
+        <ListPreference
+            android:defaultValue="0"
+            android:dependency="gestureCornerTouch"
+            android:entries="@array/gestures_labels"
+            android:entryValues="@array/gestures_values"
+            android:key="gestureTapBottomLeft"
+            android:title="@string/gestures_corner_tap_bottom_left" />
+        <ListPreference
+            android:defaultValue="1"
+            android:dependency="gestures"
+            android:entries="@array/gestures_labels"
+            android:entryValues="@array/gestures_values"
+            android:key="gestureTapBottom"
+            android:title="@string/gestures_tap_bottom" />
+        <ListPreference
+            android:defaultValue="0"
+            android:dependency="gestureCornerTouch"
+            android:entries="@array/gestures_labels"
+            android:entryValues="@array/gestures_values"
+            android:key="gestureTapBottomRight"
+            android:title="@string/gestures_corner_tap_bottom_right" />
         <ListPreference
             android:defaultValue="0"
             android:dependency="gestures"

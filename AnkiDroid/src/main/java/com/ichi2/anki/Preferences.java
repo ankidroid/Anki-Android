@@ -33,7 +33,6 @@ import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
-import android.os.Build;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.text.TextUtils;
@@ -139,9 +138,9 @@ public class Preferences extends AppCompatPreferenceActivity implements Preferen
     @Override
     public void onBuildHeaders(List<Header> target) {
         loadHeadersFromResource(R.xml.preference_headers, target);
-        Iterator iterator = target.iterator();
+        Iterator<Header> iterator = target.iterator();
         while (iterator.hasNext()) {
-            Header header = (Header)iterator.next();
+            Header header = iterator.next();
             if ((header.titleRes == R.string.pref_cat_advanced) && AdaptionUtil.isRestrictedLearningDevice()){
                 iterator.remove();
             }
@@ -276,6 +275,9 @@ public class Preferences extends AppCompatPreferenceActivity implements Preferen
                 break;
             case "com.ichi2.anki.prefs.gestures":
                 listener.addPreferencesFromResource(R.xml.preferences_gestures);
+                screen = listener.getPreferenceScreen();
+                updateGestureCornerTouch(screen);
+
                 break;
             case "com.ichi2.anki.prefs.custom_buttons":
                 getSupportActionBar().setTitle(R.string.custom_buttons);
@@ -287,16 +289,22 @@ public class Preferences extends AppCompatPreferenceActivity implements Preferen
                     SharedPreferences.Editor edit = AnkiDroidApp.getSharedPrefs(getBaseContext()).edit();
                     edit.remove("customButtonUndo");
                     edit.remove("customButtonScheduleCard");
-                    edit.remove("customButtonMarkCard");
                     edit.remove("customButtonEditCard");
+                    edit.remove("customButtonTags");
                     edit.remove("customButtonAddCard");
                     edit.remove("customButtonReplay");
+                    edit.remove("customButtonCardInfo");
                     edit.remove("customButtonSelectTts");
                     edit.remove("customButtonDeckOptions");
+                    edit.remove("customButtonMarkCard");
+                    edit.remove("customButtonToggleMicToolBar");
                     edit.remove("customButtonBury");
                     edit.remove("customButtonSuspend");
                     edit.remove("customButtonFlag");
                     edit.remove("customButtonDelete");
+                    edit.remove("customButtonEnableWhiteboard");
+                    edit.remove("customButtonSaveWhiteboard");
+                    edit.remove("customButtonWhiteboardPenColor");
                     edit.remove("customButtonClearWhiteboard");
                     edit.remove("customButtonShowHideWhiteboard");
                     edit.apply();
@@ -415,7 +423,7 @@ public class Preferences extends AppCompatPreferenceActivity implements Preferen
                 screen = listener.getPreferenceScreen();
                 android.preference.Preference syncUrlPreference = screen.findPreference("syncBaseUrl");
                 android.preference.Preference mSyncUrlPreference = screen.findPreference("syncMediaUrl");
-                syncUrlPreference.setOnPreferenceChangeListener((android.preference.Preference preference, Object newValue) -> {
+                syncUrlPreference.setOnPreferenceChangeListener((preference, newValue) -> {
                     String newUrl = newValue.toString();
                     if (!URLUtil.isValidUrl(newUrl)) {
                          new AlertDialog.Builder(this)
@@ -428,7 +436,7 @@ public class Preferences extends AppCompatPreferenceActivity implements Preferen
 
                     return true;
                 });
-                mSyncUrlPreference.setOnPreferenceChangeListener((android.preference.Preference preference, Object newValue) -> {
+                mSyncUrlPreference.setOnPreferenceChangeListener((preference, newValue) -> {
                     String newUrl = newValue.toString();
                     if (!URLUtil.isValidUrl(newUrl)) {
                         new AlertDialog.Builder(this)
@@ -767,6 +775,9 @@ public class Preferences extends AppCompatPreferenceActivity implements Preferen
                 case AnkiCardContextMenu.ANKI_CARD_CONTEXT_MENU_PREF_KEY:
                     AnkiCardContextMenu.ensureConsistentStateWithSharedPreferences(this);
                     break;
+                case "gestureCornerTouch": {
+                    updateGestureCornerTouch(screen);
+                }
             }
             // Update the summary text to reflect new value
             updateSummary(pref);
@@ -776,6 +787,23 @@ public class Preferences extends AppCompatPreferenceActivity implements Preferen
             throw new RuntimeException(e);
         }
     }
+
+
+    private void updateGestureCornerTouch(android.preference.PreferenceScreen screen) {
+        boolean gestureCornerTouch = AnkiDroidApp.getSharedPrefs(this).getBoolean("gestureCornerTouch", false);
+        if (gestureCornerTouch) {
+            screen.findPreference("gestureTapTop").setTitle(R.string.gestures_corner_tap_top_center);
+            screen.findPreference("gestureTapLeft").setTitle(R.string.gestures_corner_tap_middle_left);
+            screen.findPreference("gestureTapRight").setTitle(R.string.gestures_corner_tap_middle_right);
+            screen.findPreference("gestureTapBottom").setTitle(R.string.gestures_corner_tap_bottom_center);
+        } else {
+            screen.findPreference("gestureTapTop").setTitle(R.string.gestures_tap_top);
+            screen.findPreference("gestureTapLeft").setTitle(R.string.gestures_tap_left);
+            screen.findPreference("gestureTapRight").setTitle(R.string.gestures_tap_right);
+            screen.findPreference("gestureTapBottom").setTitle(R.string.gestures_tap_bottom);
+        }
+    }
+
 
     public void updateNotificationPreference(android.preference.ListPreference listpref) {
         CharSequence[] entries = listpref.getEntries();
@@ -903,14 +931,6 @@ public class Preferences extends AppCompatPreferenceActivity implements Preferen
             android.preference.CheckBoxPreference doubleScrolling = (android.preference.CheckBoxPreference) screen.findPreference("double_scrolling");
             if (doubleScrolling != null && plugins != null) {
                 plugins.removePreference(doubleScrolling);
-            }
-        }
-
-        if (AdaptionUtil.canUseContextMenu()) {
-            android.preference.PreferenceCategory workarounds = (android.preference.PreferenceCategory) screen.findPreference("category_workarounds");
-            if (workarounds != null) {
-                android.preference.CheckBoxPreference miuiClipboardHack = (android.preference.CheckBoxPreference) screen.findPreference("enableMIUIClipboardHack");
-                workarounds.removePreference(miuiClipboardHack);
             }
         }
     }

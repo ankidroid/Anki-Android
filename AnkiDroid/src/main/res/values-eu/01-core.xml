@@ -38,14 +38,14 @@
 ~ this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <resources>
+    <string name="yes">yes</string>
     <!-- Navigation drawer items-->
     <string name="decks">Sorta</string>
-    <string name="card_browser">Txartel arakatzailea</string>
+    <string name="card_browser" comment="The usage of card browser inside the app (note the casing)">Txartel arakatzailea</string>
     <string name="statistics">Estatistikak</string>
     <string name="settings">Ezarpenak</string>
     <string name="help">Laguntza</string>
     <string name="send_feedback">Bidali iruzkinak</string>
-    <string name="studyoptions_title">Sortaren aurrebista</string>
     <string name="studyoptions_due_today">Epemuga gaur:</string>
     <string name="studyoptions_new_total">Txartel berriak guztira:</string>
     <string name="studyoptions_total_cards">Txartelak guztira:</string>
@@ -90,22 +90,14 @@
     <string name="menu_import">Inportatu</string>
     <string name="undo">Desegin</string>
     <string name="undo_action_review">azken berrikusketa</string>
-    <string name="undo_action_bury_card">lurperatu txartela</string>
-    <string name="undo_action_bury_note">lurperatu oharra</string>
-    <string name="undo_action_suspend_card">suspend card</string>
-    <string name="undo_action_suspend_note">suspend note</string>
-    <string name="undo_action_delete">ezabatu oharra</string>
-    <string name="undo_action_delete_multi">ezabatu oharrak</string>
     <string name="undo_action_change_deck_multi">aldatu sortak</string>
-    <string name="undo_action_reschedule_card">reschedule</string>
-    <string name="undo_action_reset_card">reset progress</string>
-    <string name="undo_action_reposition_card">reposition</string>
     <string name="move_all_to_deck">Eraman denak sortara</string>
     <string name="unbury">Lurpetik atera</string>
     <string name="rename_deck">Aldatu izena sortari</string>
-    <string name="menu_add">Gehitu</string>
+    <string name="create_shortcut">Create shortcut</string>
+    <string name="menu_add" comment="A generic add button - Main Deck Picker and card templates. Please inform us if you need more specific strings">Gehitu</string>
     <string name="menu_add_note">Gehitu oharra</string>
-    <string name="menu_my_account">Sinkronizatu kontua</string>
+    <string name="menu_my_account" comment="Label of the window in which the user should enter their account. This text can\'t be found in AnkiDroid directly.">Sinkronizatu kontua</string>
     <string name="menu_dismiss_note">Ezkutatu / ezabatu</string>
     <string name="menu_bury_card">Lurperatu txartela</string>
     <string name="menu_bury_note">Lurperatu oharra</string>
@@ -129,7 +121,7 @@
     <string name="menu_unmark_note">Desmarkatu oharra</string>
     <string name="menu_toggle_mic_tool_bar">Check pronunciation</string>
     <string name="new_deck">Sortu sorta</string>
-    <string name="create">Sortu</string>
+    <string name="create" comment="Button to create a filtered deck">Sortu</string>
     <string name="new_dynamic_deck">Sortu iragazitako sorta</string>
     <string name="night_mode">Gau modua</string>
     <string name="directory_inaccessible">AnkiDroid directory is inaccessible</string>
@@ -162,6 +154,7 @@
     <string name="custom_study_deck_name">Ikasketa saio pertsonalizatua</string>
     <string name="custom_study_deck_exists">Aldatu izena dagoen ikasketa sortari aurretik</string>
     <string name="empty_deck">Sorta hau hutsik dago</string>
+    <string name="empty_deck_add_note">Add card</string>
     <string name="invalid_deck_name">Invalid deck name</string>
     <string name="studyoptions_empty">Sorta hau hutsik dago. Sakatu + botoia edukia gehitzeko.</string>
     <string name="studyoptions_limit_reached">Eguneko ikasketa mugara heldu zara</string>
@@ -187,7 +180,6 @@
     <string name="card_template_editor_front">Aurrealdearen txantiloia</string>
     <string name="card_template_editor_back">Atzealdearen txantiloia</string>
     <string name="card_template_editor_styling">Estiloa</string>
-    <string name="card_template_editor_menu_delete">Ezabatu</string>
     <string name="card_template_editor_menu_card_browser_appearance">Card Browser Appearance</string>
     <string name="card_template_editor_deck_override">Deck Override</string>
     <string name="card_template_editor_cant_delete">Gutxienez txartel mota bat behar da</string>
@@ -201,11 +193,21 @@
     <string name="template_for_current_card_deleted">The card type for the current card was deleted.</string>
     <!-- Card Browser Appearance -->
     <string name="card_template_browser_appearance_title">Browser appearance</string>
+    <string name="current_and_default_deck">%1$s (%2$s)</string>
+    <!-- card Info -->
+    <string name="card_info_title">Card info</string>
     <!-- Permissions -->
     <string name="read_write_permission_label">Read and write to the AnkiDroid database</string>
     <string name="read_write_permission_description">atzitu dauden oharrak, txartelak, ohar motak, eta sortak, eta berriak sortu ere</string>
     <!-- Context Menu -->
-    <string name="card_browser_label">Card Browser</string>
-    <string name="card_browser_context_menu">Card Browser</string>
+    <string name="card_browser_context_menu" comment="The value which appears in the system context menu. Note the casing difference">Card Browser</string>
     <string name="context_menu_anki_card_label">Anki Card</string>
+    <string name="has_a_problem" comment="First field is either front template or back template. Second field is the error message.">%1$s has a problem:<br/>%2$s</string>
+    <string name="more_information">More information</string>
+    <string name="no_field">Found \'{{%1$s}}\', but there is no field called \'%1$s\'.</string>
+    <string name="closed_tag_not_open">Found \'{{/%1$s}}\', but missing \'{{#%1$s}}\' or \'{{^%1$s}}\'.</string>
+    <string name="missing_closing_bracket">Missing \'}}\' in \'%s\'.</string>
+    <string name="open_tag_not_closed">Missing \'{{%s}}\'.</string>
+    <string name="wrong_tag_closed">Found \'{{/%1$s}}\', but expected \'{{/%2$s}}\'</string>
+    <string name="filter_error">Error in filter %s</string>
 </resources>

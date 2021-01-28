@@ -44,8 +44,8 @@
     <string name="statistics_unlearned">Non vistas</string>
     <string name="statistics_suspended">Suspended</string>
     <string name="statistics_buried">Buried</string>
-    <string name="statistics_relearn">Aprender de novo</string>
-    <string name="statistics_learn">Aprender</string>
+    <string name="statistics_relearn" comment="Labbel of the axis in the graph indicating the number of reviews of cards while they are in relearning mode.">Aprender de novo</string>
+    <string name="statistics_learn" comment="Label of the number of review of card in learning done in some amount of time">Aprender</string>
     <string name="statistics_cram">Repaso intensivo</string>
     <string name="stats_cards">Cartóns</string>
     <string name="stats_cards_intervals">Cartóns cun intervalo estabelecido</string>
@@ -67,7 +67,7 @@
     <string name="stats_time_of_day">Hora do día</string>
     <string name="stats_day_of_week">Día da semana</string>
     <string formatted="false" name="stats_percentage_correct">% correctas</string>
-    <string name="stats_reviews">Avaliacións</string>
+    <string name="stats_reviews" comment="Label of a graph, indicating cumulative number of review of all cards">Avaliacións</string>
     <string name="stats_answer_type">Tipo de resposta</string>
     <string name="stats_today_again_count">Contar de novo: &lt;b&gt;%d&lt;/b&gt;</string>
     <string name="stats_today_correct_count">(&lt;b&gt;%.1f%%&lt;/b&gt; correctos)</string>
@@ -78,7 +78,6 @@
     <string name="stats_overview_forecast_average">Medio: &lt;b&gt;%1$.1f&lt;/b&gt; revisións/día</string>
     <string name="stats_overview_forecast_due_tomorrow">Para mañá: &lt;b&gt;%1$d&lt;/b&gt;</string>
     <string name="stats_overview_days_studied">Días estudados: &lt;b&gt;%1$d%%&lt;/b&gt; (%2$d de %3$d)</string>
-    <string name="stats_overview_total_reviews">Total: &lt;b&gt;%1$d&lt;/b&gt; revisións</string>
     <string name="stats_overview_reviews_per_day_studydays">Medio de días estudados: &lt;b&gt;%1$.1f&lt;/b&gt; revisións/día</string>
     <string name="stats_overview_reviews_per_day_all">Se estudaches cada día: &lt;b&gt;%1$.1f&lt;/b&gt; revisións/día</string>
     <string name="stats_overview_total_time_in_period">Total: &lt;b&gt;%d&lt;/b&gt; minutes</string>
@@ -101,7 +100,6 @@
     <string name="stats_overview_card_types_lowest_ease">Lowest ease: &lt;b&gt;%.0f%%&lt;/b&gt;</string>
     <string name="stats_overview_card_types_average_ease">Average ease: &lt;b&gt;%.0f%%&lt;/b&gt;</string>
     <string name="stats_overview_card_types_highest_ease">Highest ease: &lt;b&gt;%.0f%%&lt;/b&gt;</string>
-    <string name="deck_summary_all_decks">Todas as barallas</string>
     <string name="stats_select_time_scale">Seleccionar escala de tempo</string>
     <string-array name="due_x_axis_title">
         <item>Días</item>
@@ -113,12 +111,11 @@
     <string name="stats_forecast">Previsión</string>
     <string name="stats_review_count">Número de avaliacións</string>
     <string name="stats_review_time">Tempo de avaliación</string>
-    <string name="stats_added">Engadido</string>
+    <string name="stats_added" comment="Label of the number of added card">Engadido</string>
     <string name="stats_review_intervals">Intervalos</string>
     <string name="stats_breakdown">Desagregar por hora</string>
     <string name="stats_weekly_breakdown">Desagregar por semana</string>
     <string name="stats_answer_buttons">Botóns de resposta</string>
-    <string name="stats_cards_types">Tipo de cartóns</string>
     <string-array name="stats_day_time_strings">
         <item>4AM</item>
         <item>10AM</item>

@@ -42,14 +42,12 @@
     <string name="disabled">無効</string>
     <string name="enabled">有効</string>
     <!-- preferences.xml categories-->
-    <string name="pref_cat_general">AnkiDroid</string>
     <string name="pref_cat_general_summ">一般設定</string>
     <string name="pref_cat_reviewing">カードの学習</string>
     <string name="pref_cat_reviewing_summ">特定のデッキに限定されない設定</string>
     <string name="pref_cat_reviewer_behaviour">動作</string>
     <string name="pref_cat_flashcard">画面表示</string>
     <string name="pref_cat_whiteboard">ホワイトボード機能</string>
-    <string name="pref_cat_automatic_display">解答の自動表示</string>
     <string name="pref_cat_appearance">デザイン</string>
     <string name="pref_cat_appearance_summ">テーマと標準フォントの変更</string>
     <string name="pref_cat_themes">テーマ</string>
@@ -66,8 +64,6 @@
     <string name="about_version">バージョン：</string>
     <!-- preferences.xml entries-->
     <string name="whiteboard_stroke_width">線の太さ</string>
-    <string name="whiteboard_black">黒色の線</string>
-    <string name="whiteboard_black_summ">カラーの線ではなく黒色の線を描き、メモリを節約します（ナイトモードでは白色の線になります）</string>
     <string name="use_input_tag">カード内にキーボード入力で解答する</string>
     <string name="use_input_tag_summ">解答をキーボード入力で行うよう設定されているカードの内部に文字入力欄を表示します</string>
     <string name="dictionary">検索辞書</string>
@@ -77,7 +73,7 @@
     <string name="reset_confirmation">全ての状態をリセット</string>
     <string name="card_zoom">カードの拡大・縮小</string>
     <string name="image_zoom">画像の拡大・縮小</string>
-    <string name="button_size">解答表示ボタン・回答ボタンのサイズ</string>
+    <string name="button_size">解答表示ボタン・解答ボタンのサイズ</string>
     <string name="card_browser_font_size">ブラウザ用フォントサイズ</string>
     <string name="card_browser_hide_media">ブラウザでファイル名も表示</string>
     <string name="card_browser_hide_media_summary">ブラウザのカード一覧画面の質問フィールド欄と解答フィールド欄に、メディア（画像・音声・動画）ファイル名も表示する</string>
@@ -85,32 +81,43 @@
     <string name="fullscreen_review">フルスクリーンモード</string>
     <string name="full_screen_off">オフ</string>
     <string name="full_screen_system">ステータスバー（通知バー）を隠す</string>
-    <string name="full_screen_complete">ステータスバー（通知バー）と解答表示ボタン・回答ボタンを隠す</string>
-    <string name="full_screen_error_gestures">回答ボタンを非表示にするにはジェスチャーを有効にする必要があります</string>
-    <string name="answer_buttons_position">解答表示ボタン・回答ボタンの位置</string>
+    <string name="full_screen_complete">ステータスバー（通知バー）と解答表示ボタン・解答ボタンを隠す</string>
+    <string name="full_screen_error_gestures">解答ボタンを非表示にするにはジェスチャーを有効にする必要があります</string>
+    <string name="answer_buttons_position">解答表示ボタン・解答ボタンの位置</string>
     <string-array name="answer_buttons_position_labels">
         <item>カードの上側</item>
         <item>カードの下側</item>
     </string-array>
     <string name="gestures">ジェスチャーを有効にする</string>
-    <string name="gestures_summ">回答やカード編集などの操作にジェスチャーを割り当てます</string>
+    <string name="gestures_summ">解答やカード編集などの操作にジェスチャーを割り当てます</string>
     <string name="gestures_allow_links">リンク上ではタップジェスチャー無効</string>
     <string name="gestures_allow_links_summary">リンク用やヒント表示用の文字列・画像をタップした場合は、タップジェスチャーに割り当てたアクションを実行せず、単にリンク先やヒントを表示します</string>
+    <string name="gestures_corner_touch">タップを９種類にする</string>
+    <string name="gestures_corner_touch_summary">カード画面内を縦３×横３の９エリアに区別して各エリアにタップジェスチャーを割り当てます</string>
     <string name="gestures_swipe_up">上にスワイプ</string>
     <string name="gestures_swipe_down">下にスワイプ</string>
     <string name="gestures_swipe_left">左にスワイプ</string>
     <string name="gestures_swipe_right">右にスワイプ</string>
     <string name="gestures_double_tap">ダブルタップ</string>
     <string name="gestures_tap_top">上をタップ</string>
-    <string name="gestures_tap_bottom">下をタップ</string>
     <string name="gestures_tap_left">左をタップ</string>
     <string name="gestures_tap_right">右をタップ</string>
+    <string name="gestures_tap_bottom">下をタップ</string>
+    <string name="gestures_corner_tap_top_left">上部左側をタップ</string>
+    <string name="gestures_corner_tap_top_center">上部中央をタップ</string>
+    <string name="gestures_corner_tap_top_right">上部右側をタップ</string>
+    <string name="gestures_corner_tap_middle_left">中央左側をタップ</string>
+    <string name="gestures_corner_tap_middle_center">中央をタップ</string>
+    <string name="gestures_corner_tap_middle_right">中央右側をタップ</string>
+    <string name="gestures_corner_tap_bottom_left">下部左側をタップ</string>
+    <string name="gestures_corner_tap_bottom_center">下部中央をタップ</string>
+    <string name="gestures_corner_tap_bottom_right">下部右側をタップ</string>
     <string name="gestures_volume_up">音量アップボタン</string>
     <string name="gestures_volume_down">音量ダウンボタン</string>
     <string name="more_scrolling_buttons">eReader</string>
     <string name="more_scrolling_buttons_summ">スクロール用に、漢字、カタカナ、絵文字、顔文字ボタンを使用</string>
     <string name="card_browser_enable_external_context_menu">‘%s’ メニュー</string>
-    <string name="card_browser_enable_external_context_menu_summary">Androidアプリ全般で、テキスト選択時のコンテキストメニューに ‘%s’ を追加する</string>
+    <string name="card_browser_enable_external_context_menu_summary">Androidアプリ全般で、テキスト選択時に表示されるコンテキストメニューに ‘%s’ を追加します</string>
     <string name="double_scrolling_gap">ダブルスクロール</string>
     <string name="double_scrolling_gap_summ">eReader とのスクロールのギャップを 2 倍にする場合、これを有効にします</string>
     <string name="swipe_sensitivity">スワイプ感度</string>
@@ -123,10 +130,10 @@
     <string name="sync_account_summ_logged_in">%s</string>
     <string name="automatic_sync_choice">自動同期</string>
     <string name="automatic_sync_choice_summ">最後に同期したのが10分以上前であった場合、アプリ起動/終了時に自動的に同期します</string>
-    <string name="sync_status_badge">Display synchronization status</string>
-    <string name="sync_status_badge_summ">Change the sync icon when changes can be uploaded</string>
-    <string name="day_theme">デイ テーマ</string>
-    <string name="night_theme">ナイト テーマ</string>
+    <string name="sync_status_badge">同期状態を区別</string>
+    <string name="sync_status_badge_summ">他の端末と同期できる変更を行い、その変更をまだアップロードしていない場合、同期アイコンに目印を付けます</string>
+    <string name="day_theme">通常表示 テーマ</string>
+    <string name="night_theme">夜間表示 テーマ</string>
     <string name="default_font">標準フォント</string>
     <string name="override_font">標準フォントの適用範囲</string>
     <string name="language">言語</string>
@@ -141,20 +148,19 @@
     <string name="timeout_answer_text">解答を自動的に表示</string>
     <string name="timeout_answer_summ">操作しなくても、一定時間経過後に自動的に解答を表示します。音声ファイルを自動的に再生する場合は、その再生時間と下記の「解答を表示するまでの時間」が経過した後に解答を表示します。</string>
     <string name="timeout_answer_seconds">解答を表示するまでの時間</string>
-    <string name="timeout_answer_seconds_summ">XXX 秒</string>
+    <string name="timeout_answer_seconds_summ" comment="The time to wait (in seconds) in the reviewer before automatically showing the next question or answer">XXX 秒</string>
     <string name="timeout_question_seconds">次の質問までの時間</string>
-    <string name="timeout_question_seconds_summ">XXX 秒</string>
     <string name="select_locale_title">言語を選択</string>
     <string name="safe_display">安全表示モード</string>
     <string name="safe_display_summ">アニメーションを無効にし、より不具合が起こりくい方法でカードを表示します。電子ペーパー端末ではこの設定が必要となる可能性があります。</string>
-    <string name="disable_extended_text_ui">Disable Single-Field Edit Mode</string>
+    <string name="disable_extended_text_ui">単一フィールド編集モードを無効にする</string>
     <!--See: multimedia_editor_popup_cloze. We can\'t use format strings as this is auto-generated-->
-    <string name="disable_extended_text_ui_summ">Allows \'Cloze Deletion\' context menu when in landscape mode.</string>
+    <string name="disable_extended_text_ui_summ">ランドスケープモード時に「穴埋め部分」メニューを許可する</string>
     <string name="vertical_centering">上下中央揃え</string>
     <string name="vertical_centering_summ">コンテンツを上下方向に中央揃えします</string>
     <string name="pref_backup_max">保管するバックアップの世代数</string>
-    <string name="show_estimates">回答ボタンに復習間隔を表示</string>
-    <string name="show_estimates_summ">次の復習までの間隔を回答ボタンの中に表示します</string>
+    <string name="show_estimates">解答ボタンに復習間隔を表示</string>
+    <string name="show_estimates_summ">次の復習までの間隔を解答ボタンの中に表示します</string>
     <string name="show_top_bar">トップバーを表示</string>
     <string name="show_top_bar_summ">アプリバーの下に、カードの残り枚数、フラグ、マークの状態を示すバーを表示します</string>
     <string name="show_progress">残りのカード枚数を表示</string>
@@ -164,32 +170,31 @@
     <string name="use_current">新規カードの追加先デッキ</string>
     <string name="new_spread">新規カードの追加場所</string>
     <string name="learn_cutoff">先取り学習の限度</string>
-    <string name="learn_cutoff_summ">XXX 分</string>
     <string name="time_limit">タイムボックスの時間枠</string>
     <string name="time_limit_summ">XXX 分</string>
     <string name="day_offset">日付更新時刻</string>
     <string name="day_offset_summ">XXX 時</string>
     <string name="sched_ver">実験的な新型スケジューラ</string>
-    <string name="sched_ver_summ">Enable the experimental scheduler. Forces changes in one direction on next sync</string>
+    <string name="sched_ver_summ">実験的なスケジューラを有効にします。次の同期時に一方向の変更を強制実行します。</string>
     <string name="sched_ver_toggle_title">確認</string>
-    <string name="sched_ver_2to1">This will reset any cards in learning, clear filtered decks, and change the scheduler version. Proceed?</string>
-    <string name="sched_ver_1to2">The experimental scheduler could cause incorrect scheduling. Please ensure you have read the documentation first. Proceed?</string>
+    <string name="sched_ver_2to1">学習中のカードがリセットされ、スケジューラのバージョンが変更されます。続行しますか？</string>
+    <string name="sched_ver_1to2">実験的なスケジューラは間違ったスケジューリングを引き起こす可能性があります。最初に関係するドキュメントを読んで確認してください。続行しますか？</string>
     <string name="pref_keep_screen_on">スクリーンをオンのままにする</string>
     <string name="pref_keep_screen_on_summ">画面の自動オフを無効にします</string>
     <string name="convert_fen_text">チェス表記のサポート</string>
     <string name="convert_fen_text_summ">Forsyth Edwards Notation 表記法を使いチェス盤を描画します。この表記は[fen][/fen] で囲む必要があります</string>
     <string name="enable_api_title">AnkiDroid API を有効にする</string>
     <string name="enable_api_summary">他のアプリがAnkiDroidに接続しデータを読み書きすることを許可します</string>
-    <string name="custom_buttons">Appバー アイコン</string>
-    <string name="custom_buttons_summary">学習画面のAppバーにどの操作をアイコン表示するかをカスタマイズします</string>
+    <string name="custom_buttons">アプリバー アイコン</string>
+    <string name="custom_buttons_summary">学習画面のアプリバーに表示する操作アイコンをカスタマイズします</string>
     <string name="custom_buttons_setting_always_show">常に表示</string>
     <string name="custom_buttons_setting_if_room">空きスペースがあれば表示</string>
     <string name="custom_buttons_setting_menu_only">文字メニューでのみ表示</string>
     <string name="reset_custom_buttons">初期設定にリセット</string>
     <string name="thirdparty_apps_title">サードパーティ製APIアプリ</string>
     <string name="thirdparty_apps_summary">辞書やユーティリティなど、AnkiDroidを活用するアプリのリストを見るにはここをタップしてください</string>
-    <string name="html_javascript_debugging">HTML / Javascript Debugging</string>
-    <string name="html_javascript_debugging_summ">Enable remote WebView connections, and save card HTML to AnkiDroid directory</string>
+    <string name="html_javascript_debugging">HTML / Javascriptのデバッグ</string>
+    <string name="html_javascript_debugging_summ">リモートの WebView 接続を有効にし、カードの HTML を AnkiDroid ディレクトリに保存します</string>
     <!-- Advanced statistics settings -->
     <string name="advanced_statistics_title">高度な統計</string>
     <string name="enable_advanced_statistics_title">高度な統計を有効にする</string>
@@ -202,9 +207,9 @@
     <string name="custom_sync_server_enable_title">同期サーバーを変更する</string>
     <string name="custom_sync_server_enable_summary">AnkiWebのサービスを使用せず、代替サーバーを指定します</string>
     <string name="custom_sync_server_base_url_title">同期URL</string>
-    <string name="custom_sync_server_base_url_invalid">Sync url invalid</string>
+    <string name="custom_sync_server_base_url_invalid">同期先のURLが無効です</string>
     <string name="custom_sync_server_media_url_title">メディア同期URL</string>
-    <string name="custom_sync_server_media_url_invalid">Media sync url invalid</string>
+    <string name="custom_sync_server_media_url_invalid">メディア同期のためのURLが無効です</string>
     <!-- studyoptions -->
     <string name="deck_conf_group_summ">オプショングループの設定内容を変更すると、同じオプショングループを使用している他のデッキにも影響が及びます。現在のデッキについてのみオプショングループの設定内容を変更したい場合は、まず新規のオプショングループを追加してください（[オプショングループの管理]＞[追加]）。</string>
     <string name="studyoptions_limit_select_tags">タグを選択</string>
@@ -215,8 +220,8 @@
         <item quantity="other">%1$s\n%2$d個のデッキがこのグループを使用しています</item>
     </plurals>
     <string name="deck_conf_new_cards">新規カードと基本学習</string>
-    <string name="deck_conf_rev_cards">復習</string>
-    <string name="deck_conf_lps_cards">忘却と再基本学習</string>
+    <string name="deck_conf_rev_cards" comment="Name of the deck options submenu for configuring reviews of due cards.">復習</string>
+    <string name="deck_conf_lps_cards" comment="Label of the submenu stating how lapses cards are treated.">忘却と再基本学習</string>
     <string name="deck_conf_general">一般</string>
     <string name="deck_conf_reminders">リマインダー</string>
     <string name="deck_conf_steps">学習ステップ（分）</string>
@@ -224,7 +229,7 @@
     <string name="deck_conf_new_cards_day">一日あたりの新規カード出題枚数の上限</string>
     <string name="deck_conf_graduating_ivl">最終ステップから復習開始までの間隔</string>
     <string name="deck_conf_days">XXX 日</string>
-    <string name="deck_conf_easy_ivl">簡単と回答してから復習開始までの間隔</string>
+    <string name="deck_conf_easy_ivl">簡単と解答してから復習開始までの間隔</string>
     <string name="deck_conf_start_ease">復習開始時の「易しさ」（復習間隔の伸び率）</string>
     <string name="deck_conf_max_rev">一日あたりの復習カード出題枚数の上限</string>
     <string name="deck_conf_new_bury">新規の関連カードの学習を延期</string>
@@ -234,6 +239,7 @@
     <string name="deck_conf_use_general_timeout_settings">一般設定を使用する</string>
     <string name="deck_conf_use_general_timeout_settings_summ">このグループ独自の設定は行わず、ドロワーメニューの[設定]>[カードの学習]>[解答の自動表示]での一般的な設定をそのまま使用します。</string>
     <string name="deck_conf_easy_bonus">簡単と答えた時のボーナス（復習間隔の伸び率の割り増し）</string>
+    <string name="deck_conf_hard_factor">難しいから復習開始までの間隔</string>
     <string name="deck_conf_ivl_fct">復習間隔の調整</string>
     <string name="deck_conf_max_ivl">復習間隔の上限</string>
     <string name="deck_conf_new_lps_ivl">新しい復習間隔（前回比）</string>
@@ -248,31 +254,26 @@
     <string name="deck_conf_replayq">質問の音声・動画も再生</string>
     <string name="deck_conf_replayq_summ">解答が表示されている時に「音声・動画を再生」を選択すると、解答の音声・動画の前に質問の音声・動画も再生します</string>
     <string name="deck_conf_manage">オプショングループの管理</string>
-    <string name="deck_conf_manage_summ">Add and change options groups</string>
+    <string name="deck_conf_manage_summ">オプショングループの追加と変更</string>
     <string name="deck_conf_current_group">このデッキが使用しているオプショングループ</string>
-    <string name="deck_conf_rename">名前の変更</string>
+    <string name="deck_conf_rename" comment="Menu entry to rename a deck">名前の変更</string>
     <string name="deck_conf_reset">標準の設定へ戻す</string>
-    <string name="deck_conf_reset_title">標準の設定へ戻す</string>
     <string name="deck_conf_reset_message">このオプショングループを標準の設定に戻しますか？</string>
-    <string name="deck_conf_add">追加</string>
+    <string name="deck_conf_add" comment="Adding a new deck option group">追加</string>
     <string name="deck_conf_add_summ">このオプショングループのコピーを作成します</string>
-    <string name="deck_conf_remove">削除</string>
-    <string name="deck_conf_remove_title">削除</string>
     <string name="deck_conf_remove_message">このオプショングループを削除しますか？</string>
     <string name="deck_conf_set_subdecks">全てのサブデッキに適用</string>
     <plurals name="deck_conf_set_subdecks_summ">
         <item quantity="other">この設定を行うと、このデッキの中にある%s個のサブデッキにもこのオプショングループを適用します</item>
     </plurals>
-    <string name="deck_conf_set_subdecks_title">全てのサブデッキに適用</string>
     <string name="deck_conf_set_subdecks_message">このオプショングループをこのデッキ内の全てのサブデッキにも適用しますか？</string>
     <string name="pref_browser_editor_font">ブラウザとノート編集のフォント</string>
     <string name="deck_conf_cram_filter">フィルター</string>
-    <string name="deck_conf_cram_options">オプション</string>
-    <string name="deck_conf_cram_search">フィルターの抽出条件</string>
+    <string name="deck_conf_cram_search">検索</string>
     <string name="deck_conf_cram_limit">抽出件数の上限</string>
     <string name="deck_conf_cram_order">抽出されたカードの並べ方</string>
-    <string name="deck_conf_cram_reschedule">スケジュールを変更</string>
-    <string name="deck_conf_cram_reschedule_summ">回答結果を元のデッキでのスケジュールに反映させます</string>
+    <string name="deck_conf_cram_reschedule" comment="Title of the box labelled by deck_conf_cram_reschedule_summ">スケジュールを変更</string>
+    <string name="deck_conf_cram_reschedule_summ">解答結果を元のデッキでのスケジュールに反映させます</string>
     <string name="deck_conf_cram_steps">カスタム学習ステップ（分）</string>
     <string name="deck_conf_cram_steps_summ">独自の学習ステップを設定</string>
     <string name="deck_conf_reminders_enabled">このグループのデッキをリマインダー通知</string>
@@ -281,6 +282,8 @@
     <string name="analytics_dialog_title">機能向上のためご協力ください</string>
     <string name="analytics_title">設定の情報提供を許可する</string>
     <string name="analytics_summ">各機能の使用傾向を開発チームが把握しやすくなり、AnkiDroidの機能向上に役立ちます。</string>
-    <string name="enable_miui_keyboard_hack">\'Paste\' to insert cloze deletion</string>
-    <string name="enable_miui_keyboard_hack_summ">In the Note Editor, \'Paste\' will turn the selected text into a cloze</string>
+    <string name="note_editor_replace_newlines">改行を HTML に置き換え</string>
+    <string name="note_editor_replace_newlines_summ">ノートエディターでは、カードを編集するときに &lt;br&gt; を改行に変換します。</string>
+    <string name="no_code_formatting">文字入力回答でシンプルなフォントを使用</string>
+    <string name="no_code_formatting_summ">文字入力して回答する種類のカードの解答画面で、自分の回答に文字化け（‘􏿾’の表示）が起こる不具合を回避します</string>
 </resources>

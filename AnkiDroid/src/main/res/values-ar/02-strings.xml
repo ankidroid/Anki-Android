@@ -37,13 +37,13 @@
 ~ You should have received a copy of the GNU General Public License along with
 ~ this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools">
     <!-- How to format a percentage shown in the summary field of a preference -->
     <string name="preference_summary_percentage">XXX %</string>
+    <!-- #7570: We should use these strings again -->
     <!-- Navigation drawer strings -->
-    <string name="drawer_open">فتح القائمة</string>
-    <string name="drawer_close">إغلاق القائمة</string>
-    <string name="CardEditorLaterMessage">حفظ المعلومات لوقت لاحق</string>
+    <string tools:ignore="UnusedResources" name="drawer_open">فتح القائمة</string>
+    <string tools:ignore="UnusedResources" name="drawer_close">إغلاق القائمة</string>
     <string name="CardEditorCardDeck">رزمة البطاقة:</string>
     <string name="CardEditorNoteDeck">الرزمة:</string>
     <string name="CardEditorModel">النوع:</string>
@@ -55,7 +55,6 @@
     <string name="check_all_tags">تحديد/إلغاء تحديد كل الوسوم</string>
     <string name="filter_tags">فلترة الوسوم</string>
     <string name="no_tags">لم تضف أي وسوم بعد</string>
-    <string name="sdcard_missing_message">أوقف تخزين USB للوصول إلى رزمك</string>
     <string name="updated_version">تم التحديث إلى الإصدار: %s</string>
     <!-- Reviewer.java -->
     <string name="save_whiteboard">حفظ السبورة</string>
@@ -65,7 +64,6 @@
     <string name="hide_whiteboard">إخفاء السبورة</string>
     <string name="clear_whiteboard">مسح السبورة</string>
     <string name="replay_audio">إعادة تشغيل الصوت</string>
-    <string name="toggle_mic_tool_bar">تحقق من النطق</string>
     <string name="leech_suspend_notification">عُلِّمت البطاقة كمستعصية وعُلِّقت</string>
     <string name="leech_notification">عُلِّمت البطاقة كمستعصية</string>
     <string name="corrupt_font">ملف خط معطوب %s</string>
@@ -107,7 +105,6 @@
     <string name="custom_study_preview_new">معاينة البطاقات الجديدة</string>
     <string name="custom_study_limit_tags">قصر على وسوم معينة</string>
     <!-- Card editor -->
-    <string name="cardeditor_title_add_note">إضافة ملحوظة</string>
     <string name="cardeditor_title_edit_card">تحرير الملحوظة</string>
     <string name="discard_unsaved_changes">هل أنت متأكد من الإغلاق وخسران المدخلات الحالية؟</string>
     <string name="note_editor_no_cards_created">لم تُنشَأ أي بطاقات. الرجاء تعبئة مزيد من الحقول</string>
@@ -118,7 +115,6 @@
     <string name="note_editor_insert_cloze_no_cloze_note_type">تعمل عبارات ملء الفراغات في نوع ملحوظة ملء فراغات فقط.</string>
     <string name="saving_facts">حفظ الملحوظة</string>
     <string name="saving_model">حفظ نوع الملحوظة</string>
-    <string name="add">إضافة</string>
     <string name="save">حفظ</string>
     <string name="close">إغلاق</string>
     <string name="select">تحديد</string>
@@ -143,17 +139,14 @@
         <item quantity="many">%1$d دقيقة</item>
         <item quantity="other">%1$d دقيقة</item>
     </plurals>
-    <string name="studyoptions_welcome_title">مرحبًا بك مع أنكيدرويد</string>
-    <string name="fact_adder_intent_title">بطاقة أنكيدرويد</string>
-    <string name="note_editor_add_note">إضافة ملحوظة</string>
+    <string name="fact_adder_intent_title" comment="Label of the \'Add Note\' window. This title can\'t be seen in AnkiDroid directly.">بطاقة أنكيدرويد</string>
     <string name="note_editor_copy_note">نسخ الملحوظة</string>
-    <string name="card_editor_copy_card">نسخ البطاقة</string>
     <string name="card_editor_reposition_card">تغيير الموضع</string>
     <string name="card_editor_reset_card">إعادة تعيين التقدم</string>
-    <string name="card_editor_reschedule_card">إعادة الجدولة</string>
-    <string name="card_editor_preview_card">معاينة</string>
+    <string name="card_editor_reschedule_card" comment="Action to reschedule a card">إعادة الجدولة</string>
+    <string name="card_editor_preview_card" comment="Button offering to preview some card(s)">معاينة</string>
     <string name="error_insufficient_memory">العملية غير ممكنة نظرًا للذاكرة غير الكافية في جهازك</string>
-    <string name="rename">إعادة التسمية</string>
+    <string name="rename" comment="Confirm that the renaming action should be processed.">إعادة التسمية</string>
     <string name="default_conf_delete_error">لا يمكن إزالة مجموعة الخيارات الافتراضية</string>
     <plurals name="factadder_cards_added">
         <item quantity="zero">أضيفت %d بطاقة</item>
@@ -163,7 +156,6 @@
         <item quantity="many">أضيفت %d بطاقة</item>
         <item quantity="other">أضيفت %d بطاقة</item>
     </plurals>
-    <string name="help_title">مساعدة</string>
     <string name="check_db">فحص قاعدة البيانات</string>
     <string name="check_media">فحص الوسائط</string>
     <string name="empty_cards">بطاقات فارغة</string>
@@ -173,10 +165,9 @@
     <string name="delete_deck">يجري حذف الرزمة...</string>
     <string name="show_hint">إظهار %s</string>
     <string name="info_rate">قيم أنكيدرويد</string>
-    <string name="col_load_failed">فشل تحميل المجموعة.\nاضغط تراجع لإغلاق أنكيدرويد.</string>
     <string name="import_title">استيراد</string>
     <string name="import_select_title">اختر ملفًا لاستيراده</string>
-    <string name="import_message_add">إضافة</string>
+    <string name="import_message_add" comment="Adding a new deck to the collection (import)">إضافة</string>
     <string name="import_message_replace_confirm">سيحذف هذا مجموعتك الحالية ويستبدلها ببيانات الملف %s</string>
     <string name="import_message_add_confirm">هل تريد إضافة “%s” إلى المجموعة؟ قد يستغرق هذا وقتًا طويلًا</string>
     <string name="import_log_no_apkg">ليس هذا ملف حزمة أنكي صالحًا</string>
@@ -217,7 +208,9 @@
     <string name="export_unsuccessful">حدث خطأ عند تصدير ملف apkg</string>
     <string name="import_hint">لاستيراد البطاقات، ضع ملف الـ apkg في المجلد “%s” وانقر «موافق»</string>
     <string name="upgrade_import_no_file_found">تعذر العثور على ملف %1$s يمكن استيراده</string>
-    <string name="study_options">الخيارات</string>
+    <string name="study_options" comment="Name for a preference category in Filtered deck (aka Cram deck, aka Custom study) options">الخيارات</string>
+    <string name="menu__deck_options">خيارات المجموعة</string>
+    <string name="menu__study_options" comment="Menu item that opens options for a Filtered deck (aka Cram deck, aka Custom study)">خيارات الدراسة</string>
     <string name="select_tts">تعيين لغة تحويل النص إلى كلام</string>
     <string name="custom_study">دراسة مخصصة</string>
     <string name="more_options">المزيد</string>
@@ -279,6 +272,10 @@
         <item quantity="many">%s عامًا</item>
         <item quantity="other">%s عام</item>
     </plurals>
+    <!-- A decimal number of seconds.
+    Please give this a best-effort translation and explain the requirements for
+    formatting decimals in your language in the CrowdIn comments -->
+    <string name="time_span_decimal_seconds">%s ثانية</string>
     <!-- The reason for making a simple “< x” translatable are RTL
          languages which apparently use the other symbol to mean less
          than. -->
@@ -298,14 +295,13 @@
     <!-- Currently only used if exporting APKG fails -->
     <string name="apk_share_error">حدث خطأ أثناء مشاركة ملف apkg</string>
     <!-- Import and export v2 feedback -->
-    <string name="import_needs_v2">يجب تفعيل مجدول V2 لاستيراد هذا الملف.</string>
-    <string name="import_cannot_with_v2">لا يمكن لمجدول V2 استيراد رزم V1 مع معلومات الجدولة.</string>
     <string name="export_v2_dummy_note">يتطلب هذا الملف إصدارًا أحدث من أنكي.</string>
     <!-- Placed in a snackbar with a long URL. Limit the length and move the URL to the start of the string -->
     <string name="activity_start_failed_load_url">فشل تحميل \'%s\'.</string>
     <string name="activity_start_failed">ليس للنظام تطبيق منصب يمكنه إجراء هذا.</string>
     <string name="multimedia_editor_image_compression_failed"><![CDATA[قد تكون صور الكاميرا كبيرة. قد ترغب في ضغط الصور وتغيير حجمها في مجلد الوسائط]]></string>
     <string name="no_browser_notification">تعذر العثور على متصفح، الرجاء زيارة صفحة الويب بواسطة حاسوب شخصي أو هاتف محمول: </string>
+    <string name="web_page_error">خطأ في تحميل الصفحة: %s</string>
     <string name="no_outgoing_link_in_cardbrowser">روابط الصفحات الخارجية في البطاقات غير مدعومة.</string>
     <!-- The name of the deck which corrupt cards will be moved to -->
     <string name="check_integrity_recovered_deck_name">تم استرجاع البطاقات</string>
@@ -368,8 +364,32 @@
     <string name="about_ankidroid_error_copy_debug_info">حدث خطأ عند نسخ معلومات التصحيح إلى الحافظة</string>
     <!-- Card Viewer -->
     <string name="card_viewer_could_not_find_image">فشل تحميل ‘%s’</string>
-    <string name="card_viewer_could_not_find_image_get_help">مساعدة</string>
+    <string name="card_viewer_media_relative_protocol">خطأ في محتوى البطاقة: تحديث الوسائط مطلوب</string>
     <!-- Deck Picker -->
     <string name="deck_picker_failed_deck_load">فشل تحميل رزمة ‘%s’</string>
     <string name="search_decks">بحث في الرزم</string>
+    <string name="ankidroid_init_failed_webview_title">خطأٌ فادح</string>
+    <string name="ankidroid_init_failed_webview">يعتمد أنكيدرويد على عارض الويب الخاص بالنظام وهو غير متوفر. يمكن أن يحدث هذا إذا كان النظام ينصب تحديثات. الرجاء المحاولة مجددًا بعد بضع دقائق.\n\n%s</string>
+    <!-- A Menu item to change the Font Size (currently in the Note Editor) -->
+    <string name="menu_font_size">حجم الخط</string>
+    <string name="menu_show_toolbar" comment="Checkable item stating whether the note editor toolbar should be shown">إظهار شريط الأدوات</string>
+    <string name="format_insert_bold">تنسيق كعريض</string>
+    <string name="format_insert_italic">تنسيق كمائل</string>
+    <string name="format_insert_underline">تنسيق كخط سفلي</string>
+    <string name="insert_horizontal_line">إضافة خط أفقي</string>
+    <string name="insert_heading">إضافة عنوان</string>
+    <string name="format_font_size">تغيير لون الخط</string>
+    <string name="insert_mathjax">إضافة معادلة MathJax</string>
+    <string name="insert_cloze">إضافة عبارة ملء فراغات</string>
+    <string name="before_text">HTML قبل المحدد</string>
+    <string name="after_text">HTML بعد المحدد</string>
+    <string name="add_toolbar_item">إنشاء عنصر شريط أدوات</string>
+    <string name="toolbar_item_explain_remove">أدخل HTML ليتم إدخاله قبل النص المحدد وبعده\n\nاضغط ضغطًا مطولًا على عنصر شريط أدوات لإزالته</string>
+    <string name="remove_toolbar_item">هل تريد حذف عنصر شريط الأدوات؟</string>
+    <string name="note_editor_paste_too_large">الصورة كبيرة جدًا للصق، أضف الصورة يدويًا</string>
+    <string name="ankidroid_cannot_open_after_backup_try_again" comment="After an Android backup is restored, AnkiDroid opens and shows this message.         Opening AnkiDroid again will work correctly">        النسخ الاحتياطي للأندرويد قيد التقدم. الرجاء المحاولة مجددًا</string>
+    <string name="create_shortcut_error_vivo" comment="iManager is an app on Vivo phones">قد تحتاج إلى استخدام iManager للسماح لأنكيدرويد بإضافة اختصارات</string>
+    <string name="create_shortcut_failed" comment="home screen == launcher">لا تسمح شاشتك الرئيسية لأنكيدرويد بإضافة اختصارات</string>
+    <string name="create_shortcut_error">حدث خطأ عند إضافة الاختصار: %s</string>
+    <string name="note_editor_capitalize" comment="This is for a switch with a checkbox - on: enabled">رسمَلة الجُمَل</string>
 </resources>

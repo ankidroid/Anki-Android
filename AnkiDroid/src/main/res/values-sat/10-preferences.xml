@@ -42,14 +42,12 @@
     <string name="disabled">ᱵᱚᱸᱫ</string>
     <string name="enabled">ᱦᱩᱞ ᱦᱚᱪᱚ</string>
     <!-- preferences.xml categories-->
-    <string name="pref_cat_general">AnkiDroid</string>
     <string name="pref_cat_general_summ">ᱥᱟᱫᱷᱟᱨᱚᱬ ᱥᱟᱡᱟᱣ</string>
     <string name="pref_cat_reviewing">ᱫᱩᱦᱲᱟ ᱧᱮᱞ</string>
     <string name="pref_cat_reviewing_summ">ᱱᱚᱱ-ᱰᱮᱠ-ᱵᱤᱥᱮᱥ ᱫᱩᱦᱲᱟ ᱧᱮᱞ ᱥᱟᱡᱟᱣᱠᱚ</string>
     <string name="pref_cat_reviewer_behaviour">ᱵᱮᱵᱷᱟᱨ</string>
     <string name="pref_cat_flashcard">ᱩᱫᱩᱜᱽ</string>
     <string name="pref_cat_whiteboard">ᱯᱩᱸᱰ ᱥᱤᱞᱚᱴ</string>
-    <string name="pref_cat_automatic_display">ᱟᱡᱽ ᱛᱮ ᱛᱮᱞᱟ ᱫᱮᱠᱷᱟᱣ</string>
     <string name="pref_cat_appearance">ᱧᱮᱞᱚᱜ ᱠᱚ</string>
     <string name="pref_cat_appearance_summ">ᱩᱱᱩᱭᱦᱟᱹᱨ ᱟᱨ ᱢᱩᱞ ᱯᱷᱮᱲᱟᱛ ᱪᱤᱠᱤ ᱵᱚᱫᱚᱞ</string>
     <string name="pref_cat_themes">ᱩᱱᱩᱭᱦᱟᱹᱨ</string>
@@ -66,8 +64,6 @@
     <string name="about_version">ᱦᱟᱹᱞᱤᱭᱟᱜ: </string>
     <!-- preferences.xml entries-->
     <string name="whiteboard_stroke_width">ᱥᱴᱨᱚᱠ ᱨᱮᱭᱟᱜ ᱚᱥᱟᱨ</string>
-    <string name="whiteboard_black">ᱦᱮᱸᱫᱮ ᱥᱴᱨᱚᱠᱥ</string>
-    <string name="whiteboard_black_summ">ᱧᱤᱸᱫᱟᱹ ᱢᱚᱰ ᱵᱟᱝ ᱦᱩᱭᱩᱜ ᱦᱟᱹᱵᱤᱡ, ᱠᱚᱢ ᱡᱟᱭᱜᱟ ᱤᱫᱤᱭᱟ</string>
     <string name="use_input_tag">ᱠᱟᱰ ᱨᱮ ᱛᱮᱞᱟ ᱚᱞ ᱛᱟᱢ</string>
     <string name="use_input_tag_summ">ᱛᱮᱞᱟ ᱚᱞ ᱞᱟᱹᱜᱤᱫ ᱠᱟᱰ ᱨᱮᱭᱟᱜ ᱚᱞ ᱟᱫᱮᱨ ᱵᱚᱠᱥᱟ ᱵᱮᱵᱦᱟᱨ ᱢᱮ</string>
     <string name="dictionary">ᱥᱟᱵᱟᱫ ᱢᱚᱱᱮ ᱯᱩᱛᱷᱤ ᱧᱮᱞᱢᱮ</string>
@@ -96,15 +92,26 @@
     <string name="gestures_summ">ᱛᱮᱞᱟ ᱮᱢ ᱟᱨ ᱠᱟᱰᱥ ᱥᱟᱯᱰᱟᱣ ᱞᱟᱹᱜᱤᱫ ᱜᱮᱥᱪᱚᱨ ᱠᱚ ᱴᱷᱤᱠ ᱢᱮ ᱾</string>
     <string name="gestures_allow_links">ᱞᱤᱝᱠ ᱨᱮ ᱴᱤᱰᱟᱹᱜ ᱪᱤᱱᱦᱟ ᱮᱨᱮᱲ ᱢᱮ</string>
     <string name="gestures_allow_links_summary">ᱴᱤᱰᱹᱟᱜ ᱪᱤᱱᱦᱟᱹ ᱵᱟᱭ ᱠᱟᱹᱢᱤᱟᱭ ᱡᱚᱫᱤ ᱞᱤᱝᱠ/ᱦᱤᱸᱴ ᱨᱮ ᱚᱛᱟᱭᱟ ᱾</string>
+    <string name="gestures_corner_touch">᱙ᱼᱤᱸᱪ ᱚᱛᱟ</string>
+    <string name="gestures_corner_touch_summary">ᱥᱠᱨᱤᱱ ᱠᱩᱱᱟᱹ ᱠᱚᱨᱮ  ᱚᱛᱟ ᱜᱮᱥᱪᱚᱨᱠᱚ ᱮᱢ ᱪᱷᱚ</string>
     <string name="gestures_swipe_up">ᱪᱮᱛᱟᱱ ᱴᱷᱮᱞᱟᱣ</string>
     <string name="gestures_swipe_down">ᱞᱟᱛᱟᱨ ᱴᱷᱮᱞᱟᱣ</string>
     <string name="gestures_swipe_left">ᱞᱮᱸᱜᱟ ᱴᱷᱮᱞᱟᱣ</string>
     <string name="gestures_swipe_right">ᱡᱚᱡᱚᱢ ᱴᱷᱮᱞᱟᱣ</string>
     <string name="gestures_double_tap">ᱫᱚᱦᱲᱟ ᱡᱚᱴᱮᱫ</string>
     <string name="gestures_tap_top">ᱪᱮᱛᱟᱱ ᱡᱚᱴᱮᱫ</string>
-    <string name="gestures_tap_bottom">ᱞᱟᱛᱟᱨ ᱡᱚᱴᱮᱫ</string>
     <string name="gestures_tap_left">ᱞᱮᱸᱜᱟ ᱡᱚᱴᱮᱫ</string>
     <string name="gestures_tap_right">ᱡᱚᱡᱚᱢ ᱡᱚᱴᱮᱫ</string>
+    <string name="gestures_tap_bottom">ᱞᱟᱛᱟᱨ ᱡᱚᱴᱮᱫ</string>
+    <string name="gestures_corner_tap_top_left">ᱪᱮᱛᱟᱱ ᱞᱮᱸᱜᱟ ᱯᱟᱦᱴᱟ ᱚᱛᱟᱭ ᱢᱮ</string>
+    <string name="gestures_corner_tap_top_center">ᱪᱮᱛᱟᱱ ᱛᱟᱞᱟᱨᱮ ᱚᱛᱟᱭ ᱢᱮ</string>
+    <string name="gestures_corner_tap_top_right">ᱪᱮᱛᱟᱱ ᱡᱚᱡᱚᱢ ᱯᱟᱦᱴᱟ ᱚᱛᱟᱭ ᱢᱮ</string>
+    <string name="gestures_corner_tap_middle_left">ᱛᱟᱞᱟ ᱞᱮᱸᱜᱟ ᱯᱟᱦᱴᱟ ᱚᱛᱟᱭ ᱢᱮ</string>
+    <string name="gestures_corner_tap_middle_center">ᱛᱟᱞᱟ ᱟᱨ ᱛᱟᱞᱟ ᱨᱮ ᱚᱛᱟᱭ ᱢᱮ</string>
+    <string name="gestures_corner_tap_middle_right">ᱛᱟᱞᱟ ᱡᱚᱡᱚᱢ ᱯᱟᱦᱴᱟ ᱨᱮ ᱚᱛᱟᱭ ᱢᱮ</string>
+    <string name="gestures_corner_tap_bottom_left">ᱞᱟᱛᱟᱨ ᱞᱮᱸᱜᱟ ᱯᱟᱦᱴᱟ ᱨᱮ ᱚᱛᱟᱭ ᱢᱮ</string>
+    <string name="gestures_corner_tap_bottom_center">Touch bottom center</string>
+    <string name="gestures_corner_tap_bottom_right">Touch bottom right</string>
     <string name="gestures_volume_up">ᱥᱟᱲᱮ ᱰᱷᱮᱨ</string>
     <string name="gestures_volume_down">ᱥᱟᱰᱮ ᱞᱟᱛᱟᱨ</string>
     <string name="more_scrolling_buttons">ᱤᱼᱨᱤᱰᱚᱨ</string>
@@ -123,8 +130,8 @@
     <string name="sync_account_summ_logged_in">%s</string>
     <string name="automatic_sync_choice">ᱟᱡ ᱛᱮᱜᱮ ᱟᱹᱭᱩᱨ ᱢᱤᱫ</string>
     <string name="automatic_sync_choice_summ">ᱟᱭᱩᱨ ᱢᱤᱫ ᱢᱮ ᱡᱚᱫᱤ ᱑᱐ ᱴᱤᱡ ᱠᱷᱚᱱ ᱡᱟᱹᱥᱛᱤ ᱥᱚᱢᱚᱭ ᱤᱫᱤᱮᱫ ᱠᱷᱟᱱ ᱮᱯ ᱮᱛᱚᱦᱚ ᱟᱨ ᱵᱚᱸᱫ ᱢᱟᱲᱟᱝ ᱨᱮ</string>
-    <string name="sync_status_badge">Display synchronization status</string>
-    <string name="sync_status_badge_summ">Change the sync icon when changes can be uploaded</string>
+    <string name="sync_status_badge">ᱥᱭᱸᱠᱨᱚᱱᱟᱭᱡᱮᱥᱚᱱ ᱥᱴᱟᱴᱟᱹᱥ ᱫᱮᱠᱷᱟᱣ</string>
+    <string name="sync_status_badge_summ">ᱡᱩᱫᱤ ᱵᱚᱫᱚᱞ ᱠᱚ ᱟᱹᱯᱞᱚᱰ ᱜᱟᱱᱚᱜ ᱠᱷᱟᱱ ᱥᱭᱸᱠ ᱟᱭᱠᱚᱱ ᱵᱚᱫᱚᱞ ᱢᱮ</string>
     <string name="day_theme">ᱫᱤᱱ ᱛᱟᱞ</string>
     <string name="night_theme">ᱟᱹᱭᱩᱵ ᱛᱟᱞ</string>
     <string name="default_font">ᱢᱩᱞ ᱯᱷᱮᱲᱟᱛ ᱪᱤᱠᱤ</string>
@@ -141,9 +148,8 @@
     <string name="timeout_answer_text">ᱟᱡᱽ ᱛᱮ ᱛᱮᱞᱟ ᱫᱮᱠᱷᱟᱣ</string>
     <string name="timeout_answer_summ">ᱵᱮᱜᱚᱨ ᱟᱫᱮᱨ ᱛᱮ ᱟᱡᱛᱮ ᱛᱮᱞᱟ ᱫᱮᱠᱷᱟᱣ ᱢᱮ ᱾ ᱟᱡ ᱛᱮ ᱥᱟᱲᱮ ᱨᱮᱫ ᱟᱱᱡᱚᱢ ᱠᱚ ᱮᱢᱟᱱ ᱞᱟᱹᱜᱤᱫ ᱥᱚᱢᱚᱭ ᱤᱫᱤ ᱫᱟᱲᱮᱟᱜᱼᱟᱭ ᱾</string>
     <string name="timeout_answer_seconds">ᱛᱮᱞᱟ ᱫᱮᱠᱷᱟᱣ ᱥᱚᱢᱚᱭ ᱦᱩᱡᱮᱱᱟ</string>
-    <string name="timeout_answer_seconds_summ">XXX ᱴᱤᱯᱤᱡ</string>
+    <string name="timeout_answer_seconds_summ" comment="The time to wait (in seconds) in the reviewer before automatically showing the next question or answer">XXX ᱴᱤᱯᱤᱡ</string>
     <string name="timeout_question_seconds">ᱤᱱᱟᱹ ᱛᱟᱭᱚᱢ ᱯᱚᱨᱥᱚᱱ ᱫᱮᱠᱷᱟᱣᱼᱟ</string>
-    <string name="timeout_question_seconds_summ">XXX ᱴᱤᱯᱤᱡ</string>
     <string name="select_locale_title">ᱟᱲᱟᱝ ᱪᱚᱭᱚᱱ</string>
     <string name="safe_display">ᱡᱟᱹᱯᱛᱤ ᱚᱵᱚᱥᱛᱷᱟ ᱩᱫᱩᱜᱽ ᱢᱚᱰ</string>
     <string name="safe_display_summ">ᱡᱷᱚᱛᱚ ᱮᱱᱤᱢᱮᱥᱚᱱ ᱵᱚᱱᱫᱽ ᱠᱟᱛᱮ ᱟᱨ ᱴᱷᱤᱠ ᱛᱚᱨᱤᱠᱟ ᱛᱮ ᱠᱟᱰ ᱤᱫᱤ ᱢᱮ ᱾ ᱤᱼᱠᱟᱲᱤ ᱰᱤᱵᱷᱟᱤᱥ ᱫᱚᱨᱠᱟᱨ ᱯᱟᱲᱟᱣ ᱜᱮᱭᱟ ᱾ </string>
@@ -164,14 +170,13 @@
     <string name="use_current">ᱱᱟᱶᱟ ᱠᱟᱰ ᱠᱚ ᱞᱟᱹᱜᱤᱫ ᱰᱮᱠ</string>
     <string name="new_spread">ᱱᱟᱣᱟ ᱠᱟᱰ ᱡᱟᱭᱜᱟ</string>
     <string name="learn_cutoff">ᱢᱟᱲᱟᱝ ᱥᱮᱫ ᱯᱟᱲᱦᱟᱣ ᱪᱮᱫᱚᱜ</string>
-    <string name="learn_cutoff_summ">XXX ᱴᱤᱯᱤᱡ</string>
     <string name="time_limit">ᱥᱚᱢᱚᱭ ᱵᱟᱠᱥᱚ ᱚᱠᱛᱚ ᱥᱤᱢᱟᱹ</string>
     <string name="time_limit_summ">XXX ᱴᱤᱯᱤᱡ</string>
     <string name="day_offset">ᱤᱱᱟᱹ ᱛᱟᱭᱚᱢ ᱫᱤᱱ ᱮᱛᱦᱚᱵ</string>
-    <string name="day_offset_summ">XXX hours past midnight</string>
-    <string name="sched_ver">Experimental V2 scheduler</string>
-    <string name="sched_ver_summ">Enable the experimental scheduler. Forces changes in one direction on next sync</string>
-    <string name="sched_ver_toggle_title">Confirm</string>
+    <string name="day_offset_summ">XXX ᱴᱟᱲᱟᱝ ᱢᱟᱲᱟᱝ ᱟᱹᱭᱩᱵ</string>
+    <string name="sched_ver">ᱮᱠᱥᱯᱮᱨᱭᱢᱮᱱᱴᱟᱞ V2 ᱥᱮᱰᱭᱩᱞᱟᱹᱨ</string>
+    <string name="sched_ver_summ">ᱮᱠᱥᱯᱮᱨᱭᱢᱮᱱᱴᱟᱞ ᱥᱮᱰᱭᱩᱞᱟᱹᱨ ᱮᱢᱼᱢᱮ ᱾ ᱢᱟᱲᱟᱝᱟᱜ ᱥᱭᱸᱠ ᱱᱟᱠᱷᱟ ᱛᱮ ᱡᱩᱨ ᱵᱚᱫᱚᱞ ᱢᱮ ᱾</string>
+    <string name="sched_ver_toggle_title">ᱴᱷᱤᱠ</string>
     <string name="sched_ver_2to1">This will reset any cards in learning, clear filtered decks, and change the scheduler version. Proceed?</string>
     <string name="sched_ver_1to2">The experimental scheduler could cause incorrect scheduling. Please ensure you have read the documentation first. Proceed?</string>
     <string name="pref_keep_screen_on">Keep screen on</string>
@@ -216,8 +221,8 @@
         <item quantity="other">%1$s\n%2$d decks use this group</item>
     </plurals>
     <string name="deck_conf_new_cards">New cards</string>
-    <string name="deck_conf_rev_cards">ᱫᱩᱦᱲᱟ ᱧᱮᱞ</string>
-    <string name="deck_conf_lps_cards">Lapses</string>
+    <string name="deck_conf_rev_cards" comment="Name of the deck options submenu for configuring reviews of due cards.">ᱫᱩᱦᱲᱟ ᱧᱮᱞ</string>
+    <string name="deck_conf_lps_cards" comment="Label of the submenu stating how lapses cards are treated.">Lapses</string>
     <string name="deck_conf_general">ᱥᱟᱱᱟᱢ</string>
     <string name="deck_conf_reminders">Reminders</string>
     <string name="deck_conf_steps">Steps (in minutes)</string>
@@ -235,6 +240,7 @@
     <string name="deck_conf_use_general_timeout_settings">Use general settings</string>
     <string name="deck_conf_use_general_timeout_settings_summ">Use general \'Automatic display answer\' settings instead of using the settings for this group.</string>
     <string name="deck_conf_easy_bonus">Easy bonus</string>
+    <string name="deck_conf_hard_factor">Hard interval</string>
     <string name="deck_conf_ivl_fct">Interval modifier</string>
     <string name="deck_conf_max_ivl">Maximum interval</string>
     <string name="deck_conf_new_lps_ivl">New interval</string>
@@ -251,29 +257,24 @@
     <string name="deck_conf_manage">Group management</string>
     <string name="deck_conf_manage_summ">Add and change options groups</string>
     <string name="deck_conf_current_group">Current group</string>
-    <string name="deck_conf_rename">ᱫᱚᱦᱲᱟ ᱧᱩᱛᱩᱢ</string>
+    <string name="deck_conf_rename" comment="Menu entry to rename a deck">ᱫᱚᱦᱲᱟ ᱧᱩᱛᱩᱢ</string>
     <string name="deck_conf_reset">Restore defaults</string>
-    <string name="deck_conf_reset_title">Restore defaults</string>
     <string name="deck_conf_reset_message">Restore current options group to default values?</string>
-    <string name="deck_conf_add">ᱥᱮᱞᱮᱫ</string>
+    <string name="deck_conf_add" comment="Adding a new deck option group">ᱥᱮᱞᱮᱫ</string>
     <string name="deck_conf_add_summ">Create a copy of the current options group</string>
-    <string name="deck_conf_remove">ᱚᱪᱚᱜᱽ</string>
-    <string name="deck_conf_remove_title">ᱚᱪᱚᱜᱽ</string>
     <string name="deck_conf_remove_message">Remove current options group?</string>
     <string name="deck_conf_set_subdecks">Set for all subdecks</string>
     <plurals name="deck_conf_set_subdecks_summ">
         <item quantity="one">%s subdeck will use this group</item>
         <item quantity="other">%s subdecks will use this group</item>
     </plurals>
-    <string name="deck_conf_set_subdecks_title">Set for all subdecks</string>
     <string name="deck_conf_set_subdecks_message">Set current options group for all of this deck’s subdecks?</string>
     <string name="pref_browser_editor_font">Browser and editor font</string>
     <string name="deck_conf_cram_filter">ᱪᱷᱟᱹᱱᱤᱭᱟᱜ</string>
-    <string name="deck_conf_cram_options">ᱚᱯᱥᱚᱱ ᱠᱚ</string>
     <string name="deck_conf_cram_search">ᱥᱮᱸᱫᱽᱨᱟ</string>
     <string name="deck_conf_cram_limit">ᱥᱤᱢᱟᱹ ᱛᱮ</string>
     <string name="deck_conf_cram_order">ᱠᱟᱰᱥ ᱪᱚᱭᱚᱱ ᱯᱨᱚᱠᱟᱨ ᱠᱚ</string>
-    <string name="deck_conf_cram_reschedule">ᱨᱤᱥᱮᱰᱭᱩᱞ ᱢᱮ</string>
+    <string name="deck_conf_cram_reschedule" comment="Title of the box labelled by deck_conf_cram_reschedule_summ">ᱨᱤᱥᱮᱰᱭᱩᱞ ᱢᱮ</string>
     <string name="deck_conf_cram_reschedule_summ">Reschedule cards based on my answers in this deck</string>
     <string name="deck_conf_cram_steps">Custom steps (in minutes)</string>
     <string name="deck_conf_cram_steps_summ">Define custom steps</string>
@@ -283,6 +284,8 @@
     <string name="analytics_dialog_title">Help make AnkiDroid better!</string>
     <string name="analytics_title">Share feature usage</string>
     <string name="analytics_summ">You can contribute to AnkiDroid by helping the development team see which features people use</string>
-    <string name="enable_miui_keyboard_hack">\'Paste\' to insert cloze deletion</string>
-    <string name="enable_miui_keyboard_hack_summ">In the Note Editor, \'Paste\' will turn the selected text into a cloze</string>
+    <string name="note_editor_replace_newlines">Replace newlines with HTML</string>
+    <string name="note_editor_replace_newlines_summ">In the Note Editor, convert any instances of &lt;br&gt; to newlines when editing a card.</string>
+    <string name="no_code_formatting">Simple typed answer formatting</string>
+    <string name="no_code_formatting_summ">Fixes ‘􏿾’ appearing in typed answer results</string>
 </resources>

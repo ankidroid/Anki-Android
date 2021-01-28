@@ -39,35 +39,6 @@
         <item>報告しない</item>
         <item>毎回確認する</item>
     </string-array>
-    <string-array name="gestures_labels">
-        <item>何もしない</item>
-        <item>解答を表示</item>
-        <item>回答ボタン１</item>
-        <item>回答ボタン２</item>
-        <item>回答ボタン３</item>
-        <item>回答ボタン４</item>
-        <item>推奨される回答（緑色）</item>
-        <item>推奨される回答よりも良い回答</item>
-        <item>元に戻す</item>
-        <item>ノートを編集</item>
-        <item>ノートにタグを付ける</item>
-        <item>ノートにマークを付ける</item>
-        <item>Lookup expression</item>
-        <item>カードを延期</item>
-        <item>カードを保留</item>
-        <item>Delete note</item>
-        <item>音声・動画を再生</item>
-        <item>学習を中断</item>
-        <item>ノートを延期</item>
-        <item>ノートを保留</item>
-        <item>赤フラグを付ける/取り外す</item>
-        <item>橙フラグを付ける/取り外す</item>
-        <item>緑フラグを付ける/取り外す</item>
-        <item>青フラグを付ける/取り外す</item>
-        <item>フラグを取り外す</item>
-        <item>１画面分上へスクロール</item>
-        <item>１画面分下へスクロール</item>
-    </string-array>
     <string-array name="leech_action_labels">
         <item>タグを付けて保留</item>
         <item>タグを付けるだけ</item>
@@ -108,4 +79,39 @@
         <item>ブラック</item>
         <item>ダークグレー</item>
     </string-array>
+    <string-array name="html_size_code_labels">
+        <item>XXS</item>
+        <item>XS</item>
+        <item>S</item>
+        <item>M</item>
+        <item>L</item>
+        <item>XL</item>
+        <item>XXL</item>
+    </string-array>
+    <!--
+    #7794 - it\'s better to use @string references in non-translated arrays as this handles
+    changes in the array ordering better
+     -->
+    <string name="gesture_no_action">何もしない</string>
+    <string name="gesture_answer_1">回答ボタン１</string>
+    <string name="gesture_answer_2">回答ボタン２</string>
+    <string name="gesture_answer_3">回答ボタン３</string>
+    <string name="gesture_answer_4">回答ボタン４</string>
+    <string name="gesture_answer_green">推奨される回答（緑色）</string>
+    <string name="gesture_answer_better_recommended">推奨される回答よりも良い回答</string>
+    <string name="gesture_tag_note">ノートにタグを付ける</string>
+    <string name="gesture_lookup">検索式</string>
+    <string name="gesture_play">音声・動画を再生</string>
+    <string name="gesture_abort_learning">学習を中断</string>
+    <string name="gesture_flag_red">赤フラグを付ける/取り外す</string>
+    <string name="gesture_flag_orange">橙フラグを付ける/取り外す</string>
+    <string name="gesture_flag_green">緑フラグを付ける/取り外す</string>
+    <string name="gesture_flag_blue">青フラグを付ける/取り外す</string>
+    <string name="gesture_flag_remove">フラグを取り外す</string>
+    <string name="gesture_page_up">１画面分上へスクロール</string>
+    <string name="gesture_page_down">１画面分下へスクロール</string>
+    <string name="gesture_abort_sync">学習を中断して同期</string>
+    <string name="gesture_toggle_whiteboard">ホワイトボード機能をオン/オフ</string>
+    <string name="record_voice">音声を録音</string>
+    <string name="replay_voice">音声を再生</string>
 </resources>

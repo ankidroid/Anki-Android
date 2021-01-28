@@ -22,10 +22,8 @@ public class WebViewDebugging {
         is not supported. https://crbug.com/558377 : Lock owner com.ichi2.anki:acra at
         org.chromium.android_webview.AwDataDirLock.a(PG:26)
          */
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
-            boolean enableDebugging = sharedPrefs.getBoolean("html_javascript_debugging", false);
-            WebView.setWebContentsDebuggingEnabled(enableDebugging);
-        }
+        boolean enableDebugging = sharedPrefs.getBoolean("html_javascript_debugging", false);
+        WebView.setWebContentsDebuggingEnabled(enableDebugging);
     }
 
     /** Throws IllegalStateException if a WebView has been initialized */

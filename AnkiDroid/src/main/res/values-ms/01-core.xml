@@ -38,14 +38,14 @@
 ~ this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <resources>
+    <string name="yes">yes</string>
     <!-- Navigation drawer items-->
     <string name="decks">Decks</string>
-    <string name="card_browser">Card browser</string>
+    <string name="card_browser" comment="The usage of card browser inside the app (note the casing)">Card browser</string>
     <string name="statistics">Statistics</string>
     <string name="settings">Settings</string>
     <string name="help">Help</string>
     <string name="send_feedback">Send feedback</string>
-    <string name="studyoptions_title">Deck overview</string>
     <string name="studyoptions_due_today">Due today:</string>
     <string name="studyoptions_new_total">Total new cards:</string>
     <string name="studyoptions_total_cards">Total cards:</string>
@@ -85,22 +85,14 @@
     <string name="menu_import">Import</string>
     <string name="undo">Undo</string>
     <string name="undo_action_review">last review</string>
-    <string name="undo_action_bury_card">bury card</string>
-    <string name="undo_action_bury_note">bury note</string>
-    <string name="undo_action_suspend_card">suspend card</string>
-    <string name="undo_action_suspend_note">suspend note</string>
-    <string name="undo_action_delete">delete note</string>
-    <string name="undo_action_delete_multi">delete notes</string>
     <string name="undo_action_change_deck_multi">change decks</string>
-    <string name="undo_action_reschedule_card">reschedule</string>
-    <string name="undo_action_reset_card">reset progress</string>
-    <string name="undo_action_reposition_card">reposition</string>
     <string name="move_all_to_deck">Move all to deck</string>
     <string name="unbury">Unbury</string>
     <string name="rename_deck">Rename deck</string>
-    <string name="menu_add">Add</string>
+    <string name="create_shortcut">Create shortcut</string>
+    <string name="menu_add" comment="A generic add button - Main Deck Picker and card templates. Please inform us if you need more specific strings">Add</string>
     <string name="menu_add_note">Add note</string>
-    <string name="menu_my_account">Sync account</string>
+    <string name="menu_my_account" comment="Label of the window in which the user should enter their account. This text can\'t be found in AnkiDroid directly.">Sync account</string>
     <string name="menu_dismiss_note">Hide / delete</string>
     <string name="menu_bury_card">Bury card</string>
     <string name="menu_bury_note">Bury note</string>
@@ -124,7 +116,7 @@
     <string name="menu_unmark_note">Unmark note</string>
     <string name="menu_toggle_mic_tool_bar">Check pronunciation</string>
     <string name="new_deck">Create deck</string>
-    <string name="create">Create</string>
+    <string name="create" comment="Button to create a filtered deck">Create</string>
     <string name="new_dynamic_deck">Create filtered deck</string>
     <string name="night_mode">Night mode</string>
     <string name="directory_inaccessible">Apa yang anda perlu lakukan direktori tidak boleh diakses</string>
@@ -157,6 +149,7 @@
     <string name="custom_study_deck_name">Adat belajar sesi</string>
     <string name="custom_study_deck_exists">Menamakan ada adat belajar dek pertama</string>
     <string name="empty_deck">Dek ini adalah kosong</string>
+    <string name="empty_deck_add_note">Add card</string>
     <string name="invalid_deck_name">Invalid deck name</string>
     <string name="studyoptions_empty">Dek ini adalah kosong. Tekan butang + untuk menambah kandungan baru.</string>
     <string name="studyoptions_limit_reached">Setiap hari belajar had mencapai</string>
@@ -182,7 +175,6 @@
     <string name="card_template_editor_front">Front template</string>
     <string name="card_template_editor_back">Back template</string>
     <string name="card_template_editor_styling">Styling</string>
-    <string name="card_template_editor_menu_delete">Delete</string>
     <string name="card_template_editor_menu_card_browser_appearance">Card Browser Appearance</string>
     <string name="card_template_editor_deck_override">Deck Override</string>
     <string name="card_template_editor_cant_delete">Sekurang-kurangnya satu jenis kad diperlukan</string>
@@ -195,11 +187,21 @@
     <string name="template_for_current_card_deleted">The card type for the current card was deleted.</string>
     <!-- Card Browser Appearance -->
     <string name="card_template_browser_appearance_title">Browser appearance</string>
+    <string name="current_and_default_deck">%1$s (%2$s)</string>
+    <!-- card Info -->
+    <string name="card_info_title">Card info</string>
     <!-- Permissions -->
     <string name="read_write_permission_label">Ead dan menulis apa yang anda perlu lakukan pangkalan data</string>
     <string name="read_write_permission_description">akses yang ada nota, kad, perhatikan jenis, dan dek, serta membuat yang baru</string>
     <!-- Context Menu -->
-    <string name="card_browser_label">Card Browser</string>
-    <string name="card_browser_context_menu">Card Browser</string>
+    <string name="card_browser_context_menu" comment="The value which appears in the system context menu. Note the casing difference">Card Browser</string>
     <string name="context_menu_anki_card_label">Anki Card</string>
+    <string name="has_a_problem" comment="First field is either front template or back template. Second field is the error message.">%1$s has a problem:<br/>%2$s</string>
+    <string name="more_information">More information</string>
+    <string name="no_field">Found \'{{%1$s}}\', but there is no field called \'%1$s\'.</string>
+    <string name="closed_tag_not_open">Found \'{{/%1$s}}\', but missing \'{{#%1$s}}\' or \'{{^%1$s}}\'.</string>
+    <string name="missing_closing_bracket">Missing \'}}\' in \'%s\'.</string>
+    <string name="open_tag_not_closed">Missing \'{{%s}}\'.</string>
+    <string name="wrong_tag_closed">Found \'{{/%1$s}}\', but expected \'{{/%2$s}}\'</string>
+    <string name="filter_error">Error in filter %s</string>
 </resources>

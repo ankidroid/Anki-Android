@@ -22,6 +22,7 @@ package com.ichi2.libanki.sync;
 
 import android.content.SharedPreferences;
 import android.net.Uri;
+import android.util.Pair;
 
 import com.ichi2.anki.AnkiDroidApp;
 import com.ichi2.anki.exception.UnknownHttpResponseException;
@@ -101,7 +102,7 @@ public class HttpSyncer {
         mHKey = hkey;
         mSKey = Utils.checksum(Float.toString(new Random().nextFloat())).substring(0, 8);
         mCon = con;
-        mPostVars = new HashMap<>();
+        mPostVars = new HashMap<>(0); // New map is created each time it is filled. No need to allocate room
         mHostNum = hostNum;
     }
 
@@ -339,62 +340,6 @@ public class HttpSyncer {
             mCon.publishProgress(0, bS, bR);
         }
     }
-
-
-    public Response hostKey(String arg1, String arg2) throws UnknownHttpResponseException {
-        return null;
-    }
-
-
-    public JSONObject applyChanges(JSONObject kw) throws UnknownHttpResponseException {
-        return null;
-    }
-
-
-    public JSONObject start(JSONObject kw) throws UnknownHttpResponseException {
-        return null;
-    }
-
-
-    public JSONObject chunk() throws UnknownHttpResponseException {
-        return null;
-    }
-
-
-    public long finish() throws UnknownHttpResponseException {
-        return 0;
-    }
-
-
-    public void abort() throws UnknownHttpResponseException {
-        // do nothing
-    }
-
-
-    public Response meta() throws UnknownHttpResponseException {
-        return null;
-    }
-
-
-    public Object[] download() throws UnknownHttpResponseException {
-        return null;
-    }
-
-
-    public Object[] upload() throws UnknownHttpResponseException {
-        return null;
-    }
-
-
-    public JSONObject sanityCheck2(JSONObject client) throws UnknownHttpResponseException {
-        return null;
-    }
-
-
-    public void applyChunk(JSONObject sech) throws UnknownHttpResponseException {
-        // do nothing
-    }
-
 
     public class ProgressByteEntity extends AbstractHttpEntity {
 

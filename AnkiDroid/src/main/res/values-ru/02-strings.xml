@@ -37,13 +37,13 @@
 ~ You should have received a copy of the GNU General Public License along with
 ~ this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools">
     <!-- How to format a percentage shown in the summary field of a preference -->
     <string name="preference_summary_percentage">XXX%</string>
+    <!-- #7570: We should use these strings again -->
     <!-- Navigation drawer strings -->
-    <string name="drawer_open">Открыть панель</string>
-    <string name="drawer_close">Закрыть панель</string>
-    <string name="CardEditorLaterMessage">Сохранённая информация</string>
+    <string tools:ignore="UnusedResources" name="drawer_open">Открыть панель</string>
+    <string tools:ignore="UnusedResources" name="drawer_close">Закрыть панель</string>
     <string name="CardEditorCardDeck">Колода:</string>
     <string name="CardEditorNoteDeck">Колода:</string>
     <string name="CardEditorModel">Тип:</string>
@@ -55,7 +55,6 @@
     <string name="check_all_tags">Выбрать/снять все метки</string>
     <string name="filter_tags">Отобрать по меткам</string>
     <string name="no_tags">Пока меток нет</string>
-    <string name="sdcard_missing_message">Отключите режим передачи файлов по USB, чтобы получить доступ к колодам</string>
     <string name="updated_version">Обновлено до версии %s</string>
     <!-- Reviewer.java -->
     <string name="save_whiteboard">Сохранить написанное</string>
@@ -65,7 +64,6 @@
     <string name="hide_whiteboard">Скрыть доску</string>
     <string name="clear_whiteboard">Стереть с доски</string>
     <string name="replay_audio">Проиграть звук</string>
-    <string name="toggle_mic_tool_bar">Проверить произношение</string>
     <string name="leech_suspend_notification">Карточка помечена как приставучая и исключена</string>
     <string name="leech_notification">Карточка помечена как приставучая</string>
     <string name="corrupt_font">Файл шрифта %s повреждён</string>
@@ -99,15 +97,14 @@
         <item>Запись изменена</item>
     </string-array>
     <!-- Custom study options -->
-    <string name="custom_study_increase_new_limit">Изменить лимит новых карточек на сегодня</string>
-    <string name="custom_study_increase_review_limit">Изменить лимит повторяемых карточек на сегодня</string>
+    <string name="custom_study_increase_new_limit">Изменить лимит новых на сегодня</string>
+    <string name="custom_study_increase_review_limit">Изменить лимит повторяемых на сегодня</string>
     <string name="custom_study_review_forgotten">Повторить забытые</string>
     <string name="custom_study_review_ahead">Повторить с опережением</string>
     <string name="custom_study_random_selection">Учить случайный набор карточек</string>
     <string name="custom_study_preview_new">Просмотреть новые</string>
     <string name="custom_study_limit_tags">Отфильтровать по меткам</string>
     <!-- Card editor -->
-    <string name="cardeditor_title_add_note">Добавить запись</string>
     <string name="cardeditor_title_edit_card">Править запись</string>
     <string name="discard_unsaved_changes">Закрыть и отказаться от изменений?</string>
     <string name="note_editor_no_cards_created">Карточки не созданы. Заполните больше полей</string>
@@ -118,7 +115,6 @@
     <string name="note_editor_insert_cloze_no_cloze_note_type">Задание с пропусками работают только в типе записи с пропусками</string>
     <string name="saving_facts">Запись сохраняется</string>
     <string name="saving_model">Тип записи сохраняется</string>
-    <string name="add">Добавить</string>
     <string name="save">Сохранить</string>
     <string name="close">Закрыть</string>
     <string name="select">Выбрать</string>
@@ -139,17 +135,14 @@
         <item quantity="many">%1$d минут</item>
         <item quantity="other">%1$d минут</item>
     </plurals>
-    <string name="studyoptions_welcome_title">AnkiDroid приветствует вас</string>
-    <string name="fact_adder_intent_title">Карточка AnkiDroid</string>
-    <string name="note_editor_add_note">Добавить запись</string>
+    <string name="fact_adder_intent_title" comment="Label of the \'Add Note\' window. This title can\'t be seen in AnkiDroid directly.">Карточка AnkiDroid</string>
     <string name="note_editor_copy_note">Копировать запись</string>
-    <string name="card_editor_copy_card">Копировать карточку</string>
     <string name="card_editor_reposition_card">Переместить</string>
     <string name="card_editor_reset_card">Сбросить прогресс</string>
-    <string name="card_editor_reschedule_card">Перепланировать</string>
-    <string name="card_editor_preview_card">Предпросмотр</string>
+    <string name="card_editor_reschedule_card" comment="Action to reschedule a card">Перепланировать</string>
+    <string name="card_editor_preview_card" comment="Button offering to preview some card(s)">Предпросмотр</string>
     <string name="error_insufficient_memory">Операция невозможна из-за нехватки места в хранилище устройства</string>
-    <string name="rename">Переименовать</string>
+    <string name="rename" comment="Confirm that the renaming action should be processed.">Переименовать</string>
     <string name="default_conf_delete_error">Конфигурацию по умолчанию нельзя удалить</string>
     <plurals name="factadder_cards_added">
         <item quantity="one">Добавлена %d карточка</item>
@@ -157,7 +150,6 @@
         <item quantity="many">Добавлено %d карточек</item>
         <item quantity="other">Добавлено %d карточек</item>
     </plurals>
-    <string name="help_title">Справка</string>
     <string name="check_db">Проверить базу данных</string>
     <string name="check_media">Проверить медиафайлы</string>
     <string name="empty_cards">Пустые карточки</string>
@@ -167,10 +159,9 @@
     <string name="delete_deck">Колода удаляется&#8230;</string>
     <string name="show_hint">Показать %s</string>
     <string name="info_rate">Оценить AnkiDroid</string>
-    <string name="col_load_failed">Сбой при загрузке коллекции.\nНажмите кнопку \"Назад\", чтобы закрыть AnkiDroid.</string>
     <string name="import_title">Импорт</string>
     <string name="import_select_title">Выберите файл для импорта</string>
-    <string name="import_message_add">Добавить</string>
+    <string name="import_message_add" comment="Adding a new deck to the collection (import)">Добавить</string>
     <string name="import_message_replace_confirm">Ваша коллекция будет удалена, и её заменят данные из файла %s</string>
     <string name="import_message_add_confirm">Добавить \"%s\" в коллекцию? Это может занять много времени</string>
     <string name="import_log_no_apkg">Это недопустимый пакет Anki</string>
@@ -210,7 +201,9 @@
     <string name="export_unsuccessful">Ошибка при экспорте файла apkg</string>
     <string name="import_hint">Чтобы импортировать карточки, поместите файл apkg в папку %s и нажмите ОК</string>
     <string name="upgrade_import_no_file_found">Файл для импорта %1$s не найден</string>
-    <string name="study_options">Параметры</string>
+    <string name="study_options" comment="Name for a preference category in Filtered deck (aka Cram deck, aka Custom study) options">Параметры</string>
+    <string name="menu__deck_options">Конфигурация колоды</string>
+    <string name="menu__study_options" comment="Menu item that opens options for a Filtered deck (aka Cram deck, aka Custom study)">Настройки обучения</string>
     <string name="select_tts">Язык синтеза речи</string>
     <string name="custom_study">Учить ещё</string>
     <string name="more_options">Ещё</string>
@@ -260,6 +253,10 @@
         <item quantity="many">%s лет</item>
         <item quantity="other">%s лет</item>
     </plurals>
+    <!-- A decimal number of seconds.
+    Please give this a best-effort translation and explain the requirements for
+    formatting decimals in your language in the CrowdIn comments -->
+    <string name="time_span_decimal_seconds">%s секунд</string>
     <!-- The reason for making a simple “< x” translatable are RTL
          languages which apparently use the other symbol to mean less
          than. -->
@@ -277,14 +274,13 @@
     <!-- Currently only used if exporting APKG fails -->
     <string name="apk_share_error">Ошибка при отправке файла apkg</string>
     <!-- Import and export v2 feedback -->
-    <string name="import_needs_v2">Для импорта этого файла нужно включить планировщик 2-й версии.</string>
-    <string name="import_cannot_with_v2">Планировщик 2-й версии не может импортировать колоды с расписанием 1-й версии.</string>
     <string name="export_v2_dummy_note">Этот файл требует новой версии Anki.</string>
     <!-- Placed in a snackbar with a long URL. Limit the length and move the URL to the start of the string -->
     <string name="activity_start_failed_load_url">Не удалось загрузить \"%s\".</string>
     <string name="activity_start_failed">В системе нет приложения, которое может выполнить это действие.</string>
     <string name="multimedia_editor_image_compression_failed"><![CDATA[Фотографии могут быть большими. Возможно, вы захотите сжать или изменить размер изображений в папке медиаданных]]></string>
     <string name="no_browser_notification">Браузер не найден. Посетите сайт с компьютера или телефона: </string>
+    <string name="web_page_error">Ошибка загрузки страницы: %s</string>
     <string name="no_outgoing_link_in_cardbrowser">В карточках не поддерживаются внешние ссылки</string>
     <!-- The name of the deck which corrupt cards will be moved to -->
     <string name="check_integrity_recovered_deck_name">Восстановленные карточки</string>
@@ -305,9 +301,9 @@
     <string name="note_importer_empty_cards_found"><![CDATA[Найдены пустые карточки. Нажмите «Инструменты» — »Пустые карточки».]]></string>
     <string name="note_importer_error_empty_first_field">Пустое первое поле: %s</string>
     <string name="note_importer_error_first_field_matched">Совпадение по первому полю: %s</string>
-    <string name="note_importer_error_added_duplicate_first_field">Добавлен дубликат с первым полем: %s</string>
+    <string name="note_importer_error_added_duplicate_first_field">Добавлен повтор с первым полем «%s»</string>
     <string name="note_importer_error_appeared_twice">Дважды встречается в файле: %s</string>
-    <string name="note_importer_error_empty_notes">Одно или несколько записей не были импортированы, потому что они не создали никаких карточек. Это может произойти, если есть пустые поля или если вы не сопоставили содержимое текстового файла с верными полями</string>
+    <string name="note_importer_error_empty_notes">Одна или несколько записей не были импортированы, потому что они не создали никаких карточек. Это могло произойти, если есть пустые поля или если вы не сопоставили содержимое текстового файла с верными полями</string>
     <string name="csv_importer_error_invalid_field_count">В «%1$s» %2$d поля, но должно быть %3$d</string>
     <string name="csv_importer_error_exception">Прервано: %s</string>
     <string name="user_is_a_robot">Обнаружен автоматический тест. Если вы человек, обратитесь в службу поддержки AnkiDroid</string>
@@ -330,10 +326,10 @@
         <item quantity="other">%d записей не изменено</item>
     </plurals>
     <!-- JS api -->
-    <string name="api_version_developer_contact">Эта карточка использует неподдерживаемые в AnkiDroid функции. Свяжитесь с разработчиком %1$s или обратитесь к вики-справке. %2$s</string>
-    <string name="invalid_json_data">В карточек недопустимые данные. %s</string>
-    <string name="valid_js_api_version">Недопустимый версия AnkiDroid JS API. Свяжитесь с разработчиком %s или обратитесь к вики-справке</string>
-    <string name="update_js_api_version">Доступна новая версия AnkiDroid JS API. Свяжитесь с разработчиком %s или обратитесь к вики-справке.</string>
+    <string name="api_version_developer_contact">Эта карточка использует неподдерживаемые в AnkiDroid функции. Свяжитесь с разработчиками %1$s или обратитесь к вики-справке. %2$s</string>
+    <string name="invalid_json_data">В карточке недопустимые данные. %s</string>
+    <string name="valid_js_api_version">Недопустимый версия AnkiDroid JS API. Свяжитесь с разработчиками %s или обратитесь к вики-справке</string>
+    <string name="update_js_api_version">Доступна новая версия AnkiDroid JS API. Свяжитесь с разработчиками %s или обратитесь к вики-справке.</string>
     <string name="reviewer_invalid_api_version_visit_documentation">Вид</string>
     <string name="anki_js_error_code">(Код ошибки: %d)</string>
     <!-- About AnkiDroid screen -->
@@ -341,8 +337,32 @@
     <string name="about_ankidroid_error_copy_debug_info">Ошибка при копировании отладочной информации в буфер обмена</string>
     <!-- Card Viewer -->
     <string name="card_viewer_could_not_find_image">Не удалось загрузить «%s»</string>
-    <string name="card_viewer_could_not_find_image_get_help">Помощь</string>
+    <string name="card_viewer_media_relative_protocol">Ошибка в содержимом карточки: требуется обновление медиафайлов</string>
     <!-- Deck Picker -->
     <string name="deck_picker_failed_deck_load">Не удалось загрузить колоду «%s»</string>
-    <string name="search_decks">Search decks</string>
+    <string name="search_decks">Найти колоду</string>
+    <string name="ankidroid_init_failed_webview_title">Критическая ошибка</string>
+    <string name="ankidroid_init_failed_webview">AnkiDroid использует системный WebView, который сейчас не доступен. Это может произойти, если система устанавливает обновления. Повторите попытку через несколько минут.\n\n%s</string>
+    <!-- A Menu item to change the Font Size (currently in the Note Editor) -->
+    <string name="menu_font_size">Размер шрифта</string>
+    <string name="menu_show_toolbar" comment="Checkable item stating whether the note editor toolbar should be shown">Показать панель инструментов</string>
+    <string name="format_insert_bold">Жирным</string>
+    <string name="format_insert_italic">Курсивом</string>
+    <string name="format_insert_underline">Подчеркнуть</string>
+    <string name="insert_horizontal_line">Вставить линейку</string>
+    <string name="insert_heading">Вставить заголовок</string>
+    <string name="format_font_size">Изменить размер шрифта</string>
+    <string name="insert_mathjax">Вставить уравнение MathJax</string>
+    <string name="insert_cloze">Вставить задание с пропусками</string>
+    <string name="before_text">HTML перед выделением</string>
+    <string name="after_text">HTML после выделения</string>
+    <string name="add_toolbar_item">Создать элемент панели инструментов</string>
+    <string name="toolbar_item_explain_remove">Введите HTML, который будет вставлен до и после выделенного текста.\n\nДолгое нажатие на элемент панели инструментов удалит его.</string>
+    <string name="remove_toolbar_item">Удалить элемент панели инструментов?</string>
+    <string name="note_editor_paste_too_large">Изображение слишком велико для вставки, пожалуйста, вставьте изображение вручную</string>
+    <string name="ankidroid_cannot_open_after_backup_try_again" comment="After an Android backup is restored, AnkiDroid opens and shows this message.         Opening AnkiDroid again will work correctly">        Выполняется резервное копирование Android. Попробуйте еще раз</string>
+    <string name="create_shortcut_error_vivo" comment="iManager is an app on Vivo phones">Возможно, вам потребуется использовать iManager, чтобы AnkiDroid мог добавлять ярлыки</string>
+    <string name="create_shortcut_failed" comment="home screen == launcher">Ваш домашний экран не позволяет AnkiDroid добавлять ярлыки</string>
+    <string name="create_shortcut_error">Ошибка при добавлении ярлыка: %s</string>
+    <string name="note_editor_capitalize" comment="This is for a switch with a checkbox - on: enabled">Предложение с заглавной буквы</string>
 </resources>

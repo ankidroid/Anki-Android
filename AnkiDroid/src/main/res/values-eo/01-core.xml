@@ -38,14 +38,14 @@
 ~ this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <resources>
+    <string name="yes">jes</string>
     <!-- Navigation drawer items-->
     <string name="decks">Kartaroj</string>
-    <string name="card_browser">Kart-foliumilo</string>
+    <string name="card_browser" comment="The usage of card browser inside the app (note the casing)">Kart-foliumilo</string>
     <string name="statistics">Statistiko</string>
     <string name="settings">Agordoj</string>
     <string name="help">Helpo</string>
     <string name="send_feedback">Sendi opinion</string>
-    <string name="studyoptions_title">Kartara sumigo</string>
     <string name="studyoptions_due_today">Lernendaj hodiaŭ:</string>
     <string name="studyoptions_new_total">Novaj kartoj tute:</string>
     <string name="studyoptions_total_cards">Kartoj tute:</string>
@@ -71,8 +71,8 @@
         <item quantity="one">ankoraŭ %d tago %d</item>
         <item quantity="other">ankoraŭ %d tagoj %d</item>
     </plurals>
-    <string name="no_cards_placeholder_title">Collection is empty</string>
-    <string name="no_cards_placeholder_description">Start adding cards\nusing the + icon.</string>
+    <string name="no_cards_placeholder_title">Kolekto estas malplena</string>
+    <string name="no_cards_placeholder_description">Komencu aldoni kartojn\nper la butono “+”</string>
     <!-- The deck picker via AnkiStatsTaskHandler.java -->
     <plurals name="studied_cards_today">
         <item quantity="one">Hodiaŭ vi lernis %1$d karton dum %2$s</item>
@@ -81,7 +81,7 @@
     <!-- flashcard_portrait.xml -->
     <string name="type_answer_hint">entajpu respondon</string>
     <string name="show_answer">montri respondon</string>
-    <string name="hide_answer">Hide answer</string>
+    <string name="hide_answer">Kaŝi respondon</string>
     <string name="ease_button_again">denove</string>
     <string name="ease_button_hard">malfacile</string>
     <string name="ease_button_good">facile</string>
@@ -90,22 +90,14 @@
     <string name="menu_import">Enporti</string>
     <string name="undo">Malfari</string>
     <string name="undo_action_review">lasta ripeto</string>
-    <string name="undo_action_bury_card">kaŝi karton por tago</string>
-    <string name="undo_action_bury_note">kaŝi noton por tago</string>
-    <string name="undo_action_suspend_card">kaŝi karton daŭre</string>
-    <string name="undo_action_suspend_note">kaŝi noton daŭre</string>
-    <string name="undo_action_delete">forigi noton</string>
-    <string name="undo_action_delete_multi">forigi notojn</string>
     <string name="undo_action_change_deck_multi">ŝanĝi kartarojn</string>
-    <string name="undo_action_reschedule_card">replani</string>
-    <string name="undo_action_reset_card">nuligi progreson</string>
-    <string name="undo_action_reposition_card">repozicii</string>
     <string name="move_all_to_deck">Movi ĉiujn al kartaro</string>
     <string name="unbury">Malkaŝi</string>
     <string name="rename_deck">Renomi kartaron</string>
-    <string name="menu_add">Aldoni</string>
+    <string name="create_shortcut">Krei simbolan ligilon</string>
+    <string name="menu_add" comment="A generic add button - Main Deck Picker and card templates. Please inform us if you need more specific strings">Aldoni</string>
     <string name="menu_add_note">Aldoni noton</string>
-    <string name="menu_my_account">Samtempigo-konton</string>
+    <string name="menu_my_account" comment="Label of the window in which the user should enter their account. This text can\'t be found in AnkiDroid directly.">Samtempigo-konton</string>
     <string name="menu_dismiss_note">Kaŝi / forigi</string>
     <string name="menu_bury_card">Kaŝi karton por tago</string>
     <string name="menu_bury_note">Kaŝi noton por tago</string>
@@ -129,7 +121,7 @@
     <string name="menu_unmark_note">Malmarki noton</string>
     <string name="menu_toggle_mic_tool_bar">Kontroli elparolon</string>
     <string name="new_deck">Krei kartaron</string>
-    <string name="create">Krei</string>
+    <string name="create" comment="Button to create a filtered deck">Krei</string>
     <string name="new_dynamic_deck">Krei filtritan kartaron</string>
     <string name="night_mode">Nokta reĝimo</string>
     <string name="directory_inaccessible">Dosierujo de AnkiDroid estas nealirebla</string>
@@ -154,14 +146,15 @@
     <string name="time_quantity_months">%.1f mon.</string>
     <string name="time_quantity_years">%.1f a</string>
     <!-- or "%.1f a" -->
-    <string name="rebuild_filtered_deck">Rebuilding filtered deck&#8230;</string>
+    <string name="rebuild_filtered_deck">Rekreado de filtrita kartaro&#8230;</string>
     <string name="rebuild_cram_label">Rekrei</string>
     <string name="empty_cram_label">Forviŝi</string>
     <string name="create_subdeck">Krei subkartaron</string>
-    <string name="empty_filtered_deck">Emptying filtered deck&#8230;</string>
+    <string name="empty_filtered_deck">Malplenigado de filtrita kartaro&#8230;</string>
     <string name="custom_study_deck_name">Propra lernado</string>
     <string name="custom_study_deck_exists">Unue ŝanĝu nomon de kartaro por propra lernado</string>
     <string name="empty_deck">Tiu ĉi kartaro estas malplena</string>
+    <string name="empty_deck_add_note">Aldoni karton</string>
     <string name="invalid_deck_name">Malĝusta nomo por kartaro</string>
     <string name="studyoptions_empty">Tiu ĉi kartaro estas malplena. Frapetu la butonon “+” por aldoni novan enhavon.</string>
     <string name="studyoptions_limit_reached">Limigo de taga lernado atingita</string>
@@ -187,7 +180,6 @@
     <string name="card_template_editor_front">Ŝablono fronta</string>
     <string name="card_template_editor_back">Ŝablono dorsa</string>
     <string name="card_template_editor_styling">Stilo</string>
-    <string name="card_template_editor_menu_delete">Forigi</string>
     <string name="card_template_editor_menu_card_browser_appearance">Aspekto de kart-foliumilo</string>
     <string name="card_template_editor_deck_override">Superskribi kartaron</string>
     <string name="card_template_editor_cant_delete">Almenaŭ unu karto estas postulata</string>
@@ -201,11 +193,21 @@
     <string name="template_for_current_card_deleted">La speco de karto por la nuna karto estis forigita.</string>
     <!-- Card Browser Appearance -->
     <string name="card_template_browser_appearance_title">Aspekto de foliumilo</string>
+    <string name="current_and_default_deck">%1$s (%2$s)</string>
+    <!-- card Info -->
+    <string name="card_info_title">Informoj pri karto</string>
     <!-- Permissions -->
     <string name="read_write_permission_label">Legi kaj skribi al datumbazo de AnkiDroid</string>
     <string name="read_write_permission_description">aliri ekzistajn notojn, kartojn, tipojn de notoj kaj kartarojn kaj krei novajn</string>
     <!-- Context Menu -->
-    <string name="card_browser_label">Kart-foliumilo</string>
-    <string name="card_browser_context_menu">Kart-foliumilo</string>
+    <string name="card_browser_context_menu" comment="The value which appears in the system context menu. Note the casing difference">Kart-foliumilo</string>
     <string name="context_menu_anki_card_label">Anki-karto</string>
+    <string name="has_a_problem" comment="First field is either front template or back template. Second field is the error message.">Problemo pri %1$s:<br/>%2$s</string>
+    <string name="more_information">Pliaj informoj</string>
+    <string name="no_field">Trovis “{{%1$s}}”, tamen ne ekzistas kampo kun nomo “%1$s”.</string>
+    <string name="closed_tag_not_open">Trovis “{{/%1$s}}”, sed mankas “{{#%1$s}}” aŭ “{{^%1$s}}”.</string>
+    <string name="missing_closing_bracket">Mankas “}}” en “%s”.</string>
+    <string name="open_tag_not_closed">Mankas “{{%s}}”.</string>
+    <string name="wrong_tag_closed">Trovis “{{/%1$s}}”, sed esperis “{{/%2$s}}”.</string>
+    <string name="filter_error">Eraro en filtrilo %s</string>
 </resources>

@@ -18,12 +18,19 @@ package com.ichi2.utils;
 
 import android.text.Spannable;
 import android.text.SpannableStringBuilder;
+import android.text.style.ForegroundColorSpan;
 import android.text.style.StyleSpan;
 
 public class UiUtil {
     public static Spannable makeBold(String s) {
         SpannableStringBuilder str = new SpannableStringBuilder(s);
         str.setSpan(new StyleSpan(android.graphics.Typeface.BOLD), 0, s.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+        return str;
+    }
+
+    public static Spannable makeColored(String s, int color) {
+        SpannableStringBuilder str = new SpannableStringBuilder(s);
+        str.setSpan(new ForegroundColorSpan(color), 0, s.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
         return str;
     }
 }

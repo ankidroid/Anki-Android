@@ -42,14 +42,12 @@
     <string name="disabled">Deshabilitado</string>
     <string name="enabled">Activado</string>
     <!-- preferences.xml categories-->
-    <string name="pref_cat_general">AnkiDroid</string>
     <string name="pref_cat_general_summ">Ajustes generales</string>
     <string name="pref_cat_reviewing">Repasando</string>
     <string name="pref_cat_reviewing_summ">No hay configuración de revisor específica de mazo</string>
     <string name="pref_cat_reviewer_behaviour">Comportamiento</string>
     <string name="pref_cat_flashcard">Pantalla</string>
     <string name="pref_cat_whiteboard">Pizarra</string>
-    <string name="pref_cat_automatic_display">Mostrar respuesta automáticamente</string>
     <string name="pref_cat_appearance">Apariencia</string>
     <string name="pref_cat_appearance_summ">Cambiar temas y fuente predeterminada</string>
     <string name="pref_cat_themes">Temas</string>
@@ -66,8 +64,6 @@
     <string name="about_version">Versión: </string>
     <!-- preferences.xml entries-->
     <string name="whiteboard_stroke_width">Ancho del trazo</string>
-    <string name="whiteboard_black">Trazos negros</string>
-    <string name="whiteboard_black_summ">Utiliza menos memoria, excepto en modo nocturno</string>
     <string name="use_input_tag">Escribir respuesta en la tarjeta</string>
     <string name="use_input_tag_summ">Usa una caja de texto dentro de la tarjeta para escribir una respuesta</string>
     <string name="dictionary">Diccionario de búsqueda</string>
@@ -96,15 +92,26 @@
     <string name="gestures_summ">Asignar gestos a acciones tales como contestar o editar tarjetas.</string>
     <string name="gestures_allow_links">Ignorar gestos táctiles en los enlaces</string>
     <string name="gestures_allow_links_summary">Los gestos de toque no se procesarán si se presiona un enlace/pista.</string>
+    <string name="gestures_corner_touch">9-point touch</string>
+    <string name="gestures_corner_touch_summary">Allow touch gestures in screen corners</string>
     <string name="gestures_swipe_up">Deslizar hacia arriba</string>
     <string name="gestures_swipe_down">Deslizar hacia abajo</string>
     <string name="gestures_swipe_left">Deslizar hacia la izquierda</string>
     <string name="gestures_swipe_right">Deslizar hacia la derecha</string>
     <string name="gestures_double_tap">Doble toque</string>
     <string name="gestures_tap_top">Tocar la parte superior</string>
-    <string name="gestures_tap_bottom">Tocar la parte inferior</string>
     <string name="gestures_tap_left">Tocar la parte izquierda</string>
     <string name="gestures_tap_right">Tocar la parte derecha</string>
+    <string name="gestures_tap_bottom">Tocar la parte inferior</string>
+    <string name="gestures_corner_tap_top_left">Touch top left</string>
+    <string name="gestures_corner_tap_top_center">Touch top center</string>
+    <string name="gestures_corner_tap_top_right">Touch top right</string>
+    <string name="gestures_corner_tap_middle_left">Touch middle left</string>
+    <string name="gestures_corner_tap_middle_center">Touch middle center</string>
+    <string name="gestures_corner_tap_middle_right">Touch middle right</string>
+    <string name="gestures_corner_tap_bottom_left">Touch bottom left</string>
+    <string name="gestures_corner_tap_bottom_center">Touch bottom center</string>
+    <string name="gestures_corner_tap_bottom_right">Touch bottom right</string>
     <string name="gestures_volume_up">Subir volumen</string>
     <string name="gestures_volume_down">Bajar volumen</string>
     <string name="more_scrolling_buttons">eReader</string>
@@ -141,9 +148,8 @@
     <string name="timeout_answer_text">Visualización automática de la respuesta</string>
     <string name="timeout_answer_summ">Mostrar respuesta automáticamente sin intervención del usuario. El retraso incluye tiempo para reproduciones automáticas de archivos de audio.</string>
     <string name="timeout_answer_seconds">Tiempo para mostrar respuesta</string>
-    <string name="timeout_answer_seconds_summ">XXX s</string>
+    <string name="timeout_answer_seconds_summ" comment="The time to wait (in seconds) in the reviewer before automatically showing the next question or answer">XXX s</string>
     <string name="timeout_question_seconds">Tiempo para mostrar la siguiente pregunta</string>
-    <string name="timeout_question_seconds_summ">XXX s</string>
     <string name="select_locale_title">Selecciona idioma</string>
     <string name="safe_display">Modo de visualización segura</string>
     <string name="safe_display_summ">Deshabilita todas las animaciones y utiliza un método más seguro para dibujar las tarjetas. Dispositivos E-ink podrían requerir esto.</string>
@@ -164,7 +170,6 @@
     <string name="use_current">Mazo para las nuevas tarjetas</string>
     <string name="new_spread">Posición de nuevas tarjetas</string>
     <string name="learn_cutoff">Aprender por delante del límite</string>
-    <string name="learn_cutoff_summ">XXX min</string>
     <string name="time_limit">Límite de tiempo del Timebox</string>
     <string name="time_limit_summ">XXX min</string>
     <string name="day_offset">Inicio del día siguiente</string>
@@ -216,8 +221,8 @@
         <item quantity="other">Los mazos %1$s\n%2$d utilizan este grupo</item>
     </plurals>
     <string name="deck_conf_new_cards">Tarjetas nuevas</string>
-    <string name="deck_conf_rev_cards">Repasos</string>
-    <string name="deck_conf_lps_cards">Lapsos</string>
+    <string name="deck_conf_rev_cards" comment="Name of the deck options submenu for configuring reviews of due cards.">Repasos</string>
+    <string name="deck_conf_lps_cards" comment="Label of the submenu stating how lapses cards are treated.">Lapsos</string>
     <string name="deck_conf_general">General</string>
     <string name="deck_conf_reminders">Recordatorios</string>
     <string name="deck_conf_steps">Pasos (en minutos)</string>
@@ -235,6 +240,7 @@
     <string name="deck_conf_use_general_timeout_settings">Usar ajustes generales</string>
     <string name="deck_conf_use_general_timeout_settings_summ">Utilice la configuración general de \'Respuesta de pantalla automática\' en lugar de usar la configuración de este grupo.</string>
     <string name="deck_conf_easy_bonus">Bonus para Fácil</string>
+    <string name="deck_conf_hard_factor">Hard interval</string>
     <string name="deck_conf_ivl_fct">Modificador de intervalo</string>
     <string name="deck_conf_max_ivl">Intervalo máximo</string>
     <string name="deck_conf_new_lps_ivl">Intervalo de nuevas</string>
@@ -251,29 +257,24 @@
     <string name="deck_conf_manage">Administración de grupos</string>
     <string name="deck_conf_manage_summ">Add and change options groups</string>
     <string name="deck_conf_current_group">Grupo actual</string>
-    <string name="deck_conf_rename">Renombrar</string>
+    <string name="deck_conf_rename" comment="Menu entry to rename a deck">Renombrar</string>
     <string name="deck_conf_reset">Restablecer predefinidos</string>
-    <string name="deck_conf_reset_title">Restablecer ajustes predefinidos</string>
     <string name="deck_conf_reset_message">¿Restaurar el grupo de opciones actual a los valores predeterminados?</string>
-    <string name="deck_conf_add">Añadir</string>
+    <string name="deck_conf_add" comment="Adding a new deck option group">Añadir</string>
     <string name="deck_conf_add_summ">Crear una copia del grupo de opciones actual</string>
-    <string name="deck_conf_remove">Quitar</string>
-    <string name="deck_conf_remove_title">Quitar</string>
     <string name="deck_conf_remove_message">¿Eliminar el grupo de opciones actual?</string>
     <string name="deck_conf_set_subdecks">Establecer para todos los submazos</string>
     <plurals name="deck_conf_set_subdecks_summ">
         <item quantity="one">%s submazo utilizará este grupo</item>
         <item quantity="other">%s submazos utilizarán este grupo</item>
     </plurals>
-    <string name="deck_conf_set_subdecks_title">Establecer para todos los submazos</string>
     <string name="deck_conf_set_subdecks_message">¿Establecer el grupo de opciones actual para todos los submazos de este mazo?</string>
     <string name="pref_browser_editor_font">Fuente del explorador y editor</string>
     <string name="deck_conf_cram_filter">Filtrar</string>
-    <string name="deck_conf_cram_options">Opciones</string>
     <string name="deck_conf_cram_search">Buscar</string>
     <string name="deck_conf_cram_limit">Limitar a</string>
     <string name="deck_conf_cram_order">tarjetas seleccionadas por</string>
-    <string name="deck_conf_cram_reschedule">Reprogramar</string>
+    <string name="deck_conf_cram_reschedule" comment="Title of the box labelled by deck_conf_cram_reschedule_summ">Reprogramar</string>
     <string name="deck_conf_cram_reschedule_summ">Reprogramar tarjetas en base a mis respuestas en este mazo</string>
     <string name="deck_conf_cram_steps">Pasos personalizados (en minutos)</string>
     <string name="deck_conf_cram_steps_summ">Definir pasos personalizados</string>
@@ -283,6 +284,8 @@
     <string name="analytics_dialog_title">¡Ayuda a mejorar AnkiDroid!</string>
     <string name="analytics_title">Compartir uso de funciones</string>
     <string name="analytics_summ">Puedes contribuir a AnkiDroid ayudando al equipo de desarrollo a ver qué características usan las personas</string>
-    <string name="enable_miui_keyboard_hack">\'Paste\' to insert cloze deletion</string>
-    <string name="enable_miui_keyboard_hack_summ">In the Note Editor, \'Paste\' will turn the selected text into a cloze</string>
+    <string name="note_editor_replace_newlines">Replace newlines with HTML</string>
+    <string name="note_editor_replace_newlines_summ">In the Note Editor, convert any instances of &lt;br&gt; to newlines when editing a card.</string>
+    <string name="no_code_formatting">Simple typed answer formatting</string>
+    <string name="no_code_formatting_summ">Fixes ‘􏿾’ appearing in typed answer results</string>
 </resources>

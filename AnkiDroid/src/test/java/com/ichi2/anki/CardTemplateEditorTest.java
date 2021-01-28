@@ -20,9 +20,12 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.widget.EditText;
-import androidx.test.ext.junit.runners.AndroidJUnit4;
 
 import com.afollestad.materialdialogs.DialogAction;
+import com.ichi2.anki.dialogs.DeckSelectionDialog;
+import com.ichi2.libanki.Model;
+import com.ichi2.libanki.Note;
+import com.ichi2.utils.JSONObject;
 
 import org.junit.Assert;
 import org.junit.Test;
@@ -32,12 +35,11 @@ import org.robolectric.android.controller.ActivityController;
 import org.robolectric.shadows.ShadowActivity;
 import org.robolectric.shadows.ShadowIntent;
 
-import com.ichi2.libanki.Model;
-import com.ichi2.libanki.Note;
-import com.ichi2.utils.JSONObject;
-
+import androidx.test.ext.junit.runners.AndroidJUnit4;
 import timber.log.Timber;
 
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.is;
 import static org.robolectric.Shadows.shadowOf;
 
 
@@ -511,6 +513,26 @@ public class CardTemplateEditorTest extends RobolectricTest {
         advanceRobolectricLooperWithSleep();
         Assert.assertFalse("Model should now be unchanged", testEditor.modelHasChanged());
         Assert.assertEquals("card generation should result in 1 card", 1, getModelCardCount(collectionBasicModelOriginal));
+    }
+
+    @Test
+    public void testDeckOverride() {
+        String modelName = "Basic (optional reversed card)";
+        Model model = getCurrentDatabaseModelCopy(modelName);
+        Intent intent = new Intent(Intent.ACTION_VIEW);
+        intent.putExtra("modelId", model.getLong("id"));
+        CardTemplateEditor editor = super.startActivityNormallyOpenCollectionWithIntent(CardTemplateEditor.class, intent);
+
+
+        JSONObject template = editor.getTempModel().getTemplate(0);
+        assertThat("Deck ID element should exist", template.has("did"), is(true));
+        assertThat("Deck ID element should be null", template.get("did"), is(org.json.JSONObject.NULL));
+        editor.onDeckSelected(new DeckSelectionDialog.SelectableDeck(1, "hello"));
+        assertThat("Deck ID element should be changed", template.get("did"), is(1L));
+        editor.onDeckSelected(null);
+        assertThat("Deck ID element should exist", template.has("did"), is(true));
+        assertThat("Deck ID element should be null", template.get("did"), is(org.json.JSONObject.NULL));
+
     }
 
     private int getModelCardCount(Model model) {

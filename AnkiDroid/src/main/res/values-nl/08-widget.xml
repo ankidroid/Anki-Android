@@ -44,18 +44,7 @@
         <item quantity="one">%d AnkiDroid kaart te doen</item>
         <item quantity="other">%d AnkiDroid kaarten te doen</item>
     </plurals>
-    <string name="widget_no_cards_due">Geen kaarten over</string>
-    <string name="widget_loading">Widget laden...</string>
-    <plurals name="widget_cards_in_decks_due">
-        <item quantity="one">%1$d kaart te gaan in %2$s</item>
-        <item quantity="other">%1$d kaarten te gaan in %2$s</item>
-    </plurals>
-    <plurals name="widget_decks">
-        <item quantity="one">%1$d set</item>
-        <item quantity="other">%1$d sets</item>
-    </plurals>
-    <string name="widget_small">AnkiDroid (klein)</string>
-    <string name="widget_small_button">Ankidroid</string>
+    <string name="widget_small" comment="Label of the small ankidroid widget. This text can\'t be found directly in AnkiDroid">AnkiDroid (klein)</string>
     <plurals name="widget_cards_due">
         <item quantity="one">%d kaart te doen</item>
         <item quantity="other">%d kaarten te doen</item>
@@ -64,6 +53,5 @@
         <item quantity="one">%d minuut resterend</item>
         <item quantity="other">%d minuten resterend</item>
     </plurals>
-    <string name="widget_add_note">Aantekening toevoegen</string>
     <string name="widget_add_note_button">Nieuwe Ankidroid aantekening toevoegen</string>
 </resources>

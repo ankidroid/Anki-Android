@@ -37,13 +37,13 @@
 ~ You should have received a copy of the GNU General Public License along with
 ~ this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools">
     <!-- How to format a percentage shown in the summary field of a preference -->
     <string name="preference_summary_percentage">XXX%</string>
+    <!-- #7570: We should use these strings again -->
     <!-- Navigation drawer strings -->
-    <string name="drawer_open">開啟側欄</string>
-    <string name="drawer_close">關閉側欄</string>
-    <string name="CardEditorLaterMessage">封存的資訊</string>
+    <string tools:ignore="UnusedResources" name="drawer_open">開啟側欄</string>
+    <string tools:ignore="UnusedResources" name="drawer_close">關閉側欄</string>
     <string name="CardEditorCardDeck">卡片牌組：</string>
     <string name="CardEditorNoteDeck">牌組：</string>
     <string name="CardEditorModel">種類：</string>
@@ -55,7 +55,6 @@
     <string name="check_all_tags">選擇/不選擇所有標籤</string>
     <string name="filter_tags">篩選標籤</string>
     <string name="no_tags">你還沒新增任何標籤</string>
-    <string name="sdcard_missing_message">SD記憶卡目前正在當隨身碟存取中，因此無法使用。拔除USB之後即可使用。</string>
     <string name="updated_version">更新到版本 %s</string>
     <!-- Reviewer.java -->
     <string name="save_whiteboard">儲存白板</string>
@@ -65,7 +64,6 @@
     <string name="hide_whiteboard">隱藏白板</string>
     <string name="clear_whiteboard">清除白板</string>
     <string name="replay_audio">重播聲音</string>
-    <string name="toggle_mic_tool_bar">檢查發音</string>
     <string name="leech_suspend_notification">卡片已擱置，同時標為榨時卡</string>
     <string name="leech_notification">卡片標為榨時卡</string>
     <string name="corrupt_font">損壞的字型檔案 %s</string>
@@ -107,7 +105,6 @@
     <string name="custom_study_preview_new">預覽新卡片</string>
     <string name="custom_study_limit_tags">僅限特定標籤的卡片</string>
     <!-- Card editor -->
-    <string name="cardeditor_title_add_note">新增筆記</string>
     <string name="cardeditor_title_edit_card">編輯筆記</string>
     <string name="discard_unsaved_changes">關閉且放棄當前的輸入？</string>
     <string name="note_editor_no_cards_created">未建立卡片。請輸入更多欄位</string>
@@ -118,7 +115,6 @@
     <string name="note_editor_insert_cloze_no_cloze_note_type">克漏字測驗僅工作於克漏字筆記類型</string>
     <string name="saving_facts">儲存筆記中</string>
     <string name="saving_model">儲存筆記類型中</string>
-    <string name="add">新增</string>
     <string name="save">存儲</string>
     <string name="close">關閉</string>
     <string name="select">選擇</string>
@@ -133,22 +129,18 @@
     <plurals name="in_minutes">
         <item quantity="other">%1$d 分鐘</item>
     </plurals>
-    <string name="studyoptions_welcome_title">歡迎使用 AnkiDroid</string>
-    <string name="fact_adder_intent_title">AnkiDroid 卡片</string>
-    <string name="note_editor_add_note">新增筆記</string>
+    <string name="fact_adder_intent_title" comment="Label of the \'Add Note\' window. This title can\'t be seen in AnkiDroid directly.">AnkiDroid 卡片</string>
     <string name="note_editor_copy_note">複製筆記</string>
-    <string name="card_editor_copy_card">複製卡片</string>
     <string name="card_editor_reposition_card">變更位置</string>
     <string name="card_editor_reset_card">重設卡片進度</string>
-    <string name="card_editor_reschedule_card">重新排程</string>
-    <string name="card_editor_preview_card">預覽</string>
+    <string name="card_editor_reschedule_card" comment="Action to reschedule a card">重新排程</string>
+    <string name="card_editor_preview_card" comment="Button offering to preview some card(s)">預覽</string>
     <string name="error_insufficient_memory">因為裝置上沒有足夠的記憶體所以不能執行你要求的操作</string>
-    <string name="rename">重新命名</string>
+    <string name="rename" comment="Confirm that the renaming action should be processed.">重新命名</string>
     <string name="default_conf_delete_error">無法移除預設的設定群組</string>
     <plurals name="factadder_cards_added">
         <item quantity="other">新增 %d 張卡片</item>
     </plurals>
-    <string name="help_title">說明</string>
     <string name="check_db">檢查資料庫</string>
     <string name="check_media">檢查媒體</string>
     <string name="empty_cards">空白卡片</string>
@@ -158,12 +150,11 @@
     <string name="delete_deck">刪除牌組中...\n請稍候</string>
     <string name="show_hint">顯示%s</string>
     <string name="info_rate">評價 AnkiDroid</string>
-    <string name="col_load_failed">載入收藏時發生錯誤。\n按返回鍵來關閉 AnkiDroid</string>
     <string name="import_title">正在匯入……</string>
     <string name="import_select_title">選擇欲匯入的檔案</string>
-    <string name="import_message_add">新增</string>
-    <string name="import_message_replace_confirm">這將會刪除你現有的收藏並以%s的內容取代，你確定嗎？</string>
-    <string name="import_message_add_confirm">新增「%s」到收藏嗎？這可能會花上好一段時間</string>
+    <string name="import_message_add" comment="Adding a new deck to the collection (import)">新增</string>
+    <string name="import_message_replace_confirm">這將會刪除你現有的集合並以%s的內容取代，你確定嗎？</string>
+    <string name="import_message_add_confirm">新增「%s」到集合嗎？這可能會花上好一段時間</string>
     <string name="import_log_no_apkg">這不是有效的 Anki 套件檔案</string>
     <string name="import_log_failed_unzip">解壓縮 Apkg 失敗：%s</string>
     <string name="import_log_failed_copy_to">複製 Apkg 至 %s 失敗</string>
@@ -176,14 +167,14 @@
     <string name="import_error_exception">無法匯入套件\n\n%s</string>
     <string name="import_error_not_apkg_extension">檔案名“%s”不包含 .apkg 或 .colpkg 副檔名</string>
     <string name="import_error_load_imported_database">Anki 資料庫 (.anki2) 替換還不受支援。請見用戶手冊以查找替換指引。</string>
-    <string name="import_error_content_provider">所選的檔案無法被 AnkiDroid 自動匯入。請參考使用者手冊瞭解如何手動匯入 anki 檔案：\n%s</string>
+    <string name="import_error_content_provider">所選的檔案無法被 AnkiDroid 自動匯入。請參考用戶手冊瞭解如何手動匯入 anki 檔案：\n%s</string>
     <string name="import_error_copy_file_to_cache">copyFileToCache() 失敗（可能是儲存空間溢出）</string>
     <string name="import_error_unhandled_scheme">無法處理來自“%s”的匯入</string>
     <string name="import_replacing">正在匯入牌組集合&#8230;&#8230;</string>
     <string name="import_interrupted">匯入中斷</string>
     <string name="export_include_schedule">包含進度</string>
     <string name="export_include_media">包含媒體</string>
-    <string name="confirm_apkg_export">是否匯出收藏為 Anki 套件？</string>
+    <string name="confirm_apkg_export">是否匯出集合為 Anki 包？</string>
     <string name="confirm_apkg_export_deck">將 \"%s\" 匯出成 apkg 檔案嗎？</string>
     <string name="export_in_progress">匯出 Anki 套件檔案中&#8230;</string>
     <string name="export_successful_title">發送 Anki 套件？</string>
@@ -197,12 +188,14 @@
     <string name="export_email_text"><![CDATA[        你好！
         <br/><br/>
         這是從 <a href="https://ankidroid.org/docs/manual.html">AnkiDroid</a> 分享的 Anki 單字卡牌組。
-        使用任一 <a href="http://ankisrs.net/#download">Anki 客戶端</a>打開它，享受輕鬆高效的學習吧！
+        使用任一 <a href="http://ankisrs.net/#download">Anki 用戶端</a>打開它，享受輕鬆高效的學習吧！
         ]]></string>
     <string name="export_unsuccessful">匯出 Apkg 檔案時出錯</string>
     <string name="import_hint">若你要匯入卡片，請將 apkg 檔案放在「%s」目錄下，然後按OK</string>
     <string name="upgrade_import_no_file_found">找不到可匯入的%1$s檔案</string>
-    <string name="study_options">選項</string>
+    <string name="study_options" comment="Name for a preference category in Filtered deck (aka Cram deck, aka Custom study) options">選項</string>
+    <string name="menu__deck_options">牌組選項</string>
+    <string name="menu__study_options" comment="Menu item that opens options for a Filtered deck (aka Cram deck, aka Custom study)">學習選項</string>
     <string name="select_tts">設定 TTS 語言</string>
     <string name="custom_study">自訂學習</string>
     <string name="more_options">更多</string>
@@ -234,6 +227,10 @@
     <plurals name="time_span_years">
         <item quantity="other">%s 年</item>
     </plurals>
+    <!-- A decimal number of seconds.
+    Please give this a best-effort translation and explain the requirements for
+    formatting decimals in your language in the CrowdIn comments -->
+    <string name="time_span_decimal_seconds">%s秒</string>
     <!-- The reason for making a simple “< x” translatable are RTL
          languages which apparently use the other symbol to mean less
          than. -->
@@ -248,14 +245,13 @@
     <!-- Currently only used if exporting APKG fails -->
     <string name="apk_share_error">分享 Apkg 檔案時出錯</string>
     <!-- Import and export v2 feedback -->
-    <string name="import_needs_v2">必須啟用 V2 排程器以匯入此檔案。</string>
-    <string name="import_cannot_with_v2">V2 排程器不能匯入包含排程的 V1 牌組。</string>
     <string name="export_v2_dummy_note">此檔案需要更新版本的 Anki。</string>
     <!-- Placed in a snackbar with a long URL. Limit the length and move the URL to the start of the string -->
     <string name="activity_start_failed_load_url">載入 ‘%s’ 失敗。</string>
     <string name="activity_start_failed">此系統不包含能執行此操作的應用程式。</string>
     <string name="multimedia_editor_image_compression_failed"><![CDATA[相機圖像可能很龐大。你可能希望壓縮和重設媒體資料夾中的圖像大小]]></string>
     <string name="no_browser_notification">無瀏覽器已找到，請使用PC或行動裝置訪問網頁： </string>
+    <string name="web_page_error">載入頁面時發生錯誤：%s</string>
     <string name="no_outgoing_link_in_cardbrowser">卡片中的外部頁面連結不受支援。</string>
     <!-- The name of the deck which corrupt cards will be moved to -->
     <string name="check_integrity_recovered_deck_name">已恢復卡片</string>
@@ -303,8 +299,32 @@
     <string name="about_ankidroid_error_copy_debug_info">將錯誤資訊複製到剪貼簿時發生錯誤</string>
     <!-- Card Viewer -->
     <string name="card_viewer_could_not_find_image">卡片內容錯誤：載入 ‘%s’ 失敗</string>
-    <string name="card_viewer_could_not_find_image_get_help">幫助</string>
+    <string name="card_viewer_media_relative_protocol">卡片內容錯誤：需要更新媒體</string>
     <!-- Deck Picker -->
     <string name="deck_picker_failed_deck_load">載入牌組 ‘%s’ 失敗</string>
     <string name="search_decks">搜尋牌組</string>
+    <string name="ankidroid_init_failed_webview_title">嚴重錯誤</string>
+    <string name="ankidroid_init_failed_webview">AnkiDroid 依賴於系統 WebView，但其不可用。這可能在系統安裝更新時發生。請等待幾分鐘後再試。\n\n%s</string>
+    <!-- A Menu item to change the Font Size (currently in the Note Editor) -->
+    <string name="menu_font_size">字型大小</string>
+    <string name="menu_show_toolbar" comment="Checkable item stating whether the note editor toolbar should be shown">顯示工具列</string>
+    <string name="format_insert_bold">格式化為粗體</string>
+    <string name="format_insert_italic">格式化為斜體</string>
+    <string name="format_insert_underline">格式化為底線</string>
+    <string name="insert_horizontal_line">插入水平線</string>
+    <string name="insert_heading">插入標題</string>
+    <string name="format_font_size">變更字型大小</string>
+    <string name="insert_mathjax">插入 MathJax 方程式</string>
+    <string name="insert_cloze">插入克漏字空格</string>
+    <string name="before_text">選取內容前的 HTML</string>
+    <string name="after_text">選取內容後的 HTML</string>
+    <string name="add_toolbar_item">建立工具列項目</string>
+    <string name="toolbar_item_explain_remove">Enter HTML to be inserted before and after the selected text\n\nLong press a toolbar item to remove it</string>
+    <string name="remove_toolbar_item">是否移除工具列項目？</string>
+    <string name="note_editor_paste_too_large">此圖像太大，無法貼上，請手動插入</string>
+    <string name="ankidroid_cannot_open_after_backup_try_again" comment="After an Android backup is restored, AnkiDroid opens and shows this message.         Opening AnkiDroid again will work correctly">        Android 備份進行中。請再試一次</string>
+    <string name="create_shortcut_error_vivo" comment="iManager is an app on Vivo phones">You may need to use iManager to allow AnkiDroid to add shortcuts</string>
+    <string name="create_shortcut_failed" comment="home screen == launcher">您的主畫面不允許 AnkiDroid 新增捷徑</string>
+    <string name="create_shortcut_error">新增捷徑時發生錯誤：%s</string>
+    <string name="note_editor_capitalize" comment="This is for a switch with a checkbox - on: enabled">大寫句子</string>
 </resources>

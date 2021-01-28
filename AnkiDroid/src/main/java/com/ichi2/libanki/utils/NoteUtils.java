@@ -33,9 +33,7 @@ public class NoteUtils {
         }
         if (tagsList != null) {
             AbstractSet<String> tagsSet = currentNote.getCol().getTags().canonify(tagsList);
-            for (String tag : tagsSet) {
-                currentNote.addTag(tag);
-            }
+            currentNote.addTags(tagsSet);
         }
     }
 }

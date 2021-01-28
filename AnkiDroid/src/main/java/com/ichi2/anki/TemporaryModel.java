@@ -33,11 +33,10 @@ import timber.log.Timber;
 
 import com.ichi2.async.CollectionTask;
 import com.ichi2.async.TaskListener;
+import com.ichi2.async.TaskManager;
 import com.ichi2.compat.CompatHelper;
 import com.ichi2.libanki.Model;
 import com.ichi2.utils.JSONObject;
-import static com.ichi2.async.CollectionTask.TASK_TYPE.*;
-import com.ichi2.async.TaskData;
 
 
 public class TemporaryModel {
@@ -146,13 +145,11 @@ public class TemporaryModel {
     }
 
 
-    public void saveToDatabase(TaskListener listener) {
+    public void saveToDatabase(CardTemplateEditor.CardTemplateFragment.SaveModelAndExitHandler listener) {
         Timber.d("saveToDatabase() called");
         dumpChanges();
         TemporaryModel.clearTempModelFiles();
-        TaskData args = new TaskData(new Object[] {mEditedModel, getAdjustedTemplateChanges()});
-        CollectionTask.launchCollectionTask(SAVE_MODEL, listener, args);
-
+        TaskManager.launchCollectionTask(new CollectionTask.SaveModel(mEditedModel, getAdjustedTemplateChanges()), listener);
     }
 
 
@@ -343,7 +340,7 @@ public class TemporaryModel {
         Timber.d("getDeleteDbOrds()");
 
         // array containing the original / db-relative ordinals for all pending deletes plus the proposed one
-        ArrayList<Integer> deletedDbOrds = new ArrayList<>();
+        ArrayList<Integer> deletedDbOrds = new ArrayList<>(mTemplateChanges.size());
 
         // For each entry in the changes list - and the proposed delete - scan for deletes to get original ordinal
         for (int i = 0; i <= mTemplateChanges.size(); i++) {
@@ -415,7 +412,7 @@ public class TemporaryModel {
      */
     public @NonNull ArrayList<Object[]> getAdjustedTemplateChanges() {
         ArrayList<Object[]> changes = getTemplateChanges();
-        ArrayList<Object[]> adjustedChanges = new ArrayList<>();
+        ArrayList<Object[]> adjustedChanges = new ArrayList<>(changes.size());
 
         // In order to save the changes into the database, the ordinals in the changelist must correspond to the
         // ordinals in the database (for deletes) or the correct index in the changes array (for adds)

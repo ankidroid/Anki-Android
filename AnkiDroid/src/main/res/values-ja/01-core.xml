@@ -38,14 +38,14 @@
 ~ this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <resources>
+    <string name="yes">はい</string>
     <!-- Navigation drawer items-->
     <string name="decks">デッキ</string>
-    <string name="card_browser">ブラウザ</string>
-    <string name="statistics">統計</string>
+    <string name="card_browser" comment="The usage of card browser inside the app (note the casing)">カードブラウザ</string>
+    <string name="statistics">統計情報</string>
     <string name="settings">設定</string>
     <string name="help">ヘルプ</string>
     <string name="send_feedback">フィードバック</string>
-    <string name="studyoptions_title">デッキの概要</string>
     <string name="studyoptions_due_today">今日の課題:</string>
     <string name="studyoptions_new_total">新規カード:</string>
     <string name="studyoptions_total_cards">カード総数:</string>
@@ -67,16 +67,16 @@
     <plurals name="reviewer_window_title_days">
         <item quantity="other">残り約 %d 日と %d 時間</item>
     </plurals>
-    <string name="no_cards_placeholder_title">Collection is empty</string>
-    <string name="no_cards_placeholder_description">Start adding cards\nusing the + icon.</string>
+    <string name="no_cards_placeholder_title">まだデッキがありません</string>
+    <string name="no_cards_placeholder_description">＋アイコンから\nカードを追加して下さい</string>
     <!-- The deck picker via AnkiStatsTaskHandler.java -->
     <plurals name="studied_cards_today">
         <item quantity="other">今日は%1$d枚のカードを%2$sで学習しています</item>
     </plurals>
     <!-- flashcard_portrait.xml -->
-    <string name="type_answer_hint">回答の入力</string>
+    <string name="type_answer_hint">解答の入力</string>
     <string name="show_answer">解答を表示</string>
-    <string name="hide_answer">Hide answer</string>
+    <string name="hide_answer">解答を非表示</string>
     <string name="ease_button_again">もう一度</string>
     <string name="ease_button_hard">難しい</string>
     <string name="ease_button_good">普通</string>
@@ -85,22 +85,14 @@
     <string name="menu_import">インポート</string>
     <string name="undo">元に戻す</string>
     <string name="undo_action_review">最後の復習</string>
-    <string name="undo_action_bury_card">カードを延期</string>
-    <string name="undo_action_bury_note">ノートを延期</string>
-    <string name="undo_action_suspend_card">カードを保留</string>
-    <string name="undo_action_suspend_note">ノートを保留</string>
-    <string name="undo_action_delete">ノートの削除</string>
-    <string name="undo_action_delete_multi">ノートを削除</string>
     <string name="undo_action_change_deck_multi">デッキを変更</string>
-    <string name="undo_action_reschedule_card">スケジュールを変更</string>
-    <string name="undo_action_reset_card">学習履歴をリセット</string>
-    <string name="undo_action_reposition_card">新規カードの表示順序を変更</string>
     <string name="move_all_to_deck">移動先デッキを選択</string>
     <string name="unbury">延期を解除</string>
     <string name="rename_deck">このデッキの名前を変更</string>
-    <string name="menu_add">ノートを追加</string>
+    <string name="create_shortcut">ショートカットを作成</string>
+    <string name="menu_add" comment="A generic add button - Main Deck Picker and card templates. Please inform us if you need more specific strings">ノートを追加</string>
     <string name="menu_add_note">ノートを追加</string>
-    <string name="menu_my_account">アカウントの設定と同期</string>
+    <string name="menu_my_account" comment="Label of the window in which the user should enter their account. This text can\'t be found in AnkiDroid directly.">アカウントの設定と同期</string>
     <string name="menu_dismiss_note">延期、保留、削除</string>
     <string name="menu_bury_card">カードを延期</string>
     <string name="menu_bury_note">ノートを延期</string>
@@ -122,9 +114,9 @@
     <string name="menu_search">%1$s で検索</string>
     <string name="menu_mark_note">ノートにマークを付ける</string>
     <string name="menu_unmark_note">ノートのマークをはずす</string>
-    <string name="menu_toggle_mic_tool_bar">Check pronunciation</string>
+    <string name="menu_toggle_mic_tool_bar">録音用マイクアイコン</string>
     <string name="new_deck">デッキを新規作成</string>
-    <string name="create">新規作成</string>
+    <string name="create" comment="Button to create a filtered deck">新規作成</string>
     <string name="new_dynamic_deck">フィルターデッキを作成</string>
     <string name="night_mode">ナイトモード</string>
     <string name="directory_inaccessible">AnkiDroid ディレクトリにアクセスできません</string>
@@ -144,19 +136,20 @@
     <string name="time_quantity_minutes">%d分</string>
     <string name="time_quantity_hours_minutes">%1$d時間%2$d分</string>
     <string name="time_quantity_hours">%d時間</string>
-    <string name="time_quantity_days">%d日間</string>
+    <string name="time_quantity_days">%d日</string>
     <string name="time_quantity_days_hours">%1$d日と%2$d時間</string>
-    <string name="time_quantity_months">%.1fヶ月</string>
+    <string name="time_quantity_months">%.1fヵ月</string>
     <string name="time_quantity_years">%.1f年</string>
     <!-- or "%.1f a" -->
-    <string name="rebuild_filtered_deck">Rebuilding filtered deck&#8230;</string>
+    <string name="rebuild_filtered_deck">フィルターデッキを再構築しています...</string>
     <string name="rebuild_cram_label">再構築</string>
     <string name="empty_cram_label">空にする</string>
     <string name="create_subdeck">サブデッキを作成</string>
-    <string name="empty_filtered_deck">Emptying filtered deck&#8230;</string>
+    <string name="empty_filtered_deck">フィルターデッキを空にしています&#8230;</string>
     <string name="custom_study_deck_name">カスタム学習セッション</string>
     <string name="custom_study_deck_exists">最初に、既存のカスタム学習デッキの名前を変更してください</string>
     <string name="empty_deck">このデッキにはカードがありません</string>
+    <string name="empty_deck_add_note">カードの追加</string>
     <string name="invalid_deck_name">無効なデッキ名です。</string>
     <string name="studyoptions_empty">このデッキにはカードが入っていません。「＋」ボタンをタップしてカードを追加してください。</string>
     <string name="studyoptions_limit_reached">既に一日あたりの学習枚数の上限に達しています</string>
@@ -178,28 +171,37 @@
     <string name="export_deck">このデッキをエクスポート</string>
     <string name="nothing">なし</string>
     <!-- Card template editor -->
-    <string name="title_activity_template_editor">カードレイアウト</string>
+    <string name="title_activity_template_editor">カードタイプ</string>
     <string name="card_template_editor_front">表面のテンプレート</string>
     <string name="card_template_editor_back">裏面のテンプレート</string>
     <string name="card_template_editor_styling">書式</string>
-    <string name="card_template_editor_menu_delete">削除</string>
-    <string name="card_template_editor_menu_card_browser_appearance">Card Browser Appearance</string>
-    <string name="card_template_editor_deck_override">Deck Override</string>
+    <string name="card_template_editor_menu_card_browser_appearance">カードの表示設定</string>
+    <string name="card_template_editor_deck_override">デッキの上書き</string>
     <string name="card_template_editor_cant_delete">カードタイプは少なくとも１種類必要です。</string>
     <plurals name="card_template_editor_confirm_delete">
         <item quantity="other">カードタイプ \'%2$s\' とそのカード %1$d 枚を削除しますか？</item>
     </plurals>
     <string name="invalid_template">カードを作成できませんでした</string>
-    <string name="card_template_editor_would_delete_note">Removing this card type would cause one or more notes to be deleted. Please create and save a new card type first.</string>
+    <string name="card_template_editor_would_delete_note">このカードタイプを削除すると、１つ以上のノートが削除されます。先に新しいカードタイプを追加してください。</string>
     <string name="card_template_editor_save_error">カードテンプレートの変更を保存できません: %s</string>
     <string name="template_for_current_card_deleted">現在のカードのカードタイプが削除されました。</string>
     <!-- Card Browser Appearance -->
-    <string name="card_template_browser_appearance_title">Browser appearance</string>
+    <string name="card_template_browser_appearance_title">カードの表示設定</string>
+    <string name="current_and_default_deck">%1$s (%2$s)</string>
+    <!-- card Info -->
+    <string name="card_info_title">カード情報</string>
     <!-- Permissions -->
     <string name="read_write_permission_label">AnkiDroid データベースの読み書き</string>
     <string name="read_write_permission_description">ノート、カード、ノートタイプ、デッキへのアクセスや、それらの新規作成を行います。</string>
     <!-- Context Menu -->
-    <string name="card_browser_label">カードブラウザー</string>
-    <string name="card_browser_context_menu">AnkiDroid検索</string>
+    <string name="card_browser_context_menu" comment="The value which appears in the system context menu. Note the casing difference">AnkiDroid検索</string>
     <string name="context_menu_anki_card_label">Ankiカード</string>
+    <string name="has_a_problem" comment="First field is either front template or back template. Second field is the error message.">%1$s has a problem:<br/>%2$s</string>
+    <string name="more_information">More information</string>
+    <string name="no_field">Found \'{{%1$s}}\', but there is no field called \'%1$s\'.</string>
+    <string name="closed_tag_not_open">Found \'{{/%1$s}}\', but missing \'{{#%1$s}}\' or \'{{^%1$s}}\'.</string>
+    <string name="missing_closing_bracket">Missing \'}}\' in \'%s\'.</string>
+    <string name="open_tag_not_closed">Missing \'{{%s}}\'.</string>
+    <string name="wrong_tag_closed">Found \'{{/%1$s}}\', but expected \'{{/%2$s}}\'</string>
+    <string name="filter_error">Error in filter %s</string>
 </resources>

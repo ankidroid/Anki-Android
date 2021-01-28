@@ -37,7 +37,7 @@
 ~ You should have received a copy of the GNU General Public License along with
 ~ this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools">
     <string name="check_db_title">Проверить базу данных?</string>
     <string name="check_db_warning">Это может занять много времени</string>
     <string name="check_db_acknowledge">База данных проверена</string>
@@ -62,7 +62,7 @@
         <item><![CDATA[Неразработчики тоже могут помочь. Например, вы можете <a href=\"%1$s\">помочь с переводом</a> AnkiDroid, обновить вики, предоставить скриншоты или написать в блоге об AnkiDroid.]]></item>
         <item><![CDATA[AnkiDroid выпускается под <a href=\"%1$s\">лицензией GNU-GPL v3</a>, и исходный код доступен <a href=\"%2$s\">на GitHub</a>.]]></item>
     </string-array>
-    <string name="preview_title">Предпросмотр</string>
+    <string name="preview_title" comment="Title of the window allowing to preview card(s)">Предпросмотр</string>
     <string name="reposition_card_dialog_title">Переместить новую карточку</string>
     <string name="reposition_card_dialog_message">Начальная позиция:</string>
     <string name="reposition_card_not_new_error">Можно переместить только новые карточки</string>
@@ -81,7 +81,6 @@
         <item quantity="other">%d карточек сброшены</item>
     </plurals>
     <!-- Reschedule Card Dialog -->
-    <string name="reschedule_card_dialog_title">Перепланировать карточку</string>
     <plurals name="reschedule_cards_dialog_title">
         <item quantity="one">Перепланировать карточку</item>
         <item quantity="few">Перепланировать карточки</item>
@@ -108,20 +107,17 @@
     <string name="answering_error_message">Не удалось записать в коллекцию. База данных может быть повреждена, или не хватает места в хранилище.\n\nПопробуйте проверить базу данных или восстановить коллекцию из резервной копии.\nОднако, это может быть ошибка в AnkiDroid. Пожалуйста, сообщите об этом разработчикам.</string>
     <string name="answering_error_report">Сообщить об ошибке</string>
     <string name="repair_deck_dialog">Вы действительно хотите починить базу данных?\n\nПеред восстановлением копия базы данных будет помещена в папку \'%s\'.</string>
-    <string name="intent_add_saved_information">Сохраненные данные</string>
-    <string name="intent_add_clear_all">Очистить всё</string>
     <string name="intent_aedict_empty">Категория по умолчанию пуста</string>
     <string name="intent_aedict_category">Чтобы добавить карточки в AnkiDroid, удалите все категории Notepad или создайте категорию \"default\"</string>
     <string name="custom_study_new_total_new">Новых карточек в колоде: %d</string>
     <string name="custom_study_rev_total_rev">Карточек для повторения: %d</string>
-    <string name="custom_study_new_extend">Увеличить/уменьшить (“-3”) лимит новых карточек на сегодня</string>
-    <string name="custom_study_rev_extend">Увеличить/уменьшить (“-3”) лимит повторяемых карточек на сегодня</string>
+    <string name="custom_study_new_extend">Увеличить/уменьшить («-3») лимит новых на сегодня</string>
+    <string name="custom_study_rev_extend">Увеличить/уменьшить («-3») лимит повторяемых на сегодня</string>
     <string name="custom_study_forgotten">Забытые за сколько дней повторить:</string>
     <string name="custom_study_ahead">На сколько дней опередить повторение:</string>
     <string name="custom_study_random">Сколько случайных карточек отобрать:</string>
     <string name="custom_study_preview">Посмотреть новые за сколько дней:</string>
     <string name="custom_study_rebuild_deck_corrupt">Не удалось перестроить колоду дополнительного обучения</string>
-    <string name="rebuild_custom_study_deck">Дополнительная колода пересобирается&#8230;</string>
     <string name="importing_collection">Коллекция импортируется&#8230;</string>
     <string name="import_media_count">Импортируются медиафайлы %1$d%%&#8230;</string>
     <string name="import_progress">• Записей: %1$d%%\n• Карточек: %2$d%%\n• Обработка: %3$d%%</string>
@@ -136,9 +132,10 @@
     <string name="dialog_ok">OK</string>
     <string name="dialog_no">Нет</string>
     <string name="dialog_continue">Продолжить</string>
-    <string name="dialog_positive_create">Создать</string>
+    <string name="dialog_positive_create" comment="Create a new collection, probably erasing the previous one, may be necessary in case of error.">Создать</string>
     <string name="dialog_positive_delete">Удалить</string>
-    <string name="dialog_positive_disable">Отключить</string>
+    <!-- Currently unsued, should be useful in the future -->
+    <string name="dialog_positive_disable" tools:ignore="UnusedResources">Отключить</string>
     <string name="dialog_positive_overwrite">Перезаписать</string>
     <string name="dialog_positive_remove">Удалить</string>
     <string name="dialog_positive_repair">Исправить</string>
@@ -159,20 +156,21 @@
     <string name="check_media_no_unused_missing">Неиспользуемые и отсутствующие файлы не найдены.</string>
     <string name="check_media_db_updated">База данных медиафайлов перестроена</string>
     <string name="check_media_delete_unused">Удалить неиспользуемые</string>
-    <string name="delete_media_message">Deleting media&#8230;</string>
-    <string name="delete_media_result_title">Deletion result</string>
+    <string name="delete_media_message">Удаляются медиафайлы&#8230;</string>
+    <string name="delete_media_result_title">Результат удаления</string>
     <plurals name="delete_media_result_message">
-        <item quantity="one">%d file deleted</item>
-        <item quantity="few">%d files deleted</item>
-        <item quantity="many">%d files deleted</item>
-        <item quantity="other">%d files deleted</item>
+        <item quantity="one">%d файл удалён</item>
+        <item quantity="few">%d файла удалены</item>
+        <item quantity="many">%d файлов удалены</item>
+        <item quantity="other">%d файлов удалено</item>
     </plurals>
     <!-- Tags Dialog Options -->
     <string name="tags_dialog_option_all_cards">Все карточки</string>
     <string name="tags_dialog_option_new_cards">Новые</string>
-    <string name="tags_dialog_option_due_cards">К просмотру</string>
+    <string name="tags_dialog_option_due_cards" comment="Name of cards that are already been reviewed in the past, and that should be reviewed again">К просмотру</string>
     <!-- Empty cards -->
     <string name="emtpy_cards_finding">Поиск пустых карточек&#8230;</string>
+    <string name="confirm_cancel">Уверены, что хотите отменить?</string>
     <string name="empty_cards_none">Нет пустых карт</string>
     <string name="empty_cards_count">Карточек к удалению: %d</string>
     <string name="empty_cards_deleted">Удалено карточек: %d</string>
@@ -189,7 +187,6 @@
     <!-- Database Integrity Check -->
     <string name="integrity_check_startup_title">AnkiDroid обновлён</string>
     <string name="integrity_check_startup_content">AnkiDroid был обновлён. Это обновление включает в себя исправления возможных проблем с базой данных, и мы рекомендуем вам запустить проверку базы данных.</string>
-    <string name="integrity_check_positive">Проверить базу данных</string>
     <string name="integrity_check_continue_anyway">Всё равно продолжить</string>
     <string name="integrity_check_insufficient_space">Проверка базы данных использует большое количество временного хранилища.\n\nЖелательно иметь по крайней мере %s свободного места на вашем устройстве, прежде чем продолжить.</string>
     <string name="integrity_check_insufficient_space_extra_content">\n\nСейчас свободно %s.</string>
@@ -204,8 +201,8 @@
     <!-- Database Errors-->
     <string name="database_locked_title">База данных заблокирована</string>
     <string name="database_locked_summary">База данных AnkiDroid используется другим приложением. Закройте другое приложение, а затем снова откройте AnkiDroid.</string>
-    <string name="incompatible_database_version_title">Incompatible Database Version</string>
-    <string name="incompatible_database_version_summary">The database is a more advanced version than this version of AnkiDroid can work with. Upgrade AnkiDroid or downgrade the database to open it\n\nSupported version: %1$d\nDatabase version: %2$d\n\nThe following restore options will overwrite your current collection, possibly with a compatible database version:</string>
+    <string name="incompatible_database_version_title">Несовместимая версия базы данных</string>
+    <string name="incompatible_database_version_summary">Эта база данных современнее той, с которой может работать эта версия AnkiDroid. Обновите AnkiDroid или понизите базу данных, чтобы открыть ее\n\nПоддерживаемая версия: %1$d\nВерсия базы данных: %2$d\n\nСледующие параметры восстановления перезапишут вашу текущую коллекцию, возможно с совместимой версией базы данных:</string>
     <!-- Deck Picker Background-->
     <string name="background_image_applied">Фоновое изображение установлено</string>
     <string name="background_image_removed">Фоновое изображение убрано</string>
@@ -224,8 +221,27 @@
     <string name="boot_service_failed_to_schedule_notifications">Не удалось установить напоминания</string>
     <string name="boot_service_too_many_notifications">Запланировано слишком много напоминаний. Некоторые из них не будут показаны</string>
     <!-- Locale Selection Dialog -->
-    <string name="locale_selection_dialog_title">Выбор языка подсказок</string>
-    <string name="locale_selection_dialog_summary">Некоторые многоязычные клавиатуры, например GBoard, могут переключать языка при редактировании текста\n\nПожалуйста, запросите функцию «setImeHintLocales» у разработчика клавиатуры, если клавиатура не переключает язык.</string>
+    <string name="locale_selection_dialog_title">Язык подсказок клавиатуры</string>
+    <string name="locale_selection_dialog_summary">Некоторые многоязычные клавиатуры, например GBoard, могут переключать язык при редактировании текста\n\nПожалуйста, запросите функцию «setImeHintLocales» у разработчика клавиатуры, если клавиатура не переключает язык.</string>
+    <!-- Help Dialog -->
+    <string name="help_title_using_ankidroid">Использование AnkiDroid</string>
+    <string name="help_item_ankidroid_manual">Руководство AnkiDroid</string>
+    <string name="help_item_anki_manual">Руководство Anki</string>
+    <string name="help_item_ankidroid_faq">Частые вопросы об AnkiDroid</string>
+    <string name="help_title_get_help">Обратиться за помощью</string>
+    <string name="help_item_mailing_list">Список рассылки</string>
+    <string name="help_item_reddit">Reddit</string>
+    <string name="help_item_report_bug">Сообщить об ошибке</string>
+    <string name="help_title_support_ankidroid">Поддержка AnkiDroid</string>
+    <string name="help_item_support_opencollective_donate">Пожертвовать</string>
+    <string name="help_item_support_develop_ankidroid">Программировать</string>
+    <string name="help_item_support_rate_ankidroid">Оценить</string>
+    <string name="help_item_support_other_ankidroid">Другое</string>
+    <string name="help_title_community">Сообщество</string>
+    <string name="help_item_anki_forums">Форум Anki</string>
+    <string name="help_item_discord">Discord</string>
+    <string name="help_item_facebook">Facebook</string>
+    <string name="help_item_twitter">Twitter</string>
     <!--Sync-->
     <plurals name="sync_automatic_sync_needs_more_time">
         <item quantity="one">Автоматическая синхронизация может быть запущена через %d секунду</item>

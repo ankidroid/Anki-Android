@@ -20,14 +20,12 @@ import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.ContextWrapper;
 import android.graphics.Rect;
-import android.os.Build;
 import android.util.AttributeSet;
 import android.view.View;
 
 import com.ichi2.anki.NavigationDrawerActivity;
 
 import androidx.annotation.Nullable;
-import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import timber.log.Timber;
@@ -52,7 +50,6 @@ public class TvNavigationElement extends View {
 
 
     @SuppressWarnings( {"unused", "RedundantSuppression"})
-    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     public TvNavigationElement(Context context, @Nullable AttributeSet attrs, int defStyleAttr, int defStyleRes) {
         super(context, attrs, defStyleAttr, defStyleRes);
     }

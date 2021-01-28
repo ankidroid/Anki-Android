@@ -22,6 +22,7 @@ import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import androidx.appcompat.widget.Toolbar;
+
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
@@ -31,13 +32,14 @@ import android.widget.TextView;
 
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.google.android.material.textfield.TextInputLayout;
-import com.ichi2.anim.ActivityTransitionAnimation;
 import com.ichi2.anki.web.HostNumFactory;
 import com.ichi2.async.Connection;
 import com.ichi2.async.Connection.Payload;
 import com.ichi2.themes.StyledProgressDialog;
 import com.ichi2.ui.TextInputEditField;
 import com.ichi2.utils.AdaptionUtil;
+
+import java.net.UnknownHostException;
 
 import timber.log.Timber;
 
@@ -89,6 +91,9 @@ public class MyAccount extends AnkiActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        if (showedActivityFailedScreen(savedInstanceState)) {
+            return;
+        }
         super.onCreate(savedInstanceState);
 
         if (AdaptionUtil.isUserATestClient()) {
@@ -162,13 +167,7 @@ public class MyAccount extends AnkiActivity {
 
 
     private void resetPassword() {
-        if (AdaptionUtil.hasWebBrowser(this)) {
-            Intent intent = new Intent(Intent.ACTION_VIEW);
-            intent.setData(Uri.parse(getResources().getString(R.string.resetpw_url)));
-            startActivityWithoutAnimation(intent);
-        } else {
-            UIUtils.showThemedToast(this, getResources().getString(R.string.no_browser_notification) + getResources().getString(R.string.resetpw_url), false);
-        }
+        super.openUrl(Uri.parse(getResources().getString(R.string.resetpw_url)));
     }
 
 
@@ -265,9 +264,9 @@ public class MyAccount extends AnkiActivity {
                     UIUtils.showSimpleSnackbar(MyAccount.this, R.string.invalid_username_password, true);
                 } else {
                     String message = getResources().getString(R.string.connection_error_message);
-                    Object[] result = (Object [])data.result;
-                    if (result.length > 1 && result[1] instanceof Exception) {
-                        showSimpleMessageDialog(message, ((Exception)result[1]).getLocalizedMessage(), false);
+                    Object[] result = data.result;
+                    if (result != null && result.length > 0 && result[0] instanceof Exception) {
+                        showSimpleMessageDialog(message, getHumanReadableLoginErrorMessage((Exception) result[0]), false);
                     } else {
                         UIUtils.showSimpleSnackbar(MyAccount.this, message, false);
                     }
@@ -281,6 +280,22 @@ public class MyAccount extends AnkiActivity {
             UIUtils.showSimpleSnackbar(MyAccount.this, R.string.youre_offline, true);
         }
     };
+
+
+    protected String getHumanReadableLoginErrorMessage(Exception exception) {
+        if (exception == null) {
+            return "";
+        }
+
+        if (exception.getCause() != null) {
+            Throwable cause = exception.getCause();
+            if (cause instanceof UnknownHostException) {
+                return getString(R.string.sync_error_unknown_host_readable, exception.getLocalizedMessage());
+            }
+        }
+
+        return exception.getLocalizedMessage();
+    }
 
 
     @Override

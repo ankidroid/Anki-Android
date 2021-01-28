@@ -43,8 +43,6 @@
                 android:description="@string/read_write_permission_description"
                 android:protectionLevel="dangerous"
                 />
-    <!-- custom tabs library has minimum SDK of 16 -->
-    <uses-sdk tools:overrideLibrary="android.support.customtabs, com.getbase.floatingactionbutton"/>
 
     <supports-screens
         android:anyDensity="true"
@@ -67,6 +65,7 @@
         android:networkSecurityConfig="@xml/network_security_config"
         android:banner="@drawable/tv_banner"
         android:requestLegacyExternalStorage="true"
+        android:resizeableActivity="true"
         >
         <activity
             android:name="com.ichi2.anki.IntentHandler"
@@ -192,7 +191,7 @@
         </activity-alias>
         <activity
             android:name="com.ichi2.anki.CardBrowser"
-            android:label="@string/card_browser_label"
+            android:label="@string/card_browser"
             android:exported="true"
             android:configChanges="keyboardHidden|orientation|locale|screenSize"
             android:parentActivityName=".DeckPicker"
@@ -352,7 +351,7 @@
         <!-- "Add Note" widget -->
         <receiver
             android:name="com.ichi2.widget.AddNoteWidget"
-            android:label="@string/widget_add_note">
+            android:label="@string/menu_add_note">
             <intent-filter>
                 <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
             </intent-filter>
@@ -418,7 +417,7 @@
         </activity>
         <activity
             android:name="com.ichi2.anki.multimediacard.activity.LoadPronounciationActivity"
-            android:label="@string/title_activity_load_pronounciation"
+            android:label="@string/multimedia_editor_text_field_editing_say"
             android:exported="false"
             android:configChanges="keyboardHidden|orientation|locale|screenSize"
             >
@@ -434,6 +433,12 @@
         <activity
             android:name=".CardTemplateBrowserAppearanceEditor"
             android:label="@string/card_template_browser_appearance_title"
+            android:exported="false"
+            android:configChanges="keyboardHidden|orientation|locale|screenSize"
+            />
+        <activity
+            android:name=".CardInfo"
+            android:label="@string/card_info_title"
             android:exported="false"
             android:configChanges="keyboardHidden|orientation|locale|screenSize"
             />
@@ -455,6 +460,14 @@
             android:name="com.sec.minimode.icon.landscape.normal"
             android:resource="@drawable/anki"
             />
+
+        <!--
+        Opt out of WebView Metrics: https://developer.android.com/guide/webapps/managing-webview#metrics
+        https://developer.android.com/guide/webapps/webview-privacy
+         -->
+        <meta-data android:name="android.webkit.WebView.MetricsOptOut" android:value="true" />
+
+
 
         <provider
             android:name=".provider.CardContentProvider"

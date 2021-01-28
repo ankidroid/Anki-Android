@@ -231,7 +231,7 @@ public class FlashCardsContract {
      * <td>String</td>
      * <td>{@link #FLDS}</td>
      * <td>read-write</td>
-     * <td>Fields of this note. Fields are separated by "\\x1f"</td>
+     * <td>Fields of this note. Fields are separated by "\\x1f", a.k.a. Consts.FIELD_SEPARATOR</td>
      * </tr>
      * <tr>
      * <td>long</td>

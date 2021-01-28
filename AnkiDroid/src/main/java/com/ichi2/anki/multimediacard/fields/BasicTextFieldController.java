@@ -151,7 +151,7 @@ public class BasicTextFieldController extends FieldControllerBase implements IFi
             // Pick from two translation sources
             PickStringDialogFragment fragment = new PickStringDialogFragment();
 
-            final ArrayList<String> translationSources = new ArrayList<>();
+            final ArrayList<String> translationSources = new ArrayList<>(2);
             translationSources.add("Glosbe.com");
             // Chromebooks do not support dependent apps yet.
             if (!CompatHelper.isChromebook()) {
@@ -191,7 +191,7 @@ public class BasicTextFieldController extends FieldControllerBase implements IFi
             // Should be more than one text not empty fields for clone to make
             // sense
 
-            mPossibleClones = new ArrayList<>();
+            mPossibleClones = new ArrayList<>(mNote.getNumberOfFields());
 
             int numTextFields = 0;
             for (int i = 0; i < mNote.getNumberOfFields(); ++i) {
@@ -266,7 +266,7 @@ public class BasicTextFieldController extends FieldControllerBase implements IFi
                 String translation = data.getExtras().get(TranslationActivity.EXTRA_TRANSLATION).toString();
                 mEditText.setText(translation);
             } catch (Exception e) {
-                showToast(gtxt(R.string.multimedia_editor_trans_translation_failed));
+                showToast(gtxt(R.string.multimedia_editor_something_wrong));
             }
         } else if (requestCode == REQUEST_CODE_PRONOUNCIATION && resultCode == Activity.RESULT_OK) {
             try {

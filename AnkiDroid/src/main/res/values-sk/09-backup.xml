@@ -38,9 +38,8 @@
 ~ this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <resources>
-    <string name="backup_deck_no_space_left">Backup not saved. Not enough space left on SD card. Lower the backup depth or remove some other files.</string>
+    <string name="backup_deck_no_space_left">Záloha neuložená. Nedostatok voľného miesta na SD karte. Znížte hĺbku záloh, alebo vymažte niektoré súbory.</string>
     <string name="sd_space_warning">Na SD karte je menej než %d MB miesta. \nUvoľnite miesto, predídete tým prípadnej strate dát.</string>
-    <string name="backup_delete">Zálohy sa odstraňujú&#8230;</string>
     <string name="backup_restore">Obnoviť zo zálohy</string>
     <string name="backup_new_collection">Nová zbierka</string>
     <string name="backup_del_collection">Odstrániť zbierku a vytvoriť novú</string>
@@ -48,13 +47,11 @@
     <string name="backup_full_sync_from_server">Úplná synchronizácia zo serveru</string>
     <string name="backup_full_sync_from_server_question">Skutočne chcete prepísať vašu zbierku tou z AnkiWeb? Prídete tak o všetky zmeny a informácie zaznamenané od poslednej synchronizácie.</string>
     <string name="error_handling_title">Spracovanie chýb</string>
-    <string name="error_handling_options">Možnosti</string>
+    <string name="error_handling_options" comment="In a warning message, the label of the suggested action that the user should take">Možnosti</string>
     <string name="backup_retry_opening">Skúsiť otvoriť znova</string>
     <string name="backup_error_menu_repair">Opraviť databázu</string>
-    <string name="backup_repair_deck">Opraviť</string>
     <!-- Collection used to be called deck. Name is kept for consistency with translation software -->
     <string name="backup_repair_deck_progress">Databáza sa opravuje&#8230;</string>
-    <string name="backup_error">Chyba</string>
     <string name="backup_invalid_file_error">Zvolený súbor zálohy je neplatný</string>
     <string name="backup_restore_select_title">Zvoľte zálohu pre obnovu</string>
     <string name="backup_restore_no_backups">Na tomto zariadení nie sú k dispozícii žiadne zálohy. Ak máte zálohy na svojom počítači, skopírujte ich manuálne do priečinku AnkiDroid.</string>

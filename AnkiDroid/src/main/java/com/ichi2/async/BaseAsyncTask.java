@@ -21,9 +21,12 @@ import android.os.AsyncTask;
 import com.ichi2.utils.MethodLogger;
 import com.ichi2.utils.Threads;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+
 import static com.ichi2.anki.AnkiDroidApp.sendExceptionReport;
 
-public class BaseAsyncTask<Params, Progress, Result> extends AsyncTask<Params, Progress, Result> {
+public class BaseAsyncTask<Params, Progress, Result> extends AsyncTask<Params, Progress, Result> implements ProgressSenderAndCancelListener<Progress> {
 
     /** Set this to {@code true} to enable detailed debugging for this class. */
     private static final boolean DEBUG = false;
@@ -89,4 +92,8 @@ public class BaseAsyncTask<Params, Progress, Result> extends AsyncTask<Params, P
         return null;
     }
 
+
+    public void doProgress(@Nullable Progress value) {
+        publishProgress(value);
+    }
 }

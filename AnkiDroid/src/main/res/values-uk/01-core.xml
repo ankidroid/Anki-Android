@@ -38,14 +38,14 @@
 ~ this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <resources>
+    <string name="yes">так</string>
     <!-- Navigation drawer items-->
     <string name="decks">Колоди</string>
-    <string name="card_browser">Переглядач карток</string>
+    <string name="card_browser" comment="The usage of card browser inside the app (note the casing)">Переглядач карток</string>
     <string name="statistics">Статистика</string>
     <string name="settings">Налаштування</string>
     <string name="help">Допомога</string>
     <string name="send_feedback">Надіслати відгук</string>
-    <string name="studyoptions_title">Огляд колоди</string>
     <string name="studyoptions_due_today">На сьогодні:</string>
     <string name="studyoptions_new_total">Всього нових карток:</string>
     <string name="studyoptions_total_cards">Всього карток:</string>
@@ -83,7 +83,7 @@
     <string name="no_cards_placeholder_description">Почніть додавати картки\nвикористовуючи значок +.</string>
     <!-- The deck picker via AnkiStatsTaskHandler.java -->
     <plurals name="studied_cards_today">
-        <item quantity="one">Сьогодні вивчена %1$d карта за %2$s</item>
+        <item quantity="one">Сьогодні вивчено %1$d карток за %2$s</item>
         <item quantity="few">Сьогодні вивчено %1$d картки за %2$s</item>
         <item quantity="many">Сьогодні вивчено %1$d карток за %2$s</item>
         <item quantity="other">Сьогодні вивчено %1$d картки за %2$s</item>
@@ -100,22 +100,14 @@
     <string name="menu_import">Імпортувати</string>
     <string name="undo">Скасувати</string>
     <string name="undo_action_review">Останній перегляд</string>
-    <string name="undo_action_bury_card">відкласти картку</string>
-    <string name="undo_action_bury_note">відкласти запис</string>
-    <string name="undo_action_suspend_card">Призупинити картку</string>
-    <string name="undo_action_suspend_note">Призупинити примітку</string>
-    <string name="undo_action_delete">видалити запис</string>
-    <string name="undo_action_delete_multi">видалити записи</string>
     <string name="undo_action_change_deck_multi">Змінити колоди</string>
-    <string name="undo_action_reschedule_card">перепланувати</string>
-    <string name="undo_action_reset_card">скинути перебіг</string>
-    <string name="undo_action_reposition_card">переставити</string>
     <string name="move_all_to_deck">Перемістити все до колоди</string>
     <string name="unbury">Повернути</string>
     <string name="rename_deck">Переназвати колоду</string>
-    <string name="menu_add">Додати</string>
+    <string name="create_shortcut">Створити значок</string>
+    <string name="menu_add" comment="A generic add button - Main Deck Picker and card templates. Please inform us if you need more specific strings">Додати</string>
     <string name="menu_add_note">Додати запис</string>
-    <string name="menu_my_account">Синхронізувати обліковий запис</string>
+    <string name="menu_my_account" comment="Label of the window in which the user should enter their account. This text can\'t be found in AnkiDroid directly.">Синхронізувати обліковий запис</string>
     <string name="menu_dismiss_note">Сховати / видалити</string>
     <string name="menu_bury_card">Відкласти картку</string>
     <string name="menu_bury_note">Відкласти запис</string>
@@ -139,7 +131,7 @@
     <string name="menu_unmark_note">Зняти позначку запису</string>
     <string name="menu_toggle_mic_tool_bar">Перевірити вимову</string>
     <string name="new_deck">Створити колоду</string>
-    <string name="create">Створити</string>
+    <string name="create" comment="Button to create a filtered deck">Створити</string>
     <string name="new_dynamic_deck">Створити фільтровану колоду</string>
     <string name="night_mode">Нічний режим</string>
     <string name="directory_inaccessible">AnkiDroid каталог не доступний</string>
@@ -147,7 +139,7 @@
     The user is taken to the "App Info" screen, and needs to click "Permissions" and
     grant AnkiDroid the \'Storage\' permission. This needs to be a fairly generic message as implementations
     of the permissions/app info screen will differ between devices. -->
-    <string name="startup_no_storage_permission">Щоб продовжити надайте AnkiDroid дозвіл на доступ до сховищя. Будь ласка.</string>
+    <string name="startup_no_storage_permission">Щоб продовжити, надайте AnkiDroid дозвіл на доступ до сховища</string>
     <!--
         The time_quantities are units of time. They are used without
         plurals or dots.
@@ -172,19 +164,20 @@
     <string name="custom_study_deck_name">Додаткове навчання</string>
     <string name="custom_study_deck_exists">Спочатку перейменуйте колоду додаткового навчання</string>
     <string name="empty_deck">Ця колода порожня</string>
+    <string name="empty_deck_add_note">Додати картку</string>
     <string name="invalid_deck_name">Некоректна назва колоди</string>
-    <string name="studyoptions_empty">Ця колода порожня. Натисніть кніпку +, щоб додати новий вміст.</string>
+    <string name="studyoptions_empty">Ця колода порожня. Натисніть на кнопку +, щоб додати новий вміст.</string>
     <string name="studyoptions_limit_reached">Досягнуто денної межі навчання</string>
-    <string name="studyoptions_empty_schedule">Нема запланованих карток</string>
+    <string name="studyoptions_empty_schedule">Немає запланованих карток</string>
     <string name="studyoptions_congrats_finished">Вітаємо! На разі це все.</string>
-    <string name="studyoptions_congrats_more_rev">Досягнуто добового обмеження повторювань, але залишилися картки на перегляд. Ви можете збільшити щоденне обмеження у налаштуваннях.</string>
-    <string name="studyoptions_congrats_more_new">Досягнуто добового обмеження повторювань. Ви можете збільшити обмеження в налаштуваннях. Це короткочасно збільшить навантаження.</string>
+    <string name="studyoptions_congrats_more_rev">Досягнуто добового ліміту, але ще залишилися картки на перегляд. Ви можете збільшити щоденний ліміт у налаштуваннях.</string>
+    <string name="studyoptions_congrats_more_new">Досягнуто добового ліміту карток. Ви можете збільшити ліміт в налаштуваннях, але це короткочасно збільшить навантаження.</string>
     <string name="studyoptions_congrats_custom">Для додаткового навчання натисніть кнопку «Додаткове навчання»</string>
     <string name="studyoptions_no_cards_due">Не залишилось карток на перегляд</string>
     <string name="sd_card_not_mounted">Пристрій зберігання не підключено</string>
-    <string name="empty_cloze_warning">Будь ласка, змініть цей запис та додайте пропуски. (%1$s)</string>
+    <string name="empty_cloze_warning">Будь ласка, відредагуйте цей запис та додайте пропуски. (%1$s)</string>
     <string name="button_sync">Синхронізувати</string>
-    <string name="cancel_sync_confirm">Чи хочете Ви скасувати синхронізацію?</string>
+    <string name="cancel_sync_confirm">Ви хочете скасувати синхронізацію?</string>
     <string name="continue_sync">Продовжити синхронізацію</string>
     <string name="sync_cancelled">Синхронізацію скасовано</string>
     <string name="sync_cancel_message">Скасування&#8230;\nЦе триватиме деякий час.</string>
@@ -197,10 +190,9 @@
     <string name="card_template_editor_front">Шаблон передньої сторони</string>
     <string name="card_template_editor_back">Шаблон задньої сторони</string>
     <string name="card_template_editor_styling">Стиль</string>
-    <string name="card_template_editor_menu_delete">Видалити</string>
     <string name="card_template_editor_menu_card_browser_appearance">Вигляд переглядача карток</string>
     <string name="card_template_editor_deck_override">Перевизначення колоди</string>
-    <string name="card_template_editor_cant_delete">Необхідна хоча б один тип карток</string>
+    <string name="card_template_editor_cant_delete">Необхідно хоча б один тип карток</string>
     <plurals name="card_template_editor_confirm_delete">
         <item quantity="one">Видалити тип картки «%2$s» та його %1$d картку?</item>
         <item quantity="few">Видалити тип картки «%2$s» та його %1$d картки?</item>
@@ -213,11 +205,21 @@
     <string name="template_for_current_card_deleted">Тип картки для поточної картки було видалено.</string>
     <!-- Card Browser Appearance -->
     <string name="card_template_browser_appearance_title">Зовнішній вигляд переглядача</string>
+    <string name="current_and_default_deck">%1$s (%2$s)</string>
+    <!-- card Info -->
+    <string name="card_info_title">Інформація про картку</string>
     <!-- Permissions -->
     <string name="read_write_permission_label">Читати і записувати в базу даних AnkiDroid</string>
-    <string name="read_write_permission_description">доступ до існуючих карток, колод, записам та їх типам, а також створення нових</string>
+    <string name="read_write_permission_description">доступ до існуючих карток, колод, записів та їх типів, а також створення нових</string>
     <!-- Context Menu -->
-    <string name="card_browser_label">Переглядач карток</string>
-    <string name="card_browser_context_menu">Переглядач карток</string>
+    <string name="card_browser_context_menu" comment="The value which appears in the system context menu. Note the casing difference">Переглядач карток</string>
     <string name="context_menu_anki_card_label">Anki картка</string>
+    <string name="has_a_problem" comment="First field is either front template or back template. Second field is the error message.">У %1$s проблема:<br/>%2$s</string>
+    <string name="more_information">Докладніше</string>
+    <string name="no_field">Знайдено «{{%1$s}}», але без поля «%1$s».</string>
+    <string name="closed_tag_not_open">Знайдено «{{/%1$s}}», але невистачає «{{#%1$s}}» чи «{{^%1$s}».</string>
+    <string name="missing_closing_bracket">Не вистачає «}}» в «%s».</string>
+    <string name="open_tag_not_closed">Відсутнє «{{%s}».</string>
+    <string name="wrong_tag_closed">Знайдено «{{/%1$s}}», але очікувалось «{{/%2$s}}»</string>
+    <string name="filter_error">Помилка в фільтрі %s</string>
 </resources>

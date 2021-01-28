@@ -27,6 +27,7 @@ import com.ichi2.anki.R;
 import com.ichi2.anki.stats.StatsMetaInfo;
 import com.ichi2.libanki.Collection;
 import com.ichi2.libanki.Consts;
+import com.ichi2.libanki.DB;
 import com.ichi2.libanki.Decks;
 import com.ichi2.libanki.DeckConfig;
 import com.ichi2.libanki.utils.Time;
@@ -305,17 +306,16 @@ public class AdvancedStatistics {
                 break;
         }
 
-        ArrayList<int[]> dues = new ArrayList<>();
 
-        EaseClassifier classifier = new EaseClassifier(mCol.getTime(), mCol.getDb().getDatabase());
-        ReviewSimulator reviewSimulator = new ReviewSimulator(mCol.getDb().getDatabase(), classifier, end, chunk);
-        TodayStats todayStats = new TodayStats(mCol.getDb().getDatabase(), Settings.getDayStartCutoff(mCol.getCrt()));
+        EaseClassifier classifier = new EaseClassifier(mCol.getTime(), mCol.getDb());
+        ReviewSimulator reviewSimulator = new ReviewSimulator(mCol.getDb(), classifier, end, chunk);
+        TodayStats todayStats = new TodayStats(mCol, Settings.getDayStartCutoff(mCol.getCrt()));
 
         long t0 = mCol.getTime().intTimeMS();
         SimulationResult simulationResult = reviewSimulator.simNreviews(Settings.getToday((int)mCol.getCrt()), mCol.getDecks(), dids, todayStats);
         long t1 = mCol.getTime().intTimeMS();
 
-        Timber.d("Simulation of all decks took: " + (t1 - t0) + " ms");
+        Timber.d("Simulation of all decks took: %d ms", t1 - t0);
 
         int[][] nReviews = ArrayUtils.transposeMatrix(simulationResult.getNReviews());
         int[][] nInState = ArrayUtils.transposeMatrix(simulationResult.getNInState());
@@ -325,6 +325,7 @@ public class AdvancedStatistics {
         //if(ArrayUtils.nCols(nInState) > 0)
         //    nInState = ArrayUtils.append(nInState, new int[ArrayUtils.nCols(nInState)], 1);
 
+        ArrayList<int[]> dues = new ArrayList<>(nReviews.length + 2);
         // Forecasted number of reviews
         for(int i = 0; i<nReviews.length; i++) {
             dues.add(new int[] { i,                                         //Time
@@ -496,16 +497,16 @@ public class AdvancedStatistics {
             int revPerDay = Settings.getMaxReviewsPerDay();
             int initialFactor = Settings.getInitialFactor();
 
-            if (conf.getInt("dyn") == 0) {
+            if (conf.getInt("dyn") == Consts.DECK_STD) {
                 revPerDay = conf.getJSONObject("rev").getInt("perDay");
                 newPerDay = conf.getJSONObject("new").getInt("perDay");
                 initialFactor = conf.getJSONObject("new").getInt("initialFactor");
 
-                Timber.d("rev.perDay=" + revPerDay);
-                Timber.d("new.perDay=" + newPerDay);
-                Timber.d("new.initialFactor=" + initialFactor);
+                Timber.d("rev.perDay=%d", revPerDay);
+                Timber.d("new.perDay=%d", newPerDay);
+                Timber.d("new.initialFactor=%d", initialFactor);
             } else {
-                Timber.d("dyn=" + conf.getInt("dyn"));
+                Timber.d("dyn=%d", conf.getInt("dyn"));
             }
 
             return new Deck(did, newPerDay, revPerDay, initialFactor);
@@ -555,7 +556,7 @@ public class AdvancedStatistics {
         private final int today;
         private final Deck deck;
 
-        public CardIterator(SupportSQLiteDatabase db, int today, Deck deck) {
+        public CardIterator(DB db, int today, Deck deck) {
 
             this.today = today;
             this.deck = deck;
@@ -568,7 +569,7 @@ public class AdvancedStatistics {
                     "AND queue != " + Consts.QUEUE_TYPE_SUSPENDED + " " +   // ignore suspended cards
                     "order by id;";
             Timber.d("Forecast query: %s", query);
-            cur = db.query(query, null);
+            cur = db.query(query);
 
         }
 
@@ -607,7 +608,7 @@ public class AdvancedStatistics {
 
         private final Random random;
 
-        private final SupportSQLiteDatabase db;
+        private final DB db;
         private double[][] probabilities;
         private double[][] probabilitiesCumulative;
 
@@ -650,7 +651,7 @@ public class AdvancedStatistics {
                 queryBaseYoungMature
                         + "where type=" + Consts.CARD_TYPE_LRN + " and lastIvl >= 21;";
 
-        public EaseClassifier(Time time, SupportSQLiteDatabase db) {
+        public EaseClassifier(Time time, DB db) {
             this.db = db;
 
             singleReviewOutcome = new ReviewOutcome(null, 0);
@@ -659,15 +660,15 @@ public class AdvancedStatistics {
             calculateCumProbabilitiesForNewEasePerCurrentEase();
             long t1 = time.intTimeMS();
 
-            Timber.d("Calculating probability distributions took: " + (t1 - t0) + " ms");
+            Timber.d("Calculating probability distributions took: %d ms", t1 - t0);
 
-            Timber.d("new\t\t" + Arrays.toString(this.probabilities[0]));
-            Timber.d("young\t\t" + Arrays.toString(this.probabilities[1]));
-            Timber.d("mature\t" + Arrays.toString(this.probabilities[2]));
+            Timber.d("new\t\t%s", Arrays.toString(this.probabilities[0]));
+            Timber.d("young\t\t%s", Arrays.toString(this.probabilities[1]));
+            Timber.d("mature\t%s", Arrays.toString(this.probabilities[2]));
 
-            Timber.d("Cumulative new\t\t" + Arrays.toString(this.probabilitiesCumulative[0]));
-            Timber.d("Cumulative young\t\t" + Arrays.toString(this.probabilitiesCumulative[1]));
-            Timber.d("Cumulative mature\t" + Arrays.toString(this.probabilitiesCumulative[2]));
+            Timber.d("Cumulative new\t\t%s", Arrays.toString(this.probabilitiesCumulative[0]));
+            Timber.d("Cumulative young\t\t%s", Arrays.toString(this.probabilitiesCumulative[1]));
+            Timber.d("Cumulative mature\t%s", Arrays.toString(this.probabilitiesCumulative[2]));
 
             random = new Random();
         }
@@ -707,8 +708,6 @@ public class AdvancedStatistics {
          */
         private double[] calculateProbabilitiesForNewEaseForCurrentEase(String queryNewEaseCountForCurrentEase, int[] prior) {
 
-            Cursor cur = null;
-
             int[] freqs = new int[] {
                     prior[REVIEW_OUTCOME_REPEAT],
                     prior[REVIEW_OUTCOME_HARD],
@@ -718,8 +717,7 @@ public class AdvancedStatistics {
 
             int n = prior[REVIEW_OUTCOME_REPEAT] + prior[REVIEW_OUTCOME_HARD] + prior[REVIEW_OUTCOME_GOOD] + prior[REVIEW_OUTCOME_EASY];
 
-            try {
-                cur = db.query(queryNewEaseCountForCurrentEase, null);
+            try (Cursor cur = db.query(queryNewEaseCountForCurrentEase)) {
                 cur.moveToNext();
 
                 freqs[REVIEW_OUTCOME_REPEAT]    += cur.getInt(REVIEW_OUTCOME_REPEAT_PLUS_1);        //Repeat
@@ -731,10 +729,6 @@ public class AdvancedStatistics {
 
                 n += nQuery;
 
-            } finally {
-                if (cur != null && !cur.isClosed()) {
-                    cur.close();
-                }
             }
 
             return new double[] {
@@ -821,26 +815,23 @@ public class AdvancedStatistics {
 
     public static class TodayStats {
 
-        private final Map<Long, Integer> nLearnedPerDeckId = new HashMap<>();
+        private final Map<Long, Integer> nLearnedPerDeckId;
 
-        public TodayStats(SupportSQLiteDatabase db, long dayStartCutoff) {
+        public TodayStats(Collection col, long dayStartCutoff) {
 
-            Cursor cur = null;
+            nLearnedPerDeckId = new HashMap<>(col.getDecks().count());
+            SupportSQLiteDatabase db = col.getDb().getDatabase();
+
             String query = "select cards.did, "+
                     "sum(case when revlog.type = " + CARD_TYPE_NEW + " then 1 else 0 end)"+ /* learning */
                     " from revlog, cards where revlog.cid = cards.id and revlog.id > " + dayStartCutoff +
                     " group by cards.did";
             Timber.d("AdvancedStatistics.TodayStats query: %s", query);
 
-            try {
-                cur = db.query(query, null);
+            try (Cursor cur = db.query(query)) {
 
                 while(cur.moveToNext()) {
                     nLearnedPerDeckId.put(cur.getLong(0), cur.getInt(1));
-                }
-            } finally {
-                if (cur != null && !cur.isClosed()) {
-                    cur.close();
                 }
             }
         }
@@ -892,7 +883,7 @@ public class AdvancedStatistics {
      */
     private class ReviewSimulator {
 
-        private final SupportSQLiteDatabase db;
+        private final DB db;
         private final EaseClassifier classifier;
 
         //TODO: also exists in Review
@@ -903,7 +894,7 @@ public class AdvancedStatistics {
 
         private final NewCardSimulator newCardSimulator = new NewCardSimulator();
 
-        public ReviewSimulator(SupportSQLiteDatabase db, EaseClassifier classifier, int nTimeBins, int timeBinLength) {
+        public ReviewSimulator(DB db, EaseClassifier classifier, int nTimeBins, int timeBinLength) {
             this.db = db;
             this.classifier = classifier;
 
@@ -952,7 +943,7 @@ public class AdvancedStatistics {
             //Forecasted final state of deck
             //finalIvl = np.empty((nSmooth, nCards), dtype='f8')
 
-            Timber.d("today: " + today);
+            Timber.d("today: %d", today);
 
             Stack<Review> reviews = new Stack<>();
             ArrayList<Review> reviewList = new ArrayList<>();
@@ -987,13 +978,13 @@ public class AdvancedStatistics {
                     if (review.getT() < tMax)
                         reviews.push(review);
 
-                    //Timber.d("Card started: " + cardN);
+                    //Timber.d("Card started: %d", cardN);
 
                     while (!reviews.isEmpty()) {
                         reviews.pop().simulateReview();
                     }
 
-                    //Timber.d("Card done: " + cardN++);
+                    //Timber.d("Card done: %d", cardN++);
 
                 }
             }
@@ -1073,10 +1064,10 @@ public class AdvancedStatistics {
          * @return Today in days counted from the time at which the collection was created
          */
         public int getToday(long collectionCreatedTime) {
-            Timber.d("Collection creation timestamp: " + collectionCreatedTime);
+            Timber.d("Collection creation timestamp: %d", collectionCreatedTime);
 
             long currentTime = mCol.getTime().intTime();
-            Timber.d("Now: " + currentTime);
+            Timber.d("Now: %d", currentTime);
             return (int) ((currentTime - collectionCreatedTime) / SECONDS_PER_DAY);
         }
 
@@ -1686,9 +1677,9 @@ public class AdvancedStatistics {
             String tabs = "";
             for(int d = 0; d<nPrevRevs; d++)
                 tabs += "\t";
-            Timber.d(tabs + "t=" + tElapsed + " p=" + prob + " * " + outcomeProb);
-            Timber.d(tabs + prevCard);
-            Timber.d(tabs + newCard);
+            Timber.d("%st=%d p=%f * %s", tabs, tElapsed, prob, outcomeProb);
+            Timber.d("%s%s",tabs , prevCard);
+            Timber.d("%s%s", tabs, newCard);
         }
 
         /**

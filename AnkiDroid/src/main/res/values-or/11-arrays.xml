@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="utf-8"?> 
+ <!-- 
+ ~ Copyright (c) 2009 Andrew <andrewdubya@gmail> 
+ ~ Copyright (c) 2009 Edu Zamora <edu.zasu@gmail.com> 
+ ~ Copyright (c) 2009 Daniel Svaerd <daniel.svard@gmail.com> 
+ ~ Copyright (c) 2009 Nicolas Raoul <nicolas.raoul@gmail.com> 
+ ~ Copyright (c) 2010 Norbert Nagold <norbert.nagold@gmail.com> 
+ ~ This program is free software; you can redistribute it and/or modify it under 
+ ~ the terms of the GNU General Public License as published by the Free Software 
+ ~ Foundation; either version 3 of the License, or (at your option) any later 
+ ~ version. 
+ ~ 
+ ~ This program is distributed in the hope that it will be useful, but WITHOUT ANY 
+ ~ WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A 
+ ~ PARTICULAR PURPOSE. See the GNU General Public License for more details. 
+ ~ 
+ ~ You should have received a copy of the GNU General Public License along with 
+ ~ this program.  If not, see <http://www.gnu.org/licenses/>. 
+ --> 
+ 
+<!--
+~ Copyright (c) 2009 Casey Link <unnamedrambler@gmail.com>
+~
+~ This program is free software; you can redistribute it and/or modify it under
+~ the terms of the GNU General Public License as published by the Free Software
+~ Foundation; either version 3 of the License, or (at your option) any later
+~ version.
+~
+~ This program is distributed in the hope that it will be useful, but WITHOUT ANY
+~ WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A
+~ PARTICULAR PURPOSE. See the GNU General Public License for more details.
+~
+~ You should have received a copy of the GNU General Public License along with
+~ this program.  If not, see <http://www.gnu.org/licenses/>.
+-->
+<resources>
+    <string-array name="error_reporting_choice_labels">
+        <item>ସର୍ବଦା ରିପୋର୍ଟ କରନ୍ତୁ</item>
+        <item>କଦାପି ରିପୋର୍ଟ କରନ୍ତୁ ନାହିଁ</item>
+        <item>ମୋତେ ପଚାରନ୍ତୁ</item>
+    </string-array>
+    <string-array name="leech_action_labels">
+        <item>କାର୍ଡ ନିଲମ୍ବିତ କରନ୍ତୁ</item>
+        <item>କେବଳ ଟ୍ୟାଗ୍ କରନ୍ତୁ</item>
+    </string-array>
+    <string-array name="new_order_labels">
+        <item>ଯାଦୃଚ୍ଛିକ କ୍ରମରେ ନୂତନ କାର୍ଡ</item>
+        <item>ଯୋଗ କ୍ରମରେ ନୂତନ କାର୍ଡ</item>
+    </string-array>
+    <string-array name="cram_deck_conf_order_labels">
+        <item>ସର୍ବପୁରାତନ ଆଗ </item>
+        <item>ଯାଦୃଚ୍ଛିକ</item>
+        <item>ବଢୁଥିବା ବ୍ୟବଧାନ </item>
+        <item>କମୁଥିବା ବ୍ୟବଧାନ </item>
+        <item>ସବୁଠୁ ଅଧିକ ତ୍ରୁଟିଜନିତ </item>
+        <item>ଯୋଡ଼ାହେବା କ୍ରମାନୁସାରେ</item>
+        <item>ବଳକା କ୍ରମାନୁସାରେ</item>
+        <item>ସର୍ଵଶାରେ ଯୋଡ଼ାହେଇଥିବା ଆଗ </item>
+        <item>ଆପେକ୍ଷିକ ଅତ୍ୟଧିକତା</item>
+    </string-array>
+    <string-array name="add_to_cur_labels">
+        <item>ସାମ୍ପ୍ରତିକ ଡେକ୍ ବ୍ୟବହାର କରନ୍ତୁ</item>
+        <item>ନୋଟ୍ ପ୍ରକାର ଅନୁଯାୟୀ ନିଷ୍ପତ୍ତି ନିଅନ୍ତୁ</item>
+    </string-array>
+    <string-array name="new_spread_labels">
+        <item>ନୂତନ କାର୍ଡ ଏବଂ ସମୀକ୍ଷା ମିଶ୍ରଣ କରନ୍ତୁ</item>
+        <item>ସମୀକ୍ଷା ପରେ ନୂତନ କାର୍ଡ</item>
+        <item>ସମୀକ୍ଷା ପୂର୍ବରୁ ନୂତନ କାର୍ଡ</item>
+    </string-array>
+    <string-array name="override_font_labels">
+        <item>ଯେତେବେଳେ ଫ୍ଲାସକାର୍ଡରେ କୌଣସି font ନିର୍ଦ୍ଦିଷ୍ଟ କରାଯାଇ ନାହିଁ</item>
+        <item>ସର୍ବଦା</item>
+    </string-array>
+    <string-array name="day_theme_labels">
+        <item>ହାଲୁକା</item>
+        <item>ସାଧା</item>
+    </string-array>
+    <string-array name="night_theme_labels">
+        <item>କଳା</item>
+        <item>ଗାଢ଼</item>
+    </string-array>
+    <string-array name="html_size_code_labels">
+        <item>xx-ଛୋଟ</item>
+        <item>x-ଛୋଟ</item>
+        <item>ଛୋଟ</item>
+        <item>ମଧ୍ୟମ</item>
+        <item>ବଡ଼</item>
+        <item>x-ବଡ଼</item>
+        <item>xx-ବଡ଼</item>
+    </string-array>
+    <!--
+    #7794 - it\'s better to use @string references in non-translated arrays as this handles
+    changes in the array ordering better
+     -->
+    <string name="gesture_no_action">କିଛି କର ନାହିଁ</string>
+    <string name="gesture_answer_1">ଉତ୍ତର ବଟନ୍ ୧</string>
+    <string name="gesture_answer_2">ଉତ୍ତର ବଟନ୍ ୨</string>
+    <string name="gesture_answer_3">ଉତ୍ତର ବଟନ୍ ୩</string>
+    <string name="gesture_answer_4">ଉତ୍ତର ବଟନ୍ ୪</string>
+    <string name="gesture_answer_green">ସୁପାରିଶିତ ଉତ୍ତର (ସବୁଜ)</string>
+    <string name="gesture_answer_better_recommended">ଉତ୍ତର ସୁପାରିଶିତ ଅପେକ୍ଷା ଭଲ</string>
+    <string name="gesture_tag_note">ନୋଟ୍ ଟ୍ୟାଗ୍ କରନ୍ତୁ</string>
+    <string name="gesture_lookup">ଅଭିବ୍ୟକ୍ତି ଦେଖନ୍ତୁ</string>
+    <string name="gesture_play">ମିଡ଼ିଆ ଚଲାନ୍ତୁ</string>
+    <string name="gesture_abort_learning">ପଢ଼ିବା ବନ୍ଦ କରନ୍ତୁ</string>
+    <string name="gesture_flag_red">ନାଲି ପତାକା ଟୋଗଲ୍ କରନ୍ତୁ</string>
+    <string name="gesture_flag_orange">କମଳା ପତାକା ଟୋଗଲ୍ କରନ୍ତୁ</string>
+    <string name="gesture_flag_green">ସବୁଜ ପତାକା ଟୋଗଲ୍ କରନ୍ତୁ</string>
+    <string name="gesture_flag_blue">ନୀଳ ପତାକା ଟୋଗଲ୍ କରନ୍ତୁ</string>
+    <string name="gesture_flag_remove">ପତାକା ହଟାନ୍ତୁ</string>
+    <string name="gesture_page_up">ଉପର ପୃଷ୍ଠା</string>
+    <string name="gesture_page_down">ତଳ ପୃଷ୍ଠା</string>
+    <string name="gesture_abort_sync">ପଢ଼ିବା ବନ୍ଦ କରନ୍ତୁ ଏବଂ ସିଙ୍କ୍ କରନ୍ତୁ</string>
+    <string name="gesture_toggle_whiteboard">ଧଳାପଟା ଟୋଗଲ୍ କରନ୍ତୁ</string>
+    <string name="record_voice">ସ୍ୱର ରେକର୍ଡ କରନ୍ତୁ</string>
+    <string name="replay_voice">ସ୍ୱର ପୁନର୍ବାର ଚଲାନ୍ତୁ</string>
+</resources>

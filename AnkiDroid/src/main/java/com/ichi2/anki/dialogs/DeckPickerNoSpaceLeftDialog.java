@@ -24,7 +24,7 @@ public class DeckPickerNoSpaceLeftDialog extends AnalyticsDialogFragment {
                 .title(res.getString(R.string.sd_card_full_title))
                 .content(res.getString(R.string.backup_deck_no_space_left))
                 .cancelable(true)
-                .positiveText(res.getString(R.string.dialog_ok))
+                .positiveText(R.string.dialog_ok)
                 .onPositive((dialog, which) -> ((DeckPicker) getActivity()).startLoadingCollection())
                 .cancelListener(dialog -> ((DeckPicker) getActivity()).startLoadingCollection())
                 .show();

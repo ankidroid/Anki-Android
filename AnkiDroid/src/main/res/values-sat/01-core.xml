@@ -38,14 +38,14 @@
 ~ this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <resources>
+    <string name="yes">ᱦᱮᱸ</string>
     <!-- Navigation drawer items-->
     <string name="decks">ᱰᱮᱠ ᱠᱚ</string>
-    <string name="card_browser">ᱠᱟᱰ ᱵᱨᱟᱩᱡᱚᱨ</string>
-    <string name="statistics">ᱟᱸᱠᱰᱟ</string>
+    <string name="card_browser" comment="The usage of card browser inside the app (note the casing)">ᱠᱟᱰ ᱵᱨᱟᱩᱡᱚᱨ</string>
+    <string name="statistics">ᱟᱸᱠᱲᱟ</string>
     <string name="settings">ᱥᱟᱡᱟᱣᱠᱚ</string>
-    <string name="help">ᱜᱚᱸᱲᱚᱸ</string>
+    <string name="help">ᱜᱚᱲᱚ</string>
     <string name="send_feedback">ᱞᱟᱹᱭ ᱯᱩᱥᱴᱟᱹᱣ ᱵᱷᱮᱡᱟᱭ ᱢᱮ</string>
-    <string name="studyoptions_title">ᱰᱮᱠ ᱧᱮᱞ ᱵᱤᱰᱟVᱣ ᱢᱮ</string>
     <string name="studyoptions_due_today">ᱛᱮᱦᱮᱸᱧ-ᱟᱜ ᱥᱟᱨᱮᱡ</string>
     <string name="studyoptions_new_total">ᱱᱟᱶᱟ ᱠᱟᱰ ᱠᱚᱣᱟᱜ ᱜᱩᱴ:</string>
     <string name="studyoptions_total_cards">ᱱᱟᱶᱟ ᱠᱟᱰ ᱠᱚᱺ</string>
@@ -75,8 +75,8 @@
     <string name="no_cards_placeholder_description">+ᱟᱭᱠᱚᱱ ᱵᱮᱵᱷᱟᱵᱨ ᱠᱟᱛᱮ\nᱠᱟᱰ ᱠᱚ ᱥᱮᱞᱮᱫ ᱮᱦᱚᱵ ᱢᱮ ᱾</string>
     <!-- The deck picker via AnkiStatsTaskHandler.java -->
     <plurals name="studied_cards_today">
-        <item quantity="one">%1$d ᱠᱟᱰ %2$s ᱫᱤᱱ ᱨᱮ ᱯᱟᱰᱦᱟᱣ ᱠᱮᱟᱹᱧ</item>
-        <item quantity="other">%1$d ᱠᱟᱰ %2$s ᱫᱤᱱ ᱨᱮ ᱯᱟᱰᱦᱟᱣ ᱠᱮᱟᱹᱧ</item>
+        <item quantity="one">%1$d ᱠᱟᱰ %2$s ᱫᱤᱱ ᱨᱮ ᱯᱟᱲᱦᱟᱣ ᱠᱮᱟᱹᱧ</item>
+        <item quantity="other">%1$d ᱠᱟᱰᱠᱚ ᱫᱚ %2$s ᱫᱤᱱ ᱨᱮ ᱯᱟᱲᱦᱟᱣ ᱠᱮᱟᱹᱧ</item>
     </plurals>
     <!-- flashcard_portrait.xml -->
     <string name="type_answer_hint">ᱛᱮᱞᱟ ᱴᱟᱭᱯ ᱢᱮ</string>
@@ -90,22 +90,14 @@
     <string name="menu_import">ᱟᱭᱟᱛ</string>
     <string name="undo">ᱢᱟᱲᱟᱝᱟᱜ</string>
     <string name="undo_action_review">ᱢᱟᱲᱟᱝᱟᱜ ᱧᱮᱧᱮᱞᱠᱚᱜ</string>
-    <string name="undo_action_bury_card">ᱠᱟᱰ ᱛᱚᱯᱟᱭ ᱢᱮ</string>
-    <string name="undo_action_bury_note">ᱠᱷᱟᱴᱚ ᱵᱤᱪᱟᱹᱨ ᱛᱚᱯᱟᱭ ᱢᱮ</string>
-    <string name="undo_action_suspend_card">ᱠᱟᱰ ᱵᱚᱸᱫᱚᱭ ᱢᱮ</string>
-    <string name="undo_action_suspend_note">ᱠᱷᱟᱴᱚ ᱵᱤᱪᱟᱹᱨ ᱵᱚᱸᱫᱚᱭ ᱢᱮ</string>
-    <string name="undo_action_delete">ᱠᱷᱟᱴᱚ ᱵᱤᱪᱟᱹᱨ ᱜᱮᱫ ᱜᱤᱰᱤ ᱢᱮ</string>
-    <string name="undo_action_delete_multi">ᱠᱷᱟᱴᱚ ᱵᱤᱪᱟᱹᱨᱥ ᱜᱮᱫ ᱜᱤᱰᱤ ᱢᱮ</string>
     <string name="undo_action_change_deck_multi">ᱰᱮᱠ ᱠᱚ ᱵᱚᱫᱚᱞ ᱢᱮ</string>
-    <string name="undo_action_reschedule_card">ᱨᱤᱥᱮᱰᱭᱩᱞ ᱢᱮ</string>
-    <string name="undo_action_reset_card">ᱯᱨᱚᱜᱨᱮᱥ ᱨᱤᱥᱮᱴ ᱢᱮ</string>
-    <string name="undo_action_reposition_card">ᱥᱛᱷᱟᱱᱚᱱᱛᱚᱨ ᱢᱮ</string>
     <string name="move_all_to_deck">ᱡᱷᱚᱛᱚ ᱰᱮᱠ ᱛᱮ ᱩᱪᱟ.ᱰ ᱡᱮ</string>
     <string name="unbury">ᱛᱚᱯᱟ ᱚᱰᱚᱠ ᱢᱮ</string>
     <string name="rename_deck">ᱰᱮᱠ ᱟ ᱧᱩᱛᱩᱢ ᱵᱚᱫᱚᱞ‌ ᱢᱮ</string>
-    <string name="menu_add">ᱥᱮᱞᱮᱫ </string>
+    <string name="create_shortcut">ᱥᱚᱴᱠᱚᱴ ᱛᱮᱭᱟᱨ ᱢᱮ</string>
+    <string name="menu_add" comment="A generic add button - Main Deck Picker and card templates. Please inform us if you need more specific strings">ᱥᱮᱞᱮᱫ </string>
     <string name="menu_add_note">ᱠᱷᱟᱴᱚ ᱵᱤᱪᱟᱹᱨ ᱥᱮᱞᱮᱫ ᱢᱮ</string>
-    <string name="menu_my_account">ᱠᱷᱟᱛᱟ ᱟᱹᱭᱩᱨ ᱢᱤᱫ ᱢᱮ</string>
+    <string name="menu_my_account" comment="Label of the window in which the user should enter their account. This text can\'t be found in AnkiDroid directly.">ᱠᱷᱟᱛᱟ ᱟᱹᱭᱩᱨ ᱢᱤᱫ ᱢᱮ</string>
     <string name="menu_dismiss_note">ᱩᱠᱩᱭ ᱢᱮ/ᱜᱫ ᱜᱤᱰᱤ</string>
     <string name="menu_bury_card">ᱠᱟᱰ ᱛᱚᱯᱟᱭ ᱢᱮ</string>
     <string name="menu_bury_note">ᱠᱷᱟᱴᱚ ᱵᱤᱪᱟᱹᱨ ᱛᱚᱯᱟᱭ ᱢᱮ</string>
@@ -129,7 +121,7 @@
     <string name="menu_unmark_note">ᱠᱷᱟᱴᱚ ᱵᱤᱪᱟᱹᱨ ᱚ-ᱪᱤᱱᱦᱟᱹᱭ ᱢᱮ </string>
     <string name="menu_toggle_mic_tool_bar">ᱥᱩᱨ ᱧᱣᱞ ᱛᱟᱢ</string>
     <string name="new_deck">ᱱᱟᱶᱟ ᱰᱮᱠ ᱛᱮᱭᱟᱨ ᱢᱮ</string>
-    <string name="create">ᱛᱮᱭᱟᱨ</string>
+    <string name="create" comment="Button to create a filtered deck">ᱛᱮᱭᱟᱨ</string>
     <string name="new_dynamic_deck">ᱯᱷᱤᱞᱴᱚᱨ ᱰᱮᱠ ᱛᱮᱭᱟᱨ ᱢᱮ</string>
     <string name="night_mode">ᱧᱤᱸᱫᱟᱹ ᱢᱚᱰ</string>
     <string name="directory_inaccessible">AnkiDroid ᱩᱱᱩᱫᱩᱜ ᱫᱚ ᱵᱟᱭ ᱦᱟᱛᱟᱣ ᱫᱟᱲᱮᱟᱜ ᱠᱟᱱᱟ </string>
@@ -162,10 +154,11 @@
     <string name="custom_study_deck_name">ᱱᱤᱡᱮᱛᱮ ᱯᱟᱲᱦᱟᱣᱜ ᱥᱚᱢᱚᱭ ᱛᱮᱭᱟᱨ ᱢᱮ</string>
     <string name="custom_study_deck_exists">ᱢᱟᱲᱟᱝ ᱠᱷᱚᱱ ᱢᱮᱱᱟᱜ ᱱᱤᱡᱮᱛᱮ ᱯᱟᱲᱦᱟᱣ ᱰᱮᱠ ᱟᱜ ᱧᱩᱛᱩᱢ ᱵᱚᱫᱚᱞ ᱢᱮ</string>
     <string name="empty_deck">ᱱᱚᱶᱟ ᱰᱮᱠ ᱫᱚ ᱠᱷᱟᱹᱞᱤ ᱜᱮᱭᱟ</string>
+    <string name="empty_deck_add_note">ᱠᱟᱰ ᱥᱮᱞᱮᱫᱽ ᱢᱮ</string>
     <string name="invalid_deck_name">ᱰᱮᱠ ᱧᱩᱛᱩᱢ ᱵᱷᱩᱞ</string>
     <string name="studyoptions_empty">ᱱᱚᱶᱟ ᱰᱮᱠ ᱫᱚ ᱠᱷᱟᱹᱞᱤ ᱜᱮᱭᱟ ᱾ + ᱵᱚᱴᱚᱱ ᱯᱨᱮᱥ ᱠᱟᱛᱮ ᱱᱟᱶᱟ ᱡᱤᱱᱥᱚ ᱥᱮᱞᱮᱫ ᱪᱷᱚᱭ ᱢᱮ ᱾</string>
-    <string name="studyoptions_limit_reached">ᱰᱮᱞᱤ ᱯᱟᱰᱦᱟᱣ ᱚᱠᱛᱚ ᱥᱮᱴᱮᱨ ᱮᱱᱟ </string>
-    <string name="studyoptions_empty_schedule">ᱯᱟᱰᱦᱟᱣ ᱞᱟᱹᱜᱤᱫ ᱛᱮ ᱠᱟᱰ ᱵᱟᱹᱱᱩᱜᱼᱟ </string>
+    <string name="studyoptions_limit_reached">ᱫᱤᱱ ᱨᱮᱭᱟᱜ ᱯᱟᱲᱦᱟᱣ ᱚᱠᱛᱚ ᱥᱮᱴᱮᱨ ᱮᱱᱟ</string>
+    <string name="studyoptions_empty_schedule">ᱯᱟᱲᱦᱟᱣ ᱞᱟᱹᱜᱤᱫ ᱛᱮ ᱠᱟᱰ ᱵᱟᱹᱱᱩᱜᱼᱟ </string>
     <string name="studyoptions_congrats_finished">ᱥᱟᱨᱦᱟᱣ! ᱱᱤᱛᱚᱜ ᱞᱟᱹᱜᱤᱫ ᱪᱟᱵᱟ ᱠᱮᱟᱢ</string>
     <string name="studyoptions_congrats_more_rev">ᱛᱮᱦᱮᱸᱧ ᱞᱟᱹᱜᱤᱫ ᱤᱱᱟᱝᱜᱮ, ᱦᱮᱞᱮ ᱟᱨᱦᱚᱸ ᱠᱟᱰ ᱠᱚ ᱮᱢᱟᱱ ᱧᱮᱞ ᱨᱮᱭᱟᱜ ᱢᱮᱱᱟᱜᱟ ᱾ ᱟᱨᱦᱚᱸ ᱯᱟᱲᱦᱟᱣ ᱞᱟᱹᱜᱤᱫ ᱚᱯᱥᱚᱱ ᱨᱮ ᱞᱤᱢᱤᱴ ᱵᱚᱰᱷᱟᱣ ᱫᱟᱲᱮᱭᱟᱼᱜᱟᱢ ᱾ </string>
     <string name="studyoptions_congrats_more_new">ᱛᱮᱦᱮᱸᱧᱼᱟᱜ ᱞᱤᱢᱤᱴ ᱥᱮᱴᱮᱨ ᱮᱱᱟ ᱾ ᱟᱨᱦᱚᱸ ᱱᱟᱶᱟ ᱠᱟᱰ ᱢᱮᱱᱟᱜᱼᱟ; ᱟᱢ ᱚᱯᱥᱚᱱ ᱨᱮ ᱞᱤᱢᱤᱴ ᱵᱚᱰᱷᱟᱚ ᱫᱟᱲᱮᱟᱜᱼᱟᱢ, ᱦᱮᱞᱮ ᱵᱚᱰᱦᱟᱣ ᱞᱮᱠᱷᱟᱱ ᱢᱚᱱᱮ ᱫᱚᱦᱚ ᱞᱚᱰ ᱡᱟᱥᱛᱤ ᱛᱟᱢᱟ ᱾ </string>
@@ -187,7 +180,6 @@
     <string name="card_template_editor_front">ᱢᱟᱲᱟᱝ ᱪᱷᱟᱸᱪ</string>
     <string name="card_template_editor_back">ᱯᱟᱹᱪᱞᱟᱹ ᱪᱷᱟᱸᱪ</string>
     <string name="card_template_editor_styling">ᱦᱩᱱᱟᱹᱨ</string>
-    <string name="card_template_editor_menu_delete">ᱜᱮᱫ ᱜᱤᱰᱤ</string>
     <string name="card_template_editor_menu_card_browser_appearance">ᱠᱟᱰ ᱵᱨᱟᱩᱡᱚᱨ ᱧᱮᱞᱚᱜ ᱠᱚ</string>
     <string name="card_template_editor_deck_override">ᱰᱮᱠ ᱠᱟᱰ ᱢᱮ</string>
     <string name="card_template_editor_cant_delete">ᱠᱚᱢ ᱥᱮ ᱠᱚᱢ ᱢᱤᱫ ᱯᱨᱚᱠᱟᱨ ᱨᱮᱭᱟᱜ ᱠᱟᱰ ᱫᱚᱨᱠᱟᱨ ᱠᱟᱱᱟ </string>
@@ -201,11 +193,21 @@
     <string name="template_for_current_card_deleted">ᱱᱚᱶᱟ ᱠᱟᱰ ᱨᱮᱭᱟᱼᱜ ᱠᱟᱲ ᱯᱨᱚᱠᱟᱨ ᱜᱮᱫ ᱜᱤᱰᱤ ᱮᱱᱟ ᱾ </string>
     <!-- Card Browser Appearance -->
     <string name="card_template_browser_appearance_title">ᱵᱨᱟᱩᱡᱚᱨ ᱧᱮᱞᱚᱜ ᱠᱚ</string>
+    <string name="current_and_default_deck">%1$s (%2$s)</string>
+    <!-- card Info -->
+    <string name="card_info_title">ᱠᱟᱰ ᱵᱟᱵᱚᱛ</string>
     <!-- Permissions -->
     <string name="read_write_permission_label">AnkiDroid ᱥᱟᱫᱠᱷᱤᱭᱟᱽ ᱵᱟᱹᱭᱥᱟᱣ ᱨᱮ ᱯᱟᱲᱦᱟᱣ ᱟᱨ ᱚᱞ ᱪᱷᱚᱭ ᱢᱮ</string>
-    <string name="read_write_permission_description">ᱢᱟᱲᱟᱝ ᱠᱷᱚᱱ ᱢᱮᱱᱟᱜ ᱠᱷᱟᱴᱚ ᱵᱤᱪᱟᱹᱨᱥ, ᱠᱟᱰ, ᱠᱷᱟᱴᱚ ᱵᱤᱪᱟᱹᱨᱥ ᱯᱨᱚᱠᱟᱨ ᱟᱨ ᱰᱮᱠ ᱚᱠ ᱦᱚᱠ ᱫᱟᱲᱮᱭᱟᱼᱜᱢ ᱚᱱᱟ ᱥᱟᱞᱟᱜ ᱛᱮ ᱱᱟᱶᱟ ᱠᱟᱰ ᱦᱚᱸ ᱛᱮᱭᱟᱨ ᱫᱟᱲᱮᱭᱟᱼᱜᱢ</string>
+    <string name="read_write_permission_description">ᱢᱟᱲᱟᱝ ᱠᱷᱚᱱ ᱢᱮᱱᱟᱜ ᱠᱷᱟᱴᱚ ᱵᱤᱪᱟᱹᱨᱥ, ᱠᱟᱰ, ᱠᱷᱟᱴᱚ ᱵᱤᱪᱟᱹᱨᱥ ᱯᱨᱚᱠᱟᱨ ᱟᱨ ᱰᱮᱠ ᱠᱚ ᱦᱚᱠ ᱫᱟᱲᱮᱭᱟᱼᱜᱢ ᱚᱱᱟ ᱥᱟᱞᱟᱜ ᱛᱮ ᱱᱟᱶᱟ ᱠᱟᱰ ᱦᱚᱸ ᱛᱮᱭᱟᱨ ᱫᱟᱲᱮᱭᱟᱼᱜᱢ</string>
     <!-- Context Menu -->
-    <string name="card_browser_label">ᱠᱟᱰ ᱵᱨᱟᱩᱡᱚᱨ</string>
-    <string name="card_browser_context_menu">ᱠᱟᱰ ᱵᱨᱟᱩᱡᱚᱨ</string>
+    <string name="card_browser_context_menu" comment="The value which appears in the system context menu. Note the casing difference">ᱠᱟᱰ ᱵᱨᱟᱩᱡᱚᱨ</string>
     <string name="context_menu_anki_card_label">Anki ᱠᱟᱰ</string>
+    <string name="has_a_problem" comment="First field is either front template or back template. Second field is the error message.">%1$s has a problem:<br/>%2$s</string>
+    <string name="more_information">More information</string>
+    <string name="no_field">Found \'{{%1$s}}\', but there is no field called \'%1$s\'.</string>
+    <string name="closed_tag_not_open">Found \'{{/%1$s}}\', but missing \'{{#%1$s}}\' or \'{{^%1$s}}\'.</string>
+    <string name="missing_closing_bracket">Missing \'}}\' in \'%s\'.</string>
+    <string name="open_tag_not_closed">Missing \'{{%s}}\'.</string>
+    <string name="wrong_tag_closed">Found \'{{/%1$s}}\', but expected \'{{/%2$s}}\'</string>
+    <string name="filter_error">Error in filter %s</string>
 </resources>

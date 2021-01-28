@@ -31,6 +31,7 @@ import com.ichi2.utils.FilterResultsUtils;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Locale;
 import java.util.TreeSet;
 
 public class TagsDialog extends AnalyticsDialogFragment {
@@ -89,8 +90,7 @@ public class TagsDialog extends AnalyticsDialogFragment {
         mCurrentTags = new TreeSet<>(String.CASE_INSENSITIVE_ORDER);
         mCurrentTags.addAll(getArguments().getStringArrayList(CHECKED_TAGS_KEY));
 
-        mAllTags = new ArrayList<>();
-        mAllTags.addAll(getArguments().getStringArrayList(ALL_TAGS_KEY));
+        mAllTags = (ArrayList<String>) getArguments().getStringArrayList(ALL_TAGS_KEY).clone();
 
         for (String tag : mCurrentTags) {
             if (!mAllTags.contains(tag)) {
@@ -145,7 +145,7 @@ public class TagsDialog extends AnalyticsDialogFragment {
 
         MaterialDialog.Builder builder = new MaterialDialog.Builder(getActivity())
                 .positiveText(mPositiveText)
-                .negativeText(res.getString(R.string.dialog_cancel))
+                .negativeText(R.string.dialog_cancel)
                 .customView(tagsDialogView, false)
                 .onPositive((dialog, which) -> mTagsDialogListener
                         .onPositive(new ArrayList<>(mCurrentTags), mSelectedOption));
@@ -278,8 +278,7 @@ public class TagsDialog extends AnalyticsDialogFragment {
         public final ArrayList<String> mTagsList;
 
         public  TagsArrayAdapter() {
-            mTagsList = new ArrayList<>();
-            mTagsList.addAll(mAllTags);
+            mTagsList = (ArrayList<String>) mAllTags.clone();
             sortData();
         }
 
@@ -343,9 +342,9 @@ public class TagsDialog extends AnalyticsDialogFragment {
                 if (constraint.length() == 0) {
                     mFilteredTags.addAll(mAllTags);
                 } else {
-                    final String filterPattern = constraint.toString().toLowerCase().trim();
+                    final String filterPattern = constraint.toString().toLowerCase(Locale.getDefault()).trim();
                     for (String tag : mAllTags) {
-                        if (tag.toLowerCase().contains(filterPattern)) {
+                        if (tag.toLowerCase(Locale.getDefault()).contains(filterPattern)) {
                             mFilteredTags.add(tag);
                         }
                     }

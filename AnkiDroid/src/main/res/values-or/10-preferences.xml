@@ -1,0 +1,293 @@
+<?xml version="1.0" encoding="utf-8"?> 
+ <!-- 
+ ~ Copyright (c) 2009 Andrew <andrewdubya@gmail> 
+ ~ Copyright (c) 2009 Edu Zamora <edu.zasu@gmail.com> 
+ ~ Copyright (c) 2009 Daniel Svaerd <daniel.svard@gmail.com> 
+ ~ Copyright (c) 2009 Nicolas Raoul <nicolas.raoul@gmail.com> 
+ ~ Copyright (c) 2010 Norbert Nagold <norbert.nagold@gmail.com> 
+ ~ This program is free software; you can redistribute it and/or modify it under 
+ ~ the terms of the GNU General Public License as published by the Free Software 
+ ~ Foundation; either version 3 of the License, or (at your option) any later 
+ ~ version. 
+ ~ 
+ ~ This program is distributed in the hope that it will be useful, but WITHOUT ANY 
+ ~ WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A 
+ ~ PARTICULAR PURPOSE. See the GNU General Public License for more details. 
+ ~ 
+ ~ You should have received a copy of the GNU General Public License along with 
+ ~ this program.  If not, see <http://www.gnu.org/licenses/>. 
+ --> 
+ 
+<!--
+~ Copyright (c) 2009 Andrew <andrewdubya@gmail>
+~ Copyright (c) 2009 Edu Zamora <edu.zasu@gmail.com>
+~ Copyright (c) 2009 Daniel Svärd <daniel.svard@gmail.com>
+~ Copyright (c) 2009 Nicolas Raoul <nicolas.raoul@gmail.com>
+~ Copyright (c) 2010 Norbert Nagold <norbert.nagold@gmail.com>
+~
+~ This program is free software; you can redistribute it and/or modify it under
+~ the terms of the GNU General Public License as published by the Free Software
+~ Foundation; either version 3 of the License, or (at your option) any later
+~ version.
+~
+~ This program is distributed in the hope that it will be useful, but WITHOUT ANY
+~ WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A
+~ PARTICULAR PURPOSE. See the GNU General Public License for more details.
+~
+~ You should have received a copy of the GNU General Public License along with
+~ this program.  If not, see <http://www.gnu.org/licenses/>.
+-->
+<resources>
+    <!-- generic strings -->
+    <string name="disabled">ଅକ୍ଷମ</string>
+    <string name="enabled">ସକ୍ଷମ</string>
+    <!-- preferences.xml categories-->
+    <string name="pref_cat_general_summ">ସାଧାରଣ ସେଟିଂସମୂହ</string>
+    <string name="pref_cat_reviewing">ସମୀକ୍ଷା</string>
+    <string name="pref_cat_reviewing_summ">ଅଣ-ତାସଖଣ୍ଡ ନିର୍ଦ୍ଦିଷ୍ଟ ସମୀକ୍ଷକ ସେଟିଂସମୂହ</string>
+    <string name="pref_cat_reviewer_behaviour">ଆଚରଣ</string>
+    <string name="pref_cat_flashcard">ପ୍ରଦର୍ଶନ</string>
+    <string name="pref_cat_whiteboard">ଧଳାପଟା</string>
+    <string name="pref_cat_appearance">ଦୃଶ୍ୟ</string>
+    <string name="pref_cat_appearance_summ">ଥିମ୍ ଏବଂ ଡିଫଲ୍ଟ ଫଣ୍ଟ ପରିବର୍ତ୍ତନ କରନ୍ତୁ</string>
+    <string name="pref_cat_themes">ଥିମ୍</string>
+    <string name="pref_cat_fonts">ଫଣ୍ଟ</string>
+    <string name="pref_cat_gestures">ଅଙ୍ଗଭଙ୍ଗୀ</string>
+    <string name="pref_cat_gestures_summ">ବଟନ୍ ବଦଳରେ ଟ୍ୟାପ୍ ଏବଂ ସ୍ୱାଇପ୍ ବ୍ୟବହାର କରନ୍ତୁ</string>
+    <string name="pref_cat_actions">କର୍ମ </string>
+    <string name="pref_cat_advanced">ବିକଶିତ</string>
+    <string name="pref_cat_advanced_summ">ଅନୁକୂଲନ ଏବଂ ପରୀକ୍ଷାମୂଳକ ବୈଶିଷ୍ଟ୍ୟଗୁଡ଼ିକ</string>
+    <string name="pref_cat_performance">ସଂଚାଳନକାରିତା</string>
+    <string name="pref_cat_workarounds">କାର୍ଯ୍ୟକ୍ଷେତ୍ର</string>
+    <string name="pref_cat_plugins">Plugins</string>
+    <string name="about_title">AnkiDroid ବିଷୟରେ</string>
+    <string name="about_version">ସଂସ୍କରଣ: </string>
+    <!-- preferences.xml entries-->
+    <string name="whiteboard_stroke_width">ଷ୍ଟ୍ରୋକ ଓସାର</string>
+    <string name="use_input_tag">ପତ୍ରରେ ଉତ୍ତର ଟାଇପ୍ କରନ୍ତୁ</string>
+    <string name="use_input_tag_summ">ଉତ୍ତର ଟାଇପ୍ କରିବାକୁ ପତ୍ର ଭିତରେ ଏକ ଟେକ୍ସଟ୍ ଇନପୁଟ୍ ବାକ୍ସ ବ୍ୟବହାର କରନ୍ତୁ</string>
+    <string name="dictionary">ସନ୍ଧାନ ଶବ୍ଦକୋଷ</string>
+    <string name="reset_languages">ଭାଷା reset କରନ୍ତୁ</string>
+    <string name="reset_languages_summ">ସମସ୍ତ ତାସଖଣ୍ଡ ପାଇଁ ଭାଷା ସ୍ଵତ୍ଵପର୍ଣ (ଲେଖାକୁ କହିବାରେ ପରିବର୍ତନ ଏବଂ ଶବ୍ଦକୋଷ ପାଇଁ ) ପୁନଃସେଟ୍ କରନ୍ତୁ</string>
+    <string name="reset_languages_question">ସମସ୍ତ ଭାଷା ସ୍ୱତ୍ୱପୁର୍ଣ ପୁନଃସେଟ କରନ୍ତୁ ?</string>
+    <string name="reset_confirmation">ସମସ୍ତ ସ୍ଥିତି reset କରାହେଲା </string>
+    <string name="card_zoom">ପତ୍ର ଜୁମ୍</string>
+    <string name="image_zoom">ଛବି ଜୁମ୍</string>
+    <string name="button_size">ଉତ୍ତର ବଟନ ଆକାର</string>
+    <string name="card_browser_font_size">Card browser font scaling</string>
+    <string name="card_browser_hide_media">କାର୍ଡ ବ୍ରାଉଜରରେ ଫାଇଲ ନାମ ଗୁଡ଼ିକୁ ଦର୍ଶାନ୍ତୁ</string>
+    <string name="card_browser_hide_media_summary">କାର୍ଡ ବ୍ରାଉଜର ପ୍ରଶ୍ନ/ଉତ୍ତର କ୍ଷେତ୍ରରେ ମିଡିଆ ଫାଇଲ ନାମ ଦର୍ଶାନ୍ତୁ</string>
+    <string name="col_path">AnkiDroid directory</string>
+    <string name="fullscreen_review">ପୂର୍ଣ୍ଣଚିତ୍ରପଟ୍ଟ ମୋଡ୍</string>
+    <string name="full_screen_off">ବନ୍ଦ</string>
+    <string name="full_screen_system">ସିଷ୍ଟମ୍ ବାରଗୁଡିକ ଲୁଚାନ୍ତୁ</string>
+    <string name="full_screen_complete">ସିଷ୍ଟମ୍ ବାର୍ ଏବଂ ଉତ୍ତର ବଟନ୍ ଲୁଚାନ୍ତୁ</string>
+    <string name="full_screen_error_gestures">ଉତ୍ତର ବଟନ୍ ଲୁଚାଇବା ପାଇଁ ତୁମେ \"ଅଙ୍ଗଭଙ୍ଗୀ\" ସକ୍ଷମ କରିବା ଆବଶ୍ୟକ </string>
+    <string name="answer_buttons_position">ଉତ୍ତର ବଟନ୍ ଅବସ୍ଥାନ</string>
+    <string-array name="answer_buttons_position_labels">
+        <item>ଶୀର୍ଷ</item>
+        <item>ତଳ</item>
+    </string-array>
+    <string name="gestures">ଅଙ୍ଗଭଙ୍ଗୀ ସକ୍ଷମ କରନ୍ତୁ</string>
+    <string name="gestures_summ">ପତ୍ରଗୁଡିକର ଉତ୍ତର ଏବଂ ସଂଶୋଧନ କରିବା ଭଳି କାର୍ଯ୍ୟରେ \"ଅଙ୍ଗଭଙ୍ଗୀ\" ନ୍ୟସ୍ତ କରନ୍ତୁ</string>
+    <string name="gestures_allow_links">ଲିଙ୍କଗୁଡିକରେ ସ୍ପର୍ଶ ଅଙ୍ଗଭଙ୍ଗୀକୁ ଅଣଦେଖା କରନ୍ତୁ</string>
+    <string name="gestures_allow_links_summary">ଯଦି ଏକ ଲିଙ୍କ୍/ସୂଚନା ଦବାଯାଏ ତେବେ ସ୍ପର୍ଶ ଅଙ୍ଗଭଙ୍ଗୀ ପ୍ରକ୍ରିୟାକରଣ ହେବ ନାହିଁ</string>
+    <string name="gestures_corner_touch">9-ଅଙ୍କ ସ୍ପର୍ଶ</string>
+    <string name="gestures_corner_touch_summary">ଚିତ୍ରପଟ୍ଟ କୋଣରେ ସ୍ପର୍ଶ ଅଙ୍ଗଭଙ୍ଗୀକୁ ଅନୁମତି ଦିଅନ୍ତୁ</string>
+    <string name="gestures_swipe_up">ଉପରକୁ ସ୍ୱାଇପ୍</string>
+    <string name="gestures_swipe_down">ତଳକୁ ସ୍ୱାଇପ କରନ୍ତୁ</string>
+    <string name="gestures_swipe_left">ବାମକୁ ସ୍ୱାଇପ୍ କରନ୍ତୁ</string>
+    <string name="gestures_swipe_right">ଡାହାଣକୁ ସ୍ୱାଇପ୍ କରନ୍ତୁ</string>
+    <string name="gestures_double_tap">ଦୁଇଥର ସ୍ପର୍ଶ</string>
+    <string name="gestures_tap_top">ଶୀର୍ଷକୁ ସ୍ପର୍ଶ କର</string>
+    <string name="gestures_tap_left">ବାମକୁ ସ୍ପର୍ଶ କରନ୍ତୁ</string>
+    <string name="gestures_tap_right">ଡାହାଣକୁ ସ୍ପର୍ଶ କରନ୍ତୁ</string>
+    <string name="gestures_tap_bottom">ତଳକୁ ସ୍ପର୍ଶ କରନ୍ତୁ</string>
+    <string name="gestures_corner_tap_top_left">ଉପର ବାମକୁ ସ୍ପର୍ଶ କରନ୍ତୁ</string>
+    <string name="gestures_corner_tap_top_center">ଉପର ମଝିକୁ ସ୍ପର୍ଶ କରନ୍ତୁ</string>
+    <string name="gestures_corner_tap_top_right">ଉପର ଡାହାଣକୁ ସ୍ପର୍ଶ କରନ୍ତୁ 
+ </string>
+    <string name="gestures_corner_tap_middle_left">ମଝି ବାମକୁ ସ୍ପର୍ଶ କରନ୍ତୁ 
+ </string>
+    <string name="gestures_corner_tap_middle_center">ମଝି କେନ୍ଦ୍ରକୁ ସ୍ପର୍ଶ କରନ୍ତୁ</string>
+    <string name="gestures_corner_tap_middle_right">ମଝି ଡାହାଣକୁ ସ୍ପର୍ଶ କରନ୍ତୁ</string>
+    <string name="gestures_corner_tap_bottom_left">ତଳ ବାମକୁ ସ୍ପର୍ଶ କରନ୍ତୁ</string>
+    <string name="gestures_corner_tap_bottom_center">ତଳ ମଝିକୁ ସ୍ପର୍ଶ କରନ୍ତୁ </string>
+    <string name="gestures_corner_tap_bottom_right">ତଳ ଡାହାଣକୁ ସ୍ପର୍ଶ କରନ୍ତୁ</string>
+    <string name="gestures_volume_up">ଧ୍ୱନିତିବ୍ରତା ବଢ଼ାଅ</string>
+    <string name="gestures_volume_down">ଧ୍ୱନିତିବ୍ରତା କମାଅ</string>
+    <string name="more_scrolling_buttons">eReader</string>
+    <string name="more_scrolling_buttons_summ">ସ୍କ୍ରୋଲ୍ ପାଇଁ kanji/katakana, emoji/kao-moji ବଟନ୍ ଗୁଡ଼ିକୁ ମଧ୍ୟ ବ୍ୟବହାର କରନ୍ତୁ</string>
+    <string name="card_browser_enable_external_context_menu">\'%s\' ମେନୁ </string>
+    <string name="card_browser_enable_external_context_menu_summary">ସବୁ ଜାଗାରେ ‘%s’ ପ୍ରସଙ୍ଗ ମେନୁକୁ ସକ୍ଷମ କରିଥାଏ </string>
+    <string name="double_scrolling_gap">ଦୁଇଥର ସ୍କ୍ରୋଲିଂ</string>
+    <string name="double_scrolling_gap_summ">EReader ସହିତ ସ୍କ୍ରୋଲ୍ ଫାଙ୍କକୁ ଦୁଇଗୁଣ କରନ୍ତୁ</string>
+    <string name="swipe_sensitivity">ସ୍ୱାଇପ୍ ସମ୍ବେଦନଶୀଳତା</string>
+    <string name="tts">ଲେଖାକୁ କହିବାରେ ପରିବର୍ତ୍ତନ </string>
+    <string name="tts_summ">ଯଦି କୌଣସି ଧ୍ୱନି ଫାଇଲ୍ ଅନ୍ତର୍ଭୂକ୍ତ ହୁଏ ନାହିଁ ତେବେ ଏହା ପ୍ରଶ୍ନ ଏବଂ ଉତ୍ତର ପଢ଼େ</string>
+    <string name="sync_fetch_missing_media">ସିଙ୍କରେ ମିଡିଆ ଆଣ</string>
+    <string name="sync_fetch_missing_media_summ">ସିଙ୍କ୍ କରିବା ସମୟରେ ସ୍ୱୟଂଚାଳିତ ଭାବରେ ନିଖୋଜ ମିଡିଆ ଆଣ</string>
+    <string name="sync_account">AnkiWeb ଖାତା</string>
+    <string name="sync_account_summ_logged_out">ଲଗ୍ ଇନ୍‌ ହୋଇନାହି</string>
+    <string name="sync_account_summ_logged_in">%s</string>
+    <string name="automatic_sync_choice">ସ୍ୱୟଂଚାଳିତ ସମକାଳୀକରଣ</string>
+    <string name="automatic_sync_choice_summ">ଯଦି ଶେଷ ସିଙ୍କ୍ ୧୦ ମିନିଟ୍ ରୁ ଅଧିକ ପୂର୍ବରୁ କରାଯାଇଥିଲା ତେବେ ଆପ ଆରମ୍ଭ/ପ୍ରସ୍ଥାନ କରିବା ସମୟରେ ସ୍ୱୟଂଚାଳିତ ଭାବରେ ସିଙ୍କ୍ କରନ୍ତୁ |</string>
+    <string name="sync_status_badge">ସମକାଳୀକରଣ ସ୍ତିତ୍ତ୍ୱ ପ୍ରଦର୍ଶନ କରନ୍ତୁ</string>
+    <string name="sync_status_badge_summ">ଯେତେବେଳେ ପରିବର୍ତ୍ତନଗୁଡିକ ଅପଲୋଡ୍ ହୋଇପାରିବ, ସିଙ୍କ ଚିହ୍ନ ପରିବର୍ତ୍ତନ କରନ୍ତୁ</string>
+    <string name="day_theme">ଦିନ ଥିମ୍</string>
+    <string name="night_theme">ରାତି ଥିମ୍</string>
+    <string name="default_font">ଡିଫଲ୍ଟ ଫଣ୍ଟ</string>
+    <string name="override_font">ଡିଫଲ୍ଟ ଫଣ୍ଟ ପ୍ରୟୋଗତା</string>
+    <string name="language">ଭାଷା</string>
+    <string name="language_system">ସିଷ୍ଟମ୍ ଭାଷା</string>
+    <string name="notification_pref">ବିଜ୍ଞପ୍ତିଗୁଡିକ</string>
+    <string name="notification_pref_title">କେତେବେଳେ ସୂଚିତ କର</string>
+    <string name="never_notify">କଦାପି ସୂଚିତ କରନାହିଁ </string>
+    <string name="notify_when_pending">ବିଚାରାଧୀନ ବାର୍ତ୍ତା ଉପଲବ୍ଧ</string>
+    <string name="notification_minimum_cards_due">%d ରୁ ଅଧିକ ପତ୍ର ବାକି ଅଛି</string>
+    <string name="notification_minimum_cards_due_vibrate">କମ୍ପନ</string>
+    <string name="notification_minimum_cards_due_blink">ନିମିଷ ଆଲୋକ </string>
+    <string name="timeout_answer_text">ସ୍ୱୟଂଚାଳିତ ପ୍ରଦର୍ଶନ ଉତ୍ତର</string>
+    <string name="timeout_answer_summ">ଉପଭୋକ୍ତା ଇନପୁଟ୍ ବିନା ସ୍ୱୟଂଚାଳିତ ଭାବରେ ଉତ୍ତର ଦେଖାନ୍ତୁ | ବିଳମ୍ବ, ସ୍ୱୟଂଚାଳିତ ଭାବରେ ଖୋଲାଯାଇଥିବା ଅଡିଓ ଫାଇଲଗୁଡ଼ିକ ପାଇଁ ସମୟ ଅନ୍ତର୍ଭୁକ୍ତ କରେ </string>
+    <string name="timeout_answer_seconds">ଉତ୍ତର ଦେଖାଇବାର ସମୟ ଆସିଗଲା</string>
+    <string name="timeout_answer_seconds_summ" comment="The time to wait (in seconds) in the reviewer before automatically showing the next question or answer">XXX s</string>
+    <string name="timeout_question_seconds">ପରବର୍ତ୍ତୀ ପ୍ରଶ୍ନ ଦେଖାଇବାର ସମୟ ଆସିଗଲା </string>
+    <string name="select_locale_title">ଭାଷା ବାଛନ୍ତୁ</string>
+    <string name="safe_display">ସୁରକ୍ଷିତ ପ୍ରଦର୍ଶନ ମୋଡ୍</string>
+    <string name="safe_display_summ">ସମସ୍ତ ଆନିମେସନ୍ ଅକ୍ଷମ କରନ୍ତୁ ଏବଂ କାର୍ଡ ଅଙ୍କନ ପାଇଁ ସୁରକ୍ଷିତ ପଦ୍ଧତି ବ୍ୟବହାର କରନ୍ତୁ | ଇ-ଇଙ୍କ ଉପକରଣଗୁଡ଼ିକ ଏହା ଆବଶ୍ୟକ କରିପାରନ୍ତି |</string>
+    <string name="disable_extended_text_ui">ସିଙ୍ଗଲ୍ ଫିଲ୍ଡ ସଂଶୋଧନ ମୋଡ୍ ଅକ୍ଷମ କରନ୍ତୁ</string>
+    <!--See: multimedia_editor_popup_cloze. We can\'t use format strings as this is auto-generated-->
+    <string name="disable_extended_text_ui_summ">ଲ୍ୟାଣ୍ଡସ୍କେପ୍ ମୋଡ୍ ରେ \'କ୍ଲୋଜ ଡିଲିଶନ\' ପ୍ରସଙ୍ଗ ମେନୁକୁ ଅନୁମତି ଦିଏ</string>
+    <string name="vertical_centering">କେନ୍ଦ୍ର ଶ୍ରେଣୀବଦ୍ଧତା</string>
+    <string name="vertical_centering_summ">ପତ୍ରଗୁଡ଼ିକର ବିଷୟବସ୍ତୁକୁ ଭୂଲମ୍ବ ଭାବରେ କେନ୍ଦ୍ରିତ କରନ୍ତୁ</string>
+    <string name="pref_backup_max">ବ୍ୟାକଅପ୍ ର ସର୍ବାଧିକ ସଂଖ୍ୟା </string>
+    <string name="show_estimates">ବଟନ୍ ସମୟ ଦେଖାନ୍ତୁ</string>
+    <string name="show_estimates_summ">ଉତ୍ତର ବଟନ୍ ଗୁଡିକରେ ପରବର୍ତ୍ତୀ ସମୀକ୍ଷା ସମୟ ଦେଖାନ୍ତୁ</string>
+    <string name="show_top_bar">ଶୀର୍ଷ ବାର୍ ଦେଖାନ୍ତୁ</string>
+    <string name="show_top_bar_summ">ଶୀର୍ଷ ବାର୍ ରେ ପତ୍ର ଗଣନା, ପତାକା ଏବଂ ଚିହ୍ନ ଦେଖାନ୍ତୁ</string>
+    <string name="show_progress">ବାକିତକ ଦେଖନ୍ତୁ</string>
+    <string name="show_progress_summ">ବଳକା ପତ୍ରସଂଖ୍ୟା ଦେଖାନ୍ତୁ</string>
+    <string name="show_eta">ETA ଦେଖାନ୍ତୁ</string>
+    <string name="show_eta_summ">ବଳକା ସମୟ ଦେଖାନ୍ତୁ</string>
+    <string name="use_current">ନୂଆ ପତ୍ରଗୁଡ଼ିକଙ୍କ ପାଇଁ ତାସଖଣ୍ଡ</string>
+    <string name="new_spread">ନୂଆ ପତ୍ରର ଅବସ୍ଥାନ</string>
+    <string name="learn_cutoff">ଆଗୁଆ ଶିଖିବା ସମୟସୀମା</string>
+    <string name="time_limit">ଟାଇମ୍ ବକ୍ସ ସମୟ ସୀମା</string>
+    <string name="time_limit_summ">XXX ମିନିଟ୍</string>
+    <string name="day_offset">ପରବର୍ତ୍ତୀ ଦିନର ଆରମ୍ଭ </string>
+    <string name="day_offset_summ">XXX ଘଣ୍ଟା ମଧ୍ୟରାତ୍ରି</string>
+    <string name="sched_ver">ପରୀକ୍ଷାମୂଳକ V2 ନିର୍ଧାରକ |</string>
+    <string name="sched_ver_summ">ପରୀକ୍ଷାମୂଳକ କାର୍ଯ୍ୟସୂଚୀ ସକ୍ଷମ କରନ୍ତୁ | ପରବର୍ତ୍ତୀ ସିଙ୍କରେ ଗୋଟିଏ ଦିଗରେ ପରିବର୍ତ୍ତନ କରିବାକୁ ବାଧ୍ୟ କରେ</string>
+    <string name="sched_ver_toggle_title">ନିଶ୍ଚିତ କରନ୍ତୁ</string>
+    <string name="sched_ver_2to1">ଏହା ଶିଖିବାରେ ଯେକୌଣସି ପତ୍ରକୁ ପୁନଃସେଟ୍ କରିବ, ଶୋଧିତ ତାସଖଣ୍ଡଙ୍କୁ ସଫା କରିବ ଏବଂ ନିର୍ଧାରକ ସଂସ୍କରଣକୁ ପରିବର୍ତ୍ତନ କରିବ | ଅଗ୍ରଗତି କରିବେ?</string>
+    <string name="sched_ver_1to2">ପରୀକ୍ଷାମୂଳକ କାର୍ଯ୍ୟସୂଚୀ ଭୁଲ କାର୍ଯ୍ୟସୂଚୀ ସୃଷ୍ଟି କରିପାରେ | ଦୟାକରି ନିଶ୍ଚିତ କରନ୍ତୁ ଯେ ଆପଣ ପ୍ରଥମେ ଡକ୍ୟୁମେଣ୍ଟେସନ୍ ପଢ଼ିଛନ୍ତି | ଅଗ୍ରଗତି କରିବେ?</string>
+    <string name="pref_keep_screen_on">ଚିତ୍ରପଟ୍ଟକୁ ଖୋଲା ରଖନ୍ତୁ </string>
+    <string name="pref_keep_screen_on_summ">ଚିତ୍ରପଟ୍ଟକୁ ସମୟ-ସମାପ୍ତ ଅକ୍ଷମ କରନ୍ତୁ </string>
+    <string name="convert_fen_text">ଚେସ୍ ଅଙ୍କନ ସମର୍ଥନ </string>
+    <string name="convert_fen_text_summ">Forsyth - Edwards ଅଙ୍କନରୁ ଚେସବୋର୍ଡ ଅଙ୍କନ କର | ଅଙ୍କନ ନିଶ୍ଚିତ ଭାବରେ [fen][/fen] ଟ୍ୟାଗରେ ଆବଦ୍ଧ |</string>
+    <string name="enable_api_title">AnkiDroid API ସକ୍ଷମ କରନ୍ତୁ</string>
+    <string name="enable_api_summary">ଅନ୍ୟ ଆପ୍ସକୁ AnkiDroid ସହିତ ସଂଯୋଗ କରିବାକୁ ଦିଅ ଏବଂ ତୁମର ହସ୍ତକ୍ଷେପ ବିନା ତଥ୍ୟ ପଢ଼ିବା/ଲେଖିବାକୁ ଦିଅ </string>
+    <string name="custom_buttons">ଆପ୍ ବାର୍ ବଟନ୍</string>
+    <string name="custom_buttons_summary">ଆପ୍ ବାର୍ ରେ କେଉଁ କ୍ରିୟା ଦେଖାଯାଏ କଷ୍ଟୋମାଇଜ୍ କରନ୍ତୁ</string>
+    <string name="custom_buttons_setting_always_show">ସର୍ବଦା ଦେଖାନ୍ତୁ</string>
+    <string name="custom_buttons_setting_if_room">ଜାଗା ଥିଲେ ଦେଖାନ୍ତୁ</string>
+    <string name="custom_buttons_setting_menu_only">କେବଳ ମେନୁ</string>
+    <string name="reset_custom_buttons">ଡିଫଲ୍ଟକୁ ପୁନଃସେଟ୍ କରନ୍ତୁ</string>
+    <string name="thirdparty_apps_title">ତୃତୀୟ-ପକ୍ଷ API ଆପ୍ ସମୂହ </string>
+    <string name="thirdparty_apps_summary">ଆପମାନଙ୍କର ଏକ ତାଲିକା ଦେଖନ୍ତୁ ଯାହାକି AnkiDroid API ବ୍ୟବହାର କରେ ଯେପରିକି ଶବ୍ଦକୋଷ,ଉପଯୋଗିତା</string>
+    <string name="html_javascript_debugging">HTML / ଜାଭାସ୍କ୍ରିପ୍ଟ ତ୍ରୁଟି ନିବାରଣ</string>
+    <string name="html_javascript_debugging_summ">ସୁଦୂର ୱେବଭ୍ୟୁ ସଂଯୋଗଗୁଡ଼ିକୁ ସକ୍ଷମ କରନ୍ତୁ, ଏବଂ AnkiDroid ଡିରେକ୍ଟୋରୀରେ ପତ୍ର HTML ସଂରକ୍ଷଣ କରନ୍ତୁ</string>
+    <!-- Advanced statistics settings -->
+    <string name="advanced_statistics_title">ଉନ୍ନତ ପରିସଂଖ୍ୟାନ</string>
+    <string name="enable_advanced_statistics_title">ଉନ୍ନତ ପରିସଂଖ୍ୟାନ ସକ୍ଷମ କରନ୍ତୁ</string>
+    <string name="enable_advanced_statistics_summ">ଭବିଷ୍ୟତର ସମୀକ୍ଷା (ସକ୍ଷମ) କିମ୍ବା ଆଗରୁ ନିର୍ଦ୍ଧାରିତ ଭବିଷ୍ୟତର ସମୀକ୍ଷା (ଅକ୍ଷମ) ର ଏକ ସଂକଳନ କିମ୍ବା ଅନୁକରଣ ଉପରେ ଆଧାର କରି ପୂର୍ବାନୁମାନ ପରିସଂଖ୍ୟାନ ପ୍ରଦର୍ଶନ କରନ୍ତୁ</string>
+    <string name="advanced_forecast_stats_compute_n_days_title">ପ୍ରଥମ n ଦିନ ଗଣନା କରନ୍ତୁ, ଅବଶିଷ୍ଟ ଅନୁକରଣ କରନ୍ତୁ</string>
+    <string name="advanced_forecast_stats_compute_precision_title">ଗଣନର ସଠିକତା</string>
+    <string name="advanced_forecast_stats_mc_n_iterations_title">ଅନୁକରଣର ପୁନରାବୃତ୍ତି ସଂଖ୍ୟା</string>
+    <!-- Custom sync server settings -->
+    <string name="custom_sync_server_title">କଷ୍ଟମ୍ ସିଙ୍କ ସର୍ଭର</string>
+    <string name="custom_sync_server_enable_title">କଷ୍ଟମ୍ ସିଙ୍କ ସର୍ଭର ବ୍ୟବହାର କରନ୍ତୁ</string>
+    <string name="custom_sync_server_enable_summary">ଯଦି ଆପଣ ମାଲିକାନା AnkiWeb ସେବା ବ୍ୟବହାର କରିବାକୁ ଚାହୁଁନାହାଁନ୍ତି ତେବେ ଆପଣ ଏଠାରେ ଏକ ବିକଳ୍ପ ସର୍ଭର ନିର୍ଦ୍ଦିଷ୍ଟ କରିପାରିବେ</string>
+    <string name="custom_sync_server_base_url_title">url ସିଙ୍କ୍ କର</string>
+    <string name="custom_sync_server_base_url_invalid">ସିଙ୍କ୍ url ଅବୈଧ</string>
+    <string name="custom_sync_server_media_url_title">ମିଡିଆ ସିଙ୍କ୍ url</string>
+    <string name="custom_sync_server_media_url_invalid">ମିଡିଆ ସିଙ୍କ url ଅବୈଧ</string>
+    <!-- studyoptions -->
+    <string name="deck_conf_group_summ">ତାସଖଣ୍ଡ ଗୋଷ୍ଠୀର ବିକଳ୍ପଗୁଡ଼ିକର ପରିବର୍ତ୍ତନ ଏକାଧିକ ତାସଖଣ୍ଡ ଉପରେ ପ୍ରଭାବ ପକାଇବ | ଯଦି ଆପଣ କେବଳ ସାମ୍ପ୍ରତିକ ତାସଖଣ୍ଡ ପରିବର୍ତ୍ତନ କରିବାକୁ ଚାହୁଁଛନ୍ତି, ଦୟାକରି ପ୍ରଥମେ ଏକ ନୂତନ ବିକଳ୍ପ ଗୋଷ୍ଠୀ ଯୋଡନ୍ତୁ</string>
+    <string name="studyoptions_limit_select_tags">ଟ୍ୟାଗ୍ ଚୟନ କରନ୍ତୁ</string>
+    <!-- Deck configurations -->
+    <string name="deck_conf_deck_description">ତାସଖଣ୍ଡ ବର୍ଣ୍ଣନା (କେବଳ ସାମ୍ପ୍ରତିକ ତାସଖଣ୍ଡ କୁ ପ୍ରଭାବିତ କରେ)</string>
+    <string name="deck_conf_group">ବିକଳ୍ପ ଗୋଷ୍ଠୀ </string>
+    <plurals name="deck_conf_group_summ">
+        <item quantity="one">%1$s\n%2$dଟିଏ ତାସଖଣ୍ଡ ଏହି ଗୋଷ୍ଠୀକୁ ବ୍ୟବହାର କରେ |</item>
+        <item quantity="other">%1$s\n%2$dଟି  ତାସଖଣ୍ଡ ଏହି ଗୋଷ୍ଠୀକୁ ବ୍ୟବହାର କରନ୍ତି  |</item>
+    </plurals>
+    <string name="deck_conf_new_cards">ନୂଆ ପତ୍ରଗୁଡ଼ିକ </string>
+    <string name="deck_conf_rev_cards" comment="Name of the deck options submenu for configuring reviews of due cards.">ସମୀକ୍ଷା </string>
+    <string name="deck_conf_lps_cards" comment="Label of the submenu stating how lapses cards are treated.">ତ୍ରୁଟିସଂଖ୍ୟା</string>
+    <string name="deck_conf_general">ସାଧାରଣ </string>
+    <string name="deck_conf_reminders">ସ୍ମାରକପତ୍ର</string>
+    <string name="deck_conf_steps">ପାଦ (ମିନିଟ ରେ)</string>
+    <string name="deck_conf_order">କ୍ରମ</string>
+    <string name="deck_conf_new_cards_day">ନୂତନ ପତ୍ର/ଦିନ</string>
+    <string name="deck_conf_graduating_ivl">ସ୍ନାତକୋତ୍ତର ବ୍ୟବଧାନ</string>
+    <string name="deck_conf_days">XXX ଦିନ (ଗୁଡିକ)</string>
+    <string name="deck_conf_easy_ivl">ସହଜ ବ୍ୟବଧାନ</string>
+    <string name="deck_conf_start_ease">ପ୍ରାରମ୍ଭିକ ସହଜତା </string>
+    <string name="deck_conf_max_rev">ସର୍ବାଧିକ ସମୀକ୍ଷା/ଦିନ</string>
+    <string name="deck_conf_new_bury">ସମ୍ପର୍କିତ ନୂତନ ପତ୍ରଗୁଡ଼ିଙ୍କୁ ପୋତିଦିଅ</string>
+    <string name="deck_conf_new_bury_summ">ସମ୍ପର୍କିତ ନୂତନ ପତ୍ରଗୁଡ଼ିଙ୍କୁ କାଲି ପର୍ଯ୍ୟନ୍ତ ପୋତିଦିଆଗଲା </string>
+    <string name="deck_conf_rev_bury">ସମ୍ପୃକ୍ତ ସମୀକ୍ଷାଗୁଡିକ ପୋତିଦିଅ</string>
+    <string name="deck_conf_rev_bury_summ">ସମ୍ପୃକ୍ତ ସମୀକ୍ଷା ପରଦିନ ପର୍ଯ୍ୟନ୍ତ ପୋତିଦିଆଗଲା </string>
+    <string name="deck_conf_use_general_timeout_settings">ସାଧାରଣ ସେଟିଂସମୂହ</string>
+    <string name="deck_conf_use_general_timeout_settings_summ">ଏହି ଗୋଷ୍ଠୀ ପାଇଁ ସେଟିଂ ବ୍ୟବହାର କରିବା ପରିବର୍ତ୍ତେ ସାଧାରଣ \'ସ୍ୱୟଂଚାଳିତ ପ୍ରଦର୍ଶନ ଉତ୍ତର\' ସେଟିଂସମୂହ ବ୍ୟବହାର କରନ୍ତୁ |</string>
+    <string name="deck_conf_easy_bonus">ସହଜ ଅଧିଲାଭ</string>
+    <string name="deck_conf_hard_factor">ସହଜ ବ୍ୟବଧାନ</string>
+    <string name="deck_conf_ivl_fct">ବ୍ୟବଧାନ ପରିବର୍ତ୍ତନକାରୀ</string>
+    <string name="deck_conf_max_ivl">ସର୍ବାଧିକ ବ୍ୟବଧାନ</string>
+    <string name="deck_conf_new_lps_ivl">ନୂତନ ବ୍ୟବଧାନ</string>
+    <string name="deck_conf_min_ivl">ସର୍ବନିମ୍ନ ବ୍ୟବଧାନ</string>
+    <string name="deck_conf_leech_thres">Leech threshold</string>
+    <string name="deck_conf_fails">XXX ତ୍ରୁଟି(ଗୁଡ଼ିକ)</string>
+    <string name="deck_conf_leech_action">ଲିଚ ଆକ୍ସନ </string>
+    <string name="deck_conf_max_time">ସର୍ବାଧିକ ଉତ୍ତର ସମୟ</string>
+    <string name="deck_conf_seconds">XXX ସେକେଣ୍ଡ୍</string>
+    <string name="deck_conf_timer">ଉତ୍ତର ଟାଇମର୍ ଦେଖାନ୍ତୁ</string>
+    <string name="deck_conf_autoplay">ସ୍ୱୟଂଚାଳିତ ଭାବରେ ଅଡିଓ ଚଲାନ୍ତୁ</string>
+    <string name="deck_conf_replayq">ପ୍ରଶ୍ନର ପୁନରାବୃତ୍ତି କରନ୍ତୁ</string>
+    <string name="deck_conf_replayq_summ">ଯେତେବେଳେ ଉତ୍ତର ଦେଖାଯାଏ, ଉଭୟ ପ୍ରଶ୍ନର ଏବଂ ଉତ୍ତର ଅଡିଓର ପୁନରାବୃତ୍ତି କର </string>
+    <string name="deck_conf_manage">ଗୋଷ୍ଠୀ ପରିଚାଳନା</string>
+    <string name="deck_conf_manage_summ">ବିକଳ୍ପ ଗୋଷ୍ଠୀ ଯୋଡନ୍ତୁ ଏବଂ ପରିବର୍ତ୍ତନ କରନ୍ତୁ</string>
+    <string name="deck_conf_current_group">ସାମ୍ପ୍ରତିକ ଗୋଷ୍ଠୀ</string>
+    <string name="deck_conf_rename" comment="Menu entry to rename a deck">ପୁନର୍ନାମକରଣ </string>
+    <string name="deck_conf_reset">ଡିଫଲ୍ଟଗୁଡିକ ପୁନରୁଦ୍ଧାର କରନ୍ତୁ</string>
+    <string name="deck_conf_reset_message">ଡିଫଲ୍ଟ ମୂଲ୍ୟଗୁଡିଗୁଡ଼ିଙ୍କକୁ ସାମ୍ପ୍ରତିକ ବିକଳ୍ପ ଗୋଷ୍ଠୀର ପୁନରୁଦ୍ଧାର କରନ୍ତୁ?</string>
+    <string name="deck_conf_add" comment="Adding a new deck option group">ଯୋଡ଼ନ୍ତୁ</string>
+    <string name="deck_conf_add_summ">ସାମ୍ପ୍ରତିକ ବିକଳ୍ପ ଗୋଷ୍ଠୀର ଏକ କପି ସୃଷ୍ଟି କରନ୍ତୁ</string>
+    <string name="deck_conf_remove_message">ସାମ୍ପ୍ରତିକ ବିକଳ୍ପ ଗୋଷ୍ଠୀ ଅପସାରଣ କରିବେ କି?</string>
+    <string name="deck_conf_set_subdecks">ସମସ୍ତ ତାସଖଣ୍ଡ ପାଇଁ ସେଟ କରନ୍ତୁ </string>
+    <plurals name="deck_conf_set_subdecks_summ">
+        <item quantity="one">%s ଟିଏ ତାସଖଣ୍ଡ ଏହି ଗୋଷ୍ଠୀ ବ୍ୟବହାର କରିବ</item>
+        <item quantity="other">%s ଟି ତାସଖଣ୍ଡ ଏହି ଗୋଷ୍ଠୀ ବ୍ୟବହାର କରିବେ </item>
+    </plurals>
+    <string name="deck_conf_set_subdecks_message">ଏହି ତାସଖଣ୍ଡର ସମସ୍ତ ଉପତାସଖଣ୍ଡ ପାଇଁ ସାମ୍ପ୍ରତିକ ବିକଳ୍ପ ଗୋଷ୍ଠୀ ସେଟ୍ କରନ୍ତୁ?</string>
+    <string name="pref_browser_editor_font">ବ୍ରାଉଜର୍ ଏବଂ ସମ୍ପାଦକର font</string>
+    <string name="deck_conf_cram_filter">ଶୋଧକ </string>
+    <string name="deck_conf_cram_search">ସନ୍ଧାନ</string>
+    <string name="deck_conf_cram_limit">ଏତିକିରେ ସୀମିତ କର</string>
+    <string name="deck_conf_cram_order">ପାତ୍ରଙ୍କୁ ଏହି ଭାବରେ ଚୟନ କରାଯାଏ </string>
+    <string name="deck_conf_cram_reschedule" comment="Title of the box labelled by deck_conf_cram_reschedule_summ">ପୁନର୍ନିର୍ଦ୍ଧାରଣ</string>
+    <string name="deck_conf_cram_reschedule_summ">ଏହି ତାସଖଣ୍ଡରେ ମୋର ଉତ୍ତର ଉପରେ ଆଧାର କରି ପତ୍ର ପୁନର୍ନିର୍ଦ୍ଧାରଣ କରନ୍ତୁ</string>
+    <string name="deck_conf_cram_steps">କଷ୍ଟମ୍ ପାଦ (ମିନିଟ୍ ରେ)</string>
+    <string name="deck_conf_cram_steps_summ">କଷ୍ଟମ୍ ପାଦ ନିର୍ଦ୍ଧାରଣ କରନ୍ତୁ</string>
+    <string name="deck_conf_reminders_enabled">ଏହି ତାସଖଣ୍ଡ-ଗୋଷ୍ଠୀର ତାସଖଣ୍ଡ ପାଇଁ ସ୍ମାରକ ବିଜ୍ଞପ୍ତିକୁ ସକ୍ଷମ କରନ୍ତୁ</string>
+    <string name="deck_conf_reminders_time">ରେ ମନେ ପକାନ୍ତୁ</string>
+    <!-- analytics options -->
+    <string name="analytics_dialog_title">AnkiDroid କୁ ଉନ୍ନତ କରିବାରେ ସାହାଯ୍ୟ କରନ୍ତୁ!</string>
+    <string name="analytics_title">ବୈଶିଷ୍ଟ୍ୟ ବ୍ୟବହାର ଅଂଶୀଦାର କରନ୍ତୁ</string>
+    <string name="analytics_summ">ଲୋକମାନେ କେଉଁ ବୈଶିଷ୍ଟ୍ୟ ବ୍ୟବହାର କରନ୍ତି ତାହା ଦେଖିବାରେ ଉନ୍ନୟନ ଦଳକୁ ସାହାଯ୍ୟ କରି ଆପଣ AnkiDroidରେ ଯୋଗଦାନ କରିପାରିବେ</string>
+    <string name="note_editor_replace_newlines">HTML ସହିତ ନୂତନ ଲାଇନ୍ ବଦଳାନ୍ତୁ</string>
+    <string name="note_editor_replace_newlines_summ">ଟିପ୍ପଣୀ ସମ୍ପାଦକରେ,ଏକ ପତ୍ର ସଂଶୋଧନ କରିବାବେଳେ &lt;br&gt; କୁ ନୂଆଧାଡ଼ିରେ ବଦଳାନ୍ତୁ </string>
+    <string name="no_code_formatting">ସରଳ ଟାଇପ୍ ହୋଇଥିବା ଉତ୍ତର ଫର୍ମାଟିଂ</string>
+    <string name="no_code_formatting_summ">ଟାଇପ୍ ହୋଇଥିବା ଉତ୍ତର ଫଳାଫଳଗୁଡିକରେ ଦେଖାଯାଉଥିବା ‘�’ ଠିକ୍ କରେ |</string>
+</resources>

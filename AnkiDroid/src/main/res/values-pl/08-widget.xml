@@ -46,22 +46,7 @@
         <item quantity="many">%d kart do przejrzenia</item>
         <item quantity="other">%d kart do przejrzenia</item>
     </plurals>
-    <string name="widget_no_cards_due">Brak kart do przejrzenia</string>
-    <string name="widget_loading">Ładowanie widżetu...</string>
-    <plurals name="widget_cards_in_decks_due">
-        <item quantity="one">%1$d karta do przejrzenia w %2$s</item>
-        <item quantity="few">%1$d karty do przejrzenia w %2$s</item>
-        <item quantity="many">%1$d kart do przejrzenia w %2$s</item>
-        <item quantity="other">%1$d kart do przejrzenia w %2$s</item>
-    </plurals>
-    <plurals name="widget_decks">
-        <item quantity="one">%1$d talia</item>
-        <item quantity="few">%1$d talie</item>
-        <item quantity="many">%1$d talii</item>
-        <item quantity="other">%1$d talii</item>
-    </plurals>
-    <string name="widget_small">AnkiDroid Mały</string>
-    <string name="widget_small_button">AnkiDroid</string>
+    <string name="widget_small" comment="Label of the small ankidroid widget. This text can\'t be found directly in AnkiDroid">AnkiDroid Mały</string>
     <plurals name="widget_cards_due">
         <item quantity="one">%d karta do przejrzenia</item>
         <item quantity="few">%d karty do przejrzenia</item>
@@ -74,6 +59,5 @@
         <item quantity="many">Pozostało %d minut</item>
         <item quantity="other">Pozostało %d minut</item>
     </plurals>
-    <string name="widget_add_note">Dodaj notatkę</string>
     <string name="widget_add_note_button">Dodaj nową notatkę AnkiDroid</string>
 </resources>

@@ -35,6 +35,8 @@ import java.util.TreeMap;
 import java.util.TreeSet;
 import java.util.regex.Pattern;
 
+import okhttp3.internal.Util;
+
 
 /**
 Anki maintains a cache of used tags so it can quickly present a list of tags
@@ -69,9 +71,7 @@ public class Tags {
 
     public void load(String json) {
         JSONObject tags = new JSONObject(json);
-        Iterator<?> i = tags.keys();
-        while (i.hasNext()) {
-            String t = (String) i.next();
+        for (String t : tags) {
             mTags.put(t, tags.getInt(t));
         }
         mChanged = false;
@@ -129,7 +129,7 @@ public class Tags {
 
 
     /** Add any missing tags from notes to the tags list. */
-    public void registerNotes(long[] nids) {
+    public void registerNotes(java.util.Collection<Long> nids) {
         // when called with a null argument, the old list is cleared first.
         String lim;
         if (nids != null) {
@@ -139,8 +139,8 @@ public class Tags {
             mTags.clear();
             mChanged = true;
         }
-        List<String> tags = new ArrayList<>();
-        try (Cursor cursor = mCol.getDb().getDatabase().query("SELECT DISTINCT tags FROM notes" + lim, null)) {
+        List<String> tags = new ArrayList<>(mCol.noteCount());
+        try (Cursor cursor = mCol.getDb().query("SELECT DISTINCT tags FROM notes" + lim)) {
             while (cursor.moveToNext()) {
                 tags.add(cursor.getString(0));
             }
@@ -152,6 +152,10 @@ public class Tags {
 
     public Set<Map.Entry<String, Integer>> allItems() {
         return mTags.entrySet();
+    }
+
+    public boolean minusOneValue() {
+        return mTags.containsValue(-1);
     }
 
 
@@ -169,10 +173,11 @@ public class Tags {
     public ArrayList<String> byDeck(long did, boolean children) {
         List<String> tags;
         if (children) {
-            ArrayList<Long> dids = new ArrayList<>();
+            java.util.Collection<Long> values = mCol.getDecks().children(did).values();
+            ArrayList<Long> dids = new ArrayList<>(values.size());
             dids.add(did);
-            dids.addAll(mCol.getDecks().children(did).values());
-            tags = mCol.getDb().queryStringList("SELECT DISTINCT n.tags FROM cards c, notes n WHERE c.nid = n.id AND c.did IN " + Utils.ids2str(Utils.collection2Array(dids)));
+            dids.addAll(values);
+            tags = mCol.getDb().queryStringList("SELECT DISTINCT n.tags FROM cards c, notes n WHERE c.nid = n.id AND c.did IN " + Utils.ids2str(dids));
         } else {
             tags = mCol.getDb().queryStringList("SELECT DISTINCT n.tags FROM cards c, notes n WHERE c.nid = n.id AND c.did = ?", did);
         }
@@ -231,12 +236,11 @@ public class Tags {
             t = t.replace("*", "%");
             lim.append(l).append("like '% ").append(t).append(" %'");
         }
-        ArrayList<Object[]> res = new ArrayList<>();
+        ArrayList<Object[]> res = new ArrayList<>(mCol.getDb().queryScalar("select count() from notes where id in "+ Utils.ids2str(ids) + " and (" + lim + ")"));
         try (Cursor cur = mCol
                 .getDb()
-                .getDatabase()
                 .query("select id, tags from notes where id in " + Utils.ids2str(ids) +
-                        " and (" + lim + ")", null)) {
+                        " and (" + lim + ")")) {
             if (add) {
                 while (cur.moveToNext()) {
                     res.add(new Object[] { addToStr(tags, cur.getString(1)), mCol.getTime().intTime(), mCol.usn(), cur.getLong(0) });
@@ -265,7 +269,7 @@ public class Tags {
 
     /** Parse a string and return a list of tags. */
     public ArrayList<String> split(String tags) {
-        ArrayList<String> list = new ArrayList<>();
+        ArrayList<String> list = new ArrayList<>(tags.length());
         for (String s : tags.replace('\u3000', ' ').split("\\s")) {
             if (s.length() > 0) {
                 list.add(s);
@@ -307,7 +311,8 @@ public class Tags {
     public String remFromStr(String deltags, String tags) {
         List<String> currentTags = split(tags);
         for (String tag : split(deltags)) {
-            List<String> remove = new ArrayList<>();
+            List<String> remove = new ArrayList<>(); // Usually not a lot of tags are removed simultaneously.
+            // So don't put initial capacity
             for (String tx: currentTags) {
                 if (tag.equalsIgnoreCase(tx) || wildcard(tag, tx)) {
                     remove.add(tx);

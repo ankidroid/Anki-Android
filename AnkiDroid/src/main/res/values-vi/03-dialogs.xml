@@ -37,7 +37,7 @@
 ~ You should have received a copy of the GNU General Public License along with
 ~ this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools">
     <string name="check_db_title">Kiểm tra CSDL?</string>
     <string name="check_db_warning">Có thể hơi lâu</string>
     <string name="check_db_acknowledge">Đã kiểm tra CSDL</string>
@@ -59,7 +59,7 @@
         <item><![CDATA[Non-developers can also help. For instance, you can <a href=\"%1$s\">help translate</a> AnkiDroid, update the wiki, provide screenshots, or blog about AnkiDroid.]]></item>
         <item><![CDATA[AnkiDroid được phát hành theo <a href=\"%1$s\">Giấy phép GNU-GPL v3</a> và mã nguồn có <a href=\"%2$s\">trên GitHub</a>.]]></item>
     </string-array>
-    <string name="preview_title">Xem trước</string>
+    <string name="preview_title" comment="Title of the window allowing to preview card(s)">Xem trước</string>
     <string name="reposition_card_dialog_title">Reposition new card</string>
     <string name="reposition_card_dialog_message">Start position:</string>
     <string name="reposition_card_not_new_error">Only new cards can be repositioned</string>
@@ -72,7 +72,6 @@
         <item quantity="other">%d cards reset</item>
     </plurals>
     <!-- Reschedule Card Dialog -->
-    <string name="reschedule_card_dialog_title">Lên lịch lại cho thẻ</string>
     <plurals name="reschedule_cards_dialog_title">
         <item quantity="other">Reschedule cards</item>
     </plurals>
@@ -90,8 +89,6 @@
     <string name="answering_error_message">Writing to the collection failed. The database could be corrupt or there may not to be enough empty space on disk.\n\nIf this happens more often, try checking the database, repairing the collection or restoring it from a backup. Touch “options” for that.\n\Or it could be an AnkiDroid bug as well; please report the error so that we can check this.</string>
     <string name="answering_error_report">Báo cáo lỗi</string>
     <string name="repair_deck_dialog">Bạn có thực sự muốn sửa chữa cơ sở dữ liệu? \n\nTrước khi bắt đầu, một bản sao sẽ được tạo trong thư mục con \"%s\".</string>
-    <string name="intent_add_saved_information">Dữ liệu đã lưu</string>
-    <string name="intent_add_clear_all">Xoá toàn bộ</string>
     <string name="intent_aedict_empty">Danh mục \"mặc định\" rỗng</string>
     <string name="intent_aedict_category">Để thêm thẻ vào AnkiDroid, hãy xoá toàn bộ danh mục Notepad hoặc thêm danh mục tên \"mặc định\"</string>
     <string name="custom_study_new_total_new">New cards in deck: %d</string>
@@ -103,7 +100,6 @@
     <string name="custom_study_random">Chọn ngẫu nhiên x thẻ từ bộ:</string>
     <string name="custom_study_preview">Xem trước thẻ mới được thêm vào x ngày trước:</string>
     <string name="custom_study_rebuild_deck_corrupt">Could not rebuild custom study deck</string>
-    <string name="rebuild_custom_study_deck">Đang dựng lại bộ thẻ học tuỳ chọn&#8230;</string>
     <string name="importing_collection">Đang nhập bộ sưu tập&#8230;</string>
     <string name="import_media_count">Đang nhập các tệp đa phương tiện %1$d%%&#8230;</string>
     <string name="import_progress">• Đang nhập các ghi chú: %1$d%%\n• Đang nhập các thẻ: %2$d%%\n• Đang hậu xử lý: %3$d%%</string>
@@ -118,9 +114,10 @@
     <string name="dialog_ok">OK</string>
     <string name="dialog_no">No</string>
     <string name="dialog_continue">Tiếp tục</string>
-    <string name="dialog_positive_create">Tạo</string>
+    <string name="dialog_positive_create" comment="Create a new collection, probably erasing the previous one, may be necessary in case of error.">Tạo</string>
     <string name="dialog_positive_delete">Xoá</string>
-    <string name="dialog_positive_disable">Tắt</string>
+    <!-- Currently unsued, should be useful in the future -->
+    <string name="dialog_positive_disable" tools:ignore="UnusedResources">Tắt</string>
     <string name="dialog_positive_overwrite">Ghi đè</string>
     <string name="dialog_positive_remove">Xoá</string>
     <string name="dialog_positive_repair">Sửa chữa</string>
@@ -149,9 +146,10 @@
     <!-- Tags Dialog Options -->
     <string name="tags_dialog_option_all_cards">Toàn bộ thẻ</string>
     <string name="tags_dialog_option_new_cards">Mới</string>
-    <string name="tags_dialog_option_due_cards">Tới hạn</string>
+    <string name="tags_dialog_option_due_cards" comment="Name of cards that are already been reviewed in the past, and that should be reviewed again">Tới hạn</string>
     <!-- Empty cards -->
     <string name="emtpy_cards_finding">Đang tìm thẻ rỗng&#8230;</string>
+    <string name="confirm_cancel">Bạn có thực sự muốn hủy?</string>
     <string name="empty_cards_none">Không có thẻ rỗng</string>
     <string name="empty_cards_count">Thẻ sẽ được xóa: %d</string>
     <string name="empty_cards_deleted">Đã xoá các thẻ: %d</string>
@@ -168,7 +166,6 @@
     <!-- Database Integrity Check -->
     <string name="integrity_check_startup_title">AnkiDroid Upgraded</string>
     <string name="integrity_check_startup_content">AnkiDroid has been upgraded. This upgrade includes fixes for possible database problems, and we advise you to run check database now.</string>
-    <string name="integrity_check_positive">Check Database</string>
     <string name="integrity_check_continue_anyway">Continue Anyway</string>
     <string name="integrity_check_insufficient_space">Check Database uses a large amount of temporary storage.\n\nIt is strongly recommended that you have at least %s free space on your device before continuing.</string>
     <string name="integrity_check_insufficient_space_extra_content">\n\nYou currently have %s free.</string>
@@ -183,12 +180,12 @@
     <!-- Database Errors-->
     <string name="database_locked_title">Database Locked</string>
     <string name="database_locked_summary">The AnkiDroid database is in use by another application. Please close the other application then reopen AnkiDroid.</string>
-    <string name="incompatible_database_version_title">Incompatible Database Version</string>
+    <string name="incompatible_database_version_title">Phiên bản Database không tương thích</string>
     <string name="incompatible_database_version_summary">The database is a more advanced version than this version of AnkiDroid can work with. Upgrade AnkiDroid or downgrade the database to open it\n\nSupported version: %1$d\nDatabase version: %2$d\n\nThe following restore options will overwrite your current collection, possibly with a compatible database version:</string>
     <!-- Deck Picker Background-->
     <string name="background_image_applied">Background image applied</string>
     <string name="background_image_removed">Background image removed</string>
-    <string name="no_image_selected">No image selected</string>
+    <string name="no_image_selected">Chưa chọn ảnh nào</string>
     <string name="error_selecting_image">Error selecting image. Please see manual. %s</string>
     <string name="error_deleting_image">Error deleting image</string>
     <string name="failed_to_apply_background_image">Failed to apply background image %s</string>
@@ -196,15 +193,34 @@
     <string name="image_max_size_allowed">Maximum image size %d MB allowed</string>
     <!-- Global Intent handler -->
     <!-- Also used by Card Browser, not renaming to save translators effort -->
-    <string name="intent_handler_failed_no_storage_permission">Missing required storage permission. Please grant storage permission then retry your action.</string>
+    <string name="intent_handler_failed_no_storage_permission">Không thể truy cập bộ nhớ. Hãy cấp quyền truy cập và thử lại.</string>
     <!-- Browser Appearance -->
-    <string name="card_template_editor_card_browser_appearance_failed">Could not load Card Browser Appearance</string>
+    <string name="card_template_editor_card_browser_appearance_failed">Không thể load giao diện thẻ</string>
     <!-- Boot Service -->
     <string name="boot_service_failed_to_schedule_notifications">Failed to schedule reminders</string>
     <string name="boot_service_too_many_notifications">Too many reminders scheduled. Some will not appear</string>
     <!-- Locale Selection Dialog -->
-    <string name="locale_selection_dialog_title">Keyboard Hint Selection</string>
+    <string name="locale_selection_dialog_title">Ngôn ngữ của bàn phím</string>
     <string name="locale_selection_dialog_summary">Some multilingual keyboards, such as GBoard support changing language when editing text\n\nPlease request the “setImeHintLocales” feature from your keyboard manufacturer if your keyboard does not change language.</string>
+    <!-- Help Dialog -->
+    <string name="help_title_using_ankidroid">Using AnkiDroid</string>
+    <string name="help_item_ankidroid_manual">AnkiDroid Manual</string>
+    <string name="help_item_anki_manual">Anki Manual</string>
+    <string name="help_item_ankidroid_faq">AnkiDroid FAQ</string>
+    <string name="help_title_get_help">Get Help</string>
+    <string name="help_item_mailing_list">Mailing List</string>
+    <string name="help_item_reddit">Reddit</string>
+    <string name="help_item_report_bug">Báo cáo lỗi</string>
+    <string name="help_title_support_ankidroid">Hỗ trợ</string>
+    <string name="help_item_support_opencollective_donate">Donate</string>
+    <string name="help_item_support_develop_ankidroid">Develop</string>
+    <string name="help_item_support_rate_ankidroid">Đánh giá</string>
+    <string name="help_item_support_other_ankidroid">Khác</string>
+    <string name="help_title_community">Community</string>
+    <string name="help_item_anki_forums">Diễn đàn Anki</string>
+    <string name="help_item_discord">Discord</string>
+    <string name="help_item_facebook">Facebook</string>
+    <string name="help_item_twitter">Twitter</string>
     <!--Sync-->
     <plurals name="sync_automatic_sync_needs_more_time">
         <item quantity="other">An automatic sync may be triggered in %d seconds</item>

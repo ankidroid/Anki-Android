@@ -56,7 +56,7 @@ public class StdModels {
     /// create the standard models
 
     public static final StdModels basicModel = new StdModels(
-            (Models mm, String name) -> {
+            (mm, name) -> {
                 Model m = mm.newModel(name);
                 String frontName = AnkiDroidApp.getAppResources().getString(R.string.front_field_name);
                 JSONObject fm = mm.newField(frontName);
@@ -74,7 +74,7 @@ public class StdModels {
             R.string.basic_model_name);
 
     public static final StdModels basicTypingModel = new StdModels
-        ( (Models mm, String name) -> {
+        ((mm, name) -> {
         Model m = basicModel._new(mm, name);
         JSONObject t = m.getJSONArray("tmpls").getJSONObject(0);
         String frontName = m.getJSONArray("flds").getJSONObject(0).getString("name");
@@ -86,7 +86,7 @@ public class StdModels {
         R.string.basic_typing_model_name);
 
     public static final StdModels forwardReverseModel = new StdModels
-        ( (Models mm, String name) -> {
+        ((mm, name) -> {
         Model m = basicModel._new(mm, name);
         String frontName = m.getJSONArray("flds").getJSONObject(0).getString("name");
         String backName = m.getJSONArray("flds").getJSONObject(1).getString("name");
@@ -100,7 +100,7 @@ public class StdModels {
         R.string.forward_reverse_model_name);
 
     public static final StdModels forwardOptionalReverseModel = new StdModels
-        ( (Models mm, String name) -> {
+        ((mm, name) -> {
         Model m = forwardReverseModel._new(mm, name);
         String av = AnkiDroidApp.getAppResources().getString(R.string.field_to_ask_front_name);
         JSONObject fm = mm.newField(av);
@@ -112,7 +112,7 @@ public class StdModels {
         R.string.forward_optional_reverse_model_name);
 
     public static final StdModels clozeModel = new StdModels
-        ( (Models mm, String name) -> {
+        ((mm, name) -> {
         Model m = mm.newModel(name);
         m.put("type", Consts.MODEL_CLOZE);
         String txt = AnkiDroidApp.getAppResources().getString(R.string.text_field_name);
@@ -121,7 +121,7 @@ public class StdModels {
         String fieldExtraName = AnkiDroidApp.getAppResources().getString(R.string.extra_field_name);
         fm = mm.newField(fieldExtraName);
         mm.addFieldInNewModel(m, fm);
-        String cardTypeClozeName = AnkiDroidApp.getAppResources().getString(R.string.card_cloze_name);
+        String cardTypeClozeName = AnkiDroidApp.getAppResources().getString(R.string.cloze_model_name);
         JSONObject t = Models.newTemplate(cardTypeClozeName);
         String fmt = "{{cloze:" + txt + "}}";
         m.put("css", m.getString("css") + ".cloze {" + "font-weight: bold;" + "color: blue;" + "}");

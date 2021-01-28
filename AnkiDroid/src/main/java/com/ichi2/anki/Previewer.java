@@ -18,8 +18,8 @@
 
 package com.ichi2.anki;
 
+import android.content.Context;
 import android.content.Intent;
-import android.os.Build;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -32,6 +32,7 @@ import com.ichi2.themes.Themes;
 import java.util.HashSet;
 import java.util.List;
 
+import androidx.annotation.CheckResult;
 import androidx.annotation.NonNull;
 import timber.log.Timber;
 
@@ -50,8 +51,21 @@ public class Previewer extends AbstractFlashcardViewer {
     private boolean mNoteChanged;
 
 
+    @CheckResult
+    @NonNull
+    public static Intent getPreviewIntent(Context context, int index, long[] cardList) {
+        Intent intent = new Intent(context, Previewer.class);
+        intent.putExtra("index", index);
+        intent.putExtra("cardList", cardList);
+        return intent;
+    }
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        if (showedActivityFailedScreen(savedInstanceState)) {
+            return;
+        }
         Timber.d("onCreate()");
         super.onCreate(savedInstanceState);
 
@@ -130,7 +144,7 @@ public class Previewer extends AbstractFlashcardViewer {
         mPreviewPrevCard.setOnClickListener(mSelectScrollHandler);
         mPreviewNextCard.setOnClickListener(mSelectScrollHandler);
 
-        if (Build.VERSION.SDK_INT >= 21 && animationEnabled()) {
+        if (animationEnabled()) {
             int resId = Themes.getResFromAttr(this, R.attr.hardButtonRippleRef);
             mPreviewButtonsLayout.setBackgroundResource(resId);
             mPreviewPrevCard.setBackgroundResource(R.drawable.item_background_light_selectable_borderless);

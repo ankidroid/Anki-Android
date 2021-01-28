@@ -17,8 +17,8 @@ package com.ichi2.anki.dialogs;
 
 import android.app.Dialog;
 import android.content.res.Resources;
+import android.os.Build;
 import android.os.Bundle;
-import android.view.View;
 
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.ichi2.anki.AnkiActivity;
@@ -29,11 +29,15 @@ import com.ichi2.anki.StudyOptionsFragment;
 import com.ichi2.anki.analytics.AnalyticsDialogFragment;
 import com.ichi2.libanki.Collection;
 
+import java.lang.annotation.Retention;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+import androidx.annotation.IntDef;
 import androidx.annotation.NonNull;
 import timber.log.Timber;
+
+import static java.lang.annotation.RetentionPolicy.SOURCE;
 
 public class DeckPickerContextMenu extends AnalyticsDialogFragment {
     /**
@@ -48,6 +52,20 @@ public class DeckPickerContextMenu extends AnalyticsDialogFragment {
     private static final int CONTEXT_MENU_CUSTOM_STUDY_REBUILD = 6;
     private static final int CONTEXT_MENU_CUSTOM_STUDY_EMPTY = 7;
     private static final int CONTEXT_MENU_CREATE_SUBDECK = 8;
+    private static final int CONTEXT_MENU_CREATE_SHORTCUT = 9;
+    @Retention(SOURCE)
+    @IntDef( {CONTEXT_MENU_RENAME_DECK,
+            CONTEXT_MENU_DECK_OPTIONS,
+            CONTEXT_MENU_CUSTOM_STUDY,
+            CONTEXT_MENU_DELETE_DECK,
+            CONTEXT_MENU_EXPORT_DECK,
+            CONTEXT_MENU_UNBURY,
+            CONTEXT_MENU_CUSTOM_STUDY_REBUILD,
+            CONTEXT_MENU_CUSTOM_STUDY_EMPTY,
+            CONTEXT_MENU_CREATE_SUBDECK,
+            CONTEXT_MENU_CREATE_SHORTCUT,
+    })
+    public @interface DECK_PICKER_CONTEXT_MENU {}
 
 
     public static DeckPickerContextMenu newInstance(long did) {
@@ -79,9 +97,9 @@ public class DeckPickerContextMenu extends AnalyticsDialogFragment {
 
     private HashMap<Integer, String> getKeyValueMap() {
         Resources res = getResources();
-        HashMap<Integer, String> keyValueMap = new HashMap<>();
+        HashMap<Integer, String> keyValueMap = new HashMap<>(9);
         keyValueMap.put(CONTEXT_MENU_RENAME_DECK, res.getString(R.string.rename_deck));
-        keyValueMap.put(CONTEXT_MENU_DECK_OPTIONS, res.getString(R.string.study_options));
+        keyValueMap.put(CONTEXT_MENU_DECK_OPTIONS, res.getString(R.string.menu__deck_options));
         keyValueMap.put(CONTEXT_MENU_CUSTOM_STUDY, res.getString(R.string.custom_study));
         keyValueMap.put(CONTEXT_MENU_DELETE_DECK, res.getString(R.string.contextmenu_deckpicker_delete_deck));
         keyValueMap.put(CONTEXT_MENU_EXPORT_DECK, res.getString(R.string.export_deck));
@@ -89,6 +107,7 @@ public class DeckPickerContextMenu extends AnalyticsDialogFragment {
         keyValueMap.put(CONTEXT_MENU_CUSTOM_STUDY_REBUILD, res.getString(R.string.rebuild_cram_label));
         keyValueMap.put(CONTEXT_MENU_CUSTOM_STUDY_EMPTY, res.getString(R.string.empty_cram_label));
         keyValueMap.put(CONTEXT_MENU_CREATE_SUBDECK, res.getString(R.string.create_subdeck));
+        keyValueMap.put(CONTEXT_MENU_CREATE_SHORTCUT, res.getString(R.string.create_shortcut));
         return keyValueMap;
     }
 
@@ -96,10 +115,11 @@ public class DeckPickerContextMenu extends AnalyticsDialogFragment {
      * Retrieve the list of ids to put in the context menu list
      * @return the ids of which values to show
      */
-    private int[] getListIds() {
+    private @DECK_PICKER_CONTEXT_MENU
+    int[] getListIds() {
         Collection col = CollectionHelper.getInstance().getCol(getContext());
         long did = getArguments().getLong("did");
-        ArrayList<Integer> itemIds = new ArrayList<>();
+        ArrayList<Integer> itemIds = new ArrayList<>(9);
         if (col.getDecks().isDyn(did)) {
             itemIds.add(CONTEXT_MENU_CUSTOM_STUDY_REBUILD);
             itemIds.add(CONTEXT_MENU_CUSTOM_STUDY_EMPTY);
@@ -115,12 +135,15 @@ public class DeckPickerContextMenu extends AnalyticsDialogFragment {
         if (col.getSched().haveBuried(did)) {
             itemIds.add(CONTEXT_MENU_UNBURY);
         }
+        itemIds.add(CONTEXT_MENU_CREATE_SHORTCUT);
+
         return ContextMenuHelper.integerListToArray(itemIds);
     }
 
     // Handle item selection on context menu which is shown when the user long-clicks on a deck
     private final MaterialDialog.ListCallback mContextMenuListener = (materialDialog, view, item, charSequence) -> {
-        switch (view.getId()) {
+        @DECK_PICKER_CONTEXT_MENU int id = view.getId();
+        switch (id) {
             case CONTEXT_MENU_DELETE_DECK:
                 Timber.i("Delete deck selected");
                 ((DeckPicker) getActivity()).confirmDeckDeletion();
@@ -139,6 +162,11 @@ public class DeckPickerContextMenu extends AnalyticsDialogFragment {
                 ((AnkiActivity) getActivity()).showDialogFragment(d);
                 break;
             }
+            case CONTEXT_MENU_CREATE_SHORTCUT:
+                Timber.i("Create icon for a deck");
+                ((DeckPicker) getActivity()).createIcon(getContext());
+                break;
+
             case CONTEXT_MENU_RENAME_DECK:
                 Timber.i("Rename deck selected");
                 ((DeckPicker) getActivity()).renameDeckDialog();

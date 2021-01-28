@@ -12,11 +12,11 @@ import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.media.AudioManager;
 import android.net.Uri;
-import android.os.Build;
 import android.os.Bundle;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.widget.Toolbar;
+import androidx.browser.customtabs.CustomTabColorSchemeParams;
 import androidx.browser.customtabs.CustomTabsIntent;
 import androidx.fragment.app.DialogFragment;
 import androidx.fragment.app.Fragment;
@@ -64,8 +64,6 @@ public class AnkiActivity extends AppCompatActivity implements SimpleMessageDial
 
     // custom tabs
     private CustomTabActivityHelper mCustomTabActivityHelper;
-
-    private boolean mIsDestroyed = false;
 
     public AnkiActivity() {
         super();
@@ -127,7 +125,6 @@ public class AnkiActivity extends AppCompatActivity implements SimpleMessageDial
 
     @Override
     protected void onDestroy() {
-        this.mIsDestroyed = true;
         Timber.i("AnkiActivity::onDestroy - %s", mActivityName);
         super.onDestroy();
     }
@@ -281,15 +278,6 @@ public class AnkiActivity extends AppCompatActivity implements SimpleMessageDial
         view.clearAnimation();
     }
 
-    /** Compat shim for API 16 */
-    public boolean wasDestroyed() {
-        if (Build.VERSION.SDK_INT > Build.VERSION_CODES.JELLY_BEAN) {
-            return super.isDestroyed();
-        }
-        return mIsDestroyed;
-    }
-
-
     protected void enableViewAnimation(View view, Animation animation) {
         if (animationDisabled()) {
             disableViewAnimation(view);
@@ -387,7 +375,11 @@ public class AnkiActivity extends AppCompatActivity implements SimpleMessageDial
 
         CustomTabActivityHelper helper = getCustomTabActivityHelper();
         CustomTabsIntent.Builder builder = new CustomTabsIntent.Builder(helper.getSession());
-        builder.setToolbarColor(ContextCompat.getColor(this, R.color.material_light_blue_500)).setShowTitle(true);
+        CustomTabColorSchemeParams colorScheme =
+                new CustomTabColorSchemeParams.Builder()
+                        .setToolbarColor(ContextCompat.getColor(this, R.color.material_light_blue_500))
+                        .build();
+        builder.setDefaultColorSchemeParams(colorScheme).setShowTitle(true);
         builder.setStartAnimations(this, R.anim.slide_right_in, R.anim.slide_left_out);
         builder.setExitAnimations(this, R.anim.slide_left_in, R.anim.slide_right_out);
         builder.setCloseButtonIcon(BitmapFactory.decodeResource(this.getResources(), R.drawable.ic_arrow_back_white_24dp));
@@ -583,6 +575,39 @@ public class AnkiActivity extends AppCompatActivity implements SimpleMessageDial
         if (toolbar != null) {
             setSupportActionBar(toolbar);
         }
+    }
+
+    protected boolean showedActivityFailedScreen(Bundle savedInstanceState) {
+        if (!AnkiDroidApp.isInitialized()) {
+            return false;
+        }
+
+        // #7630: Can be triggered with `adb shell bmgr restore com.ichi2.anki` after AnkiDroid settings are changed.
+        // Application.onCreate() is not called if:
+        // * The App was open
+        // * A restore took place
+        // * The app is reopened (until it exits: finish() does not do this - and removes it from the app list)
+
+        Timber.w("Activity started with no application instance");
+        UIUtils.showThemedToast(this, getString(R.string.ankidroid_cannot_open_after_backup_try_again), false);
+
+        // Avoids a SuperNotCalledException
+        super.onCreate(savedInstanceState);
+        finishActivityWithFade(this);
+
+        // If we don't kill the process, the backup is not "done" and reopening the app show the same message.
+        new Thread(() -> {
+            // 3.5 seconds sleep, as the toast is killed on process death.
+            // Same as the default value of LENGTH_LONG
+            try {
+                Thread.sleep(3500);
+            } catch (InterruptedException e) {
+                Timber.w(e);
+            }
+            android.os.Process.killProcess(android.os.Process.myPid());
+        }).start();
+
+        return true;
     }
 }
 

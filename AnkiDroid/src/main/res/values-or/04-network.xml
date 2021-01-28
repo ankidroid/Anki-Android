@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="utf-8"?> 
+ <!-- 
+ ~ Copyright (c) 2009 Andrew <andrewdubya@gmail> 
+ ~ Copyright (c) 2009 Edu Zamora <edu.zasu@gmail.com> 
+ ~ Copyright (c) 2009 Daniel Svaerd <daniel.svard@gmail.com> 
+ ~ Copyright (c) 2009 Nicolas Raoul <nicolas.raoul@gmail.com> 
+ ~ Copyright (c) 2010 Norbert Nagold <norbert.nagold@gmail.com> 
+ ~ This program is free software; you can redistribute it and/or modify it under 
+ ~ the terms of the GNU General Public License as published by the Free Software 
+ ~ Foundation; either version 3 of the License, or (at your option) any later 
+ ~ version. 
+ ~ 
+ ~ This program is distributed in the hope that it will be useful, but WITHOUT ANY 
+ ~ WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A 
+ ~ PARTICULAR PURPOSE. See the GNU General Public License for more details. 
+ ~ 
+ ~ You should have received a copy of the GNU General Public License along with 
+ ~ this program.  If not, see <http://www.gnu.org/licenses/>. 
+ --> 
+ 
+<!--
+~ Copyright (c) 2009 Andrew <andrewdubya@gmail>
+~ Copyright (c) 2009 Edu Zamora <edu.zasu@gmail.com>
+~ Copyright (c) 2009 Daniel Svärd <daniel.svard@gmail.com>
+~ Copyright (c) 2009 Nicolas Raoul <nicolas.raoul@gmail.com>
+~ Copyright (c) 2010 Norbert Nagold <norbert.nagold@gmail.com>
+~
+~ This program is free software; you can redistribute it and/or modify it under
+~ the terms of the GNU General Public License as published by the Free Software
+~ Foundation; either version 3 of the License, or (at your option) any later
+~ version.
+~
+~ This program is distributed in the hope that it will be useful, but WITHOUT ANY
+~ WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A
+~ PARTICULAR PURPOSE. See the GNU General Public License for more details.
+~
+~ You should have received a copy of the GNU General Public License along with
+~ this program.  If not, see <http://www.gnu.org/licenses/>.
+
+-->
+<resources>
+    <string name="youre_offline">ଆପଣ ଅଫଲାଇନ ଅଛନ୍ତି</string>
+    <string name="sync_even_if_offline">ତଥାପି ଚେଷ୍ଟା କରନ୍ତୁ</string>
+    <string name="sync_error">ସିଙ୍କ୍ ତ୍ରୁଟି</string>
+    <string name="vague_error">ତ୍ରୁଟି</string>
+    <string name="retry">ପୁନଃ ଚେଷ୍ଟା କରନ୍ତୁ</string>
+    <string name="menu_get_shared_decks">ଅଂଶୀଦାର ତାସଖଣ୍ଡ ପାଆନ୍ତୁ </string>
+    <string name="connection_error_message">ଏକ ନେଟୱର୍କ ତ୍ରୁଟି ଘଟିଛି</string>
+    <string name="not_logged_in_title">AnkiWeb ରେ ଲଗ୍ ଇନ୍ କରନ୍ତୁ</string>
+    <string name="login_create_account_message">କ୍ଲାଉଡ୍ ସିଙ୍କ୍ ସେବା ବ୍ୟବହାର କରିବାକୁ ଆପଣ ନିଶ୍ଚିତ ଭାବରେ ଏକ ତୃତୀୟ ପକ୍ଷ ଆକାଉଣ୍ଟକୁ ଲଗ୍ ଇନ୍ କରିବେ | ପରବର୍ତ୍ତୀ ସୋପାନରେ ଆପଣ ଗୋଟିଏ ସୃଷ୍ଟି କରିପାରିବେ |</string>
+    <!-- MyAccount.java -->
+    <string name="username">ଇମେଲ୍ ଠିକଣା</string>
+    <string name="password">ପାସୱାର୍ଡ</string>
+    <string name="log_in"> ଲଗ୍ ଇନ୍</string>
+    <string name="sign_up_description">AnkiWeb ଖାତା ନାହିଁ କି? ଏହା ମାଗଣା!</string>
+    <string name="sign_up_not_affiliated">ସୂଚନା: AnkiWeb AnkiDroid ସହିତ ଜଡ଼ିତ ନୁହେଁ</string>
+    <string name="sign_up">ସାଇନ୍ ଅପ୍</string>
+    <string name="logged_as">ଭାବେ ଲଗ୍ ଇନ୍ କରିଛନ୍ତି </string>
+    <string name="log_out">ପ୍ରସ୍ଥାନ କର</string>
+    <string name="alert_logging_message">ଲଗ୍ ହେଉଛି&#8230;</string>
+    <string name="invalid_username_password">ଅବୈଧ ଇମେଲ୍ ଠିକଣା କିମ୍ବା ପାସୱାର୍ଡ</string>
+    <string name="reset_password">ପାସୱାର୍ଡ ପୁନଃସେଟ୍ କରନ୍ତୁ</string>
+    <!-- AndroidManifest.xml -->
+    <string name="preferences_title">ଅଭିରୁଚି</string>
+    <string name="deckpreferences_title">XXX ପାଇଁ ବିକଳ୍ପଗୁଡ଼ିକ</string>
+    <string name="sync_conflict_message">ଆପଣ ନିଶ୍ଚିତ ଭାବରେ ଏହି ସଂଗ୍ରହକୁ ଅପଲୋଡ୍ କରିବେ କିମ୍ବା ଆଙ୍କିୱେବରୁ ଡାଉନଲୋଡ୍ କରିବେ, ଯେହେତୁ ସେଗୁଡିକ ମିଶ୍ରିତ ହୋଇପାରିବ ନାହିଁ | ଗୋଟିଏ ପାର୍ଶ୍ୱରେ ଥିବା ସଂଗ୍ରହର ନବୀକରଣ କରାଯିବ |</string>
+    <string name="sync_conflict_local">ଅପଲୋଡ୍</string>
+    <string name="sync_conflict_remote">ଡାଉନଲୋଡ୍</string>
+    <string name="sync_conflict_remote_confirm">ଆପଣଙ୍କର ସ୍ଥାନୀୟ ସଂଗ୍ରହକୁ ଓଭର୍ ରାଇଟ୍ କରନ୍ତୁ?</string>
+    <string name="sync_conflict_local_confirm">ସର୍ଭରରେ ଆପଣଙ୍କର ସଂଗ୍ରହକୁ ଓଭର୍ ରାଇଟ୍ କରନ୍ତୁ?</string>
+    <string name="sync_prepare_syncing">ସିଙ୍କ୍ ପ୍ରସ୍ତୁତ କରୁଛି&#8230;</string>
+    <string name="sync_preparing_full_sync_message">ପୂର୍ଣ୍ଣ ସିଙ୍କ୍ ପ୍ରସ୍ତୁତ କରୁଛି&#8230;</string>
+    <string name="sync_uploading_message">ଅପଲୋଡ୍ କରୁଛି&#8230;</string>
+    <string name="sync_downloading_message">ଡାଉନଲୋଡ୍ କରୁଛି&#8230;</string>
+    <string name="sync_title">ସମକାଳୀନତା </string>
+    <string name="sync_downloading_media">ମିଡିଆ ଡାଉନଲୋଡ୍ %1$d/%2$d&#8230;</string>
+    <string name="sync_log_uploading_message">ସ୍ଥାନୀୟ ଠାରୁ ସମ୍ପୂର୍ଣ୍ଣ ସିଙ୍କ୍</string>
+    <string name="sync_log_clocks_unsynchronized">ଆପଣଙ୍କର ଘଣ୍ଟା %1$d ସେକେଣ୍ଡ୍ %2$s ଆଗପଛ ଅଛି | ନିଶ୍ଚିତ କରନ୍ତୁ ଯେ ଆପଣଙ୍କ ଫୋନରେ ତାରିଖ, ସମୟ, ଏବଂ ସମୟ ମଣ୍ଡଳ ସଠିକ୍ ଭାବରେ ସେଟ୍ ହୋଇଛି, ତାପରେ ପୁନର୍ବାର ସିଙ୍କ କରନ୍ତୁ |</string>
+    <string name="sync_log_clocks_unsynchronized_tz">,ସମୟ କ୍ଷେତ୍ର ସମ୍ଭବତ ଭୁଲ୍ ଅଟେ |</string>
+    <string name="sync_log_clocks_unsynchronized_date">, ତାରିଖ ସମ୍ଭବତ ଭୁଲ ଅଟେ |</string>
+    <string name="sync_conflict_title">ସିଙ୍କ୍ ରେ ଦ୍ୱନ୍ଦ୍ୱ</string>
+    <string name="sync_no_changes_message">କୌଣସି ପରିବର୍ତ୍ତନ ମିଳିଲା ନାହିଁ |</string>
+    <string name="sync_database_acknowledge">ସଂଗ୍ରହ ସମକାଳୀକ ହୋଇଛି |</string>
+    <string name="sync_log_error_specific">ସିଙ୍କ୍ ତ୍ରୁଟି, ପ୍ରକାର: %1$s, ବାର୍ତ୍ତା: %2$s</string>
+    <string name="sync_corrupt_database">ଆପଣଙ୍କର ଡାଟାବେସ୍ ଭ୍ରଷ୍ଟ ଅଟେ | ସିଙ୍କ୍ କରିବାକୁ ପୁନର୍ବାର ଚେଷ୍ଟା କରିବା ପୂର୍ବରୁ ଦୟାକରି ଏହାକୁ ଠିକ୍ କରନ୍ତୁ |\n\nଆପଣଙ୍କର ଡାଟାବେସ୍ ମରାମତି ବିଷୟରେ ସୂଚନା ପାଇଁ %s ଦେଖନ୍ତୁ |</string>
+    <string name="sync_too_busy">ସର୍ଭର ବ୍ୟସ୍ତ | ପରେ ପୁନର୍ବାର ଚେଷ୍ଟା କରନ୍ତୁ |</string>
+    <string name="sync_remote_db_error">ଡାଉନଲୋଡ୍ ହୋଇଥିବା ଡାଟାବେସ୍ ଭ୍ରଷ୍ଟ ହୋଇଛି | ଦୟାକରି ପୁଣିଥରେ ଚେଷ୍ଟା କରନ୍ତୁ।</string>
+    <string name="sync_overwrite_error">ଡାଉନଲୋଡ୍ ହୋଇଥିବା ଫାଇଲ୍ ଦ୍ୱାରା ଆପଣଙ୍କର ସାମ୍ପ୍ରତିକ ସଂଗ୍ରହ ଓଭର୍ ରାଇଟ୍ ହୋଇପାରିବ ନାହିଁ |</string>
+    <string name="sync_connection_error">ସଂଯୋଗ ସମୟ ସମାପ୍ତ ହୋଇଛି | ହୁଏତ ଆପଣଙ୍କର ଇଣ୍ଟରନେଟ୍ ସଂଯୋଗ ସମସ୍ୟାର ସମ୍ମୁଖୀନ ହେଉଛି, କିମ୍ବା ଆପଣଙ୍କର ମିଡିଆ ଫୋଲ୍ଡରରେ ଆପଣଙ୍କର ବହୁତ ବଡ ଫାଇଲ୍ ଅଛି |</string>
+    <string name="sync_write_access_error">ଡାଉନଲୋଡ୍ ହୋଇଥିବା ଫାଇଲ୍ SD କାର୍ଡରେ ସଂରକ୍ଷିତ  ହୋଇପାରିବ ନାହିଁ | କାର୍ଡଟି କେବଳ ପଠନୀୟ ଭାବରେ ମାଉଣ୍ଟ ହୋଇଛି କିମ୍ବା ସେଠାରେ ପର୍ଯ୍ୟାପ୍ତ ସ୍ଥାନ ନାହିଁ |</string>
+    <string name="sync_error_invalid_sync_server">ଉନ୍ନତ ସେଟିଂସମୂହରେ କଷ୍ଟମ୍ ସିଙ୍କ ସର୍ଭର ଅବୈଧ (%s) | ଦୟାକରି ଏକ ବୈଧ ସର୍ଭର ପ୍ରବେଶ କରନ୍ତୁ, କିମ୍ବା ସେଟିଂକୁ ଅକ୍ଷମ କରନ୍ତୁ |</string>
+    <string name="sync_deletions_message">ଡିଲିଶନ ସିଙ୍କ୍ କରୁଛି&#8230;</string>
+    <string name="sync_small_objects_message">ଛୋଟ ବସ୍ତୁଗୁଡ଼ିକୁ ସିଙ୍କ୍ କରାହଉଛି&#8230;</string>
+    <string name="sync_finish_message">ସିଙ୍କ୍ ସମାପ୍ତ ହେଲା&#8230;</string>
+    <string name="sync_log_finish_error">ସର୍ଭରକୁ ଶେଷ ଦିଗ ପଠାଇବା ସମୟରେ ତ୍ରୁଟି |</string>
+    <string name="sync_writing_db">ଡାଟାବେସରେ ପରିବର୍ତ୍ତନ ଲେଖାହଉଛି&#8230;</string>
+    <string name="sync_download_chunk">ପରିବର୍ତ୍ତନଗୁଡ଼ିକୁ ଡାଉନଲୋଡ୍ କରୁଛି&#8230;</string>
+    <string name="sync_upload_chunk">ପରିବର୍ତ୍ତନଗୁଡିକ ଅପଲୋଡ୍ କରୁଛି&#8230;</string>
+    <string name="sync_up_down_size">ଉପରକୁ:%1$dKB, ତଳକୁ:%2$dKB |</string>
+    <string name="sync_generic_error">ଏକ ତ୍ରୁଟି ଘଟିଛି | ପରେ ପୁନର୍ବାର ଚେଷ୍ଟା କରନ୍ତୁ |</string>
+    <string name="sync_check_upload_file">ଅପଲୋଡ୍ ପୂର୍ବରୁ ଫାଇଲ୍ ଯାଞ୍ଚ କରୁଛି&#8230;</string>
+    <string name="sync_check_download_file">ଡାଉନଲୋଡ୍ ହୋଇଥିବା ଫାଇଲ୍ ଯାଞ୍ଚ କରୁଛି&#8230;</string>
+    <string name="sync_media_find">ପରିବର୍ତ୍ତିତ ମିଡିଆ ଖୋଜାହଉଛି&#8230;</string>
+    <string name="sync_media_no_changes">ମିଡିଆ ଫାଇଲରେ କୌଣସି ପରିବର୍ତ୍ତନ ନାହିଁ |</string>
+    <string name="sync_media_success">ମିଡିଆ ସିଙ୍କ୍ ହୋଇଛି |</string>
+    <string name="sync_media_changes_count">%dଟି ମିଡିଆ ଅପଲୋଡ୍ କରିବା ବାକି ଅଛି |</string>
+    <string name="sync_media_downloaded_count">%d ଟି ମିଡିଆ ଫାଇଲଗୁଡ଼ିକ ଡାଉନଲୋଡ୍ କରିବା ବାକି ଅଛି  |</string>
+    <string name="sync_sanity_failed">ସିଙ୍କ୍ କରିବା ପରେ, ସଂଗ୍ରହ ଏକ ଅସଙ୍ଗତ ଅବସ୍ଥାରେ ଥିଲା | ଏହି ସମସ୍ୟାର ସମାଧାନ ପାଇଁ, AnkiDroid ଏକ ସମ୍ପୂର୍ଣ୍ଣ ସିଙ୍କ୍କୁ ବାଧ୍ୟ କରିବ | ଆପଣ କେଉଁ ପାର୍ଶ୍ୱକୁ ରଖିବାକୁ ଚାହୁଁଛନ୍ତି ବାଛନ୍ତୁ |</string>
+    <string name="sync_media_sanity_failed">ମିଡିଆ ସିଙ୍କ୍ ସମାପ୍ତ ହୋଇଛି, କିନ୍ତୁ ମିଡିଆ ଗଣନା ସର୍ଭର ସହିତ ସହମତ ନୁହେଁ | ଯେ କୌଣସି ତ୍ରୁଟି ସଂଶୋଧନ କରିବାକୁ ପରବର୍ତ୍ତୀ ମିଡିଆ ସିଙ୍କ୍ ପୂର୍ଣ୍ଣ ହେବ |</string>
+    <string name="sync_media_db_error">ମିଡିଆ ସିଙ୍କ ବିଫଳ ହେଲା କାରଣ ସାମ୍ପ୍ରତିକ ଡାଟାବେସ୍ ଭ୍ରଷ୍ଟ ହେଇଯାଇଛି  | ଏକ ମିଡିଆ ଯାଞ୍ଚ ସୁପାରିଶ କରାଯାଏ |</string>
+    <string name="sync_media_error">ମିଡିଆ ତଥ୍ୟ ସିଙ୍କ୍ କରିବାରେ ତ୍ରୁଟି |</string>
+    <string name="sync_media_error_check">ମିଡିଆ ସିଙ୍କ କରିବା ସମୟରେ ତ୍ରୁଟି | ଏକ ମିଡିଆ ଯାଞ୍ଚ ସୁପାରିଶ କରାଯାଏ |</string>
+    <!-- Please run ‘Check database’ before syncing -->
+    <string name="sync_basic_check_failed">ସିଙ୍କ୍ କରିବା ପୂର୍ବରୁ ଦୟାକରି ‘%s’ ଚଲାନ୍ତୁ |</string>
+    <string name="sync_sanity_local">ସ୍ଥାନୀୟ</string>
+    <string name="sync_sanity_remote">ସୁଦୂର</string>
+    <string name="force_full_sync_title">ପୂର୍ଣ୍ଣ ସିଙ୍କ୍କୁ ବାଧ୍ୟ</string>
+    <string name="force_full_sync_summary">ପରବର୍ତ୍ତୀ ସିଙ୍କରେ, ଗୋଟିଏ ଦିଗରେ ବଳ ପରିବର୍ତ୍ତନ ହୁଏ |</string>
+    <string name="full_sync_confirmation">ଯେତେବେଳେ ଆପଣ ଆପଣଙ୍କର ସଂଗ୍ରହକୁ ପରବର୍ତ୍ତୀ ସମୟରେ ସମକାଳୀନ କରିବେ ସେତେବେଳେ ଅନୁରୋଧ କରାଯାଇଥିବା ପରିବର୍ତ୍ତନ ଡାଟାବେସର ସମ୍ପୂର୍ଣ୍ଣ ଅପଲୋଡ୍ ଆବଶ୍ୟକ କରିବ | ଯଦି ଆପଣଙ୍କର ସମୀକ୍ଷା କିମ୍ବା ଅନ୍ୟାନ୍ୟ ପରିବର୍ତ୍ତନ ଅନ୍ୟ ଡିଭାଇସରେ ଅପେକ୍ଷା କରିଛି ଯାହା ଏପର୍ଯ୍ୟନ୍ତ ଏଠାରେ ସମକାଳୀନ ହୋଇନାହିଁ, ସେଗୁଡିକ ହଜିଯିବ | ଜାରି ରଖନ୍ତୁ?</string>
+    <string name="full_sync_confirmation_upgrade">AnkiDroid ର ପୂର୍ବରୁ ସ୍ଥାପିତ ସଂସ୍କରଣରେ ଏକ ତ୍ରୁଟି ହେତୁ, ଏହାକୁ ସମ୍ପୂର୍ଣ୍ଣ ସିଙ୍କ କରିବାକୁ ବାଧ୍ୟ କରିବାକୁ ପରାମର୍ଶ ଦିଆଯାଇଛି |</string>
+    <string name="sync_error_407_proxy_required">ପ୍ରକ୍ସି ପ୍ରାମାଣିକିକରଣ ଆବଶ୍ୟକ |</string>
+    <string name="sync_error_409">ଏକ ସମୟରେ କେବଳ ଜଣେ ଗ୍ରାହକ AnkiWeb କୁ ପ୍ରବେଶ କରିପାରିବେ | ଯଦି ପୂର୍ବ ସିଙ୍କ ବିଫଳ ହେଲା, ଦୟାକରି କିଛି ମିନିଟରେ ପୁନର୍ବାର ଚେଷ୍ଟା କରନ୍ତୁ |</string>
+    <string name="sync_error_413_collection_size">ଆପଣଙ୍କର ସଂଗ୍ରହ କିମ୍ବା ଏକ ମିଡିଆ ଫାଇଲ୍ ସିଙ୍କ୍ କରିବାକୁ ବହୁତ ବଡ ଅଟେ |</string>
+    <string name="sync_error_500_unknown">AnkiWeb ଏକ ତ୍ରୁଟିର ସମ୍ମୁଖୀନ ହେଲା | ଦୟାକରି କିଛି ମିନିଟରେ ପୁନର୍ବାର ଚେଷ୍ଟା କରନ୍ତୁ, ଏବଂ ଯଦି ସମସ୍ୟା ଜାରି ରହେ, ଦୟାକରି ଏକ ତ୍ରୁଟି ରିପୋର୍ଟ ଦାଖଲ କରନ୍ତୁ |</string>
+    <string name="sync_error_501_upgrade_required">ଦୟାକରି AnkiDroid ର ସର୍ବଶେଷ ସଂସ୍କରଣକୁ ଅଦ୍ୟତନ କରନ୍ତୁ |</string>
+    <string name="sync_error_502_maintenance">AnkiWeb ରକ୍ଷଣାବେକ୍ଷଣରେ ଅଛି | ଦୟାକରି କିଛି ମିନିଟରେ ପୁନର୍ବାର ଚେଷ୍ଟା କରନ୍ତୁ |</string>
+    <string name="sync_error_504_gateway_timeout">504 ଗେଟୱେ ଟାଇମଆଉଟ୍ ତ୍ରୁଟି ପ୍ରାପ୍ତ ହେଲା |</string>
+    <!-- Deck Picker Sync Icon -->
+    <string name="sync_menu_title_full_sync">ସିଙ୍କ୍ (ପୂର୍ଣ୍ଣ)</string>
+    <string name="sync_menu_title_no_account">ସିଙ୍କ୍ (ଲଗ୍ ଇନ୍)</string>
+    <string name="sync_error_unknown_host_readable">Could not connect to AnkiWeb. Is your internet working?\n\n%s</string>
+</resources>

@@ -42,14 +42,12 @@
     <string name="disabled">Malaktiva</string>
     <string name="enabled">Aktiva</string>
     <!-- preferences.xml categories-->
-    <string name="pref_cat_general">AnkiDroid</string>
     <string name="pref_cat_general_summ">Ĝeneralaj agordoj</string>
     <string name="pref_cat_reviewing">Ripetado</string>
     <string name="pref_cat_reviewing_summ">Komunaj agordoj de ripetado por ĉiuj kartaroj</string>
     <string name="pref_cat_reviewer_behaviour">Sinteno</string>
     <string name="pref_cat_flashcard">Montrado</string>
     <string name="pref_cat_whiteboard">Skribtabulo</string>
-    <string name="pref_cat_automatic_display">Aŭtomata montrado de respondo</string>
     <string name="pref_cat_appearance">Aspekto</string>
     <string name="pref_cat_appearance_summ">Ŝanĝi etoson kaj implicitan tiparon</string>
     <string name="pref_cat_themes">Etoso</string>
@@ -66,8 +64,6 @@
     <string name="about_version">Versio: </string>
     <!-- preferences.xml entries-->
     <string name="whiteboard_stroke_width">Larĝo de streko</string>
-    <string name="whiteboard_black">Nigra skribilo</string>
-    <string name="whiteboard_black_summ">Uzi malpli memoron, escepte se en nokta reĝimo</string>
     <string name="use_input_tag">Entajpi respondon al karto</string>
     <string name="use_input_tag_summ">Uzi tekstan enigan kampon en la karto por entajpi respondon</string>
     <string name="dictionary">Vortaro</string>
@@ -96,15 +92,26 @@
     <string name="gestures_summ">Asigni gestojn al agoj, kiel respondi aŭ redakti karton.</string>
     <string name="gestures_allow_links">Ignori gestojn sur ligiloj</string>
     <string name="gestures_allow_links_summary">Tuŝaj gestoj ne funkcios kiam ligilo ĉeestos.</string>
+    <string name="gestures_corner_touch">9-punkta frapeto</string>
+    <string name="gestures_corner_touch_summary">Ebligi gestojn en anguloj de la ekrano</string>
     <string name="gestures_swipe_up">Ŝovumi supren</string>
     <string name="gestures_swipe_down">Ŝovumi suben</string>
     <string name="gestures_swipe_left">Ŝovumi maldekstren</string>
     <string name="gestures_swipe_right">Ŝovumi dekstren</string>
     <string name="gestures_double_tap">Duobla frapeto</string>
     <string name="gestures_tap_top">Frapeti supre</string>
-    <string name="gestures_tap_bottom">Frapeti sube</string>
     <string name="gestures_tap_left">Frapeti maldekstre</string>
     <string name="gestures_tap_right">Frapeti dekstre</string>
+    <string name="gestures_tap_bottom">Frapeti sube</string>
+    <string name="gestures_corner_tap_top_left">Frapeti supran maldekstron</string>
+    <string name="gestures_corner_tap_top_center">Frapeti supran mezon</string>
+    <string name="gestures_corner_tap_top_right">Frapeti supran maldekstron</string>
+    <string name="gestures_corner_tap_middle_left">Frapeti mezan maldekstron</string>
+    <string name="gestures_corner_tap_middle_center">Frapeti centron</string>
+    <string name="gestures_corner_tap_middle_right">Frapeti mezan maldekstron</string>
+    <string name="gestures_corner_tap_bottom_left">Frapeti suban maldekstron</string>
+    <string name="gestures_corner_tap_bottom_center">Frapeti suban mezon</string>
+    <string name="gestures_corner_tap_bottom_right">Frapeti suban dekstron</string>
     <string name="gestures_volume_up">Pliigi sonfortecon</string>
     <string name="gestures_volume_down">Malpliigi sonfortecon</string>
     <string name="more_scrolling_buttons">Elektronika legilo</string>
@@ -141,9 +148,8 @@
     <string name="timeout_answer_text">Aŭtomate montri respondon</string>
     <string name="timeout_answer_summ">Aŭtomate montri respondon sen enigo de uzanto. Prokrasto enhavas tempon por aŭtomate ludi sonaĵon.</string>
     <string name="timeout_answer_seconds">Montri respondon post</string>
-    <string name="timeout_answer_seconds_summ">XXX s</string>
+    <string name="timeout_answer_seconds_summ" comment="The time to wait (in seconds) in the reviewer before automatically showing the next question or answer">XXX s</string>
     <string name="timeout_question_seconds">Montri sekvan demandon post</string>
-    <string name="timeout_question_seconds_summ">XXX s</string>
     <string name="select_locale_title">Elekti lingvon</string>
     <string name="safe_display">Sekura vidiga reĝimo</string>
     <string name="safe_display_summ">Malaktivigi ĉiujn movbildojn kaj uzi pli sekuran manieron por bildigi kartojn. Elektronik-paperaj aparatoj povas bezoni tion ĉi.</string>
@@ -164,7 +170,6 @@
     <string name="use_current">Kartaro por novaj kartoj</string>
     <string name="new_spread">Pozicio de nova karto</string>
     <string name="learn_cutoff">Limigo de anticipa lernado</string>
-    <string name="learn_cutoff_summ">XXX min</string>
     <string name="time_limit">Limigo de lernada tempero (timebox)</string>
     <string name="time_limit_summ">XXX min</string>
     <string name="day_offset">Komenco de sekva tago</string>
@@ -188,7 +193,7 @@
     <string name="reset_custom_buttons">Restarigi normojn</string>
     <string name="thirdparty_apps_title">Eksteraj aplikaĵoj uzantaj API</string>
     <string name="thirdparty_apps_summary">Vidigi listojn de aplikaĵoj, kiuj uzas AnkiDroid API kiel vortaroj kaj iloj.</string>
-    <string name="html_javascript_debugging">Senerarigado de HTML / Ĝavoskripto</string>
+    <string name="html_javascript_debugging">Senerarigado de HTML / JavaScript</string>
     <string name="html_javascript_debugging_summ">Aktivigu forajn konektojn por WebView kaj konservu HTML de kartoj al la dosierujo “AnkiDroid”</string>
     <!-- Advanced statistics settings -->
     <string name="advanced_statistics_title">Detala statistiko</string>
@@ -216,8 +221,8 @@
         <item quantity="other">%1$s\n%2$d kartaroj uzas tiun ĉi grupon</item>
     </plurals>
     <string name="deck_conf_new_cards">Novaj kartoj</string>
-    <string name="deck_conf_rev_cards">Ripetoj</string>
-    <string name="deck_conf_lps_cards">Misrespondoj</string>
+    <string name="deck_conf_rev_cards" comment="Name of the deck options submenu for configuring reviews of due cards.">Ripetoj</string>
+    <string name="deck_conf_lps_cards" comment="Label of the submenu stating how lapses cards are treated.">Misrespondoj</string>
     <string name="deck_conf_general">Ĝeneralaj</string>
     <string name="deck_conf_reminders">Memorigaĵoj</string>
     <string name="deck_conf_steps">Paŝoj (en minutoj)</string>
@@ -235,6 +240,7 @@
     <string name="deck_conf_use_general_timeout_settings">Uzi ĝeneralajn agordojn</string>
     <string name="deck_conf_use_general_timeout_settings_summ">Uzi ĝeneralajn agordojn pri “aŭtomate montri respondon” anstataŭ uzi agordojn por tiu ĉi grupo.</string>
     <string name="deck_conf_easy_bonus">Premio por facileco</string>
+    <string name="deck_conf_hard_factor">Ripeti malfacilan karton post</string>
     <string name="deck_conf_ivl_fct">Obligi intertempon je</string>
     <string name="deck_conf_max_ivl">Maksimuma intertempo</string>
     <string name="deck_conf_new_lps_ivl">Nova intertempo</string>
@@ -249,31 +255,26 @@
     <string name="deck_conf_replayq">Reludi semandon</string>
     <string name="deck_conf_replayq_summ">Kiam montri respondon, reludi kaj demandon kaj respondon</string>
     <string name="deck_conf_manage">Administri grupojn</string>
-    <string name="deck_conf_manage_summ">Add and change options groups</string>
+    <string name="deck_conf_manage_summ">Aldoni/ŝanĝi grupojn de agordoj</string>
     <string name="deck_conf_current_group">Nuna grupo</string>
-    <string name="deck_conf_rename">Alinomi</string>
+    <string name="deck_conf_rename" comment="Menu entry to rename a deck">Alinomi</string>
     <string name="deck_conf_reset">Restarigi normojn</string>
-    <string name="deck_conf_reset_title">Restarigi normojn</string>
     <string name="deck_conf_reset_message">Ĉu restarigi la nunan grupon de agordoj al implicitaj valoroj?</string>
-    <string name="deck_conf_add">Aldoni</string>
+    <string name="deck_conf_add" comment="Adding a new deck option group">Aldoni</string>
     <string name="deck_conf_add_summ">Krei kopion de la nuna grupo de agordoj</string>
-    <string name="deck_conf_remove">Forigi</string>
-    <string name="deck_conf_remove_title">Forigi</string>
     <string name="deck_conf_remove_message">Ĉu forigi la nunan grupon de agordoj?</string>
     <string name="deck_conf_set_subdecks">Agordi por ĉiuj subkartaroj</string>
     <plurals name="deck_conf_set_subdecks_summ">
         <item quantity="one">%s subkartaro uzos tiun ĉi grupon</item>
         <item quantity="other">%s subkartaroj uzos tiun ĉi grupon</item>
     </plurals>
-    <string name="deck_conf_set_subdecks_title">Agordi por ĉiuj subkartaroj</string>
     <string name="deck_conf_set_subdecks_message">Ĉu agordi la nunan grupon de agordoj por ĉiuj subkartaroj de tiu ĉi kartaro?</string>
     <string name="pref_browser_editor_font">Tiparo de foliumilo kaj redaktilo</string>
     <string name="deck_conf_cram_filter">Filtri</string>
-    <string name="deck_conf_cram_options">Agordoj</string>
     <string name="deck_conf_cram_search">Serĉi</string>
     <string name="deck_conf_cram_limit">Limigi al</string>
     <string name="deck_conf_cram_order">kartoj elektitaj laŭ</string>
-    <string name="deck_conf_cram_reschedule">Replani</string>
+    <string name="deck_conf_cram_reschedule" comment="Title of the box labelled by deck_conf_cram_reschedule_summ">Replani</string>
     <string name="deck_conf_cram_reschedule_summ">Replani karton surbaze de miaj respondoj en tiu ĉi kartaro</string>
     <string name="deck_conf_cram_steps">Propraj paŝoj (en minutoj)</string>
     <string name="deck_conf_cram_steps_summ">Difini proprajn paŝojn</string>
@@ -283,6 +284,8 @@
     <string name="analytics_dialog_title">Helpu, ke AnkiDroid fariĝos pli bona!</string>
     <string name="analytics_title">Kunhavigi uzadon de funkcioj</string>
     <string name="analytics_summ">Vi povas kontribui al AnkiDroid per helpi al la disvovla teamo scii kiujn funkciojn homoj uzas</string>
-    <string name="enable_miui_keyboard_hack">\'Paste\' to insert cloze deletion</string>
-    <string name="enable_miui_keyboard_hack_summ">In the Note Editor, \'Paste\' will turn the selected text into a cloze</string>
+    <string name="note_editor_replace_newlines">Anstataŭigi novajn liniojn en HTML</string>
+    <string name="note_editor_replace_newlines_summ">En la kart‑redaktilo, konverti ĉiujn &lt;br&gt; al novaj linioj dum redakti karton.</string>
+    <string name="no_code_formatting">Simpla aranĝo de enigita respondo</string>
+    <string name="no_code_formatting_summ">Ripari “􏿾” aperantan en entajpita respondo</string>
 </resources>

@@ -19,8 +19,11 @@ package com.ichi2.libanki;
 import android.content.ContentValues;
 import android.content.Context;
 
+import com.ichi2.anki.UIUtils;
 import com.ichi2.anki.exception.ConfirmModSchemaException;
 
+import com.ichi2.libanki.backend.DroidBackend;
+import com.ichi2.libanki.backend.DroidBackendFactory;
 import com.ichi2.libanki.exception.UnknownDatabaseVersionException;
 import com.ichi2.libanki.utils.SystemTime;
 import com.ichi2.libanki.utils.Time;
@@ -35,10 +38,16 @@ import java.util.Arrays;
 import androidx.annotation.NonNull;
 import timber.log.Timber;
 
+import static com.ichi2.libanki.Consts.DECK_STD;
+
 @SuppressWarnings({"PMD.AvoidThrowingRawExceptionTypes","PMD.AvoidReassigningParameters",
         "PMD.NPathComplexity","PMD.MethodNamingConventions","PMD.ExcessiveMethodLength","PMD.OneDeclarationPerLine",
         "PMD.SwitchStmtsShouldHaveDefault","PMD.EmptyIfStmt","PMD.SimplifyBooleanReturns","PMD.CollapsibleIfStatements"})
 public class Storage {
+
+    private static boolean sUseBackend = true;
+    private static boolean sUseInMemory = false;
+
 
     /* Open a new or existing collection. Path must be unicode */
     public static Collection Collection(Context context, String path) {
@@ -63,19 +72,20 @@ public class Storage {
         assert path.endsWith(".anki2");
         File dbFile = new File(path);
         boolean create = !dbFile.exists();
-        // connect
-        DB db = new DB(path);
+        DroidBackend backend = DroidBackendFactory.getInstance(useBackend());
+        DB db = backend.openCollectionDatabase(sUseInMemory ? ":memory:" : path);
+
         try {
             // initialize
             int ver;
             if (create) {
-                ver = _createDB(db, time);
+                ver = _createDB(db, time, backend);
             } else {
                 ver = _upgradeSchema(db, time);
             }
             db.execute("PRAGMA temp_store = memory");
             // add db to col and do any remaining upgrades
-            Collection col = new Collection(context, db, path, server, log, time);
+            Collection col = new Collection(context, db, path, server, log, time, backend);
             if (ver < Consts.SCHEMA_VERSION) {
                 _upgrade(col, ver);
             } else if (ver > Consts.SCHEMA_VERSION) {
@@ -93,6 +103,14 @@ public class Storage {
             db.close();
             throw e;
         }
+    }
+
+    /**
+     * Whether the collection should try to be opened with a Rust-based DB Backend
+     * Falls back to Java if init fails.
+     * */
+    protected static boolean useBackend() {
+        return sUseBackend;
     }
 
 
@@ -128,15 +146,16 @@ public class Storage {
             if (ver < 3) {
                 // new deck properties
                 for (Deck d : col.getDecks().all()) {
-                    d.put("dyn", 0);
+                    d.put("dyn", DECK_STD);
                     d.put("collapsed", false);
                     col.getDecks().save(d);
                 }
             }
             if (ver < 4) {
                 col.modSchemaNoCheck();
-                ArrayList<Model> clozes = new ArrayList<>();
-                for (Model m : col.getModels().all()) {
+                ArrayList<Model> models = col.getModels().all();
+                ArrayList<Model> clozes = new ArrayList<>(models);
+                for (Model m : models) {
                     if (!m.getJSONArray("tmpls").getJSONObject(0).getString("qfmt").contains("{{cloze:")) {
                         m.put("type", Consts.MODEL_STD);
                     } else {
@@ -195,7 +214,7 @@ public class Storage {
             if (ver < 11) {
                 col.modSchemaNoCheck();
                 for (Deck d : col.getDecks().all()) {
-                    if (d.getInt("dyn") != 0) {
+                    if (d.isDyn()) {
                         int order = d.getInt("order");
                         // failed order was removed
                         if (order >= 5) {
@@ -272,12 +291,19 @@ public class Storage {
     }
 
 
-    private static int _createDB(DB db, @NonNull Time time) {
-        db.execute("PRAGMA page_size = 4096");
-        db.execute("PRAGMA legacy_file_format = 0");
-        db.execute("VACUUM");
-        _addSchema(db, time);
-        _updateIndices(db);
+    private static int _createDB(DB db, @NonNull Time time, DroidBackend backend) {
+        if (backend.databaseCreationCreatesSchema()) {
+            _setColVars(db, time);
+            // This line is required for testing - otherwise Rust will override a mocked time.
+            db.execute("update col set crt = ?", UIUtils.getDayStart(time) / 1000);
+        } else {
+            db.execute("PRAGMA page_size = 4096");
+            db.execute("PRAGMA legacy_file_format = 0");
+            db.execute("VACUUM");
+            _addSchema(db, time);
+            _updateIndices(db);
+        }
+
         db.execute("ANALYZE");
         return Consts.SCHEMA_VERSION;
     }
@@ -363,4 +389,13 @@ public class Storage {
         _updateIndices(db);
     }
 
+
+    public static void setUseBackend(boolean useBackend) {
+        sUseBackend = useBackend;
+    }
+
+
+    public static void setUseInMemory(boolean useInMemoryDatabase) {
+        sUseInMemory = useInMemoryDatabase;
+    }
 }

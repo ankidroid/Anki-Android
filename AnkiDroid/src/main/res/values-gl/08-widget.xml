@@ -44,18 +44,7 @@
         <item quantity="one">%d AnkiDroid card due</item>
         <item quantity="other">%d AnkiDroid cards due</item>
     </plurals>
-    <string name="widget_no_cards_due">Sen cartóns pendentes</string>
-    <string name="widget_loading">Cargando o widget&#8230;</string>
-    <plurals name="widget_cards_in_decks_due">
-        <item quantity="one">%1$d cartón pendente de %2$s</item>
-        <item quantity="other">%1$d cartóns pendentes de %2$s</item>
-    </plurals>
-    <plurals name="widget_decks">
-        <item quantity="one">%1$d baralla</item>
-        <item quantity="other">%1$d barallas</item>
-    </plurals>
-    <string name="widget_small">AnkiDroid pequeno</string>
-    <string name="widget_small_button">AnkiDroid</string>
+    <string name="widget_small" comment="Label of the small ankidroid widget. This text can\'t be found directly in AnkiDroid">AnkiDroid pequeno</string>
     <plurals name="widget_cards_due">
         <item quantity="one">%d card due</item>
         <item quantity="other">%d cards due</item>
@@ -64,6 +53,5 @@
         <item quantity="one">%d minute remaining</item>
         <item quantity="other">%d minutes remaining</item>
     </plurals>
-    <string name="widget_add_note">Add note</string>
     <string name="widget_add_note_button">Add new AnkiDroid note</string>
 </resources>

@@ -38,14 +38,14 @@
 ~ this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <resources>
+    <string name="yes">yes</string>
     <!-- Navigation drawer items-->
     <string name="decks">Các bộ thẻ</string>
-    <string name="card_browser">Trình duyệt thẻ</string>
+    <string name="card_browser" comment="The usage of card browser inside the app (note the casing)">Trình duyệt thẻ</string>
     <string name="statistics">Thống kê</string>
     <string name="settings">Cài đặt</string>
     <string name="help">Trợ giúp</string>
     <string name="send_feedback">Gửi phản hồi</string>
-    <string name="studyoptions_title">Tổng quan bộ thẻ</string>
     <string name="studyoptions_due_today">Tới hạn hôm nay:</string>
     <string name="studyoptions_new_total">Tổng số thẻ mới:</string>
     <string name="studyoptions_total_cards">Tổng số thẻ:</string>
@@ -65,10 +65,10 @@
         <item quantity="other">%d giờ còn lại</item>
     </plurals>
     <plurals name="reviewer_window_title_days">
-        <item quantity="other">%d days %d left</item>
+        <item quantity="other">Còn %d ngày</item>
     </plurals>
     <string name="no_cards_placeholder_title">Collection is empty</string>
-    <string name="no_cards_placeholder_description">Start adding cards\nusing the + icon.</string>
+    <string name="no_cards_placeholder_description">Để thêm thẻ\nấn vào nút +.</string>
     <!-- The deck picker via AnkiStatsTaskHandler.java -->
     <plurals name="studied_cards_today">
         <item quantity="other">Đã học %1$d thẻ trong %2$s hôm nay</item>
@@ -76,7 +76,7 @@
     <!-- flashcard_portrait.xml -->
     <string name="type_answer_hint">Gõ đáp án</string>
     <string name="show_answer">Hiện đáp án</string>
-    <string name="hide_answer">Hide answer</string>
+    <string name="hide_answer">Che đáp án</string>
     <string name="ease_button_again">Học lại</string>
     <string name="ease_button_hard">Khó</string>
     <string name="ease_button_good">Tốt</string>
@@ -85,22 +85,14 @@
     <string name="menu_import">Nhập</string>
     <string name="undo">Hoàn tác</string>
     <string name="undo_action_review">lần ôn tập trước</string>
-    <string name="undo_action_bury_card">ẩn thẻ</string>
-    <string name="undo_action_bury_note">ẩn ghi chú</string>
-    <string name="undo_action_suspend_card">tạm dừng thẻ</string>
-    <string name="undo_action_suspend_note">tạm dừng ghi chú</string>
-    <string name="undo_action_delete">xoá ghi chú</string>
-    <string name="undo_action_delete_multi">xóa các ghi chú</string>
     <string name="undo_action_change_deck_multi">thay đổi các bộ thẻ</string>
-    <string name="undo_action_reschedule_card">lên lịch lại</string>
-    <string name="undo_action_reset_card">đặt lại tiến độ</string>
-    <string name="undo_action_reposition_card">đặt lại vị trí</string>
     <string name="move_all_to_deck">Di chuyển tất cả đến bộ thẻ</string>
     <string name="unbury">Bỏ tạm ẩn</string>
     <string name="rename_deck">Đổi tên bộ thẻ</string>
-    <string name="menu_add">Thêm</string>
+    <string name="create_shortcut">Create shortcut</string>
+    <string name="menu_add" comment="A generic add button - Main Deck Picker and card templates. Please inform us if you need more specific strings">Thêm</string>
     <string name="menu_add_note">Thêm ghi chú</string>
-    <string name="menu_my_account">Tài khoản đồng bộ</string>
+    <string name="menu_my_account" comment="Label of the window in which the user should enter their account. This text can\'t be found in AnkiDroid directly.">Tài khoản đồng bộ</string>
     <string name="menu_dismiss_note">Ẩn / xoá</string>
     <string name="menu_bury_card">Tạm ẩn thẻ</string>
     <string name="menu_bury_note">Tạm ẩn ghi chú</string>
@@ -124,7 +116,7 @@
     <string name="menu_unmark_note">Bỏ đánh dấu ghi chú</string>
     <string name="menu_toggle_mic_tool_bar">Check pronunciation</string>
     <string name="new_deck">Tạo bộ thẻ</string>
-    <string name="create">Tạo</string>
+    <string name="create" comment="Button to create a filtered deck">Tạo</string>
     <string name="new_dynamic_deck">Tạo bộ thẻ đã lọc</string>
     <string name="night_mode">Chế độ ban đêm</string>
     <string name="directory_inaccessible">Không thể truy cập thư mục AnkiDroid</string>
@@ -132,7 +124,7 @@
     The user is taken to the "App Info" screen, and needs to click "Permissions" and
     grant AnkiDroid the \'Storage\' permission. This needs to be a fairly generic message as implementations
     of the permissions/app info screen will differ between devices. -->
-    <string name="startup_no_storage_permission">Please grant AnkiDroid the ‘Storage’ permission to continue</string>
+    <string name="startup_no_storage_permission">Cấp quyền \"Lưu trữ\" cho AnkiDroid để có thể tiếp tục</string>
     <!--
         The time_quantities are units of time. They are used without
         plurals or dots.
@@ -157,7 +149,8 @@
     <string name="custom_study_deck_name">Phiên học tuỳ chọn</string>
     <string name="custom_study_deck_exists">Đổi tên bộ thẻ học tuỳ chọn hiện hữu trước nhất</string>
     <string name="empty_deck">Bộ thẻ này rỗng</string>
-    <string name="invalid_deck_name">Invalid deck name</string>
+    <string name="empty_deck_add_note">Thêm thẻ</string>
+    <string name="invalid_deck_name">Tên bộ thẻ không hợp lệ</string>
     <string name="studyoptions_empty">Bộ thẻ này rỗng. Bấm bút + để thêm nội dung mới.</string>
     <string name="studyoptions_limit_reached">Đã đạt giới hạn học hằng ngày</string>
     <string name="studyoptions_empty_schedule">Không có thẻ nào được lên lịch học</string>
@@ -182,7 +175,6 @@
     <string name="card_template_editor_front">Mẫu định dạng mặt trước</string>
     <string name="card_template_editor_back">Mẫu định dạng mặt sau</string>
     <string name="card_template_editor_styling">Phong cách</string>
-    <string name="card_template_editor_menu_delete">Xoá</string>
     <string name="card_template_editor_menu_card_browser_appearance">Xuất hiện trình duyệt thẻ</string>
     <string name="card_template_editor_deck_override">Deck Override</string>
     <string name="card_template_editor_cant_delete">Cần tối thiểu một loại thẻ</string>
@@ -195,11 +187,21 @@
     <string name="template_for_current_card_deleted">The card type for the current card was deleted.</string>
     <!-- Card Browser Appearance -->
     <string name="card_template_browser_appearance_title">Browser appearance</string>
+    <string name="current_and_default_deck">%1$s (%2$s)</string>
+    <!-- card Info -->
+    <string name="card_info_title">Thông tin thẻ</string>
     <!-- Permissions -->
     <string name="read_write_permission_label">Đọc và ghi vào cơ sở dữ liệu AnkiDroid</string>
     <string name="read_write_permission_description">truy cập các ghi chú, thẻ, loại ghi chú và các bộ thẻ đang tồn tại, cũng như tạo mới chúng</string>
     <!-- Context Menu -->
-    <string name="card_browser_label">Card Browser</string>
-    <string name="card_browser_context_menu">Card Browser</string>
+    <string name="card_browser_context_menu" comment="The value which appears in the system context menu. Note the casing difference">Card Browser</string>
     <string name="context_menu_anki_card_label">Anki Card</string>
+    <string name="has_a_problem" comment="First field is either front template or back template. Second field is the error message.">%1$s has a problem:<br/>%2$s</string>
+    <string name="more_information">Thông tin chi tiết</string>
+    <string name="no_field">Found \'{{%1$s}}\', but there is no field called \'%1$s\'.</string>
+    <string name="closed_tag_not_open">Found \'{{/%1$s}}\', but missing \'{{#%1$s}}\' or \'{{^%1$s}}\'.</string>
+    <string name="missing_closing_bracket">Thiếu \'}}\' tại \'%s\'.</string>
+    <string name="open_tag_not_closed">Thiếu \'{{%s}}\'.</string>
+    <string name="wrong_tag_closed">Found \'{{/%1$s}}\', but expected \'{{/%2$s}}\'</string>
+    <string name="filter_error">Error in filter %s</string>
 </resources>

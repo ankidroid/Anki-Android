@@ -37,180 +37,173 @@
 ~ You should have received a copy of the GNU General Public License along with
 ~ this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools">
     <!-- How to format a percentage shown in the summary field of a preference -->
     <string name="preference_summary_percentage">XXX%</string>
+    <!-- #7570: We should use these strings again -->
     <!-- Navigation drawer strings -->
-    <string name="drawer_open">Open drawer</string>
-    <string name="drawer_close">Close drawer</string>
-    <string name="CardEditorLaterMessage">Saved information for later</string>
-    <string name="CardEditorCardDeck">Card deck:</string>
-    <string name="CardEditorNoteDeck">Deck:</string>
-    <string name="CardEditorModel">Type:</string>
-    <string name="CardEditorTags">Tags: %1$s</string>
-    <string name="CardEditorCards">Cards: %1$s</string>
-    <string name="tag_name">Tag name</string>
-    <string name="add_new_filter_tags">Add/filter tags</string>
-    <string name="add_tag">Add tag</string>
-    <string name="check_all_tags">Check/uncheck all tags</string>
-    <string name="filter_tags">Filter tags</string>
-    <string name="no_tags">You haven’t added any tags yet</string>
-    <string name="sdcard_missing_message">Switch off USB storage to access your decks</string>
-    <string name="updated_version">Updated to version %s</string>
+    <string tools:ignore="UnusedResources" name="drawer_open">Панельне ачу</string>
+    <string tools:ignore="UnusedResources" name="drawer_close">Панельне ябу</string>
+    <string name="CardEditorCardDeck">Кәрт колодасы:</string>
+    <string name="CardEditorNoteDeck">Колода:</string>
+    <string name="CardEditorModel">Төр:</string>
+    <string name="CardEditorTags">Тамгалар: %1$s</string>
+    <string name="CardEditorCards">Кәртләр: %1$s</string>
+    <string name="tag_name">Тамга исеме</string>
+    <string name="add_new_filter_tags">Тамгалар өстәү/фильтрлау</string>
+    <string name="add_tag">Тамга кушу</string>
+    <string name="check_all_tags">Бөтен тамгаларны сайлау/сайлауны бетерү</string>
+    <string name="filter_tags">Тамгаларны фильтрлау</string>
+    <string name="no_tags">Тамгаларны өстәмәдегез әле</string>
+    <string name="updated_version">%s версиясенә яңартылды</string>
     <!-- Reviewer.java -->
-    <string name="save_whiteboard">Save whiteboard</string>
-    <string name="enable_whiteboard">Enable whiteboard</string>
-    <string name="disable_whiteboard">Disable whiteboard</string>
-    <string name="show_whiteboard">Show whiteboard</string>
-    <string name="hide_whiteboard">Hide whiteboard</string>
-    <string name="clear_whiteboard">Clear whiteboard</string>
-    <string name="replay_audio">Replay audio</string>
-    <string name="toggle_mic_tool_bar">Check Pronunciation</string>
-    <string name="leech_suspend_notification">Card marked as leech and suspended</string>
-    <string name="leech_notification">Card marked as leech</string>
-    <string name="corrupt_font">Corrupt font file %s</string>
-    <string name="webview_crash_unknown">Unknown error</string>
-    <string name="webview_crash_unknwon_detailed">This was caused by an internal error in the WebView</string>
-    <string name="webview_crash_oom">Out of Memory</string>
-    <string name="webview_crash_oom_details">The WebView was terminated by the system. This typically happens when the application runs out of memory, often due to large fonts or media.</string>
-    <string name="webview_crash_nonfatal">WebView renderer crashed. Cause: %s</string>
-    <string name="webview_crash_fatal">Fatal Error: WebView renderer crashed. Cause: %s</string>
-    <string name="webview_crash_loop_dialog_title">System WebView Rendering Failure</string>
-    <string name="webview_crash_loop_dialog_content">System WebView failed to render card \'%1$s\'.\n %2$s</string>
+    <string name="save_whiteboard">Язылганны сакларга</string>
+    <string name="enable_whiteboard">Тактаны кабызу</string>
+    <string name="disable_whiteboard">Тактаны сүндерү</string>
+    <string name="show_whiteboard">Тактаны күрсәтү</string>
+    <string name="hide_whiteboard">Тактаны качыру</string>
+    <string name="clear_whiteboard">Тактаны сөртү</string>
+    <string name="replay_audio">Аудионы кабатлау</string>
+    <string name="leech_suspend_notification">Кәрт бәйләнчек итеп куелган hәм искә алынмас</string>
+    <string name="leech_notification">Кәрт бәйләнчек итеп куелган</string>
+    <string name="corrupt_font">%s шрифт файлы бозылган</string>
+    <string name="webview_crash_unknown">Билгесез хата</string>
+    <string name="webview_crash_unknwon_detailed">Бу WebViewның эчке хатасы аркасында килеп чыкты</string>
+    <string name="webview_crash_oom">Хәтер җитми</string>
+    <string name="webview_crash_oom_details">WebView система тарафыннан ябылды. Бу гадәттә кушымтанын зур шрифтлар я медиафайллар аркасында хәтере бетүеннән килеп чыга.</string>
+    <string name="webview_crash_nonfatal">WebView хатасы. Сәбәбе: %s</string>
+    <string name="webview_crash_fatal">Критик хата: WebView ябылды. Сәбәбе: %s</string>
+    <string name="webview_crash_loop_dialog_title">Система WebViewының хатасы</string>
+    <string name="webview_crash_loop_dialog_content">Система WebViewы \'%1$s\' кәртен ача алмады.\n %2$s</string>
     <!-- Browser -->
     <string-array name="browser_column1_headings">
-        <item>Question</item>
-        <item>Sort field</item>
+        <item>Сорау</item>
+        <item>Сортлау аланы</item>
     </string-array>
     <string-array name="browser_column2_headings">
-        <item>Answer</item>
-        <item>Card</item>
-        <item>Deck</item>
-        <item>Note</item>
-        <item>Question</item>
-        <item>Tags</item>
-        <item>Lapses</item>
-        <item>Reviews</item>
-        <item>Interval</item>
-        <item>Ease</item>
-        <item>Due</item>
-        <item>Card Modified</item>
-        <item>Created</item>
-        <item>Note Modified</item>
+        <item>Җәвап</item>
+        <item>Кәрт</item>
+        <item>Колода</item>
+        <item>Язу</item>
+        <item>Сорау</item>
+        <item>Тамгалар</item>
+        <item>Ялгышлар</item>
+        <item>Кабатлаулар</item>
+        <item>Интервал</item>
+        <item>Авырлык</item>
+        <item>Вакыт</item>
+        <item>Кәрт үзгәртелеше</item>
+        <item>Ясалган</item>
+        <item>Язу үзгәртелеше</item>
     </string-array>
     <!-- Custom study options -->
-    <string name="custom_study_increase_new_limit">Modify today’s new card limit</string>
-    <string name="custom_study_increase_review_limit">Modify today’s review card limit</string>
-    <string name="custom_study_review_forgotten">Review forgotten cards</string>
-    <string name="custom_study_review_ahead">Review ahead</string>
-    <string name="custom_study_random_selection">Study a random selection of cards</string>
-    <string name="custom_study_preview_new">Preview new cards</string>
-    <string name="custom_study_limit_tags">Limit to particular tags</string>
+    <string name="custom_study_increase_new_limit">Бугенге кәрт лимитын үзгәртү</string>
+    <string name="custom_study_increase_review_limit">Бугенге кабатланган кәрт лимитын үзгәртү</string>
+    <string name="custom_study_review_forgotten">Онытылган кәртләрне кабатлау</string>
+    <string name="custom_study_review_ahead">Алдагын кабатлау</string>
+    <string name="custom_study_random_selection">Очраклы кәрт сайланышын өйрәнү</string>
+    <string name="custom_study_preview_new">Яңаларны карау</string>
+    <string name="custom_study_limit_tags">Кайбер тамгаларны гына</string>
     <!-- Card editor -->
-    <string name="cardeditor_title_add_note">Add note</string>
-    <string name="cardeditor_title_edit_card">Edit note</string>
-    <string name="discard_unsaved_changes">Close and lose current input?</string>
-    <string name="note_editor_no_cards_created">No cards created. Please fill in more fields</string>
-    <string name="note_editor_no_first_field">The first field is empty</string>
-    <string name="note_editor_no_cloze_delations">This note type must contain cloze deletions</string>
-    <string name="note_editor_set_field_language">Set field language</string>
-    <string name="note_editor_no_cards_created_all_fields">The current note type did not produce any cards.\nPlease choose another note type, or click ‘Cards’ and add a field substitution</string>
-    <string name="note_editor_insert_cloze_no_cloze_note_type">Cloze deletions will only work on a Cloze note type</string>
-    <string name="saving_facts">Saving note</string>
-    <string name="saving_model">Saving note type</string>
-    <string name="add">Add</string>
-    <string name="save">Save</string>
-    <string name="close">Close</string>
-    <string name="select">Select</string>
-    <string name="saving_changes">Saving changes&#8230;</string>
-    <string name="reordering_cards">Reordering cards&#8230;</string>
-    <string name="field_remapping">%1$s (from “%2$s”)</string>
-    <string name="confirm_map_cards_to_nothing">Any cards mapped to nothing will be deleted. If a note has no remaining cards, it will be lost. Are you sure you want to continue?</string>
+    <string name="cardeditor_title_edit_card">Язуны үзгәртү</string>
+    <string name="discard_unsaved_changes">Ябу hәм үзгәртүләрне югалту?</string>
+    <string name="note_editor_no_cards_created">Кәртләр ясалмаган. Кубрәк юлларны тутырыгыз</string>
+    <string name="note_editor_no_first_field">Беренче юл буш</string>
+    <string name="note_editor_no_cloze_delations">Бу кәрт төре эчендә бушлыклар белән күнегү булырга тиеш</string>
+    <string name="note_editor_set_field_language">Текст телен көйләргә</string>
+    <string name="note_editor_no_cards_created_all_fields">Хәзерге язу төре бернинди кәрт тә ясамады.\nЗинhар, башка язу төрен сайлагыз я \"Кәртләр\" төймәсенә басыгыз hәм юл кертегез</string>
+    <string name="note_editor_insert_cloze_no_cloze_note_type">Буш юллар белән күнегүләр буш юллар белән язулар төрендә генә эшләячәк</string>
+    <string name="saving_facts">Язу саклана</string>
+    <string name="saving_model">Язу төре саклана</string>
+    <string name="save">Саклау</string>
+    <string name="close">Ябу</string>
+    <string name="select">Сайлау</string>
+    <string name="saving_changes">Үзгәртүләр саклана...</string>
+    <string name="reordering_cards">Кәртләр чираты үзгәртелә...</string>
+    <string name="field_remapping">%1$s (\"%2$s\"дан)</string>
+    <string name="confirm_map_cards_to_nothing">Бернәрсәгә дә бәйләнмәгән кәртләр сөртелер. Кәртсез калган язулар югалыр. Дәвам итәргә телисезме?</string>
     <plurals name="timebox_reached">
-        <item quantity="other">%1$d cards studied in %2$s</item>
+        <item quantity="other">%2$s эчендә %1$d кәрт өйрәнелде</item>
     </plurals>
     <!-- minutes used in \'[studied in] x minutes\' context, causing inflexion in some languages -->
     <plurals name="in_minutes">
-        <item quantity="other">%1$d minutes</item>
+        <item quantity="other">%1$d минут</item>
     </plurals>
-    <string name="studyoptions_welcome_title">Welcome to AnkiDroid</string>
-    <string name="fact_adder_intent_title">AnkiDroid card</string>
-    <string name="note_editor_add_note">Add note</string>
-    <string name="note_editor_copy_note">Copy note</string>
-    <string name="card_editor_copy_card">Copy card</string>
-    <string name="card_editor_reposition_card">Reposition</string>
-    <string name="card_editor_reset_card">Reset progress</string>
-    <string name="card_editor_reschedule_card">Reschedule</string>
-    <string name="card_editor_preview_card">Preview</string>
-    <string name="error_insufficient_memory">Operation not possible due to insufficient memory on your device</string>
-    <string name="rename">Rename</string>
-    <string name="default_conf_delete_error">The default options group can’t be removed</string>
+    <string name="fact_adder_intent_title" comment="Label of the \'Add Note\' window. This title can\'t be seen in AnkiDroid directly.">AnkiDroid кәрты</string>
+    <string name="note_editor_copy_note">Язуны копияләү</string>
+    <string name="card_editor_reposition_card">Урынын үзгәртү</string>
+    <string name="card_editor_reset_card">Прогрессны бетерү</string>
+    <string name="card_editor_reschedule_card" comment="Action to reschedule a card">Вакытын алыштыру</string>
+    <string name="card_editor_preview_card" comment="Button offering to preview some card(s)">Карап алу</string>
+    <string name="error_insufficient_memory">Хәтер җитмәгәнгә операцияне эшләп булмый </string>
+    <string name="rename" comment="Confirm that the renaming action should be processed.">Исемен үзгәртү</string>
+    <string name="default_conf_delete_error">Стандарт көйләүләр төркемен бетереп булмый</string>
     <plurals name="factadder_cards_added">
-        <item quantity="other">%d cards added</item>
+        <item quantity="other">%d кәрт ясалган</item>
     </plurals>
-    <string name="help_title">Help</string>
-    <string name="check_db">Check database</string>
-    <string name="check_media">Check media</string>
-    <string name="empty_cards">Empty cards</string>
-    <string name="check_db_message">Checking database&#8230;</string>
-    <string name="empty_card_warning">This card is empty. Use the “Empty cards” option from the menu on the deck list screen.</string>
-    <string name="unknown_type_field_warning">Type answer: unknown field %s</string>
-    <string name="delete_deck">Deleting deck&#8230;</string>
-    <string name="show_hint">Show %s</string>
-    <string name="info_rate">Rate AnkiDroid</string>
-    <string name="col_load_failed">Collection loading failed.\nPress back to close AnkiDroid.</string>
-    <string name="import_title">Importing</string>
-    <string name="import_select_title">Choose a file to import</string>
-    <string name="import_message_add">Add</string>
-    <string name="import_message_replace_confirm">This will delete your existing collection and replace it with the data of file %s</string>
-    <string name="import_message_add_confirm">Add “%s” to collection? This may take a long time</string>
-    <string name="import_log_no_apkg">This isn’t a valid Anki package file</string>
-    <string name="import_log_failed_unzip">Failed to unzip apkg: %s</string>
-    <string name="import_log_failed_copy_to">Failed to copy apkg to %s</string>
-    <string name="import_log_failed_validate">apkg failed validation</string>
-    <string name="import_log_insufficient_space">There is not enough space to unzip the package. Needed %1$d, available %2$d</string>
-    <string name="import_log_file_cache_cleared">Error importing file, likely a cache clear during processing.\nPlease try again</string>
-    <string name="import_succeeded_but_check_database">Data import succeeded but post-import cleanup failed. Run check database later. Root cause: %s</string>
-    <string name="import_error_unhandled_request">Unable to process import request</string>
-    <string name="import_error_corrupt_zip">The apkg file is corrupt. Please delete and re-download it.\n\nRoot cause: %s</string>
-    <string name="import_error_exception">Failed to import package\n\n%s</string>
-    <string name="import_error_not_apkg_extension">Filename “%s” doesn’t have .apkg or .colpkg extension</string>
+    <string name="check_db">Мәгълүмәт базасын тикшерү</string>
+    <string name="check_media">Медиафайлларны тикшерү</string>
+    <string name="empty_cards">Буш кәртләр</string>
+    <string name="check_db_message">Мәгълүмәт базасы тикшерелә...</string>
+    <string name="empty_card_warning">Бу кәрт буш. Колода исемлеге менюсыннан \"Буш кәртләр\" опциясен кулланыгыз.</string>
+    <string name="unknown_type_field_warning">Беленмәгән юл төре: %s</string>
+    <string name="delete_deck">Колода бетерелә...</string>
+    <string name="show_hint">%s күрсәтү</string>
+    <string name="info_rate">AnkiDroidны бәяләгез</string>
+    <string name="import_title">Импортлау</string>
+    <string name="import_select_title">Импорт өчен файл сайлагыз</string>
+    <string name="import_message_add" comment="Adding a new deck to the collection (import)">Кушу</string>
+    <string name="import_message_replace_confirm">Бу сезнең хәзерге коллекцияне бетерер hәм аны %s файлы белән алыштырыр</string>
+    <string name="import_message_add_confirm">\"%s\" коллекциягә кушыргамы? Бу күп вакыт алырга мөмкин.</string>
+    <string name="import_log_no_apkg">Бу эшли торган Anki файлы түгел</string>
+    <string name="import_log_failed_unzip">Бу apkgны ачып булмады: %s</string>
+    <string name="import_log_failed_copy_to">apkgны %sга копияләп булмады</string>
+    <string name="import_log_failed_validate">apkgны тикшереп булмады</string>
+    <string name="import_log_insufficient_space">Пакетны ачу өчен урын җитми. Кирәк: %1$d, бар: %2$d</string>
+    <string name="import_log_file_cache_cleared">Файлны импортланганда хата: бәлки, кэш чистартылган иде. Яңадан тырышып карагыз.</string>
+    <string name="import_succeeded_but_check_database">Импортлау уңышлы үтте, чистарту - уңышсыз. Мәгълүмәт базасын тикшерегез. Төп сәбәп: %s</string>
+    <string name="import_error_unhandled_request">Импортлау таләбен эшкәртеп булмый</string>
+    <string name="import_error_corrupt_zip">apkg файлы бозык. Зинhар, аны бетерегез hәм яңадан йөкләгез.\n\nТөп сәбәп: %s</string>
+    <string name="import_error_exception">Пакетны импортлау килеп чыкмады\n\n%s</string>
+    <string name="import_error_not_apkg_extension">\"%s\" файлның киңәйтүсе .apkg я .colpkg булырга тиеш</string>
     <string name="import_error_load_imported_database">Anki Database (.anki2) replacements are not yet supported. Please see the manual for replacement instructions.</string>
-    <string name="import_error_content_provider">The selected file couldn’t be imported automatically by AnkiDroid. Please see the user manual for how to manually import anki files: \n%s</string>
-    <string name="import_error_copy_file_to_cache">copyFileToCache() failed (possibly out of storage space)</string>
-    <string name="import_error_unhandled_scheme">Unhandled import from: “%s”</string>
-    <string name="import_replacing">Replacing collection&#8230;</string>
-    <string name="import_interrupted">Import interrupted: AnkiDroid was closed</string>
+    <string name="import_error_content_provider">Сайланган файл автомат рәвештә импортлана алмады. Аны кулдан ничек итеп импортларга, җитәкчелектән карагыз: \n%s</string>
+    <string name="import_error_copy_file_to_cache">copyFileToCache() килеп чыкмады (бәлки хәтердә урын җитмидер)</string>
+    <string name="import_error_unhandled_scheme">Эшкәртелә алмаган импорт: \"%s\" </string>
+    <string name="import_replacing">Коллекция алмаштырыла...</string>
+    <string name="import_interrupted">Импорт бүленгән иде</string>
     <string name="export_include_schedule">Include scheduling</string>
-    <string name="export_include_media">Include media</string>
-    <string name="confirm_apkg_export">Export collection as Anki package?</string>
-    <string name="confirm_apkg_export_deck">Export “%s” as apkg file?</string>
-    <string name="export_in_progress">Exporting Anki package file&#8230;</string>
-    <string name="export_successful_title">Send Anki package?</string>
-    <string name="export_send_button">Send</string>
-    <string name="export_save_button">Save to file</string>
-    <string name="export_send_no_handlers">No applications available to handle apkg. Saving...</string>
-    <string name="export_save_apkg_successful">Successfully saved Anki package</string>
-    <string name="export_save_apkg_unsuccessful">Save Anki package failed</string>
-    <string name="export_successful">File “%s” was exported. Do you want to send it with another app?</string>
-    <string name="export_email_subject">AnkiDroid exported flashcards: %s</string>
-    <string name="export_email_text"><![CDATA[        Hi!
+    <string name="export_include_media">Медиафайллар белән</string>
+    <string name="confirm_apkg_export">Anki пакетына коллекцияне экспортларгамы? </string>
+    <string name="confirm_apkg_export_deck">\"%s\" apkg файлына экспортларгамы? </string>
+    <string name="export_in_progress">Anki пакеты экспортлана... </string>
+    <string name="export_successful_title">Anki пакетын җибәрергәме? </string>
+    <string name="export_send_button">Җибәрү</string>
+    <string name="export_save_button">Файлга саклау</string>
+    <string name="export_send_no_handlers">apkg файлын укый ала торган кушымталар юк. Саклана... </string>
+    <string name="export_save_apkg_successful">Anki пакеты уңышлы итеп сакланды</string>
+    <string name="export_save_apkg_unsuccessful">Anki пакеты саклана алмады</string>
+    <string name="export_successful">\"%s\" файлы экспортланды. Сез аны башка кушымта белән җибәрергә телисезме? </string>
+    <string name="export_email_subject">AnkiDroid экспортланган кәртләр: %s</string>
+    <string name="export_email_text"><![CDATA[        Сәлам!
         <br/><br/>
-        This is an Anki flashcards deck send from <a href="https://ankidroid.org/docs/manual.html">AnkiDroid</a>.
-        Try to open it using one of the available <a href="http://ankisrs.net/#download">Anki distributions</a> and enjoy easy and efficient learning!
+        Бу - <a href="https://ankidroid.org/docs/manual.html">AnkiDroid</a> кушымтасыннан җибәрелгән Anki кәртләр колодасы.
+        Аны ачыр өчен,  <a href="http://ankisrs.net/#download">Anki кушымтасын</a> көйләгез һәм җиңел һәм уңышлы итеп өйрәнегез!
         ]]></string>
-    <string name="export_unsuccessful">Error exporting apkg file</string>
-    <string name="import_hint">Place the apkg file in directory “%s” and touch “OK” to import cards</string>
+    <string name="export_unsuccessful">apkg файлын экспортлаганда хата</string>
+    <string name="import_hint">Импортлау өчен apkg файлын \"%s\" папкасына урнаштырып, ОК төймәсенә басыгыз</string>
     <string name="upgrade_import_no_file_found">No importable %1$s file found</string>
-    <string name="study_options">Options</string>
+    <string name="study_options" comment="Name for a preference category in Filtered deck (aka Cram deck, aka Custom study) options">Көйләүләр</string>
+    <string name="menu__deck_options">Deck options</string>
+    <string name="menu__study_options" comment="Menu item that opens options for a Filtered deck (aka Cram deck, aka Custom study)">Study options</string>
     <string name="select_tts">Set TTS language</string>
-    <string name="custom_study">Custom study</string>
-    <string name="more_options">More</string>
-    <string name="dyn_deck_desc">This is a special deck for studying outside of the normal schedule. Cards will be automatically returned to their original decks after you review them. Deleting this deck from the deck list will return all remaining cards to their original deck.</string>
-    <string name="steps_error">Steps must be numbers greater than 0</string>
-    <string name="steps_min_error">At least one step is required</string>
-    <string name="sched_end">(end)</string>
-    <string name="sched_unbury_action">To see them now touch the “Unbury” item in the menu</string>
+    <string name="custom_study">Тагын өйрәнү</string>
+    <string name="more_options">Күбрәк</string>
+    <string name="dyn_deck_desc">Бу - гадәттәгедән тыш күбрәк уку өчен колода. Кәртләрне карап чыккач, алар үзенең колодаларына кире кайтачаклар. Бу колоданы бетерү аның эчендәге кәртләрнең үзенең колодаларына кайтуына китерер. </string>
+    <string name="steps_error">Адымнар 0дән күбрәк сан булырга тиеш</string>
+    <string name="steps_min_error">Бер булса да адым кирәк</string>
+    <string name="sched_end">(ахыр)</string>
+    <string name="sched_unbury_action">Аларны күрү өчен менюдагы \"Кайтару\" төймәсенә басыгыз</string>
     <string name="sched_has_buried">Some related or buried cards were delayed until tomorrow</string>
     <string name="tag_editor_add_feedback">Touch “%2$s” to confirm adding “%1$s”</string>
     <string name="tag_editor_add_feedback_existing">Existing tag “%1$s” selected</string>
@@ -234,6 +227,10 @@
     <plurals name="time_span_years">
         <item quantity="other">%s years</item>
     </plurals>
+    <!-- A decimal number of seconds.
+    Please give this a best-effort translation and explain the requirements for
+    formatting decimals in your language in the CrowdIn comments -->
+    <string name="time_span_decimal_seconds">%s seconds</string>
     <!-- The reason for making a simple “< x” translatable are RTL
          languages which apparently use the other symbol to mean less
          than. -->
@@ -248,14 +245,13 @@
     <!-- Currently only used if exporting APKG fails -->
     <string name="apk_share_error">Error sharing apkg file</string>
     <!-- Import and export v2 feedback -->
-    <string name="import_needs_v2">V2 scheduler must be enabled to import this file.</string>
-    <string name="import_cannot_with_v2">V2 scheduler can not import V1 decks with scheduling included.</string>
     <string name="export_v2_dummy_note">This file requires a newer version of Anki.</string>
     <!-- Placed in a snackbar with a long URL. Limit the length and move the URL to the start of the string -->
     <string name="activity_start_failed_load_url">Loading \'%s\' failed.</string>
     <string name="activity_start_failed">The system does not have an app installed that can perform this action.</string>
     <string name="multimedia_editor_image_compression_failed"><![CDATA[Camera images may be large. You may wish to compress & resize images in the media directory]]></string>
     <string name="no_browser_notification">No browser found，please visit web page by pc or mobile: </string>
+    <string name="web_page_error">Error loading page: %s</string>
     <string name="no_outgoing_link_in_cardbrowser">External page link in card is not supported.</string>
     <!-- The name of the deck which corrupt cards will be moved to -->
     <string name="check_integrity_recovered_deck_name">Recovered Cards</string>
@@ -303,8 +299,32 @@
     <string name="about_ankidroid_error_copy_debug_info">Error copying debug information to clipboard</string>
     <!-- Card Viewer -->
     <string name="card_viewer_could_not_find_image">Card Content Error: Failed to load ‘%s’</string>
-    <string name="card_viewer_could_not_find_image_get_help">Help</string>
+    <string name="card_viewer_media_relative_protocol">Card Content Error: Media update required</string>
     <!-- Deck Picker -->
     <string name="deck_picker_failed_deck_load">Failed to load deck ‘%s’</string>
     <string name="search_decks">Search decks</string>
+    <string name="ankidroid_init_failed_webview_title">Fatal Error</string>
+    <string name="ankidroid_init_failed_webview">AnkiDroid relies on the System WebView which is unavailable. This can happen if the system is installing updates. Please try again in a few minutes.\n\n%s</string>
+    <!-- A Menu item to change the Font Size (currently in the Note Editor) -->
+    <string name="menu_font_size">Font Size</string>
+    <string name="menu_show_toolbar" comment="Checkable item stating whether the note editor toolbar should be shown">Show Toolbar</string>
+    <string name="format_insert_bold">Format as Bold</string>
+    <string name="format_insert_italic">Format as Italic</string>
+    <string name="format_insert_underline">Format as Underline</string>
+    <string name="insert_horizontal_line">Insert Horizontal Line</string>
+    <string name="insert_heading">Insert Heading</string>
+    <string name="format_font_size">Change Font Size</string>
+    <string name="insert_mathjax">Insert MathJax Equation</string>
+    <string name="insert_cloze">Insert Cloze Deletion</string>
+    <string name="before_text">HTML Before Selection</string>
+    <string name="after_text">HTML After Selection</string>
+    <string name="add_toolbar_item">Create Toolbar Item</string>
+    <string name="toolbar_item_explain_remove">Enter HTML to be inserted before and after the selected text\n\nLong press a toolbar item to remove it</string>
+    <string name="remove_toolbar_item">Remove Toolbar Item?</string>
+    <string name="note_editor_paste_too_large">The image is too large to paste, please insert the image manually</string>
+    <string name="ankidroid_cannot_open_after_backup_try_again" comment="After an Android backup is restored, AnkiDroid opens and shows this message.         Opening AnkiDroid again will work correctly">        Android backup in progress. Please try again</string>
+    <string name="create_shortcut_error_vivo" comment="iManager is an app on Vivo phones">You may need to use iManager to allow AnkiDroid to add shortcuts</string>
+    <string name="create_shortcut_failed" comment="home screen == launcher">Your home screen does not allow AnkiDroid to add shortcuts</string>
+    <string name="create_shortcut_error">Error adding shortcut: %s</string>
+    <string name="note_editor_capitalize" comment="This is for a switch with a checkbox - on: enabled">Capitalize sentences</string>
 </resources>

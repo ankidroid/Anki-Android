@@ -18,10 +18,15 @@
 
 package com.ichi2.libanki;
 
+import android.text.Html;
+
+import com.ichi2.utils.HtmlUtils;
 import com.ichi2.utils.JSONObject;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+
+import androidx.annotation.VisibleForTesting;
 
 /**
  * This class is used to detect LaTeX tags in HTML and convert them to their corresponding image
@@ -85,7 +90,8 @@ public class LaTeX {
     /**
      * Return an img link for LATEX.
      */
-    private static String _imgLink(String latex, Model model, Media m) {
+    @VisibleForTesting
+    protected static String _imgLink(String latex, Model model, Media m) {
         String txt = _latexFromHtml(latex);
 
         String ext = "png";
@@ -95,7 +101,7 @@ public class LaTeX {
 
         String fname = "latex-" + Utils.checksum(txt) + "." + ext;
         if (m.have(fname)) {
-            return "<img class=latex src=\"" + fname + "\">";
+            return "<img class=latex alt=\"" + HtmlUtils.escape(latex) + "\" src=\"" + fname + "\">";
         } else {
             return Matcher.quoteReplacement(latex);
         }

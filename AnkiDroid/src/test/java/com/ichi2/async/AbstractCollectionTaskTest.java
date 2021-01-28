@@ -30,20 +30,12 @@ import static org.hamcrest.Matchers.notNullValue;
 @RunWith(AndroidJUnit4.class)
 public abstract class AbstractCollectionTaskTest extends RobolectricTest {
 
-    protected TaskData execute(CollectionTask.TASK_TYPE taskType) {
-        CollectionTask task = CollectionTask.launchCollectionTask(taskType);
+    protected <Progress, Result> Result execute(CollectionTask.Task<Progress, Result> task) {
+        CollectionTask<Progress, Progress, Result, Result> collectionTask = TaskManager.launchCollectionTask(task);
         try {
-            return task.execute().get();
+            return collectionTask.get();
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
-    }
-
-    protected <T> T assertResultArraySingleton(TaskData result, Class<T> clazz) {
-        assertThat("The result object should be non-null", result.getObjArray(), notNullValue());
-        assertThat("There should only be one result object", result.getObjArray(), arrayWithSize(1));
-        assertThat(String.format("Result should be instance of type '%s'", clazz.getName()), result.getObjArray()[0], instanceOf(clazz));
-        //noinspection unchecked
-        return (T) result.getObjArray()[0];
     }
 }

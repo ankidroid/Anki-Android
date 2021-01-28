@@ -37,7 +37,7 @@
 ~ You should have received a copy of the GNU General Public License along with
 ~ this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools">
     <string name="check_db_title">Periksa basisdata?</string>
     <string name="check_db_warning">Ini dapat memakan waktu lama</string>
     <string name="check_db_acknowledge">Basisdata diperiksa</string>
@@ -59,7 +59,7 @@
         <item><![CDATA[Yang bukan pengembang juga bisa membantu. Contohnya, kamu dapat <a href=\"%1$s\">membantu menerjemahkan</a> AnkiDroid, menambah artikel wiki, memberikan tangkapan layar, atau membuat postingan tentang AnkiDroid.]]></item>
         <item><![CDATA[AnkiDroid dirilis dibawah <a href=\"%1$s\">lisensi GNU-GPL v3</a> dan kode sumber tersedia <a href=\"%2$s\">di GitHub</a>.]]></item>
     </string-array>
-    <string name="preview_title">Pratinjau</string>
+    <string name="preview_title" comment="Title of the window allowing to preview card(s)">Pratinjau</string>
     <string name="reposition_card_dialog_title">Pindah posisi kartu baru</string>
     <string name="reposition_card_dialog_message">Posisi Mulai:</string>
     <string name="reposition_card_not_new_error">Hanya kartu baru yang dapat pindah posisi</string>
@@ -72,7 +72,6 @@
         <item quantity="other">%d kartu direset</item>
     </plurals>
     <!-- Reschedule Card Dialog -->
-    <string name="reschedule_card_dialog_title">Jadwalkan ulang kartu</string>
     <plurals name="reschedule_cards_dialog_title">
         <item quantity="other">Jadwalkan ulang kartu</item>
     </plurals>
@@ -90,8 +89,6 @@
     <string name="answering_error_message">Menulis ke koleksi gagal. Basisdata mungkin korup atau tidak cukup ruang pada penyimpanan. \ n \ n Jika ini sering terjadi, cobalah periksa database, perbaiki koleksi atau mengembalikan dari cadangan. Sentuh \"pengaturan\" untuk ini. \ n \ Atau bisa juga bug dari AnkiDroid; harap laporkan galatnya agar kami bisa mengeceknya.</string>
     <string name="answering_error_report">Laporkan galat</string>
     <string name="repair_deck_dialog">Apakah kamu benar-benar ingin memperbaiki basisdata?\n\nSebelum memulai, salinan akan dibuat ke dalam subfolder \'%s\'.</string>
-    <string name="intent_add_saved_information">Data tersimpan</string>
-    <string name="intent_add_clear_all">Hapus semua</string>
     <string name="intent_aedict_empty">Kategori \'awalan\' kosong</string>
     <string name="intent_aedict_category">Untuk menambah kartu ke AnkiDroid hapus semua kategori catatan atau tambahkan satu bernama \"bawaan\"</string>
     <string name="custom_study_new_total_new">Kartu baru di dek: %d</string>
@@ -103,7 +100,6 @@
     <string name="custom_study_random">Pilih x kartu secara acak dari dek:</string>
     <string name="custom_study_preview">Pratinjau kartu yang baru ditambahkan dalam x hari terakhir:</string>
     <string name="custom_study_rebuild_deck_corrupt">Tidak dapat membangun dek belajar khusus</string>
-    <string name="rebuild_custom_study_deck">Membuat ulang dek belajar kustom&#8230;</string>
     <string name="importing_collection">Mengimpor koleksi&#8230;</string>
     <string name="import_media_count">Mengimpor berkas media %1$d%%&#8230;</string>
     <string name="import_progress">• Mengimpor catatan: %1$d%%\n• Mengimpor kartu: %2$d%%\n• Proses akhir: %3$d%%</string>
@@ -118,9 +114,10 @@
     <string name="dialog_ok">OK</string>
     <string name="dialog_no">Tidak</string>
     <string name="dialog_continue">Lanjut</string>
-    <string name="dialog_positive_create">Buat</string>
+    <string name="dialog_positive_create" comment="Create a new collection, probably erasing the previous one, may be necessary in case of error.">Buat</string>
     <string name="dialog_positive_delete">Hapus</string>
-    <string name="dialog_positive_disable">Nonaktifkan</string>
+    <!-- Currently unsued, should be useful in the future -->
+    <string name="dialog_positive_disable" tools:ignore="UnusedResources">Nonaktifkan</string>
     <string name="dialog_positive_overwrite">Timpa</string>
     <string name="dialog_positive_remove">Hapus</string>
     <string name="dialog_positive_repair">Perbaiki</string>
@@ -149,9 +146,10 @@
     <!-- Tags Dialog Options -->
     <string name="tags_dialog_option_all_cards">Semua kartu</string>
     <string name="tags_dialog_option_new_cards">Baru</string>
-    <string name="tags_dialog_option_due_cards">Jatuh tempo</string>
+    <string name="tags_dialog_option_due_cards" comment="Name of cards that are already been reviewed in the past, and that should be reviewed again">Jatuh tempo</string>
     <!-- Empty cards -->
     <string name="emtpy_cards_finding">Mencari kartu kosong&#8230;</string>
+    <string name="confirm_cancel">Do you want to cancel?</string>
     <string name="empty_cards_none">Tidak ada kartu kosong</string>
     <string name="empty_cards_count">Kartu yang akan dihapus: %d</string>
     <string name="empty_cards_deleted">Kartu dihapus: %d</string>
@@ -168,7 +166,6 @@
     <!-- Database Integrity Check -->
     <string name="integrity_check_startup_title">AnkiDroid Diperbarui</string>
     <string name="integrity_check_startup_content">AnkiDroid Diperbarui. Pembaruan ini meliputi perbaikan masalah basisdata, dan kami sarankan untuk memeriksa basisdata sekarang</string>
-    <string name="integrity_check_positive">Periksa Basisdata</string>
     <string name="integrity_check_continue_anyway">Tetap lanjutkan</string>
     <string name="integrity_check_insufficient_space">Memeriksa Basisdata memerlukan jumlah penyimpanan sementara yang besar.\n\nSangat disarankan untuk memiliki setidaknya %s ruang kosong sebelum melanjutkan.</string>
     <string name="integrity_check_insufficient_space_extra_content">\n\nKamu memiliki %s bebas saat ini.</string>
@@ -205,6 +202,25 @@
     <!-- Locale Selection Dialog -->
     <string name="locale_selection_dialog_title">Seleksi Petunjuk Papan Tik</string>
     <string name="locale_selection_dialog_summary">Beberapa papan tik multibahasa, seperti GBoard mendukung pergantian bahasa saat mengedit teks\n\nHarap meminta fitur “setImeHintLocales” dari pembuat papan tikmu jika tidak dapat mengganti bahasa</string>
+    <!-- Help Dialog -->
+    <string name="help_title_using_ankidroid">Using AnkiDroid</string>
+    <string name="help_item_ankidroid_manual">AnkiDroid Manual</string>
+    <string name="help_item_anki_manual">Anki Manual</string>
+    <string name="help_item_ankidroid_faq">AnkiDroid FAQ</string>
+    <string name="help_title_get_help">Get Help</string>
+    <string name="help_item_mailing_list">Mailing List</string>
+    <string name="help_item_reddit">Reddit</string>
+    <string name="help_item_report_bug">Report a Bug</string>
+    <string name="help_title_support_ankidroid">Support AnkiDroid</string>
+    <string name="help_item_support_opencollective_donate">Donate</string>
+    <string name="help_item_support_develop_ankidroid">Develop</string>
+    <string name="help_item_support_rate_ankidroid">Rate</string>
+    <string name="help_item_support_other_ankidroid">Other</string>
+    <string name="help_title_community">Community</string>
+    <string name="help_item_anki_forums">Anki Forums</string>
+    <string name="help_item_discord">Discord</string>
+    <string name="help_item_facebook">Facebook</string>
+    <string name="help_item_twitter">Twitter</string>
     <!--Sync-->
     <plurals name="sync_automatic_sync_needs_more_time">
         <item quantity="other">Sinkronisasi otomatis dapat terjadi dalam %d detik</item>

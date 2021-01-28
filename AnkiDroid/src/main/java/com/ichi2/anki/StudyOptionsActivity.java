@@ -36,6 +36,9 @@ public class StudyOptionsActivity extends NavigationDrawerActivity implements St
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        if (showedActivityFailedScreen(savedInstanceState)) {
+            return;
+        }
         super.onCreate(savedInstanceState);
         // The empty frame layout is a workaround for fragments not showing when they are added
         // to android.R.id.content when an action bar is used in Android 2.1 (and potentially

@@ -44,17 +44,13 @@
     <string name="sync_error">Помилка синхронізації</string>
     <string name="vague_error">Помилка</string>
     <string name="retry">Повторити спробу</string>
-    <string name="cancel">Відміна</string>
-    <string name="terms_and_conditions"><a href="https://ankiweb.net/account/terms">Правила та умови</a></string>
     <string name="menu_get_shared_decks">Завантажити колоди</string>
-    <string name="connection_error_message">Виникла помилка мережі.</string>
-    <string name="not_logged_in_title">Увійдіть у AnkiWeb</string>
+    <string name="connection_error_message">Виникла помилка мережі</string>
+    <string name="not_logged_in_title">Ввійти в AnkiWeb</string>
     <string name="login_create_account_message">Ви повинні увійти до стороннього профілю щоб використовувати хмарну синхронізацію. Ви можете створити профіль на наступному кроці.</string>
     <!-- MyAccount.java -->
-    <string name="username">Електронна адреса</string>
-    <string name="username_repeat">Ще раз електронна адреса</string>
+    <string name="username">Електронна пошта</string>
     <string name="password">Пароль</string>
-    <string name="password_repeat">Повторити пароль</string>
     <string name="log_in">Ввійти</string>
     <string name="sign_up_description">Не маєте облікового запису AnkiWeb? Це безкоштовно!</string>
     <string name="sign_up_not_affiliated">Примітка: AnkiWeb не афілійований з AnkiDroid</string>
@@ -65,7 +61,6 @@
     <string name="invalid_username_password">Некоректна електронна адреса або пароль.</string>
     <string name="reset_password">Відновити пароль</string>
     <!-- AndroidManifest.xml -->
-    <string name="downloaddeck_search">Пошук</string>
     <string name="preferences_title">Налаштування</string>
     <string name="deckpreferences_title">Параметри для XXX</string>
     <string name="sync_conflict_message">Ваші колоди тут та в AnkiWeb відрізняються так, що їх не можна об’єднати, тому потрібно перезаписати колоди з одного боку колодами з іншого.\n\nБажаєте відвантажити колоди звідси, чи завантажити з AnkiWeb?</string>
@@ -80,8 +75,7 @@
     <string name="sync_title">Синхронізація</string>
     <string name="sync_downloading_media">Завантаження медіа %1$d/%2$d...</string>
     <string name="sync_log_uploading_message">Повна синхронізація з пристрою</string>
-    <string name="sync_log_downloading_message">Повна синхронізація з сервера</string>
-    <string name="sync_log_clocks_unsynchronized">Годинник на вашому пристрої невірний на %1$d секунд %2$s; Для синхронізації необхідно, щоб і годинник і часовий пояс були коректними для уникнення помилок. Будь ласка, встановіть коректну дату, час і часовий пояс вашого телефону і почніть синхронізацію знову.</string>
+    <string name="sync_log_clocks_unsynchronized">Годинник на вашому пристрої відхилився на %1$d секунд %2$s; Для синхронізації необхідно, щоб і годинник і часовий пояс були коректними для уникнення помилок. Будь ласка, встановіть коректну дату, час і часовий пояс вашого телефону і почніть синхронізацію знову.</string>
     <string name="sync_log_clocks_unsynchronized_tz">, часовий пояс на пристрої ймовірно не правильний</string>
     <string name="sync_log_clocks_unsynchronized_date">, дата на пристрої ймовірно не правильна</string>
     <string name="sync_conflict_title">Конфлікт синхронізації</string>
@@ -91,7 +85,7 @@
     <string name="sync_corrupt_database">Ваша база даних пошкоджена. Будь ласка, виправте її перед спробою повторної синхронізації.\n\nДивіться %s для інформації про виправлення бази даних.</string>
     <string name="sync_too_busy">Сервер перевантажений. Спробуйте знову пізніше.</string>
     <string name="sync_remote_db_error">Завантажена база даних була пошкоджена. Будь ласка, спробуйте знову.</string>
-    <string name="sync_overwrite_error">Ваша поточна колекція не може бути заміщена завантаженим файлом.</string>
+    <string name="sync_overwrite_error">Ваша поточна колекція не може бути замінена завантаженим файлом.</string>
     <string name="sync_connection_error">Вичерпано час підключення. Або у вас є проблема з підключенням до Інтернету, або у вас дуже великий файл у папці медіа.</string>
     <string name="sync_write_access_error">Не можливо зберегти завантажений файл на карту пам’яті. Вона встановлена лише для читання або на ній мало місця.</string>
     <string name="sync_error_invalid_sync_server">Користувальницький сервер для синхронізації в розширених налаштуваннях є некоректним (%s). Будь ласка, введіть дійсний сервер, або вимкніть налаштування.</string>
@@ -120,8 +114,8 @@
     <string name="sync_basic_check_failed">Будь ласка, виконайте «%s» перед синхронізацією</string>
     <string name="sync_sanity_local">Локально</string>
     <string name="sync_sanity_remote">Віддалено</string>
-    <string name="force_full_sync_title">Змусити повню синхронізацію</string>
-    <string name="force_full_sync_summary">Під час наступної синхронізації примусити зміни лише в одному напрямку</string>
+    <string name="force_full_sync_title">Виконати повну синхронізацію</string>
+    <string name="force_full_sync_summary">Під час наступної синхронізації записати зміни лише в одному напрямку</string>
     <string name="full_sync_confirmation">Обрана зміна потребує повного перезавантаження бази давних під час наступної синхронізації ваших колекцій. Якщо ви мали перегляди або інші ще не синхронізвані зміни у черзі на інших пристроях, їх буде втрачено. Продовжити?</string>
     <string name="full_sync_confirmation_upgrade">Через помилку у попередній версії, AnkiDroid рекомендовано примусово синхронізувати.</string>
     <string name="sync_error_407_proxy_required">Потрібна аyтентифікація на проксі-сервері.</string>
@@ -132,9 +126,7 @@
     <string name="sync_error_502_maintenance">AnkiWeb знаходиться на обслуговуванні. Будь ласка, спробуйте знову за кілька хвилин.</string>
     <string name="sync_error_504_gateway_timeout">Отримана помилка 504 gateway timeout.</string>
     <!-- Deck Picker Sync Icon -->
-    <string name="sync_menu_title">Синхронізація</string>
     <string name="sync_menu_title_full_sync">Синхронізація (повна)</string>
     <string name="sync_menu_title_no_account">Синхронізація (логін)</string>
-    <!-- An option on a message box to open the "corrupt collection" webpage -->
-    <string name="sync_corrupt_collection_get_help">Довідка</string>
+    <string name="sync_error_unknown_host_readable">Не вдалося під\'єднатися до AnkiWeb. Перевірте з\'єднання з інтернетом.\n\n%s</string>
 </resources>

@@ -42,14 +42,12 @@
     <string name="disabled">Оневозможи</string>
     <string name="enabled">Овозможи</string>
     <!-- preferences.xml categories-->
-    <string name="pref_cat_general">AnkiDroid</string>
     <string name="pref_cat_general_summ">Општи поднесувања</string>
     <string name="pref_cat_reviewing">Повторуање</string>
     <string name="pref_cat_reviewing_summ">Non-deck-specific reviewer settings</string>
     <string name="pref_cat_reviewer_behaviour">Однесување</string>
     <string name="pref_cat_flashcard">Приказ</string>
     <string name="pref_cat_whiteboard">Цртање</string>
-    <string name="pref_cat_automatic_display">Автоматски прикажи одговор</string>
     <string name="pref_cat_appearance">Изглед</string>
     <string name="pref_cat_appearance_summ">Change themes and default font</string>
     <string name="pref_cat_themes">Themes</string>
@@ -66,8 +64,6 @@
     <string name="about_version">Верзија</string>
     <!-- preferences.xml entries-->
     <string name="whiteboard_stroke_width">Stroke width</string>
-    <string name="whiteboard_black">Black strokes</string>
-    <string name="whiteboard_black_summ">Uses less memory, unless in night mode</string>
     <string name="use_input_tag">Пиши одговор на карта</string>
     <string name="use_input_tag_summ">Use a text input box inside the card to type in the answer</string>
     <string name="dictionary">Lookup dictionary</string>
@@ -96,15 +92,26 @@
     <string name="gestures_summ">Assign gestures to actions such as answering and editing cards.</string>
     <string name="gestures_allow_links">Ignore touch gestures on links</string>
     <string name="gestures_allow_links_summary">Touch gestures will not be processed if a link/hint is pressed.</string>
+    <string name="gestures_corner_touch">9-point touch</string>
+    <string name="gestures_corner_touch_summary">Allow touch gestures in screen corners</string>
     <string name="gestures_swipe_up">Swipe up</string>
     <string name="gestures_swipe_down">Swipe down</string>
     <string name="gestures_swipe_left">Swipe left</string>
     <string name="gestures_swipe_right">Swipe right</string>
     <string name="gestures_double_tap">Double touch</string>
     <string name="gestures_tap_top">Touch top</string>
-    <string name="gestures_tap_bottom">Touch bottom</string>
     <string name="gestures_tap_left">Touch left</string>
     <string name="gestures_tap_right">Touch right</string>
+    <string name="gestures_tap_bottom">Touch bottom</string>
+    <string name="gestures_corner_tap_top_left">Touch top left</string>
+    <string name="gestures_corner_tap_top_center">Touch top center</string>
+    <string name="gestures_corner_tap_top_right">Touch top right</string>
+    <string name="gestures_corner_tap_middle_left">Touch middle left</string>
+    <string name="gestures_corner_tap_middle_center">Touch middle center</string>
+    <string name="gestures_corner_tap_middle_right">Touch middle right</string>
+    <string name="gestures_corner_tap_bottom_left">Touch bottom left</string>
+    <string name="gestures_corner_tap_bottom_center">Touch bottom center</string>
+    <string name="gestures_corner_tap_bottom_right">Touch bottom right</string>
     <string name="gestures_volume_up">Volume up</string>
     <string name="gestures_volume_down">Volume down</string>
     <string name="more_scrolling_buttons">eReader</string>
@@ -142,9 +149,8 @@
     <string name="timeout_answer_text">Automatic display answer</string>
     <string name="timeout_answer_summ">Show answer automatically without user input. Delay includes time for automatically played audio files.</string>
     <string name="timeout_answer_seconds">Time to show answer</string>
-    <string name="timeout_answer_seconds_summ">XXX s</string>
+    <string name="timeout_answer_seconds_summ" comment="The time to wait (in seconds) in the reviewer before automatically showing the next question or answer">XXX s</string>
     <string name="timeout_question_seconds">Time to show next question</string>
-    <string name="timeout_question_seconds_summ">XXX s</string>
     <string name="select_locale_title">Select language</string>
     <string name="safe_display">Safe display mode</string>
     <string name="safe_display_summ">Disable all animations and use safer method for drawing cards. E-ink devices may require this.</string>
@@ -165,7 +171,6 @@
     <string name="use_current">Deck for new cards</string>
     <string name="new_spread">New card position</string>
     <string name="learn_cutoff">Learn ahead limit</string>
-    <string name="learn_cutoff_summ">XXX min</string>
     <string name="time_limit">Timebox time limit</string>
     <string name="time_limit_summ">XXX min</string>
     <string name="day_offset">Start of next day</string>
@@ -217,8 +222,8 @@
         <item quantity="other">%1$s\n%2$d decks use this group</item>
     </plurals>
     <string name="deck_conf_new_cards">Нови карти</string>
-    <string name="deck_conf_rev_cards">Повторувања</string>
-    <string name="deck_conf_lps_cards">Lapses</string>
+    <string name="deck_conf_rev_cards" comment="Name of the deck options submenu for configuring reviews of due cards.">Повторувања</string>
+    <string name="deck_conf_lps_cards" comment="Label of the submenu stating how lapses cards are treated.">Lapses</string>
     <string name="deck_conf_general">Општо</string>
     <string name="deck_conf_reminders">Потсетници</string>
     <string name="deck_conf_steps">Чекори (во минути)</string>
@@ -236,6 +241,7 @@
     <string name="deck_conf_use_general_timeout_settings">Употреби општи поднесувања</string>
     <string name="deck_conf_use_general_timeout_settings_summ">Use general \'Automatic display answer\' settings instead of using the settings for this group.</string>
     <string name="deck_conf_easy_bonus">Лесен бонус</string>
+    <string name="deck_conf_hard_factor">Hard interval</string>
     <string name="deck_conf_ivl_fct">Interval modifier</string>
     <string name="deck_conf_max_ivl">Максимален интервал</string>
     <string name="deck_conf_new_lps_ivl">Нов интервал</string>
@@ -252,29 +258,24 @@
     <string name="deck_conf_manage">Group management</string>
     <string name="deck_conf_manage_summ">Add and change options groups</string>
     <string name="deck_conf_current_group">Моменталната група</string>
-    <string name="deck_conf_rename">Преименувај</string>
+    <string name="deck_conf_rename" comment="Menu entry to rename a deck">Преименувај</string>
     <string name="deck_conf_reset">Обновете на стандардни подесувања</string>
-    <string name="deck_conf_reset_title">Обновете на стандардни подесувања</string>
     <string name="deck_conf_reset_message">Restore current options group to default values?</string>
-    <string name="deck_conf_add">Додај</string>
+    <string name="deck_conf_add" comment="Adding a new deck option group">Додај</string>
     <string name="deck_conf_add_summ">Create a copy of the current options group</string>
-    <string name="deck_conf_remove">Отстрани</string>
-    <string name="deck_conf_remove_title">Отстрани</string>
     <string name="deck_conf_remove_message">Remove current options group?</string>
     <string name="deck_conf_set_subdecks">Поднеси за сите под шпилови</string>
     <plurals name="deck_conf_set_subdecks_summ">
         <item quantity="one">%s subdeck will use this group</item>
         <item quantity="other">%s subdecks will use this group</item>
     </plurals>
-    <string name="deck_conf_set_subdecks_title">Поднеси за сите под шпилови</string>
     <string name="deck_conf_set_subdecks_message">Set current options group for all of this deck’s subdecks?</string>
     <string name="pref_browser_editor_font">Пребарувач и уредувач фонт</string>
     <string name="deck_conf_cram_filter">Филтрирај</string>
-    <string name="deck_conf_cram_options">Опции</string>
     <string name="deck_conf_cram_search">Пребарај</string>
     <string name="deck_conf_cram_limit">Ограничи до</string>
     <string name="deck_conf_cram_order">Карти се селектирани според</string>
-    <string name="deck_conf_cram_reschedule">Презакажи</string>
+    <string name="deck_conf_cram_reschedule" comment="Title of the box labelled by deck_conf_cram_reschedule_summ">Презакажи</string>
     <string name="deck_conf_cram_reschedule_summ">Презакажи карти според мојте одговори во овој шпил</string>
     <string name="deck_conf_cram_steps">Сопствени чекори (во минути)</string>
     <string name="deck_conf_cram_steps_summ">Дефинирај сопствени чекори</string>
@@ -284,6 +285,8 @@
     <string name="analytics_dialog_title">Помогни AnkiDroid да стане подобро!</string>
     <string name="analytics_title">Share feature usage</string>
     <string name="analytics_summ">You can contribute to AnkiDroid by helping the development team see which features people use</string>
-    <string name="enable_miui_keyboard_hack">\'Paste\' to insert cloze deletion</string>
-    <string name="enable_miui_keyboard_hack_summ">In the Note Editor, \'Paste\' will turn the selected text into a cloze</string>
+    <string name="note_editor_replace_newlines">Replace newlines with HTML</string>
+    <string name="note_editor_replace_newlines_summ">In the Note Editor, convert any instances of &lt;br&gt; to newlines when editing a card.</string>
+    <string name="no_code_formatting">Simple typed answer formatting</string>
+    <string name="no_code_formatting_summ">Fixes ‘􏿾’ appearing in typed answer results</string>
 </resources>

@@ -38,14 +38,14 @@
 ~ this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <resources>
+    <string name="yes">ja</string>
     <!-- Navigation drawer items-->
     <string name="decks">Stapel</string>
-    <string name="card_browser">Kartenübersicht</string>
+    <string name="card_browser" comment="The usage of card browser inside the app (note the casing)">Kartenübersicht</string>
     <string name="statistics">Statistik</string>
     <string name="settings">Einstellungen</string>
     <string name="help">Hilfe</string>
     <string name="send_feedback">Rückmeldung senden</string>
-    <string name="studyoptions_title">Stapelübersicht</string>
     <string name="studyoptions_due_today">Heute fällig:</string>
     <string name="studyoptions_new_total">Neue Karten gesamt:</string>
     <string name="studyoptions_total_cards">Karten gesamt:</string>
@@ -72,7 +72,7 @@
         <item quantity="other">%d Tage %d verbleiben</item>
     </plurals>
     <string name="no_cards_placeholder_title">Sammlung ist leer</string>
-    <string name="no_cards_placeholder_description">Fügen Sie Karten \nmit dem + -Symbol hinzu.</string>
+    <string name="no_cards_placeholder_description">Fügen Sie Karten mit\ndem »+«-Symbol hinzu.</string>
     <!-- The deck picker via AnkiStatsTaskHandler.java -->
     <plurals name="studied_cards_today">
         <item quantity="one">Sie haben heute %1$d Karte in %2$s gelernt</item>
@@ -90,22 +90,14 @@
     <string name="menu_import">Importieren</string>
     <string name="undo">Rückgängig</string>
     <string name="undo_action_review">Letzte Wiederholung</string>
-    <string name="undo_action_bury_card">Karte aufschieben</string>
-    <string name="undo_action_bury_note">Notiz aufschieben</string>
-    <string name="undo_action_suspend_card">Karte ausschließen</string>
-    <string name="undo_action_suspend_note">Notiz ausschließen</string>
-    <string name="undo_action_delete">Notiz löschen</string>
-    <string name="undo_action_delete_multi">Notizen löschen</string>
     <string name="undo_action_change_deck_multi">Stapel wechseln</string>
-    <string name="undo_action_reschedule_card">Umplanen</string>
-    <string name="undo_action_reset_card">Fortschritt zurücksetzen</string>
-    <string name="undo_action_reposition_card">Position zurücksetzen</string>
     <string name="move_all_to_deck">Alle diesem Stapel hinzufügen</string>
     <string name="unbury">Nicht mehr aufschieben</string>
     <string name="rename_deck">Stapel umbenennen</string>
-    <string name="menu_add">Hinzufügen</string>
+    <string name="create_shortcut">Verknüpfung erstellen</string>
+    <string name="menu_add" comment="A generic add button - Main Deck Picker and card templates. Please inform us if you need more specific strings">Hinzufügen</string>
     <string name="menu_add_note">Notiz hinzufügen</string>
-    <string name="menu_my_account">Synchronisierungskonto</string>
+    <string name="menu_my_account" comment="Label of the window in which the user should enter their account. This text can\'t be found in AnkiDroid directly.">Synchronisierungskonto</string>
     <string name="menu_dismiss_note">Aussetzen / Löschen</string>
     <string name="menu_bury_card">Karte aufschieben</string>
     <string name="menu_bury_note">Notiz aufschieben</string>
@@ -129,7 +121,7 @@
     <string name="menu_unmark_note">Markierung entfernen</string>
     <string name="menu_toggle_mic_tool_bar">Ausprache überprüfen</string>
     <string name="new_deck">Stapel erstellen</string>
-    <string name="create">Erstellen</string>
+    <string name="create" comment="Button to create a filtered deck">Erstellen</string>
     <string name="new_dynamic_deck">Gefilterten Stapel erstellen</string>
     <string name="night_mode">Nachtmodus</string>
     <string name="directory_inaccessible">Auf das AnkiDroid-Verzeichnis kann nicht zugegriffen werden</string>
@@ -154,14 +146,15 @@
     <string name="time_quantity_months">%.1f Mo</string>
     <string name="time_quantity_years">%.1f Jr</string>
     <!-- or "%.1f a" -->
-    <string name="rebuild_filtered_deck">Wiederherstellung des gefilterten Stapels&#8230;</string>
+    <string name="rebuild_filtered_deck">Gefilterter Stapel wird wiederhergestellt &#8230;</string>
     <string name="rebuild_cram_label">Neu aufbauen</string>
     <string name="empty_cram_label">Leeren</string>
     <string name="create_subdeck">Unterstapel erstellen</string>
-    <string name="empty_filtered_deck">Löschen des gefilterten Stapels&#8230;</string>
+    <string name="empty_filtered_deck">Gefilterter Stapel wird geleert &#8230;</string>
     <string name="custom_study_deck_name">Benutzerdefinierte Sitzung</string>
     <string name="custom_study_deck_exists">Bitte benennen Sie zunächst den existierenden Stapel »Benutzerdefinierte Sitzung« um</string>
     <string name="empty_deck">Dieser Stapel ist leer</string>
+    <string name="empty_deck_add_note">Karte hinzufügen</string>
     <string name="invalid_deck_name">Ungültiger Stapelname</string>
     <string name="studyoptions_empty">Dieser Stapel ist leer. Berühren Sie die »+«-Schaltfläche, um neue Inhalte hinzuzufügen.</string>
     <string name="studyoptions_limit_reached">Tageslimit erreicht</string>
@@ -187,9 +180,8 @@
     <string name="card_template_editor_front">Vorlage für Vorderseite</string>
     <string name="card_template_editor_back">Vorlage für Rückseite</string>
     <string name="card_template_editor_styling">Stil</string>
-    <string name="card_template_editor_menu_delete">Löschen</string>
     <string name="card_template_editor_menu_card_browser_appearance">Aussehen der Kartenübersicht</string>
-    <string name="card_template_editor_deck_override">Stapel überschreiben</string>
+    <string name="card_template_editor_deck_override">Stapel übergehen</string>
     <string name="card_template_editor_cant_delete">Mindestens ein Kartentyp wird benötigt.</string>
     <plurals name="card_template_editor_confirm_delete">
         <item quantity="one">Kartentyp »%2$s« und seine %1$d Karte löschen?</item>
@@ -201,11 +193,21 @@
     <string name="template_for_current_card_deleted">Der Kartentyp der aktuellen Karte wurde gelöscht.</string>
     <!-- Card Browser Appearance -->
     <string name="card_template_browser_appearance_title">Aussehen der Kartenübersicht</string>
+    <string name="current_and_default_deck">%1$s (%2$s)</string>
+    <!-- card Info -->
+    <string name="card_info_title">Karteninfos</string>
     <!-- Permissions -->
     <string name="read_write_permission_label">AnkiDroid-Datenbank lesen und schreiben</string>
     <string name="read_write_permission_description">Zugriff auf bereits vorhandene Notizen, Karten, Notiztypen und Stapel, sowie deren Neuerstellung</string>
     <!-- Context Menu -->
-    <string name="card_browser_label">Kartenübersicht</string>
-    <string name="card_browser_context_menu">Kartenübersicht</string>
+    <string name="card_browser_context_menu" comment="The value which appears in the system context menu. Note the casing difference">Kartenübersicht</string>
     <string name="context_menu_anki_card_label">Anki-Karte</string>
+    <string name="has_a_problem" comment="First field is either front template or back template. Second field is the error message.">%1$s hat ein Problem:<br/>%2$s</string>
+    <string name="more_information">Weitere Informationen</string>
+    <string name="no_field">»{{%1$s}}« gefunden, aber es existiert kein Feld namens »%1$s«.</string>
+    <string name="closed_tag_not_open">»{{/%1$s}}« gefunden, aber es fehlt »{{#%1$s}}« oder »{{^%1$s}}«.</string>
+    <string name="missing_closing_bracket">Fehlendes »}}« in »%s«.</string>
+    <string name="open_tag_not_closed">Fehlendes »{{%s}}«.</string>
+    <string name="wrong_tag_closed">»{{/%1$s}}« gefunden, aber »{{/%2$s}}« erwartet.</string>
+    <string name="filter_error">Fehler in Filter %s</string>
 </resources>

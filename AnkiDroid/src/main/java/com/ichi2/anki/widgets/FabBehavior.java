@@ -47,11 +47,11 @@ public class FabBehavior extends CoordinatorLayout.Behavior<FloatingActionsMenu>
 
     private static float getFabTranslationYForSnackbar(CoordinatorLayout parent, FloatingActionsMenu fab) {
         float minOffset = 0.0F;
-        List dependencies = parent.getDependencies(fab);
+        List<View> dependencies = parent.getDependencies(fab);
         int i = 0;
 
         for (int z = dependencies.size(); i < z; ++i) {
-            View view = (View) dependencies.get(i);
+            View view = dependencies.get(i);
             if (view instanceof Snackbar.SnackbarLayout && parent.doViewsOverlap(fab, view)) {
                 minOffset = Math.min(minOffset, view.getTranslationY() - (float) view.getHeight());
             }

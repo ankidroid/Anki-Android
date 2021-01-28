@@ -37,7 +37,7 @@
 ~ You should have received a copy of the GNU General Public License along with
 ~ this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools">
     <string name="check_db_title">هل تريد فحص قاعدة البيانات؟</string>
     <string name="check_db_warning">قد يستغرق هذا وقتًا طويلًا</string>
     <string name="check_db_acknowledge">تم فحص قاعدة البيانات</string>
@@ -64,7 +64,7 @@
         <item><![CDATA[يمكن لغير المطورين المساعدة أيضًا. على سبيل المثال، تستطيع <a href=\"%1$s\">المساهمة في ترجمة</a> أنكيدرويد، أو تحديث الويكي، أو توفير لقطات شاشة، أو التدوين عن أنكي درويد.]]></item>
         <item><![CDATA[أنكي درويد مصدر تحت رخصة <a href=\"%1$s\">GNU-GPL v3</a> وتتوفر الشفرة المصدرية <a href=\"%2$s\">في GitHub</a>.]]></item>
     </string-array>
-    <string name="preview_title">معاينة</string>
+    <string name="preview_title" comment="Title of the window allowing to preview card(s)">معاينة</string>
     <string name="reposition_card_dialog_title">تغيير موضع البطاقة الجديدة</string>
     <string name="reposition_card_dialog_message">موضع البداية:</string>
     <string name="reposition_card_not_new_error">يمكن تغيير موضع البطاقات الجديدة فقط</string>
@@ -87,7 +87,6 @@
         <item quantity="other">تم تصفير %d بطاقة</item>
     </plurals>
     <!-- Reschedule Card Dialog -->
-    <string name="reschedule_card_dialog_title">إعادة جدولة البطاقة</string>
     <plurals name="reschedule_cards_dialog_title">
         <item quantity="zero">إعادة جدولة بطاقة</item>
         <item quantity="one">إعادة جدولة بطاقة</item>
@@ -120,8 +119,6 @@
     <string name="answering_error_message">فشلت الكتابة إلى المجموعة. قد تكون قاعدة البيانات تالفة أو قد لا تكون هناك مساحة كافية على القرص.\n\nإذا كان هذا يحدث غالبًا، جرب فحص قاعدة البيانات، أو إصلاح المجموعة، أو استرجاعها من نسخة احتياطية. انقر «خيارات» لفعل ذلك. \nأو قد يكون هذا عطلًا في أنكي درويد ربما؛ الرجاء الإبلاغ عن هذا لنتحقق منه.</string>
     <string name="answering_error_report">إبلاغ عن الخطأ</string>
     <string name="repair_deck_dialog">هل تريد حقًا إصلاح قاعدة البيانات؟\n\nقبل بدء هذه المحاولة، ستُنشَأ نسخة في المجلد الفرعي “%s”.</string>
-    <string name="intent_add_saved_information">بيانات محفوظة</string>
-    <string name="intent_add_clear_all">مسح الكل</string>
     <string name="intent_aedict_empty">تصنيف “default” فارغ</string>
     <string name="intent_aedict_category">لإضافة بطاقات إلى أنكيدرويد، أزل كل تصنيفات المفكرة أو أضف تصنيفًا باسم “default”</string>
     <string name="custom_study_new_total_new">البطاقات الجديدة في الرزمة: %d</string>
@@ -133,7 +130,6 @@
     <string name="custom_study_random">اختر س بطاقة من الرزمة عشوائيًا:</string>
     <string name="custom_study_preview">عاين البطاقات الجديدة المضافة في آخر س يوم:</string>
     <string name="custom_study_rebuild_deck_corrupt">تعذرت إعادة إنشاء رزمة الدراسة المخصصة</string>
-    <string name="rebuild_custom_study_deck">تجري إعادة إنشاء رزمة الدراسة المخصصة&#8230;</string>
     <string name="importing_collection">يجري استيراد المجموعة&#8230;</string>
     <string name="import_media_count">يجري استيراد ملفات الوسائط %1$d&#8230;</string>
     <string name="import_progress">• استيراد الملحوظات: %1$d%%\n• استيراد البطاقات: %2$d%%\n• بعد المعالجة: %3$d%%</string>
@@ -148,9 +144,10 @@
     <string name="dialog_ok">حسنًا</string>
     <string name="dialog_no">لا</string>
     <string name="dialog_continue">استمرار</string>
-    <string name="dialog_positive_create">إنشاء</string>
+    <string name="dialog_positive_create" comment="Create a new collection, probably erasing the previous one, may be necessary in case of error.">إنشاء</string>
     <string name="dialog_positive_delete">حذف</string>
-    <string name="dialog_positive_disable">تعطيل</string>
+    <!-- Currently unsued, should be useful in the future -->
+    <string name="dialog_positive_disable" tools:ignore="UnusedResources">تعطيل</string>
     <string name="dialog_positive_overwrite">استبدال</string>
     <string name="dialog_positive_remove">إزالة</string>
     <string name="dialog_positive_repair">إصلاح</string>
@@ -184,9 +181,10 @@
     <!-- Tags Dialog Options -->
     <string name="tags_dialog_option_all_cards">كل البطاقات</string>
     <string name="tags_dialog_option_new_cards">جديد</string>
-    <string name="tags_dialog_option_due_cards">مستحق</string>
+    <string name="tags_dialog_option_due_cards" comment="Name of cards that are already been reviewed in the past, and that should be reviewed again">مستحق</string>
     <!-- Empty cards -->
     <string name="emtpy_cards_finding">يجري البحث عن بطاقات فارغة&#8230;</string>
+    <string name="confirm_cancel">هل تريد الإلغاء؟</string>
     <string name="empty_cards_none">لا بطاقات فارغة</string>
     <string name="empty_cards_count">بطاقات ستُحذَف: %d</string>
     <string name="empty_cards_deleted">بطاقات حُذِفت: %d</string>
@@ -203,7 +201,6 @@
     <!-- Database Integrity Check -->
     <string name="integrity_check_startup_title">تم تحديث أنكيدرويد</string>
     <string name="integrity_check_startup_content">تم تحديث أنكيدرويد. يتضمن هذا التحديث إصلاحًا لأعطال ممكنة في قاعدة البيانات، لذلك ننصح باستخدام ميزة فحص قاعدة البيانات الآن.</string>
-    <string name="integrity_check_positive">فحص قاعدة البيانات</string>
     <string name="integrity_check_continue_anyway">استمر على أي حال</string>
     <string name="integrity_check_insufficient_space">تستخدم ميزة فحص قاعدة البيانات مساحة كبيرة من التخزين المؤقت.\n\nينصح بشدة أن يكون لديك مساحة %s خالية على الأقل في جهازك قبل الاستمرار.</string>
     <string name="integrity_check_insufficient_space_extra_content">\n\nلديك حاليًا مساحة %s خالية.</string>
@@ -218,8 +215,8 @@
     <!-- Database Errors-->
     <string name="database_locked_title">تم قفل قاعدة البيانات</string>
     <string name="database_locked_summary">قاعدة بيانات أنكيدرويد قيد الاستخدام من قبل تطبيق آخر. الرجاء إغلاق ذلك التطبيق وفتح أنكيدرويد مجددًا.</string>
-    <string name="incompatible_database_version_title">Incompatible Database Version</string>
-    <string name="incompatible_database_version_summary">The database is a more advanced version than this version of AnkiDroid can work with. Upgrade AnkiDroid or downgrade the database to open it\n\nSupported version: %1$d\nDatabase version: %2$d\n\nThe following restore options will overwrite your current collection, possibly with a compatible database version:</string>
+    <string name="incompatible_database_version_title">إصدار قاعدة بيانات غير متوافق</string>
+    <string name="incompatible_database_version_summary">إن إصدار قاعدة البيانات متقدم بحيث لا يعمل إصدار أنكيدوريد هذا معه. حدّث أنكيدرويد أو خفّض إصدار قاعدة البيانات لفتحها.\n\nالإصدار المدعوم: %1$d\nإصدار قاعدة البيانات: %2$d\n\nخيارات الاسترجاع التالية تستبدل مجموعتك الحالية بإصدار قاعدة بيانات متوافق غالبًا:</string>
     <!-- Deck Picker Background-->
     <string name="background_image_applied">تم تطبيق صورة الخلفية</string>
     <string name="background_image_removed">تمت إزالة صورة الخلفية</string>
@@ -240,6 +237,25 @@
     <!-- Locale Selection Dialog -->
     <string name="locale_selection_dialog_title">تحديد تلميح لوحة المفاتيح</string>
     <string name="locale_selection_dialog_summary">بعض لوحات المفاتيح متعددة اللغات، مثل GBoard، تدعم تغيير اللغة عند تحرير النص\n\nيرجى طلب ميزة “setImeHintLocales” من مصنّع لوحة المفاتيح الخاصة بك إذا كانت لوحة المفاتيح لا تغيّر اللغة.</string>
+    <!-- Help Dialog -->
+    <string name="help_title_using_ankidroid">استخدام أنكيدرويد</string>
+    <string name="help_item_ankidroid_manual">دليل أنكيدرويد</string>
+    <string name="help_item_anki_manual">دليل أنكي</string>
+    <string name="help_item_ankidroid_faq">أسئلة متكررة عن أنكيدرويد</string>
+    <string name="help_title_get_help">الحصول على مساعدة</string>
+    <string name="help_item_mailing_list">القائمة البريدية</string>
+    <string name="help_item_reddit">Reddit</string>
+    <string name="help_item_report_bug">الإبلاغ عن خلل</string>
+    <string name="help_title_support_ankidroid">دعم أنكيدرويد</string>
+    <string name="help_item_support_opencollective_donate">تبرع</string>
+    <string name="help_item_support_develop_ankidroid">تطوير</string>
+    <string name="help_item_support_rate_ankidroid">تقييم</string>
+    <string name="help_item_support_other_ankidroid">غير ذلك</string>
+    <string name="help_title_community">المجتمع</string>
+    <string name="help_item_anki_forums">منتديات أنكي</string>
+    <string name="help_item_discord">Discord</string>
+    <string name="help_item_facebook">فيسبوك</string>
+    <string name="help_item_twitter">تويتر</string>
     <!--Sync-->
     <plurals name="sync_automatic_sync_needs_more_time">
         <item quantity="zero">قد تبدأ المزامنة التلقائية خلال %d ثانية</item>

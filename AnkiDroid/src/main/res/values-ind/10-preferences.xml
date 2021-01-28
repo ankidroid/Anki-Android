@@ -42,14 +42,12 @@
     <string name="disabled">Nonaktif</string>
     <string name="enabled">Aktif</string>
     <!-- preferences.xml categories-->
-    <string name="pref_cat_general">AnkiDroid</string>
     <string name="pref_cat_general_summ">Pengaturan umum</string>
     <string name="pref_cat_reviewing">Mengulas</string>
     <string name="pref_cat_reviewing_summ">Pengaturan ulasan yang bukan tentang dek</string>
     <string name="pref_cat_reviewer_behaviour">Perilaku</string>
     <string name="pref_cat_flashcard">Tampilan</string>
     <string name="pref_cat_whiteboard">Whiteboard</string>
-    <string name="pref_cat_automatic_display">Otomatis tampilkan jawaban</string>
     <string name="pref_cat_appearance">Tampilan</string>
     <string name="pref_cat_appearance_summ">Ubah tema dan fon dasar</string>
     <string name="pref_cat_themes">Tema</string>
@@ -66,8 +64,6 @@
     <string name="about_version">Versi: </string>
     <!-- preferences.xml entries-->
     <string name="whiteboard_stroke_width">Tebal garis</string>
-    <string name="whiteboard_black">Garis hitam</string>
-    <string name="whiteboard_black_summ">Menggunakan lebih sedikit memori, kecuali dalam mode malam</string>
     <string name="use_input_tag">Ketik jawaban ke dalam kartu</string>
     <string name="use_input_tag_summ">Gunakan kotak input teks di dalam kartu untuk mengetik jawaban</string>
     <string name="dictionary">Kamus pencarian</string>
@@ -96,15 +92,26 @@
     <string name="gestures_summ">Menerapkan gestur sebagai tindakan untuk menjawab dan mengedit kartu.</string>
     <string name="gestures_allow_links">Abaikan gestur sentuhan di tautan</string>
     <string name="gestures_allow_links_summary">Sentuhan gestur tidak akan diproses jika ada tautan ditekan.</string>
+    <string name="gestures_corner_touch">9-point touch</string>
+    <string name="gestures_corner_touch_summary">Allow touch gestures in screen corners</string>
     <string name="gestures_swipe_up">Usap ke atas</string>
     <string name="gestures_swipe_down">Usap ke bawah</string>
     <string name="gestures_swipe_left">Usap ke kiri</string>
     <string name="gestures_swipe_right">Usap ke kanan</string>
     <string name="gestures_double_tap">Sentuh ganda</string>
     <string name="gestures_tap_top">Sentuh atas</string>
-    <string name="gestures_tap_bottom">Sentuh bawah</string>
     <string name="gestures_tap_left">Sentuh kiri</string>
     <string name="gestures_tap_right">Sentuh kanan</string>
+    <string name="gestures_tap_bottom">Sentuh bawah</string>
+    <string name="gestures_corner_tap_top_left">Touch top left</string>
+    <string name="gestures_corner_tap_top_center">Touch top center</string>
+    <string name="gestures_corner_tap_top_right">Touch top right</string>
+    <string name="gestures_corner_tap_middle_left">Touch middle left</string>
+    <string name="gestures_corner_tap_middle_center">Touch middle center</string>
+    <string name="gestures_corner_tap_middle_right">Touch middle right</string>
+    <string name="gestures_corner_tap_bottom_left">Touch bottom left</string>
+    <string name="gestures_corner_tap_bottom_center">Touch bottom center</string>
+    <string name="gestures_corner_tap_bottom_right">Touch bottom right</string>
     <string name="gestures_volume_up">Volume naik</string>
     <string name="gestures_volume_down">Volume turun</string>
     <string name="more_scrolling_buttons">Pembaca elektronik</string>
@@ -142,9 +149,8 @@
     <string name="timeout_answer_text">Otomatis tampilkan jawaban</string>
     <string name="timeout_answer_summ">Tampilkan jawaban secara otomatis tanpa masukan dari pengguna. Jeda termasuk waktu untuk memutar berkas audio secara otomatis.</string>
     <string name="timeout_answer_seconds">Waktu menampilkan jawaban</string>
-    <string name="timeout_answer_seconds_summ">XXX dtk</string>
+    <string name="timeout_answer_seconds_summ" comment="The time to wait (in seconds) in the reviewer before automatically showing the next question or answer">XXX dtk</string>
     <string name="timeout_question_seconds">Waktu menampilkan pertanyaan selanjutnya</string>
-    <string name="timeout_question_seconds_summ">XXX dtk</string>
     <string name="select_locale_title">Pilih bahasa</string>
     <string name="safe_display">Mode tampilan aman</string>
     <string name="safe_display_summ">Nonaktifkan semua animasi dan gunakan metode yang lebih aman untuk menggambar kartu. Perangkat E-ink mungkin memerlukan ini.</string>
@@ -165,7 +171,6 @@
     <string name="use_current">Dek untuk kartu baru</string>
     <string name="new_spread">Posisi kartu baru</string>
     <string name="learn_cutoff">Batas belajar duluan</string>
-    <string name="learn_cutoff_summ">XXX mnt</string>
     <string name="time_limit">Batas waktu Timebox</string>
     <string name="time_limit_summ">XXX mnt</string>
     <string name="day_offset">Mulai besok</string>
@@ -216,8 +221,8 @@
         <item quantity="other">%1$s\n%2$d dek menggunakan grup ini</item>
     </plurals>
     <string name="deck_conf_new_cards">Kartu baru</string>
-    <string name="deck_conf_rev_cards">Ulasan</string>
-    <string name="deck_conf_lps_cards">Kelupaan</string>
+    <string name="deck_conf_rev_cards" comment="Name of the deck options submenu for configuring reviews of due cards.">Ulasan</string>
+    <string name="deck_conf_lps_cards" comment="Label of the submenu stating how lapses cards are treated.">Kelupaan</string>
     <string name="deck_conf_general">Umum</string>
     <string name="deck_conf_reminders">Pengingat</string>
     <string name="deck_conf_steps">Langkah-langkah (dalam menit)</string>
@@ -235,6 +240,7 @@
     <string name="deck_conf_use_general_timeout_settings">Gunakan pengaturan umum</string>
     <string name="deck_conf_use_general_timeout_settings_summ">Gunakan pengaturan umum \'Tampilkan jawaban otomatis\' daripada menggunakan pengaturan grup ini.</string>
     <string name="deck_conf_easy_bonus">Bonus mudah</string>
+    <string name="deck_conf_hard_factor">Hard interval</string>
     <string name="deck_conf_ivl_fct">Pengubah interval</string>
     <string name="deck_conf_max_ivl">Interval maksimal</string>
     <string name="deck_conf_new_lps_ivl">Interval baru</string>
@@ -251,28 +257,23 @@
     <string name="deck_conf_manage">Manajemen grup</string>
     <string name="deck_conf_manage_summ">Add and change options groups</string>
     <string name="deck_conf_current_group">Grup saat ini</string>
-    <string name="deck_conf_rename">Ubah nama</string>
+    <string name="deck_conf_rename" comment="Menu entry to rename a deck">Ubah nama</string>
     <string name="deck_conf_reset">Kembalikan ke awal</string>
-    <string name="deck_conf_reset_title">Kembalikan ke awal</string>
     <string name="deck_conf_reset_message">Kembalikan opsi kelompok sekarang menjadi seperti awal?</string>
-    <string name="deck_conf_add">Tambah</string>
+    <string name="deck_conf_add" comment="Adding a new deck option group">Tambah</string>
     <string name="deck_conf_add_summ">Buat salinan dari grup opsi saat ini</string>
-    <string name="deck_conf_remove">Hapus</string>
-    <string name="deck_conf_remove_title">Hapus</string>
     <string name="deck_conf_remove_message">Hapus grup opsi saat ini?</string>
     <string name="deck_conf_set_subdecks">Set untuk semua subdek</string>
     <plurals name="deck_conf_set_subdecks_summ">
         <item quantity="other">%s subdek akan menggunakan grup ini</item>
     </plurals>
-    <string name="deck_conf_set_subdecks_title">Set untuk semua subdek</string>
     <string name="deck_conf_set_subdecks_message">Set opsi grup pilihan saat ini untuk semua subdek dek ini?</string>
     <string name="pref_browser_editor_font">Penelusur dan editor fon</string>
     <string name="deck_conf_cram_filter">Filter</string>
-    <string name="deck_conf_cram_options">Opsi</string>
     <string name="deck_conf_cram_search">Cari</string>
     <string name="deck_conf_cram_limit">Batasi ke</string>
     <string name="deck_conf_cram_order">kartu dipilih menurut </string>
-    <string name="deck_conf_cram_reschedule">Jadwalkan ulang</string>
+    <string name="deck_conf_cram_reschedule" comment="Title of the box labelled by deck_conf_cram_reschedule_summ">Jadwalkan ulang</string>
     <string name="deck_conf_cram_reschedule_summ">Jadwalkan ulang kartu berdasarkan jawabanku di dek ini</string>
     <string name="deck_conf_cram_steps">Langkah kustom(dalam menit)</string>
     <string name="deck_conf_cram_steps_summ">Tentukan langkah kustom</string>
@@ -282,6 +283,8 @@
     <string name="analytics_dialog_title">Bantu AnkiDroid jadi lebih baik!</string>
     <string name="analytics_title">Bagikan data penggunaan fitur</string>
     <string name="analytics_summ">Kamu bisa berkontribusi ke AnkiDroid dengan membantu tim pengembangan tahu fitur mana yang orang gunakan</string>
-    <string name="enable_miui_keyboard_hack">\'Paste\' to insert cloze deletion</string>
-    <string name="enable_miui_keyboard_hack_summ">In the Note Editor, \'Paste\' will turn the selected text into a cloze</string>
+    <string name="note_editor_replace_newlines">Replace newlines with HTML</string>
+    <string name="note_editor_replace_newlines_summ">In the Note Editor, convert any instances of &lt;br&gt; to newlines when editing a card.</string>
+    <string name="no_code_formatting">Simple typed answer formatting</string>
+    <string name="no_code_formatting_summ">Fixes ‘􏿾’ appearing in typed answer results</string>
 </resources>

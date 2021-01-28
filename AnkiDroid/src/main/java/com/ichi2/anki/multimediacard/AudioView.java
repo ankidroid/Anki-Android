@@ -213,6 +213,18 @@ public class AudioView extends LinearLayout {
         }
     }
 
+    public void toggleRecord() {
+        if (mRecord != null) {
+            mRecord.callOnClick();
+        }
+    }
+
+    public void togglePlay() {
+        if (mPlayPause != null) {
+            mPlayPause.callOnClick();
+        }
+    }
+
     protected class PlayPauseButton extends AppCompatImageButton {
         private final OnClickListener onClickListener = new View.OnClickListener() {
             @Override
@@ -339,11 +351,7 @@ public class AudioView extends LinearLayout {
 
 
         public void update() {
-            if (mStatus == Status.RECORDING) {
-                setEnabled(false);
-            } else {
-                setEnabled(true);
-            }
+            setEnabled(mStatus != Status.RECORDING);
             // It doesn't need to update itself on any other state changes
         }
 
@@ -399,7 +407,7 @@ public class AudioView extends LinearLayout {
 
                             } catch (Exception e) {
                                 // either output file failed or codec didn't work, in any case fail out
-                                Timber.e("RecordButton.onClick() :: error recording to " + mAudioPath + "\n" +e.getMessage());
+                                Timber.e("RecordButton.onClick() :: error recording to %s\n%s", mAudioPath, e.getMessage());
                                 UIUtils.showThemedToast(mContext, gtxt(R.string.multimedia_editor_audio_view_recording_failed), true);
                                 mStatus = Status.STOPPED;
                                 break;

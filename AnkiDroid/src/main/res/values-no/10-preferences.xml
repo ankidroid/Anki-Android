@@ -42,14 +42,12 @@
     <string name="disabled">Deaktivert</string>
     <string name="enabled">Aktivert</string>
     <!-- preferences.xml categories-->
-    <string name="pref_cat_general">AnkiDroid</string>
     <string name="pref_cat_general_summ">Generelle innstillinger</string>
     <string name="pref_cat_reviewing">Gjennomgang</string>
     <string name="pref_cat_reviewing_summ">Non-deck-specific reviewer settings</string>
     <string name="pref_cat_reviewer_behaviour">Oppførsel</string>
     <string name="pref_cat_flashcard">Skjerm</string>
     <string name="pref_cat_whiteboard">Tavle</string>
-    <string name="pref_cat_automatic_display">Automatic display answer</string>
     <string name="pref_cat_appearance">Utseende</string>
     <string name="pref_cat_appearance_summ">Change themes and default font</string>
     <string name="pref_cat_themes">Themes</string>
@@ -66,8 +64,6 @@
     <string name="about_version">Versjon: </string>
     <!-- preferences.xml entries-->
     <string name="whiteboard_stroke_width">Stroke width</string>
-    <string name="whiteboard_black">Black strokes</string>
-    <string name="whiteboard_black_summ">Uses less memory, unless in night mode</string>
     <string name="use_input_tag">Type answer into the card</string>
     <string name="use_input_tag_summ">Use a text input box inside the card to type in the answer</string>
     <string name="dictionary">Lookup dictionary</string>
@@ -96,15 +92,26 @@
     <string name="gestures_summ">Assign gestures to actions such as answering and editing cards.</string>
     <string name="gestures_allow_links">Ignore touch gestures on links</string>
     <string name="gestures_allow_links_summary">Touch gestures will not be processed if a link/hint is pressed.</string>
+    <string name="gestures_corner_touch">9-point touch</string>
+    <string name="gestures_corner_touch_summary">Allow touch gestures in screen corners</string>
     <string name="gestures_swipe_up">Sveip opp</string>
     <string name="gestures_swipe_down">Sveip ned</string>
     <string name="gestures_swipe_left">Sveip mot venstre</string>
     <string name="gestures_swipe_right">Sveip mot høyre</string>
     <string name="gestures_double_tap">Dobbelklikk</string>
     <string name="gestures_tap_top">Klikk topp</string>
-    <string name="gestures_tap_bottom">Klikk bunn</string>
     <string name="gestures_tap_left">Klikk venstre</string>
     <string name="gestures_tap_right">Klikk høyre</string>
+    <string name="gestures_tap_bottom">Klikk bunn</string>
+    <string name="gestures_corner_tap_top_left">Touch top left</string>
+    <string name="gestures_corner_tap_top_center">Touch top center</string>
+    <string name="gestures_corner_tap_top_right">Touch top right</string>
+    <string name="gestures_corner_tap_middle_left">Touch middle left</string>
+    <string name="gestures_corner_tap_middle_center">Touch middle center</string>
+    <string name="gestures_corner_tap_middle_right">Touch middle right</string>
+    <string name="gestures_corner_tap_bottom_left">Touch bottom left</string>
+    <string name="gestures_corner_tap_bottom_center">Touch bottom center</string>
+    <string name="gestures_corner_tap_bottom_right">Touch bottom right</string>
     <string name="gestures_volume_up">Volume up</string>
     <string name="gestures_volume_down">Volume down</string>
     <string name="more_scrolling_buttons">eLeser</string>
@@ -142,9 +149,8 @@
     <string name="timeout_answer_text">Vis svaret automatisk</string>
     <string name="timeout_answer_summ">Show answer automatically without user input. Delay includes time for automatically played audio files.</string>
     <string name="timeout_answer_seconds">Time to show answer</string>
-    <string name="timeout_answer_seconds_summ">XXX s</string>
+    <string name="timeout_answer_seconds_summ" comment="The time to wait (in seconds) in the reviewer before automatically showing the next question or answer">XXX s</string>
     <string name="timeout_question_seconds">Time to show next question</string>
-    <string name="timeout_question_seconds_summ">XXX s</string>
     <string name="select_locale_title">Velg språk</string>
     <string name="safe_display">Safe display mode</string>
     <string name="safe_display_summ">Disable all animations and use safer method for drawing cards. E-ink devices may require this.</string>
@@ -165,7 +171,6 @@
     <string name="use_current">Deck for new cards</string>
     <string name="new_spread">New card position</string>
     <string name="learn_cutoff">Learn ahead limit</string>
-    <string name="learn_cutoff_summ">XXX min</string>
     <string name="time_limit">Timebox time limit</string>
     <string name="time_limit_summ">XXX min</string>
     <string name="day_offset">Start of next day</string>
@@ -217,8 +222,8 @@
         <item quantity="other">%1$s\n%2$d decks use this group</item>
     </plurals>
     <string name="deck_conf_new_cards">Nye kort</string>
-    <string name="deck_conf_rev_cards">Gjennomganger</string>
-    <string name="deck_conf_lps_cards">Feilsvar</string>
+    <string name="deck_conf_rev_cards" comment="Name of the deck options submenu for configuring reviews of due cards.">Gjennomganger</string>
+    <string name="deck_conf_lps_cards" comment="Label of the submenu stating how lapses cards are treated.">Feilsvar</string>
     <string name="deck_conf_general">Generelt</string>
     <string name="deck_conf_reminders">Varsel</string>
     <string name="deck_conf_steps">Trinn (i minutter)</string>
@@ -236,6 +241,7 @@
     <string name="deck_conf_use_general_timeout_settings">Use general settings</string>
     <string name="deck_conf_use_general_timeout_settings_summ">Use general \'Automatic display answer\' settings instead of using the settings for this group.</string>
     <string name="deck_conf_easy_bonus">Letthetsbonus</string>
+    <string name="deck_conf_hard_factor">Hard interval</string>
     <string name="deck_conf_ivl_fct">Intervall-modifikator</string>
     <string name="deck_conf_max_ivl">Maksimumsintervall</string>
     <string name="deck_conf_new_lps_ivl">Ny intervall</string>
@@ -252,29 +258,24 @@
     <string name="deck_conf_manage">Group management</string>
     <string name="deck_conf_manage_summ">Add and change options groups</string>
     <string name="deck_conf_current_group">Current group</string>
-    <string name="deck_conf_rename">Endre navn</string>
+    <string name="deck_conf_rename" comment="Menu entry to rename a deck">Endre navn</string>
     <string name="deck_conf_reset">Gjenopprett standardinnstillinger</string>
-    <string name="deck_conf_reset_title">Gjenopprett standardinnstillinger</string>
     <string name="deck_conf_reset_message">Restore current options group to default values?</string>
-    <string name="deck_conf_add">Legg til konfigurasjon</string>
+    <string name="deck_conf_add" comment="Adding a new deck option group">Legg til konfigurasjon</string>
     <string name="deck_conf_add_summ">Create a copy of the current options group</string>
-    <string name="deck_conf_remove">Fjern</string>
-    <string name="deck_conf_remove_title">Fjern</string>
     <string name="deck_conf_remove_message">Remove current options group?</string>
     <string name="deck_conf_set_subdecks">Set for all subdecks</string>
     <plurals name="deck_conf_set_subdecks_summ">
         <item quantity="one">%s subdeck will use this group</item>
         <item quantity="other">%s subdecks will use this group</item>
     </plurals>
-    <string name="deck_conf_set_subdecks_title">Set for all subdecks</string>
     <string name="deck_conf_set_subdecks_message">Set current options group for all of this deck’s subdecks?</string>
     <string name="pref_browser_editor_font">Browser and editor font</string>
     <string name="deck_conf_cram_filter">Filter</string>
-    <string name="deck_conf_cram_options">Alternativer</string>
     <string name="deck_conf_cram_search">Søk</string>
     <string name="deck_conf_cram_limit">Begrens til</string>
     <string name="deck_conf_cram_order">kort valgt etter</string>
-    <string name="deck_conf_cram_reschedule">Gi ny tidsplan</string>
+    <string name="deck_conf_cram_reschedule" comment="Title of the box labelled by deck_conf_cram_reschedule_summ">Gi ny tidsplan</string>
     <string name="deck_conf_cram_reschedule_summ">Lag ny tidsplan for kort basert på svarene jeg gir i denne kortstokken</string>
     <string name="deck_conf_cram_steps">Custom steps (in minutes)</string>
     <string name="deck_conf_cram_steps_summ">Still inn egendefinerte trinn</string>
@@ -284,6 +285,8 @@
     <string name="analytics_dialog_title">Help make AnkiDroid better!</string>
     <string name="analytics_title">Share feature usage</string>
     <string name="analytics_summ">You can contribute to AnkiDroid by helping the development team see which features people use</string>
-    <string name="enable_miui_keyboard_hack">\'Paste\' to insert cloze deletion</string>
-    <string name="enable_miui_keyboard_hack_summ">In the Note Editor, \'Paste\' will turn the selected text into a cloze</string>
+    <string name="note_editor_replace_newlines">Replace newlines with HTML</string>
+    <string name="note_editor_replace_newlines_summ">In the Note Editor, convert any instances of &lt;br&gt; to newlines when editing a card.</string>
+    <string name="no_code_formatting">Simple typed answer formatting</string>
+    <string name="no_code_formatting_summ">Fixes ‘􏿾’ appearing in typed answer results</string>
 </resources>

@@ -20,8 +20,8 @@
  
 <resources>
     <!--Menu Labels-->
-    <string name="model_browser_label">مدیریت نوع یادداشت‌ها</string>
-    <string name="model_editor_label">مدیریت فیلدها</string>
+    <string name="model_browser_label" comment="Label of the browser of note types. The text can\'t be found in AnkiDroid directly.">مدیریت نوع یادداشت‌ها</string>
+    <string name="model_editor_label" comment="Label of the window to edit the fields of a note type. This text can\'t be found in Ankidroid directly">مدیریت فیلدها</string>
     <!--Toasts-->
     <string name="toast_last_model">شما نمی‌توانید آخرین نوع یادداشت خود را حذف کنید</string>
     <string name="toast_last_field">نوع یادداشت حداقل باید یک فیلد داشته باشد</string>
@@ -37,24 +37,19 @@
         <item quantity="one">%d یادداشت</item>
         <item quantity="other">%d یادداشت</item>
     </plurals>
-    <!--Button Values-->
-    <string name="model_editor_action_add_model">اضافه کردن نوع یادداشت</string>
     <!--Browser-->
     <string name="model_browser_delete">حذف نوع یادداشت</string>
-    <string name="model_browser_rename">تغییر نام</string>
-    <string name="model_browser_options">گزینه ها</string>
+    <string name="model_browser_rename" comment="Rename a note type">تغییر نام</string>
     <string name="model_browser_template">ویرایش کارتها</string>
     <string name="model_browser_add">اضافه کردن نوع یادداشت</string>
     <!--Rename-->
     <string name="rename_model">تغییر نام نوع یادداشت</string>
     <!--Language Hint-->
-    <string name="model_field_editor_language_hint_dialog_title">Keyboard language hint</string>
     <string name="model_field_editor_language_hint_dialog_success_result">Set language hint to %s</string>
     <!--Field Editing-->
     <string name="model_field_editor_title">ویرایش فیلدها</string>
     <string name="model_field_editor_add">افزودن فیلد</string>
     <string name="model_field_editor_delete">حذف فیلد</string>
-    <string name="model_field_editor_options">گزینه های فیلد</string>
     <string name="model_field_editor_rename">تغییر نام فیلد</string>
     <string name="model_field_editor_language_hint">Set keyboard language hint</string>
     <string name="model_field_editor_reposition_menu">تغییر مکان فیلد</string>
@@ -81,8 +76,6 @@
     <string name="card_template_editor_deck_override_off">Deck Override (off)</string>
     <string name="model_manager_deck_override_added_message">Set ‘%1$s’ default deck to ‘%2$s’</string>
     <string name="model_manager_deck_override_removed_message">Removed default deck for ‘%s’</string>
-    <string name="model_manager_deck_override_cloze_error">Cannot set Deck Override for Cloze notes</string>
-    <string name="model_manager_deck_override_dynamic_deck_error">Cannot set Deck Override to a filtered deck</string>
     <string name="deck_override_explanation">Select deck to place new ‘%s’ cards into</string>
     <string name="deck_picker_dialog_filter_decks">Filter decks</string>
 </resources>

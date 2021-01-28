@@ -37,7 +37,7 @@
 ~ You should have received a copy of the GNU General Public License along with
 ~ this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools">
     <string name="check_db_title">是否检查数据库？</string>
     <string name="check_db_warning">这可能需要很长时间</string>
     <string name="check_db_acknowledge">已检查数据库</string>
@@ -59,7 +59,7 @@
         <item><![CDATA[非开发者亦可帮助。例如，你可以<a href=\"%1$s\">帮助翻译</a>AnkiDroid、更新wiki、提供屏幕截图，或写关于AnkiDroid的博客。]]></item>
         <item><![CDATA[AnkiDroid 在<a href=\"%1$s\"> GNU GPL v3 许可证</a>下发布。源代码在<a href=\"%2$s\">GitHub</a>上提供。]]></item>
     </string-array>
-    <string name="preview_title">预览</string>
+    <string name="preview_title" comment="Title of the window allowing to preview card(s)">预览</string>
     <string name="reposition_card_dialog_title">更改新卡位置</string>
     <string name="reposition_card_dialog_message">起始位置</string>
     <string name="reposition_card_not_new_error">只有新卡牌可被更改位置</string>
@@ -72,7 +72,6 @@
         <item quantity="other">%d 张卡牌已重置</item>
     </plurals>
     <!-- Reschedule Card Dialog -->
-    <string name="reschedule_card_dialog_title">重设卡牌学习进度</string>
     <plurals name="reschedule_cards_dialog_title">
         <item quantity="other">重设卡牌学习进度</item>
     </plurals>
@@ -90,8 +89,6 @@
     <string name="answering_error_message">写入集合时出错。可能是数据库损坏，或者磁盘空间不足。\n\n如果频繁发生此错误，请检查数据库，修复集合或从备份中恢复。点击\"选项\"按钮以执行上述操作。\n\n当然，也可能只是 AnkiDroid 的 bug，请报告这个错误，我们会尽力解决。</string>
     <string name="answering_error_report">报告错误</string>
     <string name="repair_deck_dialog">确实要尝试修复数据库吗？\n\n在开始前，副本将保存在子目录“%s”里。</string>
-    <string name="intent_add_saved_information">已保存的数据</string>
-    <string name="intent_add_clear_all">全部清除</string>
     <string name="intent_aedict_empty">类别“默认”为空</string>
     <string name="intent_aedict_category">向AnkiDroid中添加卡牌，需要删除所有NotePad类别，或者添加“默认(default)”类别。</string>
     <string name="custom_study_new_total_new">牌组中的新卡片数量：%d</string>
@@ -103,7 +100,6 @@
     <string name="custom_study_random">从牌组中随机选择 x 张卡片：</string>
     <string name="custom_study_preview">预览过去 x 天中新增的卡片：</string>
     <string name="custom_study_rebuild_deck_corrupt">无法重建自定义学习牌组</string>
-    <string name="rebuild_custom_study_deck">重建自定义学习牌组\n 请等待...</string>
     <string name="importing_collection">正在导入牌组集合&#8230;</string>
     <string name="import_media_count">导入媒体文件 %1$d%%&#8230;</string>
     <string name="import_progress">• 正在导入笔记: %1$d%%\n• 正在导入卡牌: %2$d%%\n• 正在后期处理: %3$d%%</string>
@@ -118,9 +114,10 @@
     <string name="dialog_ok">确定</string>
     <string name="dialog_no">否</string>
     <string name="dialog_continue">继续</string>
-    <string name="dialog_positive_create">创建</string>
+    <string name="dialog_positive_create" comment="Create a new collection, probably erasing the previous one, may be necessary in case of error.">创建</string>
     <string name="dialog_positive_delete">删除</string>
-    <string name="dialog_positive_disable">禁用</string>
+    <!-- Currently unsued, should be useful in the future -->
+    <string name="dialog_positive_disable" tools:ignore="UnusedResources">禁用</string>
     <string name="dialog_positive_overwrite">覆盖</string>
     <string name="dialog_positive_remove">移除</string>
     <string name="dialog_positive_repair">修复</string>
@@ -149,9 +146,10 @@
     <!-- Tags Dialog Options -->
     <string name="tags_dialog_option_all_cards">所有卡片</string>
     <string name="tags_dialog_option_new_cards">新卡牌</string>
-    <string name="tags_dialog_option_due_cards">待复习</string>
+    <string name="tags_dialog_option_due_cards" comment="Name of cards that are already been reviewed in the past, and that should be reviewed again">待复习</string>
     <!-- Empty cards -->
     <string name="emtpy_cards_finding">正在查找空白卡牌&#8230;</string>
+    <string name="confirm_cancel">您想要取消吗？</string>
     <string name="empty_cards_none">没有空白卡牌</string>
     <string name="empty_cards_count">将要删除卡牌：%d</string>
     <string name="empty_cards_deleted">已删除卡牌：%d</string>
@@ -168,7 +166,6 @@
     <!-- Database Integrity Check -->
     <string name="integrity_check_startup_title">AnkiDroid 已升级</string>
     <string name="integrity_check_startup_content">AnkiDroid 已升级。此升级包括可能出现数据库问题的修复，我们建议您现在开始检查数据库。</string>
-    <string name="integrity_check_positive">检查数据库</string>
     <string name="integrity_check_continue_anyway">仍要继续</string>
     <string name="integrity_check_insufficient_space">检查数据库使用大量临时存储。\n\n强烈建议您在继续之前在设备上至少有 %s 可用空间。</string>
     <string name="integrity_check_insufficient_space_extra_content">\n\n您当前有 %s 可用。</string>
@@ -205,6 +202,25 @@
     <!-- Locale Selection Dialog -->
     <string name="locale_selection_dialog_title">键盘提示选择</string>
     <string name="locale_selection_dialog_summary">某些多语言键盘，如 GBoard，支持编辑文本时更改语言\n\n如果您的键盘不会更改语言，请向您的键盘发布方请求“设置输入法编辑器本地化语言提示”特性。</string>
+    <!-- Help Dialog -->
+    <string name="help_title_using_ankidroid">使用 AnkiDroid</string>
+    <string name="help_item_ankidroid_manual">AnkiDroid 手册</string>
+    <string name="help_item_anki_manual">Anki 手册</string>
+    <string name="help_item_ankidroid_faq">AnkiDroid 常见问题</string>
+    <string name="help_title_get_help">获取帮助</string>
+    <string name="help_item_mailing_list">邮件列表</string>
+    <string name="help_item_reddit">Reddit</string>
+    <string name="help_item_report_bug">报告 Bug</string>
+    <string name="help_title_support_ankidroid">支持 AnkiDroid</string>
+    <string name="help_item_support_opencollective_donate">捐赠</string>
+    <string name="help_item_support_develop_ankidroid">开发</string>
+    <string name="help_item_support_rate_ankidroid">评分</string>
+    <string name="help_item_support_other_ankidroid">其他</string>
+    <string name="help_title_community">社区</string>
+    <string name="help_item_anki_forums">Anki 论坛</string>
+    <string name="help_item_discord">Discord</string>
+    <string name="help_item_facebook">Facebook</string>
+    <string name="help_item_twitter">Twitter</string>
     <!--Sync-->
     <plurals name="sync_automatic_sync_needs_more_time">
         <item quantity="other">可能在 %d 秒后触发自动同步</item>

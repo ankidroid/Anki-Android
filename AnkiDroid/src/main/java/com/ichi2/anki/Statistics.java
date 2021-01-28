@@ -81,6 +81,9 @@ public class Statistics extends NavigationDrawerActivity implements DeckDropDown
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        if (showedActivityFailedScreen(savedInstanceState)) {
+            return;
+        }
         Timber.d("onCreate()");
         sIsSubtitle = true;
         super.onCreate(savedInstanceState);
@@ -152,31 +155,25 @@ public class Statistics extends NavigationDrawerActivity implements DeckDropDown
         //System.err.println("in onCreateOptionsMenu");
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.anki_stats, menu);
-        return true;
-    }
 
-
-    @Override
-    public boolean onPrepareOptionsMenu(Menu menu) {
         // exit if mTaskHandler not initialized yet
-        if (mTaskHandler == null) {
-            return true;
+        if (mTaskHandler != null) {
+            switch (mTaskHandler.getStatType()) {
+                case TYPE_MONTH:
+                    MenuItem monthItem = menu.findItem(R.id.item_time_month);
+                    monthItem.setChecked(true);
+                    break;
+                case TYPE_YEAR:
+                    MenuItem yearItem = menu.findItem(R.id.item_time_year);
+                    yearItem.setChecked(true);
+                    break;
+                case TYPE_LIFE:
+                    MenuItem lifeItem = menu.findItem(R.id.item_time_all);
+                    lifeItem.setChecked(true);
+                    break;
+            }
         }
-        switch (mTaskHandler.getStatType()) {
-            case TYPE_MONTH:
-                MenuItem monthItem = menu.findItem(R.id.item_time_month);
-                monthItem.setChecked(true);
-                break;
-            case TYPE_YEAR:
-                MenuItem yearItem = menu.findItem(R.id.item_time_year);
-                yearItem.setChecked(true);
-                break;
-            case TYPE_LIFE:
-                MenuItem lifeItem = menu.findItem(R.id.item_time_all);
-                lifeItem.setChecked(true);
-                break;
-        }
-        return super.onPrepareOptionsMenu(menu);
+        return super.onCreateOptionsMenu(menu);
     }
 
     @Override
@@ -185,34 +182,29 @@ public class Statistics extends NavigationDrawerActivity implements DeckDropDown
             return true;
         }
         int itemId = item.getItemId();
-        switch (itemId) {
-            case R.id.item_time_month:
-                if (item.isChecked()) item.setChecked(false);
-                else item.setChecked(true);
-                if (mTaskHandler.getStatType() != Stats.AxisType.TYPE_MONTH) {
-                    mTaskHandler.setStatType(Stats.AxisType.TYPE_MONTH);
-                    mSectionsPagerAdapter.notifyDataSetChanged();
-                }
-                return true;
-            case R.id.item_time_year:
-                if (item.isChecked()) item.setChecked(false);
-                else item.setChecked(true);
-                if (mTaskHandler.getStatType() != Stats.AxisType.TYPE_YEAR) {
-                    mTaskHandler.setStatType(Stats.AxisType.TYPE_YEAR);
-                    mSectionsPagerAdapter.notifyDataSetChanged();
-                }
-                return true;
-            case R.id.item_time_all:
-                if (item.isChecked()) item.setChecked(false);
-                else item.setChecked(true);
-                if (mTaskHandler.getStatType() != Stats.AxisType.TYPE_LIFE) {
-                    mTaskHandler.setStatType(Stats.AxisType.TYPE_LIFE);
-                    mSectionsPagerAdapter.notifyDataSetChanged();
-                }
-                return true;
-            case R.id.action_time_chooser:
-                //showTimeDialog();
-                return true;
+        if (itemId == R.id.item_time_month) {
+            item.setChecked(!item.isChecked());
+            if (mTaskHandler.getStatType() != Stats.AxisType.TYPE_MONTH) {
+                mTaskHandler.setStatType(Stats.AxisType.TYPE_MONTH);
+                mSectionsPagerAdapter.notifyDataSetChanged();
+            }
+            return true;
+        } else if (itemId == R.id.item_time_year) {
+            item.setChecked(!item.isChecked());
+            if (mTaskHandler.getStatType() != Stats.AxisType.TYPE_YEAR) {
+                mTaskHandler.setStatType(Stats.AxisType.TYPE_YEAR);
+                mSectionsPagerAdapter.notifyDataSetChanged();
+            }
+            return true;
+        } else if (itemId == R.id.item_time_all) {
+            item.setChecked(!item.isChecked());
+            if (mTaskHandler.getStatType() != Stats.AxisType.TYPE_LIFE) {
+                mTaskHandler.setStatType(Stats.AxisType.TYPE_LIFE);
+                mSectionsPagerAdapter.notifyDataSetChanged();
+            }
+            return true;
+        } else if (itemId == R.id.action_time_chooser) {//showTimeDialog();
+            return true;
         }
         return super.onOptionsItemSelected(item);
     }
@@ -326,7 +318,7 @@ public class Statistics extends NavigationDrawerActivity implements DeckDropDown
                 case ANSWER_BUTTONS_TAB_POSITION:
                     return getString(R.string.stats_answer_buttons).toUpperCase(l);
                 case CARDS_TYPES_TAB_POSITION:
-                    return getString(R.string.stats_cards_types).toUpperCase(l);
+                    return getString(R.string.title_activity_template_editor).toUpperCase(l);
             }
             return null;
         }

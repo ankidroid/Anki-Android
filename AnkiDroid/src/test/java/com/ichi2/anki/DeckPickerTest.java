@@ -4,11 +4,12 @@ import android.content.Context;
 
 import androidx.test.core.app.ActivityScenario;
 import androidx.test.ext.junit.runners.AndroidJUnit4;
+
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
 
 import com.ichi2.libanki.Collection;
-import com.ichi2.libanki.Deck;
 import com.ichi2.libanki.DeckConfig;
 import com.ichi2.libanki.sched.AbstractSched;
 
@@ -19,6 +20,8 @@ import java.util.HashMap;
 import java.util.Map;
 
 import static com.ichi2.anki.DeckPicker.UPGRADE_VERSION_KEY;
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.is;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNull;
 import static org.mockito.Mockito.mock;
@@ -161,7 +164,7 @@ public class DeckPickerTest extends RobolectricTest {
     public void limitAppliedAfterReview() {
         Collection col = getCol();
         AbstractSched sched = col.getSched();
-        Deck deck = col.getDecks().get(1);
+
         DeckConfig dconf = col.getDecks().getConf(1);
         dconf.getJSONObject("new").put("perDay", 10);
         for (int i = 0; i < 11; i++) {
@@ -169,12 +172,25 @@ public class DeckPickerTest extends RobolectricTest {
         }
         // This set a card as current card
         sched.getCard();
+
         ensureCollectionLoadIsSynchronous();
-        try (ActivityScenario<DeckPicker> scenario = ActivityScenario.launch(DeckPicker.class)) {
-            scenario.onActivity(deckPicker -> {
-                advanceRobolectricLooper();
-                assertEquals(10, deckPicker.mDueTree.get(0).getNewCount());
-            });
-        }
+        DeckPicker deckPicker = super.startActivityNormallyOpenCollectionWithIntent(DeckPicker.class, new Intent());
+
+        assertEquals(10, deckPicker.mDueTree.get(0).getNewCount());
+    }
+
+    @Test
+    public void confirmDeckDeletionDeletesEmptyDeck() {
+        long did = addDeck("Hello World");
+
+        assertThat("Deck was added", getCol().getDecks().count(), is(2));
+
+        DeckPicker deckPicker = startActivityNormallyOpenCollectionWithIntent(DeckPicker.class, new Intent());
+
+        deckPicker.confirmDeckDeletion(did);
+
+        advanceRobolectricLooperWithSleep();
+
+        assertThat("deck was deleted", getCol().getDecks().count(), is(1));
     }
 }

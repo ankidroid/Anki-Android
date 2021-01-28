@@ -26,10 +26,22 @@ import java.io.IOException;
 import java.net.URL;
 import java.nio.file.Paths;
 import java.util.Enumeration;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Map;
 import java.util.Objects;
+import java.util.Set;
+
 import org.apache.commons.compress.archivers.zip.ZipArchiveEntry;
 import org.apache.commons.compress.archivers.zip.ZipFile;
+import org.junit.runner.RunWith;
 
+import androidx.test.ext.junit.runners.AndroidJUnit4;
+
+import static com.ichi2.libanki.Utils.nonEmptyFields;
+
+
+@RunWith(AndroidJUnit4.class)
 public class UtilsTest {
 
     @Test
@@ -40,9 +52,9 @@ public class UtilsTest {
         try {
             File file = new File(resource.toURI());
             ZipFile zipFile = new ZipFile(file);
-            Enumeration zipEntries = zipFile.getEntries();
+            Enumeration<ZipArchiveEntry> zipEntries = zipFile.getEntries();
             while (zipEntries.hasMoreElements()) {
-                ZipArchiveEntry ze2 = (ZipArchiveEntry) zipEntries.nextElement();
+                ZipArchiveEntry ze2 = zipEntries.nextElement();
                 Utils.unzipFiles(zipFile, "/tmp", new String[]{ze2.getName()}, null);
             }
             Assert.fail("Expected an IOException");
@@ -83,5 +95,25 @@ public class UtilsTest {
         copy.deleteOnExit();
         Utils.copyFile(new File(resource.toURI()), copy);
         Assert.assertEquals(TestUtils.getMD5(resourcePath), TestUtils.getMD5(copy.getCanonicalPath()));
+    }
+
+    @Test
+    public void testSplit() {
+        Assert.assertArrayEquals(new String[]{"foo", "bar"}, Utils.splitFields("foobar"));
+        Assert.assertArrayEquals(new String[]{"", "foo", "", "", ""}, Utils.splitFields("foo"));
+    }
+
+    @Test
+    public void nonEmptyFieldsTest() {
+        Map<String, String> m = new HashMap<>();
+        Set<String> s = new HashSet<>();
+        Assert.assertEquals(s, nonEmptyFields(m));
+        m.put("miam", "");
+        Assert.assertEquals(s, nonEmptyFields(m));
+        m.put("foo", "   ");
+        Assert.assertEquals(s, nonEmptyFields(m));
+        m.put("bar", " plop  ");
+        s.add("bar");
+        Assert.assertEquals(s, nonEmptyFields(m));
     }
 }

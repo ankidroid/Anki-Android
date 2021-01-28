@@ -39,35 +39,6 @@
         <item>Nooit rapporteren</item>
         <item>Mij vragen</item>
     </string-array>
-    <string-array name="gestures_labels">
-        <item>Geen actie</item>
-        <item>Toon Antwoord</item>
-        <item>Antwoordknop 1</item>
-        <item>Antwoordknop 2</item>
-        <item>Antwoordknop 3</item>
-        <item>Antwoordknop 4</item>
-        <item>Aanbevolen antwoord (groen)</item>
-        <item>Antwoord beter dan aangeraden</item>
-        <item>Ongedaan maken</item>
-        <item>Memo bewerken</item>
-        <item>Tagnaam</item>
-        <item>Markeermemo</item>
-        <item>Uitdrukking opzoeken</item>
-        <item>Kaart verbergen</item>
-        <item>Kaart opschorten</item>
-        <item>Memo verwijderen</item>
-        <item>Media afspelen</item>
-        <item>Leren afbreken</item>
-        <item>Memo begraven</item>
-        <item>Memo opschorten</item>
-        <item>Rode vlag in-/uitschakelen</item>
-        <item>Oranje vlag in-/uitschakelen</item>
-        <item>Groene vlag in-/uitschakelen</item>
-        <item>Blauwe vlag in-/uitschakelen</item>
-        <item>Vlag verwijderen</item>
-        <item>Pagina omhoog</item>
-        <item>Pagina omlaag</item>
-    </string-array>
     <string-array name="leech_action_labels">
         <item>Kaart uitstellen</item>
         <item>Alleen label toevoegen</item>
@@ -108,4 +79,39 @@
         <item>Zwart</item>
         <item>Donker</item>
     </string-array>
+    <string-array name="html_size_code_labels">
+        <item>xx-small</item>
+        <item>x-small</item>
+        <item>small</item>
+        <item>medium</item>
+        <item>large</item>
+        <item>x-large</item>
+        <item>xx-large</item>
+    </string-array>
+    <!--
+    #7794 - it\'s better to use @string references in non-translated arrays as this handles
+    changes in the array ordering better
+     -->
+    <string name="gesture_no_action">Geen actie</string>
+    <string name="gesture_answer_1">Antwoordknop 1</string>
+    <string name="gesture_answer_2">Antwoordknop 2</string>
+    <string name="gesture_answer_3">Antwoordknop 3</string>
+    <string name="gesture_answer_4">Antwoordknop 4</string>
+    <string name="gesture_answer_green">Aanbevolen antwoord (groen)</string>
+    <string name="gesture_answer_better_recommended">Antwoord beter dan aangeraden</string>
+    <string name="gesture_tag_note">Tagnaam</string>
+    <string name="gesture_lookup">Uitdrukking opzoeken</string>
+    <string name="gesture_play">Media afspelen</string>
+    <string name="gesture_abort_learning">Leren afbreken</string>
+    <string name="gesture_flag_red">Rode vlag in-/uitschakelen</string>
+    <string name="gesture_flag_orange">Oranje vlag in-/uitschakelen</string>
+    <string name="gesture_flag_green">Groene vlag in-/uitschakelen</string>
+    <string name="gesture_flag_blue">Blauwe vlag in-/uitschakelen</string>
+    <string name="gesture_flag_remove">Vlag verwijderen</string>
+    <string name="gesture_page_up">Pagina omhoog</string>
+    <string name="gesture_page_down">Pagina omlaag</string>
+    <string name="gesture_abort_sync">Abort Learning and Sync</string>
+    <string name="gesture_toggle_whiteboard">Toggle Whiteboard</string>
+    <string name="record_voice">Record Voice</string>
+    <string name="replay_voice">Replay Voice</string>
 </resources>

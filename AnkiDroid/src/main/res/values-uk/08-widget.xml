@@ -46,24 +46,9 @@
         <item quantity="many">%d карток залишилося</item>
         <item quantity="other">%d картки залишилося</item>
     </plurals>
-    <string name="widget_no_cards_due">Картки до перегляду відсутні</string>
-    <string name="widget_loading">Завантаження віджета...</string>
-    <plurals name="widget_cards_in_decks_due">
-        <item quantity="one">%1$d картка до %2$s</item>
-        <item quantity="few">%1$d карток до %2$s</item>
-        <item quantity="many">%1$d карток до %2$s</item>
-        <item quantity="other">%1$d карток до %2$s</item>
-    </plurals>
-    <plurals name="widget_decks">
-        <item quantity="one">%1$d колода</item>
-        <item quantity="few">%1$d колоди</item>
-        <item quantity="many">%1$d колод</item>
-        <item quantity="other">%1$d колод</item>
-    </plurals>
-    <string name="widget_small">Малий AnkiDroid</string>
-    <string name="widget_small_button">AnkiDroid</string>
+    <string name="widget_small" comment="Label of the small ankidroid widget. This text can\'t be found directly in AnkiDroid">Малий AnkiDroid</string>
     <plurals name="widget_cards_due">
-        <item quantity="one">%d карта в черзі</item>
+        <item quantity="one">%d карток в черзі</item>
         <item quantity="few">%d карти в черзі</item>
         <item quantity="many">%d карт в черзі</item>
         <item quantity="other">%d карт в черзі</item>
@@ -74,6 +59,5 @@
         <item quantity="many">Залишилося %d хвилин</item>
         <item quantity="other">Залишилося %d хвилин</item>
     </plurals>
-    <string name="widget_add_note">Додати запис</string>
-    <string name="widget_add_note_button">Додати запис в AnkiDroid</string>
+    <string name="widget_add_note_button">Додати новий запис в AnkiDroid</string>
 </resources>

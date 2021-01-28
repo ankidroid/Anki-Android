@@ -18,23 +18,12 @@ package com.ichi2.compat;
 
 import android.content.Context;
 import android.content.pm.PackageInfo;
-import android.os.StatFs;
-import android.speech.tts.TextToSpeech;
 import android.text.Spanned;
-import android.view.View;
-import android.view.Window;
-import android.webkit.WebSettings;
 import android.widget.TimePicker;
-
-import com.ichi2.anki.AbstractFlashcardViewer;
-import com.ichi2.anki.AnkiActivity;
 
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
-
-import androidx.annotation.CheckResult;
-
 
 /**
  * This interface defines a set of functions that are not available on all platforms.
@@ -61,32 +50,13 @@ public interface Compat {
     /* Mock the Intent PROCESS_TEXT constants introduced in API 23. */
     String ACTION_PROCESS_TEXT = "android.intent.action.PROCESS_TEXT";
     String EXTRA_PROCESS_TEXT = "android.intent.extra.PROCESS_TEXT";
-
-    void setFullScreen(AbstractFlashcardViewer activity);
-    void setSelectableBackground(View view);
-    void prepareWebViewCookies(Context context);
-    void flushWebViewCookies();
-    void setHTML5MediaAutoPlay(WebSettings settings, Boolean allow);
-    void setStatusBarColor(Window window, int color);
-
-    /** Returns true if the system UI currently visible during immersive mode */
-    boolean isImmersiveSystemUiVisible(AnkiActivity activity);
     void setupNotificationChannel(Context context, String id, String name);
-    Spanned fromHtml(String html);
-    @CheckResult
-    long getAvailableBytes(StatFs stat);
     void setTime(TimePicker picker, int hour, int minute);
     int getHour(TimePicker picker);
     int getMinute(TimePicker picker);
-    int getCameraCount();
     void vibrate(Context context, long durationMillis);
     void copyFile(String source, String target) throws IOException;
     long copyFile(String source, OutputStream target) throws IOException;
     long copyFile(InputStream source, String target) throws IOException;
-
-    /** TextToSpeech API. {@link Compat#initTtsParams} should be called before calling {@link Compat#speak*/
-    Object initTtsParams();
-    int speak(TextToSpeech tts, String text, int queueMode, Object ttsParams, String utteranceId);
-    long getVersionCode(PackageInfo pInfo);
 }
 

@@ -68,13 +68,19 @@
                 android:key="disableExtendedTextUi"
                 android:summary="@string/disable_extended_text_ui_summ"
                 android:title="@string/disable_extended_text_ui" />
-
-            <!-- HACK before 7124 MIUI Clipboard Cloze -->
             <CheckBoxPreference
                 android:defaultValue="true"
-                android:key="enableMIUIClipboardHack"
-                android:summary="@string/enable_miui_keyboard_hack_summ"
-                android:title="@string/enable_miui_keyboard_hack" />
+                android:key="noteEditorNewlineReplace"
+                android:summary="@string/note_editor_replace_newlines_summ"
+                android:title="@string/note_editor_replace_newlines"
+                />
+            <!-- #7896 - Workaround for old webviews which could not render some characters in a <code> block
+            due to problems with the default monospace font handling -->
+            <CheckBoxPreference
+                android:defaultValue="false"
+                android:key="noCodeFormatting"
+                android:summary="@string/no_code_formatting_summ"
+                android:title="@string/no_code_formatting" />
         </PreferenceCategory>
         <PreferenceCategory
             android:key="category_plugins"

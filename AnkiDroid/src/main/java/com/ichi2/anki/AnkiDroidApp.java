@@ -19,17 +19,20 @@
 package com.ichi2.anki;
 
 import android.annotation.SuppressLint;
+import android.app.Application;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.content.res.Resources;
+import android.net.Uri;
 import android.os.Build;
 import android.os.Environment;
 import android.os.LocaleList;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.annotation.VisibleForTesting;
 import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 
 import android.util.Log;
@@ -45,6 +48,7 @@ import com.ichi2.anki.services.BootService;
 import com.ichi2.anki.services.NotificationService;
 import com.ichi2.compat.CompatHelper;
 import com.ichi2.utils.AdaptionUtil;
+import com.ichi2.utils.ExceptionUtil;
 import com.ichi2.utils.LanguageUtil;
 import com.ichi2.anki.analytics.UsageAnalytics;
 import com.ichi2.utils.Permissions;
@@ -68,13 +72,13 @@ import java.util.Locale;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import androidx.multidex.MultiDexApplication;
 import timber.log.Timber;
 import static timber.log.Timber.DebugTree;
 
 /**
  * Application class.
  */
+@SuppressLint("NonConstantResourceId") // https://github.com/ACRA/acra/issues/810
 @AcraCore(
         buildConfigClass = org.acra.dialog.BuildConfig.class,
         excludeMatchingSharedPreferencesKeys = {"username","hkey"},
@@ -141,7 +145,7 @@ import static timber.log.Timber.DebugTree;
         exceptionClassLimit = 1000,
         stacktraceLimit = 1
 )
-public class AnkiDroidApp extends MultiDexApplication {
+public class AnkiDroidApp extends Application {
 
     public static final String XML_CUSTOM_NAMESPACE = "http://arbitrary.app.namespace/com.ichi2.anki";
 
@@ -177,10 +181,34 @@ public class AnkiDroidApp extends MultiDexApplication {
     /** Our ACRA configurations, initialized during onCreate() */
     private CoreConfigurationBuilder acraCoreConfigBuilder;
 
+    /** An exception if the WebView subsystem fails to load */
+    @Nullable
+    private Throwable mWebViewError;
+
 
     @NonNull
     public static InputStream getResourceAsStream(@NonNull String name) {
         return sInstance.getApplicationContext().getClassLoader().getResourceAsStream(name);
+    }
+
+
+    public static boolean isInitialized() {
+        return sInstance == null;
+    }
+
+
+    @VisibleForTesting(otherwise = VisibleForTesting.NONE)
+    public static void simulateRestoreFromBackup() {
+        sInstance = null;
+    }
+
+
+    public static boolean isAcraEnbled(Context context, boolean defaultValue) {
+        if (!getSharedPrefs(context).contains(ACRA.PREF_DISABLE_ACRA)) {
+            // we shouldn't use defaultValue below, as it would be inverted which complicated understanding.
+            return defaultValue;
+        }
+        return !getSharedPrefs(context).getBoolean(ACRA.PREF_DISABLE_ACRA, true);
     }
 
 
@@ -278,10 +306,17 @@ public class AnkiDroidApp extends MultiDexApplication {
         NotificationChannels.setup(getApplicationContext());
 
         // Configure WebView to allow file scheme pages to access cookies.
-        CookieManager.setAcceptFileSchemeCookies(true);
-
-        // Prepare Cookies to be synchronized between RAM and permanent storage.
-        CompatHelper.getCompat().prepareWebViewCookies(this.getApplicationContext());
+        try {
+            CookieManager.setAcceptFileSchemeCookies(true);
+        } catch (Throwable e) {
+            // 5794: Errors occur if the WebView fails to load
+            // android.webkit.WebViewFactory.MissingWebViewPackageException.MissingWebViewPackageException
+            // Error may be excessive, but I expect a UnsatisfiedLinkError to be possible here.
+            this.mWebViewError = e;
+            sendExceptionReport(e, "setAcceptFileSchemeCookies");
+            Timber.e(e, "setAcceptFileSchemeCookies");
+            return;
+        }
 
         // Set good default values for swipe detection
         final ViewConfiguration vc = ViewConfiguration.get(this);
@@ -411,14 +446,7 @@ public class AnkiDroidApp extends MultiDexApplication {
                 preferences = getSharedPrefs(remoteContext);
             }
             Configuration langConfig = getLanguageConfig(remoteContext.getResources().getConfiguration(), preferences);
-            //API level >= 25: supported since API 17
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1) {
-                return remoteContext.createConfigurationContext(langConfig);
-            } else {
-                //API level < 25:
-                remoteContext.getResources().updateConfiguration(langConfig, remoteContext.getResources().getDisplayMetrics());
-                return remoteContext;
-            }
+            return remoteContext.createConfigurationContext(langConfig);
         } catch (Exception e) {
             Timber.e(e, "failed to update context with new language");
             //during AnkiDroidApp.attachBaseContext() ACRA is not initialized, so the exception report will not be sent
@@ -453,13 +481,8 @@ public class AnkiDroidApp extends MultiDexApplication {
             //first element of setLocales() is automatically setLocal()
             newConfig.setLocales(newLocaleList);
         } else {
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1) {
-                //API level >=17 but <24
-                newConfig.setLocale(newLocale);
-            } else {
-                //Legacy, API level <17
-                newConfig.locale = newLocale;
-            }
+            //API level >=17 but <24
+            newConfig.setLocale(newLocale);
         }
 
         return newConfig;
@@ -537,6 +560,14 @@ public class AnkiDroidApp extends MultiDexApplication {
         editor.apply();
     }
 
+
+    public static Intent getMarketIntent(Context context) {
+        final String uri = context.getString(CompatHelper.isKindle() ? R.string.link_market_kindle : R.string.link_market);
+        Uri parsed = Uri.parse(uri);
+        return new Intent(Intent.ACTION_VIEW, parsed);
+    }
+
+
     /**
      * Get the url for the feedback page
      * @return
@@ -581,6 +612,22 @@ public class AnkiDroidApp extends MultiDexApplication {
     private static boolean isCurrentLanguage(String l) {
         String pref = getSharedPrefs(sInstance).getString(Preferences.LANGUAGE, "");
         return pref.equals(l) || "".equals(pref) && Locale.getDefault().getLanguage().equals(l);
+    }
+
+
+    public static boolean webViewFailedToLoad() {
+        return getInstance().mWebViewError != null;
+    }
+
+
+    @Nullable
+    public static String getWebViewErrorMessage() {
+        Throwable error = getInstance().mWebViewError;
+        if (error == null) {
+            Timber.w("getWebViewExceptionMessage called without webViewFailedToLoad check");
+            return null;
+        }
+        return ExceptionUtil.getExceptionMessage(error);
     }
 
     /**

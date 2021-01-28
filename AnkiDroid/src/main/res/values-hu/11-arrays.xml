@@ -39,35 +39,6 @@
         <item>Soha ne jelentse</item>
         <item>Kérdezzen rá</item>
     </string-array>
-    <string-array name="gestures_labels">
-        <item>Nincs művelet</item>
-        <item>Válasz mutatása</item>
-        <item>Válasz gomb 1</item>
-        <item>Válasz gomb 2</item>
-        <item>Válasz gomb 3</item>
-        <item>Válasz gomb 4</item>
-        <item>Javasolt válasz (zöld)</item>
-        <item>Jobb válasz, mint a javasolt</item>
-        <item>Visszavonás</item>
-        <item>Megjegyzés szerkesztése</item>
-        <item>Jegyzet címkézése</item>
-        <item>Jegyzet megjelölése</item>
-        <item>Kifejezés keresése</item>
-        <item>Kártya halasztása</item>
-        <item>Kártya felfüggesztése</item>
-        <item>Jegyzet törlése</item>
-        <item>Média lejátszása</item>
-        <item>Tanulás befejezése</item>
-        <item>Jegyzet halasztása</item>
-        <item>Jegyzet felfüggesztése</item>
-        <item>Piros jelölő bekapcsolása</item>
-        <item>Narancs Jelölő Bekapcsolása</item>
-        <item>Zöld Jelölő Bekapcsolása</item>
-        <item>Kék Jelölő Bekapcsolása</item>
-        <item>Jelölő Törlése</item>
-        <item>Felfele</item>
-        <item>Lefele</item>
-    </string-array>
     <string-array name="leech_action_labels">
         <item>Kártya felfüggesztése</item>
         <item>Csak címke</item>
@@ -108,4 +79,39 @@
         <item>Fekete</item>
         <item>Sötét</item>
     </string-array>
+    <string-array name="html_size_code_labels">
+        <item>xx-small</item>
+        <item>x-small</item>
+        <item>kicsi</item>
+        <item>közepes</item>
+        <item>nagy</item>
+        <item>x-large</item>
+        <item>xx-large</item>
+    </string-array>
+    <!--
+    #7794 - it\'s better to use @string references in non-translated arrays as this handles
+    changes in the array ordering better
+     -->
+    <string name="gesture_no_action">Nincs művelet</string>
+    <string name="gesture_answer_1">Válasz gomb 1</string>
+    <string name="gesture_answer_2">Válasz gomb 2</string>
+    <string name="gesture_answer_3">Válasz gomb 3</string>
+    <string name="gesture_answer_4">Válasz gomb 4</string>
+    <string name="gesture_answer_green">Javasolt válasz (zöld)</string>
+    <string name="gesture_answer_better_recommended">Jobb válasz, mint a javasolt</string>
+    <string name="gesture_tag_note">Jegyzet címkézése</string>
+    <string name="gesture_lookup">Kifejezés keresése</string>
+    <string name="gesture_play">Média lejátszása</string>
+    <string name="gesture_abort_learning">Tanulás befejezése</string>
+    <string name="gesture_flag_red">Piros jelölő bekapcsolása</string>
+    <string name="gesture_flag_orange">Narancs Jelölő Bekapcsolása</string>
+    <string name="gesture_flag_green">Zöld Jelölő Bekapcsolása</string>
+    <string name="gesture_flag_blue">Kék Jelölő Bekapcsolása</string>
+    <string name="gesture_flag_remove">Jelölő Törlése</string>
+    <string name="gesture_page_up">Felfele</string>
+    <string name="gesture_page_down">Lefele</string>
+    <string name="gesture_abort_sync">Abort Learning and Sync</string>
+    <string name="gesture_toggle_whiteboard">Toggle Whiteboard</string>
+    <string name="record_voice">Felvétel</string>
+    <string name="replay_voice">Visszajátszás</string>
 </resources>

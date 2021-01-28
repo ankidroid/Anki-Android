@@ -44,18 +44,7 @@
         <item quantity="one">%d lernenda AnkiDroid-karto</item>
         <item quantity="other">%d lernendaj AnkiDroid-kartoj</item>
     </plurals>
-    <string name="widget_no_cards_due">Neniu lernenda karto</string>
-    <string name="widget_loading">Ŝutado de fenestraĵo&#8230;</string>
-    <plurals name="widget_cards_in_decks_due">
-        <item quantity="one">%1$d karto estas lernenda en %2$s</item>
-        <item quantity="other">%1$d kartoj estas lernendaj en %2$s</item>
-    </plurals>
-    <plurals name="widget_decks">
-        <item quantity="one">%1$d kartaro</item>
-        <item quantity="other">%1$d kartaroj</item>
-    </plurals>
-    <string name="widget_small">AnkiDroid malgranda</string>
-    <string name="widget_small_button">AnkiDroid</string>
+    <string name="widget_small" comment="Label of the small ankidroid widget. This text can\'t be found directly in AnkiDroid">AnkiDroid malgranda</string>
     <plurals name="widget_cards_due">
         <item quantity="one">%d lernenda karto</item>
         <item quantity="other">%d lernendaj kartoj</item>
@@ -64,6 +53,5 @@
         <item quantity="one">%d minuto restas</item>
         <item quantity="other">%d minutoj restas</item>
     </plurals>
-    <string name="widget_add_note">Aldoni noton</string>
     <string name="widget_add_note_button">Aldoni novan AnkiDroid-noton</string>
 </resources>

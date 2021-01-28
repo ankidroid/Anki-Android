@@ -31,8 +31,8 @@ public class DeckPickerConfirmDeleteDeckDialog extends AnalyticsDialogFragment {
                 .title(res.getString(R.string.delete_deck_title))
                 .content(getArguments().getString("dialogMessage"))
                 .iconAttr(R.attr.dialogErrorIcon)
-                .positiveText(res.getString(R.string.dialog_positive_delete))
-                .negativeText(res.getString(R.string.dialog_cancel))
+                .positiveText(R.string.dialog_positive_delete)
+                .negativeText(R.string.dialog_cancel)
                 .cancelable(true)
                 .onPositive((dialog, which) -> {
                     ((DeckPicker) getActivity()).deleteContextMenuDeck();

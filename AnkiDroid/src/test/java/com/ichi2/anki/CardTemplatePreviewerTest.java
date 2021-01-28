@@ -34,6 +34,7 @@ import org.robolectric.RobolectricTestRunner;
 import org.robolectric.android.controller.ActivityController;
 
 import java.util.ArrayList;
+import java.util.List;
 
 @RunWith(RobolectricTestRunner.class)
 public class CardTemplatePreviewerTest extends RobolectricTest {
@@ -78,7 +79,7 @@ public class CardTemplatePreviewerTest extends RobolectricTest {
     }
 
     @Test
-    public void testPreviewNormal() throws Exception {
+    public void testPreviewNormal() {
 
         // Make sure we test previewing a new card template
         String modelName = "Basic (and reversed card)";
@@ -111,7 +112,7 @@ public class CardTemplatePreviewerTest extends RobolectricTest {
 
     private Card getSavedCard(Model model, int ordinal) {
         Note n = getCol().newNote(model);
-        ArrayList<String> fieldNames = Models.fieldNames(model);
+        List<String> fieldNames = model.getFieldsNames();
         for (int i = 0; i < fieldNames.size(); i++) {
             n.setField(i, fieldNames.get(i));
         }

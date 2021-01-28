@@ -17,7 +17,6 @@
 package com.ichi2.ui;
 
 import android.content.Context;
-import android.os.Build;
 import android.util.AttributeSet;
 import android.view.View;
 import android.view.ViewGroup;
@@ -26,7 +25,6 @@ import android.widget.TextView;
 import com.ichi2.utils.ViewGroupUtils;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.RequiresApi;
 
 // extending androidx.preference didn't work:
 // java.lang.ClassCastException: com.ichi2.ui.AutoSizeCheckBoxPreference cannot be cast to android.preference.Preference
@@ -49,7 +47,6 @@ public class AutoSizeCheckBoxPreference extends android.preference.CheckBoxPrefe
     }
 
 
-    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     @SuppressWarnings("unused")
     public AutoSizeCheckBoxPreference(Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes) {
         super(context, attrs, defStyleAttr, defStyleRes);

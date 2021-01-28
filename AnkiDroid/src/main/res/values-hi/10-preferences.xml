@@ -42,14 +42,12 @@
     <string name="disabled">अक्षम</string>
     <string name="enabled">सक्षम</string>
     <!-- preferences.xml categories-->
-    <string name="pref_cat_general">AnkiDroid</string>
     <string name="pref_cat_general_summ">सामान्य सेटिंग</string>
     <string name="pref_cat_reviewing">समीक्षा</string>
     <string name="pref_cat_reviewing_summ">डेक असंबंधित समीक्षक सेटिंग</string>
     <string name="pref_cat_reviewer_behaviour">व्यवहार</string>
     <string name="pref_cat_flashcard">प्रदर्शन</string>
     <string name="pref_cat_whiteboard">स्लेट</string>
-    <string name="pref_cat_automatic_display">स्वतः उत्तर दिखाएँ</string>
     <string name="pref_cat_appearance">दिखावट</string>
     <string name="pref_cat_appearance_summ">थीम और डिफ़ॉल्ट फ़ॉन्ट बदलें</string>
     <string name="pref_cat_themes">थीम</string>
@@ -66,8 +64,6 @@
     <string name="about_version">संस्करण: </string>
     <!-- preferences.xml entries-->
     <string name="whiteboard_stroke_width">अंकन की चौड़ाई</string>
-    <string name="whiteboard_black">काले लिखावट</string>
-    <string name="whiteboard_black_summ">रात मोड में जब तक कम स्मृति का उपयोग करता है</string>
     <string name="use_input_tag">पत्ता में उत्तर दर्ज करें</string>
     <string name="use_input_tag_summ">जवाब में टाइप करने के लिए कार्ड के अंदर एक पाठ इनपुट बॉक्स का उपयोग करें</string>
     <string name="dictionary">शब्दकोष खोजें</string>
@@ -96,15 +92,26 @@
     <string name="gestures_summ">ऐसे जवाब और संपादन कार्ड के रूप में कार्रवाई करने के लिए इशारों निरुपित ।</string>
     <string name="gestures_allow_links">Ignore touch gestures on links</string>
     <string name="gestures_allow_links_summary">Touch gestures will not be processed if a link/hint is pressed.</string>
+    <string name="gestures_corner_touch">9-point touch</string>
+    <string name="gestures_corner_touch_summary">Allow touch gestures in screen corners</string>
     <string name="gestures_swipe_up">ऊपर की ओर स्वाइप</string>
     <string name="gestures_swipe_down">निचे की ओर स्वाइप</string>
     <string name="gestures_swipe_left">बाएं स्वाइप करें</string>
     <string name="gestures_swipe_right">दाएं स्वाइप करें</string>
     <string name="gestures_double_tap">डबल टच</string>
     <string name="gestures_tap_top">टच टॉप</string>
-    <string name="gestures_tap_bottom">नीचे स्पर्श करें</string>
     <string name="gestures_tap_left">बाएं स्पर्श करें</string>
     <string name="gestures_tap_right">दाएं स्पर्श करें</string>
+    <string name="gestures_tap_bottom">नीचे स्पर्श करें</string>
+    <string name="gestures_corner_tap_top_left">Touch top left</string>
+    <string name="gestures_corner_tap_top_center">Touch top center</string>
+    <string name="gestures_corner_tap_top_right">Touch top right</string>
+    <string name="gestures_corner_tap_middle_left">Touch middle left</string>
+    <string name="gestures_corner_tap_middle_center">Touch middle center</string>
+    <string name="gestures_corner_tap_middle_right">Touch middle right</string>
+    <string name="gestures_corner_tap_bottom_left">Touch bottom left</string>
+    <string name="gestures_corner_tap_bottom_center">Touch bottom center</string>
+    <string name="gestures_corner_tap_bottom_right">Touch bottom right</string>
     <string name="gestures_volume_up">Volume up</string>
     <string name="gestures_volume_down">Volume down</string>
     <string name="more_scrolling_buttons">ई-रीडर</string>
@@ -141,9 +148,8 @@
     <string name="timeout_answer_text">स्वचालित प्रदर्शन उत्तर</string>
     <string name="timeout_answer_summ">उपयोगकर्ता इनपुट के बिना स्वचालित रूप से उत्तर दिखाएं । देरी स्वचालित रूप से खेला ऑडियो फ़ाइलों के लिए समय शामिल है ।</string>
     <string name="timeout_answer_seconds">जवाब दिखाने के लिए समय</string>
-    <string name="timeout_answer_seconds_summ">XXX s</string>
+    <string name="timeout_answer_seconds_summ" comment="The time to wait (in seconds) in the reviewer before automatically showing the next question or answer">XXX s</string>
     <string name="timeout_question_seconds">अगला प्रश्न दिखाने का समय</string>
-    <string name="timeout_question_seconds_summ">XXX s</string>
     <string name="select_locale_title">भाषा चुनें</string>
     <string name="safe_display">सुरक्षित प्रदर्शन मोड</string>
     <string name="safe_display_summ">Disable all animations and use safer method for drawing cards. E-ink devices may require this.</string>
@@ -164,7 +170,6 @@
     <string name="use_current">नए कार्ड के लिए डेक</string>
     <string name="new_spread">नए कार्ड की स्थिति</string>
     <string name="learn_cutoff">आगे की सीमा जानें</string>
-    <string name="learn_cutoff_summ">XXX min</string>
     <string name="time_limit">Timebox समय सीमा</string>
     <string name="time_limit_summ">XXX min</string>
     <string name="day_offset">अगले दिन की शुरुआत</string>
@@ -216,8 +221,8 @@
         <item quantity="other">%1$s\n%2$d डेक इस समूह का उपयोग करता है</item>
     </plurals>
     <string name="deck_conf_new_cards">नए कार्ड</string>
-    <string name="deck_conf_rev_cards">समीक्षाएँ</string>
-    <string name="deck_conf_lps_cards">चूक</string>
+    <string name="deck_conf_rev_cards" comment="Name of the deck options submenu for configuring reviews of due cards.">समीक्षाएँ</string>
+    <string name="deck_conf_lps_cards" comment="Label of the submenu stating how lapses cards are treated.">चूक</string>
     <string name="deck_conf_general">सामान्य</string>
     <string name="deck_conf_reminders">रिमाइंडर्स</string>
     <string name="deck_conf_steps">चरण (मिनटों में)</string>
@@ -235,6 +240,7 @@
     <string name="deck_conf_use_general_timeout_settings">सामान्य सेटिंग्स का उपयोग करें</string>
     <string name="deck_conf_use_general_timeout_settings_summ">Use general \'Automatic display answer\' settings instead of using the settings for this group.</string>
     <string name="deck_conf_easy_bonus">आसान बोनस</string>
+    <string name="deck_conf_hard_factor">Hard interval</string>
     <string name="deck_conf_ivl_fct">अंतराल संशोधक</string>
     <string name="deck_conf_max_ivl">अधिकतम अंतराल</string>
     <string name="deck_conf_new_lps_ivl">नया अंतराल</string>
@@ -251,29 +257,24 @@
     <string name="deck_conf_manage">समूह प्रबंधन</string>
     <string name="deck_conf_manage_summ">Add and change options groups</string>
     <string name="deck_conf_current_group">वर्तमान समूह</string>
-    <string name="deck_conf_rename">नाम बदलें</string>
+    <string name="deck_conf_rename" comment="Menu entry to rename a deck">नाम बदलें</string>
     <string name="deck_conf_reset">मूल पुनस्थापित करें</string>
-    <string name="deck_conf_reset_title">मूल पुनस्थापित करें</string>
     <string name="deck_conf_reset_message">वर्तमान विकल्प समूह को डिफ़ॉल्ट मानों में पुनर्स्थापित करें?</string>
-    <string name="deck_conf_add">जोड़ें</string>
+    <string name="deck_conf_add" comment="Adding a new deck option group">जोड़ें</string>
     <string name="deck_conf_add_summ">वर्तमान विकल्प समूह की प्रतिलिपि बनाएं</string>
-    <string name="deck_conf_remove">हटाएं</string>
-    <string name="deck_conf_remove_title">हटाएं</string>
     <string name="deck_conf_remove_message">वर्तमान विकल्प समूह निकालें?</string>
     <string name="deck_conf_set_subdecks">सभी उपडेक के लिए सेट करें</string>
     <plurals name="deck_conf_set_subdecks_summ">
         <item quantity="one">%s subdeck इस समूह का उपयोग करेगा</item>
         <item quantity="other">%s subdeck इस समूह का उपयोग करेगा</item>
     </plurals>
-    <string name="deck_conf_set_subdecks_title">सभी उपडेक के लिए सेट करें</string>
     <string name="deck_conf_set_subdecks_message">इस डेक उपडेक के सभी के लिए वर्तमान विकल्प समूह सेट करें?</string>
     <string name="pref_browser_editor_font">ब्राउज़र और संपादक फ़ॉन्ट</string>
     <string name="deck_conf_cram_filter">फ़िल्टर</string>
-    <string name="deck_conf_cram_options">विकल्प</string>
     <string name="deck_conf_cram_search">खोज</string>
     <string name="deck_conf_cram_limit">करने के लिए सीमा</string>
     <string name="deck_conf_cram_order">द्वारा चयनित कार्ड</string>
-    <string name="deck_conf_cram_reschedule">पुनः शेड्यूल करें</string>
+    <string name="deck_conf_cram_reschedule" comment="Title of the box labelled by deck_conf_cram_reschedule_summ">पुनः शेड्यूल करें</string>
     <string name="deck_conf_cram_reschedule_summ">इस डेक में मेरे जवाब के आधार पर कार्ड पुनर्निर्धारित</string>
     <string name="deck_conf_cram_steps">कस्टम चरण (मिनटों में)</string>
     <string name="deck_conf_cram_steps_summ">कस्टम चरणों को परिभाषित करें</string>
@@ -283,6 +284,8 @@
     <string name="analytics_dialog_title">AnkiDroid को बेहतर बनाने में मदद करें!</string>
     <string name="analytics_title">सुविधा उपयोग साझा करें</string>
     <string name="analytics_summ">आप AnkiDroid में योगदान कर सकते हैं, आप AnkiDroid Team को यह देखने में मदद कर सकते हैं कि लोग किन सुविधाओं का उपयोग करते हैं</string>
-    <string name="enable_miui_keyboard_hack">\'Paste\' to insert cloze deletion</string>
-    <string name="enable_miui_keyboard_hack_summ">In the Note Editor, \'Paste\' will turn the selected text into a cloze</string>
+    <string name="note_editor_replace_newlines">Replace newlines with HTML</string>
+    <string name="note_editor_replace_newlines_summ">In the Note Editor, convert any instances of &lt;br&gt; to newlines when editing a card.</string>
+    <string name="no_code_formatting">Simple typed answer formatting</string>
+    <string name="no_code_formatting_summ">Fixes ‘􏿾’ appearing in typed answer results</string>
 </resources>

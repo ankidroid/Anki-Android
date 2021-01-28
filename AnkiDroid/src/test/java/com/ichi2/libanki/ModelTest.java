@@ -1,5 +1,6 @@
 package com.ichi2.libanki;
 
+import com.ichi2.anki.R;
 import com.ichi2.anki.RobolectricTest;
 import com.ichi2.anki.exception.ConfirmModSchemaException;
 import com.ichi2.utils.JSONArray;
@@ -8,11 +9,15 @@ import com.ichi2.utils.JSONObject;
 import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.robolectric.annotation.Config;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import androidx.test.ext.junit.runners.AndroidJUnit4;
 
@@ -29,6 +34,7 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotEquals;
 import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.fail;
 
 @RunWith(AndroidJUnit4.class)
 public class ModelTest extends RobolectricTest {
@@ -187,6 +193,15 @@ public class ModelTest extends RobolectricTest {
         assertEquals(1, c2.getOrd());
     }
 
+    @Test
+    public void test_cloze_empty() {
+        Collection col = getCol();
+        Models mm = col.getModels();
+        Model cloze_model = mm.byName("Cloze");
+        mm.setCurrent(cloze_model);
+        assertEquals(new ArrayList<>(Arrays.asList(0, 1)), Models.availOrds(cloze_model, new String[]{"{{c1::Empty}} and {{c2::}}", ""}));
+    }
+
 
     @Test
     public void test_text() {
@@ -342,7 +357,7 @@ public class ModelTest extends RobolectricTest {
         Map<Integer, Integer> map = new HashMap<>();
         map.put(0, 1);
         map.put(1, 0);
-        col.getModels().change(basic, new long[] {note.getId()}, basic, map, null);
+        col.getModels().change(basic, note.getId(), basic, map, null);
         note.load();
         assertEquals("b123", note.getItem("Front"));
         assertEquals("note", note.getItem("Back"));
@@ -353,7 +368,7 @@ public class ModelTest extends RobolectricTest {
         assertThat(c1.q(), containsString("note"));
         assertEquals(0, c0.getOrd());
         assertEquals(1, c1.getOrd());
-        col.getModels().change(basic, new long[] {note.getId()}, basic, null, map);
+        col.getModels().change(basic, note.getId(), basic, null, map);
         note.load();
         c0.load();
         c1.load();
@@ -371,7 +386,7 @@ public class ModelTest extends RobolectricTest {
         //     // The low precision timer on Windows reveals a race condition
         //     time.sleep(0.05);
         // }
-        col.getModels().change(basic, new long[] {note.getId()}, basic, null, map);
+        col.getModels().change(basic, note.getId(), basic, null, map);
         note.load();
         c0.load();
         // the card was deleted
@@ -380,7 +395,7 @@ public class ModelTest extends RobolectricTest {
         // an unmapped field becomes blank
         assertEquals("b123", note.getItem("Front"));
         assertEquals("note", note.getItem("Back"));
-        col.getModels().change(basic, new long[] {note.getId()}, basic, map, null);
+        col.getModels().change(basic, note.getId(), basic, map, null);
         note.load();
         assertEquals("", note.getItem("Front"));
         assertEquals("note", note.getItem("Back"));
@@ -397,7 +412,7 @@ public class ModelTest extends RobolectricTest {
         map = new HashMap<>();
         map.put(0, 0);
         map.put(1, 1);
-        col.getModels().change(basic, new long[] {note.getId()}, cloze, map, map);
+        col.getModels().change(basic, note.getId(), cloze, map, map);
         note.load();
         assertEquals("f2", note.getItem("Text"));
         assertEquals(2, note.numberOfCards());
@@ -406,7 +421,7 @@ public class ModelTest extends RobolectricTest {
         assertEquals(2, col.getDb().queryScalar("select count() from cards where nid = ?", note.getId()));
         map = new HashMap<>();
         map.put(0, 0);
-        col.getModels().change(cloze, new long[] {note.getId()}, basic, map, map);
+        col.getModels().change(cloze, note.getId(), basic, map, map);
         assertEquals(1, col.getDb().queryScalar("select count() from cards where nid = ?", note.getId()));
     }
 
@@ -418,50 +433,8 @@ public class ModelTest extends RobolectricTest {
         assertEquals(model.getJSONArray("req").length(), model.getJSONArray("tmpls").length());
     }
 
-
     @Test
-    public void test_req() {
-
-        Collection col = getCol();
-        Models mm = col.getModels();
-        Model basic = mm.byName("Basic");
-        assertTrue(basic.has("req"));
-        reqSize(basic);
-        JSONArray r = basic.getJSONArray("req").getJSONArray(0);
-        assertEquals(0, r.getInt(0));
-        assertTrue(Arrays.asList(new String[] {REQ_ANY, REQ_ALL}).contains(r.getString(1)));
-        assertEquals(1, r.getJSONArray(2).length());
-        assertEquals(0, r.getJSONArray(2).getInt(0));
-
-        Model opt = mm.byName("Basic (optional reversed card)");
-        reqSize(opt);
-
-        r = opt.getJSONArray("req").getJSONArray(0);
-        assertTrue(Arrays.asList(new String[] {REQ_ANY, REQ_ALL}).contains(r.getString(1)));
-        assertEquals(1, r.getJSONArray(2).length());
-        assertEquals(0, r.getJSONArray(2).getInt(0));
-
-
-        assertEquals(new JSONArray("[1,\"all\",[1,2]]"), opt.getJSONArray("req").getJSONArray(1));
-
-        // testing any
-        opt.getJSONArray("tmpls").getJSONObject(1).put("qfmt", "{{Back}}{{Add Reverse}}");
-        mm.save(opt, true);
-        assertEquals(new JSONArray("[1, \"any\", [1, 2]]"), opt.getJSONArray("req").getJSONArray(1));
-        // testing null
-        opt.getJSONArray("tmpls").getJSONObject(1).put("qfmt", "{{^Add Reverse}}{{/Add Reverse}}");
-        mm.save(opt, true);
-        assertEquals(new JSONArray("[1, \"none\", []]"), opt.getJSONArray("req").getJSONArray(1));
-
-        opt = mm.byName("Basic (type in the answer)");
-        reqSize(opt);
-        r = opt.getJSONArray("req").getJSONArray(0);
-        assertTrue(Arrays.asList(new String[] {REQ_ANY, REQ_ALL}).contains(r.getString(1)));
-        // TODO: Port anki@4e33775ed4346ef136ece6ef5efec5ba46057c6b
-        assertEquals(new JSONArray("[0]"), r.getJSONArray(2));
-    }
-
-    @Test
+    @Config(qualifiers = "en")
     public void regression_test_pipe() {
         Collection col = getCol();
         Models mm = col.getModels();
@@ -469,8 +442,64 @@ public class ModelTest extends RobolectricTest {
         JSONObject template = basic.getJSONArray("tmpls").getJSONObject(0);
         template.put("qfmt", "{{|Front}}{{Front}}{{/Front}}{{Front}}");
         mm.save(basic, true);
-        Note note = addNoteUsingBasicModel("foo", "bar");
-        Card c = note.cards().get(0);
-        assertThat(c.q(), containsString("unknown field"));
+        try {
+            Note note = addNoteUsingBasicModel("foo", "bar");
+            fail();
+        } catch (IllegalStateException er) {
+        }
+    }
+
+    @Test
+    public void test_getNamesOfFieldContainingCloze() {
+        assertEquals(new ArrayList<>(), Models.getNamesOfFieldsContainingCloze(""));
+        String example = "{{cloze::foo}} <%cloze:bar%>";
+        assertEquals(Arrays.asList("foo", "bar"), Models.getNamesOfFieldsContainingCloze(example));
+        assertEquals(Arrays.asList("foo", "bar"), Models.getNamesOfFieldsContainingCloze(example));
+    }
+
+    @Test
+    public void nonEmptyFieldTest() {
+        Collection col = getCol();
+        Models mm = col.getModels();
+        Model basic = mm.byName("Basic");
+        Set s = new HashSet<>();
+        assertEquals(s, basic.nonEmptyFields(new String[] {"", ""}));
+        s.add("Front");
+        assertEquals(s, basic.nonEmptyFields(new String[] {"<br/>", "   \t "})); // Html is not stripped to check for card generation
+        assertEquals(s, basic.nonEmptyFields(new String[] {"P", ""}));
+        s.add("Back");
+        assertEquals(s, basic.nonEmptyFields(new String[] {"P", "A"}));
+    }
+
+    @Test
+    public void avail_standard_order_test() {
+        Collection col = getCol();
+        Models mm = col.getModels();
+        Model basic = mm.byName("Basic");
+        assertEquals(new ArrayList<>(), Models._availStandardOrds(basic, new String[]{"", ""}));
+        assertEquals(new ArrayList<>(), Models._availStandardOrds(basic, new String[]{"", "Back"}));
+        assertEquals(new ArrayList<>(Arrays.asList(0)), Models._availStandardOrds(basic, new String[]{"Foo", ""}));
+        assertEquals(new ArrayList<>(Arrays.asList()), Models._availStandardOrds(basic, new String[]{"  \t ", ""}));
+        Model reverse = mm.byName("Basic (and reversed card)");
+        assertEquals(new ArrayList<>(), Models._availStandardOrds(reverse, new String[]{"", ""}));
+        assertEquals(new ArrayList<>(Arrays.asList(0)), Models._availStandardOrds(reverse, new String[]{"Foo", ""}));
+        assertEquals(new ArrayList<>(Arrays.asList(0, 1)), Models._availStandardOrds(reverse, new String[]{"Foo", "Bar"}));
+        assertEquals(new ArrayList<>(Arrays.asList(1)), Models._availStandardOrds(reverse, new String[]{"  \t ", "Bar"}));
+    }
+
+    @Test
+    public void avail_ords_test() {
+        Collection col = getCol();
+        Models mm = col.getModels();
+        Model basic = mm.byName("Basic");
+        assertEquals(new ArrayList<>(), Models.availOrds(basic, new String[]{"", ""}));
+        assertEquals(new ArrayList<>(), Models.availOrds(basic, new String[]{"", "Back"}));
+        assertEquals(new ArrayList<>(Arrays.asList(0)), Models.availOrds(basic, new String[]{"Foo", ""}));
+        assertEquals(new ArrayList<>(Arrays.asList()), Models.availOrds(basic, new String[]{"  \t ", ""}));
+        Model reverse = mm.byName("Basic (and reversed card)");
+        assertEquals(new ArrayList<>(), Models.availOrds(reverse, new String[]{"", ""}));
+        assertEquals(new ArrayList<>(Arrays.asList(0)), Models.availOrds(reverse, new String[]{"Foo", ""}));
+        assertEquals(new ArrayList<>(Arrays.asList(0, 1)), Models.availOrds(reverse, new String[]{"Foo", "Bar"}));
+        assertEquals(new ArrayList<>(Arrays.asList(1)), Models.availOrds(reverse, new String[]{"  \t ", "Bar"}));
     }
 }

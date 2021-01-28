@@ -45,23 +45,16 @@
     <string name="card_browser_all_decks">모든 카드 덱</string>
     <string name="card_browser_delete_card">노트 삭제</string>
     <string name="card_browser_suspend_card">카드 비활성화</string>
-    <string name="card_browser_toggle_suspend_card">카드 (비)활성화</string>
     <string name="card_browser_change_deck">카드 덱</string>
     <string name="card_browser_unsuspend_card">카드 활성화</string>
     <string name="card_browser_mark_card">노트 마크하기</string>
-    <string name="card_browser_flag">Flag</string>
-    <string name="card_browser_toggle_mark_card">(un)mark notes</string>
     <string name="card_browser_unmark_card">노트 마크 해제하기</string>
     <string name="delete_card_title">노트를 삭제할까요?</string>
-    <string name="delete_cards_title">노트를 삭제할까요?</string>
-    <string name="delete_card_message">이 노트에 포함된 모든 카드를 삭제할까요?\n검색창: %s</string>
-    <string name="delete_card_mult_message">선택된 모든 노트들의 모든 카드를 삭제할까요?\n(선택된 카드 뿐만 아니라 모든 카드가 삭제됩니다.)</string>
     <string name="changed_deck_message">%s로 이동되었습니다.</string>
-    <string name="card_browser_suspended_cards">(비)활성화된 카드</string>
     <string name="card_browser_show_marked">표시된 카드 필터링</string>
     <string name="card_browser_show_suspended">비활성화된 카드 필터링</string>
     <string name="card_browser_search_by_tag">태그별 필터링</string>
-    <string name="card_browser_tags_shown">태그: %1$s</string>
+    <string name="card_browser_search_by_flag">Filter by flag</string>
     <string name="card_browser_list_my_searches">내가 검색한 항목</string>
     <string name="card_browser_list_my_searches_save">검색 항목 저장</string>
     <string name="card_browser_list_my_searches_title">저장된 검색 항목 선택</string>
@@ -72,11 +65,8 @@
     <string name="card_browser_change_display_order">표시 순서 변경</string>
     <string name="card_browser_change_display_order_title">표시 순서를 선택하세요</string>
     <string name="card_browser_change_display_order_reverse">역순으로 정렬하려면 필드를 두번 선택하세요</string>
-    <string name="card_details_question">문제</string>
-    <string name="card_details_answer">정답</string>
-    <string name="card_details_due">예정</string>
+    <string name="card_details_due" comment="Date at which a card will be due to review again.">예정</string>
     <string name="card_details_tags">태그</string>
-    <string name="card_browser_filtering_cards">카드 필터링 중&#8230; \n취소하려면 뒤로가기 버튼을 누르세요</string>
     <string-array name="card_browser_order_labels">
         <item>정렬 안함(더 빠름)</item>
         <item>정렬 필드에 따라</item>
@@ -91,16 +81,37 @@
     </string-array>
     <string name="card_browser_select_all">모두 선택</string>
     <string name="card_browser_select_none">모두 선택 안함</string>
-    <string name="card_browser_edit_note">Edit note</string>
-    <string name="card_browser_interval_new_card">(new)</string>
-    <string name="card_browser_ease_new_card">(new)</string>
+    <string name="card_browser_interval_new_card" comment="Message indicating that a card is currently new, and so has no interval/ease.">(new)</string>
     <string name="card_browser_due_filtered_card">(filtered)</string>
     <string name="card_browser_interval_learning_card">(learning)</string>
-    <string name="card_browser_note_editor_error">Error opening Note Editor</string>
     <string name="card_browser_no_cards_in_deck">No cards found in deck ‘%s’</string>
     <string name="card_browser_search_all_decks">Search all decks</string>
     <string name="card_browser_unknown_deck_name">Unknown</string>
     <plurals name="card_browser_cards_deleted">
         <item quantity="other">%d cards deleted</item>
     </plurals>
+    <!-- Card Info subscreen -->
+    <string name="card_info_added" comment="Label of the information showing at which date a card was added.">Added</string>
+    <string name="card_info_first_review">First Review</string>
+    <string name="card_info_latest_review">Latest Review</string>
+    <string name="card_info_interval">Interval</string>
+    <string name="card_info_ease">Ease</string>
+    <string name="card_info_reviews" comment="Number of times a card was reviewed">Reviews</string>
+    <string name="card_info_lapses" comment="Label indicating the number of lapses of a card.">Lapses</string>
+    <string name="card_info_average_time">Average Time</string>
+    <string name="card_info_total_time">Total Time</string>
+    <string name="card_info_card_type">Card Type</string>
+    <string name="card_info_note_type">Note Type</string>
+    <string name="card_info_deck_name">Deck Name</string>
+    <string name="card_info_card_id">Card Id</string>
+    <string name="card_info_note_id">Note Id</string>
+    <string name="card_info_revlog_time">Time</string>
+    <string name="card_info_revlog_date">Date</string>
+    <string name="card_info_revlog_rating">Rating</string>
+    <string name="card_info_revlog_type">Type</string>
+    <string name="card_info_revlog_learn" comment="Label indicating that a review in the log of a card occured while the card was in learning mode">Learn</string>
+    <string name="card_info_revlog_review">Review</string>
+    <string name="card_info_revlog_relearn" comment="Label of a log entry of a card, indicating that a review was done with a note in relearning mode">Relearn</string>
+    <string name="card_info_revlog_filtered">Filtered</string>
+    <string name="card_info_ease_not_applicable">N/A</string>
 </resources>

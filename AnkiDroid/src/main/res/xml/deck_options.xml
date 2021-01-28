@@ -37,11 +37,11 @@
             <com.ichi2.preferences.CustomDialogPreference
                 android:dialogIcon="@drawable/ic_dialog_alert"
                 android:dialogMessage="@string/deck_conf_remove_message"
-                android:dialogTitle="@string/deck_conf_remove_title"
+                android:dialogTitle="@string/dialog_positive_remove"
                 android:key="confRemove"
                 android:negativeButtonText="@string/dialog_cancel"
                 android:positiveButtonText="@string/dialog_positive_remove"
-                android:title="@string/deck_conf_remove" />
+                android:title="@string/dialog_positive_remove" />
 
             <EditTextPreference
                 android:key="confRename"
@@ -50,15 +50,15 @@
             <com.ichi2.preferences.CustomDialogPreference
                 android:dialogIcon="@drawable/ic_dialog_alert"
                 android:dialogMessage="@string/deck_conf_reset_message"
-                android:dialogTitle="@string/deck_conf_reset_title"
+                android:dialogTitle="@string/deck_conf_reset"
                 android:key="confRestore"
                 android:negativeButtonText="@string/dialog_cancel"
                 android:positiveButtonText="@string/dialog_positive_restore"
-                android:title="@string/deck_conf_reset_title" />
+                android:title="@string/deck_conf_reset" />
             <com.ichi2.preferences.CustomDialogPreference
                 android:dialogIcon="@drawable/ic_dialog_alert"
                 android:dialogMessage="@string/deck_conf_set_subdecks_message"
-                android:dialogTitle="@string/deck_conf_set_subdecks_title"
+                android:dialogTitle="@string/deck_conf_set_subdecks"
                 android:key="confSetSubdecks"
                 android:negativeButtonText="@string/dialog_cancel"
                 android:positiveButtonText="@string/dialog_positive_set"
@@ -99,7 +99,6 @@
                 android:title="@string/deck_conf_start_ease"
                 app:max="999"
                 app:min="100" />
-
             <CheckBoxPreference
                 android:defaultValue="true"
                 android:key="newBury"
@@ -119,6 +118,13 @@
                 app:max="1000"
                 app:min="100" />
             <com.ichi2.preferences.NumberRangePreference
+                android:key="hardFactor"
+                android:summary="@string/deck_conf_percent"
+                android:title="@string/deck_conf_hard_factor"
+                android:enabled="false"
+                app:max="120"
+                app:min="5" />
+            <com.ichi2.preferences.NumberRangePreference
                 android:key="revIvlFct"
                 android:summary="@string/deck_conf_percent"
                 android:title="@string/deck_conf_ivl_fct"
@@ -137,7 +143,7 @@
                 android:summary="@string/deck_conf_rev_bury_summ"
                 android:title="@string/deck_conf_rev_bury" />
 
-            <PreferenceCategory android:title="@string/pref_cat_automatic_display" >
+            <PreferenceCategory android:title="@string/timeout_answer_text" >
                 <CheckBoxPreference
                     android:defaultValue="true"
                     android:disableDependentsState="true"
@@ -163,7 +169,7 @@
                     android:dependency="revTimeoutAnswer"
                     android:key="revTimeoutQuestionSeconds"
                     android:max="60"
-                    android:summary="@string/timeout_question_seconds_summ"
+                    android:summary="@string/timeout_answer_seconds_summ"
                     android:title="@string/timeout_question_seconds" />
             </PreferenceCategory>
         </PreferenceScreen>

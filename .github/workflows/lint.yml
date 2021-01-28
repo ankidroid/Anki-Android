@@ -1,0 +1,76 @@
+name: Code Quality Checks
+
+on:
+  workflow_dispatch:
+  pull_request:
+    branches:
+      - '**'
+    paths:
+      - '.github/workflows/**'
+      - 'AnkiDroid/**'
+      - 'api/**'
+      - 'lint-rules/**'
+      - 'annotations/**'
+      - '**/*.gradle'
+      - 'gradle/**'
+  push:
+    branches:
+      - master
+      - i18n_sync
+      - 'release**'
+    paths:
+      - '.github/workflows/**'
+      - 'AnkiDroid/**'
+      - 'api/**'
+      - 'lint-rules/**'
+      - 'annotations/**'
+      - '**/*.gradle'
+      - 'gradle/**'
+
+jobs:
+  lintRelease:
+    name: Lint Release
+    timeout-minutes: 15
+    runs-on: ubuntu-latest
+    steps:
+      - uses: styfle/cancel-workflow-action@0.6.0
+        with:
+          access_token: ${{ github.token }}
+
+      - uses: actions/checkout@v2
+        with:
+          fetch-depth: 1
+
+      - name: Configure JDK 1.8
+        uses: actions/setup-java@v1
+        with:
+          java-version: '8' # ubuntu-latest is about to default to 11, force 8
+
+      - name: Verify JDK8
+        # OpenJDK1.8 is the default in GitHub macOS 10.15 runner, setup is not required
+        # On ubuntu-latest it is OpenJDK1.8 but is about to switch, so we should setup
+        # It may be required on other runners though
+        # Run a check that exits with error unless it is 1.8 version to future-proof against unexpected upgrades
+        run: java -fullversion 2>&1 | grep '1.8'
+        shell: bash
+
+      - name: Gradle Cache
+        uses: actions/cache@v2
+        with:
+          path: ~/.gradle/caches
+          key: ${{ runner.os }}-gradle-${{ hashFiles('**/*.gradle*') }}-v1
+
+      - name: Warm Gradle Cache
+        # This makes sure we fetch gradle network resources with a retry
+        uses: nick-invision/retry@v2
+        with:
+          timeout_minutes: 10
+          retry_wait_seconds: 60
+          max_attempts: 3
+          command: ./gradlew :AnkiDroid:compileReleaseJavaWithJavac compileLint lint-rules:compileTestJava
+
+      - name: Run Lint Release
+        run: ./gradlew lintRelease
+
+      - name: Test Lint Rules
+        run: ./gradlew lint-rules:test

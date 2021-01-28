@@ -156,7 +156,7 @@ public abstract class AbstractDeckTreeNode<T extends AbstractDeckTreeNode<T>> im
         if (!(object instanceof AbstractDeckTreeNode)) {
             return false;
         }
-        AbstractDeckTreeNode tree = (AbstractDeckTreeNode) object;
+        AbstractDeckTreeNode<?> tree = (AbstractDeckTreeNode) object;
         return Decks.equalName(getFullDeckName(), tree.getFullDeckName()) &&
             (mChildren == null && tree.mChildren == null) || // Would be the case if both are null, or the same pointer
             (mChildren != null && mChildren.equals(tree.mChildren))

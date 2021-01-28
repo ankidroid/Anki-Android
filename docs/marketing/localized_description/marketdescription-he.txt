@@ -9,7 +9,7 @@ AnkiDroid מראה לך כרטיסים בדיוק לפני שתשכח אותם �
 הוסף חומר דרך תוכנת Anki לשולחן העבודה, או ישירות דרך AnkiDroid. האפליקצייה אפילו תומכת בהוספת חומר אוטומטית ממילון!
 
 ★ תכונות מפתח:
-תומך בתכני כרטיסי-זכרון: טקסט, תמונות, צלילים ומשוואות LaTeX.
+• תכני כרטיס זיכרון נתמכים: טקסט, תמונות, צלילים, LaTeX
 חזרה לסירוגין (עפ"י אלגוריתם 2 supermemo)
 תמיכה בטקסט לדיבור
 • למעלה מ־6000 חפיסות מוכנות
@@ -32,6 +32,6 @@ AnkiDroid מראה לך כרטיסים בדיוק לפני שתשכח אותם �
 • navigation by swipe, tap
 • customisable
 • dynamic deck handling
-• night mode
-• 27 localisations
-• All previous AnkiDroid versions can be downloaded from the website
+• מצב לילה
+• תרגום ל־27 שפות
+• ניתן להוריד את כל הגרסאות הקודמות של AnkiDroid מהאתר

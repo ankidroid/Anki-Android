@@ -39,35 +39,6 @@
         <item>從不發送報告</item>
         <item>詢問我</item>
     </string-array>
-    <string-array name="gestures_labels">
-        <item>沒有動作</item>
-        <item>顯示答案</item>
-        <item>答案按鈕 1</item>
-        <item>答案按鈕 2</item>
-        <item>答案按鈕 3</item>
-        <item>答案按鈕 4</item>
-        <item>建議的答案 (綠色)</item>
-        <item>優於建議的答案</item>
-        <item>復原</item>
-        <item>編輯筆記</item>
-        <item>標記筆記</item>
-        <item>標記筆記</item>
-        <item>查找運算式</item>
-        <item>暫時隱藏卡片</item>
-        <item>擱置卡片</item>
-        <item>刪除筆記</item>
-        <item>播放媒體檔</item>
-        <item>中止學習</item>
-        <item>暫時隱藏筆記</item>
-        <item>擱置筆記</item>
-        <item>套用紅色標記</item>
-        <item>套用橙色標記</item>
-        <item>套用綠色標記</item>
-        <item>套用藍色標記</item>
-        <item>移除標記</item>
-        <item>向上翻頁</item>
-        <item>向下翻頁</item>
-    </string-array>
     <string-array name="leech_action_labels">
         <item>長久擱置卡片</item>
         <item>僅標記</item>
@@ -108,4 +79,39 @@
         <item>黑色</item>
         <item>暗色</item>
     </string-array>
+    <string-array name="html_size_code_labels">
+        <item>xx-small</item>
+        <item>x-small</item>
+        <item>small</item>
+        <item>medium</item>
+        <item>large</item>
+        <item>x-large</item>
+        <item>xx-large</item>
+    </string-array>
+    <!--
+    #7794 - it\'s better to use @string references in non-translated arrays as this handles
+    changes in the array ordering better
+     -->
+    <string name="gesture_no_action">沒有動作</string>
+    <string name="gesture_answer_1">答案按鈕 1</string>
+    <string name="gesture_answer_2">答案按鈕 2</string>
+    <string name="gesture_answer_3">答案按鈕 3</string>
+    <string name="gesture_answer_4">答案按鈕 4</string>
+    <string name="gesture_answer_green">建議的答案 (綠色)</string>
+    <string name="gesture_answer_better_recommended">優於建議的答案</string>
+    <string name="gesture_tag_note">標記筆記</string>
+    <string name="gesture_lookup">查找運算式</string>
+    <string name="gesture_play">播放媒體檔</string>
+    <string name="gesture_abort_learning">中止學習</string>
+    <string name="gesture_flag_red">套用紅色標記</string>
+    <string name="gesture_flag_orange">套用橙色標記</string>
+    <string name="gesture_flag_green">套用綠色標記</string>
+    <string name="gesture_flag_blue">套用藍色標記</string>
+    <string name="gesture_flag_remove">移除標記</string>
+    <string name="gesture_page_up">向上翻頁</string>
+    <string name="gesture_page_down">向下翻頁</string>
+    <string name="gesture_abort_sync">中止學習和同步</string>
+    <string name="gesture_toggle_whiteboard">Toggle Whiteboard</string>
+    <string name="record_voice">Record Voice</string>
+    <string name="replay_voice">Replay Voice</string>
 </resources>

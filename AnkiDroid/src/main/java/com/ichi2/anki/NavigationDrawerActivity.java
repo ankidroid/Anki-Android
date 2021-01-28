@@ -18,12 +18,12 @@ package com.ichi2.anki;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.Configuration;
-import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import com.google.android.material.navigation.NavigationView;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.core.app.TaskStackBuilder;
 import androidx.core.content.ContextCompat;
 import androidx.core.view.GravityCompat;
@@ -36,8 +36,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 
-import com.ichi2.anim.ActivityTransitionAnimation;
-import com.ichi2.compat.CompatHelper;
+import com.ichi2.anki.dialogs.HelpDialog;
 import com.ichi2.themes.Themes;
 import androidx.drawerlayout.widget.ClosableDrawerLayout;
 
@@ -80,7 +79,7 @@ public abstract class NavigationDrawerActivity extends AnkiActivity implements N
         // set a custom shadow that overlays the main content when the drawer opens
         mDrawerLayout.setDrawerShadow(R.drawable.drawer_shadow, GravityCompat.START);
         // Force transparent status bar with primary dark color underlayed so that the drawer displays under status bar
-        CompatHelper.getCompat().setStatusBarColor(getWindow(), ContextCompat.getColor(this, R.color.transparent));
+        getWindow().setStatusBarColor(ContextCompat.getColor(this, R.color.transparent));
         mDrawerLayout.setStatusBarBackgroundColor(Themes.getColorFromAttr(this, R.attr.colorPrimaryDark));
         // Setup toolbar and hamburger
         mNavigationView = mDrawerLayout.findViewById(R.id.navdrawer_items_container);
@@ -296,45 +295,31 @@ public abstract class NavigationDrawerActivity extends AnkiActivity implements N
          */
         pendingRunnable = () -> {
             // Take action if a different item selected
-            switch (item.getItemId()) {
-                case R.id.nav_decks: {
-                    Timber.i("Navigating to decks");
-                    Intent deckPicker = new Intent(NavigationDrawerActivity.this, DeckPicker.class);
-                    deckPicker.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);    // opening DeckPicker should clear back history
-                    startActivityWithAnimation(deckPicker, RIGHT);
-                    break;
-                }
-                case R.id.nav_browser:
-                    Timber.i("Navigating to card browser");
-                    openCardBrowser();
-                    break;
-                case R.id.nav_stats: {
-                    Timber.i("Navigating to stats");
-                    Intent intent = new Intent(NavigationDrawerActivity.this, Statistics.class);
-                    startActivityForResultWithAnimation(intent, REQUEST_STATISTICS, LEFT);
-                    break;
-                }
-                case R.id.nav_night_mode:
-                    Timber.i("Toggling Night Mode");
-                    mNightModeSwitch.performClick();
-                    break;
-                case R.id.nav_settings:
-                    Timber.i("Navigating to settings");
-                    mOldColPath = CollectionHelper.getCurrentAnkiDroidDirectory(NavigationDrawerActivity.this);
-                    // Remember the theme we started with so we can restart the Activity if it changes
-                    mOldTheme = Themes.getCurrentTheme(getApplicationContext());
-                    startActivityForResultWithAnimation(new Intent(NavigationDrawerActivity.this, Preferences.class), REQUEST_PREFERENCES_UPDATE, FADE);
-                    break;
-                case R.id.nav_help:
-                    Timber.i("Navigating to help");
-                    openUrl(Uri.parse(AnkiDroidApp.getManualUrl()));
-                    break;
-                case R.id.nav_feedback:
-                    Timber.i("Navigating to feedback");
-                    openUrl(Uri.parse(AnkiDroidApp.getFeedbackUrl()));
-                    break;
-                default:
-                    break;
+            int itemId = item.getItemId();
+            if (itemId == R.id.nav_decks) {
+                Timber.i("Navigating to decks");
+                Intent deckPicker = new Intent(NavigationDrawerActivity.this, DeckPicker.class);
+                deckPicker.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);    // opening DeckPicker should clear back history
+                startActivityWithAnimation(deckPicker, RIGHT);
+            } else if (itemId == R.id.nav_browser) {
+                Timber.i("Navigating to card browser");
+                openCardBrowser();
+            } else if (itemId == R.id.nav_stats) {
+                Timber.i("Navigating to stats");
+                Intent intent = new Intent(NavigationDrawerActivity.this, Statistics.class);
+                startActivityForResultWithAnimation(intent, REQUEST_STATISTICS, LEFT);
+            } else if (itemId == R.id.nav_night_mode) {
+                Timber.i("Toggling Night Mode");
+                mNightModeSwitch.performClick();
+            } else if (itemId == R.id.nav_settings) {
+                Timber.i("Navigating to settings");
+                mOldColPath = CollectionHelper.getCurrentAnkiDroidDirectory(NavigationDrawerActivity.this);
+                // Remember the theme we started with so we can restart the Activity if it changes
+                mOldTheme = Themes.getCurrentTheme(getApplicationContext());
+                startActivityForResultWithAnimation(new Intent(NavigationDrawerActivity.this, Preferences.class), REQUEST_PREFERENCES_UPDATE, FADE);
+            } else if (itemId == R.id.nav_help) {
+                Timber.i("Navigating to help");
+                showDialogFragment(HelpDialog.createInstance(this));
             }
         };
 
@@ -352,6 +337,7 @@ public abstract class NavigationDrawerActivity extends AnkiActivity implements N
     }
 
     // Override this to specify a specific card id
+    @Nullable
     protected Long getCurrentCardId() {
         return null;
     }

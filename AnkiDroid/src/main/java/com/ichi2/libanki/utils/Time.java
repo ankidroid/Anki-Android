@@ -22,6 +22,7 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
+import java.util.Locale;
 import java.util.TimeZone;
 
 /** Allows injection of time dependencies */
@@ -111,7 +112,7 @@ public abstract class Time {
     public java.sql.Date genToday(double utcOffset) {
         // The result is not adjusted for timezone anymore, following libanki model
         // Timezone adjustment happens explicitly in Deck.updateCutoff(), but not in Deck.checkDailyStats()
-        SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd");
+        SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd", Locale.US);
         df.setTimeZone(TimeZone.getTimeZone("GMT"));
         Calendar cal = Time.gregorianCalendar( intTimeMS()- (long) utcOffset * 1000L);
         return java.sql.Date.valueOf(df.format(cal.getTime()));

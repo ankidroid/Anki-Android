@@ -109,6 +109,13 @@ public class Consts {
     @IntDef({MODEL_STD, MODEL_CLOZE})
     public @interface MODEL_TYPE {}
 
+    // deck types
+    public static final int DECK_STD = 0;
+    public static final int DECK_DYN = 1;
+    @Retention(SOURCE)
+    @IntDef({DECK_STD, DECK_DYN})
+    public @interface DECK_TYPE {}
+
     public static final int STARTING_FACTOR = 2500;
 
     // deck schema & syncing vars
@@ -140,8 +147,9 @@ public class Consts {
     public static final int REVLOG_REV = 1;
     public static final int REVLOG_RELRN = 2;
     public static final int REVLOG_CRAM = 3;
+    public static final int REVLOG_MANUAL = 4;
     @Retention(SOURCE)
-    @IntDef({REVLOG_LRN, REVLOG_REV, REVLOG_RELRN, REVLOG_CRAM})
+    @IntDef({REVLOG_LRN, REVLOG_REV, REVLOG_RELRN, REVLOG_CRAM, REVLOG_MANUAL})
     public @interface REVLOG_TYPE {}
 
     // The labels defined in consts.py are in AnkiDroid's resources files.
@@ -149,4 +157,6 @@ public class Consts {
     public static final long DEFAULT_DECK_ID = 1;
     /** Default dconf - can't be removed */
     public static final long DEFAULT_DECK_CONFIG_ID = 1;
+
+    public static final String FIELD_SEPARATOR = Character.toString('\u001f');
 }

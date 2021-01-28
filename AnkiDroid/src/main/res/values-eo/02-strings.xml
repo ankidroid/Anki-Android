@@ -37,13 +37,13 @@
 ~ You should have received a copy of the GNU General Public License along with
 ~ this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools">
     <!-- How to format a percentage shown in the summary field of a preference -->
     <string name="preference_summary_percentage">XXX%</string>
+    <!-- #7570: We should use these strings again -->
     <!-- Navigation drawer strings -->
-    <string name="drawer_open">Montri tirmenuon</string>
-    <string name="drawer_close">Kaŝi tirmenuon</string>
-    <string name="CardEditorLaterMessage">Informoj konservitaj por poste</string>
+    <string tools:ignore="UnusedResources" name="drawer_open">Montri tirmenuon</string>
+    <string tools:ignore="UnusedResources" name="drawer_close">Kaŝi tirmenuon</string>
     <string name="CardEditorCardDeck">Kartaro:</string>
     <string name="CardEditorNoteDeck">Kartaro:</string>
     <string name="CardEditorModel">Tipo:</string>
@@ -55,7 +55,6 @@
     <string name="check_all_tags">(Mal)marki ĉiujn etikedojn</string>
     <string name="filter_tags">Filtri etikedojn</string>
     <string name="no_tags">Vi ankoraŭ aldonis neniun etikedon</string>
-    <string name="sdcard_missing_message">Malŝaltu USB-konservejon por aliri viajn kartarojn</string>
     <string name="updated_version">Ĝisdatigis al la versio %s</string>
     <!-- Reviewer.java -->
     <string name="save_whiteboard">Konservi skribtabulon</string>
@@ -65,7 +64,6 @@
     <string name="hide_whiteboard">Kaŝi skribtabulon</string>
     <string name="clear_whiteboard">Forviŝi skribtabulon</string>
     <string name="replay_audio">Reludi sonaĵon</string>
-    <string name="toggle_mic_tool_bar">Kontroli elparolon</string>
     <string name="leech_suspend_notification">Karto markita kiel forgesema kaj kaŝita</string>
     <string name="leech_notification">Karto markita kiel forgesema</string>
     <string name="corrupt_font">Difektita dosiero de tiparo %s</string>
@@ -107,18 +105,16 @@
     <string name="custom_study_preview_new">Antaŭrigardi novajn kartojn</string>
     <string name="custom_study_limit_tags">Limigi al specialaj etikedoj</string>
     <!-- Card editor -->
-    <string name="cardeditor_title_add_note">Aldoni noton</string>
     <string name="cardeditor_title_edit_card">Redakti noton</string>
     <string name="discard_unsaved_changes">Ĉu fermi kaj perdi entajpitan tekston?</string>
     <string name="note_editor_no_cards_created">Neniu karto kreita. Bonvolu plenigi pliajn kampojn</string>
     <string name="note_editor_no_first_field">La unua kampo estas malplena</string>
     <string name="note_editor_no_cloze_delations">Tiu ĉi noto enhavu “malplenojn” en la teksto</string>
-    <string name="note_editor_set_field_language">Set field language</string>
+    <string name="note_editor_set_field_language">Agordi lingvon de kampo</string>
     <string name="note_editor_no_cards_created_all_fields">El la nuna nototipo neniu karto kreiĝis.\nElektu alian nototipon aŭ frapetu “kartoj”-n por aldoni anstataŭan kampon</string>
     <string name="note_editor_insert_cloze_no_cloze_note_type">Trutekstaj malplenoj nur funkcias kun la nototipo “truteksto”</string>
     <string name="saving_facts">Konservado de noto</string>
     <string name="saving_model">Konservado de nototipo</string>
-    <string name="add">Aldoni</string>
     <string name="save">Konservi</string>
     <string name="close">Fermi</string>
     <string name="select">Elekti</string>
@@ -135,23 +131,19 @@
         <item quantity="one">%1$d minuto</item>
         <item quantity="other">%1$d minutoj</item>
     </plurals>
-    <string name="studyoptions_welcome_title">Bonvenon al AnkiDroid</string>
-    <string name="fact_adder_intent_title">AnkiDroid-karto</string>
-    <string name="note_editor_add_note">Aldoni noton</string>
+    <string name="fact_adder_intent_title" comment="Label of the \'Add Note\' window. This title can\'t be seen in AnkiDroid directly.">AnkiDroid-karto</string>
     <string name="note_editor_copy_note">Kopii noton</string>
-    <string name="card_editor_copy_card">Kopii karton</string>
     <string name="card_editor_reposition_card">Repozicii</string>
     <string name="card_editor_reset_card">Nuligi progreson</string>
-    <string name="card_editor_reschedule_card">Replani</string>
-    <string name="card_editor_preview_card">Antaŭrigardi</string>
+    <string name="card_editor_reschedule_card" comment="Action to reschedule a card">Replani</string>
+    <string name="card_editor_preview_card" comment="Button offering to preview some card(s)">Antaŭrigardi</string>
     <string name="error_insufficient_memory">Ago ne eblas pro nesufiĉa memoro en via aparato</string>
-    <string name="rename">Alinomi</string>
+    <string name="rename" comment="Confirm that the renaming action should be processed.">Alinomi</string>
     <string name="default_conf_delete_error">Ne povas forigi implicitan grupon de agordoj</string>
     <plurals name="factadder_cards_added">
         <item quantity="one">aldonis %d karton</item>
         <item quantity="other">%d kartoj estas aldonitaj</item>
     </plurals>
-    <string name="help_title">Helpo</string>
     <string name="check_db">Kontroli datumbazon</string>
     <string name="check_media">Kontroli aŭdvidaĵojn</string>
     <string name="empty_cards">Malplenaj kartoj</string>
@@ -161,10 +153,9 @@
     <string name="delete_deck">Forigado de kartaro&#8230;</string>
     <string name="show_hint">Montri %s</string>
     <string name="info_rate">Taksi AnkiDroid</string>
-    <string name="col_load_failed">Fiaskis enlegi kolekton.\nFrapetu reen-butonon por fermi AnkiDroid.</string>
     <string name="import_title">Enporti</string>
     <string name="import_select_title">Elektu dosieron por enporti</string>
-    <string name="import_message_add">Aldoni</string>
+    <string name="import_message_add" comment="Adding a new deck to the collection (import)">Aldoni</string>
     <string name="import_message_replace_confirm">Tio ĉi forigos vian ekzistan kolekton kaj anstataŭigos ĝin per datumoj de dosiero %s</string>
     <string name="import_message_add_confirm">Ĉu aldoni “%s” al kolekto? Tio ĉi povas okupi multan tempon</string>
     <string name="import_log_no_apkg">Tio ĉi ne estas valida dosiero Anki-pakaĵo</string>
@@ -175,13 +166,13 @@
     <string name="import_log_file_cache_cleared">Eraro dum enporti dosieron, probable la kaŝmemoro forviŝiĝis dum pritraktado.\nReprovu</string>
     <string name="import_succeeded_but_check_database">Sukcese enportis datumojn, sed fiaskis ordigi la datumojn. Plenumu kontrolon de datumbazo poste. Ĉefa kialo: %s</string>
     <string name="import_error_unhandled_request">Fiaskis pritrakti peton pri enporto</string>
-    <string name="import_error_corrupt_zip">The apkg file is corrupt. Please delete and re-download it.\n\nRoot cause: %s</string>
+    <string name="import_error_corrupt_zip">La apkg-dosiero estas difektita. Forigu kaj reelŝutu ĝin.\n\nĈefa kialo: %s</string>
     <string name="import_error_exception">Fiaskis enporti pakaĵon\n\n%s</string>
     <string name="import_error_not_apkg_extension">Dosiernomo \"%s\" ne finiĝas per .apkg aŭ .colpkg</string>
     <string name="import_error_load_imported_database">Anstataŭigoj de Anki-datumbazo (.anki2) ankoraŭ ne estas subtenataj. Legu la manlibron por instrukciojn pri anstataŭigo.</string>
     <string name="import_error_content_provider">Ne povas aŭtomate enporti elektitan dosieron al AnkiDroid. Bonvolu legi la manlibron de uzanto por sciiĝi pri kiel permane enporti anki-dosierojn:\n%s</string>
     <string name="import_error_copy_file_to_cache">Fiaskis kopii dosieron al kaŝmemoro (probable mankas spaco en konservejo)</string>
-    <string name="import_error_unhandled_scheme">Unhandled import from: “%s”</string>
+    <string name="import_error_unhandled_scheme">Nepritraktita enporto el: “%s”</string>
     <string name="import_replacing">Anstataŭigado de kolekto&#8230;</string>
     <string name="import_interrupted">Enportado interrompita</string>
     <string name="export_include_schedule">Inkluzivi lern-planon</string>
@@ -205,7 +196,9 @@
     <string name="export_unsuccessful">Eraro dum elportado de apkg-dosiero</string>
     <string name="import_hint">Enmetu apkg-dosieron en la dosierujo “%s” kaj frapetu “bone” por enporti kartojn</string>
     <string name="upgrade_import_no_file_found">Ne trovis iujn ajn dosierojn por enporti (%1$s)</string>
-    <string name="study_options">Agordoj</string>
+    <string name="study_options" comment="Name for a preference category in Filtered deck (aka Cram deck, aka Custom study) options">Agordoj</string>
+    <string name="menu__deck_options">Agordoj pri kartaro</string>
+    <string name="menu__study_options" comment="Menu item that opens options for a Filtered deck (aka Cram deck, aka Custom study)">Agordoj pri lernado</string>
     <string name="select_tts">Agordi lingvon por parol-sintezi</string>
     <string name="custom_study">Propra lernado</string>
     <string name="more_options">Pli</string>
@@ -243,6 +236,10 @@
         <item quantity="one">%s jaro</item>
         <item quantity="other">%s jaroj</item>
     </plurals>
+    <!-- A decimal number of seconds.
+    Please give this a best-effort translation and explain the requirements for
+    formatting decimals in your language in the CrowdIn comments -->
+    <string name="time_span_decimal_seconds">%s sekundoj</string>
     <!-- The reason for making a simple “< x” translatable are RTL
          languages which apparently use the other symbol to mean less
          than. -->
@@ -258,14 +255,13 @@
     <!-- Currently only used if exporting APKG fails -->
     <string name="apk_share_error">Eraro dum kunhavigado de apkg-dosiero</string>
     <!-- Import and export v2 feedback -->
-    <string name="import_needs_v2">Planilo V2 estu aktiva por enporti tiun ĉi dosieron.</string>
-    <string name="import_cannot_with_v2">Planilo V2 ne povas enporti kartarojn V1 kun inkluzivita lern-plano.</string>
     <string name="export_v2_dummy_note">Ĉi tiu dosiero postulas pli novan version de Anki.</string>
     <!-- Placed in a snackbar with a long URL. Limit the length and move the URL to the start of the string -->
     <string name="activity_start_failed_load_url">Fiaskis enlegi “%s”.</string>
     <string name="activity_start_failed">Mankas instalita aplikaĵo por plenumi tiun ĉi agon.</string>
     <string name="multimedia_editor_image_compression_failed"><![CDATA[Bildoj el la fotilo povas esti grandaj. Konsideru densigi bildojn kaj malpliigi iliajn dimensiojn]]></string>
     <string name="no_browser_notification">Ne trovis retumilon, vizitu la retpaĝon per via komputilo: </string>
+    <string name="web_page_error">Eraro dum enlegi paĝon: %s</string>
     <string name="no_outgoing_link_in_cardbrowser">Ekstera ligilo en karto ne estas subtenata.</string>
     <!-- The name of the deck which corrupt cards will be moved to -->
     <string name="check_integrity_recovered_deck_name">Restarigitaj kartoj</string>
@@ -276,8 +272,8 @@
     <string name="restore_default">Restarigi implicitajn</string>
     <string name="reviewer_tts_cloze_spoken_replacement">Malplena</string>
     <!-- in options menu & Navigation Drawer -->
-    <string name="ankidroid_turn_on_fullscreen_nav_drawer">Aktivigu plenekranan reĝimon por uzi “montri navigan tirmenuon” per Ĝavoskripto.</string>
-    <string name="ankidroid_turn_on_fullscreen_options_menu">Aktivigu plenekranan reĝimon por uzi “montri menuon de agordoj” per Ĝavoskripto.</string>
+    <string name="ankidroid_turn_on_fullscreen_nav_drawer">Aktivigu plenekranan reĝimon por uzi “montri navigan tirmenuon” per JavaScript.</string>
+    <string name="ankidroid_turn_on_fullscreen_options_menu">Aktivigu plenekranan reĝimon por uzi “montri menuon de agordoj” per JavaScript.</string>
     <!-- Whiteboard save image message in Reviewer -->
     <string name="white_board_image_save_failed">Fiaskis konservi bildon de skribtabulo. %s</string>
     <string name="white_board_image_saved">Konservis bildon de skribtabulo al %s</string>
@@ -315,9 +311,33 @@
     <string name="about_ankidroid_successfully_copied_debug">Kopiis senerarigajn informojn al tondujo</string>
     <string name="about_ankidroid_error_copy_debug_info">Eraro okazis dum kopii senerarigajn informojn al tondujo</string>
     <!-- Card Viewer -->
-    <string name="card_viewer_could_not_find_image">Card Content Error: Failed to load ‘%s’</string>
-    <string name="card_viewer_could_not_find_image_get_help">Help</string>
+    <string name="card_viewer_could_not_find_image">Eraro pri enhavo de karto, fiaskis enlegi “%s”</string>
+    <string name="card_viewer_media_relative_protocol">Eraro pri enhavo de karto: necesas ĝisdatigi plurmedion</string>
     <!-- Deck Picker -->
-    <string name="deck_picker_failed_deck_load">Failed to load deck ‘%s’</string>
-    <string name="search_decks">Search decks</string>
+    <string name="deck_picker_failed_deck_load">Fiaskis enlegi la kartaron “%s”</string>
+    <string name="search_decks">Serĉi en kartaroj</string>
+    <string name="ankidroid_init_failed_webview_title">Neriparebla eraro</string>
+    <string name="ankidroid_init_failed_webview">AnkiDroid necesas la komponanton System WebView, kiu estas nedisponebla. Tio ĉi povas okazi, kiam la operaciumo instalas ĝisdatigojn. Reprovu post kelkaj minutoj.\n\n%s</string>
+    <!-- A Menu item to change the Font Size (currently in the Note Editor) -->
+    <string name="menu_font_size">Grando de tiparo</string>
+    <string name="menu_show_toolbar" comment="Checkable item stating whether the note editor toolbar should be shown">Montri ilarstrion</string>
+    <string name="format_insert_bold">Aranĝi kiel grasan</string>
+    <string name="format_insert_italic">Aranĝi kiel kursivan</string>
+    <string name="format_insert_underline">Aranĝi kiel substrekitan</string>
+    <string name="insert_horizontal_line">Enmeti horizontalan linion</string>
+    <string name="insert_heading">Enmeti kapon</string>
+    <string name="format_font_size">Ŝanĝi grandon de tiparo</string>
+    <string name="insert_mathjax">Enmeti ekvacion MathJax</string>
+    <string name="insert_cloze">Enmeti trutekstan malplenon</string>
+    <string name="before_text">HTML antaŭ elektaĵo</string>
+    <string name="after_text">HTML post elektaĵo</string>
+    <string name="add_toolbar_item">Krei elementon de ilarstrio</string>
+    <string name="toolbar_item_explain_remove">Enigu HTML-kodon, kiu estos aldonita antaŭ kaj post la elektita teksto\n\nFrapetadu elementon de ilarstrio por forigi ĝin</string>
+    <string name="remove_toolbar_item">Ĉu forigi elementon de ilarstrio?</string>
+    <string name="note_editor_paste_too_large">La bildo estas tro granda por alglui, enmetu la bildon permane</string>
+    <string name="ankidroid_cannot_open_after_backup_try_again" comment="After an Android backup is restored, AnkiDroid opens and shows this message.         Opening AnkiDroid again will work correctly">        Restarigado de Android-sekurkopio. Reprovu</string>
+    <string name="create_shortcut_error_vivo" comment="iManager is an app on Vivo phones">Uzu iManager por permesi al AnkiDroid krei simbolajn ligilojn</string>
+    <string name="create_shortcut_failed" comment="home screen == launcher">Via hejma ekrano ne permesas al AnkiDroid krei simbolajn ligilojn</string>
+    <string name="create_shortcut_error">Eraro dum krei simbolan ligilon: %s</string>
+    <string name="note_editor_capitalize" comment="This is for a switch with a checkbox - on: enabled">Majuskligi frazojn</string>
 </resources>

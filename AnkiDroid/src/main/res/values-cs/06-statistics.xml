@@ -42,11 +42,11 @@
     <string name="statistics_mature">Zralé</string>
     <string name="statistics_young_and_learn">Mladé a nové</string>
     <string name="statistics_unlearned">Neučené</string>
-    <string name="statistics_suspended">Suspended</string>
-    <string name="statistics_buried">Buried</string>
-    <string name="statistics_relearn">Znovu učit</string>
-    <string name="statistics_learn">Učit se</string>
-    <string name="statistics_cram">Šprtat</string>
+    <string name="statistics_suspended">Vyřazené</string>
+    <string name="statistics_buried">Odložené</string>
+    <string name="statistics_relearn" comment="Labbel of the axis in the graph indicating the number of reviews of cards while they are in relearning mode.">Znovu učené</string>
+    <string name="statistics_learn" comment="Label of the number of review of card in learning done in some amount of time">Učené</string>
+    <string name="statistics_cram">Šprtané</string>
     <string name="stats_cards">Karty</string>
     <string name="stats_cards_intervals">Karty s daným intervalem</string>
     <string name="stats_cumulative_cards">Karet kumulativně</string>
@@ -66,33 +66,32 @@
     <string name="stats_deck_collection">kolekce</string>
     <string name="stats_time_of_day">Denní doba</string>
     <string name="stats_day_of_week">Den v týdnu</string>
-    <string formatted="false" name="stats_percentage_correct">% Správně</string>
-    <string name="stats_reviews">Počet opakování</string>
+    <string formatted="false" name="stats_percentage_correct">% správně</string>
+    <string name="stats_reviews" comment="Label of a graph, indicating cumulative number of review of all cards">Počet opakování</string>
     <string name="stats_answer_type">Typ odpovědi</string>
     <string name="stats_today_again_count">Počet Znovu: &lt;b&gt;%d&lt;/b&gt;</string>
     <string name="stats_today_correct_count">(&lt;b&gt;%.1f%%&lt;/b&gt; správně)</string>
     <string name="stats_today_type_breakdown">Učit se: &lt;b&gt;%1$d&lt;/b&gt;, opakovat: &lt;b&gt;%2$d&lt;/b&gt;, znovu se učit: &lt;b&gt;%3$d&lt;/b&gt;, filtrováno: &lt;b&gt;%4$d&lt;/b&gt;</string>
     <string name="stats_today_mature_cards">Správné odpovědi u zralých karet: %1$d/%2$d (%3$.1f%%)</string>
-    <string name="stats_today_no_mature_cards">Žádné \"zralé\" karty dnes nebyly studovány.</string>
+    <string name="stats_today_no_mature_cards">Žádné „zralé“ karty dnes nebyly studovány.</string>
     <string name="stats_overview_forecast_total">Celkem: &lt;b&gt;%1$d&lt;/b&gt; opakování</string>
     <string name="stats_overview_forecast_average">Průměr: &lt;b&gt;%1$.1f&lt;/b&gt; opakování/den</string>
     <string name="stats_overview_forecast_due_tomorrow">Zítra ke zkoušení: &lt;b&gt;%1$d&lt;/b&gt;</string>
     <string name="stats_overview_days_studied">Studováno dní: &lt;b&gt;%1$d%%&lt;/b&gt; (%2$d z %3$d)</string>
-    <string name="stats_overview_total_reviews">Celkem: &lt;b&gt;%1$d&lt;/b&gt; opakováni</string>
     <string name="stats_overview_reviews_per_day_studydays">Průměr za studijní dny: &lt;b&gt;%1$.1f&lt;/b&gt; opakování/den</string>
     <string name="stats_overview_reviews_per_day_all">Při každodenním studiu: &lt;b&gt;%1$.1f&lt;/b&gt; opakování/den</string>
     <string name="stats_overview_total_time_in_period">Celkem: &lt;b&gt;%d&lt;/b&gt; minut</string>
-    <string name="stats_overview_time_per_day_studydays">Průměr za studijní dny: &lt;b&gt;%1$.1f&lt;/b&gt; minut/den</string>
-    <string name="stats_overview_time_per_day_all">Při každodenním studiu: &lt;b&gt;%1$.1f&lt;/b&gt; minut/den</string>
-    <string name="stats_overview_average_answer_time">Průměrný čas odpovědi: &lt;b&gt;%1$.1fs&lt;/b&gt; (&lt;b&gt;%2$.2f&lt;/b&gt; karet/minutu)</string>
-    <string name="stats_overview_new_cards_per_day">Průměr: &lt;b&gt;%1$.1f&lt;/b&gt; karet/den</string>
+    <string name="stats_overview_time_per_day_studydays">Průměr za studijní dny: &lt;b&gt;%1$.1f&lt;/b&gt; minuty/den</string>
+    <string name="stats_overview_time_per_day_all">Při každodenním studiu: &lt;b&gt;%1$.1f&lt;/b&gt; minuty/den</string>
+    <string name="stats_overview_average_answer_time">Průměrný čas odpovědi: &lt;b&gt;%1$.1f s&lt;/b&gt; (&lt;b&gt;%2$.2f&lt;/b&gt; karty/minutu)</string>
+    <string name="stats_overview_new_cards_per_day">Průměr: &lt;b&gt;%1$.1f&lt;/b&gt; karty/den</string>
     <string name="stats_overview_total_new_cards">Celkem: &lt;b&gt;%1$d&lt;/b&gt; karet</string>
     <string name="stats_overview_average_interval">"Průměrný interval: "</string>
     <string name="stats_overview_longest_interval">"Nejdelší interval: "</string>
-    <string name="stats_overview_years">&lt;b&gt;%1$.1f&lt;/b&gt; roků</string>
-    <string name="stats_overview_months">&lt;b&gt;%1$.1f&lt;/b&gt; měsíců</string>
-    <string name="stats_overview_days">&lt;b&gt;%1$.1f&lt;/b&gt; dní</string>
-    <string name="stats_overview_hours">&lt;b&gt;%1$.1f&lt;/b&gt; hodin</string>
+    <string name="stats_overview_years">&lt;b&gt;%1$.1f&lt;/b&gt; roku</string>
+    <string name="stats_overview_months">&lt;b&gt;%1$.1f&lt;/b&gt; měsíce</string>
+    <string name="stats_overview_days">&lt;b&gt;%1$.1f&lt;/b&gt; dne</string>
+    <string name="stats_overview_hours">&lt;b&gt;%1$.1f&lt;/b&gt; hodiny</string>
     <string name="stats_overview_answer_buttons_learn">Učení: &lt;b&gt;%1$.2f%%&lt;/b&gt; správně (%2$d z %3$d)</string>
     <string name="stats_overview_answer_buttons_young">Mladé: &lt;b&gt;%1$.2f%%&lt;/b&gt; správně (%2$d z %3$d)</string>
     <string name="stats_overview_answer_buttons_mature">Zralé: &lt;b&gt;%1$.2f%%&lt;/b&gt; správně (%2$d z %3$d)</string>
@@ -101,7 +100,6 @@
     <string name="stats_overview_card_types_lowest_ease">Nejnižší snadnost: &lt;b&gt;%.0f%%&lt;/b&gt;</string>
     <string name="stats_overview_card_types_average_ease">Průměrná snadnost: &lt;b&gt;%.0f%%&lt;/b&gt;</string>
     <string name="stats_overview_card_types_highest_ease">Nejvyšší snadnost: &lt;b&gt;%.0f%%&lt;/b&gt;</string>
-    <string name="deck_summary_all_decks">Všechny balíčky</string>
     <string name="stats_select_time_scale">Vyběr časového měřítka</string>
     <string-array name="due_x_axis_title">
         <item>Dny</item>
@@ -113,12 +111,11 @@
     <string name="stats_forecast">Předpověď</string>
     <string name="stats_review_count">Počet opakování</string>
     <string name="stats_review_time">Čas opakování</string>
-    <string name="stats_added">Přidané</string>
+    <string name="stats_added" comment="Label of the number of added card">Přidané</string>
     <string name="stats_review_intervals">Intervaly</string>
     <string name="stats_breakdown">Hodinový přehled</string>
     <string name="stats_weekly_breakdown">Týdenní přehled</string>
     <string name="stats_answer_buttons">Tlačítka odpovědí</string>
-    <string name="stats_cards_types">Typy karet</string>
     <string-array name="stats_day_time_strings">
         <item>4:00</item>
         <item>10:00</item>

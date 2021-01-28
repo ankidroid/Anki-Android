@@ -37,23 +37,23 @@
 ~ You should have received a copy of the GNU General Public License along with
 ~ this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
-<resources>
-    <string name="check_db_title">Zkontrolovat databázi</string>
+<resources xmlns:tools="http://schemas.android.com/tools">
+    <string name="check_db_title">Zkontrolovat databázi?</string>
     <string name="check_db_warning">Toto může trvat dlouhou dobu</string>
     <string name="check_db_acknowledge">Databáze zkontrolována</string>
     <string name="check_db_acknowledge_shrunk">Databáze zkontrolována a optimalizována.\nZmenšena o %d MB.</string>
-    <string name="contextmenu_deckpicker_delete_deck">Smazat balíček</string>
+    <string name="contextmenu_deckpicker_delete_deck">Odstranit balíček</string>
     <string name="delete_deck_default_deck">Nelze odstranit výchozí balíček</string>
-    <string name="delete_deck_title">Smazat balíček</string>
+    <string name="delete_deck_title">Odstranit balíček?</string>
     <plurals name="delete_deck_message">
         <item quantity="one">Odstranit všechny karty v %1$s? Obsahuje %2$d kartu.</item>
         <item quantity="few">Odstranit všechny karty v %1$s? Obsahuje %2$d karty.</item>
         <item quantity="many">Odstranit všechny karty v %1$s? Obsahuje %2$d karty.</item>
         <item quantity="other">Odstranit všechny karty v %1$s? Obsahuje %2$d karet.</item>
     </plurals>
-    <string name="delete_cram_deck_message">Jste si jistý, že si přejete poslat všechny karty z balíčku %s zpátky do původního balíčku?</string>
-    <string name="no_tts_available_message">Žádný jazyk k předčítání není k dispozici</string>
-    <string name="initializing_tts">Inicializuji TTS&#8230;</string>
+    <string name="delete_cram_deck_message">Poslat všechny karty z %s zpět do svých původních balíčků?</string>
+    <string name="no_tts_available_message">Není dostupný žádný jazyk převodu textu na řeč</string>
+    <string name="initializing_tts">Inicializuje se TTS&#8230;</string>
     <string name="tts_no_tts">Nemluv</string>
     <string-array name="about_content">
         <item><![CDATA[<h2>%1$s:<br/>Kartičky pro Android</h2>AnkiDroid je kartičková aplikace plně kompatibilní s desktopovou verzí <a href=\"%2$s\">Anki</a>. Můžete vytvářet, stahovat a učit se materiály jak v AnkiDroid tak Anki Desktop a velmi snadno je synchronizovat i s AnkiWeb.]]></item>
@@ -62,7 +62,7 @@
         <item><![CDATA[Nejenom vývojáři mohou pomoci. Například můžete <a href=\"%1$s\">pomoc s překladem</a> AnkiDroid, aktualizovat wiki, poskytnout náhledy obrazovky nebo blogovat o AnkiDroid.]]></item>
         <item><![CDATA[AnkiDroid je vydán pod <a href=\"%1$s\">GNU-GPL v3 licencí</a> a zdrojový kód je dostupný <a href=\"%2$s\">na GitHub</a>.]]></item>
     </string-array>
-    <string name="preview_title">Náhled</string>
+    <string name="preview_title" comment="Title of the window allowing to preview card(s)">Náhled</string>
     <string name="reposition_card_dialog_title">Změnit pořadí nové karty</string>
     <string name="reposition_card_dialog_message">Počáteční pozice:</string>
     <string name="reposition_card_not_new_error">Změnit pořadí lze pouze u nových karet</string>
@@ -72,7 +72,7 @@
         <item quantity="many">%d karty přesunuto</item>
         <item quantity="other">%d karet přesunuto</item>
     </plurals>
-    <string name="reset_card_dialog_title">Obnovit pokrok v učení</string>
+    <string name="reset_card_dialog_title">Obnovit proces učení karty</string>
     <string name="reset_card_dialog_message">Tato karta bude umístěna na konec fronty s novými kartami.</string>
     <plurals name="reset_cards_dialog_acknowledge">
         <item quantity="one">%d karta obnovena</item>
@@ -81,7 +81,6 @@
         <item quantity="other">%d karet obnoveno</item>
     </plurals>
     <!-- Reschedule Card Dialog -->
-    <string name="reschedule_card_dialog_title">Přeplánovat kartu</string>
     <plurals name="reschedule_cards_dialog_title">
         <item quantity="one">Přeplánovat kartu</item>
         <item quantity="few">Přeplánovat karty</item>
@@ -94,7 +93,7 @@
         <item quantity="many">Současný interval: %d dne</item>
         <item quantity="other">Současný interval: %d dní</item>
     </plurals>
-    <string name="reschedule_card_dialog_message">Přeplánovat zkoušení pro x dní:</string>
+    <string name="reschedule_card_dialog_message">Přeplánovat opakování za x dní</string>
     <plurals name="reschedule_cards_dialog_acknowledge">
         <item quantity="one">%d karta přeplánována</item>
         <item quantity="few">%d karty přeplánovány</item>
@@ -103,13 +102,11 @@
     </plurals>
     <string name="reschedule_card_dialog_new_card_warning">Přeplánovává se nová karta. Přeplánování také změní novou kartu na opakovanou kartu. Použijte volbu „změnit pořadí karty“, abyste změnili pořadí nové karty v rámci fronty nových karet</string>
     <string name="reschedule_card_dialog_warning_ease_reset">Přeplánování také obnoví to, jak bude plánovač v budoucnu zacházet s kartou (snadnost bude nastavena na %d%%)</string>
-    <string name="firefox_workaround_launched_reviewer_opening_deck">Select the deck in your file manager or visit the about:downloads page to import it</string>
+    <string name="firefox_workaround_launched_reviewer_opening_deck">Vyberte balíček ve správci souborů nebo navštivte stránku about:downloads, abyste ho importovali</string>
     <string name="answering_error_title">Chyba databáze</string>
     <string name="answering_error_message">Zápis do kolekce se nezdařil. Databáze může být poškozena nebo nemusí být dostatek prázdného místa na disku.\n\nPokud se to děje častěji, zkuste zkontrolovat databázi, opravit kolekci nebo ji obnovit ze zálohy. Klepněte na „možnosti“.\n\nNebo to může být také chyba AnkiDroid, prosím nahlaste chybu, abychom to mohli zkontrolovat.</string>
     <string name="answering_error_report">Hlášení chyby</string>
     <string name="repair_deck_dialog">Opravdu se chcete pokusit opravit databázi?\n\nPřed obnovou bude vytvořena kopie v podadresáři \'%s\'.</string>
-    <string name="intent_add_saved_information">Uložená data</string>
-    <string name="intent_add_clear_all">Vymazat vše</string>
     <string name="intent_aedict_empty">Kategorie \'výchozí\' je prázdná</string>
     <string name="intent_aedict_category">Chcete-li přidat AnkiDroid karty, odstraňte všechny kategorie Poznámkového bloku nebo přidejte jednu s názvem \'default\'</string>
     <string name="custom_study_new_total_new">Nové karty v balíčku: %d</string>
@@ -121,9 +118,8 @@
     <string name="custom_study_random">Vybrat náhodně x karet z balíčku:</string>
     <string name="custom_study_preview">Zkoušení nových karet přidaných v posledních x dnech:</string>
     <string name="custom_study_rebuild_deck_corrupt">Nelze znovu sestavit balíček vlastního učení</string>
-    <string name="rebuild_custom_study_deck">Obnovování balíčku vlastního učení&#8230;</string>
-    <string name="importing_collection">Importování kolekce.\nProsím čekejte&#8230;</string>
-    <string name="import_media_count">Import multimediálních souborů %1$d%%\nProsím čekejte&#8230;</string>
+    <string name="importing_collection">Importuje se kolekce&#8230;</string>
+    <string name="import_media_count">Importují se multimediální soubory %1$d%%&#8230;</string>
     <string name="import_progress">• Importování poznámek: %1$d%%\n• Importování karet: %2$d%%\n• Post-processing: %3$d%%</string>
     <string name="import_update_details">Aktualizováno %1$d z %2$d existujících poznámek.</string>
     <string name="import_update_ignored">Některé aktualizace byly ignorovány, protože se změnil typ poznámky</string>
@@ -136,9 +132,10 @@
     <string name="dialog_ok">Ok</string>
     <string name="dialog_no">Ne</string>
     <string name="dialog_continue">Pokračovat</string>
-    <string name="dialog_positive_create">Vytvořit</string>
+    <string name="dialog_positive_create" comment="Create a new collection, probably erasing the previous one, may be necessary in case of error.">Vytvořit</string>
     <string name="dialog_positive_delete">Odstranit</string>
-    <string name="dialog_positive_disable">Zakázat</string>
+    <!-- Currently unsued, should be useful in the future -->
+    <string name="dialog_positive_disable" tools:ignore="UnusedResources">Zakázat</string>
     <string name="dialog_positive_overwrite">Přepsat</string>
     <string name="dialog_positive_remove">Odstranit</string>
     <string name="dialog_positive_repair">Opravit</string>
@@ -149,30 +146,31 @@
     <string name="dialog_collection_path_not_dir">Zadaná cesta není platný adresář</string>
     <!-- Media checking -->
     <string name="check_media_title">Zkontrolovat multimédia?</string>
-    <string name="check_media_warning">Toto může trvat dlouhou dobu u velké sbírky multimedií</string>
+    <string name="check_media_warning">Toto může trvat dlouhou dobu u velké sbírky multimédií</string>
     <string name="check_media_message">Kontrolují se multimédia&#8230;</string>
     <string name="check_media_acknowledge">Multimédia zkontrolována</string>
     <string name="check_media_failed">Kontrola multimédií se nezdařila</string>
     <string name="check_media_invalid">Soubory s neplatným kódováním: %d</string>
-    <string name="check_media_unused">Existují soubory ve složce s multimédii, ale nejsou používány na žádné kartě: %d</string>
+    <string name="check_media_unused">Soubory ve složce s multimédii, ale nejsou používány na žádné kartě: %d</string>
     <string name="check_media_nohave">Soubory jsou používané na kartách, ale nejsou ve složce s multimédii: %d</string>
-    <string name="check_media_no_unused_missing">Žádné nevyužité nebo chybějící soubory.</string>
-    <string name="check_media_db_updated">Multimediální databáze opravena.</string>
+    <string name="check_media_no_unused_missing">Nenalezeny žádné nepoužívané nebo chybějící soubory</string>
+    <string name="check_media_db_updated">Multimediální databáze opravena</string>
     <string name="check_media_delete_unused">Odstranit nepoužité</string>
-    <string name="delete_media_message">Deleting media&#8230;</string>
-    <string name="delete_media_result_title">Deletion result</string>
+    <string name="delete_media_message">Odstraňují se multimédia&#8230;</string>
+    <string name="delete_media_result_title">Výsledek odstraňování</string>
     <plurals name="delete_media_result_message">
-        <item quantity="one">%d file deleted</item>
-        <item quantity="few">%d files deleted</item>
-        <item quantity="many">%d files deleted</item>
-        <item quantity="other">%d files deleted</item>
+        <item quantity="one">%d soubor odstraněn</item>
+        <item quantity="few">%d soubory odstraněny</item>
+        <item quantity="many">%d souboru odstraněno</item>
+        <item quantity="other">%d souborů odstraněno</item>
     </plurals>
     <!-- Tags Dialog Options -->
     <string name="tags_dialog_option_all_cards">Všechny karty</string>
     <string name="tags_dialog_option_new_cards">Nové</string>
-    <string name="tags_dialog_option_due_cards">Opakování</string>
+    <string name="tags_dialog_option_due_cards" comment="Name of cards that are already been reviewed in the past, and that should be reviewed again">Ke zkoušení</string>
     <!-- Empty cards -->
-    <string name="emtpy_cards_finding">Nalezení prázdných karet&#8230;</string>
+    <string name="emtpy_cards_finding">Hledají se prázdné karty&#8230;</string>
+    <string name="confirm_cancel">Chcete to zrušit?</string>
     <string name="empty_cards_none">Žádné prázdné karty</string>
     <string name="empty_cards_count">Karet k odstranění: %d</string>
     <string name="empty_cards_deleted">Odstraněno karet: %d</string>
@@ -189,7 +187,6 @@
     <!-- Database Integrity Check -->
     <string name="integrity_check_startup_title">AnkiDroid aktualizován</string>
     <string name="integrity_check_startup_content">AnkiDroid byl aktualizován. Tato aktualizace obsahuje opravy možných problémů databáze, a doporučuje se nyní spustit kontrolu databáze.</string>
-    <string name="integrity_check_positive">Zkontrolovat databázi</string>
     <string name="integrity_check_continue_anyway">Přesto pokračovat</string>
     <string name="integrity_check_insufficient_space">Kontrola databáze používá velké množství dočasného úložiště.\n\nDůrazně se doporučuje, abyste předtím, než budete pokračovat, měli v zařízení alespoň %s volného místa.</string>
     <string name="integrity_check_insufficient_space_extra_content">\n\nMomentálně máte %s volného místa.</string>
@@ -200,12 +197,12 @@
     <!-- AbstractFlashCardViewer -->
     <string name="card_viewer_url_decode_error">Chyba při dekódování dat z karty</string>
     <!-- Deck Options -->
-    <string name="deck_options_corrupt">Failed to process deck options: %s</string>
+    <string name="deck_options_corrupt">Nepodařilo se zpracovat možnosti balíčku: %s</string>
     <!-- Database Errors-->
     <string name="database_locked_title">Databáze uzamčena</string>
     <string name="database_locked_summary">Databázi AnkiDroid používá jiná aplikace. Zavřete prosím druhou aplikaci a znovu otevřete AnkiDroid.</string>
-    <string name="incompatible_database_version_title">Incompatible Database Version</string>
-    <string name="incompatible_database_version_summary">The database is a more advanced version than this version of AnkiDroid can work with. Upgrade AnkiDroid or downgrade the database to open it\n\nSupported version: %1$d\nDatabase version: %2$d\n\nThe following restore options will overwrite your current collection, possibly with a compatible database version:</string>
+    <string name="incompatible_database_version_title">Nekompatibilní verze databáze</string>
+    <string name="incompatible_database_version_summary">Databáze je pokročilejší verze, než se kterou může tato verze AnkiDroid pracovat. Aktualizujte AnkiDroid nebo ponižte databázi, abyste ji otevřeli\n\nPodporovaná verze: %1$d\nVerze databáze: %2$d\n\nNásledující možnosti obnovení přepíšou vaši současnou kolekci snad kompatibilní verzí databáze:</string>
     <!-- Deck Picker Background-->
     <string name="background_image_applied">Obrázek na pozadí byl použit</string>
     <string name="background_image_removed">Obrázek na pozadí byl odstraněn</string>
@@ -213,8 +210,8 @@
     <string name="error_selecting_image">Chyba při výběru obrázku. Podívejte se do příručky. %s</string>
     <string name="error_deleting_image">Chyba při odstraňování obrázku</string>
     <string name="failed_to_apply_background_image">Nepodařilo se použít obrázek pozadí %s</string>
-    <string name="background_image_too_large">Deck Picker background too large</string>
-    <string name="image_max_size_allowed">Maximum image size %d MB allowed</string>
+    <string name="background_image_too_large">Pozadí výběru balíčků je příliš velké</string>
+    <string name="image_max_size_allowed">Povolená maximální velikost obrázku %d MB</string>
     <!-- Global Intent handler -->
     <!-- Also used by Card Browser, not renaming to save translators effort -->
     <string name="intent_handler_failed_no_storage_permission">Chybí požadované oprávnění k úložišti. Prosím udělte oprávnění k úložišti a zkuste to znovu.</string>
@@ -224,8 +221,27 @@
     <string name="boot_service_failed_to_schedule_notifications">Nepodařilo se naplánovat upomínky</string>
     <string name="boot_service_too_many_notifications">Naplánováno příliš mnoho upomínek. Některé se nezobrazí</string>
     <!-- Locale Selection Dialog -->
-    <string name="locale_selection_dialog_title">Keyboard Hint Selection</string>
+    <string name="locale_selection_dialog_title">Výběr nápovědy klávesnice</string>
     <string name="locale_selection_dialog_summary">Některé vícejazyčné klávesnice, např. GBoard podporují změnu jazyka při úpravách textu\n\nProsím požádejte výrobce klávesnice o funkci „setImeHintLocales“, pokud vaše klávesnice nepřepíná mezi jazyky.</string>
+    <!-- Help Dialog -->
+    <string name="help_title_using_ankidroid">Používání AnkiDroid</string>
+    <string name="help_item_ankidroid_manual">Příručka AnkiDroid</string>
+    <string name="help_item_anki_manual">Příručka Anki</string>
+    <string name="help_item_ankidroid_faq">AnkiDroid FAQ</string>
+    <string name="help_title_get_help">Získat pomoc</string>
+    <string name="help_item_mailing_list">Seznam adresátů</string>
+    <string name="help_item_reddit">Reddit</string>
+    <string name="help_item_report_bug">Nahlásit chybu</string>
+    <string name="help_title_support_ankidroid">Podpořit AnkiDroid</string>
+    <string name="help_item_support_opencollective_donate">Přispět</string>
+    <string name="help_item_support_develop_ankidroid">Vyvíjet</string>
+    <string name="help_item_support_rate_ankidroid">Ohodnotit</string>
+    <string name="help_item_support_other_ankidroid">Ostatní</string>
+    <string name="help_title_community">Komunita</string>
+    <string name="help_item_anki_forums">Fóra Anki</string>
+    <string name="help_item_discord">Spor</string>
+    <string name="help_item_facebook">Facebook</string>
+    <string name="help_item_twitter">Twitter</string>
     <!--Sync-->
     <plurals name="sync_automatic_sync_needs_more_time">
         <item quantity="one">Automatická synchronizace může být spuštěna za %d sekundu</item>

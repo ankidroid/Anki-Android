@@ -56,7 +56,7 @@ public class ActionBarOverflowTest {
         String clazz = "com.android.internal.view.menu.MenuBuilder";
         Class<?> c = Class.forName(clazz);
 
-        Constructor constructor = c.getConstructor(Context.class);
+        Constructor<?> constructor = c.getConstructor(Context.class);
 
         Object mmb = constructor.newInstance(targetContext);
 

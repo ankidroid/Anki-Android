@@ -22,12 +22,11 @@
     <!--Fields-->
     <string name="front_field_name">Depan</string>
     <string name="back_field_name">Belakang</string>
-    <string name="text_field_name">Teks</string>
+    <string name="text_field_name" comment="Field\'s name in Cloze Note type">Teks</string>
     <string name="extra_field_name">Tambahan</string>
     <string name="field_to_ask_front_name">Tambah kebalikan</string>
     <!--Card type-->
     <string name="card_n_name">Card %d</string>
-    <string name="card_cloze_name">Kloza</string>
     <!--Note type-->
     <string name="basic_model_name">Dasar</string>
     <string name="cloze_model_name">Kloza</string>

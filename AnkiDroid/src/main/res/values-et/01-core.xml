@@ -38,106 +38,98 @@
 ~ this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <resources>
+    <string name="yes">jah</string>
     <!-- Navigation drawer items-->
     <string name="decks">Kaardipakid</string>
-    <string name="card_browser">Kaardibrauser</string>
+    <string name="card_browser" comment="The usage of card browser inside the app (note the casing)">Kaardibrauser</string>
     <string name="statistics">Statistika</string>
     <string name="settings">Seaded</string>
     <string name="help">Abi</string>
-    <string name="send_feedback">Saada Tagasisidet</string>
-    <string name="studyoptions_title">Deck overview</string>
+    <string name="send_feedback">Saada tagasiside</string>
     <string name="studyoptions_due_today">Tänaseks:</string>
-    <string name="studyoptions_new_total">Uusi kaarte kokku:</string>
+    <string name="studyoptions_new_total">Kokku uusi kaarte:</string>
     <string name="studyoptions_total_cards">Kokku kaarte:</string>
     <string name="studyoptions_eta">Eeldatav aeg (min):</string>
-    <string name="studyoptions_start">Study</string>
+    <string name="studyoptions_start">Õpi</string>
     <!-- DeckPicker.java -->
     <string name="expand">Laienda</string>
     <string name="collapse">Kahanda</string>
-    <string name="study_more">Study more</string>
+    <string name="study_more">Õpi veel</string>
     <plurals name="deckpicker_title">
-        <item quantity="one">%1$d card due (%2$s)</item>
-        <item quantity="other">%1$d cards due (%2$s)</item>
+        <item quantity="one">%1$d kaart ootel (%2$s)</item>
+        <item quantity="other">%1$d kaarti ootel (%2$s)</item>
     </plurals>
     <plurals name="reviewer_window_title">
         <item quantity="one">%d minutit jäänud</item>
         <item quantity="other">%d minutit jäänud</item>
     </plurals>
     <plurals name="reviewer_window_title_hours">
-        <item quantity="one">%d hour %d left</item>
-        <item quantity="other">%d hours %d left</item>
+        <item quantity="one">%d tund %d jäänud</item>
+        <item quantity="other">%d tundi %d jäänud</item>
     </plurals>
     <plurals name="reviewer_window_title_days">
-        <item quantity="one">%d day %d left</item>
-        <item quantity="other">%d days %d left</item>
+        <item quantity="one">%d päev %d jäänud</item>
+        <item quantity="other">%d päeva %d jäänud</item>
     </plurals>
-    <string name="no_cards_placeholder_title">Collection is empty</string>
-    <string name="no_cards_placeholder_description">Start adding cards\nusing the + icon.</string>
+    <string name="no_cards_placeholder_title">Kogu on tühi</string>
+    <string name="no_cards_placeholder_description">Hakka lisama kaarte\nkasutades + ikooni.</string>
     <!-- The deck picker via AnkiStatsTaskHandler.java -->
     <plurals name="studied_cards_today">
-        <item quantity="one">Studied %1$d card in %2$s today</item>
-        <item quantity="other">Studied %1$d cards in %2$s today</item>
+        <item quantity="one">Täna õpiti %1$d kaart %2$s</item>
+        <item quantity="other">Täna õpiti %1$d kaarti %2$s</item>
     </plurals>
     <!-- flashcard_portrait.xml -->
     <string name="type_answer_hint">Kirjuta vastus</string>
     <string name="show_answer">Kuva vastus</string>
-    <string name="hide_answer">Hide answer</string>
+    <string name="hide_answer">Peida vastus</string>
     <string name="ease_button_again">Uuesti</string>
-    <string name="ease_button_hard">Keeruline</string>
+    <string name="ease_button_hard">Raske</string>
     <string name="ease_button_good">Hea</string>
     <string name="ease_button_easy">Lihtne</string>
     <string name="studyoptions_congrats_undo">Võta tagasi %s</string>
     <string name="menu_import">Impordi</string>
     <string name="undo">Võta tagasi</string>
-    <string name="undo_action_review">viimane arvustus</string>
-    <string name="undo_action_bury_card">bury card</string>
-    <string name="undo_action_bury_note">bury note</string>
-    <string name="undo_action_suspend_card">peata kaart</string>
-    <string name="undo_action_suspend_note">peata märkus</string>
-    <string name="undo_action_delete">kustuta märge</string>
-    <string name="undo_action_delete_multi">kustuta märkmed</string>
-    <string name="undo_action_change_deck_multi">change decks</string>
-    <string name="undo_action_reschedule_card">reschedule</string>
-    <string name="undo_action_reset_card">lähtesta saavutused</string>
-    <string name="undo_action_reposition_card">reposition</string>
-    <string name="move_all_to_deck">Move all to deck</string>
-    <string name="unbury">Unbury</string>
-    <string name="rename_deck">Rename deck</string>
-    <string name="menu_add">Lisa</string>
-    <string name="menu_add_note">Lisa märkus</string>
-    <string name="menu_my_account">Sünkrooni konto</string>
-    <string name="menu_dismiss_note">Hide / delete</string>
-    <string name="menu_bury_card">Bury card</string>
-    <string name="menu_bury_note">Bury note</string>
-    <string name="menu_suspend_card">Peata kaart</string>
-    <string name="menu_suspend_note">Peata Märkus</string>
-    <string name="menu_bury">Bury</string>
-    <string name="menu_suspend">Peata</string>
+    <string name="undo_action_review">viimane ülevaade</string>
+    <string name="undo_action_change_deck_multi">vaheta kaardipakki</string>
+    <string name="move_all_to_deck">Liiguta kõik kaardipakki</string>
+    <string name="unbury">Taasta</string>
+    <string name="rename_deck">Nimeta ümber kaardipakk</string>
+    <string name="create_shortcut">Loo otsetee</string>
+    <string name="menu_add" comment="A generic add button - Main Deck Picker and card templates. Please inform us if you need more specific strings">Lisa</string>
+    <string name="menu_add_note">Lisa märge</string>
+    <string name="menu_my_account" comment="Label of the window in which the user should enter their account. This text can\'t be found in AnkiDroid directly.">Sünkrooni konto</string>
+    <string name="menu_dismiss_note">Peida / kustuta</string>
+    <string name="menu_bury_card">Peida kaart</string>
+    <string name="menu_bury_note">Peida märge</string>
+    <string name="menu_suspend_card">Seiska kaart</string>
+    <string name="menu_suspend_note">Seiska märge</string>
+    <string name="menu_bury">Peida</string>
+    <string name="menu_suspend">Seiska</string>
     <string name="menu_delete_note">Kustuta märge</string>
-    <string name="menu_flag">Flag</string>
-    <string name="menu_flag_card">Flag card</string>
-    <string name="menu_flag_card_zero">No flag</string>
-    <string name="menu_flag_card_one">Red flag</string>
-    <string name="menu_flag_card_two">Orange flag</string>
-    <string name="menu_flag_card_three">Green flag</string>
-    <string name="menu_flag_card_four">Blue flag</string>
-    <string name="menu_edit_tags">Edit tags</string>
-    <string name="delete_note_message">Really delete this note and all its cards?\n%s</string>
+    <string name="menu_flag">Lipp</string>
+    <string name="menu_flag_card">Pane kaardile lipp</string>
+    <string name="menu_flag_card_zero">Liputa</string>
+    <string name="menu_flag_card_one">Punane lipp</string>
+    <string name="menu_flag_card_two">Oranž lipp</string>
+    <string name="menu_flag_card_three">Roheline lipp</string>
+    <string name="menu_flag_card_four">Sinine lipp</string>
+    <string name="menu_edit_tags">Muuda silte</string>
+    <string name="delete_note_message">Kas tõesti kustutada see märge ja kõik selle kaardid?\n%s</string>
     <string name="menu_select">Vali text</string>
-    <string name="menu_search">Lookup in %1$s</string>
-    <string name="menu_mark_note">Mark note</string>
-    <string name="menu_unmark_note">Unmark note</string>
-    <string name="menu_toggle_mic_tool_bar">Check pronunciation</string>
+    <string name="menu_search">Otsi %1$s</string>
+    <string name="menu_mark_note">Tähista märge</string>
+    <string name="menu_unmark_note">Eemalda tähistus märkelt</string>
+    <string name="menu_toggle_mic_tool_bar">Kontrolli hääldust</string>
     <string name="new_deck">Loo kaardipakk</string>
-    <string name="create">Loo</string>
-    <string name="new_dynamic_deck">Create filtered deck</string>
+    <string name="create" comment="Button to create a filtered deck">Loo</string>
+    <string name="new_dynamic_deck">Loo filtritud kaardipakk</string>
     <string name="night_mode">Öörežiim</string>
-    <string name="directory_inaccessible">AnkiDroid directory is inaccessible</string>
+    <string name="directory_inaccessible">Ei saa ligi kaustale \"AnkiDroid\"</string>
     <!--This is shown when AnkiDroid starts up with no storage permissions.
     The user is taken to the "App Info" screen, and needs to click "Permissions" and
     grant AnkiDroid the \'Storage\' permission. This needs to be a fairly generic message as implementations
     of the permissions/app info screen will differ between devices. -->
-    <string name="startup_no_storage_permission">Please grant AnkiDroid the ‘Storage’ permission to continue</string>
+    <string name="startup_no_storage_permission">Jätkamiseks palun anna AnkiDroidile \"Mälu\" luba</string>
     <!--
         The time_quantities are units of time. They are used without
         plurals or dots.
@@ -147,65 +139,75 @@
     -->
     <string name="time_quantity_seconds">%d s</string>
     <string name="time_quantity_minutes">%d min</string>
-    <string name="time_quantity_hours_minutes">%1$d h %2$d m</string>
+    <string name="time_quantity_hours_minutes">%1$d t %2$d min</string>
     <string name="time_quantity_hours">%d t</string>
     <string name="time_quantity_days">%d p</string>
-    <string name="time_quantity_days_hours">%1$d d %2$d h</string>
+    <string name="time_quantity_days_hours">%1$d p %2$d t</string>
     <string name="time_quantity_months">%.1f k</string>
     <string name="time_quantity_years">%.1f a</string>
     <!-- or "%.1f a" -->
-    <string name="rebuild_filtered_deck">Rebuilding filtered deck&#8230;</string>
-    <string name="rebuild_cram_label">Taasta</string>
+    <string name="rebuild_filtered_deck">Taastan filtritud kaardipakki...</string>
+    <string name="rebuild_cram_label">Taasloo</string>
     <string name="empty_cram_label">Tühi</string>
-    <string name="create_subdeck">Create subdeck</string>
-    <string name="empty_filtered_deck">Emptying filtered deck&#8230;</string>
-    <string name="custom_study_deck_name">Kohandatud uuringu Session</string>
-    <string name="custom_study_deck_exists">Rename the existing custom study deck first</string>
-    <string name="empty_deck">This deck is empty</string>
-    <string name="invalid_deck_name">Invalid deck name</string>
-    <string name="studyoptions_empty">This deck is empty. Press the + button to add new content.</string>
-    <string name="studyoptions_limit_reached">Daily study limit reached</string>
-    <string name="studyoptions_empty_schedule">No cards scheduled to study</string>
+    <string name="create_subdeck">Loo alakaardipakk</string>
+    <string name="empty_filtered_deck">Tühjendan filtritud kaardipakki...</string>
+    <string name="custom_study_deck_name">Kohandatud õppesessioon</string>
+    <string name="custom_study_deck_exists">Esmalt nimeta ümber juba olemasolev täiendava õppe kaardipakk</string>
+    <string name="empty_deck">See kaardipakk on tühi</string>
+    <string name="empty_deck_add_note">Add card</string>
+    <string name="invalid_deck_name">Vigane kaardipaki nimi</string>
+    <string name="studyoptions_empty">See kaardipakk on tühi. Vajuta + nupule uue sisu lisamiseks.</string>
+    <string name="studyoptions_limit_reached">Päevalimiit on saavutatud</string>
+    <string name="studyoptions_empty_schedule">Enam pole kaarte õppeks plaanitud</string>
     <string name="studyoptions_congrats_finished">Palju õnne! Sa oled praeguseks lõpetanud.</string>
-    <string name="studyoptions_congrats_more_rev">Today’s limit has been reached, but there are still cards to review. You can increase the limit in the options.</string>
-    <string name="studyoptions_congrats_more_new">Today’s limit has been reached. There are more new cards available; you can increase the limit in the options, but this will increase your short-term review workload.</string>
-    <string name="studyoptions_congrats_custom">To study outside of the normal schedule, touch the “Custom study” button</string>
-    <string name="studyoptions_no_cards_due">No cards are due yet</string>
-    <string name="sd_card_not_mounted">Device storage not mounted</string>
-    <string name="empty_cloze_warning">Edit this note and add some cloze deletions. (%1$s)</string>
+    <string name="studyoptions_congrats_more_rev">Tänane limiit on saavutatud, kuid on ikka veel kaarte, mida üle korrata. Limiiti saad muuta seadetes.</string>
+    <string name="studyoptions_congrats_more_new">Tänane limiit on saavutatud. On olemas veel uusi kaarte; limiiti saad muuta seadetes, kuid see muudab ka su lühiajalist kordamiskoormust.</string>
+    <string name="studyoptions_congrats_custom">Õppimiseks väljaspool tavalist ajakava vajuta \"Kohandatud õpe\" nuppu</string>
+    <string name="studyoptions_no_cards_due">Veel pole kaart ootel</string>
+    <string name="sd_card_not_mounted">Seadme mälu pole paigaldatud</string>
+    <string name="empty_cloze_warning">Redigeeri seda märget ja lisa mõned lüngad. (%1$s)</string>
     <string name="button_sync">Sünkrooni</string>
-    <string name="cancel_sync_confirm">Do you want to cancel the sync?</string>
-    <string name="continue_sync">Continue sync</string>
-    <string name="sync_cancelled">Sync cancelled</string>
-    <string name="sync_cancel_message">Cancelling&#8230;\nThis may take some time.</string>
+    <string name="cancel_sync_confirm">Sünkroonimine tühistada?</string>
+    <string name="continue_sync">Jätka sünkroonimist</string>
+    <string name="sync_cancelled">Sünkroonimine tühistatud</string>
+    <string name="sync_cancel_message">Tühistan&#8230;\nSee võib võtta mõnda aega.</string>
     <string name="export">Ekspordi</string>
-    <string name="export_collection">Ekspordi kollektsioon</string>
-    <string name="export_deck">Export deck</string>
+    <string name="export_collection">Ekspordi kogu</string>
+    <string name="export_deck">Ekspordi kaardipakk</string>
     <string name="nothing">Mitte midagi</string>
     <!-- Card template editor -->
-    <string name="title_activity_template_editor">Kaardi tüübid</string>
-    <string name="card_template_editor_front">Front template</string>
-    <string name="card_template_editor_back">Back template</string>
-    <string name="card_template_editor_styling">Styling</string>
-    <string name="card_template_editor_menu_delete">Kustuta</string>
-    <string name="card_template_editor_menu_card_browser_appearance">Card Browser Appearance</string>
-    <string name="card_template_editor_deck_override">Deck Override</string>
+    <string name="title_activity_template_editor">Kaarditüübid</string>
+    <string name="card_template_editor_front">Esikülje mall</string>
+    <string name="card_template_editor_back">Tagakülje mall</string>
+    <string name="card_template_editor_styling">Stiil</string>
+    <string name="card_template_editor_menu_card_browser_appearance">Kaardibrauseri välimus</string>
+    <string name="card_template_editor_deck_override">Kaardipaki pealejäämine</string>
     <string name="card_template_editor_cant_delete">Vähemalt üks kaardi tüüp peab olema valitud</string>
     <plurals name="card_template_editor_confirm_delete">
-        <item quantity="one">Delete the “%2$s” card type, and its %1$d card?</item>
-        <item quantity="other">Delete the “%2$s” card type, and its %1$d cards?</item>
+        <item quantity="one">Kustutada “%2$s” kaarditüüp ja selle %1$d kaart?</item>
+        <item quantity="other">Kustutada “%2$s” kaarditüüp ja selle %1$d kaarti?</item>
     </plurals>
-    <string name="invalid_template">A card could not be generated</string>
-    <string name="card_template_editor_would_delete_note">Removing this card type would cause one or more notes to be deleted. Please create and save a new card type first.</string>
-    <string name="card_template_editor_save_error">Unable to save card template changes: %s</string>
-    <string name="template_for_current_card_deleted">The card type for the current card was deleted.</string>
+    <string name="invalid_template">Kaarti ei suudetud tekitada</string>
+    <string name="card_template_editor_would_delete_note">Selle kaarditüübi eemaldamine võib põhjustada ühe või rohkema märkme kaotsiminekut. Esmalt looge ja salvestage uus kaarditüüp.</string>
+    <string name="card_template_editor_save_error">Ei suuda salvestada kaardimalli muudatusi: %s</string>
+    <string name="template_for_current_card_deleted">Käesoleva kaardi tüüp kustutati.</string>
     <!-- Card Browser Appearance -->
-    <string name="card_template_browser_appearance_title">Browser appearance</string>
+    <string name="card_template_browser_appearance_title">Brauseri välimus</string>
+    <string name="current_and_default_deck">%1$s (%2$s)</string>
+    <!-- card Info -->
+    <string name="card_info_title">Kaardi info</string>
     <!-- Permissions -->
-    <string name="read_write_permission_label">Read and write to the AnkiDroid database</string>
-    <string name="read_write_permission_description">access existing notes, cards, note types, and decks, as well as create new ones</string>
+    <string name="read_write_permission_label">Loe ja kirjuta AnkiDroid andmebaasi</string>
+    <string name="read_write_permission_description">ligi pääseda olemasolevatele ja luua uusi märkmeid, kaarte, märketüüpe ja kaardipakke.</string>
     <!-- Context Menu -->
-    <string name="card_browser_label">Card Browser</string>
-    <string name="card_browser_context_menu">Card Browser</string>
-    <string name="context_menu_anki_card_label">Anki Card</string>
+    <string name="card_browser_context_menu" comment="The value which appears in the system context menu. Note the casing difference">Kaardibrauser</string>
+    <string name="context_menu_anki_card_label">Anki Kaart</string>
+    <string name="has_a_problem" comment="First field is either front template or back template. Second field is the error message.">%1$s has a problem:<br/>%2$s</string>
+    <string name="more_information">More information</string>
+    <string name="no_field">Found \'{{%1$s}}\', but there is no field called \'%1$s\'.</string>
+    <string name="closed_tag_not_open">Found \'{{/%1$s}}\', but missing \'{{#%1$s}}\' or \'{{^%1$s}}\'.</string>
+    <string name="missing_closing_bracket">Missing \'}}\' in \'%s\'.</string>
+    <string name="open_tag_not_closed">Missing \'{{%s}}\'.</string>
+    <string name="wrong_tag_closed">Found \'{{/%1$s}}\', but expected \'{{/%2$s}}\'</string>
+    <string name="filter_error">Error in filter %s</string>
 </resources>

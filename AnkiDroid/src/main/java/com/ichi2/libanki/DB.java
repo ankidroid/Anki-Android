@@ -27,11 +27,16 @@ import android.database.sqlite.SQLiteDatabase;
 import android.widget.Toast;
 
 import com.ichi2.anki.AnkiDroidApp;
+import com.ichi2.anki.BuildConfig;
 import com.ichi2.anki.CollectionHelper;
 import com.ichi2.anki.dialogs.DatabaseErrorDialog;
 import com.ichi2.utils.DatabaseChangeDecorator;
 
+import net.ankiweb.rsdroid.BackendFactory;
+import net.ankiweb.rsdroid.database.RustSQLiteOpenHelperFactory;
+
 import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
@@ -60,16 +65,21 @@ public class DB {
     private final SupportSQLiteDatabase mDatabase;
     private boolean mMod = false;
 
+    public DB(String ankiFilename) {
+        this(ankiFilename, null);
+    }
+
     /**
      * Open a connection to the SQLite collection database.
      */
-    public DB(String ankiFilename) {
+    public DB(String ankiFilename, @Nullable BackendFactory backendFactory) {
 
         SupportSQLiteOpenHelper.Configuration configuration = SupportSQLiteOpenHelper.Configuration.builder(AnkiDroidApp.getInstance())
                 .name(ankiFilename)
                 .callback(getDBCallback())
                 .build();
-        SupportSQLiteOpenHelper helper = getSqliteOpenHelperFactory().create(configuration);
+        SupportSQLiteOpenHelper helper = getSqliteOpenHelperFactory(backendFactory).create(configuration);
+        // Note: This line creates the database and schema when executed using a Rust backend
         mDatabase = new DatabaseChangeDecorator(helper.getWritableDatabase());
         mDatabase.disableWriteAheadLogging();
         mDatabase.query("PRAGMA synchronous = 2", null);
@@ -88,7 +98,11 @@ public class DB {
     }
 
 
-    private SupportSQLiteOpenHelper.Factory getSqliteOpenHelperFactory() {
+    private SupportSQLiteOpenHelper.Factory getSqliteOpenHelperFactory(@Nullable BackendFactory backendFactory) {
+        if (backendFactory != null) {
+            return new RustSQLiteOpenHelperFactory(backendFactory);
+        }
+
         if (sqliteOpenHelperFactory == null) {
             return new RequerySQLiteOpenHelperFactory();
         }
@@ -217,70 +231,21 @@ public class DB {
 
 
     /**
-     * Convenience method for querying the database for an entire column. The column will be returned as an ArrayList of
-     * the specified class.
-     *
-     * @param type The class of the column's data type. Example: int.class, String.class.
-     * @param query The SQL query statement.
-     * @return An ArrayList with the contents of the specified column.
-     */
-    public <T> ArrayList<T> list(Class<T> type, String query, Object... bindArgs) {
-        int nullExceptionCount = 0;
-        InvocationTargetException nullException = null; // to catch the null exception for reporting
-        ArrayList<T> results = new ArrayList<>();
-
-        try (Cursor cursor = mDatabase.query(query, bindArgs)) {
-            String methodName = getCursorMethodName(type.getSimpleName());
-            while (cursor.moveToNext()) {
-                try {
-                    // The magical line. Almost as illegible as python code ;)
-                    results.add(type.cast(Cursor.class.getMethod(methodName, int.class).invoke(cursor, 0)));
-                } catch (InvocationTargetException e) {
-                    if (cursor.isNull(0)) { // null value encountered
-                        nullExceptionCount++;
-                        if (nullExceptionCount == 1) { // Toast and error report first time only
-                            nullException = e;
-                            Toast.makeText(AnkiDroidApp.getInstance().getBaseContext(),
-                                    "Error report pending: unexpected null in database.", Toast.LENGTH_LONG).show();
-                        }
-                    } else {
-                        throw new RuntimeException(e);
-                    }
-                }
-            }
-        } catch (NoSuchMethodException | IllegalAccessException | IllegalArgumentException e) {
-            // This is really coding error, so it should be revealed if it ever happens
-            throw new RuntimeException(e);
-        } finally {
-            if (nullExceptionCount > 0) {
-                if (nullException != null) {
-                    StringBuilder sb = new StringBuilder();
-                    sb.append("DB.queryColumn (column ").append(0).append("): ");
-                    sb.append("Exception due to null. Query: ").append(query);
-                    sb.append(" Null occurrences during this query: ").append(nullExceptionCount);
-                    AnkiDroidApp.sendExceptionReport(nullException, "queryColumn_encounteredNull", sb.toString());
-                    Timber.w(sb.toString());
-                } else { // nullException not properly initialized
-                    StringBuilder sb = new StringBuilder();
-                    sb.append("DB.queryColumn(): Critical error -- ");
-                    sb.append("unable to pass in the actual exception to error reporting.");
-                    AnkiDroidApp.sendExceptionReport(new RuntimeException("queryColumn null"), "queryColumn_encounteredNull", sb.toString());
-                    Timber.e(sb.toString());
-                }
-            }
-        }
-
-        return results;
-    }
-
-    /**
-     * Convenience method for querying the database for an entire column of long. 
+     * Convenience method for querying the database for an entire column of long.
      *
      * @param query The SQL query statement.
      * @return An ArrayList with the contents of the specified column.
      */
     public ArrayList<Long> queryLongList(String query, Object... bindArgs) {
-        return list(Long.class, query, bindArgs);
+        ArrayList<Long> results = new ArrayList<>();
+
+        try (Cursor cursor = mDatabase.query(query, bindArgs)) {
+            while (cursor.moveToNext()) {
+                results.add(cursor.getLong(0));
+            }
+        }
+
+        return results;
     }
 
     /**
@@ -290,34 +255,20 @@ public class DB {
      * @return An ArrayList with the contents of the specified column.
      */
     public ArrayList<String> queryStringList(String query, Object... bindArgs) {
-        return list(String.class, query, bindArgs);
-    }
+        ArrayList<String> results = new ArrayList<>();
 
-    /**
-     * Mapping of Java type names to the corresponding Cursor.get method.
-     *
-     * @param typeName The simple name of the type's class. Example: String.class.getSimpleName().
-     * @return The name of the Cursor method to be called.
-     */
-    private static String getCursorMethodName(String typeName) {
-        if ("String".equals(typeName)) {
-            return "getString";
-        } else if ("Long".equals(typeName)) {
-            return "getLong";
-        } else if ("Integer".equals(typeName)) {
-            return "getInt";
-        } else if ("Float".equals(typeName)) {
-            return "getFloat";
-        } else if ("Double".equals(typeName)) {
-            return "getDouble";
-        } else {
-            return null;
+        try (Cursor cursor = mDatabase.query(query, bindArgs)) {
+            while (cursor.moveToNext()) {
+                results.add(cursor.getString(0));
+            }
         }
+
+        return results;
     }
 
 
     public void execute(String sql, Object... object) {
-        String s = sql.trim().toLowerCase(Locale.US);
+        String s = sql.trim().toLowerCase(Locale.ROOT);
         // mark modified?
         for (String mo : MOD_SQLS) {
             if (s.startsWith(mo)) {
@@ -368,6 +319,11 @@ public class DB {
 
     public void executeMany(String sql, List<Object[]> list) {
         mMod = true;
+        if (BuildConfig.DEBUG) {
+            if (list.size() <= 1) {
+                Timber.w("Query %s called with a list of at most one element. Usually that's not expected.", sql);
+            }
+        }
         executeInTransaction(() -> executeManyNoTransaction(sql, list));
     }
 

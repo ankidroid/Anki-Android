@@ -42,10 +42,10 @@
     <string name="statistics_mature">Закріплені</string>
     <string name="statistics_young_and_learn">Нові і нещодавні</string>
     <string name="statistics_unlearned">Не переглядані</string>
-    <string name="statistics_suspended">Suspended</string>
-    <string name="statistics_buried">Buried</string>
-    <string name="statistics_relearn">Повторно вчено</string>
-    <string name="statistics_learn">Вчено</string>
+    <string name="statistics_suspended">Призупинено</string>
+    <string name="statistics_buried">Відкладені</string>
+    <string name="statistics_relearn" comment="Labbel of the axis in the graph indicating the number of reviews of cards while they are in relearning mode.">Повторно вчено</string>
+    <string name="statistics_learn" comment="Label of the number of review of card in learning done in some amount of time">Вчено</string>
     <string name="statistics_cram">Зазубрені</string>
     <string name="stats_cards">Картки</string>
     <string name="stats_cards_intervals">Картки з даним інтервалом</string>
@@ -67,7 +67,7 @@
     <string name="stats_time_of_day">Час доби</string>
     <string name="stats_day_of_week">День тижня</string>
     <string formatted="false" name="stats_percentage_correct">% правильного</string>
-    <string name="stats_reviews">Відповіді</string>
+    <string name="stats_reviews" comment="Label of a graph, indicating cumulative number of review of all cards">Відповіді</string>
     <string name="stats_answer_type">Тип відповіді</string>
     <string name="stats_today_again_count">Кількість повернень: &lt;b&gt;%d&lt;/b&gt;</string>
     <string name="stats_today_correct_count">(&lt;b&gt;%.1f%%&lt;/b&gt; правильно)</string>
@@ -75,20 +75,19 @@
 повторено : &lt;b&gt;%2$d&lt;/b&gt;, 
 повторно вчено: &lt;b&gt;%3$d&lt;/b&gt;, 
 відфільтровано: &lt;b&gt;%4$d&lt;/b&gt;</string>
-    <string name="stats_today_mature_cards">Правильних відповідей у закріплених картах: %1$d/%2$d (%3$.1f%%)</string>
-    <string name="stats_today_no_mature_cards">За сьогодні немає переглянутих закріплених карток.</string>
+    <string name="stats_today_mature_cards">Правильних відповідей у закріплених картках: %1$d/%2$d (%3$.1f%%)</string>
+    <string name="stats_today_no_mature_cards">За сьогодні не було повторено жодної закріпленої картки.</string>
     <string name="stats_overview_forecast_total">Загалом: &lt;b&gt;%1$d&lt;/b&gt; переглядів</string>
-    <string name="stats_overview_forecast_average">Пересічно: &lt;b&gt;%1$.1f&lt;/b&gt; переглядів на добу</string>
+    <string name="stats_overview_forecast_average">В середньому: &lt;b&gt;%1$.1f&lt;/b&gt; переглядів на добу</string>
     <string name="stats_overview_forecast_due_tomorrow">На завтра: &lt;b&gt;%1$d&lt;/b&gt;</string>
     <string name="stats_overview_days_studied">Днів навчання: &lt;b&gt;%1$d%%&lt;/b&gt; (%2$d із %3$d)</string>
-    <string name="stats_overview_total_reviews">Загалом: &lt;b&gt;%1$d&lt;/b&gt; переглядів</string>
-    <string name="stats_overview_reviews_per_day_studydays">Пересічно навчання: &lt;b&gt;%1$.1f&lt;/b&gt; переглядів на добу</string>
-    <string name="stats_overview_reviews_per_day_all">Якщо вчити щодня: &lt;b&gt;%1$.1f&lt;/b&gt; переглядів на добу</string>
+    <string name="stats_overview_reviews_per_day_studydays">В середньому за дні навчання: &lt;b&gt;%1$.1f&lt;/b&gt; переглядів на добу</string>
+    <string name="stats_overview_reviews_per_day_all">В середньому за всі дні: &lt;b&gt;%1$.1f&lt;/b&gt; переглядів на добу</string>
     <string name="stats_overview_total_time_in_period">Загалом: &lt;b&gt;%d&lt;/b&gt; хвилин</string>
-    <string name="stats_overview_time_per_day_studydays">Пересічно навчання: &lt;b&gt;%1$.1f&lt;/b&gt; хвилин на добу</string>
-    <string name="stats_overview_time_per_day_all">Якщо вчити щодня:  &lt;b&gt;%1$.1f&lt;/b&gt; хвилин на добу</string>
+    <string name="stats_overview_time_per_day_studydays">В середньому за дні навчання: &lt;b&gt;%1$.1f&lt;/b&gt; хвилин на добу</string>
+    <string name="stats_overview_time_per_day_all">В середньому за всі дні:  &lt;b&gt;%1$.1f&lt;/b&gt; хвилин на добу</string>
     <string name="stats_overview_average_answer_time">Середній час відповіді: &lt;b&gt;%1$.1fs&lt;/b&gt; (&lt;b&gt;%2$.2f&lt;/b&gt; карток/хвилину)</string>
-    <string name="stats_overview_new_cards_per_day">Пересічно: &lt;b&gt;%1$.1f&lt;/b&gt; карток за добу</string>
+    <string name="stats_overview_new_cards_per_day">В середньому: &lt;b&gt;%1$.1f&lt;/b&gt; карток за добу</string>
     <string name="stats_overview_total_new_cards">Загалом: &lt;b&gt;%1$d&lt;/b&gt; карт</string>
     <string name="stats_overview_average_interval">"Середній інтервал: "</string>
     <string name="stats_overview_longest_interval">"Найдовший інтервал: "</string>
@@ -104,7 +103,6 @@
     <string name="stats_overview_card_types_lowest_ease">Найскладніше: &lt;b&gt;%.0f%%&lt;/b&gt;</string>
     <string name="stats_overview_card_types_average_ease">Середня легкість: &lt;b&gt;%.0f%%&lt;/b&gt;</string>
     <string name="stats_overview_card_types_highest_ease">Найлегше: &lt;b&gt;%.0f%%&lt;/b&gt;</string>
-    <string name="deck_summary_all_decks">Всі колоди</string>
     <string name="stats_select_time_scale">Вибрати шкалу часу</string>
     <string-array name="due_x_axis_title">
         <item>Дні</item>
@@ -115,13 +113,12 @@
     <string name="stats_overview">Огляд</string>
     <string name="stats_forecast">Прогноз</string>
     <string name="stats_review_count">Лічильник переглядів</string>
-    <string name="stats_review_time">Час огдляду</string>
-    <string name="stats_added">Додано</string>
+    <string name="stats_review_time">Час огляду</string>
+    <string name="stats_added" comment="Label of the number of added card">Додано</string>
     <string name="stats_review_intervals">Інтервали</string>
     <string name="stats_breakdown">Годинний розподіл</string>
     <string name="stats_weekly_breakdown">Тижневий розподіл</string>
     <string name="stats_answer_buttons">Кнопки відповіді</string>
-    <string name="stats_cards_types">Типи карток</string>
     <string-array name="stats_day_time_strings">
         <item>4:00</item>
         <item>10:00</item>
@@ -166,7 +163,7 @@
         <item>4</item>
     </string-array>
     <plurals name="stats_today_cards">
-        <item quantity="one">Сьогодні переглянуто &lt;b&gt;%1$d карту&lt;/b&gt; за &lt;b&gt;%2$s&lt;/b&gt;</item>
+        <item quantity="one">Сьогодні переглянуто &lt;b&gt;%1$d карток&lt;/b&gt; за &lt;b&gt;%2$s&lt;/b&gt;</item>
         <item quantity="few">Сьогодні переглянуто &lt;b&gt;%1$d карти&lt;/b&gt; за &lt;b&gt;%2$s&lt;/b&gt;</item>
         <item quantity="many">Сьогодні переглянуто &lt;b&gt;%1$d карток&lt;/b&gt; за &lt;b&gt;%2$s&lt;/b&gt;</item>
         <item quantity="other">Сьогодні переглянуто &lt;b&gt;%1$d карток&lt;/b&gt; за &lt;b&gt;%2$s&lt;/b&gt;</item>

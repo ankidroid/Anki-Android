@@ -1,20 +1,20 @@
-/****************************************************************************************
- * Copyright (c) 2009 Andrew <andrewdubya@gmail.com>                                    *
- * Copyright (c) 2009 Nicolas Raoul <nicolas.raoul@gmail.com>                           *
- * Copyright (c) 2009 Edu Zamora <edu.zasu@gmail.com>                                   *
- *                                                                                      *
- * This program is free software; you can redistribute it and/or modify it under        *
- * the terms of the GNU General Public License as published by the Free Software        *
- * Foundation; either version 3 of the License, or (at your option) any later           *
- * version.                                                                             *
- *                                                                                      *
- * This program is distributed in the hope that it will be useful, but WITHOUT ANY      *
- * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A      *
- * PARTICULAR PURPOSE. See the GNU General Public License for more details.             *
- *                                                                                      *
- * You should have received a copy of the GNU General Public License along with         *
- * this program.  If not, see <http://www.gnu.org/licenses/>.                           *
- ****************************************************************************************/
+/*
+ * Copyright (c) 2009 Andrew <andrewdubya@gmail.com>
+ * Copyright (c) 2009 Nicolas Raoul <nicolas.raoul@gmail.com>
+ * Copyright (c) 2009 Edu Zamora <edu.zasu@gmail.com>
+ *
+ * This program is free software; you can redistribute it and/or modify it under
+ * the terms of the GNU General Public License as published by the Free Software
+ * Foundation; either version 3 of the License, or (at your option) any later
+ * version.
+ *
+ * This program is distributed in the hope that it will be useful, but WITHOUT ANY
+ * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A
+ * PARTICULAR PURPOSE. See the GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License along with
+ * this program.  If not, see <http://www.gnu.org/licenses/>.
+ */
 
 package com.ichi2.anki;
 
@@ -27,8 +27,13 @@ import android.graphics.Paint;
 import android.graphics.Path;
 import android.graphics.PathMeasure;
 import android.graphics.Point;
+
+import androidx.annotation.CheckResult;
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.annotation.VisibleForTesting;
 import androidx.core.content.ContextCompat;
+import timber.log.Timber;
 
 import android.os.Environment;
 import android.view.Display;
@@ -78,23 +83,24 @@ public class Whiteboard extends View {
     private final int foregroundColor;
     private final LinearLayout mColorPalette;
 
-    public Whiteboard(AbstractFlashcardViewer cardViewer, boolean inverted, boolean monochrome) {
+    @Nullable
+    private OnPaintColorChangeListener mOnPaintColorChangeListener;
+
+    public Whiteboard(AbstractFlashcardViewer cardViewer, boolean inverted) {
         super(cardViewer, null);
         mCardViewer = new WeakReference<>(cardViewer);
 
+        Button whitePenColorButton = cardViewer.findViewById(R.id.pen_color_white);
+        Button blackPenColorButton = cardViewer.findViewById(R.id.pen_color_black);
 
         if (!inverted) {
-            if (monochrome) {
+                whitePenColorButton.setVisibility(View.GONE);
+                blackPenColorButton.setOnClickListener(this::onClick);
                 foregroundColor = Color.BLACK;
-            } else {
-                foregroundColor = ContextCompat.getColor(cardViewer, R.color.wb_fg_color);
-            }
         } else {
-            if (monochrome) {
+                blackPenColorButton.setVisibility(View.GONE);
+                whitePenColorButton.setOnClickListener(this::onClick);
                 foregroundColor = Color.WHITE;
-            } else {
-                foregroundColor = ContextCompat.getColor(cardViewer, R.color.wb_fg_color_inv);
-            }
         }
 
         mPaint = new Paint();
@@ -113,8 +119,6 @@ public class Whiteboard extends View {
         // selecting pen color to draw
         mColorPalette = cardViewer.findViewById(R.id.whiteboard_pen_color);
 
-        cardViewer.findViewById(R.id.pen_color_white).setOnClickListener(this::onClick);
-        cardViewer.findViewById(R.id.pen_color_black).setOnClickListener(this::onClick);
         cardViewer.findViewById(R.id.pen_color_red).setOnClickListener(this::onClick);
         cardViewer.findViewById(R.id.pen_color_green).setOnClickListener(this::onClick);
         cardViewer.findViewById(R.id.pen_color_blue).setOnClickListener(this::onClick);
@@ -230,12 +234,6 @@ public class Whiteboard extends View {
         }
     }
 
-    /**
-     * @return the number of strokes currently on the undo queue
-     */
-    public int undoSize() {
-        return mUndo.size();
-    }
 
     /** @return Whether there are strokes to undo */
     public boolean undoEmpty() {
@@ -249,8 +247,8 @@ public class Whiteboard extends View {
         return mUndoModeActive;
     }
 
-    private void createBitmap(int w, int h, Bitmap.Config conf) {
-        mBitmap = Bitmap.createBitmap(w, h, conf);
+    private void createBitmap(int w, int h) {
+        mBitmap = Bitmap.createBitmap(w, h, Bitmap.Config.ARGB_8888);
         mCanvas = new Canvas(mBitmap);
         clear();
     }
@@ -258,9 +256,9 @@ public class Whiteboard extends View {
 
     private void createBitmap() {
         // To fix issue #1336, just make the whiteboard big and square.
-        final Point p = getDisplayDimenions();
+        final Point p = getDisplayDimensions();
         int bitmapSize = Math.max(p.x, p.y);
-        createBitmap(bitmapSize, bitmapSize, Bitmap.Config.ARGB_8888);
+        createBitmap(bitmapSize, bitmapSize);
     }
 
     private void drawStart(float x, float y) {
@@ -360,7 +358,7 @@ public class Whiteboard extends View {
         return false;
     }
 
-    private static Point getDisplayDimenions() {
+    private static Point getDisplayDimensions() {
         Display display = ((WindowManager) AnkiDroidApp.getInstance().getApplicationContext().
                 getSystemService(Context.WINDOW_SERVICE)).getDefaultDisplay();
         Point point = new Point();
@@ -371,39 +369,46 @@ public class Whiteboard extends View {
 
     public void onClick(View view) {
 
-        switch (view.getId()) {
-            case R.id.pen_color_white:
-                mPaint.setColor(Color.WHITE);
-                mColorPalette.setVisibility(View.GONE);
-                break;
-            case R.id.pen_color_black:
-                mPaint.setColor(Color.BLACK);
-                mColorPalette.setVisibility(View.GONE);
-                break;
-            case R.id.pen_color_red:
-                int redPenColor = ContextCompat.getColor(getContext(), R.color.material_red_500);
-                mPaint.setColor(redPenColor);
-                mColorPalette.setVisibility(View.GONE);
-                break;
-            case R.id.pen_color_green:
-                int greenPenColor = ContextCompat.getColor(getContext(), R.color.material_green_500);
-                mPaint.setColor(greenPenColor);
-                mColorPalette.setVisibility(View.GONE);
-                break;
-            case R.id.pen_color_blue:
-                int bluePenColor = ContextCompat.getColor(getContext(), R.color.material_blue_500);
-                mPaint.setColor(bluePenColor);
-                mColorPalette.setVisibility(View.GONE);
-                break;
-            case R.id.pen_color_yellow:
-                int yellowPenColor = ContextCompat.getColor(getContext(), R.color.material_yellow_500);
-                mPaint.setColor(yellowPenColor);
-                mColorPalette.setVisibility(View.GONE);
-                break;
-            default:
-                break;
+        int id = view.getId();
+        if (id == R.id.pen_color_white) {
+            setPenColor(Color.WHITE);
+        } else if (id == R.id.pen_color_black) {
+            setPenColor(Color.BLACK);
+        } else if (id == R.id.pen_color_red) {
+            int redPenColor = ContextCompat.getColor(getContext(), R.color.material_red_500);
+            setPenColor(redPenColor);
+        } else if (id == R.id.pen_color_green) {
+            int greenPenColor = ContextCompat.getColor(getContext(), R.color.material_green_500);
+            setPenColor(greenPenColor);
+        } else if (id == R.id.pen_color_blue) {
+            int bluePenColor = ContextCompat.getColor(getContext(), R.color.material_blue_500);
+            setPenColor(bluePenColor);
+        } else if (id == R.id.pen_color_yellow) {
+            int yellowPenColor = ContextCompat.getColor(getContext(), R.color.material_yellow_500);
+            setPenColor(yellowPenColor);
         }
     }
+
+
+    public void setPenColor(int color) {
+        Timber.d("Setting pen color to %d", color);
+        mPaint.setColor(color);
+        mColorPalette.setVisibility(View.GONE);
+        if (mOnPaintColorChangeListener != null) {
+            mOnPaintColorChangeListener.onPaintColorChange(color);
+        }
+    }
+
+    @VisibleForTesting
+    public int getPenColor() {
+        return mPaint.getColor();
+    }
+
+
+    public void setOnPaintColorChangeListener(@Nullable OnPaintColorChangeListener mOnPaintColorChangeListener) {
+        this.mOnPaintColorChangeListener = mOnPaintColorChangeListener;
+    }
+
 
     /**
      * Keep a stack of all points and paths so that the last stroke can be undone
@@ -486,7 +491,7 @@ public class Whiteboard extends View {
         return mCurrentlyDrawing;
     }
 
-    @SuppressWarnings("deprecation") // TODO Tracked in https://github.com/ankidroid/Anki-Android/issues/5304
+    @SuppressWarnings( {"deprecation", "RedundantSuppression"}) // TODO Tracked in https://github.com/ankidroid/Anki-Android/issues/5304
     protected String saveWhiteboard(Time time) throws FileNotFoundException {
 
         Bitmap bitmap = Bitmap.createBitmap(this.getWidth(), this.getHeight(), Bitmap.Config.ARGB_8888);
@@ -496,6 +501,7 @@ public class Whiteboard extends View {
         File ankiDroidFolder = new File(pictures, "AnkiDroid");
 
         if (!ankiDroidFolder.exists()) {
+            //noinspection ResultOfMethodCallIgnored
             ankiDroidFolder.mkdirs();
         }
 
@@ -503,7 +509,7 @@ public class Whiteboard extends View {
         String timeStamp = TimeUtils.getTimestamp(time);
         String finalFileName = baseFileName + timeStamp + ".png";
 
-        File saveWhiteboardImagFile = new File(ankiDroidFolder, finalFileName);
+        File saveWhiteboardImageFile = new File(ankiDroidFolder, finalFileName);
 
         if (foregroundColor != Color.BLACK) {
             canvas.drawColor(Color.BLACK);
@@ -512,7 +518,17 @@ public class Whiteboard extends View {
         }
 
         this.draw(canvas);
-        bitmap.compress(Bitmap.CompressFormat.JPEG, 95, new FileOutputStream(saveWhiteboardImagFile));
-        return saveWhiteboardImagFile.getAbsolutePath();
+        bitmap.compress(Bitmap.CompressFormat.JPEG, 95, new FileOutputStream(saveWhiteboardImageFile));
+        return saveWhiteboardImageFile.getAbsolutePath();
+    }
+
+    @VisibleForTesting
+    @CheckResult
+    protected int getForegroundColor() {
+        return foregroundColor;
+    }
+
+    public interface OnPaintColorChangeListener {
+        void onPaintColorChange(@Nullable Integer color);
     }
 }

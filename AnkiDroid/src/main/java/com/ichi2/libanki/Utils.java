@@ -31,6 +31,8 @@ import android.text.Spanned;
 
 import androidx.annotation.NonNull;
 import android.os.StatFs;
+import android.text.TextUtils;
+import android.util.Pair;
 
 import com.ichi2.anki.AnkiFont;
 import com.ichi2.anki.CollectionHelper;
@@ -59,17 +61,23 @@ import java.util.Arrays;
 import java.util.Collection;
 import java.util.Enumeration;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Random;
+import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import org.apache.commons.compress.archivers.zip.ZipArchiveEntry;
 import org.apache.commons.compress.archivers.zip.ZipFile;
 
 import androidx.annotation.Nullable;
+import androidx.core.text.HtmlCompat;
 import timber.log.Timber;
+
+import static com.ichi2.libanki.Consts.FIELD_SEPARATOR;
+import static com.ichi2.utils.CollectionUtils.addAll;
 
 @SuppressWarnings({"PMD.AvoidThrowingRawExceptionTypes","PMD.AvoidReassigningParameters",
         "PMD.MethodNamingConventions","PMD.FieldDeclarationsShouldBeAtStartOfClass"})
@@ -350,7 +358,7 @@ public class Utils {
         Matcher htmlEntities = htmlEntitiesPattern.matcher(html);
         StringBuffer sb = new StringBuffer();
         while (htmlEntities.find()) {
-            final Spanned spanned = CompatHelper.getCompat().fromHtml(htmlEntities.group());
+            final Spanned spanned = HtmlCompat.fromHtml(htmlEntities.group(), HtmlCompat.FROM_HTML_MODE_LEGACY);
             final String replacement = Matcher.quoteReplacement(spanned.toString());
             htmlEntities.appendReplacement(sb, replacement);
         }
@@ -501,23 +509,6 @@ public class Utils {
     }
 
 
-    public static long[] jsonArrayToLongArray(JSONArray jsonArray) throws JSONException {
-        long[] ar = new long[jsonArray.length()];
-        for (int i = 0; i < jsonArray.length(); i++) {
-            ar[i] = jsonArray.getLong(i);
-        }
-        return ar;
-    }
-
-    public static List<Long> jsonArrayToLongList(JSONArray jsonArray) throws JSONException {
-        List<Long> ar = new ArrayList<>(jsonArray.length());
-        for (Long l: jsonArray.longIterable()) {
-            ar.add(l);
-        }
-        return ar;
-    }
-
-
     public static Object[] jsonArray2Objects(JSONArray array) {
         Object[] o = new Object[array.length()];
         for (int i = 0; i < array.length(); i++) {
@@ -545,7 +536,7 @@ public class Utils {
 
     public static String[] splitFields(String fields) {
         // -1 ensures that we don't drop empty fields at the ends
-        return fields.split("\\x1f", -1);
+        return fields.split(FIELD_SEPARATOR, -1);
     }
 
     /*
@@ -593,11 +584,31 @@ public class Utils {
 
 
     /**
-     * @param data the string to generate hash from
+     * Optimized in case of sortIdx = 0
+     * @param fields Fields of a note
+     * @param sortIdx An index of the field
+     * @return The field at sortIdx, without html media, and the csum of the first field.
+     */
+    public static Pair<String, Long> sfieldAndCsum(String[] fields, int sortIdx) {
+        String firstStripped = stripHTMLMedia(fields[0]);
+        String sortStripped = (sortIdx == 0) ?  firstStripped: stripHTMLMedia(fields[sortIdx]);
+        return new Pair<>(sortStripped, fieldChecksumWithoutHtmlMedia(firstStripped));
+    }
+
+    /**
+     * @param data the string to generate hash from.
      * @return 32 bit unsigned number from first 8 digits of sha1 hash
      */
     public static long fieldChecksum(String data) {
-        return Long.valueOf(checksum(stripHTMLMedia(data)).substring(0, 8), 16);
+        return fieldChecksumWithoutHtmlMedia(stripHTMLMedia(data));
+    }
+
+    /**
+     * @param data the string to generate hash from. Html media should be removed
+     * @return 32 bit unsigned number from first 8 digits of sha1 hash
+     */
+    public static long fieldChecksumWithoutHtmlMedia(String data) {
+        return Long.valueOf(checksum(data).substring(0, 8), 16);
     }
 
     /**
@@ -683,6 +694,14 @@ public class Utils {
 
     }
 
+
+    /**
+     * @param zipFile A zip file
+     * @param targetDirectory Directory in which to unzip some of the zipped field
+     * @param zipEntries files of the zip folder to unzip
+     * @param zipEntryToFilenameMap Renaming rules from name in zip file to name in the device
+     * @throws IOException if the directory can't be created
+     */
     public static void unzipFiles(ZipFile zipFile, String targetDirectory, @NonNull String[] zipEntries,
                                   @Nullable Map<String, String> zipEntryToFilenameMap) throws IOException {
         File dir = new File(targetDirectory);
@@ -690,7 +709,7 @@ public class Utils {
             throw new IOException("Failed to create target directory: " + targetDirectory);
         }
         if (zipEntryToFilenameMap == null) {
-            zipEntryToFilenameMap = new HashMap<>();
+            zipEntryToFilenameMap = new HashMap<>(0);
         }
         for (String requestedEntry : zipEntries) {
             ZipArchiveEntry ze = zipFile.getEntry(requestedEntry);
@@ -754,7 +773,7 @@ public class Utils {
      * @return long indicating the bytes available for that path
      */
     public static long determineBytesAvailable(String path) {
-        return CompatHelper.getCompat().getAvailableBytes(new StatFs(path));
+        return new StatFs(path).getAvailableBytes();
     }
 
 
@@ -907,7 +926,7 @@ public class Utils {
         } catch (IOException e) {
             Timber.e(e, "Error on retrieving ankidroid fonts");
         }
-        List<AnkiFont> fonts = new ArrayList<>();
+        List<AnkiFont> fonts = new ArrayList<>(fontsCount);
         for (int i = 0; i < fontsCount; i++) {
             String filePath = fontsList[i].getAbsolutePath();
             String filePathExtension = splitFilename(filePath)[1];
@@ -1025,7 +1044,7 @@ public class Utils {
      * @return the unescaped text
      */
     public static String unescape(String htmlText) {
-        return CompatHelper.getCompat().fromHtml(htmlText).toString();
+        return HtmlCompat.fromHtml(htmlText, HtmlCompat.FROM_HTML_MODE_LEGACY).toString();
     }
 
 
@@ -1066,10 +1085,39 @@ public class Utils {
      * @param <T> A type on which equals can be called
      * @return Whether both objects are equal.
      */
-    // Similar as Objets.equals. So deprecated starting at API Level 19 where this methods exists.
+    // Similar as Objects.equals. So deprecated starting at API Level 19 where this methods exists.
     public static <T> boolean equals(@Nullable T left, @Nullable T right) {
         //noinspection EqualsReplaceableByObjectsCall
         return left == right || (left != null && left.equals(right));
     }
 
+    /**
+     * @param sflds Some fields
+     * @return Array with the same elements, trimmed
+     */
+    public static @NonNull String[] trimArray(@NonNull String[] sflds) {
+        int nbField = sflds.length;
+        String[] fields = new String[nbField];
+        for (int i = 0; i < nbField; i++) {
+            fields[i] = sflds[i].trim();
+        }
+        return fields;
+    }
+
+
+    /**
+     * @param fields A map from field name to field value
+     * @return The set of non empty field values.
+     */
+    public static Set<String> nonEmptyFields(Map<String, String> fields) {
+        Set<String> nonempty_fields = new HashSet<>(fields.size());
+        for (Map.Entry<String, String> kv: fields.entrySet()) {
+            String value = kv.getValue();
+            value = Utils.stripHTMLMedia(value).trim();
+            if (!TextUtils.isEmpty(value)) {
+                nonempty_fields.add(kv.getKey());
+            }
+        }
+        return nonempty_fields;
+    }
 }

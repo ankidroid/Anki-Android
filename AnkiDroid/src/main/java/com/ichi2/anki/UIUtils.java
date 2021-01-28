@@ -17,9 +17,8 @@ import com.ichi2.async.CollectionTask;
 import java.util.Calendar;
 
 import timber.log.Timber;
-import static com.ichi2.async.CollectionTask.TASK_TYPE.*;
-import com.ichi2.async.TaskData;
 import com.ichi2.async.TaskListener;
+import com.ichi2.async.TaskManager;
 import com.ichi2.libanki.utils.Time;
 
 public class UIUtils {
@@ -133,7 +132,7 @@ public class UIUtils {
 
     public static void saveCollectionInBackground(boolean syncIgnoresDatabaseModification) {
         if (CollectionHelper.getInstance().colIsOpen()) {
-            TaskListener listener = new TaskListener() {
+            TaskListener<Void, Void> listener = new TaskListener<Void, Void>() {
                 @Override
                 public void onPreExecute() {
                     Timber.d("saveCollectionInBackground: start");
@@ -141,11 +140,11 @@ public class UIUtils {
 
 
                 @Override
-                public void onPostExecute(TaskData result) {
+                public void onPostExecute(Void v) {
                     Timber.d("saveCollectionInBackground: finished");
                 }
             };
-            CollectionTask.launchCollectionTask(SAVE_COLLECTION, listener, new TaskData(syncIgnoresDatabaseModification));
+            TaskManager.launchCollectionTask(new CollectionTask.SaveCollection(syncIgnoresDatabaseModification), listener);
         }
     }
 }

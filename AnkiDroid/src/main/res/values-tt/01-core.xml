@@ -38,101 +38,93 @@
 ~ this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <resources>
+    <string name="yes">әйе</string>
     <!-- Navigation drawer items-->
-    <string name="decks">Decks</string>
-    <string name="card_browser">Card browser</string>
-    <string name="statistics">Statistics</string>
-    <string name="settings">Settings</string>
-    <string name="help">Help</string>
-    <string name="send_feedback">Send feedback</string>
-    <string name="studyoptions_title">Deck overview</string>
-    <string name="studyoptions_due_today">Due today:</string>
-    <string name="studyoptions_new_total">Total new cards:</string>
-    <string name="studyoptions_total_cards">Total cards:</string>
-    <string name="studyoptions_eta">Estimated time (min):</string>
-    <string name="studyoptions_start">Study</string>
+    <string name="decks">Колодалар</string>
+    <string name="card_browser" comment="The usage of card browser inside the app (note the casing)">Кәрт браузеры</string>
+    <string name="statistics">Статистика</string>
+    <string name="settings">Көйләүләр</string>
+    <string name="help">Ярдәм</string>
+    <string name="send_feedback">Бәяләмә җибәрү</string>
+    <string name="studyoptions_due_today">Бүгенгә:</string>
+    <string name="studyoptions_new_total">Барлыгы яңа кәртләр:</string>
+    <string name="studyoptions_total_cards">Барлыгы кәртләр:</string>
+    <string name="studyoptions_eta">Чамалы вакыт (мин.):</string>
+    <string name="studyoptions_start">Өйрәнергә</string>
     <!-- DeckPicker.java -->
-    <string name="expand">Expand</string>
-    <string name="collapse">Collapse</string>
-    <string name="study_more">Study more</string>
+    <string name="expand">Тулысынча күрсәтү</string>
+    <string name="collapse">Борып ябу</string>
+    <string name="study_more">Тагын укырга</string>
     <plurals name="deckpicker_title">
-        <item quantity="other">%1$d cards due (%2$s)</item>
+        <item quantity="other">%1$d кәрт калды (%2$s)</item>
     </plurals>
     <plurals name="reviewer_window_title">
-        <item quantity="other">%d minutes left</item>
+        <item quantity="other">%d минут калды</item>
     </plurals>
     <plurals name="reviewer_window_title_hours">
-        <item quantity="other">%d hours %d left</item>
+        <item quantity="other">%d сәгатъ %d калды</item>
     </plurals>
     <plurals name="reviewer_window_title_days">
-        <item quantity="other">%d days %d left</item>
+        <item quantity="other">%d көн %d калды</item>
     </plurals>
-    <string name="no_cards_placeholder_title">Collection is empty</string>
-    <string name="no_cards_placeholder_description">Start adding cards\nusing the + icon.</string>
+    <string name="no_cards_placeholder_title">Коллекция буш</string>
+    <string name="no_cards_placeholder_description">Кәртләрне\n+ төймәсена басып беркетә башлагыз.</string>
     <!-- The deck picker via AnkiStatsTaskHandler.java -->
     <plurals name="studied_cards_today">
-        <item quantity="other">Studied %1$d cards in %2$s today</item>
+        <item quantity="other">Бүген %2$s эчендә %1$d кәрт өйрәнелде</item>
     </plurals>
     <!-- flashcard_portrait.xml -->
-    <string name="type_answer_hint">Type answer</string>
-    <string name="show_answer">Show answer</string>
-    <string name="hide_answer">Hide answer</string>
-    <string name="ease_button_again">Again</string>
-    <string name="ease_button_hard">Hard</string>
-    <string name="ease_button_good">Good</string>
-    <string name="ease_button_easy">Easy</string>
-    <string name="studyoptions_congrats_undo">Undo %s</string>
-    <string name="menu_import">Import</string>
-    <string name="undo">Undo</string>
-    <string name="undo_action_review">last review</string>
-    <string name="undo_action_bury_card">bury card</string>
-    <string name="undo_action_bury_note">bury note</string>
-    <string name="undo_action_suspend_card">suspend card</string>
-    <string name="undo_action_suspend_note">suspend note</string>
-    <string name="undo_action_delete">delete note</string>
-    <string name="undo_action_delete_multi">delete notes</string>
-    <string name="undo_action_change_deck_multi">change decks</string>
-    <string name="undo_action_reschedule_card">reschedule</string>
-    <string name="undo_action_reset_card">reset progress</string>
-    <string name="undo_action_reposition_card">reposition</string>
-    <string name="move_all_to_deck">Move all to deck</string>
-    <string name="unbury">Unbury</string>
-    <string name="rename_deck">Rename deck</string>
-    <string name="menu_add">Add</string>
-    <string name="menu_add_note">Add note</string>
-    <string name="menu_my_account">Sync account</string>
-    <string name="menu_dismiss_note">Hide / delete</string>
-    <string name="menu_bury_card">Bury card</string>
-    <string name="menu_bury_note">Bury note</string>
-    <string name="menu_suspend_card">Suspend card</string>
-    <string name="menu_suspend_note">Suspend note</string>
-    <string name="menu_bury">Bury</string>
-    <string name="menu_suspend">Suspend</string>
-    <string name="menu_delete_note">Delete note</string>
-    <string name="menu_flag">Flag</string>
-    <string name="menu_flag_card">Flag card</string>
-    <string name="menu_flag_card_zero">No flag</string>
-    <string name="menu_flag_card_one">Red flag</string>
-    <string name="menu_flag_card_two">Orange flag</string>
-    <string name="menu_flag_card_three">Green flag</string>
-    <string name="menu_flag_card_four">Blue flag</string>
-    <string name="menu_edit_tags">Edit tags</string>
-    <string name="delete_note_message">Really delete this note and all its cards?\n%s</string>
-    <string name="menu_select">Select text</string>
-    <string name="menu_search">Lookup in %1$s</string>
-    <string name="menu_mark_note">Mark note</string>
-    <string name="menu_unmark_note">Unmark note</string>
-    <string name="menu_toggle_mic_tool_bar">Check pronunciation</string>
-    <string name="new_deck">Create deck</string>
-    <string name="create">Create</string>
-    <string name="new_dynamic_deck">Create filtered deck</string>
-    <string name="night_mode">Night mode</string>
-    <string name="directory_inaccessible">AnkiDroid directory is inaccessible</string>
+    <string name="type_answer_hint">Җәвап языгыз</string>
+    <string name="show_answer">Җәвап күрсәтергә</string>
+    <string name="hide_answer">Җәвап качырырга</string>
+    <string name="ease_button_again">Яңадан</string>
+    <string name="ease_button_hard">Авыр</string>
+    <string name="ease_button_good">Яхшы</string>
+    <string name="ease_button_easy">Җиңел</string>
+    <string name="studyoptions_congrats_undo">%s кире алу</string>
+    <string name="menu_import">Импортлау</string>
+    <string name="undo">Кире алу</string>
+    <string name="undo_action_review">соңгы кабатлау</string>
+    <string name="undo_action_change_deck_multi">колодаларны алыштыру</string>
+    <string name="move_all_to_deck">Бөтенесен колодага кую</string>
+    <string name="unbury">Кайтару</string>
+    <string name="rename_deck">Исемен үзгәртү</string>
+    <string name="create_shortcut">Тамга ясау</string>
+    <string name="menu_add" comment="A generic add button - Main Deck Picker and card templates. Please inform us if you need more specific strings">Кушу</string>
+    <string name="menu_add_note">Язу кушу</string>
+    <string name="menu_my_account" comment="Label of the window in which the user should enter their account. This text can\'t be found in AnkiDroid directly.">Синхронизация аккаунты</string>
+    <string name="menu_dismiss_note">Качыру / бетерү</string>
+    <string name="menu_bury_card">Кәртне читкә кую</string>
+    <string name="menu_bury_note">Язуны читкә кую</string>
+    <string name="menu_suspend_card">Кәртне искә алмау</string>
+    <string name="menu_suspend_note">Язуны искә алмау</string>
+    <string name="menu_bury">Читкә кую</string>
+    <string name="menu_suspend">Искә алмау</string>
+    <string name="menu_delete_note">Язуны бетерү</string>
+    <string name="menu_flag">Төс</string>
+    <string name="menu_flag_card">Төс кую</string>
+    <string name="menu_flag_card_zero">Төссез</string>
+    <string name="menu_flag_card_one">Кызыл төс</string>
+    <string name="menu_flag_card_two">Кызыл-сары төс</string>
+    <string name="menu_flag_card_three">Яшел төс</string>
+    <string name="menu_flag_card_four">Зәңгәр төс</string>
+    <string name="menu_edit_tags">Тегларны үзгәртү</string>
+    <string name="delete_note_message">Бу язуны һәм бөтен аның кәртләрен бетерергәме?\n%s</string>
+    <string name="menu_select">Текстны сайлау</string>
+    <string name="menu_search">%1$sдә карарга</string>
+    <string name="menu_mark_note">Язуны билгеләү</string>
+    <string name="menu_unmark_note">Билгеләүне бетерергә</string>
+    <string name="menu_toggle_mic_tool_bar">Әйтелешне тикшерү</string>
+    <string name="new_deck">Колода ясау</string>
+    <string name="create" comment="Button to create a filtered deck">Ясарга</string>
+    <string name="new_dynamic_deck">Фильтрлы колода ясау</string>
+    <string name="night_mode">Төнге режим</string>
+    <string name="directory_inaccessible">AnkiDroid папкасына рөхсәт юк</string>
     <!--This is shown when AnkiDroid starts up with no storage permissions.
     The user is taken to the "App Info" screen, and needs to click "Permissions" and
     grant AnkiDroid the \'Storage\' permission. This needs to be a fairly generic message as implementations
     of the permissions/app info screen will differ between devices. -->
-    <string name="startup_no_storage_permission">Please grant AnkiDroid the ‘Storage’ permission to continue</string>
+    <string name="startup_no_storage_permission">Зинһар, AnkiDroid өчен \"Storage\" рөхсәтен бирегез</string>
     <!--
         The time_quantities are units of time. They are used without
         plurals or dots.
@@ -140,66 +132,76 @@
         not be translated, at least not for languages using the Latin
         alphabet.
     -->
-    <string name="time_quantity_seconds">%d s</string>
-    <string name="time_quantity_minutes">%d min</string>
-    <string name="time_quantity_hours_minutes">%1$d h %2$d m</string>
-    <string name="time_quantity_hours">%d h</string>
-    <string name="time_quantity_days">%d d</string>
-    <string name="time_quantity_days_hours">%1$d d %2$d h</string>
-    <string name="time_quantity_months">%.1f mo</string>
-    <string name="time_quantity_years">%.1f yr</string>
+    <string name="time_quantity_seconds">%d с</string>
+    <string name="time_quantity_minutes">%d мин.</string>
+    <string name="time_quantity_hours_minutes">%1$d с. %2$d мин.</string>
+    <string name="time_quantity_hours">%d с.</string>
+    <string name="time_quantity_days">%d көн</string>
+    <string name="time_quantity_days_hours">%1$d көн %2$d сәг.</string>
+    <string name="time_quantity_months">%.1f ай</string>
+    <string name="time_quantity_years">%.1f ел</string>
     <!-- or "%.1f a" -->
-    <string name="rebuild_filtered_deck">Rebuilding filtered deck&#8230;</string>
-    <string name="rebuild_cram_label">Rebuild</string>
-    <string name="empty_cram_label">Empty</string>
-    <string name="create_subdeck">Create subdeck</string>
-    <string name="empty_filtered_deck">Emptying filtered deck&#8230;</string>
-    <string name="custom_study_deck_name">Custom study session</string>
-    <string name="custom_study_deck_exists">Rename the existing custom study deck first</string>
-    <string name="empty_deck">This deck is empty</string>
-    <string name="invalid_deck_name">Invalid deck name</string>
-    <string name="studyoptions_empty">This deck is empty. Press the + button to add new content.</string>
-    <string name="studyoptions_limit_reached">Daily study limit reached</string>
-    <string name="studyoptions_empty_schedule">No cards scheduled to study</string>
-    <string name="studyoptions_congrats_finished">Congratulations! You have finished for now.</string>
-    <string name="studyoptions_congrats_more_rev">Today’s limit has been reached, but there are still cards to review. You can increase the limit in the options.</string>
-    <string name="studyoptions_congrats_more_new">Today’s limit has been reached. There are more new cards available; you can increase the limit in the options, but this will increase your short-term review workload.</string>
-    <string name="studyoptions_congrats_custom">To study outside of the normal schedule, touch the “Custom study” button</string>
-    <string name="studyoptions_no_cards_due">No cards are due yet</string>
-    <string name="sd_card_not_mounted">Device storage not mounted</string>
-    <string name="empty_cloze_warning">Edit this note and add some cloze deletions. (%1$s)</string>
-    <string name="button_sync">Sync</string>
-    <string name="cancel_sync_confirm">Do you want to cancel the sync?</string>
-    <string name="continue_sync">Continue sync</string>
-    <string name="sync_cancelled">Sync cancelled</string>
-    <string name="sync_cancel_message">Cancelling&#8230;\nThis may take some time.</string>
-    <string name="export">Export</string>
-    <string name="export_collection">Export collection</string>
-    <string name="export_deck">Export deck</string>
-    <string name="nothing">Nothing</string>
+    <string name="rebuild_filtered_deck">Фильтрлы колода үзгәртелә</string>
+    <string name="rebuild_cram_label">Яңадан тезү</string>
+    <string name="empty_cram_label">Бушату</string>
+    <string name="create_subdeck">Колода эчендә колода ясау</string>
+    <string name="empty_filtered_deck">Фильтрлы колода бушатыла</string>
+    <string name="custom_study_deck_name">Шәхси өйрәнү сессиясе</string>
+    <string name="custom_study_deck_exists">Башта булган артык өйрәнү колода исемен үзгәртегез</string>
+    <string name="empty_deck">Бу колода буш</string>
+    <string name="empty_deck_add_note">Add card</string>
+    <string name="invalid_deck_name">Шундый колода исеме була алмый</string>
+    <string name="studyoptions_empty">Бу колода буш. Берәрнәрсә өстәү өчен + төймәсенә басыгыз.</string>
+    <string name="studyoptions_limit_reached">Бүгенге өйрәнү үтәлде</string>
+    <string name="studyoptions_empty_schedule">Өйрәнергә планланган кәртләр юк</string>
+    <string name="studyoptions_congrats_finished">Котлыйбыз! Хәзергә бетердегез.</string>
+    <string name="studyoptions_congrats_more_rev">Бүгенге лимит җителгән, әмма өйрәнелмәгән кәртләр калган. Лимитны көйләүләрдә зурайта аласыз.</string>
+    <string name="studyoptions_congrats_more_new">Бүгенге лимит җителгән, әмма өйрәнелмәгән кәртләр калган. Лимитны көйләүләрдә зурайта аласыз, әмма бу киләчәк көннәргә өйрәнү күләмен арттырыр.</string>
+    <string name="studyoptions_congrats_custom">Гадәти планнан артык өйрәнү өчен, \"Тагын өйрәнү\" төймәсенә басыгыз</string>
+    <string name="studyoptions_no_cards_due">Хәзерге вакытка кәртләр юк</string>
+    <string name="sd_card_not_mounted">Хәтер картасы куелмаган</string>
+    <string name="empty_cloze_warning">Бу язуны үзгәртеп, бушлыклар калдырыгыз. (%1$s)</string>
+    <string name="button_sync">Синхронизацияләргә</string>
+    <string name="cancel_sync_confirm">Синхронизацияне кире кагыргамы?</string>
+    <string name="continue_sync">Синхронизацияне дәвам итү</string>
+    <string name="sync_cancelled">Синхронизация кире кагылган</string>
+    <string name="sync_cancel_message">Кире кагу...\nБу бераз вакыт алырга мөмкин </string>
+    <string name="export">Экспортлау</string>
+    <string name="export_collection">Коллекцияне экспортлау</string>
+    <string name="export_deck">Колоданы экспортлау</string>
+    <string name="nothing">Берни </string>
     <!-- Card template editor -->
-    <string name="title_activity_template_editor">Card types</string>
-    <string name="card_template_editor_front">Front template</string>
-    <string name="card_template_editor_back">Back template</string>
-    <string name="card_template_editor_styling">Styling</string>
-    <string name="card_template_editor_menu_delete">Delete</string>
-    <string name="card_template_editor_menu_card_browser_appearance">Card Browser Appearance</string>
-    <string name="card_template_editor_deck_override">Deck Override</string>
-    <string name="card_template_editor_cant_delete">At least one card type is required</string>
+    <string name="title_activity_template_editor">Кәрт төрләре</string>
+    <string name="card_template_editor_front">Алгы шаблон</string>
+    <string name="card_template_editor_back">Арткы шаблон</string>
+    <string name="card_template_editor_styling">Стиль</string>
+    <string name="card_template_editor_menu_card_browser_appearance">Кәрт браузере күренеше</string>
+    <string name="card_template_editor_deck_override">Колода үзгәртү</string>
+    <string name="card_template_editor_cant_delete">Бер булса да кәрт төрен сайлау кирәк</string>
     <plurals name="card_template_editor_confirm_delete">
-        <item quantity="other">Delete the “%2$s” card type, and its %1$d cards?</item>
+        <item quantity="other">\"%2$s\" кәрт төрен hәм аның %1$d кәртен бетерергәме?</item>
     </plurals>
-    <string name="invalid_template">A card could not be generated</string>
-    <string name="card_template_editor_would_delete_note">Removing this card type would cause one or more notes to be deleted. Please create and save a new card type first.</string>
-    <string name="card_template_editor_save_error">Unable to save card template changes: %s</string>
-    <string name="template_for_current_card_deleted">The card type for the current card was deleted.</string>
+    <string name="invalid_template">Кәрт ясала алмады</string>
+    <string name="card_template_editor_would_delete_note">Бу кәрт төрен бетерү бер я берничә язунын бетерелүнә китерер. Зинhар, башта яңа кәрт төрен ясап саклагыз. </string>
+    <string name="card_template_editor_save_error">Кәрт шаблонындагы үзгәртүләрне саклап булмый: %s</string>
+    <string name="template_for_current_card_deleted">Бу кәртнең кәрт төре бетерелгән иде.</string>
     <!-- Card Browser Appearance -->
-    <string name="card_template_browser_appearance_title">Browser appearance</string>
+    <string name="card_template_browser_appearance_title">Браузер күренеше</string>
+    <string name="current_and_default_deck">%1$s (%2$s)</string>
+    <!-- card Info -->
+    <string name="card_info_title">Кәрт турында</string>
     <!-- Permissions -->
-    <string name="read_write_permission_label">Read and write to the AnkiDroid database</string>
-    <string name="read_write_permission_description">access existing notes, cards, note types, and decks, as well as create new ones</string>
+    <string name="read_write_permission_label">AnkiDroid мәгълүмәт базасына уку һәм язу</string>
+    <string name="read_write_permission_description">булган язуларга, кәртләргә, язу төрләренә рөхсәт һәм яңаларны ясау</string>
     <!-- Context Menu -->
-    <string name="card_browser_label">Card Browser</string>
-    <string name="card_browser_context_menu">Card Browser</string>
-    <string name="context_menu_anki_card_label">Anki Card</string>
+    <string name="card_browser_context_menu" comment="The value which appears in the system context menu. Note the casing difference">Кәрт браузеры</string>
+    <string name="context_menu_anki_card_label">Anki Кәрт</string>
+    <string name="has_a_problem" comment="First field is either front template or back template. Second field is the error message.">%1$s has a problem:<br/>%2$s</string>
+    <string name="more_information">More information</string>
+    <string name="no_field">Found \'{{%1$s}}\', but there is no field called \'%1$s\'.</string>
+    <string name="closed_tag_not_open">Found \'{{/%1$s}}\', but missing \'{{#%1$s}}\' or \'{{^%1$s}}\'.</string>
+    <string name="missing_closing_bracket">Missing \'}}\' in \'%s\'.</string>
+    <string name="open_tag_not_closed">Missing \'{{%s}}\'.</string>
+    <string name="wrong_tag_closed">Found \'{{/%1$s}}\', but expected \'{{/%2$s}}\'</string>
+    <string name="filter_error">Error in filter %s</string>
 </resources>

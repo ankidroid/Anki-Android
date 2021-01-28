@@ -20,8 +20,6 @@ package com.ichi2.anki;
 
 import android.content.ClipData;
 import android.content.Context;
-import android.content.Intent;
-import android.content.pm.PackageManager;
 import android.content.res.Resources;
 import android.net.Uri;
 import android.os.Build;
@@ -33,13 +31,11 @@ import android.webkit.WebChromeClient;
 import android.webkit.WebView;
 import android.widget.Button;
 
-import com.ichi2.anim.ActivityTransitionAnimation;
-import com.ichi2.compat.CompatHelper;
+import com.ichi2.utils.IntentUtil;
 import com.ichi2.utils.VersionUtils;
 
 import org.acra.util.Installation;
 
-import androidx.annotation.NonNull;
 import timber.log.Timber;
 
 import static com.ichi2.anim.ActivityTransitionAnimation.Direction.LEFT;
@@ -58,6 +54,9 @@ public class Info extends AnkiActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        if (showedActivityFailedScreen(savedInstanceState)) {
+            return;
+        }
         Timber.d("onCreate()");
         super.onCreate(savedInstanceState);
 
@@ -73,6 +72,7 @@ public class Info extends AnkiActivity {
         setContentView(R.layout.info);
         final View mainView = findViewById(android.R.id.content);
         enableToolbar(mainView);
+        findViewById(R.id.info_donate).setOnClickListener((v) -> openUrl(Uri.parse(getString(R.string.link_opencollective_donate))));
 
         setTitle(String.format("%s v%s", VersionUtils.getAppName(), VersionUtils.getPkgVersionName()));
         WebView webView = findViewById(R.id.info);
@@ -88,7 +88,7 @@ public class Info extends AnkiActivity {
         Button marketButton = findViewById(R.id.left_button);
         if (canOpenMarketUri()) {
             marketButton.setText(R.string.info_rate);
-            marketButton.setOnClickListener(arg0 -> openMarketUrl());
+            marketButton.setOnClickListener(arg0 -> IntentUtil.tryOpenIntent(this, AnkiDroidApp.getMarketIntent(this)));
         } else {
             marketButton.setVisibility(View.GONE);
         }
@@ -152,42 +152,10 @@ public class Info extends AnkiActivity {
 
     private boolean canOpenMarketUri() {
         try {
-            return canOpenMarketUri(getMarketIntent());
+            return IntentUtil.canOpenIntent(this, AnkiDroidApp.getMarketIntent(this));
         } catch (Exception e) {
             Timber.w(e);
             return false;
-        }
-    }
-
-    private boolean canOpenMarketUri(Intent intent) {
-        try {
-            final PackageManager packageManager = getPackageManager();
-            return intent.resolveActivity(packageManager) != null;
-        } catch (Exception e) {
-            return false;
-        }
-    }
-
-
-    @NonNull
-    private Intent getMarketIntent() {
-        final String intentUri = getString(
-                CompatHelper.isKindle() ? R.string.link_market_kindle : R.string.link_market);
-        return new Intent(Intent.ACTION_VIEW, Uri.parse(intentUri));
-    }
-
-    private void openMarketUrl() {
-        try {
-            final Intent intent = getMarketIntent();
-            if (canOpenMarketUri(intent)) {
-                startActivityWithoutAnimation(intent);
-            } else {
-                final String errorMsg = getString(R.string.feedback_no_suitable_app_found);
-                UIUtils.showThemedToast(Info.this, errorMsg, true);
-            }
-        } catch (Exception e) {
-            final String errorMsg = getString(R.string.feedback_no_suitable_app_found);
-            UIUtils.showThemedToast(Info.this, errorMsg, true);
         }
     }
 
@@ -221,10 +189,20 @@ public class Info extends AnkiActivity {
             Timber.e(e, "Sched name not found");
         }
 
+        Boolean dbV2Enabled = null;
+        try {
+            dbV2Enabled = getCol().isUsingRustBackend();
+        } catch (Throwable e) {
+            Timber.w(e, "Unable to detect Rust Backend");
+        }
+
+
         String debugInfo = "AnkiDroid Version = " + VersionUtils.getPkgVersionName() + "\n\n" +
                 "Android Version = " + Build.VERSION.RELEASE + "\n\n" +
                 "ACRA UUID = " + Installation.id(this) + "\n\n" +
-                "Scheduler = " + schedName + "\n";
+                "Scheduler = " + schedName + "\n\n" +
+                "Crash Reports Enabled = " + isSendingCrashReports() + "\n\n" +
+                "DatabaseV2 Enabled = " + dbV2Enabled + "\n";
 
         android.content.ClipboardManager clipboardManager = (android.content.ClipboardManager)getSystemService(Context.CLIPBOARD_SERVICE);
         if (clipboardManager != null) {
@@ -234,5 +212,10 @@ public class Info extends AnkiActivity {
             UIUtils.showThemedToast(this, getString(R.string.about_ankidroid_error_copy_debug_info), false);
         }
         return debugInfo;
+    }
+
+
+    private boolean isSendingCrashReports() {
+        return AnkiDroidApp.isAcraEnbled(this, false);
     }
 }

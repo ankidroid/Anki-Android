@@ -37,7 +37,7 @@
 ~ You should have received a copy of the GNU General Public License along with
 ~ this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools">
     <string name="check_db_title">Verilənlər bazasını yoxlayın.</string>
     <string name="check_db_warning">Bu uzun müddətə gələ bilər</string>
     <string name="check_db_acknowledge">Verilənlər bazası yoxlanılıb</string>
@@ -60,7 +60,7 @@
         <item><![CDATA[Qeyri-inkişaf edənlər də kömək edə bilər. Məsələn, AnkiDroid\'yi <a href=\"\"> tərcümə etmə kömək edə bilər, wikiyi yeniləyir, ekran görüntüləri və ya AnkiDroid haqqında blog verə bilərsiniz.]]></item>
         <item><![CDATA[AnkiDroid<a href=\"<a href=\"\">\">GNU-GPL v3 lisenziyası</ a>daxilində buraxılır və mənbə kodu<a href=\"\"> GitHub haqqındadır</ a> a>.]]></item>
     </string-array>
-    <string name="preview_title">Ön görünüş</string>
+    <string name="preview_title" comment="Title of the window allowing to preview card(s)">Ön görünüş</string>
     <string name="reposition_card_dialog_title">Reposition new card</string>
     <string name="reposition_card_dialog_message">Start position:</string>
     <string name="reposition_card_not_new_error">Only new cards can be repositioned</string>
@@ -75,7 +75,6 @@
         <item quantity="other">%d cards reset</item>
     </plurals>
     <!-- Reschedule Card Dialog -->
-    <string name="reschedule_card_dialog_title">Kartı yenidən planlaşdırırıq</string>
     <plurals name="reschedule_cards_dialog_title">
         <item quantity="one">Reschedule card</item>
         <item quantity="other">Reschedule cards</item>
@@ -96,8 +95,6 @@
     <string name="answering_error_message">Writing to the collection failed. The database could be corrupt or there may not to be enough empty space on disk.\n\nIf this happens more often, try checking the database, repairing the collection or restoring it from a backup. Touch “options” for that.\n\Or it could be an AnkiDroid bug as well; please report the error so that we can check this.</string>
     <string name="answering_error_report">Səhv bildir</string>
     <string name="repair_deck_dialog">Doğrudan verilənlər bazasını bərpa etməyə çalışırsınız?Keçirilməyə başlamazdan əvvəl,alt klasörlerde bir kopya yaradılacaq \"%s\"</string>
-    <string name="intent_add_saved_information">Saxlanılan məlumatlar</string>
-    <string name="intent_add_clear_all">Hamısını sil</string>
     <string name="intent_aedict_empty">Kateqoriya \"default\" boşdur</string>
     <string name="intent_aedict_category">AnkiDroid kartlarını əlavə etmək üçün bütün Notepad kateqoriyalarını silin və ya \"default\" adını əlavə edin</string>
     <string name="custom_study_new_total_new">New cards in deck: %d</string>
@@ -109,7 +106,6 @@
     <string name="custom_study_random">Gəmidən təsadüfi x kartları seçin:</string>
     <string name="custom_study_preview">Son x günlərdə əlavə edilmiş yeni kartların Ön görünüşü:</string>
     <string name="custom_study_rebuild_deck_corrupt">Could not rebuild custom study deck</string>
-    <string name="rebuild_custom_study_deck">Xüsusi iş yerinin bərpası ...</string>
     <string name="importing_collection">Yığım idxal ...</string>
     <string name="import_media_count">Media faylları idxalı %1$d%%&#8230;</string>
     <string name="import_progress">• İthalat qeydləri: %1$d%%\n• Kartları idxal etmək: %2$d%%\n • Post-processing: %3$d%%</string>
@@ -124,9 +120,10 @@
     <string name="dialog_ok">Oldu</string>
     <string name="dialog_no">No</string>
     <string name="dialog_continue">Davam et</string>
-    <string name="dialog_positive_create">Yaratmaq</string>
+    <string name="dialog_positive_create" comment="Create a new collection, probably erasing the previous one, may be necessary in case of error.">Yaratmaq</string>
     <string name="dialog_positive_delete">Delete</string>
-    <string name="dialog_positive_disable">Disable</string>
+    <!-- Currently unsued, should be useful in the future -->
+    <string name="dialog_positive_disable" tools:ignore="UnusedResources">Disable</string>
     <string name="dialog_positive_overwrite">Overwrite</string>
     <string name="dialog_positive_remove">Remove</string>
     <string name="dialog_positive_repair">Repair</string>
@@ -156,9 +153,10 @@
     <!-- Tags Dialog Options -->
     <string name="tags_dialog_option_all_cards">All cards</string>
     <string name="tags_dialog_option_new_cards">New</string>
-    <string name="tags_dialog_option_due_cards">Due</string>
+    <string name="tags_dialog_option_due_cards" comment="Name of cards that are already been reviewed in the past, and that should be reviewed again">Due</string>
     <!-- Empty cards -->
     <string name="emtpy_cards_finding">Finding empty cards&#8230;</string>
+    <string name="confirm_cancel">Do you want to cancel?</string>
     <string name="empty_cards_none">No empty cards</string>
     <string name="empty_cards_count">Cards to delete: %d</string>
     <string name="empty_cards_deleted">Cards deleted: %d</string>
@@ -175,7 +173,6 @@
     <!-- Database Integrity Check -->
     <string name="integrity_check_startup_title">AnkiDroid Upgraded</string>
     <string name="integrity_check_startup_content">AnkiDroid has been upgraded. This upgrade includes fixes for possible database problems, and we advise you to run check database now.</string>
-    <string name="integrity_check_positive">Check Database</string>
     <string name="integrity_check_continue_anyway">Continue Anyway</string>
     <string name="integrity_check_insufficient_space">Check Database uses a large amount of temporary storage.\n\nIt is strongly recommended that you have at least %s free space on your device before continuing.</string>
     <string name="integrity_check_insufficient_space_extra_content">\n\nYou currently have %s free.</string>
@@ -210,8 +207,27 @@
     <string name="boot_service_failed_to_schedule_notifications">Failed to schedule reminders</string>
     <string name="boot_service_too_many_notifications">Too many reminders scheduled. Some will not appear</string>
     <!-- Locale Selection Dialog -->
-    <string name="locale_selection_dialog_title">Keyboard Hint Selection</string>
+    <string name="locale_selection_dialog_title">Keyboard Language Selection</string>
     <string name="locale_selection_dialog_summary">Some multilingual keyboards, such as GBoard support changing language when editing text\n\nPlease request the “setImeHintLocales” feature from your keyboard manufacturer if your keyboard does not change language.</string>
+    <!-- Help Dialog -->
+    <string name="help_title_using_ankidroid">Using AnkiDroid</string>
+    <string name="help_item_ankidroid_manual">AnkiDroid Manual</string>
+    <string name="help_item_anki_manual">Anki Manual</string>
+    <string name="help_item_ankidroid_faq">AnkiDroid FAQ</string>
+    <string name="help_title_get_help">Get Help</string>
+    <string name="help_item_mailing_list">Mailing List</string>
+    <string name="help_item_reddit">Reddit</string>
+    <string name="help_item_report_bug">Report a Bug</string>
+    <string name="help_title_support_ankidroid">Support AnkiDroid</string>
+    <string name="help_item_support_opencollective_donate">Donate</string>
+    <string name="help_item_support_develop_ankidroid">Develop</string>
+    <string name="help_item_support_rate_ankidroid">Rate</string>
+    <string name="help_item_support_other_ankidroid">Other</string>
+    <string name="help_title_community">Community</string>
+    <string name="help_item_anki_forums">Anki Forums</string>
+    <string name="help_item_discord">Discord</string>
+    <string name="help_item_facebook">Facebook</string>
+    <string name="help_item_twitter">Twitter</string>
     <!--Sync-->
     <plurals name="sync_automatic_sync_needs_more_time">
         <item quantity="one">An automatic sync may be triggered in %d second</item>

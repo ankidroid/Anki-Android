@@ -26,6 +26,8 @@ import android.content.ContentValues;
 import android.database.Cursor;
 import android.net.Uri;
 import androidx.test.rule.GrantPermissionRule;
+import timber.log.Timber;
+
 import android.util.Log;
 
 import com.ichi2.anki.AbstractFlashcardViewer;
@@ -33,6 +35,8 @@ import com.ichi2.anki.AnkiDroidApp;
 import com.ichi2.anki.CollectionHelper;
 import com.ichi2.anki.FlashCardsContract;
 import com.ichi2.anki.exception.ConfirmModSchemaException;
+import com.ichi2.async.CollectionTask;
+import com.ichi2.async.TaskManager;
 import com.ichi2.libanki.Card;
 import com.ichi2.libanki.Collection;
 import com.ichi2.libanki.Consts;
@@ -154,7 +158,7 @@ public class ContentProviderTest extends InstrumentedTest {
         // Add a new basic model that we use for testing purposes (existing models could potentially be corrupted)
         Model model = StdModels.basicModel.add(col, BASIC_MODEL_NAME);
         mModelId = model.getLong("id");
-        ArrayList<String> fields = Models.fieldNames(model);
+        List<String> fields = model.getFieldsNames();
         // Use the names of the fields as test values for the notes which will be added
         mDummyFields = fields.toArray(new String[0]);
         // create test decks and add one note for every deck
@@ -445,6 +449,7 @@ public class ContentProviderTest extends InstrumentedTest {
 
     /**
      * Check that updating the flds column works as expected
+     * FIXME hanging sometimes. API30? API29?
      */
     @Test
     public void testUpdateNoteFields() {
@@ -790,7 +795,10 @@ public class ContentProviderTest extends InstrumentedTest {
         for(int i = 0; i < 10; i++) {//minimizing fails, when sched.reset() randomly chooses between multiple cards
             col.reset();
             nextCard = sched.getCard();
-            if(nextCard.note().getId() == noteID && nextCard.getOrd() == cardOrd)break;
+            TaskManager.waitToFinish();
+            if(nextCard != null && nextCard.note().getId() == noteID && nextCard.getOrd() == cardOrd)break;
+            TaskManager.waitToFinish();
+
         }
         assertNotNull("Check that there actually is a next scheduled card", nextCard);
         assertEquals("Check that received card and actual card have same note id", nextCard.note().getId(), noteID);
@@ -802,7 +810,7 @@ public class ContentProviderTest extends InstrumentedTest {
      * Test that query for the next card in the schedule returns a valid result WITH a deck selector
      */
     @Test
-    public void testQueryCardFromCertainDeck(){
+    public synchronized void testQueryCardFromCertainDeck(){
         long deckToTest = mTestDeckIds.get(0);
         String deckSelector = "deckID=?";
         String[] deckArguments = {Long.toString(deckToTest)};
@@ -826,7 +834,8 @@ public class ContentProviderTest extends InstrumentedTest {
             for(int i = 0; i < 10; i++) {//minimizing fails, when sched.reset() randomly chooses between multiple cards
                 col.reset();
                 nextCard = sched.getCard();
-                if(nextCard.note().getId() == noteID && nextCard.getOrd() == cardOrd)break;
+                if(nextCard != null && nextCard.note().getId() == noteID && nextCard.getOrd() == cardOrd)break;
+                try { Thread.sleep(500); } catch (Exception e) { Timber.e(e); } // Reset counts is executed in background.
             }
             assertNotNull("Check that there actually is a next scheduled card", nextCard);
             assertEquals("Check that received card and actual card have same note id", nextCard.note().getId(), noteID);

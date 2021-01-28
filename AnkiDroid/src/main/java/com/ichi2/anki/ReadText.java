@@ -19,18 +19,16 @@ package com.ichi2.anki;
 import android.content.Context;
 import android.content.res.Resources;
 import android.net.Uri;
+import android.os.Bundle;
 import android.os.Handler;
 import android.speech.tts.TextToSpeech;
 import android.speech.tts.UtteranceProgressListener;
 
-import android.view.View;
 import android.view.WindowManager;
 import android.widget.Toast;
 
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.google.android.material.snackbar.Snackbar;
-import com.ichi2.compat.Compat;
-import com.ichi2.compat.CompatHelper;
 import com.ichi2.libanki.Sound;
 
 import java.lang.ref.WeakReference;
@@ -51,9 +49,8 @@ public class ReadText {
     private static int mOrd;
     private static Sound.SoundSide mQuestionAnswer;
     public static final String NO_TTS = "0";
-    public static final ArrayList<String[]> sTextQueue = new ArrayList<>();
-    private static final Compat compat = CompatHelper.getCompat();
-    private static final Object mTtsParams = compat.initTtsParams();
+    private static final Bundle mTtsParams = new Bundle();
+
 
     public static Sound.SoundSide getmQuestionAnswer() {
         return mQuestionAnswer;
@@ -64,7 +61,7 @@ public class ReadText {
         if (result == TextToSpeech.LANG_MISSING_DATA || result == TextToSpeech.LANG_NOT_SUPPORTED) {
             Toast.makeText(mReviewer.get(), mReviewer.get().getString(R.string.no_tts_available_message)
                     + " (" + loc + ")", Toast.LENGTH_LONG).show();
-            Timber.e("Error loading locale " + loc);
+            Timber.e("Error loading locale %s", loc);
         } else {
             if (mTts.isSpeaking() && queueMode == TextToSpeech.QUEUE_FLUSH) {
                 Timber.d("tts engine appears to be busy... clearing queue");
@@ -72,7 +69,7 @@ public class ReadText {
                 //sTextQueue.add(new String[] { text, loc });
             }
             Timber.d("tts text '%s' to be played for locale (%s)", text, loc);
-            compat.speak(mTts, mTextToSpeak, queueMode, mTtsParams, "stringId");
+            mTts.speak(mTextToSpeak, queueMode, mTtsParams, "stringId");
         }
     }
 
@@ -106,10 +103,10 @@ public class ReadText {
             Timber.w("ReadText.textToSpeech() no TTS languages available");
             builder.content(res.getString(R.string.no_tts_available_message))
                     .iconAttr(R.attr.dialogErrorIcon)
-                    .positiveText(res.getString(R.string.dialog_ok));
+                    .positiveText(R.string.dialog_ok);
         } else {
-            ArrayList<CharSequence> dialogItems = new ArrayList<>();
-            final ArrayList<String> dialogIds = new ArrayList<>();
+            ArrayList<CharSequence> dialogItems = new ArrayList<>(availableTtsLocales.size());
+            final ArrayList<String> dialogIds = new ArrayList<>(availableTtsLocales.size());
             // Add option: "no tts"
             dialogItems.add(res.getString(R.string.tts_no_tts));
             dialogIds.add(NO_TTS);
@@ -286,10 +283,6 @@ public class ReadText {
                 mTts.setOnUtteranceProgressListener(new UtteranceProgressListener() {
                     @Override
                     public void onDone(String arg0) {
-                        if (ReadText.sTextQueue.size() > 0) {
-                            String[] text = ReadText.sTextQueue.remove(0);
-                            ReadText.speak(text[0], text[1], TextToSpeech.QUEUE_FLUSH);
-                        }
                         listener.onDone();
                     }
                     @Override
@@ -328,6 +321,7 @@ public class ReadText {
     public static void buildAvailableLanguages() {
         availableTtsLocales.clear();
         Locale[] systemLocales = Locale.getAvailableLocales();
+        availableTtsLocales.ensureCapacity(systemLocales.length);
         for (Locale loc : systemLocales) {
             try {
                 int retCode = mTts.isLanguageAvailable(loc);
@@ -337,7 +331,7 @@ public class ReadText {
                     Timber.v("ReadText.buildAvailableLanguages() :: %s  not available (error code %d)", loc.getDisplayName(), retCode);
                 }
             } catch (IllegalArgumentException e) {
-                Timber.e("Error checking if language " + loc.getDisplayName() + " available");
+                Timber.e("Error checking if language %s available", loc.getDisplayName());
             }
         }
     }
@@ -353,9 +347,6 @@ public class ReadText {
 
     public static void stopTts() {
         if (mTts != null) {
-            if (sTextQueue != null) {
-                sTextQueue.clear();
-            }
             mTts.stop();
         }
     }

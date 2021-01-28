@@ -20,7 +20,6 @@
         <item name="largeButtonBackgroundColorFocused">#587180</item>
         <item name="largeButtonBackgroundColorPressed">#475C66</item>
         <!-- Action bar styles -->
-        <item name="actionBarPopupBackgroundColor">@color/theme_plain_primary_light</item>
         <item name="actionBarPopupTextColor">@color/theme_plain_primary_text</item>
         <item name="actionModeBackground">@color/theme_plain_primary</item>
         <!-- Reviewer colors -->

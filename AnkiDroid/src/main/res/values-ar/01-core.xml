@@ -38,14 +38,14 @@
 ~ this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <resources>
+    <string name="yes">نعم</string>
     <!-- Navigation drawer items-->
     <string name="decks">شَدّة أوراق</string>
-    <string name="card_browser">متصفح البطاقات</string>
+    <string name="card_browser" comment="The usage of card browser inside the app (note the casing)">متصفح البطاقات</string>
     <string name="statistics">الإحصائيات</string>
     <string name="settings">الإعدادات</string>
     <string name="help">المساعدة</string>
-    <string name="send_feedback">إرسال الآراء والاقتراحات</string>
-    <string name="studyoptions_title">موجز الرزمة</string>
+    <string name="send_feedback">ارسل رأيك</string>
     <string name="studyoptions_due_today">المستحق اليوم:</string>
     <string name="studyoptions_new_total">مجموع البطاقات الجديدة:</string>
     <string name="studyoptions_total_cards">مجموع البطاقات:</string>
@@ -110,22 +110,14 @@
     <string name="menu_import">استيراد</string>
     <string name="undo">تراجع</string>
     <string name="undo_action_review">آخر مراجعة</string>
-    <string name="undo_action_bury_card">دفن البطاقة</string>
-    <string name="undo_action_bury_note">دفن الملحوظة</string>
-    <string name="undo_action_suspend_card">تعليق البطاقة</string>
-    <string name="undo_action_suspend_note">تعليق الملحوظة</string>
-    <string name="undo_action_delete">حذف الملحوظة</string>
-    <string name="undo_action_delete_multi">حذف الملحوظات</string>
     <string name="undo_action_change_deck_multi">تغيير الرزم</string>
-    <string name="undo_action_reschedule_card">إعادة الجدولة</string>
-    <string name="undo_action_reset_card">إعادة تعيين التقدم</string>
-    <string name="undo_action_reposition_card">تغيير الموضع</string>
     <string name="move_all_to_deck">نقل الكل إلى الرزمة</string>
     <string name="unbury">نكش</string>
     <string name="rename_deck">تغيير اسم الرزمة</string>
-    <string name="menu_add">إضافة</string>
+    <string name="create_shortcut">إنشاء اختصار</string>
+    <string name="menu_add" comment="A generic add button - Main Deck Picker and card templates. Please inform us if you need more specific strings">إضافة</string>
     <string name="menu_add_note">إضافة ملحوظة</string>
-    <string name="menu_my_account">حساب المزامنة</string>
+    <string name="menu_my_account" comment="Label of the window in which the user should enter their account. This text can\'t be found in AnkiDroid directly.">حساب المزامنة</string>
     <string name="menu_dismiss_note">إخفاء / حذف</string>
     <string name="menu_bury_card">دفن البطاقة</string>
     <string name="menu_bury_note">دفن الملحوظة</string>
@@ -149,7 +141,7 @@
     <string name="menu_unmark_note">إلغاء تعليم الملحوظة</string>
     <string name="menu_toggle_mic_tool_bar">تحقق من النطق</string>
     <string name="new_deck">إنشاء رزمة</string>
-    <string name="create">إنشاء</string>
+    <string name="create" comment="Button to create a filtered deck">إنشاء</string>
     <string name="new_dynamic_deck">إنشاء رزمة مفلترة</string>
     <string name="night_mode">وضع ليلي</string>
     <string name="directory_inaccessible">لا يمكن الوصول لمجلد أنكيدرويد</string>
@@ -182,6 +174,7 @@
     <string name="custom_study_deck_name">جلسة دراسة مخصصة</string>
     <string name="custom_study_deck_exists">أعد تسمية رزمة الدراسة المخصصة الموجودة أولًا</string>
     <string name="empty_deck">هذه الرزمة فارغة</string>
+    <string name="empty_deck_add_note">إضافة بِطاقة</string>
     <string name="invalid_deck_name">اسم رزمة غير صالح</string>
     <string name="studyoptions_empty">هذه الرزمة فارغة. اضغط زر + لإضافة محتوى جديد.</string>
     <string name="studyoptions_limit_reached">بلغت حد الدراسة اليومي</string>
@@ -207,7 +200,6 @@
     <string name="card_template_editor_front">القالب الأمامي</string>
     <string name="card_template_editor_back">القالب الخلفي</string>
     <string name="card_template_editor_styling">التنسيق</string>
-    <string name="card_template_editor_menu_delete">حذف</string>
     <string name="card_template_editor_menu_card_browser_appearance">مظهر متصفح البطاقات</string>
     <string name="card_template_editor_deck_override">الرزمة المهيمنة</string>
     <string name="card_template_editor_cant_delete">يلزم نوع بطاقة واحد على الأقل</string>
@@ -225,11 +217,21 @@
     <string name="template_for_current_card_deleted">تم حذف نوع البطاقة للبطاقة الحالية.</string>
     <!-- Card Browser Appearance -->
     <string name="card_template_browser_appearance_title">مظهر المتصفح</string>
+    <string name="current_and_default_deck">%1$s(%2$s)</string>
+    <!-- card Info -->
+    <string name="card_info_title">معلومات البطاقة</string>
     <!-- Permissions -->
     <string name="read_write_permission_label">القراءة والكتابة إلى قاعدة بيانات أنكيدرويد</string>
     <string name="read_write_permission_description">الوصول إلى الملحوظات الموجودة، والبطاقات، وأنواع الملحوظات، والرزم، بالإضافة إلى إنشاء أخرى</string>
     <!-- Context Menu -->
-    <string name="card_browser_label">متصفح البطاقات</string>
-    <string name="card_browser_context_menu">متصفح البطاقات</string>
+    <string name="card_browser_context_menu" comment="The value which appears in the system context menu. Note the casing difference">متصفح البطاقات</string>
     <string name="context_menu_anki_card_label">بطاقة أنكي</string>
+    <string name="has_a_problem" comment="First field is either front template or back template. Second field is the error message.">هناك مشكلة في %1$s:<br/>%2$s</string>
+    <string name="more_information">مزيد من المعلومات</string>
+    <string name="no_field">وجد \'{{%1$s}}\'، لكن ليس هناك أي حقل باسم \'%1$s\'.</string>
+    <string name="closed_tag_not_open">وجد \'{{/%1$s}}\'، لكن يفتقد  \'{{#%1$s}}\' أو \'{{^%1$s}}\'.</string>
+    <string name="missing_closing_bracket">يفتقد \'{{\' في \'%s\'.</string>
+    <string name="open_tag_not_closed">يفتقد \'{{%s}}\'.</string>
+    <string name="wrong_tag_closed">وجد  \'{{/%1$s}}\'، لكن توقع  \'{{/%2$s}}\'</string>
+    <string name="filter_error">خطأ في الفلتر %s</string>
 </resources>

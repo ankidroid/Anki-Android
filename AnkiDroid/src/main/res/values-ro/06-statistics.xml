@@ -44,8 +44,8 @@
     <string name="statistics_unlearned">Unseen</string>
     <string name="statistics_suspended">Suspended</string>
     <string name="statistics_buried">Buried</string>
-    <string name="statistics_relearn">Reinvata</string>
-    <string name="statistics_learn">Invata</string>
+    <string name="statistics_relearn" comment="Labbel of the axis in the graph indicating the number of reviews of cards while they are in relearning mode.">Reinvata</string>
+    <string name="statistics_learn" comment="Label of the number of review of card in learning done in some amount of time">Invata</string>
     <string name="statistics_cram">Toceste</string>
     <string name="stats_cards">Carduri</string>
     <string name="stats_cards_intervals">Cards with given interval</string>
@@ -67,7 +67,7 @@
     <string name="stats_time_of_day">Time of day</string>
     <string name="stats_day_of_week">Day of week</string>
     <string formatted="false" name="stats_percentage_correct">% correct</string>
-    <string name="stats_reviews">Reviews</string>
+    <string name="stats_reviews" comment="Label of a graph, indicating cumulative number of review of all cards">Reviews</string>
     <string name="stats_answer_type">Answer type</string>
     <string name="stats_today_again_count">Again count: &lt;b&gt;%d&lt;/b&gt;</string>
     <string name="stats_today_correct_count">(&lt;b&gt;%.1f%%&lt;/b&gt; correct)</string>
@@ -78,7 +78,6 @@
     <string name="stats_overview_forecast_average">Average: &lt;b&gt;%1$.1f&lt;/b&gt; reviews/day</string>
     <string name="stats_overview_forecast_due_tomorrow">Due tomorrow: &lt;b&gt;%1$d&lt;/b&gt;</string>
     <string name="stats_overview_days_studied">Days studied: &lt;b&gt;%1$d%%&lt;/b&gt; (%2$d of %3$d)</string>
-    <string name="stats_overview_total_reviews">Total: &lt;b&gt;%1$d&lt;/b&gt; reviews</string>
     <string name="stats_overview_reviews_per_day_studydays">Average for days studied: &lt;b&gt;%1$.1f&lt;/b&gt; reviews/day</string>
     <string name="stats_overview_reviews_per_day_all">If you studied every day: &lt;b&gt;%1$.1f&lt;/b&gt; reviews/day</string>
     <string name="stats_overview_total_time_in_period">Total: &lt;b&gt;%d&lt;/b&gt; minutes</string>
@@ -101,7 +100,6 @@
     <string name="stats_overview_card_types_lowest_ease">Lowest ease: &lt;b&gt;%.0f%%&lt;/b&gt;</string>
     <string name="stats_overview_card_types_average_ease">Average ease: &lt;b&gt;%.0f%%&lt;/b&gt;</string>
     <string name="stats_overview_card_types_highest_ease">Highest ease: &lt;b&gt;%.0f%%&lt;/b&gt;</string>
-    <string name="deck_summary_all_decks">Toate pachetele</string>
     <string name="stats_select_time_scale">Select timescale</string>
     <string-array name="due_x_axis_title">
         <item>Zile</item>
@@ -113,12 +111,11 @@
     <string name="stats_forecast">Prognoză</string>
     <string name="stats_review_count">Număr recapitulare</string>
     <string name="stats_review_time">Timp recapitulare</string>
-    <string name="stats_added">Added</string>
+    <string name="stats_added" comment="Label of the number of added card">Added</string>
     <string name="stats_review_intervals">Intervals</string>
     <string name="stats_breakdown">Hourly breakdown</string>
     <string name="stats_weekly_breakdown">Weekly breakdown</string>
     <string name="stats_answer_buttons">Answer buttons</string>
-    <string name="stats_cards_types">Card types</string>
     <string-array name="stats_day_time_strings">
         <item>4AM</item>
         <item>10AM</item>

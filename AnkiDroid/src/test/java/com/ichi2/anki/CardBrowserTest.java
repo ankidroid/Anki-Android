@@ -5,14 +5,16 @@ import android.app.Activity;
 import android.app.Application;
 import android.content.ComponentName;
 import android.content.Intent;
+import android.view.MenuItem;
 import android.widget.AdapterView;
 import android.widget.ListView;
 
 import com.ichi2.libanki.Card;
+import com.ichi2.libanki.Consts;
 import com.ichi2.libanki.Note;
 import com.ichi2.libanki.Deck;
 import com.ichi2.testutils.AnkiAssert;
-import com.ichi2.utils.JSONObject;
+import com.ichi2.testutils.IntentAssert;
 
 import org.junit.Assert;
 import org.junit.Ignore;
@@ -20,25 +22,29 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.robolectric.Robolectric;
 import org.robolectric.android.controller.ActivityController;
+import org.robolectric.annotation.Config;
 import org.robolectric.shadows.ShadowActivity;
 import org.robolectric.shadows.ShadowApplication;
 
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
-import java.util.Map;
+import java.util.Locale;
 import java.util.Objects;
 
 import javax.annotation.CheckReturnValue;
 
+import androidx.annotation.StringRes;
 import androidx.test.core.app.ApplicationProvider;
 import androidx.test.ext.junit.runners.AndroidJUnit4;
 import timber.log.Timber;
 
 import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.containsString;
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.greaterThan;
 import static org.hamcrest.Matchers.hasItem;
+import static org.hamcrest.Matchers.hasSize;
 import static org.hamcrest.Matchers.not;
 import static org.hamcrest.Matchers.notNullValue;
 import static org.hamcrest.core.Is.is;
@@ -76,7 +82,7 @@ public class CardBrowserTest extends RobolectricTest {
     public void selectAllIsNotVisibleOnceCalled() {
         CardBrowser browser = getBrowserWithMultipleNotes();
         selectMenuItem(browser, R.id.action_select_all);
-        advanceRobolectricLooper();
+        advanceRobolectricLooperWithSleep();
         assertThat(browser.isShowingSelectAll(), is(false));
     }
 
@@ -84,7 +90,7 @@ public class CardBrowserTest extends RobolectricTest {
     public void selectNoneIsVisibleOnceSelectAllCalled() {
         CardBrowser browser = getBrowserWithMultipleNotes();
         selectMenuItem(browser, R.id.action_select_all);
-        advanceRobolectricLooper();
+        advanceRobolectricLooperWithSleep();
         assertThat(browser.isShowingSelectNone(), is(true));
     }
 
@@ -142,7 +148,7 @@ public class CardBrowserTest extends RobolectricTest {
     @Ignore("Not yet implemented, feature has performance implications in large collections, instead we remove selections")
     public void selectionsAreCorrectWhenNonExistingCardIsRemoved() {
         CardBrowser browser = getBrowserWithNotes(7);
-        browser.checkedCardsAtPositions(new int[] {1, 3, 5, 6});
+        browser.checkCardsAtPositions(1, 3, 5, 6);
         deleteCardAtPosition(browser, 2); //delete non-selected
         deleteCardAtPosition(browser, 3); //delete selected, ensure it's not still selected
 
@@ -213,7 +219,9 @@ public class CardBrowserTest extends RobolectricTest {
         addDeck("ZZ");
         selectDefaultDeck();
         CardBrowser b = getBrowserWithNotes(5);
-        b.checkedCardsAtPositions(new int[] {0, 2});
+        b.checkCardsAtPositions(0, 2);
+
+        advanceRobolectricLooperWithSleep();
 
         List<Long> cardIds = b.getCheckedCardIds();
 
@@ -224,7 +232,7 @@ public class CardBrowserTest extends RobolectricTest {
         final int deckPosition = b.getChangeDeckPositionFromId(deckIdToChangeTo);
 
         //act
-        AnkiAssert.assertDoesNotThrow(() -> b.changeDeck(deckPosition));
+        AnkiAssert.assertDoesNotThrow(() -> b.moveSelectedCardsToDeck(deckPosition));
 
         //assert
         advanceRobolectricLooperWithSleep();
@@ -238,11 +246,11 @@ public class CardBrowserTest extends RobolectricTest {
         long dynId = addDynamicDeck("World");
         selectDefaultDeck();
         CardBrowser b = getBrowserWithNotes(5);
-        b.checkedCardsAtPositions(new int[] {0, 2});
+        b.checkCardsAtPositions(0, 2);
 
         List<Long> cardIds = b.getCheckedCardIds();
 
-        b.executeChangeCollectionTask(toLongArray(cardIds), dynId);
+        b.executeChangeCollectionTask(cardIds, dynId);
 
         for (Long cardId: cardIds) {
             assertThat("Deck should not be changed", getCol().getCard(cardId).getDid(), not(dynId));
@@ -303,6 +311,24 @@ public class CardBrowserTest extends RobolectricTest {
     }
 
     @Test
+    public void filterByFlagDisplaysProperly() {
+        Note cardWithRedFlag = addNoteUsingBasicModel("Card with red flag", "Reverse");
+        flagCardForNote(cardWithRedFlag, 1);
+
+        Note cardWithGreenFlag = addNoteUsingBasicModel("Card with green flag", "Reverse");
+        flagCardForNote(cardWithGreenFlag, 3);
+
+        Note anotherCardWithRedFlag = addNoteUsingBasicModel("Second card with red flag", "Reverse");
+        flagCardForNote(anotherCardWithRedFlag, 1);
+
+        CardBrowser b = getBrowserWithNoNewCards();
+        b.filterByFlag(1);
+        advanceRobolectricLooperWithSleep();
+
+        assertThat("Flagged cards should be returned", b.getCardCount(), is(2));
+    }
+
+    @Test
     public void previewWorksAfterSort() {
         // #7286
         long cid1 = addNoteUsingBasicModel("Hello", "World").cards().get(0).getId();
@@ -313,7 +339,7 @@ public class CardBrowserTest extends RobolectricTest {
         assertThat(b.getPropertiesForCardId(cid1).getPosition(), is(0));
         assertThat(b.getPropertiesForCardId(cid2).getPosition(), is(1));
 
-        b.checkedCardsAtPositions(new int[] { 0 });
+        b.checkCardsAtPositions(0);
         Intent previewIntent = b.getPreviewIntent();
         assertThat("before: index", previewIntent.getIntExtra("index", -100), is(0));
         assertThat("before: cards", previewIntent.getLongArrayExtra("cardList"), is(new long[] { cid1, cid2 }));
@@ -328,6 +354,180 @@ public class CardBrowserTest extends RobolectricTest {
         Intent intentAfterReverse = b.getPreviewIntent();
         assertThat("after: index", intentAfterReverse.getIntExtra("index", -100), is(0));
         assertThat("after: cards", intentAfterReverse.getLongArrayExtra("cardList"), is(new long[] { cid2, cid1 }));
+    }
+
+    /** 7420 */
+    @Test
+    public void addCardDeckIsNotSetIfAllDecksSelectedAfterLoad() {
+        addDeck("NotDefault");
+
+        CardBrowser b = getBrowserWithNoNewCards();
+
+        assertThat("All decks should not be selected", b.hasSelectedAllDecks(), is(false));
+
+        b.selectAllDecks();
+
+        assertThat("All decks should be selected", b.hasSelectedAllDecks(), is(true));
+
+        Intent addIntent = b.getAddNoteIntent();
+
+        IntentAssert.doesNotHaveExtra(addIntent, NoteEditor.EXTRA_DID);
+    }
+
+    /** 7420 */
+    @Test
+    public void addCardDeckISetIfDeckIsSelected() {
+        long targetDid = addDeck("NotDefault");
+
+        CardBrowser b = getBrowserWithNoNewCards();
+
+        assertThat("The target deck should not yet be selected", b.getLastDeckId(), not(is(targetDid)));
+
+        b.selectDeckId(targetDid);
+
+        assertThat("The target deck should be selected", b.getLastDeckId(), is(targetDid));
+
+        Intent addIntent = b.getAddNoteIntent();
+
+        IntentAssert.hasExtra(addIntent, NoteEditor.EXTRA_DID, targetDid);
+    }
+
+    /** 7420 */
+    @Test
+    public void addCardDeckISetIfDeckIsSelectedOnOpen() {
+        long initialDid = addDeck("NotDefault");
+
+        getCol().getDecks().select(initialDid);
+
+        CardBrowser b = getBrowserWithNoNewCards();
+
+        assertThat("The initial deck should be selected", b.getLastDeckId(), is(initialDid));
+
+        Intent addIntent = b.getAddNoteIntent();
+
+        IntentAssert.hasExtra(addIntent, NoteEditor.EXTRA_DID, initialDid);
+    }
+
+
+    @Test
+    public void repositionDataTest() {
+        CardBrowser b = getBrowserWithNotes(1);
+
+        b.checkCardsAtPositions(0);
+
+        CardBrowser.CardCache card = getCheckedCard(b);
+
+        assertThat("Initial position of checked card", card.getColumnHeaderText(CardBrowser.Column.DUE), is("1"));
+
+        b.repositionCardsNoValidation(Collections.singletonList(card.getId()), 2);
+
+        advanceRobolectricLooperWithSleep();
+
+        assertThat("Position of checked card after reposition", card.getColumnHeaderText(CardBrowser.Column.DUE), is("2"));
+    }
+
+    @Test
+    @Config(qualifiers = "en")
+    public void resetDataTest() {
+        Card c = addNoteUsingBasicModel("Hello", "World").firstCard();
+        c.setDue(5);
+        c.setQueue(Consts.QUEUE_TYPE_REV);
+        c.setType(Consts.CARD_TYPE_REV);
+        c.flush();
+
+        CardBrowser b = getBrowserWithNoNewCards();
+
+        b.checkCardsAtPositions(0);
+
+        CardBrowser.CardCache card = getCheckedCard(b);
+
+        assertThat("Initial due of checked card", card.getColumnHeaderText(CardBrowser.Column.DUE), is("8/12/20"));
+
+        b.resetProgressNoConfirm(Collections.singletonList(card.getId()));
+
+        advanceRobolectricLooperWithSleep();
+
+        assertThat("Position of checked card after reset", card.getColumnHeaderText(CardBrowser.Column.DUE), is("1"));
+    }
+
+    @Test
+    @Config(qualifiers = "en")
+    public void rescheduleDataTest() {
+        CardBrowser b = getBrowserWithNotes(1);
+
+        b.checkCardsAtPositions(0);
+
+        CardBrowser.CardCache card = getCheckedCard(b);
+
+        assertThat("Initial position of checked card", card.getColumnHeaderText(CardBrowser.Column.DUE), is("1"));
+
+        b.rescheduleWithoutValidation(Collections.singletonList(card.getId()), 5);
+
+        advanceRobolectricLooperWithSleep();
+
+        assertThat("Due of checked card after reschedule", card.getColumnHeaderText(CardBrowser.Column.DUE), is("8/12/20"));
+    }
+
+    @Test
+    @Ignore("Doesn't work - but should")
+    public void dataUpdatesAfterUndoReposition() {
+        CardBrowser b = getBrowserWithNotes(1);
+
+        b.checkCardsAtPositions(0);
+
+        CardBrowser.CardCache card = getCheckedCard(b);
+
+        assertThat("Initial position of checked card", card.getColumnHeaderText(CardBrowser.Column.DUE), is("1"));
+
+        b.repositionCardsNoValidation(Collections.singletonList(card.getId()), 2);
+
+        advanceRobolectricLooperWithSleep();
+
+        assertThat("Position of checked card after reposition", card.getColumnHeaderText(CardBrowser.Column.DUE), is("2"));
+
+        b.onUndo();
+
+        advanceRobolectricLooperWithSleep();
+        advanceRobolectricLooperWithSleep();
+
+        assertThat("Position of checked card after undo should be reset", card.getColumnHeaderText(CardBrowser.Column.DUE), is("1"));
+    }
+
+    @Test
+    @Ignore("FLAKY: Robolectric getOptionsMenu does not require supportInvalidateOptionsMenu - so would not fail")
+    public void rescheduleUndoTest() {
+        CardBrowser b = getBrowserWithNotes(1);
+
+        assertUndoDoesNotContain(b, R.string.deck_conf_cram_reschedule);
+
+        b.checkCardsAtPositions(0);
+
+        b.rescheduleWithoutValidation(Collections.singletonList(getCheckedCard(b).getId()), 2);
+
+        advanceRobolectricLooperWithSleep();
+
+        assertUndoContains(b, R.string.deck_conf_cram_reschedule);
+    }
+
+    protected void assertUndoDoesNotContain(CardBrowser browser, @StringRes int resId) {
+        ShadowActivity shadowActivity = shadowOf(browser);
+        MenuItem item = shadowActivity.getOptionsMenu().findItem(R.id.action_undo);
+        String expected = browser.getString(resId);
+        assertThat(item.getTitle().toString(), not(containsString(expected.toLowerCase(Locale.getDefault()))));
+    }
+
+    protected void assertUndoContains(CardBrowser browser, @StringRes int resId) {
+        ShadowActivity shadowActivity = shadowOf(browser);
+        MenuItem item = shadowActivity.getOptionsMenu().findItem(R.id.action_undo);
+        String expected = browser.getString(resId);
+        assertThat(item.getTitle().toString(), containsString(expected.toLowerCase(Locale.getDefault())));
+    }
+
+
+    private CardBrowser.CardCache getCheckedCard(CardBrowser b) {
+        List<Long> ids = b.getCheckedCardIds();
+        assertThat("only one card expected to be checked", ids, hasSize(1));
+        return b.getPropertiesForCardId(ids.get(0));
     }
 
 

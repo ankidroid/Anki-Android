@@ -43,26 +43,19 @@
         <item quantity="one">%d ᱠᱟᱰ ᱫᱮᱠᱷᱟᱣᱼᱮᱱᱟ</item>
         <item quantity="other">%d ᱠᱟᱰ ᱫᱮᱠᱷᱟᱣᱼᱮᱱᱟ</item>
     </plurals>
-    <string name="card_browser_all_decks">ᱡᱷᱚᱛᱚ ᱰᱮᱠ ᱚᱠ</string>
+    <string name="card_browser_all_decks">ᱡᱷᱚᱛᱚ ᱰᱮᱠ ᱠᱚ</string>
     <string name="card_browser_delete_card">ᱠᱷᱟᱴᱚ ᱵᱤᱪᱟᱹᱨᱥ ᱜᱮᱫ ᱜᱤᱰᱤ ᱢᱮ</string>
     <string name="card_browser_suspend_card">ᱵᱚᱹᱫ ᱠᱩᱜ ᱠᱟᱰ ᱠᱚ</string>
-    <string name="card_browser_toggle_suspend_card">(ᱵᱟᱝ)ᱵᱚᱹᱫ ᱠᱩᱜ ᱠᱟᱰ ᱠᱚ</string>
     <string name="card_browser_change_deck">ᱰᱮᱠ ᱠᱚ ᱵᱚᱫᱚᱞ ᱢᱮ</string>
     <string name="card_browser_unsuspend_card">ᱵᱚᱹᱫ ᱠᱩᱜ ᱠᱟᱰ ᱠᱚ</string>
     <string name="card_browser_mark_card">ᱠᱷᱟᱴᱚ ᱵᱤᱪᱟᱹᱨ ᱢᱟᱨᱠ ᱢᱮ</string>
-    <string name="card_browser_flag">ᱯᱚᱛᱠᱟ</string>
-    <string name="card_browser_toggle_mark_card">(ᱵᱟᱝ)ᱢᱟᱨᱠ ᱠᱟᱱ ᱠᱷᱟᱴᱚ ᱵᱤᱪᱟᱹᱨᱥ</string>
     <string name="card_browser_unmark_card">ᱠᱷᱟᱴᱚ ᱵᱤᱪᱟᱹᱨ ᱚ-ᱢᱟᱨᱠᱚᱭ ᱢᱮ</string>
     <string name="delete_card_title">ᱠᱷᱟᱴᱚ ᱵᱤᱪᱟᱹᱨ ᱜᱮᱫ ᱜᱤᱰᱤᱼᱟᱢ?</string>
-    <string name="delete_cards_title">ᱠᱷᱟᱴᱚ ᱵᱤᱪᱟᱹᱨᱥ ᱜᱮᱫ ᱜᱤᱰᱤᱼᱟᱢ?</string>
-    <string name="delete_card_message">ᱠᱷᱟᱴᱚ ᱵᱤᱪᱟᱹᱨᱥ ᱨᱮᱭᱟᱜ ᱡᱷᱚᱛᱚ ᱠᱟᱰ ᱜᱮᱫ ᱜᱤᱲᱤᱼᱟᱢ?\nᱥᱮᱸᱫᱽᱨᱟ ᱡᱟᱭᱜᱟ: %s</string>
-    <string name="delete_card_mult_message">ᱪᱚᱭᱚᱱ ᱠᱟᱱᱟ ᱠᱟᱰ ᱜᱮᱫ ᱜᱤᱲᱤᱼᱟᱢ ᱥᱮ?\n(ᱪᱚᱭᱚᱱ ᱠᱟᱱ ᱠᱟᱰ ᱦᱚᱸ ᱵᱟᱝᱟ)</string>
     <string name="changed_deck_message">%s ᱛᱮ ᱩᱪᱟᱲᱼᱱᱟ</string>
-    <string name="card_browser_suspended_cards">(ᱵᱟᱝ)ᱵᱟᱹᱫ ᱠᱚᱱ ᱠᱟᱰ ᱠᱚ</string>
     <string name="card_browser_show_marked">ᱪᱷᱟᱱᱤᱭᱟᱜ ᱢᱮᱨᱠᱼᱠᱟᱱᱟ</string>
     <string name="card_browser_show_suspended">ᱪᱷᱟᱱᱤᱭᱟᱜ ᱵᱚᱸᱫ ᱜᱤᱰᱤ ᱠᱟᱱᱟ</string>
     <string name="card_browser_search_by_tag">ᱴᱮᱜ ᱛᱮ ᱪᱷᱟᱱᱠᱟᱱᱟ</string>
-    <string name="card_browser_tags_shown">ᱴᱮᱜᱥ: %1$s</string>
+    <string name="card_browser_search_by_flag">ᱯᱚᱛᱠᱟ ᱛᱮ ᱯᱷᱤᱞᱴᱚᱨ ᱢᱮ</string>
     <string name="card_browser_list_my_searches">ᱤᱧᱟᱜ ᱥᱮᱸᱫᱽᱨᱟ</string>
     <string name="card_browser_list_my_searches_save">ᱥᱮᱸᱫᱽᱨᱟ ᱥᱟᱧᱪᱟᱣ</string>
     <string name="card_browser_list_my_searches_title">ᱥᱟᱧᱪᱟᱣᱠᱟᱱ ᱠᱟᱱ ᱠᱟᱰ ᱪᱚᱭᱚᱱ</string>
@@ -73,11 +66,8 @@
     <string name="card_browser_change_display_order">ᱧᱮᱞᱚᱜ ᱵᱚᱫᱚᱞ ᱛᱷᱟᱨ</string>
     <string name="card_browser_change_display_order_title">ᱧᱮᱞᱚᱜ ᱵᱚᱫᱚᱞ ᱛᱷᱟᱨ</string>
     <string name="card_browser_change_display_order_reverse">ᱩᱞᱴᱟ ᱞᱟᱹᱜᱤᱫ ᱒ ᱡᱟᱭᱜᱟ ᱪᱚᱭᱚᱱ ᱢᱮ</string>
-    <string name="card_details_question">ᱠᱩᱠᱞᱤ</string>
-    <string name="card_details_answer">ᱛᱮᱞᱟ</string>
-    <string name="card_details_due">ᱮᱢᱚᱜ ᱥᱚᱢᱚᱭ</string>
+    <string name="card_details_due" comment="Date at which a card will be due to review again.">ᱮᱢᱚᱜ ᱥᱚᱢᱚᱭ</string>
     <string name="card_details_tags">ᱴᱮᱜᱥ</string>
-    <string name="card_browser_filtering_cards">ᱠᱟᱰ ᱪᱷᱟᱹᱱᱤ&#8230; \nᱵᱟᱫᱽ ᱞᱟᱹᱜᱤᱫ ᱯᱟᱹᱪᱞᱟ ᱵᱚᱴᱚᱱ ᱚᱛᱟᱭ ᱢᱮ</string>
     <string-array name="card_browser_order_labels">
         <item>ᱢᱚᱦᱰᱟ ᱵᱟᱹᱱᱩᱜᱼᱟ (ᱞᱚᱜᱚᱱ)</item>
         <item>ᱡᱟᱭᱜᱟ ᱢᱚᱦᱰᱟ ᱠᱟᱛᱮ</item>
@@ -92,17 +82,38 @@
     </string-array>
     <string name="card_browser_select_all">ᱡᱷᱚᱛᱚ ᱪᱚᱭᱚᱱ ᱢᱮ</string>
     <string name="card_browser_select_none">ᱟᱞᱚ ᱪᱚᱭᱚᱱ ᱟ</string>
-    <string name="card_browser_edit_note">ᱠᱷᱟᱴᱚ ᱵᱤᱪᱟᱹᱨ ᱥᱟᱯᱰᱟᱣ</string>
-    <string name="card_browser_interval_new_card">(ᱱᱟᱶᱟ)</string>
-    <string name="card_browser_ease_new_card">(ᱱᱟᱶᱟ)</string>
+    <string name="card_browser_interval_new_card" comment="Message indicating that a card is currently new, and so has no interval/ease.">(ᱱᱟᱶᱟ)</string>
     <string name="card_browser_due_filtered_card">(ᱪᱷᱟᱹᱱᱤᱭᱟᱜ)</string>
     <string name="card_browser_interval_learning_card">(ᱪᱮᱫᱚᱜ)</string>
-    <string name="card_browser_note_editor_error">ᱠᱷᱟᱴᱚ ᱵᱤᱪᱟᱹᱨ ᱮᱰᱤᱴᱚᱨ ᱚᱰᱚᱠ ᱡᱚᱠᱷᱟᱜ ᱵᱷᱩᱞ</string>
     <string name="card_browser_no_cards_in_deck">ᱰᱮᱠ ᱨᱮ ᱪᱚᱫ ᱠᱟᱰ ᱠᱚ ᱵᱟᱹᱱᱩᱜᱼᱟ ‘%s’</string>
-    <string name="card_browser_search_all_decks">ᱠᱷᱚᱛᱚ ᱰᱮᱠ ᱚᱠ ᱥᱮᱸᱫᱽᱨᱟᱭ ᱢᱮ</string>
+    <string name="card_browser_search_all_decks">ᱠᱷᱚᱛᱚ ᱰᱮᱠ ᱠᱚ ᱥᱮᱸᱫᱽᱨᱟᱭ ᱢᱮ</string>
     <string name="card_browser_unknown_deck_name">ᱵᱟᱝ ᱵᱟᱰᱟᱭᱟᱜ</string>
     <plurals name="card_browser_cards_deleted">
-        <item quantity="one">%d card deleted</item>
-        <item quantity="other">%d cards deleted</item>
+        <item quantity="one">%d ᱠᱟᱰ ᱜᱮᱫ ᱜᱤᱰᱤ ᱮᱱᱟ</item>
+        <item quantity="other">%d ᱠᱟᱰ ᱠᱚ ᱜᱮᱫ ᱜᱤᱰᱤ ᱮᱱᱟ</item>
     </plurals>
+    <!-- Card Info subscreen -->
+    <string name="card_info_added" comment="Label of the information showing at which date a card was added.">ᱥᱮᱞᱮᱫ ᱮᱱᱟ</string>
+    <string name="card_info_first_review">ᱢᱟᱲᱟᱝ ᱨᱤᱵᱷᱭᱩ</string>
+    <string name="card_info_latest_review">ᱞᱮᱴᱮᱥᱼᱴ ᱨᱤᱵᱷᱭᱩ</string>
+    <string name="card_info_interval">ᱚᱸᱛᱨᱟᱞ</string>
+    <string name="card_info_ease">ᱥᱚᱦᱚᱡ</string>
+    <string name="card_info_reviews" comment="Number of times a card was reviewed">ᱫᱩᱦᱲᱟ ᱧᱮᱞ ᱠᱚ</string>
+    <string name="card_info_lapses" comment="Label indicating the number of lapses of a card.">ᱞᱮᱯᱥ</string>
+    <string name="card_info_average_time">ᱮᱣᱨᱮᱡ ᱚᱠᱛᱚ</string>
+    <string name="card_info_total_time">ᱠᱩᱠ ᱚᱠᱛᱚ</string>
+    <string name="card_info_card_type">ᱠᱟᱰ ᱯᱛᱚᱠᱟᱨ</string>
+    <string name="card_info_note_type">ᱠᱷᱟᱴᱚ ᱚᱞ‌‌ᱯᱨᱟᱠᱟᱨ</string>
+    <string name="card_info_deck_name">ᱰᱮᱠ ᱧᱩᱛᱩᱢ</string>
+    <string name="card_info_card_id">ᱠᱟᱰ ld</string>
+    <string name="card_info_note_id">ᱱᱚᱴ Id</string>
+    <string name="card_info_revlog_time">ᱚᱠᱛᱚ</string>
+    <string name="card_info_revlog_date">ᱢᱟᱹᱦᱤᱛ</string>
+    <string name="card_info_revlog_rating">ᱫᱚᱨ</string>
+    <string name="card_info_revlog_type">ᱯᱨᱚᱠᱟᱨ</string>
+    <string name="card_info_revlog_learn" comment="Label indicating that a review in the log of a card occured while the card was in learning mode">ᱪᱮᱫᱚᱜᱽ</string>
+    <string name="card_info_revlog_review">ᱨᱤᱵᱷᱭᱩ</string>
+    <string name="card_info_revlog_relearn" comment="Label of a log entry of a card, indicating that a review was done with a note in relearning mode">ᱫᱩᱦᱲᱟᱹ ᱪᱮᱫᱽ</string>
+    <string name="card_info_revlog_filtered">ᱯᱷᱤᱞᱴᱚᱨ ᱮᱱᱟ</string>
+    <string name="card_info_ease_not_applicable">N/A</string>
 </resources>

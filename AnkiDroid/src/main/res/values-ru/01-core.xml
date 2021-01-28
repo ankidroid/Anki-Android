@@ -38,14 +38,14 @@
 ~ this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <resources>
+    <string name="yes">Да</string>
     <!-- Navigation drawer items-->
     <string name="decks">Колоды</string>
-    <string name="card_browser">Список карточек</string>
+    <string name="card_browser" comment="The usage of card browser inside the app (note the casing)">Список карточек</string>
     <string name="statistics">Статистика</string>
     <string name="settings">Настройки</string>
     <string name="help">Помощь</string>
     <string name="send_feedback">Отправить отзыв</string>
-    <string name="studyoptions_title">Обзор колоды</string>
     <string name="studyoptions_due_today">На сегодня:</string>
     <string name="studyoptions_new_total">Всего новых карточек:</string>
     <string name="studyoptions_total_cards">Всего карточек:</string>
@@ -100,22 +100,14 @@
     <string name="menu_import">Импортировать</string>
     <string name="undo">Отменить</string>
     <string name="undo_action_review">последнее повторение</string>
-    <string name="undo_action_bury_card">отложить карточку</string>
-    <string name="undo_action_bury_note">отложить запись</string>
-    <string name="undo_action_suspend_card">исключить карточку</string>
-    <string name="undo_action_suspend_note">исключить запись</string>
-    <string name="undo_action_delete">удалить запись</string>
-    <string name="undo_action_delete_multi">удалить записи</string>
     <string name="undo_action_change_deck_multi">сменить колоды</string>
-    <string name="undo_action_reschedule_card">перепланировать</string>
-    <string name="undo_action_reset_card">сбросить прогресс</string>
-    <string name="undo_action_reposition_card">переместить</string>
     <string name="move_all_to_deck">Переместить всё в колоду</string>
     <string name="unbury">Вернуть</string>
     <string name="rename_deck">Переименовать колоду</string>
-    <string name="menu_add">Добавить</string>
+    <string name="create_shortcut">Создать ярлык</string>
+    <string name="menu_add" comment="A generic add button - Main Deck Picker and card templates. Please inform us if you need more specific strings">Добавить</string>
     <string name="menu_add_note">Добавить запись</string>
-    <string name="menu_my_account">Учётная запись синхронизации</string>
+    <string name="menu_my_account" comment="Label of the window in which the user should enter their account. This text can\'t be found in AnkiDroid directly.">Учётная запись синхронизации</string>
     <string name="menu_dismiss_note">Спрятать или удалить</string>
     <string name="menu_bury_card">Отложить карточку</string>
     <string name="menu_bury_note">Отложить запись</string>
@@ -139,7 +131,7 @@
     <string name="menu_unmark_note">Снять отметку</string>
     <string name="menu_toggle_mic_tool_bar">Проверить произношение</string>
     <string name="new_deck">Создать колоду</string>
-    <string name="create">Создать</string>
+    <string name="create" comment="Button to create a filtered deck">Создать</string>
     <string name="new_dynamic_deck">Создать фильтрованную колоду</string>
     <string name="night_mode">Ночной режим</string>
     <string name="directory_inaccessible">Папка AnkiDroid недоступна</string>
@@ -172,6 +164,7 @@
     <string name="custom_study_deck_name">Дополнительная учебная сессия</string>
     <string name="custom_study_deck_exists">Сначала переименуйте существующую дополнительную колоду</string>
     <string name="empty_deck">Эта колода пуста</string>
+    <string name="empty_deck_add_note">Add card</string>
     <string name="invalid_deck_name">Недопустимое название колоды</string>
     <string name="studyoptions_empty">Эта колода пуста. Нажмите кнопку +, чтобы добавить что-нибудь.</string>
     <string name="studyoptions_limit_reached">На сегодня всё</string>
@@ -197,7 +190,6 @@
     <string name="card_template_editor_front">Шаблон лица</string>
     <string name="card_template_editor_back">Шаблон оборота</string>
     <string name="card_template_editor_styling">Стилизация</string>
-    <string name="card_template_editor_menu_delete">Удалить</string>
     <string name="card_template_editor_menu_card_browser_appearance">Внешний вид списка карточек</string>
     <string name="card_template_editor_deck_override">Переопределение колоды</string>
     <string name="card_template_editor_cant_delete">Нужен хотя бы один тип карточек</string>
@@ -213,11 +205,21 @@
     <string name="template_for_current_card_deleted">Тип карточек текущей карточки был удалён.</string>
     <!-- Card Browser Appearance -->
     <string name="card_template_browser_appearance_title">Вид списка</string>
+    <string name="current_and_default_deck">%1$s (%2$s)</string>
+    <!-- card Info -->
+    <string name="card_info_title">Информация о карточке</string>
     <!-- Permissions -->
     <string name="read_write_permission_label">Чтение и запись в базу данных AnkiDroid</string>
     <string name="read_write_permission_description">доступ к колодам, карточкам, записям, их типам, а также создание новых</string>
     <!-- Context Menu -->
-    <string name="card_browser_label">Список карточек</string>
-    <string name="card_browser_context_menu">Список карточек</string>
+    <string name="card_browser_context_menu" comment="The value which appears in the system context menu. Note the casing difference">Список карточек</string>
     <string name="context_menu_anki_card_label">Карточка Anki</string>
+    <string name="has_a_problem" comment="First field is either front template or back template. Second field is the error message.">%1$s has a problem:<br/>%2$s</string>
+    <string name="more_information">More information</string>
+    <string name="no_field">Found \'{{%1$s}}\', but there is no field called \'%1$s\'.</string>
+    <string name="closed_tag_not_open">Found \'{{/%1$s}}\', but missing \'{{#%1$s}}\' or \'{{^%1$s}}\'.</string>
+    <string name="missing_closing_bracket">Missing \'}}\' in \'%s\'.</string>
+    <string name="open_tag_not_closed">Missing \'{{%s}}\'.</string>
+    <string name="wrong_tag_closed">Found \'{{/%1$s}}\', but expected \'{{/%2$s}}\'</string>
+    <string name="filter_error">Error in filter %s</string>
 </resources>

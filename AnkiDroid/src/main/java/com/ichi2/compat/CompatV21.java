@@ -16,73 +16,104 @@
 
 package com.ichi2.compat;
 
-import android.annotation.SuppressLint;
-import android.annotation.TargetApi;
 import android.content.Context;
-import android.content.res.TypedArray;
-import android.hardware.camera2.CameraAccessException;
-import android.hardware.camera2.CameraManager;
-import android.os.Bundle;
-import android.speech.tts.TextToSpeech;
-import android.view.View;
-import android.view.Window;
-import android.webkit.CookieManager;
+import android.os.Vibrator;
+import android.widget.TimePicker;
 
-import com.ichi2.anki.AnkiDroidApp;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
 
+import androidx.annotation.NonNull;
 import timber.log.Timber;
 
-/** Implementation of {@link Compat} for SDK level 21 */
-@TargetApi(21)
-public class CompatV21 extends CompatV19 implements Compat {
+/** Baseline implementation of {@link Compat} with implementations for older APIs */
+public class CompatV21 implements Compat {
 
+    // Until API26, ignore notification channels
     @Override
-    public void setSelectableBackground(View view) {
-        // Ripple effect
-        int[] attrs = new int[] {android.R.attr.selectableItemBackground};
-        TypedArray ta = view.getContext().obtainStyledAttributes(attrs);
-        view.setBackgroundResource(ta.getResourceId(0, 0));
-        ta.recycle();
+    public void setupNotificationChannel(Context context, String id, String name) { /* pre-API26, do nothing */ }
+
+    // Until API 23 the methods have "current" in the name
+    @Override
+    @SuppressWarnings("deprecation")
+    public void setTime(TimePicker picker, int hour, int minute) {
+        picker.setCurrentHour(hour);
+        picker.setCurrentMinute(minute);
     }
 
-    // On API level 21 and higher, CookieManager will be set automatically, so there is nothing to do here.
+    // Until API 26 just specify time, after that specify effect also
     @Override
-    public void prepareWebViewCookies(Context context) {}
-
-    // A data of cookies may be lost when an application exists just after it was written.
-    // On API level 21 and higher, this problem can be solved by using CookieManager.flush().
-    @Override
-    public void flushWebViewCookies() {
-        CookieManager.getInstance().flush();
-    }
-
-    @Override
-    public void setStatusBarColor(Window window, int color) {
-        window.setStatusBarColor(color);
-    }
-
-    @Override
-    @SuppressLint("NewApi")
-    public int getCameraCount() {
-        CameraManager cameraManager = (CameraManager)AnkiDroidApp.getInstance().getApplicationContext()
-                .getSystemService(Context.CAMERA_SERVICE);
-        try {
-            if (cameraManager != null) {
-                return cameraManager.getCameraIdList().length;
-            }
-        } catch (CameraAccessException e) {
-            Timber.e(e, "Unable to enumerate cameras");
+    @SuppressWarnings("deprecation")
+    public void vibrate(Context context, long durationMillis) {
+        Vibrator vibratorManager = (Vibrator)context.getSystemService(Context.VIBRATOR_SERVICE);
+        if (vibratorManager != null) {
+            vibratorManager.vibrate(durationMillis);
         }
-        return 0;
     }
 
-    @Override
-    public Object initTtsParams() {
-        return new Bundle();
+    // Until API 26 do the copy using streams
+    public void copyFile(@NonNull String source, @NonNull String target) throws IOException {
+        try (InputStream fileInputStream = new FileInputStream(new File(source))) {
+            copyFile(fileInputStream, target);
+        } catch (IOException e) {
+            Timber.e(e, "copyFile() error copying source %s", source);
+            throw e;
+        }
     }
 
-    @Override
-    public int speak(TextToSpeech tts, String text, int queueMode, Object ttsParams, String utteranceId) {
-        return tts.speak(text, queueMode, (Bundle) ttsParams, utteranceId);
+    // Until API 26 do the copy using streams
+    public long copyFile(@NonNull String source, @NonNull OutputStream target) throws IOException {
+        long count;
+
+        try (InputStream fileInputStream = new FileInputStream(new File(source))) {
+            count = copyFile(fileInputStream, target);
+        } catch (IOException e) {
+            Timber.e(e, "copyFile() error copying source %s", source);
+            throw e;
+        }
+
+        return count;
     }
+
+    // Until API 26 do the copy using streams
+    public long copyFile(@NonNull InputStream source, @NonNull String target) throws IOException {
+        long bytesCopied;
+
+        try (OutputStream targetStream = new FileOutputStream(target)) {
+            bytesCopied = copyFile(source, targetStream);
+        } catch (IOException ioe) {
+            Timber.e(ioe, "Error while copying to file %s", target);
+            throw ioe;
+        }
+        return bytesCopied;
+    }
+
+    // Internal implementation under the API26 copyFile APIs
+    private long copyFile(@NonNull InputStream source, @NonNull OutputStream target) throws IOException {
+        // balance memory and performance, it appears 32k is the best trade-off
+        // https://stackoverflow.com/questions/10143731/android-optimal-buffer-size
+        final byte[] buffer = new byte[1024 * 32];
+        long count = 0;
+        int n;
+        while ((n = source.read(buffer)) != -1) {
+            target.write(buffer, 0, n);
+            count += n;
+        }
+        target.flush();
+        return count;
+    }
+
+    // Until API 23 the methods have "current" in the name
+    @Override
+    @SuppressWarnings("deprecation")
+    public int getHour(TimePicker picker) { return picker.getCurrentHour(); }
+
+    // Until API 23 the methods have "current" in the name
+    @Override
+    @SuppressWarnings("deprecation")
+    public int getMinute(TimePicker picker) { return picker.getCurrentMinute(); }
 }
