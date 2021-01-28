@@ -57,6 +57,10 @@ public class PreferenceKeys {
     // Whiteboard
     public static PreferenceKey<Integer> WhiteBoardStrokeWidth = new PreferenceKey<>("whiteBoardStrokeWidth", 6);
 
+    // MyAccount
+    public static PreferenceKey<String> Username = new PreferenceKey<>("username", "");
+    public static PreferenceKey<String> HKey = new PreferenceKey<>("hkey", "");
+
 
 
     public static class PreferenceKey<T> {

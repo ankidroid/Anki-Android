@@ -35,6 +35,8 @@ import com.google.android.material.textfield.TextInputLayout;
 import com.ichi2.anki.web.HostNumFactory;
 import com.ichi2.async.Connection;
 import com.ichi2.async.Connection.Payload;
+import com.ichi2.preferences.PreferenceKeys;
+import com.ichi2.preferences.Prefs;
 import com.ichi2.themes.StyledProgressDialog;
 import com.ichi2.ui.TextInputEditField;
 import com.ichi2.utils.AdaptionUtil;
@@ -65,7 +67,7 @@ public class MyAccount extends AnkiActivity {
     private void switchToState(int newState) {
         switch (newState) {
             case STATE_LOGGED_IN:
-                String username = AnkiDroidApp.getSharedPrefs(getBaseContext()).getString("username", "");
+                String username = Prefs.getString(getBaseContext(), PreferenceKeys.Username);
                 mUsernameLoggedIn.setText(username);
                 mToolbar = mLoggedIntoMyAccountView.findViewById(R.id.toolbar);
                 if (mToolbar!= null) {
@@ -105,7 +107,7 @@ public class MyAccount extends AnkiActivity {
         initAllContentViews();
 
         SharedPreferences preferences = AnkiDroidApp.getSharedPrefs(getBaseContext());
-        if (preferences.getString("hkey", "").length() > 0) {
+        if (Prefs.getString(preferences, PreferenceKeys.HKey).length() > 0) {
             switchToState(STATE_LOGGED_IN);
         } else {
             switchToState(STATE_LOG_IN);
