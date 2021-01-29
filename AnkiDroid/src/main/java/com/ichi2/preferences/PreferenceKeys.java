@@ -31,6 +31,7 @@ import static com.ichi2.anki.reviewer.ActionButtonStatus.MENU_DISABLED;
 import static com.ichi2.anki.reviewer.ActionButtonStatus.SHOW_AS_ACTION_ALWAYS;
 import static com.ichi2.anki.reviewer.ActionButtonStatus.SHOW_AS_ACTION_IF_ROOM;
 import static com.ichi2.anki.reviewer.ActionButtonStatus.SHOW_AS_ACTION_NEVER;
+import static com.ichi2.anki.web.CustomSyncServer.PREFERENCE_ENABLE_CUSTOM_SYNC_SERVER;
 
 /**
  * Keys to ensure consistency between XML and code defaults
@@ -183,6 +184,9 @@ public class PreferenceKeys {
     public static PreferenceKey<Boolean> CardBrowserContextMenu = new PreferenceKey<>(CARD_BROWSER_CONTEXT_MENU_PREF_KEY, false);
     public static PreferenceKey<Boolean> AnkiCardContextMenu = new PreferenceKey<>(ANKI_CARD_CONTEXT_MENU_PREF_KEY, true);
 
+    // Custom Sync Server
+    public static PreferenceKey<Boolean> EnableCustomSyncServer = new PreferenceKey<>(PREFERENCE_ENABLE_CUSTOM_SYNC_SERVER, false);
+    // TODO: variable defaults (null/empty): syncBaseUrl, syncMediaUrl
 
 
     public static class PreferenceKey<T> {
