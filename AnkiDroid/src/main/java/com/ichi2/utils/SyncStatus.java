@@ -20,6 +20,8 @@ import android.content.SharedPreferences;
 
 import com.ichi2.anki.AnkiDroidApp;
 import com.ichi2.libanki.Collection;
+import com.ichi2.preferences.PreferenceKeys;
+import com.ichi2.preferences.Prefs;
 import com.ichi2.utils.FunctionalInterfaces.Supplier;
 
 import androidx.annotation.NonNull;
@@ -72,21 +74,21 @@ public enum SyncStatus {
 
 
     private static boolean isDisabled() {
-        SharedPreferences preferences = AnkiDroidApp.getSharedPrefs(AnkiDroidApp.getInstance());
-        return !preferences.getBoolean("showSyncStatusBadge", true);
+        Prefs preferences = Prefs.fromContext(AnkiDroidApp.getInstance());
+        return !preferences.getBoolean(PreferenceKeys.ShowSyncStatusBadge);
     }
 
 
     private static boolean isLoggedIn() {
-        SharedPreferences preferences = AnkiDroidApp.getSharedPrefs(AnkiDroidApp.getInstance());
-        String hkey = preferences.getString("hkey", "");
+        Prefs preferences = Prefs.fromContext(AnkiDroidApp.getInstance());
+        String hkey = preferences.getString(PreferenceKeys.HKey);
         return hkey != null && hkey.length() != 0;
     }
 
 
     /** Whether data has been changed - to be converted to Rust */
     public static boolean hasDatabaseChanges() {
-        return AnkiDroidApp.getSharedPrefs(AnkiDroidApp.getInstance()).getBoolean("changesSinceLastSync", false);
+        return Prefs.fromContext(AnkiDroidApp.getInstance()).getBoolean(PreferenceKeys.ChangesSinceLastSync);
     }
 
     /** To be converted to Rust */

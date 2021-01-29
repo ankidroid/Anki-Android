@@ -79,6 +79,10 @@ public class PreferenceKeys {
     public static PreferenceKey<Boolean> WidgetSmallEnabled = new PreferenceKey<>("widgetSmallEnabled", false);
     // TODO: minimumCardsDueForNotification - currently ambiguous default
 
+    // SyncStatus
+    public static PreferenceKey<Boolean> ShowSyncStatusBadge = new PreferenceKey<>("showSyncStatusBadge", true);
+    public static PreferenceKey<Boolean> ChangesSinceLastSync = new PreferenceKey<>("changesSinceLastSync", false);
+
 
 
     public static class PreferenceKey<T> {

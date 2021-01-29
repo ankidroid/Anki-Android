@@ -32,6 +32,12 @@ public class Prefs {
         mPreferences = preferences;
     }
 
+
+    public static Prefs fromContext(Context context) {
+        return new Prefs(AnkiDroidApp.getSharedPrefs(context));
+    }
+
+
     public boolean getBoolean(PreferenceKeys.PreferenceKey<Boolean> key) {
         return mPreferences.getBoolean(key.key, key.defaultValue);
     }
