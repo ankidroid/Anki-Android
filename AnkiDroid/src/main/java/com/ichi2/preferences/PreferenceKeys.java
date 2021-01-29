@@ -93,7 +93,17 @@ public class PreferenceKeys {
     // public static NullablePreferenceKey<String> DefaultFont = new NullablePreferenceKey<>("defaultFont", null);
     public static PreferenceKey<String> OverrideFontBehavior = new PreferenceKey<>("overrideFontBehavior", "0");
 
-
+    // GestureTapProcessor
+    public static PreferenceKey<String> GestureTapLeft = new PreferenceKey<>("gestureTapLeft", "3");
+    public static PreferenceKey<String> GestureTapRight = new PreferenceKey<>("gestureTapRight", "6");
+    public static PreferenceKey<String> GestureTapTop = new PreferenceKey<>("gestureTapTop", "12");
+    public static PreferenceKey<String> GestureTapBottom = new PreferenceKey<>("gestureTapBottom", "2");
+    public static PreferenceKey<Boolean> GestureCornerTouch = new PreferenceKey<>("gestureCornerTouch", false);
+    public static PreferenceKey<String> GestureTapTopLeft = new PreferenceKey<>("gestureTapTopLeft", "0");
+    public static PreferenceKey<String> GestureTapTopRight = new PreferenceKey<>("gestureTapTopRight", "0");
+    public static PreferenceKey<String> GestureTapCenter = new PreferenceKey<>("gestureTapCenter", "0");
+    public static PreferenceKey<String> GestureTapBottomLeft = new PreferenceKey<>("gestureTapBottomLeft", "0");
+    public static PreferenceKey<String> GestureTapBottomRight = new PreferenceKey<>("gestureTapBottomRight", "0");
 
     public static class PreferenceKey<T> {
         public String key;

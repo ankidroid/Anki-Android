@@ -18,6 +18,9 @@ package com.ichi2.anki.cardviewer;
 
 import android.content.SharedPreferences;
 
+import com.ichi2.preferences.PreferenceKeys;
+import com.ichi2.preferences.Prefs;
+
 import static com.ichi2.anki.cardviewer.ViewerCommand.COMMAND_NOTHING;
 
 public class GestureTapProcessor {
@@ -44,18 +47,19 @@ public class GestureTapProcessor {
 
 
     public void init(SharedPreferences preferences) {
-        mGestureTapLeft = Integer.parseInt(preferences.getString("gestureTapLeft", "3"));
-        mGestureTapRight = Integer.parseInt(preferences.getString("gestureTapRight", "6"));
-        mGestureTapTop = Integer.parseInt(preferences.getString("gestureTapTop", "12"));
-        mGestureTapBottom = Integer.parseInt(preferences.getString("gestureTapBottom", "2"));
+        Prefs prefs = new Prefs(preferences);
+        mGestureTapLeft = Integer.parseInt(prefs.getString(PreferenceKeys.GestureTapLeft));
+        mGestureTapRight = Integer.parseInt(prefs.getString(PreferenceKeys.GestureTapRight));
+        mGestureTapTop = Integer.parseInt(prefs.getString(PreferenceKeys.GestureTapTop));
+        mGestureTapBottom = Integer.parseInt(prefs.getString(PreferenceKeys.GestureTapBottom));
 
-        mUseCornerTouch = preferences.getBoolean("gestureCornerTouch", false);
+        mUseCornerTouch = prefs.getBoolean(PreferenceKeys.GestureCornerTouch);
         if (mUseCornerTouch) {
-            mGestureTapTopLeft = Integer.parseInt(preferences.getString("gestureTapTopLeft", "0"));
-            mGestureTapTopRight = Integer.parseInt(preferences.getString("gestureTapTopRight", "0"));
-            mGestureTapCenter = Integer.parseInt(preferences.getString("gestureTapCenter", "0"));
-            mGestureTapBottomLeft = Integer.parseInt(preferences.getString("gestureTapBottomLeft", "0"));
-            mGestureTapBottomRight = Integer.parseInt(preferences.getString("gestureTapBottomRight", "0"));
+            mGestureTapTopLeft = Integer.parseInt(prefs.getString(PreferenceKeys.GestureTapTopLeft));
+            mGestureTapTopRight = Integer.parseInt(prefs.getString(PreferenceKeys.GestureTapTopRight));
+            mGestureTapCenter = Integer.parseInt(prefs.getString(PreferenceKeys.GestureTapCenter));
+            mGestureTapBottomLeft = Integer.parseInt(prefs.getString(PreferenceKeys.GestureTapBottomLeft));
+            mGestureTapBottomRight = Integer.parseInt(prefs.getString(PreferenceKeys.GestureTapBottomRight));
         }
     }
 
