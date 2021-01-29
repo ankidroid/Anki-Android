@@ -20,6 +20,7 @@ import android.content.SharedPreferences;
 
 import com.ichi2.preferences.PreferenceKeys;
 import com.ichi2.preferences.Prefs;
+import com.ichi2.testutils.ResourceUtils;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -31,6 +32,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import androidx.annotation.XmlRes;
 import androidx.test.ext.junit.runners.AndroidJUnit4;
 
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -113,14 +115,10 @@ public class PreferencesTest extends RobolectricTest {
 
     @SuppressWarnings( {"deprecation", "RedundantSuppression"})
     private void setAllDefaultPreferences() {
-        android.preference.PreferenceManager.setDefaultValues(getTargetContext(), R.xml.preferences_advanced, true);
-        android.preference.PreferenceManager.setDefaultValues(getTargetContext(), R.xml.preferences_appearance, true);
-        android.preference.PreferenceManager.setDefaultValues(getTargetContext(), R.xml.preferences_custom_buttons, true);
-        android.preference.PreferenceManager.setDefaultValues(getTargetContext(), R.xml.preferences_custom_sync_server, true);
-        android.preference.PreferenceManager.setDefaultValues(getTargetContext(), R.xml.preferences_advanced_statistics, true);
-        android.preference.PreferenceManager.setDefaultValues(getTargetContext(), R.xml.preferences_general, true);
-        android.preference.PreferenceManager.setDefaultValues(getTargetContext(), R.xml.preferences_gestures, true);
-        android.preference.PreferenceManager.setDefaultValues(getTargetContext(), R.xml.preferences_reviewing, true);
+
+        for (@XmlRes int resource : ResourceUtils.getPreferenceXml()) {
+            android.preference.PreferenceManager.setDefaultValues(getTargetContext(), resource, true);
+        }
     }
 
     private static boolean isPublicStaticField(Field f) {
