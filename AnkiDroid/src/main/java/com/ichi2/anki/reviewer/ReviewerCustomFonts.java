@@ -23,6 +23,8 @@ import android.text.TextUtils;
 import com.ichi2.anki.AnkiDroidApp;
 import com.ichi2.anki.AnkiFont;
 import com.ichi2.libanki.Utils;
+import com.ichi2.preferences.PreferenceKeys;
+import com.ichi2.preferences.Prefs;
 
 import java.util.HashMap;
 import java.util.List;
@@ -115,7 +117,7 @@ public class ReviewerCustomFonts {
         if (mOverrideFontStyle == null) {
             SharedPreferences preferences = AnkiDroidApp.getSharedPrefs(context);
             AnkiFont defaultFont = customFontsMap.get(preferences.getString("defaultFont", null));
-            boolean overrideFont = "1".equals(preferences.getString("overrideFontBehavior", "0"));
+            boolean overrideFont = "1".equals(Prefs.getString(preferences, PreferenceKeys.OverrideFontBehavior));
             if (defaultFont != null && overrideFont) {
                 mOverrideFontStyle = "BODY, .card, * { " + defaultFont.getCSS(true) + " }\n";
             } else {

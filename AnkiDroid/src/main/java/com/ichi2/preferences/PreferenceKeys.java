@@ -88,6 +88,11 @@ public class PreferenceKeys {
     public static PreferenceKey<String> NightTheme = new PreferenceKey<>("nightTheme", "0");
     public static PreferenceKey<String> DayTheme = new PreferenceKey<>("dayTheme", "0");
 
+    // ReviewerCustomFonts
+    // TODO: null or "" in code
+    // public static NullablePreferenceKey<String> DefaultFont = new NullablePreferenceKey<>("defaultFont", null);
+    public static PreferenceKey<String> OverrideFontBehavior = new PreferenceKey<>("overrideFontBehavior", "0");
+
 
 
     public static class PreferenceKey<T> {
