@@ -9,6 +9,8 @@ import android.graphics.Typeface;
 import android.widget.Toast;
 
 import com.ichi2.libanki.Utils;
+import com.ichi2.preferences.PreferenceKeys;
+import com.ichi2.preferences.Prefs;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -96,7 +98,7 @@ public class AnkiFont {
         // determine if override font or default font
         SharedPreferences preferences = AnkiDroidApp.getSharedPrefs(ctx);
         String defaultFont = preferences.getString("defaultFont", "");
-        boolean overrideFont = "1".equals(preferences.getString("overrideFontBehavior", "0"));
+        boolean overrideFont = "1".equals(Prefs.getString(preferences, PreferenceKeys.OverrideFontBehavior));
         if (defaultFont.equalsIgnoreCase(name)) {
             if (overrideFont) {
                 createdFont.setAsOverride();
