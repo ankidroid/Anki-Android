@@ -16,6 +16,8 @@
 
 package com.ichi2.preferences;
 
+import android.content.SharedPreferences;
+
 import com.ichi2.anki.AnkiDroidApp;
 import com.ichi2.anki.Lookup;
 
@@ -147,6 +149,15 @@ public class PreferenceKeys {
     // ACRA
     // Note: defaulted to "" in Preferences, but should never have been hit
     public static PreferenceKey<String> FeedbackReportKey = new PreferenceKey<>(AnkiDroidApp.FEEDBACK_REPORT_KEY, FEEDBACK_REPORT_ASK);
+
+    // DeckPicker - Sync
+    public static PreferenceKey<Boolean> AutomaticSyncMode = new PreferenceKey<>("automaticSyncMode", false);
+    public static PreferenceKey<Boolean> SyncFetchesMedia = new PreferenceKey<>("syncFetchesMedia", true);
+
+    // DeckPicker
+    public static PreferenceKey<Boolean> NoSpaceLeft = new PreferenceKey<>("noSpaceLeft", false);
+    public static PreferenceKey<String> LastVersion = new PreferenceKey<>("lastVersion", "");
+    public static PreferenceKey<Boolean> DeckPickerBackground = new PreferenceKey<>("deckPickerBackground", false);
 
 
 

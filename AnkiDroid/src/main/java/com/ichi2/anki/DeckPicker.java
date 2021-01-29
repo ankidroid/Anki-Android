@@ -123,10 +123,11 @@ import com.ichi2.libanki.Models;
 import com.ichi2.libanki.Utils;
 import com.ichi2.libanki.importer.AnkiPackageImporter;
 import com.ichi2.libanki.sched.AbstractDeckTreeNode;
-import com.ichi2.libanki.sched.DeckTreeNode;
 import com.ichi2.libanki.sync.CustomSyncServerUrlException;
 import com.ichi2.libanki.sync.Syncer;
 import com.ichi2.libanki.utils.TimeUtils;
+import com.ichi2.preferences.PreferenceKeys;
+import com.ichi2.preferences.Prefs;
 import com.ichi2.themes.StyledProgressDialog;
 import com.ichi2.ui.BadgeDrawableBuilder;
 import com.ichi2.ui.FixedEditText;
@@ -144,7 +145,6 @@ import com.ichi2.utils.JSONException;
 
 import java.io.File;
 import java.io.FileOutputStream;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
@@ -563,7 +563,7 @@ public class DeckPicker extends NavigationDrawerActivity implements
     // throws doesn't seem to be checked by the compiler - consider it to be documentation
     private boolean applyDeckPickerBackground(View view) throws OutOfMemoryError {
         //Allow the user to clear data and get back to a good state if they provide an invalid background.
-        if (!AnkiDroidApp.getSharedPrefs(this).getBoolean("deckPickerBackground", false)) {
+        if (!Prefs.fromContext(this).getBoolean(PreferenceKeys.DeckPickerBackground)) {
             Timber.d("No DeckPicker background preference");
             view.setBackgroundResource(0);
             return false;
@@ -1040,13 +1040,13 @@ public class DeckPicker extends NavigationDrawerActivity implements
     }
 
     private void automaticSync() {
-        SharedPreferences preferences = AnkiDroidApp.getSharedPrefs(getBaseContext());
+        Prefs preferences = Prefs.fromContext(getBaseContext());
 
         // Check whether the option is selected, the user is signed in and last sync was AUTOMATIC_SYNC_TIME ago
         // (currently 10 minutes)
-        String hkey = preferences.getString("hkey", "");
-        long lastSyncTime = preferences.getLong("lastSyncTime", 0);
-        if (hkey.length() != 0 && preferences.getBoolean("automaticSyncMode", false) &&
+        String hkey = preferences.getString(PreferenceKeys.HKey);
+        long lastSyncTime = preferences.getLong(PreferenceKeys.LastSyncTime);
+        if (hkey.length() != 0 && preferences.getBoolean(PreferenceKeys.AutomaticSyncMode) &&
                 Connection.isOnline() && getCol().getTime().intTimeMS() - lastSyncTime > AUTOMATIC_SYNC_MIN_INTERVAL) {
             Timber.i("Triggering Automatic Sync");
             sync();
@@ -1167,19 +1167,20 @@ public class DeckPicker extends NavigationDrawerActivity implements
 
 
     private void showStartupScreensAndDialogs(SharedPreferences preferences, int skip) {
+        Prefs prefs = new Prefs(preferences);
 
         if (!BackupManager.enoughDiscSpace(CollectionHelper.getCurrentAnkiDroidDirectory(this))) {
             Timber.i("Not enough space to do backup");
             showDialogFragment(DeckPickerNoSpaceLeftDialog.newInstance());
-        } else if (preferences.getBoolean("noSpaceLeft", false)) {
+        } else if (prefs.getBoolean(PreferenceKeys.NoSpaceLeft)) {
             Timber.i("No space left");
             showDialogFragment(DeckPickerBackupNoSpaceLeftDialog.newInstance());
             preferences.edit().remove("noSpaceLeft").apply();
-        } else if ("".equals(preferences.getString("lastVersion", ""))) {
+        } else if ("".equals(prefs.getString(PreferenceKeys.LastVersion))) {
             Timber.i("Fresh install");
             preferences.edit().putString("lastVersion", VersionUtils.getPkgVersionName()).apply();
             onFinishedStartup();
-        } else if (skip < 2 && !preferences.getString("lastVersion", "").equals(VersionUtils.getPkgVersionName())) {
+        } else if (skip < 2 && !prefs.getString(PreferenceKeys.LastVersion).equals(VersionUtils.getPkgVersionName())) {
             Timber.i("AnkiDroid is being updated and a collection already exists.");
             // The user might appreciate us now, see if they will help us get better?
             if (!preferences.contains(UsageAnalytics.ANALYTICS_OPTIN_KEY)) {
@@ -1706,8 +1707,8 @@ public class DeckPicker extends NavigationDrawerActivity implements
      */
     @Override
     public void sync(Connection.ConflictResolution syncConflictResolution) {
-        SharedPreferences preferences = AnkiDroidApp.getSharedPrefs(getBaseContext());
-        String hkey = preferences.getString("hkey", "");
+        Prefs preferences = Prefs.fromContext(getBaseContext());
+        String hkey = preferences.getString(PreferenceKeys.HKey);
         if (hkey.length() == 0) {
             Timber.w("User not logged in");
             mPullToSyncWrapper.setRefreshing(false);
@@ -1715,7 +1716,7 @@ public class DeckPicker extends NavigationDrawerActivity implements
         } else {
             Connection.sync(mSyncListener,
                     new Connection.Payload(new Object[] { hkey,
-                            preferences.getBoolean("syncFetchesMedia", true),
+                            preferences.getBoolean(PreferenceKeys.SyncFetchesMedia),
                             syncConflictResolution,
                             HostNumFactory.getInstance(getBaseContext()) }));
         }
