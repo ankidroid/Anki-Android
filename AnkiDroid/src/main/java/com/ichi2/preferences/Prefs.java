@@ -24,6 +24,7 @@ import com.ichi2.anki.AnkiDroidApp;
 public class Prefs {
 
     // TODO: StringSet - ensure that it does not accept and return a mutable class.
+    // COULD_BE_BETTER: Consider improving this pattern via method: "Integer.parseInt(preferences.getString())"
 
     private final SharedPreferences mPreferences;
 

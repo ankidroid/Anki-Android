@@ -75,6 +75,10 @@ public class PreferenceKeys {
     public static PreferenceKey<Boolean> HideDueCount = new PreferenceKey<>("hideDueCount", false);
     public static PreferenceKey<Boolean> ShowEta = new PreferenceKey<>("showETA", true);
 
+    // Widget
+    public static PreferenceKey<Boolean> WidgetSmallEnabled = new PreferenceKey<>("widgetSmallEnabled", false);
+    // TODO: minimumCardsDueForNotification - currently ambiguous default
+
 
 
     public static class PreferenceKey<T> {
