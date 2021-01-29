@@ -141,8 +141,11 @@ public class PreferenceKeys {
     public static CustomButtonPreferenceKey CustomButtonSaveWhiteboard = new CustomButtonPreferenceKey("customButtonSaveWhiteboard", SHOW_AS_ACTION_NEVER);
     public static CustomButtonPreferenceKey CustomButtonWhiteboardPenColor = new CustomButtonPreferenceKey("customButtonWhiteboardPenColor", SHOW_AS_ACTION_IF_ROOM);
 
-    // Preferences
+    // Advanced Statistics
     public static PreferenceKey<Boolean> AdvancedStatisticsEnabled = new PreferenceKey<>("advanced_statistics_enabled", false);
+    public static PreferenceKey<Integer> AdvancedForecastStatsMcNIterations = new PreferenceKey<>("advanced_forecast_stats_mc_n_iterations", 1);
+    public static PreferenceKey<Integer> AdvancedForecastStatsComputeNDays = new PreferenceKey<>("advanced_forecast_stats_compute_n_days", 0);
+    public static PreferenceKey<Integer> AdvancedForecastStatsComputePrecision = new PreferenceKey<>("advanced_forecast_stats_compute_precision", 90);
 
     // ACRA
     // Note: defaulted to "" in Preferences, but should never have been hit

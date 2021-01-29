@@ -18,10 +18,8 @@
 package com.ichi2.libanki.stats;
 
 import android.content.Context;
-import android.content.SharedPreferences;
 import android.database.Cursor;
 
-import com.ichi2.anki.AnkiDroidApp;
 import com.ichi2.anki.CollectionHelper;
 import com.ichi2.anki.R;
 import com.ichi2.anki.stats.StatsMetaInfo;
@@ -31,6 +29,8 @@ import com.ichi2.libanki.DB;
 import com.ichi2.libanki.Decks;
 import com.ichi2.libanki.DeckConfig;
 import com.ichi2.libanki.utils.Time;
+import com.ichi2.preferences.PreferenceKeys;
+import com.ichi2.preferences.Prefs;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -163,7 +163,7 @@ public class AdvancedStatistics {
      */
     public StatsMetaInfo calculateDueAsMetaInfo(StatsMetaInfo metaInfo, Stats.AxisType type, Context context, String dids) {
 
-        if (!AnkiDroidApp.getSharedPrefs(context).getBoolean("advanced_statistics_enabled", false)) {
+        if (!Prefs.fromContext(context).getBoolean(PreferenceKeys.AdvancedStatisticsEnabled)) {
             return metaInfo;
         }
         //To indicate that we calculated the statistics so that Stats.java knows that it shouldn't display the standard Forecast chart.
@@ -1010,14 +1010,14 @@ public class AdvancedStatistics {
         private final Collection mCol;
 
         public Settings(Context context) {
-            SharedPreferences prefs = AnkiDroidApp.getSharedPrefs(context);
+            Prefs prefs = Prefs.fromContext(context);
             mCol = CollectionHelper.getInstance().getCol(context);
 
-            computeNDays = prefs.getInt("advanced_forecast_stats_compute_n_days", 0);
-            int computePrecision = prefs.getInt("advanced_forecast_stats_compute_precision", 90);
+            computeNDays = prefs.getInt(PreferenceKeys.AdvancedForecastStatsComputeNDays);
+            int computePrecision = prefs.getInt(PreferenceKeys.AdvancedForecastStatsComputePrecision);
             computeMaxError = (100-computePrecision)/100.0;
 
-            simulateNIterations = prefs.getInt("advanced_forecast_stats_mc_n_iterations", 1);
+            simulateNIterations = prefs.getInt(PreferenceKeys.AdvancedForecastStatsMcNIterations);
 
             Timber.d("computeNDays: %s", computeNDays);
             Timber.d("computeMaxError: %s", computeMaxError);
