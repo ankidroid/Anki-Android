@@ -25,6 +25,7 @@ import java.lang.annotation.RetentionPolicy;
 import androidx.annotation.IntDef;
 
 import static com.ichi2.anki.AnkiDroidApp.FEEDBACK_REPORT_ASK;
+import static com.ichi2.anki.NavigationDrawerActivity.NIGHT_MODE_PREFERENCE;
 import static com.ichi2.anki.contextmenu.AnkiCardContextMenu.ANKI_CARD_CONTEXT_MENU_PREF_KEY;
 import static com.ichi2.anki.contextmenu.CardBrowserContextMenu.CARD_BROWSER_CONTEXT_MENU_PREF_KEY;
 import static com.ichi2.anki.reviewer.ActionButtonStatus.MENU_DISABLED;
@@ -71,7 +72,7 @@ public class PreferenceKeys {
     public static PreferenceKey<Integer> CardZoom = new PreferenceKey<>("cardZoom", 100);
     public static PreferenceKey<Integer> ImageZoom = new PreferenceKey<>("imageZoom", 100);
     public static PreferenceKey<Boolean> CenterVertically = new PreferenceKey<>("centerVertically", false);
-    public static PreferenceKey<Boolean> InvertedColors = new PreferenceKey<>("invertedColors", false);
+    public static PreferenceKey<Boolean> InvertedColors = new PreferenceKey<>(NIGHT_MODE_PREFERENCE, false);
 
     // Whiteboard
     public static PreferenceKey<Integer> WhiteBoardStrokeWidth = new PreferenceKey<>("whiteBoardStrokeWidth", 6);
