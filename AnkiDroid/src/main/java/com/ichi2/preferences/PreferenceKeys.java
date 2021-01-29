@@ -164,6 +164,12 @@ public class PreferenceKeys {
     public static PreferenceKey<Integer> RelativeCardBrowserFontSize = new PreferenceKey<>("relativeCardBrowserFontSize", 100);
     public static PreferenceKey<Boolean> CardBrowserShowMediaFilenames = new PreferenceKey<>("card_browser_show_media_filenames", false);
 
+    // Notifications
+    public static PreferenceKey<Boolean> WidgetVibrate = new PreferenceKey<>("widgetVibrate", false);
+    public static PreferenceKey<Boolean> WidgetBlink = new PreferenceKey<>("widgetBlink", false);
+
+    // Animations
+    public static PreferenceKey<Boolean> SafeDisplay = new PreferenceKey<>("safeDisplay", false);
 
 
 

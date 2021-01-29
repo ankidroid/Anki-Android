@@ -44,6 +44,8 @@ import com.ichi2.compat.customtabs.CustomTabActivityHelper;
 import com.ichi2.compat.customtabs.CustomTabsFallback;
 import com.ichi2.compat.customtabs.CustomTabsHelper;
 import com.ichi2.libanki.Collection;
+import com.ichi2.preferences.PreferenceKeys;
+import com.ichi2.preferences.Prefs;
 import com.ichi2.themes.Themes;
 import com.ichi2.utils.AdaptionUtil;
 import com.ichi2.utils.AndroidUiUtils;
@@ -158,8 +160,7 @@ public class AnkiActivity extends AppCompatActivity implements SimpleMessageDial
 
 
     public boolean animationDisabled() {
-        SharedPreferences preferences = AnkiDroidApp.getSharedPrefs(this);
-        return preferences.getBoolean("safeDisplay", false);
+        return Prefs.fromContext(this).getBoolean(PreferenceKeys.SafeDisplay);
     }
 
 
@@ -490,9 +491,9 @@ public class AnkiActivity extends AppCompatActivity implements SimpleMessageDial
 
 
     public void showSimpleNotification(String title, String message, NotificationChannels.Channel channel) {
-        SharedPreferences prefs = AnkiDroidApp.getSharedPrefs(this);
+        SharedPreferences preferences = AnkiDroidApp.getSharedPrefs(this);
         // Show a notification unless all notifications have been totally disabled
-        if (Integer.parseInt(prefs.getString("minimumCardsDueForNotification", "0")) <= Preferences.PENDING_NOTIFICATIONS_ONLY) {
+        if (Integer.parseInt(preferences.getString("minimumCardsDueForNotification", "0")) <= Preferences.PENDING_NOTIFICATIONS_ONLY) {
             // Use the title as the ticker unless the title is simply "AnkiDroid"
             String ticker = title;
             if (title.equals(getResources().getString(R.string.app_name))) {
@@ -508,11 +509,13 @@ public class AnkiActivity extends AppCompatActivity implements SimpleMessageDial
                     .setStyle(new NotificationCompat.BigTextStyle().bigText(message))
                     .setVisibility(NotificationCompat.VISIBILITY_PUBLIC)
                     .setTicker(ticker);
+
+            Prefs prefs = new Prefs(preferences);
             // Enable vibrate and blink if set in preferences
-            if (prefs.getBoolean("widgetVibrate", false)) {
+            if (prefs.getBoolean(PreferenceKeys.WidgetVibrate)) {
                 builder.setVibrate(new long[] { 1000, 1000, 1000});
             }
-            if (prefs.getBoolean("widgetBlink", false)) {
+            if (prefs.getBoolean(PreferenceKeys.WidgetBlink)) {
                 builder.setLights(Color.BLUE, 1000, 1000);
             }
             // Creates an explicit intent for an Activity in your app
