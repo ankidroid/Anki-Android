@@ -84,6 +84,11 @@ public class PreferenceKeys {
     public static PreferenceKey<Boolean> ChangesSinceLastSync = new PreferenceKey<>("changesSinceLastSync", false);
 
 
+    // Themes
+    public static PreferenceKey<String> NightTheme = new PreferenceKey<>("nightTheme", "0");
+    public static PreferenceKey<String> DayTheme = new PreferenceKey<>("dayTheme", "0");
+
+
 
     public static class PreferenceKey<T> {
         public String key;
