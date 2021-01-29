@@ -447,7 +447,7 @@ public class AnkiDroidApp extends Application {
             } else {
                 preferences = getSharedPrefs(remoteContext);
             }
-            Configuration langConfig = getLanguageConfig(remoteContext.getResources().getConfiguration(), preferences);
+            Configuration langConfig = getLanguageConfig(remoteContext.getResources().getConfiguration(), new Prefs(preferences));
             return remoteContext.createConfigurationContext(langConfig);
         } catch (Exception e) {
             Timber.e(e, "failed to update context with new language");
@@ -465,9 +465,9 @@ public class AnkiDroidApp extends Application {
      */
     @SuppressWarnings("deprecation")
     @NonNull
-    private static Configuration getLanguageConfig(@NonNull Configuration remoteConfig, @NonNull SharedPreferences prefs) {
+    private static Configuration getLanguageConfig(@NonNull Configuration remoteConfig, @NonNull Prefs prefs) {
         Configuration newConfig = new Configuration(remoteConfig);
-        Locale newLocale = LanguageUtil.getLocale(prefs.getString(Preferences.LANGUAGE, ""), prefs);
+        Locale newLocale = LanguageUtil.getLocale(prefs.getString(PreferenceKeys.Language), prefs);
         Timber.d("AnkiDroidApp::getLanguageConfig - setting locale to %s", newLocale);
         //API level >=24
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {

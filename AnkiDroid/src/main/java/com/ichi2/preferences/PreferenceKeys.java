@@ -18,6 +18,7 @@ package com.ichi2.preferences;
 
 import com.ichi2.anki.AnkiDroidApp;
 import com.ichi2.anki.Lookup;
+import com.ichi2.anki.Preferences;
 
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
@@ -195,6 +196,9 @@ public class PreferenceKeys {
 
     // BootService
     public static PreferenceKey<Integer> DayOffset = new PreferenceKey<>("dayOffset", 0);
+    public static PreferenceKey<String> Language = new PreferenceKey<>(Preferences.LANGUAGE, "");
+
+
 
     public static class PreferenceKey<T> {
         public String key;
