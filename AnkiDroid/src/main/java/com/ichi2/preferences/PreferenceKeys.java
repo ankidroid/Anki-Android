@@ -25,6 +25,8 @@ import java.lang.annotation.RetentionPolicy;
 import androidx.annotation.IntDef;
 
 import static com.ichi2.anki.AnkiDroidApp.FEEDBACK_REPORT_ASK;
+import static com.ichi2.anki.contextmenu.AnkiCardContextMenu.ANKI_CARD_CONTEXT_MENU_PREF_KEY;
+import static com.ichi2.anki.contextmenu.CardBrowserContextMenu.CARD_BROWSER_CONTEXT_MENU_PREF_KEY;
 import static com.ichi2.anki.reviewer.ActionButtonStatus.MENU_DISABLED;
 import static com.ichi2.anki.reviewer.ActionButtonStatus.SHOW_AS_ACTION_ALWAYS;
 import static com.ichi2.anki.reviewer.ActionButtonStatus.SHOW_AS_ACTION_IF_ROOM;
@@ -176,6 +178,10 @@ public class PreferenceKeys {
 
     // Chess
     public static PreferenceKey<Boolean> ConvertFenText = new PreferenceKey<>("convertFenText", false);
+
+    // Context Menus
+    public static PreferenceKey<Boolean> CardBrowserContextMenu = new PreferenceKey<>(CARD_BROWSER_CONTEXT_MENU_PREF_KEY, false);
+    public static PreferenceKey<Boolean> AnkiCardContextMenu = new PreferenceKey<>(ANKI_CARD_CONTEXT_MENU_PREF_KEY, true);
 
 
 

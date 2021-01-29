@@ -18,6 +18,8 @@ package com.ichi2.anki.contextmenu;
 
 import android.content.Context;
 
+import com.ichi2.preferences.PreferenceKeys;
+
 import androidx.annotation.NonNull;
 
 public class AnkiCardContextMenu extends SystemContextMenu {
@@ -41,14 +43,9 @@ public class AnkiCardContextMenu extends SystemContextMenu {
         return "com.ichi2.anki.AnkiCardContextMenuAction";
     }
 
-    @Override
-    protected boolean getDefaultEnabledStatus() {
-        return true;
-    }
-
     @NonNull
     @Override
-    protected String getPreferenceKey() {
-        return ANKI_CARD_CONTEXT_MENU_PREF_KEY;
+    protected PreferenceKeys.PreferenceKey<Boolean> getPreferenceKey() {
+        return PreferenceKeys.AnkiCardContextMenu;
     }
 }

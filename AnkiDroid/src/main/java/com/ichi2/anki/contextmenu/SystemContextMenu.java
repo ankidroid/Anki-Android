@@ -20,7 +20,8 @@ import android.content.ComponentName;
 import android.content.Context;
 import android.content.pm.PackageManager;
 
-import com.ichi2.anki.AnkiDroidApp;
+import com.ichi2.preferences.PreferenceKeys;
+import com.ichi2.preferences.Prefs;
 
 import androidx.annotation.CheckResult;
 import androidx.annotation.NonNull;
@@ -33,9 +34,8 @@ import static android.content.pm.PackageManager.DONT_KILL_APP;
 
 public abstract class SystemContextMenu {
 
-    protected abstract boolean getDefaultEnabledStatus();
     @NonNull
-    protected abstract String getPreferenceKey();
+    protected abstract PreferenceKeys.PreferenceKey<Boolean> getPreferenceKey();
     /** We use an activity alias as the name so we can disable the context menu without disabling the activity */
     @NonNull
     protected abstract String getActivityName();
@@ -68,7 +68,7 @@ public abstract class SystemContextMenu {
     }
 
     protected boolean getPreferenceStatus() {
-        return AnkiDroidApp.getSharedPrefs(mContext).getBoolean(getPreferenceKey(), getDefaultEnabledStatus());
+        return Prefs.fromContext(mContext).getBoolean(getPreferenceKey());
     }
 
 
