@@ -43,7 +43,7 @@ public class Themes {
     public static void setTheme(Context context) {
         Prefs prefs = Prefs.fromContext(context.getApplicationContext());
         if (prefs.getBoolean(PreferenceKeys.InvertedColors)) {
-            int theme = Integer.parseInt(prefs.getString(PreferenceKeys.NightTheme));
+            int theme = prefs.getIntFromStr(PreferenceKeys.NightTheme);
             switch (theme) {
                 case THEME_NIGHT_DARK:
                     context.setTheme(R.style.Theme_Dark_Compat);
@@ -53,7 +53,7 @@ public class Themes {
                     break;
             }
         } else {
-            int theme = Integer.parseInt(prefs.getString(PreferenceKeys.DayTheme));
+            int theme = prefs.getIntFromStr(PreferenceKeys.DayTheme);
             switch (theme) {
                 case THEME_DAY_LIGHT:
                     context.setTheme(R.style.Theme_Light_Compat);
@@ -68,7 +68,7 @@ public class Themes {
     public static void setThemeLegacy(Context context) {
         Prefs prefs = Prefs.fromContext(context.getApplicationContext());
         if (prefs.getBoolean(PreferenceKeys.InvertedColors)) {
-            int theme = Integer.parseInt(prefs.getString(PreferenceKeys.NightTheme));
+            int theme = prefs.getIntFromStr(PreferenceKeys.NightTheme);
             switch (theme) {
                 case THEME_NIGHT_DARK:
                     context.setTheme(R.style.LegacyActionBarDark);
@@ -78,7 +78,7 @@ public class Themes {
                     break;
             }
         } else {
-            int theme = Integer.parseInt(prefs.getString(PreferenceKeys.DayTheme));
+            int theme = prefs.getIntFromStr(PreferenceKeys.DayTheme);
             switch (theme) {
                 case THEME_DAY_LIGHT:
                     context.setTheme(R.style.LegacyActionBarLight);
@@ -127,9 +127,9 @@ public class Themes {
     public static int getCurrentTheme(Context context) {
         Prefs prefs = Prefs.fromContext(context);
         if (prefs.getBoolean(PreferenceKeys.InvertedColors)) {
-            return Integer.parseInt(prefs.getString(PreferenceKeys.NightTheme));
+            return prefs.getIntFromStr(PreferenceKeys.NightTheme);
         } else {
-            return Integer.parseInt(prefs.getString(PreferenceKeys.DayTheme));
+            return prefs.getIntFromStr(PreferenceKeys.DayTheme);
         }
     }
 }

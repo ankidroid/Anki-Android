@@ -48,18 +48,18 @@ public class GestureTapProcessor {
 
     public void init(SharedPreferences preferences) {
         Prefs prefs = new Prefs(preferences);
-        mGestureTapLeft = Integer.parseInt(prefs.getString(PreferenceKeys.GestureTapLeft));
-        mGestureTapRight = Integer.parseInt(prefs.getString(PreferenceKeys.GestureTapRight));
-        mGestureTapTop = Integer.parseInt(prefs.getString(PreferenceKeys.GestureTapTop));
-        mGestureTapBottom = Integer.parseInt(prefs.getString(PreferenceKeys.GestureTapBottom));
+        mGestureTapLeft = prefs.getIntFromStr(PreferenceKeys.GestureTapLeft);
+        mGestureTapRight = prefs.getIntFromStr(PreferenceKeys.GestureTapRight);
+        mGestureTapTop = prefs.getIntFromStr(PreferenceKeys.GestureTapTop);
+        mGestureTapBottom = prefs.getIntFromStr(PreferenceKeys.GestureTapBottom);
 
         mUseCornerTouch = prefs.getBoolean(PreferenceKeys.GestureCornerTouch);
         if (mUseCornerTouch) {
-            mGestureTapTopLeft = Integer.parseInt(prefs.getString(PreferenceKeys.GestureTapTopLeft));
-            mGestureTapTopRight = Integer.parseInt(prefs.getString(PreferenceKeys.GestureTapTopRight));
-            mGestureTapCenter = Integer.parseInt(prefs.getString(PreferenceKeys.GestureTapCenter));
-            mGestureTapBottomLeft = Integer.parseInt(prefs.getString(PreferenceKeys.GestureTapBottomLeft));
-            mGestureTapBottomRight = Integer.parseInt(prefs.getString(PreferenceKeys.GestureTapBottomRight));
+            mGestureTapTopLeft = prefs.getIntFromStr(PreferenceKeys.GestureTapTopLeft);
+            mGestureTapTopRight = prefs.getIntFromStr(PreferenceKeys.GestureTapTopRight);
+            mGestureTapCenter = prefs.getIntFromStr(PreferenceKeys.GestureTapCenter);
+            mGestureTapBottomLeft = prefs.getIntFromStr(PreferenceKeys.GestureTapBottomLeft);
+            mGestureTapBottomRight = prefs.getIntFromStr(PreferenceKeys.GestureTapBottomRight);
         }
     }
 

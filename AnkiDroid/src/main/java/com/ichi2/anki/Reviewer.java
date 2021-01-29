@@ -911,7 +911,7 @@ public class Reviewer extends AbstractFlashcardViewer {
         mPrefHideDueCount = prefs.getBoolean(PreferenceKeys.HideDueCount);
         mPrefShowETA = prefs.getBoolean(PreferenceKeys.ShowEta);
         this.mProcessor.setup();
-        mPrefFullscreenReview = Integer.parseInt(prefs.getString(PreferenceKeys.FullscreenMode)) > 0;
+        mPrefFullscreenReview = prefs.getIntFromStr(PreferenceKeys.FullscreenMode) > 0;
         mActionButtons.setup(preferences);
         return preferences;
     }
@@ -1097,7 +1097,7 @@ public class Reviewer extends AbstractFlashcardViewer {
         );
         // Show / hide the Action bar together with the status bar
         SharedPreferences prefs = AnkiDroidApp.getSharedPrefs(a);
-        final int fullscreenMode = Integer.parseInt(Prefs.getString(prefs, PreferenceKeys.FullscreenMode));
+        final int fullscreenMode = new Prefs(prefs).getIntFromStr(PreferenceKeys.FullscreenMode);
         a.getWindow().setStatusBarColor(Themes.getColorFromAttr(a, R.attr.colorPrimaryDark));
         View decorView = a.getWindow().getDecorView();
         decorView.setOnSystemUiVisibilityChangeListener
@@ -1205,9 +1205,9 @@ public class Reviewer extends AbstractFlashcardViewer {
         Prefs prefs = Prefs.fromContext(getBaseContext());
         boolean gesturesEnabled = AnkiDroidApp.initiateGestures(prefs);
         if (gesturesEnabled) {
-            int gestureSwipeUp = Integer.parseInt(prefs.getString(PreferenceKeys.GestureSwipeUp));
-            int gestureSwipeDown = Integer.parseInt(prefs.getString(PreferenceKeys.GestureSwipeDown));
-            int gestureSwipeRight = Integer.parseInt(prefs.getString(PreferenceKeys.GestureSwipeRight));
+            int gestureSwipeUp = prefs.getIntFromStr(PreferenceKeys.GestureSwipeUp);
+            int gestureSwipeDown = prefs.getIntFromStr(PreferenceKeys.GestureSwipeDown);
+            int gestureSwipeRight = prefs.getIntFromStr(PreferenceKeys.GestureSwipeRight);
             if (gestureSwipeUp != COMMAND_NOTHING ||
                     gestureSwipeDown != COMMAND_NOTHING ||
                     gestureSwipeRight != COMMAND_NOTHING) {

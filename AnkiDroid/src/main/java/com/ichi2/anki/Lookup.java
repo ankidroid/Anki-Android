@@ -4,9 +4,7 @@ package com.ichi2.anki;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.net.Uri;
-import android.view.View;
 
 import com.afollestad.materialdialogs.MaterialDialog;
 
@@ -42,7 +40,7 @@ public class Lookup {
     public static boolean initialize(Context context) {
         mContext = context;
         Prefs preferences = Prefs.fromContext(AnkiDroidApp.getInstance().getBaseContext());
-        mDictionary = Integer.parseInt(preferences.getString(PreferenceKeys.Dictionary));
+        mDictionary = preferences.getIntFromStr(PreferenceKeys.Dictionary);
         switch (mDictionary) {
             case DICTIONARY_AEDICT:
                 mDictionaryAction = "sk.baka.aedict.action.ACTION_SEARCH_EDICT";

@@ -24,7 +24,6 @@ import com.ichi2.anki.AnkiDroidApp;
 public class Prefs {
 
     // TODO: StringSet - ensure that it does not accept and return a mutable class.
-    // COULD_BE_BETTER: Consider improving this pattern via method: "Integer.parseInt(preferences.getString())"
 
     private final SharedPreferences mPreferences;
 
@@ -52,6 +51,11 @@ public class Prefs {
 
     public long getLong(PreferenceKeys.PreferenceKey<Long> key) {
         return mPreferences.getLong(key.key, key.defaultValue);
+    }
+
+    /** Converts a string-based key to an integer */
+    public int getIntFromStr(PreferenceKeys.StringAsIntKey key) {
+        return Integer.parseInt(getString(key));
     }
 
     public static boolean getBoolean(Context context, PreferenceKeys.PreferenceKey<Boolean> key) {

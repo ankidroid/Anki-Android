@@ -42,8 +42,8 @@ import static com.ichi2.anki.web.CustomSyncServer.PREFERENCE_ENABLE_CUSTOM_SYNC_
 public class PreferenceKeys {
     public static PreferenceKey<Boolean> UseInputTag = new PreferenceKey<>("useInputTag", false);
     public static PreferenceKey<Boolean> NoCodeFormatting = new PreferenceKey<>("noCodeFormatting", false);
-    public static PreferenceKey<String> Dictionary = new PreferenceKey<>("dictionary", Integer.toString(Lookup.DICTIONARY_NONE));
-    public static PreferenceKey<String> FullscreenMode = new PreferenceKey<>("fullscreenMode", "0");
+    public static StringAsIntKey Dictionary = new StringAsIntKey("dictionary", Integer.toString(Lookup.DICTIONARY_NONE));
+    public static StringAsIntKey FullscreenMode = new StringAsIntKey("fullscreenMode", "0");
     public static PreferenceKey<Integer> AnswerButtonSide = new PreferenceKey<>("answerButtonSize", 100);
     public static PreferenceKey<Boolean> Tts = new PreferenceKey<>("tts", false);
     public static PreferenceKey<Boolean> TimeoutAnswer = new PreferenceKey<>("timeoutAnswer", false);
@@ -56,14 +56,14 @@ public class PreferenceKeys {
 
     public static PreferenceKey<Boolean> Gestures = new PreferenceKey<>("gestures", false);
     public static PreferenceKey<Integer> SwipeSensitivity = new PreferenceKey<>( "swipeSensitivity", 100);
-    public static PreferenceKey<String> GestureSwipeUp = new PreferenceKey<>("gestureSwipeUp", "9");
-    public static PreferenceKey<String> GestureSwipeDown = new PreferenceKey<>("gestureSwipeDown", "0");
-    public static PreferenceKey<String> GestureSwipeLeft = new PreferenceKey<>("gestureSwipeLeft", "8");
-    public static PreferenceKey<String> GestureSwipeRight = new PreferenceKey<>("gestureSwipeRight", "17");
-    public static PreferenceKey<String> GestureDoubleTap = new PreferenceKey<>("gestureDoubleTap", "7");
-    public static PreferenceKey<String> GestureLongClick = new PreferenceKey<>("gestureLongclick", "11");  /* This appears to be unused */
-    public static PreferenceKey<String> GestureVolumeUp = new PreferenceKey<>("gestureVolumeUp", "0");
-    public static PreferenceKey<String> GestureVolumeDown = new PreferenceKey<>("gestureVolumeDown", "0");
+    public static StringAsIntKey GestureSwipeUp = new StringAsIntKey("gestureSwipeUp", "9");
+    public static StringAsIntKey GestureSwipeDown = new StringAsIntKey("gestureSwipeDown", "0");
+    public static StringAsIntKey GestureSwipeLeft = new StringAsIntKey("gestureSwipeLeft", "8");
+    public static StringAsIntKey GestureSwipeRight = new StringAsIntKey("gestureSwipeRight", "17");
+    public static StringAsIntKey GestureDoubleTap = new StringAsIntKey("gestureDoubleTap", "7");
+    public static StringAsIntKey GestureLongClick = new StringAsIntKey("gestureLongclick", "11");  /* This appears to be unused */
+    public static StringAsIntKey GestureVolumeUp = new StringAsIntKey("gestureVolumeUp", "0");
+    public static StringAsIntKey GestureVolumeDown = new StringAsIntKey("gestureVolumeDown", "0");
 
     public static PreferenceKey<Boolean> KeepScreenOn = new PreferenceKey<>("keepScreenOn", false);
     public static PreferenceKey<Boolean> HtmlJavascriptDebugging = new PreferenceKey<>("html_javascript_debugging", false);
@@ -108,8 +108,8 @@ public class PreferenceKeys {
 
 
     // Themes
-    public static PreferenceKey<String> NightTheme = new PreferenceKey<>("nightTheme", "0");
-    public static PreferenceKey<String> DayTheme = new PreferenceKey<>("dayTheme", "0");
+    public static StringAsIntKey NightTheme = new StringAsIntKey("nightTheme", "0");
+    public static StringAsIntKey DayTheme = new StringAsIntKey("dayTheme", "0");
 
     // ReviewerCustomFonts
     // TODO: null or "" in code
@@ -117,16 +117,16 @@ public class PreferenceKeys {
     public static PreferenceKey<String> OverrideFontBehavior = new PreferenceKey<>("overrideFontBehavior", "0");
 
     // GestureTapProcessor
-    public static PreferenceKey<String> GestureTapLeft = new PreferenceKey<>("gestureTapLeft", "3");
-    public static PreferenceKey<String> GestureTapRight = new PreferenceKey<>("gestureTapRight", "6");
-    public static PreferenceKey<String> GestureTapTop = new PreferenceKey<>("gestureTapTop", "12");
-    public static PreferenceKey<String> GestureTapBottom = new PreferenceKey<>("gestureTapBottom", "2");
+    public static StringAsIntKey GestureTapLeft = new StringAsIntKey("gestureTapLeft", "3");
+    public static StringAsIntKey GestureTapRight = new StringAsIntKey("gestureTapRight", "6");
+    public static StringAsIntKey GestureTapTop = new StringAsIntKey("gestureTapTop", "12");
+    public static StringAsIntKey GestureTapBottom = new StringAsIntKey("gestureTapBottom", "2");
     public static PreferenceKey<Boolean> GestureCornerTouch = new PreferenceKey<>("gestureCornerTouch", false);
-    public static PreferenceKey<String> GestureTapTopLeft = new PreferenceKey<>("gestureTapTopLeft", "0");
-    public static PreferenceKey<String> GestureTapTopRight = new PreferenceKey<>("gestureTapTopRight", "0");
-    public static PreferenceKey<String> GestureTapCenter = new PreferenceKey<>("gestureTapCenter", "0");
-    public static PreferenceKey<String> GestureTapBottomLeft = new PreferenceKey<>("gestureTapBottomLeft", "0");
-    public static PreferenceKey<String> GestureTapBottomRight = new PreferenceKey<>("gestureTapBottomRight", "0");
+    public static StringAsIntKey GestureTapTopLeft = new StringAsIntKey("gestureTapTopLeft", "0");
+    public static StringAsIntKey GestureTapTopRight = new StringAsIntKey("gestureTapTopRight", "0");
+    public static StringAsIntKey GestureTapCenter = new StringAsIntKey("gestureTapCenter", "0");
+    public static StringAsIntKey GestureTapBottomLeft = new StringAsIntKey("gestureTapBottomLeft", "0");
+    public static StringAsIntKey GestureTapBottomRight = new StringAsIntKey("gestureTapBottomRight", "0");
 
     // ActionButtonStatus
     public static CustomButtonPreferenceKey CustomButtonUndo = new CustomButtonPreferenceKey("customButtonUndo", SHOW_AS_ACTION_ALWAYS);
@@ -213,8 +213,14 @@ public class PreferenceKeys {
         }
     }
 
+    /** A value stored as a string, but uses as an int */
+    public static class StringAsIntKey extends PreferenceKey<String> {
+        public StringAsIntKey(String key, String value) {
+            super(key, value);
+        }
+    }
 
-    public static class CustomButtonPreferenceKey extends PreferenceKey<String> {
+    public static class CustomButtonPreferenceKey extends StringAsIntKey {
         public CustomButtonPreferenceKey(String key, @CustomButtonDef int value) {
             super(key, Integer.toString(value));
         }

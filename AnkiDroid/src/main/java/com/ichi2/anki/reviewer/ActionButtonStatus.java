@@ -72,8 +72,8 @@ public class ActionButtonStatus {
     }
 
 
-    private void setupButton(Prefs preferences, @IdRes int resourceId, PreferenceKeys.CustomButtonPreferenceKey key) {
-        mCustomButtons.put(resourceId, Integer.parseInt(preferences.getString(key)));
+    private void setupButton(Prefs preferences, @IdRes int resourceId, PreferenceKeys.StringAsIntKey key) {
+        mCustomButtons.put(resourceId, preferences.getIntFromStr(key));
     }
 
 

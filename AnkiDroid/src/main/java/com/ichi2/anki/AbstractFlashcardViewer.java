@@ -1806,7 +1806,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
         // On newer Androids, ignore this setting, which should be hidden in the prefs anyway.
         mDisableClipboard = "0".equals(prefs.getString(PreferenceKeys.Dictionary));
         // mDeckFilename = preferences.getString("deckFilename", "");
-        mPrefFullscreenReview = Integer.parseInt(prefs.getString(PreferenceKeys.FullscreenMode));
+        mPrefFullscreenReview = prefs.getIntFromStr(PreferenceKeys.FullscreenMode);
         mRelativeButtonSize = prefs.getInt(PreferenceKeys.AnswerButtonSide);
         mSpeakText = prefs.getBoolean(PreferenceKeys.Tts);
         mPrefUseTimer = prefs.getBoolean(PreferenceKeys.TimeoutAnswer);
@@ -1819,15 +1819,15 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
         mGesturesEnabled = AnkiDroidApp.initiateGestures(prefs);
         mLinkOverridesTouchGesture = prefs.getBoolean(PreferenceKeys.LinkOverridesTouchGesture);
         if (mGesturesEnabled) {
-            mGestureSwipeUp = Integer.parseInt(prefs.getString(PreferenceKeys.GestureSwipeUp));
-            mGestureSwipeDown = Integer.parseInt(prefs.getString(PreferenceKeys.GestureSwipeDown));
-            mGestureSwipeLeft = Integer.parseInt(prefs.getString(PreferenceKeys.GestureSwipeLeft));
-            mGestureSwipeRight = Integer.parseInt(prefs.getString(PreferenceKeys.GestureSwipeRight));
-            mGestureDoubleTap = Integer.parseInt(prefs.getString(PreferenceKeys.GestureDoubleTap));
+            mGestureSwipeUp = prefs.getIntFromStr(PreferenceKeys.GestureSwipeUp);
+            mGestureSwipeDown = prefs.getIntFromStr(PreferenceKeys.GestureSwipeDown);
+            mGestureSwipeLeft = prefs.getIntFromStr(PreferenceKeys.GestureSwipeLeft);
+            mGestureSwipeRight = prefs.getIntFromStr(PreferenceKeys.GestureSwipeRight);
+            mGestureDoubleTap = prefs.getIntFromStr(PreferenceKeys.GestureDoubleTap);
             mGestureTapProcessor.init(preferences);
-            mGestureLongclick = Integer.parseInt(prefs.getString(PreferenceKeys.GestureLongClick));
-            mGestureVolumeUp = Integer.parseInt(prefs.getString(PreferenceKeys.GestureVolumeUp));
-            mGestureVolumeDown = Integer.parseInt(prefs.getString(PreferenceKeys.GestureVolumeDown));
+            mGestureLongclick = prefs.getIntFromStr(PreferenceKeys.GestureLongClick);
+            mGestureVolumeUp = prefs.getIntFromStr(PreferenceKeys.GestureVolumeUp);
+            mGestureVolumeDown = prefs.getIntFromStr(PreferenceKeys.GestureVolumeDown);
         }
 
         if (prefs.getBoolean(PreferenceKeys.KeepScreenOn)) {
