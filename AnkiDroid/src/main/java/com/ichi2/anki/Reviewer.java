@@ -34,7 +34,6 @@ import android.os.Handler;
 import android.os.Message;
 import android.text.SpannableString;
 import android.text.style.UnderlineSpan;
-import android.util.Pair;
 import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -71,9 +70,7 @@ import com.ichi2.anki.reviewer.ReviewerUi;
 import com.ichi2.anki.workarounds.FirefoxSnackbarWorkaround;
 import com.ichi2.anki.reviewer.ActionButtons;
 import com.ichi2.async.CollectionTask;
-import com.ichi2.async.TaskListener;
 import com.ichi2.async.TaskManager;
-import com.ichi2.compat.CompatHelper;
 import com.ichi2.libanki.Card;
 import com.ichi2.libanki.Collection;
 import com.ichi2.libanki.Collection.DismissType;
@@ -81,6 +78,8 @@ import com.ichi2.libanki.Consts;
 import com.ichi2.libanki.Decks;
 import com.ichi2.libanki.Utils;
 import com.ichi2.libanki.sched.Counts;
+import com.ichi2.preferences.PreferenceKeys;
+import com.ichi2.preferences.Prefs;
 import com.ichi2.themes.Themes;
 import com.ichi2.utils.AndroidUiUtils;
 import com.ichi2.utils.FunctionalInterfaces.Consumer;
@@ -908,10 +907,11 @@ public class Reviewer extends AbstractFlashcardViewer {
     @Override
     protected SharedPreferences restorePreferences() {
         SharedPreferences preferences = super.restorePreferences();
-        mPrefHideDueCount = preferences.getBoolean("hideDueCount", false);
-        mPrefShowETA = preferences.getBoolean("showETA", true);
+        Prefs prefs = new Prefs(preferences);
+        mPrefHideDueCount = prefs.getBoolean(PreferenceKeys.HideDueCount);
+        mPrefShowETA = prefs.getBoolean(PreferenceKeys.ShowEta);
         this.mProcessor.setup();
-        mPrefFullscreenReview = Integer.parseInt(preferences.getString("fullscreenMode", "0")) > 0;
+        mPrefFullscreenReview = Integer.parseInt(prefs.getString(PreferenceKeys.FullscreenMode)) > 0;
         mActionButtons.setup(preferences);
         return preferences;
     }
@@ -1097,7 +1097,7 @@ public class Reviewer extends AbstractFlashcardViewer {
         );
         // Show / hide the Action bar together with the status bar
         SharedPreferences prefs = AnkiDroidApp.getSharedPrefs(a);
-        final int fullscreenMode = Integer.parseInt(prefs.getString("fullscreenMode", "0"));
+        final int fullscreenMode = Integer.parseInt(Prefs.getString(prefs, PreferenceKeys.FullscreenMode));
         a.getWindow().setStatusBarColor(Themes.getColorFromAttr(a, R.attr.colorPrimaryDark));
         View decorView = a.getWindow().getDecorView();
         decorView.setOnSystemUiVisibilityChangeListener
@@ -1203,11 +1203,12 @@ public class Reviewer extends AbstractFlashcardViewer {
 
     private void disableDrawerSwipeOnConflicts() {
         SharedPreferences preferences = AnkiDroidApp.getSharedPrefs(getBaseContext());
+        Prefs prefs = new Prefs(preferences);
         boolean gesturesEnabled = AnkiDroidApp.initiateGestures(preferences);
         if (gesturesEnabled) {
-            int gestureSwipeUp = Integer.parseInt(preferences.getString("gestureSwipeUp", "9"));
-            int gestureSwipeDown = Integer.parseInt(preferences.getString("gestureSwipeDown", "0"));
-            int gestureSwipeRight = Integer.parseInt(preferences.getString("gestureSwipeRight", "17"));
+            int gestureSwipeUp = Integer.parseInt(prefs.getString(PreferenceKeys.GestureSwipeUp));
+            int gestureSwipeDown = Integer.parseInt(prefs.getString(PreferenceKeys.GestureSwipeDown));
+            int gestureSwipeRight = Integer.parseInt(prefs.getString(PreferenceKeys.GestureSwipeRight));
             if (gestureSwipeUp != COMMAND_NOTHING ||
                     gestureSwipeDown != COMMAND_NOTHING ||
                     gestureSwipeRight != COMMAND_NOTHING) {

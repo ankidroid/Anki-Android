@@ -71,6 +71,10 @@ public class PreferenceKeys {
     public static PreferenceKey<String> BrowserEditorFont = new PreferenceKey<>("browserEditorFont", "");
     public static PreferenceKey<Integer> NoteEditorFontSize = new PreferenceKey<>("note_editor_font_size", -1);
 
+    // Reviewer
+    public static PreferenceKey<Boolean> HideDueCount = new PreferenceKey<>("hideDueCount", false);
+    public static PreferenceKey<Boolean> ShowEta = new PreferenceKey<>("showETA", true);
+
 
 
     public static class PreferenceKey<T> {
