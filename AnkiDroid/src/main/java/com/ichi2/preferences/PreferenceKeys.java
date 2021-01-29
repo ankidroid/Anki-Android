@@ -174,6 +174,9 @@ public class PreferenceKeys {
     // Animations
     public static PreferenceKey<Boolean> SafeDisplay = new PreferenceKey<>("safeDisplay", false);
 
+    // Chess
+    public static PreferenceKey<Boolean> ConvertFenText = new PreferenceKey<>("convertFenText", false);
+
 
 
     public static class PreferenceKey<T> {

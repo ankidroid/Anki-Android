@@ -17,10 +17,10 @@
 package com.ichi2.libanki.hooks;
 
 
-
 import android.content.Context;
 
-import com.ichi2.anki.AnkiDroidApp;
+import com.ichi2.preferences.PreferenceKeys;
+import com.ichi2.preferences.Prefs;
 
 import java.util.Locale;
 import java.util.regex.Matcher;
@@ -63,7 +63,7 @@ public class ChessFilter {
     		"})('%s', %b)";
 
     public static String fenToChessboard(String text, Context context) {
-        if (!AnkiDroidApp.getSharedPrefs(context).getBoolean("convertFenText", false)) {
+        if (!Prefs.fromContext(context).getBoolean(PreferenceKeys.ConvertFenText)) {
             return text;
         }
         boolean showBlack = false;
