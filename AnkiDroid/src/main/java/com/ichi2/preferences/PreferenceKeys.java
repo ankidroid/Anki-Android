@@ -16,6 +16,7 @@
 
 package com.ichi2.preferences;
 
+import com.ichi2.anki.AnkiDroidApp;
 import com.ichi2.anki.Lookup;
 
 import java.lang.annotation.Retention;
@@ -23,6 +24,7 @@ import java.lang.annotation.RetentionPolicy;
 
 import androidx.annotation.IntDef;
 
+import static com.ichi2.anki.AnkiDroidApp.FEEDBACK_REPORT_ASK;
 import static com.ichi2.anki.reviewer.ActionButtonStatus.MENU_DISABLED;
 import static com.ichi2.anki.reviewer.ActionButtonStatus.SHOW_AS_ACTION_ALWAYS;
 import static com.ichi2.anki.reviewer.ActionButtonStatus.SHOW_AS_ACTION_IF_ROOM;
@@ -138,6 +140,15 @@ public class PreferenceKeys {
     public static CustomButtonPreferenceKey CustomButtonEnableWhiteboard = new CustomButtonPreferenceKey("customButtonEnableWhiteboard", SHOW_AS_ACTION_NEVER);
     public static CustomButtonPreferenceKey CustomButtonSaveWhiteboard = new CustomButtonPreferenceKey("customButtonSaveWhiteboard", SHOW_AS_ACTION_NEVER);
     public static CustomButtonPreferenceKey CustomButtonWhiteboardPenColor = new CustomButtonPreferenceKey("customButtonWhiteboardPenColor", SHOW_AS_ACTION_IF_ROOM);
+
+    // Preferences
+    public static PreferenceKey<Boolean> AdvancedStatisticsEnabled = new PreferenceKey<>("advanced_statistics_enabled", false);
+
+    // ACRA
+    // Note: defaulted to "" in Preferences, but should never have been hit
+    public static PreferenceKey<String> FeedbackReportKey = new PreferenceKey<>(AnkiDroidApp.FEEDBACK_REPORT_KEY, FEEDBACK_REPORT_ASK);
+
+
 
     public static class PreferenceKey<T> {
         public String key;

@@ -55,6 +55,8 @@ import com.ichi2.compat.CompatHelper;
 import com.ichi2.libanki.Collection;
 import com.ichi2.libanki.Utils;
 import com.ichi2.preferences.NumberRangePreference;
+import com.ichi2.preferences.PreferenceKeys;
+import com.ichi2.preferences.Prefs;
 import com.ichi2.themes.Themes;
 import com.ichi2.ui.AppCompatPreferenceActivity;
 import com.ichi2.ui.ConfirmationPreference;
@@ -687,7 +689,7 @@ public class Preferences extends AppCompatPreferenceActivity implements Preferen
                     break;
                 }
                 case AnkiDroidApp.FEEDBACK_REPORT_KEY: {
-                    String value = prefs.getString(AnkiDroidApp.FEEDBACK_REPORT_KEY, "");
+                    String value = Prefs.getString(prefs, PreferenceKeys.FeedbackReportKey);
                     AnkiDroidApp.getInstance().setAcraReportingMode(value);
                     // If the user changed error reporting, make sure future reports have a chance to post
                     AnkiDroidApp.deleteACRALimiterData(this);
@@ -696,8 +698,8 @@ public class Preferences extends AppCompatPreferenceActivity implements Preferen
                     break;
                 }
                 case "syncAccount": {
-                    SharedPreferences preferences = AnkiDroidApp.getSharedPrefs(getBaseContext());
-                    String username = preferences.getString("username", "");
+                    Prefs preferences = Prefs.fromContext(getBaseContext());
+                    String username = preferences.getString(PreferenceKeys.Username);
                     android.preference.Preference syncAccount = screen.findPreference("syncAccount");
                     if (syncAccount != null) {
                         if (TextUtils.isEmpty(username)) {
@@ -790,7 +792,7 @@ public class Preferences extends AppCompatPreferenceActivity implements Preferen
 
 
     private void updateGestureCornerTouch(android.preference.PreferenceScreen screen) {
-        boolean gestureCornerTouch = AnkiDroidApp.getSharedPrefs(this).getBoolean("gestureCornerTouch", false);
+        boolean gestureCornerTouch = Prefs.fromContext(this).getBoolean(PreferenceKeys.GestureCornerTouch);
         if (gestureCornerTouch) {
             screen.findPreference("gestureTapTop").setTitle(R.string.gestures_corner_tap_top_center);
             screen.findPreference("gestureTapLeft").setTitle(R.string.gestures_corner_tap_middle_left);
@@ -836,7 +838,7 @@ public class Preferences extends AppCompatPreferenceActivity implements Preferen
                 }
                 break;
             case "advanced_statistics_link":
-                if (!AnkiDroidApp.getSharedPrefs(this).getBoolean("advanced_statistics_enabled", false)) {
+                if (!Prefs.fromContext(this).getBoolean(PreferenceKeys.AdvancedStatisticsEnabled)) {
                     pref.setSummary(R.string.disabled);
                 } else {
                     pref.setSummary(R.string.enabled);
