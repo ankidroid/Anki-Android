@@ -193,6 +193,8 @@ public class PreferenceKeys {
     public static PreferenceKey<Boolean> EnableCustomSyncServer = new PreferenceKey<>(PREFERENCE_ENABLE_CUSTOM_SYNC_SERVER, false);
     // TODO: variable defaults (null/empty): syncBaseUrl, syncMediaUrl
 
+    // BootService
+    public static PreferenceKey<Integer> DayOffset = new PreferenceKey<>("dayOffset", 0);
 
     public static class PreferenceKey<T> {
         public String key;
