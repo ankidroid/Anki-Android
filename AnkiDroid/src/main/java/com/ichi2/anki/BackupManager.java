@@ -23,6 +23,8 @@ import com.ichi2.compat.CompatHelper;
 import com.ichi2.libanki.Collection;
 import com.ichi2.libanki.Utils;
 import com.ichi2.libanki.utils.Time;
+import com.ichi2.preferences.PreferenceKeys;
+import com.ichi2.preferences.Prefs;
 import com.ichi2.utils.FileUtil;
 
 import java.io.BufferedOutputStream;
@@ -98,7 +100,7 @@ public class BackupManager {
     @SuppressWarnings("PMD.NPathComplexity")
     private static boolean performBackupInBackground(final String colPath, int interval, boolean force, @NonNull Time time) {
         SharedPreferences prefs = AnkiDroidApp.getSharedPrefs(AnkiDroidApp.getInstance().getBaseContext());
-        if (prefs.getInt("backupMax", 8) == 0 && !force) {
+        if (Prefs.getInt(prefs, PreferenceKeys.BackupMax) == 0 && !force) {
             Timber.w("backups are disabled");
             return false;
         }
@@ -177,8 +179,8 @@ public class BackupManager {
                     CompatHelper.getCompat().copyFile(colPath, zos);
                     zos.close();
                     // Delete old backup files if needed
-                    SharedPreferences prefs = AnkiDroidApp.getSharedPrefs(AnkiDroidApp.getInstance().getBaseContext());
-                    deleteDeckBackups(colPath, prefs.getInt("backupMax", 8));
+                    Prefs prefs = Prefs.fromContext(AnkiDroidApp.getInstance().getBaseContext());
+                    deleteDeckBackups(colPath,  prefs.getInt(PreferenceKeys.BackupMax));
                     // set timestamp of file in order to avoid creating a new backup unless its changed
                     if (!backupFile.setLastModified(colFile.lastModified())) {
                         Timber.w("performBackupInBackground() setLastModified() failed on file %s", backupFilename);

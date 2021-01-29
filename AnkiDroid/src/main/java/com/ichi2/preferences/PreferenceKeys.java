@@ -198,6 +198,9 @@ public class PreferenceKeys {
     public static PreferenceKey<Integer> DayOffset = new PreferenceKey<>("dayOffset", 0);
     public static PreferenceKey<String> Language = new PreferenceKey<>(Preferences.LANGUAGE, "");
 
+    // Backups
+    public static PreferenceKey<Integer> BackupMax = new PreferenceKey<>("backupMax", 8);
+
 
 
     public static class PreferenceKey<T> {
