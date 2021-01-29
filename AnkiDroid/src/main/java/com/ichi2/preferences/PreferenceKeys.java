@@ -90,6 +90,8 @@ public class PreferenceKeys {
     public static PreferenceKey<String> BrowserEditorFont = new PreferenceKey<>("browserEditorFont", ""); // and card browser
     public static PreferenceKey<Integer> NoteEditorFontSize = new PreferenceKey<>("note_editor_font_size", -1);
 
+    public static PreferenceKey<Boolean> DisableExtendedTextUi = new PreferenceKey<>("disableExtendedTextUi", false);
+
     // Reviewer
     public static PreferenceKey<Boolean> HideDueCount = new PreferenceKey<>("hideDueCount", false);
     public static PreferenceKey<Boolean> ShowEta = new PreferenceKey<>("showETA", true);

@@ -4,7 +4,6 @@ package com.ichi2.anki;
 import android.content.ClipDescription;
 import android.content.ClipboardManager;
 import android.content.Context;
-import android.content.SharedPreferences;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Build;
@@ -17,21 +16,21 @@ import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputConnection;
 import android.widget.EditText;
 
-import java.util.Locale;
-
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.annotation.RequiresApi;
-
-import androidx.core.view.inputmethod.EditorInfoCompat;
-import androidx.core.view.inputmethod.InputConnectionCompat;
-import timber.log.Timber;
-
+import com.ichi2.preferences.PreferenceKeys;
+import com.ichi2.preferences.Prefs;
 import com.ichi2.themes.Themes;
 import com.ichi2.ui.FixedEditText;
 import com.ichi2.utils.ClipboardUtil;
 
+import java.util.Locale;
 import java.util.Objects;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.annotation.RequiresApi;
+import androidx.core.view.inputmethod.EditorInfoCompat;
+import androidx.core.view.inputmethod.InputConnectionCompat;
+import timber.log.Timber;
 
 import static android.view.inputmethod.EditorInfo.IME_FLAG_NO_EXTRACT_UI;
 import static com.ichi2.utils.ClipboardUtil.IMAGE_MIME_TYPES;
@@ -78,8 +77,8 @@ public class FieldEditText extends FixedEditText {
 
     private boolean shouldDisableExtendedTextUi() {
         try {
-            SharedPreferences sp = AnkiDroidApp.getSharedPrefs(this.getContext());
-            return sp.getBoolean("disableExtendedTextUi", false);
+            Prefs prefs = Prefs.fromContext(getContext());
+            return prefs.getBoolean(PreferenceKeys.DisableExtendedTextUi);
         } catch (Exception e) {
             Timber.e(e, "Failed to get extended UI preference");
             return false;
