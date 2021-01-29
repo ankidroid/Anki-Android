@@ -16,6 +16,16 @@
 
 package com.ichi2.preferences;
 
+import java.lang.annotation.Retention;
+import java.lang.annotation.RetentionPolicy;
+
+import androidx.annotation.IntDef;
+
+import static com.ichi2.anki.reviewer.ActionButtonStatus.MENU_DISABLED;
+import static com.ichi2.anki.reviewer.ActionButtonStatus.SHOW_AS_ACTION_ALWAYS;
+import static com.ichi2.anki.reviewer.ActionButtonStatus.SHOW_AS_ACTION_IF_ROOM;
+import static com.ichi2.anki.reviewer.ActionButtonStatus.SHOW_AS_ACTION_NEVER;
+
 /**
  * Keys to ensure consistency between XML and code defaults
  * TODO: No tests have been run on this yet
@@ -105,6 +115,28 @@ public class PreferenceKeys {
     public static PreferenceKey<String> GestureTapBottomLeft = new PreferenceKey<>("gestureTapBottomLeft", "0");
     public static PreferenceKey<String> GestureTapBottomRight = new PreferenceKey<>("gestureTapBottomRight", "0");
 
+    // ActionButtonStatus
+    public static CustomButtonPreferenceKey CustomButtonUndo = new CustomButtonPreferenceKey("customButtonUndo", SHOW_AS_ACTION_ALWAYS);
+    public static CustomButtonPreferenceKey CustomButtonScheduleCard = new CustomButtonPreferenceKey("customButtonScheduleCard", SHOW_AS_ACTION_NEVER);
+    public static CustomButtonPreferenceKey CustomButtonFlag = new CustomButtonPreferenceKey("customButtonFlag", SHOW_AS_ACTION_ALWAYS);
+    public static CustomButtonPreferenceKey CustomButtonTags = new CustomButtonPreferenceKey("customButtonTags", SHOW_AS_ACTION_NEVER);
+    public static CustomButtonPreferenceKey CustomButtonEditCard = new CustomButtonPreferenceKey("customButtonEditCard", SHOW_AS_ACTION_IF_ROOM);
+    public static CustomButtonPreferenceKey CustomButtonAddCard = new CustomButtonPreferenceKey("customButtonAddCard", MENU_DISABLED);
+    public static CustomButtonPreferenceKey CustomButtonReplay = new CustomButtonPreferenceKey("customButtonReplay", SHOW_AS_ACTION_IF_ROOM);
+    public static CustomButtonPreferenceKey CustomButtonCardInfo = new CustomButtonPreferenceKey("customButtonCardInfo", MENU_DISABLED);
+    public static CustomButtonPreferenceKey CustomButtonClearWhiteboard = new CustomButtonPreferenceKey("customButtonClearWhiteboard", SHOW_AS_ACTION_IF_ROOM);
+    public static CustomButtonPreferenceKey CustomButtonShowHideWhiteboard = new CustomButtonPreferenceKey("customButtonShowHideWhiteboard", SHOW_AS_ACTION_ALWAYS);
+    public static CustomButtonPreferenceKey CustomButtonSelectTts = new CustomButtonPreferenceKey("customButtonSelectTts", SHOW_AS_ACTION_NEVER);
+    public static CustomButtonPreferenceKey CustomButtonDeckOptions = new CustomButtonPreferenceKey("customButtonDeckOptions", SHOW_AS_ACTION_NEVER);
+    public static CustomButtonPreferenceKey CustomButtonBury = new CustomButtonPreferenceKey("customButtonBury", SHOW_AS_ACTION_NEVER);
+    public static CustomButtonPreferenceKey CustomButtonSuspend = new CustomButtonPreferenceKey("customButtonSuspend", SHOW_AS_ACTION_NEVER);
+    public static CustomButtonPreferenceKey CustomButtonMarkCard = new CustomButtonPreferenceKey("customButtonMarkCard", SHOW_AS_ACTION_IF_ROOM);
+    public static CustomButtonPreferenceKey CustomButtonDelete = new CustomButtonPreferenceKey("customButtonDelete", SHOW_AS_ACTION_NEVER);
+    public static CustomButtonPreferenceKey CustomButtonToggleMicToolBar = new CustomButtonPreferenceKey("customButtonToggleMicToolBar", SHOW_AS_ACTION_NEVER);
+    public static CustomButtonPreferenceKey CustomButtonEnableWhiteboard = new CustomButtonPreferenceKey("customButtonEnableWhiteboard", SHOW_AS_ACTION_NEVER);
+    public static CustomButtonPreferenceKey CustomButtonSaveWhiteboard = new CustomButtonPreferenceKey("customButtonSaveWhiteboard", SHOW_AS_ACTION_NEVER);
+    public static CustomButtonPreferenceKey CustomButtonWhiteboardPenColor = new CustomButtonPreferenceKey("customButtonWhiteboardPenColor", SHOW_AS_ACTION_IF_ROOM);
+
     public static class PreferenceKey<T> {
         public String key;
         public T defaultValue;
@@ -113,5 +145,17 @@ public class PreferenceKeys {
             this.key = key;
             this.defaultValue = value;
         }
+    }
+
+
+    public static class CustomButtonPreferenceKey extends PreferenceKey<String> {
+        public CustomButtonPreferenceKey(String key, @CustomButtonDef int value) {
+            super(key, Integer.toString(value));
+        }
+
+
+        @Retention(RetentionPolicy.SOURCE)
+        @IntDef({SHOW_AS_ACTION_NEVER, SHOW_AS_ACTION_IF_ROOM, SHOW_AS_ACTION_ALWAYS, MENU_DISABLED })
+        public @interface CustomButtonDef {}
     }
 }
