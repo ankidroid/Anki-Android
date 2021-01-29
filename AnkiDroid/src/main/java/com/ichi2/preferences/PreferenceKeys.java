@@ -37,7 +37,7 @@ import static com.ichi2.anki.web.CustomSyncServer.PREFERENCE_ENABLE_CUSTOM_SYNC_
 
 /**
  * Keys to ensure consistency between XML and code defaults
- * TODO: No tests have been run on this yet
+ * Tested via PreferenceTest.preferenceDefaultsAreNotChangedWhenOpeningPreferences
  * */
 public class PreferenceKeys {
     public static PreferenceKey<Boolean> UseInputTag = new PreferenceKey<>("useInputTag", false);
