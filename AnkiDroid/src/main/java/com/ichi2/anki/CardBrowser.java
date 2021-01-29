@@ -78,6 +78,8 @@ import com.ichi2.libanki.Consts;
 import com.ichi2.libanki.Decks;
 import com.ichi2.libanki.Utils;
 import com.ichi2.libanki.Deck;
+import com.ichi2.preferences.PreferenceKeys;
+import com.ichi2.preferences.Prefs;
 import com.ichi2.themes.Themes;
 import com.ichi2.upgrade.Upgrade;
 import com.ichi2.utils.BooleanGetter;
@@ -172,7 +174,6 @@ public class CardBrowser extends NavigationDrawerActivity implements
     private static final int ADD_NOTE = 1;
     private static final int PREVIEW_CARDS = 2;
 
-    private static final int DEFAULT_FONT_SIZE_RATIO = 100;
     // Should match order of R.array.card_browser_order_labels
     public static final int CARD_ORDER_NONE = 0;
     private static final String[] fSortTypes = new String[] {
@@ -531,7 +532,7 @@ public class CardBrowser extends NavigationDrawerActivity implements
         Timber.d("onCollectionLoaded()");
         registerExternalStorageListener();
 
-        SharedPreferences preferences = AnkiDroidApp.getSharedPrefs(getBaseContext());
+        Prefs preferences = Prefs.fromContext(getBaseContext());
 
         // Load reference to action bar title
         mActionBarTitle = findViewById(R.id.toolbar_title);
@@ -566,7 +567,7 @@ public class CardBrowser extends NavigationDrawerActivity implements
                 break;
             }
         }
-        if (mOrder == 1 && preferences.getBoolean("cardBrowserNoSorting", false)) {
+        if (mOrder == 1 && preferences.getBoolean(PreferenceKeys.CardBrowserNoSorting)) {
             mOrder = 0;
         }
         //This upgrade should already have been done during
@@ -583,7 +584,7 @@ public class CardBrowser extends NavigationDrawerActivity implements
                 R.array.browser_column1_headings, android.R.layout.simple_spinner_item);
         column1Adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         cardsColumn1Spinner.setAdapter(column1Adapter);
-        mColumn1Index = AnkiDroidApp.getSharedPrefs(getBaseContext()).getInt("cardBrowserColumn1", 0);
+        mColumn1Index = preferences.getInt(PreferenceKeys.CardBrowserColumn1);
         cardsColumn1Spinner.setOnItemSelectedListener(new OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int pos, long id) {
@@ -604,7 +605,7 @@ public class CardBrowser extends NavigationDrawerActivity implements
             }
         });
         // Load default value for column2 selection
-        mColumn2Index = AnkiDroidApp.getSharedPrefs(getBaseContext()).getInt("cardBrowserColumn2", 0);
+        mColumn2Index = preferences.getInt(PreferenceKeys.CardBrowserColumn2);
         // Setup the column 2 heading as a spinner so that users can easily change the column type
         Spinner cardsColumn2Spinner = findViewById(R.id.browser_column2_spinner);
         ArrayAdapter<CharSequence> column2Adapter = ArrayAdapter.createFromResource(this,
@@ -632,8 +633,8 @@ public class CardBrowser extends NavigationDrawerActivity implements
             }
         });
         // get the font and font size from the preferences
-        int sflRelativeFontSize = preferences.getInt("relativeCardBrowserFontSize", DEFAULT_FONT_SIZE_RATIO);
-        String sflCustomFont = preferences.getString("browserEditorFont", "");
+        int sflRelativeFontSize = preferences.getInt(PreferenceKeys.RelativeCardBrowserFontSize);
+        String sflCustomFont = preferences.getString(PreferenceKeys.BrowserEditorFont);
         Column[] columnsContent = {COLUMN1_KEYS[mColumn1Index], COLUMN2_KEYS[mColumn2Index]};
         // make a new list adapter mapping the data in mCards to column1 and column2 of R.layout.card_item_browser
         mCardsAdapter = new MultiColumnListAdapter(
@@ -1726,7 +1727,7 @@ public class CardBrowser extends NavigationDrawerActivity implements
 
     @CheckResult
     private static String formatQA(String text, Context context) {
-        boolean showFilenames = AnkiDroidApp.getSharedPrefs(context).getBoolean("card_browser_show_media_filenames", false);
+        boolean showFilenames = Prefs.fromContext(context).getBoolean(PreferenceKeys.CardBrowserShowMediaFilenames);
         return formatQAInternal(text, showFilenames);
     }
 

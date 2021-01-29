@@ -16,8 +16,6 @@
 
 package com.ichi2.preferences;
 
-import android.content.SharedPreferences;
-
 import com.ichi2.anki.AnkiDroidApp;
 import com.ichi2.anki.Lookup;
 
@@ -84,7 +82,7 @@ public class PreferenceKeys {
     public static PreferenceKey<Boolean> NoteEditorCapitalize = new PreferenceKey<>("note_editor_capitalize", true);
     public static PreferenceKey<Boolean> NoteEditorNewlineReplace = new PreferenceKey<>("noteEditorNewlineReplace", true);
     public static PreferenceKey<Boolean> NoteEditorShowToolbar = new PreferenceKey<>("noteEditorShowToolbar", true);
-    public static PreferenceKey<String> BrowserEditorFont = new PreferenceKey<>("browserEditorFont", "");
+    public static PreferenceKey<String> BrowserEditorFont = new PreferenceKey<>("browserEditorFont", ""); // and card browser
     public static PreferenceKey<Integer> NoteEditorFontSize = new PreferenceKey<>("note_editor_font_size", -1);
 
     // Reviewer
@@ -158,6 +156,14 @@ public class PreferenceKeys {
     public static PreferenceKey<Boolean> NoSpaceLeft = new PreferenceKey<>("noSpaceLeft", false);
     public static PreferenceKey<String> LastVersion = new PreferenceKey<>("lastVersion", "");
     public static PreferenceKey<Boolean> DeckPickerBackground = new PreferenceKey<>("deckPickerBackground", false);
+
+    // Card Browser
+    public static PreferenceKey<Boolean> CardBrowserNoSorting = new PreferenceKey<>("cardBrowserNoSorting", false);
+    public static PreferenceKey<Integer> CardBrowserColumn1 = new PreferenceKey<>("cardBrowserColumn1", 0);
+    public static PreferenceKey<Integer> CardBrowserColumn2 = new PreferenceKey<>("cardBrowserColumn2", 0);
+    public static PreferenceKey<Integer> RelativeCardBrowserFontSize = new PreferenceKey<>("relativeCardBrowserFontSize", 100);
+    public static PreferenceKey<Boolean> CardBrowserShowMediaFilenames = new PreferenceKey<>("card_browser_show_media_filenames", false);
+
 
 
 
