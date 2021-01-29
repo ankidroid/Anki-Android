@@ -16,6 +16,8 @@
 
 package com.ichi2.preferences;
 
+import com.ichi2.anki.Lookup;
+
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 
@@ -33,7 +35,7 @@ import static com.ichi2.anki.reviewer.ActionButtonStatus.SHOW_AS_ACTION_NEVER;
 public class PreferenceKeys {
     public static PreferenceKey<Boolean> UseInputTag = new PreferenceKey<>("useInputTag", false);
     public static PreferenceKey<Boolean> NoCodeFormatting = new PreferenceKey<>("noCodeFormatting", false);
-    public static PreferenceKey<String> Dictionary = new PreferenceKey<>("dictionary", "0");
+    public static PreferenceKey<String> Dictionary = new PreferenceKey<>("dictionary", Integer.toString(Lookup.DICTIONARY_NONE));
     public static PreferenceKey<String> FullscreenMode = new PreferenceKey<>("fullscreenMode", "0");
     public static PreferenceKey<Integer> AnswerButtonSide = new PreferenceKey<>("answerButtonSize", 100);
     public static PreferenceKey<Boolean> Tts = new PreferenceKey<>("tts", false);

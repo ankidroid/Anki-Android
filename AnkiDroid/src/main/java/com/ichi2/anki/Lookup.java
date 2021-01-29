@@ -11,6 +11,8 @@ import android.view.View;
 import com.afollestad.materialdialogs.MaterialDialog;
 
 import com.ichi2.libanki.Utils;
+import com.ichi2.preferences.PreferenceKeys;
+import com.ichi2.preferences.Prefs;
 
 import timber.log.Timber;
 
@@ -19,7 +21,7 @@ public class Lookup {
     /**
      * Searches
      */
-    private static final int DICTIONARY_NONE = 0;    // use no dictionary
+    public static final int DICTIONARY_NONE = 0;    // use no dictionary
     private static final int DICTIONARY_AEDICT = 1;  // Japanese dictionary
     private static final int DICTIONARY_EIJIRO_WEB = 2; // japanese web dictionary
     private static final int DICTIONARY_LEO_WEB = 3; // German web dictionary for English, French, Spanish, Italian,
@@ -39,8 +41,8 @@ public class Lookup {
 
     public static boolean initialize(Context context) {
         mContext = context;
-        SharedPreferences preferences = AnkiDroidApp.getSharedPrefs(AnkiDroidApp.getInstance().getBaseContext());
-        mDictionary = Integer.parseInt(preferences.getString("dictionary", Integer.toString(DICTIONARY_NONE)));
+        Prefs preferences = Prefs.fromContext(AnkiDroidApp.getInstance().getBaseContext());
+        mDictionary = Integer.parseInt(preferences.getString(PreferenceKeys.Dictionary));
         switch (mDictionary) {
             case DICTIONARY_AEDICT:
                 mDictionaryAction = "sk.baka.aedict.action.ACTION_SEARCH_EDICT";
