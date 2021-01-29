@@ -23,6 +23,8 @@ import com.ichi2.anki.AnkiDroidApp;
 
 public class Prefs {
 
+    // TODO: StringSet - ensure that it does not accept and return a mutable class.
+
     private final SharedPreferences mPreferences;
 
     public Prefs(SharedPreferences preferences) {

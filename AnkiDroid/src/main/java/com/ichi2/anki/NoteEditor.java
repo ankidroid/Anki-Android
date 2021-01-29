@@ -25,7 +25,6 @@ import android.content.ClipboardManager;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
-import android.content.SharedPreferences;
 import android.content.res.Resources;
 import android.graphics.Typeface;
 import android.graphics.drawable.Drawable;
@@ -92,13 +91,14 @@ import com.ichi2.async.TaskManager;
 import com.ichi2.compat.CompatHelper;
 import com.ichi2.libanki.Card;
 import com.ichi2.libanki.Collection;
-import com.ichi2.libanki.Consts;
 import com.ichi2.libanki.Models;
 import com.ichi2.libanki.Model;
 import com.ichi2.libanki.Note;
 import com.ichi2.libanki.Note.ClozeUtils;
 import com.ichi2.libanki.Utils;
 import com.ichi2.libanki.Deck;
+import com.ichi2.preferences.PreferenceKeys;
+import com.ichi2.preferences.Prefs;
 import com.ichi2.themes.StyledProgressDialog;
 import com.ichi2.themes.Themes;
 import com.ichi2.anki.widgets.PopupMenuWithIcons;
@@ -1097,18 +1097,18 @@ public class NoteEditor extends AnkiActivity {
         }
 
         menu.findItem(R.id.action_show_toolbar).setChecked(!shouldHideToolbar());
-        menu.findItem(R.id.action_capitalize).setChecked(AnkiDroidApp.getSharedPrefs(this).getBoolean("note_editor_capitalize", true));
+        menu.findItem(R.id.action_capitalize).setChecked(Prefs.getBoolean(this, PreferenceKeys.NoteEditorCapitalize));
 
         return super.onCreateOptionsMenu(menu);
     }
 
 
     protected static boolean shouldReplaceNewlines() {
-        return AnkiDroidApp.getSharedPrefs(AnkiDroidApp.getInstance()).getBoolean("noteEditorNewlineReplace", true);
+        return Prefs.getBoolean(AnkiDroidApp.getInstance(), PreferenceKeys.NoteEditorNewlineReplace);
     }
 
     protected static boolean shouldHideToolbar() {
-        return !AnkiDroidApp.getSharedPrefs(AnkiDroidApp.getInstance()).getBoolean("noteEditorShowToolbar", true);
+        return !Prefs.getBoolean(AnkiDroidApp.getInstance(), PreferenceKeys.NoteEditorShowToolbar);
     }
 
     @Override
@@ -1475,8 +1475,8 @@ public class NoteEditor extends AnkiActivity {
 
         // Use custom font if selected from preferences
         Typeface mCustomTypeface = null;
-        SharedPreferences preferences = AnkiDroidApp.getSharedPrefs(getBaseContext());
-        String customFont = preferences.getString("browserEditorFont", "");
+        Prefs prefs = new Prefs(AnkiDroidApp.getSharedPrefs(getBaseContext()));
+        String customFont = prefs.getString(PreferenceKeys.BrowserEditorFont);
         if (!"".equals(customFont)) {
             mCustomTypeface = AnkiFont.getTypeface(this, customFont);
         }
@@ -1515,11 +1515,12 @@ public class NoteEditor extends AnkiActivity {
             edit_line_view.setHintLocale(getHintLocaleForField(edit_line_view.getName()));
             initFieldEditText(newTextbox, i, !editModelMode);
             mEditFields.add(newTextbox);
-            SharedPreferences prefs = AnkiDroidApp.getSharedPrefs(this);
-            if (prefs.getInt("note_editor_font_size", -1) > 0) {
-                newTextbox.setTextSize(prefs.getInt("note_editor_font_size", -1));
+
+            int noteEditorFontSize = prefs.getInt(PreferenceKeys.NoteEditorFontSize);
+            if (noteEditorFontSize > 0) {
+                newTextbox.setTextSize(noteEditorFontSize);
             }
-            newTextbox.setCapitalize(prefs.getBoolean("note_editor_capitalize", true));
+            newTextbox.setCapitalize(prefs.getBoolean(PreferenceKeys.NoteEditorCapitalize));
 
             ImageButton mediaButton = edit_line_view.getMediaButton();
             // Load icons from attributes

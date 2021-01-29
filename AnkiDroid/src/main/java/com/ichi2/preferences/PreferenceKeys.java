@@ -64,6 +64,13 @@ public class PreferenceKeys {
     // DialogHandler
     public static PreferenceKey<Long> LastSyncTime = new PreferenceKey<>("lastSyncTime", 0L);
 
+    // Note Editor
+    public static PreferenceKey<Boolean> NoteEditorCapitalize = new PreferenceKey<>("note_editor_capitalize", true);
+    public static PreferenceKey<Boolean> NoteEditorNewlineReplace = new PreferenceKey<>("noteEditorNewlineReplace", true);
+    public static PreferenceKey<Boolean> NoteEditorShowToolbar = new PreferenceKey<>("noteEditorShowToolbar", true);
+    public static PreferenceKey<String> BrowserEditorFont = new PreferenceKey<>("browserEditorFont", "");
+    public static PreferenceKey<Integer> NoteEditorFontSize = new PreferenceKey<>("note_editor_font_size", -1);
+
 
 
     public static class PreferenceKey<T> {
