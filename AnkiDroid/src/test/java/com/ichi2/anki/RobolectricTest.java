@@ -217,7 +217,16 @@ public class RobolectricTest {
 
 
     protected Context getTargetContext() {
-        return ApplicationProvider.getApplicationContext();
+        try {
+            return ApplicationProvider.getApplicationContext();
+        } catch (IllegalStateException e) {
+            if (e.getMessage() != null && e.getMessage().startsWith("No instrumentation registered!")) {
+                // Explicitly ignore the inner exception - generates line noise
+                throw new IllegalStateException("Annotate class: '" + getClass().getSimpleName() + "' with '@RunWith(AndroidJUnit4.class)'");
+            }
+            throw e;
+        }
+
     }
 
 
