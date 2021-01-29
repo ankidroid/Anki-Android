@@ -1816,7 +1816,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
         mDoubleScrolling = prefs.getBoolean(PreferenceKeys.DoubleScrolling);
         mPrefShowTopbar = prefs.getBoolean(PreferenceKeys.ShowTopBar);
 
-        mGesturesEnabled = AnkiDroidApp.initiateGestures(preferences);
+        mGesturesEnabled = AnkiDroidApp.initiateGestures(prefs);
         mLinkOverridesTouchGesture = prefs.getBoolean(PreferenceKeys.LinkOverridesTouchGesture);
         if (mGesturesEnabled) {
             mGestureSwipeUp = Integer.parseInt(prefs.getString(PreferenceKeys.GestureSwipeUp));

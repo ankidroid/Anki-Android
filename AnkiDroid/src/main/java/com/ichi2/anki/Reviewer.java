@@ -1202,9 +1202,8 @@ public class Reviewer extends AbstractFlashcardViewer {
 
 
     private void disableDrawerSwipeOnConflicts() {
-        SharedPreferences preferences = AnkiDroidApp.getSharedPrefs(getBaseContext());
-        Prefs prefs = new Prefs(preferences);
-        boolean gesturesEnabled = AnkiDroidApp.initiateGestures(preferences);
+        Prefs prefs = Prefs.fromContext(getBaseContext());
+        boolean gesturesEnabled = AnkiDroidApp.initiateGestures(prefs);
         if (gesturesEnabled) {
             int gestureSwipeUp = Integer.parseInt(prefs.getString(PreferenceKeys.GestureSwipeUp));
             int gestureSwipeDown = Integer.parseInt(prefs.getString(PreferenceKeys.GestureSwipeDown));

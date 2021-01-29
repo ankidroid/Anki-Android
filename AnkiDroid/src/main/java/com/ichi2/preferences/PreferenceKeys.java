@@ -52,6 +52,8 @@ public class PreferenceKeys {
     public static PreferenceKey<Boolean> ShowTopBar = new PreferenceKey<>("showTopbar", true);
     public static PreferenceKey<Boolean> LinkOverridesTouchGesture = new PreferenceKey<>("linkOverridesTouchGesture", false);
 
+    public static PreferenceKey<Boolean> Gestures = new PreferenceKey<>("gestures", false);
+    public static PreferenceKey<Integer> SwipeSensitivity = new PreferenceKey<>( "swipeSensitivity", 100);
     public static PreferenceKey<String> GestureSwipeUp = new PreferenceKey<>("gestureSwipeUp", "9");
     public static PreferenceKey<String> GestureSwipeDown = new PreferenceKey<>("gestureSwipeDown", "0");
     public static PreferenceKey<String> GestureSwipeLeft = new PreferenceKey<>("gestureSwipeLeft", "8");

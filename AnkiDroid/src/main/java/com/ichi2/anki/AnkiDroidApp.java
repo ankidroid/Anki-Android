@@ -47,6 +47,8 @@ import com.ichi2.anki.exception.StorageAccessException;
 import com.ichi2.anki.services.BootService;
 import com.ichi2.anki.services.NotificationService;
 import com.ichi2.compat.CompatHelper;
+import com.ichi2.preferences.PreferenceKeys;
+import com.ichi2.preferences.Prefs;
 import com.ichi2.utils.AdaptionUtil;
 import com.ichi2.utils.ExceptionUtil;
 import com.ichi2.utils.LanguageUtil;
@@ -489,10 +491,10 @@ public class AnkiDroidApp extends Application {
     }
 
 
-    public static boolean initiateGestures(SharedPreferences preferences) {
-        boolean enabled = preferences.getBoolean("gestures", false);
+    public static boolean initiateGestures(Prefs preferences) {
+        boolean enabled = preferences.getBoolean(PreferenceKeys.Gestures);
         if (enabled) {
-            int sensitivity = preferences.getInt("swipeSensitivity", 100);
+            int sensitivity = preferences.getInt(PreferenceKeys.SwipeSensitivity);
             if (sensitivity != 100) {
                 float sens = 100.0f/sensitivity;
                 sSwipeMinDistance = (int) (DEFAULT_SWIPE_MIN_DISTANCE * sens + 0.5f);
