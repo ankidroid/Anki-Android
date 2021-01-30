@@ -937,7 +937,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
                         response.setResponseHeaders(headers);
                         return response;
                     } catch (Exception e) {
-                        Timber.e(e, "Error trying to open path in asset loader");
+                        Timber.w(e, "Error trying to open path in asset loader");
                     }
 
                     return null;
