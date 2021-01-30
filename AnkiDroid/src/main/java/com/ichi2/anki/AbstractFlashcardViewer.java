@@ -50,7 +50,6 @@ import androidx.annotation.VisibleForTesting;
 import androidx.coordinatorlayout.widget.CoordinatorLayout;
 import androidx.core.content.ContextCompat;
 import androidx.appcompat.app.ActionBar;
-import androidx.webkit.internal.AssetHelper;
 import androidx.webkit.WebViewAssetLoader;
 
 import android.text.TextUtils;
@@ -122,6 +121,7 @@ import com.ichi2.themes.HtmlColors;
 import com.ichi2.themes.Themes;
 import com.ichi2.utils.AdaptionUtil;
 import com.ichi2.utils.AndroidUiUtils;
+import com.ichi2.utils.AssetHelper;
 import com.ichi2.utils.ClipboardUtil;
 import com.ichi2.utils.BooleanGetter;
 import com.ichi2.utils.CardGetter;
