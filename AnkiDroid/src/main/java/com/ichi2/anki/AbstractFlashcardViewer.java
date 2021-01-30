@@ -921,27 +921,24 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
         mViewerUrl = mBaseUrl + "__viewer__.html";
 
         mAssetLoader = new WebViewAssetLoader.Builder()
-            .addPathHandler("/", new WebViewAssetLoader.PathHandler() {
-                @Override
-                public WebResourceResponse handle(String path) {
-                    try {
-                        File file = new File(mediaDir, path);
-                        FileInputStream is = new FileInputStream(file);
+            .addPathHandler("/", path -> {
+                try {
+                    File file = new File(mediaDir, path);
+                    FileInputStream is = new FileInputStream(file);
 
-                        String mimeType = AssetHelper.guessMimeType(path);
+                    String mimeType = AssetHelper.guessMimeType(path);
 
-                        HashMap<String, String> headers = new HashMap<String, String>();
-                        headers.put("Access-Control-Allow-Origin", "*");
+                    HashMap<String, String> headers = new HashMap<>();
+                    headers.put("Access-Control-Allow-Origin", "*");
 
-                        WebResourceResponse response = new WebResourceResponse(mimeType, null, is);
-                        response.setResponseHeaders(headers);
-                        return response;
-                    } catch (Exception e) {
-                        Timber.w(e, "Error trying to open path in asset loader");
-                    }
-
-                    return null;
+                    WebResourceResponse response = new WebResourceResponse(mimeType, null, is);
+                    response.setResponseHeaders(headers);
+                    return response;
+                } catch (Exception e) {
+                    Timber.w(e, "Error trying to open path in asset loader");
                 }
+
+                return null;
             })
             .build();
 
