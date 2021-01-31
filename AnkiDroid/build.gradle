@@ -240,6 +240,7 @@ dependencies {
     implementation 'org.apache.commons:commons-compress:1.12' // #6419 - handle >2GB apkg files
     implementation 'androidx.constraintlayout:constraintlayout:2.0.4'
     implementation 'androidx.webkit:webkit:1.4.0'
+    implementation 'com.drakeet.drawer:drawer:1.0.3'
 
     // == Rust conversion (from Anki-Android-Backend on GitHub) ==
     String backendVersion = "0.1.2" // We want both testing and implementation on the same version
