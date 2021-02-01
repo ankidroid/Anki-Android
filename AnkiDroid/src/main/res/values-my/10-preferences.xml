@@ -41,7 +41,7 @@
     <!-- generic strings -->
     <string name="disabled">Disabled</string>
     <string name="enabled">Enabled</string>
-    <!-- preferences.xml categories-->
+    <!--  categories-->
     <string name="pref_cat_general_summ">General settings</string>
     <string name="pref_cat_reviewing">Reviewing</string>
     <string name="pref_cat_reviewing_summ">Non-deck-specific reviewer settings</string>

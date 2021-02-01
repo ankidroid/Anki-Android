@@ -40,16 +40,16 @@ public class PeripheralKeymapTest {
     @Test
     public void testNumpadAction() {
         // #7736 Ensures that a numpad key is passed through (mostly testing num lock)
-        List<Integer> processed = new ArrayList<>();
+        List<ViewerCommand> processed = new ArrayList<>();
 
-        PeripheralKeymap peripheralKeymap = new PeripheralKeymap(MockReviewerUi.displayingAnswer(), processed::add);
-        peripheralKeymap.setup();
+        KeyProcessor keyProcessor = new KeyProcessor(processed::add);
 
-        peripheralKeymap.onKeyUp(KeyEvent.KEYCODE_NUMPAD_1, getNumpadEvent(KeyEvent.KEYCODE_NUMPAD_1));
+        keyProcessor.add(Binding.keyCode(KeyEvent.KEYCODE_NUMPAD_1), ViewerCommand.ANSWER_FIRST_BUTTON);
 
+        keyProcessor.onKey(getNumpadEvent(KeyEvent.KEYCODE_NUMPAD_1));
 
         assertThat(processed, hasSize(1));
-        assertThat(processed.get(0), is(ViewerCommand.COMMAND_ANSWER_FIRST_BUTTON));
+        assertThat(processed.get(0), is(ViewerCommand.ANSWER_FIRST_BUTTON));
     }
 
 

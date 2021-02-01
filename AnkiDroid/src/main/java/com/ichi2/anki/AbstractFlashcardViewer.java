@@ -91,14 +91,15 @@ import android.widget.TextView;
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.google.android.material.snackbar.Snackbar;
 import com.ichi2.anim.ViewAnimation;
-import com.ichi2.anki.cardviewer.GestureTapProcessor;
 import com.ichi2.anki.cardviewer.MissingImageHandler;
+import com.ichi2.anki.cardviewer.ViewerCommand;
 import com.ichi2.anki.dialogs.TagsDialog;
 import com.ichi2.anki.multimediacard.AudioView;
 import com.ichi2.anki.cardviewer.CardAppearance;
 import com.ichi2.anki.receiver.SdCardReceiver;
 import com.ichi2.anki.reviewer.CardMarker;
 import com.ichi2.anki.cardviewer.CardTemplate;
+import com.ichi2.anki.reviewer.GestureProcessor;
 import com.ichi2.anki.reviewer.ReviewerCustomFonts;
 import com.ichi2.anki.reviewer.ReviewerUi;
 import com.ichi2.anki.cardviewer.TypedAnswer;
@@ -232,7 +233,6 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
     private int mRelativeButtonSize;
     private boolean mDoubleScrolling;
     private boolean mScrollingButtons;
-    private boolean mGesturesEnabled;
     // Android WebView
     protected boolean mSpeakText;
     protected boolean mDisableClipboard = false;
@@ -329,18 +329,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
     private boolean mIsXScrolling = false;
     private boolean mIsYScrolling = false;
 
-    /**
-     * Gesture Allocation
-     */
-    private int mGestureSwipeUp;
-    private int mGestureSwipeDown;
-    private int mGestureSwipeLeft;
-    private int mGestureSwipeRight;
-    private int mGestureDoubleTap;
-    private int mGestureLongclick;
-    private int mGestureVolumeUp;
-    private int mGestureVolumeDown;
-    private GestureTapProcessor mGestureTapProcessor = new GestureTapProcessor();
+    protected GestureProcessor mGestureProcessor = new GestureProcessor(this);
 
     private String mCardContent;
     private String mBaseUrl;
@@ -412,7 +401,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
     private final Runnable startLongClickAction = new Runnable() {
         @Override
         public void run() {
-            executeCommand(mGestureLongclick);
+            mGestureProcessor.onLongTap();
         }
     };
 
@@ -1094,22 +1083,6 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
         return false;
     }
 
-
-    @Override
-    public boolean onKeyUp(int keyCode, KeyEvent event) {
-        if (answerFieldIsFocused()) {
-            return super.onKeyUp(keyCode, event);
-        }
-        if (!sDisplayAnswer) {
-            if (keyCode == KeyEvent.KEYCODE_SPACE || keyCode == KeyEvent.KEYCODE_ENTER || keyCode == KeyEvent.KEYCODE_NUMPAD_ENTER) {
-                displayCardAnswer();
-                return true;
-            }
-        }
-        return super.onKeyUp(keyCode, event);
-    }
-
-
     protected boolean answerFieldIsFocused() {
         return mAnswerField != null && mAnswerField.isFocused();
     }
@@ -1459,33 +1432,6 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
         TaskManager.launchCollectionTask(new CollectionTask.AnswerAndGetCard(mCurrentCard, mCurrentEase), mAnswerCardHandler(true));
     }
 
-
-    @Override
-    public boolean dispatchKeyEvent(KeyEvent event) {
-        if (event.getAction() == KeyEvent.ACTION_DOWN) {
-            // assign correct gesture code
-            int gesture = COMMAND_NOTHING;
-
-            switch (event.getKeyCode()) {
-                case KeyEvent.KEYCODE_VOLUME_UP:
-                    gesture = mGestureVolumeUp;
-                    break;
-                case KeyEvent.KEYCODE_VOLUME_DOWN:
-                    gesture = mGestureVolumeDown;
-                    break;
-            }
-
-            // Execute gesture's command, but only consume event if action is assigned. We want the volume buttons to work normally otherwise.
-            if (gesture != COMMAND_NOTHING) {
-                executeCommand(gesture);
-                return true;
-            }
-        }
-
-        return super.dispatchKeyEvent(event);
-    }
-
-
     // Set the content view to the one provided and initialize accessors.
     protected void initLayout() {
         FrameLayout mCardContainer = findViewById(R.id.flashcard_frame);
@@ -1815,19 +1761,9 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
         mDoubleScrolling = preferences.getBoolean("double_scrolling", false);
         mPrefShowTopbar = preferences.getBoolean("showTopbar", true);
 
-        mGesturesEnabled = AnkiDroidApp.initiateGestures(preferences);
         mLinkOverridesTouchGesture = preferences.getBoolean("linkOverridesTouchGesture", false);
-        if (mGesturesEnabled) {
-            mGestureSwipeUp = Integer.parseInt(preferences.getString("gestureSwipeUp", "9"));
-            mGestureSwipeDown = Integer.parseInt(preferences.getString("gestureSwipeDown", "0"));
-            mGestureSwipeLeft = Integer.parseInt(preferences.getString("gestureSwipeLeft", "8"));
-            mGestureSwipeRight = Integer.parseInt(preferences.getString("gestureSwipeRight", "17"));
-            mGestureDoubleTap = Integer.parseInt(preferences.getString("gestureDoubleTap", "7"));
-            mGestureTapProcessor.init(preferences);
-            mGestureLongclick = Integer.parseInt(preferences.getString("gestureLongclick", "11"));
-            mGestureVolumeUp = Integer.parseInt(preferences.getString("gestureVolumeUp", "0"));
-            mGestureVolumeDown = Integer.parseInt(preferences.getString("gestureVolumeDown", "0"));
-        }
+
+        mGestureProcessor.init(preferences);
 
         if (preferences.getBoolean("keepScreenOn", false)) {
             this.getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
@@ -2576,120 +2512,120 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
         }
     }
 
-    public boolean executeCommand(@ViewerCommandDef int which) {
-        if (isControlBlocked() && which != COMMAND_EXIT) {
+    public boolean executeCommand(ViewerCommand which) {
+        if (isControlBlocked() && which != EXIT) {
             return false;
         }
         switch (which) {
-            case COMMAND_NOTHING:
+            case NOTHING:
                 return true;
-            case COMMAND_SHOW_ANSWER:
+            case SHOW_ANSWER:
                 if (sDisplayAnswer) {
                     return false;
                 }
                 displayCardAnswer();
                 return true;
-            case COMMAND_FLIP_OR_ANSWER_EASE1:
+            case FLIP_OR_ANSWER_EASE1:
                 flipOrAnswerCard(EASE_1);
                 return true;
-            case COMMAND_FLIP_OR_ANSWER_EASE2:
+            case FLIP_OR_ANSWER_EASE2:
                 flipOrAnswerCard(EASE_2);
                 return true;
-            case COMMAND_FLIP_OR_ANSWER_EASE3:
+            case FLIP_OR_ANSWER_EASE3:
                 flipOrAnswerCard(EASE_3);
                 return true;
-            case COMMAND_FLIP_OR_ANSWER_EASE4:
+            case FLIP_OR_ANSWER_EASE4:
                 flipOrAnswerCard(EASE_4);
                 return true;
-            case COMMAND_FLIP_OR_ANSWER_RECOMMENDED:
+            case FLIP_OR_ANSWER_RECOMMENDED:
                 flipOrAnswerCard(getRecommendedEase(false));
                 return true;
-            case COMMAND_FLIP_OR_ANSWER_BETTER_THAN_RECOMMENDED:
+            case FLIP_OR_ANSWER_BETTER_THAN_RECOMMENDED:
                 flipOrAnswerCard(getRecommendedEase(true));
                 return true;
-            case COMMAND_EXIT:
+            case EXIT:
                 closeReviewer(RESULT_DEFAULT, false);
                 return true;
-            case COMMAND_UNDO:
+            case UNDO:
                 if (!isUndoAvailable()) {
                     return false;
                 }
                 undo();
                 return true;
-            case COMMAND_EDIT:
+            case EDIT:
                 editCard();
                 return true;
-            case COMMAND_CARD_INFO:
+            case CARD_INFO:
                 openCardInfo();
                 return true;
-            case COMMAND_TAG:
+            case TAG:
                 showTagsDialog();
                 return true;
-            case COMMAND_MARK:
+            case MARK:
                 onMark(mCurrentCard);
                 return true;
-            case COMMAND_LOOKUP:
+            case LOOKUP:
                 lookUpOrSelectText();
                 return true;
-            case COMMAND_BURY_CARD:
+            case BURY_CARD:
                 dismiss(Collection.DismissType.BURY_CARD);
                 return true;
-            case COMMAND_BURY_NOTE:
+            case BURY_NOTE:
                 dismiss(Collection.DismissType.BURY_NOTE);
                 return true;
-            case COMMAND_SUSPEND_CARD:
+            case SUSPEND_CARD:
                 dismiss(Collection.DismissType.SUSPEND_CARD);
                 return true;
-            case COMMAND_SUSPEND_NOTE:
+            case SUSPEND_NOTE:
                 dismiss(Collection.DismissType.SUSPEND_NOTE);
                 return true;
-            case COMMAND_DELETE:
+            case DELETE:
                 showDeleteNoteDialog();
                 return true;
-            case COMMAND_PLAY_MEDIA:
+            case PLAY_MEDIA:
                 playSounds(true);
                 return true;
-            case COMMAND_TOGGLE_FLAG_RED:
+            case TOGGLE_FLAG_RED:
                 toggleFlag(FLAG_RED);
                 return true;
-            case COMMAND_TOGGLE_FLAG_ORANGE:
+            case TOGGLE_FLAG_ORANGE:
                 toggleFlag(FLAG_ORANGE);
                 return true;
-            case COMMAND_TOGGLE_FLAG_GREEN:
+            case TOGGLE_FLAG_GREEN:
                 toggleFlag(FLAG_GREEN);
                 return true;
-            case COMMAND_TOGGLE_FLAG_BLUE:
+            case TOGGLE_FLAG_BLUE:
                 toggleFlag(FLAG_BLUE);
                 return true;
-            case COMMAND_UNSET_FLAG:
+            case UNSET_FLAG:
                 onFlag(mCurrentCard, FLAG_NONE);
                 return true;
-            case COMMAND_ANSWER_FIRST_BUTTON:
+            case ANSWER_FIRST_BUTTON:
                 return answerCardIfVisible(Consts.BUTTON_ONE);
-            case COMMAND_ANSWER_SECOND_BUTTON:
+            case ANSWER_SECOND_BUTTON:
                 return answerCardIfVisible(Consts.BUTTON_TWO);
-            case COMMAND_ANSWER_THIRD_BUTTON:
+            case ANSWER_THIRD_BUTTON:
                 return answerCardIfVisible(Consts.BUTTON_THREE);
-            case COMMAND_ANSWER_FOURTH_BUTTON:
+            case ANSWER_FOURTH_BUTTON:
                 return answerCardIfVisible(Consts.BUTTON_FOUR);
-            case COMMAND_ANSWER_RECOMMENDED:
+            case ANSWER_RECOMMENDED:
                 return answerCardIfVisible(getRecommendedEase(false));
-            case COMMAND_PAGE_UP:
+            case PAGE_UP:
                 onPageUp();
                 return true;
-            case COMMAND_PAGE_DOWN:
+            case PAGE_DOWN:
                 onPageDown();
                 return true;
-            case COMMAND_ABORT_AND_SYNC:
+            case ABORT_AND_SYNC:
                 abortAndSync();
                 return true;
-            case COMMAND_RECORD_VOICE:
+            case RECORD_VOICE:
                 recordVoice();
                 return true;
-            case COMMAND_REPLAY_VOICE:
+            case REPLAY_VOICE:
                 replayVoice();
                 return true;
-            case COMMAND_TOGGLE_WHITEBOARD:
+            case TOGGLE_WHITEBOARD:
                 toggleWhiteboard();
                 return true;
             default:
@@ -2926,41 +2862,12 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
 
             // Go back to immersive mode if the user had temporarily exited it (and then execute swipe gesture)
             AbstractFlashcardViewer.this.onFling();
-            if (mGesturesEnabled) {
-                try {
-                    float dy = e2.getY() - e1.getY();
-                    float dx = e2.getX() - e1.getX();
+            if (mGestureProcessor.isEnabled()) {
+                float dx = e2.getX() - e1.getX();
+                float dy = e2.getY() - e1.getY();
 
-                    if (Math.abs(dx) > Math.abs(dy)) {
-                        // horizontal swipe if moved further in x direction than y direction
-                        if (dx > AnkiDroidApp.sSwipeMinDistance
-                                && Math.abs(velocityX) > AnkiDroidApp.sSwipeThresholdVelocity
-                                && !mIsXScrolling && !mIsSelecting) {
-                            // right
-                            executeCommand(mGestureSwipeRight);
-                        } else if (dx < -AnkiDroidApp.sSwipeMinDistance
-                                && Math.abs(velocityX) > AnkiDroidApp.sSwipeThresholdVelocity
-                                && !mIsXScrolling && !mIsSelecting) {
-                            // left
-                            executeCommand(mGestureSwipeLeft);
-                        }
-                    } else {
-                        // otherwise vertical swipe
-                        if (dy > AnkiDroidApp.sSwipeMinDistance
-                                && Math.abs(velocityY) > AnkiDroidApp.sSwipeThresholdVelocity
-                                && !mIsYScrolling) {
-                            // down
-                            executeCommand(mGestureSwipeDown);
-                        } else if (dy < -AnkiDroidApp.sSwipeMinDistance
-                                && Math.abs(velocityY) > AnkiDroidApp.sSwipeThresholdVelocity
-                                && !mIsYScrolling) {
-                            // up
-                            executeCommand(mGestureSwipeUp);
-                        }
-                    }
-                } catch (Exception e) {
-                    Timber.e(e, "onFling Exception");
-                }
+                mGestureProcessor.onFling(dx, dy, velocityX, velocityY,
+                        mIsSelecting, mIsXScrolling, mIsYScrolling);
             }
             return false;
         }
@@ -2973,12 +2880,10 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
             return e1.getX() < margin || e1.getY() < margin || height - e1.getY() < margin || width - e1.getX() < margin;
         }
 
-
-
         @Override
         public boolean onDoubleTap(MotionEvent e) {
-            if (mGesturesEnabled) {
-                executeCommand(mGestureDoubleTap);
+            if (mGestureProcessor.isEnabled()) {
+                mGestureProcessor.onDoubleTab();
             }
             return true;
         }
@@ -3006,15 +2911,13 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
 
 
         protected void executeTouchCommand(@NonNull MotionEvent e) {
-            if (mGesturesEnabled && !mIsSelecting) {
+            if (mGestureProcessor.isEnabled() && !mIsSelecting) {
                 int height = mTouchLayer.getHeight();
                 int width = mTouchLayer.getWidth();
                 float posX = e.getX();
                 float posY = e.getY();
 
-                int gesture = mGestureTapProcessor.getCommandFromTap(height, width, posX, posY);
-
-                executeCommand(gesture);
+                 mGestureProcessor.onTap(height, width, posX, posY);
             }
             mIsSelecting = false;
             showLookupButtonIfNeeded();
@@ -3421,7 +3324,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
                     showDeveloperContact(ankiJsErrorCodeDefault);
                     return true;
                 } else if (mJsApiListMap.get("markCard")) {
-                    executeCommand(COMMAND_MARK);
+                    executeCommand(MARK);
                 } else {
                     // see 02-string.xml
                     showDeveloperContact(ankiJsErrorCodeMarkCard);
@@ -3441,15 +3344,15 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
 
                 String mFlag = url.replaceFirst("signal:flag_","");
                 switch (mFlag) {
-                    case "none": executeCommand(COMMAND_UNSET_FLAG);
+                    case "none": executeCommand(UNSET_FLAG);
                         return true;
-                    case "red": executeCommand(COMMAND_TOGGLE_FLAG_RED);
+                    case "red": executeCommand(TOGGLE_FLAG_RED);
                         return true;
-                    case "orange": executeCommand(COMMAND_TOGGLE_FLAG_ORANGE);
+                    case "orange": executeCommand(TOGGLE_FLAG_ORANGE);
                         return true;
-                    case "green": executeCommand(COMMAND_TOGGLE_FLAG_GREEN);
+                    case "green": executeCommand(TOGGLE_FLAG_GREEN);
                         return true;
-                    case "blue": executeCommand(COMMAND_TOGGLE_FLAG_BLUE);
+                    case "blue": executeCommand(TOGGLE_FLAG_BLUE);
                         return true;
                     default:
                         Timber.d("No such Flag found.");

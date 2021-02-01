@@ -51,14 +51,14 @@
             android:value="com.ichi2.anki.prefs.appearance" />
     </header>
 
-    <!-- Navigation Prefrences -->
+    <!-- Binding Preferences -->
     <header
         android:fragment="com.ichi2.anki.Preferences$SettingsFragment"
         android:summary="@string/pref_cat_gestures_summ"
         android:title="@string/pref_cat_gestures">
         <extra
             android:name="subscreen"
-            android:value="com.ichi2.anki.prefs.gestures" />
+            android:value="com.ichi2.anki.prefs.bindings" />
     </header>
 
     <!-- Advanced Preferences -->

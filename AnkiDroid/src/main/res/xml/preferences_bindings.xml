@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+~ Copyright (c) 2009 Nicolas Raoul <nicolas.raoul@gmail.com>
+~ Copyright (c) 2009 Edu Zamora <edu.zasu@gmail.com>
+~ Copyright (c) 2009 Jordi Chacon <jordi.chacon@gmail.com>
+~ Copyright (c) 2011 Norbert Nagold <norbert.nagold@gmail.com>
+~ Copyright (c) 2012 Kostas Spyropoulos <inigo.aldana@gmail.com>
+~ Copyright (c) 2014 Timothy Rae <perceptualchaos2@gmail.com>
+~
+~ This program is free software; you can redistribute it and/or modify it under
+~ the terms of the GNU General Public License as published by the Free Software
+~ Foundation; either version 3 of the License, or (at your option) any later
+~ version.
+~
+~ This program is distributed in the hope that it will be useful, but WITHOUT ANY
+~ WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A
+~ PARTICULAR PURPOSE. See the GNU General Public License for more details.
+~
+~ You should have received a copy of the GNU General Public License along with
+~ this program.  If not, see <http://www.gnu.org/licenses/>.
+-->
+
+<!-- Key com.ichi2.ui.BindingPreferences -->
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://arbitrary.app.namespace/com.ichi2.anki"
+    android:title="@string/pref_cat_gestures"
+    android:summary="@string/pref_cat_gestures_summ" >
+
+    <CheckBoxPreference
+        android:defaultValue="false"
+        android:disableDependentsState="false"
+        android:key="gestures"
+        android:summary="@string/gestures_summ"
+        android:title="@string/gestures" />
+    <CheckBoxPreference
+        android:defaultValue="false"
+        android:dependency="gestures"
+        android:disableDependentsState="false"
+        android:key="linkOverridesTouchGesture"
+        android:summary="@string/gestures_allow_links_summary"
+        android:title="@string/gestures_allow_links" />
+    <com.ichi2.ui.SeekBarPreference
+        android:defaultValue="100"
+        android:dependency="gestures"
+        android:dialogMessage="@string/preference_summary_literal"
+        android:key="swipeSensitivity"
+        android:max="180"
+        android:summary="@string/preference_summary_literal"
+        android:text=""
+        android:title="@string/swipe_sensitivity"
+        app:interval="1"
+        app:min="20" />
+
+    <com.ichi2.ui.BindingPreference android:key="binding_SHOW_ANSWER" android:title="@string/show_answer" android:defaultValue="⌨MEDIA_NEXT"/>
+    <com.ichi2.ui.BindingPreference android:key="binding_FLIP_OR_ANSWER_EASE1" android:title="@string/gesture_answer_1" android:defaultValue="⌨VOLUME_DOWN ⍝SWIPE_DOWN"/>
+    <com.ichi2.ui.BindingPreference android:key="binding_FLIP_OR_ANSWER_EASE2" android:title="@string/gesture_answer_2" android:defaultValue="⌨VOLUME_UP ⍝SWIPE_UP"/>
+    <com.ichi2.ui.BindingPreference android:key="binding_FLIP_OR_ANSWER_EASE3" android:title="@string/gesture_answer_3" android:defaultValue=""/>
+    <com.ichi2.ui.BindingPreference android:key="binding_FLIP_OR_ANSWER_EASE4" android:title="@string/gesture_answer_4" android:defaultValue=""/>
+    <com.ichi2.ui.BindingPreference android:key="binding_FLIP_OR_ANSWER_BETTER_THAN_RECOMMENDED" android:title="@string/gesture_answer_better_recommended" android:defaultValue=""/>
+    <com.ichi2.ui.BindingPreference android:key="binding_UNDO" android:title="@string/undo" android:defaultValue=""/>
+    <com.ichi2.ui.BindingPreference android:key="binding_MARK" android:title="@string/menu_mark_note" android:defaultValue=""/>
+    <com.ichi2.ui.BindingPreference android:key="binding_LOOKUP" android:title="@string/gesture_lookup" android:defaultValue=""/>
+    <com.ichi2.ui.BindingPreference android:key="binding_BURY_CARD" android:title="@string/menu_bury_card" android:defaultValue="⌨MEDIA_PREVIOUS"/>
+    <com.ichi2.ui.BindingPreference android:key="binding_SUSPEND_CARD" android:title="@string/menu_suspend_card" android:defaultValue=""/>
+    <com.ichi2.ui.BindingPreference android:key="binding_DELETE" android:title="@string/menu_delete_note" android:defaultValue=""/>
+    <com.ichi2.ui.BindingPreference android:key="binding_PLAY_MEDIA" android:title="@string/gesture_play" android:defaultValue=""/>
+    <com.ichi2.ui.BindingPreference android:key="binding_BURY_NOTE" android:title="@string/menu_bury_note" android:defaultValue=""/>
+    <com.ichi2.ui.BindingPreference android:key="binding_SUSPEND_NOTE" android:title="@string/menu_suspend_note" android:defaultValue=""/>
+    <com.ichi2.ui.BindingPreference android:key="binding_TOGGLE_FLAG_RED" android:title="@string/gesture_flag_red" android:defaultValue=""/>
+    <com.ichi2.ui.BindingPreference android:key="binding_TOGGLE_FLAG_ORANGE" android:title="@string/gesture_flag_orange" android:defaultValue=""/>
+    <com.ichi2.ui.BindingPreference android:key="binding_TOGGLE_FLAG_GREEN" android:title="@string/gesture_flag_green" android:defaultValue=""/>
+    <com.ichi2.ui.BindingPreference android:key="binding_TOGGLE_FLAG_BLUE" android:title="@string/gesture_flag_blue" android:defaultValue=""/>
+    <com.ichi2.ui.BindingPreference android:key="binding_PAGE_UP" android:title="@string/gesture_page_up" android:defaultValue=""/>
+    <com.ichi2.ui.BindingPreference android:key="binding_PAGE_DOWN" android:title="@string/gesture_page_down" android:defaultValue=""/>
+    <com.ichi2.ui.BindingPreference android:key="binding_TAG" android:title="@string/gesture_tag_note" android:defaultValue=""/>
+    <com.ichi2.ui.BindingPreference android:key="binding_TOGGLE_WHITEBOARD" android:title="@string/gesture_toggle_whiteboard" android:defaultValue=""/>
+</PreferenceScreen>

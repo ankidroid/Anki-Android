@@ -1,0 +1,239 @@
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+  <item>
+    <vector
+        android:width="154.18196dp"
+        android:height="154.18196dp"
+        android:viewportWidth="15418.196"
+        android:viewportHeight="15418.196">
+      <!--
+      <path
+          android:name="swipe"
+          android:pathData="m3314.4,7707.9 l1244,-1042v397h2486v-2486h-397l1042,-1244 1043,1244h-397v2486h2485v-397l1245,1042 -1245,1043v-397h-2485v2485h397l-1043,1245 -1042,-1245h397L7044.4,8353.9L4558.4,8353.9v397z"
+          android:strokeWidth="100.000"
+          android:strokeColor="#b2b2b2"/> -->
+      <path
+          android:name="swipe"
+          android:pathData="m3314.4,7707.9 l1244,-1042v397h2486v-2486h-397l1042,-1244 1043,1244h-397v2486h2485v-397l1245,1042 -1245,1043v-397h-2485v2485h397l-1043,1245 -1042,-1245h397L7044.4,8353.9L4558.4,8353.9v397z"
+          android:strokeWidth="100.000"
+          android:strokeColor="#b2b2b2"/>
+      <path
+          android:name="top_left"
+          android:pathData="M1860.2,2465.2a617.9,624 0,1 0,1235.9 0a617.9,624 0,1 0,-1235.9 0z"
+          android:strokeWidth="100.000"
+          android:strokeColor="#b1b1b1"/>
+      <path
+          android:name="top"
+          android:pathData="M7072.5,2465.2a617.9,624 0,1 0,1235.9 0a617.9,624 0,1 0,-1235.9 0z"
+          android:strokeWidth="100.000"
+          android:strokeColor="#b1b1b1"/>
+      <path
+          android:name="top_right"
+          android:pathData="M12284.8,2465.2a617.9,624 0,1 0,1235.9 0a617.9,624 0,1 0,-1235.9 0z"
+          android:strokeWidth="100.000"
+          android:strokeColor="#b1b1b1"/>
+      <path
+          android:name="left"
+          android:pathData="M1860.2,7703.9a617.9,624 0,1 0,1235.9 0a617.9,624 0,1 0,-1235.9 0z"
+          android:strokeWidth="100.000"
+          android:strokeColor="#b1b1b1"/>
+      <path
+          android:name="center"
+          android:pathData="M7072.5,7703.9a617.9,624 0,1 0,1235.9 0a617.9,624 0,1 0,-1235.9 0z"
+          android:strokeWidth="100.000"
+          android:strokeColor="#b1b1b1"/>
+      <path
+          android:name="right"
+          android:pathData="M12284.8,7703.9a617.9,624 0,1 0,1235.9 0a617.9,624 0,1 0,-1235.9 0z"
+          android:strokeWidth="100.000"
+          android:strokeColor="#b1b1b1"/>
+      <path
+          android:name="bottom_left"
+          android:pathData="M1860.2,12942.7a617.9,624 0,1 0,1235.9 0a617.9,624 0,1 0,-1235.9 0z"
+          android:strokeWidth="100.000"
+          android:strokeColor="#b1b1b1"/>
+      <path
+          android:name="bottom"
+          android:pathData="M7072.5,12942.7a617.9,624 0,1 0,1235.9 0a617.9,624 0,1 0,-1235.9 0z"
+          android:strokeWidth="100.000"
+          android:strokeColor="#b1b1b1"/>
+      <path
+          android:name="bottom_right"
+          android:pathData="M12284.8,12942.7a617.9,624 0,1 0,1235.9 0a617.9,624 0,1 0,-1235.9 0z"
+          android:strokeWidth="100.000"
+          android:strokeColor="#b1b1b1"/>
+    </vector>
+  </item>
+  <item>
+    <level-list>
+      <item android:maxLevel="0">
+        <vector
+            android:width="154.18196dp"
+            android:height="154.18196dp"
+            android:viewportWidth="15418.196"
+            android:viewportHeight="15418.196">
+          <path
+              android:name="up"
+              android:pathData="m7044.4,10838.9v-6262h-397l1042,-1244 1043,1244h-397v6262"
+              android:strokeWidth="200.000"
+              android:strokeColor="?attr/colorControlActivated"/>
+        </vector>
+      </item>
+      <item android:maxLevel="1">
+        <vector
+            android:width="154.18196dp"
+            android:height="154.18196dp"
+            android:viewportWidth="15418.196"
+            android:viewportHeight="15418.196">
+          <path
+              android:name="down"
+              android:pathData="m8335.4,4576.9v6262h397l-1043,1245 -1042,-1245h397v-6262"
+              android:strokeWidth="200.000"
+              android:strokeColor="?attr/colorControlActivated"/>
+        </vector>
+      </item>
+      <item android:maxLevel="2">
+        <vector
+            android:width="154.18196dp"
+            android:height="154.18196dp"
+            android:viewportWidth="15418.196"
+            android:viewportHeight="15418.196">
+          <path
+              android:name="left"
+              android:pathData="m10820.4,8353.9L4558.4,8353.9v397L3314.4,7707.9 4558.4,6665.9v397h6262"
+              android:strokeWidth="200.000"
+              android:strokeColor="?attr/colorControlActivated"/>
+        </vector>
+      </item>
+      <item android:maxLevel="3">
+        <vector
+            android:width="154.18196dp"
+            android:height="154.18196dp"
+            android:viewportWidth="15418.196"
+            android:viewportHeight="15418.196">
+          <path
+              android:name="right"
+              android:pathData="m4558.4,7062.9h6262v-397l1245,1042 -1245,1043v-397L4558.4,8353.9"
+              android:strokeWidth="200.000"
+              android:strokeColor="?attr/colorControlActivated"/>
+        </vector>
+      </item>
+      <item android:minLevel="6" android:maxLevel="6">
+        <vector
+            android:width="154.18196dp"
+            android:height="154.18196dp"
+            android:viewportWidth="15418.196"
+            android:viewportHeight="15418.196">
+          <path
+              android:name="top"
+              android:pathData="M1860.2,2465.2a617.9,624 0,1 0,1235.9 0a617.9,624 0,1 0,-1235.9 0z"
+              android:strokeWidth="200.000"
+              android:strokeColor="?attr/colorControlActivated"/>
+        </vector>
+      </item>
+      <item android:minLevel="7" android:maxLevel="7">
+        <vector
+            android:width="154.18196dp"
+            android:height="154.18196dp"
+            android:viewportWidth="15418.196"
+            android:viewportHeight="15418.196">
+          <path
+              android:name="top"
+              android:pathData="M7072.5,2465.2a617.9,624 0,1 0,1235.9 0a617.9,624 0,1 0,-1235.9 0z"
+              android:strokeWidth="200.000"
+              android:strokeColor="?attr/colorControlActivated"/>
+        </vector>
+      </item>
+      <item android:minLevel="8" android:maxLevel="8">
+        <vector
+            android:width="154.18196dp"
+            android:height="154.18196dp"
+            android:viewportWidth="15418.196"
+            android:viewportHeight="15418.196">
+          <path
+              android:name="top_right"
+              android:pathData="M12284.8,2465.2a617.9,624 0,1 0,1235.9 0a617.9,624 0,1 0,-1235.9 0z"
+              android:strokeWidth="200.000"
+              android:strokeColor="?attr/colorControlActivated"/>
+        </vector>
+      </item>
+      <item android:minLevel="9" android:maxLevel="9">
+        <vector
+            android:width="154.18196dp"
+            android:height="154.18196dp"
+            android:viewportWidth="15418.196"
+            android:viewportHeight="15418.196">
+          <path
+              android:name="left"
+              android:pathData="M1860.2,7703.9a617.9,624 0,1 0,1235.9 0a617.9,624 0,1 0,-1235.9 0z"
+              android:strokeWidth="200.000"
+              android:strokeColor="?attr/colorControlActivated"/>
+        </vector>
+      </item>
+      <item android:minLevel="10" android:maxLevel="10">
+        <vector
+            android:width="154.18196dp"
+            android:height="154.18196dp"
+            android:viewportWidth="15418.196"
+            android:viewportHeight="15418.196">
+          <path
+              android:name="center"
+              android:pathData="M7072.5,7703.9a617.9,624 0,1 0,1235.9 0a617.9,624 0,1 0,-1235.9 0z"
+              android:strokeWidth="200.000"
+              android:strokeColor="?attr/colorControlActivated"/>
+        </vector>
+      </item>
+      <item android:minLevel="11" android:maxLevel="11">
+        <vector
+            android:width="154.18196dp"
+            android:height="154.18196dp"
+            android:viewportWidth="15418.196"
+            android:viewportHeight="15418.196">
+          <path
+              android:name="right"
+              android:pathData="M12284.8,7703.9a617.9,624 0,1 0,1235.9 0a617.9,624 0,1 0,-1235.9 0z"
+              android:strokeWidth="200.000"
+              android:strokeColor="?attr/colorControlActivated"/>
+        </vector>
+      </item>
+      <item android:minLevel="12" android:maxLevel="12">
+        <vector
+            android:width="154.18196dp"
+            android:height="154.18196dp"
+            android:viewportWidth="15418.196"
+            android:viewportHeight="15418.196">
+          <path
+              android:name="bottom_left"
+              android:pathData="M1860.2,12942.7a617.9,624 0,1 0,1235.9 0a617.9,624 0,1 0,-1235.9 0z"
+              android:strokeWidth="200.000"
+              android:strokeColor="?attr/colorControlActivated"/>
+        </vector>
+      </item>
+      <item android:minLevel="13" android:maxLevel="13">
+        <vector
+            android:width="154.18196dp"
+            android:height="154.18196dp"
+            android:viewportWidth="15418.196"
+            android:viewportHeight="15418.196">
+          <path
+              android:name="bottom"
+              android:pathData="M7072.5,12942.7a617.9,624 0,1 0,1235.9 0a617.9,624 0,1 0,-1235.9 0z"
+              android:strokeWidth="200.000"
+              android:strokeColor="?attr/colorControlActivated"/>
+        </vector>
+      </item>
+      <item android:minLevel="14" android:maxLevel="14">
+        <vector
+            android:width="154.18196dp"
+            android:height="154.18196dp"
+            android:viewportWidth="15418.196"
+            android:viewportHeight="15418.196">
+          <path
+              android:name="bottom_right"
+              android:pathData="M12284.8,12942.7a617.9,624 0,1 0,1235.9 0a617.9,624 0,1 0,-1235.9 0z"
+              android:strokeWidth="200.000"
+              android:strokeColor="?attr/colorControlActivated"/>
+        </vector>
+      </item>
+    </level-list>
+  </item>
+</layer-list>

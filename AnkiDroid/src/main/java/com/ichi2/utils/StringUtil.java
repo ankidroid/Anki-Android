@@ -37,4 +37,16 @@ public class StringUtil {
         }
         return newLength < s.length() ? s.substring(0, newLength) : s;
     }
+
+    public static String capitalize(@Nullable String s) {
+        if (s == null) {
+            return null;
+        }
+
+        if (s.length() > 0) {
+            s = s.substring(0, 1).toUpperCase() + s.substring(1).toLowerCase();
+        }
+
+        return s;
+    }
 }
