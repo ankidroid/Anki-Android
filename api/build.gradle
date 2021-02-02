@@ -52,7 +52,7 @@ dependencies {
     api fileTree(dir: 'libs', include: ['*.jar'])
     implementation 'androidx.annotation:annotation:1.1.0'
     testImplementation 'org.junit.vintage:junit-vintage-engine:5.7.0'
-    testImplementation 'org.robolectric:robolectric:4.5'
+    testImplementation 'org.robolectric:robolectric:4.5.1'
 
     lintPublish project(":lint-rules")
 }
