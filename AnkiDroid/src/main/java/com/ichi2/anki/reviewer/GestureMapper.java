@@ -1,22 +1,17 @@
 package com.ichi2.anki.reviewer;
 
-import android.content.SharedPreferences;
-
 import com.ichi2.anki.AnkiDroidApp;
 import com.ichi2.anki.cardviewer.Gesture;
-import com.ichi2.anki.cardviewer.ViewerCommand;
-
-import java.util.HashMap;
-import java.util.Map;
 
 import timber.log.Timber;
 
+/**
+ * Map taps and flings to {@link Gesture}s.
+ */
 public class GestureMapper {
 
-    private static int DEFAULT_SWIPE_MIN_DISTANCE;
-    private int DEFAULT_SWIPE_THRESHOLD_VELOCITY;
-
     private boolean mUseCornerTouch = true;
+
     private int mSwipeMinDistance = -1;
     private int mSwipeThresholdVelocity = -1;
 
@@ -33,6 +28,10 @@ public class GestureMapper {
         mUseCornerTouch = useCornerTouch;
     }
 
+
+    /**
+     * Get gesture for a fling.
+     */
     public Gesture gesture(float dx, float dy, float velocityX, float velocityY,
                            boolean isSelecting, boolean isXScrolling, boolean isYScrolling) {
         try {
@@ -66,6 +65,9 @@ public class GestureMapper {
         return null;
     }
 
+    /**
+     * Get gesture for a tap.
+     */
     public Gesture gesture(int height, int width, float posX, float posY) {
         if (width == 0 || height == 0) {
             return null;
@@ -163,8 +165,5 @@ public class GestureMapper {
         LOW,
         MID,
         HIGH
-    }
-
-    protected void onGesture(Gesture gesture) {
     }
 }

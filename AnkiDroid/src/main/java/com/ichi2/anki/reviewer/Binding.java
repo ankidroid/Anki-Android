@@ -66,6 +66,21 @@ public class Binding {
         return mGesture;
     }
 
+    public static Binding key(KeyEvent event) {
+        ModifierKeys modifiers = new ModifierKeys(event.isShiftPressed(), event.isCtrlPressed(), event.isAltPressed());
+
+        int keyCode = event.getKeyCode();
+        if (keyCode != 0) {
+            return Binding.keyCode(modifiers, keyCode);
+        } else {
+            // passing in metaState: 0 means that Ctrl+1 returns '1' instead of '\0'
+            // NOTE: We do not differentiate on upper/lower case via KeyEvent.META_CAPS_LOCK_ON
+            int unicodeChar = event.getUnicodeChar(event.getMetaState() & (KeyEvent.META_SHIFT_ON | KeyEvent.META_NUM_LOCK_ON));
+
+            return Binding.unicode(modifiers, (char)unicodeChar);
+        }
+    }
+
     public static Binding unicode(char unicodeChar) {
         return unicode(ModifierKeys.none(), unicodeChar);
     }

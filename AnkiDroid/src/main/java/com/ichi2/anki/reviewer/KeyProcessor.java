@@ -3,11 +3,15 @@ package com.ichi2.anki.reviewer;
 import android.content.SharedPreferences;
 import android.view.KeyEvent;
 
+import com.ichi2.anki.cardviewer.Gesture;
 import com.ichi2.anki.cardviewer.ViewerCommand;
 
 import java.util.HashMap;
 import java.util.Map;
 
+/**
+ * Process {@link ViewerCommand}s in reaction to key presses.
+ */
 public class KeyProcessor {
 
     private final ViewerCommand.CommandProcessor commandProcessor;
@@ -44,28 +48,17 @@ public class KeyProcessor {
         bindingToCommand.put(binding, command);
     }
 
+
+    /**
+     * Process a key with a {@link ViewerCommand}.
+     */
     public boolean onKey(KeyEvent event) {
 
-        Binding.ModifierKeys modifiers = new Binding.ModifierKeys(event.isShiftPressed(), event.isCtrlPressed(), event.isAltPressed());
-
-        ViewerCommand command;
-
-        command = bindingToCommand.get(Binding.keyCode(modifiers, event.getKeyCode()));
+        ViewerCommand command = bindingToCommand.get(Binding.key(event));
         if (command != null) {
             commandProcessor.executeCommand(command);
             return true;
         }
-
-        // passing in metaState: 0 means that Ctrl+1 returns '1' instead of '\0'
-        // NOTE: We do not differentiate on upper/lower case via KeyEvent.META_CAPS_LOCK_ON
-        int unicodeChar = event.getUnicodeChar(event.getMetaState() & (KeyEvent.META_SHIFT_ON | KeyEvent.META_NUM_LOCK_ON));
-
-        command = bindingToCommand.get(Binding.unicode(modifiers, (char)unicodeChar));
-        if (command != null) {
-            commandProcessor.executeCommand(command);
-            return true;
-        }
-
 
         return false;
     }

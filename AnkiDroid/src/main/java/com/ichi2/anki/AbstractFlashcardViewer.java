@@ -2888,7 +2888,6 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
             return true;
         }
 
-
         @Override
         public boolean onSingleTapUp(MotionEvent e) {
             if (mTouchStarted) {

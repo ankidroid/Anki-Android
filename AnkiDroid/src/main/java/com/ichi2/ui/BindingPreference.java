@@ -101,14 +101,8 @@ public class BindingPreference extends android.preference.ListPreference {
         @Override
         public boolean dispatchKeyEvent(KeyEvent event) {
             if (event.getAction() == KeyEvent.ACTION_DOWN) {
-                Binding.ModifierKeys modifiers = new Binding.ModifierKeys(event.isShiftPressed(), event.isCtrlPressed(), event.isAltPressed());
 
-                int keyCode = event.getKeyCode();
-                if (keyCode != 0) {
-                    binding = Binding.keyCode(modifiers, keyCode);
-                } else {
-                    binding = Binding.unicode(modifiers, (char)event.getUnicodeChar());
-                }
+                binding = Binding.key(event);
 
                 setText(binding.toDisplayString(getContext()));
 
