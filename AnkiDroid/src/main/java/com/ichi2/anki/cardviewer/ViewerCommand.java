@@ -16,6 +16,8 @@
 
 package com.ichi2.anki.cardviewer;
 
+import com.ichi2.anki.R;
+
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 
@@ -25,46 +27,56 @@ import androidx.core.view.ViewCompat;
 /** Abstraction: Discuss moving many of these to 'Reviewer' */
 public enum ViewerCommand {
     
-    NOTHING,
-    SHOW_ANSWER,
-    FLIP_OR_ANSWER_EASE1,
-    FLIP_OR_ANSWER_EASE2,
-    FLIP_OR_ANSWER_EASE3,
-    FLIP_OR_ANSWER_EASE4,
-    FLIP_OR_ANSWER_RECOMMENDED,
-    FLIP_OR_ANSWER_BETTER_THAN_RECOMMENDED,
-    UNDO,
-    EDIT,
-    MARK,
-    LOOKUP,
-    BURY_CARD,
-    SUSPEND_CARD,
-    DELETE,
-    UNUSED_15,
-    PLAY_MEDIA,
-    EXIT,
-    BURY_NOTE,
-    SUSPEND_NOTE,
-    TOGGLE_FLAG_RED,
-    TOGGLE_FLAG_ORANGE,
-    TOGGLE_FLAG_GREEN,
-    TOGGLE_FLAG_BLUE,
-    UNSET_FLAG,
-    ANSWER_FIRST_BUTTON,
-    ANSWER_SECOND_BUTTON,
-    ANSWER_THIRD_BUTTON,
-    ANSWER_FOURTH_BUTTON,
-    ANSWER_RECOMMENDED,
-    PAGE_UP,
-    PAGE_DOWN,
+    NOTHING(R.string.nothing),
+    SHOW_ANSWER(R.string.show_answer),
+    FLIP_OR_ANSWER_EASE1(R.string.gesture_answer_1),
+    FLIP_OR_ANSWER_EASE2(R.string.gesture_answer_2),
+    FLIP_OR_ANSWER_EASE3(R.string.gesture_answer_3),
+    FLIP_OR_ANSWER_EASE4(R.string.gesture_answer_4),
+    FLIP_OR_ANSWER_RECOMMENDED(R.string.gesture_answer_green),
+    FLIP_OR_ANSWER_BETTER_THAN_RECOMMENDED(R.string.gesture_answer_better_recommended),
+    UNDO(R.string.undo),
+    EDIT(R.string.cardeditor_title_edit_card),
+    MARK(R.string.menu_mark_note),
+    LOOKUP(R.string.lookup_button_content),
+    BURY_CARD(R.string.menu_bury),
+    SUSPEND_CARD(R.string.menu_suspend_card),
+    DELETE(R.string.menu_delete_note),
+    UNUSED_15(R.string.nothing),
+    PLAY_MEDIA(R.string.gesture_play),
+    EXIT(R.string.nothing),
+    BURY_NOTE(R.string.menu_bury_note),
+    SUSPEND_NOTE(R.string.menu_suspend_note),
+    TOGGLE_FLAG_RED(R.string.gesture_flag_red),
+    TOGGLE_FLAG_ORANGE(R.string.gesture_flag_orange),
+    TOGGLE_FLAG_GREEN(R.string.gesture_flag_green),
+    TOGGLE_FLAG_BLUE(R.string.gesture_flag_blue),
+    UNSET_FLAG(R.string.gesture_flag_remove),
+    ANSWER_FIRST_BUTTON(R.string.gesture_answer_1),
+    ANSWER_SECOND_BUTTON(R.string.gesture_answer_2),
+    ANSWER_THIRD_BUTTON(R.string.gesture_answer_3),
+    ANSWER_FOURTH_BUTTON(R.string.gesture_answer_4),
+    ANSWER_RECOMMENDED(R.string.gesture_answer_green),
+    PAGE_UP(R.string.gesture_page_up),
+    PAGE_DOWN(R.string.gesture_page_down),
 
-    TAG,
-    CARD_INFO,
-    ABORT_AND_SYNC,
-    RECORD_VOICE,
-    REPLAY_VOICE,
+    TAG(R.string.add_tag),
+    CARD_INFO(R.string.card_info_title),
+    ABORT_AND_SYNC(R.string.gesture_abort_sync),
+    RECORD_VOICE(R.string.record_voice),
+    REPLAY_VOICE(R.string.replay_voice),
 
-    TOGGLE_WHITEBOARD;
+    TOGGLE_WHITEBOARD(R.string.gesture_toggle_whiteboard);
+
+    private final int resourceId;
+
+    ViewerCommand(int resourceId) {
+        this.resourceId = resourceId;
+    }
+
+    public int getResourceId() {
+        return resourceId;
+    }
 
     public interface CommandProcessor {
         /**

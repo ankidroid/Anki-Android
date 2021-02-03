@@ -4,6 +4,7 @@ import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.SharedPreferences;
 import android.graphics.drawable.Drawable;
 import android.text.TextUtils;
 import android.util.AttributeSet;
@@ -12,12 +13,13 @@ import android.view.Gravity;
 import android.view.KeyEvent;
 import android.view.MotionEvent;
 import android.view.View;
-import android.widget.FrameLayout;
-import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.ichi2.anki.AnkiDroidApp;
 import com.ichi2.anki.R;
 import com.ichi2.anki.cardviewer.Gesture;
+import com.ichi2.anki.cardviewer.ViewerCommand;
 import com.ichi2.anki.reviewer.Binding;
 import com.ichi2.anki.reviewer.GestureMapper;
 
@@ -109,6 +111,8 @@ public class BindingPreference extends android.preference.ListPreference {
                 }
 
                 setText(binding.toDisplayString(getContext()));
+
+                checkExistingBinding(binding);
             }
 
             return true;
@@ -131,9 +135,9 @@ public class BindingPreference extends android.preference.ListPreference {
 
         private final Drawable background;
 
-        private GestureMapper gestureMapper;
+        private final GestureMapper gestureMapper;
 
-        private GestureDetector detector;
+        private final GestureDetector detector;
 
         private Binding binding;
 
@@ -199,6 +203,8 @@ public class BindingPreference extends android.preference.ListPreference {
             this.binding = binding;
             setText(binding.toDisplayString(getContext()));
             background.setLevel(binding.getGesture().ordinal());
+
+            checkExistingBinding(binding);
         }
 
         @Override
@@ -255,6 +261,36 @@ public class BindingPreference extends android.preference.ListPreference {
         setEntryValues(entryValues.toArray(new CharSequence[entryValues.size()]));
 
         super.onPrepareDialogBuilder(builder);
+    }
+
+    private void checkExistingBinding(Binding binding) {
+        List<String> existingCommands = new ArrayList<>();
+
+        if (binding != null) {
+            SharedPreferences preferences = AnkiDroidApp.getSharedPrefs(getContext());
+
+            for (ViewerCommand command : ViewerCommand.values()) {
+                String key = "binding_" + command.name();
+
+                if (key != getKey()) {
+                    String value = preferences.getString(key, "");
+                    if (value != null) {
+                        for (String split : value.split(" ")) {
+                            Binding candidate = Binding.fromString(split);
+
+                            if (candidate.equals(binding)) {
+                                existingCommands.add(getContext().getString(command.getResourceId()));
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+        if (!existingCommands.isEmpty()) {
+            String text = String.format("Already bound to %s", TextUtils.join(", ", existingCommands));
+            Toast.makeText(getContext(), text, Toast.LENGTH_SHORT).show();
+        }
     }
 
     private void addBinding(Binding binding) {
