@@ -78,6 +78,15 @@ public enum ViewerCommand {
         return resourceId;
     }
 
+    /**
+     * Get the key of this command, under which all {@link com.ichi2.anki.reviewer.Binding}s are stored.
+     *
+     * @return preference key
+     */
+    public String getPreferenceKey() {
+        return "binding_" + name();
+    }
+
     public interface CommandProcessor {
         /**
          *

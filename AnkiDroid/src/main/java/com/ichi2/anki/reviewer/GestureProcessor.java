@@ -39,7 +39,7 @@ public class GestureProcessor {
     }
 
     private void setupGesture(SharedPreferences preferences, ViewerCommand command) {
-        String key = "binding_" + command.name();
+        String key = command.getPreferenceKey();
 
         String value = preferences.getString(key, "");
 

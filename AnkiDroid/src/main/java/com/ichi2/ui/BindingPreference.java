@@ -270,9 +270,9 @@ public class BindingPreference extends android.preference.ListPreference {
             SharedPreferences preferences = AnkiDroidApp.getSharedPrefs(getContext());
 
             for (ViewerCommand command : ViewerCommand.values()) {
-                String key = "binding_" + command.name();
+                String key = command.getPreferenceKey();
 
-                if (key != getKey()) {
+                if (key.equals(getKey()) == false) {
                     String value = preferences.getString(key, "");
                     if (value != null) {
                         for (String split : value.split(" ")) {

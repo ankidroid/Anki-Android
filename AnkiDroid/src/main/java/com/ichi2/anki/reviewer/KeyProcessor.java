@@ -24,9 +24,9 @@ public class KeyProcessor {
             setupKey(preferences, command);
         }
     }
-    
+
     private void setupKey(SharedPreferences preferences, ViewerCommand command) {
-        String key = "binding_" + command.name();
+        String key = command.getPreferenceKey();
 
         String value = preferences.getString(key, "");
         if (value != null) {
