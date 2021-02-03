@@ -87,7 +87,7 @@ public class GestureProcessor {
 
     public boolean isBound(Gesture... gestures) {
         for (Gesture gesture : gestures) {
-            if (bindingToCommand.get(gesture) != null) {
+            if (bindingToCommand.get(Binding.gesture(gesture)) != null) {
                 return true;
             }
         }
