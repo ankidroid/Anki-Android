@@ -23,6 +23,7 @@ import com.ichi2.libanki.Collection;
 import com.ichi2.utils.FunctionalInterfaces.Supplier;
 
 import androidx.annotation.NonNull;
+import timber.log.Timber;
 
 public enum SyncStatus {
     INCONCLUSIVE,
@@ -42,6 +43,7 @@ public enum SyncStatus {
         try {
             col = getCol.get();
         } catch (Exception e) {
+            Timber.w(e);
             return SyncStatus.INCONCLUSIVE;
         }
 

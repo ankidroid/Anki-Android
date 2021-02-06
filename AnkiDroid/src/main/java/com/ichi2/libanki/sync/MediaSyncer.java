@@ -94,6 +94,7 @@ public class MediaSyncer {
                 try {
                     mCol.getMedia().findChanges();
                 } catch (SQLException ignored) {
+                    Timber.w(ignored);
                     return new Pair<>(CORRUPT, null);
                 }
             }

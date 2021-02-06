@@ -339,6 +339,7 @@ public class DeckOptions extends AppCompatPreferenceActivity implements OnShared
                                     try {
                                         remConf();
                                     } catch (ConfirmModSchemaException e) {
+                                        e.log();
                                         // Libanki determined that a full sync will be required, so confirm with the user before proceeding
                                         // TODO : Use ConfirmationDialog DialogFragment -- not compatible with PreferenceActivity
                                         new MaterialDialog.Builder(DeckOptions.this)
@@ -681,6 +682,7 @@ public class DeckOptions extends AppCompatPreferenceActivity implements OnShared
                 try {
                     title = title.replace("XXX", mDeck.getString("name"));
                 } catch (JSONException e) {
+                    Timber.w(e);
                     title = title.replace("XXX", "???");
                 }
             }

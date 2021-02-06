@@ -736,6 +736,7 @@ public class CardTemplateEditor extends AnkiActivity implements DeckSelectionDia
                 mTemplateEditor.getCol().modSchema();
                 deleteTemplate(tmpl, model);
             } catch (ConfirmModSchemaException e) {
+                e.log();
                 ConfirmationDialog d = new ConfirmationDialog();
                 d.setArgs(getResources().getString(R.string.full_sync_confirmation));
                 Runnable confirm = () -> {
@@ -787,6 +788,7 @@ public class CardTemplateEditor extends AnkiActivity implements DeckSelectionDia
                 Timber.d("addNewTemplateWithCheck() called and no CMSE?");
                 addNewTemplate(model);
             } catch (ConfirmModSchemaException e) {
+                e.log();
                 ConfirmationDialog d = new ConfirmationDialog();
                 d.setArgs(getResources().getString(R.string.full_sync_confirmation));
                 Runnable confirm = () -> {

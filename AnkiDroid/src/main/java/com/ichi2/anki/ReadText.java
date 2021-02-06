@@ -135,7 +135,7 @@ public class ReadText {
             try {
                 builder.build().show();
             } catch (WindowManager.BadTokenException e) {
-                Timber.w("Activity invalidated before TTS language dialog could display");
+                Timber.w(e,"Activity invalidated before TTS language dialog could display");
             }
         }, delay);
     }
@@ -331,7 +331,7 @@ public class ReadText {
                     Timber.v("ReadText.buildAvailableLanguages() :: %s  not available (error code %d)", loc.getDisplayName(), retCode);
                 }
             } catch (IllegalArgumentException e) {
-                Timber.e("Error checking if language %s available", loc.getDisplayName());
+                Timber.w(e, "Error checking if language %s available", loc.getDisplayName());
             }
         }
     }

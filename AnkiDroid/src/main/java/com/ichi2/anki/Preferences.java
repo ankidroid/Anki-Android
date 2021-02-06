@@ -507,6 +507,7 @@ public class Preferences extends AppCompatPreferenceActivity implements Preferen
                 UIUtils.showThemedToast(this, getString(R.string.no_image_selected), false);
             }
         } catch (OutOfMemoryError | Exception e) {
+            Timber.w(e);
             UIUtils.showThemedToast(this, getString(R.string.error_selecting_image, e.getLocalizedMessage()), false);
         }
     }
@@ -521,6 +522,7 @@ public class Preferences extends AppCompatPreferenceActivity implements Preferen
                 Intent openThirdPartyAppsIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(githubThirdPartyAppsUrl));
                 super.startActivity(openThirdPartyAppsIntent);
             } catch (ActivityNotFoundException e) {
+                Timber.w(e);
                 //We use a different message here. We have limited space in the snackbar
                 String error = getString(R.string.activity_start_failed_load_url, githubThirdPartyAppsUrl);
                 UIUtils.showSimpleSnackbar(this, error, false);
@@ -886,6 +888,7 @@ public class Preferences extends AppCompatPreferenceActivity implements Preferen
                 return;
             }
         } catch (NullPointerException e) {
+            Timber.w(e);
             value = "";
         }
         // Get summary text
@@ -917,6 +920,7 @@ public class Preferences extends AppCompatPreferenceActivity implements Preferen
             Double.parseDouble(value);
             return replaceString(str, value);
         } catch (NumberFormatException e){
+            Timber.w(e);
             return value;
         }
     }

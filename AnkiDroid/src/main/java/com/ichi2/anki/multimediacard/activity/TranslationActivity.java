@@ -28,6 +28,8 @@ import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.FragmentActivity;
+import timber.log.Timber;
+
 import android.view.Menu;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -112,6 +114,7 @@ public class TranslationActivity extends FragmentActivity implements DialogInter
         try {
             mSource = getIntent().getExtras().getString(EXTRA_SOURCE);
         } catch (Exception e) {
+            Timber.w(e);
             mSource = "";
         }
 
@@ -217,6 +220,7 @@ public class TranslationActivity extends FragmentActivity implements DialogInter
             mTranslationLoadPost = new BackgroundPost();
             mTranslationLoadPost.execute();
         } catch (Exception e) {
+            Timber.w(e);
             progressDialog.dismiss();
             showToast(getText(R.string.multimedia_editor_something_wrong));
         }
@@ -238,6 +242,7 @@ public class TranslationActivity extends FragmentActivity implements DialogInter
         try {
             query = URLEncoder.encode(mSource, "utf-8");
         } catch (UnsupportedEncodingException e) {
+            Timber.w(e);
             query = mSource.replace(" ", "%20");
         }
 
@@ -426,6 +431,7 @@ public class TranslationActivity extends FragmentActivity implements DialogInter
                     progressDialog.dismiss();
             }
         } catch (Exception e) {
+            Timber.w(e);
             // nothing is done intentionally
         }
     }

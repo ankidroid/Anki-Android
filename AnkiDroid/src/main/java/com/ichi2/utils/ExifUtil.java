@@ -24,6 +24,7 @@ import android.graphics.Matrix;
 
 import androidx.annotation.NonNull;
 import androidx.exifinterface.media.ExifInterface;
+import timber.log.Timber;
 
 import java.io.File;
 
@@ -50,6 +51,7 @@ public class ExifUtil {
             bmp = Bitmap.createBitmap(bmp, 0, 0, bmp.getWidth(), bmp.getHeight(), mat, true);
             return bmp;
         } catch (Exception e) {
+            Timber.w(e);
             return bmp;
         }
     }

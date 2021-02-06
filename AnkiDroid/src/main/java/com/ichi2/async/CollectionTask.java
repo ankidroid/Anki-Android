@@ -1320,6 +1320,7 @@ public class CollectionTask<ProgressListener, ProgressBackground extends Progres
             try {
                 imp.run();
             } catch (ImportExportException e) {
+                Timber.w(e);
                 return new Triple(null, true, e.getMessage());
             }
             return new Triple<>(imp, false, null);
@@ -1385,6 +1386,7 @@ public class CollectionTask<ProgressListener, ProgressBackground extends Progres
                 try {
                     tmpCol.close();
                 } catch (Exception e2) {
+                    Timber.w(e2);
                     // do nothing
                 }
                 AnkiDroidApp.sendExceptionReport(e, "doInBackgroundImportReplace - open col");
@@ -1405,6 +1407,7 @@ public class CollectionTask<ProgressListener, ProgressBackground extends Progres
                 CollectionHelper.getInstance().lockCollection();
                 BackupManager.performBackupInBackground(colPath, true, time);
             } catch (Exception e) {
+                Timber.w(e);
             }
             // overwrite collection
             File f = new File(colFile);
@@ -1559,6 +1562,7 @@ public class CollectionTask<ProgressListener, ProgressBackground extends Progres
                 col.save();
                 return true;
             } catch (JSONException e) {
+                Timber.w(e);
                 return false;
             }
         }
@@ -1608,6 +1612,7 @@ public class CollectionTask<ProgressListener, ProgressBackground extends Progres
                 col.save();
                 return true;
             } catch (JSONException e) {
+                Timber.w(e);
                 return false;
             }
         }
@@ -1640,6 +1645,7 @@ public class CollectionTask<ProgressListener, ProgressBackground extends Progres
                 }
                 return true;
             } catch (JSONException e) {
+                Timber.w(e);
                 return false;
             }
         }
@@ -1657,6 +1663,7 @@ public class CollectionTask<ProgressListener, ProgressBackground extends Progres
             try {
                 col.getMedia().rebuildIfInvalid();
             } catch (IOException e) {
+                Timber.w(e);
                 return new PairWithBoolean<>(false, null);
             }
             // A media check on AnkiDroid will also update the media db
@@ -1804,6 +1811,7 @@ public class CollectionTask<ProgressListener, ProgressBackground extends Progres
                 col.getModels().rem(col.getModels().get(modID));
                 col.save();
             } catch (ConfirmModSchemaException e) {
+                e.log();
                 Timber.e("doInBackGroundDeleteModel :: ConfirmModSchemaException");
                 return false;
             }
@@ -1834,6 +1842,7 @@ public class CollectionTask<ProgressListener, ProgressBackground extends Progres
                 col.save();
             } catch (ConfirmModSchemaException e) {
                 //Should never be reached
+                e.log();
                 return false;
             }
             return true;
@@ -1863,6 +1872,7 @@ public class CollectionTask<ProgressListener, ProgressBackground extends Progres
                 col.getModels().moveField(model, field, index);
                 col.save();
             } catch (ConfirmModSchemaException e) {
+                e.log();
                 //Should never be reached
                 return false;
             }

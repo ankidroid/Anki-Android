@@ -471,6 +471,7 @@ public final class AnkiPackageExporter extends AnkiExporter {
             try {
                 runtime.exec(deleteCmd);
             } catch (IOException ignored) {
+                Timber.w(ignored);
             }
         }
         return media;
