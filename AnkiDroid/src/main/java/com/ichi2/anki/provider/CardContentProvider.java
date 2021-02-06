@@ -762,7 +762,7 @@ public class CardContentProvider extends ContentProvider {
                     long deckId = Long.parseLong(deckIdStr);
                     return bulkInsertNotes(values, deckId);
                 } catch (NumberFormatException e) {
-                    Timber.d("Invalid %s: %s", FlashCardsContract.Note.DECK_ID_QUERY_PARAM, deckIdStr);
+                    Timber.d(e,"Invalid %s: %s", FlashCardsContract.Note.DECK_ID_QUERY_PARAM, deckIdStr);
                 }
             }
             // deckId not specified, so default to #super implementation (as in spec version 1)
@@ -1434,7 +1434,7 @@ public class CardContentProvider extends ContentProvider {
             try {
                 id = Long.parseLong(uri.getPathSegments().get(1));
             } catch (NumberFormatException e) {
-                throw new IllegalArgumentException("Model ID must be either numeric or the String CURRENT_MODEL_ID");
+                throw new IllegalArgumentException("Model ID must be either numeric or the String CURRENT_MODEL_ID", e);
             }
         }
         return id;
@@ -1478,6 +1478,7 @@ public class CardContentProvider extends ContentProvider {
              }
              return !Arrays.asList(callingPi.requestedPermissions).contains(READ_WRITE_PERMISSION);
         } catch (PackageManager.NameNotFoundException e) {
+            Timber.w(e);
             return false;
         }
     }

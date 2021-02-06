@@ -19,6 +19,7 @@ package com.ichi2.libanki;
 import com.ichi2.utils.JSONObject;
 
 import androidx.annotation.Nullable;
+import timber.log.Timber;
 
 public class DeckConfig extends JSONObject{
     public DeckConfig(JSONObject json) {
@@ -35,9 +36,11 @@ public class DeckConfig extends JSONObject{
             //#6089 - Anki 2.1.24 changed this to a bool, reverted in 2.1.25.
             return config.getInt("timer") != 0;
         } catch (Exception e) {
+            Timber.w(e);
             try {
                 return config.getBoolean("timer");
             } catch (Exception ex) {
+                Timber.w(ex);
                 return null;
             }
         }

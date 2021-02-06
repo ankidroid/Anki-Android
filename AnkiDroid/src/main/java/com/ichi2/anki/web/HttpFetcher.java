@@ -150,6 +150,7 @@ public class HttpFetcher {
             return file.getAbsolutePath();
 
         } catch (Exception e) {
+            Timber.w(e);
             return "FAILED " + e.getMessage();
         } finally {
             if (response != null && response.body() != null) {

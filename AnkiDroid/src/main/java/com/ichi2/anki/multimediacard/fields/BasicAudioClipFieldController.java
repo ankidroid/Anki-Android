@@ -117,6 +117,7 @@ public class BasicAudioClipFieldController extends FieldControllerBase implement
                     Timber.i("Audio clip name does not have extension, using second half of mime type");
                     audioClipFullNameParts = new String[] {audioClipFullName, cursor.getString(2).split("/")[1]};
                 } catch (Exception e) {
+                    Timber.w(e);
                     // This code is difficult to stabilize - it is not clear how to handle files with no extension
                     // and apparently we may fail to get MIME_TYPE information - in that case we will gather information
                     // about what people are experiencing in the real world and decide later, but without crashing at least

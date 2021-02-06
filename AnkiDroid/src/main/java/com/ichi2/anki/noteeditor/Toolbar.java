@@ -122,6 +122,7 @@ public class Toolbar extends FrameLayout {
         try {
             c = (char) event.getUnicodeChar(0);
         } catch (Exception e) {
+            Timber.w(e);
             return false;
         }
 

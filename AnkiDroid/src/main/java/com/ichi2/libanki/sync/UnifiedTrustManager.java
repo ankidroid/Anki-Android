@@ -27,6 +27,8 @@ import javax.net.ssl.TrustManager;
 import javax.net.ssl.TrustManagerFactory;
 import javax.net.ssl.X509TrustManager;
 
+import timber.log.Timber;
+
 // https://stackoverflow.com/questions/27562666/programmatically-add-a-certificate-authority-while-keeping-android-system-ssl-ce
 // Changes:
 // We try the local manager first.
@@ -58,6 +60,7 @@ class UnifiedTrustManager implements X509TrustManager {
         try {
             localTrustManager.checkServerTrusted(chain, authType);
         } catch (CertificateException ce) {
+            Timber.w(ce);
             defaultTrustManager.checkServerTrusted(chain, authType);
         }
     }
@@ -66,6 +69,7 @@ class UnifiedTrustManager implements X509TrustManager {
         try {
             localTrustManager.checkClientTrusted(chain, authType);
         } catch (CertificateException ce) {
+            Timber.w(ce);
             defaultTrustManager.checkClientTrusted(chain, authType);
         }
     }

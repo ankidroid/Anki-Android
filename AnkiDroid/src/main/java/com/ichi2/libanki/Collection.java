@@ -462,6 +462,7 @@ public class Collection {
                     DB.safeEndInTransaction(db);
                 }
             } catch (RuntimeException e) {
+                Timber.w(e);
                 AnkiDroidApp.sendExceptionReport(e, "closeDB");
             }
             if (!mServer) {
@@ -581,6 +582,7 @@ public class Collection {
         try {
             id = mConf.getInt(type);
         } catch (JSONException e) {
+            Timber.w(e);
             id = 1;
         }
         mConf.put(type, id + 1);
@@ -895,6 +897,7 @@ public class Collection {
                                 did = ndid;
                             }
                         } catch (JSONException e) {
+                            Timber.w(e);
                             // do nothing
                         }
                         if (getDecks().isDyn(did)) {
@@ -1177,6 +1180,7 @@ public class Collection {
             try {
                 html = ParsedNode.parse_inner(format).render(fields, "q".equals(type), getContext());
             } catch (TemplateError er) {
+                Timber.w(er);
                 html = er.message(getContext());
             }
             html = ChessFilter.fenToChessboard(html, getContext());
@@ -1467,7 +1471,7 @@ public class Collection {
             }
             mDb.getDatabase().setTransactionSuccessful();
         } catch (SQLiteDatabaseLockedException ex) {
-            Timber.e("doInBackgroundCheckDatabase - Database locked");
+            Timber.w(ex,"doInBackgroundCheckDatabase - Database locked");
             return result.markAsLocked();
         } catch (RuntimeException e) {
             Timber.e(e, "doInBackgroundCheckDatabase - RuntimeException on marking card");
@@ -1740,7 +1744,7 @@ public class Collection {
                     fixCount++;
                 }
             } catch (NoSuchDeckException e) {
-                Timber.e("Unable to find dynamic deck %d", id);
+                Timber.w(e, "Unable to find dynamic deck %d", id);
             }
         }
         if (fixCount > 0) {

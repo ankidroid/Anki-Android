@@ -284,6 +284,7 @@ public class DeckPicker extends NavigationDrawerActivity implements
             }
         } catch (Exception e) {
             // Maybe later don't report if collectionIsOpen is false?
+            Timber.w(e);
             String info = deckId + " colOpen:" + collectionIsOpen;
             AnkiDroidApp.sendExceptionReport(e, "deckPicker::onDeckClick", info);
             displayFailedToOpenDeck(deckId);
@@ -1148,6 +1149,7 @@ public class DeckPicker extends NavigationDrawerActivity implements
                 getCol().modSchema();
             } catch (ConfirmModSchemaException e) {
                 Timber.w("Forcing full sync");
+                e.log();
                 // If libanki determines it's necessary to confirm the full sync then show a confirmation dialog
                 // We have to show the dialog via the DialogHandler since this method is called via an async task
                 Resources res = getResources();
@@ -1338,10 +1340,12 @@ public class DeckPicker extends NavigationDrawerActivity implements
         try {
             previous = preferences.getLong(UPGRADE_VERSION_KEY, current);
         } catch (ClassCastException e) {
+            Timber.w(e);
             try {
                 // set 20900203 to default value, as it's the latest version that stores integer in shared prefs
                 previous = preferences.getInt(UPGRADE_VERSION_KEY, 20900203);
             } catch (ClassCastException cce) {
+                Timber.w(cce);
                 // Previous versions stored this as a string.
                 String s = preferences.getString(UPGRADE_VERSION_KEY, "");
                 // The last version of AnkiDroid that stored this as a string was 2.0.2.
@@ -1389,6 +1393,7 @@ public class DeckPicker extends NavigationDrawerActivity implements
                 boolean old = preferences.getBoolean("fullscreenReview", false);
                 preferences.edit().putString("fullscreenMode", old ? "1": "0").apply();
             } catch (ClassCastException e) {
+                Timber.w(e);
                 // TODO:  can remove this catch as it was only here to fix an error in the betas
                 preferences.edit().remove("fullscreenMode").apply();
             }
@@ -2153,7 +2158,7 @@ public class DeckPicker extends NavigationDrawerActivity implements
         try {
             uri = FileProvider.getUriForFile(DeckPicker.this, "com.ichi2.anki.apkgfileprovider", attachment);
         } catch (IllegalArgumentException e) {
-            Timber.e("Could not generate a valid URI for the apkg file");
+            Timber.w(e, "Could not generate a valid URI for the apkg file");
             UIUtils.showThemedToast(this, getResources().getString(R.string.apk_share_error), false);
             return;
         }
@@ -2596,6 +2601,7 @@ public class DeckPicker extends NavigationDrawerActivity implements
                 UIUtils.showThemedToast(this, getString(R.string.create_shortcut_failed), false);
             }
         } catch (Exception e) {
+            Timber.w(e);
             UIUtils.showThemedToast(this, getString(R.string.create_shortcut_error, e.getLocalizedMessage()), false);
         }
     }
@@ -2627,6 +2633,7 @@ public class DeckPicker extends NavigationDrawerActivity implements
                         try {
                             col.getDecks().rename(col.getDecks().get(did), newName);
                         } catch (DeckRenameException e) {
+                            Timber.w(e);
                             // We get a localized string from libanki to explain the error
                             UIUtils.showThemedToast(DeckPicker.this, e.getLocalizedMessage(res), false);
                         }

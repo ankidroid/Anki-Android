@@ -320,6 +320,7 @@ public class UsageAnalytics {
                 display.getSize(size);
                 this.screenResolution(size.x + "x" + size.y);
             } catch (RuntimeException e) {
+                Timber.w(e);
                 // nothing much to do here, it means we couldn't get WindowManager
             }
 
@@ -341,6 +342,7 @@ public class UsageAnalytics {
                     this.userAgent(System.getProperty("http.agent"));
                 }
             } catch (RuntimeException e) {
+                Timber.w(e);
                 // Catch RuntimeException as WebView initialization blows up in unpredictable ways
                 // but analytics should never be a show-stopper
                 this.userAgent(System.getProperty("http.agent"));

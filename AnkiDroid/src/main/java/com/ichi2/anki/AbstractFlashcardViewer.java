@@ -1860,6 +1860,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
             throw new RuntimeException(e);
         } catch (NullPointerException npe) {
             // NPE on collection only happens if the Collection is broken, follow AnkiActivity example
+            Timber.w(npe);
             Intent deckPicker = new Intent(this, DeckPicker.class);
             deckPicker.putExtra("collectionLoadError", true); // don't currently do anything with this
             deckPicker.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
@@ -2327,6 +2328,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
                     mMissingImageHandler.processMissingSound(file, this::displayCouldNotFindMediaSnackbar);
                 }
             } catch (Exception e) {
+                Timber.w(e);
                 return false;
             }
 
@@ -3939,6 +3941,7 @@ see card.js for available functions
                 }
 
             } catch (JSONException j) {
+                Timber.w(j);
                 UIUtils.showThemedToast(AbstractFlashcardViewer.this, getString(R.string.invalid_json_data, j.getLocalizedMessage()), false);
             }
             return apiStatusJson;
