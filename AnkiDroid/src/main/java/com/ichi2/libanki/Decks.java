@@ -347,6 +347,17 @@ public class Decks {
             // not top level; ensure all parents exist
             name = _ensureParents(name);
         }
+        return id_create_name_valid(name, type);
+    }
+
+
+    /**
+     * @param name A name, assuming it's not a deck name, all ancestors exists and are not filtered
+     * @param type The json encoding of the deck, except for name and id
+     * @return the deck's id
+     */
+    private Long id_create_name_valid(String name, String type) {
+        Long id;
         Deck g = new Deck(type);
         g.put("name", name);
         do {
