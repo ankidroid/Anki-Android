@@ -226,4 +226,14 @@ public class DecksTest extends RobolectricTest {
      }
      */
 
+    @Test
+    public void curDeckIsLong() {
+        // Regression for #8092
+        Collection col = getCol();
+        Decks decks = col.getDecks();
+        long id = decks.id("test");
+        decks.select(id);
+        assertThat("curDeck should be saved as a long. A deck id.", col.getConf().get("curDeck") instanceof Long);
+    }
+
 }
