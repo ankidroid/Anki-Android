@@ -348,7 +348,7 @@ public class RobolectricTest {
     }
 
     protected long addDeck(String deckName) {
-        return getCol().getDecks().id(deckName, true);
+        return getCol().getDecks().id(deckName);
     }
 
     protected long addDynamicDeck(String name) {

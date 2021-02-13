@@ -325,7 +325,7 @@ public class Decks {
 
 
     public Long id(String name, String type) {
-        return id(name, true, type);
+        return id(name, type);
     }
 
     private String usable_name(String name) {

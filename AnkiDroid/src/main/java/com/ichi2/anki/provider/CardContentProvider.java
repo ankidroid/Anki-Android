@@ -1033,7 +1033,7 @@ public class CardContentProvider extends ContentProvider {
                 if (!Decks.isValidDeckName(deckName)) {
                     throw new IllegalArgumentException("Invalid deck name '" + deckName + "'");
                 }
-                did = col.getDecks().id(deckName, true);
+                did = col.getDecks().id(deckName);
                 Deck deck = col.getDecks().get(did);
                 if (deck != null) {
                     try {
