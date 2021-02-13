@@ -952,7 +952,7 @@ public class Collection {
         card.setDid(did);
         // if invalid did, use default instead
         Deck deck = mDecks.get(card.getDid());
-        if (deck.getInt("dyn") == DECK_DYN) {
+        if (deck.isDyn()) {
             // must not be a filtered deck
             card.setDid(1);
         } else {

@@ -370,7 +370,7 @@ public class Decks {
         if (deck == null) {
             return;
         }
-        if (deck.getInt("dyn") == DECK_DYN) {
+        if (deck.isDyn()) {
             // deleting a cramming deck returns cards to their previous deck
             // rather than deleting the cards
             mCol.getSched().emptyDyn(did);
@@ -421,7 +421,7 @@ public class Decks {
             }
         } else {
             for (Deck x : mDecks.values()) {
-                if (x.getInt("dyn") == DECK_STD) {
+                if (x.isStd()) {
                     list.add(x.getString("name"));
                 }
             }
@@ -555,7 +555,7 @@ public class Decks {
         if (newName.contains("::")) {
             List<String> parts = Arrays.asList(path(newName));
             String newParent = TextUtils.join("::", parts.subList(0, parts.size() - 1));
-            if (byName(newParent).getInt("dyn") == DECK_DYN) {
+            if (byName(newParent).isDyn()) {
                 throw new DeckRenameException(DeckRenameException.FILTERED_NOSUBDEKCS);
             }
         }
@@ -1123,7 +1123,7 @@ public class Decks {
 
 
     public boolean isDyn(long did) {
-        return get(did).getInt("dyn") == DECK_DYN;
+        return get(did).isDyn();
     }
 
     /*
@@ -1212,7 +1212,7 @@ public class Decks {
     }
 
     public static boolean isDynamic(Deck deck) {
-        return deck.getInt("dyn") == DECK_DYN;
+        return deck.isDyn();
     }
 
     /** Retruns the fully qualified name of the subdeck, or null if unavailable */

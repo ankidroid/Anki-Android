@@ -357,7 +357,7 @@ public class FilteredDeckOptions extends AppCompatPreferenceActivity implements 
 
         registerExternalStorageListener();
 
-        if (mCol == null || mDeck.getInt("dyn") == DECK_STD) {
+        if (mCol == null || mDeck.isStd()) {
             Timber.w("No Collection loaded or deck is not a dyn deck");
             finish();
             return;
