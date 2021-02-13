@@ -249,5 +249,13 @@ public class DecksTest extends RobolectricTest {
         assertThat(deck.isDyn(), is(Boolean.valueOf(false)));
         assertThat(filtered.isStd(), is(Boolean.valueOf(false)));
         assertThat(filtered.isDyn(), is(Boolean.valueOf(true)));
+
+        DeckConfig filtered_config = decks.confForDid(filteredId);
+        DeckConfig deck_config = decks.confForDid(deckId);
+        assertThat(deck_config.isStd(), is(Boolean.valueOf(true)));
+        assertThat(deck_config.isDyn(), is(Boolean.valueOf(false)));
+        assertThat(filtered_config.isStd(), is(Boolean.valueOf(false)));
+        assertThat(filtered_config.isDyn(), is(Boolean.valueOf(true)));
+
     }
 }

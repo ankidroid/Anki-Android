@@ -2162,7 +2162,7 @@ public class SchedV2 extends AbstractSched {
     private boolean _previewingCard(@NonNull Card card) {
         DeckConfig conf = _cardConf(card);
 
-        return conf.getInt("dyn") == DECK_DYN && !conf.getBoolean("resched");
+        return conf.isDyn() && !conf.getBoolean("resched");
     }
 
 
@@ -3159,7 +3159,7 @@ public class SchedV2 extends AbstractSched {
         // write old data
         oldCardData.flush(false);
         DeckConfig conf = _cardConf(oldCardData);
-        boolean previewing = conf.getInt("dyn") == DECK_DYN && ! conf.getBoolean("resched");
+        boolean previewing = conf.isDyn() && ! conf.getBoolean("resched");
         if (! previewing) {
             // and delete revlog entry
             long last = mCol.getDb().queryLongScalar("SELECT id FROM revlog WHERE cid = ? ORDER BY id DESC LIMIT 1", oldCardData.getId());
