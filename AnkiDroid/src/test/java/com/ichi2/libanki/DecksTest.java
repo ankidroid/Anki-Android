@@ -89,11 +89,11 @@ public class DecksTest extends RobolectricTest {
         // it should have an id of 1
         assertNotNull(col.getDecks().name(1));
         // create a new col
-        long parentId = col.getDecks().id("new deck");
+        long parentId = addDeck("new deck");
         assertNotEquals(parentId, 0);
         assertEquals(2, col.getDecks().allSortedNames().size());
         // should get the same id
-        assertEquals(parentId, (long) col.getDecks().id("new deck"));
+        assertEquals(parentId, (long) addDeck("new deck"));
         // we start with the default col selected
         assertEquals(1, col.getDecks().selected());
         assertEqualsArrayList(new Long[] {1L}, col.getDecks().active());
@@ -102,7 +102,7 @@ public class DecksTest extends RobolectricTest {
         assertEquals(parentId, col.getDecks().selected());
         assertEqualsArrayList(new Long[] {parentId}, col.getDecks().active());
         // let's create a child
-        long childId = col.getDecks().id("new deck::child");
+        long childId = addDeck("new deck::child");
         col.reset();
         // it should have been added to the active list
         assertEquals(parentId, col.getDecks().selected());
@@ -112,9 +112,9 @@ public class DecksTest extends RobolectricTest {
         assertEquals(childId, col.getDecks().selected());
         assertEqualsArrayList(new Long[] {childId}, col.getDecks().active());
         // parents with a different case should be handled correctly
-        col.getDecks().id("ONE");
+        addDeck("ONE");
         Model m = col.getModels().current();
-        m.put("did", col.getDecks().id("one::two"));
+        m.put("did", addDeck("one::two"));
         col.getModels().save(m, false);
         Note n = col.newNote();
         n.setItem("Front", "abc");
@@ -126,7 +126,7 @@ public class DecksTest extends RobolectricTest {
     public void test_remove() {
         Collection col = getCol();
         // create a new col, and add a note/card to it
-        long deck1 = col.getDecks().id("deck1");
+        long deck1 = addDeck("deck1");
         Note note = col.newNote();
         note.setItem("Front", "1");
         note.model().put("did", deck1);
@@ -144,7 +144,7 @@ public class DecksTest extends RobolectricTest {
     @Test
     public void test_rename() throws DeckRenameException {
         Collection col = getCol();
-        long id = col.getDecks().id("hello::world");
+        long id = addDeck("hello::world");
         // should be able to rename into a completely different branch, creating
         // parents as necessary
         col.getDecks().rename(col.getDecks().get(id), "foo::bar");
@@ -153,7 +153,7 @@ public class DecksTest extends RobolectricTest {
         assertTrue(names.contains("foo::bar"));
         assertFalse(names.contains("hello::world"));
         // create another col
-        id = col.getDecks().id("tmp");
+        id = addDeck("tmp");
          /* TODO: do we want to follow upstream here ?
          // automatically adjusted if a duplicate name
          col.getDecks().rename(col.getDecks().get(id), "FOO");
@@ -162,17 +162,17 @@ public class DecksTest extends RobolectricTest {
          
           */
         // when renaming, the children should be renamed too
-        col.getDecks().id("one::two::three");
-        id = col.getDecks().id("one");
+        addDeck("one::two::three");
+        id = addDeck("one");
         col.getDecks().rename(col.getDecks().get(id), "yo");
         names = col.getDecks().allSortedNames();
         for (String n : new String[] {"yo", "yo::two", "yo::two::three"}) {
             assertTrue(names.contains(n));
         }
         // over filtered
-        long filteredId = col.getDecks().newDyn("filtered");
+        long filteredId = addDynamicDeck("filtered");
         Deck filtered = col.getDecks().get(filteredId);
-        long childId = col.getDecks().id("child");
+        long childId = addDeck("child");
         Deck child = col.getDecks().get(childId);
         assertThrows(DeckRenameException.class, () -> col.getDecks().rename(child, "filtered::child"));
         assertThrows(DeckRenameException.class, () -> col.getDecks().rename(child, "FILTERED::child"));
@@ -183,9 +183,9 @@ public class DecksTest extends RobolectricTest {
      // TODO: upstream does not return "default", remove it
      Collection col = getCol();
 
-     long languages_did = col.getDecks().id("Languages");
-     long chinese_did = col.getDecks().id("Chinese");
-     long hsk_did = col.getDecks().id("Chinese::HSK");
+     long languages_did = addDeck("Languages");
+     long chinese_did = addDeck("Chinese");
+     long hsk_did = addDeck("Chinese::HSK");
 
      // Renaming also renames children
      col.getDecks().renameForDragAndDrop(chinese_did, languages_did);
@@ -221,7 +221,7 @@ public class DecksTest extends RobolectricTest {
      assertEqualsArrayList(new String [] {"Default", "Chinese", "Chinese::HSK", "Languages"}, col.getDecks().allSortedNames());
 
      // decks are renamed if necessary«
-     long new_hsk_did = col.getDecks().id("hsk");
+     long new_hsk_did = addDeck("hsk");
      col.getDecks().renameForDragAndDrop(new_hsk_did, chinese_did);
      assertEqualsArrayList(new String [] {"Default", "Chinese", "Chinese::HSK", "Chinese::hsk+", "Languages"}, col.getDecks().allSortedNames());
      col.getDecks().rem(new_hsk_did);
@@ -234,7 +234,7 @@ public class DecksTest extends RobolectricTest {
         // Regression for #8092
         Collection col = getCol();
         Decks decks = col.getDecks();
-        long id = decks.id("test");
+        long id = addDeck("test");
         decks.select(id);
         assertThat("curDeck should be saved as a long. A deck id.", col.getConf().get("curDeck") instanceof Long);
     }

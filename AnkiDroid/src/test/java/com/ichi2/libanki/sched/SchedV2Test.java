@@ -388,7 +388,7 @@ public class SchedV2Test extends RobolectricTest {
     public void test_newLimits_V2() throws Exception {
         Collection col = getColV2();
         // add some notes
-        long deck2 = col.getDecks().id("Default::foo");
+        long deck2 = addDeck("Default::foo");
         for (int i = 0; i < 30; i++) {
             Note note = col.newNote();
             note.setItem("Front", Integer.toString(i));
@@ -745,8 +745,8 @@ public class SchedV2Test extends RobolectricTest {
     public void test_review_limits() throws Exception {
         Collection col = getColV2();
 
-        Deck parent = col.getDecks().get(col.getDecks().id("parent"));
-        Deck child = col.getDecks().get(col.getDecks().id("parent::child"));
+        Deck parent = col.getDecks().get(addDeck("parent"));
+        Deck child = col.getDecks().get(addDeck("parent::child"));
 
         DeckConfig pconf = col.getDecks().getConf(col.getDecks().confId("parentConf"));
         DeckConfig cconf = col.getDecks().getConf(col.getDecks().confId("childConf"));
@@ -1038,7 +1038,7 @@ public class SchedV2Test extends RobolectricTest {
         // should cope with cards in cram decks
         c.setDue(1);
         c.flush();
-        col.getDecks().newDyn("tmp");
+        addDynamicDeck("tmp");
         col.getSched().rebuildDyn();
         c.load();
         assertNotEquals(1, c.getDue());
@@ -1070,7 +1070,7 @@ public class SchedV2Test extends RobolectricTest {
         col.reset();
         assertEquals(new Counts(0, 0, 0), col.getSched().counts());
         // create a dynamic deck and refresh it
-        long did = col.getDecks().newDyn("Cram");
+        long did = addDynamicDeck("Cram");
         col.getSched().rebuildDyn(did);
         col.reset();
         // should appear as normal in the deck list
@@ -1136,7 +1136,7 @@ public class SchedV2Test extends RobolectricTest {
         assertEquals(QUEUE_TYPE_LRN, c.getType());
 
         // create a dynamic deck and refresh it
-        long did = col.getDecks().newDyn("Cram");
+        long did = addDynamicDeck("Cram");
         col.getSched().rebuildDyn(did);
         col.reset();
 
@@ -1174,7 +1174,7 @@ public class SchedV2Test extends RobolectricTest {
         note2.setItem("Front", "two");
         col.addNote(note2);
         // cram deck
-        long did = col.getDecks().newDyn("Cram");
+        long did = addDynamicDeck("Cram");
         Deck cram = col.getDecks().get(did);
         cram.put("resched", false);
         col.getDecks().save(cram);
@@ -1387,7 +1387,7 @@ public class SchedV2Test extends RobolectricTest {
         // and one that's a child
         note = col.newNote();
         note.setItem("Front", "two");
-        long default1 = col.getDecks().id("Default::1");
+        long default1 = addDeck("Default::1");
         note.model().put("did", default1);
         col.addNote(note);
         // make it a review card
@@ -1398,12 +1398,12 @@ public class SchedV2Test extends RobolectricTest {
         // add one more with a new deck
         note = col.newNote();
         note.setItem("Front", "two");
-        note.model().put("did", col.getDecks().id("foo::bar"));
+        note.model().put("did", addDeck("foo::bar"));
         col.addNote(note);
         // and one that's a sibling
         note = col.newNote();
         note.setItem("Front", "three");
-        note.model().put("did", col.getDecks().id("foo::baz"));
+        note.model().put("did", addDeck("foo::baz"));
         col.addNote(note);
         col.reset();
         assertEquals(5, col.getDecks().allSortedNames().size());
@@ -1429,8 +1429,8 @@ public class SchedV2Test extends RobolectricTest {
     @Test
     public void test_deckTree() throws Exception {
         Collection col = getColV2();
-        col.getDecks().id("new::b::c");
-        col.getDecks().id("new2");
+        addDeck("new::b::c");
+        addDeck("new2");
         // new should not appear twice in tree
         List<String> names = new ArrayList<>();
         for (DeckDueTreeNode tree : col.getSched().deckDueTree()) {
@@ -1451,13 +1451,13 @@ public class SchedV2Test extends RobolectricTest {
         // and one that's a child
         note = col.newNote();
         note.setItem("Front", "two");
-        long default1 = col.getDecks().id("Default::2");
+        long default1 = addDeck("Default::2");
         note.model().put("did", default1);
         col.addNote(note);
         // and another that's higher up
         note = col.newNote();
         note.setItem("Front", "three");
-        default1 = col.getDecks().id("Default::1");
+        default1 = addDeck("Default::1");
         note.model().put("did", default1);
         col.addNote(note);
         // should get top level one first, then ::1, then ::2
@@ -1692,7 +1692,7 @@ public class SchedV2Test extends RobolectricTest {
         c.flush();
 
         // into and out of filtered deck
-        long did = col.getDecks().newDyn("Cram");
+        long did = addDynamicDeck("Cram");
         col.getSched().rebuildDyn(did);
         col.getSched().emptyDyn(did);
         col.reset();
@@ -1735,7 +1735,7 @@ public class SchedV2Test extends RobolectricTest {
         Decks decks = col.getDecks();
         AbstractSched sched = col.getSched();
         addNoteUsingBasicModel("foo", "bar");
-        long did = decks.newDyn("test");
+        long did = addDynamicDeck("test");
         Deck deck = decks.get(did);
         deck.put("resched", false);
         sched.rebuildDyn(did);

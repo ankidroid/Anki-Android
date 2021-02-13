@@ -101,7 +101,7 @@ public class CardTest extends RobolectricTest {
         assertEquals(1, col.cardCount());
         assertEquals(1, note.cards().get(0).getDid());
         // set the model to a new default col
-        long newId = col.getDecks().id("new");
+        long newId = addDeck("new");
         cloze.put("did", newId);
         col.getModels().save(cloze, false);
         // a newly generated card should share the first card's col
