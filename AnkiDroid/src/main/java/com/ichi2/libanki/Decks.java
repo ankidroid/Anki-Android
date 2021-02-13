@@ -984,7 +984,7 @@ public class Decks {
         String name = mDecks.get(did).getString("name");
 
         // current deck
-        mCol.getConf().put("curDeck", Long.toString(did));
+        mCol.getConf().put("curDeck", did);
         // and active decks (current + all children)
         TreeMap<String, Long> actv = children(did); // Note: TreeMap is already sorted
         actv.put(name, did);
