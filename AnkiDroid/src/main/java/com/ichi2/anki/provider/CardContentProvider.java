@@ -44,6 +44,7 @@ import com.ichi2.anki.FlashCardsContract;
 import com.ichi2.anki.FlashCardsContract.CardTemplate;
 import com.ichi2.anki.R;
 import com.ichi2.anki.exception.ConfirmModSchemaException;
+import com.ichi2.anki.exception.FilteredAncestor;
 import com.ichi2.compat.CompatHelper;
 import com.ichi2.libanki.Consts;
 import com.ichi2.libanki.Decks;
@@ -1033,7 +1034,11 @@ public class CardContentProvider extends ContentProvider {
                 if (!Decks.isValidDeckName(deckName)) {
                     throw new IllegalArgumentException("Invalid deck name '" + deckName + "'");
                 }
-                did = col.getDecks().id(deckName);
+                try {
+                    did = col.getDecks().id(deckName);
+                } catch (FilteredAncestor filteredSubdeck) {
+                    throw new IllegalArgumentException("Deck " + deckName + " has filtered ancestor " + filteredSubdeck.getFilteredAncestorName());
+                }
                 Deck deck = col.getDecks().get(did);
                 if (deck != null) {
                     try {

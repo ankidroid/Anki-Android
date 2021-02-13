@@ -2,6 +2,7 @@ package com.ichi2.libanki;
 
 import com.ichi2.anki.RobolectricTest;
 import com.ichi2.anki.exception.DeckRenameException;
+import com.ichi2.anki.exception.FilteredAncestor;
 import com.ichi2.utils.JSONObject;
 
 import org.apache.http.util.Asserts;
@@ -82,7 +83,7 @@ public class DecksTest extends RobolectricTest {
      ******************/
 
     @Test
-    public void test_basic() {
+    public void test_basic() throws FilteredAncestor {
         Collection col = getCol();
         Decks decks = col.getDecks();
         // we start with a standard col
@@ -124,12 +125,12 @@ public class DecksTest extends RobolectricTest {
         assertEquals(decks.id_dont_create("new deck").longValue(), parentId);
         assertEquals(decks.id_dont_create("  New Deck  ").longValue(), parentId);
         assertNull(decks.id_dont_create("Not existing deck"));
-        assertNotNull(decks.id_dont_create("new deck::not either"));
+        assertNull(decks.id_dont_create("new deck::not either"));
     }
 
 
     @Test
-    public void test_remove() {
+    public void test_remove() throws FilteredAncestor {
         Collection col = getCol();
         // create a new col, and add a note/card to it
         long deck1 = addDeck("deck1");
@@ -148,7 +149,7 @@ public class DecksTest extends RobolectricTest {
 
 
     @Test
-    public void test_rename() throws DeckRenameException {
+    public void test_rename() throws DeckRenameException, FilteredAncestor {
         Collection col = getCol();
         long id = addDeck("hello::world");
         // should be able to rename into a completely different branch, creating
@@ -237,7 +238,7 @@ public class DecksTest extends RobolectricTest {
      */
 
     @Test
-    public void curDeckIsLong() {
+    public void curDeckIsLong() throws FilteredAncestor {
         // Regression for #8092
         Collection col = getCol();
         Decks decks = col.getDecks();
@@ -251,9 +252,9 @@ public class DecksTest extends RobolectricTest {
     public void isDynStd() {
         Collection col = getCol();
         Decks decks = col.getDecks();
-        long filteredId = decks.newDyn("filtered");
+        long filteredId = addDynamicDeck("filtered");
         Deck filtered = decks.get(filteredId);
-        long deckId = decks.id("deck");
+        long deckId = addDeck("deck");
         Deck deck = decks.get(deckId);
         assertThat(deck.isStd(), is(Boolean.valueOf(true)));
         assertThat(deck.isDyn(), is(Boolean.valueOf(false)));
@@ -270,7 +271,7 @@ public class DecksTest extends RobolectricTest {
     }
 
     @Test
-    public void testEnsureParents() {
+    public void testEnsureParents() throws FilteredAncestor {
         Collection col = getCol();
         Decks decks = col.getDecks();
         addDeck("test");
@@ -280,10 +281,25 @@ public class DecksTest extends RobolectricTest {
         assertNull(decks.byName("test::sub:: subdeck"));
         assertNull(decks.byName("  test :: sub :: subdeck"));
         assertNull(decks.byName("  test :: sub "));
+
+        decks.newDyn("filtered");
+        assertThrows(FilteredAncestor.class, () -> decks._ensureParents("filtered:: sub :: subdeck"));
     }
 
     @Test
-    public void testEnsureParentsNotFiltered() {
+    public void descendantOfFiltered() throws FilteredAncestor {
+        Collection col = getCol();
+        Decks decks = col.getDecks();
+        long filtered_id = decks.newDyn("filtered");
+        assertThrows(FilteredAncestor.class,  () -> decks.id("filtered::subdeck::subsubdeck"));
+
+        Long subdeck_id = decks.id_safe("filtered::subdeck::subsubdeck");
+        Deck subdeck = decks.get(subdeck_id);
+        assertEquals("filtered'::subdeck::subsubdeck", subdeck.getString("name"));
+    }
+
+    @Test
+    public void testEnsureParentsNotFiltered() throws FilteredAncestor {
         Collection col = getCol();
         Decks decks = col.getDecks();
         addDeck("test");

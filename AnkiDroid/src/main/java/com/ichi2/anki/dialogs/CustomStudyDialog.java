@@ -43,6 +43,7 @@ import com.ichi2.anki.R;
 import com.ichi2.anki.Reviewer;
 import com.ichi2.anki.UIUtils;
 import com.ichi2.anki.analytics.AnalyticsDialogFragment;
+import com.ichi2.anki.exception.FilteredAncestor;
 import com.ichi2.async.CollectionTask;
 import com.ichi2.async.TaskListener;
 import com.ichi2.async.TaskListenerWithContext;
@@ -449,8 +450,12 @@ public class CustomStudyDialog extends AnalyticsDialogFragment {
             }
         } else {
             Timber.i("Creating Dynamic Deck '%s' for custom study", customStudyDeck);
-            long customStudyDid = decks.newDyn(customStudyDeck);
-            dyn = decks.get(customStudyDid);
+            try {
+                dyn = decks.get(decks.newDyn(customStudyDeck));
+            } catch (FilteredAncestor filteredAncestor) {
+                UIUtils.showThemedToast(getActivity(), getString(R.string.decks_rename_filtered_nosubdecks), true);
+                return;
+            }
         }
         if (!dyn.has("terms")) {
             //#5959 - temp code to diagnose why terms doesn't exist.
