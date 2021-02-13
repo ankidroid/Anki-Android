@@ -683,7 +683,9 @@ public class Decks {
 
 
     /**
-     * Ensure parents exist, and return name with case matching parents.
+     *
+     * @param name The name whose parents should exists
+     * @return The name, with potentially change in capitalization and unicode normalization, so that the parent's name corresponds to an existing deck.
      */
     @VisibleForTesting
     protected String _ensureParents(String name) {
@@ -703,6 +705,43 @@ public class Decks {
             long did = id(s);
             // get original case
             s = name(did);
+        }
+        name = s + "::" + path[path.length - 1];
+        return name;
+    }
+
+
+    /**
+     * Similar as ensure parent, to use when the method can't fail and it's better to allow more change to ancestor's names.
+     * @param name The name whose parents should exists
+     * @return The name similar to input, changed as required, and as little as required, so that no ancestor is filtered and the parent's name is an existing deck.
+     */
+    @VisibleForTesting
+    protected  String _ensureParentsNotFiltered(String name) {
+        String s = "";
+        String[] path = path(name);
+        if (path.length < 2) {
+            return name;
+        }
+        for(int i = 0; i < path.length - 1; i++) {
+            String p = path[i];
+            if (TextUtils.isEmpty(s)) {
+                s += p;
+            } else {
+                s += "::" + p;
+            }
+            long did = id(s);
+            Deck deck = get(did);
+            s = name(did);
+            while (deck.isDyn()) {
+                s = s + "'";
+                // fetch or create
+                did = id(s);
+                // get original case
+                s = name(did);
+                deck = get(did);
+
+            }
         }
         name = s + "::" + path[path.length - 1];
         return name;
@@ -957,7 +996,7 @@ public class Decks {
             if (immediateParent != null && !names.containsKey(normalizeName(immediateParent))) {
                 Timber.i("fix deck with missing parent %s", deckName);
                 Deck parent = byName(immediateParent);
-                _ensureParents(deckName);
+                _ensureParentsNotFiltered(deckName);
                 names.put(normalizeName(immediateParent), parent);
             }
             names.put(normalizeName(deckName), deck);
