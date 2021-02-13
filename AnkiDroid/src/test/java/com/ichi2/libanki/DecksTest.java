@@ -275,10 +275,32 @@ public class DecksTest extends RobolectricTest {
         Decks decks = col.getDecks();
         addDeck("test");
         String subsubdeck_name = decks._ensureParents("  tESt :: sub :: subdeck");
-        assertEquals(subsubdeck_name, "test::sub:: subdeck");// Only parents are renamed, not the last deck.
+        assertEquals("test::sub:: subdeck", subsubdeck_name);// Only parents are renamed, not the last deck.
         assertNotNull(decks.byName("test::sub"));
         assertNull(decks.byName("test::sub:: subdeck"));
         assertNull(decks.byName("  test :: sub :: subdeck"));
         assertNull(decks.byName("  test :: sub "));
     }
+
+    @Test
+    public void testEnsureParentsNotFiltered() {
+        Collection col = getCol();
+        Decks decks = col.getDecks();
+        addDeck("test");
+        String subsubdeck_name = decks._ensureParentsNotFiltered("  tESt :: sub :: subdeck");
+        assertEquals("test::sub:: subdeck", subsubdeck_name);// Only parents are renamed, not the last deck.
+        assertNotNull(decks.byName("test::sub"));
+        assertNull(decks.byName("test::sub:: subdeck"));
+        assertNull(decks.byName("  test :: sub :: subdeck"));
+        assertNull(decks.byName("  test :: sub "));
+
+        decks.newDyn("filtered");
+        String filtered_subdeck_name = decks._ensureParentsNotFiltered("filtered:: sub :: subdeck");
+        assertEquals("filtered'::sub:: subdeck", filtered_subdeck_name);// Only parents are renamed, not the last deck.
+        assertNotNull(decks.byName("filtered'::sub"));
+        assertNotNull(decks.byName("filtered'"));
+        assertNull(decks.byName("filtered::sub:: subdeck"));
+        assertNull(decks.byName("filtered::sub"));
+    }
+
 }
