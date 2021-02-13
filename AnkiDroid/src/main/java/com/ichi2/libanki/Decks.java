@@ -328,14 +328,18 @@ public class Decks {
         return id(name, true, type);
     }
 
+    private String usable_name(String name) {
+        name = strip(name);
+        name = name.replace("\"", "");
+        name = Normalizer.normalize(name, Normalizer.Form.NFC);
+        return name;
+    }
 
     /**
      * Add a deck with NAME. Reuse deck if already exists. Return id as int.
      */
     public Long id(String name, boolean create, String type) {
-        name = strip(name);
-        name = name.replace("\"", "");
-        name = Normalizer.normalize(name, Normalizer.Form.NFC);
+        name = usable_name(name);
         Deck deck = byName(name);
         if (deck != null) {
             return deck.getLong("id");
