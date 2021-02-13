@@ -119,15 +119,18 @@ public class DeckPickerContextMenu extends AnalyticsDialogFragment {
     int[] getListIds() {
         Collection col = CollectionHelper.getInstance().getCol(getContext());
         long did = getArguments().getLong("did");
+        boolean dyn = col.getDecks().isDyn(did);
         ArrayList<Integer> itemIds = new ArrayList<>(9);
-        if (col.getDecks().isDyn(did)) {
+        if (dyn) {
             itemIds.add(CONTEXT_MENU_CUSTOM_STUDY_REBUILD);
             itemIds.add(CONTEXT_MENU_CUSTOM_STUDY_EMPTY);
         }
         itemIds.add(CONTEXT_MENU_RENAME_DECK);
-        itemIds.add(CONTEXT_MENU_CREATE_SUBDECK);
+        if (!dyn) {
+            itemIds.add(CONTEXT_MENU_CREATE_SUBDECK);
+        }
         itemIds.add(CONTEXT_MENU_DECK_OPTIONS);
-        if (!col.getDecks().isDyn(did)) {
+        if (!dyn) {
             itemIds.add(CONTEXT_MENU_CUSTOM_STUDY);
         }
         itemIds.add(CONTEXT_MENU_DELETE_DECK);
