@@ -670,7 +670,7 @@ public class DeckPicker extends NavigationDrawerActivity implements
 
     private void createNewDeck(String deckName) {
         Timber.i("DeckPicker:: Creating new deck...");
-        getCol().getDecks().id(deckName, true);
+        getCol().getDecks().id(deckName);
         updateDeckList();
     }
 
