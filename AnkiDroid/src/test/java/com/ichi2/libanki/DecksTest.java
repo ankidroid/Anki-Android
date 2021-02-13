@@ -84,33 +84,34 @@ public class DecksTest extends RobolectricTest {
     @Test
     public void test_basic() {
         Collection col = getCol();
+        Decks decks = col.getDecks();
         // we start with a standard col
-        assertEquals(1, col.getDecks().allSortedNames().size());
+        assertEquals(1, decks.allSortedNames().size());
         // it should have an id of 1
-        assertNotNull(col.getDecks().name(1));
+        assertNotNull(decks.name(1));
         // create a new col
         long parentId = addDeck("new deck");
         assertNotEquals(parentId, 0);
-        assertEquals(2, col.getDecks().allSortedNames().size());
+        assertEquals(2, decks.allSortedNames().size());
         // should get the same id
         assertEquals(parentId, (long) addDeck("new deck"));
         // we start with the default col selected
-        assertEquals(1, col.getDecks().selected());
-        assertEqualsArrayList(new Long[] {1L}, col.getDecks().active());
+        assertEquals(1, decks.selected());
+        assertEqualsArrayList(new Long[] {1L}, decks.active());
         // we can select a different col
-        col.getDecks().select(parentId);
-        assertEquals(parentId, col.getDecks().selected());
-        assertEqualsArrayList(new Long[] {parentId}, col.getDecks().active());
+        decks.select(parentId);
+        assertEquals(parentId, decks.selected());
+        assertEqualsArrayList(new Long[] {parentId}, decks.active());
         // let's create a child
         long childId = addDeck("new deck::child");
         col.reset();
         // it should have been added to the active list
-        assertEquals(parentId, col.getDecks().selected());
-        assertEqualsArrayList(new Long[] {parentId, childId}, col.getDecks().active());
+        assertEquals(parentId, decks.selected());
+        assertEqualsArrayList(new Long[] {parentId, childId}, decks.active());
         // we can select the child individually too
-        col.getDecks().select(childId);
-        assertEquals(childId, col.getDecks().selected());
-        assertEqualsArrayList(new Long[] {childId}, col.getDecks().active());
+        decks.select(childId);
+        assertEquals(childId, decks.selected());
+        assertEqualsArrayList(new Long[] {childId}, decks.active());
         // parents with a different case should be handled correctly
         addDeck("ONE");
         Model m = col.getModels().current();
@@ -147,8 +148,9 @@ public class DecksTest extends RobolectricTest {
         long id = addDeck("hello::world");
         // should be able to rename into a completely different branch, creating
         // parents as necessary
-        col.getDecks().rename(col.getDecks().get(id), "foo::bar");
-        List<String> names = col.getDecks().allSortedNames();
+        Decks decks = col.getDecks();
+        decks.rename(decks.get(id), "foo::bar");
+        List<String> names = decks.allSortedNames();
         assertTrue(names.contains("foo"));
         assertTrue(names.contains("foo::bar"));
         assertFalse(names.contains("hello::world"));
@@ -156,8 +158,8 @@ public class DecksTest extends RobolectricTest {
         id = addDeck("tmp");
          /* TODO: do we want to follow upstream here ?
          // automatically adjusted if a duplicate name
-         col.getDecks().rename(col.getDecks().get(id), "FOO");
-         names =  col.getDecks().allSortedNames();
+         decks.rename(decks.get(id), "FOO");
+         names =  decks.allSortedNames();
          assertThat(names, containsString("FOO+"));
          
           */
