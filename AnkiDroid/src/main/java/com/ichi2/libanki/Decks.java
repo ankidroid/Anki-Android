@@ -354,7 +354,7 @@ public class Decks {
      * Remove the deck. If cardsToo, delete any cards inside.
      */
     public void rem(long did, boolean cardsToo, boolean childrenToo) {
-        JSONObject deck = get(did, false);
+        Deck deck = get(did, false);
         if (did == 1) {
             // we won't allow the default deck to be deleted, but if it's a
             // child of an existing deck then it needs to be renamed

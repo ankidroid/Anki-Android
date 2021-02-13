@@ -236,4 +236,18 @@ public class DecksTest extends RobolectricTest {
         assertThat("curDeck should be saved as a long. A deck id.", col.getConf().get("curDeck") instanceof Long);
     }
 
+
+    @Test
+    public void isDynStd() {
+        Collection col = getCol();
+        Decks decks = col.getDecks();
+        long filteredId = decks.newDyn("filtered");
+        Deck filtered = decks.get(filteredId);
+        long deckId = decks.id("deck");
+        Deck deck = decks.get(deckId);
+        assertThat(deck.isStd(), is(Boolean.valueOf(true)));
+        assertThat(deck.isDyn(), is(Boolean.valueOf(false)));
+        assertThat(filtered.isStd(), is(Boolean.valueOf(false)));
+        assertThat(filtered.isDyn(), is(Boolean.valueOf(true)));
+    }
 }
