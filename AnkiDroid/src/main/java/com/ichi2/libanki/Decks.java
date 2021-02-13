@@ -44,7 +44,6 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
-import java.util.Objects;
 import java.util.Set;
 import java.util.TreeMap;
 import java.util.regex.Pattern;
@@ -556,7 +555,7 @@ public class Decks {
             List<String> parts = Arrays.asList(path(newName));
             String newParent = TextUtils.join("::", parts.subList(0, parts.size() - 1));
             if (byName(newParent).isDyn()) {
-                throw new DeckRenameException(DeckRenameException.FILTERED_NOSUBDEKCS);
+                throw new DeckRenameException(DeckRenameException.FILTERED_NOSUBDECKS);
             }
         }
         // rename children
