@@ -21,9 +21,12 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotEquals;
 import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertThrows;
 import static org.junit.Assert.assertTrue;
 import static org.mockito.ArgumentMatchers.contains;
+import static org.mockito.ArgumentMatchers.isNotNull;
+import static org.mockito.ArgumentMatchers.isNull;
 
 @RunWith(AndroidJUnit4.class)
 public class DecksTest extends RobolectricTest {
@@ -257,5 +260,18 @@ public class DecksTest extends RobolectricTest {
         assertThat(filtered_config.isStd(), is(Boolean.valueOf(false)));
         assertThat(filtered_config.isDyn(), is(Boolean.valueOf(true)));
 
+    }
+
+    @Test
+    public void testEnsureParents() {
+        Collection col = getCol();
+        Decks decks = col.getDecks();
+        addDeck("test");
+        String subsubdeck_name = decks._ensureParents("  tESt :: sub :: subdeck");
+        assertEquals(subsubdeck_name, "test::sub:: subdeck");// Only parents are renamed, not the last deck.
+        assertNotNull(decks.byName("test::sub"));
+        assertNull(decks.byName("test::sub:: subdeck"));
+        assertNull(decks.byName("  test :: sub :: subdeck"));
+        assertNull(decks.byName("  test :: sub "));
     }
 }
