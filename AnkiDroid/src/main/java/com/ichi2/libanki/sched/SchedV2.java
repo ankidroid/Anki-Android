@@ -991,7 +991,7 @@ public class SchedV2 extends AbstractSched {
      * @param considerCurrentCard whether the current card should be taken from the limit (if it belongs to this deck)
      * */
     public int _deckNewLimitSingle(@NonNull Deck g, boolean considerCurrentCard) {
-        if (g.getInt("dyn") == DECK_DYN) {
+        if (g.isDyn()) {
             return mDynReportLimit;
         }
         long did = g.getLong("id");
@@ -1534,7 +1534,7 @@ public class SchedV2 extends AbstractSched {
         if (d == null) {
             return 0;
         }
-        if (d.getInt("dyn") == DECK_DYN) {
+        if (d.isDyn()) {
             return mDynReportLimit;
         }
         long did = d.getLong("id");
@@ -1887,7 +1887,7 @@ public class SchedV2 extends AbstractSched {
             did = mCol.getDecks().selected();
         }
         Deck deck = mCol.getDecks().get(did);
-        if (deck.getInt("dyn") == DECK_STD) {
+        if (deck.isStd()) {
             Timber.e("error: deck is not a filtered deck");
             return;
         }
@@ -2347,7 +2347,7 @@ public class SchedV2 extends AbstractSched {
             sb.append("\n\n");
             sb.append("").append(context.getString(R.string.sched_has_buried)).append(now);
         }
-        if (mCol.getDecks().current().getInt("dyn") == DECK_STD) {
+        if (mCol.getDecks().current().isStd()) {
             sb.append("\n\n");
             sb.append(context.getString(R.string.studyoptions_congrats_custom));
         }
