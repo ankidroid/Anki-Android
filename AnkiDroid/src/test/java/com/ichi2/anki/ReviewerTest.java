@@ -235,11 +235,11 @@ public class ReviewerTest extends RobolectricTest {
         Models models = col.getModels();
 
         Decks decks = col.getDecks();
-        Long didAb = decks.id("A::B");
+        Long didAb = addDeck("A::B");
         Model basic = models.byName(AnkiDroidApp.getAppResources().getString(R.string.basic_model_name));
         basic.put("did", didAb);
         addNoteUsingBasicModel("foo", "bar");
-        Long didA = decks.id("A");
+        Long didA = addDeck("A");
         decks.select(didA);
         Reviewer reviewer = startReviewer();
         waitForAsyncTasksToComplete();
