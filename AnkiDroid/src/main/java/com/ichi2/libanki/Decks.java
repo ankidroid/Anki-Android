@@ -27,6 +27,7 @@ import android.text.TextUtils;
 import com.ichi2.anki.AnkiDroidApp;
 import com.ichi2.anki.exception.ConfirmModSchemaException;
 import com.ichi2.anki.exception.DeckRenameException;
+import com.ichi2.anki.exception.FilteredAncestor;
 import com.ichi2.libanki.exception.NoSuchDeckException;
 
 import com.ichi2.utils.DeckComparator;
@@ -323,8 +324,12 @@ public class Decks {
         return null;
     }
 
-    public Long id(String name) {
+    public Long id(String name) throws FilteredAncestor {
         return id(name, defaultDeck);
+    }
+
+    public Long id_safe(String name) {
+        return id_safe(name, defaultDeck);
     }
 
     private String usable_name(String name) {
@@ -337,7 +342,7 @@ public class Decks {
     /**
      * Add a deck with NAME. Reuse deck if already exists. Return id as int.
      */
-    public Long id(String name, String type) {
+    public Long id(String name, String type) throws FilteredAncestor {
         name = usable_name(name);
         Long id = id_dont_create(name);
         if (id != null) {
@@ -370,6 +375,23 @@ public class Decks {
         mNameMap.add(g);
         //runHook("newDeck"); // TODO
         return id;
+    }
+
+
+    /**
+     * Same as id, but rename ancestors if filtered to avoid failure
+     */
+    public Long id_safe(String name, String type)  {
+        name = usable_name(name);
+        Long id = id_dont_create(name);
+        if (id != null) {
+            return id;
+        }
+        if (name.contains("::")) {
+            // not top level; ensure all parents exist
+            name = _ensureParentsNotFiltered(name);
+        }
+        return id_create_name_valid(name, type);
     }
 
 
@@ -582,15 +604,11 @@ public class Decks {
              * did not change. We still need to run the remaining of
              * the code in order do this change. */
         }
-        // ensure we have parents
-        newName = _ensureParents(newName);
-        // make sure we're not nesting under a filtered deck
-        if (newName.contains("::")) {
-            List<String> parts = Arrays.asList(path(newName));
-            String newParent = TextUtils.join("::", parts.subList(0, parts.size() - 1));
-            if (byName(newParent).isDyn()) {
-                throw new DeckRenameException(DeckRenameException.FILTERED_NOSUBDECKS);
-            }
+        // ensure we have parents and none is a filtered deck
+        try {
+            newName = _ensureParents(newName);
+        } catch (FilteredAncestor filteredSubdeck) {
+            throw new DeckRenameException(DeckRenameException.FILTERED_NOSUBDECKS);
         }
         // rename children
         String oldName = g.getString("name");
@@ -609,7 +627,8 @@ public class Decks {
         // adjust name
         g.put("name", newName);
         // ensure we have parents again, as we may have renamed parent->child
-        newName = _ensureParents(newName);
+        // No ancestor can be filtered after renaming
+        newName = _ensureParentsNotFiltered(newName);
         mNameMap.add(g);
         save(g);
         // renaming may have altered active did order
@@ -697,9 +716,10 @@ public class Decks {
      *
      * @param name The name whose parents should exists
      * @return The name, with potentially change in capitalization and unicode normalization, so that the parent's name corresponds to an existing deck.
+     * @throws FilteredAncestor if a parent is filtered
      */
     @VisibleForTesting
-    protected String _ensureParents(String name) {
+    protected String _ensureParents(String name) throws FilteredAncestor {
         String s = "";
         String[] path = path(name);
         if (path.length < 2) {
@@ -716,6 +736,10 @@ public class Decks {
             long did = id(s);
             // get original case
             s = name(did);
+            Deck deck = get(did);
+            if (deck.isDyn()) {
+                throw new FilteredAncestor(s);
+            }
         }
         name = s + "::" + path[path.length - 1];
         return name;
@@ -741,13 +765,13 @@ public class Decks {
             } else {
                 s += "::" + p;
             }
-            long did = id(s);
+            long did = id_safe(s);
             Deck deck = get(did);
             s = name(did);
             while (deck.isDyn()) {
                 s = s + "'";
                 // fetch or create
-                did = id(s);
+                did = id_safe(s);
                 // get original case
                 s = name(did);
                 deck = get(did);
@@ -1188,7 +1212,7 @@ public class Decks {
     /**
      * Return a new dynamic deck and set it as the current deck.
      */
-    public long newDyn(String name) {
+    public long newDyn(String name) throws FilteredAncestor {
         long did = id(name, defaultDynamicDeck);
         select(did);
         return did;
