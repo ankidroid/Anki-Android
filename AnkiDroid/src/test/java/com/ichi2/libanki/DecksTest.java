@@ -120,6 +120,11 @@ public class DecksTest extends RobolectricTest {
         Note n = col.newNote();
         n.setItem("Front", "abc");
         col.addNote(n);
+
+        assertEquals(decks.id_dont_create("new deck").longValue(), parentId);
+        assertEquals(decks.id_dont_create("  New Deck  ").longValue(), parentId);
+        assertNull(decks.id_dont_create("Not existing deck"));
+        assertNotNull(decks.id_dont_create("new deck::not either"));
     }
 
 

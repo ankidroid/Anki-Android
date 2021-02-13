@@ -314,18 +314,17 @@ public class Decks {
      * ***********************************************************
      */
 
+    public Long id_dont_create(String name) {
+        name = usable_name(name);
+        Deck deck = byName(name);
+        if (deck != null) {
+            return deck.getLong("id");
+        }
+        return null;
+    }
+
     public Long id(String name) {
-        return id(name, true);
-    }
-
-
-    public Long id(String name, boolean create) {
-        return id(name, create, defaultDeck);
-    }
-
-
-    public Long id(String name, String type) {
-        return id(name, type);
+        return id(name, defaultDeck);
     }
 
     private String usable_name(String name) {
@@ -338,20 +337,16 @@ public class Decks {
     /**
      * Add a deck with NAME. Reuse deck if already exists. Return id as int.
      */
-    public Long id(String name, boolean create, String type) {
+    public Long id(String name, String type) {
         name = usable_name(name);
-        Deck deck = byName(name);
-        if (deck != null) {
-            return deck.getLong("id");
-        }
-        if (!create) {
-            return null;
+        Long id = id_dont_create(name);
+        if (id != null) {
+            return id;
         }
         if (name.contains("::")) {
             // not top level; ensure all parents exist
             name = _ensureParents(name);
         }
-        long id;
         Deck g = new Deck(type);
         g.put("name", name);
         do {
