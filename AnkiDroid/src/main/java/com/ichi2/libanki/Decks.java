@@ -663,7 +663,8 @@ public class Decks {
     /**
      * Ensure parents exist, and return name with case matching parents.
      */
-    public String _ensureParents(String name) {
+    @VisibleForTesting
+    protected String _ensureParents(String name) {
         String s = "";
         String[] path = path(name);
         if (path.length < 2) {
