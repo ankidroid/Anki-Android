@@ -154,13 +154,28 @@ public class Decks {
     private NameMap mNameMap;
     private boolean mChanged;
 
+
+
+    /**
+     * A tool to quickly access decks from name. Ensure that names get properly normalized so that difference in
+     * name unicode normalization or upper/lower case, is ignored during deck search.
+     */
     private static class NameMap {
         private final HashMap<String, Deck> mNameMap;
 
+
+        /**
+         * @param size The expected number of deck to keep
+         */
         private NameMap(int size) {
             mNameMap = new HashMap<>(size);
         }
 
+
+        /**
+         * @param decks The collection of decks we want to get access quickly
+         * @return A name map, allowing to get decks from name
+         */
         public static NameMap constructor(java.util.Collection<Deck> decks) {
             NameMap map = new NameMap(2 * decks.size());
             for (Deck deck: decks) {
@@ -169,6 +184,11 @@ public class Decks {
             return map;
         }
 
+
+        /**
+         * @param name A name of deck to get
+         * @return The deck with this name if it exists, null otherwise.
+         */
         public synchronized Deck get(String name) {
             String normalized = normalizeName(name);
             Deck deck = mNameMap.get(normalized);
@@ -182,6 +202,10 @@ public class Decks {
             return deck;
         }
 
+
+        /**
+         * @param g Add a deck. Allow from its name to get quick access to the deck.
+         */
         public synchronized void add(Deck g) {
             String name = g.getString("name");
             mNameMap.put(name, g);
