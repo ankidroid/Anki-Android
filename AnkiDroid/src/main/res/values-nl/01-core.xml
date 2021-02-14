@@ -38,7 +38,7 @@
 ~ this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <resources>
-    <string name="yes">yes</string>
+    <string name="yes">ja</string>
     <!-- Navigation drawer items-->
     <string name="decks">Leersets</string>
     <string name="card_browser" comment="The usage of card browser inside the app (note the casing)">Kaartenoverzicht</string>
@@ -71,8 +71,8 @@
         <item quantity="one">%d dag %d over</item>
         <item quantity="other">%d dagen %d over</item>
     </plurals>
-    <string name="no_cards_placeholder_title">Collection is empty</string>
-    <string name="no_cards_placeholder_description">Start adding cards\nusing the + icon.</string>
+    <string name="no_cards_placeholder_title">Collectie is leeg</string>
+    <string name="no_cards_placeholder_description">Begin kaarten toe te voegen\nmet het + icoon.</string>
     <!-- The deck picker via AnkiStatsTaskHandler.java -->
     <plurals name="studied_cards_today">
         <item quantity="one">%1$d kaart in %2$s gestudeerd vandaag</item>
@@ -81,7 +81,7 @@
     <!-- flashcard_portrait.xml -->
     <string name="type_answer_hint">Antwoord schrijven</string>
     <string name="show_answer">Toon antwoord</string>
-    <string name="hide_answer">Hide answer</string>
+    <string name="hide_answer">Verberg het antwoord</string>
     <string name="ease_button_again">Opnieuw</string>
     <string name="ease_button_hard">Moeilijk</string>
     <string name="ease_button_good">Goed</string>
@@ -94,7 +94,7 @@
     <string name="move_all_to_deck">Alles verplaatsen naar leerset</string>
     <string name="unbury">Opgraven</string>
     <string name="rename_deck">Leerset hernoemen</string>
-    <string name="create_shortcut">Create shortcut</string>
+    <string name="create_shortcut">Snelkoppeling maken</string>
     <string name="menu_add" comment="A generic add button - Main Deck Picker and card templates. Please inform us if you need more specific strings">Toevoegen</string>
     <string name="menu_add_note">Memo toevoegen</string>
     <string name="menu_my_account" comment="Label of the window in which the user should enter their account. This text can\'t be found in AnkiDroid directly.">Account synchroniseren</string>
@@ -119,7 +119,7 @@
     <string name="menu_search">Opzoeken in %1$s</string>
     <string name="menu_mark_note">Memo markeren</string>
     <string name="menu_unmark_note">Memo onmarkeren</string>
-    <string name="menu_toggle_mic_tool_bar">Check pronunciation</string>
+    <string name="menu_toggle_mic_tool_bar">Uitspraak controleren</string>
     <string name="new_deck">Leerset aanmaken</string>
     <string name="create" comment="Button to create a filtered deck">Maak</string>
     <string name="new_dynamic_deck">Gefilterde set maken</string>
@@ -146,16 +146,16 @@
     <string name="time_quantity_months">%.1f ma</string>
     <string name="time_quantity_years">%.1f jr</string>
     <!-- or "%.1f a" -->
-    <string name="rebuild_filtered_deck">Rebuilding filtered deck&#8230;</string>
+    <string name="rebuild_filtered_deck">Gefilterde set wordt opnieuw opgebouwd&#8230;</string>
     <string name="rebuild_cram_label">Opnieuw opbouwen</string>
     <string name="empty_cram_label">Leeg</string>
     <string name="create_subdeck">Creëer subleerset</string>
-    <string name="empty_filtered_deck">Emptying filtered deck&#8230;</string>
+    <string name="empty_filtered_deck">Gefilterde set wordt leeggemaakt&#8230;</string>
     <string name="custom_study_deck_name">Aangepaste studiesessie</string>
     <string name="custom_study_deck_exists">Gelieve eerst de bestaande aangepaste studieset te hernoemen.</string>
     <string name="empty_deck">Deze leerset is leeg</string>
-    <string name="empty_deck_add_note">Add card</string>
-    <string name="invalid_deck_name">Invalid deck name</string>
+    <string name="empty_deck_add_note">Kaart toevoegen</string>
+    <string name="invalid_deck_name">Ongeldige setnaam</string>
     <string name="studyoptions_empty">Deze leerset is leeg. Druk op de + knop om nieuwe inhoud toe te voegen.</string>
     <string name="studyoptions_limit_reached">De dagelijkse studielimiet is bereikt</string>
     <string name="studyoptions_empty_schedule">Er zijn geen kaarten gepland om te studeren</string>
@@ -181,33 +181,33 @@
     <string name="card_template_editor_back">Sjabloon van de achterkant</string>
     <string name="card_template_editor_styling">Stijl</string>
     <string name="card_template_editor_menu_card_browser_appearance">Kaartenverkenner Uiterlijk</string>
-    <string name="card_template_editor_deck_override">Deck Override</string>
+    <string name="card_template_editor_deck_override">Set overschrijven</string>
     <string name="card_template_editor_cant_delete">Minstens een kaarttype is vereist.</string>
     <plurals name="card_template_editor_confirm_delete">
         <item quantity="one">Verwijder het “%2$s” kaarttype, en zijn %1$d kaart?</item>
         <item quantity="other">Verwijder het “%2$s” kaarttype, en zijn %1$d kaarten?</item>
     </plurals>
     <string name="invalid_template">De kaart kon niet worden aangemaakt</string>
-    <string name="card_template_editor_would_delete_note">Het verwijderen van dit kaarttype zou er mogelijk voor zorgen dat een of meer notities worden verwijderd. Gelieve een nieuw kaarttype eerst te maken en op te slaan.</string>
+    <string name="card_template_editor_would_delete_note">Het verwijderen van dit kaarttype zou er mogelijk voor zorgen dat een of meer memo\'s worden verwijderd. Gelieve een nieuw kaarttype eerst te maken en op te slaan.</string>
     <string name="card_template_editor_save_error">Kan de wijzigingen aan het kaartsjabloon niet opslaan: %s</string>
     <string name="template_for_current_card_deleted">Het kaarttype voor de huidige kaart is verwijderd.</string>
     <!-- Card Browser Appearance -->
     <string name="card_template_browser_appearance_title">Verkenner uiterlijk</string>
     <string name="current_and_default_deck">%1$s (%2$s)</string>
     <!-- card Info -->
-    <string name="card_info_title">Card info</string>
+    <string name="card_info_title">Kaartinformatie</string>
     <!-- Permissions -->
     <string name="read_write_permission_label">Lees en schrijf naar de AnkiDroid database</string>
-    <string name="read_write_permission_description">toegang tot bestaande notities, kaarten, notitietypen en dekken (ook nieuwe maken)</string>
+    <string name="read_write_permission_description">toegang tot bestaande memo\'s, kaarten, memotypen en sets (ook nieuwe maken)</string>
     <!-- Context Menu -->
     <string name="card_browser_context_menu" comment="The value which appears in the system context menu. Note the casing difference">Kaartenbrowser</string>
-    <string name="context_menu_anki_card_label">Anki Card</string>
-    <string name="has_a_problem" comment="First field is either front template or back template. Second field is the error message.">%1$s has a problem:<br/>%2$s</string>
-    <string name="more_information">More information</string>
-    <string name="no_field">Found \'{{%1$s}}\', but there is no field called \'%1$s\'.</string>
-    <string name="closed_tag_not_open">Found \'{{/%1$s}}\', but missing \'{{#%1$s}}\' or \'{{^%1$s}}\'.</string>
-    <string name="missing_closing_bracket">Missing \'}}\' in \'%s\'.</string>
-    <string name="open_tag_not_closed">Missing \'{{%s}}\'.</string>
-    <string name="wrong_tag_closed">Found \'{{/%1$s}}\', but expected \'{{/%2$s}}\'</string>
-    <string name="filter_error">Error in filter %s</string>
+    <string name="context_menu_anki_card_label">Ankikaart</string>
+    <string name="has_a_problem" comment="First field is either front template or back template. Second field is the error message.">%1$s heeft een probleem:<br/>%2$s</string>
+    <string name="more_information">Meer informatie</string>
+    <string name="no_field">\'{{%1$s}}\' gevonden, maar er is geen veld genaamd \'%1$s. \'.</string>
+    <string name="closed_tag_not_open">{{/%1$s}}\' gevonden, maar er ontbreekt \'{{#%1$s}}\' of \'{{^%1$s}}\'.</string>
+    <string name="missing_closing_bracket">\'}}\' ontbreekt in \'%s.</string>
+    <string name="open_tag_not_closed">\'{{%s }}\' ontbreekt.</string>
+    <string name="wrong_tag_closed">{{/%1$s}}\' gevonden, maar \'{{/%2$s }}\' verwacht</string>
+    <string name="filter_error">Fout in filters %s</string>
 </resources>

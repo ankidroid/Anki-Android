@@ -35,11 +35,11 @@
 <resources>
     <!-- Main editor popup menu items -->
     <string name="multimedia_editor_popup_image">Thêm hình ảnh</string>
-    <string name="multimedia_editor_popup_audio_clip">Add audio clip</string>
+    <string name="multimedia_editor_popup_audio_clip">Thêm đoạn âm thanh</string>
     <string name="multimedia_editor_popup_audio">Ghi âm</string>
     <string name="multimedia_editor_popup_text">Biên tập mở rộng</string>
-    <string name="multimedia_editor_popup_cloze">Cloze deletion</string>
-    <string name="multimedia_editor_popup_clear_field">Clear field</string>
+    <string name="multimedia_editor_popup_cloze">Đánh dấu Cloze</string>
+    <string name="multimedia_editor_popup_clear_field">Xóa trường</string>
     <!-- Translation activity (Glosbe) -->
     <string name="multimedia_editor_trans_poweredglosbe">Được tài trợ bởi glosbe.com</string>
     <!-- these are like translate f r o m  and t o  some othe languages -->
@@ -50,7 +50,7 @@
     <!-- waiting message -->
     <string name="multimedia_editor_trans_translating_online">Dịch trực tuyến</string>
     <!-- pick the right translation imperative -->
-    <string name="multimedia_editor_trans_pick_translation">Pick translation</string>
+    <string name="multimedia_editor_trans_pick_translation">Chọn bản dịch</string>
     <!-- from controller -->
     <!-- dialog title to ask for translation source -->
     <string name="multimedia_editor_trans_pick_translation_source">Chọn tự điển</string>
@@ -67,8 +67,8 @@
     <!-- these are button names to convert field type -->
     <string name="multimedia_editor_field_editing_text" comment="Select the field\'s type to Text.">Văn bản</string>
     <string name="multimedia_editor_field_editing_image">Hình ảnh</string>
-    <string name="multimedia_editor_field_editing_audio">Audio recording</string>
-    <string name="multimedia_editor_field_editing_audio_clip">Audio Clip</string>
+    <string name="multimedia_editor_field_editing_audio">Ghi âm</string>
+    <string name="multimedia_editor_field_editing_audio_clip">Cắt file âm thanh</string>
     <string name="multimedia_editor_field_editing_done" comment="Label of a button to tell the app that the current action is \'Done\'.">Hoàn thành</string>
     <!-- Text field editing -->
     <!-- buttons -->
@@ -76,50 +76,50 @@
     <string name="multimedia_editor_text_field_editing_say">Cách phát âm</string>
     <string name="multimedia_editor_text_field_editing_clear">Xóa</string>
     <string name="multimedia_editor_text_field_editing_clone">Sao chép từ</string>
-    <string name="multimedia_editor_text_field_editing_translate" comment="Label of a button opening the translation activity">Translation</string>
+    <string name="multimedia_editor_text_field_editing_translate" comment="Label of a button opening the translation activity">Dịch</string>
     <!-- message to user, when there is no text or many words, but the user tries something -->
-    <string name="multimedia_editor_text_field_editing_no_text">Input some text first</string>
-    <string name="multimedia_editor_text_field_editing_many_words">Dictionary usually expects one word</string>
+    <string name="multimedia_editor_text_field_editing_no_text">Nhập một số văn bản trước</string>
+    <string name="multimedia_editor_text_field_editing_many_words">Từ điển thường mong đợi một từ</string>
     <!-- message when cloning -->
-    <string name="multimedia_editor_text_field_editing_clone_source">Take from</string>
+    <string name="multimedia_editor_text_field_editing_clone_source">Lấy từ</string>
     <!-- Multimedia card editor activity -->
     <!-- for buttons -->
     <!-- delete confirmation -->
     <!-- Image editing -->
     <!-- for buttons -->
-    <string name="multimedia_editor_image_field_editing_galery">Gallery</string>
-    <string name="multimedia_editor_image_field_editing_photo">Camera</string>
-    <string name="multimedia_editor_image_field_editing_library">Library</string>
+    <string name="multimedia_editor_image_field_editing_galery">Bộ sưu tập</string>
+    <string name="multimedia_editor_image_field_editing_photo">Máy ảnh</string>
+    <string name="multimedia_editor_image_field_editing_library">Thư viện</string>
     <!-- General -->
     <!-- message on the progress dialog for the user to wait, means process -->
-    <string name="multimedia_editor_general_downloading">Downloading</string>
+    <string name="multimedia_editor_general_downloading">Đang tải xuống</string>
     <!-- when process finishes -->
-    <string name="multimedia_editor_general_done" comment="Message informing the user that the action is done">Done</string>
+    <string name="multimedia_editor_general_done" comment="Message informing the user that the action is done">Hoàn tất</string>
     <!-- General word search and failures -->
-    <string name="multimedia_editor_error_word_not_found">The word was not found</string>
+    <string name="multimedia_editor_error_word_not_found">Từ không được tìm thấy</string>
     <!-- failure when contacting glosbe or similar -->
-    <string name="multimedia_editor_trans_getting_failure">Getting translation failed</string>
-    <string name="multimedia_editor_searching_word">Searching the word</string>
+    <string name="multimedia_editor_trans_getting_failure">Không tải được bản dịch</string>
+    <string name="multimedia_editor_searching_word">Tìm kiếm từ</string>
     <!-- General -->
-    <string name="multimedia_editor_progress_wait_title">Wait</string>
+    <string name="multimedia_editor_progress_wait_title">Chờ đợi</string>
     <!-- not a good message, when an unexpected error happens -->
-    <string name="multimedia_editor_something_wrong">Something went wrong</string>
-    <string name="multimedia_editor_attach_mm_content" comment="used for screen readers. Not visible to the user">Attach multimedia content to the %1$s field</string>
-    <string name="multimedia_editor_attach_media">Attach media</string>
+    <string name="multimedia_editor_something_wrong">Đã xảy ra lỗi</string>
+    <string name="multimedia_editor_attach_mm_content" comment="used for screen readers. Not visible to the user">Đính kèm nội dung đa phương tiện vào trường %1$s</string>
+    <string name="multimedia_editor_attach_media">Đính kèm file đa phương tiện</string>
     <!-- Audio view -->
     <!-- Message when recording fails -->
-    <string name="multimedia_editor_audio_view_recording_failed">Recording failed</string>
-    <string name="multimedia_editor_audio_view_playing_failed">Playing failed</string>
-    <string name="multimedia_editor_audio_view_create_failed">Unable to create recorder tool bar</string>
+    <string name="multimedia_editor_audio_view_recording_failed">Ghi âm không thành công</string>
+    <string name="multimedia_editor_audio_view_playing_failed">Phát không thành công</string>
+    <string name="multimedia_editor_audio_view_create_failed">Không thể tạo thanh công cụ ghi</string>
     <!-- Activity titles -->
-    <string name="title_activity_edit_text" comment="Name of the window allowing to edit field. This text can not be seen in AnkiDroid directly.">Editing field</string>
-    <string name="title_activity_translation" comment="Name of the window allowing to translate. This text can not be seen in AnkiDroid directly.">Translation</string>
+    <string name="title_activity_edit_text" comment="Name of the window allowing to edit field. This text can not be seen in AnkiDroid directly.">Chỉnh sửa trường</string>
+    <string name="title_activity_translation" comment="Name of the window allowing to translate. This text can not be seen in AnkiDroid directly.">Dịch</string>
     <!-- Network failure -->
-    <string name="network_no_connection">No connection</string>
+    <string name="network_no_connection">Không có kết nối</string>
     <!-- Crop function-->
-    <string name="crop_image">Do you want to crop this image?</string>
-    <string name="crop_button">Crop image</string>
-    <string name="save_dialog_content">Current image size is %sMB. Default image size limit is 1MB. Do you want to crop it?</string>
-    <string name="select_image_failed">"Select image failed, Please retry"</string>
-    <string name="activity_result_unexpected">App returned an unexpected value. You may need to use a different app</string>
+    <string name="crop_image">Bạn có muốn cắt hình ảnh này không?</string>
+    <string name="crop_button">Cắt hình ảnh</string>
+    <string name="save_dialog_content">Kích thước hình ảnh hiện tại là %sMB. Giới hạn kích thước hình ảnh mặc định là 1MB. Bạn có muốn cắt nó?</string>
+    <string name="select_image_failed">"Chọn hình ảnh không thành công, Vui lòng thử lại"</string>
+    <string name="activity_result_unexpected">Ứng dụng trả về một giá trị không mong muốn. Bạn có thể cần sử dụng một ứng dụng khác</string>
 </resources>

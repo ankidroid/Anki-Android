@@ -57,7 +57,7 @@
     <string name="no_tags">Bạn chưa thêm bất kỳ đuôi nào</string>
     <string name="updated_version">Đã cập nhật lên phiên bản %s</string>
     <!-- Reviewer.java -->
-    <string name="save_whiteboard">Save whiteboard</string>
+    <string name="save_whiteboard">Lưu bảng viết</string>
     <string name="enable_whiteboard">Bật bảng viết</string>
     <string name="disable_whiteboard">Tắt bảng viết</string>
     <string name="show_whiteboard">Hiện bảng viết</string>
@@ -67,14 +67,14 @@
     <string name="leech_suspend_notification">Thẻ được đánh dấu là thẻ khó và đã tạm dừng</string>
     <string name="leech_notification">Thẻ được đánh dấu là thẻ khó</string>
     <string name="corrupt_font">Lỗi tệp phông chữ %s</string>
-    <string name="webview_crash_unknown">Unknown error</string>
-    <string name="webview_crash_unknwon_detailed">This was caused by an internal error in the WebView</string>
+    <string name="webview_crash_unknown">Lỗi không xác định</string>
+    <string name="webview_crash_unknwon_detailed">Điều này là do lỗi nội bộ trong WebView</string>
     <string name="webview_crash_oom">Không đủ bộ nhớ</string>
     <string name="webview_crash_oom_details">WebView đã bị ngắt bởi hệ thống. Việc này thường xảy ra khi ứng dụng tràn bộ nhớ, font chữ hoặc file media quá lớn. </string>
-    <string name="webview_crash_nonfatal">WebView renderer crashed. Cause: %s</string>
-    <string name="webview_crash_fatal">Fatal Error: WebView renderer crashed. Cause: %s</string>
-    <string name="webview_crash_loop_dialog_title">System WebView Rendering Failure</string>
-    <string name="webview_crash_loop_dialog_content">System WebView failed to render card \'%1$s\'.\n %2$s</string>
+    <string name="webview_crash_nonfatal">Trình kết xuất WebView bị lỗi. Nguyên nhân: %s</string>
+    <string name="webview_crash_fatal">Lỗi nghiêm trọng: Trình kết xuất WebView bị lỗi. Nguyên nhân: %s</string>
+    <string name="webview_crash_loop_dialog_title">Hệ thống hiển thị WebView không thành công</string>
+    <string name="webview_crash_loop_dialog_content">Hệ thống WebView không thể hiển thị thẻ \'%1$s\'.\ n%2$s</string>
     <!-- Browser -->
     <string-array name="browser_column1_headings">
         <item>Câu hỏi</item>
@@ -92,13 +92,13 @@
         <item>Khoảng thời gian</item>
         <item>Độ khó</item>
         <item>Hạn</item>
-        <item>Card Modified</item>
+        <item>Thẻ đã sửa đổi</item>
         <item>Đã tạo</item>
-        <item>Note Modified</item>
+        <item>Ghi chú đã sửa đổi</item>
     </string-array>
     <!-- Custom study options -->
-    <string name="custom_study_increase_new_limit">Modify today’s new card limit</string>
-    <string name="custom_study_increase_review_limit">Modify today’s review card limit</string>
+    <string name="custom_study_increase_new_limit">Sửa đổi giới hạn thẻ mới của ngày hôm nay</string>
+    <string name="custom_study_increase_review_limit">Sửa đổi giới hạn thẻ ôn tập của ngày hôm nay</string>
     <string name="custom_study_review_forgotten">Ôn tập các thẻ đã quên</string>
     <string name="custom_study_review_ahead">Ôn tập trước kỳ hạn</string>
     <string name="custom_study_random_selection">Học các thẻ được chọn ngẫu nhiên</string>
@@ -107,14 +107,14 @@
     <!-- Card editor -->
     <string name="cardeditor_title_edit_card">Sửa ghi chú</string>
     <string name="discard_unsaved_changes">Đóng và mất thông tin đang nhập?</string>
-    <string name="note_editor_no_cards_created">No cards created. Please fill in more fields</string>
-    <string name="note_editor_no_first_field">The first field is empty</string>
-    <string name="note_editor_no_cloze_delations">This note type must contain cloze deletions</string>
-    <string name="note_editor_set_field_language">Set field language</string>
-    <string name="note_editor_no_cards_created_all_fields">The current note type did not produce any cards.\nPlease choose another note type, or click ‘Cards’ and add a field substitution</string>
-    <string name="note_editor_insert_cloze_no_cloze_note_type">Cloze deletions will only work on a Cloze note type</string>
+    <string name="note_editor_no_cards_created">Không có thẻ nào được tạo. Vui lòng điền vào các trường khác</string>
+    <string name="note_editor_no_first_field">Trường đầu tiên trống</string>
+    <string name="note_editor_no_cloze_delations">Loại ghi chú này phải chứa đánh dấu cloze</string>
+    <string name="note_editor_set_field_language">Thiết lập trường ngôn ngữ</string>
+    <string name="note_editor_no_cards_created_all_fields">Loại ghi chú hiện tại không tạo ra bất kỳ thẻ nào. \nVui lòng chọn một loại ghi chú khác, hoặc nhấp vào \"Thẻ\" và thêm một trường thay thế</string>
+    <string name="note_editor_insert_cloze_no_cloze_note_type">Đánh dấu Cloze sẽ chỉ hoạt động trên loại ghi chú Cloze</string>
     <string name="saving_facts">Đang lưu ghi chú</string>
-    <string name="saving_model">Saving note type</string>
+    <string name="saving_model">Lưu loại ghi chú</string>
     <string name="save">Lưu</string>
     <string name="close">Đóng</string>
     <string name="select">Chọn</string>
@@ -130,7 +130,7 @@
         <item quantity="other">%1$d phút</item>
     </plurals>
     <string name="fact_adder_intent_title" comment="Label of the \'Add Note\' window. This title can\'t be seen in AnkiDroid directly.">Thẻ AnkiDroid</string>
-    <string name="note_editor_copy_note">Copy note</string>
+    <string name="note_editor_copy_note">Sao chép ghi chú</string>
     <string name="card_editor_reposition_card">Đặt lại vị trí</string>
     <string name="card_editor_reset_card">Thiết lập lại quá trình học</string>
     <string name="card_editor_reschedule_card" comment="Action to reschedule a card">Lên lịch lại</string>
@@ -156,22 +156,22 @@
     <string name="import_message_replace_confirm">Thao tác này sẽ xoá tất cả bộ sưu tập hiện hữu và thay nó bằng dữ liệu của tệp %s</string>
     <string name="import_message_add_confirm">Thêm \"%s\" vào bộ sưu tập? Có thể hơi lâu</string>
     <string name="import_log_no_apkg">Đây không phải là gói tệp tin Anki hợp lệ</string>
-    <string name="import_log_failed_unzip">Failed to unzip apkg: %s</string>
-    <string name="import_log_failed_copy_to">Failed to copy apkg to %s</string>
-    <string name="import_log_failed_validate">apkg failed validation</string>
-    <string name="import_log_insufficient_space">There is not enough space to unzip the package. Needed %1$d, available %2$d</string>
-    <string name="import_log_file_cache_cleared">Error importing file, likely a cache clear during processing.\nPlease try again</string>
-    <string name="import_succeeded_but_check_database">Data import succeeded but post-import cleanup failed. Run check database later. Root cause: %s</string>
-    <string name="import_error_unhandled_request">Unable to process import request</string>
-    <string name="import_error_corrupt_zip">The apkg file is corrupt. Please delete and re-download it.\n\nRoot cause: %s</string>
-    <string name="import_error_exception">Failed to import package\n\n%s</string>
+    <string name="import_log_failed_unzip">Không giải nén được apkg: %s</string>
+    <string name="import_log_failed_copy_to">Không sao chép được apkg sang %s</string>
+    <string name="import_log_failed_validate">không xác thực được apkg</string>
+    <string name="import_log_insufficient_space">Không có đủ dung lượng để giải nén gói. Cần %1$d, hiện có %2$d</string>
+    <string name="import_log_file_cache_cleared">Lỗi khi nhập tệp, có thể là bộ nhớ cache bị xóa trong quá trình xử lý. \nVui lòng thử lại</string>
+    <string name="import_succeeded_but_check_database">Nhập dữ liệu thành công nhưng quá trình dọn dẹp sau nhập không thành công. Chạy kiểm tra cơ sở dữ liệu sau. Nguyên nhân chính: %s</string>
+    <string name="import_error_unhandled_request">Không thể xử lý yêu cầu nhập</string>
+    <string name="import_error_corrupt_zip">Tệp apkg bị hỏng. Vui lòng xóa và tải xuống lại. \n\n. Nguyên nhân chính: %s</string>
+    <string name="import_error_exception">Không nhập được gói \n\n%s</string>
     <string name="import_error_not_apkg_extension">Tên file \"%s\" không chứa định dạng .apkg hoặc .colpkg</string>
-    <string name="import_error_load_imported_database">Anki Database (.anki2) replacements are not yet supported. Please see the manual for replacement instructions.</string>
+    <string name="import_error_load_imported_database">Cơ sở dữ liệu Anki (.anki2) thay thế chưa được hỗ trợ. Vui lòng xem sách hướng dẫn để biết hướng dẫn thay thế.</string>
     <string name="import_error_content_provider">Tệp đã chọn không thể được nhập tự động bởi AnkiDroid. Xin xem hướng dẫn sử dụng để biết cách nhập thủ công tệp anki: \n%s</string>
-    <string name="import_error_copy_file_to_cache">copyFileToCache() failed (possibly out of storage space)</string>
-    <string name="import_error_unhandled_scheme">Unhandled import from: “%s”</string>
+    <string name="import_error_copy_file_to_cache">copyFileToCache() không thành công (có thể hết dung lượng lưu trữ)</string>
+    <string name="import_error_unhandled_scheme">Việc nhập chưa xử lý từ: “%s”</string>
     <string name="import_replacing">Đang thay thế bộ sưu tập&#8230;</string>
-    <string name="import_interrupted">Import interrupted: AnkiDroid was closed</string>
+    <string name="import_interrupted">Nhập dữ liệu bị gián đoạn: AnkiDroid đã bị đóng</string>
     <string name="export_include_schedule">Gồm cả việc lên lịch</string>
     <string name="export_include_media">Gồm cả các tệp đa phương tiện</string>
     <string name="confirm_apkg_export">Kết xuất bộ sưu tập thành gói Anki?</string>
@@ -185,17 +185,17 @@
     <string name="export_save_apkg_unsuccessful">Lưu gói Anki thất bại</string>
     <string name="export_successful">Tệp tin \"%s\" đã được kết xuất. Bạn có muốn gửi nó đi với ứng dụng khác?</string>
     <string name="export_email_subject">AnkiDroid đã kết xuất các thẻ ghi nhớ: %s</string>
-    <string name="export_email_text"><![CDATA[        Hi!
+    <string name="export_email_text"><![CDATA[        Xin chào!
         <br/><br/>
-        This is an Anki flashcards deck send from <a href="https://ankidroid.org/docs/manual.html">AnkiDroid</a>.
-        Try to open it using one of the available <a href="http://ankisrs.net/#download">Anki distributions</a> and enjoy easy and efficient learning!
+        Đây là bộ thẻ flashcards Anki được gửi từ <a href="https://ankidroid.org/docs/manual.html">AnkiDroid</a>.
+        Hãy thử mở nó bằng một trong những <a href="http://ankisrs.net/#download"> bản phát hành Anki</a> và tận hưởng việc học dễ dàng và hiệu quả!
         ]]></string>
     <string name="export_unsuccessful">Lỗi kết xuất tệp tin apkg</string>
     <string name="import_hint">Đưa tệp apkg vào thư mục \"%s\" và bấm \"OK\" để nhập thẻ</string>
     <string name="upgrade_import_no_file_found">Không tìm thấy %1$s tệp có thể nhập</string>
     <string name="study_options" comment="Name for a preference category in Filtered deck (aka Cram deck, aka Custom study) options">Tuỳ chọn</string>
-    <string name="menu__deck_options">Deck options</string>
-    <string name="menu__study_options" comment="Menu item that opens options for a Filtered deck (aka Cram deck, aka Custom study)">Study options</string>
+    <string name="menu__deck_options">Tùy chọn bộ thẻ</string>
+    <string name="menu__study_options" comment="Menu item that opens options for a Filtered deck (aka Cram deck, aka Custom study)">Tùy chọn học tập</string>
     <string name="select_tts">Thiết lập ngôn ngữ TTS</string>
     <string name="custom_study">Học theo tuỳ chọn</string>
     <string name="more_options">Xem thêm</string>
@@ -230,7 +230,7 @@
     <!-- A decimal number of seconds.
     Please give this a best-effort translation and explain the requirements for
     formatting decimals in your language in the CrowdIn comments -->
-    <string name="time_span_decimal_seconds">%s seconds</string>
+    <string name="time_span_decimal_seconds">%s giây</string>
     <!-- The reason for making a simple “< x” translatable are RTL
          languages which apparently use the other symbol to mean less
          than. -->
@@ -240,44 +240,44 @@
     <string name="filtered_deck_name">Bộ thẻ đã lọc</string>
     <string name="reminder_title">Đừng quên học ngày hôm nay!</string>
     <plurals name="reminder_text">
-        <item quantity="other">%2$d cards to review in %1$s</item>
+        <item quantity="other">%2$d thẻ ôn tập trong %1$s</item>
     </plurals>
     <!-- Currently only used if exporting APKG fails -->
     <string name="apk_share_error">Lỗi chia sẻ tệp tin apkg</string>
     <!-- Import and export v2 feedback -->
     <string name="export_v2_dummy_note">Tệp tin này yêu cầu phiên bản Anki mới hơn.</string>
     <!-- Placed in a snackbar with a long URL. Limit the length and move the URL to the start of the string -->
-    <string name="activity_start_failed_load_url">Loading \'%s\' failed.</string>
-    <string name="activity_start_failed">The system does not have an app installed that can perform this action.</string>
-    <string name="multimedia_editor_image_compression_failed"><![CDATA[Camera images may be large. You may wish to compress & resize images in the media directory]]></string>
-    <string name="no_browser_notification">No browser found，please visit web page by pc or mobile: </string>
-    <string name="web_page_error">Error loading page: %s</string>
-    <string name="no_outgoing_link_in_cardbrowser">External page link in card is not supported.</string>
+    <string name="activity_start_failed_load_url">Tải \'%s\' không thành công.</string>
+    <string name="activity_start_failed">Hệ thống chưa cài đặt ứng dụng có thể thực hiện tác vụ này.</string>
+    <string name="multimedia_editor_image_compression_failed"><![CDATA[Hình ảnh máy ảnh có thể lớn. Bạn có thể muốn nén và thay đổi kích thước hình ảnh trong thư mục media]]></string>
+    <string name="no_browser_notification">Không tìm thấy trình duyệt, vui lòng truy cập trang web bằng máy tính hoặc điện thoại di động:</string>
+    <string name="web_page_error">Lỗi khi tải trang: %s</string>
+    <string name="no_outgoing_link_in_cardbrowser">Liên kết trang bên ngoài trong thẻ không được hỗ trợ.</string>
     <!-- The name of the deck which corrupt cards will be moved to -->
-    <string name="check_integrity_recovered_deck_name">Recovered Cards</string>
+    <string name="check_integrity_recovered_deck_name">Khôi phục Các thẻ</string>
     <!-- Deckpicker Background -->
     <string name="background_image_title">Hình nền</string>
-    <string name="choose_an_image">Choose an Image</string>
+    <string name="choose_an_image">Chọn một hình ảnh</string>
     <!-- Card Template Browser Appearance -->
-    <string name="restore_default">Restore Default</string>
-    <string name="reviewer_tts_cloze_spoken_replacement">Blank</string>
+    <string name="restore_default">Khôi phục mặc định</string>
+    <string name="reviewer_tts_cloze_spoken_replacement">Chỗ trống</string>
     <!-- in options menu & Navigation Drawer -->
-    <string name="ankidroid_turn_on_fullscreen_nav_drawer">Please turn on fullscreen to use Show Navigation Drawer using JavaScript.</string>
-    <string name="ankidroid_turn_on_fullscreen_options_menu">Please turn on fullscreen to use Show Options Menu using JavaScript.</string>
+    <string name="ankidroid_turn_on_fullscreen_nav_drawer">Vui lòng bật toàn màn hình để sử dụng Hiển thị Ngăn Điều hướng bằng JavaScript.</string>
+    <string name="ankidroid_turn_on_fullscreen_options_menu">Vui lòng bật toàn màn hình để sử dụng Trình đơn Tùy chọn Hiển thị bằng JavaScript.</string>
     <!-- Whiteboard save image message in Reviewer -->
-    <string name="white_board_image_save_failed">Failed to save whiteboard image. %s</string>
-    <string name="white_board_image_saved">Whiteboard image saved to %s</string>
-    <string name="title_whiteboard_pen_color">Whiteboard pen color</string>
+    <string name="white_board_image_save_failed">Không thể lưu hình ảnh bảng trắng. %s</string>
+    <string name="white_board_image_saved">Hình ảnh bảng trắng được lưu vào %s</string>
+    <string name="title_whiteboard_pen_color">Bảng màu bút</string>
     <!-- CSV/Note Import -->
-    <string name="note_importer_empty_cards_found"><![CDATA[Empty cards found. Please run Tools>Empty Cards.]]></string>
-    <string name="note_importer_error_empty_first_field">Empty first field: %s</string>
-    <string name="note_importer_error_first_field_matched">First field matched: %s</string>
-    <string name="note_importer_error_added_duplicate_first_field">Added duplicate with first field: %s</string>
-    <string name="note_importer_error_appeared_twice">Appeared twice in file: %s</string>
-    <string name="note_importer_error_empty_notes">One or more notes were not imported, because they didn\'t generate any cards. This can happen when you have empty fields or when you have not mapped the content in the text file to the correct fields</string>
-    <string name="csv_importer_error_invalid_field_count">‘%1$s’ had %2$d fields, expected %3$d</string>
-    <string name="csv_importer_error_exception">Aborted: %s</string>
-    <string name="user_is_a_robot">Detected automated test. If you are a human, contact AnkiDroid support</string>
+    <string name="note_importer_empty_cards_found"><![CDATA[Đã tìm thấy thẻ trống. Vui lòng chạy Công cụ > Thẻ trống.]]></string>
+    <string name="note_importer_error_empty_first_field">Trường đầu tiên trống: %s</string>
+    <string name="note_importer_error_first_field_matched">Trường đầu tiên phù hợp: %s</string>
+    <string name="note_importer_error_added_duplicate_first_field">Đã thêm bản sao với trường đầu tiên: %s</string>
+    <string name="note_importer_error_appeared_twice">Đã xuất hiện hai lần trong tệp: %s</string>
+    <string name="note_importer_error_empty_notes">Một hoặc nhiều ghi chú không được nhập vì chúng không tạo bất kỳ thẻ nào. Điều này có thể xảy ra khi bạn có các trường trống hoặc khi bạn chưa ánh xạ nội dung trong tệp văn bản vào các trường chính xác</string>
+    <string name="csv_importer_error_invalid_field_count">‘%1$s’ có %2$d trường, dự kiến %3$d</string>
+    <string name="csv_importer_error_exception">Đã hủy bỏ: %s</string>
+    <string name="user_is_a_robot">Đã phát hiện kiểm tra tự động. Nếu bạn là con người, hãy liên hệ với bộ phận hỗ trợ AnkiDroid</string>
     <plurals name="note_importer_notes_added">
         <item quantity="other">%d thêm ghi chú</item>
     </plurals>
@@ -285,13 +285,13 @@
         <item quantity="other">%d cập nhật ghi chú</item>
     </plurals>
     <plurals name="note_importer_notes_unchanged">
-        <item quantity="other">%d notes unchanged</item>
+        <item quantity="other">%d ghi chú không thay đổi</item>
     </plurals>
     <!-- JS api -->
-    <string name="api_version_developer_contact">This card uses unsupported AnkiDroid features. Contact developer %1$s, or view the wiki. %2$s</string>
+    <string name="api_version_developer_contact">Thẻ này sử dụng các tính năng AnkiDroid không được hỗ trợ. Liên hệ với nhà phát triển %1$s%1$s hoặc xem wiki. %2$s</string>
     <string name="invalid_json_data">Dữ liệu thẻ không hợp lệ. %s</string>
-    <string name="valid_js_api_version">Invalid AnkiDroid JS API version. Contact developer %s, or view wiki</string>
-    <string name="update_js_api_version">AnkiDroid JS API update available. Contact developer %s, or view wiki</string>
+    <string name="valid_js_api_version">Phiên bản API AnkiDroid JS không hợp lệ. Liên hệ với nhà phát triển %s hoặc xem wiki</string>
+    <string name="update_js_api_version">Đã có bản cập nhật AnkiDroid JS API. Liên hệ với nhà phát triển %s hoặc xem wiki</string>
     <string name="reviewer_invalid_api_version_visit_documentation">Hiển thị</string>
     <string name="anki_js_error_code">(Error Code: %d)</string>
     <!-- About AnkiDroid screen -->
@@ -303,28 +303,28 @@
     <!-- Deck Picker -->
     <string name="deck_picker_failed_deck_load">Không thể mở bộ thẻ ‘%s’</string>
     <string name="search_decks">Tìm kiếm bộ thẻ</string>
-    <string name="ankidroid_init_failed_webview_title">Fatal Error</string>
-    <string name="ankidroid_init_failed_webview">AnkiDroid relies on the System WebView which is unavailable. This can happen if the system is installing updates. Please try again in a few minutes.\n\n%s</string>
+    <string name="ankidroid_init_failed_webview_title">Lỗi nghiêm trọng</string>
+    <string name="ankidroid_init_failed_webview">AnkiDroid dựa trên WebView hệ thống không khả dụng. Điều này có thể xảy ra nếu hệ thống đang cài đặt các bản cập nhật. Vui lòng thử lại sau vài phút.\n\n%s</string>
     <!-- A Menu item to change the Font Size (currently in the Note Editor) -->
     <string name="menu_font_size">Cỡ chữ</string>
-    <string name="menu_show_toolbar" comment="Checkable item stating whether the note editor toolbar should be shown">Show Toolbar</string>
+    <string name="menu_show_toolbar" comment="Checkable item stating whether the note editor toolbar should be shown">Hiển thị thanh công cụ</string>
     <string name="format_insert_bold">In đậm</string>
     <string name="format_insert_italic">In nghiêng</string>
     <string name="format_insert_underline">Gạch chân</string>
-    <string name="insert_horizontal_line">Insert Horizontal Line</string>
+    <string name="insert_horizontal_line">Chèn đường ngang</string>
     <string name="insert_heading">Trèn đề mục</string>
     <string name="format_font_size">Thay đổi cỡ chữ</string>
     <string name="insert_mathjax">Chèn công thức toán</string>
-    <string name="insert_cloze">Insert Cloze Deletion</string>
-    <string name="before_text">HTML Before Selection</string>
-    <string name="after_text">HTML After Selection</string>
-    <string name="add_toolbar_item">Create Toolbar Item</string>
-    <string name="toolbar_item_explain_remove">Enter HTML to be inserted before and after the selected text\n\nLong press a toolbar item to remove it</string>
-    <string name="remove_toolbar_item">Remove Toolbar Item?</string>
-    <string name="note_editor_paste_too_large">The image is too large to paste, please insert the image manually</string>
+    <string name="insert_cloze">Chèn Đánh dấu Cloze</string>
+    <string name="before_text">HTML trước vùng chọn</string>
+    <string name="after_text">HTML Sau Vùng chọn</string>
+    <string name="add_toolbar_item">Tạo mục trên Thanh công cụ</string>
+    <string name="toolbar_item_explain_remove">Nhập HTML sẽ được chèn trước và sau văn bản đã chọn\n\nNhấn và giữ một mục trên thanh công cụ để xóa nó</string>
+    <string name="remove_toolbar_item">Xóa Mục Thanh công cụ?</string>
+    <string name="note_editor_paste_too_large">Hình ảnh quá lớn để dán, vui lòng chèn hình ảnh theo cách thủ công</string>
     <string name="ankidroid_cannot_open_after_backup_try_again" comment="After an Android backup is restored, AnkiDroid opens and shows this message.         Opening AnkiDroid again will work correctly">        Android đang sao lưu. Hãy thử lại sau</string>
-    <string name="create_shortcut_error_vivo" comment="iManager is an app on Vivo phones">You may need to use iManager to allow AnkiDroid to add shortcuts</string>
-    <string name="create_shortcut_failed" comment="home screen == launcher">Your home screen does not allow AnkiDroid to add shortcuts</string>
+    <string name="create_shortcut_error_vivo" comment="iManager is an app on Vivo phones">Bạn có thể cần sử dụng iManager để cho phép AnkiDroid thêm phím tắt</string>
+    <string name="create_shortcut_failed" comment="home screen == launcher">Màn hình chính của bạn không cho phép AnkiDroid thêm phím tắt</string>
     <string name="create_shortcut_error">Không thể thêm shortcut: %s</string>
-    <string name="note_editor_capitalize" comment="This is for a switch with a checkbox - on: enabled">Capitalize sentences</string>
+    <string name="note_editor_capitalize" comment="This is for a switch with a checkbox - on: enabled">Viết hoa các câu</string>
 </resources>

@@ -44,8 +44,8 @@
     <!-- Navigation drawer strings -->
     <string tools:ignore="UnusedResources" name="drawer_open">打开侧栏</string>
     <string tools:ignore="UnusedResources" name="drawer_close">关闭侧栏</string>
-    <string name="CardEditorCardDeck">牌组：</string>
-    <string name="CardEditorNoteDeck">牌组：</string>
+    <string name="CardEditorCardDeck">卡组：</string>
+    <string name="CardEditorNoteDeck">卡组：</string>
     <string name="CardEditorModel">笔记类型：</string>
     <string name="CardEditorTags">标签：%1$s</string>
     <string name="CardEditorCards">卡片：%1$s</string>
@@ -83,7 +83,7 @@
     <string-array name="browser_column2_headings">
         <item>答案</item>
         <item>卡片</item>
-        <item>牌组</item>
+        <item>卡组</item>
         <item>笔记</item>
         <item>问题</item>
         <item>标签</item>
@@ -92,7 +92,7 @@
         <item>间隔</item>
         <item>简易度</item>
         <item>到期</item>
-        <item>已修改卡牌</item>
+        <item>已修改卡</item>
         <item>已创建</item>
         <item>已修改笔记</item>
     </string-array>

@@ -99,7 +99,7 @@
     <string name="menu_add_note">Adicionar nota</string>
     <string name="menu_my_account" comment="Label of the window in which the user should enter their account. This text can\'t be found in AnkiDroid directly.">Sincronizar conta</string>
     <string name="menu_dismiss_note">Ocultar / excluir</string>
-    <string name="menu_bury_card">Ocultar cartão</string>
+    <string name="menu_bury_card">Ocultar card</string>
     <string name="menu_bury_note">Enterrar nota</string>
     <string name="menu_suspend_card">Suspender cartão</string>
     <string name="menu_suspend_note">Suspender nota</string>
@@ -187,9 +187,9 @@
         <item quantity="one">Excluir o tipo de cartão %2$s e seu %1$d cartão?</item>
         <item quantity="other">Excluir o tipo de cartão %2$s e seus %1$d cartões?</item>
     </plurals>
-    <string name="invalid_template">Não foi possível gerar um cartão</string>
-    <string name="card_template_editor_would_delete_note">Excluir este tipo de cartão resultará na remoção de uma ou mais notas. Por favor, primeiro crie um novo tipo de cartão.</string>
-    <string name="card_template_editor_save_error">Não é possível salvar as alterações no modelo de cartão: %s</string>
+    <string name="invalid_template">Não foi possível gerar o card</string>
+    <string name="card_template_editor_would_delete_note">Excluir este tipo de card resultará na remoção de uma ou mais notas. Por favor, primeiro crie um novo tipo de card.</string>
+    <string name="card_template_editor_save_error">Não é possível salvar as alterações no modelo de card: %s</string>
     <string name="template_for_current_card_deleted">O modelo para o cartão atual foi excluído.</string>
     <!-- Card Browser Appearance -->
     <string name="card_template_browser_appearance_title">Aparência do navegador</string>
@@ -201,7 +201,7 @@
     <string name="read_write_permission_description">acessar notas, cartões, modelos e baralhos existentes, bem como criar novos</string>
     <!-- Context Menu -->
     <string name="card_browser_context_menu" comment="The value which appears in the system context menu. Note the casing difference">Navegador de Cartões</string>
-    <string name="context_menu_anki_card_label">Cartão do Anki</string>
+    <string name="context_menu_anki_card_label">Anki Card</string>
     <string name="has_a_problem" comment="First field is either front template or back template. Second field is the error message.">%1$s tem um problema:<br/>%2$s</string>
     <string name="more_information">Mais informações</string>
     <string name="no_field">\'{{%1$s}}\' foi encontrado, mas não há nenhum campo chamado \'%1$s\'.</string>

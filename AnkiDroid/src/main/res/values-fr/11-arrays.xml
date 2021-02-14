@@ -103,11 +103,11 @@
     <string name="gesture_lookup">Vérifier l\'expression</string>
     <string name="gesture_play">Lire le média</string>
     <string name="gesture_abort_learning">Abandonner l\'apprentissage</string>
-    <string name="gesture_flag_red">Activer/désactiver le marqueur rouge</string>
-    <string name="gesture_flag_orange">Activer/désactiver le marqueur orange</string>
-    <string name="gesture_flag_green">Activer/désactiver le marqueur vert</string>
-    <string name="gesture_flag_blue">Activer/désactiver le marqueur bleu</string>
-    <string name="gesture_flag_remove">Retirer le marqueur</string>
+    <string name="gesture_flag_red">Activer/désactiver la balise rouge</string>
+    <string name="gesture_flag_orange">Activer/désactiver la balise orange</string>
+    <string name="gesture_flag_green">Activer/désactiver la balise verte</string>
+    <string name="gesture_flag_blue">Activer/désactiver la balise bleue</string>
+    <string name="gesture_flag_remove">Retirer la balise</string>
     <string name="gesture_page_up">Remonter</string>
     <string name="gesture_page_down">Descendre</string>
     <string name="gesture_abort_sync">Abandonner l\'apprentissage et la synchronisation</string>

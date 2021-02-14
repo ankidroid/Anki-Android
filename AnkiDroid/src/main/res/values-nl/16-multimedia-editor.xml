@@ -39,7 +39,7 @@
     <string name="multimedia_editor_popup_audio">Neem audio op</string>
     <string name="multimedia_editor_popup_text">Geavanceerde editor</string>
     <string name="multimedia_editor_popup_cloze">Invuloefening</string>
-    <string name="multimedia_editor_popup_clear_field">Clear field</string>
+    <string name="multimedia_editor_popup_clear_field">Veld leegmaken</string>
     <!-- Translation activity (Glosbe) -->
     <string name="multimedia_editor_trans_poweredglosbe">Aangedreven door glosbe.com</string>
     <!-- these are like translate f r o m  and t o  some othe languages -->
@@ -117,9 +117,9 @@
     <!-- Network failure -->
     <string name="network_no_connection">Geen verbinding</string>
     <!-- Crop function-->
-    <string name="crop_image">Do you want to crop this image?</string>
-    <string name="crop_button">Crop image</string>
-    <string name="save_dialog_content">Current image size is %sMB. Default image size limit is 1MB. Do you want to crop it?</string>
-    <string name="select_image_failed">"Select image failed, Please retry"</string>
-    <string name="activity_result_unexpected">App returned an unexpected value. You may need to use a different app</string>
+    <string name="crop_image">Wilt u deze afbeelding bijsnijden?</string>
+    <string name="crop_button">Afbeelding bijsnijden</string>
+    <string name="save_dialog_content">Huidige afbeeldingsgrootte is %sMB. Standaard afbeeldingsgrootte is 1 MB. Wilt u dit bijsnijden?</string>
+    <string name="select_image_failed">"Selectie van afbeelding is mislukt, probeer opnieuw"</string>
+    <string name="activity_result_unexpected">App leverde een onverwachte waarde op. U moet mogelijk een andere app gebruiken</string>
 </resources>

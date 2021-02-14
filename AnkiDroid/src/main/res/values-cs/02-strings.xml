@@ -203,8 +203,8 @@
     <string name="import_hint">Umístěte soubor apkg do adresáře „%s“ a klepněte na „OK“, abyste importovali karty</string>
     <string name="upgrade_import_no_file_found">Nebyl nalezen žádný importovatelný soubor %1$s</string>
     <string name="study_options" comment="Name for a preference category in Filtered deck (aka Cram deck, aka Custom study) options">Možnosti</string>
-    <string name="menu__deck_options">Deck options</string>
-    <string name="menu__study_options" comment="Menu item that opens options for a Filtered deck (aka Cram deck, aka Custom study)">Study options</string>
+    <string name="menu__deck_options">Nastavení balíčku</string>
+    <string name="menu__study_options" comment="Menu item that opens options for a Filtered deck (aka Cram deck, aka Custom study)">Možnosti studia</string>
     <string name="select_tts">Nastavit jazyk pro převod textu na řeč</string>
     <string name="custom_study">Vlastní učení</string>
     <string name="more_options">Více</string>

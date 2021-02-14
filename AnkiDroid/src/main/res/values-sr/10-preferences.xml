@@ -173,6 +173,7 @@
     <string name="learn_cutoff">Учити више од задатог лимита</string>
     <string name="time_limit">Ограничење времена</string>
     <string name="time_limit_summ">XXX мин</string>
+    <string name="new_timezone">New timezone handling</string>
     <string name="day_offset">Почетак следећег дана</string>
     <string name="day_offset_summ">XXX сати после поноћ</string>
     <string name="sched_ver">Experimental V2 scheduler</string>

@@ -112,8 +112,8 @@
     <string name="gestures_corner_tap_bottom_left">Toque Baixo Esquerda</string>
     <string name="gestures_corner_tap_bottom_center">Toque Baixo Centro</string>
     <string name="gestures_corner_tap_bottom_right">Toque Baixo Direita</string>
-    <string name="gestures_volume_up">Aumentar o volume</string>
-    <string name="gestures_volume_down">Diminuir volume</string>
+    <string name="gestures_volume_up">Aumentar Volume</string>
+    <string name="gestures_volume_down">Diminuir Volume</string>
     <string name="more_scrolling_buttons">eReader</string>
     <string name="more_scrolling_buttons_summ">Também utilizar botões de kanji/katakana, emoji/kao-moji para rolagem</string>
     <string name="card_browser_enable_external_context_menu">‘%s’ Menu </string>
@@ -172,6 +172,7 @@
     <string name="learn_cutoff">Aprender antes do limite</string>
     <string name="time_limit">Limite de tempo de Timebox</string>
     <string name="time_limit_summ">XXX min</string>
+    <string name="new_timezone">New timezone handling</string>
     <string name="day_offset">Início do dia seguinte</string>
     <string name="day_offset_summ">XXX horas após a meia-noite</string>
     <string name="sched_ver">Agendador V2 Experimental</string>
@@ -189,7 +190,7 @@
     <string name="custom_buttons_summary">Customizar quais ações aparecem na app bar</string>
     <string name="custom_buttons_setting_always_show">Mostrar sempre</string>
     <string name="custom_buttons_setting_if_room">Mostrar se couber</string>
-    <string name="custom_buttons_setting_menu_only">Apenas o menu</string>
+    <string name="custom_buttons_setting_menu_only">Apenas no menu</string>
     <string name="reset_custom_buttons">Redefinir valores padrão</string>
     <string name="thirdparty_apps_title">Apps de terceiros</string>
     <string name="thirdparty_apps_summary">Veja uma lista de aplicativos que usam a API do AnkiDroid, como dicionários, ferramentas.</string>
@@ -220,7 +221,7 @@
         <item quantity="one">O baralho %1$s\n%2$d utiliza este grupo</item>
         <item quantity="other">Os baralhos %1$s\n%2$d utilizam este grupo</item>
     </plurals>
-    <string name="deck_conf_new_cards">Novos cartões</string>
+    <string name="deck_conf_new_cards">Novos cards</string>
     <string name="deck_conf_rev_cards" comment="Name of the deck options submenu for configuring reviews of due cards.">Revisões</string>
     <string name="deck_conf_lps_cards" comment="Label of the submenu stating how lapses cards are treated.">Lapsos</string>
     <string name="deck_conf_general">Geral</string>
