@@ -35,38 +35,38 @@ Thêm tài liệu thông qua các ứng dụng máy tính để bàn Anki hoặc
 • Hỗ trợ 27 bản nội địa hoá theo quốc gia
 • Tất cả các phiên bản AnkiDroid trước có thể được tải về từ các trang web
 
-AnkiDroid lets you learn flashcards very efficiently by showing them just before you will forget. It is fully compatible with the spaced repetition software Anki (including synchronization), which is available for Windows, Linux and MacOS.
+AnkiDroid cho phép bạn học flashcard rất hiệu quả bằng cách hiển thị chúng ngay trước khi bạn quên. Nó hoàn toàn tương thích với phần mềm lặp lại khoảng cách Anki (bao gồm cả đồng bộ hóa), có sẵn cho Windows, Linux và MacOS.
 
-Study all sorts of things wherever and whenever you want. Make good use of idle times on bus trips, in supermarket queues or any other waiting situation!
+Học mọi thứ bất cứ nơi nào và bất cứ khi nào bạn muốn. Hãy tận dụng tốt thời gian nhàn rỗi trên các chuyến xe buýt, khi xếp hàng trong siêu thị hoặc bất kỳ tình huống chờ đợi nào khác!
 
-Create your own flashcard decks or download free decks compiled for many languages and topics (more than 6000 available).
+Tạo bộ thẻ flashcard của riêng bạn hoặc tải xuống bộ thẻ miễn phí được biên soạn cho nhiều ngôn ngữ và chủ đề (hơn 6000 bộ có sẵn).
 
-Add material through the desktop application Anki or directly through AnkiDroid. The application even supports adding material automatically from a dictionary!
+Thêm tài liệu thông qua ứng dụng Anki trên máy tính để bàn hoặc trực tiếp thông qua AnkiDroid. Ứng dụng thậm chí còn hỗ trợ thêm tài liệu tự động từ từ điển!
 
-★ Key features:
-• supported flashcard contents: text, images, sounds, LaTeX
-• spaced repetition (supermemo 2 algorithm)
-• text-to-speech integration
-• more than 6000 premade decks
-• progress widget
-• detailed statistics
-• syncing with AnkiWeb
-• open source
+★ Các tính năng chính:
+• nội dung flashcard được hỗ trợ: văn bản, hình ảnh, âm thanh, LaTeX
+• lặp lại khoảng cách (thuật toán supermemo 2)
+• tích hợp văn bản thành giọng nói
+• hơn 6000 bộ thẻ được làm sẵn
+• widget tiến trình
+• thống kê chi tiết
+• đồng bộ hóa với AnkiWeb
+• mã nguồn mở
 
-★ Additional features:
-• write answers (optional)
-• whiteboard
-• card editor/adder
-• card browser
-• tablet layout
-• import existing collection files (via Anki Desktop)
-• dictionary integration (ColorDict, GoldenDict, Leo.org, Aedict, diverse web dictionaries)
-• add cards by intent from other applications like dictionaries
-• custom font support
-• full backup system
-• navigation by swipe, tap
-• customisable
-• dynamic deck handling
-• night mode
-• 27 localisations
-• All previous AnkiDroid versions can be downloaded from the website
+★ Các tính năng bổ sung:
+• viết câu trả lời (tùy chọn)
+• bảng trắng
+• trình biên tập / thêm thẻ
+• trình duyệt thẻ
+• bố cục máy tính bảng
+• nhập các tệp bộ sưu tập hiện có (thông qua Anki Desktop)
+• tích hợp từ điển (ColorDict, GoldenDict, Leo.org, Aedict, từ điển web đa dạng)
+• thêm thẻ theo ý định từ các ứng dụng khác như từ điển
+• hỗ trợ phông chữ tùy chỉnh
+• hệ thống sao lưu đầy đủ
+• điều hướng bằng cách vuốt, chạm
+• có thể tùy chỉnh
+• xử lý bộ thẻ động
+• chế độ ban đêm
+• 27 bản địa hóa
+• Tất cả các phiên bản AnkiDroid trước có thể được tải xuống từ trang web

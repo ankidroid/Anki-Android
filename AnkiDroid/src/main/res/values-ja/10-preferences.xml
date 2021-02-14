@@ -172,6 +172,7 @@
     <string name="learn_cutoff">先取り学習の限度</string>
     <string name="time_limit">タイムボックスの時間枠</string>
     <string name="time_limit_summ">XXX 分</string>
+    <string name="new_timezone">New timezone handling</string>
     <string name="day_offset">日付更新時刻</string>
     <string name="day_offset_summ">XXX 時</string>
     <string name="sched_ver">実験的な新型スケジューラ</string>

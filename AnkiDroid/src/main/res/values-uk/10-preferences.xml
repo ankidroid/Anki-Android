@@ -43,8 +43,8 @@
     <string name="enabled">Ввімкнено</string>
     <!-- preferences.xml categories-->
     <string name="pref_cat_general_summ">Основні налаштування</string>
-    <string name="pref_cat_reviewing">Перегляд</string>
-    <string name="pref_cat_reviewing_summ">Налаштування навчання незалежне від колод</string>
+    <string name="pref_cat_reviewing">Навчання</string>
+    <string name="pref_cat_reviewing_summ">Параметри навчання, які впливають на всі колоди</string>
     <string name="pref_cat_reviewer_behaviour">Поведінка</string>
     <string name="pref_cat_flashcard">Відображення</string>
     <string name="pref_cat_whiteboard">Дошка</string>
@@ -58,7 +58,7 @@
     <string name="pref_cat_advanced">Розширені налаштування</string>
     <string name="pref_cat_advanced_summ">Оптимізація та експериментальні функції</string>
     <string name="pref_cat_performance">Продуктивність</string>
-    <string name="pref_cat_workarounds">Обхідні шляхи</string>
+    <string name="pref_cat_workarounds">Спеціальні функції</string>
     <string name="pref_cat_plugins">Плагіни</string>
     <string name="about_title">Про AnkiDroid</string>
     <string name="about_version">Версія: </string>
@@ -135,7 +135,7 @@
     <string name="sync_status_badge_summ">Значок синхронізації зміниться, коли буде можна відвантажити зміни</string>
     <string name="day_theme">Денна тема</string>
     <string name="night_theme">Нічна тема</string>
-    <string name="default_font">Типовий шрифт</string>
+    <string name="default_font">Шрифт за замовчуванням</string>
     <string name="override_font">Застосування шрифту за замовчуванням</string>
     <string name="language">Мова</string>
     <string name="language_system">Мова системи</string>
@@ -166,13 +166,14 @@
     <string name="show_top_bar_summ">Показувати кількість карт, прапорець та зірочку на верхній панелі</string>
     <string name="show_progress">Показати ті, що залишилися</string>
     <string name="show_progress_summ">Показувати кількість карток, що залишилися</string>
-    <string name="show_eta">Показувати оцінку часу</string>
-    <string name="show_eta_summ">Показувати час, що залишився</string>
+    <string name="show_eta">Показувати залишок часу</string>
+    <string name="show_eta_summ">Показувати скільки залишилося часу навчання</string>
     <string name="use_current">Колода для нових карт</string>
     <string name="new_spread">Позиція нових карток</string>
-    <string name="learn_cutoff">Вчити наперед</string>
+    <string name="learn_cutoff">Ліміт вивчення карток наперед</string>
     <string name="time_limit">Період лічильника переглядів</string>
     <string name="time_limit_summ">XXX хв.</string>
+    <string name="new_timezone">Обробка нового часового поясу</string>
     <string name="day_offset">Початок наступної доби</string>
     <string name="day_offset_summ">XXX год.</string>
     <string name="sched_ver">Експериментальний планувальник V2</string>

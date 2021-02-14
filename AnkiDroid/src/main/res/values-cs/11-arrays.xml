@@ -112,6 +112,6 @@
     <string name="gesture_page_down">Stránka dolů</string>
     <string name="gesture_abort_sync">Přerušit učení a synchronizovat</string>
     <string name="gesture_toggle_whiteboard">Přepnout tabuli</string>
-    <string name="record_voice">Record Voice</string>
-    <string name="replay_voice">Replay Voice</string>
+    <string name="record_voice">Nahrát hlas</string>
+    <string name="replay_voice">Přehrát hlas</string>
 </resources>

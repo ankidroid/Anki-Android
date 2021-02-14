@@ -57,7 +57,7 @@
     <string name="no_tags">Henüz herhangi bir etiket eklemediniz.</string>
     <string name="updated_version">%s versiyonuna güncellendi</string>
     <!-- Reviewer.java -->
-    <string name="save_whiteboard">Save whiteboard</string>
+    <string name="save_whiteboard">Yazı tahtasını kaydet</string>
     <string name="enable_whiteboard">Yazı tahtasını etkinleştir</string>
     <string name="disable_whiteboard">Yazı tahtasını devredışı bırak</string>
     <string name="show_whiteboard">Yazı tahtasını göster</string>
@@ -67,14 +67,14 @@
     <string name="leech_suspend_notification">Kart asalak olarak işaretlenip askıya alınmış</string>
     <string name="leech_notification">Kart asalak olarak işaretlenmiş</string>
     <string name="corrupt_font">Bozuk yazı tipi dosyası %s</string>
-    <string name="webview_crash_unknown">Unknown error</string>
-    <string name="webview_crash_unknwon_detailed">This was caused by an internal error in the WebView</string>
-    <string name="webview_crash_oom">Out of Memory</string>
-    <string name="webview_crash_oom_details">The WebView was terminated by the system. This typically happens when the application runs out of memory, often due to large fonts or media.</string>
-    <string name="webview_crash_nonfatal">WebView renderer crashed. Cause: %s</string>
-    <string name="webview_crash_fatal">Fatal Error: WebView renderer crashed. Cause: %s</string>
-    <string name="webview_crash_loop_dialog_title">System WebView Rendering Failure</string>
-    <string name="webview_crash_loop_dialog_content">System WebView failed to render card \'%1$s\'.\n %2$s</string>
+    <string name="webview_crash_unknown">Bilinmeyen hata</string>
+    <string name="webview_crash_unknwon_detailed">Bu, Web Görünümü\'ndeki dahili bir hatadan kaynaklandı.</string>
+    <string name="webview_crash_oom">Yetersiz Bellek</string>
+    <string name="webview_crash_oom_details">Web Görünümü sistem tarafından sonlandırıldı. Bu, genellikle büyük yazı tipleri veya ortamlar nedeniyle uygulamanın belleği bittiğinde meydana gelir.</string>
+    <string name="webview_crash_nonfatal">Web Görünümü oluşturucusu çöktü. Nedeni: %s</string>
+    <string name="webview_crash_fatal">Kritik Hata: Web Görünümü oluşturucusu çöktü. Nedeni: %s</string>
+    <string name="webview_crash_loop_dialog_title">Sistem Web Görünümü Oluşturma Hatası</string>
+    <string name="webview_crash_loop_dialog_content">Sistem Web Görünümü kartını işleyemedi \'%1$s\'.\n %2$s</string>
     <!-- Browser -->
     <string-array name="browser_column1_headings">
         <item>Soru</item>
@@ -90,9 +90,9 @@
         <item>Yanlışlar</item>
         <item>Çalışmalar</item>
         <item>Sıklık</item>
-        <item>Ease</item>
-        <item>Due</item>
-        <item>Card Modified</item>
+        <item>Kolaylaştırmak</item>
+        <item>Vade</item>
+        <item>Kart Değiştirildi</item>
         <item>Created</item>
         <item>Note Modified</item>
     </string-array>

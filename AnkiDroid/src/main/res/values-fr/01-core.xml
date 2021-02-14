@@ -154,7 +154,7 @@
     <string name="custom_study_deck_name">Session d\'étude personnalisée</string>
     <string name="custom_study_deck_exists">Merci de renommer d\'abord le paquet d\'étude personnalisée.</string>
     <string name="empty_deck">Le paquet est vide</string>
-    <string name="empty_deck_add_note">Ajouter cartes</string>
+    <string name="empty_deck_add_note">Ajouter une carte</string>
     <string name="invalid_deck_name">Nom de paquet invalide</string>
     <string name="studyoptions_empty">Le paquet est vide. touchez le bouton + pour créer du contenu.</string>
     <string name="studyoptions_limit_reached">Vous avez atteint votre limite aujourd\'hui</string>
@@ -195,7 +195,7 @@
     <string name="card_template_browser_appearance_title">Apparence du navigateur</string>
     <string name="current_and_default_deck">%1$s (%2$s)</string>
     <!-- card Info -->
-    <string name="card_info_title">Infos de la carte</string>
+    <string name="card_info_title">Infos sur la carte</string>
     <!-- Permissions -->
     <string name="read_write_permission_label">Lire et écrire dans la base de données d\'AnkiDroid</string>
     <string name="read_write_permission_description">accéder aux notes, cartes, types de notes et paquets actuels, mais aussi en créer de nouveaux</string>
