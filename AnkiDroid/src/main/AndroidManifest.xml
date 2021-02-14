@@ -436,12 +436,20 @@
             android:exported="false"
             android:configChanges="keyboardHidden|orientation|locale|screenSize"
             />
+        <!--Visual Editor: Test hunk to be removed -->
         <activity
             android:name=".CardInfo"
             android:label="@string/card_info_title"
             android:exported="false"
             android:configChanges="keyboardHidden|orientation|locale|screenSize"
             />
+
+        <!-- TODO: Investigate whether windowSoftInputMode/configChanges are correct -->
+        <activity android:name="com.ichi2.anki.multimediacard.activity.VisualEditorActivity"
+            android:exported="false"
+            android:label="@string/title_activity_visual_editor"
+            android:configChanges="keyboardHidden|orientation|locale|screenSize"
+            android:windowSoftInputMode="stateAlwaysHidden"/>
         <!-- stuff for Samsung Multi-Window -->
         <uses-library
             android:name="com.sec.android.app.multiwindow"

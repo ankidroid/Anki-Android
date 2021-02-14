@@ -14,6 +14,7 @@ apply plugin: 'idea'
 repositories {
     google()
     jcenter()
+    maven { url 'https://www.jitpack.io' }
 }
 
 
@@ -252,6 +253,10 @@ dependencies {
     // RobolectricTest.java: replace RustBackendLoader.init(); with RustBackendLoader.loadRsdroid(path);
     // A path for a testing library is typically under rsdroid-testing/assets
     testImplementation "io.github.david-allison-1:anki-android-backend-testing:$backendVersion"
+
+    //#1377 - Visual Editor (incl android_assets)
+    implementation 'com.github.jkennethcarino:RTextEditorView:0.1.1'
+    implementation 'com.jaredrummler:colorpicker:1.1.0'
 
     // May need a resolution strategy for support libs to our versions
     implementation'ch.acra:acra-http:5.5.1'

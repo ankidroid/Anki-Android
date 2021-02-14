@@ -247,4 +247,6 @@
         <item quantity="other">An automatic sync may be triggered in %d seconds</item>
     </plurals>
 
+    <string name="visual_editor_could_not_start_add_image">Unable to add image</string>
+    <string name="visual_editor_could_not_start_add_audio">Unable to add audio</string>
 </resources>

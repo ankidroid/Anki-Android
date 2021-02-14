@@ -6,6 +6,7 @@
     <dimen name="default_width">56dp</dimen>
     <dimen name="keyline_1">16dp</dimen>
     <dimen name="study_options_padding">8dp</dimen>
+    <dimen name="toolbar_item_padding">8dp</dimen>
 
     <!-- Top margin for action bar subtitles -->
     <dimen name="action_bar_subtitle_top_margin">-3dp</dimen>

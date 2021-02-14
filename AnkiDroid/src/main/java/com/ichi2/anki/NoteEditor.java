@@ -73,6 +73,7 @@ import com.ichi2.anki.dialogs.TagsDialog;
 import com.ichi2.anki.exception.ConfirmModSchemaException;
 import com.ichi2.anki.multimediacard.IMultimediaEditableNote;
 import com.ichi2.anki.multimediacard.activity.MultimediaEditFieldActivity;
+import com.ichi2.anki.multimediacard.activity.VisualEditorActivity;
 import com.ichi2.anki.multimediacard.fields.AudioClipField;
 import com.ichi2.anki.multimediacard.fields.AudioRecordingField;
 import com.ichi2.anki.multimediacard.fields.EFieldType;
@@ -109,6 +110,7 @@ import com.ichi2.utils.FileUtil;
 import com.ichi2.utils.FunctionalInterfaces.Consumer;
 import com.ichi2.utils.KeyUtils;
 import com.ichi2.utils.MapUtil;
+import com.ichi2.utils.LargeObjectStorage;
 import com.ichi2.utils.NamedJSONComparator;
 import com.ichi2.utils.NoteFieldDecorator;
 import com.ichi2.utils.TextViewUtil;
@@ -192,6 +194,7 @@ public class NoteEditor extends AnkiActivity {
     public static final int REQUEST_MULTIMEDIA_EDIT = 2;
     public static final int REQUEST_TEMPLATE_EDIT = 3;
     public static final int REQUEST_PREVIEW = 4;
+    public static final int REQUEST_VISUAL_EDIT = 5;
 
     /** Whether any change are saved. E.g. multimedia, new card added, field changed and saved.*/
     private boolean mChanged = false;
@@ -247,6 +250,9 @@ public class NoteEditor extends AnkiActivity {
 
     private Toolbar mToolbar;
 
+    //TODO: This is only set on edit currently, not on add.
+    private Long mCurrentModelId = null;
+
     // Use the same HTML if the same image is pasted multiple times.
     private HashMap<String, String> mPastedImageCache = new HashMap<>();
 
@@ -258,6 +264,8 @@ public class NoteEditor extends AnkiActivity {
         SAME_NUMBER,
         INCREMENT_NUMBER
     }
+
+    LargeObjectStorage mLargeObjectStorage = new LargeObjectStorage(this);
 
     private static class SaveNoteHandler extends TaskListenerWithContext<NoteEditor, Integer, Boolean> {
         private boolean mCloseAfter = false;
@@ -1366,6 +1374,21 @@ public class NoteEditor extends AnkiActivity {
                 }
                 break;
             }
+            case REQUEST_VISUAL_EDIT: {
+                if (resultCode == RESULT_CANCELED) {
+                    return;
+                }
+                //TODO: Duplication
+                Collection col = getCol();
+                Bundle extras = data.getExtras();
+                int index = extras.getInt(MultimediaEditFieldActivity.EXTRA_RESULT_FIELD_INDEX);
+                IField field = (IField) extras.get(MultimediaEditFieldActivity.EXTRA_RESULT_FIELD);
+                IMultimediaEditableNote mNote = NoteService.createEmptyNote(mEditorNote.model());
+                NoteService.updateMultimediaNoteFromJsonNote(col, mEditorNote, mNote);
+                mNote.setField(index, field);
+                mEditFields.get(index).setText(field.getFormattedValue());
+            }
+                break;
             case REQUEST_MULTIMEDIA_EDIT: {
                 if (resultCode != RESULT_CANCELED) {
                     Collection col = getCol();
@@ -1536,6 +1559,10 @@ public class NoteEditor extends AnkiActivity {
                 mediaButton.setBackgroundResource(icons[0]);
                 setMMButtonListener(mediaButton, i);
             }
+
+            ImageButton visualEditorButton = edit_line_view.getVisualEditorButton();
+            setVisualEditorListener(visualEditorButton, i);
+
             if (Build.VERSION.SDK_INT < Build.VERSION_CODES.O && previous != null) {
                 previous.getLastViewInTabOrder().setNextFocusForwardId(R.id.CardEditorTagButton);
             }
@@ -1611,6 +1638,28 @@ public class NoteEditor extends AnkiActivity {
         NoteService.saveMedia(getCol(), noteNew);
 
         return field.getFormattedValue();
+    }
+
+
+    private void setVisualEditorListener(ImageButton visualEditorButton, final int index) {
+        visualEditorButton.setOnClickListener(view -> {
+            Timber.i("NoteEditor:: Multimedia button pressed for field %d", index);
+            try {
+                String value = mEditFields.get(index).getText().toString();
+                Intent i = new Intent(this, VisualEditorActivity.class);
+                //Note: Intent.getExtras is a copy of the bundle.
+                Bundle b = new Bundle();
+                mLargeObjectStorage.storeSingleInstance(VisualEditorActivity.STORAGE_CURRENT_FIELD.asData(value), b);
+                mLargeObjectStorage.storeSingleInstance(VisualEditorActivity.STORAGE_EXTRA_FIELDS.asData(mEditorNote.getFields()), b);
+                i.replaceExtras(b);
+                i.putExtra(VisualEditorActivity.EXTRA_MODEL_ID, getModelId());
+                i.putExtra(VisualEditorActivity.EXTRA_FIELD_INDEX, index);
+                startActivityForResultWithoutAnimation(i, REQUEST_VISUAL_EDIT);
+            } catch (Exception e) {
+                Timber.e(e, "Unable to open Visual Editor");
+                UIUtils.showThemedToast(this, "Unable to open Visual Editor", false);
+            }
+        });
     }
 
 
@@ -2408,6 +2457,13 @@ public class NoteEditor extends AnkiActivity {
     @VisibleForTesting
     long getDeckId() {
         return mCurrentDid;
+    }
+
+    public long getModelId() {
+        if (mCurrentModelId != null) {
+            return mCurrentModelId;
+        }
+        return mEditorNote.model().getLong("id");
     }
 
 
