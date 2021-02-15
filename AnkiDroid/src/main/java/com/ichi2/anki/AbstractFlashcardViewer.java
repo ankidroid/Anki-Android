@@ -54,7 +54,6 @@ import androidx.webkit.internal.AssetHelper;
 import androidx.webkit.WebViewAssetLoader;
 
 import android.text.TextUtils;
-import android.util.Log;
 import android.util.Pair;
 import android.util.TypedValue;
 import android.view.GestureDetector;
@@ -4053,7 +4052,6 @@ see card.js for available functions
         public String ankiReadJson(String jsonFileName) {
 
             String currentAnkiDroidDirectory = CollectionHelper.getCurrentAnkiDroidDirectory(getBaseContext());
-            Log.i("path::", currentAnkiDroidDirectory);
 
             File collectionMedia = new File(currentAnkiDroidDirectory, "collection.media");
             File readFile = new File(collectionMedia, jsonFileName);
