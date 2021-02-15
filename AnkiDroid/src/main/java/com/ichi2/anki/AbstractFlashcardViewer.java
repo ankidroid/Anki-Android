@@ -138,7 +138,6 @@ import com.ichi2.utils.WebViewDebugging;
 import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
@@ -218,7 +217,6 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
     private static final int ankiJsErrorCodeDefault = 0;
     private static final int ankiJsErrorCodeMarkCard = 1;
     private static final int ankiJsErrorCodeFlagCard = 2;
-    private Context mContext;
 
     /**
      * Broadcast that informs us when the sd card is about to be unmounted
@@ -892,8 +890,6 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
         initNavigationDrawer(mainView);
 
         mShortAnimDuration = getResources().getInteger(android.R.integer.config_shortAnimTime);
-
-        mContext = this;
     }
 
     protected int getContentViewAttr(int fullscreenMode) {
