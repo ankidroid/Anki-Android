@@ -45,13 +45,13 @@
     <!--Rename-->
     <string name="rename_model">नोट प्रकार का नाम बदलें</string>
     <!--Language Hint-->
-    <string name="model_field_editor_language_hint_dialog_success_result">Set language hint to %s</string>
+    <string name="model_field_editor_language_hint_dialog_success_result">भाषा संकेत के रूप में %s सेट करें</string>
     <!--Field Editing-->
     <string name="model_field_editor_title">फ़ील्ड संपादित करें</string>
     <string name="model_field_editor_add">फ़ील्ड जोड़ें</string>
     <string name="model_field_editor_delete">फ़ील्ड मिटाएँ</string>
     <string name="model_field_editor_rename">फ़ील्ड का नाम बदलें</string>
-    <string name="model_field_editor_language_hint">Set keyboard language hint</string>
+    <string name="model_field_editor_language_hint">कीबोर्ड भाषा संकेत सेट करें</string>
     <string name="model_field_editor_reposition_menu">फ़ील्ड का स्थान बदलें</string>
     <string name="model_field_editor_reposition">फ़ील्ड का स्थान बदलें (%1$d-%2$d के बीच का मूल्य दर्ज करें)</string>
     <string name="model_field_editor_toggle_sticky">जोड़ते समय अंतिम इनपुट याद रखें</string>
@@ -67,15 +67,15 @@
     <string name="model_browser_add_clone">जुड़वाँ: %1$s </string>
     <!--Browser Appearance-->
     <string name="card_template_browser_appearance_summary">Enter the template that the card browser will use to display your cards. Use this to display a more concise answer.\n\nA front template of\n“The capital of {{Country}} is:”\ncould be compressed in the card browser to\n“Capital: {{Country}}”</string>
-    <string name="card_template_browser_appearance_question_format">Question Format</string>
-    <string name="card_template_browser_appearance_answer_format">Answer Format</string>
-    <string name="card_template_browser_appearance_restore_default_dialog">Restore Default Values?</string>
-    <string name="card_template_browser_appearance_saving_note">These changes are applied when the card template is saved</string>
+    <string name="card_template_browser_appearance_question_format">प्रश्न प्रारूप</string>
+    <string name="card_template_browser_appearance_answer_format">उत्तर प्रारूप</string>
+    <string name="card_template_browser_appearance_restore_default_dialog">डिफ़ॉल्ट मानों को बहाल करें?</string>
+    <string name="card_template_browser_appearance_saving_note">कार्ड टेम्पलेट सहेजे जाने पर ये परिवर्तन लागू होते हैं</string>
     <!-- Deck Override -->
     <string name="card_template_editor_deck_override_on">Deck Override (on)</string>
     <string name="card_template_editor_deck_override_off">Deck Override (off)</string>
     <string name="model_manager_deck_override_added_message">Set ‘%1$s’ default deck to ‘%2$s’</string>
     <string name="model_manager_deck_override_removed_message">Removed default deck for ‘%s’</string>
-    <string name="deck_override_explanation">Select deck to place new ‘%s’ cards into</string>
+    <string name="deck_override_explanation">नए ‘%s’ कार्ड रखने के लिए डेक का चयन करें</string>
     <string name="deck_picker_dialog_filter_decks">Filter decks</string>
 </resources>

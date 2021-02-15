@@ -32,6 +32,9 @@ import com.ichi2.anki.CollectionHelper;
 import com.ichi2.anki.dialogs.DatabaseErrorDialog;
 import com.ichi2.utils.DatabaseChangeDecorator;
 
+import net.ankiweb.rsdroid.BackendFactory;
+import net.ankiweb.rsdroid.database.RustSQLiteOpenHelperFactory;
+
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
@@ -62,16 +65,21 @@ public class DB {
     private final SupportSQLiteDatabase mDatabase;
     private boolean mMod = false;
 
+    public DB(String ankiFilename) {
+        this(ankiFilename, null);
+    }
+
     /**
      * Open a connection to the SQLite collection database.
      */
-    public DB(String ankiFilename) {
+    public DB(String ankiFilename, @Nullable BackendFactory backendFactory) {
 
         SupportSQLiteOpenHelper.Configuration configuration = SupportSQLiteOpenHelper.Configuration.builder(AnkiDroidApp.getInstance())
                 .name(ankiFilename)
                 .callback(getDBCallback())
                 .build();
-        SupportSQLiteOpenHelper helper = getSqliteOpenHelperFactory().create(configuration);
+        SupportSQLiteOpenHelper helper = getSqliteOpenHelperFactory(backendFactory).create(configuration);
+        // Note: This line creates the database and schema when executed using a Rust backend
         mDatabase = new DatabaseChangeDecorator(helper.getWritableDatabase());
         mDatabase.disableWriteAheadLogging();
         mDatabase.query("PRAGMA synchronous = 2", null);
@@ -90,7 +98,11 @@ public class DB {
     }
 
 
-    private SupportSQLiteOpenHelper.Factory getSqliteOpenHelperFactory() {
+    private SupportSQLiteOpenHelper.Factory getSqliteOpenHelperFactory(@Nullable BackendFactory backendFactory) {
+        if (backendFactory != null) {
+            return new RustSQLiteOpenHelperFactory(backendFactory);
+        }
+
         if (sqliteOpenHelperFactory == null) {
             return new RequerySQLiteOpenHelperFactory();
         }

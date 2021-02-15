@@ -15,6 +15,8 @@
  ****************************************************************************************/
 
 package com.ichi2.libanki;
+import net.ankiweb.rsdroid.RustCleanup;
+
 import java.lang.annotation.Retention;
 
 import androidx.annotation.IntDef;
@@ -109,6 +111,13 @@ public class Consts {
     @IntDef({MODEL_STD, MODEL_CLOZE})
     public @interface MODEL_TYPE {}
 
+    // deck types
+    public static final int DECK_STD = 0;
+    public static final int DECK_DYN = 1;
+    @Retention(SOURCE)
+    @IntDef({DECK_STD, DECK_DYN})
+    public @interface DECK_TYPE {}
+
     public static final int STARTING_FACTOR = 2500;
 
     // deck schema & syncing vars
@@ -117,7 +126,9 @@ public class Consts {
     public static final int SYNC_ZIP_COUNT = 25;
     public static final String SYNC_BASE = "https://sync%s.ankiweb.net/";
     public static final Integer DEFAULT_HOST_NUM = null;
-    public static final int SYNC_VER = 9;
+    /* Note: 10 if using Rust backend, 9 if using Java. Set in BackendFactory.getInstance */
+    @RustCleanup("Use 10")
+    public static int SYNC_VER = 9;
 
     public static final String HELP_SITE = "http://ankisrs.net/docs/manual.html";
 
@@ -140,8 +151,9 @@ public class Consts {
     public static final int REVLOG_REV = 1;
     public static final int REVLOG_RELRN = 2;
     public static final int REVLOG_CRAM = 3;
+    public static final int REVLOG_MANUAL = 4;
     @Retention(SOURCE)
-    @IntDef({REVLOG_LRN, REVLOG_REV, REVLOG_RELRN, REVLOG_CRAM})
+    @IntDef({REVLOG_LRN, REVLOG_REV, REVLOG_RELRN, REVLOG_CRAM, REVLOG_MANUAL})
     public @interface REVLOG_TYPE {}
 
     // The labels defined in consts.py are in AnkiDroid's resources files.

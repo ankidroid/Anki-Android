@@ -197,8 +197,8 @@
     <string name="import_hint">Coloque o arquivo apkg no diretório “%s” e toque em “OK” para importar cards</string>
     <string name="upgrade_import_no_file_found">Nenhum arquivo %1$s importável encontrado</string>
     <string name="study_options" comment="Name for a preference category in Filtered deck (aka Cram deck, aka Custom study) options">Opções</string>
-    <string name="menu__deck_options">Deck options</string>
-    <string name="menu__study_options" comment="Menu item that opens options for a Filtered deck (aka Cram deck, aka Custom study)">Study options</string>
+    <string name="menu__deck_options">Opções de baralho</string>
+    <string name="menu__study_options" comment="Menu item that opens options for a Filtered deck (aka Cram deck, aka Custom study)">Opções de estudo</string>
     <string name="select_tts">Definir idioma TTS</string>
     <string name="custom_study">Estudo personalizado</string>
     <string name="more_options">Mais</string>
@@ -239,7 +239,7 @@
     <!-- A decimal number of seconds.
     Please give this a best-effort translation and explain the requirements for
     formatting decimals in your language in the CrowdIn comments -->
-    <string name="time_span_decimal_seconds">%s seconds</string>
+    <string name="time_span_decimal_seconds">%s segundos</string>
     <!-- The reason for making a simple “< x” translatable are RTL
          languages which apparently use the other symbol to mean less
          than. -->
@@ -261,7 +261,7 @@
     <string name="activity_start_failed">The system does not have an app installed that can perform this action.</string>
     <string name="multimedia_editor_image_compression_failed"><![CDATA[Camera images may be large. You may wish to compress & resize images in the media directory]]></string>
     <string name="no_browser_notification">Nenhum navegador encontrado, por favor visite a página através de um computador ou celular.</string>
-    <string name="web_page_error">Error loading page: %s</string>
+    <string name="web_page_error">Erro ao carregar página: %s</string>
     <string name="no_outgoing_link_in_cardbrowser">Link de página externa não é suportado no card.</string>
     <!-- The name of the deck which corrupt cards will be moved to -->
     <string name="check_integrity_recovered_deck_name">Cards Recuperados</string>
@@ -320,24 +320,24 @@
     <string name="ankidroid_init_failed_webview">AnkiDroid depende do System WebView que não está disponível. Isso pode acontecer se o sistema está instalando atualizações. Por favor, tente novamente em alguns minutos.\n\n%s</string>
     <!-- A Menu item to change the Font Size (currently in the Note Editor) -->
     <string name="menu_font_size">Tamanho da Fonte</string>
-    <string name="menu_show_toolbar" comment="Checkable item stating whether the note editor toolbar should be shown">Show Toolbar</string>
+    <string name="menu_show_toolbar" comment="Checkable item stating whether the note editor toolbar should be shown">Mostrar Barra de Ferramentas</string>
     <string name="format_insert_bold">Formatar em Negrito</string>
     <string name="format_insert_italic">Formatar em Itálico</string>
     <string name="format_insert_underline">Formatar como Sublinhado</string>
     <string name="insert_horizontal_line">Inserir Tachado</string>
-    <string name="insert_heading">Insert Heading</string>
+    <string name="insert_heading">Inserir título</string>
     <string name="format_font_size">Alterar Tamanho da Fonte</string>
-    <string name="insert_mathjax">Insert MathJax Equation</string>
+    <string name="insert_mathjax">Inserir equação MathJax</string>
     <string name="insert_cloze">Ocultar</string>
-    <string name="before_text">HTML Before Selection</string>
-    <string name="after_text">HTML After Selection</string>
-    <string name="add_toolbar_item">Create Toolbar Item</string>
+    <string name="before_text">HTML antes da seleção</string>
+    <string name="after_text">HTML depois da seleção</string>
+    <string name="add_toolbar_item">Criar Item na Barra de Ferramentas</string>
     <string name="toolbar_item_explain_remove">Digite o código HTML a ser inserido antes e após o texto selecionado. Mantenha o item pressionado para remove-lo</string>
     <string name="remove_toolbar_item">Remover item do menu?</string>
     <string name="note_editor_paste_too_large">A imagem é muito grande para colar, por favor insira manualmente</string>
-    <string name="ankidroid_cannot_open_after_backup_try_again" comment="After an Android backup is restored, AnkiDroid opens and shows this message.         Opening AnkiDroid again will work correctly">        Android backup in progress. Please try again</string>
-    <string name="create_shortcut_error_vivo" comment="iManager is an app on Vivo phones">You may need to use iManager to allow AnkiDroid to add shortcuts</string>
-    <string name="create_shortcut_failed" comment="home screen == launcher">Your home screen does not allow AnkiDroid to add shortcuts</string>
-    <string name="create_shortcut_error">Error adding shortcut: %s</string>
-    <string name="note_editor_capitalize" comment="This is for a switch with a checkbox - on: enabled">Capitalize sentences</string>
+    <string name="ankidroid_cannot_open_after_backup_try_again" comment="After an Android backup is restored, AnkiDroid opens and shows this message.         Opening AnkiDroid again will work correctly">        Backup do Android em andamento. Por favor, tente novamente</string>
+    <string name="create_shortcut_error_vivo" comment="iManager is an app on Vivo phones">Por favor use o iManager para que AnkiDroid possa adicionar atalhos</string>
+    <string name="create_shortcut_failed" comment="home screen == launcher">Sua tela de início não permite que AnkiDroid adicione atalhos</string>
+    <string name="create_shortcut_error">Erro ao adicionar atalho: %s</string>
+    <string name="note_editor_capitalize" comment="This is for a switch with a checkbox - on: enabled">Iniciar frases em letra maíuscula</string>
 </resources>

@@ -96,6 +96,7 @@ import static com.ichi2.libanki.Collection.DismissType.REPOSITION_CARDS;
 import static com.ichi2.libanki.Collection.DismissType.RESCHEDULE_CARDS;
 import static com.ichi2.libanki.Collection.DismissType.RESET_CARDS;
 import static com.ichi2.libanki.Collection.DismissType.SUSPEND_NOTE;
+import static com.ichi2.libanki.Consts.DECK_DYN;
 import static com.ichi2.libanki.Undoable.*;
 import static com.ichi2.utils.BooleanGetter.False;
 import static com.ichi2.utils.BooleanGetter.True;
@@ -1625,7 +1626,7 @@ public class CollectionTask<ProgressListener, ProgressBackground extends Progres
                 TreeMap<String, Long> children = col.getDecks().children(deck.getLong("id"));
                 for (long childDid : children.values()) {
                     Deck child = col.getDecks().get(childDid);
-                    if (child.getInt("dyn") == 1) {
+                    if (child.isDyn()) {
                         continue;
                     }
                     boolean changed = new ConfChange(child, conf).task(col, collectionTask);

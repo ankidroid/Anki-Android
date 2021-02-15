@@ -2229,7 +2229,7 @@ public class CardBrowser extends NavigationDrawerActivity implements
             if (!"".equals(customFont)) {
                 mCustomTypeface = AnkiFont.getTypeface(context, customFont);
             }
-            mInflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+            mInflater = LayoutInflater.from(context);
         }
 
 

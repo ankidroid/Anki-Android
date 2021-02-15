@@ -172,6 +172,7 @@
     <string name="learn_cutoff">Лимит опережения</string>
     <string name="time_limit">Лимит учебного блока</string>
     <string name="time_limit_summ">XXX мин.</string>
+    <string name="new_timezone">New timezone handling</string>
     <string name="day_offset">Начало следующего дня</string>
     <string name="day_offset_summ">XXX ч. утра</string>
     <string name="sched_ver">Экспериментальный планировщик — 2</string>
@@ -230,9 +231,9 @@
     <string name="deck_conf_steps">Шаги (в минутах)</string>
     <string name="deck_conf_order">Порядок</string>
     <string name="deck_conf_new_cards_day">Новых карточек в день</string>
-    <string name="deck_conf_graduating_ivl">Интервал для \"Хорошо\"</string>
+    <string name="deck_conf_graduating_ivl">Интервал для «Хорошо»</string>
     <string name="deck_conf_days">XXX дней</string>
-    <string name="deck_conf_easy_ivl">Интервал для \"Легко\"</string>
+    <string name="deck_conf_easy_ivl">Интервал для «Легко»</string>
     <string name="deck_conf_start_ease">Начальная лёгкость</string>
     <string name="deck_conf_max_rev">Максимум повторений в день</string>
     <string name="deck_conf_new_bury">Отложить связанные новые карточки</string>
@@ -242,7 +243,7 @@
     <string name="deck_conf_use_general_timeout_settings">Использовать общие настройки</string>
     <string name="deck_conf_use_general_timeout_settings_summ">Использовать общие настройки «Автоматически показывать ответ» вместо настроек для этой группы.</string>
     <string name="deck_conf_easy_bonus">Множитель для \"Легко\"</string>
-    <string name="deck_conf_hard_factor">Интервал для трудных</string>
+    <string name="deck_conf_hard_factor">Интервал для «Трудно»</string>
     <string name="deck_conf_ivl_fct">Множитель интервалов</string>
     <string name="deck_conf_max_ivl">Максимальный интервал</string>
     <string name="deck_conf_new_lps_ivl">Новый интервал</string>
@@ -290,6 +291,6 @@
     <string name="analytics_summ">Отправляет информацию о функциях, которые предпочитают пользователи</string>
     <string name="note_editor_replace_newlines">Заменять перенос строк на HTML</string>
     <string name="note_editor_replace_newlines_summ">Заменять &lt;br&gt; в редакторе записей на перенос строки</string>
-    <string name="no_code_formatting">Simple typed answer formatting</string>
-    <string name="no_code_formatting_summ">Fixes ‘􏿾’ appearing in typed answer results</string>
+    <string name="no_code_formatting">Простое форматирование ответа</string>
+    <string name="no_code_formatting_summ">Исправляет «􏿾» при вводе ответа</string>
 </resources>

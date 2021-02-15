@@ -24,6 +24,7 @@ import com.afollestad.materialdialogs.MaterialDialog;
 import com.ichi2.anki.dialogs.DialogHandler;
 import com.ichi2.anki.dialogs.utils.FragmentTestActivity;
 import com.ichi2.anki.exception.ConfirmModSchemaException;
+import com.ichi2.anki.exception.FilteredAncestor;
 import com.ichi2.async.CollectionTask;
 import com.ichi2.async.TaskListener;
 import com.ichi2.async.TaskManager;
@@ -36,12 +37,16 @@ import com.ichi2.libanki.Model;
 import com.ichi2.libanki.Models;
 
 import com.ichi2.libanki.Note;
+import com.ichi2.libanki.Storage;
 import com.ichi2.libanki.sched.AbstractSched;
 import com.ichi2.libanki.sched.Sched;
 import com.ichi2.libanki.sched.SchedV2;
 import com.ichi2.testutils.MockTime;
 import com.ichi2.utils.BooleanGetter;
 import com.ichi2.utils.JSONException;
+
+import net.ankiweb.rsdroid.BackendException;
+import net.ankiweb.rsdroid.testing.RustBackendLoader;
 
 import org.hamcrest.Matcher;
 import org.junit.After;
@@ -86,11 +91,17 @@ public class RobolectricTest {
 
     @Before
     public void setUp() {
+
+        RustBackendLoader.init();
+
         // If you want to see the Android logging (from Timber), you need to set it up here
         ShadowLog.stream = System.out;
 
         // Robolectric can't handle our default sqlite implementation of requery, it needs the framework
         DB.setSqliteOpenHelperFactory(getHelperFactory());
+        // But, don't use the helper unless useLegacyHelper is true
+        Storage.setUseBackend(!useLegacyHelper());
+        Storage.setUseInMemory(useInMemoryDatabase());
 
         //Reset static variable for custom tabs failure.
         CustomTabActivityHelper.resetFailed();
@@ -100,6 +111,11 @@ public class RobolectricTest {
 
         // BUG: We do not reset the MetaDB
         MetaDB.closeDB();
+    }
+
+
+    protected boolean useLegacyHelper() {
+        return false;
     }
 
 
@@ -129,18 +145,29 @@ public class RobolectricTest {
         }
         controllersForCleanup.clear();
 
-        // If you don't tear down the database you'll get unexpected IllegalStateExceptions related to connections
-        CollectionHelper.getInstance().closeCollection(false, "RoboelectricTest: End");
+        try {
+            if (CollectionHelper.getInstance().colIsOpen()) {
+                CollectionHelper.getInstance().getCol(getTargetContext()).getBackend().debugEnsureNoOpenPointers();
+            }
+            // If you don't tear down the database you'll get unexpected IllegalStateExceptions related to connections
+            CollectionHelper.getInstance().closeCollection(false, "RoboelectricTest: End");
+        } catch (BackendException ex) {
+            if ("CollectionNotOpen".equals(ex.getMessage())) {
+                Timber.w(ex, "Collection was already disposed - may have been a problem");
+            } else {
+                throw ex;
+            }
+        } finally {
+            // After every test make sure the CollectionHelper is no longer overridden (done for null testing)
+            disableNullCollection();
 
-        // After every test make sure the CollectionHelper is no longer overridden (done for null testing)
-        disableNullCollection();
+            // After every test, make sure the sqlite implementation is set back to default
+            DB.setSqliteOpenHelperFactory(null);
 
-        // After every test, make sure the sqlite implementation is set back to default
-        DB.setSqliteOpenHelperFactory(null);
-
-        //called on each AnkiDroidApp.onCreate(), and spams the build
-        //there is no onDestroy(), so call it here.
-        Timber.uprootAll();
+            //called on each AnkiDroidApp.onCreate(), and spams the build
+            //there is no onDestroy(), so call it here.
+            Timber.uprootAll();
+        }
     }
 
 
@@ -191,7 +218,16 @@ public class RobolectricTest {
 
 
     protected Context getTargetContext() {
-        return ApplicationProvider.getApplicationContext();
+        try {
+            return ApplicationProvider.getApplicationContext();
+        } catch (IllegalStateException e) {
+            if (e.getMessage() != null && e.getMessage().startsWith("No instrumentation registered!")) {
+                // Explicitly ignore the inner exception - generates line noise
+                throw new IllegalStateException("Annotate class: '" + getClass().getSimpleName() + "' with '@RunWith(AndroidJUnit4.class)'");
+            }
+            throw e;
+        }
+
     }
 
 
@@ -313,11 +349,19 @@ public class RobolectricTest {
     }
 
     protected long addDeck(String deckName) {
-        return getCol().getDecks().id(deckName, true);
+        try {
+            return getCol().getDecks().id(deckName);
+        } catch (FilteredAncestor filteredAncestor) {
+            throw new RuntimeException(filteredAncestor);
+        }
     }
 
     protected long addDynamicDeck(String name) {
-        return getCol().getDecks().newDyn(name);
+        try {
+            return getCol().getDecks().newDyn(name);
+        } catch (FilteredAncestor filteredAncestor) {
+            throw new RuntimeException(filteredAncestor);
+        }
     }
 
     protected void ensureCollectionLoadIsSynchronous() {

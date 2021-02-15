@@ -6,6 +6,7 @@ on:
     branches:
       - '**'
     paths:
+      - '.github/workflows/**'
       - 'AnkiDroid/**'
       - 'api/**'
       - 'lint-rules/**'
@@ -18,6 +19,7 @@ on:
       - i18n_sync
       - 'release**'
     paths:
+      - '.github/workflows/**'
       - 'AnkiDroid/**'
       - 'api/**'
       - 'lint-rules/**'
@@ -65,7 +67,10 @@ jobs:
           timeout_minutes: 10
           retry_wait_seconds: 60
           max_attempts: 3
-          command: ./gradlew :AnkiDroid:compileReleaseJavaWithJavac compileLint
+          command: ./gradlew :AnkiDroid:compileReleaseJavaWithJavac compileLint lint-rules:compileTestJava
 
       - name: Run Lint Release
         run: ./gradlew lintRelease
+
+      - name: Test Lint Rules
+        run: ./gradlew lint-rules:test

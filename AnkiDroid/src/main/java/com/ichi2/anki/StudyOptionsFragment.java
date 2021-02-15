@@ -23,6 +23,7 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.annotation.VisibleForTesting;
+import androidx.core.text.HtmlCompat;
 import androidx.fragment.app.Fragment;
 import androidx.appcompat.widget.Toolbar;
 
@@ -56,6 +57,8 @@ import com.ichi2.utils.HtmlUtils;
 import timber.log.Timber;
 
 import static com.ichi2.anim.ActivityTransitionAnimation.Direction.*;
+import static com.ichi2.libanki.Consts.DECK_DYN;
+import static com.ichi2.libanki.Consts.DECK_STD;
 
 public class StudyOptionsFragment extends Fragment implements Toolbar.OnMenuItemClickListener {
 
@@ -457,7 +460,7 @@ public class StudyOptionsFragment extends Fragment implements Toolbar.OnMenuItem
             if (mLoadWithDeckOptions) {
                 mLoadWithDeckOptions = false;
                 Deck deck = getCol().getDecks().current();
-                if (deck.getInt("dyn") != 0 && deck.has("empty")) {
+                if (deck.isDyn() && deck.has("empty")) {
                     deck.remove("empty");
                 }
                     mProgressDialog = StyledProgressDialog.show(getActivity(), "",
@@ -588,7 +591,7 @@ public class StudyOptionsFragment extends Fragment implements Toolbar.OnMenuItem
                     }
 
                     // Switch between the empty view, the ordinary view, and the "congratulations" view
-                    boolean isDynamic = deck.optInt("dyn", 0) != 0;
+                    boolean isDynamic = deck.isDyn();
                     if (totalCards == 0 && !isDynamic) {
                         mCurrentContentView = CONTENT_EMPTY;
                         mDeckInfoLayout.setVisibility(View.VISIBLE);
@@ -700,7 +703,7 @@ public class StudyOptionsFragment extends Fragment implements Toolbar.OnMenuItem
         String withStrippedTags = Utils.stripHTMLScriptAndStyleTags(desc);
         //#5188 - fromHtml displays newlines as " "
         String withFixedNewlines = HtmlUtils.convertNewlinesToHtml(withStrippedTags);
-        return CompatHelper.getCompat().fromHtml(withFixedNewlines);
+        return HtmlCompat.fromHtml(withFixedNewlines, HtmlCompat.FROM_HTML_MODE_LEGACY);
     }
 
     private Collection getCol() {

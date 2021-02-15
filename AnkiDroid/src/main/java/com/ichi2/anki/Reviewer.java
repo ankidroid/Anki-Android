@@ -302,6 +302,8 @@ public class Reviewer extends AbstractFlashcardViewer {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
+        // 100ms was not enough on my device (Honor 9 Lite -  Android Pie)
+        delayedHide(1000);
         if (getDrawerToggle().onOptionsItemSelected(item)) {
             return true;
         }
@@ -715,9 +717,7 @@ public class Reviewer extends AbstractFlashcardViewer {
                 }
             }
 
-        } catch (Exception e) {
-            Timber.w(e, "Failed to display icons");
-        } catch (Error e) {
+        } catch (Exception | Error e) {
             Timber.w(e, "Failed to display icons");
         }
     }
@@ -976,7 +976,14 @@ public class Reviewer extends AbstractFlashcardViewer {
     public void displayCardQuestion() {
         // show timer, if activated in the deck's preferences
         initTimer();
+        delayedHide(100);
         super.displayCardQuestion();
+    }
+
+    @Override
+    protected void displayCardAnswer() {
+        delayedHide(100);
+        super.displayCardAnswer();
     }
 
     @Override
@@ -1059,6 +1066,7 @@ public class Reviewer extends AbstractFlashcardViewer {
         }
     };
 
+    /** Hide the navigation if in full-screen mode after a given period of time */
     protected void delayedHide(int delayMillis) {
         Timber.d("Fullscreen delayed hide in %dms", delayMillis);
         mFullScreenHandler.removeMessages(0);

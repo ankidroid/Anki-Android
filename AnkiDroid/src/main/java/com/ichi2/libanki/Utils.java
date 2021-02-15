@@ -31,6 +31,7 @@ import android.text.Spanned;
 
 import androidx.annotation.NonNull;
 import android.os.StatFs;
+import android.text.TextUtils;
 import android.util.Pair;
 
 import com.ichi2.anki.AnkiFont;
@@ -60,16 +61,19 @@ import java.util.Arrays;
 import java.util.Collection;
 import java.util.Enumeration;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Random;
+import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import org.apache.commons.compress.archivers.zip.ZipArchiveEntry;
 import org.apache.commons.compress.archivers.zip.ZipFile;
 
 import androidx.annotation.Nullable;
+import androidx.core.text.HtmlCompat;
 import timber.log.Timber;
 
 import static com.ichi2.libanki.Consts.FIELD_SEPARATOR;
@@ -354,7 +358,7 @@ public class Utils {
         Matcher htmlEntities = htmlEntitiesPattern.matcher(html);
         StringBuffer sb = new StringBuffer();
         while (htmlEntities.find()) {
-            final Spanned spanned = CompatHelper.getCompat().fromHtml(htmlEntities.group());
+            final Spanned spanned = HtmlCompat.fromHtml(htmlEntities.group(), HtmlCompat.FROM_HTML_MODE_LEGACY);
             final String replacement = Matcher.quoteReplacement(spanned.toString());
             htmlEntities.appendReplacement(sb, replacement);
         }
@@ -1040,7 +1044,7 @@ public class Utils {
      * @return the unescaped text
      */
     public static String unescape(String htmlText) {
-        return CompatHelper.getCompat().fromHtml(htmlText).toString();
+        return HtmlCompat.fromHtml(htmlText, HtmlCompat.FROM_HTML_MODE_LEGACY).toString();
     }
 
 
@@ -1100,4 +1104,20 @@ public class Utils {
         return fields;
     }
 
+
+    /**
+     * @param fields A map from field name to field value
+     * @return The set of non empty field values.
+     */
+    public static Set<String> nonEmptyFields(Map<String, String> fields) {
+        Set<String> nonempty_fields = new HashSet<>(fields.size());
+        for (Map.Entry<String, String> kv: fields.entrySet()) {
+            String value = kv.getValue();
+            value = Utils.stripHTMLMedia(value).trim();
+            if (!TextUtils.isEmpty(value)) {
+                nonempty_fields.add(kv.getKey());
+            }
+        }
+        return nonempty_fields;
+    }
 }

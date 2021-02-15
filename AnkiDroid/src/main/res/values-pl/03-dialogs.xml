@@ -101,7 +101,7 @@
         <item quantity="other">%d kart ponownie zaplanowano</item>
     </plurals>
     <string name="reschedule_card_dialog_new_card_warning">Karta zostanie ponownie zaplanowana. Ponowne zaplanowanie spowoduje zmianę statusu karty z \"nowa\" na \"powtarzana\". Użyj opcji \"przestaw kartę\" by zmienić pozycję nowej karty karty w kolejce bez zmiany jej statusu</string>
-    <string name="reschedule_card_dialog_warning_ease_reset">Ponowne zaplanowanie karty spowoduje także zresetowanie poziomu trudności (zostanie ustawiona na: %d%%)</string>
+    <string name="reschedule_card_dialog_warning_ease_reset">Ponowne zaplanowanie karty spowoduje także zresetowanie poziomu łatwości (zostanie ustawiona na: %d%%)</string>
     <string name="firefox_workaround_launched_reviewer_opening_deck">Wybierz talię w twoim menedżerze plików lub odwiedź stronę about:downloads, by ją zaimportować</string>
     <string name="answering_error_title">Błąd bazy danych</string>
     <string name="answering_error_message">Wystąpił błąd podczas zapisywania do kolekcji. Powodem może być uszkodzenie bazy danych albo niewystarczająca ilość miejsca na dysku.\n\nJeśli błąd ten występuje często, spróbuj użyć opcji \"sprawdź bazę danych\" oraz naprawić kolekcję lub przywróć ją z kopii zapasowej (by tego dokonać kliknij „opcje”).\n\nRównie dobrze może to być też błąd AnkiDroid; zgłoś go abyśmy mogli to sprawdzić.</string>
@@ -233,8 +233,8 @@
     <string name="help_item_reddit">Reddit</string>
     <string name="help_item_report_bug">Zgłoś błąd</string>
     <string name="help_title_support_ankidroid">Wesprzyj AnkiDroid</string>
-    <string name="help_item_support_opencollective_donate">Donate</string>
-    <string name="help_item_support_develop_ankidroid">Develop</string>
+    <string name="help_item_support_opencollective_donate">Wesprzyj</string>
+    <string name="help_item_support_develop_ankidroid">Rozbuduj</string>
     <string name="help_item_support_rate_ankidroid">Oceń</string>
     <string name="help_item_support_other_ankidroid">Inne</string>
     <string name="help_title_community">Społeczność</string>

@@ -147,7 +147,7 @@ public class Anki2Importer extends Importer {
             mDst.getMedia().getDb().getDatabase().beginTransaction();
 
             if (!TextUtils.isEmpty(mDeckPrefix)) {
-                long id = mDst.getDecks().id(mDeckPrefix);
+                long id = mDst.getDecks().id_safe(mDeckPrefix);
                 mDst.getDecks().select(id);
             }
             Timber.i("Preparing Import");
@@ -470,11 +470,11 @@ public class Anki2Importer extends Importer {
                 head += "::";
             }
             head += parent;
-            long idInSrc = mSrc.getDecks().id(head);
+            long idInSrc = mSrc.getDecks().id_safe(head);
             _did(idInSrc);
         }
         // create in local
-        long newid = mDst.getDecks().id(name);
+        long newid = mDst.getDecks().id_safe(name);
         // pull conf over
         if (g.has("conf") && g.getLong("conf") != 1) {
             DeckConfig conf = mSrc.getDecks().getConf(g.getLong("conf"));
@@ -858,8 +858,6 @@ public class Anki2Importer extends Importer {
             byte[] result = new byte[MEDIAPICKLIMIT];
             System.arraycopy(baos.toByteArray(), 0, result, 0, Math.min(baos.size(), MEDIAPICKLIMIT));
             return result;
-        } catch (FileNotFoundException e) {
-            return null;
         } catch (IOException e) {
             return null;
         }

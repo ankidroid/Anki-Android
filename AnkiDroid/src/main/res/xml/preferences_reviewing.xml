@@ -50,6 +50,11 @@
             android:title="@string/time_limit"
             app:max="9999"
             app:min="0" />
+        <CheckBoxPreference
+            android:key="newTimezoneHandling"
+            android:title="@string/new_timezone"
+            android:defaultValue="false" />
+
     </PreferenceCategory>
     <PreferenceCategory android:title="@string/pref_cat_flashcard" >
         <Preference

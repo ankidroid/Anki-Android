@@ -52,6 +52,7 @@ import java.util.Set;
 import timber.log.Timber;
 
 import static com.ichi2.anim.ActivityTransitionAnimation.Direction.FADE;
+import static com.ichi2.libanki.Consts.DECK_STD;
 
 /**
  * Preferences for the current deck.
@@ -356,7 +357,7 @@ public class FilteredDeckOptions extends AppCompatPreferenceActivity implements 
 
         registerExternalStorageListener();
 
-        if (mCol == null || mDeck.getInt("dyn") != 1) {
+        if (mCol == null || mDeck.isStd()) {
             Timber.w("No Collection loaded or deck is not a dyn deck");
             finish();
             return;

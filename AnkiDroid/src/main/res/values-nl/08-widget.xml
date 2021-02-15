@@ -53,5 +53,5 @@
         <item quantity="one">%d minuut resterend</item>
         <item quantity="other">%d minuten resterend</item>
     </plurals>
-    <string name="widget_add_note_button">Nieuwe Ankidroid aantekening toevoegen</string>
+    <string name="widget_add_note_button">Nieuwe Ankidroid-memo toevoegen</string>
 </resources>

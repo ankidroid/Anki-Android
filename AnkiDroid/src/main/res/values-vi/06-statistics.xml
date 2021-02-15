@@ -38,17 +38,17 @@
 ~ this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <resources>
-    <string name="statistics_young">Non trẻ</string>
+    <string name="statistics_young">Tuổi trẻ</string>
     <string name="statistics_mature">Trưởng thành</string>
-    <string name="statistics_young_and_learn">Young+Learn</string>
+    <string name="statistics_young_and_learn">Thiếu niên + Học</string>
     <string name="statistics_unlearned">Chưa xem</string>
-    <string name="statistics_suspended">Suspended</string>
-    <string name="statistics_buried">Buried</string>
+    <string name="statistics_suspended">ngưng lại</string>
+    <string name="statistics_buried">Tạm ẩn</string>
     <string name="statistics_relearn" comment="Labbel of the axis in the graph indicating the number of reviews of cards while they are in relearning mode.">Học lại</string>
     <string name="statistics_learn" comment="Label of the number of review of card in learning done in some amount of time">Cần học</string>
     <string name="statistics_cram">Ôn thi</string>
     <string name="stats_cards">Các thẻ</string>
-    <string name="stats_cards_intervals">Các thẻ với khoảng thời gian cho trước</string>
+    <string name="stats_cards_intervals">Các thẻ có khoảng thời gian nhất định</string>
     <string name="stats_cumulative_cards">Các thẻ tích luỹ</string>
     <string name="stats_cumulative_answers">Các đáp án tích luỹ</string>
     <string name="stats_cumulative_time_minutes">Số phút tích luỹ</string>
@@ -71,35 +71,35 @@
     <string name="stats_answer_type">Dạng đáp án</string>
     <string name="stats_today_again_count">Số lần học lại: &lt;b&gt;%d&lt;/b&gt;</string>
     <string name="stats_today_correct_count">(&lt;b&gt;%.1f%%&lt;/b&gt; chính xác)</string>
-    <string name="stats_today_type_breakdown">Learn: &lt;b&gt;%1$d&lt;/b&gt;, review: &lt;b&gt;%2$d&lt;/b&gt;, relearn: &lt;b&gt;%3$d&lt;/b&gt;, filtered: &lt;b&gt;%4$d&lt;/b&gt;</string>
+    <string name="stats_today_type_breakdown">Thẻ cần học: &lt;b&gt;%1$d&lt;/b&gt;, ôn tập: &lt;b&gt;%2$d&lt;/b&gt;, học lại: &lt;b&gt;%3$d&lt;/b&gt;, đã lọc: &lt;b&gt;%4$d&lt;/b&gt;</string>
     <string name="stats_today_mature_cards">Trả lời chính xác các thẻ trưởng thành: %1$d/%2$d (%3$.1f%%)</string>
     <string name="stats_today_no_mature_cards">Chưa học thẻ trưởng thành nào hôm nay</string>
-    <string name="stats_overview_forecast_total">Total: &lt;b&gt;%1$d&lt;/b&gt; reviews</string>
-    <string name="stats_overview_forecast_average">Average: &lt;b&gt;%1$.1f&lt;/b&gt; reviews/day</string>
-    <string name="stats_overview_forecast_due_tomorrow">Due tomorrow: &lt;b&gt;%1$d&lt;/b&gt;</string>
-    <string name="stats_overview_days_studied">Days studied: &lt;b&gt;%1$d%%&lt;/b&gt; (%2$d of %3$d)</string>
-    <string name="stats_overview_reviews_per_day_studydays">Average for days studied: &lt;b&gt;%1$.1f&lt;/b&gt; reviews/day</string>
-    <string name="stats_overview_reviews_per_day_all">If you studied every day: &lt;b&gt;%1$.1f&lt;/b&gt; reviews/day</string>
-    <string name="stats_overview_total_time_in_period">Total: &lt;b&gt;%d&lt;/b&gt; minutes</string>
-    <string name="stats_overview_time_per_day_studydays">Average for days studied: &lt;b&gt;%1$.1f&lt;/b&gt; minutes/day</string>
-    <string name="stats_overview_time_per_day_all">If you studied every day:  &lt;b&gt;%1$.1f&lt;/b&gt; minutes/day</string>
-    <string name="stats_overview_average_answer_time">Average answer time: &lt;b&gt;%1$.1fs&lt;/b&gt; (&lt;b&gt;%2$.2f&lt;/b&gt; cards/minute)</string>
-    <string name="stats_overview_new_cards_per_day">Average: &lt;b&gt;%1$.1f&lt;/b&gt; cards/day</string>
-    <string name="stats_overview_total_new_cards">Total: &lt;b&gt;%1$d&lt;/b&gt; cards</string>
-    <string name="stats_overview_average_interval">"Average interval: "</string>
-    <string name="stats_overview_longest_interval">"Longest interval: "</string>
-    <string name="stats_overview_years">&lt;b&gt;%1$.1f&lt;/b&gt; years</string>
-    <string name="stats_overview_months">&lt;b&gt;%1$.1f&lt;/b&gt; months</string>
-    <string name="stats_overview_days">&lt;b&gt;%1$.1f&lt;/b&gt; days</string>
-    <string name="stats_overview_hours">&lt;b&gt;%1$.1f&lt;/b&gt; hours</string>
-    <string name="stats_overview_answer_buttons_learn">Learning: &lt;b&gt;%1$.2f%%&lt;/b&gt; correct (%2$d of %3$d)</string>
-    <string name="stats_overview_answer_buttons_young">Young: &lt;b&gt;%1$.2f%%&lt;/b&gt; correct (%2$d of %3$d)</string>
-    <string name="stats_overview_answer_buttons_mature">Mature: &lt;b&gt;%1$.2f%%&lt;/b&gt; correct (%2$d of %3$d)</string>
-    <string name="stats_overview_card_types_total_cards">Total cards: &lt;b&gt;%d&lt;/b&gt;</string>
-    <string name="stats_overview_card_types_total_notes">Total notes: &lt;b&gt;%d&lt;/b&gt;</string>
-    <string name="stats_overview_card_types_lowest_ease">Lowest ease: &lt;b&gt;%.0f%%&lt;/b&gt;</string>
-    <string name="stats_overview_card_types_average_ease">Average ease: &lt;b&gt;%.0f%%&lt;/b&gt;</string>
-    <string name="stats_overview_card_types_highest_ease">Highest ease: &lt;b&gt;%.0f%%&lt;/b&gt;</string>
+    <string name="stats_overview_forecast_total">Tổng: &lt;b&gt;%1$d&lt;/b&gt; ôn tập</string>
+    <string name="stats_overview_forecast_average">Trung bình: &lt;b&gt;%1$.1f&lt;/b&gt; ôn tập/ngày</string>
+    <string name="stats_overview_forecast_due_tomorrow">Đến hạn vào ngày mai: &lt;b&gt;%1$d&lt;/b&gt;</string>
+    <string name="stats_overview_days_studied">Số ngày đã học: &lt;b&gt;%1$d%%&lt;/b&gt; (%2$d trên %3$d)</string>
+    <string name="stats_overview_reviews_per_day_studydays">Trung bình cho những ngày đã học: &lt;b&gt;%1$.1f&lt;/b&gt; ôn tập/ngày</string>
+    <string name="stats_overview_reviews_per_day_all">Nếu bạn học mỗi ngày: &lt;b&gt;%1$.1f&lt;/b&gt; ôn tập/ngày</string>
+    <string name="stats_overview_total_time_in_period">Tổng: &lt;b&gt;%d&lt;/b&gt; phút</string>
+    <string name="stats_overview_time_per_day_studydays">Trung bình cho những ngày đã học: &lt;b&gt;%1$.1f&lt;/b&gt; phút/ngày</string>
+    <string name="stats_overview_time_per_day_all">Nếu bạn học hàng ngày: &lt;b&gt;%1$.1f&lt;/b&gt; phút / ngày</string>
+    <string name="stats_overview_average_answer_time">Thời gian trả lời trung bình: &lt;b&gt;%1$.1fs&lt;/b&gt; (&lt;b&gt;%2$.2f&lt;/b&gt; thẻ/phút)</string>
+    <string name="stats_overview_new_cards_per_day">Trung bình: &lt;b&gt;%1$.1f&lt;/b&gt; thẻ/ngày</string>
+    <string name="stats_overview_total_new_cards">Tổng: &lt;b&gt;%1$d&lt;/b&gt; thẻ</string>
+    <string name="stats_overview_average_interval">"Khoảng thời gian trung bình:"</string>
+    <string name="stats_overview_longest_interval">"Khoảng thời gian dài nhất: "</string>
+    <string name="stats_overview_years">&lt;b&gt;%1$.1f&lt;/b&gt; năm</string>
+    <string name="stats_overview_months">&lt;b&gt;%1$.1f&lt;/b&gt; tháng</string>
+    <string name="stats_overview_days">&lt;b&gt;%1$.1f&lt;/b&gt; ngày</string>
+    <string name="stats_overview_hours">&lt;b&gt;%1$.1f&lt;/b&gt; giờ</string>
+    <string name="stats_overview_answer_buttons_learn">Đang học: &lt;b&gt;%1$.2f%%&lt;/b&gt; chính xác (%2$d trên %3$d)</string>
+    <string name="stats_overview_answer_buttons_young">Tuổi trẻ: &lt;b&gt;%1$.2f%%&lt;/b&gt; chính xác (%2$d trên %3$d)</string>
+    <string name="stats_overview_answer_buttons_mature">Trưởng thành: &lt;b&gt;%1$.2f%%&lt;/b&gt; chính xác (%2$d trên %3$d)</string>
+    <string name="stats_overview_card_types_total_cards">Tổng số thẻ: &lt;b&gt;%d&lt;/b&gt;</string>
+    <string name="stats_overview_card_types_total_notes">Tổng số ghi chú: &lt;b&gt;%d&lt;/b&gt;</string>
+    <string name="stats_overview_card_types_lowest_ease">Mức độ dễ thấp nhất: &lt;b&gt;%.0f%%&lt;/b&gt;</string>
+    <string name="stats_overview_card_types_average_ease">Mức độ dễ trung bình: &lt;b&gt;%.0f%%&lt;/b&gt;</string>
+    <string name="stats_overview_card_types_highest_ease">Mức độ dễ cao nhất: &lt;b&gt;%.0f%%&lt;/b&gt;</string>
     <string name="stats_select_time_scale">Chọn khung thời gian</string>
     <string-array name="due_x_axis_title">
         <item>Ngày</item>
@@ -107,11 +107,11 @@
         <item>Tháng</item>
     </string-array>
     <string name="stats_today">Hôm nay</string>
-    <string name="stats_overview">Overview</string>
+    <string name="stats_overview">Tổng quan</string>
     <string name="stats_forecast">Dự báo</string>
     <string name="stats_review_count">Số lượng ôn tập</string>
     <string name="stats_review_time">Thời gian ôn tập</string>
-    <string name="stats_added" comment="Label of the number of added card">Added</string>
+    <string name="stats_added" comment="Label of the number of added card">Đã thêm</string>
     <string name="stats_review_intervals">Khoảng thời gian</string>
     <string name="stats_breakdown">Phân tích theo giờ</string>
     <string name="stats_weekly_breakdown">Phân tích theo tuần</string>

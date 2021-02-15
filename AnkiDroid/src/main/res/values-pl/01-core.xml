@@ -164,6 +164,7 @@
     <string name="custom_study_deck_name">Sesja nauki niestandardowej</string>
     <string name="custom_study_deck_exists">Najpierw zmień nazwę istniejącej talii nauki niestandardowej.</string>
     <string name="empty_deck">Ta talia jest pusta</string>
+    <string name="empty_deck_add_note">Dodaj kartę</string>
     <string name="invalid_deck_name">Nieprawidłowa nazwa talii</string>
     <string name="studyoptions_empty">Talia jest pusta. Wybierz przycisk + żeby dodać karty.</string>
     <string name="studyoptions_limit_reached">Dzienny limit nauki został osiągnięty</string>
@@ -213,4 +214,12 @@
     <!-- Context Menu -->
     <string name="card_browser_context_menu" comment="The value which appears in the system context menu. Note the casing difference">Przeglądarka kart</string>
     <string name="context_menu_anki_card_label">Karta Anki</string>
+    <string name="has_a_problem" comment="First field is either front template or back template. Second field is the error message.">%1$s ma problem:<br/>%2$s</string>
+    <string name="more_information">Więcej informacji</string>
+    <string name="no_field">Znaleziono \'{{%1$s}}\', ale brakuje pola o nazwie \'%1$s\'.</string>
+    <string name="closed_tag_not_open">Znaleziono  \'{{/%1$s}}\', ale brakuje \'{{#%1$s}}\' lub \'{{^%1$s}}\'.</string>
+    <string name="missing_closing_bracket">Brakuje \'}}\' w \'%s\'.</string>
+    <string name="open_tag_not_closed">Brakuje \'{{%s}}\'.</string>
+    <string name="wrong_tag_closed">Znaleziono \'{{/%1$s}}\', ale oczekiwano \'{{/%2$s}}\'</string>
+    <string name="filter_error">Błąd w filtrze %s</string>
 </resources>

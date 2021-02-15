@@ -112,8 +112,8 @@
     <string name="gestures_corner_tap_bottom_left">Toque Baixo Esquerda</string>
     <string name="gestures_corner_tap_bottom_center">Toque Baixo Centro</string>
     <string name="gestures_corner_tap_bottom_right">Toque Baixo Direita</string>
-    <string name="gestures_volume_up">Aumentar o volume</string>
-    <string name="gestures_volume_down">Diminuir volume</string>
+    <string name="gestures_volume_up">Aumentar Volume</string>
+    <string name="gestures_volume_down">Diminuir Volume</string>
     <string name="more_scrolling_buttons">eReader</string>
     <string name="more_scrolling_buttons_summ">Também utilizar botões de kanji/katakana, emoji/kao-moji para rolagem</string>
     <string name="card_browser_enable_external_context_menu">‘%s’ Menu </string>
@@ -172,6 +172,7 @@
     <string name="learn_cutoff">Aprender antes do limite</string>
     <string name="time_limit">Limite de tempo de Timebox</string>
     <string name="time_limit_summ">XXX min</string>
+    <string name="new_timezone">New timezone handling</string>
     <string name="day_offset">Início do dia seguinte</string>
     <string name="day_offset_summ">XXX horas após a meia-noite</string>
     <string name="sched_ver">Agendador V2 Experimental</string>
@@ -189,7 +190,7 @@
     <string name="custom_buttons_summary">Customizar quais ações aparecem na app bar</string>
     <string name="custom_buttons_setting_always_show">Mostrar sempre</string>
     <string name="custom_buttons_setting_if_room">Mostrar se couber</string>
-    <string name="custom_buttons_setting_menu_only">Apenas o menu</string>
+    <string name="custom_buttons_setting_menu_only">Apenas no menu</string>
     <string name="reset_custom_buttons">Redefinir valores padrão</string>
     <string name="thirdparty_apps_title">Apps de terceiros</string>
     <string name="thirdparty_apps_summary">Veja uma lista de aplicativos que usam a API do AnkiDroid, como dicionários, ferramentas.</string>
@@ -220,7 +221,7 @@
         <item quantity="one">O baralho %1$s\n%2$d utiliza este grupo</item>
         <item quantity="other">Os baralhos %1$s\n%2$d utilizam este grupo</item>
     </plurals>
-    <string name="deck_conf_new_cards">Novos cartões</string>
+    <string name="deck_conf_new_cards">Novos cards</string>
     <string name="deck_conf_rev_cards" comment="Name of the deck options submenu for configuring reviews of due cards.">Revisões</string>
     <string name="deck_conf_lps_cards" comment="Label of the submenu stating how lapses cards are treated.">Lapsos</string>
     <string name="deck_conf_general">Geral</string>
@@ -240,7 +241,7 @@
     <string name="deck_conf_use_general_timeout_settings">Usar configurações gerais</string>
     <string name="deck_conf_use_general_timeout_settings_summ">Use as configurações gerais de \'Mostrar resposta automática\' em vez de usar as configurações deste grupo.</string>
     <string name="deck_conf_easy_bonus">Bônus fácil</string>
-    <string name="deck_conf_hard_factor">Hard interval</string>
+    <string name="deck_conf_hard_factor">Intervalo difícil</string>
     <string name="deck_conf_ivl_fct">Modificador de intervalo</string>
     <string name="deck_conf_max_ivl">Intervalo máximo</string>
     <string name="deck_conf_new_lps_ivl">Novo intervalo</string>
@@ -284,8 +285,8 @@
     <string name="analytics_dialog_title">Ajude a tornar o AnkiDroid melhor!</string>
     <string name="analytics_title">Compartilhar funções de uso</string>
     <string name="analytics_summ">Você pode contribuir para AnkiDroid ajudando a equipe de desenvolvimento a ver quais recursos as pessoas usam</string>
-    <string name="note_editor_replace_newlines">Replace newlines with HTML</string>
-    <string name="note_editor_replace_newlines_summ">In the Note Editor, convert any instances of &lt;br&gt; to newlines when editing a card.</string>
-    <string name="no_code_formatting">Simple typed answer formatting</string>
-    <string name="no_code_formatting_summ">Fixes ‘􏿾’ appearing in typed answer results</string>
+    <string name="note_editor_replace_newlines">Substituir novas linhas por HTML</string>
+    <string name="note_editor_replace_newlines_summ">No Editor de Notas, converta as ocorrências de &lt;br&gt; para uma quebra de linha ao editar um cartão.</string>
+    <string name="no_code_formatting">Formatação de resposta a ser digitada</string>
+    <string name="no_code_formatting_summ">Corrige \'􏿾\' que aparecer nas respostas digitadas</string>
 </resources>

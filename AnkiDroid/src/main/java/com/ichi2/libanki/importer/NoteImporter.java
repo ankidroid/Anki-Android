@@ -11,6 +11,7 @@ import com.ichi2.libanki.Consts;
 import com.ichi2.libanki.DeckConfig;
 import com.ichi2.libanki.Model;
 import com.ichi2.libanki.Models;
+import com.ichi2.libanki.template.ParsedNode;
 import com.ichi2.libanki.utils.StringUtils;
 import com.ichi2.utils.Assert;
 import com.ichi2.utils.HtmlUtils;
@@ -66,11 +67,13 @@ public class NoteImporter extends Importer {
     private ArrayList<Long> _ids;
     private boolean mEmptyNotes;
     private int mUpdateCount;
+    private List<ParsedNode> mTemplateParsed;
 
 
     public NoteImporter(Collection col, String file) {
         super(col, file);
         this.mModel = col.getModels().current();
+        this.mTemplateParsed = mModel.parsedNodes();
         this.mMapping = null;
         this.mTagModified = null;
         this.mTagsMapped = false;
@@ -376,7 +379,7 @@ public class NoteImporter extends Importer {
             }
         }
         note.fieldsStr = joinFields(fields);
-        ArrayList<Integer> ords = Models.availOrds(mModel, fields);
+        ArrayList<Integer> ords = Models.availOrds(mModel, fields, mTemplateParsed);
         if (ords.isEmpty()) {
             mEmptyNotes = true;
             return false;

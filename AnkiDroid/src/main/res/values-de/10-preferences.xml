@@ -50,7 +50,7 @@
     <string name="pref_cat_whiteboard">Whiteboard</string>
     <string name="pref_cat_appearance">Erscheinungsbild</string>
     <string name="pref_cat_appearance_summ">Themes und Standardschriftart ändern</string>
-    <string name="pref_cat_themes">Themes</string>
+    <string name="pref_cat_themes">Designs</string>
     <string name="pref_cat_fonts">Schriftarten</string>
     <string name="pref_cat_gestures">Gesten</string>
     <string name="pref_cat_gestures_summ">Berühren und Wischen statt Schaltflächen verwenden</string>
@@ -80,8 +80,8 @@
     <string name="col_path">AnkiDroid-Verzeichnis</string>
     <string name="fullscreen_review">Vollbildmodus</string>
     <string name="full_screen_off">Aus</string>
-    <string name="full_screen_system">Systemzeilen verbergen</string>
-    <string name="full_screen_complete">Systemleisten und Antwortschaltflächen verbergen</string>
+    <string name="full_screen_system">Systemleisten ausblenden</string>
+    <string name="full_screen_complete">Systemleisten und Antwortschaltflächen ausblenden</string>
     <string name="full_screen_error_gestures">Sie müssen Gesten aktivieren, um die Antwortschaltflächen auszublenden</string>
     <string name="answer_buttons_position">Position der Antwortschaltflächen</string>
     <string-array name="answer_buttons_position_labels">
@@ -103,21 +103,21 @@
     <string name="gestures_tap_left">Links antippen</string>
     <string name="gestures_tap_right">Rechts antippen</string>
     <string name="gestures_tap_bottom">Unten antippen</string>
-    <string name="gestures_corner_tap_top_left">Berührung links oben</string>
-    <string name="gestures_corner_tap_top_center">Touch top center</string>
-    <string name="gestures_corner_tap_top_right">Berührung oben rechts</string>
-    <string name="gestures_corner_tap_middle_left">Touch middle left</string>
-    <string name="gestures_corner_tap_middle_center">Touch middle center</string>
-    <string name="gestures_corner_tap_middle_right">Touch middle right</string>
-    <string name="gestures_corner_tap_bottom_left">Berührung unten links</string>
-    <string name="gestures_corner_tap_bottom_center">Touch bottom center</string>
-    <string name="gestures_corner_tap_bottom_right">Berührung unten rechts</string>
+    <string name="gestures_corner_tap_top_left">Oben links antippen</string>
+    <string name="gestures_corner_tap_top_center">Oben mittig antippen</string>
+    <string name="gestures_corner_tap_top_right">Oben rechts antippen</string>
+    <string name="gestures_corner_tap_middle_left">Mitte links antippen</string>
+    <string name="gestures_corner_tap_middle_center">Mitte mittig antippen</string>
+    <string name="gestures_corner_tap_middle_right">Mitte rechts antippen</string>
+    <string name="gestures_corner_tap_bottom_left">Unten links antippen</string>
+    <string name="gestures_corner_tap_bottom_center">Berührung unten mittig</string>
+    <string name="gestures_corner_tap_bottom_right">Unten rechts antippen</string>
     <string name="gestures_volume_up">Lautstärke erhöhen</string>
     <string name="gestures_volume_down">Lautstärke veringern</string>
     <string name="more_scrolling_buttons">eReader</string>
     <string name="more_scrolling_buttons_summ">Auch mit Kanji/Katakana-, Emoji/Kao-moji-Tasten scrollen</string>
     <string name="card_browser_enable_external_context_menu">»%s«-Menü</string>
-    <string name="card_browser_enable_external_context_menu_summary">Aktiviert global das »%s«-Kontextmenü</string>
+    <string name="card_browser_enable_external_context_menu_summary">Aktiviert global das Kontextmenü »%s«</string>
     <string name="double_scrolling_gap">Doppeltes scrollen</string>
     <string name="double_scrolling_gap_summ">Auf eReadern mit doppelter Schrittgröße scrollen</string>
     <string name="swipe_sensitivity">Wischempfindlichkeit</string>
@@ -132,8 +132,8 @@
     <string name="automatic_sync_choice_summ">Bei Programmstart/-ende automatisch synchronisieren, falls die letzte Synchronisation mehr als 10 Minuten zurückliegt.</string>
     <string name="sync_status_badge">Status der Synchronisation anzeigen</string>
     <string name="sync_status_badge_summ">Synchronisationssymbol ändern, wenn Änderungen hochgeladen werden können</string>
-    <string name="day_theme">Tag-Theme</string>
-    <string name="night_theme">Nacht-Thema</string>
+    <string name="day_theme">Design Tag</string>
+    <string name="night_theme">Design Nacht</string>
     <string name="default_font">Standardschrift</string>
     <string name="override_font">Anwendungsbereich der Standardschrift</string>
     <string name="language">Sprache</string>
@@ -172,6 +172,7 @@
     <string name="learn_cutoff">Grenzwert für vorzeitiges Lernen</string>
     <string name="time_limit">Zeitlimitwert</string>
     <string name="time_limit_summ">XXX min</string>
+    <string name="new_timezone">New timezone handling</string>
     <string name="day_offset">Anfang des nächsten Tages</string>
     <string name="day_offset_summ">XXX Stunden nach Mitternacht</string>
     <string name="sched_ver">Experimenteller Zeitplaner V2</string>
@@ -189,7 +190,7 @@
     <string name="custom_buttons_summary">In der App-Leiste anzuzeigende Aktionen anpassen</string>
     <string name="custom_buttons_setting_always_show">Immer anzeigen</string>
     <string name="custom_buttons_setting_if_room">Anzeigen, falls genug Platz</string>
-    <string name="custom_buttons_setting_menu_only">Nur im Menü</string>
+    <string name="custom_buttons_setting_menu_only">Nur Menü</string>
     <string name="reset_custom_buttons">Auf Standard zurücksetzen</string>
     <string name="thirdparty_apps_title">API-Apps von Drittanbietern</string>
     <string name="thirdparty_apps_summary">Eine Liste von Anwendungen anzeigen, die die AnkiDroid-API verwenden (z. B. Wörterbücher, Werkzeuge etc.)</string>
@@ -199,22 +200,22 @@
     <string name="advanced_statistics_title">Erweiterte Statistik</string>
     <string name="enable_advanced_statistics_title">Erweiterte Statistik aktivieren</string>
     <string name="enable_advanced_statistics_summ">Anzeige von Prognosestatistiken, basierend auf einer Berechnung oder Simulation zukünftiger Wiederholungen (aktiviert) oder auf bereits eingeplanten zukünftigen Wiederholungen (deaktiviert).</string>
-    <string name="advanced_forecast_stats_compute_n_days_title">Ersten n Tage berechnen, verbleibende simulieren</string>
+    <string name="advanced_forecast_stats_compute_n_days_title">Erste n Tage berechnen, verbleibende simulieren</string>
     <string name="advanced_forecast_stats_compute_precision_title">Genauigkeit der Berechnung</string>
     <string name="advanced_forecast_stats_mc_n_iterations_title">Anzahl der Iterationen der Simulation</string>
     <!-- Custom sync server settings -->
     <string name="custom_sync_server_title">Eigener Synchronisationsserver</string>
     <string name="custom_sync_server_enable_title">Eigenen Synchronisationsserver verwenden</string>
     <string name="custom_sync_server_enable_summary">Wenn Sie nicht den proprietären AnkiWeb-Dienst verwenden möchten, können Sie hier einen alternativen Server angeben</string>
-    <string name="custom_sync_server_base_url_title">Sync-URL</string>
+    <string name="custom_sync_server_base_url_title">Synchronisations-URL</string>
     <string name="custom_sync_server_base_url_invalid">Synchronisations-URL ungültig</string>
-    <string name="custom_sync_server_media_url_title">Medien-Sync-URL</string>
+    <string name="custom_sync_server_media_url_title">Mediensynchronisations-URL</string>
     <string name="custom_sync_server_media_url_invalid">Mediensynchronisations-URL ungültig</string>
     <!-- studyoptions -->
     <string name="deck_conf_group_summ">Änderungen an Stapelgruppen-Optionen beeinflussen mehrere Stapel. Wenn Sie nur den aktuellen Stapel ändern möchten, fügen Sie bitte zuerst eine neue Optionsgruppe hinzu</string>
     <string name="studyoptions_limit_select_tags">Schlagwörter auswählen</string>
     <!-- Deck configurations -->
-    <string name="deck_conf_deck_description">Stapelbeschreibung (nur aktueller Stapel)</string>
+    <string name="deck_conf_deck_description">Stapelbeschreibung (nur für aktuellen Stapel)</string>
     <string name="deck_conf_group">Optionengruppe</string>
     <plurals name="deck_conf_group_summ">
         <item quantity="one">%1$s\n%2$d Stapel verwendet diese Gruppe</item>
@@ -240,13 +241,13 @@
     <string name="deck_conf_use_general_timeout_settings">Allgemeine Einstellungen verwenden</string>
     <string name="deck_conf_use_general_timeout_settings_summ">Allgemeine Einstellungen für »Antworten automatisch anzeigen« verwenden anstatt der Einstellungen für diese Gruppe.</string>
     <string name="deck_conf_easy_bonus">Bonus für \'einfach\'</string>
-    <string name="deck_conf_hard_factor">Hard interval</string>
+    <string name="deck_conf_hard_factor">Intervall für schwere Karten</string>
     <string name="deck_conf_ivl_fct">Intervallfaktor</string>
     <string name="deck_conf_max_ivl">Maximales Intervall</string>
     <string name="deck_conf_new_lps_ivl">Intervall für neue</string>
     <string name="deck_conf_min_ivl">Minimales Intervall</string>
     <string name="deck_conf_leech_thres">Lernbremsen-Schwellwert</string>
-    <string name="deck_conf_fails">XXX Vergessene</string>
+    <string name="deck_conf_fails">XXX Vergessene(r)</string>
     <string name="deck_conf_leech_action">Lernbremsen-Aktion</string>
     <string name="deck_conf_max_time">Maximale Antwortzeit</string>
     <string name="deck_conf_seconds">XXX Sekunden</string>
@@ -255,7 +256,7 @@
     <string name="deck_conf_replayq">Frage erneut abspielen</string>
     <string name="deck_conf_replayq_summ">Spiele sowohl Frage als auch Antwort erneut ab, wenn die Antwort gezeigt wird</string>
     <string name="deck_conf_manage">Gruppenverwaltung</string>
-    <string name="deck_conf_manage_summ">Add and change options groups</string>
+    <string name="deck_conf_manage_summ">Optionsgruppen hinzufügen und ändern</string>
     <string name="deck_conf_current_group">Aktuelle Gruppe</string>
     <string name="deck_conf_rename" comment="Menu entry to rename a deck">Umbenennen</string>
     <string name="deck_conf_reset">Standard wiederherstellen</string>
@@ -279,13 +280,13 @@
     <string name="deck_conf_cram_steps">Personalisierte Schritte (in Minuten)</string>
     <string name="deck_conf_cram_steps_summ">Personalisierte Schritte definieren</string>
     <string name="deck_conf_reminders_enabled">Erinnerungsbenachrichtigungen für Stapel in dieser Stapelgruppe aktivieren</string>
-    <string name="deck_conf_reminders_time">Erinnern am</string>
+    <string name="deck_conf_reminders_time">Erinnern um</string>
     <!-- analytics options -->
     <string name="analytics_dialog_title">Helfen Sie mit, AnkiDroid zu verbessern!</string>
     <string name="analytics_title">Funktionsnutzung teilen</string>
     <string name="analytics_summ">Sie können zu AnkiDroid beitragen, indem Sie dem Entwicklerteam Einblick gewähren, welche Funktionen Sie verwenden</string>
-    <string name="note_editor_replace_newlines">Replace newlines with HTML</string>
-    <string name="note_editor_replace_newlines_summ">In the Note Editor, convert any instances of &lt;br&gt; to newlines when editing a card.</string>
-    <string name="no_code_formatting">Simple typed answer formatting</string>
-    <string name="no_code_formatting_summ">Fixes ‘􏿾’ appearing in typed answer results</string>
+    <string name="note_editor_replace_newlines">Zeilenumbrüche durch HTML ersetzen</string>
+    <string name="note_editor_replace_newlines_summ">Beim Bearbeiten einer Karte im Notizeditor alle vorkommenden »&lt;br&gt;« in Zeilenbrüche umwandeln.</string>
+    <string name="no_code_formatting">Einfache Formatierung von Antworten</string>
+    <string name="no_code_formatting_summ">Behebt das Erscheinen von  »􏿾« in eingetippten Antworten</string>
 </resources>

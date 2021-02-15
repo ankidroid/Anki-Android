@@ -137,7 +137,9 @@ public class Stats {
                 "sum(case when type = " + Consts.CARD_TYPE_LRN + " then 1 else 0 end), "+ /* review */
                 "sum(case when type = " + Consts.CARD_TYPE_REV + " then 1 else 0 end), "+ /* relearn */
                 "sum(case when type = " + Consts.CARD_TYPE_RELEARNING + " then 1 else 0 end) "+ /* filter */
-                "from revlog where id > " + ((mCol.getSched().getDayCutoff()-SECONDS_PER_DAY)*1000) + " " +  lim;
+                "from revlog "+
+                "where ease > 0 "+  // Anki Desktop logs a '0' ease for manual reschedules, ignore them https://github.com/ankidroid/Anki-Android/issues/8008
+                "and id > " + ((mCol.getSched().getDayCutoff()-SECONDS_PER_DAY)*1000) + " " +  lim;
         Timber.d("todays statistics query: %s", query);
 
         int cards, thetime, failed, lrn, rev, relrn, filt;
@@ -157,7 +159,8 @@ public class Stats {
 
         }
         query = "select count(), sum(case when ease = 1 then 0 else 1 end) from revlog " +
-        "where lastIvl >= 21 and id > " + ((mCol.getSched().getDayCutoff()-SECONDS_PER_DAY)*1000) + " " +  lim;
+                "where ease > 0 "+ // Anki Desktop logs a '0' ease for manual reschedules, ignore them https://github.com/ankidroid/Anki-Android/issues/8008
+                "and lastIvl >= 21 and id > " + ((mCol.getSched().getDayCutoff()-SECONDS_PER_DAY)*1000) + " " +  lim;
         Timber.d("todays statistics query 2: %s", query);
 
         int mcnt, msum;
@@ -272,10 +275,11 @@ public class Stats {
             lims.add(lim);
         }
 
-        if (!lims.isEmpty()) {
-            lim = "WHERE ";
-            lim += TextUtils.join(" AND ", lims.toArray());
-        }
+        // Anki Desktop logs a '0' ease for manual reschedules, ignore them https://github.com/ankidroid/Anki-Android/issues/8008
+        lims.add("ease > 0");
+
+        lim = "WHERE ";
+        lim += TextUtils.join(" AND ", lims.toArray());
 
         return lim;
     }
@@ -1154,13 +1158,13 @@ public class Stats {
         if (days > 0) {
             lims.add("id > " + ((mCol.getSched().getDayCutoff() - (days * SECONDS_PER_DAY)) * 1000));
         }
-        if (lims.size() > 0) {
-            lim = "where " + lims.get(0);
-            for (int i = 1; i < lims.size(); i++) {
-                lim += " and " + lims.get(i);
-            }
-        } else {
-            lim = "";
+
+        // Anki Desktop logs a '0' ease for manual reschedules, ignore them https://github.com/ankidroid/Anki-Android/issues/8008
+        lims.add("ease > 0");
+
+        lim = "where " + lims.get(0);
+        for (int i = 1; i < lims.size(); i++) {
+            lim += " and " + lims.get(i);
         }
 
         String ease4repl;

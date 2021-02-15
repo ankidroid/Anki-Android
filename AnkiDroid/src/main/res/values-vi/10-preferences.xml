@@ -39,8 +39,8 @@
 -->
 <resources>
     <!-- generic strings -->
-    <string name="disabled">Disabled</string>
-    <string name="enabled">Enabled</string>
+    <string name="disabled">Đã tắt</string>
+    <string name="enabled">Đã bật</string>
     <!-- preferences.xml categories-->
     <string name="pref_cat_general_summ">Cài đặt chung</string>
     <string name="pref_cat_reviewing">Ôn tập/ Xem lại</string>
@@ -48,10 +48,10 @@
     <string name="pref_cat_reviewer_behaviour">Cách thức</string>
     <string name="pref_cat_flashcard">Hiển thị</string>
     <string name="pref_cat_whiteboard">Bảng viết</string>
-    <string name="pref_cat_appearance">Appearance</string>
-    <string name="pref_cat_appearance_summ">Change themes and default font</string>
-    <string name="pref_cat_themes">Themes</string>
-    <string name="pref_cat_fonts">Fonts</string>
+    <string name="pref_cat_appearance">Giao diện</string>
+    <string name="pref_cat_appearance_summ">Thay đổi chủ đề và phông chữ mặc định</string>
+    <string name="pref_cat_themes">Chủ đề</string>
+    <string name="pref_cat_fonts">Phông chữ</string>
     <string name="pref_cat_gestures">Cử Chỉ/ Điều Hướng</string>
     <string name="pref_cat_gestures_summ">Sử dụng taps và swipes thay vì các nút bấm</string>
     <string name="pref_cat_actions">Tác vụ</string>
@@ -64,36 +64,36 @@
     <string name="about_version">Phiên bản: </string>
     <!-- preferences.xml entries-->
     <string name="whiteboard_stroke_width">Chiều rộng không cố định</string>
-    <string name="use_input_tag">Type answer into the card</string>
-    <string name="use_input_tag_summ">Use a text input box inside the card to type in the answer</string>
+    <string name="use_input_tag">Nhập câu trả lời vào thẻ</string>
+    <string name="use_input_tag_summ">Sử dụng hộp nhập văn bản bên trong thẻ để nhập câu trả lời</string>
     <string name="dictionary">Tra cứu từ điển</string>
     <string name="reset_languages">Đặt lại ngôn ngữ</string>
-    <string name="reset_languages_summ">Reset language assignments (for text to speech and dictionaries) for all decks</string>
+    <string name="reset_languages_summ">Đặt lại chỉ định ngôn ngữ (cho văn bản thành giọng nói và từ điển) cho tất cả các bộ thẻ</string>
     <string name="reset_languages_question">Đặt lại tất cả các thiết lập ngôn ngữ ?</string>
     <string name="reset_confirmation">Thiết lập lại tất cả các trạng thái</string>
-    <string name="card_zoom">Card zoom</string>
-    <string name="image_zoom">Image zoom</string>
+    <string name="card_zoom">Thu phóng thẻ</string>
+    <string name="image_zoom">Thu phóng hình ảnh</string>
     <string name="button_size">Kích thước nút trả lời </string>
     <string name="card_browser_font_size">Thẻ trình duyệt font rộng</string>
-    <string name="card_browser_hide_media">Display filenames in card browser</string>
-    <string name="card_browser_hide_media_summary">Display media filenames in the card browser question/answer fields</string>
-    <string name="col_path">AnkiDroid directory</string>
+    <string name="card_browser_hide_media">Hiển thị tên tệp trong trình duyệt thẻ</string>
+    <string name="card_browser_hide_media_summary">Hiển thị tên tệp phương tiện trong các trường câu hỏi / câu trả lời của trình duyệt thẻ</string>
+    <string name="col_path">Thư mục AnkiDroid</string>
     <string name="fullscreen_review">Chế độ toàn màn hình</string>
-    <string name="full_screen_off">Off</string>
-    <string name="full_screen_system">Hide the system bars</string>
-    <string name="full_screen_complete">Hide the system bars and answer buttons</string>
-    <string name="full_screen_error_gestures">You must enable gestures to hide the answer buttons</string>
-    <string name="answer_buttons_position">Answer buttons position</string>
+    <string name="full_screen_off">Tắt</string>
+    <string name="full_screen_system">Ẩn các thanh hệ thống</string>
+    <string name="full_screen_complete">Ẩn các thanh hệ thống và các nút trả lời</string>
+    <string name="full_screen_error_gestures">Bạn phải bật cử chỉ để ẩn các nút trả lời</string>
+    <string name="answer_buttons_position">Vị trí các nút trả lời</string>
     <string-array name="answer_buttons_position_labels">
-        <item>Top</item>
-        <item>Bottom</item>
+        <item>Trên cùng</item>
+        <item>Dưới cùng</item>
     </string-array>
     <string name="gestures">Kích hoạt Cử chỉ</string>
     <string name="gestures_summ">Chỉ định các cử chỉ để hành động như trả lời và chỉnh sửa thẻ.</string>
-    <string name="gestures_allow_links">Ignore touch gestures on links</string>
-    <string name="gestures_allow_links_summary">Touch gestures will not be processed if a link/hint is pressed.</string>
-    <string name="gestures_corner_touch">9-point touch</string>
-    <string name="gestures_corner_touch_summary">Allow touch gestures in screen corners</string>
+    <string name="gestures_allow_links">Bỏ qua các thao tác chạm trên các liên kết</string>
+    <string name="gestures_allow_links_summary">Các thao tác chạm sẽ không được xử lý nếu nhấn một liên kết / gợi ý.</string>
+    <string name="gestures_corner_touch">Chạm 9 điểm</string>
+    <string name="gestures_corner_touch_summary">Cho phép cử chỉ chạm ở các góc màn hình</string>
     <string name="gestures_swipe_up">Kéo lên</string>
     <string name="gestures_swipe_down">Kéo xuống</string>
     <string name="gestures_swipe_left">Kéo trái</string>
@@ -103,21 +103,21 @@
     <string name="gestures_tap_left">Chạm bên trái</string>
     <string name="gestures_tap_right">Chạm bên phải</string>
     <string name="gestures_tap_bottom">Chạm đáy</string>
-    <string name="gestures_corner_tap_top_left">Touch top left</string>
-    <string name="gestures_corner_tap_top_center">Touch top center</string>
-    <string name="gestures_corner_tap_top_right">Touch top right</string>
-    <string name="gestures_corner_tap_middle_left">Touch middle left</string>
-    <string name="gestures_corner_tap_middle_center">Touch middle center</string>
-    <string name="gestures_corner_tap_middle_right">Touch middle right</string>
-    <string name="gestures_corner_tap_bottom_left">Touch bottom left</string>
-    <string name="gestures_corner_tap_bottom_center">Touch bottom center</string>
-    <string name="gestures_corner_tap_bottom_right">Touch bottom right</string>
-    <string name="gestures_volume_up">Volume up</string>
-    <string name="gestures_volume_down">Volume down</string>
+    <string name="gestures_corner_tap_top_left">Chạm vào trên cùng bên trái</string>
+    <string name="gestures_corner_tap_top_center">Chạm vào phần giữa trên cùng</string>
+    <string name="gestures_corner_tap_top_right">Chạm vào trên cùng bên phải</string>
+    <string name="gestures_corner_tap_middle_left">Chạm vào giữa bên trái</string>
+    <string name="gestures_corner_tap_middle_center">Chạm vào chính giữa</string>
+    <string name="gestures_corner_tap_middle_right">Chạm vào giữa bên phải</string>
+    <string name="gestures_corner_tap_bottom_left">Chạm vào dưới cùng bên trái</string>
+    <string name="gestures_corner_tap_bottom_center">Chạm vào ở giữa dưới cùng</string>
+    <string name="gestures_corner_tap_bottom_right">Chạm vào dưới cùng bên phải</string>
+    <string name="gestures_volume_up">Tăng âm lượng</string>
+    <string name="gestures_volume_down">Giảm âm lượng</string>
     <string name="more_scrolling_buttons">eReader</string>
     <string name="more_scrolling_buttons_summ">Cũng sử dung nút kanji/katakana, emoji/kao-moji để di chuyển</string>
-    <string name="card_browser_enable_external_context_menu">‘%s’ Menu</string>
-    <string name="card_browser_enable_external_context_menu_summary">Enables the ‘%s’ context menu globally</string>
+    <string name="card_browser_enable_external_context_menu">Menu ‘%s’</string>
+    <string name="card_browser_enable_external_context_menu_summary">Bật menu ngữ cảnh ‘%s’ trên toàn cầu</string>
     <string name="double_scrolling_gap">Bấm phím scrolling (chuột giữa) hai lần</string>
     <string name="double_scrolling_gap_summ">bấm hai lần chuột giữa với eReader </string>
     <string name="swipe_sensitivity">Độ nhạy của chạm vuốt</string>
@@ -128,13 +128,12 @@
     <string name="sync_account">tài khoản AnkiWeb </string>
     <string name="sync_account_summ_logged_out">Chưa đăng nhập</string>
     <string name="sync_account_summ_logged_in">%s</string>
-    <string name="automatic_sync_choice">Automatic synchronization</string>
-    <string name="automatic_sync_choice_summ">Sync automatically on app start/exit if the last sync was more than 10
-        minutes ago.</string>
-    <string name="sync_status_badge">Display synchronization status</string>
-    <string name="sync_status_badge_summ">Change the sync icon when changes can be uploaded</string>
-    <string name="day_theme">Day theme</string>
-    <string name="night_theme">Night theme</string>
+    <string name="automatic_sync_choice">Đồng bộ hóa tự động</string>
+    <string name="automatic_sync_choice_summ">Đồng bộ hóa tự động khi khởi động / thoát ứng dụng nếu lần đồng bộ hóa cuối cùng nhiều hơn 10         phút trước.</string>
+    <string name="sync_status_badge">Hiển thị trạng thái đồng bộ hóa</string>
+    <string name="sync_status_badge_summ">Thay đổi biểu tượng đồng bộ hóa khi các thay đổi có thể được tải lên</string>
+    <string name="day_theme">Chủ đề ban ngày</string>
+    <string name="night_theme">Chủ đề ban đêm</string>
     <string name="default_font">Font mặc định</string>
     <string name="override_font">Tính ứng dụng phông chữ mặc định</string>
     <string name="language">Ngôn ngữ</string>
@@ -147,87 +146,88 @@
     <string name="notification_minimum_cards_due_vibrate">Báo rung</string>
     <string name="notification_minimum_cards_due_blink">Nhấp nháy ánh sáng</string>
     <string name="timeout_answer_text">Tự động hiển thị trả lời</string>
-    <string name="timeout_answer_summ">Show answer automatically without user input. Delay includes time for automatically played audio files.</string>
+    <string name="timeout_answer_summ">Hiển thị câu trả lời tự động mà không cần người dùng nhập. Độ trễ bao gồm thời gian cho các tệp âm thanh được phát tự động.</string>
     <string name="timeout_answer_seconds">Thời gian để hiển thị câu trả lời</string>
     <string name="timeout_answer_seconds_summ" comment="The time to wait (in seconds) in the reviewer before automatically showing the next question or answer">XXX s</string>
     <string name="timeout_question_seconds">Thời gian để hiển thị câu hỏi tiếp theo</string>
     <string name="select_locale_title">Chọn ngôn ngữ</string>
     <string name="safe_display">Chế độ an toàn màn hình</string>
-    <string name="safe_display_summ">Disable all animations and use safer method for drawing cards. E-ink devices may require this.</string>
-    <string name="disable_extended_text_ui">Disable Single-Field Edit Mode</string>
+    <string name="safe_display_summ">Tắt tất cả hoạt ảnh và sử dụng phương pháp an toàn hơn để vẽ thẻ. Các thiết bị E-ink có thể yêu cầu điều này.</string>
+    <string name="disable_extended_text_ui">Tắt chế độ chỉnh sửa trường đơn</string>
     <!--See: multimedia_editor_popup_cloze. We can\'t use format strings as this is auto-generated-->
-    <string name="disable_extended_text_ui_summ">Allows \'Cloze Deletion\' context menu when in landscape mode.</string>
+    <string name="disable_extended_text_ui_summ">Cho phép menu ngữ cảnh \'Đánh dấu Cloze\' khi ở chế độ ngang.</string>
     <string name="vertical_centering">Chọn Center align</string>
     <string name="vertical_centering_summ">Thiết lập nội dung chính của thẻ theo chiều dọc</string>
     <string name="pref_backup_max">Tối đa số lượng bản sao lưu</string>
-    <string name="show_estimates">Show button time</string>
-    <string name="show_estimates_summ">Show next review time on answer buttons</string>
-    <string name="show_top_bar">Show Top Bar</string>
-    <string name="show_top_bar_summ">Show card counts, flag and mark in top bar</string>
-    <string name="show_progress">Show remaining</string>
-    <string name="show_progress_summ">Show remaining card count</string>
-    <string name="show_eta">Show ETA</string>
-    <string name="show_eta_summ">Show remaining time</string>
-    <string name="use_current">Deck for new cards</string>
-    <string name="new_spread">New card position</string>
-    <string name="learn_cutoff">Learn ahead limit</string>
-    <string name="time_limit">Timebox time limit</string>
-    <string name="time_limit_summ">XXX min</string>
-    <string name="day_offset">Start of next day</string>
-    <string name="day_offset_summ">XXX hours past midnight</string>
-    <string name="sched_ver">Experimental V2 scheduler</string>
-    <string name="sched_ver_summ">Enable the experimental scheduler. Forces changes in one direction on next sync</string>
-    <string name="sched_ver_toggle_title">Confirm</string>
-    <string name="sched_ver_2to1">This will reset any cards in learning, clear filtered decks, and change the scheduler version. Proceed?</string>
-    <string name="sched_ver_1to2">The experimental scheduler could cause incorrect scheduling. Please ensure you have read the documentation first. Proceed?</string>
-    <string name="pref_keep_screen_on">Keep screen on</string>
-    <string name="pref_keep_screen_on_summ">Disable screen timeout</string>
-    <string name="convert_fen_text">Chess notation support</string>
-    <string name="convert_fen_text_summ">Draw chessboard from Forsyth–Edwards Notation. The notation must be enclosed in [fen][/fen] tags.</string>
-    <string name="enable_api_title">Enable AnkiDroid API</string>
-    <string name="enable_api_summary">Let other apps connect to AnkiDroid and read / write data without your intervention</string>
-    <string name="custom_buttons">App bar buttons</string>
-    <string name="custom_buttons_summary">Customize which actions appear in the app bar</string>
-    <string name="custom_buttons_setting_always_show">Always show</string>
-    <string name="custom_buttons_setting_if_room">Show if room</string>
-    <string name="custom_buttons_setting_menu_only">Menu only</string>
-    <string name="reset_custom_buttons">Reset to default</string>
-    <string name="thirdparty_apps_title">Third-party API apps</string>
-    <string name="thirdparty_apps_summary">See a list of applications which make use of the AnkiDroid API such as dictionaries, utilities.</string>
-    <string name="html_javascript_debugging">HTML / Javascript Debugging</string>
-    <string name="html_javascript_debugging_summ">Enable remote WebView connections, and save card HTML to AnkiDroid directory</string>
+    <string name="show_estimates">Hiển thị nút thời gian</string>
+    <string name="show_estimates_summ">Hiển thị thời gian đánh giá tiếp theo trên các nút trả lời</string>
+    <string name="show_top_bar">Hiển thị thanh trên cùng</string>
+    <string name="show_top_bar_summ">Hiển thị số lượng thẻ, gắn cờ và đánh dấu trên thanh trên cùng</string>
+    <string name="show_progress">Hiển thị còn lại</string>
+    <string name="show_progress_summ">Hiển thị số thẻ còn lại</string>
+    <string name="show_eta">Hiển thị ETA</string>
+    <string name="show_eta_summ">Hiển thị thời gian còn lại</string>
+    <string name="use_current">Bộ thẻ cho thẻ mới</string>
+    <string name="new_spread">Vị trí thẻ mới</string>
+    <string name="learn_cutoff">Tìm hiểu trước giới hạn</string>
+    <string name="time_limit">Giới hạn thời gian của hộp thời gian</string>
+    <string name="time_limit_summ">XXX phút</string>
+    <string name="new_timezone">New timezone handling</string>
+    <string name="day_offset">Bắt đầu ngày hôm sau</string>
+    <string name="day_offset_summ">XXX giờ quá nửa đêm</string>
+    <string name="sched_ver">Trình lập lịch V2 thử nghiệm</string>
+    <string name="sched_ver_summ">Bật công cụ lập lịch thử nghiệm. Buộc các thay đổi theo một hướng trong lần đồng bộ hóa tiếp theo</string>
+    <string name="sched_ver_toggle_title">Xác nhận</string>
+    <string name="sched_ver_2to1">Điều này sẽ đặt lại bất kỳ thẻ nào trong học tập, xóa các bộ thẻ được lọc và thay đổi phiên bản của bộ lập lịch. Tiếp tục?</string>
+    <string name="sched_ver_1to2">Trình lập lịch thử nghiệm có thể gây ra lập lịch không chính xác. Hãy đảm bảo rằng bạn đã đọc tài liệu trước. Tiếp tục?</string>
+    <string name="pref_keep_screen_on">Luôn bật màn hình</string>
+    <string name="pref_keep_screen_on_summ">Tắt thời gian chờ của màn hình</string>
+    <string name="convert_fen_text">Hỗ trợ ký hiệu cờ vua</string>
+    <string name="convert_fen_text_summ">Vẽ bàn cờ từ Forsyth – Edwards Notation. Ký hiệu phải được đặt trong thẻ [fen][/fen].</string>
+    <string name="enable_api_title">Bật AnkiDroid API</string>
+    <string name="enable_api_summary">Cho phép các ứng dụng khác kết nối với AnkiDroid và đọc / ghi dữ liệu mà không cần sự can thiệp của bạn</string>
+    <string name="custom_buttons">Các nút trên thanh ứng dụng</string>
+    <string name="custom_buttons_summary">Tùy chỉnh những hành động nào xuất hiện trên thanh ứng dụng</string>
+    <string name="custom_buttons_setting_always_show">Luôn luôn hiển thị</string>
+    <string name="custom_buttons_setting_if_room">Hiển thị nếu phòng</string>
+    <string name="custom_buttons_setting_menu_only">Chỉ Menu</string>
+    <string name="reset_custom_buttons">Đặt lại về mặc định</string>
+    <string name="thirdparty_apps_title">Ứng dụng API của bên thứ ba</string>
+    <string name="thirdparty_apps_summary">Xem danh sách các ứng dụng sử dụng AnkiDroid API như từ điển, tiện ích.</string>
+    <string name="html_javascript_debugging">Gỡ lỗi HTML / Javascript</string>
+    <string name="html_javascript_debugging_summ">Bật kết nối WebView từ xa và lưu HTML thẻ vào thư mục AnkiDroid</string>
     <!-- Advanced statistics settings -->
-    <string name="advanced_statistics_title">Advanced statistics</string>
-    <string name="enable_advanced_statistics_title">Enable advanced statistics</string>
-    <string name="enable_advanced_statistics_summ">Display forecast statistics based on a computation or simulation of future reviews (enabled) or on the future reviews already scheduled (disabled).</string>
-    <string name="advanced_forecast_stats_compute_n_days_title">Compute first n days, simulate remainder</string>
-    <string name="advanced_forecast_stats_compute_precision_title">Precision of computation</string>
-    <string name="advanced_forecast_stats_mc_n_iterations_title">Number of iterations of the simulation</string>
+    <string name="advanced_statistics_title">Thống kê nâng cao</string>
+    <string name="enable_advanced_statistics_title">Bật thống kê nâng cao</string>
+    <string name="enable_advanced_statistics_summ">Hiển thị thống kê dự báo dựa trên tính toán hoặc mô phỏng các bài đánh giá trong tương lai (được bật) hoặc trên các bài đánh giá trong tương lai đã được lên lịch (bị vô hiệu hóa).</string>
+    <string name="advanced_forecast_stats_compute_n_days_title">Tính toán n ngày đầu tiên, mô phỏng phần còn lại</string>
+    <string name="advanced_forecast_stats_compute_precision_title">Độ chính xác của tính toán</string>
+    <string name="advanced_forecast_stats_mc_n_iterations_title">Số lần lặp lại mô phỏng</string>
     <!-- Custom sync server settings -->
-    <string name="custom_sync_server_title">Custom sync server</string>
-    <string name="custom_sync_server_enable_title">Use custom sync server</string>
-    <string name="custom_sync_server_enable_summary">If you don\'t want to use the proprietary AnkiWeb service you can specify an alternative server here</string>
-    <string name="custom_sync_server_base_url_title">Sync url</string>
-    <string name="custom_sync_server_base_url_invalid">Sync url invalid</string>
-    <string name="custom_sync_server_media_url_title">Media sync url</string>
-    <string name="custom_sync_server_media_url_invalid">Media sync url invalid</string>
+    <string name="custom_sync_server_title">Máy chủ đồng bộ hóa tùy chỉnh</string>
+    <string name="custom_sync_server_enable_title">Sử dụng máy chủ đồng bộ hóa tùy chỉnh</string>
+    <string name="custom_sync_server_enable_summary">Nếu bạn không muốn sử dụng dịch vụ AnkiWeb độc quyền, bạn có thể chỉ định một máy chủ thay thế tại đây</string>
+    <string name="custom_sync_server_base_url_title">Đồng bộ hóa url</string>
+    <string name="custom_sync_server_base_url_invalid">Đồng bộ hóa url không hợp lệ</string>
+    <string name="custom_sync_server_media_url_title">Url đồng bộ hóa phương tiện</string>
+    <string name="custom_sync_server_media_url_invalid">Url đồng bộ hóa phương tiện không hợp lệ</string>
     <!-- studyoptions -->
-    <string name="deck_conf_group_summ">Changes to deck group options will affect multiple decks. If you wish to change only the current deck, please add a new options group first</string>
-    <string name="studyoptions_limit_select_tags">Select tags</string>
+    <string name="deck_conf_group_summ">Các thay đổi đối với tùy chọn nhóm bộ thẻ sẽ ảnh hưởng đến nhiều bộ thẻ. Nếu bạn chỉ muốn thay đổi bộ thẻ hiện tại, trước tiên hãy thêm một nhóm tùy chọn mới</string>
+    <string name="studyoptions_limit_select_tags">Chọn thẻ</string>
     <!-- Deck configurations -->
-    <string name="deck_conf_deck_description">Deck description (affects current deck only)</string>
-    <string name="deck_conf_group">Options group</string>
+    <string name="deck_conf_deck_description">Mô tả bộ thẻ(chỉ ảnh hưởng đến bộ thẻ hiện tại)</string>
+    <string name="deck_conf_group">Nhóm tùy chọn</string>
     <plurals name="deck_conf_group_summ">
-        <item quantity="other">%1$s\n%2$d decks use this group</item>
+        <item quantity="other">Bộ thẻ %1$s%1$s\n%2$d%2$d sử dụng nhóm này</item>
     </plurals>
-    <string name="deck_conf_new_cards">New cards</string>
-    <string name="deck_conf_rev_cards" comment="Name of the deck options submenu for configuring reviews of due cards.">Reviews</string>
-    <string name="deck_conf_lps_cards" comment="Label of the submenu stating how lapses cards are treated.">Lapses</string>
-    <string name="deck_conf_general">General</string>
-    <string name="deck_conf_reminders">Reminders</string>
-    <string name="deck_conf_steps">Steps (in minutes)</string>
-    <string name="deck_conf_order">Order</string>
-    <string name="deck_conf_new_cards_day">New cards/day</string>
+    <string name="deck_conf_new_cards">Thẻ mới</string>
+    <string name="deck_conf_rev_cards" comment="Name of the deck options submenu for configuring reviews of due cards.">Nhận xét</string>
+    <string name="deck_conf_lps_cards" comment="Label of the submenu stating how lapses cards are treated.">Vòng lặp</string>
+    <string name="deck_conf_general">Chung</string>
+    <string name="deck_conf_reminders">Nhắc nhở</string>
+    <string name="deck_conf_steps">Các bước (tính bằng phút)</string>
+    <string name="deck_conf_order">Thứ tự</string>
+    <string name="deck_conf_new_cards_day">Thẻ mới / ngày</string>
     <string name="deck_conf_graduating_ivl">Khoảng thời gian hoàn thiện</string>
     <string name="deck_conf_days">XXX ngày</string>
     <string name="deck_conf_easy_ivl">Khoảng thời gian dễ dàng</string>
@@ -237,10 +237,10 @@
     <string name="deck_conf_new_bury_summ">Các thẻ mới liên quan được giấu cho đến ngày hôm sau</string>
     <string name="deck_conf_rev_bury">Giấu các liên hệ ôn tập</string>
     <string name="deck_conf_rev_bury_summ">Các liên hệ ôn tập được giấu cho đến ngày hôm sau</string>
-    <string name="deck_conf_use_general_timeout_settings">Use general settings</string>
-    <string name="deck_conf_use_general_timeout_settings_summ">Use general \'Automatic display answer\' settings instead of using the settings for this group.</string>
+    <string name="deck_conf_use_general_timeout_settings">Sử dụng cài đặt chung</string>
+    <string name="deck_conf_use_general_timeout_settings_summ">Sử dụng cài đặt \'Câu trả lời hiển thị tự động\' chung thay vì sử dụng cài đặt cho nhóm này.</string>
     <string name="deck_conf_easy_bonus">Điểm thưởng dễ dàng </string>
-    <string name="deck_conf_hard_factor">Hard interval</string>
+    <string name="deck_conf_hard_factor">Khoảng khó</string>
     <string name="deck_conf_ivl_fct">Khoảng thời gian chỉnh sửa</string>
     <string name="deck_conf_max_ivl">Khoảng thời gian tối đa</string>
     <string name="deck_conf_new_lps_ivl">Khoảng thời gian mới</string>
@@ -255,7 +255,7 @@
     <string name="deck_conf_replayq">Phát lại câu hỏi</string>
     <string name="deck_conf_replayq_summ">Khi trả lời được hiển thị, phát lại cả hai : câu hỏi và trả lời âm thanh</string>
     <string name="deck_conf_manage">Quản lý Nhóm</string>
-    <string name="deck_conf_manage_summ">Add and change options groups</string>
+    <string name="deck_conf_manage_summ">Thêm và thay đổi các nhóm tùy chọn</string>
     <string name="deck_conf_current_group">Nhóm hiện tại</string>
     <string name="deck_conf_rename" comment="Menu entry to rename a deck">Đổi Tên</string>
     <string name="deck_conf_reset">Phục hồi mặc định</string>
@@ -265,7 +265,7 @@
     <string name="deck_conf_remove_message">Loại bỏ hiện tại tùy chọn nhóm?</string>
     <string name="deck_conf_set_subdecks">Thiết lập cho tất cả chủ đề phụ</string>
     <plurals name="deck_conf_set_subdecks_summ">
-        <item quantity="other">%s subdecks will use this group</item>
+        <item quantity="other">Bộ thẻ phụ %s sẽ sử dụng nhóm này</item>
     </plurals>
     <string name="deck_conf_set_subdecks_message">Thiết lập hiện tại tùy chọn nhóm cho tất cả chủ đề phụ này?</string>
     <string name="pref_browser_editor_font">Trình duyệt và trình soạn thảo font</string>
@@ -275,16 +275,16 @@
     <string name="deck_conf_cram_order">thẻ được lựa chọn bởi</string>
     <string name="deck_conf_cram_reschedule" comment="Title of the box labelled by deck_conf_cram_reschedule_summ">Lên lịch lại</string>
     <string name="deck_conf_cram_reschedule_summ">Lên lịch lại thẻ dựa trên câu trả lời của tôi trong chủ đề này</string>
-    <string name="deck_conf_cram_steps">Custom steps (in minutes)</string>
-    <string name="deck_conf_cram_steps_summ">Define custom steps</string>
-    <string name="deck_conf_reminders_enabled">Enable reminder notifications for decks in this deck group</string>
-    <string name="deck_conf_reminders_time">Remind at</string>
+    <string name="deck_conf_cram_steps">Các bước tùy chỉnh (tính bằng phút)</string>
+    <string name="deck_conf_cram_steps_summ">Xác định các bước tùy chỉnh</string>
+    <string name="deck_conf_reminders_enabled">Bật thông báo nhắc nhở cho các bộ thẻ trong nhóm bộ thẻ này</string>
+    <string name="deck_conf_reminders_time">Nhắc nhở lúc</string>
     <!-- analytics options -->
-    <string name="analytics_dialog_title">Help make AnkiDroid better!</string>
-    <string name="analytics_title">Share feature usage</string>
-    <string name="analytics_summ">You can contribute to AnkiDroid by helping the development team see which features people use</string>
-    <string name="note_editor_replace_newlines">Replace newlines with HTML</string>
-    <string name="note_editor_replace_newlines_summ">In the Note Editor, convert any instances of &lt;br&gt; to newlines when editing a card.</string>
-    <string name="no_code_formatting">Simple typed answer formatting</string>
-    <string name="no_code_formatting_summ">Fixes ‘􏿾’ appearing in typed answer results</string>
+    <string name="analytics_dialog_title">Giúp cải thiện AnkiDroid!</string>
+    <string name="analytics_title">Chia sẻ việc sử dụng tính năng</string>
+    <string name="analytics_summ">Bạn có thể đóng góp cho AnkiDroid bằng cách giúp nhóm phát triển xem mọi người sử dụng những tính năng nào</string>
+    <string name="note_editor_replace_newlines">Thay thế dòng mới bằng HTML</string>
+    <string name="note_editor_replace_newlines_summ">Trong Trình chỉnh sửa ghi chú, chuyển đổi thẻ &lt;br&gt; thành dòng mới khi chỉnh sửa thẻ.</string>
+    <string name="no_code_formatting">Định dạng câu trả lời đã nhập đơn giản</string>
+    <string name="no_code_formatting_summ">Sửa lỗi ‘􏿾’ xuất hiện trong kết quả câu trả lời đã nhập</string>
 </resources>

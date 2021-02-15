@@ -5,15 +5,13 @@ import android.util.Pair;
 import com.ichi2.libanki.Card;
 import com.ichi2.libanki.Collection;
 
-import androidx.annotation.NonNull;
-import timber.log.Timber;
-
-import org.junit.Assert;
-
 import java.util.Arrays;
 import java.util.List;
 
+import androidx.annotation.NonNull;
+
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.fail;
 
 /** Assertion methods that aren't currently supported by our dependencies */
 public class AnkiAssert {
@@ -25,6 +23,27 @@ public class AnkiAssert {
         } catch (Exception e) {
             throw new AssertionError("method should not throw", e);
         }
+    }
+
+    @SuppressWarnings("unchecked")
+    public static <T extends Throwable> T assertThrows(Runnable r, Class<T> clazz) {
+        try {
+            r.run();
+            fail("Expected exception: " + clazz.getSimpleName() + ". No exception thrown.");
+        } catch (Throwable t) {
+            if (t.getClass().equals(clazz)) {
+                return (T) t;
+            }
+
+            if (t.getMessage() != null && t.getMessage().startsWith("Expected exception: ")) {
+                // We need to add a "throws" if we rethrow t, so fail with the same code.
+                fail("Expected exception: " + clazz.getSimpleName() + ". No exception thrown.");
+            }
+
+            // We don't want to assert here as we want to include the exception.
+            throw new AssertionError("Expected '" + clazz.getSimpleName() + "' got '" + t.getClass().getSimpleName() + "'", t);
+        }
+        throw new IllegalStateException("unreachable");
     }
 
     public static <T> void assertEqualsArrayList(T[] ar, List<T> l) {

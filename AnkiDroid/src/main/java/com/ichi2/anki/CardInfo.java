@@ -38,6 +38,7 @@ import com.ichi2.libanki.Models;
 import com.ichi2.libanki.Utils;
 import com.ichi2.ui.FixedTextView;
 import com.ichi2.utils.FunctionalInterfaces;
+import com.ichi2.utils.LanguageUtil;
 import com.ichi2.utils.UiUtil;
 
 import java.text.DateFormat;
@@ -191,13 +192,8 @@ public class CardInfo extends AnkiActivity {
         return String.format(getLocale(), formatSpecifier, number);
     }
 
-    @SuppressWarnings("deprecation")
     private Locale getLocale() {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-            return getResources().getConfiguration().getLocales().get(0);
-        } else {
-            return getResources().getConfiguration().locale;
-        }
+        return LanguageUtil.getLocaleCompat(getResources());
     }
 
 
@@ -388,7 +384,7 @@ public class CardInfo extends AnkiActivity {
         protected static String getCardType(Card c, Model model) {
             try {
                 int ord = c.getOrd();
-                if (Models.isCloze(c.model())) {
+                if (c.model().isCloze()) {
                     ord = 0;
                 }
                 return model.getJSONArray("tmpls").getJSONObject(ord).getString("name");

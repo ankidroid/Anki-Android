@@ -55,7 +55,7 @@
     <string name="card_browser_show_marked">Filtrer les notes marquées</string>
     <string name="card_browser_show_suspended">Filtrer les cartes suspendues</string>
     <string name="card_browser_search_by_tag">Filtrer par étiquette</string>
-    <string name="card_browser_search_by_flag">Filtrer par marqueur</string>
+    <string name="card_browser_search_by_flag">Filtrer par balise</string>
     <string name="card_browser_list_my_searches">Mes recherches</string>
     <string name="card_browser_list_my_searches_save">Enregistrer la recherche</string>
     <string name="card_browser_list_my_searches_title">Choisissez une recherche enregistrée</string>

@@ -16,12 +16,18 @@
 
 package com.ichi2.testutils.libanki;
 
+import com.ichi2.anki.exception.FilteredAncestor;
 import com.ichi2.libanki.Collection;
 import com.ichi2.libanki.DeckConfig;
 
 public class FilteredDeckUtil {
     public static long createFilteredDeck(Collection col, String name, String search) {
-        long filteredDid = col.getDecks().newDyn(name);
+        long filteredDid = 0;
+        try {
+            filteredDid = col.getDecks().newDyn(name);
+        } catch (FilteredAncestor filteredAncestor) {
+            throw new RuntimeException(filteredAncestor);
+        }
 
         DeckConfig conf = col.getDecks().confForDid(filteredDid);
 

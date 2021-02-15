@@ -172,6 +172,7 @@
     <string name="learn_cutoff">Учене над лимита</string>
     <string name="time_limit">Ограничение на времето</string>
     <string name="time_limit_summ">XXX мин</string>
+    <string name="new_timezone">New timezone handling</string>
     <string name="day_offset">Началото от следващия ден</string>
     <string name="day_offset_summ">XXX часа след полунощ</string>
     <string name="sched_ver">Experimental V2 scheduler</string>

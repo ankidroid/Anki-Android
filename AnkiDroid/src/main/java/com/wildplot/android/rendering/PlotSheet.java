@@ -349,15 +349,13 @@ public class PlotSheet implements Drawable {
                 }
                 if (drawable.isOnFrame()) {
                     if (drawable.isClusterable()) {
-                        if (onFrameContainer.isCritical() == drawable.isCritical()) {
-                            onFrameContainer.addDrawable(drawable);
-                        } else {
+                        if (onFrameContainer.isCritical() != drawable.isCritical()) {
                             if (onFrameContainer.getSize() > 0) {
                                 onFrameDrawables.add(onFrameContainer);
                             }
                             onFrameContainer = new DrawableContainer(true, drawable.isCritical());
-                            onFrameContainer.addDrawable(drawable);
                         }
+                        onFrameContainer.addDrawable(drawable);
                     } else {
                         if (onFrameContainer.getSize() > 0) {
                             onFrameDrawables.add(onFrameContainer);
@@ -368,15 +366,13 @@ public class PlotSheet implements Drawable {
                     }
                 } else {
                     if (drawable.isClusterable()) {
-                        if (offFrameContainer.isCritical() == drawable.isCritical()) {
-                            offFrameContainer.addDrawable(drawable);
-                        } else {
+                        if (offFrameContainer.isCritical() != drawable.isCritical()) {
                             if (offFrameContainer.getSize() > 0) {
                                 offFrameDrawables.add(offFrameContainer);
                             }
                             offFrameContainer = new DrawableContainer(false, drawable.isCritical());
-                            offFrameContainer.addDrawable(drawable);
                         }
+                        offFrameContainer.addDrawable(drawable);
                     } else {
                         if (offFrameContainer.getSize() > 0) {
                             offFrameDrawables.add(offFrameContainer);

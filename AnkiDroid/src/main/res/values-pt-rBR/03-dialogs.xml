@@ -213,14 +213,14 @@
     <string name="help_title_using_ankidroid">Usando o AnkiDroid</string>
     <string name="help_item_ankidroid_manual">Manual do AnkiDroid</string>
     <string name="help_item_anki_manual">Manual do Anki</string>
-    <string name="help_item_ankidroid_faq">AnkiDroid FAQ</string>
+    <string name="help_item_ankidroid_faq">FAQ do AnkiDroid</string>
     <string name="help_title_get_help">Obter Ajuda</string>
-    <string name="help_item_mailing_list">Mailing List</string>
+    <string name="help_item_mailing_list">Lista de Emails</string>
     <string name="help_item_reddit">Reddit</string>
     <string name="help_item_report_bug">Reportar Bug</string>
     <string name="help_title_support_ankidroid">Apoie o AnkiDroid</string>
     <string name="help_item_support_opencollective_donate">Doação</string>
-    <string name="help_item_support_develop_ankidroid">Develop</string>
+    <string name="help_item_support_develop_ankidroid">Desenvolvedor</string>
     <string name="help_item_support_rate_ankidroid">Avaliar</string>
     <string name="help_item_support_other_ankidroid">Outros</string>
     <string name="help_title_community">Comunidade</string>
