@@ -44,19 +44,19 @@
         <item>Chỉ có thẻ</item>
     </string-array>
     <string-array name="new_order_labels">
-        <item>New cards in random order</item>
-        <item>New cards in order added</item>
+        <item>Các thẻ mới theo thứ tự ngẫu nhiên</item>
+        <item>Thẻ mới theo thứ tự đã được thêm vào</item>
     </string-array>
     <string-array name="cram_deck_conf_order_labels">
-        <item>Oldest seen first</item>
+        <item>Cũ nhất nhìn thấy đầu tiên</item>
         <item>Ngẫu nhiên</item>
-        <item>Increasing intervals</item>
-        <item>Decreasing intervals</item>
-        <item>Most lapsed</item>
-        <item>Order added</item>
-        <item>Order due</item>
-        <item>Latest added first</item>
-        <item>Relative overdueness</item>
+        <item>Tăng khoảng thời gian</item>
+        <item>Giảm khoảng thời gian</item>
+        <item>Vòng lặp nhiều nhất</item>
+        <item>Thứ tự đã thêm</item>
+        <item>Thứ tự đến hạn</item>
+        <item>Mới nhất được thêm trước</item>
+        <item>Quá hạn tương đối</item>
     </string-array>
     <string-array name="add_to_cur_labels">
         <item>Sử dụng xấp thẻ hiện tại</item>
@@ -68,7 +68,7 @@
         <item>Thẻ mới trước khi đánh giá</item>
     </string-array>
     <string-array name="override_font_labels">
-        <item>When no font specified on flashcards</item>
+        <item>Khi không có phông chữ nào được chỉ định trên thẻ flashcard</item>
         <item>Luôn cho phép</item>
     </string-array>
     <string-array name="day_theme_labels">
@@ -80,38 +80,38 @@
         <item>Tối</item>
     </string-array>
     <string-array name="html_size_code_labels">
-        <item>xx-small</item>
-        <item>x-small</item>
-        <item>small</item>
-        <item>medium</item>
-        <item>large</item>
-        <item>x-large</item>
-        <item>xx-large</item>
+        <item>cực kỳ nhỏ</item>
+        <item>rất nhỏ</item>
+        <item>nhỏ</item>
+        <item>Trung bình</item>
+        <item>lớn</item>
+        <item>lớn hon</item>
+        <item>cực kỳ lớn</item>
     </string-array>
     <!--
     #7794 - it\'s better to use @string references in non-translated arrays as this handles
     changes in the array ordering better
      -->
     <string name="gesture_no_action">Không làm gì</string>
-    <string name="gesture_answer_1">Answer button 1</string>
-    <string name="gesture_answer_2">Answer button 2</string>
-    <string name="gesture_answer_3">Answer button 3</string>
-    <string name="gesture_answer_4">Answer button 4</string>
-    <string name="gesture_answer_green">Answer recommended (green)</string>
-    <string name="gesture_answer_better_recommended">Answer better than recommended</string>
-    <string name="gesture_tag_note">Tag note</string>
-    <string name="gesture_lookup">Lookup expression</string>
-    <string name="gesture_play">Play media</string>
-    <string name="gesture_abort_learning">Abort learning</string>
-    <string name="gesture_flag_red">Toggle Red Flag</string>
-    <string name="gesture_flag_orange">Toggle Orange Flag</string>
-    <string name="gesture_flag_green">Toggle Green Flag</string>
-    <string name="gesture_flag_blue">Toggle Blue Flag</string>
-    <string name="gesture_flag_remove">Remove Flag</string>
-    <string name="gesture_page_up">Page Up</string>
-    <string name="gesture_page_down">Page Down</string>
-    <string name="gesture_abort_sync">Abort Learning and Sync</string>
-    <string name="gesture_toggle_whiteboard">Toggle Whiteboard</string>
-    <string name="record_voice">Record Voice</string>
-    <string name="replay_voice">Replay Voice</string>
+    <string name="gesture_answer_1">Nút trả lời 1</string>
+    <string name="gesture_answer_2">Nút trả lời 2</string>
+    <string name="gesture_answer_3">Nút trả lời 3</string>
+    <string name="gesture_answer_4">Nút trả lời 4</string>
+    <string name="gesture_answer_green">Câu trả lời được đề xuất (màu xanh lá cây)</string>
+    <string name="gesture_answer_better_recommended">Trả lời tốt hơn đề xuất</string>
+    <string name="gesture_tag_note">Ghi chú thẻ</string>
+    <string name="gesture_lookup">Tra cứu biểu thức</string>
+    <string name="gesture_play">Phát file đa phương tiện</string>
+    <string name="gesture_abort_learning">Bỏ học</string>
+    <string name="gesture_flag_red">Chuyển đổi cờ đỏ</string>
+    <string name="gesture_flag_orange">Chuyển đổi cờ màu cam</string>
+    <string name="gesture_flag_green">Chuyển đổi cờ xanh</string>
+    <string name="gesture_flag_blue">Chuyển đổi cờ xanh dương</string>
+    <string name="gesture_flag_remove">Xoá cờ</string>
+    <string name="gesture_page_up">Trang lên</string>
+    <string name="gesture_page_down">Trang dưới</string>
+    <string name="gesture_abort_sync">Bỏ học và đồng bộ hóa</string>
+    <string name="gesture_toggle_whiteboard">Chuyển đổi Bảng trắng</string>
+    <string name="record_voice">Ghi âm giọng nói</string>
+    <string name="replay_voice">Phát lại giọng nói</string>
 </resources>

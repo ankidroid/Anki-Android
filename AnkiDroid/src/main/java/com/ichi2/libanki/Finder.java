@@ -670,10 +670,10 @@ public class Finder {
             ids = dids(mCol.getDecks().selected());
         } else if (!val.contains("*")) {
             // single deck
-            ids = dids(mCol.getDecks().id(val, false));
+            ids = dids(mCol.getDecks().id_dont_create(val));
         } else {
             // wildcard
-            ids = dids(mCol.getDecks().id(val, false));
+            ids = dids(mCol.getDecks().id_dont_create(val));
             if (ids == null) {
                 ids = new ArrayList<>();
                 val = val.replace("*", ".*");
@@ -713,13 +713,13 @@ public class Finder {
         }
         // search for template names
         List<String> lims = new ArrayList<>();
-        for (JSONObject m : mCol.getModels().all()) {
+        for (Model m : mCol.getModels().all()) {
             JSONArray tmpls = m.getJSONArray("tmpls");
             for (JSONObject t: tmpls.jsonObjectIterable()) {
                 String templateName = t.getString("name");
                 Normalizer.normalize(templateName, Normalizer.Form.NFC);
                 if (templateName.equalsIgnoreCase(val)) {
-                    if (m.getInt("type") == Consts.MODEL_CLOZE) {
+                    if (m.isCloze()) {
                         // if the user has asked for a cloze card, we want
                         // to give all ordinals, so we just limit to the
                         // model instead

@@ -35,6 +35,7 @@ import androidx.fragment.app.testing.FragmentScenario;
 import androidx.lifecycle.Lifecycle;
 import androidx.test.ext.junit.runners.AndroidJUnit4;
 
+import static com.ichi2.libanki.Consts.DECK_DYN;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
 import static org.hamcrest.core.IsNull.notNullValue;
@@ -59,7 +60,7 @@ public class CustomStudyDialogTest extends RobolectricTest {
 
 
         Deck customStudy = getCol().getDecks().current();
-        assertThat("Custom Study should be dynamic", customStudy.getInt("dyn") == 1);
+        assertThat("Custom Study should be dynamic", customStudy.isDyn());
         assertThat("could not find deck: Custom study session", customStudy, notNullValue());
         customStudy.remove("id");
         customStudy.remove("mod");

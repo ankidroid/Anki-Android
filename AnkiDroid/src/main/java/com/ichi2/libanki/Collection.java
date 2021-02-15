@@ -23,7 +23,6 @@ import android.content.Context;
 import android.content.res.Resources;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabaseLockedException;
-import android.os.Build;
 import android.text.TextUtils;
 import android.util.Pair;
 
@@ -34,19 +33,23 @@ import com.ichi2.anki.analytics.UsageAnalytics;
 import com.ichi2.anki.exception.ConfirmModSchemaException;
 import com.ichi2.async.CancelListener;
 import com.ichi2.async.CollectionTask;
+import com.ichi2.libanki.backend.DroidBackend;
 import com.ichi2.async.ProgressSender;
 import com.ichi2.async.TaskManager;
+import com.ichi2.libanki.backend.exception.BackendNotSupportedException;
 import com.ichi2.libanki.exception.NoSuchDeckException;
 import com.ichi2.libanki.exception.UnknownDatabaseVersionException;
 import com.ichi2.libanki.hooks.ChessFilter;
 import com.ichi2.libanki.sched.AbstractSched;
 import com.ichi2.libanki.sched.Sched;
 import com.ichi2.libanki.sched.SchedV2;
-import com.ichi2.libanki.template.Template;
+import com.ichi2.libanki.template.ParsedNode;
+import com.ichi2.libanki.template.TemplateError;
 import com.ichi2.libanki.utils.Time;
 import com.ichi2.upgrade.Upgrade;
 import com.ichi2.utils.DatabaseChangeDecorator;
 import com.ichi2.utils.FunctionalInterfaces;
+import com.ichi2.utils.LanguageUtil;
 import com.ichi2.utils.VersionUtils;
 
 import com.ichi2.utils.JSONArray;
@@ -84,6 +87,7 @@ import timber.log.Timber;
 
 import static com.ichi2.async.CancelListener.isCancelled;
 import static com.ichi2.libanki.Collection.DismissType.REVIEW;
+import static com.ichi2.libanki.Consts.DECK_DYN;
 
 // Anki maintains a cache of used tags so it can quickly present a list of tags
 // for autocomplete and in the browser. For efficiency, deletions are not
@@ -125,6 +129,7 @@ public class Collection {
     private LinkedBlockingDeque<Undoable> mUndo;
 
     private final String mPath;
+    private final DroidBackend mDroidBackend;
     private boolean mDebugLog;
     private PrintWriter mLogHnd;
 
@@ -173,13 +178,8 @@ public class Collection {
             this.mUndoNameId = undoNameId;
         }
 
-        @SuppressWarnings("deprecation")
         private Locale getLocale(Resources resources) {
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-                return resources.getConfiguration().getLocales().get(0);
-            } else {
-                return resources.getConfiguration().locale;
-            }
+            return LanguageUtil.getLocaleCompat(resources);
         }
         public String getString(Resources res) {
             return res.getString(mUndoNameId).toLowerCase(getLocale(res));
@@ -189,12 +189,13 @@ public class Collection {
     private static final int UNDO_SIZE_MAX = 20;
 
     @VisibleForTesting
-    public Collection(Context context, DB db, String path, boolean server, boolean log, @NonNull Time time) {
+    public Collection(Context context, DB db, String path, boolean server, boolean log, @NonNull Time time, @NonNull DroidBackend droidBackend) {
         mContext = context;
         mDebugLog = log;
         mDb = db;
         mPath = path;
         mTime = time;
+        mDroidBackend = droidBackend;
         _openLog();
         log(path, VersionUtils.getPkgVersionName());
         mServer = server;
@@ -245,6 +246,13 @@ public class Collection {
             mSched = new Sched(this);
         } else if (ver == 2) {
             mSched = new SchedV2(this);
+            if (!getServer() && isUsingRustBackend()) {
+                try {
+                    getConf().put("localOffset", getSched()._current_timezone_offset());
+                } catch (BackendNotSupportedException e) {
+                    throw e.alreadyUsingRustBackend();
+                }
+            }
         }
     }
 
@@ -471,7 +479,7 @@ public class Collection {
     public void reopen() {
         Timber.i("Reopening Database");
         if (mDb == null) {
-            mDb = new DB(mPath);
+            mDb = mDroidBackend.openCollectionDatabase(mPath);
             mMedia.connect();
             _openLog();
         }
@@ -717,7 +725,7 @@ public class Collection {
      */
     private ArrayList<JSONObject> _tmplsFromOrds(Model model, ArrayList<Integer> avail) {
         JSONArray tmpls;
-        if (model.getInt("type") == Consts.MODEL_STD) {
+        if (model.isStd()) {
             tmpls = model.getJSONArray("tmpls");
             ArrayList<JSONObject> ok = new ArrayList<>(avail.size());
             for (Integer ord : avail) {
@@ -791,6 +799,10 @@ public class Collection {
         HashMap<Long, Long> dids = new HashMap<>(nbCount);
         // For each note, an arbitrary due of one of its due card processed, if any exists
         HashMap<Long, Long> dues = new HashMap<>(nbCount);
+        List<ParsedNode> nodes = null;
+        if (model.getInt("type") != Consts.MODEL_CLOZE) {
+            nodes = model.parsedNodes();
+        }
         try (Cursor cur = mDb.query("select id, nid, ord, (CASE WHEN odid != 0 THEN odid ELSE did END), (CASE WHEN odid != 0 THEN odue ELSE due END), type from cards where nid in " + snids)) {
             while (cur.moveToNext()) {
                 if (isCancelled(task)) {
@@ -838,7 +850,7 @@ public class Collection {
                 }
                 @NonNull Long nid = cur.getLong(0);
                 String flds = cur.getString(1);
-                ArrayList<Integer> avail = Models.availOrds(model, Utils.splitFields(flds));
+                ArrayList<Integer> avail = Models.availOrds(model, Utils.splitFields(flds), nodes);
                 if (task != null) {
                     task.doProgress(avail.size());
                 }
@@ -940,7 +952,7 @@ public class Collection {
         card.setDid(did);
         // if invalid did, use default instead
         Deck deck = mDecks.get(card.getDid());
-        if (deck.getInt("dyn") == 1) {
+        if (deck.isDyn()) {
             // must not be a filtered deck
             card.setDid(1);
         } else {
@@ -1121,7 +1133,7 @@ public class Collection {
         fields.put("Subdeck", baseName);
         fields.put("CardFlag", _flagNameFromCardFlags(flags));
         JSONObject template;
-        if (model.getInt("type") == Consts.MODEL_STD) {
+        if (model.isStd()) {
             template = model.getJSONArray("tmpls").getJSONObject(ord);
         } else {
             template = model.getJSONArray("tmpls").getJSONObject(0);
@@ -1145,7 +1157,12 @@ public class Collection {
                 // the following line differs from libanki // TODO: why?
                 fields.put("FrontSide", d.get("q")); // fields.put("FrontSide", mMedia.stripAudio(d.get("q")));
             }
-            String html = new Template(format, fields).render();
+            String html;
+            try {
+                html = ParsedNode.parse_inner(format).render(fields, "q".equals(type), getContext());
+            } catch (TemplateError er) {
+                html = er.message(getContext());
+            }
             html = ChessFilter.fenToChessboard(html, getContext());
             if (!browser) {
                 // browser don't show image. So compiling LaTeX actually remove information.
@@ -1153,7 +1170,7 @@ public class Collection {
             }
             d.put(type, html);
             // empty cloze?
-            if ("q".equals(type) && model.getInt("type") == Consts.MODEL_CLOZE) {
+            if ("q".equals(type) && model.isCloze()) {
                 if (Models._availClozeOrds(model, flist, false).size() == 0) {
                     String link = String.format("<a href=%s#cloze>%s</a>", Consts.HELP_SITE, "help");
                     d.put("q", mContext.getString(R.string.empty_cloze_warning, link));
@@ -1406,7 +1423,7 @@ public class Collection {
         int totalTasks = (getModels().all().size() * 4) + 27; // a few fixes are in all-models loops, the rest are one-offs
         Runnable notifyProgress = () -> fixIntegrityProgress(progressCallback, currentTask[0]++, totalTasks);
         FunctionalInterfaces.Consumer<FunctionalInterfaces.FunctionThrowable<Runnable, List<String>, JSONException>> executeIntegrityTask =
-                (FunctionalInterfaces.FunctionThrowable<Runnable, List<String>, JSONException> function) -> {
+                function -> {
                     //DEFECT: notifyProgress will lag if an exception is thrown.
                     try {
                         mDb.getDatabase().beginTransaction();
@@ -1449,7 +1466,7 @@ public class Collection {
 
         executeIntegrityTask.consume(this::deleteNotesWithMissingModel);
         // for each model
-        for (JSONObject m : getModels().all()) {
+        for (Model m : getModels().all()) {
             executeIntegrityTask.consume((callback) -> deleteCardsWithInvalidModelOrdinals(callback, m));
             executeIntegrityTask.consume((callback) -> deleteNotesWithWrongFieldCounts(callback, m));
         }
@@ -1562,7 +1579,8 @@ public class Collection {
 
         //we use a ! prefix to keep it at the top of the deck list
         String recoveredDeckName = "! " + mContext.getString(R.string.check_integrity_recovered_deck_name);
-        Long nextDeckId = getDecks().id(recoveredDeckName , true);
+        Long nextDeckId = getDecks().id_safe(recoveredDeckName);
+        // Still a risk of failure if recoveredDeckName is the name of a filtered deck
 
         if (nextDeckId == null) {
             throw new IllegalStateException("Unable to create deck");
@@ -1837,11 +1855,11 @@ public class Collection {
     }
 
 
-    private ArrayList<String> deleteCardsWithInvalidModelOrdinals(Runnable notifyProgress, JSONObject m) throws JSONException {
+    private ArrayList<String> deleteCardsWithInvalidModelOrdinals(Runnable notifyProgress, Model m) throws JSONException {
         Timber.d("deleteCardsWithInvalidModelOrdinals()");
         ArrayList<String> problems = new ArrayList<>(1);
         notifyProgress.run();
-        if (m.getInt("type") == Consts.MODEL_STD) {
+        if (m.isStd()) {
             JSONArray tmpls = m.getJSONArray("tmpls");
             ArrayList<Integer> ords = new ArrayList<>(tmpls.length());
             for (JSONObject tmpl: tmpls.jsonObjectIterable()) {
@@ -2154,6 +2172,14 @@ public class Collection {
         }
         mSched.setReportLimit(reportLimit);
         return mSched;
+    }
+
+    public boolean isUsingRustBackend() {
+        return mDroidBackend.isUsingRustBackend();
+    }
+
+    public DroidBackend getBackend() {
+        return mDroidBackend;
     }
 
     /** Allows a mock db to be inserted for testing */

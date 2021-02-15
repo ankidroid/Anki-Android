@@ -172,6 +172,7 @@
     <string name="learn_cutoff">حد التعلم المبكر</string>
     <string name="time_limit">مهلة مربع الوقت</string>
     <string name="time_limit_summ">XXX دقيقة</string>
+    <string name="new_timezone">New timezone handling</string>
     <string name="day_offset">بداية اليوم التالي</string>
     <string name="day_offset_summ">XXX ساعة بعد منتصف الليل</string>
     <string name="sched_ver">مجدول V2 التجريبي</string>
@@ -294,6 +295,6 @@
     <string name="analytics_summ">تستطيع المساهمة في أنكيدرويد من خلال مساعدة فريق التطوير على معرفة الميزات التي يستخدمها الناس</string>
     <string name="note_editor_replace_newlines">استبدال السطور الجديدة بـ HTML</string>
     <string name="note_editor_replace_newlines_summ">في محرر الملحوظات، حوّل أي ظهور لـ &lt;br&gt; إلى سطور جديدة عند تحرير بطاقة.</string>
-    <string name="no_code_formatting">Simple typed answer formatting</string>
-    <string name="no_code_formatting_summ">Fixes ‘􏿾’ appearing in typed answer results</string>
+    <string name="no_code_formatting">تنسيق الإجابة الكتابية البسيطة</string>
+    <string name="no_code_formatting_summ">يُصلِح وجود ‘􏿾’ في نتائِج الأجابة المكتوبة</string>
 </resources>

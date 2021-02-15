@@ -209,8 +209,8 @@
     <string name="import_hint">لاستيراد البطاقات، ضع ملف الـ apkg في المجلد “%s” وانقر «موافق»</string>
     <string name="upgrade_import_no_file_found">تعذر العثور على ملف %1$s يمكن استيراده</string>
     <string name="study_options" comment="Name for a preference category in Filtered deck (aka Cram deck, aka Custom study) options">الخيارات</string>
-    <string name="menu__deck_options">Deck options</string>
-    <string name="menu__study_options" comment="Menu item that opens options for a Filtered deck (aka Cram deck, aka Custom study)">Study options</string>
+    <string name="menu__deck_options">خيارات المجموعة</string>
+    <string name="menu__study_options" comment="Menu item that opens options for a Filtered deck (aka Cram deck, aka Custom study)">خيارات الدراسة</string>
     <string name="select_tts">تعيين لغة تحويل النص إلى كلام</string>
     <string name="custom_study">دراسة مخصصة</string>
     <string name="more_options">المزيد</string>
@@ -391,5 +391,5 @@
     <string name="create_shortcut_error_vivo" comment="iManager is an app on Vivo phones">قد تحتاج إلى استخدام iManager للسماح لأنكيدرويد بإضافة اختصارات</string>
     <string name="create_shortcut_failed" comment="home screen == launcher">لا تسمح شاشتك الرئيسية لأنكيدرويد بإضافة اختصارات</string>
     <string name="create_shortcut_error">حدث خطأ عند إضافة الاختصار: %s</string>
-    <string name="note_editor_capitalize" comment="This is for a switch with a checkbox - on: enabled">Capitalize sentences</string>
+    <string name="note_editor_capitalize" comment="This is for a switch with a checkbox - on: enabled">رسمَلة الجُمَل</string>
 </resources>

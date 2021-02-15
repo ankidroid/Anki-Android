@@ -186,7 +186,7 @@ class AnkiExporter extends Exporter {
             if (dids != null && !dids.contains(d.getLong("id"))) {
                 continue;
             }
-            if (d.getInt("dyn") != 1 && d.getLong("conf") != 1L) {
+            if (d.isStd() && d.getLong("conf") != 1L) {
                 if (mIncludeSched) {
                     dconfs.put(Long.toString(d.getLong("conf")), true);
                 }

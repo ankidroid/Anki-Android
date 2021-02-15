@@ -211,14 +211,13 @@ public class YAxis implements Drawable {
             }
 
             g.save();
+            float[] middlePosition = {plotSheet.xToGraphic(xOffset, field), plotSheet.yToGraphic(0, field)};
             if (isOnRightSide) {
-                float[] middlePosition = {plotSheet.xToGraphic(xOffset, field), plotSheet.yToGraphic(0, field)};
                 g.rotate(90, middlePosition[0] + spacerValue * 1.4f, field.height / 2 - width / 2);
                 if (mHasName) {
                     g.drawString(this.name, middlePosition[0] + spacerValue * 1.4f, field.height / 2 - width / 2);
                 }
             } else {
-                float[] middlePosition = {plotSheet.xToGraphic(xOffset, field), plotSheet.yToGraphic(0, field)};
                 g.rotate(-90, middlePosition[0] - spacerValue * 1.4f, field.height / 2 + width / 2);
                 if (mHasName) {
                     g.drawString(this.name, middlePosition[0] - spacerValue * 1.4f, field.height / 2 + width / 2);

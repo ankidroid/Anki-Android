@@ -63,9 +63,9 @@
         <item>Beslissen per memotype</item>
     </string-array>
     <string-array name="new_spread_labels">
-        <item>Mix nieuwe en herhaalde kaarten</item>
-        <item>Nieuwe kaarten na herhaalde kaarten</item>
-        <item>Nieuwe kaarten voor herhaalde kaarten</item>
+        <item>Mix nieuwe en overhoorde kaarten</item>
+        <item>Nieuwe kaarten na overhoorde kaarten</item>
+        <item>Nieuwe kaarten voor overhoorde kaarten</item>
     </string-array>
     <string-array name="override_font_labels">
         <item>Wanneer geen lettertype opgegeven op flitskaartjes</item>
@@ -80,13 +80,13 @@
         <item>Donker</item>
     </string-array>
     <string-array name="html_size_code_labels">
-        <item>xx-small</item>
-        <item>x-small</item>
-        <item>small</item>
-        <item>medium</item>
-        <item>large</item>
-        <item>x-large</item>
-        <item>xx-large</item>
+        <item>xx-klein</item>
+        <item>x-klein</item>
+        <item>klein</item>
+        <item>middelgroot</item>
+        <item>groot</item>
+        <item>x-groot</item>
+        <item>xx-groot</item>
     </string-array>
     <!--
     #7794 - it\'s better to use @string references in non-translated arrays as this handles
@@ -110,8 +110,8 @@
     <string name="gesture_flag_remove">Vlag verwijderen</string>
     <string name="gesture_page_up">Pagina omhoog</string>
     <string name="gesture_page_down">Pagina omlaag</string>
-    <string name="gesture_abort_sync">Abort Learning and Sync</string>
-    <string name="gesture_toggle_whiteboard">Toggle Whiteboard</string>
-    <string name="record_voice">Record Voice</string>
-    <string name="replay_voice">Replay Voice</string>
+    <string name="gesture_abort_sync">Leren en synchroniseren afbreken</string>
+    <string name="gesture_toggle_whiteboard">Schrijfbord in-/uitschakelen</string>
+    <string name="record_voice">Spraak opnemen</string>
+    <string name="replay_voice">Opname afspelen</string>
 </resources>

@@ -17,9 +17,18 @@
 package com.ichi2.libanki;
 
 
+import android.text.TextUtils;
+import android.util.Pair;
+
+import com.ichi2.libanki.template.ParsedNode;
+import com.ichi2.libanki.template.TemplateError;
+import com.ichi2.utils.JSONArray;
 import com.ichi2.utils.JSONObject;
 
+import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import androidx.annotation.CheckResult;
 
@@ -55,5 +64,47 @@ public class Model extends JSONObject {
 
     public List<String> getTemplatesNames() {
         return getJSONArray("tmpls").toStringList("name");
+    }
+
+    public boolean isStd() {
+        return getInt("type") == Consts.MODEL_STD;
+    }
+
+    public boolean isCloze() {
+        return getInt("type") == Consts.MODEL_CLOZE;
+    }
+
+    /**
+     * @param sfld Fields of a note of this note type
+     * @return The set of name of non-empty fields.
+     */
+    public Set<String> nonEmptyFields(String[] sfld) {
+        List<String> fieldNames = getFieldsNames();
+        Set<String> nonemptyFields = new HashSet<>(sfld.length);
+        for (int i = 0; i < sfld.length; i++) {
+            if (!TextUtils.isEmpty(sfld[i].trim())) {
+                nonemptyFields.add(fieldNames.get(i));
+            }
+        }
+        return nonemptyFields;
+    }
+
+
+    /**
+     * @return A list of parsed nodes for each template's question. null in case of exception
+     */
+    public List<ParsedNode> parsedNodes() {
+        JSONArray tmpls = getJSONArray("tmpls");
+        List<ParsedNode> nodes = new ArrayList<>(tmpls.length());
+        for (JSONObject tmpl : tmpls.jsonObjectIterable()) {
+            String format_question = tmpl.getString("qfmt");
+            ParsedNode node = null;
+            try {
+                node = ParsedNode.parse_inner(format_question);
+            } catch (TemplateError er) {
+            }
+            nodes.add(node);
+        }
+        return nodes;
     }
 }

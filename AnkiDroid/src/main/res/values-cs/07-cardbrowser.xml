@@ -59,7 +59,7 @@
     <string name="card_browser_search_by_tag">Filtrovat podle štítků</string>
     <string name="card_browser_search_by_flag">Filtrovat podle příznaku</string>
     <string name="card_browser_list_my_searches">Moje hledání</string>
-    <string name="card_browser_list_my_searches_save">Uložení hledání</string>
+    <string name="card_browser_list_my_searches_save">Uložit hledání</string>
     <string name="card_browser_list_my_searches_title">Zvolte uložené hledání</string>
     <string name="card_browser_list_my_searches_new_name">Název aktuálního hledání</string>
     <string name="card_browser_list_my_searches_new_search_error_empty_name">Nelze uložit hledání bez názvu.</string>

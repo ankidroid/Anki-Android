@@ -45,17 +45,17 @@
     <!--Rename-->
     <string name="rename_model">Notiztyp umbenennen</string>
     <!--Language Hint-->
-    <string name="model_field_editor_language_hint_dialog_success_result">Setze Sprachhinweis auf %s</string>
+    <string name="model_field_editor_language_hint_dialog_success_result">Sprachhinweis auf %s festlegen</string>
     <!--Field Editing-->
     <string name="model_field_editor_title">Felder bearbeiten</string>
     <string name="model_field_editor_add">Feld hinzufügen</string>
     <string name="model_field_editor_delete">Feld löschen</string>
     <string name="model_field_editor_rename">Feld umbenennen</string>
-    <string name="model_field_editor_language_hint">Tastatur-Sprachhinweis festlegen</string>
+    <string name="model_field_editor_language_hint">Hinweis zu Tastatursprache festlegen</string>
     <string name="model_field_editor_reposition_menu">Feld neu positionieren</string>
     <string name="model_field_editor_reposition">Feld neu positionieren (Wert von %1$d bis %2$d eingeben)</string>
     <string name="model_field_editor_toggle_sticky">Beim Hinzufügen letzte Eingabe merken</string>
-    <string name="model_field_editor_changing">Aktualisierung der Felder</string>
+    <string name="model_field_editor_changing">Felder werden aktualisiert</string>
     <string name="model_field_editor_sort_field">Nach diesem Feld sortieren</string>
     <string name="model_clone_suffix">Kopie</string>
     <!--Warnings-->
@@ -72,10 +72,10 @@
     <string name="card_template_browser_appearance_restore_default_dialog">Standardwerte wiederherstellen?</string>
     <string name="card_template_browser_appearance_saving_note">Diese Änderungen werden beim Speichern der Kartenvorlage angewendet</string>
     <!-- Deck Override -->
-    <string name="card_template_editor_deck_override_on">Deck Override (on)</string>
-    <string name="card_template_editor_deck_override_off">Deck Override (off)</string>
-    <string name="model_manager_deck_override_added_message">Setze ‘%1$s’ Standardstapel auf ‘%2$s’</string>
-    <string name="model_manager_deck_override_removed_message">Standardstapel für ‘%s ’ entfernt</string>
-    <string name="deck_override_explanation">Wähle Stapel aus, um neue ‘%s’ Karten zu platzieren</string>
+    <string name="card_template_editor_deck_override_on">Stapel übergehen (ein)</string>
+    <string name="card_template_editor_deck_override_off">Stapel übergehen (aus)</string>
+    <string name="model_manager_deck_override_added_message">»%1$s«-Standardstapel auf »%2$s« festlegen</string>
+    <string name="model_manager_deck_override_removed_message">Standardstapel für »%s« entfernt</string>
+    <string name="deck_override_explanation">Wählen Sie den Stapel aus, dem neue »%s«-Karten hinzugefügt werden sollen</string>
     <string name="deck_picker_dialog_filter_decks">Stapel filtern</string>
 </resources>

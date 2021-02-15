@@ -172,6 +172,7 @@
     <string name="learn_cutoff">先取り学習の限度</string>
     <string name="time_limit">タイムボックスの時間枠</string>
     <string name="time_limit_summ">XXX 分</string>
+    <string name="new_timezone">New timezone handling</string>
     <string name="day_offset">日付更新時刻</string>
     <string name="day_offset_summ">XXX 時</string>
     <string name="sched_ver">実験的な新型スケジューラ</string>
@@ -284,6 +285,6 @@
     <string name="analytics_summ">各機能の使用傾向を開発チームが把握しやすくなり、AnkiDroidの機能向上に役立ちます。</string>
     <string name="note_editor_replace_newlines">改行を HTML に置き換え</string>
     <string name="note_editor_replace_newlines_summ">ノートエディターでは、カードを編集するときに &lt;br&gt; を改行に変換します。</string>
-    <string name="no_code_formatting">Simple typed answer formatting</string>
-    <string name="no_code_formatting_summ">Fixes ‘􏿾’ appearing in typed answer results</string>
+    <string name="no_code_formatting">文字入力回答でシンプルなフォントを使用</string>
+    <string name="no_code_formatting_summ">文字入力して回答する種類のカードの解答画面で、自分の回答に文字化け（‘􏿾’の表示）が起こる不具合を回避します</string>
 </resources>

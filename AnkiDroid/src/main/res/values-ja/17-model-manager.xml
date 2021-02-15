@@ -30,7 +30,7 @@
     <string name="toast_out_of_range">無効な値です</string>
     <!--Plurals-->
     <plurals name="model_browser_types_available">
-        <item quantity="other">%d個のノートタイプがあります</item>
+        <item quantity="other">%d個のノートタイプが使用可能</item>
     </plurals>
     <plurals name="model_browser_of_type">
         <item quantity="other">%d個のノート</item>

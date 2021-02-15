@@ -49,8 +49,6 @@ import androidx.annotation.StringRes;
 import androidx.annotation.VisibleForTesting;
 import androidx.coordinatorlayout.widget.CoordinatorLayout;
 import androidx.core.content.ContextCompat;
-import androidx.core.net.ConnectivityManagerCompat;
-import androidx.core.view.GestureDetectorCompat;
 import androidx.appcompat.app.ActionBar;
 import androidx.webkit.internal.AssetHelper;
 import androidx.webkit.WebViewAssetLoader;
@@ -58,6 +56,7 @@ import androidx.webkit.WebViewAssetLoader;
 import android.text.TextUtils;
 import android.util.Pair;
 import android.util.TypedValue;
+import android.view.GestureDetector;
 import android.view.GestureDetector.SimpleOnGestureListener;
 import android.view.Gravity;
 import android.view.KeyEvent;
@@ -108,6 +107,7 @@ import com.ichi2.async.TaskListener;
 import com.ichi2.async.TaskManager;
 import com.ichi2.compat.CompatHelper;
 import com.ichi2.libanki.Decks;
+import com.ichi2.libanki.Model;
 import com.ichi2.libanki.sched.AbstractSched;
 import com.ichi2.libanki.Card;
 import com.ichi2.libanki.Collection;
@@ -116,7 +116,8 @@ import com.ichi2.libanki.DeckConfig;
 import com.ichi2.libanki.Note;
 import com.ichi2.libanki.Sound;
 import com.ichi2.libanki.Utils;
-import com.ichi2.libanki.template.Template;
+import com.ichi2.libanki.template.MathJax;
+import com.ichi2.libanki.template.TemplateFilters;
 import com.ichi2.themes.HtmlColors;
 import com.ichi2.themes.Themes;
 import com.ichi2.utils.AdaptionUtil;
@@ -324,7 +325,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
     /**
      * Swipe Detection
      */
-    private GestureDetectorCompat gestureDetector;
+    private GestureDetector gestureDetector;
     private MyGestureDetector mGestureDetectorImpl;
     private boolean mLinkOverridesTouchGesture;
 
@@ -896,7 +897,8 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
         return R.layout.reviewer;
     }
 
-    protected boolean isFullscreen() {
+    @VisibleForTesting(otherwise = VisibleForTesting.PROTECTED)
+    boolean isFullscreen() {
         return !getSupportActionBar().isShowing();
     }
 
@@ -1251,7 +1253,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
     }
 
 
-    public GestureDetectorCompat getGestureDetector() {
+    public GestureDetector getGestureDetector() {
         return gestureDetector;
     }
 
@@ -1508,7 +1510,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
 
         // Initialize swipe
         mGestureDetectorImpl = mLinkOverridesTouchGesture ? new LinkDetectingGestureDetector() : new MyGestureDetector();
-        gestureDetector = new GestureDetectorCompat(this, mGestureDetectorImpl);
+        gestureDetector = new GestureDetector(this, mGestureDetectorImpl);
 
         mEaseButtonsLayout = findViewById(R.id.ease_buttons);
 
@@ -1544,7 +1546,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
         mFlipCardLayout = findViewById(R.id.flashcard_layout_flip);
         mFlipCardLayout.setOnClickListener(mFlipCardListener);
 
-        if (Build.VERSION.SDK_INT >= 21 && animationEnabled()) {
+        if (animationEnabled()) {
             mFlipCard.setBackgroundResource(Themes.getResFromAttr(this, R.attr.hardButtonRippleRef));
         }
 
@@ -2180,9 +2182,9 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
      * getAnswerFormat returns the answer part of this card's template as entered by user, without any parsing
      */
     public String getAnswerFormat() {
-        JSONObject model = mCurrentCard.model();
+        Model model = mCurrentCard.model();
         JSONObject template;
-        if (model.getInt("type") == Consts.MODEL_STD) {
+        if (model.isStd()) {
             template = model.getJSONArray("tmpls").getJSONObject(mCurrentCard.getOrd());
         } else {
             template = model.getJSONArray("tmpls").getJSONObject(0);
@@ -2241,7 +2243,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
         // CSS class for card-specific styling
         String cardClass = mCardAppearance.getCardClass(mCurrentCard.getOrd() + 1, Themes.getCurrentTheme(this));
 
-        if (Template.textContainsMathjax(content)) {
+        if (MathJax.textContainsMathjax(content)) {
             cardClass += " mathjax-needs-to-render";
         }
 
@@ -2374,7 +2376,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
 
     private String getTextForTts(String text) {
         String clozeReplacement = this.getString(R.string.reviewer_tts_cloze_spoken_replacement);
-        String clozeReplaced = text.replace(Template.CLOZE_DELETION_REPLACEMENT, clozeReplacement);
+        String clozeReplaced = text.replace(TemplateFilters.CLOZE_DELETION_REPLACEMENT, clozeReplacement);
         return Utils.stripHTML(clozeReplaced);
     }
 
@@ -4111,7 +4113,7 @@ see card.js for available functions
                     Timber.w("ConnectivityManager not found - assuming metered connection");
                     return true;
                 }
-                return ConnectivityManagerCompat.isActiveNetworkMetered(cm);
+                return cm.isActiveNetworkMetered();
             } catch (Exception e) {
                 Timber.w(e, "Exception obtaining metered connection - assuming metered connection");
                 return true;

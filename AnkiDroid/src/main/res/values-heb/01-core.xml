@@ -47,7 +47,7 @@
     <string name="help">עזרה</string>
     <string name="send_feedback">שליחת משוב</string>
     <string name="studyoptions_due_today">להיום:</string>
-    <string name="studyoptions_new_total">סך כל הכרטיסים החדשים:</string>
+    <string name="studyoptions_new_total">סך כל הקלפים החדשים:</string>
     <string name="studyoptions_total_cards">סך כל הכרטיסים:</string>
     <string name="studyoptions_eta">זמן משוער (דקות):</string>
     <string name="studyoptions_start">לימוד</string>
@@ -112,7 +112,7 @@
     <string name="menu_dismiss_note">הסתרה / מחיקה</string>
     <string name="menu_bury_card">לקבור קלף</string>
     <string name="menu_bury_note">דילוג על רשומה</string>
-    <string name="menu_suspend_card">הקפאת כרטיס</string>
+    <string name="menu_suspend_card">הקפאת קלף</string>
     <string name="menu_suspend_note">הקפאת רשומה</string>
     <string name="menu_bury">דילוג</string>
     <string name="menu_suspend">הקפאה</string>
@@ -125,7 +125,7 @@
     <string name="menu_flag_card_three">דגל ירוק</string>
     <string name="menu_flag_card_four">דגל כחול</string>
     <string name="menu_edit_tags">ערוך תגיות</string>
-    <string name="delete_note_message">בטוח שברצונך למחוק את הרשומה הזאת ואת כל הכרטיסים שלה?‏\n%s</string>
+    <string name="delete_note_message">למחוק את הרשומה הזאת ואת כל הקלפים שלה?‏\n%s</string>
     <string name="menu_select">בחירת טקסט</string>
     <string name="menu_search">חפש ב%1$s</string>
     <string name="menu_mark_note">סמן הערה</string>
@@ -165,6 +165,7 @@
     <string name="custom_study_deck_name">שיעור למידה מותאם</string>
     <string name="custom_study_deck_exists">ראשית, ערוך שם חפיסה חדשה</string>
     <string name="empty_deck">החפיסה ריקה</string>
+    <string name="empty_deck_add_note">הוספת קלף</string>
     <string name="invalid_deck_name">שם חפיסה לא חוקי</string>
     <string name="studyoptions_empty">החפיסה ריקה. לחץ על כפתור ה+ להוספת תוכן חדש.</string>
     <string name="studyoptions_limit_reached">יעד הלמידה היומי הושלם</string>
@@ -200,7 +201,7 @@
         <item quantity="other">מחק את סוג הכרטסיה \"%2$s\" ואת כל %1$d כרטסיותיו?</item>
     </plurals>
     <string name="invalid_template">לא ניתן לייצר קלף</string>
-    <string name="card_template_editor_would_delete_note">הסרת סוג כרטיס זה תגרום לרשומה אחת או יותר להמחק. אנא צור ושמור סוג כרטיס חדש תחילה.</string>
+    <string name="card_template_editor_would_delete_note">הסרת סוג קלף זה תוביל למחיקת הערה אחת או יותר. נא ליצור ולשמור סוג קלף חדש תחילה.</string>
     <string name="card_template_editor_save_error">לא ניתן לשמור שינויים לתבנית הקלף: %s</string>
     <string name="template_for_current_card_deleted">סוג הקלף של הקלף הנוכחי נמחק.</string>
     <!-- Card Browser Appearance -->
@@ -210,8 +211,16 @@
     <string name="card_info_title">מידע על הקלף</string>
     <!-- Permissions -->
     <string name="read_write_permission_label">קרא ושמור לממסד הנתונים של אנקידרוייד</string>
-    <string name="read_write_permission_description">תן לאפליקציה גישה להערות, כרטיסים, סוגי הערות, וחפיסות, וכן גישה ליצור חדשים</string>
+    <string name="read_write_permission_description">לגשת להערות, קלפים, סוגי הערות וחפיסות וגם ליצור חדשים</string>
     <!-- Context Menu -->
     <string name="card_browser_context_menu" comment="The value which appears in the system context menu. Note the casing difference">דפדפן הקלפים</string>
     <string name="context_menu_anki_card_label">קלף של Anki</string>
+    <string name="has_a_problem" comment="First field is either front template or back template. Second field is the error message.">%1$s has a problem:<br/>%2$s</string>
+    <string name="more_information">More information</string>
+    <string name="no_field">Found \'{{%1$s}}\', but there is no field called \'%1$s\'.</string>
+    <string name="closed_tag_not_open">Found \'{{/%1$s}}\', but missing \'{{#%1$s}}\' or \'{{^%1$s}}\'.</string>
+    <string name="missing_closing_bracket">Missing \'}}\' in \'%s\'.</string>
+    <string name="open_tag_not_closed">Missing \'{{%s}}\'.</string>
+    <string name="wrong_tag_closed">Found \'{{/%1$s}}\', but expected \'{{/%2$s}}\'</string>
+    <string name="filter_error">Error in filter %s</string>
 </resources>

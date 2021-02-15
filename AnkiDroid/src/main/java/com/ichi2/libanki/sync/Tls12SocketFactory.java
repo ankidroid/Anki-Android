@@ -57,7 +57,7 @@ public class Tls12SocketFactory extends SSLSocketFactory {
 
 
     public static OkHttpClient.Builder enableTls12OnPreLollipop(OkHttpClient.Builder client) {
-        if (Build.VERSION.SDK_INT < 22) {
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP_MR1) {
             try {
                 Timber.d("Creating unified TrustManager");
                 Certificate cert = getUserTrustRootCertificate();

@@ -173,6 +173,7 @@
     <string name="learn_cutoff">Learn ahead limit</string>
     <string name="time_limit">Timebox time limit</string>
     <string name="time_limit_summ">XXX λεπτά</string>
+    <string name="new_timezone">New timezone handling</string>
     <string name="day_offset">Start of next day</string>
     <string name="day_offset_summ">XXX hours past midnight</string>
     <string name="sched_ver">Experimental V2 scheduler</string>

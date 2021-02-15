@@ -5,17 +5,14 @@ import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 
 import com.ichi2.anki.AnkiDroidApp;
-import com.ichi2.compat.Compat;
-import com.ichi2.compat.CompatHelper;
 
+import androidx.core.content.pm.PackageInfoCompat;
 import timber.log.Timber;
 
 /**
  * Created by Tim on 11/04/2015.
  */
 public class VersionUtils {
-
-    private static final Compat compat = CompatHelper.getCompat();
 
     /**
      * Get package name as defined in the manifest.
@@ -60,7 +57,7 @@ public class VersionUtils {
         Context context = AnkiDroidApp.getInstance();
         try {
             PackageInfo pInfo = context.getPackageManager().getPackageInfo(context.getPackageName(), 0);
-            long versionCode = compat.getVersionCode(pInfo);
+            long versionCode = PackageInfoCompat.getLongVersionCode(pInfo);
             Timber.d("getPkgVersionCode() is %s", versionCode);
             return versionCode;
         } catch (PackageManager.NameNotFoundException e) {

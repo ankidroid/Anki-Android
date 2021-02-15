@@ -174,7 +174,7 @@
     <string name="import_error_unhandled_request">לא ניתן לעבד בקשת ייבוא</string>
     <string name="import_error_corrupt_zip">קובץ ה־apkg פגום. נא למחוק ולהוריד אותו מחדש.\n\nגורם: %s</string>
     <string name="import_error_exception">ייבוא החבילה נכשל\n\n%s</string>
-    <string name="import_error_not_apkg_extension">Filename “%s” doesn’t have .apkg or .colpkg extension</string>
+    <string name="import_error_not_apkg_extension">לשם הקובץ „%s” אין סיומת ‎.apkg או ‎.colpkg</string>
     <string name="import_error_load_imported_database">Anki Database (.anki2) replacements are not yet supported. Please see the manual for replacement instructions.</string>
     <string name="import_error_content_provider">הקובץ שנבחר לא יובא בהצלחה על ידי אנקידרוייד. נא עיין במדריך למשתמש לקבלת הסבר על יבוא ידיני של קבצי אנקי: \n%s</string>
     <string name="import_error_copy_file_to_cache">copyFileToCache()‎ נכשלה (כנראה שנגמר המקום)</string>
@@ -203,8 +203,8 @@
     <string name="import_hint">מקם את קובץ הapkg בתקייה %s ולחץ על \"אשר\" ליבוא הכרטסיות</string>
     <string name="upgrade_import_no_file_found">לא נמצא קובץ %1$s הניתן ליבוא</string>
     <string name="study_options" comment="Name for a preference category in Filtered deck (aka Cram deck, aka Custom study) options">אפשרויות</string>
-    <string name="menu__deck_options">Deck options</string>
-    <string name="menu__study_options" comment="Menu item that opens options for a Filtered deck (aka Cram deck, aka Custom study)">Study options</string>
+    <string name="menu__deck_options">אפשרויות חפיסה</string>
+    <string name="menu__study_options" comment="Menu item that opens options for a Filtered deck (aka Cram deck, aka Custom study)">אפשרויות למידה</string>
     <string name="select_tts">הגדר שפת TTS</string>
     <string name="custom_study">אימון נוסף</string>
     <string name="more_options">עוד</string>
@@ -277,12 +277,12 @@
     <!-- Import and export v2 feedback -->
     <string name="export_v2_dummy_note">קובץ זה דורש גרסה חדשה יותר של Anki.</string>
     <!-- Placed in a snackbar with a long URL. Limit the length and move the URL to the start of the string -->
-    <string name="activity_start_failed_load_url">Loading \'%s\' failed.</string>
+    <string name="activity_start_failed_load_url">הטעינה של ‚%s’ נכשלה.</string>
     <string name="activity_start_failed">במערכת לא מותקן יישומון שיכול לבצע את הפעולה הזאת.</string>
     <string name="multimedia_editor_image_compression_failed"><![CDATA[תמונות המצלמה גדולות מדי. אולי עדיף לך לדחוס ולשנות את גודל התמונות בתיקיית המדיה]]></string>
     <string name="no_browser_notification">לא נמצא דפדפן, נא לבקר באתר במחשב או בנייד: </string>
     <string name="web_page_error">טעינת העמוד נכשלה: %s</string>
-    <string name="no_outgoing_link_in_cardbrowser">אין תמיכה בקישור לעמוד חיצוני בכרטיס.</string>
+    <string name="no_outgoing_link_in_cardbrowser">אין תמיכה בקישור לעמוד חיצוני בקלף.</string>
     <!-- The name of the deck which corrupt cards will be moved to -->
     <string name="check_integrity_recovered_deck_name">קלפים משוחזרים</string>
     <!-- Deckpicker Background -->
@@ -290,18 +290,18 @@
     <string name="choose_an_image">נא לבחור תמונה</string>
     <!-- Card Template Browser Appearance -->
     <string name="restore_default">שחזור בררת המחדל</string>
-    <string name="reviewer_tts_cloze_spoken_replacement">Blank</string>
+    <string name="reviewer_tts_cloze_spoken_replacement">ריק</string>
     <!-- in options menu & Navigation Drawer -->
-    <string name="ankidroid_turn_on_fullscreen_nav_drawer">Please turn on fullscreen to use Show Navigation Drawer using JavaScript.</string>
-    <string name="ankidroid_turn_on_fullscreen_options_menu">Please turn on fullscreen to use Show Options Menu using JavaScript.</string>
+    <string name="ankidroid_turn_on_fullscreen_nav_drawer">נא להפעיל את המסך המלא כדי להשתמש בהצגת מגירת ניווט עם JavaScript.</string>
+    <string name="ankidroid_turn_on_fullscreen_options_menu">נא להפעיל את המסך המלא כדי להשתמש בהצגת תפריט אפשרויות עם JavaScript.</string>
     <!-- Whiteboard save image message in Reviewer -->
     <string name="white_board_image_save_failed">Failed to save whiteboard image. %s</string>
     <string name="white_board_image_saved">Whiteboard image saved to %s</string>
     <string name="title_whiteboard_pen_color">Whiteboard pen color</string>
     <!-- CSV/Note Import -->
     <string name="note_importer_empty_cards_found"><![CDATA[Empty cards found. Please run Tools>Empty Cards.]]></string>
-    <string name="note_importer_error_empty_first_field">Empty first field: %s</string>
-    <string name="note_importer_error_first_field_matched">First field matched: %s</string>
+    <string name="note_importer_error_empty_first_field">שדה ראשון ריק: %s</string>
+    <string name="note_importer_error_first_field_matched">שדה ראשון תואם: %s</string>
     <string name="note_importer_error_added_duplicate_first_field">Added duplicate with first field: %s</string>
     <string name="note_importer_error_appeared_twice">Appeared twice in file: %s</string>
     <string name="note_importer_error_empty_notes">One or more notes were not imported, because they didn\'t generate any cards. This can happen when you have empty fields or when you have not mapped the content in the text file to the correct fields</string>

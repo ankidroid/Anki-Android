@@ -52,6 +52,7 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup.MarginLayoutParams;
 import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
@@ -139,6 +140,7 @@ import java.util.Objects;
 import java.util.Set;
 
 import androidx.core.content.ContextCompat;
+import androidx.core.text.HtmlCompat;
 import androidx.fragment.app.DialogFragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -596,7 +598,7 @@ public class NoteEditor extends AnkiActivity implements AddonToolsAdapter.OnAddo
             long thisDid = d.getLong("id");
             String currentName = d.getString("name");
             String lineContent = null;
-            if (d.getInt("dyn") == 0) {
+            if (d.isStd()) {
                 lineContent = currentName ;
             } else if (!mAddNote && mCurrentEditedCard != null && mCurrentEditedCard.getDid() == thisDid) {
                 lineContent = getApplicationContext().getString(R.string.current_and_default_deck, currentName, col.getDecks().name(mCurrentEditedCard.getODid()));
@@ -1931,6 +1933,13 @@ public class NoteEditor extends AnkiActivity implements AddonToolsAdapter.OnAddo
             return;
         }
 
+        View editorLayout = findViewById(R.id.note_editor_layout);
+        int bottomMargin = shouldHideToolbar() ? 0 : (int) getResources().getDimension(R.dimen.note_editor_toolbar_height);
+        MarginLayoutParams params = (MarginLayoutParams) editorLayout.getLayoutParams();
+        params.bottomMargin = bottomMargin;
+        editorLayout.setLayoutParams(params);
+
+
         if (shouldHideToolbar()) {
             mToolbar.setVisibility(View.GONE);
             return;
@@ -1941,7 +1950,7 @@ public class NoteEditor extends AnkiActivity implements AddonToolsAdapter.OnAddo
         mToolbar.clearCustomItems();
 
         View clozeIcon = mToolbar.getClozeIcon();
-        if (Models.isCloze(mEditorNote.model())) {
+        if (mEditorNote.model().isCloze()) {
             Toolbar.TextFormatter clozeFormatter = s -> {
                 Toolbar.TextWrapper.StringFormat stringFormat = new Toolbar.TextWrapper.StringFormat();
                 String prefix = "{{c" + getNextClozeIndex() + "::";
@@ -2099,7 +2108,9 @@ public class NoteEditor extends AnkiActivity implements AddonToolsAdapter.OnAddo
         if (!mAddNote && tmpls.length() < mEditorNote.model().getJSONArray("tmpls").length()) {
             cardsList = new StringBuilder("<font color='red'>" + cardsList + "</font>");
         }
-        mCardsButton.setText(CompatHelper.getCompat().fromHtml(getResources().getString(R.string.CardEditorCards, cardsList.toString())));
+        mCardsButton.setText(HtmlCompat.fromHtml(
+                getResources().getString(R.string.CardEditorCards, cardsList.toString()),
+                HtmlCompat.FROM_HTML_MODE_LEGACY));
     }
 
 
@@ -2396,7 +2407,7 @@ public class NoteEditor extends AnkiActivity implements AddonToolsAdapter.OnAddo
     }
 
     private boolean isClozeType() {
-        return getCurrentlySelectedModel().getInt("type") == Consts.MODEL_CLOZE;
+        return getCurrentlySelectedModel().isCloze();
     }
 
 

@@ -44,7 +44,7 @@
         <item quantity="other">%d kaarten getoond</item>
     </plurals>
     <string name="card_browser_all_decks">Alle leersets</string>
-    <string name="card_browser_delete_card">Notities verwijderen</string>
+    <string name="card_browser_delete_card">Memo\'s verwijderen</string>
     <string name="card_browser_suspend_card">Kaart opschorten</string>
     <string name="card_browser_change_deck">WIjzig dek</string>
     <string name="card_browser_unsuspend_card">Kaarten herstellen</string>
@@ -72,8 +72,8 @@
         <item>Niet sorteren (sneller)</item>
         <item>Naar sorteerveld</item>
         <item>Op tijd aanmaak</item>
-        <item>By note modification time</item>
-        <item>By card modification time</item>
+        <item>Op tijdstip van de wijziging van de memo</item>
+        <item>Op tijdstip van de wijziging van de kaart</item>
         <item>Op geplande tijd</item>
         <item>Op interval</item>
         <item>Op gemakkelijkheid</item>
@@ -89,31 +89,31 @@
     <string name="card_browser_search_all_decks">Alle sets doorzoeken</string>
     <string name="card_browser_unknown_deck_name">Onbekend</string>
     <plurals name="card_browser_cards_deleted">
-        <item quantity="one">2 kaarten verwijdert</item>
-        <item quantity="other">%d cards deleted</item>
+        <item quantity="one">%d kaart verwijderd</item>
+        <item quantity="other">%d kaarten verwijderd</item>
     </plurals>
     <!-- Card Info subscreen -->
     <string name="card_info_added" comment="Label of the information showing at which date a card was added.">Toegevoegd</string>
-    <string name="card_info_first_review">Eerste recensie</string>
-    <string name="card_info_latest_review">Laatste recensie</string>
+    <string name="card_info_first_review">Eerste overhoring</string>
+    <string name="card_info_latest_review">Laatste overhoring</string>
     <string name="card_info_interval">Interval</string>
     <string name="card_info_ease">Gemakkelijkheid</string>
-    <string name="card_info_reviews" comment="Number of times a card was reviewed">Recensies</string>
-    <string name="card_info_lapses" comment="Label indicating the number of lapses of a card.">Lapses</string>
+    <string name="card_info_reviews" comment="Number of times a card was reviewed">Overhoringen</string>
+    <string name="card_info_lapses" comment="Label indicating the number of lapses of a card.">Missers</string>
     <string name="card_info_average_time">Gemiddelde tijd</string>
     <string name="card_info_total_time">Totale tijd</string>
-    <string name="card_info_card_type">Card Type</string>
-    <string name="card_info_note_type">Kaarttype</string>
+    <string name="card_info_card_type">Kaarttype</string>
+    <string name="card_info_note_type">Memotype</string>
     <string name="card_info_deck_name">Kaartenset Naam</string>
-    <string name="card_info_card_id">Card Id</string>
-    <string name="card_info_note_id">Note Id</string>
-    <string name="card_info_revlog_time">Time</string>
-    <string name="card_info_revlog_date">Date</string>
-    <string name="card_info_revlog_rating">Rating</string>
+    <string name="card_info_card_id">Kaart ID</string>
+    <string name="card_info_note_id">Memo-ID</string>
+    <string name="card_info_revlog_time">Tijd</string>
+    <string name="card_info_revlog_date">Datum</string>
+    <string name="card_info_revlog_rating">Beoordeling</string>
     <string name="card_info_revlog_type">Type</string>
-    <string name="card_info_revlog_learn" comment="Label indicating that a review in the log of a card occured while the card was in learning mode">Learn</string>
-    <string name="card_info_revlog_review">Review</string>
-    <string name="card_info_revlog_relearn" comment="Label of a log entry of a card, indicating that a review was done with a note in relearning mode">Relearn</string>
-    <string name="card_info_revlog_filtered">Filtered</string>
-    <string name="card_info_ease_not_applicable">N/A</string>
+    <string name="card_info_revlog_learn" comment="Label indicating that a review in the log of a card occured while the card was in learning mode">Leren</string>
+    <string name="card_info_revlog_review">Overhoren</string>
+    <string name="card_info_revlog_relearn" comment="Label of a log entry of a card, indicating that a review was done with a note in relearning mode">Opnieuw leren</string>
+    <string name="card_info_revlog_filtered">Gefilterd</string>
+    <string name="card_info_ease_not_applicable">N/B</string>
 </resources>

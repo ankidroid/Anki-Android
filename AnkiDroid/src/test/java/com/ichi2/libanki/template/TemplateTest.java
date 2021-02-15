@@ -16,33 +16,57 @@
 
 package com.ichi2.libanki.template;
 
+import com.ichi2.anki.R;
 import com.ichi2.anki.RobolectricTest;
 
 import org.hamcrest.Matchers;
 import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.robolectric.annotation.Config;
 
 import java.util.HashMap;
+import java.util.Map;
 
 import androidx.test.ext.junit.runners.AndroidJUnit4;
 
 import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.contains;
+import static org.hamcrest.Matchers.containsString;
 import static org.hamcrest.Matchers.is;
 import static org.hamcrest.Matchers.not;
+import static org.hamcrest.Matchers.notNullValue;
+import static org.junit.Assert.assertThrows;
+import static org.junit.Assert.fail;
 
 @RunWith(AndroidJUnit4.class)
 public class TemplateTest extends RobolectricTest {
+    private String render(String template, Map<String, String> fields) {
+        return ParsedNode.parse_inner(template).render(fields, true, getTargetContext());
+    }
 
+    @Test
+    public void fieldStartingWithExclamation() {
+        // Ankidroid used not to display fields whose name start with !
+        HashMap<String, String> context = new HashMap<>();
+        context.put("!Front", "Test");
+        assertThat(render("{{!Front}}", context), is("Test"));
+    }
+    @Test
+    public void missingExclamation() {
+        // Ankidroid used not to display fields whose name start with !
+        HashMap<String, String> context = new HashMap<>();
+        String rendered = render("{{!Front}}", context);
+
+        assertThat(rendered, is(notNullValue()));
+        assertThat(rendered, containsString("there is no field called '!Front'"));
+    }
     @Test
     public void typeInFieldRenders() {
         HashMap<String, String> context = new HashMap<>();
         context.put("Front", "AA{{type:Back}}");
-        Template t = new Template("{{Front}}", context);
 
-        String rendered = t.render();
-
-        assertThat(rendered, is("AA{{type:Back}}"));
+        assertThat(render("{{Front}}", context), is("AA{{type:Back}}"));
     }
 
     @Test
@@ -51,13 +75,11 @@ public class TemplateTest extends RobolectricTest {
 
         HashMap<String, String> context = new HashMap<>();
 
-        Template template = new Template(maybeBad, context);
-        String result = template.render();
-
-        assertThat(result, Matchers.isEmptyString());
+        assertThat(render(maybeBad, context), Matchers.isEmptyString());
     }
 
     @Test
+    @Config(qualifiers = "en")
     public void nestedTemplatesRenderWell() {
         //#6123
         String problematicTemplate = "{{#One}}\n" +
@@ -72,12 +94,10 @@ public class TemplateTest extends RobolectricTest {
         HashMap<String, String> context = new HashMap<>();
         context.put("One", "Card1 - One");
         context.put("Two", "Card1 - Two");
-        Template template = new Template(problematicTemplate, context);
-
-        String result = template.render();
+        String result = render(problematicTemplate, context);
 
         //most important - that it does render
-        assertThat(result, not("{{invalid template}}"));
+        assertThat(result, not("{{Invalid template}}"));
         //Actual value (may be subject to change).
         assertThat(result, is("\n    \n        Card1 - One<br>\n    \n    \n        Card1 - Two\n    \n"));
     }
@@ -90,10 +110,66 @@ public class TemplateTest extends RobolectricTest {
 
         HashMap<String, String> context = new HashMap<>();
         context.put("IllustrationExample", "ilex");
-        Template template = new Template(templateWithSpaces, context);
+        assertThat(render(templateWithSpaces, context), is("Illustration Example: ilex"));
+    }
 
-        String result = template.render();
 
-        assertThat(result, is("Illustration Example: ilex"));
+
+    @Test
+    @Config(qualifiers = "en")
+    public void render() {
+        Map m = new HashMap();
+        m.put("Test", "Test");
+        m.put("Foo", "Foo");
+        assertThat(render("", m),
+                is(""));
+        assertThat(render("Test", m),
+                is("Test"));
+        assertThat(render("{{Test}}", m),
+                is("Test"));
+        assertThat(render("{{Filter2:Filter1:Test}}", m),
+                is("Test"));
+        assertThat(render("{{type:Test}}", m),
+                is("[[type:Test]]"));
+        assertThat(render("{{Filter2:type:Test}}", m),
+                is("[[Filter2:type:Test]]"));
+        assertThat(render("Foo{{Test}}", m),
+                is("FooTest"));
+        assertThat(render("Foo{{!Test}}", m),
+                containsString("there is no field called '!Test'"));
+        assertThat(render("{{#Foo}}{{Test}}{{/Foo}}", m),
+                is("Test"));
+        assertThat(render("{{^Foo}}{{Test}}{{/Foo}}", m),
+                is(""));
+        m.put("Foo", "");
+        assertThat(render("{{#Foo}}{{Test}}{{/Foo}}", m),
+                is(""));
+        assertThat(render("{{^Foo}}{{Test}}{{/Foo}}", m),
+                is("Test"));
+        m.put("Foo", "   \t");
+        assertThat(render("{{#Foo}}{{Test}}{{/Foo}}", m),
+                is(""));
+        assertThat(render("{{^Foo}}{{Test}}{{/Foo}}", m),
+                is("Test"));
+    }
+
+    @Test
+    @Config(qualifiers = "en")
+    public void empty_field_name() {
+        Map m = new HashMap();
+        // Empty field is not usually a valid field name and should be corrected.
+        // However, if we have an empty field name in the collection, this test ensure
+        // that it works as expected.
+        // This is especially relevant because filter applied to no field is valid
+        m.put("Test", "Test");
+        m.put("Foo", "Foo");
+        assertThat(render("{{}}", m), containsString("there is no field called ''"));
+        assertThat(render("{{  }}", m), containsString("there is no field called ''"));
+        assertThat(render("{{filterName:}}", m), is(""));
+        assertThat(render("{{filterName:    }}", m), is(""));
+
+        m.put("", "Test");
+        assertThat(render("{{}}", m), is("Test"));
+        m.clear();
     }
 }

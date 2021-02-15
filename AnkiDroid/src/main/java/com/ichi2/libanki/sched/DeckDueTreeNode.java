@@ -1,7 +1,9 @@
 package com.ichi2.libanki.sched;
 
 import com.ichi2.libanki.Collection;
+import com.ichi2.libanki.Consts;
 import com.ichi2.libanki.Deck;
+import com.ichi2.libanki.DeckConfig;
 import com.ichi2.libanki.Decks;
 import com.ichi2.utils.JSONObject;
 
@@ -70,8 +72,8 @@ public class DeckDueTreeNode extends AbstractDeckTreeNode<DeckDueTreeNode> {
             }
         }
         // limit the counts to the deck's limits
-        JSONObject conf = getCol().getDecks().confForDid(getDid());
-        if (conf.getInt("dyn") == 0) {
+        DeckConfig conf = getCol().getDecks().confForDid(getDid());
+        if (conf.isStd()) {
             Deck deck = getCol().getDecks().get(getDid());
             limitNewCount(conf.getJSONObject("new").getInt("perDay") - deck.getJSONArray("newToday").getInt(1));
             if (addRev) {

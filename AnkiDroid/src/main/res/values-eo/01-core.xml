@@ -154,6 +154,7 @@
     <string name="custom_study_deck_name">Propra lernado</string>
     <string name="custom_study_deck_exists">Unue ŝanĝu nomon de kartaro por propra lernado</string>
     <string name="empty_deck">Tiu ĉi kartaro estas malplena</string>
+    <string name="empty_deck_add_note">Aldoni karton</string>
     <string name="invalid_deck_name">Malĝusta nomo por kartaro</string>
     <string name="studyoptions_empty">Tiu ĉi kartaro estas malplena. Frapetu la butonon “+” por aldoni novan enhavon.</string>
     <string name="studyoptions_limit_reached">Limigo de taga lernado atingita</string>
@@ -201,4 +202,12 @@
     <!-- Context Menu -->
     <string name="card_browser_context_menu" comment="The value which appears in the system context menu. Note the casing difference">Kart-foliumilo</string>
     <string name="context_menu_anki_card_label">Anki-karto</string>
+    <string name="has_a_problem" comment="First field is either front template or back template. Second field is the error message.">Problemo pri %1$s:<br/>%2$s</string>
+    <string name="more_information">Pliaj informoj</string>
+    <string name="no_field">Trovis “{{%1$s}}”, tamen ne ekzistas kampo kun nomo “%1$s”.</string>
+    <string name="closed_tag_not_open">Trovis “{{/%1$s}}”, sed mankas “{{#%1$s}}” aŭ “{{^%1$s}}”.</string>
+    <string name="missing_closing_bracket">Mankas “}}” en “%s”.</string>
+    <string name="open_tag_not_closed">Mankas “{{%s}}”.</string>
+    <string name="wrong_tag_closed">Trovis “{{/%1$s}}”, sed esperis “{{/%2$s}}”.</string>
+    <string name="filter_error">Eraro en filtrilo %s</string>
 </resources>

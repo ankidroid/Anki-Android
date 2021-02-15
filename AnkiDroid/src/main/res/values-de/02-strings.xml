@@ -69,8 +69,8 @@
     <string name="corrupt_font">Fehlerhafte Schriftartdatei %s</string>
     <string name="webview_crash_unknown">Unbekannter Fehler</string>
     <string name="webview_crash_unknwon_detailed">Dies wurde durch einen internen Fehler in der WebView verursacht</string>
-    <string name="webview_crash_oom">Kein Speicher mehr</string>
-    <string name="webview_crash_oom_details">Der WebView wurde vom System beendet. Wahrscheinlich verfügt die App über keinen freien Speicher mehr, oft verursacht durch große Schriftarten oder Medien.</string>
+    <string name="webview_crash_oom">Nicht genügend Speicher</string>
+    <string name="webview_crash_oom_details">Die WebView wurde vom System beendet. Wahrscheinlich verfügt die App über keinen freien Speicher mehr, oft verursacht durch große Schriftarten oder Medien.</string>
     <string name="webview_crash_nonfatal">WebView-Renderer ist abgestürzt. Grund: %s</string>
     <string name="webview_crash_fatal">Schwerer Fehler: WebView-Renderer ist abgestürzt. Grund: %s</string>
     <string name="webview_crash_loop_dialog_title">Fehler beim System-WebView-Rendering</string>
@@ -97,8 +97,8 @@
         <item>Notiz geändert</item>
     </string-array>
     <!-- Custom study options -->
-    <string name="custom_study_increase_new_limit">Heutige Kartenlimit ändern</string>
-    <string name="custom_study_increase_review_limit">Limit der heutigen Rezensionskarte ändern</string>
+    <string name="custom_study_increase_new_limit">Heutiges Limit für neue Karten ändern</string>
+    <string name="custom_study_increase_review_limit">Heutiges Limit für Wiederholungskarten ändern</string>
     <string name="custom_study_review_forgotten">Vergessene Karten nochmal lernen</string>
     <string name="custom_study_review_ahead">Im Voraus lernen</string>
     <string name="custom_study_random_selection">Zufällige Kartenauswahl lernen</string>
@@ -112,7 +112,7 @@
     <string name="note_editor_no_cloze_delations">Dieser Notiztyp muss Auslassungen enthalten</string>
     <string name="note_editor_set_field_language">Feldsprache festlegen</string>
     <string name="note_editor_no_cards_created_all_fields">Der aktuelle Notiztyp hat keine Karten erzeugt.\nBitte wählen Sie einen anderen Notiztyp oder tippen Sie auf »Karten« und fügen Sie eine Feldersetzung hinzu.</string>
-    <string name="note_editor_insert_cloze_no_cloze_note_type">Auslassungen funktionieren nur bei Auslassung-Notiztyp</string>
+    <string name="note_editor_insert_cloze_no_cloze_note_type">Auslassungen funktionieren nur beim Notiztyp »Lückentext«</string>
     <string name="saving_facts">Notiz speichern</string>
     <string name="saving_model">Notiztyp wird gespeichert</string>
     <string name="save">Speichern</string>
@@ -208,7 +208,7 @@
     <string name="sched_end">(Ende)</string>
     <string name="sched_unbury_action">Tippen Sie im Menü »Nicht mehr aufschieben« an, um sie jetzt zu sehen</string>
     <string name="sched_has_buried">Einige verwandte oder aufgeschobene Karten wurden bis morgen verzögert</string>
-    <string name="tag_editor_add_feedback">Berühren Sie »%2$s«, um »%1$s« hinzuzufügen</string>
+    <string name="tag_editor_add_feedback">Tippen Sie auf »%2$s«, um das Hinzufügen von »%1$s« zu bestätigen</string>
     <string name="tag_editor_add_feedback_existing">Existierendes Schlagwort »%1$s« ausgewählt</string>
     <string name="lookup_hint">Nach dem Kopieren des Textes, tippen Sie irgendwo auf der Karteikarte um das Suchsymbol anzuzeigen</string>
     <!-- Time spans -->
@@ -308,8 +308,8 @@
     <string name="reviewer_invalid_api_version_visit_documentation">Ansicht</string>
     <string name="anki_js_error_code">(Fehlercode: %d)</string>
     <!-- About AnkiDroid screen -->
-    <string name="about_ankidroid_successfully_copied_debug">Debug-Informationen in die Zwischenablage kopiert</string>
-    <string name="about_ankidroid_error_copy_debug_info">Fehler beim Kopieren der Debug-Informationen in die Zwischenablage</string>
+    <string name="about_ankidroid_successfully_copied_debug">Diagnoseinformationen in Zwischenablage kopiert</string>
+    <string name="about_ankidroid_error_copy_debug_info">Fehler beim Kopieren der Diagnoseinformationen in die Zwischenablage</string>
     <!-- Card Viewer -->
     <string name="card_viewer_could_not_find_image">Fehler im Karteninhalt: Laden von »%s« fehlgeschlagen</string>
     <string name="card_viewer_media_relative_protocol">Fehler beim Karteninhalt: Medienaktualisierung erforderlich</string>

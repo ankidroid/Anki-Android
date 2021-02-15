@@ -14,6 +14,7 @@ import com.ichi2.libanki.Consts;
 import com.ichi2.libanki.Deck;
 import com.ichi2.libanki.DeckConfig;
 import com.ichi2.libanki.Collection;
+import com.ichi2.libanki.backend.exception.BackendNotSupportedException;
 
 import java.lang.ref.WeakReference;
 import java.util.List;
@@ -22,8 +23,6 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.annotation.VisibleForTesting;
 import timber.log.Timber;
-
-import androidx.annotation.NonNull;
 
 /**
  * In this documentation, I will call "normal use" the fact that between two successive calls to `getCard`, either the
@@ -518,4 +517,15 @@ public abstract class AbstractSched {
      * @return The number of revlog in the collection
      */
     public abstract int logCount();
+
+    public abstract int _current_timezone_offset() throws BackendNotSupportedException;
+
+    public abstract boolean _new_timezone_enabled();
+    /**
+     * Save the UTC west offset at the time of creation into the DB.
+     * Once stored, this activates the new timezone handling code.
+     */
+    public abstract void set_creation_offset() throws BackendNotSupportedException;
+
+    public abstract void clear_creation_offset();
 }

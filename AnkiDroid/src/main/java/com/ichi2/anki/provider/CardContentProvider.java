@@ -44,6 +44,7 @@ import com.ichi2.anki.FlashCardsContract;
 import com.ichi2.anki.FlashCardsContract.CardTemplate;
 import com.ichi2.anki.R;
 import com.ichi2.anki.exception.ConfirmModSchemaException;
+import com.ichi2.anki.exception.FilteredAncestor;
 import com.ichi2.compat.CompatHelper;
 import com.ichi2.libanki.Consts;
 import com.ichi2.libanki.Decks;
@@ -1026,14 +1027,18 @@ public class CardContentProvider extends ContentProvider {
             case DECKS:
                 // Insert new deck with specified name
                 String deckName = values.getAsString(FlashCardsContract.Deck.DECK_NAME);
-                did = col.getDecks().id(deckName, false);
+                did = col.getDecks().id_dont_create(deckName);
                 if (did != null) {
                     throw new IllegalArgumentException("Deck name already exists: " + deckName);
                 }
                 if (!Decks.isValidDeckName(deckName)) {
                     throw new IllegalArgumentException("Invalid deck name '" + deckName + "'");
                 }
-                did = col.getDecks().id(deckName, true);
+                try {
+                    did = col.getDecks().id(deckName);
+                } catch (FilteredAncestor filteredSubdeck) {
+                    throw new IllegalArgumentException("Deck " + deckName + " has filtered ancestor " + filteredSubdeck.getFilteredAncestorName());
+                }
                 Deck deck = col.getDecks().get(did);
                 if (deck != null) {
                     try {

@@ -1,0 +1,213 @@
+<?xml version="1.0" encoding="utf-8"?> 
+ <!-- 
+ ~ Copyright (c) 2009 Andrew <andrewdubya@gmail> 
+ ~ Copyright (c) 2009 Edu Zamora <edu.zasu@gmail.com> 
+ ~ Copyright (c) 2009 Daniel Svaerd <daniel.svard@gmail.com> 
+ ~ Copyright (c) 2009 Nicolas Raoul <nicolas.raoul@gmail.com> 
+ ~ Copyright (c) 2010 Norbert Nagold <norbert.nagold@gmail.com> 
+ ~ This program is free software; you can redistribute it and/or modify it under 
+ ~ the terms of the GNU General Public License as published by the Free Software 
+ ~ Foundation; either version 3 of the License, or (at your option) any later 
+ ~ version. 
+ ~ 
+ ~ This program is distributed in the hope that it will be useful, but WITHOUT ANY 
+ ~ WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A 
+ ~ PARTICULAR PURPOSE. See the GNU General Public License for more details. 
+ ~ 
+ ~ You should have received a copy of the GNU General Public License along with 
+ ~ this program.  If not, see <http://www.gnu.org/licenses/>. 
+ --> 
+ 
+<!--
+~ Copyright (c) 2009 Andrew <andrewdubya@gmail>
+~ Copyright (c) 2009 Edu Zamora <edu.zasu@gmail.com>
+~ Copyright (c) 2009 Daniel Svärd <daniel.svard@gmail.com>
+~ Copyright (c) 2009 Nicolas Raoul <nicolas.raoul@gmail.com>
+~ Copyright (c) 2010 Norbert Nagold <norbert.nagold@gmail.com>
+~
+~ This program is free software; you can redistribute it and/or modify it under
+~ the terms of the GNU General Public License as published by the Free Software
+~ Foundation; either version 3 of the License, or (at your option) any later
+~ version.
+~
+~ This program is distributed in the hope that it will be useful, but WITHOUT ANY
+~ WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A
+~ PARTICULAR PURPOSE. See the GNU General Public License for more details.
+~
+~ You should have received a copy of the GNU General Public License along with
+~ this program.  If not, see <http://www.gnu.org/licenses/>.
+-->
+<resources>
+    <string name="yes">ହଁ</string>
+    <!-- Navigation drawer items-->
+    <string name="decks">ଡେକଗୁଡ଼ିକ</string>
+    <string name="card_browser" comment="The usage of card browser inside the app (note the casing)">କାର୍ଡ ବ୍ରାଉଜର୍</string>
+    <string name="statistics">ପରିସଂଖ୍ୟାନ</string>
+    <string name="settings">ସେଟିଂସମୂହ (ବିକଳ୍ପ ସମୂହ)</string>
+    <string name="help">ସହାୟତା</string>
+    <string name="send_feedback">ମତାମତ ପଠାନ୍ତୁ</string>
+    <string name="studyoptions_due_today">ଆଜି ବାକି:</string>
+    <string name="studyoptions_new_total">ମୋଟ ନୂତନ କାର୍ଡ:</string>
+    <string name="studyoptions_total_cards">ମୋଟ କାର୍ଡ:</string>
+    <string name="studyoptions_eta">ଆନୁମାନିକ ସମୟ (ମିନିଟ୍):</string>
+    <string name="studyoptions_start">ଅଧ୍ୟୟନ</string>
+    <!-- DeckPicker.java -->
+    <string name="expand">ବିସ୍ତାର କରନ୍ତୁ</string>
+    <string name="collapse">ସଂକୋଚନ କରନ୍ତୁ</string>
+    <string name="study_more">ଅଧିକ ଅଧ୍ୟୟନ କରନ୍ତୁ</string>
+    <plurals name="deckpicker_title">
+        <item quantity="one">%1$dଟିଏ କାର୍ଡ ବାକି (%2$s)</item>
+        <item quantity="other">%1$dଟି କାର୍ଡ ବାକି (%2$s)</item>
+    </plurals>
+    <plurals name="reviewer_window_title">
+        <item quantity="one">%d ମିନିଟ୍ ବାକି ଅଛି</item>
+        <item quantity="other">%d ମିନିଟ୍ ବାକି ଅଛି</item>
+    </plurals>
+    <plurals name="reviewer_window_title_hours">
+        <item quantity="one">%d ଘଣ୍ଟା %d ବାକି ଅଛି</item>
+        <item quantity="other">%d ଘଣ୍ଟା %d ବାକି ଅଛି</item>
+    </plurals>
+    <plurals name="reviewer_window_title_days">
+        <item quantity="one">%d ଦିନ %d ବାକି ଅଛି</item>
+        <item quantity="other">%d ଦିନ %d ବାକି ଅଛି</item>
+    </plurals>
+    <string name="no_cards_placeholder_title">ସଂଗ୍ରହ ଖାଲି ଅଛି</string>
+    <string name="no_cards_placeholder_description">+ ଆଇକନ୍ ବ୍ୟବହାର କରି\nକାର୍ଡ ଯୋଡିବା ଆରମ୍ଭ କରନ୍ତୁ |</string>
+    <!-- The deck picker via AnkiStatsTaskHandler.java -->
+    <plurals name="studied_cards_today">
+        <item quantity="one">ଆଜି %2$sରେ %1$dଟେ ପତ୍ର ଅଧ୍ୟୟନ କଲେ</item>
+        <item quantity="other">ଆଜି %2$sରେ %1$dଟି ପତ୍ର ଅଧ୍ୟୟନ କଲେ</item>
+    </plurals>
+    <!-- flashcard_portrait.xml -->
+    <string name="type_answer_hint">ଉତ୍ତର ଟାଇପ୍ କରନ୍ତୁ</string>
+    <string name="show_answer">ଉତ୍ତର ଦେଖନ୍ତୁ</string>
+    <string name="hide_answer">ଉତ୍ତର ଲୁଚାନ୍ତୁ</string>
+    <string name="ease_button_again">ପୁଣି</string>
+    <string name="ease_button_hard">କଠିନ</string>
+    <string name="ease_button_good">ଭଲ</string>
+    <string name="ease_button_easy">ସହଜ</string>
+    <string name="studyoptions_congrats_undo">%s ପୂର୍ବବତ୍ କରନ୍ତୁ</string>
+    <string name="menu_import">ଆମଦାନି କରନ୍ତୁ</string>
+    <string name="undo">ପୂର୍ବବତ୍ କରନ୍ତୁ</string>
+    <string name="undo_action_review">ଶେଷ ସମୀକ୍ଷା</string>
+    <string name="undo_action_change_deck_multi">ଡେକ୍ ପରିବର୍ତ୍ତନ କରନ୍ତୁ</string>
+    <string name="move_all_to_deck">ସମସ୍ତକୁ ଡେକ୍ କୁ ଘୁଞ୍ଚାନ୍ତୁ</string>
+    <string name="unbury">ସ୍ଥଗିତରୁ ଫେରାଇ ଆଣ</string>
+    <string name="rename_deck">ଡେକ୍ କୁ ପୁନଃ ନାମକରଣ କରନ୍ତୁ</string>
+    <string name="create_shortcut">ସର୍ଟକଟ୍‌ ସୃଷ୍ଟି କରନ୍ତୁ</string>
+    <string name="menu_add" comment="A generic add button - Main Deck Picker and card templates. Please inform us if you need more specific strings">ଯୋଡ଼ନ୍ତୁ</string>
+    <string name="menu_add_note">ନୋଟ୍ ଯୋଡ଼ନ୍ତୁ</string>
+    <string name="menu_my_account" comment="Label of the window in which the user should enter their account. This text can\'t be found in AnkiDroid directly.">ସିଙ୍କ୍ ଖାତା</string>
+    <string name="menu_dismiss_note">ଲୁଚାନ୍ତୁ / ଅପସାରଣ କରନ୍ତୁ</string>
+    <string name="menu_bury_card">କାର୍ଡ ସ୍ଥଗିତ କରନ୍ତୁ</string>
+    <string name="menu_bury_note">ନୋଟ୍ ସ୍ଥଗିତ କରନ୍ତୁ</string>
+    <string name="menu_suspend_card">କାର୍ଡ ନିଲମ୍ବିତ କରନ୍ତୁ</string>
+    <string name="menu_suspend_note">ନୋଟ୍ ନିଲମ୍ବିତ କରନ୍ତୁ</string>
+    <string name="menu_bury">ସ୍ଥଗିତ ରଖନ୍ତୁ</string>
+    <string name="menu_suspend">ନିଲମ୍ବନ କରନ୍ତୁ</string>
+    <string name="menu_delete_note">ନୋଟ୍ ଅପସାରଣ କରନ୍ତୁ</string>
+    <string name="menu_flag">ପତାକା</string>
+    <string name="menu_flag_card">କାର୍ଡକୁ ଏକ ପତାକା ନ୍ୟସ୍ତ କରନ୍ତୁ</string>
+    <string name="menu_flag_card_zero">ପତାକା ଦିଅ ନାହିଁ</string>
+    <string name="menu_flag_card_one">ନାଲି ପତାକା</string>
+    <string name="menu_flag_card_two">କମଳା ପତାକା</string>
+    <string name="menu_flag_card_three">ସବୁଜ ପତାକା</string>
+    <string name="menu_flag_card_four">ନୀଳ ପତାକା</string>
+    <string name="menu_edit_tags">ଟ୍ୟାଗ୍ ସଂପାଦନ କରନ୍ତୁ</string>
+    <string name="delete_note_message">ଆପଣ ପ୍ରକୃତରେ ଏହି ନୋଟ୍ ଏବଂ ଏହାର ସମସ୍ତ କାର୍ଡ ବିଲୋପ କରିବାକୁ ଚାହୁଁଛନ୍ତି କି?\n%s</string>
+    <string name="menu_select">ଟେକ୍ସଟ ଚୟନ କରନ୍ତୁ</string>
+    <string name="menu_search">%1$s ରେ ଦେଖନ୍ତୁ</string>
+    <string name="menu_mark_note">ନୋଟ ଚିନ୍ହିତ କରନ୍ତୁ</string>
+    <string name="menu_unmark_note">ନୋଟ ଅଣଚିନ୍ହିତ କରନ୍ତୁ</string>
+    <string name="menu_toggle_mic_tool_bar">ଉଚ୍ଚାରଣ ଯାଞ୍ଚ କରନ୍ତୁ</string>
+    <string name="new_deck">ଡେକ୍ ସୃଷ୍ଟି କରନ୍ତୁ</string>
+    <string name="create" comment="Button to create a filtered deck">ସୃଷ୍ଟି କରନ୍ତୁ</string>
+    <string name="new_dynamic_deck">ଫିଲ୍ଟର୍ ଡେକ୍ ସୃଷ୍ଟି କରନ୍ତୁ</string>
+    <string name="night_mode">ରାତ୍ରି ମୋଡ୍</string>
+    <string name="directory_inaccessible">AnkiDroid directory ଅପ୍ରବେଶନୀୟ ଅଟେ</string>
+    <!--This is shown when AnkiDroid starts up with no storage permissions.
+    The user is taken to the "App Info" screen, and needs to click "Permissions" and
+    grant AnkiDroid the \'Storage\' permission. This needs to be a fairly generic message as implementations
+    of the permissions/app info screen will differ between devices. -->
+    <string name="startup_no_storage_permission">ଜାରି ରଖିବାକୁ ଦୟାକରି AnkiDroid କୁ ‘ଷ୍ଟୋରେଜ୍’ ଅନୁମତି ଦିଅନ୍ତୁ</string>
+    <!--
+        The time_quantities are units of time. They are used without
+        plurals or dots.
+        s, min, h, d, are standard (ISO 31-1) units and should usually
+        not be translated, at least not for languages using the Latin
+        alphabet.
+    -->
+    <string name="time_quantity_seconds">%d ସେକେଣ୍ଡ</string>
+    <string name="time_quantity_minutes">%d ମିନିଟ୍‌</string>
+    <string name="time_quantity_hours_minutes">%1$d ଘଣ୍ଟା %2$d ମିନିଟ୍‌</string>
+    <string name="time_quantity_hours">%d ଘଣ୍ଟା</string>
+    <string name="time_quantity_days">%d ଦିନ</string>
+    <string name="time_quantity_days_hours">%1$d ଦିନ %2$d ଘଣ୍ଟା</string>
+    <string name="time_quantity_months">%.1f ମା</string>
+    <string name="time_quantity_years">%.1f ବର୍ଷ</string>
+    <!-- or "%.1f a" -->
+    <string name="rebuild_filtered_deck">ଶୋଧିତ ତାସଖଣ୍ଡର ପୁନଃନିର୍ମାଣ..</string>
+    <string name="rebuild_cram_label">ପୁନଃନିର୍ମାଣ</string>
+    <string name="empty_cram_label">ଖାଲି</string>
+    <string name="create_subdeck">ଉପତାସଖଣ୍ଡ ନିର୍ମାଣ</string>
+    <string name="empty_filtered_deck">ଶୋଧିତ ଉପତାସଖଣ୍ଡ ଖାଲି ହଉଛି</string>
+    <string name="custom_study_deck_name">ଇଚ୍ଛାରୂପିତ ଅଧ୍ୟୟନ ଅଧିବେଶନ</string>
+    <string name="custom_study_deck_exists">ଆଗ ସାମ୍ପ୍ରତିକ ଇଚ୍ଛାରୂପିତ ଅଧ୍ୟୟନାଧିବେଶନକୁ ପୁନଃନାମିତ କରନ୍ତୁ</string>
+    <string name="empty_deck">ତାସଖଣ୍ଡଟି ଖାଲି ଅଛି</string>
+    <string name="empty_deck_add_note">କାର୍ଡ ଯୋଡ଼ନ୍ତୁ</string>
+    <string name="invalid_deck_name">ଅବୈଧ ତାସଖଣ୍ଡ ନାମ</string>
+    <string name="studyoptions_empty">ଏହି ଡେକ୍ ଖାଲି ଅଛି । ନୂତନ ବିଷୟବସ୍ତୁ ଯୋଗ କରିବା ପାଇଁ + ବଟନ୍ ଦବାନ୍ତୁ |</string>
+    <string name="studyoptions_limit_reached">ଦୈନିକ ଅଧ୍ୟୟନ ସୀମା ପହଞ୍ଚିଛି</string>
+    <string name="studyoptions_empty_schedule">ଅଧ୍ୟୟନ ପାଇଁ କୌଣସି ପତ୍ର ନିର୍ଦ୍ଧାରିତ ହୋଇନାହିଁ</string>
+    <string name="studyoptions_congrats_finished">ଅଭିନନ୍ଦନ! ଆପଣ ଏବେ ପାଇଁ ସବୁ ସମାପ୍ତ କରିଛନ୍ତି |</string>
+    <string name="studyoptions_congrats_more_rev">ଆଜିର ସୀମା ପହଞ୍ଚିଯାଇଛି, କିନ୍ତୁ ସମୀକ୍ଷା ପାଇଁ ଏବେ ବି କାର୍ଡ ରହିଛି | ଆପଣ ବିକଳ୍ପଗୁଡ଼ିକରେ ସୀମା ବୃଦ୍ଧି କରିପାରିବେ |</string>
+    <string name="studyoptions_congrats_more_new">ଦୈନିକ ସୀମା ପହଞ୍ଚିଛି | ଅଧିକ ନୂଆ କାର୍ଡ ଉପଲବ୍ଧ ରହିଛି; ଆପଣ ବିକଳ୍ପଗୁଡ଼ିକରେ ସୀମା ବୃଦ୍ଧି କରିପାରିବେ, କିନ୍ତୁ ଏହା ଆପଣଙ୍କର ସ୍ୱଳ୍ପକାଳୀନ ସମୀକ୍ଷା କାର୍ଯ୍ୟଭାର ବୃଦ୍ଧି କରିବ |</string>
+    <string name="studyoptions_congrats_custom">ସାଧାରଣ କାର୍ଯ୍ୟସୂଚୀ ବାହାରେ ଅଧ୍ୟୟନ କରିବାକୁ, \"ଇଚ୍ଛାରୂପିତ ଅଧ୍ୟୟନ\" ବଟନ୍ ସ୍ପର୍ଶ କରନ୍ତୁ</string>
+    <string name="studyoptions_no_cards_due">କୌଣସି ପତ୍ର ବାକି ନାହିଁ</string>
+    <string name="sd_card_not_mounted">Device storage ଭର୍ତ୍ତି କରାଯାଇ ନାହିଁ</string>
+    <string name="empty_cloze_warning">ଏହି ନୋଟ୍ କୁ ସଂପାଦନ କରନ୍ତୁ ଏବଂ କିଛି କ୍ଲୋଜ୍ ବିଲୋପ ଯୋଗ କରନ୍ତୁ | (%1$s)</string>
+    <string name="button_sync">ସିଙ୍କ୍</string>
+    <string name="cancel_sync_confirm">ଆପଣ ସିଙ୍କ୍ କୁ ବାତିଲ କରିବାକୁ ଚାହୁଁଛନ୍ତି କି?</string>
+    <string name="continue_sync">ସିଙ୍କ୍ ଜାରି ରଖନ୍ତୁ</string>
+    <string name="sync_cancelled">ସିଙ୍କ୍ ବାତିଲ ହୋଇଛି</string>
+    <string name="sync_cancel_message">ବାତିଲ ହେଉଛି...\nଏହା କିଛି ସମୟ ନେଇପାରେ |</string>
+    <string name="export">ରପ୍ତାନି</string>
+    <string name="export_collection">ସଂଗ୍ରହର ରପ୍ତାନି</string>
+    <string name="export_deck">ତାସଖଣ୍ଡର ରପ୍ତାନି</string>
+    <string name="nothing">କିଛି ନାହିଁ</string>
+    <!-- Card template editor -->
+    <string name="title_activity_template_editor">କାର୍ଡ ପ୍ରକାର</string>
+    <string name="card_template_editor_front">ସାମ୍ନା ଟେମ୍ପଲେଟ୍</string>
+    <string name="card_template_editor_back">ପଛ ଟେମ୍ପଲେଟ୍</string>
+    <string name="card_template_editor_styling">ଶୈଳିକରଣ</string>
+    <string name="card_template_editor_menu_card_browser_appearance">କାର୍ଡ ବ୍ରାଉଜରର ଦୃଶ୍ୟ</string>
+    <string name="card_template_editor_deck_override">ତାସଖଣ୍ଡର ନବଲିଖନ</string>
+    <string name="card_template_editor_cant_delete">ଅତିକମରେ ଗୋଟିଏ କାର୍ଡ ପ୍ରକାର ଆବଶ୍ୟକ</string>
+    <plurals name="card_template_editor_confirm_delete">
+        <item quantity="one">\"%2$s\" କାର୍ଡ ପ୍ରକାର ଏବଂ ଏହାର %1$dଟେ କାର୍ଡ କୁ ଅପସାରଣ କରିବେ କି?</item>
+        <item quantity="other">\"%2$s\" କାର୍ଡ ପ୍ରକାର ଏବଂ ଏହାର %1$dଟି କାର୍ଡ କୁ ଅପସାରଣ କରିବେ କି?</item>
+    </plurals>
+    <string name="invalid_template">ଗୋଟିଏ କାର୍ଡ ସୃଷ୍ଟି କରାଯାଇପାରିଲା ନାହିଁ</string>
+    <string name="card_template_editor_would_delete_note">ଏହି କାର୍ଡ ପ୍ରକାର ଅପସାରଣ କରିବା ଦ୍ୱାରା ଗୋଟିଏ କିମ୍ବା ଅଧିକ ନୋଟ୍ ବିଲୋପ ହୋଇପାରେ | ଦୟାକରି ପ୍ରଥମେ ଏକ ନୂତନ କାର୍ଡ ପ୍ରକାର ସୃଷ୍ଟି ଏବଂ ସଂରକ୍ଷଣ କରନ୍ତୁ |</string>
+    <string name="card_template_editor_save_error">କାର୍ଡ ଟେମ୍ପଲେଟ୍ ପରିବର୍ତ୍ତନଗୁଡ଼ିକୁ ସଞ୍ଚୟ କରିବାରେ ଅସମର୍ଥ: %s</string>
+    <string name="template_for_current_card_deleted">ସାମ୍ପ୍ରତିକ କାର୍ଡ ପାଇଁ କାର୍ଡ ପ୍ରକାର ବିଲୋପ ହେଇଯାଇଛି | </string>
+    <!-- Card Browser Appearance -->
+    <string name="card_template_browser_appearance_title">ବ୍ରାଉଜର ରୂପ</string>
+    <string name="current_and_default_deck">%1$s (%2$s)</string>
+    <!-- card Info -->
+    <string name="card_info_title">କାର୍ଡ ସୂଚନା</string>
+    <!-- Permissions -->
+    <string name="read_write_permission_label">Ankidroid ଡାଟାବେସ୍ କୁ ପଢ଼ନ୍ତୁ ଏବଂ ଲେଖନ୍ତୁ</string>
+    <string name="read_write_permission_description">ବିଦ୍ୟମାନ ନୋଟ୍, କାର୍ଡ, ନୋଟ୍ ପ୍ରକାର ଏବଂ ଡେକ୍ ପ୍ରବେଶ କରିବା ବ୍ୟତୀତ ନୂତନଗୁଡ଼ିକୁ ସୃଷ୍ଟି କରନ୍ତୁ</string>
+    <!-- Context Menu -->
+    <string name="card_browser_context_menu" comment="The value which appears in the system context menu. Note the casing difference">କାର୍ଡ ବ୍ରାଉଜର୍</string>
+    <string name="context_menu_anki_card_label">Anki କାର୍ଡ</string>
+    <string name="has_a_problem" comment="First field is either front template or back template. Second field is the error message.">%1$sରେ ଏକ ସମସ୍ୟା ଅଛି:<br/>%2$s</string>
+    <string name="more_information">ଅଧିକ ସୂଚନା</string>
+    <string name="no_field">\'{{%1$s}}\' ମିଳିଲା, କିନ୍ତୁ \'%1$s\' ନାମକ କୌଣସି କ୍ଷେତ୍ର ନାହିଁ।</string>
+    <string name="closed_tag_not_open">\'{{/%1$s}}\' ମିଳିଲା, କିନ୍ତୁ \'{{#%1$s}}\' କିମ୍ବା \'{{^%1$s}}\' ନିଖୋଜ ଅଛି।</string>
+    <string name="missing_closing_bracket">\'%s\' ରେ \'}}\' ନିଖୋଜ ଅଛି।</string>
+    <string name="open_tag_not_closed">\'{{%s}}\' ନିଖୋଜ ଅଛି।</string>
+    <string name="wrong_tag_closed">\'{{/%1$s}}\' ମିଳିଲା, କିନ୍ତୁ \'{{/%2$s}}\' ଆଶା କରାଯାଇଥିଲା</string>
+    <string name="filter_error">ଛାଣକ %s ରେ ତ୍ରୁଟି</string>
+</resources>

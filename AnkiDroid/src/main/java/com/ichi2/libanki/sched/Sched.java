@@ -54,6 +54,8 @@ import timber.log.Timber;
 
 
 import static com.ichi2.async.CancelListener.isCancelled;
+import static com.ichi2.libanki.Consts.DECK_DYN;
+import static com.ichi2.libanki.Consts.DECK_STD;
 import static com.ichi2.libanki.sched.Counts.Queue.*;
 import static com.ichi2.libanki.sched.Counts.Queue;
 import static com.ichi2.libanki.stats.Stats.SECONDS_PER_DAY;
@@ -366,6 +368,7 @@ public class Sched extends SchedV2 {
          * _getLrnCard which did remove the card from the queue. _sortIntoLrn will add the card back to the queue if
          * required when the card is reviewed.
          */
+        mLrnQueue.setFilled();
         try (Cursor cur = mCol.getDb().query(
                            "SELECT due, id FROM cards WHERE did IN " + _deckLimit() + " AND queue = " + Consts.QUEUE_TYPE_LRN + " AND due < ? AND id != ? LIMIT ?",
                            mDayCutoff, currentCardId(), mReportLimit)) {
@@ -624,7 +627,7 @@ public class Sched extends SchedV2 {
      * */
     @Override
     protected int _deckRevLimitSingle(@NonNull Deck d, boolean considerCurrentCard) {
-        if (d.getInt("dyn") != 0) {
+        if (d.isDyn()) {
             return mReportLimit;
         }
         long did = d.getLong("id");
@@ -706,7 +709,7 @@ public class Sched extends SchedV2 {
                 }
                 if (!mRevQueue.isEmpty()) {
                     // ordering
-                    if (mCol.getDecks().get(did).getInt("dyn") != 0) {
+                    if (mCol.getDecks().get(did).isDyn()) {
                         // dynamic decks need due order preserved
                         // Note: libanki reverses mRevQueue and returns the last element in _getRevCard().
                         // AnkiDroid differs by leaving the queue intact and returning the *first* element
@@ -898,7 +901,7 @@ public class Sched extends SchedV2 {
             did = mCol.getDecks().selected();
         }
         Deck deck = mCol.getDecks().get(did);
-        if (deck.getInt("dyn") == 0) {
+        if (deck.isStd()) {
             Timber.e("error: deck is not a filtered deck");
             return;
         }
@@ -1078,7 +1081,7 @@ public class Sched extends SchedV2 {
 
     private boolean _resched(@NonNull Card card) {
         DeckConfig conf = _cardConf(card);
-        if (conf.getInt("dyn") == 0) {
+        if (conf.getInt("dyn") == DECK_STD) {
             return true;
         }
         return conf.getBoolean("resched");

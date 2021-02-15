@@ -20,17 +20,17 @@
  
 <resources>
     <!--Fields-->
-    <string name="front_field_name">Front</string>
-    <string name="back_field_name">Back</string>
-    <string name="text_field_name" comment="Field\'s name in Cloze Note type">Text</string>
-    <string name="extra_field_name">Extra</string>
-    <string name="field_to_ask_front_name">Add Reverse</string>
+    <string name="front_field_name">Mặt trước</string>
+    <string name="back_field_name">Mặt sau</string>
+    <string name="text_field_name" comment="Field\'s name in Cloze Note type">Văn bản</string>
+    <string name="extra_field_name">Bổ sung</string>
+    <string name="field_to_ask_front_name">Bổ sung Đảo ngược</string>
     <!--Card type-->
-    <string name="card_n_name">Card %d</string>
+    <string name="card_n_name">Thẻ %d</string>
     <!--Note type-->
-    <string name="basic_model_name">Basic</string>
+    <string name="basic_model_name">Cơ bản</string>
     <string name="cloze_model_name">Cloze</string>
-    <string name="basic_typing_model_name">Basic (type in the answer)</string>
-    <string name="forward_reverse_model_name">Basic (and reversed card)</string>
-    <string name="forward_optional_reverse_model_name">Basic (optional reversed card)</string>
+    <string name="basic_typing_model_name">Cơ bản (nhập câu trả lời)</string>
+    <string name="forward_reverse_model_name">Cơ bản (và thẻ đảo ngược)</string>
+    <string name="forward_optional_reverse_model_name">Cơ bản (thẻ đảo ngược tùy chọn)</string>
 </resources>

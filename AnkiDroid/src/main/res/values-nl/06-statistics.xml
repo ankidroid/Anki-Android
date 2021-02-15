@@ -42,8 +42,8 @@
     <string name="statistics_mature">Rijp</string>
     <string name="statistics_young_and_learn">Jong+Leren</string>
     <string name="statistics_unlearned">Nieuw</string>
-    <string name="statistics_suspended">Suspended</string>
-    <string name="statistics_buried">Buried</string>
+    <string name="statistics_suspended">Geschorst</string>
+    <string name="statistics_buried">Verborgen</string>
     <string name="statistics_relearn" comment="Labbel of the axis in the graph indicating the number of reviews of cards while they are in relearning mode.">Opnieuw leren</string>
     <string name="statistics_learn" comment="Label of the number of review of card in learning done in some amount of time">Leren</string>
     <string name="statistics_cram">Blokken</string>
@@ -78,8 +78,8 @@
     <string name="stats_overview_forecast_average">Gemiddeld: &lt;b&gt;%1$.1f&lt;/b&gt; overhoringen/per dag</string>
     <string name="stats_overview_forecast_due_tomorrow">Morgen te doen: &lt;b&gt;%1$d&lt;/b&gt;</string>
     <string name="stats_overview_days_studied">Dagen gestudeerd: &lt;b&gt;%1$d%%&lt;/b&gt; (%2$d van %3$d)</string>
-    <string name="stats_overview_reviews_per_day_studydays">Gemiddelde voor dagen gestudeerd: &lt;b&gt;%1$.1f&lt;/b&gt; reviews/dag</string>
-    <string name="stats_overview_reviews_per_day_all">Had je elke dag gestudeerd: &lt;B&gt;%1$.1f&lt;/b&gt; reviews/dag</string>
+    <string name="stats_overview_reviews_per_day_studydays">Gemiddelde voor dagen gestudeerd: &lt;b&gt;%1$.1f&lt;/b&gt; overhoringen/dag</string>
+    <string name="stats_overview_reviews_per_day_all">Had je elke dag gestudeerd: &lt;B&gt;%1$.1f&lt;/b&gt; overhoringen/dag</string>
     <string name="stats_overview_total_time_in_period">Totaal: &lt;b&gt;%d&lt;/b&gt; minuten</string>
     <string name="stats_overview_time_per_day_studydays">Gemiddelde voor dagen gestudeerd: &lt;b&gt;%1$.1f&lt;/b&gt; minuten/dag</string>
     <string name="stats_overview_time_per_day_all">Had je elke dag gestudeerd: &lt;b&gt;%1$.1f&lt;/b&gt; minuten/dag</string>
@@ -96,7 +96,7 @@
     <string name="stats_overview_answer_buttons_young">Jong: &lt;b&gt;%1$.2f%%&lt;/b&gt; juist (%2$d van %3$d)</string>
     <string name="stats_overview_answer_buttons_mature">Rijp: &lt;b&gt;%1$.2f%%&lt;/b&gt; juist (%2$d van %3$d)</string>
     <string name="stats_overview_card_types_total_cards">Totaal aantal kaarten: &lt;b&gt;%d&lt;/b&gt;</string>
-    <string name="stats_overview_card_types_total_notes">Totaal aantal notities: &lt;b&gt;%d&lt;/b&gt;</string>
+    <string name="stats_overview_card_types_total_notes">Totaal aantal memo\'s: &lt;b&gt;%d&lt;/b&gt;</string>
     <string name="stats_overview_card_types_lowest_ease">Laagste gemakkelijkheid: &lt;b&gt;%.0f%%&lt;/b&gt;</string>
     <string name="stats_overview_card_types_average_ease">Gemiddelde gemakkelijkheid: &lt;b&gt;%.0f%%&lt;/b&gt;</string>
     <string name="stats_overview_card_types_highest_ease">Hoogste gemakkelijkheid: &lt;b&gt;%.0f%%&lt;/b&gt;</string>
