@@ -278,13 +278,7 @@ public class Preferences extends AppCompatPreferenceActivity implements Preferen
                 initializeCustomFontsDialog(screen);
                 break;
             case "com.ichi2.anki.prefs.bindings":
-                String test1 = Binding.keyCode(KeyEvent.KEYCODE_VOLUME_UP).toString();
-                String test2 = Binding.keyCode(KeyEvent.KEYCODE_VOLUME_DOWN).toString();
-                String test3 = Binding.keyCode(KeyEvent.KEYCODE_MEDIA_NEXT).toString();
-                String test4 = Binding.keyCode(KeyEvent.KEYCODE_MEDIA_PREVIOUS).toString();
                 listener.addPreferencesFromResource(R.xml.preferences_bindings);
-                screen = listener.getPreferenceScreen();
-
                 break;
             case "com.ichi2.anki.prefs.custom_buttons":
                 getSupportActionBar().setTitle(R.string.custom_buttons);
