@@ -15,7 +15,7 @@ Each recommendation is presented as a rule followed by examples
 
 ## Recommendations Importance
 
-In this document the words _must_, _should_ and _can_ are used to convey the importance of a recommendation. A must requirement have to be followed, a should is a strong recommendation and a can is a general suggestion.
+In this document the words _must_, _should_ and _can_ are used to convey the importance of a recommendation. A _must_ requirement has to be followed, a _should_ is a strong recommendation and a _can_ is a general suggestion.
 
 ### Automatic Style Checking and Formatting
 
