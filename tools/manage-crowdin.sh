@@ -42,7 +42,7 @@ declare -a I18N_FILES=(
   '09-backup'
   '10-preferences'
   '11-arrays'
-  '12-dont-translate'
+  '12-do-not-translate'
   '14-marketdescription'
   '16-multimedia-editor'
   '17-model-manager'
