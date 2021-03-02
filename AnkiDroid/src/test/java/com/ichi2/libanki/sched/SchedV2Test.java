@@ -1740,6 +1740,7 @@ public class SchedV2Test extends RobolectricTest {
         deck.put("resched", false);
         sched.rebuildDyn(did);
         col.reset();
+        advanceRobolectricLooper();
         Card card;
         for(int i = 0; i < 3; i++) {
             card = sched.getCard();
