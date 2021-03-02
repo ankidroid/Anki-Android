@@ -57,7 +57,7 @@
     <string name="study_more">Estudar mais</string>
     <plurals name="deckpicker_title">
         <item quantity="one">%1$d cartão programado (%2$s)</item>
-        <item quantity="other">%1$d cartões programados (%2$s)</item>
+        <item quantity="other">%1$d cards programados (%2$s)</item>
     </plurals>
     <plurals name="reviewer_window_title">
         <item quantity="one">%d minuto restante</item>
@@ -81,7 +81,7 @@
     <!-- flashcard_portrait.xml -->
     <string name="type_answer_hint">Digite a resposta</string>
     <string name="show_answer">Mostrar resposta</string>
-    <string name="hide_answer">Esconder respostas.</string>
+    <string name="hide_answer">Ocultar resposta</string>
     <string name="ease_button_again">Novamente</string>
     <string name="ease_button_hard">Difícil</string>
     <string name="ease_button_good">Bom</string>
@@ -99,11 +99,11 @@
     <string name="menu_add_note">Adicionar nota</string>
     <string name="menu_my_account" comment="Label of the window in which the user should enter their account. This text can\'t be found in AnkiDroid directly.">Sincronizar conta</string>
     <string name="menu_dismiss_note">Ocultar / excluir</string>
-    <string name="menu_bury_card">Ocultar card</string>
+    <string name="menu_bury_card">Enterrar card</string>
     <string name="menu_bury_note">Enterrar nota</string>
     <string name="menu_suspend_card">Suspender cartão</string>
     <string name="menu_suspend_note">Suspender nota</string>
-    <string name="menu_bury">Ocultar</string>
+    <string name="menu_bury">Enterrar</string>
     <string name="menu_suspend">Suspender</string>
     <string name="menu_delete_note">Excluir nota</string>
     <string name="menu_flag">Sinalização</string>
@@ -158,14 +158,14 @@
     <string name="invalid_deck_name">Nome do baralho inválido</string>
     <string name="studyoptions_empty">Este baralho está vazio. Pressione o botão + para adicionar novos conteúdos.</string>
     <string name="studyoptions_limit_reached">Limite diário de estudo atingido</string>
-    <string name="studyoptions_empty_schedule">Sem cartões programados para estudar</string>
+    <string name="studyoptions_empty_schedule">Sem cards programados para estudar</string>
     <string name="studyoptions_congrats_finished">Parabéns! Você terminou por enquanto.</string>
-    <string name="studyoptions_congrats_more_rev">O limite de hoje foi atingido, mas ainda existem cartões para serem revistos. Você pode aumentar o limite nas opções.</string>
-    <string name="studyoptions_congrats_more_new">O limite de hoje foi atingido. Ainda existem novos cartões; você pode aumentar o limite nas opções, mas isso irá aumentar a sua carga de revisões a curto prazo.</string>
+    <string name="studyoptions_congrats_more_rev">O limite foi atingido, mas ainda existem cards não revisados. Você pode aumentar o limite nas opções.</string>
+    <string name="studyoptions_congrats_more_new">O limite foi atingido. Ainda existem novos cards. Você pode aumentar o limite diário nas opções, mas isso irá aumentar a sua carga de revisões a curto prazo.</string>
     <string name="studyoptions_congrats_custom">Para estudar fora do agendamento normal, toque no botão \"Estudo personalizado\".</string>
     <string name="studyoptions_no_cards_due">Sem cartões programados por enquanto.</string>
     <string name="sd_card_not_mounted">Armazenamento do dispositivo não montado</string>
-    <string name="empty_cloze_warning">Edite esta nota e use Ocultar em algum termo. (%1$s)</string>
+    <string name="empty_cloze_warning">Edite e use Ocultar em algum termo. (%1$s)</string>
     <string name="button_sync">Sincronizar</string>
     <string name="cancel_sync_confirm">Você quer cancelar a sincronização?</string>
     <string name="continue_sync">Continuar a sincronização</string>
@@ -195,7 +195,7 @@
     <string name="card_template_browser_appearance_title">Aparência do navegador</string>
     <string name="current_and_default_deck">%1$s (%2$s)</string>
     <!-- card Info -->
-    <string name="card_info_title">Informações do cartão</string>
+    <string name="card_info_title">Card Info</string>
     <!-- Permissions -->
     <string name="read_write_permission_label">Ler e escrever para o banco de dados do AnkiDroid</string>
     <string name="read_write_permission_description">acessar notas, cartões, modelos e baralhos existentes, bem como criar novos</string>
