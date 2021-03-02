@@ -3108,7 +3108,7 @@ public class SchedV2 extends AbstractSched {
     protected void _sortIntoLrn(long due, long id) {
         if (!mLrnQueue.isFilled()) {
             // We don't want to add an element to the queue if it's not yet assumed to have its normal content.
-            // Adding anything is useless while the queue awaits beeing filled
+            // Adding anything is useless while the queue awaits being filled
             return;
         }
         ListIterator<LrnCard> i = mLrnQueue.listIterator();

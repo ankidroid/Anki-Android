@@ -1238,13 +1238,17 @@ public class SchedV2Test extends RobolectricTest {
         // ordinals should arrive in order
         AbstractSched sched = col.getSched();
         Card c = sched.getCard();
+        advanceRobolectricLooperWithSleep();
         sched.answerCard(c, sched.answerButtons(c) - 1); // not upstream. But we are not expecting multiple getCard without review
         assertEquals(0, c.getOrd());
         c = sched.getCard();
+        advanceRobolectricLooperWithSleep();
         sched.answerCard(c, sched.answerButtons(c) - 1); // not upstream. But we are not expecting multiple getCard without review
         assertEquals(1, c.getOrd());
         c = sched.getCard();
+        advanceRobolectricLooperWithSleep();
         sched.answerCard(c, sched.answerButtons(c) - 1); // not upstream. But we are not expecting multiple getCard without review
+        advanceRobolectricLooperWithSleep();
         assertEquals(2, c.getOrd());
     }
 
