@@ -172,7 +172,7 @@
     <string name="learn_cutoff">Grenzwert für vorzeitiges Lernen</string>
     <string name="time_limit">Zeitlimitwert</string>
     <string name="time_limit_summ">XXX min</string>
-    <string name="new_timezone">New timezone handling</string>
+    <string name="new_timezone">Umgang mit neuer Zeitzone</string>
     <string name="day_offset">Anfang des nächsten Tages</string>
     <string name="day_offset_summ">XXX Stunden nach Mitternacht</string>
     <string name="sched_ver">Experimenteller Zeitplaner V2</string>

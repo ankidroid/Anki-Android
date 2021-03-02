@@ -128,5 +128,5 @@
     <!-- Deck Picker Sync Icon -->
     <string name="sync_menu_title_full_sync">Синхронизация (полная)</string>
     <string name="sync_menu_title_no_account">Синхронизация (при входе)</string>
-    <string name="sync_error_unknown_host_readable">Could not connect to AnkiWeb. Is your internet working?\n\n%s</string>
+    <string name="sync_error_unknown_host_readable">Не удалось подключиться к AnkiWeb. Ваш интернет работает?\n\n%s</string>
 </resources>
