@@ -1481,17 +1481,7 @@ public class SchedV2 extends AbstractSched {
             lim--;
         }
 
-        if (parentLimit != null) {
-            return Math.min(parentLimit, lim);
-        } else if (!d.getString("name").contains("::")) {
-            return lim;
-        } else {
-            for (@NonNull Deck parent : mCol.getDecks().parents(did)) {
-                // pass in dummy parentLimit so we don't do parent lookup again
-                lim = Math.min(lim, _deckRevLimitSingle(parent, lim, considerCurrentCard));
-            }
-            return lim;
-        }
+        return lim;
     }
 
 
