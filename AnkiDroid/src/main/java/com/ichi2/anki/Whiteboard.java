@@ -197,6 +197,9 @@ public class Whiteboard extends View {
                     boolean didErase = mUndo.erase((int) event.getX(), (int) event.getY());
                     if (didErase) {
                         mUndo.apply();
+                        if (undoEmpty() && mCardViewer.get() != null) {
+                            mCardViewer.get().supportInvalidateOptionsMenu();
+                        }
                     }
                 }
                 return true;
