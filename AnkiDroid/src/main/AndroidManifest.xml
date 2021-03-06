@@ -332,75 +332,6 @@
             android:exported="false"
             android:configChanges="locale"
             />
-
-        <!-- small widget -->
-        <receiver
-            android:name="com.ichi2.widget.AnkiDroidWidgetSmall"
-            android:label="@string/widget_small"
-            >
-            <intent-filter>
-                <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
-            </intent-filter>
-
-            <meta-data
-                android:name="android.appwidget.provider"
-                android:resource="@xml/widget_provider_small"
-                />
-        </receiver>
-
-        <!-- "Add Note" widget -->
-        <receiver
-            android:name="com.ichi2.widget.AddNoteWidget"
-            android:label="@string/menu_add_note">
-            <intent-filter>
-                <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
-            </intent-filter>
-
-            <meta-data
-                android:name="android.appwidget.provider"
-                android:resource="@xml/widget_provider_add_note"
-                />
-        </receiver>
-
-        <!-- Service to perform web API queries -->
-        <service android:name="com.ichi2.widget.AnkiDroidWidgetSmall$UpdateService" />
-
-        <receiver
-            android:name="com.ichi2.anki.receiver.SdCardReceiver"
-            android:enabled="true"
-            android:exported="true"
-            >
-            <intent-filter>
-                <action android:name="android.intent.action.MEDIA_MOUNTED" />
-
-                <data android:scheme="file" />
-            </intent-filter>
-            <intent-filter>
-                <action android:name="android.intent.action.MEDIA_EJECT" />
-
-                <data android:scheme="file" />
-            </intent-filter>
-        </receiver>
-
-        <receiver android:name=".services.NotificationService"
-            android:enabled="true"
-            android:exported="false"
-            />
-        <receiver
-            android:name=".services.ReminderService"
-            android:enabled="true"
-            android:exported="false"
-            />
-        <receiver
-            android:name=".services.BootService"
-            android:enabled="true"
-            android:exported="false"
-            >
-            <intent-filter>
-                <action android:name="android.intent.action.BOOT_COMPLETED" />
-            </intent-filter>
-        </receiver>
-
         <activity
             android:name=".multimediacard.activity.MultimediaEditFieldActivity"
             android:label="@string/title_activity_edit_text"
@@ -442,6 +373,75 @@
             android:exported="false"
             android:configChanges="keyboardHidden|orientation|locale|screenSize"
             />
+
+        <!-- Service to perform web API queries -->
+        <service android:name="com.ichi2.widget.AnkiDroidWidgetSmall$UpdateService" />
+
+        <!-- small widget -->
+        <receiver
+            android:name="com.ichi2.widget.AnkiDroidWidgetSmall"
+            android:label="@string/widget_small"
+            >
+            <intent-filter>
+                <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
+            </intent-filter>
+
+            <meta-data
+                android:name="android.appwidget.provider"
+                android:resource="@xml/widget_provider_small"
+                />
+        </receiver>
+
+        <!-- "Add Note" widget -->
+        <receiver
+            android:name="com.ichi2.widget.AddNoteWidget"
+            android:label="@string/menu_add_note">
+            <intent-filter>
+                <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
+            </intent-filter>
+
+            <meta-data
+                android:name="android.appwidget.provider"
+                android:resource="@xml/widget_provider_add_note"
+                />
+        </receiver>
+
+        <receiver
+            android:name="com.ichi2.anki.receiver.SdCardReceiver"
+            android:enabled="true"
+            android:exported="true"
+            >
+            <intent-filter>
+                <action android:name="android.intent.action.MEDIA_MOUNTED" />
+
+                <data android:scheme="file" />
+            </intent-filter>
+            <intent-filter>
+                <action android:name="android.intent.action.MEDIA_EJECT" />
+
+                <data android:scheme="file" />
+            </intent-filter>
+        </receiver>
+
+        <receiver android:name=".services.NotificationService"
+            android:enabled="true"
+            android:exported="false"
+            />
+        <receiver
+            android:name=".services.ReminderService"
+            android:enabled="true"
+            android:exported="false"
+            />
+        <receiver
+            android:name=".services.BootService"
+            android:enabled="true"
+            android:exported="false"
+            >
+            <intent-filter>
+                <action android:name="android.intent.action.BOOT_COMPLETED" />
+            </intent-filter>
+        </receiver>
+
         <!-- stuff for Samsung Multi-Window -->
         <uses-library
             android:name="com.sec.android.app.multiwindow"
