@@ -44,7 +44,11 @@
                 android:layout_centerHorizontal="true"
                 android:layout_above="@+id/bottom_area_layout"/>
 
-            <include layout="@layout/reviewer_answer_buttons" />
+            <include layout="@layout/reviewer_answer_buttons"
+                android:layout_alignParentBottom="true"
+                android:translationZ="1dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
         </RelativeLayout>
     </androidx.coordinatorlayout.widget.CoordinatorLayout>
     <!-- Left navigation drawer -->
