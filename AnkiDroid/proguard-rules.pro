@@ -16,6 +16,12 @@
 #   public *;
 #}
 
+# For crop functionality
+-dontwarn com.yalantis.ucrop**
+-keep class com.yalantis.ucrop** { *; }
+-keep interface com.yalantis.ucrop** { *; }
+
+# FIXME remove this entire Android 4.2 workaround from 12/3/15 timrae commit for 2.15.x+
 # Samsung Android 4.2 bug workaround
 # https://code.google.com/p/android/issues/detail?id=78377
 -keepattributes **

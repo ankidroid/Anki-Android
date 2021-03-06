@@ -334,6 +334,11 @@
             android:exported="false"
             android:configChanges="locale"
             />
+        <activity
+            android:name="com.yalantis.ucrop.UCropActivity"
+            android:exported="false"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar"
+            android:configChanges="keyboardHidden|orientation|locale|screenSize"/>
 
         <!-- small widget -->
         <receiver
