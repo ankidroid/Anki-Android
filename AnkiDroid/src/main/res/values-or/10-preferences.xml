@@ -234,9 +234,9 @@
     <string name="deck_conf_easy_ivl">ସହଜ ବ୍ୟବଧାନ</string>
     <string name="deck_conf_start_ease">ପ୍ରାରମ୍ଭିକ ସହଜତା </string>
     <string name="deck_conf_max_rev">ସର୍ବାଧିକ ସମୀକ୍ଷା/ଦିନ</string>
-    <string name="deck_conf_new_bury">ସମ୍ପର୍କିତ ନୂତନ ପତ୍ରଗୁଡ଼ିଙ୍କୁ ପୋତିଦିଅ</string>
+    <string name="deck_conf_new_bury">ସମ୍ପୃକ୍ତ ନୂତନ କାର୍ଡଗୁଡ଼ିଙ୍କୁ ସ୍ଥଗିତ କରନ୍ତୁ</string>
     <string name="deck_conf_new_bury_summ">ସମ୍ପୃକ୍ତ ନୂତନ କାର୍ଡଗୁଡ଼ିକ ପରବର୍ତ୍ତୀ ଦିନ ପର୍ଯ୍ୟନ୍ତ ସ୍ଥଗିତ କରି ଦିଆଯାଏ</string>
-    <string name="deck_conf_rev_bury">ସମ୍ପୃକ୍ତ ସମୀକ୍ଷାଗୁଡିକ ପୋତିଦିଅ</string>
+    <string name="deck_conf_rev_bury">ସମ୍ପୃକ୍ତ ସମୀକ୍ଷାଗୁଡ଼ିକ ସ୍ଥଗିତ କରନ୍ତୁ</string>
     <string name="deck_conf_rev_bury_summ">ସମ୍ପୃକ୍ତ ସମୀକ୍ଷା ପରଦିନ ପର୍ଯ୍ୟନ୍ତ ସ୍ଥଗିତ କରି ଦିଆଯାଏ</string>
     <string name="deck_conf_use_general_timeout_settings">ସାଧାରଣ ସେଟିଂ ବ୍ୟବହାର କରନ୍ତୁ</string>
     <string name="deck_conf_use_general_timeout_settings_summ">ଏହି ଗୋଷ୍ଠୀ ପାଇଁ ସେଟିଂ ବ୍ୟବହାର କରିବା ପରିବର୍ତ୍ତେ ସାଧାରଣ \'ସ୍ୱୟଂଚାଳିତ ପ୍ରଦର୍ଶନ ଉତ୍ତର\' ସେଟିଂସମୂହ ବ୍ୟବହାର କରନ୍ତୁ |</string>
