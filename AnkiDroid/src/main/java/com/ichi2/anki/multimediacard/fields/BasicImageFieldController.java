@@ -258,9 +258,9 @@ public class BasicImageFieldController extends FieldControllerBase implements IF
     private void saveImageForRevert() {
         if (!mViewModel.isPreExistingImage) {
             deletePreviousImage();
-            mPreviousImagePath = mViewModel.mImagePath;
-            mPreviousImageUri = mViewModel.mImageUri;
         }
+        mPreviousImagePath = mViewModel.mImagePath;
+        mPreviousImageUri = mViewModel.mImageUri;
     }
 
 
@@ -615,7 +615,6 @@ public class BasicImageFieldController extends FieldControllerBase implements IF
             options.setStatusBarColor(Themes.getColorFromAttr(mActivity, R.attr.colorPrimaryDark));
             options.setToolbarColor(Themes.getColorFromAttr(mActivity, R.attr.colorPrimary));
             options.setToolbarWidgetColor(Themes.getColorFromAttr(mActivity, R.attr.actionBarTextColor));
-
             UCrop.of(mPreviousImageUri, ret.mImageUri)
                     .withOptions(options)
                     .useSourceImageAspectRatio()
