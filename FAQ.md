@@ -379,7 +379,15 @@ _search terms: subdeck, sub deck_
 
 # I want Add-Ons in AnkiDroid
 
-We understand AnkiDesktop supports Add-Ons. However, AnkiDroid does not and cannot support Add-Ons in the same way. Mobile operating systems do not let applications download and run code that was not packaged with the application. Neither iOS nor Android allow this, and if you think about the disaster that is desktop security (with viruses and crypto-ransoms etc), you will understand. The only exception is HTML and Javascript, so AnkiDroid is working on support for Javascript Add-Ons. They are still in development but you may find more information on the [AnkiDroid Javscript API here](https://github.com/ankidroid/Anki-Android/wiki/AnkiDroid-Javascript-API). 
+We understand AnkiDesktop supports Add-Ons. However, AnkiDroid does not and cannot support Add-Ons in the same way. Mobile operating systems do not let applications download and run code that was not packaged with the application. Neither iOS nor Android allow this, and if you think about the disaster that is desktop security (with viruses and crypto-ransoms etc), you will understand. The only exception is HTML and Javascript, so AnkiDroid is working on support for Javascript Add-Ons. They are still in development but you may find more information on the [AnkiDroid Javscript API here](https://github.com/ankidroid/Anki-Android/wiki/AnkiDroid-Javascript-API).
+
+Some Anki Add-ons can be made using [genanki](https://github.com/kerrickstaley/genanki) and [pyodide](https://github.com/iodide-project/pyodide) for AnkiDroid as web app.
+<br>For e.g.
+- [image occlusion in browser](https://github.com/infinyte7/image-occlusion-in-browser)
+- [ocloze: cloze overlapper in browser](https://github.com/infinyte7/ocloze)
+
+In interested in creating such Add-ons as web app for AnkiDroid then view this.
+<br>[Create Addon in browser for Anki](https://github.com/infinyte7/Create-Addon-in-browser-for-Anki)
 
 # Advanced formatting tips
 The [formatting wiki page](https://github.com/ankidroid/Anki-Android/wiki/Advanced-formatting) gives examples of how to achieve advanced flashcard formatting such as:
