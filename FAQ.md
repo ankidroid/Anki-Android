@@ -386,7 +386,7 @@ Some Anki Add-ons can be made using [genanki](https://github.com/kerrickstaley/g
 - [image occlusion in browser](https://github.com/infinyte7/image-occlusion-in-browser)
 - [ocloze: cloze overlapper in browser](https://github.com/infinyte7/ocloze)
 
-In interested in creating such Add-ons as web app for AnkiDroid then view this.
+If interested in creating such Add-ons as web app for AnkiDroid then view this.
 <br>[Create Addon in browser for Anki](https://github.com/infinyte7/Create-Addon-in-browser-for-Anki)
 
 # Advanced formatting tips
