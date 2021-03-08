@@ -377,6 +377,10 @@ As a specific example, if you have what folders to learn 'English', you would cr
 
 _search terms: subdeck, sub deck_
 
+# I want Add-Ons in AnkiDroid
+
+We understand AnkiDesktop supports Add-Ons. However, AnkiDroid does not and cannot support Add-Ons in the same way. Mobile operating systems do not let applications download and run code that was not packaged with the application. Neither iOS nor Android allow this, and if you think about the disaster that is desktop security (with viruses and crypto-ransoms etc), you will understand. The only exception is HTML and Javascript, so AnkiDroid is working on support for Javascript Add-Ons. They are still in development but you may find more information on the [AnkiDroid Javscript API here](https://github.com/ankidroid/Anki-Android/wiki/AnkiDroid-Javascript-API). 
+
 # Advanced formatting tips
 The [formatting wiki page](https://github.com/ankidroid/Anki-Android/wiki/Advanced-formatting) gives examples of how to achieve advanced flashcard formatting such as:
 
