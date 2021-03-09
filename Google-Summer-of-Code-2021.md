@@ -21,4 +21,5 @@ I emphasized "public" because this information will be web-scraped, used by spam
 - Mihir Kadiya (mkadiya@uwo.ca; Github @mkadiya20)
 - Rachana Podaralla (rpodaralla3@gatech.edu; Github @podarallarachana)
 - Shlok Garg (sngargrsd@gmail.com; Github @vngarg)
+- Caden Kline (cadenkline9+gsoc@gmail.com; Github: @Pokemod97)
 - ...etc :-)
