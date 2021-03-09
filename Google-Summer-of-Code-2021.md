@@ -17,4 +17,5 @@ I emphasized "public" because this information will be web-scraped, used by spam
 - Tarek Mohamed Abdalla (tarekkma@gmail.com; GitHub/TarekkMA)
 - Ayush Shrivastava(ayush_1901cb14@iitp.ac.in; GitHub handle: @s-ayush2903)
 - Dharmraj Rathod (dharmrajrathod98@gmail.com; Github handle:@DMRathod)
+- Luke Day (dayluke01@gmail.com; Github @dayluke)
 - ...etc :-)
