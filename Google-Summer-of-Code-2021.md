@@ -14,6 +14,6 @@ I emphasized "public" because this information will be web-scraped, used by spam
 
 ## List of interested participants
 
-- Hey look! you are first :-)
+- Tarek Mohamed Abdalla (tarekkma@gmail.com)
 - Second entry will go here...
 - ...etc :-)
