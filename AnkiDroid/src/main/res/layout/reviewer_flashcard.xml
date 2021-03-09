@@ -24,6 +24,7 @@
 <FrameLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_gravity="center"
+    android:layerType="software"
     android:id="@+id/flashcard_frame"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
@@ -31,12 +32,14 @@
 
     <FrameLayout
         android:layout_gravity="center"
+        android:layerType="software"
         android:id="@+id/flashcard"
         android:layout_width="fill_parent"
         android:layout_height="fill_parent" />
     <FrameLayout
         android:layout_gravity="center"
         android:id="@+id/touch_layer"
+        android:layerType="software"
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
         android:layout_margin="0dip"
@@ -44,6 +47,7 @@
     <FrameLayout
         android:layout_gravity="center"
         android:id="@+id/whiteboard"
+        android:layerType="software"
         android:layout_margin="0dip"
         android:layout_width="fill_parent"
         android:layout_height="fill_parent" />
@@ -51,6 +55,7 @@
         android:id="@+id/lookup_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layerType="software"
         android:layout_gravity="right"
         android:clickable="true"
         android:padding="5dip"

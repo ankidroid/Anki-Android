@@ -6,6 +6,7 @@
         android:id="@+id/toolbar"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
+        android:layerType="software"
         android:layout_alignParentTop="true"
         android:background="?attr/colorPrimary"
         android:minHeight="?attr/actionBarSize"
@@ -15,6 +16,7 @@
 
         <com.ichi2.ui.FixedTextView
             android:id="@+id/toolbar_title"
+            android:layerType="software"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:textColor="@color/white"
@@ -24,6 +26,7 @@
         <Spinner
             android:id="@+id/toolbar_spinner"
             android:layout_width="match_parent"
+            android:layerType="software"
             android:layout_height="wrap_content"
             android:background="?attr/selectableItemBackground"
             android:visibility="gone"

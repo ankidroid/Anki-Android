@@ -5,6 +5,7 @@
     android:id="@+id/navdrawer_items_container"
     style="@style/NavDrawer"
     android:layout_width="wrap_content"
+    android:layerType="software"
     android:layout_height="match_parent"
     android:layout_gravity="start"
     app:headerLayout="@layout/navdrawer_header"

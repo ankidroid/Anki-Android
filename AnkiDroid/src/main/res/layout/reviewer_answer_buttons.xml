@@ -2,6 +2,7 @@
 <LinearLayout android:id="@+id/bottom_area_layout"
     android:layout_width="fill_parent"
     android:layout_height="wrap_content"
+    android:layerType="software"
     android:orientation="vertical"
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
@@ -10,6 +11,7 @@
     <!-- "Type in the answer" bar -->
     <com.ichi2.ui.FixedEditText
         android:id="@+id/answer_field"
+        android:layerType="software"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:hint="@string/type_answer_hint"
@@ -22,6 +24,7 @@
 
     <FrameLayout
         android:id="@+id/preview_buttons_layout"
+        android:layerType="software"
         android:layout_width="match_parent"
         android:layout_height="48dp"
         android:orientation="horizontal"
@@ -32,6 +35,7 @@
         <com.ichi2.ui.FixedTextView
             android:id="@+id/preview_flip_flashcard"
             android:layout_width="wrap_content"
+            android:layerType="software"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:textColor="?attr/answerButtonTextColor"
@@ -46,6 +50,7 @@
             android:padding="12dp"
             android:focusable="true"
             android:background="?attr/hardButtonRef"
+            android:layerType="software"
             app:srcCompat="@drawable/ic_baseline_chevron_left_24"
             app:tint="?attr/hardButtonTextColor" />
 
@@ -55,6 +60,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="end|center_vertical"
             android:padding="12dp"
+            android:layerType="software"
             android:focusable="true"
             android:background="?attr/hardButtonRef"
             app:srcCompat="@drawable/ic_baseline_chevron_right_24"
@@ -64,12 +70,14 @@
     <FrameLayout
         android:id="@+id/answer_options_layout"
         android:layout_width="fill_parent"
+        android:layerType="software"
         android:layout_height="fill_parent">
 
         <LinearLayout
             android:id="@+id/ease_buttons"
             android:layout_width="fill_parent"
             android:layout_height="fill_parent"
+            android:layerType="software"
             android:visibility="gone"
             android:focusable="false"
             android:orientation="horizontal">
@@ -79,6 +87,7 @@
                 android:background="?attr/againButtonRef"
                 android:id="@+id/flashcard_layout_ease1"
                 android:nextFocusRight="@id/flashcard_layout_ease2"
+                android:layerType="software"
                 android:layout_width="0dip"
                 android:layout_height="@dimen/touch_target"
                 android:layout_weight="1"
@@ -86,11 +95,13 @@
 
                 <com.ichi2.ui.FixedTextView
                     android:id="@+id/nextTime1"
+                    android:layerType="software"
                     style="@style/AgainButtonTimeStyle"
                     tools:text="&lt; 10 min" />
 
                 <com.ichi2.ui.FixedTextView
                     android:id="@+id/ease1"
+                    android:layerType="software"
                     android:text="@string/ease_button_again"
                     style="@style/AgainButtonEaseStyle"/>
             </LinearLayout>
@@ -98,6 +109,7 @@
             <LinearLayout
                 style="@style/FooterButton"
                 android:background="?attr/hardButtonRef"
+                android:layerType="software"
                 android:id="@+id/flashcard_layout_ease2"
                 android:nextFocusRight="@id/flashcard_layout_ease3"
                 android:nextFocusLeft="@id/flashcard_layout_ease1"
@@ -109,10 +121,12 @@
                 <com.ichi2.ui.FixedTextView
                     android:id="@+id/nextTime2"
                     style="@style/HardButtonTimeStyle"
+                    android:layerType="software"
                     tools:text="2 d" />
 
                 <com.ichi2.ui.FixedTextView
                     android:id="@+id/ease2"
+                    android:layerType="software"
                     android:text="@string/ease_button_hard"
                     style="@style/HardButtonEaseStyle" />
             </LinearLayout>
@@ -120,6 +134,7 @@
             <LinearLayout
                 style="@style/FooterButton"
                 android:background="?attr/goodButtonRef"
+                android:layerType="software"
                 android:id="@+id/flashcard_layout_ease3"
                 android:nextFocusRight="@id/flashcard_layout_ease4"
                 android:nextFocusLeft="@id/flashcard_layout_ease2"
@@ -130,11 +145,13 @@
 
                 <com.ichi2.ui.FixedTextView
                     android:id="@+id/nextTime3"
+                    android:layerType="software"
                     style="@style/GoodButtonTimeStyle"
                     tools:text="3 d" />
 
                 <com.ichi2.ui.FixedTextView
                     android:id="@+id/ease3"
+                    android:layerType="software"
                     android:text="@string/ease_button_good"
                     style="@style/GoodButtonEaseStyle"/>
             </LinearLayout>
@@ -142,6 +159,7 @@
             <LinearLayout
                 style="@style/FooterButton"
                 android:background="?attr/easyButtonRef"
+                android:layerType="software"
                 android:id="@+id/flashcard_layout_ease4"
                 android:nextFocusLeft="@id/flashcard_layout_ease3"
                 android:layout_width="0dip"
@@ -151,11 +169,13 @@
 
                 <com.ichi2.ui.FixedTextView
                     android:id="@+id/nextTime4"
+                    android:layerType="software"
                     style="@style/EasyButtonTimeStyle"
                     tools:text="4 d" />
 
                 <com.ichi2.ui.FixedTextView
                     android:id="@+id/ease4"
+                    android:layerType="software"
                     android:text="@string/ease_button_easy"
                     style="@style/EasyButtonEaseStyle" />
             </LinearLayout>
@@ -163,6 +183,7 @@
 
         <LinearLayout
             android:id="@+id/flashcard_layout_flip"
+            android:layerType="software"
             android:layout_width="fill_parent"
             android:layout_height="@dimen/touch_target"
             android:orientation="vertical"
@@ -174,6 +195,7 @@
                 android:duplicateParentState="true"
                 android:background="?attr/hardButtonRef"
                 android:id="@+id/flip_card"
+                android:layerType="software"
                 android:layout_width="fill_parent"
                 android:layout_height="fill_parent"
                 android:clickable="false"
