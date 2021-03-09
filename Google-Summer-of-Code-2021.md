@@ -14,6 +14,6 @@ I emphasized "public" because this information will be web-scraped, used by spam
 
 ## List of interested participants
 
-- Tarek Mohamed Abdalla (tarekkma@gmail.com)
+- Tarek Mohamed Abdalla (tarekkma@gmail.com; GitHub/TarekkMA)
 - Ayush Shrivastava(ayush_1901cb14@iitp.ac.in; GitHub handle: @s-ayush2903)
 - ...etc :-)
