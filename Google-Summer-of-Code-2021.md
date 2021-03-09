@@ -10,7 +10,7 @@ But we have started receiving information from interested participants so we nee
 
 So if you are an interested participant: Please add your **PUBLIC** contact information here in a list. 
 
-I emphasized "public" because this information will be web-scraped, used by spammers etc etc. But we are an open source project so there is no hiding your identity completely - but you should think carefully about what specific contact methods you share.
+I emphasized "public" because this information will be web-scraped, used by spammers, etc. But we are an open-source project so there is no hiding your identity completely - but you should think carefully about what specific contact methods you share.
 
 ## List of interested participants
 
@@ -20,4 +20,5 @@ I emphasized "public" because this information will be web-scraped, used by spam
 - Luke Day (dayluke01@gmail.com; Github @dayluke)
 - Mihir Kadiya (mkadiya@uwo.ca; Github @mkadiya20)
 - Rachana Podaralla (rpodaralla3@gatech.edu; Github @podarallarachana)
+- Shlok Garg (sngargrsd@gmail.com; Github @vngarg)
 - ...etc :-)
