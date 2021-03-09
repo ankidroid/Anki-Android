@@ -19,4 +19,5 @@ I emphasized "public" because this information will be web-scraped, used by spam
 - Dharmraj Rathod (dharmrajrathod98@gmail.com; Github handle:@DMRathod)
 - Luke Day (dayluke01@gmail.com; Github @dayluke)
 - Mihir Kadiya (mkadiya@uwo.ca; Github @mkadiya20)
+- Rachana Podaralla (rpodaralla3@gatech.edu; Github @podarallarachana)
 - ...etc :-)
