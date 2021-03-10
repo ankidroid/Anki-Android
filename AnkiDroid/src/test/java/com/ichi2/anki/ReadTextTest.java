@@ -16,6 +16,8 @@
 
 package com.ichi2.anki;
 
+import android.content.Context;
+
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -28,6 +30,7 @@ import static com.ichi2.libanki.Sound.SoundSide.QUESTION;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
 import static org.mockito.Mockito.mock;
+import static org.robolectric.Shadows.shadowOf;
 
 @RunWith(AndroidJUnit4.class)
 public class ReadTextTest extends RobolectricTest{
@@ -113,6 +116,28 @@ public class ReadTextTest extends RobolectricTest{
         assertThat(MetaDB.getLanguage(getTargetContext(), 2, 1, QUESTION), is("English"));
     }
 
+    @Test
+    public void testIsTextToSpeechReleased_sameContext() {
+        Context context = getTargetContext();
+        initializeTextToSpeech(context);
+        ReadText.releaseTts(context);
+        assertThat(isTextToSpeechShutdown(), is(true));
+    }
+
+    @Test
+    public void testIsTextToSpeechReleased_differentContext() {
+        initializeTextToSpeech(getTargetContext());
+        ReadText.releaseTts(null);
+        assertThat(isTextToSpeechShutdown(), is(false));
+    }
+
+    private boolean isTextToSpeechShutdown() {
+        return shadowOf(ReadText.getTextToSpeech()).isShutdown();
+    }
+
+    private void initializeTextToSpeech(Context context) {
+        ReadText.initializeTts(context, mock(AbstractFlashcardViewer.ReadTextListener.class));
+    }
 
     protected void storeLanguage(int i, String french) {
         MetaDB.storeLanguage(getTargetContext(), i, 1, QUESTION, french);
