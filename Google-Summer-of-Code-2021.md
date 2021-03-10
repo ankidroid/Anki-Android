@@ -50,4 +50,5 @@ I emphasized "public" because this information will be web-scraped, used by spam
 - Vamsi Krishna (m.krishna@iiitg.ac.in ; Github : @VamsiKrishnaCommits) 
 - Sahil Morankar (sahilmorankar2000@gmail.com; Github: @sahil2306)
 - Pranav Kumar (pranavkumar8588@gmail.com; Github: @Pranav123-alt)
+- Varun Tiwari (varun.2011t@gmail.com; Github: @VarunT11)
 - ...etc :-)
