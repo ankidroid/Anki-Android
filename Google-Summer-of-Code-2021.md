@@ -43,4 +43,5 @@ I emphasized "public" because this information will be web-scraped, used by spam
 - Lakshmi Warrier (lakshmi0105warrier@gmail.com; GitHub: @lakshmi-warrier)
 - Neha Binwal (nnnbbbin@gmail.com; Github: @neha-b2001)
 - Peter Zukerman (pzukerman17@gmail.com; Github: @peterzukerman)
+- Gowtham B (gowthamb198@gmail.com; Github: @GowthamGoush)
 - ...etc :-)
