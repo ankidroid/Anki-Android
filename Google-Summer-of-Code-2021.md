@@ -55,4 +55,5 @@ I emphasized "public" because this information will be web-scraped, used by spam
 - Varun Tiwari (varun.2011t@gmail.com; Github: @VarunT11)
 - Stephen Mwangi (st3v3n.mw@gmail.com; GitHub: @st3v3nmw)
 - Atif Abdur Rahman (atifrahmanmi1223@gmail.com, Github: @Atifrahman5786)
+- Arpit Jain (arpitjain.2001@gmail.com; GitHub: @osBins)
 - ...etc :-)
