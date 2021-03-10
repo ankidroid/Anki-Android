@@ -2,6 +2,23 @@
 
 Hello, all fantastic Google Summer of Code 2021 people!
 
+## What is Google Summer of Code?
+> [Google Summer of Code](https://summerofcode.withgoogle.com/) is a global program focused on bringing more student developers into open source software development. Students work with an open source organization on a 10 week programming project during their break from school.
+
+## Student Eligibility
+View [Student Eligibility](https://developers.google.com/open-source/gsoc/faq#what_are_the_eligibility_requirements_for_participation)
+
+## Project Ideas
+Here is a list of project ideas we suggest:
+
+[Ideas list for 2021](https://docs.google.com/document/d/14wAQ9rsSj8CDbwi-hcnFKxO3uE8atq2QDwDrBTRM3BU)
+
+## Advice
+Potential candidates should to take a look at the guidelines on how to contribute to AnkiDroid.
+- [Development Guide](https://github.com/ankidroid/Anki-Android/wiki/Development-Guide)
+- [Contributing](https://github.com/ankidroid/Anki-Android/wiki/Contributing).
+- [Code style](https://github.com/ankidroid/Anki-Android/wiki/Code-style)
+
 ## Process
 
 We are quite honest in the AnkiDroid project, so the first thing I will say is that I'm not sure what the best process should be!
