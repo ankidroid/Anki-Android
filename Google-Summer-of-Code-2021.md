@@ -47,4 +47,5 @@ I emphasized "public" because this information will be web-scraped, used by spam
 - justTOBBI (justtobbi@muellmail.com; Github: @justTOBBI)
 - Ritvij Kumar Sharma (ritvij2001@gmail.com; Github: @ritvij14) 
 - Bbiswabasu Roy (bbiswabasuroy2001@gmail.com; GitHub: @Bbiswabasu)
+- Vamsi Krishna (m.krishna@iiitg.ac.in ; Github : VamsiKrishnaCommits) 
 - ...etc :-)
