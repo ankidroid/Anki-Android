@@ -40,4 +40,5 @@ I emphasized "public" because this information will be web-scraped, used by spam
 - Shlok Garg (sngargrsd@gmail.com; Github @vngarg)
 - Caden Kline (cadenkline9+gsoc@gmail.com; Github: @Pokemod97)
 - Aditya Srivastav (iamaditya2009@gmail.com; Github: @4D17Y4)
+- Lakshmi Warrier (lakshmi0105warrier@gmail.com; GitHub: @lakshmi-warrier)
 - ...etc :-)
