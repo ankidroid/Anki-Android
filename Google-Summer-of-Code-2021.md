@@ -32,6 +32,9 @@ So if you are an interested participant: Please add your **PUBLIC** contact info
 I emphasized "public" because this information will be web-scraped, used by spammers, etc. But we are an open-source project so there is no hiding your identity completely - but you should think carefully about what specific contact methods you share.
 
 ## List of interested participants
+- Afolabi Samuel 
+(afolabisamguy@gmail.com;
+GitHub: @afolabisamguy)
 - Akshay Prabhu (akshayprabhu@protonmail.com; Github: @akshayprabhu200)
 - Siddharth Anand Srivastav (siddharthanandsrivastav@gmail.com; GitHub: @AnandSidd)
 - Tarek Mohamed Abdalla (tarekkma@gmail.com; GitHub/TarekkMA)
