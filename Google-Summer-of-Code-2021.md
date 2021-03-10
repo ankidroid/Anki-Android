@@ -67,6 +67,9 @@ GitHub: @afolabisamguy)
 - Avinash Vijayvargiya (avinash.open.s@gmail.com; Github: [@avinash14022002])
 - Shashank Priyadarshi (s.priyadarshi629@gmail.com); GitHub: [@robustTechie](https://github.com/robusttechie)
 - Jerim Kaura (jerimkaura001@gmail.com; Github: [@jerimkaura])
+- Danish Jamal
+ (danishjamal.104@gmail.com);
+ Github: [@danishjamal104](https://github.com/danishjamal104)
 - Ashwani Kumar (ashwanikr07041999@gmail.com; Github: @ashwanikr7499)
 - Shivam Sawlani (shivamsawlani02@gmail.com; Github: @shivamsawlani02)
 - ...etc :-)
