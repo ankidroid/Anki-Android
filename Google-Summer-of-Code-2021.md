@@ -37,6 +37,8 @@ I emphasized "public" because this information will be web-scraped, used by spam
 GitHub: @afolabisamguy)
 - Nikhil Verma (nv5475609@gmail.com; Github: @nikhilverma360)
 - Akshay Prabhu (akshayprabhu@protonmail.com; Github: @akshayprabhu200)
+- Prajjwal kumar (write2prajjwal@gmail.com ; 
+  Github: https://github.com/prajjwalkumar17 ; Linkedin : https://www.linkedin.com/in/prajjwal-singh-1752001 )
 - Siddharth Anand Srivastav (siddharthanandsrivastav@gmail.com; GitHub: @AnandSidd)
 - Tarek Mohamed Abdalla (tarekkma@gmail.com; GitHub/TarekkMA)
 - Ayush Shrivastava(ayush_1901cb14@iitp.ac.in; GitHub handle: @s-ayush2903)
