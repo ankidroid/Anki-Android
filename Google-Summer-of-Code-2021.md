@@ -46,4 +46,5 @@ I emphasized "public" because this information will be web-scraped, used by spam
 - Gowtham B (gowthamb198@gmail.com; Github: @GowthamGoush)
 - justTOBBI (justtobbi@muellmail.com; Github: @justTOBBI)
 - Ritvij Kumar Sharma (ritvij2001@gmail.com; Github: @ritvij14) 
+- Bbiswabasu Roy (bbiswabasuroy2001@gmail.com; GitHub: @Bbiswabasu)
 - ...etc :-)
