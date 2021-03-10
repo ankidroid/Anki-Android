@@ -1,1 +1,0 @@
-<li>Gowtham B (gowthamb198@gmail.com; Github: @GowthamGoush)</li>
