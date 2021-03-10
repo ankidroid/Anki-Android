@@ -35,6 +35,7 @@ I emphasized "public" because this information will be web-scraped, used by spam
 - Afolabi Samuel 
 (afolabisamguy@gmail.com;
 GitHub: @afolabisamguy)
+- Nikhil Verma (nv5475609@gmail.com; Github: @nikhilverma360)
 - Akshay Prabhu (akshayprabhu@protonmail.com; Github: @akshayprabhu200)
 - Siddharth Anand Srivastav (siddharthanandsrivastav@gmail.com; GitHub: @AnandSidd)
 - Tarek Mohamed Abdalla (tarekkma@gmail.com; GitHub/TarekkMA)
