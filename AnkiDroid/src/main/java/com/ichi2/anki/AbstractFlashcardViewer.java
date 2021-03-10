@@ -1016,7 +1016,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
         }
         Timber.d("onDestroy()");
         if (mSpeakText) {
-            ReadText.releaseTts();
+            ReadText.releaseTts(this);
         }
         if (mUnmountReceiver != null) {
             unregisterReceiver(mUnmountReceiver);
