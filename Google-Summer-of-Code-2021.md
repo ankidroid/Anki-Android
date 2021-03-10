@@ -61,4 +61,5 @@ I emphasized "public" because this information will be web-scraped, used by spam
 - Ashutosh Singh (4shutoshsingh@gmail.com; Github: [@4shutosh](https://github.com/4shutosh/))
 - Jessica Chen (jessicachenjessicachen@gmail.com; Github: [@jessicreative])
 - Vishnu Sanal. T (t.v.s10123@gmail@gmail.com; Github: [@VishnuSanal])
+- Avinash Vijayvargiya (avinash.open.s@gmail.com; Github: [@avinash14022002])
 - ...etc :-)
