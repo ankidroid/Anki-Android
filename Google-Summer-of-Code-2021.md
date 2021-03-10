@@ -54,7 +54,7 @@ I emphasized "public" because this information will be web-scraped, used by spam
 - Sahil Morankar (sahilmorankar2000@gmail.com; Github: @sahil2306)
 - Pranav Kumar (pranavkumar8588@gmail.com; Github: @Pranav123-alt)
 - Varun Tiwari (varun.2011t@gmail.com; Github: @VarunT11)
-- Stephen Mwangi (st3v3n.mw@gmail.com; GitHub: @st3v3nmw)
+- Stephen Mwangi (st3v3n.mw@gmail.com; GitHub: [@st3v3nmw](https://github.com/st3v3nmw))
 - Atif Abdur Rahman (atifrahmanmi1223@gmail.com, Github: @Atifrahman5786)
 - Arpit Jain (arpitjain.2001@gmail.com; GitHub: @osBins)
 - Ashutosh Singh (4shutoshsingh@gmail.com; Github: [@4shutosh](https://github.com/4shutosh/))
