@@ -75,4 +75,5 @@ GitHub: @afolabisamguy)
 - Arpit Nema (arpitnema150@gmail.com; Github: @arpitnema07)
 - Hariharan(haran2248@gmail.com; github:@haran2248
 - Satyam Sheel(ssheel_be18@thapar.edu; github:@satyamsheel)
+- Ismail Nurudeen (ibrightstar247@gmail.com; Github: @ismailnurudeen)
 - ...etc :-)
