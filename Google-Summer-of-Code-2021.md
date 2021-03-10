@@ -15,8 +15,9 @@ Here is a list of project ideas we suggest:
 
 ## Advice
 Potential candidates should to take a look at the guidelines on how to contribute to AnkiDroid.
+- [GSOC Student Guide](https://google.github.io/gsocguides/student)
 - [Development Guide](https://github.com/ankidroid/Anki-Android/wiki/Development-Guide)
-- [Contributing](https://github.com/ankidroid/Anki-Android/wiki/Contributing).
+- [Contributing](https://github.com/ankidroid/Anki-Android/wiki/Contributing)
 - [Code style](https://github.com/ankidroid/Anki-Android/wiki/Code-style)
 
 ## Process
