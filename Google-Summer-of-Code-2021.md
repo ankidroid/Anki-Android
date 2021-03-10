@@ -74,5 +74,5 @@ GitHub: @afolabisamguy)
 - Ashwani Kumar (ashwanikr07041999@gmail.com; Github: @ashwanikr7499)
 - Shivam Sawlani (shivamsawlani02@gmail.com; Github: @shivamsawlani02)
 - Arpit Nema (arpitnema150@gmail.com; Github: @arpitnema07)
--Hariharan(haran2248@gmail.com;github:@haran2248
+- Hariharan(haran2248@gmail.com;github:@haran2248
 - ...etc :-)
