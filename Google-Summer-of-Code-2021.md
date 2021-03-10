@@ -22,4 +22,5 @@ I emphasized "public" because this information will be web-scraped, used by spam
 - Rachana Podaralla (rpodaralla3@gatech.edu; Github @podarallarachana)
 - Shlok Garg (sngargrsd@gmail.com; Github @vngarg)
 - Caden Kline (cadenkline9+gsoc@gmail.com; Github: @Pokemod97)
+- Aditya Srivastav (iamaditya2009@gmail.com; Github: @4D17Y4)
 - ...etc :-)
