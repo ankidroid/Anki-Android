@@ -3,7 +3,7 @@
 Hello, all fantastic Google Summer of Code 2021 people!
 
 ## What is Google Summer of Code?
-> [Google Summer of Code](https://summerofcode.withgoogle.com/) is a global program focused on bringing more student developers into open source software development. Students work with an open source organization on a 10 week programming project during their break from school.
+> [Google Summer of Code](https://summerofcode.withgoogle.com/) is a global program focused on bringing more student developers into open source software development. Students work with an open-source organization on a 10-week programming project during their break from school.
 
 ## Student Eligibility
 View [Student Eligibility](https://developers.google.com/open-source/gsoc/faq#what_are_the_eligibility_requirements_for_participation)
@@ -14,7 +14,7 @@ Here is a list of project ideas we suggest:
 [Ideas list for 2021](https://github.com/ankidroid/Anki-Android/wiki/GSOC-proposal-2021)
 
 ## Advice
-Potential candidates should to take a look at the guidelines on how to contribute to AnkiDroid.
+Potential candidates should take a look at the guidelines on how to contribute to AnkiDroid.
 - [Development Guide](https://github.com/ankidroid/Anki-Android/wiki/Development-Guide)
 - [Contributing](https://github.com/ankidroid/Anki-Android/wiki/Contributing).
 - [Code style](https://github.com/ankidroid/Anki-Android/wiki/Code-style)
@@ -23,11 +23,11 @@ Potential candidates should to take a look at the guidelines on how to contribut
 
 We are quite honest in the AnkiDroid project, so the first thing I will say is that I'm not sure what the best process should be!
 
-But we have started receiving information from interested participants so we need a place to collect information so we don't lose it
+But we have started receiving information from interested participants, so we need a place to collect information, so we don't lose it.
 
 So if you are an interested participant: Please add your **PUBLIC** contact information here in a list. 
 
-I emphasized "public" because this information will be web-scraped, used by spammers, etc. But we are an open-source project so there is no hiding your identity completely - but you should think carefully about what specific contact methods you share.
+I emphasized "public" because this information will be web-scraped, used by spammers, etc. But we are an open-source project, so there is no hiding your identity completely - but you should think carefully about what specific contact methods you share.
 
 ## List of interested participants
 
