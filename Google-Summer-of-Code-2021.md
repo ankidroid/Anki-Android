@@ -11,7 +11,7 @@ View [Student Eligibility](https://developers.google.com/open-source/gsoc/faq#wh
 ## Project Ideas
 Here is a list of project ideas we suggest:
 
-[Ideas list for 2021](https://docs.google.com/document/d/14wAQ9rsSj8CDbwi-hcnFKxO3uE8atq2QDwDrBTRM3BU)
+[Ideas list for 2021](https://github.com/ankidroid/Anki-Android/wiki/GSOC-proposal-2021)
 
 ## Advice
 Potential candidates should to take a look at the guidelines on how to contribute to AnkiDroid.
