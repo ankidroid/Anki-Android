@@ -76,4 +76,5 @@ GitHub: @afolabisamguy)
 - Hariharan(haran2248@gmail.com; github:@haran2248
 - Satyam Sheel(ssheel_be18@thapar.edu; github:@satyamsheel)
 - Ismail Nurudeen (ibrightstar247@gmail.com; Github: [@ismailnurudeen](https://github.com/ismailnurudeen))
+- Pragati Joshi(pragatijoshi.sbp@gmail.com; Github: @pragatij55)
 - ...etc :-)
