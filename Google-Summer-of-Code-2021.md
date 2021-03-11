@@ -32,6 +32,7 @@ So if you are an interested participant: Please add your **PUBLIC** contact info
 I emphasized "public" because this information will be web-scraped, used by spammers, etc. But we are an open-source project so there is no hiding your identity completely - but you should think carefully about what specific contact methods you share.
 
 ## List of interested participants
+- Jaishree Meena (jaisghunawat99@gmail.com) ; Github:(https://github.com/IAmJaishree) ; LinkedIn:(https://www.linkedin.com/in/jaishree-ghunawat)
 - Ekagra Sinha (ekagra001@gmail.com) ;GitHub:https://github.com/Ekagra ; LinkedIn:(https://www.linkedin.com/in/ekagra-sinha-488bb1179)
 - Anant Shukla (Email: anantshukla1402@gmail.com ; Github: https://github.com/iamanantshukla)
 - Afolabi Samuel 
