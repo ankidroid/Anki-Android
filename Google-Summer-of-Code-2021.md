@@ -37,6 +37,7 @@ I emphasized "public" because this information will be web-scraped, used by spam
 - Afolabi Samuel 
 (afolabisamguy@gmail.com;
 GitHub: @afolabisamguy)
+- Nazish Kamran (nazishkn67@gmail.com; Github : @nazishkn67)
 - Akshay Jadhav (jadhavakshay0701@gmail.com) ;GitHub:https://github.com/Akshay0701 ; LinkedIn:(https://www.linkedin.com/in/akshay-jadhav-90ba81134)
 - Nikhil Verma (nv5475609@gmail.com; Github: @nikhilverma360)
 - Akshay Prabhu (akshayprabhu@protonmail.com; Github: @akshayprabhu200)
