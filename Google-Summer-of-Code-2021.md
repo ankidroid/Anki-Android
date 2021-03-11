@@ -47,6 +47,7 @@ I emphasized "public" because this information will be web-scraped, used by spam
 - Afolabi Samuel 
 (afolabisamguy@gmail.com;
 GitHub: @afolabisamguy)
+- Abhinav (abhi2000.rtk@gmail.com; Github: @abhinav12k)
 - Nazish Kamran (nazishkn67@gmail.com; Github : @nazishkn67)
 - Akshay Jadhav (jadhavakshay0701@gmail.com) ;GitHub:https://github.com/Akshay0701 ; LinkedIn:(https://www.linkedin.com/in/akshay-jadhav-90ba81134)
 - Nikhil Verma (nv5475609@gmail.com; Github: @nikhilverma360)
@@ -110,5 +111,3 @@ GitHub: @afolabisamguy)
 - Aly Hegazy (alyyasser19@gmail.com) GitHub: (https://github.com/alyyasser19);
 Satyam jyotsana gargee(satyam8657@gmail.com)GitHub:(https://github.com/Satyamjyotsanagargee);
 - ... etc :-)
-
-Please enter your details at the bottom of the page via the following link: https://github.com/ankidroid/Anki-Android/wiki/Google-Summer-of-Code-2021/_edit. You will need a GitHub account to do this.
