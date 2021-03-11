@@ -96,4 +96,5 @@ GitHub: @afolabisamguy)
 - Pratyush raj (pratyushraj2f@gmail.com) Github: htts://github.com/rajpratyush
 - Harjot Singh (asingh.harjot@gmail.com) GitHub:[@harjotsingh1999](https://github.com/harjotsingh1999))
 - JAYESH KUGSIYA (jkugsiya11@gmail.com); GitHub: https://github.com/jkugsiya ; LinkedIn: https://www.linkedin.com/in/jaykugsiya/
+- Abhay Singh (abhaysingh7895@gmail.com); GitHub: (https://github.com/ABHAY0O7);
 - ... etc :-)
