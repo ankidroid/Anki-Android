@@ -6,3 +6,4 @@
 - Anubhuti Shruti(https://github.com/Anu-123-gif)
 - F. Malik (E-mail: f_malik_gsoc@protonmail.com); Github: (https://github.com/FurqanAMalik)
 - Mrudul Tora (E-mail: mrudultora@gmail.com); Github: (https://github.com/mrudultora)
+- Mohamed Medhat (E-Mail: mohamed.medhat0298@gmail.com; GitHub: https://github.com/MohamedMedhat1998; LinkedIn: https://www.linkedin.com/in/mohamed-medhat-33952b146/)
