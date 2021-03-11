@@ -7,4 +7,4 @@
 - F. Malik (E-mail: f_malik_gsoc@protonmail.com); Github: (https://github.com/FurqanAMalik)
 - Mrudul Tora (E-mail: mrudultora@gmail.com); Github: (https://github.com/mrudultora)
 - Mohamed Medhat (E-Mail: mohamed.medhat0298@gmail.com; GitHub: https://github.com/MohamedMedhat1998; LinkedIn: https://www.linkedin.com/in/mohamed-medhat-33952b146/)
-- Ankita Pareek (GitHub: @Ankita13-code https://github.com/Ankita13-code), (Email: ankitapareek2000@gmail.com)
+- Ankita Pareek (GitHub: Ankita13-code https://github.com/Ankita13-code), (Email: ankitapareek2000@gmail.com)
