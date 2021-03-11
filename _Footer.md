@@ -1,1 +1,1 @@
-Abanoub Asaad (Abanoub.Asaad200010@gmail.com; GitHub:[@Abanoub-Asaad](https://github.com/Abanoub-Asaad))
+<!-- For GSoC 2021 submissions, please enter your details here: https://github.com/ankidroid/Anki-Android/wiki/Google-Summer-of-Code-2021/_edit -->
