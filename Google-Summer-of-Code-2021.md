@@ -98,5 +98,5 @@ GitHub: @afolabisamguy)
 - Harjot Singh (asingh.harjot@gmail.com) GitHub:[@harjotsingh1999](https://github.com/harjotsingh1999))
 - JAYESH KUGSIYA (jkugsiya11@gmail.com); GitHub: https://github.com/jkugsiya ; LinkedIn: https://www.linkedin.com/in/jaykugsiya/
 - Abhay Singh (abhaysingh7895@gmail.com); GitHub: (https://github.com/ABHAY0O7);
--Aly Hegazy (alyyasser19@gmail.com) GitHub: (https://github.com/alyyasser19)
+- Aly Hegazy (alyyasser19@gmail.com) GitHub: (https://github.com/alyyasser19)
 - ... etc :-)
