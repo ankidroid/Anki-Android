@@ -121,3 +121,5 @@ Satyam jyotsana gargee(satyam8657@gmail.com)GitHub:(https://github.com/Satyamjyo
 - Ankita Pareek (GitHub: Ankita13-code https://github.com/Ankita13-code), (Email: ankitapareek2000@gmail.com)
 - Harish Reddy P(Email-reddyh562002@gmail.com),(Linkedin:https://www.linkedin.com/in/harish-reddy-p-3b4a39193),(github:https://github.com/le0stel0n)
 - ... etc :-)
+
+Please enter your details at the bottom of the page via the following link: https://github.com/ankidroid/Anki-Android/wiki/Google-Summer-of-Code-2021/_edit. You will need a GitHub account to do this.
