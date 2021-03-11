@@ -5,6 +5,14 @@ Hello, all fantastic Google Summer of Code 2021 people!
 ## What is Google Summer of Code?
 > [Google Summer of Code](https://summerofcode.withgoogle.com/) is a global program focused on bringing more student developers into open source software development. Students work with an open source organization on a 10 week programming project during their break from school.
 
+## Timeline
+
+Please observe the official timeline, if you are requesting things well before these dates, please take a breath and give us time, thank you
+
+- March 29 - April 13 18:00 UTC: Students will submit their draft proposals through the program website for you to give solid feedback on.
+- April 13 - May 2: Review all submitted student proposals with your org and consider how many you want to select and how many you can handle(ie how many you have committed mentors for). Decide on the minimum/maximum number of student slots to request- do not request more than your org can handle - this could take students away from orgs who have excellent student prospects and need the slots.
+- May 3 18:00 UTC: Deadline to submit slot requests (Org Admins enter requests)
+
 ## Student Eligibility
 View [Student Eligibility](https://developers.google.com/open-source/gsoc/faq#what_are_the_eligibility_requirements_for_participation)
 
