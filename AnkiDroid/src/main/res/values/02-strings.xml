@@ -323,6 +323,7 @@
     <!-- Card Viewer -->
     <string name="card_viewer_could_not_find_image">Card Content Error: Failed to load ‘%s’</string>
     <string name="card_viewer_media_relative_protocol">Card Content Error: Media update required</string>
+    <string name="cannot_load_http_resource">Loading http resources is no longer supported</string>
 
     <!-- Deck Picker -->
     <string name="deck_picker_failed_deck_load">Failed to load deck ‘%s’</string>
