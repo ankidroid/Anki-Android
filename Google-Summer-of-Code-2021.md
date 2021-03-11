@@ -95,4 +95,5 @@ GitHub: @afolabisamguy)
 - Keith Low (keithlow98@gmail.com) Github: htts://github.com/fairyinabottle4
 - Pratyush raj (pratyushraj2f@gmail.com) Github: htts://github.com/rajpratyush
 - Harjot Singh (asingh.harjot@gmail.com) GitHub:[@harjotsingh1999](https://github.com/harjotsingh1999))
+- JAYESH KUGSIYA (jkugsiya11@gmail.com); GitHub: https://github.com/jkugsiya ; LinkedIn: https://www.linkedin.com/in/jaykugsiya/
 - ... etc :-)
