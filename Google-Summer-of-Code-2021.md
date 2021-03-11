@@ -108,5 +108,5 @@ GitHub: @afolabisamguy)
 - JAYESH KUGSIYA (jkugsiya11@gmail.com); GitHub: https://github.com/jkugsiya ; LinkedIn: https://www.linkedin.com/in/jaykugsiya/
 - Abhay Singh (abhaysingh7895@gmail.com); GitHub: (https://github.com/ABHAY0O7);
 - Aly Hegazy (alyyasser19@gmail.com) GitHub: (https://github.com/alyyasser19);
-Satyamjyotsanagargee(satyam8657@gmail.com)GitHub:(https://github.com/Satyamjyotsanagargee);
+Satyam jyotsana gargee(satyam8657@gmail.com)GitHub:(https://github.com/Satyamjyotsanagargee);
 - ... etc :-)
