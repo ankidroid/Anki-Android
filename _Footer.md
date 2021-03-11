@@ -5,3 +5,4 @@
 - JAYESH KUGSIYA (https://github.com/jkugsiya);
 - Kang Breder Mbulle(https://github.com/kangbreder);
 - Anubhuti Shruti(https://github.com/Anu-123-gif)
+- F. Malik (E-mail: f_malik_gsoc@protonmail.com); Github: (https://github.com/FurqanAMalik)
