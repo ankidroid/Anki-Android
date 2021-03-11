@@ -51,7 +51,7 @@ Any violation to the guide is allowed if it enhances one of the following, by or
 * `public static final int SOME_CONSTANT = 42;`
 ### Associated constants (final variables) should be prefixed by a common type name.
 * `public static final int COLOR_RED = 1;`
-* `public static final int COLOR_GREEN = 2;```
+* `public static final int COLOR_GREEN = 2;`
 * `public static final int COLOR_BLUE = 3; `
 ### Method names should be verbs in mixed case, with the first letter in lowercase and with the first letter of each internal word capitalized.
 * `getName();`
