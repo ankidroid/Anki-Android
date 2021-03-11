@@ -94,4 +94,5 @@ GitHub: @afolabisamguy)
 - Sakshi Dahake (sddahake16@gmail.com)       Github: https://github.com/sakshi-1604
 - Keith Low (keithlow98@gmail.com) Github: htts://github.com/fairyinabottle4
 - Pratyush raj (pratyushraj2f@gmail.com) Github: htts://github.com/rajpratyush
+- Harjot Singh (asingh.harjot@gmail.com) GitHub:[@harjotsingh1999](https://github.com/harjotsingh1999))
 - ... etc :-)
