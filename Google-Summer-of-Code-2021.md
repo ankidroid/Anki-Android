@@ -8,9 +8,13 @@ We are quite honest in the AnkiDroid project, so the first thing I will say is t
 
 We have started receiving information from interested participants so we need a place to collect information so we don't lose it. We'll contact back everyone of you when we have decided more precisely. 
 
-If you want to start participating, you may want to look at [Contributing](https://github.com/ankidroid/Anki-Android/wiki/Contributing) and the list of [good first issues](https://github.com/ankidroid/Anki-Android/issues?q=is%3Aopen+is%3Aissue+label%3A%22Good+First+Issue%21%22). For the sake of transparency, we are all [volunteer](https://github.com/ankidroid/Anki-Android/wiki/OpenCollective-Payment-Process) here and if you participate now, it's as a volunteer, it do not guarantee, even implicitly, that you'll be selected for GSoC.
-
 So if you are an interested participant: Please add your **PUBLIC** contact information here in the list below. I emphasized "public" because this information will be web-scraped, used by spammers, etc. But we are an open-source project so there is no hiding your identity completely - but you should think carefully about what specific contact methods you share. 
+
+### Already want to participate to AnkiDroid? 
+
+If you want to start participating, you may want to look at [Contributing](https://github.com/ankidroid/Anki-Android/wiki/Contributing) and the list of [good first issues](https://github.com/ankidroid/Anki-Android/issues?q=is%3Aopen+is%3Aissue+label%3A%22Good+First+Issue%21%22). Write down that you are working on it, so that nobody else start doing the same work as you. If you can't work on it anymore, please post another message to let us know. If you want to create your own feature, please post a feature request first so that mainteneurs can confirm whether it would be accepted.
+
+For the sake of transparency, we are all [volunteer](https://github.com/ankidroid/Anki-Android/wiki/OpenCollective-Payment-Process) here and if you participate now, it's as a volunteer, it do not guarantee, even implicitly, that you'll be selected for GSoC.
 
 ## What is Google Summer of Code?
 > [Google Summer of Code](https://summerofcode.withgoogle.com/) is a global program focused on bringing more student developers into open source software development. Students work with an open source organization on a 10 week programming project during their break from school.
