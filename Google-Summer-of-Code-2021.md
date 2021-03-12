@@ -137,5 +137,6 @@ Satyam jyotsana gargee(satyam8657@gmail.com)GitHub:(https://github.com/Satyamjyo
 - Abhishek Nigam(Email : nabhi531@gmail.com),(Github: https://github.com/abhi114)
 
 - Amar Shukla(Email:amarshukla320@gmail.com),(Github:https://github.com/AmarShukla1),(Linkedin : https://www.linkedin.com/in/amarshukla007)
+- Tushar Bhatt; E-mail: tbhatt312@gmail.com; GitHub: https://github.com/bhatushar/; LinkenIn: https://www.linkedin.com/in/bhatushar/
 
 Please enter your details at the bottom of the page via the following link: https://github.com/ankidroid/Anki-Android/wiki/Google-Summer-of-Code-2021/_edit. You will need a GitHub account to do this.
