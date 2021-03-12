@@ -15,6 +15,7 @@ import android.net.Uri;
 import android.os.Bundle;
 
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatDelegate;
 import androidx.appcompat.widget.Toolbar;
 import androidx.browser.customtabs.CustomTabColorSchemeParams;
 import androidx.browser.customtabs.CustomTabsIntent;
@@ -48,8 +49,13 @@ import com.ichi2.themes.Themes;
 import com.ichi2.utils.AdaptionUtil;
 import com.ichi2.utils.AndroidUiUtils;
 
+import java.lang.reflect.Method;
+
 import timber.log.Timber;
 
+import static androidx.browser.customtabs.CustomTabsIntent.COLOR_SCHEME_DARK;
+import static androidx.browser.customtabs.CustomTabsIntent.COLOR_SCHEME_LIGHT;
+import static androidx.browser.customtabs.CustomTabsIntent.COLOR_SCHEME_SYSTEM;
 import static com.ichi2.anim.ActivityTransitionAnimation.Direction.*;
 import static com.ichi2.anim.ActivityTransitionAnimation.Direction;
 
@@ -64,6 +70,9 @@ public class AnkiActivity extends AppCompatActivity implements SimpleMessageDial
 
     // custom tabs
     private CustomTabActivityHelper mCustomTabActivityHelper;
+
+    // colors for custom tabs
+    int navBarColor, toolBarColor;
 
     public AnkiActivity() {
         super();
@@ -365,6 +374,38 @@ public class AnkiActivity extends AppCompatActivity implements SimpleMessageDial
         }
     }
 
+
+    /**
+     * This method will fetch the colors like colorPrimary and colorPrimaryDark, for setting them in CustomTabsIntent.
+     * This is used for changing toolbar and nav bar color in custom tabs with respect to the theme of app.
+     * Here, the current theme (from styles.xml) is fetched using reflection as it is private.
+     */
+    private void fetchThemeColors() {
+        int currentTheme = 0;
+        try {
+            Method m = Class.forName(Context.class.getName()).getMethod("getThemeResId");
+            m.setAccessible(true);
+            currentTheme = (Integer) m.invoke(this);
+        } catch (Exception e) {
+            System.out.println("currentTheme exception "+currentTheme+ e.getCause()+e.getMessage());
+        }
+
+        if (getResources().getResourceName(currentTheme).equals("com.ichi2.anki:style/Theme_Dark_Compat")) {
+            navBarColor = ContextCompat.getColor(this, R.color.material_grey_800);
+            toolBarColor = ContextCompat.getColor(this, R.color.material_grey_800);
+        } else if (getResources().getResourceName(currentTheme).equals("com.ichi2.anki:style/Theme_Plain_Compat")) {
+            navBarColor = ContextCompat.getColor(this, R.color.material_grey_500);
+            toolBarColor = ContextCompat.getColor(this, R.color.material_grey_600);
+        } else if (getResources().getResourceName(currentTheme).equals("com.ichi2.anki:style/Theme_Black_Compat")) {
+            navBarColor = toolBarColor = ContextCompat.getColor(this, R.color.black);
+        } else {
+            // if thrown exception this will prevent the app from crashing and will be set as default.
+            navBarColor = ContextCompat.getColor(this, R.color.material_light_blue_500);
+            toolBarColor = ContextCompat.getColor(this, R.color.material_light_blue_700);
+        }
+
+    }
+
     public void openUrl(Uri url) {
         //DEFECT: We might want a custom view for the toast, given i8n may make the text too long for some OSes to
         //display the toast
@@ -373,19 +414,39 @@ public class AnkiActivity extends AppCompatActivity implements SimpleMessageDial
             return;
         }
 
-        CustomTabActivityHelper helper = getCustomTabActivityHelper();
-        CustomTabsIntent.Builder builder = new CustomTabsIntent.Builder(helper.getSession());
-        CustomTabColorSchemeParams colorScheme =
+        fetchThemeColors();
+
+        CustomTabColorSchemeParams colorSchemeParams =
                 new CustomTabColorSchemeParams.Builder()
-                        .setToolbarColor(ContextCompat.getColor(this, R.color.material_light_blue_500))
+                        .setToolbarColor(toolBarColor)
+                        .setNavigationBarColor(navBarColor)
                         .build();
-        builder.setDefaultColorSchemeParams(colorScheme).setShowTitle(true);
-        builder.setStartAnimations(this, R.anim.slide_right_in, R.anim.slide_left_out);
-        builder.setExitAnimations(this, R.anim.slide_left_in, R.anim.slide_right_out);
-        builder.setCloseButtonIcon(BitmapFactory.decodeResource(this.getResources(), R.drawable.ic_arrow_back_white_24dp));
+
+        CustomTabActivityHelper helper = getCustomTabActivityHelper();
+        CustomTabsIntent.Builder builder =
+                new CustomTabsIntent.Builder(helper.getSession())
+                        .setShowTitle(true)
+                        .setStartAnimations(this, R.anim.slide_right_in, R.anim.slide_left_out)
+                        .setExitAnimations(this, R.anim.slide_left_in, R.anim.slide_right_out)
+                        .setCloseButtonIcon(BitmapFactory.decodeResource(this.getResources(), R.drawable.ic_back_arrow_custom_tab))
+                        .setColorScheme(getColorScheme())
+                        .setDefaultColorSchemeParams(colorSchemeParams);
+
         CustomTabsIntent customTabsIntent = builder.build();
         CustomTabsHelper.addKeepAliveExtra(this, customTabsIntent.intent);
         CustomTabActivityHelper.openCustomTab(this, customTabsIntent, url, new CustomTabsFallback());
+    }
+
+
+    private int getColorScheme() {
+        SharedPreferences prefs = AnkiDroidApp.getSharedPrefs(this);
+        if (AppCompatDelegate.getDefaultNightMode() == AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM) {
+            return COLOR_SCHEME_SYSTEM;
+        } else if (prefs.getBoolean("invertedColors", false)) {
+            return COLOR_SCHEME_DARK;
+        } else {
+            return COLOR_SCHEME_LIGHT;
+        }
     }
 
     public CustomTabActivityHelper getCustomTabActivityHelper() {
