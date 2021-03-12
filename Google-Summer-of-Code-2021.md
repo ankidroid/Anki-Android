@@ -2,6 +2,16 @@
 
 Hello, all fantastic Google Summer of Code 2021 people!
 
+## Process
+
+We are quite honest in the AnkiDroid project, so the first thing I will say is that I'm not sure what the best process should be! It is our first year at GSoC and we didn't expect so many interest. That's really cool, but experienced contributors need some day to discuss the best path forward. 
+
+We have started receiving information from interested participants so we need a place to collect information so we don't lose it. We'll contact back everyone of you when we have decided more precisely. 
+
+If you want to start participating, you may want to look at [Contributing](https://github.com/ankidroid/Anki-Android/wiki/Contributing) and the list of [good first issues](https://github.com/ankidroid/Anki-Android/issues?q=is%3Aopen+is%3Aissue+label%3A%22Good+First+Issue%21%22). For the sake of transparency, we are all [volunteer](https://github.com/ankidroid/Anki-Android/wiki/OpenCollective-Payment-Process) here and if you participate now, it's as a volunteer, it do not guarantee, even implicitly, that you'll be selected for GSoC.
+
+So if you are an interested participant: Please add your **PUBLIC** contact information here in the list below. I emphasized "public" because this information will be web-scraped, used by spammers, etc. But we are an open-source project so there is no hiding your identity completely - but you should think carefully about what specific contact methods you share. 
+
 ## What is Google Summer of Code?
 > [Google Summer of Code](https://summerofcode.withgoogle.com/) is a global program focused on bringing more student developers into open source software development. Students work with an open source organization on a 10 week programming project during their break from school.
 
@@ -29,17 +39,11 @@ Potential candidates should to take a look at the guidelines on how to contribut
 - [Contributing](https://github.com/ankidroid/Anki-Android/wiki/Contributing)
 - [Code style](https://github.com/ankidroid/Anki-Android/wiki/Code-style)
 
-## Process
-
-We are quite honest in the AnkiDroid project, so the first thing I will say is that I'm not sure what the best process should be!
-
-But we have started receiving information from interested participants so we need a place to collect information so we don't lose it
-
-So if you are an interested participant: Please add your **PUBLIC** contact information here in a list. 
-
-I emphasized "public" because this information will be web-scraped, used by spammers, etc. But we are an open-source project so there is no hiding your identity completely - but you should think carefully about what specific contact methods you share.
 
 ## List of interested participants
+
+As a contributor to an open source project, you'll have to share some information, at the very least an email address. Please only list information that you are confortable to share in public, as this site is scraped. We need an email to be able to contact you once we know more about our plan moving forward.
+
 - Siddharth Singh Negi (sidharthnegi43@gmail.com) ; Github: https://github.com/siddharth-droid ; LinkedIn: https://www.linkedin.com/in/siddharth-negi-587495196/
 - Jaishree Meena (jaisghunawat99@gmail.com) ; Github:(https://github.com/IAmJaishree) ; LinkedIn:(https://www.linkedin.com/in/jaishree-ghunawat)
 - Ekagra Sinha (ekagra001@gmail.com) ;GitHub:https://github.com/Ekagra ; LinkedIn:(https://www.linkedin.com/in/ekagra-sinha-488bb1179)
