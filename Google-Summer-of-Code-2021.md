@@ -43,7 +43,7 @@ Potential candidates should to take a look at the guidelines on how to contribut
 ## List of interested participants
 
 As a contributor to an open source project, you'll have to share some information, at the very least an email address. Please only list information that you are confortable to share in public, as this site is scraped. We need an email to be able to contact you once we know more about our plan moving forward.
-
+- Akshay Jadhav (jadhavakshay0701@gmail.com) ;GitHub:https://github.com/Akshay0701 ; LinkedIn:(https://www.linkedin.com/in/akshay-jadhav-90ba81134)
 - Siddharth Singh Negi (sidharthnegi43@gmail.com) ; Github: https://github.com/siddharth-droid ; LinkedIn: https://www.linkedin.com/in/siddharth-negi-587495196/
 - Jaishree Meena (jaisghunawat99@gmail.com) ; Github:(https://github.com/IAmJaishree) ; LinkedIn:(https://www.linkedin.com/in/jaishree-ghunawat)
 - Ekagra Sinha (ekagra001@gmail.com) ;GitHub:https://github.com/Ekagra ; LinkedIn:(https://www.linkedin.com/in/ekagra-sinha-488bb1179)
@@ -53,7 +53,6 @@ As a contributor to an open source project, you'll have to share some informatio
 GitHub: @afolabisamguy)
 - Abhinav (abhi2000.rtk@gmail.com; Github: @abhinav12k)
 - Nazish Kamran (nazishkn67@gmail.com; Github : @nazishkn67)
-- Akshay Jadhav (jadhavakshay0701@gmail.com) ;GitHub:https://github.com/Akshay0701 ; LinkedIn:(https://www.linkedin.com/in/akshay-jadhav-90ba81134)
 - Nikhil Verma (nv5475609@gmail.com; Github: @nikhilverma360)
 - Akshay Prabhu (akshayprabhu@protonmail.com; Github: @akshayprabhu200)
 - Prajjwal kumar (write2prajjwal@gmail.com ; 
