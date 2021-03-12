@@ -118,7 +118,6 @@ Satyam jyotsana gargee(satyam8657@gmail.com)GitHub:(https://github.com/Satyamjyo
 - F. Malik (E-mail: f_malik_gsoc@protonmail.com); Github: (https://github.com/FurqanAMalik)
 - Mrudul Tora (E-mail: mrudultora@gmail.com); Github: (https://github.com/mrudultora)
 - Mohamed Medhat (E-Mail: mohamed.medhat0298@gmail.com; GitHub: https://github.com/MohamedMedhat1998; LinkedIn: https://www.linkedin.com/in/mohamed-medhat-33952b146/)
-- Rituraj Jain( Email : rrjain20122000@gmail.com), (Github:https://github.com/riturajjain2000) , (Linkedin : https://www.linkedin.com/in/riturajjain2000/)
 - Ankita Pareek (GitHub: Ankita13-code https://github.com/Ankita13-code), (Email: ankitapareek2000@gmail.com)
 - Harish Reddy P(Email-reddyh562002@gmail.com),(Linkedin:https://www.linkedin.com/in/harish-reddy-p-3b4a39193),(github:https://github.com/le0stel0n)
 * Tanisha Gupta (GitHub:-https://github.com/tanishagupta1), (Email:-tanishagupta2201@gmail.com)
@@ -132,5 +131,6 @@ Satyam jyotsana gargee(satyam8657@gmail.com)GitHub:(https://github.com/Satyamjyo
 - Priya Gurajapu (Email: priyagurajapu29@gmail.com), (Github: https://github.com/priyag99)
 - Ritish Singh(ritish.rks@gmail.com: Github: @ritish099, Website: https://ritishsingh.me/, Linkdin: https://www.linkedin.com/in/ritish-kr-singh-619347175/)
 - Ayush Goel( Email : goela093@gmail.com), (github:https://github.com/ayush1729cpp) , (linkedin : https://www.linkedin.com/in/ayushgoel1729/)
+- Rituraj Jain( Email : rrjain20122000@gmail.com), (Github:https://github.com/riturajjain2000) , (Linkedin : https://www.linkedin.com/in/riturajjain2000/)
 
 Please enter your details at the bottom of the page via the following link: https://github.com/ankidroid/Anki-Android/wiki/Google-Summer-of-Code-2021/_edit. You will need a GitHub account to do this.
