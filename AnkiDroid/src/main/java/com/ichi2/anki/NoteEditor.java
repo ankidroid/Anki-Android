@@ -570,7 +570,7 @@ public class NoteEditor extends AnkiActivity {
                 // If this item is selected item
                 if(position == mNoteTypeSpinner.getSelectedItemPosition()){
                     // Set spinner selected popup item's text color
-                    tv.setBackgroundColor(Color.GRAY);
+                    tv.setBackgroundColor(Color.LTGRAY);
                 }
 
                 // Return the modified view
@@ -612,13 +612,16 @@ public class NoteEditor extends AnkiActivity {
         ArrayAdapter<String> noteDeckAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, deckNames){
             @Override
             public View getDropDownView(int position, View convertView, ViewGroup parent){
+
+                mCurrentDid = mAllDeckIds.get(position);
+
                 // Cast the drop down items (popup items) as text view
                 TextView tv = (TextView) super.getDropDownView(position,convertView,parent);
 
                 // If this item is selected
                 if(position == mNoteDeckSpinner.getSelectedItemPosition()){
                     // Set spinner selected popup item's text color
-                    tv.setBackgroundColor(Color.GRAY);
+                    tv.setBackgroundColor(Color.LTGRAY);
                 }
 
                 // Return the modified view
@@ -627,19 +630,6 @@ public class NoteEditor extends AnkiActivity {
         };
         mNoteDeckSpinner.setAdapter(noteDeckAdapter);
         noteDeckAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        mNoteDeckSpinner.setOnItemSelectedListener(new OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int pos, long id) {
-                // Timber.i("NoteEditor:: onItemSelected() fired on mNoteDeckSpinner with pos = %d", pos);
-                mCurrentDid = mAllDeckIds.get(pos);
-            }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> parent) {
-                // Do Nothing
-            }
-        });
-
         mCurrentDid = intent.getLongExtra(EXTRA_DID, mCurrentDid);
 
         setDid(mEditorNote);
