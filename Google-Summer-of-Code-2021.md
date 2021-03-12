@@ -10,7 +10,7 @@ We have started receiving information from interested participants so we need a 
 
 So if you are an interested participant: Please add your **PUBLIC** contact information here in the list below. I emphasized "public" because this information will be web-scraped, used by spammers, etc. But we are an open-source project so there is no hiding your identity completely - but you should think carefully about what specific contact methods you share. 
 
-### Already want to participate to AnkiDroid? 
+### Already want to participate to AnkiDroid? 
 
 If you want to start participating, you may want to look at [Contributing](https://github.com/ankidroid/Anki-Android/wiki/Contributing) and the list of [good first issues](https://github.com/ankidroid/Anki-Android/issues?q=is%3Aopen+is%3Aissue+label%3A%22Good+First+Issue%21%22). Write down that you are working on it, so that nobody else start doing the same work as you. If you can't work on it anymore, please post another message to let us know. If you want to create your own feature, please post a feature request first so that mainteneurs can confirm whether it would be accepted.
 
@@ -124,7 +124,7 @@ Satyam jyotsana gargee(satyam8657@gmail.com)GitHub:(https://github.com/Satyamjyo
 - Mohamed Medhat (E-Mail: mohamed.medhat0298@gmail.com; GitHub: https://github.com/MohamedMedhat1998; LinkedIn: https://www.linkedin.com/in/mohamed-medhat-33952b146/)
 - Ankita Pareek (GitHub: Ankita13-code https://github.com/Ankita13-code), (Email: ankitapareek2000@gmail.com)
 - Harish Reddy P(Email-reddyh562002@gmail.com),(Linkedin:https://www.linkedin.com/in/harish-reddy-p-3b4a39193),(github:https://github.com/le0stel0n)
-* Tanisha Gupta (GitHub:-https://github.com/tanishagupta1), (Email:-tanishagupta2201@gmail.com)
+- Tanisha Gupta (GitHub:-https://github.com/tanishagupta1), (Email:-tanishagupta2201@gmail.com)
 - Apurva Shukla (Github:-https://github.com/apurvaone), (Email:-apurvashuklaofficial@gmail.com)
 - Tharun Sathiyamoorthy (Github: https://github.com/thaaaarun), (Email: tharunsathiyamoorthy@gmail.com)
 - Gurleen Sidhu (Email: ginnisidhu1997@gmail.com);(GitHub: @gurleennsidhuu)
@@ -139,7 +139,6 @@ Satyam jyotsana gargee(satyam8657@gmail.com)GitHub:(https://github.com/Satyamjyo
 - Jatin Gupta(Email : jatingupta8910@gmail.com), (Github :https://github.com/dev-jatin), (Linked in : https://www.linkedin.com/in/jatin-gupta-a779b1204)
 - Vishnu Agarwal(Email : vishnuagbly@gmail.com), (Github : https://github.com/vishnuagbly), (Linkedin : https://www.linkedin.com/in/vishnu-ag-4a3762193)
 - Abhishek Nigam(Email : nabhi531@gmail.com),(Github: https://github.com/abhi114)
-
 - Amar Shukla (Email:amarshukla320@gmail.com),(Github:https://github.com/AmarShukla1),(Linkedin : https://www.linkedin.com/in/amarshukla007)
 - Tushar Bhatt; E-mail: tbhatt312@gmail.com; GitHub: https://github.com/bhatushar/; LinkedIn: https://www.linkedin.com/in/bhatushar/
 - Amarnath K (Email:amarnathk5674@gmail.com),(Github: https://github.com/Amar-2003)
@@ -147,4 +146,6 @@ Satyam jyotsana gargee(satyam8657@gmail.com)GitHub:(https://github.com/Satyamjyo
 - Amruta Koshe (Email address: amruta.koshe@gmail.com), (Github: https://github.com/AmrutaKoshe)
 - Gajanan Gitte (Email address: gajanansgitte07@gmail.com), (Github: https://github.com/gajanangitte)
 - A.M. Samara simha reddy (Email address: samarasimhareddy.mohan@gmail.com), (Github: https://github.com/samar08), (Linkedin: https://www.linkedin.com/in/samara-simha-reddy-a-907b89136/)
+- ... etc :-)
+
 Please enter your details at the bottom of the page via the following link: https://github.com/ankidroid/Anki-Android/wiki/Google-Summer-of-Code-2021/_edit. You will need a GitHub account to do this.
