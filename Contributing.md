@@ -129,8 +129,8 @@ Don't hesitate to talk in the name of the AnkiDroid team if you feel part of it.
 Many thanks to all of the people and companies who contributed to AnkiDroid! :<br>
 <ul><li>A hundred people are <a href='https://github.com/ankidroid/Anki-Android/graphs/contributors'>working on the code</a>, some sending just one patch, some becoming very involved.<br>
 </li><li>Simplified Chinese translation by / 简体中文版 安智网汉化 <a href='http://goapk.com'>http://goapk.com</a>
-</li><li>Tens of anonymous translation contributors<br>
+</li><li>A thousand of translation contributors<br>
 </li><li>Hundreds of people are <a href='https://groups.google.com/group/anki-android/members'>participating in the forum</a>
-</li><li>And thanks to the hundreds of thousands of AnkiDroid users!</li></ul>
+</li><li>And thanks to the millions of AnkiDroid users!</li></ul>
 
 We are very welcoming and open, please join us!
