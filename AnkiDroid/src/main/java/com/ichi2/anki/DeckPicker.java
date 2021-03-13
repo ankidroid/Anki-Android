@@ -203,6 +203,8 @@ public class DeckPicker extends NavigationDrawerActivity implements
     private FloatingActionsMenu mActionsMenu;
     private final Snackbar.Callback mSnackbarShowHideCallback = new Snackbar.Callback();
 
+    private ActivityExportingDelegate mExportingDelegate;
+
     private LinearLayout mNoDecksPlaceholder;
 
     private SwipeRefreshLayout mPullToSyncWrapper;
@@ -438,6 +440,8 @@ public class DeckPicker extends NavigationDrawerActivity implements
     @Override
     protected void onCreate(Bundle savedInstanceState) throws SQLException {
         Timber.d("onCreate()");
+
+        mExportingDelegate = new ActivityExportingDelegate(this, PICK_EXPORT_FILE);
 
         if (showedActivityFailedScreen(savedInstanceState)) {
             return;
@@ -917,44 +921,12 @@ public class DeckPicker extends NavigationDrawerActivity implements
                 ImportUtils.showImportUnsuccessfulDialog(this, importResult.getHumanReadableMessage(), false);
             }
         } else if ((requestCode == PICK_EXPORT_FILE) && (resultCode == RESULT_OK)) {
-            if (exportToProvider(intent, true)) {
+            if (mExportingDelegate.exportToProvider(intent, true)) {
                 UIUtils.showSimpleSnackbar(this, getString(R.string.export_save_apkg_successful), true);
             } else {
                 UIUtils.showSimpleSnackbar(this, getString(R.string.export_save_apkg_unsuccessful), false);
             }
         }
-    }
-
-
-    private boolean exportToProvider(Intent intent, boolean deleteAfterExport) {
-        if ((intent == null) || (intent.getData() == null)) {
-            Timber.e("exportToProvider() provided with insufficient intent data %s", intent);
-            return false;
-        }
-        Uri uri = intent.getData();
-        Timber.d("Exporting from file to ContentProvider URI: %s/%s", mExportFileName, uri.toString());
-        FileOutputStream fileOutputStream;
-        ParcelFileDescriptor pfd;
-        try {
-            pfd = getContentResolver().openFileDescriptor(uri, "w");
-
-            if (pfd != null) {
-                fileOutputStream = new FileOutputStream(pfd.getFileDescriptor());
-                CompatHelper.getCompat().copyFile(mExportFileName, fileOutputStream);
-                fileOutputStream.close();
-                pfd.close();
-            } else {
-                Timber.w("exportToProvider() failed - ContentProvider returned null file descriptor for %s", uri);
-                return false;
-            }
-            if (deleteAfterExport && !new File(mExportFileName).delete()) {
-                Timber.w("Failed to delete temporary export file %s", mExportFileName);
-            }
-        } catch (Exception e) {
-            Timber.e(e, "Unable to export file to Uri: %s/%s", mExportFileName, uri.toString());
-            return false;
-        }
-        return true;
     }
 
 
@@ -2122,81 +2094,19 @@ public class DeckPicker extends NavigationDrawerActivity implements
 
     @Override
     public void exportApkg(String filename, Long did, boolean includeSched, boolean includeMedia) {
-        File exportDir = new File(getExternalCacheDir(), "export");
-        exportDir.mkdirs();
-        File exportPath;
-        String timeStampSuffix = "-" + TimeUtils.getTimestamp(getCol().getTime());
-        if (filename != null) {
-            // filename has been explicitly specified
-            exportPath = new File(exportDir, filename);
-        } else if (did != null) {
-            // filename not explicitly specified, but a deck has been specified so use deck name
-            exportPath = new File(exportDir, getCol().getDecks().get(did).getString("name").replaceAll("\\W+", "_") + timeStampSuffix + ".apkg");
-        } else if (!includeSched) {
-            // full export without scheduling is assumed to be shared with someone else -- use "All Decks.apkg"
-            exportPath = new File(exportDir, "All Decks" + timeStampSuffix + ".apkg");
-        } else {
-            // full collection export -- use "collection.colpkg"
-            File colPath = new File(getCol().getPath());
-            String newFileName = colPath.getName().replace(".anki2", timeStampSuffix + ".colpkg");
-            exportPath = new File(exportDir, newFileName);
-        }
-        TaskManager.launchCollectionTask(new CollectionTask.ExportApkg(exportPath.getPath(), did, includeSched, includeMedia), exportListener());
+        mExportingDelegate.exportApkg(filename,did,includeSched,includeMedia);
     }
 
 
+    @Override
     public void emailFile(String path) {
-        // Make sure the file actually exists
-        File attachment = new File(path);
-        if (!attachment.exists()) {
-            Timber.e("Specified apkg file %s does not exist", path);
-            UIUtils.showThemedToast(this, getResources().getString(R.string.apk_share_error), false);
-            return;
-        }
-        // Get a URI for the file to be shared via the FileProvider API
-        Uri uri;
-        try {
-            uri = FileProvider.getUriForFile(DeckPicker.this, "com.ichi2.anki.apkgfileprovider", attachment);
-        } catch (IllegalArgumentException e) {
-            Timber.w(e, "Could not generate a valid URI for the apkg file");
-            UIUtils.showThemedToast(this, getResources().getString(R.string.apk_share_error), false);
-            return;
-        }
-        Intent shareIntent = new ShareCompat.IntentBuilder(DeckPicker.this)
-                .setType("application/apkg")
-                .setStream(uri)
-                .setSubject(getString(R.string.export_email_subject, attachment.getName()))
-                .setHtmlText(getString(R.string.export_email_text))
-                .getIntent();
-        if (shareIntent.resolveActivity(getPackageManager()) != null) {
-            startActivityWithoutAnimation(shareIntent);
-        } else {
-            // Try to save it?
-            UIUtils.showSimpleSnackbar(this, R.string.export_send_no_handlers, false);
-            saveExportFile(path);
-        }
+        mExportingDelegate.emailFile(path);
     }
 
 
+    @Override
     public void saveExportFile(String path) {
-        // Make sure the file actually exists
-        File attachment = new File(path);
-        if (!attachment.exists()) {
-            Timber.e("saveExportFile() Specified apkg file %s does not exist", path);
-            UIUtils.showSimpleSnackbar(this, R.string.export_save_apkg_unsuccessful, false);
-            return;
-        }
-
-        // Send the user to the standard Android file picker via Intent
-        mExportFileName = path;
-        Intent saveIntent = new Intent(Intent.ACTION_CREATE_DOCUMENT);
-        saveIntent.addCategory(Intent.CATEGORY_OPENABLE);
-        saveIntent.setType("application/apkg");
-        saveIntent.putExtra(Intent.EXTRA_TITLE, attachment.getName());
-        saveIntent.putExtra("android.content.extra.SHOW_ADVANCED", true);
-        saveIntent.putExtra("android.content.extra.FANCY", true);
-        saveIntent.putExtra("android.content.extra.SHOW_FILESIZE", true);
-        startActivityForResultWithoutAnimation(saveIntent, PICK_EXPORT_FILE);
+        mExportingDelegate.saveExportFile(path);
     }
 
 
