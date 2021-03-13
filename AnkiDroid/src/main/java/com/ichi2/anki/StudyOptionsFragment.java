@@ -18,6 +18,13 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.res.Resources;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.Canvas;
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
+import android.graphics.drawable.LevelListDrawable;
+import android.os.AsyncTask;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -27,8 +34,11 @@ import androidx.core.text.HtmlCompat;
 import androidx.fragment.app.Fragment;
 import androidx.appcompat.widget.Toolbar;
 
+import android.text.Html;
 import android.text.Spanned;
 import android.text.method.LinkMovementMethod;
+import android.util.DisplayMetrics;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -36,6 +46,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.ichi2.anim.ActivityTransitionAnimation;
@@ -54,6 +65,15 @@ import com.ichi2.themes.StyledProgressDialog;
 import com.ichi2.utils.BooleanGetter;
 import com.ichi2.utils.HtmlUtils;
 
+
+
+
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.InputStream;
+import java.net.MalformedURLException;
+import java.net.URL;
+
 import timber.log.Timber;
 
 import static com.ichi2.anim.ActivityTransitionAnimation.Direction.*;
@@ -69,6 +89,8 @@ public class StudyOptionsFragment extends Fragment implements Toolbar.OnMenuItem
     private static final int BROWSE_CARDS = 3;
     private static final int STATISTICS = 4;
     private static final int DECK_OPTIONS = 5;
+    int ScreenW, ScreenH;
+
 
     /**
      * Constants for selecting which content view to display
@@ -95,6 +117,10 @@ public class StudyOptionsFragment extends Fragment implements Toolbar.OnMenuItem
     /**
      * UI elements for "Study Options" view
      */
+
+
+
+
     @Nullable
     private View mStudyOptionsView;
     private View mDeckInfoLayout;
@@ -205,6 +231,15 @@ public class StudyOptionsFragment extends Fragment implements Toolbar.OnMenuItem
             configureToolbar();
         }
         refreshInterface(true);
+
+        //For Displaying Image in Desc
+        DisplayMetrics displayMetrics = getResources().getDisplayMetrics();
+        float dpWidth = displayMetrics.widthPixels;
+        float dpHeight = displayMetrics.heightPixels;
+
+         ScreenW = (int) dpWidth;
+         ScreenH = (int) dpHeight;
+
         return studyOptionsView;
     }
 
@@ -625,7 +660,7 @@ public class StudyOptionsFragment extends Fragment implements Toolbar.OnMenuItem
                         desc = getCol().getDecks().getActualDescription();
                     }
                     if (desc.length() > 0) {
-                        mTextDeckDescription.setText(formatDescription(desc));
+                        new HtmlImageGetter(mTextDeckDescription, desc, getContext());
                         mTextDeckDescription.setVisibility(View.VISIBLE);
                     } else {
                         mTextDeckDescription.setVisibility(View.GONE);
@@ -696,15 +731,6 @@ public class StudyOptionsFragment extends Fragment implements Toolbar.OnMenuItem
         return true;
     }
 
-    @VisibleForTesting()
-    static Spanned formatDescription(String desc) {
-        //#5715: In deck description, ignore what is in style and script tag
-        //Since we don't currently execute the JS/CSS, it's not worth displaying.
-        String withStrippedTags = Utils.stripHTMLScriptAndStyleTags(desc);
-        //#5188 - fromHtml displays newlines as " "
-        String withFixedNewlines = HtmlUtils.convertNewlinesToHtml(withStrippedTags);
-        return HtmlCompat.fromHtml(withFixedNewlines, HtmlCompat.FROM_HTML_MODE_LEGACY);
-    }
 
     private Collection getCol() {
         return CollectionHelper.getInstance().getCol(getContext());
