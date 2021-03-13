@@ -30,7 +30,7 @@ import android.widget.TextView;
 public class IncrementerNumberRangePreference extends NumberRangePreference {
 
     private final LinearLayout mLinearLayout = new LinearLayout(getContext());
-    private final EditText mEditText = getEditText();
+    private final EditText mEditText = getEditText(); // Get default EditText from parent
     private final Button mIncrementButton = new Button(getContext());
     private final Button mDecrementButton = new Button(getContext());
 
@@ -53,25 +53,33 @@ public class IncrementerNumberRangePreference extends NumberRangePreference {
     }
 
 
+    /**
+     * Performs initial configurations which are common for all constructors.
+     * <p>
+     * Sets appropriate Text and OnClickListener to {@link #mIncrementButton} and {@link #mDecrementButton}
+     * respectively.
+     */
     private void initialize() {
         mIncrementButton.setText("+");
         mDecrementButton.setText("-");
 
         mIncrementButton.setOnClickListener(view -> {
             int value = Integer.parseInt(String.valueOf(mEditText.getText()));
+            // Check (value + 1) is in range
             value = IncrementerNumberRangePreference.super.getValidatedRangeFromInt(value + 1);
             mEditText.setText(String.valueOf(value));
         });
 
         mDecrementButton.setOnClickListener(view -> {
             int value = Integer.parseInt(String.valueOf(mEditText.getText()));
+            // Check (value - 1) is in range
             value = IncrementerNumberRangePreference.super.getValidatedRangeFromInt(value - 1);
             mEditText.setText(String.valueOf(value));
         });
     }
 
 
-    @Override // TODO: Edit layout style to will entire width
+    @Override // TODO: Edit layout style to fill entire width
     protected View onCreateDialogView() {
         mLinearLayout.addView(mIncrementButton);
         mLinearLayout.addView(mEditText);
@@ -81,11 +89,11 @@ public class IncrementerNumberRangePreference extends NumberRangePreference {
     }
 
 
-    //persist values and disassemble views
     @Override
     protected void onDialogClosed(boolean positiveResult) {
         super.onDialogClosed(positiveResult);
 
+        // Remove mEditText, mIncrementButton, mDecrementButton before removing mLinearLayout
         mLinearLayout.removeAllViews();
         ViewGroup parent = (ViewGroup) mLinearLayout.getParent();
         parent.removeView(mLinearLayout);
