@@ -125,6 +125,7 @@
     <string name="card_editor_reposition_card">Reposition</string>
     <string name="card_editor_reset_card">Reset progress</string>
     <string name="card_editor_reschedule_card" comment="Action to reschedule a card">Reschedule</string>
+    <string name="card_editor_export_card" comment="Action to export selected cards">Export cards</string>
     <string name="card_editor_preview_card" comment="Button offering to preview some card(s)">Preview</string>
     <string name="error_insufficient_memory">Operation not possible due to insufficient memory on your device</string>
     <string name="rename" comment="Confirm that the renaming action should be processed.">Rename</string>
@@ -171,6 +172,7 @@
     <string name="export_include_media">Include media</string>
     <string name="confirm_apkg_export">Export collection as Anki package?</string>
     <string name="confirm_apkg_export_deck">Export “%s” as apkg file?</string>
+    <string name="confirm_apkg_export_selected_cards">Export selected cards as apkg file?</string>
     <string name="export_in_progress">Exporting Anki package file…</string>
     <string name="export_successful_title">Send Anki package?</string>
     <string name="export_send_button">Send</string>
