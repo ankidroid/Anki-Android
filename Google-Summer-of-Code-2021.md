@@ -143,7 +143,7 @@ Satyam jyotsana gargee(satyam8657@gmail.com)GitHub:(https://github.com/Satyamjyo
 - Tushar Bhatt; E-mail: tbhatt312@gmail.com; GitHub: https://github.com/bhatushar/; LinkedIn: https://www.linkedin.com/in/bhatushar/
 - Amarnath K (Email:amarnathk5674@gmail.com),(Github: https://github.com/Amar-2003)
 - Satyam Pandey Email address: psatyam360@gmail.com, GitHub Id: https://github.com/satyampandeygit
-- Amruta Koshe (Email address: amruta.koshe@gmail.com), (Github: https://github.com/AmrutaKoshe)
+- Amruta Koshe (Email address: amruta.koshe@gmail.com), (Github: https://github.com/AmrutaKoshe), (Linkedin: https://www.linkedin.com/in/amruta-koshe-5a55b8153/)
 - Gajanan Gitte (Email address: gajanansgitte07@gmail.com), (Github: https://github.com/gajanangitte)
 - A.M. Samara simha reddy (Email address: samarasimhareddy.mohan@gmail.com), (Github: https://github.com/samar08), (Linkedin: https://www.linkedin.com/in/samara-simha-reddy-a-907b89136/)
 - Aviraj Singh (Email address: aviraj.rsingh@gmail.com), (Github: https://github.com/avirajrsingh), (Linkedin: https://www.linkedin.com/in/aviraj-singh/)
