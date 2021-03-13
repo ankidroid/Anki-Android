@@ -152,6 +152,7 @@ Satyam jyotsana gargee(satyam8657@gmail.com)GitHub:(https://github.com/Satyamjyo
 - Harsh Chaurasiya (Email address: hc2542000@gmail.com), (Github: https://github.com/harsh-hash)
 - Tanmay Chakraborty (Email address: tanmaychakrabortydhn@gmail.com), (Github: https://github.com/tanmayChakrawarty), (Linkedin: https://www.linkedin.com/in/tanmay-chakraborty-521913199/)
 - Nguyen Quang Tung (Github: https://github.com/ichisadashioko ; Email address: ichisadashioko@gmail.com )
+- Saksham Pruthi (Github: https://github.com/sakshampruthi), (Linkedin: https://www.linkedin.com/in/sakshampruthi), (Email: saksham.0804@gmail.com), (Portfolio : https://bit.ly/sakshampruthi), (Medium: https://sakshampruthi.medium.com)
 - ... etc :-)
 
 Please enter your details at the bottom of the page via the following link: https://github.com/ankidroid/Anki-Android/wiki/Google-Summer-of-Code-2021/_edit. You will need a GitHub account to do this.
