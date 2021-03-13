@@ -53,11 +53,16 @@ class Exporter {
     @NonNull
     protected final Collection mCol;
     /**
-     * If set exporter will export only this deck, otherwise will export all cards
+     * If set exporter will export only this deck
      */
     @Nullable
     protected final Long mDid;
     protected int mCount;
+    /**
+     * If set exporter will export only these selection of cards
+     */
+    @Nullable
+    protected final List<Long> mCids;
     protected boolean mIncludeHTML;
 
     /**
@@ -68,6 +73,7 @@ class Exporter {
     public Exporter(@NonNull Collection col) {
         mCol = col;
         mDid = null;
+        mCids = null;
     }
 
 
@@ -80,6 +86,20 @@ class Exporter {
     public Exporter(@NonNull Collection col, @NonNull Long did) {
         mCol = col;
         mDid = did;
+        mCids = null;
+    }
+
+
+    /**
+     * An exporter for the selection of cards
+     *
+     * @param col deck collection
+     * @param cids selected card ids
+     */
+    public Exporter(@NonNull Collection col, @NonNull List<Long> cids) {
+        mCol = col;
+        mDid = null;
+        mCids = cids;
     }
 
 
@@ -90,7 +110,9 @@ class Exporter {
      */
     public Long[] cardIds() {
         Long[] cids;
-        if (mDid == null) {
+        if (mCids != null) {
+            cids = Utils.list2ObjectArray(mCids);
+        } else if (mDid == null) {
             cids = Utils.list2ObjectArray(mCol.getDb().queryLongList("select id from cards"));
         } else {
             cids = mCol.getDecks().cids(mDid, true);
@@ -188,6 +210,21 @@ class AnkiExporter extends Exporter {
      */
     public AnkiExporter(@NonNull Collection col, @NonNull Long did, boolean includeSched, boolean includeMedia) {
         super(col, did);
+        mIncludeSched = includeSched;
+        mIncludeMedia = includeMedia;
+    }
+
+
+    /**
+     * An exporter for the selected cards
+     *
+     * @param col deck collection
+     * @param cids selected cards ids
+     * @param includeSched should include scheduling
+     * @param includeMedia should include media
+     */
+    public AnkiExporter(@NonNull Collection col, @NonNull List<Long> cids, boolean includeSched, boolean includeMedia) {
+        super(col, cids);
         mIncludeSched = includeSched;
         mIncludeMedia = includeMedia;
     }
@@ -423,6 +460,19 @@ public final class AnkiPackageExporter extends AnkiExporter {
     }
 
 
+    /**
+     * An exporter for a selected deck
+     *
+     * @param col deck collection
+     * @param cids selected cards ids
+     * @param includeSched should include scheduling
+     * @param includeMedia should include media
+     */
+    public AnkiPackageExporter(@NonNull Collection col, @NonNull List<Long> cids, boolean includeSched, boolean includeMedia) {
+        super(col, cids, includeSched, includeMedia);
+    }
+
+
     @Override
     public void exportInto(String path, Context context) throws IOException, JSONException, ImportExportException {
         // sched info+v2 scheduler not compatible w/ older clients
@@ -433,7 +483,7 @@ public final class AnkiPackageExporter extends AnkiExporter {
         ZipFile z = new ZipFile(path);
         // if all decks and scheduling included, full export
         JSONObject media;
-        if (mIncludeSched && mDid == null) {
+        if (mIncludeSched && mDid == null && mCids == null) {
             media = exportVerbatim(z, context);
         } else {
             // otherwise, filter

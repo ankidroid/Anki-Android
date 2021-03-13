@@ -16,6 +16,8 @@
 
 package com.ichi2.libanki;
 
+import android.content.Context;
+
 import com.ichi2.anki.RobolectricTest;
 import com.ichi2.anki.exception.ImportExportException;
 import com.ichi2.libanki.exception.EmptyMediaException;
@@ -30,18 +32,22 @@ import java.io.PrintWriter;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
 import androidx.annotation.NonNull;
 import androidx.test.ext.junit.runners.AndroidJUnit4;
+import okhttp3.internal.Util;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.contains;
 import static org.hamcrest.Matchers.containsInAnyOrder;
 import static org.hamcrest.Matchers.hasSize;
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.*;
+import static org.mockito.Mockito.*;
 
 @RunWith(AndroidJUnit4.class)
 public class AnkiPackageExporterTest extends RobolectricTest {
@@ -108,6 +114,54 @@ public class AnkiPackageExporterTest extends RobolectricTest {
         // {"0":"filename.txt"}
         String expected = String.format("{\"0\":\"%s\"}", tempFileInCollection.getName());
         checkMediaExportStringIs(files, expected);
+    }
+
+    @Test
+    public void exporter_cardIds_returns_cids_if_available(){
+        final Long[] expected = new Long[]{0L,1L,2L,5L,6L,7L};
+
+        AnkiExporter e = new AnkiExporter(getCol(), Arrays.asList(expected), false, true);
+
+        final Long[] result = e.cardIds();
+        assertArrayEquals(result,expected);
+    }
+
+    @Test
+    public void exporter_cardIds_returns_deck_cards_if_did_available(){
+        final Long[] expected = new Long[]{0L,1L,2L,1L,6L,7L};
+
+        final long did = 1L;
+
+        final Collection col = mock(Collection.class);
+        final Decks decks = mock(Decks.class);
+
+        doReturn(decks).when(col).getDecks();
+        doReturn(expected).when(decks).cids(eq(did));
+        doReturn(expected).when(decks).cids(eq(did),anyBoolean());
+
+        AnkiExporter e = new AnkiExporter(col, did, false, true);
+
+        final Long[] result = e.cardIds();
+        assertArrayEquals(result,expected);
+    }
+
+    @Test
+    public void exporter_cardIds_returns_all_cards_if_no_did_or_cids(){
+        final Long[] expected = new Long[]{0L,1L,2L,1L,6L,7L};
+        final ArrayList<Long> expectedAL = new ArrayList<>(Arrays.asList(expected));
+
+        final long did = 1L;
+
+        final Collection col = mock(Collection.class,withSettings().verboseLogging());
+        final DB db = mock(DB.class,withSettings().verboseLogging());
+
+        doReturn(db).when(col).getDb();
+        doReturn(expectedAL).when(db).queryLongList(eq("select id from cards"));
+
+        AnkiExporter e = new AnkiExporter(col, false, true);
+
+        final Long[] result = e.cardIds();
+        assertArrayEquals(result,expected);
     }
 
 
