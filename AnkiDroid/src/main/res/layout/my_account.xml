@@ -27,7 +27,11 @@
                 android:gravity="center"
                 >
                 <!-- TODO JS choose a standardized padding to use here -->
-
+                <ImageView
+                    android:layout_width="200dp"
+                    android:src="@drawable/ankidroid_logo"
+                    android:layout_marginBottom="0dp"
+                    android:layout_height="200dp"></ImageView>
 
                 <!--<com.ichi2.ui.FixedTextView-->
                 <!--android:id="@+id/sign_in"-->
@@ -75,6 +79,7 @@
                     android:layout_height="wrap_content"
                     android:theme="@style/LargeButtonStyle"
                     android:singleLine="true"
+                    android:background="@drawable/footer_button_round_blue"
                     android:textSize="@dimen/md_title_textsize"
                     android:layout_gravity="center"
                     android:padding="10dp"
