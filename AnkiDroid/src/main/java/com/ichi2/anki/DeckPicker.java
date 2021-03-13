@@ -97,7 +97,7 @@ import com.ichi2.anki.dialogs.DeckPickerAnalyticsOptInDialog;
 import com.ichi2.anki.dialogs.DeckPickerBackupNoSpaceLeftDialog;
 import com.ichi2.anki.dialogs.DeckPickerConfirmDeleteDeckDialog;
 import com.ichi2.anki.dialogs.DeckPickerContextMenu;
-import com.ichi2.anki.dialogs.DeckPickerExportCompleteDialog;
+import com.ichi2.anki.dialogs.ExportCompleteDialog;
 import com.ichi2.anki.dialogs.DeckPickerNoSpaceLeftDialog;
 import com.ichi2.anki.dialogs.DialogHandler;
 import com.ichi2.anki.dialogs.ExportDialog;
@@ -159,7 +159,7 @@ public class DeckPicker extends NavigationDrawerActivity implements
         StudyOptionsListener, SyncErrorDialog.SyncErrorDialogListener, ImportDialog.ImportDialogListener,
         MediaCheckDialog.MediaCheckDialogListener, ExportDialog.ExportDialogListener,
         ActivityCompat.OnRequestPermissionsResultCallback, CustomStudyDialog.CustomStudyListener,
-        DeckPickerExportCompleteDialog.DeckPickerExportCompleteDialogListener {
+        ExportCompleteDialog.ExportCompleteDialogListener {
 
 
     /**
@@ -434,7 +434,7 @@ public class DeckPicker extends NavigationDrawerActivity implements
                 Timber.i("Export successful");
                 String exportPath = result.second;
                 if (exportPath != null) {
-                    deckPicker.showAsyncDialogFragment(DeckPickerExportCompleteDialog.newInstance(exportPath));
+                    deckPicker.showAsyncDialogFragment(ExportCompleteDialog.newInstance(exportPath));
                 } else {
                     UIUtils.showThemedToast(deckPicker, deckPicker.getResources().getString(R.string.export_unsuccessful), true);
                 }
