@@ -28,7 +28,16 @@ import java.io.File;
 import androidx.annotation.NonNull;
 
 public class DeckPickerExportCompleteDialog extends AsyncDialogFragment {
-    
+
+    public interface DeckPickerExportCompleteDialogListener {
+        void dismissAllDialogFragments();
+
+        void emailFile(String path);
+
+        void saveExportFile(String exportPath);
+    }
+
+
     public static DeckPickerExportCompleteDialog newInstance(String exportPath) {
         DeckPickerExportCompleteDialog f = new DeckPickerExportCompleteDialog();
         Bundle args = new Bundle();
@@ -50,15 +59,15 @@ public class DeckPickerExportCompleteDialog extends AsyncDialogFragment {
                 .positiveText(R.string.export_send_button)
                 .negativeText(R.string.export_save_button)
                 .onPositive((dialog, which) -> {
-                    ((DeckPicker) getActivity()).dismissAllDialogFragments();
-                    ((DeckPicker) getActivity()).emailFile(exportPath);
+                    ((DeckPickerExportCompleteDialogListener) getActivity()).dismissAllDialogFragments();
+                    ((DeckPickerExportCompleteDialogListener) getActivity()).emailFile(exportPath);
                 })
                 .onNegative((dialog, which) -> {
-                    ((DeckPicker) getActivity()).dismissAllDialogFragments();
-                    ((DeckPicker) getActivity()).saveExportFile(exportPath);
+                    ((DeckPickerExportCompleteDialogListener) getActivity()).dismissAllDialogFragments();
+                    ((DeckPickerExportCompleteDialogListener) getActivity()).saveExportFile(exportPath);
                 })
                 .neutralText(R.string.dialog_cancel)
-                .onNeutral((dialog, which) -> ((DeckPicker) getActivity()).dismissAllDialogFragments());
+                .onNeutral((dialog, which) -> ((DeckPickerExportCompleteDialogListener) getActivity()).dismissAllDialogFragments());
         return dialogBuilder.show();
     }
     
