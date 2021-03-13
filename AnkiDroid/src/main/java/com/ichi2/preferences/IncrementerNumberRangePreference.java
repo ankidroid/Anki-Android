@@ -18,6 +18,7 @@ package com.ichi2.preferences;
 
 import android.content.Context;
 import android.util.AttributeSet;
+import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
@@ -79,8 +80,19 @@ public class IncrementerNumberRangePreference extends NumberRangePreference {
     }
 
 
-    @Override // TODO: Edit layout style to fill entire width
+    @Override
     protected View onCreateDialogView() {
+        // Make mEditText fill all available space
+        mLinearLayout.setOrientation(LinearLayout.HORIZONTAL);
+        LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(
+                LinearLayout.LayoutParams.MATCH_PARENT,
+                LinearLayout.LayoutParams.WRAP_CONTENT,
+                1.0f
+        );
+        mEditText.setLayoutParams(params);
+        // Centre text inside mEditText
+        mEditText.setGravity(Gravity.CENTER_HORIZONTAL);
+
         mLinearLayout.addView(mIncrementButton);
         mLinearLayout.addView(mEditText);
         mLinearLayout.addView(mDecrementButton);
