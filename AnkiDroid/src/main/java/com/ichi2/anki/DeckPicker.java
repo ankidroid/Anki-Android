@@ -161,7 +161,8 @@ import static com.ichi2.anim.ActivityTransitionAnimation.Direction.*;
 public class DeckPicker extends NavigationDrawerActivity implements
         StudyOptionsListener, SyncErrorDialog.SyncErrorDialogListener, ImportDialog.ImportDialogListener,
         MediaCheckDialog.MediaCheckDialogListener, ExportDialog.ExportDialogListener,
-        ActivityCompat.OnRequestPermissionsResultCallback, CustomStudyDialog.CustomStudyListener {
+        ActivityCompat.OnRequestPermissionsResultCallback, CustomStudyDialog.CustomStudyListener,
+        DeckPickerExportCompleteDialog.DeckPickerExportCompleteDialogListener {
 
 
     /**
