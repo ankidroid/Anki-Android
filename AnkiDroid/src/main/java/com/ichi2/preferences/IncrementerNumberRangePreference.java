@@ -97,7 +97,5 @@ public class IncrementerNumberRangePreference extends NumberRangePreference {
         mLinearLayout.removeAllViews();
         ViewGroup parent = (ViewGroup) mLinearLayout.getParent();
         parent.removeView(mLinearLayout);
-
-        notifyChanged();
     }
 }
