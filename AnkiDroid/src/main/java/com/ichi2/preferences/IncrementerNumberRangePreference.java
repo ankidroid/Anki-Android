@@ -24,7 +24,6 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
-import android.widget.TextView;
 
 
 @SuppressWarnings("deprecation") // TODO Tracked in https://github.com/ankidroid/Anki-Android/issues/5019
@@ -51,32 +50,6 @@ public class IncrementerNumberRangePreference extends NumberRangePreference {
     public IncrementerNumberRangePreference(Context context) {
         super(context);
         initialize();
-    }
-
-
-    /**
-     * Performs initial configurations which are common for all constructors.
-     * <p>
-     * Sets appropriate Text and OnClickListener to {@link #mIncrementButton} and {@link #mDecrementButton}
-     * respectively.
-     */
-    private void initialize() {
-        mIncrementButton.setText("+");
-        mDecrementButton.setText("-");
-
-        mIncrementButton.setOnClickListener(view -> {
-            int value = Integer.parseInt(String.valueOf(mEditText.getText()));
-            // Check (value + 1) is in range
-            value = IncrementerNumberRangePreference.super.getValidatedRangeFromInt(value + 1);
-            mEditText.setText(String.valueOf(value));
-        });
-
-        mDecrementButton.setOnClickListener(view -> {
-            int value = Integer.parseInt(String.valueOf(mEditText.getText()));
-            // Check (value - 1) is in range
-            value = IncrementerNumberRangePreference.super.getValidatedRangeFromInt(value - 1);
-            mEditText.setText(String.valueOf(value));
-        });
     }
 
 
@@ -109,5 +82,34 @@ public class IncrementerNumberRangePreference extends NumberRangePreference {
         mLinearLayout.removeAllViews();
         ViewGroup parent = (ViewGroup) mLinearLayout.getParent();
         parent.removeView(mLinearLayout);
+    }
+
+
+    /**
+     * Performs initial configurations which are common for all constructors.
+     * <p>
+     * Sets appropriate Text and OnClickListener to {@link #mIncrementButton} and {@link #mDecrementButton}
+     * respectively.
+     */
+    private void initialize() {
+        mIncrementButton.setText("+");
+        mDecrementButton.setText("-");
+
+        mIncrementButton.setOnClickListener(view -> updateEditText(true));
+        mDecrementButton.setOnClickListener(view -> updateEditText(false));
+    }
+
+
+    /**
+     * Increments/Decrements the value of {@link #mEditText} by 1 based on the parameter value.
+     *
+     * @param isIncrement Indicator for whether to increase or decrease the value.
+     */
+    private void updateEditText(boolean isIncrement) {
+        int value = Integer.parseInt(mEditText.getText().toString());
+        value = isIncrement ? value + 1 : value - 1;
+        // Make sure value is within range
+        value = super.getValidatedRangeFromInt(value);
+        mEditText.setText(String.valueOf(value));
     }
 }
