@@ -463,6 +463,21 @@ public class Utils {
         return ar;
     }
 
+
+    /**
+     * Converts an array of primitive long to {@link java.util.List<Long>}
+     * @param arr input array
+     * @return output list
+     */
+    @NonNull
+    public static List<Long> primitiveArray2List(@NonNull long[] arr) {
+        final List<Long> list = new ArrayList<Long>(arr.length);
+        for (int i = 0; i < arr.length; i++) {
+            list.add(i, arr[i]);
+        }
+        return list;
+    }
+
     public static Long[] list2ObjectArray(List<Long> list) {
         return list.toArray(new Long[0]);
     }

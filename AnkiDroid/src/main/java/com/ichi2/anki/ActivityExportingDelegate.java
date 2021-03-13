@@ -49,7 +49,7 @@ public class ActivityExportingDelegate <A extends AnkiActivity & ExportCompleteD
     }
 
 
-    public void exportApkg(String filename, Long did, boolean includeSched, boolean includeMedia) {
+    public void exportApkg(String filename, Long did, List<Long> cardIds, boolean includeSched, boolean includeMedia) {
         File exportDir = new File(mActivity.getExternalCacheDir(), "export");
         exportDir.mkdirs();
         File exportPath;
@@ -60,6 +60,11 @@ public class ActivityExportingDelegate <A extends AnkiActivity & ExportCompleteD
         } else if (!includeSched) {
             // full export without scheduling is assumed to be shared with someone else -- use "All Decks.apkg"
             exportPath = new File(exportDir, "All Decks" + timeStampSuffix + ".apkg");
+        } else if (did != null && cardIds == null) {
+            // filename not explicitly specified, but a deck has been specified so use deck name
+            exportPath = new File(exportDir, getCol().getDecks().get(did).getString("name").replaceAll("\\W+", "_") + timeStampSuffix + ".apkg");
+        } else if (did == null && cardIds != null) {
+            exportPath = new File(exportDir, "Selected Cards" + timeStampSuffix + ".apkg");
         } else {
             // full collection export -- use "collection.colpkg"
             File colPath = new File(getCol().getPath());
@@ -67,7 +72,7 @@ public class ActivityExportingDelegate <A extends AnkiActivity & ExportCompleteD
             exportPath = new File(exportDir, newFileName);
         }
         final ExportListener exportListener = new ExportListener(mActivity);
-        TaskManager.launchCollectionTask(new CollectionTask.ExportApkg(exportPath.getPath(), did, includeSched, includeMedia), exportListener);
+        TaskManager.launchCollectionTask(new CollectionTask.ExportApkg(exportPath.getPath(), did, cardIds, includeSched, includeMedia), exportListener);
     }
 
 

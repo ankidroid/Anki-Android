@@ -6,16 +6,23 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
+import com.afollestad.materialdialogs.DialogAction;
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.ichi2.anki.R;
 import com.ichi2.anki.analytics.AnalyticsDialogFragment;
+import com.ichi2.libanki.Utils;
+
+import java.util.Arrays;
+import java.util.List;
+
+import static com.ichi2.libanki.Decks.NOT_FOUND_DECK_ID;
 import com.ichi2.utils.BundleUtils;
 
 public class ExportDialog extends AnalyticsDialogFragment {
 
     public interface ExportDialogListener {
 
-        void exportApkg(String path, Long did, boolean includeSched, boolean includeMedia);
+        void exportApkg(String path, Long did, List<Long> cardIds, boolean includeSched, boolean includeMedia);
         void dismissAllDialogFragments();
     }
 
@@ -28,19 +35,21 @@ public class ExportDialog extends AnalyticsDialogFragment {
     /**
      * Creates a new instance of ExportDialog to export a deck of cards
      *
-     * @param did A long which specifies the deck to be exported,
-     *            if did is null then the whole collection of decks will be exported
+     * @param did A long which specifies the deck to be exported.
      * @param dialogMessage A string which can be used to show a custom message or specify import path
      */
-    public static ExportDialog newInstance(@NonNull String dialogMessage, @Nullable Long did) {
-        ExportDialog f = new ExportDialog();
-        Bundle args = new Bundle();
-        if (did != null) {
-            args.putLong("did", did);
-        }
-        args.putString("dialogMessage", dialogMessage);
-        f.setArguments(args);
-        return f;
+    public static ExportDialog newInstance(@NonNull String dialogMessage, @NonNull Long did) {
+        return newInstance(dialogMessage, did, null);
+    }
+
+    /**
+     * Creates a new instance of ExportDialog to export a deck of cards
+     *
+     * @param did A long which specifies the deck to be exported.
+     * @param dialogMessage A string which can be used to show a custom message or specify import path
+     */
+    public static ExportDialog newInstance(@NonNull String dialogMessage, @NonNull List<Long> cids) {
+        return newInstance(dialogMessage, null, cids);
     }
 
     /**
@@ -49,7 +58,22 @@ public class ExportDialog extends AnalyticsDialogFragment {
      * @param dialogMessage A string which can be used to show a custom message or specify import path
      */
     public static ExportDialog newInstance(@NonNull String dialogMessage) {
-        return newInstance(dialogMessage, null);
+        return newInstance(dialogMessage, null, null);
+    }
+
+
+    private static ExportDialog newInstance(@NonNull String dialogMessage, @Nullable Long did, @Nullable List<Long> cids) {
+        ExportDialog f = new ExportDialog();
+        Bundle args = new Bundle();
+        if (cids != null) {
+            args.putLongArray("cids", Utils.collection2Array(cids));
+        }
+        if (did != null) {
+            args.putLong("did", did);
+        }
+        args.putString("dialogMessage", dialogMessage);
+        f.setArguments(args);
+        return f;
     }
 
 
@@ -59,6 +83,8 @@ public class ExportDialog extends AnalyticsDialogFragment {
         super.onCreate(savedInstanceState);
         Resources res = getResources();
         final Long did = BundleUtils.getNullableLong(getArguments(), "did");
+        final long[] _cids = getArguments().getLongArray("cids");
+        final List<Long> cids = _cids == null ? null : Utils.primitiveArray2List(_cids);
         Integer[] checked;
         if (did != null) {
             mIncludeSched = false;
@@ -95,7 +121,7 @@ public class ExportDialog extends AnalyticsDialogFragment {
                             return true;
                         })
                 .onPositive((dialog, which) -> {
-                    ((ExportDialogListener) getActivity()).exportApkg(null, did, mIncludeSched, mIncludeMedia);
+                    ((ExportDialogListener) getActivity()).exportApkg(null, did, cids, mIncludeSched, mIncludeMedia);
                     dismissAllDialogFragments();
                 })
                 .onNegative((dialog, which) -> dismissAllDialogFragments());

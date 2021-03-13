@@ -2093,8 +2093,8 @@ public class DeckPicker extends NavigationDrawerActivity implements
 
 
     @Override
-    public void exportApkg(String filename, Long did, boolean includeSched, boolean includeMedia) {
-        mExportingDelegate.exportApkg(filename,did,includeSched,includeMedia);
+    public void exportApkg(String filename, Long did, List<Long> cids, boolean includeSched, boolean includeMedia) {
+        mExportingDelegate.exportApkg(filename, did, cids, includeSched, includeMedia);
     }
 
 

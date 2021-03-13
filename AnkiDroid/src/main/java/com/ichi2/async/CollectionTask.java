@@ -1477,13 +1477,15 @@ public class CollectionTask<ProgressListener, ProgressBackground extends Progres
     public static class ExportApkg extends Task<Void, Pair<Boolean, String>> {
         private final String apkgPath;
         private final Long did;
+        private final List<Long> cardIds;
         private final Boolean includeSched;
         private final Boolean includeMedia;
 
 
-        public ExportApkg(String apkgPath, Long did, Boolean includeSched, Boolean includeMedia) {
+        public ExportApkg(String apkgPath, Long did, List<Long> cardIds, Boolean includeSched, Boolean includeMedia) {
             this.apkgPath = apkgPath;
             this.did = did;
+            this.cardIds = cardIds;
             this.includeSched = includeSched;
             this.includeMedia = includeMedia;
         }
@@ -1493,7 +1495,12 @@ public class CollectionTask<ProgressListener, ProgressBackground extends Progres
             Timber.d("doInBackgroundExportApkg");
 
             try {
-                AnkiPackageExporter exporter = new AnkiPackageExporter(col, did, includeSched, includeMedia);
+                AnkiPackageExporter exporter;
+                if (cardIds != null) {
+                    exporter = new AnkiPackageExporter(col, cardIds, includeSched, includeMedia);
+                } else {
+                    exporter = new AnkiPackageExporter(col, did, includeSched, includeMedia);
+                }
                 exporter.exportInto(apkgPath, col.getContext());
             } catch (FileNotFoundException e) {
                 Timber.e(e, "FileNotFoundException in doInBackgroundExportApkg");
