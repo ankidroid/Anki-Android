@@ -89,21 +89,67 @@ Experiences with JAVA, Android UI using XML
 ### Difficulty
 Easy
 
-## Other ideas
+# Other ideas
 We list other ideas, we would be happy to discuss them with a potential intern if they find them more interesting, but expect that the above-listed projects should already give an idea of what kind of projects the intern may participate in.
 
-## UX
+## WIP: UX/UI
+We have various users on the Play Store suggesting that that application could improve both its UX and its UI
 
-### TODO
-* Android 11/scoped storage migration would be incredible - vital to the project continuation
+### Expected Outcomes
+The app will receive less negative criticism about its user interface
 
-### TODO
-* Fixing the deprecation warnings on preferences
+### This task uses:
+Experiences with JAVA, Android UI using XML
 
-### TODO
-* Google monkey running in CI
+### Difficulty
+Variable: Easy-Hard, depending on how large the scope of the change will be
 
-### TODO
+## WIP: Scoped Storage Migration
+This is vital to the project continuation
+
+Google Play will enforce that apps target API 30 (Android 11) later on this year. After this date, we will not be able to release upgrades to AnkiDroid on the Google Play Store until we upgrade the app.
+
+We currently run using the [requestLegacyExternalStorage](https://developer.android.com/reference/android/R.attr#requestLegacyExternalStorage) flag. Once we target API 30, this flag will no longer work on Android 11 devices.
+
+For us to support this flag, I believe that we need to migrate to Scoped Storage: https://developer.android.com/about/versions/11/privacy/storage. The outcome of this will change how AnkiDroid's storage works, likely moving the publicly accessible `AnkiDroid` folder, which may mean changes to:
+
+* Collection database
+* Sync outputs (collection & media)
+* Camera/Microphone Outputs
+* "Save Whiteboard"
+* AnkiDroid API usage
+
+Mentors are less likely to know these new Storage APIs so this will involve collaboration and an aspect of experimentation and independent research.
+
+### Difficulty
+Likely Hard
+
+## Deprecation Warnings
+Google has introduced a new library for Preferences, we should move our Preferences and Deck Options screen to use this
+
+### This task uses:
+Experiences with JAVA 
+
+### Difficulty
+Medium
+
+## UI/Application Exerciser Monkey
+Google has developed a [UI/Application Exerciser Monkeyy](https://developer.android.com/studio/test/monkey) which performs automated actions to test for bugs in an application. It would improve our testing process if this is included in GitHub actions.
+
+Care must be taken to ensure that this does not cause actions affecting external services (for example: spamming AnkiWeb/our translations services with requests).
+
+### Outcomes
+
+AnkiDroid has much more stronger testing suite, and there is less chance of a crash bug being seen by the public
+
+### This task uses:
+Experiences with JAVA  
+GitHub Actions
+
+### Difficulty
+Easy
+
+## TODO: Donations
 * Donation drive from corporations rather than focusing on individuals (to discuss)
 
 ## Key Mappings
