@@ -106,6 +106,12 @@ Thank you to all our backers! 🙏
 <a href="https://opencollective.com/ankidroid/sponsor/2/website" target="_blank"><img src="https://opencollective.com/ankidroid/sponsor/2/avatar.svg"></a>
 <a href="https://opencollective.com/ankidroid/sponsor/3/website" target="_blank"><img src="https://opencollective.com/ankidroid/sponsor/3/avatar.svg"></a>
 <a href="https://opencollective.com/ankidroid/sponsor/4/website" target="_blank"><img src="https://opencollective.com/ankidroid/sponsor/4/avatar.svg"></a>
+<a href="https://opencollective.com/ankidroid/sponsor/5/website" target="_blank"><img src="https://opencollective.com/ankidroid/sponsor/5/avatar.svg"></a>
+<a href="https://opencollective.com/ankidroid/sponsor/6/website" target="_blank"><img src="https://opencollective.com/ankidroid/sponsor/6/avatar.svg"></a>
+<a href="https://opencollective.com/ankidroid/sponsor/7/website" target="_blank"><img src="https://opencollective.com/ankidroid/sponsor/7/avatar.svg"></a>
+<a href="https://opencollective.com/ankidroid/sponsor/8/website" target="_blank"><img src="https://opencollective.com/ankidroid/sponsor/8/avatar.svg"></a>
+<a href="https://opencollective.com/ankidroid/sponsor/9/website" target="_blank"><img src="https://opencollective.com/ankidroid/sponsor/9/avatar.svg"></a>
+<a href="https://opencollective.com/ankidroid/sponsor/10/website" target="_blank"><img src="https://opencollective.com/ankidroid/sponsor/10/avatar.svg"></a>
 
 
 
