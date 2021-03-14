@@ -233,7 +233,7 @@ public class MyAccount extends AnkiActivity {
         public void onPreExecute() {
             Timber.d("loginListener.onPreExecute()");
             if (mProgressDialog == null || !mProgressDialog.isShowing()) {
-                mProgressDialog = StyledProgressDialog.show(MyAccount.this, "",
+                mProgressDialog = StyledProgressDialog.show(MyAccount.this, null,
                         getResources().getString(R.string.alert_logging_message), false);
             }
         }
