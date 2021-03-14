@@ -91,6 +91,8 @@ Thank you to all our backers! 🙏
 
 <a href="https://opencollective.com/ankidroid#backers" target="_blank"><img src="https://opencollective.com/ankidroid/backers.svg?width=890"></a>
 
+### [Sponsors](https://opencollective.com/ankidroid#sponsor)
+
 Join Us On
 ----------
 
