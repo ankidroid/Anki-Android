@@ -169,5 +169,6 @@ Satyam jyotsana gargee(satyam8657@gmail.com)GitHub:(https://github.com/Satyamjyo
 - ... etc :-)
 - **Pratik Agarwal** (Email : pratik1234agarwal@gmail.com, [Github](https://github.com/Pratik1234agarwal), [LinkedIn](https://www.linkedin.com/in/pratik-agarwal-0115931b0/))
 - **Ameya Thakur** (Email : ameya.thakur19@vit.edu, [Github](https://github.com/ameythakur-del), [LinkedIn](https://www.linkedin.com/in/ameya-thakur-54a030134))
+- Saksham Gupta (Email : sakshamgupta9656@gmail.com , [Github](https://github.com/saksham9656), [Linkedin](https://www.linkedin.com/in/saksham-gupta-a1931b132/)) 
 
 Please enter your details at the bottom of the page via the following link: https://github.com/ankidroid/Anki-Android/wiki/Google-Summer-of-Code-2021/_edit. You will need a GitHub account to do this.
