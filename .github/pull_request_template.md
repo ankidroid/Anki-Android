@@ -27,3 +27,4 @@ _Please, go through these checks before submitting the PR._
 - [ ] You have commented your code, particularly in hard-to-understand areas
 - [ ] You have performed a self-review of your own code
 - [ ] UI changes: include screenshots of all affected screens (in particular showing any new or changed strings)
+- [ ] UI Changes: You have tested your change using the [Google Accessibility Scanner](https://play.google.com/store/apps/details?id=com.google.android.apps.accessibility.auditor)
