@@ -35,7 +35,7 @@ This Code of Conduct applies both within project spaces and in public spaces
 when an individual is representing the project or its community.
 
 A working group of community members is committed to promptly addressing any
-reported issues. The working group is made up of pandas contributors and users.
+reported issues. The working group is made up of Anki-Android contributors and users.
 Instances of abusive, harassing, or otherwise unacceptable behavior may be
 reported by contacting the working group by e-mail (pandas-coc@googlegroups.com).
 Messages sent to this e-mail address will not be publicly visible but only to
