@@ -1,5 +1,11 @@
 Name: Krishna Wadhwani
 
+E-Mail: kwswhwmw@gmail.com
+
+Linked-in: https://www.linkedin.com/in/krishna-wadhwani-1063b81ab/
+
+Github: https://github.com/KrishnaWadhwani/Quack-Maths-Solver
+
 Projects: 
 1) Food Ordering App, Website(Django)
 2) A Human Verifier If Human Is Real Or Fraud(Android)
@@ -27,3 +33,5 @@ Experience:
 11) Javascript
 12) Server Side
 13) Git
+
+Please Give Me A Chance To Work In Anki And This Is My First GSOC
