@@ -39,6 +39,9 @@
         <item name="fab_normal">@color/theme_plain_accent</item>
         <item name="fab_pressed">#c8607d8b</item> <!-- 55 less opacity than fab_normal -->
         <item name="fab_background">@color/theme_plain_primary_dark</item>
+        <!--Custom Tabs colors-->
+        <item name="customTabToolbarColor">@color/material_grey_600</item>
+        <item name="customTabNavBarColor">@color/material_grey_500</item>
     </style>
 
     <!-- Preferences screens -->
