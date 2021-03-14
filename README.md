@@ -79,11 +79,7 @@ See the [contribution wiki page](https://github.com/ankidroid/Anki-Android/wiki/
 
 
 ## Credits
-<a href="https://github.com/ankidroid/Anki-Android/graphs/contributors">
-  <img src="https://contrib.rocks/image?repo=ankidroid/Anki-Android" />
-</a>
-
-Made with [contributors-img](https://contrib.rocks).
+[![](https://opencollective.com/html-react-parser/contributors.svg?width=890&button=false)](https://github.com/ankidroid/Anki-Androidk/html-react-parser/graphs/contributors)
 
 Join Us On
 ----------
