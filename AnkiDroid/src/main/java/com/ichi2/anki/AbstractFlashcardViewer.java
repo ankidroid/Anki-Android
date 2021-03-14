@@ -4024,7 +4024,7 @@ see card.js for available functions
         }
 
         @JavascriptInterface
-        public boolean ankiIsDisplayAnswer() { return isDisplayingAnswer(); };
+        public boolean ankiIsDisplayingAnswer() { return isDisplayingAnswer(); };
 
         @JavascriptInterface
         public boolean ankiIsActiveNetworkMetered() {
