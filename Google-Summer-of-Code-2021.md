@@ -47,6 +47,7 @@ Potential candidates should to take a look at the guidelines on how to contribut
 ## List of interested participants
 
 As a contributor to an open source project, you'll have to share some information, at the very least an email address. Please only list information that you are confortable to share in public, as this site is scraped. We need an email to be able to contact you once we know more about our plan moving forward.
+- **Umang Gupta** (Email : umang_gupta@mymail.sutd.edu.sg, [Github](https://github.com/Usgupta), [LinkedIn](https://www.linkedin.com/in/usg1103/))
 - **Krishna Wadhwani** _Reach me_ **:** Email - kwswhwmw@gmail.com , [Github](https://github.com/KrishnaWadhwani/) , [LinkedIn](https://www.linkedin.com/in/krishna-wadhwani-1063b81ab/)
 - **Kartikey Saran** _Reach me_ **:** email - sarankartikey@gmail.com , [Github](https://github.com/kartikeysaran) , [LinkedIn](https://www.linkedin.com/in/kartikeysaran/)
 - Saket Thenua (saketthenuan8045@gmail.com) ;GitHub:https://github.com/Saketthenuan ; LinkedIn: (https://www.linkedin.com/in/saket10/) ; Portfolio:https://oriongeek.me/
@@ -175,7 +176,7 @@ Satyam jyotsana gargee(satyam8657@gmail.com)GitHub:(https://github.com/Satyamjyo
 - **Sumadithya Sreenivasa** (Email : sumadithya18bcs@iiitkottayam.ac.in, [Github](https://github.com/sumadithya))
 - **Abhishek Pathak** (Email : abhishekpathak.svnit@gmail.com, [Github](https://github.com/musiqualGeek))
 - **Shreyash Lata** (Email : shreyeslata@gmail.com, [Github](https://github.com/leoshrey), [LinkedIn](https://www.linkedin.com/in/shreyash-lata-29a71010b))
-- **Umang Gupta** (Email : umang_gupta@mymail.sutd.edu.sg, [Github](https://github.com/Usgupta), [LinkedIn](https://www.linkedin.com/in/usg1103/))
+
 
 
 Please enter your details at the bottom of the page via the following link: https://github.com/ankidroid/Anki-Android/wiki/Google-Summer-of-Code-2021/_edit. You will need a GitHub account to do this.
