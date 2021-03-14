@@ -11,7 +11,8 @@ Projects:
 8) Gym App(Android)
 9) Find Things In Home App(Android)
 10) Job Finding Website
-And Many More Some Of These Are Not In My GITHUB
+And Many More Some Of These Are Not In My Github
+
 Experience: 
 1) Ethical Hacking
 2) Machine Learning
