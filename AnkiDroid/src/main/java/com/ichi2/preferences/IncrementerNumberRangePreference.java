@@ -88,6 +88,15 @@ public class IncrementerNumberRangePreference extends NumberRangePreference {
         mIncrementButton.setText("+");
         mDecrementButton.setText("-");
 
+        LinearLayout.LayoutParams buttonParams = new LinearLayout.LayoutParams(
+                LinearLayout.LayoutParams.WRAP_CONTENT,
+                LinearLayout.LayoutParams.WRAP_CONTENT,
+                1.0f
+        );
+
+        mIncrementButton.setLayoutParams(buttonParams);
+        mDecrementButton.setLayoutParams(buttonParams);
+
         mIncrementButton.setOnClickListener(view -> updateEditText(true));
         mDecrementButton.setOnClickListener(view -> updateEditText(false));
 
@@ -96,7 +105,7 @@ public class IncrementerNumberRangePreference extends NumberRangePreference {
         LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(
                 LinearLayout.LayoutParams.MATCH_PARENT,
                 LinearLayout.LayoutParams.WRAP_CONTENT,
-                1.0f
+                3.0f
         );
         mEditText.setLayoutParams(params);
         // Centre text inside mEditText
