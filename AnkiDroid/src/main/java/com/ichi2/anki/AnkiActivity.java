@@ -378,7 +378,7 @@ public class AnkiActivity extends AppCompatActivity implements SimpleMessageDial
         }
 
         int toolbarColor = Themes.getColorFromAttr(this, R.attr.customTabToolbarColor);
-        int navBarColor=Themes.getColorFromAttr(this,R.attr.customTabNavBarColor);
+        int navBarColor = Themes.getColorFromAttr(this, R.attr.customTabNavBarColor);
 
         CustomTabColorSchemeParams colorSchemeParams =
                 new CustomTabColorSchemeParams.Builder()
