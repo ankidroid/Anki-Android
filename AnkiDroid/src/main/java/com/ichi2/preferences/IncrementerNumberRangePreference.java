@@ -85,31 +85,31 @@ public class IncrementerNumberRangePreference extends NumberRangePreference {
      * Sets {@link #mEditText} width and gravity.
      */
     private void initialize() {
-        mIncrementButton.setText("+");
-        mDecrementButton.setText("-");
-
+        // Layout parameters for mEditText
+        LinearLayout.LayoutParams editTextParams = new LinearLayout.LayoutParams(
+                LinearLayout.LayoutParams.MATCH_PARENT,
+                LinearLayout.LayoutParams.WRAP_CONTENT,
+                3.0f
+        );
+        // Layout parameters for mIncrementButton and mDecrementButton
         LinearLayout.LayoutParams buttonParams = new LinearLayout.LayoutParams(
                 LinearLayout.LayoutParams.WRAP_CONTENT,
                 LinearLayout.LayoutParams.WRAP_CONTENT,
                 1.0f
         );
 
+        mEditText.setLayoutParams(editTextParams);
+        // Centre text inside mEditText
+        mEditText.setGravity(Gravity.CENTER_HORIZONTAL);
+
+        mIncrementButton.setText("+");
+        mDecrementButton.setText("-");
         mIncrementButton.setLayoutParams(buttonParams);
         mDecrementButton.setLayoutParams(buttonParams);
-
         mIncrementButton.setOnClickListener(view -> updateEditText(true));
         mDecrementButton.setOnClickListener(view -> updateEditText(false));
 
-        // Make mEditText fill all available space
         mLinearLayout.setOrientation(LinearLayout.HORIZONTAL);
-        LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(
-                LinearLayout.LayoutParams.MATCH_PARENT,
-                LinearLayout.LayoutParams.WRAP_CONTENT,
-                3.0f
-        );
-        mEditText.setLayoutParams(params);
-        // Centre text inside mEditText
-        mEditText.setGravity(Gravity.CENTER_HORIZONTAL);
     }
 
 
