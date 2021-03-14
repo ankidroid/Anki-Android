@@ -79,6 +79,9 @@ See the [contribution wiki page](https://github.com/ankidroid/Anki-Android/wiki/
 
 
 ## Credits
+
+Thanks to these awesome contributors who keep this project going
+
 [![](https://opencollective.com/html-react-parser/contributors.svg?width=890&button=false)](https://github.com/ankidroid/Anki-Androidk/html-react-parser/graphs/contributors)
 
 Join Us On
