@@ -85,7 +85,7 @@ Thanks to these awesome contributors who keep this project going
 <a href="https://github.com/ankidroid/Anki-Android/graphs/contributors"><img src="https://opencollective.com/jest/contributors.svg?width=890&button=false" /></a>
 
 
-### [Backers](https://opencollective.com/jest#backer)
+### Backers
 
 Thank you to all our backers! 🙏
 
