@@ -3,46 +3,50 @@
     android:id="@+id/drawer_layout"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent">
-    <androidx.coordinatorlayout.widget.CoordinatorLayout
-        android:id="@+id/root_layout"
+    <com.drakeet.drawer.FullDraggableContainer
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:focusableInTouchMode="true">
-        <!-- AbstractFlashcardViewer pulls layout params from parent, casting it as RelativeLayout -->
-        <RelativeLayout
+        android:layout_height="match_parent">
+        <androidx.coordinatorlayout.widget.CoordinatorLayout
+            android:id="@+id/root_layout"
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
-            <!-- Main content that takes up the fullscreen -->
-            <include
-                layout="@layout/reviewer_mic_tool_bar"
+            android:layout_height="match_parent"
+            android:focusableInTouchMode="true">
+            <!-- AbstractFlashcardViewer pulls layout params from parent, casting it as RelativeLayout -->
+            <RelativeLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
-
-            <include layout="@layout/reviewer_flashcard_fullscreen_noanswers" />
-            <!-- Controls that are overlaid over the main content when the user interrupts immersive mode -->
-            <FrameLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:fitsSystemWindows="true">
-                <RelativeLayout
-                    android:id="@+id/front_frame"
+                android:layout_height="match_parent">
+                <!-- Main content that takes up the fullscreen -->
+                <include
+                    layout="@layout/reviewer_mic_tool_bar"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent">
-                    <include layout="@layout/toolbar"/>
-                    <include layout="@layout/reviewer_topbar"
-                             android:layout_width="fill_parent"
-                             android:layout_height="wrap_content"
-                             android:layout_below="@id/toolbar"/>
-                    <include
-                        layout="@layout/reviewer_whiteboard_pen_color"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_centerHorizontal="true"
-                        android:layout_above="@+id/bottom_area_layout"/>
-                    <include layout="@layout/reviewer_answer_buttons"/>
-                </RelativeLayout>
-            </FrameLayout>
-        </RelativeLayout>
-    </androidx.coordinatorlayout.widget.CoordinatorLayout>
+                    android:layout_height="wrap_content" />
+
+                <include layout="@layout/reviewer_flashcard_fullscreen_noanswers" />
+                <!-- Controls that are overlaid over the main content when the user interrupts immersive mode -->
+                <FrameLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:fitsSystemWindows="true">
+                    <RelativeLayout
+                        android:id="@+id/front_frame"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent">
+                        <include layout="@layout/toolbar"/>
+                        <include layout="@layout/reviewer_topbar"
+                            android:layout_width="fill_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@id/toolbar"/>
+                        <include
+                            layout="@layout/reviewer_whiteboard_pen_color"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_centerHorizontal="true"
+                            android:layout_above="@+id/bottom_area_layout"/>
+                        <include layout="@layout/reviewer_answer_buttons"/>
+                    </RelativeLayout>
+                </FrameLayout>
+            </RelativeLayout>
+        </androidx.coordinatorlayout.widget.CoordinatorLayout>
+    </com.drakeet.drawer.FullDraggableContainer>
     <include layout="@layout/navigation_drawer" />
 </androidx.drawerlayout.widget.ClosableDrawerLayout>
