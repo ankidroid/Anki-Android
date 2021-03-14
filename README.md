@@ -87,18 +87,12 @@ Join Us On
 
 ## Credits
 
+
 ### Github Contributors
 
 Thanks to these awesome contributors who keep this project going
 
 <a href="https://github.com/ankidroid/Anki-Android/graphs/contributors"><img src="https://opencollective.com/jest/contributors.svg?width=890&button=false" /></a>
-
-
-### [Backers](https://opencollective.com/ankidroid#backer)
-
-Thank you to all our backers! 🙏
-
-<a href="https://opencollective.com/ankidroid#backers" target="_blank"><img src="https://opencollective.com/ankidroid/backers.svg?width=890"></a>
 
 ### [Sponsors](https://opencollective.com/ankidroid#sponsor)
 <a href="https://opencollective.com/ankidroid/sponsor/0/website" target="_blank"><img src="https://opencollective.com/ankidroid/sponsor/0/avatar.svg"></a>
@@ -122,6 +116,19 @@ Thank you to all our backers! 🙏
 <a href="https://opencollective.com/ankidroid/sponsor/18/website" target="_blank"><img src="https://opencollective.com/ankidroid/sponsor/18/avatar.svg"></a>
 <a href="https://opencollective.com/ankidroid/sponsor/19/website" target="_blank"><img src="https://opencollective.com/ankidroid/sponsor/19/avatar.svg"></a>
 <a href="https://opencollective.com/ankidroid/sponsor/20/website" target="_blank"><img src="https://opencollective.com/ankidroid/sponsor/20/avatar.svg"></a>
+
+### [Backers](https://opencollective.com/ankidroid#backer)
+
+Thank you to all our backers! 🙏
+
+<a href="https://opencollective.com/ankidroid#backers" target="_blank"><img src="https://opencollective.com/ankidroid/backers.svg?width=890"></a>
+
+### [Contributors](https://opencollective.com/ankidroid#contributors)
+
+Our Awesome Team of Contributors
+
+<a href="https://opencollective.com/ankidroid#contributors" target="_blank"><img src="https://opencollective.com/ankidroid/contributors.svg?width=890"></a>
+
 
 
 
