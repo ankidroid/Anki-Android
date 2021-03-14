@@ -1546,17 +1546,7 @@ public class SchedV2 extends AbstractSched {
             lim--;
         }
 
-        if (parentLimit != null) {
-            return Math.min(parentLimit, lim);
-        } else if (!d.getString("name").contains("::")) {
-            return lim;
-        } else {
-            for (@NonNull Deck parent : mCol.getDecks().parents(did)) {
-                // pass in dummy parentLimit so we don't do parent lookup again
-                lim = Math.min(lim, _deckRevLimitSingle(parent, lim, considerCurrentCard));
-            }
-            return lim;
-        }
+        return lim;
     }
 
 
@@ -3118,7 +3108,7 @@ public class SchedV2 extends AbstractSched {
     protected void _sortIntoLrn(long due, long id) {
         if (!mLrnQueue.isFilled()) {
             // We don't want to add an element to the queue if it's not yet assumed to have its normal content.
-            // Adding anything is useless while the queue awaits beeing filled
+            // Adding anything is useless while the queue awaits being filled
             return;
         }
         ListIterator<LrnCard> i = mLrnQueue.listIterator();

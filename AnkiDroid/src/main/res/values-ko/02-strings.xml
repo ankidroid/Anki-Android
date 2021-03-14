@@ -93,13 +93,13 @@
         <item>시간 간격</item>
         <item>수월함</item>
         <item>예정</item>
-        <item>Card Modified</item>
-        <item>Created</item>
-        <item>Note Modified</item>
+        <item>카드編輯日</item>
+        <item>生成日</item>
+        <item>노트編輯日</item>
     </string-array>
     <!-- Custom study options -->
-    <string name="custom_study_increase_new_limit">Modify today’s new card limit</string>
-    <string name="custom_study_increase_review_limit">Modify today’s review card limit</string>
+    <string name="custom_study_increase_new_limit">오늘의 新規카드上限을 變更</string>
+    <string name="custom_study_increase_review_limit">오늘의 復習카드上限을 變更</string>
     <string name="custom_study_review_forgotten">잊어버린 카드 복습하기</string>
     <string name="custom_study_review_ahead">미리 복습하기</string>
     <string name="custom_study_random_selection">무작위 카드 학습하기</string>
@@ -108,14 +108,14 @@
     <!-- Card editor -->
     <string name="cardeditor_title_edit_card">노트 편집하기</string>
     <string name="discard_unsaved_changes">현재 입력된 내용을 버리고 닫을까요?</string>
-    <string name="note_editor_no_cards_created">No cards created. Please fill in more fields</string>
-    <string name="note_editor_no_first_field">The first field is empty</string>
-    <string name="note_editor_no_cloze_delations">This note type must contain cloze deletions</string>
-    <string name="note_editor_set_field_language">Set field language</string>
-    <string name="note_editor_no_cards_created_all_fields">The current note type did not produce any cards.\nPlease choose another note type, or click ‘Cards’ and add a field substitution</string>
-    <string name="note_editor_insert_cloze_no_cloze_note_type">Cloze deletions will only work on a Cloze note type</string>
+    <string name="note_editor_no_cards_created">카드가 生成되있지않습니다。他필드 亦是 채워주십시오。</string>
+    <string name="note_editor_no_first_field">最初필드가 비어있읍니다</string>
+    <string name="note_editor_no_cloze_delations">이 노트타이프는 空欄補充問題의 包含을 要합니다</string>
+    <string name="note_editor_set_field_language">필드言語設定</string>
+    <string name="note_editor_no_cards_created_all_fields">現在의 노트타이프로는 카드를 生成할수없었습니다。\n別途노트타이프를 選擇、或은「카드」를 눌러、필드의 置換을 行해주십시오。</string>
+    <string name="note_editor_insert_cloze_no_cloze_note_type">空欄補充問題는、空欄補充타이프의 노트에서만 機能합니다。</string>
     <string name="saving_facts">노트 저장 중</string>
-    <string name="saving_model">Saving note type</string>
+    <string name="saving_model">노트타이프保存中</string>
     <string name="save">저장</string>
     <string name="close">닫기</string>
     <string name="select">선택</string>
@@ -131,7 +131,7 @@
         <item quantity="other">%1$d분</item>
     </plurals>
     <string name="fact_adder_intent_title" comment="Label of the \'Add Note\' window. This title can\'t be seen in AnkiDroid directly.">AnkiDroid 카드</string>
-    <string name="note_editor_copy_note">Copy note</string>
+    <string name="note_editor_copy_note">노트複寫</string>
     <string name="card_editor_reposition_card">위치 변경</string>
     <string name="card_editor_reset_card">학습 진도 재설정</string>
     <string name="card_editor_reschedule_card" comment="Action to reschedule a card">일정 변경</string>
@@ -156,7 +156,7 @@
     <string name="import_message_add" comment="Adding a new deck to the collection (import)">추가</string>
     <string name="import_message_replace_confirm">기존의 컬렉션을 삭제하고 파일 %s의 데이터로 덮어씁니다. 확실합니까?</string>
     <string name="import_message_add_confirm">\"%s\"를 컬렉션에 추가하시겠습니까? 시간이 오래 걸릴 수 있습니다.</string>
-    <string name="import_log_no_apkg">This isn’t a valid Anki package file</string>
+    <string name="import_log_no_apkg">이것은 有效한 Anki파케지 파일이 아닙니다。</string>
     <string name="import_log_failed_unzip">Failed to unzip apkg: %s</string>
     <string name="import_log_failed_copy_to">Failed to copy apkg to %s</string>
     <string name="import_log_failed_validate">apkg failed validation</string>

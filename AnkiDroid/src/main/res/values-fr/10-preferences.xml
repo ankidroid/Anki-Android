@@ -172,7 +172,7 @@
     <string name="learn_cutoff">Limite d’apprentissage</string>
     <string name="time_limit">Limite de temps</string>
     <string name="time_limit_summ">XXX min</string>
-    <string name="new_timezone">New timezone handling</string>
+    <string name="new_timezone">Nouvelle gestion du fuseau horaire</string>
     <string name="day_offset">Début du jour suivant</string>
     <string name="day_offset_summ">XXX heures après minuit</string>
     <string name="sched_ver">Planificateur V2 expérimental</string>

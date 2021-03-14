@@ -54,7 +54,7 @@
     <string name="pref_cat_fonts">ଫଣ୍ଟ</string>
     <string name="pref_cat_gestures">ଅଙ୍ଗଭଙ୍ଗୀ</string>
     <string name="pref_cat_gestures_summ">ବଟନ୍ ବଦଳରେ ଟ୍ୟାପ୍ ଏବଂ ସ୍ୱାଇପ୍ ବ୍ୟବହାର କରନ୍ତୁ</string>
-    <string name="pref_cat_actions">କର୍ମ </string>
+    <string name="pref_cat_actions">କାର୍ଯ୍ୟକଳାପ</string>
     <string name="pref_cat_advanced">ବିକଶିତ</string>
     <string name="pref_cat_advanced_summ">ଅନୁକୂଲନ ଏବଂ ପରୀକ୍ଷାମୂଳକ ବୈଶିଷ୍ଟ୍ୟଗୁଡ଼ିକ</string>
     <string name="pref_cat_performance">ସଂଚାଳନକାରିତା</string>
@@ -65,12 +65,12 @@
     <!-- preferences.xml entries-->
     <string name="whiteboard_stroke_width">ଷ୍ଟ୍ରୋକ ଓସାର</string>
     <string name="use_input_tag">ପତ୍ରରେ ଉତ୍ତର ଟାଇପ୍ କରନ୍ତୁ</string>
-    <string name="use_input_tag_summ">ଉତ୍ତର ଟାଇପ୍ କରିବାକୁ ପତ୍ର ଭିତରେ ଏକ ଟେକ୍ସଟ୍ ଇନପୁଟ୍ ବାକ୍ସ ବ୍ୟବହାର କରନ୍ତୁ</string>
+    <string name="use_input_tag_summ">ଉତ୍ତର ଟାଇପ୍ କରିବାକୁ ପତ୍ର ଭିତରେ ଏକ ପାଠ୍ୟ ଇନପୁଟ୍ ବାକ୍ସ ବ୍ୟବହାର କରନ୍ତୁ</string>
     <string name="dictionary">ସନ୍ଧାନ ଶବ୍ଦକୋଷ</string>
     <string name="reset_languages">ଭାଷା reset କରନ୍ତୁ</string>
-    <string name="reset_languages_summ">ସମସ୍ତ ତାସଖଣ୍ଡ ପାଇଁ ଭାଷା ସ୍ଵତ୍ଵପର୍ଣ (ଲେଖାକୁ କହିବାରେ ପରିବର୍ତନ ଏବଂ ଶବ୍ଦକୋଷ ପାଇଁ ) ପୁନଃସେଟ୍ କରନ୍ତୁ</string>
+    <string name="reset_languages_summ">ସମସ୍ତ ଡେକ୍ ପାଇଁ ଭାଷା ସ୍ଵତ୍ଵପର୍ଣ (ପାଠ୍ୟ ରୁ କଥନ ଏବଂ ଅଭିଧାନ ପାଇଁ) ପୁନଃସେଟ୍ କରନ୍ତୁ</string>
     <string name="reset_languages_question">ସମସ୍ତ ଭାଷା ସ୍ୱତ୍ୱପୁର୍ଣ ପୁନଃସେଟ କରନ୍ତୁ ?</string>
-    <string name="reset_confirmation">ସମସ୍ତ ସ୍ଥିତି reset କରାହେଲା </string>
+    <string name="reset_confirmation">ସମସ୍ତ ସ୍ଥିତି ପୁନଃସେଟ୍ କରାହେଲା</string>
     <string name="card_zoom">ପତ୍ର ଜୁମ୍</string>
     <string name="image_zoom">ଛବି ଜୁମ୍</string>
     <string name="button_size">ଉତ୍ତର ବଟନ ଆକାର</string>
@@ -82,48 +82,46 @@
     <string name="full_screen_off">ବନ୍ଦ</string>
     <string name="full_screen_system">ସିଷ୍ଟମ୍ ବାରଗୁଡିକ ଲୁଚାନ୍ତୁ</string>
     <string name="full_screen_complete">ସିଷ୍ଟମ୍ ବାର୍ ଏବଂ ଉତ୍ତର ବଟନ୍ ଲୁଚାନ୍ତୁ</string>
-    <string name="full_screen_error_gestures">ଉତ୍ତର ବଟନ୍ ଲୁଚାଇବା ପାଇଁ ତୁମେ \"ଅଙ୍ଗଭଙ୍ଗୀ\" ସକ୍ଷମ କରିବା ଆବଶ୍ୟକ </string>
+    <string name="full_screen_error_gestures">ଉତ୍ତର ବଟନଗୁଡ଼ିକୁ ଲୁଚାଇବା ପାଇଁ ଆପଣ ଅଙ୍ଗଭଙ୍ଗୀ ସକ୍ଷମ କରିବା ଆବଶ୍ୟକ </string>
     <string name="answer_buttons_position">ଉତ୍ତର ବଟନ୍ ଅବସ୍ଥାନ</string>
     <string-array name="answer_buttons_position_labels">
         <item>ଶୀର୍ଷ</item>
         <item>ତଳ</item>
     </string-array>
     <string name="gestures">ଅଙ୍ଗଭଙ୍ଗୀ ସକ୍ଷମ କରନ୍ତୁ</string>
-    <string name="gestures_summ">ପତ୍ରଗୁଡିକର ଉତ୍ତର ଏବଂ ସଂଶୋଧନ କରିବା ଭଳି କାର୍ଯ୍ୟରେ \"ଅଙ୍ଗଭଙ୍ଗୀ\" ନ୍ୟସ୍ତ କରନ୍ତୁ</string>
-    <string name="gestures_allow_links">ଲିଙ୍କଗୁଡିକରେ ସ୍ପର୍ଶ ଅଙ୍ଗଭଙ୍ଗୀକୁ ଅଣଦେଖା କରନ୍ତୁ</string>
+    <string name="gestures_summ">ପତ୍ରଗୁଡିକର ଉତ୍ତର ଏବଂ ସମ୍ପାଦନ କରିବା ଭଳି କାର୍ଯ୍ୟରେ ଅଙ୍ଗଭଙ୍ଗୀ ନ୍ୟସ୍ତ କରନ୍ତୁ</string>
+    <string name="gestures_allow_links">ଲିଙ୍କଗୁଡ଼ିକରେ ସ୍ପର୍ଶ ଅଙ୍ଗଭଙ୍ଗୀକୁ ଅଣଦେଖା କରନ୍ତୁ</string>
     <string name="gestures_allow_links_summary">ଯଦି ଏକ ଲିଙ୍କ୍/ସୂଚନା ଦବାଯାଏ ତେବେ ସ୍ପର୍ଶ ଅଙ୍ଗଭଙ୍ଗୀ ପ୍ରକ୍ରିୟାକରଣ ହେବ ନାହିଁ</string>
-    <string name="gestures_corner_touch">9-ଅଙ୍କ ସ୍ପର୍ଶ</string>
+    <string name="gestures_corner_touch">୯-ଅଙ୍କ ସ୍ପର୍ଶ</string>
     <string name="gestures_corner_touch_summary">ଚିତ୍ରପଟ୍ଟ କୋଣରେ ସ୍ପର୍ଶ ଅଙ୍ଗଭଙ୍ଗୀକୁ ଅନୁମତି ଦିଅନ୍ତୁ</string>
     <string name="gestures_swipe_up">ଉପରକୁ ସ୍ୱାଇପ୍</string>
-    <string name="gestures_swipe_down">ତଳକୁ ସ୍ୱାଇପ କରନ୍ତୁ</string>
-    <string name="gestures_swipe_left">ବାମକୁ ସ୍ୱାଇପ୍ କରନ୍ତୁ</string>
-    <string name="gestures_swipe_right">ଡାହାଣକୁ ସ୍ୱାଇପ୍ କରନ୍ତୁ</string>
+    <string name="gestures_swipe_down">ତଳକୁ ସ୍ୱାଇପ୍</string>
+    <string name="gestures_swipe_left">ବାମକୁ ସ୍ୱାଇପ୍</string>
+    <string name="gestures_swipe_right">ଡାହାଣକୁ ସ୍ୱାଇପ୍</string>
     <string name="gestures_double_tap">ଦୁଇଥର ସ୍ପର୍ଶ</string>
-    <string name="gestures_tap_top">ଶୀର୍ଷକୁ ସ୍ପର୍ଶ କର</string>
-    <string name="gestures_tap_left">ବାମକୁ ସ୍ପର୍ଶ କରନ୍ତୁ</string>
-    <string name="gestures_tap_right">ଡାହାଣକୁ ସ୍ପର୍ଶ କରନ୍ତୁ</string>
-    <string name="gestures_tap_bottom">ତଳକୁ ସ୍ପର୍ଶ କରନ୍ତୁ</string>
-    <string name="gestures_corner_tap_top_left">ଉପର ବାମକୁ ସ୍ପର୍ଶ କରନ୍ତୁ</string>
-    <string name="gestures_corner_tap_top_center">ଉପର ମଝିକୁ ସ୍ପର୍ଶ କରନ୍ତୁ</string>
-    <string name="gestures_corner_tap_top_right">ଉପର ଡାହାଣକୁ ସ୍ପର୍ଶ କରନ୍ତୁ 
- </string>
-    <string name="gestures_corner_tap_middle_left">ମଝି ବାମକୁ ସ୍ପର୍ଶ କରନ୍ତୁ 
- </string>
-    <string name="gestures_corner_tap_middle_center">ମଝି କେନ୍ଦ୍ରକୁ ସ୍ପର୍ଶ କରନ୍ତୁ</string>
-    <string name="gestures_corner_tap_middle_right">ମଝି ଡାହାଣକୁ ସ୍ପର୍ଶ କରନ୍ତୁ</string>
-    <string name="gestures_corner_tap_bottom_left">ତଳ ବାମକୁ ସ୍ପର୍ଶ କରନ୍ତୁ</string>
-    <string name="gestures_corner_tap_bottom_center">ତଳ ମଝିକୁ ସ୍ପର୍ଶ କରନ୍ତୁ </string>
-    <string name="gestures_corner_tap_bottom_right">ତଳ ଡାହାଣକୁ ସ୍ପର୍ଶ କରନ୍ତୁ</string>
-    <string name="gestures_volume_up">ଧ୍ୱନିତିବ୍ରତା ବଢ଼ାଅ</string>
-    <string name="gestures_volume_down">ଧ୍ୱନିତିବ୍ରତା କମାଅ</string>
+    <string name="gestures_tap_top">ଶୀର୍ଷକୁ ସ୍ପର୍ଶ</string>
+    <string name="gestures_tap_left">ବାମକୁ ସ୍ପର୍ଶ</string>
+    <string name="gestures_tap_right">ଡାହାଣକୁ ସ୍ପର୍ଶ</string>
+    <string name="gestures_tap_bottom">ତଳକୁ ସ୍ପର୍ଶ</string>
+    <string name="gestures_corner_tap_top_left">ଉପର ବାମକୁ ସ୍ପର୍ଶ</string>
+    <string name="gestures_corner_tap_top_center">ଉପର ମଝିକୁ ସ୍ପର୍ଶ</string>
+    <string name="gestures_corner_tap_top_right">ଉପର ଡାହାଣକୁ ସ୍ପର୍ଶ</string>
+    <string name="gestures_corner_tap_middle_left">ମଝି ବାମକୁ ସ୍ପର୍ଶ</string>
+    <string name="gestures_corner_tap_middle_center">ମଝି କେନ୍ଦ୍ରକୁ ସ୍ପର୍ଶ</string>
+    <string name="gestures_corner_tap_middle_right">ମଝି ଡାହାଣକୁ ସ୍ପର୍ଶ</string>
+    <string name="gestures_corner_tap_bottom_left">ତଳ ବାମକୁ ସ୍ପର୍ଶ</string>
+    <string name="gestures_corner_tap_bottom_center">ତଳ ମଝିକୁ ସ୍ପର୍ଶ</string>
+    <string name="gestures_corner_tap_bottom_right">ତଳ ଡାହାଣକୁ ସ୍ପର୍ଶ</string>
+    <string name="gestures_volume_up">ଧ୍ୱନିତିବ୍ରତା ବୃଦ୍ଧି</string>
+    <string name="gestures_volume_down">ଧ୍ୱନିତିବ୍ରତା ହ୍ରାସ</string>
     <string name="more_scrolling_buttons">eReader</string>
     <string name="more_scrolling_buttons_summ">ସ୍କ୍ରୋଲ୍ ପାଇଁ kanji/katakana, emoji/kao-moji ବଟନ୍ ଗୁଡ଼ିକୁ ମଧ୍ୟ ବ୍ୟବହାର କରନ୍ତୁ</string>
-    <string name="card_browser_enable_external_context_menu">\'%s\' ମେନୁ </string>
+    <string name="card_browser_enable_external_context_menu">‘%s’ ମେନୁ</string>
     <string name="card_browser_enable_external_context_menu_summary">ସବୁ ଜାଗାରେ ‘%s’ ପ୍ରସଙ୍ଗ ମେନୁକୁ ସକ୍ଷମ କରିଥାଏ </string>
     <string name="double_scrolling_gap">ଦୁଇଥର ସ୍କ୍ରୋଲିଂ</string>
-    <string name="double_scrolling_gap_summ">EReader ସହିତ ସ୍କ୍ରୋଲ୍ ଫାଙ୍କକୁ ଦୁଇଗୁଣ କରନ୍ତୁ</string>
+    <string name="double_scrolling_gap_summ">eReader ସହିତ ସ୍କ୍ରୋଲ୍ ଫାଙ୍କକୁ ଦୁଇଗୁଣ କରନ୍ତୁ</string>
     <string name="swipe_sensitivity">ସ୍ୱାଇପ୍ ସମ୍ବେଦନଶୀଳତା</string>
-    <string name="tts">ଲେଖାକୁ କହିବାରେ ପରିବର୍ତ୍ତନ </string>
+    <string name="tts">ପାଠ୍ୟ ରୁ କଥନ</string>
     <string name="tts_summ">ଯଦି କୌଣସି ଧ୍ୱନି ଫାଇଲ୍ ଅନ୍ତର୍ଭୂକ୍ତ ହୁଏ ନାହିଁ ତେବେ ଏହା ପ୍ରଶ୍ନ ଏବଂ ଉତ୍ତର ପଢ଼େ</string>
     <string name="sync_fetch_missing_media">ସିଙ୍କରେ ମିଡିଆ ଆଣ</string>
     <string name="sync_fetch_missing_media_summ">ସିଙ୍କ୍ କରିବା ସମୟରେ ସ୍ୱୟଂଚାଳିତ ଭାବରେ ନିଖୋଜ ମିଡିଆ ଆଣ</string>
@@ -146,8 +144,8 @@
     <string name="notify_when_pending">ବିଚାରାଧୀନ ବାର୍ତ୍ତା ଉପଲବ୍ଧ</string>
     <string name="notification_minimum_cards_due">%d ରୁ ଅଧିକ ପତ୍ର ବାକି ଅଛି</string>
     <string name="notification_minimum_cards_due_vibrate">କମ୍ପନ</string>
-    <string name="notification_minimum_cards_due_blink">ନିମିଷ ଆଲୋକ </string>
-    <string name="timeout_answer_text">ସ୍ୱୟଂଚାଳିତ ପ୍ରଦର୍ଶନ ଉତ୍ତର</string>
+    <string name="notification_minimum_cards_due_blink">LED ସୂଚକ</string>
+    <string name="timeout_answer_text">ସ୍ୱୟଂଚାଳିତ ଉତ୍ତର ପ୍ରଦର୍ଶନ</string>
     <string name="timeout_answer_summ">ଉପଭୋକ୍ତା ଇନପୁଟ୍ ବିନା ସ୍ୱୟଂଚାଳିତ ଭାବରେ ଉତ୍ତର ଦେଖାନ୍ତୁ | ବିଳମ୍ବ, ସ୍ୱୟଂଚାଳିତ ଭାବରେ ଖୋଲାଯାଇଥିବା ଅଡିଓ ଫାଇଲଗୁଡ଼ିକ ପାଇଁ ସମୟ ଅନ୍ତର୍ଭୁକ୍ତ କରେ </string>
     <string name="timeout_answer_seconds">ଉତ୍ତର ଦେଖାଇବାର ସମୟ ଆସିଗଲା</string>
     <string name="timeout_answer_seconds_summ" comment="The time to wait (in seconds) in the reviewer before automatically showing the next question or answer">XXX s</string>
@@ -155,7 +153,7 @@
     <string name="select_locale_title">ଭାଷା ବାଛନ୍ତୁ</string>
     <string name="safe_display">ସୁରକ୍ଷିତ ପ୍ରଦର୍ଶନ ମୋଡ୍</string>
     <string name="safe_display_summ">ସମସ୍ତ ଆନିମେସନ୍ ଅକ୍ଷମ କରନ୍ତୁ ଏବଂ କାର୍ଡ ଅଙ୍କନ ପାଇଁ ସୁରକ୍ଷିତ ପଦ୍ଧତି ବ୍ୟବହାର କରନ୍ତୁ | ଇ-ଇଙ୍କ ଉପକରଣଗୁଡ଼ିକ ଏହା ଆବଶ୍ୟକ କରିପାରନ୍ତି |</string>
-    <string name="disable_extended_text_ui">ସିଙ୍ଗଲ୍ ଫିଲ୍ଡ ସଂଶୋଧନ ମୋଡ୍ ଅକ୍ଷମ କରନ୍ତୁ</string>
+    <string name="disable_extended_text_ui">ଗୋଟିଏ-କ୍ଷେତ୍ର ସଂପାଦନା ମୋଡ୍ କୁ ଅକ୍ଷମ କରନ୍ତୁ</string>
     <!--See: multimedia_editor_popup_cloze. We can\'t use format strings as this is auto-generated-->
     <string name="disable_extended_text_ui_summ">ଲ୍ୟାଣ୍ଡସ୍କେପ୍ ମୋଡ୍ ରେ \'କ୍ଲୋଜ ଡିଲିଶନ\' ପ୍ରସଙ୍ଗ ମେନୁକୁ ଅନୁମତି ଦିଏ</string>
     <string name="vertical_centering">କେନ୍ଦ୍ର ଶ୍ରେଣୀବଦ୍ଧତା</string>
@@ -174,7 +172,7 @@
     <string name="learn_cutoff">ଆଗୁଆ ଶିଖିବା ସମୟସୀମା</string>
     <string name="time_limit">ଟାଇମ୍ ବକ୍ସ ସମୟ ସୀମା</string>
     <string name="time_limit_summ">XXX ମିନିଟ୍</string>
-    <string name="new_timezone">New timezone handling</string>
+    <string name="new_timezone">ନୂତନ ସମୟ କ୍ଷେତ୍ର ପରିଚାଳନା</string>
     <string name="day_offset">ପରବର୍ତ୍ତୀ ଦିନର ଆରମ୍ଭ </string>
     <string name="day_offset_summ">XXX ଘଣ୍ଟା ମଧ୍ୟରାତ୍ରି</string>
     <string name="sched_ver">ପରୀକ୍ଷାମୂଳକ V2 ନିର୍ଧାରକ |</string>
@@ -182,7 +180,7 @@
     <string name="sched_ver_toggle_title">ନିଶ୍ଚିତ କରନ୍ତୁ</string>
     <string name="sched_ver_2to1">ଏହା ଶିଖିବାରେ ଯେକୌଣସି ପତ୍ରକୁ ପୁନଃସେଟ୍ କରିବ, ଶୋଧିତ ତାସଖଣ୍ଡଙ୍କୁ ସଫା କରିବ ଏବଂ ନିର୍ଧାରକ ସଂସ୍କରଣକୁ ପରିବର୍ତ୍ତନ କରିବ | ଅଗ୍ରଗତି କରିବେ?</string>
     <string name="sched_ver_1to2">ପରୀକ୍ଷାମୂଳକ କାର୍ଯ୍ୟସୂଚୀ ଭୁଲ କାର୍ଯ୍ୟସୂଚୀ ସୃଷ୍ଟି କରିପାରେ | ଦୟାକରି ନିଶ୍ଚିତ କରନ୍ତୁ ଯେ ଆପଣ ପ୍ରଥମେ ଡକ୍ୟୁମେଣ୍ଟେସନ୍ ପଢ଼ିଛନ୍ତି | ଅଗ୍ରଗତି କରିବେ?</string>
-    <string name="pref_keep_screen_on">ଚିତ୍ରପଟ୍ଟକୁ ଖୋଲା ରଖନ୍ତୁ </string>
+    <string name="pref_keep_screen_on">ସ୍କ୍ରିନ୍ ସଚଳ ରଖନ୍ତୁ</string>
     <string name="pref_keep_screen_on_summ">ଚିତ୍ରପଟ୍ଟକୁ ସମୟ-ସମାପ୍ତ ଅକ୍ଷମ କରନ୍ତୁ </string>
     <string name="convert_fen_text">ଚେସ୍ ଅଙ୍କନ ସମର୍ଥନ </string>
     <string name="convert_fen_text_summ">Forsyth - Edwards ଅଙ୍କନରୁ ଚେସବୋର୍ଡ ଅଙ୍କନ କର | ଅଙ୍କନ ନିଶ୍ଚିତ ଭାବରେ [fen][/fen] ଟ୍ୟାଗରେ ଆବଦ୍ଧ |</string>
@@ -195,7 +193,7 @@
     <string name="custom_buttons_setting_menu_only">କେବଳ ମେନୁ</string>
     <string name="reset_custom_buttons">ଡିଫଲ୍ଟକୁ ପୁନଃସେଟ୍ କରନ୍ତୁ</string>
     <string name="thirdparty_apps_title">ତୃତୀୟ-ପକ୍ଷ API ଆପ୍ ସମୂହ </string>
-    <string name="thirdparty_apps_summary">ଆପମାନଙ୍କର ଏକ ତାଲିକା ଦେଖନ୍ତୁ ଯାହାକି AnkiDroid API ବ୍ୟବହାର କରେ ଯେପରିକି ଶବ୍ଦକୋଷ,ଉପଯୋଗିତା</string>
+    <string name="thirdparty_apps_summary">ଆପ୍ଲିକେସନ୍ ଗୁଡ଼ିକର ଏକ ତାଲିକା ଦେଖନ୍ତୁ ଯାହାକି AnkiDroid API ଯେପରିକି ଅଭିଧାନ,ଉପଯୋଗିତା ବ୍ୟବହାର କରେ</string>
     <string name="html_javascript_debugging">HTML / ଜାଭାସ୍କ୍ରିପ୍ଟ ତ୍ରୁଟି ନିବାରଣ</string>
     <string name="html_javascript_debugging_summ">ସୁଦୂର ୱେବଭ୍ୟୁ ସଂଯୋଗଗୁଡ଼ିକୁ ସକ୍ଷମ କରନ୍ତୁ, ଏବଂ AnkiDroid ଡିରେକ୍ଟୋରୀରେ ପତ୍ର HTML ସଂରକ୍ଷଣ କରନ୍ତୁ</string>
     <!-- Advanced statistics settings -->
@@ -236,11 +234,11 @@
     <string name="deck_conf_easy_ivl">ସହଜ ବ୍ୟବଧାନ</string>
     <string name="deck_conf_start_ease">ପ୍ରାରମ୍ଭିକ ସହଜତା </string>
     <string name="deck_conf_max_rev">ସର୍ବାଧିକ ସମୀକ୍ଷା/ଦିନ</string>
-    <string name="deck_conf_new_bury">ସମ୍ପର୍କିତ ନୂତନ ପତ୍ରଗୁଡ଼ିଙ୍କୁ ପୋତିଦିଅ</string>
-    <string name="deck_conf_new_bury_summ">ସମ୍ପର୍କିତ ନୂତନ ପତ୍ରଗୁଡ଼ିଙ୍କୁ କାଲି ପର୍ଯ୍ୟନ୍ତ ପୋତିଦିଆଗଲା </string>
-    <string name="deck_conf_rev_bury">ସମ୍ପୃକ୍ତ ସମୀକ୍ଷାଗୁଡିକ ପୋତିଦିଅ</string>
-    <string name="deck_conf_rev_bury_summ">ସମ୍ପୃକ୍ତ ସମୀକ୍ଷା ପରଦିନ ପର୍ଯ୍ୟନ୍ତ ପୋତିଦିଆଗଲା </string>
-    <string name="deck_conf_use_general_timeout_settings">ସାଧାରଣ ସେଟିଂସମୂହ</string>
+    <string name="deck_conf_new_bury">ସମ୍ପୃକ୍ତ ନୂତନ କାର୍ଡଗୁଡ଼ିଙ୍କୁ ସ୍ଥଗିତ କରନ୍ତୁ</string>
+    <string name="deck_conf_new_bury_summ">ସମ୍ପୃକ୍ତ ନୂତନ କାର୍ଡଗୁଡ଼ିକ ପରବର୍ତ୍ତୀ ଦିନ ପର୍ଯ୍ୟନ୍ତ ସ୍ଥଗିତ କରି ଦିଆଯାଏ</string>
+    <string name="deck_conf_rev_bury">ସମ୍ପୃକ୍ତ ସମୀକ୍ଷାଗୁଡ଼ିକ ସ୍ଥଗିତ କରନ୍ତୁ</string>
+    <string name="deck_conf_rev_bury_summ">ସମ୍ପୃକ୍ତ ସମୀକ୍ଷା ପରଦିନ ପର୍ଯ୍ୟନ୍ତ ସ୍ଥଗିତ କରି ଦିଆଯାଏ</string>
+    <string name="deck_conf_use_general_timeout_settings">ସାଧାରଣ ସେଟିଂ ବ୍ୟବହାର କରନ୍ତୁ</string>
     <string name="deck_conf_use_general_timeout_settings_summ">ଏହି ଗୋଷ୍ଠୀ ପାଇଁ ସେଟିଂ ବ୍ୟବହାର କରିବା ପରିବର୍ତ୍ତେ ସାଧାରଣ \'ସ୍ୱୟଂଚାଳିତ ପ୍ରଦର୍ଶନ ଉତ୍ତର\' ସେଟିଂସମୂହ ବ୍ୟବହାର କରନ୍ତୁ |</string>
     <string name="deck_conf_easy_bonus">ସହଜ ଅଧିଲାଭ</string>
     <string name="deck_conf_hard_factor">ସହଜ ବ୍ୟବଧାନ</string>
@@ -288,7 +286,7 @@
     <string name="analytics_title">ବୈଶିଷ୍ଟ୍ୟ ବ୍ୟବହାର ଅଂଶୀଦାର କରନ୍ତୁ</string>
     <string name="analytics_summ">ଲୋକମାନେ କେଉଁ ବୈଶିଷ୍ଟ୍ୟ ବ୍ୟବହାର କରନ୍ତି ତାହା ଦେଖିବାରେ ଉନ୍ନୟନ ଦଳକୁ ସାହାଯ୍ୟ କରି ଆପଣ AnkiDroidରେ ଯୋଗଦାନ କରିପାରିବେ</string>
     <string name="note_editor_replace_newlines">HTML ସହିତ ନୂତନ ଲାଇନ୍ ବଦଳାନ୍ତୁ</string>
-    <string name="note_editor_replace_newlines_summ">ଟିପ୍ପଣୀ ସମ୍ପାଦକରେ,ଏକ ପତ୍ର ସଂଶୋଧନ କରିବାବେଳେ &lt;br&gt; କୁ ନୂଆଧାଡ଼ିରେ ବଦଳାନ୍ତୁ </string>
+    <string name="note_editor_replace_newlines_summ">ନୋଟ୍ ସମ୍ପାଦକରେ, କାର୍ଡ ସମ୍ପାଦନ କରିବା ସମୟରେ &lt;br&gt; କୁ ନୂତନ ଲାଇନରେ ରୂପାନ୍ତର କରନ୍ତୁ।</string>
     <string name="no_code_formatting">ସରଳ ଟାଇପ୍ ହୋଇଥିବା ଉତ୍ତର ଫର୍ମାଟିଂ</string>
     <string name="no_code_formatting_summ">ଟାଇପ୍ ହୋଇଥିବା ଉତ୍ତର ଫଳାଫଳଗୁଡିକରେ ଦେଖାଯାଉଥିବା ‘�’ ଠିକ୍ କରେ |</string>
 </resources>

@@ -1,5 +1,6 @@
 /****************************************************************************************
  * Copyright (c) 2014 Michael Goldbach <michael@m-goldbach.net>                         *
+ * Copyright (c) 2021 Mike Hardy <github@mikehardy.net>                                 *
  *                                                                                      *
  * This program is free software; you can redistribute it and/or modify it under        *
  * the terms of the GNU General Public License as published by the Free Software        *
@@ -20,11 +21,14 @@ import android.graphics.Color;
 import android.os.AsyncTask;
 import android.os.Bundle;
 
+import androidx.annotation.CheckResult;
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentPagerAdapter;
-import androidx.viewpager.widget.ViewPager;
+import androidx.fragment.app.FragmentActivity;
+import androidx.recyclerview.widget.RecyclerView;
+import androidx.viewpager2.adapter.FragmentStateAdapter;
+import androidx.viewpager2.widget.ViewPager2;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import android.view.LayoutInflater;
@@ -37,8 +41,9 @@ import android.webkit.WebView;
 import android.widget.AdapterView;
 import android.widget.ProgressBar;
 import android.widget.Spinner;
-import android.widget.TextView;
 
+import com.google.android.material.tabs.TabLayout;
+import com.google.android.material.tabs.TabLayoutMediator;
 import com.ichi2.anim.ActivityTransitionAnimation;
 import com.ichi2.anki.stats.AnkiStatsTaskHandler;
 import com.ichi2.anki.stats.ChartView;
@@ -48,7 +53,6 @@ import com.ichi2.libanki.Decks;
 import com.ichi2.libanki.stats.Stats;
 import com.ichi2.libanki.Deck;
 import com.ichi2.ui.FixedTextView;
-import com.ichi2.ui.SlidingTabLayout;
 
 import com.ichi2.utils.JSONException;
 
@@ -70,8 +74,8 @@ public class Statistics extends NavigationDrawerActivity implements DeckDropDown
     public static final int ANSWER_BUTTONS_TAB_POSITION = 7;
     public static final int CARDS_TYPES_TAB_POSITION = 8;
 
-    private SectionsPagerAdapter mSectionsPagerAdapter;
-    private ViewPager mViewPager;
+    private ViewPager2 mViewPager;
+    private TabLayout mSlidingTabLayout;
     private AnkiStatsTaskHandler mTaskHandler = null;
     private long mDeckId;
     private ArrayList<Deck> mDropDownDecks;
@@ -97,6 +101,15 @@ public class Statistics extends NavigationDrawerActivity implements DeckDropDown
     protected void onCollectionLoaded(Collection col) {
         Timber.d("onCollectionLoaded()");
         super.onCollectionLoaded(col);
+
+        // Create the adapter that will return a fragment for each of the three
+        // primary sections of the activity.
+        // Set up the ViewPager with the sections adapter.
+        mViewPager = findViewById(R.id.pager);
+        mViewPager.setAdapter(new Statistics.StatsPagerAdapter((this)));
+        mViewPager.setOffscreenPageLimit(8);
+        mSlidingTabLayout = findViewById(R.id.sliding_tabs);
+
         // Add drop-down menu to select deck to action bar.
         mDropDownDecks = getCol().getDecks().allSorted();
         ActionBar actionBar = getSupportActionBar();
@@ -119,23 +132,12 @@ public class Statistics extends NavigationDrawerActivity implements DeckDropDown
         // Setup Task Handler
         mTaskHandler = new AnkiStatsTaskHandler(col);
 
-        // Create the adapter that will return a fragment for each of the three
-        // primary sections of the activity.
-        mSectionsPagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager());
-
-        // Set up the ViewPager with the sections adapter.
-        mViewPager = findViewById(R.id.pager);
-        mViewPager.setAdapter(mSectionsPagerAdapter);
-        mViewPager.setOffscreenPageLimit(8);
-        SlidingTabLayout slidingTabLayout = findViewById(R.id.sliding_tabs);
-        slidingTabLayout.setViewPager(mViewPager);
-
         // Dirty way to get text size from a TextView with current style, change if possible
         float size = new FixedTextView(this).getTextSize();
         mTaskHandler.setmStandardTextSize(size);
         // Prepare options menu only after loading everything
         supportInvalidateOptionsMenu();
-        mSectionsPagerAdapter.notifyDataSetChanged();
+//        StatisticFragment.updateAllFragments();
 
         // Default to libanki's selected deck
         selectDeckById(getCol().getDecks().selected());
@@ -186,24 +188,24 @@ public class Statistics extends NavigationDrawerActivity implements DeckDropDown
             item.setChecked(!item.isChecked());
             if (mTaskHandler.getStatType() != Stats.AxisType.TYPE_MONTH) {
                 mTaskHandler.setStatType(Stats.AxisType.TYPE_MONTH);
-                mSectionsPagerAdapter.notifyDataSetChanged();
+                mViewPager.getAdapter().notifyDataSetChanged();
             }
             return true;
         } else if (itemId == R.id.item_time_year) {
             item.setChecked(!item.isChecked());
             if (mTaskHandler.getStatType() != Stats.AxisType.TYPE_YEAR) {
                 mTaskHandler.setStatType(Stats.AxisType.TYPE_YEAR);
-                mSectionsPagerAdapter.notifyDataSetChanged();
+                mViewPager.getAdapter().notifyDataSetChanged();
             }
             return true;
         } else if (itemId == R.id.item_time_all) {
             item.setChecked(!item.isChecked());
             if (mTaskHandler.getStatType() != Stats.AxisType.TYPE_LIFE) {
                 mTaskHandler.setStatType(Stats.AxisType.TYPE_LIFE);
-                mSectionsPagerAdapter.notifyDataSetChanged();
+                mViewPager.getAdapter().notifyDataSetChanged();
             }
             return true;
-        } else if (itemId == R.id.action_time_chooser) {//showTimeDialog();
+        } else if (itemId == R.id.action_time_chooser) {
             return true;
         }
         return super.onOptionsItemSelected(item);
@@ -223,7 +225,7 @@ public class Statistics extends NavigationDrawerActivity implements DeckDropDown
             }
         }
         mTaskHandler.setDeckId(mDeckId);
-        mSectionsPagerAdapter.notifyDataSetChanged();
+        mViewPager.getAdapter().notifyDataSetChanged();
     }
 
     // Iterates the drop down decks, and selects the one matching the given id
@@ -250,54 +252,112 @@ public class Statistics extends NavigationDrawerActivity implements DeckDropDown
     }
 
 
-    public ViewPager getViewPager(){
+    public ViewPager2 getViewPager(){
         return mViewPager;
     }
 
-
-    public SectionsPagerAdapter getSectionsPagerAdapter() {
-        return mSectionsPagerAdapter;
+    public TabLayout getSlidingTabLayout() {
+        return mSlidingTabLayout;
     }
 
     private long getDeckId() { return mDeckId; }
 
-
     /**
-     * A {@link FragmentPagerAdapter} that returns a fragment corresponding to
-     * one of the sections/tabs/pages.
+     * A {@link FragmentStateAdapter} that returns a fragment corresponding to
+     * one of the tabs.
      */
-    public class SectionsPagerAdapter extends FragmentPagerAdapter {
+    public static class StatsPagerAdapter extends FragmentStateAdapter {
 
-        public SectionsPagerAdapter(FragmentManager fm) {
-            super(fm, BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT);
-        }
-
-        //this is called when mSectionsPagerAdapter.notifyDataSetChanged() is called, so checkAndUpdate() here
-        //works best for updating all tabs
-        @Override
-        public int getItemPosition(@NonNull Object object) {
-            if (object instanceof StatisticFragment) {
-                ((StatisticFragment) object).checkAndUpdate();
-            }
-            //don't return POSITION_NONE, avoid fragment recreation.
-            return super.getItemPosition(object);
+        private StatsPagerAdapter(@NonNull FragmentActivity fragmentActivity) {
+            super(fragmentActivity);
         }
 
         @NonNull
         @Override
-        public Fragment getItem(int position) {
+        public Fragment createFragment(int position) {
             StatisticFragment item = StatisticFragment.newInstance(position);
             item.checkAndUpdate();
             return item;
         }
 
         @Override
-        public int getCount() {
+        public int getItemCount() {
             return 9;
+        }
+    }
+
+    public static abstract class StatisticFragment extends Fragment {
+
+        //track current settings for each individual fragment
+        protected long mDeckId;
+        protected AsyncTask mStatisticsTask;
+        private ViewPager2 mActivityPager;
+        private TabLayout mSlidingTabLayout;
+        private TabLayoutMediator mTabLayoutMediator;
+        private final RecyclerView.AdapterDataObserver mDataObserver = new RecyclerView.AdapterDataObserver() {
+            @Override
+            public void onChanged() {
+                checkAndUpdate();
+                super.onChanged();
+            }
+        };
+
+        /**
+         * The fragment argument representing the section number for this
+         * fragment.
+         */
+        protected static final String ARG_SECTION_NUMBER = "section_number";
+
+
+        /**
+         * Returns a new instance of this fragment for the given section
+         * number.
+         */
+        @NonNull
+        @CheckResult
+        public static StatisticFragment newInstance(int sectionNumber) {
+            StatisticFragment fragment;
+            Bundle args = new Bundle();
+            switch (sectionNumber) {
+                case FORECAST_TAB_POSITION:
+                case REVIEW_COUNT_TAB_POSITION:
+                case REVIEW_TIME_TAB_POSITION:
+                case INTERVALS_TAB_POSITION:
+                case HOURLY_BREAKDOWN_TAB_POSITION:
+                case WEEKLY_BREAKDOWN_TAB_POSITION:
+                case ANSWER_BUTTONS_TAB_POSITION:
+                case CARDS_TYPES_TAB_POSITION:
+                    fragment = new ChartFragment();
+                    break;
+                case TODAYS_STATS_TAB_POSITION:
+                    fragment = new OverviewStatisticsFragment();
+                    break;
+                default:
+                    throw new IllegalArgumentException("Unknown section number: " + sectionNumber);
+            }
+            args.putInt(ARG_SECTION_NUMBER, sectionNumber);
+            fragment.setArguments(args);
+            return fragment;
         }
 
         @Override
-        public CharSequence getPageTitle(int position) {
+        public void onResume() {
+            checkAndUpdate();
+            super.onResume();
+        }
+
+        @Override
+        public void onDestroy() {
+            if (mStatisticsTask != null && !mStatisticsTask.isCancelled()) {
+                mStatisticsTask.cancel(true);
+            }
+            if (mActivityPager.getAdapter() != null) {
+                mActivityPager.getAdapter().unregisterAdapterDataObserver(mDataObserver);
+            }
+            super.onDestroy();
+        }
+
+        private String getTabTitle(int position) {
             Locale l = Locale.getDefault();
 
             switch (position) {
@@ -320,64 +380,29 @@ public class Statistics extends NavigationDrawerActivity implements DeckDropDown
                 case CARDS_TYPES_TAB_POSITION:
                     return getString(R.string.title_activity_template_editor).toUpperCase(l);
             }
-            return null;
-        }
-    }
-
-    public static abstract class StatisticFragment extends Fragment {
-
-        //track current settings for each individual fragment
-        protected long mDeckId;
-        protected ViewPager mActivityPager;
-        protected SectionsPagerAdapter mActivitySectionPagerAdapter;
-
-        /**
-         * The fragment argument representing the section number for this
-         * fragment.
-         */
-        protected static final String ARG_SECTION_NUMBER = "section_number";
-
-
-        /**
-         * Returns a new instance of this fragment for the given section
-         * number.
-         */
-        public static StatisticFragment newInstance(int sectionNumber) {
-            Fragment fragment;
-            Bundle args;
-            switch (sectionNumber) {
-                case FORECAST_TAB_POSITION:
-                case REVIEW_COUNT_TAB_POSITION:
-                case REVIEW_TIME_TAB_POSITION:
-                case INTERVALS_TAB_POSITION:
-                case HOURLY_BREAKDOWN_TAB_POSITION:
-                case WEEKLY_BREAKDOWN_TAB_POSITION:
-                case ANSWER_BUTTONS_TAB_POSITION:
-                case CARDS_TYPES_TAB_POSITION:
-                    fragment = new ChartFragment();
-                    args = new Bundle();
-                    args.putInt(ARG_SECTION_NUMBER, sectionNumber);
-                    fragment.setArguments(args);
-                    return (ChartFragment) fragment;
-                case TODAYS_STATS_TAB_POSITION:
-                    fragment = new OverviewStatisticsFragment();
-                    args = new Bundle();
-                    args.putInt(ARG_SECTION_NUMBER, sectionNumber);
-                    fragment.setArguments(args);
-                    return (OverviewStatisticsFragment) fragment;
-                default:
-                    return null;
-            }
+            return "";
         }
 
         @Override
-        public void onResume() {
-            super.onResume();
-            checkAndUpdate();
-
+        public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+            mActivityPager = ((Statistics) requireActivity()).getViewPager();
+            if (mActivityPager.getAdapter() != null) {
+                mActivityPager.getAdapter().registerAdapterDataObserver(mDataObserver);
+            }
+            mSlidingTabLayout = ((Statistics) requireActivity()).getSlidingTabLayout();
+            initTabLayoutMediator();
         }
 
-        public abstract void invalidateView();
+        private void initTabLayoutMediator() {
+            if (mTabLayoutMediator != null) {
+                mTabLayoutMediator.detach();
+            }
+            mTabLayoutMediator = new TabLayoutMediator(mSlidingTabLayout, mActivityPager,
+                    (tab, position) -> tab.setText(getTabTitle(position))
+            );
+            mTabLayoutMediator.attach();
+        }
+
         public abstract void checkAndUpdate();
     }
 
@@ -394,7 +419,6 @@ public class Statistics extends NavigationDrawerActivity implements DeckDropDown
         private int mSectionNumber;
         private Stats.AxisType mType  = Stats.AxisType.TYPE_MONTH;
         private boolean mIsCreated = false;
-        private AsyncTask mCreateChartTask;
 
         public ChartFragment() {
             super();
@@ -424,10 +448,10 @@ public class Statistics extends NavigationDrawerActivity implements DeckDropDown
             //mChart.setVisibility(View.GONE);
 
             // TODO: Implementing loader for Collection in Fragment itself would be a better solution.
-            if ((((Statistics) getActivity()).getTaskHandler()) == null) {
+            if ((((Statistics) requireActivity()).getTaskHandler()) == null) {
                 // Close statistics if the TaskHandler hasn't been loaded yet
                 Timber.e("Statistics.ChartFragment.onCreateView() TaskHandler not found");
-                getActivity().finish();
+                requireActivity().finish();
                 return rootView;
             }
 
@@ -436,61 +460,64 @@ public class Statistics extends NavigationDrawerActivity implements DeckDropDown
             mWidth = mChart.getMeasuredWidth();
             mChart.addFragment(this);
 
-            mType = (((Statistics) getActivity()).getTaskHandler()).getStatType();
+            mType = (((Statistics) requireActivity()).getTaskHandler()).getStatType();
             mIsCreated = true;
-            mActivityPager = ((Statistics) getActivity()).getViewPager();
-            mActivitySectionPagerAdapter = ((Statistics) getActivity()).getSectionsPagerAdapter();
-            mDeckId = ((Statistics) getActivity()).getDeckId();
+            mDeckId = ((Statistics) requireActivity()).getDeckId();
             if (mDeckId != Stats.ALL_DECKS_ID) {
-                Collection col = CollectionHelper.getInstance().getCol(getActivity());
+                Collection col = CollectionHelper.getInstance().getCol(requireActivity());
                 String baseName = Decks.basename(col.getDecks().current().getString("name"));
                 if (sIsSubtitle) {
-                    ((AppCompatActivity) getActivity()).getSupportActionBar().setSubtitle(baseName);
+                    ((AppCompatActivity) requireActivity()).getSupportActionBar().setSubtitle(baseName);
                 } else {
-                    getActivity().setTitle(baseName);
+                    requireActivity().setTitle(baseName);
                 }
             } else {
                 if (sIsSubtitle) {
-                    ((AppCompatActivity) getActivity()).getSupportActionBar().setSubtitle(R.string.stats_deck_collection);
+                    ((AppCompatActivity) requireActivity()).getSupportActionBar().setSubtitle(R.string.stats_deck_collection);
                 } else {
-                    getActivity().setTitle(getResources().getString(R.string.stats_deck_collection));
+                    requireActivity().setTitle(getResources().getString(R.string.stats_deck_collection));
                 }
             }
             return rootView;
         }
 
         private void createChart() {
+            Statistics statisticsActivity = (Statistics) requireActivity();
+            if (statisticsActivity == null) {
+                return;
+            }
+            AnkiStatsTaskHandler taskHandler = statisticsActivity.getTaskHandler();
             switch (mSectionNumber) {
                 case FORECAST_TAB_POSITION:
-                    mCreateChartTask = (((Statistics) getActivity()).getTaskHandler()).createChart(
+                    mStatisticsTask = taskHandler.createChart(
                             Stats.ChartType.FORECAST, mChart, mProgressBar);
                     break;
                 case REVIEW_COUNT_TAB_POSITION:
-                    mCreateChartTask = (((Statistics) getActivity()).getTaskHandler()).createChart(
+                    mStatisticsTask = taskHandler.createChart(
                             Stats.ChartType.REVIEW_COUNT, mChart, mProgressBar);
                     break;
                 case REVIEW_TIME_TAB_POSITION:
-                    mCreateChartTask = (((Statistics) getActivity()).getTaskHandler()).createChart(
+                    mStatisticsTask = taskHandler.createChart(
                             Stats.ChartType.REVIEW_TIME, mChart, mProgressBar);
                     break;
                 case INTERVALS_TAB_POSITION:
-                    mCreateChartTask = (((Statistics) getActivity()).getTaskHandler()).createChart(
+                    mStatisticsTask = taskHandler.createChart(
                             Stats.ChartType.INTERVALS, mChart, mProgressBar);
                     break;
                 case HOURLY_BREAKDOWN_TAB_POSITION:
-                    mCreateChartTask = (((Statistics) getActivity()).getTaskHandler()).createChart(
+                    mStatisticsTask = taskHandler.createChart(
                             Stats.ChartType.HOURLY_BREAKDOWN, mChart, mProgressBar);
                     break;
                 case WEEKLY_BREAKDOWN_TAB_POSITION:
-                    mCreateChartTask = (((Statistics) getActivity()).getTaskHandler()).createChart(
+                    mStatisticsTask = taskHandler.createChart(
                             Stats.ChartType.WEEKLY_BREAKDOWN, mChart, mProgressBar);
                     break;
                 case ANSWER_BUTTONS_TAB_POSITION:
-                    mCreateChartTask = (((Statistics) getActivity()).getTaskHandler()).createChart(
+                    mStatisticsTask = taskHandler.createChart(
                             Stats.ChartType.ANSWER_BUTTONS, mChart, mProgressBar);
                     break;
                 case CARDS_TYPES_TAB_POSITION:
-                    mCreateChartTask = (((Statistics) getActivity()).getTaskHandler()).createChart(
+                    mStatisticsTask = taskHandler.createChart(
                             Stats.ChartType.CARDS_TYPES, mChart, mProgressBar);
                     break;
             }
@@ -499,7 +526,6 @@ public class Statistics extends NavigationDrawerActivity implements DeckDropDown
 
         @Override
         public void checkAndUpdate() {
-            //System.err.println("<<<<<<<checkAndUpdate" + mSectionNumber);
             if (!mIsCreated) {
                 return;
             }
@@ -508,18 +534,18 @@ public class Statistics extends NavigationDrawerActivity implements DeckDropDown
 
             //are height and width checks still necessary without bitmaps?
             if (height != 0 && width != 0) {
-                Collection col = CollectionHelper.getInstance().getCol(getActivity());
+                Collection col = CollectionHelper.getInstance().getCol(requireActivity());
                 if (mHeight != height || mWidth != width ||
-                        mType != (((Statistics) getActivity()).getTaskHandler()).getStatType() ||
-                        mDeckId != ((Statistics) getActivity()).getDeckId()) {
+                        mType != (((Statistics) requireActivity()).getTaskHandler()).getStatType() ||
+                        mDeckId != ((Statistics) requireActivity()).getDeckId()) {
                     mHeight = height;
                     mWidth = width;
-                    mType = (((Statistics) getActivity()).getTaskHandler()).getStatType();
+                    mType = (((Statistics) requireActivity()).getTaskHandler()).getStatType();
                     mProgressBar.setVisibility(View.VISIBLE);
                     mChart.setVisibility(View.GONE);
-                    mDeckId = ((Statistics) getActivity()).getDeckId();
-                    if (mCreateChartTask != null && !mCreateChartTask.isCancelled()) {
-                        mCreateChartTask.cancel(true);
+                    mDeckId = ((Statistics) requireActivity()).getDeckId();
+                    if (mStatisticsTask != null && !mStatisticsTask.isCancelled()) {
+                        mStatisticsTask.cancel(true);
                     }
                     createChart();
                 }
@@ -531,23 +557,6 @@ public class Statistics extends NavigationDrawerActivity implements DeckDropDown
         public void onCreate(Bundle savedInstanceState) {
             super.onCreate(savedInstanceState);
         }
-
-
-        @Override
-        public void invalidateView() {
-            if (mChart != null) {
-                mChart.invalidate();
-            }
-        }
-
-
-        @Override
-        public void onDestroy() {
-            super.onDestroy();
-            if (mCreateChartTask != null && !mCreateChartTask.isCancelled()) {
-                mCreateChartTask.cancel(true);
-            }
-        }
     }
 
     public static class OverviewStatisticsFragment extends StatisticFragment {
@@ -556,7 +565,6 @@ public class Statistics extends NavigationDrawerActivity implements DeckDropDown
         private ProgressBar mProgressBar;
         private Stats.AxisType mType  = Stats.AxisType.TYPE_MONTH;
         private boolean mIsCreated = false;
-        private AsyncTask mCreateStatisticsOverviewTask;
 
         public OverviewStatisticsFragment() {
             super();
@@ -568,12 +576,12 @@ public class Statistics extends NavigationDrawerActivity implements DeckDropDown
                                  Bundle savedInstanceState) {
             setHasOptionsMenu(true);
             View rootView = inflater.inflate(R.layout.fragment_anki_stats_overview, container, false);
-            AnkiStatsTaskHandler handler = (((Statistics) getActivity()).getTaskHandler());
+            AnkiStatsTaskHandler handler = (((Statistics) requireActivity()).getTaskHandler());
             // Workaround for issue 2406 -- crash when resuming after app is purged from RAM
             // TODO: Implementing loader for Collection in Fragment itself would be a better solution.
             if (handler == null) {
                 Timber.e("Statistics.OverviewStatisticsFragment.onCreateView() TaskHandler not found");
-                getActivity().finish();
+                requireActivity().finish();
                 return rootView;
             }
             mWebView = rootView.findViewById(R.id.web_view_stats);
@@ -594,38 +602,28 @@ public class Statistics extends NavigationDrawerActivity implements DeckDropDown
             createStatisticOverview();
             mType = handler.getStatType();
             mIsCreated = true;
-            mActivityPager = ((Statistics) getActivity()).getViewPager();
-            mActivitySectionPagerAdapter = ((Statistics) getActivity()).getSectionsPagerAdapter();
-            Collection col = CollectionHelper.getInstance().getCol(getActivity());
-            mDeckId = ((Statistics) getActivity()).getDeckId();
+            Collection col = CollectionHelper.getInstance().getCol(requireActivity());
+            mDeckId = ((Statistics) requireActivity()).getDeckId();
             if (mDeckId != Stats.ALL_DECKS_ID) {
                 String basename = Decks.basename(col.getDecks().current().getString("name"));
                 if (sIsSubtitle) {
-                    ((AppCompatActivity) getActivity()).getSupportActionBar().setSubtitle(basename);
+                    ((AppCompatActivity) requireActivity()).getSupportActionBar().setSubtitle(basename);
                 } else {
-                    getActivity().setTitle(basename);
+                    requireActivity().setTitle(basename);
                 }
             } else {
                 if (sIsSubtitle) {
-                    ((AppCompatActivity) getActivity()).getSupportActionBar().setSubtitle(R.string.stats_deck_collection);
+                    ((AppCompatActivity) requireActivity()).getSupportActionBar().setSubtitle(R.string.stats_deck_collection);
                 } else {
-                    getActivity().setTitle(R.string.stats_deck_collection);
+                    requireActivity().setTitle(R.string.stats_deck_collection);
                 }
             }
             return rootView;
         }
 
         private void createStatisticOverview(){
-            AnkiStatsTaskHandler handler = (((Statistics)getActivity()).getTaskHandler());
-            mCreateStatisticsOverviewTask = handler.createStatisticsOverview(mWebView, mProgressBar);
-        }
-
-
-        @Override
-        public void invalidateView() {
-            if (mWebView != null) {
-                mWebView.invalidate();
-            }
+            AnkiStatsTaskHandler handler = (((Statistics)requireActivity()).getTaskHandler());
+            mStatisticsTask = handler.createStatisticsOverview(mWebView, mProgressBar);
         }
 
 
@@ -634,26 +632,16 @@ public class Statistics extends NavigationDrawerActivity implements DeckDropDown
             if (!mIsCreated) {
                 return;
             }
-            Collection col = CollectionHelper.getInstance().getCol(getActivity());
-            if (mType != (((Statistics) getActivity()).getTaskHandler()).getStatType() ||
-                    mDeckId != ((Statistics) getActivity()).getDeckId()) {
-                mType = (((Statistics) getActivity()).getTaskHandler()).getStatType();
+            if (mType != (((Statistics) requireActivity()).getTaskHandler()).getStatType() ||
+                    mDeckId != ((Statistics) requireActivity()).getDeckId()) {
+                mType = (((Statistics) requireActivity()).getTaskHandler()).getStatType();
                 mProgressBar.setVisibility(View.VISIBLE);
                 mWebView.setVisibility(View.GONE);
-                mDeckId = ((Statistics) getActivity()).getDeckId();
-                if (mCreateStatisticsOverviewTask != null && !mCreateStatisticsOverviewTask.isCancelled()) {
-                    mCreateStatisticsOverviewTask.cancel(true);
+                mDeckId = ((Statistics) requireActivity()).getDeckId();
+                if (mStatisticsTask != null && !mStatisticsTask.isCancelled()) {
+                    mStatisticsTask.cancel(true);
                 }
                 createStatisticOverview();
-            }
-        }
-
-
-        @Override
-        public void onDestroy() {
-            super.onDestroy();
-            if (mCreateStatisticsOverviewTask != null && !mCreateStatisticsOverviewTask.isCancelled()) {
-                mCreateStatisticsOverviewTask.cancel(true);
             }
         }
     }

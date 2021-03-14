@@ -206,8 +206,8 @@
     <string name="steps_error">ପର୍ଯ୍ୟାୟଟି ୦ ଠାରୁ ଅଧିକ ଗୋଟେ ସଂଖ୍ୟା ହବା ଉଚିତ</string>
     <string name="steps_min_error">ଅତିକାମରେ ୧ଟିଏ ପର୍ଯ୍ୟାୟ ଆବଶ୍ୟକ</string>
     <string name="sched_end">(ସମାପ୍ତି)</string>
-    <string name="sched_unbury_action">ତାଙ୍କୁ ଦେଖିବାକୁ ମେନୁରେ \"ଅଣପୋତା\" ବିକଳ୍ପ ବାଛନ୍ତୁ</string>
-    <string name="sched_has_buried">କିଛି ସମ୍ବନ୍ଧିତ/ପୋତି ହୋଇଥିବା ପାତ୍ରଙ୍କୁ କଲି ପାଇଁ ସ୍ଥଗିତ କରାହେଇଛି</string>
+    <string name="sched_unbury_action">ତାଙ୍କୁ ଦେଖିବାକୁ ମେନୁରେ “ସ୍ଥଗିତରୁ ଫେରାଇ ଆଣ” ବିକଳ୍ପ ବାଛନ୍ତୁ</string>
+    <string name="sched_has_buried">କିଛି ସମ୍ପୃକ୍ତ କିମ୍ବା ସ୍ଥଗିତ ହୋଇଥିବା କାର୍ଡ ଆସନ୍ତାକାଲି ପର୍ଯ୍ୟନ୍ତ ବିଳମ୍ବ କରାଯାଇଥିଲା</string>
     <string name="tag_editor_add_feedback"> “%1$s” କୁ ଯୋଡ଼ିବା ପାଇଁ “%2$s” ଦବାନ୍ତୁ</string>
     <string name="tag_editor_add_feedback_existing">ସାମ୍ପ୍ରତିକ ଟ୍ୟାଗ “%1$s” ବଛାହେଲା</string>
     <string name="lookup_hint">ଲେଖାକୁ କପି କଲା ପରେ,ସନ୍ଧାନ-ଚିହ୍ନ ଦେଖିବାକୁ ଫ୍ଲାସକାର୍ଡର ଯେକୌଣସି ଜାଗା ଟିପନ୍ତୁ</string>
