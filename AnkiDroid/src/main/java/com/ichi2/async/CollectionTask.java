@@ -1483,10 +1483,7 @@ public class CollectionTask<ProgressListener, ProgressBackground extends Progres
             Timber.d("doInBackgroundExportApkg");
 
             try {
-                AnkiPackageExporter exporter = new AnkiPackageExporter(col);
-                exporter.setIncludeSched(includeSched);
-                exporter.setIncludeMedia(includeMedia);
-                exporter.setDid(did);
+                AnkiPackageExporter exporter = new AnkiPackageExporter(col, did, includeSched, includeMedia);
                 exporter.exportInto(apkgPath, col.getContext());
             } catch (FileNotFoundException e) {
                 Timber.e(e, "FileNotFoundException in doInBackgroundExportApkg");
