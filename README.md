@@ -77,6 +77,14 @@ Contribute
 You can contribute to AnkiDroid by beta testing, translating, or submitting code. 
 See the [contribution wiki page](https://github.com/ankidroid/Anki-Android/wiki/Contributing) for more info.
 
+
+## Credits
+<a href="https://github.com/ankidroid/Anki-Android/graphs/contributors">
+  <img src="https://contrib.rocks/image?repo=ankidroid/Anki-Android" />
+</a>
+
+Made with [contributors-img](https://contrib.rocks).
+
 Join Us On
 ----------
 
