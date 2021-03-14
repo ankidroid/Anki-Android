@@ -49,8 +49,6 @@ import com.ichi2.themes.Themes;
 import com.ichi2.utils.AdaptionUtil;
 import com.ichi2.utils.AndroidUiUtils;
 
-import java.lang.reflect.Method;
-
 import timber.log.Timber;
 
 import static androidx.browser.customtabs.CustomTabsIntent.COLOR_SCHEME_DARK;
@@ -70,9 +68,6 @@ public class AnkiActivity extends AppCompatActivity implements SimpleMessageDial
 
     // custom tabs
     private CustomTabActivityHelper mCustomTabActivityHelper;
-
-    // colors for custom tabs
-    int navBarColor, toolBarColor;
 
     public AnkiActivity() {
         super();
@@ -374,38 +369,6 @@ public class AnkiActivity extends AppCompatActivity implements SimpleMessageDial
         }
     }
 
-
-    /**
-     * This method will fetch the colors like colorPrimary and colorPrimaryDark, for setting them in CustomTabsIntent.
-     * This is used for changing toolbar and nav bar color in custom tabs with respect to the theme of app.
-     * Here, the current theme (from styles.xml) is fetched using reflection as it is private.
-     */
-    private void fetchThemeColors() {
-        int currentTheme = 0;
-        try {
-            Method m = Class.forName(Context.class.getName()).getMethod("getThemeResId");
-            m.setAccessible(true);
-            currentTheme = (Integer) m.invoke(this);
-        } catch (Exception e) {
-            System.out.println("currentTheme exception "+currentTheme+ e.getCause()+e.getMessage());
-        }
-
-        if (getResources().getResourceName(currentTheme).equals("com.ichi2.anki:style/Theme_Dark_Compat")) {
-            navBarColor = ContextCompat.getColor(this, R.color.material_grey_800);
-            toolBarColor = ContextCompat.getColor(this, R.color.material_grey_800);
-        } else if (getResources().getResourceName(currentTheme).equals("com.ichi2.anki:style/Theme_Plain_Compat")) {
-            navBarColor = ContextCompat.getColor(this, R.color.material_grey_500);
-            toolBarColor = ContextCompat.getColor(this, R.color.material_grey_600);
-        } else if (getResources().getResourceName(currentTheme).equals("com.ichi2.anki:style/Theme_Black_Compat")) {
-            navBarColor = toolBarColor = ContextCompat.getColor(this, R.color.black);
-        } else {
-            // if thrown exception this will prevent the app from crashing and will be set as default.
-            navBarColor = ContextCompat.getColor(this, R.color.material_light_blue_500);
-            toolBarColor = ContextCompat.getColor(this, R.color.material_light_blue_700);
-        }
-
-    }
-
     public void openUrl(Uri url) {
         //DEFECT: We might want a custom view for the toast, given i8n may make the text too long for some OSes to
         //display the toast
@@ -414,11 +377,12 @@ public class AnkiActivity extends AppCompatActivity implements SimpleMessageDial
             return;
         }
 
-        fetchThemeColors();
+        int toolbarColor=Themes.getColorFromAttr(this,R.attr.customTabToolbarColor);
+        int navBarColor=Themes.getColorFromAttr(this,R.attr.customTabNavBarColor);
 
         CustomTabColorSchemeParams colorSchemeParams =
                 new CustomTabColorSchemeParams.Builder()
-                        .setToolbarColor(toolBarColor)
+                        .setToolbarColor(toolbarColor)
                         .setNavigationBarColor(navBarColor)
                         .build();
 
