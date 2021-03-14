@@ -92,7 +92,7 @@ Join Us On
 
 Thanks to these awesome contributors who keep this project going
 
-<a href="https://github.com/ankidroid/Anki-Android/graphs/contributors"><img src="https://opencollective.com/jest/contributors.svg?width=890&button=false" /></a>
+<a href="https://github.com/ankidroid/Anki-Android/graphs/contributors"><img src="https://opencollective.com/ankidroid/contributors.svg?width=890&button=false" /></a>
 
 ### [Sponsors](https://opencollective.com/ankidroid#sponsor)
 <a href="https://opencollective.com/ankidroid/sponsor/0/website" target="_blank"><img src="https://opencollective.com/ankidroid/sponsor/0/avatar.svg"></a>
