@@ -42,28 +42,50 @@ import java.util.Set;
 import org.apache.commons.compress.archivers.zip.ZipArchiveEntry;
 import org.apache.commons.compress.archivers.zip.ZipArchiveOutputStream;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import timber.log.Timber;
 
 import static com.ichi2.utils.CollectionUtils.addAll;
 
 class Exporter {
     protected final Collection mCol;
+    /**
+     * If set exporter will export only this deck, otherwise will export all cards
+     */
+    @Nullable
     protected Long mDid;
     protected int mCount;
 
 
+    /**
+     * An exporter for the whole collection of decks
+     *
+     * @param col deck collection
+     */
     public Exporter(Collection col) {
         mCol = col;
         mDid = null;
     }
 
 
-    public Exporter(Collection col, Long did) {
+    /**
+     * An exporter for the content of a deck
+     *
+     * @param col deck collection
+     * @param did deck id
+     */
+    public Exporter(Collection col, @NonNull Long did) {
         mCol = col;
         mDid = did;
     }
 
-    /** card ids of cards in deck self.did if it is set, all ids otherwise. */
+
+    /**
+     * Fetches the ids of cards to be exported
+     *
+     * @return list of card ids
+     */
     public Long[] cardIds() {
         Long[] cids;
         if (mDid == null) {
@@ -90,6 +112,11 @@ class AnkiExporter extends Exporter {
     boolean _v2sched;
 
 
+    /**
+     * An exporter for the whole collection of decks
+     *
+     * @param col deck collection
+     */
     public AnkiExporter(Collection col) {
         super(col);
         mIncludeSched = false;
@@ -101,7 +128,7 @@ class AnkiExporter extends Exporter {
      * Export source database into new destination database Note: The following python syntax isn't supported in
      * Android: for row in mSrc.db.execute("select * from cards where id in "+ids2str(cids)): therefore we use a
      * different method for copying tables
-     * 
+     *
      * @param path String path to destination database
      * @throws JSONException
      * @throws IOException
@@ -317,6 +344,11 @@ class AnkiExporter extends Exporter {
 
 public final class AnkiPackageExporter extends AnkiExporter {
 
+    /**
+     * An exporter for the whole collection of decks
+     *
+     * @param col deck collection
+     */
     public AnkiPackageExporter(Collection col) {
         super(col);
     }
