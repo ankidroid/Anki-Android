@@ -42,8 +42,8 @@
     <string name="statistics_mature">पुराना</string>
     <string name="statistics_young_and_learn">हाल के + सीख</string>
     <string name="statistics_unlearned">नया</string>
-    <string name="statistics_suspended">Suspended</string>
-    <string name="statistics_buried">Buried</string>
+    <string name="statistics_suspended">निलंबित</string>
+    <string name="statistics_buried">स्थगित</string>
     <string name="statistics_relearn" comment="Labbel of the axis in the graph indicating the number of reviews of cards while they are in relearning mode.">पुनः सीखें</string>
     <string name="statistics_learn" comment="Label of the number of review of card in learning done in some amount of time">सीखें</string>
     <string name="statistics_cram">रटें</string>
@@ -74,18 +74,18 @@
     <string name="stats_today_type_breakdown">Learn: &lt;b&gt;%1$d&lt;/b&gt;, review: &lt;b&gt;%2$d&lt;/b&gt;, relearn: &lt;b&gt;%3$d&lt;/b&gt;, filtered: &lt;b&gt;%4$d&lt;/b&gt;</string>
     <string name="stats_today_mature_cards">परिपक्व कार्ड पर सही उत्तर: %1$d/%2$d (%3$.1f%%)</string>
     <string name="stats_today_no_mature_cards">आज किसी पुराने पत्ते का अध्ययन नहीं हुआ</string>
-    <string name="stats_overview_forecast_total">कुल: &lt; b &gt;%1$d &lt;/</string>
-    <string name="stats_overview_forecast_average">औसत: &lt;b&gt;%1$.1f&lt;/b&gt; समीक्षा / दिन</string>
-    <string name="stats_overview_forecast_due_tomorrow">फिर गिनें: &lt;b&gt;%1$d&lt;/b&gt;</string>
+    <string name="stats_overview_forecast_total">कुल: &lt;b&gt;%1$d&lt;/b&gt; समीक्षाएँ</string>
+    <string name="stats_overview_forecast_average">औसत: &lt;b&gt;%1$.1f&lt;/b&gt; समीक्षा/दिन</string>
+    <string name="stats_overview_forecast_due_tomorrow">कल के लिए नियत: &lt;b&gt;%1$d&lt;/b&gt;</string>
     <string name="stats_overview_days_studied">Days studied: &lt;b&gt;%1$d%%&lt;/b&gt; (%2$d of %3$d)</string>
     <string name="stats_overview_reviews_per_day_studydays">औसत: &lt;b&gt;%1$.1f&lt;/b&gt; समीक्षा / दिन</string>
     <string name="stats_overview_reviews_per_day_all">यदि आप प्रतिदिन अध्ययन करते हैं: &lt;b&gt;%1$.1f &lt;/b&gt;</string>
     <string name="stats_overview_total_time_in_period">Total: &lt;b&gt;%d&lt;/b&gt; minutes</string>
-    <string name="stats_overview_time_per_day_studydays">अध्ययन के दिनों के लिए औसत: &lt;b&gt;%1$.1f&lt;/b&gt;</string>
-    <string name="stats_overview_time_per_day_all">यदि आप प्रतिदिन अध्ययन करते हैं: &lt;b&gt;%1$.1f &lt;/b&gt;</string>
+    <string name="stats_overview_time_per_day_studydays">अध्ययन किए गए दिनों के लिए औसत: &lt;b&gt;%1$.1f&lt;/b&gt; मिनट/दिन</string>
+    <string name="stats_overview_time_per_day_all">यदि आप प्रतिदिन अध्ययन करते हैं:  &lt;b&gt;%1$.1f&lt;/b&gt; मिनट/दिन</string>
     <string name="stats_overview_average_answer_time">Average answer time: &lt;b&gt;%1$.1fs&lt;/b&gt; (&lt;b&gt;%2$.2f&lt;/b&gt; cards/minute)</string>
-    <string name="stats_overview_new_cards_per_day">औसत: &lt;b&gt;%1$.1f&lt;/b&gt; समीक्षा / दिन</string>
-    <string name="stats_overview_total_new_cards">औसत: &lt;b&gt;%1$d&lt;/b&gt; समीक्षा / दिन</string>
+    <string name="stats_overview_new_cards_per_day">औसत: &lt;b&gt;%1$.1f&lt;/b&gt; पत्ते/दिन</string>
+    <string name="stats_overview_total_new_cards">कुल: &lt;b&gt;%1$d&lt;/b&gt; पत्ते</string>
     <string name="stats_overview_average_interval">"औसत अंतराल: "</string>
     <string name="stats_overview_longest_interval">"सबसे लंबे अंतराल: "</string>
     <string name="stats_overview_years">&lt;b&gt;%1$.1f&lt;/b&gt; साल</string>
@@ -95,8 +95,8 @@
     <string name="stats_overview_answer_buttons_learn">Learning: &lt;b&gt;%1$.2f%%&lt;/b&gt; correct (%2$d of %3$d)</string>
     <string name="stats_overview_answer_buttons_young">Young: &lt;b&gt;%1$.2f%%&lt;/b&gt; correct (%2$d of %3$d)</string>
     <string name="stats_overview_answer_buttons_mature">Mature: &lt;b&gt;%1$.2f%%&lt;/b&gt; correct (%2$d of %3$d)</string>
-    <string name="stats_overview_card_types_total_cards">Total cards: &lt;b&gt;%d&lt;/b&gt;</string>
-    <string name="stats_overview_card_types_total_notes">Total notes: &lt;b&gt;%d&lt;/b&gt;</string>
+    <string name="stats_overview_card_types_total_cards">कुल पत्ते: &lt;b&gt;%d&lt;/b&gt;</string>
+    <string name="stats_overview_card_types_total_notes">कुल नोट्स: &lt;b&gt;%d&lt;/b&gt;</string>
     <string name="stats_overview_card_types_lowest_ease">Lowest ease: &lt;b&gt;%.0f%%&lt;/b&gt;</string>
     <string name="stats_overview_card_types_average_ease">Average ease: &lt;b&gt;%.0f%%&lt;/b&gt;</string>
     <string name="stats_overview_card_types_highest_ease">Highest ease: &lt;b&gt;%.0f%%&lt;/b&gt;</string>
