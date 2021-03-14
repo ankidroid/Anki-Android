@@ -17,11 +17,11 @@ For each grey bullet, translate the English text to your language.
 
 To see where texts are used and check your translation, you can see screenshot of the original text. 
 * Click on context 
-![Image without context](https://milchior.fr/crowdin/without_context.png).
-* Then click on the image  ![Context button](https://milchior.fr/crowdin/with_context.png)
+* Then click on the image
 * And you'll see where the image is used in AnkiDroid
 
-![Screenshot](https://milchior.fr/crowdin/screenshot.png)
+<img src="https://user-images.githubusercontent.com/12841290/111070556-3bd7ce80-850d-11eb-89c4-c94e0d9086d6.gif" height=300></img>
+
 
 **Tips:**
 
