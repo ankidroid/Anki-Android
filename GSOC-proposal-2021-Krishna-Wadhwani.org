@@ -19,3 +19,9 @@ Experience:
 5) Java
 6) Android Dev
 7) Web Dev
+8) SQLite
+9) SQL
+10) PHP
+11) Javascript
+12) Server Side
+13) Git
