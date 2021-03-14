@@ -55,17 +55,6 @@ public class IncrementerNumberRangePreference extends NumberRangePreference {
 
     @Override
     protected View onCreateDialogView() {
-        // Make mEditText fill all available space
-        mLinearLayout.setOrientation(LinearLayout.HORIZONTAL);
-        LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(
-                LinearLayout.LayoutParams.MATCH_PARENT,
-                LinearLayout.LayoutParams.WRAP_CONTENT,
-                1.0f
-        );
-        mEditText.setLayoutParams(params);
-        // Centre text inside mEditText
-        mEditText.setGravity(Gravity.CENTER_HORIZONTAL);
-
         mLinearLayout.addView(mIncrementButton);
         mLinearLayout.addView(mEditText);
         mLinearLayout.addView(mDecrementButton);
@@ -90,6 +79,10 @@ public class IncrementerNumberRangePreference extends NumberRangePreference {
      * <p>
      * Sets appropriate Text and OnClickListener to {@link #mIncrementButton} and {@link #mDecrementButton}
      * respectively.
+     * <p>
+     * Sets orientation for {@link #mLinearLayout}.
+     * <p>
+     * Sets {@link #mEditText} width and gravity.
      */
     private void initialize() {
         mIncrementButton.setText("+");
@@ -97,6 +90,17 @@ public class IncrementerNumberRangePreference extends NumberRangePreference {
 
         mIncrementButton.setOnClickListener(view -> updateEditText(true));
         mDecrementButton.setOnClickListener(view -> updateEditText(false));
+
+        // Make mEditText fill all available space
+        mLinearLayout.setOrientation(LinearLayout.HORIZONTAL);
+        LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(
+                LinearLayout.LayoutParams.MATCH_PARENT,
+                LinearLayout.LayoutParams.WRAP_CONTENT,
+                1.0f
+        );
+        mEditText.setLayoutParams(params);
+        // Centre text inside mEditText
+        mEditText.setGravity(Gravity.CENTER_HORIZONTAL);
     }
 
 
