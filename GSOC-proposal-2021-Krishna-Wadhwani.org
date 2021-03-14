@@ -1,0 +1,21 @@
+Name: Krishna Wadhwani
+
+Projects: 
+1) Food Ordering App, Website(Django)
+2) A Human Verifier If Human Is Real Or Fraud(Android)
+3) An Urban Clap Like App, Website(Django)
+4) Machine Learning, House Price Predector
+5) Machine Learning, Check Weather A Human Is Infected With Covid-19
+6) Machine Learning, How Many People Will Die In Future Cause Of Covid-19
+7) Quack Maths Solver App(Android) 
+8) Gym App(Android)
+9) Find Things In Home App(Android)
+10) Job Finding Website
+Experience: 
+1) Ethical Hacking
+2) Machine Learning
+3) Django
+4) Python
+5) Java
+6) Android Dev
+7) Web Dev
