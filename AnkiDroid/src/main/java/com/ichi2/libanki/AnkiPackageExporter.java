@@ -49,12 +49,13 @@ import timber.log.Timber;
 import static com.ichi2.utils.CollectionUtils.addAll;
 
 class Exporter {
+    @NonNull
     protected final Collection mCol;
     /**
      * If set exporter will export only this deck, otherwise will export all cards
      */
     @Nullable
-    protected Long mDid;
+    protected final Long mDid;
     protected int mCount;
 
 
@@ -63,7 +64,7 @@ class Exporter {
      *
      * @param col deck collection
      */
-    public Exporter(Collection col) {
+    public Exporter(@NonNull Collection col) {
         mCol = col;
         mDid = null;
     }
@@ -75,7 +76,7 @@ class Exporter {
      * @param col deck collection
      * @param did deck id
      */
-    public Exporter(Collection col, @NonNull Long did) {
+    public Exporter(@NonNull Collection col, @NonNull Long did) {
         mCol = col;
         mDid = did;
     }
@@ -103,8 +104,8 @@ class Exporter {
         "PMD.NPathComplexity","PMD.MethodNamingConventions","PMD.ExcessiveMethodLength",
         "PMD.EmptyIfStmt","PMD.CollapsibleIfStatements"})
 class AnkiExporter extends Exporter {
-    protected boolean mIncludeSched;
-    protected boolean mIncludeMedia;
+    protected final boolean mIncludeSched;
+    protected final boolean mIncludeMedia;
     private Collection mSrc;
     String mMediaDir;
     // Actual capacity will be set when known, if media are imported.
@@ -116,11 +117,28 @@ class AnkiExporter extends Exporter {
      * An exporter for the whole collection of decks
      *
      * @param col deck collection
+     * @param includeSched should include scheduling
+     * @param includeMedia should include media
      */
-    public AnkiExporter(Collection col) {
+    public AnkiExporter(@NonNull Collection col, boolean includeSched, boolean includeMedia) {
         super(col);
-        mIncludeSched = false;
-        mIncludeMedia = true;
+        mIncludeSched = includeSched;
+        mIncludeMedia = includeMedia;
+    }
+
+
+    /**
+     * An exporter for the selected deck
+     *
+     * @param col deck collection
+     * @param did selected deck id
+     * @param includeSched should include scheduling
+     * @param includeMedia should include media
+     */
+    public AnkiExporter(@NonNull Collection col, @NonNull Long did, boolean includeSched, boolean includeMedia) {
+        super(col, did);
+        mIncludeSched = includeSched;
+        mIncludeMedia = includeMedia;
     }
 
 
@@ -323,21 +341,6 @@ class AnkiExporter extends Exporter {
     private String removeSystemTags(String tags) {
         return mSrc.getTags().remFromStr("marked leech", tags);
     }
-
-
-    public void setIncludeSched(boolean includeSched) {
-        mIncludeSched = includeSched;
-    }
-
-
-    public void setIncludeMedia(boolean includeMedia) {
-        mIncludeMedia = includeMedia;
-    }
-
-
-    public void setDid(Long did) {
-        mDid = did;
-    }
 }
 
 
@@ -348,9 +351,24 @@ public final class AnkiPackageExporter extends AnkiExporter {
      * An exporter for the whole collection of decks
      *
      * @param col deck collection
+     * @param includeSched should include scheduling
+     * @param includeMedia should include media
      */
-    public AnkiPackageExporter(Collection col) {
-        super(col);
+    public AnkiPackageExporter(@NonNull Collection col, boolean includeSched, boolean includeMedia) {
+        super(col, includeSched, includeMedia);
+    }
+
+
+    /**
+     * An exporter for a selected deck
+     *
+     * @param col deck collection
+     * @param did selected deck id
+     * @param includeSched should include scheduling
+     * @param includeMedia should include media
+     */
+    public AnkiPackageExporter(@NonNull Collection col, @NonNull Long did, boolean includeSched, boolean includeMedia) {
+        super(col, did, includeSched, includeMedia);
     }
 
 
