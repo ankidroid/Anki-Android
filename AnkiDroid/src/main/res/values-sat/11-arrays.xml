@@ -111,7 +111,7 @@
     <string name="gesture_page_up">ᱥᱟᱠᱟᱢ ᱪᱮᱛᱟᱱ</string>
     <string name="gesture_page_down">ᱥᱟᱠᱟᱢ ᱞᱟᱛᱟᱨ</string>
     <string name="gesture_abort_sync">ᱪᱮᱫᱚᱜ ᱵᱚᱸᱫᱚᱭ ᱢᱮ ᱟᱨ ᱥᱭᱸᱠ ᱢᱮ</string>
-    <string name="gesture_toggle_whiteboard">Toggle Whiteboard</string>
-    <string name="record_voice">Record Voice</string>
-    <string name="replay_voice">Replay Voice</string>
+    <string name="gesture_toggle_whiteboard">ᱯᱩᱱᱰᱵᱚᱰ ᱴᱩᱜᱟᱹᱞ ᱢᱮ</string>
+    <string name="record_voice">ᱥᱟᱲᱮ ᱨᱮᱠᱚᱰ ᱢᱮ</string>
+    <string name="replay_voice">ᱥᱟᱲᱮ ᱨᱤᱯᱞᱮ ᱢᱮ</string>
 </resources>

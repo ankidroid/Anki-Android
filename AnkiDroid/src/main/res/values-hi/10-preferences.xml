@@ -234,10 +234,10 @@
     <string name="deck_conf_easy_ivl">आसान अंतराल</string>
     <string name="deck_conf_start_ease">आसानी शुरू</string>
     <string name="deck_conf_max_rev">अधिकतम समीक्षा/</string>
-    <string name="deck_conf_new_bury">दफनाने संबंधित नए कार्ड</string>
-    <string name="deck_conf_new_bury_summ">संबंधित नए कार्ड अगले दिन तक दफन कर रहे है</string>
-    <string name="deck_conf_rev_bury">दफनाने संबंधित समीक्षाएं</string>
-    <string name="deck_conf_rev_bury_summ">संबंधित समीक्षाएं अगले दिन तक दफन कर रहे है</string>
+    <string name="deck_conf_new_bury">संबंधित नए कार्ड स्थगित करें</string>
+    <string name="deck_conf_new_bury_summ">संबंधित नए पत्ते अगले दिन तक दफन कर दिए जाते हैं</string>
+    <string name="deck_conf_rev_bury">संबंधित समीक्षाएं स्थगित करें</string>
+    <string name="deck_conf_rev_bury_summ">संबंधित समीक्षाओं को अगले दिन तक स्थगित किया जाता है</string>
     <string name="deck_conf_use_general_timeout_settings">सामान्य सेटिंग्स का उपयोग करें</string>
     <string name="deck_conf_use_general_timeout_settings_summ">Use general \'Automatic display answer\' settings instead of using the settings for this group.</string>
     <string name="deck_conf_easy_bonus">आसान बोनस</string>
