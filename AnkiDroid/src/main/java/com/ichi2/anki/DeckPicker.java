@@ -2570,6 +2570,16 @@ public class DeckPicker extends NavigationDrawerActivity implements
         }
     }
 
+    /** Callback to open card browser for currently selected deck */
+    public void openCardBrowser() {
+        openCardBrowser(mContextMenuDid);
+    }
+    public void openCardBrowser(long did) {
+        Intent i = new Intent(DeckPicker.this, CardBrowser.class);
+        i.putExtra("did", mContextMenuDid);
+        startActivityWithAnimation(i, FADE);
+    }
+
 
     // Callback to show export dialog for currently selected deck
     public void showContextMenuExportDialog() {

@@ -78,6 +78,7 @@
     <string name="undo_action_change_deck_multi">change decks</string>
     <string name="move_all_to_deck">Move all to deck</string>
     <string name="unbury">Unbury</string>
+    <string name="browse_cards">Browse cards</string>
     <string name="rename_deck">Rename deck</string>
     <string name="create_shortcut">Create shortcut</string>
     <string name="menu_add" comment="A generic add button - Main Deck Picker and card templates. Please inform us if you need more specific strings">Add</string>
