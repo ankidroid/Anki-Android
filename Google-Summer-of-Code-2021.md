@@ -60,6 +60,7 @@ As a contributor to an open source project, you'll have to share some informatio
 - Afolabi Samuel 
 (afolabisamguy@gmail.com;
 GitHub: @afolabisamguy)
+- Prashant Kumar (prashantkumarjnv6@gmail.com; Github : @prashantkumar-cmd)
 - Abhinav (abhi2000.rtk@gmail.com; Github: @abhinav12k)
 - Nazish Kamran (nazishkn67@gmail.com; Github : @nazishkn67)
 - Nikhil Verma (nv5475609@gmail.com; Github: @nikhilverma360)
