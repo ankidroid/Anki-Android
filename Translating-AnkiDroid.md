@@ -13,7 +13,7 @@ Translating is easy and fun:
 
 For each grey bullet, translate the English text to your language.
 
-** Context **
+**Context**
 
 To see where texts are used and check your translation, you can see screenshot of the original text. 
 * Click on context 
