@@ -93,12 +93,12 @@
         <item>Kolaylaştırmak</item>
         <item>Vade</item>
         <item>Kart Değiştirildi</item>
-        <item>Created</item>
-        <item>Note Modified</item>
+        <item>Oluşturuldu</item>
+        <item>Değiştirilmiş notlar</item>
     </string-array>
     <!-- Custom study options -->
-    <string name="custom_study_increase_new_limit">Modify today’s new card limit</string>
-    <string name="custom_study_increase_review_limit">Modify today’s review card limit</string>
+    <string name="custom_study_increase_new_limit">Bugünün yeni kart sınırını düzenle</string>
+    <string name="custom_study_increase_review_limit">Bugünün tekrar edilecek kart sınırını düzenle</string>
     <string name="custom_study_review_forgotten">Unutulmuş kartları tekrarla</string>
     <string name="custom_study_review_ahead">Önceden çalış</string>
     <string name="custom_study_random_selection">Rastgele seçilmiş kartları çalış</string>
@@ -114,7 +114,7 @@
     <string name="note_editor_no_cards_created_all_fields">The current note type did not produce any cards.\nPlease choose another note type, or click ‘Cards’ and add a field substitution</string>
     <string name="note_editor_insert_cloze_no_cloze_note_type">Cloze deletions will only work on a Cloze note type</string>
     <string name="saving_facts">Not kaydediliyor</string>
-    <string name="saving_model">Saving note type</string>
+    <string name="saving_model">Not tipini kaydet</string>
     <string name="save">Kaydet</string>
     <string name="close">Kapat</string>
     <string name="select">Seç</string>
@@ -132,7 +132,7 @@
         <item quantity="other">%1$d dakika</item>
     </plurals>
     <string name="fact_adder_intent_title" comment="Label of the \'Add Note\' window. This title can\'t be seen in AnkiDroid directly.">AnkiDroid Kartı</string>
-    <string name="note_editor_copy_note">Copy note</string>
+    <string name="note_editor_copy_note">Notu kopyala</string>
     <string name="card_editor_reposition_card">Yerini değiştir</string>
     <string name="card_editor_reset_card">İlerlemeyi sıfırla</string>
     <string name="card_editor_reschedule_card" comment="Action to reschedule a card">Zamanını değiştir</string>
@@ -180,12 +180,12 @@
     <string name="confirm_apkg_export">Export collection as Anki package?</string>
     <string name="confirm_apkg_export_deck">\"%s\" apkg dosyası olarak kaydedilsin mi?</string>
     <string name="export_in_progress">Exporting Anki package file&#8230;</string>
-    <string name="export_successful_title">Send Anki package?</string>
+    <string name="export_successful_title">Anki Paketi Gönderilsin mi?</string>
     <string name="export_send_button">Gönder</string>
     <string name="export_save_button">Dosyaya kaydet</string>
     <string name="export_send_no_handlers">Apkg işleyecek uygulama yok. Kaydediliyor...</string>
-    <string name="export_save_apkg_successful">Successfully saved Anki package</string>
-    <string name="export_save_apkg_unsuccessful">Save Anki package failed</string>
+    <string name="export_save_apkg_successful">Anki Paketi başarıyla kaydedildi</string>
+    <string name="export_save_apkg_unsuccessful">Anki Paketi kaydı başarısız oldu</string>
     <string name="export_successful">Dosya \"%s\" dışarı çıkartıldı. Başka bir uygulama ile göndermek istiyor musunuz?</string>
     <string name="export_email_subject">AnkiDroid hafızakartlarına çıkartıldı: %s</string>
     <string name="export_email_text"><![CDATA[        Selam!
@@ -196,8 +196,8 @@
     <string name="import_hint">İçeri kart aktarmak için, apkg dosyasını %s dizinine yerleştirip Tamam\'a basın</string>
     <string name="upgrade_import_no_file_found">İçeri aktarılabilir %1$s dosyası bulunmuyor</string>
     <string name="study_options" comment="Name for a preference category in Filtered deck (aka Cram deck, aka Custom study) options">Seçenekler</string>
-    <string name="menu__deck_options">Deck options</string>
-    <string name="menu__study_options" comment="Menu item that opens options for a Filtered deck (aka Cram deck, aka Custom study)">Study options</string>
+    <string name="menu__deck_options">Deste seçenekleri</string>
+    <string name="menu__study_options" comment="Menu item that opens options for a Filtered deck (aka Cram deck, aka Custom study)">Çalışma seçenekleri</string>
     <string name="select_tts">Metin okuma dilini ayarla</string>
     <string name="custom_study">Kişisel Çalışma</string>
     <string name="more_options">Daha fazlası</string>
@@ -238,7 +238,7 @@
     <!-- A decimal number of seconds.
     Please give this a best-effort translation and explain the requirements for
     formatting decimals in your language in the CrowdIn comments -->
-    <string name="time_span_decimal_seconds">%s seconds</string>
+    <string name="time_span_decimal_seconds">%s saniye</string>
     <!-- The reason for making a simple “< x” translatable are RTL
          languages which apparently use the other symbol to mean less
          than. -->
@@ -256,20 +256,20 @@
     <!-- Import and export v2 feedback -->
     <string name="export_v2_dummy_note">Bu dosya için Anki\'nin daha yeni bir sürümü gerekli.</string>
     <!-- Placed in a snackbar with a long URL. Limit the length and move the URL to the start of the string -->
-    <string name="activity_start_failed_load_url">Loading \'%s\' failed.</string>
+    <string name="activity_start_failed_load_url">\'%s\' Yüklemesi başarısız oldu.</string>
     <string name="activity_start_failed">The system does not have an app installed that can perform this action.</string>
     <string name="multimedia_editor_image_compression_failed"><![CDATA[Camera images may be large. You may wish to compress & resize images in the media directory]]></string>
     <string name="no_browser_notification">No browser found，please visit web page by pc or mobile: </string>
-    <string name="web_page_error">Error loading page: %s</string>
+    <string name="web_page_error">Sayfa yüklenirken hata: %s</string>
     <string name="no_outgoing_link_in_cardbrowser">External page link in card is not supported.</string>
     <!-- The name of the deck which corrupt cards will be moved to -->
-    <string name="check_integrity_recovered_deck_name">Recovered Cards</string>
+    <string name="check_integrity_recovered_deck_name">Düzeltilmiş Kartlar</string>
     <!-- Deckpicker Background -->
-    <string name="background_image_title">Background</string>
-    <string name="choose_an_image">Choose an Image</string>
+    <string name="background_image_title">Arkaplan</string>
+    <string name="choose_an_image">Bir resim seç</string>
     <!-- Card Template Browser Appearance -->
-    <string name="restore_default">Restore Default</string>
-    <string name="reviewer_tts_cloze_spoken_replacement">Blank</string>
+    <string name="restore_default">Varsayılana Dön</string>
+    <string name="reviewer_tts_cloze_spoken_replacement">Boş</string>
     <!-- in options menu & Navigation Drawer -->
     <string name="ankidroid_turn_on_fullscreen_nav_drawer">Please turn on fullscreen to use Show Navigation Drawer using JavaScript.</string>
     <string name="ankidroid_turn_on_fullscreen_options_menu">Please turn on fullscreen to use Show Options Menu using JavaScript.</string>
@@ -312,6 +312,7 @@
     <!-- Card Viewer -->
     <string name="card_viewer_could_not_find_image">Card Content Error: Failed to load ‘%s’</string>
     <string name="card_viewer_media_relative_protocol">Card Content Error: Media update required</string>
+    <string name="cannot_load_http_resource">Loading http resources is no longer supported</string>
     <!-- Deck Picker -->
     <string name="deck_picker_failed_deck_load">Failed to load deck ‘%s’</string>
     <string name="search_decks">Search decks</string>
@@ -339,4 +340,7 @@
     <string name="create_shortcut_failed" comment="home screen == launcher">Your home screen does not allow AnkiDroid to add shortcuts</string>
     <string name="create_shortcut_error">Error adding shortcut: %s</string>
     <string name="note_editor_capitalize" comment="This is for a switch with a checkbox - on: enabled">Capitalize sentences</string>
+    <!-- Symbols used as Button text in IncrementNumberRangePreference -->
+    <string name="plus_sign" comment="Label for increment button in IncrementerNumberRangePreference">+</string>
+    <string name="minus_sign" comment="Label for decrement button in IncrementerNumberRangePreference">-</string>
 </resources>
