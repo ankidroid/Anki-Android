@@ -23,7 +23,7 @@ A semi-official port of the open source [Anki](http://ankisrs.net/index.html) sp
 
 <div style="display:flex;">
  
-- Night mode
+- Night Mode
 - Whiteboard 
 - Progress Widget
 - Detailed Statistics
