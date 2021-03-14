@@ -47,6 +47,7 @@ Potential candidates should to take a look at the guidelines on how to contribut
 ## List of interested participants
 
 As a contributor to an open source project, you'll have to share some information, at the very least an email address. Please only list information that you are confortable to share in public, as this site is scraped. We need an email to be able to contact you once we know more about our plan moving forward.
+
 -**Prashant Kumar** (prashantkumarjnv6@gmail.com; Github : https://www.github.com/prashantkumar-cmd)
 - **Prem Kumar** (Email : prem47645@gmail.com, [Github](https://github.com/Prem1803/),[LinkedIn](https://www.linkedin.com/in/prem-kumar-55ab82194/))  
 - **Umang Gupta** (Email : umang_gupta@mymail.sutd.edu.sg, [Github](https://github.com/Usgupta), [LinkedIn](https://www.linkedin.com/in/usg1103/))
