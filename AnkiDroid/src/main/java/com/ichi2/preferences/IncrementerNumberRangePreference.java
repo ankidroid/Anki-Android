@@ -69,6 +69,7 @@ public class IncrementerNumberRangePreference extends NumberRangePreference {
     protected void onDialogClosed(boolean positiveResult) {
         super.onDialogClosed(positiveResult);
 
+        // Need to remove Views explicitly otherwise the app crashes when the setting is accessed again
         // Remove mEditText, mIncrementButton, mDecrementButton before removing mLinearLayout
         mLinearLayout.removeAllViews();
         ViewGroup parent = (ViewGroup) mLinearLayout.getParent();
