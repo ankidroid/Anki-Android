@@ -497,7 +497,7 @@ public class AddonsBrowser extends NavigationDrawerActivity implements DeckDropD
 
                             // remove enabled status
                             SharedPreferences.Editor editor = preferences.edit();
-                            editor.remove("addon:"+addonModel.getName());
+                            editor.remove(addonModel.getAddonType() + "_addon:" + addonModel.getName());
                             editor.apply();
 
                             addonsNames.remove(position);

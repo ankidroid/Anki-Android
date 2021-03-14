@@ -382,4 +382,10 @@
     <string name="checking_addon_update">Checking for addon updates...</string>
     <string name="reviewer_addons">Reviewer addons</string>
     <string name="note_editor_addons">Note editor addons</string>
+
+    <string name="addon_name">Name</string>
+    <string name="addon_version">Version</string>
+    <string name="addon_developer">Developer</string>
+    <string name="ankidroid_js_api">AnkiDroid JS API</string>
+    <string name="addon_homepage">Homepage</string>
 </resources>

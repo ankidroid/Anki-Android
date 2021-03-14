@@ -2400,6 +2400,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
         return card.getODid() == 0 ? card.getDid() : card.getODid();
     }
 
+    // get enabled js addon contents from AnkiDroid/addons/...
     public String getEnabledAddonsContent() {
         StringBuilder content = new StringBuilder();
         String mainJsFile = null;
@@ -4100,6 +4101,9 @@ see card.js for available functions
         public boolean ankiIsInNightMode() {
             return isInNightMode();
         }
+
+        @JavascriptInterface
+        public boolean ankiIsDisplayingAnswer() { return isDisplayingAnswer(); };
 
         @JavascriptInterface
         public boolean ankiIsActiveNetworkMetered() {
