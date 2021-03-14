@@ -339,6 +339,7 @@
     <!-- Card Viewer -->
     <string name="card_viewer_could_not_find_image">Chyba obsahu kartičky: Nepodarilo sa načítať ‘%s’</string>
     <string name="card_viewer_media_relative_protocol">Chyba obsahu kartičky: Vyžaduje sa update médií</string>
+    <string name="cannot_load_http_resource">Loading http resources is no longer supported</string>
     <!-- Deck Picker -->
     <string name="deck_picker_failed_deck_load">Nepodarilo sa načítať balíček ‘%s’</string>
     <string name="search_decks">Prehľadať balíčky</string>
@@ -366,4 +367,7 @@
     <string name="create_shortcut_failed" comment="home screen == launcher">Vaša domovská obrazovka neumožňuje, aby AnkiDroid pridal zástupcov</string>
     <string name="create_shortcut_error">Chyba pri pridávaní odkazu: %s</string>
     <string name="note_editor_capitalize" comment="This is for a switch with a checkbox - on: enabled">Capitalize sentences</string>
+    <!-- Symbols used as Button text in IncrementNumberRangePreference -->
+    <string name="plus_sign" comment="Label for increment button in IncrementerNumberRangePreference">+</string>
+    <string name="minus_sign" comment="Label for decrement button in IncrementerNumberRangePreference">-</string>
 </resources>

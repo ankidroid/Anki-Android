@@ -339,6 +339,7 @@
     <!-- Card Viewer -->
     <string name="card_viewer_could_not_find_image">Błąd zawartości karty, nie udało się załadować: %s</string>
     <string name="card_viewer_media_relative_protocol">Błąd zawartości karty: Wymagana aktualizacja mediów</string>
+    <string name="cannot_load_http_resource">Loading http resources is no longer supported</string>
     <!-- Deck Picker -->
     <string name="deck_picker_failed_deck_load">Nie udało się załadować talii: %s</string>
     <string name="search_decks">Przeszukaj talie</string>
@@ -366,4 +367,7 @@
     <string name="create_shortcut_failed" comment="home screen == launcher">Twój launcher nie pozwala AnkiDroid dodawać skrótów</string>
     <string name="create_shortcut_error">Błąd dodawania skrótu: %s</string>
     <string name="note_editor_capitalize" comment="This is for a switch with a checkbox - on: enabled">Automatycznie wyświetlaj zdania z dużej litery</string>
+    <!-- Symbols used as Button text in IncrementNumberRangePreference -->
+    <string name="plus_sign" comment="Label for increment button in IncrementerNumberRangePreference">+</string>
+    <string name="minus_sign" comment="Label for decrement button in IncrementerNumberRangePreference">-</string>
 </resources>
