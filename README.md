@@ -23,17 +23,17 @@ A semi-official port of the open source [Anki](http://ankisrs.net/index.html) sp
 
 <div style="display:flex;">
  
-- night mode
-- whiteboard 
-- progress widget
-- detailed statistics
-- syncing with AnkiWeb
-- write answers (optional)
-- text-to-speech integration
-- more than 6000 premade decks
-- spaced repetition (supermemo 2 algorithm)
-- supported contents: text, images, sounds, MathJax
-- add cards by intent from other applications like dictionaries
+- Night mode
+- Whiteboard 
+- Progress Widget
+- Detailed Statistics
+- Syncing with AnkiWeb
+- Write Answers (optional)
+- Text-to-Speech integration
+-Mmore than 6000 Premade Decks
+- Spaced Repetition (Supermemo 2 Algorithm)
+- Supported Contents: Text, Images, Sounds, MathJax
+- Add Cards by Intent from other Applications like Dictionaries
 
 </div>
 
