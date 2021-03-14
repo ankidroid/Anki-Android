@@ -4,8 +4,8 @@ package com.ichi2.anki.dialogs;
 import android.content.res.Resources;
 import android.os.Bundle;
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 
-import com.afollestad.materialdialogs.DialogAction;
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.ichi2.anki.R;
 import com.ichi2.anki.analytics.AnalyticsDialogFragment;
@@ -27,27 +27,28 @@ public class ExportDialog extends AnalyticsDialogFragment {
 
 
     /**
-     * A set of dialogs which deal with importing a file
-     * 
-     * @param did An integer which specifies which of the sub-dialogs to show
-     * @param dialogMessage An optional string which can be used to show a custom message or specify import path
+     * Creates a new instance of ExportDialog to export a deck of cards
+     *
+     * @param did A long which specifies the deck to be exported,
+     *            if did is null then the whole collection of decks will be exported
+     * @param dialogMessage A string which can be used to show a custom message or specify import path
      */
-    public static ExportDialog newInstance(@NonNull String dialogMessage, Long did) {
+    public static ExportDialog newInstance(@NonNull String dialogMessage, @Nullable Long did) {
         ExportDialog f = new ExportDialog();
         Bundle args = new Bundle();
-        args.putLong("did", did);
+        args.putLong("did", did == null ? NOT_FOUND_DECK_ID : did);
         args.putString("dialogMessage", dialogMessage);
         f.setArguments(args);
         return f;
     }
 
-
+    /**
+     * Creates a new instance of ExportDialog to export the user collection of decks
+     *
+     * @param dialogMessage A string which can be used to show a custom message or specify import path
+     */
     public static ExportDialog newInstance(@NonNull String dialogMessage) {
-        ExportDialog f = new ExportDialog();
-        Bundle args = new Bundle();
-        args.putString("dialogMessage", dialogMessage);
-        f.setArguments(args);
-        return f;
+        return newInstance(dialogMessage, null);
     }
 
 
