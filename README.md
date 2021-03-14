@@ -77,6 +77,10 @@ Contribute
 You can contribute to AnkiDroid by beta testing, translating, or submitting code. 
 See the [contribution wiki page](https://github.com/ankidroid/Anki-Android/wiki/Contributing) for more info.
 
+## Code of Conduct
+
+We take all Code of Conduct related queries very strictly. You can find the guidelines [here](https://github.com/ankidroid/Anki-Android/CODE_OF_CONDUCT.md).
+
 ## Credits
 
 Thanks to all these wonderful people for contributing!
