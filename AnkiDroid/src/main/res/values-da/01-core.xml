@@ -38,10 +38,10 @@
 ~ this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <resources>
-    <string name="yes">yes</string>
+    <string name="yes">ja</string>
     <!-- Navigation drawer items-->
-    <string name="decks">Kortsæt</string>
-    <string name="card_browser" comment="The usage of card browser inside the app (note the casing)">Kort browser</string>
+    <string name="decks">Dæk</string>
+    <string name="card_browser" comment="The usage of card browser inside the app (note the casing)">Kortoversigt</string>
     <string name="statistics">Statistik</string>
     <string name="settings">Indstillinger</string>
     <string name="help">Hjælp</string>
@@ -56,12 +56,12 @@
     <string name="collapse">Minimér</string>
     <string name="study_more">Studér mere</string>
     <plurals name="deckpicker_title">
-        <item quantity="one">%1$d kort skal studeres (%2$s)</item>
-        <item quantity="other">%1$d cards due (%2$s)</item>
+        <item quantity="one">%1$d kort i kø (%2$s)</item>
+        <item quantity="other">%1$d kort i kø (%2$s)</item>
     </plurals>
     <plurals name="reviewer_window_title">
         <item quantity="one">%d minutter tilbage</item>
-        <item quantity="other">%d minutes left</item>
+        <item quantity="other">%d minutter tilbage</item>
     </plurals>
     <plurals name="reviewer_window_title_hours">
         <item quantity="one">%d time %d tilbage</item>
@@ -71,8 +71,8 @@
         <item quantity="one">%d dag %d tilbage</item>
         <item quantity="other">%d dage %d tilbage</item>
     </plurals>
-    <string name="no_cards_placeholder_title">Collection is empty</string>
-    <string name="no_cards_placeholder_description">Start adding cards\nusing the + icon.</string>
+    <string name="no_cards_placeholder_title">Samlingen er tom</string>
+    <string name="no_cards_placeholder_description">Begynd at tilføje kort\nved hjælp af ikonet +.</string>
     <!-- The deck picker via AnkiStatsTaskHandler.java -->
     <plurals name="studied_cards_today">
         <item quantity="one">Studerede %1$d kort på %2$s i dag</item>
@@ -81,7 +81,7 @@
     <!-- flashcard_portrait.xml -->
     <string name="type_answer_hint">Skriv svar</string>
     <string name="show_answer">Vis svar</string>
-    <string name="hide_answer">Hide answer</string>
+    <string name="hide_answer">Skjul svar</string>
     <string name="ease_button_again">Igen</string>
     <string name="ease_button_hard">Svær</string>
     <string name="ease_button_good">God</string>
@@ -94,7 +94,7 @@
     <string name="move_all_to_deck">Flyt alle til kortsæt</string>
     <string name="unbury">Grav op</string>
     <string name="rename_deck">Omdøb kortsæt</string>
-    <string name="create_shortcut">Create shortcut</string>
+    <string name="create_shortcut">Opret genvej</string>
     <string name="menu_add" comment="A generic add button - Main Deck Picker and card templates. Please inform us if you need more specific strings">Tilføj</string>
     <string name="menu_add_note">Tilføj note</string>
     <string name="menu_my_account" comment="Label of the window in which the user should enter their account. This text can\'t be found in AnkiDroid directly.">Synkroniseringskonto</string>
@@ -106,21 +106,21 @@
     <string name="menu_bury">Begrav</string>
     <string name="menu_suspend">Suspendér</string>
     <string name="menu_delete_note">Slet note</string>
-    <string name="menu_flag">Flag</string>
-    <string name="menu_flag_card">Flag card</string>
+    <string name="menu_flag">Markér</string>
+    <string name="menu_flag_card">Markér kort</string>
     <string name="menu_flag_card_zero">Intet flag</string>
     <string name="menu_flag_card_one">Rødt flag</string>
     <string name="menu_flag_card_two">Orange flag</string>
     <string name="menu_flag_card_three">Grønt flag</string>
     <string name="menu_flag_card_four">Blåt flag</string>
-    <string name="menu_edit_tags">Edit tags</string>
+    <string name="menu_edit_tags">Redigér tags</string>
     <string name="delete_note_message">Vil du virkelig gerne slette denne note og alle dens kort?\n%s</string>
     <string name="menu_select">Vælg tekst</string>
     <string name="menu_search">Slå op i %1$s</string>
     <string name="menu_mark_note">Markér note</string>
     <string name="menu_unmark_note">Fjern markering fra note</string>
     <string name="menu_toggle_mic_tool_bar">Tjek udtale</string>
-    <string name="new_deck">Opret kortsæt</string>
+    <string name="new_deck">Opret dæk</string>
     <string name="create" comment="Button to create a filtered deck">Opret</string>
     <string name="new_dynamic_deck">Opret filtreret dæk</string>
     <string name="night_mode">Nattetilstand</string>
@@ -129,7 +129,7 @@
     The user is taken to the "App Info" screen, and needs to click "Permissions" and
     grant AnkiDroid the \'Storage\' permission. This needs to be a fairly generic message as implementations
     of the permissions/app info screen will differ between devices. -->
-    <string name="startup_no_storage_permission">Please grant AnkiDroid the ‘Storage’ permission to continue</string>
+    <string name="startup_no_storage_permission">Tillad venligst AnkiDroid adgang til \'Lagring\' for at fortsætte</string>
     <!--
         The time_quantities are units of time. They are used without
         plurals or dots.
@@ -139,75 +139,75 @@
     -->
     <string name="time_quantity_seconds">%d s</string>
     <string name="time_quantity_minutes">%d min</string>
-    <string name="time_quantity_hours_minutes">%1$d h %2$d m</string>
+    <string name="time_quantity_hours_minutes">%1$d t %2$d m</string>
     <string name="time_quantity_hours">%d t</string>
     <string name="time_quantity_days">%d d</string>
-    <string name="time_quantity_days_hours">%1$d d %2$d h</string>
-    <string name="time_quantity_months">%.1f mo</string>
+    <string name="time_quantity_days_hours">%1$d d %2$d t</string>
+    <string name="time_quantity_months">%.1f md</string>
     <string name="time_quantity_years">%.1f år</string>
     <!-- or "%.1f a" -->
-    <string name="rebuild_filtered_deck">Rebuilding filtered deck&#8230;</string>
+    <string name="rebuild_filtered_deck">Genopbygger filtreret dæk&#8230;</string>
     <string name="rebuild_cram_label">Genopbyg</string>
     <string name="empty_cram_label">Tøm</string>
-    <string name="create_subdeck">Opret underkortsæt</string>
-    <string name="empty_filtered_deck">Emptying filtered deck&#8230;</string>
-    <string name="custom_study_deck_name">Custom study session</string>
-    <string name="custom_study_deck_exists">Rename the existing custom study deck first</string>
+    <string name="create_subdeck">Opret underdæk</string>
+    <string name="empty_filtered_deck">Tømmer filtreret dæk... </string>
+    <string name="custom_study_deck_name">Tilpasset studiesession</string>
+    <string name="custom_study_deck_exists">Omdøb det eksisterende tilpassede dæk først </string>
     <string name="empty_deck">Dette kortsæt er tomt</string>
-    <string name="empty_deck_add_note">Add card</string>
-    <string name="invalid_deck_name">Ugyldigt kortsætnavn</string>
-    <string name="studyoptions_empty">Dette kortsæt er tomt. Tryk på +knappen for at tilføje indhold.</string>
-    <string name="studyoptions_limit_reached">Daily study limit reached</string>
-    <string name="studyoptions_empty_schedule">No cards scheduled to study</string>
-    <string name="studyoptions_congrats_finished">Congratulations! You have finished for now.</string>
-    <string name="studyoptions_congrats_more_rev">Today’s limit has been reached, but there are still cards to review. You can increase the limit in the options.</string>
-    <string name="studyoptions_congrats_more_new">Today’s limit has been reached. There are more new cards available; you can increase the limit in the options, but this will increase your short-term review workload.</string>
-    <string name="studyoptions_congrats_custom">To study outside of the normal schedule, touch the “Custom study” button</string>
-    <string name="studyoptions_no_cards_due">No cards are due yet</string>
-    <string name="sd_card_not_mounted">Device storage not mounted</string>
-    <string name="empty_cloze_warning">Edit this note and add some cloze deletions. (%1$s)</string>
+    <string name="empty_deck_add_note">Tilføj kort</string>
+    <string name="invalid_deck_name">Ugyldigt dæknavn</string>
+    <string name="studyoptions_empty">Dette dæk er tomt. Tryk på + knappen for at tilføje nyt indhold.</string>
+    <string name="studyoptions_limit_reached">Daglig studiegrænse nået</string>
+    <string name="studyoptions_empty_schedule">Ingen kort planlagt til at studere</string>
+    <string name="studyoptions_congrats_finished">Tillykke! Du er færdig for nu. </string>
+    <string name="studyoptions_congrats_more_rev">Dagens grænse er nået, men der er stadig kort at gennemgå. Du kan øge grænsen i indstillingerne. </string>
+    <string name="studyoptions_congrats_more_new">Dagens grænse er nået. Der er flere nye kort tilgængelige; du kan øge grænsen i indstillingerne, men dette vil øge din arbejdsbyrde for gennemgang i en kort periode. </string>
+    <string name="studyoptions_congrats_custom">Tryk på knappen \"Tilpasset studie\" for at studere udenfor den normale tidsplan</string>
+    <string name="studyoptions_no_cards_due">Ingen kort i kø </string>
+    <string name="sd_card_not_mounted">Enhedslagring er ikke monteret</string>
+    <string name="empty_cloze_warning">Rediger denne note og tilføj nogle huller i teksten. (%1$s)</string>
     <string name="button_sync">Synkroniser</string>
-    <string name="cancel_sync_confirm">Do you want to cancel the sync?</string>
+    <string name="cancel_sync_confirm">Vil du annullere synkroniseringen? </string>
     <string name="continue_sync">Fortsæt synkronisering</string>
     <string name="sync_cancelled">Synkronisering annulleret</string>
-    <string name="sync_cancel_message">Cancelling&#8230;\nThis may take some time.</string>
+    <string name="sync_cancel_message">Annullerer&#8230;\nDette kan tage et stykke tid. </string>
     <string name="export">Eksporter</string>
     <string name="export_collection">Eksporter samling</string>
     <string name="export_deck">Eksporter kortsæt</string>
-    <string name="nothing">Nothing</string>
+    <string name="nothing">Intet</string>
     <!-- Card template editor -->
     <string name="title_activity_template_editor">Korttyper</string>
-    <string name="card_template_editor_front">Front template</string>
-    <string name="card_template_editor_back">Back template</string>
-    <string name="card_template_editor_styling">Styling</string>
-    <string name="card_template_editor_menu_card_browser_appearance">Card Browser Appearance</string>
-    <string name="card_template_editor_deck_override">Deck Override</string>
-    <string name="card_template_editor_cant_delete">At least one card type is required</string>
+    <string name="card_template_editor_front">Skabelon til forside</string>
+    <string name="card_template_editor_back">Skabelon til bagside</string>
+    <string name="card_template_editor_styling">Design</string>
+    <string name="card_template_editor_menu_card_browser_appearance">Udseende af kortoversigt</string>
+    <string name="card_template_editor_deck_override">Overskriv dæk </string>
+    <string name="card_template_editor_cant_delete">Mindst én korttype er påkrævet </string>
     <plurals name="card_template_editor_confirm_delete">
-        <item quantity="one">Delete the “%2$s” card type, and its %1$d card?</item>
-        <item quantity="other">Delete the “%2$s” card type, and its %1$d cards?</item>
+        <item quantity="one">Slet korttypen “%2$s” og dens %1$d kort?</item>
+        <item quantity="other">Slet korttypen “%2$s” og dens %1$d kort?</item>
     </plurals>
-    <string name="invalid_template">A card could not be generated</string>
-    <string name="card_template_editor_would_delete_note">Removing this card type would cause one or more notes to be deleted. Please create and save a new card type first.</string>
-    <string name="card_template_editor_save_error">Unable to save card template changes: %s</string>
-    <string name="template_for_current_card_deleted">The card type for the current card was deleted.</string>
+    <string name="invalid_template">Et kort kunne ikke genereres</string>
+    <string name="card_template_editor_would_delete_note">Fjernelse af denne korttype vil få en eller flere noter til at blive slettet. Opret og gem først en ny korttype.</string>
+    <string name="card_template_editor_save_error">Kan ikke gemme kortskabelonændringer: %s</string>
+    <string name="template_for_current_card_deleted">Korttypen for det aktuelle kort blev slettet.</string>
     <!-- Card Browser Appearance -->
-    <string name="card_template_browser_appearance_title">Browser appearance</string>
+    <string name="card_template_browser_appearance_title">Udseende af kortoversigt</string>
     <string name="current_and_default_deck">%1$s (%2$s)</string>
     <!-- card Info -->
-    <string name="card_info_title">Card info</string>
+    <string name="card_info_title">Information om kort</string>
     <!-- Permissions -->
-    <string name="read_write_permission_label">Read and write to the AnkiDroid database</string>
-    <string name="read_write_permission_description">access existing notes, cards, note types, and decks, as well as create new ones</string>
+    <string name="read_write_permission_label">Læse og skrive til AnkiDroid databasen</string>
+    <string name="read_write_permission_description">adgang til eksisterende noter, kort, notetyper og dæk, samt til at skabe nye</string>
     <!-- Context Menu -->
-    <string name="card_browser_context_menu" comment="The value which appears in the system context menu. Note the casing difference">Card Browser</string>
-    <string name="context_menu_anki_card_label">Anki Card</string>
-    <string name="has_a_problem" comment="First field is either front template or back template. Second field is the error message.">%1$s has a problem:<br/>%2$s</string>
-    <string name="more_information">More information</string>
-    <string name="no_field">Found \'{{%1$s}}\', but there is no field called \'%1$s\'.</string>
-    <string name="closed_tag_not_open">Found \'{{/%1$s}}\', but missing \'{{#%1$s}}\' or \'{{^%1$s}}\'.</string>
-    <string name="missing_closing_bracket">Missing \'}}\' in \'%s\'.</string>
-    <string name="open_tag_not_closed">Missing \'{{%s}}\'.</string>
-    <string name="wrong_tag_closed">Found \'{{/%1$s}}\', but expected \'{{/%2$s}}\'</string>
-    <string name="filter_error">Error in filter %s</string>
+    <string name="card_browser_context_menu" comment="The value which appears in the system context menu. Note the casing difference">Kortoversigt</string>
+    <string name="context_menu_anki_card_label">Anki kort </string>
+    <string name="has_a_problem" comment="First field is either front template or back template. Second field is the error message.">%1$s har et problem:<br/>%2$s</string>
+    <string name="more_information">Mere information</string>
+    <string name="no_field">Fandt \'{{%1$s}}\', men der er intet felt ved navn \'%1$s\'.</string>
+    <string name="closed_tag_not_open">Fundet \'{{/%1$s}}\', men mangler \'{#%1$s}}\' eller \'{{^%1$s}}\'.</string>
+    <string name="missing_closing_bracket">Mangler \'}}\' i \'%s\'.</string>
+    <string name="open_tag_not_closed">Mangler \'{{%s}}\'.</string>
+    <string name="wrong_tag_closed">Fandt \'{{/%1$s}}\', men forventede \'{{/%2$s}}\'</string>
+    <string name="filter_error">Fejl i filter %s</string>
 </resources>

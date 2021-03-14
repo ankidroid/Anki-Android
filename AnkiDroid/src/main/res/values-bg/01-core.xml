@@ -209,5 +209,5 @@
     <string name="missing_closing_bracket">Липсва \'}}\' в \'%s\'.</string>
     <string name="open_tag_not_closed">Липсва „{{%s}}“.</string>
     <string name="wrong_tag_closed">Намерено „{{/%1$s}}“, но очаквано „{{/%2$s}}“</string>
-    <string name="filter_error">Error in filter %s</string>
+    <string name="filter_error">Грешка във филтъра %s</string>
 </resources>

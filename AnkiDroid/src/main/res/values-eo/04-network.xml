@@ -128,5 +128,5 @@
     <!-- Deck Picker Sync Icon -->
     <string name="sync_menu_title_full_sync">Samtempigo (plena)</string>
     <string name="sync_menu_title_no_account">Samtempigo (ensaluto)</string>
-    <string name="sync_error_unknown_host_readable">Could not connect to AnkiWeb. Is your internet working?\n\n%s</string>
+    <string name="sync_error_unknown_host_readable">Ne povis konekti al AnkiWeb. Eble via interreta konekte ne funkcias?\n\n%s</string>
 </resources>

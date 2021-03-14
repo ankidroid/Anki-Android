@@ -51,7 +51,7 @@
     <string name="pref_cat_appearance">Appearance</string>
     <string name="pref_cat_appearance_summ">Change themes and default font</string>
     <string name="pref_cat_themes">Ոճեր</string>
-    <string name="pref_cat_fonts">Fonts</string>
+    <string name="pref_cat_fonts">Տառատեսակ</string>
     <string name="pref_cat_gestures">Gestures</string>
     <string name="pref_cat_gestures_summ">Use taps and swipes instead of buttons</string>
     <string name="pref_cat_actions">Actions</string>
@@ -61,7 +61,7 @@
     <string name="pref_cat_workarounds">Workarounds</string>
     <string name="pref_cat_plugins">Plugins</string>
     <string name="about_title">About AnkiDroid</string>
-    <string name="about_version">Version: </string>
+    <string name="about_version">Տարբերակ.</string>
     <!-- preferences.xml entries-->
     <string name="whiteboard_stroke_width">Stroke width</string>
     <string name="use_input_tag">Type answer into the card</string>
@@ -173,6 +173,7 @@
     <string name="learn_cutoff">Learn ahead limit</string>
     <string name="time_limit">Timebox time limit</string>
     <string name="time_limit_summ">XXX min</string>
+    <string name="new_timezone">New timezone handling</string>
     <string name="day_offset">Start of next day</string>
     <string name="day_offset_summ">XXX hours past midnight</string>
     <string name="sched_ver">Experimental V2 scheduler</string>

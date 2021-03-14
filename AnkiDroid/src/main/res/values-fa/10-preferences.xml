@@ -172,6 +172,7 @@
     <string name="learn_cutoff">محدودیت های پیش رو را یاد بگیرید</string>
     <string name="time_limit">محدوده زمانی جعبه زمان</string>
     <string name="time_limit_summ">XXX دقیقه</string>
+    <string name="new_timezone">New timezone handling</string>
     <string name="day_offset">شروع روز بعد</string>
     <string name="day_offset_summ">XXX ساعت پس از نیمه شب</string>
     <string name="sched_ver">زمانبندی آزمایشی ورژن 2</string>

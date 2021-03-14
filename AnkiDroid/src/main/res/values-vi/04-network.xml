@@ -40,7 +40,7 @@
 -->
 <resources>
     <string name="youre_offline">Bạn đang ngoại tuyến</string>
-    <string name="sync_even_if_offline">Try Anyway</string>
+    <string name="sync_even_if_offline">Thử lại</string>
     <string name="sync_error">Lỗi đồng bộ</string>
     <string name="vague_error">Lỗi</string>
     <string name="retry">Thử lại</string>
@@ -88,7 +88,7 @@
     <string name="sync_overwrite_error">Không thể ghi đè bộ sưu tập hiện tại bằng tập tin đã tải xuống</string>
     <string name="sync_connection_error">Đã hết thời gian kết nối. Hoặc là kết nối mạng của bạn đang gặp vấn đề hoặc bạn có một tệp rất lớn trong thư mục đa phương tiện.</string>
     <string name="sync_write_access_error">Không thể lưu tệp đã tải xuống vào thẻ SD. Hoặc là thẻ được gắn với thuộc tính chỉ-đọc hoặc là không đủ dung lượng.</string>
-    <string name="sync_error_invalid_sync_server">The Custom Sync Server in Advanced Settings is invalid (%s). Please enter a valid server, or disable the setting.</string>
+    <string name="sync_error_invalid_sync_server">Máy chủ Đồng bộ hóa Tùy chỉnh trong Cài đặt Nâng cao không hợp lệ (%s). Vui lòng nhập một máy chủ hợp lệ hoặc tắt cài đặt.</string>
     <string name="sync_deletions_message">Đồng bộ phần đã xoá&#8230;</string>
     <string name="sync_small_objects_message">Đồng bộ các phần nhỏ&#8230;</string>
     <string name="sync_finish_message">Đang hoàn tất đồng bộ&#8230;</string>
@@ -96,7 +96,7 @@
     <string name="sync_writing_db">Đang lưu các thay đổi vào cơ sở dữ liệu&#8230;</string>
     <string name="sync_download_chunk">Đang tải xuống các thay đổi&#8230;</string>
     <string name="sync_upload_chunk">Đang tải lên các thay đổi&#8230;</string>
-    <string name="sync_up_down_size">Up: %1$d KB, down: %2$d KB</string>
+    <string name="sync_up_down_size">Tải lên: %1$d KB, Tải xuống : %2$d KB</string>
     <string name="sync_generic_error">Đã xảy ra lỗi. Hãy thử lại sau.</string>
     <string name="sync_check_upload_file">Đang kiểm tra tệp trước khi tải lên&#8230;</string>
     <string name="sync_check_download_file">Đang kiểm tra tệp đã tải về&#8230;</string>
@@ -107,11 +107,11 @@
     <string name="sync_media_downloaded_count">có %d tệp đa phương tiện phải tải về</string>
     <string name="sync_sanity_failed">Sau khi đồng bộ, bộ sưu tập ở trong tình trạng bất ổn. Để khắc phục vấn đề này, AnkiDroid sẽ thực hiện đồng bộ đầy đủ. Lựa chọn phía mà bạn muốn giữ.</string>
     <string name="sync_media_sanity_failed">Đã hoàn thành đồng bộ đa phương tiện, nhưng số lượng không đúng so với máy chủ. Kế tiếp sẽ là đồng bộ đầy đủ để sửa lỗi.</string>
-    <string name="sync_media_db_error">Media sync failed because current database is corrupt. A media check is recommended.</string>
+    <string name="sync_media_db_error">Đồng bộ hóa phương tiện không thành công vì cơ sở dữ liệu hiện tại bị hỏng. Hãy kiểm tra file đa phương tiện.</string>
     <string name="sync_media_error">Lỗi đồng bộ dữ liệu đa phương tiện</string>
     <string name="sync_media_error_check">Lỗi đồng bộ các tệp đa phương tiện. Đề nghị kiểm tra lại chúng.</string>
     <!-- Please run ‘Check database’ before syncing -->
-    <string name="sync_basic_check_failed">Please run ‘%s’ before syncing</string>
+    <string name="sync_basic_check_failed">Vui lòng chạy ‘%s’ trước khi đồng bộ hóa</string>
     <string name="sync_sanity_local">Trên thiết bị</string>
     <string name="sync_sanity_remote">Từ xa</string>
     <string name="force_full_sync_title">Thực hiện đồng bộ đầy đủ</string>
@@ -120,13 +120,13 @@
     <string name="full_sync_confirmation_upgrade">Do lỗi của phiên bản AnkiDroid đã cài đặt trước đó, đề nghị thực hiện đồng bộ hoàn toàn.</string>
     <string name="sync_error_407_proxy_required">Máy chủ proxy yêu cầu xác thực.</string>
     <string name="sync_error_409">Chỉ một máy trạm được phép truy cập AnkiWeb tại một thời điểm. Nếu đồng bộ trước thất bại, hãy thử lại trong vài phút.</string>
-    <string name="sync_error_413_collection_size">Your collection or a media file is too large to sync.</string>
-    <string name="sync_error_500_unknown">AnkiWeb encountered an error. Please try again in a few minutes, and if the problem persists, please file a bug report.</string>
+    <string name="sync_error_413_collection_size">Bộ sưu tập của bạn hoặc một tệp phương tiện quá lớn để đồng bộ hóa.</string>
+    <string name="sync_error_500_unknown">AnkiWeb đã gặp lỗi. Vui lòng thử lại sau vài phút và nếu sự cố vẫn tiếp diễn, vui lòng gửi báo cáo lỗi.</string>
     <string name="sync_error_501_upgrade_required">Xin nâng cấp lên phiên bản AnkiDroid mới nhất</string>
-    <string name="sync_error_502_maintenance">AnkiWeb hiện đang bảo trì. Hãy thử lại sau ít phút.</string>
-    <string name="sync_error_504_gateway_timeout">Lỗi 504 gateway timeout</string>
+    <string name="sync_error_502_maintenance">AnkiWeb đang được bảo trì. Vui lòng thử lại trong vài phút.</string>
+    <string name="sync_error_504_gateway_timeout">Đã nhận được lỗi hết thời gian chờ cổng 504.</string>
     <!-- Deck Picker Sync Icon -->
-    <string name="sync_menu_title_full_sync">Sync (full)</string>
-    <string name="sync_menu_title_no_account">Đồng bộ (đăng nhập)</string>
-    <string name="sync_error_unknown_host_readable">Could not connect to AnkiWeb. Is your internet working?\n\n%s</string>
+    <string name="sync_menu_title_full_sync">Đồng bộ hóa (đầy đủ)</string>
+    <string name="sync_menu_title_no_account">Đồng bộ hóa (đăng nhập)</string>
+    <string name="sync_error_unknown_host_readable">Không thể kết nối với AnkiWeb. Internet của bạn có hoạt động không? \n\n%s</string>
 </resources>

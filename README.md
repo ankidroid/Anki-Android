@@ -88,3 +88,4 @@ Join Us On
 License
 -------
 [GPL-3.0 License](https://github.com/ankidroid/Anki-Android/blob/master/COPYING)
+[AGPL-3.0 Licence](https://github.com/ankitects/anki/blob/master/LICENSE) for some part of the back-end

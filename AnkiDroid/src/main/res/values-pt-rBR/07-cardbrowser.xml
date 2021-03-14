@@ -76,7 +76,7 @@
         <item>Por data de modificação do card.</item>
         <item>Por tempo programado</item>
         <item>Por intervalo</item>
-        <item>Por facilidade</item>
+        <item>Por espaçamento</item>
         <item>Por revisões</item>
         <item>Por falhas</item>
     </string-array>
@@ -97,9 +97,9 @@
     <string name="card_info_first_review">Primeira Revisão</string>
     <string name="card_info_latest_review">Última Revisão</string>
     <string name="card_info_interval">Intervalo</string>
-    <string name="card_info_ease">Facilidade</string>
+    <string name="card_info_ease">Espaçamento</string>
     <string name="card_info_reviews" comment="Number of times a card was reviewed">Revisões</string>
-    <string name="card_info_lapses" comment="Label indicating the number of lapses of a card.">Erros</string>
+    <string name="card_info_lapses" comment="Label indicating the number of lapses of a card.">Falhas</string>
     <string name="card_info_average_time">Tempo Médio</string>
     <string name="card_info_total_time">Tempo Total</string>
     <string name="card_info_card_type">Tipo de Card</string>
@@ -115,5 +115,5 @@
     <string name="card_info_revlog_review">Revisar</string>
     <string name="card_info_revlog_relearn" comment="Label of a log entry of a card, indicating that a review was done with a note in relearning mode">Reaprender</string>
     <string name="card_info_revlog_filtered">Filtrado</string>
-    <string name="card_info_ease_not_applicable">N/D</string>
+    <string name="card_info_ease_not_applicable">N/A</string>
 </resources>

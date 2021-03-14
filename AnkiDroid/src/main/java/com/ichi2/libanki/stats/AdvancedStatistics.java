@@ -497,7 +497,7 @@ public class AdvancedStatistics {
             int revPerDay = Settings.getMaxReviewsPerDay();
             int initialFactor = Settings.getInitialFactor();
 
-            if (conf.getInt("dyn") == Consts.DECK_STD) {
+            if (conf.isStd()) {
                 revPerDay = conf.getJSONObject("rev").getInt("perDay");
                 newPerDay = conf.getJSONObject("new").getInt("perDay");
                 initialFactor = conf.getJSONObject("new").getInt("initialFactor");

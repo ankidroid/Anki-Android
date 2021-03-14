@@ -91,8 +91,8 @@
     <string name="gestures">Włącz obsługę gestów</string>
     <string name="gestures_summ">Przydziel gesty do akcji takich jak odpowiedzi lub edycja kart.</string>
     <string name="gestures_allow_links">Ignoruj gesty przy dotknięciu linków</string>
-    <string name="gestures_allow_links_summary">Touch gestures will not be processed if a link/hint is pressed.</string>
-    <string name="gestures_corner_touch">9-point touch</string>
+    <string name="gestures_allow_links_summary">Gesty dotykowe nie będą przetwarzane jeśli naciśnięto odnośnik/wskazówkę.</string>
+    <string name="gestures_corner_touch">Dotyk 9-punktowy</string>
     <string name="gestures_corner_touch_summary">Zezwalaj na gesty dotykowe w rogach ekranu</string>
     <string name="gestures_swipe_up">Przesuń w górę</string>
     <string name="gestures_swipe_down">Przesuń w dół</string>
@@ -103,15 +103,15 @@
     <string name="gestures_tap_left">Dotknij po lewej</string>
     <string name="gestures_tap_right">Dotknij po prawej</string>
     <string name="gestures_tap_bottom">Dotknij na dole</string>
-    <string name="gestures_corner_tap_top_left">Touch top left</string>
-    <string name="gestures_corner_tap_top_center">Touch top center</string>
-    <string name="gestures_corner_tap_top_right">Touch top right</string>
-    <string name="gestures_corner_tap_middle_left">Touch middle left</string>
-    <string name="gestures_corner_tap_middle_center">Touch middle center</string>
-    <string name="gestures_corner_tap_middle_right">Touch middle right</string>
-    <string name="gestures_corner_tap_bottom_left">Touch bottom left</string>
-    <string name="gestures_corner_tap_bottom_center">Touch bottom center</string>
-    <string name="gestures_corner_tap_bottom_right">Touch bottom right</string>
+    <string name="gestures_corner_tap_top_left">Dotknij lewej górnej części ekranu</string>
+    <string name="gestures_corner_tap_top_center">Dotknij górnej środkowej części ekranu</string>
+    <string name="gestures_corner_tap_top_right">Dotknij prawej górnej części ekranu</string>
+    <string name="gestures_corner_tap_middle_left">Dotknij lewej środkowej części ekranu</string>
+    <string name="gestures_corner_tap_middle_center">Dotknij środka ekranu</string>
+    <string name="gestures_corner_tap_middle_right">Dotknij prawej środkowej części ekranu</string>
+    <string name="gestures_corner_tap_bottom_left">Dotknij lewej dolnej części ekranu</string>
+    <string name="gestures_corner_tap_bottom_center">Dotknij dolnej środkowej części ekranu</string>
+    <string name="gestures_corner_tap_bottom_right">Dotknij prawej dolnej części ekranu</string>
     <string name="gestures_volume_up">Zwiększ głośność</string>
     <string name="gestures_volume_down">Zmniejsz głośność</string>
     <string name="more_scrolling_buttons">eCzytnik</string>
@@ -155,14 +155,14 @@
     <string name="safe_display_summ">Wyłącz wszystkie animacje i użyj bezpieczniejszej metody rysowania kart. Urządzenia E-ink mogą tego wymagać.</string>
     <string name="disable_extended_text_ui">Wyłącz tryb edycji pojedynczego pola</string>
     <!--See: multimedia_editor_popup_cloze. We can\'t use format strings as this is auto-generated-->
-    <string name="disable_extended_text_ui_summ">Allows \'Cloze Deletion\' context menu when in landscape mode.</string>
+    <string name="disable_extended_text_ui_summ">Zezwala na menu kontekstowe luk do wypełnienia w trybie poziomym.</string>
     <string name="vertical_centering">Wycentruj</string>
     <string name="vertical_centering_summ">Wycentruj w pionie zawartość kart</string>
     <string name="pref_backup_max">Maksymalna liczba kopii zapasowych</string>
     <string name="show_estimates">Pokaż czas przy przyciskach</string>
     <string name="show_estimates_summ">Pokazuj czas kolejnej powtórki nad przyciskami odpowiedzi</string>
     <string name="show_top_bar">Pokaż górny pasek</string>
-    <string name="show_top_bar_summ">Show card counts, flag and mark in top bar</string>
+    <string name="show_top_bar_summ">Wyświetl licznik kart, zakreślenie i oznaczenie w górnym pasku</string>
     <string name="show_progress">Pokaż pozostałe</string>
     <string name="show_progress_summ">Pokazuj licznik pozostałych kart</string>
     <string name="show_eta">Pokaż ETA</string>
@@ -172,6 +172,7 @@
     <string name="learn_cutoff">Limit nauki z wyprzedzeniem</string>
     <string name="time_limit">Ograniczenie czasu</string>
     <string name="time_limit_summ">XXX min</string>
+    <string name="new_timezone">Obsługa nowej strefy czasowej</string>
     <string name="day_offset">Początek kolejnego dnia</string>
     <string name="day_offset_summ">XXX godzin po północy</string>
     <string name="sched_ver">Eksperymentalny planista V2</string>
@@ -240,7 +241,7 @@
     <string name="deck_conf_rev_bury">Zakop powiązane powtórki</string>
     <string name="deck_conf_rev_bury_summ">Powiązane powtórki są zakopane do kolejnego dnia</string>
     <string name="deck_conf_use_general_timeout_settings">Użyj ustawień ogólnych</string>
-    <string name="deck_conf_use_general_timeout_settings_summ">Use general \'Automatic display answer\' settings instead of using the settings for this group.</string>
+    <string name="deck_conf_use_general_timeout_settings_summ">Użyj ustawień ogólnych \"Automatycznego wyświetlania odpowiedzi\" zamiast używać ustawień dla tej grupy.</string>
     <string name="deck_conf_easy_bonus">Bonus dla łatwych</string>
     <string name="deck_conf_hard_factor">Przerwa dla trudnych</string>
     <string name="deck_conf_ivl_fct">Modyfikator interwału</string>
@@ -257,7 +258,7 @@
     <string name="deck_conf_replayq">Powtórz pytanie</string>
     <string name="deck_conf_replayq_summ">Po pokazaniu odpowiedzi powtórz i audio pytania i odpowiedzi</string>
     <string name="deck_conf_manage">Zarządzanie grupą ustawień</string>
-    <string name="deck_conf_manage_summ">Add and change options groups</string>
+    <string name="deck_conf_manage_summ">Dodaj i zmień grupy opcji</string>
     <string name="deck_conf_current_group">Bieżąca grupa ustawień</string>
     <string name="deck_conf_rename" comment="Menu entry to rename a deck">Zmień nazwę</string>
     <string name="deck_conf_reset">Przywróć domyślne</string>
@@ -288,8 +289,8 @@
     <string name="analytics_dialog_title">Pomóż ulepszyć AnkiDroid!</string>
     <string name="analytics_title">Udostępnij użycie aplikacji</string>
     <string name="analytics_summ">Możesz ulepszyć AnkiDroid, pomagając zespołowi programistów zobaczyć jakie funkcje są najczęściej używane</string>
-    <string name="note_editor_replace_newlines">Replace newlines with HTML</string>
-    <string name="note_editor_replace_newlines_summ">In the Note Editor, convert any instances of &lt;br&gt; to newlines when editing a card.</string>
-    <string name="no_code_formatting">Simple typed answer formatting</string>
-    <string name="no_code_formatting_summ">Fixes ‘􏿾’ appearing in typed answer results</string>
+    <string name="note_editor_replace_newlines">Zastąp nowe wiersze przez HTML</string>
+    <string name="note_editor_replace_newlines_summ">W Edytorze Notatek zmień wszelkie przykłady &lt;br&gt; na nowy wiersz kiedy karta jest edytowana.</string>
+    <string name="no_code_formatting">Proste formatowanie wpisywanej odpowiedzi</string>
+    <string name="no_code_formatting_summ">Naprawia ‘􏿾’ pojawiające się we wpisywanych odpowiedziach</string>
 </resources>

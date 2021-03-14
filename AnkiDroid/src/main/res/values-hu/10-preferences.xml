@@ -173,6 +173,7 @@
     <string name="learn_cutoff">Korai tanulás korlátai</string>
     <string name="time_limit">Időkorlát érték</string>
     <string name="time_limit_summ">XXX perc</string>
+    <string name="new_timezone">New timezone handling</string>
     <string name="day_offset">Következő nap kezdete</string>
     <string name="day_offset_summ">XXX órával éjfél után</string>
     <string name="sched_ver">Kísérleti V2 ütemező</string>

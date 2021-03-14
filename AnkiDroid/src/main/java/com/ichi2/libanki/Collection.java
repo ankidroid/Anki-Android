@@ -23,7 +23,6 @@ import android.content.Context;
 import android.content.res.Resources;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabaseLockedException;
-import android.os.Build;
 import android.text.TextUtils;
 import android.util.Pair;
 
@@ -37,6 +36,7 @@ import com.ichi2.async.CollectionTask;
 import com.ichi2.libanki.backend.DroidBackend;
 import com.ichi2.async.ProgressSender;
 import com.ichi2.async.TaskManager;
+import com.ichi2.libanki.backend.exception.BackendNotSupportedException;
 import com.ichi2.libanki.exception.NoSuchDeckException;
 import com.ichi2.libanki.exception.UnknownDatabaseVersionException;
 import com.ichi2.libanki.hooks.ChessFilter;
@@ -246,6 +246,13 @@ public class Collection {
             mSched = new Sched(this);
         } else if (ver == 2) {
             mSched = new SchedV2(this);
+            if (!getServer() && isUsingRustBackend()) {
+                try {
+                    getConf().put("localOffset", getSched()._current_timezone_offset());
+                } catch (BackendNotSupportedException e) {
+                    throw e.alreadyUsingRustBackend();
+                }
+            }
         }
     }
 
@@ -945,7 +952,7 @@ public class Collection {
         card.setDid(did);
         // if invalid did, use default instead
         Deck deck = mDecks.get(card.getDid());
-        if (deck.getInt("dyn") == DECK_DYN) {
+        if (deck.isDyn()) {
             // must not be a filtered deck
             card.setDid(1);
         } else {
@@ -1572,7 +1579,8 @@ public class Collection {
 
         //we use a ! prefix to keep it at the top of the deck list
         String recoveredDeckName = "! " + mContext.getString(R.string.check_integrity_recovered_deck_name);
-        Long nextDeckId = getDecks().id(recoveredDeckName , true);
+        Long nextDeckId = getDecks().id_safe(recoveredDeckName);
+        // Still a risk of failure if recoveredDeckName is the name of a filtered deck
 
         if (nextDeckId == null) {
             throw new IllegalStateException("Unable to create deck");

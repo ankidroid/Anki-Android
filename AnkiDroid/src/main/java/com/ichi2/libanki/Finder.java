@@ -670,10 +670,10 @@ public class Finder {
             ids = dids(mCol.getDecks().selected());
         } else if (!val.contains("*")) {
             // single deck
-            ids = dids(mCol.getDecks().id(val, false));
+            ids = dids(mCol.getDecks().id_dont_create(val));
         } else {
             // wildcard
-            ids = dids(mCol.getDecks().id(val, false));
+            ids = dids(mCol.getDecks().id_dont_create(val));
             if (ids == null) {
                 ids = new ArrayList<>();
                 val = val.replace("*", ".*");

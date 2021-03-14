@@ -172,6 +172,7 @@
     <string name="learn_cutoff">提前学习的限制</string>
     <string name="time_limit">时间盒时间限制</string>
     <string name="time_limit_summ">XXX 分钟</string>
+    <string name="new_timezone">新时区处理</string>
     <string name="day_offset">下一天开始的时间</string>
     <string name="day_offset_summ">午夜过后的XXX小时</string>
     <string name="sched_ver">实验性 V2 调度器</string>

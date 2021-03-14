@@ -172,6 +172,7 @@
     <string name="learn_cutoff">حد التعلم المبكر</string>
     <string name="time_limit">مهلة مربع الوقت</string>
     <string name="time_limit_summ">XXX دقيقة</string>
+    <string name="new_timezone">طريقة المعالجة الجديدة للمناطق الزمنية</string>
     <string name="day_offset">بداية اليوم التالي</string>
     <string name="day_offset_summ">XXX ساعة بعد منتصف الليل</string>
     <string name="sched_ver">مجدول V2 التجريبي</string>

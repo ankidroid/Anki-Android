@@ -92,8 +92,8 @@
     <string name="gestures_summ">Bewegingen toewijzen aan acties zoals het beantwoorden en bewerken van kaarten.</string>
     <string name="gestures_allow_links">Negeer aanraakgebaren op links</string>
     <string name="gestures_allow_links_summary">Aanraakgebaren worden niet verwerkt als een link/hint wordt ingedrukt.</string>
-    <string name="gestures_corner_touch">9-point touch</string>
-    <string name="gestures_corner_touch_summary">Allow touch gestures in screen corners</string>
+    <string name="gestures_corner_touch">9-punts aanraakscherm</string>
+    <string name="gestures_corner_touch_summary">Aanraakgebaren in schermhoeken toestaan</string>
     <string name="gestures_swipe_up">Omhoog vegen</string>
     <string name="gestures_swipe_down">Omlaag vegen</string>
     <string name="gestures_swipe_left">Naar links vegen</string>
@@ -103,17 +103,17 @@
     <string name="gestures_tap_left">Druk links</string>
     <string name="gestures_tap_right">Druk rechts</string>
     <string name="gestures_tap_bottom">Druk onderaan</string>
-    <string name="gestures_corner_tap_top_left">Touch top left</string>
-    <string name="gestures_corner_tap_top_center">Touch top center</string>
-    <string name="gestures_corner_tap_top_right">Touch top right</string>
-    <string name="gestures_corner_tap_middle_left">Touch middle left</string>
-    <string name="gestures_corner_tap_middle_center">Touch middle center</string>
-    <string name="gestures_corner_tap_middle_right">Touch middle right</string>
-    <string name="gestures_corner_tap_bottom_left">Touch bottom left</string>
-    <string name="gestures_corner_tap_bottom_center">Touch bottom center</string>
-    <string name="gestures_corner_tap_bottom_right">Touch bottom right</string>
-    <string name="gestures_volume_up">Volume up</string>
-    <string name="gestures_volume_down">Volume down</string>
+    <string name="gestures_corner_tap_top_left">Druk linksboven</string>
+    <string name="gestures_corner_tap_top_center">Druk midden bovenaan</string>
+    <string name="gestures_corner_tap_top_right">Druk rechtsboven</string>
+    <string name="gestures_corner_tap_middle_left">Druk midden links</string>
+    <string name="gestures_corner_tap_middle_center">Druk midden rechts</string>
+    <string name="gestures_corner_tap_middle_right">Druk midden rechts</string>
+    <string name="gestures_corner_tap_bottom_left">Druk linksonder</string>
+    <string name="gestures_corner_tap_bottom_center">Druk midden onderaan</string>
+    <string name="gestures_corner_tap_bottom_right">Druk rechtsonder</string>
+    <string name="gestures_volume_up">Volume omhoog</string>
+    <string name="gestures_volume_down">Volume omlaag</string>
     <string name="more_scrolling_buttons">eReader</string>
     <string name="more_scrolling_buttons_summ">Gebruik ook kanji/katakana, emoji/kao-moji knoppen voor scrollen</string>
     <string name="card_browser_enable_external_context_menu">‘%s’ menu</string>
@@ -130,8 +130,8 @@
     <string name="sync_account_summ_logged_in">%s</string>
     <string name="automatic_sync_choice">Automatische synchronisatie</string>
     <string name="automatic_sync_choice_summ">Synchronizeer automatisch bij het starten en sluiten van de app indien de laatste synchronisatie meer dan 10 minuten geleden was.</string>
-    <string name="sync_status_badge">Display synchronization status</string>
-    <string name="sync_status_badge_summ">Change the sync icon when changes can be uploaded</string>
+    <string name="sync_status_badge">Synchronisatiestatus weergeven</string>
+    <string name="sync_status_badge_summ">Verander het synchronisatie-icoon wanneer wijzigingen kunnen worden geüpload</string>
     <string name="day_theme">Dag thema</string>
     <string name="night_theme">Nacht thema</string>
     <string name="default_font">Standaardlettertype</string>
@@ -172,6 +172,7 @@
     <string name="learn_cutoff">Max vooruit leren</string>
     <string name="time_limit">Stel een tijdslimiet in</string>
     <string name="time_limit_summ">XXX min</string>
+    <string name="new_timezone">New timezone handling</string>
     <string name="day_offset">Een dag begint</string>
     <string name="day_offset_summ">XXX uur na middernacht</string>
     <string name="sched_ver">Experimentele V2-planner</string>
@@ -198,7 +199,7 @@
     <!-- Advanced statistics settings -->
     <string name="advanced_statistics_title">Geavanceerde statistieken</string>
     <string name="enable_advanced_statistics_title">Geavanceerde statistieken inschakelen</string>
-    <string name="enable_advanced_statistics_summ">Laat prognose statistieken zien op basis van een berekening of simulatie van toekomstige herzieningen (ingeschakeld) of op basis van de reeds ingeplande toekomstige herzieningen (uitgeschakeld).</string>
+    <string name="enable_advanced_statistics_summ">Laat prognose statistieken zien op basis van een berekening of simulatie van toekomstige overhoringen (ingeschakeld) of op basis van de reeds ingeplande toekomstige overhoringen (uitgeschakeld).</string>
     <string name="advanced_forecast_stats_compute_n_days_title">Eerste n dagen berekenen, rest simuleren</string>
     <string name="advanced_forecast_stats_compute_precision_title">Nauwkeurigheid van de berekening</string>
     <string name="advanced_forecast_stats_mc_n_iterations_title">Aantal iteraties van de simulatie</string>
@@ -232,15 +233,15 @@
     <string name="deck_conf_days">XXX dag(en)</string>
     <string name="deck_conf_easy_ivl">Gemakkelijk interval</string>
     <string name="deck_conf_start_ease">Begin gemakkelijk</string>
-    <string name="deck_conf_max_rev">Maximale beoordelingen/dag</string>
+    <string name="deck_conf_max_rev">Maximale overhoringen/dag</string>
     <string name="deck_conf_new_bury">Blokkeer gerelateerde nieuwe kaarten</string>
     <string name="deck_conf_new_bury_summ">Gerelateerde nieuwe kaarten worden geblokkeerd tot de volgende dag</string>
-    <string name="deck_conf_rev_bury">Blokkeer gerelateerde overhooropdracht</string>
-    <string name="deck_conf_rev_bury_summ">Gerelateerde overhooropdrachten worden geblokkeerd tot de volgende dag</string>
+    <string name="deck_conf_rev_bury">Verberg gerelateerde overhoringen</string>
+    <string name="deck_conf_rev_bury_summ">Gerelateerde overhoringen worden verborgen tot de volgende dag</string>
     <string name="deck_conf_use_general_timeout_settings">Algemene instellingen gebruiken</string>
     <string name="deck_conf_use_general_timeout_settings_summ">Gebruik de algemene instellingen voor \'Automatisch antwoord weergeven\' in plaats van de instellingen voor deze groep.</string>
     <string name="deck_conf_easy_bonus">Bonus bij gemakkelijk</string>
-    <string name="deck_conf_hard_factor">Hard interval</string>
+    <string name="deck_conf_hard_factor">Moeilijk interval</string>
     <string name="deck_conf_ivl_fct">Intervalsfactor</string>
     <string name="deck_conf_max_ivl">Grootste interval</string>
     <string name="deck_conf_new_lps_ivl">Nieuw interval</string>
@@ -255,7 +256,7 @@
     <string name="deck_conf_replayq">Vraag opnieuw stellen</string>
     <string name="deck_conf_replayq_summ">Bij het antwoord ook het geluid van de vraag en het antwoord afspelen</string>
     <string name="deck_conf_manage">Groepenbeheer</string>
-    <string name="deck_conf_manage_summ">Add and change options groups</string>
+    <string name="deck_conf_manage_summ">Set aan instellingen toevoegen en wijzigen</string>
     <string name="deck_conf_current_group">Huidige groep</string>
     <string name="deck_conf_rename" comment="Menu entry to rename a deck">Naam wijzigen</string>
     <string name="deck_conf_reset">Standaardinstellingen herstellen</string>
@@ -284,8 +285,8 @@
     <string name="analytics_dialog_title">Help AnkiDroid te verbeteren!</string>
     <string name="analytics_title">Gebruik van functies delen</string>
     <string name="analytics_summ">Je kunt bijdragen aan AnkiDroid door het ontwikkelteam te laten zien welke functies mensen gebruiken</string>
-    <string name="note_editor_replace_newlines">Replace newlines with HTML</string>
-    <string name="note_editor_replace_newlines_summ">In the Note Editor, convert any instances of &lt;br&gt; to newlines when editing a card.</string>
-    <string name="no_code_formatting">Simple typed answer formatting</string>
-    <string name="no_code_formatting_summ">Fixes ‘􏿾’ appearing in typed answer results</string>
+    <string name="note_editor_replace_newlines">Nieuwe lijnen vervangen door HTML</string>
+    <string name="note_editor_replace_newlines_summ">Zet in de memobewerker alle instanties van &lt;br&gt; om in nieuwe lijnen bij het bewerken van een kaart.</string>
+    <string name="no_code_formatting">Eenvoudig getypte antwoordopmaak</string>
+    <string name="no_code_formatting_summ">Herstelt het verschijnen van \'􏿾\' in getypte antwoordresultaten</string>
 </resources>

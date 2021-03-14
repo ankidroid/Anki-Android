@@ -24,6 +24,7 @@ import com.afollestad.materialdialogs.MaterialDialog;
 import com.ichi2.anki.dialogs.DialogHandler;
 import com.ichi2.anki.dialogs.utils.FragmentTestActivity;
 import com.ichi2.anki.exception.ConfirmModSchemaException;
+import com.ichi2.anki.exception.FilteredAncestor;
 import com.ichi2.async.CollectionTask;
 import com.ichi2.async.TaskListener;
 import com.ichi2.async.TaskManager;
@@ -348,11 +349,19 @@ public class RobolectricTest {
     }
 
     protected long addDeck(String deckName) {
-        return getCol().getDecks().id(deckName, true);
+        try {
+            return getCol().getDecks().id(deckName);
+        } catch (FilteredAncestor filteredAncestor) {
+            throw new RuntimeException(filteredAncestor);
+        }
     }
 
     protected long addDynamicDeck(String name) {
-        return getCol().getDecks().newDyn(name);
+        try {
+            return getCol().getDecks().newDyn(name);
+        } catch (FilteredAncestor filteredAncestor) {
+            throw new RuntimeException(filteredAncestor);
+        }
     }
 
     protected void ensureCollectionLoadIsSynchronous() {

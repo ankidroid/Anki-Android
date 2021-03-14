@@ -50,7 +50,6 @@ import androidx.annotation.VisibleForTesting;
 import androidx.coordinatorlayout.widget.CoordinatorLayout;
 import androidx.core.content.ContextCompat;
 import androidx.appcompat.app.ActionBar;
-import androidx.webkit.internal.AssetHelper;
 import androidx.webkit.WebViewAssetLoader;
 
 import android.text.TextUtils;
@@ -122,6 +121,7 @@ import com.ichi2.themes.HtmlColors;
 import com.ichi2.themes.Themes;
 import com.ichi2.utils.AdaptionUtil;
 import com.ichi2.utils.AndroidUiUtils;
+import com.ichi2.utils.AssetHelper;
 import com.ichi2.utils.ClipboardUtil;
 import com.ichi2.utils.BooleanGetter;
 import com.ichi2.utils.CardGetter;
@@ -921,27 +921,24 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
         mViewerUrl = mBaseUrl + "__viewer__.html";
 
         mAssetLoader = new WebViewAssetLoader.Builder()
-            .addPathHandler("/", new WebViewAssetLoader.PathHandler() {
-                @Override
-                public WebResourceResponse handle(String path) {
-                    try {
-                        File file = new File(mediaDir, path);
-                        FileInputStream is = new FileInputStream(file);
+            .addPathHandler("/", path -> {
+                try {
+                    File file = new File(mediaDir, path);
+                    FileInputStream is = new FileInputStream(file);
 
-                        String mimeType = AssetHelper.guessMimeType(path);
+                    String mimeType = AssetHelper.guessMimeType(path);
 
-                        HashMap<String, String> headers = new HashMap<String, String>();
-                        headers.put("Access-Control-Allow-Origin", "*");
+                    HashMap<String, String> headers = new HashMap<>();
+                    headers.put("Access-Control-Allow-Origin", "*");
 
-                        WebResourceResponse response = new WebResourceResponse(mimeType, null, is);
-                        response.setResponseHeaders(headers);
-                        return response;
-                    } catch (Exception e) {
-                        Timber.e(e, "Error trying to open path in asset loader");
-                    }
-
-                    return null;
+                    WebResourceResponse response = new WebResourceResponse(mimeType, null, is);
+                    response.setResponseHeaders(headers);
+                    return response;
+                } catch (Exception e) {
+                    Timber.w(e, "Error trying to open path in asset loader");
                 }
+
+                return null;
             })
             .build();
 

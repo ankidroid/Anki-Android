@@ -110,7 +110,7 @@
     <!-- Message when recording fails -->
     <string name="multimedia_editor_audio_view_recording_failed">Falha na gravação</string>
     <string name="multimedia_editor_audio_view_playing_failed">Falha na reprodução</string>
-    <string name="multimedia_editor_audio_view_create_failed">Não foi possível criar a barra de ferramentas</string>
+    <string name="multimedia_editor_audio_view_create_failed">Não foi possível criar a barra de ações</string>
     <!-- Activity titles -->
     <string name="title_activity_edit_text" comment="Name of the window allowing to edit field. This text can not be seen in AnkiDroid directly.">Campo de edição</string>
     <string name="title_activity_translation" comment="Name of the window allowing to translate. This text can not be seen in AnkiDroid directly.">Tradução</string>

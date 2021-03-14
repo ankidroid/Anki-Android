@@ -271,7 +271,7 @@ public class FinderTest extends RobolectricTest {
         // should be able to limit to parent col, no children
         long id = col.getDb().queryLongScalar("select id from cards limit 1");
         col.getDb().execute(
-                "update cards set did = ? where id = ?", col.getDecks().id("Default::Child"), id);
+                "update cards set did = ? where id = ?", addDeck("Default::Child"), id);
         col.save();
         assertEquals(7, col.findCards("deck:default").size());
         assertEquals(1, col.findCards("deck:default::child").size());
@@ -341,7 +341,7 @@ public class FinderTest extends RobolectricTest {
     public void test_deckNameContainingWildcardCanBeSearched() {
         String val = "*Yr1::Med2::CAS4::F4: Renal::BRS (zanki)::HY";
         Collection col = getCol();
-        long currentDid = col.getDecks().id(val);
+        long currentDid = addDeck(val);
         col.getDecks().select(currentDid);
         Note note = col.newNote();
         note.setItem("Front", "foo");

@@ -8,7 +8,7 @@ import com.ichi2.anki.R;
 public class DeckRenameException extends Exception {
 
     public static final int ALREADY_EXISTS = 0;
-    public static final int FILTERED_NOSUBDEKCS = 1;
+    public static final int FILTERED_NOSUBDECKS = 1;
 
     private final int mErrorCode;
 
@@ -21,7 +21,7 @@ public class DeckRenameException extends Exception {
         switch (mErrorCode) {
             case ALREADY_EXISTS:
                 return res.getString(R.string.decks_rename_exists);
-            case FILTERED_NOSUBDEKCS:
+            case FILTERED_NOSUBDECKS:
                 return res.getString(R.string.decks_rename_filtered_nosubdecks);
             default:
                 return "";

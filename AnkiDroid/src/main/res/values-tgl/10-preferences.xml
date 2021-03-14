@@ -173,6 +173,7 @@
     <string name="learn_cutoff">Matuto nang higit na limitasyon</string>
     <string name="time_limit">Limitasyon ng oras ng Timebox</string>
     <string name="time_limit_summ">XXX min</string>
+    <string name="new_timezone">New timezone handling</string>
     <string name="day_offset">Simula ng susunod na araw</string>
     <string name="day_offset_summ">XXX oras nakalipas nang hatinggabi</string>
     <string name="sched_ver">Experimental V2 scheduler</string>

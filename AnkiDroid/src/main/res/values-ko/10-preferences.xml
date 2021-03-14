@@ -172,6 +172,7 @@
     <string name="learn_cutoff">미리 학습하기 시간 설정</string>
     <string name="time_limit">타임박스 시간 설정</string>
     <string name="time_limit_summ">XXX 분</string>
+    <string name="new_timezone">New timezone handling</string>
     <string name="day_offset">다음 날의 시작</string>
     <string name="day_offset_summ">자정으로부터 지난 XXX 시간</string>
     <string name="sched_ver">실험적 V2 스케줄러</string>

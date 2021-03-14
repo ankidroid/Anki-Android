@@ -88,7 +88,7 @@
     <string name="sync_overwrite_error">Je huidige collectie kan niet worden overschreven door het gedownloade bestand.</string>
     <string name="sync_connection_error">Verbinding time-out. Je internetverbinding ondervindt problemen of je hebt een erg groot bestand in je mediamap.</string>
     <string name="sync_write_access_error">Het gedownloade bestand kon niet worden opgeslagen op de sd-kaart. Ofwel de sd-kaart is als alleen-lezen aangesloten of er is onvoldoende ruimte.</string>
-    <string name="sync_error_invalid_sync_server">The Custom Sync Server in Advanced Settings is invalid (%s). Please enter a valid server, or disable the setting.</string>
+    <string name="sync_error_invalid_sync_server">De aangepaste synchronisatieserver in geavanceerde instellingen is ongeldig (%s). Voer een geldige server in, of schakel de instelling uit.</string>
     <string name="sync_deletions_message">Verwijderde objecten synchroniseren...</string>
     <string name="sync_small_objects_message">Kleine objecten synchroniseren...</string>
     <string name="sync_finish_message">Synchronisatie afsluiten...</string>
@@ -111,12 +111,12 @@
     <string name="sync_media_error">Fout tijdens het synchroniseren van mediagegevens.</string>
     <string name="sync_media_error_check">Fout tijdens het synchroniseren van media. Een controle van de media wordt aanbevolen.</string>
     <!-- Please run ‘Check database’ before syncing -->
-    <string name="sync_basic_check_failed">Please run ‘%s’ before syncing</string>
+    <string name="sync_basic_check_failed">Gelieve \'%s\' uit te voeren voor het synchroniseren</string>
     <string name="sync_sanity_local">Lokaal</string>
     <string name="sync_sanity_remote">Server</string>
     <string name="force_full_sync_title">Forceer complete synchronisatie</string>
     <string name="force_full_sync_summary">Bij volgende synchronisatie, wijzigingen forceren in één richting</string>
-    <string name="full_sync_confirmation">De gevraagde wijziging vergt een volledige upload van de database wanneer u de volgende keer uw collectie synchroniseert. Indien u herhalingen of wijzigingen heeft op een ander apparaat dat nog niet is gesynchroniseerd, dan zullen zij verloren gaan. Wilt u verder gaan?</string>
+    <string name="full_sync_confirmation">De gevraagde wijziging vergt een volledige upload van de database wanneer u de volgende keer uw collectie synchroniseert. Indien u overhoringen of wijzigingen heeft op een ander apparaat dat nog niet is gesynchroniseerd, dan zullen zij verloren gaan. Wilt u verder gaan?</string>
     <string name="full_sync_confirmation_upgrade">Vanwege een fout in een vorige versie van AnkiDroid, is het aan te raden om een volledige synchronisatie uit te voeren.</string>
     <string name="sync_error_407_proxy_required">Proxyverificatie vereist.</string>
     <string name="sync_error_409">Slechts één client kan AnkiWeb tegelijk gebruiken. Als een vorige synchronisatie mislukt is, probeer het dan over een paar minuten opnieuw.</string>
@@ -126,7 +126,7 @@
     <string name="sync_error_502_maintenance">AnkiWeb is momenteel in onderhoud. Probeer opnieuw binnen enkele minuten.</string>
     <string name="sync_error_504_gateway_timeout">504 gateway timeout foutmelding ontvangen.</string>
     <!-- Deck Picker Sync Icon -->
-    <string name="sync_menu_title_full_sync">Sync (full)</string>
-    <string name="sync_menu_title_no_account">Sync (log in)</string>
-    <string name="sync_error_unknown_host_readable">Could not connect to AnkiWeb. Is your internet working?\n\n%s</string>
+    <string name="sync_menu_title_full_sync">Synchronisatie (volledig)</string>
+    <string name="sync_menu_title_no_account">Synchroniseren (inloggen)</string>
+    <string name="sync_error_unknown_host_readable">Kon geen verbinding maken met AnkiWeb. Werkt uw internetverbinding?\n\n%s</string>
 </resources>

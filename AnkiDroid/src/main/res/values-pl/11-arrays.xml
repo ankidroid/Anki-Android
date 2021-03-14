@@ -111,7 +111,7 @@
     <string name="gesture_page_up">Przewiń w górę</string>
     <string name="gesture_page_down">Przewiń w dół</string>
     <string name="gesture_abort_sync">Przerwij naukę i synchronizuj</string>
-    <string name="gesture_toggle_whiteboard">Toggle Whiteboard</string>
+    <string name="gesture_toggle_whiteboard">Przełącz Tablicę</string>
     <string name="record_voice">Nagraj głos</string>
     <string name="replay_voice">Odtwórz głos</string>
 </resources>

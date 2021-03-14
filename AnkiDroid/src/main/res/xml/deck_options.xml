@@ -75,8 +75,7 @@
                 android:key="newOrder"
                 android:summary=""
                 android:title="@string/deck_conf_order" />
-
-            <com.ichi2.preferences.NumberRangePreference
+            <com.ichi2.preferences.IncrementerNumberRangePreference
                 android:key="newPerDay"
                 android:title="@string/deck_conf_new_cards_day"
                 app:max="9999"

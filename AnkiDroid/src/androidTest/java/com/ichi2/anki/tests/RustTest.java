@@ -33,9 +33,11 @@ import static org.hamcrest.Matchers.is;
 
 public class RustTest extends InstrumentedTest {
 
-    /** Ensure that the database can't be locked */
+    /** Ensure that the database isn't be locked
+     * This happened before the database code was converted to use the Rust backend.
+      */
     @Rule
-    public Timeout timeout = new Timeout(3, TimeUnit.SECONDS);
+    public Timeout timeout = new Timeout(30, TimeUnit.SECONDS);
 
     @Test
     public void collectionIsVersion11AfterOpen() throws BackendException, IOException {

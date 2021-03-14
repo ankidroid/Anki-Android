@@ -172,6 +172,7 @@
     <string name="learn_cutoff">Gräns för att lära i förväg</string>
     <string name="time_limit">Tidsgräns</string>
     <string name="time_limit_summ">XXX min</string>
+    <string name="new_timezone">New timezone handling</string>
     <string name="day_offset">Starttid för nästa dag</string>
     <string name="day_offset_summ">XXX timmar efter midnatt</string>
     <string name="sched_ver">Experimentell V2 schemaläggare</string>

@@ -173,6 +173,7 @@
     <string name="learn_cutoff">Вучыць наперад</string>
     <string name="time_limit">Абмежаванне навучальнага блока</string>
     <string name="time_limit_summ">XXX хв.</string>
+    <string name="new_timezone">New timezone handling</string>
     <string name="day_offset">Пачатак наступнага дня</string>
     <string name="day_offset_summ">XXX гадзін пасля поўначы</string>
     <string name="sched_ver">Эксперыментальны планіроўшчык другой версіі</string>

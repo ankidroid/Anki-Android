@@ -164,7 +164,7 @@
     <string name="custom_study_deck_name">Дополнительная учебная сессия</string>
     <string name="custom_study_deck_exists">Сначала переименуйте существующую дополнительную колоду</string>
     <string name="empty_deck">Эта колода пуста</string>
-    <string name="empty_deck_add_note">Add card</string>
+    <string name="empty_deck_add_note">Добавить карточку</string>
     <string name="invalid_deck_name">Недопустимое название колоды</string>
     <string name="studyoptions_empty">Эта колода пуста. Нажмите кнопку +, чтобы добавить что-нибудь.</string>
     <string name="studyoptions_limit_reached">На сегодня всё</string>
@@ -214,12 +214,12 @@
     <!-- Context Menu -->
     <string name="card_browser_context_menu" comment="The value which appears in the system context menu. Note the casing difference">Список карточек</string>
     <string name="context_menu_anki_card_label">Карточка Anki</string>
-    <string name="has_a_problem" comment="First field is either front template or back template. Second field is the error message.">%1$s has a problem:<br/>%2$s</string>
-    <string name="more_information">More information</string>
-    <string name="no_field">Found \'{{%1$s}}\', but there is no field called \'%1$s\'.</string>
-    <string name="closed_tag_not_open">Found \'{{/%1$s}}\', but missing \'{{#%1$s}}\' or \'{{^%1$s}}\'.</string>
-    <string name="missing_closing_bracket">Missing \'}}\' in \'%s\'.</string>
-    <string name="open_tag_not_closed">Missing \'{{%s}}\'.</string>
-    <string name="wrong_tag_closed">Found \'{{/%1$s}}\', but expected \'{{/%2$s}}\'</string>
-    <string name="filter_error">Error in filter %s</string>
+    <string name="has_a_problem" comment="First field is either front template or back template. Second field is the error message.">%1$s имеет проблему:<br/>%2$s</string>
+    <string name="more_information">Подробнее</string>
+    <string name="no_field">Найдена \'{{%1$s}}\', но нет поля с названием \'%1$s\'.</string>
+    <string name="closed_tag_not_open">Найдено \'{{/%1$s}}\', но отсутствует \'{{#%1$s}}\' или \'{{{^%1$s}}\'.</string>
+    <string name="missing_closing_bracket">Отсутствуют «}}» в «%s».</string>
+    <string name="open_tag_not_closed">Отсутствует \'{{%s}}\'.</string>
+    <string name="wrong_tag_closed">Найдено \'{{/%1$s}}\', но ожидалось \'{{/%2$s}}\'</string>
+    <string name="filter_error">Ошибка в фильтре %s</string>
 </resources>

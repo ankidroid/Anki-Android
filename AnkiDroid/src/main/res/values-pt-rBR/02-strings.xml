@@ -61,9 +61,9 @@
     <string name="enable_whiteboard">Habilitar quadro</string>
     <string name="disable_whiteboard">Desativar quadro</string>
     <string name="show_whiteboard">Mostrar quadro</string>
-    <string name="hide_whiteboard">Esconder quadro</string>
+    <string name="hide_whiteboard">Ocultar quadro</string>
     <string name="clear_whiteboard">Limpar quadro</string>
-    <string name="replay_audio">Tocar audio novamente</string>
+    <string name="replay_audio">Repetir áudio</string>
     <string name="leech_suspend_notification">Cartão marcado como sanguessuga e suspenso</string>
     <string name="leech_notification">Cartão marcado como sanguessuga</string>
     <string name="corrupt_font">Arquivo de fonte %s danificado</string>
@@ -87,10 +87,10 @@
         <item>Nota</item>
         <item>Questão</item>
         <item>Tags</item>
-        <item>Erros</item>
+        <item>Falhas</item>
         <item>Revisões</item>
         <item>Intervalo</item>
-        <item>Ease</item>
+        <item>Espaçamento</item>
         <item>Due</item>
         <item>Card Modificado</item>
         <item>Created</item>
@@ -206,7 +206,7 @@
     <string name="steps_error">Número de passos deve ser maior do que 0</string>
     <string name="steps_min_error">Pelo menos um passo é necessário</string>
     <string name="sched_end">(fim)</string>
-    <string name="sched_unbury_action">Para vê-los agora, toque em \"Revelar\" no menu.</string>
+    <string name="sched_unbury_action">Para vê-los agora, toque em \"Desenterrar\" no menu.</string>
     <string name="sched_has_buried">Alguns cards relacionados ou Ocultados foram adiados.</string>
     <string name="tag_editor_add_feedback">Toque \"%2$s\" para confirmar a adição de \"%1$s\"</string>
     <string name="tag_editor_add_feedback_existing">Tag existente \"%1$s\" selecionada</string>
@@ -320,7 +320,7 @@
     <string name="ankidroid_init_failed_webview">AnkiDroid depende do System WebView que não está disponível. Isso pode acontecer se o sistema está instalando atualizações. Por favor, tente novamente em alguns minutos.\n\n%s</string>
     <!-- A Menu item to change the Font Size (currently in the Note Editor) -->
     <string name="menu_font_size">Tamanho da Fonte</string>
-    <string name="menu_show_toolbar" comment="Checkable item stating whether the note editor toolbar should be shown">Mostrar Barra de Ferramentas</string>
+    <string name="menu_show_toolbar" comment="Checkable item stating whether the note editor toolbar should be shown">Mostrar Barra de Funções</string>
     <string name="format_insert_bold">Formatar em Negrito</string>
     <string name="format_insert_italic">Formatar em Itálico</string>
     <string name="format_insert_underline">Formatar como Sublinhado</string>
@@ -331,9 +331,9 @@
     <string name="insert_cloze">Ocultar</string>
     <string name="before_text">HTML antes da seleção</string>
     <string name="after_text">HTML depois da seleção</string>
-    <string name="add_toolbar_item">Criar Item na Barra de Ferramentas</string>
+    <string name="add_toolbar_item">Criar Item na Barra de Funções</string>
     <string name="toolbar_item_explain_remove">Digite o código HTML a ser inserido antes e após o texto selecionado. Mantenha o item pressionado para remove-lo</string>
-    <string name="remove_toolbar_item">Remover item do menu?</string>
+    <string name="remove_toolbar_item">Remover Item da Barra de Funções?</string>
     <string name="note_editor_paste_too_large">A imagem é muito grande para colar, por favor insira manualmente</string>
     <string name="ankidroid_cannot_open_after_backup_try_again" comment="After an Android backup is restored, AnkiDroid opens and shows this message.         Opening AnkiDroid again will work correctly">        Backup do Android em andamento. Por favor, tente novamente</string>
     <string name="create_shortcut_error_vivo" comment="iManager is an app on Vivo phones">Por favor use o iManager para que AnkiDroid possa adicionar atalhos</string>

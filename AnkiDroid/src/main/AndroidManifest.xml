@@ -30,6 +30,7 @@
     <!-- Suggested if we add a TV Launcher icon. We do not use leanback currently -->
     <uses-feature android:name="android.software.leanback" android:required="false" />
     <uses-feature android:name="android.hardware.touchscreen" android:required="false" />
+    <uses-feature android:name="android.hardware.microphone" android:required="false" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.VIBRATE" />
     <uses-permission android:name="android.permission.INTERNET" />
@@ -332,6 +333,55 @@
             android:exported="false"
             android:configChanges="locale"
             />
+        <activity
+            android:name=".multimediacard.activity.MultimediaEditFieldActivity"
+            android:label="@string/title_activity_edit_text"
+            android:exported="false"
+            android:configChanges="keyboardHidden|orientation|locale|screenSize"
+            >
+        </activity>
+        <activity
+            android:name="com.yalantis.ucrop.UCropActivity"
+            android:exported="false"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar"
+            android:configChanges="keyboardHidden|orientation|locale|screenSize"/>
+        <activity
+            android:name="com.ichi2.anki.multimediacard.activity.TranslationActivity"
+            android:label="@string/title_activity_translation"
+            android:exported="false"
+            android:configChanges="keyboardHidden|orientation|locale|screenSize"
+            >
+        </activity>
+        <activity
+            android:name="com.ichi2.anki.multimediacard.activity.LoadPronounciationActivity"
+            android:label="@string/multimedia_editor_text_field_editing_say"
+            android:exported="false"
+            android:configChanges="keyboardHidden|orientation|locale|screenSize"
+            >
+        </activity>
+        <activity
+            android:name="com.ichi2.anki.CardTemplateEditor"
+            android:label="@string/title_activity_template_editor"
+            android:exported="false"
+            android:configChanges="keyboardHidden|orientation|locale|screenSize"
+            android:windowSoftInputMode="stateAlwaysHidden|adjustPan"
+            >
+        </activity>
+        <activity
+            android:name=".CardTemplateBrowserAppearanceEditor"
+            android:label="@string/card_template_browser_appearance_title"
+            android:exported="false"
+            android:configChanges="keyboardHidden|orientation|locale|screenSize"
+            />
+        <activity
+            android:name=".CardInfo"
+            android:label="@string/card_info_title"
+            android:exported="false"
+            android:configChanges="keyboardHidden|orientation|locale|screenSize"
+            />
+
+        <!-- Service to perform web API queries -->
+        <service android:name="com.ichi2.widget.AnkiDroidWidgetSmall$UpdateService" />
 
         <!-- small widget -->
         <receiver
@@ -361,9 +411,6 @@
                 android:resource="@xml/widget_provider_add_note"
                 />
         </receiver>
-
-        <!-- Service to perform web API queries -->
-        <service android:name="com.ichi2.widget.AnkiDroidWidgetSmall$UpdateService" />
 
         <receiver
             android:name="com.ichi2.anki.receiver.SdCardReceiver"
@@ -401,47 +448,6 @@
             </intent-filter>
         </receiver>
 
-        <activity
-            android:name=".multimediacard.activity.MultimediaEditFieldActivity"
-            android:label="@string/title_activity_edit_text"
-            android:exported="false"
-            android:configChanges="keyboardHidden|orientation|locale|screenSize"
-            >
-        </activity>
-        <activity
-            android:name="com.ichi2.anki.multimediacard.activity.TranslationActivity"
-            android:label="@string/title_activity_translation"
-            android:exported="false"
-            android:configChanges="keyboardHidden|orientation|locale|screenSize"
-            >
-        </activity>
-        <activity
-            android:name="com.ichi2.anki.multimediacard.activity.LoadPronounciationActivity"
-            android:label="@string/multimedia_editor_text_field_editing_say"
-            android:exported="false"
-            android:configChanges="keyboardHidden|orientation|locale|screenSize"
-            >
-        </activity>
-        <activity
-            android:name="com.ichi2.anki.CardTemplateEditor"
-            android:label="@string/title_activity_template_editor"
-            android:exported="false"
-            android:configChanges="keyboardHidden|orientation|locale|screenSize"
-            android:windowSoftInputMode="stateAlwaysHidden|adjustPan"
-            >
-        </activity>
-        <activity
-            android:name=".CardTemplateBrowserAppearanceEditor"
-            android:label="@string/card_template_browser_appearance_title"
-            android:exported="false"
-            android:configChanges="keyboardHidden|orientation|locale|screenSize"
-            />
-        <activity
-            android:name=".CardInfo"
-            android:label="@string/card_info_title"
-            android:exported="false"
-            android:configChanges="keyboardHidden|orientation|locale|screenSize"
-            />
         <!-- stuff for Samsung Multi-Window -->
         <uses-library
             android:name="com.sec.android.app.multiwindow"

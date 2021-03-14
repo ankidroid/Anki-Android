@@ -40,28 +40,28 @@
 <resources>
     <!-- CardBrowser -->
     <plurals name="card_browser_subtitle">
-        <item quantity="other">%d cards shown</item>
+        <item quantity="other">%d thẻ hiển thị</item>
     </plurals>
     <string name="card_browser_all_decks">Tất cả chủ đề (Tập thẻ)</string>
-    <string name="card_browser_delete_card">Delete notes</string>
-    <string name="card_browser_suspend_card">Suspend cards</string>
-    <string name="card_browser_change_deck">Change deck</string>
-    <string name="card_browser_unsuspend_card">Unsuspend cards</string>
-    <string name="card_browser_mark_card">Mark notes</string>
-    <string name="card_browser_unmark_card">Unmark notes</string>
+    <string name="card_browser_delete_card">Xóa ghi chú</string>
+    <string name="card_browser_suspend_card">Tạm dừng thẻ</string>
+    <string name="card_browser_change_deck">Thay đổi bộ thẻ</string>
+    <string name="card_browser_unsuspend_card">Thẻ chưa sử dụng</string>
+    <string name="card_browser_mark_card">Đánh dấu ghi chú</string>
+    <string name="card_browser_unmark_card">Bỏ đánh dấu ghi chú</string>
     <string name="delete_card_title">Xoá ghi chú?</string>
-    <string name="changed_deck_message">Moved to %s</string>
+    <string name="changed_deck_message">Đã chuyển sang %s</string>
     <string name="card_browser_show_marked">Bộ lọc được đánh dấu</string>
     <string name="card_browser_show_suspended">Bộ lọc bị tạm dừng</string>
     <string name="card_browser_search_by_tag">Lọc bởi từ khóa</string>
-    <string name="card_browser_search_by_flag">Filter by flag</string>
-    <string name="card_browser_list_my_searches">My searches</string>
-    <string name="card_browser_list_my_searches_save">Save search</string>
-    <string name="card_browser_list_my_searches_title">Choose a saved search</string>
-    <string name="card_browser_list_my_searches_new_name">Name for the current search</string>
-    <string name="card_browser_list_my_searches_new_search_error_empty_name">You can’t save a search without a name</string>
-    <string name="card_browser_list_my_searches_new_search_error_dup">Name exists</string>
-    <string name="card_browser_list_my_searches_remove_content">Delete “%1$s”?</string>
+    <string name="card_browser_search_by_flag">Lọc theo cờ</string>
+    <string name="card_browser_list_my_searches">Tìm kiếm của tôi</string>
+    <string name="card_browser_list_my_searches_save">Lưu tìm kiếm</string>
+    <string name="card_browser_list_my_searches_title">Chọn một tìm kiếm đã lưu</string>
+    <string name="card_browser_list_my_searches_new_name">Đặt tên cho tìm kiếm hiện tại</string>
+    <string name="card_browser_list_my_searches_new_search_error_empty_name">Bạn không thể lưu tìm kiếm mà không có tên</string>
+    <string name="card_browser_list_my_searches_new_search_error_dup">Tên tồn tại</string>
+    <string name="card_browser_list_my_searches_remove_content">Xóa “%1$s”?</string>
     <string name="card_browser_change_display_order">Thay đổi thứ tự hiển thị</string>
     <string name="card_browser_change_display_order_title">Chọn thứ tự hiển thị</string>
     <string name="card_browser_change_display_order_reverse">Chọn một loại hai lần để  xem mặt ngược lại</string>
@@ -69,49 +69,49 @@
     <string name="card_details_tags">Các từ khóa</string>
     <string-array name="card_browser_order_labels">
         <item>Không phân loại  (nhanh hơn)</item>
-        <item>By sort field</item>
+        <item>Theo trường sắp xếp</item>
         <item>Bằng thời gian tạo ra</item>
-        <item>By note modification time</item>
-        <item>By card modification time</item>
+        <item>Theo thời gian sửa đổi ghi chú</item>
+        <item>Theo thời gian sửa đổi thẻ</item>
         <item>Bởi thời gian</item>
         <item>Bởi khoảng thời gian</item>
         <item>Bởi dễ dàng</item>
         <item>Bởi ôn tập</item>
         <item>Bởi nhầm lẫn/sai sót</item>
     </string-array>
-    <string name="card_browser_select_all">Select all</string>
-    <string name="card_browser_select_none">Select none</string>
-    <string name="card_browser_interval_new_card" comment="Message indicating that a card is currently new, and so has no interval/ease.">(new)</string>
-    <string name="card_browser_due_filtered_card">(filtered)</string>
-    <string name="card_browser_interval_learning_card">(learning)</string>
-    <string name="card_browser_no_cards_in_deck">No cards found in deck ‘%s’</string>
-    <string name="card_browser_search_all_decks">Search all decks</string>
-    <string name="card_browser_unknown_deck_name">Unknown</string>
+    <string name="card_browser_select_all">Chọn tất cả</string>
+    <string name="card_browser_select_none">Không chọn</string>
+    <string name="card_browser_interval_new_card" comment="Message indicating that a card is currently new, and so has no interval/ease.">(Mới)</string>
+    <string name="card_browser_due_filtered_card">(đã lọc)</string>
+    <string name="card_browser_interval_learning_card">(đang học)</string>
+    <string name="card_browser_no_cards_in_deck">Không tìm thấy thẻ nào trong bộ thẻ ‘%s’</string>
+    <string name="card_browser_search_all_decks">Tìm kiếm tất cả các bộ thẻ</string>
+    <string name="card_browser_unknown_deck_name">không xác định</string>
     <plurals name="card_browser_cards_deleted">
-        <item quantity="other">%d cards deleted</item>
+        <item quantity="other">%d thẻ đã bị xóa</item>
     </plurals>
     <!-- Card Info subscreen -->
-    <string name="card_info_added" comment="Label of the information showing at which date a card was added.">Added</string>
-    <string name="card_info_first_review">First Review</string>
-    <string name="card_info_latest_review">Latest Review</string>
-    <string name="card_info_interval">Interval</string>
-    <string name="card_info_ease">Ease</string>
-    <string name="card_info_reviews" comment="Number of times a card was reviewed">Reviews</string>
-    <string name="card_info_lapses" comment="Label indicating the number of lapses of a card.">Lapses</string>
-    <string name="card_info_average_time">Average Time</string>
-    <string name="card_info_total_time">Total Time</string>
-    <string name="card_info_card_type">Card Type</string>
-    <string name="card_info_note_type">Note Type</string>
-    <string name="card_info_deck_name">Deck Name</string>
-    <string name="card_info_card_id">Card Id</string>
-    <string name="card_info_note_id">Note Id</string>
-    <string name="card_info_revlog_time">Time</string>
-    <string name="card_info_revlog_date">Date</string>
-    <string name="card_info_revlog_rating">Rating</string>
-    <string name="card_info_revlog_type">Type</string>
-    <string name="card_info_revlog_learn" comment="Label indicating that a review in the log of a card occured while the card was in learning mode">Learn</string>
-    <string name="card_info_revlog_review">Review</string>
-    <string name="card_info_revlog_relearn" comment="Label of a log entry of a card, indicating that a review was done with a note in relearning mode">Relearn</string>
-    <string name="card_info_revlog_filtered">Filtered</string>
-    <string name="card_info_ease_not_applicable">N/A</string>
+    <string name="card_info_added" comment="Label of the information showing at which date a card was added.">Đã thêm</string>
+    <string name="card_info_first_review">Ôn tập đầu tiên</string>
+    <string name="card_info_latest_review">Ôn tập cuối cùng</string>
+    <string name="card_info_interval">Khoảng thời gian</string>
+    <string name="card_info_ease">Dễ</string>
+    <string name="card_info_reviews" comment="Number of times a card was reviewed">Đánh giá</string>
+    <string name="card_info_lapses" comment="Label indicating the number of lapses of a card.">Vòng lặp</string>
+    <string name="card_info_average_time">Thời gian trung bình</string>
+    <string name="card_info_total_time">Tổng thời gian</string>
+    <string name="card_info_card_type">Loại thẻ</string>
+    <string name="card_info_note_type">Loại ghi chú</string>
+    <string name="card_info_deck_name">Tên bộ thẻ</string>
+    <string name="card_info_card_id">Thẻ định danh</string>
+    <string name="card_info_note_id">Ghi chú định danh</string>
+    <string name="card_info_revlog_time">Thời gian</string>
+    <string name="card_info_revlog_date">Ngày</string>
+    <string name="card_info_revlog_rating">Xếp hạng</string>
+    <string name="card_info_revlog_type">Kiểu</string>
+    <string name="card_info_revlog_learn" comment="Label indicating that a review in the log of a card occured while the card was in learning mode">Thẻ cần học</string>
+    <string name="card_info_revlog_review">Ôn tập</string>
+    <string name="card_info_revlog_relearn" comment="Label of a log entry of a card, indicating that a review was done with a note in relearning mode">Học lại</string>
+    <string name="card_info_revlog_filtered">Đã lọc</string>
+    <string name="card_info_ease_not_applicable">Không có</string>
 </resources>

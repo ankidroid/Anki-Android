@@ -50,4 +50,12 @@ public class DeckConfig extends JSONObject{
         }
         return ret;
     }
+
+    public boolean isDyn() {
+        return getInt("dyn") == Consts.DECK_DYN;
+    }
+
+    public boolean isStd() {
+        return getInt("dyn") == Consts.DECK_STD;
+    }
 }

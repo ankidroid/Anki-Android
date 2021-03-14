@@ -173,6 +173,7 @@
     <string name="learn_cutoff">Batas belajar duluan</string>
     <string name="time_limit">Batas waktu Timebox</string>
     <string name="time_limit_summ">XXX mnt</string>
+    <string name="new_timezone">New timezone handling</string>
     <string name="day_offset">Mulai besok</string>
     <string name="day_offset_summ">XXX jam lewat tengah malam</string>
     <string name="sched_ver">Penjadwalan eksperimental V2</string>

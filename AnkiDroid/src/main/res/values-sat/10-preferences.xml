@@ -110,8 +110,8 @@
     <string name="gestures_corner_tap_middle_center">ᱛᱟᱞᱟ ᱟᱨ ᱛᱟᱞᱟ ᱨᱮ ᱚᱛᱟᱭ ᱢᱮ</string>
     <string name="gestures_corner_tap_middle_right">ᱛᱟᱞᱟ ᱡᱚᱡᱚᱢ ᱯᱟᱦᱴᱟ ᱨᱮ ᱚᱛᱟᱭ ᱢᱮ</string>
     <string name="gestures_corner_tap_bottom_left">ᱞᱟᱛᱟᱨ ᱞᱮᱸᱜᱟ ᱯᱟᱦᱴᱟ ᱨᱮ ᱚᱛᱟᱭ ᱢᱮ</string>
-    <string name="gestures_corner_tap_bottom_center">Touch bottom center</string>
-    <string name="gestures_corner_tap_bottom_right">Touch bottom right</string>
+    <string name="gestures_corner_tap_bottom_center">ᱞᱟᱛᱟᱨ ᱵᱩᱛᱟᱹᱢ ᱚᱛᱟᱭ ᱢᱮ</string>
+    <string name="gestures_corner_tap_bottom_right">ᱞᱟᱛᱟᱨ ᱡᱟᱡᱚᱢ ᱛᱤ ᱯᱟᱦᱴᱟ ᱚᱛᱟᱭ ᱢᱮ</string>
     <string name="gestures_volume_up">ᱥᱟᱲᱮ ᱰᱷᱮᱨ</string>
     <string name="gestures_volume_down">ᱥᱟᱰᱮ ᱞᱟᱛᱟᱨ</string>
     <string name="more_scrolling_buttons">ᱤᱼᱨᱤᱰᱚᱨ</string>
@@ -172,6 +172,7 @@
     <string name="learn_cutoff">ᱢᱟᱲᱟᱝ ᱥᱮᱫ ᱯᱟᱲᱦᱟᱣ ᱪᱮᱫᱚᱜ</string>
     <string name="time_limit">ᱥᱚᱢᱚᱭ ᱵᱟᱠᱥᱚ ᱚᱠᱛᱚ ᱥᱤᱢᱟᱹ</string>
     <string name="time_limit_summ">XXX ᱴᱤᱯᱤᱡ</string>
+    <string name="new_timezone">New timezone handling</string>
     <string name="day_offset">ᱤᱱᱟᱹ ᱛᱟᱭᱚᱢ ᱫᱤᱱ ᱮᱛᱦᱚᱵ</string>
     <string name="day_offset_summ">XXX ᱴᱟᱲᱟᱝ ᱢᱟᱲᱟᱝ ᱟᱹᱭᱩᱵ</string>
     <string name="sched_ver">ᱮᱠᱥᱯᱮᱨᱭᱢᱮᱱᱴᱟᱞ V2 ᱥᱮᱰᱭᱩᱞᱟᱹᱨ</string>
@@ -240,7 +241,7 @@
     <string name="deck_conf_use_general_timeout_settings">Use general settings</string>
     <string name="deck_conf_use_general_timeout_settings_summ">Use general \'Automatic display answer\' settings instead of using the settings for this group.</string>
     <string name="deck_conf_easy_bonus">Easy bonus</string>
-    <string name="deck_conf_hard_factor">Hard interval</string>
+    <string name="deck_conf_hard_factor">ᱠᱚᱰᱟ ᱤᱱᱴᱚᱨᱣᱟᱞ</string>
     <string name="deck_conf_ivl_fct">Interval modifier</string>
     <string name="deck_conf_max_ivl">Maximum interval</string>
     <string name="deck_conf_new_lps_ivl">New interval</string>

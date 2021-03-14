@@ -197,12 +197,12 @@
     <!-- Context Menu -->
     <string name="card_browser_context_menu" comment="The value which appears in the system context menu. Note the casing difference">卡片瀏覽器</string>
     <string name="context_menu_anki_card_label">Anki卡</string>
-    <string name="has_a_problem" comment="First field is either front template or back template. Second field is the error message.">%1$s has a problem:<br/>%2$s</string>
+    <string name="has_a_problem" comment="First field is either front template or back template. Second field is the error message.">%1$s 有一個問題:<br/>%2$s</string>
     <string name="more_information">更多資訊</string>
     <string name="no_field">找到 \'{{%1$s}}\', 但沒有任何領域叫做 \'%1$s\'.</string>
     <string name="closed_tag_not_open">找到 \'{{/%1$s}}\', 但缺少 \'{{#%1$s}}\' 或 \'{{^%1$s}}\'.</string>
     <string name="missing_closing_bracket">缺少 \'}}\' 於 \'%s\'.</string>
     <string name="open_tag_not_closed">缺少 \'{{%s}}\'.</string>
-    <string name="wrong_tag_closed">Found \'{{/%1$s}}\', but expected \'{{/%2$s}}\'</string>
+    <string name="wrong_tag_closed">找到 \'{{/%1$s}}\', 但預期是 \'{{/%2$s}}\'</string>
     <string name="filter_error">篩選器有誤 %s</string>
 </resources>

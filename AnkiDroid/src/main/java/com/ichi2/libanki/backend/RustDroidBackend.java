@@ -17,12 +17,12 @@
 package com.ichi2.libanki.backend;
 
 import com.ichi2.libanki.DB;
+import com.ichi2.libanki.backend.model.SchedTimingToday;
+import com.ichi2.libanki.backend.model.SchedTimingTodayProto;
 
 import net.ankiweb.rsdroid.BackendFactory;
-import net.ankiweb.rsdroid.BackendUtils;
 
 import BackendProto.AdBackend;
-import timber.log.Timber;
 
 /** The Backend in Rust */
 public class RustDroidBackend implements DroidBackend {
@@ -68,5 +68,17 @@ public class RustDroidBackend implements DroidBackend {
             String numbers = result.getSequenceNumbersList().toString();
             throw new IllegalStateException("Contained unclosed sequence numbers: " + numbers);
         }
+    }
+
+    @Override
+    public SchedTimingToday sched_timing_today(long createdSecs, int createdMinsWest, long nowSecs, int nowMinsWest, int rolloverHour) {
+        AdBackend.SchedTimingTodayOut2 res = mBackend.getBackend().schedTimingTodayLegacy(createdSecs, createdMinsWest, nowSecs, nowMinsWest, rolloverHour);
+        return new SchedTimingTodayProto(res);
+    }
+
+
+    @Override
+    public int local_minutes_west(long timestampSeconds) {
+        return mBackend.getBackend().localMinutesWest(timestampSeconds).getVal();
     }
 }

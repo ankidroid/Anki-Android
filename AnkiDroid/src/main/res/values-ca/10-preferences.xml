@@ -172,6 +172,7 @@
     <string name="learn_cutoff">Informeu-vos de límit per davant</string>
     <string name="time_limit">Límit de temps de Timebox</string>
     <string name="time_limit_summ">XXX min</string>
+    <string name="new_timezone">New timezone handling</string>
     <string name="day_offset">Inici de l\'endemà</string>
     <string name="day_offset_summ">XXX hores passada la mitjanit</string>
     <string name="sched_ver">Experimental V2 scheduler</string>

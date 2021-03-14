@@ -162,7 +162,7 @@
     <string name="show_estimates">Afficher le temps</string>
     <string name="show_estimates_summ">Afficher le temps avant la prochaine révision sur les boutons de réponse</string>
     <string name="show_top_bar">Afficher la barre supérieure</string>
-    <string name="show_top_bar_summ">Afficher le nombre de cartes, le marqueur et la marque dans la barre supérieure</string>
+    <string name="show_top_bar_summ">Afficher le nombre de cartes, la balise et la marque dans la barre supérieure</string>
     <string name="show_progress">Afficher le nombre restant de révision</string>
     <string name="show_progress_summ">Montrer le nombre de cartes restantes</string>
     <string name="show_eta">Afficher le temps restant</string>
@@ -172,6 +172,7 @@
     <string name="learn_cutoff">Limite d’apprentissage</string>
     <string name="time_limit">Limite de temps</string>
     <string name="time_limit_summ">XXX min</string>
+    <string name="new_timezone">Nouvelle gestion du fuseau horaire</string>
     <string name="day_offset">Début du jour suivant</string>
     <string name="day_offset_summ">XXX heures après minuit</string>
     <string name="sched_ver">Planificateur V2 expérimental</string>

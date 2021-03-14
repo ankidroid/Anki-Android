@@ -44,12 +44,16 @@ import com.ichi2.libanki.Utils;
 import com.ichi2.libanki.Deck;
 import com.ichi2.libanki.DeckConfig;
 
+import com.ichi2.libanki.backend.exception.BackendNotSupportedException;
+import com.ichi2.libanki.backend.model.SchedTimingToday;
 import com.ichi2.libanki.utils.Time;
 import com.ichi2.utils.Assert;
 import com.ichi2.utils.JSONArray;
 import com.ichi2.utils.JSONException;
 import com.ichi2.utils.JSONObject;
 import com.ichi2.utils.SyncStatus;
+
+import net.ankiweb.rsdroid.RustCleanup;
 
 import java.lang.ref.WeakReference;
 import java.util.ArrayList;
@@ -987,7 +991,7 @@ public class SchedV2 extends AbstractSched {
      * @param considerCurrentCard whether the current card should be taken from the limit (if it belongs to this deck)
      * */
     public int _deckNewLimitSingle(@NonNull Deck g, boolean considerCurrentCard) {
-        if (g.getInt("dyn") == DECK_DYN) {
+        if (g.isDyn()) {
             return mDynReportLimit;
         }
         long did = g.getLong("id");
@@ -1530,7 +1534,7 @@ public class SchedV2 extends AbstractSched {
         if (d == null) {
             return 0;
         }
-        if (d.getInt("dyn") == DECK_DYN) {
+        if (d.isDyn()) {
             return mDynReportLimit;
         }
         long did = d.getLong("id");
@@ -1542,17 +1546,7 @@ public class SchedV2 extends AbstractSched {
             lim--;
         }
 
-        if (parentLimit != null) {
-            return Math.min(parentLimit, lim);
-        } else if (!d.getString("name").contains("::")) {
-            return lim;
-        } else {
-            for (@NonNull Deck parent : mCol.getDecks().parents(did)) {
-                // pass in dummy parentLimit so we don't do parent lookup again
-                lim = Math.min(lim, _deckRevLimitSingle(parent, lim, considerCurrentCard));
-            }
-            return lim;
-        }
+        return lim;
     }
 
 
@@ -1883,7 +1877,7 @@ public class SchedV2 extends AbstractSched {
             did = mCol.getDecks().selected();
         }
         Deck deck = mCol.getDecks().get(did);
-        if (deck.getInt("dyn") == DECK_STD) {
+        if (deck.isStd()) {
             Timber.e("error: deck is not a filtered deck");
             return;
         }
@@ -2158,7 +2152,7 @@ public class SchedV2 extends AbstractSched {
     private boolean _previewingCard(@NonNull Card card) {
         DeckConfig conf = _cardConf(card);
 
-        return conf.getInt("dyn") == DECK_DYN && !conf.getBoolean("resched");
+        return conf.isDyn() && !conf.getBoolean("resched");
     }
 
 
@@ -2173,12 +2167,23 @@ public class SchedV2 extends AbstractSched {
      */
 
     /* Overriden: other way to count time*/
+    @RustCleanup("remove timing == null check once JavaBackend is removed")
     public void _updateCutoff() {
         int oldToday = mToday == null ? 0 : mToday;
-        // days since col created
-        mToday = _daysSinceCreation();
-        // end of day cutoff
-        mDayCutoff = _dayCutoff();
+
+        SchedTimingToday timing = _timingToday();
+
+        if (timing == null) {
+            mToday = _daysSinceCreation();
+            mDayCutoff = _dayCutoff();
+        } else if (_new_timezone_enabled()) {
+            mToday = timing.days_elapsed();
+            mDayCutoff = timing.next_day_at();
+        } else {
+            mToday = _daysSinceCreation();
+            mDayCutoff = _dayCutoff();
+        }
+
         if (oldToday != mToday) {
             mCol.log(mToday, mDayCutoff);
         }
@@ -2217,7 +2222,7 @@ public class SchedV2 extends AbstractSched {
 
     private int _daysSinceCreation() {
         Calendar c = mCol.crtCalendar();
-        c.set(Calendar.HOUR, mCol.getConf().optInt("rollover", 4));
+        c.set(Calendar.HOUR, _rolloverHour());
         c.set(Calendar.MINUTE, 0);
         c.set(Calendar.SECOND, 0);
         c.set(Calendar.MILLISECOND, 0);
@@ -2225,6 +2230,60 @@ public class SchedV2 extends AbstractSched {
         return (int) (((getTime().intTimeMS() - c.getTimeInMillis()) / 1000) / SECONDS_PER_DAY);
     }
 
+    private int _rolloverHour() {
+        return getCol().getConf().optInt("rollover", 4);
+    }
+
+    // New timezone handling
+    //////////////////////////////////////////////////////////////////////////
+
+    @Override
+    public boolean _new_timezone_enabled() {
+        JSONObject conf = getCol().getConf();
+        return conf.has("creationOffset") && !conf.isNull("creationOffset");
+    }
+
+    @Nullable
+    private SchedTimingToday _timingToday() {
+        try {
+            return getCol().getBackend().sched_timing_today(
+                    getCol().getCrt(),
+                    _creation_timezone_offset(),
+                    getTime().intTime(),
+                    _current_timezone_offset(),
+                    _rolloverHour());
+        } catch (BackendNotSupportedException e) {
+            return null;
+        }
+    }
+
+    @Override
+    public int _current_timezone_offset() throws BackendNotSupportedException {
+        if (getCol().getServer()) {
+            return getCol().getConf().optInt("localOffset", 0);
+        } else {
+            return getCol().getBackend().local_minutes_west(getTime().intTime());
+        }
+    }
+
+    private int _creation_timezone_offset() {
+        return getCol().getConf().optInt("creationOffset", 0);
+    }
+
+    @Override
+    public void set_creation_offset() throws BackendNotSupportedException {
+        int mins_west = getCol().getBackend().local_minutes_west(getCol().getCrt());
+        getCol().getConf().put("creationOffset", mins_west);
+        getCol().setMod();
+    }
+
+    @Override
+    public void clear_creation_offset() {
+        if (getCol().getConf().has("creationOffset")) {
+            getCol().getConf().remove("creationOffset");
+            getCol().setMod();
+        }
+    }
 
     protected void update(@NonNull Deck g) {
         for (String t : new String[] { "new", "rev", "lrn", "time" }) {
@@ -2278,7 +2337,7 @@ public class SchedV2 extends AbstractSched {
             sb.append("\n\n");
             sb.append("").append(context.getString(R.string.sched_has_buried)).append(now);
         }
-        if (mCol.getDecks().current().getInt("dyn") == DECK_STD) {
+        if (mCol.getDecks().current().isStd()) {
             sb.append("\n\n");
             sb.append(context.getString(R.string.studyoptions_congrats_custom));
         }
@@ -3049,7 +3108,7 @@ public class SchedV2 extends AbstractSched {
     protected void _sortIntoLrn(long due, long id) {
         if (!mLrnQueue.isFilled()) {
             // We don't want to add an element to the queue if it's not yet assumed to have its normal content.
-            // Adding anything is useless while the queue awaits beeing filled
+            // Adding anything is useless while the queue awaits being filled
             return;
         }
         ListIterator<LrnCard> i = mLrnQueue.listIterator();
@@ -3090,7 +3149,7 @@ public class SchedV2 extends AbstractSched {
         // write old data
         oldCardData.flush(false);
         DeckConfig conf = _cardConf(oldCardData);
-        boolean previewing = conf.getInt("dyn") == DECK_DYN && ! conf.getBoolean("resched");
+        boolean previewing = conf.isDyn() && ! conf.getBoolean("resched");
         if (! previewing) {
             // and delete revlog entry
             long last = mCol.getDb().queryLongScalar("SELECT id FROM revlog WHERE cid = ? ORDER BY id DESC LIMIT 1", oldCardData.getId());

@@ -460,7 +460,7 @@ public class StudyOptionsFragment extends Fragment implements Toolbar.OnMenuItem
             if (mLoadWithDeckOptions) {
                 mLoadWithDeckOptions = false;
                 Deck deck = getCol().getDecks().current();
-                if (deck.getInt("dyn") == DECK_DYN && deck.has("empty")) {
+                if (deck.isDyn() && deck.has("empty")) {
                     deck.remove("empty");
                 }
                     mProgressDialog = StyledProgressDialog.show(getActivity(), "",
@@ -591,7 +591,7 @@ public class StudyOptionsFragment extends Fragment implements Toolbar.OnMenuItem
                     }
 
                     // Switch between the empty view, the ordinary view, and the "congratulations" view
-                    boolean isDynamic = deck.optInt("dyn", DECK_STD) == DECK_DYN;
+                    boolean isDynamic = deck.isDyn();
                     if (totalCards == 0 && !isDynamic) {
                         mCurrentContentView = CONTENT_EMPTY;
                         mDeckInfoLayout.setVisibility(View.VISIBLE);

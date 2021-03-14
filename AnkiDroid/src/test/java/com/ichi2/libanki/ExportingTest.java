@@ -25,7 +25,7 @@ public class ExportingTest extends RobolectricTest {
         note = col.newNote();
         note.setItem("Front", "baz");
         note.setItem("Back", "qux");
-        note.model().put("did", col.getDecks().id("new col"));
+        note.model().put("did", addDeck("new col"));
         col.addNote(note);
     }
 
@@ -41,7 +41,7 @@ public class ExportingTest extends RobolectricTest {
        @Test
        public void test_export_anki(){
        // create a new col with its own conf to test conf copying
-       long did = col.getDecks().id("test");
+       long did = addDeck("test");
        Deck dobj = col.getDecks().get(did);
        long confId = col.getDecks().add_config_returning_id("newconf");
        DeckConfig conf = col.getDecks().getConf(confId);

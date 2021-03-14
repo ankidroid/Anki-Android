@@ -217,10 +217,10 @@ public class AbstractSchedTest extends RobolectricTest {
         public IncreaseToday() {
             decks = getCol().getDecks();
             sched = getCol().getSched();
-            aId = decks.id("A");
-            bId = decks.id("A::B");
-            cId = decks.id("A::B::C");
-            dId = decks.id("A::B::D");
+            aId = addDeck("A");
+            bId = addDeck("A::B");
+            cId = addDeck("A::B::C");
+            dId = addDeck("A::B::D");
         }
 
         private void assertNewCountIs(String explanation, long did, int expected) {

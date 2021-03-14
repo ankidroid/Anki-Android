@@ -73,7 +73,7 @@ public class DeckDueTreeNode extends AbstractDeckTreeNode<DeckDueTreeNode> {
         }
         // limit the counts to the deck's limits
         DeckConfig conf = getCol().getDecks().confForDid(getDid());
-        if (conf.getInt("dyn") == Consts.DECK_STD) {
+        if (conf.isStd()) {
             Deck deck = getCol().getDecks().get(getDid());
             limitNewCount(conf.getJSONObject("new").getInt("perDay") - deck.getJSONArray("newToday").getInt(1));
             if (addRev) {

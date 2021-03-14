@@ -172,6 +172,7 @@
     <string name="learn_cutoff">आगे की सीमा जानें</string>
     <string name="time_limit">Timebox समय सीमा</string>
     <string name="time_limit_summ">XXX min</string>
+    <string name="new_timezone">New timezone handling</string>
     <string name="day_offset">अगले दिन की शुरुआत</string>
     <string name="day_offset_summ">XXX घंटे पिछले आधी रात</string>
     <string name="sched_ver">Experimental V2 scheduler</string>

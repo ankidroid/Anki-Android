@@ -28,8 +28,8 @@
     <!--Card type-->
     <string name="card_n_name">Karta %d</string>
     <!--Note type-->
-    <string name="basic_model_name">Basic</string>
-    <string name="cloze_model_name">Wypełnianka</string>
+    <string name="basic_model_name">Podstawowy</string>
+    <string name="cloze_model_name">Luka</string>
     <string name="basic_typing_model_name">Podstawowy (wpisywanie odpowiedzi)</string>
     <string name="forward_reverse_model_name">Podstawowy (z odwrotną kartą)</string>
     <string name="forward_optional_reverse_model_name">Podstawowy (z opcjonalną odwrotną kartą)</string>

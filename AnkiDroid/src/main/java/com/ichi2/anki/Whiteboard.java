@@ -2,6 +2,7 @@
  * Copyright (c) 2009 Andrew <andrewdubya@gmail.com>
  * Copyright (c) 2009 Nicolas Raoul <nicolas.raoul@gmail.com>
  * Copyright (c) 2009 Edu Zamora <edu.zasu@gmail.com>
+ * Copyright (c) 2021 Nicolai Weitkemper <kontakt@nicolaiweitkemper.de>
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU General Public License as published by the Free Software
@@ -27,14 +28,9 @@ import android.graphics.Paint;
 import android.graphics.Path;
 import android.graphics.PathMeasure;
 import android.graphics.Point;
-
-import androidx.annotation.CheckResult;
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.annotation.VisibleForTesting;
-import androidx.core.content.ContextCompat;
-import timber.log.Timber;
-
+import android.graphics.Rect;
+import android.graphics.RectF;
+import android.graphics.Region;
 import android.os.Environment;
 import android.view.Display;
 import android.view.MotionEvent;
@@ -50,7 +46,16 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.lang.ref.WeakReference;
-import java.util.Stack;
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
+
+import androidx.annotation.CheckResult;
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.annotation.VisibleForTesting;
+import androidx.core.content.ContextCompat;
+import timber.log.Timber;
 
 /**
  * Whiteboard allowing the user to draw the card's answer on the touchscreen.
@@ -61,7 +66,7 @@ public class Whiteboard extends View {
     private static final float TOUCH_TOLERANCE = 4;
 
     private final Paint mPaint;
-    private final UndoStack mUndo = new UndoStack();
+    private final UndoList mUndo = new UndoList();
     private Bitmap mBitmap;
     private Canvas mCanvas;
     private final Path mPath;
@@ -185,6 +190,19 @@ public class Whiteboard extends View {
                     drawAbort();
                 }
                 return false;
+            // not present in docs: https://developer.android.com/reference/android/view/MotionEvent
+            case 211: // POINTER_DOWN with S-Pen-button
+            case 213: // MOVE with S-Pen-button
+                if (event.getButtonState() == MotionEvent.BUTTON_STYLUS_PRIMARY && !undoEmpty()) {
+                    boolean didErase = mUndo.erase((int) event.getX(), (int) event.getY());
+                    if (didErase) {
+                        mUndo.apply();
+                        if (undoEmpty() && mCardViewer.get() != null) {
+                            mCardViewer.get().supportInvalidateOptionsMenu();
+                        }
+                    }
+                }
+                return true;
             default:
                 return false;
         }
@@ -411,44 +429,87 @@ public class Whiteboard extends View {
 
 
     /**
-     * Keep a stack of all points and paths so that the last stroke can be undone
-     * pop() removes the last stroke from the stack, and apply() redraws it to whiteboard.
+     * Keep a list of all points and paths so that the last stroke can be undone
+     * pop() removes the last stroke from the list, and apply() redraws it to whiteboard.
      */
-    private class UndoStack {
-        private final Stack<WhiteboardAction> mStack = new Stack<>();
+    private class UndoList {
+        private final List<WhiteboardAction> mList = new ArrayList<>();
 
         public void add(WhiteboardAction action) {
-            mStack.add(action);
+            mList.add(action);
         }
 
         public void clear() {
-            mStack.clear();
+            mList.clear();
         }
 
         public int size() {
-            return mStack.size();
+            return mList.size();
         }
 
         public void pop() {
-            mStack.pop();
+            mList.remove(mList.size() - 1);
         }
 
         public void apply() {
             mBitmap.eraseColor(0);
 
-            for (WhiteboardAction action : mStack) {
+            for (WhiteboardAction action : mList) {
                 action.apply(mCanvas);
             }
             invalidate();
         }
 
+        public boolean erase(int x, int y) {
+            boolean didErase = false;
+            Region clip = new Region(0, 0, getDisplayDimensions().x, getDisplayDimensions().y);
+            Path eraserPath = new Path();
+            eraserPath.addRect(x - 10, y - 10, x + 10, y + 10, Path.Direction.CW);
+            Region eraserRegion = new Region();
+            eraserRegion.setPath(eraserPath, clip);
+
+            // used inside the loop – created here to make things a little more efficient
+            RectF bounds = new RectF();
+            Region lineRegion = new Region();
+
+            // we delete elements while iterating, so we need to use an iterator in order to avoid java.util.ConcurrentModificationException
+            for (Iterator<WhiteboardAction> iterator = mList.iterator(); iterator.hasNext(); ) {
+                WhiteboardAction action = iterator.next();
+
+                Path mPath = action.getPath();
+                if (mPath != null) { // → line
+                    boolean lineRegionSuccess = lineRegion.setPath(mPath, clip);
+                    if (!lineRegionSuccess) {
+                        // Small lines can be perfectly vertical/horizontal,
+                        // thus giving us an empty region, which would make them undeletable.
+                        // For this edge case, we create a Region ourselves.
+                        mPath.computeBounds(bounds, true);
+                        lineRegion = new Region(new Rect((int) bounds.left, (int) bounds.top, (int) bounds.right + 1, (int) bounds.bottom + 1));
+                    }
+                } else { // → point
+                    Point p = action.getPoint();
+                    lineRegion = new Region(p.x, p.y, p.x + 1, p.y + 1);
+                }
+
+                if (!lineRegion.quickReject(eraserRegion) && lineRegion.op(eraserRegion, Region.Op.INTERSECT)) {
+                    iterator.remove();
+                    didErase = true;
+                }
+            }
+            return didErase;
+        }
+
         public boolean empty() {
-            return mStack.empty();
+            return mList.size() == 0;
         }
     }
 
     private interface WhiteboardAction {
         void apply(@NonNull Canvas canvas);
+
+        Path getPath();
+
+        Point getPoint();
     }
 
     private static class DrawPoint implements WhiteboardAction {
@@ -469,6 +530,16 @@ public class Whiteboard extends View {
         public void apply(@NonNull Canvas canvas) {
             canvas.drawPoint(mX, mY, mPaint);
         }
+
+        @Override
+        public Path getPath() {
+            return null;
+        }
+
+
+        public Point getPoint() {
+            return new Point((int) mX, (int) mY);
+        }
     }
 
     private static class DrawPath implements WhiteboardAction {
@@ -484,6 +555,16 @@ public class Whiteboard extends View {
         @Override
         public void apply(@NonNull Canvas canvas) {
             canvas.drawPath(mPath, mPaint);
+        }
+
+        @Override
+        public Path getPath() {
+            return mPath;
+        }
+
+        @Override
+        public Point getPoint() {
+            return null;
         }
     }
 

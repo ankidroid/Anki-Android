@@ -1,6 +1,3 @@
-import com.android.ddmlib.DdmPreferences
-import com.android.build.OutputFile
-
 plugins {
  // Gradle plugin portal 
  id 'com.github.triplet.play' version '3.0.0'
@@ -14,6 +11,7 @@ apply plugin: 'idea'
 repositories {
     google()
     jcenter()
+    maven { url "https://jitpack.io" }
 }
 
 
@@ -52,8 +50,8 @@ android {
         //
         // This ensures the correct ordering between the various types of releases (dev < alpha < beta < release) which is
         // needed for upgrades to be offered correctly.
-        versionCode=21500125
-        versionName="2.15alpha25"
+        versionCode=21500128
+        versionName="2.15alpha28"
         minSdkVersion 21
         //noinspection OldTargetApi - also performed in api/build.fradle
         targetSdkVersion 29 // change .travis.yml platform download at same time
@@ -117,23 +115,27 @@ android {
     }
     // applicationVariants are e.g. debug, release
     applicationVariants.all { variant ->
-        // purge debug sounds from react-native-background-geolocation-android
+
+        // We want the same version stream for all ABIs in debug but for release we can split them
         if (variant.buildType.name == 'release') {
-            // We want the same version stream for all ABIs in debug but for release we can split them
             variant.outputs.each { output ->
+
                 // For each separate APK per architecture, set a unique version code as described here:
                 // https://developer.android.com/studio/build/configure-apk-splits.html
                 def versionCodes = ["armeabi-v7a": 1, "x86": 2, "arm64-v8a": 3, "x86_64": 4]
-                def abi = output.getFilter(OutputFile.ABI)
-                if (abi != null) {  // null for the universal-debug, universal-release variants
-                    //  From: https://developer.android.com/studio/publish/versioning#appversioning
-                    //  "Warning: The greatest value Google Play allows for versionCode is 2100000000"
-                    //  AnkiDroid versionCodes have a budget 8 digits (through AnkiDroid 9)
-                    //  This style does ABI version code ranges with the 9th digit as 0-4.
-                    //  This consumes ~20% of the version range space, w/50 years of versioning at our major-version pace
-                    output.versionCodeOverride =
-                            // ex:  321200106 = 3 * 100000000 + 21200106
-                            versionCodes.get(abi) * 100000000 + defaultConfig.versionCode
+                def outputFile = output.outputFile
+                if (outputFile != null && outputFile.name.endsWith('.apk')) {
+                    def abi = output.getFilter("ABI")
+                    if (abi != null) {  // null for the universal-debug, universal-release variants
+                        //  From: https://developer.android.com/studio/publish/versioning#appversioning
+                        //  "Warning: The greatest value Google Play allows for versionCode is 2100000000"
+                        //  AnkiDroid versionCodes have a budget 8 digits (through AnkiDroid 9)
+                        //  This style does ABI version code ranges with the 9th digit as 0-4.
+                        //  This consumes ~20% of the version range space, w/50 years of versioning at our major-version pace
+                        output.versionCodeOverride =
+                                // ex:  321200106 = 3 * 100000000 + 21200106
+                                versionCodes.get(abi) * 100000000 + defaultConfig.versionCode
+                    }
                 }
             }
         }
@@ -219,8 +221,6 @@ dependencies {
     annotationProcessor "com.google.auto.service:auto-service:1.0-rc7"
 
     implementation fileTree(dir: 'libs', include: ['*.jar'])
-    // Note: the design support library can be quite buggy, so test everything thoroughly before updating it
-    implementation 'com.google.android.material:material:1.2.1'
     implementation 'androidx.annotation:annotation:1.1.0'
     implementation 'androidx.appcompat:appcompat:1.2.0'
     implementation 'androidx.browser:browser:1.3.0'
@@ -231,23 +231,19 @@ dependencies {
     implementation 'androidx.sqlite:sqlite-framework:2.1.0'
     implementation 'androidx.swiperefreshlayout:swiperefreshlayout:1.1.0'
     implementation 'androidx.viewpager2:viewpager2:1.0.0'
-    implementation 'io.requery:sqlite-android:3.34.0'
-    implementation 'com.afollestad.material-dialogs:core:0.9.6.0'
-    implementation 'com.getbase:floatingactionbutton:1.10.1'
-    // io.github.java-diff-utils:java-diff-utils is the natural successor here, but requires API24, #7091
-    implementation 'org.bitbucket.cowwoc:diff-match-patch:1.2'
     // noinspection GradleDependency - pinned at 1.12 until API26 minSdkVersion (File.toPath usage)
-    implementation 'org.apache.commons:commons-compress:1.12' // #6419 - handle >2GB apkg files
     implementation 'androidx.constraintlayout:constraintlayout:2.0.4'
     implementation 'androidx.webkit:webkit:1.4.0'
-    implementation 'com.drakeet.drawer:drawer:1.0.3'
+    // Note: the design support library can be quite buggy, so test everything thoroughly before updating it
+    implementation 'com.google.android.material:material:1.3.0'
+    implementation 'com.google.code.gson:gson:2.8.6'
 
     // == Rust conversion (from Anki-Android-Backend on GitHub) ==
     String backendVersion = "0.1.2" // We want both testing and implementation on the same version
     // build with ./gradlew rsdroid:assembleRelease
     // In my experience, using `files()` currently requires a reindex operation, which is slow.
     // implementation files("C:\\GitHub\\Rust-Test\\rsdroid\\build\\outputs\\aar\\rsdroid-release.aar")
-    implementation 'com.google.protobuf:protobuf-java:3.13.0' // This is required when loading from a file
+    implementation 'com.google.protobuf:protobuf-java:3.15.3' // This is required when loading from a file
     implementation "io.github.david-allison-1:anki-android-backend:$backendVersion"
     // build with ./gradlew rsdroid-testing:assembleRelease
     // RobolectricTest.java: replace RustBackendLoader.init(); with RustBackendLoader.loadRsdroid(path);
@@ -260,21 +256,28 @@ dependencies {
     implementation'ch.acra:acra-toast:5.5.1'
     implementation'ch.acra:acra-limiter:5.5.1'
 
+    implementation 'io.requery:sqlite-android:3.34.1'
+    implementation 'com.afollestad.material-dialogs:core:0.9.6.0'
+    implementation 'com.getbase:floatingactionbutton:1.10.1'
+    // io.github.java-diff-utils:java-diff-utils is the natural successor here, but requires API24, #7091
+    implementation 'org.bitbucket.cowwoc:diff-match-patch:1.2'
+    implementation 'org.apache.commons:commons-compress:1.12' // #6419 - handle >2GB apkg files
     implementation 'net.mikehardy:google-analytics-java7:2.0.13'
     //noinspection GradleDependency NewerVersionAvailable
     implementation 'com.squareup.okhttp3:okhttp:3.12.12'
     implementation 'com.arcao:slf4j-timber:3.1'
-
     implementation 'com.jakewharton.timber:timber:4.7.1'
-    implementation 'com.google.code.gson:gson:2.8.6'
     implementation 'org.jsoup:jsoup:1.13.1'
+    implementation "com.github.zafarkhaja:java-semver:0.9.0" // For AnkiDroid JS API Versioning
+    implementation 'com.github.yalantis:ucrop:2.2.6'
+    implementation 'com.drakeet.drawer:drawer:1.0.3'
     api project(":api")
 
-    testImplementation 'org.junit.vintage:junit-vintage-engine:5.7.0'
-    testImplementation 'org.mockito:mockito-inline:3.7.7'
+    testImplementation 'org.junit.vintage:junit-vintage-engine:5.7.1'
+    testImplementation 'org.mockito:mockito-inline:3.8.0'
     testImplementation 'org.hamcrest:hamcrest-all:1.3'
     testImplementation 'net.lachlanmckee:timber-junit-rule:1.0.1'
-    testImplementation "org.robolectric:robolectric:4.4"
+    testImplementation "org.robolectric:robolectric:4.5.1"
     testImplementation 'androidx.test:core:1.3.0'
     testImplementation 'androidx.test.ext:junit:1.1.2'
     // debugImplementation required vs testImplementation: https://issuetracker.google.com/issues/128612536
@@ -289,8 +292,4 @@ dependencies {
     androidTestImplementation 'androidx.test.espresso:espresso-contrib:3.3.0'
     androidTestImplementation 'androidx.test.ext:junit:1.1.2'
     androidTestImplementation 'androidx.test:rules:1.3.0'
-
-    //For AnkiDroid JS API Versioning
-    implementation "com.github.zafarkhaja:java-semver:0.9.0"
-
 }

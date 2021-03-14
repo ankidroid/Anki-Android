@@ -197,8 +197,8 @@
     <string name="import_hint">कार्ड को आयात करने के लिए, apkg फ़ाइल %s निर्देशिका में रखें और ठीक दबाएँ</string>
     <string name="upgrade_import_no_file_found">कोई आयातयोग्य %1$s फ़ाइल मिली</string>
     <string name="study_options" comment="Name for a preference category in Filtered deck (aka Cram deck, aka Custom study) options">विकल्प</string>
-    <string name="menu__deck_options">Deck options</string>
-    <string name="menu__study_options" comment="Menu item that opens options for a Filtered deck (aka Cram deck, aka Custom study)">Study options</string>
+    <string name="menu__deck_options">डेक विकल्प</string>
+    <string name="menu__study_options" comment="Menu item that opens options for a Filtered deck (aka Cram deck, aka Custom study)">अध्ययन के विकल्प</string>
     <string name="select_tts">टीटीएस भाषा सेट करता है</string>
     <string name="custom_study">कस्टम अध्ययन</string>
     <string name="more_options">अधिक</string>
@@ -261,7 +261,7 @@
     <string name="activity_start_failed">सिस्टम में कोई ऐप इंस्टॉल नहीं है जो इस क्रिया को कर सके।</string>
     <string name="multimedia_editor_image_compression_failed"><![CDATA[कैमरे के चित्र बड़े हो सकते हैं। आप मीडिया फ़ोल्डर में छवियों को संपीड़ित और आकार देना चाह सकते हैं]]></string>
     <string name="no_browser_notification">कोई ब्राउज़र नहीं मिला, कृपया कंप्यूटर या मोबाइल द्वारा वेब पेज पर जाएँ:</string>
-    <string name="web_page_error">Error loading page: %s</string>
+    <string name="web_page_error">पृष्ठ लोड करने में त्रुटि: %s</string>
     <string name="no_outgoing_link_in_cardbrowser">कार्ड में बाहरी पेज लिंक समर्थित नहीं है।</string>
     <!-- The name of the deck which corrupt cards will be moved to -->
     <string name="check_integrity_recovered_deck_name">कार्ड पुनः प्राप्त किया</string>
@@ -312,7 +312,7 @@
     <string name="about_ankidroid_error_copy_debug_info">क्लिपबोर्ड पर डिबग जानकारी कॉपी करने में त्रुटि</string>
     <!-- Card Viewer -->
     <string name="card_viewer_could_not_find_image">कार्ड सामग्री त्रुटि: ‘%s’ लोड करने में विफल</string>
-    <string name="card_viewer_media_relative_protocol">Card Content Error: Media update required</string>
+    <string name="card_viewer_media_relative_protocol">कार्ड सामग्री त्रुटि: मीडिया अद्यतन की आवश्यकता है</string>
     <!-- Deck Picker -->
     <string name="deck_picker_failed_deck_load">डेक को लोड करने में विफल  ‘%s’</string>
     <string name="search_decks">खोज डेक</string>
@@ -324,15 +324,15 @@
     <string name="format_insert_bold">Format as Bold</string>
     <string name="format_insert_italic">Format as Italic</string>
     <string name="format_insert_underline">Format as Underline</string>
-    <string name="insert_horizontal_line">Insert Horizontal Line</string>
+    <string name="insert_horizontal_line">क्षैतिज रेखा डालें</string>
     <string name="insert_heading">Insert Heading</string>
     <string name="format_font_size">Change Font Size</string>
-    <string name="insert_mathjax">Insert MathJax Equation</string>
+    <string name="insert_mathjax">MathJax समीकरण सम्मिलित करें</string>
     <string name="insert_cloze">Insert Cloze Deletion</string>
-    <string name="before_text">HTML Before Selection</string>
-    <string name="after_text">HTML After Selection</string>
+    <string name="before_text">चयन से पहले का HTML</string>
+    <string name="after_text">चयन के बाद का HTML</string>
     <string name="add_toolbar_item">Create Toolbar Item</string>
-    <string name="toolbar_item_explain_remove">Enter HTML to be inserted before and after the selected text\n\nLong press a toolbar item to remove it</string>
+    <string name="toolbar_item_explain_remove">चयनित पाठ से पहले और बाद में डाले जाने वाले HTML दर्ज करें\n\nकिसी टूलबार आइटम को निकालने के लिए उसे लंबे समय तक दबाएं</string>
     <string name="remove_toolbar_item">Remove Toolbar Item?</string>
     <string name="note_editor_paste_too_large">The image is too large to paste, please insert the image manually</string>
     <string name="ankidroid_cannot_open_after_backup_try_again" comment="After an Android backup is restored, AnkiDroid opens and shows this message.         Opening AnkiDroid again will work correctly">        Android backup in progress. Please try again</string>

@@ -173,6 +173,7 @@
     <string name="learn_cutoff">Mokymosi į priekį apribojimas</string>
     <string name="time_limit">Mokymuisi numatyto laiko apribojimas</string>
     <string name="time_limit_summ">XXX min</string>
+    <string name="new_timezone">New timezone handling</string>
     <string name="day_offset">Sekančios dienos pradžia</string>
     <string name="day_offset_summ">XXX val. po vidurnakčio</string>
     <string name="sched_ver">Experimental V2 scheduler</string>

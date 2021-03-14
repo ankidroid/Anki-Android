@@ -1626,7 +1626,7 @@ public class CollectionTask<ProgressListener, ProgressBackground extends Progres
                 TreeMap<String, Long> children = col.getDecks().children(deck.getLong("id"));
                 for (long childDid : children.values()) {
                     Deck child = col.getDecks().get(childDid);
-                    if (child.getInt("dyn") == DECK_DYN) {
+                    if (child.isDyn()) {
                         continue;
                     }
                     boolean changed = new ConfChange(child, conf).task(col, collectionTask);

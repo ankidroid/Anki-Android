@@ -172,6 +172,7 @@
     <string name="learn_cutoff">Лимит опережения</string>
     <string name="time_limit">Лимит учебного блока</string>
     <string name="time_limit_summ">XXX мин.</string>
+    <string name="new_timezone">Обработка нового часового пояса</string>
     <string name="day_offset">Начало следующего дня</string>
     <string name="day_offset_summ">XXX ч. утра</string>
     <string name="sched_ver">Экспериментальный планировщик — 2</string>

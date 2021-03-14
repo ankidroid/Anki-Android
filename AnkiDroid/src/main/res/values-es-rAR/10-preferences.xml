@@ -172,6 +172,7 @@
     <string name="learn_cutoff">Aprender antes del límite</string>
     <string name="time_limit">Límite de tiempo para Timebox</string>
     <string name="time_limit_summ">XXX min</string>
+    <string name="new_timezone">New timezone handling</string>
     <string name="day_offset">Comienzo del siguiente día</string>
     <string name="day_offset_summ">XXX horas luego pasada la medianoche</string>
     <string name="sched_ver">Programador Experimental V2</string>

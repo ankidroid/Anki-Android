@@ -104,6 +104,7 @@ import com.ichi2.anki.dialogs.MediaCheckDialog;
 import com.ichi2.anki.dialogs.SyncErrorDialog;
 import com.ichi2.anki.exception.ConfirmModSchemaException;
 import com.ichi2.anki.exception.DeckRenameException;
+import com.ichi2.anki.exception.FilteredAncestor;
 import com.ichi2.anki.receiver.SdCardReceiver;
 import com.ichi2.anki.stats.AnkiStatsTaskHandler;
 import com.ichi2.anki.web.HostNumFactory;
@@ -646,7 +647,10 @@ public class DeckPicker extends NavigationDrawerActivity implements
                     .onPositive((dialog, which) -> {
                         String deckName = mDialogEditText.getText().toString();
                         if (Decks.isValidDeckName(deckName)) {
-                            createNewDeck(deckName);
+                            boolean creation_succeed = createNewDeck(deckName);
+                            if (!creation_succeed) {
+                                return;
+                            }
                         } else {
                             Timber.i("configureFloatingActionsMenu::addDeckButton::onPositiveListener - Not creating invalid deck name '%s'", deckName);
                             UIUtils.showThemedToast(this, getString(R.string.invalid_deck_name), false);
@@ -668,10 +672,21 @@ public class DeckPicker extends NavigationDrawerActivity implements
     }
 
 
-    private void createNewDeck(String deckName) {
+    /**
+     * It can fail if an ancestor is a filtered deck.
+     * @param deckName Create a deck with this name.
+     * @return Whether creation succeeded.
+     */
+    private boolean createNewDeck(String deckName) {
         Timber.i("DeckPicker:: Creating new deck...");
-        getCol().getDecks().id(deckName, true);
+        try {
+            getCol().getDecks().id(deckName);
+        } catch (FilteredAncestor filteredAncestor) {
+            UIUtils.showThemedToast(this, getString(R.string.decks_rename_filtered_nosubdecks), false);
+            return false;
+        }
         updateDeckList();
+        return true;
     }
 
 
@@ -823,7 +838,12 @@ public class DeckPicker extends NavigationDrawerActivity implements
                             return;
                         }
                         Timber.i("DeckPicker:: Creating filtered deck...");
-                        getCol().getDecks().newDyn(filteredDeckName);
+                        try {
+                            getCol().getDecks().newDyn(filteredDeckName);
+                        } catch (FilteredAncestor filteredAncestor) {
+                            UIUtils.showThemedToast(this, getString(R.string.decks_rename_filtered_nosubdecks), false);
+                            return;
+                        }
                         openStudyOptions(true);
                     })
                     .show();
@@ -2911,7 +2931,10 @@ public class DeckPicker extends NavigationDrawerActivity implements
                     String textValue = mDialogEditText.getText().toString();
                     String newName = getCol().getDecks().getSubdeckName(did, textValue);
                     if (Decks.isValidDeckName(newName)) {
-                        createNewDeck(newName);
+                        boolean creation_succeed = createNewDeck(newName);
+                        if (!creation_succeed) {
+                            return;
+                        }
                     } else {
                         Timber.i("createSubDeckDialog - not creating invalid subdeck name '%s'", newName);
                         UIUtils.showThemedToast(this, getString(R.string.invalid_deck_name), false);

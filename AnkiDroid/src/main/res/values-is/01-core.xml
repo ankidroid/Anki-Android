@@ -43,33 +43,33 @@
     <string name="decks">Decks</string>
     <string name="card_browser" comment="The usage of card browser inside the app (note the casing)">Card browser</string>
     <string name="statistics">Statistics</string>
-    <string name="settings">Settings</string>
-    <string name="help">Help</string>
+    <string name="settings">Stillingar</string>
+    <string name="help">Hjálp</string>
     <string name="send_feedback">Send feedback</string>
     <string name="studyoptions_due_today">Due today:</string>
-    <string name="studyoptions_new_total">Total new cards:</string>
-    <string name="studyoptions_total_cards">Total cards:</string>
+    <string name="studyoptions_new_total">Samtal nýrra spilanna:</string>
+    <string name="studyoptions_total_cards">Samtal spilanna:</string>
     <string name="studyoptions_eta">Estimated time (min):</string>
-    <string name="studyoptions_start">Study</string>
+    <string name="studyoptions_start">Læra</string>
     <!-- DeckPicker.java -->
     <string name="expand">Expand</string>
     <string name="collapse">Collapse</string>
-    <string name="study_more">Study more</string>
+    <string name="study_more">Læra meira</string>
     <plurals name="deckpicker_title">
         <item quantity="one">%1$d card due (%2$s)</item>
         <item quantity="other">%1$d cards due (%2$s)</item>
     </plurals>
     <plurals name="reviewer_window_title">
-        <item quantity="one">%d minute left</item>
-        <item quantity="other">%d minutes left</item>
+        <item quantity="one">%d mínuta enn</item>
+        <item quantity="other">%d mínutur enn</item>
     </plurals>
     <plurals name="reviewer_window_title_hours">
-        <item quantity="one">%d hour %d left</item>
-        <item quantity="other">%d hours %d left</item>
+        <item quantity="one">%d klúkkutími %d enn</item>
+        <item quantity="other">%d klúkkutímar %d enn</item>
     </plurals>
     <plurals name="reviewer_window_title_days">
-        <item quantity="one">%d day %d left</item>
-        <item quantity="other">%d days %d left</item>
+        <item quantity="one">%d dagur %d enn</item>
+        <item quantity="other">%d dagar %d enn</item>
     </plurals>
     <string name="no_cards_placeholder_title">Collection is empty</string>
     <string name="no_cards_placeholder_description">Start adding cards\nusing the + icon.</string>
@@ -80,14 +80,14 @@
     </plurals>
     <!-- flashcard_portrait.xml -->
     <string name="type_answer_hint">Type answer</string>
-    <string name="show_answer">Show answer</string>
-    <string name="hide_answer">Hide answer</string>
-    <string name="ease_button_again">Again</string>
-    <string name="ease_button_hard">Hard</string>
-    <string name="ease_button_good">Good</string>
-    <string name="ease_button_easy">Easy</string>
+    <string name="show_answer">Sýna svar</string>
+    <string name="hide_answer">Fela svar</string>
+    <string name="ease_button_again">Aftur</string>
+    <string name="ease_button_hard">Erfitt</string>
+    <string name="ease_button_good">Góður</string>
+    <string name="ease_button_easy">Auðvelt</string>
     <string name="studyoptions_congrats_undo">Undo %s</string>
-    <string name="menu_import">Import</string>
+    <string name="menu_import">Innfæra</string>
     <string name="undo">Undo</string>
     <string name="undo_action_review">last review</string>
     <string name="undo_action_change_deck_multi">change decks</string>
@@ -95,10 +95,10 @@
     <string name="unbury">Unbury</string>
     <string name="rename_deck">Rename deck</string>
     <string name="create_shortcut">Create shortcut</string>
-    <string name="menu_add" comment="A generic add button - Main Deck Picker and card templates. Please inform us if you need more specific strings">Add</string>
+    <string name="menu_add" comment="A generic add button - Main Deck Picker and card templates. Please inform us if you need more specific strings">Bæta við</string>
     <string name="menu_add_note">Add note</string>
     <string name="menu_my_account" comment="Label of the window in which the user should enter their account. This text can\'t be found in AnkiDroid directly.">Sync account</string>
-    <string name="menu_dismiss_note">Hide / delete</string>
+    <string name="menu_dismiss_note">Fela / eyða</string>
     <string name="menu_bury_card">Bury card</string>
     <string name="menu_bury_note">Bury note</string>
     <string name="menu_suspend_card">Suspend card</string>

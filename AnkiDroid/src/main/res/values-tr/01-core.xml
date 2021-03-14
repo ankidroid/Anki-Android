@@ -64,15 +64,15 @@
         <item quantity="other">%d dakika kaldı</item>
     </plurals>
     <plurals name="reviewer_window_title_hours">
-        <item quantity="one">%d hour %d left</item>
-        <item quantity="other">%d hours %d left</item>
+        <item quantity="one">%d saat kaldı</item>
+        <item quantity="other">%d saat kaldı</item>
     </plurals>
     <plurals name="reviewer_window_title_days">
-        <item quantity="one">%d day %d left</item>
-        <item quantity="other">%d days %d left</item>
+        <item quantity="one">%d gün kaldı</item>
+        <item quantity="other">%d gün kaldı</item>
     </plurals>
-    <string name="no_cards_placeholder_title">Collection is empty</string>
-    <string name="no_cards_placeholder_description">Start adding cards\nusing the + icon.</string>
+    <string name="no_cards_placeholder_title">Bu koleksiyon boş</string>
+    <string name="no_cards_placeholder_description">+ ikonuna tıklayarak kart eklemeye başlayın.</string>
     <!-- The deck picker via AnkiStatsTaskHandler.java -->
     <plurals name="studied_cards_today">
         <item quantity="one">Bugün %2$s içinde %1$d kart çalışıldı</item>
@@ -81,7 +81,7 @@
     <!-- flashcard_portrait.xml -->
     <string name="type_answer_hint">Cevabı yazın</string>
     <string name="show_answer">Cevabı göster</string>
-    <string name="hide_answer">Hide answer</string>
+    <string name="hide_answer">Cevabı gizle</string>
     <string name="ease_button_again">Yeniden</string>
     <string name="ease_button_hard">Zor</string>
     <string name="ease_button_good">İyi</string>
@@ -94,7 +94,7 @@
     <string name="move_all_to_deck">Bir paket kartın hepsini taşı</string>
     <string name="unbury">Görünür Yap</string>
     <string name="rename_deck">Destenin adını değiştir</string>
-    <string name="create_shortcut">Create shortcut</string>
+    <string name="create_shortcut">Kısayol oluştur</string>
     <string name="menu_add" comment="A generic add button - Main Deck Picker and card templates. Please inform us if you need more specific strings">Ekle</string>
     <string name="menu_add_note">Not ekle</string>
     <string name="menu_my_account" comment="Label of the window in which the user should enter their account. This text can\'t be found in AnkiDroid directly.">Senkronizasyon hesabı</string>
@@ -106,20 +106,20 @@
     <string name="menu_bury">Gizle</string>
     <string name="menu_suspend">Askıya Al</string>
     <string name="menu_delete_note">Notu Sil</string>
-    <string name="menu_flag">Flag</string>
-    <string name="menu_flag_card">Flag card</string>
-    <string name="menu_flag_card_zero">No flag</string>
-    <string name="menu_flag_card_one">Red flag</string>
-    <string name="menu_flag_card_two">Orange flag</string>
-    <string name="menu_flag_card_three">Green flag</string>
-    <string name="menu_flag_card_four">Blue flag</string>
-    <string name="menu_edit_tags">Edit tags</string>
+    <string name="menu_flag">Bayrak</string>
+    <string name="menu_flag_card">Bayrak kartı</string>
+    <string name="menu_flag_card_zero">Bayrak yok</string>
+    <string name="menu_flag_card_one">Kırmızı bayrak</string>
+    <string name="menu_flag_card_two">Turuncu bayrak</string>
+    <string name="menu_flag_card_three">Yeşil bayrak</string>
+    <string name="menu_flag_card_four">Mavi bayrak</string>
+    <string name="menu_edit_tags">Etiketleri düzenle</string>
     <string name="delete_note_message">Bu not ve bütün kartları gerçekten silinsin mi?\n%s</string>
     <string name="menu_select">Metni seç</string>
     <string name="menu_search">%1$s\'de Ara</string>
     <string name="menu_mark_note">Notu işâretle</string>
     <string name="menu_unmark_note">İşâreti kaldır</string>
-    <string name="menu_toggle_mic_tool_bar">Check pronunciation</string>
+    <string name="menu_toggle_mic_tool_bar">Telaffuzu kontrol et</string>
     <string name="new_deck">Deste oluştur</string>
     <string name="create" comment="Button to create a filtered deck">Oluştur</string>
     <string name="new_dynamic_deck">Filtreli deste oluştur</string>
@@ -129,7 +129,7 @@
     The user is taken to the "App Info" screen, and needs to click "Permissions" and
     grant AnkiDroid the \'Storage\' permission. This needs to be a fairly generic message as implementations
     of the permissions/app info screen will differ between devices. -->
-    <string name="startup_no_storage_permission">Please grant AnkiDroid the ‘Storage’ permission to continue</string>
+    <string name="startup_no_storage_permission">Lütfen ilerlemek için AnkiDroid\'e ‘Depolama’ yetkisini veriniz.</string>
     <!--
         The time_quantities are units of time. They are used without
         plurals or dots.
@@ -139,23 +139,23 @@
     -->
     <string name="time_quantity_seconds">%d s</string>
     <string name="time_quantity_minutes">%d dk</string>
-    <string name="time_quantity_hours_minutes">%1$d h %2$d m</string>
+    <string name="time_quantity_hours_minutes">%1$d s %2$d d</string>
     <string name="time_quantity_hours">%d h</string>
     <string name="time_quantity_days">%d gün</string>
-    <string name="time_quantity_days_hours">%1$d d %2$d h</string>
+    <string name="time_quantity_days_hours">%1$d g %2$d s</string>
     <string name="time_quantity_months">%.1f ay</string>
     <string name="time_quantity_years">%.1f yıl</string>
     <!-- or "%.1f a" -->
-    <string name="rebuild_filtered_deck">Rebuilding filtered deck&#8230;</string>
+    <string name="rebuild_filtered_deck">Filtreli deste yeniden oluşturuluyor...</string>
     <string name="rebuild_cram_label">Yeniden Oluştur</string>
     <string name="empty_cram_label">Boş</string>
-    <string name="create_subdeck">Create subdeck</string>
-    <string name="empty_filtered_deck">Emptying filtered deck&#8230;</string>
+    <string name="create_subdeck">Alt deste oluştur</string>
+    <string name="empty_filtered_deck">Filtreli deste boşaltılıyor...</string>
     <string name="custom_study_deck_name">Kişiselleştirilmiş çalışma oturumu</string>
     <string name="custom_study_deck_exists">Lütfen mevcut özelleştirilmiş çalışma destesini yeniden adlandırın.</string>
     <string name="empty_deck">Bu deste boş</string>
-    <string name="empty_deck_add_note">Add card</string>
-    <string name="invalid_deck_name">Invalid deck name</string>
+    <string name="empty_deck_add_note">Kart ekle</string>
+    <string name="invalid_deck_name">Geçersiz deste adı</string>
     <string name="studyoptions_empty">Bu deste boş. Yeni içerik eklemek için + düğmesine basın.</string>
     <string name="studyoptions_limit_reached">Günlük çalışma sınırına ulaşıldı</string>
     <string name="studyoptions_empty_schedule">Çalışılması planlanmış kart yok</string>
@@ -180,34 +180,34 @@
     <string name="card_template_editor_front">Şablon Ön Yüz</string>
     <string name="card_template_editor_back">Şablon Arka Yüz</string>
     <string name="card_template_editor_styling">Stil</string>
-    <string name="card_template_editor_menu_card_browser_appearance">Card Browser Appearance</string>
-    <string name="card_template_editor_deck_override">Deck Override</string>
+    <string name="card_template_editor_menu_card_browser_appearance">Kart Listeleyici Görünümü</string>
+    <string name="card_template_editor_deck_override">Desteyi Geçersiz Kılma</string>
     <string name="card_template_editor_cant_delete">En az bir kart türü gerekiyor.</string>
     <plurals name="card_template_editor_confirm_delete">
         <item quantity="one">\"%2$s\" kart türü ve %1$d kartı silinsin mi?</item>
         <item quantity="other">\"%2$s\" kart türü ve %1$d kartı silinsin mi?</item>
     </plurals>
     <string name="invalid_template">Bir kart oluşturulamadı</string>
-    <string name="card_template_editor_would_delete_note">Removing this card type would cause one or more notes to be deleted. Please create and save a new card type first.</string>
-    <string name="card_template_editor_save_error">Unable to save card template changes: %s</string>
-    <string name="template_for_current_card_deleted">The card type for the current card was deleted.</string>
+    <string name="card_template_editor_would_delete_note">Bu kart tipini kaldırmak bir veya daha fazla notun silinmesine neden olur. Lütfen önce yeni bir kart türü oluşturun.</string>
+    <string name="card_template_editor_save_error">Kart şablon değişiklikleri yapılamıyor: %s</string>
+    <string name="template_for_current_card_deleted">Kart için mevcut olan kart tipi silindi.</string>
     <!-- Card Browser Appearance -->
-    <string name="card_template_browser_appearance_title">Browser appearance</string>
+    <string name="card_template_browser_appearance_title">Listeleyici görünümü</string>
     <string name="current_and_default_deck">%1$s (%2$s)</string>
     <!-- card Info -->
-    <string name="card_info_title">Card info</string>
+    <string name="card_info_title">Kart Bilgileri</string>
     <!-- Permissions -->
     <string name="read_write_permission_label">AnkiDroid veritabanını oku ve yaz</string>
     <string name="read_write_permission_description">varolan notlara, kartlara, not türlerine ve destelere erişmek, ve yenilerini oluşturmek</string>
     <!-- Context Menu -->
-    <string name="card_browser_context_menu" comment="The value which appears in the system context menu. Note the casing difference">Card Browser</string>
-    <string name="context_menu_anki_card_label">Anki Card</string>
-    <string name="has_a_problem" comment="First field is either front template or back template. Second field is the error message.">%1$s has a problem:<br/>%2$s</string>
-    <string name="more_information">More information</string>
-    <string name="no_field">Found \'{{%1$s}}\', but there is no field called \'%1$s\'.</string>
-    <string name="closed_tag_not_open">Found \'{{/%1$s}}\', but missing \'{{#%1$s}}\' or \'{{^%1$s}}\'.</string>
-    <string name="missing_closing_bracket">Missing \'}}\' in \'%s\'.</string>
-    <string name="open_tag_not_closed">Missing \'{{%s}}\'.</string>
-    <string name="wrong_tag_closed">Found \'{{/%1$s}}\', but expected \'{{/%2$s}}\'</string>
-    <string name="filter_error">Error in filter %s</string>
+    <string name="card_browser_context_menu" comment="The value which appears in the system context menu. Note the casing difference">Kart Listeleyicisi</string>
+    <string name="context_menu_anki_card_label">Anki Kart</string>
+    <string name="has_a_problem" comment="First field is either front template or back template. Second field is the error message.">%1$s problem var:<br/>%2$s</string>
+    <string name="more_information">Daha fazla bilgi</string>
+    <string name="no_field">Bulundu \'{{%1$s}}\', ama \'%1$s\' alanı yok.</string>
+    <string name="closed_tag_not_open">Bulundu \'{{/%1$s}}\', ama \'{{#%1$s}}\' ya da \'{{^%1$s}}\' eksik.</string>
+    <string name="missing_closing_bracket">\'%s\' içinde \'}}\' eksik.</string>
+    <string name="open_tag_not_closed">\'{{%s}}\' eksik.</string>
+    <string name="wrong_tag_closed">Bulundu \'{{/%1$s}}\', ama \'{{/%2$s}}\' beklendi.</string>
+    <string name="filter_error">%s Filtresinde Hata</string>
 </resources>

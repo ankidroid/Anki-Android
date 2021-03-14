@@ -43,6 +43,7 @@ import com.ichi2.anki.R;
 import com.ichi2.anki.Reviewer;
 import com.ichi2.anki.UIUtils;
 import com.ichi2.anki.analytics.AnalyticsDialogFragment;
+import com.ichi2.anki.exception.FilteredAncestor;
 import com.ichi2.async.CollectionTask;
 import com.ichi2.async.TaskListener;
 import com.ichi2.async.TaskListenerWithContext;
@@ -51,6 +52,7 @@ import com.ichi2.libanki.Collection;
 import com.ichi2.libanki.Consts;
 
 import com.ichi2.libanki.Deck;
+import com.ichi2.libanki.Decks;
 import com.ichi2.utils.JSONArray;
 import com.ichi2.utils.JSONObject;
 
@@ -428,9 +430,10 @@ public class CustomStudyDialog extends AnalyticsDialogFragment {
         final AnkiActivity activity = getAnkiActivity();
         Collection col = CollectionHelper.getInstance().getCol(activity);
         long did = getArguments().getLong("did");
-        String deckToStudyName = col.getDecks().get(did).getString("name");
+        Decks decks = col.getDecks();
+        String deckToStudyName = decks.get(did).getString("name");
         String customStudyDeck = getResources().getString(R.string.custom_study_deck_name);
-        Deck cur = col.getDecks().byName(customStudyDeck);
+        Deck cur = decks.byName(customStudyDeck);
         if (cur != null) {
             Timber.i("Found deck: '%s'", customStudyDeck);
             if (cur.isStd()) {
@@ -443,12 +446,16 @@ public class CustomStudyDialog extends AnalyticsDialogFragment {
                 col.getSched().emptyDyn(cur.getLong("id"));
                 // reuse; don't delete as it may have children
                 dyn = cur;
-                col.getDecks().select(cur.getLong("id"));
+                decks.select(cur.getLong("id"));
             }
         } else {
             Timber.i("Creating Dynamic Deck '%s' for custom study", customStudyDeck);
-            long customStudyDid = col.getDecks().newDyn(customStudyDeck);
-            dyn = col.getDecks().get(customStudyDid);
+            try {
+                dyn = decks.get(decks.newDyn(customStudyDeck));
+            } catch (FilteredAncestor filteredAncestor) {
+                UIUtils.showThemedToast(getActivity(), getString(R.string.decks_rename_filtered_nosubdecks), true);
+                return;
+            }
         }
         if (!dyn.has("terms")) {
             //#5959 - temp code to diagnose why terms doesn't exist.

@@ -92,13 +92,13 @@
         <item>Интервал</item>
         <item>Ease</item>
         <item>Due</item>
-        <item>Card Modified</item>
+        <item>променена карта</item>
         <item>Създадено</item>
-        <item>Note Modified</item>
+        <item>променена бележка</item>
     </string-array>
     <!-- Custom study options -->
-    <string name="custom_study_increase_new_limit">Modify today’s new card limit</string>
-    <string name="custom_study_increase_review_limit">Modify today’s review card limit</string>
+    <string name="custom_study_increase_new_limit">Модифициране на днешното ограничение за нови карти</string>
+    <string name="custom_study_increase_review_limit">Модифициране на днешния лимит за преглед на карти</string>
     <string name="custom_study_review_forgotten">Преглед забравени карти</string>
     <string name="custom_study_review_ahead">Преглед напред</string>
     <string name="custom_study_random_selection">Учи случаен подбор от карти</string>
@@ -107,14 +107,14 @@
     <!-- Card editor -->
     <string name="cardeditor_title_edit_card">Промяна на бележка</string>
     <string name="discard_unsaved_changes">Затворете и загубете текущите входни данни?</string>
-    <string name="note_editor_no_cards_created">No cards created. Please fill in more fields</string>
+    <string name="note_editor_no_cards_created">Няма създадени карти. Моля, попълнете още полета</string>
     <string name="note_editor_no_first_field">Първото поле е празно</string>
     <string name="note_editor_no_cloze_delations">This note type must contain cloze deletions</string>
     <string name="note_editor_set_field_language">Set field language</string>
     <string name="note_editor_no_cards_created_all_fields">The current note type did not produce any cards.\nPlease choose another note type, or click ‘Cards’ and add a field substitution</string>
     <string name="note_editor_insert_cloze_no_cloze_note_type">Cloze deletions will only work on a Cloze note type</string>
     <string name="saving_facts">Записване на бележка</string>
-    <string name="saving_model">Saving note type</string>
+    <string name="saving_model">запазване типа на бележката</string>
     <string name="save">Запис</string>
     <string name="close">Затвори</string>
     <string name="select">Изберете</string>
@@ -135,7 +135,7 @@
     <string name="note_editor_copy_note">Копиране на бележката</string>
     <string name="card_editor_reposition_card">Препозициониране</string>
     <string name="card_editor_reset_card">Начално състояние на напредъка</string>
-    <string name="card_editor_reschedule_card" comment="Action to reschedule a card">Reschedule</string>
+    <string name="card_editor_reschedule_card" comment="Action to reschedule a card">Повторно планиране</string>
     <string name="card_editor_preview_card" comment="Button offering to preview some card(s)">Преглед</string>
     <string name="error_insufficient_memory">Операцията е невъзможна поради недостатъчна памет на вашето устройство</string>
     <string name="rename" comment="Confirm that the renaming action should be processed.">Преименуване</string>
@@ -158,16 +158,16 @@
     <string name="import_message_add" comment="Adding a new deck to the collection (import)">Добави</string>
     <string name="import_message_replace_confirm">Това ще изтрие вашата съществуваща колекция и ще я замени с данните от файла %s</string>
     <string name="import_message_add_confirm">Добавяне на \"%s\" към колекцията? Това може да отнеме дълго време</string>
-    <string name="import_log_no_apkg">This isn’t a valid Anki package file</string>
-    <string name="import_log_failed_unzip">Failed to unzip apkg: %s</string>
-    <string name="import_log_failed_copy_to">Failed to copy apkg to %s</string>
+    <string name="import_log_no_apkg">Това не е валиден Anki package файл</string>
+    <string name="import_log_failed_unzip">Неуспешно разархивиране на apkg %s:</string>
+    <string name="import_log_failed_copy_to">Неуспешно копиране на apkg до %s</string>
     <string name="import_log_failed_validate">apkg failed validation</string>
-    <string name="import_log_insufficient_space">There is not enough space to unzip the package. Needed %1$d, available %2$d</string>
+    <string name="import_log_insufficient_space">Няма достатъчно място за разархивирането на пакета. Нужни са %1$d наличние  са само %2$d</string>
     <string name="import_log_file_cache_cleared">Error importing file, likely a cache clear during processing.\nPlease try again</string>
-    <string name="import_succeeded_but_check_database">Data import succeeded but post-import cleanup failed. Run check database later. Root cause: %s</string>
-    <string name="import_error_unhandled_request">Unable to process import request</string>
+    <string name="import_succeeded_but_check_database">Импортирането на данните е успешно, но почистването на след импортирането се провали. Стартирайте проверка на базата данни по-късно. Главна причина: %s</string>
+    <string name="import_error_unhandled_request">Заявката за импортиране не може да бъде обработена</string>
     <string name="import_error_corrupt_zip">The apkg file is corrupt. Please delete and re-download it.\n\nRoot cause: %s</string>
-    <string name="import_error_exception">Failed to import package\n\n%s</string>
+    <string name="import_error_exception">Неуспешно импортиране на пакет \n\n%s</string>
     <string name="import_error_not_apkg_extension">Filename “%s” doesn’t have .apkg or .colpkg extension</string>
     <string name="import_error_load_imported_database">Anki Database (.anki2) replacements are not yet supported. Please see the manual for replacement instructions.</string>
     <string name="import_error_content_provider">Избраният файл не можа да бъде импортиран автоматично от AnkiDroid. Моля, вижте ръководството на потребителя за как да ръчно да импортирате anki файлове: \n%s</string>
@@ -179,12 +179,12 @@
     <string name="export_include_media">Включване на медия</string>
     <string name="confirm_apkg_export">Export collection as Anki package?</string>
     <string name="confirm_apkg_export_deck">Експортиране на \"%s\" като apkg файл?</string>
-    <string name="export_in_progress">Exporting Anki package file&#8230;</string>
+    <string name="export_in_progress">Експортиране на Anki пакетен файл&#8230;</string>
     <string name="export_successful_title">Send Anki package?</string>
     <string name="export_send_button">Изпращане</string>
     <string name="export_save_button">Запис във файл</string>
     <string name="export_send_no_handlers">No applications available to handle apkg. Saving...</string>
-    <string name="export_save_apkg_successful">Successfully saved Anki package</string>
+    <string name="export_save_apkg_successful">Успешно запазване на Anki пакет</string>
     <string name="export_save_apkg_unsuccessful">Save Anki package failed</string>
     <string name="export_successful">File “%s” was exported. Do you want to send it with another app?</string>
     <string name="export_email_subject">Експортирани от AnkiDroid флашкарти: %s</string>
@@ -289,23 +289,23 @@
     <string name="csv_importer_error_exception">Прекъснато: %s</string>
     <string name="user_is_a_robot">Открит автоматичен тест. Ако сте човек, свържете се с екипа за поддръжка на AnkiDroid</string>
     <plurals name="note_importer_notes_added">
-        <item quantity="one">%d note added</item>
-        <item quantity="other">%d notes added</item>
+        <item quantity="one">%d бележката е добавена</item>
+        <item quantity="other">%d бележките са добавени</item>
     </plurals>
     <plurals name="note_importer_notes_updated">
-        <item quantity="one">%d note updated</item>
-        <item quantity="other">%d notes updated</item>
+        <item quantity="one">%d бележката е обновена</item>
+        <item quantity="other">%d бележките са обновени</item>
     </plurals>
     <plurals name="note_importer_notes_unchanged">
-        <item quantity="one">%d note unchanged</item>
-        <item quantity="other">%d notes unchanged</item>
+        <item quantity="one">%d бележката е непроменена</item>
+        <item quantity="other">%d бележките са непроменени</item>
     </plurals>
     <!-- JS api -->
     <string name="api_version_developer_contact">Тази карта използва неподдържани функции на AnkiDroid. Свържете се с разработчика %1$s или вижте уикито. %2$s</string>
     <string name="invalid_json_data">Картата предоставя невалидни данни. %s</string>
     <string name="valid_js_api_version">Невалидна версия на AnkiDroid JS API. Свържете се с разработчика %s или вижте уики</string>
     <string name="update_js_api_version">AnkiDroid JS API update available. Contact developer %s, or view wiki</string>
-    <string name="reviewer_invalid_api_version_visit_documentation">View</string>
+    <string name="reviewer_invalid_api_version_visit_documentation">Преглед</string>
     <string name="anki_js_error_code">(Код на грешката: %1$d)</string>
     <!-- About AnkiDroid screen -->
     <string name="about_ankidroid_successfully_copied_debug">Copied debug information to clipboard</string>
@@ -315,7 +315,7 @@
     <string name="card_viewer_media_relative_protocol">Card Content Error: Media update required</string>
     <!-- Deck Picker -->
     <string name="deck_picker_failed_deck_load">Failed to load deck ‘%s’</string>
-    <string name="search_decks">Search decks</string>
+    <string name="search_decks">Потърси тесте</string>
     <string name="ankidroid_init_failed_webview_title">Фатална грешка</string>
     <string name="ankidroid_init_failed_webview">AnkiDroid relies on the System WebView which is unavailable. This can happen if the system is installing updates. Please try again in a few minutes.\n\n%s</string>
     <!-- A Menu item to change the Font Size (currently in the Note Editor) -->
