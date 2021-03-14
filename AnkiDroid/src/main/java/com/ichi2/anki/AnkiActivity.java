@@ -377,7 +377,7 @@ public class AnkiActivity extends AppCompatActivity implements SimpleMessageDial
             return;
         }
 
-        int toolbarColor=Themes.getColorFromAttr(this,R.attr.customTabToolbarColor);
+        int toolbarColor = Themes.getColorFromAttr(this, R.attr.customTabToolbarColor);
         int navBarColor=Themes.getColorFromAttr(this,R.attr.customTabNavBarColor);
 
         CustomTabColorSchemeParams colorSchemeParams =
@@ -635,4 +635,3 @@ public class AnkiActivity extends AppCompatActivity implements SimpleMessageDial
         return true;
     }
 }
-
