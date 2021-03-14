@@ -1,7 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<menu xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools">
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
 
     <group
         android:id="@+id/menu_multimedia_group"
@@ -9,33 +7,23 @@
         <item
             android:id="@+id/menu_multimedia_photo"
             android:icon="@drawable/ic_popup_menu_item_image"
-            android:title="@string/multimedia_editor_popup_image"
-            app:showAsAction="always"
-            tools:ignore="AlwaysShowAction" />
+            android:title="@string/multimedia_editor_popup_image" />
         <item
             android:id="@+id/menu_multimedia_audio_clip"
             android:icon="@drawable/ic_popup_menu_item_audio"
-            android:title="@string/multimedia_editor_popup_audio_clip"
-            app:showAsAction="always"
-            tools:ignore="AlwaysShowAction" />
+            android:title="@string/multimedia_editor_popup_audio_clip" />
         <item
             android:id="@+id/menu_multimedia_audio"
             android:icon="@drawable/ic_popup_menu_item_record"
-            android:title="@string/multimedia_editor_popup_audio"
-            app:showAsAction="always"
-            tools:ignore="AlwaysShowAction" />
+            android:title="@string/multimedia_editor_popup_audio" />
         <item
             android:id="@+id/menu_multimedia_text"
             android:icon="@drawable/ic_popup_menu_item_editor"
-            android:title="@string/multimedia_editor_popup_text"
-            app:showAsAction="always"
-            tools:ignore="AlwaysShowAction" />
+            android:title="@string/multimedia_editor_popup_text" />
         <item
             android:id="@+id/menu_multimedia_clear_field"
             android:icon="@drawable/ic_popup_menu_item_clear"
-            android:title="@string/multimedia_editor_popup_clear_field"
-            app:showAsAction="always"
-            tools:ignore="AlwaysShowAction" />
+            android:title="@string/multimedia_editor_popup_clear_field" />
     </group>
 
 </menu>
