@@ -25,6 +25,8 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 
+import com.ichi2.anki.R;
+
 
 @SuppressWarnings("deprecation") // TODO Tracked in https://github.com/ankidroid/Anki-Android/issues/5019
 public class IncrementerNumberRangePreference extends NumberRangePreference {
@@ -102,8 +104,8 @@ public class IncrementerNumberRangePreference extends NumberRangePreference {
         // Centre text inside mEditText
         mEditText.setGravity(Gravity.CENTER_HORIZONTAL);
 
-        mIncrementButton.setText("+");
-        mDecrementButton.setText("-");
+        mIncrementButton.setText(R.string.plus_sign);
+        mDecrementButton.setText(R.string.minus_sign);
         mIncrementButton.setLayoutParams(buttonParams);
         mDecrementButton.setLayoutParams(buttonParams);
         mIncrementButton.setOnClickListener(view -> updateEditText(true));
