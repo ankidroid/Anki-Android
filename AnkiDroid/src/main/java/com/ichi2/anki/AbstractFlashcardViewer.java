@@ -4024,6 +4024,9 @@ see card.js for available functions
         }
 
         @JavascriptInterface
+        public boolean ankiIsDisplayingAnswer() { return isDisplayingAnswer(); };
+
+        @JavascriptInterface
         public boolean ankiIsActiveNetworkMetered() {
             try {
                 ConnectivityManager cm = (ConnectivityManager) AnkiDroidApp.getInstance().getApplicationContext()
