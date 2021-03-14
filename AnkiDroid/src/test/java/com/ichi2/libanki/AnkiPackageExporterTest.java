@@ -127,10 +127,7 @@ public class AnkiPackageExporterTest extends RobolectricTest {
 
     @NonNull
     private AnkiPackageExporter getExporterForDeckWithMedia() {
-        AnkiPackageExporter exporter = new AnkiPackageExporter(getCol());
-        exporter.setIncludeMedia(true);
-        exporter.setIncludeSched(true);
-        exporter.setDid(1L);
+        AnkiPackageExporter exporter = new AnkiPackageExporter(getCol(), 1L, true, true);
         return exporter;
     }
 
