@@ -20,6 +20,9 @@ import android.content.Context;
 import android.net.Uri;
 import android.os.Parcel;
 import android.os.Parcelable;
+import android.os.SystemClock;
+import android.view.View;
+import android.widget.Toast;
 
 import com.ichi2.anki.AnkiActivity;
 import com.ichi2.anki.AnkiDroidApp;
@@ -31,6 +34,10 @@ import com.ichi2.utils.IntentUtil;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.UUID;
+import java.util.WeakHashMap;
 
 import androidx.annotation.DrawableRes;
 import androidx.annotation.StringRes;
@@ -49,6 +56,7 @@ public class HelpDialog {
     public static DialogFragment createInstance(Context context) {
 
         RateAppItem rateAppItem = new RateAppItem(R.string.help_item_support_rate_ankidroid, R.drawable.ic_star_black_24);
+        ExceptionReportItem exceptionReportItem = new ExceptionReportItem(R.string.send_exception_now, R.drawable.ic_round_assignment_24);
         Item[] allItems = {
                 new ItemHeader(R.string.help_title_using_ankidroid, R.drawable.ic_manual_black_24dp,
                         new FunctionItem(R.string.help_item_ankidroid_manual, R.drawable.ic_manual_black_24dp, HelpDialog::openManual),
@@ -75,6 +83,7 @@ public class HelpDialog {
                         new LinkItem(R.string.help_item_facebook, R.drawable.ic_link_black_24dp, R.string.link_facebook),
                         new LinkItem(R.string.help_item_twitter, R.drawable.ic_link_black_24dp, R.string.link_twitter)
                 ),
+                exceptionReportItem
         };
 
         ArrayList<Item> itemList = new ArrayList<>(Arrays.asList(allItems));
@@ -216,5 +225,52 @@ public class HelpDialog {
         public interface ActivityConsumer extends Serializable {
             void consume(AnkiActivity activity);
         }
+    }
+
+    private static class ExceptionReportItem extends Item implements Parcelable{
+
+        UUID uuid = UUID.randomUUID();
+        private static final Map<String, Long> lastClickMap = new HashMap<>();
+        final int minInterval = 60000;
+        final String lastClick = "LAST_CLICK";
+
+        public ExceptionReportItem(@StringRes int titleRes, @DrawableRes int iconRes) { super(titleRes, iconRes); }
+
+        @Override
+        public void execute(AnkiActivity activity) {
+            long currentTimestamp = SystemClock.uptimeMillis();
+            Long lastClickTimeStamp = lastClickMap.get(lastClick);
+
+            if (lastClickTimeStamp == null || currentTimestamp - lastClickTimeStamp > minInterval) {
+                AnkiDroidApp.sendExceptionReport(
+                        new Throwable("Exception report sent by user manually"),
+                        "AnkiDroidApp.HelpDialog",
+                        uuid.toString());
+                Toast.makeText(activity, "Report Submitted.", Toast.LENGTH_SHORT).show();
+                lastClickMap.put(lastClick, currentTimestamp);
+            } else {
+                Toast.makeText(activity, "Submitted already.", Toast.LENGTH_SHORT).show();
+            }
+        }
+
+        protected ExceptionReportItem(Parcel in) {
+            super(in);
+        }
+
+        public static final Creator<ExceptionReportItem> CREATOR = new Creator<ExceptionReportItem>() {
+            @Override
+            public ExceptionReportItem createFromParcel(Parcel in) {
+                return new ExceptionReportItem(in);
+            }
+
+
+            @Override
+            public ExceptionReportItem[] newArray(int size) {
+                return new ExceptionReportItem[size];
+            }
+        };
+
+        @Override
+        public void remove(Item toRemove) { }
     }
 }
