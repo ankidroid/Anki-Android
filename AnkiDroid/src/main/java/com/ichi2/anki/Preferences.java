@@ -393,15 +393,18 @@ public class Preferences extends AppCompatPreferenceActivity implements Preferen
                     });
                     screen.addPreference(lockDbPreference);
                 }
+                // Adding change logs in both debug and release builds
                 if (BuildConfig.DEBUG) {
                     Timber.i("Debug mode, adding show changelog");
-                    android.preference.Preference changelogPreference = new android.preference.Preference(this);
-                    changelogPreference.setTitle("Open Changelog");
-                    Intent infoIntent = new Intent(this, Info.class);
-                    infoIntent.putExtra(Info.TYPE_EXTRA, Info.TYPE_NEW_VERSION);
-                    changelogPreference.setIntent(infoIntent);
-                    screen.addPreference(changelogPreference);
+                } else {
+                    Timber.i("Release mode, adding show changelog");
                 }
+                android.preference.Preference changelogPreference = new android.preference.Preference(this);
+                changelogPreference.setTitle("Open Changelog");
+                Intent infoIntent = new Intent(this, Info.class);
+                infoIntent.putExtra(Info.TYPE_EXTRA, Info.TYPE_NEW_VERSION);
+                changelogPreference.setIntent(infoIntent);
+                screen.addPreference(changelogPreference);
                 // Force full sync option
                 ConfirmationPreference fullSyncPreference = (ConfirmationPreference)screen.findPreference("force_full_sync");
                 fullSyncPreference.setDialogMessage(R.string.force_full_sync_summary);
