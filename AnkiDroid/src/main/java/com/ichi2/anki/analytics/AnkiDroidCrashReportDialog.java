@@ -139,7 +139,7 @@ public class AnkiDroidCrashReportDialog extends CrashReportDialog implements Dia
             outState.putString(STATE_COMMENT, mUserComment.getText().toString());
         }
     }
-    public static String fetchWebViewInformation(WebView webView){
+    public static String fetchWebViewInformation( WebView webView ){
         return webView.getSettings().getUserAgentString();
     }
 }
