@@ -394,11 +394,7 @@ public class Preferences extends AppCompatPreferenceActivity implements Preferen
                     screen.addPreference(lockDbPreference);
                 }
                 // Adding change logs in both debug and release builds
-                if (BuildConfig.DEBUG) {
-                    Timber.i("Debug mode, adding show changelog");
-                } else {
-                    Timber.i("Release mode, adding show changelog");
-                }
+                Timber.i("Adding open changelog");
                 android.preference.Preference changelogPreference = new android.preference.Preference(this);
                 changelogPreference.setTitle(R.string.open_changelog);
                 Intent infoIntent = new Intent(this, Info.class);
