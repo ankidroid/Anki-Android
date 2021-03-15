@@ -381,11 +381,11 @@ public class CardBrowserTest extends RobolectricTest {
 
         CardBrowser b = getBrowserWithNoNewCards();
 
-        assertThat("The target deck should not yet be selected", b.getLastDeckId(), not(is(targetDid)));
+        assertThat("The target deck should not yet be selected", b.getDeckId(), not(is(targetDid)));
 
         b.selectDeckId(targetDid);
 
-        assertThat("The target deck should be selected", b.getLastDeckId(), is(targetDid));
+        assertThat("The target deck should be selected", b.getDeckId(), is(targetDid));
 
         Intent addIntent = b.getAddNoteIntent();
 
@@ -401,7 +401,7 @@ public class CardBrowserTest extends RobolectricTest {
 
         CardBrowser b = getBrowserWithNoNewCards();
 
-        assertThat("The initial deck should be selected", b.getLastDeckId(), is(initialDid));
+        assertThat("The initial deck should be selected", b.getDeckId(), is(initialDid));
 
         Intent addIntent = b.getAddNoteIntent();
 
