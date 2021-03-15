@@ -489,16 +489,17 @@ public class CardBrowser extends NavigationDrawerActivity implements
      * */
     @VisibleForTesting
     Long getDeckId() {
-        long did = getIntent().getExtras().getLong("did");
-        if(did == 0) {
-            SharedPreferences state = getSharedPreferences(PERSISTENT_STATE_FILE,0);
-            if (!state.contains(LAST_DECK_ID_KEY)) {
-                return null;
+        if (getIntent().getExtras().containsKey("did")){
+            long did = getIntent().getExtras().getLong("did");
+            if (did != 0) {
+                return did;
             }
-            return state.getLong(LAST_DECK_ID_KEY, -1);
-        } else {
-            return did;
         }
+        SharedPreferences state = getSharedPreferences(PERSISTENT_STATE_FILE,0);
+        if (!state.contains(LAST_DECK_ID_KEY)) {
+            return null;
+        }
+        return state.getLong(LAST_DECK_ID_KEY, -1);
     }
 
     public static void clearLastDeckId() {
