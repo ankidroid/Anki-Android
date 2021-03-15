@@ -567,10 +567,10 @@ public class NoteEditor extends AnkiActivity {
                 // Cast the drop down items (popup items) as text view
                 TextView tv = (TextView) super.getDropDownView(position,convertView,parent);
 
-                // If this item is selected item
+                // If this item is selected
                 if(position == mNoteTypeSpinner.getSelectedItemPosition()){
-                    // Set spinner selected popup item's text color
                     tv.setBackgroundColor(Color.LTGRAY);
+                    tv.setTextColor(Color.BLACK);
                 }
 
                 // Return the modified view
@@ -620,8 +620,8 @@ public class NoteEditor extends AnkiActivity {
 
                 // If this item is selected
                 if(position == mNoteDeckSpinner.getSelectedItemPosition()){
-                    // Set spinner selected popup item's text color
                     tv.setBackgroundColor(Color.LTGRAY);
+                    tv.setTextColor(Color.BLACK);
                 }
 
                 // Return the modified view
