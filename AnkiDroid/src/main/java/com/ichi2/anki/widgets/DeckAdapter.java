@@ -61,9 +61,7 @@ public class DeckAdapter<T extends AbstractDeckTreeNode<T>> extends RecyclerView
 
     private final LayoutInflater mLayoutInflater;
     private final List<T> mDeckList;
-    /**
-     * A subset of mDeckList (currently displayed)
-     */
+    /**A subset of mDeckList (currently displayed)*/
     private final List<AbstractDeckTreeNode<?>> mCurrentDeckList = new ArrayList<>();
     private final int mZeroCountColor;
     private final int mNewCountColor;
@@ -96,8 +94,6 @@ public class DeckAdapter<T extends AbstractDeckTreeNode<T>> extends RecyclerView
     // Whether we have a background (so some items should be partially transparent).
     private boolean mPartiallyTransparentForBackground;
 
-
-
     // ViewHolder class to save inflated views for recycling
     public static class ViewHolder extends RecyclerView.ViewHolder {
         public final RelativeLayout deckLayout;
@@ -108,7 +104,6 @@ public class DeckAdapter<T extends AbstractDeckTreeNode<T>> extends RecyclerView
         public final TextView deckNew;
         public final TextView deckLearn;
         public final TextView deckRev;
-
 
         public ViewHolder(View v) {
             super(v);
@@ -122,7 +117,6 @@ public class DeckAdapter<T extends AbstractDeckTreeNode<T>> extends RecyclerView
             deckRev = v.findViewById(R.id.deckpicker_rev);
         }
     }
-
 
     public DeckAdapter(LayoutInflater layoutInflater, Context context) {
         mLayoutInflater = layoutInflater;
@@ -151,27 +145,21 @@ public class DeckAdapter<T extends AbstractDeckTreeNode<T>> extends RecyclerView
         ta.recycle();
     }
 
-
     public void setDeckClickListener(View.OnClickListener listener) {
         mDeckClickListener = listener;
     }
-
 
     public void setCountsClickListener(View.OnClickListener listener) {
         mCountsClickListener = listener;
     }
 
-
     public void setDeckExpanderClickListener(View.OnClickListener listener) {
         mDeckExpanderClickListener = listener;
     }
 
-
     public void setDeckLongClickListener(View.OnLongClickListener listener) {
         mDeckLongClickListener = listener;
     }
-
-
     /**
      * Sets whether the control should have partial transparency to allow a background to be seen
      */
@@ -179,10 +167,8 @@ public class DeckAdapter<T extends AbstractDeckTreeNode<T>> extends RecyclerView
         mPartiallyTransparentForBackground = isTransparent;
     }
 
-
     /**
      * Consume a list of {@link AbstractDeckTreeNode}s to render a new deck list.
-     *
      * @param filter The string to filter the deck by
      */
     public void buildDeckList(List<T> nodes, Collection col, @Nullable CharSequence filter) {
@@ -197,12 +183,10 @@ public class DeckAdapter<T extends AbstractDeckTreeNode<T>> extends RecyclerView
         getFilter().filter(filter);
     }
 
-
     public AbstractDeckTreeNode<?> getNodeByDid(long did) {
         int pos = findDeckPosition(did);
         return getDeckList().get(pos);
     }
-
 
     @NonNull
     @Override
@@ -210,7 +194,6 @@ public class DeckAdapter<T extends AbstractDeckTreeNode<T>> extends RecyclerView
         View v = mLayoutInflater.inflate(R.layout.deck_item, parent, false);
         return new ViewHolder(v);
     }
-
 
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
@@ -279,24 +262,20 @@ public class DeckAdapter<T extends AbstractDeckTreeNode<T>> extends RecyclerView
         holder.countsLayout.setOnClickListener(mCountsClickListener);
     }
 
-
     private void setBackgroundAlpha(View view, @SuppressWarnings("SameParameterValue") double alphaPercentage) {
         Drawable background = view.getBackground().mutate();
         background.setAlpha((int) (255 * alphaPercentage));
         view.setBackground(background);
     }
 
-
     private boolean isCurrentlySelectedDeck(AbstractDeckTreeNode<?> node) {
         return node.getDid() == mCol.getDecks().current().optLong("id");
     }
-
 
     @Override
     public int getItemCount() {
         return mCurrentDeckList.size();
     }
-
 
     private void setDeckExpander(ImageButton expander, ImageButton indent, AbstractDeckTreeNode<?> node) {
         boolean collapsed = mCol.getDecks().get(node.getDid()).optBoolean("collapsed", false);
@@ -318,7 +297,6 @@ public class DeckAdapter<T extends AbstractDeckTreeNode<T>> extends RecyclerView
         int width = (int) indent.getResources().getDimension(R.dimen.keyline_1) * node.getDepth();
         indent.setMinimumWidth(width);
     }
-
 
     private void processNodes(List<T> nodes) {
         for (T node : nodes) {
@@ -351,8 +329,6 @@ public class DeckAdapter<T extends AbstractDeckTreeNode<T>> extends RecyclerView
             processNodes(node.getChildren());
         }
     }
-
-
     /**
      * Return the position of the deck in the deck list. If the deck is a child of a collapsed deck
      * (i.e., not visible in the deck list), then the position of the parent deck is returned instead.
@@ -374,7 +350,6 @@ public class DeckAdapter<T extends AbstractDeckTreeNode<T>> extends RecyclerView
         }
     }
 
-
     @Nullable
     public Integer getEta() {
         if (mNumbersComputed) {
@@ -383,7 +358,6 @@ public class DeckAdapter<T extends AbstractDeckTreeNode<T>> extends RecyclerView
             return null;
         }
     }
-
 
     @Nullable
     public Integer getDue() {
@@ -394,32 +368,26 @@ public class DeckAdapter<T extends AbstractDeckTreeNode<T>> extends RecyclerView
         }
     }
 
-
     private List<AbstractDeckTreeNode<?>> getDeckList() {
         return mCurrentDeckList;
     }
-
 
     @Override
     public Filter getFilter() {
         return new DeckFilter();
     }
 
-
     private class DeckFilter extends Filter {
         private final @NonNull
         ArrayList<AbstractDeckTreeNode<?>> mFilteredDecks = new ArrayList<>();
-
 
         private DeckFilter() {
             super();
         }
 
-
         private List<T> getAllDecks() {
             return mDeckList;
         }
-
 
         @Override
         protected FilterResults performFiltering(CharSequence constraint) {
@@ -434,10 +402,8 @@ public class DeckAdapter<T extends AbstractDeckTreeNode<T>> extends RecyclerView
                 List<T> filteredDecks = filterDecks(filterPattern, allDecks);
                 mFilteredDecks.addAll(filteredDecks);
             }
-
             return FilterResultsUtils.fromCollection(mFilteredDecks);
         }
-
 
         @Override
         protected void publishResults(CharSequence constraint, FilterResults results) {
@@ -445,7 +411,6 @@ public class DeckAdapter<T extends AbstractDeckTreeNode<T>> extends RecyclerView
             mCurrentDeckList.addAll(mFilteredDecks);
             notifyDataSetChanged();
         }
-
 
         private List<T> filterDecks(String filterPattern, List<T> allDecks) {
             ArrayList<T> ret = new ArrayList<>(allDecks.size());
@@ -457,7 +422,6 @@ public class DeckAdapter<T extends AbstractDeckTreeNode<T>> extends RecyclerView
             }
             return ret;
         }
-
 
         @Nullable
         private T filterDeckInternal(String filterPattern, T root) {
@@ -475,12 +439,10 @@ public class DeckAdapter<T extends AbstractDeckTreeNode<T>> extends RecyclerView
                     ret.add(returned);
                 }
             }
-
             // If any of a deck's children contains the search string, then the deck is valid
             return ret.isEmpty() ? null : root.withChildren(ret);
         }
-
-
+        
         private boolean containsFilterString(String filterPattern, T root) {
             String deckName = root.getFullDeckName();
             return deckName.toLowerCase(Locale.getDefault()).contains(filterPattern) || deckName.toLowerCase(Locale.ROOT).contains(filterPattern);
