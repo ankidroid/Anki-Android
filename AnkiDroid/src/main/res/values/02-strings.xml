@@ -372,5 +372,5 @@
 
     <!-- Used for credential empty warning message -->
     <string name="email_id_empty">Email Address is required!</string>
-    <string name="password_empty">Password is required!</string>
+    <string name="password_empty">Password is required</string>
 </resources>
