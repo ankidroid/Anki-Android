@@ -34,7 +34,7 @@ Feel free to join our Discord: [#dev-ankidroid](https://discord.gg/qjzcRTx) to j
 First, register here on GitHub, and follow the [instructions](https://help.github.com/articles/fork-a-repo/) on GitHub on the Anki-Android repository to fork and clone the code. If you want to be notified about each new improvement/bugfix, please subscribe to the [commits feed for the master branch](https://github.com/ankidroid/Anki-Android/commits/master.atom).
 
 ## Android Studio
-The next step is to install [Android Studio and the Android SDK](https://developer.android.com/sdk/index.html). Open Android Studio and choose "Open Project", then select the folder where you earlier cloned the github repository to (we will refer to this folder as `%AnkiDroidRoot%`).
+The next step is to install [Android Studio and the Android SDK](https://developer.android.com/sdk/index.html). Open Android Studio and choose "Open Project", then select the folder where you earlier cloned the Github repository to (we will refer to this folder as `%AnkiDroidRoot%`).
 
 On opening the project it should start to build and should eventually prompt you to install the following missing SDK components. Install them one by one as you get prompted:
 
