@@ -125,7 +125,7 @@ public class AnkiDroidCrashReportDialog extends CrashReportDialog implements Dia
                     mHelper.sendCrash(mUserComment.getText().toString()+"\n Webview Version name : "+pi.versionName+" Version Code : "+ pi.getLongVersionCode(), "");
                 }
             } catch (PackageManager.NameNotFoundException e) {
-                Log.e("Webview", "Android System WebView is not found");
+                Timber.w(e, "Android System WebView is not found");
                 mHelper.sendCrash(mUserComment.getText().toString(),"");
             }
         } else {
