@@ -34,6 +34,23 @@ Please understand that the interest in contributing to AnkiDroid for the Google 
 This list of projects is not exhaustive. Discussion with the intern may lead to new projects. In particular, if the intern uses the app and wants some new feature that does not exist yet, we may consider helping them create those features.
 Not all projects have the same difficulty level. We will choose a project to work on first, and if the intern does the project quickly we’ll be happy to work on a second simple project.
 
+## Tests coverage
+
+AnkiDroid really lack tests. According to https://app.codecov.io/gh/ankidroid/Anki-Android/ only 37% of the code is currently covered by tests. That means that 63% of the code is never even run during runs. We want to increase this considerably, we want to have tests that ensure that each feature work, and that warn us if anything breaks.
+
+### Expected Outcomes
+An increase in code coverage. Less regression in the future
+
+### This task uses:
+JAVA. Robolectric and/or test on device. Potentially JS
+
+### Difficulty
+From easy to very hard. As examples:
+* Finding a background function not covered in /libanki with codecov and adding test for it should usually be easy. Just calling method and checking the result.
+* Testing that some button properly implement a feature might require to understand more of the test tool used, and require bigger test. It will likely involve running activities.
+* Figuring out a proper way to test the javascript in card might require a whole new way to create tests.
+
+
 ## Scoped Storage Migration
 _This is vital to the project continuation_
 
