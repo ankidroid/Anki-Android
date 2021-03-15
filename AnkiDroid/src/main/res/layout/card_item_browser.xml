@@ -23,7 +23,12 @@
         android:paddingRight="3dp"
         android:paddingStart="3dp"
         android:paddingEnd="3dp"
+        android:textStyle="bold"
         android:paddingVertical="1dp"
+        android:paddingTop="15dp"
+        android:layout_marginTop="10dp"
+        android:textSize="15sp"
+        android:paddingBottom="2dp"
         android:gravity="top"/>
 
     <View
@@ -34,10 +39,15 @@
     <com.ichi2.ui.FixedTextView
         android:id="@+id/card_column2"
         android:layout_width="0dip"
+        android:layout_marginTop="10dp"
         android:layout_height="fill_parent"
         android:layout_weight="1"
+        android:textSize="15sp"
         android:paddingLeft="4dp"
+        android:paddingTop="15dp"
+        android:paddingBottom="2dp"
         android:paddingRight="2dp"
+        android:textStyle="bold"
         android:paddingStart="4dp"
         android:paddingEnd="2dp"
         android:paddingVertical="1dp"
