@@ -15,7 +15,8 @@ Feel free to join our Discord: [#dev-ankidroid](https://discord.gg/qjzcRTx) to j
   - [Dealing with merge conflicts](#dealing-with-merge-conflicts)
   - [Running automated tests](#running-automated-tests)
   - [Compiling from the command line](#compiling-from-the-command-line)
-  - [Handling translations](#handling-translations)
+  - [Adding translations](#adding-translations)
+  - [Handling translations (advanced)](#handling-translations)
   - [Making parallel builds](#making-parallel-builds)
   - [Anki database structure](#anki-database-structure)
   - [Branching Model](#branching-model)
@@ -154,7 +155,39 @@ gradlew.bat assembleDebug
 An apk file signed with a standard "debug" key will be generated named `"AnkiDroid-debug.apk"` in:
 `%AnkiDroidRoot%/AnkiDroid/build/outputs/apk/`
 
-## Handling translations
+## Adding translations
+
+AnkiDroid uses [string resources](https://developer.android.com/guide/topics/resources/string-resource) for all translatable strings. These are managed by a platform called [CrowdIn](https://crowdin.com/project/ankidroid).
+
+A translation consists of a key (used to reference the translation from Java), and a value:
+
+```xml
+<string name="example_key">Example value</string>
+```
+
+1. Determine the correct resource XML file to edit ([Guide](https://github.com/ankidroid/Anki-Android/wiki/Translating-AnkiDroid#logic-of-the-separation-in-different-files)) and expand it in Android Studio
+2. Add the string to the first file in the list (`/values`) and no other file.
+3. Reference the string using the appropriate function 
+   - Normally use `context.getString(R.string.example_key)`, some functions directly accept a string ID (`@StringRes int`).
+   - If the item is a plural, see [Google's documentation for handling plurals](https://developer.android.com/guide/topics/resources/string-resource#Plurals)
+4. Ignore any errors stating that these are missing translations after adding the string. If it compiles, it's fine. Maintainers will handle generating the strings after the pull request is completed.
+5. Take a screenshot of the string in context and add it to the Pull Request
+6. After the change is merged, a maintainer should add this screenshot to the CrowdIn string to help translators with context
+
+<details><summary>Example of the correct file to modify</summary>
+
+![demo](https://github.com/imaryandokania/catsapi/blob/master/Screenshot%202021-03-15%20at%2010.36.53%20AM.png)
+
+</details>
+
+### Translation Conventions
+
+* Avoid ending a string with a full stop unless there are multiple sentences
+* Plurals should use `<plurals`. Only define `one` and `other` for English as CrowdIn handles other plural types
+* Keys names should be [lowercase using underscores](https://github.com/ankidroid/Anki-Android/wiki/Code-style#string-key-resources-must-be-all-lowercase-using-underscore-to-separate-words)
+* Values should be unique in English. If the values are not unique, a `comment=""` attribute must be added to explain the differences to our translators. This is enforced by lint.
+
+## Handling translations (advanced)
 As described in the [contributing wiki](https://github.com/ankidroid/Anki-Android/wiki/Contributing#translate-ankidroid), AnkiDroid localization is done through the Crowdin platform. Developers should basically ignore all resource folders that have non-English locales. Edit the English strings only, and one of the project owners will handle the syncing of the translations. The process works as follows:
 
 * Developers can freely add, delete, or modify strings in English to the resources folder (`values/`) and commit to git.
@@ -163,12 +196,7 @@ As described in the [contributing wiki](https://github.com/ankidroid/Anki-Androi
 * A project owner will run a script that pushes those changes to the crowdin platform
 * Translators will see any new untranslated strings on crowdin and submit their translations
 * Before release a project owner will run another script which pulls all the current translations from crowdin and overwrites the existing files
-* These new files are then committed and pushed to github
-
-### Translation Conventions
-
-* Avoid ending a string with a full stop unless there are multiple sentences
-* Plurals should use `<plurals`. Only define `one` and `other` for English as CrowdIn handles other plural types
+* These new files are then committed and pushed to GitHub
 
 ## Making "parallel" builds
 If you want to run several different versions of AnkiDroid side by side (e.g. as described in the [FAQ on using profiles](https://github.com/ankidroid/Anki-Android/wiki/FAQ#how-to-use-different-anki-profiles)), you need to edit the package ID (from com.ichi2.anki) in the following places so that every version of AnkiDroid that you install has a unique ID:
