@@ -67,7 +67,7 @@ public class MyAccount extends AnkiActivity {
     private ImageView mAnkidroid_logo;
 
     private static boolean PORTRAIT_MODE = true;
-    private OrientationEventListener myOrientationEventListener ;
+    private OrientationEventListener myOrientationEventListener;
 
 
     private void switchToState(int newState) {
