@@ -483,13 +483,22 @@ public class CardBrowser extends NavigationDrawerActivity implements
     }
 
 
+    /**
+     * Returns the deck id of selected deck  if activity called from deck's context menu
+     * else return last deck id
+     * */
     @VisibleForTesting
-    Long getLastDeckId() {
-        SharedPreferences state = getSharedPreferences(PERSISTENT_STATE_FILE,0);
-        if (!state.contains(LAST_DECK_ID_KEY)) {
-            return null;
+    Long getDeckId() {
+        long did = getIntent().getExtras().getLong("did");
+        if(did == 0) {
+            SharedPreferences state = getSharedPreferences(PERSISTENT_STATE_FILE,0);
+            if (!state.contains(LAST_DECK_ID_KEY)) {
+                return null;
+            }
+            return state.getLong(LAST_DECK_ID_KEY, -1);
+        } else {
+            return did;
         }
-        return state.getLong(LAST_DECK_ID_KEY, -1);
     }
 
     public static void clearLastDeckId() {
@@ -682,10 +691,10 @@ public class CardBrowser extends NavigationDrawerActivity implements
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
 
         // If a valid value for last deck exists then use it, otherwise use libanki selected deck
-        if (getLastDeckId() != null && getLastDeckId() == ALL_DECKS_ID) {
+        if (getDeckId() != null && getDeckId() == ALL_DECKS_ID) {
             selectAllDecks();
-        } else  if (getLastDeckId() != null && getCol().getDecks().get(getLastDeckId(), false) != null) {
-            selectDeckById(getLastDeckId());
+        } else  if(getDeckId() != null && getCol().getDecks().get(getDeckId(), false) != null) {
+            selectDeckById(getDeckId());
         } else {
             selectDeckById(getCol().getDecks().selected());
         }
@@ -1319,7 +1328,7 @@ public class CardBrowser extends NavigationDrawerActivity implements
     Intent getAddNoteIntent() {
         Intent intent = new Intent(CardBrowser.this, NoteEditor.class);
         intent.putExtra(NoteEditor.EXTRA_CALLER, NoteEditor.CALLER_CARDBROWSER_ADD);
-        Long did = getLastDeckId();
+        Long did = getDeckId();
         if (did != null && did > 0) {
             intent.putExtra(NoteEditor.EXTRA_DID, (long) did);
         }
@@ -2011,7 +2020,7 @@ public class CardBrowser extends NavigationDrawerActivity implements
     }
 
     public boolean hasSelectedAllDecks() {
-        Long lastDeckId = getLastDeckId();
+        Long lastDeckId = getDeckId();
         return lastDeckId != null && lastDeckId == ALL_DECKS_ID;
     }
 
@@ -2028,7 +2037,7 @@ public class CardBrowser extends NavigationDrawerActivity implements
      */
     public String getSelectedDeckNameForUi() {
         try {
-            Long lastDeckId = getLastDeckId();
+            Long lastDeckId = getDeckId();
             if (lastDeckId == null) {
                 return getString(R.string.card_browser_unknown_deck_name);
             }
