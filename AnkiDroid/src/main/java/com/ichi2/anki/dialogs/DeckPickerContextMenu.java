@@ -53,6 +53,7 @@ public class DeckPickerContextMenu extends AnalyticsDialogFragment {
     private static final int CONTEXT_MENU_CUSTOM_STUDY_EMPTY = 7;
     private static final int CONTEXT_MENU_CREATE_SUBDECK = 8;
     private static final int CONTEXT_MENU_CREATE_SHORTCUT = 9;
+    private static final int CONTEXT_MENU_CARD_BROWSER = 10;
     @Retention(SOURCE)
     @IntDef( {CONTEXT_MENU_RENAME_DECK,
             CONTEXT_MENU_DECK_OPTIONS,
@@ -64,6 +65,7 @@ public class DeckPickerContextMenu extends AnalyticsDialogFragment {
             CONTEXT_MENU_CUSTOM_STUDY_EMPTY,
             CONTEXT_MENU_CREATE_SUBDECK,
             CONTEXT_MENU_CREATE_SHORTCUT,
+            CONTEXT_MENU_CARD_BROWSER,
     })
     public @interface DECK_PICKER_CONTEXT_MENU {}
 
@@ -101,6 +103,7 @@ public class DeckPickerContextMenu extends AnalyticsDialogFragment {
         keyValueMap.put(CONTEXT_MENU_RENAME_DECK, res.getString(R.string.rename_deck));
         keyValueMap.put(CONTEXT_MENU_DECK_OPTIONS, res.getString(R.string.menu__deck_options));
         keyValueMap.put(CONTEXT_MENU_CUSTOM_STUDY, res.getString(R.string.custom_study));
+        keyValueMap.put(CONTEXT_MENU_CARD_BROWSER, res.getString(R.string.browse_cards));
         keyValueMap.put(CONTEXT_MENU_DELETE_DECK, res.getString(R.string.contextmenu_deckpicker_delete_deck));
         keyValueMap.put(CONTEXT_MENU_EXPORT_DECK, res.getString(R.string.export_deck));
         keyValueMap.put(CONTEXT_MENU_UNBURY, res.getString(R.string.unbury));
@@ -120,7 +123,7 @@ public class DeckPickerContextMenu extends AnalyticsDialogFragment {
         Collection col = CollectionHelper.getInstance().getCol(getContext());
         long did = getArguments().getLong("did");
         boolean dyn = col.getDecks().isDyn(did);
-        ArrayList<Integer> itemIds = new ArrayList<>(9);
+        ArrayList<Integer> itemIds = new ArrayList<>(10);
         if (dyn) {
             itemIds.add(CONTEXT_MENU_CUSTOM_STUDY_REBUILD);
             itemIds.add(CONTEXT_MENU_CUSTOM_STUDY_EMPTY);
@@ -133,6 +136,7 @@ public class DeckPickerContextMenu extends AnalyticsDialogFragment {
         if (!dyn) {
             itemIds.add(CONTEXT_MENU_CUSTOM_STUDY);
         }
+        itemIds.add(CONTEXT_MENU_CARD_BROWSER);
         itemIds.add(CONTEXT_MENU_DELETE_DECK);
         itemIds.add(CONTEXT_MENU_EXPORT_DECK);
         if (col.getSched().haveBuried(did)) {
@@ -203,6 +207,12 @@ public class DeckPickerContextMenu extends AnalyticsDialogFragment {
             case CONTEXT_MENU_CREATE_SUBDECK: {
                 Timber.i("Create Subdeck selected");
                 ((DeckPicker) getActivity()).createSubdeckDialog();
+                break;
+            }
+            case CONTEXT_MENU_CARD_BROWSER: {
+                Timber.i(("Browse cards selected"));
+                ((DeckPicker) getActivity()).openCardBrowser();
+                ((AnkiActivity) getActivity()).dismissAllDialogFragments();
                 break;
             }
         }
