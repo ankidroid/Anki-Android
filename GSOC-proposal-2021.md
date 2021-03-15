@@ -1,7 +1,10 @@
 # AnkiDroid GSOC proposal
 
-AnkiDroid is a free Android flashcards app which makes remembering things easy. It is a space repetition software for Android. Because it's a lot more efficient than traditional study methods, you can either greatly decrease your time spent studying, or greatly increase the amount you learn.  
-Anyone who needs to remember things in their daily life can benefit from Anki. Since it is content-agnostic and supports images, audio, videos and scientific markup (via LaTeX), the possibilities are endless.
+AnkiDroid is a free Android flashcards app which makes remembering things easy.
+
+It is [spaced repetition](https://en.wikipedia.org/wiki/Spaced_repetition) software for Android. Because it's a lot more efficient than traditional study methods, you can either greatly decrease your time spent studying, or greatly increase the amount you learn.  
+Anyone who needs to remember things in their daily life can benefit from Anki. Since it is content-agnostic and supports images, audio, videos and scientific markup (via [Mathjax](https://en.wikipedia.org/wiki/MathJax) or LaTeX), the possibilities are endless.
+
 For example:
 - Learning a language
 - Studying for medical and law exams
@@ -10,13 +13,47 @@ For example:
 - Mastering long poems
 - Even practicing guitar chords!
 
-We are proud to have 4.8 stars on the play store, and 2 million active installs (as of january 2021). It has an active community of developers, with 34 contributors to code in 2020, two new maintainers, and even new localizations. An important part of the contributors discovered android programming with AnkiDroid and we are always happy to help someone contribute, independently of Google Summer of Code.
+We are proud to have 4.8 stars on the play store, and 2 million active installs (as of January 2021). It has an active community of developers, with 34 contributors to code in 2020, two new maintainers, and even new language translations. Many of the contributors did their first android programming with AnkiDroid and we are always happy to help someone learn how to contribute, independent of Google Summer of Code.
 
-You can reach us on Ankidroid’s [forum](https://groups.google.com/g/anki-android), on the Anki's [subreddit](http://reddit.com/r/Anki), or on the [discord #dev-ankidroid](https://discord.gg/qjzcRTx).
+You may reach us on the [discord #dev-ankidroid](https://discord.gg/qjzcRTx), Ankidroid’s [forum](https://groups.google.com/g/anki-android), on the Anki's [subreddit](http://reddit.com/r/Anki) though for now it is best to just add contact details to our [list of interested participants](https://github.com/ankidroid/Anki-Android/wiki/Google-Summer-of-Code-2021#list-of-interested-participants)
+
+# Guidelines for Participation
+
+It will help your application if you have already contributed to AnkiDroid. Please note these guidelines for people new to contributing:
+
+- Please feel free to post new issues, but only core contributors may label an issue as a "bug"
+- Please only work on issues that are labeled as a "bug", so we know that only issues we agree are important receive focus
+- You should strongly consider choosing bugs in existing features for the first few PRs prior to considering any enhancements
+- We will expect some level of automated testing to cover any work done on the Projects we list below. You should consider running the existing automated test suite and examining the coverage report, then adding new unit tests that cover parts of the code not already covered as a great way to make a first PR
+- Reviewing other developer's code is a fundamental skill for any developer. You should consider performing a PR review (where you reproduce the error locally, then verify that the PR fixes the bug, and you review the code itself to make sure it is understandable for the future) as an excellent way to contribute to a project
+
+Please understand that the interest in contributing to AnkiDroid for the Google Summer of Code is very high. We have around 150 people interested so far, and likely only have the ability to accept one or two official participants.
 
 # Projects
-This list of projects is not exhaustive. Discussion with the intern may lead to new projects. In particular, if the intern uses the app and wants some feature, we may consider helping them create those features.
+
+This list of projects is not exhaustive. Discussion with the intern may lead to new projects. In particular, if the intern uses the app and wants some new feature that does not exist yet, we may consider helping them create those features.
 Not all projects have the same difficulty level. We will choose a project to work on first, and if the intern does the project quickly we’ll be happy to work on a second simple project.
+
+## Scoped Storage Migration
+_This is vital to the project continuation_
+
+Google Play will enforce that apps target API 30 (Android 11) later on this year. After this date, we will not be able to release upgrades to AnkiDroid on the Google Play Store until we upgrade the app.
+
+We currently run using the [requestLegacyExternalStorage](https://developer.android.com/reference/android/R.attr#requestLegacyExternalStorage) flag. Once we target API 30, this flag will no longer work on Android 11 devices.
+
+For us to support this flag, I believe that we need to migrate to Scoped Storage: https://developer.android.com/about/versions/11/privacy/storage. The outcome of this will change how AnkiDroid's storage works, likely moving the publicly accessible `AnkiDroid` folder, which may mean changes to:
+
+* Collection database
+* Sync outputs (collection & media)
+* Camera/Microphone Outputs
+* "Save Whiteboard"
+* AnkiDroid API usage
+* User help documentation (we advise them that uninstall/reinstall is safe currently, but it will not be in the future as it will remove their scoped storage database)
+
+Mentors are less likely to know these new Storage APIs so this will involve collaboration and an aspect of experimentation and independent research.
+
+### Difficulty
+Likely Hard
 
 ## Loading/uploading shared decks in-app 
 (ticketed - but we can do much better here by moving it all in-app)
@@ -37,7 +74,7 @@ Medium
 
 
 ## Visual Editor
-(PR) Questions and answers are displayed in WebView using HTML/CSS/JS. Buttons are already present to allow the user to do basic formatting such as italic, bold, adding images etc. That was found to be acceptable when the app was created ten years ago, when we expected most users to create questions using the computer. Nowadays, people have smartphones and don’t necessarily have the app on their computer, thus, allowing more advanced tools becomes more important. This project already started but is not yet fully functional. The intern would work on moving this project to production.
+(PR) Questions and answers are displayed in WebView using HTML/CSS/Javascript. Buttons are already present to allow the user to do basic formatting such as italic, bold, adding images etc. That was found to be acceptable when the app was created ten years ago, when we expected most users to create questions using the computer. Nowadays, people have smartphones and don’t necessarily have the app on their computer, thus, allowing more advanced tools becomes more important. This project already started but is not yet fully functional. The intern would work on moving this project to production.
 
 ### Expected Outcomes
 Note editor in AnkiDroid with additional buttons to format decks 
@@ -69,7 +106,7 @@ Medium
 Currently, most of the documentations are created for users who want to learn with our app. However, there is a lack of centralized documentation toward developers and deck creators. Questions can have the full power of HTML/JavaScript, and use a template system that is highly parameterizable. More documentation of the advanced features, and of the concept behind the app, would be extremely appreciated.
 
 ### Expected Outcomes
-A centralised page with documentation for new AnkiDroid contributors and deck creators.
+A centralized page with documentation for new AnkiDroid contributors and deck creators.
 
 ### This task uses:
 Experiences with HTML and Markdown
@@ -103,26 +140,6 @@ Experiences with JAVA, Android UI using XML
 
 ### Difficulty
 Variable: Easy-Hard, depending on how large the scope of the change will be
-
-## WIP: Scoped Storage Migration
-This is vital to the project continuation
-
-Google Play will enforce that apps target API 30 (Android 11) later on this year. After this date, we will not be able to release upgrades to AnkiDroid on the Google Play Store until we upgrade the app.
-
-We currently run using the [requestLegacyExternalStorage](https://developer.android.com/reference/android/R.attr#requestLegacyExternalStorage) flag. Once we target API 30, this flag will no longer work on Android 11 devices.
-
-For us to support this flag, I believe that we need to migrate to Scoped Storage: https://developer.android.com/about/versions/11/privacy/storage. The outcome of this will change how AnkiDroid's storage works, likely moving the publicly accessible `AnkiDroid` folder, which may mean changes to:
-
-* Collection database
-* Sync outputs (collection & media)
-* Camera/Microphone Outputs
-* "Save Whiteboard"
-* AnkiDroid API usage
-
-Mentors are less likely to know these new Storage APIs so this will involve collaboration and an aspect of experimentation and independent research.
-
-### Difficulty
-Likely Hard
 
 ## Deprecation Warnings
 Google has introduced a new library for Preferences, we should move our Preferences and Deck Options screen to use this
