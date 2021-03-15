@@ -118,16 +118,8 @@ public class AnkiDroidCrashReportDialog extends CrashReportDialog implements Dia
                 AnkiDroidApp.getInstance().setAcraReportingMode(AnkiDroidApp.FEEDBACK_REPORT_ALWAYS);
             }
             // Send the crash report
-            PackageManager pm = getPackageManager();
-            try {
-                PackageInfo pi = pm.getPackageInfo("com.google.android.webview", 0);
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) {
-                    mHelper.sendCrash(mUserComment.getText().toString()+"\n Webview Version name : "+pi.versionName+" Version Code : "+ pi.getLongVersionCode(), "");
-                }
-            } catch (PackageManager.NameNotFoundException e) {
-                Timber.w(e, "Android System WebView is not found");
                 mHelper.sendCrash(mUserComment.getText().toString(),"");
-            }
+            
         } else {
             mHelper.cancelReports();
         }
@@ -146,5 +138,8 @@ public class AnkiDroidCrashReportDialog extends CrashReportDialog implements Dia
         if (mUserComment != null && mUserComment.getText() != null) {
             outState.putString(STATE_COMMENT, mUserComment.getText().toString());
         }
+    }
+    public static String fetchWebViewInformation(WebView webView){
+        return webView.getSettings().getUserAgentString();
     }
 }
