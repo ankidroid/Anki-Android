@@ -176,7 +176,7 @@
     <string name="export_deck">Leerset exporteren</string>
     <string name="nothing">Niets</string>
     <!-- Card template editor -->
-    <string name="title_activity_template_editor">Kaartypes</string>
+    <string name="title_activity_template_editor">Kaarttypes</string>
     <string name="card_template_editor_front">Sjabloon van de voorkant</string>
     <string name="card_template_editor_back">Sjabloon van de achterkant</string>
     <string name="card_template_editor_styling">Stijl</string>

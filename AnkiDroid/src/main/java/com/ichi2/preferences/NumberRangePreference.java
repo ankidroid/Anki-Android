@@ -109,7 +109,7 @@ public class NumberRangePreference extends android.preference.EditTextPreference
      * @param input Integer to validate.
      * @return The input value within acceptable range.
      */
-    private int getValidatedRangeFromInt(int input) {
+    protected int getValidatedRangeFromInt(int input) {
         if (input < mMin) {
             input = mMin;
         } else if (input > mMax) {

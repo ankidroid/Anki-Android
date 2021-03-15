@@ -339,6 +339,7 @@
     <!-- Card Viewer -->
     <string name="card_viewer_could_not_find_image">Card Content Error: Failed to load ‘%s’</string>
     <string name="card_viewer_media_relative_protocol">Card Content Error: Media update required</string>
+    <string name="cannot_load_http_resource">Loading http resources is no longer supported</string>
     <!-- Deck Picker -->
     <string name="deck_picker_failed_deck_load">Failed to load deck ‘%s’</string>
     <string name="search_decks">חיפוש בחפיסות</string>
@@ -366,4 +367,7 @@
     <string name="create_shortcut_failed" comment="home screen == launcher">Your home screen does not allow AnkiDroid to add shortcuts</string>
     <string name="create_shortcut_error">Error adding shortcut: %s</string>
     <string name="note_editor_capitalize" comment="This is for a switch with a checkbox - on: enabled">Capitalize sentences</string>
+    <!-- Symbols used as Button text in IncrementNumberRangePreference -->
+    <string name="plus_sign" comment="Label for increment button in IncrementerNumberRangePreference">+</string>
+    <string name="minus_sign" comment="Label for decrement button in IncrementerNumberRangePreference">-</string>
 </resources>

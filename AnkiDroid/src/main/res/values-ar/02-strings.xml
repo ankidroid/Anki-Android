@@ -365,6 +365,7 @@
     <!-- Card Viewer -->
     <string name="card_viewer_could_not_find_image">فشل تحميل ‘%s’</string>
     <string name="card_viewer_media_relative_protocol">خطأ في محتوى البطاقة: تحديث الوسائط مطلوب</string>
+    <string name="cannot_load_http_resource">Loading http resources is no longer supported</string>
     <!-- Deck Picker -->
     <string name="deck_picker_failed_deck_load">فشل تحميل رزمة ‘%s’</string>
     <string name="search_decks">بحث في الرزم</string>
@@ -392,4 +393,7 @@
     <string name="create_shortcut_failed" comment="home screen == launcher">لا تسمح شاشتك الرئيسية لأنكيدرويد بإضافة اختصارات</string>
     <string name="create_shortcut_error">حدث خطأ عند إضافة الاختصار: %s</string>
     <string name="note_editor_capitalize" comment="This is for a switch with a checkbox - on: enabled">رسمَلة الجُمَل</string>
+    <!-- Symbols used as Button text in IncrementNumberRangePreference -->
+    <string name="plus_sign" comment="Label for increment button in IncrementerNumberRangePreference">+</string>
+    <string name="minus_sign" comment="Label for decrement button in IncrementerNumberRangePreference">-</string>
 </resources>

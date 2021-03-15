@@ -132,6 +132,7 @@ import com.ichi2.utils.FunctionalInterfaces.Function;
 import com.ichi2.utils.JSONArray;
 import com.ichi2.utils.JSONException;
 import com.ichi2.utils.JSONObject;
+import com.ichi2.utils.MaxExecFunction;
 import com.ichi2.utils.WebViewDebugging;
 
 import java.io.ByteArrayInputStream;
@@ -3305,6 +3306,12 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
             if (isLoadedFromProtocolRelativeUrl(url)) {
                 mMissingImageHandler.processInefficientImage(AbstractFlashcardViewer.this::displayMediaUpgradeRequiredSnackbar);
             }
+
+            if (isLoadedFromHttpUrl(url)) {
+                //shouldInterceptRequest is not running on the UI thread.
+                AbstractFlashcardViewer.this.runOnUiThread(() -> mDisplayMediaLoadedFromHttpWarningSnackbar.execOnceForReference(mCurrentCard));
+            }
+
             return null;
         }
 
@@ -3312,14 +3319,15 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
         @Override
         @TargetApi(Build.VERSION_CODES.N)
         public WebResourceResponse shouldInterceptRequest(WebView view, WebResourceRequest request) {
-            WebResourceResponse result = mLoader.shouldInterceptRequest(request.getUrl());
+            Uri url = request.getUrl();
+            WebResourceResponse result = mLoader.shouldInterceptRequest(url);
 
             if (result != null) {
                 return result;
             }
 
             if (!AdaptionUtil.hasWebBrowser(getBaseContext())) {
-                String scheme = request.getUrl().getScheme().trim();
+                String scheme = url.getScheme().trim();
                 if ("http".equalsIgnoreCase(scheme) || "https".equalsIgnoreCase(scheme)) {
                     String response = getResources().getString(R.string.no_outgoing_link_in_cardbrowser);
                     return new WebResourceResponse("text/html", "utf-8", new ByteArrayInputStream(response.getBytes()));
@@ -3330,7 +3338,20 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
                 mMissingImageHandler.processInefficientImage(AbstractFlashcardViewer.this::displayMediaUpgradeRequiredSnackbar);
             }
 
+            if (isLoadedFromHttpUrl(url)) {
+                //shouldInterceptRequest is not running on the UI thread.
+                AbstractFlashcardViewer.this.runOnUiThread(() -> mDisplayMediaLoadedFromHttpWarningSnackbar.execOnceForReference(mCurrentCard));
+            }
+
             return null;
+        }
+
+        protected boolean isLoadedFromHttpUrl(String url) {
+            return url.trim().toLowerCase().startsWith("http");
+        }
+
+        protected boolean isLoadedFromHttpUrl(Uri uri) {
+            return uri.getScheme().equalsIgnoreCase("http");
         }
 
         protected boolean isLoadedFromProtocolRelativeUrl(String url) {
@@ -3677,6 +3698,10 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
         }
     }
 
+    private final MaxExecFunction mDisplayMediaLoadedFromHttpWarningSnackbar = new MaxExecFunction(3, () -> {
+        OnClickListener onClickListener = (v) -> openUrl(Uri.parse(getString(R.string.link_faq_external_http_content)));
+        showSnackbar(getString(R.string.cannot_load_http_resource), R.string.help, onClickListener);
+    });
 
     private void displayCouldNotFindMediaSnackbar(String filename) {
         OnClickListener onClickListener = (v) -> openUrl(Uri.parse(getString(R.string.link_faq_missing_media)));
@@ -4022,6 +4047,9 @@ see card.js for available functions
         public boolean ankiIsInNightMode() {
             return isInNightMode();
         }
+
+        @JavascriptInterface
+        public boolean ankiIsDisplayingAnswer() { return isDisplayingAnswer(); };
 
         @JavascriptInterface
         public boolean ankiIsActiveNetworkMetered() {
