@@ -1214,19 +1214,24 @@ public class NoteEditor extends AnkiActivity {
 
     @VisibleForTesting
     void performPreview() {
-        Intent previewer = new Intent(NoteEditor.this, CardTemplatePreviewer.class);
+        //show error if first textfield is empty
+        if(TextUtils.isEmpty(getCurrentFieldText(0))){
+            UIUtils.showThemedToast(this, getResources().getString(R.string.note_editor_no_first_field), false);
+        }else {
+            Intent previewer = new Intent(NoteEditor.this, CardTemplatePreviewer.class);
 
-        if (mCurrentEditedCard != null) {
-            previewer.putExtra("ordinal", mCurrentEditedCard.getOrd());
+            if (mCurrentEditedCard != null) {
+                previewer.putExtra("ordinal", mCurrentEditedCard.getOrd());
+            }
+            previewer.putExtra(TemporaryModel.INTENT_MODEL_FILENAME, TemporaryModel.saveTempModel(this, mEditorNote.model()));
+
+            // Send the previewer all our current editing information
+            Bundle noteEditorBundle = new Bundle();
+            addInstanceStateToBundle(noteEditorBundle);
+            noteEditorBundle.putBundle("editFields", getFieldsAsBundleForPreview());
+            previewer.putExtra("noteEditorBundle", noteEditorBundle);
+            startActivityForResultWithoutAnimation(previewer, REQUEST_PREVIEW);
         }
-        previewer.putExtra(TemporaryModel.INTENT_MODEL_FILENAME, TemporaryModel.saveTempModel(this, mEditorNote.model()));
-
-        // Send the previewer all our current editing information
-        Bundle noteEditorBundle = new Bundle();
-        addInstanceStateToBundle(noteEditorBundle);
-        noteEditorBundle.putBundle("editFields", getFieldsAsBundleForPreview());
-        previewer.putExtra("noteEditorBundle", noteEditorBundle);
-        startActivityForResultWithoutAnimation(previewer, REQUEST_PREVIEW);
     }
 
 
