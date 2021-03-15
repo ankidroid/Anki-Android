@@ -169,6 +169,7 @@ Satyam jyotsana gargee(satyam8657@gmail.com)GitHub:(https://github.com/Satyamjyo
 - **Piyush Pradhan** ( Email: piyushpradhan3.14@gmail.com, Github: https://github.com/piyushpradhan, LinkedIn: https://www.linkedin.com/in/piyush-pradhan-04258a192/ )
 - **Mohammad Aflah Khan** ( Email: aflahkhan.2020@gmail.com, Github: https://github.com/aflah02, LinkedIn: https://www.linkedin.com/in/mohammad-aflah-khan/ )
 - **Rajat kaushik**(Email:rajatkaushik777@gmail.com, Github: https://github.com/rajat7k ,LinkedIn: www.linkedin.com/in/rajat7k )
+- **Almas Ahmad** (Email : ahmadalmas.786.aa@gmail.com, [Github](https://github.com/almas33))
 - **Aryan Dokania** ( Email: aryandokania2001@gmail.com, Github: https://github.com/imaryandokania, LinkedIn: https://www.linkedin.com/in/aryan-dokania-14436b159/ )
 - **Anu Sharma**(Email:sharmaanu2002in@gmail.com, [Github](https://github.com/Anu-MADMAX), [LinkedIn](https://www.linkedin.com/in/anu-sharma-9311701b7/))
 - ... etc :-)
