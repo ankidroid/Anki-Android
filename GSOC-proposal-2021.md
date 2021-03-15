@@ -27,7 +27,7 @@ It will help your application if you have already contributed to AnkiDroid. Plea
 - We will expect some level of automated testing to cover any work done on the Projects we list below. You should consider running the existing automated test suite and examining the coverage report, then adding new unit tests that cover parts of the code not already covered as a great way to make a first PR
 - Reviewing other developer's code is a fundamental skill for any developer. You should consider performing a PR review (where you reproduce the error locally, then verify that the PR fixes the bug, and you review the code itself to make sure it is understandable for the future) as an excellent way to contribute to a project
 
-Please understand that the interest in contributing to AnkiDroid for the Google Summer of Code is very high. We have around 150 people interested so far, and likely only have the ability to accept one or two official participants.
+Please understand that the interest in contributing to AnkiDroid for the Google Summer of Code is very high. We have around 150 people interested so far, and likely only have the ability to accept one or two official participants total, as an organization.
 
 # Projects
 
