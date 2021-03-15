@@ -214,6 +214,8 @@ public class DeckPicker extends NavigationDrawerActivity implements
 
     private long mContextMenuDid;
 
+    private long mBackPressedTime;
+
     private EditText mDialogEditText;
 
     // flag asking user to do a full sync which is used in upgrade path
@@ -1082,8 +1084,14 @@ public class DeckPicker extends NavigationDrawerActivity implements
             if (mActionsMenu != null && mActionsMenu.isExpanded()) {
                 mActionsMenu.collapse();
             } else {
-                automaticSync();
-                finishWithAnimation();
+                if (mBackPressedTime + 2000 > System.currentTimeMillis()) {
+                    automaticSync();
+                    finishWithAnimation();
+                    return;
+                } else {
+                    Toast.makeText(this, "Press back again to exit", Toast.LENGTH_SHORT).show();
+                }
+                mBackPressedTime = System.currentTimeMillis();
             }
         }
     }
