@@ -64,9 +64,8 @@ public class MyAccount extends AnkiActivity {
     Toolbar mToolbar = null;
     private TextInputLayout mPasswordLayout;
 
-    private ImageView mAnkidroid_logo;
+    private ImageView mAnkidroidLogo;
 
-    private static boolean PORTRAIT_MODE = true;
     private OrientationEventListener myOrientationEventListener ;
 
 
@@ -184,7 +183,7 @@ public class MyAccount extends AnkiActivity {
         mUsername = mLoginToMyAccountView.findViewById(R.id.username);
         mPassword = mLoginToMyAccountView.findViewById(R.id.password);
         mPasswordLayout = mLoginToMyAccountView.findViewById(R.id.password_layout);
-        mAnkidroid_logo = mLoginToMyAccountView.findViewById(R.id.ankidroid_logo);
+        mAnkidroidLogo = mLoginToMyAccountView.findViewById(R.id.ankidroid_logo);
 
         //checking if device is in horizontal mode or not .
         myOrientationEventListener = new OrientationEventListener(this,SensorManager.SENSOR_DELAY_NORMAL)
@@ -192,13 +191,14 @@ public class MyAccount extends AnkiActivity {
             @Override
             public void onOrientationChanged(int orientation)
             {
-                PORTRAIT_MODE = ((orientation < 100) || (orientation > 280));
+                boolean PORTRAIT_MODE  = ((orientation < 100) || (orientation > 280));
                 //if device is in horizontal mode then screen might not have enough space for ankidroid logo
                 //so we will invisible logo for horizontal mode only
-                if(PORTRAIT_MODE)
-                    mAnkidroid_logo.setVisibility(View.GONE);
-                else
-                    mAnkidroid_logo.setVisibility(View.VISIBLE);
+                if(PORTRAIT_MODE) {
+                    mAnkidroidLogo.setVisibility(View.GONE);
+                }else {
+                    mAnkidroidLogo.setVisibility(View.VISIBLE);
+                }
             }
         };
         myOrientationEventListener.enable();
