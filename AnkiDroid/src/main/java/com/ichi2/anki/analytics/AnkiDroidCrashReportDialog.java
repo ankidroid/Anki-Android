@@ -23,6 +23,7 @@ import android.content.DialogInterface;
 import android.content.SharedPreferences;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
+import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -120,7 +121,9 @@ public class AnkiDroidCrashReportDialog extends CrashReportDialog implements Dia
             PackageManager pm = getPackageManager();
             try {
                 PackageInfo pi = pm.getPackageInfo("com.google.android.webview", 0);
-                mHelper.sendCrash(mUserComment.getText().toString()+"\n Webview Version name : "+pi.versionName+" Version Code : "+ pi.versionCode, "");
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) {
+                    mHelper.sendCrash(mUserComment.getText().toString()+"\n Webview Version name : "+pi.versionName+" Version Code : "+ pi.getLongVersionCode(), "");
+                }
             } catch (PackageManager.NameNotFoundException e) {
                 Log.e("Webview", "Android System WebView is not found");
                 mHelper.sendCrash(mUserComment.getText().toString(),"");
