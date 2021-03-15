@@ -21,7 +21,10 @@ import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.SharedPreferences;
+import android.content.pm.PackageInfo;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.CheckBox;
@@ -114,7 +117,14 @@ public class AnkiDroidCrashReportDialog extends CrashReportDialog implements Dia
                 AnkiDroidApp.getInstance().setAcraReportingMode(AnkiDroidApp.FEEDBACK_REPORT_ALWAYS);
             }
             // Send the crash report
-            mHelper.sendCrash(mUserComment.getText().toString(), "");
+            PackageManager pm = getPackageManager();
+            try {
+                PackageInfo pi = pm.getPackageInfo("com.google.android.webview", 0);
+                mHelper.sendCrash(mUserComment.getText().toString()+"\n Webview Version name : "+pi.versionName+" Version Code : "+ pi.versionCode, "");
+            } catch (PackageManager.NameNotFoundException e) {
+                Log.e("Webview", "Android System WebView is not found");
+                mHelper.sendCrash(mUserComment.getText().toString(),"");
+            }
         } else {
             mHelper.cancelReports();
         }
