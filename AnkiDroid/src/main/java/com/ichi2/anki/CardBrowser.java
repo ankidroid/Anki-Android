@@ -696,7 +696,7 @@ public class CardBrowser extends NavigationDrawerActivity implements
         // If a valid value for last deck exists then use it, otherwise use libanki selected deck
         if (getDeckId() != null && getDeckId() == ALL_DECKS_ID) {
             selectAllDecks();
-        } else  if(getDeckId() != null && getCol().getDecks().get(getDeckId(), false) != null) {
+        } else if (getDeckId() != null && getCol().getDecks().get(getDeckId(), false) != null) {
             selectDeckById(getDeckId());
         } else {
             selectDeckById(getCol().getDecks().selected());
