@@ -400,7 +400,7 @@ public class Preferences extends AppCompatPreferenceActivity implements Preferen
                     Timber.i("Release mode, adding show changelog");
                 }
                 android.preference.Preference changelogPreference = new android.preference.Preference(this);
-                changelogPreference.setTitle("Open Changelog");
+                changelogPreference.setTitle(R.string.open_changelog);
                 Intent infoIntent = new Intent(this, Info.class);
                 infoIntent.putExtra(Info.TYPE_EXTRA, Info.TYPE_NEW_VERSION);
                 changelogPreference.setIntent(infoIntent);
