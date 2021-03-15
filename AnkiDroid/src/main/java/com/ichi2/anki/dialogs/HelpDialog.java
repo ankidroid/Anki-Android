@@ -21,15 +21,11 @@ import android.net.Uri;
 import android.os.Parcel;
 import android.os.Parcelable;
 import android.os.SystemClock;
-import android.view.View;
-import android.widget.Toast;
 
 import com.ichi2.anki.AnkiActivity;
 import com.ichi2.anki.AnkiDroidApp;
 import com.ichi2.anki.R;
 import com.ichi2.anki.UIUtils;
-import com.ichi2.anki.analytics.AnkiDroidCrashReportDialog;
-import com.ichi2.anki.analytics.UsageAnalytics;
 import com.ichi2.anki.dialogs.RecursivePictureMenu.Item;
 import com.ichi2.anki.dialogs.RecursivePictureMenu.ItemHeader;
 import com.ichi2.anki.exception.UserSubmittedException;
@@ -38,10 +34,6 @@ import com.ichi2.utils.IntentUtil;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.UUID;
-import java.util.WeakHashMap;
 
 import androidx.annotation.DrawableRes;
 import androidx.annotation.StringRes;
@@ -63,7 +55,7 @@ public class HelpDialog {
     public static DialogFragment createInstance(Context context) {
 
         RateAppItem rateAppItem = new RateAppItem(R.string.help_item_support_rate_ankidroid, R.drawable.ic_star_black_24);
-        ExceptionReportItem exceptionReportItem = new ExceptionReportItem(R.string.send_exception_now, R.drawable.ic_round_assignment_24);
+        ExceptionReportItem exceptionReportItem = new ExceptionReportItem(R.string.help_title_send_exception, R.drawable.ic_round_assignment_24);
         Item[] allItems = {
                 new ItemHeader(R.string.help_title_using_ankidroid, R.drawable.ic_manual_black_24dp,
                         new FunctionItem(R.string.help_item_ankidroid_manual, R.drawable.ic_manual_black_24dp, HelpDialog::openManual),
