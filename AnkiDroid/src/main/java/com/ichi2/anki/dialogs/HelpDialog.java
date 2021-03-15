@@ -27,8 +27,10 @@ import android.widget.Toast;
 import com.ichi2.anki.AnkiActivity;
 import com.ichi2.anki.AnkiDroidApp;
 import com.ichi2.anki.R;
+import com.ichi2.anki.UIUtils;
 import com.ichi2.anki.dialogs.RecursivePictureMenu.Item;
 import com.ichi2.anki.dialogs.RecursivePictureMenu.ItemHeader;
+import com.ichi2.anki.exception.UserSubmittedException;
 import com.ichi2.utils.IntentUtil;
 
 import java.io.Serializable;
@@ -230,26 +232,27 @@ public class HelpDialog {
     private static class ExceptionReportItem extends Item implements Parcelable{
 
         UUID uuid = UUID.randomUUID();
-        private static final Map<String, Long> lastClickMap = new HashMap<>();
-        final int minInterval = 60000;
-        final String lastClick = "LAST_CLICK";
+        private static Long lastClickStamp;
+        final int minIntervalMS = 60000;
+        final String exceptionMessage = "Exception report sent by user manually";
 
         public ExceptionReportItem(@StringRes int titleRes, @DrawableRes int iconRes) { super(titleRes, iconRes); }
 
         @Override
         public void execute(AnkiActivity activity) {
             long currentTimestamp = SystemClock.uptimeMillis();
-            Long lastClickTimeStamp = lastClickMap.get(lastClick);
 
-            if (lastClickTimeStamp == null || currentTimestamp - lastClickTimeStamp > minInterval) {
+            if (lastClickStamp == null || currentTimestamp - lastClickStamp > minIntervalMS) {
+                AnkiDroidApp.deleteACRALimiterData(activity);
                 AnkiDroidApp.sendExceptionReport(
-                        new Throwable("Exception report sent by user manually"),
-                        "AnkiDroidApp.HelpDialog",
-                        uuid.toString());
-                Toast.makeText(activity, "Report Submitted.", Toast.LENGTH_SHORT).show();
-                lastClickMap.put(lastClick, currentTimestamp);
+                        new UserSubmittedException(exceptionMessage),
+                        "AnkiDroidApp.HelpDialog");
+                UIUtils.showThemedToast(activity, activity.getString(R.string.help_dialog_exception_report_submitted),
+                        true);
+                lastClickStamp = currentTimestamp;
             } else {
-                Toast.makeText(activity, "Submitted already.", Toast.LENGTH_SHORT).show();
+                UIUtils.showThemedToast(activity, activity.getString(R.string.help_dialog_exception_report_debounce),
+                        true);
             }
         }
 

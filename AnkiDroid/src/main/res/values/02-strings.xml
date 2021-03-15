@@ -365,6 +365,8 @@
     <string name="create_shortcut_error">Error adding shortcut: %s</string>
     <string name="note_editor_capitalize" comment="This is for a switch with a checkbox - on: enabled">Capitalize sentences</string>
 
+    <string name="help_dialog_exception_report_submitted">Report submitted</string>
+    <string name="help_dialog_exception_report_debounce">Report already submitted</string>
 
     <!-- Symbols used as Button text in IncrementNumberRangePreference -->
     <string name="plus_sign" comment="Label for increment button in IncrementerNumberRangePreference">+</string>
