@@ -191,7 +191,7 @@ Satyam jyotsana gargee(satyam8657@gmail.com)GitHub:(https://github.com/Satyamjyo
 - **A S V K Vinayak** (Email: asvkvinayak@gmail.com, [Github](https://github.com/ASVKVINAYAK), [LinkedIn](https://www.linkedin.com/in/a-s-v-k-vinayak-228a62127/))
 - **Girish Garg** (Email: girishgargcool@gmail.com, [Github](https://github.com/gargVader), [LinkedIn](https://www.linkedin.com/in/girish23))
 - **Mihir Sahu** (Email: mihirsahu2307@gmail.com, [Github](https://github.com/Mihirsahu2307), [LinkedIn](https://www.linkedin.com/in/mihir-sahu-73b3ba200/))
-- **Vasu Tiwari (Email: vasutiwari409@gmail.com, [Github](https://github.com/vasut02), [LinkedIn](https://www.linkedin.com/in/vasu-tiwari-5960481b0/))
+- **Vasu Tiwari** (Email: vasutiwari409@gmail.com, [Github](https://github.com/vasut02), [LinkedIn](https://www.linkedin.com/in/vasu-tiwari-5960481b0/))
 # # 
 
 
