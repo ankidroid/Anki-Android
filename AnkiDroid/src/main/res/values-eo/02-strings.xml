@@ -313,7 +313,7 @@
     <!-- Card Viewer -->
     <string name="card_viewer_could_not_find_image">Eraro pri enhavo de karto, fiaskis enlegi “%s”</string>
     <string name="card_viewer_media_relative_protocol">Eraro pri enhavo de karto: necesas ĝisdatigi plurmedion</string>
-    <string name="cannot_load_http_resource">Loading http resources is no longer supported</string>
+    <string name="cannot_load_http_resource">Ne plu eblas enlegi enhavon http</string>
     <!-- Deck Picker -->
     <string name="deck_picker_failed_deck_load">Fiaskis enlegi la kartaron “%s”</string>
     <string name="search_decks">Serĉi en kartaroj</string>
