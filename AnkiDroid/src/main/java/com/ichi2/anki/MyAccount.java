@@ -152,6 +152,7 @@ public class MyAccount extends AnkiActivity {
             mPassword.setError("Password is required!");
             mPassword.requestFocus();
             return;
+
         }
         if (!"".equalsIgnoreCase(username) && !"".equalsIgnoreCase(password)) {
             Connection.login(loginListener, new Connection.Payload(new Object[]{username, password,
