@@ -1215,9 +1215,9 @@ public class NoteEditor extends AnkiActivity {
     @VisibleForTesting
     void performPreview() {
         //show error if first textfield is empty
-        if(TextUtils.isEmpty(getCurrentFieldText(0))){
+        if (TextUtils.isEmpty(getCurrentFieldText(0))) {
             UIUtils.showThemedToast(this, getResources().getString(R.string.note_editor_no_first_field), false);
-        }else {
+        } else {
             Intent previewer = new Intent(NoteEditor.this, CardTemplatePreviewer.class);
 
             if (mCurrentEditedCard != null) {
