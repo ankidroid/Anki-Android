@@ -4,20 +4,13 @@ Hello, all fantastic Google Summer of Code 2021 people!
 
 ## Process
 
-We are quite honest in the AnkiDroid project, so the first thing I will say is that I'm not sure what the best process should be! It is our first year at GSoC and we didn't expect so many interest. That's really cool, but experienced contributors need some day to discuss the best path forward. 
+We are quite honest in the AnkiDroid project, so the first thing I will say is that this our first year as an organization participating, so we are creating the process right now. We are getting close to finishing it but the core contributors still need a little time to finish it.
 
-We have started receiving information from interested participants so we need a place to collect information so we don't lose it. We'll contact back everyone of you when we have decided more precisely. 
+We really appreciate your patience while we make sure we are organized.
 
-So if you are an interested participant: Please add your **PUBLIC** contact information here in the list below. I emphasized "public" because this information will be web-scraped, used by spammers, etc. But we are an open-source project so there is no hiding your identity completely - but you should think carefully about what specific contact methods you share. 
+We have started receiving information from interested participants so we need a place to collect information so we don't lose it. We'll contact everyone of you when we have finished organizing ourselves, and when we contact you it will be with clear instructions. 
 
-### Already want to participate to AnkiDroid? 
-
-If you want to start participating, you may want to look at [Contributing](https://github.com/ankidroid/Anki-Android/wiki/Contributing) and the list of [good first issues](https://github.com/ankidroid/Anki-Android/issues?q=is%3Aopen+is%3Aissue+label%3A%22Good+First+Issue%21%22). Write down that you are working on it, so that nobody else start doing the same work as you. If you can't work on it anymore, please post another message to let us know. If you want to create your own feature, please post a feature request first so that mainteneurs can confirm whether it would be accepted.
-
-For the sake of transparency, we are all [volunteer](https://github.com/ankidroid/Anki-Android/wiki/OpenCollective-Payment-Process) here and if you participate now, it's as a volunteer, it do not guarantee, even implicitly, that you'll be selected for GSoC.
-
-## What is Google Summer of Code?
-> [Google Summer of Code](https://summerofcode.withgoogle.com/) is a global program focused on bringing more student developers into open source software development. Students work with an open source organization on a 10 week programming project during their break from school.
+**So if you are an interested participant:** Please add your **PUBLIC** contact information here in the list below. I emphasized "public" because this information will be web-scraped, used by spammers, etc. We are an open-source project so there is no hiding your identity completely - this is just your opportunity think carefully about what specific contact methods you share if that is important to you.
 
 ## Timeline
 
@@ -29,6 +22,15 @@ Please observe the official timeline, if you are requesting things well before t
 
 ## Student Eligibility
 View [Student Eligibility](https://developers.google.com/open-source/gsoc/faq#what_are_the_eligibility_requirements_for_participation)
+
+## Want to contribute to AnkiDroid before we officially start?
+
+If you want to start participating, you should look at our [Contributing](https://github.com/ankidroid/Anki-Android/wiki/Contributing) page and the list of [good first issues](https://github.com/ankidroid/Anki-Android/issues?q=is%3Aopen+is%3Aissue+label%3A%22Good+First+Issue%21%22). Write down that you are working on it, so that nobody else start doing the same work as you. If you can't work on it anymore, please post another message to let us know. If you want to create your own feature, please post a feature request first so that the core contributors can confirm whether it would be accepted.
+
+For the sake of transparency, we are all [volunteers](https://github.com/ankidroid/Anki-Android/wiki/OpenCollective-Payment-Process) here and if you participate now, it's as a volunteer, it do not guarantee, even implicitly, that you will be selected for GSoC.
+
+## What is Google Summer of Code?
+> [Google Summer of Code](https://summerofcode.withgoogle.com/) is a global program focused on bringing more student developers into open source software development. Students work with an open source organization on a 10 week programming project during their break from school.
 
 ## Project Ideas
 Here is a list of project ideas we suggest:
@@ -46,7 +48,12 @@ Potential candidates should to take a look at the guidelines on how to contribut
 
 ## List of interested participants
 
-As a contributor to an open source project, you'll have to share some information, at the very least an email address. Please only list information that you are confortable to share in public, as this site is scraped. We need an email to be able to contact you once we know more about our plan moving forward.
+As a contributor to an open source project, you'll have to share some information, at the very least an email address. 
+
+We care about your privacy. Please only list information that you are comfortable to share in public, as this site is scraped. But we do need an email to be able to contact you once we know more about our plan moving forward. Using your github email address is a reasonably safe choice since it will be necessary to collaborate with us, but you may create an anonymous email specifically for GitHub if that is important to you, we won't mind as long as we have your name some email that works for you :smile: 
+
+
+Please enter your details at the bottom of the page via the following link: https://github.com/ankidroid/Anki-Android/wiki/Google-Summer-of-Code-2021/_edit. You will need a GitHub account to do this.
 
 - **Lokesh Bibinagar** _Reach me_ **:** 'Email' - lokeshbibinagar97@gmail.com, [GitHub](https://github.com/Lokeshbibinagar)
 - **Sahil Hemnani** _Reach me_ **:** `Email` - hemnanisahil777@gmail.com, [GitHub](https://github.com/SahilHemnani777), [LinkedIn](https://www.linkedin.com/in/sahil-hemnani-8084b41a6/)
@@ -192,7 +199,5 @@ Satyam jyotsana gargee(satyam8657@gmail.com)GitHub:(https://github.com/Satyamjyo
 - **Girish Garg** (Email: girishgargcool@gmail.com, [Github](https://github.com/gargVader), [LinkedIn](https://www.linkedin.com/in/girish23))
 - **Mihir Sahu** (Email: mihirsahu2307@gmail.com, [Github](https://github.com/Mihirsahu2307), [LinkedIn](https://www.linkedin.com/in/mihir-sahu-73b3ba200/))
 - **Vasu Tiwari** (Email: vasutiwari409@gmail.com, [Github](https://github.com/vasut02), [LinkedIn](https://www.linkedin.com/in/vasu-tiwari-5960481b0/))
-# # 
 
 
-Please enter your details at the bottom of the page via the following link: https://github.com/ankidroid/Anki-Android/wiki/Google-Summer-of-Code-2021/_edit. You will need a GitHub account to do this.
