@@ -16,7 +16,7 @@ Feel free to join our Discord: [#dev-ankidroid](https://discord.gg/qjzcRTx) to j
   - [Running automated tests](#running-automated-tests)
   - [Compiling from the command line](#compiling-from-the-command-line)
   - [Adding translations](#adding-translations)
-  - [Handling translations (advanced)](#handling-translations)
+  - [Handling translations](#handling-translations)
   - [Making parallel builds](#making-parallel-builds)
   - [Anki database structure](#anki-database-structure)
   - [Branching Model](#branching-model)
@@ -187,7 +187,7 @@ A translation consists of a key (used to reference the translation from Java), a
 * Keys names should be [lowercase using underscores](https://github.com/ankidroid/Anki-Android/wiki/Code-style#string-key-resources-must-be-all-lowercase-using-underscore-to-separate-words)
 * Values should be unique in English. If the values are not unique, a `comment=""` attribute must be added to explain the differences to our translators. This is enforced by lint.
 
-## Handling translations (advanced)
+## Handling translations
 As described in the [contributing wiki](https://github.com/ankidroid/Anki-Android/wiki/Contributing#translate-ankidroid), AnkiDroid localization is done through the Crowdin platform. Developers should basically ignore all resource folders that have non-English locales. Edit the English strings only, and one of the project owners will handle the syncing of the translations. The process works as follows:
 
 * Developers can freely add, delete, or modify strings in English to the resources folder (`values/`) and commit to git.
