@@ -47,7 +47,7 @@ Potential candidates should to take a look at the guidelines on how to contribut
 ## List of interested participants
 
 As a contributor to an open source project, you'll have to share some information, at the very least an email address. Please only list information that you are confortable to share in public, as this site is scraped. We need an email to be able to contact you once we know more about our plan moving forward.
-
+- **Sahil Hemnani** _Reach me_ **:** `Email` - hemnanisahil777@gmail.com, [GitHub](https://github.com/SahilHemnani777), [LinkedIn](https://www.linkedin.com/in/sahil-hemnani-8084b41a6/)
 - **Krishna Wadhwani** _Reach me_ **:** Email - kwswhwmw@gmail.com , [Github](https://github.com/KrishnaWadhwani/) , [LinkedIn](https://www.linkedin.com/in/krishna-wadhwani-1063b81ab/)
 - **Prashant Kumar** (prashantkumarjnv6@gmail.com; )
 - **Prem Kumar** (Email : prem47645@gmail.com, [Github](https://github.com/Prem1803/),[LinkedIn](https://www.linkedin.com/in/prem-kumar-55ab82194/))  
