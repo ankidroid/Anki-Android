@@ -208,6 +208,7 @@ Satyam jyotsana gargee(satyam8657@gmail.com)GitHub:(https://github.com/Satyamjyo
 - **Kavya Goyal** (Email: kavya24goyal@gmail.com, [Github](https://github.com/Kavya-24), [LinkedIn](https://www.linkedin.com/in/kavya-goyal-313ba6194/))
 - **Prince Sinha** _Reach me_ **:** 'Email' - princesinha7072@gmail.com, [GitHub](https://github.com/prince-09), [LinkedIn](https://www.linkedin.com/in/prince-sinha-90a83b180/)
 - **Arjun Dashrath** _Reach me_ **:** 'Email' - arjundashrath@gmail.com, [GitHub](https://github.com/arjundashrath), [LinkedIn](https://www.linkedin.com/in/arjun-dashrath/)
+- **Mitali Gupta** (Email: guptamg0701@gmail.com, [Github](https://github.com/mitaligupta07), [LinkedIn](https://www.linkedin.com/in/mitali-gupta-96751b191/))
 
 # # 
 
