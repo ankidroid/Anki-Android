@@ -211,6 +211,7 @@ Satyam jyotsana gargee(satyam8657@gmail.com)GitHub:(https://github.com/Satyamjyo
 - **Mitali Gupta** (Email: guptamg0701@gmail.com, [Github](https://github.com/mitaligupta07), [LinkedIn](https://www.linkedin.com/in/mitali-gupta-96751b191/))
 - **Kiran Baby** (Email : kiranbaby256@gmail.com, [Github](https://github.com/kiranbaby14))
 - **Saket Sarin** (Email: sarinsaket@gmail.com, [Github](https://github.com/saketsarin), [LinkedIn](https://www.linkedin.com/in/saket-sarin-02a479154/))
+- **Vaishnavi Shrivastava** _Reach me_ **:** Email - vaishnavi.shri2019@gmail.com, [GitHub](https://github.com/VaishnaviShri)
 
 # # 
 
