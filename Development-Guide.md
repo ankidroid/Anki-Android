@@ -121,6 +121,10 @@ git push origin HEAD -f
 ```
 
 ## Running automated tests
+There are two kinds of test in AnkiDroid. Unit test and on-device integration test. The second one need a connected device or an emulated device. You can run both test set simultaneously from the command line with
+```
+./gradlew jacocoTestReport
+```
 
 ### Unit tests
 There are unit tests defined in the `AnkiDroid/src/test` directory, with [an extendable test superclass available using the Robolectric framework](https://github.com/ankidroid/Anki-Android/blob/master/AnkiDroid/src/test/java/com/ichi2/anki/RobolectricTest.java) to make standard Android services available, including sqlite so you can operate on Anki Collections in your tests - each Collection created on the fly prior to each test method and deleted afterwards for isolation. You can run these tests by selecting them directly from AndroidStudio for individual tests or all tests from one file, or you can run them from the command line and generate a coverage report to verify the effect of your testing from the command line using:
@@ -133,11 +137,16 @@ Afterwards you should find the coverage report in `%AnkiDroidRoot%/AnkiDroid/bui
 ### On-device integration tests
 In addition to the unit tests, several integration tests are defined in the `AnkiDroid/src/androidTest` folder. You can run the tests from within Android Studio by simply right clicking on the test and running it against the chosen connected Android device (be sure to choose the icon with the Android symbol if there are multiple options shown), or from the command line against all connected devices at once using
 ```
-./gradlew jacocoTestReport
+./gradlew jacocoAndroidTestReport
 ```
 After this you should find a coverage report that integrates unit and integration test execution in `%AnkiDroidRoot%/AnkiDroid/build/reports/jacoco/jacocoTestReport/html/index.html`
 
 **Note:** Some of the connected tests involve the deletion of models, which will force a full-sync, so it's not recommended to try running the tests on your main device.
+
+### Troubleshooting step
+If tests do not behave as expected, you can replace `./gradlew` by `./gradlew clean` to clean the directory before running test.
+
+If on-device tests are slow or fail, it maybe because of conflict with your ankidroid collection. To avoid them, you can simply rename the "ankidroid" folder to "ankidroid_back" on your device when running test. You can then rename "ankidroid_back" to "ankidroid" when you are done
 
 ## Compiling from the command line
 If you have the Android SDK installed, you should be able to compile from the command line even without installing Android Studio.
