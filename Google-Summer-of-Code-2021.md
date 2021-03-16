@@ -10,14 +10,14 @@ We really appreciate your patience while we make sure we are organized.
 
 We have started receiving information from interested participants so we need a place to collect information so we don't lose it. We'll contact everyone of you when we have finished organizing ourselves, and when we contact you it will be with clear instructions. 
 
-**So if you are an interested participant:** Please add your **PUBLIC** contact information here in the list below. I emphasized "public" because this information will be web-scraped, used by spammers, etc. We are an open-source project so there is no hiding your identity completely - this is just your opportunity think carefully about what specific contact methods you share if that is important to you.
+**So if you are an interested participant:** Please add your **PUBLIC** contact information here in the list below. I emphasized "public" because this information will be web-scraped, used by spammers, etc. We are an open-source project so there is no hiding your identity completely - this is just your opportunity to think carefully about what specific contact methods you share if that is important to you.
 
 ## Timeline
 
 Please observe the official timeline, if you are requesting things well before these dates, please take a breath and give us time, thank you
 
 - March 29 - April 13 18:00 UTC: Students will submit their draft proposals through the program website for you to give solid feedback on.
-- April 13 - May 2: Review all submitted student proposals with your org and consider how many you want to select and how many you can handle(ie how many you have committed mentors for). Decide on the minimum/maximum number of student slots to request- do not request more than your org can handle - this could take students away from orgs who have excellent student prospects and need the slots.
+- April 13 - May 2: Review all submitted student proposals with your org and consider how many you want to select and how many you can handle(ie how many you have committed mentors for). Decide on the minimum/maximum number of student slots to request- do not request more than your org can handle - this could take students away from orgs that have excellent student prospects and need the slots.
 - May 3 18:00 UTC: Deadline to submit slot requests (Org Admins enter requests)
 
 ## Student Eligibility
@@ -25,15 +25,15 @@ View [Student Eligibility](https://developers.google.com/open-source/gsoc/faq#wh
 
 ## Want to contribute to AnkiDroid before we officially start?
 
-We welcome any contributors, and you can start contributing immediately if you desire so. For the sake of transparency, we are all [volunteers](https://github.com/ankidroid/Anki-Android/wiki/OpenCollective-Payment-Process) here and if you participate now, it's as a volunteer, it do not guarantee, even implicitly, that you will be selected for GSoC.
+We welcome any contributors, and you can start contributing immediately if you desire so. For the sake of transparency, we are all [volunteers](https://github.com/ankidroid/Anki-Android/wiki/OpenCollective-Payment-Process) here and if you participate now, it's as a volunteer, it does not guarantee, even implicitly, that you will be selected for GSoC.
 
-You should look at our [Contributing](https://github.com/ankidroid/Anki-Android/wiki/Contributing) page and the list of [good first issues](https://github.com/ankidroid/Anki-Android/issues?q=is%3Aopen+is%3Aissue+label%3A%22Good+First+Issue%21%22). If you work on an open issue, write down that you are working on it, so that nobody else start doing the same work as you. If you can't work on it anymore, please post another message to let us know. If you want to create your own feature, please post a feature request first so that the core contributors can confirm whether it would be accepted. 
+You should look at our [Contributing](https://github.com/ankidroid/Anki-Android/wiki/Contributing) page and the list of [good first issues](https://github.com/ankidroid/Anki-Android/issues?q=is%3Aopen+is%3Aissue+label%3A%22Good+First+Issue%21%22). If you work on an open issue, write down that you are working on it so that nobody else starts doing the same work as you. If you can't work on it anymore, please post another message to let us know. If you want to create your own feature, please post a feature request first so that the core contributors can confirm whether it would be accepted. 
 
-There are a few tasks that will surely lead to accepted PR, assuming they are done correctly. Adding javadoc to class, members and methods that are not yet properly documented, annotations such as `@Nullable`, `@NotNull`, and `@CheckResult` annotation. Of course, those annotations should be relevant. Also, increasing [coverage](https://github.com/ankidroid/Anki-Android/wiki/Development-Guide#code-coverage) is extremely welcomed, as it will considerably improve the future of the codebase.
+There are a few tasks that will surely lead to accepted PR, assuming they are done correctly. Adding javadoc to class, members, and methods that are not yet properly documented, annotations such as `@Nullable`, `@NotNull`, and `@CheckResult` annotation. Of course, those annotations should be relevant. Also, increasing [coverage](https://github.com/ankidroid/Anki-Android/wiki/Development-Guide#code-coverage) is extremely welcomed, as it will considerably improve the future of the codebase.
 
 
 ## What is Google Summer of Code?
-> [Google Summer of Code](https://summerofcode.withgoogle.com/) is a global program focused on bringing more student developers into open source software development. Students work with an open source organization on a 10 week programming project during their break from school.
+> [Google Summer of Code](https://summerofcode.withgoogle.com/) is a global program focused on bringing more student developers into open source software development. Students work with an open-source organization on a 10-week programming project during their break from school.
 
 ## Project Ideas
 Here is a list of project ideas we suggest:
@@ -41,7 +41,7 @@ Here is a list of project ideas we suggest:
 [Ideas list for 2021](https://github.com/ankidroid/Anki-Android/wiki/GSOC-proposal-2021)
 
 ## Advice
-Potential candidates should to take a look at the guidelines on how to contribute to AnkiDroid.
+Potential candidates should take a look at the guidelines on how to contribute to AnkiDroid.
 - [GSOC Student Advice](https://developers.google.com/open-source/gsoc/help/student-advice)
 - [GSOC Student Guide](https://google.github.io/gsocguides/student)
 - [Development Guide](https://github.com/ankidroid/Anki-Android/wiki/Development-Guide)
@@ -51,9 +51,9 @@ Potential candidates should to take a look at the guidelines on how to contribut
 
 ## List of interested participants
 
-As a contributor to an open source project, you'll have to share some information, at the very least an email address. 
+As a contributor to an open-source project, you'll have to share some information, at the very least an email address. 
 
-We care about your privacy. Please only list information that you are comfortable to share in public, as this site is scraped. But we do need an email to be able to contact you once we know more about our plan moving forward. Using your github email address is a reasonably safe choice since it will be necessary to collaborate with us, but you may create an anonymous email specifically for GitHub if that is important to you, we won't mind as long as we have your name some email that works for you :smile: 
+We care about your privacy. Please only list information that you are comfortable sharing in public, as this site is scraped. But we do need an email to be able to contact you once we know more about our plan moving forward. Using your GitHub email address is a reasonably safe choice since it will be necessary to collaborate with us, but you may create an anonymous email specifically for GitHub if that is important to you, we won't mind as long as we have your name some email that works for you :smile: 
 
 
 Please enter your details at the bottom of the page via the following link: https://github.com/ankidroid/Anki-Android/wiki/Google-Summer-of-Code-2021/_edit. You will need a GitHub account to do this.
@@ -70,15 +70,15 @@ Please enter your details at the bottom of the page via the following link: http
 - Siddharth Singh Negi (sidharthnegi43@gmail.com) ; Github: https://github.com/siddharth-droid ; LinkedIn: https://www.linkedin.com/in/siddharth-negi-587495196/
 - Jaishree Meena (jaisghunawat99@gmail.com) ; Github:(https://github.com/IAmJaishree) ; LinkedIn:(https://www.linkedin.com/in/jaishree-ghunawat)
 - Ekagra Sinha (ekagra001@gmail.com) ;GitHub:https://github.com/Ekagra ; LinkedIn:(https://www.linkedin.com/in/ekagra-sinha-488bb1179)
-- Anant Shukla (Email: anantshukla1402@gmail.com ; Github: https://github.com/iamanantshukla)
+- Anant Shukla (Email: anantshukla1402@gmail.com; Github: https://github.com/iamanantshukla)
 - Afolabi Samuel 
 (afolabisamguy@gmail.com;
 GitHub: @afolabisamguy)
 - Abhinav (abhi2000.rtk@gmail.com; Github: @abhinav12k)
-- Nazish Kamran (nazishkn67@gmail.com; Github : @nazishkn67)
+- Nazish Kamran (nazishkn67@gmail.com; Github: @nazishkn67)
 - Nikhil Verma (nv5475609@gmail.com; Github: @nikhilverma360)
 - Akshay Prabhu (akshayprabhu@protonmail.com; Github: @akshayprabhu200)
-- Prajjwal kumar (write2prajjwal@gmail.com ; 
+- Prajjwal Kumar (write2prajjwal@gmail.com ; 
   Github: https://github.com/prajjwalkumar17 ; Linkedin : https://www.linkedin.com/in/prajjwal-singh-1752001 )
 - Siddharth Anand Srivastav (siddharthanandsrivastav@gmail.com; GitHub: @AnandSidd)
 - Tarek Mohamed Abdalla (tarekkma@gmail.com; GitHub/TarekkMA)
@@ -156,21 +156,21 @@ Satyam jyotsana gargee(satyam8657@gmail.com)GitHub:(https://github.com/Satyamjyo
 - Ritish Singh(ritish.rks@gmail.com: Github: @ritish099, Website: https://ritishsingh.me/, Linkdin: https://www.linkedin.com/in/ritish-kr-singh-619347175/)
 - Ayush Goel( Email : goela093@gmail.com), (github:https://github.com/ayush1729cpp) , (linkedin : https://www.linkedin.com/in/ayushgoel1729/)
 - Rituraj Jain( Email : rrjain20122000@gmail.com), (Github:https://github.com/riturajjain2000) , (Linkedin : https://www.linkedin.com/in/riturajjain2000/)
-- Jatin Gupta(Email : jatingupta8910@gmail.com), (Github :https://github.com/dev-jatin), (Linked in : https://www.linkedin.com/in/jatin-gupta-a779b1204)
-- Vishnu Agarwal(Email : vishnuagbly@gmail.com), (Github : https://github.com/vishnuagbly), (Linkedin : https://www.linkedin.com/in/vishnu-ag-4a3762193)
-- Abhishek Nigam(Email : nabhi531@gmail.com),(Github: https://github.com/abhi114)
+- Jatin Gupta(Email: jatingupta8910@gmail.com), (Github:https://github.com/dev-jatin), (Linked in https://www.linkedin.com/in/jatin-gupta-a779b1204)
+- Vishnu Agarwal(Email: vishnuagbly@gmail.com), (Github: https://github.com/vishnuagbly), (Linkedin: https://www.linkedin.com/in/vishnu-ag-4a3762193)
+- Abhishek Nigam(Email: nabhi531@gmail.com),(Github: https://github.com/abhi114)
 - Amar Shukla (Email:amarshukla320@gmail.com),(Github:https://github.com/AmarShukla1),(Linkedin : https://www.linkedin.com/in/amarshukla007)
 - Tushar Bhatt; E-mail: tbhatt312@gmail.com; GitHub: https://github.com/bhatushar/; LinkedIn: https://www.linkedin.com/in/bhatushar/
 - Amarnath K (Email:amarnathk5674@gmail.com),(Github: https://github.com/Amar-2003)
 - Satyam Pandey Email address: psatyam360@gmail.com, GitHub Id: https://github.com/satyampandeygit
 - Amruta Koshe (Email address: amruta.koshe@gmail.com), (Github: https://github.com/AmrutaKoshe), (Linkedin: https://www.linkedin.com/in/amruta-koshe-5a55b8153/)
 - Gajanan Gitte (Email address: gajanansgitte07@gmail.com), (Github: https://github.com/gajanangitte)
-- A.M. Samara simha reddy (Email address: samarasimhareddy.mohan@gmail.com), (Github: https://github.com/samar08), (Linkedin: https://www.linkedin.com/in/samara-simha-reddy-a-907b89136/)
+- A.M. Samara Simha reddy (Email address: samarasimhareddy.mohan@gmail.com), (Github: https://github.com/samar08), (Linkedin: https://www.linkedin.com/in/samara-simha-reddy-a-907b89136/)
 - Aviraj Singh (Email address: aviraj.rsingh@gmail.com), (Github: https://github.com/avirajrsingh), (Linkedin: https://www.linkedin.com/in/aviraj-singh/)
 - Harsh Kumar Sinha (Email address: harshkumarsinha.hks2@gmail.com), (Github: https://github.com/harshhks2)
 - Harsh Chaurasiya (Email address: hc2542000@gmail.com), (Github: https://github.com/harsh-hash)
 - Tanmay Chakraborty (Email address: tanmaychakrabortydhn@gmail.com), (Github: https://github.com/tanmayChakrawarty), (Linkedin: https://www.linkedin.com/in/tanmay-chakraborty-521913199/)
-- Nguyen Quang Tung (Github: https://github.com/ichisadashioko ; Email address: ichisadashioko@gmail.com )
+- Nguyen Quang Tung (Github: https://github.com/ichisadashioko; Email address: ichisadashioko@gmail.com )
 - Vatsal Patel
 (GitHub: https://github.com/PatelVatsalB21 ),(Linkedin: https://www.linkedin.com/in/vatsal-patel-919691193 )
 - Saksham Pruthi (Github: https://github.com/sakshampruthi), (Linkedin: https://www.linkedin.com/in/sakshampruthi), (Email: saksham.0804@gmail.com), (Portfolio : https://bit.ly/sakshampruthi), (Medium: https://sakshampruthi.medium.com)
@@ -196,7 +196,7 @@ Satyam jyotsana gargee(satyam8657@gmail.com)GitHub:(https://github.com/Satyamjyo
 - **Abhishek Singh Chauhan** (Email : asc9451127984@gmail.com , [LinkedIn]( https://www.linkedin.com/in/abhishek-singh-chauhan-4498751ab))
 - **Avinash Kumar** (Email: avinashbest3@gmail.com, LinkedIn: https://www.linkedin.com/in/avinashbest/ , Medium: https://avinashbest.medium.com/ , GitLab: https://gitlab.crio.do/avinashbest)
 - **Anming Gu** (Email : gu.anming106@gmail.com, [Github](https://github.com/AnmingGu), [LinkedIn](https://www.linkedin.com/in/anming-gu-7a00541ab/))
-- Snehith S Nair (Email : snehithnair901@gmail.com)
+- Snehith S Nair (Email: snehithnair901@gmail.com)
 - **Shivani Jindal** (Email: jindalshivani11@gmail.com, [Github](https://github.com/jindalshiva), [LinkedIn](https://www.linkedin.com/in/shivani-jindal-87a148157/))
 - **A S V K Vinayak** (Email: asvkvinayak@gmail.com, [Github](https://github.com/ASVKVINAYAK), [LinkedIn](https://www.linkedin.com/in/a-s-v-k-vinayak-228a62127/))
 - **Girish Garg** (Email: girishgargcool@gmail.com, [Github](https://github.com/gargVader), [LinkedIn](https://www.linkedin.com/in/girish23))
@@ -210,6 +210,7 @@ Satyam jyotsana gargee(satyam8657@gmail.com)GitHub:(https://github.com/Satyamjyo
 - **Arjun Dashrath** _Reach me_ **:** 'Email' - arjundashrath@gmail.com, [GitHub](https://github.com/arjundashrath), [LinkedIn](https://www.linkedin.com/in/arjun-dashrath/)
 - **Mitali Gupta** (Email: guptamg0701@gmail.com, [Github](https://github.com/mitaligupta07), [LinkedIn](https://www.linkedin.com/in/mitali-gupta-96751b191/))
 - **Kiran Baby** (Email : kiranbaby256@gmail.com, [Github](https://github.com/kiranbaby14))
+- **Saket Sarin** (Email: sarinsaket@gmail.com, [Github](https://github.com/saketsarin), [LinkedIn](https://www.linkedin.com/in/saket-sarin-02a479154/))
 
 # # 
 
