@@ -118,8 +118,7 @@ public class AnkiDroidCrashReportDialog extends CrashReportDialog implements Dia
                 AnkiDroidApp.getInstance().setAcraReportingMode(AnkiDroidApp.FEEDBACK_REPORT_ALWAYS);
             }
             // Send the crash report
-                mHelper.sendCrash(mUserComment.getText().toString(),"");
-            
+            mHelper.sendCrash(mUserComment.getText().toString(),"");
         } else {
             mHelper.cancelReports();
         }
@@ -139,7 +138,12 @@ public class AnkiDroidCrashReportDialog extends CrashReportDialog implements Dia
             outState.putString(STATE_COMMENT, mUserComment.getText().toString());
         }
     }
-    public static String fetchWebViewInformation( WebView webView ){
-        return webView.getSettings().getUserAgentString();
+    public static String fetchWebViewInformation ( WebView webView ) {
+        try{
+            return webView.getSettings().getUserAgentString();
+        } catch ( Exception e ) {
+            Timber.e( e, "Error Fetching WebView Information");
+            return e.getMessage().toString();
+        }
     }
 }
