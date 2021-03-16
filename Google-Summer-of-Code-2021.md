@@ -203,7 +203,7 @@ Satyam jyotsana gargee(satyam8657@gmail.com)GitHub:(https://github.com/Satyamjyo
 - **Hiron Saha** (Email: hironsaha0@gmail.com, [Github](https://github.com/hiron1999), [LinkedIn](https://www.linkedin.com/in/hiron-saha-b7912b198/))
 - **Xiaoyu Qiu** (Email: qiuxy23@mail2.sysu.edu.cn, [Github](https://github.com/LittleFish33))
 - **Kavya Goyal** (Email: kavya24goyal@gmail.com, [Github](https://github.com/Kavya-24), [LinkedIn](https://www.linkedin.com/in/kavya-goyal-313ba6194/))
-- **Prince Sinha** _Reach me_ **:** 'Email' - princesinha7072@gmail.com, [GitHub](https://github.com/prince-09)
+- **Prince Sinha** _Reach me_ **:** 'Email' - princesinha7072@gmail.com, [GitHub](https://github.com/prince-09), [LinkedIn](https://www.linkedin.com/in/prince-sinha-90a83b180/)
 
 # # 
 
