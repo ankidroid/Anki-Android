@@ -218,9 +218,19 @@ public class Info extends AnkiActivity {
             Timber.w(e, "Unable to detect Rust Backend");
         }
 
+        String webviewUserAgent = null;
+        try {
+            webviewUserAgent = getWebviewUserAgent();
+        } catch (Throwable e) {
+            AnkiDroidApp.sendExceptionReport(e, "Info::copyDebugInfo()", "some issue occured while extracting webview user agent");
+        }
 
         String debugInfo = "AnkiDroid Version = " + VersionUtils.getPkgVersionName() + "\n\n" +
                 "Android Version = " + Build.VERSION.RELEASE + "\n\n" +
+                "Manufacturer = " + Build.MANUFACTURER + "\n\n" +
+                "Model = " + Build.MODEL + "\n\n" +
+                "Hardware = " + Build.HARDWARE+ "\n\n" +
+                "Webview User Agent = " + webviewUserAgent +
                 "ACRA UUID = " + Installation.id(this) + "\n\n" +
                 "Scheduler = " + schedName + "\n\n" +
                 "Crash Reports Enabled = " + isSendingCrashReports() + "\n\n" +
@@ -236,6 +246,9 @@ public class Info extends AnkiActivity {
         return debugInfo;
     }
 
+    private String getWebviewUserAgent() {
+        return new WebView(this).getSettings().getUserAgentString() + "\n\n";
+    }
 
     private boolean isSendingCrashReports() {
         return AnkiDroidApp.isAcraEnbled(this, false);
