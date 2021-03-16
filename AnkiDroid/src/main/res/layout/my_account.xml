@@ -1,101 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.coordinatorlayout.widget.CoordinatorLayout
-<<<<<<< HEAD
-	xmlns:android="http://schemas.android.com/apk/res/android"
-	xmlns:app="http://schemas.android.com/apk/res-auto"
-	xmlns:tools="http://schemas.android.com/tools"
-	android:id="@+id/root_layout"
-	android:layout_width="fill_parent"
-	android:layout_height="fill_parent"
-	android:fitsSystemWindows="true">
-	<LinearLayout
-		android:layout_width="match_parent"
-		android:layout_height="match_parent"
-		android:orientation="vertical">
-		<include layout="@layout/toolbar"/>
-		<ScrollView
-			android:layout_width="match_parent"
-			android:layout_height="0dp"
-			android:layout_gravity="center_horizontal"
-			android:fillViewport="true"
-			android:layout_weight="1">
-			<LinearLayout
-				android:id="@+id/MyAccountLayout"
-				android:layout_width="fill_parent"
-				android:layout_height="wrap_content"
-				android:orientation="vertical"
-				android:padding="15dp"
-				android:gravity="top"
-				>
-				<!-- TODO JS choose a standardized padding to use here -->
-
-
-				<!--<com.ichi2.ui.FixedTextView-->
-				<!--android:id="@+id/sign_in"-->
-				<!--android:layout_width="fill_parent"-->
-				<!--android:layout_height="wrap_content"-->
-				<!--android:text="Sign in"-->
-				<!--android:gravity="center"-->
-				<!--android:textSize="@dimen/md_title_textsize"-->
-				<!--android:textColor="?android:textColorPrimary"-->
-				<!--android:layout_gravity="center"-->
-				<!--android:layout_margin="@dimen/content_vertical_padding"/>-->
-				<!--&lt;!&ndash; TODO JS - move into strings.xml &ndash;&gt;-->
-
-				<ImageView
-					android:id="@+id/ankidroid_logo"
-					android:layout_width="199dp"
-					android:src="@drawable/ic_anki"
-					android:layout_gravity="center"
-					android:layout_marginTop="19dp"
-					android:layout_centerHorizontal="true"
-					android:layout_marginBottom="-1dp"
-					android:layout_height="199dp"
-					tools:ignore="VectorDrawableCompat"></ImageView>
-
-				<com.google.android.material.textfield.TextInputLayout
-					android:layout_width="match_parent"
-					android:layout_height="wrap_content"
-					android:hint="@string/username">
-
-					<com.google.android.material.textfield.TextInputEditText
-						android:id="@+id/username"
-						android:layout_width="match_parent"
-						android:layout_height="wrap_content"
-						android:inputType="textNoSuggestions|textEmailAddress"
-						android:layout_margin="@dimen/content_vertical_padding"/>
-				</com.google.android.material.textfield.TextInputLayout>
-
-				<com.google.android.material.textfield.TextInputLayout
-					android:id="@+id/password_layout"
-					android:layout_width="match_parent"
-					android:layout_height="wrap_content"
-					android:hint="@string/password"
-					app:passwordToggleEnabled="true">
-
-					<com.ichi2.ui.TextInputEditField
-						android:id="@+id/password"
-						android:layout_width="match_parent"
-						android:layout_height="wrap_content"
-						android:inputType="textPassword"
-						android:layout_margin="@dimen/content_vertical_padding"/>
-				</com.google.android.material.textfield.TextInputLayout>
-
-				<Button
-					android:id="@+id/login_button"
-					android:layout_width="fill_parent"
-					android:layout_height="wrap_content"
-					android:theme="@style/LargeButtonStyle"
-					android:singleLine="true"
-					android:background="@drawable/footer_button_round_blue"
-					android:textSize="@dimen/md_title_textsize"
-					android:layout_gravity="center"
-					android:padding="10dp"
-					android:text="@string/log_in"
-					android:paddingTop="30dp"
-					android:layout_margin="@dimen/content_vertical_padding"/>
-				<!-- TODO better text size ^^ -->
-=======
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/root_layout"
@@ -200,63 +104,46 @@
                     />
 
             </LinearLayout>
->>>>>>> parent of 2906d1eb1 (Improved UI Design Of Login Page)
 
+        </ScrollView>
 
-				<Button
-					android:id="@+id/reset_password_button"
-					android:layout_width="wrap_content"
-					android:layout_height="wrap_content"
-					android:background="@null"
-					android:textSize="@dimen/abc_text_size_button_material"
-					android:textColor="?attr/colorAccent"
-					android:singleLine="true"
-					android:padding="10dp"
-					android:layout_gravity="center"
-					android:text="@string/reset_password"
-					android:layout_margin="@dimen/content_vertical_padding"
-					/>
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:padding="3dp"
+            android:orientation="vertical"
+            >
+            <!-- TODO move padding to dimen, when finalized -->
 
-			</LinearLayout>
+            <com.ichi2.ui.FixedTextView
+                android:id="@+id/no_account_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/sign_up_description"
+                android:layout_gravity="center"
+                android:textSize="@dimen/abc_text_size_button_material"
+                android:textStyle="bold"/>
+            <com.ichi2.ui.FixedTextView
+                android:id="@+id/no_account_not_affiliated"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/sign_up_not_affiliated"
+                android:layout_gravity="center"
+                android:textSize="@dimen/abc_text_size_button_material"
+                android:textStyle="italic"/>
 
-		</ScrollView>
-
-		<LinearLayout
-			android:layout_width="fill_parent"
-			android:layout_height="wrap_content"
-			android:padding="3dp"
-			android:orientation="vertical"
-			>
-			<!-- TODO move padding to dimen, when finalized -->
-
-			<com.ichi2.ui.FixedTextView
-				android:id="@+id/no_account_text"
-				android:layout_width="wrap_content"
-				android:layout_height="wrap_content"
-				android:text="@string/sign_up_description"
-				android:layout_gravity="center"
-				android:textSize="@dimen/abc_text_size_button_material"
-				android:textStyle="bold"/>
-			<com.ichi2.ui.FixedTextView
-				android:id="@+id/no_account_not_affiliated"
-				android:layout_width="wrap_content"
-				android:layout_height="wrap_content"
-				android:text="@string/sign_up_not_affiliated"
-				android:layout_gravity="center"
-				android:textSize="@dimen/abc_text_size_button_material"
-				android:textStyle="italic"/>
-
-			<Button
-				android:id="@+id/sign_up_button"
-				android:layout_width="wrap_content"
-				android:layout_height="wrap_content"
-				android:background="@null"
-				android:textSize="@dimen/abc_text_size_button_material"
-				android:textColor="?attr/colorAccent"
-				android:padding="3dp"
-				android:layout_gravity="center"
-				android:singleLine="true"
-				android:text="@string/sign_up" />
-		</LinearLayout>
-	</LinearLayout>
+            <Button
+                android:id="@+id/sign_up_button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@null"
+                android:textSize="@dimen/abc_text_size_button_material"
+                android:textColor="?attr/colorAccent"
+                android:padding="3dp"
+                android:layout_gravity="center"
+                android:singleLine="true"
+                android:text="@string/sign_up" />
+        </LinearLayout>
+    </LinearLayout>
 </androidx.coordinatorlayout.widget.CoordinatorLayout>
+

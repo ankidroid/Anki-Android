@@ -61,10 +61,7 @@ public class MyAccount extends AnkiActivity {
     Toolbar mToolbar = null;
     private TextInputLayout mPasswordLayout;
 
-<<<<<<< HEAD
-=======
 
->>>>>>> parent of 2906d1eb1 (Improved UI Design Of Login Page)
     private void switchToState(int newState) {
         switch (newState) {
             case STATE_LOGGED_IN:
@@ -179,28 +176,6 @@ public class MyAccount extends AnkiActivity {
         mUsername = mLoginToMyAccountView.findViewById(R.id.username);
         mPassword = mLoginToMyAccountView.findViewById(R.id.password);
         mPasswordLayout = mLoginToMyAccountView.findViewById(R.id.password_layout);
-<<<<<<< HEAD
-        ImageView mAnkidroidLogo = mLoginToMyAccountView.findViewById(R.id.ankidroid_logo);
-
-        //checking if device is in horizontal mode or not .
-        OrientationEventListener myOrientationEventListener = new OrientationEventListener(this,SensorManager.SENSOR_DELAY_NORMAL)
-        {
-            @Override
-            public void onOrientationChanged(int orientation)
-            {
-                boolean PORTRAIT_MODE  = ((orientation < 100) || (orientation > 280));
-                //if device is in horizontal mode then screen might not have enough space for ankidroid logo
-                //so we will invisible logo for horizontal mode only
-                if(PORTRAIT_MODE){
-                    mAnkidroidLogo.setVisibility(View.GONE);
-                }else {
-                    mAnkidroidLogo.setVisibility(View.VISIBLE);
-                }
-            }
-        };
-        myOrientationEventListener.enable();
-=======
->>>>>>> parent of 2906d1eb1 (Improved UI Design Of Login Page)
 
         mPassword.setOnKeyListener((v, keyCode, event) -> {
             if (event.getAction() == KeyEvent.ACTION_DOWN) {
