@@ -41,6 +41,7 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.contains;
 import static org.hamcrest.Matchers.containsInAnyOrder;
 import static org.hamcrest.Matchers.hasSize;
+import static org.junit.Assert.assertEquals;
 
 @RunWith(AndroidJUnit4.class)
 public class AnkiPackageExporterTest extends RobolectricTest {
@@ -107,6 +108,25 @@ public class AnkiPackageExporterTest extends RobolectricTest {
         // {"0":"filename.txt"}
         String expected = String.format("{\"0\":\"%s\"}", tempFileInCollection.getName());
         checkMediaExportStringIs(files, expected);
+    }
+
+
+    @Test
+    public void stripHTML_will_remove_html_with_unicode_whitespace() {
+        Exporter exporter = getExporterForDeckWithMedia();
+
+        final String res = exporter.stripHTML(String.join(
+                "\n",//delimiter
+                "\n\u205F\t<[sound",
+                ":test.mp3]>",
+                "\n\u2029\t",
+                "\u2004",
+                "<!-- Comment \n \u1680 --> <",
+                "tag\n>",
+                "<style><s>"
+        ));
+
+        assertEquals("", res);
     }
 
 
