@@ -216,6 +216,7 @@ Satyam jyotsana gargee(satyam8657@gmail.com)GitHub:(https://github.com/Satyamjyo
 - **Jaydeepsinh Parmar** (Email: jaydeepparmar253@gmail.com , [Github](https://github.com/techjd))
 - **Sam Dirkswager** (Email: sam@dirkback.com , [Github](https://github.com/tolziplohu))
 - **Ubadah Jafry** (Email: ubadahjafry@gmail.com, [Github](https://github.com/UbadahJ), [LinkedIn](https://www.linkedin.com/in/ubadah-jafry/))
+- **Md Irshad** (Email: irshadmd039@gmail.com, [Github](https://github.com/irshadmd), [LinkedIn](https://www.linkedin.com/in/iamirshad))
 
 # # 
 
