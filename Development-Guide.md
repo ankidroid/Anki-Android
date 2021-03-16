@@ -239,9 +239,14 @@ In this case, it's necessary to:
   1. reupload the translations (option "t" and language "all").
 
 ## Code Coverage
-After running tests with `./gradlew jacocoTestReport` a report is generated on `%AnkiDroidRoot%/AnkiDroid/build/reports/jacoco/jacocoUnitTestReport/html/index.html`. Opening this file in your browser will let you find part of the code that were not covered - that is, that was not executed during the tests. This means that any bug in this part of the code would be undetected. 
 
-In march 2021, only 36% of the code were covered. You can find such code using the report and add either unit test or on-device tests that run this part of the code; ensuring that any change in the code behavior is detected. Not 100% of the code have to be covered. In particular, it is useless to cover part of the code that should be rewritten. Use your own judgement or discuss with maintainers if you have got a doubt. 
+In march 2021, only 36% of the code were covered. That is that all of our test only runs 36% of the lines written. Erroneous change in the remaining 74% of lines would not be detected automatically and would impact user experience. One of the best way to improve long-term evolution of the code base would be to increase the coverage. You can go to https://codecov.io/gh/ankidroid/Anki-Android/tree/master/AnkiDroid/src/main/java/com/ichi2 and find functions and part of codes which are not yet tested, and write test for them. 
+
+
+Not 100% of the code have to be covered. In particular, it is useless to cover part of the code that should be rewritten, or ported to rust. Use your own judgement or discuss with maintainers if you have got a doubt. 
+
+Coverage can also be generated on your computer. This is mostly useful if you want to check that you correctly covered the code you expected to cover. You can do it by running tests with `./gradlew jacocoTestReport`  and looking at the report on `%AnkiDroidRoot%/AnkiDroid/build/reports/jacoco/jacocoUnitTestReport/html/index.html` in your browser
+
 
 # Other development tools
 
