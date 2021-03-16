@@ -25,10 +25,12 @@ import androidx.core.app.NotificationCompat;
 import androidx.core.content.ContextCompat;
 
 import com.ichi2.anki.AnkiDroidApp;
+import com.ichi2.anki.CollectionHelper;
 import com.ichi2.anki.DeckPicker;
 import com.ichi2.anki.NotificationChannels;
 import com.ichi2.anki.Preferences;
 import com.ichi2.anki.R;
+import com.ichi2.anki.Reviewer;
 import com.ichi2.widget.WidgetStatus;
 
 import timber.log.Timber;
@@ -39,6 +41,11 @@ public class NotificationService extends BroadcastReceiver {
     private static final int WIDGET_NOTIFY_ID = 1;
 
     public static final String INTENT_ACTION = "com.ichi2.anki.intent.action.SHOW_NOTIFICATION";
+
+    /**
+     * Used by Activities to check if the control came from Notification tap.
+     */
+    public static final String THROUGH_NOTIFICATION = "throughNotification";
 
     @Override
     public void onReceive(Context context, Intent intent) {
@@ -71,7 +78,14 @@ public class NotificationService extends BroadcastReceiver {
                 builder.setLights(Color.BLUE, 1000, 1000);
             }
             // Creates an explicit intent for an Activity in your app
-            Intent resultIntent = new Intent(context, DeckPicker.class);
+            // If there are pending reviews then tapping the notification will open Review Activity instead of DeckPicer Activity
+            Intent resultIntent;
+            if (currentlySelectedDeckHasDueCards(context)) {
+                resultIntent = new Intent(context, Reviewer.class);
+                resultIntent.putExtra(THROUGH_NOTIFICATION, true);
+            } else {
+                resultIntent = new Intent(context, DeckPicker.class);
+            }
             resultIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
             PendingIntent resultPendingIntent = PendingIntent.getActivity(context, 0, resultIntent,
                     PendingIntent.FLAG_UPDATE_CURRENT);
@@ -81,6 +95,21 @@ public class NotificationService extends BroadcastReceiver {
         } else {
             // Cancel the existing notification, if any.
             manager.cancel(WIDGET_NOTIFY_ID);
+        }
+    }
+
+
+    /**
+     * Checks if currently selected deck has due cards
+     *
+     * @param context.
+     * @return true if currently selected deck has due cards otherwise false.
+     */
+    private boolean currentlySelectedDeckHasDueCards(Context context) {
+        try {
+            return CollectionHelper.getInstance().getCol(context).getSched().count() > 0;
+        } catch (Exception e) {
+            return false;
         }
     }
 }

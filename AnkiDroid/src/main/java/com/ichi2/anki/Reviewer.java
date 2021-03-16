@@ -68,6 +68,7 @@ import com.ichi2.anki.multimediacard.AudioView;
 import com.ichi2.anki.dialogs.RescheduleDialog;
 import com.ichi2.anki.reviewer.PeripheralKeymap;
 import com.ichi2.anki.reviewer.ReviewerUi;
+import com.ichi2.anki.services.NotificationService;
 import com.ichi2.anki.workarounds.FirefoxSnackbarWorkaround;
 import com.ichi2.anki.reviewer.ActionButtons;
 import com.ichi2.async.CollectionTask;
@@ -162,6 +163,7 @@ public class Reviewer extends AbstractFlashcardViewer {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
         if (showedActivityFailedScreen(savedInstanceState)) {
             return;
         }
@@ -273,6 +275,22 @@ public class Reviewer extends AbstractFlashcardViewer {
     @Override
     protected void onCollectionLoaded(Collection col) {
         super.onCollectionLoaded(col);
+
+        //This checks if the control came here through Notification tap.
+        if (getIntent().getExtras() != null) {
+            if (getIntent().getExtras().containsKey(NotificationService.THROUGH_NOTIFICATION)) {
+                /*  It verifies if there are pending cards to review
+                    if there are pending cards, then this Activity will resume the pending Review
+                    else the control will go to the DeckPicker Activity to show the Deck List
+                */
+                if (col.getSched().count() == 0) {
+                    startActivityWithoutAnimation(new Intent(this, DeckPicker.class));
+                    finishWithoutAnimation();
+                    return;
+                }
+            }
+        }
+
         // Load the first card and start reviewing. Uses the answer card
         // task to load a card, but since we send null
         // as the card to answer, no card will be answered.
