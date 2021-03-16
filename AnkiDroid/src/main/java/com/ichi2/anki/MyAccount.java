@@ -18,16 +18,19 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
+import android.hardware.SensorManager;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import androidx.appcompat.widget.Toolbar;
 
 import android.view.KeyEvent;
+import android.view.OrientationEventListener;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.afollestad.materialdialogs.MaterialDialog;
@@ -176,6 +179,25 @@ public class MyAccount extends AnkiActivity {
         mUsername = mLoginToMyAccountView.findViewById(R.id.username);
         mPassword = mLoginToMyAccountView.findViewById(R.id.password);
         mPasswordLayout = mLoginToMyAccountView.findViewById(R.id.password_layout);
+        ImageView mAnkidroidLogo = mLoginToMyAccountView.findViewById(R.id.ankidroid_logo);
+
+        //checking if device is in horizontal mode or not .
+        OrientationEventListener myOrientationEventListener = new OrientationEventListener(this,SensorManager.SENSOR_DELAY_NORMAL)
+        {
+            @Override
+            public void onOrientationChanged(int orientation)
+            {
+                boolean PORTRAIT_MODE = ((orientation < 100) || (orientation > 280));
+                // if device is in horizontal mode then screen might not have enough space for ankidroid logo
+                // so we will invisible logo for horizontal mode only
+                if(PORTRAIT_MODE){
+                    mAnkidroidLogo.setVisibility(View.GONE);
+                }else {
+                    mAnkidroidLogo.setVisibility(View.VISIBLE);
+                }
+            }
+        };
+        myOrientationEventListener.enable();
 
         mPassword.setOnKeyListener((v, keyCode, event) -> {
             if (event.getAction() == KeyEvent.ACTION_DOWN) {
