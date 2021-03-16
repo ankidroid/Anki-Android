@@ -58,6 +58,7 @@ We care about your privacy. Please only list information that you are comfortabl
 
 Please enter your details at the bottom of the page via the following link: https://github.com/ankidroid/Anki-Android/wiki/Google-Summer-of-Code-2021/_edit. You will need a GitHub account to do this.
 
+- **Keshav Garg** _Reach me_ **:** 'Email' - gargk747@gmail.com, [GitHub](https://github.com/gargk747)
 - **Lokesh Bibinagar** _Reach me_ **:** 'Email' - lokeshbibinagar97@gmail.com, [GitHub](https://github.com/Lokeshbibinagar)
 - **Sahil Hemnani** _Reach me_ **:** `Email` - hemnanisahil777@gmail.com, [GitHub](https://github.com/SahilHemnani777), [LinkedIn](https://www.linkedin.com/in/sahil-hemnani-8084b41a6/)
 - **Krishna Wadhwani** _Reach me_ **:** Email - kwswhwmw@gmail.com , [Github](https://github.com/KrishnaWadhwani/) , [LinkedIn](https://www.linkedin.com/in/krishna-wadhwani-1063b81ab/)
