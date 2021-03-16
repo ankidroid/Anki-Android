@@ -17,6 +17,7 @@
 package com.ichi2.anki.dialogs;
 
 import android.content.Context;
+import android.content.Intent;
 import android.net.Uri;
 import android.os.Parcel;
 import android.os.Parcelable;
@@ -26,10 +27,16 @@ import com.ichi2.anki.AnkiActivity;
 import com.ichi2.anki.AnkiDroidApp;
 import com.ichi2.anki.R;
 import com.ichi2.anki.UIUtils;
+import com.ichi2.anki.analytics.AnkiDroidCrashReportDialog;
 import com.ichi2.anki.dialogs.RecursivePictureMenu.Item;
 import com.ichi2.anki.dialogs.RecursivePictureMenu.ItemHeader;
 import com.ichi2.anki.exception.UserSubmittedException;
+import com.ichi2.utils.AdaptionUtil;
 import com.ichi2.utils.IntentUtil;
+
+import org.acra.ACRA;
+import org.acra.config.CoreConfigurationBuilder;
+import org.acra.config.DialogConfigurationBuilder;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -64,7 +71,8 @@ public class HelpDialog {
                 ),
                 new ItemHeader(R.string.help_title_get_help, R.drawable.ic_help_black_24dp,
                         new LinkItem(R.string.help_item_mailing_list, R.drawable.ic_email_black_24dp, R.string.link_forum),
-                        new FunctionItem(R.string.help_item_report_bug, R.drawable.ic_bug_report_black_24dp, HelpDialog::openFeedback)
+                        new FunctionItem(R.string.help_item_report_bug, R.drawable.ic_bug_report_black_24dp, HelpDialog::openFeedback),
+                        exceptionReportItem
                 ),
                 new ItemHeader(R.string.help_title_support_ankidroid, R.drawable.ic_heart_black_24dp,
                         new LinkItem(R.string.help_item_support_opencollective_donate, R.drawable.ic_donate_black_24dp, R.string.link_opencollective_donate),
@@ -81,8 +89,7 @@ public class HelpDialog {
                         new LinkItem(R.string.help_item_discord, R.drawable.ic_message_black_24dp, R.string.link_discord),
                         new LinkItem(R.string.help_item_facebook, R.drawable.ic_link_black_24dp, R.string.link_facebook),
                         new LinkItem(R.string.help_item_twitter, R.drawable.ic_link_black_24dp, R.string.link_twitter)
-                ),
-                exceptionReportItem
+                )
         };
 
         ArrayList<Item> itemList = new ArrayList<>(Arrays.asList(allItems));
@@ -229,6 +236,7 @@ public class HelpDialog {
     private static class ExceptionReportItem extends Item implements Parcelable{
 
         private static Long lastClickStamp;
+        static final long currentTimestamp = SystemClock.uptimeMillis();
         final int minIntervalMS = 60000;
         final String exceptionMessage = "Exception report sent by user manually";
         String reportMode = getSharedPrefs(getInstance().getApplicationContext()).getString(AnkiDroidApp.FEEDBACK_REPORT_KEY, "");
@@ -237,12 +245,22 @@ public class HelpDialog {
 
         @Override
         public void execute(AnkiActivity activity) {
-            long currentTimestamp = SystemClock.uptimeMillis();
+            if (AdaptionUtil.isUserATestClient()) {
+                UIUtils.showThemedToast(activity, activity.getString(R.string.user_is_a_robot), false);
+                return;
+            }
 
+            if (reportMode.equals(AnkiDroidApp.FEEDBACK_REPORT_NEVER)) {
+                getSharedPrefs(activity).edit().putBoolean(ACRA.PREF_DISABLE_ACRA, false).apply();
+                getInstance().getAcraCoreConfigBuilder().getPluginConfigurationBuilder(DialogConfigurationBuilder.class)
+                        .setEnabled(true);
+                sendReport(activity);
+                getSharedPrefs(activity).edit().putBoolean(ACRA.PREF_DISABLE_ACRA, true).apply();
+            } else { sendReport(activity); }
+        }
+
+        private void sendReport(AnkiActivity activity) {
             if (lastClickStamp == null || currentTimestamp - lastClickStamp > minIntervalMS) {
-                if (!reportMode.equals(AnkiDroidApp.FEEDBACK_REPORT_ALWAYS)) {
-                    getInstance().setAcraReportingMode(AnkiDroidApp.FEEDBACK_REPORT_ASK);
-                }
                 AnkiDroidApp.deleteACRALimiterData(activity);
                 AnkiDroidApp.sendExceptionReport(
                         new UserSubmittedException(exceptionMessage),
