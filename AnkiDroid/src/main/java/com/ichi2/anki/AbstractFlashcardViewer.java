@@ -64,6 +64,7 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
+import android.view.ViewParent;
 import android.view.WindowManager;
 import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputMethodManager;
@@ -88,6 +89,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.afollestad.materialdialogs.MaterialDialog;
+import com.drakeet.drawer.FullDraggableContainer;
 import com.google.android.material.snackbar.Snackbar;
 import com.ichi2.anim.ViewAnimation;
 import com.ichi2.anki.cardviewer.GestureTapProcessor;
@@ -2898,6 +2900,43 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
                 scrollHandler.removeCallbacks(scrollYRunnable);
                 scrollHandler.postDelayed(scrollYRunnable, 300);
             }
+        }
+
+        @Override
+        public boolean onTouchEvent(MotionEvent event) {
+            if (event.getAction() == MotionEvent.ACTION_DOWN) {
+                ViewParent scrollParent = findScrollParent(this);
+                if (scrollParent != null) {
+                    scrollParent.requestDisallowInterceptTouchEvent(true);
+                }
+            }
+            return super.onTouchEvent(event);
+        }
+
+
+        @Override
+        protected void onOverScrolled(int scrollX, int scrollY, boolean clampedX, boolean clampedY) {
+            if (clampedX) {
+                ViewParent scrollParent = findScrollParent(this);
+                if (scrollParent != null) {
+                    scrollParent.requestDisallowInterceptTouchEvent(false);
+                }
+            }
+            super.onOverScrolled(scrollX, scrollY, clampedX, clampedY);
+        }
+
+
+        private ViewParent findScrollParent(View current) {
+            ViewParent parent = current.getParent();
+            if (parent == null) {
+                return null;
+            }
+            if (parent instanceof FullDraggableContainer) {
+                return parent;
+            } else if (parent instanceof View) {
+                return findScrollParent((View) parent);
+            }
+            return null;
         }
 
         private final Handler scrollHandler = new Handler();
