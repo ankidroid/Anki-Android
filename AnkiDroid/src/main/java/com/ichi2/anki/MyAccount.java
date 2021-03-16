@@ -64,11 +64,6 @@ public class MyAccount extends AnkiActivity {
     Toolbar mToolbar = null;
     private TextInputLayout mPasswordLayout;
 
-    private ImageView mAnkidroidLogo;
-
-    private OrientationEventListener myOrientationEventListener ;
-
-
     private void switchToState(int newState) {
         switch (newState) {
             case STATE_LOGGED_IN:
@@ -183,10 +178,10 @@ public class MyAccount extends AnkiActivity {
         mUsername = mLoginToMyAccountView.findViewById(R.id.username);
         mPassword = mLoginToMyAccountView.findViewById(R.id.password);
         mPasswordLayout = mLoginToMyAccountView.findViewById(R.id.password_layout);
-        mAnkidroidLogo = mLoginToMyAccountView.findViewById(R.id.ankidroid_logo);
+        ImageView mAnkidroidLogo = mLoginToMyAccountView.findViewById(R.id.ankidroid_logo);
 
         //checking if device is in horizontal mode or not .
-        myOrientationEventListener = new OrientationEventListener(this,SensorManager.SENSOR_DELAY_NORMAL)
+        OrientationEventListener myOrientationEventListener = new OrientationEventListener(this,SensorManager.SENSOR_DELAY_NORMAL)
         {
             @Override
             public void onOrientationChanged(int orientation)
