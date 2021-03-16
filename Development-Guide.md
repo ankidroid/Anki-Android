@@ -128,14 +128,14 @@ There are unit tests defined in the `AnkiDroid/src/test` directory, with [an ext
 ./gradlew jacocoUnitTestReport
 ```
 
-Afterwards you should find the coverage report in `%AnkiDroidRoot%/AnkiAndroid/build/reports/jacoco/jacocoUnitTestReport/html/index.html`
+Afterwards you should find the coverage report in `%AnkiDroidRoot%/AnkiDroid/build/reports/jacoco/jacocoUnitTestReport/html/index.html`
 
 ### On-device integration tests
 In addition to the unit tests, several integration tests are defined in the `AnkiDroid/src/androidTest` folder. You can run the tests from within Android Studio by simply right clicking on the test and running it against the chosen connected Android device (be sure to choose the icon with the Android symbol if there are multiple options shown), or from the command line against all connected devices at once using
 ```
 ./gradlew jacocoTestReport
 ```
-After this you should find a coverage report that integrates unit and integration test execution in `%AnkiDroidRoot%/AnkiAndroid/build/reports/jacoco/jacocoTestReport/html/index.html`
+After this you should find a coverage report that integrates unit and integration test execution in `%AnkiDroidRoot%/AnkiDroid/build/reports/jacoco/jacocoTestReport/html/index.html`
 
 **Note:** Some of the connected tests involve the deletion of models, which will force a full-sync, so it's not recommended to try running the tests on your main device.
 
