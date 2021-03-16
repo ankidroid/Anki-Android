@@ -214,6 +214,7 @@ Satyam jyotsana gargee(satyam8657@gmail.com)GitHub:(https://github.com/Satyamjyo
 - **Vaishnavi Shrivastava** _Reach me_ **:** Email - vaishnavi.shri2019@gmail.com, [GitHub](https://github.com/VaishnaviShri)
 - **Jaydeepsinh Parmar** (Email: jaydeepparmar253@gmail.com , [Github](https://github.com/techjd))
 - **Sam Dirkswager** (Email: sam@dirkback.com , [Github](https://github.com/tolziplohu))
+- **Ubadah Jafry** (Email: ubadahjafry@gmail.com, [Github](https://github.com/UbadahJ), [LinkedIn](https://www.linkedin.com/in/ubadah-jafry/))
 
 # # 
 
