@@ -25,9 +25,12 @@ View [Student Eligibility](https://developers.google.com/open-source/gsoc/faq#wh
 
 ## Want to contribute to AnkiDroid before we officially start?
 
-If you want to start participating, you should look at our [Contributing](https://github.com/ankidroid/Anki-Android/wiki/Contributing) page and the list of [good first issues](https://github.com/ankidroid/Anki-Android/issues?q=is%3Aopen+is%3Aissue+label%3A%22Good+First+Issue%21%22). Write down that you are working on it, so that nobody else start doing the same work as you. If you can't work on it anymore, please post another message to let us know. If you want to create your own feature, please post a feature request first so that the core contributors can confirm whether it would be accepted.
+We welcome any contributors, and you can start contributing immediately if you desire so. For the sake of transparency, we are all [volunteers](https://github.com/ankidroid/Anki-Android/wiki/OpenCollective-Payment-Process) here and if you participate now, it's as a volunteer, it do not guarantee, even implicitly, that you will be selected for GSoC.
 
-For the sake of transparency, we are all [volunteers](https://github.com/ankidroid/Anki-Android/wiki/OpenCollective-Payment-Process) here and if you participate now, it's as a volunteer, it do not guarantee, even implicitly, that you will be selected for GSoC.
+You should look at our [Contributing](https://github.com/ankidroid/Anki-Android/wiki/Contributing) page and the list of [good first issues](https://github.com/ankidroid/Anki-Android/issues?q=is%3Aopen+is%3Aissue+label%3A%22Good+First+Issue%21%22). If you work on an open issue, write down that you are working on it, so that nobody else start doing the same work as you. If you can't work on it anymore, please post another message to let us know. If you want to create your own feature, please post a feature request first so that the core contributors can confirm whether it would be accepted. 
+
+There are a few tasks that will surely lead to accepted PR, assuming they are done correctly. Adding javadoc to class, members and methods that are not yet properly documented, annotations such as @Nullable, @NotNull, and @CheckResult annotation. Of course, those annotations should be relevant. Also, increasing [coverage](https://github.com/ankidroid/Anki-Android/wiki/Development-Guide#code-coverage) is extremely welcomed, as it will considerably improve the future of the codebase.
+
 
 ## What is Google Summer of Code?
 > [Google Summer of Code](https://summerofcode.withgoogle.com/) is a global program focused on bringing more student developers into open source software development. Students work with an open source organization on a 10 week programming project during their break from school.
