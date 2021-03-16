@@ -1089,7 +1089,7 @@ public class DeckPicker extends NavigationDrawerActivity implements
                     finishWithAnimation();
                     return;
                 } else {
-                    Toast.makeText(this, "Press back again to exit", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(this, "Press back again to close the app", Toast.LENGTH_SHORT).show();
                 }
                 mBackPressedTime = System.currentTimeMillis();
             }
