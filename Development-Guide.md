@@ -21,6 +21,7 @@ Feel free to join our Discord: [#dev-ankidroid](https://discord.gg/qjzcRTx) to j
   - [Anki database structure](#anki-database-structure)
   - [Branching Model](#branching-model)
   - [Localization Administration](#localization-administration)
+  - [Code Coverage](#code-coverage)
 * [Other development tools](#other-development-tools)
   - [SQLite browser](#sqlite-browser)
   - [HTML javascript inspection](#html-javascript-inspection)
@@ -236,6 +237,11 @@ In this case, it's necessary to:
   1. download all translations (update-translations.py)
   1. upload the changed strings
   1. reupload the translations (option "t" and language "all").
+
+## Code Coverage
+After running tests with `./gradlew jacocoTestReport` a report is generated on `%AnkiDroidRoot%/AnkiDroid/build/reports/jacoco/jacocoUnitTestReport/html/index.html`. Opening this file in your browser will let you find part of the code that were not covered - that is, that was not executed during the tests. This means that any bug in this part of the code would be undetected. 
+
+In march 2021, only 36% of the code were covered. You can find such code using the report and add either unit test or on-device tests that run this part of the code; ensuring that any change in the code behavior is detected. Not 100% of the code have to be covered. In particular, it is useless to cover part of the code that should be rewritten. Use your own judgement or discuss with maintainers if you have got a doubt. 
 
 # Other development tools
 
