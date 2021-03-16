@@ -17,95 +17,93 @@
             android:layout_gravity="center_horizontal"
             android:fillViewport="true"
             android:layout_weight="1">
-                <LinearLayout
-                    android:id="@+id/MyAccountLayout"
+
+            <LinearLayout
+                android:id="@+id/MyAccountLayout"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="15dp"
+                android:gravity="center"
+                >
+                <!-- TODO JS choose a standardized padding to use here -->
+                <ImageView
+                    android:layout_width="200dp"
+                    android:src="@drawable/ankidroid_logo"
+                    android:layout_marginBottom="0dp"
+                    android:layout_height="200dp"></ImageView>
+
+                <!--<com.ichi2.ui.FixedTextView-->
+                <!--android:id="@+id/sign_in"-->
+                <!--android:layout_width="fill_parent"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:text="Sign in"-->
+                <!--android:gravity="center"-->
+                <!--android:textSize="@dimen/md_title_textsize"-->
+                <!--android:textColor="?android:textColorPrimary"-->
+                <!--android:layout_gravity="center"-->
+                <!--android:layout_margin="@dimen/content_vertical_padding"/>-->
+                <!--&lt;!&ndash; TODO JS - move into strings.xml &ndash;&gt;-->
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/username">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/username"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:inputType="textNoSuggestions|textEmailAddress"
+                        android:layout_margin="@dimen/content_vertical_padding"/>
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/password_layout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/password"
+                    app:passwordToggleEnabled="true">
+
+                    <com.ichi2.ui.TextInputEditField
+                        android:id="@+id/password"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:inputType="textPassword"
+                        android:layout_margin="@dimen/content_vertical_padding"/>
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <Button
+                    android:id="@+id/login_button"
                     android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="vertical"
-                    android:padding="15dp"
-                    android:gravity="top"
-                    >
-                    <ImageView
-                        android:id="@+id/ankidroid_logo"
-                        android:layout_width="200dp"
-                        android:src="@drawable/anki"
-                        android:layout_gravity="center"
-                        android:layout_marginTop="20dp"
-                        android:layout_centerHorizontal="true"
-                        android:layout_marginBottom="0dp"
-                        android:layout_height="200dp"></ImageView>
-                    <!-- TODO JS choose a standardized padding to use here -->
-                    <!--<com.ichi2.ui.FixedTextView-->
-                    <!--android:id="@+id/sign_in"-->
-                    <!--android:layout_width="fill_parent"-->
-                    <!--android:layout_height="wrap_content"-->
-                    <!--android:text="Sign in"-->
-                    <!--android:gravity="center"-->
-                    <!--android:textSize="@dimen/md_title_textsize"-->
-                    <!--android:textColor="?android:textColorPrimary"-->
-                    <!--android:layout_gravity="center"-->
-                    <!--android:layout_margin="@dimen/content_vertical_padding"/>-->
-                    <!--&lt;!&ndash; TODO JS - move into strings.xml &ndash;&gt;-->
-
-                    <com.google.android.material.textfield.TextInputLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:hint="@string/username">
-
-                        <com.google.android.material.textfield.TextInputEditText
-                            android:id="@+id/username"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:inputType="textNoSuggestions|textEmailAddress"
-                            android:layout_margin="@dimen/content_vertical_padding"/>
-                    </com.google.android.material.textfield.TextInputLayout>
-
-                    <com.google.android.material.textfield.TextInputLayout
-                        android:id="@+id/password_layout"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:hint="@string/password"
-                        app:passwordToggleEnabled="true">
-
-                        <com.ichi2.ui.TextInputEditField
-                            android:id="@+id/password"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:inputType="textPassword"
-                            android:layout_margin="@dimen/content_vertical_padding"/>
-                    </com.google.android.material.textfield.TextInputLayout>
-
-                    <Button
-                        android:id="@+id/login_button"
-                        android:layout_width="fill_parent"
-                        android:layout_height="wrap_content"
-                        android:theme="@style/LargeButtonStyle"
-                        android:singleLine="true"
-                        android:background="@drawable/footer_button_round_blue"
-                        android:textSize="@dimen/md_title_textsize"
-                        android:layout_gravity="center"
-                        android:padding="10dp"
-                        android:text="@string/log_in"
-                        android:paddingTop="30dp"
-                        android:layout_margin="@dimen/content_vertical_padding"/>
-                    <!-- TODO better text size ^^ -->
+                    android:theme="@style/LargeButtonStyle"
+                    android:singleLine="true"
+                    android:background="@drawable/footer_button_round_blue"
+                    android:textSize="@dimen/md_title_textsize"
+                    android:layout_gravity="center"
+                    android:padding="10dp"
+                    android:text="@string/log_in"
+                    android:paddingTop="30dp"
+                    android:layout_margin="@dimen/content_vertical_padding"/>
+                <!-- TODO better text size ^^ -->
 
 
-                    <Button
-                        android:id="@+id/reset_password_button"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:background="@null"
-                        android:textSize="@dimen/abc_text_size_button_material"
-                        android:textColor="?attr/colorAccent"
-                        android:singleLine="true"
-                        android:padding="10dp"
-                        android:layout_gravity="center"
-                        android:text="@string/reset_password"
-                        android:layout_margin="@dimen/content_vertical_padding"
-                        />
+                <Button
+                    android:id="@+id/reset_password_button"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@null"
+                    android:textSize="@dimen/abc_text_size_button_material"
+                    android:textColor="?attr/colorAccent"
+                    android:singleLine="true"
+                    android:padding="10dp"
+                    android:layout_gravity="center"
+                    android:text="@string/reset_password"
+                    android:layout_margin="@dimen/content_vertical_padding"
+                    />
 
-                </LinearLayout>
+            </LinearLayout>
 
         </ScrollView>
 
