@@ -18,19 +18,16 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
-import android.hardware.SensorManager;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import androidx.appcompat.widget.Toolbar;
 
 import android.view.KeyEvent;
-import android.view.OrientationEventListener;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.afollestad.materialdialogs.MaterialDialog;
@@ -64,6 +61,10 @@ public class MyAccount extends AnkiActivity {
     Toolbar mToolbar = null;
     private TextInputLayout mPasswordLayout;
 
+<<<<<<< HEAD
+=======
+
+>>>>>>> parent of 2906d1eb1 (Improved UI Design Of Login Page)
     private void switchToState(int newState) {
         switch (newState) {
             case STATE_LOGGED_IN:
@@ -178,6 +179,7 @@ public class MyAccount extends AnkiActivity {
         mUsername = mLoginToMyAccountView.findViewById(R.id.username);
         mPassword = mLoginToMyAccountView.findViewById(R.id.password);
         mPasswordLayout = mLoginToMyAccountView.findViewById(R.id.password_layout);
+<<<<<<< HEAD
         ImageView mAnkidroidLogo = mLoginToMyAccountView.findViewById(R.id.ankidroid_logo);
 
         //checking if device is in horizontal mode or not .
@@ -197,6 +199,8 @@ public class MyAccount extends AnkiActivity {
             }
         };
         myOrientationEventListener.enable();
+=======
+>>>>>>> parent of 2906d1eb1 (Improved UI Design Of Login Page)
 
         mPassword.setOnKeyListener((v, keyCode, event) -> {
             if (event.getAction() == KeyEvent.ACTION_DOWN) {
