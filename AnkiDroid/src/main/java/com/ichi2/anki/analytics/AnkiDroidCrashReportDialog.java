@@ -118,7 +118,7 @@ public class AnkiDroidCrashReportDialog extends CrashReportDialog implements Dia
                 AnkiDroidApp.getInstance().setAcraReportingMode(AnkiDroidApp.FEEDBACK_REPORT_ALWAYS);
             }
             // Send the crash report
-            mHelper.sendCrash(mUserComment.getText().toString(),"");
+            mHelper.sendCrash(mUserComment.getText().toString(), "");
         } else {
             mHelper.cancelReports();
         }
