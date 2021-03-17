@@ -144,13 +144,12 @@ public class RecursivePictureMenu extends DialogFragment {
 
     public abstract static class Item implements Parcelable {
 
-        private final @StringRes
-        int mText;
-        private final @DrawableRes
-        int mIcon;
-        private final @StringRes
-        int analyticsId;
-
+        @StringRes
+        private final int mText;
+        @DrawableRes
+        private final int mIcon;
+        @StringRes
+        private final int analyticsId;
 
         public Item(@StringRes int titleString, @DrawableRes int iconDrawable, @StringRes int analyticsId) {
             this.mText = titleString;
@@ -158,11 +157,9 @@ public class RecursivePictureMenu extends DialogFragment {
             this.analyticsId = analyticsId;
         }
 
-
         public List<Item> getChildren() {
             return new ArrayList<>(0);
         }
-
 
         protected Item(Parcel in) {
             mText = in.readInt();
@@ -170,18 +167,15 @@ public class RecursivePictureMenu extends DialogFragment {
             analyticsId = in.readInt();
         }
 
-
         @StringRes
         protected int getTitle() {
             return mText;
         }
 
-
         @Override
         public int describeContents() {
             return 0;
         }
-
 
         @Override
         public void writeToParcel(Parcel dest, int flags) {
@@ -190,10 +184,12 @@ public class RecursivePictureMenu extends DialogFragment {
             dest.writeInt(analyticsId);
         }
 
-
         protected abstract void onClicked(AnkiActivity activity);
 
-        public abstract String getAnalyticsId(Context context);
+        public String getAnalyticsId(Context context) {
+            System.out.println("getAnalyticsId : " + context.getString(analyticsId));
+            return context.getString(analyticsId);
+        }
 
         public abstract void execute(AnkiActivity activity);
 
@@ -205,22 +201,16 @@ public class RecursivePictureMenu extends DialogFragment {
     public static class ItemHeader extends Item implements Parcelable {
 
         private final List<Item> mChildren;
-        private @StringRes
-        int mAnalyticsStringId;
-
 
         public ItemHeader(@StringRes int titleString, int i, @StringRes int analyticsStringId, Item... children) {
             super(titleString, i, analyticsStringId);
             mChildren = new ArrayList<>(Arrays.asList(children));
-            mAnalyticsStringId = analyticsStringId;
         }
-
 
         @Override
         public List<Item> getChildren() {
             return new ArrayList<>(mChildren);
         }
-
 
         @Override
         public void onClicked(AnkiActivity activity) {
@@ -229,21 +219,11 @@ public class RecursivePictureMenu extends DialogFragment {
             activity.showDialogFragment(nextFragment);
         }
 
-
-        @Override
-        public String getAnalyticsId(Context context) {
-            return context.getString(mAnalyticsStringId);
-        }
-
-        /*This method calls onClicked method to handle click event in a suitable manner and
-         * the analytics of the item clicked are send.
-         */
         @Override
         public void execute(AnkiActivity activity) {
             onClicked(activity);
             UsageAnalytics.sendAnalyticsEvent(UsageAnalytics.Category.LINK_CLICKED, getAnalyticsId(activity));
         }
-
 
         @Override
         public void remove(Item toRemove) {
@@ -252,7 +232,6 @@ public class RecursivePictureMenu extends DialogFragment {
                 i.remove(toRemove);
             }
         }
-
 
         protected ItemHeader(Parcel in) {
             super(in);
@@ -263,7 +242,6 @@ public class RecursivePictureMenu extends DialogFragment {
                 mChildren = new ArrayList<>(0);
             }
         }
-
 
         @Override
         public void writeToParcel(Parcel dest, int flags) {

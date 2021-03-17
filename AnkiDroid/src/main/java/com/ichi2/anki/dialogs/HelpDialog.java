@@ -93,43 +93,28 @@ public class HelpDialog {
 
     public static class RateAppItem extends Item implements Parcelable {
 
-        private @StringRes
-        int mAnalyticsRes;
-
-
         public RateAppItem(@StringRes int titleRes, @DrawableRes int iconRes, @StringRes int analyticsRes) {
             super(titleRes, iconRes, analyticsRes);
-            mAnalyticsRes = analyticsRes;
         }
-
 
         @Override
         protected void onClicked(AnkiActivity activity) {
             IntentUtil.tryOpenIntent(activity, AnkiDroidApp.getMarketIntent(activity));
         }
 
-
-        @Override
-        public String getAnalyticsId(Context context) {
-            return context.getString(mAnalyticsRes);
-        }
-
-
         /*This method calls onClicked method to handle click event in a suitable manner and
         * the analytics of the item clicked are send.
         */
         @Override
         public void execute(AnkiActivity activity) {
-            onClicked(activity);
             UsageAnalytics.sendAnalyticsEvent(UsageAnalytics.Category.LINK_CLICKED, getAnalyticsId(activity));
+            onClicked(activity);
         }
-
 
         @Override
         public void remove(Item toRemove) {
             // intentionally blank - no children
         }
-
 
         protected RateAppItem(Parcel in) {
             super(in);
@@ -154,57 +139,39 @@ public class HelpDialog {
 
 
     public static class LinkItem extends Item implements Parcelable {
-        private final @StringRes
-        int mUrlLocationRes;
-        private @StringRes
-        int mAnalyticsRes;
-
+        @StringRes
+        private final int mUrlLocationRes;
 
         public LinkItem(@StringRes int titleRes, @DrawableRes int iconRes, @StringRes int analyticsRes, @StringRes int urlLocation) {
             super(titleRes, iconRes, analyticsRes);
 
-            this.mAnalyticsRes = analyticsRes;
             this.mUrlLocationRes = urlLocation;
         }
-
 
         @Override
         protected void onClicked(AnkiActivity activity) {
             activity.openUrl(getUrl(activity));
         }
 
-
-        @Override
-        public String getAnalyticsId(Context context) {
-            return context.getString(mAnalyticsRes);
-        }
-
-        /*This method calls onClicked method to handle click event in a suitable manner and
-         * the analytics of the item clicked are send.
-         */
         @Override
         public void execute(AnkiActivity activity) {
-            onClicked(activity);
             UsageAnalytics.sendAnalyticsEvent(UsageAnalytics.Category.LINK_CLICKED, getAnalyticsId(activity));
+            onClicked(activity);
         }
-
 
         protected Uri getUrl(Context ctx) {
             return Uri.parse(ctx.getString(mUrlLocationRes));
         }
-
 
         protected LinkItem(Parcel in) {
             super(in);
             mUrlLocationRes = in.readInt();
         }
 
-
         @Override
         public void remove(Item toRemove) {
             // intentionally blank - no children
         }
-
 
         @Override
         public void writeToParcel(Parcel dest, int flags) {
@@ -232,56 +199,38 @@ public class HelpDialog {
 
     public static class FunctionItem extends Item implements Parcelable {
         private final ActivityConsumer mFunc;
-        private @StringRes
-        int mAnalyticsRes;
-
 
         public FunctionItem(@StringRes int titleRes, @DrawableRes int iconRes, @StringRes int analyticsRes, ActivityConsumer func) {
             super(titleRes, iconRes, analyticsRes);
             this.mFunc = func;
-            this.mAnalyticsRes = analyticsRes;
         }
-
 
         @Override
         protected void onClicked(AnkiActivity activity) {
             mFunc.consume(activity);
         }
 
-
-        @Override
-        public String getAnalyticsId(Context context) {
-            return context.getString(mAnalyticsRes);
-        }
-
-        /*This method calls onClicked method to handle click event in a suitable manner and
-         * the analytics of the item clicked are send.
-         */
         @Override
         public void execute(AnkiActivity activity) {
-            onClicked(activity);
             UsageAnalytics.sendAnalyticsEvent(UsageAnalytics.Category.LINK_CLICKED, getAnalyticsId(activity));
+            onClicked(activity);
         }
-
 
         protected FunctionItem(Parcel in) {
             super(in);
             mFunc = (ActivityConsumer) in.readSerializable();
         }
 
-
         @Override
         public void remove(Item toRemove) {
             // intentionally blank - no children
         }
-
 
         @Override
         public void writeToParcel(Parcel dest, int flags) {
             super.writeToParcel(dest, flags);
             dest.writeSerializable(mFunc);
         }
-
 
         @SuppressWarnings("unused")
         public static final Parcelable.Creator<FunctionItem> CREATOR = new Parcelable.Creator<FunctionItem>() {
@@ -296,8 +245,6 @@ public class HelpDialog {
                 return new FunctionItem[size];
             }
         };
-
-
 
         @FunctionalInterface
         public interface ActivityConsumer extends Serializable {
