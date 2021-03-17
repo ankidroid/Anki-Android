@@ -190,9 +190,9 @@ public class MyAccount extends AnkiActivity {
                 boolean PORTRAIT_MODE = ((orientation < 100) || (orientation > 280));
                 // if device is in horizontal mode then screen might not have enough space for ankidroid logo
                 // so we will invisible logo for horizontal mode only
-                if(PORTRAIT_MODE){
+                if (PORTRAIT_MODE) {
                     mAnkidroidLogo.setVisibility(View.GONE);
-                }else {
+                } else {
                     mAnkidroidLogo.setVisibility(View.VISIBLE);
                 }
             }
