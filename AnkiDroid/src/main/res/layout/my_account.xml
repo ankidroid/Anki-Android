@@ -35,7 +35,7 @@
                     android:layout_marginBottom="0dp"
                     android:layout_gravity="center"
                     android:layout_height="200dp"
-                    tools:ignore="VectorDrawableCompat"></ImageView>
+                    />
 
                 <!--<com.ichi2.ui.FixedTextView-->
                 <!--android:id="@+id/sign_in"-->
