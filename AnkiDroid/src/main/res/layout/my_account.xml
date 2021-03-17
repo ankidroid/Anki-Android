@@ -2,6 +2,7 @@
 <androidx.coordinatorlayout.widget.CoordinatorLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/root_layout"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
@@ -33,7 +34,8 @@
                     android:src="@drawable/ankidroid_logo"
                     android:layout_marginBottom="0dp"
                     android:layout_gravity="center"
-                    android:layout_height="200dp"></ImageView>
+                    android:layout_height="200dp"
+                    tools:ignore="VectorDrawableCompat"></ImageView>
 
                 <!--<com.ichi2.ui.FixedTextView-->
                 <!--android:id="@+id/sign_in"-->
