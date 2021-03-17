@@ -124,7 +124,7 @@ public class RecursivePictureMenuTest extends RobolectricTest {
     }
 
     private Item getItemLinkingTo(int linkLocation) {
-        return new LinkItem(R.string.help_item_ankidroid_manual, R.drawable.ic_manual_black_24dp, linkLocation);
+        return new LinkItem(R.string.help_item_ankidroid_manual, R.drawable.ic_manual_black_24dp, R.string.opened_ankidroid_manual, linkLocation);
     }
 
 
@@ -135,6 +135,6 @@ public class RecursivePictureMenuTest extends RobolectricTest {
             items[i] = getItemLinkingTo(R.string.link_anki);
         }
 
-        return new ItemHeader(R.string.help_item_ankidroid_manual, R.drawable.ic_manual_black_24dp, items);
+        return new ItemHeader(R.string.help_item_ankidroid_manual, R.drawable.ic_manual_black_24dp, R.string.opened_ankidroid_manual, items);
     }
 }
