@@ -90,6 +90,11 @@
         <item name="android:textColor">?attr/easyButtonTextColor</item>
     </style>
 
+
+    <style name="FloatingActionsMenu">
+        <item name="fab_labelsPosition">left</item>
+    </style>
+
     <!-- FAB menu items -->
     <style name="menu_labels_style">
         <item name="android:background">?attr/fab_item_background</item>
