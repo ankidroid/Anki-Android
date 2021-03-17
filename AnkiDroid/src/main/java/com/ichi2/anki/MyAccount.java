@@ -144,18 +144,6 @@ public class MyAccount extends AnkiActivity {
         String username = mUsername.getText().toString().trim(); // trim spaces, issue 1586
         String password = mPassword.getText().toString();
 
-        if (username.isEmpty()) {
-            mUsername.setError(getString(R.string.email_id_empty));
-            mUsername.requestFocus();
-            return;
-        }
-        if (password.isEmpty()) {
-            mPassword.setError(getString(R.string.password_empty));
-            mPassword.requestFocus();
-            return;
-
-        }
-
         if (!"".equalsIgnoreCase(username) && !"".equalsIgnoreCase(password)) {
             Connection.login(loginListener, new Connection.Payload(new Object[]{username, password,
                     HostNumFactory.getInstance(this) }));
