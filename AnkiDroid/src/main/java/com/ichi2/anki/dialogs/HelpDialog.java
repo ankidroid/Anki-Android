@@ -17,6 +17,7 @@
 package com.ichi2.anki.dialogs;
 
 import android.annotation.SuppressLint;
+import android.app.Dialog;
 import android.content.Context;
 import android.content.res.AssetManager;
 import android.net.Uri;
@@ -47,7 +48,7 @@ import timber.log.Timber;
 public class HelpDialog {
 
 
-    private static final String TAG ="Hello" ;
+
 
 
     private static void openManual(AnkiActivity ankiActivity) {
@@ -75,6 +76,8 @@ public class HelpDialog {
         } catch (Exception xxx) {
             Timber.e(xxx, "Load assets/AnkiDroidSupport.html");
         }
+        ankiActivity.dismissAllDialogFragments();
+
 
     }
 
@@ -122,6 +125,7 @@ public class HelpDialog {
     }
 
 
+
     @SuppressLint("SetJavaScriptEnabled")
     private static void openAnkiManual(AnkiActivity ankiActivity) {
         WebView view = new WebView(ankiActivity);
@@ -143,6 +147,9 @@ public class HelpDialog {
         } catch (Exception xxx) {
             Timber.e(xxx, "Load assets/AnkiManual.html");
         }
+        ankiActivity.dismissAllDialogFragments();
+
+
 
     }
 
