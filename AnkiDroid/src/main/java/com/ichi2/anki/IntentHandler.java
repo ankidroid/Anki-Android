@@ -1,7 +1,11 @@
 package com.ichi2.anki;
 
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Message;
 
@@ -15,6 +19,8 @@ import com.ichi2.utils.Permissions;
 import androidx.annotation.CheckResult;
 import androidx.annotation.NonNull;
 import androidx.annotation.VisibleForTesting;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 import timber.log.Timber;
 
 /**
@@ -26,12 +32,16 @@ import timber.log.Timber;
  */
 
 public class IntentHandler extends Activity {
+    private static final int PERMISSION_REQUEST_CODE = 200;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         //Note: This is our entry point from the launcher with intent: android.intent.action.MAIN
         Timber.d("onCreate()");
         super.onCreate(savedInstanceState);
         setContentView(R.layout.progress_bar);
+        if (!checkPermission()) {
+            requestPermission();
+        }
         Intent intent = getIntent();
         Timber.v(intent.toString());
         Intent reloadIntent = new Intent(this, DeckPicker.class);
@@ -60,6 +70,59 @@ public class IntentHandler extends Activity {
                 launchDeckPickerIfNoOtherTasks(reloadIntent);
         }
     }
+    private boolean checkPermission() {
+        if (ContextCompat.checkSelfPermission(this, android.Manifest.permission.CAMERA)
+                != PackageManager.PERMISSION_GRANTED) {
+            // Permission is not granted
+            return false;
+        }
+        return true;
+    }
+
+    private void requestPermission() {
+
+        ActivityCompat.requestPermissions(this,
+                new String[]{android.Manifest.permission.CAMERA},
+                PERMISSION_REQUEST_CODE);
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, String permissions[], int[] grantResults) {
+        switch (requestCode) {
+            case PERMISSION_REQUEST_CODE:
+                if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                    Timber.d("Permission Granted");
+
+                } else {
+                    Timber.d("Permission Denied");
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                        if (ContextCompat.checkSelfPermission(this, android.Manifest.permission.CAMERA)
+                                != PackageManager.PERMISSION_GRANTED) {
+                            showMessageOKCancel("You need to allow access permissions",
+                                    new DialogInterface.OnClickListener() {
+                                        @Override
+                                        public void onClick(DialogInterface dialog, int which) {
+                                            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                                                requestPermission();
+                                            }
+                                        }
+                                    });
+                        }
+                    }
+                }
+                break;
+        }
+    }
+
+    private void showMessageOKCancel(String message, DialogInterface.OnClickListener okListener) {
+        new AlertDialog.Builder(IntentHandler.this)
+                .setMessage(message)
+                .setPositiveButton("OK", okListener)
+                .setNegativeButton("Cancel", null)
+                .create()
+                .show();
+    }
+
 
     private static boolean isValidViewIntent(@NonNull Intent intent) {
         // Negating a negative because we want to call specific attention to the fact that it's invalid
