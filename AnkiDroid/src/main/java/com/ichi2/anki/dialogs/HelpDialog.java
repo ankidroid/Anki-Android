@@ -17,7 +17,7 @@
 package com.ichi2.anki.dialogs;
 
 import android.content.Context;
-import android.content.Intent;
+import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Parcel;
 import android.os.Parcelable;
@@ -27,7 +27,6 @@ import com.ichi2.anki.AnkiActivity;
 import com.ichi2.anki.AnkiDroidApp;
 import com.ichi2.anki.R;
 import com.ichi2.anki.UIUtils;
-import com.ichi2.anki.analytics.AnkiDroidCrashReportDialog;
 import com.ichi2.anki.dialogs.RecursivePictureMenu.Item;
 import com.ichi2.anki.dialogs.RecursivePictureMenu.ItemHeader;
 import com.ichi2.anki.exception.UserSubmittedException;
@@ -35,7 +34,6 @@ import com.ichi2.utils.AdaptionUtil;
 import com.ichi2.utils.IntentUtil;
 
 import org.acra.ACRA;
-import org.acra.config.CoreConfigurationBuilder;
 import org.acra.config.DialogConfigurationBuilder;
 
 import java.io.Serializable;
@@ -45,9 +43,6 @@ import java.util.Arrays;
 import androidx.annotation.DrawableRes;
 import androidx.annotation.StringRes;
 import androidx.fragment.app.DialogFragment;
-
-import static com.ichi2.anki.AnkiDroidApp.getInstance;
-import static com.ichi2.anki.AnkiDroidApp.getSharedPrefs;
 
 public class HelpDialog {
 
@@ -236,27 +231,32 @@ public class HelpDialog {
     private static class ExceptionReportItem extends Item implements Parcelable{
 
         private static Long lastClickStamp;
-        static final long currentTimestamp = SystemClock.uptimeMillis();
+        final long currentTimestamp = SystemClock.uptimeMillis();
         final int minIntervalMS = 60000;
         final String exceptionMessage = "Exception report sent by user manually";
-        String reportMode = getSharedPrefs(getInstance().getApplicationContext()).getString(AnkiDroidApp.FEEDBACK_REPORT_KEY, "");
 
         public ExceptionReportItem(@StringRes int titleRes, @DrawableRes int iconRes) { super(titleRes, iconRes); }
 
         @Override
         public void execute(AnkiActivity activity) {
+            SharedPreferences preferences = AnkiDroidApp.getSharedPrefs(activity);
+            String reportMode = preferences.getString(AnkiDroidApp.FEEDBACK_REPORT_KEY, "");
+
             if (AdaptionUtil.isUserATestClient()) {
                 UIUtils.showThemedToast(activity, activity.getString(R.string.user_is_a_robot), false);
                 return;
             }
 
             if (reportMode.equals(AnkiDroidApp.FEEDBACK_REPORT_NEVER)) {
-                getSharedPrefs(activity).edit().putBoolean(ACRA.PREF_DISABLE_ACRA, false).apply();
-                getInstance().getAcraCoreConfigBuilder().getPluginConfigurationBuilder(DialogConfigurationBuilder.class)
+                preferences.edit().putBoolean(ACRA.PREF_DISABLE_ACRA, false).apply();
+                AnkiDroidApp.getInstance().getAcraCoreConfigBuilder()
+                        .getPluginConfigurationBuilder(DialogConfigurationBuilder.class)
                         .setEnabled(true);
                 sendReport(activity);
-                getSharedPrefs(activity).edit().putBoolean(ACRA.PREF_DISABLE_ACRA, true).apply();
-            } else { sendReport(activity); }
+                preferences.edit().putBoolean(ACRA.PREF_DISABLE_ACRA, true).apply();
+            } else {
+                sendReport(activity);
+            }
         }
 
         private void sendReport(AnkiActivity activity) {
