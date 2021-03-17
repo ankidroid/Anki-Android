@@ -253,6 +253,9 @@ public class HelpDialog {
                         .getPluginConfigurationBuilder(DialogConfigurationBuilder.class)
                         .setEnabled(true);
                 sendReport(activity);
+                AnkiDroidApp.getInstance().getAcraCoreConfigBuilder()
+                        .getPluginConfigurationBuilder(DialogConfigurationBuilder.class)
+                        .setEnabled(false);
                 preferences.edit().putBoolean(ACRA.PREF_DISABLE_ACRA, true).apply();
             } else {
                 sendReport(activity);
