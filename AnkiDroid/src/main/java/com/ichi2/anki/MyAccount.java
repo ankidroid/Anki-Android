@@ -192,7 +192,7 @@ public class MyAccount extends AnkiActivity {
                 // so we will invisible logo for horizontal mode only
                 if (PORTRAIT_MODE) {
                     mAnkidroidLogo.setVisibility(View.GONE);
-                }else {
+                } else {
                     mAnkidroidLogo.setVisibility(View.VISIBLE);
                 }
             }
