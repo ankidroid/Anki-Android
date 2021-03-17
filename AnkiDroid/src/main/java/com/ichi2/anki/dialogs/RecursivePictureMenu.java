@@ -17,6 +17,7 @@
 package com.ichi2.anki.dialogs;
 
 import android.app.Dialog;
+import android.content.Context;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.os.Parcel;
@@ -28,6 +29,7 @@ import android.widget.TextView;
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.ichi2.anki.AnkiActivity;
 import com.ichi2.anki.R;
+import com.ichi2.anki.analytics.UsageAnalytics;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -142,52 +144,75 @@ public class RecursivePictureMenu extends DialogFragment {
 
     public abstract static class Item implements Parcelable {
 
-        private final @StringRes int mText;
-        private final @DrawableRes int mIcon;
+        private final @StringRes
+        int mText;
+        private final @DrawableRes
+        int mIcon;
+        private final @StringRes
+        int analyticsId;
 
-        public Item(@StringRes int titleString, @DrawableRes int iconDrawable) {
+
+        public Item(@StringRes int titleString, @DrawableRes int iconDrawable, @StringRes int analyticsId) {
             this.mText = titleString;
             this.mIcon = iconDrawable;
+            this.analyticsId = analyticsId;
         }
+
 
         public List<Item> getChildren() {
             return new ArrayList<>(0);
         }
 
+
         protected Item(Parcel in) {
             mText = in.readInt();
             mIcon = in.readInt();
+            analyticsId = in.readInt();
         }
+
 
         @StringRes
         protected int getTitle() {
             return mText;
         }
 
+
         @Override
         public int describeContents() {
             return 0;
         }
 
+
         @Override
         public void writeToParcel(Parcel dest, int flags) {
             dest.writeInt(mText);
             dest.writeInt(mIcon);
+            dest.writeInt(analyticsId);
         }
+
+
+        protected abstract void onClicked(AnkiActivity activity);
+
+        public abstract String getAnalyticsId(Context context);
 
         public abstract void execute(AnkiActivity activity);
 
         public abstract void remove(Item toRemove);
     }
 
+
+
     public static class ItemHeader extends Item implements Parcelable {
 
         private final List<Item> mChildren;
+        private @StringRes
+        int mAnalyticsStringId;
 
 
-        public ItemHeader(@StringRes int titleString, int i, Item... children) {
-            super(titleString, i);
+        public ItemHeader(@StringRes int titleString, int i, @StringRes int analyticsStringId, Item... children) {
+            super(titleString, i, analyticsStringId);
             mChildren = new ArrayList<>(Arrays.asList(children));
+            mAnalyticsStringId = analyticsStringId;
         }
 
 
@@ -198,10 +223,25 @@ public class RecursivePictureMenu extends DialogFragment {
 
 
         @Override
-        public void execute(AnkiActivity activity) {
+        public void onClicked(AnkiActivity activity) {
             ArrayList<Item> children = new ArrayList<>(this.getChildren());
             DialogFragment nextFragment = RecursivePictureMenu.createInstance(children, getTitle());
             activity.showDialogFragment(nextFragment);
+        }
+
+
+        @Override
+        public String getAnalyticsId(Context context) {
+            return context.getString(mAnalyticsStringId);
+        }
+
+        /*This method calls onClicked method to handle click event in a suitable manner and
+         * the analytics of the item clicked are send.
+         */
+        @Override
+        public void execute(AnkiActivity activity) {
+            onClicked(activity);
+            UsageAnalytics.sendAnalyticsEvent(UsageAnalytics.Category.LINK_CLICKED, getAnalyticsId(activity));
         }
 
 
@@ -224,6 +264,7 @@ public class RecursivePictureMenu extends DialogFragment {
             }
         }
 
+
         @Override
         public void writeToParcel(Parcel dest, int flags) {
             super.writeToParcel(dest, flags);
@@ -235,12 +276,14 @@ public class RecursivePictureMenu extends DialogFragment {
             }
         }
 
+
         @SuppressWarnings("unused")
         public static final Parcelable.Creator<ItemHeader> CREATOR = new Parcelable.Creator<ItemHeader>() {
             @Override
             public ItemHeader createFromParcel(Parcel in) {
                 return new ItemHeader(in);
             }
+
 
             @Override
             public ItemHeader[] newArray(int size) {
