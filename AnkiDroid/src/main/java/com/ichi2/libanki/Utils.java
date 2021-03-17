@@ -107,9 +107,10 @@ public class Utils {
     private Utils() { }
 
     // Regex pattern used in removing tags from text before diff
+    private static final Pattern commentPattern = Pattern.compile("(?s)<!--.*?-->");
     private static final Pattern stylePattern = Pattern.compile("(?si)<style.*?>.*?</style>");
     private static final Pattern scriptPattern = Pattern.compile("(?si)<script.*?>.*?</script>");
-    private static final Pattern tagPattern = Pattern.compile("<.*?>");
+    private static final Pattern tagPattern = Pattern.compile("(?s)<.*?>");
     private static final Pattern imgPattern = Pattern.compile("(?i)<img[^>]+src=[\"']?([^\"'>]+)[\"']?[^>]*>");
     private static final Pattern soundPattern = Pattern.compile("(?i)\\[sound:([^]]+)]");
     private static final Pattern htmlEntitiesPattern = Pattern.compile("&#?\\w+;");
@@ -296,6 +297,7 @@ public class Utils {
      * @return The text without the aforementioned tags.
      */
     public static String stripHTML(String s) {
+        s = commentPattern.matcher(s).replaceAll("");
         s = stripHTMLScriptAndStyleTags(s);
         Matcher htmlMatcher = tagPattern.matcher(s);
         s = htmlMatcher.replaceAll("");
