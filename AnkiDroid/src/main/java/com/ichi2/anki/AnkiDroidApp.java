@@ -212,6 +212,9 @@ public class AnkiDroidApp extends Application {
     }
 
 
+
+
+
     /**
      * Get the ACRA ConfigurationBuilder - use this followed by setting it to modify the config
      * @return ConfigurationBuilder for the current ACRA config
@@ -603,6 +606,7 @@ public class AnkiDroidApp extends Application {
             return getAppResources().getString(R.string.link_manual);
         }
     }
+
 
     /**
      * Check whether l is the currently set language code

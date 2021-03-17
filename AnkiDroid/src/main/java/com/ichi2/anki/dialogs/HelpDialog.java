@@ -16,10 +16,14 @@
 
 package com.ichi2.anki.dialogs;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
+import android.content.res.AssetManager;
 import android.net.Uri;
 import android.os.Parcel;
 import android.os.Parcelable;
+import android.util.Log;
+import android.webkit.WebView;
 
 import com.ichi2.anki.AnkiActivity;
 import com.ichi2.anki.AnkiDroidApp;
@@ -28,6 +32,9 @@ import com.ichi2.anki.dialogs.RecursivePictureMenu.Item;
 import com.ichi2.anki.dialogs.RecursivePictureMenu.ItemHeader;
 import com.ichi2.utils.IntentUtil;
 
+import java.io.BufferedReader;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -35,24 +42,52 @@ import java.util.Arrays;
 import androidx.annotation.DrawableRes;
 import androidx.annotation.StringRes;
 import androidx.fragment.app.DialogFragment;
+import timber.log.Timber;
 
 public class HelpDialog {
+
+
+    private static final String TAG ="Hello" ;
+
 
     private static void openManual(AnkiActivity ankiActivity) {
         ankiActivity.openUrl(Uri.parse(AnkiDroidApp.getManualUrl()));
     }
 
+    @SuppressLint("SetJavaScriptEnabled")
     private static void openFeedback(AnkiActivity ankiActivity) {
-        ankiActivity.openUrl(Uri.parse(AnkiDroidApp.getFeedbackUrl()));
+        WebView view = new WebView(ankiActivity);
+        view.getSettings().setJavaScriptEnabled(true);
+        view.loadUrl("file:///assets/AnkiDroidSupport.html");
+        ankiActivity.setContentView(view);
+
+        try {
+
+            AssetManager assetManager = ankiActivity.getAssets();
+            InputStream stream = assetManager.open("AnkiDroidSupport.html");
+            BufferedReader r = new BufferedReader(new InputStreamReader(stream));
+            StringBuilder total = new StringBuilder();
+            String line;
+            while ((line = r.readLine()) != null) {
+                total.append(line).append("\n");
+            }
+            view.loadDataWithBaseURL(null, total.toString(), "text/html", "UTF-8", null);
+        } catch (Exception xxx) {
+            Timber.e(xxx, "Load assets/AnkiDroidSupport.html");
+        }
+
     }
+
+
 
     public static DialogFragment createInstance(Context context) {
 
         RateAppItem rateAppItem = new RateAppItem(R.string.help_item_support_rate_ankidroid, R.drawable.ic_star_black_24);
+
         Item[] allItems = {
                 new ItemHeader(R.string.help_title_using_ankidroid, R.drawable.ic_manual_black_24dp,
                         new FunctionItem(R.string.help_item_ankidroid_manual, R.drawable.ic_manual_black_24dp, HelpDialog::openManual),
-                        new LinkItem(R.string.help_item_anki_manual, R.drawable.ic_manual_black_24dp, R.string.link_anki_manual),
+                        new FunctionItem(R.string.help_item_anki_manual, R.drawable.ic_manual_black_24dp,HelpDialog::openAnkiManual),
                         new LinkItem(R.string.help_item_ankidroid_faq, R.drawable.ic_help_black_24dp, R.string.link_ankidroid_faq)
                 ),
                 new ItemHeader(R.string.help_title_get_help, R.drawable.ic_help_black_24dp,
@@ -85,6 +120,32 @@ public class HelpDialog {
 
         return RecursivePictureMenu.createInstance(itemList, R.string.help);
     }
+
+
+    @SuppressLint("SetJavaScriptEnabled")
+    private static void openAnkiManual(AnkiActivity ankiActivity) {
+        WebView view = new WebView(ankiActivity);
+        view.getSettings().setJavaScriptEnabled(true);
+        view.loadUrl("file:///assets/AnkiManual.html");
+        ankiActivity.setContentView(view);
+
+        try {
+
+            AssetManager assetManager = ankiActivity.getAssets();
+            InputStream stream = assetManager.open("AnkiManual.html");
+            BufferedReader r = new BufferedReader(new InputStreamReader(stream));
+            StringBuilder total = new StringBuilder();
+            String line;
+            while ((line = r.readLine()) != null) {
+                total.append(line).append("\n");
+            }
+            view.loadDataWithBaseURL(null, total.toString(), "text/html", "UTF-8", null);
+        } catch (Exception xxx) {
+            Timber.e(xxx, "Load assets/AnkiManual.html");
+        }
+
+    }
+
 
     public static class RateAppItem extends Item implements Parcelable {
 

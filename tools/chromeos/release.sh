@@ -53,5 +53,6 @@ done
 echo "`jq 'del(.file_handlers.any.types) | .file_handlers.any.extensions = ["apkg"]' cws/unpacked/manifest.json`" > cws/unpacked/manifest.json
 
 # Prepare release package
+# shellcheck disable=SC2164
 cd cws/unpacked
 zip -q -r -o ../../cws/release.zip *
