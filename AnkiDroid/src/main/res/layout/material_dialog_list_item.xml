@@ -25,6 +25,7 @@
     android:paddingEnd="10dp"
     android:paddingRight="10dp"
     android:gravity="start|center_vertical"
+    android:textAlignment="viewStart"
     android:background="?attr/selectableItemBackground"
     android:drawablePadding="10dp"
     android:textSize="20sp"
