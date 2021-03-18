@@ -32,6 +32,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.google.android.material.textfield.TextInputLayout;
@@ -64,6 +65,8 @@ public class MyAccount extends AnkiActivity {
     Toolbar mToolbar = null;
     private TextInputLayout mPasswordLayout;
 
+    private OrientationEventListener myOrientationEventListener;
+    private ImageView mAnkidroidLogo;
 
     private void switchToState(int newState) {
         switch (newState) {
@@ -179,22 +182,7 @@ public class MyAccount extends AnkiActivity {
         mUsername = mLoginToMyAccountView.findViewById(R.id.username);
         mPassword = mLoginToMyAccountView.findViewById(R.id.password);
         mPasswordLayout = mLoginToMyAccountView.findViewById(R.id.password_layout);
-        ImageView mAnkidroidLogo = mLoginToMyAccountView.findViewById(R.id.ankidroid_logo);
-
-        //checking if device is in horizontal mode or not .
-        OrientationEventListener myOrientationEventListener = new OrientationEventListener(this, SensorManager.SENSOR_DELAY_NORMAL) {
-            @Override
-            public void onOrientationChanged(int orientation) {
-                // if device is in horizontal mode then screen might not have enough space for ankidroid logo
-                // so we will invisible logo for horizontal mode only
-                if ((orientation < 100) || (orientation > 280)) {
-                    mAnkidroidLogo.setVisibility(View.GONE);
-                } else {
-                    mAnkidroidLogo.setVisibility(View.VISIBLE);
-                }
-            }
-        };
-        myOrientationEventListener.enable();
+        mAnkidroidLogo = mLoginToMyAccountView.findViewById(R.id.ankidroid_logo);
 
         mPassword.setOnKeyListener((v, keyCode, event) -> {
             if (event.getAction() == KeyEvent.ACTION_DOWN) {
@@ -314,6 +302,39 @@ public class MyAccount extends AnkiActivity {
         }
 
         return exception.getLocalizedMessage();
+    }
+    
+    public void checkOrientation(int orientation) {
+        // if device is in horizontal mode then screen might not have enough space for ankidroid logo
+        // so we will invisible logo for horizontal mode only
+        if ((orientation == OrientationEventListener.ORIENTATION_UNKNOWN) || (orientation < 100) || (orientation > 280)) {
+            mAnkidroidLogo.setVisibility(View.GONE);
+        } else {
+            mAnkidroidLogo.setVisibility(View.VISIBLE);
+        }
+    }
+
+    public void initializeOrientationListner() {
+        myOrientationEventListener = new OrientationEventListener(this, SensorManager.SENSOR_DELAY_NORMAL) {
+            @Override
+            public void onOrientationChanged(int orientation) {
+                checkOrientation(orientation);
+            }
+        };
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        initializeOrientationListner();
+        myOrientationEventListener.enable();
+    }
+
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        myOrientationEventListener.disable();
     }
 
 
