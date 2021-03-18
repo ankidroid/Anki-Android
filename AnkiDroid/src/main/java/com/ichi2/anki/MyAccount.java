@@ -185,10 +185,9 @@ public class MyAccount extends AnkiActivity {
         OrientationEventListener myOrientationEventListener = new OrientationEventListener(this, SensorManager.SENSOR_DELAY_NORMAL) {
             @Override
             public void onOrientationChanged(int orientation) {
-                boolean PORTRAIT_MODE = ((orientation < 100) || (orientation > 280));
                 // if device is in horizontal mode then screen might not have enough space for ankidroid logo
                 // so we will invisible logo for horizontal mode only
-                if (PORTRAIT_MODE) {
+                if ((orientation < 100) || (orientation > 280)) {
                     mAnkidroidLogo.setVisibility(View.GONE);
                 } else {
                     mAnkidroidLogo.setVisibility(View.VISIBLE);
