@@ -182,8 +182,7 @@ public class MyAccount extends AnkiActivity {
         ImageView mAnkidroidLogo = mLoginToMyAccountView.findViewById(R.id.ankidroid_logo);
 
         //checking if device is in horizontal mode or not .
-        OrientationEventListener myOrientationEventListener = new OrientationEventListener(this,SensorManager.SENSOR_DELAY_NORMAL)
-        {
+        OrientationEventListener myOrientationEventListener = new OrientationEventListener(this, SensorManager.SENSOR_DELAY_NORMAL) {
             @Override
             public void onOrientationChanged(int orientation)
             {
