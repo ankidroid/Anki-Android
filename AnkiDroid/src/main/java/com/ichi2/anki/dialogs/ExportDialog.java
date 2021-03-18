@@ -9,8 +9,7 @@ import androidx.annotation.Nullable;
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.ichi2.anki.R;
 import com.ichi2.anki.analytics.AnalyticsDialogFragment;
-
-import static com.ichi2.libanki.Decks.NOT_FOUND_DECK_ID;
+import com.ichi2.utils.BundleUtils;
 
 public class ExportDialog extends AnalyticsDialogFragment {
 
@@ -36,7 +35,9 @@ public class ExportDialog extends AnalyticsDialogFragment {
     public static ExportDialog newInstance(@NonNull String dialogMessage, @Nullable Long did) {
         ExportDialog f = new ExportDialog();
         Bundle args = new Bundle();
-        args.putLong("did", did == null ? NOT_FOUND_DECK_ID : did);
+        if (did != null) {
+            args.putLong("did", did);
+        }
         args.putString("dialogMessage", dialogMessage);
         f.setArguments(args);
         return f;
@@ -57,9 +58,9 @@ public class ExportDialog extends AnalyticsDialogFragment {
     public MaterialDialog onCreateDialog(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         Resources res = getResources();
-        final long did = getArguments().getLong("did", NOT_FOUND_DECK_ID);
+        final Long did = BundleUtils.getNullableLong(getArguments(), "did");
         Integer[] checked;
-        if (did != NOT_FOUND_DECK_ID) {
+        if (did != null) {
             mIncludeSched = false;
             checked = new Integer[]{};
         } else {
@@ -94,8 +95,7 @@ public class ExportDialog extends AnalyticsDialogFragment {
                             return true;
                         })
                 .onPositive((dialog, which) -> {
-                    ((ExportDialogListener) getActivity())
-                            .exportApkg(null, did != NOT_FOUND_DECK_ID ? did : null, mIncludeSched, mIncludeMedia);
+                    ((ExportDialogListener) getActivity()).exportApkg(null, did, mIncludeSched, mIncludeMedia);
                     dismissAllDialogFragments();
                 })
                 .onNegative((dialog, which) -> dismissAllDialogFragments());
