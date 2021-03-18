@@ -48,7 +48,7 @@
     <string name="CardEditorNoteDeck">ডেক:</string>
     <string name="CardEditorModel">ধরন:</string>
     <string name="CardEditorTags">ট্যাগ: %1$s</string>
-    <string name="CardEditorCards">কার্ড: %1$s</string>
+    <string name="CardEditorCards">তাস: %1$s</string>
     <string name="tag_name">ট্যাগ নাম</string>
     <string name="add_new_filter_tags">ট্যাগ যুক্ত/ফিল্টার করুন</string>
     <string name="add_tag">ট্যাগ যোগ করুন</string>
@@ -57,7 +57,7 @@
     <string name="no_tags">আপনি এখনো কোন ট্যাগ যুক্ত করেননি</string>
     <string name="updated_version">%s সংস্করণে আপডেট করা হয়েছে</string>
     <!-- Reviewer.java -->
-    <string name="save_whiteboard">Save whiteboard</string>
+    <string name="save_whiteboard">হোয়াইটবোর্ডে রাখো</string>
     <string name="enable_whiteboard">হোয়াইটবোর্ড সক্রিয় করুন</string>
     <string name="disable_whiteboard">হোয়াইটবোর্ড নিষ্ক্রিয় করুন</string>
     <string name="show_whiteboard">হোয়াইটবোর্ড প্রদর্শন করুন</string>
@@ -77,12 +77,12 @@
     <string name="webview_crash_loop_dialog_content">System WebView failed to render card \'%1$s\'.\n %2$s</string>
     <!-- Browser -->
     <string-array name="browser_column1_headings">
-        <item>Question</item>
-        <item>Sort field</item>
+        <item>প্রশ্ন</item>
+        <item>ভুক্তি সাজাও</item>
     </string-array>
     <string-array name="browser_column2_headings">
-        <item>Answer</item>
-        <item>Card</item>
+        <item>উত্তর</item>
+        <item>তাস</item>
         <item>Deck</item>
         <item>Note</item>
         <item>Question</item>

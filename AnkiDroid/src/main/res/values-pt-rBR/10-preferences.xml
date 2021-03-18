@@ -289,4 +289,6 @@
     <string name="note_editor_replace_newlines_summ">No Editor de Notas, converta as ocorrências de &lt;br&gt; para uma quebra de linha ao editar um cartão.</string>
     <string name="no_code_formatting">Formatação de resposta a ser digitada</string>
     <string name="no_code_formatting_summ">Corrige \'􏿾\' que aparecer nas respostas digitadas</string>
+    <!-- Open Changelog-->
+    <string name="open_changelog">Open Changelog</string>
 </resources>
