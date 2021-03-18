@@ -18,11 +18,13 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.res.Resources;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.annotation.VisibleForTesting;
+import androidx.appcompat.content.res.AppCompatResources;
 import androidx.core.text.HtmlCompat;
 import androidx.fragment.app.Fragment;
 import androidx.appcompat.widget.Toolbar;
@@ -52,6 +54,7 @@ import com.ichi2.libanki.Deck;
 import com.ichi2.themes.StyledProgressDialog;
 import com.ichi2.utils.BooleanGetter;
 import com.ichi2.utils.HtmlUtils;
+import com.ichi2.utils.UiUtil;
 
 import timber.log.Timber;
 
@@ -412,7 +415,9 @@ public class StudyOptionsFragment extends Fragment implements Toolbar.OnMenuItem
             }
             // Set the back button listener
             if (!mFragmented) {
-                mToolbar.setNavigationIcon(R.drawable.ic_arrow_back_white_24dp);
+                final Drawable icon = AppCompatResources.getDrawable(getContext(), R.drawable.ic_arrow_back_white_24dp);
+                icon.setAutoMirrored(true);
+                mToolbar.setNavigationIcon(icon);
                 mToolbar.setNavigationOnClickListener(v -> ((AnkiActivity) getActivity()).finishWithAnimation(RIGHT));
             }
         } catch (IllegalStateException e) {
