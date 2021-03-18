@@ -28,6 +28,7 @@ ku: Naverokê Bixwaze
 lt: „AnkiDroid“ atminties kortelės
 mr: अंकीड्रोएड फ़्लँशकार्डस्
 nl: AnkiDroid flitskaarten
+or: AnkiDroid ଫ୍ଲାସକାର୍ଡ
 pl: AnkiDroid – Fiszki
 ru: AnkiDroid: карточки для запоминания
 sk: AnkiDroid kartičky

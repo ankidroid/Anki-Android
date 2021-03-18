@@ -782,21 +782,21 @@ public class SchedV2Test extends RobolectricTest {
         // (('parent', 1514457677462, 5, 0, 0, (('child', 1514457677463, 5, 0, 0, ()),)))
         assertEquals("parent", tree.getFullDeckName());
         assertEquals(5, tree.getRevCount());  // paren, tree.review_count)t
-        assertEquals(5, tree.getChildren().get(0).getRevCount());
+        assertEquals(10, tree.getChildren().get(0).getRevCount());
 
         // .counts() should match
         col.getDecks().select(child.getLong("id"));
         col.reset();
-        assertEquals(new Counts(0, 0, 5), col.getSched().counts());
+        assertEquals(new Counts(0, 0, 10), col.getSched().counts());
 
         // answering a card in the child should decrement parent count
         Card c = getCard();
         col.getSched().answerCard(c, 3);
-        assertEquals(new Counts(0, 0, 4), col.getSched().counts());
+        assertEquals(new Counts(0, 0, 9), col.getSched().counts());
 
         tree = col.getSched().deckDueTree().get(1);
         assertEquals(4, tree.getRevCount());
-        assertEquals(4, tree.getChildren().get(0).getRevCount());
+        assertEquals(9, tree.getChildren().get(0).getRevCount());
     }
 
 
@@ -1238,13 +1238,17 @@ public class SchedV2Test extends RobolectricTest {
         // ordinals should arrive in order
         AbstractSched sched = col.getSched();
         Card c = sched.getCard();
+        advanceRobolectricLooperWithSleep();
         sched.answerCard(c, sched.answerButtons(c) - 1); // not upstream. But we are not expecting multiple getCard without review
         assertEquals(0, c.getOrd());
         c = sched.getCard();
+        advanceRobolectricLooperWithSleep();
         sched.answerCard(c, sched.answerButtons(c) - 1); // not upstream. But we are not expecting multiple getCard without review
         assertEquals(1, c.getOrd());
         c = sched.getCard();
+        advanceRobolectricLooperWithSleep();
         sched.answerCard(c, sched.answerButtons(c) - 1); // not upstream. But we are not expecting multiple getCard without review
+        advanceRobolectricLooperWithSleep();
         assertEquals(2, c.getOrd());
     }
 
@@ -1740,6 +1744,7 @@ public class SchedV2Test extends RobolectricTest {
         deck.put("resched", false);
         sched.rebuildDyn(did);
         col.reset();
+        advanceRobolectricLooper();
         Card card;
         for(int i = 0; i < 3; i++) {
             card = sched.getCard();

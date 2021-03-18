@@ -41,6 +41,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.annotation.VisibleForTesting;
 import androidx.core.content.ContentResolverCompat;
+import androidx.core.content.ContextCompat;
 import androidx.core.content.FileProvider;
 
 import android.text.TextUtils;
@@ -61,6 +62,7 @@ import com.ichi2.anki.AnkiDroidApp;
 import com.ichi2.anki.R;
 import com.ichi2.anki.UIUtils;
 import com.ichi2.compat.CompatHelper;
+import com.ichi2.themes.Themes;
 import com.ichi2.ui.FixedEditText;
 import com.ichi2.utils.BitmapUtil;
 import com.ichi2.utils.ExifUtil;
@@ -68,6 +70,7 @@ import com.ichi2.utils.FileUtil;
 import com.ichi2.utils.Permissions;
 
 import com.afollestad.materialdialogs.MaterialDialog;
+import com.yalantis.ucrop.UCrop;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -257,9 +260,9 @@ public class BasicImageFieldController extends FieldControllerBase implements IF
     private void saveImageForRevert() {
         if (!mViewModel.isPreExistingImage) {
             deletePreviousImage();
-            mPreviousImagePath = mViewModel.mImagePath;
-            mPreviousImageUri = mViewModel.mImageUri;
         }
+        mPreviousImagePath = mViewModel.mImagePath;
+        mPreviousImageUri = mViewModel.mImageUri;
     }
 
 
@@ -340,6 +343,7 @@ public class BasicImageFieldController extends FieldControllerBase implements IF
             switch (requestCode) {
                 case ACTIVITY_TAKE_PICTURE:
                 case ACTIVITY_CROP_PICTURE:
+                case UCrop.REQUEST_CROP:
                     if (!TextUtils.isEmpty(mPreviousImagePath)) {
                         revertToPreviousImage();
                     }
@@ -351,6 +355,12 @@ public class BasicImageFieldController extends FieldControllerBase implements IF
             // Some apps send this back with app-specific data, direct the user to another app
             if (resultCode >= Activity.RESULT_FIRST_USER) {
                 UIUtils.showThemedToast(mActivity, mActivity.getString(R.string.activity_result_unexpected), true);
+            }
+
+            // uCrop can give us more information. Not sure it is actionable so for now just log it.
+            if ((requestCode == UCrop.REQUEST_CROP) && (resultCode == UCrop.RESULT_ERROR)) {
+                Timber.w(UCrop.getError((data)), "uCrop threw an error");
+                AnkiDroidApp.sendExceptionReport(UCrop.getError(data), "uCrop threw an error");
             }
             return;
         }
@@ -368,7 +378,7 @@ public class BasicImageFieldController extends FieldControllerBase implements IF
             }
         } else if (requestCode == ACTIVITY_TAKE_PICTURE) {
             handleTakePictureResult();
-        } else if (requestCode == ACTIVITY_CROP_PICTURE) {
+        } else if ((requestCode == ACTIVITY_CROP_PICTURE) || (requestCode == UCrop.REQUEST_CROP)) {
             handleCropResult();
         } else {
             Timber.w("Unhandled request code: %d", requestCode);
@@ -595,21 +605,40 @@ public class BasicImageFieldController extends FieldControllerBase implements IF
         setTemporaryMedia(imagePath);
         Timber.d("requestCrop()  destination image has path/uri %s/%s", ret.mImagePath, ret.mImageUri);
 
-        // This is basically a "magic" recipe to get the system to crop, gleaned from StackOverflow etc
-        // Intent intent = new Intent(Intent.ACTION_EDIT);  // edit (vs crop) would be even better, but it fails differently and needs lots of testing
-        Intent intent = new Intent("com.android.camera.action.CROP");
-        intent.setFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION | Intent.FLAG_GRANT_WRITE_URI_PERMISSION);
-        intent.setDataAndType(mPreviousImageUri, "image/*");
-        intent.putExtra("return-data", false);
-        intent.putExtra(MediaStore.EXTRA_OUTPUT, imageUri);
-        intent.putExtra("outputFormat", Bitmap.CompressFormat.JPEG.toString()); // worked w/crop but not edit
-        intent.putExtra("noFaceDetection", true); // no face detection
-        try {
-            mActivity.startActivityForResultWithoutAnimation(Intent.createChooser(intent, null), ACTIVITY_CROP_PICTURE);
-        } catch (Exception e) {
-            Timber.w(e, "requestCrop unable to start cropping activity for Uri %s", mPreviousImageUri);
-            showSomethingWentWrong();
-            onActivityResult(ACTIVITY_CROP_PICTURE, Activity.RESULT_CANCELED, null);
+        // Crop on Android 11 broke completely. We will transition to uCrop in general for everyone but first
+        // for Android 11 only we try uCrop. Worst case, it was already broken for them
+        if (CompatHelper.getSdkVersion() > Build.VERSION_CODES.Q) { // We don't compile against 30 yet, so R symbol does not exist
+            UCrop.Options options = new UCrop.Options();
+            options.setFreeStyleCropEnabled(true);
+
+
+            // Color palette
+            options.setActiveControlsWidgetColor(ContextCompat.getColor(mActivity, R.color.theme_light_primary));
+            options.setStatusBarColor(Themes.getColorFromAttr(mActivity, R.attr.colorPrimaryDark));
+            options.setToolbarColor(Themes.getColorFromAttr(mActivity, R.attr.colorPrimary));
+            options.setToolbarWidgetColor(Themes.getColorFromAttr(mActivity, R.attr.actionBarTextColor));
+            UCrop.of(mPreviousImageUri, ret.mImageUri)
+                    .withOptions(options)
+                    .useSourceImageAspectRatio()
+                    //.withMaxResultSize(maxWidth, maxHeight)
+                    .start(mActivity);
+        } else {
+            // This is basically a "magic" recipe to get the system to crop, gleaned from StackOverflow etc
+            // Intent intent = new Intent(Intent.ACTION_EDIT);  // edit (vs crop) would be even better, but it fails differently and needs lots of testing
+            Intent intent = new Intent("com.android.camera.action.CROP");
+            intent.setFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION | Intent.FLAG_GRANT_WRITE_URI_PERMISSION);
+            intent.setDataAndType(mPreviousImageUri, "image/*");
+            intent.putExtra("return-data", false);
+            intent.putExtra(MediaStore.EXTRA_OUTPUT, imageUri);
+            intent.putExtra("outputFormat", Bitmap.CompressFormat.JPEG.toString()); // worked w/crop but not edit
+            intent.putExtra("noFaceDetection", true); // no face detection
+            try {
+                mActivity.startActivityForResultWithoutAnimation(Intent.createChooser(intent, null), ACTIVITY_CROP_PICTURE);
+            } catch (Exception e) {
+                Timber.w(e, "requestCrop unable to start cropping activity for Uri %s", mPreviousImageUri);
+                showSomethingWentWrong();
+                onActivityResult(ACTIVITY_CROP_PICTURE, Activity.RESULT_CANCELED, null);
+            }
         }
         return ret;
     }
@@ -825,7 +854,9 @@ public class BasicImageFieldController extends FieldControllerBase implements IF
         public void deleteImagePath() {
             if (mImagePath != null && new File(mImagePath).exists()) {
                 if (!new File(mImagePath).delete()) {
-                    Timber.i("revertToPreviousImage() had existing image, but delete failed");
+                    Timber.i("deleteImagePath() had existing image, but delete failed");
+                } else {
+                    Timber.d("deleteImagePath() deleted %s", mImagePath);
                 }
             }
         }

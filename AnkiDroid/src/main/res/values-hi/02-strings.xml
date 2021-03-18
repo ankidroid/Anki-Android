@@ -206,8 +206,8 @@
     <string name="steps_error">कदम नंबर 0 से अधिक होना चाहिए</string>
     <string name="steps_min_error">कम से कम एक कदम की आवश्यकता है</string>
     <string name="sched_end">(अंत)</string>
-    <string name="sched_unbury_action">उन्हें देखने के लिए अब मेनू में \"दफन\" आइटम को छूने</string>
-    <string name="sched_has_buried">कुछ संबंधित या दफन कार्ड एक बाद में सत्र तक देरी हो रहे थे।</string>
+    <string name="sched_unbury_action">उन्हें अभी देखने के लिए मेनू में \"स्थगित से वापस लाएं\" आइटम स्पर्श करें</string>
+    <string name="sched_has_buried">कुछ संबंधित या स्थगित पत्ते को कल तक विलंबित किया गया</string>
     <string name="tag_editor_add_feedback">\"%1$s\" जोड़ने की पुष्टि करने के लिए \"%2$s\" स्पर्श करें</string>
     <string name="tag_editor_add_feedback_existing">मौजूदा टैग \"%1$s\" चयनित</string>
     <string name="lookup_hint">पाठ की प्रतिलिपि बनाने के बाद, खोज चिह्न दिखाने के लिए स्पैनिश पर कहीं भी टैप करें</string>
@@ -313,6 +313,7 @@
     <!-- Card Viewer -->
     <string name="card_viewer_could_not_find_image">कार्ड सामग्री त्रुटि: ‘%s’ लोड करने में विफल</string>
     <string name="card_viewer_media_relative_protocol">कार्ड सामग्री त्रुटि: मीडिया अद्यतन की आवश्यकता है</string>
+    <string name="cannot_load_http_resource">Loading http resources is no longer supported</string>
     <!-- Deck Picker -->
     <string name="deck_picker_failed_deck_load">डेक को लोड करने में विफल  ‘%s’</string>
     <string name="search_decks">खोज डेक</string>
@@ -335,9 +336,12 @@
     <string name="toolbar_item_explain_remove">चयनित पाठ से पहले और बाद में डाले जाने वाले HTML दर्ज करें\n\nकिसी टूलबार आइटम को निकालने के लिए उसे लंबे समय तक दबाएं</string>
     <string name="remove_toolbar_item">Remove Toolbar Item?</string>
     <string name="note_editor_paste_too_large">The image is too large to paste, please insert the image manually</string>
-    <string name="ankidroid_cannot_open_after_backup_try_again" comment="After an Android backup is restored, AnkiDroid opens and shows this message.         Opening AnkiDroid again will work correctly">        Android backup in progress. Please try again</string>
+    <string name="ankidroid_cannot_open_after_backup_try_again" comment="After an Android backup is restored, AnkiDroid opens and shows this message.         Opening AnkiDroid again will work correctly">एन्ड्रॉयड बैकप प्रगति पर है। कृपया पुन: प्रयास करें</string>
     <string name="create_shortcut_error_vivo" comment="iManager is an app on Vivo phones">You may need to use iManager to allow AnkiDroid to add shortcuts</string>
     <string name="create_shortcut_failed" comment="home screen == launcher">Your home screen does not allow AnkiDroid to add shortcuts</string>
-    <string name="create_shortcut_error">Error adding shortcut: %s</string>
+    <string name="create_shortcut_error">शॉर्टकट जोड़ने में त्रुटि: %s</string>
     <string name="note_editor_capitalize" comment="This is for a switch with a checkbox - on: enabled">Capitalize sentences</string>
+    <!-- Symbols used as Button text in IncrementNumberRangePreference -->
+    <string name="plus_sign" comment="Label for increment button in IncrementerNumberRangePreference">+</string>
+    <string name="minus_sign" comment="Label for decrement button in IncrementerNumberRangePreference">-</string>
 </resources>

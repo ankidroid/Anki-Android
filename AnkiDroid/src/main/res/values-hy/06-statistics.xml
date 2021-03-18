@@ -68,7 +68,7 @@
     <string name="stats_day_of_week">Day of week</string>
     <string formatted="false" name="stats_percentage_correct">% ճիշտ</string>
     <string name="stats_reviews" comment="Label of a graph, indicating cumulative number of review of all cards">Reviews</string>
-    <string name="stats_answer_type">Answer type</string>
+    <string name="stats_answer_type">Պատասխանի տեսակ</string>
     <string name="stats_today_again_count">Again count: &lt;b&gt;%d&lt;/b&gt;</string>
     <string name="stats_today_correct_count">(&lt;b&gt;%.1f%%&lt;/b&gt; correct)</string>
     <string name="stats_today_type_breakdown">Learn: &lt;b&gt;%1$d&lt;/b&gt;, review: &lt;b&gt;%2$d&lt;/b&gt;, relearn: &lt;b&gt;%3$d&lt;/b&gt;, filtered: &lt;b&gt;%4$d&lt;/b&gt;</string>

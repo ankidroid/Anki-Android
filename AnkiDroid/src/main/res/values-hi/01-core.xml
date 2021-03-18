@@ -92,18 +92,18 @@
     <string name="undo_action_review">पिछली समीक्षा</string>
     <string name="undo_action_change_deck_multi">डेक बदलें</string>
     <string name="move_all_to_deck">सभी को डेक में ले जाएं</string>
-    <string name="unbury">निकालें</string>
+    <string name="unbury">स्थगित से वापस लाएं</string>
     <string name="rename_deck">डेक का नाम बदलें</string>
     <string name="create_shortcut">क्षुद्र मार्ग बनाएँ </string>
     <string name="menu_add" comment="A generic add button - Main Deck Picker and card templates. Please inform us if you need more specific strings">जोड़ें</string>
     <string name="menu_add_note">नोट जोड़ें</string>
     <string name="menu_my_account" comment="Label of the window in which the user should enter their account. This text can\'t be found in AnkiDroid directly.">खाता को तुल्यकालन करें</string>
     <string name="menu_dismiss_note">छुपाएं/हटाना</string>
-    <string name="menu_bury_card">कार्ड दफनाना</string>
-    <string name="menu_bury_note">नोट दफनाना</string>
+    <string name="menu_bury_card">पत्ता स्थगित करें</string>
+    <string name="menu_bury_note">नोट स्थगित करें</string>
     <string name="menu_suspend_card">कार्ड को निलंबित</string>
     <string name="menu_suspend_note">नोट निलंबित करें</string>
-    <string name="menu_bury">दफनाना</string>
+    <string name="menu_bury">स्थगित करें</string>
     <string name="menu_suspend">निलंबित</string>
     <string name="menu_delete_note">नोट हटाएँ</string>
     <string name="menu_flag">झंडा</string>

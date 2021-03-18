@@ -82,11 +82,11 @@
     <string name="full_screen_off">Desligar</string>
     <string name="full_screen_system">Ocultar barras de sistema</string>
     <string name="full_screen_complete">Ocultar barras de sistema e botões de resposta</string>
-    <string name="full_screen_error_gestures">Você precisa habilitar os gestos para esconder os botões de resposta</string>
+    <string name="full_screen_error_gestures">Habilite os gestos para ocultar os botões de resposta</string>
     <string name="answer_buttons_position">Posição dos botões de resposta</string>
     <string-array name="answer_buttons_position_labels">
-        <item>Topo</item>
-        <item>Final</item>
+        <item>Acima</item>
+        <item>Abaixo</item>
     </string-array>
     <string name="gestures">Habilitar gestos</string>
     <string name="gestures_summ">Atribuir gestos a ações tais como responder e editar cards.</string>
@@ -172,7 +172,7 @@
     <string name="learn_cutoff">Aprender antes do limite</string>
     <string name="time_limit">Limite de tempo de Timebox</string>
     <string name="time_limit_summ">XXX min</string>
-    <string name="new_timezone">New timezone handling</string>
+    <string name="new_timezone">Processando novo fuso horário</string>
     <string name="day_offset">Início do dia seguinte</string>
     <string name="day_offset_summ">XXX horas após a meia-noite</string>
     <string name="sched_ver">Agendador V2 Experimental</string>
@@ -223,7 +223,7 @@
     </plurals>
     <string name="deck_conf_new_cards">Novos cards</string>
     <string name="deck_conf_rev_cards" comment="Name of the deck options submenu for configuring reviews of due cards.">Revisões</string>
-    <string name="deck_conf_lps_cards" comment="Label of the submenu stating how lapses cards are treated.">Lapsos</string>
+    <string name="deck_conf_lps_cards" comment="Label of the submenu stating how lapses cards are treated.">Falhas</string>
     <string name="deck_conf_general">Geral</string>
     <string name="deck_conf_reminders">Lembretes</string>
     <string name="deck_conf_steps">Passos (em minutos)</string>
@@ -232,12 +232,12 @@
     <string name="deck_conf_graduating_ivl">Intervalo de graduação</string>
     <string name="deck_conf_days">XXX dia(s)</string>
     <string name="deck_conf_easy_ivl">Intervalo fácil</string>
-    <string name="deck_conf_start_ease">Dificuldade de início</string>
+    <string name="deck_conf_start_ease">Espaçamento inicial</string>
     <string name="deck_conf_max_rev">Máximo de revisões/dia</string>
-    <string name="deck_conf_new_bury">Ocultar cards novos relacionados</string>
-    <string name="deck_conf_new_bury_summ">Cards novos relacionados são ocultados até o dia seguinte</string>
-    <string name="deck_conf_rev_bury">Ocultar revisões relacionadas</string>
-    <string name="deck_conf_rev_bury_summ">Revisões relacionadas são ocultadas até o dia seguinte</string>
+    <string name="deck_conf_new_bury">Enterrar cards novos relacionados</string>
+    <string name="deck_conf_new_bury_summ">Cards novos relacionados serão enterrados até o dia seguinte</string>
+    <string name="deck_conf_rev_bury">Enterrar revisões relacionadas</string>
+    <string name="deck_conf_rev_bury_summ">Revisões relacionadas serão enterradas até o dia seguinte</string>
     <string name="deck_conf_use_general_timeout_settings">Usar configurações gerais</string>
     <string name="deck_conf_use_general_timeout_settings_summ">Use as configurações gerais de \'Mostrar resposta automática\' em vez de usar as configurações deste grupo.</string>
     <string name="deck_conf_easy_bonus">Bônus fácil</string>
@@ -247,7 +247,7 @@
     <string name="deck_conf_new_lps_ivl">Novo intervalo</string>
     <string name="deck_conf_min_ivl">Intervalo mínimo</string>
     <string name="deck_conf_leech_thres">Limite de sanguessuga</string>
-    <string name="deck_conf_fails">XXX falhas</string>
+    <string name="deck_conf_fails">XXX falha(s)</string>
     <string name="deck_conf_leech_action">Ação de sanguessuga</string>
     <string name="deck_conf_max_time">Tempo máximo de resposta</string>
     <string name="deck_conf_seconds">XXX segundos</string>

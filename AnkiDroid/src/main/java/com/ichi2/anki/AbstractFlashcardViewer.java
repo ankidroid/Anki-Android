@@ -50,7 +50,6 @@ import androidx.annotation.VisibleForTesting;
 import androidx.coordinatorlayout.widget.CoordinatorLayout;
 import androidx.core.content.ContextCompat;
 import androidx.appcompat.app.ActionBar;
-import androidx.webkit.internal.AssetHelper;
 import androidx.webkit.WebViewAssetLoader;
 
 import android.text.TextUtils;
@@ -65,6 +64,7 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
+import android.view.ViewParent;
 import android.view.WindowManager;
 import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputMethodManager;
@@ -89,6 +89,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.afollestad.materialdialogs.MaterialDialog;
+import com.drakeet.drawer.FullDraggableContainer;
 import com.google.android.material.snackbar.Snackbar;
 import com.ichi2.anim.ViewAnimation;
 import com.ichi2.anki.cardviewer.GestureTapProcessor;
@@ -122,6 +123,7 @@ import com.ichi2.themes.HtmlColors;
 import com.ichi2.themes.Themes;
 import com.ichi2.utils.AdaptionUtil;
 import com.ichi2.utils.AndroidUiUtils;
+import com.ichi2.utils.AssetHelper;
 import com.ichi2.utils.ClipboardUtil;
 import com.ichi2.utils.BooleanGetter;
 import com.ichi2.utils.CardGetter;
@@ -132,6 +134,7 @@ import com.ichi2.utils.FunctionalInterfaces.Function;
 import com.ichi2.utils.JSONArray;
 import com.ichi2.utils.JSONException;
 import com.ichi2.utils.JSONObject;
+import com.ichi2.utils.MaxExecFunction;
 import com.ichi2.utils.WebViewDebugging;
 
 import java.io.BufferedReader;
@@ -218,6 +221,8 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
     private static final int ankiJsErrorCodeDefault = 0;
     private static final int ankiJsErrorCodeMarkCard = 1;
     private static final int ankiJsErrorCodeFlagCard = 2;
+
+    private static String jsAddonContent = "";
 
     /**
      * Broadcast that informs us when the sd card is about to be unmounted
@@ -891,6 +896,9 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
         initNavigationDrawer(mainView);
 
         mShortAnimDuration = getResources().getInteger(android.R.integer.config_shortAnimTime);
+
+        // get all enabled addons' content
+        jsAddonContent = getEnabledAddonsContent();
     }
 
     protected int getContentViewAttr(int fullscreenMode) {
@@ -924,27 +932,24 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
         mViewerUrl = mBaseUrl + "__viewer__.html";
 
         mAssetLoader = new WebViewAssetLoader.Builder()
-            .addPathHandler("/", new WebViewAssetLoader.PathHandler() {
-                @Override
-                public WebResourceResponse handle(String path) {
-                    try {
-                        File file = new File(mediaDir, path);
-                        FileInputStream is = new FileInputStream(file);
+            .addPathHandler("/", path -> {
+                try {
+                    File file = new File(mediaDir, path);
+                    FileInputStream is = new FileInputStream(file);
 
-                        String mimeType = AssetHelper.guessMimeType(path);
+                    String mimeType = AssetHelper.guessMimeType(path);
 
-                        HashMap<String, String> headers = new HashMap<String, String>();
-                        headers.put("Access-Control-Allow-Origin", "*");
+                    HashMap<String, String> headers = new HashMap<>();
+                    headers.put("Access-Control-Allow-Origin", "*");
 
-                        WebResourceResponse response = new WebResourceResponse(mimeType, null, is);
-                        response.setResponseHeaders(headers);
-                        return response;
-                    } catch (Exception e) {
-                        Timber.e(e, "Error trying to open path in asset loader");
-                    }
-
-                    return null;
+                    WebResourceResponse response = new WebResourceResponse(mimeType, null, is);
+                    response.setResponseHeaders(headers);
+                    return response;
+                } catch (Exception e) {
+                    Timber.w(e, "Error trying to open path in asset loader");
                 }
+
+                return null;
             })
             .build();
 
@@ -2403,6 +2408,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
         return card.getODid() == 0 ? card.getDid() : card.getODid();
     }
 
+    // get enabled js addon contents from AnkiDroid/addons/...
     public String getEnabledAddonsContent() {
         StringBuilder content = new StringBuilder();
         String mainJsFile = null;
@@ -2481,11 +2487,10 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
             return;
         }
 
-        String addonsContent = getEnabledAddonsContent();
-        if (addonsContent == null) {
-            addonsContent = "";
+        if (jsAddonContent == null) {
+            jsAddonContent = "";
         }
-        final String cardContent = mCardContent + addonsContent;
+        final String cardContent = mCardContent + jsAddonContent;
 
         processCardAction(cardWebView -> loadContentIntoCard(cardWebView, cardContent));
         mGestureDetectorImpl.onFillFlashcard();
@@ -2980,6 +2985,43 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
             }
         }
 
+        @Override
+        public boolean onTouchEvent(MotionEvent event) {
+            if (event.getAction() == MotionEvent.ACTION_DOWN) {
+                ViewParent scrollParent = findScrollParent(this);
+                if (scrollParent != null) {
+                    scrollParent.requestDisallowInterceptTouchEvent(true);
+                }
+            }
+            return super.onTouchEvent(event);
+        }
+
+
+        @Override
+        protected void onOverScrolled(int scrollX, int scrollY, boolean clampedX, boolean clampedY) {
+            if (clampedX) {
+                ViewParent scrollParent = findScrollParent(this);
+                if (scrollParent != null) {
+                    scrollParent.requestDisallowInterceptTouchEvent(false);
+                }
+            }
+            super.onOverScrolled(scrollX, scrollY, clampedX, clampedY);
+        }
+
+
+        private ViewParent findScrollParent(View current) {
+            ViewParent parent = current.getParent();
+            if (parent == null) {
+                return null;
+            }
+            if (parent instanceof FullDraggableContainer) {
+                return parent;
+            } else if (parent instanceof View) {
+                return findScrollParent((View) parent);
+            }
+            return null;
+        }
+
         private final Handler scrollHandler = new Handler();
         private final Runnable scrollXRunnable = () -> mIsXScrolling = false;
         private final Runnable scrollYRunnable = () -> mIsYScrolling = false;
@@ -3386,6 +3428,12 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
             if (isLoadedFromProtocolRelativeUrl(url)) {
                 mMissingImageHandler.processInefficientImage(AbstractFlashcardViewer.this::displayMediaUpgradeRequiredSnackbar);
             }
+
+            if (isLoadedFromHttpUrl(url)) {
+                //shouldInterceptRequest is not running on the UI thread.
+                AbstractFlashcardViewer.this.runOnUiThread(() -> mDisplayMediaLoadedFromHttpWarningSnackbar.execOnceForReference(mCurrentCard));
+            }
+
             return null;
         }
 
@@ -3393,14 +3441,15 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
         @Override
         @TargetApi(Build.VERSION_CODES.N)
         public WebResourceResponse shouldInterceptRequest(WebView view, WebResourceRequest request) {
-            WebResourceResponse result = mLoader.shouldInterceptRequest(request.getUrl());
+            Uri url = request.getUrl();
+            WebResourceResponse result = mLoader.shouldInterceptRequest(url);
 
             if (result != null) {
                 return result;
             }
 
             if (!AdaptionUtil.hasWebBrowser(getBaseContext())) {
-                String scheme = request.getUrl().getScheme().trim();
+                String scheme = url.getScheme().trim();
                 if ("http".equalsIgnoreCase(scheme) || "https".equalsIgnoreCase(scheme)) {
                     String response = getResources().getString(R.string.no_outgoing_link_in_cardbrowser);
                     return new WebResourceResponse("text/html", "utf-8", new ByteArrayInputStream(response.getBytes()));
@@ -3411,7 +3460,20 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
                 mMissingImageHandler.processInefficientImage(AbstractFlashcardViewer.this::displayMediaUpgradeRequiredSnackbar);
             }
 
+            if (isLoadedFromHttpUrl(url)) {
+                //shouldInterceptRequest is not running on the UI thread.
+                AbstractFlashcardViewer.this.runOnUiThread(() -> mDisplayMediaLoadedFromHttpWarningSnackbar.execOnceForReference(mCurrentCard));
+            }
+
             return null;
+        }
+
+        protected boolean isLoadedFromHttpUrl(String url) {
+            return url.trim().toLowerCase().startsWith("http");
+        }
+
+        protected boolean isLoadedFromHttpUrl(Uri uri) {
+            return uri.getScheme().equalsIgnoreCase("http");
         }
 
         protected boolean isLoadedFromProtocolRelativeUrl(String url) {
@@ -3758,6 +3820,10 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
         }
     }
 
+    private final MaxExecFunction mDisplayMediaLoadedFromHttpWarningSnackbar = new MaxExecFunction(3, () -> {
+        OnClickListener onClickListener = (v) -> openUrl(Uri.parse(getString(R.string.link_faq_external_http_content)));
+        showSnackbar(getString(R.string.cannot_load_http_resource), R.string.help, onClickListener);
+    });
 
     private void displayCouldNotFindMediaSnackbar(String filename) {
         OnClickListener onClickListener = (v) -> openUrl(Uri.parse(getString(R.string.link_faq_missing_media)));
@@ -4103,6 +4169,9 @@ see card.js for available functions
         public boolean ankiIsInNightMode() {
             return isInNightMode();
         }
+
+        @JavascriptInterface
+        public boolean ankiIsDisplayingAnswer() { return isDisplayingAnswer(); };
 
         @JavascriptInterface
         public boolean ankiIsActiveNetworkMetered() {

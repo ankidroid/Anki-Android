@@ -1546,17 +1546,7 @@ public class SchedV2 extends AbstractSched {
             lim--;
         }
 
-        if (parentLimit != null) {
-            return Math.min(parentLimit, lim);
-        } else if (!d.getString("name").contains("::")) {
-            return lim;
-        } else {
-            for (@NonNull Deck parent : mCol.getDecks().parents(did)) {
-                // pass in dummy parentLimit so we don't do parent lookup again
-                lim = Math.min(lim, _deckRevLimitSingle(parent, lim, considerCurrentCard));
-            }
-            return lim;
-        }
+        return lim;
     }
 
 
@@ -2752,11 +2742,14 @@ public class SchedV2 extends AbstractSched {
         String scids = Utils.ids2str(cids);
         long now = getTime().intTime();
         ArrayList<Long> nids = new ArrayList<>(cids.size());
-        for (long id : cids) {
+        // List of cid from `cids` and its `nid`
+        ArrayList<Pair<Long, Long>> cid2nid = new ArrayList<>(cids.size());
+        for (Long id : cids) {
             long nid = mCol.getDb().queryLongScalar("SELECT nid FROM cards WHERE id = ?", id);
             if (!nids.contains(nid)) {
                 nids.add(nid);
             }
+            cid2nid.add(new Pair<>(id, nid));
         }
         if (nids.isEmpty()) {
             // no new cards
@@ -2780,31 +2773,29 @@ public class SchedV2 extends AbstractSched {
                 int shiftby = high - low + 1;
                 mCol.getDb().execute(
                         "UPDATE cards SET mod = ?, usn = ?, due = due + ?"
-                                + " WHERE id NOT IN " + scids + " AND due >= ? AND queue = " + Consts.QUEUE_TYPE_NEW,
+                                + " WHERE id NOT IN " + scids + " AND due >= ? AND type = " + Consts.CARD_TYPE_NEW,
                         now, mCol.usn(), shiftby, low);
             }
         }
         // reorder cards
         ArrayList<Object[]> d = new ArrayList<>(cids.size());
-        try (Cursor cur = mCol.getDb()
-                    .query("SELECT id, nid FROM cards WHERE type = " + Consts.CARD_TYPE_NEW + " AND id IN " + scids)) {
-            while (cur.moveToNext()) {
-                long nid = cur.getLong(1);
-                d.add(new Object[] { due.get(nid), now, mCol.usn(), cur.getLong(0) });
-            }
+        for (Pair<Long, Long> pair : cid2nid) {
+            Long cid = pair.first;
+            Long nid = pair.second;
+            d.add(new Object[] { due.get(nid), now, mCol.usn(), cid });
         }
         mCol.getDb().executeMany("UPDATE cards SET due = ?, mod = ?, usn = ? WHERE id = ?", d);
     }
 
 
     public void randomizeCards(long did) {
-        List<Long> cids = mCol.getDb().queryLongList("select id from cards where did = ?", did);
+        List<Long> cids = mCol.getDb().queryLongList("select id from cards where type = " + Consts.CARD_TYPE_NEW + " and did = ?", did);
         sortCards(cids, 1, 1, true, false);
     }
 
 
     public void orderCards(long did) {
-        List<Long> cids = mCol.getDb().queryLongList("SELECT id FROM cards WHERE did = ? ORDER BY nid", did);
+        List<Long> cids = mCol.getDb().queryLongList("SELECT id FROM cards WHERE type = " + Consts.CARD_TYPE_NEW + " AND did = ? ORDER BY nid", did);
         sortCards(cids, 1, 1, false, false);
     }
 
@@ -3118,7 +3109,7 @@ public class SchedV2 extends AbstractSched {
     protected void _sortIntoLrn(long due, long id) {
         if (!mLrnQueue.isFilled()) {
             // We don't want to add an element to the queue if it's not yet assumed to have its normal content.
-            // Adding anything is useless while the queue awaits beeing filled
+            // Adding anything is useless while the queue awaits being filled
             return;
         }
         ListIterator<LrnCard> i = mLrnQueue.listIterator();

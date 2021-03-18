@@ -1648,7 +1648,7 @@ public class NoteEditor extends AnkiActivity implements AddonToolsAdapter.OnAddo
             } else {
                 // Otherwise we make a popup menu allowing the user to choose between audio/image/text field
                 // TODO: Update the icons for dark material theme, then can set 3rd argument to true
-                PopupMenuWithIcons popup = new PopupMenuWithIcons(NoteEditor.this, v, false);
+                PopupMenuWithIcons popup = new PopupMenuWithIcons(NoteEditor.this, v, true);
                 MenuInflater inflater = popup.getMenuInflater();
                 inflater.inflate(R.menu.popupmenu_multimedia_options, popup.getMenu());
                 popup.setOnMenuItemClickListener(item -> {
