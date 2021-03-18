@@ -40,7 +40,7 @@ public class AddonsAdapter extends RecyclerView.Adapter<AddonsAdapter.AddonsView
 
         // while binding viewholder if preferences w.r.t viewholder store true value or enabled status then
         // turn on switch status else it is off by default
-        if (preferences.getString(addonModel.getAddonType()+ "_addon:"+addonModel.getName(), "disabled").equals("enabled")) {
+        if (preferences.getString(addonModel.getType()+ "_addon:"+addonModel.getName(), "disabled").equals("enabled")) {
             holder.addonActivate.setChecked(true);
         }
 
@@ -48,11 +48,11 @@ public class AddonsAdapter extends RecyclerView.Adapter<AddonsAdapter.AddonsView
             SharedPreferences.Editor editor = preferences.edit();
             // store enabled/disabled status as boolean true/false value in SharedPreferences
             if (holder.addonActivate.isChecked()) {
-                editor.putString(addonModel.getAddonType() + "_addon:" + addonModel.getName(), "enabled");
+                editor.putString(addonModel.getType() + "_addon:" + addonModel.getName(), "enabled");
                 editor.apply();
                 UIUtils.showThemedToast(context, context.getString(R.string.enabled)+" "+addonModel.getName(), true);
             } else {
-                editor.putString(addonModel.getAddonType() + "_addon:" + addonModel.getName(), "disabled");
+                editor.putString(addonModel.getType() + "_addon:" + addonModel.getName(), "disabled");
                 editor.apply();
                 UIUtils.showThemedToast(context, context.getString(R.string.disabled)+" "+addonModel.getName(), true);
             }

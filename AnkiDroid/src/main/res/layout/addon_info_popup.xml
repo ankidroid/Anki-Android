@@ -70,7 +70,7 @@
                 android:textStyle="bold" />
 
             <TextView
-                android:id="@+id/popup_ankidroid_api_info"
+                android:id="@+id/popup_js_api_info"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="0.0.1"
