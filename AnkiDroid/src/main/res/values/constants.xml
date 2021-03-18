@@ -204,7 +204,7 @@
     <string name="link_ankidroid_faq">https://github.com/ankidroid/Anki-Android/wiki/FAQ</string>
     <string name="link_opencollective_donate">https://opencollective.com/ankidroid#section-contribute</string>
     <!-- Strings used for sending analytics for HelpDialogBox -->
-    <!-- Note: These Strings must note be changed -->
+    <!-- Note: These Strings must not be changed as they are used for analytic comparisons between AnkiDroid versions -->
     <string name="opened_using_ankidroid">Opened Using AnkiDroid</string>
     <string name="opened_get_help">Opened Get Help</string>
     <string name="opened_support_ankidroid">Opened Support AnkiDroid</string>

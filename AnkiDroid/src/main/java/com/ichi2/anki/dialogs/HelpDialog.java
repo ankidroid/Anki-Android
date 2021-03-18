@@ -43,11 +43,9 @@ public class HelpDialog {
         ankiActivity.openUrl(Uri.parse(AnkiDroidApp.getManualUrl()));
     }
 
-
     private static void openFeedback(AnkiActivity ankiActivity) {
         ankiActivity.openUrl(Uri.parse(AnkiDroidApp.getFeedbackUrl()));
     }
-
 
     public static DialogFragment createInstance(Context context) {
 
@@ -90,7 +88,6 @@ public class HelpDialog {
         return RecursivePictureMenu.createInstance(itemList, R.string.help);
     }
 
-
     public static class RateAppItem extends Item implements Parcelable {
 
         public RateAppItem(@StringRes int titleRes, @DrawableRes int iconRes, @StringRes int analyticsRes) {
@@ -107,7 +104,7 @@ public class HelpDialog {
         */
         @Override
         public void execute(AnkiActivity activity) {
-            UsageAnalytics.sendAnalyticsEvent(UsageAnalytics.Category.LINK_CLICKED, getAnalyticsId(activity));
+            sendAnalytics(activity);
             onClicked(activity);
         }
 
@@ -119,7 +116,6 @@ public class HelpDialog {
         protected RateAppItem(Parcel in) {
             super(in);
         }
-
 
         @SuppressWarnings("unused")
         public static final Parcelable.Creator<RateAppItem> CREATOR = new Parcelable.Creator<RateAppItem>() {
@@ -135,8 +131,6 @@ public class HelpDialog {
             }
         };
     }
-
-
 
     public static class LinkItem extends Item implements Parcelable {
         @StringRes
@@ -155,7 +149,7 @@ public class HelpDialog {
 
         @Override
         public void execute(AnkiActivity activity) {
-            UsageAnalytics.sendAnalyticsEvent(UsageAnalytics.Category.LINK_CLICKED, getAnalyticsId(activity));
+            sendAnalytics(activity);
             onClicked(activity);
         }
 
@@ -179,7 +173,6 @@ public class HelpDialog {
             dest.writeInt(mUrlLocationRes);
         }
 
-
         @SuppressWarnings("unused")
         public static final Parcelable.Creator<LinkItem> CREATOR = new Parcelable.Creator<LinkItem>() {
             @Override
@@ -187,15 +180,12 @@ public class HelpDialog {
                 return new LinkItem(in);
             }
 
-
             @Override
             public LinkItem[] newArray(int size) {
                 return new LinkItem[size];
             }
         };
     }
-
-
 
     public static class FunctionItem extends Item implements Parcelable {
         private final ActivityConsumer mFunc;
@@ -212,7 +202,7 @@ public class HelpDialog {
 
         @Override
         public void execute(AnkiActivity activity) {
-            UsageAnalytics.sendAnalyticsEvent(UsageAnalytics.Category.LINK_CLICKED, getAnalyticsId(activity));
+            sendAnalytics(activity);
             onClicked(activity);
         }
 
@@ -238,7 +228,6 @@ public class HelpDialog {
             public FunctionItem createFromParcel(Parcel in) {
                 return new FunctionItem(in);
             }
-
 
             @Override
             public FunctionItem[] newArray(int size) {

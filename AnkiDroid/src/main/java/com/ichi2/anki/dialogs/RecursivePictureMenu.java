@@ -187,16 +187,18 @@ public class RecursivePictureMenu extends DialogFragment {
         protected abstract void onClicked(AnkiActivity activity);
 
         public String getAnalyticsId(Context context) {
-            System.out.println("getAnalyticsId : " + context.getString(analyticsId));
-            return context.getString(analyticsId);
+            String id = context.getString(analyticsId);
+            return id;
+        }
+
+        public final void sendAnalytics(AnkiActivity activity){
+            UsageAnalytics.sendAnalyticsEvent(UsageAnalytics.Category.LINK_CLICKED, getAnalyticsId(activity));
         }
 
         public abstract void execute(AnkiActivity activity);
 
         public abstract void remove(Item toRemove);
     }
-
-
 
     public static class ItemHeader extends Item implements Parcelable {
 
@@ -221,8 +223,8 @@ public class RecursivePictureMenu extends DialogFragment {
 
         @Override
         public void execute(AnkiActivity activity) {
+            sendAnalytics(activity);
             onClicked(activity);
-            UsageAnalytics.sendAnalyticsEvent(UsageAnalytics.Category.LINK_CLICKED, getAnalyticsId(activity));
         }
 
         @Override
@@ -261,8 +263,7 @@ public class RecursivePictureMenu extends DialogFragment {
             public ItemHeader createFromParcel(Parcel in) {
                 return new ItemHeader(in);
             }
-
-
+            
             @Override
             public ItemHeader[] newArray(int size) {
                 return new ItemHeader[size];
