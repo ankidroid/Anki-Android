@@ -50,8 +50,8 @@ android {
         //
         // This ensures the correct ordering between the various types of releases (dev < alpha < beta < release) which is
         // needed for upgrades to be offered correctly.
-        versionCode=21500128
-        versionName="2.15alpha28"
+        versionCode=21500130
+        versionName="2.15alpha30"
         minSdkVersion 21
         //noinspection OldTargetApi - also performed in api/build.fradle
         targetSdkVersion 29 // change .travis.yml platform download at same time
@@ -270,6 +270,7 @@ dependencies {
     implementation 'org.jsoup:jsoup:1.13.1'
     implementation "com.github.zafarkhaja:java-semver:0.9.0" // For AnkiDroid JS API Versioning
     implementation 'com.github.yalantis:ucrop:2.2.6'
+    implementation 'com.drakeet.drawer:drawer:1.0.3'
     api project(":api")
 
     testImplementation 'org.junit.vintage:junit-vintage-engine:5.7.1'
