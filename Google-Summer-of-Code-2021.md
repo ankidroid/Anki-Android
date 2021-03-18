@@ -225,6 +225,7 @@ Satyam jyotsana gargee(satyam8657@gmail.com)GitHub:(https://github.com/Satyamjyo
 - **Ojas Jain** _Reach me_ **:** 'Email' - ojas24012002jain@gmail.com, [GitHub](https://github.com/ojasjain24), [LinkedIn](https://www.linkedin.com/in/ojas-jain-028179197/)
 - Britannio Jarrett (bj3g20 at soton.ac.uk, https://github.com/britannio)
 - **Alessandra Terranova** _Reach me_ **:** 'Email' - terranovaalessandra2002@gmail.com, [GitHub](https://github.com/alessandraterranova)
+- **Klavio Tarka** _Reach me_ **:** 'Email' - tarkaklavio@gmail.com, [GitHub](https://github.com/klaviotarka)
 # # 
 
 Please enter your details at the bottom of the page via the following link: https://github.com/ankidroid/Anki-Android/wiki/Google-Summer-of-Code-2021/_edit. You will need a GitHub account to do this.
