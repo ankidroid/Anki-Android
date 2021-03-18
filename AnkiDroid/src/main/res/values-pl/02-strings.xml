@@ -135,7 +135,7 @@
         <item quantity="many">%1$d minut</item>
         <item quantity="other">%1$d minut</item>
     </plurals>
-    <string name="fact_adder_intent_title" comment="Label of the \'Add Note\' window. This title can\'t be seen in AnkiDroid directly.">Karta AnkiDroida</string>
+    <string name="fact_adder_intent_title" comment="Label of the \'Add Note\' window. This title can\'t be seen in AnkiDroid directly.">Karta AnkiDroid</string>
     <string name="note_editor_copy_note">Kopiuj notatkę</string>
     <string name="card_editor_reposition_card">Przestawianie</string>
     <string name="card_editor_reset_card">Resetuj postępy</string>
@@ -339,7 +339,7 @@
     <!-- Card Viewer -->
     <string name="card_viewer_could_not_find_image">Błąd zawartości karty, nie udało się załadować: %s</string>
     <string name="card_viewer_media_relative_protocol">Błąd zawartości karty: Wymagana aktualizacja mediów</string>
-    <string name="cannot_load_http_resource">Loading http resources is no longer supported</string>
+    <string name="cannot_load_http_resource">Ładowanie zasobów http nie jest już obsługiwane</string>
     <!-- Deck Picker -->
     <string name="deck_picker_failed_deck_load">Nie udało się załadować talii: %s</string>
     <string name="search_decks">Przeszukaj talie</string>

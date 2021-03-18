@@ -297,4 +297,6 @@
     <string name="note_editor_replace_newlines_summ">في محرر الملحوظات، حوّل أي ظهور لـ &lt;br&gt; إلى سطور جديدة عند تحرير بطاقة.</string>
     <string name="no_code_formatting">تنسيق الإجابة الكتابية البسيطة</string>
     <string name="no_code_formatting_summ">يُصلِح وجود ‘􏿾’ في نتائِج الأجابة المكتوبة</string>
+    <!-- Open Changelog-->
+    <string name="open_changelog">Open Changelog</string>
 </resources>
