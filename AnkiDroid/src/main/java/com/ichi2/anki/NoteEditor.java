@@ -2553,26 +2553,34 @@ public class NoteEditor extends AnkiActivity implements AddonToolsAdapter.OnAddo
                     File addonsPackageDir = new File(addonDirName, "package");
                     File addonsPackageJson = new File(addonsPackageDir, "package.json");
 
-                    org.json.JSONObject jsonObject  = packageJsonReader(addonsPackageJson);
-
-                    String addonName = jsonObject.optString("name", "");
-                    String typeOfAddon = jsonObject.optString("addon_type", "");
-                    String addonIcon = jsonObject.optString("addon_icon", "");
-
-                    char icon;
-
-                    if (addonIcon.isEmpty()) {
-                        // default text to addon
-                        icon = 'A';
+                    // possibly manually deleted by user, so remove key also
+                    if (!addonsPackageJson.exists()) {
+                        SharedPreferences.Editor editor = preferences.edit();
+                        editor.remove(addonType + ":" + addonDirName.getName());
+                        editor.apply();
                     } else {
-                        icon = addonIcon.charAt(0);
-                    }
 
-                    if (addonType.equals(typeOfAddon)) {
-                        addonToolsModel = new AddonToolsModel(addonName, icon);
-                        addonToolsModelList.add(addonToolsModel);
-                    }
+                        org.json.JSONObject jsonObject = packageJsonReader(addonsPackageJson);
 
+                        String addonName = jsonObject.optString("name", "");
+                        String typeOfAddon = jsonObject.optString("addon_type", "");
+                        String addonIcon = jsonObject.optString("addon_icon", "");
+
+                        char icon;
+
+                        if (addonIcon.isEmpty()) {
+                            // default text to addon
+                            icon = 'A';
+                        } else {
+                            icon = addonIcon.charAt(0);
+                        }
+
+                        if (addonType.equals(typeOfAddon)) {
+                            addonToolsModel = new AddonToolsModel(addonName, icon);
+                            addonToolsModelList.add(addonToolsModel);
+                        }
+
+                    }
                 }
             }
 
@@ -2585,6 +2593,27 @@ public class NoteEditor extends AnkiActivity implements AddonToolsAdapter.OnAddo
 
     @Override
     public void onAddonClick(int position) {
+        /*
+         * provide these to js addon in json format and receive in changed data in json format
+         *
+         * { "noteType": "Basic",
+         *   "deckName": "Default",
+         *   "fieldsName": ["Front", "Back"],
+         *   "fieldsCount": 2,
+         *   "selectedText": "Some selected text..." }
+         **/
+
+        String noteType = mNoteTypeSpinner.getSelectedItem().toString();
+        String deckName = mNoteDeckSpinner.getSelectedItem().toString();
+        List<String> fieldsNameList = getCurrentlySelectedModel().getFieldsNames();
+        int fieldsCount = fieldsNameList.size();
+
+        JSONObject jsonObject = new JSONObject();
+        jsonObject.put("noteType", noteType);
+        jsonObject.put("deckName", deckName);
+        jsonObject.put("fieldsName", new JSONArray(fieldsNameList));
+        jsonObject.put("fieldsCount", fieldsCount);
+
         AddonToolsModel addonToolsModel = addonToolsModelList.get(position);
         Timber.d("Clicked on addon %s", addonToolsModel.getName());
 
@@ -2595,6 +2624,7 @@ public class NoteEditor extends AnkiActivity implements AddonToolsAdapter.OnAddo
         }
 
         String selectedText = getSelectedText();
+        jsonObject.put("selectedText", selectedText);
 
         String currentAnkiDroidDirectory = CollectionHelper.getCurrentAnkiDroidDirectory(this);
         File addonsHomeDir = new File(currentAnkiDroidDirectory, "addons");
@@ -2631,21 +2661,59 @@ public class NoteEditor extends AnkiActivity implements AddonToolsAdapter.OnAddo
 
                     @Override
                     public void onResult(String result) {
-                        addonAddToEditText(result);
+                        jsAddonParseResult(result);
                     }
+
 
                     @Override
                     public void onError(String errorMessage) {
-                        UIUtils.showThemedToast(getApplicationContext(), "Error calling addon function\n"+errorMessage, false);
+                        UIUtils.showThemedToast(getApplicationContext(), "Error calling addon function\n" + errorMessage, false);
                     }
-                }, "AnkiJSFunction", selectedText); // name in index.js in addon folder must be AnkiJSFunction
+                }, "AnkiJSFunction", jsonObject.toString()); // name in index.js in addon folder must be AnkiJSFunction
     }
 
-    private void addonAddToEditText(String result) {
-        Toolbar.TextWrapper formatter = new Toolbar.TextWrapper("", result);
+
+    private void jsAddonParseResult(String result) {
+        /*
+         * parse result in json format
+         *
+         * { "changedText": "some changed text...",
+         *   "addToFields": { "0": "some text to field one",
+         *   "2": "some text to field two"
+         *   "3": "some text to field three"
+         *   ...
+         *   ... },
+         *   "changeOption": "replace"
+         *  }
+         *
+         *  change option - replace, append, clear, default - with selected text
+         **/
+
+        JSONObject jsonObject = new JSONObject(result);
+        String changedText = jsonObject.optString("changedText", "");
+
+        JSONObject addToFields = jsonObject.optJSONObject("addToFields");
+
+        Timber.d("js addon: %s", jsonObject.toString());
+
+        if (addToFields != null) {
+            int size = addToFields.names().length();
+            for (int i = 0; i < size; i++) {
+                String keyIndex = Objects.requireNonNull(addToFields.names()).getString(i);
+                String value = addToFields.optString(Objects.requireNonNull(addToFields.names()).getString(i));
+
+                Timber.d("js addon: %s : %s", keyIndex, value);
+
+                FieldEditText field = mEditFields.get(Integer.parseInt(keyIndex));
+                field.setText(value);
+            }
+        }
+
+        Toolbar.TextWrapper formatter = new Toolbar.TextWrapper("", changedText);
         mToolbar.onFormat(formatter);
-        Timber.d("format %s", result);
+        Timber.d("format %s", changedText);
     }
+
 
     private String getSelectedText() {
         int startSelection = 0;
