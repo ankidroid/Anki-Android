@@ -10,9 +10,12 @@
         android:layout_width="30dp"
         android:layout_height="30dp"
         android:layout_margin="2dp"
-        android:textSize="20dp"
+        android:textSize="20sp"
         android:textStyle="bold"
         android:textAllCaps="false"
         style="?android:attr/borderlessButtonStyle"
-        android:contentDescription="TODO" />
+        android:contentDescription="@string/js_addon"
+        android:clickable="true"
+        android:focusable="true"
+        android:foreground="?android:attr/selectableItemBackground" />
 </LinearLayout>

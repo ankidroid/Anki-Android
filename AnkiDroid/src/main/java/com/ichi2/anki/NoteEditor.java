@@ -1992,6 +1992,9 @@ public class NoteEditor extends AnkiActivity implements AddonToolsAdapter.OnAddo
 
         // Let the user add more buttons (always at the end).
         mToolbar.insertItem(0, R.drawable.ic_add_toolbar_icon, this::displayAddToolbarDialog);
+
+        View jsAddonIcon = mToolbar.getJSAddonIconIcon();
+        jsAddonIcon.setOnClickListener(l ->  showJSAddonsRecyclerView());
     }
 
     @NonNull
@@ -2498,19 +2501,15 @@ public class NoteEditor extends AnkiActivity implements AddonToolsAdapter.OnAddo
 
         addonToolsRecyclerView = findViewById(R.id.addon_tools_list);
         addonToolsRecyclerView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
+        addonToolsRecyclerView.setVisibility(View.GONE);
 
         if (isChecked) {
-            addonToolsRecyclerView.setVisibility(View.VISIBLE);
-
             try {
                 jsEvaluator = new JsEvaluator(this);
                 listEnabledAddonsFromDir();
             } catch (IOException | NullPointerException e) {
                 Timber.e(e.getLocalizedMessage(), "NoteEditor::listEnabledAddonsFromDir");
             }
-
-        } else {
-            addonToolsRecyclerView.setVisibility(View.GONE);
         }
     }
 
@@ -2531,8 +2530,14 @@ public class NoteEditor extends AnkiActivity implements AddonToolsAdapter.OnAddo
             SharedPreferences preferences = AnkiDroidApp.getSharedPrefs(this);
             Map<String,?> keys = preferences.getAll();
 
+            AddonToolsModel addonToolsModel;
+
             // for creating new list from scratch
             addonToolsModelList.clear();
+
+            // first button for hiding
+            addonToolsModel = new AddonToolsModel("first", '<');
+            addonToolsModelList.add(addonToolsModel);
 
             for(Map.Entry<String,?> entry : keys.entrySet()) {
                 Timber.d("map values %s", entry.getKey() + ": " + entry.getValue().toString());
@@ -2549,8 +2554,6 @@ public class NoteEditor extends AnkiActivity implements AddonToolsAdapter.OnAddo
                     File addonsPackageJson = new File(addonsPackageDir, "package.json");
 
                     org.json.JSONObject jsonObject  = packageJsonReader(addonsPackageJson);
-
-                    AddonToolsModel addonToolsModel;
 
                     String addonName = jsonObject.optString("name", "");
                     String typeOfAddon = jsonObject.optString("addon_type", "");
@@ -2585,10 +2588,16 @@ public class NoteEditor extends AnkiActivity implements AddonToolsAdapter.OnAddo
         AddonToolsModel addonToolsModel = addonToolsModelList.get(position);
         Timber.d("Clicked on addon %s", addonToolsModel.getName());
 
+        // if first button click then hide the addon tool bar
+        if (addonToolsModel.getName().equals("first")) {
+            addonToolsRecyclerView.setVisibility(View.GONE);
+            return;
+        }
+
         String selectedText = getSelectedText();
 
         String currentAnkiDroidDirectory = CollectionHelper.getCurrentAnkiDroidDirectory(this);
-        File addonsHomeDir = new File(currentAnkiDroidDirectory, "addons" );
+        File addonsHomeDir = new File(currentAnkiDroidDirectory, "addons");
         File finalAddonPath = new File(addonsHomeDir, addonToolsModel.getName());
         File addonsPackageDir = new File(finalAddonPath, "package");
         File addonsContentFile = new File(addonsPackageDir, "index.js");
@@ -2610,7 +2619,7 @@ public class NoteEditor extends AnkiActivity implements AddonToolsAdapter.OnAddo
             br.close();
 
         } catch (IOException e) {
-            e.printStackTrace();
+            Timber.e(e.getLocalizedMessage());
         }
 
         if (content.toString().isEmpty()) {
@@ -2633,7 +2642,7 @@ public class NoteEditor extends AnkiActivity implements AddonToolsAdapter.OnAddo
     }
 
     private void addonAddToEditText(String result) {
-        Toolbar.TextWrapper formatter = new Toolbar.TextWrapper(result, "");
+        Toolbar.TextWrapper formatter = new Toolbar.TextWrapper("", result);
         mToolbar.onFormat(formatter);
         Timber.d("format %s", result);
     }
@@ -2644,12 +2653,16 @@ public class NoteEditor extends AnkiActivity implements AddonToolsAdapter.OnAddo
         String selectedText = "";
         for (FieldEditText e : mEditFields) {
             if (e.isFocused()) {
-                startSelection=e.getSelectionStart();
-                endSelection=e.getSelectionEnd();
+                startSelection = e.getSelectionStart();
+                endSelection = e.getSelectionEnd();
                 selectedText = Objects.requireNonNull(e.getText()).toString().substring(startSelection, endSelection);
                 break;
             }
         }
         return selectedText;
+    }
+
+    private void showJSAddonsRecyclerView() {
+        addonToolsRecyclerView.setVisibility(View.VISIBLE);
     }
 }

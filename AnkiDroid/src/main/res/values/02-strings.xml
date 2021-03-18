@@ -346,7 +346,7 @@
     <string name="format_font_size">Change Font Size</string>
     <string name="insert_mathjax">Insert MathJax Equation</string>
     <string name="insert_cloze">Insert Cloze Deletion</string>
-
+    <string name="list_js_addon">List JS addon</string>
     <string name="before_text">HTML Before Selection</string>
     <string name="after_text">HTML After Selection</string>
     <string name="add_toolbar_item">Create Toolbar Item</string>
@@ -370,7 +370,7 @@
     <string name="get_more_addons">Get more addons</string>
     <string name="not_valid_package">Not a valid package for AnkiDroid</string>
     <string name="addon_download_success">Addon downloads successful</string>
-    <string name="downloading_addon">Downloading addon</string>
+    <string name="downloading_addon">Downloading addon...</string>
     <string name="confirm_remove_addon">Do you want to remove %s ?</string>
     <string name="confirm_update_addon">Do you want to update %s ?</string>
     <string name="enter_npm_install_text">Enter npm install text</string>
@@ -383,6 +383,7 @@
     <string name="checking_addon_update">Checking for addon updates...</string>
     <string name="reviewer_addons">Reviewer addons</string>
     <string name="note_editor_addons">Note editor addons</string>
+    <string name="js_addon">JavaScript Addon</string>
 
     <string name="addon_name">Name</string>
     <string name="addon_version">Version</string>
