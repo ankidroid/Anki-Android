@@ -222,6 +222,8 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
     private static final int ankiJsErrorCodeMarkCard = 1;
     private static final int ankiJsErrorCodeFlagCard = 2;
 
+    private static String jsAddonContent = "";
+
     /**
      * Broadcast that informs us when the sd card is about to be unmounted
      */
@@ -894,6 +896,9 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
         initNavigationDrawer(mainView);
 
         mShortAnimDuration = getResources().getInteger(android.R.integer.config_shortAnimTime);
+
+        // get all enabled addons' content
+        jsAddonContent = getEnabledAddonsContent();
     }
 
     protected int getContentViewAttr(int fullscreenMode) {
@@ -2482,11 +2487,10 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
             return;
         }
 
-        String addonsContent = getEnabledAddonsContent();
-        if (addonsContent == null) {
-            addonsContent = "";
+        if (jsAddonContent == null) {
+            jsAddonContent = "";
         }
-        final String cardContent = mCardContent + addonsContent;
+        final String cardContent = mCardContent + jsAddonContent;
 
         processCardAction(cardWebView -> loadContentIntoCard(cardWebView, cardContent));
         mGestureDetectorImpl.onFillFlashcard();
