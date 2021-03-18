@@ -2691,6 +2691,7 @@ public class NoteEditor extends AnkiActivity implements AddonToolsAdapter.OnAddo
 
         JSONObject jsonObject = new JSONObject(result);
         String changedText = jsonObject.optString("changedText", "");
+        String changeType = jsonObject.optString("changeType", "");
 
         JSONObject addToFields = jsonObject.optJSONObject("addToFields");
 
@@ -2702,16 +2703,14 @@ public class NoteEditor extends AnkiActivity implements AddonToolsAdapter.OnAddo
                 String keyIndex = Objects.requireNonNull(addToFields.names()).getString(i);
                 String value = addToFields.optString(Objects.requireNonNull(addToFields.names()).getString(i));
 
-                Timber.d("js addon: %s : %s", keyIndex, value);
+                Timber.d("js addon key::value : %s :: %s", keyIndex, value);
 
                 FieldEditText field = mEditFields.get(Integer.parseInt(keyIndex));
                 field.setText(value);
             }
         }
 
-        Toolbar.TextWrapper formatter = new Toolbar.TextWrapper("", changedText);
-        mToolbar.onFormat(formatter);
-        Timber.d("format %s", changedText);
+        changeEditFieldWithSelectedText(changedText, changeType);
     }
 
 
@@ -2728,6 +2727,44 @@ public class NoteEditor extends AnkiActivity implements AddonToolsAdapter.OnAddo
             }
         }
         return selectedText;
+    }
+
+    private void changeEditFieldWithSelectedText(String changedText, String changeType) {
+        int startSelection = 0;
+        int endSelection = 0;
+        String selectedText = "";
+        for (FieldEditText e : mEditFields) {
+            if (e.isFocused()) {
+                startSelection = e.getSelectionStart();
+                endSelection = e.getSelectionEnd();
+                selectedText = Objects.requireNonNull(e.getText()).toString().substring(startSelection, endSelection);
+
+                String editTextStr = e.getText().toString();
+
+                switch(changeType) {
+                    case "replace":
+                        editTextStr = editTextStr.replace(selectedText, changedText);
+                        e.setText(editTextStr);
+                        break;
+
+                    case "append":
+                        String appendText = selectedText + changedText;
+                        editTextStr = editTextStr.replace(selectedText, appendText);
+                        e.setText(editTextStr);
+                        break;
+
+                    case "clear":
+                        editTextStr = editTextStr.replace(selectedText, "");
+                        e.setText(editTextStr);
+                        break;
+
+                    default:
+                        // do nothing
+                }
+
+                break;
+            }
+        }
     }
 
     private void showJSAddonsRecyclerView() {
