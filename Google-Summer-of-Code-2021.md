@@ -58,6 +58,7 @@ We care about your privacy. Please only list information that you are comfortabl
 
 Please enter your details at the bottom of the page via the following link: https://github.com/ankidroid/Anki-Android/wiki/Google-Summer-of-Code-2021/_edit. You will need a GitHub account to do this.
 
+
 - **Keshav Garg** _Reach me_ **:** 'Email' - gargk747@gmail.com, [GitHub](https://github.com/gargk747), [LinkedIn](https://www.linkedin.com/in/gargk747/)
 - **Lokesh Bibinagar** _Reach me_ **:** 'Email' - lokeshbibinagar97@gmail.com, [GitHub](https://github.com/Lokeshbibinagar)
 - **Sahil Hemnani** _Reach me_ **:** `Email` - hemnanisahil777@gmail.com, [GitHub](https://github.com/SahilHemnani777), [LinkedIn](https://www.linkedin.com/in/sahil-hemnani-8084b41a6/)
@@ -221,6 +222,7 @@ Satyam jyotsana gargee(satyam8657@gmail.com)GitHub:(https://github.com/Satyamjyo
 - **Hitesh Mitruka** (Email: hiteshmitruka1@gmail.com, [GitHub](https://github.com/mitrukahitesh), [LinkedIn](https://www.linkedin.com/in/mitrukahitesh))
 - **Ashwath** (Email: vaashwath@gmail.com)
 - **Roshan B** (Email: roshan241b@gmail.com, [Github](https://github.com/Roshan-24))
+- **Ojas Jain** _Reach me_ **:** 'Email' - ojas24012002jain@gmail.com, [GitHub](https://github.com/ojasjain24), [LinkedIn](https://www.linkedin.com/in/ojas-jain-028179197/)
 # # 
 
 Please enter your details at the bottom of the page via the following link: https://github.com/ankidroid/Anki-Android/wiki/Google-Summer-of-Code-2021/_edit. You will need a GitHub account to do this.
