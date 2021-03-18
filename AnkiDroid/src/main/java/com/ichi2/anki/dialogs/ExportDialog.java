@@ -83,8 +83,7 @@ public class ExportDialog extends AnalyticsDialogFragment {
         super.onCreate(savedInstanceState);
         Resources res = getResources();
         final Long did = BundleUtils.getNullableLong(getArguments(), "did");
-        final long[] _cids = getArguments().getLongArray("cids");
-        final List<Long> cids = _cids == null ? null : Utils.primitiveArray2List(_cids);
+        final List<Long> cids = BundleUtils.getNullableLongList(getArguments(), "cids");
         Integer[] checked;
         if (did != null) {
             mIncludeSched = false;
