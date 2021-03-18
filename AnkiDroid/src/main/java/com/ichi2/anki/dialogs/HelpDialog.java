@@ -49,7 +49,7 @@ public class HelpDialog {
 
     public static DialogFragment createInstance(Context context) {
 
-        UsageAnalytics.sendAnalyticsEvent(UsageAnalytics.Category.LINK_CLICKED,"Opened");
+        UsageAnalytics.sendAnalyticsEvent(UsageAnalytics.Category.LINK_CLICKED,"Opened HelpDialogBox");
         RateAppItem rateAppItem = new RateAppItem(R.string.help_item_support_rate_ankidroid, R.drawable.ic_star_black_24, R.string.opened_rate);
         Item[] allItems = {
                 new ItemHeader(R.string.help_title_using_ankidroid, R.drawable.ic_manual_black_24dp, R.string.opened_using_ankidroid,
@@ -123,7 +123,6 @@ public class HelpDialog {
             public RateAppItem createFromParcel(Parcel in) {
                 return new RateAppItem(in);
             }
-
 
             @Override
             public RateAppItem[] newArray(int size) {
