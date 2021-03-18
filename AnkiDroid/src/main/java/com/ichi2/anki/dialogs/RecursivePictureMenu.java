@@ -256,14 +256,13 @@ public class RecursivePictureMenu extends DialogFragment {
             }
         }
 
-
         @SuppressWarnings("unused")
         public static final Parcelable.Creator<ItemHeader> CREATOR = new Parcelable.Creator<ItemHeader>() {
             @Override
             public ItemHeader createFromParcel(Parcel in) {
                 return new ItemHeader(in);
             }
-            
+
             @Override
             public ItemHeader[] newArray(int size) {
                 return new ItemHeader[size];
