@@ -18,9 +18,6 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
-import com.android.volley.RequestQueue;
-import com.android.volley.toolbox.StringRequest;
-import com.android.volley.toolbox.Volley;
 import com.ichi2.anki.widgets.DeckDropDownAdapter;
 import com.ichi2.async.Connection;
 import com.ichi2.themes.Themes;
@@ -43,6 +40,11 @@ import androidx.core.text.HtmlCompat;
 import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import okhttp3.Call;
+import okhttp3.Callback;
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.Response;
 import timber.log.Timber;
 
 import static com.ichi2.anim.ActivityTransitionAnimation.Direction.RIGHT;
@@ -73,7 +75,8 @@ public class AddonsBrowser extends NavigationDrawerActivity implements DeckDropD
 
     private String[] addonTypes = {"reviewer", "note_editor"};
     private String listAddonType = addonTypes[0];
-    
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         Themes.setThemeLegacy(this);
@@ -248,11 +251,30 @@ public class AddonsBrowser extends NavigationDrawerActivity implements DeckDropD
 
         String url = "https://registry.npmjs.org/" + npmAddonName + "/latest";
 
-        StringRequest request = new StringRequest(url, strResponse -> parseJsonData(strResponse, npmAddonName),
-                volleyError -> UIUtils.showThemedToast(AddonsBrowser.this, getString(R.string.error_downloading_file), false));
+        OkHttpClient client = new OkHttpClient();
 
-        RequestQueue rQueue = Volley.newRequestQueue(this);
-        rQueue.add(request);
+        Request request = new Request.Builder()
+                .url(url)
+                .build();
+
+        client.newCall(request).enqueue(new Callback() {
+            @Override
+            public void onFailure(Call call, IOException e) {
+                Timber.e("js addon %s", e.toString());
+            }
+
+
+            @Override
+            public void onResponse(Call call, Response response) {
+                try {
+                    String strResponse = response.body().string();
+                    runOnUiThread(() -> parseJsonData(strResponse, npmAddonName));
+                } catch (IOException | NullPointerException e) {
+                    Timber.e(e.getLocalizedMessage());
+                }
+            }
+        });
+
     }
 
 
@@ -274,6 +296,7 @@ public class AddonsBrowser extends NavigationDrawerActivity implements DeckDropD
             UIUtils.showThemedToast(getApplicationContext(), getString(R.string.not_valid_package), false);
         }
     }
+
 
     // download npm package .tgz
     public void downloadAddonPackageFile(JSONObject jsonObject, String npmAddonName) {
@@ -310,6 +333,7 @@ public class AddonsBrowser extends NavigationDrawerActivity implements DeckDropD
         }
     }
 
+
     BroadcastReceiver receiver = new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent intent) {
@@ -339,13 +363,12 @@ public class AddonsBrowser extends NavigationDrawerActivity implements DeckDropD
                                 archiver.extract(tarballFile, addonsDir);
 
                                 hideProgressBar();
+                                listAddonsFromDir(listAddonType);
                                 UIUtils.showThemedToast(context, getString(R.string.addon_download_success), true);
                             } catch (IOException e) {
                                 Timber.e(e);
                                 UIUtils.showThemedToast(context, getString(R.string.error_downloading_file), true);
                             } finally {
-                                listAddonsFromDir(listAddonType);
-
                                 if (tarballFile.exists()) {
                                     tarballFile.delete();
                                 }

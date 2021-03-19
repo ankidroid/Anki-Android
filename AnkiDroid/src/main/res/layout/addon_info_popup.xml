@@ -28,7 +28,6 @@
                 android:id="@+id/popup_addon_name_info"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Cool Addon"
                 android:textAppearance="?android:attr/textAppearanceMedium" />
 
             <TextView
@@ -43,7 +42,6 @@
                 android:id="@+id/popup_addon_version_info"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="1.0.0"
                 android:textAppearance="?android:attr/textAppearanceMedium" />
 
             <TextView
@@ -58,7 +56,6 @@
                 android:id="@+id/popup_addon_dev_info"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="dev@mail.com"
                 android:textAppearance="?android:attr/textAppearanceMedium" />
 
             <TextView
@@ -73,7 +70,6 @@
                 android:id="@+id/popup_js_api_info"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="0.0.1"
                 android:textAppearance="?android:attr/textAppearanceMedium" />
 
             <TextView
@@ -89,7 +85,6 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:autoLink="web"
-                android:text="https://"
                 android:textAppearance="?android:attr/textAppearanceListItem" />
         </LinearLayout>
 
