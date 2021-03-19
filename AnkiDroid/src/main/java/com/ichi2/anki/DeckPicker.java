@@ -908,14 +908,6 @@ public class DeckPicker extends NavigationDrawerActivity implements
                 CollectionTask.waitForAllToFinish(4);
                 sync();
             }
-        } else if (requestCode == REQUEST_BROWSE_CARDS) {
-            // Store the selected deck after opening browser
-            if (intent != null && intent.getBooleanExtra("allDecksSelected", false)) {
-                AnkiDroidApp.getSharedPrefs(this).edit().putLong("browserDeckIdFromDeckPicker", Decks.NOT_FOUND_DECK_ID).apply();
-            } else {
-                long selectedDeck = getCol().getDecks().selected();
-                AnkiDroidApp.getSharedPrefs(this).edit().putLong("browserDeckIdFromDeckPicker", selectedDeck).apply();
-            }
         } else if (requestCode == REQUEST_PATH_UPDATE) {
             // The collection path was inaccessible on startup so just close the activity and let user restart
             finishWithoutAnimation();
