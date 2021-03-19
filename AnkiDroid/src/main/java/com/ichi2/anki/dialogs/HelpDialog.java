@@ -49,33 +49,33 @@ public class HelpDialog {
 
     public static DialogFragment createInstance(Context context) {
 
-        UsageAnalytics.sendAnalyticsEvent(UsageAnalytics.Category.LINK_CLICKED, "Opened HelpDialogBox");
-        RateAppItem rateAppItem = new RateAppItem(R.string.help_item_support_rate_ankidroid, R.drawable.ic_star_black_24, R.string.opened_rate);
+        UsageAnalytics.sendAnalyticsEvent(UsageAnalytics.Category.LINK_CLICKED, UsageAnalytics.Category.OPENED_HELPDIALOG);
+        RateAppItem rateAppItem = new RateAppItem(R.string.help_item_support_rate_ankidroid, R.drawable.ic_star_black_24, UsageAnalytics.Category.OPENED_RATE);
         Item[] allItems = {
-                new ItemHeader(R.string.help_title_using_ankidroid, R.drawable.ic_manual_black_24dp, R.string.opened_using_ankidroid,
-                        new FunctionItem(R.string.help_item_ankidroid_manual, R.drawable.ic_manual_black_24dp, R.string.opened_ankidroid_manual, HelpDialog::openManual),
-                        new LinkItem(R.string.help_item_anki_manual, R.drawable.ic_manual_black_24dp, R.string.opened_anki_manual, R.string.link_anki_manual),
-                        new LinkItem(R.string.help_item_ankidroid_faq, R.drawable.ic_help_black_24dp, R.string.opened_ankidroid_faq, R.string.link_ankidroid_faq)
+                new ItemHeader(R.string.help_title_using_ankidroid, R.drawable.ic_manual_black_24dp, UsageAnalytics.Category.OPENED_USING_ANKIDROID,
+                        new FunctionItem(R.string.help_item_ankidroid_manual, R.drawable.ic_manual_black_24dp, UsageAnalytics.Category.OPENED_ANKIDROID_MANUAL, HelpDialog::openManual),
+                        new LinkItem(R.string.help_item_anki_manual, R.drawable.ic_manual_black_24dp, UsageAnalytics.Category.OPENED_ANKI_MANUAL, R.string.link_anki_manual),
+                        new LinkItem(R.string.help_item_ankidroid_faq, R.drawable.ic_help_black_24dp, UsageAnalytics.Category.OPENED_ANKIDROID_FAQ, R.string.link_ankidroid_faq)
                 ),
-                new ItemHeader(R.string.help_title_get_help, R.drawable.ic_help_black_24dp, R.string.opened_get_help,
-                        new LinkItem(R.string.help_item_mailing_list, R.drawable.ic_email_black_24dp, R.string.opened_mailing_list, R.string.link_forum),
-                        new FunctionItem(R.string.help_item_report_bug, R.drawable.ic_bug_report_black_24dp, R.string.opened_report_bug, HelpDialog::openFeedback)
+                new ItemHeader(R.string.help_title_get_help, R.drawable.ic_help_black_24dp, UsageAnalytics.Category.OPENED_GET_HELP,
+                        new LinkItem(R.string.help_item_mailing_list, R.drawable.ic_email_black_24dp, UsageAnalytics.Category.OPENED_MAILING_LIST, R.string.link_forum),
+                        new FunctionItem(R.string.help_item_report_bug, R.drawable.ic_bug_report_black_24dp, UsageAnalytics.Category.OPENED_REPORT_BUG, HelpDialog::openFeedback)
                 ),
-                new ItemHeader(R.string.help_title_support_ankidroid, R.drawable.ic_heart_black_24dp, R.string.opened_support_ankidroid,
-                        new LinkItem(R.string.help_item_support_opencollective_donate, R.drawable.ic_donate_black_24dp, R.string.opened_donate, R.string.link_opencollective_donate),
-                        new LinkItem(R.string.multimedia_editor_trans_translate, R.drawable.ic_language_black_24dp, R.string.opened_translate, R.string.link_translation),
-                        new LinkItem(R.string.help_item_support_develop_ankidroid, R.drawable.ic_build_black_24, R.string.opened_develop, R.string.link_ankidroid_development_guide),
+                new ItemHeader(R.string.help_title_support_ankidroid, R.drawable.ic_heart_black_24dp, UsageAnalytics.Category.OPENED_SUPPORT_ANKIDROID,
+                        new LinkItem(R.string.help_item_support_opencollective_donate, R.drawable.ic_donate_black_24dp, UsageAnalytics.Category.OPENED_DONATE, R.string.link_opencollective_donate),
+                        new LinkItem(R.string.multimedia_editor_trans_translate, R.drawable.ic_language_black_24dp, UsageAnalytics.Category.OPENED_TRANSLATE, R.string.link_translation),
+                        new LinkItem(R.string.help_item_support_develop_ankidroid, R.drawable.ic_build_black_24, UsageAnalytics.Category.OPENED_DEVELOP, R.string.link_ankidroid_development_guide),
                         rateAppItem,
-                        new LinkItem(R.string.help_item_support_other_ankidroid, R.drawable.ic_help_black_24dp, R.string.opened_other, R.string.link_contribution),
-                        new FunctionItem(R.string.send_feedback, R.drawable.ic_email_black_24dp, R.string.opened_send_feedback, HelpDialog::openFeedback)
+                        new LinkItem(R.string.help_item_support_other_ankidroid, R.drawable.ic_help_black_24dp, UsageAnalytics.Category.OPENED_OTHER, R.string.link_contribution),
+                        new FunctionItem(R.string.send_feedback, R.drawable.ic_email_black_24dp, UsageAnalytics.Category.OPENED_SEND_FEEDBACK, HelpDialog::openFeedback)
                 ),
-                new ItemHeader(R.string.help_title_community, R.drawable.ic_people_black_24dp, R.string.opened_community,
-                        new LinkItem(R.string.help_item_anki_forums, R.drawable.ic_forum_black_24dp, R.string.opened_anki_forums, R.string.link_anki_forum),
-                        new LinkItem(R.string.help_item_reddit, R.drawable.ic_mail_outline_black_24dp, R.string.opened_reddit, R.string.link_reddit),
-                        new LinkItem(R.string.help_item_mailing_list, R.drawable.ic_email_black_24dp, R.string.opened_mailing_list, R.string.link_forum),
-                        new LinkItem(R.string.help_item_discord, R.drawable.ic_message_black_24dp, R.string.opened_discord, R.string.link_discord),
-                        new LinkItem(R.string.help_item_facebook, R.drawable.ic_link_black_24dp, R.string.opened_facebook, R.string.link_facebook),
-                        new LinkItem(R.string.help_item_twitter, R.drawable.ic_link_black_24dp, R.string.opened_twitter, R.string.link_twitter)
+                new ItemHeader(R.string.help_title_community, R.drawable.ic_people_black_24dp, UsageAnalytics.Category.OPENED_COMMUNITY,
+                        new LinkItem(R.string.help_item_anki_forums, R.drawable.ic_forum_black_24dp, UsageAnalytics.Category.OPENED_ANKI_FORUMS, R.string.link_anki_forum),
+                        new LinkItem(R.string.help_item_reddit, R.drawable.ic_mail_outline_black_24dp, UsageAnalytics.Category.OPENED_REDDIT, R.string.link_reddit),
+                        new LinkItem(R.string.help_item_mailing_list, R.drawable.ic_email_black_24dp, UsageAnalytics.Category.OPENED_MAILING_LIST, R.string.link_forum),
+                        new LinkItem(R.string.help_item_discord, R.drawable.ic_message_black_24dp, UsageAnalytics.Category.OPENED_DISCORD, R.string.link_discord),
+                        new LinkItem(R.string.help_item_facebook, R.drawable.ic_link_black_24dp, UsageAnalytics.Category.OPENED_FACEBOOK, R.string.link_facebook),
+                        new LinkItem(R.string.help_item_twitter, R.drawable.ic_link_black_24dp, UsageAnalytics.Category.OPENED_TWITTER, R.string.link_twitter)
                 ),
         };
 
@@ -90,7 +90,7 @@ public class HelpDialog {
 
     public static class RateAppItem extends Item implements Parcelable {
 
-        public RateAppItem(@StringRes int titleRes, @DrawableRes int iconRes, @StringRes int analyticsRes) {
+        public RateAppItem(@StringRes int titleRes, @DrawableRes int iconRes, String analyticsRes) {
             super(titleRes, iconRes, analyticsRes);
         }
 
@@ -104,7 +104,7 @@ public class HelpDialog {
         */
         @Override
         public void execute(AnkiActivity activity) {
-            sendAnalytics(activity);
+            sendAnalytics();
             onClicked(activity);
         }
 
@@ -135,7 +135,7 @@ public class HelpDialog {
         @StringRes
         private final int mUrlLocationRes;
 
-        public LinkItem(@StringRes int titleRes, @DrawableRes int iconRes, @StringRes int analyticsRes, @StringRes int urlLocation) {
+        public LinkItem(@StringRes int titleRes, @DrawableRes int iconRes, String analyticsRes, @StringRes int urlLocation) {
             super(titleRes, iconRes, analyticsRes);
 
             this.mUrlLocationRes = urlLocation;
@@ -148,7 +148,7 @@ public class HelpDialog {
 
         @Override
         public void execute(AnkiActivity activity) {
-            sendAnalytics(activity);
+            sendAnalytics();
             onClicked(activity);
         }
 
@@ -189,7 +189,7 @@ public class HelpDialog {
     public static class FunctionItem extends Item implements Parcelable {
         private final ActivityConsumer mFunc;
 
-        public FunctionItem(@StringRes int titleRes, @DrawableRes int iconRes, @StringRes int analyticsRes, ActivityConsumer func) {
+        public FunctionItem(@StringRes int titleRes, @DrawableRes int iconRes, String analyticsRes, ActivityConsumer func) {
             super(titleRes, iconRes, analyticsRes);
             this.mFunc = func;
         }
@@ -201,7 +201,7 @@ public class HelpDialog {
 
         @Override
         public void execute(AnkiActivity activity) {
-            sendAnalytics(activity);
+            sendAnalytics();
             onClicked(activity);
         }
 

@@ -203,28 +203,6 @@
     <string name="link_ankidroid_development_guide">https://github.com/ankidroid/Anki-Android/wiki/Development-Guide</string>
     <string name="link_ankidroid_faq">https://github.com/ankidroid/Anki-Android/wiki/FAQ</string>
     <string name="link_opencollective_donate">https://opencollective.com/ankidroid#section-contribute</string>
-    <!-- Strings used for sending analytics for HelpDialogBox -->
-    <!-- Note: These Strings must not be changed as they are used for analytic comparisons between AnkiDroid versions -->
-    <string name="opened_using_ankidroid">Opened Using AnkiDroid</string>
-    <string name="opened_get_help">Opened Get Help</string>
-    <string name="opened_support_ankidroid">Opened Support AnkiDroid</string>
-    <string name="opened_community">Opened Community</string>
-    <string name="opened_ankidroid_manual">Opened AnkiDroid Manual</string>
-    <string name="opened_anki_manual">Opened Anki Manual</string>
-    <string name="opened_ankidroid_faq">Opened AnkiDroid FAQ</string>
-    <string name="opened_mailing_list">Opened Mailing List</string>
-    <string name="opened_report_bug">Opened Report a Bug</string>
-    <string name="opened_donate">Opened Donate</string>
-    <string name="opened_translate">Opened Translate</string>
-    <string name="opened_develop">Opened Develop</string>
-    <string name="opened_rate">Opened Rate</string>
-    <string name="opened_other">Opened Other</string>
-    <string name="opened_send_feedback">Opened Send Feedback</string>
-    <string name="opened_anki_forums">Opened Anki Forums</string>
-    <string name="opened_reddit">Opened Reddit</string>
-    <string name="opened_discord">Opened Discord</string>
-    <string name="opened_facebook">Opened Facebook</string>
-    <string name="opened_twitter">Opened Twitter</string>
 
     <string-array name="leech_action_values">
         <item>0</item>

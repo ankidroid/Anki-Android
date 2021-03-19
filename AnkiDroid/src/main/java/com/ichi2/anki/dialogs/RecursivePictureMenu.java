@@ -148,10 +148,9 @@ public class RecursivePictureMenu extends DialogFragment {
         private final int mText;
         @DrawableRes
         private final int mIcon;
-        @StringRes
-        private final int analyticsId;
+        private final String analyticsId;
 
-        public Item(@StringRes int titleString, @DrawableRes int iconDrawable, @StringRes int analyticsId) {
+        public Item(@StringRes int titleString, @DrawableRes int iconDrawable, String analyticsId) {
             this.mText = titleString;
             this.mIcon = iconDrawable;
             this.analyticsId = analyticsId;
@@ -164,7 +163,7 @@ public class RecursivePictureMenu extends DialogFragment {
         protected Item(Parcel in) {
             mText = in.readInt();
             mIcon = in.readInt();
-            analyticsId = in.readInt();
+            analyticsId = in.readString();
         }
 
         @StringRes
@@ -181,18 +180,13 @@ public class RecursivePictureMenu extends DialogFragment {
         public void writeToParcel(Parcel dest, int flags) {
             dest.writeInt(mText);
             dest.writeInt(mIcon);
-            dest.writeInt(analyticsId);
+            dest.writeString(analyticsId);
         }
 
         protected abstract void onClicked(AnkiActivity activity);
 
-        public String getAnalyticsId(Context context) {
-            String id = context.getString(analyticsId);
-            return id;
-        }
-
-        public final void sendAnalytics(AnkiActivity activity){
-            UsageAnalytics.sendAnalyticsEvent(UsageAnalytics.Category.LINK_CLICKED, getAnalyticsId(activity));
+        public final void sendAnalytics() {
+            UsageAnalytics.sendAnalyticsEvent(UsageAnalytics.Category.LINK_CLICKED, analyticsId);
         }
 
         public abstract void execute(AnkiActivity activity);
@@ -204,7 +198,7 @@ public class RecursivePictureMenu extends DialogFragment {
 
         private final List<Item> mChildren;
 
-        public ItemHeader(@StringRes int titleString, int i, @StringRes int analyticsStringId, Item... children) {
+        public ItemHeader(@StringRes int titleString, int i, String analyticsStringId, Item... children) {
             super(titleString, i, analyticsStringId);
             mChildren = new ArrayList<>(Arrays.asList(children));
         }
@@ -223,7 +217,7 @@ public class RecursivePictureMenu extends DialogFragment {
 
         @Override
         public void execute(AnkiActivity activity) {
-            sendAnalytics(activity);
+            sendAnalytics();
             onClicked(activity);
         }
 

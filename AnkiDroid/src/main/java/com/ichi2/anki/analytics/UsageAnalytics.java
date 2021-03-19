@@ -360,6 +360,29 @@ public class UsageAnalytics {
     public static class Category {
         public static final String SYNC = "Sync";
         public static final String LINK_CLICKED = "LinkClicked";
+
+        /* These Strings must not be changed as they are used for analytic comparisons between AnkiDroid versions */
+        public static final String OPENED_HELPDIALOG = "Opened HelpDialogBox";
+        public static final String OPENED_USING_ANKIDROID = "Opened Using AnkiDroid";
+        public static final String OPENED_GET_HELP = "Opened Get Help";
+        public static final String OPENED_SUPPORT_ANKIDROID = "Opened Support AnkiDroid";
+        public static final String OPENED_COMMUNITY = "Opened Community";
+        public static final String OPENED_ANKIDROID_MANUAL = "Opened AnkiDroid Manual";
+        public static final String OPENED_ANKI_MANUAL = "Opened Anki Manual";
+        public static final String OPENED_ANKIDROID_FAQ = "Opened AnkiDroid FAQ";
+        public static final String OPENED_MAILING_LIST = "Opened Mailing List";
+        public static final String OPENED_REPORT_BUG = "Opened Report a Bug";
+        public static final String OPENED_DONATE = "Opened Donate";
+        public static final String OPENED_TRANSLATE = "Opened Translate";
+        public static final String OPENED_DEVELOP = "Opened Develop";
+        public static final String OPENED_RATE = "Opened Rate";
+        public static final String OPENED_OTHER = "Opened Other";
+        public static final String OPENED_SEND_FEEDBACK = "Opened Send Feedback";
+        public static final String OPENED_ANKI_FORUMS = "Opened Anki Forums";
+        public static final String OPENED_REDDIT = "Opened Reddit";
+        public static final String OPENED_DISCORD = "Opened Discord";
+        public static final String OPENED_FACEBOOK = "Opened Facebook";
+        public static final String OPENED_TWITTER = "Opened Twitter";
     }
 
     @VisibleForTesting(otherwise = VisibleForTesting.NONE) // TOOD: Make this package-protected
