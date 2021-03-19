@@ -307,7 +307,7 @@ public class MyAccount extends AnkiActivity {
         return exception.getLocalizedMessage();
     }
 
-    public void handleCurrentOrientationState(int orientation){
+    public void handleCurrentOrientationState(int orientation) {
         if ((orientation == Configuration.ORIENTATION_UNDEFINED) || orientation == Configuration.ORIENTATION_LANDSCAPE) {
             mAnkidroidLogo.setVisibility(View.GONE);
         } else {
