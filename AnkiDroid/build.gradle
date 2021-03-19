@@ -298,5 +298,4 @@ dependencies {
 
     // for untar .tgz file downloaded from npmjs for AnkiDroid js addon support
     implementation 'org.rauschig:jarchivelib:1.1.0'
-    implementation 'com.android.volley:volley:1.2.0'
 }

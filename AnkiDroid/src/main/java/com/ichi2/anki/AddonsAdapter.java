@@ -15,14 +15,17 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 public class AddonsAdapter extends RecyclerView.Adapter<AddonsAdapter.AddonsViewHolder> {
-    private  SharedPreferences preferences;
+    private SharedPreferences preferences;
     private Context context;
     List<AddonModel> addonModels;
     private OnAddonClickListener mOnAddonClickListener;
+
+
     public AddonsAdapter(List<AddonModel> addonModels, OnAddonClickListener mOnAddonClickListener) {
         this.addonModels = addonModels;
         this.mOnAddonClickListener = mOnAddonClickListener;
     }
+
 
     @NonNull
     @Override
@@ -34,6 +37,7 @@ public class AddonsAdapter extends RecyclerView.Adapter<AddonsAdapter.AddonsView
         return new AddonsViewHolder(view, mOnAddonClickListener);
     }
 
+
     @Override
     public void onBindViewHolder(@NonNull AddonsViewHolder holder, int position) {
         AddonModel addonModel = addonModels.get(position);
@@ -41,7 +45,7 @@ public class AddonsAdapter extends RecyclerView.Adapter<AddonsAdapter.AddonsView
 
         // while binding viewholder if preferences w.r.t viewholder store true value or enabled status then
         // turn on switch status else it is off by default
-        if (preferences.getString(addonModel.getType()+ "_addon:"+addonModel.getName(), "disabled").equals("enabled")) {
+        if (preferences.getString(addonModel.getType() + "_addon:" + addonModel.getName(), "disabled").equals("enabled")) {
             holder.addonActivate.setChecked(true);
         }
 
@@ -51,26 +55,30 @@ public class AddonsAdapter extends RecyclerView.Adapter<AddonsAdapter.AddonsView
             if (holder.addonActivate.isChecked()) {
                 editor.putString(addonModel.getType() + "_addon:" + addonModel.getName(), "enabled");
                 editor.apply();
-                UIUtils.showThemedToast(context, context.getString(R.string.enabled)+" "+addonModel.getName(), true);
+                UIUtils.showThemedToast(context, context.getString(R.string.enabled) + " " + addonModel.getName(), true);
             } else {
                 editor.putString(addonModel.getType() + "_addon:" + addonModel.getName(), "disabled");
                 editor.apply();
-                UIUtils.showThemedToast(context, context.getString(R.string.disabled)+" "+addonModel.getName(), true);
+                UIUtils.showThemedToast(context, context.getString(R.string.disabled) + " " + addonModel.getName(), true);
             }
         });
 
     }
+
 
     @Override
     public int getItemCount() {
         return addonModels.size();
     }
 
-    public class AddonsViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
+
+    public class AddonsViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         TextView addonsTextView;
         @SuppressLint("UseSwitchCompatOrMaterialCode")
         Switch addonActivate;
         OnAddonClickListener onAddonClickListener;
+
+
         public AddonsViewHolder(@NonNull View itemView, OnAddonClickListener onAddonClickListener) {
             super(itemView);
             addonsTextView = itemView.findViewById(R.id.addon_name);
@@ -79,13 +87,16 @@ public class AddonsAdapter extends RecyclerView.Adapter<AddonsAdapter.AddonsView
             itemView.setOnClickListener(this);
         }
 
+
         @Override
         public void onClick(View v) {
             onAddonClickListener.onAddonClick(getAdapterPosition());
         }
     }
 
-    public interface OnAddonClickListener{
+
+
+    public interface OnAddonClickListener {
         void onAddonClick(int position);
     }
 
