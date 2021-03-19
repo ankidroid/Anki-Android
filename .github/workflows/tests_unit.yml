@@ -35,9 +35,7 @@ jobs:
     #env:
     #  CODACY_TOKEN: ${{ secrets.CODACY_TOKEN }}
     steps:
-      - uses: styfle/cancel-workflow-action@0.6.0
-        with:
-          access_token: ${{ github.token }}
+      - uses: styfle/cancel-workflow-action@0.8.0
 
       - uses: actions/checkout@v2
         with:
