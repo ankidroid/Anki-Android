@@ -115,6 +115,11 @@ public class MyAccount extends AnkiActivity {
         } else {
             switchToState(STATE_LOG_IN);
         }
+
+        // handle current state
+        checkOrientation(getResources().getConfiguration().orientation);
+        // listener for handling future change in orientation
+        initializeOrientationListener();
     }
 
 
@@ -313,7 +318,7 @@ public class MyAccount extends AnkiActivity {
         }
     }
 
-    public void initializeOrientationListner() {
+    public void initializeOrientationListener() {
         myOrientationEventListener = new OrientationEventListener(this, SensorManager.SENSOR_DELAY_NORMAL) {
             @Override
             public void onOrientationChanged(int orientation) {
@@ -325,7 +330,6 @@ public class MyAccount extends AnkiActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        initializeOrientationListner();
         myOrientationEventListener.enable();
     }
 
