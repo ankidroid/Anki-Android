@@ -1,5 +1,6 @@
 package com.ichi2.anki;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.view.LayoutInflater;
@@ -67,6 +68,7 @@ public class AddonsAdapter extends RecyclerView.Adapter<AddonsAdapter.AddonsView
 
     public class AddonsViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
         TextView addonsTextView;
+        @SuppressLint("UseSwitchCompatOrMaterialCode")
         Switch addonActivate;
         OnAddonClickListener onAddonClickListener;
         public AddonsViewHolder(@NonNull View itemView, OnAddonClickListener onAddonClickListener) {

@@ -19,13 +19,13 @@
     <EditText
         android:textSize="16sp"
         android:id="@+id/addon_download_edit_text"
-        android:hint="npm i ankidroid-js-addon..."
+        android:hint="@string/addon_download_hint_text"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"/>
     <Button
         android:padding="8dp"
         android:id="@+id/addon_download_button"
-        android:text="Download"
+        android:text="@string/sync_conflict_remote"
         android:layout_gravity="center"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"/>
