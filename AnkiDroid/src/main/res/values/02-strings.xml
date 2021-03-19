@@ -380,6 +380,7 @@
     <string name="reviewer_addons">Reviewer addons</string>
     <string name="note_editor_addons">Note editor addons</string>
     <string name="addon_download_hint_text">npm i ankidroid-js-addon…</string>
+    <string name="js_addon">JavaScript Addon</string>
 
     <string name="addon_name">Name</string>
     <string name="addon_version">Version</string>
