@@ -18,6 +18,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
+import android.content.res.Configuration;
 import android.hardware.SensorManager;
 import android.net.Uri;
 import android.os.Build;
@@ -116,8 +117,6 @@ public class MyAccount extends AnkiActivity {
             switchToState(STATE_LOG_IN);
         }
 
-        // handle current state
-        checkOrientation(getResources().getConfiguration().orientation);
         // listener for handling future change in orientation
         initializeOrientationListener();
     }
@@ -307,7 +306,15 @@ public class MyAccount extends AnkiActivity {
 
         return exception.getLocalizedMessage();
     }
-    
+
+    public void handleCurrentOrientationState(int orientation){
+        if ((orientation == Configuration.ORIENTATION_UNDEFINED) || orientation == Configuration.ORIENTATION_LANDSCAPE) {
+            mAnkidroidLogo.setVisibility(View.GONE);
+        } else {
+            mAnkidroidLogo.setVisibility(View.VISIBLE);
+        }
+    }
+
     public void checkOrientation(int orientation) {
         // if device is in horizontal mode then screen might not have enough space for ankidroid logo
         // so we will invisible logo for horizontal mode only
@@ -330,6 +337,8 @@ public class MyAccount extends AnkiActivity {
     @Override
     protected void onResume() {
         super.onResume();
+        // handle current state
+        handleCurrentOrientationState(getResources().getConfiguration().orientation);
         myOrientationEventListener.enable();
     }
 
