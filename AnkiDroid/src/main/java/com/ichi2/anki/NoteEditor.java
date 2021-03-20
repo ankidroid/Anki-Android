@@ -561,14 +561,14 @@ public class NoteEditor extends AnkiActivity {
             mAllModelIds.add(m.getLong("id"));
         }
 
-        ArrayAdapter<String> noteTypeAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, modelNames){
+        ArrayAdapter<String> noteTypeAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, modelNames) {
             @Override
-            public View getDropDownView(int position, View convertView, ViewGroup parent){
+            public View getDropDownView(int position, View convertView, ViewGroup parent) {
                 // Cast the drop down items (popup items) as text view
-                TextView tv = (TextView) super.getDropDownView(position,convertView,parent);
+                TextView tv = (TextView) super.getDropDownView(position, convertView, parent);
 
                 // If this item is selected
-                if(position == mNoteTypeSpinner.getSelectedItemPosition()){
+                if (position == mNoteTypeSpinner.getSelectedItemPosition()) {
                     tv.setBackgroundColor(Color.LTGRAY);
                     tv.setTextColor(Color.BLACK);
                 }
@@ -609,17 +609,17 @@ public class NoteEditor extends AnkiActivity {
             mAllDeckIds.add(thisDid);
         }
 
-        ArrayAdapter<String> noteDeckAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, deckNames){
+        ArrayAdapter<String> noteDeckAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, deckNames) {
             @Override
             public View getDropDownView(int position, View convertView, ViewGroup parent){
 
                 mCurrentDid = mAllDeckIds.get(position);
 
                 // Cast the drop down items (popup items) as text view
-                TextView tv = (TextView) super.getDropDownView(position,convertView,parent);
+                TextView tv = (TextView) super.getDropDownView(position, convertView, parent);
 
                 // If this item is selected
-                if(position == mNoteDeckSpinner.getSelectedItemPosition()){
+                if (position == mNoteDeckSpinner.getSelectedItemPosition()) {
                     tv.setBackgroundColor(Color.LTGRAY);
                     tv.setTextColor(Color.BLACK);
                 }
