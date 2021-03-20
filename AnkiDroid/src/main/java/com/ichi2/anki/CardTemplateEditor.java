@@ -521,6 +521,7 @@ public class CardTemplateEditor extends AnkiActivity implements DeckSelectionDia
         }
 
 
+        @SuppressWarnings("deprecation") // Tracked as https://github.com/ankidroid/Anki-Android/issues/8293
         private void performPreview() {
             Collection col = mTemplateEditor.getCol();
             TemporaryModel tempModel = mTemplateEditor.getTempModel();
@@ -575,6 +576,7 @@ public class CardTemplateEditor extends AnkiActivity implements DeckSelectionDia
         }
 
 
+        @SuppressWarnings("deprecation") // Tracked as https://github.com/ankidroid/Anki-Android/issues/8293
         private void launchCardBrowserAppearance(JSONObject currentTemplate) {
             Context context = AnkiDroidApp.getInstance().getBaseContext();
             if (context == null) {
@@ -627,6 +629,7 @@ public class CardTemplateEditor extends AnkiActivity implements DeckSelectionDia
         }
 
 
+        @SuppressWarnings("deprecation") // Tracked as https://github.com/ankidroid/Anki-Android/issues/8293
         @Override
         public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
             super.onActivityResult(requestCode, resultCode, data);
