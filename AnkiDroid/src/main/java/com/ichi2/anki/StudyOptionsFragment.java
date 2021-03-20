@@ -158,6 +158,7 @@ public class StudyOptionsFragment extends Fragment implements Toolbar.OnMenuItem
      *                      deck has no options associated with it yet and should use a default
      *                      set of values.
      */
+    @SuppressWarnings("deprecation") // Tracked as https://github.com/ankidroid/Anki-Android/issues/8293
     private void openFilteredDeckOptions(boolean defaultConfig) {
         Intent i = new Intent(getActivity(), FilteredDeckOptions.class);
         i.putExtra("defaultConfig", defaultConfig);
@@ -241,6 +242,7 @@ public class StudyOptionsFragment extends Fragment implements Toolbar.OnMenuItem
     }
 
 
+    @SuppressWarnings("deprecation") // Tracked as https://github.com/ankidroid/Anki-Android/issues/8293
     private void openReviewer() {
         Intent reviewer = new Intent(getActivity(), Reviewer.class);
         if (mFragmented) {
@@ -312,6 +314,7 @@ public class StudyOptionsFragment extends Fragment implements Toolbar.OnMenuItem
         }
     };
 
+    @SuppressWarnings("deprecation") // Tracked as https://github.com/ankidroid/Anki-Android/issues/8293
     @Override
     public boolean onMenuItemClick(MenuItem item) {
         int itemId = item.getItemId();
@@ -434,6 +437,7 @@ public class StudyOptionsFragment extends Fragment implements Toolbar.OnMenuItem
     }
 
 
+    @SuppressWarnings("deprecation") // Tracked as https://github.com/ankidroid/Anki-Android/issues/8293
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent intent) {
         super.onActivityResult(requestCode, resultCode, intent);
