@@ -27,6 +27,7 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.content.res.Resources;
+import android.graphics.Color;
 import android.graphics.Typeface;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
@@ -52,6 +53,7 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.ViewGroup.MarginLayoutParams;
 import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
@@ -559,7 +561,22 @@ public class NoteEditor extends AnkiActivity {
             mAllModelIds.add(m.getLong("id"));
         }
 
-        ArrayAdapter<String> noteTypeAdapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, modelNames);
+        ArrayAdapter<String> noteTypeAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, modelNames){
+            @Override
+            public View getDropDownView(int position, View convertView, ViewGroup parent){
+                // Cast the drop down items (popup items) as text view
+                TextView tv = (TextView) super.getDropDownView(position,convertView,parent);
+
+                // If this item is selected
+                if(position == mNoteTypeSpinner.getSelectedItemPosition()){
+                    tv.setBackgroundColor(Color.LTGRAY);
+                    tv.setTextColor(Color.BLACK);
+                }
+
+                // Return the modified view
+                return tv;
+            }
+        };
         mNoteTypeSpinner.setAdapter(noteTypeAdapter);
         noteTypeAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 
@@ -592,21 +609,27 @@ public class NoteEditor extends AnkiActivity {
             mAllDeckIds.add(thisDid);
         }
 
-        ArrayAdapter<String> noteDeckAdapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, deckNames);
+        ArrayAdapter<String> noteDeckAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, deckNames){
+            @Override
+            public View getDropDownView(int position, View convertView, ViewGroup parent){
+
+                mCurrentDid = mAllDeckIds.get(position);
+
+                // Cast the drop down items (popup items) as text view
+                TextView tv = (TextView) super.getDropDownView(position,convertView,parent);
+
+                // If this item is selected
+                if(position == mNoteDeckSpinner.getSelectedItemPosition()){
+                    tv.setBackgroundColor(Color.LTGRAY);
+                    tv.setTextColor(Color.BLACK);
+                }
+
+                // Return the modified view
+                return tv;
+            }
+        };
         mNoteDeckSpinner.setAdapter(noteDeckAdapter);
         noteDeckAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        mNoteDeckSpinner.setOnItemSelectedListener(new OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int pos, long id) {
-                // Timber.i("NoteEditor:: onItemSelected() fired on mNoteDeckSpinner with pos = %d", pos);
-                mCurrentDid = mAllDeckIds.get(pos);
-            }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> parent) {
-                // Do Nothing
-            }
-        });
 
         mCurrentDid = intent.getLongExtra(EXTRA_DID, mCurrentDid);
 
