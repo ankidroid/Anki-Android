@@ -103,11 +103,14 @@ Experiences with JAVA, Android XML, HTML
 Medium
 
 
-## CSV Import
+## ~~CSV Import~~ 
+**Requested outside GSoC in https://github.com/ankidroid/Anki-Android/issues/6772**
+<details>
 (ticketed - needs GUI)
 Currently, AnkiDroid allows only to import decks in the format .apkg, a format used only by Anki. While it is great to share a deck that already exists, it is not always ideal to create a new deck. As an example, let’s say that you want a deck to help you learn Chinese and your mother tongue is Persian. There may not already exist a Chinese-Persian deck. You may want to create a CSV file, that is, a text file which contains a list of words you want to learn, adding on each line “Chinese word, Persian word”. It is easy to create manually and also easy to generate automatically. 
 
 Currently, this feature exists only on the (free) computer version of the app.
+</details>
 
 ### Expected Outcomes
 The goal of this project is to add an option to import such a list of questions/answers in AnkiDroid. Option in AnkiDroid to import CSV or TSV files and add notes to database using those files
