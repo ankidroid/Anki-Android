@@ -388,6 +388,7 @@ public class UsageAnalytics {
         public static final String OPENED_DISCORD = "Opened Discord";
         public static final String OPENED_FACEBOOK = "Opened Facebook";
         public static final String OPENED_TWITTER = "Opened Twitter";
+        public static final String EXCEPTION_REPORT = "Exception report";
     }
 
     @VisibleForTesting(otherwise = VisibleForTesting.NONE) // TOOD: Make this package-protected

@@ -57,8 +57,7 @@ public class HelpDialog {
 
     public static DialogFragment createInstance(Context context) {
 
-        RateAppItem rateAppItem = new RateAppItem(R.string.help_item_support_rate_ankidroid, R.drawable.ic_star_black_24);
-        ExceptionReportItem exceptionReportItem = new ExceptionReportItem(R.string.help_title_send_exception, R.drawable.ic_round_assignment_24);
+        ExceptionReportItem exceptionReportItem = new ExceptionReportItem(R.string.help_title_send_exception, R.drawable.ic_round_assignment_24, UsageAnalytics.Actions.EXCEPTION_REPORT);
         UsageAnalytics.sendAnalyticsEvent(UsageAnalytics.Category.LINK_CLICKED, UsageAnalytics.Actions.OPENED_HELPDIALOG);
         RateAppItem rateAppItem = new RateAppItem(R.string.help_item_support_rate_ankidroid, R.drawable.ic_star_black_24, UsageAnalytics.Actions.OPENED_RATE);
         Item[] allItems = {
@@ -67,13 +66,10 @@ public class HelpDialog {
                         new LinkItem(R.string.help_item_anki_manual, R.drawable.ic_manual_black_24dp, UsageAnalytics.Actions.OPENED_ANKI_MANUAL, R.string.link_anki_manual),
                         new LinkItem(R.string.help_item_ankidroid_faq, R.drawable.ic_help_black_24dp, UsageAnalytics.Actions.OPENED_ANKIDROID_FAQ, R.string.link_ankidroid_faq)
                 ),
-                new ItemHeader(R.string.help_title_get_help, R.drawable.ic_help_black_24dp,
-                        new LinkItem(R.string.help_item_mailing_list, R.drawable.ic_email_black_24dp, R.string.link_forum),
-                        new FunctionItem(R.string.help_item_report_bug, R.drawable.ic_bug_report_black_24dp, HelpDialog::openFeedback),
-                        exceptionReportItem
                 new ItemHeader(R.string.help_title_get_help, R.drawable.ic_help_black_24dp, UsageAnalytics.Actions.OPENED_GET_HELP,
                         new LinkItem(R.string.help_item_mailing_list, R.drawable.ic_email_black_24dp, UsageAnalytics.Actions.OPENED_MAILING_LIST, R.string.link_forum),
-                        new FunctionItem(R.string.help_item_report_bug, R.drawable.ic_bug_report_black_24dp, UsageAnalytics.Actions.OPENED_REPORT_BUG, HelpDialog::openFeedback)
+                        new FunctionItem(R.string.help_item_report_bug, R.drawable.ic_bug_report_black_24dp, UsageAnalytics.Actions.OPENED_REPORT_BUG, HelpDialog::openFeedback),
+                        exceptionReportItem
                 ),
                 new ItemHeader(R.string.help_title_support_ankidroid, R.drawable.ic_heart_black_24dp, UsageAnalytics.Actions.OPENED_SUPPORT_ANKIDROID,
                         new LinkItem(R.string.help_item_support_opencollective_donate, R.drawable.ic_donate_black_24dp, UsageAnalytics.Actions.OPENED_DONATE, R.string.link_opencollective_donate),
@@ -90,14 +86,6 @@ public class HelpDialog {
                         new LinkItem(R.string.help_item_discord, R.drawable.ic_message_black_24dp, UsageAnalytics.Actions.OPENED_DISCORD, R.string.link_discord),
                         new LinkItem(R.string.help_item_facebook, R.drawable.ic_link_black_24dp, UsageAnalytics.Actions.OPENED_FACEBOOK, R.string.link_facebook),
                         new LinkItem(R.string.help_item_twitter, R.drawable.ic_link_black_24dp, UsageAnalytics.Actions.OPENED_TWITTER, R.string.link_twitter)
-                ),
-                new ItemHeader(R.string.help_title_community, R.drawable.ic_people_black_24dp,
-                        new LinkItem(R.string.help_item_anki_forums, R.drawable.ic_forum_black_24dp, R.string.link_anki_forum),
-                        new LinkItem(R.string.help_item_reddit, R.drawable.ic_mail_outline_black_24dp, R.string.link_reddit),
-                        new LinkItem(R.string.help_item_mailing_list, R.drawable.ic_email_black_24dp, R.string.link_forum),
-                        new LinkItem(R.string.help_item_discord, R.drawable.ic_message_black_24dp, R.string.link_discord),
-                        new LinkItem(R.string.help_item_facebook, R.drawable.ic_link_black_24dp, R.string.link_facebook),
-                        new LinkItem(R.string.help_item_twitter, R.drawable.ic_link_black_24dp, R.string.link_twitter)
                 )
         };
 
@@ -248,10 +236,12 @@ public class HelpDialog {
         final int minIntervalMS = 60000;
         final String exceptionMessage = "Exception report sent by user manually";
 
-        public ExceptionReportItem(@StringRes int titleRes, @DrawableRes int iconRes) { super(titleRes, iconRes); }
+        public ExceptionReportItem(@StringRes int titleRes, @DrawableRes int iconRes, String analyticsRes) {
+            super(titleRes, iconRes, analyticsRes);
+        }
 
         @Override
-        public void execute(AnkiActivity activity) {
+        protected void onClicked(AnkiActivity activity) {
             SharedPreferences preferences = AnkiDroidApp.getSharedPrefs(activity);
             String reportMode = preferences.getString(AnkiDroidApp.FEEDBACK_REPORT_KEY, "");
 
