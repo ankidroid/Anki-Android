@@ -272,6 +272,9 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
     private boolean mInAnswer = false;
     private boolean mAnswerSoundsAdded = false;
 
+    /** Preferred option that should be selected in "Automatic answer" scenario **/
+    private int mAutomaticAnswerSelection;
+
     private CardTemplate mCardTemplate;
 
     /**
@@ -1798,6 +1801,8 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
     protected SharedPreferences restorePreferences() {
         SharedPreferences preferences = AnkiDroidApp.getSharedPrefs(getBaseContext());
 
+
+        mAutomaticAnswerSelection = Integer.parseInt(preferences.getString("automaticAnswer", "3"));
         mUseInputTag = preferences.getBoolean("useInputTag", false);
         mDoNotUseCodeFormatting = preferences.getBoolean("noCodeFormatting", false);
         // On newer Androids, ignore this setting, which should be hidden in the prefs anyway.
@@ -1927,9 +1932,51 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
     protected final Runnable mShowQuestionTask = new Runnable() {
         @Override
         public void run() {
-            // Assume hitting the "Again" button when auto next question
-            if (mEase1Layout.isEnabled() && mEase1Layout.getVisibility() == View.VISIBLE) {
-                mEase1Layout.performClick();
+            // Hitting button based on the user preference for "automaticdisplayanswer" scenario
+            switch (mAutomaticAnswerSelection) {
+                // Again
+                case 1: {
+                    // "Again" is always present as the first button
+                    if (mEase1Layout.isEnabled() && mEase1Layout.getVisibility() == View.VISIBLE) {
+                        mEase1Layout.performClick();
+                    }
+                    break;
+                }
+                // Hard(or Good if Hard is not an option)
+                case 2: {
+                    // Second button can either be "Hard" or "Good"
+                    // If "hard "is present it will be second button otherwise "Good" will be the second button
+                    if (mEase2Layout.isEnabled() && mEase2Layout.getVisibility() == View.VISIBLE) {
+                        mEase2Layout.performClick();
+                    }
+                    break;
+                }
+                // "Good"
+                case 3: {
+                    if (getAnswerButtonCount() == 2 && mEase2Layout.isEnabled() && mEase2Layout.getVisibility() == View.VISIBLE) {
+                        // In case of only two buttons "Good" is the Second option
+                        mEase2Layout.performClick();
+                    } else if (mEase3Layout.isEnabled() && mEase3Layout.getVisibility() == View.VISIBLE) {
+                        // If more than two buttons are present then "Good" is the third option
+                        mEase3Layout.performClick();
+                    }
+                    break;
+                }
+                // "Easy (or Good if Easy is not an option )"
+                case 4: {
+                    if (getAnswerButtonCount() == 4 && mEase4Layout.isEnabled() && mEase4Layout.getVisibility() == View.VISIBLE) {
+                        // In case of All 4 buttons are present "Easy" is the 4th button
+                        mEase4Layout.performClick();
+                    } else if (getAnswerButtonCount() == 3 && mEase3Layout.isEnabled() && mEase3Layout.getVisibility() == View.VISIBLE) {
+                        // If 3 buttons are present then if "Easy" is present it is the third option
+                        // or if "Easy" is not present then "Good" is the third option
+                        mEase3Layout.performClick();
+                    } else if (mEase2Layout.isEnabled() && mEase2Layout.getVisibility() == View.VISIBLE) {
+                        // If only two buttons are present then "Good" is the second option
+                        mEase2Layout.performClick();
+                    }
+                    break;
+                }
             }
         }
     };

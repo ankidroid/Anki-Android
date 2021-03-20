@@ -145,6 +145,13 @@
             android:key="timeoutAnswer"
             android:summary="@string/timeout_answer_summ"
             android:title="@string/timeout_answer_text" />
+        <ListPreference
+            android:entries="@array/automatic_answer_options"
+            android:dependency="timeoutAnswer"
+            android:entryValues="@array/automatic_answer_values"
+            android:defaultValue="3"
+            android:key="automaticAnswer"
+            android:title="@string/timeout_answer" />
         <com.ichi2.ui.SeekBarPreference
             android:defaultValue="20"
             android:dependency="timeoutAnswer"

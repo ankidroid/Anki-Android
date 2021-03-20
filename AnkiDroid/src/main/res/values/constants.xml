@@ -234,6 +234,18 @@
         <item>1</item>
         <item>2</item>
     </string-array>
+    <string-array name="automatic_answer_options">
+        <item>@string/ease_button_again</item>
+        <item>@string/automatic_answer_option_2</item>
+        <item>@string/automatic_answer_option_3</item>
+        <item>@string/automatic_answer_option_4</item>
+    </string-array>
+    <string-array name="automatic_answer_values">
+        <item>1</item>
+        <item>2</item>
+        <item>3</item>
+        <item>4</item>
+    </string-array>
     <string-array name="override_font_values">
         <item>0</item>
         <item>1</item>
