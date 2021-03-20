@@ -229,7 +229,7 @@ public class HelpDialog {
         }
     }
 
-    private static class ExceptionReportItem extends Item implements Parcelable{
+    private static class ExceptionReportItem extends Item implements Parcelable {
 
         private static Long lastClickStamp;
         final long currentTimestamp = SystemClock.uptimeMillis();
@@ -250,7 +250,7 @@ public class HelpDialog {
                 return;
             }
 
-            if (reportMode.equals(AnkiDroidApp.FEEDBACK_REPORT_NEVER)) {
+            if (AnkiDroidApp.FEEDBACK_REPORT_NEVER.equals(reportMode)) {
                 preferences.edit().putBoolean(ACRA.PREF_DISABLE_ACRA, false).apply();
                 AnkiDroidApp.getInstance().getAcraCoreConfigBuilder()
                         .getPluginConfigurationBuilder(DialogConfigurationBuilder.class)
