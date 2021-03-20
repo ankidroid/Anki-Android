@@ -273,7 +273,7 @@ public class NoteEditor extends AnkiActivity {
         public void actualOnPreExecute(@NonNull NoteEditor noteEditor) {
             Resources res = noteEditor.getResources();
             noteEditor.mProgressDialog = StyledProgressDialog
-                    .show(noteEditor, "", res.getString(R.string.saving_facts), false);
+                    .show(noteEditor, null, res.getString(R.string.saving_facts), false);
         }
 
         @Override

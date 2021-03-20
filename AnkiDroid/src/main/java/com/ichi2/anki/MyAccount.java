@@ -18,16 +18,20 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
+import android.content.res.Configuration;
+import android.hardware.SensorManager;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import androidx.appcompat.widget.Toolbar;
 
 import android.view.KeyEvent;
+import android.view.OrientationEventListener;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.afollestad.materialdialogs.MaterialDialog;
@@ -61,6 +65,8 @@ public class MyAccount extends AnkiActivity {
     Toolbar mToolbar = null;
     private TextInputLayout mPasswordLayout;
 
+    private OrientationEventListener myOrientationEventListener;
+    private ImageView mAnkidroidLogo;
 
     private void switchToState(int newState) {
         switch (newState) {
@@ -110,6 +116,9 @@ public class MyAccount extends AnkiActivity {
         } else {
             switchToState(STATE_LOG_IN);
         }
+
+        // listener for handling future change in orientation
+        initializeOrientationListener();
     }
 
 
@@ -176,6 +185,7 @@ public class MyAccount extends AnkiActivity {
         mUsername = mLoginToMyAccountView.findViewById(R.id.username);
         mPassword = mLoginToMyAccountView.findViewById(R.id.password);
         mPasswordLayout = mLoginToMyAccountView.findViewById(R.id.password_layout);
+        mAnkidroidLogo = mLoginToMyAccountView.findViewById(R.id.ankidroid_logo);
 
         mPassword.setOnKeyListener((v, keyCode, event) -> {
             if (event.getAction() == KeyEvent.ACTION_DOWN) {
@@ -295,6 +305,48 @@ public class MyAccount extends AnkiActivity {
         }
 
         return exception.getLocalizedMessage();
+    }
+
+    public void handleCurrentOrientationState(int orientation) {
+        if ((orientation == Configuration.ORIENTATION_UNDEFINED) || orientation == Configuration.ORIENTATION_LANDSCAPE) {
+            mAnkidroidLogo.setVisibility(View.GONE);
+        } else {
+            mAnkidroidLogo.setVisibility(View.VISIBLE);
+        }
+    }
+
+    public void checkOrientation(int orientation) {
+        // if device is in horizontal mode then screen might not have enough space for ankidroid logo
+        // so we will invisible logo for horizontal mode only
+        if ((orientation == OrientationEventListener.ORIENTATION_UNKNOWN) || (orientation < 100) || (orientation > 280)) {
+            mAnkidroidLogo.setVisibility(View.GONE);
+        } else {
+            mAnkidroidLogo.setVisibility(View.VISIBLE);
+        }
+    }
+
+    public void initializeOrientationListener() {
+        myOrientationEventListener = new OrientationEventListener(this, SensorManager.SENSOR_DELAY_NORMAL) {
+            @Override
+            public void onOrientationChanged(int orientation) {
+                checkOrientation(orientation);
+            }
+        };
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        // handle current state
+        handleCurrentOrientationState(getResources().getConfiguration().orientation);
+        myOrientationEventListener.enable();
+    }
+
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        myOrientationEventListener.disable();
     }
 
 

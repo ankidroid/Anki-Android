@@ -20,6 +20,7 @@ import android.view.View;
 
 import com.ichi2.anki.R;
 import com.ichi2.anki.RobolectricTest;
+import com.ichi2.anki.analytics.UsageAnalytics;
 import com.ichi2.anki.dialogs.HelpDialog.LinkItem;
 import com.ichi2.anki.dialogs.RecursivePictureMenu.Item;
 import com.ichi2.anki.dialogs.RecursivePictureMenu.ItemHeader;
@@ -124,7 +125,7 @@ public class RecursivePictureMenuTest extends RobolectricTest {
     }
 
     private Item getItemLinkingTo(int linkLocation) {
-        return new LinkItem(R.string.help_item_ankidroid_manual, R.drawable.ic_manual_black_24dp, linkLocation);
+        return new LinkItem(R.string.help_item_ankidroid_manual, R.drawable.ic_manual_black_24dp, UsageAnalytics.Actions.OPENED_ANKIDROID_MANUAL, linkLocation);
     }
 
 
@@ -135,6 +136,6 @@ public class RecursivePictureMenuTest extends RobolectricTest {
             items[i] = getItemLinkingTo(R.string.link_anki);
         }
 
-        return new ItemHeader(R.string.help_item_ankidroid_manual, R.drawable.ic_manual_black_24dp, items);
+        return new ItemHeader(R.string.help_item_ankidroid_manual, R.drawable.ic_manual_black_24dp, UsageAnalytics.Actions.OPENED_ANKIDROID_MANUAL, items);
     }
 }
