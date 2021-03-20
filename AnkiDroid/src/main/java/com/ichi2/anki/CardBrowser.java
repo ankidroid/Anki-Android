@@ -658,7 +658,6 @@ public class CardBrowser extends NavigationDrawerActivity implements
                 CheckBox cb = view.findViewById(R.id.card_checkbox);
                 cb.toggle();
                 onCheck(position, view);
-                mLastSelectedPosition = position;
             } else {
                 // load up the card selected on the list
                 long clickedCardId = getCards().get(position).getId();
