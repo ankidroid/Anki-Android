@@ -28,4 +28,16 @@
     <dimen name="deck_picker_left_padding">24dp</dimen>
     <dimen name="deck_picker_right_padding">4dp</dimen>
     <dimen name="note_editor_toolbar_height">28dp</dimen>
+
+    <!-- floating_add_button.xml -->
+    <dimen name="activity_horizontal_margin">16dp</dimen>
+    <dimen name="activity_vertical_margin">16dp</dimen>
+    <dimen name="fab_margin">16dp</dimen>
+
+    <dimen name="standard_12">12dp</dimen>
+    <dimen name="standard_23">23dp</dimen>
+    <dimen name="standard_55">60dp</dimen>
+    <dimen name="standard_100">110dp</dimen>
+    <dimen name="standard_145">160dp</dimen>
+
 </resources>
