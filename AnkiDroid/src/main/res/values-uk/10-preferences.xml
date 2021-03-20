@@ -295,5 +295,5 @@
     <string name="no_code_formatting">Просте форматування введених відповідей</string>
     <string name="no_code_formatting_summ">Виправляє «􏿾», що з\'являються у результатах введених відповідей</string>
     <!-- Open Changelog-->
-    <string name="open_changelog">Open Changelog</string>
+    <string name="open_changelog">Відкрити список змін</string>
 </resources>
