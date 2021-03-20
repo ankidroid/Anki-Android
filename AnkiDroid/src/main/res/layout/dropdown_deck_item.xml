@@ -5,6 +5,7 @@
     android:id="@+id/dropdown_deck_name"
     style="?android:attr/spinnerDropDownItemStyle"
     android:layout_width="match_parent"
+    android:focusable="true"
     android:layout_height="?attr/dropdownListPreferredItemHeight"
     android:singleLine="true"
     tools:background="@android:color/holo_orange_light"

@@ -9,6 +9,7 @@
     <com.ichi2.ui.FixedTextView
         android:id="@+id/model_list_item_1"
         android:textSize="20sp"
+        android:focusable="true"
         android:textStyle="bold"
         android:layout_width="wrap_content"
         android:gravity="left"
@@ -20,6 +21,7 @@
         android:id="@+id/model_list_item_2"
         android:layout_width="wrap_content"
         android:textSize="14sp"
+        android:focusable="true"
         android:gravity="left"
         android:textColor="?android:textColorSecondary"
         android:layout_height="wrap_content"/>

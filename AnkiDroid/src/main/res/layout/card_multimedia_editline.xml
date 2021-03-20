@@ -10,6 +10,8 @@
         android:id="@+id/id_label"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:focusable="true"
+
         android:freezesText="true"
         android:layout_alignParentLeft="true"
         app:layout_constraintBottom_toTopOf="@+id/id_note_editText"
@@ -22,6 +24,8 @@
         android:id="@+id/id_media_button"
         android:nextFocusForward="@id/id_expand_button"
         android:layout_width="wrap_content"
+        android:focusable="true"
+
         android:layout_height="wrap_content"
         android:gravity="right|center_vertical"
         android:background="?attr/attachFileImage"
@@ -35,6 +39,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:gravity="right|center_vertical"
+        android:focusable="true"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         tools:background="@drawable/ic_expand_less_black_24dp"/>
@@ -42,6 +47,7 @@
     <androidx.constraintlayout.widget.Barrier
         android:id="@+id/multimedia_barrier"
         android:layout_width="0dp"
+        android:focusable="true"
         android:layout_height="0dp"
         app:barrierDirection="bottom"
         app:constraint_referenced_ids="id_label, id_media_button, id_expand_button" />
@@ -50,6 +56,7 @@
         android:id="@+id/id_note_editText"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:focusable="true"
         android:nextFocusForward="@id/id_media_button"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

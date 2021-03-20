@@ -44,12 +44,14 @@
                 <com.google.android.material.textfield.TextInputLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:focusable="true"
                     android:hint="@string/username">
 
                     <com.google.android.material.textfield.TextInputEditText
                         android:id="@+id/username"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:focusable="true"
                         android:inputType="textNoSuggestions|textEmailAddress"
                         android:layout_margin="@dimen/content_vertical_padding"/>
                 </com.google.android.material.textfield.TextInputLayout>
@@ -59,6 +61,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="@string/password"
+                    android:focusable="true"
                     app:passwordToggleEnabled="true">
 
                     <com.ichi2.ui.TextInputEditField
@@ -66,6 +69,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:inputType="textPassword"
+                        android:focusable="true"
                         android:layout_margin="@dimen/content_vertical_padding"/>
                 </com.google.android.material.textfield.TextInputLayout>
 
@@ -78,6 +82,7 @@
                     android:textSize="@dimen/md_title_textsize"
                     android:layout_gravity="center"
                     android:padding="10dp"
+                    android:focusable="true"
                     android:text="@string/log_in"
                     android:paddingTop="30dp"
                     android:layout_margin="@dimen/content_vertical_padding"/>
@@ -91,6 +96,7 @@
                     android:background="@null"
                     android:textSize="@dimen/abc_text_size_button_material"
                     android:textColor="?attr/colorAccent"
+                    android:focusable="true"
                     android:singleLine="true"
                     android:padding="10dp"
                     android:layout_gravity="center"
@@ -115,12 +121,14 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/sign_up_description"
+                android:focusable="true"
                 android:layout_gravity="center"
                 android:textSize="@dimen/abc_text_size_button_material"
                 android:textStyle="bold"/>
             <com.ichi2.ui.FixedTextView
                 android:id="@+id/no_account_not_affiliated"
                 android:layout_width="wrap_content"
+                android:focusable="true"
                 android:layout_height="wrap_content"
                 android:text="@string/sign_up_not_affiliated"
                 android:layout_gravity="center"
@@ -133,6 +141,7 @@
                 android:layout_height="wrap_content"
                 android:background="@null"
                 android:textSize="@dimen/abc_text_size_button_material"
+                android:focusable="true"
                 android:textColor="?attr/colorAccent"
                 android:padding="3dp"
                 android:layout_gravity="center"

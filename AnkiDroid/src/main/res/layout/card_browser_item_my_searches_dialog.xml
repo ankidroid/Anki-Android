@@ -16,16 +16,19 @@
         <com.ichi2.ui.FixedTextView android:id="@+id/card_browser_my_search_name_textview"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:focusable="true"
             android:textSize="16sp"/>
         <com.ichi2.ui.FixedTextView android:id="@+id/card_browser_my_search_terms_textview"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="13sp"/>
+            android:textSize="13sp"
+            android:focusable="true"/>
     </LinearLayout>
     <ImageButton android:id="@+id/card_browser_my_search_remove_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentRight="true"
+        android:focusable="true"
         android:layout_centerVertical="true"
         android:src="@drawable/ic_remove_circle_grey600_24dp"
         android:background="@color/transparent"/>

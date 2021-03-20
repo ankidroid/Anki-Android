@@ -47,6 +47,7 @@
     <com.ichi2.ui.FixedTextView
         android:id="@+id/locale_dialog_summary"
         android:layout_width="match_parent"
+        android:focusable="true"
         android:layout_height="wrap_content"
         android:gravity="center_horizontal"
         android:text="@string/locale_selection_dialog_summary"

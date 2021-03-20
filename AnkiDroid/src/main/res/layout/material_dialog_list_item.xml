@@ -21,6 +21,7 @@
     android:layout_height="wrap_content"
     android:minHeight="?android:attr/listPreferredItemHeight"
     android:paddingStart="10dp"
+    android:focusable="true"
     android:paddingLeft="10dp"
     android:paddingEnd="10dp"
     android:paddingRight="10dp"

@@ -61,6 +61,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:ellipsize="end"
+                            android:focusable="true"
                             android:gravity="center"
                             android:maxLines="3"
                             android:textSize="28sp"
@@ -94,6 +95,7 @@
                                         android:layout_width="wrap_content"
                                         android:layout_height="wrap_content"
                                         android:paddingLeft="0dip"
+                                        android:focusable="true"
                                         android:paddingRight="5dip"
                                         android:text="@string/studyoptions_due_today"/>
 
@@ -104,6 +106,7 @@
                                         <com.ichi2.ui.FixedTextView
                                             android:id="@+id/studyoptions_new"
                                             android:layout_width="wrap_content"
+                                            android:focusable="true"
                                             android:layout_height="wrap_content"
                                             android:textColor="?attr/newCountColor" />
 
@@ -111,6 +114,7 @@
                                             android:id="@+id/studyoptions_lrn"
                                             android:layout_width="wrap_content"
                                             android:layout_height="wrap_content"
+                                            android:focusable="true"
                                             android:layout_marginLeft="5dip"
                                             android:layout_marginStart="5dip"
                                             android:textColor="?attr/learnCountColor" />
@@ -120,6 +124,7 @@
                                             android:layout_width="wrap_content"
                                             android:layout_height="wrap_content"
                                             android:layout_marginLeft="5dip"
+                                            android:focusable="true"
                                             android:layout_marginStart="5dip"
                                             android:textColor="?attr/reviewCountColor" />
                                     </LinearLayout>
@@ -131,12 +136,14 @@
                                         android:layout_width="wrap_content"
                                         android:layout_height="wrap_content"
                                         android:paddingLeft="0dip"
+                                        android:focusable="true"
                                         android:paddingRight="5dip"
                                         android:text="@string/studyoptions_new_total" />
 
                                     <com.ichi2.ui.FixedTextView
                                         android:id="@+id/studyoptions_total_new"
                                         android:layout_width="wrap_content"
+                                        android:focusable="true"
                                         android:layout_height="wrap_content"
                                         android:gravity="end" />
                                 </TableRow>
@@ -147,6 +154,7 @@
                                         android:layout_width="wrap_content"
                                         android:layout_height="wrap_content"
                                         android:paddingLeft="0dip"
+                                        android:focusable="true"
                                         android:paddingRight="5dip"
                                         android:text="@string/studyoptions_total_cards" />
 
@@ -154,6 +162,7 @@
                                         android:id="@+id/studyoptions_total"
                                         android:layout_width="wrap_content"
                                         android:layout_height="wrap_content"
+                                        android:focusable="true"
                                         android:gravity="end" />
                                 </TableRow>
 
@@ -164,12 +173,14 @@
                                         android:layout_height="wrap_content"
                                         android:paddingLeft="0dip"
                                         android:paddingRight="5dip"
+                                        android:focusable="true"
                                         android:text="@string/studyoptions_eta" />
 
                                     <com.ichi2.ui.FixedTextView
                                         android:id="@+id/studyoptions_eta"
                                         android:layout_width="wrap_content"
                                         android:layout_height="wrap_content"
+                                        android:focusable="true"
                                         android:gravity="end" />
                                 </TableRow>
                             </TableLayout>
@@ -178,6 +189,7 @@
                             android:id="@+id/studyoptions_deck_description"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
+                            android:focusable="true"
                             android:gravity="center"/>
 
                     </LinearLayout>
@@ -196,6 +208,7 @@
                         android:minLines="2"
                         android:layout_gravity="center_horizontal"
                         android:gravity="center"
+                        android:focusable="true"
                         android:paddingLeft="2dp"
                         android:paddingRight="2dp"
                         android:paddingBottom="8dp"/>
@@ -205,6 +218,7 @@
                         android:layout_width="200dip"
                         android:layout_height="wrap_content"
                         android:lines="2"
+                        android:focusable="true"
                         android:text="@string/studyoptions_start"
                         android:textSize="20sp"
                         android:textStyle="bold"

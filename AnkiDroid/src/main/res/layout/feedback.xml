@@ -19,6 +19,7 @@
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:gravity="top"
+            android:focusable="true"
             android:hint="@string/feedback_default_text"
             android:minLines="2" />
     </ScrollView>
@@ -28,6 +29,7 @@
         android:text="@string/feedback_report_automatically"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
+        android:focusable="true"
         android:paddingTop="15dp"
         android:paddingBottom="15dp"/>
 
@@ -36,11 +38,13 @@
         android:layout_height="0dp"
         android:layout_weight="1"
         android:fadeScrollbars="false"
+
         android:fillViewport="true" >
 
         <com.ichi2.ui.FixedTextView
             android:paddingLeft="5dp"
             android:paddingRight="5dp"
+            android:focusable="true"
             android:id="@+id/tvFeedbackDisclaimer"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"

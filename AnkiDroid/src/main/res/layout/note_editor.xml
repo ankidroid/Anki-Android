@@ -33,13 +33,15 @@
                 <LinearLayout
                     android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="horizontal" >
+                    android:orientation="horizontal"
+                   >
                     <com.ichi2.ui.FixedTextView
                         android:id="@+id/CardEditorModelText"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
                         android:layout_marginLeft="8dip"
+                        android:focusable="true"
                         android:layout_marginRight="8dip"
                         android:clickable="false"
                         android:gravity="left|center_vertical"
@@ -49,6 +51,7 @@
                         android:id="@+id/note_type_spinner"
                         android:layout_width="fill_parent"
                         android:layout_height="@dimen/touch_target"
+                        android:focusable="true"
                         app:popupTheme="@style/ActionBar.Popup"/>
                 </LinearLayout>
 
@@ -66,12 +69,14 @@
                         android:layout_marginRight="8dip"
                         android:clickable="false"
                         android:gravity="left|center_vertical"
+                        android:focusable="true"
                         android:textStyle="bold"
                         android:text="@string/CardEditorNoteDeck" />
                     <Spinner
                         android:id="@+id/note_deck_spinner"
                         android:layout_width="fill_parent"
                         android:layout_height="@dimen/touch_target"
+                        android:focusable="true"
                         app:popupTheme="@style/ActionBar.Popup"/>
                 </LinearLayout>
 
@@ -103,6 +108,7 @@
                             android:layout_width="fill_parent"
                             android:layout_height="wrap_content"
                             android:layout_gravity="center"
+                            android:focusable="true"
                             android:layout_marginLeft="5dip"
                             android:layout_marginRight="5dip"
                             android:clickable="false"
@@ -128,6 +134,7 @@
                             android:layout_height="wrap_content"
                             android:layout_gravity="center"
                             android:layout_marginLeft="5dip"
+                            android:focusable="true"
                             android:layout_marginRight="5dip"
                             android:clickable="false"
                             tools:text="Cards: Card 1"

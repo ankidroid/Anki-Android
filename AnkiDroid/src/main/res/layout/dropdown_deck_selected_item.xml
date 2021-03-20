@@ -4,6 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="?attr/actionBarSize"
     android:orientation="vertical"
+    android:focusable="true"
     android:gravity="center_vertical"
     tools:background="@android:color/holo_orange_light"
     tools:layout_height="wrap_content">

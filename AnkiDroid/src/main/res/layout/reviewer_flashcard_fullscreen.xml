@@ -43,6 +43,7 @@
         android:layout_height="wrap_content"
         android:layout_gravity="right"
         android:clickable="true"
+        android:focusable="true"
         android:padding="5dip"
         android:src="@drawable/ic_lookup"
         android:visibility="gone"

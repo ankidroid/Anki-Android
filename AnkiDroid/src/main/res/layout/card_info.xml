@@ -57,7 +57,7 @@
             android:labelFor="@id/card_info_added"
             android:text="@string/card_info_added"
             android:textStyle="bold"
-
+            android:focusable="true"
             app:layout_constraintStart_toStartOf="parent" />
 
         <com.ichi2.ui.FixedTextView
@@ -66,7 +66,9 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="@id/card_info_vertical_barrier"
             app:layout_constraintTop_toTopOf="@+id/card_info_added_label"
-            tools:text="1 April 2020" />
+            tools:text="1 April 2020"
+            android:focusable="true"
+            />
 
         <com.ichi2.ui.FixedTextView
             android:id="@+id/card_info_first_review_label"
@@ -74,6 +76,7 @@
             android:layout_height="wrap_content"
             android:labelFor="@id/card_info_added"
             android:text="@string/card_info_first_review"
+            android:focusable="true"
             android:textStyle="bold"
             app:layout_constraintStart_toStartOf="@+id/card_info_added_label"
             app:layout_constraintTop_toBottomOf="@+id/card_info_added" />
@@ -82,6 +85,7 @@
             android:id="@+id/card_info_first_review"
             style="@style/card_info_data"
             app:layout_constraintEnd_toEndOf="parent"
+            android:focusable="true"
             app:layout_constraintStart_toStartOf="@+id/card_info_vertical_barrier"
             app:layout_constraintTop_toTopOf="@+id/card_info_first_review_label"
             tools:text="First Rev: 1 April 2020" />
@@ -92,6 +96,7 @@
             android:layout_height="wrap_content"
             android:labelFor="@id/card_info_added"
             android:text="@string/card_info_latest_review"
+            android:focusable="true"
             android:textStyle="bold"
             app:layout_constraintStart_toStartOf="@+id/card_info_first_review_label"
             app:layout_constraintTop_toBottomOf="@+id/card_info_first_review" />
@@ -101,6 +106,7 @@
             android:id="@+id/card_info_latest_review"
             style="@style/card_info_data"
             app:layout_constraintEnd_toEndOf="parent"
+            android:focusable="true"
             app:layout_constraintStart_toStartOf="@+id/card_info_vertical_barrier"
             app:layout_constraintTop_toTopOf="@+id/card_info_latest_review_label"
             tools:text="1 April 2020" />
@@ -109,6 +115,7 @@
             android:id="@+id/card_info_due_label"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:focusable="true"
             android:labelFor="@id/card_info_due"
             android:text="@string/card_details_due"
             android:textStyle="bold"
@@ -118,6 +125,7 @@
         <com.ichi2.ui.FixedTextView
             android:id="@+id/card_info_due"
             style="@style/card_info_data"
+            android:focusable="true"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="@+id/card_info_vertical_barrier"
             app:layout_constraintTop_toTopOf="@+id/card_info_due_label"
@@ -127,6 +135,7 @@
             android:id="@+id/card_info_interval_label"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:focusable="true"
             android:labelFor="@id/card_info_interval"
             android:text="@string/card_info_interval"
             android:textStyle="bold"
@@ -136,6 +145,7 @@
         <com.ichi2.ui.FixedTextView
             android:id="@+id/card_info_interval"
             style="@style/card_info_data"
+            android:focusable="true"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="@+id/card_info_vertical_barrier"
             app:layout_constraintTop_toTopOf="@+id/card_info_interval_label"
@@ -147,6 +157,7 @@
             android:layout_height="wrap_content"
             android:labelFor="@id/card_info_added"
             android:text="@string/card_info_ease"
+            android:focusable="true"
             android:textStyle="bold"
             app:layout_constraintStart_toStartOf="@+id/card_info_interval_label"
             app:layout_constraintTop_toBottomOf="@+id/card_info_interval" />
@@ -155,6 +166,7 @@
             android:id="@+id/card_info_ease"
             style="@style/card_info_data"
             app:layout_constraintEnd_toEndOf="parent"
+            android:focusable="true"
             app:layout_constraintStart_toStartOf="@+id/card_info_vertical_barrier"
             app:layout_constraintTop_toTopOf="@+id/card_info_ease_label"
             tools:text="250%" />
@@ -164,6 +176,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:labelFor="@id/card_info_added"
+            android:focusable="true"
             android:text="@string/card_info_reviews"
             android:textStyle="bold"
             app:layout_constraintStart_toStartOf="parent"
@@ -174,6 +187,7 @@
             android:id="@+id/card_info_review_count"
             style="@style/card_info_data"
             app:layout_constraintEnd_toEndOf="parent"
+            android:focusable="true"
             app:layout_constraintStart_toStartOf="@+id/card_info_vertical_barrier"
             app:layout_constraintTop_toTopOf="@+id/card_info_review_count_label"
             tools:text="Rev Count" />
@@ -183,6 +197,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:labelFor="@id/card_info_added"
+            android:focusable="true"
             android:text="@string/card_info_lapses"
             android:textStyle="bold"
             app:layout_constraintStart_toStartOf="@+id/card_info_review_count_label"
@@ -192,6 +207,7 @@
             android:id="@+id/card_info_lapse_count"
             style="@style/card_info_data"
             app:layout_constraintEnd_toEndOf="parent"
+            android:focusable="true"
             app:layout_constraintStart_toStartOf="@+id/card_info_vertical_barrier"
             app:layout_constraintTop_toTopOf="@+id/card_info_lapse_count_label"
             tools:text="0 lapses" />
@@ -201,6 +217,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:labelFor="@id/card_info_added"
+            android:focusable="true"
             android:text="@string/card_info_average_time"
             android:textStyle="bold"
             app:layout_constraintStart_toStartOf="@+id/card_info_lapse_count_label"
@@ -210,6 +227,7 @@
             android:id="@+id/card_info_average_time"
             style="@style/card_info_data"
             app:layout_constraintEnd_toEndOf="parent"
+            android:focusable="true"
             app:layout_constraintStart_toStartOf="@+id/card_info_vertical_barrier"
             app:layout_constraintTop_toTopOf="@+id/card_info_average_time_label"
             tools:text="Average Time" />
@@ -218,6 +236,7 @@
             android:id="@+id/card_info_total_time_label"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:focusable="true"
             android:labelFor="@id/card_info_added"
             android:text="@string/card_info_total_time"
             android:textStyle="bold"
@@ -228,6 +247,7 @@
             android:id="@+id/card_info_total_time"
             style="@style/card_info_data"
             app:layout_constraintEnd_toEndOf="parent"
+            android:focusable="true"
             app:layout_constraintStart_toStartOf="@+id/card_info_vertical_barrier"
             app:layout_constraintTop_toTopOf="@+id/card_info_total_time_label"
             tools:text="Total time" />
@@ -237,6 +257,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:labelFor="@id/card_info_added"
+            android:focusable="true"
             android:text="@string/card_info_card_type"
             android:textStyle="bold"
             app:layout_constraintStart_toStartOf="@+id/card_info_total_time_label"
@@ -246,6 +267,7 @@
             android:id="@+id/card_info_card_type"
             style="@style/card_info_data"
             app:layout_constraintEnd_toEndOf="parent"
+            android:focusable="true"
             app:layout_constraintStart_toStartOf="@+id/card_info_vertical_barrier"
             app:layout_constraintTop_toTopOf="@+id/card_info_card_type_label"
             tools:text="English" />
@@ -254,6 +276,7 @@
             android:id="@+id/card_info_note_type_label"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:focusable="true"
             android:labelFor="@id/card_info_added"
             android:text="@string/card_info_note_type"
             android:textStyle="bold"
@@ -265,6 +288,7 @@
             android:id="@+id/card_info_note_type"
             style="@style/card_info_data"
             app:layout_constraintEnd_toEndOf="parent"
+            android:focusable="true"
             app:layout_constraintStart_toStartOf="@+id/card_info_vertical_barrier"
             app:layout_constraintTop_toTopOf="@id/card_info_note_type_label"
             tools:text="English to French" />
@@ -273,6 +297,7 @@
             android:id="@+id/card_info_deck_name_label"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:focusable="true"
             android:labelFor="@id/card_info_added"
             android:text="@string/card_info_deck_name"
             android:textStyle="bold"
@@ -283,6 +308,7 @@
         <com.ichi2.ui.FixedTextView
             android:id="@+id/card_info_deck_name"
             style="@style/card_info_data"
+            android:focusable="true"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="@+id/card_info_vertical_barrier"
             app:layout_constraintTop_toTopOf="@+id/card_info_deck_name_label"
@@ -293,6 +319,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:labelFor="@id/card_info_added"
+            android:focusable="true"
             android:text="@string/card_info_card_id"
             android:textStyle="bold"
             app:layout_constraintStart_toStartOf="@+id/card_info_deck_name_label"
@@ -301,6 +328,7 @@
         <com.ichi2.ui.FixedTextView
             android:id="@+id/card_info_card_id"
             style="@style/card_info_data"
+            android:focusable="true"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="@+id/card_info_vertical_barrier"
             app:layout_constraintTop_toTopOf="@+id/card_info_card_id_label"
@@ -310,6 +338,7 @@
             android:id="@+id/card_info_note_id_label"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:focusable="true"
             android:labelFor="@id/card_info_added"
             android:text="@string/card_info_note_id"
             android:textStyle="bold"
@@ -320,6 +349,7 @@
             android:id="@+id/card_info_note_id"
             style="@style/card_info_data"
             app:layout_constraintEnd_toEndOf="parent"
+            android:focusable="true"
             app:layout_constraintStart_toStartOf="@+id/card_info_vertical_barrier"
             app:layout_constraintTop_toTopOf="@+id/card_info_note_id_label"
             tools:text="nid:1111111" />
@@ -338,6 +368,7 @@
                     android:gravity="center"
                     android:layout_weight="1"
                     android:layout_width="wrap_content"
+                    android:focusable="true"
                     android:layout_height="wrap_content"
                     android:textSize="12sp"
                     android:text="@string/card_info_revlog_date"
@@ -345,6 +376,7 @@
                 <com.ichi2.ui.FixedTextView
                     android:gravity="center"
                     android:layout_weight="1"
+                    android:focusable="true"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textSize="12sp"
@@ -353,6 +385,7 @@
                 <com.ichi2.ui.FixedTextView
                     android:gravity="center"
                     android:layout_weight="1"
+                    android:focusable="true"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textSize="12sp"
@@ -361,6 +394,7 @@
                 <com.ichi2.ui.FixedTextView
                     android:gravity="center"
                     android:layout_weight="1"
+                    android:focusable="true"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textSize="12sp"
@@ -369,6 +403,7 @@
                 <com.ichi2.ui.FixedTextView
                     android:gravity="center"
                     android:layout_weight="1"
+                    android:focusable="true"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textSize="12sp"
@@ -376,6 +411,7 @@
                     />
                 <com.ichi2.ui.FixedTextView
                     android:gravity="center"
+                    android:focusable="true"
                     android:layout_weight="1"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"

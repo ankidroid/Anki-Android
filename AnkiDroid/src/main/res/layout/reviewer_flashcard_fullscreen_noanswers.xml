@@ -45,6 +45,7 @@
         android:layout_gravity="right"
         android:clickable="true"
         android:padding="5dip"
+        android:focusable="true"
         android:src="@drawable/ic_lookup"
         android:visibility="gone"
         android:contentDescription="@string/lookup_button_content" />

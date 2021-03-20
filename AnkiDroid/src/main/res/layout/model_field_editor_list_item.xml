@@ -3,6 +3,7 @@
         android:layout_width="600dp"
         android:layout_gravity="center_horizontal"
         android:layout_height="wrap_content"
+        android:focusable="true"
         android:paddingBottom="7dip"
         android:paddingLeft="@dimen/keyline_1"
         android:paddingRight="5dip"

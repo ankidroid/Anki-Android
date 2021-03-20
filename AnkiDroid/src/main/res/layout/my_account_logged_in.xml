@@ -29,6 +29,7 @@
                 android:layout_height="wrap_content"
                 android:text="@string/logged_as"
                 android:textSize="@dimen/md_title_textsize"
+                android:focusable="true"
                 android:layout_margin="@dimen/content_vertical_padding"/>
 
             <com.ichi2.ui.FixedTextView
@@ -36,6 +37,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textSize="@dimen/md_title_textsize"
+                android:focusable="true"
                 android:textStyle="bold"
                 android:layout_margin="@dimen/content_vertical_padding"/>
 
@@ -44,6 +46,7 @@
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:theme="@style/LargeButtonStyle"
+                android:focusable="true"
                 android:singleLine="true"
                 android:textSize="@dimen/md_title_textsize"
                 android:layout_gravity="center"
