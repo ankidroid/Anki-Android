@@ -360,8 +360,13 @@ public class UsageAnalytics {
     public static class Category {
         public static final String SYNC = "Sync";
         public static final String LINK_CLICKED = "LinkClicked";
+    }
 
-        /* These Strings must not be changed as they are used for analytic comparisons between AnkiDroid versions */
+    /**
+     * These Strings must not be changed as they are used for analytic comparisons between AnkiDroid versions.
+     */
+    public static class Actions {
+        /* Analytics actions used in Help Dialog*/
         public static final String OPENED_HELPDIALOG = "Opened HelpDialogBox";
         public static final String OPENED_USING_ANKIDROID = "Opened Using AnkiDroid";
         public static final String OPENED_GET_HELP = "Opened Get Help";

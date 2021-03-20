@@ -189,7 +189,13 @@ public class RecursivePictureMenu extends DialogFragment {
             UsageAnalytics.sendAnalyticsEvent(UsageAnalytics.Category.LINK_CLICKED, analyticsId);
         }
 
-        public abstract void execute(AnkiActivity activity);
+        /* This method calls onClicked method to handle click event in a suitable manner and
+         * the analytics of the item clicked are send.
+         */
+        public void execute(AnkiActivity activity){
+            sendAnalytics();
+            onClicked(activity);
+        }
 
         public abstract void remove(Item toRemove);
     }
@@ -213,12 +219,6 @@ public class RecursivePictureMenu extends DialogFragment {
             ArrayList<Item> children = new ArrayList<>(this.getChildren());
             DialogFragment nextFragment = RecursivePictureMenu.createInstance(children, getTitle());
             activity.showDialogFragment(nextFragment);
-        }
-
-        @Override
-        public void execute(AnkiActivity activity) {
-            sendAnalytics();
-            onClicked(activity);
         }
 
         @Override
