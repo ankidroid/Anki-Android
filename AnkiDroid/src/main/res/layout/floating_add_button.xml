@@ -1,48 +1,120 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!-- Floating action button -->
-<merge xmlns:android="http://schemas.android.com/apk/res/android">
-    <com.getbase.floatingactionbutton.FloatingActionsMenu
-        xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:fab="http://schemas.android.com/apk/res-auto"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <TextView
+        android:id="@+id/textview_new_deck"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginBottom="250dp"
+        android:layout_marginEnd="88dp"
+        android:background="#212121"
+        android:padding="8dp"
+        android:text="@string/new_deck"
+        android:textColor="#ffffff"
+        android:visibility="invisible" />
+
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/add_deck_action"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginBottom="240dp"
+        android:layout_marginEnd="24dp"
+        android:background="?android:attr/selectableItemBackground"
+        android:clickable="true"
+        android:elevation="16dp"
+        android:focusable="true"
+        android:visibility="invisible"
+        app:backgroundTint="#ffffff"
+        app:pressedTranslationZ="12dp"
+        app:srcCompat="@drawable/icon_file" />
+
+    <TextView
+        android:id="@+id/textview_shared_deck"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginBottom="180dp"
+        android:layout_marginEnd="88dp"
+        android:background="#212121"
+        android:padding="8dp"
+        android:text="@string/menu_get_shared_decks"
+        android:textColor="#ffffff"
+        android:visibility="invisible" />
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/add_shared_action"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginBottom="170dp"
+        android:layout_marginEnd="24dp"
+        android:layout_marginTop="42dp"
+        android:background="?android:attr/selectableItemBackground"
+        android:clickable="true"
+        android:elevation="16dp"
+        android:focusable="true"
+        android:visibility="invisible"
+        app:backgroundTint="#ffffff"
+        app:pressedTranslationZ="12dp"
+        app:srcCompat="@drawable/icon_shared_deck" />
+
+
+    <TextView
+        android:id="@+id/textview_add_new"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginBottom="110dp"
+        android:layout_marginEnd="88dp"
+        android:background="#212121"
+        android:padding="8dp"
+        android:text="@string/menu_add"
+        android:textColor="#ffffff"
+        android:visibility="invisible" />
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/add_note_action"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginBottom="100dp"
+        android:layout_marginEnd="24dp"
+        android:background="?android:attr/selectableItemBackground"
+        android:clickable="true"
+        android:elevation="16dp"
+        android:focusable="true"
+        android:visibility="invisible"
+        app:backgroundTint="#ffffff"
+        app:pressedTranslationZ="12dp"
+        app:srcCompat="@drawable/icon_add" />
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/add_content_menu"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="end|bottom"
-        android:layout_margin="16dp"
-        fab:fab_addButtonColorNormal="?attr/fab_normal"
-        fab:fab_addButtonColorPressed="?attr/fab_pressed"
-        fab:fab_icon="@drawable/ic_add_white_24dp"
-        fab:fab_labelStyle="@style/menu_labels_style"
-        fab:layout_behavior="com.ichi2.anki.widgets.FabBehavior">
-        <com.getbase.floatingactionbutton.FloatingActionButton
-            android:id="@+id/add_deck_action"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:contentDescription="@string/new_deck"
-            fab:fab_colorNormal="?attr/fab_normal"
-            fab:fab_icon="@drawable/ic_folder_white_24dp"
-            fab:fab_title="@string/new_deck"
-            fab:fab_size="mini"
-            fab:fab_colorPressed="?attr/fab_pressed"/>
-        <com.getbase.floatingactionbutton.FloatingActionButton
-            android:id="@+id/add_shared_action"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:contentDescription="@string/menu_get_shared_decks"
-            fab:fab_colorNormal="?attr/fab_normal"
-            fab:fab_icon="@drawable/ic_file_download_white_24dp"
-            fab:fab_title="@string/menu_get_shared_decks"
-            fab:fab_size="mini"
-            fab:fab_colorPressed="?attr/fab_pressed"/>
-        <com.getbase.floatingactionbutton.FloatingActionButton
-            android:id="@+id/add_note_action"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:contentDescription="@string/menu_add"
-            fab:fab_colorNormal="?attr/fab_normal"
-            fab:fab_icon="@drawable/ic_add_white_24dp"
-            fab:fab_title="@string/menu_add"
-            fab:fab_size="mini"
-            fab:fab_colorPressed="?attr/fab_pressed"/>
-    </com.getbase.floatingactionbutton.FloatingActionsMenu>
-</merge>
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginBottom="32dp"
+        android:layout_marginEnd="24dp"
+        android:background="?android:attr/selectableItemBackground"
+        android:clickable="true"
+        android:elevation="16dp"
+        android:focusable="true"
+        android:visibility="visible"
+        app:backgroundTint="#ffffff"
+        app:pressedTranslationZ="12dp"
+        app:srcCompat="@drawable/icon_add_circle" />
+
+</RelativeLayout>
