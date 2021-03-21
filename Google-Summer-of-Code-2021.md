@@ -12,6 +12,10 @@ We have started receiving information from interested participants so we need a 
 
 **So if you are an interested participant:** Please add your **PUBLIC** contact information here in the list below. I emphasized "public" because this information will be web-scraped, used by spammers, etc. We are an open-source project so there is no hiding your identity completely - this is just your opportunity to think carefully about what specific contact methods you share if that is important to you.
 
+## How we select our candidates
+
+We created a [document](https://docs.google.com/document/d/15JH_3YtfTatdA4V3tZ_lwBibRRyTSFbpeCjpzhX3-y0/edit?usp=sharing) explaining our selection process. We'll share a template soon
+
 ## Timeline
 
 Please observe the official timeline, if you are requesting things well before these dates, please take a breath and give us time, thank you
