@@ -92,7 +92,6 @@ import com.ichi2.async.TaskManager;
 import com.ichi2.compat.CompatHelper;
 import com.ichi2.libanki.Card;
 import com.ichi2.libanki.Collection;
-import com.ichi2.libanki.Consts;
 import com.ichi2.libanki.Models;
 import com.ichi2.libanki.Model;
 import com.ichi2.libanki.Note;
@@ -103,6 +102,7 @@ import com.ichi2.themes.StyledProgressDialog;
 import com.ichi2.themes.Themes;
 import com.ichi2.anki.widgets.PopupMenuWithIcons;
 import com.ichi2.utils.AdaptionUtil;
+import com.ichi2.utils.CheckCameraPermission;
 import com.ichi2.utils.ContentResolverUtil;
 import com.ichi2.utils.DeckComparator;
 import com.ichi2.utils.FileUtil;
@@ -246,6 +246,9 @@ public class NoteEditor extends AnkiActivity {
     private FieldState mFieldState = FieldState.fromEditor(this);
 
     private Toolbar mToolbar;
+
+    /* To check whether Camera Permission is asked in AndroidManifest.xml */
+    private CheckCameraPermission mCheckCameraPermission;
 
     // Use the same HTML if the same image is pasted multiple times.
     private HashMap<String, String> mPastedImageCache = new HashMap<>();
@@ -1626,9 +1629,14 @@ public class NoteEditor extends AnkiActivity {
             } else {
                 // Otherwise we make a popup menu allowing the user to choose between audio/image/text field
                 // TODO: Update the icons for dark material theme, then can set 3rd argument to true
+                mCheckCameraPermission = new CheckCameraPermission(this);
                 PopupMenuWithIcons popup = new PopupMenuWithIcons(NoteEditor.this, v, true);
                 MenuInflater inflater = popup.getMenuInflater();
                 inflater.inflate(R.menu.popupmenu_multimedia_options, popup.getMenu());
+                if (mCheckCameraPermission.checkManifestCameraPermission()) {
+                    MenuItem item = popup.getMenu().findItem(R.id.menu_multimedia_photo);
+                    item.setVisible(false);
+                }
                 popup.setOnMenuItemClickListener(item -> {
 
                     int itemId = item.getItemId();
