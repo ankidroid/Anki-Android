@@ -17,12 +17,13 @@
         android:id="@+id/add_note_layout"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginRight="@dimen/standard_23"
-        android:padding="@dimen/standard_12"
+        android:layout_marginRight="23dp"
+        android:padding="12dp"
         android:clipToPadding="false"
         android:gravity="center_vertical"
-        android:layout_marginBottom="@dimen/standard_23"
+        android:layout_marginBottom="23dp"
         android:layout_gravity="bottom|end"
+        android:orientation="horizontal"
         android:visibility="gone">
         <TextView
             android:layout_width="wrap_content"
@@ -42,11 +43,12 @@
         android:id="@+id/add_shared_layout"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:padding="@dimen/standard_12"
+        android:padding="12dp"
         android:clipToPadding="false"
-        android:layout_marginRight="@dimen/standard_23"
+        android:layout_marginRight="23dp"
         android:gravity="center_vertical"
-        android:layout_marginBottom="@dimen/standard_23"
+        android:layout_marginBottom="23dp"
+        android:orientation="horizontal"
         android:layout_gravity="bottom|end"
         android:visibility="gone">
         <TextView
@@ -67,11 +69,12 @@
         android:id="@+id/add_deck_layout"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:padding="@dimen/standard_12"
+        android:padding="12dp"
         android:clipToPadding="false"
-        android:layout_marginRight="@dimen/standard_23"
+        android:layout_marginRight="23dp"
         android:gravity="center_vertical"
-        android:layout_marginBottom="@dimen/standard_23"
+        android:layout_marginBottom="23dp"
+        android:orientation="horizontal"
         android:layout_gravity="bottom|end"
         android:visibility="gone">
         <TextView
@@ -91,10 +94,11 @@
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginRight="@dimen/fab_margin"
+        android:layout_marginRight="16dp"
         android:gravity="center_vertical"
         android:clipToPadding="false"
-        android:padding="@dimen/standard_12"
+        android:orientation="horizontal"
+        android:padding="12dp"
         android:layout_marginBottom="10dp"
         android:layout_gravity="bottom|end">
         <com.google.android.material.floatingactionbutton.FloatingActionButton
