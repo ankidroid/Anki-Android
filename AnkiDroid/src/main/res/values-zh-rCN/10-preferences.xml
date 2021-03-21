@@ -288,5 +288,5 @@
     <string name="no_code_formatting">简单输入的答案格式</string>
     <string name="no_code_formatting_summ">修复在输入的答案结果中出现的“􏿾”</string>
     <!-- Open Changelog-->
-    <string name="open_changelog">Open Changelog</string>
+    <string name="open_changelog">打开更新日志</string>
 </resources>
