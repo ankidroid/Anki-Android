@@ -95,7 +95,7 @@ CREATE TABLE col (
     id              integer primary key,
       -- arbitrary number since there is only one row
     crt             integer not null,
-      -- timestamp of the creation date. It's correct up to the day. For V1 scheduler, the hour corresponds to starting a new day. By default, new day is 4.
+      -- timestamp of the creation date in second. It's correct up to the day. For V1 scheduler, the hour corresponds to starting a new day. By default, new day is 4.
     mod             integer not null,
       -- last modified in milliseconds
     scm             integer not null,
