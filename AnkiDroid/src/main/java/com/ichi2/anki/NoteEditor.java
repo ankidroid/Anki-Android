@@ -569,8 +569,8 @@ public class NoteEditor extends AnkiActivity {
 
                 // If this item is selected
                 if (position == mNoteTypeSpinner.getSelectedItemPosition()) {
-                    tv.setBackgroundColor(Color.LTGRAY);
-                    tv.setTextColor(Color.BLACK);
+                    tv.setBackgroundColor(ContextCompat.getColor(NoteEditor.this, R.color.note_editor_selected_item_background));
+                    tv.setTextColor(ContextCompat.getColor(NoteEditor.this, R.color.note_editor_selected_item_text));
                 }
 
                 // Return the modified view
@@ -620,8 +620,8 @@ public class NoteEditor extends AnkiActivity {
 
                 // If this item is selected
                 if (position == mNoteDeckSpinner.getSelectedItemPosition()) {
-                    tv.setBackgroundColor(Color.LTGRAY);
-                    tv.setTextColor(Color.BLACK);
+                    tv.setBackgroundColor(ContextCompat.getColor(NoteEditor.this, R.color.note_editor_selected_item_background));
+                    tv.setTextColor(ContextCompat.getColor(NoteEditor.this, R.color.note_editor_selected_item_text));
                 }
 
                 // Return the modified view
@@ -2494,3 +2494,4 @@ public class NoteEditor extends AnkiActivity {
         }
     }
 }
+
