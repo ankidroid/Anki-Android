@@ -202,13 +202,13 @@ public class DeckPicker extends NavigationDrawerActivity implements
     private LinearLayoutManager mRecyclerViewLayoutManager;
     private DeckAdapter mDeckListAdapter;
 	
-	private FloatingActionButton addDeckButton;
-	private FloatingActionButton addNoteButton;
-	private FloatingActionButton addSharedButton;
-	private FloatingActionButton fabMain;
-	private LinearLayout addSharedLayout;
-	private LinearLayout addDeckLayout;
-	private LinearLayout addNoteLayout;
+    private FloatingActionButton addDeckButton;
+    private FloatingActionButton addNoteButton;
+    private FloatingActionButton addSharedButton;
+    private FloatingActionButton fabMain;
+    private LinearLayout addSharedLayout;
+    private LinearLayout addDeckLayout;
+    private LinearLayout addNoteLayout;
     private View fabBGLayout;
     private boolean mIsFABOpen = false;
 	
