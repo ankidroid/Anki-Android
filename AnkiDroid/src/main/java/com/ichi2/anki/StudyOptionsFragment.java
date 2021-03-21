@@ -341,13 +341,13 @@ public class StudyOptionsFragment extends Fragment implements Toolbar.OnMenuItem
             return true;
         } else if (itemId == R.id.action_rebuild) {
             Timber.i("StudyOptionsFragment:: rebuild cram deck button pressed");
-            mProgressDialog = StyledProgressDialog.show(getActivity(), "",
+            mProgressDialog = StyledProgressDialog.show(getActivity(), null,
                     getResources().getString(R.string.rebuild_filtered_deck), true);
             TaskManager.launchCollectionTask(new CollectionTask.RebuildCram(), getCollectionTaskListener(true));
             return true;
         } else if (itemId == R.id.action_empty) {
             Timber.i("StudyOptionsFragment:: empty cram deck button pressed");
-            mProgressDialog = StyledProgressDialog.show(getActivity(), "",
+            mProgressDialog = StyledProgressDialog.show(getActivity(), null,
                     getResources().getString(R.string.empty_filtered_deck), false);
             TaskManager.launchCollectionTask(new CollectionTask.EmptyCram(), getCollectionTaskListener(true));
             return true;
@@ -463,7 +463,7 @@ public class StudyOptionsFragment extends Fragment implements Toolbar.OnMenuItem
                 if (deck.isDyn() && deck.has("empty")) {
                     deck.remove("empty");
                 }
-                    mProgressDialog = StyledProgressDialog.show(getActivity(), "",
+                    mProgressDialog = StyledProgressDialog.show(getActivity(), null,
                             getResources().getString(R.string.rebuild_filtered_deck), true);
                     TaskManager.launchCollectionTask(new CollectionTask.RebuildCram(), getCollectionTaskListener(true));
             } else {

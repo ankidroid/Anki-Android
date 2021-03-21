@@ -401,7 +401,7 @@ public class DeckPicker extends NavigationDrawerActivity implements
 
         @Override
         public void actualOnPreExecute(@NonNull DeckPicker deckPicker) {
-            deckPicker.mProgressDialog = StyledProgressDialog.show(deckPicker, "",
+            deckPicker.mProgressDialog = StyledProgressDialog.show(deckPicker, null,
                     deckPicker.getResources().getString(R.string.export_in_progress), false);
         }
 
@@ -1568,7 +1568,7 @@ public class DeckPicker extends NavigationDrawerActivity implements
 
         @Override
         public void actualOnPreExecute(@NonNull DeckPicker deckPicker) {
-            deckPicker.mProgressDialog = StyledProgressDialog.show(deckPicker, "",
+            deckPicker.mProgressDialog = StyledProgressDialog.show(deckPicker, null,
                     deckPicker.getResources().getString(R.string.backup_repair_deck_progress), false);
         }
 
@@ -1627,7 +1627,7 @@ public class DeckPicker extends NavigationDrawerActivity implements
 
         @Override
         public void actualOnPreExecute(@NonNull DeckPicker deckPicker) {
-            deckPicker.mProgressDialog = StyledProgressDialog.show(deckPicker, "",
+            deckPicker.mProgressDialog = StyledProgressDialog.show(deckPicker, null,
                     deckPicker.getResources().getString(R.string.check_media_message), false);
         }
 
@@ -1661,7 +1661,7 @@ public class DeckPicker extends NavigationDrawerActivity implements
 
         @Override
         public void actualOnPreExecute(@NonNull DeckPicker deckPicker) {
-            deckPicker.mProgressDialog = StyledProgressDialog.show(deckPicker, "",
+            deckPicker.mProgressDialog = StyledProgressDialog.show(deckPicker, null,
                     deckPicker.getResources().getString(R.string.delete_media_message), false);
         }
 
@@ -2719,7 +2719,7 @@ public class DeckPicker extends NavigationDrawerActivity implements
 
         @Override
         public void actualOnPreExecute(@NonNull DeckPicker deckPicker) {
-            deckPicker.mProgressDialog = StyledProgressDialog.show(deckPicker, "",
+            deckPicker.mProgressDialog = StyledProgressDialog.show(deckPicker, null,
                     deckPicker.getResources().getString(R.string.delete_deck), false);
             if (did == deckPicker.getCol().getDecks().current().optLong("id")) {
                 removingCurrent = true;
