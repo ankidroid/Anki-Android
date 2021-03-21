@@ -18,6 +18,9 @@ package com.ichi2.testutils;
 
 import com.ichi2.libanki.utils.Time;
 
+import java.util.Calendar;
+import java.util.TimeZone;
+
 public class MockTime extends Time {
 
     /** Number of miliseconds between each call. */
@@ -34,6 +37,23 @@ public class MockTime extends Time {
     public MockTime(long time, int step) {
         this.mTime = time;
         this.mStep = step;
+    }
+
+    /** A clock at time Time, each call advance by step ms.*/
+    public MockTime(int year, int month, int date, int hourOfDay, int minute,
+                    int second) {
+        this(year, month, date, hourOfDay, minute, second, 0);
+    }
+
+    /** create a mock time whose initial value is this date. Month is 0-based, in order to stay close to calendar. MS are 0.*/
+    public MockTime(int year, int month, int date, int hourOfDay, int minute,
+                    int second, int step) {
+        Calendar cal = Calendar.getInstance();
+        cal.setTimeZone(TimeZone.getTimeZone("GMT"));
+        cal.clear();
+        cal.set(year, month, date, hourOfDay, minute, second);
+        mTime = cal.getTimeInMillis();
+        mStep = step;
     }
 
     /** Time in milisecond since epoch. */
