@@ -1456,6 +1456,8 @@ public class CardBrowser extends NavigationDrawerActivity implements
         savedInstanceState.putInt("mOldCardTopOffset", mOldCardTopOffset);
         savedInstanceState.putBoolean("mShouldRestoreScroll", mShouldRestoreScroll);
         savedInstanceState.putBoolean("mPostAutoScroll", mPostAutoScroll);
+        savedInstanceState.putInt("mLastSelectedPosition", mLastSelectedPosition);
+        savedInstanceState.putBoolean("mInMultiSelectMode", mInMultiSelectMode);
         super.onSaveInstanceState(savedInstanceState);
     }
 
@@ -1467,6 +1469,8 @@ public class CardBrowser extends NavigationDrawerActivity implements
         mOldCardTopOffset = savedInstanceState.getInt("mOldCardTopOffset");
         mShouldRestoreScroll = savedInstanceState.getBoolean("mShouldRestoreScroll");
         mPostAutoScroll = savedInstanceState.getBoolean("mPostAutoScroll");
+        mLastSelectedPosition = savedInstanceState.getInt("mLastSelectedPosition");
+        mInMultiSelectMode = savedInstanceState.getBoolean("mInMultiSelectMode");
         searchCards();
     }
 
