@@ -62,7 +62,7 @@ public class StyledProgressDialog extends Dialog {
             boolean cancelable, DialogInterface.OnCancelListener cancelListener) {
         if ("".equals(title)) {
             title = null;
-            Timber.w("Invalid title was provided. Using null");
+            Timber.d("Invalid title was provided. Using null");
         }
         return new MaterialDialog.Builder(context)
                 .title(title)
