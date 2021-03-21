@@ -202,11 +202,15 @@ public class DeckPicker extends NavigationDrawerActivity implements
     private LinearLayoutManager mRecyclerViewLayoutManager;
     private DeckAdapter mDeckListAdapter;
 	
-    // private FloatingActionsMenu mActionsMenu;
-	 private FloatingActionButton addDeckButton,addNoteButton,addSharedButton,fabMain;
-    private LinearLayout addNoteLayout, addSharedLayout, addDeckLayout;
+	private FloatingActionButton addDeckButton;
+	private FloatingActionButton addNoteButton;
+	private FloatingActionButton addSharedButton;
+	private FloatingActionButton fabMain;
+    private LinearLayout addNoteLayout;
+	private LinearLayout addSharedLayout;
+	private LinearLayout addDeckLayout;
     private View fabBGLayout;
-    private boolean isFABOpen = false;
+    private boolean mIsFABOpen = false;
 	
     private final Snackbar.Callback mSnackbarShowHideCallback = new Snackbar.Callback();
 
@@ -224,9 +228,6 @@ public class DeckPicker extends NavigationDrawerActivity implements
 
     // flag asking user to do a full sync which is used in upgrade path
     private boolean mRecommendFullSync = false;
-	
-	// flag to track 
-//	private boolean isFABOpen = false;
 
     // flag keeping track of when the app has been paused
     private boolean mActivityPaused = false;
@@ -278,7 +279,7 @@ public class DeckPicker extends NavigationDrawerActivity implements
     private void onDeckClick(View v, DeckSelectionType selectionType) {
         long deckId = (long) v.getTag();
         Timber.i("DeckPicker:: Selected deck with id %d", deckId);
-        if (isFABOpen) {
+        if (mIsFABOpen) {
             closeFloatingActionMenu();
         }
 
@@ -635,23 +636,28 @@ public class DeckPicker extends NavigationDrawerActivity implements
         }
     }
 	
+
 	  private void showFloatingActionMenu() {
-        isFABOpen = true;
+        mIsFABOpen = true;
         addNoteLayout.setVisibility(View.VISIBLE);
         addSharedLayout.setVisibility(View.VISIBLE);
         addDeckLayout.setVisibility(View.VISIBLE);
         fabBGLayout.setVisibility(View.VISIBLE);
-		
-        fabMain.animate().rotationBy(140);
-        addNoteLayout.animate().translationY(-getResources().getDimension(R.dimen.standard_55));
-        addSharedLayout.animate().translationY(-getResources().getDimension(R.dimen.standard_100));
-        addDeckLayout.animate().translationY(-getResources().getDimension(R.dimen.standard_145));
+		// get preference of animation from AnkiActivity
+		if(animationEnabled()) {
+			fabMain.animate().rotationBy(140);
+		}
+		addNoteLayout.animate().translationY(-getResources().getDimension(R.dimen.standard_55));
+		addSharedLayout.animate().translationY(-getResources().getDimension(R.dimen.standard_100));
+		addDeckLayout.animate().translationY(-getResources().getDimension(R.dimen.standard_145));
     }
 
     private void closeFloatingActionMenu() {
-        isFABOpen = false;
+        mIsFABOpen = false;
         fabBGLayout.setVisibility(View.GONE);
-        fabMain.animate().rotation(0);
+		if(animationEnabled()) {
+			fabMain.animate().rotation(0);
+		}
         addNoteLayout.animate().translationY(0);
         addSharedLayout.animate().translationY(0);
         addDeckLayout.animate().translationY(0);
@@ -660,7 +666,7 @@ public class DeckPicker extends NavigationDrawerActivity implements
             public void onAnimationStart(Animator animator) { }
             @Override
             public void onAnimationEnd(Animator animator) {
-                if (!isFABOpen) {
+                if (!mIsFABOpen) {
                     addNoteLayout.setVisibility(View.GONE);
                     addSharedLayout.setVisibility(View.GONE);
                     addDeckLayout.setVisibility(View.GONE);
@@ -676,19 +682,19 @@ public class DeckPicker extends NavigationDrawerActivity implements
     }
 	
     private void configureFloatingActionsMenu() {
-		 addNoteLayout = (LinearLayout) findViewById(R.id.add_note_layout);
-        addSharedLayout = (LinearLayout) findViewById(R.id.add_shared_layout);
-        addDeckLayout = (LinearLayout) findViewById(R.id.add_deck_layout);
-        fabMain = (FloatingActionButton) findViewById(R.id.fab_main);
-        addNoteButton = (FloatingActionButton) findViewById(R.id.add_note_action);
-        addSharedButton = (FloatingActionButton) findViewById(R.id.add_shared_action);
-        addDeckButton = (FloatingActionButton) findViewById(R.id.add_deck_action);
+		addNoteLayout = (LinearLayout)findViewById(R.id.add_note_layout);
+        addSharedLayout = (LinearLayout)findViewById(R.id.add_shared_layout);
+        addDeckLayout = (LinearLayout)findViewById(R.id.add_deck_layout);
+        fabMain = (FloatingActionButton)findViewById(R.id.fab_main);
+        addNoteButton = (FloatingActionButton)findViewById(R.id.add_note_action);
+        addSharedButton = (FloatingActionButton)findViewById(R.id.add_shared_action);
+        addDeckButton = (FloatingActionButton)findViewById(R.id.add_deck_action);
         fabBGLayout = findViewById(R.id.fabBGLayout);
 
         fabMain.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (!isFABOpen) {
+                if (!mIsFABOpen) {
                     showFloatingActionMenu();
                 } else {
                     closeFloatingActionMenu();
@@ -704,11 +710,10 @@ public class DeckPicker extends NavigationDrawerActivity implements
         });
 		
 		addDeckButton.setOnClickListener(view -> {
-            if (isFABOpen) {
+            if (mIsFABOpen) {
                 closeFloatingActionMenu();
                 mDialogEditText = new FixedEditText(DeckPicker.this);
                 mDialogEditText.setSingleLine(true);
-                // mDialogEditText.setFilters(new InputFilter[] { mDeckNameFilter });
                 new MaterialDialog.Builder(DeckPicker.this)
                         .title(R.string.new_deck)
                         .positiveText(R.string.dialog_ok)
@@ -1088,6 +1093,7 @@ public class DeckPicker extends NavigationDrawerActivity implements
         super.onSaveInstanceState(savedInstanceState);
         savedInstanceState.putLong("mContextMenuDid", mContextMenuDid);
         savedInstanceState.putBoolean("mClosedWelcomeMessage", mClosedWelcomeMessage);
+		savedInstanceState.putBoolean("mIsFABOpen", mIsFABOpen);
     }
 
 
@@ -1095,6 +1101,7 @@ public class DeckPicker extends NavigationDrawerActivity implements
     public void onRestoreInstanceState(Bundle savedInstanceState) {
         super.onRestoreInstanceState(savedInstanceState);
         mContextMenuDid = savedInstanceState.getLong("mContextMenuDid");
+		mIsFABOpen = savedInstanceState.getBoolean("mIsFABOpen");
     }
 
 
@@ -1151,7 +1158,7 @@ public class DeckPicker extends NavigationDrawerActivity implements
             super.onBackPressed();
         } else {
             Timber.i("Back key pressed");
-            if (isFABOpen) {
+            if (mIsFABOpen) {
                 closeFloatingActionMenu();
             } else {
                 automaticSync();

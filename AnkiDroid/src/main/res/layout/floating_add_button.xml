@@ -34,7 +34,7 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="10dp"
             app:backgroundTint="@color/material_blue_500"
-            android:src="@drawable/ic_add_white_24dp"
+            android:src="@drawable/ic_add_white"
             app:fabSize="mini"/>
     </LinearLayout>
 
@@ -59,7 +59,7 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="10dp"
             app:backgroundTint="@color/material_blue_500"
-            android:src="@drawable/ic_file_download_white_24dp"
+            android:src="@drawable/ic_file_download_white"
             app:fabSize="mini"/>
     </LinearLayout>
 
@@ -84,7 +84,7 @@
             android:layout_height="wrap_content"
             app:backgroundTint="@color/material_blue_500"
             android:layout_marginLeft="10dp"
-            android:src="@drawable/ic_folder_white_24dp"
+            android:src="@drawable/ic_folder_white"
             app:fabSize="mini"/>
     </LinearLayout>
 
@@ -104,7 +104,7 @@
             android:layout_gravity="bottom|end"
             app:fab_colorNormal="?attr/fab_normal"
             android:gravity="center_vertical"
-            app:srcCompat="@drawable/ic_add_white_24dp"
+            app:srcCompat="@drawable/ic_add_white"
             app:backgroundTint="@color/material_blue_500"
             app:fabSize="normal"/>
     </LinearLayout>

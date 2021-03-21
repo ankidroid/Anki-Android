@@ -70,7 +70,7 @@
     <item
         android:id="@+id/action_add_note_reviewer"
         android:title="@string/menu_add_note"
-        android:icon="@drawable/ic_add_white_24dp"
+        android:icon="@drawable/ic_add_white"
         ankidroid:showAsAction="never"/>
     <item
         android:id="@+id/action_card_info"
