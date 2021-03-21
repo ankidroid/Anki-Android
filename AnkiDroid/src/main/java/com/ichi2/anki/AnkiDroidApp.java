@@ -24,6 +24,8 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.SharedPreferences;
+import android.content.pm.PackageInfo;
+import android.content.pm.PackageManager;
 import android.content.res.Configuration;
 import android.content.res.Resources;
 import android.net.Uri;
@@ -38,6 +40,7 @@ import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 import android.util.Log;
 import android.view.ViewConfiguration;
 import android.webkit.CookieManager;
+import android.webkit.WebView;
 
 import com.ichi2.anki.analytics.AnkiDroidCrashReportDialog;
 import com.ichi2.anki.contextmenu.AnkiCardContextMenu;
@@ -228,6 +231,7 @@ public class AnkiDroidApp extends Application {
     private void setAcraConfigBuilder(CoreConfigurationBuilder acraCoreConfigBuilder) {
         this.acraCoreConfigBuilder = acraCoreConfigBuilder;
         ACRA.init(this, acraCoreConfigBuilder);
+        ACRA.getErrorReporter().putCustomData("WEBVIEW_INFORMATION",fetchWebViewInformation());
     }
 
     @Override
@@ -706,6 +710,26 @@ public class AnkiDroidApp extends Application {
                     Log.e(AnkiDroidApp.TAG, getTag() + "/ " + message, t);
                     break;
             }
+        }
+    }
+
+    @NonNull
+    private String fetchWebViewInformation () {
+        String webViewInfo;
+        try {
+            PackageManager packageManager = getPackageManager();
+            PackageInfo pi;
+            if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
+                pi = WebView.getCurrentWebViewPackage();
+                webViewInfo = "Webview version name - "+pi.versionName+" , version Code - "+pi.versionCode;
+                return webViewInfo;
+            } else {
+                pi = packageManager.getPackageInfo("com.google.android.webview", 0);
+                webViewInfo = "Webview version name - "+pi.versionName+" , version Code - "+pi.versionCode;
+                return webViewInfo;
+            }
+        } catch (Throwable e) {
+            return e.getMessage();
         }
     }
 
