@@ -75,9 +75,6 @@ public class MultimediaEditFieldActivity extends AnkiActivity
     private IMultimediaEditableNote mNote;
     private int mFieldIndex;
 
-    /* To check whether Camera Permission is asked in AndroidManifest.xml */
-    private CheckCameraPermission mCheckCameraPermission;
-
     private IFieldController mFieldController;
     /**
      * Cached copy of the current request to change a field
@@ -219,7 +216,9 @@ public class MultimediaEditFieldActivity extends AnkiActivity
         menu.findItem(R.id.multimedia_edit_field_to_audio).setVisible(mField.getType() != EFieldType.AUDIO_RECORDING);
         menu.findItem(R.id.multimedia_edit_field_to_audio_clip).setVisible(mField.getType() != EFieldType.AUDIO_CLIP);
         menu.findItem(R.id.multimedia_edit_field_to_image).setVisible(mField.getType() != EFieldType.IMAGE);
-        mCheckCameraPermission = new CheckCameraPermission(this);
+
+        /* To check whether Camera Permission is asked in AndroidManifest.xml */
+        CheckCameraPermission mCheckCameraPermission = new CheckCameraPermission(this);
         if (mCheckCameraPermission.checkManifestCameraPermission()) {
             menu.findItem(R.id.multimedia_edit_field_to_image).setVisible(false);
         }

@@ -1,7 +1,6 @@
 /***************************************************************************************
  *                                                                                      *
- * Copyright (c) 2012 Norbert Nagold <norbert.nagold@gmail.com>                         *
- * Copyright (c) 2014 Timothy Rae <perceptualchaos2@gmail.com>                          *
+ * Copyright (c) 2021 Mrudul Tora <mrudultora@gmail.com>                                *
  *                                                                                      *
  * This program is free software; you can redistribute it and/or modify it under        *
  * the terms of the GNU General Public License as published by the Free Software        *
@@ -24,16 +23,16 @@ import android.content.pm.PackageManager;
 import java.util.Arrays;
 
 public class CheckCameraPermission {
-    private final Context mContext;
+    private final Context context;
 
-    public CheckCameraPermission(Context mContext) {
-        this.mContext = mContext;
+    public CheckCameraPermission(Context context) {
+        this.context = context;
     }
 
     public boolean checkManifestCameraPermission() {
         try {
-            String[] requestedPermissions = mContext.getPackageManager()
-                    .getPackageInfo(mContext.getPackageName(), PackageManager.GET_PERMISSIONS)
+            String[] requestedPermissions = context.getPackageManager()
+                    .getPackageInfo(context.getPackageName(), PackageManager.GET_PERMISSIONS)
                     .requestedPermissions;
             if (Arrays.toString(requestedPermissions).contains("android.permission.CAMERA")) {
                 return false;
