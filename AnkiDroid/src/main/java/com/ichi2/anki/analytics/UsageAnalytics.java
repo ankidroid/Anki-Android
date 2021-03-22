@@ -391,7 +391,6 @@ public class UsageAnalytics {
         public static final String EXCEPTION_REPORT = "Exception Report";
 
         /* Analytics actions used in Lookup Dictionary */
-        public static final String NONE = "none";
         public static final String AEDICT = "aedict";
         public static final String LEO = "leo";
         public static final String COLORDICT = "colordict";
