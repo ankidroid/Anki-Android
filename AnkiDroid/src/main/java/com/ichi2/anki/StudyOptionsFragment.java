@@ -43,7 +43,6 @@ import com.ichi2.anki.dialogs.CustomStudyDialog;
 import com.ichi2.async.CollectionTask;
 import com.ichi2.async.TaskListener;
 import com.ichi2.async.TaskManager;
-import com.ichi2.compat.CompatHelper;
 import com.ichi2.libanki.Card;
 import com.ichi2.libanki.Collection;
 import com.ichi2.libanki.Consts;
@@ -57,8 +56,6 @@ import com.ichi2.utils.HtmlUtils;
 import timber.log.Timber;
 
 import static com.ichi2.anim.ActivityTransitionAnimation.Direction.*;
-import static com.ichi2.libanki.Consts.DECK_DYN;
-import static com.ichi2.libanki.Consts.DECK_STD;
 
 public class StudyOptionsFragment extends Fragment implements Toolbar.OnMenuItemClickListener {
 
@@ -526,30 +523,59 @@ public class StudyOptionsFragment extends Fragment implements Toolbar.OnMenuItem
     }
 
 
+    public static class DeckStudyData {
+        /**
+         * The number of new card to see today in a deck, including subdecks.
+         */
+        public final int mNewCardsToday;
+        /**
+         * The number of (repetition of) card in learning to see today in a deck, including subdecks. The exact way cards with multiple steps are counted depends on the scheduler
+         */
+        public final int mLrnCardsToday;
+        /**
+         * The number of review card to see today in a deck, including subdecks.
+         */
+        public final int mRevCardsToday;
+        /**
+         * The number of new cards in this decks, and subdecks.
+         */
+        public final int mNumberOfNewCardsInDeck;
+        /**
+         * Number of cards in this decks and its subdecks.
+         */
+        public final int mNumberOfCardsInDeck;
+        /**
+         * Expected time spent today to review all due cards in this deck.
+         */
+        public final int mEta;
+
+
+        public DeckStudyData(int mNewCardsToday, int mLrnCardsToday, int mRevCardsToday, int mNumberOfNewCardsInDeck, int mNumberOfCardsInDeck, int mEta) {
+            this.mNewCardsToday = mNewCardsToday;
+            this.mLrnCardsToday = mLrnCardsToday;
+            this.mRevCardsToday = mRevCardsToday;
+            this.mNumberOfNewCardsInDeck = mNumberOfNewCardsInDeck;
+            this.mNumberOfCardsInDeck = mNumberOfCardsInDeck;
+            this.mEta = mEta;
+        }
+    }
+
     /**
      * Returns a listener that rebuilds the interface after execute.
      *
      * @param refreshDecklist If true, the listener notifies the parent activity to update its deck list
      *                        to reflect the latest values.
      */
-    private TaskListener<Void, int[]> getCollectionTaskListener(final boolean refreshDecklist) {
-        return new TaskListener<Void, int[]>() {
+    private TaskListener<Void, DeckStudyData> getCollectionTaskListener(final boolean refreshDecklist) {
+        return new TaskListener<Void, DeckStudyData>() {
             @Override
             public void onPreExecute() {
-
             }
 
             @Override
-            public void onPostExecute(int[] obj) {
+            public void onPostExecute(DeckStudyData data) {
                 dismissProgressDialog();
-                if (obj != null) {
-                    // Get the return values back from the AsyncTask
-                    int newCards = obj[0];
-                    int lrnCards = obj[1];
-                    int revCards = obj[2];
-                    int totalNew = obj[3];
-                    int totalCards = obj[4];
-                    int eta = obj[5];
+                if (data != null) {
 
                     // Don't do anything if the fragment is no longer attached to it's Activity or col has been closed
                     if (getActivity() == null) {
@@ -592,13 +618,13 @@ public class StudyOptionsFragment extends Fragment implements Toolbar.OnMenuItem
 
                     // Switch between the empty view, the ordinary view, and the "congratulations" view
                     boolean isDynamic = deck.isDyn();
-                    if (totalCards == 0 && !isDynamic) {
+                    if (data.mNumberOfCardsInDeck == 0 && !isDynamic) {
                         mCurrentContentView = CONTENT_EMPTY;
                         mDeckInfoLayout.setVisibility(View.VISIBLE);
                         mTextCongratsMessage.setVisibility(View.VISIBLE);
                         mTextCongratsMessage.setText(R.string.studyoptions_empty);
                         mButtonStart.setVisibility(View.GONE);
-                    } else if (newCards + lrnCards + revCards == 0) {
+                    } else if (data.mNewCardsToday + data.mLrnCardsToday + data.mRevCardsToday == 0) {
                         mCurrentContentView = CONTENT_CONGRATS;
                         if (!isDynamic) {
                             mDeckInfoLayout.setVisibility(View.GONE);
@@ -632,14 +658,14 @@ public class StudyOptionsFragment extends Fragment implements Toolbar.OnMenuItem
                     }
 
                     // Set new/learn/review card counts
-                    mTextTodayNew.setText(String.valueOf(newCards));
-                    mTextTodayLrn.setText(String.valueOf(lrnCards));
-                    mTextTodayRev.setText(String.valueOf(revCards));
+                    mTextTodayNew.setText(String.valueOf(data.mNewCardsToday));
+                    mTextTodayLrn.setText(String.valueOf(data.mLrnCardsToday));
+                    mTextTodayRev.setText(String.valueOf(data.mRevCardsToday));
 
                     // Set the total number of new cards in deck
-                    if (totalNew < NEW_CARD_COUNT_TRUNCATE_THRESHOLD) {
+                    if (data.mNumberOfNewCardsInDeck < NEW_CARD_COUNT_TRUNCATE_THRESHOLD) {
                         // if it hasn't been truncated by libanki then just set it usually
-                        mTextNewTotal.setText(String.valueOf(totalNew));
+                        mTextNewTotal.setText(String.valueOf(data.mNumberOfNewCardsInDeck));
                     } else {
                         // if truncated then make a thread to allow full count to load
                         mTextNewTotal.setText(">1000");
@@ -665,10 +691,10 @@ public class StudyOptionsFragment extends Fragment implements Toolbar.OnMenuItem
                     }
 
                     // Set total number of cards
-                    mTextTotal.setText(String.valueOf(totalCards));
+                    mTextTotal.setText(String.valueOf(data.mNumberOfCardsInDeck));
                     // Set estimated time remaining
-                    if (eta != -1) {
-                        mTextETA.setText(Integer.toString(eta));
+                    if (data.mEta != -1) {
+                        mTextETA.setText(Integer.toString(data.mEta));
                     } else {
                         mTextETA.setText("-");
                     }
