@@ -167,7 +167,7 @@ Satyam jyotsana gargee(satyam8657@gmail.com)GitHub:(https://github.com/Satyamjyo
 - Vishnu Agarwal(Email: vishnuagbly@gmail.com), (Github: https://github.com/vishnuagbly), (Linkedin: https://www.linkedin.com/in/vishnu-ag-4a3762193)
 - Abhishek Nigam(Email: nabhi531@gmail.com),(Github: https://github.com/abhi114)
 - Amar Shukla (Email:amarshukla320@gmail.com),(Github:https://github.com/AmarShukla1),(Linkedin : https://www.linkedin.com/in/amarshukla007)
-- Tushar Bhatt; E-mail: tbhatt312@gmail.com; GitHub: https://github.com/bhatushar/; LinkedIn: https://www.linkedin.com/in/bhatushar/
+- Tushar Bhatt; E-mail: tbhatt321@gmail.com; GitHub: https://github.com/bhatushar/; LinkedIn: https://www.linkedin.com/in/bhatushar/
 - Amarnath K (Email:amarnathk5674@gmail.com),(Github: https://github.com/Amar-2003)
 - Satyam Pandey Email address: psatyam360@gmail.com, GitHub Id: https://github.com/satyampandeygit
 - Amruta Koshe (Email address: amruta.koshe@gmail.com), (Github: https://github.com/AmrutaKoshe), (Linkedin: https://www.linkedin.com/in/amruta-koshe-5a55b8153/)
