@@ -41,6 +41,8 @@ public class ClozeTest extends RobolectricTest {
         // a cloze model with no clozes is not empty
         f.setItem("Text", "nothing");
         assertThat(d.addNote(f), is(greaterThan(0)));
+        Card card = f.cards().get(0);
+        assertTrue(card.isEmpty());
         // try with one cloze
         f = d.newNote(d.getModels().byName("Cloze"));
         f.setItem("Text", "hello {{c1::world}}");
