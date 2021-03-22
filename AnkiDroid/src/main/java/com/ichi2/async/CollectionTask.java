@@ -30,6 +30,7 @@ import com.ichi2.anki.CardBrowser;
 import com.ichi2.anki.CardUtils;
 import com.ichi2.anki.CollectionHelper;
 import com.ichi2.anki.R;
+import com.ichi2.anki.StudyOptionsFragment;
 import com.ichi2.anki.TemporaryModel;
 import com.ichi2.anki.exception.ConfirmModSchemaException;
 import com.ichi2.anki.exception.ImportExportException;
@@ -1239,7 +1240,7 @@ public class CollectionTask<ProgressListener, ProgressBackground extends Progres
     }
 
 
-    public static class UpdateValuesFromDeck extends Task<Void, int[]> {
+    public static class UpdateValuesFromDeck extends Task<Void, StudyOptionsFragment.DeckStudyData> {
         private final boolean reset;
 
 
@@ -1248,7 +1249,7 @@ public class CollectionTask<ProgressListener, ProgressBackground extends Progres
         }
 
 
-        public int[] task(Collection col, ProgressSenderAndCancelListener<Void> collectionTask) {
+        public StudyOptionsFragment.DeckStudyData task(Collection col, ProgressSenderAndCancelListener<Void> collectionTask) {
             Timber.d("doInBackgroundUpdateValuesFromDeck");
             try {
                 AbstractSched sched = col.getSched();
@@ -1259,8 +1260,8 @@ public class CollectionTask<ProgressListener, ProgressBackground extends Progres
                 Counts counts = sched.counts();
                 int totalNewCount = sched.totalNewForCurrentDeck();
                 int totalCount = sched.cardCount();
-                return new int[] {counts.getNew(), counts.getLrn(), counts.getRev(), totalNewCount,
-                        totalCount, sched.eta(counts)};
+                return new StudyOptionsFragment.DeckStudyData(counts.getNew(), counts.getLrn(), counts.getRev(), totalNewCount,
+                        totalCount, sched.eta(counts));
             } catch (RuntimeException e) {
                 Timber.e(e, "doInBackgroundUpdateValuesFromDeck - an error occurred");
                 return null;
@@ -1286,16 +1287,16 @@ public class CollectionTask<ProgressListener, ProgressBackground extends Progres
     }
 
 
-    public static class RebuildCram extends Task<Void, int[]> {
-        protected int[] task(Collection col, ProgressSenderAndCancelListener<Void> collectionTask) {
+    public static class RebuildCram extends Task<Void, StudyOptionsFragment.DeckStudyData> {
+        protected StudyOptionsFragment.DeckStudyData task(Collection col, ProgressSenderAndCancelListener<Void> collectionTask) {
             Timber.d("doInBackgroundRebuildCram");
             col.getSched().rebuildDyn(col.getDecks().selected());
             return new UpdateValuesFromDeck(true).task(col, collectionTask);
         }
     }
 
-    public static class EmptyCram extends Task<Void, int[]> {
-        protected int[] task(Collection col, ProgressSenderAndCancelListener<Void> collectionTask) {
+    public static class EmptyCram extends Task<Void, StudyOptionsFragment.DeckStudyData> {
+        protected StudyOptionsFragment.DeckStudyData task(Collection col, ProgressSenderAndCancelListener<Void> collectionTask) {
             Timber.d("doInBackgroundEmptyCram");
             col.getSched().emptyDyn(col.getDecks().selected());
             return new UpdateValuesFromDeck(true).task(col, collectionTask);

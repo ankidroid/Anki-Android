@@ -2747,7 +2747,7 @@ public class DeckPicker extends NavigationDrawerActivity implements
     private SimpleProgressListener simpleProgressListener() {
         return new SimpleProgressListener(this);
     }
-    private static class SimpleProgressListener extends TaskListenerWithContext<DeckPicker, Void, int[]>{
+    private static class SimpleProgressListener extends TaskListenerWithContext<DeckPicker, Void, StudyOptionsFragment.DeckStudyData>{
         public SimpleProgressListener (DeckPicker deckPicker) {
             super(deckPicker);
         }
@@ -2759,7 +2759,7 @@ public class DeckPicker extends NavigationDrawerActivity implements
 
 
         @Override
-        public void actualOnPostExecute(@NonNull DeckPicker deckPicker, int[] stats) {
+        public void actualOnPostExecute(@NonNull DeckPicker deckPicker, StudyOptionsFragment.DeckStudyData stats) {
             deckPicker.updateDeckList();
             if (deckPicker.mFragmented) {
                 deckPicker.loadStudyOptionsFragment(false);

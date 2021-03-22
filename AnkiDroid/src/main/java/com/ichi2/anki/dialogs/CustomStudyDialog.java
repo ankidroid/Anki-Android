@@ -41,6 +41,7 @@ import com.ichi2.anki.CollectionHelper;
 import com.ichi2.anki.DeckOptions;
 import com.ichi2.anki.R;
 import com.ichi2.anki.Reviewer;
+import com.ichi2.anki.StudyOptionsFragment;
 import com.ichi2.anki.UIUtils;
 import com.ichi2.anki.analytics.AnalyticsDialogFragment;
 import com.ichi2.anki.exception.FilteredAncestor;
@@ -504,7 +505,7 @@ public class CustomStudyDialog extends AnalyticsDialogFragment {
     private CreateCustomStudySessionListener createCustomStudySessionListener(){
         return new CreateCustomStudySessionListener(getAnkiActivity());
     }
-    private static class CreateCustomStudySessionListener extends TaskListenerWithContext<AnkiActivity, Void, int[]> {
+    private static class CreateCustomStudySessionListener extends TaskListenerWithContext<AnkiActivity, Void, StudyOptionsFragment.DeckStudyData> {
         public CreateCustomStudySessionListener(AnkiActivity activity) {
             super(activity);
         }
@@ -517,7 +518,7 @@ public class CustomStudyDialog extends AnalyticsDialogFragment {
 
 
         @Override
-        public void actualOnPostExecute(@NonNull AnkiActivity activity, int[] v) {
+        public void actualOnPostExecute(@NonNull AnkiActivity activity, StudyOptionsFragment.DeckStudyData v) {
             activity.hideProgressBar();
             ((CustomStudyListener) activity).onCreateCustomStudySession();
         }
