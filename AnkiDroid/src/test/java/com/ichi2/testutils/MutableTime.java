@@ -28,6 +28,10 @@ public class MutableTime extends MockTime {
     public MutableTime(long time, int step) {
         super(time, step);
     }
+    public MutableTime(int year, int month, int date, int hourOfDay, int minute,
+                       int second, int milliseconds, int step)  {
+        super(year, month, date, hourOfDay, minute, second, milliseconds, step);
+    }
 
     public void setFrozen(boolean value) {
         mFrozen = value;
