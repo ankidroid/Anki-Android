@@ -68,11 +68,30 @@
                         android:gravity="left|center_vertical"
                         android:textStyle="bold"
                         android:text="@string/CardEditorNoteDeck" />
-                    <Spinner
-                        android:id="@+id/note_deck_spinner"
+                    <LinearLayout
                         android:layout_width="fill_parent"
-                        android:layout_height="@dimen/touch_target"
-                        app:popupTheme="@style/ActionBar.Popup"/>
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical" >
+                        <LinearLayout
+                            android:id="@+id/DeckEditorCardsButton"
+                            style="?android:attr/buttonStyleSmall"
+                            android:layout_width="fill_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:gravity="center" >
+
+                            <com.ichi2.ui.FixedTextView
+                                android:id="@+id/DeckEditorCardsText"
+                                android:layout_width="fill_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center"
+                                android:layout_marginLeft="5dip"
+                                android:layout_marginRight="5dip"
+                                android:clickable="false"
+                                tools:text="Card 1"
+                                android:gravity="left|center_vertical" />
+                        </LinearLayout>
+                    </LinearLayout>
                 </LinearLayout>
 
                 <!-- Front/Back/Attach views added in NoteEditor.populateEditFields(..) -->
