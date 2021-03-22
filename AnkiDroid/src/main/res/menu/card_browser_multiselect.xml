@@ -96,6 +96,7 @@
         ankidroid:showAsAction="ifRoom"
         android:id="@+id/action_undo"
         android:title="@string/undo"
+        ankidroid:actionProviderClass="com.ichi2.ui.RtlCompliantActionProvider"
         android:icon="@drawable/ic_undo_white_24dp"/>
 
 </menu>

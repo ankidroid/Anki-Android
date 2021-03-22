@@ -19,6 +19,7 @@
         android:id="@+id/action_undo"
         android:icon="@drawable/ic_undo_white_24dp"
         android:title="@string/undo_action_review"
+        ankidroid:actionProviderClass="com.ichi2.ui.RtlCompliantActionProvider"
         ankidroid:showAsAction="never"
         android:visible="false"/>
     <item
