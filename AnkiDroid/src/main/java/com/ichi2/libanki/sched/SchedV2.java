@@ -224,7 +224,7 @@ public class SchedV2 extends AbstractSched {
 
     @Override
     public void resetCounts(@NonNull CancelListener cancelListener) {
-        resetCounts(true);
+        resetCounts(cancelListener,true);
     }
 
     public void resetCounts(boolean checkCutoff) {
