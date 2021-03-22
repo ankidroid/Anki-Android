@@ -218,13 +218,7 @@ public class Info extends AnkiActivity {
             Timber.w(e, "Unable to detect Rust Backend");
         }
 
-        String webviewUserAgent = null;
-        try {
-            webviewUserAgent = getWebviewUserAgent();
-        } catch (Throwable e) {
-            AnkiDroidApp.sendExceptionReport(e, "Info::copyDebugInfo()", "some issue occured while extracting webview user agent");
-        }
-
+        String webviewUserAgent = getWebviewUserAgent();
         String debugInfo = "AnkiDroid Version = " + VersionUtils.getPkgVersionName() + "\n\n" +
                 "Android Version = " + Build.VERSION.RELEASE + "\n\n" +
                 "Manufacturer = " + Build.MANUFACTURER + "\n\n" +
@@ -247,7 +241,12 @@ public class Info extends AnkiActivity {
     }
 
     private String getWebviewUserAgent() {
-        return new WebView(this).getSettings().getUserAgentString() + "\n\n";
+        try {
+            return new WebView(this).getSettings().getUserAgentString() + "\n\n";
+        } catch (Throwable e) {
+            AnkiDroidApp.sendExceptionReport(e, "Info::copyDebugInfo()", "some issue occured while extracting webview user agent");
+        }
+        return null;
     }
 
     private boolean isSendingCrashReports() {
