@@ -312,7 +312,6 @@ public class FlashCardsContract {
                 Note._ID,
                 Note.GUID,
                 Note.MID,
-                Note.ALLOW_EMPTY,
                 Note.MOD,
                 Note.USN,
                 Note.TAGS,
