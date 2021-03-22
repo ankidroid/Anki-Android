@@ -223,8 +223,8 @@ public class Info extends AnkiActivity {
                 "Android Version = " + Build.VERSION.RELEASE + "\n\n" +
                 "Manufacturer = " + Build.MANUFACTURER + "\n\n" +
                 "Model = " + Build.MODEL + "\n\n" +
-                "Hardware = " + Build.HARDWARE+ "\n\n" +
-                "Webview User Agent = " + webviewUserAgent +
+                "Hardware = " + Build.HARDWARE + "\n\n" +
+                "Webview User Agent = " + webviewUserAgent + "\n\n" +
                 "ACRA UUID = " + Installation.id(this) + "\n\n" +
                 "Scheduler = " + schedName + "\n\n" +
                 "Crash Reports Enabled = " + isSendingCrashReports() + "\n\n" +
@@ -242,7 +242,7 @@ public class Info extends AnkiActivity {
 
     private String getWebviewUserAgent() {
         try {
-            return new WebView(this).getSettings().getUserAgentString() + "\n\n";
+            return new WebView(this).getSettings().getUserAgentString();
         } catch (Throwable e) {
             AnkiDroidApp.sendExceptionReport(e, "Info::copyDebugInfo()", "some issue occured while extracting webview user agent");
         }
