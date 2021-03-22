@@ -744,6 +744,12 @@ public class NoteEditor extends AnkiActivity implements DeckSelectionDialog.Deck
                 }
                 break;
 
+            case KeyEvent.KEYCODE_D:
+                if (event.isCtrlPressed() && (mDeckEditorCardsButton != null)) {
+                    displayDeckOverrideDialog(getCol());
+                }
+                break;
+
             case KeyEvent.KEYCODE_L:
                 if (event.isCtrlPressed()) {
                     showCardTemplateEditor();
