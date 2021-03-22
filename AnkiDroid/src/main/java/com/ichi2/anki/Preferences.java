@@ -349,13 +349,6 @@ public class Preferences extends AppCompatPreferenceActivity implements Preferen
                 });
                 setupContextMenuPreference(screen, CardBrowserContextMenu.CARD_BROWSER_CONTEXT_MENU_PREF_KEY, R.string.card_browser_context_menu);
                 setupContextMenuPreference(screen, AnkiCardContextMenu.ANKI_CARD_CONTEXT_MENU_PREF_KEY, R.string.context_menu_anki_card_label);
-                // Analytics for lookup
-                android.preference.Preference lookupPreference = screen.findPreference("dictionary");
-                lookupPreference.setOnPreferenceChangeListener(((preference, o) -> {
-                    int dictionaryType = Integer.parseInt(o.toString());
-                    Lookup.lookupAnalytics(dictionaryType);
-                    return true;
-                }));
 
                 // Make it possible to test crash reporting, but only for DEBUG builds
                 if (BuildConfig.DEBUG && !AdaptionUtil.isUserATestClient()) {
