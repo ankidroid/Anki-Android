@@ -130,7 +130,21 @@ public class Finder {
         if (rev) {
             Collections.reverse(res);
         }
-        return res;
+        List<Long> nid = findNotes(query);
+        List<Long> cid = new ArrayList<>();
+        for ( int i = 0 ; i < nid.size() ; i++ ) {
+            for ( int j = 0 ; j < res.size() ; j++ ) {
+                int count  = 0;
+                if ( nid.get(i).equals( getNoteId(res.get(j))) ){
+                    count++;
+                    if ( count == 1 ) {
+                        cid.add( res.get(j) );
+                        break;
+                    }
+                }
+            }
+        }
+        return cid;
     }
 
 
@@ -390,6 +404,20 @@ public class Finder {
         }
         return sql;
     }
+
+    private Long getNoteId ( Long cid ) {
+        String sql = "select c.nid from cards c where c.id = " + String.valueOf(cid) ;
+        Long nid = Long.valueOf(0);
+        try ( Cursor cur = mCol.getDb().getDatabase().query(sql) ) {
+            while ( cur.moveToNext() ) {
+                nid = cur.getLong(0);
+            }
+        } catch ( SQLException e ) {
+            return Long.valueOf(0);
+        }
+        return nid;
+    }
+
 
 
     /**
