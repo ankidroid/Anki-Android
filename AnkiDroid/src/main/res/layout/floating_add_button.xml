@@ -13,104 +13,111 @@
         android:layout_height="match_parent"
         android:background="@color/transparent"
         android:visibility="gone"/>
-    <LinearLayout
-        android:id="@+id/add_note_layout"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginRight="23dp"
-        android:padding="12dp"
-        android:clipToPadding="false"
-        android:gravity="center_vertical"
-        android:layout_marginBottom="23dp"
-        android:layout_gravity="bottom|end"
-        android:orientation="horizontal"
-        android:visibility="gone">
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/menu_add_note"/>
-        <com.google.android.material.floatingactionbutton.FloatingActionButton
-            android:id="@+id/add_note_action"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="10dp"
-            app:backgroundTint="@color/material_blue_500"
-            android:src="@drawable/ic_add_white"
-            app:fabSize="mini"/>
-    </LinearLayout>
-
-    <LinearLayout
-        android:id="@+id/add_shared_layout"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:padding="12dp"
-        android:clipToPadding="false"
-        android:layout_marginRight="23dp"
-        android:gravity="center_vertical"
-        android:layout_marginBottom="23dp"
-        android:orientation="horizontal"
-        android:layout_gravity="bottom|end"
-        android:visibility="gone">
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/menu_get_shared_decks"/>
-        <com.google.android.material.floatingactionbutton.FloatingActionButton
-            android:id="@+id/add_shared_action"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="10dp"
-            app:backgroundTint="@color/material_blue_500"
-            android:src="@drawable/ic_file_download_white"
-            app:fabSize="mini"/>
-    </LinearLayout>
-
-    <LinearLayout
-        android:id="@+id/add_deck_layout"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:padding="12dp"
-        android:clipToPadding="false"
-        android:layout_marginRight="23dp"
-        android:gravity="center_vertical"
-        android:layout_marginBottom="23dp"
-        android:orientation="horizontal"
-        android:layout_gravity="bottom|end"
-        android:visibility="gone">
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/new_deck"/>
-        <com.google.android.material.floatingactionbutton.FloatingActionButton
-            android:id="@+id/add_deck_action"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            app:backgroundTint="@color/material_blue_500"
-            android:layout_marginLeft="10dp"
-            android:src="@drawable/ic_folder_white"
-            app:fabSize="mini"/>
-    </LinearLayout>
 
     <LinearLayout
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginRight="16dp"
-        android:gravity="center_vertical"
-        android:clipToPadding="false"
-        android:orientation="horizontal"
+        android:orientation="vertical"
         android:padding="12dp"
         android:layout_marginBottom="10dp"
-        android:layout_gravity="bottom|end">
-        <com.google.android.material.floatingactionbutton.FloatingActionButton
-            android:id="@+id/fab_main"
+        android:layout_marginRight="23dp"
+        android:layout_gravity="bottom|end"
+        android:layout_height="wrap_content">
+
+        <LinearLayout
+            android:id="@+id/add_note_layout"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="bottom|end"
-            app:fab_colorNormal="?attr/fab_normal"
+            android:padding="5dp"
+            android:clipToPadding="false"
             android:gravity="center_vertical"
-            app:srcCompat="@drawable/ic_add_white"
-            app:backgroundTint="@color/material_blue_500"
-            app:fabSize="normal"/>
+            android:layout_marginBottom="23dp"
+            android:layout_gravity="bottom|end"
+            android:orientation="horizontal"
+            android:visibility="gone">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/menu_add_note"/>
+            <com.google.android.material.floatingactionbutton.FloatingActionButton
+                android:id="@+id/add_note_action"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                app:backgroundTint="@color/material_blue_500"
+                android:src="@drawable/ic_add_white"
+                app:fabSize="mini"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/add_shared_layout"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="5dp"
+            android:clipToPadding="false"
+            android:gravity="center_vertical"
+            android:layout_marginBottom="23dp"
+            android:orientation="horizontal"
+            android:layout_gravity="bottom|end"
+            android:visibility="gone">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/menu_get_shared_decks"/>
+            <com.google.android.material.floatingactionbutton.FloatingActionButton
+                android:id="@+id/add_shared_action"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                app:backgroundTint="@color/material_blue_500"
+                android:src="@drawable/ic_file_download_white"
+                app:fabSize="mini"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/add_deck_layout"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="5dp"
+            android:clipToPadding="false"
+            android:gravity="center_vertical"
+            android:layout_marginBottom="23dp"
+            android:orientation="horizontal"
+            android:layout_gravity="bottom|end"
+            android:visibility="gone">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/new_deck"/>
+            <com.google.android.material.floatingactionbutton.FloatingActionButton
+                android:id="@+id/add_deck_action"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:backgroundTint="@color/material_blue_500"
+                android:layout_marginLeft="10dp"
+                android:src="@drawable/ic_folder_white"
+                app:fabSize="mini"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            android:clipToPadding="false"
+            android:orientation="horizontal"
+            android:layout_gravity="bottom|end">
+            <com.google.android.material.floatingactionbutton.FloatingActionButton
+                android:id="@+id/fab_main"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="bottom|end"
+                app:fab_colorNormal="?attr/fab_normal"
+                android:gravity="center_vertical"
+                app:srcCompat="@drawable/ic_add_white"
+                app:backgroundTint="@color/material_blue_500"
+                app:fabSize="normal"/>
+        </LinearLayout>
+
     </LinearLayout>
+
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

@@ -638,44 +638,58 @@ public class DeckPicker extends NavigationDrawerActivity implements
 
     private void showFloatingActionMenu() {
         mIsFABOpen = true;
-        addNoteLayout.setVisibility(View.VISIBLE);
-        addSharedLayout.setVisibility(View.VISIBLE);
-        addDeckLayout.setVisibility(View.VISIBLE);
-        fabBGLayout.setVisibility(View.VISIBLE);
         if (animationEnabled()) {
+            // Show with animation
+            addNoteLayout.setVisibility(View.VISIBLE);
+            addSharedLayout.setVisibility(View.VISIBLE);
+            addDeckLayout.setVisibility(View.VISIBLE);
+            fabBGLayout.setVisibility(View.VISIBLE);
             fabMain.animate().rotationBy(140);
+            addNoteLayout.animate().translationY(0);
+            addSharedLayout.animate().translationY(0);
+            addDeckLayout.animate().translationY(0);
+        } else {
+            // Show without animation
+            addNoteLayout.setVisibility(View.VISIBLE);
+            addSharedLayout.setVisibility(View.VISIBLE);
+            addDeckLayout.setVisibility(View.VISIBLE);
+            fabBGLayout.setVisibility(View.VISIBLE);
         }
-        addNoteLayout.animate().translationY(-getResources().getDimension(R.dimen.standard_55));
-        addSharedLayout.animate().translationY(-getResources().getDimension(R.dimen.standard_100));
-        addDeckLayout.animate().translationY(-getResources().getDimension(R.dimen.standard_145));
     }
 
     private void closeFloatingActionMenu() {
         mIsFABOpen = false;
         fabBGLayout.setVisibility(View.GONE);
         if (animationEnabled()) {
+            // Close with animation
             fabMain.animate().rotation(0);
-        }
-        addNoteLayout.animate().translationY(0);
-        addSharedLayout.animate().translationY(0);
-        addDeckLayout.animate().translationY(0).setListener(new Animator.AnimatorListener() {
-            @Override
-            public void onAnimationStart(Animator animator) { }
-            @Override
-            public void onAnimationEnd(Animator animator) {
-                if (!mIsFABOpen) {
-                    addNoteLayout.setVisibility(View.GONE);
-                    addSharedLayout.setVisibility(View.GONE);
-                    addDeckLayout.setVisibility(View.GONE);
+            addDeckLayout.animate().translationY(getResources().getDimension(R.dimen.standard_60));
+            addSharedLayout.animate().translationY(getResources().getDimension(R.dimen.standard_110));
+            addNoteLayout.animate().translationY(getResources().getDimension(R.dimen.standard_160)).setListener(new Animator.AnimatorListener() {
+                @Override
+                public void onAnimationStart(Animator animator) { }
+
+                @Override
+                public void onAnimationEnd(Animator animator) {
+                    if (!mIsFABOpen) {
+                        addNoteLayout.setVisibility(View.GONE);
+                        addSharedLayout.setVisibility(View.GONE);
+                        addDeckLayout.setVisibility(View.GONE);
+                    }
                 }
-            }
 
-            @Override
-            public void onAnimationCancel(Animator animator) { }
+                @Override
+                public void onAnimationCancel(Animator animator) { }
 
-            @Override
-            public void onAnimationRepeat(Animator animator) { }
-        });
+                @Override
+                public void onAnimationRepeat(Animator animator) { }
+            });
+        } else {
+            // Close without animation
+            addNoteLayout.setVisibility(View.GONE);
+            addSharedLayout.setVisibility(View.GONE);
+            addDeckLayout.setVisibility(View.GONE);
+        }
     }
 	
     private void configureFloatingActionsMenu() {
@@ -687,7 +701,7 @@ public class DeckPicker extends NavigationDrawerActivity implements
         addSharedButton = (FloatingActionButton)findViewById(R.id.add_shared_action);
         addDeckButton = (FloatingActionButton)findViewById(R.id.add_deck_action);
         fabBGLayout = findViewById(R.id.fabBGLayout);
-
+		
         fabMain.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
