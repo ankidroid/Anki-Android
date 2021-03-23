@@ -616,7 +616,7 @@ public class DeckOptions extends AppCompatPreferenceActivity implements OnShared
         @Override
         public void actualOnPreExecute(@NonNull DeckPreferenceHack deckPreferenceHack) {
             Resources res = deckPreferenceHack.getDeckOptions().getResources();
-            deckPreferenceHack.mProgressDialog = StyledProgressDialog.show(deckPreferenceHack.getDeckOptions(), "",
+            deckPreferenceHack.mProgressDialog = StyledProgressDialog.show(deckPreferenceHack.getDeckOptions(), null,
                     res.getString(R.string.reordering_cards), false);
         }
 

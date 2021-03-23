@@ -658,11 +658,22 @@ public class Collection {
 
 
     /**
-     * Add a note to the collection. Return number of new cards.
+     * @param note A note to add if it generates card
+     * @return Number of card added.
      */
     public int addNote(Note note) {
+        return addNote(note, Models.AllowEmpty.ONLY_CLOZE);
+    }
+
+    /**
+     * Add a note and cards to the collection. If allowEmpty, at least one card is generated.
+     * @param note  The note to add to the collection
+     * @param allowEmpty Whether we accept to add it even if it should generate no card. Useful to import note even if buggy
+     * @return Number of card added
+     */
+    public int addNote(Note note, Models.AllowEmpty allowEmpty) {
         // check we have card models available, then save
-        ArrayList<JSONObject> cms = findTemplates(note);
+        ArrayList<JSONObject> cms = findTemplates(note, allowEmpty);
         // Todo: upstream, we accept to add a not even if it generates no card. Should be ported to ankidroid
         if (cms.size() == 0) {
             return 0;
@@ -706,13 +717,18 @@ public class Collection {
       Card creation ************************************************************ ***********************************
      */
 
+    public ArrayList<JSONObject> findTemplates(Note note) {
+        return findTemplates(note, Models.AllowEmpty.ONLY_CLOZE);
+    }
+
     /**
      * @param note A note
+     * @param allowEmpty whether we allow to have a card which is actually empty if it is necessary to return a non-empty list
      * @return (active), non-empty templates.
      */
-    public ArrayList<JSONObject> findTemplates(Note note) {
+    public ArrayList<JSONObject> findTemplates(Note note, Models.AllowEmpty allowEmpty) {
         Model model = note.model();
-        ArrayList<Integer> avail = Models.availOrds(model, note.getFields());
+        ArrayList<Integer> avail = Models.availOrds(model, note.getFields(), allowEmpty);
         return _tmplsFromOrds(model, avail);
     }
 
@@ -850,7 +866,7 @@ public class Collection {
                 }
                 @NonNull Long nid = cur.getLong(0);
                 String flds = cur.getString(1);
-                ArrayList<Integer> avail = Models.availOrds(model, Utils.splitFields(flds), nodes);
+                ArrayList<Integer> avail = Models.availOrds(model, Utils.splitFields(flds), nodes, Models.AllowEmpty.TRUE);
                 if (task != null) {
                     task.doProgress(avail.size());
                 }

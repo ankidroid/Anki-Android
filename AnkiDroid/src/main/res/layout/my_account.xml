@@ -2,6 +2,7 @@
 <androidx.coordinatorlayout.widget.CoordinatorLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/root_layout"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
@@ -24,10 +25,17 @@
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
                 android:padding="15dp"
-                android:gravity="center"
+                android:gravity="top"
                 >
                 <!-- TODO JS choose a standardized padding to use here -->
-
+                <ImageView
+                    android:id="@+id/ankidroid_logo"
+                    android:layout_width="200dp"
+                    app:srcCompat="@drawable/ankidroid_logo"
+                    android:layout_marginBottom="0dp"
+                    android:layout_gravity="center"
+                    android:layout_height="200dp"
+                    />
 
                 <!--<com.ichi2.ui.FixedTextView-->
                 <!--android:id="@+id/sign_in"-->
@@ -69,8 +77,13 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:inputType="textPassword"
+<<<<<<< HEAD
                         android:focusable="true"
                         android:layout_margin="@dimen/content_vertical_padding"/>
+=======
+                        android:layout_margin="@dimen/content_vertical_padding"
+                        android:paddingRight="40dp"/>
+>>>>>>> 7ea9e61e110ec7dae19d678b55431ca1b8d6bb2f
                 </com.google.android.material.textfield.TextInputLayout>
 
                 <Button
@@ -79,6 +92,7 @@
                     android:layout_height="wrap_content"
                     android:theme="@style/LargeButtonStyle"
                     android:singleLine="true"
+                    android:background="@drawable/footer_button_round_blue"
                     android:textSize="@dimen/md_title_textsize"
                     android:layout_gravity="center"
                     android:padding="10dp"
@@ -150,4 +164,3 @@
         </LinearLayout>
     </LinearLayout>
 </androidx.coordinatorlayout.widget.CoordinatorLayout>
-

@@ -35,6 +35,7 @@ import com.ichi2.anki.exception.ConfirmModSchemaException;
 import com.ichi2.anki.exception.ImportExportException;
 import com.ichi2.libanki.Media;
 import com.ichi2.libanki.Model;
+import com.ichi2.libanki.Models;
 import com.ichi2.libanki.Undoable;
 import com.ichi2.libanki.WrongId;
 import com.ichi2.libanki.sched.AbstractSched;
@@ -100,7 +101,6 @@ import static com.ichi2.libanki.Consts.DECK_DYN;
 import static com.ichi2.libanki.Undoable.*;
 import static com.ichi2.utils.BooleanGetter.False;
 import static com.ichi2.utils.BooleanGetter.True;
-import static com.ichi2.utils.BooleanGetter.fromBoolean;
 
 /**
  * Loading in the background, so that AnkiDroid does not look like frozen.
@@ -264,10 +264,16 @@ public class CollectionTask<ProgressListener, ProgressBackground extends Progres
 
     public static class AddNote extends Task<Integer, Boolean> {
         private final Note note;
+        private final Models.AllowEmpty allowEmpty;
 
+
+        public AddNote(Note note, Models.AllowEmpty allowEmpty) {
+            this.note = note;
+            this.allowEmpty = allowEmpty;
+        }
 
         public AddNote(Note note) {
-            this.note = note;
+            this(note, Models.AllowEmpty.ONLY_CLOZE);
         }
 
 
@@ -276,7 +282,7 @@ public class CollectionTask<ProgressListener, ProgressBackground extends Progres
             try {
                 DB db = col.getDb();
                 db.executeInTransaction(() -> {
-                        int value = col.addNote(note);
+                        int value = col.addNote(note, allowEmpty);
                         collectionTask.doProgress(value);
                     });
             } catch (RuntimeException e) {
@@ -1483,10 +1489,7 @@ public class CollectionTask<ProgressListener, ProgressBackground extends Progres
             Timber.d("doInBackgroundExportApkg");
 
             try {
-                AnkiPackageExporter exporter = new AnkiPackageExporter(col);
-                exporter.setIncludeSched(includeSched);
-                exporter.setIncludeMedia(includeMedia);
-                exporter.setDid(did);
+                AnkiPackageExporter exporter = new AnkiPackageExporter(col, did, includeSched, includeMedia);
                 exporter.exportInto(apkgPath, col.getContext());
             } catch (FileNotFoundException e) {
                 Timber.e(e, "FileNotFoundException in doInBackgroundExportApkg");
