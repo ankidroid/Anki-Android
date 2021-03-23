@@ -291,6 +291,10 @@ public class UsageAnalytics {
 
 
     protected static boolean canGetDefaultUserAgent() {
+        // FIXME: Hack to fix #8319 - broken 'Android System WebView' update
+        return false;
+/*
+
         // #5502 - getDefaultUserAgent starts a WebView. We can't have two WebViews with the same data directory.
         // But ACRA starts an :acra process which does not terminate when AnkiDroid is restarted. https://crbug.com/558377
 
@@ -301,6 +305,7 @@ public class UsageAnalytics {
 
         // If we have a custom data directory, then the crash will not occur.
         return WebViewDebugging.hasSetDataDirectory();
+*/
     }
 
 
