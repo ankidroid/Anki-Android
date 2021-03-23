@@ -59,7 +59,7 @@ public class DeckSelectionDialog extends AnalyticsDialogFragment {
      * A dialog which handles selecting a deck
      */
     @NonNull
-    public static DeckSelectionDialog newInstance(@NonNull String title, @NonNull String summaryMessage, @NonNull List<SelectableDeck> decks) {
+    public static DeckSelectionDialog newInstance(@NonNull String title, @Nullable String summaryMessage, @NonNull List<SelectableDeck> decks) {
         DeckSelectionDialog f = new DeckSelectionDialog();
         Bundle args = new Bundle();
         args.putString("summaryMessage", summaryMessage);
@@ -88,7 +88,12 @@ public class DeckSelectionDialog extends AnalyticsDialogFragment {
 
         Bundle arguments = requireArguments();
 
-        summary.setText(getSummaryMessage(arguments));
+        if (getSummaryMessage(arguments) == null) {
+            summary.setVisibility(View.GONE);
+        } else {
+            summary.setVisibility(View.VISIBLE);
+            summary.setText(getSummaryMessage(arguments));
+        }
 
         RecyclerView recyclerView = dialogView.findViewById(R.id.deck_picker_dialog_list);
         recyclerView.requestFocus();
@@ -108,7 +113,6 @@ public class DeckSelectionDialog extends AnalyticsDialogFragment {
 
         MaterialDialog.Builder builder = new MaterialDialog.Builder(requireActivity())
                 .neutralText(R.string.dialog_cancel)
-                .negativeText(R.string.restore_default)
                 .customView(dialogView, false)
                 .onNegative((dialog, which) -> onDeckSelected(null))
                 .onNeutral((dialog, which) -> { });
@@ -118,9 +122,9 @@ public class DeckSelectionDialog extends AnalyticsDialogFragment {
     }
 
 
-    @NonNull
+    @Nullable
     private String getSummaryMessage(Bundle arguments) {
-        return Objects.requireNonNull(arguments.getString("summaryMessage"));
+        return arguments.getString("summaryMessage");
     }
 
 

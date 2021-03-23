@@ -264,7 +264,7 @@ public class NoteEditor extends AnkiActivity implements DeckSelectionDialog.Deck
     public void onDeckSelected(@Nullable DeckSelectionDialog.SelectableDeck deck) {
         if (deck != null) {
             mDeckEditorCardsText.setText(deck.getName());
-            mCurrentDid=deck.getDeckId();
+            mCurrentDid = deck.getDeckId();
         }
     }
 
@@ -585,8 +585,8 @@ public class NoteEditor extends AnkiActivity implements DeckSelectionDialog.Deck
             deckTextView.setText(R.string.CardEditorCardDeck);
         }
 
-        mDeckEditorCardsButton = findViewById(R.id.DeckEditorCardsButton);
-        mDeckEditorCardsText = findViewById(R.id.DeckEditorCardsText);
+        mDeckEditorCardsButton = findViewById(R.id.deck_editor_cards_button);
+        mDeckEditorCardsText = findViewById(R.id.deck_editor_cards_text);
 
         ArrayList<Deck> decks = getCol().getDecks().all();
         Collections.sort(decks, DeckComparator.instance);
@@ -712,7 +712,7 @@ public class NoteEditor extends AnkiActivity implements DeckSelectionDialog.Deck
     private void displayDeckOverrideDialog(Collection col) {
         FunctionalInterfaces.Filter<Deck> nonDynamic = (d) -> !Decks.isDynamic(d);
         List<DeckSelectionDialog.SelectableDeck> decks = DeckSelectionDialog.SelectableDeck.fromCollection(col, nonDynamic);
-        DeckSelectionDialog dialog = DeckSelectionDialog.newInstance("Deck Search", "", decks);
+        DeckSelectionDialog dialog = DeckSelectionDialog.newInstance("Deck Search", null, decks);
         AnkiActivity.showDialogFragment(NoteEditor.this, dialog);
     }
 
@@ -1505,7 +1505,7 @@ public class NoteEditor extends AnkiActivity implements DeckSelectionDialog.Deck
 
             if (Build.VERSION.SDK_INT < Build.VERSION_CODES.O) {
                 if (i == 0) {
-                    findViewById(R.id.DeckEditorCardsButton).setNextFocusForwardId(newTextbox.getId());
+                    findViewById(R.id.deck_editor_cards_button).setNextFocusForwardId(newTextbox.getId());
                 }
                 if (previous != null) {
                     previous.getLastViewInTabOrder().setNextFocusForwardId(newTextbox.getId());
