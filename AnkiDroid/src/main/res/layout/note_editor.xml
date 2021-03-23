@@ -45,11 +45,17 @@
                         android:gravity="left|center_vertical"
                         android:textStyle="bold"
                         android:text="@string/CardEditorModel" />
-                    <Spinner
-                        android:id="@+id/note_type_spinner"
+                    <LinearLayout
                         android:layout_width="fill_parent"
                         android:layout_height="@dimen/touch_target"
-                        app:popupTheme="@style/ActionBar.Popup"/>
+                        style="?android:attr/buttonStyleSmall"
+                        android:orientation="vertical" >
+                        <Spinner
+                            android:id="@+id/note_type_spinner"
+                            android:layout_width="fill_parent"
+                            android:layout_height="wrap_content"
+                            app:popupTheme="@style/ActionBar.Popup" />
+                    </LinearLayout>
                 </LinearLayout>
 
                 <!-- Deck selector -->
@@ -73,21 +79,21 @@
                         android:layout_height="wrap_content"
                         android:orientation="vertical" >
                         <LinearLayout
-                            android:id="@+id/DeckEditorCardsButton"
+                            android:id="@+id/deck_editor_cards_button"
                             style="?android:attr/buttonStyleSmall"
                             android:layout_width="fill_parent"
                             android:layout_height="wrap_content"
                             android:layout_gravity="center"
                             android:gravity="center" >
-
                             <com.ichi2.ui.FixedTextView
-                                android:id="@+id/DeckEditorCardsText"
+                                android:id="@+id/deck_editor_cards_text"
                                 android:layout_width="fill_parent"
                                 android:layout_height="wrap_content"
                                 android:layout_gravity="center"
-                                android:layout_marginLeft="5dip"
-                                android:layout_marginRight="5dip"
+                                android:layout_marginStart="5dip"
+                                android:layout_marginEnd="5dip"
                                 android:clickable="false"
+                                android:textColor="@color/black"
                                 tools:text="Card 1"
                                 android:gravity="left|center_vertical" />
                         </LinearLayout>
