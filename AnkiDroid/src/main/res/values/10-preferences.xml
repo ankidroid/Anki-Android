@@ -278,4 +278,7 @@
 
     <string name="no_code_formatting">Simple typed answer formatting</string>
     <string name="no_code_formatting_summ">Fixes ‘􏿾’ appearing in typed answer results</string>
+
+    <!-- Open Changelog-->
+    <string name="open_changelog">Open Changelog</string>
 </resources>

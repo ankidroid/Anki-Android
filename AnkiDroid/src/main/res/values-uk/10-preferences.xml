@@ -294,4 +294,6 @@
     <string name="note_editor_replace_newlines_summ">Замінювати у Редакторі нотаток будь-які випадки &lt;br&gt;  на нові рядки під час редагування картки.</string>
     <string name="no_code_formatting">Просте форматування введених відповідей</string>
     <string name="no_code_formatting_summ">Виправляє «􏿾», що з\'являються у результатах введених відповідей</string>
+    <!-- Open Changelog-->
+    <string name="open_changelog">Відкрити список змін</string>
 </resources>

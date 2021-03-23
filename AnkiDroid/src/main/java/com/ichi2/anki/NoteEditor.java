@@ -92,7 +92,6 @@ import com.ichi2.async.TaskManager;
 import com.ichi2.compat.CompatHelper;
 import com.ichi2.libanki.Card;
 import com.ichi2.libanki.Collection;
-import com.ichi2.libanki.Consts;
 import com.ichi2.libanki.Models;
 import com.ichi2.libanki.Model;
 import com.ichi2.libanki.Note;
@@ -273,7 +272,7 @@ public class NoteEditor extends AnkiActivity {
         public void actualOnPreExecute(@NonNull NoteEditor noteEditor) {
             Resources res = noteEditor.getResources();
             noteEditor.mProgressDialog = StyledProgressDialog
-                    .show(noteEditor, "", res.getString(R.string.saving_facts), false);
+                    .show(noteEditor, null, res.getString(R.string.saving_facts), false);
         }
 
         @Override

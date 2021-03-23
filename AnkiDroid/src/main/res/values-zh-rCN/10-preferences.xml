@@ -287,4 +287,6 @@
     <string name="note_editor_replace_newlines_summ">在笔记编辑器中，编辑卡片时将 &lt;br&gt; 的任何实例转换为换行。</string>
     <string name="no_code_formatting">简单输入的答案格式</string>
     <string name="no_code_formatting_summ">修复在输入的答案结果中出现的“􏿾”</string>
+    <!-- Open Changelog-->
+    <string name="open_changelog">打开更新日志</string>
 </resources>
