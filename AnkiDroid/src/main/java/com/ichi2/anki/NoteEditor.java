@@ -613,8 +613,6 @@ public class NoteEditor extends AnkiActivity {
             @Override
             public View getDropDownView(int position, View convertView, ViewGroup parent){
 
-                mCurrentDid = mAllDeckIds.get(position);
-
                 // Cast the drop down items (popup items) as text view
                 TextView tv = (TextView) super.getDropDownView(position, convertView, parent);
 
@@ -630,6 +628,19 @@ public class NoteEditor extends AnkiActivity {
         };
         mNoteDeckSpinner.setAdapter(noteDeckAdapter);
         noteDeckAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        mNoteDeckSpinner.setOnItemSelectedListener(new OnItemSelectedListener() {
+
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int pos, long id) {
+                // Timber.i("NoteEditor:: onItemSelected() fired on mNoteDeckSpinner with pos = %d", pos);
+                mCurrentDid = mAllDeckIds.get(pos);
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+                // Do Nothing
+            }
+        });
 
         mCurrentDid = intent.getLongExtra(EXTRA_DID, mCurrentDid);
 
