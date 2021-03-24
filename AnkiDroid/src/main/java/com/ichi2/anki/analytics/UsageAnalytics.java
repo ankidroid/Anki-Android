@@ -389,6 +389,14 @@ public class UsageAnalytics {
         public static final String OPENED_FACEBOOK = "Opened Facebook";
         public static final String OPENED_TWITTER = "Opened Twitter";
         public static final String EXCEPTION_REPORT = "Exception Report";
+
+        /* Analytics actions used in Lookup Dictionary */
+        public static final String AEDICT = "aedict";
+        public static final String LEO = "leo";
+        public static final String COLORDICT = "colordict";
+        public static final String FORA = "fora";
+        public static final String NCIKU = "nciku";
+        public static final String EIJIRO = "eijiro";
     }
 
     @VisibleForTesting(otherwise = VisibleForTesting.NONE) // TOOD: Make this package-protected
