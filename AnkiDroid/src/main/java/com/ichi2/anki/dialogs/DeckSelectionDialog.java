@@ -20,19 +20,29 @@ import android.app.Dialog;
 import android.os.Bundle;
 import android.os.Parcel;
 import android.os.Parcelable;
+import android.text.InputFilter;
+import android.text.InputType;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.Filter;
 import android.widget.Filterable;
 import android.widget.TextView;
 
 import com.afollestad.materialdialogs.MaterialDialog;
+import com.ichi2.anki.AnkiActivity;
 import com.ichi2.anki.R;
+import com.ichi2.anki.UIUtils;
 import com.ichi2.anki.analytics.AnalyticsDialogFragment;
+import com.ichi2.anki.exception.FilteredAncestor;
 import com.ichi2.libanki.Collection;
 import com.ichi2.libanki.Deck;
+import com.ichi2.libanki.Decks;
+import com.ichi2.ui.FixedEditText;
 import com.ichi2.utils.FunctionalInterfaces;
 import com.ichi2.utils.FilterResultsUtils;
 
@@ -49,11 +59,12 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import timber.log.Timber;
 
 public class DeckSelectionDialog extends AnalyticsDialogFragment {
 
     private MaterialDialog mDialog;
-
+    private DecksArrayAdapter mAdapter;
 
     /**
      * A dialog which handles selecting a deck
@@ -106,10 +117,10 @@ public class DeckSelectionDialog extends AnalyticsDialogFragment {
         recyclerView.addItemDecoration(dividerItemDecoration);
 
         List<SelectableDeck> decks = getDeckNames(arguments);
-        DecksArrayAdapter adapter = new DecksArrayAdapter(decks);
-        recyclerView.setAdapter(adapter);
+        mAdapter = new DecksArrayAdapter(decks);
+        recyclerView.setAdapter(mAdapter);
 
-        adjustToolbar(dialogView, adapter);
+        adjustToolbar(dialogView, mAdapter);
 
         MaterialDialog.Builder builder = new MaterialDialog.Builder(requireActivity())
                 .neutralText(R.string.dialog_cancel)
@@ -164,8 +175,58 @@ public class DeckSelectionDialog extends AnalyticsDialogFragment {
                 return true;
             }
         });
+
+        MenuItem add_Decks = mToolbar.getMenu().findItem(R.id.deck_picker_dialog_action_add_deck);
+        add_Decks.setOnMenuItemClickListener(menuItem -> {
+            // creating new deck without any parent deck
+            addDeckDialog("");
+            return true;
+        });
     }
 
+    private void addDeckDialog(String parentDeckPath) {
+        EditText mDialogEditText = new FixedEditText(requireActivity());
+        mDialogEditText.setSingleLine(true);
+        new MaterialDialog.Builder(requireActivity())
+                .title(R.string.new_deck)
+                .positiveText(R.string.dialog_ok)
+                .customView(mDialogEditText, true)
+                .onPositive((dialog, which) -> {
+                    String deckName = parentDeckPath + mDialogEditText.getText().toString();
+                    if (Decks.isValidDeckName(deckName)) {
+                        boolean creation_succeed = createNewDeck(deckName);
+                        if (!creation_succeed) {
+                            return;
+                        }
+                    } else {
+                        Timber.i("configureFloatingActionsMenu::addDeckButton::onPositiveListener - Not creating invalid deck name '%s'", deckName);
+                        UIUtils.showThemedToast(requireActivity(), getString(R.string.invalid_deck_name), false);
+                    }
+                })
+                .negativeText(R.string.dialog_cancel)
+                .show();
+    }
+
+    /**
+     * It can fail if an ancestor is a filtered deck.
+     * @param deckName Create a deck with this name.
+     * @return Whether creation succeeded.
+     */
+    private boolean createNewDeck(String deckName) {
+        Timber.i("DeckPicker:: Creating new deck...");
+        try {
+            Long id = new AnkiActivity().getCol().getDecks().id(deckName);
+            SelectableDeck dec = new SelectableDeck(id,deckName);
+            mAdapter.mCurrentlyDisplayedDecks.add(dec);
+            mAdapter.mAllDecksList.add(dec);
+            Collections.sort(mAdapter.mCurrentlyDisplayedDecks);
+            mAdapter.notifyDataSetChanged();
+        } catch (FilteredAncestor filteredAncestor) {
+            UIUtils.showThemedToast(requireActivity(), getString(R.string.decks_rename_filtered_nosubdecks), false);
+            return false;
+        }
+        return true;
+    }
 
     protected void onDeckSelected(@Nullable SelectableDeck deck) {
         ((DeckSelectionListener) requireActivity()).onDeckSelected(deck);
@@ -191,8 +252,16 @@ public class DeckSelectionDialog extends AnalyticsDialogFragment {
                     String deckName = ctv.getText().toString();
                     selectDeckByNameAndClose(deckName);
                 });
-            }
 
+                mDeckTextView.setOnLongClickListener(new View.OnLongClickListener() {
+                    @Override
+                    public boolean onLongClick(View view) {
+                        //creating sub deck with parent deck path
+                        addDeckDialog(ctv.getText().toString()+"::");
+                        return true;
+                    }
+                });
+            }
 
             public void setDeck(@NonNull SelectableDeck deck) {
                 mDeckTextView.setText(deck.getName());
