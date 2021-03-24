@@ -160,10 +160,8 @@ public class AnkiDroidApp extends Application {
     // Singleton instance of this class.
     private static AnkiDroidApp sInstance;
     // Constants for gestures
-    public static int sSwipeMinDistance = -1;
-    public static int sSwipeThresholdVelocity = -1;
-    private static int DEFAULT_SWIPE_MIN_DISTANCE;
-    private static int DEFAULT_SWIPE_THRESHOLD_VELOCITY;
+    public static int DEFAULT_SWIPE_MIN_DISTANCE;
+    public static int DEFAULT_SWIPE_THRESHOLD_VELOCITY;
 
     /**
      * The latest package version number that included important changes to the database integrity check routine. All
@@ -487,24 +485,6 @@ public class AnkiDroidApp extends Application {
 
         return newConfig;
     }
-
-
-    public static boolean initiateGestures(SharedPreferences preferences) {
-        boolean enabled = preferences.getBoolean("gestures", false);
-        if (enabled) {
-            int sensitivity = preferences.getInt("swipeSensitivity", 100);
-            if (sensitivity != 100) {
-                float sens = 100.0f/sensitivity;
-                sSwipeMinDistance = (int) (DEFAULT_SWIPE_MIN_DISTANCE * sens + 0.5f);
-                sSwipeThresholdVelocity = (int) (DEFAULT_SWIPE_THRESHOLD_VELOCITY * sens  + 0.5f);
-            } else {
-                sSwipeMinDistance = DEFAULT_SWIPE_MIN_DISTANCE;
-                sSwipeThresholdVelocity = DEFAULT_SWIPE_THRESHOLD_VELOCITY;
-            }
-        }
-        return enabled;
-    }
-
 
     /**
      * Turns ACRA reporting off completely and persists it to shared prefs

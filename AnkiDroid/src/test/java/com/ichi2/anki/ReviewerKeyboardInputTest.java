@@ -287,7 +287,6 @@ public class ReviewerKeyboardInputTest extends RobolectricTest {
         public static KeyboardInputTestReviewer displayingAnswer() {
             KeyboardInputTestReviewer keyboardInputTestReviewer = new KeyboardInputTestReviewer();
             KeyboardInputTestReviewer.sDisplayAnswer = true;
-            keyboardInputTestReviewer.mProcessor.setup();
             return keyboardInputTestReviewer;
         }
 
@@ -295,7 +294,6 @@ public class ReviewerKeyboardInputTest extends RobolectricTest {
         public static KeyboardInputTestReviewer displayingQuestion() {
             KeyboardInputTestReviewer keyboardInputTestReviewer = new KeyboardInputTestReviewer();
             KeyboardInputTestReviewer.sDisplayAnswer = false;
-            keyboardInputTestReviewer.mProcessor.setup();
             return keyboardInputTestReviewer;
         }
 

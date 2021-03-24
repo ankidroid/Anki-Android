@@ -95,7 +95,7 @@ public class ReviewerTest extends RobolectricTest {
         try (ActivityScenario<Reviewer> scenario = ActivityScenario.launch(Reviewer.class)) {
             scenario.onActivity(reviewer -> {
                 reviewer.blockControls(true);
-                reviewer.executeCommand(ViewerCommand.COMMAND_EXIT);
+                reviewer.executeCommand(ViewerCommand.EXIT);
             });
             assertThat(scenario.getResult().getResultCode(), is(RESULT_DEFAULT));
         }

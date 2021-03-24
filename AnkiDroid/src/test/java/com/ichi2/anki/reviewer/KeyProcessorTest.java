@@ -16,11 +16,16 @@
 
 package com.ichi2.anki.reviewer;
 
+import android.content.SharedPreferences;
 import android.view.KeyEvent;
+import android.view.ViewConfiguration;
 
+import com.ichi2.anki.cardviewer.Gesture;
 import com.ichi2.anki.cardviewer.ViewerCommand;
 
 import org.junit.Test;
+import org.mockito.ArgumentMatchers;
+import org.mockito.Mockito;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -28,16 +33,19 @@ import java.util.List;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.hasSize;
 import static org.hamcrest.Matchers.is;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
-public class PeripheralKeymapTest {
+public class KeyProcessorTest {
     @Test
     public void flagAndAnswerDoNotConflict() {
-        List<Integer> processed = new ArrayList<>();
+        List<ViewerCommand> processed = new ArrayList<>();
 
-        PeripheralKeymap peripheralKeymap = new PeripheralKeymap(new MockReviewerUi(), processed::add);
-        peripheralKeymap.setup();
+        KeyProcessor processor = new KeyProcessor(processed::add);
+        processor.add(Binding.unicode(Binding.ModifierKeys.ctrl(), (char)49), ViewerCommand.TOGGLE_FLAG_RED);
+
         KeyEvent event = mock(KeyEvent.class);
         when(event.getUnicodeChar()).thenReturn(0);
         when(event.isCtrlPressed()).thenReturn(true);
@@ -45,29 +53,9 @@ public class PeripheralKeymapTest {
 
         assertThat((char) event.getUnicodeChar(), is('\0'));
         assertThat((char) event.getUnicodeChar(0), is('1'));
-        peripheralKeymap.onKeyUp(8, event);
 
+        processor.onKey(event);
         assertThat(processed, hasSize(1));
-        assertThat(processed.get(0), is(ViewerCommand.COMMAND_TOGGLE_FLAG_RED));
-    }
-
-    private static class MockReviewerUi implements ReviewerUi {
-
-        @Override
-        public ControlBlock getControlBlocked() {
-            return null;
-        }
-
-
-        @Override
-        public boolean isControlBlocked() {
-            return false;
-        }
-
-
-        @Override
-        public boolean isDisplayingAnswer() {
-            return false;
-        }
+        assertThat(processed.get(0), is(ViewerCommand.TOGGLE_FLAG_RED));
     }
 }

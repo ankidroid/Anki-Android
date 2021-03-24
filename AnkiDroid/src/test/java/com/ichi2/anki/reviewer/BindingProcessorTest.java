@@ -16,45 +16,33 @@
 
 package com.ichi2.anki.reviewer;
 
-import android.view.KeyEvent;
-
+import com.ichi2.anki.cardviewer.Gesture;
 import com.ichi2.anki.cardviewer.ViewerCommand;
-import com.ichi2.anki.testutil.MockReviewerUi;
 
 import org.junit.Test;
-import org.junit.runner.RunWith;
 
 import java.util.ArrayList;
 import java.util.List;
-
-import androidx.annotation.NonNull;
-import androidx.test.ext.junit.runners.AndroidJUnit4;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.hasSize;
 import static org.hamcrest.Matchers.is;
 
-@RunWith(AndroidJUnit4.class)
-public class PeripheralKeymapTest {
-
+public class BindingProcessorTest {
     @Test
-    public void testNumpadAction() {
-        // #7736 Ensures that a numpad key is passed through (mostly testing num lock)
+    public void tabs() {
         List<ViewerCommand> processed = new ArrayList<>();
 
-        KeyProcessor keyProcessor = new KeyProcessor(processed::add);
+        GestureProcessor processor = new GestureProcessor(processed::add);
+        processor.add(Binding.gesture(Gesture.DOUBLE_TAP), ViewerCommand.TOGGLE_FLAG_RED);
+        processor.add(Binding.gesture(Gesture.LONG_TAP), ViewerCommand.TOGGLE_FLAG_GREEN);
 
-        keyProcessor.add(Binding.keyCode(KeyEvent.KEYCODE_NUMPAD_1), ViewerCommand.ANSWER_FIRST_BUTTON);
-
-        keyProcessor.onKey(getNumpadEvent(KeyEvent.KEYCODE_NUMPAD_1));
-
+        processor.onDoubleTab();
         assertThat(processed, hasSize(1));
-        assertThat(processed.get(0), is(ViewerCommand.ANSWER_FIRST_BUTTON));
-    }
+        assertThat(processed.get(0), is(ViewerCommand.TOGGLE_FLAG_RED));
 
-
-    @NonNull
-    protected KeyEvent getNumpadEvent(@SuppressWarnings("SameParameterValue") int keycode) {
-        return new KeyEvent(0, 0, KeyEvent.ACTION_UP, keycode, 0, KeyEvent.META_NUM_LOCK_ON);
+        processor.onLongTap();
+        assertThat(processed, hasSize(2));
+        assertThat(processed.get(1), is(ViewerCommand.TOGGLE_FLAG_GREEN));
     }
 }

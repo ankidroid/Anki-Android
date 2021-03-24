@@ -160,7 +160,7 @@ public class ReviewerNoParamTest extends RobolectricTest {
 
         int hideCount = reviewer.getDelayedHideCount();
 
-        reviewer.executeCommand(ViewerCommand.COMMAND_UNDO);
+        reviewer.executeCommand(ViewerCommand.UNDO);
         advanceRobolectricLooperWithSleep();
 
 

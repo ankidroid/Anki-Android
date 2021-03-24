@@ -80,6 +80,7 @@
     <string name="gestures_swipe_left">Swipe left</string>
     <string name="gestures_swipe_right">Swipe right</string>
     <string name="gestures_double_tap">Double touch</string>
+    <string name="gestures_long_tap">Long touch</string>
     <string name="gestures_tap_top">Touch top</string>
     <string name="gestures_tap_left">Touch left</string>
     <string name="gestures_tap_right">Touch right</string>

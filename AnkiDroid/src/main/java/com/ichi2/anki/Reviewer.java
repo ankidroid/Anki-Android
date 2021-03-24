@@ -34,7 +34,6 @@ import android.os.Handler;
 import android.os.Message;
 import android.text.SpannableString;
 import android.text.style.UnderlineSpan;
-import android.util.Pair;
 import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -63,17 +62,16 @@ import androidx.core.view.MenuItemCompat;
 import androidx.vectordrawable.graphics.drawable.VectorDrawableCompat;
 
 import com.ichi2.anki.cardviewer.CardAppearance;
+import com.ichi2.anki.cardviewer.Gesture;
 import com.ichi2.anki.dialogs.ConfirmationDialog;
 import com.ichi2.anki.multimediacard.AudioView;
 import com.ichi2.anki.dialogs.RescheduleDialog;
-import com.ichi2.anki.reviewer.PeripheralKeymap;
+import com.ichi2.anki.reviewer.KeyProcessor;
 import com.ichi2.anki.reviewer.ReviewerUi;
 import com.ichi2.anki.workarounds.FirefoxSnackbarWorkaround;
 import com.ichi2.anki.reviewer.ActionButtons;
 import com.ichi2.async.CollectionTask;
-import com.ichi2.async.TaskListener;
 import com.ichi2.async.TaskManager;
-import com.ichi2.compat.CompatHelper;
 import com.ichi2.libanki.Card;
 import com.ichi2.libanki.Collection;
 import com.ichi2.libanki.Collection.DismissType;
@@ -94,7 +92,6 @@ import java.util.Collections;
 import timber.log.Timber;
 
 import static com.ichi2.anki.reviewer.CardMarker.*;
-import static com.ichi2.anki.cardviewer.ViewerCommand.COMMAND_NOTHING;
 import static com.ichi2.anim.ActivityTransitionAnimation.Direction.*;
 
 
@@ -142,7 +139,7 @@ public class Reviewer extends AbstractFlashcardViewer {
     };
 
     @VisibleForTesting
-    protected final PeripheralKeymap mProcessor = new PeripheralKeymap(this, this);
+    protected final KeyProcessor mProcessor = new KeyProcessor(this);
 
     /** We need to listen for and handle reschedules / resets very similarly */
     abstract class ScheduleCollectionTaskListener extends NextCardHandler<PairWithBoolean<Card[]>> {
@@ -731,7 +728,15 @@ public class Reviewer extends AbstractFlashcardViewer {
     }
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
-        if (mProcessor.onKeyDown(keyCode, event) || super.onKeyDown(keyCode, event)) {
+        if (answerFieldIsFocused()) {
+            return super.onKeyDown(keyCode, event);
+        }
+
+        if (mProcessor.onKey(event)) {
+            return true;
+        }
+
+        if (super.onKeyDown(keyCode, event)) {
             return true;
         }
 
@@ -760,18 +765,6 @@ public class Reviewer extends AbstractFlashcardViewer {
         view.requestFocus();
         return true;
     }
-
-    @Override
-    public boolean onKeyUp(int keyCode, KeyEvent event) {
-        if (answerFieldIsFocused()) {
-            return super.onKeyUp(keyCode, event);
-        }
-        if (mProcessor.onKeyUp(keyCode, event)) {
-            return true;
-        }
-        return super.onKeyUp(keyCode, event);
-    }
-
 
     private <T extends ActionProvider & SubMenuProvider> void setupSubMenu(Menu menu, @IdRes int parentMenu, T subMenuProvider) {
         if (!AndroidUiUtils.isRunningOnTv(this)) {
@@ -910,9 +903,11 @@ public class Reviewer extends AbstractFlashcardViewer {
         SharedPreferences preferences = super.restorePreferences();
         mPrefHideDueCount = preferences.getBoolean("hideDueCount", false);
         mPrefShowETA = preferences.getBoolean("showETA", true);
-        this.mProcessor.setup();
         mPrefFullscreenReview = Integer.parseInt(preferences.getString("fullscreenMode", "0")) > 0;
+
+        mProcessor.setup(preferences);
         mActionButtons.setup(preferences);
+
         return preferences;
     }
 
@@ -1203,14 +1198,9 @@ public class Reviewer extends AbstractFlashcardViewer {
 
     private void disableDrawerSwipeOnConflicts() {
         SharedPreferences preferences = AnkiDroidApp.getSharedPrefs(getBaseContext());
-        boolean gesturesEnabled = AnkiDroidApp.initiateGestures(preferences);
-        if (gesturesEnabled) {
-            int gestureSwipeUp = Integer.parseInt(preferences.getString("gestureSwipeUp", "9"));
-            int gestureSwipeDown = Integer.parseInt(preferences.getString("gestureSwipeDown", "0"));
-            int gestureSwipeRight = Integer.parseInt(preferences.getString("gestureSwipeRight", "17"));
-            if (gestureSwipeUp != COMMAND_NOTHING ||
-                    gestureSwipeDown != COMMAND_NOTHING ||
-                    gestureSwipeRight != COMMAND_NOTHING) {
+
+        if (mGestureProcessor.isEnabled()) {
+            if (mGestureProcessor.isBound(Gesture.SWIPE_UP, Gesture.SWIPE_DOWN, Gesture.SWIPE_RIGHT)) {
                 mHasDrawerSwipeConflicts = true;
                 super.disableDrawerSwipe();
             }

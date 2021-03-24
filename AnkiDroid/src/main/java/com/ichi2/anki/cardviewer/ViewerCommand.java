@@ -16,66 +16,76 @@
 
 package com.ichi2.anki.cardviewer;
 
+import com.ichi2.anki.R;
+
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 
 import androidx.annotation.IntDef;
+import androidx.core.view.ViewCompat;
 
 /** Abstraction: Discuss moving many of these to 'Reviewer' */
-public class ViewerCommand {
-    public static final int COMMAND_NOTHING = 0;
-    public static final int COMMAND_SHOW_ANSWER = 1;
-    public static final int COMMAND_FLIP_OR_ANSWER_EASE1 = 2;
-    public static final int COMMAND_FLIP_OR_ANSWER_EASE2 = 3;
-    public static final int COMMAND_FLIP_OR_ANSWER_EASE3 = 4;
-    public static final int COMMAND_FLIP_OR_ANSWER_EASE4 = 5;
-    public static final int COMMAND_FLIP_OR_ANSWER_RECOMMENDED = 6;
-    public static final int COMMAND_FLIP_OR_ANSWER_BETTER_THAN_RECOMMENDED = 7;
-    public static final int COMMAND_UNDO = 8;
-    public static final int COMMAND_EDIT = 9;
-    public static final int COMMAND_MARK = 10;
-    public static final int COMMAND_LOOKUP = 11;
-    public static final int COMMAND_BURY_CARD = 12;
-    public static final int COMMAND_SUSPEND_CARD = 13;
-    public static final int COMMAND_DELETE = 14;
-    public static final int COMMAND_PLAY_MEDIA = 16;
-    public static final int COMMAND_EXIT = 17;
-    public static final int COMMAND_BURY_NOTE = 18;
-    public static final int COMMAND_SUSPEND_NOTE = 19;
-    public static final int COMMAND_TOGGLE_FLAG_RED = 20;
-    public static final int COMMAND_TOGGLE_FLAG_ORANGE = 21;
-    public static final int COMMAND_TOGGLE_FLAG_GREEN = 22;
-    public static final int COMMAND_TOGGLE_FLAG_BLUE = 23;
-    public static final int COMMAND_UNSET_FLAG = 24;
-    public static final int COMMAND_ANSWER_FIRST_BUTTON = 25;
-    public static final int COMMAND_ANSWER_SECOND_BUTTON = 26;
-    public static final int COMMAND_ANSWER_THIRD_BUTTON = 27;
-    public static final int COMMAND_ANSWER_FOURTH_BUTTON = 28;
-    /** Answer "Good" */
-    public static final int COMMAND_ANSWER_RECOMMENDED = 29;
-    public static final int COMMAND_PAGE_UP = 30;
-    public static final int COMMAND_PAGE_DOWN = 31;
+public enum ViewerCommand {
+    
+    NOTHING(R.string.nothing),
+    SHOW_ANSWER(R.string.show_answer),
+    FLIP_OR_ANSWER_EASE1(R.string.gesture_answer_1),
+    FLIP_OR_ANSWER_EASE2(R.string.gesture_answer_2),
+    FLIP_OR_ANSWER_EASE3(R.string.gesture_answer_3),
+    FLIP_OR_ANSWER_EASE4(R.string.gesture_answer_4),
+    FLIP_OR_ANSWER_RECOMMENDED(R.string.gesture_answer_green),
+    FLIP_OR_ANSWER_BETTER_THAN_RECOMMENDED(R.string.gesture_answer_better_recommended),
+    UNDO(R.string.undo),
+    EDIT(R.string.cardeditor_title_edit_card),
+    MARK(R.string.menu_mark_note),
+    LOOKUP(R.string.lookup_button_content),
+    BURY_CARD(R.string.menu_bury),
+    SUSPEND_CARD(R.string.menu_suspend_card),
+    DELETE(R.string.menu_delete_note),
+    UNUSED_15(R.string.nothing),
+    PLAY_MEDIA(R.string.gesture_play),
+    EXIT(R.string.nothing),
+    BURY_NOTE(R.string.menu_bury_note),
+    SUSPEND_NOTE(R.string.menu_suspend_note),
+    TOGGLE_FLAG_RED(R.string.gesture_flag_red),
+    TOGGLE_FLAG_ORANGE(R.string.gesture_flag_orange),
+    TOGGLE_FLAG_GREEN(R.string.gesture_flag_green),
+    TOGGLE_FLAG_BLUE(R.string.gesture_flag_blue),
+    UNSET_FLAG(R.string.gesture_flag_remove),
+    ANSWER_FIRST_BUTTON(R.string.gesture_answer_1),
+    ANSWER_SECOND_BUTTON(R.string.gesture_answer_2),
+    ANSWER_THIRD_BUTTON(R.string.gesture_answer_3),
+    ANSWER_FOURTH_BUTTON(R.string.gesture_answer_4),
+    ANSWER_RECOMMENDED(R.string.gesture_answer_green),
+    PAGE_UP(R.string.gesture_page_up),
+    PAGE_DOWN(R.string.gesture_page_down),
 
-    public static final int COMMAND_TAG = 32;
-    public static final int COMMAND_CARD_INFO = 33;
-    public static final int COMMAND_ABORT_AND_SYNC = 34;
-    public static final int COMMAND_RECORD_VOICE = 35;
-    public static final int COMMAND_REPLAY_VOICE = 36;
+    TAG(R.string.add_tag),
+    CARD_INFO(R.string.card_info_title),
+    ABORT_AND_SYNC(R.string.gesture_abort_sync),
+    RECORD_VOICE(R.string.record_voice),
+    REPLAY_VOICE(R.string.replay_voice),
 
-    public static final int COMMAND_TOGGLE_WHITEBOARD = 37;
+    TOGGLE_WHITEBOARD(R.string.gesture_toggle_whiteboard);
 
-    @Retention(RetentionPolicy.SOURCE)
-    @IntDef({COMMAND_NOTHING, COMMAND_SHOW_ANSWER, COMMAND_FLIP_OR_ANSWER_EASE1, COMMAND_FLIP_OR_ANSWER_EASE2,
-            COMMAND_FLIP_OR_ANSWER_EASE3, COMMAND_FLIP_OR_ANSWER_EASE4, COMMAND_FLIP_OR_ANSWER_RECOMMENDED,
-            COMMAND_FLIP_OR_ANSWER_BETTER_THAN_RECOMMENDED, COMMAND_UNDO, COMMAND_EDIT, COMMAND_MARK, COMMAND_LOOKUP,
-            COMMAND_BURY_CARD, COMMAND_SUSPEND_CARD, COMMAND_DELETE, COMMAND_PLAY_MEDIA, COMMAND_EXIT,
-            COMMAND_BURY_NOTE, COMMAND_SUSPEND_NOTE, COMMAND_TOGGLE_FLAG_RED, COMMAND_TOGGLE_FLAG_ORANGE,
-            COMMAND_TOGGLE_FLAG_GREEN, COMMAND_TOGGLE_FLAG_BLUE, COMMAND_UNSET_FLAG, COMMAND_ANSWER_FIRST_BUTTON,
-            COMMAND_ANSWER_SECOND_BUTTON, COMMAND_ANSWER_THIRD_BUTTON, COMMAND_ANSWER_FOURTH_BUTTON, COMMAND_ANSWER_RECOMMENDED,
-            COMMAND_PAGE_UP, COMMAND_PAGE_DOWN, COMMAND_TAG, COMMAND_CARD_INFO, COMMAND_ABORT_AND_SYNC, COMMAND_RECORD_VOICE,
-            COMMAND_REPLAY_VOICE, COMMAND_TOGGLE_WHITEBOARD
-    })
-    public @interface ViewerCommandDef {}
+    private final int resourceId;
+
+    ViewerCommand(int resourceId) {
+        this.resourceId = resourceId;
+    }
+
+    public int getResourceId() {
+        return resourceId;
+    }
+
+    /**
+     * Get the key of this command, under which all {@link com.ichi2.anki.reviewer.Binding}s are stored.
+     *
+     * @return preference key
+     */
+    public String getPreferenceKey() {
+        return "binding_" + name();
+    }
 
     public interface CommandProcessor {
         /**
@@ -85,6 +95,6 @@ public class ViewerCommand {
          * <p>example failure: answering an ease on the front of the card</p>
          */
         @SuppressWarnings("UnusedReturnValue")
-        boolean executeCommand(@ViewerCommandDef int which);
+        boolean executeCommand(ViewerCommand which);
     }
 }
