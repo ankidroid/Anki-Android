@@ -174,7 +174,7 @@
     <string name="time_limit">Batas waktu Timebox</string>
     <string name="time_limit_summ">XXX mnt</string>
     <string name="new_timezone">New timezone handling</string>
-    <string name="day_offset">Mulai besok</string>
+    <string name="day_offset_with_description">Start of next day (0 is midnight, 23 is 11PM)</string>
     <string name="day_offset_summ">XXX jam lewat tengah malam</string>
     <string name="sched_ver">Penjadwalan eksperimental V2</string>
     <string name="sched_ver_summ">Aktifkan penjadwalan eksperimental. Perubahan dipaksa ke satu arah saat sinkronisasi berikutnya</string>

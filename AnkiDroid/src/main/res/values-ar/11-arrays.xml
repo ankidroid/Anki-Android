@@ -59,7 +59,7 @@
         <item>التأخير النسبي</item>
     </string-array>
     <string-array name="add_to_cur_labels">
-        <item>استخدام الرزمة الحالية</item>
+        <item>استخدام شَدّة أوراق الحالية</item>
         <item>تقرير حسب نوع الملحوظة</item>
     </string-array>
     <string-array name="new_spread_labels">

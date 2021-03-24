@@ -173,7 +173,7 @@
     <string name="time_limit">Limite di tempo per sessione</string>
     <string name="time_limit_summ">XXX min</string>
     <string name="new_timezone">Nuova gestione fuso orario</string>
-    <string name="day_offset">Inizio del giorno successivo</string>
+    <string name="day_offset_with_description">Start of next day (0 is midnight, 23 is 11PM)</string>
     <string name="day_offset_summ">XXX ore dopo mezzanotte</string>
     <string name="sched_ver">Pianificatore sperimentale V2</string>
     <string name="sched_ver_summ">Abilita la pianificazione sperimentale. Forza le modifiche in una direzione alla prossima sincronizzazione</string>

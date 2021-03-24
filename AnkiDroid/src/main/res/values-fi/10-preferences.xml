@@ -173,7 +173,7 @@
     <string name="time_limit">Aikaraja</string>
     <string name="time_limit_summ">XXX min</string>
     <string name="new_timezone">New timezone handling</string>
-    <string name="day_offset">Seuraava päivä alkaa</string>
+    <string name="day_offset_with_description">Start of next day (0 is midnight, 23 is 11PM)</string>
     <string name="day_offset_summ">XXX tuntia yli puolenyön</string>
     <string name="sched_ver">Kokeellinen V2 ajastin</string>
     <string name="sched_ver_summ">Ota kokeellinen ajastin käyttöön. Pakottaa muutokset yhteen suuntaa seuraavassa synkronoinnissa</string>

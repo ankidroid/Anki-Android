@@ -119,7 +119,7 @@
     <!-- Crop function-->
     <string name="crop_image">ଆପଣ ଏହି ପ୍ରତିଛବି କ୍ରପ୍ କରିବାକୁ ଚାହୁଁଛନ୍ତି କି?</string>
     <string name="crop_button">Crop image</string>
-    <string name="save_dialog_content">ବର୍ତ୍ତମାନର ପ୍ରତିଛବି ଆକାର ହେଉଛି %sMB | Default ପ୍ରତିଛବି ଆକାର ସୀମା ହେଉଛି 1MB | ଆପଣ ଏହାକୁ crop କରିବାକୁ ଚାହୁଁଛନ୍ତି କି?</string>
+    <string name="save_dialog_content">ବର୍ତ୍ତମାନର ପ୍ରତିଛବି ଆକାର ହେଉଛି %sMB। Default ପ୍ରତିଛବି ଆକାର ସୀମା ହେଉଛି 1MB। ଆପଣ ଏହାକୁ crop କରିବାକୁ ଚାହୁଁଛନ୍ତି କି?</string>
     <string name="select_image_failed">"ପ୍ରତିଛବି ଚୟନ ବିଫଳ ହୋଇଛି, ଦୟାକରି ପୁନଃଚେଷ୍ଟା କରନ୍ତୁ"</string>
-    <string name="activity_result_unexpected">ଆପ୍ ଏକ ଅପ୍ରତ୍ୟାଶିତ ମୂଲ୍ୟ ଫେରସ୍ତ କଲା | ଆପଣଙ୍କୁ ଏକ ଭିନ୍ନ ଆପ୍ ବ୍ୟବହାର କରିବାକୁ ପଡ଼଼ିପାରେ</string>
+    <string name="activity_result_unexpected">ଆପ୍ ଏକ ଅପ୍ରତ୍ୟାଶିତ ମୂଲ୍ୟ ଫେରସ୍ତ କଲା। ଆପଣଙ୍କୁ ଏକ ଭିନ୍ନ ଆପ୍ ବ୍ୟବହାର କରିବାକୁ ପଡ଼଼ିପାରେ</string>
 </resources>

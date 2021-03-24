@@ -173,7 +173,7 @@
     <string name="time_limit">Tidsgräns</string>
     <string name="time_limit_summ">XXX min</string>
     <string name="new_timezone">New timezone handling</string>
-    <string name="day_offset">Starttid för nästa dag</string>
+    <string name="day_offset_with_description">Start of next day (0 is midnight, 23 is 11PM)</string>
     <string name="day_offset_summ">XXX timmar efter midnatt</string>
     <string name="sched_ver">Experimentell V2 schemaläggare</string>
     <string name="sched_ver_summ">Aktivera den experimentella schemaläggaren. Tvingar förändringar åt ett håll nästa synkning</string>
