@@ -39,16 +39,31 @@ public class TagsDialog extends AnalyticsDialogFragment {
         void onPositive(ArrayList<String> selectedTags, int option);
     }
 
-    private static final int TYPE_NONE = -1;
-    public static final int TYPE_ADD_TAG = 0;
-    public static final int TYPE_FILTER_BY_TAG = 1;
-    public static final int TYPE_CUSTOM_STUDY_TAGS = 2;
+
+
+    /**
+     * Enum that define all possible types of TagsDialog
+     */
+    public enum DialogType {
+        /**
+         * Adding tag to a single note
+         */
+        ADD_TAG,
+        /**
+         * Filter notes by tags
+         */
+        FILTER_BY_TAG,
+        /**
+         * A custom study session filtered by tags
+         */
+        CUSTOM_STUDY_TAGS
+    }
 
     private static final String DIALOG_TYPE_KEY = "dialog_type";
     private static final String CHECKED_TAGS_KEY = "checked_tags";
     private static final String ALL_TAGS_KEY = "all_tags";
 
-    private int mType = TYPE_NONE;
+    private DialogType mType;
     private TreeSet<String> mCurrentTags;
     private ArrayList<String> mAllTags;
 
@@ -66,12 +81,11 @@ public class TagsDialog extends AnalyticsDialogFragment {
 
     private MaterialDialog mDialog;
 
-    public static TagsDialog newInstance(int type, ArrayList<String> checked_tags,
-                                            ArrayList<String> all_tags) {
+    public static TagsDialog newInstance(DialogType type, ArrayList<String> checked_tags, ArrayList<String> all_tags) {
         TagsDialog t = new TagsDialog();
 
         Bundle args = new Bundle();
-        args.putInt(DIALOG_TYPE_KEY, type);
+        args.putInt(DIALOG_TYPE_KEY, type.ordinal());
         args.putStringArrayList(CHECKED_TAGS_KEY, checked_tags);
         args.putStringArrayList(ALL_TAGS_KEY, all_tags);
         t.setArguments(args);
@@ -85,7 +99,7 @@ public class TagsDialog extends AnalyticsDialogFragment {
         super.onCreate(savedInstanceState);
         getActivity().getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE);
 
-        mType = getArguments().getInt(DIALOG_TYPE_KEY);
+        mType = DialogType.values()[requireArguments().getInt(DIALOG_TYPE_KEY)];
 
         mCurrentTags = new TreeSet<>(String.CASE_INSENSITIVE_ORDER);
         mCurrentTags.addAll(getArguments().getStringArrayList(CHECKED_TAGS_KEY));
@@ -132,7 +146,7 @@ public class TagsDialog extends AnalyticsDialogFragment {
         mSelectedOption = mOptionsGroup.getCheckedRadioButtonId();
         mOptionsGroup.setOnCheckedChangeListener((radioGroup, checkedId) -> mSelectedOption = checkedId);
 
-        if (mType == TYPE_ADD_TAG) {
+        if (mType == DialogType.ADD_TAG) {
             mDialogTitle = getResources().getString(R.string.card_details_tags);
             mOptionsGroup.setVisibility(View.GONE);
             mPositiveText = getString(R.string.dialog_ok);
@@ -233,7 +247,7 @@ public class TagsDialog extends AnalyticsDialogFragment {
             return true;
         });
 
-        if (mType == TYPE_ADD_TAG) {
+        if (mType == DialogType.ADD_TAG) {
             mToolbarSearchView.setQueryHint(getString(R.string.add_new_filter_tags));
         } else {
             mToolbarAddItem.setVisible(false);

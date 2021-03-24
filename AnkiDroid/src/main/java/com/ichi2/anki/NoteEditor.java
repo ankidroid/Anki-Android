@@ -1328,7 +1328,7 @@ public class NoteEditor extends AnkiActivity {
             mSelectedTags = selectedTags;
             updateTags();
         };
-        TagsDialog dialog = TagsDialog.newInstance(TagsDialog.TYPE_ADD_TAG, selTags, tags);
+        TagsDialog dialog = TagsDialog.newInstance(TagsDialog.DialogType.ADD_TAG, selTags, tags);
         dialog.setTagsDialogListener(tagsDialogListener);
         showDialogFragment(dialog);
     }
