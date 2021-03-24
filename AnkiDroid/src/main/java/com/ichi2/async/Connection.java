@@ -21,7 +21,11 @@ package com.ichi2.async;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.net.ConnectivityManager;
+import android.net.Network;
+import android.net.NetworkCapabilities;
+import android.net.NetworkInfo;
 import android.os.AsyncTask;
+import android.os.Build;
 import android.os.PowerManager;
 import android.util.Pair;
 
@@ -556,16 +560,26 @@ public class Connection extends BaseAsyncTask<Connection.Payload, Object, Connec
         super.publishProgress(id, up, down);
     }
 
-    @SuppressWarnings("deprecation") // TODO Tracked in https://github.com/ankidroid/Anki-Android/issues/7013
+
     public static boolean isOnline() {
         if (sAllowSyncOnNoConnection) {
             return true;
         }
         ConnectivityManager cm = (ConnectivityManager) AnkiDroidApp.getInstance().getApplicationContext()
                 .getSystemService(Context.CONNECTIVITY_SERVICE);
-        if (cm != null) {
-            android.net.NetworkInfo netInfo = cm.getActiveNetworkInfo();
-            return (netInfo != null) && netInfo.isConnected();
+
+        /* NetworkInfo is deprecated in API 29 so we have to check separately for higher API Levels */
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M && cm != null) {
+            Network network = cm.getActiveNetwork();
+            if (network == null) {
+                return false;
+            }
+            NetworkCapabilities networkCapabilities = cm.getNetworkCapabilities(network);
+            return networkCapabilities != null && (networkCapabilities.hasTransport(NetworkCapabilities.TRANSPORT_WIFI)
+                    || networkCapabilities.hasTransport(NetworkCapabilities.TRANSPORT_CELLULAR));
+        } else if (cm != null) {
+            NetworkInfo networkInfo = cm.getActiveNetworkInfo();
+            return networkInfo != null && networkInfo.isConnected();
         }
         return false;
     }
