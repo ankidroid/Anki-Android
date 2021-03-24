@@ -3,11 +3,6 @@ package com.ichi2.anki.dialogs;
 import android.annotation.SuppressLint;
 import android.app.Dialog;
 import android.os.Bundle;
-import androidx.annotation.NonNull;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-import androidx.appcompat.widget.SearchView;
-import androidx.appcompat.widget.Toolbar;
 import android.text.InputFilter;
 import android.text.InputType;
 import android.text.TextUtils;
@@ -36,6 +31,13 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Locale;
 import java.util.TreeSet;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.appcompat.widget.SearchView;
+import androidx.appcompat.widget.Toolbar;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 public class TagsDialog extends AnalyticsDialogFragment {
     public interface TagsDialogListener {
@@ -144,6 +146,28 @@ public class TagsDialog extends AnalyticsDialogFragment {
 
 
         /**
+         * @return Number of tags in the list
+         */
+        public int size() {
+            return mAllTags.size();
+        }
+
+
+        /**
+         * Returns the tag at the specified position in this list.
+         *
+         * @param index index of the tag to return
+         * @return the tag at the specified position in this list
+         * @throws IndexOutOfBoundsException if the index is out of range
+         *                                   (<tt>index &lt; 0 || index &gt;= size()</tt>)
+         */
+        @NonNull
+        public String get(int index) {
+            return mAllTags.get(index);
+        }
+
+
+        /**
          * @return true if there is no tags in the list
          */
         public boolean isEmpty() {
@@ -156,6 +180,14 @@ public class TagsDialog extends AnalyticsDialogFragment {
          */
         public List<String> getCheckedTagList() {
             return new ArrayList<>(mCurrentTags);
+        }
+
+
+        /**
+         * @return return all tags as an List
+         */
+        public List<String> getAllTagList() {
+            return new ArrayList<>(mAllTags);
         }
 
 
@@ -178,6 +210,7 @@ public class TagsDialog extends AnalyticsDialogFragment {
             return mAllTags.iterator();
         }
     }
+
 
 
     /**
@@ -268,7 +301,7 @@ public class TagsDialog extends AnalyticsDialogFragment {
         RecyclerView.LayoutManager tagsListLayout = new LinearLayoutManager(getActivity());
         mTagsListRecyclerView.setLayoutManager(tagsListLayout);
 
-        mTagsArrayAdapter = new TagsArrayAdapter();
+        mTagsArrayAdapter = new TagsArrayAdapter(mTags);
         mTagsListRecyclerView.setAdapter(mTagsArrayAdapter);
 
         mNoTagsTextView = tagsDialogView.findViewById(R.id.tags_dialog_no_tags_textview);
@@ -414,8 +447,8 @@ public class TagsDialog extends AnalyticsDialogFragment {
         }
     }
 
-    public class TagsArrayAdapter extends  RecyclerView.Adapter<TagsArrayAdapter.ViewHolder> implements Filterable{
-        public class ViewHolder extends RecyclerView.ViewHolder {
+    public static class TagsArrayAdapter extends  RecyclerView.Adapter<TagsArrayAdapter.ViewHolder> implements Filterable{
+        public static class ViewHolder extends RecyclerView.ViewHolder {
             private final CheckedTextView mTagItemCheckedTextView;
             public ViewHolder(CheckedTextView ctv) {
                 super(ctv);
@@ -423,15 +456,18 @@ public class TagsDialog extends AnalyticsDialogFragment {
             }
         }
 
-        public final List<String> mTagsList;
+        @NonNull
+        public final TagsList mTagsList;
+        @Nullable
+        public List<String> mFilteredList;
 
-        public  TagsArrayAdapter() {
-            mTagsList = new ArrayList<>(mTags.mAllTags);
+        public  TagsArrayAdapter(@NonNull TagsList tagsList) {
+            mTagsList = tagsList;
             sortData();
         }
 
         public void sortData() {
-            mTags.sort();
+            mTagsList.sort();
         }
 
         @NonNull
@@ -445,10 +481,10 @@ public class TagsDialog extends AnalyticsDialogFragment {
                 CheckedTextView ctv = (CheckedTextView) view;
                 ctv.toggle();
                 String tag = ctv.getText().toString();
-                if (ctv.isChecked() && !mTags.isChecked(tag)) {
-                    mTags.check(tag);
+                if (ctv.isChecked()) {
+                    mTagsList.check(tag);
                 } else if (!ctv.isChecked()) {
-                    mTags.uncheck(tag);
+                    mTagsList.uncheck(tag);
                 }
             });
             return vh;
@@ -456,13 +492,24 @@ public class TagsDialog extends AnalyticsDialogFragment {
 
         @Override
         public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-            String tag = mTagsList.get(position);
+            String tag = getTagAtPosition(position);
             holder.mTagItemCheckedTextView.setText(tag);
-            holder.mTagItemCheckedTextView.setChecked(mTags.isChecked(tag));
+            holder.mTagItemCheckedTextView.setChecked(mTagsList.isChecked(tag));
+        }
+
+
+        private String getTagAtPosition(int position) {
+            if (mFilteredList != null) {
+                return mFilteredList.get(position);
+            }
+            return mTagsList.get(position);
         }
 
         @Override
         public int getItemCount() {
+            if (mFilteredList != null) {
+                return mFilteredList.size();
+            }
             return mTagsList.size();
         }
 
@@ -473,33 +520,25 @@ public class TagsDialog extends AnalyticsDialogFragment {
 
         /* Custom Filter class - as seen in http://stackoverflow.com/a/29792313/1332026 */
         private class TagsFilter extends Filter {
-            private final ArrayList<String> mFilteredTags;
-            private TagsFilter() {
-                super();
-                mFilteredTags = new ArrayList<>();
-            }
-
             @Override
             protected FilterResults performFiltering(CharSequence constraint) {
-                mFilteredTags.clear();
                 if (constraint.length() == 0) {
-                    mFilteredTags.addAll(mTags.mAllTags);
+                    mFilteredList = null;
                 } else {
+                    mFilteredList = new ArrayList<>();
                     final String filterPattern = constraint.toString().toLowerCase(Locale.getDefault()).trim();
-                    for (String tag : mTags) {
+                    for (String tag : mTagsList) {
                         if (tag.toLowerCase(Locale.getDefault()).contains(filterPattern)) {
-                            mFilteredTags.add(tag);
+                            mFilteredList.add(tag);
                         }
                     }
                 }
 
-                return FilterResultsUtils.fromCollection(mFilteredTags);
+                return FilterResultsUtils.fromCollection(mFilteredList);
             }
 
             @Override
             protected void publishResults(CharSequence charSequence, FilterResults filterResults) {
-                mTagsList.clear();
-                mTagsList.addAll(mFilteredTags);
                 sortData();
                 notifyDataSetChanged();
             }
