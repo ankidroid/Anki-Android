@@ -611,7 +611,7 @@ public class NoteEditor extends AnkiActivity {
 
         ArrayAdapter<String> noteDeckAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, deckNames) {
             @Override
-            public View getDropDownView(int position, View convertView, ViewGroup parent){
+            public View getDropDownView(int position, View convertView, ViewGroup parent) {
 
                 // Cast the drop down items (popup items) as text view
                 TextView tv = (TextView) super.getDropDownView(position, convertView, parent);
@@ -2505,4 +2505,3 @@ public class NoteEditor extends AnkiActivity {
         }
     }
 }
-
