@@ -1,7 +1,7 @@
 package com.ichi2.anki.dialogs;
 
+import android.annotation.SuppressLint;
 import android.app.Dialog;
-import android.content.res.Resources;
 import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -31,6 +31,7 @@ import com.ichi2.utils.FilterResultsUtils;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.List;
 import java.util.Locale;
 import java.util.TreeSet;
 
@@ -65,7 +66,7 @@ public class TagsDialog extends AnalyticsDialogFragment {
 
     private DialogType mType;
     private TreeSet<String> mCurrentTags;
-    private ArrayList<String> mAllTags;
+    private List<String> mAllTags;
 
     private String mPositiveText;
     private String mDialogTitle;
@@ -81,13 +82,22 @@ public class TagsDialog extends AnalyticsDialogFragment {
 
     private MaterialDialog mDialog;
 
-    public static TagsDialog newInstance(DialogType type, ArrayList<String> checked_tags, ArrayList<String> all_tags) {
+    /**
+     * Initializes an instance of {@link TagsDialog} using passed parameters
+     *
+     * @param type the type of dialog @see {@link DialogType}
+     * @param checkedTags tags of the note
+     * @param allTags all possible tags in the collection
+     * @return Initialized instance of {@link TagsDialog}
+     */
+    @NonNull
+    public static TagsDialog newInstance(@NonNull DialogType type, @NonNull List<String> checkedTags, @NonNull List<String> allTags) {
         TagsDialog t = new TagsDialog();
 
         Bundle args = new Bundle();
         args.putInt(DIALOG_TYPE_KEY, type.ordinal());
-        args.putStringArrayList(CHECKED_TAGS_KEY, checked_tags);
-        args.putStringArrayList(ALL_TAGS_KEY, all_tags);
+        args.putStringArrayList(CHECKED_TAGS_KEY, new ArrayList<>(checkedTags));
+        args.putStringArrayList(ALL_TAGS_KEY, new ArrayList<>(allTags));
         t.setArguments(args);
 
         return t;
@@ -97,14 +107,14 @@ public class TagsDialog extends AnalyticsDialogFragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        getActivity().getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE);
+        requireActivity().getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE);
 
         mType = DialogType.values()[requireArguments().getInt(DIALOG_TYPE_KEY)];
 
         mCurrentTags = new TreeSet<>(String.CASE_INSENSITIVE_ORDER);
-        mCurrentTags.addAll(getArguments().getStringArrayList(CHECKED_TAGS_KEY));
+        mCurrentTags.addAll(requireArguments().getStringArrayList(CHECKED_TAGS_KEY));
 
-        mAllTags = (ArrayList<String>) getArguments().getStringArrayList(ALL_TAGS_KEY).clone();
+        mAllTags = requireArguments().getStringArrayList(ALL_TAGS_KEY);
 
         for (String tag : mCurrentTags) {
             if (!mAllTags.contains(tag)) {
@@ -119,10 +129,8 @@ public class TagsDialog extends AnalyticsDialogFragment {
     @NonNull
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
-        Resources res = getResources();
-
-        View tagsDialogView = LayoutInflater.from(getActivity())
-                .inflate(R.layout.tags_dialog, null, false);
+        @SuppressLint("InflateParams")
+        View tagsDialogView = LayoutInflater.from(getActivity()).inflate(R.layout.tags_dialog, null, false);
         mTagsListRecyclerView = tagsDialogView.findViewById(R.id.tags_dialog_tags_list);
         mTagsListRecyclerView.requestFocus();
         mTagsListRecyclerView.setHasFixedSize(true);
@@ -157,7 +165,7 @@ public class TagsDialog extends AnalyticsDialogFragment {
 
         adjustToolbar(tagsDialogView);
 
-        MaterialDialog.Builder builder = new MaterialDialog.Builder(getActivity())
+        MaterialDialog.Builder builder = new MaterialDialog.Builder(requireActivity())
                 .positiveText(mPositiveText)
                 .negativeText(R.string.dialog_cancel)
                 .customView(tagsDialogView, false)
@@ -175,6 +183,7 @@ public class TagsDialog extends AnalyticsDialogFragment {
 
         mToolbar.inflateMenu(R.menu.tags_dialog_menu);
 
+        // disallow inputting the 'space' character
         final InputFilter addTagFilter = (source, start, end, dest, dstart, dend) -> {
             for (int i = start; i < end; i++) {
                 if (source.charAt(i) == ' ') {
@@ -190,14 +199,14 @@ public class TagsDialog extends AnalyticsDialogFragment {
                 addTag(query);
                 mToolbarSearchView.setQuery("", true);
             } else {
-                MaterialDialog.Builder addTagBuilder = new MaterialDialog.Builder(getActivity())
+                MaterialDialog.Builder addTagBuilder = new MaterialDialog.Builder(requireActivity())
                         .title(getString(R.string.add_tag))
                         .negativeText(R.string.dialog_cancel)
                         .positiveText(R.string.dialog_ok)
                         .inputType(InputType.TYPE_CLASS_TEXT)
                         .input(R.string.tag_name, R.string.empty_string, (dialog, input) -> addTag(input.toString()));
                 final MaterialDialog addTagDialog = addTagBuilder.build();
-                EditText inputET = addTagDialog.getInputEditText();
+                EditText inputET = requireDialogInputEditText(addTagDialog);
                 inputET.setFilters(new InputFilter[]{addTagFilter});
                 addTagDialog.show();
             }
@@ -254,9 +263,22 @@ public class TagsDialog extends AnalyticsDialogFragment {
         }
     }
 
+
+    /**
+     * A wrapper function around dialog.getInputEditText() to get non null {@link EditText}
+     */
+    @NonNull
+    private EditText requireDialogInputEditText(@NonNull MaterialDialog dialog) {
+        EditText editText = dialog.getInputEditText();
+        if (editText == null) {
+            throw new IllegalStateException("MaterialDialog " + dialog + " does not have an input edit text.");
+        }
+        return editText;
+    }
+
     public void addTag(String tag) {
         if (!TextUtils.isEmpty(tag)) {
-            String feedbackText = "";
+            String feedbackText;
             if (!mAllTags.contains(tag)) {
                 mAllTags.add(tag);
                 if (mNoTagsTextView.getVisibility() == View.VISIBLE) {
@@ -289,10 +311,10 @@ public class TagsDialog extends AnalyticsDialogFragment {
             }
         }
 
-        public final ArrayList<String> mTagsList;
+        public final List<String> mTagsList;
 
         public  TagsArrayAdapter() {
-            mTagsList = (ArrayList<String>) mAllTags.clone();
+            mTagsList = new ArrayList<>(mAllTags);
             sortData();
         }
 
