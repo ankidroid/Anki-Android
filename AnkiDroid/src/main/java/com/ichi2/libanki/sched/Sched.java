@@ -926,7 +926,7 @@ public class Sched extends SchedV2 {
             search = String.format(Locale.US, "(%s)", search);
         }
         search = String.format(Locale.US, "%s -is:suspended -is:buried -deck:filtered -is:learn", search);
-        List<Long> ids = mCol.findCards(search, orderlimit);
+        List<Long> ids = mCol.findCards(search, orderlimit, false);
         if (ids.isEmpty()) {
             return ids;
         }

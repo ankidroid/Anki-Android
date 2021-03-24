@@ -1180,7 +1180,16 @@ public class CardBrowser extends NavigationDrawerActivity implements
                 startActivityWithAnimation(intent, FADE);
             }
             return true;
+        } else if (itemId == R.id.action_limited_search) {
+            if( mActionBarMenu.findItem(R.id.action_limited_search).isChecked() ){
+                mActionBarMenu.findItem(R.id.action_limited_search).setChecked(false);
+                searchCards();
+            } else {
+                mActionBarMenu.findItem(R.id.action_limited_search).setChecked(true);
+                searchCards();
+            }
         }
+
         return super.onOptionsItemSelected(item);
     }
 
@@ -1476,6 +1485,17 @@ public class CardBrowser extends NavigationDrawerActivity implements
         // cancel the previous search & render tasks if still running
         invalidate();
         String searchText;
+        boolean limitedCards;
+        try{
+            if (mActionBarMenu.findItem(R.id.action_limited_search).isChecked()) {
+                limitedCards = true;
+            } else {
+                limitedCards = false;
+            }
+        } catch (Throwable e) {
+            Timber.d(e.getMessage());
+            limitedCards = false;
+        }
         if (mSearchTerms == null) {
             mSearchTerms = "";
         }
@@ -1500,7 +1520,8 @@ public class CardBrowser extends NavigationDrawerActivity implements
                             (mOrder != CARD_ORDER_NONE),
                             numCardsToRender,
                             mColumn1Index,
-                            mColumn2Index),
+                            mColumn2Index,
+                            limitedCards),
                     mSearchCardsHandler
             );
         }

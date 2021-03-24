@@ -76,33 +76,34 @@ public class Finder {
 
     /** Return a list of card ids for QUERY */
     @CheckResult
-    public List<Long> findCards(String query, String _order) {
-        return _findCards(query, _order);
+    public List<Long> findCards(String query, String _order, boolean limitedCards) {
+        return _findCards(query, _order, limitedCards);
     }
 
     @CheckResult
-    public List<Long> findCards(String query, boolean _order) {
-        return findCards(query, _order, null);
+    public List<Long> findCards(String query, boolean _order, boolean limitedCards) {
+        return findCards(query, _order, null, limitedCards);
     }
 
     @CheckResult
-    public List<Long> findCards(String query, boolean _order, CollectionTask.PartialSearch task) {
-        return _findCards(query, _order, task);
+    public List<Long> findCards(String query, boolean _order, CollectionTask.PartialSearch task, boolean limitedCards) {
+        return _findCards(query, _order, task, limitedCards);
     }
 
 
     @CheckResult
-    private List<Long> _findCards(String query, Object _order) {
-        return _findCards(query, _order, null);
+    private List<Long> _findCards(String query, Object _order, boolean limitedCards) {
+        return _findCards(query, _order, null, limitedCards);
     }
 
     @CheckResult
-    private List<Long> _findCards(String query, Object _order, CollectionTask.PartialSearch task) {
+    private List<Long> _findCards(String query, Object _order, CollectionTask.PartialSearch task, boolean limitedCards) {
         String[] tokens = _tokenize(query);
         Pair<String, String[]> res1 = _where(tokens);
         String preds = res1.first;
         String[] args = res1.second;
         List<Long> res = new ArrayList<>();
+        HashSet<Long> nids = new HashSet<>();
         if (preds == null) {
             return res;
         }
@@ -112,41 +113,48 @@ public class Finder {
         String sql = _query(preds, order);
         Timber.v("Search query '%s' is compiled as '%s'.", query, sql);
         boolean sendProgress = task != null;
-        try (Cursor cur = mCol.getDb().getDatabase().query(sql, args)) {
-            while (cur.moveToNext()) {
-                if (isCancelled(task)) {
-                    return new ArrayList<>(0);
+        if(limitedCards){
+            try (Cursor cur = mCol.getDb().getDatabase().query(sql, args)) {
+                while (cur.moveToNext()) {
+                    if (isCancelled(task)) {
+                        return new ArrayList<>(0);
+                    }
+                    if ( !nids.contains(cur.getLong(1)) ) {
+                            nids.add(cur.getLong(1));
+                            res.add(cur.getLong(0));
+                    }
+                    if (sendProgress && res.size() > task.getNumCardsToRender()) {
+                        task.doProgress(res);
+                        sendProgress = false;
+                    }
                 }
-                res.add(cur.getLong(0));
-                if (sendProgress && res.size() > task.getNumCardsToRender()) {
-                    task.doProgress(res);
-                    sendProgress = false;
-                }
+            } catch (SQLException e) {
+                // invalid grouping
+                return new ArrayList<>(0);
             }
-        } catch (SQLException e) {
-            // invalid grouping
-            return new ArrayList<>(0);
+        } else {
+            try (Cursor cur = mCol.getDb().getDatabase().query(sql, args)) {
+                while (cur.moveToNext()) {
+                    if (isCancelled(task)) {
+                        return new ArrayList<>(0);
+                    }
+                    res.add(cur.getLong(0));
+                    if (sendProgress && res.size() > task.getNumCardsToRender()) {
+                        task.doProgress(res);
+                        sendProgress = false;
+                    }
+                }
+            } catch (SQLException e) {
+                // invalid grouping
+                return new ArrayList<>(0);
+            }
         }
+
         if (rev) {
             Collections.reverse(res);
         }
-        List<Long> nid = findNotes(query);
-        List<Long> cid = new ArrayList<>();
-        for ( int i = 0 ; i < nid.size() ; i++ ) {
-            for ( int j = 0 ; j < res.size() ; j++ ) {
-                int count  = 0;
-                if ( nid.get(i).equals( getNoteId(res.get(j))) ){
-                    count++;
-                    if ( count == 1 ) {
-                        cid.add( res.get(j) );
-                        break;
-                    }
-                }
-            }
-        }
-        return cid;
+        return res;
     }
-
 
     public List<Long> findNotes(String query) {
         String[] tokens = _tokenize(query);
@@ -388,9 +396,9 @@ public class Finder {
         // can we skip the note table?
         String sql;
         if (!preds.contains("n.") && !order.contains("n.")) {
-            sql = "select c.id from cards c where ";
+            sql = "select c.id , c.nid from cards c where ";
         } else {
-            sql = "select c.id from cards c, notes n where c.nid=n.id and ";
+            sql = "select c.id , c.nid from cards c, notes n where c.nid=n.id and ";
         }
         // combine with preds
         if (!TextUtils.isEmpty(preds)) {
@@ -404,21 +412,6 @@ public class Finder {
         }
         return sql;
     }
-
-    private Long getNoteId ( Long cid ) {
-        String sql = "select c.nid from cards c where c.id = " + String.valueOf(cid) ;
-        Long nid = Long.valueOf(0);
-        try ( Cursor cur = mCol.getDb().getDatabase().query(sql) ) {
-            while ( cur.moveToNext() ) {
-                nid = cur.getLong(0);
-            }
-        } catch ( SQLException e ) {
-            return Long.valueOf(0);
-        }
-        return nid;
-    }
-
-
 
     /**
      * Ordering

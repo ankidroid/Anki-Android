@@ -1,5 +1,5 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:ankidroid="http://schemas.android.com/apk/res-auto" >
+    xmlns:ankidroid="http://schemas.android.com/apk/res-auto">
 
     <item
         android:id="@+id/action_add_note_from_card_browser"
@@ -13,6 +13,11 @@
         android:title="@string/deck_conf_cram_search"
         ankidroid:actionViewClass="androidx.appcompat.widget.SearchView"
         ankidroid:showAsAction="always|collapseActionView"/>
+
+    <item
+        android:id="@+id/action_limited_search"
+        android:checkable="true"
+        android:title="Show Limited Cards"/>
 
     <item
         android:id="@+id/action_save_search"

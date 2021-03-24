@@ -1911,7 +1911,7 @@ public class SchedV2 extends AbstractSched {
                 search = String.format(Locale.US, "(%s)", search);
             }
             search = String.format(Locale.US, "%s -is:suspended -is:buried -deck:filtered", search);
-            ids = mCol.findCards(search, orderlimit);
+            ids = mCol.findCards(search, orderlimit, false);
             if (ids.isEmpty()) {
                 return total;
             }
