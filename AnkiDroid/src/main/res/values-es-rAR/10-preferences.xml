@@ -173,7 +173,7 @@
     <string name="time_limit">Límite de tiempo para Timebox</string>
     <string name="time_limit_summ">XXX min</string>
     <string name="new_timezone">New timezone handling</string>
-    <string name="day_offset">Comienzo del siguiente día</string>
+    <string name="day_offset_with_description">Start of next day (0 is midnight, 23 is 11PM)</string>
     <string name="day_offset_summ">XXX horas luego pasada la medianoche</string>
     <string name="sched_ver">Programador Experimental V2</string>
     <string name="sched_ver_summ">Activar el programador experimental. Fuerza los cambios en una dirección en la próxima sincronización</string>

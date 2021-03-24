@@ -173,7 +173,7 @@
     <string name="time_limit">Limite de temps</string>
     <string name="time_limit_summ">XXX min</string>
     <string name="new_timezone">Nouvelle gestion du fuseau horaire</string>
-    <string name="day_offset">Début du jour suivant</string>
+    <string name="day_offset_with_description">Start of next day (0 is midnight, 23 is 11PM)</string>
     <string name="day_offset_summ">XXX heures après minuit</string>
     <string name="sched_ver">Planificateur V2 expérimental</string>
     <string name="sched_ver_summ">Activer le planificateur expérimental. Force les changements dans un sens lors de la prochaine synchronisation</string>

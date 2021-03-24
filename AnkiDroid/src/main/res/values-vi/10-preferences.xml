@@ -173,7 +173,7 @@
     <string name="time_limit">Giới hạn thời gian của hộp thời gian</string>
     <string name="time_limit_summ">XXX phút</string>
     <string name="new_timezone">New timezone handling</string>
-    <string name="day_offset">Bắt đầu ngày hôm sau</string>
+    <string name="day_offset_with_description">Start of next day (0 is midnight, 23 is 11PM)</string>
     <string name="day_offset_summ">XXX giờ quá nửa đêm</string>
     <string name="sched_ver">Trình lập lịch V2 thử nghiệm</string>
     <string name="sched_ver_summ">Bật công cụ lập lịch thử nghiệm. Buộc các thay đổi theo một hướng trong lần đồng bộ hóa tiếp theo</string>
