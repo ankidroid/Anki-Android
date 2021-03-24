@@ -253,5 +253,6 @@ Satyam jyotsana gargee(satyam8657@gmail.com)GitHub:(https://github.com/Satyamjyo
 - **Mario Román Dono** (Email: mario.romandono@gmail.com)
 - Ashirwad Mishra (E-mail: ashirwad.golu@gmail.com); Github: (https://github.com/ashirrwad)
 - **Ziad Elgretly** (E-mail: zsiad72@gmail.com) ,,, Github: (https://github.com/ziadelgretly)
+- **Jesse Wang** (Email: wangjesse2002@gmail.com); (Github: https://github.com/wjesse)
 ##
 Please enter your details at the bottom of the page via the following link: https://github.com/ankidroid/Anki-Android/wiki/Google-Summer-of-Code-2021/_edit. You will need a GitHub account to do this.
