@@ -722,6 +722,8 @@ public class AnkiDroidApp extends Application {
     @NonNull
     private HashMap<String, String> fetchWebViewInformation() {
         HashMap<String, String> webViewInfo = new HashMap<>();
+        webViewInfo.put("WEBVIEW_VER_NAME", "");
+        webViewInfo.put("WEBVIEW_VER_CODE", "");
         try {
             PackageManager packageManager = getPackageManager();
             PackageInfo pi = WebViewCompat.getCurrentWebViewPackage(this);
@@ -729,8 +731,6 @@ public class AnkiDroidApp extends Application {
             webViewInfo.put("WEBVIEW_VER_CODE", String.valueOf(PackageInfoCompat.getLongVersionCode(pi)));
         } catch (Throwable e) {
             Timber.w(e);
-            webViewInfo.put("WEBVIEW_VER_NAME", "");
-            webViewInfo.put("WEBVIEW_VER_CODE", "");
         }
         return webViewInfo;
     }
