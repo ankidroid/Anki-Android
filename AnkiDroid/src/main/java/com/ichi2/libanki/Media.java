@@ -30,6 +30,7 @@ import com.ichi2.libanki.template.TemplateFilters;
 import com.ichi2.utils.Assert;
 
 import com.ichi2.utils.ExceptionUtil;
+import com.ichi2.utils.HashUtil;
 import com.ichi2.utils.JSONArray;
 import com.ichi2.utils.JSONObject;
 
@@ -698,7 +699,7 @@ public class Media {
 
 
     private Pair<List<String>, List<String>> _changes() {
-        Map<String, Object[]> cache = new HashMap<>(mDb.queryScalar("SELECT count() FROM media WHERE csum IS NOT NULL"));
+        Map<String, Object[]> cache = HashUtil.HashMapInit(mDb.queryScalar("SELECT count() FROM media WHERE csum IS NOT NULL"));
         try (Cursor cur = mDb.query("select fname, csum, mtime from media where csum is not null")) {
             while (cur.moveToNext()) {
                 String name = cur.getString(0);

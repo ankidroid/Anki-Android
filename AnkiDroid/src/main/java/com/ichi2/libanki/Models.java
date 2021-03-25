@@ -31,6 +31,7 @@ import com.ichi2.libanki.template.ParsedNode;
 import com.ichi2.libanki.template.TemplateError;
 import com.ichi2.utils.Assert;
 
+import com.ichi2.utils.HashUtil;
 import com.ichi2.utils.JSONArray;
 import com.ichi2.utils.JSONObject;
 
@@ -437,7 +438,7 @@ public class Models {
     public static Map<String, Pair<Integer, JSONObject>> fieldMap(@NonNull Model m) {
         JSONArray flds = m.getJSONArray("flds");
         // TreeMap<Integer, String> map = new TreeMap<Integer, String>();
-        Map<String, Pair<Integer, JSONObject>> result = new HashMap<>(flds.length());
+        Map<String, Pair<Integer, JSONObject>> result = HashUtil.HashMapInit(flds.length());
         for (JSONObject f: flds.jsonObjectIterable()) {
             result.put(f.getString("name"), new Pair<>(f.getInt("ord"), f));
         }
@@ -878,7 +879,7 @@ public class Models {
         long mid = newModel.getLong("id");
         String sflds = mCol.getDb().queryString("select flds from notes where id = ?", nid);
         String[] flds = Utils.splitFields(sflds);
-        Map<Integer, String> newflds = new HashMap<>(map.size());
+        Map<Integer, String> newflds = HashUtil.HashMapInit(map.size());
 
         for (Entry<Integer, Integer> entry : map.entrySet()) {
             newflds.put(entry.getValue(), flds[entry.getKey()]);
@@ -1184,10 +1185,10 @@ public class Models {
 
 
     public HashMap<Long, HashMap<Integer, String>> getTemplateNames() {
-        HashMap<Long, HashMap<Integer, String>> result = new HashMap<>(mModels.size());
+        HashMap<Long, HashMap<Integer, String>> result = HashUtil.HashMapInit(mModels.size());
         for (Model m : mModels.values()) {
             JSONArray templates = m.getJSONArray("tmpls");
-            HashMap<Integer, String> names = new HashMap<>(templates.length());
+            HashMap<Integer, String> names = HashUtil.HashMapInit(templates.length());
             for (JSONObject t: templates.jsonObjectIterable()) {
                 names.put(t.getInt("ord"), t.getString("name"));
             }

@@ -110,6 +110,7 @@ import com.ichi2.utils.DeckComparator;
 import com.ichi2.utils.FileUtil;
 import com.ichi2.utils.FunctionalInterfaces;
 import com.ichi2.utils.FunctionalInterfaces.Consumer;
+import com.ichi2.utils.HashUtil;
 import com.ichi2.utils.KeyUtils;
 import com.ichi2.utils.MapUtil;
 import com.ichi2.utils.NamedJSONComparator;
@@ -127,7 +128,6 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Locale;
@@ -2034,7 +2034,7 @@ public class NoteEditor extends AnkiActivity implements
 
     @NonNull
     private ArrayList<CustomToolbarButton> getToolbarButtons() {
-        Set<String> set = AnkiDroidApp.getSharedPrefs(this).getStringSet("note_editor_custom_buttons", new HashSet<>(0));
+        Set<String> set = AnkiDroidApp.getSharedPrefs(this).getStringSet("note_editor_custom_buttons", HashUtil.HashSetInit(0));
         return CustomToolbarButton.fromStringSet(set);
     }
 
@@ -2264,13 +2264,13 @@ public class NoteEditor extends AnkiActivity implements
             if (mAllModelIds.get(pos) != noteModelId) {
                 // Initialize mapping between fields of old model -> new model
                 int itemsLength = mEditorNote.items().length;
-                mModelChangeFieldMap = new HashMap<>(itemsLength);
+                mModelChangeFieldMap = HashUtil.HashMapInit(itemsLength);
                 for (int i=0; i < itemsLength; i++) {
                     mModelChangeFieldMap.put(i, i);
                 }
                 // Initialize mapping between cards new model -> old model
                 int templatesLength = newModel.getJSONArray("tmpls").length();
-                mModelChangeCardMap = new HashMap<>(templatesLength);
+                mModelChangeCardMap = HashUtil.HashMapInit(templatesLength);
                 for (int i = 0; i < templatesLength ; i++) {
                     if (i < mEditorNote.numberOfCards()) {
                         mModelChangeCardMap.put(i, i);

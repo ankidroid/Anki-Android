@@ -21,6 +21,7 @@ import com.ichi2.anki.exception.UnknownHttpResponseException;
 import com.ichi2.async.Connection;
 import com.ichi2.libanki.Consts;
 import com.ichi2.libanki.Utils;
+import com.ichi2.utils.HashUtil;
 import com.ichi2.utils.VersionUtils;
 
 import com.ichi2.utils.JSONException;
@@ -44,7 +45,7 @@ public class RemoteServer extends HttpSyncer {
     /** Returns hkey or null if user/pw incorrect. */
     public Response hostKey(String user, String pw) throws UnknownHttpResponseException {
         try {
-            mPostVars = new HashMap<>(0);
+            mPostVars = HashUtil.HashMapInit(0);
             JSONObject credentials = new JSONObject();
             credentials.put("u", user);
             credentials.put("p", pw);
@@ -57,7 +58,7 @@ public class RemoteServer extends HttpSyncer {
 
 
     public Response meta() throws UnknownHttpResponseException {
-        mPostVars = new HashMap<>(2);
+        mPostVars = HashUtil.HashMapInit(2);
         mPostVars.put("k", mHKey);
         mPostVars.put("s", mSKey);
         JSONObject meta = new JSONObject();
