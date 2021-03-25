@@ -35,6 +35,7 @@ import android.os.LocaleList;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.annotation.VisibleForTesting;
+import androidx.core.content.pm.PackageInfoCompat;
 import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 
 import android.util.Log;
@@ -724,7 +725,7 @@ public class AnkiDroidApp extends Application {
             } else {
                 pi = packageManager.getPackageInfo("com.google.android.webview", 0);
             }
-            return "Webview version name - " + pi.versionName + " , version Code - " + pi.versionCode ;
+            return "Webview version name - " + pi.versionName + " , version Code - " + PackageInfoCompat.getLongVersionCode(pi) ;
         } catch (Throwable e) {
             return e.getMessage();
         }
