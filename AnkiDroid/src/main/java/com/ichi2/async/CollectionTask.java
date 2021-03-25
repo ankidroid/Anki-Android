@@ -1088,16 +1088,16 @@ public class CollectionTask<ProgressListener, ProgressBackground extends Progres
         private final int numCardsToRender;
         private final int column1Index;
         private final int column2Index;
-        private final boolean limitedCards;
+        private final boolean singleCardByNote;
 
 
-        public SearchCards(String query, boolean order, int numCardsToRender, int column1Index, int column2Index, boolean limitedCards) {
+        public SearchCards(String query, boolean order, int numCardsToRender, int column1Index, int column2Index, boolean singleCardByNote) {
             this.query = query;
             this.order = order;
             this.numCardsToRender = numCardsToRender;
             this.column1Index = column1Index;
             this.column2Index = column2Index;
-            this.limitedCards = limitedCards;
+            this.singleCardByNote = singleCardByNote;
         }
 
 
@@ -1108,7 +1108,7 @@ public class CollectionTask<ProgressListener, ProgressBackground extends Progres
                 return null;
             }
             List<CardBrowser.CardCache> searchResult = new ArrayList<>();
-            List<Long> searchResult_ = col.findCards(query, order, new PartialSearch(searchResult, column1Index, column2Index, numCardsToRender, collectionTask, col), limitedCards);
+            List<Long> searchResult_ = col.findCards(query, order, new PartialSearch(searchResult, column1Index, column2Index, numCardsToRender, collectionTask, col), singleCardByNote);
             Timber.d("The search found %d cards", searchResult_.size());
             int position = 0;
             for (Long cid : searchResult_) {

@@ -1181,13 +1181,9 @@ public class CardBrowser extends NavigationDrawerActivity implements
             }
             return true;
         } else if (itemId == R.id.action_limited_search) {
-            if( mActionBarMenu.findItem(R.id.action_limited_search).isChecked() ){
-                mActionBarMenu.findItem(R.id.action_limited_search).setChecked(false);
-                searchCards();
-            } else {
-                mActionBarMenu.findItem(R.id.action_limited_search).setChecked(true);
-                searchCards();
-            }
+            boolean wasChecked =  mActionBarMenu.findItem(R.id.action_limited_search).isChecked();
+            mActionBarMenu.findItem(R.id.action_limited_search).setChecked(!wasChecked);
+            searchCards();
         }
 
         return super.onOptionsItemSelected(item);
@@ -1485,16 +1481,12 @@ public class CardBrowser extends NavigationDrawerActivity implements
         // cancel the previous search & render tasks if still running
         invalidate();
         String searchText;
-        boolean limitedCards;
+        boolean singleCardByNote;
         try{
-            if (mActionBarMenu.findItem(R.id.action_limited_search).isChecked()) {
-                limitedCards = true;
-            } else {
-                limitedCards = false;
-            }
-        } catch (Throwable e) {
+            singleCardByNote = mActionBarMenu.findItem(R.id.action_limited_search).isChecked();
+        } catch ( Exception e) {
             Timber.d(e.getMessage());
-            limitedCards = false;
+            singleCardByNote = false;
         }
         if (mSearchTerms == null) {
             mSearchTerms = "";
@@ -1521,7 +1513,7 @@ public class CardBrowser extends NavigationDrawerActivity implements
                             numCardsToRender,
                             mColumn1Index,
                             mColumn2Index,
-                            limitedCards),
+                            singleCardByNote),
                     mSearchCardsHandler
             );
         }

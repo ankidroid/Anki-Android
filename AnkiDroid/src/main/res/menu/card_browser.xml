@@ -17,7 +17,7 @@
     <item
         android:id="@+id/action_limited_search"
         android:checkable="true"
-        android:title="Show Limited Cards"/>
+        android:title="@string/deck_cong_cram_show_one_card_per_note"/>
 
     <item
         android:id="@+id/action_save_search"

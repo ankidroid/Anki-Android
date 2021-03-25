@@ -1216,22 +1216,22 @@ public class Collection {
      */
 
     /** Return a list of card ids */
-    public List<Long> findCards(String search, boolean limitedCards) {
-        return new Finder(this).findCards(search, null, limitedCards);
+    public List<Long> findCards(String search, boolean singleCardByNote) {
+        return new Finder(this).findCards(search, null, singleCardByNote);
     }
 
 
     /** Return a list of card ids */
-    public List<Long> findCards(String search, String order, boolean limitedCards) {
-        return new Finder(this).findCards(search, order, limitedCards);
+    public List<Long> findCards(String search, String order, boolean singleCardByNote) {
+        return new Finder(this).findCards(search, order, singleCardByNote);
     }
 
-    public List<Long> findCards(String search, boolean order, boolean limitedCards) {
-        return findCards(search, order, null, limitedCards);
+    public List<Long> findCards(String search, boolean order, boolean singleCardByNote) {
+        return findCards(search, order, null, singleCardByNote);
     }
 
-    public List<Long> findCards(String search, boolean order, CollectionTask.PartialSearch task, boolean limitedCards) {
-        return new Finder(this).findCards(search, order, task, limitedCards);
+    public List<Long> findCards(String search, boolean order, CollectionTask.PartialSearch task, boolean singleCardByNote) {
+        return new Finder(this).findCards(search, order, task, singleCardByNote);
     }
 
 

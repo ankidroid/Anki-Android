@@ -76,28 +76,28 @@ public class Finder {
 
     /** Return a list of card ids for QUERY */
     @CheckResult
-    public List<Long> findCards(String query, String _order, boolean limitedCards) {
-        return _findCards(query, _order, limitedCards);
+    public List<Long> findCards(String query, String _order, boolean singleCardByNote) {
+        return _findCards(query, _order, singleCardByNote);
     }
 
     @CheckResult
-    public List<Long> findCards(String query, boolean _order, boolean limitedCards) {
-        return findCards(query, _order, null, limitedCards);
+    public List<Long> findCards(String query, boolean _order, boolean singleCardByNote) {
+        return findCards(query, _order, null, singleCardByNote);
     }
 
     @CheckResult
-    public List<Long> findCards(String query, boolean _order, CollectionTask.PartialSearch task, boolean limitedCards) {
-        return _findCards(query, _order, task, limitedCards);
+    public List<Long> findCards(String query, boolean _order, CollectionTask.PartialSearch task, boolean singleCardByNote) {
+        return _findCards(query, _order, task, singleCardByNote);
     }
 
 
     @CheckResult
-    private List<Long> _findCards(String query, Object _order, boolean limitedCards) {
-        return _findCards(query, _order, null, limitedCards);
+    private List<Long> _findCards(String query, Object _order, boolean singleCardByNote) {
+        return _findCards(query, _order, null, singleCardByNote);
     }
 
     @CheckResult
-    private List<Long> _findCards(String query, Object _order, CollectionTask.PartialSearch task, boolean limitedCards) {
+    private List<Long> _findCards(String query, Object _order, CollectionTask.PartialSearch task, boolean singleCardByNote) {
         String[] tokens = _tokenize(query);
         Pair<String, String[]> res1 = _where(tokens);
         String preds = res1.first;
@@ -113,8 +113,8 @@ public class Finder {
         String sql = _query(preds, order);
         Timber.v("Search query '%s' is compiled as '%s'.", query, sql);
         boolean sendProgress = task != null;
-        if(limitedCards){
-            try (Cursor cur = mCol.getDb().getDatabase().query(sql, args)) {
+        try (Cursor cur = mCol.getDb().getDatabase().query(sql, args)) {
+            if (singleCardByNote) {
                 while (cur.moveToNext()) {
                     if (isCancelled(task)) {
                         return new ArrayList<>(0);
@@ -128,12 +128,7 @@ public class Finder {
                         sendProgress = false;
                     }
                 }
-            } catch (SQLException e) {
-                // invalid grouping
-                return new ArrayList<>(0);
-            }
-        } else {
-            try (Cursor cur = mCol.getDb().getDatabase().query(sql, args)) {
+            } else {
                 while (cur.moveToNext()) {
                     if (isCancelled(task)) {
                         return new ArrayList<>(0);
@@ -144,12 +139,12 @@ public class Finder {
                         sendProgress = false;
                     }
                 }
-            } catch (SQLException e) {
-                // invalid grouping
-                return new ArrayList<>(0);
             }
-        }
 
+        } catch (SQLException e) {
+            // invalid grouping
+            return new ArrayList<>(0);
+        }
         if (rev) {
             Collections.reverse(res);
         }
