@@ -72,10 +72,13 @@ import org.acra.config.ToastConfigurationBuilder;
 import org.acra.sender.HttpSender;
 
 import java.io.InputStream;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Locale;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import androidx.webkit.WebViewCompat;
 import timber.log.Timber;
 import static timber.log.Timber.DebugTree;
 
@@ -232,7 +235,8 @@ public class AnkiDroidApp extends Application {
     private void setAcraConfigBuilder(CoreConfigurationBuilder acraCoreConfigBuilder) {
         this.acraCoreConfigBuilder = acraCoreConfigBuilder;
         ACRA.init(this, acraCoreConfigBuilder);
-        ACRA.getErrorReporter().putCustomData("WEBVIEW_INFORMATION", fetchWebViewInformation());
+        ACRA.getErrorReporter().putCustomData("WEBVIEW_VER_NAME", fetchWebViewInformation().get(0));
+        ACRA.getErrorReporter().putCustomData("WEBVIEW_VER_CODE", fetchWebViewInformation().get(1));
     }
 
     @Override
@@ -715,20 +719,17 @@ public class AnkiDroidApp extends Application {
     }
 
     @NonNull
-    private String fetchWebViewInformation() {
-        String webViewInfo;
+    private List<String> fetchWebViewInformation() {
+        List<String> webViewInfo = new ArrayList<>();
         try {
             PackageManager packageManager = getPackageManager();
-            PackageInfo pi;
-            if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
-                pi = WebView.getCurrentWebViewPackage();
-            } else {
-                pi = packageManager.getPackageInfo("com.google.android.webview", 0);
-            }
-            return "Webview version name - " + pi.versionName + " , version Code - " + PackageInfoCompat.getLongVersionCode(pi);
+            PackageInfo pi = WebViewCompat.getCurrentWebViewPackage(this);
+            webViewInfo.add(0,pi.versionName);
+            webViewInfo.add(1,String.valueOf(PackageInfoCompat.getLongVersionCode(pi)));
         } catch (Throwable e) {
-            return e.getMessage();
+            Timber.w( e );
         }
+        return webViewInfo;
     }
 
 }
