@@ -167,7 +167,7 @@ import com.github.zafarkhaja.semver.Version;
 import static com.ichi2.anim.ActivityTransitionAnimation.Direction.*;
 
 @SuppressWarnings({"PMD.AvoidThrowingRawExceptionTypes","PMD.FieldDeclarationsShouldBeAtStartOfClass"})
-public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity implements ReviewerUi, CommandProcessor {
+public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity implements ReviewerUi, CommandProcessor, TagsDialog.TagsDialogListener {
 
     /**
      * Result codes that are returned when this activity finishes.
@@ -3876,19 +3876,20 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
     protected void showTagsDialog() {
         ArrayList<String> tags = new ArrayList<>(getCol().getTags().all());
         ArrayList<String> selTags = new ArrayList<>(mCurrentCard.note().getTags());
-        TagsDialog.TagsDialogListener tagsDialogListener = (selectedTags, option) -> {
-            if (!mCurrentCard.note().getTags().equals(selectedTags)) {
-                String tagString = TextUtils.join(" ", selectedTags);
-                Note note = mCurrentCard.note();
-                note.setTagsFromStr(tagString);
-                note.flush();
-                // Reload current card to reflect tag changes
-                displayCardQuestion(true);
-            }
-        };
-        TagsDialog dialog = TagsDialog.newInstance(TagsDialog.DialogType.ADD_TAG, selTags, tags);
-        dialog.setTagsDialogListener(tagsDialogListener);
+        TagsDialog dialog = TagsDialog.newInstance(TagsDialog.TYPE_ADD_TAG, selTags, tags);
         showDialogFragment(dialog);
+    }
+
+    @Override
+    public void onPositive(ArrayList<String> selectedTags, int option) {
+        if (!mCurrentCard.note().getTags().equals(selectedTags)) {
+            String tagString = TextUtils.join(" ", selectedTags);
+            Note note = mCurrentCard.note();
+            note.setTagsFromStr(tagString);
+            note.flush();
+            // Reload current card to reflect tag changes
+            displayCardQuestion(true);
+        }
     }
 
     // init or reset api list

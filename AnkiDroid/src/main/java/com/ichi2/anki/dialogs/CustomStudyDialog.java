@@ -158,7 +158,6 @@ public class CustomStudyDialog extends AnalyticsDialogFragment implements
                             TagsDialog dialogFragment = TagsDialog.newInstance(
                                     TagsDialog.DialogType.CUSTOM_STUDY_TAGS, new ArrayList<>(),
                                     new ArrayList<>(activity.getCol().getTags().byDeck(currentDeck, true)));
-                            dialogFragment.setTagsDialogListener(CustomStudyDialog.this::onPositive);
                             activity.showDialogFragment(dialogFragment);
                             break;
                         }

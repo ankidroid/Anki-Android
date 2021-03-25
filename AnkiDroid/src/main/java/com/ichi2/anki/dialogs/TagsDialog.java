@@ -70,7 +70,6 @@ public class TagsDialog extends AnalyticsDialogFragment {
 
     private String mPositiveText;
     private String mDialogTitle;
-    private TagsDialogListener mTagsDialogListener = null;
     private TagsArrayAdapter mTagsArrayAdapter;
     private int mSelectedOption = -1;
 
@@ -169,7 +168,7 @@ public class TagsDialog extends AnalyticsDialogFragment {
                 .positiveText(mPositiveText)
                 .negativeText(R.string.dialog_cancel)
                 .customView(tagsDialogView, false)
-                .onPositive((dialog, which) -> mTagsDialogListener
+                .onPositive((dialog, which) -> ((TagsDialogListener)requireActivity())
                         .onPositive(new ArrayList<>(mCurrentTags), mSelectedOption));
         mDialog = builder.build();
 
@@ -296,10 +295,6 @@ public class TagsDialog extends AnalyticsDialogFragment {
             UIUtils.showSnackbar(getActivity(), feedbackText, false, -1, null,
                     mDialog.getView().findViewById(R.id.tags_dialog_snackbar), null);
         }
-    }
-
-    public void setTagsDialogListener(TagsDialogListener selectedTagsListener) {
-        mTagsDialogListener = selectedTagsListener;
     }
 
     public class TagsArrayAdapter extends  RecyclerView.Adapter<TagsArrayAdapter.ViewHolder> implements Filterable{
