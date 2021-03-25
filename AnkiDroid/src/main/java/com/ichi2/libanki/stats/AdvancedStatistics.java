@@ -31,6 +31,7 @@ import com.ichi2.libanki.DB;
 import com.ichi2.libanki.Decks;
 import com.ichi2.libanki.DeckConfig;
 import com.ichi2.libanki.utils.Time;
+import com.ichi2.utils.HashUtil;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -819,7 +820,7 @@ public class AdvancedStatistics {
 
         public TodayStats(Collection col, long dayStartCutoff) {
 
-            mNLearnedPerDeckId = new HashMap<>(col.getDecks().count());
+            mNLearnedPerDeckId = HashUtil.HashMapInit(col.getDecks().count());
             SupportSQLiteDatabase db = col.getDb().getDatabase();
 
             String query = "select cards.did, "+

@@ -15,6 +15,7 @@ import com.ichi2.libanki.Models;
 import com.ichi2.libanki.template.ParsedNode;
 import com.ichi2.libanki.utils.StringUtils;
 import com.ichi2.utils.Assert;
+import com.ichi2.utils.HashUtil;
 import com.ichi2.utils.HtmlUtils;
 import com.ichi2.utils.JSONObject;
 
@@ -164,7 +165,7 @@ public class NoteImporter extends Importer {
             }
         }
 
-        HashSet<String> firsts = new HashSet<>(notes.size());
+        HashSet<String> firsts = HashUtil.HashSetInit(notes.size());
         int fld0index = mMapping.indexOf(mModel.getJSONArray("flds").getJSONObject(0).getString("name"));
         mFMap = Models.fieldMap(mModel);
         mNextId = mCol.getTime().timestampID(mCol.getDb(), "notes");

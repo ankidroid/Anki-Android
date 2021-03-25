@@ -24,6 +24,7 @@ import android.view.MenuItem;
 import com.ichi2.anki.Lookup;
 import com.ichi2.anki.R;
 import com.ichi2.themes.Themes;
+import com.ichi2.utils.HashUtil;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -39,7 +40,7 @@ public class ActionButtonStatus {
      * Custom button allocation
      */
     @NonNull
-    protected final Map<Integer, Integer> mCustomButtons = new HashMap<>(25); // setup's size
+    protected final Map<Integer, Integer> mCustomButtons = HashUtil.HashMapInit(25); // setup's size
     private final ReviewerUi mReviewerUi;
 
     public static final int SHOW_AS_ACTION_NEVER = MenuItem.SHOW_AS_ACTION_NEVER;

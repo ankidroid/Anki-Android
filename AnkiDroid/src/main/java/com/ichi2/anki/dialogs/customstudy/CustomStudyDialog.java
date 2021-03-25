@@ -56,6 +56,7 @@ import com.ichi2.libanki.Consts;
 
 import com.ichi2.libanki.Deck;
 import com.ichi2.libanki.Decks;
+import com.ichi2.utils.HashUtil;
 import com.ichi2.utils.JSONArray;
 import com.ichi2.utils.JSONObject;
 
@@ -325,7 +326,7 @@ public class CustomStudyDialog extends AnalyticsDialogFragment implements
 
     private HashMap<Integer, String> getKeyValueMap() {
         Resources res = getResources();
-        HashMap<Integer, String> keyValueMap = new HashMap<>(10);
+        HashMap<Integer, String> keyValueMap = HashUtil.HashMapInit(10);
         keyValueMap.put(CONTEXT_MENU_STANDARD, res.getString(R.string.custom_study));
         keyValueMap.put(CUSTOM_STUDY_NEW, res.getString(R.string.custom_study_increase_new_limit));
         keyValueMap.put(CUSTOM_STUDY_REV, res.getString(R.string.custom_study_increase_review_limit));

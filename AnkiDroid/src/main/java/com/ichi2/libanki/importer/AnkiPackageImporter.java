@@ -29,6 +29,7 @@ import com.ichi2.anki.exception.ImportExportException;
 import com.ichi2.libanki.Collection;
 import com.ichi2.libanki.Storage;
 import com.ichi2.libanki.Utils;
+import com.ichi2.utils.HashUtil;
 
 import java.io.BufferedInputStream;
 import java.io.File;
@@ -92,7 +93,7 @@ public class AnkiPackageImporter extends Anki2Importer {
                 // The filename that we extract should be collection.anki2
                 // Importing collection.anki21 fails due to some media regexes expecting collection.anki2.
                 // We follow how Anki does it and fix the problem here.
-                HashMap<String, String> mediaToFileNameMap = new HashMap<>(1);
+                HashMap<String, String> mediaToFileNameMap = HashUtil.HashMapInit(1);
                 mediaToFileNameMap.put(colname, CollectionHelper.COLLECTION_FILENAME);
                 Utils.unzipFiles(mZip, tempDir.getAbsolutePath(), new String[]{colname, "media"}, mediaToFileNameMap);
                 colname = CollectionHelper.COLLECTION_FILENAME;

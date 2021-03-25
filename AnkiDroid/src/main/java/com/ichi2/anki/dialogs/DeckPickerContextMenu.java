@@ -32,6 +32,7 @@ import com.ichi2.anki.analytics.AnalyticsDialogFragment;
 import com.ichi2.anki.dialogs.customstudy.CustomStudyDialog;
 import com.ichi2.libanki.Collection;
 import com.ichi2.utils.FragmentFactoryUtils;
+import com.ichi2.utils.HashUtil;
 
 import java.lang.annotation.Retention;
 import java.util.ArrayList;
@@ -106,7 +107,7 @@ public class DeckPickerContextMenu extends AnalyticsDialogFragment {
 
     private HashMap<Integer, String> getKeyValueMap() {
         Resources res = getResources();
-        HashMap<Integer, String> keyValueMap = new HashMap<>(9);
+        HashMap<Integer, String> keyValueMap = HashUtil.HashMapInit(9);
         keyValueMap.put(CONTEXT_MENU_RENAME_DECK, res.getString(R.string.rename_deck));
         keyValueMap.put(CONTEXT_MENU_DECK_OPTIONS, res.getString(R.string.menu__deck_options));
         keyValueMap.put(CONTEXT_MENU_CUSTOM_STUDY, res.getString(R.string.custom_study));

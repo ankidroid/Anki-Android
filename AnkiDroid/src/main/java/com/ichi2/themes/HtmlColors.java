@@ -1,6 +1,8 @@
 //noinspection MissingCopyrightHeader #8659
 package com.ichi2.themes;
 
+import com.ichi2.utils.HashUtil;
+
 import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
@@ -20,7 +22,7 @@ public class HtmlColors {
 
     public static String nameToHex(String name) {
         if (sColorsMap == null) {
-            sColorsMap = new HashMap<>(fColorsRawList.length);
+            sColorsMap = HashUtil.HashMapInit(fColorsRawList.length);
             for (int i = 0; i < fColorsRawList.length; i+=2) {
                 sColorsMap.put(fColorsRawList[i].toLowerCase(Locale.US), fColorsRawList[i+1].toLowerCase(Locale.US));
             }

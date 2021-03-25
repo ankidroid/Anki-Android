@@ -30,17 +30,16 @@ import com.ichi2.libanki.DB;
 import com.ichi2.libanki.Decks;
 import com.ichi2.libanki.Media;
 import com.ichi2.libanki.Model;
-import com.ichi2.libanki.Note;
 import com.ichi2.libanki.Storage;
 import com.ichi2.libanki.Utils;
 import com.ichi2.libanki.DeckConfig;
 import com.ichi2.libanki.Deck;
+import com.ichi2.utils.HashUtil;
 
 import java.io.BufferedInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -140,7 +139,7 @@ public class Anki2Importer extends Importer {
 
 
     private void _import() {
-        mDecks = new HashMap<>(mSrc.getDecks().count());
+        mDecks = HashUtil.HashMapInit(mSrc.getDecks().count());
         try {
             // Use transactions for performance and rollbacks in case of error
             mDst.getDb().getDatabase().beginTransaction();
@@ -203,8 +202,8 @@ public class Anki2Importer extends Importer {
     private void _importNotes() {
         int noteCount = mDst.noteCount();
         // build guid -> (id,mod,mid) hash & map of existing note ids
-        mNotes = new HashMap<>(noteCount);
-        Set<Long> existing = new HashSet<>(noteCount);
+        mNotes = HashUtil.HashMapInit(noteCount);
+        Set<Long> existing = HashUtil.HashSetInit(noteCount);
         try (Cursor cur = mDst.getDb().query("select id, guid, mod, mid from notes")) {
             while (cur.moveToNext()) {
                 long id = cur.getLong(0);
@@ -396,7 +395,7 @@ public class Anki2Importer extends Importer {
 
     /** Prepare index of schema hashes. */
     private void _prepareModels() {
-        mModelMap = new HashMap<>(mSrc.getModels().count());
+        mModelMap = HashUtil.HashMapInit(mSrc.getModels().count());
     }
 
 
@@ -516,8 +515,8 @@ public class Anki2Importer extends Importer {
          * Java: guid -> ord -> cid
          */
         int nbCard = mDst.cardCount();
-        Map<String, Map<Integer, Long>> cardsByGuid = new HashMap<>(nbCard);
-        Set<Long> existing = new HashSet<>(nbCard);
+        Map<String, Map<Integer, Long>> cardsByGuid = HashUtil.HashMapInit(nbCard);
+        Set<Long> existing = HashUtil.HashSetInit(nbCard);
         try (Cursor cur = mDst.getDb().query(
                     "select f.guid, c.ord, c.id from cards c, notes f " +
                     "where c.nid = f.id")) {

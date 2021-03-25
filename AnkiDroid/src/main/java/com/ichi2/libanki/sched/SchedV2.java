@@ -48,6 +48,7 @@ import com.ichi2.libanki.backend.exception.BackendNotSupportedException;
 import com.ichi2.libanki.backend.model.SchedTimingToday;
 import com.ichi2.libanki.utils.Time;
 import com.ichi2.utils.Assert;
+import com.ichi2.utils.HashUtil;
 import com.ichi2.utils.JSONArray;
 import com.ichi2.utils.JSONException;
 import com.ichi2.utils.JSONObject;
@@ -472,7 +473,7 @@ public class SchedV2 extends AbstractSched {
      */
     protected int _walkingCount(@NonNull LimitMethod limFn, @NonNull CountMethod cntFn, @Nullable CancelListener cancelListener) {
         int tot = 0;
-        HashMap<Long, Integer> pcounts = new HashMap<>(mCol.getDecks().count());
+        HashMap<Long, Integer> pcounts = HashUtil.HashMapInit(mCol.getDecks().count());
         // for each of the active decks
         for (long did : mCol.getDecks().active()) {
             if (isCancelled(cancelListener)) return -1;
@@ -527,7 +528,7 @@ public class SchedV2 extends AbstractSched {
         _checkDay();
         mCol.getDecks().checkIntegrity();
         List<Deck> decks = mCol.getDecks().allSorted();
-        HashMap<String, Integer[]> lims = new HashMap<>(decks.size());
+        HashMap<String, Integer[]> lims = HashUtil.HashMapInit(decks.size());
         ArrayList<DeckDueTreeNode> deckNodes = new ArrayList<>(decks.size());
         Decks.Node childMap = mCol.getDecks().childMap();
         for (Deck deck : decks) {
@@ -2755,7 +2756,7 @@ public class SchedV2 extends AbstractSched {
             return;
         }
         // determine nid ordering
-        HashMap<Long, Long> due = new HashMap<>(nids.size());
+        HashMap<Long, Long> due = HashUtil.HashMapInit(nids.size());
         if (shuffle) {
             Collections.shuffle(nids);
         }

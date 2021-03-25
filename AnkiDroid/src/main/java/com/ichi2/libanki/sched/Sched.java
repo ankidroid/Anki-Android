@@ -34,6 +34,7 @@ import com.ichi2.libanki.Deck;
 import com.ichi2.libanki.DeckConfig;
 
 import com.ichi2.utils.Assert;
+import com.ichi2.utils.HashUtil;
 import com.ichi2.utils.JSONArray;
 import com.ichi2.utils.JSONException;
 import com.ichi2.utils.JSONObject;
@@ -216,7 +217,7 @@ public class Sched extends SchedV2 {
         _checkDay();
         mCol.getDecks().checkIntegrity();
         List<Deck> decks = mCol.getDecks().allSorted();
-        HashMap<String, Integer[]> lims = new HashMap<>(decks.size());
+        HashMap<String, Integer[]> lims = HashUtil.HashMapInit(decks.size());
         ArrayList<DeckDueTreeNode> deckNodes = new ArrayList<>(decks.size());
         for (Deck deck : decks) {
             if (isCancelled(cancelListener)) {
