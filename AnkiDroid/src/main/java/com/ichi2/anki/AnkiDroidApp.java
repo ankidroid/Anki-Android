@@ -725,7 +725,7 @@ public class AnkiDroidApp extends Application {
             } else {
                 pi = packageManager.getPackageInfo("com.google.android.webview", 0);
             }
-            return "Webview version name - " + pi.versionName + " , version Code - " + PackageInfoCompat.getLongVersionCode(pi) ;
+            return "Webview version name - " + pi.versionName + " , version Code - " + PackageInfoCompat.getLongVersionCode(pi);
         } catch (Throwable e) {
             return e.getMessage();
         }
