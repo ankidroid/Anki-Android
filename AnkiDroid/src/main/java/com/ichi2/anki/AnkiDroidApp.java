@@ -232,7 +232,7 @@ public class AnkiDroidApp extends Application {
     private void setAcraConfigBuilder(CoreConfigurationBuilder acraCoreConfigBuilder) {
         this.acraCoreConfigBuilder = acraCoreConfigBuilder;
         ACRA.init(this, acraCoreConfigBuilder);
-        ACRA.getErrorReporter().putCustomData("WEBVIEW_INFORMATION",fetchWebViewInformation());
+        ACRA.getErrorReporter().putCustomData("WEBVIEW_INFORMATION", fetchWebViewInformation());
     }
 
     @Override
