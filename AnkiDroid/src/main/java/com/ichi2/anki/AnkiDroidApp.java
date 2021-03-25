@@ -73,6 +73,7 @@ import org.acra.sender.HttpSender;
 
 import java.io.InputStream;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.regex.Matcher;
@@ -235,8 +236,8 @@ public class AnkiDroidApp extends Application {
     private void setAcraConfigBuilder(CoreConfigurationBuilder acraCoreConfigBuilder) {
         this.acraCoreConfigBuilder = acraCoreConfigBuilder;
         ACRA.init(this, acraCoreConfigBuilder);
-        ACRA.getErrorReporter().putCustomData("WEBVIEW_VER_NAME", fetchWebViewInformation().get(0));
-        ACRA.getErrorReporter().putCustomData("WEBVIEW_VER_CODE", fetchWebViewInformation().get(1));
+        ACRA.getErrorReporter().putCustomData("WEBVIEW_VER_NAME", fetchWebViewInformation().get("WEBVIEW_VER_NAME"));
+        ACRA.getErrorReporter().putCustomData("WEBVIEW_VER_CODE", fetchWebViewInformation().get("WEBVIEW_VER_CODE"));
     }
 
     @Override
@@ -719,15 +720,17 @@ public class AnkiDroidApp extends Application {
     }
 
     @NonNull
-    private List<String> fetchWebViewInformation() {
-        List<String> webViewInfo = new ArrayList<>();
+    private HashMap<String, String> fetchWebViewInformation() {
+        HashMap<String, String> webViewInfo = new HashMap<>();
         try {
             PackageManager packageManager = getPackageManager();
             PackageInfo pi = WebViewCompat.getCurrentWebViewPackage(this);
-            webViewInfo.add(0, pi.versionName);
-            webViewInfo.add(1, String.valueOf(PackageInfoCompat.getLongVersionCode(pi)));
+            webViewInfo.put("WEBVIEW_VER_NAME", pi.versionName);
+            webViewInfo.put("WEBVIEW_VER_CODE", String.valueOf(PackageInfoCompat.getLongVersionCode(pi)));
         } catch (Throwable e) {
             Timber.w(e);
+            webViewInfo.put("WEBVIEW_VER_NAME", "");
+            webViewInfo.put("WEBVIEW_VER_CODE", "");
         }
         return webViewInfo;
     }
