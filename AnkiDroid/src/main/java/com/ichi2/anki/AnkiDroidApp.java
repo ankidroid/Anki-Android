@@ -727,7 +727,7 @@ public class AnkiDroidApp extends Application {
             webViewInfo.add(0, pi.versionName);
             webViewInfo.add(1, String.valueOf(PackageInfoCompat.getLongVersionCode(pi)));
         } catch (Throwable e) {
-            Timber.w( e );
+            Timber.w(e);
         }
         return webViewInfo;
     }
