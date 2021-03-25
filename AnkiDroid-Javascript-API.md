@@ -536,6 +536,17 @@ If want to hide card's button / text in current card when reviewing on Anki Desk
 ```
 For more view [Window.navigator](https://developer.mozilla.org/en-US/docs/Web/API/Window/navigator) and [Navigator userAgent Property](https://www.w3schools.com/jsref/prop_nav_useragent.asp)
 
+#### Other way to know if in AnkiDroid or other platform
+```js
+ if (document.documentElement.classList.contains("android")) {
+  // Hidden on AnkiDesktop / AnkiMobile
+
+ } else {
+  // Available to AnkiDesktop / AnkiMobile
+
+ }
+```
+
 ## Adding progress bar to card template
 **Note: After AnkiDroid 2.12**. Turn on fullscreen and also hide topbar from reviewer settings. More better implementation can be done for this.
 
