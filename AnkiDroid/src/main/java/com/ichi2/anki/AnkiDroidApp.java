@@ -715,7 +715,7 @@ public class AnkiDroidApp extends Application {
     }
 
     @NonNull
-    private String fetchWebViewInformation () {
+    private String fetchWebViewInformation() {
         String webViewInfo;
         try {
             PackageManager packageManager = getPackageManager();
