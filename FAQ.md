@@ -354,6 +354,28 @@ Some users have found that uninstalling updates to the TTS engine can work: Syst
 
 Some users have found that re-downloading the TTS packages for their language works for them: System Preferences -> System -> Languages & Input -> Text-to-speech output -> Preferred engine settings -> install voice data -> choose the affected voice -> delete it, re-download it
 
+### To use TTS on AnkiDesktop and AnkiDroid
+For field ```Front```
+
+```html
+{{Front}}
+
+<div id="anki_tts">{{tts en_US voices=Apple_Samantha,Microsoft_Zira speed=1.0:Front}}</div>
+
+<div id="ankidroid_tts" style="display:none;">
+    <tts id="tts_tag" service="android" voice="en_US">{{Front}}</tts>
+</div>
+
+<script>
+ if (document.documentElement.classList.contains("android")) {
+       document.getElementById("anki_tts").innerHTML = "";
+ } else {
+       document.getElementById("ankidroid_tts").innerHTML = "";
+ }
+</script>
+```
+
+
 ### Sync is not working
 
 There are few reasons this can happen.
