@@ -27,6 +27,7 @@ import timber.log.Timber;
 import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.View;
 import android.view.WindowManager;
 import android.view.inputmethod.EditorInfo;
@@ -345,6 +346,10 @@ public class CustomStudyDialog extends AnalyticsDialogFragment {
         switch (dialogId) {
             case CONTEXT_MENU_STANDARD:
                 // Standard context menu
+                if (col.getSched().newCount()==0) {
+                    return new int[] {CUSTOM_STUDY_REV, CUSTOM_STUDY_FORGOT, CUSTOM_STUDY_AHEAD,
+                            CUSTOM_STUDY_RANDOM, CUSTOM_STUDY_PREVIEW, CUSTOM_STUDY_TAGS};
+                }
                 return new int[] {CUSTOM_STUDY_NEW, CUSTOM_STUDY_REV, CUSTOM_STUDY_FORGOT, CUSTOM_STUDY_AHEAD,
                         CUSTOM_STUDY_RANDOM, CUSTOM_STUDY_PREVIEW, CUSTOM_STUDY_TAGS};
             case CONTEXT_MENU_LIMITS:
