@@ -724,7 +724,7 @@ public class AnkiDroidApp extends Application {
         try {
             PackageManager packageManager = getPackageManager();
             PackageInfo pi = WebViewCompat.getCurrentWebViewPackage(this);
-            webViewInfo.add(0,pi.versionName);
+            webViewInfo.add(0, pi.versionName);
             webViewInfo.add(1,String.valueOf(PackageInfoCompat.getLongVersionCode(pi)));
         } catch (Throwable e) {
             Timber.w( e );
