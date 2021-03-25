@@ -25,6 +25,7 @@ Feel free to join our Discord: [#dev-ankidroid](https://discord.gg/qjzcRTx) to j
 * [Other development tools](#other-development-tools)
   - [SQLite browser](#sqlite-browser)
   - [HTML javascript inspection](#html-javascript-inspection)
+  - [Custom Search Engines](#custom-search-engines)
 * [Checking database modifications](#checking-database-modifications)
 * [To do from time to time](#to-do-from-time-to-time)
   - [Licenses](#licenses)
@@ -294,6 +295,31 @@ This can be used inside the AnkiDroid to view console log like Chrome dev tools.
 * Save the templates and open deck again.
 * At bottom right corner, there will be button to open console log
 * [View Demo](https://user-images.githubusercontent.com/12841290/103353056-c00bdf80-4ae2-11eb-941e-e652e05e8345.gif)
+
+## Custom Search Engines
+
+Many browser support a "custom search engine" function. These save time while developing. 
+
+Instructions to add a Search Engine to Chrome: https://zapier.com/blog/add-search-engine-to-chrome/
+
+| keyword | url                                                                                                                | Description                           |
+|---------|--------------------------------------------------------------------------------------------------------------------|---------------------------------------|
+| issue   | https://github.com/ankidroid/Anki-Android/issues/%s                                                                | Jump to Issue/PR                      |
+| commit  | https://github.com/ankidroid/Anki-Android/commit/%s                                                                | Jump to commit hash                   |
+| gc      | https://github.com/ankidroid/Anki-Android/search?q=%22Originally+reported+on+Google+Code+with+ID+%s%22&type=issues | Jump to Google Code Issue ID (rare, somtimes documented in source code) |
+| acra    | https://couchdb.ankidroid.org/acralyzer/_design/acralyzer/index.html#/reports-browser/user/%s                      | Search for ACRA user UUID             |
+| wiki    | https://github.com/ankidroid/Anki-Android/search?q=%s&type=wikis                                                   | Search GitHub Wiki for keyword        |
+| acrarep | https://couchdb.ankidroid.org/acralyzer/_design/acralyzer/index.html#/report-details/%s                            | Go to ACRA report (rare)              |
+
+
+Usage: 
+
+* F6/Select Search Bar
+* Type in keyword
+* Tab
+* Type in search term
+* Enter
+
 
 # Checking database modifications
 
