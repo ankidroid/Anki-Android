@@ -1751,7 +1751,7 @@ public class NoteEditor extends AnkiActivity {
                 }
             });
         }
-
+        
         if (!enabled) {
             editText.setBackgroundColor(Themes.getColorFromAttr(NoteEditor.this, R.attr.editTextBackgroundColor));
         }
