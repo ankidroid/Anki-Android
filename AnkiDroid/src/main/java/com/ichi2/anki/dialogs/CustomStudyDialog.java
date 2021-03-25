@@ -368,6 +368,7 @@ public class CustomStudyDialog extends AnalyticsDialogFragment {
                 }
                 break;
             case CONTEXT_MENU_LIMITS:
+                // Special custom study options to show when the daily study limit has been reached
                 dialogOptions.remove(Integer.valueOf(CUSTOM_STUDY_FORGOT));
                 dialogOptions.remove(Integer.valueOf(CUSTOM_STUDY_AHEAD));
                 dialogOptions.remove(Integer.valueOf(CUSTOM_STUDY_RANDOM));
