@@ -1759,7 +1759,7 @@ public class NoteEditor extends AnkiActivity {
             });
         }
 
-        if (!enabled){
+        if (!enabled) {
             editText.setBackgroundColor(Color.parseColor("#CFCFCF"));
         }
         editText.setEnabled(enabled);
