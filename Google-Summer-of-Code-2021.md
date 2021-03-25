@@ -60,8 +60,7 @@ As a contributor to an open-source project, you'll have to share some informatio
 We care about your privacy. Please only list information that you are comfortable sharing in public, as this site is scraped. But we do need an email to be able to contact you once we know more about our plan moving forward. Using your GitHub email address is a reasonably safe choice since it will be necessary to collaborate with us, but you may create an anonymous email specifically for GitHub if that is important to you, we won't mind as long as we have your name some email that works for you :smile: 
 
 
-Please enter your details at the bottom of the page via the following link: https://github.com/ankidroid/Anki-Android/wiki/Google-Summer-of-Code-2021/_edit. You will need a GitHub account to do this.
-- **Prashant Singh** _Reach me_ **:** 'Email' - ps962630@gmail.com, [Github](https://github.com/Prashant830),  [Gitlab](https://gitlab.com/Prashant830), [LinkedIn](https://www.linkedin.com/in/prashant-singh-a612541a6)
+Please enter your details at the bottom of the page via the following link: https://github.com/ankidroid/Anki-Android/wiki/Google-Summer-of-Code-2021/_edit. You will need a GitHub account to do this. 
 - **Priyanka Lodhi** _Reach me_ **:** 'Email' - lodhipriyanka0905@gmail.com, [Github](https://github.com/priyanka090700), [LinkedIn](https://www.linkedin.com/in/priyanka-lodhi-a60a56187/)
 - **Aman Gupta** _Reach me_ **:** 'Email' - aman09072000@gmail.com, [Github](https://github.com/Aman09072000), [LinkedIn](https://www.linkedin.com/in/aman-gupta-396867156/)
 - **Keshav Garg** _Reach me_ **:** 'Email' - gargk747@gmail.com, [GitHub](https://github.com/gargk747), [LinkedIn](https://www.linkedin.com/in/gargk747/)
