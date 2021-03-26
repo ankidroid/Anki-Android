@@ -195,7 +195,7 @@ public class Utils {
         Resources res = context.getResources();
         if (time_s < TIME_HOUR_LONG) {
             time_x = (int) Math.round(time_s / TIME_MINUTE);
-            if(time_x == 0) {
+            if (time_x == 0) {
                 time_x++;
             }
             return res.getQuantityString(R.plurals.reviewer_window_title, time_x, time_x);
