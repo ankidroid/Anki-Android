@@ -22,6 +22,11 @@ import androidx.annotation.Nullable;
 import timber.log.Timber;
 
 public class DeckConfig extends JSONObject{
+
+    private DeckConfig() {
+        super();
+    }
+
     public DeckConfig(JSONObject json) {
         super(json);
     }
@@ -60,5 +65,12 @@ public class DeckConfig extends JSONObject{
 
     public boolean isStd() {
         return getInt("dyn") == Consts.DECK_STD;
+    }
+
+
+    @Override
+    public DeckConfig deepClone() {
+        DeckConfig dc = new DeckConfig();
+        return deepClonedInto(dc);
     }
 }
