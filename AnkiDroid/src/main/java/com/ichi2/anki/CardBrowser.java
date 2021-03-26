@@ -1335,7 +1335,7 @@ public class CardBrowser extends NavigationDrawerActivity implements
         if (did != null && did > 0) {
             intent.putExtra(NoteEditor.EXTRA_DID, (long) did);
         }
-        intent.putExtra("SEARCH",mSearchTerms);
+        intent.putExtra(NoteEditor.TEXT_FROM_SEARCH_VIEW, mSearchTerms);
         return intent;
     }
 
