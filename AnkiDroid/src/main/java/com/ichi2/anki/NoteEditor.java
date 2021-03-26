@@ -232,7 +232,7 @@ public class NoteEditor extends AnkiActivity {
 
     /* indicates if a new note is added or a card is edited */
     private boolean mAddNote;
-
+    private String search_item_query;
     private boolean mAedictIntent;
 
     /* indicates which activity called Note Editor */
@@ -642,7 +642,7 @@ public class NoteEditor extends AnkiActivity {
         });
 
         mCurrentDid = intent.getLongExtra(EXTRA_DID, mCurrentDid);
-
+        search_item_query=intent.getStringExtra("SEARCH");
         setDid(mEditorNote);
 
         setNote(mEditorNote, FieldChangeType.onActivityCreation(shouldReplaceNewlines()));
@@ -697,6 +697,7 @@ public class NoteEditor extends AnkiActivity {
 
         //set focus to FieldEditText 'first' on startup like Anki desktop
         if (mEditFields != null && !mEditFields.isEmpty()) {
+            mEditFields.getFirst().setText(search_item_query);
             mEditFields.getFirst().requestFocus();
         }
     }
