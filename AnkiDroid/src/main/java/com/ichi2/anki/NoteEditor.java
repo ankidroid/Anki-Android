@@ -27,7 +27,6 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.content.res.Resources;
-import android.graphics.Color;
 import android.graphics.Typeface;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
@@ -1759,8 +1758,8 @@ public class NoteEditor extends AnkiActivity {
             });
         }
 
-        if(!enabled){
-            editText.setBackgroundColor(Color.parseColor("#CFCFCF"));
+        if (!enabled) {
+            editText.setBackgroundColor(Themes.getColorFromAttr(NoteEditor.this,R.attr.editTextBackgroundColor));
         }
         editText.setEnabled(enabled);
     }

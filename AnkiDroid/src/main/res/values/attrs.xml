@@ -99,6 +99,7 @@
     <attr name="flagBlue" format="color"/>
     <!-- Note editor colors -->
     <attr name="duplicateColor" format="color"/>
+    <attr name="editTextBackgroundColor" format="color"/>
     <!-- Images -->
     <attr name="navDrawerImage" format="integer"/>
     <attr name="attachFileImage" format="integer"/>
