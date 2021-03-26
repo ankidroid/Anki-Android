@@ -149,6 +149,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.LinkedHashSet;
+import java.util.List;
 import java.util.Set;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReadWriteLock;
@@ -3881,7 +3882,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
     }
 
     @Override
-    public void onSelectedTags(ArrayList<String> selectedTags, int option) {
+    public void onSelectedTags(List<String> selectedTags, int option) {
         if (!mCurrentCard.note().getTags().equals(selectedTags)) {
             String tagString = TextUtils.join(" ", selectedTags);
             Note note = mCurrentCard.note();

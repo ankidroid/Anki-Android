@@ -1579,8 +1579,8 @@ public class CardBrowser extends NavigationDrawerActivity implements
 
 
     @Override
-    public void onSelectedTags(ArrayList<String> selectedTags, int option) {
-        //TODO: Duplication between here and CustomStudyDialog:customStudyFromTags
+    public void onSelectedTags(List<String> selectedTags, int option) {
+        //TODO: Duplication between here and CustomStudyDialog:onSelectedTags
         mSearchView.setQuery("", false);
         String tags = selectedTags.toString();
         mSearchView.setQueryHint(getResources().getString(R.string.CardEditorTags,
@@ -2874,7 +2874,7 @@ public class CardBrowser extends NavigationDrawerActivity implements
 
     @VisibleForTesting
     void filterByTag(String... tags) {
-        onSelectedTags(new ArrayList(Arrays.asList(tags)), 0);
+        onSelectedTags(Arrays.asList(tags), 0);
     }
 
     @VisibleForTesting

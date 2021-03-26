@@ -311,12 +311,12 @@ public class CustomStudyDialog extends AnalyticsDialogFragment implements
         return keyValueMap;
     }
 
+    /**
+     * Gathers the final selection of tags and type of cards,
+     * Generates the search screen for the custom study deck.
+     */
     @Override
-    public void onSelectedTags(ArrayList<String> selectedTags, int option) {
-        /*
-         * Here's the method that gathers the final selection of tags, type of cards and
-         * generates the search screen for the custom study deck.
-         */
+    public void onSelectedTags(List<String> selectedTags, int option) {
         StringBuilder sb = new StringBuilder();
         switch (option) {
             case 1:

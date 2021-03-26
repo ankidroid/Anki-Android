@@ -37,7 +37,7 @@ import java.util.TreeSet;
 
 public class TagsDialog extends AnalyticsDialogFragment {
     public interface TagsDialogListener {
-        void onSelectedTags(ArrayList<String> selectedTags, int option);
+        void onSelectedTags(List<String> selectedTags, int option);
     }
 
 
