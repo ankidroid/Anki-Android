@@ -313,6 +313,9 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
 
     private boolean mButtonHeightSet = false;
 
+    // to check whether media is playing or not
+    private boolean isMediaPlaying = false;
+
     private static final int sShowChosenAnswerLength = 2000;
 
     /**
@@ -388,15 +391,6 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
     // ----------------------------------------------------------------------------
     // LISTENERS
     // ----------------------------------------------------------------------------
-
-    private final Handler mHandler = new Handler() {
-
-        @Override
-        public void handleMessage(Message msg) {
-            mSoundPlayer.stopSounds();
-            mSoundPlayer.playSound((String) msg.obj, null, null, getSoundErrorListener());
-        }
-    };
 
     private final Handler longClickHandler = new Handler();
     private final Runnable longClickTestRunnable = new Runnable() {
@@ -889,7 +883,6 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
 
         View mainView = findViewById(android.R.id.content);
         initNavigationDrawer(mainView);
-
         mShortAnimDuration = getResources().getInteger(android.R.integer.config_shortAnimTime);
     }
 
@@ -2316,6 +2309,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
     }
 
     private void playSounds(SoundSide questionAndAnswer) {
+        isMediaPlaying = true;
         mSoundPlayer.playSounds(questionAndAnswer, getSoundErrorListener());
     }
 
@@ -3426,10 +3420,17 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
         // We play sounds through these links when a user taps the sound icon.
         private boolean filterUrl(String url) {
             if (url.startsWith("playsound:")) {
-                // Send a message that will be handled on the UI thread.
-                Message msg = Message.obtain();
-                msg.obj = url.replaceFirst("playsound:", "");
-                mHandler.sendMessage(msg);
+                String playButton = "<svg viewBox=\"0 0 32 32\"><polygon points=\"11,25 25,16 11,7\"/>Play</svg>";
+                String pauseButton = "<svg viewBox=\"0 0 32 32\"><path d=\"M6,19h4L10,5L6,5v14zM14,5v14h4L18,5h-4z\"/>Pause</svg>";
+                if (isMediaPlaying) {
+                    isMediaPlaying = false;
+                    mCardWebView.evaluateJavascript("var x=document.getElementsByTagName(\"span\");x[0].innerHTML='" + playButton + "';", null);
+                    mSoundPlayer.pauseSound();
+                } else {
+                    isMediaPlaying = true;
+                    mSoundPlayer.resumeSound();
+                    mCardWebView.evaluateJavascript("var x=document.getElementsByTagName(\"span\");x[0].innerHTML='" + pauseButton + "';", null);
+                }
                 return true;
             }
             if (url.startsWith("file") || url.startsWith("data:")) {

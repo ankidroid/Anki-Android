@@ -215,13 +215,13 @@ public class Sound {
             // Construct the new content, appending the substring from the beginning of the content left until the
             // beginning of the sound marker
             // and then appending the html code to add the play button
-            String button = "<svg viewBox=\"0 0 32 32\"><polygon points=\"11,25 25,16 11,7\"/>Replay</svg>";
+            String pauseButton = "<svg viewBox=\"0 0 32 32\"><path d=\"M6,19h4L10,5L6,5v14zM14,5v14h4L18,5h-4z\"/>Pause</svg>";
             String soundMarker = matcher.group();
             int markerStart = contentLeft.indexOf(soundMarker);
             stringBuilder.append(contentLeft.substring(0, markerStart));
             // The <span> around the button (SVG or PNG image) is needed to make the vertical alignment work.
             stringBuilder.append("<a class='replaybutton' href=\"playsound:").append(soundPath).append("\">")
-                    .append("<span>").append(button)
+                    .append("<span>").append(pauseButton)
                     .append("</span></a>");
             contentLeft = contentLeft.substring(markerStart + soundMarker.length());
             Timber.v("Content left = %s", contentLeft);
@@ -284,6 +284,24 @@ public class Sound {
         Timber.d("Playing single sound");
         SingleSoundCompletionListener completionListener = new SingleSoundCompletionListener(playAllListener);
         playSoundInternal(soundPath, completionListener, videoView, errorListener);
+    }
+
+    /**
+     * Pauses the given sound. Called on pressing the content inside span tag.
+     */
+    public void pauseSound() {
+        if (mMediaPlayer != null && mMediaPlayer.isPlaying()) {
+            mMediaPlayer.pause();
+        }
+    }
+
+    /**
+     * Resumes the given sound.Called on pressing the content inside span tag
+     */
+    public void resumeSound() {
+        if (mMediaPlayer != null) {
+            mMediaPlayer.start();
+        }
     }
 
     /** Plays a sound without ensuring that the playAllListener will release the audio */
