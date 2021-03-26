@@ -565,21 +565,27 @@ public class Connection extends BaseAsyncTask<Connection.Payload, Object, Connec
         }
         ConnectivityManager cm = (ConnectivityManager) AnkiDroidApp.getInstance().getApplicationContext()
                 .getSystemService(Context.CONNECTIVITY_SERVICE);
-
+        if (cm == null) {
+            return false;
+        }
         /* NetworkInfo is deprecated in API 29 so we have to check separately for higher API Levels */
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q && cm != null) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) {
             Network network = cm.getActiveNetwork();
             if (network == null) {
                 return false;
             }
             NetworkCapabilities networkCapabilities = cm.getNetworkCapabilities(network);
-            return networkCapabilities != null && (networkCapabilities.hasTransport(NetworkCapabilities.TRANSPORT_WIFI)
-                    || networkCapabilities.hasTransport(NetworkCapabilities.TRANSPORT_CELLULAR));
-        } else if (cm != null) {
+            if (networkCapabilities == null) {
+                return false;
+            }
+            boolean isInternetSuspended = !networkCapabilities.hasCapability(NetworkCapabilities.NET_CAPABILITY_NOT_SUSPENDED);
+            return networkCapabilities.hasCapability(NetworkCapabilities.NET_CAPABILITY_INTERNET)
+                    && networkCapabilities.hasCapability(NetworkCapabilities.NET_CAPABILITY_VALIDATED)
+                    && !isInternetSuspended;
+        } else {
             android.net.NetworkInfo networkInfo = cm.getActiveNetworkInfo();
             return networkInfo != null && networkInfo.isConnected();
         }
-        return false;
     }
 
 
