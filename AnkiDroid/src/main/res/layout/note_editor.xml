@@ -45,17 +45,11 @@
                         android:gravity="left|center_vertical"
                         android:textStyle="bold"
                         android:text="@string/CardEditorModel" />
-                    <LinearLayout
+                    <Spinner
+                        android:id="@+id/note_type_spinner"
                         android:layout_width="fill_parent"
                         android:layout_height="@dimen/touch_target"
-                        style="?android:attr/buttonStyleSmall"
-                        android:orientation="vertical" >
-                        <Spinner
-                            android:id="@+id/note_type_spinner"
-                            android:layout_width="fill_parent"
-                            android:layout_height="wrap_content"
-                            app:popupTheme="@style/ActionBar.Popup" />
-                    </LinearLayout>
+                        app:popupTheme="@style/ActionBar.Popup"/>
                 </LinearLayout>
 
                 <!-- Deck selector -->
@@ -74,30 +68,11 @@
                         android:gravity="left|center_vertical"
                         android:textStyle="bold"
                         android:text="@string/CardEditorNoteDeck" />
-                    <LinearLayout
+                    <Spinner
+                        android:id="@+id/note_deck_spinner"
                         android:layout_width="fill_parent"
-                        android:layout_height="wrap_content"
-                        android:orientation="vertical" >
-                        <LinearLayout
-                            android:id="@+id/deck_editor_cards_button"
-                            style="?android:attr/buttonStyleSmall"
-                            android:layout_width="fill_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_gravity="center"
-                            android:gravity="center" >
-                            <com.ichi2.ui.FixedTextView
-                                android:id="@+id/deck_editor_cards_text"
-                                android:layout_width="fill_parent"
-                                android:layout_height="wrap_content"
-                                android:layout_gravity="center"
-                                android:layout_marginStart="5dip"
-                                android:layout_marginEnd="5dip"
-                                android:clickable="false"
-                                android:textColor="@color/black"
-                                tools:text="Card 1"
-                                android:gravity="left|center_vertical" />
-                        </LinearLayout>
-                    </LinearLayout>
+                        android:layout_height="@dimen/touch_target"
+                        app:popupTheme="@style/ActionBar.Popup"/>
                 </LinearLayout>
 
                 <!-- Front/Back/Attach views added in NoteEditor.populateEditFields(..) -->

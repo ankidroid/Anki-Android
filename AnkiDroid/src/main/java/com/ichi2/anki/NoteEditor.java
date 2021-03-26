@@ -51,6 +51,7 @@ import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup.MarginLayoutParams;
 import android.view.WindowManager;
@@ -213,8 +214,8 @@ public class NoteEditor extends AnkiActivity implements DeckSelectionDialog.Deck
 
     private LinearLayout mFieldsLayoutContainer;
 
-    private LinearLayout mDeckEditorCardsButton;
-    private TextView mDeckEditorCardsText;
+    private Spinner mNoteDeckSpinner;
+    private LinearLayout mNoteDeckLayout;
     
     private TextView mTagsButton;
     private TextView mCardsButton;
@@ -263,8 +264,8 @@ public class NoteEditor extends AnkiActivity implements DeckSelectionDialog.Deck
     @Override
     public void onDeckSelected(@Nullable DeckSelectionDialog.SelectableDeck deck) {
         if (deck != null) {
-            mDeckEditorCardsText.setText(deck.getName());
             mCurrentDid = deck.getDeckId();
+            mNoteDeckSpinner.setSelection(mAllDeckIds.indexOf(deck.getDeckId()), false);
         }
     }
 
@@ -577,16 +578,12 @@ public class NoteEditor extends AnkiActivity implements DeckSelectionDialog.Deck
         mNoteTypeSpinner.setAdapter(noteTypeAdapter);
         noteTypeAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 
-
         // Deck Selector
         TextView deckTextView = findViewById(R.id.CardEditorDeckText);
         // If edit mode and more than one card template distinguish between "Deck" and "Card deck"
         if (!mAddNote && mEditorNote.model().getJSONArray("tmpls").length()>1) {
             deckTextView.setText(R.string.CardEditorCardDeck);
         }
-
-        mDeckEditorCardsButton = findViewById(R.id.deck_editor_cards_button);
-        mDeckEditorCardsText = findViewById(R.id.deck_editor_cards_text);
 
         ArrayList<Deck> decks = getCol().getDecks().all();
         Collections.sort(decks, DeckComparator.instance);
@@ -608,10 +605,18 @@ public class NoteEditor extends AnkiActivity implements DeckSelectionDialog.Deck
             mAllDeckIds.add(thisDid);
         }
 
-        mDeckEditorCardsButton.setOnClickListener(new View.OnClickListener() {
+        mNoteDeckSpinner = findViewById(R.id.note_deck_spinner);
+        mNoteDeckLayout = findViewById(R.id.note_deck_layout);
+
+        ArrayAdapter<String> noteDeckAdapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, mAllDeckNames);
+        mNoteDeckSpinner.setAdapter(noteDeckAdapter);
+        mNoteDeckSpinner.setOnTouchListener(new View.OnTouchListener() {
             @Override
-            public void onClick(View view) {
-                displayDeckOverrideDialog(getCol());
+            public boolean onTouch(View view, MotionEvent motionEvent) {
+                if (motionEvent.getAction() == MotionEvent.ACTION_UP) {
+                    displayDeckOverrideDialog(getCol());
+                }
+                return true;
             }
         });
 
@@ -745,7 +750,7 @@ public class NoteEditor extends AnkiActivity implements DeckSelectionDialog.Deck
                 break;
 
             case KeyEvent.KEYCODE_D:
-                if (event.isCtrlPressed() && (mDeckEditorCardsButton != null)) {
+                if (event.isCtrlPressed() && (mNoteDeckSpinner != null)) {
                     displayDeckOverrideDialog(getCol());
                 }
                 break;
@@ -1505,7 +1510,7 @@ public class NoteEditor extends AnkiActivity implements DeckSelectionDialog.Deck
 
             if (Build.VERSION.SDK_INT < Build.VERSION_CODES.O) {
                 if (i == 0) {
-                    findViewById(R.id.deck_editor_cards_button).setNextFocusForwardId(newTextbox.getId());
+                    findViewById(R.id.note_deck_spinner).setNextFocusForwardId(newTextbox.getId());
                 }
                 if (previous != null) {
                     previous.getLastViewInTabOrder().setNextFocusForwardId(newTextbox.getId());
@@ -2058,7 +2063,7 @@ public class NoteEditor extends AnkiActivity implements DeckSelectionDialog.Deck
     private void updateDeckPosition() {
         int position = mAllDeckIds.indexOf(mCurrentDid);
         if (position != -1) {
-            mDeckEditorCardsText.setText(mAllDeckNames.get(position));
+            mNoteDeckSpinner.setSelection(position, false);
         } else {
             Timber.e("updateDeckPosition() error :: mCurrentDid=%d, position=%d", mCurrentDid, position);
         }
@@ -2239,7 +2244,7 @@ public class NoteEditor extends AnkiActivity implements DeckSelectionDialog.Deck
                 //((LinearLayout) findViewById(R.id.CardEditorCardsButton)).setEnabled(false);
                 int position = mAllDeckIds.indexOf(mCurrentEditedCard.getDid());
                 if (position != -1) {
-                    mDeckEditorCardsText.setText(mAllDeckNames.get(position));
+                    mNoteDeckSpinner.setSelection(position, false);
                 }
             } else {
                 populateEditFields(FieldChangeType.refresh(shouldReplaceNewlines()), false);
