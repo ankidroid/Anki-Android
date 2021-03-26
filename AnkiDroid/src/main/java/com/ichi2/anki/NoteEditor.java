@@ -1757,6 +1757,10 @@ public class NoteEditor extends AnkiActivity {
                 }
             });
         }
+
+        if(!enabled){
+            editText.setBackgroundColor(Color.parseColor("#CFCFCF"));
+        }
         editText.setEnabled(enabled);
     }
 
