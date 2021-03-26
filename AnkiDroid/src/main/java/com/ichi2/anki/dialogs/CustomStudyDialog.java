@@ -63,7 +63,8 @@ import java.util.List;
 import java.util.Locale;
 
 
-public class CustomStudyDialog extends AnalyticsDialogFragment {
+public class CustomStudyDialog extends AnalyticsDialogFragment implements
+        TagsDialog.TagsDialogListener {
     // Different configurations for the context menu
     public static final int CONTEXT_MENU_STANDARD = 0;
     public static final int CONTEXT_MENU_LIMITS = 1;
@@ -157,7 +158,6 @@ public class CustomStudyDialog extends AnalyticsDialogFragment {
                             TagsDialog dialogFragment = TagsDialog.newInstance(
                                     TagsDialog.DialogType.CUSTOM_STUDY_TAGS, new ArrayList<>(),
                                     new ArrayList<>(activity.getCol().getTags().byDeck(currentDeck, true)));
-                            dialogFragment.setTagsDialogListener(CustomStudyDialog.this::customStudyFromTags);
                             activity.showDialogFragment(dialogFragment);
                             break;
                         }
@@ -311,7 +311,12 @@ public class CustomStudyDialog extends AnalyticsDialogFragment {
         return keyValueMap;
     }
 
-    private void customStudyFromTags(List<String> selectedTags, int option) {
+    /**
+     * Gathers the final selection of tags and type of cards,
+     * Generates the search screen for the custom study deck.
+     */
+    @Override
+    public void onSelectedTags(List<String> selectedTags, int option) {
         StringBuilder sb = new StringBuilder();
         switch (option) {
             case 1:
