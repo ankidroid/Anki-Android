@@ -1474,7 +1474,6 @@ public class CardBrowser extends NavigationDrawerActivity implements
     }
 
     private void invalidate() {
-        TaskManager.cancelAllTasks(CollectionTask.SearchCards.class);
         TaskManager.cancelAllTasks(CollectionTask.RenderBrowserQA.class);
         TaskManager.cancelAllTasks(CollectionTask.CheckCardSelection.class);
         mCards.clear();
@@ -1489,6 +1488,7 @@ public class CardBrowser extends NavigationDrawerActivity implements
 
     private void searchCards() {
         // cancel the previous search & render tasks if still running
+        TaskManager.cancelAllTasks(CollectionTask.SearchCards.class);
         invalidate();
         String searchText;
         if (mSearchTerms == null) {
