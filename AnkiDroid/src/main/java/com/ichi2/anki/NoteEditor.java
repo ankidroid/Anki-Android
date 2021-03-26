@@ -1758,6 +1758,7 @@ public class NoteEditor extends AnkiActivity {
             });
         }
 
+        // Sets the background color of disabled EditText.
         if (!enabled) {
             editText.setBackgroundColor(Themes.getColorFromAttr(NoteEditor.this,R.attr.editTextBackgroundColor));
         }
