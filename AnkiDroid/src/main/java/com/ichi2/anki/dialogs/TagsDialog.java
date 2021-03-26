@@ -37,7 +37,7 @@ import java.util.TreeSet;
 
 public class TagsDialog extends AnalyticsDialogFragment {
     public interface TagsDialogListener {
-        void onPositive(ArrayList<String> selectedTags, int option);
+        void onSelectedTags(ArrayList<String> selectedTags, int option);
     }
 
 
@@ -169,7 +169,7 @@ public class TagsDialog extends AnalyticsDialogFragment {
                 .negativeText(R.string.dialog_cancel)
                 .customView(tagsDialogView, false)
                 .onPositive((dialog, which) -> ((TagsDialogListener)requireActivity())
-                        .onPositive(new ArrayList<>(mCurrentTags), mSelectedOption));
+                        .onSelectedTags(new ArrayList<>(mCurrentTags), mSelectedOption));
         mDialog = builder.build();
 
         mDialog.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE);

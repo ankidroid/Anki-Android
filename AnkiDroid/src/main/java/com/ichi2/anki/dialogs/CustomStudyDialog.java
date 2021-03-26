@@ -64,7 +64,7 @@ import java.util.Locale;
 
 
 public class CustomStudyDialog extends AnalyticsDialogFragment implements
-        TagsDialog.TagsDialogListener{
+        TagsDialog.TagsDialogListener {
     // Different configurations for the context menu
     public static final int CONTEXT_MENU_STANDARD = 0;
     public static final int CONTEXT_MENU_LIMITS = 1;
@@ -312,7 +312,7 @@ public class CustomStudyDialog extends AnalyticsDialogFragment implements
     }
 
     @Override
-    public void onPositive(ArrayList<String> selectedTags, int option) {
+    public void onSelectedTags(ArrayList<String> selectedTags, int option) {
         /*
          * Here's the method that gathers the final selection of tags, type of cards and
          * generates the search screen for the custom study deck.

@@ -111,7 +111,7 @@ import static com.ichi2.libanki.stats.Stats.SECONDS_PER_DAY;
 import static com.ichi2.anim.ActivityTransitionAnimation.Direction.*;
 
 public class CardBrowser extends NavigationDrawerActivity implements
-        DeckDropDownAdapter.SubtitleListener, TagsDialog.TagsDialogListener{
+        DeckDropDownAdapter.SubtitleListener, TagsDialog.TagsDialogListener {
 
     enum Column {
         QUESTION,
@@ -1579,7 +1579,7 @@ public class CardBrowser extends NavigationDrawerActivity implements
 
 
     @Override
-    public void onPositive(ArrayList<String> selectedTags, int option) {
+    public void onSelectedTags(ArrayList<String> selectedTags, int option) {
         //TODO: Duplication between here and CustomStudyDialog:customStudyFromTags
         mSearchView.setQuery("", false);
         String tags = selectedTags.toString();
@@ -2874,7 +2874,7 @@ public class CardBrowser extends NavigationDrawerActivity implements
 
     @VisibleForTesting
     void filterByTag(String... tags) {
-        onPositive(new ArrayList(Arrays.asList(tags)), 0);
+        onSelectedTags(new ArrayList(Arrays.asList(tags)), 0);
     }
 
     @VisibleForTesting

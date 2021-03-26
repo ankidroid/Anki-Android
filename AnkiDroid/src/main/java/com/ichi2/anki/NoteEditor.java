@@ -150,7 +150,7 @@ import static com.ichi2.libanki.Models.NOT_FOUND_NOTE_TYPE;
  * @see <a href="http://ankisrs.net/docs/manual.html#cards">the Anki Desktop manual</a>
  */
 public class NoteEditor extends AnkiActivity implements
-        TagsDialog.TagsDialogListener{
+        TagsDialog.TagsDialogListener {
     // DA 2020-04-13 - Refactoring Plans once tested:
     // * There is a difference in functionality depending on whether we are editing
     // * Extract mAddNote and mCurrentEditedCard into inner class. Gate mCurrentEditedCard on edit state.
@@ -1362,7 +1362,7 @@ public class NoteEditor extends AnkiActivity implements
     }
 
     @Override
-    public void onPositive(ArrayList<String> selectedTags, int option) {
+    public void onSelectedTags(ArrayList<String> selectedTags, int option) {
         if (!mSelectedTags.equals(selectedTags)) {
             mTagsEdited = true;
         }
