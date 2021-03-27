@@ -196,7 +196,7 @@ public class DeckSelectionDialog extends AnalyticsDialogFragment {
                     if (Decks.isValidDeckName(deckName)) {
                         boolean creationSucceeded = createNewDeck(deckName);
                         if (!creationSucceeded) {
-                            UIUtils.showThemedToast(requireActivity(), "Failed to create deck", false);
+                            UIUtils.showThemedToast(requireActivity(), getString(R.string.deck_creation_failed), false);
                         }
                     } else {
                         Timber.i("configureFloatingActionsMenu::addDeckButton::onPositiveListener - Not creating invalid deck name '%s'", deckName);
@@ -208,16 +208,15 @@ public class DeckSelectionDialog extends AnalyticsDialogFragment {
     }
 
     /**
-     * It can fail if an ancestor is a filtered deck.
-     * @param deckName Create a deck with this name.
-     * @return Whether creation succeeded.
+     * Succeeded means deck has been created without issue
+     * Deck will not create if deckName is already present in list
      */
     private boolean createNewDeck(String deckName) {
-        Timber.i("DeckPicker:: Creating new deck...");
         try {
             Long id = new AnkiActivity().getCol().getDecks().id(deckName);
             // Add deck to adapter list only if its not already present
             if (!mAdapter.mCurrentlyDisplayedDecks.contains(deckName)) {
+                Timber.i("DeckPicker:: Creating new deck...");
                 SelectableDeck dec = new SelectableDeck(id, deckName);
                 mAdapter.mCurrentlyDisplayedDecks.add(dec);
                 mAdapter.mAllDecksList.add(dec);
