@@ -176,8 +176,8 @@ public class DeckSelectionDialog extends AnalyticsDialogFragment {
             }
         });
 
-        MenuItem add_Decks = mToolbar.getMenu().findItem(R.id.deck_picker_dialog_action_add_deck);
-        add_Decks.setOnMenuItemClickListener(menuItem -> {
+        MenuItem addDecks = mToolbar.getMenu().findItem(R.id.deck_picker_dialog_action_add_deck);
+        addDecks.setOnMenuItemClickListener(menuItem -> {
             // creating new deck without any parent deck
             addDeckDialog("");
             return true;
@@ -185,18 +185,18 @@ public class DeckSelectionDialog extends AnalyticsDialogFragment {
     }
 
     private void addDeckDialog(String parentDeckPath) {
-        EditText mDialogEditText = new FixedEditText(requireActivity());
-        mDialogEditText.setSingleLine(true);
+        EditText dialogEditText = new FixedEditText(requireActivity());
+        dialogEditText.setSingleLine(true);
         new MaterialDialog.Builder(requireActivity())
                 .title(R.string.new_deck)
                 .positiveText(R.string.dialog_ok)
-                .customView(mDialogEditText, true)
+                .customView(dialogEditText, true)
                 .onPositive((dialog, which) -> {
-                    String deckName = parentDeckPath + mDialogEditText.getText().toString();
+                    String deckName = parentDeckPath + dialogEditText.getText().toString();
                     if (Decks.isValidDeckName(deckName)) {
-                        boolean creation_succeed = createNewDeck(deckName);
-                        if (!creation_succeed) {
-                            return;
+                        boolean creationSucceeded = createNewDeck(deckName);
+                        if (!creationSucceeded) {
+                            UIUtils.showThemedToast(requireActivity(), "Failed to create deck", false);
                         }
                     } else {
                         Timber.i("configureFloatingActionsMenu::addDeckButton::onPositiveListener - Not creating invalid deck name '%s'", deckName);
@@ -216,11 +216,14 @@ public class DeckSelectionDialog extends AnalyticsDialogFragment {
         Timber.i("DeckPicker:: Creating new deck...");
         try {
             Long id = new AnkiActivity().getCol().getDecks().id(deckName);
-            SelectableDeck dec = new SelectableDeck(id,deckName);
-            mAdapter.mCurrentlyDisplayedDecks.add(dec);
-            mAdapter.mAllDecksList.add(dec);
-            Collections.sort(mAdapter.mCurrentlyDisplayedDecks);
-            mAdapter.notifyDataSetChanged();
+            // Add deck to adapter list only if its not already present
+            if (!mAdapter.mCurrentlyDisplayedDecks.contains(deckName)) {
+                SelectableDeck dec = new SelectableDeck(id, deckName);
+                mAdapter.mCurrentlyDisplayedDecks.add(dec);
+                mAdapter.mAllDecksList.add(dec);
+                Collections.sort(mAdapter.mCurrentlyDisplayedDecks);
+                mAdapter.notifyDataSetChanged();
+            }
         } catch (FilteredAncestor filteredAncestor) {
             UIUtils.showThemedToast(requireActivity(), getString(R.string.decks_rename_filtered_nosubdecks), false);
             return false;
@@ -256,8 +259,8 @@ public class DeckSelectionDialog extends AnalyticsDialogFragment {
                 mDeckTextView.setOnLongClickListener(new View.OnLongClickListener() {
                     @Override
                     public boolean onLongClick(View view) {
-                        //creating sub deck with parent deck path
-                        addDeckDialog(ctv.getText().toString()+"::");
+                        // creating sub deck with parent deck path
+                        addDeckDialog(ctv.getText().toString() + "::");
                         return true;
                     }
                 });
