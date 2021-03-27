@@ -645,9 +645,12 @@ public class DeckPicker extends NavigationDrawerActivity implements
             addDeckLayout.setVisibility(View.VISIBLE);
             fabBGLayout.setVisibility(View.VISIBLE);
             fabMain.animate().rotationBy(140);
-            addNoteLayout.animate().translationY(0);
-            addSharedLayout.animate().translationY(0);
-            addDeckLayout.animate().translationY(0);
+            addNoteLayout.animate().translationY(0).setDuration(70);
+            addSharedLayout.animate().translationY(0).setDuration(150);
+            addDeckLayout.animate().translationY(0).setDuration(300);
+            addDeckLayout.animate().alpha(1f).setDuration(300);
+            addSharedLayout.animate().alpha(1f).setDuration(150);
+            addNoteLayout.animate().alpha(1f).setDuration(70);
         } else {
             // Show without animation
             addNoteLayout.setVisibility(View.VISIBLE);
@@ -663,9 +666,12 @@ public class DeckPicker extends NavigationDrawerActivity implements
         if (animationEnabled()) {
             // Close with animation
             fabMain.animate().rotation(0);
-            addDeckLayout.animate().translationY(getResources().getDimension(R.dimen.standard_60));
-            addSharedLayout.animate().translationY(getResources().getDimension(R.dimen.standard_110));
-            addNoteLayout.animate().translationY(getResources().getDimension(R.dimen.standard_160)).setListener(new Animator.AnimatorListener() {
+            addNoteLayout.animate().translationY(getResources().getDimension(R.dimen.standard_60)).setDuration(70);
+            addSharedLayout.animate().translationY(getResources().getDimension(R.dimen.standard_110)).setDuration(150);
+            addDeckLayout.animate().alpha(0f).setDuration(300);
+            addSharedLayout.animate().alpha(0f).setDuration(150);
+            addNoteLayout.animate().alpha(0f).setDuration(70);
+            addDeckLayout.animate().translationY(getResources().getDimension(R.dimen.standard_160)).setDuration(300).setListener(new Animator.AnimatorListener() {
                 @Override
                 public void onAnimationStart(Animator animator) { }
 
