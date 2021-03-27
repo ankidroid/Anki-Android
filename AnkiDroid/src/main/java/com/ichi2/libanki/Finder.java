@@ -110,37 +110,20 @@ public class Finder {
         Pair<String, Boolean> res2 = _order instanceof Boolean ? _order((Boolean) _order) : _order((String) _order);
         String order = res2.first;
         boolean rev = res2.second;
-        String sql = _query(preds, order);
+        String sql = _query(preds, order, singleCardByNote);
         Timber.v("Search query '%s' is compiled as '%s'.", query, sql);
         boolean sendProgress = task != null;
         try (Cursor cur = mCol.getDb().getDatabase().query(sql, args)) {
-            if (singleCardByNote) {
-                while (cur.moveToNext()) {
-                    if (isCancelled(task)) {
-                        return new ArrayList<>(0);
-                    }
-                    if ( !nids.contains(cur.getLong(1)) ) {
-                            nids.add(cur.getLong(1));
-                            res.add(cur.getLong(0));
-                    }
-                    if (sendProgress && res.size() > task.getNumCardsToRender()) {
-                        task.doProgress(res);
-                        sendProgress = false;
-                    }
+            while (cur.moveToNext()) {
+                if (isCancelled(task)) {
+                    return new ArrayList<>(0);
                 }
-            } else {
-                while (cur.moveToNext()) {
-                    if (isCancelled(task)) {
-                        return new ArrayList<>(0);
-                    }
-                    res.add(cur.getLong(0));
-                    if (sendProgress && res.size() > task.getNumCardsToRender()) {
-                        task.doProgress(res);
-                        sendProgress = false;
-                    }
+                res.add(cur.getLong(0));
+                if (sendProgress && res.size() > task.getNumCardsToRender()) {
+                    task.doProgress(res);
+                    sendProgress = false;
                 }
             }
-
         } catch (SQLException e) {
             // invalid grouping
             return new ArrayList<>(0);
@@ -387,23 +370,42 @@ public class Finder {
      * @param order A part of a query, ordering element of table Card, with c a card, n its note
      * @return A query to return all card ids satifying the predicate and in the given order
      */
-    private static String _query(String preds, String order) {
+    private static String _query(String preds, String order, boolean singleCardByNote) {
         // can we skip the note table?
         String sql;
-        if (!preds.contains("n.") && !order.contains("n.")) {
-            sql = "select c.id , c.nid from cards c where ";
+        if (singleCardByNote) {
+            if (!preds.contains( "n." ) && !order.contains( "n." )) {
+                sql = "select min(c.id) from cards c where " ;
+            } else {
+                sql = "select min(c.id) from cards c, notes n where c.nid=n.id and " ;
+            }
+            // combine with preds
+            if (!TextUtils.isEmpty(preds)) {
+                sql += "(" + preds + ")";
+            } else {
+                sql += "1";
+            }
+            sql += " group by c.nid";
+            // order
+            if (!TextUtils.isEmpty(order)) {
+                sql += " " + order;
+            }
         } else {
-            sql = "select c.id , c.nid from cards c, notes n where c.nid=n.id and ";
-        }
-        // combine with preds
-        if (!TextUtils.isEmpty(preds)) {
-            sql += "(" + preds + ")";
-        } else {
-            sql += "1";
-        }
-        // order
-        if (!TextUtils.isEmpty(order)) {
-            sql += " " + order;
+            if (!preds.contains("n.") && !order.contains("n.")) {
+                sql = "select c.id from cards c where ";
+            } else {
+                sql = "select c.id from cards c, notes n where c.nid=n.id and ";
+            }
+            // combine with preds
+            if (!TextUtils.isEmpty(preds)) {
+                sql += "(" + preds + ")";
+            } else {
+                sql += "1";
+            }
+            // order
+            if (!TextUtils.isEmpty(order)) {
+                sql += " " + order;
+            }
         }
         return sql;
     }
