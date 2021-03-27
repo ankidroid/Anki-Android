@@ -263,6 +263,7 @@ Satyam jyotsana gargee(satyam8657@gmail.com)GitHub:(https://github.com/Satyamjyo
 - **Vaibhavi Lokegaonkar** (Email: vaibhavilokegaonkar@gmail.com, [Github](https://github.com/Vaibhavi1707), [LinkedIn](https://www.linkedin.com/in/vaibhavi-lokegaonkar-06b844195/))
 - **Miroslav Müller** (Email: m.muller037@gmail.com, [Github](https://github.com/Mizumaky), [Gitlab](https://gitlab.fel.cvut.cz/mullemi5))
 - **Deividas Ovsianikovas** (Email: deividov2000@gmail.com, [Github](https://github.com/deividasovs), [LinkedIn](https://www.linkedin.com/in/deividasovs/))
+- **Olaf Czarnecki** (Email: [olaf.czarnecki@outlook.com](mailto:olaf.czarnecki@outlook.com), [Github](https://github.com/OCzarnecki)
 
 ##
 Please enter your details at the bottom of the page via the following link: https://github.com/ankidroid/Anki-Android/wiki/Google-Summer-of-Code-2021/_edit. You will need a GitHub account to do this.
