@@ -215,8 +215,7 @@ dependencies {
         resolutionStrategy {
             force 'org.jetbrains:annotations:20.1.0'
         }
-        coreLibraryDesugaring 'com.android.tools:desugar_jdk_libs:1.0.9' // Setting the version of core desugaring library.
-//    coreLibraryDesugaring 'com.android.tools:desugar_jdk_libs:1.0.4'
+        coreLibraryDesugaring 'com.android.tools:desugar_jdk_libs:1.0.9'
     }
 
     compileOnly 'org.jetbrains:annotations:20.1.0'
