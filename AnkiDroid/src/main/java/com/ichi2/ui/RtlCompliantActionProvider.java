@@ -26,6 +26,7 @@ import android.widget.ImageView;
 import com.ichi2.anki.R;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.VisibleForTesting;
 import androidx.appcompat.widget.TooltipCompat;
 import androidx.core.view.ActionProvider;
 
@@ -37,7 +38,8 @@ public class RtlCompliantActionProvider extends ActionProvider {
     @NonNull
     private final Context mContext;
     @NonNull
-    private final Activity mActivity;
+    @VisibleForTesting
+    protected final Activity mActivity;
 
 
     public RtlCompliantActionProvider(@NonNull Context context) {
