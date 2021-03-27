@@ -146,18 +146,8 @@ public class HttpSyncer {
     }
 
     /** Note: Return value must be closed */
-    public Response req(String method, int comp, InputStream fobj) throws UnknownHttpResponseException {
-        return req(method, fobj, comp);
-    }
-
-    /** Note: Return value must be closed */
-    public Response req(String method, InputStream fobj, int comp) throws UnknownHttpResponseException {
-        return req(method, fobj, comp, null);
-    }
-
-    /** Note: Return value must be closed */
     @SuppressWarnings("CharsetObjectCanBeUsed")
-    private Response req(String method, InputStream fobj, int comp, JSONObject registerData) throws UnknownHttpResponseException {
+    public Response req(String method, InputStream fobj, int comp) throws UnknownHttpResponseException {
         File tmpFileBuffer = null;
         try {
             String bdry = "--" + BOUNDARY;
