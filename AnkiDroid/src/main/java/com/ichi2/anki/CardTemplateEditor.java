@@ -546,8 +546,9 @@ public class CardTemplateEditor extends AnkiActivity implements DeckSelectionDia
             // Save the model and pass the filename if updated
             tempModel.setEditedModelFileName(TemporaryModel.saveTempModel(mTemplateEditor, tempModel.getModel()));
             i.putExtra(TemporaryModel.INTENT_MODEL_FILENAME, tempModel.getEditedModelFileName());
-            //TODO:Deprecated Solve issue #8293
-            startActivityForResult(i, REQUEST_PREVIEWER);
+            //Before we used startActivityForResult(i, REQUEST_PREVIEWER);
+            //Now we have to use activityResultLauncher.launch
+            activityResultLauncher.launch(i);
         }
 
 
@@ -589,8 +590,8 @@ public class CardTemplateEditor extends AnkiActivity implements DeckSelectionDia
                 return;
             }
             Intent browserAppearanceIntent = CardTemplateBrowserAppearanceEditor.getIntentFromTemplate(context, currentTemplate);
-            activityResultLauncher.launch(browserAppearanceIntent);
             //startActivityForResult(browserAppearanceIntent, REQUEST_CARD_BROWSER_APPEARANCE);
+            activityResultLauncher.launch(browserAppearanceIntent);
         }
 
 
@@ -633,6 +634,29 @@ public class CardTemplateEditor extends AnkiActivity implements DeckSelectionDia
             return false;
         }
 
+        //Old way for handling activity results
+
+        /*
+        @Override
+        public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+            super.onActivityResult(requestCode, resultCode, data);
+            if (requestCode == REQUEST_CARD_BROWSER_APPEARANCE) {
+                onCardBrowserAppearanceResult(resultCode, data);
+                return;
+            }
+
+            if (requestCode == REQUEST_PREVIEWER) {
+                TemporaryModel.clearTempModelFiles();
+                // Make sure the fragments reinitialize, otherwise there is staleness on return
+                ((TemplatePagerAdapter)mTemplateEditor.mViewPager.getAdapter()).ordinalShift();
+                mTemplateEditor.mViewPager.getAdapter().notifyDataSetChanged();
+            }
+        }
+
+ */
+
+        //New way for handling the activity results
+
         ActivityResultLauncher<Intent> activityResultLauncher = registerForActivityResult(
                 new ActivityResultContracts.StartActivityForResult(),
                 new ActivityResultCallback<ActivityResult>() {
@@ -652,25 +676,6 @@ public class CardTemplateEditor extends AnkiActivity implements DeckSelectionDia
                     }
                 }
         );
-
-/*
-        @Override
-        public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
-            super.onActivityResult(requestCode, resultCode, data);
-            if (requestCode == REQUEST_CARD_BROWSER_APPEARANCE) {
-                onCardBrowserAppearanceResult(resultCode, data);
-                return;
-            }
-
-            if (requestCode == REQUEST_PREVIEWER) {
-                TemporaryModel.clearTempModelFiles();
-                // Make sure the fragments reinitialize, otherwise there is staleness on return
-                ((TemplatePagerAdapter)mTemplateEditor.mViewPager.getAdapter()).ordinalShift();
-                mTemplateEditor.mViewPager.getAdapter().notifyDataSetChanged();
-            }
-        }
-
- */
 
 
         private void onCardBrowserAppearanceResult(int resultCode, @Nullable Intent data) {
