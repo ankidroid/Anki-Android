@@ -226,7 +226,7 @@ public class DeckPicker extends NavigationDrawerActivity implements
 
     private EditText mDialogEditText;
 
-    private FloatingActionMenu mFloatingActionMenu;
+    private DeckPickerFloatingActionMenu mFloatingActionMenu;
 
     // flag asking user to do a full sync which is used in upgrade path
     private boolean mRecommendFullSync = false;
@@ -528,7 +528,7 @@ public class DeckPicker extends NavigationDrawerActivity implements
                 mPullToSyncWrapper.setEnabled(mRecyclerViewLayoutManager.findFirstCompletelyVisibleItemPosition() == 0));
 
         // Setup the FloatingActionButtons, should work everywhere with min API >= 15
-        mFloatingActionMenu = new FloatingActionMenu(this,view,this);
+        mFloatingActionMenu = new DeckPickerFloatingActionMenu(view,this);
 
         mReviewSummaryTextView = findViewById(R.id.today_stats_text_view);
 
@@ -643,7 +643,7 @@ public class DeckPicker extends NavigationDrawerActivity implements
      * @param deckName Create a deck with this name.
      * @return Whether creation succeeded.
      */
-    private boolean createNewDeck(String deckName) {
+    protected boolean createNewDeck(String deckName) {
         Timber.i("DeckPicker:: Creating new deck...");
         try {
             getCol().getDecks().id(deckName);

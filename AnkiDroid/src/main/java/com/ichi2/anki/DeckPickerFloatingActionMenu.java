@@ -19,29 +19,25 @@ import timber.log.Timber;
 
 import static com.ichi2.anim.ActivityTransitionAnimation.Direction.LEFT;
 
-public class FloatingActionMenu {
+public class DeckPickerFloatingActionMenu {
 
     private FloatingActionButton addDeckButton,addNoteButton,addSharedButton,fabMain;
     private LinearLayout addNoteLayout, addSharedLayout, addDeckLayout;
     private View fabBGLayout;
     private boolean mIsFABOpen = false;
 
-    private Context mContext;
-    private AnkiActivity ankiActivity;
-    private DeckPicker deckPicker;
+    private DeckPicker mDeckPicker;
 
-    public FloatingActionMenu(Context mContext, View mView, DeckPicker deckPicker) {
-        this.mContext = mContext;
-        this.ankiActivity = new AnkiActivity();
-        this.deckPicker = deckPicker;
-        addNoteLayout = (LinearLayout)mView.findViewById(R.id.add_note_layout);
-        addSharedLayout = (LinearLayout)mView.findViewById(R.id.add_shared_layout);
-        addDeckLayout = (LinearLayout)mView.findViewById(R.id.add_deck_layout);
-        fabMain = (FloatingActionButton)mView.findViewById(R.id.fab_main);
-        addNoteButton = (FloatingActionButton)mView.findViewById(R.id.add_note_action);
-        addSharedButton = (FloatingActionButton)mView.findViewById(R.id.add_shared_action);
-        addDeckButton = (FloatingActionButton)mView.findViewById(R.id.add_deck_action);
-        fabBGLayout = mView.findViewById(R.id.fabBGLayout);
+    public DeckPickerFloatingActionMenu(View view, DeckPicker deckPicker) {
+        this.mDeckPicker = deckPicker;
+        addNoteLayout = (LinearLayout)view.findViewById(R.id.add_note_layout);
+        addSharedLayout = (LinearLayout)view.findViewById(R.id.add_shared_layout);
+        addDeckLayout = (LinearLayout)view.findViewById(R.id.add_deck_layout);
+        fabMain = (FloatingActionButton)view.findViewById(R.id.fab_main);
+        addNoteButton = (FloatingActionButton)view.findViewById(R.id.add_note_action);
+        addSharedButton = (FloatingActionButton)view.findViewById(R.id.add_shared_action);
+        addDeckButton = (FloatingActionButton)view.findViewById(R.id.add_deck_action);
+        fabBGLayout = view.findViewById(R.id.fabBGLayout);
 
         fabMain.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -61,25 +57,25 @@ public class FloatingActionMenu {
             }
         });
 
-        addDeckButton.setOnClickListener(view -> {
+        addDeckButton.setOnClickListener(addDeckButtonView -> {
             if (mIsFABOpen) {
                 closeFloatingActionMenu();
-                EditText mDialogEditText = new FixedEditText(mContext);
+                EditText mDialogEditText = new FixedEditText(mDeckPicker);
                 mDialogEditText.setSingleLine(true);
-                new MaterialDialog.Builder(mContext)
+                new MaterialDialog.Builder(mDeckPicker)
                         .title(R.string.new_deck)
                         .positiveText(R.string.dialog_ok)
                         .customView(mDialogEditText, true)
                         .onPositive((dialog, which) -> {
                             String deckName = mDialogEditText.getText().toString();
                             if (Decks.isValidDeckName(deckName)) {
-                                boolean creation_succeed = createNewDeck(deckName);
+                                boolean creation_succeed = deckPicker.createNewDeck(deckName);
                                 if (!creation_succeed) {
                                     return;
                                 }
                             } else {
                                 Timber.i("configureFloatingActionsMenu::addDeckButton::onPositiveListener - Not creating invalid deck name '%s'", deckName);
-                                UIUtils.showThemedToast(mContext, mContext.getString(R.string.invalid_deck_name), false);
+                                UIUtils.showThemedToast(mDeckPicker, mDeckPicker.getString(R.string.invalid_deck_name), false);
                             }
                         })
                         .negativeText(R.string.dialog_cancel)
@@ -87,39 +83,21 @@ public class FloatingActionMenu {
             }
         });
 
-        addSharedButton.setOnClickListener(view -> {
+        addSharedButton.setOnClickListener(addSharedButtonView -> {
             Timber.i("Adding Shared Deck");
             closeFloatingActionMenu();
             deckPicker.addSharedDeck();
         });
 
-        addNoteButton.setOnClickListener(view -> {
+        addNoteButton.setOnClickListener(addNoteButtonView -> {
             Timber.i("Adding Note");
             closeFloatingActionMenu();
             deckPicker.addNote();
         });
     }
 
-
-    /**
-     * It can fail if an ancestor is a filtered deck.
-     * @param deckName Create a deck with this name.
-     * @return Whether creation succeeded.
-     */
-    private boolean createNewDeck(String deckName) {
-        Timber.i("DeckPicker:: Creating new deck...");
-        try {
-            ankiActivity.getCol().getDecks().id(deckName);
-        } catch (FilteredAncestor filteredAncestor) {
-            UIUtils.showThemedToast(mContext, mContext.getString(R.string.decks_rename_filtered_nosubdecks), false);
-            return false;
-        }
-        deckPicker.updateDeckList();
-        return true;
-    }
-
     private boolean animationDisabled(){
-        SharedPreferences preferences = AnkiDroidApp.getSharedPrefs(mContext);
+        SharedPreferences preferences = AnkiDroidApp.getSharedPrefs(mDeckPicker);
         return preferences.getBoolean("safeDisplay", false);
     }
 
