@@ -109,6 +109,7 @@ public class HttpFetcher {
     }
 
 
+    @SuppressWarnings("deprecation")
     public static String downloadFileToSdCardMethod(String UrlToFile, Context context, String prefix, String method) {
 
         Response response = null;

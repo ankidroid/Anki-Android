@@ -265,8 +265,7 @@ dependencies {
     implementation 'org.bitbucket.cowwoc:diff-match-patch:1.2'
     implementation 'org.apache.commons:commons-compress:1.12' // #6419 - handle >2GB apkg files
     implementation 'net.mikehardy:google-analytics-java7:2.0.13'
-    //noinspection GradleDependency NewerVersionAvailable
-    implementation 'com.squareup.okhttp3:okhttp:3.12.12'
+    implementation 'com.squareup.okhttp3:okhttp:4.9.1'
     implementation 'com.arcao:slf4j-timber:3.1'
     implementation 'com.jakewharton.timber:timber:4.7.1'
     implementation 'org.jsoup:jsoup:1.13.1'

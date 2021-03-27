@@ -55,6 +55,7 @@ public class CountingFileRequestBody extends RequestBody {
     }
 
     @Override
+    @SuppressWarnings("deprecation")
     public void writeTo(BufferedSink sink) throws IOException {
         Source source = null;
         try {
