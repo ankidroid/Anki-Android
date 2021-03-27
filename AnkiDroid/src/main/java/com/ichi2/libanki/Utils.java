@@ -194,7 +194,8 @@ public class Utils {
         int remaining; // Time in the unit smaller than x
         Resources res = context.getResources();
         if (time_s < TIME_HOUR_LONG) {
-            time_x = (int) Math.round(time_s / TIME_MINUTE);
+            // get time remaining, but never less than 1
+            time_x = Math.max((int) Math.round(time_s / TIME_MINUTE), 1);
             return res.getQuantityString(R.plurals.reviewer_window_title, time_x, time_x);
             //It used to be minutes only. So the word "minutes" is not
             //explicitly written in the ressource name.
