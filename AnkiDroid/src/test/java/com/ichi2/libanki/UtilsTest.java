@@ -25,9 +25,11 @@ import java.io.File;
 import java.io.IOException;
 import java.net.URL;
 import java.nio.file.Paths;
+import java.util.Arrays;
 import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
@@ -39,6 +41,7 @@ import org.junit.runner.RunWith;
 import androidx.test.ext.junit.runners.AndroidJUnit4;
 
 import static com.ichi2.libanki.Utils.nonEmptyFields;
+import static org.junit.Assert.assertEquals;
 
 
 @RunWith(AndroidJUnit4.class)
@@ -115,5 +118,40 @@ public class UtilsTest {
         m.put("bar", " plop  ");
         s.add("bar");
         Assert.assertEquals(s, nonEmptyFields(m));
+    }
+
+
+    @Test
+    public void test_stripHTML_will_remove_tags() {
+        final List<String> strings = Arrays.asList(
+                "<>",
+                "<1>",
+                "<asdasd>",
+                "<\n>",
+                "<\\qwq>",
+                "<aa\nsd\nas\n?\n>"
+        );
+
+        for (String s : strings) {
+            assertEquals(s.replace("\n","\\n") + " should be removed.",
+                    "", Utils.stripHTML(s));
+        }
+    }
+
+    @Test
+    public void test_stripHTML_will_remove_comments() {
+        final List<String> strings = Arrays.asList(
+                "<!---->",
+                "<!--dd-->",
+                "<!--asd asd asd-->",
+                "<!--\n-->",
+                "<!--\nsd-->",
+                "<!--lkl\nklk\n-->"
+        );
+
+        for (String s : strings) {
+            assertEquals(s.replace("\n","\\n") + " should be removed.",
+                    "", Utils.stripHTML(s));
+        }
     }
 }

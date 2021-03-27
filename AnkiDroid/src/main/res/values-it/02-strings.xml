@@ -313,6 +313,7 @@
     <!-- Card Viewer -->
     <string name="card_viewer_could_not_find_image">Errore nel contenuto della carta: impossibile caricare «%s»</string>
     <string name="card_viewer_media_relative_protocol">Errore del Contenuto della Carta: Richiesto aggiornamento multimediale</string>
+    <string name="cannot_load_http_resource">Loading http resources is no longer supported</string>
     <!-- Deck Picker -->
     <string name="deck_picker_failed_deck_load">Impossibile caricare il mazzo «%s»</string>
     <string name="search_decks">Cerca mazzi</string>
@@ -340,4 +341,10 @@
     <string name="create_shortcut_failed" comment="home screen == launcher">La tua schermata iniziale non consente ad AnkiDroid di aggiungere scorciatoie</string>
     <string name="create_shortcut_error">Errore nell\'aggiunta della scorciatoia: %s</string>
     <string name="note_editor_capitalize" comment="This is for a switch with a checkbox - on: enabled">Frasi in maiuscole</string>
+    <!-- Symbols used as Button text in IncrementNumberRangePreference -->
+    <string name="plus_sign" comment="Label for increment button in IncrementerNumberRangePreference">+</string>
+    <string name="minus_sign" comment="Label for decrement button in IncrementerNumberRangePreference">-</string>
+    <!-- Used for credential empty warning message -->
+    <string name="email_id_empty">Email address is required</string>
+    <string name="password_empty">Password is required</string>
 </resources>

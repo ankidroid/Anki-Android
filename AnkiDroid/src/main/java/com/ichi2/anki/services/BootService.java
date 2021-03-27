@@ -67,8 +67,10 @@ public class BootService extends BroadcastReceiver {
         try {
             runnable.run();
         } catch (SecurityException ex) {
+            Timber.w(ex);
             error = R.string.boot_service_too_many_notifications;
         } catch (Exception e) {
+            Timber.w(e);
             error = R.string.boot_service_failed_to_schedule_notifications;
         }
         if (error != null) {

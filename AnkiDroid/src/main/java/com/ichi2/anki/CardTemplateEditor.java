@@ -526,6 +526,7 @@ public class CardTemplateEditor extends AnkiActivity implements DeckSelectionDia
         }
 
 
+        @SuppressWarnings("deprecation") // Tracked as https://github.com/ankidroid/Anki-Android/issues/8293
         private void performPreview() {
             Collection col = mTemplateEditor.getCol();
             TemporaryModel tempModel = mTemplateEditor.getTempModel();
@@ -582,6 +583,7 @@ public class CardTemplateEditor extends AnkiActivity implements DeckSelectionDia
         }
 
 
+        @SuppressWarnings("deprecation") // Tracked as https://github.com/ankidroid/Anki-Android/issues/8293
         private void launchCardBrowserAppearance(JSONObject currentTemplate) {
             Context context = AnkiDroidApp.getInstance().getBaseContext();
             if (context == null) {
@@ -636,7 +638,9 @@ public class CardTemplateEditor extends AnkiActivity implements DeckSelectionDia
 
         //Old way for handling activity results
 
+
         /*
+        @SuppressWarnings("deprecation") // Tracked as https://github.com/ankidroid/Anki-Android/issues/8293
         @Override
         public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
             super.onActivityResult(requestCode, resultCode, data);
@@ -767,6 +771,7 @@ public class CardTemplateEditor extends AnkiActivity implements DeckSelectionDia
                 mTemplateEditor.getCol().modSchema();
                 deleteTemplate(tmpl, model);
             } catch (ConfirmModSchemaException e) {
+                e.log();
                 ConfirmationDialog d = new ConfirmationDialog();
                 d.setArgs(getResources().getString(R.string.full_sync_confirmation));
                 Runnable confirm = () -> {
@@ -818,6 +823,7 @@ public class CardTemplateEditor extends AnkiActivity implements DeckSelectionDia
                 Timber.d("addNewTemplateWithCheck() called and no CMSE?");
                 addNewTemplate(model);
             } catch (ConfirmModSchemaException e) {
+                e.log();
                 ConfirmationDialog d = new ConfirmationDialog();
                 d.setArgs(getResources().getString(R.string.full_sync_confirmation));
                 Runnable confirm = () -> {

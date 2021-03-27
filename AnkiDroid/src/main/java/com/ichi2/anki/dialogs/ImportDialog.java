@@ -137,7 +137,7 @@ public class ImportDialog extends AsyncDialogFragment {
         try {
             return URLDecoder.decode(name, "UTF-8");
         } catch (Exception e) {
-            Timber.w("Failed to convert filename to displayable string");
+            Timber.w(e,"Failed to convert filename to displayable string");
             return name;
         }
     }

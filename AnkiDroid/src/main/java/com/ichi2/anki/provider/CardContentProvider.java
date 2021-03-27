@@ -762,7 +762,7 @@ public class CardContentProvider extends ContentProvider {
                     long deckId = Long.parseLong(deckIdStr);
                     return bulkInsertNotes(values, deckId);
                 } catch (NumberFormatException e) {
-                    Timber.d("Invalid %s: %s", FlashCardsContract.Note.DECK_ID_QUERY_PARAM, deckIdStr);
+                    Timber.d(e,"Invalid %s: %s", FlashCardsContract.Note.DECK_ID_QUERY_PARAM, deckIdStr);
                 }
             }
             // deckId not specified, so default to #super implementation (as in spec version 1)
@@ -771,7 +771,7 @@ public class CardContentProvider extends ContentProvider {
     }
 
     /**
-     * This implementation optimizes for when the notes are grouped according to model
+     * This implementation optimizes for when the notes are grouped according to model.
      */
     private int bulkInsertNotes(ContentValues[] valuesArr, long deckId) {
         if (valuesArr == null || valuesArr.length == 0) {
@@ -804,6 +804,7 @@ public class CardContentProvider extends ContentProvider {
                 if (flds == null) {
                     continue;
                 }
+                Models.AllowEmpty allowEmpty = Models.AllowEmpty.fromBoolean(values.getAsBoolean(FlashCardsContract.Note.ALLOW_EMPTY));
                 Long thisModelId = values.getAsLong(FlashCardsContract.Note.MID);
                 if (thisModelId == null || thisModelId < 0) {
                     Timber.d("Unable to get model at index: %d", i);
@@ -833,7 +834,7 @@ public class CardContentProvider extends ContentProvider {
                     newNote.setTagsFromStr(tags);
                 }
                 // Add to collection
-                col.addNote(newNote);
+                col.addNote(newNote, allowEmpty);
                 for (Card card : newNote.cards()) {
                     card.setDid(deckId);
                     card.flush();
@@ -869,6 +870,7 @@ public class CardContentProvider extends ContentProvider {
                 Long modelId = values.getAsLong(FlashCardsContract.Note.MID);
                 String flds = values.getAsString(FlashCardsContract.Note.FLDS);
                 String tags = values.getAsString(FlashCardsContract.Note.TAGS);
+                Models.AllowEmpty allowEmpty = Models.AllowEmpty.fromBoolean(values.getAsBoolean(FlashCardsContract.Note.ALLOW_EMPTY));
                 // Create empty note
                 com.ichi2.libanki.Note newNote = new com.ichi2.libanki.Note(col, col.getModels().get(modelId));
                 // Set fields
@@ -885,7 +887,7 @@ public class CardContentProvider extends ContentProvider {
                     newNote.setTagsFromStr(tags);
                 }
                 // Add to collection
-                col.addNote(newNote);
+                col.addNote(newNote, allowEmpty);
                 col.save();
                 return Uri.withAppendedPath(FlashCardsContract.Note.CONTENT_URI, Long.toString(newNote.getId()));
             }
@@ -1432,7 +1434,7 @@ public class CardContentProvider extends ContentProvider {
             try {
                 id = Long.parseLong(uri.getPathSegments().get(1));
             } catch (NumberFormatException e) {
-                throw new IllegalArgumentException("Model ID must be either numeric or the String CURRENT_MODEL_ID");
+                throw new IllegalArgumentException("Model ID must be either numeric or the String CURRENT_MODEL_ID", e);
             }
         }
         return id;
@@ -1476,6 +1478,7 @@ public class CardContentProvider extends ContentProvider {
              }
              return !Arrays.asList(callingPi.requestedPermissions).contains(READ_WRITE_PERMISSION);
         } catch (PackageManager.NameNotFoundException e) {
+            Timber.w(e);
             return false;
         }
     }

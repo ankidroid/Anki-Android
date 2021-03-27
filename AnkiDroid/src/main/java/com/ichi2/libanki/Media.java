@@ -514,6 +514,7 @@ public class Media {
         try {
             findChanges();
         } catch (SQLException ignored) {
+            Timber.w(ignored);
             _deleteDB();
         }
         List<List<String>> result = new ArrayList<>(3);
@@ -895,6 +896,7 @@ public class Media {
                         meta.put(new JSONArray().put(normname).put(Integer.toString(c)));
                         sz += file.length();
                     } catch (FileNotFoundException e) {
+                        Timber.w(e);
                         // A file has been marked as added but no longer exists in the media directory.
                         // Skip over it and mark it as removed in the db.
                         removeFile(fname);

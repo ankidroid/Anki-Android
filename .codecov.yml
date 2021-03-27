@@ -1,2 +1,11 @@
+# the comments are too noisy to be useful
+comment: false
+
 coverage:
   range: "36...100"
+  status:
+    project:
+      default:
+        # dropping slightly is ok - this stops the check failing on test timing variability
+        # .12 was observed as the largest variability owing to timing forcing different test branch choice
+        threshold: 0.15

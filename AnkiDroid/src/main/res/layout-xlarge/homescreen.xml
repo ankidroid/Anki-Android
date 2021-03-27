@@ -5,22 +5,26 @@
                                            android:layout_height="match_parent"
                                            android:background="?android:attr/colorBackground"
                                            android:fitsSystemWindows="true">
-    <LinearLayout
+    <com.drakeet.drawer.FullDraggableContainer
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <LinearLayout
             android:id="@+id/deckpicker_view"
             android:layout_width="fill_parent"
             android:layout_height="fill_parent"
             android:background="?android:attr/colorBackground"
             android:orientation="horizontal">
-        <include layout="@layout/deck_picker"
-                     android:layout_width="1dip"
-                     android:layout_weight="3"
-                     android:layout_height="match_parent"/>
-        <FrameLayout
-                     android:id="@+id/studyoptions_fragment"
-                     android:layout_weight="2"
-                     android:layout_width="1dip"
-                     android:layout_height="fill_parent"/>
-    </LinearLayout>
+            <include layout="@layout/deck_picker"
+                android:layout_width="1dip"
+                android:layout_weight="3"
+                android:layout_height="match_parent"/>
+            <FrameLayout
+                android:id="@+id/studyoptions_fragment"
+                android:layout_weight="2"
+                android:layout_width="1dip"
+                android:layout_height="fill_parent"/>
+        </LinearLayout>
+    </com.drakeet.drawer.FullDraggableContainer>
     <include layout="@layout/navigation_drawer" />
 </androidx.drawerlayout.widget.ClosableDrawerLayout>
 

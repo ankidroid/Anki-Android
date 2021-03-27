@@ -309,6 +309,7 @@
     <!-- Card Viewer -->
     <string name="card_viewer_could_not_find_image">ᱠᱟᱰ ᱡᱤᱱᱤᱥ ᱵᱷᱩᱞ:  ‘%s’ ᱞᱟᱫᱮ ᱰᱤᱜᱟᱹᱣ</string>
     <string name="card_viewer_media_relative_protocol">ᱠᱟᱰ ᱡᱤᱱᱤᱥ ᱵᱷᱩᱞᱺ ᱢᱮᱰᱤᱭᱟ ᱟᱹᱯᱰᱮᱴ ᱫᱚᱨᱠᱟᱨ</string>
+    <string name="cannot_load_http_resource">Loading http resources is no longer supported</string>
     <!-- Deck Picker -->
     <string name="deck_picker_failed_deck_load">ᱰᱮᱠ ᱞᱟᱫᱮ ᱰᱤᱜᱟᱹᱣ ‘%s’</string>
     <string name="search_decks">ᱰᱮᱠ ᱠᱚ ᱥᱮᱸᱫᱽᱨᱟ</string>
@@ -336,4 +337,10 @@
     <string name="create_shortcut_failed" comment="home screen == launcher">ᱟᱢᱟᱜ ᱚᱲᱟᱜ ᱥᱠᱨᱤᱱ AnkiDroid ᱥᱚᱴᱠᱚᱴ ᱵᱟᱝ ᱥᱮᱞᱮᱫ ᱪᱷᱚᱭᱟᱭ</string>
     <string name="create_shortcut_error">ᱥᱚᱴᱠᱚᱴ ᱥᱮᱞᱮᱫ ᱵᱷᱩᱞ: %s</string>
     <string name="note_editor_capitalize" comment="This is for a switch with a checkbox - on: enabled">ᱟᱹᱭᱟᱹᱛ ᱢᱟᱨᱟᱝ ᱪᱷᱚᱭ ᱢᱮ</string>
+    <!-- Symbols used as Button text in IncrementNumberRangePreference -->
+    <string name="plus_sign" comment="Label for increment button in IncrementerNumberRangePreference">+</string>
+    <string name="minus_sign" comment="Label for decrement button in IncrementerNumberRangePreference">-</string>
+    <!-- Used for credential empty warning message -->
+    <string name="email_id_empty">Email address is required</string>
+    <string name="password_empty">Password is required</string>
 </resources>

@@ -15,6 +15,7 @@ import android.net.Uri;
 import android.os.Bundle;
 
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatDelegate;
 import androidx.appcompat.widget.Toolbar;
 import androidx.browser.customtabs.CustomTabColorSchemeParams;
 import androidx.browser.customtabs.CustomTabsIntent;
@@ -50,6 +51,9 @@ import com.ichi2.utils.AndroidUiUtils;
 
 import timber.log.Timber;
 
+import static androidx.browser.customtabs.CustomTabsIntent.COLOR_SCHEME_DARK;
+import static androidx.browser.customtabs.CustomTabsIntent.COLOR_SCHEME_LIGHT;
+import static androidx.browser.customtabs.CustomTabsIntent.COLOR_SCHEME_SYSTEM;
 import static com.ichi2.anim.ActivityTransitionAnimation.Direction.*;
 import static com.ichi2.anim.ActivityTransitionAnimation.Direction;
 
@@ -234,6 +238,7 @@ public class AnkiActivity extends AppCompatActivity implements SimpleMessageDial
         try {
             super.startActivityForResult(intent, requestCode);
         } catch (ActivityNotFoundException e) {
+            Timber.w(e);
             UIUtils.showSimpleSnackbar(this, R.string.activity_start_failed,true);
         }
     }
@@ -373,19 +378,40 @@ public class AnkiActivity extends AppCompatActivity implements SimpleMessageDial
             return;
         }
 
-        CustomTabActivityHelper helper = getCustomTabActivityHelper();
-        CustomTabsIntent.Builder builder = new CustomTabsIntent.Builder(helper.getSession());
-        CustomTabColorSchemeParams colorScheme =
+        int toolbarColor = Themes.getColorFromAttr(this, R.attr.customTabToolbarColor);
+        int navBarColor = Themes.getColorFromAttr(this, R.attr.customTabNavBarColor);
+
+        CustomTabColorSchemeParams colorSchemeParams =
                 new CustomTabColorSchemeParams.Builder()
-                        .setToolbarColor(ContextCompat.getColor(this, R.color.material_light_blue_500))
+                        .setToolbarColor(toolbarColor)
+                        .setNavigationBarColor(navBarColor)
                         .build();
-        builder.setDefaultColorSchemeParams(colorScheme).setShowTitle(true);
-        builder.setStartAnimations(this, R.anim.slide_right_in, R.anim.slide_left_out);
-        builder.setExitAnimations(this, R.anim.slide_left_in, R.anim.slide_right_out);
-        builder.setCloseButtonIcon(BitmapFactory.decodeResource(this.getResources(), R.drawable.ic_arrow_back_white_24dp));
+
+        CustomTabActivityHelper helper = getCustomTabActivityHelper();
+        CustomTabsIntent.Builder builder =
+                new CustomTabsIntent.Builder(helper.getSession())
+                        .setShowTitle(true)
+                        .setStartAnimations(this, R.anim.slide_right_in, R.anim.slide_left_out)
+                        .setExitAnimations(this, R.anim.slide_left_in, R.anim.slide_right_out)
+                        .setCloseButtonIcon(BitmapFactory.decodeResource(this.getResources(), R.drawable.ic_back_arrow_custom_tab))
+                        .setColorScheme(getColorScheme())
+                        .setDefaultColorSchemeParams(colorSchemeParams);
+
         CustomTabsIntent customTabsIntent = builder.build();
         CustomTabsHelper.addKeepAliveExtra(this, customTabsIntent.intent);
         CustomTabActivityHelper.openCustomTab(this, customTabsIntent, url, new CustomTabsFallback());
+    }
+
+
+    private int getColorScheme() {
+        SharedPreferences prefs = AnkiDroidApp.getSharedPrefs(this);
+        if (AppCompatDelegate.getDefaultNightMode() == AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM) {
+            return COLOR_SCHEME_SYSTEM;
+        } else if (prefs.getBoolean("invertedColors", false)) {
+            return COLOR_SCHEME_DARK;
+        } else {
+            return COLOR_SCHEME_LIGHT;
+        }
     }
 
     public CustomTabActivityHelper getCustomTabActivityHelper() {
@@ -443,6 +469,7 @@ public class AnkiActivity extends AppCompatActivity implements SimpleMessageDial
         try {
             showDialogFragment(newFragment);
         } catch (IllegalStateException e) {
+            Timber.w(e);
             // Store a persistent message to SharedPreferences instructing AnkiDroid to show dialog
             DialogHandler.storeMessage(newFragment.getDialogHandlerMessage());
             // Show a basic notification to the user in the notification bar in the meantime
@@ -610,4 +637,3 @@ public class AnkiActivity extends AppCompatActivity implements SimpleMessageDial
         return true;
     }
 }
-

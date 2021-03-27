@@ -313,6 +313,7 @@
     <!-- Card Viewer -->
     <string name="card_viewer_could_not_find_image">Eraro pri enhavo de karto, fiaskis enlegi “%s”</string>
     <string name="card_viewer_media_relative_protocol">Eraro pri enhavo de karto: necesas ĝisdatigi plurmedion</string>
+    <string name="cannot_load_http_resource">Ne plu eblas enlegi enhavon http</string>
     <!-- Deck Picker -->
     <string name="deck_picker_failed_deck_load">Fiaskis enlegi la kartaron “%s”</string>
     <string name="search_decks">Serĉi en kartaroj</string>
@@ -340,4 +341,10 @@
     <string name="create_shortcut_failed" comment="home screen == launcher">Via hejma ekrano ne permesas al AnkiDroid krei simbolajn ligilojn</string>
     <string name="create_shortcut_error">Eraro dum krei simbolan ligilon: %s</string>
     <string name="note_editor_capitalize" comment="This is for a switch with a checkbox - on: enabled">Majuskligi frazojn</string>
+    <!-- Symbols used as Button text in IncrementNumberRangePreference -->
+    <string name="plus_sign" comment="Label for increment button in IncrementerNumberRangePreference">+</string>
+    <string name="minus_sign" comment="Label for decrement button in IncrementerNumberRangePreference">-</string>
+    <!-- Used for credential empty warning message -->
+    <string name="email_id_empty">Email address is required</string>
+    <string name="password_empty">Password is required</string>
 </resources>

@@ -92,6 +92,7 @@
         <item name="flagBlue">@color/flag_blue</item>
         <!-- Note editor colors -->
         <item name="duplicateColor">#855</item>
+        <item name="editTextBackgroundColor">#EE5C5C5C</item>
         <!-- FAB -->
         <item name="fab_normal">@color/material_light_blue_700</item>
         <item name="fab_pressed">@color/material_light_blue_900</item>
@@ -108,6 +109,9 @@
         <!-- Dialog styles -->
         <item name="android:listPreferredItemHeight">56dip</item>
         <item name="md_dark_theme">true</item>
+        <!--Custom Tabs colors-->
+        <item name="customTabToolbarColor">#3d3d3d</item>
+        <item name="customTabNavBarColor">@color/material_grey_800</item>
     </style>
 
     <!-- Preferences screens -->

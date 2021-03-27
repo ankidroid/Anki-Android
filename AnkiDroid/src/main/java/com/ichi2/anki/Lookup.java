@@ -6,10 +6,9 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.net.Uri;
-import android.view.View;
 
 import com.afollestad.materialdialogs.MaterialDialog;
-
+import com.ichi2.anki.analytics.UsageAnalytics;
 import com.ichi2.libanki.Utils;
 
 import timber.log.Timber;
@@ -88,6 +87,7 @@ public class Lookup {
                 Intent aedictSearchIntent = new Intent(mDictionaryAction);
                 aedictSearchIntent.putExtra("kanjis", text);
                 mContext.startActivity(aedictSearchIntent);
+                UsageAnalytics.sendAnalyticsEvent(Lookup.class.getSimpleName(), UsageAnalytics.Actions.AEDICT);
                 return true;
             case DICTIONARY_LEO_WEB:
             case DICTIONARY_LEO_APP:
@@ -115,25 +115,30 @@ public class Lookup {
                             mLookupText = "";
                         })
                         .build().show();
+                UsageAnalytics.sendAnalyticsEvent(Lookup.class.getSimpleName(), UsageAnalytics.Actions.LEO);
                 return true;
             case DICTIONARY_COLORDICT:
                 Intent colordictSearchIntent = new Intent(mDictionaryAction);
                 colordictSearchIntent.putExtra("EXTRA_QUERY", text);
                 mContext.startActivity(colordictSearchIntent);
+                UsageAnalytics.sendAnalyticsEvent(Lookup.class.getSimpleName(), UsageAnalytics.Actions.COLORDICT);
                 return true;
             case DICTIONARY_FORA:
                 Intent foraSearchIntent = new Intent(mDictionaryAction);
                 foraSearchIntent.putExtra("HEADWORD", text.trim());
                 mContext.startActivity(foraSearchIntent);
+                UsageAnalytics.sendAnalyticsEvent(Lookup.class.getSimpleName(), UsageAnalytics.Actions.FORA);
                 return true;
             case DICTIONARY_NCIKU_WEB:
                 Intent ncikuWebIntent = new Intent(mDictionaryAction, Uri.parse("http://m.nciku.com/en/entry/?query="
                         + text));
                 mContext.startActivity(ncikuWebIntent);
+                UsageAnalytics.sendAnalyticsEvent(Lookup.class.getSimpleName(), UsageAnalytics.Actions.NCIKU);
                 return true;
             case DICTIONARY_EIJIRO_WEB:
                 Intent eijiroWebIntent = new Intent(mDictionaryAction, Uri.parse("http://eow.alc.co.jp/" + text));
                 mContext.startActivity(eijiroWebIntent);
+                UsageAnalytics.sendAnalyticsEvent(Lookup.class.getSimpleName(), UsageAnalytics.Actions.EIJIRO);
                 return true;
         }
         return false;
@@ -187,5 +192,4 @@ public class Lookup {
         // mCurrentCard.getCardModelId(), false).getId(), mCurrentCard.getCardModelId(), questionAnswer, language);
         // }
     }
-
 }

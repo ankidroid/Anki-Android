@@ -80,7 +80,7 @@ public class ReminderService extends BroadcastReceiver {
             colHelper = CollectionHelper.getInstance();
             col = colHelper.getCol(context);
         } catch (Throwable t) {
-            Timber.w("onReceive - unexpectedly unable to get collection. Returning.");
+            Timber.w(t,"onReceive - unexpectedly unable to get collection. Returning.");
             return;
         }
 

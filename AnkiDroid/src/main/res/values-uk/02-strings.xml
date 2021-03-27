@@ -339,6 +339,7 @@
     <!-- Card Viewer -->
     <string name="card_viewer_could_not_find_image">Не вдалося завантажити «\'%s»</string>
     <string name="card_viewer_media_relative_protocol">Помилка вмісту картки: необхідне оновлення медіа</string>
+    <string name="cannot_load_http_resource">Завантаження ресурсів http більше не підтримується</string>
     <!-- Deck Picker -->
     <string name="deck_picker_failed_deck_load">Не вдалося завантажити колоду «%s»</string>
     <string name="search_decks">Шукати колоди</string>
@@ -366,4 +367,10 @@
     <string name="create_shortcut_failed" comment="home screen == launcher">Ваш головний екран не дозволяє AnkiDroid додати ярлики</string>
     <string name="create_shortcut_error">Помилка при створенні ярлика: %s</string>
     <string name="note_editor_capitalize" comment="This is for a switch with a checkbox - on: enabled">Підняти регістр речень</string>
+    <!-- Symbols used as Button text in IncrementNumberRangePreference -->
+    <string name="plus_sign" comment="Label for increment button in IncrementerNumberRangePreference">+</string>
+    <string name="minus_sign" comment="Label for decrement button in IncrementerNumberRangePreference">-</string>
+    <!-- Used for credential empty warning message -->
+    <string name="email_id_empty">Email address is required</string>
+    <string name="password_empty">Password is required</string>
 </resources>

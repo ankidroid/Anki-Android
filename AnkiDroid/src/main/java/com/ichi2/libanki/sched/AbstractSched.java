@@ -190,7 +190,7 @@ public abstract class AbstractSched {
     public abstract int _newForDeck(long did, int lim);
 
     /**
-     * @return Number of new card to see today in current deck. */
+     * @return Number of new card in current deck and its descendants. Capped at reportLimit = 99999. */
     public abstract int totalNewForCurrentDeck();
 
     /** @return Number of review cards in current deck.  */

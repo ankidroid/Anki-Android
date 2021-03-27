@@ -173,7 +173,7 @@
     <string name="time_limit">Časové omezení</string>
     <string name="time_limit_summ">XXX min</string>
     <string name="new_timezone">New timezone handling</string>
-    <string name="day_offset">Začátek příštího dne</string>
+    <string name="day_offset_with_description">Start of next day (0 is midnight, 23 is 11PM)</string>
     <string name="day_offset_summ">XXX hodin po půlnoci</string>
     <string name="sched_ver">Experimentální V2 plánovač</string>
     <string name="sched_ver_summ">Povolit experimentální plánovač. To vynutí změny v jednom směru při příští synchronizaci</string>
@@ -293,4 +293,6 @@
     <string name="note_editor_replace_newlines_summ">V editoru poznámek převede při úpravě karty každý výskyt &lt;br&gt; na nový řádek.</string>
     <string name="no_code_formatting">Jednoduché formátování napsané odpovědi</string>
     <string name="no_code_formatting_summ">Opraví „􏿾“, které se vyskytuje ve výsledcích napsaných odpovědí</string>
+    <!-- Open Changelog-->
+    <string name="open_changelog">Otevřít seznam změn</string>
 </resources>

@@ -99,6 +99,7 @@
     <attr name="flagBlue" format="color"/>
     <!-- Note editor colors -->
     <attr name="duplicateColor" format="color"/>
+    <attr name="editTextBackgroundColor" format="color"/>
     <!-- Images -->
     <attr name="navDrawerImage" format="integer"/>
     <attr name="attachFileImage" format="integer"/>
@@ -112,4 +113,7 @@
     <attr name="fab_labelsTextColor" format="color"/>
     <attr name="fab_background" format="color"/>
     <attr name="fab_item_background" format="reference"/>
+    <!--Custom Tabs colors-->
+    <attr name="customTabToolbarColor" format="color"/>
+    <attr name="customTabNavBarColor" format="color"/>
 </resources>

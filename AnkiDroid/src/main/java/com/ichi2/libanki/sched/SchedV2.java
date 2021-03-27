@@ -224,7 +224,7 @@ public class SchedV2 extends AbstractSched {
 
     @Override
     public void resetCounts(@NonNull CancelListener cancelListener) {
-        resetCounts(true);
+        resetCounts(cancelListener, true);
     }
 
     public void resetCounts(boolean checkCutoff) {
@@ -1305,6 +1305,7 @@ public class SchedV2 extends AbstractSched {
             try {
                 delay = delays.getDouble(len - left);
             } catch (JSONException e) {
+                Timber.w(e);
                 if (conf.getJSONArray("delays").length() > 0) {
                     delay = conf.getJSONArray("delays").getDouble(0);
                 } else {
@@ -1457,6 +1458,7 @@ public class SchedV2 extends AbstractSched {
             mCol.getDb().execute("INSERT INTO revlog VALUES (?,?,?,?,?,?,?,?,?)",
                     getTime().intTimeMS(), id, usn, ease, ivl, lastIvl, factor, timeTaken, type);
         } catch (SQLiteConstraintException e) {
+            Timber.w(e);
             try {
                 Thread.sleep(10);
             } catch (InterruptedException e1) {
@@ -2253,6 +2255,7 @@ public class SchedV2 extends AbstractSched {
                     _current_timezone_offset(),
                     _rolloverHour());
         } catch (BackendNotSupportedException e) {
+            Timber.w(e);
             return null;
         }
     }
@@ -2742,11 +2745,14 @@ public class SchedV2 extends AbstractSched {
         String scids = Utils.ids2str(cids);
         long now = getTime().intTime();
         ArrayList<Long> nids = new ArrayList<>(cids.size());
-        for (long id : cids) {
+        // List of cid from `cids` and its `nid`
+        ArrayList<Pair<Long, Long>> cid2nid = new ArrayList<>(cids.size());
+        for (Long id : cids) {
             long nid = mCol.getDb().queryLongScalar("SELECT nid FROM cards WHERE id = ?", id);
             if (!nids.contains(nid)) {
                 nids.add(nid);
             }
+            cid2nid.add(new Pair<>(id, nid));
         }
         if (nids.isEmpty()) {
             // no new cards
@@ -2770,31 +2776,29 @@ public class SchedV2 extends AbstractSched {
                 int shiftby = high - low + 1;
                 mCol.getDb().execute(
                         "UPDATE cards SET mod = ?, usn = ?, due = due + ?"
-                                + " WHERE id NOT IN " + scids + " AND due >= ? AND queue = " + Consts.QUEUE_TYPE_NEW,
+                                + " WHERE id NOT IN " + scids + " AND due >= ? AND type = " + Consts.CARD_TYPE_NEW,
                         now, mCol.usn(), shiftby, low);
             }
         }
         // reorder cards
         ArrayList<Object[]> d = new ArrayList<>(cids.size());
-        try (Cursor cur = mCol.getDb()
-                    .query("SELECT id, nid FROM cards WHERE type = " + Consts.CARD_TYPE_NEW + " AND id IN " + scids)) {
-            while (cur.moveToNext()) {
-                long nid = cur.getLong(1);
-                d.add(new Object[] { due.get(nid), now, mCol.usn(), cur.getLong(0) });
-            }
+        for (Pair<Long, Long> pair : cid2nid) {
+            Long cid = pair.first;
+            Long nid = pair.second;
+            d.add(new Object[] { due.get(nid), now, mCol.usn(), cid });
         }
         mCol.getDb().executeMany("UPDATE cards SET due = ?, mod = ?, usn = ? WHERE id = ?", d);
     }
 
 
     public void randomizeCards(long did) {
-        List<Long> cids = mCol.getDb().queryLongList("select id from cards where did = ?", did);
+        List<Long> cids = mCol.getDb().queryLongList("select id from cards where type = " + Consts.CARD_TYPE_NEW + " and did = ?", did);
         sortCards(cids, 1, 1, true, false);
     }
 
 
     public void orderCards(long did) {
-        List<Long> cids = mCol.getDb().queryLongList("SELECT id FROM cards WHERE did = ? ORDER BY nid", did);
+        List<Long> cids = mCol.getDb().queryLongList("SELECT id FROM cards WHERE type = " + Consts.CARD_TYPE_NEW + " AND did = ? ORDER BY nid", did);
         sortCards(cids, 1, 1, false, false);
     }
 

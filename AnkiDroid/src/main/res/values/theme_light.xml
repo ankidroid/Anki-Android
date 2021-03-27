@@ -106,6 +106,7 @@ APIs. It's visible when there aren't enough decks to fill the screen.
         <item name="flagBlue">@color/flag_blue</item>
         <!-- Note editor colors -->
         <item name="duplicateColor">#fcc</item>
+        <item name="editTextBackgroundColor">#EBCCCCCC</item>
         <!-- FAB -->
         <item name="fab_normal">@color/material_light_blue_700</item>
         <item name="fab_pressed">@color/material_light_blue_900</item>
@@ -122,6 +123,9 @@ APIs. It's visible when there aren't enough decks to fill the screen.
         <!-- Dialog styles -->
         <item name="android:listPreferredItemHeight">56dip</item>
         <item name="md_dark_theme">false</item>
+        <!--Custom Tabs colors-->
+        <item name="customTabToolbarColor">@color/material_light_blue_700</item>
+        <item name="customTabNavBarColor">@color/material_light_blue_500</item>
     </style>
 
     <!-- Preferences screens -->

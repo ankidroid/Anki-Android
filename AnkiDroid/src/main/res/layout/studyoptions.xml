@@ -4,20 +4,24 @@
                                            android:layout_width="match_parent"
                                            android:layout_height="match_parent"
                                            android:fitsSystemWindows="true">
-    <androidx.coordinatorlayout.widget.CoordinatorLayout
-        android:id="@+id/root_layout"
-        android:layout_width="fill_parent"
-        android:layout_height="fill_parent">
-        <LinearLayout
+    <com.drakeet.drawer.FullDraggableContainer
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <androidx.coordinatorlayout.widget.CoordinatorLayout
+            android:id="@+id/root_layout"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent">
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:orientation="vertical">
-            <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-                android:id="@+id/studyoptions_frame"
-                android:layout_width="fill_parent"
-                android:layout_height="fill_parent" />
-        </LinearLayout>
-    </androidx.coordinatorlayout.widget.CoordinatorLayout>
+                <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                    android:id="@+id/studyoptions_frame"
+                    android:layout_width="fill_parent"
+                    android:layout_height="fill_parent" />
+            </LinearLayout>
+        </androidx.coordinatorlayout.widget.CoordinatorLayout>
+    </com.drakeet.drawer.FullDraggableContainer>
     <include layout="@layout/navigation_drawer" />
 </androidx.drawerlayout.widget.ClosableDrawerLayout>
 

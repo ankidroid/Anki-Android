@@ -173,7 +173,7 @@
     <string name="time_limit">Limigo de lernada tempero (timebox)</string>
     <string name="time_limit_summ">XXX min</string>
     <string name="new_timezone">Pritraktado de nova horzono</string>
-    <string name="day_offset">Komenco de sekva tago</string>
+    <string name="day_offset_with_description">Start of next day (0 is midnight, 23 is 11PM)</string>
     <string name="day_offset_summ">XXX horo(j) post noktmezo</string>
     <string name="sched_ver">Eksperimenta V2 planilo</string>
     <string name="sched_ver_summ">Aktivigi testan planilon V2. Devigas ŝanĝojn en unu direkto je la sekva samtempigo</string>
@@ -289,4 +289,6 @@
     <string name="note_editor_replace_newlines_summ">En la kart‑redaktilo, konverti ĉiujn &lt;br&gt; al novaj linioj dum redakti karton.</string>
     <string name="no_code_formatting">Simpla aranĝo de enigita respondo</string>
     <string name="no_code_formatting_summ">Ripari “􏿾” aperantan en entajpita respondo</string>
+    <!-- Open Changelog-->
+    <string name="open_changelog">Open Changelog</string>
 </resources>

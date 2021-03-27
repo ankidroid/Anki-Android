@@ -227,11 +227,13 @@ public class Connection extends BaseAsyncTask<Connection.Payload, Object, Connec
         try {
             ret = server.hostKey(username, password);
         } catch (UnknownHttpResponseException e) {
+            Timber.w(e);
             data.success = false;
             data.resultType = ERROR;
             data.result = new Object[]{e.getResponseCode(), e.getMessage() };
             return data;
         } catch (Exception e2) {
+            Timber.w(e2);
             // Ask user to report all bugs which aren't timeout errors
             if (!timeoutOccurred(e2)) {
                 AnkiDroidApp.sendExceptionReport(e2, "doInBackgroundLogin");
@@ -252,6 +254,7 @@ public class Connection extends BaseAsyncTask<Connection.Payload, Object, Connec
                     hostkey = response.getString("key");
                     valid = (hostkey != null) && (hostkey.length() > 0);
                 } catch (JSONException e) {
+                    Timber.w(e);
                     valid = false;
                 } catch (IllegalStateException | IOException | NullPointerException e) {
                     throw new RuntimeException(e);
@@ -426,12 +429,14 @@ public class Connection extends BaseAsyncTask<Connection.Payload, Object, Connec
                     default:
                     }
                 } catch (OutOfMemoryError e) {
+                    Timber.w(e);
                     AnkiDroidApp.sendExceptionReport(e, "doInBackgroundSync-fullSync");
                     data.success = false;
                     data.resultType = OUT_OF_MEMORY_ERROR;
                     data.result = new Object[0];
                     return data;
                 } catch (RuntimeException e) {
+                    Timber.w(e);
                     if (timeoutOccurred(e)) {
                         data.resultType = CONNECTION_ERROR;
                     } else if (USER_ABORTED_SYNC.toString().equals(e.getMessage())) {
@@ -479,6 +484,7 @@ public class Connection extends BaseAsyncTask<Connection.Payload, Object, Connec
                         }
                     }
                 } catch (RuntimeException e) {
+                    Timber.w(e);
                     if (timeoutOccurred(e)) {
                         data.resultType = CONNECTION_ERROR;
                         data.result = new Object[]{e};
