@@ -266,7 +266,7 @@
     <string name="deck_conf_cram_steps_summ">Define custom steps</string>
     <string name="deck_conf_reminders_enabled">Enable reminder notifications for decks in this deck group</string>
     <string name="deck_conf_reminders_time">Remind at</string>
-    <string name="deck_cong_cram_show_one_card_per_note" tools:ignore="MissingTranslation">Show one card per note</string>
+    <string name="deck_cong_cram_show_one_card_per_note">Show one card per note</string>
 
     <!-- analytics options -->
     <string name="analytics_dialog_title">Help make AnkiDroid better!</string>
