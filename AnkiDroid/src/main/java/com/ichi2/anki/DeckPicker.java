@@ -226,6 +226,8 @@ public class DeckPicker extends NavigationDrawerActivity implements
 
     private EditText mDialogEditText;
 
+    private FloatingActionMenu mFloatingActionMenu;
+
     // flag asking user to do a full sync which is used in upgrade path
     private boolean mRecommendFullSync = false;
 
@@ -280,7 +282,7 @@ public class DeckPicker extends NavigationDrawerActivity implements
         long deckId = (long) v.getTag();
         Timber.i("DeckPicker:: Selected deck with id %d", deckId);
         if (mIsFABOpen) {
-            closeFloatingActionMenu();
+            mFloatingActionMenu.closeFloatingActionMenu();
         }
 
         boolean collectionIsOpen = false;
@@ -526,7 +528,7 @@ public class DeckPicker extends NavigationDrawerActivity implements
                 mPullToSyncWrapper.setEnabled(mRecyclerViewLayoutManager.findFirstCompletelyVisibleItemPosition() == 0));
 
         // Setup the FloatingActionButtons, should work everywhere with min API >= 15
-        configureFloatingActionsMenu();
+        mFloatingActionMenu = new FloatingActionMenu(this,view,this);
 
         mReviewSummaryTextView = findViewById(R.id.today_stats_text_view);
 
@@ -635,136 +637,6 @@ public class DeckPicker extends NavigationDrawerActivity implements
             return false;
         }
     }
-
-    private void showFloatingActionMenu() {
-        mIsFABOpen = true;
-        if (animationEnabled()) {
-            // Show with animation
-            addNoteLayout.setVisibility(View.VISIBLE);
-            addSharedLayout.setVisibility(View.VISIBLE);
-            addDeckLayout.setVisibility(View.VISIBLE);
-            fabBGLayout.setVisibility(View.VISIBLE);
-            fabMain.animate().rotationBy(140);
-            addNoteLayout.animate().translationY(0).setDuration(70);
-            addSharedLayout.animate().translationY(0).setDuration(150);
-            addDeckLayout.animate().translationY(0).setDuration(300);
-            addDeckLayout.animate().alpha(1f).setDuration(300);
-            addSharedLayout.animate().alpha(1f).setDuration(150);
-            addNoteLayout.animate().alpha(1f).setDuration(70);
-        } else {
-            // Show without animation
-            addNoteLayout.setVisibility(View.VISIBLE);
-            addSharedLayout.setVisibility(View.VISIBLE);
-            addDeckLayout.setVisibility(View.VISIBLE);
-            fabBGLayout.setVisibility(View.VISIBLE);
-        }
-    }
-
-    private void closeFloatingActionMenu() {
-        mIsFABOpen = false;
-        fabBGLayout.setVisibility(View.GONE);
-        if (animationEnabled()) {
-            // Close with animation
-            fabMain.animate().rotation(0);
-            addNoteLayout.animate().translationY(getResources().getDimension(R.dimen.standard_60)).setDuration(70);
-            addSharedLayout.animate().translationY(getResources().getDimension(R.dimen.standard_110)).setDuration(150);
-            addDeckLayout.animate().alpha(0f).setDuration(300);
-            addSharedLayout.animate().alpha(0f).setDuration(150);
-            addNoteLayout.animate().alpha(0f).setDuration(70);
-            addDeckLayout.animate().translationY(getResources().getDimension(R.dimen.standard_160)).setDuration(300).setListener(new Animator.AnimatorListener() {
-                @Override
-                public void onAnimationStart(Animator animator) { }
-
-                @Override
-                public void onAnimationEnd(Animator animator) {
-                    if (!mIsFABOpen) {
-                        addNoteLayout.setVisibility(View.GONE);
-                        addSharedLayout.setVisibility(View.GONE);
-                        addDeckLayout.setVisibility(View.GONE);
-                    }
-                }
-
-                @Override
-                public void onAnimationCancel(Animator animator) { }
-
-                @Override
-                public void onAnimationRepeat(Animator animator) { }
-            });
-        } else {
-            // Close without animation
-            addNoteLayout.setVisibility(View.GONE);
-            addSharedLayout.setVisibility(View.GONE);
-            addDeckLayout.setVisibility(View.GONE);
-        }
-    }
-	
-    private void configureFloatingActionsMenu() {
-        addNoteLayout = (LinearLayout)findViewById(R.id.add_note_layout);
-        addSharedLayout = (LinearLayout)findViewById(R.id.add_shared_layout);
-        addDeckLayout = (LinearLayout)findViewById(R.id.add_deck_layout);
-        fabMain = (FloatingActionButton)findViewById(R.id.fab_main);
-        addNoteButton = (FloatingActionButton)findViewById(R.id.add_note_action);
-        addSharedButton = (FloatingActionButton)findViewById(R.id.add_shared_action);
-        addDeckButton = (FloatingActionButton)findViewById(R.id.add_deck_action);
-        fabBGLayout = findViewById(R.id.fabBGLayout);
-		
-        fabMain.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if (!mIsFABOpen) {
-                    showFloatingActionMenu();
-                } else {
-                    closeFloatingActionMenu();
-                }
-            }
-        });
-
-        fabBGLayout.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                closeFloatingActionMenu();
-            }
-        });
-
-        addDeckButton.setOnClickListener(view -> {
-            if (mIsFABOpen) {
-                closeFloatingActionMenu();
-                mDialogEditText = new FixedEditText(DeckPicker.this);
-                mDialogEditText.setSingleLine(true);
-                new MaterialDialog.Builder(DeckPicker.this)
-                        .title(R.string.new_deck)
-                        .positiveText(R.string.dialog_ok)
-                        .customView(mDialogEditText, true)
-                        .onPositive((dialog, which) -> {
-                            String deckName = mDialogEditText.getText().toString();
-                            if (Decks.isValidDeckName(deckName)) {
-                                boolean creation_succeed = createNewDeck(deckName);
-                                if (!creation_succeed) {
-                                    return;
-                                }
-                            } else {
-                                Timber.i("configureFloatingActionsMenu::addDeckButton::onPositiveListener - Not creating invalid deck name '%s'", deckName);
-                                UIUtils.showThemedToast(this, getString(R.string.invalid_deck_name), false);
-                            }
-                        })
-                        .negativeText(R.string.dialog_cancel)
-                        .show();
-            }
-        });
-
-        addSharedButton.setOnClickListener(view -> {
-            Timber.i("Adding Shared Deck");
-            closeFloatingActionMenu();
-            addSharedDeck();
-        });
-
-        addNoteButton.setOnClickListener(view -> {
-            Timber.i("Adding Note");
-            closeFloatingActionMenu();
-            addNote();
-        });
-    }
-
 
     /**
      * It can fail if an ancestor is a filtered deck.
@@ -1176,7 +1048,7 @@ public class DeckPicker extends NavigationDrawerActivity implements
         } else {
             Timber.i("Back key pressed");
             if (mIsFABOpen) {
-                closeFloatingActionMenu();
+                mFloatingActionMenu.closeFloatingActionMenu();
             } else {
                 automaticSync();
                 finishWithAnimation();
@@ -2515,7 +2387,7 @@ public class DeckPicker extends NavigationDrawerActivity implements
      *
      * This method also triggers an update for the widget to reflect the newly calculated counts.
      */
-    private void updateDeckList() {
+    protected void updateDeckList() {
         updateDeckList(false);
     }
 
