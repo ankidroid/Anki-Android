@@ -392,6 +392,7 @@ public class AudioView extends LinearLayout {
                             mRecorder.start();
                             highSampling = true;
                         } catch (Exception e) {
+                            Timber.w(e);
                             // in all cases, fall back to low sampling
                         }
 

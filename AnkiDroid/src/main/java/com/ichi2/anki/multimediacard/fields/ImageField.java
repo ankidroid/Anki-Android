@@ -30,6 +30,7 @@ import java.io.File;
 import androidx.annotation.CheckResult;
 import androidx.annotation.NonNull;
 import androidx.annotation.VisibleForTesting;
+import timber.log.Timber;
 
 /**
  * Field with an image.
@@ -184,6 +185,7 @@ public class ImageField extends FieldBase implements IField {
             }
             return image.attr("src");
         } catch (Exception e) {
+            Timber.w(e);
             return "";
         }
     }

@@ -28,6 +28,8 @@ import com.ichi2.anki.UIUtils;
 import com.ichi2.utils.JSONArray;
 import com.ichi2.utils.JSONException;
 
+import timber.log.Timber;
+
 @SuppressWarnings("deprecation") // TODO Tracked in https://github.com/ankidroid/Anki-Android/issues/5019
 public class StepsPreference extends android.preference.EditTextPreference {
 
@@ -148,6 +150,7 @@ public class StepsPreference extends android.preference.EditTextPreference {
             }
         } catch (NumberFormatException | JSONException e) {
             // Can't serialize float. Value likely too big/small.
+            Timber.w(e);
             return null;
         }
         return stepsAr;

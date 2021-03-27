@@ -64,6 +64,7 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
+import android.view.ViewParent;
 import android.view.WindowManager;
 import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputMethodManager;
@@ -88,6 +89,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.afollestad.materialdialogs.MaterialDialog;
+import com.drakeet.drawer.FullDraggableContainer;
 import com.google.android.material.snackbar.Snackbar;
 import com.ichi2.anim.ViewAnimation;
 import com.ichi2.anki.cardviewer.GestureTapProcessor;
@@ -147,6 +149,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.LinkedHashSet;
+import java.util.List;
 import java.util.Set;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReadWriteLock;
@@ -165,7 +168,7 @@ import com.github.zafarkhaja.semver.Version;
 import static com.ichi2.anim.ActivityTransitionAnimation.Direction.*;
 
 @SuppressWarnings({"PMD.AvoidThrowingRawExceptionTypes","PMD.FieldDeclarationsShouldBeAtStartOfClass"})
-public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity implements ReviewerUi, CommandProcessor {
+public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity implements ReviewerUi, CommandProcessor, TagsDialog.TagsDialogListener {
 
     /**
      * Result codes that are returned when this activity finishes.
@@ -1017,7 +1020,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
         }
         Timber.d("onDestroy()");
         if (mSpeakText) {
-            ReadText.releaseTts();
+            ReadText.releaseTts(this);
         }
         if (mUnmountReceiver != null) {
             unregisterReceiver(mUnmountReceiver);
@@ -1858,6 +1861,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
             throw new RuntimeException(e);
         } catch (NullPointerException npe) {
             // NPE on collection only happens if the Collection is broken, follow AnkiActivity example
+            Timber.w(npe);
             Intent deckPicker = new Intent(this, DeckPicker.class);
             deckPicker.putExtra("collectionLoadError", true); // don't currently do anything with this
             deckPicker.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
@@ -2325,6 +2329,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
                     mMissingImageHandler.processMissingSound(file, this::displayCouldNotFindMediaSnackbar);
                 }
             } catch (Exception e) {
+                Timber.w(e);
                 return false;
             }
 
@@ -2898,6 +2903,43 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
                 scrollHandler.removeCallbacks(scrollYRunnable);
                 scrollHandler.postDelayed(scrollYRunnable, 300);
             }
+        }
+
+        @Override
+        public boolean onTouchEvent(MotionEvent event) {
+            if (event.getAction() == MotionEvent.ACTION_DOWN) {
+                ViewParent scrollParent = findScrollParent(this);
+                if (scrollParent != null) {
+                    scrollParent.requestDisallowInterceptTouchEvent(true);
+                }
+            }
+            return super.onTouchEvent(event);
+        }
+
+
+        @Override
+        protected void onOverScrolled(int scrollX, int scrollY, boolean clampedX, boolean clampedY) {
+            if (clampedX) {
+                ViewParent scrollParent = findScrollParent(this);
+                if (scrollParent != null) {
+                    scrollParent.requestDisallowInterceptTouchEvent(false);
+                }
+            }
+            super.onOverScrolled(scrollX, scrollY, clampedX, clampedY);
+        }
+
+
+        private ViewParent findScrollParent(View current) {
+            ViewParent parent = current.getParent();
+            if (parent == null) {
+                return null;
+            }
+            if (parent instanceof FullDraggableContainer) {
+                return parent;
+            } else if (parent instanceof View) {
+                return findScrollParent((View) parent);
+            }
+            return null;
         }
 
         private final Handler scrollHandler = new Handler();
@@ -3835,19 +3877,20 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
     protected void showTagsDialog() {
         ArrayList<String> tags = new ArrayList<>(getCol().getTags().all());
         ArrayList<String> selTags = new ArrayList<>(mCurrentCard.note().getTags());
-        TagsDialog.TagsDialogListener tagsDialogListener = (selectedTags, option) -> {
-            if (!mCurrentCard.note().getTags().equals(selectedTags)) {
-                String tagString = TextUtils.join(" ", selectedTags);
-                Note note = mCurrentCard.note();
-                note.setTagsFromStr(tagString);
-                note.flush();
-                // Reload current card to reflect tag changes
-                displayCardQuestion(true);
-            }
-        };
-        TagsDialog dialog = TagsDialog.newInstance(TagsDialog.TYPE_ADD_TAG, selTags, tags);
-        dialog.setTagsDialogListener(tagsDialogListener);
+        TagsDialog dialog = TagsDialog.newInstance(TagsDialog.DialogType.ADD_TAG, selTags, tags);
         showDialogFragment(dialog);
+    }
+
+    @Override
+    public void onSelectedTags(List<String> selectedTags, int option) {
+        if (!mCurrentCard.note().getTags().equals(selectedTags)) {
+            String tagString = TextUtils.join(" ", selectedTags);
+            Note note = mCurrentCard.note();
+            note.setTagsFromStr(tagString);
+            note.flush();
+            // Reload current card to reflect tag changes
+            displayCardQuestion(true);
+        }
     }
 
     // init or reset api list
@@ -3900,6 +3943,7 @@ see card.js for available functions
                 }
 
             } catch (JSONException j) {
+                Timber.w(j);
                 UIUtils.showThemedToast(AbstractFlashcardViewer.this, getString(R.string.invalid_json_data, j.getLocalizedMessage()), false);
             }
             return apiStatusJson;

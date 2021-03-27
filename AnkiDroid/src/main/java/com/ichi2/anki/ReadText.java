@@ -135,7 +135,7 @@ public class ReadText {
             try {
                 builder.build().show();
             } catch (WindowManager.BadTokenException e) {
-                Timber.w("Activity invalidated before TTS language dialog could display");
+                Timber.w(e,"Activity invalidated before TTS language dialog could display");
             }
         }, delay);
     }
@@ -331,14 +331,20 @@ public class ReadText {
                     Timber.v("ReadText.buildAvailableLanguages() :: %s  not available (error code %d)", loc.getDisplayName(), retCode);
                 }
             } catch (IllegalArgumentException e) {
-                Timber.e("Error checking if language %s available", loc.getDisplayName());
+                Timber.w(e, "Error checking if language %s available", loc.getDisplayName());
             }
         }
     }
 
 
-    public static void releaseTts() {
-        if (mTts != null) {
+    /**
+     * Request that TextToSpeech is stopped and shutdown after it it no longer being used
+     * by the context that initialized it.
+     * No-op if the current instance of TextToSpeech was initialized by another Context
+     * @param context The context used during {@link #initializeTts(Context, ReadTextListener)}
+     */
+    public static void releaseTts(Context context) {
+        if (mTts != null && mReviewer.get() == context) {
             mTts.stop();
             mTts.shutdown();
         }
@@ -370,5 +376,11 @@ public class ReadText {
     @Nullable
     public static String getTextToSpeak() {
         return mTextToSpeak;
+    }
+
+    @VisibleForTesting(otherwise = VisibleForTesting.NONE)
+    @Nullable
+    public static TextToSpeech getTextToSpeech() {
+        return mTts;
     }
 }

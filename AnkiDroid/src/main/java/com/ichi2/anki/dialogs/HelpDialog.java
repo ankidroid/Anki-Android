@@ -17,16 +17,25 @@
 package com.ichi2.anki.dialogs;
 
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Parcel;
 import android.os.Parcelable;
+import android.os.SystemClock;
 
 import com.ichi2.anki.AnkiActivity;
 import com.ichi2.anki.AnkiDroidApp;
 import com.ichi2.anki.R;
+import com.ichi2.anki.analytics.UsageAnalytics;
+import com.ichi2.anki.UIUtils;
 import com.ichi2.anki.dialogs.RecursivePictureMenu.Item;
 import com.ichi2.anki.dialogs.RecursivePictureMenu.ItemHeader;
+import com.ichi2.anki.exception.UserSubmittedException;
+import com.ichi2.utils.AdaptionUtil;
 import com.ichi2.utils.IntentUtil;
+
+import org.acra.ACRA;
+import org.acra.config.DialogConfigurationBuilder;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -48,33 +57,36 @@ public class HelpDialog {
 
     public static DialogFragment createInstance(Context context) {
 
-        RateAppItem rateAppItem = new RateAppItem(R.string.help_item_support_rate_ankidroid, R.drawable.ic_star_black_24);
+        ExceptionReportItem exceptionReportItem = new ExceptionReportItem(R.string.help_title_send_exception, R.drawable.ic_round_assignment_24, UsageAnalytics.Actions.EXCEPTION_REPORT);
+        UsageAnalytics.sendAnalyticsEvent(UsageAnalytics.Category.LINK_CLICKED, UsageAnalytics.Actions.OPENED_HELPDIALOG);
+        RateAppItem rateAppItem = new RateAppItem(R.string.help_item_support_rate_ankidroid, R.drawable.ic_star_black_24, UsageAnalytics.Actions.OPENED_RATE);
         Item[] allItems = {
-                new ItemHeader(R.string.help_title_using_ankidroid, R.drawable.ic_manual_black_24dp,
-                        new FunctionItem(R.string.help_item_ankidroid_manual, R.drawable.ic_manual_black_24dp, HelpDialog::openManual),
-                        new LinkItem(R.string.help_item_anki_manual, R.drawable.ic_manual_black_24dp, R.string.link_anki_manual),
-                        new LinkItem(R.string.help_item_ankidroid_faq, R.drawable.ic_help_black_24dp, R.string.link_ankidroid_faq)
+                new ItemHeader(R.string.help_title_using_ankidroid, R.drawable.ic_manual_black_24dp, UsageAnalytics.Actions.OPENED_USING_ANKIDROID,
+                        new FunctionItem(R.string.help_item_ankidroid_manual, R.drawable.ic_manual_black_24dp, UsageAnalytics.Actions.OPENED_ANKIDROID_MANUAL, HelpDialog::openManual),
+                        new LinkItem(R.string.help_item_anki_manual, R.drawable.ic_manual_black_24dp, UsageAnalytics.Actions.OPENED_ANKI_MANUAL, R.string.link_anki_manual),
+                        new LinkItem(R.string.help_item_ankidroid_faq, R.drawable.ic_help_black_24dp, UsageAnalytics.Actions.OPENED_ANKIDROID_FAQ, R.string.link_ankidroid_faq)
                 ),
-                new ItemHeader(R.string.help_title_get_help, R.drawable.ic_help_black_24dp,
-                        new LinkItem(R.string.help_item_mailing_list, R.drawable.ic_email_black_24dp, R.string.link_forum),
-                        new FunctionItem(R.string.help_item_report_bug, R.drawable.ic_bug_report_black_24dp, HelpDialog::openFeedback)
+                new ItemHeader(R.string.help_title_get_help, R.drawable.ic_help_black_24dp, UsageAnalytics.Actions.OPENED_GET_HELP,
+                        new LinkItem(R.string.help_item_mailing_list, R.drawable.ic_email_black_24dp, UsageAnalytics.Actions.OPENED_MAILING_LIST, R.string.link_forum),
+                        new FunctionItem(R.string.help_item_report_bug, R.drawable.ic_bug_report_black_24dp, UsageAnalytics.Actions.OPENED_REPORT_BUG, HelpDialog::openFeedback),
+                        exceptionReportItem
                 ),
-                new ItemHeader(R.string.help_title_support_ankidroid, R.drawable.ic_heart_black_24dp,
-                        new LinkItem(R.string.help_item_support_opencollective_donate, R.drawable.ic_donate_black_24dp, R.string.link_opencollective_donate),
-                        new LinkItem(R.string.multimedia_editor_trans_translate, R.drawable.ic_language_black_24dp, R.string.link_translation),
-                        new LinkItem(R.string.help_item_support_develop_ankidroid, R.drawable.ic_build_black_24, R.string.link_ankidroid_development_guide),
+                new ItemHeader(R.string.help_title_support_ankidroid, R.drawable.ic_heart_black_24dp, UsageAnalytics.Actions.OPENED_SUPPORT_ANKIDROID,
+                        new LinkItem(R.string.help_item_support_opencollective_donate, R.drawable.ic_donate_black_24dp, UsageAnalytics.Actions.OPENED_DONATE, R.string.link_opencollective_donate),
+                        new LinkItem(R.string.multimedia_editor_trans_translate, R.drawable.ic_language_black_24dp, UsageAnalytics.Actions.OPENED_TRANSLATE, R.string.link_translation),
+                        new LinkItem(R.string.help_item_support_develop_ankidroid, R.drawable.ic_build_black_24, UsageAnalytics.Actions.OPENED_DEVELOP, R.string.link_ankidroid_development_guide),
                         rateAppItem,
-                        new LinkItem(R.string.help_item_support_other_ankidroid, R.drawable.ic_help_black_24dp, R.string.link_contribution),
-                        new FunctionItem(R.string.send_feedback, R.drawable.ic_email_black_24dp, HelpDialog::openFeedback)
+                        new LinkItem(R.string.help_item_support_other_ankidroid, R.drawable.ic_help_black_24dp, UsageAnalytics.Actions.OPENED_OTHER, R.string.link_contribution),
+                        new FunctionItem(R.string.send_feedback, R.drawable.ic_email_black_24dp, UsageAnalytics.Actions.OPENED_SEND_FEEDBACK, HelpDialog::openFeedback)
                 ),
-                new ItemHeader(R.string.help_title_community, R.drawable.ic_people_black_24dp,
-                        new LinkItem(R.string.help_item_anki_forums, R.drawable.ic_forum_black_24dp, R.string.link_anki_forum),
-                        new LinkItem(R.string.help_item_reddit, R.drawable.ic_mail_outline_black_24dp, R.string.link_reddit),
-                        new LinkItem(R.string.help_item_mailing_list, R.drawable.ic_email_black_24dp, R.string.link_forum),
-                        new LinkItem(R.string.help_item_discord, R.drawable.ic_message_black_24dp, R.string.link_discord),
-                        new LinkItem(R.string.help_item_facebook, R.drawable.ic_link_black_24dp, R.string.link_facebook),
-                        new LinkItem(R.string.help_item_twitter, R.drawable.ic_link_black_24dp, R.string.link_twitter)
-                ),
+                new ItemHeader(R.string.help_title_community, R.drawable.ic_people_black_24dp, UsageAnalytics.Actions.OPENED_COMMUNITY,
+                        new LinkItem(R.string.help_item_anki_forums, R.drawable.ic_forum_black_24dp, UsageAnalytics.Actions.OPENED_ANKI_FORUMS, R.string.link_anki_forum),
+                        new LinkItem(R.string.help_item_reddit, R.drawable.ic_mail_outline_black_24dp, UsageAnalytics.Actions.OPENED_REDDIT, R.string.link_reddit),
+                        new LinkItem(R.string.help_item_mailing_list, R.drawable.ic_email_black_24dp, UsageAnalytics.Actions.OPENED_MAILING_LIST, R.string.link_forum),
+                        new LinkItem(R.string.help_item_discord, R.drawable.ic_message_black_24dp, UsageAnalytics.Actions.OPENED_DISCORD, R.string.link_discord),
+                        new LinkItem(R.string.help_item_facebook, R.drawable.ic_link_black_24dp, UsageAnalytics.Actions.OPENED_FACEBOOK, R.string.link_facebook),
+                        new LinkItem(R.string.help_item_twitter, R.drawable.ic_link_black_24dp, UsageAnalytics.Actions.OPENED_TWITTER, R.string.link_twitter)
+                )
         };
 
         ArrayList<Item> itemList = new ArrayList<>(Arrays.asList(allItems));
@@ -88,21 +100,19 @@ public class HelpDialog {
 
     public static class RateAppItem extends Item implements Parcelable {
 
-        public RateAppItem(@StringRes int titleRes, @DrawableRes int iconRes) {
-            super(titleRes, iconRes);
+        public RateAppItem(@StringRes int titleRes, @DrawableRes int iconRes, String analyticsRes) {
+            super(titleRes, iconRes, analyticsRes);
         }
 
         @Override
-        public void execute(AnkiActivity activity) {
+        protected void onClicked(AnkiActivity activity) {
             IntentUtil.tryOpenIntent(activity, AnkiDroidApp.getMarketIntent(activity));
         }
-
 
         @Override
         public void remove(Item toRemove) {
             // intentionally blank - no children
         }
-
 
         protected RateAppItem(Parcel in) {
             super(in);
@@ -123,16 +133,17 @@ public class HelpDialog {
     }
 
     public static class LinkItem extends Item implements Parcelable {
-        private final @StringRes int mUrlLocationRes;
+        @StringRes
+        private final int mUrlLocationRes;
 
-        public LinkItem(@StringRes int titleRes, @DrawableRes int iconRes, @StringRes int urlLocation) {
-            super(titleRes, iconRes);
+        public LinkItem(@StringRes int titleRes, @DrawableRes int iconRes, String analyticsRes, @StringRes int urlLocation) {
+            super(titleRes, iconRes, analyticsRes);
 
             this.mUrlLocationRes = urlLocation;
         }
 
         @Override
-        public void execute(AnkiActivity activity) {
+        protected void onClicked(AnkiActivity activity) {
             activity.openUrl(getUrl(activity));
         }
 
@@ -173,13 +184,13 @@ public class HelpDialog {
     public static class FunctionItem extends Item implements Parcelable {
         private final ActivityConsumer mFunc;
 
-        public FunctionItem(@StringRes int titleRes, @DrawableRes int iconRes, ActivityConsumer func) {
-            super(titleRes, iconRes);
+        public FunctionItem(@StringRes int titleRes, @DrawableRes int iconRes, String analyticsRes, ActivityConsumer func) {
+            super(titleRes, iconRes, analyticsRes);
             this.mFunc = func;
         }
 
         @Override
-        public void execute(AnkiActivity activity)  {
+        protected void onClicked(AnkiActivity activity) {
             mFunc.consume(activity);
         }
 
@@ -216,5 +227,75 @@ public class HelpDialog {
         public interface ActivityConsumer extends Serializable {
             void consume(AnkiActivity activity);
         }
+    }
+
+    private static class ExceptionReportItem extends Item implements Parcelable {
+
+        private static Long lastClickStamp;
+        final long currentTimestamp = SystemClock.uptimeMillis();
+        final int minIntervalMS = 60000;
+        final String exceptionMessage = "Exception report sent by user manually";
+
+        public ExceptionReportItem(@StringRes int titleRes, @DrawableRes int iconRes, String analyticsRes) {
+            super(titleRes, iconRes, analyticsRes);
+        }
+
+        @Override
+        protected void onClicked(AnkiActivity activity) {
+            SharedPreferences preferences = AnkiDroidApp.getSharedPrefs(activity);
+            String reportMode = preferences.getString(AnkiDroidApp.FEEDBACK_REPORT_KEY, "");
+
+            if (AdaptionUtil.isUserATestClient()) {
+                UIUtils.showThemedToast(activity, activity.getString(R.string.user_is_a_robot), false);
+                return;
+            }
+
+            if (AnkiDroidApp.FEEDBACK_REPORT_NEVER.equals(reportMode)) {
+                preferences.edit().putBoolean(ACRA.PREF_DISABLE_ACRA, false).apply();
+                AnkiDroidApp.getInstance().getAcraCoreConfigBuilder()
+                        .getPluginConfigurationBuilder(DialogConfigurationBuilder.class)
+                        .setEnabled(true);
+                sendReport(activity);
+                AnkiDroidApp.getInstance().getAcraCoreConfigBuilder()
+                        .getPluginConfigurationBuilder(DialogConfigurationBuilder.class)
+                        .setEnabled(false);
+                preferences.edit().putBoolean(ACRA.PREF_DISABLE_ACRA, true).apply();
+            } else {
+                sendReport(activity);
+            }
+        }
+
+        private void sendReport(AnkiActivity activity) {
+            if (lastClickStamp == null || currentTimestamp - lastClickStamp > minIntervalMS) {
+                AnkiDroidApp.deleteACRALimiterData(activity);
+                AnkiDroidApp.sendExceptionReport(
+                        new UserSubmittedException(exceptionMessage),
+                        "AnkiDroidApp.HelpDialog");
+                lastClickStamp = currentTimestamp;
+            } else {
+                UIUtils.showThemedToast(activity, activity.getString(R.string.help_dialog_exception_report_debounce),
+                        true);
+            }
+        }
+
+        protected ExceptionReportItem(Parcel in) {
+            super(in);
+        }
+
+        public static final Creator<ExceptionReportItem> CREATOR = new Creator<ExceptionReportItem>() {
+            @Override
+            public ExceptionReportItem createFromParcel(Parcel in) {
+                return new ExceptionReportItem(in);
+            }
+
+
+            @Override
+            public ExceptionReportItem[] newArray(int size) {
+                return new ExceptionReportItem[size];
+            }
+        };
+
+        @Override
+        public void remove(Item toRemove) { }
     }
 }

@@ -460,6 +460,7 @@ public class BasicImageFieldController extends FieldControllerBase implements IF
             Timber.d("internalizeUri successful. Returning internalFile.");
             return returnFile;
         } catch (Exception e) {
+            Timber.w(e);
             showSomethingWentWrong();
             return null;
         }

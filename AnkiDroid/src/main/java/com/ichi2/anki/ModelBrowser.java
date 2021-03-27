@@ -423,6 +423,7 @@ public class ModelBrowser extends AnkiActivity {
                 d.setCancel(cancel);
                 ModelBrowser.this.showDialogFragment(d);
             } catch (ConfirmModSchemaException e) {
+                e.log();
                 ConfirmationDialog c = new ConfirmationDialog();
                 c.setArgs(getResources().getString(R.string.full_sync_confirmation));
                 c.setConfirm(confirm);
