@@ -373,39 +373,24 @@ public class Finder {
     private static String _query(String preds, String order, boolean singleCardByNote) {
         // can we skip the note table?
         String sql;
-        if (singleCardByNote) {
-            if (!preds.contains( "n." ) && !order.contains( "n." )) {
-                sql = "select min(c.id) from cards c where " ;
-            } else {
-                sql = "select min(c.id) from cards c, notes n where c.nid=n.id and " ;
-            }
-            // combine with preds
-            if (!TextUtils.isEmpty(preds)) {
-                sql += "(" + preds + ")";
-            } else {
-                sql += "1";
-            }
-            sql += " group by c.nid";
-            // order
-            if (!TextUtils.isEmpty(order)) {
-                sql += " " + order;
-            }
+        String select = singleCardByNote ? "min(c.id)": "c.id";
+        if (!preds.contains("n.") && !order.contains("n.")) {
+            sql = "select "+select+" from cards c where ";
         } else {
-            if (!preds.contains("n.") && !order.contains("n.")) {
-                sql = "select c.id from cards c where ";
-            } else {
-                sql = "select c.id from cards c, notes n where c.nid=n.id and ";
-            }
-            // combine with preds
-            if (!TextUtils.isEmpty(preds)) {
-                sql += "(" + preds + ")";
-            } else {
-                sql += "1";
-            }
-            // order
-            if (!TextUtils.isEmpty(order)) {
-                sql += " " + order;
-            }
+            sql = "select "+select+" from cards c, notes n where c.nid=n.id and ";
+        }
+        // combine with preds
+        if (!TextUtils.isEmpty(preds)) {
+            sql += "(" + preds + ")";
+        } else {
+            sql += "1";
+        }
+        if(singleCardByNote){
+            sql += " group by c.nid";
+        }
+        // order
+        if (!TextUtils.isEmpty(order)) {
+            sql += " " + order;
         }
         return sql;
     }
