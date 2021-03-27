@@ -53,8 +53,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_margin="10dp"
-                app:fab_colorNormal="?attr/fab_normal"
-                app:fab_colorPressed="?attr/fab_pressed"
+                app:backgroundTint="?attr/fab_normal"
                 android:src="@drawable/ic_folder_white"
                 app:fabSize="mini"
                 />
@@ -88,8 +87,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_margin="10dp"
-                app:fab_colorNormal="?attr/fab_normal"
-                app:fab_colorPressed="?attr/fab_pressed"
+                app:backgroundTint="?attr/fab_normal"
                 android:src="@drawable/ic_file_download_white"
                 app:fabSize="mini"
                 />
@@ -123,8 +121,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_margin="10dp"
-                app:fab_colorNormal="?attr/fab_normal"
-                app:fab_colorPressed="?attr/fab_pressed"
+                app:backgroundTint="?attr/fab_normal"
                 android:src="@drawable/ic_add_white"
                 app:fabSize="mini"
                 />
@@ -146,8 +143,7 @@
                 android:layout_marginBottom="17dp"
                 android:gravity="center_vertical"
                 app:srcCompat="@drawable/ic_add_white"
-                app:fab_colorNormal="?attr/fab_normal"
-                app:fab_colorPressed="?attr/fab_pressed"
+                app:backgroundTint="?attr/fab_normal"
                 app:fabSize="normal"
                 />
         </LinearLayout>
