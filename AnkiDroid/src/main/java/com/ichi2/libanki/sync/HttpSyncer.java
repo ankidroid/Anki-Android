@@ -201,11 +201,14 @@ public class HttpSyncer {
             Request.Builder requestBuilder = new Request.Builder();
             requestBuilder.url(parseUrl(url));
 
+            // Set our request up to count upstream traffic including headers
             requestBuilder.post(new CountingFileRequestBody(tmpFileBuffer, ANKI_POST_TYPE.toString(), num -> {
                 bytesSent.addAndGet(num);
                 publishProgress();
             }));
             Request httpPost = requestBuilder.build();
+            bytesSent.addAndGet(httpPost.headers().byteCount());
+            publishProgress();
 
             try {
                 OkHttpClient httpClient = getHttpClient();
@@ -216,6 +219,15 @@ public class HttpSyncer {
                 Timber.d("TLSVersion in use is: %s",
                         (httpResponse.handshake() != null ? httpResponse.handshake().tlsVersion() : "unknown"));
 
+
+                // Count downstream traffic including headers
+                bytesReceived.addAndGet(httpResponse.headers().byteCount());
+                try {
+                    bytesReceived.addAndGet(httpResponse.body().contentLength());
+                } catch (NullPointerException npe) {
+                    Timber.d(npe, "Unexpected null response body");
+                }
+                publishProgress();
 
                 assertOk(httpResponse);
                 return httpResponse;
