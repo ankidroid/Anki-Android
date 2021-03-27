@@ -215,7 +215,6 @@ public class NoteEditor extends AnkiActivity implements DeckSelectionDialog.Deck
     private LinearLayout mFieldsLayoutContainer;
 
     private Spinner mNoteDeckSpinner;
-    private LinearLayout mNoteDeckLayout;
     
     private TextView mTagsButton;
     private TextView mCardsButton;
@@ -606,7 +605,6 @@ public class NoteEditor extends AnkiActivity implements DeckSelectionDialog.Deck
         }
 
         mNoteDeckSpinner = findViewById(R.id.note_deck_spinner);
-        mNoteDeckLayout = findViewById(R.id.note_deck_layout);
 
         ArrayAdapter<String> noteDeckAdapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, mAllDeckNames);
         mNoteDeckSpinner.setAdapter(noteDeckAdapter);
