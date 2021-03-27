@@ -172,7 +172,7 @@ public class NoteEditor extends AnkiActivity implements
     public static final String EXTRA_TAGS = "TAGS";
     public static final String EXTRA_ID = "ID";
     public static final String EXTRA_DID = "DECK_ID";
-    public static final String TEXT_FROM_SEARCH_VIEW= "SEARCH";
+    public static final String EXTRA_TEXT_FROM_SEARCH_VIEW = "SEARCH";
     private static final String ACTION_CREATE_FLASHCARD = "org.openintents.action.CREATE_FLASHCARD";
     private static final String ACTION_CREATE_FLASHCARD_SEND = "android.intent.action.SEND";
 
@@ -642,7 +642,7 @@ public class NoteEditor extends AnkiActivity implements
         });
 
         mCurrentDid = intent.getLongExtra(EXTRA_DID, mCurrentDid);
-        mGetTextFromSearchView = intent.getStringExtra(TEXT_FROM_SEARCH_VIEW);
+        mGetTextFromSearchView = intent.getStringExtra(EXTRA_TEXT_FROM_SEARCH_VIEW);
         setDid(mEditorNote);
 
         setNote(mEditorNote, FieldChangeType.onActivityCreation(shouldReplaceNewlines()));
@@ -697,7 +697,10 @@ public class NoteEditor extends AnkiActivity implements
 
         //set focus to FieldEditText 'first' on startup like Anki desktop
         if (mEditFields != null && !mEditFields.isEmpty()) {
-            mEditFields.getFirst().setText(mGetTextFromSearchView);
+            //won't set Text in the first field if the value is empty or null
+            if(mGetTextFromSearchView!=null && !mGetTextFromSearchView.isEmpty()) {
+                mEditFields.getFirst().setText(mGetTextFromSearchView);
+            }
             mEditFields.getFirst().requestFocus();
         }
     }
