@@ -22,17 +22,15 @@ package com.ichi2.libanki.sync;
 
 import android.content.SharedPreferences;
 import android.net.Uri;
-import android.util.Pair;
 
 import com.ichi2.anki.AnkiDroidApp;
 import com.ichi2.anki.exception.UnknownHttpResponseException;
 import com.ichi2.anki.web.CustomSyncServer;
+import com.ichi2.anki.web.HttpFetcher;
 import com.ichi2.async.Connection;
 import com.ichi2.libanki.Consts;
 import com.ichi2.libanki.Utils;
-import com.ichi2.utils.VersionUtils;
 
-import org.apache.http.entity.AbstractHttpEntity;
 import com.ichi2.utils.JSONObject;
 
 import java.io.BufferedInputStream;
@@ -40,8 +38,6 @@ import java.io.BufferedOutputStream;
 import java.io.BufferedReader;
 import java.io.ByteArrayInputStream;
 import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
@@ -53,7 +49,6 @@ import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Random;
-import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicLong;
 import java.util.zip.GZIPOutputStream;
 
@@ -106,25 +101,6 @@ public class HttpSyncer {
         mHostNum = hostNum;
     }
 
-    private OkHttpClient.Builder getHttpClientBuilder() {
-        OkHttpClient.Builder clientBuilder = new OkHttpClient.Builder()
-                .addNetworkInterceptor(chain -> chain.proceed(
-                        chain.request()
-                                .newBuilder()
-                                .header("User-Agent", "AnkiDroid-" + VersionUtils.getPkgVersionName())
-                                .build()
-                ));
-        Tls12SocketFactory.enableTls12OnPreLollipop(clientBuilder)
-                .followRedirects(true)
-                .followSslRedirects(true)
-                .retryOnConnectionFailure(true)
-                .cache(null)
-                .connectTimeout(Connection.CONN_TIMEOUT, TimeUnit.SECONDS)
-                .writeTimeout(Connection.CONN_TIMEOUT, TimeUnit.SECONDS)
-                .readTimeout(Connection.CONN_TIMEOUT, TimeUnit.SECONDS);
-        return clientBuilder;
-    }
-
     private OkHttpClient getHttpClient() {
         if (this.mHttpClient != null) {
             return mHttpClient;
@@ -137,7 +113,12 @@ public class HttpSyncer {
         if (mHttpClient != null) {
             return mHttpClient;
         }
-        mHttpClient = getHttpClientBuilder().build();
+        mHttpClient = HttpFetcher.getOkHttpBuilder(false)
+                .followRedirects(true)
+                .followSslRedirects(true)
+                .retryOnConnectionFailure(true)
+                .cache(null)
+                .build();
         return mHttpClient;
     }
 
