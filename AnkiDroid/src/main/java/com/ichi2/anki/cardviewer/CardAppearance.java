@@ -5,6 +5,7 @@ import android.content.SharedPreferences;
 import com.ichi2.anki.reviewer.ReviewerCustomFonts;
 import com.ichi2.libanki.Card;
 import com.ichi2.themes.Themes;
+//import java.time.*; This line was added to test the build and run on API 22.
 
 import androidx.annotation.CheckResult;
 
