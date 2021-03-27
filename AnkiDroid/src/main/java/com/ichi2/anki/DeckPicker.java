@@ -960,6 +960,7 @@ public class DeckPicker extends NavigationDrawerActivity implements
 
 
     public void onRequestPermissionsResult (int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
         if (requestCode == REQUEST_STORAGE_PERMISSION && permissions.length == 1) {
             if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                 invalidateOptionsMenu();
@@ -2162,7 +2163,7 @@ public class DeckPicker extends NavigationDrawerActivity implements
             UIUtils.showThemedToast(this, getResources().getString(R.string.apk_share_error), false);
             return;
         }
-        Intent shareIntent = ShareCompat.IntentBuilder.from(DeckPicker.this)
+        Intent shareIntent = new ShareCompat.IntentBuilder(DeckPicker.this)
                 .setType("application/apkg")
                 .setStream(uri)
                 .setSubject(getString(R.string.export_email_subject, attachment.getName()))
