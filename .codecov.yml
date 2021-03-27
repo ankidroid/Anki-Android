@@ -1,6 +1,11 @@
 # the comments are too noisy to be useful
 comment: false
 
+# disable noisy inline-annotations ("Added line [LineNum] was not covered by tests") on PRs (#8296)
+# https://docs.codecov.io/docs/github-checks-beta
+github_checks:
+  annotations: false
+
 coverage:
   range: "36...100"
   status:
