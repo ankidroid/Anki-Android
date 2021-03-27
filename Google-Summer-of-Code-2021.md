@@ -259,7 +259,7 @@ Satyam jyotsana gargee(satyam8657@gmail.com)GitHub:(https://github.com/Satyamjyo
 - **Aswin Raj K** (Email: 121801008@smail.iitpkd.ac.in, [Github](https://github.com/Aswin-Raj-K), [LinkedIn](https://www.linkedin.com/in/aswin-raj-k-920b71192/))
 - **Khadisha Kenzhebekkyzy** (Email: khadisha.kenzhebekkyzy@nu.edu.kz, [Github](https://github.com/khadishakenzhebekkyzy), [LinkedIn](https://www.linkedin.com/in/khadisha-kenzhebekkyzy/))
 - **Harshita Kanal** (Email: harshita.kanal@gmail.com, [Github](https://github.com/Harshita-Kanal), [LinkedIn](https://www.linkedin.com/in/harshita-kanal-400563166/))
--**Mohaned Elfeky** (Email: MohanedElfeky@outlook.com, [Github](https://github.com/mohaned-hassan), [LinkedIn](https://www.linkedin.com/in/mohaned-elfeky-6544a2200/))
+- **Mohaned Elfeky** (Email: MohanedElfeky@outlook.com, [Github](https://github.com/mohaned-hassan), [LinkedIn](https://www.linkedin.com/in/mohaned-elfeky-6544a2200/))
 - **Vaibhavi Lokegaonkar** (Email: vaibhavilokegaonkar@gmail.com, [Github](https://github.com/Vaibhavi1707), [LinkedIn](https://www.linkedin.com/in/vaibhavi-lokegaonkar-06b844195/))
 - **Miroslav Müller** (Email: m.muller037@gmail.com, [Github](https://github.com/Mizumaky), [Gitlab](https://gitlab.fel.cvut.cz/mullemi5))
 - **Deividas Ovsianikovas** (Email: deividov2000@gmail.com, [Github](https://github.com/deividasovs), [LinkedIn](https://www.linkedin.com/in/deividasovs/))
