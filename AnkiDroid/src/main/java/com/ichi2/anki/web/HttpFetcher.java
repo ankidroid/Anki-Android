@@ -137,7 +137,6 @@ public class HttpFetcher {
     }
 
 
-    @SuppressWarnings("deprecation")
     public static String downloadFileToSdCardMethod(String UrlToFile, Context context, String prefix, String method) {
 
         Response response = null;
@@ -152,7 +151,7 @@ public class HttpFetcher {
             if ("GET".equals(method)) {
                 requestBuilder.get();
             } else {
-                requestBuilder.post(RequestBody.create(null, new byte[0]));
+                requestBuilder.post(RequestBody.create(new byte[0], null));
             }
             Request request = requestBuilder.build();
             OkHttpClient client = getOkHttpBuilder(true).build();
