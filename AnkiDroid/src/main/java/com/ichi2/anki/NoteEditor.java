@@ -228,7 +228,6 @@ public class NoteEditor extends AnkiActivity implements
     private ArrayList<Long> mAllModelIds;
     private Map<Integer, Integer> mModelChangeFieldMap;
     private HashMap<Integer, Integer> mModelChangeCardMap;
-    private String mGetTextFromSearchView;
     private ArrayList<Integer> mCustomViewIds = new ArrayList<>();
 
     /* indicates if a new note is added or a card is edited */
@@ -642,7 +641,7 @@ public class NoteEditor extends AnkiActivity implements
         });
 
         mCurrentDid = intent.getLongExtra(EXTRA_DID, mCurrentDid);
-        mGetTextFromSearchView = intent.getStringExtra(EXTRA_TEXT_FROM_SEARCH_VIEW);
+        String mGetTextFromSearchView = intent.getStringExtra(EXTRA_TEXT_FROM_SEARCH_VIEW);
         setDid(mEditorNote);
 
         setNote(mEditorNote, FieldChangeType.onActivityCreation(shouldReplaceNewlines()));
