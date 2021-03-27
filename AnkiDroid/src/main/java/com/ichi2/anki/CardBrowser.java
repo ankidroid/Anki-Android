@@ -146,7 +146,8 @@ public class CardBrowser extends NavigationDrawerActivity implements
     private String mSearchTerms;
     private String mRestrictOnDeck;
     private int mCurrentFlag;
-
+    private static final String NIGHT_MODE_PREFERENCE = "invertedColors";
+    private boolean isDarkModeAtStart;
     private MenuItem mSearchItem;
     private MenuItem mSaveSearchItem;
     private MenuItem mMySearchesItem;
@@ -507,6 +508,11 @@ public class CardBrowser extends NavigationDrawerActivity implements
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
+        // Saves the present Night Mode Preference on activity start.
+        isDarkModeAtStart=AnkiDroidApp.getSharedPrefs(getApplicationContext())
+                .getBoolean(NIGHT_MODE_PREFERENCE,false);
+
         if (showedActivityFailedScreen(savedInstanceState)) {
             return;
         }
@@ -820,7 +826,14 @@ public class CardBrowser extends NavigationDrawerActivity implements
     @Override
     protected void onDestroy() {
         Timber.d("onDestroy()");
-        invalidate();
+        if(isDarkModeAtStart == AnkiDroidApp.getSharedPrefs(getApplicationContext())
+                        .getBoolean(NIGHT_MODE_PREFERENCE,false)) {
+
+            // We don't want to invalidate on just theme change.
+            // as it cancels all the running tasks and the card browser is left empty.
+
+            invalidate();
+        }
         super.onDestroy();
         if (mUnmountReceiver != null) {
             unregisterReceiver(mUnmountReceiver);
@@ -1474,6 +1487,7 @@ public class CardBrowser extends NavigationDrawerActivity implements
     }
 
     private void invalidate() {
+        TaskManager.cancelAllTasks(CollectionTask.SearchCards.class);
         TaskManager.cancelAllTasks(CollectionTask.RenderBrowserQA.class);
         TaskManager.cancelAllTasks(CollectionTask.CheckCardSelection.class);
         mCards.clear();
@@ -1488,7 +1502,6 @@ public class CardBrowser extends NavigationDrawerActivity implements
 
     private void searchCards() {
         // cancel the previous search & render tasks if still running
-        TaskManager.cancelAllTasks(CollectionTask.SearchCards.class);
         invalidate();
         String searchText;
         if (mSearchTerms == null) {
