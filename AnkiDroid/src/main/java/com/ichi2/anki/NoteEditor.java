@@ -697,8 +697,8 @@ public class NoteEditor extends AnkiActivity implements
 
         //set focus to FieldEditText 'first' on startup like Anki desktop
         if (mEditFields != null && !mEditFields.isEmpty()) {
-            //won't set Text in the first field if the value is empty or null
-            if(mGetTextFromSearchView!=null && !mGetTextFromSearchView.isEmpty()) {
+            // EXTRA_TEXT_FROM_SEARCH_VIEW takes priority over other intent inputs
+            if (mGetTextFromSearchView != null && !mGetTextFromSearchView.isEmpty()) {
                 mEditFields.getFirst().setText(mGetTextFromSearchView);
             }
             mEditFields.getFirst().requestFocus();
