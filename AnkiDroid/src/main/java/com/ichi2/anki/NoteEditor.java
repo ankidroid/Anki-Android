@@ -172,7 +172,7 @@ public class NoteEditor extends AnkiActivity implements
     public static final String EXTRA_TAGS = "TAGS";
     public static final String EXTRA_ID = "ID";
     public static final String EXTRA_DID = "DECK_ID";
-    public static final String TEXT_FROM_SEARCH_VIEW= "";
+    public static final String TEXT_FROM_SEARCH_VIEW= "SEARCH";
     private static final String ACTION_CREATE_FLASHCARD = "org.openintents.action.CREATE_FLASHCARD";
     private static final String ACTION_CREATE_FLASHCARD_SEND = "android.intent.action.SEND";
 
