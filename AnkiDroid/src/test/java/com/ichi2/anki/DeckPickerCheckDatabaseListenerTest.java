@@ -178,7 +178,7 @@ public class DeckPickerCheckDatabaseListenerTest extends RobolectricTest {
         }
 
         @Override
-        protected void showSimpleMessageDialog(String message, boolean reload) {
+        public void showSimpleMessageDialog(String message, boolean reload) {
             mDidDisplayMessage = true;
             super.showSimpleMessageDialog(message, reload);
         }
