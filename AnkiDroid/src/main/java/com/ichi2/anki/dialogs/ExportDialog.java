@@ -18,13 +18,14 @@ package com.ichi2.anki.dialogs;
 
 import android.content.res.Resources;
 import android.os.Bundle;
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.ichi2.anki.R;
 import com.ichi2.anki.analytics.AnalyticsDialogFragment;
 import com.ichi2.utils.BundleUtils;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 
 public class ExportDialog extends AnalyticsDialogFragment {
 
@@ -32,6 +33,14 @@ public class ExportDialog extends AnalyticsDialogFragment {
 
         void exportApkg(String path, Long did, boolean includeSched, boolean includeMedia);
         void dismissAllDialogFragments();
+    }
+
+    @NonNull
+    private final ExportDialogListener mListener;
+
+
+    public ExportDialog(@NonNull ExportDialogListener listener) {
+        mListener = listener;
     }
 
     private final static int INCLUDE_SCHED = 0;
@@ -47,15 +56,17 @@ public class ExportDialog extends AnalyticsDialogFragment {
      *            if did is null then the whole collection of decks will be exported
      * @param dialogMessage A string which can be used to show a custom message or specify import path
      */
-    public static ExportDialog newInstance(@NonNull String dialogMessage, @Nullable Long did) {
-        ExportDialog f = new ExportDialog();
-        Bundle args = new Bundle();
+    public ExportDialog withArguments(@NonNull String dialogMessage, @Nullable Long did) {
+        Bundle args = this.getArguments();
+        if (args == null) {
+            args = new Bundle();
+        }
         if (did != null) {
             args.putLong("did", did);
         }
         args.putString("dialogMessage", dialogMessage);
-        f.setArguments(args);
-        return f;
+        this.setArguments(args);
+        return this;
     }
 
     /**
@@ -63,8 +74,8 @@ public class ExportDialog extends AnalyticsDialogFragment {
      *
      * @param dialogMessage A string which can be used to show a custom message or specify import path
      */
-    public static ExportDialog newInstance(@NonNull String dialogMessage) {
-        return newInstance(dialogMessage, null);
+    public ExportDialog withArguments(@NonNull String dialogMessage) {
+        return withArguments(dialogMessage, null);
     }
 
 
@@ -85,7 +96,7 @@ public class ExportDialog extends AnalyticsDialogFragment {
         final String[] items = { res.getString(R.string.export_include_schedule),
                 res.getString(R.string.export_include_media) };
 
-        MaterialDialog.Builder builder = new MaterialDialog.Builder(getActivity())
+        MaterialDialog.Builder builder = new MaterialDialog.Builder(requireActivity())
                 .title(R.string.export)
                 .content(getArguments().getString("dialogMessage"))
                 .positiveText(android.R.string.ok)
@@ -110,7 +121,7 @@ public class ExportDialog extends AnalyticsDialogFragment {
                             return true;
                         })
                 .onPositive((dialog, which) -> {
-                    ((ExportDialogListener) getActivity()).exportApkg(null, did, mIncludeSched, mIncludeMedia);
+                    mListener.exportApkg(null, did, mIncludeSched, mIncludeMedia);
                     dismissAllDialogFragments();
                 })
                 .onNegative((dialog, which) -> dismissAllDialogFragments());
@@ -119,7 +130,7 @@ public class ExportDialog extends AnalyticsDialogFragment {
 
 
     public void dismissAllDialogFragments() {
-        ((ExportDialogListener) getActivity()).dismissAllDialogFragments();
+        mListener.dismissAllDialogFragments();
     }
 
 }
