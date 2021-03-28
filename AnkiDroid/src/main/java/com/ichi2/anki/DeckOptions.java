@@ -222,6 +222,196 @@ public class DeckOptions extends AppCompatPreferenceActivity implements OnShared
         }
 
 
+        /**
+         * Writes the changes made to {@link #mOptionsCopy} and {@link #mDeckCopy} to actual options and deck data.
+         * After writing the changes, they're committed to the database.
+         */
+        public void writeChanges() {
+            // Create references to actual options and deck data
+            DeckConfig options = getOptionsReference();
+            Deck deck = getDeckReference();
+
+            Object changedValue;
+            // For every change in the copy of options/deck, write them to actual options/deck respectively
+            for (String key : mChanges) {
+                switch (key) {
+                    // New cards
+                    case "newSteps":
+                        changedValue = mOptionsCopy.getJSONObject("new").get("delays");
+                        options.getJSONObject("new").put("delays", changedValue);
+                        break;
+                    case "newOrder":
+                        changedValue = mOptionsCopy.getJSONObject("new").get("order");
+                        options.getJSONObject("new").put("order", changedValue);
+                        TaskManager.launchCollectionTask(
+                                new CollectionTask.Reorder(mOptionsCopy),
+                                new ConfChangeHandler(mPref) // Cannot call Editor.confChangeHandler() in this context
+                        );
+                        break;
+                    case "newPerDay":
+                        changedValue = mOptionsCopy.getJSONObject("new").get("perDay");
+                        options.getJSONObject("new").put("perDay", changedValue);
+                        break;
+                    case "newGradIvl":
+                    case "newEasy":
+                        changedValue = mOptionsCopy.getJSONObject("new").get("ints");
+                        options.getJSONObject("new").put("ints", changedValue);
+                        break;
+                    case "newFactor":
+                        changedValue = mOptionsCopy.getJSONObject("new").get("initialFactor");
+                        options.getJSONObject("new").put("initialFactor", changedValue);
+                        break;
+                    case "newBury":
+                        changedValue = mOptionsCopy.getJSONObject("new").get("bury");
+                        options.getJSONObject("new").put("bury", changedValue);
+                        break;
+
+                    // Reviews
+                    case "revPerDay":
+                        changedValue = mOptionsCopy.getJSONObject("rev").get("perDay");
+                        options.getJSONObject("rev").put("perDay", changedValue);
+                        break;
+                    case "easyBonus":
+                        changedValue = mOptionsCopy.getJSONObject("rev").get("ease4");
+                        options.getJSONObject("rev").put("ease4", changedValue);
+                        break;
+                    case "hardFactor":
+                        changedValue = mOptionsCopy.getJSONObject("rev").get("hardFactor");
+                        options.getJSONObject("rev").put("hardFactor", changedValue);
+                        break;
+                    case "revIvlFct":
+                        changedValue = mOptionsCopy.getJSONObject("rev").get("ivlFct");
+                        options.getJSONObject("rev").put("ivlFct", changedValue);
+                        break;
+                    case "revMaxIvl":
+                        changedValue = mOptionsCopy.getJSONObject("rev").get("maxIvl");
+                        options.getJSONObject("rev").put("maxIvl", changedValue);
+                        break;
+                    case "revBury":
+                        changedValue = mOptionsCopy.getJSONObject("rev").get("bury");
+                        options.getJSONObject("rev").put("bury", changedValue);
+                        break;
+                    case "revUseGeneralTimeoutSettings":
+                        changedValue = mOptionsCopy.getJSONObject("rev").get("useGeneralTimeoutSettings");
+                        options.getJSONObject("rev").put("useGeneralTimeoutSettings", changedValue);
+                        break;
+                    case "revTimeoutAnswer":
+                        changedValue = mOptionsCopy.getJSONObject("rev").get("timeoutAnswer");
+                        options.getJSONObject("rev").put("timeoutAnswer", changedValue);
+                        break;
+                    case "revTimeoutAnswerSeconds":
+                        changedValue = mOptionsCopy.getJSONObject("rev").get("timeoutAnswerSeconds");
+                        options.getJSONObject("rev").put("timeoutAnswerSeconds", changedValue);
+                        break;
+                    case "revTimeoutQuestionSeconds":
+                        changedValue = mOptionsCopy.getJSONObject("rev").get("timeoutQuestionSeconds");
+                        options.getJSONObject("rev").put("timeoutQuestionSeconds", changedValue);
+                        break;
+
+                    // Lapses
+                    case "lapSteps":
+                        changedValue = mOptionsCopy.getJSONObject("lapse").get("delays");
+                        options.getJSONObject("lapse").put("delays", changedValue);
+                        break;
+                    case "lapNewIvl":
+                        changedValue = mOptionsCopy.getJSONObject("lapse").get("mult");
+                        options.getJSONObject("lapse").put("mult", changedValue);
+                        break;
+                    case "lapMinIvl":
+                        changedValue = mOptionsCopy.getJSONObject("lapse").get("minInt");
+                        options.getJSONObject("lapse").put("minInt", changedValue);
+                        break;
+                    case "lapLeechThres":
+                        changedValue = mOptionsCopy.getJSONObject("lapse").get("leechFails");
+                        options.getJSONObject("lapse").put("leechFails", changedValue);
+                        break;
+                    case "lapLeechAct":
+                        changedValue = mOptionsCopy.getJSONObject("lapse").get("leechAction");
+                        options.getJSONObject("lapse").put("leechAction", changedValue);
+                        break;
+
+                    // General
+                    case "maxAnswerTime":
+                        changedValue = mOptionsCopy.get("maxTaken");
+                        options.put("maxTaken", changedValue);
+                        break;
+                    case "showAnswerTimer":
+                        changedValue = mOptionsCopy.get("timer");
+                        options.put("timer", changedValue);
+                        break;
+                    case "autoPlayAudio":
+                        changedValue = mOptionsCopy.get("autoplay");
+                        options.put("autoplay", changedValue);
+                        break;
+                    case "replayQuestion":
+                        changedValue = mOptionsCopy.get("replayq");
+                        options.put("replayq", changedValue);
+                        break;
+
+                    // Reminders
+                    case "reminderEnabled":
+                    case "reminderTime":
+                        changedValue = mOptionsCopy.get("reminder");
+                        options.put("reminder", changedValue);
+                        break;
+
+                    // Deck Description
+                    case "desc":
+                        changedValue = mDeckCopy.get("desc");
+                        deck.put("desc", changedValue);
+                        break;
+
+                    // Unknown key
+                    default:
+                        Timber.w("Unknown key type: %s", key);
+                        break;
+                }
+            }
+
+            // This section is placed outside of switch-case because it's common for "reminderEnabled" and "reminderTime"
+            // This way we avoid redundant execution
+            if (mUpdateReminderEnabled || mUpdateReminderTime) {
+                // Update reminder settings (key: reminderEnabled, reminderTime)
+                final AlarmManager alarmManager = (AlarmManager) getSystemService(ALARM_SERVICE);
+                final PendingIntent reminderIntent = PendingIntent.getBroadcast(
+                        getApplicationContext(),
+                        (int) mOptionsCopy.getLong("id"),
+                        new Intent(getApplicationContext(), ReminderService.class).putExtra
+                                (ReminderService.EXTRA_DECK_OPTION_ID, mOptionsCopy.getLong("id")),
+                        0
+                );
+                alarmManager.cancel(reminderIntent);
+
+                if (mUpdateReminderTime) {
+                    // Set reminder if enabled (key: reminderTime)
+                    final JSONObject reminder = mOptionsCopy.getJSONObject("reminder");
+                    final Calendar calendar = reminderToCalendar(mCol.getTime(), reminder);
+                    alarmManager.setRepeating(
+                            AlarmManager.RTC_WAKEUP,
+                            calendar.getTimeInMillis(),
+                            AlarmManager.INTERVAL_DAY,
+                            reminderIntent
+                    );
+                }
+            }
+
+            try {
+                // Write new changes to DB
+                mCol.getDecks().save(deck);
+                mCol.getDecks().save(options);
+            } catch (RuntimeException e) {
+                // Couldn't write to DB, exit Deck Options activity
+                Timber.e(e, "DeckOptions - RuntimeException on saving conf");
+                AnkiDroidApp.sendExceptionReport(e, "DeckOptionsSaveConf");
+                setResult(DeckPicker.RESULT_DB_ERROR);
+                finish();
+            }
+
+            // All changes are saved; clear set
+            mChanges.clear();
+        }
+
+
         private boolean parseTimerValue(DeckConfig options) {
             return DeckConfig.parseTimerOpt(options, true);
         }
