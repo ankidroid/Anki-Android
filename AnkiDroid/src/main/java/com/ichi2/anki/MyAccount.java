@@ -52,6 +52,8 @@ import static com.ichi2.anim.ActivityTransitionAnimation.Direction.FADE;
 public class MyAccount extends AnkiActivity {
     private final static int STATE_LOG_IN  = 1;
     private final static int STATE_LOGGED_IN = 2;
+    private final static int ROTATED_RIGHT = 90;
+    private final static int ROTATED_LEFT = 270;
 
     private View mLoginToMyAccountView;
     private View mLoggedIntoMyAccountView;
@@ -328,13 +330,19 @@ public class MyAccount extends AnkiActivity {
     }
 
     public void checkOrientation(int orientation) {
-        // if device is in horizontal mode then screen might not have enough space for ankidroid logo
-        // so we will invisible logo for horizontal mode only
-        if ((orientation == OrientationEventListener.ORIENTATION_UNKNOWN) || (orientation < 100) || (orientation > 280)) {
+        if ((orientation == OrientationEventListener.ORIENTATION_UNKNOWN)
+                || isPhone() && (orientation == ROTATED_RIGHT || orientation == ROTATED_LEFT)) {
             mAnkidroidLogo.setVisibility(View.GONE);
         } else {
             mAnkidroidLogo.setVisibility(View.VISIBLE);
         }
+    }
+
+    private boolean isPhone(){
+        Context context = this.getApplicationContext();
+        return (context.getResources().getConfiguration().screenLayout
+                & Configuration.SCREENLAYOUT_SIZE_MASK)
+                < Configuration.SCREENLAYOUT_SIZE_LARGE;
     }
 
     public void initializeOrientationListener() {
