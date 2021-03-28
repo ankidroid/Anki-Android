@@ -13,7 +13,7 @@
  You should have received a copy of the GNU General Public License along with
  this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package com.ichi2.anki;
+package com.ichi2.anki.export;
 
 
 import android.content.Intent;
@@ -22,6 +22,10 @@ import android.os.ParcelFileDescriptor;
 import android.util.Pair;
 
 import com.afollestad.materialdialogs.MaterialDialog;
+import com.ichi2.anki.AnkiActivity;
+import com.ichi2.anki.CollectionHelper;
+import com.ichi2.anki.R;
+import com.ichi2.anki.UIUtils;
 import com.ichi2.anki.dialogs.ExportCompleteDialog;
 import com.ichi2.anki.dialogs.ExportCompleteDialog.ExportCompleteDialogListener;
 import com.ichi2.async.CollectionTask;
