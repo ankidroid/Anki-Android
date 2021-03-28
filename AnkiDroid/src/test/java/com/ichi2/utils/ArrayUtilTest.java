@@ -18,21 +18,17 @@ package com.ichi2.utils;
 
 import org.junit.Before;
 import org.junit.Test;
-import org.junit.runner.RunWith;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-import androidx.test.ext.junit.runners.AndroidJUnit4;
-
 import static com.ichi2.utils.ArrayUtil.toArrayList;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 
-@RunWith(AndroidJUnit4.class)
 public class ArrayUtilTest {
-    private static Integer[] sampleItems;
+    private Integer[] sampleItems;
 
 
     @Before
