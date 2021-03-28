@@ -88,6 +88,43 @@ public class DeckOptions extends AppCompatPreferenceActivity implements OnShared
     private BroadcastReceiver mUnmountReceiver = null;
     private DeckPreferenceHack mPref;
 
+
+    /**
+     * Returns a reference to the deck data.
+     * Uses {@link #mCol} to get deck data and if it's uninitialized, {@link NullPointerException} is thrown.
+     *
+     * @return Reference to deck data
+     */
+    private Deck getDeckReference() throws NullPointerException {
+        if (mCol == null) {
+            throw new NullPointerException("Collection object is not initialized");
+        }
+        Bundle extras = getIntent().getExtras();
+        if (extras != null && extras.containsKey("did")) {
+            return mCol.getDecks().get(extras.getLong("did"));
+        } else {
+            return mCol.getDecks().current();
+        }
+    }
+
+
+    /**
+     * Returns a reference to the options data.
+     * Uses {@link #mCol} and {@link #mDeck} to get options data and if they are uninitialized,
+     * {@link NullPointerException} is thrown.
+     *
+     * @return Reference to actual deck options
+     */
+    private DeckConfig getOptionsReference() throws NullPointerException {
+        if (mCol == null) {
+            throw new NullPointerException("Collection object is not initialized");
+        } else if (mDeck == null) {
+            throw new NullPointerException("Deck object is not initialized");
+        }
+        return mCol.getDecks().confForDid(mDeck.getLong("id"));
+    }
+
+
     public class DeckPreferenceHack implements SharedPreferences {
 
         private final Map<String, String> mValues = new HashMap<>(30); // At most as many as in cacheValues
