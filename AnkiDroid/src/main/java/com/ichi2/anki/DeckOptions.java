@@ -132,6 +132,16 @@ public class DeckOptions extends AppCompatPreferenceActivity implements OnShared
         private final Map<String, String> mSummaries = new HashMap<>();
         private MaterialDialog mProgressDialog;
         private final List<OnSharedPreferenceChangeListener> listeners = new LinkedList<>();
+        /*
+         * Post-save settings
+         * Some of the preferences require additional configurations after saving them.
+         * Reminder enable: Enable reminder based on preference
+         * Reminder time: Set reminder time based on preference
+         *
+         * Boolean variables are used to keep track of these preferences inside Editor.commit().
+         */
+        private boolean mUpdateReminderEnabled = false;
+        private boolean mUpdateReminderTime = false;
 
 
         private DeckPreferenceHack() {
@@ -449,27 +459,8 @@ public class DeckOptions extends AppCompatPreferenceActivity implements OnShared
                                 }
 
                                 mOptionsCopy.put("reminder", reminder);
-
-                                final AlarmManager alarmManager = (AlarmManager) getSystemService(ALARM_SERVICE);
-                                final PendingIntent reminderIntent = PendingIntent.getBroadcast(
-                                        getApplicationContext(),
-                                        (int) mOptionsCopy.getLong("id"),
-                                        new Intent(getApplicationContext(), ReminderService.class).putExtra
-                                                (ReminderService.EXTRA_DECK_OPTION_ID, mOptionsCopy.getLong("id")),
-                                        0
-                                );
-
-                                alarmManager.cancel(reminderIntent);
-                                if ((Boolean) value) {
-                                    final Calendar calendar = reminderToCalendar(mCol.getTime(), reminder);
-
-                                    alarmManager.setRepeating(
-                                            AlarmManager.RTC_WAKEUP,
-                                            calendar.getTimeInMillis(),
-                                            AlarmManager.INTERVAL_DAY,
-                                            reminderIntent
-                                    );
-                                }
+                                mUpdateReminderEnabled = true; // Alarm will be modified after changes are saved
+                                mUpdateReminderTime = (Boolean) value; // New alarm will be set if reminder is enabled
                                 break;
                             }
                             case "reminderTime": {
@@ -480,26 +471,7 @@ public class DeckOptions extends AppCompatPreferenceActivity implements OnShared
                                         .put(TimePreference.parseMinutes((String) value)));
 
                                 mOptionsCopy.put("reminder", reminder);
-
-                                final AlarmManager alarmManager = (AlarmManager) getSystemService(ALARM_SERVICE);
-                                final PendingIntent reminderIntent = PendingIntent.getBroadcast(
-                                        getApplicationContext(),
-                                        (int) mOptionsCopy.getLong("id"),
-                                        new Intent(getApplicationContext(), ReminderService.class).putExtra
-                                                (ReminderService.EXTRA_DECK_OPTION_ID, mOptionsCopy.getLong("id")),
-                                        0
-                                );
-
-                                alarmManager.cancel(reminderIntent);
-
-                                final Calendar calendar = reminderToCalendar(mCol.getTime(), reminder);
-
-                                alarmManager.setRepeating(
-                                        AlarmManager.RTC_WAKEUP,
-                                        calendar.getTimeInMillis(),
-                                        AlarmManager.INTERVAL_DAY,
-                                        reminderIntent
-                                );
+                                mUpdateReminderTime = true; // Alarm will be modified after changes are saved
                                 break;
                             }
                             default:
