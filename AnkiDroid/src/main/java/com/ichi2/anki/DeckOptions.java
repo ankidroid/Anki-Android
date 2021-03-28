@@ -80,9 +80,9 @@ import static com.ichi2.anim.ActivityTransitionAnimation.Direction.FADE;
  * Preferences for the current deck.
  */
 public class DeckOptions extends AppCompatPreferenceActivity implements OnSharedPreferenceChangeListener {
-
-    private DeckConfig mOptions;
-    private Deck mDeck;
+    // Copy of options and deck data is stored in the respective object
+    private DeckConfig mOptionsCopy;
+    private Deck mDeckCopy;
     private Collection mCol;
     private boolean mPreferenceChanged = false;
     private BroadcastReceiver mUnmountReceiver = null;
@@ -110,7 +110,7 @@ public class DeckOptions extends AppCompatPreferenceActivity implements OnShared
 
     /**
      * Returns a reference to the options data.
-     * Uses {@link #mCol} and {@link #mDeck} to get options data and if they are uninitialized,
+     * Uses {@link #mCol} and {@link #mDeckCopy} to get options data and if they are uninitialized,
      * {@link NullPointerException} is thrown.
      *
      * @return Reference to actual deck options
@@ -118,10 +118,10 @@ public class DeckOptions extends AppCompatPreferenceActivity implements OnShared
     private DeckConfig getOptionsReference() throws NullPointerException {
         if (mCol == null) {
             throw new NullPointerException("Collection object is not initialized");
-        } else if (mDeck == null) {
+        } else if (mDeckCopy == null) {
             throw new NullPointerException("Deck object is not initialized");
         }
-        return mCol.getDecks().confForDid(mDeck.getLong("id"));
+        return mCol.getDecks().confForDid(mDeckCopy.getLong("id"));
     }
 
 
@@ -145,18 +145,16 @@ public class DeckOptions extends AppCompatPreferenceActivity implements OnShared
             Timber.i("DeckOptions - CacheValues");
 
             try {
-                mOptions = mCol.getDecks().confForDid(mDeck.getLong("id"));
-
-                mValues.put("name", mDeck.getString("name"));
-                mValues.put("desc", mDeck.getString("desc"));
-                mValues.put("deckConf", mDeck.getString("conf"));
+                mValues.put("name", mDeckCopy.getString("name"));
+                mValues.put("desc", mDeckCopy.getString("desc"));
+                mValues.put("deckConf", mDeckCopy.getString("conf"));
                 // general
-                mValues.put("maxAnswerTime", mOptions.getString("maxTaken"));
-                mValues.put("showAnswerTimer", Boolean.toString(parseTimerValue(mOptions)));
-                mValues.put("autoPlayAudio", Boolean.toString(mOptions.getBoolean("autoplay")));
-                mValues.put("replayQuestion", Boolean.toString(mOptions.optBoolean("replayq", true)));
+                mValues.put("maxAnswerTime", mOptionsCopy.getString("maxTaken"));
+                mValues.put("showAnswerTimer", Boolean.toString(parseTimerValue(mOptionsCopy)));
+                mValues.put("autoPlayAudio", Boolean.toString(mOptionsCopy.getBoolean("autoplay")));
+                mValues.put("replayQuestion", Boolean.toString(mOptionsCopy.optBoolean("replayq", true)));
                 // new
-                JSONObject newOptions = mOptions.getJSONObject("new");
+                JSONObject newOptions = mOptionsCopy.getJSONObject("new");
                 mValues.put("newSteps", StepsPreference.convertFromJSON(newOptions.getJSONArray("delays")));
                 mValues.put("newGradIvl", newOptions.getJSONArray("ints").getString(0));
                 mValues.put("newEasy", newOptions.getJSONArray("ints").getString(1));
@@ -165,7 +163,7 @@ public class DeckOptions extends AppCompatPreferenceActivity implements OnShared
                 mValues.put("newPerDay", newOptions.getString("perDay"));
                 mValues.put("newBury", Boolean.toString(newOptions.optBoolean("bury", true)));
                 // rev
-                JSONObject revOptions = mOptions.getJSONObject("rev");
+                JSONObject revOptions = mOptionsCopy.getJSONObject("rev");
                 mValues.put("revPerDay", revOptions.getString("perDay"));
                 mValues.put("easyBonus", String.format(Locale.ROOT, "%.0f", revOptions.getDouble("ease4") * 100));
                 mValues.put("hardFactor", String.format(Locale.ROOT, "%.0f", revOptions.optDouble("hardFactor", 1.2) * 100));
@@ -179,17 +177,17 @@ public class DeckOptions extends AppCompatPreferenceActivity implements OnShared
                 mValues.put("revTimeoutQuestionSeconds", Integer.toString(revOptions.optInt("timeoutQuestionSeconds", 60)));
 
                 // lapse
-                JSONObject lapOptions = mOptions.getJSONObject("lapse");
+                JSONObject lapOptions = mOptionsCopy.getJSONObject("lapse");
                 mValues.put("lapSteps", StepsPreference.convertFromJSON(lapOptions.getJSONArray("delays")));
                 mValues.put("lapNewIvl", String.format(Locale.ROOT, "%.0f", lapOptions.getDouble("mult") * 100));
                 mValues.put("lapMinIvl", lapOptions.getString("minInt"));
                 mValues.put("lapLeechThres", lapOptions.getString("leechFails"));
                 mValues.put("lapLeechAct", lapOptions.getString("leechAction"));
                 // options group management
-                mValues.put("currentConf", mCol.getDecks().getConf(mDeck.getLong("conf")).getString("name"));
+                mValues.put("currentConf", mCol.getDecks().getConf(mDeckCopy.getLong("conf")).getString("name"));
                 // reminders
-                if (mOptions.has("reminder")) {
-                    final JSONObject reminder = mOptions.getJSONObject("reminder");
+                if (mOptionsCopy.has("reminder")) {
+                    final JSONObject reminder = mOptionsCopy.getJSONObject("reminder");
                     final JSONArray reminderTime = reminder.getJSONArray("time");
 
                     mValues.put("reminderEnabled", Boolean.toString(reminder.getBoolean("enabled")));
@@ -238,136 +236,136 @@ public class DeckOptions extends AppCompatPreferenceActivity implements OnShared
 
                         switch (key) {
                             case "maxAnswerTime":
-                                mOptions.put("maxTaken", value);
+                                mOptionsCopy.put("maxTaken", value);
                                 break;
                             case "newFactor":
-                                mOptions.getJSONObject("new").put("initialFactor", (Integer) value * 10);
+                                mOptionsCopy.getJSONObject("new").put("initialFactor", (Integer) value * 10);
                                 break;
                             case "newOrder": {
                                 int newValue = Integer.parseInt((String) value);
                                 // Sorting is slow, so only do it if we change order
-                                int oldValue = mOptions.getJSONObject("new").getInt("order");
+                                int oldValue = mOptionsCopy.getJSONObject("new").getInt("order");
                                 if (oldValue != newValue) {
-                                    mOptions.getJSONObject("new").put("order", newValue);
-                                    TaskManager.launchCollectionTask(new CollectionTask.Reorder(mOptions), confChangeHandler());
+                                    mOptionsCopy.getJSONObject("new").put("order", newValue);
+                                    TaskManager.launchCollectionTask(new CollectionTask.Reorder(mOptionsCopy), confChangeHandler());
                                 }
-                                mOptions.getJSONObject("new").put("order", Integer.parseInt((String) value));
+                                mOptionsCopy.getJSONObject("new").put("order", Integer.parseInt((String) value));
                                 break;
                             }
                             case "newPerDay":
-                                mOptions.getJSONObject("new").put("perDay", value);
+                                mOptionsCopy.getJSONObject("new").put("perDay", value);
                                 break;
                             case "newGradIvl": {
                                 JSONArray newInts = new JSONArray(); // [graduating, easy]
 
                                 newInts.put(value);
-                                newInts.put(mOptions.getJSONObject("new").getJSONArray("ints").getInt(1));
-                                mOptions.getJSONObject("new").put("ints", newInts);
+                                newInts.put(mOptionsCopy.getJSONObject("new").getJSONArray("ints").getInt(1));
+                                mOptionsCopy.getJSONObject("new").put("ints", newInts);
                                 break;
                             }
                             case "newEasy": {
                                 JSONArray newInts = new JSONArray(); // [graduating, easy]
 
-                                newInts.put(mOptions.getJSONObject("new").getJSONArray("ints").getInt(0));
+                                newInts.put(mOptionsCopy.getJSONObject("new").getJSONArray("ints").getInt(0));
                                 newInts.put(value);
-                                mOptions.getJSONObject("new").put("ints", newInts);
+                                mOptionsCopy.getJSONObject("new").put("ints", newInts);
                                 break;
                             }
                             case "newBury":
-                                mOptions.getJSONObject("new").put("bury", value);
+                                mOptionsCopy.getJSONObject("new").put("bury", value);
                                 break;
                             case "revPerDay":
-                                mOptions.getJSONObject("rev").put("perDay", value);
+                                mOptionsCopy.getJSONObject("rev").put("perDay", value);
                                 break;
                             case "easyBonus":
-                                mOptions.getJSONObject("rev").put("ease4", (Integer) value / 100.0f);
+                                mOptionsCopy.getJSONObject("rev").put("ease4", (Integer) value / 100.0f);
                                 break;
                             case "hardFactor":
-                                mOptions.getJSONObject("rev").put("hardFactor", (Integer) value / 100.0f);
+                                mOptionsCopy.getJSONObject("rev").put("hardFactor", (Integer) value / 100.0f);
                                 break;
                             case "revIvlFct":
-                                mOptions.getJSONObject("rev").put("ivlFct", (Integer) value / 100.0f);
+                                mOptionsCopy.getJSONObject("rev").put("ivlFct", (Integer) value / 100.0f);
                                 break;
                             case "revMaxIvl":
-                                mOptions.getJSONObject("rev").put("maxIvl", value);
+                                mOptionsCopy.getJSONObject("rev").put("maxIvl", value);
                                 break;
                             case "revBury":
-                                mOptions.getJSONObject("rev").put("bury", value);
+                                mOptionsCopy.getJSONObject("rev").put("bury", value);
                                 break;
                             case "revUseGeneralTimeoutSettings":
-                                mOptions.getJSONObject("rev").put("useGeneralTimeoutSettings", value);
+                                mOptionsCopy.getJSONObject("rev").put("useGeneralTimeoutSettings", value);
                                 break;
                             case "revTimeoutAnswer":
-                                mOptions.getJSONObject("rev").put("timeoutAnswer", value);
+                                mOptionsCopy.getJSONObject("rev").put("timeoutAnswer", value);
                                 break;
                             case "revTimeoutAnswerSeconds":
-                                mOptions.getJSONObject("rev").put("timeoutAnswerSeconds", value);
+                                mOptionsCopy.getJSONObject("rev").put("timeoutAnswerSeconds", value);
                                 break;
                             case "revTimeoutQuestionSeconds":
-                                mOptions.getJSONObject("rev").put("timeoutQuestionSeconds", value);
+                                mOptionsCopy.getJSONObject("rev").put("timeoutQuestionSeconds", value);
                                 break;
                             case "lapMinIvl":
-                                mOptions.getJSONObject("lapse").put("minInt", value);
+                                mOptionsCopy.getJSONObject("lapse").put("minInt", value);
                                 break;
                             case "lapLeechThres":
-                                mOptions.getJSONObject("lapse").put("leechFails", value);
+                                mOptionsCopy.getJSONObject("lapse").put("leechFails", value);
                                 break;
                             case "lapLeechAct":
-                                mOptions.getJSONObject("lapse").put("leechAction", Integer.parseInt((String) value));
+                                mOptionsCopy.getJSONObject("lapse").put("leechAction", Integer.parseInt((String) value));
                                 break;
                             case "lapNewIvl":
-                                mOptions.getJSONObject("lapse").put("mult", (Integer) value / 100.0f);
+                                mOptionsCopy.getJSONObject("lapse").put("mult", (Integer) value / 100.0f);
                                 break;
                             case "showAnswerTimer":
-                                mOptions.put("timer", (Boolean) value ? 1 : 0);
+                                mOptionsCopy.put("timer", (Boolean) value ? 1 : 0);
                                 break;
                             case "autoPlayAudio":
-                                mOptions.put("autoplay", value);
+                                mOptionsCopy.put("autoplay", value);
                                 break;
                             case "replayQuestion":
-                                mOptions.put("replayq", value);
+                                mOptionsCopy.put("replayq", value);
                                 break;
                             case "desc":
-                                mDeck.put("desc", value);
-                                mCol.getDecks().save(mDeck);
+                                mDeckCopy.put("desc", value);
+                                mCol.getDecks().save(mDeckCopy);
                                 break;
                             case "newSteps":
-                                mOptions.getJSONObject("new").put("delays", StepsPreference.convertToJSON((String) value));
+                                mOptionsCopy.getJSONObject("new").put("delays", StepsPreference.convertToJSON((String) value));
                                 break;
                             case "lapSteps":
-                                mOptions.getJSONObject("lapse")
+                                mOptionsCopy.getJSONObject("lapse")
                                         .put("delays", StepsPreference.convertToJSON((String) value));
                                 break;
                             case "deckConf": {
                                 long newConfId = Long.parseLong((String) value);
-                                mOptions = mCol.getDecks().getConf(newConfId);
-                                TaskManager.launchCollectionTask(new CollectionTask.ConfChange(mDeck, mOptions), confChangeHandler());
+                                mOptionsCopy = mCol.getDecks().getConf(newConfId);
+                                TaskManager.launchCollectionTask(new CollectionTask.ConfChange(mDeckCopy, mOptionsCopy), confChangeHandler());
                                 break;
                             }
                             case "confRename": {
                                 String newName = (String) value;
                                 if (!TextUtils.isEmpty(newName)) {
-                                    mOptions.put("name", newName);
+                                    mOptionsCopy.put("name", newName);
                                 }
                                 break;
                             }
                             case "confReset":
                                 if ((Boolean) value) {
-                                    TaskManager.launchCollectionTask(new CollectionTask.ConfReset(mOptions), confChangeHandler());
+                                    TaskManager.launchCollectionTask(new CollectionTask.ConfReset(mOptionsCopy), confChangeHandler());
                                 }
                                 break;
                             case "confAdd": {
                                 String newName = (String) value;
                                 if (!TextUtils.isEmpty(newName)) {
                                     // New config clones current config
-                                    long id = mCol.getDecks().confId(newName, mOptions.toString());
-                                    mDeck.put("conf", id);
-                                    mCol.getDecks().save(mDeck);
+                                    long id = mCol.getDecks().confId(newName, mOptionsCopy.toString());
+                                    mDeckCopy.put("conf", id);
+                                    mCol.getDecks().save(mDeckCopy);
                                 }
                                 break;
                             }
                             case "confRemove":
-                                if (mOptions.getLong("id") == 1) {
+                                if (mOptionsCopy.getLong("id") == 1) {
                                     // Don't remove the options group if it's the default group
                                     UIUtils.showThemedToast(DeckOptions.this,
                                             getResources().getString(R.string.default_conf_delete_error), false);
@@ -399,29 +397,29 @@ public class DeckOptions extends AppCompatPreferenceActivity implements OnShared
                                 break;
                             case "confSetSubdecks":
                                 if ((Boolean) value) {
-                                    TaskManager.launchCollectionTask(new CollectionTask.ConfSetSubdecks(mDeck, mOptions), confChangeHandler());
+                                    TaskManager.launchCollectionTask(new CollectionTask.ConfSetSubdecks(mDeckCopy, mOptionsCopy), confChangeHandler());
                                 }
                                 break;
                             case "reminderEnabled": {
                                 final JSONObject reminder = new JSONObject();
 
                                 reminder.put("enabled", value);
-                                if (mOptions.has("reminder")) {
-                                    reminder.put("time", mOptions.getJSONObject("reminder").getJSONArray("time"));
+                                if (mOptionsCopy.has("reminder")) {
+                                    reminder.put("time", mOptionsCopy.getJSONObject("reminder").getJSONArray("time"));
                                 } else {
                                     reminder.put("time", new JSONArray()
                                             .put(TimePreference.parseHours(TimePreference.DEFAULT_VALUE))
                                             .put(TimePreference.parseMinutes(TimePreference.DEFAULT_VALUE)));
                                 }
 
-                                mOptions.put("reminder", reminder);
+                                mOptionsCopy.put("reminder", reminder);
 
                                 final AlarmManager alarmManager = (AlarmManager) getSystemService(ALARM_SERVICE);
                                 final PendingIntent reminderIntent = PendingIntent.getBroadcast(
                                         getApplicationContext(),
-                                        (int) mOptions.getLong("id"),
+                                        (int) mOptionsCopy.getLong("id"),
                                         new Intent(getApplicationContext(), ReminderService.class).putExtra
-                                                (ReminderService.EXTRA_DECK_OPTION_ID, mOptions.getLong("id")),
+                                                (ReminderService.EXTRA_DECK_OPTION_ID, mOptionsCopy.getLong("id")),
                                         0
                                 );
 
@@ -445,14 +443,14 @@ public class DeckOptions extends AppCompatPreferenceActivity implements OnShared
                                 reminder.put("time", new JSONArray().put(TimePreference.parseHours((String) value))
                                         .put(TimePreference.parseMinutes((String) value)));
 
-                                mOptions.put("reminder", reminder);
+                                mOptionsCopy.put("reminder", reminder);
 
                                 final AlarmManager alarmManager = (AlarmManager) getSystemService(ALARM_SERVICE);
                                 final PendingIntent reminderIntent = PendingIntent.getBroadcast(
                                         getApplicationContext(),
-                                        (int) mOptions.getLong("id"),
+                                        (int) mOptionsCopy.getLong("id"),
                                         new Intent(getApplicationContext(), ReminderService.class).putExtra
-                                                (ReminderService.EXTRA_DECK_OPTION_ID, mOptions.getLong("id")),
+                                                (ReminderService.EXTRA_DECK_OPTION_ID, mOptionsCopy.getLong("id")),
                                         0
                                 );
 
@@ -479,7 +477,7 @@ public class DeckOptions extends AppCompatPreferenceActivity implements OnShared
 
                 // save conf
                 try {
-                    mCol.getDecks().save(mOptions);
+                    mCol.getDecks().save(mOptionsCopy);
                 } catch (RuntimeException e) {
                     Timber.e(e, "DeckOptions - RuntimeException on saving conf");
                     AnkiDroidApp.sendExceptionReport(e, "DeckOptionsSaveConf");
@@ -568,10 +566,10 @@ public class DeckOptions extends AppCompatPreferenceActivity implements OnShared
              */
             private void remConf() throws ConfirmModSchemaException {
                 // Remove options group, asking user to confirm full sync if necessary
-                mCol.getDecks().remConf(mOptions.getLong("id"));
+                mCol.getDecks().remConf(mOptionsCopy.getLong("id"));
                 // Run the CPU intensive re-sort operation in a background thread
-                TaskManager.launchCollectionTask(new CollectionTask.ConfRemove(mOptions), confChangeHandler());
-                mDeck.put("conf", 1);
+                TaskManager.launchCollectionTask(new CollectionTask.ConfRemove(mOptionsCopy), confChangeHandler());
+                mDeckCopy.put("conf", 1);
             }
         }
 
@@ -688,12 +686,9 @@ public class DeckOptions extends AppCompatPreferenceActivity implements OnShared
             finish();
             return;
         }
-        Bundle extras = getIntent().getExtras();
-        if (extras != null && extras.containsKey("did")) {
-            mDeck = mCol.getDecks().get(extras.getLong("did"));
-        } else {
-            mDeck = mCol.getDecks().current();
-        }
+        mDeckCopy = getDeckReference().deepClone();
+        // TODO: Replace with deepClone() when #8350 is merged
+        mOptionsCopy = new DeckConfig(getOptionsReference().toString());
         registerExternalStorageListener();
 
         if (mCol == null) {
@@ -717,7 +712,7 @@ public class DeckOptions extends AppCompatPreferenceActivity implements OnShared
             String title = getResources().getString(R.string.deckpreferences_title);
             if (title.contains("XXX")) {
                 try {
-                    title = title.replace("XXX", mDeck.getString("name"));
+                    title = title.replace("XXX", mDeckCopy.getString("name"));
                 } catch (JSONException e) {
                     Timber.w(e);
                     title = title.replace("XXX", "???");
@@ -889,7 +884,7 @@ public class DeckOptions extends AppCompatPreferenceActivity implements OnShared
      */
     private int getOptionsGroupCount() {
         int count = 0;
-        long conf = mDeck.getLong("conf");
+        long conf = mDeckCopy.getLong("conf");
         for (Deck deck : mCol.getDecks().all()) {
             if (deck.isDyn()) {
                 continue;
@@ -916,7 +911,7 @@ public class DeckOptions extends AppCompatPreferenceActivity implements OnShared
      */
     private int getSubdeckCount() {
         int count = 0;
-        long did = mDeck.getLong("id");
+        long did = mDeckCopy.getLong("id");
         TreeMap<String, Long> children = mCol.getDecks().children(did);
         for (long childDid : children.values()) {
             Deck child = mCol.getDecks().get(childDid);
