@@ -1037,7 +1037,7 @@ public class DeckPicker extends NavigationDrawerActivity implements
             super.onBackPressed();
         } else {
             Timber.i("Back key pressed");
-            if (mFloatingActionMenu.mIsFABOpen) {
+            if (mFloatingActionMenu.isFABOpen()) {
                 mFloatingActionMenu.closeFloatingActionMenu();
             } else {
                 automaticSync();

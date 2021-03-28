@@ -39,7 +39,7 @@ public class DeckPickerFloatingActionMenu {
     private final LinearLayout mAddDeckLayout;
     private final LinearLayout mAddNoteLayout;
     private final View mFabBGLayout;
-    protected boolean mIsFABOpen = false;
+    private boolean mIsFABOpen = false;
 
     private final DeckPicker mDeckPicker;
 
