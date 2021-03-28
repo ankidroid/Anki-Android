@@ -519,11 +519,11 @@ public class AnkiActivity extends AppCompatActivity implements SimpleMessageDial
      *
      * @param message
      */
-    protected void showSimpleMessageDialog(String message) {
+    public void showSimpleMessageDialog(String message) {
         showSimpleMessageDialog(message, false);
     }
 
-    protected void showSimpleMessageDialog(String title, String message){
+    public void showSimpleMessageDialog(String title, String message){
         showSimpleMessageDialog(title, message, false);
     }
 
@@ -537,12 +537,12 @@ public class AnkiActivity extends AppCompatActivity implements SimpleMessageDial
      * @param message
      * @param reload flag which forces app to be restarted when true
      */
-    protected void showSimpleMessageDialog(String message, boolean reload) {
+    public void showSimpleMessageDialog(String message, boolean reload) {
         AsyncDialogFragment newFragment = SimpleMessageDialog.newInstance(message, reload);
         showAsyncDialogFragment(newFragment);
     }
 
-    protected void showSimpleMessageDialog(String title, @Nullable String message, boolean reload) {
+    public void showSimpleMessageDialog(String title, @Nullable String message, boolean reload) {
         AsyncDialogFragment newFragment = SimpleMessageDialog.newInstance(title, message, reload);
         showAsyncDialogFragment(newFragment);
     }
