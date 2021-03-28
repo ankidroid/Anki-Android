@@ -568,7 +568,7 @@ public class DeckOptions extends AppCompatPreferenceActivity implements OnShared
                                             .neutralText(getResources().getString(R.string.dialog_cancel))
                                             .onPositive((dialog, which) -> {
                                                 // Save changes before loading new group
-                                                // writeChanges();
+                                                writeChanges();
                                                 TaskManager.launchCollectionTask(
                                                         new CollectionTask.ConfChange(originalDeck, newOptions),
                                                         confChangeHandler()
@@ -984,14 +984,36 @@ public class DeckOptions extends AppCompatPreferenceActivity implements OnShared
         return super.onKeyDown(keyCode, event);
     }
 
+
+    /**
+     * Writes changes to database based on the value of {@link #mPreferenceChanged} and {@link #mSaveChanges}.
+     * After changes are saved/discarded, the activity is finished.
+     */
     private void closeWithResult() {
         if (mPreferenceChanged) {
-            setResult(RESULT_OK);
+            if (mSaveChanges) {
+                // Preferences are changed and should be saved
+                mPref.writeChanges();
+                setResult(RESULT_OK);
+                finish();
+                ActivityTransitionAnimation.slide(this, FADE);
+            } else {
+                // Preferences are changed but back key is pressed (ask for confirmation)
+                DiscardChangesDialog
+                        .getDefault(this)
+                        .onPositive((dialog, which) -> {
+                            setResult(RESULT_CANCELED);
+                            finish();
+                            ActivityTransitionAnimation.slide(this, FADE);
+                        })
+                        .show();
+            }
         } else {
+            // Preferences are not changed
             setResult(RESULT_CANCELED);
+            finish();
+            ActivityTransitionAnimation.slide(this, FADE);
         }
-        finish();
-        ActivityTransitionAnimation.slide(this, FADE);
     }
 
 
