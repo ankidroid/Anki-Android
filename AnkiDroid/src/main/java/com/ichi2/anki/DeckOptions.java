@@ -32,6 +32,7 @@ import android.os.Bundle;
 import android.text.TextUtils;
 
 import android.view.KeyEvent;
+import android.view.Menu;
 import android.view.MenuItem;
 
 import com.afollestad.materialdialogs.MaterialDialog;
@@ -89,6 +90,11 @@ public class DeckOptions extends AppCompatPreferenceActivity implements OnShared
     private boolean mPreferenceChanged = false;
     private BroadcastReceiver mUnmountReceiver = null;
     private DeckPreferenceHack mPref;
+    /**
+     * Indicator for whether to save the preference changes or not.
+     * Set to true when save button is clicked.
+     */
+    private boolean mSaveChanges = false;
 
 
     /**
@@ -922,12 +928,24 @@ public class DeckOptions extends AppCompatPreferenceActivity implements OnShared
 
     }
 
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.deck_options, menu);
+        return super.onCreateOptionsMenu(menu);
+    }
+
+
     @Override
     @SuppressWarnings("deprecation") // TODO Tracked in https://github.com/ankidroid/Anki-Android/issues/5019
     public boolean onOptionsItemSelected(MenuItem item) {
         if (item.getItemId() == android.R.id.home) {
             closeWithResult();
             return true;
+        } else if (item.getItemId() == R.id.action_save) {
+            Timber.d("DeckOptions - onOptionsItemSelected() save changes");
+            mSaveChanges = true;
+            closeWithResult();
         }
         return false;
     }
