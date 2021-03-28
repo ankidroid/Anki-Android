@@ -79,15 +79,4 @@ public class ExportCompleteDialog extends AsyncDialogFragment {
         File exportPath = new File(getArguments().getString("exportPath"));
         return res().getString(R.string.export_successful, exportPath.getName());
     }
-
-
-    @Override
-    public Message getDialogHandlerMessage() {
-        Message msg = Message.obtain();
-        msg.what = DialogHandler.MSG_SHOW_EXPORT_COMPLETE_DIALOG;
-        Bundle b = new Bundle();
-        b.putString("exportPath", getArguments().getString("exportPath"));
-        msg.setData(b);
-        return msg;
-    } 
 }

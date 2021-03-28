@@ -56,7 +56,6 @@ public class DialogHandler extends Handler {
     public static final int MSG_SHOW_COLLECTION_IMPORT_REPLACE_DIALOG = 1;
     public static final int MSG_SHOW_COLLECTION_IMPORT_ADD_DIALOG = 2;
     public static final int MSG_SHOW_SYNC_ERROR_DIALOG = 3;
-    public static final int MSG_SHOW_EXPORT_COMPLETE_DIALOG = 4;
     public static final int MSG_SHOW_MEDIA_CHECK_COMPLETE_DIALOG = 5;
     public static final int MSG_SHOW_DATABASE_ERROR_DIALOG = 6;
     public static final int MSG_SHOW_FORCE_FULL_SYNC_DIALOG = 7;
@@ -103,11 +102,7 @@ public class DialogHandler extends Handler {
             int id = msgData.getInt("dialogType");
             String message = msgData.getString("dialogMessage");
             ((DeckPicker) mActivity.get()).showSyncErrorDialog(id, message);
-        } else if (msg.what == MSG_SHOW_EXPORT_COMPLETE_DIALOG) {
-            // Export complete
-            AsyncDialogFragment f = ExportCompleteDialog.newInstance(msgData.getString("exportPath"));
-            mActivity.get().showAsyncDialogFragment(f);
-        } else if (msg.what == MSG_SHOW_MEDIA_CHECK_COMPLETE_DIALOG) {            
+        } else if (msg.what == MSG_SHOW_MEDIA_CHECK_COMPLETE_DIALOG) {
             // Media check results
             int id = msgData.getInt("dialogType");
             if (id!=MediaCheckDialog.DIALOG_CONFIRM_MEDIA_CHECK) {
