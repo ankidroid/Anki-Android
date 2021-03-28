@@ -415,7 +415,7 @@ public class DeckPicker extends NavigationDrawerActivity implements
         }
         Timber.d("onCreate()");
 
-        mExportingDelegate = new ActivityExportingDelegate<>(this, this::getCol, PICK_EXPORT_FILE);
+        mExportingDelegate = new ActivityExportingDelegate(this, this::getCol);
 
         mCustomStudyDialogFactory = new CustomStudyDialogFactory(this::getCol, this).attachToActivity(this);
 
@@ -833,12 +833,6 @@ public class DeckPicker extends NavigationDrawerActivity implements
             ImportUtils.ImportResult importResult = ImportUtils.handleFileImport(this, intent);
             if (!importResult.isSuccess()) {
                 ImportUtils.showImportUnsuccessfulDialog(this, importResult.getHumanReadableMessage(), false);
-            }
-        } else if ((requestCode == PICK_EXPORT_FILE) && (resultCode == RESULT_OK)) {
-            if (mExportingDelegate.exportToProvider(intent, true)) {
-                UIUtils.showSimpleSnackbar(this, getString(R.string.export_save_apkg_successful), true);
-            } else {
-                UIUtils.showSimpleSnackbar(this, getString(R.string.export_save_apkg_unsuccessful), false);
             }
         }
     }
