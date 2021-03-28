@@ -184,6 +184,8 @@
 
     <!-- Deck Options -->
     <string name="deck_options_corrupt">Failed to process deck options: %s</string>
+    <string name="deck_options_group_changes">Do you want to save changes for \'%s\'?</string>
+    <string name="discard" comment="Option to discard any changes made">Discard</string>
 
     <!-- Database Errors-->
     <string name="database_locked_title">Database Locked</string>

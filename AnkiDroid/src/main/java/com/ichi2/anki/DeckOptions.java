@@ -36,6 +36,7 @@ import android.view.MenuItem;
 
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.ichi2.anim.ActivityTransitionAnimation;
+import com.ichi2.anki.dialogs.DiscardChangesDialog;
 import com.ichi2.anki.exception.ConfirmModSchemaException;
 import com.ichi2.anki.receiver.SdCardReceiver;
 import com.ichi2.anki.services.ReminderService;
@@ -337,8 +338,44 @@ public class DeckOptions extends AppCompatPreferenceActivity implements OnShared
                                 break;
                             case "deckConf": {
                                 long newConfId = Long.parseLong((String) value);
-                                mOptionsCopy = mCol.getDecks().getConf(newConfId);
-                                TaskManager.launchCollectionTask(new CollectionTask.ConfChange(mDeckCopy, mOptionsCopy), confChangeHandler());
+                                Deck originalDeck = getDeckReference();
+                                DeckConfig newOptions = mCol.getDecks().getConf(newConfId);
+
+                                if (mPreferenceChanged) {
+                                    // Preferences are changed, ask whether to save/discard before proceeding
+                                    String confirmationText = getResources().getString(
+                                            R.string.deck_options_group_changes,
+                                            mOptionsCopy.optString("name", "???")
+                                    ); // = "Do you want to save changes for '{Options group name}'?"
+                                    DiscardChangesDialog
+                                            .getDefault(getDeckOptions())
+                                            .content(confirmationText)
+                                            .positiveText(getResources().getString(R.string.save))
+                                            .negativeText(getResources().getString(R.string.discard))
+                                            .neutralText(getResources().getString(R.string.dialog_cancel))
+                                            .onPositive((dialog, which) -> {
+                                                // Save changes before loading new group
+                                                // writeChanges();
+                                                TaskManager.launchCollectionTask(
+                                                        new CollectionTask.ConfChange(originalDeck, newOptions),
+                                                        confChangeHandler()
+                                                );
+                                            })
+                                            .onNegative((dialog, which) -> {
+                                                // Discard current changes
+                                                TaskManager.launchCollectionTask(
+                                                        new CollectionTask.ConfChange(originalDeck, newOptions),
+                                                        confChangeHandler()
+                                                );
+                                            })
+                                            .show();
+                                } else {
+                                    // No preference changed; proceed
+                                    TaskManager.launchCollectionTask(
+                                            new CollectionTask.ConfChange(originalDeck, newOptions),
+                                            confChangeHandler()
+                                    );
+                                }
                                 break;
                             }
                             case "confRename": {
