@@ -64,6 +64,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collections;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Locale;
@@ -142,7 +143,11 @@ public class DeckOptions extends AppCompatPreferenceActivity implements OnShared
          */
         private boolean mUpdateReminderEnabled = false;
         private boolean mUpdateReminderTime = false;
-
+        /**
+         * Contains preference keys that are modified.
+         * Keys are added inside {@link Editor#commit()}.
+         */
+        private HashSet<String> mChanges = new HashSet<>();
 
         private DeckPreferenceHack() {
             this.cacheValues();
@@ -244,6 +249,8 @@ public class DeckOptions extends AppCompatPreferenceActivity implements OnShared
                         String key = entry.getKey();
                         Object value = entry.getValue();
                         Timber.i("Change value for key '%s': %s", key, value);
+                        // Store preference key that is modified
+                        mChanges.add(key);
 
                         switch (key) {
                             case "maxAnswerTime":
@@ -255,12 +262,12 @@ public class DeckOptions extends AppCompatPreferenceActivity implements OnShared
                             case "newOrder": {
                                 int newValue = Integer.parseInt((String) value);
                                 // Sorting is slow, so only do it if we change order
-                                int oldValue = mOptionsCopy.getJSONObject("new").getInt("order");
-                                if (oldValue != newValue) {
-                                    mOptionsCopy.getJSONObject("new").put("order", newValue);
-                                    TaskManager.launchCollectionTask(new CollectionTask.Reorder(mOptionsCopy), confChangeHandler());
+                                int oldValue = getOptionsReference().getJSONObject("new").getInt("order");
+                                if (oldValue == newValue) {
+                                    // No need to update order
+                                    mChanges.remove(key);
                                 }
-                                mOptionsCopy.getJSONObject("new").put("order", Integer.parseInt((String) value));
+                                mOptionsCopy.getJSONObject("new").put("order", newValue);
                                 break;
                             }
                             case "newPerDay":
