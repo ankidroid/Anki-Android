@@ -44,7 +44,11 @@ import com.ichi2.utils.FunctionalInterfaces.Supplier;
 import java.io.File;
 import java.io.FileOutputStream;
 
+import androidx.activity.result.ActivityResult;
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
+import androidx.annotation.StringRes;
 import androidx.core.app.ShareCompat;
 import androidx.core.content.FileProvider;
 import androidx.fragment.app.FragmentFactory;
@@ -54,13 +58,13 @@ import timber.log.Timber;
 /**
  * A delegate class used in any {@link AnkiActivity} where the exporting feature is required.
  */
-public class ActivityExportingDelegate <A extends AnkiActivity> implements ExportDialogListener, ExportCompleteDialogListener {
+public class ActivityExportingDelegate implements ExportDialogListener, ExportCompleteDialogListener {
 
 
-    private final A mActivity;
+    private final AnkiActivity mActivity;
     private final Supplier<Collection> mCollectionSupplier;
-    private final int mPickExportFileCallbackCode;
     private final ExportDialogsFactory mDialogsFactory;
+    private final ActivityResultLauncher<Intent> mSaveFileLauncher;
 
     private String mExportFileName;
 
@@ -71,15 +75,17 @@ public class ActivityExportingDelegate <A extends AnkiActivity> implements Expor
      *
      * @param activity the calling activity (must implement {@link ExportCompleteDialogListener})
      * @param collectionSupplier a predicate that supplies a collection instance
-     * @param mPickExportFileCallbackCode the code that will be used on onActivityResult
      */
-    public ActivityExportingDelegate(A activity, Supplier<Collection> collectionSupplier, int mPickExportFileCallbackCode) {
+    public ActivityExportingDelegate(AnkiActivity activity, Supplier<Collection> collectionSupplier) {
         mActivity = activity;
         this.mCollectionSupplier = collectionSupplier;
-        this.mPickExportFileCallbackCode = mPickExportFileCallbackCode;
         final FragmentManager fragmentManager = activity.getSupportFragmentManager();
         mDialogsFactory = new ExportDialogsFactory(this, this).attachToActivity(activity);
         fragmentManager.setFragmentFactory(mDialogsFactory);
+        mSaveFileLauncher = activity.registerForActivityResult(
+                new ActivityResultContracts.StartActivityForResult(),
+                this::saveFileCallback
+        );
     }
 
 
@@ -113,7 +119,7 @@ public class ActivityExportingDelegate <A extends AnkiActivity> implements Expor
             String newFileName = colPath.getName().replace(".anki2", timeStampSuffix + ".colpkg");
             exportPath = new File(exportDir, newFileName);
         }
-        final ExportListener exportListener = new ExportListener<>(mActivity, mDialogsFactory);
+        final ExportListener exportListener = new ExportListener(mActivity, mDialogsFactory);
         TaskManager.launchCollectionTask(new CollectionTask.ExportApkg(exportPath.getPath(), did, includeSched, includeMedia), exportListener);
     }
 
@@ -177,11 +183,19 @@ public class ActivityExportingDelegate <A extends AnkiActivity> implements Expor
         saveIntent.putExtra("android.content.extra.SHOW_ADVANCED", true);
         saveIntent.putExtra("android.content.extra.FANCY", true);
         saveIntent.putExtra("android.content.extra.SHOW_FILESIZE", true);
-        mActivity.startActivityForResultWithoutAnimation(saveIntent, mPickExportFileCallbackCode);
+        mSaveFileLauncher.launch(saveIntent);
     }
 
 
-    public boolean exportToProvider(Intent intent, boolean deleteAfterExport) {
+    private void saveFileCallback(ActivityResult result) {
+        boolean isSuccessful = exportToProvider(result.getData(), true);
+        @StringRes int message = (isSuccessful) ?
+                R.string.export_save_apkg_successful :
+                R.string.export_save_apkg_unsuccessful;
+        UIUtils.showSimpleSnackbar(mActivity, mActivity.getString(message), isSuccessful);
+    }
+
+    private boolean exportToProvider(Intent intent, boolean deleteAfterExport) {
         if ((intent == null) || (intent.getData() == null)) {
             Timber.e("exportToProvider() provided with insufficient intent data %s", intent);
             return false;
@@ -213,27 +227,27 @@ public class ActivityExportingDelegate <A extends AnkiActivity> implements Expor
     }
 
 
-    private static class ExportListener<A extends AnkiActivity>  extends TaskListenerWithContext<A, Void, Pair<Boolean, String>> {
+    private static class ExportListener extends TaskListenerWithContext<AnkiActivity, Void, Pair<Boolean, String>> {
         private final ExportDialogsFactory mDialogsFactory;
 
         private MaterialDialog mProgressDialog;
 
 
-        public ExportListener(A activity, ExportDialogsFactory dialogsFactory) {
+        public ExportListener(AnkiActivity activity, ExportDialogsFactory dialogsFactory) {
             super(activity);
             this.mDialogsFactory = dialogsFactory;
         }
 
 
         @Override
-        public void actualOnPreExecute(@NonNull A activity) {
+        public void actualOnPreExecute(@NonNull AnkiActivity activity) {
             mProgressDialog = StyledProgressDialog.show(activity, "",
                     activity.getResources().getString(R.string.export_in_progress), false);
         }
 
 
         @Override
-        public void actualOnPostExecute(@NonNull A activity, Pair<Boolean, String> result) {
+        public void actualOnPostExecute(@NonNull AnkiActivity activity, Pair<Boolean, String> result) {
             if (mProgressDialog != null && mProgressDialog.isShowing()) {
                 mProgressDialog.dismiss();
             }
