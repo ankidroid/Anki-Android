@@ -191,7 +191,11 @@ public abstract class NavigationDrawerActivity extends AnkiActivity implements N
         final SharedPreferences preferences = getPreferences();
         Timber.i("Night mode was %s", setToNightMode ? "enabled" : "disabled");
         preferences.edit().putBoolean(NIGHT_MODE_PREFERENCE, setToNightMode).apply();
-        restartActivityInvalidateBackstack(NavigationDrawerActivity.this);
+        //restartActivityInvalidateBackstack(NavigationDrawerActivity.this);
+        if(setToNightMode)
+            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
+        else
+            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
     }
 
     @Override
