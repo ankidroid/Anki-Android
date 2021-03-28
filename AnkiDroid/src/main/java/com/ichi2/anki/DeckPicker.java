@@ -94,10 +94,8 @@ import com.ichi2.anki.dialogs.DeckPickerAnalyticsOptInDialog;
 import com.ichi2.anki.dialogs.DeckPickerBackupNoSpaceLeftDialog;
 import com.ichi2.anki.dialogs.DeckPickerConfirmDeleteDeckDialog;
 import com.ichi2.anki.dialogs.DeckPickerContextMenu;
-import com.ichi2.anki.dialogs.ExportCompleteDialog;
 import com.ichi2.anki.dialogs.DeckPickerNoSpaceLeftDialog;
 import com.ichi2.anki.dialogs.DialogHandler;
-import com.ichi2.anki.dialogs.ExportDialog;
 import com.ichi2.anki.dialogs.ImportDialog;
 import com.ichi2.anki.dialogs.MediaCheckDialog;
 import com.ichi2.anki.dialogs.SyncErrorDialog;
@@ -155,9 +153,8 @@ import static com.ichi2.anim.ActivityTransitionAnimation.Direction.*;
 
 public class DeckPicker extends NavigationDrawerActivity implements
         StudyOptionsListener, SyncErrorDialog.SyncErrorDialogListener, ImportDialog.ImportDialogListener,
-        MediaCheckDialog.MediaCheckDialogListener, ExportDialog.ExportDialogListener,
-        ActivityCompat.OnRequestPermissionsResultCallback, CustomStudyDialog.CustomStudyListener,
-        ExportCompleteDialog.ExportCompleteDialogListener {
+        MediaCheckDialog.MediaCheckDialogListener, ActivityCompat.OnRequestPermissionsResultCallback,
+        CustomStudyDialog.CustomStudyListener{
 
 
     /**
@@ -790,7 +787,7 @@ public class DeckPicker extends NavigationDrawerActivity implements
         } else if (itemId == R.id.action_export) {
             Timber.i("DeckPicker:: Export collection button pressed");
             String msg = getResources().getString(R.string.confirm_apkg_export);
-            showDialogFragment(ExportDialog.newInstance(msg));
+            mExportingDelegate.showExportDialog(msg);
             return true;
         }
         return super.onOptionsItemSelected(item);
@@ -1989,24 +1986,6 @@ public class DeckPicker extends NavigationDrawerActivity implements
     }
 
 
-    @Override
-    public void exportApkg(String filename, Long did, boolean includeSched, boolean includeMedia) {
-        mExportingDelegate.exportApkg(filename,did,includeSched,includeMedia);
-    }
-
-
-    @Override
-    public void emailFile(String path) {
-        mExportingDelegate.emailFile(path);
-    }
-
-
-    @Override
-    public void saveExportFile(String path) {
-        mExportingDelegate.saveExportFile(path);
-    }
-
-
     /**
      * Load a new studyOptionsFragment. If withDeckOptions is true, the deck options activity will
      * be loaded on top of it. Use this flag when creating a new filtered deck to allow the user to
@@ -2388,7 +2367,7 @@ public class DeckPicker extends NavigationDrawerActivity implements
     }
     public void exportDeck(long did) {
         String msg = getResources().getString(R.string.confirm_apkg_export_deck, getCol().getDecks().get(did).getString("name"));
-        showDialogFragment(ExportDialog.newInstance(msg, did));
+        mExportingDelegate.showExportDialog(msg, did);
     }
 
     public void createIcon(Context context) {

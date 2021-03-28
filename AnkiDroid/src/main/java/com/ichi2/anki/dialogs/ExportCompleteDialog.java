@@ -36,13 +36,21 @@ public class ExportCompleteDialog extends AsyncDialogFragment {
         void saveExportFile(String exportPath);
     }
 
+    @NonNull
+    private final ExportCompleteDialogListener mListener;
 
-    public static ExportCompleteDialog newInstance(String exportPath) {
-        ExportCompleteDialog f = new ExportCompleteDialog();
-        Bundle args = new Bundle();
+    public ExportCompleteDialog(@NonNull ExportCompleteDialogListener listener) {
+        mListener = listener;
+    }
+
+    public ExportCompleteDialog withArguments(String exportPath) {
+        Bundle args = this.getArguments();
+        if (args == null) {
+            args = new Bundle();
+        }
         args.putString("exportPath", exportPath);
-        f.setArguments(args);
-        return f;
+        this.setArguments(args);
+        return this;
     }
 
 
@@ -50,23 +58,23 @@ public class ExportCompleteDialog extends AsyncDialogFragment {
     @Override
     public MaterialDialog onCreateDialog(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        final String exportPath = getArguments().getString("exportPath");
-        MaterialDialog.Builder dialogBuilder = new MaterialDialog.Builder(getActivity())
+        final String exportPath = requireArguments().getString("exportPath");
+        MaterialDialog.Builder dialogBuilder = new MaterialDialog.Builder(requireActivity())
                 .title(getNotificationTitle())
                 .content(getNotificationMessage())
                 .iconAttr(R.attr.dialogSendIcon)
                 .positiveText(R.string.export_send_button)
                 .negativeText(R.string.export_save_button)
                 .onPositive((dialog, which) -> {
-                    ((ExportCompleteDialogListener) getActivity()).dismissAllDialogFragments();
-                    ((ExportCompleteDialogListener) getActivity()).emailFile(exportPath);
+                    mListener.dismissAllDialogFragments();
+                    mListener.emailFile(exportPath);
                 })
                 .onNegative((dialog, which) -> {
-                    ((ExportCompleteDialogListener) getActivity()).dismissAllDialogFragments();
-                    ((ExportCompleteDialogListener) getActivity()).saveExportFile(exportPath);
+                    mListener.dismissAllDialogFragments();
+                    mListener.saveExportFile(exportPath);
                 })
                 .neutralText(R.string.dialog_cancel)
-                .onNeutral((dialog, which) -> ((ExportCompleteDialogListener) getActivity()).dismissAllDialogFragments());
+                .onNeutral((dialog, which) -> mListener.dismissAllDialogFragments());
         return dialogBuilder.show();
     }
     
@@ -76,7 +84,7 @@ public class ExportCompleteDialog extends AsyncDialogFragment {
 
 
     public String getNotificationMessage() {
-        File exportPath = new File(getArguments().getString("exportPath"));
+        File exportPath = new File(requireArguments().getString("exportPath"));
         return res().getString(R.string.export_successful, exportPath.getName());
     }
 }
