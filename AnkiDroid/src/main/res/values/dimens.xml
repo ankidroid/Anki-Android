@@ -28,5 +28,4 @@
     <dimen name="deck_picker_left_padding">24dp</dimen>
     <dimen name="deck_picker_right_padding">4dp</dimen>
     <dimen name="note_editor_toolbar_height">28dp</dimen>
-
 </resources>

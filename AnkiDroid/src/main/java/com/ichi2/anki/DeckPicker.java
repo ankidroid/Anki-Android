@@ -202,16 +202,6 @@ public class DeckPicker extends NavigationDrawerActivity implements
     private LinearLayoutManager mRecyclerViewLayoutManager;
     private DeckAdapter mDeckListAdapter;
 	
-    private FloatingActionButton addDeckButton;
-    private FloatingActionButton addNoteButton;
-    private FloatingActionButton addSharedButton;
-    private FloatingActionButton fabMain;
-    private LinearLayout addSharedLayout;
-    private LinearLayout addDeckLayout;
-    private LinearLayout addNoteLayout;
-    private View fabBGLayout;
-    private boolean mIsFABOpen = false;
-	
     private final Snackbar.Callback mSnackbarShowHideCallback = new Snackbar.Callback();
 
     private LinearLayout mNoDecksPlaceholder;
@@ -281,7 +271,7 @@ public class DeckPicker extends NavigationDrawerActivity implements
     private void onDeckClick(View v, DeckSelectionType selectionType) {
         long deckId = (long) v.getTag();
         Timber.i("DeckPicker:: Selected deck with id %d", deckId);
-        if (mIsFABOpen) {
+        if (mFloatingActionMenu.mIsFABOpen) {
             mFloatingActionMenu.closeFloatingActionMenu();
         }
 
@@ -982,7 +972,7 @@ public class DeckPicker extends NavigationDrawerActivity implements
         super.onSaveInstanceState(savedInstanceState);
         savedInstanceState.putLong("mContextMenuDid", mContextMenuDid);
         savedInstanceState.putBoolean("mClosedWelcomeMessage", mClosedWelcomeMessage);
-        savedInstanceState.putBoolean("mIsFABOpen", mIsFABOpen);
+        savedInstanceState.putBoolean("mIsFABOpen", mFloatingActionMenu.mIsFABOpen);
     }
 
 
@@ -990,7 +980,7 @@ public class DeckPicker extends NavigationDrawerActivity implements
     public void onRestoreInstanceState(Bundle savedInstanceState) {
         super.onRestoreInstanceState(savedInstanceState);
         mContextMenuDid = savedInstanceState.getLong("mContextMenuDid");
-        mIsFABOpen = savedInstanceState.getBoolean("mIsFABOpen");
+        mFloatingActionMenu.mIsFABOpen = savedInstanceState.getBoolean("mIsFABOpen");
     }
 
 
@@ -1047,7 +1037,7 @@ public class DeckPicker extends NavigationDrawerActivity implements
             super.onBackPressed();
         } else {
             Timber.i("Back key pressed");
-            if (mIsFABOpen) {
+            if (mFloatingActionMenu.mIsFABOpen) {
                 mFloatingActionMenu.closeFloatingActionMenu();
             } else {
                 automaticSync();
