@@ -20,19 +20,14 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.ParcelFileDescriptor;
-import android.os.PersistableBundle;
-import android.util.Pair;
 
-import com.afollestad.materialdialogs.MaterialDialog;
 import com.ichi2.anki.AnkiActivity;
 import com.ichi2.anki.CollectionHelper;
 import com.ichi2.anki.R;
 import com.ichi2.anki.UIUtils;
-import com.ichi2.anki.dialogs.ExportCompleteDialog;
 import com.ichi2.anki.dialogs.ExportCompleteDialog.ExportCompleteDialogListener;
 import com.ichi2.anki.dialogs.ExportDialog.ExportDialogListener;
 import com.ichi2.async.CollectionTask;
-import com.ichi2.async.TaskListenerWithContext;
 import com.ichi2.async.TaskManager;
 import com.ichi2.compat.CompatHelper;
 import com.ichi2.libanki.Collection;
@@ -47,7 +42,6 @@ import java.io.FileOutputStream;
 import androidx.activity.result.ActivityResult;
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
-import androidx.annotation.NonNull;
 import androidx.annotation.StringRes;
 import androidx.core.app.ShareCompat;
 import androidx.core.content.FileProvider;
@@ -67,7 +61,6 @@ public class ActivityExportingDelegate implements ExportDialogListener, ExportCo
     private final ActivityResultLauncher<Intent> mSaveFileLauncher;
 
     private String mExportFileName;
-
 
     /**
      * Must be constructed before calling {@link AnkiActivity#onCreate(Bundle, PersistableBundle)}, this is to fragment
@@ -224,49 +217,5 @@ public class ActivityExportingDelegate implements ExportDialogListener, ExportCo
             return false;
         }
         return true;
-    }
-
-
-    private static class ExportListener extends TaskListenerWithContext<AnkiActivity, Void, Pair<Boolean, String>> {
-        private final ExportDialogsFactory mDialogsFactory;
-
-        private MaterialDialog mProgressDialog;
-
-
-        public ExportListener(AnkiActivity activity, ExportDialogsFactory dialogsFactory) {
-            super(activity);
-            this.mDialogsFactory = dialogsFactory;
-        }
-
-
-        @Override
-        public void actualOnPreExecute(@NonNull AnkiActivity activity) {
-            mProgressDialog = StyledProgressDialog.show(activity, "",
-                    activity.getResources().getString(R.string.export_in_progress), false);
-        }
-
-
-        @Override
-        public void actualOnPostExecute(@NonNull AnkiActivity activity, Pair<Boolean, String> result) {
-            if (mProgressDialog != null && mProgressDialog.isShowing()) {
-                mProgressDialog.dismiss();
-            }
-
-            // If boolean and string are both set, we are signalling an error message
-            // instead of a successful result.
-            if (result.first && result.second != null) {
-                Timber.w("Export Failed: %s", result.second);
-                activity.showSimpleMessageDialog(result.second);
-            } else {
-                Timber.i("Export successful");
-                String exportPath = result.second;
-                if (exportPath != null) {
-                    final ExportCompleteDialog dialog = mDialogsFactory.newExportCompleteDialog().withArguments(exportPath);
-                    activity.showAsyncDialogFragment(dialog);
-                } else {
-                    UIUtils.showThemedToast(activity, activity.getResources().getString(R.string.export_unsuccessful), true);
-                }
-            }
-        }
     }
 }
