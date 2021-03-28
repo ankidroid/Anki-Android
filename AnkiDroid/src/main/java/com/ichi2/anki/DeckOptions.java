@@ -241,6 +241,16 @@ public class DeckOptions extends AppCompatPreferenceActivity implements OnShared
             // For every change in the copy of options/deck, write them to actual options/deck respectively
             for (String key : mChanges) {
                 switch (key) {
+                    // Group management
+                    case "confAdd":
+                        changedValue = mDeckCopy.get("conf");
+                        deck.put("conf", changedValue);
+                        break;
+                    case "confRename":
+                        changedValue = mOptionsCopy.get("name");
+                        options.put("name", changedValue);
+                        break;
+
                     // New cards
                     case "newSteps":
                         changedValue = mOptionsCopy.getJSONObject("new").get("delays");
@@ -440,6 +450,9 @@ public class DeckOptions extends AppCompatPreferenceActivity implements OnShared
             public boolean commit() {
                 Timber.d("DeckOptions - commit() changes back to database");
 
+                // If it is set to true, listeners will not be updated as changes are already made permanent
+                // Only needed to be set for "confAdd" and "confRename"
+                boolean isGroupManagementUpdated = false;
                 try {
                     for (Entry<String, Object> entry : mUpdate.valueSet()) {
                         String key = entry.getKey();
@@ -595,12 +608,18 @@ public class DeckOptions extends AppCompatPreferenceActivity implements OnShared
                                 String newName = (String) value;
                                 if (!TextUtils.isEmpty(newName)) {
                                     mOptionsCopy.put("name", newName);
+                                    // Save all changes
+                                    writeChanges();
+                                    mPreferenceChanged = false;
+                                    isGroupManagementUpdated = true;
                                 }
                                 break;
                             }
                             case "confReset":
                                 if ((Boolean) value) {
                                     TaskManager.launchCollectionTask(new CollectionTask.ConfReset(mOptionsCopy), confChangeHandler());
+                                    // Not needed; only added for consistency
+                                    isGroupManagementUpdated = true;
                                 }
                                 break;
                             case "confAdd": {
@@ -609,7 +628,14 @@ public class DeckOptions extends AppCompatPreferenceActivity implements OnShared
                                     // New config clones current config
                                     long id = mCol.getDecks().confId(newName, mOptionsCopy.toString());
                                     mDeckCopy.put("conf", id);
-                                    mCol.getDecks().save(mDeckCopy);
+                                    // Save all changes
+                                    writeChanges();
+                                    mPreferenceChanged = false;
+                                    // Load new group
+                                    mDeckCopy = getDeckReference().deepClone();
+                                    // TODO: Replace with deepClone() when #8350 is merged
+                                    mOptionsCopy = new DeckConfig(getOptionsReference().toString());
+                                    isGroupManagementUpdated = true;
                                 }
                                 break;
                             }
@@ -621,6 +647,8 @@ public class DeckOptions extends AppCompatPreferenceActivity implements OnShared
                                 } else {
                                     // Remove options group, handling the case where the user needs to confirm full sync
                                     try {
+                                        // Not needed; only added for consistency
+                                        isGroupManagementUpdated = true;
                                         remConf();
                                     } catch (ConfirmModSchemaException e) {
                                         e.log();
@@ -646,7 +674,16 @@ public class DeckOptions extends AppCompatPreferenceActivity implements OnShared
                                 break;
                             case "confSetSubdecks":
                                 if ((Boolean) value) {
-                                    TaskManager.launchCollectionTask(new CollectionTask.ConfSetSubdecks(mDeckCopy, mOptionsCopy), confChangeHandler());
+                                    writeChanges();
+                                    TaskManager.launchCollectionTask(
+                                            new CollectionTask.ConfSetSubdecks(
+                                                    getDeckReference(),
+                                                    getOptionsReference()
+                                            ),
+                                            confChangeHandler()
+                                    );
+                                    // Not needed; only added for consistency
+                                    isGroupManagementUpdated = true;
                                 }
                                 break;
                             case "reminderEnabled": {
@@ -691,9 +728,12 @@ public class DeckOptions extends AppCompatPreferenceActivity implements OnShared
                 buildLists();
                 updateSummaries();
 
-                // and update any listeners
-                for (OnSharedPreferenceChangeListener listener : listeners) {
-                    listener.onSharedPreferenceChanged(DeckPreferenceHack.this, null);
+                // Updating group management preferences saves all changes, no need to update listeners
+                if (!isGroupManagementUpdated) {
+                    // and update any listeners
+                    for (OnSharedPreferenceChangeListener listener : listeners) {
+                        listener.onSharedPreferenceChanged(DeckPreferenceHack.this, null);
+                    }
                 }
 
                 return true;

@@ -25,6 +25,10 @@
         <PreferenceScreen android:title="@string/deck_conf_manage"
             android:summary="@string/deck_conf_manage_summ" >
             <Preference
+                android:key="groupNotice"
+                android:summary="@string/deck_conf_group_notice" />
+
+            <Preference
                 android:enabled="false"
                 android:key="currentConf"
                 android:title="@string/deck_conf_current_group" />
