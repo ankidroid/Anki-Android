@@ -605,7 +605,7 @@ public class AnkiActivity extends AppCompatActivity implements SimpleMessageDial
     }
 
     protected boolean showedActivityFailedScreen(Bundle savedInstanceState) {
-        if (!AnkiDroidApp.isInitialized()) {
+        if (!AnkiDroidApp.isUninitialized()) {
             return false;
         }
 
