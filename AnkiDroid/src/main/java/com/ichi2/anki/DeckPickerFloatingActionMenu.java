@@ -15,17 +15,17 @@ import timber.log.Timber;
 
 public class DeckPickerFloatingActionMenu {
 
-    private FloatingActionButton mAddDeckButton;
-    private FloatingActionButton mAddNoteButton;
-    private FloatingActionButton mAddSharedButton;
-    private FloatingActionButton mFabMain;
-    private LinearLayout mAddSharedLayout;
-    private LinearLayout mAddDeckLayout;
-    private LinearLayout mAddNoteLayout;
-    private View mFabBGLayout;
+    private final FloatingActionButton mAddDeckButton;
+    private final FloatingActionButton mAddNoteButton;
+    private final FloatingActionButton mAddSharedButton;
+    private final FloatingActionButton mFabMain;
+    private final LinearLayout mAddSharedLayout;
+    private final LinearLayout mAddDeckLayout;
+    private final LinearLayout mAddNoteLayout;
+    private final View mFabBGLayout;
     protected boolean mIsFABOpen = false;
 
-    private DeckPicker mDeckPicker;
+    private final DeckPicker mDeckPicker;
 
     public DeckPickerFloatingActionMenu(View view, DeckPicker deckPicker) {
         this.mDeckPicker = deckPicker;
@@ -99,6 +99,17 @@ public class DeckPickerFloatingActionMenu {
         SharedPreferences preferences = AnkiDroidApp.getSharedPrefs(mDeckPicker);
         return preferences.getBoolean("safeDisplay", false);
     }
+
+
+    public boolean isFABOpen() {
+        return mIsFABOpen;
+    }
+
+
+    public void setIsFABOpen(boolean mIsFABOpen) {
+        this.mIsFABOpen = mIsFABOpen;
+    }
+
 
     private void showFloatingActionMenu() {
         mIsFABOpen = true;
