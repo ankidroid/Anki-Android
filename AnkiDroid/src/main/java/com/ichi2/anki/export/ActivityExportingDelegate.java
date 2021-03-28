@@ -18,7 +18,9 @@ package com.ichi2.anki.export;
 
 import android.content.Intent;
 import android.net.Uri;
+import android.os.Bundle;
 import android.os.ParcelFileDescriptor;
+import android.os.PersistableBundle;
 import android.util.Pair;
 
 import com.afollestad.materialdialogs.MaterialDialog;
@@ -28,6 +30,7 @@ import com.ichi2.anki.R;
 import com.ichi2.anki.UIUtils;
 import com.ichi2.anki.dialogs.ExportCompleteDialog;
 import com.ichi2.anki.dialogs.ExportCompleteDialog.ExportCompleteDialogListener;
+import com.ichi2.anki.dialogs.ExportDialog.ExportDialogListener;
 import com.ichi2.async.CollectionTask;
 import com.ichi2.async.TaskListenerWithContext;
 import com.ichi2.async.TaskManager;
@@ -44,23 +47,28 @@ import java.io.FileOutputStream;
 import androidx.annotation.NonNull;
 import androidx.core.app.ShareCompat;
 import androidx.core.content.FileProvider;
+import androidx.fragment.app.FragmentFactory;
+import androidx.fragment.app.FragmentManager;
 import timber.log.Timber;
 
 /**
  * A delegate class used in any {@link AnkiActivity} where the exporting feature is required.
- * <p>
- * The calling activity must implement {@link ExportCompleteDialogListener} and can then forward any call the the exporting delegate
  */
-public class ActivityExportingDelegate <A extends AnkiActivity & ExportCompleteDialogListener> {
+public class ActivityExportingDelegate <A extends AnkiActivity> implements ExportDialogListener, ExportCompleteDialogListener {
+
 
     private final A mActivity;
     private final Supplier<Collection> mCollectionSupplier;
     private final int mPickExportFileCallbackCode;
+    private final ExportDialogsFactory mDialogsFactory;
 
     private String mExportFileName;
 
 
     /**
+     * Must be constructed before calling {@link AnkiActivity#onCreate(Bundle, PersistableBundle)}, this is to fragment
+     * factory {@link #mDialogsFactory} is set correctly.
+     *
      * @param activity the calling activity (must implement {@link ExportCompleteDialogListener})
      * @param collectionSupplier a predicate that supplies a collection instance
      * @param mPickExportFileCallbackCode the code that will be used on onActivityResult
@@ -69,9 +77,22 @@ public class ActivityExportingDelegate <A extends AnkiActivity & ExportCompleteD
         mActivity = activity;
         this.mCollectionSupplier = collectionSupplier;
         this.mPickExportFileCallbackCode = mPickExportFileCallbackCode;
+        final FragmentManager fragmentManager = activity.getSupportFragmentManager();
+        mDialogsFactory = new ExportDialogsFactory(this, this).attachToActivity(activity);
+        fragmentManager.setFragmentFactory(mDialogsFactory);
     }
 
 
+    public void showExportDialog(String msg) {
+        mActivity.showDialogFragment(mDialogsFactory.newExportDialog().withArguments(msg));
+    }
+
+
+    public void showExportDialog(String msg, long did) {
+        mActivity.showDialogFragment(mDialogsFactory.newExportDialog().withArguments(msg, did));
+    }
+
+    @Override
     public void exportApkg(String filename, Long did, boolean includeSched, boolean includeMedia) {
         File exportDir = new File(mActivity.getExternalCacheDir(), "export");
         exportDir.mkdirs();
@@ -92,11 +113,18 @@ public class ActivityExportingDelegate <A extends AnkiActivity & ExportCompleteD
             String newFileName = colPath.getName().replace(".anki2", timeStampSuffix + ".colpkg");
             exportPath = new File(exportDir, newFileName);
         }
-        final ExportListener exportListener = new ExportListener<>(mActivity);
+        final ExportListener exportListener = new ExportListener<>(mActivity, mDialogsFactory);
         TaskManager.launchCollectionTask(new CollectionTask.ExportApkg(exportPath.getPath(), did, includeSched, includeMedia), exportListener);
     }
 
 
+    @Override
+    public void dismissAllDialogFragments() {
+        mActivity.dismissAllDialogFragments();
+    }
+
+
+    @Override
     public void emailFile(String path) {
         // Make sure the file actually exists
         File attachment = new File(path);
@@ -130,6 +158,7 @@ public class ActivityExportingDelegate <A extends AnkiActivity & ExportCompleteD
     }
 
 
+    @Override
     public void saveExportFile(String path) {
         // Make sure the file actually exists
         File attachment = new File(path);
@@ -184,12 +213,15 @@ public class ActivityExportingDelegate <A extends AnkiActivity & ExportCompleteD
     }
 
 
-    private static class ExportListener<A extends AnkiActivity & ExportCompleteDialogListener>  extends TaskListenerWithContext<A, Void, Pair<Boolean, String>> {
+    private static class ExportListener<A extends AnkiActivity>  extends TaskListenerWithContext<A, Void, Pair<Boolean, String>> {
+        private final ExportDialogsFactory mDialogsFactory;
+
         private MaterialDialog mProgressDialog;
 
 
-        public ExportListener(A activity) {
+        public ExportListener(A activity, ExportDialogsFactory dialogsFactory) {
             super(activity);
+            this.mDialogsFactory = dialogsFactory;
         }
 
 
@@ -215,7 +247,8 @@ public class ActivityExportingDelegate <A extends AnkiActivity & ExportCompleteD
                 Timber.i("Export successful");
                 String exportPath = result.second;
                 if (exportPath != null) {
-                    activity.showAsyncDialogFragment(ExportCompleteDialog.newInstance(exportPath));
+                    final ExportCompleteDialog dialog = mDialogsFactory.newExportCompleteDialog().withArguments(exportPath);
+                    activity.showAsyncDialogFragment(dialog);
                 } else {
                     UIUtils.showThemedToast(activity, activity.getResources().getString(R.string.export_unsuccessful), true);
                 }
