@@ -327,7 +327,6 @@ public class DeckOptions extends AppCompatPreferenceActivity implements OnShared
                                 break;
                             case "desc":
                                 mDeckCopy.put("desc", value);
-                                mCol.getDecks().save(mDeckCopy);
                                 break;
                             case "newSteps":
                                 mOptionsCopy.getJSONObject("new").put("delays", StepsPreference.convertToJSON((String) value));
@@ -473,16 +472,6 @@ public class DeckOptions extends AppCompatPreferenceActivity implements OnShared
                     }
                 } catch (JSONException e) {
                     throw new RuntimeException(e);
-                }
-
-                // save conf
-                try {
-                    mCol.getDecks().save(mOptionsCopy);
-                } catch (RuntimeException e) {
-                    Timber.e(e, "DeckOptions - RuntimeException on saving conf");
-                    AnkiDroidApp.sendExceptionReport(e, "DeckOptionsSaveConf");
-                    setResult(DeckPicker.RESULT_DB_ERROR);
-                    finish();
                 }
 
                 // make sure we refresh the parent cached values
