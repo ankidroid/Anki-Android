@@ -823,16 +823,16 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
      *
      * @param txt The field text with the clozes
      * @param idx The index of the cloze to use
-     * @return A string with a comma-separeted list of unique cloze strings with the correct index.
+     * @return If the cloze strings are the same, return a single cloze string, otherwise, return
+     *         a string with a comma-separeted list of strings with the correct index.
      */
-
-    private String contentForCloze(String txt, int idx) {
+    @VisibleForTesting
+    protected String contentForCloze(String txt, int idx) {
         @SuppressWarnings("RegExpRedundantEscape") // In Android, } should be escaped
         Pattern re = Pattern.compile("\\{\\{c" + idx + "::(.+?)\\}\\}");
         Matcher m = re.matcher(txt);
-        Set<String> matches = new LinkedHashSet<>(); // Size can't be known in advance
-        // LinkedHashSet: make entries appear only once, like Anki desktop (see also issue #2208), and keep the order
-        // they appear in.
+        List<String> matches = new ArrayList<>();
+
         String groupOne;
         int colonColonIndex = -1;
         while (m.find()) {
@@ -844,15 +844,15 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
             }
             matches.add(groupOne);
         }
-        // Now do what the pythonic ", ".join(matches) does in a tricky way
-        String prefix = "";
-        StringBuilder resultBuilder = new StringBuilder();
-        for (String match : matches) {
-            resultBuilder.append(prefix);
-            resultBuilder.append(match);
-            prefix = ", ";
+
+        Set<String> uniqMatches = new HashSet<>(matches); // Allow to check whether there are distinct strings
+
+        // Make it consistent with the Desktop version (see issue #8229)
+        if (uniqMatches.size() == 1) {
+            return matches.get(0);
+        } else {
+            return TextUtils.join(", ", matches);
         }
-        return resultBuilder.toString();
     }
 
     private final Handler mTimerHandler = new Handler();
