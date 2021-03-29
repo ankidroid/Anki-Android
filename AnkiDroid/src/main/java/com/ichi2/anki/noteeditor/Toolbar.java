@@ -21,12 +21,14 @@ import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Color;
+import android.graphics.ColorFilter;
 import android.graphics.Paint;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.util.AttributeSet;
 import android.util.DisplayMetrics;
+import android.util.Log;
 import android.util.TypedValue;
 import android.view.ContextThemeWrapper;
 import android.view.Gravity;
@@ -35,6 +37,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 
 import com.afollestad.materialdialogs.MaterialDialog;
@@ -45,6 +48,7 @@ import com.ichi2.utils.ViewGroupUtils;
 import java.util.ArrayList;
 import java.util.List;
 
+import androidx.annotation.ColorInt;
 import androidx.annotation.DrawableRes;
 import androidx.annotation.IdRes;
 import androidx.annotation.NonNull;
@@ -307,6 +311,13 @@ public class Toolbar extends FrameLayout {
         mFormatCallback.performFormat(formatter);
     }
 
+    public void setIconColor(@ColorInt int color) {
+        for(int i=0 ; i<this.mToolbar.getChildCount() ; ++i){
+            AppCompatImageButton button = (AppCompatImageButton) this.mToolbar.getChildAt(i);
+            button.setColorFilter(color);
+        }
+        mStringPaint.setColor(color);
+    }
 
     public interface TextFormatListener {
         void performFormat(TextFormatter formatter);
