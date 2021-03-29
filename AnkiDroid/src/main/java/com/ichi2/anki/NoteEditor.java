@@ -271,7 +271,7 @@ public class NoteEditor extends AnkiActivity implements
     private void displayDeckOverrideDialog(Collection col) {
         FunctionalInterfaces.Filter<Deck> nonDynamic = (d) -> !Decks.isDynamic(d);
         List<DeckSelectionDialog.SelectableDeck> decks = DeckSelectionDialog.SelectableDeck.fromCollection(col, nonDynamic);
-        DeckSelectionDialog dialog = DeckSelectionDialog.newInstance("Deck Search", null, decks);
+        DeckSelectionDialog dialog = DeckSelectionDialog.newInstance("Deck Search", null, false, decks);
         AnkiActivity.showDialogFragment(NoteEditor.this, dialog);
     }
 

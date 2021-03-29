@@ -59,11 +59,12 @@ public class DeckSelectionDialog extends AnalyticsDialogFragment {
      * A dialog which handles selecting a deck
      */
     @NonNull
-    public static DeckSelectionDialog newInstance(@NonNull String title, @Nullable String summaryMessage, @NonNull List<SelectableDeck> decks) {
+    public static DeckSelectionDialog newInstance(@NonNull String title, @Nullable String summaryMessage, @NonNull boolean keepRestoreDefaultButton, @NonNull List<SelectableDeck> decks) {
         DeckSelectionDialog f = new DeckSelectionDialog();
         Bundle args = new Bundle();
         args.putString("summaryMessage", summaryMessage);
         args.putString("title", title);
+        args.putBoolean("keepRestoreDefaultButton", keepRestoreDefaultButton);
         args.putParcelableArrayList("deckNames", new ArrayList<>(decks));
         f.setArguments(args);
         return f;
@@ -111,12 +112,23 @@ public class DeckSelectionDialog extends AnalyticsDialogFragment {
 
         adjustToolbar(dialogView, adapter);
 
-        MaterialDialog.Builder builder = new MaterialDialog.Builder(requireActivity())
-                .neutralText(R.string.dialog_cancel)
-                .customView(dialogView, false)
-                .onNegative((dialog, which) -> onDeckSelected(null))
-                .onNeutral((dialog, which) -> { });
-
+        MaterialDialog.Builder builder;
+        if (arguments.getBoolean("keepRestoreDefaultButton")) {
+            builder = new MaterialDialog.Builder(requireActivity())
+                    .neutralText(R.string.dialog_cancel)
+                    .negativeText(R.string.restore_default)
+                    .customView(dialogView, false)
+                    .onNegative((dialog, which) -> onDeckSelected(null))
+                    .onNeutral((dialog, which) -> {
+                    });
+        } else {
+            builder = new MaterialDialog.Builder(requireActivity())
+                    .neutralText(R.string.dialog_cancel)
+                    .customView(dialogView, false)
+                    .onNegative((dialog, which) -> onDeckSelected(null))
+                    .onNeutral((dialog, which) -> {
+                    });
+        }
         mDialog = builder.build();
         return mDialog;
     }
