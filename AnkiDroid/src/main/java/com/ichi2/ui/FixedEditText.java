@@ -137,6 +137,9 @@ public class FixedEditText extends AppCompatEditText {
         }
     }
 
+    /*
+     * Focuses the edit text and opens the soft keyboard.
+     */
     public void focus(){
         this.postDelayed(() -> {
             this.requestFocus();
