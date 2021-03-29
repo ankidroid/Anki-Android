@@ -81,7 +81,6 @@ import android.webkit.WebView.HitTestResult;
 import android.webkit.WebViewClient;
 import android.widget.Button;
 import android.widget.Chronometer;
-import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -1760,7 +1759,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
         // This does not handle mUseInputTag (the WebView contains an input field with a typable answer).
         // In this case, the user can use touch to focus the field if necessary.
         if (typeAnswer()) {
-            mAnswerField.focus();
+            mAnswerField.focusWithKeyboard();
         } else {
             mFlipCardLayout.requestFocus();
         }
