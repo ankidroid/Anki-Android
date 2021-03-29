@@ -53,7 +53,7 @@ public class BackupManager {
 
 
     /** Number of hours after which a backup new backup is created */
-    private static final int BACKUP_INTERVAL = 5;
+    private static final int BACKUP_INTERVAL = 24;
 
 
     /* Prevent class from being instantiated */

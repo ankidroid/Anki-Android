@@ -209,6 +209,8 @@ apply from: "./jacoco.gradle"
 apply from: "../lint.gradle"
 
 dependencies {
+    implementation 'androidx.coordinatorlayout:coordinatorlayout:1.1.0'
+
     // Can possibly remove if upstream PR merges https://github.com/JakeWharton/timber/pull/398
     configurations.all {
         resolutionStrategy {
