@@ -143,6 +143,8 @@ import com.ichi2.widget.WidgetStatus;
 
 import com.ichi2.utils.JSONException;
 
+import org.jetbrains.annotations.NotNull;
+
 import java.io.File;
 import java.io.FileOutputStream;
 import java.util.List;
@@ -1395,15 +1397,14 @@ public class DeckPicker extends NavigationDrawerActivity implements
         }
     }
 
-    private UndoTaskListener undoTaskListener(boolean isReview) {
-        return new UndoTaskListener(isReview, this);
+    private UndoTaskListener undoTaskListener() {
+        return new UndoTaskListener(this);
     }
     private static class UndoTaskListener extends TaskListenerWithContext<DeckPicker, Card, BooleanGetter> {
-        private final boolean mIsreview;
+        Card mUndoneCard;
 
-        public UndoTaskListener(boolean isReview, DeckPicker deckPicker) {
+        public UndoTaskListener(DeckPicker deckPicker) {
             super(deckPicker);
-            this.mIsreview = isReview;
         }
 
 
@@ -1420,10 +1421,16 @@ public class DeckPicker extends NavigationDrawerActivity implements
 
 
         @Override
+        public void actualOnProgressUpdate(@NonNull @NotNull DeckPicker deckPicker, Card value) {
+            mUndoneCard = value;
+        }
+
+
+        @Override
         public void actualOnPostExecute(@NonNull DeckPicker deckPicker, BooleanGetter voi) {
             deckPicker.hideProgressBar();
             Timber.i("Undo completed");
-            if (mIsreview) {
+            if ((voi.getBoolean()) && (mUndoneCard != null)) {
                 Timber.i("Review undone - opening reviewer.");
                 deckPicker.openReviewer();
             }
@@ -1431,9 +1438,7 @@ public class DeckPicker extends NavigationDrawerActivity implements
     }
     private void undo() {
         Timber.i("undo()");
-        String undoReviewString = getResources().getString(R.string.undo_action_review);
-        final boolean isReview = undoReviewString.equals(getCol().undoName(getResources()));
-        TaskManager.launchCollectionTask(new CollectionTask.Undo(), undoTaskListener(isReview));
+        TaskManager.launchCollectionTask(new CollectionTask.Undo(), undoTaskListener());
     }
 
 
