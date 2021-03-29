@@ -1759,7 +1759,12 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
         // This does not handle mUseInputTag (the WebView contains an input field with a typable answer).
         // In this case, the user can use touch to focus the field if necessary.
         if (typeAnswer()) {
-            mAnswerField.requestFocus();
+            // Required on some devices to show soft keyboard (Android 10 in my case): https://stackoverflow.com/a/7784904
+            mAnswerField.postDelayed(() -> {
+                mAnswerField.requestFocus();
+                InputMethodManager imm = (InputMethodManager) this.getSystemService(Context.INPUT_METHOD_SERVICE);
+                imm.showSoftInput(mAnswerField, InputMethodManager.SHOW_IMPLICIT);
+            }, 200);
         } else {
             mFlipCardLayout.requestFocus();
         }
