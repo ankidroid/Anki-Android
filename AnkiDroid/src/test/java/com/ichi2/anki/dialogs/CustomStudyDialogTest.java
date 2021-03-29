@@ -78,7 +78,7 @@ public class CustomStudyDialogTest extends RobolectricTest {
     @Config(qualifiers = "en")
     public void increaseNewCardLimitRegressionTest(){
         // #8338 - Regression Test
-        CustomStudyDialog standard = CustomStudyDialog.newInstance(CustomStudyDialog.CONTEXT_MENU_STANDARD,2);
+        CustomStudyDialog standard = CustomStudyDialog.newInstance(CustomStudyDialog.CONTEXT_MENU_STANDARD,1);
 
         FragmentScenario<CustomStudyDialogForTesting> scenarioStandard = getDialogScenario(standard);
 
