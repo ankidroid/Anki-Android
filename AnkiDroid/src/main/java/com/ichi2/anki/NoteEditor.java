@@ -52,6 +52,7 @@ import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewGroup.MarginLayoutParams;
@@ -68,6 +69,7 @@ import android.widget.TextView;
 
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.ichi2.anki.dialogs.ConfirmationDialog;
+import com.ichi2.anki.dialogs.DeckSelectionDialog;
 import com.ichi2.anki.dialogs.DiscardChangesDialog;
 import com.ichi2.anki.dialogs.IntegerDialog;
 import com.ichi2.anki.dialogs.LocaleSelectionDialog;
@@ -94,6 +96,7 @@ import com.ichi2.async.TaskManager;
 import com.ichi2.compat.CompatHelper;
 import com.ichi2.libanki.Card;
 import com.ichi2.libanki.Collection;
+import com.ichi2.libanki.Decks;
 import com.ichi2.libanki.Models;
 import com.ichi2.libanki.Model;
 import com.ichi2.libanki.Note;
@@ -107,6 +110,7 @@ import com.ichi2.utils.AdaptionUtil;
 import com.ichi2.utils.ContentResolverUtil;
 import com.ichi2.utils.DeckComparator;
 import com.ichi2.utils.FileUtil;
+import com.ichi2.utils.FunctionalInterfaces;
 import com.ichi2.utils.FunctionalInterfaces.Consumer;
 import com.ichi2.utils.KeyUtils;
 import com.ichi2.utils.MapUtil;
@@ -150,6 +154,7 @@ import static com.ichi2.libanki.Models.NOT_FOUND_NOTE_TYPE;
  * @see <a href="http://ankisrs.net/docs/manual.html#cards">the Anki Desktop manual</a>
  */
 public class NoteEditor extends AnkiActivity implements
+        DeckSelectionDialog.DeckSelectionListener,
         TagsDialog.TagsDialogListener {
     // DA 2020-04-13 - Refactoring Plans once tested:
     // * There is a difference in functionality depending on whether we are editing
@@ -252,6 +257,22 @@ public class NoteEditor extends AnkiActivity implements
 
     private SaveNoteHandler saveNoteHandler() {
         return new SaveNoteHandler(this);
+    }
+
+
+    @Override
+    public void onDeckSelected(@Nullable DeckSelectionDialog.SelectableDeck deck) {
+        if (deck != null) {
+            mCurrentDid = deck.getDeckId();
+            mNoteDeckSpinner.setSelection(mAllDeckIds.indexOf(deck.getDeckId()), false);
+        }
+    }
+
+    private void displayDeckOverrideDialog(Collection col) {
+        FunctionalInterfaces.Filter<Deck> nonDynamic = (d) -> !Decks.isDynamic(d);
+        List<DeckSelectionDialog.SelectableDeck> decks = DeckSelectionDialog.SelectableDeck.fromCollection(col, nonDynamic);
+        DeckSelectionDialog dialog = DeckSelectionDialog.newInstance("Deck Search", null, decks);
+        AnkiActivity.showDialogFragment(NoteEditor.this, dialog);
     }
 
     private enum AddClozeType {
@@ -626,19 +647,15 @@ public class NoteEditor extends AnkiActivity implements
         };
         mNoteDeckSpinner.setAdapter(noteDeckAdapter);
         noteDeckAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        mNoteDeckSpinner.setOnItemSelectedListener(new OnItemSelectedListener() {
+        mNoteDeckSpinner.setOnTouchListener(new View.OnTouchListener() {
 
-            @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int pos, long id) {
-                // Timber.i("NoteEditor:: onItemSelected() fired on mNoteDeckSpinner with pos = %d", pos);
-                mCurrentDid = mAllDeckIds.get(pos);
-            }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> parent) {
-                // Do Nothing
-            }
-        });
+                public boolean onTouch(View view, MotionEvent motionEvent) {
+                    if (motionEvent.getAction() == MotionEvent.ACTION_UP) {
+                        displayDeckOverrideDialog(getCol());
+                    }
+                    return true;
+                }
+            });
 
         mCurrentDid = intent.getLongExtra(EXTRA_DID, mCurrentDid);
         String mGetTextFromSearchView = intent.getStringExtra(EXTRA_TEXT_FROM_SEARCH_VIEW);
@@ -770,7 +787,7 @@ public class NoteEditor extends AnkiActivity implements
             case KeyEvent.KEYCODE_D:
                 //null check in case Spinner is moved into options menu in the future
                 if (event.isCtrlPressed() && (mNoteDeckSpinner != null)) {
-                        mNoteDeckSpinner.performClick();
+                    displayDeckOverrideDialog(getCol());
                 }
                 break;
 
