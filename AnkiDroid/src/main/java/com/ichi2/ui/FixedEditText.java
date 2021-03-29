@@ -42,6 +42,7 @@ import android.content.Context;
 import android.graphics.Canvas;
 import android.util.AttributeSet;
 import android.view.MotionEvent;
+import android.view.inputmethod.InputMethodManager;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -134,5 +135,13 @@ public class FixedEditText extends AppCompatEditText {
             Timber.w(ex);
             return false;
         }
+    }
+
+    public void focus(){
+        this.postDelayed(() -> {
+            this.requestFocus();
+            InputMethodManager imm = (InputMethodManager) getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
+            imm.showSoftInput(this, InputMethodManager.SHOW_IMPLICIT);
+        }, 200);
     }
 }

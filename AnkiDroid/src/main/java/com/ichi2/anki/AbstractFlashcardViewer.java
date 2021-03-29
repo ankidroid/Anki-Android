@@ -121,6 +121,7 @@ import com.ichi2.libanki.template.MathJax;
 import com.ichi2.libanki.template.TemplateFilters;
 import com.ichi2.themes.HtmlColors;
 import com.ichi2.themes.Themes;
+import com.ichi2.ui.FixedEditText;
 import com.ichi2.utils.AdaptionUtil;
 import com.ichi2.utils.AndroidUiUtils;
 import com.ichi2.utils.AssetHelper;
@@ -289,7 +290,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
     protected TextView mNext2;
     protected TextView mNext3;
     protected TextView mNext4;
-    protected EditText mAnswerField;
+    protected FixedEditText mAnswerField;
     protected TextView mEase1;
     protected TextView mEase2;
     protected TextView mEase3;
@@ -1759,12 +1760,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
         // This does not handle mUseInputTag (the WebView contains an input field with a typable answer).
         // In this case, the user can use touch to focus the field if necessary.
         if (typeAnswer()) {
-            // Required on some devices to show soft keyboard (Android 10 in my case): https://stackoverflow.com/a/7784904
-            mAnswerField.postDelayed(() -> {
-                mAnswerField.requestFocus();
-                InputMethodManager imm = (InputMethodManager) this.getSystemService(Context.INPUT_METHOD_SERVICE);
-                imm.showSoftInput(mAnswerField, InputMethodManager.SHOW_IMPLICIT);
-            }, 200);
+            mAnswerField.focus();
         } else {
             mFlipCardLayout.requestFocus();
         }

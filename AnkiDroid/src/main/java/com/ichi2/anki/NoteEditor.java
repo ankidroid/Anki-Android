@@ -298,13 +298,7 @@ public class NoteEditor extends AnkiActivity implements
                 mIntent = new Intent();
                 mIntent.putExtra(EXTRA_ID, noteEditor.getIntent().getStringExtra(EXTRA_ID));
             } else if (!noteEditor.mEditFields.isEmpty()) {
-                FieldEditText firstEditField = noteEditor.mEditFields.getFirst();
-                // Required on my Android 9 Phone to show keyboard: https://stackoverflow.com/a/7784904
-                firstEditField.postDelayed(() -> {
-                    firstEditField.requestFocus();
-                    InputMethodManager imm = (InputMethodManager) noteEditor.getSystemService(Context.INPUT_METHOD_SERVICE);
-                    imm.showSoftInput(firstEditField, InputMethodManager.SHOW_IMPLICIT);
-                }, 200);
+                noteEditor.mEditFields.getFirst().focus();
             }
             if (!mCloseAfter && (noteEditor.mProgressDialog != null) && noteEditor.mProgressDialog.isShowing()) {
                 try {
