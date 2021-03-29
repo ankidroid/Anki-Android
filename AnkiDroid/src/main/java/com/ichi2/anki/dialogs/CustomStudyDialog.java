@@ -342,60 +342,42 @@ public class CustomStudyDialog extends AnalyticsDialogFragment {
      */
     private int[] getListIds(int dialogId) {
         Collection col = getAnkiActivity().getCol();
-
-        ArrayList<Integer> dialogOptions= new ArrayList<Integer>(){
-            {
-                add(CUSTOM_STUDY_NEW);
-                add(CUSTOM_STUDY_REV);
-                add(CUSTOM_STUDY_FORGOT);
-                add(CUSTOM_STUDY_AHEAD);
-                add(CUSTOM_STUDY_RANDOM);
-                add(CUSTOM_STUDY_PREVIEW);
-                add(CUSTOM_STUDY_TAGS);
-                add(DECK_OPTIONS);
-                add(MORE_OPTIONS);
-            }
-        };
-
         switch (dialogId) {
             case CONTEXT_MENU_STANDARD:
                 // Standard context menu
-                dialogOptions.remove(Integer.valueOf(DECK_OPTIONS));
-                dialogOptions.remove(Integer.valueOf(MORE_OPTIONS));
+                ArrayList<Integer> dialogOptions = new ArrayList<Integer>(){{
+                    add(CUSTOM_STUDY_NEW);
+                    add(CUSTOM_STUDY_REV);
+                    add(CUSTOM_STUDY_FORGOT);
+                    add(CUSTOM_STUDY_AHEAD);
+                    add(CUSTOM_STUDY_RANDOM);
+                    add(CUSTOM_STUDY_PREVIEW);
+                    add(CUSTOM_STUDY_TAGS);
+                }};
                 if (col.getSched().newCount() == 0) {
                     // If no new cards we wont show CUSTOM_STUDY_NEW
                     dialogOptions.remove(Integer.valueOf(CUSTOM_STUDY_NEW));
                 }
-                break;
+                return ContextMenuHelper.integerListToArray(dialogOptions);
             case CONTEXT_MENU_LIMITS:
                 // Special custom study options to show when the daily study limit has been reached
-                dialogOptions.remove(Integer.valueOf(CUSTOM_STUDY_FORGOT));
-                dialogOptions.remove(Integer.valueOf(CUSTOM_STUDY_AHEAD));
-                dialogOptions.remove(Integer.valueOf(CUSTOM_STUDY_RANDOM));
-                dialogOptions.remove(Integer.valueOf(CUSTOM_STUDY_PREVIEW));
-                dialogOptions.remove(Integer.valueOf(CUSTOM_STUDY_TAGS));
-                if (!col.getSched().newDue()) {
-                    dialogOptions.remove(Integer.valueOf(CUSTOM_STUDY_NEW));
-                } else if(!col.getSched().revDue()) {
-                    dialogOptions.remove(Integer.valueOf(CUSTOM_STUDY_REV));
+                if (col.getSched().newDue() && col.getSched().revDue()) {
+                    return new int[] {CUSTOM_STUDY_NEW, CUSTOM_STUDY_REV, DECK_OPTIONS, MORE_OPTIONS};
+                } else {
+                    if (col.getSched().newDue()) {
+                        return new int[]{CUSTOM_STUDY_NEW, DECK_OPTIONS, MORE_OPTIONS};
+                    } else {
+                        return new int[]{CUSTOM_STUDY_REV, DECK_OPTIONS, MORE_OPTIONS};
+                    }
                 }
-                break;
             case CONTEXT_MENU_EMPTY_SCHEDULE:
                 // Special custom study options to show when extending the daily study limits is not applicable
-                dialogOptions.remove(Integer.valueOf(CUSTOM_STUDY_NEW));
-                dialogOptions.remove(Integer.valueOf(CUSTOM_STUDY_REV));
-                dialogOptions.remove(Integer.valueOf(MORE_OPTIONS));
-                break;
+                return new int[] {CUSTOM_STUDY_FORGOT, CUSTOM_STUDY_AHEAD, CUSTOM_STUDY_RANDOM,
+                        CUSTOM_STUDY_PREVIEW, CUSTOM_STUDY_TAGS, DECK_OPTIONS};
             default:
-                dialogOptions.clear();
                 break;
         }
-        int [] list = new int[dialogOptions.size()];
-        for (int i=0; i< dialogOptions.size(); i++) {
-            list[i] = dialogOptions.get(i);
-        }
-
-        return list;
+        return null;
     }
 
 
