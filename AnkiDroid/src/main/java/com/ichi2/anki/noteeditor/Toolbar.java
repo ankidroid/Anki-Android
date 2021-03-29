@@ -312,7 +312,7 @@ public class Toolbar extends FrameLayout {
     }
 
     public void setIconColor(@ColorInt int color) {
-        for(int i=0 ; i<this.mToolbar.getChildCount() ; ++i){
+        for (int i=0; i < this.mToolbar.getChildCount(); i++) {
             AppCompatImageButton button = (AppCompatImageButton) this.mToolbar.getChildAt(i);
             button.setColorFilter(color);
         }
