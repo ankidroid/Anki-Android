@@ -22,6 +22,7 @@ import com.afollestad.materialdialogs.DialogAction;
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.ichi2.anki.AnkiActivity;
 import com.ichi2.anki.CardTemplateBrowserAppearanceEditor;
+import com.ichi2.anki.R;
 import com.ichi2.anki.RobolectricTest;
 import com.ichi2.anki.dialogs.CustomStudyDialog.CustomStudyListener;
 import com.ichi2.libanki.Deck;
@@ -30,6 +31,7 @@ import com.ichi2.utils.JSONObject;
 import org.hamcrest.Matchers;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.robolectric.annotation.Config;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.testing.FragmentScenario;
@@ -70,9 +72,11 @@ public class CustomStudyDialogTest extends RobolectricTest {
         String expected = "{\"newToday\":[0,0],\"revToday\":[0,0],\"lrnToday\":[0,0],\"timeToday\":[0,0],\"collapsed\":false,\"dyn\":1,\"desc\":\"\",\"usn\":-1,\"delays\":null,\"separate\":true,\"terms\":[[\"deck:\\\"Default\\\" prop:due<=1\",99999,6]],\"resched\":true,\"return\":true}";
         assertThat(customStudy.toString(), is(expected));
     }
-    
-    
-    @Test 
+
+
+
+    @Test
+    @Config(qualifiers = "en")
     public void increaseNewCardLimitRegressionTest(){
         // #8338 - Regression Test
         CustomStudyDialog standard = CustomStudyDialog.newInstance(CustomStudyDialog.CONTEXT_MENU_STANDARD,2);
@@ -82,7 +86,7 @@ public class CustomStudyDialogTest extends RobolectricTest {
         scenarioStandard.onFragment(f ->{
             MaterialDialog dialog = (MaterialDialog)f.getDialog();
             assertThat(dialog,notNullValue());
-            assertThat(dialog.getItems(), Matchers.not(Matchers.hasItem("Modify today’s new card limit")));
+            assertThat(dialog.getItems(), Matchers.not(Matchers.hasItem(getResourceString(R.string.custom_study_increase_new_limit))));
         });
 
     }
