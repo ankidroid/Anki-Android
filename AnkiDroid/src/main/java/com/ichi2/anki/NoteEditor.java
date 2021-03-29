@@ -27,7 +27,6 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.content.res.Resources;
-import android.graphics.Color;
 import android.graphics.Typeface;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
@@ -56,7 +55,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewGroup.MarginLayoutParams;
 import android.view.WindowManager;
-import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemSelectedListener;
 import android.widget.ArrayAdapter;
@@ -298,13 +296,7 @@ public class NoteEditor extends AnkiActivity implements
                 mIntent = new Intent();
                 mIntent.putExtra(EXTRA_ID, noteEditor.getIntent().getStringExtra(EXTRA_ID));
             } else if (!noteEditor.mEditFields.isEmpty()) {
-                FieldEditText firstEditField = noteEditor.mEditFields.getFirst();
-                // Required on my Android 9 Phone to show keyboard: https://stackoverflow.com/a/7784904
-                firstEditField.postDelayed(() -> {
-                    firstEditField.requestFocus();
-                    InputMethodManager imm = (InputMethodManager) noteEditor.getSystemService(Context.INPUT_METHOD_SERVICE);
-                    imm.showSoftInput(firstEditField, InputMethodManager.SHOW_IMPLICIT);
-                }, 200);
+                noteEditor.mEditFields.getFirst().focusWithKeyboard();
             }
             if (!mCloseAfter && (noteEditor.mProgressDialog != null) && noteEditor.mProgressDialog.isShowing()) {
                 try {
