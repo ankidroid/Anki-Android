@@ -117,7 +117,7 @@ public class DeckSelectionDialog extends AnalyticsDialogFragment {
                 .customView(dialogView, false)
                 .onNegative((dialog, which) -> onDeckSelected(null))
                 .onNeutral((dialog, which) -> {
-                });;
+                });
         if (arguments.getBoolean("keepRestoreDefaultButton")) {
             builder = builder.negativeText(R.string.restore_default).onNegative((dialog, which) -> onDeckSelected(null));
         }
