@@ -82,6 +82,8 @@ public class CustomStudyDialogTest extends RobolectricTest {
 
         FragmentScenario<CustomStudyDialogForTesting> scenarioStandard = getDialogScenario(standard);
 
+        scenarioStandard.moveToState(Lifecycle.State.STARTED);
+
         scenarioStandard.onFragment(f ->{
             MaterialDialog dialog = (MaterialDialog)f.getDialog();
             assertThat(dialog,notNullValue());
