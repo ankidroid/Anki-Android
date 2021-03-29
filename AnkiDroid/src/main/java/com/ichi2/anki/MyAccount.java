@@ -331,14 +331,14 @@ public class MyAccount extends AnkiActivity {
 
     public void checkOrientation(int orientation) {
         if ((orientation == OrientationEventListener.ORIENTATION_UNKNOWN)
-                || isPhone() && (orientation == ROTATED_RIGHT || orientation == ROTATED_LEFT)) {
+                || isNotTablet() && (ROTATED_RIGHT <= orientation && orientation <= ROTATED_LEFT)) {
             mAnkidroidLogo.setVisibility(View.GONE);
         } else {
             mAnkidroidLogo.setVisibility(View.VISIBLE);
         }
     }
 
-    private boolean isPhone(){
+    private boolean isNotTablet(){
         Context context = this.getApplicationContext();
         return (context.getResources().getConfiguration().screenLayout
                 & Configuration.SCREENLAYOUT_SIZE_MASK)
