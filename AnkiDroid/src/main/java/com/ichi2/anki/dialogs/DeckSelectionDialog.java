@@ -115,7 +115,6 @@ public class DeckSelectionDialog extends AnalyticsDialogFragment {
         MaterialDialog.Builder builder = new MaterialDialog.Builder(requireActivity())
                 .neutralText(R.string.dialog_cancel)
                 .customView(dialogView, false)
-                .onNegative((dialog, which) -> onDeckSelected(null))
                 .onNeutral((dialog, which) -> {
                 });
         if (arguments.getBoolean("keepRestoreDefaultButton")) {
