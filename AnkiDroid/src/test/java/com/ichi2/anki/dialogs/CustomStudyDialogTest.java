@@ -74,7 +74,6 @@ public class CustomStudyDialogTest extends RobolectricTest {
     }
 
 
-
     @Test
     @Config(qualifiers = "en")
     public void increaseNewCardLimitRegressionTest(){
