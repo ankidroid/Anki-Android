@@ -112,16 +112,23 @@ public class DeckSelectionDialog extends AnalyticsDialogFragment {
 
         adjustToolbar(dialogView, adapter);
 
-        MaterialDialog.Builder builder = new MaterialDialog.Builder(requireActivity())
-                .neutralText(R.string.dialog_cancel)
-                .customView(dialogView, false)
-                .onNegative((dialog, which) -> onDeckSelected(null))
-                .onNeutral((dialog, which) -> {
-                });;
+        MaterialDialog.Builder builder;
         if (arguments.getBoolean("keepRestoreDefaultButton")) {
-            builder = builder.negativeText(R.string.restore_default).onNegative((dialog, which) -> onDeckSelected(null));
+            builder = new MaterialDialog.Builder(requireActivity())
+                    .neutralText(R.string.dialog_cancel)
+                    .negativeText(R.string.restore_default)
+                    .customView(dialogView, false)
+                    .onNegative((dialog, which) -> onDeckSelected(null))
+                    .onNeutral((dialog, which) -> {
+                    });
+        } else {
+            builder = new MaterialDialog.Builder(requireActivity())
+                    .neutralText(R.string.dialog_cancel)
+                    .customView(dialogView, false)
+                    .onNegative((dialog, which) -> onDeckSelected(null))
+                    .onNeutral((dialog, which) -> {
+                    });
         }
-
         mDialog = builder.build();
         return mDialog;
     }
