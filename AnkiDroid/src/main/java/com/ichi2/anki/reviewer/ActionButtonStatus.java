@@ -66,10 +66,13 @@ public class ActionButtonStatus {
         setupButton(preferences, R.id.action_toggle_whiteboard, "customButtonEnableWhiteboard", SHOW_AS_ACTION_NEVER);
         setupButton(preferences, R.id.action_save_whiteboard, "customButtonSaveWhiteboard", SHOW_AS_ACTION_NEVER);
         setupButton(preferences, R.id.action_change_whiteboard_pen_color, "customButtonWhiteboardPenColor", SHOW_AS_ACTION_IF_ROOM);
-        if(Lookup.isAvailable())
+        if(Lookup.isAvailable()){  //checks if Lookup Dictionary preference is enabled
             setupButton(preferences, R.id.action_search_dictionary, "customButtonSearchDictionary",SHOW_AS_ACTION_IF_ROOM);
-        else
+        }
+        else{
             setupButton(preferences, R.id.action_search_dictionary, "customButtonSearchDictionary",MENU_DISABLED);
+        }
+
     }
 
 
@@ -136,6 +139,4 @@ public class ActionButtonStatus {
     public boolean whiteboardPenColorIsDisabled() {
         return mCustomButtons.get(R.id.action_change_whiteboard_pen_color) == MENU_DISABLED;
     }
-
-
 }

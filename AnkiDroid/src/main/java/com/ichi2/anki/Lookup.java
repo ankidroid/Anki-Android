@@ -6,7 +6,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.net.Uri;
-import android.widget.Toast;
+
 
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.ichi2.anki.analytics.UsageAnalytics;
@@ -71,13 +71,11 @@ public class Lookup {
                 break;
         }
         Timber.v("Is intent available = %b", mIsDictionaryAvailable);
-
         return mIsDictionaryAvailable;
     }
 
 
     public static boolean lookUp(String text) {
-        Timber.d("Dictionary optioooon:"+String.valueOf(mIsDictionaryAvailable));
         if (!mIsDictionaryAvailable) {
             return false;
         }
