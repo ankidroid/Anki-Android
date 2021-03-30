@@ -199,7 +199,6 @@ public class FinderTest extends RobolectricTest {
         c.flush();
         assertEqualsArrayList((new Long[] {c.getId()}), col.findCards("is:due", singleCardByNoteFalse));
         assertEquals(4, col.findCards("-is:due", singleCardByNoteFalse).size());
-        assertEquals(3, col.findCards("-is:due", singleCardByNoteTrue).size());
         c.setQueue(QUEUE_TYPE_SUSPENDED);
         // ensure this card gets a later mod time
         c.flush();
@@ -208,7 +207,6 @@ public class FinderTest extends RobolectricTest {
         // nids
         assertEquals(0, col.findCards("nid:54321", singleCardByNoteFalse).size());
         assertEquals(2, col.findCards("nid:" + note.getId(), singleCardByNoteFalse).size());
-        assertEquals(1, col.findCards("nid:" + note.getId(), singleCardByNoteTrue).size());
         assertEquals(2, col.findCards("nid:" + n1id + "," + n2id, singleCardByNoteFalse).size());
         // templates
         assertEquals(0, col.findCards("card:foo", singleCardByNoteFalse).size());
@@ -224,7 +222,6 @@ public class FinderTest extends RobolectricTest {
         assertEquals(3, col.findCards("-back:sheep", singleCardByNoteFalse).size());
         assertEquals(0, col.findCards("front:do", singleCardByNoteFalse).size());
         assertEquals(5, col.findCards("front:*", singleCardByNoteFalse).size());
-        assertEquals(4, col.findCards("front:*", singleCardByNoteTrue).size());
         // ordering
         col.getConf().put("sortType", "noteCrt");
         col.flush();
@@ -253,17 +250,12 @@ public class FinderTest extends RobolectricTest {
         assertEquals(3, col.findCards("note:basic", singleCardByNoteFalse).size());
         assertEquals(2, col.findCards("-note:basic", singleCardByNoteFalse).size());
         assertEquals(5, col.findCards("-note:foo", singleCardByNoteFalse).size());
-        assertEquals(4, col.findCards("-note:foo", singleCardByNoteTrue).size());
         // col
         assertEquals(5, col.findCards("deck:default", singleCardByNoteFalse).size());
-        assertEquals(4, col.findCards("deck:default", singleCardByNoteTrue).size());
         assertEquals(0, col.findCards("-deck:default", singleCardByNoteFalse).size());
         assertEquals(5, col.findCards("-deck:foo", singleCardByNoteFalse).size());
-        assertEquals(4, col.findCards("-deck:foo", singleCardByNoteTrue).size());
         assertEquals(5, col.findCards("deck:def*", singleCardByNoteFalse).size());
-        assertEquals(4, col.findCards("deck:def*", singleCardByNoteTrue).size());
         assertEquals(5, col.findCards("deck:*EFAULT", singleCardByNoteFalse).size());
-        assertEquals(5, col.findCards("deck:*EFAULT", singleCardByNoteTrue).size());
         assertEquals(0, col.findCards("deck:*cefault", singleCardByNoteFalse).size());
         // full search
         note = col.newNote();
@@ -272,7 +264,6 @@ public class FinderTest extends RobolectricTest {
         col.addNote(note);
         // as it's the sort field, it matches
         assertEquals(2, col.findCards("helloworld", singleCardByNoteFalse).size());
-        assertEquals(1, col.findCards("helloworld", singleCardByNoteTrue).size());
         // assertEquals(, col.findCards("helloworld", full=true).size())2 This is commented upstream
         // if we put it on the back, it won't
         String note_front = note.getItem("Front");
