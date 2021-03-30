@@ -89,7 +89,7 @@ public class DeckPickerFloatingActionMenu {
                                     return;
                                 }
                             } else {
-                                Timber.i("configureFloatingActionsMenu::addDeckButton::onPositiveListener - Not creating invalid deck name '%s'", deckName);
+                                Timber.d("configureFloatingActionsMenu::addDeckButton::onPositiveListener - Not creating invalid deck name '%s'", deckName);
                                 UIUtils.showThemedToast(mDeckPicker, mDeckPicker.getString(R.string.invalid_deck_name), false);
                             }
                         })
