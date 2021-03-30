@@ -14,7 +14,7 @@
         android:layout_width="fill_parent"
         android:layout_height="wrap_content" >
 
-        <com.ichi2.ui.FixedEditText
+        <EditText
             android:id="@+id/etFeedbackText"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
