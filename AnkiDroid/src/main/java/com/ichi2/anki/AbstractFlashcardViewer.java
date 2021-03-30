@@ -148,7 +148,6 @@ import java.net.URLDecoder;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
-import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Set;
 import java.util.concurrent.locks.Lock;
@@ -1387,7 +1386,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
                 .onPositive((dialog, which) -> {
                     Timber.i("AbstractFlashcardViewer:: OK button pressed to delete note %d", mCurrentCard.getNid());
                     mSoundPlayer.stopSounds();
-                    dismiss(Collection.DismissType.DELETE_NOTE);
+                    dismiss(new CollectionTask.DeleteNote(mCurrentCard));
                 })
                 .build().show();
     }
@@ -2635,16 +2634,16 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
                 lookUpOrSelectText();
                 return true;
             case COMMAND_BURY_CARD:
-                dismiss(Collection.DismissType.BURY_CARD);
+                dismiss(new CollectionTask.BuryCard(mCurrentCard));
                 return true;
             case COMMAND_BURY_NOTE:
-                dismiss(Collection.DismissType.BURY_NOTE);
+                dismiss(new CollectionTask.BuryNote(mCurrentCard));
                 return true;
             case COMMAND_SUSPEND_CARD:
-                dismiss(Collection.DismissType.SUSPEND_CARD);
+                dismiss(new CollectionTask.SuspendCard(mCurrentCard));
                 return true;
             case COMMAND_SUSPEND_NOTE:
-                dismiss(Collection.DismissType.SUSPEND_NOTE);
+                dismiss(new CollectionTask.SuspendNote(mCurrentCard));
                 return true;
             case COMMAND_DELETE:
                 showDeleteNoteDialog();
@@ -3277,9 +3276,9 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
             } */
     }
 
-    protected void dismiss(Collection.DismissType type) {
+    protected void dismiss(CollectionTask.DismissNote dismiss) {
         blockControls(false);
-        TaskManager.launchCollectionTask(new CollectionTask.DismissNote(mCurrentCard, type), mDismissCardHandler);
+        TaskManager.launchCollectionTask(dismiss, mDismissCardHandler);
     }
 
     /** Signals from a WebView represent actions with no parameters */
