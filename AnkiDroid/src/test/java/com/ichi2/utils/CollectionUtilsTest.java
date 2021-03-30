@@ -22,6 +22,8 @@ import org.junit.Test;
 import java.util.ArrayList;
 import java.util.List;
 
+import static com.ichi2.testutils.AnkiAssert.assertEqualsArrayList;
+import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 
 public class CollectionUtilsTest {
@@ -34,13 +36,19 @@ public class CollectionUtilsTest {
 
     @Test
     public void testGetLastListElement() {
-        assertThat(CollectionUtils.getLastListElement(testList), Matchers.is(3));
+        assertThat(CollectionUtils.getLastListElement(testList), is(3));
+    }
+
+    @Test(expected = IndexOutOfBoundsException.class)
+    public void testGetLastOnEmptyList() {
+        List<Integer> emptyList = new ArrayList<>();
+        CollectionUtils.getLastListElement(emptyList);
     }
 
     @Test
     public void testAddAll() {
         List<Integer> toTest = new ArrayList<>();
         CollectionUtils.addAll(toTest, testList);
-        assertThat(toTest, Matchers.is(testList));
+        assertEqualsArrayList(new Integer [] {1, 2, 3}, toTest);
     }
 }
