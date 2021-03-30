@@ -105,7 +105,7 @@ public class DeckPickerFloatingActionMenu {
         });
 
         mAddNoteButton.setOnClickListener(addNoteButtonView -> {
-            Timber.i("Adding Note");
+            Timber.d("configureFloatingActionsMenu::addNoteButton::onClickListener - Adding Note");
             closeFloatingActionMenu();
             deckPicker.addNote();
         });
