@@ -1186,6 +1186,9 @@ public class Reviewer extends AbstractFlashcardViewer {
         mWhiteboard.setEnabled(true);
     }
 
+
+
+
     // Show or hide the whiteboard
     private void setWhiteboardVisibility(boolean state) {
         mShowWhiteboard = state;

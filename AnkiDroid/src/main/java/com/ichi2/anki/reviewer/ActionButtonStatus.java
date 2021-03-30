@@ -5,6 +5,7 @@ import android.graphics.drawable.Drawable;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import com.ichi2.anki.Lookup;
 import com.ichi2.anki.R;
 import com.ichi2.themes.Themes;
 
@@ -65,6 +66,10 @@ public class ActionButtonStatus {
         setupButton(preferences, R.id.action_toggle_whiteboard, "customButtonEnableWhiteboard", SHOW_AS_ACTION_NEVER);
         setupButton(preferences, R.id.action_save_whiteboard, "customButtonSaveWhiteboard", SHOW_AS_ACTION_NEVER);
         setupButton(preferences, R.id.action_change_whiteboard_pen_color, "customButtonWhiteboardPenColor", SHOW_AS_ACTION_IF_ROOM);
+        if(Lookup.isAvailable())
+            setupButton(preferences, R.id.action_search_dictionary, "customButtonSearchDictionary",SHOW_AS_ACTION_IF_ROOM);
+        else
+            setupButton(preferences, R.id.action_search_dictionary, "customButtonSearchDictionary",MENU_DISABLED);
     }
 
 
@@ -131,4 +136,6 @@ public class ActionButtonStatus {
     public boolean whiteboardPenColorIsDisabled() {
         return mCustomButtons.get(R.id.action_change_whiteboard_pen_color) == MENU_DISABLED;
     }
+
+
 }

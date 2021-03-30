@@ -102,6 +102,12 @@ TODO: Add a unit test
             android:entryValues="@array/custom_button_values"
             android:key="customButtonToggleMicToolBar"
             android:title="@string/menu_toggle_mic_tool_bar" />
+        <ListPreference
+            android:defaultValue="0"
+            android:entries="@array/custom_button_labels"
+            android:entryValues="@array/custom_button_values"
+            android:key="customButtonSearchDictionary"
+            android:title="@string/menu_select" />
     </PreferenceCategory>
     <PreferenceCategory android:title="@string/menu_dismiss_note" >
         <ListPreference

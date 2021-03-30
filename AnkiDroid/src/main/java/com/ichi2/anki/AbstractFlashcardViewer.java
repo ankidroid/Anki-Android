@@ -23,6 +23,7 @@ package com.ichi2.anki;
 
 import android.annotation.SuppressLint;
 import android.annotation.TargetApi;
+import android.app.Application;
 import android.content.ActivityNotFoundException;
 import android.content.BroadcastReceiver;
 import android.content.ClipData;
@@ -87,6 +88,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.drakeet.drawer.FullDraggableContainer;
@@ -1339,12 +1341,17 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
             Timber.d("Clipboard has text = %b", clipboardHasText());
             lookUp();
         } else {
-            selectAndCopyText();
+
+            UIUtils.showThemedToast(AbstractFlashcardViewer.this, "Clipboard is empty" , false);
+
+//            selectAndCopyText();
         }
     }
 
 
     private void lookUp() {
+
+
         mLookUpIcon.setVisibility(View.GONE);
         mIsSelecting = false;
         if (Lookup.lookUp(clipboardGetText().toString())) {
@@ -2574,6 +2581,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
             processCardAction(shiftPressEvent::dispatch);
             shiftPressEvent.isShiftPressed();
             mIsSelecting = true;
+
         } catch (Exception e) {
             throw new AssertionError(e);
         }
