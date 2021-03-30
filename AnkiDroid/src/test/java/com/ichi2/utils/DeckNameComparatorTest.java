@@ -10,7 +10,7 @@ public class DeckNameComparatorTest {
     private DeckNameComparator deckNameComparator;
 
     @Before
-    public void setUp(){
+    public void setUp() {
         deckNameComparator = new DeckNameComparator();
     }
 
