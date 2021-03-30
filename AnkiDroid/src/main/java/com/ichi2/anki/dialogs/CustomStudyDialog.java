@@ -351,15 +351,14 @@ public class CustomStudyDialog extends AnalyticsDialogFragment {
         switch (dialogId) {
             case CONTEXT_MENU_STANDARD:
                 // Standard context menu
-                ArrayList<Integer> dialogOptions = new ArrayList<Integer>(){{
-                    add(CUSTOM_STUDY_NEW);
-                    add(CUSTOM_STUDY_REV);
-                    add(CUSTOM_STUDY_FORGOT);
-                    add(CUSTOM_STUDY_AHEAD);
-                    add(CUSTOM_STUDY_RANDOM);
-                    add(CUSTOM_STUDY_PREVIEW);
-                    add(CUSTOM_STUDY_TAGS);
-                }};
+                ArrayList<Integer> dialogOptions = new ArrayList<Integer>();
+                dialogOptions.add(CUSTOM_STUDY_NEW);
+                dialogOptions.add(CUSTOM_STUDY_REV);
+                dialogOptions.add(CUSTOM_STUDY_FORGOT);
+                dialogOptions.add(CUSTOM_STUDY_AHEAD);
+                dialogOptions.add(CUSTOM_STUDY_RANDOM);
+                dialogOptions.add(CUSTOM_STUDY_PREVIEW);
+                dialogOptions.add(CUSTOM_STUDY_TAGS);
                 if (col.getSched().newCount() == 0) {
                     // If no new cards we wont show CUSTOM_STUDY_NEW
                     dialogOptions.remove(Integer.valueOf(CUSTOM_STUDY_NEW));
