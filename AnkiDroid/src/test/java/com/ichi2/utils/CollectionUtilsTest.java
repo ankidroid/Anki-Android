@@ -41,6 +41,6 @@ public class CollectionUtilsTest {
     public void testAddAll() {
         List<Integer> toTest = new ArrayList<>();
         CollectionUtils.addAll(toTest, testList);
-        assertThat("List should be same", toTest.equals(testList));
+        assertThat(toTest, Matchers.is(testList));
     }
 }
