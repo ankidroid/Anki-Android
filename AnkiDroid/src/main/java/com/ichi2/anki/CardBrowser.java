@@ -1485,7 +1485,7 @@ public class CardBrowser extends NavigationDrawerActivity implements
         try{
             singleCardByNote = mActionBarMenu.findItem(R.id.action_limited_search).isChecked();
         } catch ( NullPointerException e) {
-            Timber.e(e.getMessage());
+            Timber.e(e);
             singleCardByNote = false;
         }
         if (mSearchTerms == null) {
