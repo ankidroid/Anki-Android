@@ -256,21 +256,13 @@ public class ModelFieldEditor extends AnkiActivity implements LocaleSelectionDia
         if (mFieldLabels.size() < 2) {
             UIUtils.showThemedToast(this, getResources().getString(R.string.toast_last_field), true);
         } else {
-            try {
-                mCol.modSchema();
+            executeSchemaModified(() -> {
                 ConfirmationDialog d = new ConfirmationDialog();
                 d.setArgs(getResources().getString(R.string.field_delete_warning));
                 d.setConfirm(confirm);
                 d.setCancel(mConfirmDialogCancel);
                 showDialogFragment(d);
-            } catch (ConfirmModSchemaException e) {
-                e.log();
-                ConfirmationDialog c = new ConfirmationDialog();
-                c.setConfirm(confirm);
-                c.setCancel(mConfirmDialogCancel);
-                c.setArgs(getResources().getString(R.string.full_sync_confirmation));
-                showDialogFragment(c);
-            }
+            });
         }
     }
 
@@ -426,24 +418,9 @@ public class ModelFieldEditor extends AnkiActivity implements LocaleSelectionDia
      * Changes the sort field (that displays in card browser) to the current field
      */
     private void sortByField() {
-        changeHandler listener = changeFieldHandler();
-        try {
-            mCol.modSchema();
-            TaskManager.launchCollectionTask(new CollectionTask.ChangeSortField(mMod, mCurrentPos), listener);
-        } catch (ConfirmModSchemaException e) {
-            e.log();
-            // Handler mMod schema confirmation
-            ConfirmationDialog c = new ConfirmationDialog();
-            c.setArgs(getResources().getString(R.string.full_sync_confirmation));
-            Runnable confirm = () -> {
-                mCol.modSchemaNoCheck();
-                TaskManager.launchCollectionTask(new CollectionTask.ChangeSortField(mMod, mCurrentPos), listener);
-                dismissContextMenu();
-            };
-            c.setConfirm(confirm);
-            c.setCancel(mConfirmDialogCancel);
-            ModelFieldEditor.this.showDialogFragment(c);
-        }
+        executeSchemaModified(() -> {
+                TaskManager.launchCollectionTask(new CollectionTask.ChangeSortField(mMod, mCurrentPos), changeFieldHandler());
+                dismissContextMenu();}, mConfirmDialogCancel);
     }
 
     /*

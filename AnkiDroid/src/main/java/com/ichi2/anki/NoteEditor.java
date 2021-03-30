@@ -1038,27 +1038,7 @@ public class NoteEditor extends AnkiActivity implements
      * Change the note type from oldModel to newModel, handling the case where a full sync will be required
      */
     private void changeNoteTypeWithErrorHandling(final Model oldModel, final Model newModel) {
-        Resources res = getResources();
-        try {
-            changeNoteType(oldModel, newModel);
-        } catch (ConfirmModSchemaException e) {
-            e.log();
-            // Libanki has determined we should ask the user to confirm first
-            ConfirmationDialog dialog = new ConfirmationDialog();
-            dialog.setArgs(res.getString(R.string.full_sync_confirmation));
-            Runnable confirm = () -> {
-                // Bypass the check once the user confirms
-                getCol().modSchemaNoCheck();
-                try {
-                    changeNoteType(oldModel, newModel);
-                } catch (ConfirmModSchemaException e2) {
-                    // This should never be reached as we explicitly called modSchemaNoCheck()
-                    throw new RuntimeException(e2);
-                }
-            };
-            dialog.setConfirm(confirm);
-            showDialogFragment(dialog);
-        }
+        executeSchemaModified(() -> changeNoteType(oldModel, newModel));
     }
 
     /**
