@@ -111,7 +111,7 @@ public class DeckPickerFloatingActionMenu {
         });
     }
 
-    private boolean animationDisabled(){
+    private boolean animationDisabled() {
         SharedPreferences preferences = AnkiDroidApp.getSharedPrefs(mDeckPicker);
         return preferences.getBoolean("safeDisplay", false);
     }
