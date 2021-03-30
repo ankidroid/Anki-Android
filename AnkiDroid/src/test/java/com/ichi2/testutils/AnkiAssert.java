@@ -46,8 +46,8 @@ public class AnkiAssert {
         throw new IllegalStateException("unreachable");
     }
 
-    public static <T> void assertEqualsArrayList(T[] ar, List<T> l) {
-        assertEquals(Arrays.asList(ar), l);
+    public static <T> void assertEqualsArrayList(T[] expected, List<T> actual) {
+        assertEquals(Arrays.asList(expected), actual);
     }
 
 
