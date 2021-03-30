@@ -27,6 +27,7 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.content.res.Resources;
+import android.graphics.Color;
 import android.graphics.Typeface;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
@@ -131,6 +132,7 @@ import java.util.Map;
 import java.util.Set;
 
 import androidx.core.content.ContextCompat;
+import androidx.core.graphics.drawable.DrawableCompat;
 import androidx.core.text.HtmlCompat;
 import androidx.fragment.app.DialogFragment;
 import timber.log.Timber;
@@ -473,6 +475,10 @@ public class NoteEditor extends AnkiActivity implements
             }
             modifyCurrentSelection(formatter, (FieldEditText) currentFocus);
         });
+
+        // Sets the background and icon color of toolbar respectively.
+        mToolbar.setBackgroundColor(Themes.getColorFromAttr(NoteEditor.this, R.attr.toolbarBackgroundColor));
+        mToolbar.setIconColor(Themes.getColorFromAttr(NoteEditor.this, R.attr.toolbarIconColor));
 
         enableToolbar(mainView);
 
@@ -1790,7 +1796,7 @@ public class NoteEditor extends AnkiActivity implements
 
         // Sets the background color of disabled EditText.
         if (!enabled) {
-            editText.setBackgroundColor(Themes.getColorFromAttr(NoteEditor.this,R.attr.editTextBackgroundColor));
+            editText.setBackgroundColor(Themes.getColorFromAttr(NoteEditor.this, R.attr.editTextBackgroundColor));
         }
         editText.setEnabled(enabled);
     }
@@ -2004,7 +2010,10 @@ public class NoteEditor extends AnkiActivity implements
         }
 
         // Let the user add more buttons (always at the end).
-        mToolbar.insertItem(0, R.drawable.ic_add_toolbar_icon, this::displayAddToolbarDialog);
+        // Sets the add custom tag icon color.
+        Drawable drawable = getResources().getDrawable(R.drawable.ic_add_toolbar_icon, getTheme());
+        drawable.setTint(Themes.getColorFromAttr(NoteEditor.this, R.attr.toolbarIconColor));
+        mToolbar.insertItem(0, drawable, this::displayAddToolbarDialog);
     }
 
     @NonNull
