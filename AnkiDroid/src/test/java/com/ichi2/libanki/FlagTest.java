@@ -25,6 +25,7 @@ public class FlagTest extends RobolectricTest {
         n.setItem("Back", "two");
         int cnt = col.addNote(n);
         Card c = n.cards().get(0);
+        boolean singleCardByNote = false;
 
         // make sure higher bits are preserved
         int origBits = 0b101 << 3;
@@ -32,16 +33,16 @@ public class FlagTest extends RobolectricTest {
         c.flush();
         // no flags to start with
         assertEquals(0, c.userFlag());
-        assertEquals(1, col.findCards("flag:0").size());
-        assertEquals(0, col.findCards("flag:1").size());
+        assertEquals(1, col.findCards("flag:0", false).size());
+        assertEquals(0, col.findCards("flag:1", false).size());
         // set flag 2
         col.setUserFlag(2, Collections.singletonList(c.getId()));
         c.load();
         assertEquals(2, c.userFlag());
         // assertEquals(origBits, c.flags & origBits);TODO: create direct access to real flag value
-        assertEquals(0, col.findCards("flag:0").size());
-        assertEquals(1, col.findCards("flag:2").size());
-        assertEquals(0, col.findCards("flag:3").size());
+        assertEquals(0, col.findCards("flag:0", singleCardByNote).size());
+        assertEquals(1, col.findCards("flag:2", singleCardByNote).size());
+        assertEquals(0, col.findCards("flag:3", singleCardByNote).size());
         // change to 3
         col.setUserFlag(3, Collections.singletonList(c.getId()));
         c.load();

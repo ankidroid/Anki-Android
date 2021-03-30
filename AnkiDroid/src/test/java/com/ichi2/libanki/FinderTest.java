@@ -60,6 +60,8 @@ public class FinderTest extends RobolectricTest {
     @Config(qualifiers = "en")
     public void searchForBuriedReturnsManuallyAndSiblingBuried() throws ConfirmModSchemaException {
         final String searchQuery = "is:buried";
+        boolean singleCardByNoteFalse = false;
+        boolean singleCardByNoteTrue = true;
 
         SchedV2 sched = upgradeToSchedV2();  //needs to be first
 
@@ -72,7 +74,7 @@ public class FinderTest extends RobolectricTest {
         Card manuallyBuriedCard = buryManually(sched, toAnswer.getId());
 
         //perform the search
-        List<Long> buriedCards = new Finder(getCol()).findCards(searchQuery, false);
+        List<Long> buriedCards = new Finder(getCol()).findCards(searchQuery, false, singleCardByNoteFalse);
 
         //assert
         assertThat("A manually buried card should be returned", buriedCards, hasItem(manuallyBuriedCard.getId()));
@@ -118,6 +120,8 @@ public class FinderTest extends RobolectricTest {
     public void test_findCards() {
         Collection col = getCol();
         Note note = col.newNote();
+        boolean singleCardByNoteFalse = false;
+        boolean singleCardByNoteTrue = true;
         note.setItem("Front", "dog");
         note.setItem("Back", "cat");
         note.addTag("monkey animal_1 * %");
@@ -150,85 +154,95 @@ public class FinderTest extends RobolectricTest {
         col.save();
         List<Long> latestCardIds = note.cids();
         // tag searches
-        assertEquals(5, col.findCards("tag:*").size());
-        assertEquals(1, col.findCards("tag:\\*").size());
-        assertEquals(5, col.findCards("tag:%").size());
-        assertEquals(1, col.findCards("tag:\\%").size());
-        assertEquals(2, col.findCards("tag:animal_1").size());
-        assertEquals(1, col.findCards("tag:animal\\_1").size());
-        assertEquals(0, col.findCards("tag:donkey").size());
-        assertEquals(1, col.findCards("tag:sheep").size());
-        assertEquals(1, col.findCards("tag:sheep tag:goat").size());
-        assertEquals(0, col.findCards("tag:sheep tag:monkey").size());
-        assertEquals(1, col.findCards("tag:monkey").size());
-        assertEquals(1, col.findCards("tag:sheep -tag:monkey").size());
-        assertEquals(4, col.findCards("-tag:sheep").size());
+        assertEquals(5, col.findCards("tag:*", singleCardByNoteFalse).size());
+        assertEquals(4,col.findCards("tag:*", singleCardByNoteTrue).size());
+        assertEquals(1, col.findCards("tag:\\*", singleCardByNoteFalse).size());
+        assertEquals(5, col.findCards("tag:%", singleCardByNoteFalse).size());
+        assertEquals(4,col.findCards("tag:%", singleCardByNoteTrue).size());
+        assertEquals(1, col.findCards("tag:\\%", singleCardByNoteFalse).size());
+        assertEquals(2, col.findCards("tag:animal_1", singleCardByNoteFalse).size());
+        assertEquals(1, col.findCards("tag:animal_1", singleCardByNoteTrue).size());
+        assertEquals(1, col.findCards("tag:animal\\_1", singleCardByNoteFalse).size());
+        assertEquals(0, col.findCards("tag:donkey", singleCardByNoteFalse).size());
+        assertEquals(1, col.findCards("tag:sheep", singleCardByNoteFalse).size());
+        assertEquals(1, col.findCards("tag:sheep tag:goat", singleCardByNoteFalse).size());
+        assertEquals(0, col.findCards("tag:sheep tag:monkey", singleCardByNoteFalse).size());
+        assertEquals(1, col.findCards("tag:monkey", singleCardByNoteFalse).size());
+        assertEquals(1, col.findCards("tag:sheep -tag:monkey", singleCardByNoteFalse).size());
+        assertEquals(4, col.findCards("-tag:sheep", singleCardByNoteFalse).size());
         col.getTags().bulkAdd(col.getDb().queryLongList("select id from notes"), "foo bar");
-        assertEquals(5, col.findCards("tag:foo").size());
-        assertEquals(5, col.findCards("tag:bar").size());
+        assertEquals(5, col.findCards("tag:foo", singleCardByNoteFalse).size());
+        assertEquals(4, col.findCards("tag:foo", singleCardByNoteTrue).size());
+        assertEquals(5, col.findCards("tag:bar", singleCardByNoteFalse).size());
+        assertEquals(4, col.findCards("tag:bar", singleCardByNoteTrue).size());
         col.getTags().bulkRem(col.getDb().queryLongList("select id from notes"), "foo");
-        assertEquals(0, col.findCards("tag:foo").size());
-        assertEquals(5, col.findCards("tag:bar").size());
+        assertEquals(0, col.findCards("tag:foo", singleCardByNoteFalse).size());
+        assertEquals(5, col.findCards("tag:bar", singleCardByNoteFalse).size());
+        assertEquals(4, col.findCards("tag:bar", singleCardByNoteTrue).size());
         // text searches
-        assertEquals(2, col.findCards("cat").size());
-        assertEquals(1, col.findCards("cat -dog").size());
-        assertEquals(1, col.findCards("cat -dog").size());
-        assertEquals(1, col.findCards("are goats").size());
-        assertEquals(0, col.findCards("\"are goats\"").size());
-        assertEquals(1, col.findCards("\"goats are\"").size());
+        assertEquals(2, col.findCards("cat", singleCardByNoteFalse).size());
+        assertEquals(1, col.findCards("cat", singleCardByNoteTrue).size());
+        assertEquals(1, col.findCards("cat -dog", singleCardByNoteFalse).size());
+        assertEquals(1, col.findCards("cat -dog", singleCardByNoteFalse).size());
+        assertEquals(1, col.findCards("are goats", singleCardByNoteFalse).size());
+        assertEquals(0, col.findCards("\"are goats\"", singleCardByNoteFalse).size());
+        assertEquals(1, col.findCards("\"goats are\"", singleCardByNoteFalse).size());
         // card states
         Card c = note.cards().get(0);
         c.setQueue(QUEUE_TYPE_REV);
         c.setType(CARD_TYPE_REV);
-        assertEquals(0, col.findCards("is:review").size());
+        assertEquals(0, col.findCards("is:review", singleCardByNoteFalse).size());
         c.flush();
-        assertEqualsArrayList((new Long[] {c.getId()}), col.findCards("is:review"));
-        assertEquals(0, col.findCards("is:due").size());
+        assertEqualsArrayList((new Long[] {c.getId()}), col.findCards("is:review", singleCardByNoteFalse));
+        assertEquals(0, col.findCards("is:due", singleCardByNoteFalse).size());
         c.setDue(0);
         c.setQueue(QUEUE_TYPE_REV);
         c.flush();
-        assertEqualsArrayList((new Long[] {c.getId()}), col.findCards("is:due"));
-        assertEquals(4, col.findCards("-is:due").size());
+        assertEqualsArrayList((new Long[] {c.getId()}), col.findCards("is:due", singleCardByNoteFalse));
+        assertEquals(4, col.findCards("-is:due", singleCardByNoteFalse).size());
+        assertEquals(3, col.findCards("-is:due", singleCardByNoteTrue).size());
         c.setQueue(QUEUE_TYPE_SUSPENDED);
         // ensure this card gets a later mod time
         c.flush();
         col.getDb().execute("update cards set mod = mod + 1 where id = ?", c.getId());
-        assertEqualsArrayList((new Long[] {c.getId()}), col.findCards("is:suspended"));
+        assertEqualsArrayList((new Long[] {c.getId()}), col.findCards("is:suspended", singleCardByNoteFalse));
         // nids
-        assertEquals(0, col.findCards("nid:54321").size());
-        assertEquals(2, col.findCards("nid:" + note.getId()).size());
-        assertEquals(2, col.findCards("nid:" + n1id + "," + n2id).size());
+        assertEquals(0, col.findCards("nid:54321", singleCardByNoteFalse).size());
+        assertEquals(2, col.findCards("nid:" + note.getId(), singleCardByNoteFalse).size());
+        assertEquals(1, col.findCards("nid:" + note.getId(), singleCardByNoteTrue).size());
+        assertEquals(2, col.findCards("nid:" + n1id + "," + n2id, singleCardByNoteFalse).size());
         // templates
-        assertEquals(0, col.findCards("card:foo").size());
-        assertEquals(4, col.findCards("\"card:card 1\"").size());
-        assertEquals(1, col.findCards("card:reverse").size());
-        assertEquals(4, col.findCards("card:1").size());
-        assertEquals(1, col.findCards("card:2").size());
+        assertEquals(0, col.findCards("card:foo", singleCardByNoteFalse).size());
+        assertEquals(4, col.findCards("\"card:card 1\"", singleCardByNoteFalse).size());
+        assertEquals(1, col.findCards("card:reverse", singleCardByNoteFalse).size());
+        assertEquals(4, col.findCards("card:1", singleCardByNoteFalse).size());
+        assertEquals(1, col.findCards("card:2", singleCardByNoteFalse).size());
         // fields
-        assertEquals(1, col.findCards("front:dog").size());
-        assertEquals(4, col.findCards("-front:dog").size());
-        assertEquals(0, col.findCards("front:sheep").size());
-        assertEquals(2, col.findCards("back:sheep").size());
-        assertEquals(3, col.findCards("-back:sheep").size());
-        assertEquals(0, col.findCards("front:do").size());
-        assertEquals(5, col.findCards("front:*").size());
+        assertEquals(1, col.findCards("front:dog", singleCardByNoteFalse).size());
+        assertEquals(4, col.findCards("-front:dog", singleCardByNoteFalse).size());
+        assertEquals(0, col.findCards("front:sheep", singleCardByNoteFalse).size());
+        assertEquals(2, col.findCards("back:sheep", singleCardByNoteFalse).size());
+        assertEquals(3, col.findCards("-back:sheep", singleCardByNoteFalse).size());
+        assertEquals(0, col.findCards("front:do", singleCardByNoteFalse).size());
+        assertEquals(5, col.findCards("front:*", singleCardByNoteFalse).size());
+        assertEquals(4, col.findCards("front:*", singleCardByNoteTrue).size());
         // ordering
         col.getConf().put("sortType", "noteCrt");
         col.flush();
-        assertTrue(latestCardIds.contains(getLastListElement(col.findCards("front:*", true))));
-        assertTrue(latestCardIds.contains(getLastListElement(col.findCards("", true))));
+        assertTrue(latestCardIds.contains(getLastListElement(col.findCards("front:*", true, singleCardByNoteFalse))));
+        assertTrue(latestCardIds.contains(getLastListElement(col.findCards("", true, singleCardByNoteFalse))));
 
         col.getConf().put("sortType", "noteFld");
         col.flush();
-        assertEquals(catCard.getId(), (long) col.findCards("", true).get(0));
-        assertTrue(latestCardIds.contains(getLastListElement(col.findCards("", true))));
+        assertEquals(catCard.getId(), (long) col.findCards("", true, singleCardByNoteFalse).get(0));
+        assertTrue(latestCardIds.contains(getLastListElement(col.findCards("", true, singleCardByNoteFalse))));
         col.getConf().put("sortType", "cardMod");
         col.flush();
-        assertTrue(latestCardIds.contains(getLastListElement(col.findCards("", true))));
-        assertEquals(firstCardId, (long) col.findCards("", true).get(0));
+        assertTrue(latestCardIds.contains(getLastListElement(col.findCards("", true, singleCardByNoteFalse))));
+        assertEquals(firstCardId, (long) col.findCards("", true, singleCardByNoteFalse).get(0));
         col.getConf().put("sortBackwards", true);
         col.flush();
-        assertTrue(latestCardIds.contains(col.findCards("", true).get(0)));
+        assertTrue(latestCardIds.contains(col.findCards("", true, singleCardByNoteFalse).get(0)));
         /* TODO: Port BuiltinSortKind
            assertEquals(firstCardId,
            col.findCards("", BuiltinSortKind.CARD_DUE, reverse=false).get(0)
@@ -237,23 +251,29 @@ public class FinderTest extends RobolectricTest {
            col.findCards("", BuiltinSortKind.CARD_DUE, reverse=true).get(0));
         */
         // model
-        assertEquals(3, col.findCards("note:basic").size());
-        assertEquals(2, col.findCards("-note:basic").size());
-        assertEquals(5, col.findCards("-note:foo").size());
+        assertEquals(3, col.findCards("note:basic", singleCardByNoteFalse).size());
+        assertEquals(2, col.findCards("-note:basic", singleCardByNoteFalse).size());
+        assertEquals(5, col.findCards("-note:foo", singleCardByNoteFalse).size());
+        assertEquals(4, col.findCards("-note:foo", singleCardByNoteTrue).size());
         // col
-        assertEquals(5, col.findCards("deck:default").size());
-        assertEquals(0, col.findCards("-deck:default").size());
-        assertEquals(5, col.findCards("-deck:foo").size());
-        assertEquals(5, col.findCards("deck:def*").size());
-        assertEquals(5, col.findCards("deck:*EFAULT").size());
-        assertEquals(0, col.findCards("deck:*cefault").size());
+        assertEquals(5, col.findCards("deck:default", singleCardByNoteFalse).size());
+        assertEquals(4, col.findCards("deck:default", singleCardByNoteTrue).size());
+        assertEquals(0, col.findCards("-deck:default", singleCardByNoteFalse).size());
+        assertEquals(5, col.findCards("-deck:foo", singleCardByNoteFalse).size());
+        assertEquals(4, col.findCards("-deck:foo", singleCardByNoteTrue).size());
+        assertEquals(5, col.findCards("deck:def*", singleCardByNoteFalse).size());
+        assertEquals(4, col.findCards("deck:def*", singleCardByNoteTrue).size());
+        assertEquals(5, col.findCards("deck:*EFAULT", singleCardByNoteFalse).size());
+        assertEquals(5, col.findCards("deck:*EFAULT", singleCardByNoteTrue).size());
+        assertEquals(0, col.findCards("deck:*cefault", singleCardByNoteFalse).size());
         // full search
         note = col.newNote();
         note.setItem("Front", "hello<b>world</b>");
         note.setItem("Back", "abc");
         col.addNote(note);
         // as it's the sort field, it matches
-        assertEquals(2, col.findCards("helloworld").size());
+        assertEquals(2, col.findCards("helloworld", singleCardByNoteFalse).size());
+        assertEquals(1, col.findCards("helloworld", singleCardByNoteTrue).size());
         // assertEquals(, col.findCards("helloworld", full=true).size())2 This is commented upstream
         // if we put it on the back, it won't
         String note_front = note.getItem("Front");
@@ -261,7 +281,7 @@ public class FinderTest extends RobolectricTest {
         note.setItem("Front", note_back);
         note.setItem("Back", note_front);
         note.flush();
-        assertEquals(0, col.findCards("helloworld").size());
+        assertEquals(0, col.findCards("helloworld", singleCardByNoteFalse).size());
         // Those lines are commented above
         // assertEquals(, col.findCards("helloworld", full=true).size())2
         // assertEquals(, col.findCards("back:helloworld", full=true).size())2
@@ -273,65 +293,65 @@ public class FinderTest extends RobolectricTest {
         col.getDb().execute(
                 "update cards set did = ? where id = ?", addDeck("Default::Child"), id);
         col.save();
-        assertEquals(7, col.findCards("deck:default").size());
-        assertEquals(1, col.findCards("deck:default::child").size());
-        assertEquals(6, col.findCards("deck:default -deck:default::*").size());
+        assertEquals(7, col.findCards("deck:default", singleCardByNoteFalse).size());
+        assertEquals(1, col.findCards("deck:default::child", singleCardByNoteFalse).size());
+        assertEquals(6, col.findCards("deck:default -deck:default::*", singleCardByNoteFalse).size());
         // properties
         id = col.getDb().queryLongScalar("select id from cards limit 1");
         col.getDb().execute(
                 "update cards set queue=2, ivl=10, reps=20, due=30, factor=2200 where id = ?",
                 id);
-        assertEquals(1, col.findCards("prop:ivl>5").size());
-        assertThat(col.findCards("prop:ivl<5").size(), greaterThan(1));
-        assertEquals(1, col.findCards("prop:ivl>=5").size());
-        assertEquals(0, col.findCards("prop:ivl=9").size());
-        assertEquals(1, col.findCards("prop:ivl=10").size());
-        assertThat(col.findCards("prop:ivl!=10").size(), greaterThan(1));
-        assertEquals(1, col.findCards("prop:due>0").size());
+        assertEquals(1, col.findCards("prop:ivl>5", singleCardByNoteFalse).size());
+        assertThat(col.findCards("prop:ivl<5", singleCardByNoteFalse).size(), greaterThan(1));
+        assertEquals(1, col.findCards("prop:ivl>=5", singleCardByNoteFalse).size());
+        assertEquals(0, col.findCards("prop:ivl=9", singleCardByNoteFalse).size());
+        assertEquals(1, col.findCards("prop:ivl=10", singleCardByNoteFalse).size());
+        assertThat(col.findCards("prop:ivl!=10", singleCardByNoteFalse).size(), greaterThan(1));
+        assertEquals(1, col.findCards("prop:due>0", singleCardByNoteFalse).size());
         // due dates should work
-        assertEquals(0, col.findCards("prop:due=29").size());
-        assertEquals(1, col.findCards("prop:due=30").size());
+        assertEquals(0, col.findCards("prop:due=29", singleCardByNoteFalse).size());
+        assertEquals(1, col.findCards("prop:due=30", singleCardByNoteFalse).size());
         // ease factors
-        assertEquals(0, col.findCards("prop:ease=2.3").size());
-        assertEquals(1, col.findCards("prop:ease=2.2").size());
-        assertEquals(1, col.findCards("prop:ease>2").size());
-        assertThat(col.findCards("-prop:ease>2").size(), greaterThan(1));
+        assertEquals(0, col.findCards("prop:ease=2.3", singleCardByNoteFalse).size());
+        assertEquals(1, col.findCards("prop:ease=2.2", singleCardByNoteFalse).size());
+        assertEquals(1, col.findCards("prop:ease>2", singleCardByNoteFalse).size());
+        assertThat(col.findCards("-prop:ease>2", singleCardByNoteFalse).size(), greaterThan(1));
         // recently failed
         if (!isNearCutoff(col)) {
-            assertEquals(0, col.findCards("rated:1:1").size());
-            assertEquals(0, col.findCards("rated:1:2").size());
+            assertEquals(0, col.findCards("rated:1:1", singleCardByNoteFalse).size());
+            assertEquals(0, col.findCards("rated:1:2", singleCardByNoteFalse).size());
             c = getCard();
             col.getSched().answerCard(c, 2);
-            assertEquals(0, col.findCards("rated:1:1").size());
-            assertEquals(1, col.findCards("rated:1:2").size());
+            assertEquals(0, col.findCards("rated:1:1", singleCardByNoteFalse).size());
+            assertEquals(1, col.findCards("rated:1:2", singleCardByNoteFalse).size());
             c = getCard();
             col.getSched().answerCard(c, 1);
-            assertEquals(1, col.findCards("rated:1:1").size());
-            assertEquals(1, col.findCards("rated:1:2").size());
-            assertEquals(2, col.findCards("rated:1").size());
-            assertEquals(0, col.findCards("rated:0:2").size());
-            assertEquals(1, col.findCards("rated:2:2").size());
+            assertEquals(1, col.findCards("rated:1:1", singleCardByNoteFalse).size());
+            assertEquals(1, col.findCards("rated:1:2", singleCardByNoteFalse).size());
+            assertEquals(2, col.findCards("rated:1", singleCardByNoteFalse).size());
+            assertEquals(0, col.findCards("rated:0:2", singleCardByNoteFalse).size());
+            assertEquals(1, col.findCards("rated:2:2", singleCardByNoteFalse).size());
             // added
-            assertEquals(0, col.findCards("added:0").size());
+            assertEquals(0, col.findCards("added:0", singleCardByNoteFalse).size());
             col.getDb().execute("update cards set id = id - " + SECONDS_PER_DAY * 1000 + " where id = ?", id);
-            assertEquals(col.cardCount() - 1, col.findCards("added:1").size());
-            assertEquals(col.cardCount(), col.findCards("added:2").size());
+            assertEquals(col.cardCount() - 1, col.findCards("added:1", singleCardByNoteFalse).size());
+            assertEquals(col.cardCount(), col.findCards("added:2", singleCardByNoteFalse).size());
         } else {
             Timber.w("some find tests disabled near cutoff");
         }
         // empty field
-        assertEquals(0, col.findCards("front:").size());
+        assertEquals(0, col.findCards("front:", singleCardByNoteFalse).size());
         note = col.newNote();
         note.setItem("Front", "");
         note.setItem("Back", "abc2");
         assertEquals(1, col.addNote(note));
-        assertEquals(1, col.findCards("front:").size());
+        assertEquals(1, col.findCards("front:", singleCardByNoteFalse).size());
         // OR searches and nesting
-        assertEquals(2, col.findCards("tag:monkey or tag:sheep").size());
-        assertEquals(2, col.findCards("(tag:monkey OR tag:sheep)").size());
-        assertEquals(6, col.findCards("-(tag:monkey OR tag:sheep)").size());
-        assertEquals(2, col.findCards("tag:monkey or (tag:sheep sheep)").size());
-        assertEquals(1, col.findCards("tag:monkey or (tag:sheep octopus)").size());
+        assertEquals(2, col.findCards("tag:monkey or tag:sheep", singleCardByNoteFalse).size());
+        assertEquals(2, col.findCards("(tag:monkey OR tag:sheep)", singleCardByNoteFalse).size());
+        assertEquals(6, col.findCards("-(tag:monkey OR tag:sheep)", singleCardByNoteFalse).size());
+        assertEquals(2, col.findCards("tag:monkey or (tag:sheep sheep)", singleCardByNoteFalse).size());
+        assertEquals(1, col.findCards("tag:monkey or (tag:sheep octopus)", singleCardByNoteFalse).size());
         // flag
         // Todo: ensure it fails
         // assertThrows(Exception.class, () -> col.findCards("flag:12"));
