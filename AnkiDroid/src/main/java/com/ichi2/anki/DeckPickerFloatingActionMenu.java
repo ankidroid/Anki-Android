@@ -99,7 +99,7 @@ public class DeckPickerFloatingActionMenu {
         });
 
         mAddSharedButton.setOnClickListener(addSharedButtonView -> {
-            Timber.i("Adding Shared Deck");
+            Timber.d("configureFloatingActionsMenu::addSharedButton::onClickListener - Adding Shared Deck");
             closeFloatingActionMenu();
             deckPicker.addSharedDeck();
         });
