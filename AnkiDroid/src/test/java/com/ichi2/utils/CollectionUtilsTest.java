@@ -26,21 +26,21 @@ import static org.hamcrest.MatcherAssert.assertThat;
 
 public class CollectionUtilsTest {
 
-    List<Integer> testList = new ArrayList<Integer>(){{
+    List<Integer> testList = new ArrayList<Integer>() {{
         add(1);
         add(2);
         add(3);
     }};
 
     @Test
-    public void testGetLastListElement(){
+    public void testGetLastListElement() {
         assertThat(CollectionUtils.getLastListElement(testList), Matchers.is(3));
     }
 
     @Test
-    public void testAddAll(){
-        List<Integer> toTest=new ArrayList<>();
-        CollectionUtils.addAll(toTest,testList);
-        assertThat("List should be same",toTest.equals(testList));
+    public void testAddAll() {
+        List<Integer> toTest = new ArrayList<>();
+        CollectionUtils.addAll(toTest, testList);
+        assertThat("List should be same", toTest.equals(testList));
     }
 }
