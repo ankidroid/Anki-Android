@@ -16,31 +16,23 @@
 
 package com.ichi2.utils;
 
-import org.junit.Before;
 import org.junit.Test;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-import static com.ichi2.utils.ArrayUtil.toArrayList;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 
 public class ArrayUtilTest {
-    private Integer[] sampleItems;
-
-
-    @Before
-    public void initializeArray() {
-        sampleItems = new Integer[] {1, 2, 3, 4, 5, 6};
-    }
+    private final Integer[] sampleItems = new Integer[] {1, 2, 3, 4, 5, 6};
 
 
     @Test
     public void arrayToArrayList() {
         List<Integer> list = new ArrayList<>();
         Collections.addAll(list, sampleItems);
-        assertThat(toArrayList(sampleItems), is(list));
+        assertThat(ArrayUtil.toArrayList(sampleItems), is(list));
     }
 }
