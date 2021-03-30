@@ -2010,7 +2010,7 @@ public class NoteEditor extends AnkiActivity implements
 
         // Let the user add more buttons (always at the end).
         // Sets the add custom tag icon color.
-        final Drawable drawable = ResourcesCompat.getDrawable(getResources(),R.drawable.ic_add_toolbar_icon,null);
+        final Drawable drawable = ResourcesCompat.getDrawable(getResources(), R.drawable.ic_add_toolbar_icon, null);
         drawable.setTint(Themes.getColorFromAttr(NoteEditor.this, R.attr.toolbarIconColor));
         mToolbar.insertItem(0, drawable, this::displayAddToolbarDialog);
     }
