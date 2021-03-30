@@ -161,7 +161,6 @@ public class FinderTest extends RobolectricTest {
         assertEquals(4,col.findCards("tag:%", singleCardByNoteTrue).size());
         assertEquals(1, col.findCards("tag:\\%", singleCardByNoteFalse).size());
         assertEquals(2, col.findCards("tag:animal_1", singleCardByNoteFalse).size());
-        assertEquals(1, col.findCards("tag:animal_1", singleCardByNoteTrue).size());
         assertEquals(1, col.findCards("tag:animal\\_1", singleCardByNoteFalse).size());
         assertEquals(0, col.findCards("tag:donkey", singleCardByNoteFalse).size());
         assertEquals(1, col.findCards("tag:sheep", singleCardByNoteFalse).size());
