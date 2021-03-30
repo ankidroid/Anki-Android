@@ -80,6 +80,7 @@ import java.util.regex.Pattern;
 import androidx.annotation.CheckResult;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.annotation.StringRes;
 import androidx.annotation.VisibleForTesting;
 import androidx.sqlite.db.SupportSQLiteDatabase;
 import androidx.sqlite.db.SupportSQLiteStatement;
@@ -172,6 +173,7 @@ public class Collection {
         RESCHEDULE_CARDS(R.string.card_editor_reschedule_card),
         RESET_CARDS(R.string.card_editor_reset_card);
 
+        @StringRes
         private final int mUndoNameId;
 
         DismissType(int undoNameId) {
