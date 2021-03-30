@@ -7,7 +7,7 @@ import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 
 public class DeckNameComparatorTest {
-    DeckNameComparator deckNameComparator;
+    private DeckNameComparator deckNameComparator;
 
     @Before
     public void setUp(){
