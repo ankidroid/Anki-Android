@@ -98,7 +98,6 @@ import static com.ichi2.libanki.Collection.DismissType.REPOSITION_CARDS;
 import static com.ichi2.libanki.Collection.DismissType.RESCHEDULE_CARDS;
 import static com.ichi2.libanki.Collection.DismissType.RESET_CARDS;
 import static com.ichi2.libanki.Collection.DismissType.SUSPEND_NOTE;
-import static com.ichi2.libanki.Consts.DECK_DYN;
 import static com.ichi2.libanki.Undoable.*;
 import static com.ichi2.utils.BooleanGetter.False;
 import static com.ichi2.utils.BooleanGetter.True;
@@ -177,7 +176,7 @@ public class CollectionTask<ProgressListener, ProgressBackground extends Progres
         mTask = task;
         mListener = listener;
         mPreviousTask = previousTask;
-        TaskManager.addTasks(this);
+        TaskManager.addTask(this);
     }
 
     @Override
