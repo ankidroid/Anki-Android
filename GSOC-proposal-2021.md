@@ -137,6 +137,17 @@ Easy
 ## Onboarding
 Onboarding helps new users to introduce the app. The new users may need to understand the user interface of the app. The user may even don’t know about space repetition software. So, the idea is to tell about the advantages of using the app in learning and memorising things and how AnkiDroid will help in memorising things easier.
 
+### Notes from user feedback
+
+* We want people to be able to understand only what they need to know and be able to quickly use the app effectively.
+* Our main issues is that people don't know what spaced repetition is, and why they can't study when they want
+* We do not want to force the user to log in when they open the app (but it may be an optional flow).
+* Some of our users will come from Anki Desktop, it would be good if we can set these up to logon and sync.
+* It would be ideal if we could show users where to get more help
+* We do not want to add new fields to forms unless there is a known benefit
+
+* (David) A user suggested `AppIntro`. I personally wouldn't see this dependency to be problematic as it seems maintained
+
 ### Expected Outcomes
 Onboarding screen at first start of app to introduce about the app to new user
 
