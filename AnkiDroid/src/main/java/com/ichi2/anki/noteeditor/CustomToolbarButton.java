@@ -25,6 +25,7 @@ import java.util.Set;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import timber.log.Timber;
 
 import static com.ichi2.libanki.Consts.FIELD_SEPARATOR;
 
@@ -59,6 +60,7 @@ public class CustomToolbarButton {
         try {
             index = Integer.parseInt(fields[0]);
         } catch (Exception e) {
+            Timber.w(e);
             return null;
         }
 

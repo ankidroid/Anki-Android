@@ -110,10 +110,10 @@
     <string name="menu_import">استيراد</string>
     <string name="undo">تراجع</string>
     <string name="undo_action_review">آخر مراجعة</string>
-    <string name="undo_action_change_deck_multi">تغيير الرزم</string>
-    <string name="move_all_to_deck">نقل الكل إلى الرزمة</string>
+    <string name="undo_action_change_deck_multi">تغيير شَدّات الأوراق</string>
+    <string name="move_all_to_deck">نقل الكل إلى شَدّة الأوراق</string>
     <string name="unbury">نكش</string>
-    <string name="rename_deck">تغيير اسم الرزمة</string>
+    <string name="rename_deck">إعادة تسمية شَدّة الأوراق</string>
     <string name="create_shortcut">إنشاء اختصار</string>
     <string name="menu_add" comment="A generic add button - Main Deck Picker and card templates. Please inform us if you need more specific strings">إضافة</string>
     <string name="menu_add_note">إضافة ملحوظة</string>
@@ -140,9 +140,9 @@
     <string name="menu_mark_note">تعليم الملحوظة</string>
     <string name="menu_unmark_note">إلغاء تعليم الملحوظة</string>
     <string name="menu_toggle_mic_tool_bar">تحقق من النطق</string>
-    <string name="new_deck">إنشاء رزمة</string>
+    <string name="new_deck">إنشاء شَدّة أوراق</string>
     <string name="create" comment="Button to create a filtered deck">إنشاء</string>
-    <string name="new_dynamic_deck">إنشاء رزمة مفلترة</string>
+    <string name="new_dynamic_deck">انشئ شَدّة أوراق مُفَلتَرة</string>
     <string name="night_mode">وضع ليلي</string>
     <string name="directory_inaccessible">لا يمكن الوصول لمجلد أنكيدرويد</string>
     <!--This is shown when AnkiDroid starts up with no storage permissions.
@@ -166,10 +166,10 @@
     <string name="time_quantity_months">%.1f ش</string>
     <string name="time_quantity_years">%.1f ع</string>
     <!-- or "%.1f a" -->
-    <string name="rebuild_filtered_deck">إعادة إنشاء الرزمة المفلترة&#8230;</string>
+    <string name="rebuild_filtered_deck">إعادة انشئ شَدّة أوراق مُفَلتَرة...</string>
     <string name="rebuild_cram_label">إعادة إنشاء</string>
     <string name="empty_cram_label">إفراغ</string>
-    <string name="create_subdeck">إنشاء رزمة فرعية</string>
+    <string name="create_subdeck">إنشاء شَدّة أوراق فرغية</string>
     <string name="empty_filtered_deck">إفراغ الرزمة المفلترة&#8230;</string>
     <string name="custom_study_deck_name">جلسة دراسة مخصصة</string>
     <string name="custom_study_deck_exists">أعد تسمية رزمة الدراسة المخصصة الموجودة أولًا</string>

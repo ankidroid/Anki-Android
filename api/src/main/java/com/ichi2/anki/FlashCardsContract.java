@@ -298,6 +298,7 @@ public class FlashCardsContract {
         public static final String _ID = "_id";
         public static final String GUID = "guid";
         public static final String MID = "mid";
+        public static final String ALLOW_EMPTY = "allow_empty";
         public static final String MOD = "mod";
         public static final String USN = "usn";
         public static final String TAGS = "tags";

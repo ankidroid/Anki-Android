@@ -286,6 +286,7 @@ public class DeckPicker extends NavigationDrawerActivity implements
             }
         } catch (Exception e) {
             // Maybe later don't report if collectionIsOpen is false?
+            Timber.w(e);
             String info = deckId + " colOpen:" + collectionIsOpen;
             AnkiDroidApp.sendExceptionReport(e, "deckPicker::onDeckClick", info);
             displayFailedToOpenDeck(deckId);
@@ -403,7 +404,7 @@ public class DeckPicker extends NavigationDrawerActivity implements
 
         @Override
         public void actualOnPreExecute(@NonNull DeckPicker deckPicker) {
-            deckPicker.mProgressDialog = StyledProgressDialog.show(deckPicker, "",
+            deckPicker.mProgressDialog = StyledProgressDialog.show(deckPicker, null,
                     deckPicker.getResources().getString(R.string.export_in_progress), false);
         }
 
@@ -864,14 +865,6 @@ public class DeckPicker extends NavigationDrawerActivity implements
                 CollectionTask.waitForAllToFinish(4);
                 sync();
             }
-        } else if (requestCode == REQUEST_BROWSE_CARDS) {
-            // Store the selected deck after opening browser
-            if (intent != null && intent.getBooleanExtra("allDecksSelected", false)) {
-                AnkiDroidApp.getSharedPrefs(this).edit().putLong("browserDeckIdFromDeckPicker", Decks.NOT_FOUND_DECK_ID).apply();
-            } else {
-                long selectedDeck = getCol().getDecks().selected();
-                AnkiDroidApp.getSharedPrefs(this).edit().putLong("browserDeckIdFromDeckPicker", selectedDeck).apply();
-            }
         } else if (requestCode == REQUEST_PATH_UPDATE) {
             // The collection path was inaccessible on startup so just close the activity and let user restart
             finishWithoutAnimation();
@@ -923,6 +916,7 @@ public class DeckPicker extends NavigationDrawerActivity implements
 
 
     public void onRequestPermissionsResult (int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
         if (requestCode == REQUEST_STORAGE_PERMISSION && permissions.length == 1) {
             if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                 invalidateOptionsMenu();
@@ -1114,6 +1108,7 @@ public class DeckPicker extends NavigationDrawerActivity implements
                 getCol().modSchema();
             } catch (ConfirmModSchemaException e) {
                 Timber.w("Forcing full sync");
+                e.log();
                 // If libanki determines it's necessary to confirm the full sync then show a confirmation dialog
                 // We have to show the dialog via the DialogHandler since this method is called via an async task
                 Resources res = getResources();
@@ -1304,10 +1299,12 @@ public class DeckPicker extends NavigationDrawerActivity implements
         try {
             previous = preferences.getLong(UPGRADE_VERSION_KEY, current);
         } catch (ClassCastException e) {
+            Timber.w(e);
             try {
                 // set 20900203 to default value, as it's the latest version that stores integer in shared prefs
                 previous = preferences.getInt(UPGRADE_VERSION_KEY, 20900203);
             } catch (ClassCastException cce) {
+                Timber.w(cce);
                 // Previous versions stored this as a string.
                 String s = preferences.getString(UPGRADE_VERSION_KEY, "");
                 // The last version of AnkiDroid that stored this as a string was 2.0.2.
@@ -1355,6 +1352,7 @@ public class DeckPicker extends NavigationDrawerActivity implements
                 boolean old = preferences.getBoolean("fullscreenReview", false);
                 preferences.edit().putString("fullscreenMode", old ? "1": "0").apply();
             } catch (ClassCastException e) {
+                Timber.w(e);
                 // TODO:  can remove this catch as it was only here to fix an error in the betas
                 preferences.edit().remove("fullscreenMode").apply();
             }
@@ -1526,7 +1524,7 @@ public class DeckPicker extends NavigationDrawerActivity implements
 
         @Override
         public void actualOnPreExecute(@NonNull DeckPicker deckPicker) {
-            deckPicker.mProgressDialog = StyledProgressDialog.show(deckPicker, "",
+            deckPicker.mProgressDialog = StyledProgressDialog.show(deckPicker, null,
                     deckPicker.getResources().getString(R.string.backup_repair_deck_progress), false);
         }
 
@@ -1585,7 +1583,7 @@ public class DeckPicker extends NavigationDrawerActivity implements
 
         @Override
         public void actualOnPreExecute(@NonNull DeckPicker deckPicker) {
-            deckPicker.mProgressDialog = StyledProgressDialog.show(deckPicker, "",
+            deckPicker.mProgressDialog = StyledProgressDialog.show(deckPicker, null,
                     deckPicker.getResources().getString(R.string.check_media_message), false);
         }
 
@@ -1619,7 +1617,7 @@ public class DeckPicker extends NavigationDrawerActivity implements
 
         @Override
         public void actualOnPreExecute(@NonNull DeckPicker deckPicker) {
-            deckPicker.mProgressDialog = StyledProgressDialog.show(deckPicker, "",
+            deckPicker.mProgressDialog = StyledProgressDialog.show(deckPicker, null,
                     deckPicker.getResources().getString(R.string.delete_media_message), false);
         }
 
@@ -2119,11 +2117,11 @@ public class DeckPicker extends NavigationDrawerActivity implements
         try {
             uri = FileProvider.getUriForFile(DeckPicker.this, "com.ichi2.anki.apkgfileprovider", attachment);
         } catch (IllegalArgumentException e) {
-            Timber.e("Could not generate a valid URI for the apkg file");
+            Timber.w(e, "Could not generate a valid URI for the apkg file");
             UIUtils.showThemedToast(this, getResources().getString(R.string.apk_share_error), false);
             return;
         }
-        Intent shareIntent = ShareCompat.IntentBuilder.from(DeckPicker.this)
+        Intent shareIntent = new ShareCompat.IntentBuilder(DeckPicker.this)
                 .setType("application/apkg")
                 .setStream(uri)
                 .setSubject(getString(R.string.export_email_subject, attachment.getName()))
@@ -2562,6 +2560,7 @@ public class DeckPicker extends NavigationDrawerActivity implements
                 UIUtils.showThemedToast(this, getString(R.string.create_shortcut_failed), false);
             }
         } catch (Exception e) {
+            Timber.w(e);
             UIUtils.showThemedToast(this, getString(R.string.create_shortcut_error, e.getLocalizedMessage()), false);
         }
     }
@@ -2593,6 +2592,7 @@ public class DeckPicker extends NavigationDrawerActivity implements
                         try {
                             col.getDecks().rename(col.getDecks().get(did), newName);
                         } catch (DeckRenameException e) {
+                            Timber.w(e);
                             // We get a localized string from libanki to explain the error
                             UIUtils.showThemedToast(DeckPicker.this, e.getLocalizedMessage(res), false);
                         }
@@ -2677,7 +2677,7 @@ public class DeckPicker extends NavigationDrawerActivity implements
 
         @Override
         public void actualOnPreExecute(@NonNull DeckPicker deckPicker) {
-            deckPicker.mProgressDialog = StyledProgressDialog.show(deckPicker, "",
+            deckPicker.mProgressDialog = StyledProgressDialog.show(deckPicker, null,
                     deckPicker.getResources().getString(R.string.delete_deck), false);
             if (did == deckPicker.getCol().getDecks().current().optLong("id")) {
                 removingCurrent = true;
@@ -2713,7 +2713,7 @@ public class DeckPicker extends NavigationDrawerActivity implements
     private SimpleProgressListener simpleProgressListener() {
         return new SimpleProgressListener(this);
     }
-    private static class SimpleProgressListener extends TaskListenerWithContext<DeckPicker, Void, int[]>{
+    private static class SimpleProgressListener extends TaskListenerWithContext<DeckPicker, Void, StudyOptionsFragment.DeckStudyData>{
         public SimpleProgressListener (DeckPicker deckPicker) {
             super(deckPicker);
         }
@@ -2725,7 +2725,7 @@ public class DeckPicker extends NavigationDrawerActivity implements
 
 
         @Override
-        public void actualOnPostExecute(@NonNull DeckPicker deckPicker, int[] stats) {
+        public void actualOnPostExecute(@NonNull DeckPicker deckPicker, StudyOptionsFragment.DeckStudyData stats) {
             deckPicker.updateDeckList();
             if (deckPicker.mFragmented) {
                 deckPicker.loadStudyOptionsFragment(false);

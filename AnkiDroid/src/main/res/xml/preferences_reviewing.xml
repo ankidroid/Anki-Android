@@ -35,7 +35,7 @@
             android:key="dayOffset"
             android:max="23"
             android:summary="@string/day_offset_summ"
-            android:title="@string/day_offset"
+            android:title="@string/day_offset_with_description"
             app:interval="1"
             app:min="0" />
         <com.ichi2.preferences.NumberRangePreference

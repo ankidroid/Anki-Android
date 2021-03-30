@@ -44,6 +44,8 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
+import timber.log.Timber;
+
 /**
  * One of the most powerful controllers - creates UI and works with the field of textual type.
  * <p>
@@ -266,6 +268,7 @@ public class BasicTextFieldController extends FieldControllerBase implements IFi
                 String translation = data.getExtras().get(TranslationActivity.EXTRA_TRANSLATION).toString();
                 mEditText.setText(translation);
             } catch (Exception e) {
+                Timber.w(e);
                 showToast(gtxt(R.string.multimedia_editor_something_wrong));
             }
         } else if (requestCode == REQUEST_CODE_PRONOUNCIATION && resultCode == Activity.RESULT_OK) {
@@ -283,6 +286,7 @@ public class BasicTextFieldController extends FieldControllerBase implements IFi
                 af.setHasTemporaryMedia(true);
                 mActivity.handleFieldChanged(af);
             } catch (Exception e) {
+                Timber.w(e);
                 showToast(gtxt(R.string.multimedia_editor_pron_pronunciation_failed));
             }
         } else if (requestCode == REQUEST_CODE_TRANSLATE_COLORDICT && resultCode == Activity.RESULT_OK) {

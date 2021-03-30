@@ -92,7 +92,7 @@
     <string name="gestures_summ">ऐसे जवाब और संपादन कार्ड के रूप में कार्रवाई करने के लिए इशारों निरुपित ।</string>
     <string name="gestures_allow_links">Ignore touch gestures on links</string>
     <string name="gestures_allow_links_summary">Touch gestures will not be processed if a link/hint is pressed.</string>
-    <string name="gestures_corner_touch">9-point touch</string>
+    <string name="gestures_corner_touch">९-बिंदु स्पर्श</string>
     <string name="gestures_corner_touch_summary">Allow touch gestures in screen corners</string>
     <string name="gestures_swipe_up">ऊपर की ओर स्वाइप</string>
     <string name="gestures_swipe_down">निचे की ओर स्वाइप</string>
@@ -116,7 +116,7 @@
     <string name="gestures_volume_down">Volume down</string>
     <string name="more_scrolling_buttons">ई-रीडर</string>
     <string name="more_scrolling_buttons_summ">साथ ही स्क्रॉलिंग के लिए कांजी/कतकान, इमोजी/काओ-मोजी बटन का उपयोग करें</string>
-    <string name="card_browser_enable_external_context_menu">‘%s’ Menu</string>
+    <string name="card_browser_enable_external_context_menu">‘%s’ मेन्यू</string>
     <string name="card_browser_enable_external_context_menu_summary">Enables the ‘%s’ context menu globally</string>
     <string name="double_scrolling_gap">डबल स्क्रॉल</string>
     <string name="double_scrolling_gap_summ">ई-रीडर के साथ स्क्रॉल गैप डबल</string>
@@ -173,9 +173,9 @@
     <string name="time_limit">Timebox समय सीमा</string>
     <string name="time_limit_summ">XXX min</string>
     <string name="new_timezone">New timezone handling</string>
-    <string name="day_offset">अगले दिन की शुरुआत</string>
+    <string name="day_offset_with_description">Start of next day (0 is midnight, 23 is 11PM)</string>
     <string name="day_offset_summ">XXX घंटे पिछले आधी रात</string>
-    <string name="sched_ver">Experimental V2 scheduler</string>
+    <string name="sched_ver">प्रायोगिक V2 अनुसूचक</string>
     <string name="sched_ver_summ">Enable the experimental scheduler. Forces changes in one direction on next sync</string>
     <string name="sched_ver_toggle_title">पुष्टि करें</string>
     <string name="sched_ver_2to1">This will reset any cards in learning, clear filtered decks, and change the scheduler version. Proceed?</string>
@@ -192,7 +192,7 @@
     <string name="custom_buttons_setting_if_room">यदि कक्ष दिखाएं</string>
     <string name="custom_buttons_setting_menu_only">केवल मेनू</string>
     <string name="reset_custom_buttons">डिफ़ॉल्ट पर रीसेट करें</string>
-    <string name="thirdparty_apps_title">Third-party API apps</string>
+    <string name="thirdparty_apps_title">तृतीय-पक्ष API ऐप्स</string>
     <string name="thirdparty_apps_summary">See a list of applications which make use of the AnkiDroid API such as dictionaries, utilities.</string>
     <string name="html_javascript_debugging">HTML / Javascript Debugging</string>
     <string name="html_javascript_debugging_summ">Enable remote WebView connections, and save card HTML to AnkiDroid directory</string>
@@ -290,5 +290,5 @@
     <string name="no_code_formatting">Simple typed answer formatting</string>
     <string name="no_code_formatting_summ">Fixes ‘􏿾’ appearing in typed answer results</string>
     <!-- Open Changelog-->
-    <string name="open_changelog">Open Changelog</string>
+    <string name="open_changelog">परिवर्तन लॉग खोलें</string>
 </resources>

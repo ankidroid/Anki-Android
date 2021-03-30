@@ -137,6 +137,7 @@ public class CollectionHelper {
         try {
             return getCol(context).getTime();
         } catch (Exception e) {
+            Timber.w(e);
             return new SystemTime();
         }
     }
@@ -151,6 +152,7 @@ public class CollectionHelper {
         try {
             return getCol(context);
         } catch (Exception e) {
+            Timber.w(e);
             AnkiDroidApp.sendExceptionReport(e, "CollectionHelper.getColSafe");
             return null;
         }
@@ -220,6 +222,7 @@ public class CollectionHelper {
             initializeAnkiDroidDirectory(getCurrentAnkiDroidDirectory(context));
             return true;
         } catch (StorageAccessException e) {
+            Timber.w(e);
             return false;
         }
     }

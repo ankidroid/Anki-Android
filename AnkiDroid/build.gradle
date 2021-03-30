@@ -50,8 +50,8 @@ android {
         //
         // This ensures the correct ordering between the various types of releases (dev < alpha < beta < release) which is
         // needed for upgrades to be offered correctly.
-        versionCode=21500131
-        versionName="2.15alpha31"
+        versionCode=21500136
+        versionName="2.15alpha36"
         minSdkVersion 21
         //noinspection OldTargetApi - also performed in api/build.fradle
         targetSdkVersion 29 // change .travis.yml platform download at same time
@@ -221,10 +221,12 @@ dependencies {
     annotationProcessor "com.google.auto.service:auto-service:1.0-rc7"
 
     implementation fileTree(dir: 'libs', include: ['*.jar'])
-    implementation 'androidx.annotation:annotation:1.1.0'
-    implementation 'androidx.appcompat:appcompat:1.2.0'
+    implementation 'androidx.activity:activity:1.2.2'
+    implementation 'androidx.annotation:annotation:1.2.0'
+    implementation 'androidx.appcompat:appcompat:1.3.0-rc01'
     implementation 'androidx.browser:browser:1.3.0'
     implementation 'androidx.exifinterface:exifinterface:1.3.2'
+    implementation 'androidx.fragment:fragment:1.3.2'
     implementation 'androidx.localbroadcastmanager:localbroadcastmanager:1.0.0'
     implementation "androidx.preference:preference:1.1.1"
     implementation 'androidx.recyclerview:recyclerview:1.1.0'
@@ -263,8 +265,7 @@ dependencies {
     implementation 'org.bitbucket.cowwoc:diff-match-patch:1.2'
     implementation 'org.apache.commons:commons-compress:1.12' // #6419 - handle >2GB apkg files
     implementation 'net.mikehardy:google-analytics-java7:2.0.13'
-    //noinspection GradleDependency NewerVersionAvailable
-    implementation 'com.squareup.okhttp3:okhttp:3.12.12'
+    implementation 'com.squareup.okhttp3:okhttp:4.9.1'
     implementation 'com.arcao:slf4j-timber:3.1'
     implementation 'com.jakewharton.timber:timber:4.7.1'
     implementation 'org.jsoup:jsoup:1.13.1'
@@ -281,10 +282,7 @@ dependencies {
     testImplementation 'androidx.test:core:1.3.0'
     testImplementation 'androidx.test.ext:junit:1.1.2'
     // debugImplementation required vs testImplementation: https://issuetracker.google.com/issues/128612536
-    debugImplementation("androidx.fragment:fragment-testing:1.2.5") {
-        // monitor dep constrained to 1.2 by fragment-testing, 1.3+ is needed: https://github.com/android/android-test/issues/481
-        exclude group:'androidx.test', module:'monitor'
-    }
+    debugImplementation 'androidx.fragment:fragment-testing:1.3.2'
 
     // May need a resolution strategy for support libs to our versions
     androidTestImplementation 'com.azimolabs.conditionwatcher:conditionwatcher:0.2'

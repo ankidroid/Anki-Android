@@ -1,7 +1,7 @@
 package com.ichi2.anki.dialogs;
 
+import android.annotation.SuppressLint;
 import android.app.Dialog;
-import android.content.res.Resources;
 import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -31,30 +31,45 @@ import com.ichi2.utils.FilterResultsUtils;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.List;
 import java.util.Locale;
 import java.util.TreeSet;
 
 public class TagsDialog extends AnalyticsDialogFragment {
     public interface TagsDialogListener {
-        void onPositive(ArrayList<String> selectedTags, int option);
+        void onSelectedTags(List<String> selectedTags, int option);
     }
 
-    private static final int TYPE_NONE = -1;
-    public static final int TYPE_ADD_TAG = 0;
-    public static final int TYPE_FILTER_BY_TAG = 1;
-    public static final int TYPE_CUSTOM_STUDY_TAGS = 2;
+
+
+    /**
+     * Enum that define all possible types of TagsDialog
+     */
+    public enum DialogType {
+        /**
+         * Adding tag to a single note
+         */
+        ADD_TAG,
+        /**
+         * Filter notes by tags
+         */
+        FILTER_BY_TAG,
+        /**
+         * A custom study session filtered by tags
+         */
+        CUSTOM_STUDY_TAGS
+    }
 
     private static final String DIALOG_TYPE_KEY = "dialog_type";
     private static final String CHECKED_TAGS_KEY = "checked_tags";
     private static final String ALL_TAGS_KEY = "all_tags";
 
-    private int mType = TYPE_NONE;
+    private DialogType mType;
     private TreeSet<String> mCurrentTags;
-    private ArrayList<String> mAllTags;
+    private List<String> mAllTags;
 
     private String mPositiveText;
     private String mDialogTitle;
-    private TagsDialogListener mTagsDialogListener = null;
     private TagsArrayAdapter mTagsArrayAdapter;
     private int mSelectedOption = -1;
 
@@ -66,14 +81,22 @@ public class TagsDialog extends AnalyticsDialogFragment {
 
     private MaterialDialog mDialog;
 
-    public static TagsDialog newInstance(int type, ArrayList<String> checked_tags,
-                                            ArrayList<String> all_tags) {
+    /**
+     * Initializes an instance of {@link TagsDialog} using passed parameters
+     *
+     * @param type the type of dialog @see {@link DialogType}
+     * @param checkedTags tags of the note
+     * @param allTags all possible tags in the collection
+     * @return Initialized instance of {@link TagsDialog}
+     */
+    @NonNull
+    public static TagsDialog newInstance(@NonNull DialogType type, @NonNull List<String> checkedTags, @NonNull List<String> allTags) {
         TagsDialog t = new TagsDialog();
 
         Bundle args = new Bundle();
-        args.putInt(DIALOG_TYPE_KEY, type);
-        args.putStringArrayList(CHECKED_TAGS_KEY, checked_tags);
-        args.putStringArrayList(ALL_TAGS_KEY, all_tags);
+        args.putInt(DIALOG_TYPE_KEY, type.ordinal());
+        args.putStringArrayList(CHECKED_TAGS_KEY, new ArrayList<>(checkedTags));
+        args.putStringArrayList(ALL_TAGS_KEY, new ArrayList<>(allTags));
         t.setArguments(args);
 
         return t;
@@ -83,14 +106,14 @@ public class TagsDialog extends AnalyticsDialogFragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        getActivity().getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE);
+        requireActivity().getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE);
 
-        mType = getArguments().getInt(DIALOG_TYPE_KEY);
+        mType = DialogType.values()[requireArguments().getInt(DIALOG_TYPE_KEY)];
 
         mCurrentTags = new TreeSet<>(String.CASE_INSENSITIVE_ORDER);
-        mCurrentTags.addAll(getArguments().getStringArrayList(CHECKED_TAGS_KEY));
+        mCurrentTags.addAll(requireArguments().getStringArrayList(CHECKED_TAGS_KEY));
 
-        mAllTags = (ArrayList<String>) getArguments().getStringArrayList(ALL_TAGS_KEY).clone();
+        mAllTags = requireArguments().getStringArrayList(ALL_TAGS_KEY);
 
         for (String tag : mCurrentTags) {
             if (!mAllTags.contains(tag)) {
@@ -105,10 +128,8 @@ public class TagsDialog extends AnalyticsDialogFragment {
     @NonNull
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
-        Resources res = getResources();
-
-        View tagsDialogView = LayoutInflater.from(getActivity())
-                .inflate(R.layout.tags_dialog, null, false);
+        @SuppressLint("InflateParams")
+        View tagsDialogView = LayoutInflater.from(getActivity()).inflate(R.layout.tags_dialog, null, false);
         mTagsListRecyclerView = tagsDialogView.findViewById(R.id.tags_dialog_tags_list);
         mTagsListRecyclerView.requestFocus();
         mTagsListRecyclerView.setHasFixedSize(true);
@@ -132,7 +153,7 @@ public class TagsDialog extends AnalyticsDialogFragment {
         mSelectedOption = mOptionsGroup.getCheckedRadioButtonId();
         mOptionsGroup.setOnCheckedChangeListener((radioGroup, checkedId) -> mSelectedOption = checkedId);
 
-        if (mType == TYPE_ADD_TAG) {
+        if (mType == DialogType.ADD_TAG) {
             mDialogTitle = getResources().getString(R.string.card_details_tags);
             mOptionsGroup.setVisibility(View.GONE);
             mPositiveText = getString(R.string.dialog_ok);
@@ -143,12 +164,12 @@ public class TagsDialog extends AnalyticsDialogFragment {
 
         adjustToolbar(tagsDialogView);
 
-        MaterialDialog.Builder builder = new MaterialDialog.Builder(getActivity())
+        MaterialDialog.Builder builder = new MaterialDialog.Builder(requireActivity())
                 .positiveText(mPositiveText)
                 .negativeText(R.string.dialog_cancel)
                 .customView(tagsDialogView, false)
-                .onPositive((dialog, which) -> mTagsDialogListener
-                        .onPositive(new ArrayList<>(mCurrentTags), mSelectedOption));
+                .onPositive((dialog, which) -> ((TagsDialogListener)requireActivity())
+                        .onSelectedTags(new ArrayList<>(mCurrentTags), mSelectedOption));
         mDialog = builder.build();
 
         mDialog.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE);
@@ -161,6 +182,7 @@ public class TagsDialog extends AnalyticsDialogFragment {
 
         mToolbar.inflateMenu(R.menu.tags_dialog_menu);
 
+        // disallow inputting the 'space' character
         final InputFilter addTagFilter = (source, start, end, dest, dstart, dend) -> {
             for (int i = start; i < end; i++) {
                 if (source.charAt(i) == ' ') {
@@ -176,14 +198,14 @@ public class TagsDialog extends AnalyticsDialogFragment {
                 addTag(query);
                 mToolbarSearchView.setQuery("", true);
             } else {
-                MaterialDialog.Builder addTagBuilder = new MaterialDialog.Builder(getActivity())
+                MaterialDialog.Builder addTagBuilder = new MaterialDialog.Builder(requireActivity())
                         .title(getString(R.string.add_tag))
                         .negativeText(R.string.dialog_cancel)
                         .positiveText(R.string.dialog_ok)
                         .inputType(InputType.TYPE_CLASS_TEXT)
                         .input(R.string.tag_name, R.string.empty_string, (dialog, input) -> addTag(input.toString()));
                 final MaterialDialog addTagDialog = addTagBuilder.build();
-                EditText inputET = addTagDialog.getInputEditText();
+                EditText inputET = requireDialogInputEditText(addTagDialog);
                 inputET.setFilters(new InputFilter[]{addTagFilter});
                 addTagDialog.show();
             }
@@ -233,16 +255,29 @@ public class TagsDialog extends AnalyticsDialogFragment {
             return true;
         });
 
-        if (mType == TYPE_ADD_TAG) {
+        if (mType == DialogType.ADD_TAG) {
             mToolbarSearchView.setQueryHint(getString(R.string.add_new_filter_tags));
         } else {
             mToolbarAddItem.setVisible(false);
         }
     }
 
+
+    /**
+     * A wrapper function around dialog.getInputEditText() to get non null {@link EditText}
+     */
+    @NonNull
+    private EditText requireDialogInputEditText(@NonNull MaterialDialog dialog) {
+        EditText editText = dialog.getInputEditText();
+        if (editText == null) {
+            throw new IllegalStateException("MaterialDialog " + dialog + " does not have an input edit text.");
+        }
+        return editText;
+    }
+
     public void addTag(String tag) {
         if (!TextUtils.isEmpty(tag)) {
-            String feedbackText = "";
+            String feedbackText;
             if (!mAllTags.contains(tag)) {
                 mAllTags.add(tag);
                 if (mNoTagsTextView.getVisibility() == View.VISIBLE) {
@@ -262,10 +297,6 @@ public class TagsDialog extends AnalyticsDialogFragment {
         }
     }
 
-    public void setTagsDialogListener(TagsDialogListener selectedTagsListener) {
-        mTagsDialogListener = selectedTagsListener;
-    }
-
     public class TagsArrayAdapter extends  RecyclerView.Adapter<TagsArrayAdapter.ViewHolder> implements Filterable{
         public class ViewHolder extends RecyclerView.ViewHolder {
             private final CheckedTextView mTagItemCheckedTextView;
@@ -275,10 +306,10 @@ public class TagsDialog extends AnalyticsDialogFragment {
             }
         }
 
-        public final ArrayList<String> mTagsList;
+        public final List<String> mTagsList;
 
         public  TagsArrayAdapter() {
-            mTagsList = (ArrayList<String>) mAllTags.clone();
+            mTagsList = new ArrayList<>(mAllTags);
             sortData();
         }
 

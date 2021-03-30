@@ -5,6 +5,7 @@
         android:enabled="true"
         android:icon="@drawable/ic_undo_white_24dp"
         android:title="@string/undo"
+        ankidroid:actionProviderClass="com.ichi2.ui.RtlCompliantActionProvider"
         ankidroid:showAsAction="always"/>
     <item
         android:id="@+id/action_rebuild"

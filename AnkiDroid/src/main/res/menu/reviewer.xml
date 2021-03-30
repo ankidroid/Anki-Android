@@ -1,5 +1,6 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:ankidroid="http://schemas.android.com/apk/res-auto" >
+    xmlns:ankidroid="http://schemas.android.com/apk/res-auto"
+    android:layoutDirection="locale">
 
     <item
         android:id="@+id/action_clear_whiteboard"
@@ -24,6 +25,7 @@
         android:enabled="false"
         android:icon="@drawable/ic_undo_white_24dp"
         android:title="@string/undo"
+        ankidroid:actionProviderClass="com.ichi2.ui.RtlCompliantActionProvider"
         ankidroid:showAsAction="always"/>
     <item
         android:id="@+id/action_flag"

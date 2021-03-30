@@ -173,7 +173,7 @@
     <string name="time_limit">Timebox zaman sınırı</string>
     <string name="time_limit_summ">XXX dk</string>
     <string name="new_timezone">New timezone handling</string>
-    <string name="day_offset">Sonraki günün başlangıcı</string>
+    <string name="day_offset_with_description">Start of next day (0 is midnight, 23 is 11PM)</string>
     <string name="day_offset_summ">Geceyarısından XXX saat sonra</string>
     <string name="sched_ver">Deneysel V2 zamanlayıcı</string>
     <string name="sched_ver_summ">Deneysel zamanlayıcıyı etkinleştir. Bir sonraki senkronizasyonda değişiklikleri zorla gönderir.</string>

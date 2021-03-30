@@ -6,6 +6,8 @@ import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import timber.log.Timber;
+
 public class HtmlColors {
     private static final Pattern fHtmlColorPattern = Pattern.compile(
             "((?:color|background)\\s*[=:]\\s*\"?)((?:[a-z]+|#[0-9a-f]+|rgb\\([0-9]+,\\s*[0-9],+\\s*[0-9]+\\)))([\";\\s])", Pattern.CASE_INSENSITIVE);
@@ -68,6 +70,7 @@ public class HtmlColors {
                     }
                 }
             } catch (NumberFormatException e) {
+                Timber.w(e);
                 // shouldn't happen but ignore anyway
             }
             m1.appendReplacement(sb, m1.group(1) + color + m1.group(3));

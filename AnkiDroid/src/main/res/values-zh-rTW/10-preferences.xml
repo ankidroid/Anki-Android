@@ -173,7 +173,7 @@
     <string name="time_limit">時間盒的時間上限</string>
     <string name="time_limit_summ">XXX分鐘</string>
     <string name="new_timezone">新的時區處理</string>
-    <string name="day_offset">明天的開始時間</string>
+    <string name="day_offset_with_description">Start of next day (0 is midnight, 23 is 11PM)</string>
     <string name="day_offset_summ">午夜過後 XXX 小時</string>
     <string name="sched_ver">實驗性 V2 排程器</string>
     <string name="sched_ver_summ">啟用實驗性排程器。強制改變下次同步的方向</string>

@@ -462,6 +462,7 @@ public class Collection {
                     DB.safeEndInTransaction(db);
                 }
             } catch (RuntimeException e) {
+                Timber.w(e);
                 AnkiDroidApp.sendExceptionReport(e, "closeDB");
             }
             if (!mServer) {
@@ -581,6 +582,7 @@ public class Collection {
         try {
             id = mConf.getInt(type);
         } catch (JSONException e) {
+            Timber.w(e);
             id = 1;
         }
         mConf.put(type, id + 1);
@@ -658,11 +660,22 @@ public class Collection {
 
 
     /**
-     * Add a note to the collection. Return number of new cards.
+     * @param note A note to add if it generates card
+     * @return Number of card added.
      */
     public int addNote(Note note) {
+        return addNote(note, Models.AllowEmpty.ONLY_CLOZE);
+    }
+
+    /**
+     * Add a note and cards to the collection. If allowEmpty, at least one card is generated.
+     * @param note  The note to add to the collection
+     * @param allowEmpty Whether we accept to add it even if it should generate no card. Useful to import note even if buggy
+     * @return Number of card added
+     */
+    public int addNote(Note note, Models.AllowEmpty allowEmpty) {
         // check we have card models available, then save
-        ArrayList<JSONObject> cms = findTemplates(note);
+        ArrayList<JSONObject> cms = findTemplates(note, allowEmpty);
         // Todo: upstream, we accept to add a not even if it generates no card. Should be ported to ankidroid
         if (cms.size() == 0) {
             return 0;
@@ -706,13 +719,18 @@ public class Collection {
       Card creation ************************************************************ ***********************************
      */
 
+    public ArrayList<JSONObject> findTemplates(Note note) {
+        return findTemplates(note, Models.AllowEmpty.ONLY_CLOZE);
+    }
+
     /**
      * @param note A note
+     * @param allowEmpty whether we allow to have a card which is actually empty if it is necessary to return a non-empty list
      * @return (active), non-empty templates.
      */
-    public ArrayList<JSONObject> findTemplates(Note note) {
+    public ArrayList<JSONObject> findTemplates(Note note, Models.AllowEmpty allowEmpty) {
         Model model = note.model();
-        ArrayList<Integer> avail = Models.availOrds(model, note.getFields());
+        ArrayList<Integer> avail = Models.availOrds(model, note.getFields(), allowEmpty);
         return _tmplsFromOrds(model, avail);
     }
 
@@ -850,7 +868,7 @@ public class Collection {
                 }
                 @NonNull Long nid = cur.getLong(0);
                 String flds = cur.getString(1);
-                ArrayList<Integer> avail = Models.availOrds(model, Utils.splitFields(flds), nodes);
+                ArrayList<Integer> avail = Models.availOrds(model, Utils.splitFields(flds), nodes, Models.AllowEmpty.TRUE);
                 if (task != null) {
                     task.doProgress(avail.size());
                 }
@@ -879,6 +897,7 @@ public class Collection {
                                 did = ndid;
                             }
                         } catch (JSONException e) {
+                            Timber.w(e);
                             // do nothing
                         }
                         if (getDecks().isDyn(did)) {
@@ -1161,6 +1180,7 @@ public class Collection {
             try {
                 html = ParsedNode.parse_inner(format).render(fields, "q".equals(type), getContext());
             } catch (TemplateError er) {
+                Timber.w(er);
                 html = er.message(getContext());
             }
             html = ChessFilter.fenToChessboard(html, getContext());
@@ -1451,7 +1471,7 @@ public class Collection {
             }
             mDb.getDatabase().setTransactionSuccessful();
         } catch (SQLiteDatabaseLockedException ex) {
-            Timber.e("doInBackgroundCheckDatabase - Database locked");
+            Timber.w(ex,"doInBackgroundCheckDatabase - Database locked");
             return result.markAsLocked();
         } catch (RuntimeException e) {
             Timber.e(e, "doInBackgroundCheckDatabase - RuntimeException on marking card");
@@ -1724,7 +1744,7 @@ public class Collection {
                     fixCount++;
                 }
             } catch (NoSuchDeckException e) {
-                Timber.e("Unable to find dynamic deck %d", id);
+                Timber.w(e, "Unable to find dynamic deck %d", id);
             }
         }
         if (fixCount > 0) {

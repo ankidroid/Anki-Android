@@ -125,6 +125,7 @@ public class Finder {
             }
         } catch (SQLException e) {
             // invalid grouping
+            Timber.w(e);
             return new ArrayList<>(0);
         }
         if (rev) {
@@ -154,6 +155,7 @@ public class Finder {
                 res.add(cur.getLong(0));
             }
         } catch (SQLException e) {
+            Timber.w(e);
             // invalid grouping
             return new ArrayList<>(0);
         }
@@ -531,6 +533,7 @@ public class Finder {
         try {
             days = Integer.parseInt(r[0]);
         } catch (NumberFormatException e) {
+            Timber.w(e);
             return null;
         }
         days = Math.min(days, 31);
@@ -552,6 +555,7 @@ public class Finder {
         try {
             days = Integer.parseInt(val);
         } catch (NumberFormatException e) {
+            Timber.w(e);
             return null;
         }
         long cutoff = (mCol.getSched().getDayCutoff() - SECONDS_PER_DAY * days) * 1000;
@@ -578,6 +582,7 @@ public class Finder {
                 val = Integer.parseInt(sval);
             }
         } catch (NumberFormatException e) {
+            Timber.w(e);
             return null;
         }
         // is prop valid?
@@ -706,6 +711,7 @@ public class Finder {
         try {
             num = Integer.parseInt(val) - 1;
         } catch (NumberFormatException e) {
+            Timber.w(e);
             num = null;
         }
         if (num != null) {
