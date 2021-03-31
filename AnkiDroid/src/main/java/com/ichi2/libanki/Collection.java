@@ -1384,16 +1384,27 @@ public class Collection {
         }
     }
 
+    private static class UndoReview extends Undoable {
+        private final boolean mWasLeech;
+        @NonNull private final Card mClonedCard;
+        public UndoReview(boolean wasLeech, @NonNull Card clonedCard) {
+            super(REVIEW);
+            mClonedCard = clonedCard;
+            mWasLeech = wasLeech;
+        }
+
+        @NonNull
+        @Override
+        public Card undo(@NonNull Collection col) {
+            col.getSched().undoReview(mClonedCard, mWasLeech);
+            return mClonedCard;
+        }
+    }
+
     public void markReview(Card card) {
         boolean wasLeech = card.note().hasTag("leech");
         Card clonedCard = card.clone();
-        Undoable undoableReview = new Undoable(REVIEW) {
-            public @Nullable Card undo(@NonNull Collection col) {
-                col.getSched().undoReview(clonedCard, wasLeech);
-                return clonedCard;
-            }
-        };
-        markUndo(undoableReview);
+        markUndo(new UndoReview(wasLeech, clonedCard));
     }
 
     /**
