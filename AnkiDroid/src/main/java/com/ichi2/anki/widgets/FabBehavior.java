@@ -76,4 +76,17 @@ public class FabBehavior extends CoordinatorLayout.Behavior<View> {
         }
         return false;
     }
+
+    @Override
+    public void onDependentViewRemoved(@NonNull CoordinatorLayout parent, @NonNull View fab, @NonNull View dependency) {
+        super.onDependentViewRemoved(parent, fab, dependency);
+        if (dependency instanceof Snackbar.SnackbarLayout && fab.getVisibility() == View.VISIBLE) {
+            float translationY = getFabTranslationYForSnackbar(parent, fab);
+            if (translationY == this.mTranslationY) {
+                ViewCompat.animate(fab).cancel();
+                fab.setTranslationY(0);
+                this.mTranslationY = 0;
+            }
+        }
+    }
 }
