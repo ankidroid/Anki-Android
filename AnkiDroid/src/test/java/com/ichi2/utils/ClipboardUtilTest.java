@@ -29,17 +29,9 @@ public class ClipboardUtilTest {
     }
 
     @Test
-    public void hasImageClipboardmanagerprimarycliptest() {
-        android.content.ClipboardManager clipboardManager = (android.content.ClipboardManager) context.getSystemService(Context.CLIPBOARD_SERVICE);
-        ClipData clip = ClipData.newPlainText(null, "sample text");
-        clipboardManager.setPrimaryClip(clip);
-        assertFalse(hasImage(clipboardManager));
-    }
-
-    @Test
     public void hasImageDescriptionnulltest() {
         ClipDescription clipDescription = null;
         assertFalse(hasImage(clipDescription));
     }
-    
+
 }
