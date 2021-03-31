@@ -262,7 +262,7 @@ dependencies {
     // io.github.java-diff-utils:java-diff-utils is the natural successor here, but requires API24, #7091
     implementation 'org.bitbucket.cowwoc:diff-match-patch:1.2'
     implementation 'org.apache.commons:commons-compress:1.12' // #6419 - handle >2GB apkg files
-    implementation group: 'org.apache.commons', name: 'commons-collections4', version: '4.4' // SetUniqueList
+    implementation 'org.apache.commons:commons-collections4:4.4' // SetUniqueList
     implementation 'net.mikehardy:google-analytics-java7:2.0.13'
     //noinspection GradleDependency NewerVersionAvailable
     implementation 'com.squareup.okhttp3:okhttp:3.12.12'
