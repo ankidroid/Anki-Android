@@ -200,8 +200,8 @@ public class AnkiDroidApp extends Application {
     }
 
 
-    public static boolean isUninitialized() {
-        return sInstance == null;
+    public static boolean isInitialized() {
+        return sInstance != null;
     }
 
 
