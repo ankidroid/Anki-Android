@@ -10,7 +10,6 @@ import static com.ichi2.utils.ClipboardUtil.hasImage;
 import static org.junit.Assert.*;
 
 import org.junit.runner.RunWith;
-import org.mockito.Mock;
 import org.mockito.junit.MockitoJUnitRunner;
 
 
@@ -18,9 +17,6 @@ import org.mockito.junit.MockitoJUnitRunner;
 @RunWith(MockitoJUnitRunner.class)
 
 public class ClipboardUtilTest {
-
-    @Mock
-    Context context;
 
     @Test
     public void hasImageClipboardmanagernulltest() {
