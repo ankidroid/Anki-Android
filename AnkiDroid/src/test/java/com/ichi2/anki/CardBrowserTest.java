@@ -520,7 +520,7 @@ public class CardBrowserTest extends RobolectricTest {
         c2.flush();
 
         CardBrowser cardBrowser = getBrowserWithNoNewCards();
-        cardBrowser.searchCards("Hello or world");
+        cardBrowser.searchCards("world or hello");
         advanceRobolectricLooperWithSleep();
 
         assertThat("tagged card should be returned", cardBrowser.getCardCount(), is(1));
