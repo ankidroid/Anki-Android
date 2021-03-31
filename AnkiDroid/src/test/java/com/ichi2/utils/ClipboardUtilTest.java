@@ -41,11 +41,5 @@ public class ClipboardUtilTest {
         ClipDescription clipDescription = null;
         assertFalse(hasImage(clipDescription));
     }
-
-    @Test
-    public void hasImageDescriptionimagemimetypestest() {
-        ClipDescription clipDescription = null;
-        assertFalse(hasImage(clipDescription));
-    }
-
+    
 }
