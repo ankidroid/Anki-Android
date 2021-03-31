@@ -1,20 +1,12 @@
 package com.ichi2.utils;
 
-import android.content.ClipData;
 import android.content.ClipDescription;
 import android.content.ClipboardManager;
-import android.content.Context;
 
 import org.junit.Test;
 import static com.ichi2.utils.ClipboardUtil.hasImage;
 import static org.junit.Assert.*;
 
-import org.junit.runner.RunWith;
-import org.mockito.junit.MockitoJUnitRunner;
-
-
-
-@RunWith(MockitoJUnitRunner.class)
 
 public class ClipboardUtilTest {
 
