@@ -45,8 +45,7 @@ import com.ichi2.ui.TextInputEditField;
 import com.ichi2.utils.AdaptionUtil;
 
 import java.net.UnknownHostException;
-import java.util.LinkedList;
-import java.util.Queue;
+import java.util.Arrays;
 
 import timber.log.Timber;
 
@@ -57,8 +56,8 @@ public class MyAccount extends AnkiActivity {
     private final static int STATE_LOGGED_IN = 2;
     private final static int ROTATED_RIGHT = 90;
     private final static int ROTATED_LEFT = 270;
-    private final static int OFF_SET = 30;
-    private final static int TOLERANCE = 10;
+    private final static int OFFSET = 30;
+    private final static int DEVIATION = 10;
     private final static int ORIENTATION_WINDOW = 25;
 
     private View mLoginToMyAccountView;
@@ -76,7 +75,8 @@ public class MyAccount extends AnkiActivity {
     private OrientationEventListener myOrientationEventListener;
     private ImageView mAnkidroidLogo;
 
-    private Queue<Integer> orientations;
+    private Integer[] orientations = new Integer[ORIENTATION_WINDOW];
+    private int incrementer = 0;
 
     private void switchToState(int newState) {
         switch (newState) {
@@ -127,10 +127,9 @@ public class MyAccount extends AnkiActivity {
             switchToState(STATE_LOG_IN);
         }
 
-        orientations = new LinkedList<>();
-
         // listener for handling future change in orientation
         initializeOrientationListener();
+        Arrays.fill(orientations, 0);
     }
 
 
@@ -341,7 +340,6 @@ public class MyAccount extends AnkiActivity {
 
     // this was the original method to check orientation
     public void checkOrientation(int orientation) {
-        Log.d("checkOrientation", "Average Orientation is " + getAverageOrientation(orientation));
         // if the screen is
         if (getIsScreenSmall() && getIsNotVertical(orientation)) {
             mAnkidroidLogo.setVisibility(View.GONE);
@@ -350,41 +348,35 @@ public class MyAccount extends AnkiActivity {
         }
     }
 
-    // check if the screen is not vertical
-    private boolean getIsNotVertical(int orientation){
-        int avgOrientation = getAverageOrientation(orientation);
-        // check if we have enough data to change
-        return orientations.size() == ORIENTATION_WINDOW
-                // make sure we haven't just rotated
-                && Math.abs(orientation - avgOrientation) < TOLERANCE
-                // check if we are not vertical
-                && ROTATED_RIGHT - OFF_SET <= avgOrientation
-                && avgOrientation <= ROTATED_LEFT + OFF_SET;
+    private boolean getIsNotVertical(int orientation) {
+        Log.d("checkOrientation", "Orientation is " + orientation);
+        setAverageOrientation(orientation);
+        int avgOrientation = getAverageOrientation();
+        //Log.d("checkOrientation", "Average Orientation is " + avgOrientation);
+        Log.d("checkOrientation", "Difference is " + Math.abs(orientation - avgOrientation));
+        return Math.abs(orientation - avgOrientation) < DEVIATION
+                && ROTATED_RIGHT - OFFSET <= avgOrientation
+                && avgOrientation <= ROTATED_LEFT + OFFSET;
     }
 
-    // check if we will have room to show the logo, since this might be on a tablet
-    private boolean getIsScreenSmall(){
+    private boolean getIsScreenSmall() {
         return (this.getApplicationContext().getResources().getConfiguration().screenLayout
                 & Configuration.SCREENLAYOUT_SIZE_MASK)
                 <= Configuration.SCREENLAYOUT_SIZE_NORMAL;
     }
 
-    // split between updating orientation and get moving average to separate data from use
-    private int getAverageOrientation(int orientation){
-        // remove oldest orientation
-        if(orientations.size() == ORIENTATION_WINDOW){
-            orientations.remove();
-        }
-        // add new orientation
+    private void setAverageOrientation(int orientation) {
         if(orientation != OrientationEventListener.ORIENTATION_UNKNOWN) {
-            orientations.add(orientation);
+            orientations[incrementer++%ORIENTATION_WINDOW] = orientation;
         }
-        // get the average orientation
+    }
+
+    private int getAverageOrientation() {
         int orientationSum = 0;
         for(int ort: orientations){
             orientationSum += ort;
         }
-        return orientationSum/orientations.size();
+        return orientationSum/ orientations.length;
     }
 
     public void initializeOrientationListener() {
