@@ -182,7 +182,7 @@ public class Collection {
             return LanguageUtil.getLocaleCompat(resources);
         }
         public String getString(Resources res) {
-            return res.getString(mUndoNameId).toLowerCase(getLocale(res));
+            return res.getString(mUndoNameId);
         }
     }
 
@@ -1349,16 +1349,16 @@ public class Collection {
 
     /** Undo menu item name, or "" if undo unavailable. */
     @VisibleForTesting
-    public @Nullable DismissType undoType() {
+    public @Nullable Undoable undoType() {
         if (mUndo.size() > 0) {
-            return mUndo.getLast().getDismissType();
+            return mUndo.getLast();
         }
         return null;
     }
     public String undoName(Resources res) {
-        DismissType type = undoType();
+        Undoable type = undoType();
         if (type != null) {
-            return type.getString(res);
+            return type.name(res);
         }
         return "";
     }
