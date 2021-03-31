@@ -29,6 +29,7 @@ import com.ichi2.libanki.Deck;
 import com.ichi2.utils.JSONObject;
 
 import org.hamcrest.Matchers;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.robolectric.annotation.Config;
@@ -75,6 +76,7 @@ public class CustomStudyDialogTest extends RobolectricTest {
 
 
     @Test
+    @Ignore("#8406")
     @Config(qualifiers = "en")
     public void increaseNewCardLimitRegressionTest(){
         // #8338 - Regression Test

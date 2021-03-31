@@ -69,20 +69,14 @@ public class CustomStudyDialog extends AnalyticsDialogFragment {
     public static final int CONTEXT_MENU_LIMITS = 1;
     public static final int CONTEXT_MENU_EMPTY_SCHEDULE = 2;
     // Standard custom study options to show in the context menu
-    @VisibleForTesting
-    static final int CUSTOM_STUDY_NEW = 100;
-    @VisibleForTesting
-    static final int CUSTOM_STUDY_REV = 101;
-    @VisibleForTesting
-    static final int CUSTOM_STUDY_FORGOT = 102;
+    private static final int CUSTOM_STUDY_NEW = 100;
+    private static final int CUSTOM_STUDY_REV = 101;
+    private static final int CUSTOM_STUDY_FORGOT = 102;
     @VisibleForTesting
     static final int CUSTOM_STUDY_AHEAD = 103;
-    @VisibleForTesting
-    static final int CUSTOM_STUDY_RANDOM = 104;
-    @VisibleForTesting
-    static final int CUSTOM_STUDY_PREVIEW = 105;
-    @VisibleForTesting
-    static final int CUSTOM_STUDY_TAGS = 106;
+    private static final int CUSTOM_STUDY_RANDOM = 104;
+    private static final int CUSTOM_STUDY_PREVIEW = 105;
+    private static final int CUSTOM_STUDY_TAGS = 106;
     // Special items to put in the context menu
     private static final int DECK_OPTIONS = 107;
     private static final int MORE_OPTIONS = 108;
