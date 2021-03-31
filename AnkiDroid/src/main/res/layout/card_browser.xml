@@ -22,23 +22,23 @@
 
                 <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
                     android:background="?android:attr/colorBackground"
-                    android:orientation="horizontal" >
+                    android:orientation="horizontal"
+                    style="@style/card_browser_spinner_layout">
 
                     <Spinner
                         android:id="@+id/browser_column1_spinner"
                         android:layout_width="0dp"
-                        android:layout_height="wrap_content"
+                        android:layout_height="match_parent"
                         android:layout_weight="1"
-                        app:popupTheme="@style/ActionBar.Popup"/>
+                        app:popupTheme="@style/ActionBar.Popup" />
 
                     <Spinner
                         android:id="@+id/browser_column2_spinner"
                         android:layout_width="0dp"
-                        android:layout_height="wrap_content"
+                        android:layout_height="match_parent"
                         android:layout_weight="1"
-                        app:popupTheme="@style/ActionBar.Popup"/>
+                        app:popupTheme="@style/ActionBar.Popup" />
                 </LinearLayout>
 
                 <ListView
