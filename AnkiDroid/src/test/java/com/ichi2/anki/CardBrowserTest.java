@@ -509,6 +509,23 @@ public class CardBrowserTest extends RobolectricTest {
         assertUndoContains(b, R.string.deck_conf_cram_reschedule);
     }
 
+    @Test
+    public void checkSearchString() {
+        Card c1 = addNoteUsingBasicModel("Hello", "John").firstCard();
+        c1.flush();
+        long deck = addDeck("Deck 1");
+        getCol().getDecks().select(deck);
+        Card c2 = addNoteUsingBasicModel("New", "world").firstCard();
+        c2.setDid(deck);
+        c2.flush();
+
+        CardBrowser cardBrowser = getBrowserWithNoNewCards();
+        cardBrowser.searchCards("Hello or world");
+        advanceRobolectricLooperWithSleep();
+
+        assertThat("tagged card should be returned", cardBrowser.getCardCount(), is(1));
+    }
+
     protected void assertUndoDoesNotContain(CardBrowser browser, @StringRes int resId) {
         ShadowActivity shadowActivity = shadowOf(browser);
         MenuItem item = shadowActivity.getOptionsMenu().findItem(R.id.action_undo);
