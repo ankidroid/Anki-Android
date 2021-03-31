@@ -87,17 +87,12 @@ import org.apache.commons.compress.archivers.zip.ZipFile;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.annotation.StringRes;
 import androidx.annotation.VisibleForTesting;
 import timber.log.Timber;
 
 import static com.ichi2.async.TaskManager.setLatestInstance;
 import static com.ichi2.libanki.Card.deepCopyCardArray;
-import static com.ichi2.libanki.Collection.DismissType.BURY_CARD;
-import static com.ichi2.libanki.Collection.DismissType.BURY_NOTE;
-import static com.ichi2.libanki.Collection.DismissType.REPOSITION_CARDS;
-import static com.ichi2.libanki.Collection.DismissType.RESCHEDULE_CARDS;
-import static com.ichi2.libanki.Collection.DismissType.RESET_CARDS;
-import static com.ichi2.libanki.Collection.DismissType.SUSPEND_NOTE;
 import static com.ichi2.libanki.Undoable.*;
 import static com.ichi2.utils.BooleanGetter.False;
 import static com.ichi2.utils.BooleanGetter.True;
@@ -437,7 +432,7 @@ public class CollectionTask<ProgressListener, ProgressBackground extends Progres
 
 
         public UndoSuspendCard(Card suspendedCard) {
-            super(Collection.DismissType.SUSPEND_CARD);
+            super(R.string.menu_suspend_card);
             this.suspendedCard = suspendedCard;
         }
 
@@ -457,7 +452,7 @@ public class CollectionTask<ProgressListener, ProgressBackground extends Progres
 
 
         public UndoDeleteNote(Note note, ArrayList<Card> allCs, @NonNull Card card) {
-            super(Collection.DismissType.DELETE_NOTE);
+            super(R.string.menu_delete_note);
             this.note = note;
             this.allCs = allCs;
             this.card = card;
@@ -514,7 +509,7 @@ public class CollectionTask<ProgressListener, ProgressBackground extends Progres
         @Override
         protected void actualTask(Collection col, Card card) {
             // collect undo information
-            col.markUndo(revertToProvidedState(BURY_CARD, card));
+            col.markUndo(revertToProvidedState(R.string.menu_bury_card, card));
             // then bury
             col.getSched().buryCards(new long[] {card.getId()});
         }
@@ -528,7 +523,7 @@ public class CollectionTask<ProgressListener, ProgressBackground extends Progres
         @Override
         protected void actualTask(Collection col, Card card) {
             // collect undo information
-            col.markUndo(revertToProvidedState(BURY_NOTE, card));
+            col.markUndo(revertToProvidedState(R.string.menu_bury_note, card));
             // then bury
             col.getSched().buryNote(card.note().getId());
         }
@@ -566,7 +561,7 @@ public class CollectionTask<ProgressListener, ProgressBackground extends Progres
             for (int i = 0; i < cards.size(); i++) {
                 cids[i] = cards.get(i).getId();
             }
-            col.markUndo(revertToProvidedState(SUSPEND_NOTE, card));
+            col.markUndo(revertToProvidedState(R.string.menu_suspend_note, card));
             // suspend note
             col.getSched().suspendCards(cids);
         }
@@ -597,7 +592,7 @@ public class CollectionTask<ProgressListener, ProgressBackground extends Progres
          *                          otherwise the action was "Unsuspend")  */
         public UndoSuspendCardMulti(Card[] cards, boolean[] originalSuspended,
                                     boolean hasUnsuspended) {
-            super((hasUnsuspended) ? Collection.DismissType.SUSPEND_CARD_MULTI: Collection.DismissType.UNSUSPEND_CARD_MULTI);
+            super((hasUnsuspended) ? R.string.menu_suspend_card : R.string.card_browser_unsuspend_card);
             this.cards = cards;
             this.originalSuspended = originalSuspended;
         }
@@ -642,7 +637,7 @@ public class CollectionTask<ProgressListener, ProgressBackground extends Progres
 
 
         public UndoDeleteNoteMulti(Note[] notesArr, List<Card> allCards) {
-            super(Collection.DismissType.DELETE_NOTE_MULTI);
+            super(R.string.card_browser_delete_card);
             this.notesArr = notesArr;
             this.allCards = allCards;
         }
@@ -673,7 +668,7 @@ public class CollectionTask<ProgressListener, ProgressBackground extends Progres
 
 
         public UndoChangeDeckMulti(Card[] cards, long[] originalDids) {
-            super(Collection.DismissType.CHANGE_DECK_MULTI);
+            super(R.string.undo_action_change_deck_multi);
             this.cards = cards;
             this.originalDids = originalDids;
         }
@@ -702,7 +697,7 @@ public class CollectionTask<ProgressListener, ProgressBackground extends Progres
         /** @param hasUnmarked whether there were any unmarked card (in which card the action was "mark",
          *                      otherwise the action was "Unmark")  */
         public UndoMarkNoteMulti(List<Note> originalMarked, List<Note> originalUnmarked, boolean hasUnmarked) {
-            super((hasUnmarked) ? Collection.DismissType.MARK_NOTE_MULTI : Collection.DismissType.UNMARK_NOTE_MULTI);
+            super((hasUnmarked) ? R.string.card_browser_mark_card : R.string.card_browser_unmark_card);
             this.originalMarked = originalMarked;
             this.originalUnmarked = originalUnmarked;
         }
@@ -721,14 +716,14 @@ public class CollectionTask<ProgressListener, ProgressBackground extends Progres
         private final Card[] cards_copied;
 
 
-        public UndoRepositionRescheduleResetCards(Collection.DismissType type, Card[] cards_copied) {
-            super(type);
+        public UndoRepositionRescheduleResetCards(@StringRes int undoNameId, Card[] cards_copied) {
+            super(undoNameId);
             this.cards_copied = cards_copied;
         }
 
 
         public @Nullable Card undo(@NonNull Collection col) {
-            Timber.i("Undoing action of type %s on %d cards", getDismissType(), cards_copied.length);
+            Timber.i("Undoing action of type %s on %d cards", getClass(), cards_copied.length);
             for (Card card : cards_copied) {
                 card.flush(false);
             }
@@ -968,22 +963,22 @@ public class CollectionTask<ProgressListener, ProgressBackground extends Progres
     }
 
     private abstract static class RescheduleRepositionReset extends DismissNotes<Card> {
-        private final Collection.DismissType mType;
-        public RescheduleRepositionReset(List<Long> cardIds, Collection.DismissType type) {
+        @StringRes private final int mUndoNameId;
+        public RescheduleRepositionReset(List<Long> cardIds, @StringRes int undoNameId) {
             super(cardIds);
-            mType = type;
+            mUndoNameId = undoNameId;
         }
 
         protected PairWithBoolean<Card[]> actualTask(Collection col, ProgressSenderAndCancelListener<Card> collectionTask, Card[] cards) {
             AbstractSched sched = col.getSched();
             // collect undo information, sensitive to memory pressure, same for all 3 cases
             try {
-                Timber.d("Saving undo information of type %s on %d cards", mType, cards.length);
+                Timber.d("Saving undo information of type %s on %d cards", getClass(), cards.length);
                 Card[] cards_copied = deepCopyCardArray(cards, collectionTask);
-                Undoable repositionRescheduleResetCards = new UndoRepositionRescheduleResetCards(mType, cards_copied);
+                Undoable repositionRescheduleResetCards = new UndoRepositionRescheduleResetCards(mUndoNameId, cards_copied);
                 col.markUndo(repositionRescheduleResetCards);
             } catch (CancellationException ce) {
-                Timber.i(ce, "Cancelled while handling type %s, skipping undo", mType);
+                Timber.i(ce, "Cancelled while handling type %s, skipping undo", mUndoNameId);
             }
             actualActualTask(sched);
             // In all cases schedule a new card so Reviewer doesn't sit on the old one
@@ -998,7 +993,7 @@ public class CollectionTask<ProgressListener, ProgressBackground extends Progres
     public static class RescheduleCards extends RescheduleRepositionReset {
         private final int mSchedule;
         public RescheduleCards(List<Long> cardIds, int schedule) {
-            super(cardIds, RESCHEDULE_CARDS);
+            super(cardIds, R.string.card_editor_reschedule_card);
             this.mSchedule = schedule;
         }
 
@@ -1011,7 +1006,7 @@ public class CollectionTask<ProgressListener, ProgressBackground extends Progres
     public static class RepositionCards extends RescheduleRepositionReset {
         private final int mPosition;
         public RepositionCards(List<Long> cardIds, int position) {
-            super(cardIds, REPOSITION_CARDS);
+            super(cardIds, R.string.card_editor_reposition_card);
             this.mPosition = position;
         }
 
@@ -1023,7 +1018,7 @@ public class CollectionTask<ProgressListener, ProgressBackground extends Progres
 
     public static class ResetCards extends RescheduleRepositionReset {
         public ResetCards(List<Long> cardIds) {
-            super(cardIds, RESET_CARDS);
+            super(cardIds, R.string.card_editor_reset_card);
         }
 
         @Override
