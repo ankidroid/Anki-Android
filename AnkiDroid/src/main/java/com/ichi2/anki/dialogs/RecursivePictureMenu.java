@@ -24,6 +24,7 @@ import android.os.Parcel;
 import android.os.Parcelable;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.afollestad.materialdialogs.MaterialDialog;
@@ -40,9 +41,9 @@ import androidx.annotation.DrawableRes;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.annotation.StringRes;
+import androidx.appcompat.content.res.AppCompatResources;
 import androidx.fragment.app.DialogFragment;
 import androidx.recyclerview.widget.RecyclerView;
-import androidx.vectordrawable.graphics.drawable.VectorDrawableCompat;
 import timber.log.Timber;
 
 /** A Dialog displaying The various options for "Help" in a nested structure */
@@ -129,13 +130,11 @@ public class RecursivePictureMenu extends DialogFragment {
             titleFrame.setPadding(10, 22, 10, 10);
             titleFrame.setOnClickListener((l) -> dismiss());
 
-            View icon = dialog.findViewById(R.id.md_icon);
+            ImageView icon = (ImageView) dialog.findViewById(R.id.md_icon);
             icon.setVisibility(View.VISIBLE);
-            Drawable iconValue = VectorDrawableCompat.create(
-                    getResources(),
-                    R.drawable.ic_menu_back_black_24dp,
-                    requireActivity().getTheme());
-            icon.setBackground(iconValue);
+            Drawable iconValue = AppCompatResources.getDrawable(getContext(), R.drawable.ic_menu_back_black_24dp);
+            iconValue.setAutoMirrored(true);
+            icon.setImageDrawable(iconValue);
         } catch (Exception e) {
             Timber.w(e, "Failed to set Menu title/icon");
         }

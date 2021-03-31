@@ -23,8 +23,8 @@
     android:gravity="center_vertical"
     android:orientation="horizontal"
     android:focusable="true"
-    android:paddingLeft="@dimen/deck_picker_left_padding"
-    android:paddingRight="@dimen/deck_picker_right_padding"
+    android:paddingStart="@dimen/deck_picker_left_padding"
+    android:paddingEnd="@dimen/deck_picker_right_padding"
     tools:background="@android:color/holo_orange_light">
 
     <ImageButton
@@ -32,14 +32,14 @@
         android:minWidth="0dp"
         android:layout_height="wrap_content"
         android:layout_width="wrap_content"
-        android:focusable="true"
-        android:layout_alignParentLeft="true"
+        android:focusable="true
+        android:layout_alignParentStart="true"
         android:background="@android:color/transparent" />
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_toRightOf="@+id/deckpicker_indent"
-        android:layout_toLeftOf="@+id/counts_layout"
+        android:layout_toEndOf="@+id/deckpicker_indent"
+        android:layout_toStartOf="@+id/counts_layout"
         android:orientation="horizontal"
         android:focusable="true"
         android:gravity="center_vertical">
@@ -57,7 +57,7 @@
             android:layout_height="wrap_content"
             android:minHeight="48dp"
             android:background="@color/transparent"
-            android:gravity="left|center_vertical"
+            android:gravity="start|center_vertical"
             android:maxLines="2"
             android:focusable="true"
 
@@ -74,8 +74,8 @@
         android:layout_height="wrap_content"
         android:minHeight="48dp"
         android:minWidth="70dp"
-        android:gravity="right"
-        android:layout_alignParentRight="true"
+        android:gravity="end"
+        android:layout_alignParentEnd="true"
         android:layout_centerVertical="true" >
         <com.ichi2.ui.FixedTextView
             android:id="@+id/deckpicker_new"
@@ -85,7 +85,7 @@
             android:focusable="true"
             android:background="@color/transparent"
             android:gravity="center"
-            android:paddingRight="5dip"
+            android:paddingEnd="5dip"
             android:textSize="14sp"
             tools:text="10" />
 
@@ -96,7 +96,7 @@
             android:layout_gravity="center"
             android:background="@color/transparent"
             android:gravity="center"
-            android:paddingRight="5dip"
+            android:paddingEnd="5dip"
             android:textSize="14sp"
             tools:text="42" />
 
@@ -106,7 +106,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:focusable="true"
-            android:layout_marginRight="6dip"
+            android:layout_marginEnd="6dip"
             android:background="@color/transparent"
             android:gravity="center"
             android:textSize="14sp"
