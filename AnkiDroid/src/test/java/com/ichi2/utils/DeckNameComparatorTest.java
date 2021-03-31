@@ -18,7 +18,7 @@ public class DeckNameComparatorTest {
 
     @Test
     public void compareLessThan() {
-       assertThat(deckNameComparator.compare("aa", "aa:bb"), is(lessThan(0)));
+       assertThat(deckNameComparator.compare("aa", "aa:bb"), lessThan(0));
     }
 
     @Test
