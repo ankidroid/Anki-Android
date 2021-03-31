@@ -22,6 +22,7 @@
 package com.ichi2.anki;
 
 import android.Manifest;
+import android.animation.Animator;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -42,6 +43,7 @@ import android.os.ParcelFileDescriptor;
 import android.provider.Settings;
 
 import com.afollestad.materialdialogs.GravityEnum;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
 
 import androidx.annotation.NonNull;
@@ -82,8 +84,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.afollestad.materialdialogs.MaterialDialog;
-import com.getbase.floatingactionbutton.FloatingActionButton;
-import com.getbase.floatingactionbutton.FloatingActionsMenu;
 import com.ichi2.anki.CollectionHelper.CollectionIntegrityStorageCheck;
 import com.ichi2.anki.StudyOptionsFragment.StudyOptionsListener;
 import com.ichi2.anki.analytics.UsageAnalytics;
@@ -201,7 +201,7 @@ public class DeckPicker extends NavigationDrawerActivity implements
     private RecyclerView mRecyclerView;
     private LinearLayoutManager mRecyclerViewLayoutManager;
     private DeckAdapter mDeckListAdapter;
-    private FloatingActionsMenu mActionsMenu;
+	
     private final Snackbar.Callback mSnackbarShowHideCallback = new Snackbar.Callback();
 
     private LinearLayout mNoDecksPlaceholder;
@@ -215,6 +215,8 @@ public class DeckPicker extends NavigationDrawerActivity implements
     private long mContextMenuDid;
 
     private EditText mDialogEditText;
+
+    private DeckPickerFloatingActionMenu mFloatingActionMenu;
 
     // flag asking user to do a full sync which is used in upgrade path
     private boolean mRecommendFullSync = false;
@@ -269,8 +271,8 @@ public class DeckPicker extends NavigationDrawerActivity implements
     private void onDeckClick(View v, DeckSelectionType selectionType) {
         long deckId = (long) v.getTag();
         Timber.i("DeckPicker:: Selected deck with id %d", deckId);
-        if (mActionsMenu != null && mActionsMenu.isExpanded()) {
-            mActionsMenu.collapse();
+        if (mFloatingActionMenu.isFABOpen()) {
+            mFloatingActionMenu.closeFloatingActionMenu();
         }
 
         boolean collectionIsOpen = false;
@@ -517,9 +519,7 @@ public class DeckPicker extends NavigationDrawerActivity implements
                 mPullToSyncWrapper.setEnabled(mRecyclerViewLayoutManager.findFirstCompletelyVisibleItemPosition() == 0));
 
         // Setup the FloatingActionButtons, should work everywhere with min API >= 15
-        mActionsMenu = findViewById(R.id.add_content_menu);
-        mActionsMenu.findViewById(R.id.fab_expand_menu_button).setContentDescription(getString(R.string.menu_add));
-        configureFloatingActionsMenu();
+        mFloatingActionMenu = new DeckPickerFloatingActionMenu(view, this);
 
         mReviewSummaryTextView = findViewById(R.id.today_stats_text_view);
 
@@ -629,56 +629,12 @@ public class DeckPicker extends NavigationDrawerActivity implements
         }
     }
 
-    private void configureFloatingActionsMenu() {
-        final FloatingActionButton addDeckButton = findViewById(R.id.add_deck_action);
-        final FloatingActionButton addSharedButton = findViewById(R.id.add_shared_action);
-        final FloatingActionButton addNoteButton = findViewById(R.id.add_note_action);
-        addDeckButton.setOnClickListener(view -> {
-            if (mActionsMenu == null) {
-                return;
-            }
-            mActionsMenu.collapse();
-            mDialogEditText = new FixedEditText(DeckPicker.this);
-            mDialogEditText.setSingleLine(true);
-            // mDialogEditText.setFilters(new InputFilter[] { mDeckNameFilter });
-            new MaterialDialog.Builder(DeckPicker.this)
-                    .title(R.string.new_deck)
-                    .positiveText(R.string.dialog_ok)
-                    .customView(mDialogEditText, true)
-                    .onPositive((dialog, which) -> {
-                        String deckName = mDialogEditText.getText().toString();
-                        if (Decks.isValidDeckName(deckName)) {
-                            boolean creation_succeed = createNewDeck(deckName);
-                            if (!creation_succeed) {
-                                return;
-                            }
-                        } else {
-                            Timber.i("configureFloatingActionsMenu::addDeckButton::onPositiveListener - Not creating invalid deck name '%s'", deckName);
-                            UIUtils.showThemedToast(this, getString(R.string.invalid_deck_name), false);
-                        }
-                    })
-                    .negativeText(R.string.dialog_cancel)
-                    .show();
-        });
-        addSharedButton.setOnClickListener(view -> {
-            Timber.i("Adding Shared Deck");
-            mActionsMenu.collapse();
-            addSharedDeck();
-        });
-        addNoteButton.setOnClickListener(view -> {
-            Timber.i("Adding Note");
-            mActionsMenu.collapse();
-            addNote();
-        });
-    }
-
-
     /**
      * It can fail if an ancestor is a filtered deck.
      * @param deckName Create a deck with this name.
      * @return Whether creation succeeded.
      */
-    private boolean createNewDeck(String deckName) {
+    protected boolean createNewDeck(String deckName) {
         Timber.i("DeckPicker:: Creating new deck...");
         try {
             getCol().getDecks().id(deckName);
@@ -1010,6 +966,7 @@ public class DeckPicker extends NavigationDrawerActivity implements
         super.onSaveInstanceState(savedInstanceState);
         savedInstanceState.putLong("mContextMenuDid", mContextMenuDid);
         savedInstanceState.putBoolean("mClosedWelcomeMessage", mClosedWelcomeMessage);
+        savedInstanceState.putBoolean("mIsFABOpen", mFloatingActionMenu.isFABOpen());
     }
 
 
@@ -1017,6 +974,7 @@ public class DeckPicker extends NavigationDrawerActivity implements
     public void onRestoreInstanceState(Bundle savedInstanceState) {
         super.onRestoreInstanceState(savedInstanceState);
         mContextMenuDid = savedInstanceState.getLong("mContextMenuDid");
+        mFloatingActionMenu.setIsFABOpen(savedInstanceState.getBoolean("mIsFABOpen"));
     }
 
 
@@ -1073,8 +1031,8 @@ public class DeckPicker extends NavigationDrawerActivity implements
             super.onBackPressed();
         } else {
             Timber.i("Back key pressed");
-            if (mActionsMenu != null && mActionsMenu.isExpanded()) {
-                mActionsMenu.collapse();
+            if (mFloatingActionMenu.isFABOpen()) {
+                mFloatingActionMenu.closeFloatingActionMenu();
             } else {
                 automaticSync();
                 finishWithAnimation();
@@ -2417,7 +2375,7 @@ public class DeckPicker extends NavigationDrawerActivity implements
      *
      * This method also triggers an update for the widget to reflect the newly calculated counts.
      */
-    private void updateDeckList() {
+    protected void updateDeckList() {
         updateDeckList(false);
     }
 
