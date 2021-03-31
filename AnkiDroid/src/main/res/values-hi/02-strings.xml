@@ -43,27 +43,27 @@
     <!-- #7570: We should use these strings again -->
     <!-- Navigation drawer strings -->
     <string tools:ignore="UnusedResources" name="drawer_open">दराज़ खोलें</string>
-    <string tools:ignore="UnusedResources" name="drawer_close">दराज़ बंद करें</string>
+    <string tools:ignore="UnusedResources" name="drawer_close">दराज को बंद करें</string>
     <string name="CardEditorCardDeck">पत्ता डेक:</string>
     <string name="CardEditorNoteDeck">डेक:</string>
     <string name="CardEditorModel">प्रकार:</string>
     <string name="CardEditorTags">टैग: %1$s</string>
     <string name="CardEditorCards">पत्ते: %1$s</string>
-    <string name="tag_name">टैग नाम</string>
-    <string name="add_new_filter_tags">टैग को जोड़ें/छानें</string>
+    <string name="tag_name">टैग का नाम</string>
+    <string name="add_new_filter_tags">टैग को छानें</string>
     <string name="add_tag">टैग जोड़ें</string>
     <string name="check_all_tags">सभी टैग चयनित/अचयनित करें</string>
     <string name="filter_tags">टैग छानें</string>
-    <string name="no_tags">अपने अभी तक कोई टैग नहीं जोड़ा है</string>
+    <string name="no_tags">आपने अभी तक कोई टैग नहीं बनाया है</string>
     <string name="updated_version">%s संस्करण को अद्यतित किया गया</string>
     <!-- Reviewer.java -->
-    <string name="save_whiteboard">स्लेट सुरक्षित करें </string>
-    <string name="enable_whiteboard">स्लेट सक्षम करें</string>
-    <string name="disable_whiteboard">स्लेट अक्षम करें</string>
-    <string name="show_whiteboard">Whiteboard दिखाएँ</string>
-    <string name="hide_whiteboard">Whiteboard छुपाएँ</string>
-    <string name="clear_whiteboard">स्पष्ट Whiteboard</string>
-    <string name="replay_audio">ध्वनि फिर चलाएँ</string>
+    <string name="save_whiteboard">पटल को सुरक्षित करें </string>
+    <string name="enable_whiteboard">पटल को सक्षम करें</string>
+    <string name="disable_whiteboard">पटल को अक्षम करें</string>
+    <string name="show_whiteboard">पटल को दिखाएँ</string>
+    <string name="hide_whiteboard">पटल को छुपाएँ</string>
+    <string name="clear_whiteboard">पटल को मिटाये</string>
+    <string name="replay_audio">ध्वनि फिर से चलाएँ</string>
     <string name="leech_suspend_notification">जोंक के रूप में के रूप में चिह्नित और निलंबित कार्ड</string>
     <string name="leech_notification">जोंक के रूप में के रूप में चिह्नित कार्ड</string>
     <string name="corrupt_font">दूषित फ़ॉन्ट फ़ाइल %s</string>
