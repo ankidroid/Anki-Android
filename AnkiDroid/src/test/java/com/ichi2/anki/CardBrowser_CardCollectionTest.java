@@ -53,7 +53,7 @@ public class CardBrowser_CardCollectionTest {
     private static class Positioned implements CardBrowser.PositionAware {
 
         private int mPosition;
-        private int mInitialValue;
+        private final int mInitialValue;
 
         public Positioned(int position) {
             mPosition = position;

@@ -43,8 +43,8 @@ import static com.ichi2.libanki.importer.NoteImporter.ImportMode.UPDATE_MODE;
 // Aside from 9f676dbe0b2ad9b87a3bf89d7735b4253abd440e, which allows empty notes.
 public class NoteImporter extends Importer {
 
-    private boolean mNeedMapper = true;
-    private boolean mNeedDelimiter = false;
+    private final boolean mNeedMapper = true;
+    private final boolean mNeedDelimiter = false;
     private boolean mAllowHTML = false;
     private ImportMode mImportMode = UPDATE_MODE;
     /** Note: elements can be null */
@@ -67,7 +67,7 @@ public class NoteImporter extends Importer {
     private ArrayList<Long> _ids;
     private boolean mEmptyNotes;
     private int mUpdateCount;
-    private List<ParsedNode> mTemplateParsed;
+    private final List<ParsedNode> mTemplateParsed;
 
 
     public NoteImporter(Collection col, String file) {

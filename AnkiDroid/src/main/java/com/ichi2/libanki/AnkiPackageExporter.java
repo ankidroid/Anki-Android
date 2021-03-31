@@ -568,7 +568,7 @@ public final class AnkiPackageExporter extends AnkiExporter {
  */
 class ZipFile {
     private final int BUFFER_SIZE = 1024;
-    private ZipArchiveOutputStream mZos;
+    private final ZipArchiveOutputStream mZos;
 
 
     public ZipFile(String path) throws FileNotFoundException {

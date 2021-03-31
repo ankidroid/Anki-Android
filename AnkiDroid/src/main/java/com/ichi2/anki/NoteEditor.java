@@ -226,7 +226,7 @@ public class NoteEditor extends AnkiActivity implements
     private ArrayList<Long> mAllModelIds;
     private Map<Integer, Integer> mModelChangeFieldMap;
     private HashMap<Integer, Integer> mModelChangeCardMap;
-    private ArrayList<Integer> mCustomViewIds = new ArrayList<>();
+    private final ArrayList<Integer> mCustomViewIds = new ArrayList<>();
 
     /* indicates if a new note is added or a card is edited */
     private boolean mAddNote;
@@ -241,7 +241,7 @@ public class NoteEditor extends AnkiActivity implements
 
     private String[] mSourceText;
 
-    private FieldState mFieldState = FieldState.fromEditor(this);
+    private final FieldState mFieldState = FieldState.fromEditor(this);
 
     private Toolbar mToolbar;
 

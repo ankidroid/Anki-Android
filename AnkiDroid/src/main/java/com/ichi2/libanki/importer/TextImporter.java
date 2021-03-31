@@ -32,7 +32,7 @@ import timber.log.Timber;
 @RequiresApi(api = Build.VERSION_CODES.O)
 public class TextImporter extends NoteImporter {
 
-    private boolean mNeedDelimiter = true;
+    private final boolean mNeedDelimiter = true;
     final String mPatterns = "\t|,;:";
 
     private FileObj fileobj;

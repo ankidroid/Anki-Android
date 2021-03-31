@@ -53,7 +53,7 @@ public abstract class ParsedNode {
     /**
      * Associate to each template its node, or the error it generates
      */
-    private static WeakHashMap<String, Pair<ParsedNode, TemplateError>> parse_inner_cache = new WeakHashMap<>();
+    private static final WeakHashMap<String, Pair<ParsedNode, TemplateError>> parse_inner_cache = new WeakHashMap<>();
 
     /**
      * @param template A question or answer template

@@ -71,7 +71,7 @@ import static com.android.SdkConstants.VALUE_FALSE;
 
 public class DuplicateCrowdInStrings extends ResourceXmlDetector {
 
-    private static Implementation IMPLEMENTATION_XML =
+    private static final Implementation IMPLEMENTATION_XML =
             new Implementation(DuplicateCrowdInStrings.class, Scope.ALL_RESOURCES_SCOPE);
 
     /**

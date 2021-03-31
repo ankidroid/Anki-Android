@@ -89,7 +89,7 @@ public class TextNoteExporter extends Exporter {
 
         try (BufferedWriter writer =
                      new BufferedWriter(new OutputStreamWriter(new FileOutputStream(path), StandardCharsets.UTF_8))) {
-            writer.write(out.toString());
+            writer.write(out);
         }
     }
 }
