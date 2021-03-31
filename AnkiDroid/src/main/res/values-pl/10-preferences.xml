@@ -294,5 +294,5 @@
     <string name="no_code_formatting">Proste formatowanie wpisywanej odpowiedzi</string>
     <string name="no_code_formatting_summ">Naprawia ‘􏿾’ pojawiające się we wpisywanych odpowiedziach</string>
     <!-- Open Changelog-->
-    <string name="open_changelog">Open Changelog</string>
+    <string name="open_changelog">Otwórz listę zmian w programie</string>
 </resources>

@@ -184,7 +184,7 @@
     <string name="card_template_editor_deck_override">Forcer le paquet</string>
     <string name="card_template_editor_cant_delete">Il faut au moins un type de carte.</string>
     <plurals name="card_template_editor_confirm_delete">
-        <item quantity="one">Supprimer le type de carte “%2$s” et son %1$d carte ?</item>
+        <item quantity="one">Supprimer le type de carte « %2$s » et son %1$d carte ?</item>
         <item quantity="other">Supprimer le type de carte “%2$s” et ses %1$d cartes ?</item>
     </plurals>
     <string name="invalid_template">Une carte n\'a pas pu être générée</string>

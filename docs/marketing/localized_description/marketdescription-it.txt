@@ -16,7 +16,7 @@ Aggiungi materiale con l'applicazione per desktop Anki o direttamente con AnkiDr
 • widget con progresso
 • statistiche dettagliate
 • sincronizzazione con AnkiWeb
-• open source
+• codice sorgente aperto
 
 ★ Caratteristiche aggiuntive:
 • risposte scritte (opzionale)

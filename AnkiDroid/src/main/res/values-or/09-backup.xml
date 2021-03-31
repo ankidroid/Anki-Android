@@ -40,7 +40,7 @@
 <resources>
     <string name="backup_deck_no_space_left">ବ୍ୟାକଅପ୍ ସଞ୍ଚୟ ହୋଇନାହିଁ। SD କାର୍ଡରେ ପର୍ଯ୍ୟାପ୍ତ ସ୍ଥାନ ବାକି ନାହିଁ। ବ୍ୟାକଅପ୍ ଗଭୀରତାକୁ କମ୍ କରନ୍ତୁ କିମ୍ବା ଅନ୍ୟ କିଛି ଫାଇଲ୍ ଅପସାରଣ କରନ୍ତୁ।</string>
     <string name="sd_space_warning">ଆପଣଙ୍କ SD କାର୍ଡରେ %d MB ରୁ କମ୍ ସ୍ଥାନ ବାକି ଅଛି।\nଡାଟା ନଷ୍ଟକୁ ଏଡାଇବା ପାଇଁ କିଛି ସ୍ଥାନ ଖାଲି କରନ୍ତୁ।</string>
-    <string name="backup_restore">ବ୍ୟାକଅପ୍ ରୁ ପୁନରୁଦ୍ଧାର କରନ୍ତୁ</string>
+    <string name="backup_restore">ବ୍ୟାକଅପ୍ ରୁ ପୁନରୁଦ୍ଧାର</string>
     <string name="backup_new_collection">ନୂତନ ସଂଗ୍ରହ</string>
     <string name="backup_del_collection">ସଂଗ୍ରହ ଅପସାରଣ କରନ୍ତୁ ଏବଂ ନୂତନ ନିର୍ମାଣ କରନ୍ତୁ</string>
     <string name="backup_del_collection_question">ସଂଗ୍ରହ ବିଲୋପ କରନ୍ତୁ ଏବଂ ଏକ ନୂତନ ସୃଷ୍ଟି କରନ୍ତୁ? ଏହା ଆପଣଙ୍କର ସମସ୍ତ ଶିକ୍ଷଣ ପ୍ରଗତିକୁ ଛାଡ଼ି ଦେବ ଏବଂ ସମସ୍ତ ପତ୍ର ବିଲୋପ କରିବ |</string>
