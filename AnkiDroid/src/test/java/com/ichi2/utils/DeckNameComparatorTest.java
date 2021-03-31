@@ -3,10 +3,10 @@ package com.ichi2.utils;
 import org.junit.Before;
 import org.junit.Test;
 
+import static java.util.Arrays.sort;
+
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.greaterThan;
-import static org.hamcrest.Matchers.lessThan;
 
 public class DeckNameComparatorTest {
     private DeckNameComparator deckNameComparator;
@@ -16,29 +16,21 @@ public class DeckNameComparatorTest {
         deckNameComparator = new DeckNameComparator();
     }
 
+    //Testing DeckNameComparator by sorting an array of different string size.
     @Test
-    public void compareLessThan() {
-       assertThat(deckNameComparator.compare("aa", "aa:bb"), lessThan(0));
+    public void sortDecksBySize() {
+        String[] deckNames = new String[]{"aa", "aa::bb"};
+        sort(deckNames, deckNameComparator);
+
+        assertThat(deckNames, is(new String[] {"aa", "aa::bb"}));
     }
 
+    //Testing DeckNameComparator by sorting an array of equal string length with both cases.
     @Test
-    public void compareGreaterThan() {
-        assertThat(deckNameComparator.compare("aa:bb", "aa"), is(greaterThan(0)));
-    }
+    public void sortDecks() {
+        String[] deckNames = new String[]{"AA", "ab", "BB"};
+        sort(deckNames, deckNameComparator);
 
-    @Test
-    public void compareCaseLessThan() {
-        assertThat(deckNameComparator.compare("ab", "BB"), is(lessThan(0)));
-    }
-
-    @Test
-    public void compareCaseGreaterThan() {
-        assertThat(deckNameComparator.compare("AB", "Aa"), is(greaterThan(0)));
-    }
-
-    //Test to further check implementation of case insensitivity.
-    @Test
-    public void compareCaseInsensitivity() {
-        assertThat(deckNameComparator.compare("a", "A"), is(0));
+        assertThat(deckNames, is(new String[]{"AA", "ab", "BB"}));
     }
 }
