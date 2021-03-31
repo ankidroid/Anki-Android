@@ -338,9 +338,7 @@ public class MyAccount extends AnkiActivity {
         }
     }
 
-    // this was the original method to check orientation
     public void checkOrientation(int orientation) {
-        // if the screen is
         if (getIsScreenSmall() && getIsNotVertical(orientation)) {
             mAnkidroidLogo.setVisibility(View.GONE);
         } else {
@@ -349,11 +347,8 @@ public class MyAccount extends AnkiActivity {
     }
 
     private boolean getIsNotVertical(int orientation) {
-        Log.d("checkOrientation", "Orientation is " + orientation);
         setAverageOrientation(orientation);
         int avgOrientation = getAverageOrientation();
-        //Log.d("checkOrientation", "Average Orientation is " + avgOrientation);
-        Log.d("checkOrientation", "Difference is " + Math.abs(orientation - avgOrientation));
         return Math.abs(orientation - avgOrientation) < DEVIATION
                 && ROTATED_RIGHT - OFFSET <= avgOrientation
                 && avgOrientation <= ROTATED_LEFT + OFFSET;
@@ -362,7 +357,7 @@ public class MyAccount extends AnkiActivity {
     private boolean getIsScreenSmall() {
         return (this.getApplicationContext().getResources().getConfiguration().screenLayout
                 & Configuration.SCREENLAYOUT_SIZE_MASK)
-                <= Configuration.SCREENLAYOUT_SIZE_NORMAL;
+                < Configuration.SCREENLAYOUT_SIZE_LARGE;
     }
 
     private void setAverageOrientation(int orientation) {
