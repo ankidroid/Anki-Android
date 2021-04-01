@@ -58,7 +58,7 @@ public class MyAccount extends AnkiActivity {
      * ROTATED_LEFT is 270 degree from vertical or - 90 degrees
      * OFFSET accounts for imperfections in rotation
      * DEVIATION makes sure that we have settled in a position
-     * ORIENTATION_WINDOW is the sample size.
+     * ORIENTATION_WINDOW is the sample size
      */
     private final static int ROTATED_RIGHT = 90;
     private final static int ROTATED_LEFT = 270;
@@ -138,7 +138,7 @@ public class MyAccount extends AnkiActivity {
 
         // listener for handling future change in orientation
         initializeOrientationListener();
-        // assume that we are in a vertical state to begin with.
+        // assume that we are in a vertical state to begin with
         Arrays.fill(orientations, 0);
     }
 
