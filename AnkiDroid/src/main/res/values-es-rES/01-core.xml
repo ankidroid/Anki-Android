@@ -71,7 +71,7 @@
         <item quantity="one">%d día %d restante</item>
         <item quantity="other">%d días %d restantes</item>
     </plurals>
-    <string name="no_cards_placeholder_title">Esta colección está vacía</string>
+    <string name="no_cards_placeholder_title">La colección está vacía</string>
     <string name="no_cards_placeholder_description">Empieza añadiendo tarjetas usando el ícono +</string>
     <!-- The deck picker via AnkiStatsTaskHandler.java -->
     <plurals name="studied_cards_today">

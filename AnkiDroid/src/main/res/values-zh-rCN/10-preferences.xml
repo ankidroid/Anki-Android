@@ -173,7 +173,7 @@
     <string name="time_limit">时间盒时间限制</string>
     <string name="time_limit_summ">XXX 分钟</string>
     <string name="new_timezone">新时区处理</string>
-    <string name="day_offset_with_description">Start of next day (0 is midnight, 23 is 11PM)</string>
+    <string name="day_offset_with_description">次日开始时间 (0为午夜，23为 11PM)</string>
     <string name="day_offset_summ">午夜过后的XXX小时</string>
     <string name="sched_ver">实验性 V2 调度器</string>
     <string name="sched_ver_summ">启用实验性调度器。在下次同步时强制单向变更</string>
