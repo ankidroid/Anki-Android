@@ -27,7 +27,6 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.content.res.Resources;
-import android.graphics.Color;
 import android.graphics.Typeface;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
@@ -56,7 +55,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewGroup.MarginLayoutParams;
 import android.view.WindowManager;
-import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemSelectedListener;
 import android.widget.ArrayAdapter;
@@ -133,6 +131,7 @@ import java.util.Map;
 import java.util.Set;
 
 import androidx.core.content.ContextCompat;
+import androidx.core.content.res.ResourcesCompat;
 import androidx.core.text.HtmlCompat;
 import androidx.fragment.app.DialogFragment;
 import timber.log.Timber;
@@ -172,7 +171,7 @@ public class NoteEditor extends AnkiActivity implements
     public static final String EXTRA_TAGS = "TAGS";
     public static final String EXTRA_ID = "ID";
     public static final String EXTRA_DID = "DECK_ID";
-
+    public static final String EXTRA_TEXT_FROM_SEARCH_VIEW = "SEARCH";
     private static final String ACTION_CREATE_FLASHCARD = "org.openintents.action.CREATE_FLASHCARD";
     private static final String ACTION_CREATE_FLASHCARD_SEND = "android.intent.action.SEND";
 
@@ -228,12 +227,10 @@ public class NoteEditor extends AnkiActivity implements
     private ArrayList<Long> mAllModelIds;
     private Map<Integer, Integer> mModelChangeFieldMap;
     private HashMap<Integer, Integer> mModelChangeCardMap;
-
     private ArrayList<Integer> mCustomViewIds = new ArrayList<>();
 
     /* indicates if a new note is added or a card is edited */
     private boolean mAddNote;
-
     private boolean mAedictIntent;
 
     /* indicates which activity called Note Editor */
@@ -300,13 +297,7 @@ public class NoteEditor extends AnkiActivity implements
                 mIntent = new Intent();
                 mIntent.putExtra(EXTRA_ID, noteEditor.getIntent().getStringExtra(EXTRA_ID));
             } else if (!noteEditor.mEditFields.isEmpty()) {
-                FieldEditText firstEditField = noteEditor.mEditFields.getFirst();
-                // Required on my Android 9 Phone to show keyboard: https://stackoverflow.com/a/7784904
-                firstEditField.postDelayed(() -> {
-                    firstEditField.requestFocus();
-                    InputMethodManager imm = (InputMethodManager) noteEditor.getSystemService(Context.INPUT_METHOD_SERVICE);
-                    imm.showSoftInput(firstEditField, InputMethodManager.SHOW_IMPLICIT);
-                }, 200);
+                noteEditor.mEditFields.getFirst().focusWithKeyboard();
             }
             if (!mCloseAfter && (noteEditor.mProgressDialog != null) && noteEditor.mProgressDialog.isShowing()) {
                 try {
@@ -484,6 +475,10 @@ public class NoteEditor extends AnkiActivity implements
             modifyCurrentSelection(formatter, (FieldEditText) currentFocus);
         });
 
+        // Sets the background and icon color of toolbar respectively.
+        mToolbar.setBackgroundColor(Themes.getColorFromAttr(NoteEditor.this, R.attr.toolbarBackgroundColor));
+        mToolbar.setIconColor(Themes.getColorFromAttr(NoteEditor.this, R.attr.toolbarIconColor));
+
         enableToolbar(mainView);
 
         mFieldsLayoutContainer = findViewById(R.id.CardEditorEditFieldsLayout);
@@ -643,7 +638,7 @@ public class NoteEditor extends AnkiActivity implements
         });
 
         mCurrentDid = intent.getLongExtra(EXTRA_DID, mCurrentDid);
-
+        String mGetTextFromSearchView = intent.getStringExtra(EXTRA_TEXT_FROM_SEARCH_VIEW);
         setDid(mEditorNote);
 
         setNote(mEditorNote, FieldChangeType.onActivityCreation(shouldReplaceNewlines()));
@@ -698,6 +693,10 @@ public class NoteEditor extends AnkiActivity implements
 
         //set focus to FieldEditText 'first' on startup like Anki desktop
         if (mEditFields != null && !mEditFields.isEmpty()) {
+            // EXTRA_TEXT_FROM_SEARCH_VIEW takes priority over other intent inputs
+            if (mGetTextFromSearchView != null && !mGetTextFromSearchView.isEmpty()) {
+                mEditFields.getFirst().setText(mGetTextFromSearchView);
+            }
             mEditFields.getFirst().requestFocus();
         }
     }
@@ -1796,7 +1795,7 @@ public class NoteEditor extends AnkiActivity implements
 
         // Sets the background color of disabled EditText.
         if (!enabled) {
-            editText.setBackgroundColor(Themes.getColorFromAttr(NoteEditor.this,R.attr.editTextBackgroundColor));
+            editText.setBackgroundColor(Themes.getColorFromAttr(NoteEditor.this, R.attr.editTextBackgroundColor));
         }
         editText.setEnabled(enabled);
     }
@@ -2010,7 +2009,10 @@ public class NoteEditor extends AnkiActivity implements
         }
 
         // Let the user add more buttons (always at the end).
-        mToolbar.insertItem(0, R.drawable.ic_add_toolbar_icon, this::displayAddToolbarDialog);
+        // Sets the add custom tag icon color.
+        final Drawable drawable = ResourcesCompat.getDrawable(getResources(), R.drawable.ic_add_toolbar_icon, null);
+        drawable.setTint(Themes.getColorFromAttr(NoteEditor.this, R.attr.toolbarIconColor));
+        mToolbar.insertItem(0, drawable, this::displayAddToolbarDialog);
     }
 
     @NonNull

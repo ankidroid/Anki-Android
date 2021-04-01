@@ -216,7 +216,7 @@
         <item quantity="other">%s minutes</item>
     </plurals>
     <plurals name="time_span_hours">
-        <item quantity="other">%s hours</item>
+        <item quantity="other">%s сәгатъ</item>
     </plurals>
     <plurals name="time_span_days">
         <item quantity="other">%s days</item>

@@ -145,7 +145,7 @@
         <item quantity="other">%dଟି କାର୍ଡ ଯୋଗ କରାଯାଇଛି</item>
     </plurals>
     <string name="check_db">ଡାଟାବେସ୍ ଯାଞ୍ଚ</string>
-    <string name="check_media">ମିଡ଼ିଆ ଯାଞ୍ଚ କରନ୍ତୁ</string>
+    <string name="check_media">ମିଡ଼ିଆ ଯାଞ୍ଚ</string>
     <string name="empty_cards">ଖାଲି କାର୍ଡଗୁଡ଼ିକ</string>
     <string name="check_db_message">ଡାଟାବେସ୍ ଯାଞ୍ଚ କରାଯାଉଛି...</string>
     <string name="empty_card_warning">ଏହି ପତ୍ରଟି ଖାଲି ଅଛି। ତାସଖଣ୍ଡ ଚିଠାରୁ ମେନୁରେ \"ଖାଲି କାର୍ଡଗୁଡ଼ିକ\" ବିକଳ୍ପ ବାଛନ୍ତୁ।</string>

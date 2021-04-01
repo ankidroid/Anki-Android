@@ -173,7 +173,7 @@
     <string name="time_limit">Limite di tempo per sessione</string>
     <string name="time_limit_summ">XXX min</string>
     <string name="new_timezone">Nuova gestione fuso orario</string>
-    <string name="day_offset_with_description">Start of next day (0 is midnight, 23 is 11PM)</string>
+    <string name="day_offset_with_description">Inizio del giorno successivo (0 è mezzanotte, 23 è 23 ore)</string>
     <string name="day_offset_summ">XXX ore dopo mezzanotte</string>
     <string name="sched_ver">Pianificatore sperimentale V2</string>
     <string name="sched_ver_summ">Abilita la pianificazione sperimentale. Forza le modifiche in una direzione alla prossima sincronizzazione</string>
@@ -290,5 +290,5 @@
     <string name="no_code_formatting">Formattazione semplice della risposta</string>
     <string name="no_code_formatting_summ">Correzioni ‘􏿾’ che appaiono nei risultati delle risposte digitate</string>
     <!-- Open Changelog-->
-    <string name="open_changelog">Open Changelog</string>
+    <string name="open_changelog">Apri il registro dei cambiamenti</string>
 </resources>

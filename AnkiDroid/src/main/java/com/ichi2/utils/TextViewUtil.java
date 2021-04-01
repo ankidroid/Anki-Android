@@ -18,8 +18,11 @@ package com.ichi2.utils;
 
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
+
+
 public class TextViewUtil {
-    public static float getTextSizeSp(TextView first) {
+    public static float getTextSizeSp(@NonNull TextView first) {
         return first.getTextSize() / first.getResources().getDisplayMetrics().scaledDensity;
     }
 }

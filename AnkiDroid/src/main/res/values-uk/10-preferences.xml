@@ -174,7 +174,7 @@
     <string name="time_limit">Період лічильника переглядів</string>
     <string name="time_limit_summ">XXX хв.</string>
     <string name="new_timezone">Обробка нового часового поясу</string>
-    <string name="day_offset_with_description">Start of next day (0 is midnight, 23 is 11PM)</string>
+    <string name="day_offset_with_description">Початок наступного дня (0 – опівніч, 23 – 23:00)</string>
     <string name="day_offset_summ">XXX год.</string>
     <string name="sched_ver">Експериментальний планувальник V2</string>
     <string name="sched_ver_summ">Увімкнути експериментальний планувальник. Примушує зміни в одному напрямку при наступній синхронізації</string>

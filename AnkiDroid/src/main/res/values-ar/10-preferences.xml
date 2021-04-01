@@ -173,7 +173,7 @@
     <string name="time_limit">مهلة مربع الوقت</string>
     <string name="time_limit_summ">XXX دقيقة</string>
     <string name="new_timezone">طريقة المعالجة الجديدة للمناطق الزمنية</string>
-    <string name="day_offset_with_description">Start of next day (0 is midnight, 23 is 11PM)</string>
+    <string name="day_offset_with_description">بداية اليوم التالي (0 يعني منتصف الليل، 23 يعني الساعة 11 مساءً)</string>
     <string name="day_offset_summ">XXX ساعة بعد منتصف الليل</string>
     <string name="sched_ver">مجدول V2 التجريبي</string>
     <string name="sched_ver_summ">تفعيل المجدول التجريبي. يفرض التغييرات في جانب واحد عند المزامنة التالية</string>

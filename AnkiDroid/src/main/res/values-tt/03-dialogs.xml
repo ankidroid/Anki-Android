@@ -110,9 +110,9 @@
     <string name="sd_card_almost_full_title">SD card almost full</string>
     <string name="restore_backup_title">Restore backup?</string>
     <string name="restore_backup">Your collection will be replaced with an older copy. Any unsaved progress will be lost.</string>
-    <string name="dialog_cancel">Cancel</string>
+    <string name="dialog_cancel">Баш тарту</string>
     <string name="dialog_ok">OK</string>
-    <string name="dialog_no">No</string>
+    <string name="dialog_no">Юк</string>
     <string name="dialog_continue">Continue</string>
     <string name="dialog_positive_create" comment="Create a new collection, probably erasing the previous one, may be necessary in case of error.">Create</string>
     <string name="dialog_positive_delete">Delete</string>
