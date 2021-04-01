@@ -149,6 +149,7 @@
     <string name="custom_study_deck_name">Sesi belajar kustom</string>
     <string name="custom_study_deck_exists">Ubah nama dek belajar kustom yang ada</string>
     <string name="empty_deck">Dek ini kosong</string>
+    <string name="search_deck">Deck Search</string>
     <string name="empty_deck_add_note">Add card</string>
     <string name="invalid_deck_name">Nama dek tidak valid</string>
     <string name="studyoptions_empty">Dek Ini kosong. Tekan tombol + untuk menambah konten baru.</string>

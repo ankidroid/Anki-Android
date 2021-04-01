@@ -164,6 +164,7 @@
     <string name="custom_study_deck_name">Vlastné štúdium</string>
     <string name="custom_study_deck_exists">Prosím premenujte najprv existujúci balíček Vlastné štúdium.</string>
     <string name="empty_deck">Tento balíček je prázdny</string>
+    <string name="search_deck">Deck Search</string>
     <string name="empty_deck_add_note">Add card</string>
     <string name="invalid_deck_name">Neplatný názov balíčka</string>
     <string name="studyoptions_empty">Tento balíček je prázdny. Stlačte + pre pridávanie obsahu.</string>

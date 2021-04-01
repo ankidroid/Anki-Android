@@ -222,10 +222,10 @@
         <item quantity="other">%s days</item>
     </plurals>
     <plurals name="time_span_months">
-        <item quantity="other">%s months</item>
+        <item quantity="other">%s ай</item>
     </plurals>
     <plurals name="time_span_years">
-        <item quantity="other">%s years</item>
+        <item quantity="other">%s ел</item>
     </plurals>
     <!-- A decimal number of seconds.
     Please give this a best-effort translation and explain the requirements for

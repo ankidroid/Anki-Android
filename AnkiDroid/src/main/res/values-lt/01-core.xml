@@ -164,6 +164,7 @@
     <string name="custom_study_deck_name">Individualus mokymosi seansas</string>
     <string name="custom_study_deck_exists">Prašome pirmiausiai pervadinti esamą individualaus mokymosi rinkinį</string>
     <string name="empty_deck">Šis rinkinys yra tuščias</string>
+    <string name="search_deck">Deck Search</string>
     <string name="empty_deck_add_note">Add card</string>
     <string name="invalid_deck_name">Blogas rinkinio vardas</string>
     <string name="studyoptions_empty">Šis rinkinys yra tuščias. Norėdami pridėti naują turinį, spauskite +.</string>

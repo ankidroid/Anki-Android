@@ -154,6 +154,7 @@
     <string name="custom_study_deck_name">Sessió d\'estudi personalitzat</string>
     <string name="custom_study_deck_exists">Si us plau, primer canvieu de nom el paquet d\'estudi a mida</string>
     <string name="empty_deck">Aquest paquet és buit</string>
+    <string name="search_deck">Deck Search</string>
     <string name="empty_deck_add_note">Add card</string>
     <string name="invalid_deck_name">Invalid deck name</string>
     <string name="studyoptions_empty">Aquest paquet és buit. Premeu el botó + per afegir nou contingut.</string>

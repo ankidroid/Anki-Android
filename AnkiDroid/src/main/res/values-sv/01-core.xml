@@ -154,6 +154,7 @@
     <string name="custom_study_deck_name">Anpassad studiesession</string>
     <string name="custom_study_deck_exists">Var god döp om den existerande anpassade studiekortleken först.</string>
     <string name="empty_deck">Den här leken är tom</string>
+    <string name="search_deck">Deck Search</string>
     <string name="empty_deck_add_note">Lägg till kort</string>
     <string name="invalid_deck_name">Ogiltigt kortleksnamn</string>
     <string name="studyoptions_empty">Den här leken är tom. Använd +-knappen för att lägga till nytt innehåll.</string>

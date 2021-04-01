@@ -154,6 +154,7 @@
     <string name="custom_study_deck_name">Session d\'étude personnalisée</string>
     <string name="custom_study_deck_exists">Merci de renommer d\'abord le paquet d\'étude personnalisée.</string>
     <string name="empty_deck">Le paquet est vide</string>
+    <string name="search_deck">Deck Search</string>
     <string name="empty_deck_add_note">Ajouter une carte</string>
     <string name="invalid_deck_name">Nom de paquet invalide</string>
     <string name="studyoptions_empty">Le paquet est vide. touchez le bouton + pour créer du contenu.</string>
