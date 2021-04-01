@@ -86,7 +86,7 @@ public class CustomStudyDialogTest extends RobolectricTest {
 
         scenarioStandard.moveToState(Lifecycle.State.STARTED);
 
-        scenarioStandard.onFragment(f ->{
+        scenarioStandard.onFragment(f -> {
             MaterialDialog dialog = (MaterialDialog)f.getDialog();
             assertThat(dialog,notNullValue());
             assertThat(dialog.getItems(), Matchers.not(Matchers.hasItem(getResourceString(R.string.custom_study_increase_new_limit))));
