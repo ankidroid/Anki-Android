@@ -1038,19 +1038,21 @@ public class SchedV2 extends AbstractSched {
 
     protected void _resetLrnCount(@Nullable CancelListener cancelListener) {
         _updateLrnCutoff(true);
+        // Uses a second variable to avoid concurrency issue
         // sub-day
-        mLrnCount = mCol.getDb().queryScalar(
+        int lrnCount = mCol.getDb().queryScalar(
                 "SELECT count() FROM cards WHERE did IN " + _deckLimit()
                 + " AND queue = " + Consts.QUEUE_TYPE_LRN + " AND id != ? AND due < ?", currentCardId(), mLrnCutoff);
         if (isCancelled(cancelListener)) return;
         // day
-        mLrnCount += mCol.getDb().queryScalar(
+        lrnCount += mCol.getDb().queryScalar(
                 "SELECT count() FROM cards WHERE did IN " + _deckLimit() + " AND queue = " + Consts.QUEUE_TYPE_DAY_LEARN_RELEARN + " AND due <= ? AND id != ?",
                 mToday, currentCardId());
         if (isCancelled(cancelListener)) return;
         // previews
-        mLrnCount += mCol.getDb().queryScalar(
+        lrnCount += mCol.getDb().queryScalar(
                 "SELECT count() FROM cards WHERE did IN " + _deckLimit() + " AND queue = " + Consts.QUEUE_TYPE_PREVIEW + " AND id != ? ", currentCardId());
+        mLrnCount = lrnCount;
     }
 
 
