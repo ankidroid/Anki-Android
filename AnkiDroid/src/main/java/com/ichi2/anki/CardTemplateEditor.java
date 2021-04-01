@@ -559,7 +559,7 @@ public class CardTemplateEditor extends AnkiActivity implements DeckSelectionDia
             FunctionalInterfaces.Filter<Deck> nonDynamic = (d) -> !Decks.isDynamic(d);
             List<SelectableDeck> decks = SelectableDeck.fromCollection(col, nonDynamic);
             String title = getString(R.string.card_template_editor_deck_override);
-            DeckSelectionDialog dialog = DeckSelectionDialog.newInstance(title, explanation, decks);
+            DeckSelectionDialog dialog = DeckSelectionDialog.newInstance(title, explanation, true, decks);
             AnkiActivity.showDialogFragment(activity, dialog);
         }
 
