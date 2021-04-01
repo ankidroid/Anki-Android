@@ -91,7 +91,6 @@ public class CustomStudyDialogTest extends RobolectricTest {
             assertThat(dialog,notNullValue());
             assertThat(dialog.getItems(), Matchers.not(Matchers.hasItem(getResourceString(R.string.custom_study_increase_new_limit))));
         });
-
     }
 
 
