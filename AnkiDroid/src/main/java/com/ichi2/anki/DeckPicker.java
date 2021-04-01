@@ -777,7 +777,8 @@ public class DeckPicker extends NavigationDrawerActivity implements
             case NO_ACCOUNT:
             case FULL_SYNC:
                 if (syncStatus == SyncStatus.NO_ACCOUNT) {
-                    syncMenu.setTitle(R.string.sync_menu_title_no_account);
+                    syncMenu.setVisible(false);
+                    // syncMenu.setTitle(R.string.sync_menu_title_no_account);
                 } else if (syncStatus == SyncStatus.FULL_SYNC) {
                     syncMenu.setTitle(R.string.sync_menu_title_full_sync);
                 }

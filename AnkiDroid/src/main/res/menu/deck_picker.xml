@@ -15,6 +15,7 @@
         android:icon="@drawable/ic_sync_white_24dp"
         android:title="@string/button_sync"
         ankidroid:showAsAction="always"/>
+
     <item
         android:id="@+id/action_undo"
         android:icon="@drawable/ic_undo_white_24dp"
@@ -22,6 +23,7 @@
         ankidroid:actionProviderClass="com.ichi2.ui.RtlCompliantActionProvider"
         ankidroid:showAsAction="never"
         android:visible="false"/>
+
     <item
         android:id="@+id/action_new_filtered_deck"
         android:enabled="false"

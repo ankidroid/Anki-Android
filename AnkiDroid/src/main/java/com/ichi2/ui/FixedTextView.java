@@ -61,9 +61,7 @@ public class FixedTextView extends AppCompatTextView {
         super(context, attrs);
     }
 
-    public FixedTextView(@NonNull Context context, @Nullable AttributeSet attrs, int defStyleAttr) {
-        super(context, attrs, defStyleAttr);
-    }
+    public FixedTextView(@NonNull Context context, @Nullable AttributeSet attrs, int defStyleAttr){ super(context, attrs, defStyleAttr); }
 
     @Override
     protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
