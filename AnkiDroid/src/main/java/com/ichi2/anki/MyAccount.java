@@ -116,7 +116,7 @@ public class MyAccount extends AnkiActivity {
             switchToState(STATE_LOG_IN);
         }
 
-        if(isScreenSmall() && this.getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE){
+        if (isScreenSmall() && this.getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE) {
             mAnkidroidLogo.setVisibility(View.GONE);
         } else {
             mAnkidroidLogo.setVisibility(View.VISIBLE);
@@ -330,7 +330,7 @@ public class MyAccount extends AnkiActivity {
     @Override
     public void onConfigurationChanged(@NonNull Configuration newConfig) {
         super.onConfigurationChanged(newConfig);
-        if(isScreenSmall() && newConfig.orientation == Configuration.ORIENTATION_LANDSCAPE){
+        if (isScreenSmall() && newConfig.orientation == Configuration.ORIENTATION_LANDSCAPE) {
             mAnkidroidLogo.setVisibility(View.GONE);
         } else {
             mAnkidroidLogo.setVisibility(View.VISIBLE);
