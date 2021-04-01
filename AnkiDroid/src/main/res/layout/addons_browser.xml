@@ -28,6 +28,30 @@
                 android:layout_marginBottom="3dp"/>
 
         </LinearLayout>
+
+        <LinearLayout
+            android:visibility="gone"
+            android:id="@+id/addons_download_message_ll"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical|center_horizontal"
+            android:gravity="center"
+            android:orientation="vertical">
+
+            <ImageView
+                android:layout_width="150dp"
+                android:layout_height="150dp"
+                android:background="@drawable/ic_baseline_extension_24"
+                android:backgroundTint="@color/material_blue_grey_200"
+                android:contentDescription="@string/addons_browser_message" />
+
+            <com.ichi2.ui.FixedTextView
+                android:id="@+id/addons_download_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/addons_browser_message" />
+        </LinearLayout>
+
         <include layout="@layout/anki_progress"/>
     </androidx.coordinatorlayout.widget.CoordinatorLayout>
     <include layout="@layout/navigation_drawer" />

@@ -14,8 +14,10 @@ import android.os.Bundle;
 import android.os.Environment;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.ichi2.anki.widgets.DeckDropDownAdapter;
@@ -74,8 +76,11 @@ public class AddonsBrowser extends NavigationDrawerActivity implements DeckDropD
     private SharedPreferences preferences;
 
     private String[] addonTypes = {"reviewer", "note_editor"};
+    // default list addons in addons browser
     private String listAddonType = addonTypes[0];
 
+
+    private LinearLayout addonsMessageLayout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -88,6 +93,10 @@ public class AddonsBrowser extends NavigationDrawerActivity implements DeckDropD
         setContentView(R.layout.addons_browser);
         initNavigationDrawer(findViewById(android.R.id.content));
 
+        addonsMessageLayout = findViewById(R.id.addons_download_message_ll);
+        addonsMessageLayout.setOnClickListener(v -> {
+            openUrl(Uri.parse(getResources().getString(R.string.ankidroid_js_addon_npm_search_url)));
+        });
 
         // Add a home button to the actionbar
         getSupportActionBar().setHomeButtonEnabled(true);
@@ -182,11 +191,7 @@ public class AddonsBrowser extends NavigationDrawerActivity implements DeckDropD
         });
 
         mGetMoreAddons.setOnMenuItemClickListener(item -> {
-            String baseUrl = "https://www.npmjs.com/search?q=keywords:";
-            String url = baseUrl + AnkiDroidJsAddonKeywords;
-            Uri uri = Uri.parse(url);
-            Intent intent = new Intent(Intent.ACTION_VIEW, uri);
-            startActivity(intent);
+            openUrl(Uri.parse(getResources().getString(R.string.ankidroid_js_addon_npm_search_url)));
             return true;
         });
 
@@ -194,7 +199,10 @@ public class AddonsBrowser extends NavigationDrawerActivity implements DeckDropD
     }
 
 
-    /* list addons with valid packge.json, i.e contains ankidroid_js_api = 0.0.1, keywords='ankidroid-js-addon'
+    /*
+       list addons with valid package.json, i.e contains
+       ankidroid_js_api = 0.0.1
+       keywords='ankidroid-js-addon'
        and non empty string.
        Then that addon will available for enable/disable
      */
@@ -239,13 +247,22 @@ public class AddonsBrowser extends NavigationDrawerActivity implements DeckDropD
             }
 
             addonsListRecyclerView.setAdapter(new AddonsAdapter(addonsNames, this));
+
+            if (addonsNames.isEmpty()) {
+                addonsMessageLayout.setVisibility(View.VISIBLE);
+            } else {
+                addonsMessageLayout.setVisibility(View.GONE);
+            }
+
         } else {
             UIUtils.showThemedToast(this, getString(R.string.error_listing_addons), true);
         }
         hideProgressBar();
     }
 
-
+    /*
+      Get info about npm package from npm registry
+     */
     public void getLatestPackageJson(String npmAddonName) {
         showProgressBar();
 
@@ -277,7 +294,9 @@ public class AddonsBrowser extends NavigationDrawerActivity implements DeckDropD
 
     }
 
-
+    /*
+      Parse npm package info from package.json. If valid ankidroid-js-addon package then download it
+     */
     public void parseJsonData(String strResponse, String npmAddonName) {
         try {
             Timber.d("json::%s", strResponse);
@@ -298,7 +317,10 @@ public class AddonsBrowser extends NavigationDrawerActivity implements DeckDropD
     }
 
 
-    // download npm package .tgz
+    /*
+      Download ankidroid-js-addon...tgz file from npmjs.org
+      The download link parsed from info of npm package registry
+     */
     public void downloadAddonPackageFile(JSONObject jsonObject, String npmAddonName) {
         if (Connection.isOnline()) {
             try {
@@ -334,6 +356,9 @@ public class AddonsBrowser extends NavigationDrawerActivity implements DeckDropD
     }
 
 
+    /*
+      Download the package in download directory, extract and copy to ANkiDroid/addons/...
+     */
     BroadcastReceiver receiver = new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent intent) {
@@ -393,7 +418,9 @@ public class AddonsBrowser extends NavigationDrawerActivity implements DeckDropD
     };
 
 
-    // read package.json file of ankidroid-js-addon...
+    /*
+      read package.json file of ankidroid-js-addon...
+     */
     public static JSONObject packageJsonReader(File addonsFiles) {
         JSONObject jsonObject = null;
         try {
@@ -417,7 +444,10 @@ public class AddonsBrowser extends NavigationDrawerActivity implements DeckDropD
     }
 
 
-    // is package.json of ankidroid-js-addon... contains valid ankidroid_js_api==0.0.1 and keywords 'ankidroid-js-addon'
+    /*
+      is package.json of ankidroid-js-addon... contains valid
+      ankidroid_js_api==0.0.1 and keywords 'ankidroid-js-addon'
+     */
     public boolean isValidAddonPackage(JSONObject jsonObject) {
 
         if (jsonObject == null) {
@@ -454,6 +484,9 @@ public class AddonsBrowser extends NavigationDrawerActivity implements DeckDropD
         return false;
     }
 
+    /*
+      Show info about clicked addons with update and delete options
+     */
 
     @Override
     public void onAddonClick(int position) {

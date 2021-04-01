@@ -897,8 +897,13 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
 
         mShortAnimDuration = getResources().getInteger(android.R.integer.config_shortAnimTime);
 
-        // get all enabled addons' content
-        jsAddonContent = getEnabledAddonsContent();
+        /*
+          get all enabled addons' content before so called only once during review time instead of calling each time
+        */
+        if (AnkiDroidApp.getSharedPrefs(this).getBoolean("javascript_addons_support", false)) {
+            jsAddonContent = getEnabledAddonsContent();
+        }
+
     }
 
     protected int getContentViewAttr(int fullscreenMode) {
@@ -2408,7 +2413,10 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
         return card.getODid() == 0 ? card.getDid() : card.getODid();
     }
 
-    // get enabled js addon contents from AnkiDroid/addons/...
+    /**
+     * @return content of index.js file for every enabled addons in script tag.
+     * get enabled js addon contents from AnkiDroid/addons/...
+     */
     public String getEnabledAddonsContent() {
         StringBuilder content = new StringBuilder();
         String mainJsFile = null;
@@ -2417,32 +2425,31 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
         String currentAnkiDroidDirectory = CollectionHelper.getCurrentAnkiDroidDirectory(this);
         File addonsHomeDir = new File(currentAnkiDroidDirectory, "addons" );
 
-        // wrap index.js content in script tag
-        content.append("<script>");
-        content.append("\n");
-
         Map<String,?> keys = preferences.getAll();
 
         for(Map.Entry<String,?> entry : keys.entrySet()){
             Timber.d("map values %s",entry.getKey() + ": " + entry.getValue().toString());
 
-            // getting enabled status of addons in SharedPreferences with key containing 'addon'
+            // get enabled status of addons in SharedPreferences with key containing 'addon'
             if (entry.getKey().contains("reviewer_addon") && entry.getValue().toString().equals("enabled")) {
                 try {
                     /*
-                     split value and getting latter part as it stored id for addon e.g addon:ankidroid-js-addon-12345...
-                     It is same as folder name for the addon
-                     if id not present in manifest.json then it leads to exception
+                      split value and get latter part as it stored in SharedPreferences
+                      e.g reviewer_addon:ankidroid-js-addon-12345...  --> ankidroid-js-addon-12345...
+                      It is same as folder name for the addon.
                      */
-                    File addonDirName = new File(String.valueOf(entry.getKey().split(":")[1]));
-                    File finalAddonPath = new File(addonsHomeDir, String.valueOf(addonDirName));
+                    String addonDirName = String.valueOf(entry.getKey().split(":")[1]);
+                    File finalAddonPath = new File(addonsHomeDir, addonDirName);
 
                     if (finalAddonPath.exists()) {
                         //Read text from file, index.js is starting point for the addon
                         File addonsPackageDir = new File(finalAddonPath, "package");
                         File addonPackageJson = new File(addonsPackageDir, "package.json");
 
-                        // get {'main': 'index.js'} from package.json file
+                        /*
+                          get {'main': 'index.js'} from package.json file
+                          main point to index.js file by default, according to info in package.json it may point to other .js file
+                         */
                         if (addonPackageJson.exists()) {
                             org.json.JSONObject jsonObject  = AddonsBrowser.packageJsonReader(addonPackageJson);
                             if (jsonObject == null) {
@@ -2452,9 +2459,13 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
                             mainJsFile = jsonObject.optString("main", "");
                         }
 
-                        // read index.js file
+                        // read index.js file or file pointed by "main"
                         File addonsContentFile = new File(addonsPackageDir, mainJsFile);
                         if (addonsContentFile.exists()) {
+                            // wrap index.js content in script tag for each enabled addons
+                            content.append("<script>");
+                            content.append("\n");
+
                             BufferedReader br = new BufferedReader(new FileReader(addonsContentFile));
                             String line;
 
@@ -2463,6 +2474,9 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
                                 content.append('\n');
                             }
                             br.close();
+
+                            content.append("</script>");
+                            content.append("\n");
 
                             Timber.d("addon content path %s", addonsContentFile);
                         }
@@ -2474,8 +2488,6 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
             }
         }
 
-        content.append("</script>");
-        content.append("\n");
         return content.toString();
     }
 
@@ -2487,6 +2499,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
             return;
         }
 
+        // jsAddonContent assigned in onCreate called getEnabledAddonsContent() only once time
         if (jsAddonContent == null) {
             jsAddonContent = "";
         }
