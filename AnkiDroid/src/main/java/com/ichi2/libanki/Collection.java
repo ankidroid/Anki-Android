@@ -330,11 +330,9 @@ public class Collection {
         // We have the ability to look into our sqlite implementation on Android and use it's value
         // as a ceiling. Try it, with a reasonable fallback in case of failure
         SupportSQLiteDatabase db = mDb.getDatabase();
-        if (! (db instanceof DatabaseChangeDecorator)) {
-            return sChunk;
-        }
-        String db_name = ((DatabaseChangeDecorator) db).getWrapped().getClass().getName();
-        if ("io.requery.android.database.sqlite.SQLiteDatabase".equals(db_name)) {
+        String db_name = (db instanceof DatabaseChangeDecorator) ? ((DatabaseChangeDecorator) db).getWrapped().getClass().getName() : null;
+
+        if (db_name != null && "io.requery.android.database.sqlite.SQLiteDatabase".equals(db_name)) {
             try {
                 Field cursorWindowSize = io.requery.android.database.CursorWindow.class.getDeclaredField("sDefaultCursorWindowSize");
                 cursorWindowSize.setAccessible(true);
@@ -351,6 +349,7 @@ public class Collection {
         }
 
         // reduce the actual size a little bit.
+        // In case db is not an instance of DatabaseChangeDecorator, sChunk evaluated on default window size
         sChunk = (int) (sCursorWindowSize * 15. / 16.);
         return sChunk;
     }
@@ -359,6 +358,7 @@ public class Collection {
         int pos = 1;
         StringBuilder buf = new StringBuilder();
 
+        // code refactoring done to remove unnecessary break statements
         while (true) {
             try (Cursor cursor = mDb.query("SELECT substr(" + columnName + ", ?, ?) FROM col",
                     Integer.toString(pos), Integer.toString(getChunk()))) {
@@ -367,16 +367,15 @@ public class Collection {
                 }
                 String res = cursor.getString(0);
                 if (res.length() == 0) {
-                      break;
+                    return buf.toString();
                 }
                 buf.append(res);
                 if (res.length() < getChunk()) {
-                    break;
+                    return buf.toString();
                 }
                 pos += getChunk();
             }
         }
-        return buf.toString();
     }
 
     /**
