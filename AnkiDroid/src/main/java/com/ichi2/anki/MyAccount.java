@@ -25,7 +25,6 @@ import android.os.Build;
 import android.os.Bundle;
 import androidx.appcompat.widget.Toolbar;
 
-import android.util.Log;
 import android.view.KeyEvent;
 import android.view.OrientationEventListener;
 import android.view.View;
@@ -54,6 +53,13 @@ import static com.ichi2.anim.ActivityTransitionAnimation.Direction.FADE;
 public class MyAccount extends AnkiActivity {
     private final static int STATE_LOG_IN  = 1;
     private final static int STATE_LOGGED_IN = 2;
+    /*
+     * ROTATED_RIGHT is 90 degrees from vertical
+     * ROTATED_LEFT is 270 degree from vertical or - 90 degrees
+     * OFFSET accounts for imperfections in rotation
+     * DEVIATION makes sure that we have settled in a position
+     * ORIENTATION_WINDOW is the sample size.
+     */
     private final static int ROTATED_RIGHT = 90;
     private final static int ROTATED_LEFT = 270;
     private final static int OFFSET = 30;
@@ -75,8 +81,11 @@ public class MyAccount extends AnkiActivity {
     private OrientationEventListener myOrientationEventListener;
     private ImageView mAnkidroidLogo;
 
+    /*
+     * This buffer tracks orientations of the mobile device.
+     */
     private Integer[] orientations = new Integer[ORIENTATION_WINDOW];
-    private int incrementer = 0;
+    private int orientationIndex = 0;
 
     private void switchToState(int newState) {
         switch (newState) {
@@ -129,6 +138,7 @@ public class MyAccount extends AnkiActivity {
 
         // listener for handling future change in orientation
         initializeOrientationListener();
+        // assume that we are in a vertical state to begin with.
         Arrays.fill(orientations, 0);
     }
 
@@ -339,30 +349,30 @@ public class MyAccount extends AnkiActivity {
     }
 
     public void checkOrientation(int orientation) {
-        if (getIsScreenSmall() && getIsNotVertical(orientation)) {
+        recordOrientation(orientation);
+        if (isScreenSmall() && isHorizontal(orientation)) {
             mAnkidroidLogo.setVisibility(View.GONE);
         } else {
             mAnkidroidLogo.setVisibility(View.VISIBLE);
         }
     }
 
-    private boolean getIsNotVertical(int orientation) {
-        setAverageOrientation(orientation);
+    private boolean isHorizontal(int orientation) {
         int avgOrientation = getAverageOrientation();
         return Math.abs(orientation - avgOrientation) < DEVIATION
                 && ROTATED_RIGHT - OFFSET <= avgOrientation
                 && avgOrientation <= ROTATED_LEFT + OFFSET;
     }
 
-    private boolean getIsScreenSmall() {
+    private boolean isScreenSmall() {
         return (this.getApplicationContext().getResources().getConfiguration().screenLayout
                 & Configuration.SCREENLAYOUT_SIZE_MASK)
                 < Configuration.SCREENLAYOUT_SIZE_LARGE;
     }
 
-    private void setAverageOrientation(int orientation) {
+    private void recordOrientation(int orientation) {
         if(orientation != OrientationEventListener.ORIENTATION_UNKNOWN) {
-            orientations[incrementer++%ORIENTATION_WINDOW] = orientation;
+            orientations[orientationIndex++ % ORIENTATION_WINDOW] = orientation;
         }
     }
 
@@ -371,7 +381,7 @@ public class MyAccount extends AnkiActivity {
         for(int ort: orientations){
             orientationSum += ort;
         }
-        return orientationSum/ orientations.length;
+        return orientationSum / orientations.length;
     }
 
     public void initializeOrientationListener() {
