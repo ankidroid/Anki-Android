@@ -164,6 +164,7 @@
     <string name="custom_study_deck_name">Sesja nauki niestandardowej</string>
     <string name="custom_study_deck_exists">Najpierw zmień nazwę istniejącej talii nauki niestandardowej.</string>
     <string name="empty_deck">Ta talia jest pusta</string>
+    <string name="search_deck">Deck Search</string>
     <string name="empty_deck_add_note">Dodaj kartę</string>
     <string name="invalid_deck_name">Nieprawidłowa nazwa talii</string>
     <string name="studyoptions_empty">Talia jest pusta. Wybierz przycisk + żeby dodać karty.</string>

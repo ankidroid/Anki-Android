@@ -164,6 +164,7 @@ Pinagaralang %1$d mga baraha %2$s ngayong araw</item>
     <string name="custom_study_deck_name">Pinasadyang sesyon ng pagaaral</string>
     <string name="custom_study_deck_exists">Palitan muna ang pangalan ng pinasadyang paaaral ng deck</string>
     <string name="empty_deck">Walang laman ang deck na ito</string>
+    <string name="search_deck">Deck Search</string>
     <string name="empty_deck_add_note">Add card</string>
     <string name="invalid_deck_name">Invalid deck name</string>
     <string name="studyoptions_empty">Walang laman ang deck na ito. Pindutin and + na butones upang magdagdag ng bago.</string>

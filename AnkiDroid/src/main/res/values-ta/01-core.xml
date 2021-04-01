@@ -154,6 +154,7 @@
     <string name="custom_study_deck_name">தனிப்பயன் ஆய்வு கூட்டம்</string>
     <string name="custom_study_deck_exists">தற்போதுள்ள விருப்ப ஆய்வு கட்டு முதலில் மறுபெயரிடு</string>
     <string name="empty_deck">இந்த கட்டு காலியாக உள்ளது</string>
+    <string name="search_deck">Deck Search</string>
     <string name="empty_deck_add_note">Add card</string>
     <string name="invalid_deck_name">Invalid deck name</string>
     <string name="studyoptions_empty">இந்த கட்டு காலியாக உள்ளது. பத்திரிகை, + புதிய உள்ளடக்கம் சேர்க்க பொத்தான்.</string>

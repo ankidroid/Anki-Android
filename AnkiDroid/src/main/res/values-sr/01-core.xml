@@ -159,6 +159,7 @@
     <string name="custom_study_deck_name">Посебна сесија проучавања</string>
     <string name="custom_study_deck_exists">Прво преименујте постојеће специјалне шпилове.</string>
     <string name="empty_deck">Овај шпил је празан</string>
+    <string name="search_deck">Deck Search</string>
     <string name="empty_deck_add_note">Додај карту</string>
     <string name="invalid_deck_name">Invalid deck name</string>
     <string name="studyoptions_empty">Овај шпил је празан. Притисните дугме +, да бисте додали нови садржај.</string>

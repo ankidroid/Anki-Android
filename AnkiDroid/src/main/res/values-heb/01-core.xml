@@ -165,6 +165,7 @@
     <string name="custom_study_deck_name">שיעור למידה מותאם</string>
     <string name="custom_study_deck_exists">ראשית, ערוך שם חפיסה חדשה</string>
     <string name="empty_deck">החפיסה ריקה</string>
+    <string name="search_deck">Deck Search</string>
     <string name="empty_deck_add_note">הוספת קלף</string>
     <string name="invalid_deck_name">שם חפיסה לא חוקי</string>
     <string name="studyoptions_empty">החפיסה ריקה. לחץ על כפתור ה+ להוספת תוכן חדש.</string>
