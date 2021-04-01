@@ -1500,13 +1500,7 @@ public class CardBrowser extends NavigationDrawerActivity implements
             mSearchItem.expandActionView();
         }
         if (mSearchTerms.contains("deck:")) {
-            int position;
-            if (mSearchTerms.charAt(5) == '\"') {
-                position = mSearchTerms.indexOf("\"", 6) + 2;
-            } else {
-                position = mSearchTerms.indexOf(' ') + 1;
-            }
-            searchText = mSearchTerms.substring(0, position) + "(" + mSearchTerms.substring(position) + ")";
+            searchText = "(" + mSearchTerms + ")";
         } else {
             if (!"".equals(mSearchTerms))
                 searchText = mRestrictOnDeck + "(" + mSearchTerms + ")";

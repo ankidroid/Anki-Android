@@ -509,6 +509,7 @@ public class CardBrowserTest extends RobolectricTest {
         assertUndoContains(b, R.string.deck_conf_cram_reschedule);
     }
 
+    /** 8027 */
     @Test
     public void checkSearchString() {
         Card c1 = addNoteUsingBasicModel("Hello", "John").firstCard();
