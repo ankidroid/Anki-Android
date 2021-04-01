@@ -22,17 +22,15 @@ package com.ichi2.libanki.sync;
 
 import android.content.SharedPreferences;
 import android.net.Uri;
-import android.util.Pair;
 
 import com.ichi2.anki.AnkiDroidApp;
 import com.ichi2.anki.exception.UnknownHttpResponseException;
 import com.ichi2.anki.web.CustomSyncServer;
+import com.ichi2.anki.web.HttpFetcher;
 import com.ichi2.async.Connection;
 import com.ichi2.libanki.Consts;
 import com.ichi2.libanki.Utils;
-import com.ichi2.utils.VersionUtils;
 
-import org.apache.http.entity.AbstractHttpEntity;
 import com.ichi2.utils.JSONObject;
 
 import java.io.BufferedInputStream;
@@ -40,8 +38,6 @@ import java.io.BufferedOutputStream;
 import java.io.BufferedReader;
 import java.io.ByteArrayInputStream;
 import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
@@ -53,7 +49,6 @@ import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Random;
-import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicLong;
 import java.util.zip.GZIPOutputStream;
 
@@ -106,25 +101,6 @@ public class HttpSyncer {
         mHostNum = hostNum;
     }
 
-    private OkHttpClient.Builder getHttpClientBuilder() {
-        OkHttpClient.Builder clientBuilder = new OkHttpClient.Builder()
-                .addNetworkInterceptor(chain -> chain.proceed(
-                        chain.request()
-                                .newBuilder()
-                                .header("User-Agent", "AnkiDroid-" + VersionUtils.getPkgVersionName())
-                                .build()
-                ));
-        Tls12SocketFactory.enableTls12OnPreLollipop(clientBuilder)
-                .followRedirects(true)
-                .followSslRedirects(true)
-                .retryOnConnectionFailure(true)
-                .cache(null)
-                .connectTimeout(Connection.CONN_TIMEOUT, TimeUnit.SECONDS)
-                .writeTimeout(Connection.CONN_TIMEOUT, TimeUnit.SECONDS)
-                .readTimeout(Connection.CONN_TIMEOUT, TimeUnit.SECONDS);
-        return clientBuilder;
-    }
-
     private OkHttpClient getHttpClient() {
         if (this.mHttpClient != null) {
             return mHttpClient;
@@ -137,7 +113,12 @@ public class HttpSyncer {
         if (mHttpClient != null) {
             return mHttpClient;
         }
-        mHttpClient = getHttpClientBuilder().build();
+        mHttpClient = HttpFetcher.getOkHttpBuilder(false)
+                .followRedirects(true)
+                .followSslRedirects(true)
+                .retryOnConnectionFailure(true)
+                .cache(null)
+                .build();
         return mHttpClient;
     }
 
@@ -165,18 +146,8 @@ public class HttpSyncer {
     }
 
     /** Note: Return value must be closed */
-    public Response req(String method, int comp, InputStream fobj) throws UnknownHttpResponseException {
-        return req(method, fobj, comp);
-    }
-
-    /** Note: Return value must be closed */
-    public Response req(String method, InputStream fobj, int comp) throws UnknownHttpResponseException {
-        return req(method, fobj, comp, null);
-    }
-
-    /** Note: Return value must be closed */
     @SuppressWarnings("CharsetObjectCanBeUsed")
-    private Response req(String method, InputStream fobj, int comp, JSONObject registerData) throws UnknownHttpResponseException {
+    public Response req(String method, InputStream fobj, int comp) throws UnknownHttpResponseException {
         File tmpFileBuffer = null;
         try {
             String bdry = "--" + BOUNDARY;
@@ -230,11 +201,14 @@ public class HttpSyncer {
             Request.Builder requestBuilder = new Request.Builder();
             requestBuilder.url(parseUrl(url));
 
+            // Set our request up to count upstream traffic including headers
             requestBuilder.post(new CountingFileRequestBody(tmpFileBuffer, ANKI_POST_TYPE.toString(), num -> {
                 bytesSent.addAndGet(num);
                 publishProgress();
             }));
             Request httpPost = requestBuilder.build();
+            bytesSent.addAndGet(httpPost.headers().byteCount());
+            publishProgress();
 
             try {
                 OkHttpClient httpClient = getHttpClient();
@@ -245,6 +219,15 @@ public class HttpSyncer {
                 Timber.d("TLSVersion in use is: %s",
                         (httpResponse.handshake() != null ? httpResponse.handshake().tlsVersion() : "unknown"));
 
+
+                // Count downstream traffic including headers
+                bytesReceived.addAndGet(httpResponse.headers().byteCount());
+                try {
+                    bytesReceived.addAndGet(httpResponse.body().contentLength());
+                } catch (NullPointerException npe) {
+                    Timber.d(npe, "Unexpected null response body");
+                }
+                publishProgress();
 
                 assertOk(httpResponse);
                 return httpResponse;
@@ -338,64 +321,6 @@ public class HttpSyncer {
             mNextSendR = (bR / 1024 + 1) * 1024;
             mNextSendS = (bS / 1024 + 1) * 1024;
             mCon.publishProgress(0, bS, bR);
-        }
-    }
-
-    public class ProgressByteEntity extends AbstractHttpEntity {
-
-        private InputStream mInputStream;
-        private final long mLength;
-
-
-        public ProgressByteEntity(File file) {
-            super();
-            mLength = file.length();
-            try {
-                mInputStream = new BufferedInputStream(new FileInputStream(file));
-            } catch (FileNotFoundException e) {
-                throw new RuntimeException(e);
-            }
-        }
-
-
-        @Override
-        public void writeTo(OutputStream outstream) throws IOException {
-            try {
-                byte[] tmp = new byte[4096];
-                int len;
-                while ((len = mInputStream.read(tmp)) != -1) {
-                    outstream.write(tmp, 0, len);
-                    bytesSent.addAndGet(len);
-                    publishProgress();
-                }
-                outstream.flush();
-            } finally {
-                mInputStream.close();
-            }
-        }
-
-
-        @Override
-        public InputStream getContent() throws IllegalStateException {
-            return mInputStream;
-        }
-
-
-        @Override
-        public long getContentLength() {
-            return mLength;
-        }
-
-
-        @Override
-        public boolean isRepeatable() {
-            return false;
-        }
-
-
-        @Override
-        public boolean isStreaming() {
-            return false;
         }
     }
 

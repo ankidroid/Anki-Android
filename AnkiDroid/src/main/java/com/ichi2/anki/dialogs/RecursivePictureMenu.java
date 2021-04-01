@@ -17,17 +17,20 @@
 package com.ichi2.anki.dialogs;
 
 import android.app.Dialog;
+import android.content.Context;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.os.Parcel;
 import android.os.Parcelable;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.ichi2.anki.AnkiActivity;
 import com.ichi2.anki.R;
+import com.ichi2.anki.analytics.UsageAnalytics;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -38,9 +41,9 @@ import androidx.annotation.DrawableRes;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.annotation.StringRes;
+import androidx.appcompat.content.res.AppCompatResources;
 import androidx.fragment.app.DialogFragment;
 import androidx.recyclerview.widget.RecyclerView;
-import androidx.vectordrawable.graphics.drawable.VectorDrawableCompat;
 import timber.log.Timber;
 
 /** A Dialog displaying The various options for "Help" in a nested structure */
@@ -127,13 +130,11 @@ public class RecursivePictureMenu extends DialogFragment {
             titleFrame.setPadding(10, 22, 10, 10);
             titleFrame.setOnClickListener((l) -> dismiss());
 
-            View icon = dialog.findViewById(R.id.md_icon);
+            ImageView icon = (ImageView) dialog.findViewById(R.id.md_icon);
             icon.setVisibility(View.VISIBLE);
-            Drawable iconValue = VectorDrawableCompat.create(
-                    getResources(),
-                    R.drawable.ic_menu_back_black_24dp,
-                    requireActivity().getTheme());
-            icon.setBackground(iconValue);
+            Drawable iconValue = AppCompatResources.getDrawable(getContext(), R.drawable.ic_menu_back_black_24dp);
+            iconValue.setAutoMirrored(true);
+            icon.setImageDrawable(iconValue);
         } catch (Exception e) {
             Timber.w(e, "Failed to set Menu title/icon");
         }
@@ -142,12 +143,16 @@ public class RecursivePictureMenu extends DialogFragment {
 
     public abstract static class Item implements Parcelable {
 
-        private final @StringRes int mText;
-        private final @DrawableRes int mIcon;
+        @StringRes
+        private final int mText;
+        @DrawableRes
+        private final int mIcon;
+        private final String analyticsId;
 
-        public Item(@StringRes int titleString, @DrawableRes int iconDrawable) {
+        public Item(@StringRes int titleString, @DrawableRes int iconDrawable, String analyticsId) {
             this.mText = titleString;
             this.mIcon = iconDrawable;
+            this.analyticsId = analyticsId;
         }
 
         public List<Item> getChildren() {
@@ -157,6 +162,7 @@ public class RecursivePictureMenu extends DialogFragment {
         protected Item(Parcel in) {
             mText = in.readInt();
             mIcon = in.readInt();
+            analyticsId = in.readString();
         }
 
         @StringRes
@@ -173,9 +179,22 @@ public class RecursivePictureMenu extends DialogFragment {
         public void writeToParcel(Parcel dest, int flags) {
             dest.writeInt(mText);
             dest.writeInt(mIcon);
+            dest.writeString(analyticsId);
         }
 
-        public abstract void execute(AnkiActivity activity);
+        protected abstract void onClicked(AnkiActivity activity);
+
+        public final void sendAnalytics() {
+            UsageAnalytics.sendAnalyticsEvent(UsageAnalytics.Category.LINK_CLICKED, analyticsId);
+        }
+
+        /* This method calls onClicked method to handle click event in a suitable manner and
+         * the analytics of the item clicked are send.
+         */
+        public void execute(AnkiActivity activity){
+            sendAnalytics();
+            onClicked(activity);
+        }
 
         public abstract void remove(Item toRemove);
     }
@@ -184,26 +203,22 @@ public class RecursivePictureMenu extends DialogFragment {
 
         private final List<Item> mChildren;
 
-
-        public ItemHeader(@StringRes int titleString, int i, Item... children) {
-            super(titleString, i);
+        public ItemHeader(@StringRes int titleString, int i, String analyticsStringId, Item... children) {
+            super(titleString, i, analyticsStringId);
             mChildren = new ArrayList<>(Arrays.asList(children));
         }
-
 
         @Override
         public List<Item> getChildren() {
             return new ArrayList<>(mChildren);
         }
 
-
         @Override
-        public void execute(AnkiActivity activity) {
+        public void onClicked(AnkiActivity activity) {
             ArrayList<Item> children = new ArrayList<>(this.getChildren());
             DialogFragment nextFragment = RecursivePictureMenu.createInstance(children, getTitle());
             activity.showDialogFragment(nextFragment);
         }
-
 
         @Override
         public void remove(Item toRemove) {
@@ -212,7 +227,6 @@ public class RecursivePictureMenu extends DialogFragment {
                 i.remove(toRemove);
             }
         }
-
 
         protected ItemHeader(Parcel in) {
             super(in);

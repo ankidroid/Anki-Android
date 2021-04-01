@@ -224,7 +224,7 @@ public class SchedV2 extends AbstractSched {
 
     @Override
     public void resetCounts(@NonNull CancelListener cancelListener) {
-        resetCounts(true);
+        resetCounts(cancelListener, true);
     }
 
     public void resetCounts(boolean checkCutoff) {
@@ -1305,6 +1305,7 @@ public class SchedV2 extends AbstractSched {
             try {
                 delay = delays.getDouble(len - left);
             } catch (JSONException e) {
+                Timber.w(e);
                 if (conf.getJSONArray("delays").length() > 0) {
                     delay = conf.getJSONArray("delays").getDouble(0);
                 } else {
@@ -1457,6 +1458,7 @@ public class SchedV2 extends AbstractSched {
             mCol.getDb().execute("INSERT INTO revlog VALUES (?,?,?,?,?,?,?,?,?)",
                     getTime().intTimeMS(), id, usn, ease, ivl, lastIvl, factor, timeTaken, type);
         } catch (SQLiteConstraintException e) {
+            Timber.w(e);
             try {
                 Thread.sleep(10);
             } catch (InterruptedException e1) {
@@ -2253,6 +2255,7 @@ public class SchedV2 extends AbstractSched {
                     _current_timezone_offset(),
                     _rolloverHour());
         } catch (BackendNotSupportedException e) {
+            Timber.w(e);
             return null;
         }
     }

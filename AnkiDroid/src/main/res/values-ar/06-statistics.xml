@@ -62,7 +62,7 @@
     <string name="stats_percentage">النسبة المئوية</string>
     <string name="stats_period_month">شهر واحد</string>
     <string name="stats_period_year">سنة واحدة</string>
-    <string name="stats_period_lifetime">مدى حياة الرزمة</string>
+    <string name="stats_period_lifetime">شَدّة الأوراق على مدى الحياة</string>
     <string name="stats_deck_collection">مجموعة</string>
     <string name="stats_time_of_day">وقت من اليوم</string>
     <string name="stats_day_of_week">يوم من الأسبوع</string>

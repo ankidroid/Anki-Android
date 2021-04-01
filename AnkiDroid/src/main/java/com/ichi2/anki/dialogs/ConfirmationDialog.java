@@ -15,8 +15,8 @@ import com.ichi2.anki.R;
      * Create a new instance, call setArgs(...), setConfirm(), and setCancel() then show it via the fragment manager as usual.
      */
     public class ConfirmationDialog extends DialogFragment {
-        private Runnable mConfirm = () -> { }; // Do nothing by default
-        private Runnable mCancel = () -> { };  // Do nothing by default
+        private @NonNull Runnable mConfirm = () -> { }; // Do nothing by default
+        private @NonNull Runnable mCancel = () -> { };  // Do nothing by default
 
         public void setArgs(String message) {
             setArgs("" , message);
@@ -29,11 +29,11 @@ import com.ichi2.anki.R;
             setArguments(args);
         }
 
-        public void setConfirm(Runnable confirm) {
+        public void setConfirm(@NonNull Runnable confirm) {
             mConfirm = confirm;
         }
 
-        public void setCancel(Runnable cancel) {
+        public void setCancel(@NonNull Runnable cancel) {
             mCancel = cancel;
         }
 

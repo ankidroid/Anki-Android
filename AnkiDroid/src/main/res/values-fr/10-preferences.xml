@@ -173,7 +173,7 @@
     <string name="time_limit">Limite de temps</string>
     <string name="time_limit_summ">XXX min</string>
     <string name="new_timezone">Nouvelle gestion du fuseau horaire</string>
-    <string name="day_offset">Début du jour suivant</string>
+    <string name="day_offset_with_description">Début du jour suivant (0 est minuit, 23 est 23 h)</string>
     <string name="day_offset_summ">XXX heures après minuit</string>
     <string name="sched_ver">Planificateur V2 expérimental</string>
     <string name="sched_ver_summ">Activer le planificateur expérimental. Force les changements dans un sens lors de la prochaine synchronisation</string>
@@ -289,4 +289,6 @@
     <string name="note_editor_replace_newlines_summ">Dans l\'éditeur de notes, convertissez toutes les instances de &lt;br&gt; en nouvelles lignes lors de l\'édition d\'une carte.</string>
     <string name="no_code_formatting">Formatage simple des réponses saisies</string>
     <string name="no_code_formatting_summ">Fixe « &lt;unk&gt; » dans les résultats des types de réponses</string>
+    <!-- Open Changelog-->
+    <string name="open_changelog">Ouvrir le journal des modifications</string>
 </resources>

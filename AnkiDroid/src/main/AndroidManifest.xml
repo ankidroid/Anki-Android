@@ -67,6 +67,7 @@
         android:banner="@drawable/tv_banner"
         android:requestLegacyExternalStorage="true"
         android:resizeableActivity="true"
+        android:supportsRtl="true"
         >
         <activity
             android:name="com.ichi2.anki.IntentHandler"

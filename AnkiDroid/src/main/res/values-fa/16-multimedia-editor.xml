@@ -39,7 +39,7 @@
     <string name="multimedia_editor_popup_audio">ضبط صدا</string>
     <string name="multimedia_editor_popup_text">ویرایش‌گر پیشرفته</string>
     <string name="multimedia_editor_popup_cloze">انصراف از پاک کردن</string>
-    <string name="multimedia_editor_popup_clear_field">Clear field</string>
+    <string name="multimedia_editor_popup_clear_field">پاک کردن فیلد</string>
     <!-- Translation activity (Glosbe) -->
     <string name="multimedia_editor_trans_poweredglosbe">قدرت گرفته از glosbe.com</string>
     <!-- these are like translate f r o m  and t o  some othe languages -->

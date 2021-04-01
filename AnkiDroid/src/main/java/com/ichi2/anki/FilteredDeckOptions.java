@@ -376,6 +376,7 @@ public class FilteredDeckOptions extends AppCompatPreferenceActivity implements 
             try {
                 title = title.replace("XXX", mDeck.getString("name"));
             } catch (JSONException e) {
+                Timber.w(e);
                 title = title.replace("XXX", "???");
             }
         }

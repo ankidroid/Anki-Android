@@ -3,7 +3,7 @@
 
     <item
         android:id="@+id/action_add_note_from_card_browser"
-        android:icon="@drawable/ic_add_white_24dp"
+        android:icon="@drawable/ic_add_white"
         android:title="@string/menu_add_note"
         ankidroid:showAsAction="ifRoom"/>
 
@@ -64,6 +64,7 @@
         ankidroid:showAsAction="ifRoom"
         android:id="@+id/action_undo"
         android:title="@string/undo"
+        ankidroid:actionProviderClass="com.ichi2.ui.RtlCompliantActionProvider"
         android:icon="@drawable/ic_undo_white_24dp"/>
 
     <item

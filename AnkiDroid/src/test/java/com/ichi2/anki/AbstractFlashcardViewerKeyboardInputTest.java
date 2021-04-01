@@ -19,12 +19,15 @@ package com.ichi2.anki;
 import android.view.KeyEvent;
 
 import org.junit.Test;
+import org.junit.runner.RunWith;
 
+import androidx.test.ext.junit.runners.AndroidJUnit4;
 import timber.log.Timber;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 
-public class AbstractFlashcardViewerKeyboardInputTest {
+@RunWith(AndroidJUnit4.class)
+public class AbstractFlashcardViewerKeyboardInputTest extends RobolectricTest {
 
     @Test
     public void spaceShowsAnswer() {
