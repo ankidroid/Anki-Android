@@ -19,12 +19,13 @@ package com.ichi2.themes;
 
 
 import android.content.Context;
-import android.content.SharedPreferences;
 import android.content.res.TypedArray;
-import androidx.core.content.ContextCompat;
 
-import com.ichi2.anki.AnkiDroidApp;
 import com.ichi2.anki.R;
+import com.ichi2.preferences.PreferenceKeys;
+import com.ichi2.preferences.Prefs;
+
+import androidx.core.content.ContextCompat;
 
 public class Themes {
     public final static int ALPHA_ICON_ENABLED_LIGHT = 255; // 100%
@@ -40,9 +41,9 @@ public class Themes {
 
 
     public static void setTheme(Context context) {
-        SharedPreferences prefs = AnkiDroidApp.getSharedPrefs(context.getApplicationContext());
-        if (prefs.getBoolean("invertedColors", false)) {
-            int theme = Integer.parseInt(prefs.getString("nightTheme", "0"));
+        Prefs prefs = Prefs.fromContext(context.getApplicationContext());
+        if (prefs.getBoolean(PreferenceKeys.InvertedColors)) {
+            int theme = prefs.getIntFromStr(PreferenceKeys.NightTheme);
             switch (theme) {
                 case THEME_NIGHT_DARK:
                     context.setTheme(R.style.Theme_Dark_Compat);
@@ -52,7 +53,7 @@ public class Themes {
                     break;
             }
         } else {
-            int theme = Integer.parseInt(prefs.getString("dayTheme", "0"));
+            int theme = prefs.getIntFromStr(PreferenceKeys.DayTheme);
             switch (theme) {
                 case THEME_DAY_LIGHT:
                     context.setTheme(R.style.Theme_Light_Compat);
@@ -65,9 +66,9 @@ public class Themes {
     }
 
     public static void setThemeLegacy(Context context) {
-        SharedPreferences prefs = AnkiDroidApp.getSharedPrefs(context.getApplicationContext());
-        if (prefs.getBoolean("invertedColors", false)) {
-            int theme = Integer.parseInt(prefs.getString("nightTheme", "0"));
+        Prefs prefs = Prefs.fromContext(context.getApplicationContext());
+        if (prefs.getBoolean(PreferenceKeys.InvertedColors)) {
+            int theme = prefs.getIntFromStr(PreferenceKeys.NightTheme);
             switch (theme) {
                 case THEME_NIGHT_DARK:
                     context.setTheme(R.style.LegacyActionBarDark);
@@ -77,7 +78,7 @@ public class Themes {
                     break;
             }
         } else {
-            int theme = Integer.parseInt(prefs.getString("dayTheme", "0"));
+            int theme = prefs.getIntFromStr(PreferenceKeys.DayTheme);
             switch (theme) {
                 case THEME_DAY_LIGHT:
                     context.setTheme(R.style.LegacyActionBarLight);
@@ -124,11 +125,11 @@ public class Themes {
      * whether we are in day mode or night mode.
      */
     public static int getCurrentTheme(Context context) {
-        SharedPreferences prefs = AnkiDroidApp.getSharedPrefs(context);
-        if (prefs.getBoolean("invertedColors", false)) {
-            return Integer.parseInt(prefs.getString("nightTheme", "0"));
+        Prefs prefs = Prefs.fromContext(context);
+        if (prefs.getBoolean(PreferenceKeys.InvertedColors)) {
+            return prefs.getIntFromStr(PreferenceKeys.NightTheme);
         } else {
-            return Integer.parseInt(prefs.getString("dayTheme", "0"));
+            return prefs.getIntFromStr(PreferenceKeys.DayTheme);
         }
     }
 }

@@ -19,6 +19,9 @@ package com.ichi2.anki.web;
 import android.content.Context;
 import android.content.SharedPreferences;
 
+import com.ichi2.preferences.PreferenceKeys;
+import com.ichi2.preferences.Prefs;
+
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import timber.log.Timber;
@@ -43,7 +46,7 @@ public class CustomSyncServer {
     }
 
     public static boolean isEnabled(@NonNull SharedPreferences userPreferences) {
-        return userPreferences.getBoolean(PREFERENCE_ENABLE_CUSTOM_SYNC_SERVER, false);
+        return Prefs.getBoolean(userPreferences, PreferenceKeys.EnableCustomSyncServer);
     }
 
     public static void handleSyncServerPreferenceChange(Context context) {

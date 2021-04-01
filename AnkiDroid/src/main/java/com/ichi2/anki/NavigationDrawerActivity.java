@@ -37,6 +37,8 @@ import android.view.MenuItem;
 import android.view.View;
 
 import com.ichi2.anki.dialogs.HelpDialog;
+import com.ichi2.preferences.PreferenceKeys;
+import com.ichi2.preferences.Prefs;
 import com.ichi2.themes.Themes;
 import androidx.drawerlayout.widget.ClosableDrawerLayout;
 
@@ -65,7 +67,7 @@ public abstract class NavigationDrawerActivity extends AnkiActivity implements N
     public static final int REQUEST_PREFERENCES_UPDATE = 100;
     public static final int REQUEST_BROWSE_CARDS = 101;
     public static final int REQUEST_STATISTICS = 102;
-    private static final String NIGHT_MODE_PREFERENCE = "invertedColors";
+    public static final String NIGHT_MODE_PREFERENCE = "invertedColors";
 
     /**
      * runnable that will be executed after the drawer has been closed.
@@ -98,7 +100,7 @@ public abstract class NavigationDrawerActivity extends AnkiActivity implements N
         final SharedPreferences preferences = getPreferences();
         View actionLayout = mNavigationView.getMenu().findItem(R.id.nav_night_mode).getActionView();
         mNightModeSwitch = actionLayout.findViewById(R.id.switch_compat);
-        mNightModeSwitch.setChecked(preferences.getBoolean(NIGHT_MODE_PREFERENCE, false));
+        mNightModeSwitch.setChecked(Prefs.getBoolean(preferences, PreferenceKeys.InvertedColors));
         mNightModeSwitch.setOnCheckedChangeListener((buttonView, isChecked) -> applyNightMode(isChecked));
         // ActionBarDrawerToggle ties together the the proper interactions
         // between the sliding drawer and the action bar app icon
@@ -232,14 +234,14 @@ public abstract class NavigationDrawerActivity extends AnkiActivity implements N
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        final SharedPreferences preferences = getPreferences();
+        final Prefs preferences = new Prefs(getPreferences());
         Timber.i("Handling Activity Result: %d. Result: %d", requestCode, resultCode);
         NotificationChannels.setup(getApplicationContext());
         // Restart the activity on preference change
         if (requestCode == REQUEST_PREFERENCES_UPDATE) {
             if (mOldColPath != null && CollectionHelper.getCurrentAnkiDroidDirectory(this).equals(mOldColPath)) {
                 // collection path hasn't been changed so just restart the current activity
-                if ((this instanceof Reviewer) && preferences.getBoolean("tts", false)) {
+                if ((this instanceof Reviewer) && preferences.getBoolean(PreferenceKeys.Tts)) {
                     // Workaround to kick user back to StudyOptions after opening settings from Reviewer
                     // because onDestroy() of old Activity interferes with TTS in new Activity
                     finishWithoutAnimation();

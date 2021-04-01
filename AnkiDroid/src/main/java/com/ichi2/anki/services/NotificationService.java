@@ -29,6 +29,8 @@ import com.ichi2.anki.DeckPicker;
 import com.ichi2.anki.NotificationChannels;
 import com.ichi2.anki.Preferences;
 import com.ichi2.anki.R;
+import com.ichi2.preferences.PreferenceKeys;
+import com.ichi2.preferences.Prefs;
 import com.ichi2.widget.WidgetStatus;
 
 import timber.log.Timber;
@@ -63,11 +65,12 @@ public class NotificationService extends BroadcastReceiver {
                     .setColor(ContextCompat.getColor(context, R.color.material_light_blue_700))
                     .setContentTitle(cardsDueText)
                     .setTicker(cardsDueText);
+            Prefs prefs = new Prefs(preferences);
             // Enable vibrate and blink if set in preferences
-            if (preferences.getBoolean("widgetVibrate", false)) {
+            if (prefs.getBoolean(PreferenceKeys.WidgetVibrate)) {
                 builder.setVibrate(new long[] { 1000, 1000, 1000});
             }
-            if (preferences.getBoolean("widgetBlink", false)) {
+            if (prefs.getBoolean(PreferenceKeys.WidgetBlink)) {
                 builder.setLights(Color.BLUE, 1000, 1000);
             }
             // Creates an explicit intent for an Activity in your app

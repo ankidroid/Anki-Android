@@ -16,12 +16,12 @@
 
 package com.ichi2.utils;
 
-import android.content.SharedPreferences;
 import android.content.res.Resources;
 import android.text.TextUtils;
 
 import com.ichi2.anki.AnkiDroidApp;
-import com.ichi2.anki.Preferences;
+import com.ichi2.preferences.PreferenceKeys;
+import com.ichi2.preferences.Prefs;
 
 import java.text.DateFormat;
 import java.util.Date;
@@ -65,8 +65,7 @@ public class LanguageUtil {
      */
     @NonNull
     public static Locale getLocale(@Nullable String localeCode) {
-        SharedPreferences prefs = AnkiDroidApp.getSharedPrefs(AnkiDroidApp.getInstance().getBaseContext());
-        return getLocale(localeCode, prefs);
+        return getLocale(localeCode, Prefs.fromContext(AnkiDroidApp.getInstance().getBaseContext()));
     }
 
     /**
@@ -76,11 +75,11 @@ public class LanguageUtil {
      * @return The {@link Locale} for the given code
      */
     @NonNull
-    public static Locale getLocale(@Nullable String localeCode, @NonNull SharedPreferences prefs) {
+    public static Locale getLocale(@Nullable String localeCode, @NonNull Prefs prefs) {
         Locale locale;
         if (localeCode == null || TextUtils.isEmpty(localeCode)) {
 
-            localeCode = prefs.getString(Preferences.LANGUAGE, "");
+            localeCode = prefs.getString(PreferenceKeys.Language);
             // If no code provided use the app language.
         }
         if (TextUtils.isEmpty(localeCode)) {

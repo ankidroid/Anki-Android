@@ -51,6 +51,8 @@ import com.ichi2.anki.exception.StorageAccessException;
 import com.ichi2.anki.services.BootService;
 import com.ichi2.anki.services.NotificationService;
 import com.ichi2.compat.CompatHelper;
+import com.ichi2.preferences.PreferenceKeys;
+import com.ichi2.preferences.Prefs;
 import com.ichi2.utils.AdaptionUtil;
 import com.ichi2.utils.ExceptionUtil;
 import com.ichi2.utils.LanguageUtil;
@@ -455,7 +457,7 @@ public class AnkiDroidApp extends Application {
             } else {
                 preferences = getSharedPrefs(remoteContext);
             }
-            Configuration langConfig = getLanguageConfig(remoteContext.getResources().getConfiguration(), preferences);
+            Configuration langConfig = getLanguageConfig(remoteContext.getResources().getConfiguration(), new Prefs(preferences));
             return remoteContext.createConfigurationContext(langConfig);
         } catch (Exception e) {
             Timber.e(e, "failed to update context with new language");
@@ -473,9 +475,9 @@ public class AnkiDroidApp extends Application {
      */
     @SuppressWarnings("deprecation")
     @NonNull
-    private static Configuration getLanguageConfig(@NonNull Configuration remoteConfig, @NonNull SharedPreferences prefs) {
+    private static Configuration getLanguageConfig(@NonNull Configuration remoteConfig, @NonNull Prefs prefs) {
         Configuration newConfig = new Configuration(remoteConfig);
-        Locale newLocale = LanguageUtil.getLocale(prefs.getString(Preferences.LANGUAGE, ""), prefs);
+        Locale newLocale = LanguageUtil.getLocale(prefs.getString(PreferenceKeys.Language), prefs);
         Timber.d("AnkiDroidApp::getLanguageConfig - setting locale to %s", newLocale);
         //API level >=24
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
@@ -499,10 +501,10 @@ public class AnkiDroidApp extends Application {
     }
 
 
-    public static boolean initiateGestures(SharedPreferences preferences) {
-        boolean enabled = preferences.getBoolean("gestures", false);
+    public static boolean initiateGestures(Prefs preferences) {
+        boolean enabled = preferences.getBoolean(PreferenceKeys.Gestures);
         if (enabled) {
-            int sensitivity = preferences.getInt("swipeSensitivity", 100);
+            int sensitivity = preferences.getInt(PreferenceKeys.SwipeSensitivity);
             if (sensitivity != 100) {
                 float sens = 100.0f/sensitivity;
                 sSwipeMinDistance = (int) (DEFAULT_SWIPE_MIN_DISTANCE * sens + 0.5f);

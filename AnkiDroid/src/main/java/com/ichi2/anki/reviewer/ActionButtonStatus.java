@@ -6,6 +6,8 @@ import android.view.Menu;
 import android.view.MenuItem;
 
 import com.ichi2.anki.R;
+import com.ichi2.preferences.PreferenceKeys;
+import com.ichi2.preferences.Prefs;
 import com.ichi2.themes.Themes;
 
 import java.util.HashMap;
@@ -45,31 +47,33 @@ public class ActionButtonStatus {
 
     public void setup(SharedPreferences preferences) {
         // NOTE: the default values below should be in sync with preferences_custom_buttons.xml and reviewer.xml
-        setupButton(preferences, R.id.action_undo, "customButtonUndo", SHOW_AS_ACTION_ALWAYS);
-        setupButton(preferences, R.id.action_schedule, "customButtonScheduleCard", SHOW_AS_ACTION_NEVER);
-        setupButton(preferences, R.id.action_flag, "customButtonFlag", SHOW_AS_ACTION_ALWAYS);
-        setupButton(preferences, R.id.action_tag, "customButtonTags", SHOW_AS_ACTION_NEVER);
-        setupButton(preferences, R.id.action_edit, "customButtonEditCard", SHOW_AS_ACTION_IF_ROOM);
-        setupButton(preferences, R.id.action_add_note_reviewer, "customButtonAddCard", MENU_DISABLED);
-        setupButton(preferences, R.id.action_replay, "customButtonReplay", SHOW_AS_ACTION_IF_ROOM);
-        setupButton(preferences, R.id.action_card_info, "customButtonCardInfo", MENU_DISABLED);
-        setupButton(preferences, R.id.action_clear_whiteboard, "customButtonClearWhiteboard", SHOW_AS_ACTION_IF_ROOM);
-        setupButton(preferences, R.id.action_hide_whiteboard, "customButtonShowHideWhiteboard", SHOW_AS_ACTION_ALWAYS);
-        setupButton(preferences, R.id.action_select_tts, "customButtonSelectTts", SHOW_AS_ACTION_NEVER);
-        setupButton(preferences, R.id.action_open_deck_options, "customButtonDeckOptions", SHOW_AS_ACTION_NEVER);
-        setupButton(preferences, R.id.action_bury, "customButtonBury", SHOW_AS_ACTION_NEVER);
-        setupButton(preferences, R.id.action_suspend, "customButtonSuspend", SHOW_AS_ACTION_NEVER);
-        setupButton(preferences, R.id.action_mark_card, "customButtonMarkCard", SHOW_AS_ACTION_IF_ROOM);
-        setupButton(preferences, R.id.action_delete, "customButtonDelete", SHOW_AS_ACTION_NEVER);
-        setupButton(preferences, R.id.action_toggle_mic_tool_bar, "customButtonToggleMicToolBar", SHOW_AS_ACTION_NEVER);
-        setupButton(preferences, R.id.action_toggle_whiteboard, "customButtonEnableWhiteboard", SHOW_AS_ACTION_NEVER);
-        setupButton(preferences, R.id.action_save_whiteboard, "customButtonSaveWhiteboard", SHOW_AS_ACTION_NEVER);
-        setupButton(preferences, R.id.action_change_whiteboard_pen_color, "customButtonWhiteboardPenColor", SHOW_AS_ACTION_IF_ROOM);
+        // TODO: Link this to test for #5346
+        Prefs prefs = new Prefs(preferences);
+        setupButton(prefs, R.id.action_undo, PreferenceKeys.CustomButtonUndo);
+        setupButton(prefs, R.id.action_schedule, PreferenceKeys.CustomButtonScheduleCard);
+        setupButton(prefs, R.id.action_flag, PreferenceKeys.CustomButtonFlag);
+        setupButton(prefs, R.id.action_tag, PreferenceKeys.CustomButtonTags);
+        setupButton(prefs, R.id.action_edit, PreferenceKeys.CustomButtonEditCard);
+        setupButton(prefs, R.id.action_add_note_reviewer, PreferenceKeys.CustomButtonAddCard);
+        setupButton(prefs, R.id.action_replay, PreferenceKeys.CustomButtonReplay);
+        setupButton(prefs, R.id.action_card_info, PreferenceKeys.CustomButtonCardInfo);
+        setupButton(prefs, R.id.action_clear_whiteboard, PreferenceKeys.CustomButtonClearWhiteboard);
+        setupButton(prefs, R.id.action_hide_whiteboard, PreferenceKeys.CustomButtonShowHideWhiteboard);
+        setupButton(prefs, R.id.action_select_tts, PreferenceKeys.CustomButtonSelectTts);
+        setupButton(prefs, R.id.action_open_deck_options, PreferenceKeys.CustomButtonDeckOptions);
+        setupButton(prefs, R.id.action_bury, PreferenceKeys.CustomButtonBury);
+        setupButton(prefs, R.id.action_suspend, PreferenceKeys.CustomButtonSuspend);
+        setupButton(prefs, R.id.action_mark_card, PreferenceKeys.CustomButtonMarkCard);
+        setupButton(prefs, R.id.action_delete, PreferenceKeys.CustomButtonDelete);
+        setupButton(prefs, R.id.action_toggle_mic_tool_bar, PreferenceKeys.CustomButtonToggleMicToolBar);
+        setupButton(prefs, R.id.action_toggle_whiteboard, PreferenceKeys.CustomButtonEnableWhiteboard);
+        setupButton(prefs, R.id.action_save_whiteboard, PreferenceKeys.CustomButtonSaveWhiteboard);
+        setupButton(prefs, R.id.action_change_whiteboard_pen_color, PreferenceKeys.CustomButtonWhiteboardPenColor);
     }
 
 
-    private void setupButton(SharedPreferences preferences, @IdRes int resourceId, String preferenceName, int showAsActionType) {
-        mCustomButtons.put(resourceId, Integer.parseInt(preferences.getString(preferenceName, Integer.toString(showAsActionType))));
+    private void setupButton(Prefs preferences, @IdRes int resourceId, PreferenceKeys.StringAsIntKey key) {
+        mCustomButtons.put(resourceId, preferences.getIntFromStr(key));
     }
 
 

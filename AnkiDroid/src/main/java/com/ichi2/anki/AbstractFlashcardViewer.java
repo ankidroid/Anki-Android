@@ -118,6 +118,8 @@ import com.ichi2.libanki.Sound;
 import com.ichi2.libanki.Utils;
 import com.ichi2.libanki.template.MathJax;
 import com.ichi2.libanki.template.TemplateFilters;
+import com.ichi2.preferences.PreferenceKeys;
+import com.ichi2.preferences.Prefs;
 import com.ichi2.themes.HtmlColors;
 import com.ichi2.themes.Themes;
 import com.ichi2.ui.FixedEditText;
@@ -1584,10 +1586,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
         initControls();
 
         // Position answer buttons
-        String answerButtonsPosition = AnkiDroidApp.getSharedPrefs(this).getString(
-                getString(R.string.answer_buttons_position_preference),
-                "bottom"
-        );
+        String answerButtonsPosition = Prefs.getString(this, PreferenceKeys.AnswerButtonPosition);
         LinearLayout answerArea = findViewById(R.id.bottom_area_layout);
         RelativeLayout.LayoutParams answerAreaParams = (RelativeLayout.LayoutParams) answerArea.getLayoutParams();
         RelativeLayout.LayoutParams cardContainerParams = (RelativeLayout.LayoutParams) mCardContainer.getLayoutParams();
@@ -1801,36 +1800,38 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
     protected SharedPreferences restorePreferences() {
         SharedPreferences preferences = AnkiDroidApp.getSharedPrefs(getBaseContext());
 
-        mUseInputTag = preferences.getBoolean("useInputTag", false);
-        mDoNotUseCodeFormatting = preferences.getBoolean("noCodeFormatting", false);
-        // On newer Androids, ignore this setting, which should be hidden in the prefs anyway.
-        mDisableClipboard = "0".equals(preferences.getString("dictionary", "0"));
-        // mDeckFilename = preferences.getString("deckFilename", "");
-        mPrefFullscreenReview = Integer.parseInt(preferences.getString("fullscreenMode", "0"));
-        mRelativeButtonSize = preferences.getInt("answerButtonSize", 100);
-        mSpeakText = preferences.getBoolean("tts", false);
-        mPrefUseTimer = preferences.getBoolean("timeoutAnswer", false);
-        mPrefWaitAnswerSecond = preferences.getInt("timeoutAnswerSeconds", 20);
-        mPrefWaitQuestionSecond = preferences.getInt("timeoutQuestionSeconds", 60);
-        mScrollingButtons = preferences.getBoolean("scrolling_buttons", false);
-        mDoubleScrolling = preferences.getBoolean("double_scrolling", false);
-        mPrefShowTopbar = preferences.getBoolean("showTopbar", true);
+        Prefs prefs = new Prefs(preferences);
 
-        mGesturesEnabled = AnkiDroidApp.initiateGestures(preferences);
-        mLinkOverridesTouchGesture = preferences.getBoolean("linkOverridesTouchGesture", false);
+        mUseInputTag = prefs.getBoolean(PreferenceKeys.UseInputTag);
+        mDoNotUseCodeFormatting = prefs.getBoolean(PreferenceKeys.NoCodeFormatting);
+        // On newer Androids, ignore this setting, which should be hidden in the prefs anyway.
+        mDisableClipboard = "0".equals(prefs.getString(PreferenceKeys.Dictionary));
+        // mDeckFilename = preferences.getString("deckFilename", "");
+        mPrefFullscreenReview = prefs.getIntFromStr(PreferenceKeys.FullscreenMode);
+        mRelativeButtonSize = prefs.getInt(PreferenceKeys.AnswerButtonSide);
+        mSpeakText = prefs.getBoolean(PreferenceKeys.Tts);
+        mPrefUseTimer = prefs.getBoolean(PreferenceKeys.TimeoutAnswer);
+        mPrefWaitAnswerSecond = prefs.getInt(PreferenceKeys.TimeoutAnswerSeconds);
+        mPrefWaitQuestionSecond = prefs.getInt(PreferenceKeys.TimeoutQuestionSeconds);
+        mScrollingButtons = prefs.getBoolean(PreferenceKeys.ScrollingButtons);
+        mDoubleScrolling = prefs.getBoolean(PreferenceKeys.DoubleScrolling);
+        mPrefShowTopbar = prefs.getBoolean(PreferenceKeys.ShowTopBar);
+
+        mGesturesEnabled = AnkiDroidApp.initiateGestures(prefs);
+        mLinkOverridesTouchGesture = prefs.getBoolean(PreferenceKeys.LinkOverridesTouchGesture);
         if (mGesturesEnabled) {
-            mGestureSwipeUp = Integer.parseInt(preferences.getString("gestureSwipeUp", "9"));
-            mGestureSwipeDown = Integer.parseInt(preferences.getString("gestureSwipeDown", "0"));
-            mGestureSwipeLeft = Integer.parseInt(preferences.getString("gestureSwipeLeft", "8"));
-            mGestureSwipeRight = Integer.parseInt(preferences.getString("gestureSwipeRight", "17"));
-            mGestureDoubleTap = Integer.parseInt(preferences.getString("gestureDoubleTap", "7"));
+            mGestureSwipeUp = prefs.getIntFromStr(PreferenceKeys.GestureSwipeUp);
+            mGestureSwipeDown = prefs.getIntFromStr(PreferenceKeys.GestureSwipeDown);
+            mGestureSwipeLeft = prefs.getIntFromStr(PreferenceKeys.GestureSwipeLeft);
+            mGestureSwipeRight = prefs.getIntFromStr(PreferenceKeys.GestureSwipeRight);
+            mGestureDoubleTap = prefs.getIntFromStr(PreferenceKeys.GestureDoubleTap);
             mGestureTapProcessor.init(preferences);
-            mGestureLongclick = Integer.parseInt(preferences.getString("gestureLongclick", "11"));
-            mGestureVolumeUp = Integer.parseInt(preferences.getString("gestureVolumeUp", "0"));
-            mGestureVolumeDown = Integer.parseInt(preferences.getString("gestureVolumeDown", "0"));
+            mGestureLongclick = prefs.getIntFromStr(PreferenceKeys.GestureLongClick);
+            mGestureVolumeUp = prefs.getIntFromStr(PreferenceKeys.GestureVolumeUp);
+            mGestureVolumeDown = prefs.getIntFromStr(PreferenceKeys.GestureVolumeDown);
         }
 
-        if (preferences.getBoolean("keepScreenOn", false)) {
+        if (prefs.getBoolean(PreferenceKeys.KeepScreenOn)) {
             this.getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
         }
 
@@ -1880,7 +1881,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
     private void recreateWebView() {
         if (mCardWebView == null) {
             mCardWebView = createWebView();
-            WebViewDebugging.initializeDebugging(AnkiDroidApp.getSharedPrefs(this));
+            WebViewDebugging.initializeDebugging(Prefs.fromContext(this));
             mCardFrame.addView(mCardWebView);
             mGestureDetectorImpl.onWebViewCreated(mCardWebView);
         }
@@ -2255,7 +2256,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
         mCardContent = mCardTemplate.render(content, style, cardClass);
         Timber.d("base url = %s", mBaseUrl);
 
-        if (AnkiDroidApp.getSharedPrefs(this).getBoolean("html_javascript_debugging", false)) {
+        if (Prefs.getBoolean(this, PreferenceKeys.HtmlJavascriptDebugging)) {
             try {
                 try (FileOutputStream f = new FileOutputStream(new File(CollectionHelper.getCurrentAnkiDroidDirectory(this),
                         "card.html"))) {

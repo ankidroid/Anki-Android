@@ -30,6 +30,8 @@ import com.ichi2.async.BaseAsyncTask;
 import com.ichi2.libanki.Collection;
 import com.ichi2.libanki.sched.Counts;
 import com.ichi2.libanki.sched.DeckDueTreeNode;
+import com.ichi2.preferences.PreferenceKeys;
+import com.ichi2.preferences.Prefs;
 
 import java.util.List;
 
@@ -57,7 +59,7 @@ public final class WidgetStatus {
      */
     public static void update(Context context) {
         SharedPreferences preferences = AnkiDroidApp.getSharedPrefs(context);
-        sSmallWidgetEnabled = preferences.getBoolean("widgetSmallEnabled", false);
+        sSmallWidgetEnabled = Prefs.getBoolean(preferences, PreferenceKeys.WidgetSmallEnabled);
         boolean notificationEnabled = Integer.parseInt(preferences.getString("minimumCardsDueForNotification", "1000001")) < 1000000;
         boolean canExecuteTask = ((sUpdateDeckStatusAsyncTask == null) || (sUpdateDeckStatusAsyncTask.getStatus() == AsyncTask.Status.FINISHED));
         if ((sSmallWidgetEnabled || notificationEnabled) && canExecuteTask) {
