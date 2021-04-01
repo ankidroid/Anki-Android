@@ -19,14 +19,14 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
 import android.content.res.Configuration;
-import android.hardware.SensorManager;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
+
+import androidx.annotation.NonNull;
 import androidx.appcompat.widget.Toolbar;
 
 import android.view.KeyEvent;
-import android.view.OrientationEventListener;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
@@ -44,7 +44,6 @@ import com.ichi2.ui.TextInputEditField;
 import com.ichi2.utils.AdaptionUtil;
 
 import java.net.UnknownHostException;
-import java.util.Arrays;
 
 import timber.log.Timber;
 
@@ -53,18 +52,6 @@ import static com.ichi2.anim.ActivityTransitionAnimation.Direction.FADE;
 public class MyAccount extends AnkiActivity {
     private final static int STATE_LOG_IN  = 1;
     private final static int STATE_LOGGED_IN = 2;
-    /*
-     * ROTATED_RIGHT is 90 degrees from vertical
-     * ROTATED_LEFT is 270 degree from vertical or - 90 degrees
-     * OFFSET accounts for imperfections in rotation
-     * DEVIATION makes sure that we have settled in a position
-     * ORIENTATION_WINDOW is the sample size
-     */
-    private final static int ROTATED_RIGHT = 90;
-    private final static int ROTATED_LEFT = 270;
-    private final static int OFFSET = 30;
-    private final static int DEVIATION = 10;
-    private final static int ORIENTATION_WINDOW = 25;
 
     private View mLoginToMyAccountView;
     private View mLoggedIntoMyAccountView;
@@ -78,14 +65,7 @@ public class MyAccount extends AnkiActivity {
     Toolbar mToolbar = null;
     private TextInputLayout mPasswordLayout;
 
-    private OrientationEventListener myOrientationEventListener;
     private ImageView mAnkidroidLogo;
-
-    /*
-     * This buffer tracks orientations of the mobile device.
-     */
-    private Integer[] orientations = new Integer[ORIENTATION_WINDOW];
-    private int orientationIndex = 0;
 
     private void switchToState(int newState) {
         switch (newState) {
@@ -135,11 +115,6 @@ public class MyAccount extends AnkiActivity {
         } else {
             switchToState(STATE_LOG_IN);
         }
-
-        // listener for handling future change in orientation
-        initializeOrientationListener();
-        // assume that we are in a vertical state to begin with
-        Arrays.fill(orientations, 0);
     }
 
 
@@ -340,74 +315,21 @@ public class MyAccount extends AnkiActivity {
         return exception.getLocalizedMessage();
     }
 
-    public void handleCurrentOrientationState(int orientation) {
-        if ((orientation == Configuration.ORIENTATION_UNDEFINED) || orientation == Configuration.ORIENTATION_LANDSCAPE) {
-            mAnkidroidLogo.setVisibility(View.GONE);
-        } else {
-            mAnkidroidLogo.setVisibility(View.VISIBLE);
-        }
-    }
-
-    public void checkOrientation(int orientation) {
-        recordOrientation(orientation);
-        if (isScreenSmall() && isHorizontal(orientation)) {
-            mAnkidroidLogo.setVisibility(View.GONE);
-        } else {
-            mAnkidroidLogo.setVisibility(View.VISIBLE);
-        }
-    }
-
-    private boolean isHorizontal(int orientation) {
-        int avgOrientation = getAverageOrientation();
-        return Math.abs(orientation - avgOrientation) < DEVIATION
-                && ROTATED_RIGHT - OFFSET <= avgOrientation
-                && avgOrientation <= ROTATED_LEFT + OFFSET;
-    }
-
     private boolean isScreenSmall() {
         return (this.getApplicationContext().getResources().getConfiguration().screenLayout
                 & Configuration.SCREENLAYOUT_SIZE_MASK)
                 < Configuration.SCREENLAYOUT_SIZE_LARGE;
     }
 
-    private void recordOrientation(int orientation) {
-        if(orientation != OrientationEventListener.ORIENTATION_UNKNOWN) {
-            orientations[orientationIndex++ % ORIENTATION_WINDOW] = orientation;
+    @Override
+    public void onConfigurationChanged(@NonNull Configuration newConfig) {
+        super.onConfigurationChanged(newConfig);
+        if(isScreenSmall() && newConfig.orientation == Configuration.ORIENTATION_LANDSCAPE){
+            mAnkidroidLogo.setVisibility(View.GONE);
+        } else {
+            mAnkidroidLogo.setVisibility(View.VISIBLE);
         }
     }
-
-    private int getAverageOrientation() {
-        int orientationSum = 0;
-        for(int ort: orientations){
-            orientationSum += ort;
-        }
-        return orientationSum / orientations.length;
-    }
-
-    public void initializeOrientationListener() {
-        myOrientationEventListener = new OrientationEventListener(this, SensorManager.SENSOR_DELAY_NORMAL) {
-            @Override
-            public void onOrientationChanged(int orientation) {
-                checkOrientation(orientation);
-            }
-        };
-    }
-
-    @Override
-    protected void onResume() {
-        super.onResume();
-        // handle current state
-        handleCurrentOrientationState(getResources().getConfiguration().orientation);
-        myOrientationEventListener.enable();
-    }
-
-
-    @Override
-    protected void onPause() {
-        super.onPause();
-        myOrientationEventListener.disable();
-    }
-
 
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
@@ -418,5 +340,4 @@ public class MyAccount extends AnkiActivity {
         }
         return super.onKeyDown(keyCode, event);
     }
-
 }
