@@ -193,4 +193,9 @@ public abstract class AbstractDeckTreeNode<T extends AbstractDeckTreeNode<T>> im
 
 
     public abstract T withChildren(List<T> children);
+
+    public String[] getmNameComponents() {
+        return mNameComponents;
+    }
+
 }
