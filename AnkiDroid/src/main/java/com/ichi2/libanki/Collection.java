@@ -332,7 +332,7 @@ public class Collection {
         SupportSQLiteDatabase db = mDb.getDatabase();
         String db_name = (db instanceof DatabaseChangeDecorator) ? ((DatabaseChangeDecorator) db).getWrapped().getClass().getName() : null;
 
-        if (db_name != null && "io.requery.android.database.sqlite.SQLiteDatabase".equals(db_name)) {
+        if ("io.requery.android.database.sqlite.SQLiteDatabase".equals(db_name)) {
             try {
                 Field cursorWindowSize = io.requery.android.database.CursorWindow.class.getDeclaredField("sDefaultCursorWindowSize");
                 cursorWindowSize.setAccessible(true);
