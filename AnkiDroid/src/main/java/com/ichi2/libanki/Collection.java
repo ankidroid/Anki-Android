@@ -332,10 +332,8 @@ public class Collection {
         // We have the ability to look into our sqlite implementation on Android and use it's value
         // as a ceiling. Try it, with a reasonable fallback in case of failure
         SupportSQLiteDatabase db = mDb.getDatabase();
-        if (! (db instanceof DatabaseChangeDecorator)) {
-            return sChunk;
-        }
-        String db_name = ((DatabaseChangeDecorator) db).getWrapped().getClass().getName();
+        String db_name = (db instanceof DatabaseChangeDecorator) ? ((DatabaseChangeDecorator) db).getWrapped().getClass().getName() : null;
+
         if ("io.requery.android.database.sqlite.SQLiteDatabase".equals(db_name)) {
             try {
                 Field cursorWindowSize = io.requery.android.database.CursorWindow.class.getDeclaredField("sDefaultCursorWindowSize");
@@ -353,6 +351,7 @@ public class Collection {
         }
 
         // reduce the actual size a little bit.
+        // In case db is not an instance of DatabaseChangeDecorator, sChunk evaluated on default window size
         sChunk = (int) (sCursorWindowSize * 15. / 16.);
         return sChunk;
     }
