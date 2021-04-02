@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.drawerlayout.widget.ClosableDrawerLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/drawer_layout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fitsSystemWindows="true">
+    <androidx.coordinatorlayout.widget.CoordinatorLayout
+        android:id="@+id/root_layout"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent">
+        <LinearLayout android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <include layout="@layout/toolbar" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/addons"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:clipToPadding="false"
+                android:drawSelectorOnTop="true"
+                android:fastScrollEnabled="true"
+                android:focusable="true"
+                android:paddingBottom="72dp"
+                android:scrollbars="vertical"
+                android:layout_marginBottom="3dp"/>
+
+        </LinearLayout>
+        <include layout="@layout/anki_progress"/>
+    </androidx.coordinatorlayout.widget.CoordinatorLayout>
+    <include layout="@layout/navigation_drawer" />
+</androidx.drawerlayout.widget.ClosableDrawerLayout>

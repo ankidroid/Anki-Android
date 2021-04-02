@@ -61,6 +61,7 @@ public class Toolbar extends FrameLayout {
     private LinearLayout mToolbar;
     private List<View> mCustomButtons = new ArrayList<>();
     private View mClozeIcon;
+    private View mJSAddonIcon;
 
     private Paint mStringPaint;
 
@@ -108,6 +109,8 @@ public class Toolbar extends FrameLayout {
         findViewById(R.id.note_editor_toolbar_button_font_size).setOnClickListener(l -> displayFontSizeDialog());
         findViewById(R.id.note_editor_toolbar_button_title).setOnClickListener(l -> displayInsertHeadingDialog());
         this.mClozeIcon = findViewById(R.id.note_editor_toolbar_button_cloze);
+
+        this.mJSAddonIcon = findViewById(R.id.note_editor_toolbar_button_list_addon);
     }
 
 
@@ -156,6 +159,11 @@ public class Toolbar extends FrameLayout {
     public View getClozeIcon() {
         // HACK until API 21 FIXME can this be altered now?
         return mClozeIcon;
+    }
+
+    public View getJSAddonIconIcon() {
+        // HACK until API 21 FIXME can this be altered now?
+        return mJSAddonIcon;
     }
 
 
