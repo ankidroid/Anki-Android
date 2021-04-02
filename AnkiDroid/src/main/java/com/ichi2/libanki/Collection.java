@@ -358,7 +358,6 @@ public class Collection {
         int pos = 1;
         StringBuilder buf = new StringBuilder();
 
-        // code refactoring done to remove unnecessary break statements
         while (true) {
             try (Cursor cursor = mDb.query("SELECT substr(" + columnName + ", ?, ?) FROM col",
                     Integer.toString(pos), Integer.toString(getChunk()))) {
