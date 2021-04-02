@@ -22,6 +22,7 @@ import android.util.AttributeSet;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.core.view.GravityCompat;
 
 public class ClosableDrawerLayout extends DrawerLayout {
     @SuppressWarnings( {"FieldCanBeLocal", "unused", "RedundantSuppression"})

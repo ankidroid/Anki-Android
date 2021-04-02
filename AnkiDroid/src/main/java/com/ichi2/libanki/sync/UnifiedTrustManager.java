@@ -35,9 +35,9 @@ import timber.log.Timber;
 // Cached the accepted issuers.
 // Did not ignore NoSuchAlgorithmException
 class UnifiedTrustManager implements X509TrustManager {
-    private final X509TrustManager defaultTrustManager;
-    private final X509TrustManager localTrustManager;
-    private final X509Certificate[] mAcceptedIssuers;
+    private X509TrustManager defaultTrustManager;
+    private X509TrustManager localTrustManager;
+    private X509Certificate[] mAcceptedIssuers;
 
     public UnifiedTrustManager(KeyStore localKeyStore) throws KeyStoreException, NoSuchAlgorithmException {
         this.defaultTrustManager = createTrustManager(null);

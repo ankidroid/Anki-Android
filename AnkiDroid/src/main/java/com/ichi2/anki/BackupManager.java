@@ -18,6 +18,7 @@ package com.ichi2.anki;
 
 import android.content.SharedPreferences;
 
+
 import com.ichi2.compat.CompatHelper;
 import com.ichi2.libanki.Collection;
 import com.ichi2.libanki.Utils;

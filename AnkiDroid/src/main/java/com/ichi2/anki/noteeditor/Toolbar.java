@@ -58,7 +58,7 @@ public class Toolbar extends FrameLayout {
 
     private TextFormatListener mFormatCallback;
     private LinearLayout mToolbar;
-    private final List<View> mCustomButtons = new ArrayList<>();
+    private List<View> mCustomButtons = new ArrayList<>();
     private View mClozeIcon;
 
     private Paint mStringPaint;

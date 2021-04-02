@@ -95,7 +95,7 @@ public class DecksTest extends RobolectricTest {
         assertNotEquals(parentId, 0);
         assertEquals(2, decks.allSortedNames().size());
         // should get the same id
-        assertEquals(parentId, addDeck("new deck"));
+        assertEquals(parentId, (long) addDeck("new deck"));
         // we start with the default col selected
         assertEquals(1, decks.selected());
         assertEqualsArrayList(new Long[] {1L}, decks.active());
