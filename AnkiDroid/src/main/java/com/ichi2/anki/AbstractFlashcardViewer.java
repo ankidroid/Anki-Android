@@ -1338,7 +1338,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
             Timber.d("Clipboard has text = %b", clipboardHasText());
             lookUp();
         } else {
-            selectAndCopyText();
+            UIUtils.showThemedToast(AbstractFlashcardViewer.this, getApplicationContext().getString(R.string.dialog_clipboard_empty) , false);
         }
     }
 
