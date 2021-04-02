@@ -154,6 +154,7 @@
     <string name="custom_study_deck_name">Tilpasset studiesession</string>
     <string name="custom_study_deck_exists">Omdøb det eksisterende tilpassede dæk først </string>
     <string name="empty_deck">Dette kortsæt er tomt</string>
+    <string name="search_deck">Deck Search</string>
     <string name="empty_deck_add_note">Tilføj kort</string>
     <string name="invalid_deck_name">Ugyldigt dæknavn</string>
     <string name="studyoptions_empty">Dette dæk er tomt. Tryk på + knappen for at tilføje nyt indhold.</string>

@@ -23,9 +23,11 @@ import com.ichi2.libanki.Card;
 import com.ichi2.libanki.Collection;
 
 import org.junit.Test;
+import org.junit.runner.RunWith;
 
 import androidx.annotation.CheckResult;
 import androidx.annotation.NonNull;
+import androidx.test.ext.junit.runners.AndroidJUnit4;
 import timber.log.Timber;
 
 import static android.view.KeyEvent.*;
@@ -40,7 +42,8 @@ import static org.mockito.ArgumentMatchers.anyInt;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
-public class ReviewerKeyboardInputTest {
+@RunWith(AndroidJUnit4.class)
+public class ReviewerKeyboardInputTest extends RobolectricTest {
 
     @Test
     public void whenDisplayingQuestionTyping1DoesNothing() {

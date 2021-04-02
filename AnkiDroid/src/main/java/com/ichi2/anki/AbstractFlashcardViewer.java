@@ -81,7 +81,6 @@ import android.webkit.WebView.HitTestResult;
 import android.webkit.WebViewClient;
 import android.widget.Button;
 import android.widget.Chronometer;
-import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -121,6 +120,7 @@ import com.ichi2.libanki.template.MathJax;
 import com.ichi2.libanki.template.TemplateFilters;
 import com.ichi2.themes.HtmlColors;
 import com.ichi2.themes.Themes;
+import com.ichi2.ui.FixedEditText;
 import com.ichi2.utils.AdaptionUtil;
 import com.ichi2.utils.AndroidUiUtils;
 import com.ichi2.utils.AssetHelper;
@@ -149,6 +149,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.LinkedHashSet;
+import java.util.List;
 import java.util.Set;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReadWriteLock;
@@ -167,7 +168,7 @@ import com.github.zafarkhaja.semver.Version;
 import static com.ichi2.anim.ActivityTransitionAnimation.Direction.*;
 
 @SuppressWarnings({"PMD.AvoidThrowingRawExceptionTypes","PMD.FieldDeclarationsShouldBeAtStartOfClass"})
-public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity implements ReviewerUi, CommandProcessor {
+public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity implements ReviewerUi, CommandProcessor, TagsDialog.TagsDialogListener {
 
     /**
      * Result codes that are returned when this activity finishes.
@@ -288,7 +289,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
     protected TextView mNext2;
     protected TextView mNext3;
     protected TextView mNext4;
-    protected EditText mAnswerField;
+    protected FixedEditText mAnswerField;
     protected TextView mEase1;
     protected TextView mEase2;
     protected TextView mEase3;
@@ -822,16 +823,16 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
      *
      * @param txt The field text with the clozes
      * @param idx The index of the cloze to use
-     * @return A string with a comma-separeted list of unique cloze strings with the correct index.
+     * @return If the cloze strings are the same, return a single cloze string, otherwise, return
+     *         a string with a comma-separeted list of strings with the correct index.
      */
-
-    private String contentForCloze(String txt, int idx) {
+    @VisibleForTesting
+    protected String contentForCloze(String txt, int idx) {
         @SuppressWarnings("RegExpRedundantEscape") // In Android, } should be escaped
         Pattern re = Pattern.compile("\\{\\{c" + idx + "::(.+?)\\}\\}");
         Matcher m = re.matcher(txt);
-        Set<String> matches = new LinkedHashSet<>(); // Size can't be known in advance
-        // LinkedHashSet: make entries appear only once, like Anki desktop (see also issue #2208), and keep the order
-        // they appear in.
+        List<String> matches = new ArrayList<>();
+
         String groupOne;
         int colonColonIndex = -1;
         while (m.find()) {
@@ -843,15 +844,15 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
             }
             matches.add(groupOne);
         }
-        // Now do what the pythonic ", ".join(matches) does in a tricky way
-        String prefix = "";
-        StringBuilder resultBuilder = new StringBuilder();
-        for (String match : matches) {
-            resultBuilder.append(prefix);
-            resultBuilder.append(match);
-            prefix = ", ";
+
+        Set<String> uniqMatches = new HashSet<>(matches); // Allow to check whether there are distinct strings
+
+        // Make it consistent with the Desktop version (see issue #8229)
+        if (uniqMatches.size() == 1) {
+            return matches.get(0);
+        } else {
+            return TextUtils.join(", ", matches);
         }
-        return resultBuilder.toString();
     }
 
     private final Handler mTimerHandler = new Handler();
@@ -1758,7 +1759,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
         // This does not handle mUseInputTag (the WebView contains an input field with a typable answer).
         // In this case, the user can use touch to focus the field if necessary.
         if (typeAnswer()) {
-            mAnswerField.requestFocus();
+            mAnswerField.focusWithKeyboard();
         } else {
             mFlipCardLayout.requestFocus();
         }
@@ -1860,6 +1861,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
             throw new RuntimeException(e);
         } catch (NullPointerException npe) {
             // NPE on collection only happens if the Collection is broken, follow AnkiActivity example
+            Timber.w(npe);
             Intent deckPicker = new Intent(this, DeckPicker.class);
             deckPicker.putExtra("collectionLoadError", true); // don't currently do anything with this
             deckPicker.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
@@ -2327,6 +2329,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
                     mMissingImageHandler.processMissingSound(file, this::displayCouldNotFindMediaSnackbar);
                 }
             } catch (Exception e) {
+                Timber.w(e);
                 return false;
             }
 
@@ -3874,19 +3877,20 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
     protected void showTagsDialog() {
         ArrayList<String> tags = new ArrayList<>(getCol().getTags().all());
         ArrayList<String> selTags = new ArrayList<>(mCurrentCard.note().getTags());
-        TagsDialog.TagsDialogListener tagsDialogListener = (selectedTags, option) -> {
-            if (!mCurrentCard.note().getTags().equals(selectedTags)) {
-                String tagString = TextUtils.join(" ", selectedTags);
-                Note note = mCurrentCard.note();
-                note.setTagsFromStr(tagString);
-                note.flush();
-                // Reload current card to reflect tag changes
-                displayCardQuestion(true);
-            }
-        };
-        TagsDialog dialog = TagsDialog.newInstance(TagsDialog.TYPE_ADD_TAG, selTags, tags);
-        dialog.setTagsDialogListener(tagsDialogListener);
+        TagsDialog dialog = TagsDialog.newInstance(TagsDialog.DialogType.ADD_TAG, selTags, tags);
         showDialogFragment(dialog);
+    }
+
+    @Override
+    public void onSelectedTags(List<String> selectedTags, int option) {
+        if (!mCurrentCard.note().getTags().equals(selectedTags)) {
+            String tagString = TextUtils.join(" ", selectedTags);
+            Note note = mCurrentCard.note();
+            note.setTagsFromStr(tagString);
+            note.flush();
+            // Reload current card to reflect tag changes
+            displayCardQuestion(true);
+        }
     }
 
     // init or reset api list
@@ -3939,6 +3943,7 @@ see card.js for available functions
                 }
 
             } catch (JSONException j) {
+                Timber.w(j);
                 UIUtils.showThemedToast(AbstractFlashcardViewer.this, getString(R.string.invalid_json_data, j.getLocalizedMessage()), false);
             }
             return apiStatusJson;

@@ -129,7 +129,7 @@
     <string name="sync_account_summ_logged_out">ଲଗ୍ ଇନ୍‌ ହୋଇନାହି</string>
     <string name="sync_account_summ_logged_in">%s</string>
     <string name="automatic_sync_choice">ସ୍ୱୟଂଚାଳିତ ସମକାଳୀକରଣ</string>
-    <string name="automatic_sync_choice_summ">ଯଦି ଶେଷ ସିଙ୍କ୍ ୧୦ ମିନିଟ୍ ରୁ ଅଧିକ ପୂର୍ବରୁ କରାଯାଇଥିଲା ତେବେ ଆପ ଆରମ୍ଭ/ପ୍ରସ୍ଥାନ କରିବା ସମୟରେ ସ୍ୱୟଂଚାଳିତ ଭାବରେ ସିଙ୍କ୍ କରନ୍ତୁ |</string>
+    <string name="automatic_sync_choice_summ">ଯଦି ଶେଷ ସିଙ୍କ୍ ୧୦ ମିନିଟ୍ ରୁ ଅଧିକ ପୂର୍ବରୁ କରାଯାଇଥିଲା ତେବେ ଆପ ଆରମ୍ଭ/ପ୍ରସ୍ଥାନ କରିବା ସମୟରେ ସ୍ୱୟଂଚାଳିତ ଭାବରେ ସିଙ୍କ୍ କରନ୍ତୁ।</string>
     <string name="sync_status_badge">ସମକାଳୀକରଣ ସ୍ତିତ୍ତ୍ୱ ପ୍ରଦର୍ଶନ କରନ୍ତୁ</string>
     <string name="sync_status_badge_summ">ଯେତେବେଳେ ପରିବର୍ତ୍ତନଗୁଡିକ ଅପଲୋଡ୍ ହୋଇପାରିବ, ସିଙ୍କ ଚିହ୍ନ ପରିବର୍ତ୍ତନ କରନ୍ତୁ</string>
     <string name="day_theme">ଦିନ ଥିମ୍</string>
@@ -139,7 +139,7 @@
     <string name="language">ଭାଷା</string>
     <string name="language_system">ସିଷ୍ଟମ୍ ଭାଷା</string>
     <string name="notification_pref">ବିଜ୍ଞପ୍ତିଗୁଡିକ</string>
-    <string name="notification_pref_title">କେତେବେଳେ ସୂଚିତ କର</string>
+    <string name="notification_pref_title">କେତେବେଳେ ସୂଚିତ କରିବି</string>
     <string name="never_notify">କଦାପି ସୂଚିତ କରନାହିଁ </string>
     <string name="notify_when_pending">ବିଚାରାଧୀନ ବାର୍ତ୍ତା ଉପଲବ୍ଧ</string>
     <string name="notification_minimum_cards_due">%d ରୁ ଅଧିକ ପତ୍ର ବାକି ଅଛି</string>
@@ -173,7 +173,7 @@
     <string name="time_limit">ଟାଇମ୍ ବକ୍ସ ସମୟ ସୀମା</string>
     <string name="time_limit_summ">XXX ମିନିଟ୍</string>
     <string name="new_timezone">ନୂତନ ସମୟ କ୍ଷେତ୍ର ପରିଚାଳନା</string>
-    <string name="day_offset">ପରବର୍ତ୍ତୀ ଦିନର ଆରମ୍ଭ </string>
+    <string name="day_offset_with_description">ପରବର୍ତ୍ତୀ ଦିନର ଆରମ୍ଭ (0 ଅର୍ଥ ମଧ୍ୟରାତ୍ରି, 23 ହେଉଛି 11 PM)</string>
     <string name="day_offset_summ">XXX ଘଣ୍ଟା ମଧ୍ୟରାତ୍ରି</string>
     <string name="sched_ver">ପରୀକ୍ଷାମୂଳକ V2 ନିର୍ଧାରକ |</string>
     <string name="sched_ver_summ">ପରୀକ୍ଷାମୂଳକ କାର୍ଯ୍ୟସୂଚୀ ସକ୍ଷମ କରନ୍ତୁ | ପରବର୍ତ୍ତୀ ସିଙ୍କରେ ଗୋଟିଏ ଦିଗରେ ପରିବର୍ତ୍ତନ କରିବାକୁ ବାଧ୍ୟ କରେ</string>
@@ -290,5 +290,5 @@
     <string name="no_code_formatting">ସରଳ ଟାଇପ୍ ହୋଇଥିବା ଉତ୍ତର ଫର୍ମାଟିଂ</string>
     <string name="no_code_formatting_summ">ଟାଇପ୍ ହୋଇଥିବା ଉତ୍ତର ଫଳାଫଳଗୁଡିକରେ ଦେଖାଯାଉଥିବା ‘�’ ଠିକ୍ କରେ |</string>
     <!-- Open Changelog-->
-    <string name="open_changelog">Open Changelog</string>
+    <string name="open_changelog">ପରିବର୍ତ୍ତନ ଲଗ୍ ଖୋଲନ୍ତୁ</string>
 </resources>

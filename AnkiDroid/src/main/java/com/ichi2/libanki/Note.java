@@ -32,6 +32,7 @@ import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import androidx.annotation.VisibleForTesting;
 import timber.log.Timber;
 
 
@@ -353,6 +354,12 @@ public class Note implements Cloneable {
     public long getId() {
         // TODO: Conflicting method name and return value. Reconsider.
         return mId;
+    }
+
+
+    @VisibleForTesting
+    public String getGuId() {
+        return mGuId;
     }
 
 

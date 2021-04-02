@@ -25,6 +25,7 @@ import com.ichi2.anki.exception.ImportExportException;
 import com.ichi2.utils.JSONArray;
 import com.ichi2.utils.JSONException;
 import com.ichi2.utils.JSONObject;
+import com.ichi2.utils.StringUtil;
 
 import java.io.BufferedInputStream;
 import java.io.BufferedOutputStream;
@@ -38,7 +39,7 @@ import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
+
 import org.apache.commons.compress.archivers.zip.ZipArchiveEntry;
 import org.apache.commons.compress.archivers.zip.ZipArchiveOutputStream;
 
@@ -57,7 +58,7 @@ class Exporter {
     @Nullable
     protected final Long mDid;
     protected int mCount;
-
+    protected boolean mIncludeHTML;
 
     /**
      * An exporter for the whole collection of decks
@@ -96,6 +97,56 @@ class Exporter {
         }
         mCount = cids.length;
         return cids;
+    }
+
+
+    @NonNull
+    protected String processText(@NonNull String text) {
+        if (!mIncludeHTML) {
+            text = stripHTML(text);
+        }
+
+        text = escapeText(text);
+
+        return text;
+    }
+
+
+    /**
+     * Escape newlines, tabs, CSS and quotechar.
+     */
+    @NonNull
+    protected String escapeText(@NonNull String text) {
+        //pylib:fixme: we should probably quote fields with newlines instead of converting them to spaces
+        text = text.replace("\\n", " ");
+        text = text.replace("\\r", "");
+
+        //pylib: text = text.replace("\t", " " * 8)
+        text = text.replace("\\t", "        "/*8 spaced*/);
+
+        text = text.replaceAll("(?i)<style>.*?</style>", "");
+        text = text.replaceAll("\\[\\[type:[^]]+\\]\\]", "");
+
+        if (text.contains("\"")) {
+            text = '"' + text.replace("\"", "\"\"") + "\"";
+        }
+
+        return text;
+    }
+
+
+    /**
+     * very basic conversion to text
+     */
+    @NonNull
+    protected String stripHTML(@NonNull String text) {
+        String s = text;
+        s = s.replaceAll("(?i)<(br ?/?|div|p)>", " ");
+        s = s.replaceAll("\\[sound:[^]]+\\]", "");
+        s = Utils.stripHTML(s);
+        s = s.replaceAll("[ \\n\\t]+", " ");
+        s = StringUtil.strip(s);
+        return s;
     }
 }
 
@@ -471,6 +522,7 @@ public final class AnkiPackageExporter extends AnkiExporter {
             try {
                 runtime.exec(deleteCmd);
             } catch (IOException ignored) {
+                Timber.w(ignored);
             }
         }
         return media;

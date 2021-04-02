@@ -141,7 +141,9 @@ public class DeckAdapter<T extends AbstractDeckTreeNode<T>> extends RecyclerView
         mDeckNameDefaultColor = ta.getColor(5, ContextCompat.getColor(context, R.color.black));
         mDeckNameDynColor = ta.getColor(6, ContextCompat.getColor(context, R.color.material_blue_A700));
         mExpandImage = ta.getDrawable(7);
+        mExpandImage.setAutoMirrored(true);
         mCollapseImage = ta.getDrawable(8);
+        mCollapseImage.setAutoMirrored(true);
         ta.recycle();
     }
 

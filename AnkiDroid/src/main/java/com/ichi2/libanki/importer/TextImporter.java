@@ -163,9 +163,11 @@ public class TextImporter extends NoteImporter {
                 String join = getLinesFromFile(10);
                 dialect = sniffer.sniff(join, mPatterns.toCharArray());
             } catch (Exception e) {
+                Timber.w(e);
                 try {
                     dialect = sniffer.sniff(getFirstFileLine().orElse(""), mPatterns.toCharArray());
                 } catch (Exception ex) {
+                    Timber.w(ex);
                     // pass
                 }
             }
@@ -178,6 +180,7 @@ public class TextImporter extends NoteImporter {
             try {
                 reader = CsvReader.fromDialect(data, dialect);
             } catch (Exception e) {
+                Timber.w(e);
                 err();
             }
         } else {

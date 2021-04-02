@@ -173,7 +173,7 @@
     <string name="time_limit">Limigo de lernada tempero (timebox)</string>
     <string name="time_limit_summ">XXX min</string>
     <string name="new_timezone">Pritraktado de nova horzono</string>
-    <string name="day_offset">Komenco de sekva tago</string>
+    <string name="day_offset_with_description">Komenco de tago (0 estas la horo 00:00. 23 estas la horo 23:00)</string>
     <string name="day_offset_summ">XXX horo(j) post noktmezo</string>
     <string name="sched_ver">Eksperimenta V2 planilo</string>
     <string name="sched_ver_summ">Aktivigi testan planilon V2. Devigas ŝanĝojn en unu direkto je la sekva samtempigo</string>
@@ -290,5 +290,5 @@
     <string name="no_code_formatting">Simpla aranĝo de enigita respondo</string>
     <string name="no_code_formatting_summ">Ripari “􏿾” aperantan en entajpita respondo</string>
     <!-- Open Changelog-->
-    <string name="open_changelog">Open Changelog</string>
+    <string name="open_changelog">Montri ŝanĝoprotokolon</string>
 </resources>

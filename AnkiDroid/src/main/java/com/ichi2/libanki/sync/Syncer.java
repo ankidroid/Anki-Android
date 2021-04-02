@@ -230,6 +230,7 @@ public class Syncer {
                 try {
                     mergeChanges(lchg, rchg);
                 } catch (UnexpectedSchemaChange e) {
+                    Timber.w(e);
                     mRemoteServer.abort();
                     _forceFullSync();
                 }
@@ -286,9 +287,11 @@ public class Syncer {
             throw new RuntimeException(e);
         } catch (OutOfMemoryError e) {
             AnkiDroidApp.sendExceptionReport(e, "Syncer-sync");
+            Timber.w(e);
             return new Pair<>( OUT_OF_MEMORY_ERROR , null);
         } catch (IOException e) {
             AnkiDroidApp.sendExceptionReport(e, "Syncer-sync");
+            Timber.w(e);
             return new Pair<>( IO_EXCEPTION , null);
         }
         return new Pair<>( SUCCESS , null);
@@ -930,6 +933,7 @@ public class Syncer {
             try {
                 mRemoteServer.abort();
             } catch (UnknownHttpResponseException ignored) {
+                Timber.w(ignored);
             }
             throw new RuntimeException(USER_ABORTED_SYNC.toString());
         }

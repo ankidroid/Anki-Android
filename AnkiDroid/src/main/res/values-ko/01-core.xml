@@ -149,6 +149,7 @@
     <string name="custom_study_deck_name">맞춤 학습 세션</string>
     <string name="custom_study_deck_exists">기존의 맞춤 학습 덱의 이름을 먼저 변경하세요.</string>
     <string name="empty_deck">이 카드 묶음은 비어있습니다.</string>
+    <string name="search_deck">Deck Search</string>
     <string name="empty_deck_add_note">카드追加</string>
     <string name="invalid_deck_name">無效한 덱名입니다</string>
     <string name="studyoptions_empty">이 카드 묶음은 비어있습니다. + 버튼을 눌러 새 컨텐츠를 추가하세요.</string>

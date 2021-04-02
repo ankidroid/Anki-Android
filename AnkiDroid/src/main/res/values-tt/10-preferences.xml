@@ -51,8 +51,8 @@
     <string name="pref_cat_appearance">Appearance</string>
     <string name="pref_cat_appearance_summ">Change themes and default font</string>
     <string name="pref_cat_themes">Themes</string>
-    <string name="pref_cat_fonts">Fonts</string>
-    <string name="pref_cat_gestures">Gestures</string>
+    <string name="pref_cat_fonts">Шрифтлар</string>
+    <string name="pref_cat_gestures">Ишарәләр</string>
     <string name="pref_cat_gestures_summ">Use taps and swipes instead of buttons</string>
     <string name="pref_cat_actions">Actions</string>
     <string name="pref_cat_advanced">Advanced</string>
@@ -61,7 +61,7 @@
     <string name="pref_cat_workarounds">Workarounds</string>
     <string name="pref_cat_plugins">Plugins</string>
     <string name="about_title">About AnkiDroid</string>
-    <string name="about_version">Version: </string>
+    <string name="about_version">Версия: </string>
     <!-- preferences.xml entries-->
     <string name="whiteboard_stroke_width">Stroke width</string>
     <string name="use_input_tag">Type answer into the card</string>
@@ -79,13 +79,13 @@
     <string name="card_browser_hide_media_summary">Display media filenames in the card browser question/answer fields</string>
     <string name="col_path">AnkiDroid directory</string>
     <string name="fullscreen_review">Fullscreen mode</string>
-    <string name="full_screen_off">Off</string>
+    <string name="full_screen_off">Сүнгән</string>
     <string name="full_screen_system">Hide the system bars</string>
     <string name="full_screen_complete">Hide the system bars and answer buttons</string>
     <string name="full_screen_error_gestures">You must enable gestures to hide the answer buttons</string>
     <string name="answer_buttons_position">Answer buttons position</string>
     <string-array name="answer_buttons_position_labels">
-        <item>Top</item>
+        <item>Өске</item>
         <item>Bottom</item>
     </string-array>
     <string name="gestures">Enable gestures</string>
@@ -113,7 +113,7 @@
     <string name="gestures_corner_tap_bottom_center">Touch bottom center</string>
     <string name="gestures_corner_tap_bottom_right">Touch bottom right</string>
     <string name="gestures_volume_up">Volume up</string>
-    <string name="gestures_volume_down">Volume down</string>
+    <string name="gestures_volume_down">Тавышны киметү</string>
     <string name="more_scrolling_buttons">eReader</string>
     <string name="more_scrolling_buttons_summ">Also use kanji/katakana, emoji/kao-moji buttons for scrolling</string>
     <string name="card_browser_enable_external_context_menu">‘%s’ Menu</string>
@@ -134,10 +134,10 @@
     <string name="sync_status_badge">Display synchronization status</string>
     <string name="sync_status_badge_summ">Change the sync icon when changes can be uploaded</string>
     <string name="day_theme">Day theme</string>
-    <string name="night_theme">Night theme</string>
+    <string name="night_theme">Төнге режим</string>
     <string name="default_font">Default font</string>
     <string name="override_font">Default font applicability</string>
-    <string name="language">Language</string>
+    <string name="language">Тел</string>
     <string name="language_system">System language</string>
     <string name="notification_pref">Notifications</string>
     <string name="notification_pref_title">Notify when</string>
@@ -149,7 +149,7 @@
     <string name="timeout_answer_text">Automatic display answer</string>
     <string name="timeout_answer_summ">Show answer automatically without user input. Delay includes time for automatically played audio files.</string>
     <string name="timeout_answer_seconds">Time to show answer</string>
-    <string name="timeout_answer_seconds_summ" comment="The time to wait (in seconds) in the reviewer before automatically showing the next question or answer">XXX s</string>
+    <string name="timeout_answer_seconds_summ" comment="The time to wait (in seconds) in the reviewer before automatically showing the next question or answer">XXX сек</string>
     <string name="timeout_question_seconds">Time to show next question</string>
     <string name="select_locale_title">Select language</string>
     <string name="safe_display">Safe display mode</string>
@@ -172,9 +172,9 @@
     <string name="new_spread">New card position</string>
     <string name="learn_cutoff">Learn ahead limit</string>
     <string name="time_limit">Timebox time limit</string>
-    <string name="time_limit_summ">XXX min</string>
+    <string name="time_limit_summ">XXX мин</string>
     <string name="new_timezone">New timezone handling</string>
-    <string name="day_offset">Start of next day</string>
+    <string name="day_offset_with_description">Start of next day (0 is midnight, 23 is 11PM)</string>
     <string name="day_offset_summ">XXX hours past midnight</string>
     <string name="sched_ver">Experimental V2 scheduler</string>
     <string name="sched_ver_summ">Enable the experimental scheduler. Forces changes in one direction on next sync</string>
@@ -227,7 +227,7 @@
     <string name="deck_conf_general">General</string>
     <string name="deck_conf_reminders">Reminders</string>
     <string name="deck_conf_steps">Steps (in minutes)</string>
-    <string name="deck_conf_order">Order</string>
+    <string name="deck_conf_order">Тәртипкә салу</string>
     <string name="deck_conf_new_cards_day">New cards/day</string>
     <string name="deck_conf_graduating_ivl">Graduating interval</string>
     <string name="deck_conf_days">XXX day(s)</string>
@@ -261,7 +261,7 @@
     <string name="deck_conf_rename" comment="Menu entry to rename a deck">Rename</string>
     <string name="deck_conf_reset">Restore defaults</string>
     <string name="deck_conf_reset_message">Restore current options group to default values?</string>
-    <string name="deck_conf_add" comment="Adding a new deck option group">Add</string>
+    <string name="deck_conf_add" comment="Adding a new deck option group">Кушу</string>
     <string name="deck_conf_add_summ">Create a copy of the current options group</string>
     <string name="deck_conf_remove_message">Remove current options group?</string>
     <string name="deck_conf_set_subdecks">Set for all subdecks</string>
@@ -271,7 +271,7 @@
     <string name="deck_conf_set_subdecks_message">Set current options group for all of this deck’s subdecks?</string>
     <string name="pref_browser_editor_font">Browser and editor font</string>
     <string name="deck_conf_cram_filter">Filter</string>
-    <string name="deck_conf_cram_search">Search</string>
+    <string name="deck_conf_cram_search">Эзләү</string>
     <string name="deck_conf_cram_limit">Limit to</string>
     <string name="deck_conf_cram_order">cards selected by</string>
     <string name="deck_conf_cram_reschedule" comment="Title of the box labelled by deck_conf_cram_reschedule_summ">Reschedule</string>

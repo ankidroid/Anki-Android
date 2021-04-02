@@ -147,6 +147,7 @@ public class FieldEditText extends FixedEditText {
                 InputConnectionCompat.commitContent(inputConnection, editorInfo, contentInfo, flags, opts);
                 return true;
             } catch (Exception e) {
+                Timber.w(e);
                 AnkiDroidApp.sendExceptionReport(e, "NoteEditor::onImage");
                 return false;
             }

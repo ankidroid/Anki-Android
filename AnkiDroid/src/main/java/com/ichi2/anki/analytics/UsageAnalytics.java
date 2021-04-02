@@ -320,6 +320,7 @@ public class UsageAnalytics {
                 display.getSize(size);
                 this.screenResolution(size.x + "x" + size.y);
             } catch (RuntimeException e) {
+                Timber.w(e);
                 // nothing much to do here, it means we couldn't get WindowManager
             }
 
@@ -341,6 +342,7 @@ public class UsageAnalytics {
                     this.userAgent(System.getProperty("http.agent"));
                 }
             } catch (RuntimeException e) {
+                Timber.w(e);
                 // Catch RuntimeException as WebView initialization blows up in unpredictable ways
                 // but analytics should never be a show-stopper
                 this.userAgent(System.getProperty("http.agent"));
@@ -389,6 +391,14 @@ public class UsageAnalytics {
         public static final String OPENED_FACEBOOK = "Opened Facebook";
         public static final String OPENED_TWITTER = "Opened Twitter";
         public static final String EXCEPTION_REPORT = "Exception Report";
+
+        /* Analytics actions used in Lookup Dictionary */
+        public static final String AEDICT = "aedict";
+        public static final String LEO = "leo";
+        public static final String COLORDICT = "colordict";
+        public static final String FORA = "fora";
+        public static final String NCIKU = "nciku";
+        public static final String EIJIRO = "eijiro";
     }
 
     @VisibleForTesting(otherwise = VisibleForTesting.NONE) // TOOD: Make this package-protected

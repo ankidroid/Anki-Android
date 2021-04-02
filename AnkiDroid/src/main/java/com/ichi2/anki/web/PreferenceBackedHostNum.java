@@ -75,6 +75,7 @@ public class PreferenceBackedHostNum extends HostNum {
         try {
             return Integer.parseInt(hostNum);
         } catch (Exception e) {
+            Timber.w(e);
             return getDefaultHostNum();
         }
     }

@@ -30,11 +30,13 @@ import com.ichi2.anki.CardBrowser;
 import com.ichi2.anki.CardUtils;
 import com.ichi2.anki.CollectionHelper;
 import com.ichi2.anki.R;
+import com.ichi2.anki.StudyOptionsFragment;
 import com.ichi2.anki.TemporaryModel;
 import com.ichi2.anki.exception.ConfirmModSchemaException;
 import com.ichi2.anki.exception.ImportExportException;
 import com.ichi2.libanki.Media;
 import com.ichi2.libanki.Model;
+import com.ichi2.libanki.Models;
 import com.ichi2.libanki.Undoable;
 import com.ichi2.libanki.WrongId;
 import com.ichi2.libanki.sched.AbstractSched;
@@ -96,11 +98,9 @@ import static com.ichi2.libanki.Collection.DismissType.REPOSITION_CARDS;
 import static com.ichi2.libanki.Collection.DismissType.RESCHEDULE_CARDS;
 import static com.ichi2.libanki.Collection.DismissType.RESET_CARDS;
 import static com.ichi2.libanki.Collection.DismissType.SUSPEND_NOTE;
-import static com.ichi2.libanki.Consts.DECK_DYN;
 import static com.ichi2.libanki.Undoable.*;
 import static com.ichi2.utils.BooleanGetter.False;
 import static com.ichi2.utils.BooleanGetter.True;
-import static com.ichi2.utils.BooleanGetter.fromBoolean;
 
 /**
  * Loading in the background, so that AnkiDroid does not look like frozen.
@@ -176,7 +176,7 @@ public class CollectionTask<ProgressListener, ProgressBackground extends Progres
         mTask = task;
         mListener = listener;
         mPreviousTask = previousTask;
-        TaskManager.addTasks(this);
+        TaskManager.addTask(this);
     }
 
     @Override
@@ -264,10 +264,16 @@ public class CollectionTask<ProgressListener, ProgressBackground extends Progres
 
     public static class AddNote extends Task<Integer, Boolean> {
         private final Note note;
+        private final Models.AllowEmpty allowEmpty;
 
+
+        public AddNote(Note note, Models.AllowEmpty allowEmpty) {
+            this.note = note;
+            this.allowEmpty = allowEmpty;
+        }
 
         public AddNote(Note note) {
-            this.note = note;
+            this(note, Models.AllowEmpty.ONLY_CLOZE);
         }
 
 
@@ -276,7 +282,7 @@ public class CollectionTask<ProgressListener, ProgressBackground extends Progres
             try {
                 DB db = col.getDb();
                 db.executeInTransaction(() -> {
-                        int value = col.addNote(note);
+                        int value = col.addNote(note, allowEmpty);
                         collectionTask.doProgress(value);
                     });
             } catch (RuntimeException e) {
@@ -1233,7 +1239,7 @@ public class CollectionTask<ProgressListener, ProgressBackground extends Progres
     }
 
 
-    public static class UpdateValuesFromDeck extends Task<Void, int[]> {
+    public static class UpdateValuesFromDeck extends Task<Void, StudyOptionsFragment.DeckStudyData> {
         private final boolean reset;
 
 
@@ -1242,7 +1248,7 @@ public class CollectionTask<ProgressListener, ProgressBackground extends Progres
         }
 
 
-        public int[] task(Collection col, ProgressSenderAndCancelListener<Void> collectionTask) {
+        public StudyOptionsFragment.DeckStudyData task(Collection col, ProgressSenderAndCancelListener<Void> collectionTask) {
             Timber.d("doInBackgroundUpdateValuesFromDeck");
             try {
                 AbstractSched sched = col.getSched();
@@ -1253,8 +1259,8 @@ public class CollectionTask<ProgressListener, ProgressBackground extends Progres
                 Counts counts = sched.counts();
                 int totalNewCount = sched.totalNewForCurrentDeck();
                 int totalCount = sched.cardCount();
-                return new int[] {counts.getNew(), counts.getLrn(), counts.getRev(), totalNewCount,
-                        totalCount, sched.eta(counts)};
+                return new StudyOptionsFragment.DeckStudyData(counts.getNew(), counts.getLrn(), counts.getRev(), totalNewCount,
+                        totalCount, sched.eta(counts));
             } catch (RuntimeException e) {
                 Timber.e(e, "doInBackgroundUpdateValuesFromDeck - an error occurred");
                 return null;
@@ -1280,16 +1286,16 @@ public class CollectionTask<ProgressListener, ProgressBackground extends Progres
     }
 
 
-    public static class RebuildCram extends Task<Void, int[]> {
-        protected int[] task(Collection col, ProgressSenderAndCancelListener<Void> collectionTask) {
+    public static class RebuildCram extends Task<Void, StudyOptionsFragment.DeckStudyData> {
+        protected StudyOptionsFragment.DeckStudyData task(Collection col, ProgressSenderAndCancelListener<Void> collectionTask) {
             Timber.d("doInBackgroundRebuildCram");
             col.getSched().rebuildDyn(col.getDecks().selected());
             return new UpdateValuesFromDeck(true).task(col, collectionTask);
         }
     }
 
-    public static class EmptyCram extends Task<Void, int[]> {
-        protected int[] task(Collection col, ProgressSenderAndCancelListener<Void> collectionTask) {
+    public static class EmptyCram extends Task<Void, StudyOptionsFragment.DeckStudyData> {
+        protected StudyOptionsFragment.DeckStudyData task(Collection col, ProgressSenderAndCancelListener<Void> collectionTask) {
             Timber.d("doInBackgroundEmptyCram");
             col.getSched().emptyDyn(col.getDecks().selected());
             return new UpdateValuesFromDeck(true).task(col, collectionTask);
@@ -1313,6 +1319,7 @@ public class CollectionTask<ProgressListener, ProgressBackground extends Progres
             try {
                 imp.run();
             } catch (ImportExportException e) {
+                Timber.w(e);
                 return new Triple(null, true, e.getMessage());
             }
             return new Triple<>(imp, false, null);
@@ -1378,6 +1385,7 @@ public class CollectionTask<ProgressListener, ProgressBackground extends Progres
                 try {
                     tmpCol.close();
                 } catch (Exception e2) {
+                    Timber.w(e2);
                     // do nothing
                 }
                 AnkiDroidApp.sendExceptionReport(e, "doInBackgroundImportReplace - open col");
@@ -1398,6 +1406,7 @@ public class CollectionTask<ProgressListener, ProgressBackground extends Progres
                 CollectionHelper.getInstance().lockCollection();
                 BackupManager.performBackupInBackground(colPath, true, time);
             } catch (Exception e) {
+                Timber.w(e);
             }
             // overwrite collection
             File f = new File(colFile);
@@ -1552,6 +1561,7 @@ public class CollectionTask<ProgressListener, ProgressBackground extends Progres
                 col.save();
                 return true;
             } catch (JSONException e) {
+                Timber.w(e);
                 return false;
             }
         }
@@ -1601,6 +1611,7 @@ public class CollectionTask<ProgressListener, ProgressBackground extends Progres
                 col.save();
                 return true;
             } catch (JSONException e) {
+                Timber.w(e);
                 return false;
             }
         }
@@ -1633,6 +1644,7 @@ public class CollectionTask<ProgressListener, ProgressBackground extends Progres
                 }
                 return true;
             } catch (JSONException e) {
+                Timber.w(e);
                 return false;
             }
         }
@@ -1650,6 +1662,7 @@ public class CollectionTask<ProgressListener, ProgressBackground extends Progres
             try {
                 col.getMedia().rebuildIfInvalid();
             } catch (IOException e) {
+                Timber.w(e);
                 return new PairWithBoolean<>(false, null);
             }
             // A media check on AnkiDroid will also update the media db
@@ -1797,6 +1810,7 @@ public class CollectionTask<ProgressListener, ProgressBackground extends Progres
                 col.getModels().rem(col.getModels().get(modID));
                 col.save();
             } catch (ConfirmModSchemaException e) {
+                e.log();
                 Timber.e("doInBackGroundDeleteModel :: ConfirmModSchemaException");
                 return false;
             }
@@ -1827,6 +1841,7 @@ public class CollectionTask<ProgressListener, ProgressBackground extends Progres
                 col.save();
             } catch (ConfirmModSchemaException e) {
                 //Should never be reached
+                e.log();
                 return false;
             }
             return true;
@@ -1856,6 +1871,7 @@ public class CollectionTask<ProgressListener, ProgressBackground extends Progres
                 col.getModels().moveField(model, field, index);
                 col.save();
             } catch (ConfirmModSchemaException e) {
+                e.log();
                 //Should never be reached
                 return false;
             }
