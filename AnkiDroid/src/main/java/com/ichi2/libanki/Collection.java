@@ -366,7 +366,7 @@ public class Collection {
                 }
                 String res = cursor.getString(0);
                 if (res.length() == 0) {
-                    break;
+                      break;
                 }
                 buf.append(res);
                 if (res.length() < getChunk()) {
