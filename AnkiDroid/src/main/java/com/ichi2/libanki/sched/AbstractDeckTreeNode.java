@@ -44,7 +44,7 @@ public abstract class AbstractDeckTreeNode<T extends AbstractDeckTreeNode<T>> im
         int minDepth = Math.min(getDepth(), rhs.getDepth()) + 1;
         // Consider each subdeck name in the ordering
         for (int i = 0; i < minDepth; i++) {
-            int cmp = mNameComponents[i].compareTo(rhs.mNameComponents[i]);
+            int cmp = mNameComponents[i].compareToIgnoreCase(rhs.mNameComponents[i]);
             if (cmp == 0) {
                 continue;
             }
