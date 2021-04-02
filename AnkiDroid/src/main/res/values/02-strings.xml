@@ -365,6 +365,28 @@
     <string name="create_shortcut_error">Error adding shortcut: %s</string>
     <string name="note_editor_capitalize" comment="This is for a switch with a checkbox - on: enabled">Capitalize sentences</string>
 
+    <string name="error_listing_addons">Error listing addons</string>
+    <string name="install_js_addon">Import Addon</string>
+    <string name="get_more_addons">Get more addons</string>
+    <string name="not_valid_package">Not a valid package for AnkiDroid</string>
+    <string name="addon_download_success">Addon downloads successful</string>
+    <string name="downloading_addon">Downloading addon…</string>
+    <string name="confirm_remove_addon">Do you want to remove %s ?</string>
+    <string name="enter_npm_install_text">Enter npm install text</string>
+    <string name="error_downloading_file">Error downloading file, Try again</string>
+    <string name="error_downloading_file_check_name">Error downloading file, Check name</string>
+    <string name="addon_update">Update</string>
+    <string name="checking_addon_update">Checking for addon updates…</string>
+    <string name="reviewer_addons">Reviewer addons</string>
+    <string name="note_editor_addons">Note editor addons</string>
+    <string name="addon_download_hint_text">npm i ankidroid-js-addon…</string>
+    <string name="addons_browser_message">Get addons from npmjs.org</string>
+
+    <string name="addon_name">Name</string>
+    <string name="addon_version">Version</string>
+    <string name="addon_developer">Developer</string>
+    <string name="ankidroid_js_api">AnkiDroid JS API</string>
+    <string name="addon_homepage">Homepage</string>
 
     <!-- Symbols used as Button text in IncrementNumberRangePreference -->
     <string name="plus_sign" comment="Label for increment button in IncrementerNumberRangePreference">+</string>
