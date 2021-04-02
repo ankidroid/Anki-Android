@@ -66,7 +66,7 @@ public class ActionButtonStatus {
         setupButton(preferences, R.id.action_toggle_whiteboard, "customButtonEnableWhiteboard", SHOW_AS_ACTION_NEVER);
         setupButton(preferences, R.id.action_save_whiteboard, "customButtonSaveWhiteboard", SHOW_AS_ACTION_NEVER);
         setupButton(preferences, R.id.action_change_whiteboard_pen_color, "customButtonWhiteboardPenColor", SHOW_AS_ACTION_IF_ROOM);
-        setupButton(preferences, R.id.action_search_dictionary, "customButtonSearchDictionary", Lookup.isAvailable() ? SHOW_AS_ACTION_IF_ROOM : MENU_DISABLED);
+        setupButton(preferences, R.id.action_search_dictionary, "customButtonLookup", Lookup.isAvailable() ? SHOW_AS_ACTION_IF_ROOM : MENU_DISABLED);
     }
 
 
