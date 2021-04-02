@@ -84,6 +84,6 @@
     <string name="card_template_editor_deck_override_off">رزمة مهيمنة (غير مفعل)</string>
     <string name="model_manager_deck_override_added_message">ضبط الرزمة الافتراضية ‘%1$s’ إلى ‘%2$s’</string>
     <string name="model_manager_deck_override_removed_message">أزيلت الرزمة الافتراضية لـ ‘%s’</string>
-    <string name="deck_override_explanation">حدد رزمة لوضع بطاقات ‘%s’ الجديدة فيها</string>
-    <string name="deck_picker_dialog_filter_decks">رزم مفلترة</string>
+    <string name="deck_override_explanation">حدد شَدّة الأوراق لوضع بطاقات ‘%s’ الجديدة فيها</string>
+    <string name="deck_picker_dialog_filter_decks">فلترة شَدّات الأوراق</string>
 </resources>

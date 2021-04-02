@@ -154,6 +154,7 @@
     <string name="custom_study_deck_name">Kohandatud õppesessioon</string>
     <string name="custom_study_deck_exists">Esmalt nimeta ümber juba olemasolev täiendava õppe kaardipakk</string>
     <string name="empty_deck">See kaardipakk on tühi</string>
+    <string name="search_deck">Deck Search</string>
     <string name="empty_deck_add_note">Add card</string>
     <string name="invalid_deck_name">Vigane kaardipaki nimi</string>
     <string name="studyoptions_empty">See kaardipakk on tühi. Vajuta + nupule uue sisu lisamiseks.</string>

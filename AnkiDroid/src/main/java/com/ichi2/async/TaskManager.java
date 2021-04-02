@@ -20,7 +20,7 @@ public class TaskManager {
      * */
     private static final List<CollectionTask> sTasks = Collections.synchronizedList(new LinkedList<>());
 
-    protected static void addTasks(CollectionTask task) {
+    protected static void addTask(CollectionTask task) {
         sTasks.add(task);
     }
 

@@ -320,6 +320,7 @@ public class UsageAnalytics {
                 display.getSize(size);
                 this.screenResolution(size.x + "x" + size.y);
             } catch (RuntimeException e) {
+                Timber.w(e);
                 // nothing much to do here, it means we couldn't get WindowManager
             }
 
@@ -341,6 +342,7 @@ public class UsageAnalytics {
                     this.userAgent(System.getProperty("http.agent"));
                 }
             } catch (RuntimeException e) {
+                Timber.w(e);
                 // Catch RuntimeException as WebView initialization blows up in unpredictable ways
                 // but analytics should never be a show-stopper
                 this.userAgent(System.getProperty("http.agent"));
@@ -359,6 +361,44 @@ public class UsageAnalytics {
 
     public static class Category {
         public static final String SYNC = "Sync";
+        public static final String LINK_CLICKED = "LinkClicked";
+    }
+
+    /**
+     * These Strings must not be changed as they are used for analytic comparisons between AnkiDroid versions.
+     */
+    public static class Actions {
+        /* Analytics actions used in Help Dialog*/
+        public static final String OPENED_HELPDIALOG = "Opened HelpDialogBox";
+        public static final String OPENED_USING_ANKIDROID = "Opened Using AnkiDroid";
+        public static final String OPENED_GET_HELP = "Opened Get Help";
+        public static final String OPENED_SUPPORT_ANKIDROID = "Opened Support AnkiDroid";
+        public static final String OPENED_COMMUNITY = "Opened Community";
+        public static final String OPENED_ANKIDROID_MANUAL = "Opened AnkiDroid Manual";
+        public static final String OPENED_ANKI_MANUAL = "Opened Anki Manual";
+        public static final String OPENED_ANKIDROID_FAQ = "Opened AnkiDroid FAQ";
+        public static final String OPENED_MAILING_LIST = "Opened Mailing List";
+        public static final String OPENED_REPORT_BUG = "Opened Report a Bug";
+        public static final String OPENED_DONATE = "Opened Donate";
+        public static final String OPENED_TRANSLATE = "Opened Translate";
+        public static final String OPENED_DEVELOP = "Opened Develop";
+        public static final String OPENED_RATE = "Opened Rate";
+        public static final String OPENED_OTHER = "Opened Other";
+        public static final String OPENED_SEND_FEEDBACK = "Opened Send Feedback";
+        public static final String OPENED_ANKI_FORUMS = "Opened Anki Forums";
+        public static final String OPENED_REDDIT = "Opened Reddit";
+        public static final String OPENED_DISCORD = "Opened Discord";
+        public static final String OPENED_FACEBOOK = "Opened Facebook";
+        public static final String OPENED_TWITTER = "Opened Twitter";
+        public static final String EXCEPTION_REPORT = "Exception Report";
+
+        /* Analytics actions used in Lookup Dictionary */
+        public static final String AEDICT = "aedict";
+        public static final String LEO = "leo";
+        public static final String COLORDICT = "colordict";
+        public static final String FORA = "fora";
+        public static final String NCIKU = "nciku";
+        public static final String EIJIRO = "eijiro";
     }
 
     @VisibleForTesting(otherwise = VisibleForTesting.NONE) // TOOD: Make this package-protected

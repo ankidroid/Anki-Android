@@ -21,6 +21,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.annotation.VisibleForTesting;
 import okhttp3.internal.Util;
+import timber.log.Timber;
 
 /**
  * Represents a template, allow to check in linear time which card is empty/render card.
@@ -146,6 +147,7 @@ public abstract class ParsedNode {
             render_into(fields, Utils.nonEmptyFields(fields), builder);
             return builder.toString();
         } catch (TemplateError er) {
+            Timber.w(er);
             String side = (question)? context.getString(R.string.card_template_editor_front): context.getString(R.string.card_template_editor_back);
             String explanation = context.getString(R.string.has_a_problem, side, er.message(context));
             String more_explanation = "<a href=\""+ TEMPLATE_ERROR_LINK+"\">" + context.getString(R.string.more_information) + "</a>";

@@ -154,6 +154,7 @@
     <string name="custom_study_deck_name">Прилагодена студиска сесија</string>
     <string name="custom_study_deck_exists">Прво преименувајте ја постоечката прилагодена студија на deck</string>
     <string name="empty_deck">Овој deck е празен</string>
+    <string name="search_deck">Deck Search</string>
     <string name="empty_deck_add_note">Add card</string>
     <string name="invalid_deck_name">Невалидно име за шпил</string>
     <string name="studyoptions_empty">Овој deck е празен. Притиснете го копчето + за да додадете нова содржина.</string>

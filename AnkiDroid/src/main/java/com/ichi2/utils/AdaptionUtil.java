@@ -34,6 +34,8 @@ import com.ichi2.anki.AnkiDroidApp;
 import java.util.List;
 import java.util.Locale;
 
+import timber.log.Timber;
+
 public class AdaptionUtil {
     private static boolean sHasRunRestrictedLearningDeviceCheck = false;
     private static boolean sIsRestrictedLearningDevice = false;
@@ -57,6 +59,7 @@ public class AdaptionUtil {
                     ActivityManager.isUserAMonkey() ||
                             isRunningUnderFirebaseTestLab();
         } catch (Exception e) {
+            Timber.w(e);
             return false;
         }
     }
@@ -66,6 +69,7 @@ public class AdaptionUtil {
         try {
             return isRunningUnderFirebaseTestLab(AnkiDroidApp.getInstance().getContentResolver());
         } catch (Exception e) {
+            Timber.w(e);
             return false;
         }
     }
@@ -118,6 +122,7 @@ public class AdaptionUtil {
                 return (info != null) && (info.applicationInfo != null) &&
                         ((info.applicationInfo.flags & ApplicationInfo.FLAG_SYSTEM) != 0);
             } catch (PackageManager.NameNotFoundException e) {
+                Timber.w(e);
                 return false;
             }
         } else {

@@ -17,6 +17,7 @@
 package com.ichi2.anki;
 
 import android.app.Activity;
+import android.os.Bundle;
 
 import com.ichi2.anki.multimediacard.activity.LoadPronounciationActivity;
 import com.ichi2.anki.multimediacard.activity.TranslationActivity;
@@ -67,10 +68,12 @@ public class ActivityStartupUnderBackupTest extends RobolectricTest {
     }
 
 
+    /**
+     * Tests that each activity can handle {@link AnkiDroidApp#getInstance()} returning null
+     * This happens during a backup, for details, see {@link AnkiActivity#showedActivityFailedScreen(Bundle)}
+     */
     @Test
     public void activityHandlesRestoreBackup() {
-        // See: showActivityFailedScreen
-
         AnkiDroidApp.simulateRestoreFromBackup();
         ActivityController<? extends Activity> controller = mLauncher.build(getTargetContext()).create();
 

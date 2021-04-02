@@ -63,6 +63,7 @@ public class AnkiPackageImporter extends Anki2Importer {
                 try {
                     mZip = new ZipFile(new File(mFile));
                 } catch (FileNotFoundException fileNotFound) {
+                    Timber.w(fileNotFound);
                     // The cache can be cleared between copying the file in and importing. This is temporary
                     if (fileNotFound.getMessage().contains("ENOENT")) {
                         mLog.add(getRes().getString(R.string.import_log_file_cache_cleared));

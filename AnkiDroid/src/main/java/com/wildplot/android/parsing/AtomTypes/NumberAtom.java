@@ -19,6 +19,8 @@ import com.wildplot.android.parsing.Atom;
 import com.wildplot.android.parsing.ExpressionFormatException;
 import com.wildplot.android.parsing.TreeElement;
 
+import timber.log.Timber;
+
 public class NumberAtom implements TreeElement {
 
     private Atom.AtomType atomType = Atom.AtomType.NUMBER;
@@ -29,6 +31,7 @@ public class NumberAtom implements TreeElement {
         try {
             this.value = Double.parseDouble(factorString);
         } catch (NumberFormatException e) {
+            Timber.w(e);
             atomType = Atom.AtomType.INVALID;
         }
 

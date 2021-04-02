@@ -45,6 +45,8 @@ import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 import java.util.Locale;
 
+import timber.log.Timber;
+
 /**
  * Activity to load pronunciation files from Beolingus.
  * <p>
@@ -155,6 +157,7 @@ public class LoadPronounciationActivity extends Activity implements OnCancelList
             // post.setStopper(PRONUNC_STOPPER);
             mPostTranslation.execute();
         } catch (Exception e) {
+            Timber.w(e);
             progressDialog.dismiss();
             showToast(gtxt(R.string.multimedia_editor_something_wrong));
         }
@@ -287,6 +290,7 @@ public class LoadPronounciationActivity extends Activity implements OnCancelList
                 mPostPronunciation.setAddress(mPronunciationAddress);
                 mPostPronunciation.execute();
             } catch (Exception e) {
+                Timber.w(e);
                 progressDialog.dismiss();
                 showToast(gtxt(R.string.multimedia_editor_something_wrong));
             }
@@ -315,6 +319,7 @@ public class LoadPronounciationActivity extends Activity implements OnCancelList
                 mDownloadMp3Task.setAddress(mMp3Address);
                 mDownloadMp3Task.execute();
             } catch (Exception e) {
+                Timber.w(e);
                 progressDialog.dismiss();
                 showToast(gtxt(R.string.multimedia_editor_something_wrong));
             }
@@ -386,6 +391,7 @@ public class LoadPronounciationActivity extends Activity implements OnCancelList
         try {
             query = URLEncoder.encode(mSource, "utf-8");
         } catch (UnsupportedEncodingException e) {
+            Timber.w(e);
             query = mSource.replace(" ", "%20");
         }
 
@@ -427,6 +433,7 @@ public class LoadPronounciationActivity extends Activity implements OnCancelList
                     progressDialog.dismiss();
             }
         } catch (Exception e) {
+            Timber.w(e);
             // nothing is done intentionally
         }
     }

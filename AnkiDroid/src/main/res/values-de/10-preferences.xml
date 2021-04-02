@@ -173,7 +173,7 @@
     <string name="time_limit">Zeitlimitwert</string>
     <string name="time_limit_summ">XXX min</string>
     <string name="new_timezone">Umgang mit neuer Zeitzone</string>
-    <string name="day_offset">Anfang des nächsten Tages</string>
+    <string name="day_offset_with_description">Start des nächsten Tages (0 ist Mitternacht, 23 ist 23 Uhr)</string>
     <string name="day_offset_summ">XXX Stunden nach Mitternacht</string>
     <string name="sched_ver">Experimenteller Zeitplaner V2</string>
     <string name="sched_ver_summ">Experimentellen Zeitplaner aktivieren. Erzwingt bei der nächsten Synchronisation Änderungen in einer Richtung</string>
@@ -289,4 +289,6 @@
     <string name="note_editor_replace_newlines_summ">Beim Bearbeiten einer Karte im Notizeditor alle vorkommenden »&lt;br&gt;« in Zeilenbrüche umwandeln.</string>
     <string name="no_code_formatting">Einfache Formatierung von Antworten</string>
     <string name="no_code_formatting_summ">Behebt das Erscheinen von  »􏿾« in eingetippten Antworten</string>
+    <!-- Open Changelog-->
+    <string name="open_changelog">Änderungsprotokoll öffnen</string>
 </resources>

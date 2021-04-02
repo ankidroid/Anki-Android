@@ -146,11 +146,11 @@
     <string name="check_media_no_unused_missing">هیچ فایل مفقود شده یا بلا استفاده یافت نشد</string>
     <string name="check_media_db_updated">پایگاه داده رسانه بازسازی شد</string>
     <string name="check_media_delete_unused">حذف استفاده نشده ها</string>
-    <string name="delete_media_message">Deleting media&#8230;</string>
-    <string name="delete_media_result_title">Deletion result</string>
+    <string name="delete_media_message">حذف رسانه&#8230;</string>
+    <string name="delete_media_result_title">نتیجه حذف</string>
     <plurals name="delete_media_result_message">
-        <item quantity="one">%d file deleted</item>
-        <item quantity="other">%d files deleted</item>
+        <item quantity="one">%d فایل حذف شد</item>
+        <item quantity="other">%d فایل حذف شد</item>
     </plurals>
     <!-- Tags Dialog Options -->
     <string name="tags_dialog_option_all_cards">همه کارتها</string>
@@ -158,7 +158,7 @@
     <string name="tags_dialog_option_due_cards" comment="Name of cards that are already been reviewed in the past, and that should be reviewed again">موعد</string>
     <!-- Empty cards -->
     <string name="emtpy_cards_finding">در حال پیدا کردن کارت های خالی&#8230;</string>
-    <string name="confirm_cancel">Do you want to cancel?</string>
+    <string name="confirm_cancel">کنسل میکنید؟</string>
     <string name="empty_cards_none">کارت خالی یافت نشد</string>
     <string name="empty_cards_count">کارتها برای اینکه حذف شوند: %d</string>
     <string name="empty_cards_deleted">کارتهای حذف شده: %d</string>
@@ -189,7 +189,7 @@
     <!-- Database Errors-->
     <string name="database_locked_title">دیتابیس قفل است</string>
     <string name="database_locked_summary">نرم‌افزاری دیگر در حال استفاده از دیتابیس آنکی‌دروید است. لطفاً نرم افزار دیگر را ببندید سپس آنکی‌دروید را باز کنید.</string>
-    <string name="incompatible_database_version_title">Incompatible Database Version</string>
+    <string name="incompatible_database_version_title">نسخه پایگاه داده ناسازگار است</string>
     <string name="incompatible_database_version_summary">The database is a more advanced version than this version of AnkiDroid can work with. Upgrade AnkiDroid or downgrade the database to open it\n\nSupported version: %1$d\nDatabase version: %2$d\n\nThe following restore options will overwrite your current collection, possibly with a compatible database version:</string>
     <!-- Deck Picker Background-->
     <string name="background_image_applied">تصویر پس‌زمینه اعمال شد</string>
@@ -209,30 +209,32 @@
     <string name="boot_service_failed_to_schedule_notifications">تنظیم یادآور انجام نشد</string>
     <string name="boot_service_too_many_notifications">یادآورهای زیادی تنظیم شده‌اند. بعضی از آنها نمایش داده نخواهند شد</string>
     <!-- Locale Selection Dialog -->
-    <string name="locale_selection_dialog_title">Keyboard Language Selection</string>
+    <string name="locale_selection_dialog_title">انتخاب زبان کیبرد</string>
     <string name="locale_selection_dialog_summary">Some multilingual keyboards, such as GBoard support changing language when editing text\n\nPlease request the “setImeHintLocales” feature from your keyboard manufacturer if your keyboard does not change language.</string>
     <!-- Help Dialog -->
-    <string name="help_title_using_ankidroid">Using AnkiDroid</string>
-    <string name="help_item_ankidroid_manual">AnkiDroid Manual</string>
-    <string name="help_item_anki_manual">Anki Manual</string>
+    <string name="help_title_using_ankidroid">استفاده از AnkiDroid</string>
+    <string name="help_item_ankidroid_manual">دفترچه راهنما AnkiDroid</string>
+    <string name="help_item_anki_manual">دفتر راهنما Anki</string>
     <string name="help_item_ankidroid_faq">AnkiDroid FAQ</string>
-    <string name="help_title_get_help">Get Help</string>
-    <string name="help_item_mailing_list">Mailing List</string>
-    <string name="help_item_reddit">Reddit</string>
-    <string name="help_item_report_bug">Report a Bug</string>
-    <string name="help_title_support_ankidroid">Support AnkiDroid</string>
-    <string name="help_item_support_opencollective_donate">Donate</string>
-    <string name="help_item_support_develop_ankidroid">Develop</string>
-    <string name="help_item_support_rate_ankidroid">Rate</string>
-    <string name="help_item_support_other_ankidroid">Other</string>
-    <string name="help_title_community">Community</string>
-    <string name="help_item_anki_forums">Anki Forums</string>
-    <string name="help_item_discord">Discord</string>
-    <string name="help_item_facebook">Facebook</string>
-    <string name="help_item_twitter">Twitter</string>
+    <string name="help_title_get_help">کمک گرفتن</string>
+    <string name="help_item_mailing_list">لیست ایمیل‌ها</string>
+    <string name="help_item_reddit">ردیت</string>
+    <string name="help_item_report_bug">گزارش مشکل</string>
+    <string name="help_title_support_ankidroid">درباره AnkiDroid</string>
+    <string name="help_item_support_opencollective_donate">کمک مالی</string>
+    <string name="help_item_support_develop_ankidroid">توسعه</string>
+    <string name="help_item_support_rate_ankidroid">امتیازدهی</string>
+    <string name="help_item_support_other_ankidroid">دیگر</string>
+    <string name="help_title_community">انجمن</string>
+    <string name="help_item_anki_forums">فوروم های Anki</string>
+    <string name="help_item_discord">دیسکورد</string>
+    <string name="help_item_facebook">فیسبوک</string>
+    <string name="help_item_twitter">توییتر</string>
+    <string name="help_title_send_exception">ارسال گزارش عیب یابی</string>
+    <string name="help_dialog_exception_report_debounce">گزارش قبلا ثبت شده است</string>
     <!--Sync-->
     <plurals name="sync_automatic_sync_needs_more_time">
-        <item quantity="one">An automatic sync may be triggered in %d second</item>
-        <item quantity="other">An automatic sync may be triggered in %d seconds</item>
+        <item quantity="one">همگام سازی خودکار %d ثانیه دیگر آغاز میشود</item>
+        <item quantity="other">همگام سازی خودکار %d ثانیه دیگر آغاز میشود</item>
     </plurals>
 </resources>
