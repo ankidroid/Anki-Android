@@ -53,7 +53,7 @@ public class AddonToolsAdapter extends RecyclerView.Adapter<AddonToolsAdapter.Ad
 
 
     public class AddonToolsViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
-        Button addonBtn;
+        TextView addonBtn;
         AddonToolsAdapter.OnAddonClickListener onAddonClickListener;
         public AddonToolsViewHolder(@NonNull View itemView, AddonToolsAdapter.OnAddonClickListener onAddonClickListener) {
             super(itemView);

@@ -2563,6 +2563,7 @@ public class NoteEditor extends AnkiActivity implements
         addonToolsRecyclerView = findViewById(R.id.addon_tools_list);
         addonToolsRecyclerView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
         addonToolsRecyclerView.setVisibility(View.GONE);
+        addonToolsRecyclerView.setBackgroundColor(Themes.getColorFromAttr(NoteEditor.this, R.attr.toolbarBackgroundColor));
 
         if (isChecked) {
             try {

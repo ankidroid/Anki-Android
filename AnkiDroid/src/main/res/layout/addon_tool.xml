@@ -4,20 +4,18 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content">
-    <Button
+    <TextView
         android:text="A"
         android:id="@+id/addon_btn"
-        android:background="#D6D7D7"
-        android:layout_width="30dp"
-        android:layout_height="30dp"
+        android:layout_width="28dp"
+        android:layout_height="28dp"
         android:layout_margin="2dp"
         android:textSize="20sp"
-        android:textStyle="bold"
         android:textAllCaps="false"
-        style="?android:attr/borderlessButtonStyle"
         android:contentDescription="@string/js_addon"
         android:clickable="true"
         android:focusable="true"
         android:foreground="?android:attr/selectableItemBackground"
+        android:gravity="center"
         tools:ignore="HardcodedText" />
 </LinearLayout>
