@@ -281,4 +281,8 @@
 
     <!-- Open Changelog-->
     <string name="open_changelog">Open Changelog</string>
+
+    <!-- javascript addons support -->
+    <string name="javascript_addons_support">JavaScript Addons Support</string>
+    <string name="javascript_addons_support_summ">Add JavaScript addons to Note Editor and Reviewer</string>
 </resources>
