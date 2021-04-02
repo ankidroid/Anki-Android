@@ -40,6 +40,8 @@ import org.acra.config.DialogConfigurationBuilder;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
+import java.util.Map;
 
 import androidx.annotation.DrawableRes;
 import androidx.annotation.StringRes;
@@ -231,8 +233,11 @@ public class HelpDialog {
 
     private static class ExceptionReportItem extends Item implements Parcelable {
 
-        private static Long lastClickStamp;
-        final long currentTimestamp = SystemClock.uptimeMillis();
+        private static final Map<String, Long> lastClickMap = new HashMap<>();
+        final String lastClick = "LAST_CLICK";
+        long currentTimestamp = SystemClock.uptimeMillis();
+        Long lastClickTimeStamp = lastClickMap.get(lastClick);
+
         final int minIntervalMS = 60000;
         final String exceptionMessage = "Exception report sent by user manually";
 
@@ -266,12 +271,12 @@ public class HelpDialog {
         }
 
         private void sendReport(AnkiActivity activity) {
-            if (lastClickStamp == null || currentTimestamp - lastClickStamp > minIntervalMS) {
+            if (lastClickTimeStamp == null || currentTimestamp - lastClickTimeStamp > minIntervalMS) {
                 AnkiDroidApp.deleteACRALimiterData(activity);
                 AnkiDroidApp.sendExceptionReport(
                         new UserSubmittedException(exceptionMessage),
                         "AnkiDroidApp.HelpDialog");
-                lastClickStamp = currentTimestamp;
+                lastClickMap.put(lastClick, currentTimestamp);
             } else {
                 UIUtils.showThemedToast(activity, activity.getString(R.string.help_dialog_exception_report_debounce),
                         true);
