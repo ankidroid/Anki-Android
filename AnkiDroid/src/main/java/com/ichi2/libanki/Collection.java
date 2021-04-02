@@ -367,15 +367,16 @@ public class Collection {
                 }
                 String res = cursor.getString(0);
                 if (res.length() == 0) {
-                    return buf.toString();
+                    break;
                 }
                 buf.append(res);
                 if (res.length() < getChunk()) {
-                    return buf.toString();
+                    break;
                 }
                 pos += getChunk();
             }
         }
+        return buf.toString();
     }
 
     /**
