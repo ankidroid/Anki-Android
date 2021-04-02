@@ -154,6 +154,7 @@
     <string name="custom_study_deck_name">Mukautettu istunto</string>
     <string name="custom_study_deck_exists">Nimeä olemassa oleva mukautettu pakka ensin</string>
     <string name="empty_deck">Tämä pakka on tyhjä</string>
+    <string name="search_deck">Deck Search</string>
     <string name="empty_deck_add_note">Add card</string>
     <string name="invalid_deck_name">Pätemätön pakka nimi</string>
     <string name="studyoptions_empty">Tämä pakka on tyhjä. Paina + painiketta lisätäksesi uutta sisältöä.</string>

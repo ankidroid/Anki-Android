@@ -159,6 +159,7 @@
     <string name="custom_study_deck_name">Prilagođena sesija učenja</string>
     <string name="custom_study_deck_exists">Prvo preimenujte postojeću prilagođenu skupinu za učenje</string>
     <string name="empty_deck">Ova skupina je prazna</string>
+    <string name="search_deck">Deck Search</string>
     <string name="empty_deck_add_note">Add card</string>
     <string name="invalid_deck_name">Invalid deck name</string>
     <string name="studyoptions_empty">Ova skupina je prazna. Pritisnite tipku + kako biste dodali novi sadržaj.</string>

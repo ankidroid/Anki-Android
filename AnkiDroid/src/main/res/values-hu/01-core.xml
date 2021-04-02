@@ -154,6 +154,7 @@
     <string name="custom_study_deck_name">Egyéni tanulás pakli</string>
     <string name="custom_study_deck_exists">Kérlek, előbb nevezd át a meglévő, Egyéni tanulás paklit</string>
     <string name="empty_deck">Ez a pakli üres</string>
+    <string name="search_deck">Deck Search</string>
     <string name="empty_deck_add_note">Kártya hozzáadása</string>
     <string name="invalid_deck_name">Érvénytelen paklinév</string>
     <string name="studyoptions_empty">Ez a pakli üres. Adj hozzá új tartalmat a \"+\" megnyomásával.</string>
