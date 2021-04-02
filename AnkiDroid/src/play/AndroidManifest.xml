@@ -1,7 +1,0 @@
-<manifest package="com.ichi2.anki"
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    android:installLocation="auto">
-
-    <uses-permission android:name="android.permission.CAMERA" />
-
-</manifest>

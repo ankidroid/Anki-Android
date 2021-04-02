@@ -23,13 +23,8 @@ import android.content.pm.PackageManager;
 import java.util.Arrays;
 
 public class CheckCameraPermission {
-    private final Context context;
 
-    public CheckCameraPermission(Context context) {
-        this.context = context;
-    }
-
-    public boolean checkManifestCameraPermission() {
+    public static boolean isPermissionAvailableInManifest(Context context) {
         try {
             String[] requestedPermissions = context.getPackageManager()
                     .getPackageInfo(context.getPackageName(), PackageManager.GET_PERMISSIONS)

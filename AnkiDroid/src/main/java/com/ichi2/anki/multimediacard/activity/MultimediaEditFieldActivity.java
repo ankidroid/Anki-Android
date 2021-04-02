@@ -218,8 +218,7 @@ public class MultimediaEditFieldActivity extends AnkiActivity
         menu.findItem(R.id.multimedia_edit_field_to_image).setVisible(mField.getType() != EFieldType.IMAGE);
 
         /* To check whether Camera Permission is asked in AndroidManifest.xml */
-        CheckCameraPermission mCheckCameraPermission = new CheckCameraPermission(this);
-        if (mCheckCameraPermission.checkManifestCameraPermission()) {
+        if (CheckCameraPermission.isPermissionAvailableInManifest(this)) {
             menu.findItem(R.id.multimedia_edit_field_to_image).setVisible(false);
         }
         return true;
