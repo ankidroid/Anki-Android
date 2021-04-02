@@ -15,6 +15,9 @@
  ****************************************************************************************/
 package com.wildplot.android.rendering.graphics.wrapper;
 
+import android.annotation.SuppressLint;
+
+@SuppressLint("FieldNamingPatternDetector")
 public class StrokeWrap {
     private final float strokeSize;
 
