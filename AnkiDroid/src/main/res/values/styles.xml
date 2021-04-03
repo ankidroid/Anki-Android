@@ -90,6 +90,11 @@
         <item name="android:textColor">?attr/easyButtonTextColor</item>
     </style>
 
+
+    <style name="FloatingActionsMenu">
+        <item name="fab_labelsPosition">left</item>
+    </style>
+
     <!-- FAB menu items -->
     <style name="menu_labels_style">
         <item name="android:background">?attr/fab_item_background</item>
@@ -133,5 +138,10 @@
         <item name="android:padding">4dp</item>
         <item name="android:background">?android:attr/selectableItemBackground</item>
         <item name="android:tint">@color/black</item>
+    </style>
+
+    <!-- increasing the size of Spinner in the Card Browser to 48dp to meet Accessibility criteria -->
+    <style name="card_browser_spinner_layout">
+        <item name="android:layout_height">48dp</item>
     </style>
 </resources>

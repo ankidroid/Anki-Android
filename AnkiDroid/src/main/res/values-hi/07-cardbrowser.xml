@@ -87,15 +87,15 @@
     <string name="card_browser_interval_learning_card">(अध्ययन)</string>
     <string name="card_browser_no_cards_in_deck">No cards found in deck ‘%s’</string>
     <string name="card_browser_search_all_decks">Search all decks</string>
-    <string name="card_browser_unknown_deck_name">Unknown</string>
+    <string name="card_browser_unknown_deck_name">अज्ञात</string>
     <plurals name="card_browser_cards_deleted">
-        <item quantity="one">%d card deleted</item>
-        <item quantity="other">%d cards deleted</item>
+        <item quantity="one">%d कार्ड हटाया गया</item>
+        <item quantity="other">%d कार्ड हटाए गए</item>
     </plurals>
     <!-- Card Info subscreen -->
-    <string name="card_info_added" comment="Label of the information showing at which date a card was added.">Added</string>
-    <string name="card_info_first_review">First Review</string>
-    <string name="card_info_latest_review">Latest Review</string>
+    <string name="card_info_added" comment="Label of the information showing at which date a card was added.">जोड़ा गया</string>
+    <string name="card_info_first_review">पहली समीक्षा</string>
+    <string name="card_info_latest_review">नवीनतम समीक्षा</string>
     <string name="card_info_interval">Interval</string>
     <string name="card_info_ease">आसानी</string>
     <string name="card_info_reviews" comment="Number of times a card was reviewed">Reviews</string>

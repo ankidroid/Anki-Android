@@ -24,7 +24,6 @@ import androidx.core.view.ViewCompat;
 import android.util.AttributeSet;
 import android.view.View;
 
-import com.getbase.floatingactionbutton.FloatingActionsMenu;
 
 import java.util.List;
 
@@ -33,7 +32,7 @@ import java.util.List;
  * Defines the behavior for the floating action button. If the dependency is a Snackbar, move the
  * fab up.
  */
-public class FabBehavior extends CoordinatorLayout.Behavior<FloatingActionsMenu> {
+public class FabBehavior extends CoordinatorLayout.Behavior<View> {
 
     private float mTranslationY;
 
@@ -45,7 +44,7 @@ public class FabBehavior extends CoordinatorLayout.Behavior<FloatingActionsMenu>
         super(context, attrs);
     }
 
-    private static float getFabTranslationYForSnackbar(CoordinatorLayout parent, FloatingActionsMenu fab) {
+    private static float getFabTranslationYForSnackbar(CoordinatorLayout parent, View fab) {
         float minOffset = 0.0F;
         List<View> dependencies = parent.getDependencies(fab);
         int i = 0;
@@ -61,12 +60,12 @@ public class FabBehavior extends CoordinatorLayout.Behavior<FloatingActionsMenu>
     }
 
     @Override
-    public boolean layoutDependsOn(@NonNull CoordinatorLayout parent, @NonNull FloatingActionsMenu child, @NonNull View dependency) {
+    public boolean layoutDependsOn(@NonNull CoordinatorLayout parent, @NonNull View child, @NonNull View dependency) {
         return dependency instanceof Snackbar.SnackbarLayout;
     }
 
     @Override
-    public boolean onDependentViewChanged(@NonNull CoordinatorLayout parent, @NonNull FloatingActionsMenu fab, @NonNull View dependency) {
+    public boolean onDependentViewChanged(@NonNull CoordinatorLayout parent, @NonNull View fab, @NonNull View dependency) {
         if (dependency instanceof Snackbar.SnackbarLayout && fab.getVisibility() == View.VISIBLE) {
             float translationY = getFabTranslationYForSnackbar(parent, fab);
             if (translationY != this.mTranslationY) {
@@ -76,5 +75,18 @@ public class FabBehavior extends CoordinatorLayout.Behavior<FloatingActionsMenu>
             }
         }
         return false;
+    }
+
+    @Override
+    public void onDependentViewRemoved(@NonNull CoordinatorLayout parent, @NonNull View fab, @NonNull View dependency) {
+        super.onDependentViewRemoved(parent, fab, dependency);
+        if (dependency instanceof Snackbar.SnackbarLayout && fab.getVisibility() == View.VISIBLE) {
+            float translationY = getFabTranslationYForSnackbar(parent, fab);
+            if (translationY == this.mTranslationY) {
+                ViewCompat.animate(fab).cancel();
+                fab.setTranslationY(0);
+                this.mTranslationY = 0;
+            }
+        }
     }
 }

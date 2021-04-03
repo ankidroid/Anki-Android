@@ -107,9 +107,10 @@ public class Utils {
     private Utils() { }
 
     // Regex pattern used in removing tags from text before diff
+    private static final Pattern commentPattern = Pattern.compile("(?s)<!--.*?-->");
     private static final Pattern stylePattern = Pattern.compile("(?si)<style.*?>.*?</style>");
     private static final Pattern scriptPattern = Pattern.compile("(?si)<script.*?>.*?</script>");
-    private static final Pattern tagPattern = Pattern.compile("<.*?>");
+    private static final Pattern tagPattern = Pattern.compile("(?s)<.*?>");
     private static final Pattern imgPattern = Pattern.compile("(?i)<img[^>]+src=[\"']?([^\"'>]+)[\"']?[^>]*>");
     private static final Pattern soundPattern = Pattern.compile("(?i)\\[sound:([^]]+)]");
     private static final Pattern htmlEntitiesPattern = Pattern.compile("&#?\\w+;");
@@ -193,7 +194,8 @@ public class Utils {
         int remaining; // Time in the unit smaller than x
         Resources res = context.getResources();
         if (time_s < TIME_HOUR_LONG) {
-            time_x = (int) Math.round(time_s / TIME_MINUTE);
+            // get time remaining, but never less than 1
+            time_x = Math.max((int) Math.round(time_s / TIME_MINUTE), 1);
             return res.getQuantityString(R.plurals.reviewer_window_title, time_x, time_x);
             //It used to be minutes only. So the word "minutes" is not
             //explicitly written in the ressource name.
@@ -296,6 +298,7 @@ public class Utils {
      * @return The text without the aforementioned tags.
      */
     public static String stripHTML(String s) {
+        s = commentPattern.matcher(s).replaceAll("");
         s = stripHTMLScriptAndStyleTags(s);
         Matcher htmlMatcher = tagPattern.matcher(s);
         s = htmlMatcher.replaceAll("");

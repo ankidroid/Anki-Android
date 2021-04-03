@@ -150,6 +150,7 @@
     <string name="custom_study_deck_name">自訂學程</string>
     <string name="custom_study_deck_exists">請先重新命名現有的「自訂學習」牌組。</string>
     <string name="empty_deck">這個牌組是空的</string>
+    <string name="search_deck">Deck Search</string>
     <string name="empty_deck_add_note">新增卡片</string>
     <string name="invalid_deck_name">無效牌組名稱</string>
     <string name="studyoptions_empty">這個牌組是空的。按下 + 按鈕增加新內容。</string>

@@ -25,6 +25,7 @@ import static com.ichi2.libanki.Consts.MODEL_CLOZE;
 import static com.ichi2.libanki.Models.REQ_ALL;
 import static com.ichi2.libanki.Models.REQ_ANY;
 import static com.ichi2.libanki.Utils.stripHTML;
+import static com.ichi2.utils.ListUtil.assertListEquals;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.contains;
 import static org.hamcrest.Matchers.containsString;
@@ -199,7 +200,7 @@ public class ModelTest extends RobolectricTest {
         Models mm = col.getModels();
         Model cloze_model = mm.byName("Cloze");
         mm.setCurrent(cloze_model);
-        assertEquals(new ArrayList<>(Arrays.asList(0, 1)), Models.availOrds(cloze_model, new String[]{"{{c1::Empty}} and {{c2::}}", ""}));
+        assertListEquals(Arrays.asList(0, 1), Models.availOrds(cloze_model, new String[]{"{{c1::Empty}} and {{c2::}}", ""}));
     }
 
 
@@ -224,17 +225,26 @@ public class ModelTest extends RobolectricTest {
         assertEquals("Cloze", note.model().getString("name"));
         // a cloze model with no clozes is not empty
         note.setItem("Text", "nothing");
-        assertNotEquals(0, col.addNote(note));
+        assertEquals(1, col.addNote(note));
+        assertEquals(1, col.addNote(note, Models.AllowEmpty.TRUE));
+        assertEquals(1, col.addNote(note, Models.AllowEmpty.ONLY_CLOZE));
+        assertEquals(0, col.addNote(note, Models.AllowEmpty.FALSE));
         // try with one cloze
         note = col.newNote();
         note.setItem("Text", "hello {{c1::world}}");
         assertEquals(1, col.addNote(note));
+        assertEquals(1, col.addNote(note, Models.AllowEmpty.TRUE));
+        assertEquals(1, col.addNote(note, Models.AllowEmpty.ONLY_CLOZE));
+        assertEquals(1, col.addNote(note, Models.AllowEmpty.FALSE));
         assertThat(note.cards().get(0).q(), containsString("hello <span class=cloze>[...]</span>"));
         assertThat(note.cards().get(0).a(), containsString("hello <span class=cloze>world</span>"));
         // and with a comment
         note = col.newNote();
         note.setItem("Text", "hello {{c1::world::typical}}");
         assertEquals(1, col.addNote(note));
+        assertEquals(1, col.addNote(note, Models.AllowEmpty.TRUE));
+        assertEquals(1, col.addNote(note, Models.AllowEmpty.ONLY_CLOZE));
+        assertEquals(1, col.addNote(note, Models.AllowEmpty.FALSE));
         assertThat(note.cards().get(0).q(), containsString("<span class=cloze>[typical]</span>"));
         assertThat(note.cards().get(0).a(), containsString("<span class=cloze>world</span>"));
         // and with 2 clozes
@@ -251,19 +261,41 @@ public class ModelTest extends RobolectricTest {
         assertThat(c2.a(), containsString("world <span class=cloze>bar</span>"));
         // if there are multiple answers for a single cloze, they are given in a
         // list
-        note = col.newNote();
         note.setItem("Text", "a {{c1::b}} {{c1::c}}");
         assertEquals(1, col.addNote(note));
+        assertEquals(1, col.addNote(note, Models.AllowEmpty.TRUE));
+        assertEquals(1, col.addNote(note, Models.AllowEmpty.ONLY_CLOZE));
+        assertEquals(1, col.addNote(note, Models.AllowEmpty.FALSE));
         assertThat(note.cards().get(0).a(), containsString("<span class=cloze>b</span> <span class=cloze>c</span>"));
         // if we add another cloze, a card should be generated
-        int cnt = col.cardCount();
         note.setItem("Text", "{{c2::hello}} {{c1::foo}}");
-        note.flush();
-        assertEquals(cnt + 1, col.cardCount());
+        assertEquals(2, col.addNote(note));
+        assertEquals(2, col.addNote(note, Models.AllowEmpty.TRUE));
+        assertEquals(2, col.addNote(note, Models.AllowEmpty.ONLY_CLOZE));
+        assertEquals(2, col.addNote(note, Models.AllowEmpty.FALSE));
         // 0 or negative indices are not supported
         note.setItem("Text", "{{c0::zero}} {{c-1:foo}}");
+        assertEquals(1, col.addNote(note));
+        assertEquals(1, col.addNote(note, Models.AllowEmpty.TRUE));
+        assertEquals(1, col.addNote(note, Models.AllowEmpty.ONLY_CLOZE));
+        assertEquals(0, col.addNote(note, Models.AllowEmpty.FALSE));
+
+        note = col.newNote();
+        note.setItem("Text", "hello {{c1::world}}");
+        col.addNote(note);
+        assertEquals(1, note.numberOfCards());
+        note.setItem("Text", "hello {{c2::world}}");
         note.flush();
         assertEquals(2, note.numberOfCards());
+        note.setItem("Text", "{{c1::hello}} {{c2::world}}");
+        note.flush();
+        assertEquals(2, note.numberOfCards());
+        note.setItem("Text", "{{c1::hello}} {{c3::world}}");
+        note.flush();
+        assertEquals(3, note.numberOfCards());
+        note.setItem("Text", "{{c0::hello}} {{c-1::world}}");
+        note.flush();
+        assertEquals(3, note.numberOfCards());
     }
 
 
@@ -451,10 +483,10 @@ public class ModelTest extends RobolectricTest {
 
     @Test
     public void test_getNamesOfFieldContainingCloze() {
-        assertEquals(new ArrayList<>(), Models.getNamesOfFieldsContainingCloze(""));
+        assertListEquals(new ArrayList<>(), Models.getNamesOfFieldsContainingCloze(""));
         String example = "{{cloze::foo}} <%cloze:bar%>";
-        assertEquals(Arrays.asList("foo", "bar"), Models.getNamesOfFieldsContainingCloze(example));
-        assertEquals(Arrays.asList("foo", "bar"), Models.getNamesOfFieldsContainingCloze(example));
+        assertListEquals(Arrays.asList("foo", "bar"), Models.getNamesOfFieldsContainingCloze(example));
+        assertListEquals(Arrays.asList("foo", "bar"), Models.getNamesOfFieldsContainingCloze(example));
     }
 
     @Test
@@ -476,15 +508,34 @@ public class ModelTest extends RobolectricTest {
         Collection col = getCol();
         Models mm = col.getModels();
         Model basic = mm.byName("Basic");
-        assertEquals(new ArrayList<>(), Models._availStandardOrds(basic, new String[]{"", ""}));
-        assertEquals(new ArrayList<>(), Models._availStandardOrds(basic, new String[]{"", "Back"}));
-        assertEquals(new ArrayList<>(Arrays.asList(0)), Models._availStandardOrds(basic, new String[]{"Foo", ""}));
-        assertEquals(new ArrayList<>(Arrays.asList()), Models._availStandardOrds(basic, new String[]{"  \t ", ""}));
         Model reverse = mm.byName("Basic (and reversed card)");
-        assertEquals(new ArrayList<>(), Models._availStandardOrds(reverse, new String[]{"", ""}));
-        assertEquals(new ArrayList<>(Arrays.asList(0)), Models._availStandardOrds(reverse, new String[]{"Foo", ""}));
-        assertEquals(new ArrayList<>(Arrays.asList(0, 1)), Models._availStandardOrds(reverse, new String[]{"Foo", "Bar"}));
-        assertEquals(new ArrayList<>(Arrays.asList(1)), Models._availStandardOrds(reverse, new String[]{"  \t ", "Bar"}));
+
+        assertListEquals(new ArrayList<>(), Models._availStandardOrds(basic, new String[]{"", ""}));
+        assertListEquals(new ArrayList<>(), Models._availStandardOrds(basic, new String[]{"", "Back"}));
+        assertListEquals(Arrays.asList(0), Models._availStandardOrds(basic, new String[]{"Foo", ""}));
+        assertListEquals(Arrays.asList(), Models._availStandardOrds(basic, new String[]{"  \t ", ""}));
+        assertListEquals(new ArrayList<>(), Models._availStandardOrds(reverse, new String[]{"", ""}));
+        assertListEquals(Arrays.asList(0), Models._availStandardOrds(reverse, new String[]{"Foo", ""}));
+        assertListEquals(Arrays.asList(0, 1), Models._availStandardOrds(reverse, new String[]{"Foo", "Bar"}));
+        assertListEquals(Arrays.asList(1), Models._availStandardOrds(reverse, new String[]{"  \t ", "Bar"}));
+
+        assertListEquals(new ArrayList<>(), Models._availStandardOrds(basic, new String[]{"", ""}, false) );
+        assertListEquals(new ArrayList<>(), Models._availStandardOrds(basic, new String[]{"", "Back"}, false));
+        assertListEquals(Arrays.asList(0), Models._availStandardOrds(basic, new String[]{"Foo", ""}, false));
+        assertListEquals(Arrays.asList(), Models._availStandardOrds(basic, new String[]{"  \t ", ""}, false));
+        assertListEquals(new ArrayList<>(), Models._availStandardOrds(reverse, new String[]{"", ""}, false));
+        assertListEquals(Arrays.asList(0), Models._availStandardOrds(reverse, new String[]{"Foo", ""}, false));
+        assertListEquals(Arrays.asList(0, 1), Models._availStandardOrds(reverse, new String[]{"Foo", "Bar"}, false));
+        assertListEquals(Arrays.asList(1), Models._availStandardOrds(reverse, new String[]{"  \t ", "Bar"}, false));
+
+        assertListEquals(Arrays.asList(0), Models._availStandardOrds(basic, new String[]{"", ""}, true) );
+        assertListEquals(Arrays.asList(0), Models._availStandardOrds(basic, new String[]{"", "Back"}, true));
+        assertListEquals(Arrays.asList(0), Models._availStandardOrds(basic, new String[]{"Foo", ""}, true));
+        assertListEquals(Arrays.asList(0), Models._availStandardOrds(basic, new String[]{"  \t ", ""}, true));
+        assertListEquals(Arrays.asList(0), Models._availStandardOrds(reverse, new String[]{"", ""}, true));
+        assertListEquals(Arrays.asList(0), Models._availStandardOrds(reverse, new String[]{"Foo", ""}, true));
+        assertListEquals(Arrays.asList(0, 1), Models._availStandardOrds(reverse, new String[]{"Foo", "Bar"}, true));
+        assertListEquals(Arrays.asList(1), Models._availStandardOrds(reverse, new String[]{"  \t ", "Bar"}, true));
     }
 
     @Test
@@ -492,14 +543,35 @@ public class ModelTest extends RobolectricTest {
         Collection col = getCol();
         Models mm = col.getModels();
         Model basic = mm.byName("Basic");
-        assertEquals(new ArrayList<>(), Models.availOrds(basic, new String[]{"", ""}));
-        assertEquals(new ArrayList<>(), Models.availOrds(basic, new String[]{"", "Back"}));
-        assertEquals(new ArrayList<>(Arrays.asList(0)), Models.availOrds(basic, new String[]{"Foo", ""}));
-        assertEquals(new ArrayList<>(Arrays.asList()), Models.availOrds(basic, new String[]{"  \t ", ""}));
         Model reverse = mm.byName("Basic (and reversed card)");
-        assertEquals(new ArrayList<>(), Models.availOrds(reverse, new String[]{"", ""}));
-        assertEquals(new ArrayList<>(Arrays.asList(0)), Models.availOrds(reverse, new String[]{"Foo", ""}));
-        assertEquals(new ArrayList<>(Arrays.asList(0, 1)), Models.availOrds(reverse, new String[]{"Foo", "Bar"}));
-        assertEquals(new ArrayList<>(Arrays.asList(1)), Models.availOrds(reverse, new String[]{"  \t ", "Bar"}));
+
+        assertListEquals(new ArrayList<>(), Models.availOrds(basic, new String[]{"", ""}));
+        assertListEquals(new ArrayList<>(), Models.availOrds(basic, new String[]{"", "Back"}));
+        assertListEquals(Arrays.asList(0), Models.availOrds(basic, new String[]{"Foo", ""}));
+        assertListEquals(Arrays.asList(), Models.availOrds(basic, new String[]{"  \t ", ""}));
+        assertListEquals(new ArrayList<>(), Models.availOrds(reverse, new String[]{"", ""}));
+        assertListEquals(Arrays.asList(0), Models.availOrds(reverse, new String[]{"Foo", ""}));
+        assertListEquals(Arrays.asList(0, 1), Models.availOrds(reverse, new String[]{"Foo", "Bar"}));
+        assertListEquals(Arrays.asList(1), Models.availOrds(reverse, new String[]{"  \t ", "Bar"}));
+
+        for (Models.AllowEmpty allow : new Models.AllowEmpty[] {Models.AllowEmpty.ONLY_CLOZE, Models.AllowEmpty.FALSE}) {
+            assertListEquals(new ArrayList<>(), Models.availOrds(basic, new String[] {"", ""}, allow));
+            assertListEquals(new ArrayList<>(), Models.availOrds(basic, new String[] {"", "Back"}, allow));
+            assertListEquals(Arrays.asList(0), Models.availOrds(basic, new String[] {"Foo", ""}, allow));
+            assertListEquals(Arrays.asList(), Models.availOrds(basic, new String[] {"  \t ", ""}, allow));
+            assertListEquals(new ArrayList<>(), Models.availOrds(reverse, new String[] {"", ""}, allow));
+            assertListEquals(Arrays.asList(0), Models.availOrds(reverse, new String[] {"Foo", ""}, allow));
+            assertListEquals(Arrays.asList(0, 1), Models.availOrds(reverse, new String[] {"Foo", "Bar"}, allow));
+            assertListEquals(Arrays.asList(1), Models.availOrds(reverse, new String[] {"  \t ", "Bar"}, allow));
+        }
+
+        assertListEquals(Arrays.asList(0), Models.availOrds(basic, new String[]{"", ""}, Models.AllowEmpty.TRUE));
+        assertListEquals(Arrays.asList(0), Models.availOrds(basic, new String[]{"", "Back"}, Models.AllowEmpty.TRUE));
+        assertListEquals(Arrays.asList(0), Models.availOrds(basic, new String[]{"Foo", ""}, Models.AllowEmpty.TRUE));
+        assertListEquals(Arrays.asList(0), Models.availOrds(basic, new String[]{"  \t ", ""}, Models.AllowEmpty.TRUE));
+        assertListEquals(Arrays.asList(0), Models.availOrds(reverse, new String[]{"", ""}, Models.AllowEmpty.TRUE));
+        assertListEquals(Arrays.asList(0), Models.availOrds(reverse, new String[]{"Foo", ""}, Models.AllowEmpty.TRUE));
+        assertListEquals(Arrays.asList(0, 1), Models.availOrds(reverse, new String[]{"Foo", "Bar"}, Models.AllowEmpty.TRUE));
+        assertListEquals(Arrays.asList(1), Models.availOrds(reverse, new String[]{"  \t ", "Bar"}, Models.AllowEmpty.TRUE));
     }
 }

@@ -27,12 +27,9 @@ import okio.Okio;
 import okio.Source;
 
 
-// Note that in current versions of OkHTTP this is unnecessary as they support
-// Decorators / hooks more easily with the builder API, allowing upload transfer tracking
-// without a separate object. I believe we will have to move to API21+ for that to be possible
 public class CountingFileRequestBody extends RequestBody {
 
-    private static final int SEGMENT_SIZE = 2048; // okio.Segment.SIZE
+    private static final int SEGMENT_SIZE = 8092; // okio.Segment.SIZE (internal, copy required)
 
     private final File file;
     private final ProgressListener listener;
@@ -61,7 +58,7 @@ public class CountingFileRequestBody extends RequestBody {
             source = Okio.source(file);
             long read;
 
-            while ((read = source.read(sink.buffer(), SEGMENT_SIZE)) != -1) {
+            while ((read = source.read(sink.getBuffer(), SEGMENT_SIZE)) != -1) {
                 sink.flush();
                 this.listener.transferred(read);
             }

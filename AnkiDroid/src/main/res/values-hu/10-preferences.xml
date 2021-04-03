@@ -174,7 +174,7 @@
     <string name="time_limit">Időkorlát érték</string>
     <string name="time_limit_summ">XXX perc</string>
     <string name="new_timezone">New timezone handling</string>
-    <string name="day_offset">Következő nap kezdete</string>
+    <string name="day_offset_with_description">Start of next day (0 is midnight, 23 is 11PM)</string>
     <string name="day_offset_summ">XXX órával éjfél után</string>
     <string name="sched_ver">Kísérleti V2 ütemező</string>
     <string name="sched_ver_summ">Kísérleti ütemező engedélyezése. A változásokat egy irányba erőlteti a következő szinkronizáláskor</string>
@@ -290,4 +290,6 @@
     <string name="note_editor_replace_newlines_summ">In the Note Editor, convert any instances of &lt;br&gt; to newlines when editing a card.</string>
     <string name="no_code_formatting">Simple typed answer formatting</string>
     <string name="no_code_formatting_summ">Fixes ‘􏿾’ appearing in typed answer results</string>
+    <!-- Open Changelog-->
+    <string name="open_changelog">Open Changelog</string>
 </resources>

@@ -149,6 +149,7 @@
     <string name="custom_study_deck_name">カスタム学習セッション</string>
     <string name="custom_study_deck_exists">最初に、既存のカスタム学習デッキの名前を変更してください</string>
     <string name="empty_deck">このデッキにはカードがありません</string>
+    <string name="search_deck">Deck Search</string>
     <string name="empty_deck_add_note">カードの追加</string>
     <string name="invalid_deck_name">無効なデッキ名です。</string>
     <string name="studyoptions_empty">このデッキにはカードが入っていません。「＋」ボタンをタップしてカードを追加してください。</string>

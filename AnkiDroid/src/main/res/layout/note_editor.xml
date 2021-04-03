@@ -42,7 +42,7 @@
                         android:layout_marginLeft="8dip"
                         android:layout_marginRight="8dip"
                         android:clickable="false"
-                        android:gravity="left|center_vertical"
+                        android:gravity="start|center_vertical"
                         android:textStyle="bold"
                         android:text="@string/CardEditorModel" />
                     <Spinner
@@ -65,7 +65,7 @@
                         android:layout_marginLeft="8dip"
                         android:layout_marginRight="8dip"
                         android:clickable="false"
-                        android:gravity="left|center_vertical"
+                        android:gravity="start|center_vertical"
                         android:textStyle="bold"
                         android:text="@string/CardEditorNoteDeck" />
                     <Spinner
@@ -106,7 +106,7 @@
                             android:layout_marginLeft="5dip"
                             android:layout_marginRight="5dip"
                             android:clickable="false"
-                            android:gravity="left|center_vertical"
+                            android:gravity="start|center_vertical"
                             tools:text="Tags: AnkiDroid"/>
                     </LinearLayout>
                 </LinearLayout>
@@ -131,7 +131,7 @@
                             android:layout_marginRight="5dip"
                             android:clickable="false"
                             tools:text="Cards: Card 1"
-                            android:gravity="left|center_vertical" />
+                            android:gravity="start|center_vertical" />
                     </LinearLayout>
                 </LinearLayout>
             </LinearLayout>
@@ -140,7 +140,6 @@
     </LinearLayout>
 
     <com.ichi2.anki.noteeditor.Toolbar
-        android:background="#D6D7D7"
         android:layout_gravity="bottom"
         android:id="@+id/editor_toolbar"
         android:layout_width="match_parent"

@@ -154,6 +154,7 @@
     <string name="custom_study_deck_name">Kişiselleştirilmiş çalışma oturumu</string>
     <string name="custom_study_deck_exists">Lütfen mevcut özelleştirilmiş çalışma destesini yeniden adlandırın.</string>
     <string name="empty_deck">Bu deste boş</string>
+    <string name="search_deck">Deck Search</string>
     <string name="empty_deck_add_note">Kart ekle</string>
     <string name="invalid_deck_name">Geçersiz deste adı</string>
     <string name="studyoptions_empty">Bu deste boş. Yeni içerik eklemek için + düğmesine basın.</string>

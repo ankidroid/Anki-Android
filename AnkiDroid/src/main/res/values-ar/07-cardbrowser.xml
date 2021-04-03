@@ -47,10 +47,10 @@
         <item quantity="many">%d بطاقة معروضة</item>
         <item quantity="other">%d بطاقة معروضة</item>
     </plurals>
-    <string name="card_browser_all_decks">كل الرزم</string>
+    <string name="card_browser_all_decks">كل شَدّات الأوراق</string>
     <string name="card_browser_delete_card">حذف الملحوظات</string>
     <string name="card_browser_suspend_card">تعليق البطاقات</string>
-    <string name="card_browser_change_deck">تغيير الرزمة</string>
+    <string name="card_browser_change_deck">تغيير شَدّة الأوراق</string>
     <string name="card_browser_unsuspend_card">تفعيل البطاقات</string>
     <string name="card_browser_mark_card">تعليم الملحوظات</string>
     <string name="card_browser_unmark_card">إلغاء تعليم الملحوظات</string>
@@ -89,8 +89,8 @@
     <string name="card_browser_interval_new_card" comment="Message indicating that a card is currently new, and so has no interval/ease.">(جديدة)</string>
     <string name="card_browser_due_filtered_card">(مفلترة)</string>
     <string name="card_browser_interval_learning_card">(في طور التعلم)</string>
-    <string name="card_browser_no_cards_in_deck">لا توجد بطاقات في الرزمة ‘%s’</string>
-    <string name="card_browser_search_all_decks">البحث في كل الرزم</string>
+    <string name="card_browser_no_cards_in_deck">لا توجد بطاقات في شَدّة الأوراق ‘%s’</string>
+    <string name="card_browser_search_all_decks">البحث في كل شَدّات الأوراق</string>
     <string name="card_browser_unknown_deck_name">غير معروف</string>
     <plurals name="card_browser_cards_deleted">
         <item quantity="zero">حُذِفت %d بطاقة</item>
@@ -112,7 +112,7 @@
     <string name="card_info_total_time">إجمالي الوقت</string>
     <string name="card_info_card_type">نوع البطاقة</string>
     <string name="card_info_note_type">نوع الملحوظة</string>
-    <string name="card_info_deck_name">اسم الرزمة</string>
+    <string name="card_info_deck_name">اسم شَدّة الأوراق</string>
     <string name="card_info_card_id">معرف البطاقة</string>
     <string name="card_info_note_id">معرف الملحوظة</string>
     <string name="card_info_revlog_time">الوقت</string>

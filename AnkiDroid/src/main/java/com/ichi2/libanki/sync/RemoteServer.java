@@ -31,6 +31,7 @@ import java.util.HashMap;
 import java.util.Locale;
 
 import okhttp3.Response;
+import timber.log.Timber;
 
 @SuppressWarnings({"PMD.AvoidThrowingRawExceptionTypes","PMD.MethodNamingConventions"})
 public class RemoteServer extends HttpSyncer {
@@ -49,6 +50,7 @@ public class RemoteServer extends HttpSyncer {
             credentials.put("p", pw);
             return super.req("hostKey", HttpSyncer.getInputStream(Utils.jsonToString(credentials)));
         } catch (JSONException e) {
+            Timber.w(e);
             return null;
         }
     }
@@ -121,6 +123,7 @@ public class RemoteServer extends HttpSyncer {
         try {
             return Long.parseLong(s);
         } catch (NumberFormatException e) {
+            Timber.w(e);
             return 0;
         }
     }

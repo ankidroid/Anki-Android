@@ -173,7 +173,7 @@
     <string name="time_limit">Ограничение на времето</string>
     <string name="time_limit_summ">XXX мин</string>
     <string name="new_timezone">New timezone handling</string>
-    <string name="day_offset">Началото от следващия ден</string>
+    <string name="day_offset_with_description">Start of next day (0 is midnight, 23 is 11PM)</string>
     <string name="day_offset_summ">XXX часа след полунощ</string>
     <string name="sched_ver">Experimental V2 scheduler</string>
     <string name="sched_ver_summ">Enable the experimental scheduler. Forces changes in one direction on next sync</string>
@@ -289,4 +289,6 @@
     <string name="note_editor_replace_newlines_summ">In the Note Editor, convert any instances of &lt;br&gt; to newlines when editing a card.</string>
     <string name="no_code_formatting">Simple typed answer formatting</string>
     <string name="no_code_formatting_summ">Fixes ‘􏿾’ appearing in typed answer results</string>
+    <!-- Open Changelog-->
+    <string name="open_changelog">Open Changelog</string>
 </resources>

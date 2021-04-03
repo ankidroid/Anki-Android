@@ -44,8 +44,7 @@ import timber.log.Timber;
 /**
  * Enables TLS v1.2 when creating SSLSockets.
  * <p/>
- * For some reason, android supports TLS v1.2 from API 16, but enables it by
- * default only from API 20. Additionally some Samsung API21 phones also need this.
+ * This hack is currently only maintained with API >= 21 for some Samsung API21 phones
  *
  * @link https://developer.android.com/reference/javax/net/ssl/SSLSocket.html
  * @see SSLSocketFactory
@@ -57,7 +56,7 @@ public class Tls12SocketFactory extends SSLSocketFactory {
 
 
     public static OkHttpClient.Builder enableTls12OnPreLollipop(OkHttpClient.Builder client) {
-        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP_MR1) {
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP_MR1 && "Samsung".equals(Build.MANUFACTURER)) {
             try {
                 Timber.d("Creating unified TrustManager");
                 Certificate cert = getUserTrustRootCertificate();

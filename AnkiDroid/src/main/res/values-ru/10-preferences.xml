@@ -173,7 +173,7 @@
     <string name="time_limit">Лимит учебного блока</string>
     <string name="time_limit_summ">XXX мин.</string>
     <string name="new_timezone">Обработка нового часового пояса</string>
-    <string name="day_offset">Начало следующего дня</string>
+    <string name="day_offset_with_description">Start of next day (0 is midnight, 23 is 11PM)</string>
     <string name="day_offset_summ">XXX ч. утра</string>
     <string name="sched_ver">Экспериментальный планировщик — 2</string>
     <string name="sched_ver_summ">Включает экспериментальный планировщик. При синхронизации изменения будут перезаписаны в одну сторону</string>
@@ -293,4 +293,6 @@
     <string name="note_editor_replace_newlines_summ">Заменять &lt;br&gt; в редакторе записей на перенос строки</string>
     <string name="no_code_formatting">Простое форматирование ответа</string>
     <string name="no_code_formatting_summ">Исправляет «􏿾» при вводе ответа</string>
+    <!-- Open Changelog-->
+    <string name="open_changelog">Open Changelog</string>
 </resources>
