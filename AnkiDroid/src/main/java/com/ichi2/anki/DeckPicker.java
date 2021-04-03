@@ -1023,7 +1023,7 @@ public class DeckPicker extends NavigationDrawerActivity implements
         }
     }
 
-    private long pressedTime;
+    public int count = 1;
     @Override
     public void onBackPressed() {
         if (isDrawerOpen()) {
@@ -1034,7 +1034,7 @@ public class DeckPicker extends NavigationDrawerActivity implements
                 Toast.makeText(this, getApplication().getString(R.string.toastOnBackPressed), Toast.LENGTH_SHORT).show();
                 mFloatingActionMenu.closeFloatingActionMenu();
             } else {
-                if (pressedTime + 2000 > System.currentTimeMillis()){
+                if (count!=1){
                     automaticSync();
                     finishWithAnimation();
                 }
@@ -1042,7 +1042,7 @@ public class DeckPicker extends NavigationDrawerActivity implements
                     Toast.makeText(this, getApplication().getString(R.string.toastOnBackPressed), Toast.LENGTH_SHORT).show();
                 }
             }
-            pressedTime = System.currentTimeMillis();
+            count ++;
         }
     }
 
