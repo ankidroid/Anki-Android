@@ -20,7 +20,13 @@ Methods are only tested with inputs that they are supposed to accept. You can re
 If a method parameter is annotated with `@NonNull`, we do not want a test to send it a `null` value. On the other hand if it is annotated with `@Nullable` we want to have test checking the case where the value is `null`. If there is no annotation and the type is not a scalar, then it is good practice to add the annotation. 
 
 ## Time
-Unit tests are run with simulated time. The collection is created the 7th of August 2020 at 7 hour, UTC. Each time the time is checked, it advanced by 10 milliseconds. You can also use the MockTime class to change the date to any time you decide.
+Unit tests are run with simulated time. The collection is created the 7th of August 2020 at 7 hour, UTC. Each time the time is checked, it advanced by 10 milliseconds. You can also use 
+```java
+MockTime timeManager = (MockTime) col.getTime();
+timeManager.addD(1);
+timeManager.addM(3);
+```
+to add 1 day and 3 minutes to the simulated time
 
 # Testing styles
 
