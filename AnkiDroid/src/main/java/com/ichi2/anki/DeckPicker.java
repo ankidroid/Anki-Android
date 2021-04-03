@@ -162,8 +162,6 @@ public class DeckPicker extends NavigationDrawerActivity implements
         ActivityCompat.OnRequestPermissionsResultCallback, CustomStudyDialog.CustomStudyListener {
 
 
-    public boolean mBackButtonPressedToExit = false;
-
     /**
      * Result codes from other activities
      */
@@ -193,6 +191,8 @@ public class DeckPicker extends NavigationDrawerActivity implements
 
     // Short animation duration from system
     private int mShortAnimDuration;
+
+    public boolean mBackButtonPressedToExit = false;
 
     private RelativeLayout mDeckPickerContent;
 
