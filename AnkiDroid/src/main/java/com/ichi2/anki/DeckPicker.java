@@ -37,6 +37,7 @@ import android.database.SQLException;
 import android.graphics.PixelFormat;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Message;
 import android.os.ParcelFileDescriptor;
@@ -1145,6 +1146,17 @@ public class DeckPicker extends NavigationDrawerActivity implements
 
 
     private void showStartupScreensAndDialogs(SharedPreferences preferences, int skip) {
+
+        // For Android 8/8.1 we want to use software rendering by default or the Reviewer UI is broken #7369
+        if (CompatHelper.getSdkVersion() == Build.VERSION_CODES.O ||
+                CompatHelper.getSdkVersion() == Build.VERSION_CODES.O_MR1) {
+                if (!preferences.contains("softwareRender")) {
+                    Timber.i("Android 8/8.1 detected with no render preference. Turning on software render.");
+                    preferences.edit().putBoolean("softwareRender", true).apply();
+                } else {
+                    Timber.i("Android 8/8.1 detected, software render preference already exists.");
+                }
+        }
 
         if (!BackupManager.enoughDiscSpace(CollectionHelper.getCurrentAnkiDroidDirectory(this))) {
             Timber.i("Not enough space to do backup");
