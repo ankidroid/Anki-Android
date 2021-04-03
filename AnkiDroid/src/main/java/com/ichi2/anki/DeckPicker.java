@@ -224,6 +224,8 @@ public class DeckPicker extends NavigationDrawerActivity implements
 
     private String mExportFileName;
 
+    private LinearLayout linearLayout;
+
     @Nullable private CollectionTask<?, ?, ?, ?> mEmptyCardTask = null;
 
     @VisibleForTesting
@@ -466,6 +468,8 @@ public class DeckPicker extends NavigationDrawerActivity implements
         initNavigationDrawer(mainView);
         setTitle(getResources().getString(R.string.app_name));
 
+        linearLayout = findViewById(R.id.deckpicker_view);
+
         mDeckPickerContent = findViewById(R.id.deck_picker_content);
         mRecyclerView = findViewById(R.id.files);
         mNoDecksPlaceholder = findViewById(R.id.no_decks_placeholder);
@@ -518,6 +522,21 @@ public class DeckPicker extends NavigationDrawerActivity implements
         // Setup the FloatingActionButtons, should work everywhere with min API >= 15
         mActionsMenu = findViewById(R.id.add_content_menu);
         mActionsMenu.findViewById(R.id.fab_expand_menu_button).setContentDescription(getString(R.string.menu_add));
+        mActionsMenu.findViewById(R.id.fab_expand_menu_button).setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (mActionsMenu.isExpanded()){
+                    mActionsMenu.collapse();
+                    linearLayout.setAlpha(1f);
+                }
+                else{
+                    mActionsMenu.expand();
+                    linearLayout.setAlpha(0.5f);
+                }
+            }
+        });
+
+
         configureFloatingActionsMenu();
 
         mReviewSummaryTextView = findViewById(R.id.today_stats_text_view);
@@ -629,6 +648,7 @@ public class DeckPicker extends NavigationDrawerActivity implements
     }
 
     private void configureFloatingActionsMenu() {
+
         final FloatingActionButton addDeckButton = findViewById(R.id.add_deck_action);
         final FloatingActionButton addSharedButton = findViewById(R.id.add_shared_action);
         final FloatingActionButton addNoteButton = findViewById(R.id.add_note_action);
@@ -636,6 +656,7 @@ public class DeckPicker extends NavigationDrawerActivity implements
             if (mActionsMenu == null) {
                 return;
             }
+            linearLayout.setAlpha(1f);
             mActionsMenu.collapse();
             mDialogEditText = new FixedEditText(DeckPicker.this);
             mDialogEditText.setSingleLine(true);
@@ -661,11 +682,13 @@ public class DeckPicker extends NavigationDrawerActivity implements
         });
         addSharedButton.setOnClickListener(view -> {
             Timber.i("Adding Shared Deck");
+            linearLayout.setAlpha(1f);
             mActionsMenu.collapse();
             addSharedDeck();
         });
         addNoteButton.setOnClickListener(view -> {
             Timber.i("Adding Note");
+            linearLayout.setAlpha(1f);
             mActionsMenu.collapse();
             addNote();
         });
@@ -1080,6 +1103,7 @@ public class DeckPicker extends NavigationDrawerActivity implements
         } else {
             Timber.i("Back key pressed");
             if (mActionsMenu != null && mActionsMenu.isExpanded()) {
+                linearLayout.setAlpha(1f);
                 mActionsMenu.collapse();
             } else {
                 automaticSync();
