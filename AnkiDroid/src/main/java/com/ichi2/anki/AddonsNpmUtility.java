@@ -117,7 +117,7 @@ public class AddonsNpmUtility extends AnkiActivity{
             }
             Timber.d("keywords %s", keywords.toString());
         } catch (JSONException e) {
-            Timber.e(e.getLocalizedMessage());
+            Timber.w(e, e.getLocalizedMessage());
         }
 
         if (!addonModel.getJsApiVersion().equals(AnkiDroidJsAPI) && jsAddonKeywordsPresent) {

@@ -63,4 +63,8 @@ public class AddonModel {
         AddonModel addonModel = new AddonModel(addonName, addonVersion, addonDev, addonAnkiDroidAPI, addonHomepage, addonType);
         return addonModel;
     }
+
+    public static String getAddonFullName(AddonModel addonModel) {
+        return addonModel.getType() + "_addon:" + addonModel.getName();
+    }
 }

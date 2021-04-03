@@ -47,7 +47,7 @@ public class AddonsAdapter extends RecyclerView.Adapter<AddonsAdapter.AddonsView
         // while binding viewholder if preferences w.r.t viewholder store true value or enabled status then
         // turn on switch status else it is off by default
 
-        String addonTypeAndName = addonModel.getType() + "_addon:" + addonModel.getName();
+        String addonTypeAndName = AddonModel.getAddonFullName(addonModel);
 
         if (preferences.getBoolean(addonTypeAndName, false)) {
             holder.addonActivate.setChecked(true);
