@@ -902,7 +902,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
           get all enabled addons' content before so called only once during review time instead of calling each time
         */
         if (AnkiDroidApp.getSharedPrefs(this).getBoolean("javascript_addons_support", false)) {
-            jsAddonContent = getEnabledAddonsContent();
+            jsAddonContent = AddonsBrowser.getEnabledAddonsContent(this);
         }
 
     }
@@ -2414,84 +2414,6 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
         // Try to get the configuration by the original deck ID (available in case of a cram deck),
         // else use the direct deck ID (in case of a 'normal' deck.
         return card.getODid() == 0 ? card.getDid() : card.getODid();
-    }
-
-    /**
-     * @return content of index.js file for every enabled addons in script tag.
-     * get enabled js addon contents from AnkiDroid/addons/...
-     */
-    public String getEnabledAddonsContent() {
-        StringBuilder content = new StringBuilder();
-        String mainJsFile = null;
-
-        SharedPreferences preferences = AnkiDroidApp.getSharedPrefs(this);
-        String currentAnkiDroidDirectory = CollectionHelper.getCurrentAnkiDroidDirectory(this);
-        File addonsHomeDir = new File(currentAnkiDroidDirectory, "addons" );
-
-        Map<String,?> keys = preferences.getAll();
-
-        for(Map.Entry<String,?> entry : keys.entrySet()){
-            Timber.d("map values %s",entry.getKey() + ": " + entry.getValue().toString());
-
-            // get enabled status of addons in SharedPreferences with key containing 'addon'
-            if (entry.getKey().contains("reviewer_addon") && entry.getValue().toString().equals("enabled")) {
-                try {
-                    /*
-                      split value and get latter part as it stored in SharedPreferences
-                      e.g reviewer_addon:ankidroid-js-addon-12345...  --> ankidroid-js-addon-12345...
-                      It is same as folder name for the addon.
-                     */
-                    String addonDirName = String.valueOf(entry.getKey().split(":")[1]);
-                    File finalAddonPath = new File(addonsHomeDir, addonDirName);
-
-                    if (finalAddonPath.exists()) {
-                        //Read text from file, index.js is starting point for the addon
-                        File addonsPackageDir = new File(finalAddonPath, "package");
-                        File addonPackageJson = new File(addonsPackageDir, "package.json");
-
-                        /*
-                          get {'main': 'index.js'} from package.json file
-                          main point to index.js file by default, according to info in package.json it may point to other .js file
-                         */
-                        if (addonPackageJson.exists()) {
-                            org.json.JSONObject jsonObject  = AddonsBrowser.packageJsonReader(addonPackageJson);
-                            if (jsonObject == null) {
-                                // return empty
-                                return "";
-                            }
-                            mainJsFile = jsonObject.optString("main", "");
-                        }
-
-                        // read index.js file or file pointed by "main"
-                        File addonsContentFile = new File(addonsPackageDir, mainJsFile);
-                        if (addonsContentFile.exists()) {
-                            // wrap index.js content in script tag for each enabled addons
-                            content.append("<script>");
-                            content.append("\n");
-
-                            BufferedReader br = new BufferedReader(new FileReader(addonsContentFile));
-                            String line;
-
-                            while ((line = br.readLine()) != null) {
-                                content.append(line);
-                                content.append('\n');
-                            }
-                            br.close();
-
-                            content.append("</script>");
-                            content.append("\n");
-
-                            Timber.d("addon content path %s", addonsContentFile);
-                        }
-                    }
-                }
-                catch (ArrayIndexOutOfBoundsException | IOException e) {
-                    Timber.e(e, "AbstractFlashcardViewer::IOException");
-                }
-            }
-        }
-
-        return content.toString();
     }
 
     public void fillFlashcard() {

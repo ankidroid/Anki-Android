@@ -326,13 +326,7 @@
             android:name="com.ichi2.anki.AddonsBrowser"
             android:exported="false"
             android:configChanges="keyboardHidden|orientation|locale|screenSize"
-            android:parentActivityName=".DeckPicker"
-            >
-            <!-- The meta-data element is needed for versions lower than 4.1 -->
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.ichi2.anki.DeckPicker"
-                />
+            android:parentActivityName=".DeckPicker">
         </activity>
         <activity
             android:name="com.ichi2.anki.Previewer"

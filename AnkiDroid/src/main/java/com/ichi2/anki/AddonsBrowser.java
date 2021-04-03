@@ -36,6 +36,7 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.Objects;
 
 import androidx.core.text.HtmlCompat;
@@ -81,6 +82,7 @@ public class AddonsBrowser extends NavigationDrawerActivity implements DeckDropD
 
 
     private LinearLayout addonsMessageLayout;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -260,6 +262,7 @@ public class AddonsBrowser extends NavigationDrawerActivity implements DeckDropD
         hideProgressBar();
     }
 
+
     /*
       Get info about npm package from npm registry
      */
@@ -293,6 +296,7 @@ public class AddonsBrowser extends NavigationDrawerActivity implements DeckDropD
         });
 
     }
+
 
     /*
       Parse npm package info from package.json. If valid ankidroid-js-addon package then download it
@@ -364,55 +368,53 @@ public class AddonsBrowser extends NavigationDrawerActivity implements DeckDropD
         public void onReceive(Context context, Intent intent) {
             String action = intent.getAction();
 
-            if (DownloadManager.ACTION_DOWNLOAD_COMPLETE.equals(action)) {
-                DownloadManager.Query query = new DownloadManager.Query();
-                query.setFilterById(queueId);
+            if (!DownloadManager.ACTION_DOWNLOAD_COMPLETE.equals(action)) {
+                return;
+            }
 
-                Cursor cursor = downloadManager.query(query);
+            DownloadManager.Query query = new DownloadManager.Query();
+            query.setFilterById(queueId);
 
-                if (cursor.moveToFirst()) {
-                    int columnIndex = cursor.getColumnIndex(DownloadManager.COLUMN_STATUS);
+            Cursor cursor = downloadManager.query(query);
 
-                    if (DownloadManager.STATUS_SUCCESSFUL == cursor.getInt(columnIndex)) {
-                        String addonName = cursor.getString(cursor.getColumnIndex(DownloadManager.COLUMN_TITLE));
+            if (cursor.moveToFirst()) {
+                int columnIndex = cursor.getColumnIndex(DownloadManager.COLUMN_STATUS);
 
-                        File addonsDir = new File(addonsHomeDir, addonName);
-                        String tarballPath = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS)
-                                + "/" + Uri.parse(addonName).getPath() + ".tgz";
-                        File tarballFile = new File(tarballPath);
+                if (DownloadManager.STATUS_SUCCESSFUL == cursor.getInt(columnIndex)) {
+                    String addonName = cursor.getString(cursor.getColumnIndex(DownloadManager.COLUMN_TITLE));
 
-                        if (tarballFile.exists()) {
-                            // extracting using library https://github.com/thrau/jarchivelib
-                            try {
-                                Archiver archiver = ArchiverFactory.createArchiver(new File(tarballPath));
-                                archiver.extract(tarballFile, addonsDir);
+                    File addonsDir = new File(addonsHomeDir, addonName);
+                    String tarballPath = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS)
+                            + "/" + Uri.parse(addonName).getPath() + ".tgz";
+                    File tarballFile = new File(tarballPath);
 
-                                hideProgressBar();
-                                listAddonsFromDir(listAddonType);
-                                UIUtils.showThemedToast(context, getString(R.string.addon_download_success), true);
-                            } catch (IOException e) {
-                                Timber.e(e);
-                                UIUtils.showThemedToast(context, getString(R.string.error_downloading_file), true);
-                            } finally {
-                                if (tarballFile.exists()) {
-                                    tarballFile.delete();
-                                }
-                            }
-                        } else {
-                            hideProgressBar();
-                        }
-
-                    } else if (DownloadManager.STATUS_FAILED == cursor.getInt(columnIndex)) {
-                        hideProgressBar();
-                        downloadManager.remove(queueId);
-                        UIUtils.showThemedToast(context, getString(R.string.error_downloading_file_check_name), false);
+                    if (!tarballFile.exists()) {
+                        return;
                     }
-                }
 
-            } else {
-                hideProgressBar();
-                downloadManager.remove(queueId);
-                UIUtils.showThemedToast(context, getString(R.string.error_downloading_file_check_name), false);
+                    // extracting using library https://github.com/thrau/jarchivelib
+                    try {
+                        Archiver archiver = ArchiverFactory.createArchiver(new File(tarballPath));
+                        archiver.extract(tarballFile, addonsDir);
+
+                        hideProgressBar();
+                        listAddonsFromDir(listAddonType);
+                        UIUtils.showThemedToast(context, getString(R.string.addon_download_success), true);
+
+                    } catch (IOException e) {
+                        Timber.e(e);
+                        UIUtils.showThemedToast(context, getString(R.string.error_downloading_file), true);
+                    } finally {
+                        if (tarballFile.exists()) {
+                            tarballFile.delete();
+                        }
+                    }
+
+                } else if (DownloadManager.STATUS_FAILED == cursor.getInt(columnIndex)) {
+                    hideProgressBar();
+                    downloadManager.remove(queueId);
+                    UIUtils.showThemedToast(context, getString(R.string.error_downloading_file_check_name), false);
+                }
             }
         }
     };
@@ -488,6 +490,7 @@ public class AddonsBrowser extends NavigationDrawerActivity implements DeckDropD
       Show info about clicked addons with update and delete options
      */
 
+
     @Override
     public void onAddonClick(int position) {
         AddonModel addonModel = addonsNames.get(position);
@@ -557,20 +560,103 @@ public class AddonsBrowser extends NavigationDrawerActivity implements DeckDropD
 
 
     public static void deleteDirectory(File dir) {
-        if (dir.isDirectory()) {
-            String[] children = dir.list();
-            for (int i = 0; i < children.length; i++) {
-                File child = new File(dir, children[i]);
+        if (!dir.isDirectory()) {
+            return;
+        }
 
-                if (child.isDirectory()) {
-                    deleteDirectory(child);
-                    child.delete();
-                } else {
-                    child.delete();
-                }
+        String[] children = dir.list();
+        for (String s : children) {
+            File child = new File(dir, s);
+
+            if (child.isDirectory()) {
+                deleteDirectory(child);
+            }
+            child.delete();
+        }
+        dir.delete();
+    }
+
+
+    /**
+     * @return content of index.js file for every enabled addons in script tag.
+     * get enabled js addon contents from AnkiDroid/addons/...
+     * This function will be called in AbstractFlashcardViewer
+     */
+    public static String getEnabledAddonsContent(Context context) {
+        StringBuilder content = new StringBuilder();
+        String mainJsFile = null;
+
+        String currentAnkiDroidDirectory = CollectionHelper.getCurrentAnkiDroidDirectory(context);
+        File addonsHomeDir = new File(currentAnkiDroidDirectory, "addons");
+        SharedPreferences preferences = AnkiDroidApp.getSharedPrefs(context);
+
+        Map<String, ?> keys = preferences.getAll();
+
+        for (Map.Entry<String, ?> entry : keys.entrySet()) {
+            Timber.d("map values %s: %s", entry.getKey(), entry.getValue());
+
+            // get enabled status of addons in SharedPreferences with key containing 'addon', read only enabled addons
+            if (!entry.getKey().contains("reviewer_addon") && entry.getValue().equals(true)) {
+                continue;
             }
 
-            dir.delete();
+            /*
+              split value and get latter part as it stored in SharedPreferences
+              e.g: reviewer_addon:ankidroid-js-addon-12345...  -->  ankidroid-js-addon-12345...
+              It is same as folder name for the addon.
+             */
+            try {
+                String addonDirName = String.valueOf(entry.getKey().split(":")[1]);
+                File finalAddonPath = new File(addonsHomeDir, addonDirName);
+
+                if (!finalAddonPath.exists()) {
+                    continue;
+                }
+
+                //Read text from file, index.js is starting point for the addon
+                File addonsPackageDir = new File(finalAddonPath, "package");
+                File addonPackageJson = new File(addonsPackageDir, "package.json");
+
+                /*
+                  get {'main': 'index.js'} from package.json file
+                  main point to index.js file by default, according to info in package.json it may point to other .js file
+                 */
+                if (addonPackageJson.exists()) {
+                    org.json.JSONObject jsonObject = packageJsonReader(addonPackageJson);
+                    if (jsonObject == null) {
+                        // return empty
+                        return "";
+                    }
+                    mainJsFile = jsonObject.optString("main", "");
+                }
+
+                // read index.js file or file pointed by "main"
+                File addonsContentFile = new File(addonsPackageDir, mainJsFile);
+                if (addonsContentFile.exists()) {
+                    // wrap index.js content in script tag for each enabled addons
+                    content.append("<script>");
+                    content.append("\n");
+
+                    BufferedReader br = new BufferedReader(new FileReader(addonsContentFile));
+                    String line;
+
+                    while ((line = br.readLine()) != null) {
+                        content.append(line);
+                        content.append('\n');
+                    }
+                    br.close();
+
+                    content.append("</script>");
+                    content.append("\n");
+
+                    Timber.d("addon content path %s", addonsContentFile);
+                }
+
+            } catch (ArrayIndexOutOfBoundsException | IOException e) {
+                Timber.w(e, "AbstractFlashcardViewer::IOException");
+            }
         }
+
+        return content.toString();
     }
 }

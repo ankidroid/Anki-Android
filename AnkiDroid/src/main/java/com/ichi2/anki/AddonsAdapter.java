@@ -12,6 +12,7 @@ import android.widget.TextView;
 import java.util.List;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.widget.SwitchCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
 public class AddonsAdapter extends RecyclerView.Adapter<AddonsAdapter.AddonsViewHolder> {
@@ -45,21 +46,23 @@ public class AddonsAdapter extends RecyclerView.Adapter<AddonsAdapter.AddonsView
 
         // while binding viewholder if preferences w.r.t viewholder store true value or enabled status then
         // turn on switch status else it is off by default
-        if (preferences.getString(addonModel.getType() + "_addon:" + addonModel.getName(), "disabled").equals("enabled")) {
+
+        String addonTypeAndName = addonModel.getType() + "_addon:" + addonModel.getName();
+
+        if (preferences.getBoolean(addonTypeAndName, false)) {
             holder.addonActivate.setChecked(true);
         }
 
         holder.addonActivate.setOnClickListener(v -> {
             SharedPreferences.Editor editor = preferences.edit();
             // store enabled/disabled status as boolean true/false value in SharedPreferences
+
             if (holder.addonActivate.isChecked()) {
-                editor.putString(addonModel.getType() + "_addon:" + addonModel.getName(), "enabled");
-                editor.apply();
-                UIUtils.showThemedToast(context, context.getString(R.string.enabled) + " " + addonModel.getName(), true);
+                editor.putBoolean(addonTypeAndName, true).apply();
+                UIUtils.showThemedToast(context, context.getString(R.string.addon_enabled, addonModel.getName()), true);
             } else {
-                editor.putString(addonModel.getType() + "_addon:" + addonModel.getName(), "disabled");
-                editor.apply();
-                UIUtils.showThemedToast(context, context.getString(R.string.disabled) + " " + addonModel.getName(), true);
+                editor.putBoolean(addonTypeAndName, false).apply();
+                UIUtils.showThemedToast(context, context.getString(R.string.addon_disabled, addonModel.getName()), true);
             }
         });
 
@@ -74,8 +77,7 @@ public class AddonsAdapter extends RecyclerView.Adapter<AddonsAdapter.AddonsView
 
     public class AddonsViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         TextView addonsTextView;
-        @SuppressLint("UseSwitchCompatOrMaterialCode")
-        Switch addonActivate;
+        SwitchCompat addonActivate;
         OnAddonClickListener onAddonClickListener;
 
 

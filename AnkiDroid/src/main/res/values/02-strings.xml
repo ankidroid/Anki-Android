@@ -381,7 +381,8 @@
     <string name="note_editor_addons">Note editor addons</string>
     <string name="addon_download_hint_text">npm i ankidroid-js-addon…</string>
     <string name="addons_browser_message">Get addons from npmjs.org</string>
-
+    <string name="addon_enabled">Enabled %s</string>
+    <string name="addon_disabled">Disabled %s</string>
     <string name="addon_name">Name</string>
     <string name="addon_version">Version</string>
     <string name="addon_developer">Developer</string>

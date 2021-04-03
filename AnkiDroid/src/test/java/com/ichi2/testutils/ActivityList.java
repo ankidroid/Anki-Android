@@ -91,8 +91,7 @@ public class ActivityList {
                 get(LoadPronounciationActivity.class),
                 get(CardInfo.class),
                 get(CardTemplateEditor.class, ActivityList::intentForCardTemplateEditor),
-                get(CardTemplateBrowserAppearanceEditor.class, ActivityList::intentForCardTemplateBrowserAppearanceEditor),
-                get(AddonsBrowser.class)
+                get(CardTemplateBrowserAppearanceEditor.class, ActivityList::intentForCardTemplateBrowserAppearanceEditor)
         );
     }
 
