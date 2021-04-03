@@ -84,9 +84,7 @@ public class AddonsNpmUtility extends AnkiActivity{
                 Timber.d("tarball link %s", tarballUrl);
 
                 downloadAddonPackageFile(tarballUrl, npmAddonName, context);
-            } else {
-                UIUtils.showThemedToast(context, context.getString(R.string.not_valid_package), false);
-            }
+            } 
 
         } catch (JSONException e) {
             Timber.e(e.getLocalizedMessage());
