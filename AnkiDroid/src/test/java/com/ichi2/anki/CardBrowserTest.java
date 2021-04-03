@@ -513,7 +513,6 @@ public class CardBrowserTest extends RobolectricTest {
     @Test
     public void checkSearchString() {
         Card c1 = addNoteUsingBasicModel("Hello", "John").firstCard();
-        c1.flush();
         long deck = addDeck("Deck 1");
         getCol().getDecks().select(deck);
         Card c2 = addNoteUsingBasicModel("New", "world").firstCard();
@@ -524,7 +523,8 @@ public class CardBrowserTest extends RobolectricTest {
         cardBrowser.searchCards("world or hello");
         advanceRobolectricLooperWithSleep();
 
-        assertThat("tagged card should be returned", cardBrowser.getCardCount(), is(1));
+        assertThat("Cardbrowser has Deck 1 as selected deck", cardBrowser.getSelectedDeckNameForUi(), is("Deck 1"));
+        assertThat("Results should only be from the selected deck", cardBrowser.getCardCount(), is(1));
     }
 
     protected void assertUndoDoesNotContain(CardBrowser browser, @StringRes int resId) {
