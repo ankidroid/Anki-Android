@@ -124,7 +124,6 @@ import com.ichi2.libanki.Models;
 import com.ichi2.libanki.Utils;
 import com.ichi2.libanki.importer.AnkiPackageImporter;
 import com.ichi2.libanki.sched.AbstractDeckTreeNode;
-import com.ichi2.libanki.sched.DeckTreeNode;
 import com.ichi2.libanki.sync.CustomSyncServerUrlException;
 import com.ichi2.libanki.sync.Syncer;
 import com.ichi2.libanki.utils.TimeUtils;
@@ -145,7 +144,6 @@ import com.ichi2.utils.JSONException;
 
 import java.io.File;
 import java.io.FileOutputStream;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
@@ -862,7 +860,7 @@ public class DeckPicker extends NavigationDrawerActivity implements
                 }
             } else if (resultCode == Reviewer.RESULT_ABORT_AND_SYNC) {
                 Timber.i("Obtained Abort and Sync result");
-                CollectionTask.waitForAllToFinish(4);
+                TaskManager.waitForAllToFinish(4);
                 sync();
             }
         } else if (requestCode == REQUEST_PATH_UPDATE) {

@@ -149,6 +149,7 @@
     <string name="custom_study_deck_name">Phiên học tuỳ chọn</string>
     <string name="custom_study_deck_exists">Đổi tên bộ thẻ học tuỳ chọn hiện hữu trước nhất</string>
     <string name="empty_deck">Bộ thẻ này rỗng</string>
+    <string name="search_deck">Deck Search</string>
     <string name="empty_deck_add_note">Thêm thẻ</string>
     <string name="invalid_deck_name">Tên bộ thẻ không hợp lệ</string>
     <string name="studyoptions_empty">Bộ thẻ này rỗng. Bấm bút + để thêm nội dung mới.</string>

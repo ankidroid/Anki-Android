@@ -154,6 +154,7 @@
     <string name="custom_study_deck_name">Sessione di Studio Personalizzato</string>
     <string name="custom_study_deck_exists">Rinomina dapprima il mazzo di Studio Personalizzato esistente.</string>
     <string name="empty_deck">Questo mazzo è vuoto</string>
+    <string name="search_deck">Deck Search</string>
     <string name="empty_deck_add_note">Aggiungi carta</string>
     <string name="invalid_deck_name">Nome mazzo non valido</string>
     <string name="studyoptions_empty">Questo mazzo è vuoto. Premi il pulsante + per aggiungere nuovi contenuti.</string>

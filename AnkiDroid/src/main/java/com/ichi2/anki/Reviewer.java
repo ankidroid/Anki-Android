@@ -76,7 +76,6 @@ import com.ichi2.async.TaskManager;
 import com.ichi2.compat.CompatHelper;
 import com.ichi2.libanki.Card;
 import com.ichi2.libanki.Collection;
-import com.ichi2.libanki.Collection.DismissType;
 import com.ichi2.libanki.Consts;
 import com.ichi2.libanki.Decks;
 import com.ichi2.libanki.Utils;
@@ -342,13 +341,13 @@ public class Reviewer extends AbstractFlashcardViewer {
             Timber.i("Reviewer:: Bury button pressed");
             if (!MenuItemCompat.getActionProvider(item).hasSubMenu()) {
                 Timber.d("Bury card due to no submenu");
-                dismiss(DismissType.BURY_CARD);
+                dismiss(new CollectionTask.BuryCard(mCurrentCard));
             }
         } else if (itemId == R.id.action_suspend) {
             Timber.i("Reviewer:: Suspend button pressed");
             if (!MenuItemCompat.getActionProvider(item).hasSubMenu()) {
                 Timber.d("Suspend card due to no submenu");
-                dismiss(DismissType.SUSPEND_CARD);
+                dismiss(new CollectionTask.SuspendCard(mCurrentCard));
             }
         } else if (itemId == R.id.action_delete) {
             Timber.i("Reviewer:: Delete note button pressed");
@@ -1306,10 +1305,10 @@ public class Reviewer extends AbstractFlashcardViewer {
         public boolean onMenuItemClick(MenuItem item) {
             int itemId = item.getItemId();
             if (itemId == R.id.action_suspend_card) {
-                dismiss(DismissType.SUSPEND_CARD);
+                dismiss(new CollectionTask.SuspendCard(mCurrentCard));
                 return true;
             } else if (itemId == R.id.action_suspend_note) {
-                dismiss(DismissType.SUSPEND_NOTE);
+                dismiss(new CollectionTask.SuspendNote(mCurrentCard));
                 return true;
             }
             return false;
@@ -1354,10 +1353,10 @@ public class Reviewer extends AbstractFlashcardViewer {
         public boolean onMenuItemClick(MenuItem item) {
             int itemId = item.getItemId();
             if (itemId == R.id.action_bury_card) {
-                dismiss(DismissType.BURY_CARD);
+                dismiss(new CollectionTask.BuryCard(mCurrentCard));
                 return true;
             } else if (itemId == R.id.action_bury_note) {
-                dismiss(DismissType.BURY_NOTE);
+                dismiss(new CollectionTask.BuryNote(mCurrentCard));
                 return true;
             }
             return false;

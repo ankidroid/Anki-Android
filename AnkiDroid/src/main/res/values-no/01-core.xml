@@ -154,6 +154,7 @@
     <string name="custom_study_deck_name">Tilpasset studiesesjon</string>
     <string name="custom_study_deck_exists">Gi den eksisterende tilpassede studiestokken nytt navn først</string>
     <string name="empty_deck">Denne kortstokken er tom</string>
+    <string name="search_deck">Deck Search</string>
     <string name="empty_deck_add_note">Add card</string>
     <string name="invalid_deck_name">Invalid deck name</string>
     <string name="studyoptions_empty">Denne kortstokken er tom. Bruk +-knappen for å legge til nytt innhold.</string>
