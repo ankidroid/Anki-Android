@@ -67,6 +67,7 @@ import java.util.ArrayList;
 import androidx.annotation.CheckResult;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+
 import com.ichi2.utils.InMemorySQLiteOpenHelperFactory;
 
 import androidx.fragment.app.DialogFragment;
@@ -173,7 +174,7 @@ public class RobolectricTest implements CollectionGetter {
             //there is no onDestroy(), so call it here.
             Timber.uprootAll();
 
-            runtTasksInBackground();
+            runTasksInBackground();
         }
     }
 
@@ -191,7 +192,7 @@ public class RobolectricTest implements CollectionGetter {
     /**
      * Set back the standard background process
      */
-    public void runtTasksInBackground() {
+    public void runTasksInBackground() {
         TaskManager.setTaskManager(new SingleTaskManager());
         mBackground = true;
     }
