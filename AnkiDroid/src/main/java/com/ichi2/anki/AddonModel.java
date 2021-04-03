@@ -1,50 +1,50 @@
 package com.ichi2.anki;
 
 public class AddonModel {
-    private String sName;
-    private String sVersion;
-    private String sDeveloper;
-    private String sJsApiVersion;
-    private String sHomepage;
-    private String sType;
+    private String mName;
+    private String mVersion;
+    private String mDeveloper;
+    private String mJsApiVersion;
+    private String mHomepage;
+    private String mType;
 
 
     public AddonModel(String name, String version, String developer, String jsApiVersion, String homepage, String type) {
-        this.sName = name;
-        this.sVersion = version;
-        this.sDeveloper = developer;
-        this.sJsApiVersion = jsApiVersion;
-        this.sHomepage = homepage;
-        this.sType = type;
+        this.mName = name;
+        this.mVersion = version;
+        this.mDeveloper = developer;
+        this.mJsApiVersion = jsApiVersion;
+        this.mHomepage = homepage;
+        this.mType = type;
     }
 
 
     public String getName() {
-        return sName;
+        return mName;
     }
 
 
     public String getVersion() {
-        return sVersion;
+        return mVersion;
     }
 
 
     public String getDeveloper() {
-        return sDeveloper;
+        return mDeveloper;
     }
 
 
     public String getJsApiVersion() {
-        return sJsApiVersion;
+        return mJsApiVersion;
     }
 
 
     public String getHomepage() {
-        return sHomepage;
+        return mHomepage;
     }
 
 
     public String getType() {
-        return sType;
+        return mType;
     }
 }
