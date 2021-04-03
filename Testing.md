@@ -21,3 +21,13 @@ If a method parameter is annotated with `@NonNull`, we do not want a test to sen
 
 ## Time
 Unit tests are run with simulated time. The collection is created the 7th of August 2020 at 7 hour, UTC. Each time the time is checked, it advanced by 10 milliseconds. You can also use the MockTime class to change the date to any time you decide.
+
+
+# Background tasks
+
+Currently, any call to background tasks really starts a new thread. This means that assertions sometime may be checked while the code tested had no time to actually be executed. If it is the case, you can either: 
+* uses `advanceRobolectricLooperWithSleep` or `advanceRobolectricLooper` to ensure that a task is executed before moving on
+* calls `runTasksInForeground` to ensure that tasks are executed in the main thread. 
+
+Once #8442 got merged, this section should be updated to indicate that the default changed, and that tasks will be run by default on foreground and that if required, some tasks should be run in background (e.g. tasks related to missing collection or broken database)
+
