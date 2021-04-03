@@ -1031,7 +1031,7 @@ public class DeckPicker extends NavigationDrawerActivity implements
         } else {
             Timber.i("Back key pressed");
             if (mFloatingActionMenu.isFABOpen()) {
-                Toast.makeText(this, "Press back again to exit.", Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, getApplication().getString(R.string.toastOnBackPressed), Toast.LENGTH_SHORT).show();
                 mFloatingActionMenu.closeFloatingActionMenu();
             } else {
                 if (pressedTime + 2000 > System.currentTimeMillis()){
@@ -1039,7 +1039,7 @@ public class DeckPicker extends NavigationDrawerActivity implements
                     finishWithAnimation();
                 }
                 else {
-                    Toast.makeText(this, "Press back again to exit.", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(this, getApplication().getString(R.string.toastOnBackPressed), Toast.LENGTH_SHORT).show();
                 }
             }
             pressedTime = System.currentTimeMillis();
