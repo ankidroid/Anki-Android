@@ -702,7 +702,8 @@ public class Card implements Cloneable {
     }
 
     // as in Anki aqt/browser.py
-    private String nextDue() {
+    @VisibleForTesting
+    public String nextDue() {
         long date;
         long due = getDue();
         if (isInDynamicDeck()) {

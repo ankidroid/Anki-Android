@@ -154,6 +154,7 @@
     <string name="custom_study_deck_name">اپنی مرضی کے مطابق تعلیمی سیشن</string>
     <string name="custom_study_deck_exists">پہلے موجودہ مخصوص مطالعہ ڈیک کو نیا نام دیں</string>
     <string name="empty_deck">یہ ڈیک خالی ہے</string>
+    <string name="search_deck">Deck Search</string>
     <string name="empty_deck_add_note">Add card</string>
     <string name="invalid_deck_name">Invalid deck name</string>
     <string name="studyoptions_empty">یہ ڈیک خالی ہے ۔ + کے بٹن کو دبا کر نیا مواد ڈالیں.</string>

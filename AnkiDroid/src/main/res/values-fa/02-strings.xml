@@ -97,8 +97,8 @@
         <item>زمان ویرایش یادداشت</item>
     </string-array>
     <!-- Custom study options -->
-    <string name="custom_study_increase_new_limit">Modify today’s new card limit</string>
-    <string name="custom_study_increase_review_limit">Modify today’s review card limit</string>
+    <string name="custom_study_increase_new_limit">تعیین محدودیت برای کارت جدید امروز</string>
+    <string name="custom_study_increase_review_limit">تعیین محدودیت برای مرور کارت امروز</string>
     <string name="custom_study_review_forgotten">مرور کارت های فراموش شده</string>
     <string name="custom_study_review_ahead">مرور آنهایي که در شرف مطالعه اند</string>
     <string name="custom_study_random_selection">مطالعه کارت ها به صورت تصادفی</string>
@@ -110,7 +110,7 @@
     <string name="note_editor_no_cards_created">کارتی ساخته نشد. لطفاً فیلدهای بیشتری را پر کنید</string>
     <string name="note_editor_no_first_field">فیلد نخست خالی است</string>
     <string name="note_editor_no_cloze_delations">این نوع یادداشت باید حاوی کلوز باشد</string>
-    <string name="note_editor_set_field_language">Set field language</string>
+    <string name="note_editor_set_field_language">تنظیم زبان زمینه</string>
     <string name="note_editor_no_cards_created_all_fields">نوع یادداشت فعلی هیچ کارتی تولید نکرد.\nلطفاٌ نوع یادداشت دیگری را انتخاب کنید، یا روی \'کارت‌ها\' کلیک کرده یک فیلد جایگزین را وارد کنید</string>
     <string name="note_editor_insert_cloze_no_cloze_note_type">Cloze deletions will only work on a Cloze note type</string>
     <string name="saving_facts">ذخیره یادداشت</string>
@@ -198,7 +198,7 @@
     <string name="upgrade_import_no_file_found">فایل %1$s قابل وارد کردن یافت نشد</string>
     <string name="study_options" comment="Name for a preference category in Filtered deck (aka Cram deck, aka Custom study) options">گزینه ها</string>
     <string name="menu__deck_options">Deck options</string>
-    <string name="menu__study_options" comment="Menu item that opens options for a Filtered deck (aka Cram deck, aka Custom study)">Study options</string>
+    <string name="menu__study_options" comment="Menu item that opens options for a Filtered deck (aka Cram deck, aka Custom study)">تنظیمات مطالعه</string>
     <string name="select_tts">تنظیم زبان تبدیل متن به صدا TTS</string>
     <string name="custom_study">مطالعه بر اساس تنظیمات دلخواه</string>
     <string name="more_options">بیشتر</string>
@@ -239,7 +239,7 @@
     <!-- A decimal number of seconds.
     Please give this a best-effort translation and explain the requirements for
     formatting decimals in your language in the CrowdIn comments -->
-    <string name="time_span_decimal_seconds">%s seconds</string>
+    <string name="time_span_decimal_seconds">%s ثانیه</string>
     <!-- The reason for making a simple “< x” translatable are RTL
          languages which apparently use the other symbol to mean less
          than. -->
@@ -261,7 +261,7 @@
     <string name="activity_start_failed">دستگاه شما نرم افزار قادر به انجام این عمل را ندارد.</string>
     <string name="multimedia_editor_image_compression_failed"><![CDATA[تصاویر دوربین ممکن است بزرگ باشند. در صورت لزوم تغییر اندازۀ تصویر یا کاهش حجم آن از مسیر رسانه استفاده کنید]]></string>
     <string name="no_browser_notification">مرورگر یافت نشد، لطفاً صفحۀ مربوطه را در سیستم دیگری باز کنید: </string>
-    <string name="web_page_error">Error loading page: %s</string>
+    <string name="web_page_error">خطای بارگذاری صفحه: %s</string>
     <string name="no_outgoing_link_in_cardbrowser">لینک صفحۀ خارجی درون کارت پشتیبانی نمی‌شود.</string>
     <!-- The name of the deck which corrupt cards will be moved to -->
     <string name="check_integrity_recovered_deck_name">کارت‌های بازیابی شده</string>
@@ -279,34 +279,34 @@
     <string name="white_board_image_saved">تصویر تخته سفید در %s ذخیره شد</string>
     <string name="title_whiteboard_pen_color">رنگ ماژیک تخته سفید</string>
     <!-- CSV/Note Import -->
-    <string name="note_importer_empty_cards_found"><![CDATA[Empty cards found. Please run Tools>Empty Cards.]]></string>
-    <string name="note_importer_error_empty_first_field">Empty first field: %s</string>
-    <string name="note_importer_error_first_field_matched">First field matched: %s</string>
+    <string name="note_importer_empty_cards_found"><![CDATA[کارت های خالی پیدا شد. لطفا ابزار>کارت های خالی را اجرا کنید.]]></string>
+    <string name="note_importer_error_empty_first_field">فیلد اول خالی: %s</string>
+    <string name="note_importer_error_first_field_matched">فیلد اول مطابق با: %s</string>
     <string name="note_importer_error_added_duplicate_first_field">Added duplicate with first field: %s</string>
-    <string name="note_importer_error_appeared_twice">Appeared twice in file: %s</string>
+    <string name="note_importer_error_appeared_twice">دوبار در فایل %s وجود دارد</string>
     <string name="note_importer_error_empty_notes">One or more notes were not imported, because they didn\'t generate any cards. This can happen when you have empty fields or when you have not mapped the content in the text file to the correct fields</string>
     <string name="csv_importer_error_invalid_field_count">‘%1$s’ had %2$d fields, expected %3$d</string>
     <string name="csv_importer_error_exception">Aborted: %s</string>
     <string name="user_is_a_robot">Detected automated test. If you are a human, contact AnkiDroid support</string>
     <plurals name="note_importer_notes_added">
-        <item quantity="one">%d note added</item>
-        <item quantity="other">%d notes added</item>
+        <item quantity="one">%d یادداشت اضافه شد</item>
+        <item quantity="other">%d یادداشت اضافه شد</item>
     </plurals>
     <plurals name="note_importer_notes_updated">
-        <item quantity="one">%d note updated</item>
-        <item quantity="other">%d notes updated</item>
+        <item quantity="one">%d یادداشت به روزرسانی شد</item>
+        <item quantity="other">%d یادداشت به روزرسانی شد</item>
     </plurals>
     <plurals name="note_importer_notes_unchanged">
-        <item quantity="one">%d note unchanged</item>
-        <item quantity="other">%d notes unchanged</item>
+        <item quantity="one">%d یادداشت بدون تغییر</item>
+        <item quantity="other">%d یادداشت بدون تغییر</item>
     </plurals>
     <!-- JS api -->
     <string name="api_version_developer_contact">This card uses unsupported AnkiDroid features. Contact developer %1$s, or view the wiki. %2$s</string>
     <string name="invalid_json_data">Card provided invalid data. %s</string>
     <string name="valid_js_api_version">Invalid AnkiDroid JS API version. Contact developer %s, or view wiki</string>
     <string name="update_js_api_version">AnkiDroid JS API update available. Contact developer %s, or view wiki</string>
-    <string name="reviewer_invalid_api_version_visit_documentation">View</string>
-    <string name="anki_js_error_code">(Error Code: %d)</string>
+    <string name="reviewer_invalid_api_version_visit_documentation">نما</string>
+    <string name="anki_js_error_code">(شماره خطا: %d)</string>
     <!-- About AnkiDroid screen -->
     <string name="about_ankidroid_successfully_copied_debug">Copied debug information to clipboard</string>
     <string name="about_ankidroid_error_copy_debug_info">Error copying debug information to clipboard</string>
@@ -316,12 +316,12 @@
     <string name="cannot_load_http_resource">Loading http resources is no longer supported</string>
     <!-- Deck Picker -->
     <string name="deck_picker_failed_deck_load">Failed to load deck ‘%s’</string>
-    <string name="search_decks">Search decks</string>
-    <string name="ankidroid_init_failed_webview_title">Fatal Error</string>
+    <string name="search_decks">جستجو در تمام دسته‌ها</string>
+    <string name="ankidroid_init_failed_webview_title">خطای مخرب</string>
     <string name="ankidroid_init_failed_webview">AnkiDroid relies on the System WebView which is unavailable. This can happen if the system is installing updates. Please try again in a few minutes.\n\n%s</string>
     <!-- A Menu item to change the Font Size (currently in the Note Editor) -->
-    <string name="menu_font_size">Font Size</string>
-    <string name="menu_show_toolbar" comment="Checkable item stating whether the note editor toolbar should be shown">Show Toolbar</string>
+    <string name="menu_font_size">اندازه فونت</string>
+    <string name="menu_show_toolbar" comment="Checkable item stating whether the note editor toolbar should be shown">نمایش نوار ابزار</string>
     <string name="format_insert_bold">Format as Bold</string>
     <string name="format_insert_italic">Format as Italic</string>
     <string name="format_insert_underline">Format as Underline</string>
@@ -344,4 +344,7 @@
     <!-- Symbols used as Button text in IncrementNumberRangePreference -->
     <string name="plus_sign" comment="Label for increment button in IncrementerNumberRangePreference">+</string>
     <string name="minus_sign" comment="Label for decrement button in IncrementerNumberRangePreference">-</string>
+    <!-- Used for credential empty warning message -->
+    <string name="email_id_empty">Email address is required</string>
+    <string name="password_empty">Password is required</string>
 </resources>

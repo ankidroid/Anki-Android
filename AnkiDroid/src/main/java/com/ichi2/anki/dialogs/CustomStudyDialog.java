@@ -41,6 +41,7 @@ import com.ichi2.anki.CollectionHelper;
 import com.ichi2.anki.DeckOptions;
 import com.ichi2.anki.R;
 import com.ichi2.anki.Reviewer;
+import com.ichi2.anki.StudyOptionsFragment;
 import com.ichi2.anki.UIUtils;
 import com.ichi2.anki.analytics.AnalyticsDialogFragment;
 import com.ichi2.anki.exception.FilteredAncestor;
@@ -62,7 +63,8 @@ import java.util.List;
 import java.util.Locale;
 
 
-public class CustomStudyDialog extends AnalyticsDialogFragment {
+public class CustomStudyDialog extends AnalyticsDialogFragment implements
+        TagsDialog.TagsDialogListener {
     // Different configurations for the context menu
     public static final int CONTEXT_MENU_STANDARD = 0;
     public static final int CONTEXT_MENU_LIMITS = 1;
@@ -154,9 +156,8 @@ public class CustomStudyDialog extends AnalyticsDialogFragment {
                              */
                             long currentDeck = getArguments().getLong("did");
                             TagsDialog dialogFragment = TagsDialog.newInstance(
-                                    TagsDialog.TYPE_CUSTOM_STUDY_TAGS, new ArrayList<>(),
+                                    TagsDialog.DialogType.CUSTOM_STUDY_TAGS, new ArrayList<>(),
                                     new ArrayList<>(activity.getCol().getTags().byDeck(currentDeck, true)));
-                            dialogFragment.setTagsDialogListener(CustomStudyDialog.this::customStudyFromTags);
                             activity.showDialogFragment(dialogFragment);
                             break;
                         }
@@ -213,6 +214,7 @@ public class CustomStudyDialog extends AnalyticsDialogFragment {
                     try {
                         n = Integer.parseInt(mEditText.getText().toString());
                     } catch (Exception ignored) {
+                        Timber.w(ignored);
                         // This should never happen because we disable positive button for non-parsable inputs
                         return;
                     }
@@ -282,6 +284,7 @@ public class CustomStudyDialog extends AnalyticsDialogFragment {
                     Integer.parseInt(mEditText.getText().toString());
                     dialog.getActionButton(DialogAction.POSITIVE).setEnabled(true);
                 } catch (Exception ignored) {
+                    Timber.w(ignored);
                     dialog.getActionButton(DialogAction.POSITIVE).setEnabled(false);
                 }
             }
@@ -308,7 +311,12 @@ public class CustomStudyDialog extends AnalyticsDialogFragment {
         return keyValueMap;
     }
 
-    private void customStudyFromTags(List<String> selectedTags, int option) {
+    /**
+     * Gathers the final selection of tags and type of cards,
+     * Generates the search screen for the custom study deck.
+     */
+    @Override
+    public void onSelectedTags(List<String> selectedTags, int option) {
         StringBuilder sb = new StringBuilder();
         switch (option) {
             case 1:
@@ -342,8 +350,19 @@ public class CustomStudyDialog extends AnalyticsDialogFragment {
         switch (dialogId) {
             case CONTEXT_MENU_STANDARD:
                 // Standard context menu
-                return new int[] {CUSTOM_STUDY_NEW, CUSTOM_STUDY_REV, CUSTOM_STUDY_FORGOT, CUSTOM_STUDY_AHEAD,
-                        CUSTOM_STUDY_RANDOM, CUSTOM_STUDY_PREVIEW, CUSTOM_STUDY_TAGS};
+                ArrayList<Integer> dialogOptions = new ArrayList<Integer>();
+                dialogOptions.add(CUSTOM_STUDY_NEW);
+                dialogOptions.add(CUSTOM_STUDY_REV);
+                dialogOptions.add(CUSTOM_STUDY_FORGOT);
+                dialogOptions.add(CUSTOM_STUDY_AHEAD);
+                dialogOptions.add(CUSTOM_STUDY_RANDOM);
+                dialogOptions.add(CUSTOM_STUDY_PREVIEW);
+                dialogOptions.add(CUSTOM_STUDY_TAGS);
+                if (col.getSched().newCount() == 0) {
+                    // If no new cards we wont show CUSTOM_STUDY_NEW
+                    dialogOptions.remove(Integer.valueOf(CUSTOM_STUDY_NEW));
+                }
+                return ContextMenuHelper.integerListToArray(dialogOptions);
             case CONTEXT_MENU_LIMITS:
                 // Special custom study options to show when the daily study limit has been reached
                 if (col.getSched().newDue() && col.getSched().revDue()) {
@@ -504,7 +523,7 @@ public class CustomStudyDialog extends AnalyticsDialogFragment {
     private CreateCustomStudySessionListener createCustomStudySessionListener(){
         return new CreateCustomStudySessionListener(getAnkiActivity());
     }
-    private static class CreateCustomStudySessionListener extends TaskListenerWithContext<AnkiActivity, Void, int[]> {
+    private static class CreateCustomStudySessionListener extends TaskListenerWithContext<AnkiActivity, Void, StudyOptionsFragment.DeckStudyData> {
         public CreateCustomStudySessionListener(AnkiActivity activity) {
             super(activity);
         }
@@ -517,7 +536,7 @@ public class CustomStudyDialog extends AnalyticsDialogFragment {
 
 
         @Override
-        public void actualOnPostExecute(@NonNull AnkiActivity activity, int[] v) {
+        public void actualOnPostExecute(@NonNull AnkiActivity activity, StudyOptionsFragment.DeckStudyData v) {
             activity.hideProgressBar();
             ((CustomStudyListener) activity).onCreateCustomStudySession();
         }

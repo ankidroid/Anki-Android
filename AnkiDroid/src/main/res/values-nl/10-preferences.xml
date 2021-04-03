@@ -173,7 +173,7 @@
     <string name="time_limit">Stel een tijdslimiet in</string>
     <string name="time_limit_summ">XXX min</string>
     <string name="new_timezone">New timezone handling</string>
-    <string name="day_offset">Een dag begint</string>
+    <string name="day_offset_with_description">Start of next day (0 is midnight, 23 is 11PM)</string>
     <string name="day_offset_summ">XXX uur na middernacht</string>
     <string name="sched_ver">Experimentele V2-planner</string>
     <string name="sched_ver_summ">Schakel de experimentele planner in. Dwingt veranderingen in een bepaalde richting bij de volgende synchronisatie</string>
@@ -289,4 +289,6 @@
     <string name="note_editor_replace_newlines_summ">Zet in de memobewerker alle instanties van &lt;br&gt; om in nieuwe lijnen bij het bewerken van een kaart.</string>
     <string name="no_code_formatting">Eenvoudig getypte antwoordopmaak</string>
     <string name="no_code_formatting_summ">Herstelt het verschijnen van \'􏿾\' in getypte antwoordresultaten</string>
+    <!-- Open Changelog-->
+    <string name="open_changelog">Open Changelog</string>
 </resources>

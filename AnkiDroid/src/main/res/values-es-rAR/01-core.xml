@@ -71,7 +71,7 @@
         <item quantity="one">%d día %d restante</item>
         <item quantity="other">%d días %d restantes</item>
     </plurals>
-    <string name="no_cards_placeholder_title">Esta colección está vacía</string>
+    <string name="no_cards_placeholder_title">La colección está vacía</string>
     <string name="no_cards_placeholder_description">Empieza añadiendo tarjetas usando el ícono +</string>
     <!-- The deck picker via AnkiStatsTaskHandler.java -->
     <plurals name="studied_cards_today">
@@ -154,6 +154,7 @@
     <string name="custom_study_deck_name">Sesión de estudio personalizado</string>
     <string name="custom_study_deck_exists">Renombre primero el mazo de estudio personalizado existente</string>
     <string name="empty_deck">Este mazo está vacío</string>
+    <string name="search_deck">Deck Search</string>
     <string name="empty_deck_add_note">Añadir tarjeta</string>
     <string name="invalid_deck_name">Nombre de mazo no válido</string>
     <string name="studyoptions_empty">Este mazo está vacío. Pulse el botón + para añadir contenido nuevo.</string>

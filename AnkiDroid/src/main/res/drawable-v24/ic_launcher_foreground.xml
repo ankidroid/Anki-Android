@@ -18,8 +18,8 @@
             android:endY="140.15863"
             android:endX="164.13487"
             android:type="linear">
-          <item android:offset="0" android:color="#FF29B6F6"/>
-          <item android:offset="1" android:color="#FF0288D1"/>
+          <item android:offset="0" android:color="@color/anki_foreground_icon_color_0"/>
+          <item android:offset="1" android:color="@color/anki_foreground_icon_color_1"/>
         </gradient>
       </aapt:attr>
     </path>

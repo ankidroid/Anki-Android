@@ -4,6 +4,8 @@ import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 import android.content.Context;
 import androidx.appcompat.widget.PopupMenu;
+import timber.log.Timber;
+
 import android.view.View;
 
 /**
@@ -28,7 +30,9 @@ public class PopupMenuWithIcons extends PopupMenu {
                         break;
                     }
                 }
-            } catch (Exception ignored) {}
+            } catch (Exception ignored) {
+                Timber.w(ignored);
+            }
         }
     }
 }

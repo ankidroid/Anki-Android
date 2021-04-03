@@ -215,7 +215,7 @@
     <string name="help_item_anki_manual">Manuale di Anki</string>
     <string name="help_item_ankidroid_faq">FAQ di AnkiDroid</string>
     <string name="help_title_get_help">Chiedi Aiuto</string>
-    <string name="help_item_mailing_list">Mailing List</string>
+    <string name="help_item_mailing_list">Lista di diffusione</string>
     <string name="help_item_reddit">Reddit</string>
     <string name="help_item_report_bug">Segnala un Bug</string>
     <string name="help_title_support_ankidroid">Supporta AnkiDroid</string>
@@ -228,6 +228,8 @@
     <string name="help_item_discord">Discord</string>
     <string name="help_item_facebook">Facebook</string>
     <string name="help_item_twitter">Twitter</string>
+    <string name="help_title_send_exception">Invia un rapporto sulla risoluzione dei problemi</string>
+    <string name="help_dialog_exception_report_debounce">Rapporto già inviato</string>
     <!--Sync-->
     <plurals name="sync_automatic_sync_needs_more_time">
         <item quantity="one">Una sincronizzazione automatica potrebbe essere attivata in %d secondo</item>

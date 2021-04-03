@@ -38,38 +38,38 @@
 ~ this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <resources>
-    <string name="yes">yes</string>
+    <string name="yes">होय</string>
     <!-- Navigation drawer items-->
-    <string name="decks">Decks</string>
-    <string name="card_browser" comment="The usage of card browser inside the app (note the casing)">Card browser</string>
-    <string name="statistics">Statistics</string>
-    <string name="settings">Settings</string>
-    <string name="help">Help</string>
-    <string name="send_feedback">Send feedback</string>
+    <string name="decks">पत्त्यांचे गठ्ठे</string>
+    <string name="card_browser" comment="The usage of card browser inside the app (note the casing)">कार्ड ब्राउझर</string>
+    <string name="statistics">सांख्यिकी</string>
+    <string name="settings">सेटिंग्ज</string>
+    <string name="help">मदत करा</string>
+    <string name="send_feedback">अभिप्राय पाठवा</string>
     <string name="studyoptions_due_today">आज शेवटचा दिवस:</string>
     <string name="studyoptions_new_total">एकुण नविन पत्रं:</string>
     <string name="studyoptions_total_cards">एकुण पत्रं:</string>
     <string name="studyoptions_eta">अदमासें वेळ(मिनिटांमधे):</string>
-    <string name="studyoptions_start">Study</string>
+    <string name="studyoptions_start">अभ्यास</string>
     <!-- DeckPicker.java -->
-    <string name="expand">Expand</string>
-    <string name="collapse">Collapse</string>
-    <string name="study_more">Study more</string>
+    <string name="expand">विस्तृत करा</string>
+    <string name="collapse">कोसळणे</string>
+    <string name="study_more">अधिक अभ्यास करा</string>
     <plurals name="deckpicker_title">
-        <item quantity="one">%1$d card due (%2$s)</item>
-        <item quantity="other">%1$d cards due (%2$s)</item>
+        <item quantity="one">कार्ड देय</item>
+        <item quantity="other">कार्ड देय</item>
     </plurals>
     <plurals name="reviewer_window_title">
-        <item quantity="one">%d minute left</item>
-        <item quantity="other">%d minutes left</item>
+        <item quantity="one">मिनिट शिल्लक</item>
+        <item quantity="other">मिनिट शिल्लक</item>
     </plurals>
     <plurals name="reviewer_window_title_hours">
         <item quantity="one">%d hour %d left</item>
-        <item quantity="other">%d hours %d left</item>
+        <item quantity="other">तास बाकी</item>
     </plurals>
     <plurals name="reviewer_window_title_days">
-        <item quantity="one">%d day %d left</item>
-        <item quantity="other">%d days %d left</item>
+        <item quantity="one">तास बाकी</item>
+        <item quantity="other">तास बाकी</item>
     </plurals>
     <string name="no_cards_placeholder_title">Collection is empty</string>
     <string name="no_cards_placeholder_description">Start adding cards\nusing the + icon.</string>
@@ -154,6 +154,7 @@
     <string name="custom_study_deck_name">Custom study session</string>
     <string name="custom_study_deck_exists">Rename the existing custom study deck first</string>
     <string name="empty_deck">This deck is empty</string>
+    <string name="search_deck">Deck Search</string>
     <string name="empty_deck_add_note">Add card</string>
     <string name="invalid_deck_name">Invalid deck name</string>
     <string name="studyoptions_empty">This deck is empty. Press the + button to add new content.</string>

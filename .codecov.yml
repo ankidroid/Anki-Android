@@ -1,2 +1,16 @@
+# the comments are too noisy to be useful
+comment: false
+
+# disable noisy inline-annotations ("Added line [LineNum] was not covered by tests") on PRs (#8296)
+# https://docs.codecov.io/docs/github-checks-beta
+github_checks:
+  annotations: false
+
 coverage:
   range: "36...100"
+  status:
+    project:
+      default:
+        # dropping slightly is ok - this stops the check failing on test timing variability
+        # .12 was observed as the largest variability owing to timing forcing different test branch choice
+        threshold: 0.15

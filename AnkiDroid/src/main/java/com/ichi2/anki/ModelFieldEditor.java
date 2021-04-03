@@ -219,6 +219,7 @@ public class ModelFieldEditor extends AnkiActivity implements LocaleSelectionDia
                         mCol.modSchema();
                         TaskManager.launchCollectionTask(new CollectionTask.AddField(mMod, fieldName), listener);
                     } catch (ConfirmModSchemaException e) {
+                        e.log();
 
                         //Create dialogue to for schema change
                         ConfirmationDialog c = new ConfirmationDialog();
@@ -265,6 +266,7 @@ public class ModelFieldEditor extends AnkiActivity implements LocaleSelectionDia
                 d.setCancel(mConfirmDialogCancel);
                 showDialogFragment(d);
             } catch (ConfirmModSchemaException e) {
+                e.log();
                 ConfirmationDialog c = new ConfirmationDialog();
                 c.setConfirm(confirm);
                 c.setCancel(mConfirmDialogCancel);
@@ -301,6 +303,7 @@ public class ModelFieldEditor extends AnkiActivity implements LocaleSelectionDia
                     try {
                         renameField();
                     } catch (ConfirmModSchemaException e) {
+                        e.log();
 
                         // Handler mod schema confirmation
                         ConfirmationDialog c = new ConfirmationDialog();
@@ -310,6 +313,7 @@ public class ModelFieldEditor extends AnkiActivity implements LocaleSelectionDia
                             try {
                                 renameField();
                             } catch (ConfirmModSchemaException e1) {
+                                e1.log();
                                 //This should never be thrown
                             }
                             dismissContextMenu();
@@ -342,6 +346,7 @@ public class ModelFieldEditor extends AnkiActivity implements LocaleSelectionDia
                         try {
                             pos = Integer.parseInt(newPosition);
                         } catch (NumberFormatException n) {
+                            Timber.w(n);
                             UIUtils.showThemedToast(this, getResources().getString(R.string.toast_out_of_range), true);
                             return;
                         }
@@ -355,6 +360,7 @@ public class ModelFieldEditor extends AnkiActivity implements LocaleSelectionDia
                                 mCol.modSchema();
                                 TaskManager.launchCollectionTask(new CollectionTask.RepositionField(mMod,mNoteFields.getJSONObject(mCurrentPos), pos - 1));
                             } catch (ConfirmModSchemaException e) {
+                                e.log();
 
                                 // Handle mod schema confirmation
                                 ConfirmationDialog c = new ConfirmationDialog();
@@ -362,10 +368,8 @@ public class ModelFieldEditor extends AnkiActivity implements LocaleSelectionDia
                                 Runnable confirm = () -> {
                                     try {
                                         mCol.modSchemaNoCheck();
-                                        String newPosition1 = mFieldNameInput.getText().toString();
-                                        int pos1 = Integer.parseInt(newPosition1);
                                         TaskManager.launchCollectionTask(new CollectionTask.RepositionField(mMod,
-                                                mNoteFields.getJSONObject(mCurrentPos), pos1 - 1),
+                                                mNoteFields.getJSONObject(mCurrentPos), pos - 1),
                                                 listener);
                                         dismissContextMenu();
                                     } catch (JSONException e1) {
@@ -429,6 +433,7 @@ public class ModelFieldEditor extends AnkiActivity implements LocaleSelectionDia
             mCol.modSchema();
             TaskManager.launchCollectionTask(new CollectionTask.ChangeSortField(mMod, mCurrentPos), listener);
         } catch (ConfirmModSchemaException e) {
+            e.log();
             // Handler mMod schema confirmation
             ConfirmationDialog c = new ConfirmationDialog();
             c.setArgs(getResources().getString(R.string.full_sync_confirmation));

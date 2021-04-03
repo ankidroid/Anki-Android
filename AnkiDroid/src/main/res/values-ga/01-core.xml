@@ -113,7 +113,7 @@
     <string name="menu_add" comment="A generic add button - Main Deck Picker and card templates. Please inform us if you need more specific strings">Cuir leis</string>
     <string name="menu_add_note">Add note</string>
     <string name="menu_my_account" comment="Label of the window in which the user should enter their account. This text can\'t be found in AnkiDroid directly.">Sync account</string>
-    <string name="menu_dismiss_note">Hide / delete</string>
+    <string name="menu_dismiss_note">Cuir i bhfolach / scrios</string>
     <string name="menu_bury_card">Bury card</string>
     <string name="menu_bury_note">Bury note</string>
     <string name="menu_suspend_card">Suspend card</string>
@@ -123,11 +123,11 @@
     <string name="menu_delete_note">Delete note</string>
     <string name="menu_flag">Flag</string>
     <string name="menu_flag_card">Flag card</string>
-    <string name="menu_flag_card_zero">No flag</string>
-    <string name="menu_flag_card_one">Red flag</string>
-    <string name="menu_flag_card_two">Orange flag</string>
-    <string name="menu_flag_card_three">Green flag</string>
-    <string name="menu_flag_card_four">Blue flag</string>
+    <string name="menu_flag_card_zero">Gan brat</string>
+    <string name="menu_flag_card_one">Brat dhearg</string>
+    <string name="menu_flag_card_two">Brat oráiste</string>
+    <string name="menu_flag_card_three">Brat uaine</string>
+    <string name="menu_flag_card_four">Brat ghorm</string>
     <string name="menu_edit_tags">Edit tags</string>
     <string name="delete_note_message">Really delete this note and all its cards?\n%s</string>
     <string name="menu_select">Select text</string>
@@ -153,22 +153,23 @@
         alphabet.
     -->
     <string name="time_quantity_seconds">%d s</string>
-    <string name="time_quantity_minutes">%d min</string>
-    <string name="time_quantity_hours_minutes">%1$d h %2$d m</string>
-    <string name="time_quantity_hours">%d h</string>
-    <string name="time_quantity_days">%d d</string>
-    <string name="time_quantity_days_hours">%1$d d %2$d h</string>
-    <string name="time_quantity_months">%.1f mo</string>
-    <string name="time_quantity_years">%.1f yr</string>
+    <string name="time_quantity_minutes">%d noim</string>
+    <string name="time_quantity_hours_minutes">%1$d u %2$d n</string>
+    <string name="time_quantity_hours">%d u</string>
+    <string name="time_quantity_days">%d l</string>
+    <string name="time_quantity_days_hours">%1$d l %2$d u</string>
+    <string name="time_quantity_months">%.1f mí</string>
+    <string name="time_quantity_years">%.1f bl</string>
     <!-- or "%.1f a" -->
     <string name="rebuild_filtered_deck">Rebuilding filtered deck&#8230;</string>
     <string name="rebuild_cram_label">Rebuild</string>
-    <string name="empty_cram_label">Empty</string>
+    <string name="empty_cram_label">Folamh</string>
     <string name="create_subdeck">Create subdeck</string>
     <string name="empty_filtered_deck">Emptying filtered deck&#8230;</string>
     <string name="custom_study_deck_name">Custom study session</string>
     <string name="custom_study_deck_exists">Rename the existing custom study deck first</string>
     <string name="empty_deck">This deck is empty</string>
+    <string name="search_deck">Deck Search</string>
     <string name="empty_deck_add_note">Add card</string>
     <string name="invalid_deck_name">Invalid deck name</string>
     <string name="studyoptions_empty">This deck is empty. Press the + button to add new content.</string>
@@ -218,10 +219,10 @@
     <string name="read_write_permission_label">Read and write to the AnkiDroid database</string>
     <string name="read_write_permission_description">access existing notes, cards, note types, and decks, as well as create new ones</string>
     <!-- Context Menu -->
-    <string name="card_browser_context_menu" comment="The value which appears in the system context menu. Note the casing difference">Card Browser</string>
-    <string name="context_menu_anki_card_label">Anki Card</string>
+    <string name="card_browser_context_menu" comment="The value which appears in the system context menu. Note the casing difference">Brabhsálaí Cártaí</string>
+    <string name="context_menu_anki_card_label">Carta Anki</string>
     <string name="has_a_problem" comment="First field is either front template or back template. Second field is the error message.">%1$s has a problem:<br/>%2$s</string>
-    <string name="more_information">More information</string>
+    <string name="more_information">Tuilleadh eolas</string>
     <string name="no_field">Found \'{{%1$s}}\', but there is no field called \'%1$s\'.</string>
     <string name="closed_tag_not_open">Found \'{{/%1$s}}\', but missing \'{{#%1$s}}\' or \'{{^%1$s}}\'.</string>
     <string name="missing_closing_bracket">Missing \'}}\' in \'%s\'.</string>

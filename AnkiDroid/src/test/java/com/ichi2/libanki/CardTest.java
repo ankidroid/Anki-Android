@@ -1,16 +1,23 @@
 package com.ichi2.libanki;
 
 import com.ichi2.anki.RobolectricTest;
+import com.ichi2.anki.UIUtils;
 import com.ichi2.anki.exception.ConfirmModSchemaException;
+import com.ichi2.anki.exception.FilteredAncestor;
+import com.ichi2.libanki.utils.Time;
+import com.ichi2.testutils.MockTime;
 import com.ichi2.utils.JSONArray;
 import com.ichi2.utils.JSONObject;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.robolectric.annotation.Config;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Calendar;
 import java.util.Collections;
+import java.util.Date;
 import java.util.List;
 
 import androidx.test.ext.junit.runners.AndroidJUnit4;
@@ -237,5 +244,139 @@ public class CardTest extends RobolectricTest {
             assumeThat(ords, hasItemInArray(ord));
         }
     }
-    
+
+    @Test
+    @Config(qualifiers = "en")
+    public void nextDueTest() throws FilteredAncestor {
+        Collection col = getCol();
+        // Test runs as the 7th of august 2020, 9h00
+        Note n = addNoteUsingBasicModel("Front", "Back");
+        Card c = n.firstCard();
+        Decks decks = col.getDecks();
+
+        Calendar cal = Calendar.getInstance();
+        cal.set(2021, 2, 19, 7, 42, 42);
+        Long id = cal.getTimeInMillis() / 1000;
+
+        // Not filtered
+
+
+        c.setType(Consts.CARD_TYPE_NEW);
+        c.setDue(27L);
+
+        c.setQueue(Consts.QUEUE_TYPE_MANUALLY_BURIED);
+        assertEquals("27", c.nextDue());
+        assertEquals("(27)", c.getDueString());
+
+        c.setQueue(Consts.QUEUE_TYPE_SIBLING_BURIED);
+        assertEquals("27", c.nextDue());
+        assertEquals("(27)", c.getDueString());
+
+        c.setQueue(Consts.QUEUE_TYPE_SUSPENDED);
+        assertEquals("27", c.nextDue());
+        assertEquals("(27)", c.getDueString());
+
+        c.setQueue(Consts.QUEUE_TYPE_NEW);
+        c.setDue(27L);
+        assertEquals("27", c.nextDue());
+        assertEquals("27", c.getDueString());
+
+        c.setQueue(Consts.QUEUE_TYPE_PREVIEW);
+        assertEquals("27", c.nextDue());
+        assertEquals("27", c.getDueString());
+
+
+        c.setType(Consts.CARD_TYPE_LRN);
+        c.setDue(id);
+
+        c.setQueue(Consts.QUEUE_TYPE_MANUALLY_BURIED);
+        assertEquals("", c.nextDue());
+        assertEquals("()", c.getDueString());
+
+        c.setQueue(Consts.QUEUE_TYPE_SIBLING_BURIED);
+        assertEquals("", c.nextDue());
+        assertEquals("()", c.getDueString());
+
+        c.setQueue(Consts.QUEUE_TYPE_SUSPENDED);
+        assertEquals("", c.nextDue());
+        assertEquals("()", c.getDueString());
+
+        c.setQueue(Consts.QUEUE_TYPE_LRN);
+        assertEquals("3/19/21", c.nextDue());
+        assertEquals("3/19/21", c.getDueString());
+
+        c.setQueue(Consts.QUEUE_TYPE_PREVIEW);
+        assertEquals("", c.nextDue());
+        assertEquals("", c.getDueString());
+
+
+
+        c.setType(Consts.CARD_TYPE_REV);
+        c.setDue(20);
+        // Since tests run the 7th of august, in 20 days we are the 27th of august 2020
+
+        c.setQueue(Consts.QUEUE_TYPE_MANUALLY_BURIED);
+        assertEquals("8/27/20", c.nextDue());
+        assertEquals("(8/27/20)", c.getDueString());
+
+        c.setQueue(Consts.QUEUE_TYPE_SIBLING_BURIED);
+        assertEquals("8/27/20", c.nextDue());
+        assertEquals("(8/27/20)", c.getDueString());
+
+        c.setQueue(Consts.QUEUE_TYPE_SUSPENDED);
+        assertEquals("8/27/20", c.nextDue());
+        assertEquals("(8/27/20)", c.getDueString());
+
+        c.setQueue(Consts.QUEUE_TYPE_REV);
+        assertEquals("8/27/20", c.nextDue());
+        assertEquals("8/27/20", c.getDueString());
+
+        c.setQueue(Consts.QUEUE_TYPE_PREVIEW);
+        assertEquals("", c.nextDue());
+        assertEquals("", c.getDueString());
+
+
+
+        c.setType(Consts.CARD_TYPE_RELEARNING);
+        c.setDue(id);
+
+        c.setQueue(Consts.QUEUE_TYPE_MANUALLY_BURIED);
+        assertEquals("", c.nextDue());
+        assertEquals("()", c.getDueString());
+
+        c.setQueue(Consts.QUEUE_TYPE_SIBLING_BURIED);
+        assertEquals("", c.nextDue());
+        assertEquals("()", c.getDueString());
+
+        c.setQueue(Consts.QUEUE_TYPE_SUSPENDED);
+        assertEquals("", c.nextDue());
+        assertEquals("()", c.getDueString());
+
+        c.setQueue(Consts.QUEUE_TYPE_LRN);
+        c.setDue(id);
+        assertEquals("3/19/21", c.nextDue());
+        assertEquals("3/19/21", c.getDueString());
+
+        c.setQueue(Consts.QUEUE_TYPE_PREVIEW);
+        assertEquals("", c.nextDue());
+        assertEquals("", c.getDueString());
+
+
+
+
+        // Dynamic deck
+        long dyn = decks.newDyn("dyn");
+        c.setODid(c.getDid());
+        c.setDid(dyn);
+        assertEquals("(filtered)", c.nextDue());
+        assertEquals("(filtered)", c.getDueString());
+
+        c.setQueue(Consts.QUEUE_TYPE_SIBLING_BURIED);
+        assertEquals("(filtered)", c.nextDue());
+        assertEquals("((filtered))", c.getDueString());
+
+
+
+    }
+
 }

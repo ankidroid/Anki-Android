@@ -12,6 +12,8 @@ import androidx.test.ext.junit.runners.AndroidJUnit4;
 import static com.ichi2.libanki.Consts.COUNT_REMAINING;
 import static com.ichi2.libanki.Consts.QUEUE_TYPE_LRN;
 import static com.ichi2.libanki.Consts.QUEUE_TYPE_NEW;
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.instanceOf;
 import static org.hamcrest.Matchers.is;
 import static org.junit.Assert.assertArrayEquals;
 import static org.junit.Assert.assertEquals;
@@ -120,7 +122,7 @@ public class UndoTest extends RobolectricTest {
         // performing a normal op will clear the review queue
         c = col.getSched().getCard();
         col.getSched().answerCard(c, 3);
-        assertEquals(Collection.DismissType.REVIEW, col.undoType());
+        assertThat(col.undoType(), is(instanceOf(Collection.UndoReview.class)));
         col.save("foo");
         // Upstream, "save" can be undone. This test fails here because it's not the case in AnkiDroid
         assumeThat(col.undoName(getTargetContext().getResources()), is("foo"));

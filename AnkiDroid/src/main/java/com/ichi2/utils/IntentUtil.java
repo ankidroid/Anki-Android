@@ -24,12 +24,15 @@ import com.ichi2.anki.AnkiActivity;
 import com.ichi2.anki.R;
 import com.ichi2.anki.UIUtils;
 
+import timber.log.Timber;
+
 public class IntentUtil {
     public static boolean canOpenIntent(Context context, Intent intent) {
         try {
             final PackageManager packageManager = context.getPackageManager();
             return intent.resolveActivity(packageManager) != null;
         } catch (Exception e) {
+            Timber.w(e);
             return false;
         }
     }
@@ -43,6 +46,7 @@ public class IntentUtil {
                 UIUtils.showThemedToast(activity, errorMsg, true);
             }
         } catch (Exception e) {
+            Timber.w(e);
             final String errorMsg = activity.getString(R.string.feedback_no_suitable_app_found);
             UIUtils.showThemedToast(activity, errorMsg, true);
         }

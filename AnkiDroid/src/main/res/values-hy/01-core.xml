@@ -154,6 +154,7 @@
     <string name="custom_study_deck_name">Ուսուցման լրացուցիչ աշխատաշրջան</string>
     <string name="custom_study_deck_exists">Սկզբում վերանվանել լրացուցիչ ուսուցման առկա կապուկը</string>
     <string name="empty_deck">Այս կապուկը դատարկ է</string>
+    <string name="search_deck">Deck Search</string>
     <string name="empty_deck_add_note">Add card</string>
     <string name="invalid_deck_name">Invalid deck name</string>
     <string name="studyoptions_empty">Կապուկը դատարկ է: Սեղմեք + կոճակը նոր բովանդակություն ավելացնելու համար:</string>

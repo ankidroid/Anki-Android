@@ -1,6 +1,8 @@
 
 package com.ichi2.anki.exception;
 
+import timber.log.Timber;
+
 public class ConfirmModSchemaException extends Exception {
 
     /**
@@ -10,5 +12,13 @@ public class ConfirmModSchemaException extends Exception {
 
 
     public ConfirmModSchemaException() {
+    }
+
+
+    /**
+     * Add the current exception to log.
+     */
+    public void log() {
+        Timber.v(this);
     }
 }

@@ -11,7 +11,7 @@
 
     <item
         android:id="@+id/tags_dialog_action_add"
-        android:icon="@drawable/ic_add_white_24dp"
+        android:icon="@drawable/ic_add_white"
         android:title="@string/add_tag"
         ankidroid:showAsAction="ifRoom"/>
 
