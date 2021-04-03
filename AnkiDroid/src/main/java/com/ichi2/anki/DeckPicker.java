@@ -162,7 +162,7 @@ public class DeckPicker extends NavigationDrawerActivity implements
         ActivityCompat.OnRequestPermissionsResultCallback, CustomStudyDialog.CustomStudyListener {
 
 
-    public boolean count = false;
+    public boolean backPressed = false;
 
     /**
      * Result codes from other activities
@@ -1034,7 +1034,7 @@ public class DeckPicker extends NavigationDrawerActivity implements
             if (mFloatingActionMenu.isFABOpen()) {
                 mFloatingActionMenu.closeFloatingActionMenu();
             } else {
-                if (count) {
+                if (backPressed) {
                     automaticSync();
                     finishWithAnimation();
                 }
@@ -1042,7 +1042,7 @@ public class DeckPicker extends NavigationDrawerActivity implements
                     UIUtils.showThemedToast(this, getString(R.string.back_pressed_once), true);
                 }
             }
-            count = true;
+            backPressed = true;
         }
     }
 
