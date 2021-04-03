@@ -80,8 +80,6 @@ public class AddonsBrowser extends NavigationDrawerActivity implements DeckDropD
         DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(this, DividerItemDecoration.VERTICAL);
         addonsListRecyclerView.addItemDecoration(dividerItemDecoration);
 
-        downloadDialog = new Dialog(this);
-
         String currentAnkiDroidDirectory = CollectionHelper.getCurrentAnkiDroidDirectory(this);
         addonsHomeDir = new File(currentAnkiDroidDirectory, "addons");
 
@@ -124,6 +122,8 @@ public class AddonsBrowser extends NavigationDrawerActivity implements DeckDropD
             listAddonsFromDir(addonType);
             return true;
         });
+
+        downloadDialog = new Dialog(this);
 
         installAddon.setOnMenuItemClickListener(item -> {
 
@@ -312,7 +312,6 @@ public class AddonsBrowser extends NavigationDrawerActivity implements DeckDropD
      */
     public static String getEnabledAddonsContent(Context context) {
         StringBuilder content = new StringBuilder();
-        String mainJsFile = null;
 
         String currentAnkiDroidDirectory = CollectionHelper.getCurrentAnkiDroidDirectory(context);
         File addonsHomeDir = new File(currentAnkiDroidDirectory, "addons");
@@ -340,24 +339,8 @@ public class AddonsBrowser extends NavigationDrawerActivity implements DeckDropD
                     }
 
                     //Read text from file, index.js is starting point for the addon
-                    File addonsPackageDir = new File(finalAddonPath, "package");
-                    File addonPackageJson = new File(addonsPackageDir, "package.json");
+                    File addonsContentFile = new File(addonsHomeDir, "index.js");
 
-                    /*
-                      get {'main': 'index.js'} from package.json file
-                      main point to index.js file by default, according to info in package.json it may point to other .js file
-                     */
-                    if (addonPackageJson.exists()) {
-                        org.json.JSONObject jsonObject = AddonsNpmUtility.packageJsonReader(addonPackageJson);
-                        if (jsonObject == null) {
-                            // return empty
-                            return "";
-                        }
-                        mainJsFile = jsonObject.optString("main", "");
-                    }
-
-                    // read index.js file or file pointed by "main"
-                    File addonsContentFile = new File(addonsPackageDir, mainJsFile);
                     if (addonsContentFile.exists()) {
                         // wrap index.js content in script tag for each enabled addons
                         content.append("<script>");
