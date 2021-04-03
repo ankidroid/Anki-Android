@@ -368,12 +368,9 @@
     <string name="error_listing_addons">Error listing addons</string>
     <string name="install_js_addon">Import Addon</string>
     <string name="get_more_addons">Get more addons</string>
-    <string name="not_valid_package">Not a valid package for AnkiDroid</string>
-    <string name="addon_download_success">Addon downloads successful</string>
     <string name="downloading_addon">Downloading addon…</string>
     <string name="confirm_remove_addon">Do you want to remove %s ?</string>
     <string name="enter_npm_install_text">Enter npm install text</string>
-    <string name="error_downloading_file">Error downloading file, Try again</string>
     <string name="error_downloading_file_check_name">Error downloading file, Check name</string>
     <string name="addon_update">Update</string>
     <string name="checking_addon_update">Checking for addon updates…</string>

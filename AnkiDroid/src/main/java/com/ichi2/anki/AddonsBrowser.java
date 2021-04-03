@@ -187,7 +187,7 @@ public class AddonsBrowser extends NavigationDrawerActivity implements DeckDropD
             File directory = new File(String.valueOf(addonsHomeDir));
             File[] files = directory.listFiles();
             for (File file : files) {
-                Timber.d("Addons:%s", file.getName());
+                Timber.d("Addons: %s", file.getName());
 
                 // Read package.json from
                 // AnkiDroid/addons/ankidroid-addon-../package/package.json
@@ -266,7 +266,6 @@ public class AddonsBrowser extends NavigationDrawerActivity implements DeckDropD
                         editor.remove(addonFullName).apply();
 
                         addonsNames.remove(position);
-                        Objects.requireNonNull(addonsListRecyclerView.getAdapter()).notifyItemRemoved(position);
                         addonsListRecyclerView.getAdapter().notifyItemRangeChanged(position, addonsNames.size());
                         addonsListRecyclerView.getAdapter().notifyDataSetChanged();
                     });
@@ -309,6 +308,13 @@ public class AddonsBrowser extends NavigationDrawerActivity implements DeckDropD
      * @return content of index.js file for every enabled addons in script tag.
      * get enabled js addon contents from AnkiDroid/addons/...
      * This function will be called in AbstractFlashcardViewer
+     *
+     * 1. get enabled status of addons in SharedPreferences with key containing 'reviewer_addon', read only enabled addons
+     * 2. split value and get latter part as it stored in SharedPreferences
+     *    e.g: reviewer_addon:ankidroid-js-addon-12345...  -->  ankidroid-js-addon-12345...
+     *    It is same as folder name for the addon.
+     * 3. Read index.js file from  AnkiDroid/addons/js-addons/package/index.js
+     * 4. Wrap it in script tag and return
      */
     public static String getEnabledAddonsContent(Context context) {
         StringBuilder content = new StringBuilder();
@@ -322,24 +328,13 @@ public class AddonsBrowser extends NavigationDrawerActivity implements DeckDropD
         for (Map.Entry<String, ?> entry : keys.entrySet()) {
             Timber.d("map values %s: %s", entry.getKey(), entry.getValue());
 
-            // get enabled status of addons in SharedPreferences with key containing 'addon', read only enabled addons
             if (entry.getKey().contains("reviewer_addon") && entry.getValue().equals(true)) {
-
-                /*
-                  split value and get latter part as it stored in SharedPreferences
-                  e.g: reviewer_addon:ankidroid-js-addon-12345...  -->  ankidroid-js-addon-12345...
-                  It is same as folder name for the addon.
-                 */
                 try {
                     String addonDirName = String.valueOf(entry.getKey().split(":")[1]);
+
                     File finalAddonPath = new File(addonsHomeDir, addonDirName);
-
-                    if (!finalAddonPath.exists()) {
-                        continue;
-                    }
-
-                    //Read text from file, index.js is starting point for the addon
-                    File addonsContentFile = new File(addonsHomeDir, "index.js");
+                    File packageDir = new File(finalAddonPath, "package");
+                    File addonsContentFile = new File(packageDir, "index.js");
 
                     if (addonsContentFile.exists()) {
                         // wrap index.js content in script tag for each enabled addons
