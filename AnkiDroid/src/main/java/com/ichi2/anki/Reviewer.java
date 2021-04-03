@@ -34,7 +34,6 @@ import android.os.Handler;
 import android.os.Message;
 import android.text.SpannableString;
 import android.text.style.UnderlineSpan;
-import android.util.Pair;
 import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -71,9 +70,7 @@ import com.ichi2.anki.reviewer.ReviewerUi;
 import com.ichi2.anki.workarounds.FirefoxSnackbarWorkaround;
 import com.ichi2.anki.reviewer.ActionButtons;
 import com.ichi2.async.CollectionTask;
-import com.ichi2.async.TaskListener;
 import com.ichi2.async.TaskManager;
-import com.ichi2.compat.CompatHelper;
 import com.ichi2.libanki.Card;
 import com.ichi2.libanki.Collection;
 import com.ichi2.libanki.Consts;
@@ -85,6 +82,7 @@ import com.ichi2.utils.AndroidUiUtils;
 import com.ichi2.utils.FunctionalInterfaces.Consumer;
 import com.ichi2.utils.PairWithBoolean;
 import com.ichi2.utils.Permissions;
+import com.ichi2.utils.ViewGroupUtils;
 import com.ichi2.widget.WidgetStatus;
 
 import java.lang.ref.WeakReference;
@@ -208,6 +206,12 @@ public class Reviewer extends AbstractFlashcardViewer {
     }
 
     @Override
+    protected void recreateWebView() {
+        super.recreateWebView();
+        ViewGroupUtils.setRenderWorkaround(this);
+    }
+
+    @Override
     protected boolean shouldDisplayMark() {
         boolean markValue = super.shouldDisplayMark();
         if (!markValue) {
@@ -296,6 +300,8 @@ public class Reviewer extends AbstractFlashcardViewer {
         if (mPrefFullscreenReview) {
             setFullScreen(this);
         }
+
+        ViewGroupUtils.setRenderWorkaround(this);
     }
 
 
