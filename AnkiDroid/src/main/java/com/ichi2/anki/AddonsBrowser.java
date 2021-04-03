@@ -86,7 +86,6 @@ public class AddonsBrowser extends NavigationDrawerActivity implements DeckDropD
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        Themes.setThemeLegacy(this);
         if (showedActivityFailedScreen(savedInstanceState)) {
             return;
         }
