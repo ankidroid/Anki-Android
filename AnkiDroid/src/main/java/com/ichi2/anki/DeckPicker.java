@@ -248,6 +248,11 @@ public class DeckPicker extends NavigationDrawerActivity implements
 
     private SearchView mToolbarSearchView;
 
+    /*
+     * Keep a track of how many times back button was pressed
+     * */
+    public boolean count = false;
+
     // ----------------------------------------------------------------------------
     // LISTENERS
     // ----------------------------------------------------------------------------
@@ -1030,11 +1035,18 @@ public class DeckPicker extends NavigationDrawerActivity implements
         } else {
             Timber.i("Back key pressed");
             if (mFloatingActionMenu.isFABOpen()) {
+                UIUtils.showThemedToast(this, getApplication().getString(R.string.back_pressed_once), true);
                 mFloatingActionMenu.closeFloatingActionMenu();
             } else {
-                automaticSync();
-                finishWithAnimation();
+                if (count){
+                    automaticSync();
+                    finishWithAnimation();
+                }
+                else {
+                    UIUtils.showThemedToast(this, getApplication().getString(R.string.back_pressed_once), true);
+                }
             }
+            count = true;
         }
     }
 

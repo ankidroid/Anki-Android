@@ -373,4 +373,6 @@
     <!-- Used for credential empty warning message -->
     <string name="email_id_empty">Email address is required</string>
     <string name="password_empty">Password is required</string>
+
+    <string name="back_pressed_once" translatable="false">Press back again to exit</string>
 </resources>
