@@ -192,7 +192,7 @@ public class DeckPicker extends NavigationDrawerActivity implements
     // Short animation duration from system
     private int mShortAnimDuration;
 
-    public boolean mBackButtonPressedToExit = false;
+    private boolean mBackButtonPressedToExit = false;
 
     private RelativeLayout mDeckPickerContent;
 
@@ -1037,12 +1037,11 @@ public class DeckPicker extends NavigationDrawerActivity implements
                 if (mBackButtonPressedToExit) {
                     automaticSync();
                     finishWithAnimation();
-                }
-                else {
+                } else {
                     UIUtils.showThemedToast(this, getString(R.string.back_pressed_once), true);
                 }
+                mBackButtonPressedToExit = true;
             }
-            mBackButtonPressedToExit = true;
         }
     }
 
