@@ -5,10 +5,6 @@
         android:title="@string/reviewer_addons"/>
 
     <item
-        android:id="@+id/action_addon_note_editor"
-        android:title="@string/note_editor_addons"/>
-
-    <item
         android:id="@+id/action_install_addon"
         android:title="@string/install_js_addon"/>
     <item

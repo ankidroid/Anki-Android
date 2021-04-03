@@ -41,20 +41,15 @@ import static com.ichi2.anki.AddonsNpmUtility.isValidAddonPackage;
 public class AddonsBrowser extends NavigationDrawerActivity implements DeckDropDownAdapter.SubtitleListener, AddonsAdapter.OnAddonClickListener {
 
     private RecyclerView addonsListRecyclerView;
-    private MenuItem mInstallAddon;
-    private MenuItem mGetMoreAddons;
-    private MenuItem mReviewerAddons;
-    private MenuItem mNoteEditorAddons;
 
-    private String currentAnkiDroidDirectory;
     private File addonsHomeDir;
     private Dialog downloadDialog;
 
-    private List<AddonModel> addonsNames = new ArrayList<AddonModel>();
+    private final List<AddonModel> addonsNames = new ArrayList<AddonModel>();
 
     private SharedPreferences preferences;
 
-    private String[] addonTypes = {"reviewer", "note_editor"};
+    private final String addonType = "reviewer";
 
     private LinearLayout addonsDownloadButton;
 
@@ -87,14 +82,14 @@ public class AddonsBrowser extends NavigationDrawerActivity implements DeckDropD
 
         downloadDialog = new Dialog(this);
 
-        currentAnkiDroidDirectory = CollectionHelper.getCurrentAnkiDroidDirectory(this);
+        String currentAnkiDroidDirectory = CollectionHelper.getCurrentAnkiDroidDirectory(this);
         addonsHomeDir = new File(currentAnkiDroidDirectory, "addons");
 
         preferences = AnkiDroidApp.getSharedPrefs(this);
 
         // default list reviewer addons
         getSupportActionBar().setTitle(getString(R.string.reviewer_addons));
-        listAddonsFromDir(addonTypes[0]);
+        listAddonsFromDir(addonType);
     }
 
 
@@ -117,25 +112,20 @@ public class AddonsBrowser extends NavigationDrawerActivity implements DeckDropD
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
+        MenuItem installAddon, getMoreAddons, reviewerAddons;
+
         getMenuInflater().inflate(R.menu.addon_browser, menu);
-        mInstallAddon = menu.findItem(R.id.action_install_addon);
-        mGetMoreAddons = menu.findItem(R.id.action_get_more_addons);
-        mReviewerAddons = menu.findItem(R.id.action_addon_reviewer);
-        mNoteEditorAddons = menu.findItem(R.id.action_addon_note_editor);
+        installAddon = menu.findItem(R.id.action_install_addon);
+        getMoreAddons = menu.findItem(R.id.action_get_more_addons);
+        reviewerAddons = menu.findItem(R.id.action_addon_reviewer);
 
-        mReviewerAddons.setOnMenuItemClickListener(item -> {
+        reviewerAddons.setOnMenuItemClickListener(item -> {
             getSupportActionBar().setTitle(getString(R.string.reviewer_addons));
-            listAddonsFromDir(addonTypes[0]);
+            listAddonsFromDir(addonType);
             return true;
         });
 
-        mNoteEditorAddons.setOnMenuItemClickListener(item -> {
-            getSupportActionBar().setTitle(getString(R.string.note_editor_addons));
-            listAddonsFromDir(addonTypes[1]);
-            return true;
-        });
-
-        mInstallAddon.setOnMenuItemClickListener(item -> {
+        installAddon.setOnMenuItemClickListener(item -> {
 
             downloadDialog.setCanceledOnTouchOutside(true);
             downloadDialog.setContentView(R.layout.addon_install_from_npm);
@@ -156,6 +146,7 @@ public class AddonsBrowser extends NavigationDrawerActivity implements DeckDropD
                 npmAddonName = npmAddonName.replaceAll("\u00A0", "");
 
                 UIUtils.showThemedToast(this, getString(R.string.downloading_addon), true);
+                // download npm package for AnkiDroid as addons
                 AddonsNpmUtility.getPackageJson(npmAddonName, this);
 
                 downloadDialog.dismiss();
@@ -166,7 +157,7 @@ public class AddonsBrowser extends NavigationDrawerActivity implements DeckDropD
             return true;
         });
 
-        mGetMoreAddons.setOnMenuItemClickListener(item -> {
+        getMoreAddons.setOnMenuItemClickListener(item -> {
             openUrl(Uri.parse(getResources().getString(R.string.ankidroid_js_addon_npm_search_url)));
             return true;
         });
