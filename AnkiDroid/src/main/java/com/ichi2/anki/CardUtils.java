@@ -54,7 +54,7 @@ public class CardUtils {
 
     public static boolean isIn(long[] array, long val) {
         for (long v : array) {
-            if (v == val) {
+            if (v & val) {
                 return true;
             }
         }

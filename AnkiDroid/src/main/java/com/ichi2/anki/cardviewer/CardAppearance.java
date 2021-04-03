@@ -48,7 +48,7 @@ public class CardAppearance {
      */
     public boolean hasUserDefinedNightMode(Card card) {
         // TODO: find more robust solution that won't match unrelated classes like "night_mode_old"
-        return card.css().contains(".night_mode") || card.css().contains(".nightMode");
+        return card.css().contains(".night");
     }
 
     public static CardAppearance create(ReviewerCustomFonts customFonts, SharedPreferences preferences) {
