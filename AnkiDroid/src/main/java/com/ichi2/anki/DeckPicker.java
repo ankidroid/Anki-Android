@@ -1023,7 +1023,7 @@ public class DeckPicker extends NavigationDrawerActivity implements
         }
     }
 
-    public boolean count = false;
+    public int count = 1;
     @Override
     public void onBackPressed() {
         if (isDrawerOpen()) {
@@ -1031,18 +1031,18 @@ public class DeckPicker extends NavigationDrawerActivity implements
         } else {
             Timber.i("Back key pressed");
             if (mFloatingActionMenu.isFABOpen()) {
-                UIUtils.showThemedToast(this, getApplication().getString(R.string.back_pressed_once),true);
+                Toast.makeText(this, getApplication().getString(R.string.toastOnBackPressed), Toast.LENGTH_SHORT).show();
                 mFloatingActionMenu.closeFloatingActionMenu();
             } else {
-                if (count){
+                if (count!=1){
                     automaticSync();
                     finishWithAnimation();
                 }
                 else {
-                    UIUtils.showThemedToast(this, getApplication().getString(R.string.back_pressed_once),true);
+                    Toast.makeText(this, getApplication().getString(R.string.toastOnBackPressed), Toast.LENGTH_SHORT).show();
                 }
             }
-            count = true;
+            count ++;
         }
     }
 

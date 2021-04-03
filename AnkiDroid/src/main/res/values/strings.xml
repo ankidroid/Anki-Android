@@ -6,5 +6,5 @@
     <!-- https://developers.google.com/analytics/devguides/collection/android/v4/limits-quotas -->
     <integer name="ga_sampleFrequency">10</integer>
     <bool name="ga_anonymizeIp">true</bool>
-
+    <string name="toastOnBackPressed" translatable="false">Press back again to exit.</string>
 </resources>
