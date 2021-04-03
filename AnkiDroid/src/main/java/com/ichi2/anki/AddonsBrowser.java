@@ -2,16 +2,10 @@ package com.ichi2.anki;
 
 import android.app.AlertDialog;
 import android.app.Dialog;
-import android.app.DownloadManager;
-import android.content.BroadcastReceiver;
 import android.content.Context;
-import android.content.Intent;
-import android.content.IntentFilter;
 import android.content.SharedPreferences;
-import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
-import android.os.Environment;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -21,14 +15,8 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.ichi2.anki.widgets.DeckDropDownAdapter;
-import com.ichi2.async.Connection;
-import com.ichi2.themes.Themes;
 
-import org.json.JSONArray;
-import org.json.JSONException;
 import org.json.JSONObject;
-import org.rauschig.jarchivelib.Archiver;
-import org.rauschig.jarchivelib.ArchiverFactory;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -43,11 +31,6 @@ import androidx.core.text.HtmlCompat;
 import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-import okhttp3.Call;
-import okhttp3.Callback;
-import okhttp3.OkHttpClient;
-import okhttp3.Request;
-import okhttp3.Response;
 import timber.log.Timber;
 
 import static com.ichi2.anim.ActivityTransitionAnimation.Direction.RIGHT;
@@ -63,27 +46,17 @@ public class AddonsBrowser extends NavigationDrawerActivity implements DeckDropD
     private MenuItem mReviewerAddons;
     private MenuItem mNoteEditorAddons;
 
-    private long queueId;
-    DownloadManager downloadManager;
-
     private String currentAnkiDroidDirectory;
     private File addonsHomeDir;
     private Dialog downloadDialog;
-
-    // Update if api get updated
-    private String AnkiDroidJsAPI = "0.0.1";
-    private String AnkiDroidJsAddonKeywords = "ankidroid-js-addon";
 
     private List<AddonModel> addonsNames = new ArrayList<AddonModel>();
 
     private SharedPreferences preferences;
 
     private String[] addonTypes = {"reviewer", "note_editor"};
-    // default list addons in addons browser
-    private String listAddonType = addonTypes[0];
 
-
-    private LinearLayout addonsMessageLayout;
+    private LinearLayout addonsDownloadButton;
 
 
     @Override
@@ -96,9 +69,9 @@ public class AddonsBrowser extends NavigationDrawerActivity implements DeckDropD
         setContentView(R.layout.addons_browser);
         initNavigationDrawer(findViewById(android.R.id.content));
 
-        addonsMessageLayout = findViewById(R.id.addons_download_message_ll);
-        addonsMessageLayout.setOnClickListener(v -> {
-            openUrl(Uri.parse(getResources().getString(R.string.ankidroid_js_addon_npm_search_url)));
+        addonsDownloadButton = findViewById(R.id.addons_download_message_ll);
+        addonsDownloadButton.setOnClickListener(v -> {
+            openUrl(Uri.parse(getString(R.string.ankidroid_js_addon_npm_search_url)));
         });
 
         // Add a home button to the actionbar
@@ -252,9 +225,9 @@ public class AddonsBrowser extends NavigationDrawerActivity implements DeckDropD
             addonsListRecyclerView.setAdapter(new AddonsAdapter(addonsNames, this));
 
             if (addonsNames.isEmpty()) {
-                addonsMessageLayout.setVisibility(View.VISIBLE);
+                addonsDownloadButton.setVisibility(View.VISIBLE);
             } else {
-                addonsMessageLayout.setVisibility(View.GONE);
+                addonsDownloadButton.setVisibility(View.GONE);
             }
 
         } else {
@@ -340,10 +313,8 @@ public class AddonsBrowser extends NavigationDrawerActivity implements DeckDropD
             return;
         }
 
-        String[] children = dir.list();
-        for (String s : children) {
-            File child = new File(dir, s);
-
+        File[] children = dir.listFiles();
+        for (File child : children) {
             if (child.isDirectory()) {
                 deleteDirectory(child);
             }
@@ -372,67 +343,65 @@ public class AddonsBrowser extends NavigationDrawerActivity implements DeckDropD
             Timber.d("map values %s: %s", entry.getKey(), entry.getValue());
 
             // get enabled status of addons in SharedPreferences with key containing 'addon', read only enabled addons
-            if (!entry.getKey().contains("reviewer_addon") && entry.getValue().equals(true)) {
-                continue;
-            }
-
-            /*
-              split value and get latter part as it stored in SharedPreferences
-              e.g: reviewer_addon:ankidroid-js-addon-12345...  -->  ankidroid-js-addon-12345...
-              It is same as folder name for the addon.
-             */
-            try {
-                String addonDirName = String.valueOf(entry.getKey().split(":")[1]);
-                File finalAddonPath = new File(addonsHomeDir, addonDirName);
-
-                if (!finalAddonPath.exists()) {
-                    continue;
-                }
-
-                //Read text from file, index.js is starting point for the addon
-                File addonsPackageDir = new File(finalAddonPath, "package");
-                File addonPackageJson = new File(addonsPackageDir, "package.json");
+            if (entry.getKey().contains("reviewer_addon") && entry.getValue().equals(true)) {
 
                 /*
-                  get {'main': 'index.js'} from package.json file
-                  main point to index.js file by default, according to info in package.json it may point to other .js file
+                  split value and get latter part as it stored in SharedPreferences
+                  e.g: reviewer_addon:ankidroid-js-addon-12345...  -->  ankidroid-js-addon-12345...
+                  It is same as folder name for the addon.
                  */
-                if (addonPackageJson.exists()) {
-                    org.json.JSONObject jsonObject = AddonsNpmUtility.packageJsonReader(addonPackageJson);
-                    if (jsonObject == null) {
-                        // return empty
-                        return "";
+                try {
+                    String addonDirName = String.valueOf(entry.getKey().split(":")[1]);
+                    File finalAddonPath = new File(addonsHomeDir, addonDirName);
+
+                    if (!finalAddonPath.exists()) {
+                        continue;
                     }
-                    mainJsFile = jsonObject.optString("main", "");
-                }
 
-                // read index.js file or file pointed by "main"
-                File addonsContentFile = new File(addonsPackageDir, mainJsFile);
-                if (addonsContentFile.exists()) {
-                    // wrap index.js content in script tag for each enabled addons
-                    content.append("<script>");
-                    content.append("\n");
+                    //Read text from file, index.js is starting point for the addon
+                    File addonsPackageDir = new File(finalAddonPath, "package");
+                    File addonPackageJson = new File(addonsPackageDir, "package.json");
 
-                    BufferedReader br = new BufferedReader(new FileReader(addonsContentFile));
-                    String line;
-
-                    while ((line = br.readLine()) != null) {
-                        content.append(line);
-                        content.append('\n');
+                    /*
+                      get {'main': 'index.js'} from package.json file
+                      main point to index.js file by default, according to info in package.json it may point to other .js file
+                     */
+                    if (addonPackageJson.exists()) {
+                        org.json.JSONObject jsonObject = AddonsNpmUtility.packageJsonReader(addonPackageJson);
+                        if (jsonObject == null) {
+                            // return empty
+                            return "";
+                        }
+                        mainJsFile = jsonObject.optString("main", "");
                     }
-                    br.close();
 
-                    content.append("</script>");
-                    content.append("\n");
+                    // read index.js file or file pointed by "main"
+                    File addonsContentFile = new File(addonsPackageDir, mainJsFile);
+                    if (addonsContentFile.exists()) {
+                        // wrap index.js content in script tag for each enabled addons
+                        content.append("<script>");
+                        content.append("\n");
 
-                    Timber.d("addon content path %s", addonsContentFile);
+                        BufferedReader br = new BufferedReader(new FileReader(addonsContentFile));
+                        String line;
+
+                        while ((line = br.readLine()) != null) {
+                            content.append(line);
+                            content.append('\n');
+                        }
+                        br.close();
+
+                        content.append("</script>");
+                        content.append("\n");
+
+                        Timber.d("addon content path %s", addonsContentFile);
+                    }
+
+                } catch (ArrayIndexOutOfBoundsException | IOException e) {
+                    Timber.w(e, "AbstractFlashcardViewer::IOException");
                 }
-
-            } catch (ArrayIndexOutOfBoundsException | IOException e) {
-                Timber.w(e, "AbstractFlashcardViewer::IOException");
             }
         }
-
         return content.toString();
     }
 }

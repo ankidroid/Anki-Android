@@ -1,7 +1,8 @@
 package com.ichi2.anki;
 
 import android.content.Context;
-import android.os.Bundle;
+
+import com.ichi2.libanki.Utils;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -9,10 +10,8 @@ import org.json.JSONObject;
 import org.rauschig.jarchivelib.Archiver;
 import org.rauschig.jarchivelib.ArchiverFactory;
 
-import java.io.BufferedReader;
 import java.io.File;
-import java.io.FileOutputStream;
-import java.io.FileReader;
+import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 
@@ -22,6 +21,8 @@ import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
 import timber.log.Timber;
+
+import static com.ichi2.anki.web.HttpFetcher.downloadFileToSdCardMethod;
 
 public class AddonsNpmUtility extends AnkiActivity{
 
@@ -40,7 +41,6 @@ public class AddonsNpmUtility extends AnkiActivity{
         String url = "https://registry.npmjs.org/" + npmAddonName + "/latest";
 
         OkHttpClient client = new OkHttpClient();
-
         Request request = new Request.Builder()
                 .url(url)
                 .build();
@@ -77,6 +77,7 @@ public class AddonsNpmUtility extends AnkiActivity{
 
             JSONObject jsonObject = new JSONObject(strResponse);
             if (isValidAddonPackage(jsonObject)) {
+
                 listAddonType = jsonObject.optString("addon_type", "");
                 JSONObject dist = jsonObject.getJSONObject("dist");
                 String tarballUrl = dist.get("tarball").toString();
@@ -136,47 +137,8 @@ public class AddonsNpmUtility extends AnkiActivity{
      * @param tarballUrl tarball url of addon.tgz package file
      */
     public static void downloadAddonPackageFile(String tarballUrl, String npmAddonName, Context context) {
-
-        OkHttpClient client = new OkHttpClient();
-
-        Request request = new Request.Builder()
-                .url(tarballUrl)
-                .build();
-
-        client.newCall(request).enqueue(new Callback() {
-            @Override
-            public void onFailure(Call call, IOException e) {
-                Timber.e("js addon %s", e.toString());
-            }
-
-
-            @Override
-            public void onResponse(Call call, Response response) {
-                InputStream is = null;
-                byte[] buf = new byte[2048];
-                int len = 0;
-                FileOutputStream fos = null;
-
-                try {
-                    String currentAnkiDroidDirectory = CollectionHelper.getCurrentAnkiDroidDirectory(context);
-                    File addonsHomeDir = new File(currentAnkiDroidDirectory, "addons");
-
-                    File tarballFile = new File(addonsHomeDir, npmAddonName + ".tgz");
-
-                    is = response.body().byteStream();
-                    fos = new FileOutputStream(tarballFile);
-
-                    while ((len = is.read(buf)) != -1) {
-                        fos.write(buf, 0, len);
-                    }
-                    fos.flush();
-
-                    extractAndCopyAddonTgz(tarballFile.getPath(), npmAddonName, context);
-                } catch (IOException | NullPointerException e) {
-                    Timber.e(e.getLocalizedMessage());
-                }
-            }
-        });
+        String downloadFilePath = downloadFileToSdCardMethod(tarballUrl, context, "addons", "GET");
+        extractAndCopyAddonTgz(downloadFilePath, npmAddonName, context);
     }
 
     /**
@@ -214,18 +176,10 @@ public class AddonsNpmUtility extends AnkiActivity{
     public static JSONObject packageJsonReader(File addonsFiles) {
         JSONObject jsonObject = null;
         try {
-            FileReader fileReader = new FileReader(addonsFiles);
-            BufferedReader bufferedReader = new BufferedReader(fileReader);
-            StringBuilder stringBuilder = new StringBuilder();
-            String line = bufferedReader.readLine();
-            while (line != null) {
-                stringBuilder.append(line).append("\n");
-                line = bufferedReader.readLine();
-            }
-            bufferedReader.close();
 
-            String response = stringBuilder.toString();
-            jsonObject = new JSONObject(response);
+            InputStream is = new FileInputStream(addonsFiles);
+            String stream = Utils.convertStreamToString(is);
+            jsonObject = new JSONObject(stream);
 
         } catch (IOException | JSONException e) {
             Timber.e(e.getLocalizedMessage());

@@ -20,7 +20,6 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 
-import com.ichi2.anki.AddonsBrowser;
 import com.ichi2.anki.CardBrowser;
 import com.ichi2.anki.CardInfo;
 import com.ichi2.anki.CardTemplateBrowserAppearanceEditor;
