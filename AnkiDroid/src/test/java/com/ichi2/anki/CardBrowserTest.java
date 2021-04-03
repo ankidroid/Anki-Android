@@ -512,7 +512,7 @@ public class CardBrowserTest extends RobolectricTest {
     /** 8027 */
     @Test
     public void checkSearchString() {
-        Card c1 = addNoteUsingBasicModel("Hello", "John").firstCard();
+        addNoteUsingBasicModel("Hello", "John");
         long deck = addDeck("Deck 1");
         getCol().getDecks().select(deck);
         Card c2 = addNoteUsingBasicModel("New", "world").firstCard();
