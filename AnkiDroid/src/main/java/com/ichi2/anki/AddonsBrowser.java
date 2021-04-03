@@ -198,18 +198,8 @@ public class AddonsBrowser extends NavigationDrawerActivity implements DeckDropD
 
                 AddonModel addonModel;
                 if (isValidAddonPackage(jsonObject)) {
-
-                    String addonName = jsonObject.optString("name", "");
-                    String addonVersion = jsonObject.optString("version", "");
-                    String addonDev = jsonObject.optString("author", "");
-                    String addonAnkiDroidAPI = jsonObject.optString("ankidroid_js_api", "");
-                    String addonHomepage = jsonObject.optString("homepage", "");
-                    String typeOfAddon = jsonObject.optString("addon_type", "");
-
-                    if (addonType.equals(typeOfAddon)) {
-                        addonModel = new AddonModel(addonName, addonVersion, addonDev, addonAnkiDroidAPI, addonHomepage, addonType);
-                        addonsNames.add(addonModel);
-                    }
+                    addonModel = AddonModel.tryParse(jsonObject, addonType);
+                    addonsNames.add(addonModel);
                 }
             }
 

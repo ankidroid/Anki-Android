@@ -34,6 +34,8 @@ public class AddonsNpmUtility extends AnkiActivity{
     // default list addons in addons browser
     private static String listAddonType = addonTypes[0];
 
+    private static final String addonType = "reviewer";
+
     /**
      * @param npmAddonName addon name, e.g ankidroid-js-addon-progress-bar
      */
@@ -84,7 +86,7 @@ public class AddonsNpmUtility extends AnkiActivity{
                 Timber.d("tarball link %s", tarballUrl);
 
                 downloadAddonPackageFile(tarballUrl, npmAddonName, context);
-            } 
+            }
 
         } catch (JSONException e) {
             Timber.e(e.getLocalizedMessage());
@@ -101,11 +103,7 @@ public class AddonsNpmUtility extends AnkiActivity{
             return false;
         }
 
-        String addonName = jsonObject.optString("name", "");
-        String addonVersion = jsonObject.optString("version", "");
-        String addonDev = jsonObject.optString("author", "");
-        String addonAnkiDroidAPI = jsonObject.optString("ankidroid_js_api", "");
-        String addonHomepage = jsonObject.optString("homepage", "");
+        AddonModel addonModel = AddonModel.tryParse(jsonObject, addonType);
         boolean jsAddonKeywordsPresent = false;
 
         try {
@@ -122,12 +120,15 @@ public class AddonsNpmUtility extends AnkiActivity{
             Timber.e(e.getLocalizedMessage());
         }
 
-        if (addonAnkiDroidAPI.equals(AnkiDroidJsAPI) && jsAddonKeywordsPresent) {
-            // if other strings are non empty
-            if (!addonName.isEmpty() && !addonVersion.isEmpty() && !addonDev.isEmpty() && !addonHomepage.isEmpty()) {
-                return true;
-            }
+        if (!addonModel.getJsApiVersion().equals(AnkiDroidJsAPI) && jsAddonKeywordsPresent) {
+            return false;
         }
+
+        // if other strings are non empty
+        if (!addonModel.getName().isEmpty() && !addonModel.getVersion().isEmpty() && !addonModel.getDeveloper().isEmpty() && !addonModel.getHomepage().isEmpty()) {
+            return true;
+        }
+
         return false;
     }
 

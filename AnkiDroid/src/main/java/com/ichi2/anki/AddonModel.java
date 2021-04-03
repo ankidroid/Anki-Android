@@ -1,5 +1,8 @@
 package com.ichi2.anki;
 
+
+import org.json.JSONObject;
+
 public class AddonModel {
     private String mName;
     private String mVersion;
@@ -46,5 +49,18 @@ public class AddonModel {
 
     public String getType() {
         return mType;
+    }
+
+    public static AddonModel tryParse(JSONObject jsonObject, String addonType) {
+
+        String addonName = jsonObject.optString("name", "");
+        String addonVersion = jsonObject.optString("version", "");
+        String addonDev = jsonObject.optString("author", "");
+        String addonAnkiDroidAPI = jsonObject.optString("ankidroid_js_api", "");
+        String addonHomepage = jsonObject.optString("homepage", "");
+        String typeOfAddon = jsonObject.optString("addon_type", "");
+
+        AddonModel addonModel = new AddonModel(addonName, addonVersion, addonDev, addonAnkiDroidAPI, addonHomepage, addonType);
+        return addonModel;
     }
 }
