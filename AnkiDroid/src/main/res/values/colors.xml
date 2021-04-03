@@ -113,6 +113,6 @@
     <color name="badge_error">#f45000</color>
     <color name="badge_warning">#ff5e13</color>
 
-    <color name="fag_background">#777</color>
+    <color name="fab_background">#777</color>
 </resources>
 
