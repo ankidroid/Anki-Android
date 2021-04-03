@@ -197,25 +197,6 @@ public class Preferences extends AppCompatPreferenceActivity implements Preferen
                     mCategory.removePreference(mCheckBoxPref_Vibrate);
                     mCategory.removePreference(mCheckBoxPref_Blink);
                 }
-                try {
-                    // This works on an API 19 emulator
-                    // use icon= once we're past API 21
-                    // ----
-                    // android.content.res.Resources$NotFoundException: File res/drawable/ic_language_black_24dp.xml
-                    // from drawable resource ID #0x7f0800d7. If the resource you are trying to use is a vector
-                    // resource, you may be referencing it in an unsupported way.
-                    // See AppCompatDelegate.setCompatVectorFromResourcesEnabled() for more info.
-                    Drawable languageIcon = VectorDrawableCompat.create(
-                            getResources(),
-                            R.drawable.ic_language_black_24dp,
-                            getTheme());
-
-                    screen.findPreference("language").setIcon(languageIcon);
-                } catch (Exception e) {
-                    Timber.w(e, "Failed to set language icon");
-                }
-
-
                 // Build languages
                 initializeLanguageDialog(screen);
                 break;
