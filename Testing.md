@@ -8,7 +8,7 @@ The remaining documents is about best practice to write tests for AnkiDroid. You
 
 # Values
 ## Reused values
-Please avoid recreating variables if possible. Uses a `static final` variable to save values that never changes. We expect the content of those variables not to be changed by tests. If really necessary, it can be enforced with [Collections.unmodifiable](https://docs.oracle.com/javase/7/docs/api/java/util/Collections.html#unmodifiableList(java.util.List) but we generally don't do it as it would call an extra function, add more codes and we have not yet had a problem that it would have solved.
+Please avoid recreating variables if possible. Uses a `static final` variable to save values that never changes. We expect the content of those variables not to be changed by tests. If really necessary, it can be enforced with [Collections.unmodifiable](https://docs.oracle.com/javase/7/docs/api/java/util/Collections.html#unmodifiableList) but we generally don't do it as it would call an extra function, add more codes and we have not yet had a problem that it would have solved.
 
 ## The collection
 If you need to access the collection in your test you may extend the `RobolectricTest` class (more details below). Then you must access the collection by `getCol()`. You'll get a freshly initialized collection in each unit test, that is, only the default deck, no card... On the embedded test you'll get the device real collection, so any change you make here could have impact on the collection, or could fail if for some reason there was an interaction between the real collection and the tests. E.g. better make a backup of/rename your "ankidroid" folder before running the tests.
