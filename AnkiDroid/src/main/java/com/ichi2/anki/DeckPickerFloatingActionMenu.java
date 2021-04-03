@@ -42,6 +42,7 @@ public class DeckPickerFloatingActionMenu {
     private boolean mIsFABOpen = false;
 
     private final DeckPicker mDeckPicker;
+    private LinearLayout linearLayout;
 
     public DeckPickerFloatingActionMenu(View view, DeckPicker deckPicker) {
         this.mDeckPicker = deckPicker;
@@ -53,6 +54,7 @@ public class DeckPickerFloatingActionMenu {
         mAddSharedButton = (FloatingActionButton)view.findViewById(R.id.add_shared_action);
         mAddDeckButton = (FloatingActionButton)view.findViewById(R.id.add_deck_action);
         mFabBGLayout = view.findViewById(R.id.fabBGLayout);
+        linearLayout = view.findViewById(R.id.deckpicker_view);
 
         mFabMain.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -128,6 +130,7 @@ public class DeckPickerFloatingActionMenu {
 
 
     private void showFloatingActionMenu() {
+        linearLayout.setAlpha(0.5f);
         mIsFABOpen = true;
         if (!animationDisabled()) {
             // Show with animation
@@ -152,6 +155,7 @@ public class DeckPickerFloatingActionMenu {
     }
 
     protected void closeFloatingActionMenu() {
+        linearLayout.setAlpha(1f);
         mIsFABOpen = false;
         mFabBGLayout.setVisibility(View.GONE);
         if (!animationDisabled()) {
