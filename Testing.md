@@ -22,6 +22,28 @@ If a method parameter is annotated with `@NonNull`, we do not want a test to sen
 ## Time
 Unit tests are run with simulated time. The collection is created the 7th of August 2020 at 7 hour, UTC. Each time the time is checked, it advanced by 10 milliseconds. You can also use the MockTime class to change the date to any time you decide.
 
+# Testing tools
+
+## RunWith
+
+Some tests uses `@RunWith(AndroidJUnit4.class)` before the class name. #TODO: document why. In general avoid it as it makes tests slower and is not always required
+
+## Reasons
+
+One goal of a test is to have an easy to read error message when it fails. Most tests methods allow to take a string as first parameter to explain what is tested. Please fill it unless the meaning of the test is obvious. While it is a low priority, PR adding reasons to tests are a nice addition to the codebase.
+
+The expected value is always in first position and the result of a function in last position. Pay close attention to it, as there is no way for Java type system to check whether the meaning is respected. Experiences shows that it is some very common error.
+
+This also means that we have a preferences for tests that give detailed error messages. As an example `org.junit.Assert.assertArrayEquals` do not only fail when two arrays differ, it also state whether the size is different or the first differing position. Similarly, `com.ichi2.utils.ListUtil.assertListEquals` allow to tests list equality.
+
+For standards arithmetical properties, we uses hamcrest. E.g.
+```java
+        assertThat("At least one card added for note", col.addNote(newNote), is(greaterThanOrEqualTo(1)));
+```
+is a clear and readable way to check that a number is greater than or equal to one and explain what is tested. Please familiarize yourselves with the variety of standard tests it offers
+
+
+
 
 # Background tasks
 
