@@ -54,6 +54,11 @@
             android:title="@string/pref_cat_workarounds" >
             <CheckBoxPreference
                 android:defaultValue="false"
+                android:key="softwareRender"
+                android:summary="@string/software_render_summ"
+                android:title="@string/software_render" />
+            <CheckBoxPreference
+                android:defaultValue="false"
                 android:key="safeDisplay"
                 android:summary="@string/safe_display_summ"
                 android:title="@string/safe_display" />
