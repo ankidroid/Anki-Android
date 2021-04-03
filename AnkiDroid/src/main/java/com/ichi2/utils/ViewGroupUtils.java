@@ -16,13 +16,17 @@
 
 package com.ichi2.utils;
 
+import android.app.Activity;
 import android.view.View;
 import android.view.ViewGroup;
+
+import com.ichi2.anki.AnkiDroidApp;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import androidx.annotation.NonNull;
+import timber.log.Timber;
 
 public class ViewGroupUtils {
     @NonNull
@@ -46,5 +50,33 @@ public class ViewGroupUtils {
             }
         }
         return views;
+    }
+
+    public static void setRenderWorkaround(Activity activity) {
+        if (AnkiDroidApp.getSharedPrefs(activity).getBoolean("softwareRender", false)) {
+            Timber.i("ViewGroupUtils::setRenderWorkaround - software render requested, altering Views...");
+            ViewGroupUtils.setContentViewLayerTypeSoftware(activity);
+        } else {
+            Timber.i("ViewGroupUtils::setRenderWorkaround - using default / hardware rendering");
+        }
+    }
+
+    /**
+     * Gets all the Views for the given Activity's ContentView, and sets their layerType
+     * to the given layerType
+     *
+     * @param activity Activity containing the View hierarchy to alter
+     */
+    private static void setContentViewLayerTypeSoftware(@NonNull Activity activity) {
+        ViewGroup rootViewGroup =
+                (ViewGroup) ((ViewGroup) activity.findViewById(android.R.id.content))
+                        .getChildAt(0);
+        List<View> allViews = getAllChildrenRecursive(rootViewGroup);
+        allViews.add(rootViewGroup);
+        for (View v : allViews) {
+            Timber.d("ViewGroupUtils::setContentViewLayerTypeSoftware for view %s",
+                    v.getId());
+            v.setLayerType(View.LAYER_TYPE_SOFTWARE, null);
+        }
     }
 }

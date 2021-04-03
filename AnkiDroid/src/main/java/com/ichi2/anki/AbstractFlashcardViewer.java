@@ -1876,7 +1876,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
         recreateWebView();
     }
 
-    private void recreateWebView() {
+    protected void recreateWebView() {
         if (mCardWebView == null) {
             mCardWebView = createWebView();
             WebViewDebugging.initializeDebugging(AnkiDroidApp.getSharedPrefs(this));
