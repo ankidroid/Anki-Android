@@ -430,7 +430,6 @@ public class NoteEditorTest extends RobolectricForegroundTest {
 
     private void saveNote(NoteEditor editor) {
         editor.saveNote();
-        advanceRobolectricLooperWithSleep();
     }
 
     private enum FromScreen {
@@ -465,13 +464,7 @@ public class NoteEditorTest extends RobolectricForegroundTest {
 
         public NoteEditor build() {
             NoteEditor editor = build(NoteEditor.class);
-            advanceRobolectricLooper();
-            advanceRobolectricLooper();
-            advanceRobolectricLooper();
-            advanceRobolectricLooper();
             // 4 is insufficient
-            advanceRobolectricLooper();
-            advanceRobolectricLooper();
 
             return editor;
         }
@@ -479,7 +472,6 @@ public class NoteEditorTest extends RobolectricForegroundTest {
         public <T extends NoteEditor> T build(Class<T> clazz) {
             getCol().getModels().setCurrent(mModel);
             T noteEditor = getNoteEditorAddingNote(FromScreen.REVIEWER, clazz);
-            advanceRobolectricLooper();
             noteEditor.setFieldValueFromUi(0, mFirstField);
             if (mSecondField != null) {
                 noteEditor.setFieldValueFromUi(1, mSecondField);

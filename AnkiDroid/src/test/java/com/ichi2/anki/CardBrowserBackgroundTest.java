@@ -12,6 +12,8 @@ import static org.hamcrest.core.Is.is;
 public class CardBrowserBackgroundTest extends RobolectricBackgroundTest {
     private final CardBrowserTestDelegate mDelegate = new CardBrowserTestDelegate(this);
 
+
+
     @Test
     public void selectAllIsNotVisibleOnceCalled() {
         CardBrowser browser = mDelegate.getBrowserWithMultipleNotes();

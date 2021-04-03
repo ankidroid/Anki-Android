@@ -199,8 +199,6 @@ public class CardBrowserForegroundTest extends RobolectricForegroundTest {
         CardBrowser b = mDelegate.getBrowserWithNotes(5);
         b.checkCardsAtPositions(0, 2);
 
-        advanceRobolectricLooperWithSleep();
-
         List<Long> cardIds = b.getCheckedCardIds();
 
         for (Long cardId : cardIds) {
@@ -213,7 +211,6 @@ public class CardBrowserForegroundTest extends RobolectricForegroundTest {
         AnkiAssert.assertDoesNotThrow(() -> b.moveSelectedCardsToDeck(deckPosition));
 
         //assert
-        advanceRobolectricLooperWithSleep();
         for (Long cardId : cardIds) {
             assertThat("Deck should be changed", getCol().getCard(cardId).getDid(), is(deckIdToChangeTo));
         }
@@ -331,7 +328,6 @@ public class CardBrowserForegroundTest extends RobolectricForegroundTest {
 
         CardBrowser b = mDelegate.getBrowserWithNoNewCards();
         b.filterByTag("sketchy::(1)");
-        advanceRobolectricLooperWithSleep();
 
         assertThat("tagged card should be returned", b.getCardCount(), is(1));
     }
@@ -349,7 +345,6 @@ public class CardBrowserForegroundTest extends RobolectricForegroundTest {
 
         CardBrowser b = mDelegate.getBrowserWithNoNewCards();
         b.filterByFlag(1);
-        advanceRobolectricLooperWithSleep();
 
         assertThat("Flagged cards should be returned", b.getCardCount(), is(2));
     }
@@ -447,8 +442,6 @@ public class CardBrowserForegroundTest extends RobolectricForegroundTest {
 
         b.repositionCardsNoValidation(Collections.singletonList(card.getId()), 2);
 
-        advanceRobolectricLooperWithSleep();
-
         assertThat("Position of checked card after reposition", card.getColumnHeaderText(CardBrowser.Column.DUE), is("2"));
     }
 
@@ -471,8 +464,6 @@ public class CardBrowserForegroundTest extends RobolectricForegroundTest {
 
         b.resetProgressNoConfirm(Collections.singletonList(card.getId()));
 
-        advanceRobolectricLooperWithSleep();
-
         assertThat("Position of checked card after reset", card.getColumnHeaderText(CardBrowser.Column.DUE), is("1"));
     }
 
@@ -488,8 +479,6 @@ public class CardBrowserForegroundTest extends RobolectricForegroundTest {
         assertThat("Initial position of checked card", card.getColumnHeaderText(CardBrowser.Column.DUE), is("1"));
 
         b.rescheduleWithoutValidation(Collections.singletonList(card.getId()), 5);
-
-        advanceRobolectricLooperWithSleep();
 
         assertThat("Due of checked card after reschedule", card.getColumnHeaderText(CardBrowser.Column.DUE), is("8/12/20"));
     }
@@ -507,14 +496,9 @@ public class CardBrowserForegroundTest extends RobolectricForegroundTest {
 
         b.repositionCardsNoValidation(Collections.singletonList(card.getId()), 2);
 
-        advanceRobolectricLooperWithSleep();
-
         assertThat("Position of checked card after reposition", card.getColumnHeaderText(CardBrowser.Column.DUE), is("2"));
 
         b.onUndo();
-
-        advanceRobolectricLooperWithSleep();
-        advanceRobolectricLooperWithSleep();
 
         assertThat("Position of checked card after undo should be reset", card.getColumnHeaderText(CardBrowser.Column.DUE), is("1"));
     }
@@ -529,8 +513,6 @@ public class CardBrowserForegroundTest extends RobolectricForegroundTest {
         b.checkCardsAtPositions(0);
 
         b.rescheduleWithoutValidation(Collections.singletonList(getCheckedCard(b).getId()), 2);
-
-        advanceRobolectricLooperWithSleep();
 
         assertUndoContains(b, R.string.deck_conf_cram_reschedule);
     }

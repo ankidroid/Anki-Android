@@ -48,8 +48,6 @@ public class PreviewerTest extends RobolectricForegroundTest {
 
         previewer.onActivityResult(AbstractFlashcardViewer.EDIT_CURRENT_CARD, Activity.RESULT_OK, null);
 
-        advanceRobolectricLooperWithSleep();
-
         assertThat("Should be previewing selected card after edit", previewer.getCurrentCardId(), is(cardToPreview.getId()));
     }
 
@@ -68,8 +66,6 @@ public class PreviewerTest extends RobolectricForegroundTest {
         cardToPreview.note().setField(0, "Hi");
 
         previewer.onActivityResult(AbstractFlashcardViewer.EDIT_CURRENT_CARD, Activity.RESULT_OK, null);
-
-        advanceRobolectricLooperWithSleep();
 
         assertThat("Card content should be updated after editing", previewer.getCardContent(), containsString("Hi"));
     }

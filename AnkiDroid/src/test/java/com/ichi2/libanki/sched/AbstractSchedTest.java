@@ -432,7 +432,6 @@ mw.col.sched.extendLimits(1, 0)
         col.reset();
         // Regression test success non deterministically without the sleep
         Card gotten = sched.getCard();
-        advanceRobolectricLooperWithSleep();
         assertThat(gotten, is(cards[0]));
         sched.answerCard(gotten, Consts.BUTTON_ONE);
 

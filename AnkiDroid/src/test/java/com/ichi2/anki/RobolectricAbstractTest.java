@@ -172,8 +172,6 @@ public class RobolectricAbstractTest implements CollectionGetter {
             //called on each AnkiDroidApp.onCreate(), and spams the build
             //there is no onDestroy(), so call it here.
             Timber.uprootAll();
-
-            runTasksInBackground();
         }
     }
 
@@ -314,8 +312,6 @@ public class RobolectricAbstractTest implements CollectionGetter {
     protected static <T extends AnkiActivity> T startActivityNormallyOpenCollectionWithIntent(RobolectricAbstractTest testClass, Class<T> clazz, Intent i) {
         ActivityController<T> controller = Robolectric.buildActivity(clazz, i)
                 .create().start().resume().visible();
-        advanceRobolectricLooperWithSleep();
-        advanceRobolectricLooperWithSleep();
         testClass.saveControllerForCleanup(controller);
         return controller.get();
     }
@@ -442,10 +438,8 @@ public class RobolectricAbstractTest implements CollectionGetter {
             }
         };
         TaskManager.launchCollectionTask(task, listener);
-        advanceRobolectricLooper();
 
         wait(timeoutMs);
-        advanceRobolectricLooper();
 
         if (!completed[0]) {
             throw new IllegalStateException(String.format("Task %s didn't finish in %d ms", task.getClass(), timeoutMs));
@@ -469,7 +463,6 @@ public class RobolectricAbstractTest implements CollectionGetter {
      * @see org.junit.matchers.JUnitMatchers
      */
     public <T> void assumeThat(T actual, Matcher<T> matcher) {
-        advanceRobolectricLooperWithSleep();
         Assume.assumeThat(actual, matcher);
     }
 
@@ -491,7 +484,6 @@ public class RobolectricAbstractTest implements CollectionGetter {
      * @see org.junit.matchers.JUnitMatchers
      */
     public <T> void assumeThat(String message, T actual, Matcher<T> matcher) {
-        advanceRobolectricLooperWithSleep();
         Assume.assumeThat(message, actual, matcher);
     }
 
@@ -505,7 +497,6 @@ public class RobolectricAbstractTest implements CollectionGetter {
      * @param message A message to pass to {@link AssumptionViolatedException}.
      */
     public void assumeTrue(String message, boolean b) {
-        advanceRobolectricLooperWithSleep();
         Assume.assumeTrue(message, b);
     }
 
@@ -528,7 +519,6 @@ public class RobolectricAbstractTest implements CollectionGetter {
 
     protected Card getCard() {
         Card card = getCol().getSched().getCard();
-        advanceRobolectricLooperWithSleep();
         return card;
     }
 

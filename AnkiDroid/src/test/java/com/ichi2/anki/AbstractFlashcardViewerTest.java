@@ -433,8 +433,6 @@ public class AbstractFlashcardViewerTest extends RobolectricForegroundTest {
         viewer.loadInitialCard();
         // Without this, AbstractFlashcardViewer.mCard is still null, and RobolectricTest.tearDown executes before
         // AsyncTasks spawned by by loading the viewer finish. Is there a way to synchronize these things while under test?
-        advanceRobolectricLooperWithSleep();
-        advanceRobolectricLooperWithSleep();
         return viewer;
     }
 }

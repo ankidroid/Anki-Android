@@ -206,7 +206,6 @@ public class ReviewerForegroundTest extends RobolectricForegroundTest {
         equalFirstField(cards[2], reviewer.mCurrentCard);
         time.addM(2);
         reviewer.answerCard(getCol().getSched().getGoodNewButton());
-        advanceRobolectricLooperWithSleep();
         equalFirstField(cards[0], reviewer.mCurrentCard); // This failed in #6898 because this card was not in the queue
     }
 
@@ -252,8 +251,6 @@ public class ReviewerForegroundTest extends RobolectricForegroundTest {
         reviewer.toggleWhiteboard();
 
         assumeTrue("Whiteboard should now be enabled", reviewer.mPrefWhiteboard);
-
-        advanceRobolectricLooperWithSleep();
     }
 
 

@@ -1232,17 +1232,13 @@ public class SchedV2Test extends RobolectricForegroundTest {
         // ordinals should arrive in order
         AbstractSched sched = col.getSched();
         Card c = sched.getCard();
-        advanceRobolectricLooperWithSleep();
         sched.answerCard(c, sched.answerButtons(c) - 1); // not upstream. But we are not expecting multiple getCard without review
         assertEquals(0, c.getOrd());
         c = sched.getCard();
-        advanceRobolectricLooperWithSleep();
         sched.answerCard(c, sched.answerButtons(c) - 1); // not upstream. But we are not expecting multiple getCard without review
         assertEquals(1, c.getOrd());
         c = sched.getCard();
-        advanceRobolectricLooperWithSleep();
         sched.answerCard(c, sched.answerButtons(c) - 1); // not upstream. But we are not expecting multiple getCard without review
-        advanceRobolectricLooperWithSleep();
         assertEquals(2, c.getOrd());
     }
 
@@ -1598,10 +1594,8 @@ public class SchedV2Test extends RobolectricForegroundTest {
         conf.getJSONObject("lapse").put("mult", 0.5);
         col.getDecks().save(conf);
         c = getCard();
-        advanceRobolectricLooper();
         col.getSched().answerCard(c, 1);
         assertEquals(50, c.getIvl());
-        advanceRobolectricLooperWithSleep();
         col.getSched().answerCard(c, 1);
         assertEquals(25, c.getIvl());
     }

@@ -352,7 +352,6 @@ public class FinderTest extends RobolectricForegroundTest {
         CardBrowser cb = super.startActivityNormallyOpenCollectionWithIntent(CardBrowser.class, new Intent());
         int pos = cb.getChangeDeckPositionFromId(currentDid);
         cb.mDeckSpinnerSelection.selectDropDownItem(pos + 1);    //Adjusting for All Decks option at position 0
-        advanceRobolectricLooperWithSleep();
         assertEquals(1L, cb.getCardCount());
     }
 

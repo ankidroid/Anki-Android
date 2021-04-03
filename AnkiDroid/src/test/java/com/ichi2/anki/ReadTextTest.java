@@ -141,7 +141,5 @@ public class ReadTextTest extends RobolectricForegroundTest {
 
     protected void storeLanguage(int i, String french) {
         MetaDB.storeLanguage(getTargetContext(), i, 1, QUESTION, french);
-        advanceRobolectricLooperWithSleep();
-        advanceRobolectricLooperWithSleep();
     }
 }
