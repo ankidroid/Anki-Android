@@ -78,7 +78,7 @@ import static com.ichi2.libanki.stats.Stats.SECONDS_PER_DAY;
  * [AdvancedStatistics]
  * [ReviewSimulator]
  * [StatsMetaInfo|mTitle:int;mType:int;mAxisTitles:int［］;mValueLabels:int［］;mColors:int［］;]
- * [Settings|computeNDays:int;computeMaxError:double;simulateNIterations:int]
+ * [Settings|mComputeNDays:int;computeMaxError:double;simulateNIterations:int]
  * [Deck|-did:long;newPerDay:int;revPerDay:int]
  * [Card|-id:long;ivl:int;factor:double;lastReview:int;due:int;correct:int|setAll();getType()]
  * [Review|prob:double;tElapsed:int]
@@ -139,9 +139,9 @@ public class AdvancedStatistics {
     private static final int REVIEW_OUTCOME_GOOD_PLUS_1 = 3;
     private static final int REVIEW_OUTCOME_EASY_PLUS_1 = 4;
 
-    private final ArrayUtils ArrayUtils = new ArrayUtils();
-    private final DeckFactory Decks = new DeckFactory();
-    private Settings Settings;
+    private final ArrayUtils mArrayUtils = new ArrayUtils();
+    private final DeckFactory mDecks = new DeckFactory();
+    private Settings mSettings;
 
     /**
      * Determine forecast statistics based on a computation or simulation of future reviews.
@@ -167,7 +167,7 @@ public class AdvancedStatistics {
             return metaInfo;
         }
         //To indicate that we calculated the statistics so that Stats.java knows that it shouldn't display the standard Forecast chart.
-        Settings = new Settings(context);
+        mSettings = new Settings(context);
         metaInfo.setStatsCalculated(true);
 
         Collection mCol = CollectionHelper.getInstance().getCol(context);
@@ -195,13 +195,13 @@ public class AdvancedStatistics {
 
         for (int t = 0;t < dues.size(); t++) {
             int[] data = dues.get(t);
-            int nReviews = data[REVIEW_TYPE_LEARN_PLUS_1] +
+            int mNReviews = data[REVIEW_TYPE_LEARN_PLUS_1] +
                            data[REVIEW_TYPE_YOUNG_PLUS_1] +
                            data[REVIEW_TYPE_MATURE_PLUS_1] +
                            data[REVIEW_TYPE_RELEARN_PLUS_1];
 
-            if(nReviews > mMaxCards)
-                mMaxCards = nReviews;                                                                     //Y-Axis: Max. value
+            if(mNReviews > mMaxCards)
+                mMaxCards = mNReviews;                                                                     //Y-Axis: Max. value
 
             //In the bar-chart, the bars will be stacked on top of each other.
             //For the i^{th} bar counting from the bottom we therefore have to
@@ -307,32 +307,32 @@ public class AdvancedStatistics {
         }
 
 
-        EaseClassifier classifier = new EaseClassifier(mCol.getTime(), mCol.getDb());
-        ReviewSimulator reviewSimulator = new ReviewSimulator(mCol.getDb(), classifier, end, chunk);
-        TodayStats todayStats = new TodayStats(mCol, Settings.getDayStartCutoff(mCol.getCrt()));
+        EaseClassifier mClassifier = new EaseClassifier(mCol.getTime(), mCol.getDb());
+        ReviewSimulator reviewSimulator = new ReviewSimulator(mCol.getDb(), mClassifier, end, chunk);
+        TodayStats todayStats = new TodayStats(mCol, mSettings.getDayStartCutoff(mCol.getCrt()));
 
         long t0 = mCol.getTime().intTimeMS();
-        SimulationResult simulationResult = reviewSimulator.simNreviews(Settings.getToday((int)mCol.getCrt()), mCol.getDecks(), dids, todayStats);
+        SimulationResult mSimulationResult = reviewSimulator.simNreviews(mSettings.getToday((int)mCol.getCrt()), mCol.getDecks(), dids, todayStats);
         long t1 = mCol.getTime().intTimeMS();
 
         Timber.d("Simulation of all decks took: %d ms", t1 - t0);
 
-        int[][] nReviews = ArrayUtils.transposeMatrix(simulationResult.getNReviews());
-        int[][] nInState = ArrayUtils.transposeMatrix(simulationResult.getNInState());
+        int[][] mNReviews = mArrayUtils.transposeMatrix(mSimulationResult.getNReviews());
+        int[][] mNInState = mArrayUtils.transposeMatrix(mSimulationResult.getNInState());
 
         //Append row with zeros and transpose to make it the same dimension as nReviews
         //int[][] nInState = simulationResult.getNInState();
         //if(ArrayUtils.nCols(nInState) > 0)
         //    nInState = ArrayUtils.append(nInState, new int[ArrayUtils.nCols(nInState)], 1);
 
-        ArrayList<int[]> dues = new ArrayList<>(nReviews.length + 2);
+        ArrayList<int[]> dues = new ArrayList<>(mNReviews.length + 2);
         // Forecasted number of reviews
-        for(int i = 0; i<nReviews.length; i++) {
+        for(int i = 0; i<mNReviews.length; i++) {
             dues.add(new int[] { i,                                         //Time
-                                 nReviews[i][REVIEW_TYPE_LEARN],
-                                 nReviews[i][REVIEW_TYPE_YOUNG],
-                                 nReviews[i][REVIEW_TYPE_MATURE],
-                                 nReviews[i][REVIEW_TYPE_RELEARN] });
+                                 mNReviews[i][REVIEW_TYPE_LEARN],
+                                 mNReviews[i][REVIEW_TYPE_YOUNG],
+                                 mNReviews[i][REVIEW_TYPE_MATURE],
+                                 mNReviews[i][REVIEW_TYPE_RELEARN] });
         }
 
         // small adjustment for a proper chartbuilding
@@ -352,16 +352,16 @@ public class AdvancedStatistics {
 
         for(int i = 0; i<dues.size(); i++) {
 
-            if(i < nInState.length) {
+            if(i < mNInState.length) {
                 nInStateCum[i] = new double[] {
                         i,
                         0,                                                  //Y-Axis: Relearn = 0 (we can't say 'we know x relearn cards on day d')
                         //nInState[i][0] + nInState[i][1] + nInState[i][2], //Y-Axis: New + Young + Mature
                         //nInState[i][0] + nInState[i][1],                  //Y-Axis: New + Young
                         //nInState[i][0],                                   //Y-Axis: New
-                        nInState[i][CARD_TYPE_MATURE],                      //Y-Axis: Mature
-                        nInState[i][CARD_TYPE_YOUNG],                       //Y-Axis: Young
-                        nInState[i][CARD_TYPE_NEW],                         //Y-Axis: New
+                        mNInState[i][CARD_TYPE_MATURE],                      //Y-Axis: Mature
+                        mNInState[i][CARD_TYPE_YOUNG],                       //Y-Axis: Young
+                        mNInState[i][CARD_TYPE_NEW],                         //Y-Axis: New
                 };
             }
             else {
@@ -380,78 +380,78 @@ public class AdvancedStatistics {
         //    nInState = ArrayUtils.append(nInState, nInState[nInState.length-1], dues.size() - nInState.length);
         //}
 
-        return new PlottableSimulationResult(dues, ArrayUtils.transposeMatrix(nInStateCum));
+        return new PlottableSimulationResult(dues, mArrayUtils.transposeMatrix(nInStateCum));
     }
 
     private static class Card {
 
-        private int ivl;
-        private double factor;
-        private int lastReview;
-        private int due;
-        private int correct;
-        private long id;
+        private int mIvl;
+        private double mFactor;
+        private int mLastReview;
+        private int mDue;
+        private int mCorrect;
+        private long mId;
 
         @Override
         public @NonNull String toString() {
-            return "Card [ivl=" + ivl + ", factor=" + factor + ", due=" + due + ", correct=" + correct + ", id="
-                    + id + "]";
+            return "Card [ivl=" + mIvl + ", factor=" + mFactor + ", due=" + mDue + ", correct=" + mCorrect + ", id="
+                    + mId + "]";
         }
 
-        public Card(long id, int ivl, int factor, int due, int correct, int lastReview) {
+        public Card(long mId, int mIvl, int mFactor, int mDue, int mCorrect, int mLastReview) {
             super();
-            this.id = id;
-            this.ivl = ivl;
-            this.factor = factor / 1000.0;
-            this.due = due;
-            this.correct = correct;
-            this.lastReview = lastReview;
+            this.mId = mId;
+            this.mIvl = mIvl;
+            this.mFactor = mFactor / 1000.0;
+            this.mDue = mDue;
+            this.mCorrect = mCorrect;
+            this.mLastReview = mLastReview;
         }
 
-        public void setAll(long id, int ivl, int factor, int due, int correct, int lastReview) {
-            this.id = id;
-            this.ivl = ivl;
-            this.factor = factor / 1000.0;
-            this.due = due;
-            this.correct = correct;
-            this.lastReview = lastReview;
+        public void setAll(long mId, int mIvl, int mFactor, int mDue, int mCorrect, int mLastReview) {
+            this.mId = mId;
+            this.mIvl = mIvl;
+            this.mFactor = mFactor / 1000.0;
+            this.mDue = mDue;
+            this.mCorrect = mCorrect;
+            this.mLastReview = mLastReview;
         }
 
-        public void setAll(Card card) {
-            this.id = card.id;
-            this.ivl = card.ivl;
-            this.factor = card.factor;
-            this.due = card.due;
-            this.correct = card.correct;
-            this.lastReview = card.lastReview;
+        public void setAll(Card mCard) {
+            this.mId = mCard.mId;
+            this.mIvl = mCard.mIvl;
+            this.mFactor = mCard.mFactor;
+            this.mDue = mCard.mDue;
+            this.mCorrect = mCard.mCorrect;
+            this.mLastReview = mCard.mLastReview;
         }
 
         public long getId() {
-            return id;
+            return mId;
         }
 
         public int getIvl() {
-            return ivl;
+            return mIvl;
         }
 
-        public void setIvl(int ivl) {
-            this.ivl = ivl;
+        public void setIvl(int mIvl) {
+            this.mIvl = mIvl;
         }
 
         public double getFactor() {
-            return factor;
+            return mFactor;
         }
 
-        public void setFactor(double factor) {
-            this.factor = factor;
+        public void setFactor(double mFactor) {
+            this.mFactor = mFactor;
         }
 
         public int getDue() {
-            return due;
+            return mDue;
         }
 
-        public void setDue(int due) {
-            this.due = due;
+        public void setDue(int mDue) {
+            this.mDue = mDue;
         }
 
         /**
@@ -459,9 +459,9 @@ public class AdvancedStatistics {
          * @return CARD_TYPE_NEW if interval = 0, CARD_TYPE_YOUNG if interval 1-20, CARD_TYPE_MATURE if interval >= 20
          */
         public int getType() {
-            if(ivl == 0) {
+            if(mIvl == 0) {
                 return CARD_TYPE_NEW;
-            } else if (ivl >= 21) {
+            } else if (mIvl >= 21) {
                 return CARD_TYPE_MATURE;
             } else {
                 return CARD_TYPE_YOUNG;
@@ -469,47 +469,47 @@ public class AdvancedStatistics {
         }
 
         public int getCorrect() {
-            return correct;
+            return mCorrect;
         }
 
-        public void setCorrect(int correct) {
-            this.correct = correct;
+        public void setCorrect(int mCorrect) {
+            this.mCorrect = mCorrect;
         }
 
         public int getLastReview() {
-            return lastReview;
+            return mLastReview;
         }
 
-        public void setLastReview(int lastReview) {
-            this.lastReview = lastReview;
+        public void setLastReview(int mLastReview) {
+            this.mLastReview = mLastReview;
         }
     }
 
     private class DeckFactory {
 
-        public Deck createDeck(long did, Decks decks) {
+        public Deck createDeck(long mDid, Decks decks) {
 
-            Timber.d("Trying to get deck settings for deck with id=" + did);
+            Timber.d("Trying to get deck settings for deck with id=" + mDid);
 
-            DeckConfig conf = decks.confForDid(did);
+            DeckConfig conf = decks.confForDid(mDid);
 
-            int newPerDay = Settings.getMaxNewPerDay();
-            int revPerDay = Settings.getMaxReviewsPerDay();
-            int initialFactor = Settings.getInitialFactor();
+            int mNewPerDay = mSettings.getMaxNewPerDay();
+            int mRevPerDay = mSettings.getMaxReviewsPerDay();
+            int mInitialFactor = mSettings.getInitialFactor();
 
             if (conf.isStd()) {
-                revPerDay = conf.getJSONObject("rev").getInt("perDay");
-                newPerDay = conf.getJSONObject("new").getInt("perDay");
-                initialFactor = conf.getJSONObject("new").getInt("initialFactor");
+                mRevPerDay = conf.getJSONObject("rev").getInt("perDay");
+                mNewPerDay = conf.getJSONObject("new").getInt("perDay");
+                mInitialFactor = conf.getJSONObject("new").getInt("initialFactor");
 
-                Timber.d("rev.perDay=%d", revPerDay);
-                Timber.d("new.perDay=%d", newPerDay);
-                Timber.d("new.initialFactor=%d", initialFactor);
+                Timber.d("rev.perDay=%d", mRevPerDay);
+                Timber.d("new.perDay=%d", mNewPerDay);
+                Timber.d("new.initialFactor=%d", mInitialFactor);
             } else {
                 Timber.d("dyn=%d", conf.getInt("dyn"));
             }
 
-            return new Deck(did, newPerDay, revPerDay, initialFactor);
+            return new Deck(mDid, mNewPerDay, mRevPerDay, mInitialFactor);
         }
     }
 
@@ -518,78 +518,78 @@ public class AdvancedStatistics {
      */
     private static class Deck {
 
-        private final long did;
+        private final long mDid;
 
-        private final int newPerDay;
-        private final int revPerDay;
-        private final int initialFactor;
+        private final int mNewPerDay;
+        private final int mRevPerDay;
+        private final int mInitialFactor;
 
-        public Deck(long did, int newPerDay, int revPerDay, int initialFactor) {
-            this.did = did;
-            this.newPerDay = newPerDay;
-            this.revPerDay = revPerDay;
-            this.initialFactor = initialFactor;
+        public Deck(long mDid, int mNewPerDay, int mRevPerDay, int mInitialFactor) {
+            this.mDid = mDid;
+            this.mNewPerDay = mNewPerDay;
+            this.mRevPerDay = mRevPerDay;
+            this.mInitialFactor = mInitialFactor;
         }
 
         public long getDid() {
-            return did;
+            return mDid;
         }
 
         public int getNewPerDay() {
-            return newPerDay;
+            return mNewPerDay;
         }
 
         public int getRevPerDay() {
-            return revPerDay;
+            return mRevPerDay;
         }
 
         public int getInitialFactor() {
-            return initialFactor;
+            return mInitialFactor;
         }
 
     }
 
     private static class CardIterator {
 
-        private final Cursor cur;
+        private final Cursor mCur;
 
-        private final int today;
-        private final Deck deck;
+        private final int mToday;
+        private final Deck mDeck;
 
-        public CardIterator(DB db, int today, Deck deck) {
+        public CardIterator(DB mDb, int mToday, Deck mDeck) {
 
-            this.today = today;
-            this.deck = deck;
+            this.mToday = mToday;
+            this.mDeck = mDeck;
 
-            long did = deck.getDid();
+            long mDid = mDeck.getDid();
 
             String query = "SELECT id, due, ivl, factor, type, reps " +
                     "FROM cards " +
-                    "WHERE did IN (" + did + ") " +
+                    "WHERE did IN (" + mDid + ") " +
                     "AND queue != " + Consts.QUEUE_TYPE_SUSPENDED + " " +   // ignore suspended cards
                     "order by id;";
             Timber.d("Forecast query: %s", query);
-            cur = db.query(query);
+            mCur = mDb.query(query);
 
         }
 
         public boolean moveToNext() {
-            return cur.moveToNext();
+            return mCur.moveToNext();
         }
 
-        public void current(Card card) {
-            card.setAll(cur.getLong(0),                                             //Id
-                    cur.getInt(5) == 0 ? 0 : cur.getInt(2),  		                //reps = 0 ? 0 : card interval
-                    cur.getInt(3) > 0 ? cur.getInt(3) :  deck.getInitialFactor(),   //factor
-                    Math.max(cur.getInt(1) - today, 0),                             //due
+        public void current(Card mCard) {
+            mCard.setAll(mCur.getLong(0),                                             //Id
+                    mCur.getInt(5) == 0 ? 0 : mCur.getInt(2),  		                //reps = 0 ? 0 : card interval
+                    mCur.getInt(3) > 0 ? mCur.getInt(3) :  mDeck.getInitialFactor(),   //factor
+                    Math.max(mCur.getInt(1) - mToday, 0),                             //due
                     1,                                                              //correct
                     -1                                                              //lastreview
                     );
         }
 
         public void close() {
-            if (cur != null && !cur.isClosed())
-                cur.close();
+            if (mCur != null && !mCur.isClosed())
+                mCur.close();
         }
     }
 
@@ -606,16 +606,16 @@ public class AdvancedStatistics {
      */
     private static class EaseClassifier {
 
-        private final Random random;
+        private final Random mRandom;
 
-        private final DB db;
-        private double[][] probabilities;
-        private double[][] probabilitiesCumulative;
+        private final DB mDb;
+        private double[][] mProbabilities;
+        private double[][] mProbabilitiesCumulative;
 
         //# Prior that half of new cards are answered correctly
-        private final int[] priorNew = {5, 0, 5, 0};		//half of new cards are answered correctly
-        private final int[] priorYoung = {1, 0, 9, 0};	//90% of young cards get "good" response
-        private final int[] priorMature = {1, 0, 9, 0};	//90% of mature cards get "good" response
+        private final int[] mPriorNew = {5, 0, 5, 0};		//half of new cards are answered correctly
+        private final int[] mPriorYoung = {1, 0, 9, 0};	//90% of young cards get "good" response
+        private final int[] mPriorMature = {1, 0, 9, 0};	//90% of mature cards get "good" response
 
 
         //TODO: should we determine these per deck or over decks?
@@ -651,10 +651,10 @@ public class AdvancedStatistics {
                 queryBaseYoungMature
                         + "where type=" + Consts.CARD_TYPE_LRN + " and lastIvl >= 21;";
 
-        public EaseClassifier(Time time, DB db) {
-            this.db = db;
+        public EaseClassifier(Time time, DB mDb) {
+            this.mDb = mDb;
 
-            singleReviewOutcome = new ReviewOutcome(null, 0);
+            mSingleReviewOutcome = new ReviewOutcome(null, 0);
 
             long t0 = time.intTimeMS();
             calculateCumProbabilitiesForNewEasePerCurrentEase();
@@ -662,15 +662,15 @@ public class AdvancedStatistics {
 
             Timber.d("Calculating probability distributions took: %d ms", t1 - t0);
 
-            Timber.d("new\t\t%s", Arrays.toString(this.probabilities[0]));
-            Timber.d("young\t\t%s", Arrays.toString(this.probabilities[1]));
-            Timber.d("mature\t%s", Arrays.toString(this.probabilities[2]));
+            Timber.d("new\t\t%s", Arrays.toString(this.mProbabilities[0]));
+            Timber.d("young\t\t%s", Arrays.toString(this.mProbabilities[1]));
+            Timber.d("mature\t%s", Arrays.toString(this.mProbabilities[2]));
 
-            Timber.d("Cumulative new\t\t%s", Arrays.toString(this.probabilitiesCumulative[0]));
-            Timber.d("Cumulative young\t\t%s", Arrays.toString(this.probabilitiesCumulative[1]));
-            Timber.d("Cumulative mature\t%s", Arrays.toString(this.probabilitiesCumulative[2]));
+            Timber.d("Cumulative new\t\t%s", Arrays.toString(this.mProbabilitiesCumulative[0]));
+            Timber.d("Cumulative young\t\t%s", Arrays.toString(this.mProbabilitiesCumulative[1]));
+            Timber.d("Cumulative mature\t%s", Arrays.toString(this.mProbabilitiesCumulative[2]));
 
-            random = new Random();
+            mRandom = new Random();
         }
 
         private double[] cumsum(double[] p) {
@@ -686,16 +686,16 @@ public class AdvancedStatistics {
         }
 
         private void calculateCumProbabilitiesForNewEasePerCurrentEase() {
-            this.probabilities = new double[3][];
-            this.probabilitiesCumulative = new double[3][];
+            this.mProbabilities = new double[3][];
+            this.mProbabilitiesCumulative = new double[3][];
 
-            this.probabilities[CARD_TYPE_NEW] = calculateProbabilitiesForNewEaseForCurrentEase(queryNew, priorNew);
-            this.probabilities[CARD_TYPE_YOUNG] = calculateProbabilitiesForNewEaseForCurrentEase(queryYoung, priorYoung);
-            this.probabilities[CARD_TYPE_MATURE] = calculateProbabilitiesForNewEaseForCurrentEase(queryMature, priorMature);
+            this.mProbabilities[CARD_TYPE_NEW] = calculateProbabilitiesForNewEaseForCurrentEase(queryNew, mPriorNew);
+            this.mProbabilities[CARD_TYPE_YOUNG] = calculateProbabilitiesForNewEaseForCurrentEase(queryYoung, mPriorYoung);
+            this.mProbabilities[CARD_TYPE_MATURE] = calculateProbabilitiesForNewEaseForCurrentEase(queryMature, mPriorMature);
 
-            this.probabilitiesCumulative[CARD_TYPE_NEW] = cumsum(this.probabilities[CARD_TYPE_NEW]);
-            this.probabilitiesCumulative[CARD_TYPE_YOUNG] = cumsum(this.probabilities[CARD_TYPE_YOUNG]);
-            this.probabilitiesCumulative[CARD_TYPE_MATURE] = cumsum(this.probabilities[CARD_TYPE_MATURE]);
+            this.mProbabilitiesCumulative[CARD_TYPE_NEW] = cumsum(this.mProbabilities[CARD_TYPE_NEW]);
+            this.mProbabilitiesCumulative[CARD_TYPE_YOUNG] = cumsum(this.mProbabilities[CARD_TYPE_YOUNG]);
+            this.mProbabilitiesCumulative[CARD_TYPE_MATURE] = cumsum(this.mProbabilities[CARD_TYPE_MATURE]);
         }
 
         /**
@@ -717,15 +717,15 @@ public class AdvancedStatistics {
 
             int n = prior[REVIEW_OUTCOME_REPEAT] + prior[REVIEW_OUTCOME_HARD] + prior[REVIEW_OUTCOME_GOOD] + prior[REVIEW_OUTCOME_EASY];
 
-            try (Cursor cur = db.query(queryNewEaseCountForCurrentEase)) {
-                cur.moveToNext();
+            try (Cursor mCur = mDb.query(queryNewEaseCountForCurrentEase)) {
+                mCur.moveToNext();
 
-                freqs[REVIEW_OUTCOME_REPEAT]    += cur.getInt(REVIEW_OUTCOME_REPEAT_PLUS_1);        //Repeat
-                freqs[REVIEW_OUTCOME_HARD]      += cur.getInt(REVIEW_OUTCOME_HARD_PLUS_1);          //Hard
-                freqs[REVIEW_OUTCOME_GOOD]      += cur.getInt(REVIEW_OUTCOME_GOOD_PLUS_1);          //Good
-                freqs[REVIEW_OUTCOME_EASY]      += cur.getInt(REVIEW_OUTCOME_EASY_PLUS_1);          //Easy
+                freqs[REVIEW_OUTCOME_REPEAT]    += mCur.getInt(REVIEW_OUTCOME_REPEAT_PLUS_1);        //Repeat
+                freqs[REVIEW_OUTCOME_HARD]      += mCur.getInt(REVIEW_OUTCOME_HARD_PLUS_1);          //Hard
+                freqs[REVIEW_OUTCOME_GOOD]      += mCur.getInt(REVIEW_OUTCOME_GOOD_PLUS_1);          //Good
+                freqs[REVIEW_OUTCOME_EASY]      += mCur.getInt(REVIEW_OUTCOME_EASY_PLUS_1);          //Easy
 
-                int nQuery = cur.getInt(0);         //N
+                int nQuery = mCur.getInt(0);         //N
 
                 n += nQuery;
 
@@ -740,73 +740,73 @@ public class AdvancedStatistics {
         }
 
         private int draw(double[] p) {
-            return searchsorted(p, random.nextDouble());
+            return searchsorted(p, mRandom.nextDouble());
         }
 
-        private int searchsorted(double[] p, double random) {
-            if(random <= p[0]) return 0;
-            if(random <= p[1]) return 1;
-            if(random <= p[2]) return 2;
+        private int searchsorted(double[] p, double mRandom) {
+            if(mRandom <= p[0]) return 0;
+            if(mRandom <= p[1]) return 1;
+            if(mRandom <= p[2]) return 2;
             return 3;
         }
 
-        private final ReviewOutcome singleReviewOutcome;
+        private final ReviewOutcome mSingleReviewOutcome;
         public ReviewOutcome simSingleReview(Card c){
 
             @Consts.CARD_TYPE int type = c.getType();
 
-            int outcome = draw(probabilitiesCumulative[type]);
+            int mOutcome = draw(mProbabilitiesCumulative[type]);
 
-            applyOutcomeToCard(c, outcome);
+            applyOutcomeToCard(c, mOutcome);
 
-            singleReviewOutcome.setAll(c, 1);
-            return singleReviewOutcome;
+            mSingleReviewOutcome.setAll(c, 1);
+            return mSingleReviewOutcome;
         }
 
-        public ReviewOutcome simSingleReview(Card c, int outcome) {
+        public ReviewOutcome simSingleReview(Card c, int mOutcome) {
 
             int c_type = c.getType();
 
             //For first review, re-use current card to prevent creating too many objects
-            applyOutcomeToCard(c, outcome);
-            singleReviewOutcome.setAll(c, probabilities[c_type][outcome]);
+            applyOutcomeToCard(c, mOutcome);
+            mSingleReviewOutcome.setAll(c, mProbabilities[c_type][mOutcome]);
 
-            return singleReviewOutcome;
+            return mSingleReviewOutcome;
         }
 
-        private void applyOutcomeToCard(Card c, int outcome) {
+        private void applyOutcomeToCard(Card c, int mOutcome) {
 
             @Consts.CARD_TYPE int type = c.getType();
-            int ivl = c.getIvl();
-            double factor = c.getFactor();
+            int mIvl = c.getIvl();
+            double mFactor = c.getFactor();
 
             if(type == CARD_TYPE_NEW) {
-                if (outcome <= 2)
-                    ivl = 1;
+                if (mOutcome <= 2)
+                    mIvl = 1;
                 else
-                    ivl = 4;
+                    mIvl = 4;
             }
             else {
-                switch(outcome) {
+                switch(mOutcome) {
                     case REVIEW_OUTCOME_REPEAT:
-                        ivl = 1;
+                        mIvl = 1;
                         //factor = Math.max(1300, factor - 200);
                         break;
                     case REVIEW_OUTCOME_HARD:
-                        ivl *= 1.2;
+                        mIvl *= 1.2;
                         break;
                     case REVIEW_OUTCOME_GOOD:
-                        ivl *= 1.2 * factor;
+                        mIvl *= 1.2 * mFactor;
                         break;
                     case REVIEW_OUTCOME_EASY:
                     default:
-                        ivl *= 1.2 * 2. * factor;
+                        mIvl *= 1.2 * 2. * mFactor;
                         break;
                 }
             }
 
-            c.setIvl(ivl);
-            c.setCorrect((outcome > 0) ? 1 : 0);
+            c.setIvl(mIvl);
+            c.setCorrect((mOutcome > 0) ? 1 : 0);
             //c.setTypetype);
             //c.setIvl(60);
             //c.setFactor(factor);
@@ -815,12 +815,12 @@ public class AdvancedStatistics {
 
     public static class TodayStats {
 
-        private final Map<Long, Integer> nLearnedPerDeckId;
+        private final Map<Long, Integer> mNLearnedPerDeckId;
 
         public TodayStats(Collection col, long dayStartCutoff) {
 
-            nLearnedPerDeckId = new HashMap<>(col.getDecks().count());
-            SupportSQLiteDatabase db = col.getDb().getDatabase();
+            mNLearnedPerDeckId = new HashMap<>(col.getDecks().count());
+            SupportSQLiteDatabase mDb = col.getDb().getDatabase();
 
             String query = "select cards.did, "+
                     "sum(case when revlog.type = " + CARD_TYPE_NEW + " then 1 else 0 end)"+ /* learning */
@@ -828,17 +828,17 @@ public class AdvancedStatistics {
                     " group by cards.did";
             Timber.d("AdvancedStatistics.TodayStats query: %s", query);
 
-            try (Cursor cur = db.query(query)) {
+            try (Cursor mCur = mDb.query(query)) {
 
-                while(cur.moveToNext()) {
-                    nLearnedPerDeckId.put(cur.getLong(0), cur.getInt(1));
+                while(mCur.moveToNext()) {
+                    mNLearnedPerDeckId.put(mCur.getLong(0), mCur.getInt(1));
                 }
             }
         }
 
-        public int getNLearned(long did) {
-            if(nLearnedPerDeckId.containsKey(did)) {
-                return nLearnedPerDeckId.get(did);
+        public int getNLearned(long mDid) {
+            if(mNLearnedPerDeckId.containsKey(mDid)) {
+                return mNLearnedPerDeckId.get(mDid);
             }
             else {
                 return 0;
@@ -848,27 +848,27 @@ public class AdvancedStatistics {
 
     public static class NewCardSimulator {
 
-        private int nAddedToday;
-        private int tAdd;
+        private int mNAddedToday;
+        private int mTAdd;
 
         public NewCardSimulator() {
             reset(0);
         }
 
-        public int simulateNewCard(Deck deck) {
-            nAddedToday++;
-            int tElapsed = tAdd;	//differs from online
-            if (nAddedToday >= deck.getNewPerDay()) {
-                tAdd++;
-                nAddedToday = 0;
+        public int simulateNewCard(Deck mDeck) {
+            mNAddedToday++;
+            int mTElapsed = mTAdd;	//differs from online
+            if (mNAddedToday >= mDeck.getNewPerDay()) {
+                mTAdd++;
+                mNAddedToday = 0;
             }
-            return tElapsed;
+            return mTElapsed;
         }
 
-        public void reset(int nAddedToday)
+        public void reset(int mNAddedToday)
         {
-            this.nAddedToday = nAddedToday;
-            this.tAdd = 0;
+            this.mNAddedToday = mNAddedToday;
+            this.mTAdd = 0;
         }
     }
 
@@ -883,39 +883,39 @@ public class AdvancedStatistics {
      */
     private class ReviewSimulator {
 
-        private final DB db;
-        private final EaseClassifier classifier;
+        private final DB mDb;
+        private final EaseClassifier mClassifier;
 
         //TODO: also exists in Review
-        private final int nTimeBins;
-        private final int timeBinLength;
+        private final int mNTimeBins;
+        private final int mTimeBinLength;
 
-        private final int tMax;
+        private final int mTMax;
 
-        private final NewCardSimulator newCardSimulator = new NewCardSimulator();
+        private final NewCardSimulator mNewCardSimulator = new NewCardSimulator();
 
-        public ReviewSimulator(DB db, EaseClassifier classifier, int nTimeBins, int timeBinLength) {
-            this.db = db;
-            this.classifier = classifier;
+        public ReviewSimulator(DB mDb, EaseClassifier mClassifier, int mNTimeBins, int mTimeBinLength) {
+            this.mDb = mDb;
+            this.mClassifier = mClassifier;
 
-            this.nTimeBins = nTimeBins;
-            this.timeBinLength = timeBinLength;
+            this.mNTimeBins = mNTimeBins;
+            this.mTimeBinLength = mTimeBinLength;
 
-            this.tMax = this.nTimeBins * this.timeBinLength;
+            this.mTMax = this.mNTimeBins * this.mTimeBinLength;
         }
 
-        public SimulationResult simNreviews(int today, Decks decks, String didsStr, TodayStats todayStats) {
+        public SimulationResult simNreviews(int mToday, Decks decks, String didsStr, TodayStats todayStats) {
 
-            SimulationResult simulationResultAggregated = new SimulationResult(nTimeBins, timeBinLength, SimulationResult.DOUBLE_TO_INT_MODE_ROUND);
+            SimulationResult simulationResultAggregated = new SimulationResult(mNTimeBins, mTimeBinLength, SimulationResult.DOUBLE_TO_INT_MODE_ROUND);
 
-            long[] dids = ArrayUtils.stringToLongArray(didsStr);
-            int nIterations = Settings.getSimulateNIterations();
+            long[] dids = mArrayUtils.stringToLongArray(didsStr);
+            int nIterations = mSettings.getSimulateNIterations();
             double nIterationsInv = 1.0 / nIterations;
 
-            for(long did : dids) {
+            for(long mDid : dids) {
                 for(int iteration = 0; iteration < nIterations; iteration++) {
-                    newCardSimulator.reset(todayStats.getNLearned(did));
-                    simulationResultAggregated.add(simNreviews(today, Decks.createDeck(did, decks)), nIterationsInv);
+                    mNewCardSimulator.reset(todayStats.getNLearned(mDid));
+                    simulationResultAggregated.add(simNreviews(mToday, mDecks.createDeck(mDid, decks)), nIterationsInv);
                 }
             }
 
@@ -923,19 +923,19 @@ public class AdvancedStatistics {
 
         }
 
-        private SimulationResult simNreviews(int today, Deck deck) {
+        private SimulationResult simNreviews(int mToday, Deck mDeck) {
 
-            SimulationResult simulationResult;
+            SimulationResult mSimulationResult;
 
             //we schedule a review if the number of reviews has not yet reached the maximum # reviews per day
             //If we compute the simulationresult, we keep track of the average number of reviews
             //Since it's the average, it can be a non-integer
             //Adding a review to a non-integer can make it exceed the maximum # reviews per day, but not by 1 or more
             //So if we take the floor when displaying it, we will display the maximum # reviews
-            if(Settings.getComputeNDays() > 0)
-                simulationResult = new SimulationResult(nTimeBins, timeBinLength, SimulationResult.DOUBLE_TO_INT_MODE_FLOOR);
+            if(mSettings.getComputeNDays() > 0)
+                mSimulationResult = new SimulationResult(mNTimeBins, mTimeBinLength, SimulationResult.DOUBLE_TO_INT_MODE_FLOOR);
             else
-                simulationResult = new SimulationResult(nTimeBins, timeBinLength, SimulationResult.DOUBLE_TO_INT_MODE_ROUND);
+                mSimulationResult = new SimulationResult(mNTimeBins, mTimeBinLength, SimulationResult.DOUBLE_TO_INT_MODE_ROUND);
 
             //nSmooth=1
 
@@ -943,10 +943,10 @@ public class AdvancedStatistics {
             //Forecasted final state of deck
             //finalIvl = np.empty((nSmooth, nCards), dtype='f8')
 
-            Timber.d("today: %d", today);
+            Timber.d("today: %d", mToday);
 
-            Stack<Review> reviews = new Stack<>();
-            ArrayList<Review> reviewList = new ArrayList<>();
+            Stack<Review> mReviews = new Stack<>();
+            ArrayList<Review> mReviewList = new ArrayList<>();
 
             //By having simulateReview add future reviews depending on which simulation of this card this is (the nth) we can:
             //1. Do monte carlo simulation if we add nIterations future reviews if n = 1
@@ -958,30 +958,30 @@ public class AdvancedStatistics {
             //   in simulations of previous cards.
             //2. Do a complete traversal of the future reviews tree if we add k future reviews for all n
             //   We accept the drawback as mentioned in (1).
-            //3. Do any combination of these (controlled by computeNDays and computeMaxError)
+            //3. Do any combination of these (controlled by mComputeNDays and computeMaxError)
 
-            Card card = new Card(0, 0, 0, 0, 0, 0);
+            Card mCard = new Card(0, 0, 0, 0, 0, 0);
             CardIterator cardIterator = null;
-            Review review = new Review(deck, simulationResult, classifier, reviews, reviewList);
+            Review review = new Review(mDeck, mSimulationResult, mClassifier, mReviews, mReviewList);
 
             try {
-                cardIterator = new CardIterator(db, today, deck);
+                cardIterator = new CardIterator(mDb, mToday, mDeck);
 
                 //int cardN = 0;
 
                 while (cardIterator.moveToNext()) {
 
-                    cardIterator.current(card);
+                    cardIterator.current(mCard);
 
-                    review.newCard(card, newCardSimulator);
+                    review.mNewCard(mCard, mNewCardSimulator);
 
-                    if (review.getT() < tMax)
-                        reviews.push(review);
+                    if (review.getT() < mTMax)
+                        mReviews.push(review);
 
                     //Timber.d("Card started: %d", cardN);
 
-                    while (!reviews.isEmpty()) {
-                        reviews.pop().simulateReview();
+                    while (!mReviews.isEmpty()) {
+                        mReviews.pop().simulateReview();
                     }
 
                     //Timber.d("Card done: %d", cardN++);
@@ -992,10 +992,10 @@ public class AdvancedStatistics {
                 if(cardIterator != null)
                     cardIterator.close();
             }
-            ArrayUtils.formatMatrix("nReviews", simulationResult.getNReviews(), "%04d ");
-            ArrayUtils.formatMatrix("nInState", simulationResult.getNInState(), "%04d ");
+            mArrayUtils.formatMatrix("nReviews", mSimulationResult.getNReviews(), "%04d ");
+            mArrayUtils.formatMatrix("nInState", mSimulationResult.getNInState(), "%04d ");
 
-            return simulationResult;
+            return mSimulationResult;
         }
     }
 
@@ -1004,36 +1004,36 @@ public class AdvancedStatistics {
      */
     private static class Settings {
 
-        private final int computeNDays;
-        private final double computeMaxError;
-        private final int simulateNIterations;
+        private final int mComputeNDays;
+        private final double mComputeMaxError;
+        private final int mSimulateNIterations;
         private final Collection mCol;
 
         public Settings(Context context) {
             SharedPreferences prefs = AnkiDroidApp.getSharedPrefs(context);
             mCol = CollectionHelper.getInstance().getCol(context);
 
-            computeNDays = prefs.getInt("advanced_forecast_stats_compute_n_days", 0);
+            mComputeNDays = prefs.getInt("advanced_forecast_stats_compute_n_days", 0);
             int computePrecision = prefs.getInt("advanced_forecast_stats_compute_precision", 90);
-            computeMaxError = (100-computePrecision)/100.0;
+            mComputeMaxError = (100-computePrecision)/100.0;
 
-            simulateNIterations = prefs.getInt("advanced_forecast_stats_mc_n_iterations", 1);
+            mSimulateNIterations = prefs.getInt("advanced_forecast_stats_mc_n_iterations", 1);
 
-            Timber.d("computeNDays: %s", computeNDays);
-            Timber.d("computeMaxError: %s", computeMaxError);
-            Timber.d("simulateNIterations: %s", simulateNIterations);
+            Timber.d("mComputeNDays: %s", mComputeNDays);
+            Timber.d("computeMaxError: %s", mComputeMaxError);
+            Timber.d("simulateNIterations: %s", mSimulateNIterations);
         }
 
         public int getComputeNDays() {
-            return computeNDays;
+            return mComputeNDays;
         }
 
         public double getComputeMaxError() {
-            return computeMaxError;
+            return mComputeMaxError;
         }
 
         public int getSimulateNIterations() {
-            return simulateNIterations;
+            return mSimulateNIterations;
         }
 
         /**
@@ -1077,8 +1077,8 @@ public class AdvancedStatistics {
          * @return The beginning of today in milliseconds counted from the time at which the collection was created
          */
         public long getDayStartCutoff (long collectionCreatedTime) {
-            long today = getToday(collectionCreatedTime);
-            return (collectionCreatedTime + (today * SECONDS_PER_DAY)) * 1000;
+            long mToday = getToday(collectionCreatedTime);
+            return (collectionCreatedTime + (mToday * SECONDS_PER_DAY)) * 1000;
         }
     }
 
@@ -1094,7 +1094,7 @@ public class AdvancedStatistics {
             return matrix;
         }
 
-        public int[][] toIntMatrix(double[][] doubleMatrix, int doubleToIntMode) {
+        public int[][] toIntMatrix(double[][] doubleMatrix, int mDoubleToIntMode) {
             int m = doubleMatrix.length;
             if(m == 0)
                 return new int[0][];
@@ -1104,7 +1104,7 @@ public class AdvancedStatistics {
             for(int i=0; i<m; i++) {
                 intMatrix[i] = new int[n];
                 for(int j=0; j<n; j++) {
-                    if (doubleToIntMode == SimulationResult.DOUBLE_TO_INT_MODE_ROUND)
+                    if (mDoubleToIntMode == SimulationResult.DOUBLE_TO_INT_MODE_ROUND)
                         intMatrix[i][j] = (int) Math.round(doubleMatrix[i][j]);
                     else
                         intMatrix[i][j] = (int) doubleMatrix[i][j];
@@ -1220,12 +1220,12 @@ public class AdvancedStatistics {
         public static final int DOUBLE_TO_INT_MODE_FLOOR = 0;
         public static final int DOUBLE_TO_INT_MODE_ROUND = 1;
 
-        private final int doubleToIntMode;
+        private final int mDoubleToIntMode;
 
-        private final int nTimeBins;
-        private final int timeBinLength;
+        private final int mNTimeBins;
+        private final int mTimeBinLength;
 
-        private final int nDays;
+        private final int mNDays;
 
         /**
          * Forecasted number of reviews per time bin (a time bin contains statistics for 1 or a multiple of days)
@@ -1236,13 +1236,13 @@ public class AdvancedStatistics {
          * 3 = Relearn
          * Second dimension: time
          */
-        private final double[][] nReviews;
+        private final double[][] mNReviews;
 
         /**
          * Forecasted number of reviews per day.
          * @see #nReviews
          */
-        private final double[][] nReviewsPerDay;
+        private final double[][] mNReviewsPerDay;
 
         /**
          * Forecasted number of cards per state
@@ -1252,27 +1252,27 @@ public class AdvancedStatistics {
          * 2 = Mature
          * Second dimension: time
          */
-        private final double[][] nInState;
+        private final double[][] mNInState;
 
         /**
          * Create an empty SimulationResult.
          * @param nTimeBins Number of time bins.
          * @param timeBinLength Length of 1 time bin in days.
          */
-        public SimulationResult(int nTimeBins, int timeBinLength, int doubleToIntMode) {
-            nReviews = ArrayUtils.createDoubleMatrix(REVIEW_TYPE_COUNT, nTimeBins);
-            nReviewsPerDay = ArrayUtils.createDoubleMatrix(REVIEW_TYPE_COUNT, nTimeBins * timeBinLength);
-            nInState = ArrayUtils.createDoubleMatrix(CARD_TYPE_COUNT, nTimeBins);
+        public SimulationResult(int mNTimeBins, int mTimeBinLength, int mDoubleToIntMode) {
+            mNReviews = mArrayUtils.createDoubleMatrix(REVIEW_TYPE_COUNT, mNTimeBins);
+            mNReviewsPerDay = mArrayUtils.createDoubleMatrix(REVIEW_TYPE_COUNT, mNTimeBins * mTimeBinLength);
+            mNInState = mArrayUtils.createDoubleMatrix(CARD_TYPE_COUNT, mNTimeBins);
 
-            this.nTimeBins = nTimeBins;
-            this.timeBinLength = timeBinLength;
-            this.nDays = nTimeBins * timeBinLength;
+            this.mNTimeBins = mNTimeBins;
+            this.mTimeBinLength = mTimeBinLength;
+            this.mNDays = mNTimeBins * mTimeBinLength;
 
-            this.doubleToIntMode = doubleToIntMode;
+            this.mDoubleToIntMode = mDoubleToIntMode;
         }
 
         public int getnDays() {
-            return nDays;
+            return mNDays;
         }
 
         /**
@@ -1280,29 +1280,29 @@ public class AdvancedStatistics {
          * Use to gather statistics over decks.
          * @param res2Add Statistics to be added to the current statistics.
          */
-        public void add(SimulationResult res2Add, double prob) {
+        public void add(SimulationResult res2Add, double mProb) {
 
-            int[][] nReviews = res2Add.getNReviews();
-            int[][] nInState = res2Add.getNInState();
+            int[][] mNReviews = res2Add.getNReviews();
+            int[][] mNInState = res2Add.getNInState();
 
-            for(int i = 0; i < nReviews.length; i++)
-                for(int j = 0; j < nReviews[i].length; j++)
-                    this.nReviews[i][j] += nReviews[i][j] * prob;
+            for(int i = 0; i < mNReviews.length; i++)
+                for(int j = 0; j < mNReviews[i].length; j++)
+                    this.mNReviews[i][j] += mNReviews[i][j] * mProb;
 
             //This method is only used to aggregate over decks
             //We do not update nReviewsPerDay since it is not needed for the SimulationResult aggregated over decks.
 
-            for(int i = 0; i < nInState.length; i++)
-                for(int j = 0; j < nInState[i].length; j++)
-                    this.nInState[i][j] += nInState[i][j] * prob;
+            for(int i = 0; i < mNInState.length; i++)
+                for(int j = 0; j < mNInState[i].length; j++)
+                    this.mNInState[i][j] += mNInState[i][j] * mProb;
         }
 
         public int[][] getNReviews() {
-            return ArrayUtils.toIntMatrix(nReviews, doubleToIntMode);
+            return mArrayUtils.toIntMatrix(mNReviews, mDoubleToIntMode);
         }
 
         public int[][] getNInState() {
-            return ArrayUtils.toIntMatrix(nInState, doubleToIntMode);
+            return mArrayUtils.toIntMatrix(mNInState, mDoubleToIntMode);
         }
 
         /**
@@ -1318,9 +1318,9 @@ public class AdvancedStatistics {
          * @return Number of reviews of young and mature cards simulated at time tElapsed.
          * This excludes new cards and relearns as they don't count towards the limit.
          */
-        public int nReviewsDoneToday(int tElapsed) {
-            return (int)(nReviewsPerDay[REVIEW_TYPE_YOUNG][tElapsed] +
-                         nReviewsPerDay[REVIEW_TYPE_MATURE][tElapsed]);
+        public int nReviewsDoneToday(int mTElapsed) {
+            return (int)(mNReviewsPerDay[REVIEW_TYPE_YOUNG][mTElapsed] +
+                         mNReviewsPerDay[REVIEW_TYPE_MATURE][mTElapsed]);
         }
 
         /**
@@ -1328,9 +1328,9 @@ public class AdvancedStatistics {
          * @param cardType  Card type
          * @param t Day for which to increment
          */
-        public void incrementNReviews(int cardType, int t, double prob) {
-            nReviews[cardType][t / timeBinLength]+= prob;
-            nReviewsPerDay[cardType][t]+= prob;
+        public void incrementNReviews(int cardType, int t, double mProb) {
+            mNReviews[cardType][t / mTimeBinLength]+= mProb;
+            mNReviewsPerDay[cardType][t]+= mProb;
         }
 
         /**
@@ -1339,15 +1339,15 @@ public class AdvancedStatistics {
          * @param tFrom The first day for which to update the state.
          * @param tTo The day after the last day for which to update the state.
          */
-        public void updateNInState(Card card, int tFrom, int tTo, double prob) {
-            int cardType = card.getType();
+        public void updateNInState(Card mCard, int tFrom, int tTo, double mProb) {
+            int cardType = mCard.getType();
 
-            int t0 = tFrom / timeBinLength;
-            int t1 = tTo / timeBinLength;
+            int t0 = tFrom / mTimeBinLength;
+            int t1 = tTo / mTimeBinLength;
 
             for(int t = t0; t < t1; t++)
-                if(t < nTimeBins) {
-                    nInState[cardType][t]+= prob;
+                if(t < mNTimeBins) {
+                    mNInState[cardType][t]+= mProb;
                 } else {
                     return;
                 }
@@ -1363,29 +1363,29 @@ public class AdvancedStatistics {
          *
          * @see #updateNInState(Card, int, int, double)
          */
-        public void updateNInState(Card prevCard, Card card, int tFrom, int tTo, double prob) {
-            int lastReview = prevCard.getLastReview();
+        public void updateNInState(Card mPrevCard, Card mCard, int tFrom, int tTo, double mProb) {
+            int mLastReview = mPrevCard.getLastReview();
 
-            int prevCardType = prevCard.getType();
-            int cardType = card.getType();
+            int prevCardType = mPrevCard.getType();
+            int cardType = mCard.getType();
 
-            int t0 = tFrom / timeBinLength;
-            int t1 = Math.min(lastReview, tTo) / timeBinLength;
+            int t0 = tFrom / mTimeBinLength;
+            int t1 = Math.min(mLastReview, tTo) / mTimeBinLength;
 
             //Replace state set during last review
             for(int t = t0; t < t1; t++)
-                if(t < nTimeBins) {
-                    nInState[prevCardType][t]-= prob;
+                if(t < mNTimeBins) {
+                    mNInState[prevCardType][t]-= mProb;
                 } else {
                     break;
                 }
 
-            t1 = tTo / timeBinLength;
+            t1 = tTo / mTimeBinLength;
 
             //With state set during new review
             for(int t = t0; t < t1; t++)
-                if(t < nTimeBins) {
-                    nInState[cardType][t]+=prob;
+                if(t < mNTimeBins) {
+                    mNInState[cardType][t]+=mProb;
                 } else {
                     return;
                 }
@@ -1406,7 +1406,7 @@ public class AdvancedStatistics {
         //   2 = Young
         //   3 = Mature
         //   4 = Relearn
-        private final ArrayList<int[]> nReviews;
+        private final ArrayList<int[]> mNReviews;
 
         // Forecasted number of cards per state
         // First dimension:
@@ -1416,19 +1416,19 @@ public class AdvancedStatistics {
         //   2 = Mature
         //   1 = Zeros (we can't say 'we know x relearn cards on day d')
         // Second dimension: time
-        private final double[][] nInState;
+        private final double[][] mNInState;
 
-        public PlottableSimulationResult(ArrayList<int[]> nReviews, double[][] nInState) {
-            this.nReviews = nReviews;
-            this.nInState = nInState;
+        public PlottableSimulationResult(ArrayList<int[]> mNReviews, double[][] mNInState) {
+            this.mNReviews = mNReviews;
+            this.mNInState = mNInState;
         }
 
         public ArrayList<int[]> getNReviews() {
-            return nReviews;
+            return mNReviews;
         }
 
         public double[][] getNInState() {
-            return nInState;
+            return mNInState;
         }
     }
 
@@ -1438,32 +1438,32 @@ public class AdvancedStatistics {
      * A ReviewOutcome bundles the probability of the outcome and the card with changed state.
      */
     private static class ReviewOutcome {
-        private Card card;
-        private double prob;
+        private Card mCard;
+        private double mProb;
 
-        public ReviewOutcome(Card card, double prob) {
-            this.card = card;
-            this.prob = prob;
+        public ReviewOutcome(Card mCard, double mProb) {
+            this.mCard = mCard;
+            this.mProb = mProb;
         }
 
-        public void setAll(Card card, double prob) {
-            this.card = card;
-            this.prob = prob;
+        public void setAll(Card mCard, double mProb) {
+            this.mCard = mCard;
+            this.mProb = mProb;
         }
 
         public Card getCard() {
-            return card;
+            return mCard;
         }
 
         public double getProb() {
-            return prob;
+            return mProb;
         }
 
         @Override
         public @NonNull String toString() {
             return "ReviewOutcome{" +
-                    "card=" + card +
-                    ", prob=" + prob +
+                    "card=" + mCard +
+                    ", prob=" + mProb +
                     '}';
         }
     }
@@ -1476,23 +1476,23 @@ public class AdvancedStatistics {
         /**
          * Deck-specific setting stored separately to save a method call on the deck object)
          */
-        private final int maxReviewsPerDay;
+        private final int mMaxReviewsPerDay;
 
         /**
          * Number of reviews simulated for this card at time < tElapsed
          */
-        private int nPrevRevs;
+        private int mNPrevRevs;
 
         /**
          * The probability that the outcomes of the reviews simulated for this card at time < tElapsed are such that
          * this review [with this state of the card] will occur [at this time (tElapsed)].
          */
-        private double prob;
+        private double mProb;
 
         /**
          * The time instant at which the review takes place.
          */
-        private int tElapsed;
+        private int mTElapsed;
 
         /**
          * The outcome of the review.
@@ -1500,66 +1500,66 @@ public class AdvancedStatistics {
          * (to update statistics, deterime probability of specified outcome, and to schedule subsequent reviews)
          * Only relevant if we are computing (all possible review outcomes), not if simulating (only one possible outcome)
          */
-        private int outcome;
+        private int mOutcome;
 
         /**
          * Deck-specific settings
          */
-        private final Deck deck;
+        private final Deck mDeck;
 
         /**
          * State of the card before current review.
          * Needed to schedule current review but with different outcome and to update statistics.
          */
-        private Card card = new Card(0, 0, 0, 0, 0, 0);
-        private final Card prevCard = new Card(0, 0, 0, 0, 0, 0);
+        private Card mCard = new Card(0, 0, 0, 0, 0, 0);
+        private final Card mPrevCard = new Card(0, 0, 0, 0, 0, 0);
 
         /**
          * State of the card after current review.
          * Needed to schedule future review.
          */
-        private Card newCard = new Card(0, 0, 0, 0, 0, 0);
+        private Card mNewCard = new Card(0, 0, 0, 0, 0, 0);
 
         /**
          * Statistics
          */
-        private final SimulationResult simulationResult;
+        private final SimulationResult mSimulationResult;
 
         /**
          * Classifier which uses probability distribution from review log to predict outcome of review.
          */
-        private final EaseClassifier classifier;
+        private final EaseClassifier mClassifier;
 
         /**
          * Reviews which are scheduled to be simulated.
          * For adding current review with other outcome and future review.
          */
-        private final Stack<Review> reviews;
+        private final Stack<Review> mReviews;
 
         /**
          * Review objects to be re-used so that we don't have to create new Review objects all the time.
          * Be careful: it also contains Review objects which are still in use.
          * So the algorithm using this list has to make sure that it only re-uses Review objects which are not in use anymore.
          */
-        private final List<Review> reviewList;
+        private final List<Review> mReviewList;
 
         /**
          * For creating future reviews which are to be scheduled as a result of the current review.
          * @see Review(Deck, SimulationResult, EaseClassifier, Stack<Review>)
          */
-        private Review (Review prevReview, Card card, int nPrevRevs, int tElapsed, double prob) {
-            this.deck = prevReview.deck;
-            this.card.setAll(card);
-            this.simulationResult = prevReview.simulationResult;
-            this.classifier = prevReview.classifier;
-            this.reviews = prevReview.reviews;
-            this.reviewList = prevReview.reviewList;
+        private Review (Review prevReview, Card mCard, int mNPrevRevs, int mTElapsed, double mProb) {
+            this.mDeck = prevReview.mDeck;
+            this.mCard.setAll(mCard);
+            this.mSimulationResult = prevReview.mSimulationResult;
+            this.mClassifier = prevReview.mClassifier;
+            this.mReviews = prevReview.mReviews;
+            this.mReviewList = prevReview.mReviewList;
 
-            this.nPrevRevs = nPrevRevs;
-            this.tElapsed = tElapsed;
-            this.prob = prob;
+            this.mNPrevRevs = mNPrevRevs;
+            this.mTElapsed = mTElapsed;
+            this.mProb = mProb;
 
-            this.maxReviewsPerDay = deck.getRevPerDay();
+            this.mMaxReviewsPerDay = mDeck.getRevPerDay();
         }
 
         /**
@@ -1571,14 +1571,14 @@ public class AdvancedStatistics {
          * @param classifier Information needed to simulate a review: transition probabilities to new card state for each possible current card state.
          * @param reviews Will be affected by the review. Scheduled future reviews of this card will be added.
          */
-        public Review(Deck deck, SimulationResult simulationResult, EaseClassifier classifier, Stack<Review> reviews, List<Review> reviewList) {
-            this.deck = deck;
-            this.simulationResult = simulationResult;
-            this.classifier = classifier;
-            this.reviews = reviews;
-            this.reviewList = reviewList;
+        public Review(Deck mDeck, SimulationResult mSimulationResult, EaseClassifier mClassifier, Stack<Review> mReviews, List<Review> mReviewList) {
+            this.mDeck = mDeck;
+            this.mSimulationResult = mSimulationResult;
+            this.mClassifier = mClassifier;
+            this.mReviews = mReviews;
+            this.mReviewList = mReviewList;
 
-            this.maxReviewsPerDay = deck.getRevPerDay();
+            this.mMaxReviewsPerDay = mDeck.getRevPerDay();
         }
 
         /**
@@ -1588,35 +1588,35 @@ public class AdvancedStatistics {
          *                         Will be affected by the review. After the review of a new card, the number of cards added on that day will be updated.
          *                         Next day new cards will be added might be updated if new card limit has been reached.
          */
-        public void newCard(Card card, NewCardSimulator newCardSimulator) {
-            this.card = card;
+        public void mNewCard(Card mCard, NewCardSimulator mNewCardSimulator) {
+            this.mCard = mCard;
 
-            this.nPrevRevs = 0;
-            this.prob = 1;
-            this.outcome = 0;
+            this.mNPrevRevs = 0;
+            this.mProb = 1;
+            this.mOutcome = 0;
 
             //# Rate-limit new cards by shifting starting time
-            if (card.getType() == CARD_TYPE_NEW)
-                tElapsed = newCardSimulator.simulateNewCard(deck);
+            if (mCard.getType() == CARD_TYPE_NEW)
+                mTElapsed = mNewCardSimulator.simulateNewCard(mDeck);
             else
-                tElapsed = card.getDue();
+                mTElapsed = mCard.getDue();
 
             // Set state of card between start and first review
             // New reviews happen with probability 1
-            this.simulationResult.updateNInState(card, 0, tElapsed, 1);
+            this.mSimulationResult.updateNInState(mCard, 0, mTElapsed, 1);
         }
 
         /**
          * Re-use the current review object to schedule an existing card. An existing card here means that it has been reviewed before (either by the user or by the simulation)
          * and hence the due date is known.
          */
-        private void existingCard(Card card, int nPrevRevs, int tElapsed, double prob) {
-            this.card.setAll(card);
+        private void existingCard(Card mCard, int mNPrevRevs, int mTElapsed, double mProb) {
+            this.mCard.setAll(mCard);
 
-            this.nPrevRevs = nPrevRevs;
-            this.tElapsed = tElapsed;
-            this.prob = prob;
-            this.outcome = 0;
+            this.mNPrevRevs = mNPrevRevs;
+            this.mTElapsed = mTElapsed;
+            this.mProb = mProb;
+            this.mOutcome = 0;
         }
 
         /**
@@ -1628,67 +1628,67 @@ public class AdvancedStatistics {
          */
         public void simulateReview() {
 
-            if(card.getType() == CARD_TYPE_NEW || simulationResult.nReviewsDoneToday(tElapsed) < maxReviewsPerDay || outcome > 0) {
+            if(mCard.getType() == CARD_TYPE_NEW || mSimulationResult.nReviewsDoneToday(mTElapsed) < mMaxReviewsPerDay || mOutcome > 0) {
                 // Update the forecasted number of reviews
-                if(outcome == 0)
-                    simulationResult.incrementNReviews(card.getType(), tElapsed, prob);
+                if(mOutcome == 0)
+                    mSimulationResult.incrementNReviews(mCard.getType(), mTElapsed, mProb);
 
                 // Simulate response
-                prevCard.setAll(card);
-                newCard.setAll(card);
+                mPrevCard.setAll(mCard);
+                mNewCard.setAll(mCard);
 
                 ReviewOutcome reviewOutcome;
-                if(tElapsed >= Settings.getComputeNDays() || prob < Settings.getComputeMaxError())
-                    reviewOutcome = classifier.simSingleReview(newCard);
+                if(mTElapsed >= mSettings.getComputeNDays() || mProb < mSettings.getComputeMaxError())
+                    reviewOutcome = mClassifier.simSingleReview(mNewCard);
                 else
-                    reviewOutcome = classifier.simSingleReview(newCard, outcome);
+                    reviewOutcome = mClassifier.simSingleReview(mNewCard, mOutcome);
 
                 //Timber.d("Simulation at t=" + tElapsed + ": outcome " + outcomeIdx + ": " + reviewOutcome.toString() );
 
-                newCard = reviewOutcome.getCard();
+                mNewCard = reviewOutcome.getCard();
                 double outcomeProb = reviewOutcome.getProb();
 
                 //writeLog(newCard, outcomeProb);
 
-                newCard.setLastReview(tElapsed);
+                mNewCard.setLastReview(mTElapsed);
 
                 // If card failed, update "relearn" count
-                if(newCard.getCorrect() == 0)
-                    simulationResult.incrementNReviews(3, tElapsed, prob * outcomeProb);
+                if(mNewCard.getCorrect() == 0)
+                    mSimulationResult.incrementNReviews(3, mTElapsed, mProb * outcomeProb);
 
                 // Set state of card between current and next review
-                simulationResult.updateNInState(prevCard, newCard, tElapsed, tElapsed + newCard.getIvl(), prob * outcomeProb);
+                mSimulationResult.updateNInState(mPrevCard, mNewCard, mTElapsed, mTElapsed + mNewCard.getIvl(), mProb * outcomeProb);
 
                 // Schedule current review, but with other outcome
-                if(outcomeProb < 1.0 && outcome < 3)
-                    scheduleCurrentReview(prevCard);
+                if(outcomeProb < 1.0 && mOutcome < 3)
+                    scheduleCurrentReview(mPrevCard);
 
                 // Advance time to next review
-                scheduleNextReview(newCard, tElapsed + newCard.getIvl(), prob * outcomeProb);
+                scheduleNextReview(mNewCard, mTElapsed + mNewCard.getIvl(), mProb * outcomeProb);
             }
             else {
                 // Advance time to next review (max. #reviews reached for this day)
-                simulationResult.updateNInState(card, card, tElapsed, tElapsed + 1, prob);
-                rescheduleCurrentReview(tElapsed + 1);
+                mSimulationResult.updateNInState(mCard, mCard, mTElapsed, mTElapsed + 1, mProb);
+                rescheduleCurrentReview(mTElapsed + 1);
             }
         }
 
-        private void writeLog(Card newCard, double outcomeProb) {
+        private void writeLog(Card mNewCard, double outcomeProb) {
             String tabs = "";
-            for(int d = 0; d<nPrevRevs; d++)
+            for(int d = 0; d<mNPrevRevs; d++)
                 tabs += "\t";
-            Timber.d("%st=%d p=%f * %s", tabs, tElapsed, prob, outcomeProb);
-            Timber.d("%s%s",tabs , prevCard);
-            Timber.d("%s%s", tabs, newCard);
+            Timber.d("%st=%d p=%f * %s", tabs, mTElapsed, mProb, outcomeProb);
+            Timber.d("%s%s",tabs , mPrevCard);
+            Timber.d("%s%s", tabs, mNewCard);
         }
 
         /**
          * Schedule the current review at another time (will re-use current Review).
          */
         private void rescheduleCurrentReview(int newTElapsed) {
-            if (newTElapsed < simulationResult.getnDays()) {
-                this.tElapsed = newTElapsed;
-                this.reviews.push(this);
+            if (newTElapsed < mSimulationResult.getnDays()) {
+                this.mTElapsed = newTElapsed;
+                this.mReviews.push(this);
             }
         }
 
@@ -1696,41 +1696,41 @@ public class AdvancedStatistics {
          * Schedule the current review at the current time, but with another outcome (will re-use current Review).
          * @param newCard
          */
-        private void scheduleCurrentReview(Card newCard) {
-            this.card.setAll(newCard);
-            this.outcome++;
-            this.reviews.push(this);
+        private void scheduleCurrentReview(Card mNewCard) {
+            this.mCard.setAll(mNewCard);
+            this.mOutcome++;
+            this.mReviews.push(this);
         }
 
         /**
          * Schedule next review (will not re-use current Review).
          */
-        private void scheduleNextReview(Card newCard, int newTElapsed, double newProb) {
+        private void scheduleNextReview(Card mNewCard, int newTElapsed, double newProb) {
             //Schedule next review(s) if they are within the time window of the simulation
-            if (newTElapsed < simulationResult.getnDays()) {
+            if (newTElapsed < mSimulationResult.getnDays()) {
                 Review review;
                 //Re-use existing instance of the review object (to limit memory usage and prevent time taken by garbage collector)
                 //This is possible since reviews with nPrevRevs > nPrevRevs of the current review which were already scheduled have all already been processed before we do the current review.
-                if(reviewList.size() > nPrevRevs) {
-                    review = reviewList.get(nPrevRevs);
-                    review.existingCard(newCard, nPrevRevs + 1, newTElapsed, newProb);
+                if(mReviewList.size() > mNPrevRevs) {
+                    review = mReviewList.get(mNPrevRevs);
+                    review.existingCard(mNewCard, mNPrevRevs + 1, newTElapsed, newProb);
                 }
                 else {
-                    if(reviewList.size() == nPrevRevs) {
-                        review = new Review(this, newCard, nPrevRevs + 1, newTElapsed, newProb);
-                        reviewList.add(review);
+                    if(mReviewList.size() == mNPrevRevs) {
+                        review = new Review(this, mNewCard, mNPrevRevs + 1, newTElapsed, newProb);
+                        mReviewList.add(review);
                     }
                     else {
                         throw new IllegalStateException("State of previous reviews of this card should have been saved for determining possible future reviews other than the current one.");
                     }
                 }
 
-                this.reviews.push(review);
+                this.mReviews.push(review);
             }
         }
 
         public int getT() {
-            return tElapsed;
+            return mTElapsed;
         }
     }
 

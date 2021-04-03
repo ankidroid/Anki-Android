@@ -161,7 +161,7 @@ class AnkiExporter extends Exporter {
     String mMediaDir;
     // Actual capacity will be set when known, if media are imported.
     final ArrayList<String> mMediaFiles = new ArrayList<>(0);
-    boolean _v2sched;
+    boolean mM_V2sched;
 
 
     /**
@@ -427,7 +427,7 @@ public final class AnkiPackageExporter extends AnkiExporter {
     public void exportInto(String path, Context context) throws IOException, JSONException, ImportExportException {
         // sched info+v2 scheduler not compatible w/ older clients
         Timber.i("Starting export into %s", path);
-        _v2sched = mCol.schedVer() != 1 && mIncludeSched;
+        mM_V2sched = mCol.schedVer() != 1 && mIncludeSched;
 
         // open a zip file
         ZipFile z = new ZipFile(path);
@@ -449,7 +449,7 @@ public final class AnkiPackageExporter extends AnkiExporter {
         // close our deck & write it into the zip file, and reopen
         mCount = mCol.cardCount();
         mCol.close();
-        if (!_v2sched) {
+        if (!mM_V2sched) {
             z.write(mCol.getPath(), CollectionHelper.COLLECTION_FILENAME);
         } else {
             _addDummyCollection(z, context);
@@ -567,7 +567,7 @@ public final class AnkiPackageExporter extends AnkiExporter {
  * @author Tim
  */
 class ZipFile {
-    private final int BUFFER_SIZE = 1024;
+    private final int mM_BUFFER_SIZE = 1024;
     private ZipArchiveOutputStream mZos;
 
 
@@ -577,7 +577,7 @@ class ZipFile {
 
 
     public void write(String path, String entry) throws IOException {
-        BufferedInputStream bis = new BufferedInputStream(new FileInputStream(path), BUFFER_SIZE);
+        BufferedInputStream bis = new BufferedInputStream(new FileInputStream(path), mM_BUFFER_SIZE);
         ZipArchiveEntry ze = new ZipArchiveEntry(entry);
         writeEntry(bis, ze);
     }
@@ -586,17 +586,17 @@ class ZipFile {
     public void writeStr(String entry, String value) throws IOException {
         // TODO: Does this work with abnormal characters?
         InputStream is = new ByteArrayInputStream(value.getBytes());
-        BufferedInputStream bis = new BufferedInputStream(is, BUFFER_SIZE);
+        BufferedInputStream bis = new BufferedInputStream(is, mM_BUFFER_SIZE);
         ZipArchiveEntry ze = new ZipArchiveEntry(entry);
         writeEntry(bis, ze);
     }
 
 
     private void writeEntry(BufferedInputStream bis, ZipArchiveEntry ze) throws IOException {
-        byte[] buf = new byte[BUFFER_SIZE];
+        byte[] buf = new byte[mM_BUFFER_SIZE];
         mZos.putArchiveEntry(ze);
         int len;
-        while ((len = bis.read(buf, 0, BUFFER_SIZE)) != -1) {
+        while ((len = bis.read(buf, 0, mM_BUFFER_SIZE)) != -1) {
             mZos.write(buf, 0, len);
         }
         mZos.closeArchiveEntry();
