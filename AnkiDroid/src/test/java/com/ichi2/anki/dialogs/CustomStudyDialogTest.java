@@ -129,8 +129,9 @@ public class CustomStudyDialogTest extends RobolectricTest {
         }
 
 
+        @NonNull
         @Override
-        protected AnkiActivity getAnkiActivity() {
+        protected AnkiActivity requireAnkiActivity() {
             return mAnkiActivity;
         }
     }

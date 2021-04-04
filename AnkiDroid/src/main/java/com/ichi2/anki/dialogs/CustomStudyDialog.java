@@ -15,6 +15,7 @@
  ****************************************************************************************/
 package com.ichi2.anki.dialogs;
 
+import android.annotation.SuppressLint;
 import android.app.Dialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -108,10 +109,10 @@ public class CustomStudyDialog extends AnalyticsDialogFragment implements
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        final int dialogId = getArguments().getInt("id");
+        final int dialogId = requireArguments().getInt("id");
         if (dialogId < 100) {
             // Select the specified deck
-            CollectionHelper.getInstance().getCol(getActivity()).getDecks().select(getArguments().getLong("did"));
+            CollectionHelper.getInstance().getCol(requireActivity()).getDecks().select(requireArguments().getLong("did"));
             return buildContextMenu(dialogId);
         } else {
             return buildInputDialog(dialogId);
@@ -120,31 +121,30 @@ public class CustomStudyDialog extends AnalyticsDialogFragment implements
 
     /**
      * Build a context menu for custom study
-     * @param id
-     * @return
+     * @param id the id type of the dialog
      */
     private MaterialDialog buildContextMenu(int id) {
         int[] listIds = getListIds(id);
-        final boolean jumpToReviewer = getArguments ().getBoolean("jumpToReviewer");
-        return new MaterialDialog.Builder(this.getActivity())
+        final boolean jumpToReviewer = requireArguments().getBoolean("jumpToReviewer");
+        return new MaterialDialog.Builder(this.requireActivity())
                 .title(R.string.custom_study)
                 .cancelable(true)
                 .itemsIds(listIds)
                 .items(ContextMenuHelper.getValuesFromKeys(getKeyValueMap(), listIds))
                 .itemsCallback((materialDialog, view, which, charSequence) -> {
-                    AnkiActivity activity = getAnkiActivity();
+                    AnkiActivity activity = requireAnkiActivity();
                     switch (view.getId()) {
                         case DECK_OPTIONS: {
                             // User asked to permanently change the deck options
                             Intent i = new Intent(activity, DeckOptions.class);
-                            i.putExtra("did", getArguments().getLong("did"));
-                            getActivity().startActivity(i);
+                            i.putExtra("did", requireArguments().getLong("did"));
+                            requireActivity().startActivity(i);
                             break;
                         }
                         case MORE_OPTIONS: {
                             // User asked to see all custom study options
                             CustomStudyDialog d = CustomStudyDialog.newInstance(CONTEXT_MENU_STANDARD,
-                                    getArguments().getLong("did"), jumpToReviewer);
+                                    requireArguments().getLong("did"), jumpToReviewer);
                             activity.showDialogFragment(d);
                             break;
                         }
@@ -154,7 +154,7 @@ public class CustomStudyDialog extends AnalyticsDialogFragment implements
                              * number, it is necessary to collect a list of tags. This case handles the creation
                              * of that Dialog.
                              */
-                            long currentDeck = getArguments().getLong("did");
+                            long currentDeck = requireArguments().getLong("did");
                             TagsDialog dialogFragment = TagsDialog.newInstance(
                                     TagsDialog.DialogType.CUSTOM_STUDY_TAGS, new ArrayList<>(),
                                     new ArrayList<>(activity.getCol().getTags().byDeck(currentDeck, true)));
@@ -164,8 +164,8 @@ public class CustomStudyDialog extends AnalyticsDialogFragment implements
                         default: {
                             // User asked for a standard custom study option
                             CustomStudyDialog d = CustomStudyDialog.newInstance(view.getId(),
-                                    getArguments().getLong("did"), jumpToReviewer);
-                            getAnkiActivity().showDialogFragment(d);
+                                    requireArguments().getLong("did"), jumpToReviewer);
+                            requireAnkiActivity().showDialogFragment(d);
                         }
                     }
                 }).build();
@@ -173,8 +173,7 @@ public class CustomStudyDialog extends AnalyticsDialogFragment implements
 
     /**
      * Build an input dialog that is used to get a parameter related to custom study from the user
-     * @param dialogId
-     * @return
+     * @param dialogId the id type of the dialog
      */
     private MaterialDialog buildInputDialog(final int dialogId) {
         /*
@@ -182,9 +181,9 @@ public class CustomStudyDialog extends AnalyticsDialogFragment implements
             TODO: hint line for the number of cards available, and having the pre-filled text selected by default)
         */
         // Input dialogs
-        Resources res = getActivity().getResources();
         // Show input dialog for an individual custom study dialog
-        View v = getActivity().getLayoutInflater().inflate(R.layout.styled_custom_study_details_dialog, null);
+        @SuppressLint("InflateParams")
+        View v = requireActivity().getLayoutInflater().inflate(R.layout.styled_custom_study_details_dialog, null);
         TextView textView1 = v.findViewById(R.id.custom_study_details_text1);
         TextView textView2 = v.findViewById(R.id.custom_study_details_text2);
         final EditText mEditText = v.findViewById(R.id.custom_study_details_edittext2);
@@ -199,16 +198,16 @@ public class CustomStudyDialog extends AnalyticsDialogFragment implements
             mEditText.setInputType(EditorInfo.TYPE_CLASS_NUMBER | EditorInfo.TYPE_NUMBER_FLAG_SIGNED);
         }
         // deck id
-        final long did = getArguments().getLong("did");
+        final long did = requireArguments().getLong("did");
         // Whether or not to jump straight to the reviewer
-        final boolean jumpToReviewer = getArguments ().getBoolean("jumpToReviewer");
+        final boolean jumpToReviewer = requireArguments().getBoolean("jumpToReviewer");
         // Set builder parameters
-        MaterialDialog.Builder builder = new MaterialDialog.Builder(getActivity())
+        MaterialDialog.Builder builder = new MaterialDialog.Builder(requireActivity())
                 .customView(v, true)
                 .positiveText(R.string.dialog_ok)
                 .negativeText(R.string.dialog_cancel)
                 .onPositive((dialog, which) -> {
-                    Collection col = CollectionHelper.getInstance().getCol(getActivity());
+                    Collection col = CollectionHelper.getInstance().getCol(requireActivity());
                     // Get the value selected by user
                     int n;
                     try {
@@ -222,7 +221,7 @@ public class CustomStudyDialog extends AnalyticsDialogFragment implements
                     // Set behavior when clicking OK button
                     switch (dialogId) {
                         case CUSTOM_STUDY_NEW: {
-                            AnkiDroidApp.getSharedPrefs(getActivity()).edit().putInt("extendNew", n).commit();
+                            AnkiDroidApp.getSharedPrefs(requireActivity()).edit().putInt("extendNew", n).apply();
                             Deck deck = col.getDecks().get(did);
                             deck.put("extendNew", n);
                             col.getDecks().save(deck);
@@ -231,7 +230,7 @@ public class CustomStudyDialog extends AnalyticsDialogFragment implements
                             break;
                         }
                         case CUSTOM_STUDY_REV: {
-                            AnkiDroidApp.getSharedPrefs(getActivity()).edit().putInt("extendRev", n).commit();
+                            AnkiDroidApp.getSharedPrefs(requireActivity()).edit().putInt("extendRev", n).apply();
                             Deck deck = col.getDecks().get(did);
                             deck.put("extendRev", n);
                             col.getDecks().save(deck);
@@ -265,7 +264,7 @@ public class CustomStudyDialog extends AnalyticsDialogFragment implements
                             break;
                     }
                 })
-                .onNegative((dialog, which) -> getAnkiActivity().dismissAllDialogFragments());
+                .onNegative((dialog, which) -> requireAnkiActivity().dismissAllDialogFragments());
         final MaterialDialog dialog = builder.build();
         mEditText.addTextChangedListener(new TextWatcher() {
             @Override
@@ -346,7 +345,7 @@ public class CustomStudyDialog extends AnalyticsDialogFragment implements
      * @return the ids of which values to show
      */
     private int[] getListIds(int dialogId) {
-        Collection col = getAnkiActivity().getCol();
+        Collection col = requireAnkiActivity().getCol();
         switch (dialogId) {
             case CONTEXT_MENU_STANDARD:
                 // Standard context menu
@@ -387,8 +386,8 @@ public class CustomStudyDialog extends AnalyticsDialogFragment implements
 
     private String getText1() {
         Resources res = AnkiDroidApp.getAppResources();
-        Collection col = CollectionHelper.getInstance().getCol(getActivity());
-        switch (getArguments().getInt("id")) {
+        Collection col = CollectionHelper.getInstance().getCol(requireActivity());
+        switch (requireArguments().getInt("id")) {
             case CUSTOM_STUDY_NEW:
                 return res.getString(R.string.custom_study_new_total_new, col.getSched().totalNewForCurrentDeck());
             case CUSTOM_STUDY_REV:
@@ -400,7 +399,7 @@ public class CustomStudyDialog extends AnalyticsDialogFragment implements
 
     private String getText2() {
         Resources res = AnkiDroidApp.getAppResources();
-        switch (getArguments().getInt("id")) {
+        switch (requireArguments().getInt("id")) {
             case CUSTOM_STUDY_NEW:
                 return res.getString(R.string.custom_study_new_extend);
             case CUSTOM_STUDY_REV:
@@ -419,8 +418,8 @@ public class CustomStudyDialog extends AnalyticsDialogFragment implements
     }
 
     private String getDefaultValue() {
-        SharedPreferences prefs = AnkiDroidApp.getSharedPrefs(getActivity());
-        switch (getArguments().getInt("id")) {
+        SharedPreferences prefs = AnkiDroidApp.getSharedPrefs(requireActivity());
+        switch (requireArguments().getInt("id")) {
             case CUSTOM_STUDY_NEW:
                 return Integer.toString(prefs.getInt("extendNew", 10));
             case CUSTOM_STUDY_REV:
@@ -446,9 +445,9 @@ public class CustomStudyDialog extends AnalyticsDialogFragment implements
      */
     private void createCustomStudySession(JSONArray delays, Object[] terms, Boolean resched) {
         Deck dyn;
-        final AnkiActivity activity = getAnkiActivity();
+        final AnkiActivity activity = requireAnkiActivity();
         Collection col = CollectionHelper.getInstance().getCol(activity);
-        long did = getArguments().getLong("did");
+        long did = requireArguments().getLong("did");
         Decks decks = col.getDecks();
         String deckToStudyName = decks.get(did).getString("name");
         String customStudyDeck = getResources().getString(R.string.custom_study_deck_name);
@@ -457,7 +456,7 @@ public class CustomStudyDialog extends AnalyticsDialogFragment implements
             Timber.i("Found deck: '%s'", customStudyDeck);
             if (cur.isStd()) {
                 Timber.w("Deck: '%s' was non-dynamic", customStudyDeck);
-                UIUtils.showThemedToast(getActivity(), getString(R.string.custom_study_deck_exists), true);
+                UIUtils.showThemedToast(requireActivity(), getString(R.string.custom_study_deck_exists), true);
                 return;
             } else {
                 Timber.i("Emptying dynamic deck '%s' for custom study", customStudyDeck);
@@ -472,7 +471,7 @@ public class CustomStudyDialog extends AnalyticsDialogFragment implements
             try {
                 dyn = decks.get(decks.newDyn(customStudyDeck));
             } catch (FilteredAncestor filteredAncestor) {
-                UIUtils.showThemedToast(getActivity(), getString(R.string.decks_rename_filtered_nosubdecks), true);
+                UIUtils.showThemedToast(requireActivity(), getString(R.string.decks_rename_filtered_nosubdecks), true);
                 return;
             }
         }
@@ -506,7 +505,7 @@ public class CustomStudyDialog extends AnalyticsDialogFragment implements
     }
 
     private void onLimitsExtended(boolean jumpToReviewer) {
-        AnkiActivity activity = getAnkiActivity();
+        AnkiActivity activity = requireAnkiActivity();
         if (jumpToReviewer) {
             activity.startActivityForResultWithoutAnimation(new Intent(activity, Reviewer.class), AnkiActivity.REQUEST_REVIEW);
         } else {
@@ -515,13 +514,14 @@ public class CustomStudyDialog extends AnalyticsDialogFragment implements
         activity.dismissAllDialogFragments();
     }
 
-    protected AnkiActivity getAnkiActivity() {
-        return (AnkiActivity) getActivity();
+    @NonNull
+    protected AnkiActivity requireAnkiActivity() {
+        return (AnkiActivity) requireActivity();
     }
 
 
     private CreateCustomStudySessionListener createCustomStudySessionListener(){
-        return new CreateCustomStudySessionListener(getAnkiActivity());
+        return new CreateCustomStudySessionListener(requireAnkiActivity());
     }
     private static class CreateCustomStudySessionListener extends TaskListenerWithContext<AnkiActivity, Void, StudyOptionsFragment.DeckStudyData> {
         public CreateCustomStudySessionListener(AnkiActivity activity) {
