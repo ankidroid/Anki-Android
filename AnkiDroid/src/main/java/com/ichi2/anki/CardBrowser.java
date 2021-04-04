@@ -668,9 +668,7 @@ public class CardBrowser extends NavigationDrawerActivity implements
         mCardsListView.setOnItemLongClickListener((adapterView, view, position, id) -> {
             if (mInMultiSelectMode) {
                 for (int i = Math.min(mLastSelectedPosition, position); i <= Math.max(mLastSelectedPosition, position); i++) {
-                    // getting the item at the particular position and then checking whether it's already checked or not
-                    mCheckedCards.add((CardCache) mCardsListView.getItemAtPosition(i));
-                    CardCache card = getCards().get(position);
+                    CardCache card = (CardCache) mCardsListView.getItemAtPosition(i);
 
                     if (!mCheckedCards.contains(card)) {
                         mCheckedCards.add(card);
