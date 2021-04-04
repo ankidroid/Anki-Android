@@ -51,18 +51,19 @@ public class AddonModel {
         return mType;
     }
 
-    public static AddonModel tryParse(JSONObject jsonObject, String addonType) {
+
+    public static AddonModel tryParse(JSONObject jsonObject) {
 
         String addonName = jsonObject.optString("name", "");
         String addonVersion = jsonObject.optString("version", "");
         String addonDev = jsonObject.optString("author", "");
         String addonAnkiDroidAPI = jsonObject.optString("ankidroid_js_api", "");
         String addonHomepage = jsonObject.optString("homepage", "");
-        String typeOfAddon = jsonObject.optString("addon_type", "");
+        String addonType = jsonObject.optString("addon_type", "");
 
-        AddonModel addonModel = new AddonModel(addonName, addonVersion, addonDev, addonAnkiDroidAPI, addonHomepage, addonType);
-        return addonModel;
+        return new AddonModel(addonName, addonVersion, addonDev, addonAnkiDroidAPI, addonHomepage, addonType);
     }
+
 
     public static String getAddonFullName(AddonModel addonModel) {
         return addonModel.getType() + "_addon:" + addonModel.getName();

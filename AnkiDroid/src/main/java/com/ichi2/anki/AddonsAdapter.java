@@ -97,6 +97,7 @@ public class AddonsAdapter extends RecyclerView.Adapter<AddonsAdapter.AddonsView
     }
 
 
+
     public interface OnAddonClickListener {
         void onAddonClick(int position);
     }

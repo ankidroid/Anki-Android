@@ -1,5 +1,6 @@
 package com.ichi2.anki;
 
+import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.Context;
@@ -25,7 +26,6 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
-import java.util.Objects;
 
 import androidx.core.text.HtmlCompat;
 import androidx.recyclerview.widget.DividerItemDecoration;
@@ -34,24 +34,26 @@ import androidx.recyclerview.widget.RecyclerView;
 import timber.log.Timber;
 
 import static com.ichi2.anim.ActivityTransitionAnimation.Direction.RIGHT;
-import static com.ichi2.anki.AddonsNpmUtility.getPackageJson;
+import static com.ichi2.anki.AddonsNpmUtility.hideProgressBarStatic;
 import static com.ichi2.anki.AddonsNpmUtility.isValidAddonPackage;
 
 @SuppressWarnings("deprecation")
 public class AddonsBrowser extends NavigationDrawerActivity implements DeckDropDownAdapter.SubtitleListener, AddonsAdapter.OnAddonClickListener {
 
-    private RecyclerView addonsListRecyclerView;
+    private static RecyclerView addonsListRecyclerView;
 
-    private File addonsHomeDir;
+    private static File addonsHomeDir;
     private Dialog downloadDialog;
 
-    private final List<AddonModel> addonsNames = new ArrayList<AddonModel>();
+    private static final List<AddonModel> addonsNames = new ArrayList<AddonModel>();
 
     private SharedPreferences preferences;
 
     private final String addonType = "reviewer";
 
-    private LinearLayout addonsDownloadButton;
+    private static LinearLayout addonsDownloadButton;
+
+    static Activity addonsBrowserActivity = null;
 
 
     @Override
@@ -64,15 +66,17 @@ public class AddonsBrowser extends NavigationDrawerActivity implements DeckDropD
         setContentView(R.layout.addons_browser);
         initNavigationDrawer(findViewById(android.R.id.content));
 
-        addonsDownloadButton = findViewById(R.id.addons_download_message_ll);
-        addonsDownloadButton.setOnClickListener(v -> {
-            openUrl(Uri.parse(getString(R.string.ankidroid_js_addon_npm_search_url)));
-        });
-
         // Add a home button to the actionbar
         getSupportActionBar().setHomeButtonEnabled(true);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         showBackIcon();
+
+        addonsBrowserActivity = this;
+
+        addonsDownloadButton = findViewById(R.id.addons_download_message_ll);
+        addonsDownloadButton.setOnClickListener(v -> {
+            openUrl(Uri.parse(getString(R.string.ankidroid_js_addon_npm_search_url)));
+        });
 
         addonsListRecyclerView = findViewById(R.id.addons);
         addonsListRecyclerView.setLayoutManager(new LinearLayoutManager(this));
@@ -145,6 +149,10 @@ public class AddonsBrowser extends NavigationDrawerActivity implements DeckDropD
                 npmAddonName = npmAddonName.trim();
                 npmAddonName = npmAddonName.replaceAll("\u00A0", "");
 
+                if (npmAddonName.isEmpty()) {
+                    return;
+                }
+
                 UIUtils.showThemedToast(this, getString(R.string.downloading_addon), true);
                 // download npm package for AnkiDroid as addons
                 AddonsNpmUtility.getPackageJson(npmAddonName, this);
@@ -173,7 +181,7 @@ public class AddonsBrowser extends NavigationDrawerActivity implements DeckDropD
        and non empty string.
        Then that addon will available for enable/disable
      */
-    public void listAddonsFromDir(String addonType) {
+    public static void listAddonsFromDir(String addonType) {
         boolean success = true;
         if (!addonsHomeDir.exists()) {
             success = addonsHomeDir.mkdirs();
@@ -198,23 +206,30 @@ public class AddonsBrowser extends NavigationDrawerActivity implements DeckDropD
 
                 AddonModel addonModel;
                 if (isValidAddonPackage(jsonObject)) {
-                    addonModel = AddonModel.tryParse(jsonObject, addonType);
-                    addonsNames.add(addonModel);
+                    addonModel = AddonModel.tryParse(jsonObject);
+                    if (addonModel.getType().equals(addonType)) {
+                        addonsNames.add(addonModel);
+                    }
                 }
             }
 
-            addonsListRecyclerView.setAdapter(new AddonsAdapter(addonsNames, this));
+            addonsBrowserActivity.runOnUiThread(() -> {
+                addonsListRecyclerView.setAdapter(new AddonsAdapter(addonsNames, (AddonsAdapter.OnAddonClickListener) addonsBrowserActivity));
 
-            if (addonsNames.isEmpty()) {
-                addonsDownloadButton.setVisibility(View.VISIBLE);
-            } else {
-                addonsDownloadButton.setVisibility(View.GONE);
-            }
+                if (addonsNames.isEmpty()) {
+                    addonsDownloadButton.setVisibility(View.VISIBLE);
+                } else {
+                    addonsDownloadButton.setVisibility(View.GONE);
+                }
+            });
 
         } else {
-            UIUtils.showThemedToast(this, getString(R.string.error_listing_addons), true);
+            addonsBrowserActivity.runOnUiThread(() -> {
+                UIUtils.showThemedToast(addonsBrowserActivity, addonsBrowserActivity.getString(R.string.error_listing_addons), false);
+            });
         }
-        hideProgressBar();
+
+        hideProgressBarStatic();
     }
 
 
@@ -248,10 +263,11 @@ public class AddonsBrowser extends NavigationDrawerActivity implements DeckDropD
 
         buttonDelete.setOnClickListener(v -> {
 
-            AlertDialog.Builder alertBuilder = new AlertDialog.Builder(this);
-            alertBuilder.setTitle(addonModel.getName());
-            alertBuilder.setMessage(getString(R.string.confirm_remove_addon, addonModel.getName()));
-            alertBuilder.setCancelable(true);
+            AlertDialog.Builder alertBuilder = new AlertDialog.Builder(this)
+                    .setTitle(addonModel.getName())
+                    .setMessage(getString(R.string.confirm_remove_addon, addonModel.getName()))
+                    .setCancelable(true)
+                    .setNegativeButton(getString(R.string.dialog_cancel), (dialog, id) -> dialog.cancel());
 
             alertBuilder.setPositiveButton(
                     getString(R.string.dialog_ok),
@@ -268,20 +284,22 @@ public class AddonsBrowser extends NavigationDrawerActivity implements DeckDropD
                         addonsNames.remove(position);
                         addonsListRecyclerView.getAdapter().notifyItemRangeChanged(position, addonsNames.size());
                         addonsListRecyclerView.getAdapter().notifyDataSetChanged();
+
+                        if (addonsNames.isEmpty()) {
+                            addonsDownloadButton.setVisibility(View.VISIBLE);
+                        } else {
+                            addonsDownloadButton.setVisibility(View.GONE);
+                        }
+
                     });
 
-            alertBuilder.setNegativeButton(
-                    getString(R.string.dialog_cancel),
-                    (dialog, id) -> dialog.cancel());
-
-            AlertDialog deleteAlert = alertBuilder.create();
-            deleteAlert.show();
+            alertBuilder.show();
             infoDialog.dismiss();
         });
 
         buttonUpdate.setOnClickListener(v -> {
             UIUtils.showThemedToast(this, getString(R.string.checking_addon_update), false);
-            getPackageJson(addonModel.getName(), this);
+            AddonsNpmUtility.getPackageJson(addonModel.getName(), this);
         });
 
         infoDialog.show();
@@ -306,15 +324,17 @@ public class AddonsBrowser extends NavigationDrawerActivity implements DeckDropD
 
     /**
      * @return content of index.js file for every enabled addons in script tag.
+     * @param context context for calling the method
      * get enabled js addon contents from AnkiDroid/addons/...
      * This function will be called in AbstractFlashcardViewer
-     *
+     * <p>
      * 1. get enabled status of addons in SharedPreferences with key containing 'reviewer_addon', read only enabled addons
      * 2. split value and get latter part as it stored in SharedPreferences
-     *    e.g: reviewer_addon:ankidroid-js-addon-12345...  -->  ankidroid-js-addon-12345...
-     *    It is same as folder name for the addon.
+     * e.g: reviewer_addon:ankidroid-js-addon-12345...  -->  ankidroid-js-addon-12345...
+     * It is same as folder name for the addon.
      * 3. Read index.js file from  AnkiDroid/addons/js-addons/package/index.js
      * 4. Wrap it in script tag and return
+     * </p>
      */
     public static String getEnabledAddonsContent(Context context) {
         StringBuilder content = new StringBuilder();

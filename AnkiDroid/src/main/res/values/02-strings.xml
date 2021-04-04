@@ -371,11 +371,12 @@
     <string name="downloading_addon">Downloading addon…</string>
     <string name="confirm_remove_addon">Do you want to remove %s ?</string>
     <string name="enter_npm_install_text">Enter npm install text</string>
+    <string name="not_valid_package">Not a valid package for AnkiDroid</string>
     <string name="error_downloading_file_check_name">Error downloading file, Check name</string>
+    <string name="addon_installed">Addon Installed</string>
     <string name="addon_update">Update</string>
     <string name="checking_addon_update">Checking for addon updates…</string>
     <string name="reviewer_addons">Reviewer addons</string>
-    <string name="note_editor_addons">Note editor addons</string>
     <string name="addon_download_hint_text">npm i ankidroid-js-addon…</string>
     <string name="addons_browser_message">Get addons from npmjs.org</string>
     <string name="addon_enabled">Enabled %s</string>
