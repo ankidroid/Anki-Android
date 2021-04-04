@@ -30,7 +30,7 @@ import static com.ichi2.anki.web.HttpFetcher.downloadFileToSdCardMethod;
 
 public class AddonsNpmUtility {
 
-    private String addonType = "reviewer";
+    private static final String ADDON_TYPE = "reviewer";
 
     private final Activity activity;
     private final Context context;
@@ -98,7 +98,7 @@ public class AddonsNpmUtility {
             Timber.d("json::%s", strResponse);
 
             JSONObject jsonObject = new JSONObject(strResponse);
-            if (AddonModel.isValidAddonPackage(jsonObject, addonType)) {
+            if (AddonModel.isValidAddonPackage(jsonObject, ADDON_TYPE)) {
 
                 JSONObject dist = jsonObject.getJSONObject("dist");
                 String tarballUrl = dist.get("tarball").toString();
@@ -110,7 +110,7 @@ public class AddonsNpmUtility {
             }
 
         } catch (JSONException e) {
-            Timber.e(e.getLocalizedMessage());
+            Timber.w(e);
         }
     }
 

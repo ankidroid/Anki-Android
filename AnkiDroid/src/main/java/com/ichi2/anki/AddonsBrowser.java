@@ -347,15 +347,19 @@ public class AddonsBrowser extends NavigationDrawerActivity implements DeckDropD
 
     public static String readIndexJs(File addonsContentFile) throws IOException {
         StringBuilder content = new StringBuilder();
-        if (addonsContentFile.exists()) {
-            BufferedReader br = new BufferedReader(new FileReader(addonsContentFile));
-            String line;
-            while ((line = br.readLine()) != null) {
-                content.append(line);
-                content.append('\n');
-            }
-            br.close();
+        if (!addonsContentFile.exists()) {
+            return content.toString();
         }
+
+        FileReader fileReader = new FileReader(addonsContentFile);
+        BufferedReader br = new BufferedReader(fileReader);
+        String line;
+        while ((line = br.readLine()) != null) {
+            content.append(line);
+            content.append('\n');
+        }
+        br.close();
+
         return content.toString();
     }
 
