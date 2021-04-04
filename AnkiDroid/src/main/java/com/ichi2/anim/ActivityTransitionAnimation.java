@@ -71,17 +71,12 @@ public class ActivityTransitionAnimation {
 
 
     public enum Direction {
-        START,
-        END,
+        LEFT,
+        RIGHT,
         FADE,
         UP,
         DOWN,
         DIALOG_EXIT,
         NONE
-    }
-
-    private static boolean isRightToLeft(Context c)
-    {
-        return c.getResources().getConfiguration().getLayoutDirection() == LayoutDirection.RTL;
     }
 }
