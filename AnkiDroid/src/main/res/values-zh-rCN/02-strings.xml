@@ -334,4 +334,5 @@
     <!-- Used for credential empty warning message -->
     <string name="email_id_empty">电子邮件地址是必填项</string>
     <string name="password_empty">密码是必填项</string>
+    <string name="back_pressed_once">Press back again to exit</string>
 </resources>

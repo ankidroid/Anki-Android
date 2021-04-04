@@ -373,4 +373,5 @@
     <!-- Used for credential empty warning message -->
     <string name="email_id_empty">Je požadována e-mailová adresa</string>
     <string name="password_empty">Je požadováno heslo</string>
+    <string name="back_pressed_once">Press back again to exit</string>
 </resources>

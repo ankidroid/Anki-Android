@@ -373,4 +373,5 @@
     <!-- Used for credential empty warning message -->
     <string name="email_id_empty">Необхідно вказати адресу електронної пошти</string>
     <string name="password_empty">Поле «Пароль» обов\'язкове до заповнення</string>
+    <string name="back_pressed_once">Press back again to exit</string>
 </resources>

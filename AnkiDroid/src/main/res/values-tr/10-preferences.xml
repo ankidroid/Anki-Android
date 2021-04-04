@@ -78,7 +78,7 @@
     <string name="card_browser_hide_media">Display filenames in card browser</string>
     <string name="card_browser_hide_media_summary">Display media filenames in the card browser question/answer fields</string>
     <string name="col_path">AnkiDroid dizini</string>
-    <string name="fullscreen_review">Tamekran modu</string>
+    <string name="fullscreen_review">Tam ekran modu</string>
     <string name="full_screen_off">Devre Dışı</string>
     <string name="full_screen_system">Sistem çubuklarını gizle</string>
     <string name="full_screen_complete">Sistem çubuklarını ve cevap butonlarını gizle</string>
@@ -151,6 +151,8 @@
     <string name="timeout_answer_seconds_summ" comment="The time to wait (in seconds) in the reviewer before automatically showing the next question or answer">XXX s</string>
     <string name="timeout_question_seconds">Sonraki soruyu gösterme zamanı</string>
     <string name="select_locale_title">Dil Seç</string>
+    <string name="software_render">Disable card hardware render</string>
+    <string name="software_render_summ">Hardware render is faster but may have problems, specifically on Android 8/8.1. If you cannot see parts of the card review user interface, try this setting.</string>
     <string name="safe_display">Güvenli görüntü modu</string>
     <string name="safe_display_summ">Bütün animasyonları devredışı bırak ve kartları çizmek için daha güvenli yöntem kullan. Bu e-mürekkepli cihazlar için gerekebilir.</string>
     <string name="disable_extended_text_ui">Disable Single-Field Edit Mode</string>

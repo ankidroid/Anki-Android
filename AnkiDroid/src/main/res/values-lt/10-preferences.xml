@@ -152,6 +152,8 @@
     <string name="timeout_answer_seconds_summ" comment="The time to wait (in seconds) in the reviewer before automatically showing the next question or answer">XXX s</string>
     <string name="timeout_question_seconds">Laikas, po kurio bus rodomas sekantis klausimas</string>
     <string name="select_locale_title">Pasirinkite kalbą</string>
+    <string name="software_render">Disable card hardware render</string>
+    <string name="software_render_summ">Hardware render is faster but may have problems, specifically on Android 8/8.1. If you cannot see parts of the card review user interface, try this setting.</string>
     <string name="safe_display">Ribotoji ekrano veiksena</string>
     <string name="safe_display_summ">Išjungti visą animaciją ir naudoti saugesnį kortelių piešimo būdą. To gali reikėti įrenginiams, kurių veikimas paremtas „E-ink“ technologija.</string>
     <string name="disable_extended_text_ui">Disable Single-Field Edit Mode</string>
