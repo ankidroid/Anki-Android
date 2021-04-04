@@ -223,8 +223,6 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
     private static final int ankiJsErrorCodeMarkCard = 1;
     private static final int ankiJsErrorCodeFlagCard = 2;
 
-    private static String jsAddonContent = "";
-
     /**
      * Broadcast that informs us when the sd card is about to be unmounted
      */
@@ -897,14 +895,6 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
         initNavigationDrawer(mainView);
 
         mShortAnimDuration = getResources().getInteger(android.R.integer.config_shortAnimTime);
-
-        /*
-          get all enabled addons' content before so called only once during review time instead of calling each time
-        */
-        if (AnkiDroidApp.getSharedPrefs(this).getBoolean("javascript_addons_support", false)) {
-            jsAddonContent = AddonsBrowser.getEnabledAddonsContent(this);
-        }
-
     }
 
     protected int getContentViewAttr(int fullscreenMode) {
@@ -2265,6 +2255,11 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
             }
         }
 
+        // get all enabled addons' content before so called only once during review time instead of calling each time
+        if (AnkiDroidApp.getSharedPrefs(this).getBoolean("javascript_addons_support", false)) {
+            content += AddonsBrowser.getEnabledAddonsContent(this);
+        }
+
         mCardContent = mCardTemplate.render(content, style, cardClass);
         Timber.d("base url = %s", mBaseUrl);
 
@@ -2424,11 +2419,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
             return;
         }
 
-        // jsAddonContent assigned in onCreate called getEnabledAddonsContent() only once time
-        if (jsAddonContent == null) {
-            jsAddonContent = "";
-        }
-        final String cardContent = mCardContent + jsAddonContent;
+        final String cardContent = mCardContent;
 
         processCardAction(cardWebView -> loadContentIntoCard(cardWebView, cardContent));
         mGestureDetectorImpl.onFillFlashcard();

@@ -1,15 +1,15 @@
 package com.ichi2.anki;
 
-import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Switch;
 import android.widget.TextView;
 
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.widget.SwitchCompat;
@@ -49,21 +49,23 @@ public class AddonsAdapter extends RecyclerView.Adapter<AddonsAdapter.AddonsView
 
         String addonTypeAndName = AddonModel.getAddonFullName(addonModel);
 
-        if (preferences.getBoolean(addonTypeAndName, false)) {
+        // store enabled/disabled status as boolean true/false value in SharedPreferences
+        SharedPreferences.Editor editor = preferences.edit();
+        Set<String> enabledAddonSet = preferences.getStringSet("enabledAddons", new HashSet<String>());
+
+        if (enabledAddonSet.contains(addonTypeAndName)) {
             holder.addonActivate.setChecked(true);
         }
 
         holder.addonActivate.setOnClickListener(v -> {
-            SharedPreferences.Editor editor = preferences.edit();
-            // store enabled/disabled status as boolean true/false value in SharedPreferences
-
             if (holder.addonActivate.isChecked()) {
-                editor.putBoolean(addonTypeAndName, true).apply();
+                enabledAddonSet.add(addonTypeAndName);
                 UIUtils.showThemedToast(context, context.getString(R.string.addon_enabled, addonModel.getName()), true);
             } else {
-                editor.putBoolean(addonTypeAndName, false).apply();
+                enabledAddonSet.remove(addonTypeAndName);
                 UIUtils.showThemedToast(context, context.getString(R.string.addon_disabled, addonModel.getName()), true);
             }
+            editor.putStringSet("enabledAddons", enabledAddonSet).apply();
         });
 
     }

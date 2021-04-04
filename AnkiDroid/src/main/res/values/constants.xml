@@ -205,6 +205,7 @@
     <string name="link_opencollective_donate">https://opencollective.com/ankidroid#section-contribute</string>
     <!-- js addons npm url   -->
     <string name="ankidroid_js_addon_npm_search_url">https://www.npmjs.com/search?q=keywords:ankidroid-js-addon</string>
+    <string name="ankidroid_js_addon_npm_registry">https://registry.npmjs.org/%s/latest</string>
 
     <string-array name="leech_action_values">
         <item>0</item>
