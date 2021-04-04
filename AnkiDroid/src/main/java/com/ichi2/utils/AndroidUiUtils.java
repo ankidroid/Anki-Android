@@ -47,5 +47,4 @@ public class AndroidUiUtils {
         view.requestFocus();
         Objects.requireNonNull(materialDialog.getWindow()).setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_VISIBLE);
     }
-
 }
