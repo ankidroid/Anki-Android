@@ -61,10 +61,10 @@ public class AddonsAdapter extends RecyclerView.Adapter<AddonsAdapter.AddonsView
 
         holder.addonActivate.setOnClickListener(v -> {
             if (holder.addonActivate.isChecked()) {
-                updatePrefs(reviewerAddonKey, addonModel.getName(), false);
+                addonModel.updatePrefs(preferences, reviewerAddonKey, addonModel.getName(), false);
                 UIUtils.showThemedToast(context, context.getString(R.string.addon_enabled, addonModel.getName()), true);
             } else {
-                updatePrefs(reviewerAddonKey, addonModel.getName(), true);
+                addonModel.updatePrefs(preferences, reviewerAddonKey, addonModel.getName(), true);
                 UIUtils.showThemedToast(context, context.getString(R.string.addon_disabled, addonModel.getName()), true);
             }
 
@@ -105,20 +105,4 @@ public class AddonsAdapter extends RecyclerView.Adapter<AddonsAdapter.AddonsView
     public interface OnAddonClickListener {
         void onAddonClick(int position);
     }
-
-    public void updatePrefs(String reviewerAddonKey, String addonName, boolean remove) {
-        Set<String> reviewerEnabledAddonSet = preferences.getStringSet(reviewerAddonKey, new HashSet<String>());
-        SharedPreferences.Editor editor = preferences.edit();
-
-        Set<String> newStrSet = new HashSet<String>();
-        newStrSet.addAll(reviewerEnabledAddonSet);
-        newStrSet.add(addonName);
-
-        if (remove) {
-            newStrSet.remove(addonName);
-        }
-
-        editor.putStringSet(reviewerAddonKey, newStrSet).apply();
-    }
-
 }

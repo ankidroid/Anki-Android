@@ -269,10 +269,7 @@ public class AddonsBrowser extends NavigationDrawerActivity implements DeckDropD
                         BackupManager.removeDir(dir);
 
                         // remove enabled status
-                        Set<String> enabledAddonSet = preferences.getStringSet(AddonModel.getReviewerAddonKey(), new HashSet<String>());
-                        enabledAddonSet.remove(addonModel.getName());
-                        SharedPreferences.Editor editor = preferences.edit();
-                        editor.putStringSet(AddonModel.getReviewerAddonKey(), enabledAddonSet).apply();
+                        addonModel.updatePrefs(preferences, AddonModel.getReviewerAddonKey(), addonModel.getName(), true);
 
                         addonsNames.remove(position);
                         addonsListRecyclerView.getAdapter().notifyItemRangeChanged(position, addonsNames.size());

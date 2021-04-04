@@ -1,9 +1,14 @@
 package com.ichi2.anki;
 
 
+import android.content.SharedPreferences;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+
+import java.util.HashSet;
+import java.util.Set;
 
 import timber.log.Timber;
 
@@ -121,5 +126,20 @@ public class AddonModel {
         }
 
         return false;
+    }
+
+    public void updatePrefs(SharedPreferences preferences, String reviewerAddonKey, String addonName, boolean remove) {
+        Set<String> reviewerEnabledAddonSet = preferences.getStringSet(reviewerAddonKey, new HashSet<String>());
+        SharedPreferences.Editor editor = preferences.edit();
+
+        Set<String> newStrSet = new HashSet<String>();
+        newStrSet.addAll(reviewerEnabledAddonSet);
+        newStrSet.add(addonName);
+
+        if (remove) {
+            newStrSet.remove(addonName);
+        }
+
+        editor.putStringSet(reviewerAddonKey, newStrSet).apply();
     }
 }
