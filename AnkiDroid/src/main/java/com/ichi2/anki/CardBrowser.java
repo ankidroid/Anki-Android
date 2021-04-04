@@ -670,10 +670,12 @@ public class CardBrowser extends NavigationDrawerActivity implements
                 for (int i = Math.min(mLastSelectedPosition, position); i <= Math.max(mLastSelectedPosition, position); i++) {
                     // getting the view of particular view and then checking whether it's already checked or not
                     View childView = mCardsListView.getChildAt(i);
-                    CheckBox cb = childView.findViewById(R.id.card_checkbox);
-                    if (!cb.isChecked()) {
-                        cb.toggle();
-                        onCheck(i, childView);
+                    if (childView != null) {
+                        CheckBox cb = childView.findViewById(R.id.card_checkbox);
+                        if (!cb.isChecked()) {
+                            cb.toggle();
+                            onCheck(i, childView);
+                        }
                     }
                 }
             } else {
