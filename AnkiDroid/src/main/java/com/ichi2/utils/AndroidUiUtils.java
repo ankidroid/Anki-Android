@@ -23,10 +23,6 @@ import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 
-import com.afollestad.materialdialogs.MaterialDialog;
-
-import java.util.Objects;
-
 import androidx.annotation.NonNull;
 
 import static androidx.core.content.ContextCompat.getSystemService;
