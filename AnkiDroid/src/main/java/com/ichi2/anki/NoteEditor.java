@@ -1233,7 +1233,7 @@ public class NoteEditor extends AnkiActivity implements
         intent.putExtra(EXTRA_DID, mCurrentDid);
         //mutate event with additional properties
         intentEnricher.consume(intent);
-        startActivityForResultWithAnimation(intent, REQUEST_ADD, LEFT);
+        startActivityForResultWithAnimation(intent, REQUEST_ADD, START);
     }
 
 
@@ -1341,7 +1341,7 @@ public class NoteEditor extends AnkiActivity implements
         if (mCaller == CALLER_CARDEDITOR_INTENT_ADD) {
             finishWithAnimation(NONE);
         } else {
-            finishWithAnimation(RIGHT);
+            finishWithAnimation(END);
         }
     }
 
@@ -1376,7 +1376,7 @@ public class NoteEditor extends AnkiActivity implements
             intent.putExtra("ordId", mCurrentEditedCard.getOrd());
             Timber.d("showCardTemplateEditor() with ord %s", mCurrentEditedCard.getOrd());
         }
-        startActivityForResultWithAnimation(intent, REQUEST_TEMPLATE_EDIT, LEFT);
+        startActivityForResultWithAnimation(intent, REQUEST_TEMPLATE_EDIT, START);
     }
 
 

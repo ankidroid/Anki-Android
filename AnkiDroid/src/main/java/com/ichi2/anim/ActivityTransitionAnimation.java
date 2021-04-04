@@ -7,10 +7,10 @@ import com.ichi2.anki.R;
 public class ActivityTransitionAnimation {
     public static void slide(Activity activity, Direction direction) {
         switch (direction) {
-        case LEFT:
+        case START:
             activity.overridePendingTransition(R.anim.slide_left_in, R.anim.slide_left_out);
             break;
-        case RIGHT:
+        case END:
             activity.overridePendingTransition(R.anim.slide_right_in, R.anim.slide_right_out);
             break;
         case FADE:
@@ -32,8 +32,8 @@ public class ActivityTransitionAnimation {
 
 
     public enum Direction {
-        LEFT,
-        RIGHT,
+        START,
+        END,
         FADE,
         UP,
         DOWN,

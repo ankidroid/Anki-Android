@@ -40,7 +40,7 @@ import org.acra.util.Installation;
 
 import timber.log.Timber;
 
-import static com.ichi2.anim.ActivityTransitionAnimation.Direction.LEFT;
+import static com.ichi2.anim.ActivityTransitionAnimation.Direction.START;
 
 /**
  * Shows an about box, which is a small HTML page.
@@ -195,7 +195,7 @@ public class Info extends AnkiActivity {
 
 
     private void finishWithAnimation() {
-        finishWithAnimation(LEFT);
+        finishWithAnimation(START);
     }
 
 

@@ -658,7 +658,7 @@ public class Statistics extends NavigationDrawerActivity implements DeckDropDown
                 data.putExtra("originalDeck", getIntent().getLongExtra("selectedDeck", 0L));
             }
             setResult(RESULT_CANCELED, data);
-            finishWithAnimation(ActivityTransitionAnimation.Direction.RIGHT);
+            finishWithAnimation(ActivityTransitionAnimation.Direction.END);
         }
     }
 }

@@ -864,7 +864,7 @@ public class DeckPicker extends NavigationDrawerActivity implements
         } else if (itemId == R.id.action_model_browser_open) {
             Timber.i("DeckPicker:: Model browser button pressed");
             Intent noteTypeBrowser = new Intent(this, ModelBrowser.class);
-            startActivityForResultWithAnimation(noteTypeBrowser, 0, LEFT);
+            startActivityForResultWithAnimation(noteTypeBrowser, 0, START);
             return true;
         } else if (itemId == R.id.action_restore_backup) {
             Timber.i("DeckPicker:: Restore from backup button pressed");
@@ -1177,7 +1177,7 @@ public class DeckPicker extends NavigationDrawerActivity implements
     public void addNote() {
         Intent intent = new Intent(DeckPicker.this, NoteEditor.class);
         intent.putExtra(NoteEditor.EXTRA_CALLER, NoteEditor.CALLER_DECKPICKER);
-        startActivityForResultWithAnimation(intent, ADD_NOTE, LEFT);
+        startActivityForResultWithAnimation(intent, ADD_NOTE, START);
     }
 
 
@@ -1316,7 +1316,7 @@ public class DeckPicker extends NavigationDrawerActivity implements
 
                     if (skip != 0) {
                         startActivityForResultWithAnimation(infoIntent, SHOW_INFO_NEW_VERSION,
-                                LEFT);
+                                START);
                     } else {
                         startActivityForResultWithoutAnimation(infoIntent, SHOW_INFO_NEW_VERSION);
                     }
@@ -2260,7 +2260,7 @@ public class DeckPicker extends NavigationDrawerActivity implements
             Intent intent = new Intent();
             intent.putExtra("withDeckOptions", withDeckOptions);
             intent.setClass(this, StudyOptionsActivity.class);
-            startActivityForResultWithAnimation(intent, SHOW_STUDYOPTIONS, LEFT);
+            startActivityForResultWithAnimation(intent, SHOW_STUDYOPTIONS, START);
         }
     }
 
@@ -2804,7 +2804,7 @@ public class DeckPicker extends NavigationDrawerActivity implements
 
     private void openReviewer() {
         Intent reviewer = new Intent(this, Reviewer.class);
-        startActivityForResultWithAnimation(reviewer, REQUEST_REVIEW, LEFT);
+        startActivityForResultWithAnimation(reviewer, REQUEST_REVIEW, START);
     }
 
     @Override
