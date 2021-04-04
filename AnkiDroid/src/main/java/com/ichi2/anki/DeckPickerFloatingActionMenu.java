@@ -100,6 +100,7 @@ public class DeckPickerFloatingActionMenu {
                         .negativeText(R.string.dialog_cancel)
                         .show();
 
+                // Open keyboard when dialog shows
                 Objects.requireNonNull(materialDialog.getWindow()).setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_VISIBLE);
             }
         });
