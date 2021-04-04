@@ -197,8 +197,7 @@ public class AddonsBrowser extends NavigationDrawerActivity implements DeckDropD
 
                 // Read package.json from
                 // AnkiDroid/addons/ankidroid-addon-../package/package.json
-                File addonsPackageDir = new File(file, "package");
-                File addonsPackageJson = new File(addonsPackageDir, "package.json");
+                File addonsPackageJson = new File(file, "package/package.json");
 
                 JSONObject jsonObject = AddonsNpmUtility.packageJsonReader(addonsPackageJson);
 
