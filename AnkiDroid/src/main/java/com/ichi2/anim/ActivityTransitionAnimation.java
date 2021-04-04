@@ -4,8 +4,10 @@ import android.app.Activity;
 
 import com.ichi2.anki.R;
 
+import org.jetbrains.annotations.NotNull;
+
 public class ActivityTransitionAnimation {
-    public static void slide(Activity activity, Direction direction) {
+    public static void slide(Activity activity, @NotNull Direction direction) {
         switch (direction) {
         case LEFT:
             activity.overridePendingTransition(R.anim.slide_left_in, R.anim.slide_left_out);
