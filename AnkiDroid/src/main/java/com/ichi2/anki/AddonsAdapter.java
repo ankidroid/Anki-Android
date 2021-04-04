@@ -1,6 +1,5 @@
 package com.ichi2.anki;
 
-import android.app.TaskInfo;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.view.LayoutInflater;
@@ -15,7 +14,6 @@ import java.util.Set;
 import androidx.annotation.NonNull;
 import androidx.appcompat.widget.SwitchCompat;
 import androidx.recyclerview.widget.RecyclerView;
-import timber.log.Timber;
 
 public class AddonsAdapter extends RecyclerView.Adapter<AddonsAdapter.AddonsViewHolder> {
     private SharedPreferences preferences;

@@ -82,6 +82,7 @@ public class AddonsNpmUtility {
                         Timber.e(e.getLocalizedMessage());
                     }
                 } else {
+                    hideProgressBar();
                     showToast(context.getString(R.string.error_downloading_file_check_name));
                 }
             }
