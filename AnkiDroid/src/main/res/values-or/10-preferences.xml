@@ -151,6 +151,8 @@
     <string name="timeout_answer_seconds_summ" comment="The time to wait (in seconds) in the reviewer before automatically showing the next question or answer">XXX s</string>
     <string name="timeout_question_seconds">ପରବର୍ତ୍ତୀ ପ୍ରଶ୍ନ ଦେଖାଇବାର ସମୟ ଆସିଗଲା </string>
     <string name="select_locale_title">ଭାଷା ବାଛନ୍ତୁ</string>
+    <string name="software_render">Disable card hardware render</string>
+    <string name="software_render_summ">Hardware render is faster but may have problems, specifically on Android 8/8.1. If you cannot see parts of the card review user interface, try this setting.</string>
     <string name="safe_display">ସୁରକ୍ଷିତ ପ୍ରଦର୍ଶନ ମୋଡ୍</string>
     <string name="safe_display_summ">ସମସ୍ତ ଆନିମେସନ୍ ଅକ୍ଷମ କରନ୍ତୁ ଏବଂ କାର୍ଡ ଅଙ୍କନ ପାଇଁ ସୁରକ୍ଷିତ ପଦ୍ଧତି ବ୍ୟବହାର କରନ୍ତୁ | ଇ-ଇଙ୍କ ଉପକରଣଗୁଡ଼ିକ ଏହା ଆବଶ୍ୟକ କରିପାରନ୍ତି |</string>
     <string name="disable_extended_text_ui">ଗୋଟିଏ-କ୍ଷେତ୍ର ସଂପାଦନା ମୋଡ୍ କୁ ଅକ୍ଷମ କରନ୍ତୁ</string>

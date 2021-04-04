@@ -347,4 +347,5 @@
     <!-- Used for credential empty warning message -->
     <string name="email_id_empty">L\'adresse courriel est requise</string>
     <string name="password_empty">Mot de passe requis</string>
+    <string name="back_pressed_once">Press back again to exit</string>
 </resources>
