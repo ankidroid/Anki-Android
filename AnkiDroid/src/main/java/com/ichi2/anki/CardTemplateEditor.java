@@ -636,31 +636,6 @@ public class CardTemplateEditor extends AnkiActivity implements DeckSelectionDia
             return false;
         }
 
-        //Old way for handling activity results
-
-
-        /*
-        @SuppressWarnings("deprecation") // Tracked as https://github.com/ankidroid/Anki-Android/issues/8293
-        @Override
-        public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
-            super.onActivityResult(requestCode, resultCode, data);
-            if (requestCode == REQUEST_CARD_BROWSER_APPEARANCE) {
-                onCardBrowserAppearanceResult(resultCode, data);
-                return;
-            }
-
-            if (requestCode == REQUEST_PREVIEWER) {
-                TemporaryModel.clearTempModelFiles();
-                // Make sure the fragments reinitialize, otherwise there is staleness on return
-                ((TemplatePagerAdapter)mTemplateEditor.mViewPager.getAdapter()).ordinalShift();
-                mTemplateEditor.mViewPager.getAdapter().notifyDataSetChanged();
-            }
-        }
-
- */
-
-        //New way for handling the activity results
-
         ActivityResultLauncher<Intent> activityResultLauncher = registerForActivityResult(
                 new ActivityResultContracts.StartActivityForResult(),
                 new ActivityResultCallback<ActivityResult>() {
