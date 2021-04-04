@@ -1758,7 +1758,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
         // This does not handle mUseInputTag (the WebView contains an input field with a typable answer).
         // In this case, the user can use touch to focus the field if necessary.
         if (typeAnswer()) {
-            mAnswerField.focusWithKeyboard();
+            AndroidUiUtils.setFocusAndOpenKeyboard(mAnswerField, getWindow());
         } else {
             mFlipCardLayout.requestFocus();
         }

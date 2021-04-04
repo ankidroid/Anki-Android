@@ -105,6 +105,7 @@ import com.ichi2.themes.StyledProgressDialog;
 import com.ichi2.themes.Themes;
 import com.ichi2.anki.widgets.PopupMenuWithIcons;
 import com.ichi2.utils.AdaptionUtil;
+import com.ichi2.utils.AndroidUiUtils;
 import com.ichi2.utils.ContentResolverUtil;
 import com.ichi2.utils.DeckComparator;
 import com.ichi2.utils.FileUtil;
@@ -318,7 +319,7 @@ public class NoteEditor extends AnkiActivity implements
                 mIntent = new Intent();
                 mIntent.putExtra(EXTRA_ID, noteEditor.getIntent().getStringExtra(EXTRA_ID));
             } else if (!noteEditor.mEditFields.isEmpty()) {
-                noteEditor.mEditFields.getFirst().focusWithKeyboard();
+                AndroidUiUtils.setFocusAndOpenKeyboard(noteEditor.mEditFields.getFirst(), noteEditor.getWindow());
             }
             if (!mCloseAfter && (noteEditor.mProgressDialog != null) && noteEditor.mProgressDialog.isShowing()) {
                 try {

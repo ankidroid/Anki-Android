@@ -20,11 +20,14 @@ import android.app.UiModeManager;
 import android.content.Context;
 import android.content.res.Configuration;
 import android.view.View;
+import android.view.Window;
 import android.view.WindowManager;
 
 import com.afollestad.materialdialogs.MaterialDialog;
 
 import java.util.Objects;
+
+import androidx.annotation.NonNull;
 
 import static androidx.core.content.ContextCompat.getSystemService;
 
@@ -41,10 +44,10 @@ public class AndroidUiUtils {
      * This method is used for setting the focus on an EditText and opening the keyboard for EditText
      * which are used in dialogs.
      * @param view The EditText which requires the focus to be set.
-     * @param materialDialog The dialog where the view is present.
+     * @param window The window where the view is present.
      */
-    public static void setFocusAndOpenKeyboard(View view, MaterialDialog materialDialog) {
+    public static void setFocusAndOpenKeyboard(View view, @NonNull Window window) {
         view.requestFocus();
-        Objects.requireNonNull(materialDialog.getWindow()).setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_VISIBLE);
+        window.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_VISIBLE);
     }
 }
