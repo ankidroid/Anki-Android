@@ -16,21 +16,12 @@ public class DeckNameComparatorTest {
         deckNameComparator = new DeckNameComparator();
     }
 
-    //Testing DeckNameComparator by sorting an array of different string size.
+    //Testing DeckNameComparator by sorting an array of deck names.
     @Test
-    public void sortDecksBySize() {
-        String[] deckNames = new String[]{"aa", "aa::bb"};
+    public void sortDeckNames() {
+        String[] deckNames = new String[]{"AA", "ab", "BB", "aa::bb", "aa::ab"};
         sort(deckNames, deckNameComparator);
 
-        assertThat(deckNames, is(new String[] {"aa", "aa::bb"}));
-    }
-
-    //Testing DeckNameComparator by sorting an array of equal string length with both cases.
-    @Test
-    public void sortDecks() {
-        String[] deckNames = new String[]{"AA", "ab", "BB"};
-        sort(deckNames, deckNameComparator);
-
-        assertThat(deckNames, is(new String[]{"AA", "ab", "BB"}));
+        assertThat(deckNames, is(new String[]{"AA", "aa::ab", "aa::bb", "ab", "BB"}));
     }
 }
