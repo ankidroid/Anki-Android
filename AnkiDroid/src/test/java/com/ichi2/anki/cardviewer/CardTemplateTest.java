@@ -42,6 +42,9 @@ public class CardTemplateTest {
             "        <div id=\"content\">\n" +
             "        ::content::\n" +
             "        </div>\n" +
+            "       <script>\n" +
+            "       ::addons::\n" +
+            "       </script>\n" +
             "    </body>\n" +
             "</html>\n";
 
@@ -51,9 +54,10 @@ public class CardTemplateTest {
         String content = "foo";
         String style = "bar";
         String cardClass = "baz";
-        String result = new CardTemplate(data).render(content, style, cardClass);
+        String addons = "addon";
+        String result = new CardTemplate(data).render(content, style, cardClass, addons);
 
-        assertThat(result, is(data.replace("::content::", content).replace("::style::", style).replace("::class::", cardClass)));
+        assertThat(result, is(data.replace("::content::", content).replace("::style::", style).replace("::class::", cardClass).replace("::addons::", addons)));
     }
 
     @Test
@@ -65,7 +69,7 @@ public class CardTemplateTest {
         String content = new String(new char[stringLength]).replace('\0', 'a');
 
 
-        String ret = new CardTemplate(data).render(content, content, content);
+        String ret = new CardTemplate(data).render(content, content, content, content);
     }
 
 }

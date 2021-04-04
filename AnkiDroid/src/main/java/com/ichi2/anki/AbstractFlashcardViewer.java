@@ -2256,11 +2256,12 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
         }
 
         // get all enabled addons' content before so called only once during review time instead of calling each time
+        String addons = "";
         if (AnkiDroidApp.getSharedPrefs(this).getBoolean("javascript_addons_support", false)) {
-            content += AddonsBrowser.getEnabledAddonsContent(this);
+            addons = AddonsBrowser.getEnabledAddonsContent(this);
         }
 
-        mCardContent = mCardTemplate.render(content, style, cardClass);
+        mCardContent = mCardTemplate.render(content, style, cardClass, addons);
         Timber.d("base url = %s", mBaseUrl);
 
         if (AnkiDroidApp.getSharedPrefs(this).getBoolean("html_javascript_debugging", false)) {

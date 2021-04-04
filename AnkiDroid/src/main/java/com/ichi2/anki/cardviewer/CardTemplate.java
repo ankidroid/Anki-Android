@@ -24,6 +24,7 @@ public class CardTemplate {
     private final String mPreClass;
     private final String mPreContent;
     private final String mPostContent;
+    private final String mAddonsContent;
 
     public CardTemplate(@NonNull String template) {
         // Note: This refactoring means the template must be in the specific order of style, class, content.
@@ -31,16 +32,19 @@ public class CardTemplate {
         String classDelim = "::class::";
         String styleDelim = "::style::";
         String contentDelim = "::content::";
+        String addonContentDelim = "::addons::";
 
         int styleIndex = template.indexOf(styleDelim);
         int classIndex = template.indexOf(classDelim);
         int contentIndex = template.indexOf(contentDelim);
+        int addonsIndex = template.indexOf(addonContentDelim);
 
         try {
             this.mPreStyle = template.substring(0, styleIndex);
             this.mPreClass = template.substring(styleIndex + styleDelim.length(), classIndex);
             this.mPreContent = template.substring(classIndex + classDelim.length(), contentIndex);
-            this.mPostContent = template.substring(contentIndex + contentDelim.length());
+            this.mPostContent = template.substring(contentIndex + contentDelim.length(), addonsIndex);
+            this.mAddonsContent = template.substring(addonsIndex + addonContentDelim.length());
         } catch (StringIndexOutOfBoundsException ex) {
             throw new IllegalStateException("The card template had replacement string order, or content changed", ex);
         }
@@ -48,7 +52,7 @@ public class CardTemplate {
 
     @CheckResult
     @NonNull
-    public String render(String content, String style, String cardClass) {
-        return mPreStyle + style + mPreClass + cardClass + mPreContent + content + mPostContent;
+    public String render(String content, String style, String cardClass, String addons) {
+        return mPreStyle + style + mPreClass + cardClass + mPreContent + content + mPostContent + addons + mAddonsContent;
     }
 }

@@ -269,10 +269,10 @@ public class AddonsBrowser extends NavigationDrawerActivity implements DeckDropD
                         BackupManager.removeDir(dir);
 
                         // remove enabled status
-                        Set<String> enabledAddonSet = preferences.getStringSet("enabledAddons", new HashSet<String>());
-                        enabledAddonSet.remove(AddonModel.getAddonFullName(addonModel));
+                        Set<String> enabledAddonSet = preferences.getStringSet(AddonModel.getReviewerAddonKey(), new HashSet<String>());
+                        enabledAddonSet.remove(addonModel.getName());
                         SharedPreferences.Editor editor = preferences.edit();
-                        editor.putStringSet("enabledAddons", enabledAddonSet).apply();
+                        editor.putStringSet(AddonModel.getReviewerAddonKey(), enabledAddonSet).apply();
 
                         addonsNames.remove(position);
                         addonsListRecyclerView.getAdapter().notifyItemRangeChanged(position, addonsNames.size());
@@ -309,7 +309,6 @@ public class AddonsBrowser extends NavigationDrawerActivity implements DeckDropD
      *                e.g: reviewer_addon:ankidroid-js-addon-12345...  -->  ankidroid-js-addon-12345...
      *                It is same as folder name for the addon.
      *                3. Read index.js file from  AnkiDroid/addons/js-addons/package/index.js
-     *                4. Wrap it in script tag and return
      *                </p>
      * @return content of index.js file for every enabled addons in script tag.
      */
@@ -319,20 +318,17 @@ public class AddonsBrowser extends NavigationDrawerActivity implements DeckDropD
         String currentAnkiDroidDirectory = CollectionHelper.getCurrentAnkiDroidDirectory(context);
         SharedPreferences preferences = AnkiDroidApp.getSharedPrefs(context);
 
-        Set<String> enabledAddonSet = preferences.getStringSet("enabledAddons", new HashSet<String>());
+        // set of enabled addons only
+        Set<String> reviewerEnabledAddonSet = preferences.getStringSet(AddonModel.getReviewerAddonKey(), new HashSet<String>());
 
-        for (String s : enabledAddonSet) {
-            if (!s.contains("reviewer_addon")) {
-                continue;
-            }
+        for (String addonDir : reviewerEnabledAddonSet) {
             try {
-                String addonDirName = s.replace("reviewer_addon:", "");
 
                 // AnkiDroid/addons/js-addons/package/index.js
                 StringJoiner joinedPath = new StringJoiner("/")
                         .add(currentAnkiDroidDirectory)
                         .add("addons")
-                        .add(addonDirName)
+                        .add(addonDir)
                         .add("package")
                         .add("index.js");
 
@@ -358,18 +354,11 @@ public class AddonsBrowser extends NavigationDrawerActivity implements DeckDropD
         if (addonsContentFile.exists()) {
             BufferedReader br = new BufferedReader(new FileReader(addonsContentFile));
             String line;
-
-            content.append("<script>");
-            content.append("\n");
-
             while ((line = br.readLine()) != null) {
                 content.append(line);
                 content.append('\n');
             }
             br.close();
-
-            content.append("</script>");
-            content.append("\n");
         }
         return content.toString();
     }

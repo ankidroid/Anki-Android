@@ -14,6 +14,7 @@ public class AddonModel {
     private String mJsApiVersion;
     private String mHomepage;
     private String mType;
+    private static String mReviewerAddonKey = "enabled_reviewer_addon";
 
 
     public AddonModel(String name, String version, String developer, String jsApiVersion, String homepage, String type) {
@@ -55,6 +56,9 @@ public class AddonModel {
         return mType;
     }
 
+    public static String getReviewerAddonKey() {
+        return mReviewerAddonKey;
+    }
 
     public static AddonModel tryParse(JSONObject jsonObject, String type) {
 
@@ -69,12 +73,6 @@ public class AddonModel {
         }
         return null;
     }
-
-
-    public static String getAddonFullName(AddonModel addonModel) {
-        return addonModel.getType() + "_addon:" + addonModel.getName();
-    }
-
 
     /**
      * @param jsonObject json object with addons info

@@ -1,5 +1,6 @@
 package com.ichi2.anki;
 
+import android.app.TaskInfo;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.view.LayoutInflater;
@@ -14,6 +15,7 @@ import java.util.Set;
 import androidx.annotation.NonNull;
 import androidx.appcompat.widget.SwitchCompat;
 import androidx.recyclerview.widget.RecyclerView;
+import timber.log.Timber;
 
 public class AddonsAdapter extends RecyclerView.Adapter<AddonsAdapter.AddonsViewHolder> {
     private SharedPreferences preferences;
@@ -47,25 +49,25 @@ public class AddonsAdapter extends RecyclerView.Adapter<AddonsAdapter.AddonsView
         // while binding viewholder if preferences w.r.t viewholder store true value or enabled status then
         // turn on switch status else it is off by default
 
-        String addonTypeAndName = AddonModel.getAddonFullName(addonModel);
-
         // store enabled/disabled status as boolean true/false value in SharedPreferences
-        SharedPreferences.Editor editor = preferences.edit();
-        Set<String> enabledAddonSet = preferences.getStringSet("enabledAddons", new HashSet<String>());
+        String reviewerAddonKey = AddonModel.getReviewerAddonKey();
+        Set<String> reviewerEnabledAddonSet = preferences.getStringSet(reviewerAddonKey, new HashSet<String>());
 
-        if (enabledAddonSet.contains(addonTypeAndName)) {
-            holder.addonActivate.setChecked(true);
+        for (String s : reviewerEnabledAddonSet) {
+            if (s.equals(addonModel.getName())) {
+                holder.addonActivate.setChecked(true);
+            }
         }
 
         holder.addonActivate.setOnClickListener(v -> {
             if (holder.addonActivate.isChecked()) {
-                enabledAddonSet.add(addonTypeAndName);
+                updatePrefs(reviewerAddonKey, addonModel.getName(), false);
                 UIUtils.showThemedToast(context, context.getString(R.string.addon_enabled, addonModel.getName()), true);
             } else {
-                enabledAddonSet.remove(addonTypeAndName);
+                updatePrefs(reviewerAddonKey, addonModel.getName(), true);
                 UIUtils.showThemedToast(context, context.getString(R.string.addon_disabled, addonModel.getName()), true);
             }
-            editor.putStringSet("enabledAddons", enabledAddonSet).apply();
+
         });
 
     }
@@ -102,6 +104,21 @@ public class AddonsAdapter extends RecyclerView.Adapter<AddonsAdapter.AddonsView
 
     public interface OnAddonClickListener {
         void onAddonClick(int position);
+    }
+
+    public void updatePrefs(String reviewerAddonKey, String addonName, boolean remove) {
+        Set<String> reviewerEnabledAddonSet = preferences.getStringSet(reviewerAddonKey, new HashSet<String>());
+        SharedPreferences.Editor editor = preferences.edit();
+
+        Set<String> newStrSet = new HashSet<String>();
+        newStrSet.addAll(reviewerEnabledAddonSet);
+        newStrSet.add(addonName);
+
+        if (remove) {
+            newStrSet.remove(addonName);
+        }
+
+        editor.putStringSet(reviewerAddonKey, newStrSet).apply();
     }
 
 }
