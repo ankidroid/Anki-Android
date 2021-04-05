@@ -28,6 +28,7 @@ import com.ichi2.anki.R;
 import com.ichi2.anki.UIUtils;
 import com.ichi2.anki.analytics.AnalyticsDialogFragment;
 import com.ichi2.utils.FilterResultsUtils;
+import com.ichi2.utils.UniqueArrayList;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -62,18 +63,15 @@ public class TagsDialog extends AnalyticsDialogFragment {
          * Construct a new {@link TagsList}
          *
          * @param allTags A list of all available tags
+         *                any duplicates will be ignored
          * @param currentTags a list containing the currently selected tags
          *                    any duplicates will be ignored
          */
         public TagsList(@NonNull List<String> allTags, @NonNull List<String> currentTags) {
             mCurrentTags = new TreeSet<>(String.CASE_INSENSITIVE_ORDER);
             mCurrentTags.addAll(currentTags);
-            mAllTags = allTags;
-            for (String tag : mCurrentTags) {
-                if (!allTags.contains(tag)) {
-                    allTags.add(tag);
-                }
-            }
+            mAllTags = UniqueArrayList.from(allTags);
+            mAllTags.addAll(mCurrentTags);
         }
 
 
