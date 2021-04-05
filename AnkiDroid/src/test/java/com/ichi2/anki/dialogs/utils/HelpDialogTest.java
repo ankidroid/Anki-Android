@@ -52,6 +52,6 @@ public class HelpDialogTest extends RobolectricTest {
 
         RecyclerView v = RecursivePictureMenuUtil.getRecyclerViewFor(dialog);
 
-        assertThat(v.getChildCount(), is(6));
+        assertThat(v.getChildCount(), is(5));
     }
 }
