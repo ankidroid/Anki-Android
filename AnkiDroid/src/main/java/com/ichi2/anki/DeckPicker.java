@@ -173,7 +173,8 @@ public class DeckPicker extends NavigationDrawerActivity implements
     /**
      * Available options performed by other activities (request codes for onActivityResult())
      */
-    private static final int REQUEST_STORAGE_PERMISSION = 0;
+    @VisibleForTesting
+    static final int REQUEST_STORAGE_PERMISSION = 0;
     private static final int REQUEST_PATH_UPDATE = 1;
     public static final int REPORT_FEEDBACK = 4;
     private static final int LOG_IN_FOR_SYNC = 6;
@@ -524,20 +525,30 @@ public class DeckPicker extends NavigationDrawerActivity implements
         mReviewSummaryTextView = findViewById(R.id.today_stats_text_view);
 
         Timber.i("colOpen: %b", colOpen);
-        if (colOpen) {
-            // Show any necessary dialogs (e.g. changelog, special messages, etc)
-            showStartupScreensAndDialogs(preferences, 0);
-        } else {
-            // Show error dialogs
-            if (Permissions.hasStorageAccessPermission(this)) {
-                StartupFailure failure = InitialActivity.getStartupFailureType(this);
-                handleStartupFailure(failure);
-            }
-            // firstCollectionOpen should have been called to show a dialog - so no need to do anything here.
+        // if permission is denied, firstCollectionOpen() requests it and onRequestPermissionsResult continues execution
+        if (Permissions.hasStorageAccessPermission(this)) {
+            handleStartup(colOpen);
         }
+
 
         mShortAnimDuration = getResources().getInteger(android.R.integer.config_shortAnimTime);
     }
+
+    /** The first call in showing dialogs for startup - error or success */
+    private void handleStartup(boolean colOpen) {
+        // TODO: colOpen is not colIsOpen() if called from onCreate - we should fix this mismatch of terms
+        // or use the same variable if the semantics should have been equivalent
+        if (colOpen) {
+            // Show any necessary dialogs (e.g. changelog, special messages, etc)
+            SharedPreferences sharedPrefs = AnkiDroidApp.getSharedPrefs(this);
+            showStartupScreensAndDialogs(sharedPrefs, 0);
+        } else {
+            // Show error dialogs
+            StartupFailure failure = InitialActivity.getStartupFailureType(this);
+            handleStartupFailure(failure);
+        }
+    }
+
 
     @VisibleForTesting
     void handleStartupFailure(StartupFailure failure) {
@@ -926,7 +937,7 @@ public class DeckPicker extends NavigationDrawerActivity implements
         if (requestCode == REQUEST_STORAGE_PERMISSION && permissions.length == 1) {
             if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                 invalidateOptionsMenu();
-                showStartupScreensAndDialogs(AnkiDroidApp.getSharedPrefs(this), 0);
+                handleStartup(colIsOpen());
             } else {
                 // User denied access to file storage  so show error toast and display "App Info"
                 Toast.makeText(this, R.string.startup_no_storage_permission, Toast.LENGTH_LONG).show();
