@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
+import android.content.pm.PackageManager;
 
 import com.ichi2.anki.dialogs.DatabaseErrorDialog;
 import com.ichi2.libanki.Collection;
@@ -221,12 +222,37 @@ public class DeckPickerTest extends RobolectricTest {
         }
     }
 
+    @Test
+    public void databaseLockedNoPermissionIntegrationTest() {
+        // no permissions -> grant permissions -> db locked
+        try {
+            InitialActivityTest.setupForDefault();
+            BackendEmulatingOpenConflict.enable();
+
+            DeckPickerEx d = super.startActivityNormallyOpenCollectionWithIntent(DeckPickerEx.class, new Intent());
+
+            // grant permissions
+            InitialActivityTest.setupForDatabaseConflict();
+
+            d.onStoragePermissionGranted();
+
+            assertThat("A specific dialog for a conflict should be shown", d.mDatabaseErrorDialog, is(DatabaseErrorDialog.DIALOG_DB_LOCKED));
+        } finally {
+            BackendEmulatingOpenConflict.disable();
+            InitialActivityTest.setupForDefault();
+        }
+    }
+
     private static class DeckPickerEx extends DeckPicker {
         private int mDatabaseErrorDialog;
 
         @Override
         public void showDatabaseErrorDialog(int id) {
             this.mDatabaseErrorDialog = id;
+        }
+
+        public void onStoragePermissionGranted() {
+            onRequestPermissionsResult(DeckPicker.REQUEST_STORAGE_PERMISSION, new String[] { "" }, new int[] { PackageManager.PERMISSION_GRANTED });
         }
     }
 }
