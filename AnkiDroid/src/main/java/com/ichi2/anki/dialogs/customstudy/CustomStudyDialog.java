@@ -75,13 +75,24 @@ public class CustomStudyDialog extends AnalyticsDialogFragment implements
     private static final int CUSTOM_STUDY_REV = 101;
     private static final int CUSTOM_STUDY_FORGOT = 102;
     @VisibleForTesting
-    static final int CUSTOM_STUDY_AHEAD = 103;
+    public static final int CUSTOM_STUDY_AHEAD = 103;
     private static final int CUSTOM_STUDY_RANDOM = 104;
     private static final int CUSTOM_STUDY_PREVIEW = 105;
     private static final int CUSTOM_STUDY_TAGS = 106;
     // Special items to put in the context menu
     private static final int DECK_OPTIONS = 107;
     private static final int MORE_OPTIONS = 108;
+
+
+    private final CustomStudyListener mCustomStudyListener;
+    private final Collection mCollection;
+
+
+    public CustomStudyDialog(Collection collection, CustomStudyListener customStudyListener) {
+        this.mCollection = collection;
+        this.mCustomStudyListener = customStudyListener;
+    }
+
 
     public interface CustomStudyListener extends CreateCustomStudySessionListener.Callback {
         void onExtendStudyLimits();
@@ -90,34 +101,22 @@ public class CustomStudyDialog extends AnalyticsDialogFragment implements
         void startActivityForResultWithoutAnimation(Intent intent, int requestCode);
     }
 
-    /**
-     * Instance factories
-     */
-    public static CustomStudyDialog newInstance(int id, long did) {
-        return newInstance(id, did, false);
+
+    public CustomStudyDialog withArguments(int id, long did) {
+        return withArguments(id, did, false);
     }
 
-    public static CustomStudyDialog newInstance(int id, long did, boolean jumpToReviewer) {
-        CustomStudyDialog f = new CustomStudyDialog();
-        Bundle args = new Bundle();
+
+    public CustomStudyDialog withArguments(int id, long did, boolean jumpToReviewer) {
+        Bundle args = this.getArguments();
+        if (args == null) {
+            args = new Bundle();
+        }
         args.putInt("id", id);
         args.putLong("did", did);
         args.putBoolean("jumpToReviewer", jumpToReviewer);
-        f.setArguments(args);
-        return f;
-    }
-
-
-    private CustomStudyListener mCustomStudyListener;
-    private Collection mCollection;
-
-
-    @Override
-    public void onAttach(@NonNull Context context) {
-        super.onAttach(context);
-        AnkiActivity ankiActivity = (AnkiActivity) requireActivity();
-        mCustomStudyListener = (CustomStudyListener) ankiActivity;
-        mCollection = ankiActivity.getCol();
+        this.setArguments(args);
+        return this;
     }
 
 
@@ -158,8 +157,12 @@ public class CustomStudyDialog extends AnalyticsDialogFragment implements
                         }
                         case MORE_OPTIONS: {
                             // User asked to see all custom study options
-                            CustomStudyDialog d = CustomStudyDialog.newInstance(CONTEXT_MENU_STANDARD,
-                                    requireArguments().getLong("did"), jumpToReviewer);
+                            final CustomStudyDialog d = new CustomStudyDialog(mCollection, mCustomStudyListener)
+                                    .withArguments(
+                                            CONTEXT_MENU_STANDARD,
+                                            requireArguments().getLong("did"),
+                                            jumpToReviewer
+                                    );
                             mCustomStudyListener.showDialogFragment(d);
                             break;
                         }
@@ -178,8 +181,12 @@ public class CustomStudyDialog extends AnalyticsDialogFragment implements
                         }
                         default: {
                             // User asked for a standard custom study option
-                            CustomStudyDialog d = CustomStudyDialog.newInstance(view.getId(),
-                                    requireArguments().getLong("did"), jumpToReviewer);
+                            final CustomStudyDialog d = new CustomStudyDialog(mCollection, mCustomStudyListener)
+                                    .withArguments(
+                                            view.getId(),
+                                            requireArguments().getLong("did"),
+                                            jumpToReviewer
+                                    );
                             mCustomStudyListener.showDialogFragment(d);
                         }
                     }

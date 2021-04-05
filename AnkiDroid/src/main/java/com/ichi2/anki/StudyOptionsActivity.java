@@ -23,6 +23,7 @@ import android.view.View;
 
 import com.ichi2.anki.StudyOptionsFragment.StudyOptionsListener;
 import com.ichi2.anki.dialogs.customstudy.CustomStudyDialog;
+import com.ichi2.anki.dialogs.customstudy.CustomStudyDialogFactory;
 import com.ichi2.widget.WidgetStatus;
 
 import timber.log.Timber;
@@ -38,6 +39,8 @@ public class StudyOptionsActivity extends NavigationDrawerActivity implements St
         if (showedActivityFailedScreen(savedInstanceState)) {
             return;
         }
+        CustomStudyDialogFactory customStudyDialogFactory = new CustomStudyDialogFactory(this::getCol, this);
+        customStudyDialogFactory.attachToActivity(this);
         super.onCreate(savedInstanceState);
         // The empty frame layout is a workaround for fragments not showing when they are added
         // to android.R.id.content when an action bar is used in Android 2.1 (and potentially
