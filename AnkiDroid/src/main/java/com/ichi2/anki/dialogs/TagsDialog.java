@@ -83,6 +83,17 @@ public class TagsDialog extends AnalyticsDialogFragment {
 
 
         /**
+         * Adds a tag to the list if it is not already present.
+         *
+         * @param tag  the tag to add
+         * @return true if tag was added (new tag)
+         */
+        public boolean add(String tag) {
+            return mAllTags.add(tag);
+        }
+
+
+        /**
          * Mark a tag as checked tag
          *
          * @param tag the tag to be checked (case-insensitive)
@@ -383,8 +394,7 @@ public class TagsDialog extends AnalyticsDialogFragment {
     public void addTag(String tag) {
         if (!TextUtils.isEmpty(tag)) {
             String feedbackText;
-            if (!mTags.mAllTags.contains(tag)) {
-                mTags.mAllTags.add(tag);
+            if (mTags.add(tag)) {
                 if (mNoTagsTextView.getVisibility() == View.VISIBLE) {
                     mNoTagsTextView.setVisibility(View.GONE);
                 }
