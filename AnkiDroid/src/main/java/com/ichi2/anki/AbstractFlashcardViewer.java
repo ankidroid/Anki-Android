@@ -137,12 +137,10 @@ import com.ichi2.utils.JSONObject;
 import com.ichi2.utils.MaxExecFunction;
 import com.ichi2.utils.WebViewDebugging;
 
-import java.io.BufferedReader;
 import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
-import java.io.FileReader;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.lang.ref.WeakReference;
@@ -150,8 +148,6 @@ import java.net.URLDecoder;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
-import java.util.LinkedHashSet;
-import java.util.Map;
 import java.util.List;
 import java.util.Set;
 import java.util.concurrent.locks.Lock;
@@ -2412,6 +2408,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
         return card.getODid() == 0 ? card.getDid() : card.getODid();
     }
 
+
     public void fillFlashcard() {
         Timber.d("fillFlashcard()");
         Timber.d("base url = %s", mBaseUrl);
@@ -2419,9 +2416,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
             Timber.w("fillFlashCard() called with no card content");
             return;
         }
-
         final String cardContent = mCardContent;
-
         processCardAction(cardWebView -> loadContentIntoCard(cardWebView, cardContent));
         mGestureDetectorImpl.onFillFlashcard();
         if (mShowTimer && mCardTimer.getVisibility() == View.INVISIBLE) {

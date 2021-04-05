@@ -15,7 +15,6 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.ichi2.anki.widgets.DeckDropDownAdapter;
-import com.ichi2.utils.UiUtil;
 
 import org.json.JSONObject;
 
