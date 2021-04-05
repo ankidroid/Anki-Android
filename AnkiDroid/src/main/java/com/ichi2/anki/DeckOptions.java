@@ -808,7 +808,7 @@ public class DeckOptions extends AppCompatPreferenceActivity implements OnShared
     protected void buildLists() {
         android.preference.ListPreference deckConfPref = (android.preference.ListPreference) findPreference("deckConf");
         ArrayList<DeckConfig> confs = mCol.getDecks().allConf();
-        Collections.sort(confs, NamedJSONComparator.instance);
+        Collections.sort(confs, NamedJSONComparator.INSTANCE);
         String[] confValues = new String[confs.size()];
         String[] confLabels = new String[confs.size()];
         for (int i = 0; i < confs.size(); i++) {

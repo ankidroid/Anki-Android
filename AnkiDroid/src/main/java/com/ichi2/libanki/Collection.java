@@ -144,7 +144,7 @@ public class Collection implements CollectionGetter {
     private final Time mTime;
 
     // other options
-    public static final String defaultConf = "{"
+    public static final String DEFAULT_CONF = "{"
             +
             // review options
             "'activeDecks': [1], " + "'curDeck': 1, " + "'newSpread': " + Consts.NEW_CARDS_DISTRIBUTE + ", "

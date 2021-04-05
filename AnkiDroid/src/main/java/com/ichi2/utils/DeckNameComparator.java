@@ -5,7 +5,7 @@ import com.ichi2.libanki.Decks;
 import java.util.Comparator;
 
 public class DeckNameComparator implements Comparator<String> {
-    public static final DeckNameComparator instance = new DeckNameComparator();
+    public static final DeckNameComparator INSTANCE = new DeckNameComparator();
 
     @Override
     public int compare(String lhs, String rhs) {

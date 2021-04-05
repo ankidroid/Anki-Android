@@ -46,7 +46,7 @@ public class DialogHandler extends Handler {
     public static final int MSG_SHOW_FORCE_FULL_SYNC_DIALOG = 7;
     public static final int MSG_DO_SYNC = 8;
 
-    public static final String[] sMessageNameList = {
+    public static final String[] MESSAGE_NAME_LIST = {
             "CollectionLoadErrorDialog",
             "ImportReplaceDialog",
             "ImportAddDialog",
@@ -70,7 +70,7 @@ public class DialogHandler extends Handler {
     @Override
     public void handleMessage(Message msg) {
         Bundle msgData = msg.getData();
-        String messageName = sMessageNameList[msg.what];
+        String messageName = MESSAGE_NAME_LIST[msg.what];
         UsageAnalytics.sendAnalyticsScreenView(messageName);
         Timber.i("Handling Message: %s", messageName);
         if (msg.what == MSG_SHOW_COLLECTION_LOADING_ERROR_DIALOG) {
