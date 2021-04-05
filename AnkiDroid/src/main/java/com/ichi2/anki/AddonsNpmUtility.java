@@ -18,6 +18,7 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 
+import java8.util.StringJoiner;
 import timber.log.Timber;
 
 import static com.ichi2.anki.web.HttpFetcher.downloadFileToSdCardMethod;
@@ -76,18 +77,24 @@ public class AddonsNpmUtility {
     public void extractAndCopyAddonTgz(String tarballPath, String npmAddonName) {
 
         String currentAnkiDroidDirectory = CollectionHelper.getCurrentAnkiDroidDirectory(context);
-        File addonsHomeDir = new File(currentAnkiDroidDirectory, "addons");
 
-        File addonsDir = new File(addonsHomeDir, npmAddonName);
+        // AnkiDroid/addons/js-addons
+        // here npmAddonName is id of npm package which may not contain ../ or other bad path
+        StringJoiner joinedPath = new StringJoiner("/")
+                .add(currentAnkiDroidDirectory)
+                .add("addons")
+                .add(npmAddonName);
+
+        File addonsDir = new File(joinedPath.toString());
         File tarballFile = new File(tarballPath);
 
-        if (!tarballFile.exists()) {
+        if (!tarballFile.exists() || !addonsDir.exists()) {
             return;
         }
 
         // extracting using library https://github.com/thrau/jarchivelib
         try {
-            Archiver archiver = ArchiverFactory.createArchiver(new File(tarballPath));
+            Archiver archiver = ArchiverFactory.createArchiver(tarballFile);
             archiver.extract(tarballFile, addonsDir);
             Timber.d("js addon .tgz extracted");
             showToast(context.getString(R.string.addon_installed));

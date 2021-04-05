@@ -327,6 +327,7 @@ public class AddonsBrowser extends NavigationDrawerActivity implements DeckDropD
             try {
 
                 // AnkiDroid/addons/js-addons/package/index.js
+                // // here addonDir is id of npm package which may not contain ../ or other bad path
                 StringJoiner joinedPath = new StringJoiner("/")
                         .add(currentAnkiDroidDirectory)
                         .add("addons")
