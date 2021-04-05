@@ -155,6 +155,28 @@ public class TagsDialog extends AnalyticsDialogFragment {
 
 
         /**
+         * @return Number of tags in the list
+         */
+        public int size() {
+            return mAllTags.size();
+        }
+
+
+        /**
+         * Returns the tag at the specified position in this list.
+         *
+         * @param index index of the tag to return
+         * @return the tag at the specified position in this list
+         * @throws IndexOutOfBoundsException if the index is out of range
+         *                                   (<tt>index &lt; 0 || index &gt;= size()</tt>)
+         */
+        @NonNull
+        public String get(int index) {
+            return mAllTags.get(index);
+        }
+
+
+        /**
          * @return true if there is no tags in the list
          */
         public boolean isEmpty() {
@@ -167,6 +189,14 @@ public class TagsDialog extends AnalyticsDialogFragment {
          */
         public List<String> getCheckedTagList() {
             return new ArrayList<>(mCurrentTags);
+        }
+
+
+        /**
+         * @return return a copy of all tags list
+         */
+        public List<String> getAllTagList() {
+            return new ArrayList<>(mAllTags);
         }
 
 
@@ -197,6 +227,7 @@ public class TagsDialog extends AnalyticsDialogFragment {
             return mAllTags.iterator();
         }
     }
+
 
 
     /**
