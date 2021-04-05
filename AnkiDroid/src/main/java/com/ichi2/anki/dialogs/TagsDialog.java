@@ -31,6 +31,7 @@ import com.ichi2.utils.FilterResultsUtils;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Locale;
 import java.util.TreeSet;
@@ -43,8 +44,10 @@ public class TagsDialog extends AnalyticsDialogFragment {
 
     /**
      * A container class that keeps track of tags and their status
+     *
+     * {@link TagsList} provides an iterator over all tags
      */
-    public static class TagsList {
+    public static class TagsList implements Iterable<String> {
         /**
          * A Set containing the currently selected tags
          */
@@ -144,6 +147,16 @@ public class TagsDialog extends AnalyticsDialogFragment {
                     return lhs.compareToIgnoreCase(rhs);
                 }
             });
+        }
+
+
+        /**
+         * @return Iterator over all tags
+         */
+        @NonNull
+        @Override
+        public Iterator<String> iterator() {
+            return mAllTags.iterator();
         }
     }
 
@@ -463,7 +476,7 @@ public class TagsDialog extends AnalyticsDialogFragment {
                     mFilteredTags.addAll(mTags.mAllTags);
                 } else {
                     final String filterPattern = constraint.toString().toLowerCase(Locale.getDefault()).trim();
-                    for (String tag : mTags.mAllTags) {
+                    for (String tag : mTags) {
                         if (tag.toLowerCase(Locale.getDefault()).contains(filterPattern)) {
                             mFilteredTags.add(tag);
                         }
