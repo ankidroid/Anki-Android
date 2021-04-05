@@ -61,6 +61,11 @@ public class TagsDialog extends AnalyticsDialogFragment {
         public TagsList(@NonNull ArrayList<String> allTags, @NonNull TreeSet<String> currentTags) {
             mCurrentTags = currentTags;
             mAllTags = allTags;
+            for (String tag : mCurrentTags) {
+                if (!allTags.contains(tag)) {
+                    allTags.add(tag);
+                }
+            }
         }
 
 
@@ -248,15 +253,8 @@ public class TagsDialog extends AnalyticsDialogFragment {
         TreeSet<String> currentTags = new TreeSet<>(String.CASE_INSENSITIVE_ORDER);
         currentTags.addAll(requireArguments().getStringArrayList(CHECKED_TAGS_KEY));
 
-        ArrayList<String> allTags = requireArguments().getStringArrayList(ALL_TAGS_KEY);
 
-        for (String tag : currentTags) {
-            if (!allTags.contains(tag)) {
-                allTags.add(tag);
-            }
-        }
-
-        mTags = new TagsList(allTags, currentTags);
+        mTags = new TagsList(requireArguments().getStringArrayList(ALL_TAGS_KEY), currentTags);
 
         setCancelable(true);
     }
