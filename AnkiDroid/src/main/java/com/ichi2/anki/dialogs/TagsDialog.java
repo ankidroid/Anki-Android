@@ -58,8 +58,9 @@ public class TagsDialog extends AnalyticsDialogFragment {
          * @param currentTags A list of checked tags
          *                any duplicates will be ignored
          */
-        public TagsList(@NonNull ArrayList<String> allTags, @NonNull TreeSet<String> currentTags) {
-            mCurrentTags = currentTags;
+        public TagsList(@NonNull ArrayList<String> allTags, @NonNull List<String> currentTags) {
+            mCurrentTags = new TreeSet<>(String.CASE_INSENSITIVE_ORDER);
+            currentTags.addAll(currentTags);
             mAllTags = allTags;
             for (String tag : mCurrentTags) {
                 if (!allTags.contains(tag)) {
@@ -250,11 +251,10 @@ public class TagsDialog extends AnalyticsDialogFragment {
 
         mType = DialogType.values()[requireArguments().getInt(DIALOG_TYPE_KEY)];
 
-        TreeSet<String> currentTags = new TreeSet<>(String.CASE_INSENSITIVE_ORDER);
-        currentTags.addAll(requireArguments().getStringArrayList(CHECKED_TAGS_KEY));
 
-
-        mTags = new TagsList(requireArguments().getStringArrayList(ALL_TAGS_KEY), currentTags);
+        mTags = new TagsList(
+                    requireArguments().getStringArrayList(ALL_TAGS_KEY),
+                    requireArguments().getStringArrayList(CHECKED_TAGS_KEY));
 
         setCancelable(true);
     }
