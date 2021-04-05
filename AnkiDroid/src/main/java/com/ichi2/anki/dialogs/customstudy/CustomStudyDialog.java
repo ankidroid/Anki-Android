@@ -226,8 +226,8 @@ public class CustomStudyDialog extends AnalyticsDialogFragment implements
                     int n;
                     try {
                         n = Integer.parseInt(mEditText.getText().toString());
-                    } catch (Exception ignored) {
-                        Timber.w(ignored);
+                    } catch (Exception e) {
+                        Timber.w(e);
                         // This should never happen because we disable positive button for non-parsable inputs
                         return;
                     }
@@ -296,8 +296,8 @@ public class CustomStudyDialog extends AnalyticsDialogFragment implements
                 try {
                     Integer.parseInt(mEditText.getText().toString());
                     dialog.getActionButton(DialogAction.POSITIVE).setEnabled(true);
-                } catch (Exception ignored) {
-                    Timber.w(ignored);
+                } catch (Exception e) {
+                    Timber.w(e);
                     dialog.getActionButton(DialogAction.POSITIVE).setEnabled(false);
                 }
             }
