@@ -127,6 +127,19 @@ public class TagsDialog extends AnalyticsDialogFragment {
         public boolean isEmpty() {
             return mAllTags.isEmpty();
         }
+
+
+        /**
+         * Sort the tag list alphabetically ignoring the case, with priority for checked tags
+         */
+        public void sort() {
+            Collections.sort(mAllTags, (lhs, rhs) -> {
+                boolean lhs_checked = isChecked(lhs);
+                boolean rhs_checked = isChecked(rhs);
+                //priority for checked items.
+                return lhs_checked == rhs_checked ? lhs.compareToIgnoreCase(rhs) : lhs_checked ? -1 : 1;
+            });
+        }
     }
 
 
@@ -380,7 +393,7 @@ public class TagsDialog extends AnalyticsDialogFragment {
             }
         }
 
-        public final List<String> mTagsList;
+        public List<String> mTagsList;
 
         public  TagsArrayAdapter() {
             mTagsList = new ArrayList<>(mTags.mAllTags);
@@ -388,12 +401,8 @@ public class TagsDialog extends AnalyticsDialogFragment {
         }
 
         public void sortData() {
-            Collections.sort(mTagsList, (lhs, rhs) -> {
-                boolean lhs_checked = mTags.isChecked(lhs);
-                boolean rhs_checked = mTags.isChecked(rhs);
-                //priority for checked items.
-                return lhs_checked == rhs_checked ? lhs.compareToIgnoreCase(rhs) : lhs_checked ? -1 : 1;
-            });
+            mTags.sort();
+            mTagsList = new ArrayList<>(mTags.mAllTags);
         }
 
         @NonNull
