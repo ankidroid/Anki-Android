@@ -648,13 +648,15 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
                 int nMins = elapsed.first / 60;
                 String mins = res.getQuantityString(R.plurals.in_minutes, nMins, nMins);
                 String timeboxMessage = res.getQuantityString(R.plurals.timebox_reached, nCards, nCards, mins);
+                // Restarting Timebox in .onPositive is not necessary,
+                // because the following line will restart it (along with restarting after cancelling the dialog box)
                 new MaterialDialog.Builder(AbstractFlashcardViewer.this)
                         .title(res.getString(R.string.timebox_reached_title))
                         .content(timeboxMessage)
-                        .positiveText(R.string.dialog_finish)
-                        .negativeText(R.string.dialog_continue)
+                        .positiveText(R.string.dialog_continue)
+                        .negativeText(R.string.dialog_close)
                         .cancelable(true)
-                        .onPositive((materialDialog, dialogAction) -> finishWithAnimation(RIGHT))
+                        .onNegative((materialDialog, dialogAction) -> finishWithAnimation(RIGHT))
                         .show();
                 getCol().startTimebox();
             }
