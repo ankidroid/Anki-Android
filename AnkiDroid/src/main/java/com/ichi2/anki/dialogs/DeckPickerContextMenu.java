@@ -17,7 +17,6 @@ package com.ichi2.anki.dialogs;
 
 import android.app.Dialog;
 import android.content.res.Resources;
-import android.os.Build;
 import android.os.Bundle;
 
 import com.afollestad.materialdialogs.MaterialDialog;
@@ -27,6 +26,7 @@ import com.ichi2.anki.DeckPicker;
 import com.ichi2.anki.R;
 import com.ichi2.anki.StudyOptionsFragment;
 import com.ichi2.anki.analytics.AnalyticsDialogFragment;
+import com.ichi2.anki.dialogs.customstudy.CustomStudyDialog;
 import com.ichi2.libanki.Collection;
 
 import java.lang.annotation.Retention;

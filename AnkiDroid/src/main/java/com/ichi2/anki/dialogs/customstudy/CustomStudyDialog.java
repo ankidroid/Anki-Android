@@ -13,7 +13,7 @@
  * You should have received a copy of the GNU General Public License along with         *
  * this program.  If not, see <http://www.gnu.org/licenses/>.                           *
  ****************************************************************************************/
-package com.ichi2.anki.dialogs;
+package com.ichi2.anki.dialogs.customstudy;
 
 import android.annotation.SuppressLint;
 import android.app.Dialog;
@@ -45,9 +45,10 @@ import com.ichi2.anki.Reviewer;
 import com.ichi2.anki.StudyOptionsFragment;
 import com.ichi2.anki.UIUtils;
 import com.ichi2.anki.analytics.AnalyticsDialogFragment;
+import com.ichi2.anki.dialogs.ContextMenuHelper;
+import com.ichi2.anki.dialogs.TagsDialog;
 import com.ichi2.anki.exception.FilteredAncestor;
 import com.ichi2.async.CollectionTask;
-import com.ichi2.async.TaskListener;
 import com.ichi2.async.TaskListenerWithContext;
 import com.ichi2.async.TaskManager;
 import com.ichi2.libanki.Collection;

@@ -41,7 +41,7 @@ import android.widget.TextView;
 
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.ichi2.anim.ActivityTransitionAnimation;
-import com.ichi2.anki.dialogs.CustomStudyDialog;
+import com.ichi2.anki.dialogs.customstudy.CustomStudyDialog;
 import com.ichi2.async.CollectionTask;
 import com.ichi2.async.TaskListener;
 import com.ichi2.async.TaskManager;
@@ -54,7 +54,6 @@ import com.ichi2.libanki.Deck;
 import com.ichi2.themes.StyledProgressDialog;
 import com.ichi2.utils.BooleanGetter;
 import com.ichi2.utils.HtmlUtils;
-import com.ichi2.utils.UiUtil;
 
 import timber.log.Timber;
 
