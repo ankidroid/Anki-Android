@@ -28,7 +28,7 @@
         <item
             android:id="@+id/support_ankidroid"
             android:icon="@drawable/ic_support_ankidroid"
-            android:title="@string/support_ankidroid"/>
+            android:title="@string/help_title_support_ankidroid"/>
         <item
             android:id="@+id/nav_help"
             android:icon="@drawable/ic_help_black_24dp"
