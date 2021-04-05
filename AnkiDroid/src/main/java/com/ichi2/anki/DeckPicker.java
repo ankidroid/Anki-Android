@@ -22,7 +22,6 @@
 package com.ichi2.anki;
 
 import android.Manifest;
-import android.animation.Animator;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -44,7 +43,6 @@ import android.os.ParcelFileDescriptor;
 import android.provider.Settings;
 
 import com.afollestad.materialdialogs.GravityEnum;
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
 
 import androidx.annotation.NonNull;
@@ -86,6 +84,7 @@ import android.widget.Toast;
 
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.ichi2.anki.CollectionHelper.CollectionIntegrityStorageCheck;
+import com.ichi2.anki.InitialActivity.StartupFailure;
 import com.ichi2.anki.StudyOptionsFragment.StudyOptionsListener;
 import com.ichi2.anki.analytics.UsageAnalytics;
 import com.ichi2.anki.dialogs.AsyncDialogFragment;
@@ -531,34 +530,36 @@ public class DeckPicker extends NavigationDrawerActivity implements
         } else {
             // Show error dialogs
             if (Permissions.hasStorageAccessPermission(this)) {
-                if (!AnkiDroidApp.isSdCardMounted()) {
-                    Timber.i("SD card not mounted");
-                    onSdCardNotMounted();
-                } else if (!CollectionHelper.isCurrentAnkiDroidDirAccessible(this)) {
-                    Timber.i("AnkiDroid directory inaccessible");
-                    Intent i = Preferences.getPreferenceSubscreenIntent(this, "com.ichi2.anki.prefs.advanced");
-                    startActivityForResultWithoutAnimation(i, REQUEST_PATH_UPDATE);
-                    Toast.makeText(this, R.string.directory_inaccessible, Toast.LENGTH_LONG).show();
-                } else if (isFutureAnkiDroidVersion()) {
-                    Timber.i("Displaying database versioning");
-                    showDatabaseErrorDialog(DatabaseErrorDialog.INCOMPATIBLE_DB_VERSION);
-                } else {
-                    Timber.i("Displaying database error");
-                    showDatabaseErrorDialog(DatabaseErrorDialog.DIALOG_LOAD_FAILED);
-                }
+                StartupFailure failure = InitialActivity.getStartupFailureType(this);
+                handleStartupFailure(failure);
             }
+            // firstCollectionOpen should have been called to show a dialog - so no need to do anything here.
         }
 
         mShortAnimDuration = getResources().getInteger(android.R.integer.config_shortAnimTime);
     }
 
-
-    private boolean isFutureAnkiDroidVersion() {
-        try {
-            return CollectionHelper.isFutureAnkiDroidVersion(this);
-        } catch (Exception e) {
-            Timber.w(e, "Could not determine if future AnkiDroid version - assuming not");
-            return false;
+    @VisibleForTesting
+    void handleStartupFailure(StartupFailure failure) {
+        switch (failure) {
+            case SD_CARD_NOT_MOUNTED:
+                Timber.i("SD card not mounted");
+                onSdCardNotMounted();
+                break;
+            case DIRECTORY_NOT_ACCESSIBLE:
+                Timber.i("AnkiDroid directory inaccessible");
+                Intent i = Preferences.getPreferenceSubscreenIntent(this, "com.ichi2.anki.prefs.advanced");
+                startActivityForResultWithoutAnimation(i, REQUEST_PATH_UPDATE);
+                Toast.makeText(this, R.string.directory_inaccessible, Toast.LENGTH_LONG).show();
+                break;
+            case FUTURE_ANKIDROID_VERSION:
+                Timber.i("Displaying database versioning");
+                showDatabaseErrorDialog(DatabaseErrorDialog.INCOMPATIBLE_DB_VERSION);
+                break;
+            case DB_ERROR:
+            default:
+                Timber.i("Displaying database error");
+                showDatabaseErrorDialog(DatabaseErrorDialog.DIALOG_LOAD_FAILED);
         }
     }
 
