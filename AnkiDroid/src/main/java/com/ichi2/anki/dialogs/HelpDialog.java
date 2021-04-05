@@ -98,6 +98,25 @@ public class HelpDialog {
         return RecursivePictureMenu.createInstance(itemList, R.string.help);
     }
 
+    public static DialogFragment createInstanceForSupportAnkiDroid(Context context) {
+        RateAppItem rateAppItem = new RateAppItem(R.string.help_item_support_rate_ankidroid, R.drawable.ic_star_black_24, UsageAnalytics.Actions.OPENED_RATE);
+        Item[] allItems = {
+                new LinkItem(R.string.help_item_support_opencollective_donate, R.drawable.ic_donate_black_24dp, UsageAnalytics.Actions.OPENED_DONATE, R.string.link_opencollective_donate),
+                new LinkItem(R.string.multimedia_editor_trans_translate, R.drawable.ic_language_black_24dp, UsageAnalytics.Actions.OPENED_TRANSLATE, R.string.link_translation),
+                new LinkItem(R.string.help_item_support_develop_ankidroid, R.drawable.ic_build_black_24, UsageAnalytics.Actions.OPENED_DEVELOP, R.string.link_ankidroid_development_guide),
+                rateAppItem,
+                new LinkItem(R.string.help_item_support_other_ankidroid, R.drawable.ic_help_black_24dp, UsageAnalytics.Actions.OPENED_OTHER, R.string.link_contribution),
+                new FunctionItem(R.string.send_feedback, R.drawable.ic_email_black_24dp, UsageAnalytics.Actions.OPENED_SEND_FEEDBACK, HelpDialog::openFeedback)
+        };
+
+        ArrayList<Item> itemList = new ArrayList<>(Arrays.asList(allItems));
+
+        if (!IntentUtil.canOpenIntent(context, AnkiDroidApp.getMarketIntent(context))) {
+            RecursivePictureMenu.removeFrom(itemList, rateAppItem);
+        }
+        return RecursivePictureMenu.createInstance(itemList, R.string.support_ankidroid);
+    }
+
     public static class RateAppItem extends Item implements Parcelable {
 
         public RateAppItem(@StringRes int titleRes, @DrawableRes int iconRes, String analyticsRes) {
