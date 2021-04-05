@@ -2,6 +2,7 @@ package com.ichi2.anki.dialogs.tags;
 
 import android.annotation.SuppressLint;
 import android.app.Dialog;
+import android.content.Context;
 import android.os.Bundle;
 import android.text.InputFilter;
 import android.text.InputType;
@@ -73,6 +74,8 @@ public class TagsDialog extends AnalyticsDialogFragment {
 
     private MaterialDialog mDialog;
 
+    private TagsDialogListener mListener;
+
     /**
      * Initializes an instance of {@link TagsDialog} using passed parameters
      *
@@ -92,6 +95,13 @@ public class TagsDialog extends AnalyticsDialogFragment {
         t.setArguments(args);
 
         return t;
+    }
+
+
+    @Override
+    public void onAttach(@NonNull Context context) {
+        super.onAttach(context);
+        mListener = (TagsDialogListener) requireActivity();
     }
 
 
@@ -153,8 +163,7 @@ public class TagsDialog extends AnalyticsDialogFragment {
                 .positiveText(mPositiveText)
                 .negativeText(R.string.dialog_cancel)
                 .customView(tagsDialogView, false)
-                .onPositive((dialog, which) -> ((TagsDialogListener)requireActivity())
-                        .onSelectedTags(mTags.copyOfCheckedTagList(), mSelectedOption));
+                .onPositive((dialog, which) -> mListener.onSelectedTags(mTags.copyOfCheckedTagList(), mSelectedOption));
         mDialog = builder.build();
 
         mDialog.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE);
