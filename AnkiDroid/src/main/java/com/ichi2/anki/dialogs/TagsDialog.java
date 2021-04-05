@@ -77,6 +77,28 @@ public class TagsDialog extends AnalyticsDialogFragment {
         public boolean isChecked(String tag) {
             return mCurrentTags.contains(tag);
         }
+
+
+        /**
+         * Mark a tag as checked tag
+         *
+         * @param tag the tag to be checked (case-insensitive)
+         * @return true if the tag changed its check status, false otherwise
+         */
+        public boolean check(String tag) {
+            return mCurrentTags.add(tag);
+        }
+
+        /**
+         * Mark a tag as unchecked tag
+         *
+         * @param tag the tag to be checked (case-insensitive)
+         * @return true if the tag changed its check status
+         *         false if the tag was already unchecked or not in the list
+         */
+        public boolean uncheck(String tag) {
+            return mCurrentTags.remove(tag);
+        }
     }
 
 
@@ -280,7 +302,7 @@ public class TagsDialog extends AnalyticsDialogFragment {
             } else {
                 for (String tag : mTagsArrayAdapter.mTagsList) {
                     if (!mTags.isChecked(tag)) {
-                        mTags.mCurrentTags.add(tag);
+                        mTags.check(tag);
                         changed = true;
                     }
                 }
@@ -326,7 +348,7 @@ public class TagsDialog extends AnalyticsDialogFragment {
             } else {
                 feedbackText = getString(R.string.tag_editor_add_feedback_existing, tag);
             }
-            mTags.mCurrentTags.add(tag);
+            mTags.check(tag);
             mTagsArrayAdapter.notifyDataSetChanged();
             // Show a snackbar to let the user know the tag was added successfully
             UIUtils.showSnackbar(getActivity(), feedbackText, false, -1, null,
@@ -371,9 +393,9 @@ public class TagsDialog extends AnalyticsDialogFragment {
                 ctv.toggle();
                 String tag = ctv.getText().toString();
                 if (ctv.isChecked() && !mTags.isChecked(tag)) {
-                    mTags.mCurrentTags.add(tag);
+                    mTags.check(tag);
                 } else if (!ctv.isChecked()) {
-                    mTags.mCurrentTags.remove(tag);
+                    mTags.uncheck(tag);
                 }
             });
             return vh;
