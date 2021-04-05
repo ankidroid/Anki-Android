@@ -1,23 +1,25 @@
 package com.ichi2.anki;
 
 import android.content.Context;
-
-import androidx.test.core.app.ActivityScenario;
-import androidx.test.ext.junit.runners.AndroidJUnit4;
-
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
 
+import com.ichi2.anki.dialogs.DatabaseErrorDialog;
 import com.ichi2.libanki.Collection;
 import com.ichi2.libanki.DeckConfig;
 import com.ichi2.libanki.sched.AbstractSched;
+import com.ichi2.testutils.BackendEmulatingOpenConflict;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.robolectric.Robolectric;
 
 import java.util.HashMap;
 import java.util.Map;
+
+import androidx.test.core.app.ActivityScenario;
+import androidx.test.ext.junit.runners.AndroidJUnit4;
 
 import static com.ichi2.anki.DeckPicker.UPGRADE_VERSION_KEY;
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -192,5 +194,39 @@ public class DeckPickerTest extends RobolectricTest {
         advanceRobolectricLooperWithSleep();
 
         assertThat("deck was deleted", getCol().getDecks().count(), is(1));
+    }
+
+    @Test
+    public void databaseLockedTest() {
+        // don't call .onCreate
+        DeckPickerEx deckPicker = Robolectric.buildActivity(DeckPickerEx.class, new Intent()).get();
+
+        deckPicker.handleStartupFailure(InitialActivity.StartupFailure.DATABASE_LOCKED);
+
+        assertThat(deckPicker.mDatabaseErrorDialog, is(DatabaseErrorDialog.DIALOG_DB_LOCKED));
+    }
+
+    @Test
+    public void databaseLockedWithPermissionIntegrationTest() {
+        try {
+            BackendEmulatingOpenConflict.enable();
+            InitialActivityTest.setupForDatabaseConflict();
+
+            DeckPickerEx d = super.startActivityNormallyOpenCollectionWithIntent(DeckPickerEx.class, new Intent());
+
+            assertThat("A specific dialog for a conflict should be shown", d.mDatabaseErrorDialog, is(DatabaseErrorDialog.DIALOG_DB_LOCKED));
+        } finally {
+            BackendEmulatingOpenConflict.disable();
+            InitialActivityTest.setupForDefault();
+        }
+    }
+
+    private static class DeckPickerEx extends DeckPicker {
+        private int mDatabaseErrorDialog;
+
+        @Override
+        public void showDatabaseErrorDialog(int id) {
+            this.mDatabaseErrorDialog = id;
+        }
     }
 }

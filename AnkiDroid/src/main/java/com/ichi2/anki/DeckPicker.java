@@ -556,6 +556,10 @@ public class DeckPicker extends NavigationDrawerActivity implements
                 Timber.i("Displaying database versioning");
                 showDatabaseErrorDialog(DatabaseErrorDialog.INCOMPATIBLE_DB_VERSION);
                 break;
+            case DATABASE_LOCKED:
+                Timber.i("Displaying database locked error");
+                showDatabaseErrorDialog(DatabaseErrorDialog.DIALOG_DB_LOCKED);
+                break;
             case DB_ERROR:
             default:
                 Timber.i("Displaying database error");
