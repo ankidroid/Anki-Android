@@ -102,6 +102,7 @@ import com.ichi2.anki.dialogs.ExportDialog;
 import com.ichi2.anki.dialogs.ImportDialog;
 import com.ichi2.anki.dialogs.MediaCheckDialog;
 import com.ichi2.anki.dialogs.SyncErrorDialog;
+import com.ichi2.anki.dialogs.customstudy.CustomStudyDialogFactory;
 import com.ichi2.anki.exception.ConfirmModSchemaException;
 import com.ichi2.anki.exception.DeckRenameException;
 import com.ichi2.anki.exception.FilteredAncestor;
@@ -250,6 +251,8 @@ public class DeckPicker extends NavigationDrawerActivity implements
     private boolean mClosedWelcomeMessage;
 
     private SearchView mToolbarSearchView;
+
+    private CustomStudyDialogFactory mCustomStudyDialogFactory;
 
     // ----------------------------------------------------------------------------
     // LISTENERS
@@ -446,6 +449,8 @@ public class DeckPicker extends NavigationDrawerActivity implements
         if (showedActivityFailedScreen(savedInstanceState)) {
             return;
         }
+
+        mCustomStudyDialogFactory = new CustomStudyDialogFactory(this::getCol, this).attachToActivity(this);
 
         SharedPreferences preferences = AnkiDroidApp.getSharedPrefs(getBaseContext());
 
@@ -2302,7 +2307,7 @@ public class DeckPicker extends NavigationDrawerActivity implements
         } else if (getCol().getSched().newDue() || getCol().getSched().revDue()) {
             // If there are no cards to review because of the daily study limit then give "Study more" option
             UIUtils.showSnackbar(this, R.string.studyoptions_limit_reached, false, R.string.study_more, v -> {
-                CustomStudyDialog d = CustomStudyDialog.newInstance(
+                CustomStudyDialog d = mCustomStudyDialogFactory.newCustomStudyDialog().withArguments(
                         CustomStudyDialog.CONTEXT_MENU_LIMITS,
                         getCol().getDecks().selected(), true);
                 showDialogFragment(d);
@@ -2333,7 +2338,7 @@ public class DeckPicker extends NavigationDrawerActivity implements
         } else {
             // Otherwise say there are no cards scheduled to study, and give option to do custom study
             UIUtils.showSnackbar(this, R.string.studyoptions_empty_schedule, false, R.string.custom_study, v -> {
-                CustomStudyDialog d = CustomStudyDialog.newInstance(
+                CustomStudyDialog d = mCustomStudyDialogFactory.newCustomStudyDialog().withArguments(
                         CustomStudyDialog.CONTEXT_MENU_EMPTY_SCHEDULE,
                         getCol().getDecks().selected(), true);
                 showDialogFragment(d);

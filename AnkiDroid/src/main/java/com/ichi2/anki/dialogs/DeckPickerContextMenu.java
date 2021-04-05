@@ -35,6 +35,7 @@ import java.util.HashMap;
 
 import androidx.annotation.IntDef;
 import androidx.annotation.NonNull;
+import androidx.fragment.app.FragmentFactory;
 import timber.log.Timber;
 
 import static java.lang.annotation.RetentionPolicy.SOURCE;
@@ -160,9 +161,12 @@ public class DeckPickerContextMenu extends AnalyticsDialogFragment {
             case CONTEXT_MENU_CUSTOM_STUDY: {
                 Timber.i("Custom study option selected");
                 long did = getArguments().getLong("did");
-                CustomStudyDialog d = CustomStudyDialog.newInstance(
-                        CustomStudyDialog.CONTEXT_MENU_STANDARD, did);
-                ((AnkiActivity) getActivity()).showDialogFragment(d);
+
+                final AnkiActivity ankiActivity = ((AnkiActivity) requireActivity());
+                final FragmentFactory fragmentFactory = ankiActivity.getSupportFragmentManager().getFragmentFactory();
+                CustomStudyDialog d = (CustomStudyDialog) fragmentFactory.instantiate(ankiActivity.getClassLoader(), CustomStudyDialog.class.getName());
+                d.withArguments(CustomStudyDialog.CONTEXT_MENU_STANDARD, did);
+                ankiActivity.showDialogFragment(d);
                 break;
             }
             case CONTEXT_MENU_CREATE_SHORTCUT:

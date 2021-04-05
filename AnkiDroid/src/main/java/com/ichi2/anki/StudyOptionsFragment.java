@@ -55,6 +55,7 @@ import com.ichi2.themes.StyledProgressDialog;
 import com.ichi2.utils.BooleanGetter;
 import com.ichi2.utils.HtmlUtils;
 
+import androidx.fragment.app.FragmentFactory;
 import timber.log.Timber;
 
 import static com.ichi2.anim.ActivityTransitionAnimation.Direction.*;
@@ -288,9 +289,11 @@ public class StudyOptionsFragment extends Fragment implements Toolbar.OnMenuItem
      * Show the context menu for the custom study options
      */
     private void showCustomStudyContextMenu() {
-        CustomStudyDialog d = CustomStudyDialog.newInstance(CustomStudyDialog.CONTEXT_MENU_STANDARD,
-                getCol().getDecks().selected());
-        ((AnkiActivity)getActivity()).showDialogFragment(d);
+        final AnkiActivity ankiActivity = ((AnkiActivity) requireActivity());
+        final FragmentFactory fragmentFactory = ankiActivity.getSupportFragmentManager().getFragmentFactory();
+        CustomStudyDialog d = (CustomStudyDialog) fragmentFactory.instantiate(ankiActivity.getClassLoader(), CustomStudyDialog.class.getName());
+        d.withArguments(CustomStudyDialog.CONTEXT_MENU_STANDARD, getCol().getDecks().selected());
+        ankiActivity.showDialogFragment(d);
     }
 
 
