@@ -15,6 +15,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.ichi2.anki.widgets.DeckDropDownAdapter;
+import com.ichi2.utils.UiUtil;
 
 import org.json.JSONObject;
 
@@ -26,12 +27,18 @@ import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import java.util.concurrent.TimeUnit;
 
 import androidx.core.text.HtmlCompat;
 import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import java8.util.StringJoiner;
+import okhttp3.Call;
+import okhttp3.Callback;
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.Response;
 import timber.log.Timber;
 
 import static com.ichi2.anim.ActivityTransitionAnimation.Direction.RIGHT;
@@ -153,7 +160,7 @@ public class AddonsBrowser extends NavigationDrawerActivity implements DeckDropD
 
                 UIUtils.showThemedToast(this, getString(R.string.downloading_addon), true);
                 // download npm package for AnkiDroid as addons
-                npmUtility.getPackageJson(npmAddonName);
+                getPackageJson(npmAddonName);
 
                 downloadDialog.dismiss();
 
@@ -288,7 +295,7 @@ public class AddonsBrowser extends NavigationDrawerActivity implements DeckDropD
 
         buttonUpdate.setOnClickListener(v -> {
             UIUtils.showThemedToast(this, getString(R.string.checking_addon_update), false);
-            npmUtility.getPackageJson(addonModel.getName());
+            getPackageJson(addonModel.getName());
         });
 
         infoDialog.show();
@@ -362,5 +369,57 @@ public class AddonsBrowser extends NavigationDrawerActivity implements DeckDropD
 
         return content.toString();
     }
+
+    /**
+     * @param npmAddonName addon name, e.g ankidroid-js-addon-progress-bar
+     */
+    public void getPackageJson(String npmAddonName) {
+        showProgressBar();
+        String url = getString(R.string.ankidroid_js_addon_npm_registry, npmAddonName);
+        Timber.i("npm url: %s", url);
+
+        OkHttpClient client = new OkHttpClient.Builder()
+                .connectTimeout(10, TimeUnit.SECONDS)
+                .writeTimeout(10, TimeUnit.SECONDS)
+                .readTimeout(20, TimeUnit.SECONDS)
+                .build();
+
+        Request request = new Request.Builder()
+                .url(url)
+                .build();
+
+        client.newCall(request).enqueue(new Callback() {
+            @Override
+            public void onFailure(Call call, IOException e) {
+                Timber.e("js addon %s", e.toString());
+                UIUtils.showThemedToast(getApplicationContext(), getString(R.string.error_downloading_file_check_name), false);
+                call.cancel();
+            }
+
+
+            @Override
+            public void onResponse(Call call, Response response) {
+                if (response.isSuccessful()) {
+                    try {
+                        String strResponse = response.body().string();
+                        npmUtility.parseJsonData(strResponse, npmAddonName);
+
+                        runOnUiThread(() -> {
+                            listAddonsFromDir(addonType);
+                        });
+
+                        call.cancel();
+                        response.close();
+                    } catch (IOException | NullPointerException e) {
+                        Timber.e(e.getLocalizedMessage());
+                    }
+                } else {
+                    hideProgressBar();
+                    UIUtils.showThemedToast(getApplicationContext(), getString(R.string.error_downloading_file_check_name), false);
+                }
+            }
+        });
+    }
+
 
 }

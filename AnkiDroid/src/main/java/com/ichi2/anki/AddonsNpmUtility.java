@@ -41,55 +41,6 @@ public class AddonsNpmUtility {
         this.activity = activity;
     }
 
-
-    /**
-     * @param npmAddonName addon name, e.g ankidroid-js-addon-progress-bar
-     */
-    public void getPackageJson(String npmAddonName) {
-        showProgressBar();
-        String url = context.getString(R.string.ankidroid_js_addon_npm_registry, npmAddonName);
-        Timber.i("npm url: %s", url);
-
-        OkHttpClient client = new OkHttpClient.Builder()
-                .connectTimeout(10, TimeUnit.SECONDS)
-                .writeTimeout(10, TimeUnit.SECONDS)
-                .readTimeout(20, TimeUnit.SECONDS)
-                .build();
-
-        Request request = new Request.Builder()
-                .url(url)
-                .build();
-
-        client.newCall(request).enqueue(new Callback() {
-            @Override
-            public void onFailure(Call call, IOException e) {
-                Timber.e("js addon %s", e.toString());
-                showToast(context.getString(R.string.error_downloading_file_check_name));
-                call.cancel();
-            }
-
-
-            @Override
-            public void onResponse(Call call, Response response) {
-                if (response.isSuccessful()) {
-                    try {
-                        String strResponse = response.body().string();
-                        parseJsonData(strResponse, npmAddonName);
-
-                        call.cancel();
-                        response.close();
-                    } catch (IOException | NullPointerException e) {
-                        Timber.e(e.getLocalizedMessage());
-                    }
-                } else {
-                    hideProgressBar();
-                    showToast(context.getString(R.string.error_downloading_file_check_name));
-                }
-            }
-        });
-    }
-
-
     /**
      * Parse npm package info from package.json. If valid ankidroid-js-addon package then download it
      */
