@@ -46,8 +46,22 @@ public class TagsDialog extends AnalyticsDialogFragment {
      * A container class that keeps track of tags and their status
      */
     public static class TagsList implements Iterable<String> {
-        private TreeSet<String> mCurrentTags;
-        private List<String> mAllTags;
+        private final @NonNull TreeSet<String> mCurrentTags;
+        private final @NonNull List<String> mAllTags;
+
+
+        /**
+         * Construct a new {@link TagsList}
+         *
+         * @param allTags A list of all tags possible
+         *                any duplicates will be ignored
+         * @param currentTags A list of checked tags
+         *                any duplicates will be ignored
+         */
+        public TagsList(@NonNull ArrayList<String> allTags, @NonNull TreeSet<String> currentTags) {
+            mCurrentTags = currentTags;
+            mAllTags = allTags;
+        }
 
 
         /**
@@ -187,7 +201,7 @@ public class TagsDialog extends AnalyticsDialogFragment {
     private static final String ALL_TAGS_KEY = "all_tags";
 
     private DialogType mType;
-    private TagsList mTags = new TagsList();
+    private TagsList mTags;
 
     private String mPositiveText;
     private String mDialogTitle;
@@ -231,16 +245,18 @@ public class TagsDialog extends AnalyticsDialogFragment {
 
         mType = DialogType.values()[requireArguments().getInt(DIALOG_TYPE_KEY)];
 
-        mTags.mCurrentTags = new TreeSet<>(String.CASE_INSENSITIVE_ORDER);
-        mTags.mCurrentTags.addAll(requireArguments().getStringArrayList(CHECKED_TAGS_KEY));
+        TreeSet<String> currentTags = new TreeSet<>(String.CASE_INSENSITIVE_ORDER);
+        currentTags.addAll(requireArguments().getStringArrayList(CHECKED_TAGS_KEY));
 
-        mTags.mAllTags = requireArguments().getStringArrayList(ALL_TAGS_KEY);
+        ArrayList<String> allTags = requireArguments().getStringArrayList(ALL_TAGS_KEY);
 
-        for (String tag : mTags.mCurrentTags) {
-            if (!mTags.mAllTags.contains(tag)) {
-                mTags.mAllTags.add(tag);
+        for (String tag : currentTags) {
+            if (!allTags.contains(tag)) {
+                allTags.add(tag);
             }
         }
+
+        mTags = new TagsList(allTags, currentTags);
 
         setCancelable(true);
     }
