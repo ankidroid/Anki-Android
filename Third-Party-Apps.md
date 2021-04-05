@@ -20,6 +20,8 @@ Look up Mandarin Chinese words offline using English, Pinyin or Chinese characte
 Cantonese dictionary with AnkiDroid Flashcards support (bulk export as well as auto-export when word is starred) for studying using Anki flashcards.
 ### [The Korean Learners' Dictionary](https://play.google.com/store/apps/details?id=com.schurawel.kl_dictionary)
 A Korean dictionary available in multiple languages that uses the database of the Korean Government's National Institute of Korean Language. Utilizes the AnkiDroid api to create flashcards from within the app.
+### [jidoujisho](https://github.com/lrorpilla/jidoujisho)
+A mobile video player tailored for Japanese language learners. Allows text selection of subtitles for quick lookups and export to Anki with snapshot and audio for uninterrupted language immersion. Written in Dart and powered by Flutter, using a method channel to invoke the AnkiDroid API.
 ### [Japanese Kanji Study](https://play.google.com/store/apps/details?id=com.mindtwisted.kanjistudy)
 Japanese Kanji Study is an Android app focused on learning kanji. Crafted with love, you can study with flashcards, customizable quizzes and writing challenges. As of v4.2.2, the AnkiDroid integration allows you to export well-formatted cards for words and sentences to any of your decks. Exported word cards also include a link back to that entry within the app. 
 ### [Kata](https://play.google.com/store/apps/details?id=im.dacer.kata)
