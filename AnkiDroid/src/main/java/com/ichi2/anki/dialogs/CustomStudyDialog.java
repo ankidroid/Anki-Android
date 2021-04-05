@@ -358,7 +358,7 @@ public class CustomStudyDialog extends AnalyticsDialogFragment implements
                 dialogOptions.add(CUSTOM_STUDY_RANDOM);
                 dialogOptions.add(CUSTOM_STUDY_PREVIEW);
                 dialogOptions.add(CUSTOM_STUDY_TAGS);
-                if (col.getSched().newCount() == 0) {
+                if (col.getSched().totalNewForCurrentDeck() == 0) {
                     // If no new cards we wont show CUSTOM_STUDY_NEW
                     dialogOptions.remove(Integer.valueOf(CUSTOM_STUDY_NEW));
                 }
