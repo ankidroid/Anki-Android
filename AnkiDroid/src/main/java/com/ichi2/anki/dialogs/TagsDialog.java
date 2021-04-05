@@ -497,9 +497,9 @@ public class TagsDialog extends AnalyticsDialogFragment {
                 CheckedTextView ctv = (CheckedTextView) view;
                 ctv.toggle();
                 String tag = ctv.getText().toString();
-                if (ctv.isChecked() && !mTags.isChecked(tag)) {
+                if (ctv.isChecked()) {
                     mTags.check(tag);
-                } else if (!ctv.isChecked()) {
+                } else {
                     mTags.uncheck(tag);
                 }
             });
