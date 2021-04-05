@@ -136,6 +136,14 @@ public class TagsDialog extends AnalyticsDialogFragment {
 
 
         /**
+         * @return return all checked tags as an List
+         */
+        public List<String> getCheckedTagList() {
+            return new ArrayList<>(mCurrentTags);
+        }
+
+
+        /**
          * Sort the tag list alphabetically ignoring the case, with priority for checked tags
          */
         public void sort() {
@@ -282,7 +290,7 @@ public class TagsDialog extends AnalyticsDialogFragment {
                 .negativeText(R.string.dialog_cancel)
                 .customView(tagsDialogView, false)
                 .onPositive((dialog, which) -> ((TagsDialogListener)requireActivity())
-                        .onSelectedTags(new ArrayList<>(mTags.mCurrentTags), mSelectedOption));
+                        .onSelectedTags(mTags.getCheckedTagList(), mSelectedOption));
         mDialog = builder.build();
 
         mDialog.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE);
