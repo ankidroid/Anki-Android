@@ -55,16 +55,26 @@ public class InitialActivityTest extends RobolectricTest {
 
     @Test
     public void testInitialActivityResult() {
-        setupForDatabaseConflict();
+        try {
+            setupForDatabaseConflict();
 
-        InitialActivity.StartupFailure f = InitialActivity.getStartupFailureType(getTargetContext());
+            InitialActivity.StartupFailure f = InitialActivity.getStartupFailureType(getTargetContext());
 
-        assertThat("A conflict should be returned", f, is(InitialActivity.StartupFailure.DATABASE_LOCKED));
+            assertThat("A conflict should be returned", f, is(InitialActivity.StartupFailure.DATABASE_LOCKED));
+        } finally {
+            setupForDefault();
+        }
     }
 
     public static void setupForDatabaseConflict() {
         ShadowApplication app = Shadows.shadowOf((Application) ApplicationProvider.getApplicationContext());
         app.grantPermissions(android.Manifest.permission.WRITE_EXTERNAL_STORAGE, android.Manifest.permission.READ_EXTERNAL_STORAGE);
         ShadowEnvironment.setExternalStorageState("mounted");
+    }
+
+    public static void setupForDefault() {
+        ShadowApplication app = Shadows.shadowOf((Application) ApplicationProvider.getApplicationContext());
+        app.denyPermissions(android.Manifest.permission.WRITE_EXTERNAL_STORAGE, android.Manifest.permission.READ_EXTERNAL_STORAGE);
+        ShadowEnvironment.setExternalStorageState("removed");
     }
 }
