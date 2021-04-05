@@ -362,7 +362,7 @@ public class CustomStudyDialog extends AnalyticsDialogFragment implements
         switch (dialogId) {
             case CONTEXT_MENU_STANDARD:
                 // Standard context menu
-                ArrayList<Integer> dialogOptions = new ArrayList<Integer>();
+                ArrayList<Integer> dialogOptions = new ArrayList<>();
                 dialogOptions.add(CUSTOM_STUDY_NEW);
                 dialogOptions.add(CUSTOM_STUDY_REV);
                 dialogOptions.add(CUSTOM_STUDY_FORGOT);
