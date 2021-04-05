@@ -103,6 +103,22 @@ public class TagsDialog extends AnalyticsDialogFragment {
         public boolean uncheck(String tag) {
             return mCurrentTags.remove(tag);
         }
+
+
+        /**
+         * Toggle the status of all tags,
+         * if all tags are checked, then uncheck them
+         * otherwise check all tags
+         *
+         * @return true if this tag list changed as a result of the call
+         */
+        public boolean toggleAllCheckedStatuses() {
+            if (mAllTags.size() == mCurrentTags.size()) {
+                mCurrentTags.clear();
+                return true;
+            }
+            return mCurrentTags.addAll(mAllTags);
+        }
     }
 
 
@@ -299,14 +315,8 @@ public class TagsDialog extends AnalyticsDialogFragment {
 
         MenuItem checkAllItem = mToolbar.getMenu().findItem(R.id.tags_dialog_action_select_all);
         checkAllItem.setOnMenuItemClickListener(menuItem -> {
-            boolean changed = false;
-            if (mTags.mAllTags.size() == mTags.mCurrentTags.size()) {
-                mTags.mCurrentTags.clear();
-                changed = true;
-            } else {
-                changed = mTags.mCurrentTags.addAll(mTags.mAllTags);
-            }
-            if (changed) {
+            final boolean didChange = mTags.toggleAllCheckedStatuses();
+            if (didChange) {
                 mTagsArrayAdapter.notifyDataSetChanged();
             }
             return true;
