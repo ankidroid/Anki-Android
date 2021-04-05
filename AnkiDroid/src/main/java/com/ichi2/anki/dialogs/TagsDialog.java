@@ -41,6 +41,20 @@ public class TagsDialog extends AnalyticsDialogFragment {
     }
 
 
+    /**
+     * A container class that keeps track of tags and their status
+     */
+    public static class TagsList {
+        /**
+         * A Set containing the currently selected tags
+         */
+        private TreeSet<String> mCurrentTags;
+        /**
+         * List of all available tags
+         */
+        private List<String> mAllTags;
+    }
+
 
     /**
      * Enum that define all possible types of TagsDialog
@@ -65,8 +79,7 @@ public class TagsDialog extends AnalyticsDialogFragment {
     private static final String ALL_TAGS_KEY = "all_tags";
 
     private DialogType mType;
-    private TreeSet<String> mCurrentTags;
-    private List<String> mAllTags;
+    private TagsList mTags = new TagsList();
 
     private String mPositiveText;
     private String mDialogTitle;
@@ -110,14 +123,14 @@ public class TagsDialog extends AnalyticsDialogFragment {
 
         mType = DialogType.values()[requireArguments().getInt(DIALOG_TYPE_KEY)];
 
-        mCurrentTags = new TreeSet<>(String.CASE_INSENSITIVE_ORDER);
-        mCurrentTags.addAll(requireArguments().getStringArrayList(CHECKED_TAGS_KEY));
+        mTags.mCurrentTags = new TreeSet<>(String.CASE_INSENSITIVE_ORDER);
+        mTags.mCurrentTags.addAll(requireArguments().getStringArrayList(CHECKED_TAGS_KEY));
 
-        mAllTags = requireArguments().getStringArrayList(ALL_TAGS_KEY);
+        mTags.mAllTags = requireArguments().getStringArrayList(ALL_TAGS_KEY);
 
-        for (String tag : mCurrentTags) {
-            if (!mAllTags.contains(tag)) {
-                mAllTags.add(tag);
+        for (String tag : mTags.mCurrentTags) {
+            if (!mTags.mAllTags.contains(tag)) {
+                mTags.mAllTags.add(tag);
             }
         }
 
@@ -141,7 +154,7 @@ public class TagsDialog extends AnalyticsDialogFragment {
         mTagsListRecyclerView.setAdapter(mTagsArrayAdapter);
 
         mNoTagsTextView = tagsDialogView.findViewById(R.id.tags_dialog_no_tags_textview);
-        if (mAllTags.isEmpty()) {
+        if (mTags.mAllTags.isEmpty()) {
             mNoTagsTextView.setVisibility(View.VISIBLE);
         }
         RadioGroup mOptionsGroup = tagsDialogView.findViewById(R.id.tags_dialog_options_radiogroup);
@@ -169,7 +182,7 @@ public class TagsDialog extends AnalyticsDialogFragment {
                 .negativeText(R.string.dialog_cancel)
                 .customView(tagsDialogView, false)
                 .onPositive((dialog, which) -> ((TagsDialogListener)requireActivity())
-                        .onSelectedTags(new ArrayList<>(mCurrentTags), mSelectedOption));
+                        .onSelectedTags(new ArrayList<>(mTags.mCurrentTags), mSelectedOption));
         mDialog = builder.build();
 
         mDialog.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE);
@@ -237,13 +250,13 @@ public class TagsDialog extends AnalyticsDialogFragment {
         MenuItem checkAllItem = mToolbar.getMenu().findItem(R.id.tags_dialog_action_select_all);
         checkAllItem.setOnMenuItemClickListener(menuItem -> {
             boolean changed = false;
-            if (mCurrentTags.containsAll(mTagsArrayAdapter.mTagsList)) {
-                mCurrentTags.removeAll(mTagsArrayAdapter.mTagsList);
+            if (mTags.mCurrentTags.containsAll(mTagsArrayAdapter.mTagsList)) {
+                mTags.mCurrentTags.removeAll(mTagsArrayAdapter.mTagsList);
                 changed = true;
             } else {
                 for (String tag : mTagsArrayAdapter.mTagsList) {
-                    if (!mCurrentTags.contains(tag)) {
-                        mCurrentTags.add(tag);
+                    if (!mTags.mCurrentTags.contains(tag)) {
+                        mTags.mCurrentTags.add(tag);
                         changed = true;
                     }
                 }
@@ -278,8 +291,8 @@ public class TagsDialog extends AnalyticsDialogFragment {
     public void addTag(String tag) {
         if (!TextUtils.isEmpty(tag)) {
             String feedbackText;
-            if (!mAllTags.contains(tag)) {
-                mAllTags.add(tag);
+            if (!mTags.mAllTags.contains(tag)) {
+                mTags.mAllTags.add(tag);
                 if (mNoTagsTextView.getVisibility() == View.VISIBLE) {
                     mNoTagsTextView.setVisibility(View.GONE);
                 }
@@ -289,7 +302,7 @@ public class TagsDialog extends AnalyticsDialogFragment {
             } else {
                 feedbackText = getString(R.string.tag_editor_add_feedback_existing, tag);
             }
-            mCurrentTags.add(tag);
+            mTags.mCurrentTags.add(tag);
             mTagsArrayAdapter.notifyDataSetChanged();
             // Show a snackbar to let the user know the tag was added successfully
             UIUtils.showSnackbar(getActivity(), feedbackText, false, -1, null,
@@ -309,14 +322,14 @@ public class TagsDialog extends AnalyticsDialogFragment {
         public final List<String> mTagsList;
 
         public  TagsArrayAdapter() {
-            mTagsList = new ArrayList<>(mAllTags);
+            mTagsList = new ArrayList<>(mTags.mAllTags);
             sortData();
         }
 
         public void sortData() {
             Collections.sort(mTagsList, (lhs, rhs) -> {
-                boolean lhs_checked = mCurrentTags.contains(lhs);
-                boolean rhs_checked = mCurrentTags.contains(rhs);
+                boolean lhs_checked = mTags.mCurrentTags.contains(lhs);
+                boolean rhs_checked = mTags.mCurrentTags.contains(rhs);
                 //priority for checked items.
                 return lhs_checked == rhs_checked ? lhs.compareToIgnoreCase(rhs) : lhs_checked ? -1 : 1;
             });
@@ -333,10 +346,10 @@ public class TagsDialog extends AnalyticsDialogFragment {
                 CheckedTextView ctv = (CheckedTextView) view;
                 ctv.toggle();
                 String tag = ctv.getText().toString();
-                if (ctv.isChecked() && !mCurrentTags.contains(tag)) {
-                    mCurrentTags.add(tag);
+                if (ctv.isChecked() && !mTags.mCurrentTags.contains(tag)) {
+                    mTags.mCurrentTags.add(tag);
                 } else if (!ctv.isChecked()) {
-                    mCurrentTags.remove(tag);
+                    mTags.mCurrentTags.remove(tag);
                 }
             });
             return vh;
@@ -346,7 +359,7 @@ public class TagsDialog extends AnalyticsDialogFragment {
         public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
             String tag = mTagsList.get(position);
             holder.mTagItemCheckedTextView.setText(tag);
-            holder.mTagItemCheckedTextView.setChecked(mCurrentTags.contains(tag));
+            holder.mTagItemCheckedTextView.setChecked(mTags.mCurrentTags.contains(tag));
         }
 
         @Override
@@ -371,10 +384,10 @@ public class TagsDialog extends AnalyticsDialogFragment {
             protected FilterResults performFiltering(CharSequence constraint) {
                 mFilteredTags.clear();
                 if (constraint.length() == 0) {
-                    mFilteredTags.addAll(mAllTags);
+                    mFilteredTags.addAll(mTags.mAllTags);
                 } else {
                     final String filterPattern = constraint.toString().toLowerCase(Locale.getDefault()).trim();
-                    for (String tag : mAllTags) {
+                    for (String tag : mTags.mAllTags) {
                         if (tag.toLowerCase(Locale.getDefault()).contains(filterPattern)) {
                             mFilteredTags.add(tag);
                         }
