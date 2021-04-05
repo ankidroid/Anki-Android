@@ -115,7 +115,7 @@ public class CustomStudyDialog extends AnalyticsDialogFragment implements
     @Override
     public void onAttach(@NonNull Context context) {
         super.onAttach(context);
-        AnkiActivity ankiActivity = requireAnkiActivity();
+        AnkiActivity ankiActivity = (AnkiActivity) requireActivity();
         mCustomStudyListener = (CustomStudyListener) ankiActivity;
         mCollection = ankiActivity.getCol();
     }
@@ -148,11 +148,10 @@ public class CustomStudyDialog extends AnalyticsDialogFragment implements
                 .itemsIds(listIds)
                 .items(ContextMenuHelper.getValuesFromKeys(getKeyValueMap(), listIds))
                 .itemsCallback((materialDialog, view, which, charSequence) -> {
-                    AnkiActivity activity = requireAnkiActivity();
                     switch (view.getId()) {
                         case DECK_OPTIONS: {
                             // User asked to permanently change the deck options
-                            Intent i = new Intent(activity, DeckOptions.class);
+                            Intent i = new Intent(requireContext(), DeckOptions.class);
                             i.putExtra("did", requireArguments().getLong("did"));
                             requireActivity().startActivity(i);
                             break;
@@ -458,7 +457,6 @@ public class CustomStudyDialog extends AnalyticsDialogFragment implements
      */
     private void createCustomStudySession(JSONArray delays, Object[] terms, Boolean resched) {
         Deck dyn;
-        final AnkiActivity activity = requireAnkiActivity();
         long did = requireArguments().getLong("did");
         Decks decks = mCollection.getDecks();
         String deckToStudyName = decks.get(did).getString("name");
@@ -517,20 +515,13 @@ public class CustomStudyDialog extends AnalyticsDialogFragment implements
     }
 
     private void onLimitsExtended(boolean jumpToReviewer) {
-        AnkiActivity activity = requireAnkiActivity();
         if (jumpToReviewer) {
-            mCustomStudyListener.startActivityForResultWithoutAnimation(new Intent(activity, Reviewer.class), AnkiActivity.REQUEST_REVIEW);
+            mCustomStudyListener.startActivityForResultWithoutAnimation(new Intent(requireContext(), Reviewer.class), AnkiActivity.REQUEST_REVIEW);
         } else {
             mCustomStudyListener.onExtendStudyLimits();
         }
         mCustomStudyListener.dismissAllDialogFragments();
     }
-
-    @NonNull
-    protected AnkiActivity requireAnkiActivity() {
-        return (AnkiActivity) requireActivity();
-    }
-
 
     private CreateCustomStudySessionListener createCustomStudySessionListener(){
         return new CreateCustomStudySessionListener(mCustomStudyListener);
