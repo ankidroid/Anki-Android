@@ -42,14 +42,12 @@ import com.ichi2.anki.CollectionHelper;
 import com.ichi2.anki.DeckOptions;
 import com.ichi2.anki.R;
 import com.ichi2.anki.Reviewer;
-import com.ichi2.anki.StudyOptionsFragment;
 import com.ichi2.anki.UIUtils;
 import com.ichi2.anki.analytics.AnalyticsDialogFragment;
 import com.ichi2.anki.dialogs.ContextMenuHelper;
 import com.ichi2.anki.dialogs.TagsDialog;
 import com.ichi2.anki.exception.FilteredAncestor;
 import com.ichi2.async.CollectionTask;
-import com.ichi2.async.TaskListenerWithContext;
 import com.ichi2.async.TaskManager;
 import com.ichi2.libanki.Collection;
 import com.ichi2.libanki.Consts;
@@ -84,8 +82,7 @@ public class CustomStudyDialog extends AnalyticsDialogFragment implements
     private static final int DECK_OPTIONS = 107;
     private static final int MORE_OPTIONS = 108;
 
-    public interface CustomStudyListener {
-        void onCreateCustomStudySession();
+    public interface CustomStudyListener extends CreateCustomStudySessionListener.Callback {
         void onExtendStudyLimits();
     }
 
@@ -522,24 +519,6 @@ public class CustomStudyDialog extends AnalyticsDialogFragment implements
 
 
     private CreateCustomStudySessionListener createCustomStudySessionListener(){
-        return new CreateCustomStudySessionListener(requireAnkiActivity());
-    }
-    private static class CreateCustomStudySessionListener extends TaskListenerWithContext<AnkiActivity, Void, StudyOptionsFragment.DeckStudyData> {
-        public CreateCustomStudySessionListener(AnkiActivity activity) {
-            super(activity);
-        }
-
-
-        @Override
-        public void actualOnPreExecute(@NonNull AnkiActivity activity) {
-            activity.showProgressBar();
-        }
-
-
-        @Override
-        public void actualOnPostExecute(@NonNull AnkiActivity activity, StudyOptionsFragment.DeckStudyData v) {
-            activity.hideProgressBar();
-            ((CustomStudyListener) activity).onCreateCustomStudySession();
-        }
+        return new CreateCustomStudySessionListener((CustomStudyListener) requireAnkiActivity());
     }
 }
