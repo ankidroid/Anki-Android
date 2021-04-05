@@ -33,6 +33,8 @@ import com.ichi2.libanki.utils.Time;
 import com.ichi2.preferences.PreferenceExtensions;
 import com.ichi2.utils.FileUtil;
 
+import net.ankiweb.rsdroid.BackendException;
+
 import java.io.File;
 import java.io.IOException;
 
@@ -151,6 +153,9 @@ public class CollectionHelper {
     public synchronized Collection getColSafe(Context context) {
         try {
             return getCol(context);
+        } catch (BackendException.BackendDbException.BackendDbLockedException e) {
+            Timber.w(e);
+            return null;
         } catch (Exception e) {
             Timber.w(e);
             AnkiDroidApp.sendExceptionReport(e, "CollectionHelper.getColSafe");
