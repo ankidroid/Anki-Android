@@ -119,6 +119,14 @@ public class TagsDialog extends AnalyticsDialogFragment {
             }
             return mCurrentTags.addAll(mAllTags);
         }
+
+
+        /**
+         * @return true if there is no tags in the list
+         */
+        public boolean isEmpty() {
+            return mAllTags.isEmpty();
+        }
     }
 
 
@@ -219,7 +227,7 @@ public class TagsDialog extends AnalyticsDialogFragment {
         mTagsListRecyclerView.setAdapter(mTagsArrayAdapter);
 
         mNoTagsTextView = tagsDialogView.findViewById(R.id.tags_dialog_no_tags_textview);
-        if (mTags.mAllTags.isEmpty()) {
+        if (mTags.isEmpty()) {
             mNoTagsTextView.setVisibility(View.VISIBLE);
         }
         RadioGroup mOptionsGroup = tagsDialogView.findViewById(R.id.tags_dialog_options_radiogroup);
