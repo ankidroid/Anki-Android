@@ -47,6 +47,30 @@ public class TagsDialog extends AnalyticsDialogFragment {
     public static class TagsList {
         private TreeSet<String> mCurrentTags;
         private List<String> mAllTags;
+
+
+        /**
+         * Return true if a tag is checked given its index in the list
+         *
+         * @param index index of the tag to check
+         * @return whether the tag is checked or not
+         * @throws IndexOutOfBoundsException if the index is out of range
+         *                                   (<tt>index &lt; 0 || index &gt;= size()</tt>)
+         */
+        public boolean isChecked(int index) {
+            return isChecked(mAllTags.get(index));
+        }
+
+
+        /**
+         * Return true if a tag is checked
+         *
+         * @param tag the tag to check (case-insensitive)
+         * @return whether the tag is checked or not
+         */
+        public boolean isChecked(String tag) {
+            return mCurrentTags.contains(tag);
+        }
     }
 
 
@@ -249,7 +273,7 @@ public class TagsDialog extends AnalyticsDialogFragment {
                 changed = true;
             } else {
                 for (String tag : mTagsArrayAdapter.mTagsList) {
-                    if (!mTags.mCurrentTags.contains(tag)) {
+                    if (!mTags.isChecked(tag)) {
                         mTags.mCurrentTags.add(tag);
                         changed = true;
                     }
@@ -322,8 +346,8 @@ public class TagsDialog extends AnalyticsDialogFragment {
 
         public void sortData() {
             Collections.sort(mTagsList, (lhs, rhs) -> {
-                boolean lhs_checked = mTags.mCurrentTags.contains(lhs);
-                boolean rhs_checked = mTags.mCurrentTags.contains(rhs);
+                boolean lhs_checked = mTags.isChecked(lhs);
+                boolean rhs_checked = mTags.isChecked(rhs);
                 //priority for checked items.
                 return lhs_checked == rhs_checked ? lhs.compareToIgnoreCase(rhs) : lhs_checked ? -1 : 1;
             });
@@ -340,7 +364,7 @@ public class TagsDialog extends AnalyticsDialogFragment {
                 CheckedTextView ctv = (CheckedTextView) view;
                 ctv.toggle();
                 String tag = ctv.getText().toString();
-                if (ctv.isChecked() && !mTags.mCurrentTags.contains(tag)) {
+                if (ctv.isChecked() && !mTags.isChecked(tag)) {
                     mTags.mCurrentTags.add(tag);
                 } else if (!ctv.isChecked()) {
                     mTags.mCurrentTags.remove(tag);
@@ -353,7 +377,7 @@ public class TagsDialog extends AnalyticsDialogFragment {
         public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
             String tag = mTagsList.get(position);
             holder.mTagItemCheckedTextView.setText(tag);
-            holder.mTagItemCheckedTextView.setChecked(mTags.mCurrentTags.contains(tag));
+            holder.mTagItemCheckedTextView.setChecked(mTags.isChecked(tag));
         }
 
         @Override
