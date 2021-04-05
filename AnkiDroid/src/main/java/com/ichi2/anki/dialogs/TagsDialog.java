@@ -300,18 +300,12 @@ public class TagsDialog extends AnalyticsDialogFragment {
         MenuItem checkAllItem = mToolbar.getMenu().findItem(R.id.tags_dialog_action_select_all);
         checkAllItem.setOnMenuItemClickListener(menuItem -> {
             boolean changed = false;
-            if (mTags.mCurrentTags.containsAll(mTagsArrayAdapter.mTagsList)) {
-                mTags.mCurrentTags.removeAll(mTagsArrayAdapter.mTagsList);
+            if (mTags.mAllTags.size() == mTags.mCurrentTags.size()) {
+                mTags.mCurrentTags.clear();
                 changed = true;
             } else {
-                for (String tag : mTagsArrayAdapter.mTagsList) {
-                    if (!mTags.isChecked(tag)) {
-                        mTags.check(tag);
-                        changed = true;
-                    }
-                }
+                changed = mTags.mCurrentTags.addAll(mTags.mAllTags);
             }
-
             if (changed) {
                 mTagsArrayAdapter.notifyDataSetChanged();
             }
