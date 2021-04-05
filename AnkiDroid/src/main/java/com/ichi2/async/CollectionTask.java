@@ -64,7 +64,6 @@ import com.ichi2.utils.JSONObject;
 import com.ichi2.utils.PairWithBoolean;
 import com.ichi2.utils.PairWithCard;
 import com.ichi2.utils.SyncStatus;
-import com.ichi2.utils.ThreadUtil;
 import com.ichi2.utils.Triple;
 
 import java.io.File;
@@ -94,8 +93,8 @@ import timber.log.Timber;
 import static com.ichi2.async.TaskManager.setLatestInstance;
 import static com.ichi2.libanki.Card.deepCopyCardArray;
 import static com.ichi2.libanki.Undoable.*;
-import static com.ichi2.utils.BooleanGetter.False;
-import static com.ichi2.utils.BooleanGetter.True;
+import static com.ichi2.utils.BooleanGetter.FALSE;
+import static com.ichi2.utils.BooleanGetter.TRUE;
 
 /**
  * Loading in the background, so that AnkiDroid does not look like frozen.
@@ -310,9 +309,9 @@ public class CollectionTask<ProgressListener, ProgressBackground extends Progres
             } catch (RuntimeException e) {
                 Timber.e(e, "doInBackgroundUpdateNote - RuntimeException on updating note");
                 AnkiDroidApp.sendExceptionReport(e, "doInBackgroundUpdateNote");
-                return False;
+                return FALSE;
             }
-            return True;
+            return TRUE;
         }
 
         public boolean isFromReviewer() {
@@ -330,7 +329,7 @@ public class CollectionTask<ProgressListener, ProgressBackground extends Progres
                 newCard._getQA(true);
             }
             collectionTask.doProgress(newCard);
-            return True;
+            return TRUE;
         }
     }
 
@@ -473,9 +472,9 @@ public class CollectionTask<ProgressListener, ProgressBackground extends Progres
             } catch (RuntimeException e) {
                 Timber.e(e, "doInBackgroundDismissNote - RuntimeException on dismissing note, dismiss type %s", this.getClass());
                 AnkiDroidApp.sendExceptionReport(e, "doInBackgroundDismissNote");
-                return False;
+                return FALSE;
             }
-            return True;
+            return TRUE;
         }
     }
 
@@ -1034,9 +1033,9 @@ public class CollectionTask<ProgressListener, ProgressBackground extends Progres
             } catch (RuntimeException e) {
                 Timber.e(e, "doInBackgroundUndo - RuntimeException on undoing");
                 AnkiDroidApp.sendExceptionReport(e, "doInBackgroundUndo");
-                return False;
+                return FALSE;
             }
-            return True;
+            return TRUE;
         }
     }
 
@@ -1363,7 +1362,7 @@ public class CollectionTask<ProgressListener, ProgressBackground extends Progres
             } catch (IOException e) {
                 Timber.e(e, "doInBackgroundImportReplace - Error while unzipping");
                 AnkiDroidApp.sendExceptionReport(e, "doInBackgroundImportReplace0");
-                return False;
+                return FALSE;
             }
             try {
                 // v2 scheduler?
@@ -1373,11 +1372,11 @@ public class CollectionTask<ProgressListener, ProgressBackground extends Progres
                 Utils.unzipFiles(zip, dir.getAbsolutePath(), new String[] {colname, "media"}, null);
             } catch (IOException e) {
                 AnkiDroidApp.sendExceptionReport(e, "doInBackgroundImportReplace - unzip");
-                return False;
+                return FALSE;
             }
             String colFile = new File(dir, colname).getAbsolutePath();
             if (!(new File(colFile)).exists()) {
-                return False;
+                return FALSE;
             }
 
             Collection tmpCol = null;
@@ -1385,7 +1384,7 @@ public class CollectionTask<ProgressListener, ProgressBackground extends Progres
                 tmpCol = Storage.Collection(context, colFile);
                 if (!tmpCol.validCollection()) {
                     tmpCol.close();
-                    return False;
+                    return FALSE;
                 }
             } catch (Exception e) {
                 Timber.e("Error opening new collection file... probably it's invalid");
@@ -1396,7 +1395,7 @@ public class CollectionTask<ProgressListener, ProgressBackground extends Progres
                     // do nothing
                 }
                 AnkiDroidApp.sendExceptionReport(e, "doInBackgroundImportReplace - open col");
-                return False;
+                return FALSE;
             } finally {
                 if (tmpCol != null) {
                     tmpCol.close();
@@ -1419,7 +1418,7 @@ public class CollectionTask<ProgressListener, ProgressBackground extends Progres
             File f = new File(colFile);
             if (!f.renameTo(new File(colPath))) {
                 // Exit early if this didn't work
-                return False;
+                return FALSE;
             }
             int addedCount = -1;
             try {
@@ -1462,19 +1461,19 @@ public class CollectionTask<ProgressListener, ProgressBackground extends Progres
                 zip.close();
                 // delete tmp dir
                 BackupManager.removeDir(dir);
-                return True;
+                return TRUE;
             } catch (RuntimeException e) {
                 Timber.e(e, "doInBackgroundImportReplace - RuntimeException");
                 AnkiDroidApp.sendExceptionReport(e, "doInBackgroundImportReplace1");
-                return False;
+                return FALSE;
             } catch (FileNotFoundException e) {
                 Timber.e(e, "doInBackgroundImportReplace - FileNotFoundException");
                 AnkiDroidApp.sendExceptionReport(e, "doInBackgroundImportReplace2");
-                return False;
+                return FALSE;
             } catch (IOException e) {
                 Timber.e(e, "doInBackgroundImportReplace - IOException");
                 AnkiDroidApp.sendExceptionReport(e, "doInBackgroundImportReplace3");
-                return False;
+                return FALSE;
             }
         }
     }

@@ -48,7 +48,6 @@ import com.ichi2.libanki.Collection;
 import com.ichi2.libanki.Model;
 import com.ichi2.libanki.StdModels;
 import com.ichi2.ui.FixedEditText;
-import com.ichi2.utils.Triple;
 import com.ichi2.widget.WidgetStatus;
 
 import java.util.ArrayList;
@@ -309,13 +308,13 @@ public class ModelBrowser extends AnkiActivity {
 
         //Populates arrayadapters listing the mModels (includes prefixes/suffixes)
         int existingModelSize = (mModels == null) ? 0 : mModels.size();
-        int stdModelSize = StdModels.stdModels.length;
+        int stdModelSize = StdModels.STD_MODELS.length;
         ArrayList<String> newModelLabels = new ArrayList<>(existingModelSize + stdModelSize);
         ArrayList<String> existingModelsNames = new ArrayList<>(existingModelSize);
 
         //Used to fetch model names
         mNewModelNames = new ArrayList<>(stdModelSize);
-        for (StdModels StdModels: StdModels.stdModels) {
+        for (StdModels StdModels: StdModels.STD_MODELS) {
             String defaultName = StdModels.getDefaultName();
             newModelLabels.add(String.format(add, defaultName));
             mNewModelNames.add(defaultName);
@@ -383,14 +382,14 @@ public class ModelBrowser extends AnkiActivity {
     private void addNewNoteType(String modelName, int position) {
         Model model;
         if (modelName.length() > 0) {
-            int nbStdModels = StdModels.stdModels.length;
+            int nbStdModels = StdModels.STD_MODELS.length;
             if (position < nbStdModels) {
-                model = StdModels.stdModels[position].add(col);
+                model = StdModels.STD_MODELS[position].add(col);
             } else {
                 //New model
                 //Model that is being cloned
                 Model oldModel = mModels.get(position - nbStdModels).deepClone();
-                Model newModel = StdModels.basicModel.add(col);
+                Model newModel = StdModels.BASIC_MODEL.add(col);
                 oldModel.put("id", newModel.getLong("id"));
                 model = oldModel;
             }

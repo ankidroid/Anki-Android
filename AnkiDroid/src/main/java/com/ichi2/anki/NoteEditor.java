@@ -569,7 +569,7 @@ public class NoteEditor extends AnkiActivity implements
         // Note type Selector
         mNoteTypeSpinner = findViewById(R.id.note_type_spinner);
         ArrayList<Model> models = getCol().getModels().all();
-        Collections.sort(models, NamedJSONComparator.instance);
+        Collections.sort(models, NamedJSONComparator.INSTANCE);
         final ArrayList<String> modelNames = new ArrayList<>(models.size());
         mAllModelIds = new ArrayList<>(models.size());
         for (JSONObject m : models) {
@@ -606,7 +606,7 @@ public class NoteEditor extends AnkiActivity implements
         mNoteDeckSpinner = findViewById(R.id.note_deck_spinner);
 
         ArrayList<Deck> decks = getCol().getDecks().all();
-        Collections.sort(decks, DeckComparator.instance);
+        Collections.sort(decks, DeckComparator.INSTANCE);
         final ArrayList<String> deckNames = new ArrayList<>(decks.size());
         mAllDeckIds = new ArrayList<>(decks.size());
         for (Deck d : decks) {
