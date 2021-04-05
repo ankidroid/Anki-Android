@@ -1025,6 +1025,12 @@ public class CardBrowser extends NavigationDrawerActivity implements
         TaskManager.launchCollectionTask(
                 new CollectionTask.Flag(getSelectedCardIds(), flag),
                 flagCardHandler());
+
+        for (CardCache card: getCards()) {
+            if (getSelectedCardIds().contains(card.getCard().getId())) {
+                card.getCard().setUserFlag(flag);
+            }
+        }
     }
 
     /** Updates flag icon color and cards shown with given color */
