@@ -18,6 +18,8 @@ package com.ichi2.anki;
 
 import android.content.Context;
 
+import net.ankiweb.rsdroid.BackendException;
+
 import androidx.annotation.CheckResult;
 import androidx.annotation.NonNull;
 import timber.log.Timber;
@@ -39,6 +41,13 @@ public class InitialActivity {
         } else if (isFutureAnkiDroidVersion(context)) {
             return StartupFailure.FUTURE_ANKIDROID_VERSION;
         } else {
+            try {
+                CollectionHelper.getInstance().getCol(context);
+            } catch (BackendException.BackendDbException.BackendDbLockedException e) {
+                return StartupFailure.DATABASE_LOCKED;
+            } catch (Exception ignored) {
+
+            }
             return StartupFailure.DB_ERROR;
         }
     }
@@ -57,5 +66,6 @@ public class InitialActivity {
         DIRECTORY_NOT_ACCESSIBLE,
         FUTURE_ANKIDROID_VERSION,
         DB_ERROR,
+        DATABASE_LOCKED,
     }
 }
