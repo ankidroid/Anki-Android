@@ -533,6 +533,7 @@ public class CardBrowserTest extends RobolectricTest {
         b.checkCardsAtPositions(0);
 
         Card card = getCheckedCard(b).getCard();
+
         b.flagTask(1);
 
         assertThat(card.userFlag(), is(1));
