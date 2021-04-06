@@ -17,8 +17,14 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.concurrent.TimeUnit;
 
 import java8.util.StringJoiner;
+import okhttp3.Call;
+import okhttp3.Callback;
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.Response;
 import timber.log.Timber;
 
 import static com.ichi2.anki.web.HttpFetcher.downloadFileToSdCardMethod;
@@ -37,23 +43,71 @@ public class AddonsNpmUtility {
     }
 
     /**
+     * @param npmAddonName addon name, e.g ankidroid-js-addon-progress-bar
+     */
+    public void getPackageJson(String npmAddonName) {
+        showProgressBar();
+        String url = context.getString(R.string.ankidroid_js_addon_npm_registry, npmAddonName);
+        Timber.i("npm url: %s", url);
+
+        OkHttpClient client = new OkHttpClient.Builder()
+                .connectTimeout(10, TimeUnit.SECONDS)
+                .writeTimeout(10, TimeUnit.SECONDS)
+                .readTimeout(20, TimeUnit.SECONDS)
+                .build();
+
+        Request request = new Request.Builder()
+                .url(url)
+                .build();
+
+        client.newCall(request).enqueue(new Callback() {
+            @Override
+            public void onFailure(Call call, IOException e) {
+                Timber.e("js addon %s", e.toString());
+                UIUtils.showThemedToast(context, context.getString(R.string.error_downloading_file_check_name), false);
+                call.cancel();
+            }
+
+
+            @Override
+            public void onResponse(Call call, Response response) {
+                if (response.isSuccessful()) {
+                    try {
+                        String strResponse = response.body().string();
+                        parseJsonData(strResponse, npmAddonName);
+                        response.close();
+                    } catch (IOException | NullPointerException e) {
+                        Timber.e(e.getLocalizedMessage());
+                    }
+                } else {
+                    hideProgressBar();
+                    UIUtils.showThemedToast(context, context.getString(R.string.error_downloading_file_check_name), false);
+                }
+            }
+        });
+    }
+
+
+    /**
      * Parse npm package info from package.json. If valid ankidroid-js-addon package then download it
      */
     public void parseJsonData(String strResponse, String npmAddonName) {
         try {
-            Timber.d("json::%s", strResponse);
+            Timber.v("json:: %s", strResponse);
 
             JSONObject jsonObject = new JSONObject(strResponse);
-            if (AddonModel.isValidAddonPackage(jsonObject, ADDON_TYPE)) {
+            AddonModel addonModel = AddonModel.isValidAddonPackage(jsonObject, ADDON_TYPE);
 
-                JSONObject dist = jsonObject.getJSONObject("dist");
-                String tarballUrl = dist.get("tarball").toString();
-                Timber.d("tarball link %s", tarballUrl);
-                downloadAddonPackageFile(tarballUrl, npmAddonName);
-            } else {
+            if (addonModel == null) {
                 hideProgressBar();
                 showToast(context.getString(R.string.not_valid_package));
+                return;
             }
+
+            JSONObject dist = jsonObject.getJSONObject("dist");
+            String tarballUrl = dist.getString("tarball");
+            Timber.d("tarball link %s", tarballUrl);
+            downloadAddonPackageFile(tarballUrl, npmAddonName);
 
         } catch (JSONException e) {
             Timber.w(e);

@@ -81,18 +81,19 @@ public class AddonModel {
 
     /**
      * @param jsonObject json object with addons info
-     * @return true/false, if valid
+     * @param addonType type of addons, reviewer or note editor
+     * @return addonModel/null, if valid addon then return addon model else return null
      * is package.json of ankidroid-js-addon... contains valid
      * ankidroid_js_api = 0.0.1 and keywords 'ankidroid-js-addon'
      */
-    public static boolean isValidAddonPackage(JSONObject jsonObject, String addonType) {
+    public static AddonModel isValidAddonPackage(JSONObject jsonObject, String addonType) {
         // Update if api get updated
         // TODO Extract to resources from other classes
         String AnkiDroidJsAPI = "0.0.1";
         String AnkiDroidJsAddonKeywords = "ankidroid-js-addon";
 
         if (jsonObject == null) {
-            return false;
+            return null;
         }
 
         AddonModel addonModel = AddonModel.tryParse(jsonObject, addonType);
@@ -112,34 +113,37 @@ public class AddonModel {
             Timber.w(e, e.getLocalizedMessage());
         }
 
-        if (addonModel == null) {
-            return false;
-        }
-
+        // js addons have full access to AnkiDroid JS API so needs to check the version
+        // jsAddonKeywords help in distinguish from other npm package
         if (!addonModel.getJsApiVersion().equals(AnkiDroidJsAPI) && jsAddonKeywordsPresent) {
-            return false;
+            return null;
         }
 
         // if other strings are non empty
+        if (isValid(addonModel)) {
+            return addonModel;
+        }
+
+        return null;
+    }
+
+    public static boolean isValid(AddonModel addonModel) {
         if (!addonModel.getName().isEmpty() && !addonModel.getVersion().isEmpty() && !addonModel.getDeveloper().isEmpty() && !addonModel.getHomepage().isEmpty()) {
             return true;
         }
-
         return false;
     }
 
+    // https://stackoverflow.com/questions/19949182/android-sharedpreferences-string-set-some-items-are-removed-after-app-restart/19949833
     public void updatePrefs(SharedPreferences preferences, String reviewerAddonKey, String addonName, boolean remove) {
         Set<String> reviewerEnabledAddonSet = preferences.getStringSet(reviewerAddonKey, new HashSet<String>());
-        SharedPreferences.Editor editor = preferences.edit();
-
-        Set<String> newStrSet = new HashSet<String>();
-        newStrSet.addAll(reviewerEnabledAddonSet);
-        newStrSet.add(addonName);
+        Set<String> newStrSet = new HashSet<String>(reviewerEnabledAddonSet);
 
         if (remove) {
             newStrSet.remove(addonName);
+        } else {
+            newStrSet.add(addonName);
         }
-
-        editor.putStringSet(reviewerAddonKey, newStrSet).apply();
+        preferences.edit().putStringSet(reviewerAddonKey, newStrSet).apply();
     }
 }

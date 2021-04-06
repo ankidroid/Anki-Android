@@ -15,6 +15,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.ichi2.anki.widgets.DeckDropDownAdapter;
+import com.ichi2.utils.StringUtil;
 
 import org.json.JSONObject;
 
@@ -145,8 +146,9 @@ public class AddonsBrowser extends NavigationDrawerActivity implements DeckDropD
                 String npmAddonName = downloadEditText.getText().toString();
 
                 // if string is:  npm i ankidroid-js-addon-progress-bar
+                npmAddonName = StringUtil.trimRight("npm i");
                 if (npmAddonName.startsWith("npm i")) {
-                    npmAddonName = npmAddonName.replaceAll("npm i", "");
+                    npmAddonName = npmAddonName.substring("npm i".length());
                 }
 
                 // if containing space
@@ -159,7 +161,7 @@ public class AddonsBrowser extends NavigationDrawerActivity implements DeckDropD
 
                 UIUtils.showThemedToast(this, getString(R.string.downloading_addon), true);
                 // download npm package for AnkiDroid as addons
-                getPackageJson(npmAddonName);
+                npmUtility.getPackageJson(npmAddonName);
 
                 downloadDialog.dismiss();
 
@@ -206,21 +208,17 @@ public class AddonsBrowser extends NavigationDrawerActivity implements DeckDropD
 
                 JSONObject jsonObject = AddonsNpmUtility.packageJsonReader(addonsPackageJson);
 
-                // TODO
-                AddonModel addonModel;
-                if (AddonModel.isValidAddonPackage(jsonObject, addonType)) {
-                    addonModel = AddonModel.tryParse(jsonObject, addonType);
-                    addonsNames.add(addonModel);
+                // if valid addon then return addonModel else return null
+                AddonModel addonModel = AddonModel.isValidAddonPackage(jsonObject, addonType);
+                if (addonModel == null) {
+                    continue;
                 }
+                addonsNames.add(addonModel);
             }
 
             addonsListRecyclerView.setAdapter(new AddonsAdapter(addonsNames, this));
 
-            if (addonsNames.isEmpty()) {
-                addonsDownloadButton.setVisibility(View.VISIBLE);
-            } else {
-                addonsDownloadButton.setVisibility(View.GONE);
-            }
+            addonsDownloadButton.setVisibility(addonsNames.isEmpty() ? View.VISIBLE : View.GONE);
 
         } else {
             UIUtils.showThemedToast(this, getString(R.string.error_listing_addons), false);
@@ -294,7 +292,7 @@ public class AddonsBrowser extends NavigationDrawerActivity implements DeckDropD
 
         buttonUpdate.setOnClickListener(v -> {
             UIUtils.showThemedToast(this, getString(R.string.checking_addon_update), false);
-            getPackageJson(addonModel.getName());
+            npmUtility.getPackageJson(addonModel.getName());
         });
 
         infoDialog.show();
@@ -370,56 +368,6 @@ public class AddonsBrowser extends NavigationDrawerActivity implements DeckDropD
         return content.toString();
     }
 
-    /**
-     * @param npmAddonName addon name, e.g ankidroid-js-addon-progress-bar
-     */
-    public void getPackageJson(String npmAddonName) {
-        showProgressBar();
-        String url = getString(R.string.ankidroid_js_addon_npm_registry, npmAddonName);
-        Timber.i("npm url: %s", url);
-
-        OkHttpClient client = new OkHttpClient.Builder()
-                .connectTimeout(10, TimeUnit.SECONDS)
-                .writeTimeout(10, TimeUnit.SECONDS)
-                .readTimeout(20, TimeUnit.SECONDS)
-                .build();
-
-        Request request = new Request.Builder()
-                .url(url)
-                .build();
-
-        client.newCall(request).enqueue(new Callback() {
-            @Override
-            public void onFailure(Call call, IOException e) {
-                Timber.e("js addon %s", e.toString());
-                UIUtils.showThemedToast(getApplicationContext(), getString(R.string.error_downloading_file_check_name), false);
-                call.cancel();
-            }
-
-
-            @Override
-            public void onResponse(Call call, Response response) {
-                if (response.isSuccessful()) {
-                    try {
-                        String strResponse = response.body().string();
-                        npmUtility.parseJsonData(strResponse, npmAddonName);
-
-                        runOnUiThread(() -> {
-                            listAddonsFromDir(addonType);
-                        });
-
-                        call.cancel();
-                        response.close();
-                    } catch (IOException | NullPointerException e) {
-                        Timber.e(e.getLocalizedMessage());
-                    }
-                } else {
-                    hideProgressBar();
-                    UIUtils.showThemedToast(getApplicationContext(), getString(R.string.error_downloading_file_check_name), false);
-                }
-            }
-        });
-    }
 
 
 }
