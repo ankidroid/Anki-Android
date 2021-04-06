@@ -17,16 +17,28 @@
 package com.ichi2.anki.cardviewer;
 
 import android.content.Context;
+import android.content.SharedPreferences;
 
+import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mock;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
+import static org.mockito.Mockito.when;
 
 public class CardTemplateTest {
     @Mock
     private Context mMockContext;
+
+    @Mock
+    private SharedPreferences mMockSharedPreferences;
+
+    @Before
+    public void setUp() {
+        when(mMockContext.getSharedPreferences("mock_context_preferences", Context.MODE_PRIVATE))
+                .thenReturn(mMockSharedPreferences);
+    }
 
     private static final String data = "<!doctype html>\n" +
             "<html class=\"mobile android linux js\">\n" +

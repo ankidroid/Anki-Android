@@ -23,6 +23,7 @@ import java.io.InputStream;
 import java.util.HashSet;
 import java.util.Set;
 import java.util.concurrent.TimeUnit;
+import java.util.concurrent.Callable;
 
 import java8.util.StringJoiner;
 import okhttp3.Call;
@@ -50,7 +51,7 @@ public class AddonsNpmUtility {
     /**
      * @param npmAddonName addon name, e.g ankidroid-js-addon-progress-bar
      */
-    public void getPackageJson(String npmAddonName) {
+    public void getPackageJson(String npmAddonName, Runnable runnable) {
         showProgressBar();
         String url = context.getString(R.string.ankidroid_js_addon_npm_registry, npmAddonName);
         Timber.i("npm url: %s", url);
@@ -69,7 +70,7 @@ public class AddonsNpmUtility {
             @Override
             public void onFailure(Call call, IOException e) {
                 Timber.e("js addon %s", e.toString());
-                UIUtils.showThemedToast(context, context.getString(R.string.error_downloading_file_check_name), false);
+                showToast(context.getString(R.string.error_downloading_file_check_name));
                 call.cancel();
             }
 
@@ -80,13 +81,14 @@ public class AddonsNpmUtility {
                     try {
                         String strResponse = response.body().string();
                         parseJsonData(strResponse, npmAddonName);
-                        response.close();
                     } catch (IOException | NullPointerException e) {
                         Timber.e(e.getLocalizedMessage());
+                    } finally {
+                        runnable.run();
                     }
                 } else {
                     hideProgressBar();
-                    UIUtils.showThemedToast(context, context.getString(R.string.error_downloading_file_check_name), false);
+                    showToast(context.getString(R.string.error_downloading_file_check_name));
                 }
             }
         });
@@ -126,6 +128,7 @@ public class AddonsNpmUtility {
      */
     public void downloadAddonPackageFile(String tarballUrl, String npmAddonName) {
         String downloadFilePath = downloadFileToSdCardMethod(tarballUrl, context, "addons", "GET");
+        Timber.d("download path %s", downloadFilePath);
         extractAndCopyAddonTgz(downloadFilePath, npmAddonName);
     }
 
@@ -147,7 +150,7 @@ public class AddonsNpmUtility {
         File addonsDir = new File(joinedPath.toString());
         File tarballFile = new File(tarballPath);
 
-        if (!tarballFile.exists() || !addonsDir.exists()) {
+        if (!tarballFile.exists()) {
             return;
         }
 
@@ -243,7 +246,7 @@ public class AddonsNpmUtility {
             try {
 
                 // AnkiDroid/addons/js-addons/package/index.js
-                // // here addonDir is id of npm package which may not contain ../ or other bad path
+                // here addonDir is id of npm package which may not contain ../ or other bad path
                 StringJoiner joinedPath = new StringJoiner("/")
                         .add(currentAnkiDroidDirectory)
                         .add("addons")

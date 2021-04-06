@@ -133,7 +133,6 @@ public class AddonsBrowser extends NavigationDrawerActivity implements DeckDropD
                 String npmAddonName = downloadEditText.getText().toString();
 
                 // if string is:  npm i ankidroid-js-addon-progress-bar
-                npmAddonName = StringUtil.trimRight("npm i");
                 if (npmAddonName.startsWith("npm i")) {
                     npmAddonName = npmAddonName.substring("npm i".length());
                 }
@@ -148,7 +147,7 @@ public class AddonsBrowser extends NavigationDrawerActivity implements DeckDropD
 
                 UIUtils.showThemedToast(this, getString(R.string.downloading_addon), true);
                 // download npm package for AnkiDroid as addons
-                npmUtility.getPackageJson(npmAddonName);
+                npmUtility.getPackageJson(npmAddonName, () -> runOnUiThread(() -> listAddonsFromDir(addonType)));
 
                 downloadDialog.dismiss();
 
@@ -279,7 +278,7 @@ public class AddonsBrowser extends NavigationDrawerActivity implements DeckDropD
 
         buttonUpdate.setOnClickListener(v -> {
             UIUtils.showThemedToast(this, getString(R.string.checking_addon_update), false);
-            npmUtility.getPackageJson(addonModel.getName());
+            npmUtility.getPackageJson(addonModel.getName(), () -> runOnUiThread(() -> listAddonsFromDir(addonType)));
         });
 
         infoDialog.show();
