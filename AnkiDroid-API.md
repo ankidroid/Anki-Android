@@ -19,6 +19,18 @@ dependencies {
 }
 ```
 
+### Manifest changes required on Android SDK 30+
+The below snippet resolves `Failed to find provider info for com.ichi2.anki.flashcards` which occurs on or above Android SDK 30 or Android 11+:
+
+```html
+<manifest>
+...
+    <queries>
+        <package android:name="com.ichi2.anki" />
+    </queries>
+</manifest>
+```
+
 Release Notes:
 * [v1.1.0 (2016-03-24)](https://groups.google.com/forum/#!topic/anki-android/LbrQ7kS9Zhg)
 
