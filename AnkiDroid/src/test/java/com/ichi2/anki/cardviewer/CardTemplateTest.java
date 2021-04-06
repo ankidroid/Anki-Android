@@ -16,12 +16,17 @@
 
 package com.ichi2.anki.cardviewer;
 
+import android.content.Context;
+
 import org.junit.Test;
+import org.mockito.Mock;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
 
 public class CardTemplateTest {
+    @Mock
+    private Context mMockContext;
 
     private static final String data = "<!doctype html>\n" +
             "<html class=\"mobile android linux js\">\n" +
@@ -55,7 +60,7 @@ public class CardTemplateTest {
         String style = "bar";
         String cardClass = "baz";
         String addons = "addon";
-        String result = new CardTemplate(data).render(content, style, cardClass, addons);
+        String result = new CardTemplate(data, mMockContext).render(content, style, cardClass);
 
         assertThat(result, is(data.replace("::content::", content).replace("::style::", style).replace("::class::", cardClass).replace("::addons::", addons)));
     }
@@ -69,7 +74,7 @@ public class CardTemplateTest {
         String content = new String(new char[stringLength]).replace('\0', 'a');
 
 
-        String ret = new CardTemplate(data).render(content, content, content, content);
+        String ret = new CardTemplate(data, mMockContext).render(content, content, content);
     }
 
 }

@@ -2,6 +2,7 @@ package com.ichi2.anki;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.view.View;
 import android.widget.ProgressBar;
 
@@ -12,11 +13,15 @@ import org.json.JSONObject;
 import org.rauschig.jarchivelib.Archiver;
 import org.rauschig.jarchivelib.ArchiverFactory;
 
+import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.HashSet;
+import java.util.Set;
 import java.util.concurrent.TimeUnit;
 
 import java8.util.StringJoiner;
@@ -211,4 +216,76 @@ public class AddonsNpmUtility {
         });
     }
 
+
+    /**
+     * @param context context for calling the method
+     *                get enabled js addon contents from AnkiDroid/addons/...
+     *                This function will be called in AbstractFlashcardViewer
+     *                <p>
+     *                1. get enabled status of addons in SharedPreferences with key containing 'reviewer_addon', read only enabled addons
+     *                2. split value and get latter part as it stored in SharedPreferences
+     *                e.g: reviewer_addon:ankidroid-js-addon-12345...  -->  ankidroid-js-addon-12345...
+     *                It is same as folder name for the addon.
+     *                3. Read index.js file from  AnkiDroid/addons/js-addons/package/index.js
+     *                </p>
+     * @return content of index.js file for every enabled addons in script tag.
+     */
+    public static String getEnabledAddonsContent(Context context) {
+        StringBuilder content = new StringBuilder();
+
+        String currentAnkiDroidDirectory = CollectionHelper.getCurrentAnkiDroidDirectory(context);
+        SharedPreferences preferences = AnkiDroidApp.getSharedPrefs(context);
+
+        // set of enabled addons only
+        Set<String> reviewerEnabledAddonSet = preferences.getStringSet(AddonModel.getReviewerAddonKey(), new HashSet<String>());
+
+        for (String addonDir : reviewerEnabledAddonSet) {
+            try {
+
+                // AnkiDroid/addons/js-addons/package/index.js
+                // // here addonDir is id of npm package which may not contain ../ or other bad path
+                StringJoiner joinedPath = new StringJoiner("/")
+                        .add(currentAnkiDroidDirectory)
+                        .add("addons")
+                        .add(addonDir)
+                        .add("package")
+                        .add("index.js");
+
+                String indexJsPath = joinedPath.toString();
+
+                File addonsContentFile = new File(indexJsPath);
+
+                // wrap index.js content in script tag for each enabled addons
+                content.append(readIndexJs(addonsContentFile));
+
+                Timber.d("addon content path: %s", addonsContentFile);
+
+            } catch (ArrayIndexOutOfBoundsException e) {
+                Timber.w(e, "AbstractFlashcardViewer::Exception");
+            }
+        }
+        return content.toString();
+    }
+
+
+    public static String readIndexJs(File addonsContentFile) {
+        StringBuilder content = new StringBuilder();
+        if (!addonsContentFile.exists()) {
+            return content.toString();
+        }
+
+        try {
+            FileReader fileReader = new FileReader(addonsContentFile);
+            BufferedReader br = new BufferedReader(fileReader);
+            String line;
+            while ((line = br.readLine()) != null) {
+                content.append(line);
+                content.append('\n');
+            }
+            br.close();
+        } catch (IOException e) {
+            Timber.e(e.getLocalizedMessage());
+        }
+        return content.toString();
+    }
 }

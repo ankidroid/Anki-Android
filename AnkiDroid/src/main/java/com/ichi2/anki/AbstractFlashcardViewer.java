@@ -960,7 +960,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
         // Load the template for the card
         try {
             String data = Utils.convertStreamToString(getAssets().open("card_template.html"));
-            mCardTemplate = new CardTemplate(data);
+            mCardTemplate = new CardTemplate(data, this);
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -2251,13 +2251,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
             }
         }
 
-        // get all enabled addons' content before so called only once during review time instead of calling each time
-        String addons = "";
-        if (AnkiDroidApp.getSharedPrefs(this).getBoolean("javascript_addons_support", false)) {
-            addons = AddonsBrowser.getEnabledAddonsContent(this);
-        }
-
-        mCardContent = mCardTemplate.render(content, style, cardClass, addons);
+        mCardContent = mCardTemplate.render(content, style, cardClass);
         Timber.d("base url = %s", mBaseUrl);
 
         if (AnkiDroidApp.getSharedPrefs(this).getBoolean("html_javascript_debugging", false)) {
