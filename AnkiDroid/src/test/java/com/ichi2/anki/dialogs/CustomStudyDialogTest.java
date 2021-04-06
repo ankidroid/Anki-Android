@@ -31,7 +31,6 @@ import com.ichi2.libanki.sched.AbstractSched;
 
 import org.hamcrest.Matchers;
 import org.junit.After;
-import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mockito;
@@ -104,13 +103,17 @@ public class CustomStudyDialogTest extends RobolectricTest {
 
 
     @Test
-    @Ignore("ERROR") //java.lang.UnsupportedOperationException: Failed to resolve attribute at index 13: TypedValue{t=0x2/d=0x7f040340 a=-1}
     @Config(qualifiers = "en")
     public void increaseNewCardLimitRegressionTest(){
         // #8338 - Regression Test
         Bundle args = new CustomStudyDialog(whatever(), whatever())
                 .withArguments(CustomStudyDialog.CONTEXT_MENU_STANDARD, 1)
                 .getArguments();
+
+        // we are using mock collection for the CustomStudyDialog but still other parts of the code
+        // access a real collection, so we must ensure that collection is loaded first
+        // so we don't get net/ankiweb/rsdroid/BackendException$BackendDbException$BackendDbLockedException
+        ensureCollectionLoadIsSynchronous();
 
         Collection mockCollection = mock(Collection.class, Mockito.RETURNS_DEEP_STUBS);
         AbstractSched mockSched = mock(AbstractSched.class);
@@ -119,7 +122,7 @@ public class CustomStudyDialogTest extends RobolectricTest {
 
 
         CustomStudyDialogFactory factory = new CustomStudyDialogFactory(() -> mockCollection, mockListener);
-        FragmentScenario<CustomStudyDialog> scenario = FragmentScenario.launch(CustomStudyDialog.class, args, factory);
+        FragmentScenario<CustomStudyDialog> scenario = FragmentScenario.launch(CustomStudyDialog.class, args, R.style.Theme_AppCompat, factory);
 
         scenario.moveToState(Lifecycle.State.STARTED);
 
