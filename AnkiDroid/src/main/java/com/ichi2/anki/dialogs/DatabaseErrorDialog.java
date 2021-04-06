@@ -41,7 +41,7 @@ public class DatabaseErrorDialog extends AsyncDialogFragment {
     public static final int DIALOG_FULL_SYNC_FROM_SERVER = 8;
     /** If the database is locked, all we can do is reset the app */
     public static final int DIALOG_DB_LOCKED = 9;
-    /** If the datbase is at a version higher than what we can currently handle */
+    /** If the database is at a version higher than what we can currently handle */
     public static final int INCOMPATIBLE_DB_VERSION = 10;
 
     // public flag which lets us distinguish between inaccessible and corrupt database

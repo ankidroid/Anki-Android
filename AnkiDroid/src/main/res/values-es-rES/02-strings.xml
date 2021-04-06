@@ -345,6 +345,7 @@
     <string name="plus_sign" comment="Label for increment button in IncrementerNumberRangePreference">+</string>
     <string name="minus_sign" comment="Label for decrement button in IncrementerNumberRangePreference">-</string>
     <!-- Used for credential empty warning message -->
-    <string name="email_id_empty">Email address is required</string>
-    <string name="password_empty">Password is required</string>
+    <string name="email_id_empty">Se requiere dirección de correo electrónico</string>
+    <string name="password_empty">La contraseña es requerida</string>
+    <string name="back_pressed_once">Press back again to exit</string>
 </resources>

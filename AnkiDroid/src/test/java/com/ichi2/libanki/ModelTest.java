@@ -25,6 +25,7 @@ import static com.ichi2.libanki.Consts.MODEL_CLOZE;
 import static com.ichi2.libanki.Models.REQ_ALL;
 import static com.ichi2.libanki.Models.REQ_ANY;
 import static com.ichi2.libanki.Utils.stripHTML;
+import static com.ichi2.utils.ListUtil.assertListEquals;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.contains;
 import static org.hamcrest.Matchers.containsString;
@@ -199,7 +200,7 @@ public class ModelTest extends RobolectricTest {
         Models mm = col.getModels();
         Model cloze_model = mm.byName("Cloze");
         mm.setCurrent(cloze_model);
-        assertEquals(new ArrayList<>(Arrays.asList(0, 1)), Models.availOrds(cloze_model, new String[]{"{{c1::Empty}} and {{c2::}}", ""}));
+        assertListEquals(Arrays.asList(0, 1), Models.availOrds(cloze_model, new String[]{"{{c1::Empty}} and {{c2::}}", ""}));
     }
 
 
@@ -482,10 +483,10 @@ public class ModelTest extends RobolectricTest {
 
     @Test
     public void test_getNamesOfFieldContainingCloze() {
-        assertEquals(new ArrayList<>(), Models.getNamesOfFieldsContainingCloze(""));
+        assertListEquals(new ArrayList<>(), Models.getNamesOfFieldsContainingCloze(""));
         String example = "{{cloze::foo}} <%cloze:bar%>";
-        assertEquals(Arrays.asList("foo", "bar"), Models.getNamesOfFieldsContainingCloze(example));
-        assertEquals(Arrays.asList("foo", "bar"), Models.getNamesOfFieldsContainingCloze(example));
+        assertListEquals(Arrays.asList("foo", "bar"), Models.getNamesOfFieldsContainingCloze(example));
+        assertListEquals(Arrays.asList("foo", "bar"), Models.getNamesOfFieldsContainingCloze(example));
     }
 
     @Test
@@ -509,32 +510,32 @@ public class ModelTest extends RobolectricTest {
         Model basic = mm.byName("Basic");
         Model reverse = mm.byName("Basic (and reversed card)");
 
-        assertEquals(new ArrayList<>(), Models._availStandardOrds(basic, new String[]{"", ""}));
-        assertEquals(new ArrayList<>(), Models._availStandardOrds(basic, new String[]{"", "Back"}));
-        assertEquals(new ArrayList<>(Arrays.asList(0)), Models._availStandardOrds(basic, new String[]{"Foo", ""}));
-        assertEquals(new ArrayList<>(Arrays.asList()), Models._availStandardOrds(basic, new String[]{"  \t ", ""}));
-        assertEquals(new ArrayList<>(), Models._availStandardOrds(reverse, new String[]{"", ""}));
-        assertEquals(new ArrayList<>(Arrays.asList(0)), Models._availStandardOrds(reverse, new String[]{"Foo", ""}));
-        assertEquals(new ArrayList<>(Arrays.asList(0, 1)), Models._availStandardOrds(reverse, new String[]{"Foo", "Bar"}));
-        assertEquals(new ArrayList<>(Arrays.asList(1)), Models._availStandardOrds(reverse, new String[]{"  \t ", "Bar"}));
+        assertListEquals(new ArrayList<>(), Models._availStandardOrds(basic, new String[]{"", ""}));
+        assertListEquals(new ArrayList<>(), Models._availStandardOrds(basic, new String[]{"", "Back"}));
+        assertListEquals(Arrays.asList(0), Models._availStandardOrds(basic, new String[]{"Foo", ""}));
+        assertListEquals(Arrays.asList(), Models._availStandardOrds(basic, new String[]{"  \t ", ""}));
+        assertListEquals(new ArrayList<>(), Models._availStandardOrds(reverse, new String[]{"", ""}));
+        assertListEquals(Arrays.asList(0), Models._availStandardOrds(reverse, new String[]{"Foo", ""}));
+        assertListEquals(Arrays.asList(0, 1), Models._availStandardOrds(reverse, new String[]{"Foo", "Bar"}));
+        assertListEquals(Arrays.asList(1), Models._availStandardOrds(reverse, new String[]{"  \t ", "Bar"}));
 
-        assertEquals(new ArrayList<>(), Models._availStandardOrds(basic, new String[]{"", ""}, false) );
-        assertEquals(new ArrayList<>(), Models._availStandardOrds(basic, new String[]{"", "Back"}, false));
-        assertEquals(new ArrayList<>(Arrays.asList(0)), Models._availStandardOrds(basic, new String[]{"Foo", ""}, false));
-        assertEquals(new ArrayList<>(Arrays.asList()), Models._availStandardOrds(basic, new String[]{"  \t ", ""}, false));
-        assertEquals(new ArrayList<>(), Models._availStandardOrds(reverse, new String[]{"", ""}, false));
-        assertEquals(new ArrayList<>(Arrays.asList(0)), Models._availStandardOrds(reverse, new String[]{"Foo", ""}, false));
-        assertEquals(new ArrayList<>(Arrays.asList(0, 1)), Models._availStandardOrds(reverse, new String[]{"Foo", "Bar"}, false));
-        assertEquals(new ArrayList<>(Arrays.asList(1)), Models._availStandardOrds(reverse, new String[]{"  \t ", "Bar"}, false));
+        assertListEquals(new ArrayList<>(), Models._availStandardOrds(basic, new String[]{"", ""}, false) );
+        assertListEquals(new ArrayList<>(), Models._availStandardOrds(basic, new String[]{"", "Back"}, false));
+        assertListEquals(Arrays.asList(0), Models._availStandardOrds(basic, new String[]{"Foo", ""}, false));
+        assertListEquals(Arrays.asList(), Models._availStandardOrds(basic, new String[]{"  \t ", ""}, false));
+        assertListEquals(new ArrayList<>(), Models._availStandardOrds(reverse, new String[]{"", ""}, false));
+        assertListEquals(Arrays.asList(0), Models._availStandardOrds(reverse, new String[]{"Foo", ""}, false));
+        assertListEquals(Arrays.asList(0, 1), Models._availStandardOrds(reverse, new String[]{"Foo", "Bar"}, false));
+        assertListEquals(Arrays.asList(1), Models._availStandardOrds(reverse, new String[]{"  \t ", "Bar"}, false));
 
-        assertEquals(new ArrayList<>(Arrays.asList(0)), Models._availStandardOrds(basic, new String[]{"", ""}, true) );
-        assertEquals(new ArrayList<>(Arrays.asList(0)), Models._availStandardOrds(basic, new String[]{"", "Back"}, true));
-        assertEquals(new ArrayList<>(Arrays.asList(0)), Models._availStandardOrds(basic, new String[]{"Foo", ""}, true));
-        assertEquals(new ArrayList<>(Arrays.asList(0)), Models._availStandardOrds(basic, new String[]{"  \t ", ""}, true));
-        assertEquals(new ArrayList<>(Arrays.asList(0)), Models._availStandardOrds(reverse, new String[]{"", ""}, true));
-        assertEquals(new ArrayList<>(Arrays.asList(0)), Models._availStandardOrds(reverse, new String[]{"Foo", ""}, true));
-        assertEquals(new ArrayList<>(Arrays.asList(0, 1)), Models._availStandardOrds(reverse, new String[]{"Foo", "Bar"}, true));
-        assertEquals(new ArrayList<>(Arrays.asList(1)), Models._availStandardOrds(reverse, new String[]{"  \t ", "Bar"}, true));
+        assertListEquals(Arrays.asList(0), Models._availStandardOrds(basic, new String[]{"", ""}, true) );
+        assertListEquals(Arrays.asList(0), Models._availStandardOrds(basic, new String[]{"", "Back"}, true));
+        assertListEquals(Arrays.asList(0), Models._availStandardOrds(basic, new String[]{"Foo", ""}, true));
+        assertListEquals(Arrays.asList(0), Models._availStandardOrds(basic, new String[]{"  \t ", ""}, true));
+        assertListEquals(Arrays.asList(0), Models._availStandardOrds(reverse, new String[]{"", ""}, true));
+        assertListEquals(Arrays.asList(0), Models._availStandardOrds(reverse, new String[]{"Foo", ""}, true));
+        assertListEquals(Arrays.asList(0, 1), Models._availStandardOrds(reverse, new String[]{"Foo", "Bar"}, true));
+        assertListEquals(Arrays.asList(1), Models._availStandardOrds(reverse, new String[]{"  \t ", "Bar"}, true));
     }
 
     @Test
@@ -544,33 +545,33 @@ public class ModelTest extends RobolectricTest {
         Model basic = mm.byName("Basic");
         Model reverse = mm.byName("Basic (and reversed card)");
 
-        assertEquals(new ArrayList<>(), Models.availOrds(basic, new String[]{"", ""}));
-        assertEquals(new ArrayList<>(), Models.availOrds(basic, new String[]{"", "Back"}));
-        assertEquals(new ArrayList<>(Arrays.asList(0)), Models.availOrds(basic, new String[]{"Foo", ""}));
-        assertEquals(new ArrayList<>(Arrays.asList()), Models.availOrds(basic, new String[]{"  \t ", ""}));
-        assertEquals(new ArrayList<>(), Models.availOrds(reverse, new String[]{"", ""}));
-        assertEquals(new ArrayList<>(Arrays.asList(0)), Models.availOrds(reverse, new String[]{"Foo", ""}));
-        assertEquals(new ArrayList<>(Arrays.asList(0, 1)), Models.availOrds(reverse, new String[]{"Foo", "Bar"}));
-        assertEquals(new ArrayList<>(Arrays.asList(1)), Models.availOrds(reverse, new String[]{"  \t ", "Bar"}));
+        assertListEquals(new ArrayList<>(), Models.availOrds(basic, new String[]{"", ""}));
+        assertListEquals(new ArrayList<>(), Models.availOrds(basic, new String[]{"", "Back"}));
+        assertListEquals(Arrays.asList(0), Models.availOrds(basic, new String[]{"Foo", ""}));
+        assertListEquals(Arrays.asList(), Models.availOrds(basic, new String[]{"  \t ", ""}));
+        assertListEquals(new ArrayList<>(), Models.availOrds(reverse, new String[]{"", ""}));
+        assertListEquals(Arrays.asList(0), Models.availOrds(reverse, new String[]{"Foo", ""}));
+        assertListEquals(Arrays.asList(0, 1), Models.availOrds(reverse, new String[]{"Foo", "Bar"}));
+        assertListEquals(Arrays.asList(1), Models.availOrds(reverse, new String[]{"  \t ", "Bar"}));
 
         for (Models.AllowEmpty allow : new Models.AllowEmpty[] {Models.AllowEmpty.ONLY_CLOZE, Models.AllowEmpty.FALSE}) {
-            assertEquals(new ArrayList<>(), Models.availOrds(basic, new String[] {"", ""}, allow));
-            assertEquals(new ArrayList<>(), Models.availOrds(basic, new String[] {"", "Back"}, allow));
-            assertEquals(new ArrayList<>(Arrays.asList(0)), Models.availOrds(basic, new String[] {"Foo", ""}, allow));
-            assertEquals(new ArrayList<>(Arrays.asList()), Models.availOrds(basic, new String[] {"  \t ", ""}, allow));
-            assertEquals(new ArrayList<>(), Models.availOrds(reverse, new String[] {"", ""}, allow));
-            assertEquals(new ArrayList<>(Arrays.asList(0)), Models.availOrds(reverse, new String[] {"Foo", ""}, allow));
-            assertEquals(new ArrayList<>(Arrays.asList(0, 1)), Models.availOrds(reverse, new String[] {"Foo", "Bar"}, allow));
-            assertEquals(new ArrayList<>(Arrays.asList(1)), Models.availOrds(reverse, new String[] {"  \t ", "Bar"}, allow));
+            assertListEquals(new ArrayList<>(), Models.availOrds(basic, new String[] {"", ""}, allow));
+            assertListEquals(new ArrayList<>(), Models.availOrds(basic, new String[] {"", "Back"}, allow));
+            assertListEquals(Arrays.asList(0), Models.availOrds(basic, new String[] {"Foo", ""}, allow));
+            assertListEquals(Arrays.asList(), Models.availOrds(basic, new String[] {"  \t ", ""}, allow));
+            assertListEquals(new ArrayList<>(), Models.availOrds(reverse, new String[] {"", ""}, allow));
+            assertListEquals(Arrays.asList(0), Models.availOrds(reverse, new String[] {"Foo", ""}, allow));
+            assertListEquals(Arrays.asList(0, 1), Models.availOrds(reverse, new String[] {"Foo", "Bar"}, allow));
+            assertListEquals(Arrays.asList(1), Models.availOrds(reverse, new String[] {"  \t ", "Bar"}, allow));
         }
 
-        assertEquals(new ArrayList<>(Arrays.asList(0)), Models.availOrds(basic, new String[]{"", ""}, Models.AllowEmpty.TRUE));
-        assertEquals(new ArrayList<>(Arrays.asList(0)), Models.availOrds(basic, new String[]{"", "Back"}, Models.AllowEmpty.TRUE));
-        assertEquals(new ArrayList<>(Arrays.asList(0)), Models.availOrds(basic, new String[]{"Foo", ""}, Models.AllowEmpty.TRUE));
-        assertEquals(new ArrayList<>(Arrays.asList(0)), Models.availOrds(basic, new String[]{"  \t ", ""}, Models.AllowEmpty.TRUE));
-        assertEquals(new ArrayList<>(Arrays.asList(0)), Models.availOrds(reverse, new String[]{"", ""}, Models.AllowEmpty.TRUE));
-        assertEquals(new ArrayList<>(Arrays.asList(0)), Models.availOrds(reverse, new String[]{"Foo", ""}, Models.AllowEmpty.TRUE));
-        assertEquals(new ArrayList<>(Arrays.asList(0, 1)), Models.availOrds(reverse, new String[]{"Foo", "Bar"}, Models.AllowEmpty.TRUE));
-        assertEquals(new ArrayList<>(Arrays.asList(1)), Models.availOrds(reverse, new String[]{"  \t ", "Bar"}, Models.AllowEmpty.TRUE));
+        assertListEquals(Arrays.asList(0), Models.availOrds(basic, new String[]{"", ""}, Models.AllowEmpty.TRUE));
+        assertListEquals(Arrays.asList(0), Models.availOrds(basic, new String[]{"", "Back"}, Models.AllowEmpty.TRUE));
+        assertListEquals(Arrays.asList(0), Models.availOrds(basic, new String[]{"Foo", ""}, Models.AllowEmpty.TRUE));
+        assertListEquals(Arrays.asList(0), Models.availOrds(basic, new String[]{"  \t ", ""}, Models.AllowEmpty.TRUE));
+        assertListEquals(Arrays.asList(0), Models.availOrds(reverse, new String[]{"", ""}, Models.AllowEmpty.TRUE));
+        assertListEquals(Arrays.asList(0), Models.availOrds(reverse, new String[]{"Foo", ""}, Models.AllowEmpty.TRUE));
+        assertListEquals(Arrays.asList(0, 1), Models.availOrds(reverse, new String[]{"Foo", "Bar"}, Models.AllowEmpty.TRUE));
+        assertListEquals(Arrays.asList(1), Models.availOrds(reverse, new String[]{"  \t ", "Bar"}, Models.AllowEmpty.TRUE));
     }
 }

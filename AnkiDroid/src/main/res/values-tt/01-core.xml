@@ -104,10 +104,10 @@
     <string name="menu_flag">Төс</string>
     <string name="menu_flag_card">Төс кую</string>
     <string name="menu_flag_card_zero">Төссез</string>
-    <string name="menu_flag_card_one">Кызыл төс</string>
-    <string name="menu_flag_card_two">Кызыл-сары төс</string>
-    <string name="menu_flag_card_three">Яшел төс</string>
-    <string name="menu_flag_card_four">Зәңгәр төс</string>
+    <string name="menu_flag_card_one">Кызыл байрак</string>
+    <string name="menu_flag_card_two">Кызыл-сары байрак</string>
+    <string name="menu_flag_card_three">Яшел байрак</string>
+    <string name="menu_flag_card_four">Зәңгәр байрак</string>
     <string name="menu_edit_tags">Тегларны үзгәртү</string>
     <string name="delete_note_message">Бу язуны һәм бөтен аның кәртләрен бетерергәме?\n%s</string>
     <string name="menu_select">Текстны сайлау</string>
@@ -149,6 +149,7 @@
     <string name="custom_study_deck_name">Шәхси өйрәнү сессиясе</string>
     <string name="custom_study_deck_exists">Башта булган артык өйрәнү колода исемен үзгәртегез</string>
     <string name="empty_deck">Бу колода буш</string>
+    <string name="search_deck">Deck Search</string>
     <string name="empty_deck_add_note">Add card</string>
     <string name="invalid_deck_name">Шундый колода исеме була алмый</string>
     <string name="studyoptions_empty">Бу колода буш. Берәрнәрсә өстәү өчен + төймәсенә басыгыз.</string>

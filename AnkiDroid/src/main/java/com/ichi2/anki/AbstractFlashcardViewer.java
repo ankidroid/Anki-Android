@@ -148,7 +148,6 @@ import java.net.URLDecoder;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
-import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Set;
 import java.util.concurrent.locks.Lock;
@@ -326,7 +325,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
     /**
      * Swipe Detection
      */
-    private GestureDetector gestureDetector;
+    private GestureDetector mGestureDetector;
     private MyGestureDetector mGestureDetectorImpl;
     private boolean mLinkOverridesTouchGesture;
 
@@ -369,7 +368,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
      * If we get 2 crashes on the same card, then we likely have an infinite loop and want to exit gracefully.
      */
     @Nullable
-    private Long lastCrashingCardId = null;
+    private Long mLastCrashingCardId = null;
 
     /** Reference to the parent of the cardFrame to allow regeneration of the cardFrame in case of crash */
     private ViewGroup mCardFrameParent;
@@ -399,8 +398,8 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
         }
     };
 
-    private final Handler longClickHandler = new Handler();
-    private final Runnable longClickTestRunnable = new Runnable() {
+    private final Handler mLongClickHandler = new Handler();
+    private final Runnable mLongClickTestRunnable = new Runnable() {
         @Override
         public void run() {
             Timber.i("AbstractFlashcardViewer:: onEmulatedLongClick");
@@ -410,10 +409,10 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
                 UIUtils.showThemedToast(AbstractFlashcardViewer.this, lookupHint, false);
             }
             CompatHelper.getCompat().vibrate(AnkiDroidApp.getInstance().getApplicationContext(), 50);
-            longClickHandler.postDelayed(startLongClickAction, 300);
+            mLongClickHandler.postDelayed(mStartLongClickAction, 300);
         }
     };
-    private final Runnable startLongClickAction = new Runnable() {
+    private final Runnable mStartLongClickAction = new Runnable() {
         @Override
         public void run() {
             executeCommand(mGestureLongclick);
@@ -467,24 +466,24 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
     private final View.OnTouchListener mGestureListener = new View.OnTouchListener() {
         @Override
         public boolean onTouch(View v, MotionEvent event) {
-            if (gestureDetector.onTouchEvent(event)) {
+            if (mGestureDetector.onTouchEvent(event)) {
                 return true;
             }
             if (!mDisableClipboard) {
                 switch (event.getAction()) {
                     case MotionEvent.ACTION_DOWN:
                         mTouchStarted = true;
-                        longClickHandler.postDelayed(longClickTestRunnable, 800);
+                        mLongClickHandler.postDelayed(mLongClickTestRunnable, 800);
                         break;
                     case MotionEvent.ACTION_UP:
                     case MotionEvent.ACTION_MOVE:
                         if (mTouchStarted) {
-                            longClickHandler.removeCallbacks(longClickTestRunnable);
+                            mLongClickHandler.removeCallbacks(mLongClickTestRunnable);
                             mTouchStarted = false;
                         }
                         break;
                     default:
-                        longClickHandler.removeCallbacks(longClickTestRunnable);
+                        mLongClickHandler.removeCallbacks(mLongClickTestRunnable);
                         mTouchStarted = false;
                         break;
                 }
@@ -857,7 +856,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
 
     private final Handler mTimerHandler = new Handler();
 
-    private final Runnable removeChosenAnswerText = new Runnable() {
+    private final Runnable mRemoveChosenAnswerText = new Runnable() {
         @Override
         public void run() {
             mChosenAnswer.setText("");
@@ -986,8 +985,8 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
 
         mTimeoutHandler.removeCallbacks(mShowAnswerTask);
         mTimeoutHandler.removeCallbacks(mShowQuestionTask);
-        longClickHandler.removeCallbacks(longClickTestRunnable);
-        longClickHandler.removeCallbacks(startLongClickAction);
+        mLongClickHandler.removeCallbacks(mLongClickTestRunnable);
+        mLongClickHandler.removeCallbacks(mStartLongClickAction);
 
         pauseTimer();
         mSoundPlayer.stopSounds();
@@ -1252,7 +1251,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
 
 
     public GestureDetector getGestureDetector() {
-        return gestureDetector;
+        return mGestureDetector;
     }
 
 
@@ -1387,7 +1386,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
                 .onPositive((dialog, which) -> {
                     Timber.i("AbstractFlashcardViewer:: OK button pressed to delete note %d", mCurrentCard.getNid());
                     mSoundPlayer.stopSounds();
-                    dismiss(Collection.DismissType.DELETE_NOTE);
+                    dismiss(new CollectionTask.DeleteNote(mCurrentCard));
                 })
                 .build().show();
     }
@@ -1452,8 +1451,8 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
         }
 
         // remove chosen answer hint after a while
-        mTimerHandler.removeCallbacks(removeChosenAnswerText);
-        mTimerHandler.postDelayed(removeChosenAnswerText, sShowChosenAnswerLength);
+        mTimerHandler.removeCallbacks(mRemoveChosenAnswerText);
+        mTimerHandler.postDelayed(mRemoveChosenAnswerText, sShowChosenAnswerLength);
         mSoundPlayer.stopSounds();
         mCurrentEase = ease;
 
@@ -1508,7 +1507,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
 
         // Initialize swipe
         mGestureDetectorImpl = mLinkOverridesTouchGesture ? new LinkDetectingGestureDetector() : new MyGestureDetector();
-        gestureDetector = new GestureDetector(this, mGestureDetectorImpl);
+        mGestureDetector = new GestureDetector(this, mGestureDetectorImpl);
 
         mEaseButtonsLayout = findViewById(R.id.ease_buttons);
 
@@ -1650,7 +1649,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
 
 
     private boolean webViewRendererLastCrashedOnCard(long cardId) {
-        return lastCrashingCardId != null && lastCrashingCardId == cardId;
+        return mLastCrashingCardId != null && mLastCrashingCardId == cardId;
     }
 
 
@@ -1877,7 +1876,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
         recreateWebView();
     }
 
-    private void recreateWebView() {
+    protected void recreateWebView() {
         if (mCardWebView == null) {
             mCardWebView = createWebView();
             WebViewDebugging.initializeDebugging(AnkiDroidApp.getSharedPrefs(this));
@@ -2635,16 +2634,16 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
                 lookUpOrSelectText();
                 return true;
             case COMMAND_BURY_CARD:
-                dismiss(Collection.DismissType.BURY_CARD);
+                dismiss(new CollectionTask.BuryCard(mCurrentCard));
                 return true;
             case COMMAND_BURY_NOTE:
-                dismiss(Collection.DismissType.BURY_NOTE);
+                dismiss(new CollectionTask.BuryNote(mCurrentCard));
                 return true;
             case COMMAND_SUSPEND_CARD:
-                dismiss(Collection.DismissType.SUSPEND_CARD);
+                dismiss(new CollectionTask.SuspendCard(mCurrentCard));
                 return true;
             case COMMAND_SUSPEND_NOTE:
-                dismiss(Collection.DismissType.SUSPEND_NOTE);
+                dismiss(new CollectionTask.SuspendNote(mCurrentCard));
                 return true;
             case COMMAND_DELETE:
                 showDeleteNoteDialog();
@@ -2856,9 +2855,9 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
 
         mTimeoutHandler.removeCallbacks(mShowAnswerTask);
         mTimeoutHandler.removeCallbacks(mShowQuestionTask);
-        mTimerHandler.removeCallbacks(removeChosenAnswerText);
-        longClickHandler.removeCallbacks(longClickTestRunnable);
-        longClickHandler.removeCallbacks(startLongClickAction);
+        mTimerHandler.removeCallbacks(mRemoveChosenAnswerText);
+        mLongClickHandler.removeCallbacks(mLongClickTestRunnable);
+        mLongClickHandler.removeCallbacks(mStartLongClickAction);
 
         AbstractFlashcardViewer.this.setResult(result);
 
@@ -2896,12 +2895,12 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
             super.onScrollChanged(horiz, vert, oldHoriz, oldVert);
             if (Math.abs(horiz - oldHoriz) > Math.abs(vert - oldVert)) {
                 mIsXScrolling = true;
-                scrollHandler.removeCallbacks(scrollXRunnable);
-                scrollHandler.postDelayed(scrollXRunnable, 300);
+                mScrollHandler.removeCallbacks(mScrollXRunnable);
+                mScrollHandler.postDelayed(mScrollXRunnable, 300);
             } else {
                 mIsYScrolling = true;
-                scrollHandler.removeCallbacks(scrollYRunnable);
-                scrollHandler.postDelayed(scrollYRunnable, 300);
+                mScrollHandler.removeCallbacks(mScrollYRunnable);
+                mScrollHandler.postDelayed(mScrollYRunnable, 300);
             }
         }
 
@@ -2942,9 +2941,9 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
             return null;
         }
 
-        private final Handler scrollHandler = new Handler();
-        private final Runnable scrollXRunnable = () -> mIsXScrolling = false;
-        private final Runnable scrollYRunnable = () -> mIsYScrolling = false;
+        private final Handler mScrollHandler = new Handler();
+        private final Runnable mScrollXRunnable = () -> mIsXScrolling = false;
+        private final Runnable mScrollYRunnable = () -> mIsYScrolling = false;
 
     }
 
@@ -3027,7 +3026,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
         @Override
         public boolean onSingleTapUp(MotionEvent e) {
             if (mTouchStarted) {
-                longClickHandler.removeCallbacks(longClickTestRunnable);
+                mLongClickHandler.removeCallbacks(mLongClickTestRunnable);
                 mTouchStarted = false;
             }
             return false;
@@ -3186,7 +3185,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
         String newAnswerContent = answerContent;
         if (answerFormat.contains("{{FrontSide}}")) { // possible audio removal necessary
             String frontSideFormat = mCurrentCard._getQA(false).get("q");
-            Matcher audioReferences = Sound.sSoundPattern.matcher(frontSideFormat);
+            Matcher audioReferences = Sound.SOUND_PATTERN.matcher(frontSideFormat);
             // remove the first instance of audio contained in "{{FrontSide}}"
             while (audioReferences.find()) {
                 newAnswerContent = newAnswerContent.replaceFirst(Pattern.quote(audioReferences.group()), "");
@@ -3277,9 +3276,9 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
             } */
     }
 
-    protected void dismiss(Collection.DismissType type) {
+    protected void dismiss(CollectionTask.DismissNote dismiss) {
         blockControls(false);
-        TaskManager.launchCollectionTask(new CollectionTask.DismissNote(mCurrentCard, type), mDismissCardHandler);
+        TaskManager.launchCollectionTask(dismiss, mDismissCardHandler);
     }
 
     /** Signals from a WebView represent actions with no parameters */
@@ -3700,7 +3699,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
 
                 // If we get here, the error is non-fatal and we should re-render the WebView
                 // This logic may need to be better defined. The card could have changed by the time we get here.
-                lastCrashingCardId = mCurrentCard.getId();
+                mLastCrashingCardId = mCurrentCard.getId();
 
 
                 String nonFatalError = getResources().getString(R.string.webview_crash_nonfatal, errorCauseString);

@@ -154,6 +154,7 @@
     <string name="custom_study_deck_name">Προσαρμοσμένη μελέτη λειτουργίας</string>
     <string name="custom_study_deck_exists">Παρακαλούμε μετονομάστε την υπάρχουσα τράπουλα Προσαρμοσμένης Μελέτης πρώτα.</string>
     <string name="empty_deck">Αυτή η τράπουλα είναι κενή</string>
+    <string name="search_deck">Deck Search</string>
     <string name="empty_deck_add_note">Add card</string>
     <string name="invalid_deck_name">Invalid deck name</string>
     <string name="studyoptions_empty">Αυτή η τράπουλα είναι κενή. Πατήστε το κουμπί + για να προσθέσετε πριεχόμενο.</string>

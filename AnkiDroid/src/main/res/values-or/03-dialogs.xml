@@ -54,8 +54,7 @@
     <string name="initializing_tts">TTS ଆରମ୍ଭ ହେଉଛି...</string>
     <string name="tts_no_tts">କଥା କୁହ ନାହିଁ</string>
     <string-array name="about_content">
-        <item><![CDATA[<h2>%1$s:<br/>ଆଣ୍ଡ୍ରଏଡ୍ ପାଇଁ ଫ୍ଲାସକାର୍ଡ</h2>AnkiDroid ହେଉଛି ଏକ ଫ୍ଲାସକାର୍ଡ ଆପ୍ଲିକେସନ୍ ଯାହା ଡେସ୍କଟପ୍ ସଫ୍ଟୱେର୍ 
-<a href=\"%2$s\">Anki</a> ସହିତ ସମ୍ପୂର୍ଣ୍ଣ ସୁସଙ୍ଗତ। ଆପଣ ଉଭୟ Ankidroid କିମ୍ବା Anki ଡେସ୍କଟପରେ ସାମଗ୍ରୀ ସୃଷ୍ଟି, ଡାଉନଲୋଡ୍ ଏବଂ ଶିଖିପାରିବେ, ଏବଂ ସେମାନଙ୍କୁ AnkiWeb ସହିତ ସହଜରେ ସିଙ୍କ୍ରୋନାଇଜ୍ କରିପାରିବେ।]]></item>
+        <item><![CDATA[<h2>%1$s:<br/>ଆଣ୍ଡ୍ରଏଡ୍ ପାଇଁ ଫ୍ଲାସକାର୍ଡ</h2>AnkiDroid ହେଉଛି ଏକ ଫ୍ଲାସକାର୍ଡ ଆପ୍ଲିକେସନ୍ ଯାହା ଡେସ୍କଟପ୍ ସଫ୍ଟୱେର୍ <a href=\"%2$s\">Anki</a> ସହିତ ସମ୍ପୂର୍ଣ୍ଣ ସୁସଙ୍ଗତ। ଆପଣ ଉଭୟ Ankidroid କିମ୍ବା Anki ଡେସ୍କଟପରେ ସାମଗ୍ରୀ ସୃଷ୍ଟି, ଡାଉନଲୋଡ୍ ଏବଂ ଶିଖିପାରିବେ, ଏବଂ ସେମାନଙ୍କୁ AnkiWeb ସହିତ ସହଜରେ ସିଙ୍କ୍ରୋନାଇଜ୍ କରିପାରିବେ।]]></item>
         <item><![CDATA[ଆମକୁ AnkiDroid କୁ ଉନ୍ନତ କରିବାରେ ସାହାଯ୍ୟ କରିବାକୁ, ଦୟାକରି <a href=\"%1$s\">issue tracker</a>କୁ ତ୍ରୁଟି ରିପୋର୍ଟ କରନ୍ତୁ; ନୂତନ ବୈଶିଷ୍ଟ୍ୟ ଚିନ୍ତାଧାରା ମଧ୍ୟ ବହୁତ ସ୍ୱାଗତଯୋଗ୍ୟ। <a href=\"%2$s\">Wiki</a>ରେ ଉତ୍ତର ଖୋଜ କିମ୍ବା <a href=\"%3$s\">Forum</a>ରେ ଏକ ଆଲୋଚନା ଆରମ୍ଭ କର।]]></item>
         <item><![CDATA[Ankidroid ହେଉଛି <a href=\"%1$s\">ଖୋଲା-ଉତ୍ସ ସଫ୍ଟୱେର<a/>, ତେଣୁ ସମସ୍ତଙ୍କୁ <a href=\"%2$s\">ଯୋଗଦାନ କରିବା</a>କୁ ଉତ୍ସାହିତ କରାଯାଏ :-)]]></item>
         <item><![CDATA[Non-developer ମାନେ ମଧ୍ୟ ସାହାଯ୍ୟ କରିପାରିବେ। ଉଦାହରଣ ସ୍ୱରୂପ, ଆପଣ Ankidroid <a href=\"%1$s\">ଅନୁବାଦ କରିବା</a>, Wiki ଅପଡେଟ୍ କରିବା, screenshot ପ୍ରଦାନ କରିବା, କିମ୍ବା Ankidroid ବିଷୟରେ blog କରିବାରେ ସାହାଯ୍ୟ କରିପାରିବେ।]]></item>
@@ -64,10 +63,10 @@
     <string name="preview_title" comment="Title of the window allowing to preview card(s)">ପୂର୍ବାବଲୋକନ</string>
     <string name="reposition_card_dialog_title">ନୂତନ କାର୍ଡଗୁଡ଼ିକ ପୁନଃସ୍ଥାନିତ କରନ୍ତୁ</string>
     <string name="reposition_card_dialog_message">ଆରମ୍ଭ ସ୍ଥିତି:</string>
-    <string name="reposition_card_not_new_error">କେବଳ ନୂତନ କାର୍ଡ ପୁନଃଅବସ୍ଥିତ କରାଯାଇପାରିବ</string>
+    <string name="reposition_card_not_new_error">କେବଳ ନୂତନ କାର୍ଡ ବିଳମ୍ବ କରାଯାଇପାରିବ</string>
     <plurals name="reposition_card_dialog_acknowledge">
         <item quantity="one">%d କାର୍ଡ ପୁନଃଅବସ୍ଥିତ</item>
-        <item quantity="other">%dଟି କାର୍ଡ ପୁନଃଅବସ୍ଥିତ</item>
+        <item quantity="other">%dଟି କାର୍ଡ ବିଳମ୍ବ</item>
     </plurals>
     <string name="reset_card_dialog_title">Reset card progress</string>
     <string name="reset_card_dialog_message">ଏହି କାର୍ଡକୁ ନୂତନ କାର୍ଡ ଧାଡି ଶେଷରେ ରଖାଯିବ</string>
@@ -89,7 +88,7 @@
         <item quantity="one">%d କାର୍ଡ reschedule ହୋଇଛି</item>
         <item quantity="other">%dଟି କାର୍ଡ reschedule ହୋଇଛି</item>
     </plurals>
-    <string name="reschedule_card_dialog_new_card_warning">ଏକ ନୂତନ ପତ୍ର ପୁନଃନିର୍ମାଣ କରାଯାଉଛି | ପୁନଃନିର୍ଦ୍ଧାରଣ ନୂତନ କାର୍ଡଗୁଡ଼ିକୁ ସମୀକ୍ଷା ପତ୍ରରେ ପରିଣତ କରେ | ନୂତନ ଧାଡିରେ ଏକ ନୂତନ ପତ୍ରର ସ୍ଥିତି ପରିବର୍ତ୍ତନ କରିବାକୁ ‘ଅବସ୍ଥାନ ପତ୍ର’ ବିକଳ୍ପ ବ୍ୟବହାର କରନ୍ତୁ </string>
+    <string name="reschedule_card_dialog_new_card_warning">ଏକ ନୂତନ ପତ୍ର ପୁନଃନିର୍ମାଣ କରାଯାଉଛି। ପୁନଃନିର୍ଦ୍ଧାରଣ ନୂତନ କାର୍ଡଗୁଡ଼ିକୁ ସମୀକ୍ଷା ପତ୍ରରେ ପରିଣତ କରେ। ନୂତନ ଧାଡିରେ ଏକ ନୂତନ ପତ୍ରର ସ୍ଥିତି ପରିବର୍ତ୍ତନ କରିବାକୁ ‘ପତ୍ର ବିଳମ୍ବ’ ବିକଳ୍ପ ବ୍ୟବହାର କରନ୍ତୁ </string>
     <string name="reschedule_card_dialog_warning_ease_reset">ଭବିଷ୍ୟତରେ ନିର୍ଦ୍ଧାରକ କିପରି ପତ୍ରଙ୍କୁ ବ୍ୟବହାର କରେ ତାହା ମଧ୍ୟ ପୁନଃସେଟ୍ କଲେ ପୁନଃସେଟ୍ ହେଇଯାଏ (ସହଜତା %d%% ରେ ସେଟ୍ ହେବ)</string>
     <string name="firefox_workaround_launched_reviewer_opening_deck">ଆପଣଙ୍କର ଫାଇଲ୍ ମ୍ୟାନେଜର୍ ରେ ତାସଖଣ୍ଡ ଚୟନ କରନ୍ତୁ କିମ୍ବା ଏହାକୁ ପରିଦର୍ଶନ କରନ୍ତୁ: ଏହାକୁ ଆମଦାନୀ କରିବାକୁ ଡାଉନଲୋଡ୍ ପୃଷ୍ଠା </string>
     <string name="answering_error_title">ଡାଟାବେସ୍ ତ୍ରୁଟି</string>
@@ -134,7 +133,7 @@
     <string name="lookup_button_content">ଦେଖନ୍ତୁ </string>
     <string name="dialog_collection_path_not_dir">ନିର୍ଦ୍ଦିଷ୍ଟ ପଥ ଏକ ବୈଧ ନିର୍ଦେଶିକା ନୁହେଁ </string>
     <!-- Media checking -->
-    <string name="check_media_title">ମିଡିଆ ଯାଞ୍ଚ କରନ୍ତୁ?</string>
+    <string name="check_media_title">ମିଡିଆ ଯାଞ୍ଚ କରିବେ କି?</string>
     <string name="check_media_warning">ବଡ଼ ମିଡିଆ ସଂଗ୍ରହ ସହିତ ଏହା ଏକ ଦୀର୍ଘ ସମୟ ନେଇପାରେ</string>
     <string name="check_media_message">ମିଡିଆ ଯାଞ୍ଚ କରୁଛି&#8230;</string>
     <string name="check_media_acknowledge">ମିଡିଆ ଯାଞ୍ଚ କରାଯାଇଛି</string>
@@ -157,7 +156,7 @@
     <string name="tags_dialog_option_due_cards" comment="Name of cards that are already been reviewed in the past, and that should be reviewed again">ବାକି</string>
     <!-- Empty cards -->
     <string name="emtpy_cards_finding">ଖାଲି ପତ୍ର ଖୋଜାହଉଛି</string>
-    <string name="confirm_cancel">ଆପଣ  ବାତିଲ କରିବାକୁ ଚାହାନ୍ତି?</string>
+    <string name="confirm_cancel">ଆପଣ ବାତିଲ କରିବାକୁ ଚାହୁଁଛନ୍ତି କି?</string>
     <string name="empty_cards_none">କୌଣସି ଖାଲି କାର୍ଡ ନାହିଁ</string>
     <string name="empty_cards_count">ବିଲୋପ କରିବାକୁ ପତ୍ର : %d</string>
     <string name="empty_cards_deleted">ବିଲୋପିତ ପତ୍ର: %d</string>

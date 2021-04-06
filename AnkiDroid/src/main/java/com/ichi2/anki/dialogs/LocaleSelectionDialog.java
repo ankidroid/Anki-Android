@@ -40,6 +40,7 @@ import com.ichi2.ui.RecyclerSingleTouchAdapter;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
 import java.util.Locale;
 
@@ -49,7 +50,6 @@ import androidx.appcompat.widget.SearchView;
 import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-import java8.util.Lists;
 
 /** Locale selection dialog. Note: this must be dismissed onDestroy if not called from an activity implementing LocaleSelectionDialogHandler */
 public class LocaleSelectionDialog extends AnalyticsDialogFragment {
@@ -198,7 +198,7 @@ public class LocaleSelectionDialog extends AnalyticsDialogFragment {
         }
 
         public LocaleListAdapter(@NonNull Locale[] locales) {
-            mSelectableLocales = Lists.of(locales);
+            mSelectableLocales = Collections.unmodifiableList(new ArrayList<>(Arrays.asList(locales)));
             mCurrentlyVisibleLocales = new ArrayList<>(Arrays.asList(locales));
         }
 

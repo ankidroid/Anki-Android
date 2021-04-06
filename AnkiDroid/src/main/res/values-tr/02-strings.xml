@@ -107,10 +107,10 @@
     <!-- Card editor -->
     <string name="cardeditor_title_edit_card">Notu Düzenle</string>
     <string name="discard_unsaved_changes">Kapatıp şu anki girdi kaybedilsin mi?</string>
-    <string name="note_editor_no_cards_created">No cards created. Please fill in more fields</string>
-    <string name="note_editor_no_first_field">The first field is empty</string>
-    <string name="note_editor_no_cloze_delations">This note type must contain cloze deletions</string>
-    <string name="note_editor_set_field_language">Set field language</string>
+    <string name="note_editor_no_cards_created">Hiçbir kart yaratılmadı. Lütfen daha fazla alan doldurun</string>
+    <string name="note_editor_no_first_field">İlk alan boş</string>
+    <string name="note_editor_no_cloze_delations">Bu not türü çıkartmalı (boşluk doldurmalı) silme işlemlerini içermelidir</string>
+    <string name="note_editor_set_field_language">Alanın dilini belirle</string>
     <string name="note_editor_no_cards_created_all_fields">The current note type did not produce any cards.\nPlease choose another note type, or click ‘Cards’ and add a field substitution</string>
     <string name="note_editor_insert_cloze_no_cloze_note_type">Cloze deletions will only work on a Cloze note type</string>
     <string name="saving_facts">Not kaydediliyor</string>
@@ -160,8 +160,8 @@
     <string name="import_message_add_confirm">\"%s\" koleksiyona eklensin mi? Bu uzun sürebilir.</string>
     <string name="import_log_no_apkg">This isn’t a valid Anki package file</string>
     <string name="import_log_failed_unzip">Failed to unzip apkg: %s</string>
-    <string name="import_log_failed_copy_to">Failed to copy apkg to %s</string>
-    <string name="import_log_failed_validate">apkg failed validation</string>
+    <string name="import_log_failed_copy_to">apkg\'yi %s\'e kopyalama başarısız</string>
+    <string name="import_log_failed_validate">apkg onaylama başarısız</string>
     <string name="import_log_insufficient_space">There is not enough space to unzip the package. Needed %1$d, available %2$d</string>
     <string name="import_log_file_cache_cleared">Error importing file, likely a cache clear during processing.\nPlease try again</string>
     <string name="import_succeeded_but_check_database">Data import succeeded but post-import cleanup failed. Run check database later. Root cause: %s</string>
@@ -276,74 +276,75 @@
     <!-- Whiteboard save image message in Reviewer -->
     <string name="white_board_image_save_failed">Failed to save whiteboard image. %s</string>
     <string name="white_board_image_saved">Whiteboard image saved to %s</string>
-    <string name="title_whiteboard_pen_color">Whiteboard pen color</string>
+    <string name="title_whiteboard_pen_color">Beyaz tahta kalem rengi</string>
     <!-- CSV/Note Import -->
     <string name="note_importer_empty_cards_found"><![CDATA[Empty cards found. Please run Tools>Empty Cards.]]></string>
-    <string name="note_importer_error_empty_first_field">Empty first field: %s</string>
+    <string name="note_importer_error_empty_first_field">Boş ilk alan: %s</string>
     <string name="note_importer_error_first_field_matched">First field matched: %s</string>
     <string name="note_importer_error_added_duplicate_first_field">Added duplicate with first field: %s</string>
     <string name="note_importer_error_appeared_twice">Appeared twice in file: %s</string>
     <string name="note_importer_error_empty_notes">One or more notes were not imported, because they didn\'t generate any cards. This can happen when you have empty fields or when you have not mapped the content in the text file to the correct fields</string>
     <string name="csv_importer_error_invalid_field_count">‘%1$s’ had %2$d fields, expected %3$d</string>
-    <string name="csv_importer_error_exception">Aborted: %s</string>
+    <string name="csv_importer_error_exception">İptal edildi: %s</string>
     <string name="user_is_a_robot">Detected automated test. If you are a human, contact AnkiDroid support</string>
     <plurals name="note_importer_notes_added">
-        <item quantity="one">%d note added</item>
-        <item quantity="other">%d notes added</item>
+        <item quantity="one">%d notu eklendi</item>
+        <item quantity="other">%d notları eklendi</item>
     </plurals>
     <plurals name="note_importer_notes_updated">
-        <item quantity="one">%d note updated</item>
-        <item quantity="other">%d notes updated</item>
+        <item quantity="one">%d notu güncellendi</item>
+        <item quantity="other">%d notları güncellendi</item>
     </plurals>
     <plurals name="note_importer_notes_unchanged">
-        <item quantity="one">%d note unchanged</item>
-        <item quantity="other">%d notes unchanged</item>
+        <item quantity="one">%d notu değiştirilmedi</item>
+        <item quantity="other">%d notları değiştirilmedi</item>
     </plurals>
     <!-- JS api -->
     <string name="api_version_developer_contact">This card uses unsupported AnkiDroid features. Contact developer %1$s, or view the wiki. %2$s</string>
     <string name="invalid_json_data">Card provided invalid data. %s</string>
     <string name="valid_js_api_version">Invalid AnkiDroid JS API version. Contact developer %s, or view wiki</string>
     <string name="update_js_api_version">AnkiDroid JS API update available. Contact developer %s, or view wiki</string>
-    <string name="reviewer_invalid_api_version_visit_documentation">View</string>
-    <string name="anki_js_error_code">(Error Code: %d)</string>
+    <string name="reviewer_invalid_api_version_visit_documentation">Görüntüle</string>
+    <string name="anki_js_error_code">(Hata kodu: %d)</string>
     <!-- About AnkiDroid screen -->
     <string name="about_ankidroid_successfully_copied_debug">Copied debug information to clipboard</string>
     <string name="about_ankidroid_error_copy_debug_info">Error copying debug information to clipboard</string>
     <!-- Card Viewer -->
     <string name="card_viewer_could_not_find_image">Card Content Error: Failed to load ‘%s’</string>
     <string name="card_viewer_media_relative_protocol">Card Content Error: Media update required</string>
-    <string name="cannot_load_http_resource">Loading http resources is no longer supported</string>
+    <string name="cannot_load_http_resource">Yüklenen HTTP kaynakları artık desteklenmiyor</string>
     <!-- Deck Picker -->
-    <string name="deck_picker_failed_deck_load">Failed to load deck ‘%s’</string>
-    <string name="search_decks">Search decks</string>
-    <string name="ankidroid_init_failed_webview_title">Fatal Error</string>
+    <string name="deck_picker_failed_deck_load">\'%s\' destesinin yüklenmesi başarısız</string>
+    <string name="search_decks">Deste ara</string>
+    <string name="ankidroid_init_failed_webview_title">Kritik hata</string>
     <string name="ankidroid_init_failed_webview">AnkiDroid relies on the System WebView which is unavailable. This can happen if the system is installing updates. Please try again in a few minutes.\n\n%s</string>
     <!-- A Menu item to change the Font Size (currently in the Note Editor) -->
-    <string name="menu_font_size">Font Size</string>
-    <string name="menu_show_toolbar" comment="Checkable item stating whether the note editor toolbar should be shown">Show Toolbar</string>
-    <string name="format_insert_bold">Format as Bold</string>
-    <string name="format_insert_italic">Format as Italic</string>
-    <string name="format_insert_underline">Format as Underline</string>
-    <string name="insert_horizontal_line">Insert Horizontal Line</string>
-    <string name="insert_heading">Insert Heading</string>
-    <string name="format_font_size">Change Font Size</string>
-    <string name="insert_mathjax">Insert MathJax Equation</string>
+    <string name="menu_font_size">Yazı tipi boyutu</string>
+    <string name="menu_show_toolbar" comment="Checkable item stating whether the note editor toolbar should be shown">Araç Çubuğunu Göster</string>
+    <string name="format_insert_bold">Kalın olarak biçimlendir</string>
+    <string name="format_insert_italic">İtalic olarak biçimlendir</string>
+    <string name="format_insert_underline">Altı çizili olarak biçimlendir</string>
+    <string name="insert_horizontal_line">Yatay Çizgi Ekle</string>
+    <string name="insert_heading">Başlık ekle</string>
+    <string name="format_font_size">Yazı Tipi Boyutunu Değiştir</string>
+    <string name="insert_mathjax">MathJax denklemi ekle</string>
     <string name="insert_cloze">Insert Cloze Deletion</string>
-    <string name="before_text">HTML Before Selection</string>
-    <string name="after_text">HTML After Selection</string>
-    <string name="add_toolbar_item">Create Toolbar Item</string>
+    <string name="before_text">Seçimden önce HTML</string>
+    <string name="after_text">Seçimden sonra HTML</string>
+    <string name="add_toolbar_item">Araç çubuğu öğesi yarat</string>
     <string name="toolbar_item_explain_remove">Enter HTML to be inserted before and after the selected text\n\nLong press a toolbar item to remove it</string>
-    <string name="remove_toolbar_item">Remove Toolbar Item?</string>
-    <string name="note_editor_paste_too_large">The image is too large to paste, please insert the image manually</string>
-    <string name="ankidroid_cannot_open_after_backup_try_again" comment="After an Android backup is restored, AnkiDroid opens and shows this message.         Opening AnkiDroid again will work correctly">        Android backup in progress. Please try again</string>
-    <string name="create_shortcut_error_vivo" comment="iManager is an app on Vivo phones">You may need to use iManager to allow AnkiDroid to add shortcuts</string>
-    <string name="create_shortcut_failed" comment="home screen == launcher">Your home screen does not allow AnkiDroid to add shortcuts</string>
-    <string name="create_shortcut_error">Error adding shortcut: %s</string>
-    <string name="note_editor_capitalize" comment="This is for a switch with a checkbox - on: enabled">Capitalize sentences</string>
+    <string name="remove_toolbar_item">Araç çubuğu öğesini sil?</string>
+    <string name="note_editor_paste_too_large">Görsel yapıştırmak için çok büyük, lütfen görseli elle ekleyin</string>
+    <string name="ankidroid_cannot_open_after_backup_try_again" comment="After an Android backup is restored, AnkiDroid opens and shows this message.         Opening AnkiDroid again will work correctly">Android yedeklemesi gerçekleştiriliyor. Lütfen tekrar deneyin</string>
+    <string name="create_shortcut_error_vivo" comment="iManager is an app on Vivo phones">AnkiDroid\'in kısayol eklemesine izin vermek için iManager kullanmanız gerekebilir</string>
+    <string name="create_shortcut_failed" comment="home screen == launcher">Ana ekranın, kısayol ekleyebilmesi için AnkiDroid\'e izin vermiyor</string>
+    <string name="create_shortcut_error">Kısayolu eklerken hata: %s</string>
+    <string name="note_editor_capitalize" comment="This is for a switch with a checkbox - on: enabled">Cümlelerin baş harflerini büyült</string>
     <!-- Symbols used as Button text in IncrementNumberRangePreference -->
     <string name="plus_sign" comment="Label for increment button in IncrementerNumberRangePreference">+</string>
     <string name="minus_sign" comment="Label for decrement button in IncrementerNumberRangePreference">-</string>
     <!-- Used for credential empty warning message -->
-    <string name="email_id_empty">Email address is required</string>
-    <string name="password_empty">Password is required</string>
+    <string name="email_id_empty">E-posta adresi gereklidir</string>
+    <string name="password_empty">Parola gereklidir</string>
+    <string name="back_pressed_once">Press back again to exit</string>
 </resources>

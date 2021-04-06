@@ -151,6 +151,8 @@
     <string name="timeout_answer_seconds_summ" comment="The time to wait (in seconds) in the reviewer before automatically showing the next question or answer">XXX s</string>
     <string name="timeout_question_seconds">Temps avant de montrer la question suivante</string>
     <string name="select_locale_title">Sélectionnez la langue</string>
+    <string name="software_render">Disable card hardware render</string>
+    <string name="software_render_summ">Hardware render is faster but may have problems, specifically on Android 8/8.1. If you cannot see parts of the card review user interface, try this setting.</string>
     <string name="safe_display">Mode d’affichage protégé</string>
     <string name="safe_display_summ">Désactiver toutes les animations et utiliser le mode sécurisé pour afficher les cartes. Les appareils à encre électronique peuvent nécessiter ceci.</string>
     <string name="disable_extended_text_ui">Désactiver le mode d\'édition à champ unique</string>
@@ -173,7 +175,7 @@
     <string name="time_limit">Limite de temps</string>
     <string name="time_limit_summ">XXX min</string>
     <string name="new_timezone">Nouvelle gestion du fuseau horaire</string>
-    <string name="day_offset_with_description">Start of next day (0 is midnight, 23 is 11PM)</string>
+    <string name="day_offset_with_description">Début du jour suivant (0 est minuit, 23 est 23 h)</string>
     <string name="day_offset_summ">XXX heures après minuit</string>
     <string name="sched_ver">Planificateur V2 expérimental</string>
     <string name="sched_ver_summ">Activer le planificateur expérimental. Force les changements dans un sens lors de la prochaine synchronisation</string>
@@ -290,5 +292,5 @@
     <string name="no_code_formatting">Formatage simple des réponses saisies</string>
     <string name="no_code_formatting_summ">Fixe « &lt;unk&gt; » dans les résultats des types de réponses</string>
     <!-- Open Changelog-->
-    <string name="open_changelog">Open Changelog</string>
+    <string name="open_changelog">Ouvrir le journal des modifications</string>
 </resources>

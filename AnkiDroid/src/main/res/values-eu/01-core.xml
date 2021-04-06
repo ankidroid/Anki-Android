@@ -154,6 +154,7 @@
     <string name="custom_study_deck_name">Ikasketa saio pertsonalizatua</string>
     <string name="custom_study_deck_exists">Aldatu izena dagoen ikasketa sortari aurretik</string>
     <string name="empty_deck">Sorta hau hutsik dago</string>
+    <string name="search_deck">Deck Search</string>
     <string name="empty_deck_add_note">Add card</string>
     <string name="invalid_deck_name">Invalid deck name</string>
     <string name="studyoptions_empty">Sorta hau hutsik dago. Sakatu + botoia edukia gehitzeko.</string>

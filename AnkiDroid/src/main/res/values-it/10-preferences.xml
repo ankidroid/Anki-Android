@@ -151,6 +151,8 @@
     <string name="timeout_answer_seconds_summ" comment="The time to wait (in seconds) in the reviewer before automatically showing the next question or answer">XXX s</string>
     <string name="timeout_question_seconds">Tempo prima di mostrare la prossima domanda</string>
     <string name="select_locale_title">Scegli la lingua</string>
+    <string name="software_render">Disable card hardware render</string>
+    <string name="software_render_summ">Hardware render is faster but may have problems, specifically on Android 8/8.1. If you cannot see parts of the card review user interface, try this setting.</string>
     <string name="safe_display">Modalità visualizzazione sicura</string>
     <string name="safe_display_summ">Disattiva tutte le animazioni e utilizza il metodo più sicuro per disegnare le carte. Dispositivi e-ink possono richiedere questo.</string>
     <string name="disable_extended_text_ui">Disabilita la modalità Modifica singolo campo</string>
@@ -173,7 +175,7 @@
     <string name="time_limit">Limite di tempo per sessione</string>
     <string name="time_limit_summ">XXX min</string>
     <string name="new_timezone">Nuova gestione fuso orario</string>
-    <string name="day_offset_with_description">Start of next day (0 is midnight, 23 is 11PM)</string>
+    <string name="day_offset_with_description">Inizio del giorno successivo (0 è mezzanotte, 23 è 23 ore)</string>
     <string name="day_offset_summ">XXX ore dopo mezzanotte</string>
     <string name="sched_ver">Pianificatore sperimentale V2</string>
     <string name="sched_ver_summ">Abilita la pianificazione sperimentale. Forza le modifiche in una direzione alla prossima sincronizzazione</string>
@@ -290,5 +292,5 @@
     <string name="no_code_formatting">Formattazione semplice della risposta</string>
     <string name="no_code_formatting_summ">Correzioni ‘􏿾’ che appaiono nei risultati delle risposte digitate</string>
     <!-- Open Changelog-->
-    <string name="open_changelog">Open Changelog</string>
+    <string name="open_changelog">Apri il registro dei cambiamenti</string>
 </resources>

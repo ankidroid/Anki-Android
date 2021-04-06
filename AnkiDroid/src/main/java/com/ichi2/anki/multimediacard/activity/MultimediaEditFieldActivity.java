@@ -68,7 +68,7 @@ public class MultimediaEditFieldActivity extends AnkiActivity
     private static final int REQUEST_AUDIO_PERMISSION = 0;
     private static final int REQUEST_CAMERA_PERMISSION = 1;
 
-    public static final int sImageLimit = 1024 * 1024; // 1MB in bytes
+    public static final int IMAGE_LIMIT = 1024 * 1024; // 1MB in bytes
 
     private IField mField;
     private IMultimediaEditableNote mNote;
@@ -263,8 +263,8 @@ public class MultimediaEditFieldActivity extends AnkiActivity
                     bChangeToText = true;
                 } else {
                     long length = f.length();
-                    if (length > sImageLimit) {
-                        showLargeFileCropDialog((float) (1.0 * length / sImageLimit));
+                    if (length > IMAGE_LIMIT) {
+                        showLargeFileCropDialog((float) (1.0 * length / IMAGE_LIMIT));
                         return;
                     }
                 }

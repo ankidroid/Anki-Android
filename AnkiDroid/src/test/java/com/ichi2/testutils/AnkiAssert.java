@@ -10,6 +10,7 @@ import java.util.List;
 
 import androidx.annotation.NonNull;
 
+import static com.ichi2.utils.ListUtil.assertListEquals;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.fail;
 
@@ -47,7 +48,7 @@ public class AnkiAssert {
     }
 
     public static <T> void assertEqualsArrayList(T[] expected, List<T> actual) {
-        assertEquals(Arrays.asList(expected), actual);
+        assertListEquals(Arrays.asList(expected), actual);
     }
 
 

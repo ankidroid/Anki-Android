@@ -164,6 +164,7 @@
     <string name="custom_study_deck_name">Спецыяльная навучальная сесія</string>
     <string name="custom_study_deck_exists">Спачатку дайце новую назву бягучай спецыяльнай калодзе</string>
     <string name="empty_deck">Гэта калода пустая</string>
+    <string name="search_deck">Deck Search</string>
     <string name="empty_deck_add_note">Add card</string>
     <string name="invalid_deck_name">Invalid deck name</string>
     <string name="studyoptions_empty">Гэта калода пустая. Націсніце кнопку +, каб дадаць новае змесціва.</string>

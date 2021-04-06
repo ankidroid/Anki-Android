@@ -41,11 +41,11 @@
     <string name="yes">evet</string>
     <!-- Navigation drawer items-->
     <string name="decks">Desteler</string>
-    <string name="card_browser" comment="The usage of card browser inside the app (note the casing)">Kart Tarayıcısı</string>
+    <string name="card_browser" comment="The usage of card browser inside the app (note the casing)">Kart tarayıcısı</string>
     <string name="statistics">İstatistikler</string>
     <string name="settings">Ayarlar</string>
     <string name="help">Yardım</string>
-    <string name="send_feedback">Geribildirim Gönder</string>
+    <string name="send_feedback">Geribildirim gönder</string>
     <string name="studyoptions_due_today">Bugün çıkacak:</string>
     <string name="studyoptions_new_total">Toplam yeni kart:</string>
     <string name="studyoptions_total_cards">Toplam kart:</string>
@@ -90,8 +90,8 @@
     <string name="menu_import">İçeri aktar</string>
     <string name="undo">Geri Al</string>
     <string name="undo_action_review">Son çalışmayı</string>
-    <string name="undo_action_change_deck_multi">Deste değiştirmeyi</string>
-    <string name="move_all_to_deck">Bir paket kartın hepsini taşı</string>
+    <string name="undo_action_change_deck_multi">Desteleri değiştir</string>
+    <string name="move_all_to_deck">Hepsini desteye taşı</string>
     <string name="unbury">Görünür Yap</string>
     <string name="rename_deck">Destenin adını değiştir</string>
     <string name="create_shortcut">Kısayol oluştur</string>
@@ -154,6 +154,7 @@
     <string name="custom_study_deck_name">Kişiselleştirilmiş çalışma oturumu</string>
     <string name="custom_study_deck_exists">Lütfen mevcut özelleştirilmiş çalışma destesini yeniden adlandırın.</string>
     <string name="empty_deck">Bu deste boş</string>
+    <string name="search_deck">Deste Ara</string>
     <string name="empty_deck_add_note">Kart ekle</string>
     <string name="invalid_deck_name">Geçersiz deste adı</string>
     <string name="studyoptions_empty">Bu deste boş. Yeni içerik eklemek için + düğmesine basın.</string>

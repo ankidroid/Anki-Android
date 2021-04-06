@@ -50,8 +50,8 @@ android {
         //
         // This ensures the correct ordering between the various types of releases (dev < alpha < beta < release) which is
         // needed for upgrades to be offered correctly.
-        versionCode=21500136
-        versionName="2.15alpha36"
+        versionCode=21500139
+        versionName="2.15alpha39"
         minSdkVersion 21
         //noinspection OldTargetApi - also performed in api/build.fradle
         targetSdkVersion 29 // change .travis.yml platform download at same time
@@ -84,6 +84,9 @@ android {
                 testCoverageEnabled true
             }
 
+            // make the icon red if in debug mode
+            resValue 'color', 'anki_foreground_icon_color_0', "#FFFF0000"
+            resValue 'color', 'anki_foreground_icon_color_1', "#FFFF0000"
         }
         release {
             minifyEnabled true
@@ -91,6 +94,8 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
             signingConfig signingConfigs.release
             buildConfigField "String", "ACRA_URL", '"https://ankidroid.org/acra/report"'
+            resValue 'color', 'anki_foreground_icon_color_0', "#FF29B6F6"
+            resValue 'color', 'anki_foreground_icon_color_1', "#FF0288D1"
         }
     }
 
@@ -154,6 +159,7 @@ android {
         preDexLibraries = preDexEnabled && !ciBuild
     }
     compileOptions {
+        coreLibraryDesugaringEnabled true
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
     }
@@ -216,6 +222,7 @@ dependencies {
         }
     }
 
+    coreLibraryDesugaring 'com.android.tools:desugar_jdk_libs:1.0.9'
     compileOnly 'org.jetbrains:annotations:20.1.0'
     compileOnly "com.google.auto.service:auto-service-annotations:1.0-rc7"
     annotationProcessor "com.google.auto.service:auto-service:1.0-rc7"
@@ -241,7 +248,7 @@ dependencies {
     implementation 'com.google.code.gson:gson:2.8.6'
 
     // == Rust conversion (from Anki-Android-Backend on GitHub) ==
-    String backendVersion = "0.1.2" // We want both testing and implementation on the same version
+    String backendVersion = "0.1.4" // We want both testing and implementation on the same version
     // build with ./gradlew rsdroid:assembleRelease
     // In my experience, using `files()` currently requires a reindex operation, which is slow.
     // implementation files("C:\\GitHub\\Rust-Test\\rsdroid\\build\\outputs\\aar\\rsdroid-release.aar")
@@ -264,6 +271,7 @@ dependencies {
     // io.github.java-diff-utils:java-diff-utils is the natural successor here, but requires API24, #7091
     implementation 'org.bitbucket.cowwoc:diff-match-patch:1.2'
     implementation 'org.apache.commons:commons-compress:1.12' // #6419 - handle >2GB apkg files
+    implementation 'org.apache.commons:commons-collections4:4.4' // SetUniqueList
     implementation 'net.mikehardy:google-analytics-java7:2.0.13'
     implementation 'com.squareup.okhttp3:okhttp:4.9.1'
     implementation 'com.arcao:slf4j-timber:3.1'

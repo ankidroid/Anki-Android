@@ -145,7 +145,7 @@
         <item quantity="other">%dଟି କାର୍ଡ ଯୋଗ କରାଯାଇଛି</item>
     </plurals>
     <string name="check_db">ଡାଟାବେସ୍ ଯାଞ୍ଚ</string>
-    <string name="check_media">ମିଡ଼ିଆ ଯାଞ୍ଚ କରନ୍ତୁ</string>
+    <string name="check_media">ମିଡ଼ିଆ ଯାଞ୍ଚ</string>
     <string name="empty_cards">ଖାଲି କାର୍ଡଗୁଡ଼ିକ</string>
     <string name="check_db_message">ଡାଟାବେସ୍ ଯାଞ୍ଚ କରାଯାଉଛି...</string>
     <string name="empty_card_warning">ଏହି ପତ୍ରଟି ଖାଲି ଅଛି। ତାସଖଣ୍ଡ ଚିଠାରୁ ମେନୁରେ \"ଖାଲି କାର୍ଡଗୁଡ଼ିକ\" ବିକଳ୍ପ ବାଛନ୍ତୁ।</string>
@@ -340,11 +340,12 @@
     <string name="create_shortcut_error_vivo" comment="iManager is an app on Vivo phones">AnkiDroid କୁ ସର୍ଟକଟ୍ ଯୋଡିବାକୁ ଅନୁମତି ଦେବା ପାଇଁ ଆପଣଙ୍କୁ iManager ବ୍ୟବହାର କରିବାକୁ ପଡିପାରେ </string>
     <string name="create_shortcut_failed" comment="home screen == launcher">ଆପଣଙ୍କର ହୋମ ସ୍କ୍ରିନ AnkiDroid କୁ ସର୍ଟକଟ୍ ଯୋଡିବାକୁ ଅନୁମତି ଦିଏ ନାହିଁ </string>
     <string name="create_shortcut_error">ସର୍ଟକଟ୍ ଯୋଡିବାରେ ତ୍ରୁଟି : %s</string>
-    <string name="note_editor_capitalize" comment="This is for a switch with a checkbox - on: enabled">ବାକ୍ୟଗୁଡ଼ିଙ୍କ ବଡ଼ କରନ୍ତୁ </string>
+    <string name="note_editor_capitalize" comment="This is for a switch with a checkbox - on: enabled">ବାକ୍ୟଗୁଡ଼ିକ କ୍ୟାପିଟାଲାଇଜ୍ କରନ୍ତୁ</string>
     <!-- Symbols used as Button text in IncrementNumberRangePreference -->
     <string name="plus_sign" comment="Label for increment button in IncrementerNumberRangePreference">+</string>
     <string name="minus_sign" comment="Label for decrement button in IncrementerNumberRangePreference">-</string>
     <!-- Used for credential empty warning message -->
     <string name="email_id_empty">ଇମେଲ୍ ଠିକଣା ଆବଶ୍ୟକ</string>
     <string name="password_empty">ପାସୱାର୍ଡ ଆବଶ୍ୟକ</string>
+    <string name="back_pressed_once">Press back again to exit</string>
 </resources>

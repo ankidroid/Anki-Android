@@ -5,7 +5,7 @@ import com.ichi2.utils.JSONObject;
 import java.util.Comparator;
 
 public class NamedJSONComparator implements Comparator<JSONObject> {
-    public static final NamedJSONComparator instance = new NamedJSONComparator();
+    public static final NamedJSONComparator INSTANCE = new NamedJSONComparator();
 
     @Override
     public int compare(JSONObject lhs, JSONObject rhs) {

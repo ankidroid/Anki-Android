@@ -350,8 +350,19 @@ public class CustomStudyDialog extends AnalyticsDialogFragment implements
         switch (dialogId) {
             case CONTEXT_MENU_STANDARD:
                 // Standard context menu
-                return new int[] {CUSTOM_STUDY_NEW, CUSTOM_STUDY_REV, CUSTOM_STUDY_FORGOT, CUSTOM_STUDY_AHEAD,
-                        CUSTOM_STUDY_RANDOM, CUSTOM_STUDY_PREVIEW, CUSTOM_STUDY_TAGS};
+                ArrayList<Integer> dialogOptions = new ArrayList<Integer>();
+                dialogOptions.add(CUSTOM_STUDY_NEW);
+                dialogOptions.add(CUSTOM_STUDY_REV);
+                dialogOptions.add(CUSTOM_STUDY_FORGOT);
+                dialogOptions.add(CUSTOM_STUDY_AHEAD);
+                dialogOptions.add(CUSTOM_STUDY_RANDOM);
+                dialogOptions.add(CUSTOM_STUDY_PREVIEW);
+                dialogOptions.add(CUSTOM_STUDY_TAGS);
+                if (col.getSched().totalNewForCurrentDeck() == 0) {
+                    // If no new cards we wont show CUSTOM_STUDY_NEW
+                    dialogOptions.remove(Integer.valueOf(CUSTOM_STUDY_NEW));
+                }
+                return ContextMenuHelper.integerListToArray(dialogOptions);
             case CONTEXT_MENU_LIMITS:
                 // Special custom study options to show when the daily study limit has been reached
                 if (col.getSched().newDue() && col.getSched().revDue()) {

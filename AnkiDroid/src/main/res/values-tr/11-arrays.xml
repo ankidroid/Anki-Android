@@ -48,7 +48,7 @@
         <item>Yeni kartlar ekleniş sırasına göre</item>
     </string-array>
     <string-array name="cram_deck_conf_order_labels">
-        <item>Eski çıkanlar ilk önce</item>
+        <item>Önce en eski görüntülenir</item>
         <item>Rastgele</item>
         <item>Artan aralıkta</item>
         <item>Azalan aralıkta</item>
@@ -64,8 +64,8 @@
     </string-array>
     <string-array name="new_spread_labels">
         <item>Yeni kartları ve çalışmaları karıştır</item>
-        <item>Yeni kartlar çalışmalardan sonra</item>
-        <item>Yeni kartlar çalışmalardan önce</item>
+        <item>Yeni kartlar tekrardan sonra</item>
+        <item>Yeni kartlar tekrardan önce</item>
     </string-array>
     <string-array name="override_font_labels">
         <item>Bilgi kartlarında font belirtilmediği zaman</item>
@@ -80,38 +80,38 @@
         <item>Koyu</item>
     </string-array>
     <string-array name="html_size_code_labels">
-        <item>xx-small</item>
-        <item>x-small</item>
-        <item>small</item>
-        <item>medium</item>
-        <item>large</item>
-        <item>x-large</item>
-        <item>xx-large</item>
+        <item>çok çok küçük</item>
+        <item>çok küçük</item>
+        <item>küçük</item>
+        <item>orta</item>
+        <item>büyük</item>
+        <item>çok büyük</item>
+        <item>çok çok büyük</item>
     </string-array>
     <!--
     #7794 - it\'s better to use @string references in non-translated arrays as this handles
     changes in the array ordering better
      -->
     <string name="gesture_no_action">Eylem yok</string>
-    <string name="gesture_answer_1">1. cevap düğmesi</string>
-    <string name="gesture_answer_2">2. cevap düğmesi</string>
-    <string name="gesture_answer_3">3. cevap düğmesi</string>
-    <string name="gesture_answer_4">4. cevap düğmesi</string>
+    <string name="gesture_answer_1">Cevap butonu 1</string>
+    <string name="gesture_answer_2">Cevap butonu 2</string>
+    <string name="gesture_answer_3">Cevap butonu 3</string>
+    <string name="gesture_answer_4">Cevap butonu 4</string>
     <string name="gesture_answer_green">Önerilen cevabı (yeşil) ver</string>
     <string name="gesture_answer_better_recommended">Önerilenden daha iyi cevap ver</string>
-    <string name="gesture_tag_note">Tag note</string>
-    <string name="gesture_lookup">Lookup expression</string>
-    <string name="gesture_play">Play media</string>
-    <string name="gesture_abort_learning">Abort learning</string>
-    <string name="gesture_flag_red">Toggle Red Flag</string>
-    <string name="gesture_flag_orange">Toggle Orange Flag</string>
-    <string name="gesture_flag_green">Toggle Green Flag</string>
-    <string name="gesture_flag_blue">Toggle Blue Flag</string>
-    <string name="gesture_flag_remove">Remove Flag</string>
-    <string name="gesture_page_up">Page Up</string>
-    <string name="gesture_page_down">Page Down</string>
-    <string name="gesture_abort_sync">Abort Learning and Sync</string>
-    <string name="gesture_toggle_whiteboard">Toggle Whiteboard</string>
-    <string name="record_voice">Record Voice</string>
-    <string name="replay_voice">Replay Voice</string>
+    <string name="gesture_tag_note">Notu etiketlendir</string>
+    <string name="gesture_lookup">İfadeyi kontrol et</string>
+    <string name="gesture_play">Medyayı oynat</string>
+    <string name="gesture_abort_learning">Öğrenmeyi durdur</string>
+    <string name="gesture_flag_red">Kırmızı bayrağı etkinleştir</string>
+    <string name="gesture_flag_orange">Turuncu bayrağı etkinleştir</string>
+    <string name="gesture_flag_green">Yeşil bayrağı etkinleştir</string>
+    <string name="gesture_flag_blue">Mavi bayrağı etkinleştir</string>
+    <string name="gesture_flag_remove">Bayrağı sil</string>
+    <string name="gesture_page_up">Yukarı</string>
+    <string name="gesture_page_down">Aşağı</string>
+    <string name="gesture_abort_sync">Öğrenmeyi ve senkronizasyonu iptal et</string>
+    <string name="gesture_toggle_whiteboard">Yazı tahtasını etkinleştir</string>
+    <string name="record_voice">Ses kaydet</string>
+    <string name="replay_voice">Sesi tekrar oynat</string>
 </resources>

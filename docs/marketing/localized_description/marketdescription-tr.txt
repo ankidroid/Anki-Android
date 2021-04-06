@@ -6,7 +6,7 @@ Her türlü şeyi istediğiniz yerde, istediğiniz zaman çalışın. Otobüs yo
 
 Kendi bilgi kartı destelerinizi oluşturun veya birçok dil ve konu için hazırlanmış ücretsiz desteleri indirin (6000'den fazla mevcut).
 
-Masaüstü uygulaması Anki veya doğrudan AnkiDroid yoluyla malzeme ekleyin. Uygulama bir sözlükten otomatik olarak malzeme eklemeyi bile destekler!
+Masaüstü uygulaması Anki veya doğrudan AnkiDroid yoluyla malzeme ekleyin. Uygulama bir sözlükten otomatik olarak materyal eklemeyi bile destekler!
 
 ★ Anahtar özellikler:
 • desteklenen bilgi kartı içerikleri: yazı, resim, ses, LaTeX
@@ -24,10 +24,10 @@ Masaüstü uygulaması Anki veya doğrudan AnkiDroid yoluyla malzeme ekleyin. Uy
 • kart düzenleyici/ekleyici
 • kart tarayıcı
 • tablet düzeni
-• var olan toplama dosyalarını kullanma (Anki Masaüstü yoluyla)
+• var olan koleksiyon dosyalarını içeri aktarma (Anki Desktop aracılığıyla)
 • sözlük entegrasyonu (ColorDict, GoldenDict, Leo.org, Aedict, çeşitli web sözlükleri)
 • sözlük gibi diğer uygulamalardan istek tabanlı kart ekleme
-• hâricî yazı tipi desteği
+• özel yazı tipi desteği
 • tam yedekleme sistemi
 • dokunma ve kaydırmalarla gezinme
 • kişiselleştirilebilir

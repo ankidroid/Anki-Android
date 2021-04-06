@@ -313,7 +313,7 @@
     <!-- Card Viewer -->
     <string name="card_viewer_could_not_find_image">Errore nel contenuto della carta: impossibile caricare «%s»</string>
     <string name="card_viewer_media_relative_protocol">Errore del Contenuto della Carta: Richiesto aggiornamento multimediale</string>
-    <string name="cannot_load_http_resource">Loading http resources is no longer supported</string>
+    <string name="cannot_load_http_resource">Il caricamento delle risorse http non è più supportato</string>
     <!-- Deck Picker -->
     <string name="deck_picker_failed_deck_load">Impossibile caricare il mazzo «%s»</string>
     <string name="search_decks">Cerca mazzi</string>
@@ -345,6 +345,7 @@
     <string name="plus_sign" comment="Label for increment button in IncrementerNumberRangePreference">+</string>
     <string name="minus_sign" comment="Label for decrement button in IncrementerNumberRangePreference">-</string>
     <!-- Used for credential empty warning message -->
-    <string name="email_id_empty">Email address is required</string>
-    <string name="password_empty">Password is required</string>
+    <string name="email_id_empty">L\'indirizzo di posta elettronica è obbligatorio.</string>
+    <string name="password_empty">La password è obbligatoria</string>
+    <string name="back_pressed_once">Press back again to exit</string>
 </resources>

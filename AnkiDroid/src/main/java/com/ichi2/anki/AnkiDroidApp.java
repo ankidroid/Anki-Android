@@ -193,6 +193,9 @@ public class AnkiDroidApp extends Application {
     @Nullable
     private Throwable mWebViewError;
 
+    /** HACK: Whether an exception report has been thrown - TODO: Rewrite an ACRA Listener to do this */
+    @VisibleForTesting
+    public static boolean sSentExceptionReportHack;
 
     @NonNull
     public static InputStream getResourceAsStream(@NonNull String name) {
@@ -200,8 +203,8 @@ public class AnkiDroidApp extends Application {
     }
 
 
-    public static boolean isUninitialized() {
-        return sInstance == null;
+    public static boolean isInitialized() {
+        return sInstance != null;
     }
 
 
@@ -408,6 +411,8 @@ public class AnkiDroidApp extends Application {
 
     public static void sendExceptionReport(Throwable e, String origin, @Nullable String additionalInfo, boolean onlyIfSilent) {
         UsageAnalytics.sendAnalyticsException(e, false);
+
+        sSentExceptionReportHack = true;
 
         if (onlyIfSilent) {
             String reportMode = getSharedPrefs(getInstance().getApplicationContext()).getString(AnkiDroidApp.FEEDBACK_REPORT_KEY, FEEDBACK_REPORT_ASK);

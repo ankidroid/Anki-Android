@@ -151,6 +151,8 @@
     <string name="timeout_answer_seconds_summ" comment="The time to wait (in seconds) in the reviewer before automatically showing the next question or answer">XXX ثانية</string>
     <string name="timeout_question_seconds">مهلة إظهار السؤال التالي</string>
     <string name="select_locale_title">حدد اللغة</string>
+    <string name="software_render">Disable card hardware render</string>
+    <string name="software_render_summ">Hardware render is faster but may have problems, specifically on Android 8/8.1. If you cannot see parts of the card review user interface, try this setting.</string>
     <string name="safe_display">وضع العرض الآمن</string>
     <string name="safe_display_summ">تعطيل كل التأثيرات المتحركة واستخدام طريقة أأمن لرسم البطاقات. قد تتطلب أجهزة الحبر الإلكتروني هذا.</string>
     <string name="disable_extended_text_ui">تعطيل وضع تحرير الحقل الفردي</string>
@@ -173,7 +175,7 @@
     <string name="time_limit">مهلة مربع الوقت</string>
     <string name="time_limit_summ">XXX دقيقة</string>
     <string name="new_timezone">طريقة المعالجة الجديدة للمناطق الزمنية</string>
-    <string name="day_offset_with_description">Start of next day (0 is midnight, 23 is 11PM)</string>
+    <string name="day_offset_with_description">بداية اليوم التالي (0 يعني منتصف الليل، 23 يعني الساعة 11 مساءً)</string>
     <string name="day_offset_summ">XXX ساعة بعد منتصف الليل</string>
     <string name="sched_ver">مجدول V2 التجريبي</string>
     <string name="sched_ver_summ">تفعيل المجدول التجريبي. يفرض التغييرات في جانب واحد عند المزامنة التالية</string>

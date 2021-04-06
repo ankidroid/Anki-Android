@@ -187,7 +187,7 @@
     <string name="export_save_apkg_successful">Fichier Anki sauvegardé avec succès</string>
     <string name="export_save_apkg_unsuccessful">Échec de la sauvegarde du fichier Anki</string>
     <string name="export_successful">Le fichier « %s » a été exporté. Voulez-vous le partager à l\'aide d\'une autre app ?</string>
-    <string name="export_email_subject">AnkiDroid a exporté %s flashcards</string>
+    <string name="export_email_subject">AnkiDroid a exporté %s cartes mémoire</string>
     <string name="export_email_text"><![CDATA[        Salut !
         <br/><br/>
         Ceci est un paquet Anki envoyé depuis <a href="https://ankidroid.org/docs/manual.html">AnkiDroid</a>.
@@ -345,6 +345,7 @@
     <string name="plus_sign" comment="Label for increment button in IncrementerNumberRangePreference">+</string>
     <string name="minus_sign" comment="Label for decrement button in IncrementerNumberRangePreference">-</string>
     <!-- Used for credential empty warning message -->
-    <string name="email_id_empty">L\'adresse e-mail est requise</string>
+    <string name="email_id_empty">L\'adresse courriel est requise</string>
     <string name="password_empty">Mot de passe requis</string>
+    <string name="back_pressed_once">Press back again to exit</string>
 </resources>

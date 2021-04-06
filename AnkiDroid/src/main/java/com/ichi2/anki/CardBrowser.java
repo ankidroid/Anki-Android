@@ -1500,9 +1500,12 @@ public class CardBrowser extends NavigationDrawerActivity implements
             mSearchItem.expandActionView();
         }
         if (mSearchTerms.contains("deck:")) {
-            searchText = mSearchTerms;
+            searchText = "(" + mSearchTerms + ")";
         } else {
-            searchText = mRestrictOnDeck + mSearchTerms;
+            if (!"".equals(mSearchTerms))
+                searchText = mRestrictOnDeck + "(" + mSearchTerms + ")";
+            else
+                searchText = mRestrictOnDeck;
         }
         if (colIsOpen() && mCardsAdapter!= null) {
             // clear the existing card list
@@ -2888,5 +2891,11 @@ public class CardBrowser extends NavigationDrawerActivity implements
     void replaceSelectionWith(int[] positions) {
         mCheckedCards.clear();
         checkCardsAtPositions(positions);
+    }
+
+    @VisibleForTesting
+    void searchCards(String searchQuery) {
+        mSearchTerms = searchQuery;
+        searchCards();
     }
 }

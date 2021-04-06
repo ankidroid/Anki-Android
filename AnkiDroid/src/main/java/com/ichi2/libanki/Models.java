@@ -49,10 +49,8 @@ import java.util.regex.Pattern;
 
 import androidx.annotation.NonNull;
 
-import static com.ichi2.libanki.Models.AllowEmpty.FALSE;
 import static com.ichi2.libanki.Models.AllowEmpty.ONLY_CLOZE;
 import static com.ichi2.libanki.Models.AllowEmpty.TRUE;
-import static com.ichi2.libanki.Utils.trimArray;
 
 @SuppressWarnings({"PMD.ExcessiveClassLength", "PMD.AvoidThrowingRawExceptionTypes","PMD.AvoidReassigningParameters",
         "PMD.NPathComplexity","PMD.MethodNamingConventions",
@@ -72,7 +70,7 @@ public class Models {
     @SuppressWarnings("RegExpRedundantEscape")
     private static final Pattern fClozeOrdPattern = Pattern.compile("(?si)\\{\\{c(\\d+)::.*?\\}\\}");
 
-    public static final String defaultModel =
+    public static final String DEFAULT_MODEL =
               "{'sortf': 0, "
             + "'did': 1, "
             + "'latexPre': \""
@@ -233,7 +231,7 @@ public class Models {
     public boolean ensureNotEmpty() {
         if (mModels.isEmpty()) {
             // TODO: Maybe we want to restore all models if we don't have any
-            StdModels.basicModel.add(mCol);
+            StdModels.BASIC_MODEL.add(mCol);
             return true;
         } else {
             return false;
@@ -314,7 +312,7 @@ public class Models {
 	// not in python. Thus the method has to be renamed.
     public Model newModel(String name) {
         // caller should call save() after modifying
-        Model m = new Model(defaultModel);
+        Model m = new Model(DEFAULT_MODEL);
         m.put("name", name);
         m.put("mod", mCol.getTime().intTime());
         m.put("flds", new JSONArray());
