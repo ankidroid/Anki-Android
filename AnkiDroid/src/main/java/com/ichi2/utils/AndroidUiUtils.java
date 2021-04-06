@@ -22,6 +22,11 @@ import android.content.res.Configuration;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
+import android.view.inputmethod.InputMethodManager;
+
+import com.ichi2.ui.FixedEditText;
+
+import org.jetbrains.annotations.NotNull;
 
 import androidx.annotation.NonNull;
 
@@ -37,13 +42,26 @@ public class AndroidUiUtils {
     }
 
     /**
-     * This method is used for setting the focus on an EditText and opening the keyboard for EditText
-     * which are used in dialogs.
+     * This method is used for setting the focus on an EditText which is used in a dialog
+     * and for opening the keyboard.
      * @param view The EditText which requires the focus to be set.
      * @param window The window where the view is present.
      */
-    public static void setFocusAndOpenKeyboard(View view, @NonNull Window window) {
+    public static void setFocusAndOpenKeyboard(@NotNull View view, @NonNull Window window) {
         view.requestFocus();
         window.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_VISIBLE);
+    }
+
+    /**
+     * Focuses on FixedEditText and opens the soft keyboard.
+     * @param fixedEditText The FixedEditText which requires the focus to be set.
+     */
+    public static void setFocusAndOpenKeyboard(@NotNull FixedEditText fixedEditText) {
+        //  Required on some Android 9, 10 devices to show keyboard: https://stackoverflow.com/a/7784904
+        fixedEditText.postDelayed(() -> {
+            fixedEditText.requestFocus();
+            InputMethodManager imm = (InputMethodManager) fixedEditText.getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
+            imm.showSoftInput(fixedEditText, InputMethodManager.SHOW_IMPLICIT);
+        }, 200);
     }
 }
