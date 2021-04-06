@@ -1,21 +1,9 @@
 package com.ichi2.anim;
-
 import android.app.Activity;
 import android.content.Context;
-import android.content.res.Resources;
-import android.os.Build;
-import android.text.Layout;
 import android.util.LayoutDirection;
-import android.view.View;
-
 import com.ichi2.anki.R;
-import com.ichi2.utils.LanguageUtil;
 
-import java.security.DomainLoadStoreParameter;
-import java.util.Locale;
-
-import androidx.core.os.ConfigurationCompat;
-import androidx.core.text.TextUtilsCompat;
 
 
 public class ActivityTransitionAnimation {
