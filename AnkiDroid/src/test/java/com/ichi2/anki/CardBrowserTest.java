@@ -536,7 +536,7 @@ public class CardBrowserTest extends RobolectricTest {
 
         b.flagTask(1);
 
-        assertThat(card.userFlag(), is(1));
+        assertThat("Card colour should get updated when a flag is selected", card.userFlag(), is(1));
     }
 
     protected void assertUndoDoesNotContain(CardBrowser browser, @StringRes int resId) {
