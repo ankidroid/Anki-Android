@@ -23,7 +23,6 @@ import java.io.InputStream;
 import java.util.HashSet;
 import java.util.Set;
 import java.util.concurrent.TimeUnit;
-import java.util.concurrent.Callable;
 
 import java8.util.StringJoiner;
 import okhttp3.Call;

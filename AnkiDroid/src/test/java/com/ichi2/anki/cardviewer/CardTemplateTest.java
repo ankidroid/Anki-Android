@@ -18,13 +18,19 @@ package com.ichi2.anki.cardviewer;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.preference.PreferenceManager;
+
+import com.brsanthu.googleanalytics.GoogleAnalytics;
 
 import org.junit.Before;
 import org.junit.Test;
+import org.mockito.ArgumentMatchers;
 import org.mockito.Mock;
+import org.mockito.MockedStatic;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
+import static org.mockito.Mockito.mockStatic;
 import static org.mockito.Mockito.when;
 
 public class CardTemplateTest {
@@ -38,6 +44,17 @@ public class CardTemplateTest {
     public void setUp() {
         when(mMockContext.getSharedPreferences("mock_context_preferences", Context.MODE_PRIVATE))
                 .thenReturn(mMockSharedPreferences);
+    }
+
+    @Test
+    @SuppressWarnings("deprecation") // TODO Tracked in https://github.com/ankidroid/Anki-Android/issues/5019
+    public void testSendException() {
+        try (
+                MockedStatic<PreferenceManager> ignored = mockStatic(android.preference.PreferenceManager.class)
+            ) {
+            when(android.preference.PreferenceManager.getDefaultSharedPreferences(ArgumentMatchers.any()))
+                    .thenReturn(mMockSharedPreferences);
+        }
     }
 
     private static final String data = "<!doctype html>\n" +
