@@ -97,6 +97,10 @@ public class AddonModel {
         }
 
         AddonModel addonModel = AddonModel.tryParse(jsonObject, addonType);
+        if (addonModel == null) {
+            return null;
+        }
+
         boolean jsAddonKeywordsPresent = false;
 
         try {
