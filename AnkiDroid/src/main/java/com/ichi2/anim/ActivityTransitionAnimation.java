@@ -10,7 +10,8 @@ public class ActivityTransitionAnimation {
     public static void slide(Activity activity, Direction direction) {
         switch (direction) {
             case START:
-                if (isRightToLeft(activity)) {
+                if (isRightToLeft(activity)) 
+                {
                         activity.overridePendingTransition(R.anim.slide_right_in, R.anim.slide_right_out);
                 }
                 else{
@@ -25,7 +26,6 @@ public class ActivityTransitionAnimation {
                 else{
                 activity.overridePendingTransition(R.anim.slide_right_in, R.anim.slide_right_out);
                 }
-
                 break;
             case FADE:
                 activity.overridePendingTransition(R.anim.fade_out, R.anim.fade_in);
