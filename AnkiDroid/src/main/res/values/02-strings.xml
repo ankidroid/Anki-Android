@@ -386,7 +386,7 @@
     <string name="addon_developer">Developer</string>
     <string name="ankidroid_js_api">AnkiDroid JS API</string>
     <string name="addon_homepage">Homepage</string>
-    <string name="addon_download">Download</string>
+    <string name="addon_download" comment="Button text for downloading addons">Download</string>
 
     <!-- Symbols used as Button text in IncrementNumberRangePreference -->
     <string name="plus_sign" comment="Label for increment button in IncrementerNumberRangePreference">+</string>

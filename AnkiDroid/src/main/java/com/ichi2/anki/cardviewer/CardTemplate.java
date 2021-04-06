@@ -65,7 +65,7 @@ public class CardTemplate {
     }
 
     public String setAddons(Context context) {
-        if (AnkiDroidApp.getSharedPrefs(context).getBoolean("javascript_addons_support", false)) {
+        if (AnkiDroidApp.getSharedPrefs(context).getBoolean("javascript_addons_support_prefs", false)) {
             return AddonsNpmUtility.getEnabledAddonsContent(context);
         }
         return "";
