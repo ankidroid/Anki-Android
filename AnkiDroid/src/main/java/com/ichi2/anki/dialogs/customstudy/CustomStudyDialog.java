@@ -473,7 +473,7 @@ public class CustomStudyDialog extends AnalyticsDialogFragment implements
             Timber.i("Found deck: '%s'", customStudyDeck);
             if (cur.isStd()) {
                 Timber.w("Deck: '%s' was non-dynamic", customStudyDeck);
-                UIUtils.showThemedToast(requireActivity(), getString(R.string.custom_study_deck_exists), true);
+                UIUtils.showThemedToast(requireContext(), getString(R.string.custom_study_deck_exists), true);
                 return;
             } else {
                 Timber.i("Emptying dynamic deck '%s' for custom study", customStudyDeck);
