@@ -53,6 +53,7 @@ import com.ichi2.libanki.Utils;
 import com.ichi2.libanki.Deck;
 import com.ichi2.themes.StyledProgressDialog;
 import com.ichi2.utils.BooleanGetter;
+import com.ichi2.utils.FragmentFactoryUtils;
 import com.ichi2.utils.HtmlUtils;
 
 import androidx.fragment.app.FragmentFactory;
@@ -290,8 +291,7 @@ public class StudyOptionsFragment extends Fragment implements Toolbar.OnMenuItem
      */
     private void showCustomStudyContextMenu() {
         final AnkiActivity ankiActivity = ((AnkiActivity) requireActivity());
-        final FragmentFactory fragmentFactory = ankiActivity.getSupportFragmentManager().getFragmentFactory();
-        CustomStudyDialog d = (CustomStudyDialog) fragmentFactory.instantiate(ankiActivity.getClassLoader(), CustomStudyDialog.class.getName());
+        CustomStudyDialog d = FragmentFactoryUtils.instantiate(ankiActivity, CustomStudyDialog.class);
         d.withArguments(CustomStudyDialog.CONTEXT_MENU_STANDARD, getCol().getDecks().selected());
         ankiActivity.showDialogFragment(d);
     }

@@ -28,6 +28,7 @@ import com.ichi2.anki.StudyOptionsFragment;
 import com.ichi2.anki.analytics.AnalyticsDialogFragment;
 import com.ichi2.anki.dialogs.customstudy.CustomStudyDialog;
 import com.ichi2.libanki.Collection;
+import com.ichi2.utils.FragmentFactoryUtils;
 
 import java.lang.annotation.Retention;
 import java.util.ArrayList;
@@ -163,8 +164,7 @@ public class DeckPickerContextMenu extends AnalyticsDialogFragment {
                 long did = getArguments().getLong("did");
 
                 final AnkiActivity ankiActivity = ((AnkiActivity) requireActivity());
-                final FragmentFactory fragmentFactory = ankiActivity.getSupportFragmentManager().getFragmentFactory();
-                CustomStudyDialog d = (CustomStudyDialog) fragmentFactory.instantiate(ankiActivity.getClassLoader(), CustomStudyDialog.class.getName());
+                CustomStudyDialog d = FragmentFactoryUtils.instantiate(ankiActivity, CustomStudyDialog.class);
                 d.withArguments(CustomStudyDialog.CONTEXT_MENU_STANDARD, did);
                 ankiActivity.showDialogFragment(d);
                 break;
