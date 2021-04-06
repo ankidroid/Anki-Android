@@ -25,7 +25,7 @@
     <Button
         android:padding="8dp"
         android:id="@+id/addon_download_button"
-        android:text="@string/sync_conflict_remote"
+        android:text="@string/addon_download"
         android:layout_gravity="center"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"/>
