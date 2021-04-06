@@ -145,6 +145,7 @@ Onboarding helps new users to introduce the app. The new users may need to under
 * Some of our users will come from Anki Desktop, it would be good if we can set these up to logon and sync.
 * It would be ideal if we could show users where to get more help
 * We do not want to add new fields to forms unless there is a known benefit
+* We want to be able to solve the common "how do I add reversed cards" question - showing how templating works (but under an advanced section of some sort)
 
 * (David) A user suggested `AppIntro`. I personally wouldn't see this dependency to be problematic as it seems maintained
 
