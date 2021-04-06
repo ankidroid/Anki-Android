@@ -385,6 +385,9 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
     /** Handle providing help for "Image Not Found" */
     private static final MissingImageHandler mMissingImageHandler = new MissingImageHandler();
 
+    /** Preference: Whether the user wants to focus "type in answer" */
+    private boolean mFocusTypeAnswer;
+
     // ----------------------------------------------------------------------------
     // LISTENERS
     // ----------------------------------------------------------------------------
@@ -1757,7 +1760,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
     private void focusAnswerCompletionField() {
         // This does not handle mUseInputTag (the WebView contains an input field with a typable answer).
         // In this case, the user can use touch to focus the field if necessary.
-        if (typeAnswer()) {
+        if (typeAnswer() && mFocusTypeAnswer) {
             mAnswerField.focusWithKeyboard();
         } else {
             mFlipCardLayout.requestFocus();
@@ -1814,6 +1817,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
         mScrollingButtons = preferences.getBoolean("scrolling_buttons", false);
         mDoubleScrolling = preferences.getBoolean("double_scrolling", false);
         mPrefShowTopbar = preferences.getBoolean("showTopbar", true);
+        mFocusTypeAnswer = preferences.getBoolean("autoFocusTypeInAnswer", false);
 
         mGesturesEnabled = AnkiDroidApp.initiateGestures(preferences);
         mLinkOverridesTouchGesture = preferences.getBoolean("linkOverridesTouchGesture", false);
