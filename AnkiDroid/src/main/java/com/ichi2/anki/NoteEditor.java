@@ -319,7 +319,7 @@ public class NoteEditor extends AnkiActivity implements
                 mIntent = new Intent();
                 mIntent.putExtra(EXTRA_ID, noteEditor.getIntent().getStringExtra(EXTRA_ID));
             } else if (!noteEditor.mEditFields.isEmpty()) {
-                AndroidUiUtils.setFocusAndOpenKeyboard(noteEditor.mEditFields.getFirst());
+                noteEditor.mEditFields.getFirst().focusWithKeyboard();
             }
             if (!mCloseAfter && (noteEditor.mProgressDialog != null) && noteEditor.mProgressDialog.isShowing()) {
                 try {
