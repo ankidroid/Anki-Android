@@ -527,6 +527,17 @@ public class CardBrowserTest extends RobolectricTest {
         assertThat("Results should only be from the selected deck", cardBrowser.getCardCount(), is(1));
     }
 
+    @Test
+    public void checkIfFlagSelectionUpdatesSelectedCard() {
+        CardBrowser b = getBrowserWithNotes(1);
+        b.checkCardsAtPositions(0);
+
+        Card card = getCheckedCard(b).getCard();
+        b.flagTask(1);
+
+        assertThat(card.userFlag(), is(1));
+    }
+
     protected void assertUndoDoesNotContain(CardBrowser browser, @StringRes int resId) {
         ShadowActivity shadowActivity = shadowOf(browser);
         MenuItem item = shadowActivity.getOptionsMenu().findItem(R.id.action_undo);
