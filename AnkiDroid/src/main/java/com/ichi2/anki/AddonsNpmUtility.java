@@ -49,6 +49,7 @@ public class AddonsNpmUtility {
 
     /**
      * @param npmAddonName addon name, e.g ankidroid-js-addon-progress-bar
+     * @param runnable for calling listAddonsFromDir in AddonsBrowser after download/extract of js-addons.tgz to addons folder
      */
     public void getPackageJson(String npmAddonName, Runnable runnable) {
         showProgressBar();
@@ -95,6 +96,8 @@ public class AddonsNpmUtility {
 
 
     /**
+     * @param npmAddonName addon name, e.g ankidroid-js-addon-progress-bar
+     * @param strResponse response from registry.npmjs.org
      * Parse npm package info from package.json. If valid ankidroid-js-addon package then download it
      */
     public void parseJsonData(String strResponse, String npmAddonName) {
@@ -133,6 +136,8 @@ public class AddonsNpmUtility {
 
 
     /**
+     * @param tarballPath path to downloaded js-addon.tgz file
+     * @param npmAddonName addon name, e.g ankidroid-js-addon-progress-bar
      * extract downloaded .tgz files and copy to AnkiDroid/addons/ folder
      */
     public void extractAndCopyAddonTgz(String tarballPath, String npmAddonName) {
@@ -171,7 +176,8 @@ public class AddonsNpmUtility {
 
 
     /**
-     * read package.json file of ankidroid-js-addon...
+     * @param addonsFiles package.json file in ankidroid-js-addon/package/...
+     * @return jsonObject json object of the addon files content
      */
     public static JSONObject packageJsonReader(File addonsFiles) {
         JSONObject jsonObject = null;
@@ -270,6 +276,10 @@ public class AddonsNpmUtility {
     }
 
 
+    /**
+     * @param addonsContentFile index.js file in js-addons/package folder
+     * @return String, js code inside index.js
+     */
     public static String readIndexJs(File addonsContentFile) {
         StringBuilder content = new StringBuilder();
         if (!addonsContentFile.exists()) {
