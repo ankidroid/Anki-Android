@@ -21,10 +21,10 @@ package com.ichi2.anki.multimediacard;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
-import android.media.MediaPlayer;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.annotation.VisibleForTesting;
 import androidx.appcompat.widget.AppCompatImageButton;
 
 import android.view.Gravity;
@@ -50,7 +50,7 @@ public class AudioView extends LinearLayout {
     protected RecordButton mRecord = null;
 
     private final AudioRecorder mAudioRecorder = new AudioRecorder();
-    private MediaPlayer mPlayer = null;
+    private final AudioPlayer mPlayer = new AudioPlayer();
 
     private OnRecordingFinishEventListener mOnRecordingFinishEventListener = null;
 
@@ -64,7 +64,8 @@ public class AudioView extends LinearLayout {
 
     private final Context mContext;
 
-    enum Status {
+    @VisibleForTesting(otherwise = VisibleForTesting.PACKAGE_PRIVATE)
+    public enum Status {
         IDLE, // Default initial state
         INITIALIZED, // When datasource has been set
         PLAYING, PAUSED, STOPPED, // The different possible states once playing
@@ -102,6 +103,9 @@ public class AudioView extends LinearLayout {
 
     private AudioView(Context context, int resPlay, int resPause, int resStop, String audioPath) {
         super(context);
+
+        mPlayer.setOnStoppingListener(() -> mStatus = Status.STOPPED);
+        mPlayer.setOnStoppedListener(this::notifyStop);
 
         mAudioRecorder.setOnRecordingInitializedHandler(() -> mStatus = Status.INITIALIZED);
 
@@ -235,15 +239,7 @@ public class AudioView extends LinearLayout {
                 switch (mStatus) {
                     case IDLE:
                         try {
-                            mPlayer = new MediaPlayer();
-                            mPlayer.setDataSource(getAudioPath());
-                            mPlayer.setOnCompletionListener(mp -> {
-                                mStatus = Status.STOPPED;
-                                mPlayer.stop();
-                                notifyStop();
-                            });
-                            mPlayer.prepare();
-                            mPlayer.start();
+                            mPlayer.play(getAudioPath());
 
                             setImageResource(mResPauseImage);
                             mStatus = Status.PLAYING;
@@ -267,12 +263,7 @@ public class AudioView extends LinearLayout {
                         // -> Play, start from beginning
                         mStatus = Status.PLAYING;
                         setImageResource(mResPauseImage);
-                        try {
-                            mPlayer.prepare();
-                            mPlayer.seekTo(0);
-                        } catch (Exception e) {
-                            Timber.e(e);
-                        }
+                        mPlayer.stop();
                         mPlayer.start();
                         notifyPlay();
                         break;
