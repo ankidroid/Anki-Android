@@ -98,7 +98,7 @@ public class CardBrowserTest extends RobolectricTest {
     public void selectNoneIsVisibleWhenSelectingOne() {
         CardBrowser browser = getBrowserWithMultipleNotes();
         advanceRobolectricLooperWithSleep();
-        selectOneOfManyCards(browser);
+        selectOneOfManyCards(browser, 0);
         advanceRobolectricLooperWithSleep();
         assertThat(browser.isShowingSelectNone(), is(true));
     }
@@ -106,14 +106,14 @@ public class CardBrowserTest extends RobolectricTest {
     @Test
     public void selectAllIsVisibleWhenSelectingOne() {
         CardBrowser browser = getBrowserWithMultipleNotes();
-        selectOneOfManyCards(browser);
+        selectOneOfManyCards(browser, 0);
         assertThat(browser.isShowingSelectAll(), is(true));
     }
 
     @Test
     public void browserIsInMultiSelectModeWhenSelectingOne() {
         CardBrowser browser = getBrowserWithMultipleNotes();
-        selectOneOfManyCards(browser);
+        selectOneOfManyCards(browser, 0);
         assertThat(browser.isInMultiSelectMode(), is(true));
     }
 
@@ -527,6 +527,14 @@ public class CardBrowserTest extends RobolectricTest {
         assertThat("Results should only be from the selected deck", cardBrowser.getCardCount(), is(1));
     }
 
+    @Test
+    public void checkIfLongSelectChecksAllCardsInBetween() {
+        CardBrowser browser = getBrowserWithNotes(10);
+        selectOneOfManyCards(browser, 4);
+        selectOneOfManyCards(browser, 8);
+        assertThat(browser.checkedCardCount(), is(5));
+    }
+
     protected void assertUndoDoesNotContain(CardBrowser browser, @StringRes int resId) {
         ShadowActivity shadowActivity = shadowOf(browser);
         MenuItem item = shadowActivity.getOptionsMenu().findItem(R.id.action_undo);
@@ -565,11 +573,10 @@ public class CardBrowserTest extends RobolectricTest {
         browser.clearCardData(positionToCorrupt);
     }
 
-    private void selectOneOfManyCards(CardBrowser browser) {
+    private void selectOneOfManyCards(CardBrowser browser, int position) {
         Timber.d("Selecting single card");
         ShadowActivity shadowActivity = shadowOf(browser);
         ListView toSelect = shadowActivity.getContentView().findViewById(R.id.card_browser_list);
-        int position = 0;
 
         //roboelectric doesn't easily seem to allow us to fire an onItemLongClick
         AdapterView.OnItemLongClickListener listener = toSelect.getOnItemLongClickListener();
