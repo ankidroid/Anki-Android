@@ -167,7 +167,7 @@ public class DeckPickerTest extends RobolectricTest {
     public void limitAppliedAfterReview() {
         AbstractSched sched = mCol.getSched();
 
-        DeckConfig dconf = mCol.getDecks().getConf(1);
+        DeckConfig dconf = mDecks.getConf(1);
         dconf.getJSONObject("new").put("perDay", 10);
         for (int i = 0; i < 11; i++) {
             addNoteUsingBasicModel("Which card is this ?", Integer.toString(i));
@@ -185,7 +185,7 @@ public class DeckPickerTest extends RobolectricTest {
     public void confirmDeckDeletionDeletesEmptyDeck() {
         long did = addDeck("Hello World");
 
-        assertThat("Deck was added", mCol.getDecks().count(), is(2));
+        assertThat("Deck was added", mDecks.count(), is(2));
 
         DeckPicker deckPicker = startActivityNormallyOpenCollectionWithIntent(DeckPicker.class, new Intent());
 
@@ -193,7 +193,7 @@ public class DeckPickerTest extends RobolectricTest {
 
         advanceRobolectricLooperWithSleep();
 
-        assertThat("deck was deleted", mCol.getDecks().count(), is(1));
+        assertThat("deck was deleted", mDecks.count(), is(1));
     }
 
     @Test

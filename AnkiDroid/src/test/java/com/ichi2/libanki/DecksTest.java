@@ -37,31 +37,29 @@ public class DecksTest extends RobolectricTest {
 
     @Test
     public void duplicateName() {
-        Decks decks = mCol.getDecks();
-        decks.load("{2: {\"name\": \"A\", \"id\":2}, 3: {\"name\": \"A\", \"id\":3}, 4: {\"name\": \"A::B\", \"id\":4}}", "{}");
-        decks.checkIntegrity();
-        JSONObject deckA = decks.byName("A");
+        mDecks.load("{2: {\"name\": \"A\", \"id\":2}, 3: {\"name\": \"A\", \"id\":3}, 4: {\"name\": \"A::B\", \"id\":4}}", "{}");
+        mDecks.checkIntegrity();
+        JSONObject deckA = mDecks.byName("A");
         Asserts.notNull(deckA, "A deck with name \"A\" should still exists");
         assertThat("A deck with name \"A\" should have name \"A\"", deckA.getString("name"), is("A"));
-        JSONObject deckAPlus = decks.byName("A+");
+        JSONObject deckAPlus = mDecks.byName("A+");
         Asserts.notNull(deckAPlus, "A deck with name \"A+\" should still exists");
     }
     @Test
     public void ensureDeckList() {
-        Decks decks = mCol.getDecks();
         for (String deckName: TEST_DECKS) {
             addDeck(deckName);
         }
-        JSONObject brokenDeck = decks.byName("cmxieunwoogyxsctnjmv::INSBGDS");
+        JSONObject brokenDeck = mDecks.byName("cmxieunwoogyxsctnjmv::INSBGDS");
         Asserts.notNull(brokenDeck,"We should get deck with given name");
         // Changing the case. That could exists in an old collection or during sync.
         brokenDeck.put("name", "CMXIEUNWOOGYXSCTNJMV::INSBGDS");
-        decks.save(brokenDeck);
+        mDecks.save(brokenDeck);
 
-        decks.childMap();
-        for (JSONObject deck: decks.all()) {
+        mDecks.childMap();
+        for (JSONObject deck: mDecks.all()) {
             long did = deck.getLong("id");
-            for (JSONObject parent: decks.parents(did)) {
+            for (JSONObject parent: mDecks.parents(did)) {
                 Asserts.notNull(parent, "Parent should not be null");
             }
         }
@@ -81,34 +79,33 @@ public class DecksTest extends RobolectricTest {
 
     @Test
     public void test_basic() throws FilteredAncestor {
-        Decks decks = mCol.getDecks();
         // we start with a standard col
-        assertEquals(1, decks.allSortedNames().size());
+        assertEquals(1, mDecks.allSortedNames().size());
         // it should have an id of 1
-        assertNotNull(decks.name(1));
+        assertNotNull(mDecks.name(1));
         // create a new col
         long parentId = addDeck("new deck");
         assertNotEquals(parentId, 0);
-        assertEquals(2, decks.allSortedNames().size());
+        assertEquals(2, mDecks.allSortedNames().size());
         // should get the same id
         assertEquals(parentId, (long) addDeck("new deck"));
         // we start with the default col selected
-        assertEquals(1, decks.selected());
-        assertEqualsArrayList(new Long[] {1L}, decks.active());
+        assertEquals(1, mDecks.selected());
+        assertEqualsArrayList(new Long[] {1L}, mDecks.active());
         // we can select a different col
-        decks.select(parentId);
-        assertEquals(parentId, decks.selected());
-        assertEqualsArrayList(new Long[] {parentId}, decks.active());
+        mDecks.select(parentId);
+        assertEquals(parentId, mDecks.selected());
+        assertEqualsArrayList(new Long[] {parentId}, mDecks.active());
         // let's create a child
         long childId = addDeck("new deck::child");
         mCol.reset();
         // it should have been added to the active list
-        assertEquals(parentId, decks.selected());
-        assertEqualsArrayList(new Long[] {parentId, childId}, decks.active());
+        assertEquals(parentId, mDecks.selected());
+        assertEqualsArrayList(new Long[] {parentId, childId}, mDecks.active());
         // we can select the child individually too
-        decks.select(childId);
-        assertEquals(childId, decks.selected());
-        assertEqualsArrayList(new Long[] {childId}, decks.active());
+        mDecks.select(childId);
+        assertEquals(childId, mDecks.selected());
+        assertEqualsArrayList(new Long[] {childId}, mDecks.active());
         // parents with a different case should be handled correctly
         addDeck("ONE");
         Model m = mCol.getModels().current();
@@ -118,10 +115,10 @@ public class DecksTest extends RobolectricTest {
         n.setItem("Front", "abc");
         mCol.addNote(n);
 
-        assertEquals(decks.id_dont_create("new deck").longValue(), parentId);
-        assertEquals(decks.id_dont_create("  New Deck  ").longValue(), parentId);
-        assertNull(decks.id_dont_create("Not existing deck"));
-        assertNull(decks.id_dont_create("new deck::not either"));
+        assertEquals(mDecks.id_dont_create("new deck").longValue(), parentId);
+        assertEquals(mDecks.id_dont_create("  New Deck  ").longValue(), parentId);
+        assertNull(mDecks.id_dont_create("Not existing deck"));
+        assertNull(mDecks.id_dont_create("new deck::not either"));
     }
 
 
@@ -136,10 +133,10 @@ public class DecksTest extends RobolectricTest {
         Card c = note.cards().get(0);
         assertEquals(deck1, c.getDid());
         assertEquals(1, mCol.cardCount());
-        mCol.getDecks().rem(deck1);
+        mDecks.rem(deck1);
         assertEquals(0, mCol.cardCount());
         // if we try to get it, we get the default
-        assertEquals("[no deck]", mCol.getDecks().name(c.getDid()));
+        assertEquals("[no deck]", mDecks.name(c.getDid()));
     }
 
 
@@ -148,9 +145,8 @@ public class DecksTest extends RobolectricTest {
         long id = addDeck("hello::world");
         // should be able to rename into a completely different branch, creating
         // parents as necessary
-        Decks decks = mCol.getDecks();
-        decks.rename(decks.get(id), "foo::bar");
-        List<String> names = decks.allSortedNames();
+        mDecks.rename(mDecks.get(id), "foo::bar");
+        List<String> names = mDecks.allSortedNames();
         assertTrue(names.contains("foo"));
         assertTrue(names.contains("foo::bar"));
         assertFalse(names.contains("hello::world"));
@@ -158,26 +154,26 @@ public class DecksTest extends RobolectricTest {
         id = addDeck("tmp");
          /* TODO: do we want to follow upstream here ?
          // automatically adjusted if a duplicate name
-         decks.rename(decks.get(id), "FOO");
-         names =  decks.allSortedNames();
+         mDecks.rename(mDecks.get(id), "FOO");
+         names =  mDecks.allSortedNames();
          assertThat(names, containsString("FOO+"));
          
           */
         // when renaming, the children should be renamed too
         addDeck("one::two::three");
         id = addDeck("one");
-        mCol.getDecks().rename(mCol.getDecks().get(id), "yo");
-        names = mCol.getDecks().allSortedNames();
+        mDecks.rename(mDecks.get(id), "yo");
+        names = mDecks.allSortedNames();
         for (String n : new String[] {"yo", "yo::two", "yo::two::three"}) {
             assertTrue(names.contains(n));
         }
         // over filtered
         long filteredId = addDynamicDeck("filtered");
-        Deck filtered = mCol.getDecks().get(filteredId);
+        Deck filtered = mDecks.get(filteredId);
         long childId = addDeck("child");
-        Deck child = mCol.getDecks().get(childId);
-        assertThrows(DeckRenameException.class, () -> mCol.getDecks().rename(child, "filtered::child"));
-        assertThrows(DeckRenameException.class, () -> mCol.getDecks().rename(child, "FILTERED::child"));
+        Deck child = mDecks.get(childId);
+        assertThrows(DeckRenameException.class, () -> mDecks.rename(child, "filtered::child"));
+        assertThrows(DeckRenameException.class, () -> mDecks.rename(child, "FILTERED::child"));
     }
 
     /* TODO: maybe implement. We don't drag and drop here anyway, so buggy implementation is okay
@@ -188,43 +184,43 @@ public class DecksTest extends RobolectricTest {
      long hsk_did = addDeck("Chinese::HSK");
 
      // Renaming also renames children
-     mCol.getDecks().renameForDragAndDrop(chinese_did, languages_did);
-     assertEqualsArrayList(new String [] {"Default", "Languages", "Languages::Chinese", "Languages::Chinese::HSK"}, mCol.getDecks().allSortedNames());
+     mDecks.renameForDragAndDrop(chinese_did, languages_did);
+     assertEqualsArrayList(new String [] {"Default", "Languages", "Languages::Chinese", "Languages::Chinese::HSK"}, mDecks.allSortedNames());
 
      // Dragging a col onto itself is a no-op
-     mCol.getDecks().renameForDragAndDrop(languages_did, languages_did);
-     assertEqualsArrayList(new String [] {"Default", "Languages", "Languages::Chinese", "Languages::Chinese::HSK"}, mCol.getDecks().allSortedNames());
+     mDecks.renameForDragAndDrop(languages_did, languages_did);
+     assertEqualsArrayList(new String [] {"Default", "Languages", "Languages::Chinese", "Languages::Chinese::HSK"}, mDecks.allSortedNames());
 
      // Dragging a col onto its parent is a no-op
-     mCol.getDecks().renameForDragAndDrop(hsk_did, chinese_did);
-     assertEqualsArrayList(new String [] {"Default", "Languages", "Languages::Chinese", "Languages::Chinese::HSK"}, mCol.getDecks().allSortedNames());
+     mDecks.renameForDragAndDrop(hsk_did, chinese_did);
+     assertEqualsArrayList(new String [] {"Default", "Languages", "Languages::Chinese", "Languages::Chinese::HSK"}, mDecks.allSortedNames());
 
      // Dragging a col onto a descendant is a no-op
-     mCol.getDecks().renameForDragAndDrop(languages_did, hsk_did);
+     mDecks.renameForDragAndDrop(languages_did, hsk_did);
      // TODO: real problem to correct, even if we don't have drag and drop
-     // assertEqualsArrayList(new String [] {"Default", "Languages", "Languages::Chinese", "Languages::Chinese::HSK"}, mCol.getDecks().allSortedNames());
+     // assertEqualsArrayList(new String [] {"Default", "Languages", "Languages::Chinese", "Languages::Chinese::HSK"}, mDecks.allSortedNames());
 
      // Can drag a grandchild onto its grandparent.  It becomes a child
-     mCol.getDecks().renameForDragAndDrop(hsk_did, languages_did);
-     assertEqualsArrayList(new String [] {"Default", "Languages", "Languages::Chinese", "Languages::HSK"}, mCol.getDecks().allSortedNames());
+     mDecks.renameForDragAndDrop(hsk_did, languages_did);
+     assertEqualsArrayList(new String [] {"Default", "Languages", "Languages::Chinese", "Languages::HSK"}, mDecks.allSortedNames());
 
      // Can drag a col onto its sibling
-     mCol.getDecks().renameForDragAndDrop(hsk_did, chinese_did);
-     assertEqualsArrayList(new String [] {"Default", "Languages", "Languages::Chinese", "Languages::Chinese::HSK"}, mCol.getDecks().allSortedNames());
+     mDecks.renameForDragAndDrop(hsk_did, chinese_did);
+     assertEqualsArrayList(new String [] {"Default", "Languages", "Languages::Chinese", "Languages::Chinese::HSK"}, mDecks.allSortedNames());
 
      // Can drag a col back to the top level
-     mCol.getDecks().renameForDragAndDrop(chinese_did, null);
-     assertEqualsArrayList(new String [] {"Default", "Chinese", "Chinese::HSK", "Languages"}, mCol.getDecks().allSortedNames());
+     mDecks.renameForDragAndDrop(chinese_did, null);
+     assertEqualsArrayList(new String [] {"Default", "Chinese", "Chinese::HSK", "Languages"}, mDecks.allSortedNames());
 
      // Dragging a top level col to the top level is a no-op
-     mCol.getDecks().renameForDragAndDrop(chinese_did, null);
-     assertEqualsArrayList(new String [] {"Default", "Chinese", "Chinese::HSK", "Languages"}, mCol.getDecks().allSortedNames());
+     mDecks.renameForDragAndDrop(chinese_did, null);
+     assertEqualsArrayList(new String [] {"Default", "Chinese", "Chinese::HSK", "Languages"}, mDecks.allSortedNames());
 
-     // decks are renamed if necessary«
+     // mDecks are renamed if necessary«
      long new_hsk_did = addDeck("hsk");
-     mCol.getDecks().renameForDragAndDrop(new_hsk_did, chinese_did);
-     assertEqualsArrayList(new String [] {"Default", "Chinese", "Chinese::HSK", "Chinese::hsk+", "Languages"}, mCol.getDecks().allSortedNames());
-     mCol.getDecks().rem(new_hsk_did);
+     mDecks.renameForDragAndDrop(new_hsk_did, chinese_did);
+     assertEqualsArrayList(new String [] {"Default", "Chinese", "Chinese::HSK", "Chinese::hsk+", "Languages"}, mDecks.allSortedNames());
+     mDecks.rem(new_hsk_did);
 
      }
      */
@@ -232,27 +228,25 @@ public class DecksTest extends RobolectricTest {
     @Test
     public void curDeckIsLong() throws FilteredAncestor {
         // Regression for #8092
-        Decks decks = mCol.getDecks();
         long id = addDeck("test");
-        decks.select(id);
+        mDecks.select(id);
         assertThat("curDeck should be saved as a long. A deck id.", mCol.getConf().get("curDeck") instanceof Long);
     }
 
 
     @Test
     public void isDynStd() {
-        Decks decks = mCol.getDecks();
         long filteredId = addDynamicDeck("filtered");
-        Deck filtered = decks.get(filteredId);
+        Deck filtered = mDecks.get(filteredId);
         long deckId = addDeck("deck");
-        Deck deck = decks.get(deckId);
+        Deck deck = mDecks.get(deckId);
         assertThat(deck.isStd(), is(Boolean.valueOf(true)));
         assertThat(deck.isDyn(), is(Boolean.valueOf(false)));
         assertThat(filtered.isStd(), is(Boolean.valueOf(false)));
         assertThat(filtered.isDyn(), is(Boolean.valueOf(true)));
 
-        DeckConfig filtered_config = decks.confForDid(filteredId);
-        DeckConfig deck_config = decks.confForDid(deckId);
+        DeckConfig filtered_config = mDecks.confForDid(filteredId);
+        DeckConfig deck_config = mDecks.confForDid(deckId);
         assertThat(deck_config.isStd(), is(Boolean.valueOf(true)));
         assertThat(deck_config.isDyn(), is(Boolean.valueOf(false)));
         assertThat(filtered_config.isStd(), is(Boolean.valueOf(false)));
@@ -262,48 +256,45 @@ public class DecksTest extends RobolectricTest {
 
     @Test
     public void testEnsureParents() throws FilteredAncestor {
-        Decks decks = mCol.getDecks();
         addDeck("test");
-        String subsubdeck_name = decks._ensureParents("  tESt :: sub :: subdeck");
+        String subsubdeck_name = mDecks._ensureParents("  tESt :: sub :: subdeck");
         assertEquals("test::sub:: subdeck", subsubdeck_name);// Only parents are renamed, not the last deck.
-        assertNotNull(decks.byName("test::sub"));
-        assertNull(decks.byName("test::sub:: subdeck"));
-        assertNull(decks.byName("  test :: sub :: subdeck"));
-        assertNull(decks.byName("  test :: sub "));
+        assertNotNull(mDecks.byName("test::sub"));
+        assertNull(mDecks.byName("test::sub:: subdeck"));
+        assertNull(mDecks.byName("  test :: sub :: subdeck"));
+        assertNull(mDecks.byName("  test :: sub "));
 
-        decks.newDyn("filtered");
-        assertThrows(FilteredAncestor.class, () -> decks._ensureParents("filtered:: sub :: subdeck"));
+        mDecks.newDyn("filtered");
+        assertThrows(FilteredAncestor.class, () -> mDecks._ensureParents("filtered:: sub :: subdeck"));
     }
 
     @Test
     public void descendantOfFiltered() throws FilteredAncestor {
-        Decks decks = mCol.getDecks();
-        long filtered_id = decks.newDyn("filtered");
-        assertThrows(FilteredAncestor.class,  () -> decks.id("filtered::subdeck::subsubdeck"));
+        long filtered_id = mDecks.newDyn("filtered");
+        assertThrows(FilteredAncestor.class,  () -> mDecks.id("filtered::subdeck::subsubdeck"));
 
-        Long subdeck_id = decks.id_safe("filtered::subdeck::subsubdeck");
-        Deck subdeck = decks.get(subdeck_id);
+        Long subdeck_id = mDecks.id_safe("filtered::subdeck::subsubdeck");
+        Deck subdeck = mDecks.get(subdeck_id);
         assertEquals("filtered'::subdeck::subsubdeck", subdeck.getString("name"));
     }
 
     @Test
     public void testEnsureParentsNotFiltered() throws FilteredAncestor {
-        Decks decks = mCol.getDecks();
         addDeck("test");
-        String subsubdeck_name = decks._ensureParentsNotFiltered("  tESt :: sub :: subdeck");
+        String subsubdeck_name = mDecks._ensureParentsNotFiltered("  tESt :: sub :: subdeck");
         assertEquals("test::sub:: subdeck", subsubdeck_name);// Only parents are renamed, not the last deck.
-        assertNotNull(decks.byName("test::sub"));
-        assertNull(decks.byName("test::sub:: subdeck"));
-        assertNull(decks.byName("  test :: sub :: subdeck"));
-        assertNull(decks.byName("  test :: sub "));
+        assertNotNull(mDecks.byName("test::sub"));
+        assertNull(mDecks.byName("test::sub:: subdeck"));
+        assertNull(mDecks.byName("  test :: sub :: subdeck"));
+        assertNull(mDecks.byName("  test :: sub "));
 
-        decks.newDyn("filtered");
-        String filtered_subdeck_name = decks._ensureParentsNotFiltered("filtered:: sub :: subdeck");
+        mDecks.newDyn("filtered");
+        String filtered_subdeck_name = mDecks._ensureParentsNotFiltered("filtered:: sub :: subdeck");
         assertEquals("filtered'::sub:: subdeck", filtered_subdeck_name);// Only parents are renamed, not the last deck.
-        assertNotNull(decks.byName("filtered'::sub"));
-        assertNotNull(decks.byName("filtered'"));
-        assertNull(decks.byName("filtered::sub:: subdeck"));
-        assertNull(decks.byName("filtered::sub"));
+        assertNotNull(mDecks.byName("filtered'::sub"));
+        assertNotNull(mDecks.byName("filtered'"));
+        assertNull(mDecks.byName("filtered::sub:: subdeck"));
+        assertNull(mDecks.byName("filtered::sub"));
     }
 
 }

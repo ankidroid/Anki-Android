@@ -42,12 +42,12 @@ public class ExportingTest extends RobolectricTest {
        public void test_export_anki(){
        // create a new col with its own conf to test conf copying
        long did = addDeck("test");
-       Deck dobj = mCol.getDecks().get(did);
-       long confId = mCol.getDecks().add_config_returning_id("newconf");
-       DeckConfig conf = mCol.getDecks().getConf(confId);
+       Deck dobj = mDecks.get(did);
+       long confId = mDecks.add_config_returning_id("newconf");
+       DeckConfig conf = mDecks.getConf(confId);
        conf.getJSONObject("new").put("perDay", 5);
-       mCol.getDecks().save(conf);
-       mCol.getDecks().setConf(dobj, confId);
+       mDecks.save(conf);
+       mDecks.setConf(dobj, confId);
        // export
        AnkiPackageExporter e = AnkiExporter(mCol);
        fd, newname = tempfile.mkstemp(prefix="ankitest", suffix=".anki2");
@@ -56,7 +56,7 @@ public class ExportingTest extends RobolectricTest {
        os.unlink(newname);
        e.exportInto(newname);
        // exporting should not have changed conf for original deck
-       conf = mCol.getDecks().confForDid(did);
+       conf = mDecks.confForDid(did);
        assertNotEquals(conf.getLong("id") != 1);
        // connect to new deck
        Collection col2 = aopen(newname);

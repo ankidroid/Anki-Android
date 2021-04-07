@@ -117,7 +117,7 @@ public class SchedV2Test extends RobolectricTest {
 
         long homeDeckId = addDeck("Poorretention");
 
-        DeckConfig homeDeckConf = mCol.getDecks().confForDid(homeDeckId);
+        DeckConfig homeDeckConf = mDecks.confForDid(homeDeckId);
         JSONObject lapse = homeDeckConf.getJSONObject("lapse");
 
         lapse.put("minInt", 2);
@@ -265,7 +265,7 @@ public class SchedV2Test extends RobolectricTest {
 
         addNoteUsingBasicModel("Hello", "World");
 
-        mCol.getDecks().allConf().get(0).getJSONObject("new").put("delays", new JSONArray(Arrays.asList(0.01, 10)));
+        mDecks.allConf().get(0).getJSONObject("new").put("delays", new JSONArray(Arrays.asList(0.01, 10)));
 
         Card c = mCol.getSched().getCard();
 
@@ -391,8 +391,8 @@ public class SchedV2Test extends RobolectricTest {
             mCol.addNote(note);
         }
         // give the child deck a different configuration
-        long c2 = mCol.getDecks().confId("new conf");
-        mCol.getDecks().setConf(mCol.getDecks().get(deck2), c2);
+        long c2 = mDecks.confId("new conf");
+        mDecks.setConf(mDecks.get(deck2), c2);
         mCol.reset();
         // both confs have defaulted to a limit of 20
         assertEquals(20, mCol.getSched().newCount());
@@ -400,15 +400,15 @@ public class SchedV2Test extends RobolectricTest {
         Card c = getCard();
         assertEquals(1, c.getDid());
         // limit the parent to 10 cards, meaning we get 10 in total
-        DeckConfig conf1 = mCol.getDecks().confForDid(1);
+        DeckConfig conf1 = mDecks.confForDid(1);
         conf1.getJSONObject("new").put("perDay", 10);
-        mCol.getDecks().save(conf1);
+        mDecks.save(conf1);
         mCol.reset();
         assertEquals(10, mCol.getSched().newCount());
         // if we limit child to 4, we should get 9
-        DeckConfig conf2 = mCol.getDecks().confForDid(deck2);
+        DeckConfig conf2 = mDecks.confForDid(deck2);
         conf2.getJSONObject("new").put("perDay", 4);
-        mCol.getDecks().save(conf2);
+        mDecks.save(conf2);
         mCol.reset();
         assertEquals(9, mCol.getSched().newCount());
     }
@@ -424,11 +424,11 @@ public class SchedV2Test extends RobolectricTest {
         Card c = getCard();
         DeckConfig conf = mCol.getSched()._cardConf(c);
         conf.getJSONObject("new").put("delays", new JSONArray(new double[] {1, 2, 3, 4, 5}));
-        mCol.getDecks().save(conf);
+        mDecks.save(conf);
         mCol.getSched().answerCard(c, 2);
         // should handle gracefully
         conf.getJSONObject("new").put("delays", new JSONArray(new double[] {1}));
-        mCol.getDecks().save(conf);
+        mDecks.save(conf);
         mCol.getSched().answerCard(c, 2);
     }
 
@@ -449,7 +449,7 @@ public class SchedV2Test extends RobolectricTest {
         assertNotNull(c);
         DeckConfig conf = mCol.getSched()._cardConf(c);
         conf.getJSONObject("new").put("delays", new JSONArray(new double[] {0.5, 3, 10}));
-        mCol.getDecks().save(conf);
+        mDecks.save(conf);
         // fail it
         mCol.getSched().answerCard(c, 1);
         // it should have three reps left to graduation
@@ -545,9 +545,9 @@ public class SchedV2Test extends RobolectricTest {
         c.setType(QUEUE_TYPE_REV);
         c.flush();
 
-        DeckConfig conf = mCol.getDecks().confForDid(1);
+        DeckConfig conf = mDecks.confForDid(1);
         conf.getJSONObject("lapse").put("delays", new JSONArray(new double[] {}));
-        mCol.getDecks().save(conf);
+        mDecks.save(conf);
 
         // fail the card
         mCol.reset();
@@ -598,7 +598,7 @@ public class SchedV2Test extends RobolectricTest {
         Card c = getCard();
         DeckConfig conf = mCol.getSched()._cardConf(c);
         conf.getJSONObject("new").put("delays", new JSONArray(new double[] {1, 10, 1440, 2880}));
-        mCol.getDecks().save(conf);
+        mDecks.save(conf);
         // pass it
         mCol.getSched().answerCard(c, 3);
         // two reps to graduate, 1 more today
@@ -645,7 +645,7 @@ public class SchedV2Test extends RobolectricTest {
         assertEquals(new Counts(0, 0, 1), mCol.getSched().counts());
         conf = mCol.getSched()._cardConf(c);
         conf.getJSONObject("lapse").put("delays", new JSONArray(new double[] {1440}));
-        mCol.getDecks().save(conf);
+        mDecks.save(conf);
         c = getCard();
         mCol.getSched().answerCard(c, 1);
         assertEquals(QUEUE_TYPE_DAY_LEARN_RELEARN, c.getQueue());
@@ -711,9 +711,9 @@ public class SchedV2Test extends RobolectricTest {
         assertEquals(2650, c.getFactor());
         // leech handling
         ////////////////////////////////////////////////////////////////////////////////////////////////////
-        DeckConfig conf = mCol.getDecks().getConf(1);
+        DeckConfig conf = mDecks.getConf(1);
         conf.getJSONObject("lapse").put("leechAction", LEECH_SUSPEND);
-        mCol.getDecks().save(conf);
+        mDecks.save(conf);
         c = cardcopy.clone();
         c.setLapses(7);
         c.flush();
@@ -738,18 +738,18 @@ public class SchedV2Test extends RobolectricTest {
     public void test_review_limits() throws Exception {
         getCol(2);
 
-        Deck parent = mCol.getDecks().get(addDeck("parent"));
-        Deck child = mCol.getDecks().get(addDeck("parent::child"));
+        Deck parent = mDecks.get(addDeck("parent"));
+        Deck child = mDecks.get(addDeck("parent::child"));
 
-        DeckConfig pconf = mCol.getDecks().getConf(mCol.getDecks().confId("parentConf"));
-        DeckConfig cconf = mCol.getDecks().getConf(mCol.getDecks().confId("childConf"));
+        DeckConfig pconf = mDecks.getConf(mDecks.confId("parentConf"));
+        DeckConfig cconf = mDecks.getConf(mDecks.confId("childConf"));
 
         pconf.getJSONObject("rev").put("perDay", 5);
-        mCol.getDecks().updateConf(pconf);
-        mCol.getDecks().setConf(parent, pconf.getLong("id"));
+        mDecks.updateConf(pconf);
+        mDecks.setConf(parent, pconf.getLong("id"));
         cconf.getJSONObject("rev").put("perDay", 10);
-        mCol.getDecks().updateConf(cconf);
-        mCol.getDecks().setConf(child, cconf.getLong("id"));
+        mDecks.updateConf(cconf);
+        mDecks.setConf(child, cconf.getLong("id"));
 
         Model m = mCol.getModels().current();
         m.put("did", child.getLong("id"));
@@ -778,7 +778,7 @@ public class SchedV2Test extends RobolectricTest {
         assertEquals(10, tree.getChildren().get(0).getRevCount());
 
         // .counts() should match
-        mCol.getDecks().select(child.getLong("id"));
+        mDecks.select(child.getLong("id"));
         mCol.reset();
         assertEquals(new Counts(0, 0, 10), mCol.getSched().counts());
 
@@ -815,9 +815,9 @@ public class SchedV2Test extends RobolectricTest {
         assertEquals("4 d", without_unicode_isolation(mCol.getSched().nextIvlStr(getTargetContext(), c, 4)));
 
         // if hard factor is <= 1, then hard may not increase
-        DeckConfig conf = mCol.getDecks().confForDid(1);
+        DeckConfig conf = mDecks.confForDid(1);
         conf.getJSONObject("rev").put("hardFactor", 1);
-        mCol.getDecks().save(conf);
+        mDecks.save(conf);
         assertEquals("1 d", without_unicode_isolation(mCol.getSched().nextIvlStr(getTargetContext(), c, 2)));
     }
 
@@ -893,10 +893,10 @@ public class SchedV2Test extends RobolectricTest {
         note.setItem("Back", "two");
         mCol.addNote(note);
         mCol.reset();
-        DeckConfig conf = mCol.getDecks().confForDid(1);
+        DeckConfig conf = mDecks.confForDid(1);
         conf.getJSONObject("new").put("delays", new JSONArray(new double[] {0.5, 3, 10}));
         conf.getJSONObject("lapse").put("delays", new JSONArray(new double[] {1, 5, 9}));
-        mCol.getDecks().save(conf);
+        mDecks.save(conf);
         Card c = getCard();
         // new cards
         ////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -938,7 +938,7 @@ public class SchedV2Test extends RobolectricTest {
         assertEquals(60, mCol.getSched().nextIvl(c, 1));
         // or 1 day if relearn is false
         conf.getJSONObject("lapse").put("delays", new JSONArray(new double[] {}));
-        mCol.getDecks().save(conf);
+        mDecks.save(conf);
         assertEquals(SECONDS_PER_DAY, mCol.getSched().nextIvl(c, 1));
         // (* 100 1.2 SECONDS_PER_DAY)10368000.0
         assertEquals(10368000, mCol.getSched().nextIvl(c, 2));
@@ -1116,7 +1116,7 @@ public class SchedV2Test extends RobolectricTest {
         Card c = getCard();
         DeckConfig conf = mCol.getSched()._cardConf(c);
         conf.getJSONObject("new").put("delays", new JSONArray(new double[] {1, 10, 61}));
-        mCol.getDecks().save(conf);
+        mDecks.save(conf);
 
         mCol.getSched().answerCard(c, 1);
 
@@ -1168,9 +1168,9 @@ public class SchedV2Test extends RobolectricTest {
         mCol.addNote(note2);
         // cram deck
         long did = addDynamicDeck("Cram");
-        Deck cram = mCol.getDecks().get(did);
+        Deck cram = mDecks.get(did);
         cram.put("resched", false);
-        mCol.getDecks().save(cram);
+        mDecks.save(cram);
         mCol.getSched().rebuildDyn(did);
         mCol.reset();
         // grab the first card
@@ -1403,7 +1403,7 @@ public class SchedV2Test extends RobolectricTest {
         note.model().put("did", addDeck("foo::baz"));
         mCol.addNote(note);
         mCol.reset();
-        assertEquals(5, mCol.getDecks().allSortedNames().size());
+        assertEquals(5, mDecks.allSortedNames().size());
         DeckDueTreeNode tree = mCol.getSched().deckDueTree().get(0);
         assertEquals("Default", tree.getLastDeckNameComponent());
         // sum of child and parent
@@ -1595,7 +1595,7 @@ public class SchedV2Test extends RobolectricTest {
         c.flush();
         DeckConfig conf = mCol.getSched()._cardConf(c);
         conf.getJSONObject("lapse").put("mult", 0.5);
-        mCol.getDecks().save(conf);
+        mDecks.save(conf);
         c = getCard();
         advanceRobolectricLooper();
         mCol.getSched().answerCard(c, 1);
@@ -1656,7 +1656,7 @@ public class SchedV2Test extends RobolectricTest {
         c.flush();
         DeckConfig conf = mCol.getSched()._cardConf(c);
         conf.getJSONObject("lapse").put("mult", 0.5);
-        mCol.getDecks().save(conf);
+        mDecks.save(conf);
         mCol.reset();
         c = getCard();
         mCol.getSched().answerCard(c, 1);
@@ -1729,11 +1729,10 @@ public class SchedV2Test extends RobolectricTest {
     public void regression_test_preview() throws Exception {
         //"https://github.com/ankidroid/Anki-Android/issues/7285"
         getCol(2);
-        Decks decks = mCol.getDecks();
         AbstractSched sched = mCol.getSched();
         addNoteUsingBasicModel("foo", "bar");
         long did = addDynamicDeck("test");
-        Deck deck = decks.get(did);
+        Deck deck = mDecks.get(did);
         deck.put("resched", false);
         sched.rebuildDyn(did);
         mCol.reset();

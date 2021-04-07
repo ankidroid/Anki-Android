@@ -81,7 +81,7 @@ public class FinderTest extends RobolectricTest {
 
 
     private void enableBurySiblings() {
-        mCol.getDecks().allConf().get(0).getJSONObject("new").put("bury", true);
+        mDecks.allConf().get(0).getJSONObject("new").put("bury", true);
     }
 
 
@@ -339,7 +339,7 @@ public class FinderTest extends RobolectricTest {
     public void test_deckNameContainingWildcardCanBeSearched() {
         String val = "*Yr1::Med2::CAS4::F4: Renal::BRS (zanki)::HY";
         long currentDid = addDeck(val);
-        mCol.getDecks().select(currentDid);
+        mDecks.select(currentDid);
         Note note = mCol.newNote();
         note.setItem("Front", "foo");
         note.setItem("Back", "bar");

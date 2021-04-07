@@ -61,7 +61,7 @@ public class CustomStudyDialogTest extends RobolectricTest {
         });
 
 
-        Deck customStudy = mCol.getDecks().current();
+        Deck customStudy = mDecks.current();
         assertThat("Custom Study should be dynamic", customStudy.isDyn());
         assertThat("could not find deck: Custom study session", customStudy, notNullValue());
         customStudy.remove("id");

@@ -159,7 +159,7 @@ public class ReviewerTest extends RobolectricTest {
     @Test
     public synchronized void testMultipleCards() throws ConfirmModSchemaException {
         addNoteWithThreeCards();
-        JSONObject nw = mCol.getDecks().confForDid(1).getJSONObject("new");
+        JSONObject nw = mDecks.confForDid(1).getJSONObject("new");
         MockTime time = getCollectionTime();
         nw.put("delays", new JSONArray(new int[] {1, 10, 60, 120}));
 
@@ -189,7 +189,7 @@ public class ReviewerTest extends RobolectricTest {
 
     @Test
     public void testLrnQueueAfterUndo() {
-        JSONObject nw = mCol.getDecks().confForDid(1).getJSONObject("new");
+        JSONObject nw = mDecks.confForDid(1).getJSONObject("new");
         MockTime time = (MockTime) mCol.getTime();
         nw.put("delays", new JSONArray(new int[] {1, 10, 60, 120}));
 
@@ -231,13 +231,12 @@ public class ReviewerTest extends RobolectricTest {
     public void baseDeckName() {
         Models models = mCol.getModels();
 
-        Decks decks = mCol.getDecks();
         Long didAb = addDeck("A::B");
         Model basic = models.byName(AnkiDroidApp.getAppResources().getString(R.string.basic_model_name));
         basic.put("did", didAb);
         addNoteUsingBasicModel("foo", "bar");
         Long didA = addDeck("A");
-        decks.select(didA);
+        mDecks.select(didA);
         Reviewer reviewer = startReviewer();
         waitForAsyncTasksToComplete();
         assertThat(reviewer.getSupportActionBar().getTitle(), is("B"));

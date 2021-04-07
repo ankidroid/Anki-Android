@@ -240,8 +240,6 @@ public class CardTest extends RobolectricTest {
         // Test runs as the 7th of august 2020, 9h00
         Note n = addNoteUsingBasicModel("Front", "Back");
         Card c = n.firstCard();
-        Decks decks = mCol.getDecks();
-
         Calendar cal = Calendar.getInstance();
         cal.set(2021, 2, 19, 7, 42, 42);
         Long id = cal.getTimeInMillis() / 1000;
@@ -353,7 +351,7 @@ public class CardTest extends RobolectricTest {
 
 
         // Dynamic deck
-        long dyn = decks.newDyn("dyn");
+        long dyn = mDecks.newDyn("dyn");
         c.setODid(c.getDid());
         c.setDid(dyn);
         assertEquals("(filtered)", c.nextDue());

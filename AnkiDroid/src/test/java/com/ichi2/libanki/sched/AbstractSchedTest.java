@@ -106,8 +106,8 @@ public class AbstractSchedTest extends RobolectricTest {
     @Test
     public void ensureUndoCorrectCounts() {
         AbstractSched sched = mCol.getSched();
-        Deck deck = mCol.getDecks().get(1);
-        DeckConfig dconf = mCol.getDecks().getConf(1);
+        Deck deck = mDecks.get(1);
+        DeckConfig dconf = mDecks.getConf(1);
         dconf.getJSONObject("new").put("perDay", 10);
         JSONArray newCount = deck.getJSONArray("newToday");
         for (int i = 0; i < 20; i++) {
@@ -161,7 +161,7 @@ public class AbstractSchedTest extends RobolectricTest {
         // #6903
         AbstractSched sched = mCol.getSched();
         Models models = mCol.getModels();
-        DeckConfig dconf = mCol.getDecks().getConf(1);
+        DeckConfig dconf = mDecks.getConf(1);
         dconf.getJSONObject("new").put("bury", true);
         final int nbNote = 2;
         Note[] notes = new Note[nbNote];
@@ -200,7 +200,7 @@ public class AbstractSchedTest extends RobolectricTest {
         addDeckWithExactName(parent);
         addDeckWithExactName(child);
 
-        mCol.getDecks().checkIntegrity();
+        mDecks.checkIntegrity();
         assertDoesNotThrow(() -> mCol.getSched().deckDueList());
     }
 
@@ -211,7 +211,7 @@ public class AbstractSchedTest extends RobolectricTest {
         private final AbstractSched sched;
 
         public IncreaseToday() {
-            decks = mCol.getDecks();
+            decks = mDecks;
             sched = mCol.getSched();
             aId = addDeck("A");
             bId = addDeck("A::B");
@@ -305,7 +305,7 @@ mw.mCol.sched.extendLimits(1, 0)
 
 
     protected void undoAndRedo(boolean preload) {
-        DeckConfig conf = mCol.getDecks().confForDid(1);
+        DeckConfig conf = mDecks.confForDid(1);
         conf.getJSONObject("new").put("delays", new JSONArray(new double[] {1, 3, 5, 10}));
         mCol.getConf().put("collapseTime", 20 * 60);
         AbstractSched sched = mCol.getSched();
@@ -373,14 +373,12 @@ mw.mCol.sched.extendLimits(1, 0)
     }
 
     private void addDeckWithExactName(String name) {
-        Decks decks = mCol.getDecks();
-
         long did = addDeck(name);
-        Deck d = decks.get(did);
+        Deck d = mDecks.get(did);
         d.put("name", name);
-        decks.update(d);
+        mDecks.update(d);
 
-        boolean hasMatch = decks.all().stream().anyMatch(x -> name.equals(x.getString("name")));
+        boolean hasMatch = mDecks.all().stream().anyMatch(x -> name.equals(x.getString("name")));
         assertThat(String.format("Deck %s should exist", name), hasMatch, is(true));
     }
 
@@ -388,7 +386,7 @@ mw.mCol.sched.extendLimits(1, 0)
 
     @Test
     public void regression_7066() {
-        DeckConfig dconf = mCol.getDecks().getConf(1);
+        DeckConfig dconf = mDecks.getConf(1);
         dconf.getJSONObject("new").put("bury", true);
         AbstractSched sched = mCol.getSched();
         addNoteUsingBasicAndReversedModel("foo", "bar");

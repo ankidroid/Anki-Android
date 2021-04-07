@@ -397,7 +397,7 @@ public class CardBrowserTest extends RobolectricTest {
     public void addCardDeckISetIfDeckIsSelectedOnOpen() {
         long initialDid = addDeck("NotDefault");
 
-        mCol.getDecks().select(initialDid);
+        mDecks.select(initialDid);
 
         CardBrowser b = getBrowserWithNoNewCards();
 
@@ -557,7 +557,7 @@ public class CardBrowserTest extends RobolectricTest {
 
 
     private void selectDefaultDeck() {
-        mCol.getDecks().select(1);
+        mDecks.select(1);
     }
 
     private void deleteCardAtPosition(CardBrowser browser, int positionToCorrupt) {
