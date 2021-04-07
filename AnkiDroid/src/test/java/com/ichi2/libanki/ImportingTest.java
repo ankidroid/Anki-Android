@@ -184,7 +184,7 @@ public class ImportingTest extends RobolectricTest {
 
       @Test
       public void test_csv2(){
-      Models mm = mCol.getModels();
+      Models mm = mModels;
       Model m = mm.current();
       Note note = mm.newField("Three");
       mm.addField(m, note);
@@ -208,7 +208,7 @@ public class ImportingTest extends RobolectricTest {
 
       @Test
       public void test_tsv_tag_modified(){
-      Models mm = mCol.getModels();
+      Models mm = mModels;
       Model m = mm.current();
       Note note = mm.newField("Top");
       mm.addField(m, note);
@@ -244,7 +244,7 @@ public class ImportingTest extends RobolectricTest {
       
       @Test
       public void test_tsv_tag_multiple_tags(){
-      Models mm = mCol.getModels();
+      Models mm = mModels;
       Model m = mm.current();
       Note note = mm.newField("Top");
       mm.addField(m, note);
@@ -278,7 +278,7 @@ public class ImportingTest extends RobolectricTest {
 
       @Test
       public void test_csv_tag_only_if_modified(){
-      Models mm = mCol.getModels();
+      Models mm = mModels;
       Model m = mm.current();
       Note note = mm.newField("Left");
       mm.addField(m, note);

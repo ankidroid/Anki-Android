@@ -108,9 +108,9 @@ public class DecksTest extends RobolectricTest {
         assertEqualsArrayList(new Long[] {childId}, mDecks.active());
         // parents with a different case should be handled correctly
         addDeck("ONE");
-        Model m = mCol.getModels().current();
+        Model m = mModels.current();
         m.put("did", addDeck("one::two"));
-        mCol.getModels().save(m, false);
+        mModels.save(m, false);
         Note n = mCol.newNote();
         n.setItem("Front", "abc");
         mCol.addNote(n);

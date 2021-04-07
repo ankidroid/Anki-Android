@@ -278,13 +278,13 @@ public class CardTemplateEditorTest extends RobolectricTest {
                 getDialogText(true));
         clickDialogButton(DialogAction.POSITIVE, true);
         advanceRobolectricLooperWithSleep();
-        Assert.assertNull("Can delete used template?", mCol.getModels().getCardIdsForModel(collectionBasicModelOriginal.getLong("id"), new int[] {0}));
+        Assert.assertNull("Can delete used template?", mModels.getCardIdsForModel(collectionBasicModelOriginal.getLong("id"), new int[] {0}));
         Assert.assertEquals("Change already in database?", collectionBasicModelOriginal.toString().trim(), getCurrentDatabaseModelCopy(modelName).toString().trim());
         Assert.assertFalse("Ordinal pending add?", TemporaryModel.isOrdinalPendingAdd(testEditor.getTempModel(), 0));
         Assert.assertEquals("Change incorrectly added to list?", 0, testEditor.getTempModel().getTemplateChanges().size());
 
         // Assert can delete 'Card 2'
-        Assert.assertNotNull("Cannot delete unused template?", mCol.getModels().getCardIdsForModel(collectionBasicModelOriginal.getLong("id"), new int[] {1}));
+        Assert.assertNotNull("Cannot delete unused template?", mModels.getCardIdsForModel(collectionBasicModelOriginal.getLong("id"), new int[] {1}));
 
         // Edit note to have Add Reverse set to 'y' so we get a second card
         selectiveGeneratedNote.setField(2, "y");
@@ -294,9 +294,9 @@ public class CardTemplateEditorTest extends RobolectricTest {
         Assert.assertEquals("should be two cards now", 2, getModelCardCount(collectionBasicModelOriginal));
 
         // - assert can delete either Card template but not both
-        Assert.assertNotNull("Cannot delete template?", mCol.getModels().getCardIdsForModel(collectionBasicModelOriginal.getLong("id"), new int[] {0}));
-        Assert.assertNotNull("Cannot delete template?", mCol.getModels().getCardIdsForModel(collectionBasicModelOriginal.getLong("id"), new int[] {1}));
-        Assert.assertNull("Can delete both templates?", mCol.getModels().getCardIdsForModel(collectionBasicModelOriginal.getLong("id"), new int[] {0, 1}));
+        Assert.assertNotNull("Cannot delete template?", mModels.getCardIdsForModel(collectionBasicModelOriginal.getLong("id"), new int[] {0}));
+        Assert.assertNotNull("Cannot delete template?", mModels.getCardIdsForModel(collectionBasicModelOriginal.getLong("id"), new int[] {1}));
+        Assert.assertNull("Can delete both templates?", mModels.getCardIdsForModel(collectionBasicModelOriginal.getLong("id"), new int[] {0, 1}));
 
         // A couple more notes to make sure things are okay
         Note secondNote = mCol.newNote(collectionBasicModelOriginal);
@@ -306,9 +306,9 @@ public class CardTemplateEditorTest extends RobolectricTest {
         mCol.addNote(secondNote);
 
         // - assert can delete either Card template but not both
-        Assert.assertNotNull("Cannot delete template?", mCol.getModels().getCardIdsForModel(collectionBasicModelOriginal.getLong("id"), new int[] {0}));
-        Assert.assertNotNull("Cannot delete template?", mCol.getModels().getCardIdsForModel(collectionBasicModelOriginal.getLong("id"), new int[] {1}));
-        Assert.assertNull("Can delete both templates?", mCol.getModels().getCardIdsForModel(collectionBasicModelOriginal.getLong("id"), new int[] {0, 1}));
+        Assert.assertNotNull("Cannot delete template?", mModels.getCardIdsForModel(collectionBasicModelOriginal.getLong("id"), new int[] {0}));
+        Assert.assertNotNull("Cannot delete template?", mModels.getCardIdsForModel(collectionBasicModelOriginal.getLong("id"), new int[] {1}));
+        Assert.assertNull("Can delete both templates?", mModels.getCardIdsForModel(collectionBasicModelOriginal.getLong("id"), new int[] {0, 1}));
     }
 
 
@@ -349,9 +349,9 @@ public class CardTemplateEditorTest extends RobolectricTest {
                 getDialogText(true));
         clickDialogButton(DialogAction.NEGATIVE, true);
         advanceRobolectricLooperWithSleep();
-        Assert.assertNotNull("Cannot delete template?", mCol.getModels().getCardIdsForModel(collectionBasicModelOriginal.getLong("id"), new int[] {0}));
-        Assert.assertNotNull("Cannot delete template?", mCol.getModels().getCardIdsForModel(collectionBasicModelOriginal.getLong("id"), new int[] {1}));
-        Assert.assertNull("Can delete both templates?", mCol.getModels().getCardIdsForModel(collectionBasicModelOriginal.getLong("id"), new int[] {0, 1}));
+        Assert.assertNotNull("Cannot delete template?", mModels.getCardIdsForModel(collectionBasicModelOriginal.getLong("id"), new int[] {0}));
+        Assert.assertNotNull("Cannot delete template?", mModels.getCardIdsForModel(collectionBasicModelOriginal.getLong("id"), new int[] {1}));
+        Assert.assertNull("Can delete both templates?", mModels.getCardIdsForModel(collectionBasicModelOriginal.getLong("id"), new int[] {0, 1}));
         Assert.assertEquals("Change in database despite no change?", collectionBasicModelOriginal.toString().trim(), getCurrentDatabaseModelCopy(modelName).toString().trim());
         Assert.assertEquals("Model should have 2 templates still", 2, testEditor.getTempModel().getTemplateCount());
 
@@ -415,13 +415,13 @@ public class CardTemplateEditorTest extends RobolectricTest {
         advanceRobolectricLooperWithSleep();
 
         // - assert can delete any 1 or 2 Card templates but not all
-        Assert.assertNotNull("Cannot delete template?", mCol.getModels().getCardIdsForModel(collectionBasicModelOriginal.getLong("id"), new int[] {0}));
-        Assert.assertNotNull("Cannot delete template?", mCol.getModels().getCardIdsForModel(collectionBasicModelOriginal.getLong("id"), new int[] {1}));
-        Assert.assertNotNull("Cannot delete template?", mCol.getModels().getCardIdsForModel(collectionBasicModelOriginal.getLong("id"), new int[] {2}));
-        Assert.assertNotNull("Cannot delete two templates?", mCol.getModels().getCardIdsForModel(collectionBasicModelOriginal.getLong("id"), new int[] {0, 1}));
-        Assert.assertNotNull("Cannot delete two templates?", mCol.getModels().getCardIdsForModel(collectionBasicModelOriginal.getLong("id"), new int[] {0, 2}));
-        Assert.assertNotNull("Cannot delete two templates?", mCol.getModels().getCardIdsForModel(collectionBasicModelOriginal.getLong("id"), new int[] {1, 2}));
-        Assert.assertNull("Can delete all templates?", mCol.getModels().getCardIdsForModel(collectionBasicModelOriginal.getLong("id"), new int[] {0, 1, 2}));
+        Assert.assertNotNull("Cannot delete template?", mModels.getCardIdsForModel(collectionBasicModelOriginal.getLong("id"), new int[] {0}));
+        Assert.assertNotNull("Cannot delete template?", mModels.getCardIdsForModel(collectionBasicModelOriginal.getLong("id"), new int[] {1}));
+        Assert.assertNotNull("Cannot delete template?", mModels.getCardIdsForModel(collectionBasicModelOriginal.getLong("id"), new int[] {2}));
+        Assert.assertNotNull("Cannot delete two templates?", mModels.getCardIdsForModel(collectionBasicModelOriginal.getLong("id"), new int[] {0, 1}));
+        Assert.assertNotNull("Cannot delete two templates?", mModels.getCardIdsForModel(collectionBasicModelOriginal.getLong("id"), new int[] {0, 2}));
+        Assert.assertNotNull("Cannot delete two templates?", mModels.getCardIdsForModel(collectionBasicModelOriginal.getLong("id"), new int[] {1, 2}));
+        Assert.assertNull("Can delete all templates?", mModels.getCardIdsForModel(collectionBasicModelOriginal.getLong("id"), new int[] {0, 1, 2}));
         Assert.assertEquals("Change already in database?", collectionBasicModelOriginal.toString().trim(), getCurrentDatabaseModelCopy(modelName).toString().trim());
 
         Assert.assertEquals("Change added but not adjusted correctly?", 1, TemporaryModel.getAdjustedAddOrdinalAtChangeIndex(testEditor.getTempModel(), 0));
@@ -477,9 +477,9 @@ public class CardTemplateEditorTest extends RobolectricTest {
         clickDialogButton(DialogAction.POSITIVE, true);
         advanceRobolectricLooperWithSleep();
         Assert.assertTrue("Model should have changed", testEditor.modelHasChanged());
-        Assert.assertNotNull("Cannot delete template?", mCol.getModels().getCardIdsForModel(collectionBasicModelOriginal.getLong("id"), new int[] {0}));
-        Assert.assertNotNull("Cannot delete template?", mCol.getModels().getCardIdsForModel(collectionBasicModelOriginal.getLong("id"), new int[] {1}));
-        Assert.assertNull("Can delete both templates?", mCol.getModels().getCardIdsForModel(collectionBasicModelOriginal.getLong("id"), new int[] {0, 1}));
+        Assert.assertNotNull("Cannot delete template?", mModels.getCardIdsForModel(collectionBasicModelOriginal.getLong("id"), new int[] {0}));
+        Assert.assertNotNull("Cannot delete template?", mModels.getCardIdsForModel(collectionBasicModelOriginal.getLong("id"), new int[] {1}));
+        Assert.assertNull("Can delete both templates?", mModels.getCardIdsForModel(collectionBasicModelOriginal.getLong("id"), new int[] {0, 1}));
         Assert.assertEquals("Change in database despite no save?", collectionBasicModelOriginal.toString().trim(), getCurrentDatabaseModelCopy(modelName).toString().trim());
         Assert.assertEquals("Model should have 1 template", 1, testEditor.getTempModel().getTemplateCount());
 
@@ -502,9 +502,9 @@ public class CardTemplateEditorTest extends RobolectricTest {
         clickDialogButton(DialogAction.POSITIVE, true);
         advanceRobolectricLooperWithSleep();
         Assert.assertTrue("Model should have changed", testEditor.modelHasChanged());
-        Assert.assertNotNull("Cannot delete template?", mCol.getModels().getCardIdsForModel(collectionBasicModelOriginal.getLong("id"), new int[] {0}));
-        Assert.assertNotNull("Cannot delete template?", mCol.getModels().getCardIdsForModel(collectionBasicModelOriginal.getLong("id"), new int[] {1}));
-        Assert.assertNull("Can delete both templates?", mCol.getModels().getCardIdsForModel(collectionBasicModelOriginal.getLong("id"), new int[] {0, 1}));
+        Assert.assertNotNull("Cannot delete template?", mModels.getCardIdsForModel(collectionBasicModelOriginal.getLong("id"), new int[] {0}));
+        Assert.assertNotNull("Cannot delete template?", mModels.getCardIdsForModel(collectionBasicModelOriginal.getLong("id"), new int[] {1}));
+        Assert.assertNull("Can delete both templates?", mModels.getCardIdsForModel(collectionBasicModelOriginal.getLong("id"), new int[] {0, 1}));
         Assert.assertEquals("Change in database despite no save?", collectionBasicModelOriginal.toString().trim(), getCurrentDatabaseModelCopy(modelName).toString().trim());
         Assert.assertEquals("Model should have 1 template", 1, testEditor.getTempModel().getTemplateCount());
 
@@ -537,7 +537,7 @@ public class CardTemplateEditorTest extends RobolectricTest {
 
     private int getModelCardCount(Model model) {
         int cardCount = 0;
-        for (Long noteId : mCol.getModels().nids(model)) {
+        for (Long noteId : mModels.nids(model)) {
             cardCount += mCol.getNote(noteId).numberOfCards();
         }
         return cardCount;

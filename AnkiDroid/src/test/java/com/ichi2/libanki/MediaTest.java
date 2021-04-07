@@ -35,7 +35,7 @@ public class MediaTest extends RobolectricTest {
        } */
     @Test
     public void test_strings() {
-        long mid = mCol.getModels().current().getLong("id");
+        long mid = mModels.current().getLong("id");
         assertEquals(0, mCol.getMedia().filesInStr(mid, "aoeu").size());
         assertEqualsArrayList(new String[] {"foo.jpg"}, mCol.getMedia().filesInStr(mid, "aoeu<img src='foo.jpg'>ao"));
         assertEqualsArrayList(new String[] {"foo.jpg"}, mCol.getMedia().filesInStr(mid, "aoeu<img src='foo.jpg' style='test'>ao"));

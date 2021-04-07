@@ -34,7 +34,7 @@ public class LaTeXTest extends RobolectricTest {
     @Test
     public void  _imgLinkTest() {
         Media m = new MockMedia(mCol);
-        Model model = mCol.getModels().byName("Basic");
+        Model model = mModels.byName("Basic");
         // The hashing function should never change, as it would broke link. So hard coding the expected hash value is valid
         // Test with media access
         assertThat(LaTeX._imgLink("$\\sqrt[3]{2} + \\text{\"var\"}$", model, m),
@@ -48,7 +48,7 @@ public class LaTeXTest extends RobolectricTest {
     @Test
     public void  mungeQATest() {
         Media m = new MockMedia(mCol);
-        Model model = mCol.getModels().byName("Basic");
+        Model model = mModels.byName("Basic");
 
         // Test with media access
         assertThat(LaTeX.mungeQA("[$]\\sqrt[3]{2} + \\text{\"var\"}[/$]", m, model),

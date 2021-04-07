@@ -53,7 +53,7 @@ public class CardTest extends RobolectricTest {
         note.setItem("Back", "2");
         mCol.addNote(note);
         Card c = note.cards().get(0);
-        long id = mCol.getModels().current().getLong("id");
+        long id = mModels.current().getLong("id");
         assertEquals(0, c.template().getInt("ord"));
     }
 
@@ -65,8 +65,8 @@ public class CardTest extends RobolectricTest {
         note.setItem("Back", "");
         mCol.addNote(note);
         assertEquals(1, note.numberOfCards());
-        Model m = mCol.getModels().current();
-        Models mm = mCol.getModels();
+        Model m = mModels.current();
+        Models mm = mModels;
         // adding a new template should automatically create cards
         JSONObject t = Models.newTemplate("rev");
         t.put("qfmt", "{{Front}}");
@@ -91,8 +91,8 @@ public class CardTest extends RobolectricTest {
 
     @Test
     public void test_gendeck() {
-        Model cloze = mCol.getModels().byName("Cloze");
-        mCol.getModels().setCurrent(cloze);
+        Model cloze = mModels.byName("Cloze");
+        mModels.setCurrent(cloze);
         Note note = mCol.newNote();
         note.setItem("Text", "{{c1::one}}");
         mCol.addNote(note);
@@ -101,7 +101,7 @@ public class CardTest extends RobolectricTest {
         // set the model to a new default col
         long newId = addDeck("new");
         cloze.put("did", newId);
-        mCol.getModels().save(cloze, false);
+        mModels.save(cloze, false);
         // a newly generated card should share the first card's col
         note.setItem("Text", "{{c2::two}}");
         note.flush();
@@ -122,14 +122,13 @@ public class CardTest extends RobolectricTest {
 
     @Test
     public void test_gen_or() throws ConfirmModSchemaException {
-        Models models = mCol.getModels();
-        Model model = models.byName("Basic");
+        Model model = mModels.byName("Basic");
         JSONArray flds = model.getJSONArray("flds");
-        models.renameField(model, flds.getJSONObject(0), "A");
-        models.renameField(model, flds.getJSONObject(1), "B");
-        JSONObject fld2 = models.newField("C");
+        mModels.renameField(model, flds.getJSONObject(0), "A");
+        mModels.renameField(model, flds.getJSONObject(1), "B");
+        JSONObject fld2 = mModels.newField("C");
         fld2.put("ord", NULL);
-        models.addField(model, fld2);
+        mModels.addField(model, fld2);
 
         JSONArray tmpls = model.getJSONArray("tmpls");
         tmpls.getJSONObject(0).put("qfmt", "{{A}}{{B}}{{C}}");
@@ -137,10 +136,10 @@ public class CardTest extends RobolectricTest {
         // because at last one card is generated
         JSONObject tmpl = Models.newTemplate("AND_OR");
         tmpl.put("qfmt", "        {{A}}    {{#B}}        {{#C}}            {{B}}        {{/C}}    {{/B}}");
-        models.addTemplate(model, tmpl);
+        mModels.addTemplate(model, tmpl);
 
-        models.save(model);
-        models.setCurrent(model);
+        mModels.save(model);
+        mModels.setCurrent(model);
 
         Note note = mCol.newNote();
         note.setItem("A", "foo");
@@ -178,16 +177,15 @@ public class CardTest extends RobolectricTest {
 
     @Test
     public void test_gen_not() throws ConfirmModSchemaException {
-        Models models = mCol.getModels();
-        Model model = models.byName("Basic");
+        Model model = mModels.byName("Basic");
         JSONArray flds = model.getJSONArray("flds");
         JSONArray tmpls = model.getJSONArray("tmpls");
 
-        models.renameField(model, flds.getJSONObject(0), "First");
-        models.renameField(model, flds.getJSONObject(1), "Front");
-        JSONObject fld2 = models.newField("AddIfEmpty");
+        mModels.renameField(model, flds.getJSONObject(0), "First");
+        mModels.renameField(model, flds.getJSONObject(1), "Front");
+        JSONObject fld2 = mModels.newField("AddIfEmpty");
         fld2.put("name", "AddIfEmpty");
-        models.addField(model, fld2);
+        mModels.addField(model, fld2);
 
         // ensure first card is always generated,
         // because at last one card is generated
@@ -195,10 +193,10 @@ public class CardTest extends RobolectricTest {
         JSONObject tmpl = Models.newTemplate("NOT");
         tmpl.put("qfmt", "    {{^AddIfEmpty}}        {{Front}}    {{/AddIfEmpty}}    ");
 
-        models.addTemplate(model, tmpl);
+        mModels.addTemplate(model, tmpl);
 
-        models.save(model);
-        models.setCurrent(model);
+        mModels.save(model);
+        mModels.setCurrent(model);
 
         Note note = mCol.newNote();
         note.setItem("First", "foo");

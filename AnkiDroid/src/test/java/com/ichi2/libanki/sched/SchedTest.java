@@ -231,7 +231,7 @@ public class SchedTest extends RobolectricTest {
         // disabled for now, as the learn fudging makes this randomly fail
         // // the default order should ensure siblings are not seen together, and
         // // should show all cards
-        // Model m = mCol.getModels().current(); Models mm = mCol.getModels()
+        // Model m = mModels.current(); Models mm = mModels
         // JSONObject t = mm.newTemplate("Reverse")
         // t['qfmt'] = "{{Back}}"
         // t['afmt'] = "{{Front}}"
@@ -1038,8 +1038,8 @@ public class SchedTest extends RobolectricTest {
     public void test_ordcycleV1() throws Exception {
         getCol(1);
         // add two more templates and set second active
-        Model m = mCol.getModels().current();
-        Models mm = mCol.getModels();
+        Model m = mModels.current();
+        Models mm = mModels;
         JSONObject t = Models.newTemplate("Reverse");
         t.put("qfmt", "{{Back}}");
         t.put("afmt", "{{Front}}");

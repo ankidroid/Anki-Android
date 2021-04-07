@@ -363,15 +363,15 @@ public class NoteEditorTest extends RobolectricTest {
 
     private Model makeNoteForType(NoteType noteType) {
         switch (noteType) {
-            case BASIC: return mCol.getModels().byName("Basic");
-            case CLOZE: return mCol.getModels().byName("Cloze");
+            case BASIC: return mModels.byName("Basic");
+            case CLOZE: return mModels.byName("Cloze");
             case BACKTOFRONT: {
                 String name = super.addNonClozeModel("Reversed", new String[] {"Front", "Back"}, "{{Back}}", "{{Front}}");
-                return mCol.getModels().byName(name);
+                return mModels.byName(name);
             }
             case THREE_FIELD_INVALID_TEMPLATE: {
                 String name = super.addNonClozeModel("Invalid", new String[] {"Front", "Back", "Side"}, "", "");
-                return mCol.getModels().byName(name);
+                return mModels.byName(name);
             }
             default: throw new IllegalStateException(String.format("unexpected value: %s", noteType));
         }
@@ -477,7 +477,7 @@ public class NoteEditorTest extends RobolectricTest {
         }
 
         public <T extends NoteEditor> T build(Class<T> clazz) {
-            mCol.getModels().setCurrent(mModel);
+            mModels.setCurrent(mModel);
             T noteEditor = getNoteEditorAddingNote(FromScreen.REVIEWER, clazz);
             advanceRobolectricLooper();
             noteEditor.setFieldValueFromUi(0, mFirstField);

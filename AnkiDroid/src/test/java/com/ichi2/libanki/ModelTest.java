@@ -45,15 +45,15 @@ public class ModelTest extends RobolectricTest {
         note.setItem("Back", "2");
         mCol.addNote(note);
         assertEquals(1, mCol.cardCount());
-        mCol.getModels().rem(mCol.getModels().current());
+        mModels.rem(mModels.current());
         assertEquals(0, mCol.cardCount());
     }
 
 
     @Test
     public void test_modelCopy() {
-        Model m = mCol.getModels().current();
-        Model m2 = mCol.getModels().copy(m);
+        Model m = mModels.current();
+        Model m2 = mModels.copy(m);
         assertEquals("Basic copy", m2.getString("name"));
         assertNotEquals(m2.getLong("id"), m.getLong("id"));
         assertEquals(2, m2.getJSONArray("flds").length());
@@ -61,7 +61,7 @@ public class ModelTest extends RobolectricTest {
         assertEquals(m.getJSONArray("flds").length(), m2.getJSONArray("flds").length());
         assertEquals(1, m.getJSONArray("tmpls").length());
         assertEquals(1, m2.getJSONArray("tmpls").length());
-        assertEquals(mCol.getModels().scmhash(m), mCol.getModels().scmhash(m2));
+        assertEquals(mModels.scmhash(m), mModels.scmhash(m2));
     }
 
 
@@ -71,52 +71,52 @@ public class ModelTest extends RobolectricTest {
         note.setItem("Front", "1");
         note.setItem("Back", "2");
         mCol.addNote(note);
-        Model m = mCol.getModels().current();
+        Model m = mModels.current();
         // make sure renaming a field updates the templates
-        mCol.getModels().renameField(m, m.getJSONArray("flds").getJSONObject(0), "NewFront");
+        mModels.renameField(m, m.getJSONArray("flds").getJSONObject(0), "NewFront");
         assertThat(m.getJSONArray("tmpls").getJSONObject(0).getString("qfmt"), containsString("{{NewFront}}"));
-        String h = mCol.getModels().scmhash(m);
+        String h = mModels.scmhash(m);
         // add a field
-        JSONObject field = mCol.getModels().newField("foo");
-        mCol.getModels().addField(m, field);
-        assertArrayEquals(new String[] {"1", "2", ""}, mCol.getNote(mCol.getModels().nids(m).get(0)).getFields());
-        assertNotEquals(h, mCol.getModels().scmhash(m));
+        JSONObject field = mModels.newField("foo");
+        mModels.addField(m, field);
+        assertArrayEquals(new String[] {"1", "2", ""}, mCol.getNote(mModels.nids(m).get(0)).getFields());
+        assertNotEquals(h, mModels.scmhash(m));
         // rename it
         field = m.getJSONArray("flds").getJSONObject(2);
-        mCol.getModels().renameField(m, field, "bar");
-        assertEquals("", mCol.getNote(mCol.getModels().nids(m).get(0)).getItem("bar"));
+        mModels.renameField(m, field, "bar");
+        assertEquals("", mCol.getNote(mModels.nids(m).get(0)).getItem("bar"));
         // delete back
-        mCol.getModels().remField(m, m.getJSONArray("flds").getJSONObject(1));
-        assertArrayEquals(new String[] {"1", ""}, mCol.getNote(mCol.getModels().nids(m).get(0)).getFields());
+        mModels.remField(m, m.getJSONArray("flds").getJSONObject(1));
+        assertArrayEquals(new String[] {"1", ""}, mCol.getNote(mModels.nids(m).get(0)).getFields());
         // move 0 -> 1
-        mCol.getModels().moveField(m, m.getJSONArray("flds").getJSONObject(0), 1);
-        assertArrayEquals(new String[] {"", "1"}, mCol.getNote(mCol.getModels().nids(m).get(0)).getFields());
+        mModels.moveField(m, m.getJSONArray("flds").getJSONObject(0), 1);
+        assertArrayEquals(new String[] {"", "1"}, mCol.getNote(mModels.nids(m).get(0)).getFields());
         // move 1 -> 0
-        mCol.getModels().moveField(m, m.getJSONArray("flds").getJSONObject(1), 0);
-        assertArrayEquals(new String[] {"1", ""}, mCol.getNote(mCol.getModels().nids(m).get(0)).getFields());
+        mModels.moveField(m, m.getJSONArray("flds").getJSONObject(1), 0);
+        assertArrayEquals(new String[] {"1", ""}, mCol.getNote(mModels.nids(m).get(0)).getFields());
         // add another and put in middle
-        field = mCol.getModels().newField("baz");
-        mCol.getModels().addField(m, field);
-        note = mCol.getNote(mCol.getModels().nids(m).get(0));
+        field = mModels.newField("baz");
+        mModels.addField(m, field);
+        note = mCol.getNote(mModels.nids(m).get(0));
         note.setItem("baz", "2");
         note.flush();
-        assertArrayEquals(new String[] {"1", "", "2"}, mCol.getNote(mCol.getModels().nids(m).get(0)).getFields());
+        assertArrayEquals(new String[] {"1", "", "2"}, mCol.getNote(mModels.nids(m).get(0)).getFields());
         // move 2 -> 1
-        mCol.getModels().moveField(m, m.getJSONArray("flds").getJSONObject(2), 1);
-        assertArrayEquals(new String[] {"1", "2", ""}, mCol.getNote(mCol.getModels().nids(m).get(0)).getFields());
+        mModels.moveField(m, m.getJSONArray("flds").getJSONObject(2), 1);
+        assertArrayEquals(new String[] {"1", "2", ""}, mCol.getNote(mModels.nids(m).get(0)).getFields());
         // move 0 -> 2
-        mCol.getModels().moveField(m, m.getJSONArray("flds").getJSONObject(0), 2);
-        assertArrayEquals(new String[] {"2", "", "1"}, mCol.getNote(mCol.getModels().nids(m).get(0)).getFields());
+        mModels.moveField(m, m.getJSONArray("flds").getJSONObject(0), 2);
+        assertArrayEquals(new String[] {"2", "", "1"}, mCol.getNote(mModels.nids(m).get(0)).getFields());
         // move 0 -> 1
-        mCol.getModels().moveField(m, m.getJSONArray("flds").getJSONObject(0), 1);
-        assertArrayEquals(new String[] {"", "2", "1"}, mCol.getNote(mCol.getModels().nids(m).get(0)).getFields());
+        mModels.moveField(m, m.getJSONArray("flds").getJSONObject(0), 1);
+        assertArrayEquals(new String[] {"", "2", "1"}, mCol.getNote(mModels.nids(m).get(0)).getFields());
     }
 
 
     @Test
     public void test_templates() throws ConfirmModSchemaException {
-        Model m = mCol.getModels().current();
-        Models mm = mCol.getModels();
+        Model m = mModels.current();
+        Models mm = mModels;
         JSONObject t = Models.newTemplate("Reverse");
         t.put("qfmt", "{{Back}}");
         t.put("afmt", "{{Front}}");
@@ -135,13 +135,13 @@ public class ModelTest extends RobolectricTest {
         assertEquals(0, c.getOrd());
         assertEquals(1, c2.getOrd());
         // switch templates
-        mCol.getModels().moveTemplate(m, c.template(), 1);
+        mModels.moveTemplate(m, c.template(), 1);
         c.load();
         c2.load();
         assertEquals(1, c.getOrd());
         assertEquals(0, c2.getOrd());
         // removing a template should delete its cards
-        mCol.getModels().remTemplate(m, m.getJSONArray("tmpls").getJSONObject(0));
+        mModels.remTemplate(m, m.getJSONArray("tmpls").getJSONObject(0));
         assertEquals(1, mCol.cardCount());
         // and should have updated the other cards' ordinals
         c = note.cards().get(0);
@@ -150,7 +150,7 @@ public class ModelTest extends RobolectricTest {
         // it shouldn't be possible to orphan notes by removing templates
         t = Models.newTemplate("template name");
         mm.addTemplateModChanged(m, t);
-        mCol.getModels().remTemplate(m, m.getJSONArray("tmpls").getJSONObject(0));
+        mModels.remTemplate(m, m.getJSONArray("tmpls").getJSONObject(0));
         assertEquals(0,
                 mCol.getDb().queryLongScalar(
                         "select count() from cards where nid not in (select id from notes)"));
@@ -159,9 +159,9 @@ public class ModelTest extends RobolectricTest {
 
     @Test
     public void test_cloze_ordinals() throws ConfirmModSchemaException {
-        mCol.getModels().setCurrent(mCol.getModels().byName("Cloze"));
-        Model m = mCol.getModels().current();
-        Models mm = mCol.getModels();
+        mModels.setCurrent(mModels.byName("Cloze"));
+        Model m = mModels.current();
+        Models mm = mModels;
 
         // We replace the default Cloze template
         JSONObject t = Models.newTemplate("ChainedCloze");
@@ -169,7 +169,7 @@ public class ModelTest extends RobolectricTest {
         t.put("afmt", "{{text:cloze:Text}}");
         mm.addTemplateModChanged(m, t);
         mm.save(m);
-        mCol.getModels().remTemplate(m, m.getJSONArray("tmpls").getJSONObject(0));
+        mModels.remTemplate(m, m.getJSONArray("tmpls").getJSONObject(0));
 
         Note note = mCol.newNote();
         note.setItem("Text", "{{c1::firstQ::firstA}}{{c2::secondQ::secondA}}");
@@ -186,7 +186,7 @@ public class ModelTest extends RobolectricTest {
 
     @Test
     public void test_cloze_empty() {
-        Models mm = mCol.getModels();
+        Models mm = mModels;
         Model cloze_model = mm.byName("Cloze");
         mm.setCurrent(cloze_model);
         assertListEquals(Arrays.asList(0, 1), Models.availOrds(cloze_model, new String[]{"{{c1::Empty}} and {{c2::}}", ""}));
@@ -195,9 +195,9 @@ public class ModelTest extends RobolectricTest {
 
     @Test
     public void test_text() {
-        Model m = mCol.getModels().current();
+        Model m = mModels.current();
         m.getJSONArray("tmpls").getJSONObject(0).put("qfmt", "{{text:Front}}");
-        mCol.getModels().save(m);
+        mModels.save(m);
         Note note = mCol.newNote();
         note.setItem("Front", "hello<b>world");
         mCol.addNote(note);
@@ -207,7 +207,7 @@ public class ModelTest extends RobolectricTest {
 
     @Test
     public void test_cloze() {
-        mCol.getModels().setCurrent(mCol.getModels().byName("Cloze"));
+        mModels.setCurrent(mModels.byName("Cloze"));
         Note note = mCol.newNote();
         assertEquals("Cloze", note.model().getString("name"));
         // a cloze model with no clozes is not empty
@@ -288,7 +288,7 @@ public class ModelTest extends RobolectricTest {
 
     @Test
     public void test_cloze_mathjax() {
-        mCol.getModels().setCurrent(mCol.getModels().byName("Cloze"));
+        mModels.setCurrent(mModels.byName("Cloze"));
         Note note = mCol.newNote();
         note.setItem("Text", "{{c1::ok}} \\(2^2\\) {{c2::not ok}} \\(2^{{c3::2}}\\) \\(x^3\\) {{c4::blah}} {{c5::text with \\(x^2\\) jax}}");
         assertNotEquals(0, mCol.addNote(note));
@@ -310,10 +310,10 @@ public class ModelTest extends RobolectricTest {
 
     @Test
     public void test_typecloze() {
-        Model m = mCol.getModels().byName("Cloze");
-        mCol.getModels().setCurrent(m);
+        Model m = mModels.byName("Cloze");
+        mModels.setCurrent(m);
         m.getJSONArray("tmpls").getJSONObject(0).put("qfmt", "{{cloze:Text}}{{type:cloze:Text}}");
-        mCol.getModels().save(m);
+        mModels.save(m);
         Note note = mCol.newNote();
         note.setItem("Text", "hello {{c1::world}}");
         mCol.addNote(note);
@@ -323,9 +323,9 @@ public class ModelTest extends RobolectricTest {
 
     @Test
     public void test_chained_mods() throws ConfirmModSchemaException {
-        mCol.getModels().setCurrent(mCol.getModels().byName("Cloze"));
-        Model m = mCol.getModels().current();
-        Models mm = mCol.getModels();
+        mModels.setCurrent(mModels.byName("Cloze"));
+        Model m = mModels.current();
+        Models mm = mModels;
 
         // We replace the default Cloze template
         JSONObject t = Models.newTemplate("ChainedCloze");
@@ -333,7 +333,7 @@ public class ModelTest extends RobolectricTest {
         t.put("afmt", "{{cloze:text:Text}}");
         mm.addTemplateModChanged(m, t);
         mm.save(m);
-        mCol.getModels().remTemplate(m, m.getJSONArray("tmpls").getJSONObject(0));
+        mModels.remTemplate(m, m.getJSONArray("tmpls").getJSONObject(0));
 
         Note note = mCol.newNote();
         String q1 = "<span style=\"color:red\">phrase</span>";
@@ -355,10 +355,10 @@ public class ModelTest extends RobolectricTest {
 
     @Test
     public void test_modelChange() throws ConfirmModSchemaException {
-        Model cloze = mCol.getModels().byName("Cloze");
+        Model cloze = mModels.byName("Cloze");
         // enable second template and add a note
-        Model basic = mCol.getModels().current();
-        Models mm = mCol.getModels();
+        Model basic = mModels.current();
+        Models mm = mModels;
         JSONObject t = Models.newTemplate("Reverse");
         t.put("qfmt", "{{Back}}");
         t.put("afmt", "{{Front}}");
@@ -372,7 +372,7 @@ public class ModelTest extends RobolectricTest {
         Map<Integer, Integer> map = new HashMap<>();
         map.put(0, 1);
         map.put(1, 0);
-        mCol.getModels().change(basic, note.getId(), basic, map, null);
+        mModels.change(basic, note.getId(), basic, map, null);
         note.load();
         assertEquals("b123", note.getItem("Front"));
         assertEquals("note", note.getItem("Back"));
@@ -383,7 +383,7 @@ public class ModelTest extends RobolectricTest {
         assertThat(c1.q(), containsString("note"));
         assertEquals(0, c0.getOrd());
         assertEquals(1, c1.getOrd());
-        mCol.getModels().change(basic, note.getId(), basic, null, map);
+        mModels.change(basic, note.getId(), basic, null, map);
         note.load();
         c0.load();
         c1.load();
@@ -401,7 +401,7 @@ public class ModelTest extends RobolectricTest {
         //     // The low precision timer on Windows reveals a race condition
         //     time.sleep(0.05);
         // }
-        mCol.getModels().change(basic, note.getId(), basic, null, map);
+        mModels.change(basic, note.getId(), basic, null, map);
         note.load();
         c0.load();
         // the card was deleted
@@ -410,7 +410,7 @@ public class ModelTest extends RobolectricTest {
         // an unmapped field becomes blank
         assertEquals("b123", note.getItem("Front"));
         assertEquals("note", note.getItem("Back"));
-        mCol.getModels().change(basic, note.getId(), basic, map, null);
+        mModels.change(basic, note.getId(), basic, map, null);
         note.load();
         assertEquals("", note.getItem("Front"));
         assertEquals("note", note.getItem("Back"));
@@ -419,24 +419,24 @@ public class ModelTest extends RobolectricTest {
         note.setItem("Front", "f2");
         note.setItem("Back", "b2");
         mCol.addNote(note);
-        // counts = mCol.getModels().all_use_counts();
+        // counts = mModels.all_use_counts();
         // Using older version of the test
-        assertEquals(2, mCol.getModels().useCount(basic));
-        assertEquals(0, mCol.getModels().useCount(cloze));
+        assertEquals(2, mModels.useCount(basic));
+        assertEquals(0, mModels.useCount(cloze));
         // Identity map
         map = new HashMap<>();
         map.put(0, 0);
         map.put(1, 1);
-        mCol.getModels().change(basic, note.getId(), cloze, map, map);
+        mModels.change(basic, note.getId(), cloze, map, map);
         note.load();
         assertEquals("f2", note.getItem("Text"));
         assertEquals(2, note.numberOfCards());
         // back the other way, with deletion of second ord
-        mCol.getModels().remTemplate(basic, basic.getJSONArray("tmpls").getJSONObject(1));
+        mModels.remTemplate(basic, basic.getJSONArray("tmpls").getJSONObject(1));
         assertEquals(2, mCol.getDb().queryScalar("select count() from cards where nid = ?", note.getId()));
         map = new HashMap<>();
         map.put(0, 0);
-        mCol.getModels().change(cloze, note.getId(), basic, map, map);
+        mModels.change(cloze, note.getId(), basic, map, map);
         assertEquals(1, mCol.getDb().queryScalar("select count() from cards where nid = ?", note.getId()));
     }
 
@@ -451,7 +451,7 @@ public class ModelTest extends RobolectricTest {
     @Test
     @Config(qualifiers = "en")
     public void regression_test_pipe() {
-        Models mm = mCol.getModels();
+        Models mm = mModels;
         Model basic = mm.byName("Basic");
         JSONObject template = basic.getJSONArray("tmpls").getJSONObject(0);
         template.put("qfmt", "{{|Front}}{{Front}}{{/Front}}{{Front}}");
@@ -473,7 +473,7 @@ public class ModelTest extends RobolectricTest {
 
     @Test
     public void nonEmptyFieldTest() {
-        Models mm = mCol.getModels();
+        Models mm = mModels;
         Model basic = mm.byName("Basic");
         Set s = new HashSet<>();
         assertEquals(s, basic.nonEmptyFields(new String[] {"", ""}));
@@ -486,7 +486,7 @@ public class ModelTest extends RobolectricTest {
 
     @Test
     public void avail_standard_order_test() {
-        Models mm = mCol.getModels();
+        Models mm = mModels;
         Model basic = mm.byName("Basic");
         Model reverse = mm.byName("Basic (and reversed card)");
 
@@ -520,7 +520,7 @@ public class ModelTest extends RobolectricTest {
 
     @Test
     public void avail_ords_test() {
-        Models mm = mCol.getModels();
+        Models mm = mModels;
         Model basic = mm.byName("Basic");
         Model reverse = mm.byName("Basic (and reversed card)");
 

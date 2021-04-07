@@ -229,10 +229,8 @@ public class ReviewerTest extends RobolectricTest {
 
     @Test
     public void baseDeckName() {
-        Models models = mCol.getModels();
-
         Long didAb = addDeck("A::B");
-        Model basic = models.byName(AnkiDroidApp.getAppResources().getString(R.string.basic_model_name));
+        Model basic = mModels.byName(AnkiDroidApp.getAppResources().getString(R.string.basic_model_name));
         basic.put("did", didAb);
         addNoteUsingBasicModel("foo", "bar");
         Long didA = addDeck("A");
@@ -312,14 +310,13 @@ public class ReviewerTest extends RobolectricTest {
 
 
     private void addNoteWithThreeCards() throws ConfirmModSchemaException {
-        Models models = mCol.getModels();
-        Model m = models.copy(models.current());
+        Model m = mModels.copy(mModels.current());
         m.put("name", "Three");
-        models.add(m);
-        m = models.byName("Three");
-        models.flush();
-        cloneTemplate(models, m);
-        cloneTemplate(models, m);
+        mModels.add(m);
+        m = mModels.byName("Three");
+        mModels.flush();
+        cloneTemplate(mModels, m);
+        cloneTemplate(mModels, m);
 
         Note newNote = mCol.newNote();
         newNote.setField(0, "Hello");
@@ -339,7 +336,7 @@ public class ReviewerTest extends RobolectricTest {
         String card_name = getTargetContext().getString(R.string.card_n_name, tmpls.length() + 1);
         newTemplate.put("name", card_name);
 
-        models.addTemplate(m, newTemplate);
+        mModels.addTemplate(m, newTemplate);
     }
 
 

@@ -160,7 +160,6 @@ public class AbstractSchedTest extends RobolectricTest {
     public void siblingCorrectlyBuried() {
         // #6903
         AbstractSched sched = mCol.getSched();
-        Models models = mCol.getModels();
         DeckConfig dconf = mDecks.getConf(1);
         dconf.getJSONObject("new").put("bury", true);
         final int nbNote = 2;
@@ -243,13 +242,11 @@ public class AbstractSchedTest extends RobolectricTest {
         }
 
         public void test() {
-            Models models = mCol.getModels();
-
             DeckConfig dconf = decks.getConf(1);
             dconf.getJSONObject("new").put("perDay", 0);
 
 
-            Model model = models.byName("Basic");
+            Model model = mModels.byName("Basic");
             for (long did : new long[]{cId, dId}) {
                 // The note is added in model's did. So change model's did.
                 model.put("did", did);
