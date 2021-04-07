@@ -10,21 +10,17 @@ public class ActivityTransitionAnimation {
     public static void slide(Activity activity, Direction direction) {
         switch (direction) {
             case START:
-                if (isRightToLeft(activity)) 
-                {
-                        activity.overridePendingTransition(R.anim.slide_right_in, R.anim.slide_right_out);
-                }
-                else{
+                if (isRightToLeft(activity)) {
+                    activity.overridePendingTransition(R.anim.slide_right_in, R.anim.slide_right_out);
+                } else {
                     activity.overridePendingTransition(R.anim.slide_left_in, R.anim.slide_left_out);
                 }
                 break;
             case END:
-                if(isRightToLeft(activity))
-                {
+                if (isRightToLeft(activity)) {
                     activity.overridePendingTransition(R.anim.slide_left_in, R.anim.slide_left_out);
-                }
-                else{
-                activity.overridePendingTransition(R.anim.slide_right_in, R.anim.slide_right_out);
+                } else {
+                    activity.overridePendingTransition(R.anim.slide_right_in, R.anim.slide_right_out);
                 }
                 break;
             case FADE:
@@ -58,4 +54,3 @@ public class ActivityTransitionAnimation {
         return c.getResources().getConfiguration().getLayoutDirection() == LayoutDirection.RTL;
     }
 }
-
