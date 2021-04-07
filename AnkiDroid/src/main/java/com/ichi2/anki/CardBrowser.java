@@ -687,30 +687,27 @@ public class CardBrowser extends NavigationDrawerActivity implements
         });
         mCardsListView.setOnItemLongClickListener((adapterView, view, position, id) -> {
             if (mInMultiSelectMode) {
-                if (!mCheckedCards.contains(mCardsListView.getItemAtPosition(position))) {
-                    for (int i = Math.min(mLastSelectedPosition, position); i <= Math.max(mLastSelectedPosition, position); i++) {
-                        // Fetch card at position i.
-                        CardCache card = (CardCache) mCardsListView.getItemAtPosition(i);
+                for (int i = Math.min(mLastSelectedPosition, position); i <= Math.max(mLastSelectedPosition, position); i++) {
+                    // Fetch card at position i.
+                    CardCache card = (CardCache) mCardsListView.getItemAtPosition(i);
 
-                        // If card is not in the list of checked cards, then add it.
-                        if (!mCheckedCards.contains(card)) {
-                            mCheckedCards.add(card);
-                            onSelectionChanged();
-                        }
+                    // If card is not in the list of checked cards, then add it.
+                    if (mCheckedCards.add(card)) {
+                        onSelectionChanged();
                     }
                 }
             } else {
                 mLastSelectedPosition = position;
                 saveScrollingState(position);
                 loadMultiSelectMode();
-            }
 
-            // click on whole cell triggers select
-            CheckBox cb = view.findViewById(R.id.card_checkbox);
-            cb.toggle();
-            onCheck(position, view);
-            recenterListView(view);
-            mCardsAdapter.notifyDataSetChanged();
+                // click on whole cell triggers select
+                CheckBox cb = view.findViewById(R.id.card_checkbox);
+                cb.toggle();
+                onCheck(position, view);
+                recenterListView(view);
+                mCardsAdapter.notifyDataSetChanged();
+            }
             return true;
         });
 
