@@ -35,7 +35,7 @@ public class TextCardExporterTest extends RobolectricTest {
         note.setTagsFromStr("tag, tag2");
         col.addNote(note);
         noteList.add(note);
-        // with a different col
+        // with a different note
         note = col.newNote();
         note.setItem("Front", "baz");
         note.setItem("Back", "qux");
