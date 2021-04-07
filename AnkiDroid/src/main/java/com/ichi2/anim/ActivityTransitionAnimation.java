@@ -4,8 +4,6 @@ import android.content.Context;
 import android.util.LayoutDirection;
 import com.ichi2.anki.R;
 
-
-
 public class ActivityTransitionAnimation {
     public static void slide(Activity activity, Direction direction) {
         switch (direction) {
@@ -48,8 +46,8 @@ public class ActivityTransitionAnimation {
         DIALOG_EXIT,
         NONE
     }
-    //This is used to determine If the current layout is RTL or not
-    static boolean isRightToLeft(Context c)
+
+    private static boolean isRightToLeft(Context c)
     {
         return c.getResources().getConfiguration().getLayoutDirection() == LayoutDirection.RTL;
     }
