@@ -33,7 +33,7 @@ import static org.mockito.Mockito.mock;
 import static org.robolectric.Shadows.shadowOf;
 
 @RunWith(AndroidJUnit4.class)
-public class ReadTextTest extends RobolectricTestBase {
+public class ReadTextTest extends RobolectricTest {
 
     @Before
     public void init() {

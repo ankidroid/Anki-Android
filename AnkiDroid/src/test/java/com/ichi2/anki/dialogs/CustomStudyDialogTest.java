@@ -23,7 +23,7 @@ import com.afollestad.materialdialogs.MaterialDialog;
 import com.ichi2.anki.AnkiActivity;
 import com.ichi2.anki.CardTemplateBrowserAppearanceEditor;
 import com.ichi2.anki.R;
-import com.ichi2.anki.RobolectricTestBase;
+import com.ichi2.anki.RobolectricTest;
 import com.ichi2.anki.dialogs.CustomStudyDialog.CustomStudyListener;
 import com.ichi2.libanki.Deck;
 
@@ -43,7 +43,7 @@ import static org.hamcrest.Matchers.is;
 import static org.hamcrest.core.IsNull.notNullValue;
 
 @RunWith(AndroidJUnit4.class)
-public class CustomStudyDialogTest extends RobolectricTestBase {
+public class CustomStudyDialogTest extends RobolectricTest {
 
     @Test
     public void learnAheadCardsRegressionTest() {

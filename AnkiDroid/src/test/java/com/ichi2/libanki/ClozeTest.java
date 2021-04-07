@@ -2,7 +2,7 @@ package com.ichi2.libanki;
 
 import android.content.Context;
 
-import com.ichi2.anki.RobolectricTestBase;
+import com.ichi2.anki.RobolectricTest;
 
 import com.ichi2.utils.JSONException;
 import org.junit.Test;
@@ -21,7 +21,7 @@ import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 
 @RunWith(AndroidJUnit4.class)
-public class ClozeTest extends RobolectricTestBase {
+public class ClozeTest extends RobolectricTest {
 
     @Test
     public void testCloze() {

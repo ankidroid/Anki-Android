@@ -1,6 +1,6 @@
 package com.ichi2.libanki;
 
-import com.ichi2.anki.RobolectricTestBase;
+import com.ichi2.anki.RobolectricTest;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -9,7 +9,7 @@ import androidx.test.ext.junit.runners.AndroidJUnit4;
 
 
 @RunWith(AndroidJUnit4.class)
-public class StatsTest extends RobolectricTestBase {
+public class StatsTest extends RobolectricTest {
 
     /*****************
      ** Stats        *

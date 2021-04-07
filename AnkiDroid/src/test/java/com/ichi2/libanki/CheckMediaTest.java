@@ -16,7 +16,7 @@
 
 package com.ichi2.libanki;
 
-import com.ichi2.anki.RobolectricTestBase;
+import com.ichi2.anki.RobolectricTest;
 import com.ichi2.async.CollectionTask;
 import com.ichi2.async.TaskManager;
 import com.ichi2.utils.PairWithBoolean;
@@ -33,7 +33,7 @@ import static org.hamcrest.Matchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 
 @RunWith(AndroidJUnit4.class)
-public class CheckMediaTest extends RobolectricTestBase {
+public class CheckMediaTest extends RobolectricTest {
 
     @Override
     protected boolean useInMemoryDatabase() {

@@ -16,7 +16,8 @@
 
 package com.ichi2.libanki.sched;
 
-import com.ichi2.anki.RobolectricTestBase;
+import com.ichi2.anki.RobolectricTest;
+import com.ichi2.anki.RobolectricTest;
 import com.ichi2.anki.exception.ConfirmModSchemaException;
 import com.ichi2.async.CollectionTask;
 import com.ichi2.libanki.Card;
@@ -57,7 +58,7 @@ import static org.junit.Assert.assertNull;
 // Note: These tests can't be run individually but can from the class-level
 // gradlew AnkiDroid:testDebug --tests "com.ichi2.libanki.sched.AbstractSchedTest.*"
 @RunWith(ParameterizedRobolectricTestRunner.class)
-public class AbstractSchedTest extends RobolectricTestBase {
+public class AbstractSchedTest extends RobolectricTest {
 
     @Parameter
     public int schedVersion;

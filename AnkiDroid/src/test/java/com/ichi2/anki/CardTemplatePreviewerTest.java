@@ -35,7 +35,7 @@ import org.robolectric.android.controller.ActivityController;
 import java.util.List;
 
 @RunWith(RobolectricTestRunner.class)
-public class CardTemplatePreviewerTest extends RobolectricTestBase {
+public class CardTemplatePreviewerTest extends RobolectricTest {
 
     @Test
     public void testPreviewUnsavedTemplate() {

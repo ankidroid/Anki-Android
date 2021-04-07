@@ -20,7 +20,7 @@ package com.ichi2.libanki.sched;
 import android.database.Cursor;
 
 import com.ichi2.anki.AbstractFlashcardViewer;
-import com.ichi2.anki.RobolectricTestBase;
+import com.ichi2.anki.RobolectricTest;
 import com.ichi2.anki.exception.ConfirmModSchemaException;
 import com.ichi2.libanki.Card;
 import com.ichi2.libanki.Collection;
@@ -80,7 +80,7 @@ import static org.junit.Assume.assumeTrue;
 import static com.ichi2.libanki.sched.Counts.Queue.*;
 
 @RunWith(AndroidJUnit4.class)
-public class SchedTest extends RobolectricTestBase {
+public class SchedTest extends RobolectricTest {
 
     @Test
     public void unburyWorksIfDeckIsNotSelected() {

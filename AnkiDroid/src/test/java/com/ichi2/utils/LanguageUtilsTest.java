@@ -17,7 +17,7 @@
 package com.ichi2.utils;
 
 import com.google.common.collect.Sets;
-import com.ichi2.anki.RobolectricTestBase;
+import com.ichi2.anki.RobolectricTest;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -38,7 +38,7 @@ import static org.hamcrest.Matchers.is;
 import static org.hamcrest.Matchers.isOneOf;
 
 @RunWith(AndroidJUnit4.class)
-public class LanguageUtilsTest extends RobolectricTestBase {
+public class LanguageUtilsTest extends RobolectricTest {
 
     private static final String[] PREVIOUS_LANGUAGES = {"af", "am", "ar", "az", "be", "bg", "bn", "ca", "ckb", "cs", "da",
             "de", "el", "en", "eo", "es-AR", "es-ES", "et", "eu", "fa", "fi", "fil", "fr", "fy-NL", "ga-IE", "gl", "got",

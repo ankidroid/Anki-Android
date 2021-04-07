@@ -19,6 +19,7 @@ package com.ichi2.anki.dialogs.utils;
 import android.net.Uri;
 
 import com.ichi2.anki.AnkiActivity;
+import com.ichi2.anki.RobolectricTest;
 import com.ichi2.anki.RobolectricTestBase;
 
 import androidx.fragment.app.DialogFragment;

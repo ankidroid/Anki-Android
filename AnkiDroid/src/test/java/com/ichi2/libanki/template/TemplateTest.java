@@ -16,7 +16,7 @@
 
 package com.ichi2.libanki.template;
 
-import com.ichi2.anki.RobolectricTestBase;
+import com.ichi2.anki.RobolectricTest;
 
 import org.hamcrest.Matchers;
 import org.junit.Ignore;
@@ -39,7 +39,7 @@ import static org.junit.Assert.assertThrows;
 import static org.junit.Assert.fail;
 
 @RunWith(AndroidJUnit4.class)
-public class TemplateTest extends RobolectricTestBase {
+public class TemplateTest extends RobolectricTest {
     private String render(String template, Map<String, String> fields) {
         return ParsedNode.parse_inner(template).render(fields, true, getTargetContext());
     }

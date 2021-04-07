@@ -28,7 +28,7 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
 
 @RunWith(AndroidJUnit4.class)
-public class CardInfoModelTest extends RobolectricTestBase {
+public class CardInfoModelTest extends RobolectricTest {
     private CardInfo.CardInfoModel mModel;
 
 

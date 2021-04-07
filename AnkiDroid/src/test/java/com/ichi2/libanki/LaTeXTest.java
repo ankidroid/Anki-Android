@@ -1,6 +1,6 @@
 package com.ichi2.libanki;
 
-import com.ichi2.anki.RobolectricTestBase;
+import com.ichi2.anki.RobolectricTest;
 
 import org.hamcrest.Matchers;
 import org.junit.Test;
@@ -13,7 +13,7 @@ import static org.hamcrest.core.Is.is;
 
 
 @RunWith(AndroidJUnit4.class)
-public class LaTeXTest extends RobolectricTestBase {
+public class LaTeXTest extends RobolectricTest {
 
     public static class MockMedia extends Media {
         public MockMedia(Collection col) {

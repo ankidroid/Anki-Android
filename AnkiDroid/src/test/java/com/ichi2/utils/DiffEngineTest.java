@@ -16,7 +16,7 @@
 
 package com.ichi2.utils;
 
-import com.ichi2.anki.RobolectricTestBase;
+import com.ichi2.anki.RobolectricTest;
 import com.ichi2.testutils.EmptyApplication;
 
 import org.junit.Test;
@@ -30,7 +30,7 @@ import static org.hamcrest.MatcherAssert.assertThat;
 
 @RunWith(AndroidJUnit4.class)
 @Config(application = EmptyApplication.class)
-public class DiffEngineTest extends RobolectricTestBase {
+public class DiffEngineTest extends RobolectricTest {
 
     @Test
     public void checkEscapedHtmlCharacters() {

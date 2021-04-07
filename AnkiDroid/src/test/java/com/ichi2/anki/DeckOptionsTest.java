@@ -13,7 +13,7 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
 
 @RunWith(AndroidJUnit4.class)
-public class DeckOptionsTest extends RobolectricTestBase {
+public class DeckOptionsTest extends RobolectricTest {
 
     @Test
     public void changeHardFactor() {

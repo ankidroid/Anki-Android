@@ -1,6 +1,6 @@
 package com.ichi2.libanki.template;
 
-import com.ichi2.anki.RobolectricTestBase;
+import com.ichi2.anki.RobolectricTest;
 
 import org.hamcrest.Matchers;
 import org.junit.Test;
@@ -29,7 +29,7 @@ import static org.junit.Assert.fail;
 
 
 @RunWith(AndroidJUnit4.class)
-public class TokenizerTest extends RobolectricTestBase {
+public class TokenizerTest extends RobolectricTest {
 
     @Test
     public void test_text_token() {

@@ -16,7 +16,7 @@
 
 package com.ichi2.async;
 
-import com.ichi2.anki.RobolectricTestBase;
+import com.ichi2.anki.RobolectricTest;
 
 import org.junit.runner.RunWith;
 
@@ -27,7 +27,7 @@ import static org.hamcrest.Matchers.arrayWithSize;
 import static org.hamcrest.Matchers.notNullValue;
 
 @RunWith(AndroidJUnit4.class)
-public abstract class AbstractCollectionTaskTest extends RobolectricTestBase {
+public abstract class AbstractCollectionTaskTest extends RobolectricTest {
 
     protected <Progress, Result> Result execute(CollectionTask.Task<Progress, Result> task) {
         CollectionTask<Progress, Progress, Result, Result> collectionTask = TaskManager.launchCollectionTask(task);

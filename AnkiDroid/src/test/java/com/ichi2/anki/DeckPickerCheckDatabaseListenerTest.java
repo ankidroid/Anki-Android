@@ -33,7 +33,7 @@ import androidx.test.ext.junit.runners.AndroidJUnit4;
 import static org.hamcrest.MatcherAssert.assertThat;
 
 @RunWith(AndroidJUnit4.class)
-public class DeckPickerCheckDatabaseListenerTest extends RobolectricTestBase {
+public class DeckPickerCheckDatabaseListenerTest extends RobolectricTest {
 
     private DeckPickerTestImpl impl;
 

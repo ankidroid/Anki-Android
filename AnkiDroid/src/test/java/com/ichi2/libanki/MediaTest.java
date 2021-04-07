@@ -1,6 +1,6 @@
 package com.ichi2.libanki;
 
-import com.ichi2.anki.RobolectricTestBase;
+import com.ichi2.anki.RobolectricTest;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -11,7 +11,7 @@ import static com.ichi2.testutils.AnkiAssert.assertEqualsArrayList;
 import static org.junit.Assert.assertEquals;
 
 @RunWith(AndroidJUnit4.class)
-public class MediaTest extends RobolectricTestBase {
+public class MediaTest extends RobolectricTest {
     /*****************
      ** Media        *
      *****************/

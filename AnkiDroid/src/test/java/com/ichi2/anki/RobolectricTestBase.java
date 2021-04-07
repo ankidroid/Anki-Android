@@ -155,7 +155,7 @@ public class RobolectricTestBase implements CollectionGetter {
                 CollectionHelper.getInstance().getCol(getTargetContext()).getBackend().debugEnsureNoOpenPointers();
             }
             // If you don't tear down the database you'll get unexpected IllegalStateExceptions related to connections
-            CollectionHelper.getInstance().closeCollection(false, "RoboelectricTest: End");
+            CollectionHelper.getInstance().closeCollection(false, "RobolectricTest: End");
         } catch (BackendException ex) {
             if ("CollectionNotOpen".equals(ex.getMessage())) {
                 Timber.w(ex, "Collection was already disposed - may have been a problem");
