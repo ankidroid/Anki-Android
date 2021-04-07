@@ -530,6 +530,7 @@ public class CardBrowserTest extends RobolectricTest {
     @Test
     public void checkIfLongSelectChecksAllCardsInBetween() {
         CardBrowser browser = getBrowserWithNotes(10);
+        browser.setLongClickListenerOnItems();
         selectOneOfManyCards(browser, 4);
         selectOneOfManyCards(browser, 8);
         assertThat(browser.checkedCardCount(), is(5));
