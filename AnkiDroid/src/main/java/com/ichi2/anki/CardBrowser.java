@@ -685,6 +685,23 @@ public class CardBrowser extends NavigationDrawerActivity implements
                 openNoteEditorForCard(clickedCardId);
             }
         });
+
+        setLongClickListenerOnItems();
+
+        getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
+
+        // If a valid value for last deck exists then use it, otherwise use libanki selected deck
+        if (getLastDeckId() != null && getLastDeckId() == ALL_DECKS_ID) {
+            selectAllDecks();
+        } else  if (getLastDeckId() != null && getCol().getDecks().get(getLastDeckId(), false) != null) {
+            selectDeckById(getLastDeckId());
+        } else {
+            selectDeckById(getCol().getDecks().selected());
+        }
+    }
+
+    @VisibleForTesting
+    public void setLongClickListenerOnItems() {
         mCardsListView.setOnItemLongClickListener((adapterView, view, position, id) -> {
             if (mInMultiSelectMode) {
                 for (int i = Math.min(mLastSelectedPosition, position); i <= Math.max(mLastSelectedPosition, position); i++) {
@@ -710,17 +727,6 @@ public class CardBrowser extends NavigationDrawerActivity implements
             }
             return true;
         });
-
-        getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
-
-        // If a valid value for last deck exists then use it, otherwise use libanki selected deck
-        if (getLastDeckId() != null && getLastDeckId() == ALL_DECKS_ID) {
-            selectAllDecks();
-        } else  if (getLastDeckId() != null && getCol().getDecks().get(getLastDeckId(), false) != null) {
-            selectDeckById(getLastDeckId());
-        } else {
-            selectDeckById(getCol().getDecks().selected());
-        }
     }
 
 
