@@ -53,7 +53,6 @@ import com.ichi2.anki.dialogs.DiscardChangesDialog;
 import com.ichi2.anki.exception.ConfirmModSchemaException;
 import com.ichi2.async.TaskListenerWithContext;
 import com.ichi2.libanki.Collection;
-import com.ichi2.libanki.Consts;
 import com.ichi2.libanki.Deck;
 import com.ichi2.libanki.Decks;
 import com.ichi2.libanki.Model;
@@ -296,7 +295,7 @@ public class CardTemplateEditor extends AnkiActivity implements DeckSelectionDia
      */
     public class TemplatePagerAdapter extends FragmentStateAdapter {
 
-        private long baseId = 0;
+        private long mBaseId = 0;
 
         public TemplatePagerAdapter(@NonNull FragmentActivity fragmentActivity) {
             super(fragmentActivity);
@@ -321,18 +320,18 @@ public class CardTemplateEditor extends AnkiActivity implements DeckSelectionDia
 
         @Override
         public long getItemId(int position) {
-            return baseId + position;
+            return mBaseId + position;
         }
 
 
         @Override
         public boolean containsItem(long id) {
-            return (id - baseId < getItemCount() && id - baseId >= 0);
+            return (id - mBaseId < getItemCount() && id - mBaseId >= 0);
         }
 
         /** Force fragments to reinitialize contents by invalidating previous set of ordinal-based ids */
         public void ordinalShift() {
-            baseId += getItemCount() + 1;
+            mBaseId += getItemCount() + 1;
         }
     }
 
