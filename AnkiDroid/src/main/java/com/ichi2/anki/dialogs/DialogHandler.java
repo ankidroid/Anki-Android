@@ -88,7 +88,7 @@ public class DialogHandler extends Handler {
             ((DeckPicker) mActivity.get()).showSyncErrorDialog(id, message);
         } else if (msg.what == MSG_SHOW_EXPORT_COMPLETE_DIALOG) {
             // Export complete
-            AsyncDialogFragment f = DeckPickerExportCompleteDialog.newInstance(msgData.getString("exportPath"));
+            AsyncDialogFragment f = ExportCompleteDialog.newInstance(msgData.getString("exportPath"));
             mActivity.get().showAsyncDialogFragment(f);
         } else if (msg.what == MSG_SHOW_MEDIA_CHECK_COMPLETE_DIALOG) {            
             // Media check results

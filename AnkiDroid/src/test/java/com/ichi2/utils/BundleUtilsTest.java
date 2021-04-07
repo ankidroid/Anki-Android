@@ -2,11 +2,15 @@ package com.ichi2.utils;
 
 import android.os.Bundle;
 
+import com.ichi2.libanki.Utils;
+
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.stubbing.Answer;
 import org.robolectric.RobolectricTestRunner;
 
+import java.util.Arrays;
+import java.util.List;
 import java.util.Random;
 
 import static org.junit.Assert.assertEquals;
@@ -52,6 +56,48 @@ public class BundleUtilsTest {
         Long val = BundleUtils.getNullableLong(b, KEY);
 
         verify(b).getLong(eq(KEY));
+
+        assertEquals(expected, val);
+    }
+
+
+    @Test
+    public void test_GetNullableLongList_NullBundle_ReturnsNull() {
+        List<Long> val = BundleUtils.getNullableLongList(null, KEY);
+        assertNull(val);
+    }
+
+
+    @Test
+    public void test_GetNullableLongList_NotFound_ReturnsNull() {
+        final Bundle b = mock(Bundle.class);
+
+        when(b.containsKey(anyString())).thenReturn(false);
+
+        List<Long> val = BundleUtils.getNullableLongList(b, KEY);
+
+        verify(b, times(0)).getLongArray(eq(KEY));
+
+        assertNull(val);
+    }
+
+
+    @Test
+    public void test_GetNullableLongList_Found_ReturnIt() {
+        final List<Long> expected = Arrays.asList(
+                new Random().nextLong(),
+                new Random().nextLong(),
+                new Random().nextLong()
+        );
+        final Bundle b = mock(Bundle.class);
+
+        when(b.containsKey(anyString())).thenReturn(true);
+
+        when(b.getLongArray(anyString())).thenReturn(Utils.toPrimitive(expected));
+
+        List<Long> val = BundleUtils.getNullableLongList(b, KEY);
+
+        verify(b).getLongArray(eq(KEY));
 
         assertEquals(expected, val);
     }

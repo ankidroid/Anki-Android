@@ -61,6 +61,8 @@ import com.afollestad.materialdialogs.MaterialDialog;
 import com.ichi2.anki.dialogs.CardBrowserMySearchesDialog;
 import com.ichi2.anki.dialogs.CardBrowserOrderDialog;
 import com.ichi2.anki.dialogs.ConfirmationDialog;
+import com.ichi2.anki.dialogs.ExportCompleteDialog;
+import com.ichi2.anki.dialogs.ExportDialog;
 import com.ichi2.anki.dialogs.IntegerDialog;
 import com.ichi2.anki.dialogs.RescheduleDialog;
 import com.ichi2.anki.dialogs.SimpleMessageDialog;
@@ -111,7 +113,8 @@ import static com.ichi2.libanki.stats.Stats.SECONDS_PER_DAY;
 import static com.ichi2.anim.ActivityTransitionAnimation.Direction.*;
 
 public class CardBrowser extends NavigationDrawerActivity implements
-        DeckDropDownAdapter.SubtitleListener, TagsDialog.TagsDialogListener {
+        DeckDropDownAdapter.SubtitleListener, ExportDialog.ExportDialogListener,
+        ExportCompleteDialog.ExportCompleteDialogListener, TagsDialog.TagsDialogListener {
 
     enum Column {
         QUESTION,
@@ -171,6 +174,7 @@ public class CardBrowser extends NavigationDrawerActivity implements
     private static final int EDIT_CARD = 0;
     private static final int ADD_NOTE = 1;
     private static final int PREVIEW_CARDS = 2;
+    private static final int PICK_EXPORT_FILE = 3;
 
     private static final int DEFAULT_FONT_SIZE_RATIO = 100;
     // Should match order of R.array.card_browser_order_labels
@@ -218,6 +222,7 @@ public class CardBrowser extends NavigationDrawerActivity implements
 
     private static final int SNACKBAR_DURATION = 8000;
 
+    private ActivityExportingDelegate mExportingDelegate;
 
     // Values related to persistent state data
     private static final long ALL_DECKS_ID = 0L;
@@ -240,6 +245,24 @@ public class CardBrowser extends NavigationDrawerActivity implements
                 changeCardOrder(which);
                 return true;
             };
+
+
+    @Override
+    public void exportApkg(String path, Long did, List<Long> cardIds, boolean includeSched, boolean includeMedia) {
+        mExportingDelegate.exportApkg(path, did, cardIds, includeSched, includeMedia);
+    }
+
+
+    @Override
+    public void emailFile(String exportPath) {
+        mExportingDelegate.emailFile(exportPath);
+    }
+
+
+    @Override
+    public void saveExportFile(String exportPath) {
+        mExportingDelegate.saveExportFile(exportPath);
+    }
 
 
     protected void changeCardOrder(int which) {
@@ -512,6 +535,9 @@ public class CardBrowser extends NavigationDrawerActivity implements
         }
         super.onCreate(savedInstanceState);
         Timber.d("onCreate()");
+
+        mExportingDelegate = new ActivityExportingDelegate(this, PICK_EXPORT_FILE);
+
         if (wasLoadedFromExternalTextActionItem() && !Permissions.hasStorageAccessPermission(this)) {
             Timber.w("'Card Browser' Action item pressed before storage permissions granted.");
             UIUtils.showThemedToast(this, getString(R.string.intent_handler_failed_no_storage_permission), false);
@@ -1155,6 +1181,11 @@ public class CardBrowser extends NavigationDrawerActivity implements
             Timber.i("CardBrowser:: Reschedule button pressed");
             rescheduleSelectedCards();
             return true;
+        } else if (itemId == R.id.action_export_cards) {
+            Timber.i("CardBrowser:: Export Cards button pressed");
+            String msg = getResources().getString(R.string.confirm_apkg_export_selected_cards);
+            showDialogFragment(ExportDialog.newInstance(msg, getSelectedCardIds()));
+            return true;
         } else if (itemId == R.id.action_reposition_cards) {
             Timber.i("CardBrowser:: Reposition button pressed");
 
@@ -1385,6 +1416,14 @@ public class CardBrowser extends NavigationDrawerActivity implements
             // in use by reviewer?
             if (getReviewerCardId() == mCurrentCardId) {
                 mReloadRequired = true;
+            }
+        }
+
+        if ((requestCode == PICK_EXPORT_FILE) && (resultCode == RESULT_OK)) {
+            if (mExportingDelegate.exportToProvider(data, true)) {
+                UIUtils.showSimpleSnackbar(this, getString(R.string.export_save_apkg_successful), true);
+            } else {
+                UIUtils.showSimpleSnackbar(this, getString(R.string.export_save_apkg_unsuccessful), false);
             }
         }
 

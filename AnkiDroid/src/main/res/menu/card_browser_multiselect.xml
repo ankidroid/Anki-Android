@@ -72,6 +72,10 @@
         android:title="@string/card_editor_reschedule_card"/>
 
     <item
+        android:id="@+id/action_export_cards"
+        android:title="@string/card_editor_export_card"/>
+
+    <item
         android:id="@+id/action_reset_cards_progress"
         android:title="@string/card_editor_reset_card"/>
 

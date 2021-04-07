@@ -5,17 +5,25 @@ import android.os.Bundle;
 import android.os.Message;
 
 import com.afollestad.materialdialogs.MaterialDialog;
-import com.ichi2.anki.DeckPicker;
 import com.ichi2.anki.R;
 
 import java.io.File;
 
 import androidx.annotation.NonNull;
 
-public class DeckPickerExportCompleteDialog extends AsyncDialogFragment {
-    
-    public static DeckPickerExportCompleteDialog newInstance(String exportPath) {
-        DeckPickerExportCompleteDialog f = new DeckPickerExportCompleteDialog();
+public class ExportCompleteDialog extends AsyncDialogFragment {
+
+    public interface ExportCompleteDialogListener {
+        void dismissAllDialogFragments();
+
+        void emailFile(String path);
+
+        void saveExportFile(String exportPath);
+    }
+
+
+    public static ExportCompleteDialog newInstance(String exportPath) {
+        ExportCompleteDialog f = new ExportCompleteDialog();
         Bundle args = new Bundle();
         args.putString("exportPath", exportPath);
         f.setArguments(args);
@@ -35,15 +43,15 @@ public class DeckPickerExportCompleteDialog extends AsyncDialogFragment {
                 .positiveText(R.string.export_send_button)
                 .negativeText(R.string.export_save_button)
                 .onPositive((dialog, which) -> {
-                    ((DeckPicker) getActivity()).dismissAllDialogFragments();
-                    ((DeckPicker) getActivity()).emailFile(exportPath);
+                    ((ExportCompleteDialogListener) getActivity()).dismissAllDialogFragments();
+                    ((ExportCompleteDialogListener) getActivity()).emailFile(exportPath);
                 })
                 .onNegative((dialog, which) -> {
-                    ((DeckPicker) getActivity()).dismissAllDialogFragments();
-                    ((DeckPicker) getActivity()).saveExportFile(exportPath);
+                    ((ExportCompleteDialogListener) getActivity()).dismissAllDialogFragments();
+                    ((ExportCompleteDialogListener) getActivity()).saveExportFile(exportPath);
                 })
                 .neutralText(R.string.dialog_cancel)
-                .onNeutral((dialog, which) -> ((DeckPicker) getActivity()).dismissAllDialogFragments());
+                .onNeutral((dialog, which) -> ((ExportCompleteDialogListener) getActivity()).dismissAllDialogFragments());
         return dialogBuilder.show();
     }
     
