@@ -25,7 +25,6 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.content.pm.PackageInfo;
-import android.content.pm.PackageManager;
 import android.content.res.Configuration;
 import android.content.res.Resources;
 import android.net.Uri;
@@ -41,7 +40,6 @@ import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 import android.util.Log;
 import android.view.ViewConfiguration;
 import android.webkit.CookieManager;
-import android.webkit.WebView;
 
 import com.ichi2.anki.analytics.AnkiDroidCrashReportDialog;
 import com.ichi2.anki.contextmenu.AnkiCardContextMenu;
@@ -72,9 +70,7 @@ import org.acra.config.ToastConfigurationBuilder;
 import org.acra.sender.HttpSender;
 
 import java.io.InputStream;
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Locale;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -730,8 +726,11 @@ public class AnkiDroidApp extends Application {
         webViewInfo.put("WEBVIEW_VER_NAME", "");
         webViewInfo.put("WEBVIEW_VER_CODE", "");
         try {
-            PackageManager packageManager = getPackageManager();
             PackageInfo pi = WebViewCompat.getCurrentWebViewPackage(this);
+            if (pi == null) {
+                Timber.w("Could not get WebView package information");
+                return webViewInfo;
+            }
             webViewInfo.put("WEBVIEW_VER_NAME", pi.versionName);
             webViewInfo.put("WEBVIEW_VER_CODE", String.valueOf(PackageInfoCompat.getLongVersionCode(pi)));
         } catch (Throwable e) {
