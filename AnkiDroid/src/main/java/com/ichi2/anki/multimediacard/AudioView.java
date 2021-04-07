@@ -45,8 +45,8 @@ import timber.log.Timber;
 public class AudioView extends LinearLayout {
     protected final String mAudioPath;
 
-    protected PlayPauseButton mPlayPause = null;
-    protected StopButton mStop = null;
+    protected PlayPauseButton mPlayPause;
+    protected StopButton mStop;
     protected RecordButton mRecord = null;
 
     private AudioRecorder mAudioRecorder = new AudioRecorder();
