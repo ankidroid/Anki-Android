@@ -641,7 +641,7 @@ public class CardTemplateEditor extends AnkiActivity implements DeckSelectionDia
 
             @Override
             public Intent parseResult(int resultCode, @Nullable Intent intent) {
-                if(resultCode != Activity.RESULT_OK || intent == null) {
+                if (resultCode != Activity.RESULT_OK) {
                     return null;
                 }
                 return intent;
