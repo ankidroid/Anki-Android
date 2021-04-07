@@ -1020,7 +1020,7 @@ public class CardBrowser extends NavigationDrawerActivity implements
         return checkedCardCount() >= getCardCount(); //must handle 0.
     }
 
-
+    @VisibleForTesting
     public void flagTask (int flag) {
         TaskManager.launchCollectionTask(
                 new CollectionTask.Flag(getSelectedCardIds(), flag),
