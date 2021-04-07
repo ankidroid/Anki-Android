@@ -46,27 +46,32 @@ public class TextCardExporterTest extends RobolectricTest {
 
 
     @Test
-    public void textExportTestCard() throws IOException {
-        Path tempExportDir = Files.createTempDirectory("AnkiDroid-test_export_textnote");
+    public void testExportTextCardWithHTML() throws IOException {
+        Path tempExportDir = Files.createTempDirectory("AnkiDroid-test_export_textcard");
         File exportedFile = new File(tempExportDir.toFile(), "export.txt");
 
-        // With HTML
-        TextCardExporter exporterWithHTML = new TextCardExporter(col, true);
-        exporterWithHTML.doExport(exportedFile.getAbsolutePath());
-        String contentWithHTML = new String(Files.readAllBytes(Paths.get(exportedFile.getAbsolutePath())));
-        String expectedWithHTML = "";
-        // Optionally we can choose to strip styling from contentWithHTML
-        expectedWithHTML += String.format(Locale.US, "<style>%s</style>", noteList.get(0).model().getString("css"));
-        expectedWithHTML += "foo\tbar<br>\n";
-        expectedWithHTML += String.format(Locale.US, "<style>%s</style>", noteList.get(1).model().getString("css"));
-        expectedWithHTML += "baz\tqux\n";
-        assertEquals(expectedWithHTML, contentWithHTML);
+        TextCardExporter exporter = new TextCardExporter(col, true);
+        exporter.doExport(exportedFile.getAbsolutePath());
+        String content = new String(Files.readAllBytes(Paths.get(exportedFile.getAbsolutePath())));
+        String expected = "";
+        // Alternatively we can choose to strip styling from content, instead of adding styling to expected
+        expected += String.format(Locale.US, "<style>%s</style>", noteList.get(0).model().getString("css"));
+        expected += "foo\tbar<br>\n";
+        expected += String.format(Locale.US, "<style>%s</style>", noteList.get(1).model().getString("css"));
+        expected += "baz\tqux\n";
+        assertEquals(expected, content);
+    }
 
-        // Without HTML
-        TextCardExporter exporterWithoutHTML = new TextCardExporter(col, false);
-        exporterWithoutHTML.doExport(exportedFile.getAbsolutePath());
-        String contentWithoutHTML = new String(Files.readAllBytes(Paths.get(exportedFile.getAbsolutePath())));
-        String expectedWithoutHTML = "foo\tbar\nbaz\tqux\n";
-        assertEquals(expectedWithoutHTML, contentWithoutHTML);
+
+    @Test
+    public void testExportTextCardWithoutHTML() throws IOException {
+        Path tempExportDir = Files.createTempDirectory("AnkiDroid-test_export_textcard");
+        File exportedFile = new File(tempExportDir.toFile(), "export.txt");
+
+        TextCardExporter exporter = new TextCardExporter(col, false);
+        exporter.doExport(exportedFile.getAbsolutePath());
+        String content = new String(Files.readAllBytes(Paths.get(exportedFile.getAbsolutePath())));
+        String expected = "foo\tbar\nbaz\tqux\n";
+        assertEquals(expected, content);
     }
 }
