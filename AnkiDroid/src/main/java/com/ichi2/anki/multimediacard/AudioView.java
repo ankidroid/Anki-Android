@@ -216,15 +216,38 @@ public class AudioView extends LinearLayout {
         mAudioRecorder.release();
     }
 
+    /** Stops playing and records */
     public void toggleRecord() {
+        stopPlaying();
+
         if (mRecord != null) {
             mRecord.callOnClick();
         }
     }
 
+
+    /** Stops recording and presses the play button */
     public void togglePlay() {
+        // cancelling recording is done via pressing the record button again
+        stopRecording();
+
         if (mPlayPause != null) {
             mPlayPause.callOnClick();
+        }
+    }
+
+    /** If recording is occurring, stop it */
+    private void stopRecording() {
+        if (mStatus == Status.RECORDING && mRecord != null) {
+            mRecord.callOnClick();
+        }
+    }
+
+    /** If playing, stop it */
+    protected void stopPlaying() {
+        // The stop button only applies to the player, and does nothing if no action is needed
+        if (mStop != null) {
+            mStop.callOnClick();
         }
     }
 

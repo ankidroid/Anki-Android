@@ -28,7 +28,6 @@ import com.ichi2.anki.multimediacard.AudioRecorder;
 import com.ichi2.anki.multimediacard.AudioView;
 
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.robolectric.Shadows;
@@ -90,7 +89,6 @@ public class KeyboardShortcutIntegrationTest extends RobolectricTest {
      * #7780
      */
     @Test
-    @Ignore("7780")
     public void playingWhileRecordingStopsRecordingAndStartsPlaying() throws IOException {
         AudioPlayer player = setupPlayerMock();
         AudioRecorder recorder = setupRecorderMock();
@@ -120,7 +118,6 @@ public class KeyboardShortcutIntegrationTest extends RobolectricTest {
      * #7780
      */
     @Test
-    @Ignore("7780")
     public void recordingWhilePlayingStopsPlayingAndStartsRecording() throws IOException {
         Shadows.shadowOf((Application) ApplicationProvider.getApplicationContext()).grantPermissions(Manifest.permission.RECORD_AUDIO);
 
