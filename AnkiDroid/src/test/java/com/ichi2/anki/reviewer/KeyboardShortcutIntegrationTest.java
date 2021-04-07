@@ -73,7 +73,6 @@ public class KeyboardShortcutIntegrationTest extends RobolectricTest {
      * #7780
      */
     @Test
-    @Ignore("7780")
     public void testActionsOccurOnKeyDown() throws IOException {
         AudioRecorder recorder = setupRecorderMock();
 
