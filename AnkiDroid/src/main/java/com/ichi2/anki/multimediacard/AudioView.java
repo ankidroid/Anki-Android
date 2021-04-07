@@ -22,7 +22,6 @@ package com.ichi2.anki.multimediacard;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.media.MediaPlayer;
-import android.media.MediaRecorder;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -50,7 +49,7 @@ public class AudioView extends LinearLayout {
     protected StopButton mStop = null;
     protected RecordButton mRecord = null;
 
-    private MediaRecorder mRecorder = null;
+    private final AudioRecorder mAudioRecorder = new AudioRecorder();
     private MediaPlayer mPlayer = null;
 
     private OnRecordingFinishEventListener mOnRecordingFinishEventListener = null;
@@ -103,6 +102,8 @@ public class AudioView extends LinearLayout {
 
     private AudioView(Context context, int resPlay, int resPause, int resStop, String audioPath) {
         super(context);
+
+        mAudioRecorder.setOnRecordingInitializedHandler(() -> mStatus = Status.INITIALIZED);
 
         mContext = context;
 
@@ -188,9 +189,9 @@ public class AudioView extends LinearLayout {
 
 
     public void notifyStopRecord() {
-        if (mRecorder != null && mStatus == Status.RECORDING) {
+        if (mStatus == Status.RECORDING) {
             try {
-                mRecorder.stop();
+                mAudioRecorder.stopRecording();
             } catch (RuntimeException e) {
                 Timber.i(e, "Recording stop failed, this happens if stop was hit immediately after start");
                 UIUtils.showThemedToast(mContext, gtxt(R.string.multimedia_editor_audio_view_recording_failed), true);
@@ -208,9 +209,7 @@ public class AudioView extends LinearLayout {
     }
 
     public void notifyReleaseRecorder() {
-        if (mRecorder != null) {
-            mRecorder.release();
-        }
+        mAudioRecorder.release();
     }
 
     public void toggleRecord() {
@@ -366,7 +365,7 @@ public class AudioView extends LinearLayout {
                     return;
                 }
 
-                //We can get to this screen without permissions through the "Pronunciation" feature.
+                // We can get to this screen without permissions through the "Pronunciation" feature.
                 if (!Permissions.canRecordAudio(mContext)) {
                     Timber.w("Audio recording permission denied.");
                     UIUtils.showThemedToast(mContext,
@@ -378,42 +377,15 @@ public class AudioView extends LinearLayout {
                 switch (mStatus) {
                     case IDLE: // If not already recorded or not already played
                     case STOPPED: // if already recorded or played
-                        boolean highSampling = false;
+
                         try {
-                            // try high quality AAC @ 44.1kHz / 192kbps first
-                            // can throw IllegalArgumentException if codec isn't supported
-                            mRecorder = initMediaRecorder();
-                            mRecorder.setAudioEncoder(MediaRecorder.AudioEncoder.AAC);
-                            mRecorder.setAudioChannels(2);
-                            mRecorder.setAudioSamplingRate(44100);
-                            mRecorder.setAudioEncodingBitRate(192000);
-                            // this can also throw IOException if output path is invalid
-                            mRecorder.prepare();
-                            mRecorder.start();
-                            highSampling = true;
+                            mAudioRecorder.startRecording(mAudioPath);
                         } catch (Exception e) {
-                            Timber.w(e);
-                            // in all cases, fall back to low sampling
-                        }
-
-                        if (!highSampling) {
-                            // if we are here, either the codec didn't work or output file was invalid
-                            // fall back on default
-                            try {
-                                mRecorder = initMediaRecorder();
-                                mRecorder.setAudioEncoder(MediaRecorder.AudioEncoder.AMR_NB);
-
-                                mRecorder.prepare();
-                                mRecorder.start();
-
-                            } catch (Exception e) {
-                                // either output file failed or codec didn't work, in any case fail out
-                                Timber.e("RecordButton.onClick() :: error recording to %s\n%s", mAudioPath, e.getMessage());
-                                UIUtils.showThemedToast(mContext, gtxt(R.string.multimedia_editor_audio_view_recording_failed), true);
-                                mStatus = Status.STOPPED;
-                                break;
-                            }
-
+                            // either output file failed or codec didn't work, in any case fail out
+                            Timber.e("RecordButton.onClick() :: error recording to %s\n%s", mAudioPath, e.getMessage());
+                            UIUtils.showThemedToast(mContext, gtxt(R.string.multimedia_editor_audio_view_recording_failed), true);
+                            mStatus = Status.STOPPED;
+                            break;
                         }
 
                         mStatus = Status.RECORDING;
@@ -430,17 +402,6 @@ public class AudioView extends LinearLayout {
                     default:
                         break;
                 }
-            }
-
-            private MediaRecorder initMediaRecorder() {
-                MediaRecorder mr = new MediaRecorder();
-                mr.setAudioSource(MediaRecorder.AudioSource.MIC);
-                mr.setOutputFormat(MediaRecorder.OutputFormat.THREE_GPP);
-                mStatus = Status.INITIALIZED;
-                mr.setOutputFile(mAudioPath); // audioPath
-                                              // could
-                                              // change
-                return mr;
             }
         };
 
