@@ -49,8 +49,8 @@ public class AndroidUiUtils {
     }
 
     /**
-     * Focuses on EditText and opens the soft keyboard.
-     * @param view The EditText which requires the focus to be set.
+     * Focuses on View and opens the soft keyboard.
+     * @param view The View which requires the focus to be set (typically an EditText).
      */
     public static void setFocusAndOpenKeyboard(View view) {
         //  Required on some Android 9, 10 devices to show keyboard: https://stackoverflow.com/a/7784904
