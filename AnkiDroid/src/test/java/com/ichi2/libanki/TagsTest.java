@@ -9,7 +9,6 @@ import com.ichi2.anki.RobolectricTest;
 import androidx.test.ext.junit.runners.AndroidJUnit4;
 
 import static junit.framework.TestCase.assertFalse;
-import static junit.framework.TestCase.assertNull;
 import static junit.framework.TestCase.assertTrue;
 
 @RunWith(AndroidJUnit4.class)
