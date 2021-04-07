@@ -16,7 +16,7 @@
 
 package com.ichi2.libanki;
 
-import com.ichi2.anki.RobolectricTest;
+import com.ichi2.anki.RobolectricTestBase;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -27,7 +27,7 @@ import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 
 @RunWith(AndroidJUnit4.class)
-public class MetaTest extends RobolectricTest {
+public class MetaTest extends RobolectricTestBase {
 
     @Test
     public void ensureDatabaseIsInMemory() {

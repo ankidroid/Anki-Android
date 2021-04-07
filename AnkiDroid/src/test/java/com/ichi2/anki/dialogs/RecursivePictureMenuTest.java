@@ -19,7 +19,7 @@ package com.ichi2.anki.dialogs;
 import android.view.View;
 
 import com.ichi2.anki.R;
-import com.ichi2.anki.RobolectricTest;
+import com.ichi2.anki.RobolectricTestBase;
 import com.ichi2.anki.analytics.UsageAnalytics;
 import com.ichi2.anki.dialogs.HelpDialog.LinkItem;
 import com.ichi2.anki.dialogs.RecursivePictureMenu.Item;
@@ -44,7 +44,7 @@ import static org.hamcrest.Matchers.hasSize;
 import static org.hamcrest.Matchers.is;
 
 @RunWith(AndroidJUnit4.class)
-public class RecursivePictureMenuTest extends RobolectricTest {
+public class RecursivePictureMenuTest extends RobolectricTestBase {
 
     private FragmentTestActivity mActivity;
 

@@ -20,7 +20,6 @@ import android.app.Activity;
 import android.content.Intent;
 
 import com.ichi2.libanki.Card;
-import com.ichi2.libanki.Note;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -33,7 +32,7 @@ import static org.hamcrest.Matchers.containsString;
 import static org.hamcrest.Matchers.is;
 
 @RunWith(AndroidJUnit4.class)
-public class PreviewerTest extends RobolectricTest {
+public class PreviewerTest extends RobolectricTestBase {
 
     @Test
     public void editingNoteDoesNotChangePreviewedCardId() {

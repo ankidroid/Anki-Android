@@ -32,7 +32,7 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import static org.junit.Assert.fail;
 
 @RunWith(AndroidJUnit4.class)
-public class DeckPickerImportTest extends RobolectricTest {
+public class DeckPickerImportTest extends RobolectricTestBase {
 
     @Test
     public void importAddShowsImportDialog() {

@@ -22,7 +22,6 @@ import android.view.View;
 
 import com.ichi2.libanki.Card;
 import com.ichi2.libanki.Model;
-import com.ichi2.libanki.Models;
 import com.ichi2.libanki.Note;
 import com.ichi2.utils.JSONObject;
 
@@ -33,11 +32,10 @@ import org.robolectric.Robolectric;
 import org.robolectric.RobolectricTestRunner;
 import org.robolectric.android.controller.ActivityController;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @RunWith(RobolectricTestRunner.class)
-public class CardTemplatePreviewerTest extends RobolectricTest {
+public class CardTemplatePreviewerTest extends RobolectricTestBase {
 
     @Test
     public void testPreviewUnsavedTemplate() {

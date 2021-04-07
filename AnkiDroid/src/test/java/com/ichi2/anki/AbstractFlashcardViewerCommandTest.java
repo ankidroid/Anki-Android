@@ -39,7 +39,7 @@ import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
 @RunWith(AndroidJUnit4.class)
-public class AbstractFlashcardViewerCommandTest extends RobolectricTest {
+public class AbstractFlashcardViewerCommandTest extends RobolectricTestBase {
 
     @Test
     public void doubleTapSetsNone() {

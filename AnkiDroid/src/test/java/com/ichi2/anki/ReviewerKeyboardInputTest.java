@@ -21,7 +21,6 @@ import android.view.KeyEvent;
 import com.ichi2.anki.reviewer.ReviewerUi;
 import com.ichi2.async.CollectionTask;
 import com.ichi2.libanki.Card;
-import com.ichi2.libanki.Collection;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -44,7 +43,7 @@ import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
 @RunWith(AndroidJUnit4.class)
-public class ReviewerKeyboardInputTest extends RobolectricTest {
+public class ReviewerKeyboardInputTest extends RobolectricTestBase {
 
     @Test
     public void whenDisplayingQuestionTyping1DoesNothing() {

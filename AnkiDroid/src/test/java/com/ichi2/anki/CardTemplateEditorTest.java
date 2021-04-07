@@ -44,7 +44,7 @@ import static org.robolectric.Shadows.shadowOf;
 
 
 @RunWith(AndroidJUnit4.class)
-public class CardTemplateEditorTest extends RobolectricTest {
+public class CardTemplateEditorTest extends RobolectricTestBase {
 
     @Test
     @SuppressWarnings("PMD.NPathComplexity")

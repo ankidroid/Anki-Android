@@ -4,7 +4,7 @@ import android.app.NotificationManager;
 import android.content.Context;
 import android.content.Intent;
 
-import com.ichi2.anki.RobolectricTest;
+import com.ichi2.anki.RobolectricTestBase;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -18,7 +18,7 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import static org.robolectric.Shadows.shadowOf;
 
 @RunWith(AndroidJUnit4.class)
-public class ReminderServiceTest extends RobolectricTest {
+public class ReminderServiceTest extends RobolectricTestBase {
 
     @Test
     public void testReminderServiceNothingDue() {

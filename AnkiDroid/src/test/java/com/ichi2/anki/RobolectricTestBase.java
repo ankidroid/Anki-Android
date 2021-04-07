@@ -66,7 +66,6 @@ import java.util.ArrayList;
 
 import androidx.annotation.CheckResult;
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 
 import com.ichi2.utils.InMemorySQLiteOpenHelperFactory;
 
@@ -81,7 +80,7 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
 import static org.robolectric.Shadows.shadowOf;
 
-public class RobolectricTest implements CollectionGetter {
+public class RobolectricTestBase implements CollectionGetter {
 
     private static boolean mBackground = true;
 
@@ -306,7 +305,7 @@ public class RobolectricTest implements CollectionGetter {
         return new Model(collectionModels.byName(modelName).toString().trim());
     }
 
-    protected static <T extends AnkiActivity> T startActivityNormallyOpenCollectionWithIntent(RobolectricTest testClass, Class<T> clazz, Intent i) {
+    protected static <T extends AnkiActivity> T startActivityNormallyOpenCollectionWithIntent(RobolectricTestBase testClass, Class<T> clazz, Intent i) {
         ActivityController<T> controller = Robolectric.buildActivity(clazz, i)
                 .create().start().resume().visible();
         advanceRobolectricLooperWithSleep();
@@ -431,8 +430,8 @@ public class RobolectricTest implements CollectionGetter {
                     throw new IllegalArgumentException("Task failed");
                 }
                 completed[0] = true;
-                synchronized (RobolectricTest.this) {
-                    RobolectricTest.this.notify();
+                synchronized (RobolectricTestBase.this) {
+                    RobolectricTestBase.this.notify();
                 }
             }
         };

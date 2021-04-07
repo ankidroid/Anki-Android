@@ -22,7 +22,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 
-import com.ichi2.anki.RobolectricTest;
+import com.ichi2.anki.RobolectricTestBase;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -42,7 +42,7 @@ import static org.junit.Assert.assertTrue;
 import static org.mockito.Mockito.spy;
 
 @RunWith(AndroidJUnit4.class)
-public class ImportUtilsTest extends RobolectricTest {
+public class ImportUtilsTest extends RobolectricTestBase {
 
     @Test
     public void cjkNamesAreConvertedToUnicode() {

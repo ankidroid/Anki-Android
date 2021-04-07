@@ -51,7 +51,7 @@ import static org.hamcrest.core.Is.is;
 import static org.robolectric.Shadows.shadowOf;
 
 @RunWith(AndroidJUnit4.class)
-public class CardBrowserTest extends RobolectricTest {
+public class CardBrowserTest extends RobolectricTestBase {
 
     @Test
     public void browserIsNotInitiallyInMultiSelectModeWithNoCards() {

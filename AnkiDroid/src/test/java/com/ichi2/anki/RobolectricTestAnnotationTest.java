@@ -24,7 +24,7 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.core.StringContains.containsString;
 
 // explicitly missing @RunWith(AndroidJUnit4.class)
-public class RobolectricTestAnnotationTest extends RobolectricTest {
+public class RobolectricTestAnnotationTest extends RobolectricTestBase {
 
     @Test
     public void readableErrorIfNotAnnotated() {

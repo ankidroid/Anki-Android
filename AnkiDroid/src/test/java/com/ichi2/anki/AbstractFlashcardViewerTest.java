@@ -30,7 +30,7 @@ import static org.hamcrest.Matchers.not;
 import static org.junit.Assert.assertEquals;
 
 @RunWith(AndroidJUnit4.class)
-public class AbstractFlashcardViewerTest extends RobolectricTest {
+public class AbstractFlashcardViewerTest extends RobolectricTestBase {
 
     public static class NonAbstractFlashcardViewer extends AbstractFlashcardViewer {
         @Override
@@ -397,7 +397,7 @@ public class AbstractFlashcardViewerTest extends RobolectricTest {
         NonAbstractFlashcardViewer viewer = multimediaController.get();
         viewer.onCollectionLoaded(getCol());
         viewer.loadInitialCard();
-        // Without this, AbstractFlashcardViewer.mCard is still null, and RobolectricTest.tearDown executes before
+        // Without this, AbstractFlashcardViewer.mCard is still null, and RobolectricTestBase.tearDown executes before
         // AsyncTasks spawned by by loading the viewer finish. Is there a way to synchronize these things while under test?
         advanceRobolectricLooperWithSleep();
         advanceRobolectricLooperWithSleep();

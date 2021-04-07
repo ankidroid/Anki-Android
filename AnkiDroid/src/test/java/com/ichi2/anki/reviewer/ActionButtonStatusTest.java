@@ -18,7 +18,7 @@ package com.ichi2.anki.reviewer;
 
 import android.content.SharedPreferences;
 
-import com.ichi2.anki.RobolectricTest;
+import com.ichi2.anki.RobolectricTestBase;
 import com.ichi2.testutils.PreferenceUtils;
 
 import org.junit.Test;
@@ -37,7 +37,7 @@ import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
 @RunWith(AndroidJUnit4.class)
-public class ActionButtonStatusTest extends RobolectricTest {
+public class ActionButtonStatusTest extends RobolectricTestBase {
 
     @Test
     public void allCustomButtonsCanBeDisabled() {

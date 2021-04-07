@@ -23,10 +23,9 @@ import com.afollestad.materialdialogs.MaterialDialog;
 import com.ichi2.anki.AnkiActivity;
 import com.ichi2.anki.CardTemplateBrowserAppearanceEditor;
 import com.ichi2.anki.R;
-import com.ichi2.anki.RobolectricTest;
+import com.ichi2.anki.RobolectricTestBase;
 import com.ichi2.anki.dialogs.CustomStudyDialog.CustomStudyListener;
 import com.ichi2.libanki.Deck;
-import com.ichi2.utils.JSONObject;
 
 import org.hamcrest.Matchers;
 import org.junit.Ignore;
@@ -39,13 +38,12 @@ import androidx.fragment.app.testing.FragmentScenario;
 import androidx.lifecycle.Lifecycle;
 import androidx.test.ext.junit.runners.AndroidJUnit4;
 
-import static com.ichi2.libanki.Consts.DECK_DYN;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
 import static org.hamcrest.core.IsNull.notNullValue;
 
 @RunWith(AndroidJUnit4.class)
-public class CustomStudyDialogTest extends RobolectricTest {
+public class CustomStudyDialogTest extends RobolectricTestBase {
 
     @Test
     public void learnAheadCardsRegressionTest() {

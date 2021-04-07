@@ -20,10 +20,9 @@ import android.content.Intent;
 import android.util.Pair;
 
 import com.ichi2.anki.CardBrowser;
-import com.ichi2.anki.RobolectricTest;
+import com.ichi2.anki.RobolectricTestBase;
 import com.ichi2.anki.exception.ConfirmModSchemaException;
 import com.ichi2.libanki.sched.SchedV2;
-import com.ichi2.libanki.utils.Time;
 import com.ichi2.utils.JSONObject;
 
 import org.junit.Test;
@@ -54,7 +53,7 @@ import static org.junit.Assert.assertNotEquals;
 import static org.junit.Assert.assertTrue;
 
 @RunWith(AndroidJUnit4.class)
-public class FinderTest extends RobolectricTest {
+public class FinderTest extends RobolectricTestBase {
 
     @Test
     @Config(qualifiers = "en")
