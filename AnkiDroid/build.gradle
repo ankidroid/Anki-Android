@@ -224,8 +224,8 @@ dependencies {
 
     coreLibraryDesugaring 'com.android.tools:desugar_jdk_libs:1.1.5'
     compileOnly 'org.jetbrains:annotations:20.1.0'
-    compileOnly "com.google.auto.service:auto-service-annotations:1.0-rc7"
-    annotationProcessor "com.google.auto.service:auto-service:1.0-rc7"
+    compileOnly "com.google.auto.service:auto-service-annotations:1.0"
+    annotationProcessor "com.google.auto.service:auto-service:1.0"
 
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     implementation 'androidx.activity:activity:1.2.2'
