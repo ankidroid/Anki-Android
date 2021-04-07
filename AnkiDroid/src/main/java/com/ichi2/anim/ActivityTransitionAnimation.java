@@ -52,7 +52,7 @@ public class ActivityTransitionAnimation {
         DIALOG_EXIT,
         NONE
     }
-
+    //This is used to determine If the current layout is RTL or not
     static boolean isRightToLeft(Context c)
     {
         return c.getResources().getConfiguration().getLayoutDirection() == LayoutDirection.RTL;
