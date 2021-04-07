@@ -33,31 +33,29 @@ public class LaTeXTest extends RobolectricTest {
 
     @Test
     public void  _imgLinkTest() {
-        Collection col = getCol();
-        Media m = new MockMedia(col);
-        Model model = col.getModels().byName("Basic");
+        Media m = new MockMedia(mCol);
+        Model model = mCol.getModels().byName("Basic");
         // The hashing function should never change, as it would broke link. So hard coding the expected hash value is valid
         // Test with media access
         assertThat(LaTeX._imgLink("$\\sqrt[3]{2} + \\text{\"var\"}$", model, m),
                 Matchers.is("<img class=latex alt=\"\\$\\\\sqrt[3]{2} + \\\\text{&quot;var&quot;}\\$\" src=\"latex-dd84e5d506179a137f7924d0960609a8c89d491e.png\">"));
 
         // Test without access to media
-        assertThat(LaTeX._imgLink("$\\sqrt[3]{2} + \\text{\"var\"}$", model, col.getMedia()),
+        assertThat(LaTeX._imgLink("$\\sqrt[3]{2} + \\text{\"var\"}$", model, mCol.getMedia()),
                 Matchers.is("\\$\\\\sqrt[3]{2} + \\\\text{\"var\"}\\$"));
     }
 
     @Test
     public void  mungeQATest() {
-        Collection col = getCol();
-        Media m = new MockMedia(col);
-        Model model = col.getModels().byName("Basic");
+        Media m = new MockMedia(mCol);
+        Model model = mCol.getModels().byName("Basic");
 
         // Test with media access
         assertThat(LaTeX.mungeQA("[$]\\sqrt[3]{2} + \\text{\"var\"}[/$]", m, model),
                 Matchers.is("<img class=latex alt=\"$\\sqrt[3]{2} + \\text{&quot;var&quot;}$\" src=\"latex-dd84e5d506179a137f7924d0960609a8c89d491e.png\">"));
 
         // Test without access to media
-        assertThat(LaTeX.mungeQA("[$]\\sqrt[3]{2} + \\text{\"var\"}[/$]", col, model),
+        assertThat(LaTeX.mungeQA("[$]\\sqrt[3]{2} + \\text{\"var\"}[/$]", mCol, model),
                 Matchers.is("$\\sqrt[3]{2} + \\text{\"var\"}$"));
     }
 }

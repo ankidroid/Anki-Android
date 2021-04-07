@@ -165,10 +165,9 @@ public class DeckPickerTest extends RobolectricTest {
 
     @Test
     public void limitAppliedAfterReview() {
-        Collection col = getCol();
-        AbstractSched sched = col.getSched();
+        AbstractSched sched = mCol.getSched();
 
-        DeckConfig dconf = col.getDecks().getConf(1);
+        DeckConfig dconf = mCol.getDecks().getConf(1);
         dconf.getJSONObject("new").put("perDay", 10);
         for (int i = 0; i < 11; i++) {
             addNoteUsingBasicModel("Which card is this ?", Integer.toString(i));
@@ -186,7 +185,7 @@ public class DeckPickerTest extends RobolectricTest {
     public void confirmDeckDeletionDeletesEmptyDeck() {
         long did = addDeck("Hello World");
 
-        assertThat("Deck was added", getCol().getDecks().count(), is(2));
+        assertThat("Deck was added", mCol.getDecks().count(), is(2));
 
         DeckPicker deckPicker = startActivityNormallyOpenCollectionWithIntent(DeckPicker.class, new Intent());
 
@@ -194,7 +193,7 @@ public class DeckPickerTest extends RobolectricTest {
 
         advanceRobolectricLooperWithSleep();
 
-        assertThat("deck was deleted", getCol().getDecks().count(), is(1));
+        assertThat("deck was deleted", mCol.getDecks().count(), is(1));
     }
 
     @Test
@@ -207,47 +206,8 @@ public class DeckPickerTest extends RobolectricTest {
         assertThat(deckPicker.mDatabaseErrorDialog, is(DatabaseErrorDialog.DIALOG_DB_LOCKED));
     }
 
-    @Test
-    public void databaseLockedWithPermissionIntegrationTest() {
-        AnkiDroidApp.sSentExceptionReportHack = false;
-        try {
-            BackendEmulatingOpenConflict.enable();
-            InitialActivityTest.setupForDatabaseConflict();
-
-            DeckPickerEx d = super.startActivityNormallyOpenCollectionWithIntent(DeckPickerEx.class, new Intent());
-
-            assertThat("A specific dialog for a conflict should be shown", d.mDatabaseErrorDialog, is(DatabaseErrorDialog.DIALOG_DB_LOCKED));
-
-            assertThat("No exception reports should be thrown", AnkiDroidApp.sSentExceptionReportHack, is(false));
-        } finally {
-            BackendEmulatingOpenConflict.disable();
-            InitialActivityTest.setupForDefault();
-        }
-    }
-
-    @Test
-    public void databaseLockedNoPermissionIntegrationTest() {
-        // no permissions -> grant permissions -> db locked
-        try {
-            InitialActivityTest.setupForDefault();
-            BackendEmulatingOpenConflict.enable();
-
-            DeckPickerEx d = super.startActivityNormallyOpenCollectionWithIntent(DeckPickerEx.class, new Intent());
-
-            // grant permissions
-            InitialActivityTest.setupForDatabaseConflict();
-
-            d.onStoragePermissionGranted();
-
-            assertThat("A specific dialog for a conflict should be shown", d.mDatabaseErrorDialog, is(DatabaseErrorDialog.DIALOG_DB_LOCKED));
-        } finally {
-            BackendEmulatingOpenConflict.disable();
-            InitialActivityTest.setupForDefault();
-        }
-    }
-
-    private static class DeckPickerEx extends DeckPicker {
-        private int mDatabaseErrorDialog;
+    protected static class DeckPickerEx extends DeckPicker {
+        protected int mDatabaseErrorDialog;
 
         @Override
         public void showDatabaseErrorDialog(int id) {

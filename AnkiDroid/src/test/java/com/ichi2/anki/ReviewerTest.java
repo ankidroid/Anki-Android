@@ -67,7 +67,7 @@ public class ReviewerTest extends RobolectricTest {
         super.setUp();
         try {
             Timber.d("scheduler version is %d", schedVersion);
-            getCol().changeSchedulerVer(schedVersion);
+            getCol(schedVersion);
         } catch (ConfirmModSchemaException e) {
             throw new RuntimeException("Could not change schedVer", e);
         }
@@ -159,8 +159,7 @@ public class ReviewerTest extends RobolectricTest {
     @Test
     public synchronized void testMultipleCards() throws ConfirmModSchemaException {
         addNoteWithThreeCards();
-        Collection col = getCol();
-        JSONObject nw = col.getDecks().confForDid(1).getJSONObject("new");
+        JSONObject nw = mCol.getDecks().confForDid(1).getJSONObject("new");
         MockTime time = getCollectionTime();
         nw.put("delays", new JSONArray(new int[] {1, 10, 60, 120}));
 
@@ -190,9 +189,8 @@ public class ReviewerTest extends RobolectricTest {
 
     @Test
     public void testLrnQueueAfterUndo() {
-        Collection col = getCol();
-        JSONObject nw = col.getDecks().confForDid(1).getJSONObject("new");
-        MockTime time = (MockTime) col.getTime();
+        JSONObject nw = mCol.getDecks().confForDid(1).getJSONObject("new");
+        MockTime time = (MockTime) mCol.getTime();
         nw.put("delays", new JSONArray(new int[] {1, 10, 60, 120}));
 
         Card[] cards = new Card[4];
@@ -219,22 +217,21 @@ public class ReviewerTest extends RobolectricTest {
         waitForAsyncTasksToComplete();
 
         equalFirstField(cards[1], reviewer.mCurrentCard);
-        reviewer.answerCard(getCol().getSched().getGoodNewButton());
+        reviewer.answerCard(mCol.getSched().getGoodNewButton());
         waitForAsyncTasksToComplete();
 
         equalFirstField(cards[2], reviewer.mCurrentCard);
         time.addM(2);
-        reviewer.answerCard(getCol().getSched().getGoodNewButton());
+        reviewer.answerCard(mCol.getSched().getGoodNewButton());
         advanceRobolectricLooperWithSleep();
         equalFirstField(cards[0], reviewer.mCurrentCard); // This failed in #6898 because this card was not in the queue
     }
 
     @Test
     public void baseDeckName() {
-        Collection col = getCol();
-        Models models = col.getModels();
+        Models models = mCol.getModels();
 
-        Decks decks = col.getDecks();
+        Decks decks = mCol.getDecks();
         Long didAb = addDeck("A::B");
         Model basic = models.byName(AnkiDroidApp.getAppResources().getString(R.string.basic_model_name));
         basic.put("did", didAb);
@@ -301,7 +298,7 @@ public class ReviewerTest extends RobolectricTest {
     private void answerCardOrdinalAsGood(Reviewer r, int i) {
         assertCurrentOrdIs(r, i);
 
-        r.answerCard(getCol().getSched().getGoodNewButton());
+        r.answerCard(mCol.getSched().getGoodNewButton());
 
         waitForAsyncTasksToComplete();
     }
@@ -316,7 +313,7 @@ public class ReviewerTest extends RobolectricTest {
 
 
     private void addNoteWithThreeCards() throws ConfirmModSchemaException {
-        Models models = getCol().getModels();
+        Models models = mCol.getModels();
         Model m = models.copy(models.current());
         m.put("name", "Three");
         models.add(m);
@@ -325,11 +322,11 @@ public class ReviewerTest extends RobolectricTest {
         cloneTemplate(models, m);
         cloneTemplate(models, m);
 
-        Note newNote = getCol().newNote();
+        Note newNote = mCol.newNote();
         newNote.setField(0, "Hello");
         assertThat(newNote.model().get("name"), is("Three"));
 
-        assertThat(getCol().addNote(newNote), is(3));
+        assertThat(mCol.addNote(newNote), is(3));
     }
 
 

@@ -17,19 +17,17 @@ public class DeckOptionsTest extends RobolectricTest {
 
     @Test
     public void changeHardFactor() {
-        Collection col = getCol();
-
         // Verify that for newly created deck hardFactor is default.
-        JSONObject conf = col.getConf();
+        JSONObject conf = mCol.getConf();
         double hardFactor = conf.optDouble("hardFactor", 1.2);
         Assert.assertEquals(1.2, hardFactor, 0.01);
 
         // Modify hard factor.
         conf.put("hardFactor", 1.0);
-        col.setConf(conf);
+        mCol.setConf(conf);
 
         // Verify that hardFactor value has changed.
-        conf = col.getConf();
+        conf = mCol.getConf();
         hardFactor = conf.optDouble("hardFactor", 1.2);
         Assert.assertEquals(1.0, hardFactor, 0.01);
     }

@@ -109,12 +109,12 @@ public class CardTemplatePreviewerTest extends RobolectricTest {
     }
 
     private Card getSavedCard(Model model, int ordinal) {
-        Note n = getCol().newNote(model);
+        Note n = mCol.newNote(model);
         List<String> fieldNames = model.getFieldsNames();
         for (int i = 0; i < fieldNames.size(); i++) {
             n.setField(i, fieldNames.get(i));
         }
         n.flush();
-        return getCol().getNewLinkedCard(new Card(getCol()), n, model.getJSONArray("tmpls").getJSONObject(ordinal), 1, 1, true);
+        return mCol.getNewLinkedCard(new Card(mCol), n, model.getJSONArray("tmpls").getJSONObject(ordinal), 1, 1, true);
     }
 }

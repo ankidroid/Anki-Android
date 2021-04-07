@@ -226,7 +226,7 @@ public class CardBrowserTest extends RobolectricTest {
         List<Long> cardIds = b.getCheckedCardIds();
 
         for (Long cardId : cardIds) {
-            assertThat("Deck should have been changed yet", getCol().getCard(cardId).getDid(), not(deckIdToChangeTo));
+            assertThat("Deck should have been changed yet", mCol.getCard(cardId).getDid(), not(deckIdToChangeTo));
         }
 
         final int deckPosition = b.getChangeDeckPositionFromId(deckIdToChangeTo);
@@ -237,7 +237,7 @@ public class CardBrowserTest extends RobolectricTest {
         //assert
         advanceRobolectricLooperWithSleep();
         for (Long cardId : cardIds) {
-            assertThat("Deck should be changed", getCol().getCard(cardId).getDid(), is(deckIdToChangeTo));
+            assertThat("Deck should be changed", mCol.getCard(cardId).getDid(), is(deckIdToChangeTo));
         }
     }
 
@@ -253,7 +253,7 @@ public class CardBrowserTest extends RobolectricTest {
         b.executeChangeCollectionTask(cardIds, dynId);
 
         for (Long cardId: cardIds) {
-            assertThat("Deck should not be changed", getCol().getCard(cardId).getDid(), not(dynId));
+            assertThat("Deck should not be changed", mCol.getCard(cardId).getDid(), not(dynId));
         }
     }
 
@@ -397,7 +397,7 @@ public class CardBrowserTest extends RobolectricTest {
     public void addCardDeckISetIfDeckIsSelectedOnOpen() {
         long initialDid = addDeck("NotDefault");
 
-        getCol().getDecks().select(initialDid);
+        mCol.getDecks().select(initialDid);
 
         CardBrowser b = getBrowserWithNoNewCards();
 
@@ -557,7 +557,7 @@ public class CardBrowserTest extends RobolectricTest {
 
 
     private void selectDefaultDeck() {
-        getCol().getDecks().select(1);
+        mCol.getDecks().select(1);
     }
 
     private void deleteCardAtPosition(CardBrowser browser, int positionToCorrupt) {
@@ -616,7 +616,7 @@ public class CardBrowserTest extends RobolectricTest {
     }
 
     private void removeCardFromCollection(Long cardId) {
-        getCol().remCards(Collections.singletonList(cardId));
+        mCol.remCards(Collections.singletonList(cardId));
     }
 
     @CheckReturnValue

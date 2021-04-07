@@ -27,7 +27,7 @@ public class ClozeTest extends RobolectricTest {
     public void testCloze() {
         final Context context = ApplicationProvider.getApplicationContext();
 
-        Collection d = getCol();
+        Collection d = mCol;
         Note f = d.newNote(d.getModels().byName("Cloze"));
 
         try {

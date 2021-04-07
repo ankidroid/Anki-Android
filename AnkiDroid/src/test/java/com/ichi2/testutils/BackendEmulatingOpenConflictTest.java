@@ -18,6 +18,7 @@ package com.ichi2.testutils;
 
 import com.ichi2.anki.CollectionHelper;
 import com.ichi2.anki.RobolectricTest;
+import com.ichi2.anki.RobolectricTestBase;
 
 import net.ankiweb.rsdroid.BackendException.BackendDbException.BackendDbLockedException;
 
@@ -31,7 +32,7 @@ import androidx.test.ext.junit.runners.AndroidJUnit4;
 import static org.junit.Assert.assertThrows;
 
 @RunWith(AndroidJUnit4.class)
-public class BackendEmulatingOpenConflictTest extends RobolectricTest {
+public class BackendEmulatingOpenConflictTest extends RobolectricTestBase {
 
     @Before
     @Override

@@ -74,7 +74,7 @@ public class TextNoteExporterTest extends RobolectricTest {
     @Before
     public void setUp() {
         super.setUp();
-        mCollection = getCol();
+        mCollection = mCol;
         mExporter = new TextNoteExporter(mCollection, mIncludeId, mIncludeTags, mIncludeHTML);
 
         final Note n1 = mCollection.newNote();

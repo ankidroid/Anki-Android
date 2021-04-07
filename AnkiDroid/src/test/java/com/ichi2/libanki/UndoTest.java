@@ -33,93 +33,93 @@ public class UndoTest extends RobolectricTest {
     @Test
     @Ignore("We need to figure out how to test save/undo")
     public void test_op() throws Exception {
-        Collection col = getCol(2);
+        getCol(2);
         // should have no undo by default
-        assertNull(col.undoType());
+        assertNull(mCol.undoType());
         // let's adjust a study option
-        col.save("studyopts");
-        col.getConf().put("abc", 5);
+        mCol.save("studyopts");
+        mCol.getConf().put("abc", 5);
         // it should be listed as undoable
-        assertEquals("studyopts", col.undoName(getTargetContext().getResources()));
+        assertEquals("studyopts", mCol.undoName(getTargetContext().getResources()));
         // with about 5 minutes until it's clobbered
         /* lastSave
-           assertThat(getTime().now() - col._lastSave, lesserThan(1));
+           assertThat(getTime().now() - mCol._lastSave, lesserThan(1));
         */
         // undoing should restore the old value
-        col.undo();
-        assertNull(col.undoType());
-        assertFalse(col.getConf().has("abc"));
+        mCol.undo();
+        assertNull(mCol.undoType());
+        assertFalse(mCol.getConf().has("abc"));
         // an (auto)save will clear the undo
-        col.save("foo");
-        assertEquals("foo", col.undoName(getTargetContext().getResources()));
-        col.save();
-        assertEquals("", col.undoName(getTargetContext().getResources()));
+        mCol.save("foo");
+        assertEquals("foo", mCol.undoName(getTargetContext().getResources()));
+        mCol.save();
+        assertEquals("", mCol.undoName(getTargetContext().getResources()));
         // and a review will, too
-        col.save("add");
-        Note note = col.newNote();
+        mCol.save("add");
+        Note note = mCol.newNote();
         note.setItem("Front", "one");
-        col.addNote(note);
-        col.reset();
-        assertEquals("add", col.undoName(getTargetContext().getResources()));
-        Card c = col.getSched().getCard();
-        col.getSched().answerCard(c, 2);
-        assertEquals("Review", col.undoName(getTargetContext().getResources()));
+        mCol.addNote(note);
+        mCol.reset();
+        assertEquals("add", mCol.undoName(getTargetContext().getResources()));
+        Card c = mCol.getSched().getCard();
+        mCol.getSched().answerCard(c, 2);
+        assertEquals("Review", mCol.undoName(getTargetContext().getResources()));
     }
 
 
     @Test
     public void test_review() throws Exception {
-        Collection col = getCol(2);
-        col.getConf().put("counts", COUNT_REMAINING);
-        Note note = col.newNote();
+        getCol(2);
+        mCol.getConf().put("counts", COUNT_REMAINING);
+        Note note = mCol.newNote();
         note.setItem("Front", "one");
-        col.addNote(note);
-        col.reset();
+        mCol.addNote(note);
+        mCol.reset();
         /* TODO:  undo after reset ?
-        assertNotNull(col.undoType());
+        assertNotNull(mCol.undoType());
 
          */
         // answer
-        assertEquals(new Counts(1, 0, 0), col.getSched().counts());
-        Card c = col.getSched().getCard();
+        assertEquals(new Counts(1, 0, 0), mCol.getSched().counts());
+        Card c = mCol.getSched().getCard();
         assertEquals(QUEUE_TYPE_NEW, c.getQueue());
-        col.getSched().answerCard(c, 3);
+        mCol.getSched().answerCard(c, 3);
         assertEquals(1001, c.getLeft());
-        assertEquals(new Counts(0, 1, 0), col.getSched().counts());
+        assertEquals(new Counts(0, 1, 0), mCol.getSched().counts());
         assertEquals(QUEUE_TYPE_LRN, c.getQueue());
         // undo
-        assertNotNull(col.undoType());
-        col.undo();
-        col.reset();
-        assertEquals(new Counts(1, 0, 0), col.getSched().counts());
+        assertNotNull(mCol.undoType());
+        mCol.undo();
+        mCol.reset();
+        assertEquals(new Counts(1, 0, 0), mCol.getSched().counts());
         c.load();
         assertEquals(QUEUE_TYPE_NEW, c.getQueue());
         assertNotEquals(1001, c.getLeft());
-        assertNull(col.undoType());
+        assertNull(mCol.undoType());
         // we should be able to undo multiple answers too
-        note = col.newNote();
+        note = mCol.newNote();
         note.setItem("Front", "two");
-        col.addNote(note);
-        col.reset();
-        assertEquals(new Counts(2, 0, 0), col.getSched().counts());
-        c = col.getSched().getCard();
-        col.getSched().answerCard(c, 3);
-        c = col.getSched().getCard();
-        col.getSched().answerCard(c, 3);
-        assertEquals(new Counts(0, 2, 0), col.getSched().counts());
-        col.undo();
-        col.reset();
-        assertEquals(new Counts(1, 1, 0), col.getSched().counts());
-        col.undo();
-        col.reset();
-        assertEquals(new Counts(2, 0, 0), col.getSched().counts());
+        mCol.addNote(note);
+        mCol.reset();
+        assertEquals(new Counts(2, 0, 0), mCol.getSched().counts());
+        c = mCol.getSched().getCard();
+        mCol.getSched().answerCard(c, 3);
+        c = mCol.getSched().getCard();
+        mCol.getSched().answerCard(c, 3);
+        assertEquals(new Counts(0, 2, 0), mCol.getSched().counts());
+        mCol.undo();
+        mCol.reset();
+        assertEquals(new Counts(1, 1, 0), mCol.getSched().counts());
+        mCol.undo();
+        mCol.reset();
+        assertEquals(new Counts(2, 0, 0), mCol.getSched().counts());
         // performing a normal op will clear the review queue
-        c = col.getSched().getCard();
-        col.getSched().answerCard(c, 3);
-        assertThat(col.undoType(), is(instanceOf(Collection.UndoReview.class)));
-        col.save("foo");
+        c = mCol.getSched().getCard();
+        mCol.getSched().answerCard(c, 3);
+        assertThat(mCol.undoType(), is(instanceOf(Collection.UndoReview.class)));
+        mCol.save("foo");
         // Upstream, "save" can be undone. This test fails here because it's not the case in AnkiDroid
-        assumeThat(col.undoName(getTargetContext().getResources()), is("foo"));
-        col.undo();
+        assumeThat(mCol.undoName(getTargetContext().getResources()), is("foo"));
+        mCol.undo();
     }
 }

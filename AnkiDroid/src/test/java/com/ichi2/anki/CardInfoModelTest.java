@@ -47,8 +47,8 @@ public class CardInfoModelTest extends RobolectricTest {
         1438962063638,1438962011404,1438953473618,0,1441720656,2949,2,2,-99826,12,1950,14,2,1001,705,1438357550678,0,""
          */
 
-        getCol().setCrt(1381723200);
-        getCol().getDb().executeScript(
+        mCol.setCrt(1381723200);
+        mCol.getDb().executeScript(
                 "insert into revlog values (1441720656373,1438962063638,1603,2,12,13,1950,2619,1);" +
                         "insert into revlog values (1440617351419,1438962063638,1541,3,13,7,2100,1582,1);" +
                         "insert into revlog values (1440007700496,1438962063638,1479,3,7,5,2100,1845,1);" +
@@ -63,9 +63,9 @@ public class CardInfoModelTest extends RobolectricTest {
                         "insert into revlog values (1438983221721,1438962063638,1337,2,-600,-60,0,2214,3);" +
                         "insert into revlog values (1438983131213,1438962063638,1337,1,-60,-60,0,3123,3);" +
                         "insert into revlog values (1438983050444,1438962063638,1337,1,-60,-60,0,5282,0);");
-        getCol().save();
+        mCol.save();
 
-        mModel = CardInfo.CardInfoModel.create(c, getCol());
+        mModel = CardInfo.CardInfoModel.create(c, mCol);
     }
 
     @Test

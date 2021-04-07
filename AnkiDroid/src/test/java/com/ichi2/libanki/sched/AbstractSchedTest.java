@@ -74,7 +74,7 @@ public class AbstractSchedTest extends RobolectricTest {
     public void setUp() {
         super.setUp();
         try {
-            getCol().changeSchedulerVer(schedVersion);
+            getCol(schedVersion);
         } catch (ConfirmModSchemaException e) {
             throw new RuntimeException("Could not change schedVer", e);
         }
@@ -85,9 +85,8 @@ public class AbstractSchedTest extends RobolectricTest {
         // #6587
         addNoteUsingBasicModel("Hello", "World");
 
-        Collection col = getCol();
-        AbstractSched sched = col.getSched();
-        col.reset();
+        AbstractSched sched = mCol.getSched();
+        mCol.reset();
 
         Card cardBeforeUndo = sched.getCard();
         Counts countsBeforeUndo = sched.counts();
@@ -106,26 +105,25 @@ public class AbstractSchedTest extends RobolectricTest {
 
     @Test
     public void ensureUndoCorrectCounts() {
-        Collection col = getCol();
-        AbstractSched sched = col.getSched();
-        Deck deck = col.getDecks().get(1);
-        DeckConfig dconf = col.getDecks().getConf(1);
+        AbstractSched sched = mCol.getSched();
+        Deck deck = mCol.getDecks().get(1);
+        DeckConfig dconf = mCol.getDecks().getConf(1);
         dconf.getJSONObject("new").put("perDay", 10);
         JSONArray newCount = deck.getJSONArray("newToday");
         for (int i = 0; i < 20; i++) {
-            Note note = col.newNote();
+            Note note = mCol.newNote();
             note.setField(0, "a");
-            col.addNote(note);
+            mCol.addNote(note);
         }
-        col.reset();
-        assertThat(col.cardCount(), is(20));
+        mCol.reset();
+        assertThat(mCol.cardCount(), is(20));
         assertThat(sched.newCount(), is(10));
         Card card = sched.getCard();
         assertThat(sched.newCount(), is(9));
         assertThat(sched.counts(card).getNew(), is(10));
         sched.answerCard(card, sched.getGoodNewButton());
         sched.getCard();
-        nonTaskUndo(col);
+        nonTaskUndo(mCol);
         card.load();
         assertThat(sched.newCount(), is(9));
         assertThat(sched.counts(card).getNew(), is(10));
@@ -133,8 +131,7 @@ public class AbstractSchedTest extends RobolectricTest {
 
     @Test
     public void testCardQueue() {
-        Collection col = getCol();
-        SchedV2 sched = (SchedV2) col.getSched();
+        SchedV2 sched = (SchedV2) mCol.getSched();
         SimpleCardQueue queue = new SimpleCardQueue(sched);
         assertThat(queue.size(), is(0));
         final int nbCard = 6;
@@ -162,10 +159,9 @@ public class AbstractSchedTest extends RobolectricTest {
     @Test
     public void siblingCorrectlyBuried() {
         // #6903
-        Collection col = getCol();
-        AbstractSched sched = col.getSched();
-        Models models = col.getModels();
-        DeckConfig dconf = col.getDecks().getConf(1);
+        AbstractSched sched = mCol.getSched();
+        Models models = mCol.getModels();
+        DeckConfig dconf = mCol.getDecks().getConf(1);
         dconf.getJSONObject("new").put("bury", true);
         final int nbNote = 2;
         Note[] notes = new Note[nbNote];
@@ -173,7 +169,7 @@ public class AbstractSchedTest extends RobolectricTest {
             Note note  = addNoteUsingBasicAndReversedModel("front", "back");
             notes[i] = note;
         }
-        col.reset();
+        mCol.reset();
 
         for (int i = 0; i < nbNote; i++) {
             Card card = sched.getCard();
@@ -204,8 +200,8 @@ public class AbstractSchedTest extends RobolectricTest {
         addDeckWithExactName(parent);
         addDeckWithExactName(child);
 
-        getCol().getDecks().checkIntegrity();
-        assertDoesNotThrow(() -> getCol().getSched().deckDueList());
+        mCol.getDecks().checkIntegrity();
+        assertDoesNotThrow(() -> mCol.getSched().deckDueList());
     }
 
 
@@ -215,8 +211,8 @@ public class AbstractSchedTest extends RobolectricTest {
         private final AbstractSched sched;
 
         public IncreaseToday() {
-            decks = getCol().getDecks();
-            sched = getCol().getSched();
+            decks = mCol.getDecks();
+            sched = mCol.getSched();
             aId = addDeck("A");
             bId = addDeck("A::B");
             cId = addDeck("A::B::C");
@@ -247,8 +243,7 @@ public class AbstractSchedTest extends RobolectricTest {
         }
 
         public void test() {
-            Collection col = getCol();
-            Models models = col.getModels();
+            Models models = mCol.getModels();
 
             DeckConfig dconf = decks.getConf(1);
             dconf.getJSONObject("new").put("perDay", 0);
@@ -271,7 +266,7 @@ public class AbstractSchedTest extends RobolectricTest {
             increaseAndAssertNewCountsIs("Adding a review in D add it in its parents too", dId, 5, 5, 3, 4);
 
             decks.select(cId);
-            col.reset();
+            mCol.reset();
             for (int i = 0; i < 3; i++) {
                 Card card = sched.getCard();
                 sched.answerCard(card, sched.answerButtons(card));
@@ -295,8 +290,8 @@ public class AbstractSchedTest extends RobolectricTest {
              or to do
 ```python
 from aqt import mw
-c = mw.col.decks.byName("A::B::C")
-mw.col.sched.extendLimits(1, 0)
+c = mw.mCol.decks.byName("A::B::C")
+mw.mCol.sched.extendLimits(1, 0)
 ```
              */
         }
@@ -310,15 +305,14 @@ mw.col.sched.extendLimits(1, 0)
 
 
     protected void undoAndRedo(boolean preload) {
-        Collection col = getCol();
-        DeckConfig conf = col.getDecks().confForDid(1);
+        DeckConfig conf = mCol.getDecks().confForDid(1);
         conf.getJSONObject("new").put("delays", new JSONArray(new double[] {1, 3, 5, 10}));
-        col.getConf().put("collapseTime", 20 * 60);
-        AbstractSched sched = col.getSched();
+        mCol.getConf().put("collapseTime", 20 * 60);
+        AbstractSched sched = mCol.getSched();
 
         Note note = addNoteUsingBasicModel("foo", "bar");
 
-        col.reset();
+        mCol.reset();
 
         Card card = sched.getCard();
         assertNotNull(card);
@@ -348,7 +342,7 @@ mw.col.sched.extendLimits(1, 0)
 
         assertNotNull(card);
 
-        card = nonTaskUndo(col);
+        card = nonTaskUndo(mCol);
         assertNotNull(card);
         assertEquals(new Counts(0, (schedVersion == 1) ? 3 : 1, 0), sched.counts(card));
         sched.count();
@@ -379,7 +373,7 @@ mw.col.sched.extendLimits(1, 0)
     }
 
     private void addDeckWithExactName(String name) {
-        Decks decks = getCol().getDecks();
+        Decks decks = mCol.getDecks();
 
         long did = addDeck(name);
         Deck d = decks.get(did);
@@ -394,13 +388,12 @@ mw.col.sched.extendLimits(1, 0)
 
     @Test
     public void regression_7066() {
-        Collection col = getCol();
-        DeckConfig dconf = col.getDecks().getConf(1);
+        DeckConfig dconf = mCol.getDecks().getConf(1);
         dconf.getJSONObject("new").put("bury", true);
-        AbstractSched sched = col.getSched();
+        AbstractSched sched = mCol.getSched();
         addNoteUsingBasicAndReversedModel("foo", "bar");
         addNoteUsingBasicModel("plop", "foo");
-        col.reset();
+        mCol.reset();
         Card card = sched.getCard();
         sched.setCurrentCard(card);
         sched.preloadNextCard();
@@ -412,9 +405,8 @@ mw.col.sched.extendLimits(1, 0)
 
     @Test
     public void regression_7984() {
-        Collection col = getCol();
-        SchedV2 sched = (SchedV2) col.getSched();
-        Time time = getCol().getTime();
+        SchedV2 sched = (SchedV2) mCol.getSched();
+        Time time = mCol.getTime();
         Card[] cards = new Card[2];
         for (int i = 0; i < 2; i++) {
             cards[i] = addNoteUsingBasicModel(Integer.toString(i), "").cards().get(0);
@@ -423,7 +415,7 @@ mw.col.sched.extendLimits(1, 0)
             cards[i].setDue(time.intTime() - 20 * 60 + i);
             cards[i].flush();
         }
-        col.reset();
+        mCol.reset();
         // Regression test success non deterministically without the sleep
         Card gotten = sched.getCard();
         advanceRobolectricLooperWithSleep();

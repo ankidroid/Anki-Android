@@ -218,12 +218,12 @@ public class NoteEditorTest extends RobolectricTest {
         // value returned if deck not found
         final int DECK_ID_NOT_FOUND = -404;
         long currentDid = addDeck("Basic::Test");
-        getCol().getConf().put("curDeck", currentDid);
+        mCol.getConf().put("curDeck", currentDid);
         Note n = super.addNoteUsingBasicModel("Test", "Note");
         n.model().put("did", currentDid);
         NoteEditor editor = getNoteEditorEditingExistingBasicNote("Test", "Note", FromScreen.DECK_LIST);
 
-        getCol().getConf().put("curDeck", Consts.DEFAULT_DECK_ID); // Change DID if going through default path
+        mCol.getConf().put("curDeck", Consts.DEFAULT_DECK_ID); // Change DID if going through default path
         Intent copyNoteIntent = getCopyNoteIntent(editor);
         NoteEditor newNoteEditor = super.startActivityNormallyOpenCollectionWithIntent(NoteEditor.class, copyNoteIntent);
 
@@ -352,7 +352,7 @@ public class NoteEditorTest extends RobolectricTest {
 
 
     private int getCardCount() {
-        return getCol().cardCount();
+        return mCol.cardCount();
     }
 
     private NoteEditorTestBuilder getNoteEditorAdding(NoteType noteType) {
@@ -363,15 +363,15 @@ public class NoteEditorTest extends RobolectricTest {
 
     private Model makeNoteForType(NoteType noteType) {
         switch (noteType) {
-            case BASIC: return getCol().getModels().byName("Basic");
-            case CLOZE: return getCol().getModels().byName("Cloze");
+            case BASIC: return mCol.getModels().byName("Basic");
+            case CLOZE: return mCol.getModels().byName("Cloze");
             case BACKTOFRONT: {
                 String name = super.addNonClozeModel("Reversed", new String[] {"Front", "Back"}, "{{Back}}", "{{Front}}");
-                return getCol().getModels().byName(name);
+                return mCol.getModels().byName(name);
             }
             case THREE_FIELD_INVALID_TEMPLATE: {
                 String name = super.addNonClozeModel("Invalid", new String[] {"Front", "Back", "Side"}, "", "");
-                return getCol().getModels().byName(name);
+                return mCol.getModels().byName(name);
             }
             default: throw new IllegalStateException(String.format("unexpected value: %s", noteType));
         }
@@ -477,7 +477,7 @@ public class NoteEditorTest extends RobolectricTest {
         }
 
         public <T extends NoteEditor> T build(Class<T> clazz) {
-            getCol().getModels().setCurrent(mModel);
+            mCol.getModels().setCurrent(mModel);
             T noteEditor = getNoteEditorAddingNote(FromScreen.REVIEWER, clazz);
             advanceRobolectricLooper();
             noteEditor.setFieldValueFromUi(0, mFirstField);

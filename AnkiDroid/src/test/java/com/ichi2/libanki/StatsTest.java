@@ -21,32 +21,29 @@ public class StatsTest extends RobolectricTest {
     /* TODO put in Collection
        @Test
        public void test_stats() throws Exception {
-       Collection col = getCol();
-       Note note = col.newNote();
+       Note note = mCol.newNote();
        note.setItem("Front","foo");
-       col.addNote(note);
+       mCol.addNote(note);
        Card c = note.cards().get(0);
        // card stats
-       assertTrue(col.cardStats(c));
-       col.reset();
-       c = col.getSched().getCard();
-       col.getSched().answerCard(c, 3);
-       col.getSched().answerCard(c, 2);
-       assertTrue(col.cardStats(c));
+       assertTrue(mCol.cardStats(c));
+       mCol.reset();
+       c = mCol.getSched().getCard();
+       mCol.getSched().answerCard(c, 3);
+       mCol.getSched().answerCard(c, 2);
+       assertTrue(mCol.cardStats(c));
        }
 
        @Test
        public void test_graphs_empty() throws Exception {
-       Collection col = getCol();
-       assertTrue(col.stats().report());
+       assertTrue(mCol.stats().report());
        }
 
 
        @Test
        public void test_graphs() throws Exception {
        dir = tempfile.gettempdir();
-       Collection col = getCol();
-       g = col.stats();
+       g = mCol.stats();
        rep = g.report();
        with open(os.path.join(dir, "test.html"), "w", encoding="UTF-8") as note:
        note.write(rep);

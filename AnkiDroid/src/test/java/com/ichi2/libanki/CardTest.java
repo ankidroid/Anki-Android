@@ -30,46 +30,43 @@ public class CardTest extends RobolectricTest {
 
     @Test
     public void test_delete() {
-        Collection col = getCol();
-        Note note = col.newNote();
+        Note note = mCol.newNote();
         note.setItem("Front", "1");
         note.setItem("Back", "2");
-        col.addNote(note);
+        mCol.addNote(note);
         long cid = note.cards().get(0).getId();
-        col.reset();
-        col.getSched().answerCard(col.getSched().getCard(), 2);
-        col.remCards(Collections.singletonList(cid));
-        assertEquals(0, col.cardCount());
-        assertEquals(0, col.noteCount());
-        assertEquals(0, col.getDb().queryScalar("select count() from notes"));
-        assertEquals(0, col.getDb().queryScalar("select count() from cards"));
-        assertEquals(2, col.getDb().queryScalar("select count() from graves"));
+        mCol.reset();
+        mCol.getSched().answerCard(mCol.getSched().getCard(), 2);
+        mCol.remCards(Collections.singletonList(cid));
+        assertEquals(0, mCol.cardCount());
+        assertEquals(0, mCol.noteCount());
+        assertEquals(0, mCol.getDb().queryScalar("select count() from notes"));
+        assertEquals(0, mCol.getDb().queryScalar("select count() from cards"));
+        assertEquals(2, mCol.getDb().queryScalar("select count() from graves"));
     }
 
 
     @Test
     public void test_misc_cards() {
-        Collection col = getCol();
-        Note note = col.newNote();
+        Note note = mCol.newNote();
         note.setItem("Front", "1");
         note.setItem("Back", "2");
-        col.addNote(note);
+        mCol.addNote(note);
         Card c = note.cards().get(0);
-        long id = col.getModels().current().getLong("id");
+        long id = mCol.getModels().current().getLong("id");
         assertEquals(0, c.template().getInt("ord"));
     }
 
 
     @Test
     public void test_genrem() {
-        Collection col = getCol();
-        Note note = col.newNote();
+        Note note = mCol.newNote();
         note.setItem("Front", "1");
         note.setItem("Back", "");
-        col.addNote(note);
+        mCol.addNote(note);
         assertEquals(1, note.numberOfCards());
-        Model m = col.getModels().current();
-        Models mm = col.getModels();
+        Model m = mCol.getModels().current();
+        Models mm = mCol.getModels();
         // adding a new template should automatically create cards
         JSONObject t = Models.newTemplate("rev");
         t.put("qfmt", "{{Front}}");
@@ -81,8 +78,8 @@ public class CardTest extends RobolectricTest {
         t = m.getJSONArray("tmpls").getJSONObject(1);
         t.put("qfmt", "{{Back}}");
         mm.save(m, true);
-        List<Long> rep = col.emptyCids(null);
-        col.remCards(rep);
+        List<Long> rep = mCol.emptyCids(null);
+        mCol.remCards(rep);
         assertEquals(1, note.numberOfCards());
         // if we add to the note, a card should be automatically generated
         note.load();
@@ -94,18 +91,17 @@ public class CardTest extends RobolectricTest {
 
     @Test
     public void test_gendeck() {
-        Collection col = getCol();
-        Model cloze = col.getModels().byName("Cloze");
-        col.getModels().setCurrent(cloze);
-        Note note = col.newNote();
+        Model cloze = mCol.getModels().byName("Cloze");
+        mCol.getModels().setCurrent(cloze);
+        Note note = mCol.newNote();
         note.setItem("Text", "{{c1::one}}");
-        col.addNote(note);
-        assertEquals(1, col.cardCount());
+        mCol.addNote(note);
+        assertEquals(1, mCol.cardCount());
         assertEquals(1, note.cards().get(0).getDid());
         // set the model to a new default col
         long newId = addDeck("new");
         cloze.put("did", newId);
-        col.getModels().save(cloze, false);
+        mCol.getModels().save(cloze, false);
         // a newly generated card should share the first card's col
         note.setItem("Text", "{{c2::two}}");
         note.flush();
@@ -126,8 +122,7 @@ public class CardTest extends RobolectricTest {
 
     @Test
     public void test_gen_or() throws ConfirmModSchemaException {
-        Collection col = getCol();
-        Models models = col.getModels();
+        Models models = mCol.getModels();
         Model model = models.byName("Basic");
         JSONArray flds = model.getJSONArray("flds");
         models.renameField(model, flds.getJSONObject(0), "A");
@@ -147,44 +142,43 @@ public class CardTest extends RobolectricTest {
         models.save(model);
         models.setCurrent(model);
 
-        Note note = col.newNote();
+        Note note = mCol.newNote();
         note.setItem("A", "foo");
-        col.addNote(note);
+        mCol.addNote(note);
         assertNoteOrdinalAre(note, new Integer[]{0, 1});
 
-        note = col.newNote();
+        note = mCol.newNote();
         note.setItem("B", "foo");
         note.setItem("C", "foo");
-        col.addNote(note);
+        mCol.addNote(note);
         assertNoteOrdinalAre(note, new Integer[]{0, 1});
 
-        note = col.newNote();
+        note = mCol.newNote();
         note.setItem("B", "foo");
-        col.addNote(note);
+        mCol.addNote(note);
         assertNoteOrdinalAre(note, new Integer[]{0});
 
-        note = col.newNote();
+        note = mCol.newNote();
         note.setItem("C", "foo");
-        col.addNote(note);
+        mCol.addNote(note);
         assertNoteOrdinalAre(note, new Integer[]{0});
 
-        note = col.newNote();
+        note = mCol.newNote();
         note.setItem("A", "foo");
         note.setItem("B", "foo");
         note.setItem("C", "foo");
-        col.addNote(note);
+        mCol.addNote(note);
         assertNoteOrdinalAre(note, new Integer[]{0, 1});
 
-        note = col.newNote();
-        col.addNote(note);
+        note = mCol.newNote();
+        mCol.addNote(note);
         assertNoteOrdinalAre(note, new Integer[]{0});
         // First card is generated if no other card
     }
 
     @Test
     public void test_gen_not() throws ConfirmModSchemaException {
-        Collection col = getCol();
-        Models models = col.getModels();
+        Models models = mCol.getModels();
         Model model = models.byName("Basic");
         JSONArray flds = model.getJSONArray("flds");
         JSONArray tmpls = model.getJSONArray("tmpls");
@@ -206,28 +200,28 @@ public class CardTest extends RobolectricTest {
         models.save(model);
         models.setCurrent(model);
 
-        Note note = col.newNote();
+        Note note = mCol.newNote();
         note.setItem("First", "foo");
         note.setItem("AddIfEmpty", "foo");
         note.setItem("Front", "foo");
-        col.addNote(note);
+        mCol.addNote(note);
         assertNoteOrdinalAre(note, new Integer[]{0});
 
-        note = col.newNote();
+        note = mCol.newNote();
         note.setItem("First", "foo");
         note.setItem("AddIfEmpty", "foo");
-        col.addNote(note);
+        mCol.addNote(note);
         assertNoteOrdinalAre(note, new Integer[]{0});
 
-        note = col.newNote();
+        note = mCol.newNote();
         note.setItem("First", "foo"); // ensure first note generated
-        col.addNote(note);
+        mCol.addNote(note);
         assertNoteOrdinalAre(note, new Integer[]{0});
 
-        note = col.newNote();
+        note = mCol.newNote();
         note.setItem("First", "foo");
         note.setItem("Front", "foo");
-        col.addNote(note);
+        mCol.addNote(note);
         assertNoteOrdinalAre(note, new Integer[]{0, 1});
     }
 
@@ -243,11 +237,10 @@ public class CardTest extends RobolectricTest {
     @Test
     @Config(qualifiers = "en")
     public void nextDueTest() throws FilteredAncestor {
-        Collection col = getCol();
         // Test runs as the 7th of august 2020, 9h00
         Note n = addNoteUsingBasicModel("Front", "Back");
         Card c = n.firstCard();
-        Decks decks = col.getDecks();
+        Decks decks = mCol.getDecks();
 
         Calendar cal = Calendar.getInstance();
         cal.set(2021, 2, 19, 7, 42, 42);

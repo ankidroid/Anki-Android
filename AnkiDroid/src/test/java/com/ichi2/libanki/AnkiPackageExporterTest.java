@@ -147,7 +147,7 @@ public class AnkiPackageExporterTest extends RobolectricTest {
 
     @NonNull
     private AnkiPackageExporter getExporterForDeckWithMedia() {
-        AnkiPackageExporter exporter = new AnkiPackageExporter(getCol(), 1L, true, true);
+        AnkiPackageExporter exporter = new AnkiPackageExporter(mCol, 1L, true, true);
         return exporter;
     }
 
@@ -175,7 +175,7 @@ public class AnkiPackageExporterTest extends RobolectricTest {
         String s = addFile(temp);
         temp.delete();
 
-        File newFile = new File(getCol().getMedia().dir(), s);
+        File newFile = new File(mCol.getMedia().dir(), s);
         if (!newFile.exists()) {
             throw new IllegalStateException("Could not create temp file");
         }
@@ -188,7 +188,7 @@ public class AnkiPackageExporterTest extends RobolectricTest {
 
     private String addFile(File temp) throws IOException {
         try {
-            return getCol().getMedia().addFile(temp);
+            return mCol.getMedia().addFile(temp);
         } catch (EmptyMediaException e) {
             throw new RuntimeException(e);
         }

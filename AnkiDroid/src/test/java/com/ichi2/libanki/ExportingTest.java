@@ -15,18 +15,18 @@ public class ExportingTest extends RobolectricTest {
      ** Exporting    *
      *****************/
     private void setup() {
-        col = getCol();
-        Note note = col.newNote();
+        col = mCol;
+        Note note = mCol.newNote();
         note.setItem("Front", "foo");
         note.setItem("Back", "bar<br>");
         note.setTagsFromStr("tag, tag2");
-        col.addNote(note);
+        mCol.addNote(note);
         // with a different col
-        note = col.newNote();
+        note = mCol.newNote();
         note.setItem("Front", "baz");
         note.setItem("Back", "qux");
         note.model().put("did", addDeck("new col"));
-        col.addNote(note);
+        mCol.addNote(note);
     }
 
 
@@ -42,21 +42,21 @@ public class ExportingTest extends RobolectricTest {
        public void test_export_anki(){
        // create a new col with its own conf to test conf copying
        long did = addDeck("test");
-       Deck dobj = col.getDecks().get(did);
-       long confId = col.getDecks().add_config_returning_id("newconf");
-       DeckConfig conf = col.getDecks().getConf(confId);
+       Deck dobj = mCol.getDecks().get(did);
+       long confId = mCol.getDecks().add_config_returning_id("newconf");
+       DeckConfig conf = mCol.getDecks().getConf(confId);
        conf.getJSONObject("new").put("perDay", 5);
-       col.getDecks().save(conf);
-       col.getDecks().setConf(dobj, confId);
+       mCol.getDecks().save(conf);
+       mCol.getDecks().setConf(dobj, confId);
        // export
-       AnkiPackageExporter e = AnkiExporter(col);
+       AnkiPackageExporter e = AnkiExporter(mCol);
        fd, newname = tempfile.mkstemp(prefix="ankitest", suffix=".anki2");
        newname = str(newname);
        os.close(fd);
        os.unlink(newname);
        e.exportInto(newname);
        // exporting should not have changed conf for original deck
-       conf = col.getDecks().confForDid(did);
+       conf = mCol.getDecks().confForDid(did);
        assertNotEquals(conf.getLong("id") != 1);
        // connect to new deck
        Collection col2 = aopen(newname);
@@ -83,12 +83,12 @@ public class ExportingTest extends RobolectricTest {
        @Test
        public void test_export_ankipkg(){
        // add a test file to the media folder
-       with open(os.path.join(col.getMedia().dir(), "今日.mp3"), "w") as note:
+       with open(os.path.join(mCol.getMedia().dir(), "今日.mp3"), "w") as note:
        note.write("test");
-       Note n = col.newNote();
+       Note n = mCol.newNote();
        n.setItem("Front", "[sound:今日.mp3]");
-       col.addNote(n);
-       AnkiPackageExporter e = AnkiPackageExporter(col);
+       mCol.addNote(n);
+       AnkiPackageExporter e = AnkiPackageExporter(mCol);
        fd, newname = tempfile.mkstemp(prefix="ankitest", suffix=".apkg");
        String newname = str(newname);
        os.close(fd);
@@ -99,23 +99,22 @@ public class ExportingTest extends RobolectricTest {
        @errorsAfterMidnight
        @Test
        public void test_export_anki_due(){
-       Collection col = getCol();
-       Note note = col.newNote();
+       Note note = mCol.newNote();
        note.setItem("Front","foo");
-       col.addNote(note);
-       col.crt -= SECONDS_PER_DAY * 10;
-       col.flush();
-       col.getSched().reset();
-       Card c = col.getSched().getCard();
-       col.getSched().answerCard(c, 3);
-       col.getSched().answerCard(c, 3);
+       mCol.addNote(note);
+       mCol.crt -= SECONDS_PER_DAY * 10;
+       mCol.flush();
+       mCol.getSched().reset();
+       Card c = mCol.getSched().getCard();
+       mCol.getSched().answerCard(c, 3);
+       mCol.getSched().answerCard(c, 3);
        // should have ivl of 1, due on day 11
        assertEquals(1, c.getIvl());
        assertEquals(11, c.getDue());
-       assertEquals(10, col.getSched().getToday());
-       assertEquals(1, c.getDue() - col.getSched().getToday());
+       assertEquals(10, mCol.getSched().getToday());
+       assertEquals(1, c.getDue() - mCol.getSched().getToday());
        // export
-       AnkiPackageExporter e = AnkiExporter(col);
+       AnkiPackageExporter e = AnkiExporter(mCol);
        e.includeSched = true;
        fd, newname = tempfile.mkstemp(prefix="ankitest", suffix=".anki2");
        String newname = str(newname);
@@ -123,7 +122,7 @@ public class ExportingTest extends RobolectricTest {
        os.unlink(newname);
        e.exportInto(newname);
        // importing into a new deck, the due date should be equivalent
-       col2 = getCol();
+       col2 = mCol;
        imp = Anki2Importer(col2, newname);
        imp.run();
        c = col2.getCard(c.getId());
@@ -133,7 +132,7 @@ public class ExportingTest extends RobolectricTest {
 
        @Test
        public void test_export_textcard(){
-       //     e = TextCardExporter(col)
+       //     e = TextCardExporter(mCol)
        //     Note note = unicode(tempfile.mkstemp(prefix="ankitest")[1])
        //     os.unlink(note)
        //     e.exportInto(note)
@@ -144,7 +143,7 @@ public class ExportingTest extends RobolectricTest {
        @Test
        public void test_export_textnote(){
        Collection col = setup1();
-       e = TextNoteExporter(col);
+       e = TextNoteExporter(mCol);
        fd, Note note = tempfile.mkstemp(prefix="ankitest");
        Note note = str(note);
        os.close(fd);

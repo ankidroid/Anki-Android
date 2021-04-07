@@ -42,7 +42,7 @@ public class CollectionTaskCheckDatabaseTest extends AbstractCollectionTaskTest 
     }
 
     private void lockDatabase() {
-        CollectionUtils.lockDatabase(getCol());
+        CollectionUtils.lockDatabase(mCol);
     }
 
 }

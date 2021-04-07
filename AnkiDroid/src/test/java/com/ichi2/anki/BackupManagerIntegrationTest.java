@@ -37,7 +37,6 @@ public class BackupManagerIntegrationTest extends RobolectricTest {
     @Test
     @Ignore("Fails on line: if (!f.renameTo(new File(colPath))) {")
     public void restoreBackupLeavesCollectionWritable() throws InterruptedException {
-        getCol();
         String path = createBackup();
 
         // Perform a write
@@ -45,7 +44,7 @@ public class BackupManagerIntegrationTest extends RobolectricTest {
 
         waitFortask(new CollectionTask.ImportReplace(path), 1000);
 
-        assertThat("database should be read-write", getCol().getDb().getDatabase().isReadOnly(), is(false));
+        assertThat("database should be read-write", mCol.getDb().getDatabase().isReadOnly(), is(false));
         AnkiAssert.assertDoesNotThrow(() -> addNoteUsingBasicModel("Hello", "World"));
     }
 
@@ -54,7 +53,7 @@ public class BackupManagerIntegrationTest extends RobolectricTest {
         try {
             BackupManagerTestUtilities.setupSpaceForBackup(getTargetContext());
 
-            assertThat("Backup should work", BackupManager.performBackupInBackground(getCol().getPath(), getCol().getTime()), is(true));
+            assertThat("Backup should work", BackupManager.performBackupInBackground(mCol.getPath(), mCol.getTime()), is(true));
 
             return spinUntilBackupExists(1000);
         } finally {
@@ -67,7 +66,7 @@ public class BackupManagerIntegrationTest extends RobolectricTest {
     private String spinUntilBackupExists(int timeoutMs) {
         long time = System.currentTimeMillis();
         while (true) {
-            File colFile = new File(getCol().getPath());
+            File colFile = new File(mCol.getPath());
             File[] backups = BackupManager.getBackups(colFile);
             if (backups.length > 0) {
                 return backups[0].getAbsolutePath();

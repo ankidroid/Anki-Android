@@ -44,14 +44,14 @@ public class CheckMediaTest extends RobolectricTest {
     @Test
     public void checkMediaWorksAfterMissingMetaTable() throws ExecutionException, InterruptedException {
         // 7421
-        getCol().getMedia().getDb().getDatabase().execSQL("drop table meta");
+        mCol.getMedia().getDb().getDatabase().execSQL("drop table meta");
 
-        assertThat(getCol().getMedia().getDb().queryScalar("SELECT count(*) FROM sqlite_master WHERE type='table' AND name='meta';"), is(0));
+        assertThat(mCol.getMedia().getDb().queryScalar("SELECT count(*) FROM sqlite_master WHERE type='table' AND name='meta';"), is(0));
 
         CollectionTask<Void, Void, PairWithBoolean<List<List<String>>>, PairWithBoolean<List<List<String>>>> task = TaskManager.launchCollectionTask(new CollectionTask.CheckMedia());
 
         task.get();
 
-        assertThat(getCol().getMedia().getDb().queryScalar("SELECT count(*) FROM sqlite_master WHERE type='table' AND name='meta';"), is(1));
+        assertThat(mCol.getMedia().getDb().queryScalar("SELECT count(*) FROM sqlite_master WHERE type='table' AND name='meta';"), is(1));
     }
 }

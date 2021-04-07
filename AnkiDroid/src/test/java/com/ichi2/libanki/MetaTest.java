@@ -31,7 +31,7 @@ public class MetaTest extends RobolectricTest {
 
     @Test
     public void ensureDatabaseIsInMemory() {
-        String path = getCol().getDb().getPath();
+        String path = mCol.getDb().getPath();
         assertThat("Default test database should be in-memory.", path, is(":memory:"));
     }
 }

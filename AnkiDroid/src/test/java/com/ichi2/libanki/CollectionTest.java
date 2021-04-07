@@ -64,14 +64,14 @@ public class CollectionTest extends RobolectricTest {
       }
       Collection col = aopen(path);
       // for open()
-      String newPath = col.getPath();
-      long newMod = col.getMod();
-      col.close();
+      String newPath = mCol.getPath();
+      long newMod = mCol.getMod();
+      mCol.close();
 
       // reopen
       col = aopen(newPath);
-      assertEquals(newMod, col.getMod());
-      col.close();
+      assertEquals(newMod, mCol.getMod());
+      mCol.close();
 
       // non-writeable dir
       if (isWin) {
@@ -88,36 +88,35 @@ public class CollectionTest extends RobolectricTest {
       } */
     @Test
     public void test_noteAddDelete() {
-        Collection col = getCol();
         // add a note
-        Note note = col.newNote();
+        Note note = mCol.newNote();
         note.setItem("Front", "one");
         note.setItem("Back", "two");
-        int n = col.addNote(note);
+        int n = mCol.addNote(note);
         assertEquals(1, n);
         // test multiple cards - add another template
-        Model m = col.getModels().current();
-        Models mm = col.getModels();
+        Model m = mCol.getModels().current();
+        Models mm = mCol.getModels();
         JSONObject t = Models.newTemplate("Reverse");
         t.put("qfmt", "{{Back}}");
         t.put("afmt", "{{Front}}");
         mm.addTemplateModChanged(m, t);
         mm.save(m, true); // todo: remove true which is not upstream
-        assertEquals(2, col.cardCount());
+        assertEquals(2, mCol.cardCount());
         // creating new notes should use both cards
-        note = col.newNote();
+        note = mCol.newNote();
         note.setItem("Front", "three");
         note.setItem("Back", "four");
-        n = col.addNote(note);
+        n = mCol.addNote(note);
         assertEquals(2, n);
-        assertEquals(4, col.cardCount());
+        assertEquals(4, mCol.cardCount());
         // check q/a generation
         Card c0 = note.cards().get(0);
         assertThat(c0.q(), containsString("three"));
         // it should not be a duplicate
         assertEquals(note.dupeOrEmpty(), Note.DupeOrEmpty.CORRECT);
         // now let's make a duplicate
-        Note note2 = col.newNote();
+        Note note2 = mCol.newNote();
         note2.setItem("Front", "one");
         note2.setItem("Back", "");
         assertNotEquals(note2.dupeOrEmpty(), Note.DupeOrEmpty.CORRECT);
@@ -130,36 +129,34 @@ public class CollectionTest extends RobolectricTest {
     @Test
     @Ignore("I don't understand this csum")
     public void test_fieldChecksum() {
-        Collection col = getCol();
-        Note note = col.newNote();
+        Note note = mCol.newNote();
         note.setItem("Front", "new");
         note.setItem("Back", "new2");
-        col.addNote(note);
-        assertEquals(0xc2a6b03f, col.getDb().queryLongScalar("select csum from notes"));
+        mCol.addNote(note);
+        assertEquals(0xc2a6b03f, mCol.getDb().queryLongScalar("select csum from notes"));
         // changing the val should change the checksum
         note.setItem("Front", "newx");
         note.flush();
-        assertEquals(0x302811ae, col.getDb().queryLongScalar("select csum from notes"));
+        assertEquals(0x302811ae, mCol.getDb().queryLongScalar("select csum from notes"));
     }
 
 
     @Test
     public void test_addDelTags() {
-        Collection col = getCol();
-        Note note = col.newNote();
+        Note note = mCol.newNote();
         note.setItem("Front", "1");
-        col.addNote(note);
-        Note note2 = col.newNote();
+        mCol.addNote(note);
+        Note note2 = mCol.newNote();
         note2.setItem("Front", "2");
-        col.addNote(note2);
+        mCol.addNote(note2);
         // adding for a given id
-        col.getTags().bulkAdd(Collections.singletonList(note.getId()), "foo");
+        mCol.getTags().bulkAdd(Collections.singletonList(note.getId()), "foo");
         note.load();
         note2.load();
         assertTrue(note.getTags().contains("foo"));
         assertFalse(note2.getTags().contains("foo"));
         // should be canonified
-        col.getTags().bulkAdd(Collections.singletonList(note.getId()), "foo aaa");
+        mCol.getTags().bulkAdd(Collections.singletonList(note.getId()), "foo aaa");
         note.load();
         assertEquals("aaa", note.getTags().get(0));
         assertEquals(2, note.getTags().size());
@@ -168,28 +165,26 @@ public class CollectionTest extends RobolectricTest {
 
     @Test
     public void test_timestamps() {
-        Collection col = getCol();
         int stdModelSize = StdModels.STD_MODELS.length;
-        assertEquals(col.getModels().all().size(), stdModelSize);
+        assertEquals(mCol.getModels().all().size(), stdModelSize);
         for (int i = 0; i < 100; i++) {
-            StdModels.BASIC_MODEL.add(col);
+            StdModels.BASIC_MODEL.add(mCol);
         }
-        assertEquals(col.getModels().all().size(), 100 + stdModelSize);
+        assertEquals(mCol.getModels().all().size(), 100 + stdModelSize);
     }
 
 
     @Test
     @Ignore("Pending port of media search from Rust code")
     public void test_furigana() {
-        Collection col = getCol();
-        Models mm = col.getModels();
+        Models mm = mCol.getModels();
         Model m = mm.current();
         // filter should work
         m.getJSONArray("tmpls").getJSONObject(0).put("qfmt", "{{kana:Front}}");
         mm.save(m);
-        Note n = col.newNote();
+        Note n = mCol.newNote();
         n.setItem("Front", "foo[abc]");
-        col.addNote(n);
+        mCol.addNote(n);
         Card c = n.cards().get(0);
         assertTrue(c.q().endsWith("abc"));
         // and should avoid sound
@@ -205,8 +200,7 @@ public class CollectionTest extends RobolectricTest {
 
     @Test
     public void test_filterToValidCards() {
-        Collection col = getCol();
         long cid = addNoteUsingBasicModel("foo", "bar").firstCard().getId();
-        assertEquals( new ArrayList<>(Collections.singleton(cid)), col.filterToValidCards(new long[]{cid, cid + 1}));
+        assertEquals( new ArrayList<>(Collections.singleton(cid)), mCol.filterToValidCards(new long[]{cid, cid + 1}));
     }
 }

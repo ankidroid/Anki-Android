@@ -386,16 +386,16 @@ public class AbstractFlashcardViewerTest extends RobolectricTest {
 
 
     private NonAbstractFlashcardViewer getViewer() {
-        Note n = getCol().newNote();
+        Note n = mCol.newNote();
         n.setField(0, "a");
-        getCol().addNote(n);
+        mCol.addNote(n);
 
         ActivityController<NonAbstractFlashcardViewer> multimediaController = Robolectric.buildActivity(NonAbstractFlashcardViewer.class, new Intent())
                 .create().start().resume().visible();
         saveControllerForCleanup((multimediaController));
 
         NonAbstractFlashcardViewer viewer = multimediaController.get();
-        viewer.onCollectionLoaded(getCol());
+        viewer.onCollectionLoaded(mCol);
         viewer.loadInitialCard();
         // Without this, AbstractFlashcardViewer.mCard is still null, and RobolectricTestBase.tearDown executes before
         // AsyncTasks spawned by by loading the viewer finish. Is there a way to synchronize these things while under test?

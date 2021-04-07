@@ -30,24 +30,23 @@ public class ImportingTest extends RobolectricTest {
 
       @Test
       public void test_anki2_mediadupes(){
-      Collection col = getCol();
       // add a note that references a sound
       Note n = tmp.newNote();
       n.setItem("Front", "[sound:foo.mp3]");
       mid = n.model().getLong("id");
-      col.addNote(n);
+      mCol.addNote(n);
       // add that sound to media folder
-      with open(os.path.join(col.getMedia().dir(), "foo.mp3"), "w") as note:
+      with open(os.path.join(mCol.getMedia().dir(), "foo.mp3"), "w") as note:
       note.write("foo");
-      col.close();
+      mCol.close();
       // it should be imported correctly into an empty deck
-      Collection empty = getCol();
-      Anki2Importer imp = Anki2Importer(empty, col.getPath());
+      Collection empty = mCol;
+      Anki2Importer imp = Anki2Importer(empty, mCol.getPath());
       imp.run();
       assertEqualsArrayList(new String [] {"foo.mp3"}, os.listdir(empty.getMedia().dir()));
       // and importing again will not duplicate, as the file content matches
       empty.remCards(empty.getDb().test_removequeryLongList("select id from cards"));
-      Anki2Importer imp = Anki2Importer(empty, col.getPath());
+      Anki2Importer imp = Anki2Importer(empty, mCol.getPath());
       imp.run();
       assertEqualsArrayList(new String [] {"foo.mp3"}, os.listdir(empty.getMedia().dir()));
       Note n = empty.getNote(empty.getDb().queryLongScalar("select id from notes"));
@@ -57,7 +56,7 @@ public class ImportingTest extends RobolectricTest {
       empty.remCards(empty.getDb().queryLongList("select id from cards"));
       with open(os.path.join(empty.getMedia().dir(), "foo.mp3"), "w") as note:
       note.write("bar");
-      Anki2Importer imp = Anki2Importer(empty, col.getPath());
+      Anki2Importer imp = Anki2Importer(empty, mCol.getPath());
       imp.run();
       assertEqualsArrayList(new String [] {"foo.mp3", "foo_"+mid+".mp3"}, sorted(os.listdir(empty.getMedia().dir())));
       Note n = empty.getNote(empty.getDb().queryLongScalar("select id from notes"));
@@ -67,7 +66,7 @@ public class ImportingTest extends RobolectricTest {
       empty.remCards(empty.getDb().queryLongList("select id from cards"));
       with open(os.path.join(empty.getMedia().dir(), "foo.mp3"), "w") as note:
       note.write("bar");
-      Anki2Importer imp = Anki2Importer(empty, col.getPath());
+      Anki2Importer imp = Anki2Importer(empty, mCol.getPath());
       imp.run();
       assertEqualsArrayList(new String [] {"foo.mp3", "foo_"+mid+".mp3" }, sorted(os.listdir(empty.getMedia().dir())));
       assertEqualsArrayList(new String [] {"foo.mp3", "foo_"+mid+".mp3"}, sorted(os.listdir(empty.getMedia().dir())));
@@ -77,31 +76,30 @@ public class ImportingTest extends RobolectricTest {
 
       @Test
       public void test_apkg(){
-      Collection col = getCol();
       String apkg = str(os.path.join(testDir, "support/media.apkg"));
       AnkiPackageImporter imp = AnkiPackageImporter(col, apkg);
-      assertEqualsArrayList(new String [] {}, os.listdir(col.getMedia().dir()));
+      assertEqualsArrayList(new String [] {}, os.listdir(mCol.getMedia().dir()));
       imp.run();
-      assertEqualsArrayList(new String [] {"foo.wav"}, os.listdir(col.getMedia().dir()));
+      assertEqualsArrayList(new String [] {"foo.wav"}, os.listdir(mCol.getMedia().dir()));
       // importing again should be idempotent in terms of media
-      col.remCards(col.getDb().queryLongList("select id from cards"));
+      mCol.remCards(mCol.getDb().queryLongList("select id from cards"));
       AnkiPackageImporter imp = AnkiPackageImporter(col, apkg);
       imp.run();
-      assertEqualsArrayList(new String [] {"foo.wav"}, os.listdir(col.getMedia().dir()));
+      assertEqualsArrayList(new String [] {"foo.wav"}, os.listdir(mCol.getMedia().dir()));
       // but if the local file has different data, it will rename
-      col.remCards(col.getDb().queryLongList("select id from cards"));
-      with open(os.path.join(col.getMedia().dir(), "foo.wav"), "w") as note:
+      mCol.remCards(mCol.getDb().queryLongList("select id from cards"));
+      with open(os.path.join(mCol.getMedia().dir(), "foo.wav"), "w") as note:
       note.write("xyz");
       imp = AnkiPackageImporter(col, apkg);
       imp.run();
-      assertEquals(2, os.listdir(col.getMedia().dir()).size());
+      assertEquals(2, os.listdir(mCol.getMedia().dir()).size());
       }
 
       @Test
       public void test_anki2_diffmodel_templates(){
       // different from the above as this one tests only the template text being
       // changed, not the number of cards/fields
-      Collection dst = getCol();
+      Collection dst = mCol;
       // import the first version of the model
       Collection col = getUpgradeDeckPath("diffmodeltemplates-1.apkg");
       AnkiPackageImporter imp = AnkiPackageImporter(dst, col);
@@ -123,7 +121,7 @@ public class ImportingTest extends RobolectricTest {
       @Test
       public void test_anki2_updates(){
       // create a new empty deck
-      dst = getCol();
+      dst = mCol;
       Collection col = getUpgradeDeckPath("update1.apkg");
       AnkiPackageImporter imp = AnkiPackageImporter(dst, col);
       imp.run();
@@ -151,7 +149,6 @@ public class ImportingTest extends RobolectricTest {
 
       @Test
       public void test_csv(){
-      Collection col = getCol();
       file = str(os.path.join(testDir, "support/text-2fields.txt"));
       i = TextImporter(col, file);
       i.initMapping();
@@ -165,7 +162,7 @@ public class ImportingTest extends RobolectricTest {
       assertEquals(10, i.log.size());
       assertEquals(5, i.total);
       // but importing should not clobber tags if they're unmapped
-      Note n = col.getNote(col.getDb().queryLongScalar("select id from notes"));
+      Note n = mCol.getNote(mCol.getDb().queryLongScalar("select id from notes"));
       n.addTag("test");
       n.flush();
       i.run();
@@ -176,28 +173,27 @@ public class ImportingTest extends RobolectricTest {
       i.run();
       assertEquals(0, i.total);
       // and if dupes mode, will reimport everything
-      assertEquals(5, col.cardCount());
+      assertEquals(5, mCol.cardCount());
       i.importMode = 2;
       i.run();
       // includes repeated field
       assertEquals(6, i.total);
-      assertEquals(11, col.cardCount());
-      col.close();
+      assertEquals(11, mCol.cardCount());
+      mCol.close();
       }
 
       @Test
       public void test_csv2(){
-      Collection col = getCol();
-      Models mm = col.getModels();
+      Models mm = mCol.getModels();
       Model m = mm.current();
       Note note = mm.newField("Three");
       mm.addField(m, note);
       mm.save(m);
-      Note n = col.newNote();
+      Note n = mCol.newNote();
       n.setItem("Front", "1");
       n.setItem("Back", "2");
       n.setItem("Three", "3");
-      col.addNote(n);
+      mCol.addNote(n);
       // an update with unmapped fields should not clobber those fields
       file = str(os.path.join(testDir, "support/text-update.txt"));
       TextImporter i = TextImporter(col, file);
@@ -207,23 +203,22 @@ public class ImportingTest extends RobolectricTest {
       assertTrue(n.setItem("Front",= "1"));
       assertTrue(n.setItem("Back",= "x"));
       assertTrue(n.setItem("Three",= "3"));
-      col.close();
+      mCol.close();
       }
 
       @Test
       public void test_tsv_tag_modified(){
-      Collection col = getCol();
-      Models mm = col.getModels();
+      Models mm = mCol.getModels();
       Model m = mm.current();
       Note note = mm.newField("Top");
       mm.addField(m, note);
       mm.save(m);
-      Note n = col.newNote();
+      Note n = mCol.newNote();
       n.setItem("Front", "1");
       n.setItem("Back", "2");
       n.setItem("Top", "3");
       n.addTag("four");
-      col.addNote(n);
+      mCol.addNote(n);
       
       // https://stackoverflow.com/questions/23212435/permission-denied-to-write-to-my-temporary-file
       with NamedTemporaryFile(mode="w", delete=false) as tf:
@@ -244,24 +239,23 @@ public class ImportingTest extends RobolectricTest {
       assertEquals(2, n.getTags().size());
       assertEquals(1, i.updateCount);
       
-      col.close();
+      mCol.close();
       }
       
       @Test
       public void test_tsv_tag_multiple_tags(){
-      Collection col = getCol();
-      Models mm = col.getModels();
+      Models mm = mCol.getModels();
       Model m = mm.current();
       Note note = mm.newField("Top");
       mm.addField(m, note);
       mm.save(m);
-      Note n = col.newNote();
+      Note n = mCol.newNote();
       n.setItem("Front", "1");
       n.setItem("Back", "2");
       n.setItem("Top", "3");
       n.addTag("four");
       n.addTag("five");
-      col.addNote(n);
+      mCol.addNote(n);
       
       // https://stackoverflow.com/questions/23212435/permission-denied-to-write-to-my-temporary-file
       with NamedTemporaryFile(mode="w", delete=false) as tf:
@@ -279,22 +273,21 @@ public class ImportingTest extends RobolectricTest {
       assertTrue(n.setItem("Top",= "c"));
       assertEquals(list(sorted(new String [] {"four", "five", "six"}, list(sorted(n.getTags())))));
       
-      col.close();
+      mCol.close();
       }
 
       @Test
       public void test_csv_tag_only_if_modified(){
-      Collection col = getCol();
-      Models mm = col.getModels();
+      Models mm = mCol.getModels();
       Model m = mm.current();
       Note note = mm.newField("Left");
       mm.addField(m, note);
       mm.save(m);
-      Note n = col.newNote();
+      Note n = mCol.newNote();
       n.setItem("Front", "1");
       n.setItem("Back", "2");
       n.setItem("Left", "3");
-      col.addNote(n);
+      mCol.addNote(n);
       
       // https://stackoverflow.com/questions/23212435/permission-denied-to-write-to-my-temporary-file
       with NamedTemporaryFile(mode="w", delete=false) as tf:
@@ -310,36 +303,34 @@ public class ImportingTest extends RobolectricTest {
       assertEqualsArrayList(new String [] {}, n.tags);
       assertEquals(0, i.updateCount);
       
-      col.close();
+      mCol.close();
       }
 
       @pytest.mark.filterwarnings("ignore:Using or importing the ABCs")
       @Test
       public void test_supermemo_xml_01_unicode(){
-      Collection col = getCol();
       String file = str(os.path.join(testDir, "support/supermemo1.xml"));
       SupermemoXmlImporter i = SupermemoXmlImporter(col, file);
       // i.META.logToStdOutput = true
       i.run();
       assertEquals(1, i.total);
-      long cid = col.getDb().queryLongScalar("select id from cards");
-      Card c = col.getCard(cid);
+      long cid = mCol.getDb().queryLongScalar("select id from cards");
+      Card c = mCol.getCard(cid);
       // Applies A Factor-to-E Factor conversion
       assertEquals(2879, c.getFactor());
       assertEquals(7, c.getReps());
-      col.close();
+      mCol.close();
       }
 
       @Test
       public void test_mnemo(){
-      Collection col = getCol();
       String file = str(os.path.join(testDir, "support/mnemo.getDb()"));
       MnemosyneImporter i = MnemosyneImporter(col, file);
       i.run();
-      assertEquals(7, col.cardCount());
-      assertThat(col.getTags().all(), containsString("a_longer_tag"));
-      assertEquals(1, col.getDb().queryScalar("select count() from cards where type = 0"));
-      col.close()
+      assertEquals(7, mCol.cardCount());
+      assertThat(mCol.getTags().all(), containsString("a_longer_tag"));
+      assertEquals(1, mCol.getDb().queryScalar("select count() from cards where type = 0"));
+      mCol.close()
       }
     */
 }

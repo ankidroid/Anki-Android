@@ -409,7 +409,7 @@ public class RobolectricTestBase implements CollectionGetter {
 
 
     protected SchedV2 upgradeToSchedV2() throws ConfirmModSchemaException {
-        getCol().changeSchedulerVer(2);
+        getCol(2);
 
         AbstractSched sched = getCol().getSched();
         //Sched inherits from schedv2...
