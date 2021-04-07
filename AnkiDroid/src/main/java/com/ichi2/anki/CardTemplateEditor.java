@@ -18,16 +18,15 @@
 
 package com.ichi2.anki;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.res.Resources;
 import android.os.Bundle;
 
-import androidx.activity.result.ActivityResult;
 import androidx.activity.result.ActivityResultCallback;
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContract;
-import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.CheckResult;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -58,7 +57,6 @@ import com.ichi2.anki.dialogs.DiscardChangesDialog;
 import com.ichi2.anki.exception.ConfirmModSchemaException;
 import com.ichi2.async.TaskListenerWithContext;
 import com.ichi2.libanki.Collection;
-import com.ichi2.libanki.Consts;
 import com.ichi2.libanki.Deck;
 import com.ichi2.libanki.Decks;
 import com.ichi2.libanki.Model;
@@ -547,9 +545,7 @@ public class CardTemplateEditor extends AnkiActivity implements DeckSelectionDia
             // Save the model and pass the filename if updated
             tempModel.setEditedModelFileName(TemporaryModel.saveTempModel(mTemplateEditor, tempModel.getModel()));
             i.putExtra(TemporaryModel.INTENT_MODEL_FILENAME, tempModel.getEditedModelFileName());
-            //Before we used startActivityForResult(i, REQUEST_PREVIEWER);
-            //Now we have to use activityResultLauncher.launch
-            activityResultLauncher.launch(i);
+            onRequestPreviewResult.launch(i);
         }
 
 
@@ -592,8 +588,7 @@ public class CardTemplateEditor extends AnkiActivity implements DeckSelectionDia
                 return;
             }
             Intent browserAppearanceIntent = CardTemplateBrowserAppearanceEditor.getIntentFromTemplate(context, currentTemplate);
-            //startActivityForResult(browserAppearanceIntent, REQUEST_CARD_BROWSER_APPEARANCE);
-            activityResultLauncher.launch(browserAppearanceIntent);
+            onCardBrowserAppearanceResult.launch(browserAppearanceIntent);
         }
 
 
@@ -636,33 +631,56 @@ public class CardTemplateEditor extends AnkiActivity implements DeckSelectionDia
             return false;
         }
 
-        ActivityResultLauncher<Intent> activityResultLauncher = registerForActivityResult(
-                new ActivityResultContracts.StartActivityForResult(),
-                new ActivityResultCallback<ActivityResult>() {
-                    @Override
-                    public void onActivityResult(ActivityResult result) {
-                        if (result.getResultCode() == REQUEST_CARD_BROWSER_APPEARANCE) {
-                            onCardBrowserAppearanceResult(result.getResultCode(), result.getData());
-                            return;
-                        }
-
-                        if (result.getResultCode() == REQUEST_PREVIEWER) {
-                            TemporaryModel.clearTempModelFiles();
-                            // Make sure the fragments reinitialize, otherwise there is staleness on return
-                            ((TemplatePagerAdapter)mTemplateEditor.mViewPager.getAdapter()).ordinalShift();
-                            mTemplateEditor.mViewPager.getAdapter().notifyDataSetChanged();
-                        }
-                    }
-                }
-        );
-
-
-        private void onCardBrowserAppearanceResult(int resultCode, @Nullable Intent data) {
-            if (resultCode != RESULT_OK) {
-                Timber.i("Activity Cancelled: Card Template Browser Appearance");
-                return;
+        public class onCardBrowserAppearanceContract extends ActivityResultContract<Intent, Intent>{
+            @NonNull
+            @Override
+            public Intent createIntent(@NonNull Context context, Intent input) {
+                return input;
             }
 
+
+            @Override
+            public Intent parseResult(int resultCode, @Nullable Intent intent) {
+                if(resultCode != Activity.RESULT_OK || intent == null) {
+                    return null;
+                }
+                return intent;
+            }
+        }
+
+        ActivityResultLauncher<Intent> onCardBrowserAppearanceResult = registerForActivityResult(new onCardBrowserAppearanceContract(), new ActivityResultCallback<Intent>() {
+            @Override
+            public void onActivityResult(Intent data) {
+             onCardBrowserAppearanceResult(data);
+            }
+        });
+
+        public class onRequestPreviewContract extends ActivityResultContract<Intent, Intent>{
+            @NonNull
+            @Override
+            public Intent createIntent(@NonNull Context context, Intent input) {
+                return input;
+            }
+            @Override
+            public Intent parseResult(int resultCode, @Nullable Intent intent) {
+                if(resultCode != Activity.RESULT_OK || intent == null) {
+                    return null;
+                }
+                return intent;
+            }
+        }
+
+        ActivityResultLauncher<Intent> onRequestPreviewResult = registerForActivityResult(new onRequestPreviewContract(), new ActivityResultCallback<Intent>() {
+            @Override
+            public void onActivityResult(Intent result) {
+                TemporaryModel.clearTempModelFiles();
+                // Make sure the fragments reinitialize, otherwise there is staleness on return
+                ((TemplatePagerAdapter)mTemplateEditor.mViewPager.getAdapter()).ordinalShift();
+                mTemplateEditor.mViewPager.getAdapter().notifyDataSetChanged();
+            }
+        });
+
+        private void onCardBrowserAppearanceResult(@Nullable Intent data) {
             CardTemplateBrowserAppearanceEditor.Result result = CardTemplateBrowserAppearanceEditor.Result.fromIntent(data);
             if (result == null) {
                 Timber.w("Error processing Card Template Browser Appearance result");
