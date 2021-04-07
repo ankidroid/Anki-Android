@@ -19,7 +19,6 @@
 package com.ichi2.anki;
 
 import android.annotation.SuppressLint;
-import android.app.Application;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
@@ -149,7 +148,7 @@ import static timber.log.Timber.DebugTree;
         exceptionClassLimit = 1000,
         stacktraceLimit = 1
 )
-public class AnkiDroidApp extends Application {
+public class AnkiDroidApp extends AnkiDroidAppBase {
 
     public static final String XML_CUSTOM_NAMESPACE = "http://arbitrary.app.namespace/com.ichi2.anki";
 
@@ -161,8 +160,6 @@ public class AnkiDroidApp extends Application {
 
     // Tag for logging messages.
     public static final String TAG = "AnkiDroid";
-    // Singleton instance of this class.
-    private static AnkiDroidApp sInstance;
     // Constants for gestures
     public static int sSwipeMinDistance = -1;
     public static int sSwipeThresholdVelocity = -1;
@@ -223,6 +220,7 @@ public class AnkiDroidApp extends Application {
      * Get the ACRA ConfigurationBuilder - use this followed by setting it to modify the config
      * @return ConfigurationBuilder for the current ACRA config
      */
+    @Override
     public CoreConfigurationBuilder getAcraCoreConfigBuilder() {
         return acraCoreConfigBuilder;
     }
@@ -257,15 +255,6 @@ public class AnkiDroidApp extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
-        if (sInstance != null) {
-            Timber.i("onCreate() called multiple times");
-            //5887 - fix crash.
-            if (sInstance.getResources() == null) {
-                Timber.w("Skipping re-initialisation - no resources. Maybe uninstalling app?");
-                return;
-            }
-        }
-        sInstance = this;
         // Get preferences
         SharedPreferences preferences = getSharedPrefs(this);
 
@@ -360,6 +349,12 @@ public class AnkiDroidApp extends Application {
     }
 
 
+    @Override
+    protected Throwable getWebViewError() {
+        return mWebViewError;
+    }
+
+
     /**
      * Convenience method for accessing Shared preferences
      *
@@ -372,7 +367,7 @@ public class AnkiDroidApp extends Application {
     }
 
 
-    public static AnkiDroidApp getInstance() {
+    public static AnkiDroidAppBase getInstance() {
         return sInstance;
     }
 
@@ -548,6 +543,7 @@ public class AnkiDroidApp extends Application {
      * Set the reporting mode for ACRA based on the value of the FEEDBACK_REPORT_KEY preference
      * @param value value of FEEDBACK_REPORT_KEY preference
      */
+    @Override
     public void setAcraReportingMode(String value) {
         SharedPreferences.Editor editor = getSharedPrefs(this).edit();
         // Set the ACRA disable value
@@ -627,13 +623,13 @@ public class AnkiDroidApp extends Application {
 
 
     public static boolean webViewFailedToLoad() {
-        return getInstance().mWebViewError != null;
+        return getInstance().getWebViewError() != null;
     }
 
 
     @Nullable
     public static String getWebViewErrorMessage() {
-        Throwable error = getInstance().mWebViewError;
+        Throwable error = getInstance().getWebViewError();
         if (error == null) {
             Timber.w("getWebViewExceptionMessage called without webViewFailedToLoad check");
             return null;
