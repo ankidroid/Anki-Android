@@ -28,6 +28,16 @@ public class MockTime extends Time {
     /** Time since epoch in MS. */
     private long mTime;
 
+    private boolean mFrozen;
+
+    public void setFrozen(boolean value) {
+        mFrozen = value;
+    }
+
+    public long getInternalTimeMs() {
+        return getTime();
+    }
+
     /** A clock at time Time, only changed explicitly*/
     public MockTime(long time) {
         this(time, 0);
@@ -49,9 +59,11 @@ public class MockTime extends Time {
     /** Time in milisecond since epoch. */
     @Override
     public long intTimeMS() {
-        long mTime = this.mTime;
-        this.mTime += mStep;
-        return mTime;
+        long time = this.mTime;
+        if (!mFrozen) {
+            mTime += mStep;
+        }
+        return time;
     }
 
     protected long getTime() {
