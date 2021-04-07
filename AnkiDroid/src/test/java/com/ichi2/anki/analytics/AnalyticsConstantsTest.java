@@ -31,7 +31,7 @@ public class AnalyticsConstantsTest {
 
     @RunWith(Parameterized.class)
     public static class AnalyticsConstantsFieldValuesTest {
-        private String analyticsString;
+        private final String analyticsString;
 
 
         public AnalyticsConstantsFieldValuesTest(String analyticsString) {
@@ -105,7 +105,14 @@ public class AnalyticsConstantsTest {
 
         @Test
         public void fieldSizeEqualsListOfConstantFields() {
-            assertEquals("Add the new constant here also in the list listOfConstantFields", listOfConstantFields.size(), getFieldSize());
+            if (getFieldSize() > listOfConstantFields.size()) {
+                assertEquals("Add the new constant here also in the list listOfConstantFields", listOfConstantFields.size(), getFieldSize());
+            } else if (getFieldSize() < listOfConstantFields.size()) {
+                assertEquals("Remove the constant from the list listOfConstantFields", listOfConstantFields.size(), getFieldSize());
+            } else {
+                assertEquals(listOfConstantFields.size(), getFieldSize());
+            }
+
         }
 
 
