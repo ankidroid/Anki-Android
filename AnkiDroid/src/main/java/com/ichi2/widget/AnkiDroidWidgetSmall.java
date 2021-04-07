@@ -115,7 +115,7 @@ public class AnkiDroidWidgetSmall extends AppWidgetProvider {
     public static class UpdateService extends Service {
 
         /** The cached number of total due cards. */
-        private int dueCardsCount;
+        private int mDueCardsCount;
 
 
         public void doUpdate(Context context) {
@@ -173,14 +173,14 @@ public class AnkiDroidWidgetSmall extends AppWidgetProvider {
                 }
             } else {
                 // If we do not have a cached version, always update.
-                if (dueCardsCount == 0 || updateDueDecksNow) {
+                if (mDueCardsCount == 0 || updateDueDecksNow) {
                     // Compute the total number of cards due.
                     int[] counts = WidgetStatus.fetchSmall(context);
-                    dueCardsCount = counts[0];
+                    mDueCardsCount = counts[0];
                     /* The cached estimated reviewing time. */
                     int eta = counts[1];
-                    if (dueCardsCount <= 0) {
-                        if (dueCardsCount == 0) {
+                    if (mDueCardsCount <= 0) {
+                        if (mDueCardsCount == 0) {
                             updateViews.setViewVisibility(R.id.ankidroid_widget_small_finish_layout, View.VISIBLE);
                         } else {
                             updateViews.setViewVisibility(R.id.ankidroid_widget_small_finish_layout, View.INVISIBLE);
@@ -189,10 +189,10 @@ public class AnkiDroidWidgetSmall extends AppWidgetProvider {
                     } else {
                         updateViews.setViewVisibility(R.id.ankidroid_widget_small_finish_layout, View.INVISIBLE);
                         updateViews.setViewVisibility(R.id.widget_due, View.VISIBLE);
-                        updateViews.setTextViewText(R.id.widget_due, Integer.toString(dueCardsCount));
-                        updateViews.setContentDescription(R.id.widget_due, context.getResources().getQuantityString(R.plurals.widget_cards_due, dueCardsCount, dueCardsCount));
+                        updateViews.setTextViewText(R.id.widget_due, Integer.toString(mDueCardsCount));
+                        updateViews.setContentDescription(R.id.widget_due, context.getResources().getQuantityString(R.plurals.widget_cards_due, mDueCardsCount, mDueCardsCount));
                     }
-                    if (eta <= 0 || dueCardsCount <= 0) {
+                    if (eta <= 0 || mDueCardsCount <= 0) {
                         updateViews.setViewVisibility(R.id.widget_eta, View.INVISIBLE);
                     } else {
                         updateViews.setViewVisibility(R.id.widget_eta, View.VISIBLE);
