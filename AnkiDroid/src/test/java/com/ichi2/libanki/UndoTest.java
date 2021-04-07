@@ -61,8 +61,8 @@ public class UndoTest extends RobolectricTest {
         mCol.addNote(note);
         mCol.reset();
         assertEquals("add", mCol.undoName(getTargetContext().getResources()));
-        Card c = mCol.getSched().getCard();
-        mCol.getSched().answerCard(c, 2);
+        Card c = mSched.getCard();
+        mSched.answerCard(c, 2);
         assertEquals("Review", mCol.undoName(getTargetContext().getResources()));
     }
 
@@ -80,18 +80,18 @@ public class UndoTest extends RobolectricTest {
 
          */
         // answer
-        assertEquals(new Counts(1, 0, 0), mCol.getSched().counts());
-        Card c = mCol.getSched().getCard();
+        assertEquals(new Counts(1, 0, 0), mSched.counts());
+        Card c = mSched.getCard();
         assertEquals(QUEUE_TYPE_NEW, c.getQueue());
-        mCol.getSched().answerCard(c, 3);
+        mSched.answerCard(c, 3);
         assertEquals(1001, c.getLeft());
-        assertEquals(new Counts(0, 1, 0), mCol.getSched().counts());
+        assertEquals(new Counts(0, 1, 0), mSched.counts());
         assertEquals(QUEUE_TYPE_LRN, c.getQueue());
         // undo
         assertNotNull(mCol.undoType());
         mCol.undo();
         mCol.reset();
-        assertEquals(new Counts(1, 0, 0), mCol.getSched().counts());
+        assertEquals(new Counts(1, 0, 0), mSched.counts());
         c.load();
         assertEquals(QUEUE_TYPE_NEW, c.getQueue());
         assertNotEquals(1001, c.getLeft());
@@ -101,21 +101,21 @@ public class UndoTest extends RobolectricTest {
         note.setItem("Front", "two");
         mCol.addNote(note);
         mCol.reset();
-        assertEquals(new Counts(2, 0, 0), mCol.getSched().counts());
-        c = mCol.getSched().getCard();
-        mCol.getSched().answerCard(c, 3);
-        c = mCol.getSched().getCard();
-        mCol.getSched().answerCard(c, 3);
-        assertEquals(new Counts(0, 2, 0), mCol.getSched().counts());
+        assertEquals(new Counts(2, 0, 0), mSched.counts());
+        c = mSched.getCard();
+        mSched.answerCard(c, 3);
+        c = mSched.getCard();
+        mSched.answerCard(c, 3);
+        assertEquals(new Counts(0, 2, 0), mSched.counts());
         mCol.undo();
         mCol.reset();
-        assertEquals(new Counts(1, 1, 0), mCol.getSched().counts());
+        assertEquals(new Counts(1, 1, 0), mSched.counts());
         mCol.undo();
         mCol.reset();
-        assertEquals(new Counts(2, 0, 0), mCol.getSched().counts());
+        assertEquals(new Counts(2, 0, 0), mSched.counts());
         // performing a normal op will clear the review queue
-        c = mCol.getSched().getCard();
-        mCol.getSched().answerCard(c, 3);
+        c = mSched.getCard();
+        mSched.answerCard(c, 3);
         assertThat(mCol.undoType(), is(instanceOf(Collection.UndoReview.class)));
         mCol.save("foo");
         // Upstream, "save" can be undone. This test fails here because it's not the case in AnkiDroid

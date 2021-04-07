@@ -28,9 +28,9 @@ public class StatsTest extends RobolectricTest {
        // card stats
        assertTrue(mCol.cardStats(c));
        mCol.reset();
-       c = mCol.getSched().getCard();
-       mCol.getSched().answerCard(c, 3);
-       mCol.getSched().answerCard(c, 2);
+       c = mSched.getCard();
+       mSched.answerCard(c, 3);
+       mSched.answerCard(c, 2);
        assertTrue(mCol.cardStats(c));
        }
 

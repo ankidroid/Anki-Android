@@ -217,12 +217,12 @@ public class ReviewerTest extends RobolectricTest {
         waitForAsyncTasksToComplete();
 
         equalFirstField(cards[1], reviewer.mCurrentCard);
-        reviewer.answerCard(mCol.getSched().getGoodNewButton());
+        reviewer.answerCard(mSched.getGoodNewButton());
         waitForAsyncTasksToComplete();
 
         equalFirstField(cards[2], reviewer.mCurrentCard);
         time.addM(2);
-        reviewer.answerCard(mCol.getSched().getGoodNewButton());
+        reviewer.answerCard(mSched.getGoodNewButton());
         advanceRobolectricLooperWithSleep();
         equalFirstField(cards[0], reviewer.mCurrentCard); // This failed in #6898 because this card was not in the queue
     }
@@ -295,7 +295,7 @@ public class ReviewerTest extends RobolectricTest {
     private void answerCardOrdinalAsGood(Reviewer r, int i) {
         assertCurrentOrdIs(r, i);
 
-        r.answerCard(mCol.getSched().getGoodNewButton());
+        r.answerCard(mSched.getGoodNewButton());
 
         waitForAsyncTasksToComplete();
     }

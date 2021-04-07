@@ -85,27 +85,25 @@ public class AbstractSchedTest extends RobolectricTest {
         // #6587
         addNoteUsingBasicModel("Hello", "World");
 
-        AbstractSched sched = mCol.getSched();
         mCol.reset();
 
-        Card cardBeforeUndo = sched.getCard();
-        Counts countsBeforeUndo = sched.counts();
+        Card cardBeforeUndo = mSched.getCard();
+        Counts countsBeforeUndo = mSched.counts();
         // Not shown in the UI, but there is a state where the card has been removed from the queue, but not answered
         // where the counts are decremented.
         assertThat(countsBeforeUndo, is(new Counts(0, 0, 0)));
 
-        sched.answerCard(cardBeforeUndo, EASE_3);
+        mSched.answerCard(cardBeforeUndo, EASE_3);
 
         waitFortask(new CollectionTask.Undo(), 5000);
 
-        Counts countsAfterUndo = sched.counts();
+        Counts countsAfterUndo = mSched.counts();
 
         assertThat("Counts after an undo should be the same as before an undo", countsAfterUndo, is(countsBeforeUndo));
     }
 
     @Test
     public void ensureUndoCorrectCounts() {
-        AbstractSched sched = mCol.getSched();
         Deck deck = mDecks.get(1);
         DeckConfig dconf = mDecks.getConf(1);
         dconf.getJSONObject("new").put("perDay", 10);
@@ -117,22 +115,21 @@ public class AbstractSchedTest extends RobolectricTest {
         }
         mCol.reset();
         assertThat(mCol.cardCount(), is(20));
-        assertThat(sched.newCount(), is(10));
-        Card card = sched.getCard();
-        assertThat(sched.newCount(), is(9));
-        assertThat(sched.counts(card).getNew(), is(10));
-        sched.answerCard(card, sched.getGoodNewButton());
-        sched.getCard();
+        assertThat(mSched.newCount(), is(10));
+        Card card = mSched.getCard();
+        assertThat(mSched.newCount(), is(9));
+        assertThat(mSched.counts(card).getNew(), is(10));
+        mSched.answerCard(card, mSched.getGoodNewButton());
+        mSched.getCard();
         nonTaskUndo(mCol);
         card.load();
-        assertThat(sched.newCount(), is(9));
-        assertThat(sched.counts(card).getNew(), is(10));
+        assertThat(mSched.newCount(), is(9));
+        assertThat(mSched.counts(card).getNew(), is(10));
     }
 
     @Test
     public void testCardQueue() {
-        SchedV2 sched = (SchedV2) mCol.getSched();
-        SimpleCardQueue queue = new SimpleCardQueue(sched);
+        SimpleCardQueue queue = new SimpleCardQueue(mSched);
         assertThat(queue.size(), is(0));
         final int nbCard = 6;
         long[] cids = new long[nbCard];
@@ -159,7 +156,6 @@ public class AbstractSchedTest extends RobolectricTest {
     @Test
     public void siblingCorrectlyBuried() {
         // #6903
-        AbstractSched sched = mCol.getSched();
         DeckConfig dconf = mDecks.getConf(1);
         dconf.getJSONObject("new").put("bury", true);
         final int nbNote = 2;
@@ -171,9 +167,9 @@ public class AbstractSchedTest extends RobolectricTest {
         mCol.reset();
 
         for (int i = 0; i < nbNote; i++) {
-            Card card = sched.getCard();
-            Counts counts = sched.counts(card);
-            sched.setCurrentCard(card); // imitate what the reviewer does
+            Card card = mSched.getCard();
+            Counts counts = mSched.counts(card);
+            mSched.setCurrentCard(card); // imitate what the reviewer does
             assertThat(counts.getNew(), is(greaterThan(nbNote - i))); // Actual number of new card.
             assertThat(counts.getNew(), is(lessThanOrEqualTo(nbNote * 2 - i))); // Maximal number potentially shown,
             // because decrementing does not consider burying sibling
@@ -181,10 +177,10 @@ public class AbstractSchedTest extends RobolectricTest {
             assertEquals(0, counts.getRev());
             assertEquals(notes[i].firstCard().getId(), card.getId());
             assertEquals(Consts.QUEUE_TYPE_NEW, card.getQueue());
-            sched.answerCard(card, sched.answerButtons(card));
+            mSched.answerCard(card, mSched.answerButtons(card));
         }
 
-        Card card = sched.getCard();
+        Card card = mSched.getCard();
         assertNull(card);
     }
 
@@ -200,7 +196,7 @@ public class AbstractSchedTest extends RobolectricTest {
         addDeckWithExactName(child);
 
         mDecks.checkIntegrity();
-        assertDoesNotThrow(() -> mCol.getSched().deckDueList());
+        assertDoesNotThrow(() -> mSched.deckDueList());
     }
 
 
@@ -211,7 +207,7 @@ public class AbstractSchedTest extends RobolectricTest {
 
         public IncreaseToday() {
             decks = mDecks;
-            sched = mCol.getSched();
+            sched = mSched;
             aId = addDeck("A");
             bId = addDeck("A::B");
             cId = addDeck("A::B::C");
@@ -220,8 +216,8 @@ public class AbstractSchedTest extends RobolectricTest {
 
         private void assertNewCountIs(String explanation, long did, int expected) {
             decks.select(did);
-            sched.resetCounts();
-            assertThat(explanation, sched.newCount(), is(expected));
+            mSched.resetCounts();
+            assertThat(explanation, mSched.newCount(), is(expected));
         }
 
         private void increaseAndAssertNewCountsIs(String explanation, long did, int a, int b, int c, int d) {
@@ -238,7 +234,7 @@ public class AbstractSchedTest extends RobolectricTest {
 
         private void extendNew(long did) {
             decks.select(did);
-            sched.extendLimits(1, 0);
+            mSched.extendLimits(1, 0);
         }
 
         public void test() {
@@ -265,8 +261,8 @@ public class AbstractSchedTest extends RobolectricTest {
             decks.select(cId);
             mCol.reset();
             for (int i = 0; i < 3; i++) {
-                Card card = sched.getCard();
-                sched.answerCard(card, sched.answerButtons(card));
+                Card card = mSched.getCard();
+                mSched.answerCard(card, mSched.answerButtons(card));
             }
             assertNewCountsIs("All cards from C are reviewed. Still 4 cards to review in D, but only two available because of A's limit.", 2, 2, 0, 2);
 
@@ -288,7 +284,7 @@ public class AbstractSchedTest extends RobolectricTest {
 ```python
 from aqt import mw
 c = mw.mCol.decks.byName("A::B::C")
-mw.mCol.sched.extendLimits(1, 0)
+mw.mCol.mSched.extendLimits(1, 0)
 ```
              */
         }
@@ -305,56 +301,54 @@ mw.mCol.sched.extendLimits(1, 0)
         DeckConfig conf = mDecks.confForDid(1);
         conf.getJSONObject("new").put("delays", new JSONArray(new double[] {1, 3, 5, 10}));
         mCol.getConf().put("collapseTime", 20 * 60);
-        AbstractSched sched = mCol.getSched();
-
         Note note = addNoteUsingBasicModel("foo", "bar");
 
         mCol.reset();
 
-        Card card = sched.getCard();
+        Card card = mSched.getCard();
         assertNotNull(card);
-        assertEquals(new Counts(1, 0, 0), sched.counts(card));
+        assertEquals(new Counts(1, 0, 0), mSched.counts(card));
         if (preload) {
-            sched.preloadNextCard();
+            mSched.preloadNextCard();
         }
 
-        sched.answerCard(card, sched.getGoodNewButton());
+        mSched.answerCard(card, mSched.getGoodNewButton());
 
-        card = sched.getCard();
+        card = mSched.getCard();
         assertNotNull(card);
-        assertEquals(new Counts(0, (schedVersion == 1) ? 3 : 1, 0), sched.counts(card));
+        assertEquals(new Counts(0, (schedVersion == 1) ? 3 : 1, 0), mSched.counts(card));
         if (preload) {
-            sched.preloadNextCard();
+            mSched.preloadNextCard();
         }
 
 
-        sched.answerCard(card, sched.getGoodNewButton());
+        mSched.answerCard(card, mSched.getGoodNewButton());
 
-        card = sched.getCard();
+        card = mSched.getCard();
         assertNotNull(card);
-        assertEquals(new Counts(0, (schedVersion == 1) ? 2 : 1, 0), sched.counts(card));
+        assertEquals(new Counts(0, (schedVersion == 1) ? 2 : 1, 0), mSched.counts(card));
         if (preload) {
-            sched.preloadNextCard();
+            mSched.preloadNextCard();
         }
 
         assertNotNull(card);
 
         card = nonTaskUndo(mCol);
         assertNotNull(card);
-        assertEquals(new Counts(0, (schedVersion == 1) ? 3 : 1, 0), sched.counts(card));
-        sched.count();
+        assertEquals(new Counts(0, (schedVersion == 1) ? 3 : 1, 0), mSched.counts(card));
+        mSched.count();
         if (preload) {
-            sched.preloadNextCard();
+            mSched.preloadNextCard();
         }
 
 
-        sched.answerCard(card, sched.getGoodNewButton());
-        card = sched.getCard();
+        mSched.answerCard(card, mSched.getGoodNewButton());
+        card = mSched.getCard();
         assertNotNull(card);
         if (preload) {
-            sched.preloadNextCard();
+            mSched.preloadNextCard();
         }
-        assertEquals(new Counts(0, (schedVersion == 1) ? 2 : 1, 0), sched.counts(card));
+        assertEquals(new Counts(0, (schedVersion == 1) ? 2 : 1, 0), mSched.counts(card));
 
         assertNotNull(card);
     }
@@ -385,22 +379,20 @@ mw.mCol.sched.extendLimits(1, 0)
     public void regression_7066() {
         DeckConfig dconf = mDecks.getConf(1);
         dconf.getJSONObject("new").put("bury", true);
-        AbstractSched sched = mCol.getSched();
         addNoteUsingBasicAndReversedModel("foo", "bar");
         addNoteUsingBasicModel("plop", "foo");
         mCol.reset();
-        Card card = sched.getCard();
-        sched.setCurrentCard(card);
-        sched.preloadNextCard();
-        sched.answerCard(card, Consts.BUTTON_THREE);
-        card = sched.getCard();
-        sched.setCurrentCard(card);
-        AnkiAssert.assertDoesNotThrow(sched::preloadNextCard);
+        Card card = mSched.getCard();
+        mSched.setCurrentCard(card);
+        mSched.preloadNextCard();
+        mSched.answerCard(card, Consts.BUTTON_THREE);
+        card = mSched.getCard();
+        mSched.setCurrentCard(card);
+        AnkiAssert.assertDoesNotThrow(mSched::preloadNextCard);
     }
 
     @Test
     public void regression_7984() {
-        SchedV2 sched = (SchedV2) mCol.getSched();
         Time time = mCol.getTime();
         Card[] cards = new Card[2];
         for (int i = 0; i < 2; i++) {
@@ -412,15 +404,15 @@ mw.mCol.sched.extendLimits(1, 0)
         }
         mCol.reset();
         // Regression test success non deterministically without the sleep
-        Card gotten = sched.getCard();
+        Card gotten = mSched.getCard();
         advanceRobolectricLooperWithSleep();
         assertThat(gotten, is(cards[0]));
-        sched.answerCard(gotten, Consts.BUTTON_ONE);
+        mSched.answerCard(gotten, Consts.BUTTON_ONE);
 
-        gotten = sched.getCard();
+        gotten = mSched.getCard();
         assertThat(gotten, is(cards[1]));
-        sched.answerCard(gotten, Consts.BUTTON_ONE);
-        gotten = sched.getCard();
+        mSched.answerCard(gotten, Consts.BUTTON_ONE);
+        gotten = mSched.getCard();
         assertThat(gotten, is(cards[0]));
     }
 }

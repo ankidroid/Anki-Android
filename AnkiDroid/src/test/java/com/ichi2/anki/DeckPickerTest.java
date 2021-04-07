@@ -165,15 +165,13 @@ public class DeckPickerTest extends RobolectricTest {
 
     @Test
     public void limitAppliedAfterReview() {
-        AbstractSched sched = mCol.getSched();
-
         DeckConfig dconf = mDecks.getConf(1);
         dconf.getJSONObject("new").put("perDay", 10);
         for (int i = 0; i < 11; i++) {
             addNoteUsingBasicModel("Which card is this ?", Integer.toString(i));
         }
         // This set a card as current card
-        sched.getCard();
+        mSched.getCard();
 
         ensureCollectionLoadIsSynchronous();
         DeckPicker deckPicker = super.startActivityNormallyOpenCollectionWithIntent(DeckPicker.class, new Intent());

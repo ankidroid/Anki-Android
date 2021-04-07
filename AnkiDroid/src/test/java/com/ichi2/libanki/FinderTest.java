@@ -64,7 +64,7 @@ public class FinderTest extends RobolectricTest {
 
         enableBurySiblings();
         super.addNoteUsingModelName("Basic (and reversed card)", "Front", "Back");
-        Card toAnswer = sched.getCard();
+        Card toAnswer = mSched.getCard();
 
         //act
         Card siblingBuried = burySiblings(sched, toAnswer);
@@ -87,7 +87,7 @@ public class FinderTest extends RobolectricTest {
 
     @NonNull
     private Card burySiblings(SchedV2 sched, Card toManuallyBury) {
-        sched.answerCard(toManuallyBury, 1);
+        mSched.answerCard(toManuallyBury, 1);
         Card siblingBuried = new Note(mCol, toManuallyBury.getNid()).cards().get(1);
         assertThat(siblingBuried.getQueue(), is(Consts.QUEUE_TYPE_SIBLING_BURIED));
         return siblingBuried;
@@ -96,7 +96,7 @@ public class FinderTest extends RobolectricTest {
 
     @NonNull
     private Card buryManually(SchedV2 sched, long id) {
-        sched.buryCards(new long[] {id}, true);
+        mSched.buryCards(new long[] {id}, true);
         Card manuallyBuriedCard = new Card(mCol, id);
         assertThat(manuallyBuriedCard.getQueue(), is(Consts.QUEUE_TYPE_MANUALLY_BURIED));
         return manuallyBuriedCard;
@@ -299,11 +299,11 @@ public class FinderTest extends RobolectricTest {
             assertEquals(0, mCol.findCards("rated:1:1").size());
             assertEquals(0, mCol.findCards("rated:1:2").size());
             c = getCard();
-            mCol.getSched().answerCard(c, 2);
+            mSched.answerCard(c, 2);
             assertEquals(0, mCol.findCards("rated:1:1").size());
             assertEquals(1, mCol.findCards("rated:1:2").size());
             c = getCard();
-            mCol.getSched().answerCard(c, 1);
+            mSched.answerCard(c, 1);
             assertEquals(1, mCol.findCards("rated:1:1").size());
             assertEquals(1, mCol.findCards("rated:1:2").size());
             assertEquals(2, mCol.findCards("rated:1").size());

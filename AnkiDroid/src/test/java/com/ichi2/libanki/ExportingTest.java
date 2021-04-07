@@ -104,15 +104,15 @@ public class ExportingTest extends RobolectricTest {
        mCol.addNote(note);
        mCol.crt -= SECONDS_PER_DAY * 10;
        mCol.flush();
-       mCol.getSched().reset();
-       Card c = mCol.getSched().getCard();
-       mCol.getSched().answerCard(c, 3);
-       mCol.getSched().answerCard(c, 3);
+       mSched.reset();
+       Card c = mSched.getCard();
+       mSched.answerCard(c, 3);
+       mSched.answerCard(c, 3);
        // should have ivl of 1, due on day 11
        assertEquals(1, c.getIvl());
        assertEquals(11, c.getDue());
-       assertEquals(10, mCol.getSched().getToday());
-       assertEquals(1, c.getDue() - mCol.getSched().getToday());
+       assertEquals(10, mSched.getToday());
+       assertEquals(1, c.getDue() - mSched.getToday());
        // export
        AnkiPackageExporter e = AnkiExporter(mCol);
        e.includeSched = true;
