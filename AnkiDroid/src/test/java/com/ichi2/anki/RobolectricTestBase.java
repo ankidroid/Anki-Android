@@ -279,6 +279,11 @@ public class RobolectricTestBase implements CollectionGetter {
         MockTime time = new MockTime(2020, 7, 7, 7, 0, 0, 0, 10);
         return CollectionHelper.getInstance().getCol(getTargetContext(), time);
     }
+    protected Collection getCol(int version) throws ConfirmModSchemaException {
+        Collection col = getCol();
+        col.changeSchedulerVer(version);
+        return col;
+    }
 
 
     protected MockTime getCollectionTime() {

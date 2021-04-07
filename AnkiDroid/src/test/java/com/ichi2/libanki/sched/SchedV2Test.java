@@ -311,15 +311,9 @@ public class SchedV2Test extends RobolectricTest {
      *****************/
     private final MockTime mTime = new MockTime(2020, 7, 4,11, 22, 19, 0, 10);
 
-    public Collection getColV2() throws Exception {
-        Collection col = getCol();
-        col.changeSchedulerVer(2);
-        return col;
-    }
-
     @Test
     public void test_clock() throws Exception {
-        Collection col = getColV2();
+        Collection col = getCol(2);
         if ((col.getSched().getDayCutoff() - mTime.intTime()) < 10 * 60) {
             throw new Exception("Unit tests will fail around the day rollover.");
         }
@@ -328,7 +322,7 @@ public class SchedV2Test extends RobolectricTest {
 
     @Test
     public void test_basics() throws Exception {
-        Collection col = getColV2();
+        Collection col = getCol(2);
         col.reset();
         assertNull(getCard());
     }
@@ -336,7 +330,7 @@ public class SchedV2Test extends RobolectricTest {
 
     @Test
     public void test_new_v2() throws Exception {
-        Collection col = getColV2();
+        Collection col = getCol(2);
         col.reset();
         assertEquals(0, col.getSched().newCount());
         // add a note
@@ -386,7 +380,7 @@ public class SchedV2Test extends RobolectricTest {
 
     @Test
     public void test_newLimits_V2() throws Exception {
-        Collection col = getColV2();
+        Collection col = getCol(2);
         // add some notes
         long deck2 = addDeck("Default::foo");
         for (int i = 0; i < 30; i++) {
@@ -423,7 +417,7 @@ public class SchedV2Test extends RobolectricTest {
 
     @Test
     public void test_newBoxes_v2() throws Exception {
-        Collection col = getColV2();
+        Collection col = getCol(2);
         Note note = col.newNote();
         note.setItem("Front", "one");
         col.addNote(note);
@@ -442,7 +436,7 @@ public class SchedV2Test extends RobolectricTest {
 
     @Test
     public void test_learnV2() throws Exception {
-        Collection col = getColV2();
+        Collection col = getCol(2);
         // add a note
         Note note = col.newNote();
         note.setItem("Front", "one");
@@ -511,7 +505,7 @@ public class SchedV2Test extends RobolectricTest {
 
     @Test
     public void test_relearn() throws Exception {
-        Collection col = getColV2();
+        Collection col = getCol(2);
         Note note = col.newNote();
         note.setItem("Front", "one");
         col.addNote(note);
@@ -541,7 +535,7 @@ public class SchedV2Test extends RobolectricTest {
 
     @Test
     public void test_relearn_no_steps() throws Exception {
-        Collection col = getColV2();
+        Collection col = getCol(2);
         Note note = col.newNote();
         note.setItem("Front", "one");
         col.addNote(note);
@@ -567,7 +561,7 @@ public class SchedV2Test extends RobolectricTest {
 
     @Test
     public void test_learn_collapsedV2() throws Exception {
-        Collection col = getColV2();
+        Collection col = getCol(2);
         // add 2 notes
         Note note = col.newNote();
         note.setItem("Front", "1");
@@ -596,7 +590,7 @@ public class SchedV2Test extends RobolectricTest {
 
     @Test
     public void test_learn_dayV2() throws Exception {
-        Collection col = getColV2();
+        Collection col = getCol(2);
         // add a note
         Note note = col.newNote();
         note.setItem("Front", "one");
@@ -662,7 +656,7 @@ public class SchedV2Test extends RobolectricTest {
 
     @Test
     public void test_reviewsV2() throws Exception {
-        Collection col = getColV2();
+        Collection col = getCol(2);
         // add a note
         Note note = col.newNote();
         note.setItem("Front", "one");
@@ -743,7 +737,7 @@ public class SchedV2Test extends RobolectricTest {
 
     @Test
     public void test_review_limits() throws Exception {
-        Collection col = getColV2();
+        Collection col = getCol(2);
 
         Deck parent = col.getDecks().get(addDeck("parent"));
         Deck child = col.getDecks().get(addDeck("parent::child"));
@@ -802,7 +796,7 @@ public class SchedV2Test extends RobolectricTest {
 
     @Test
     public void test_button_spacingV2() throws Exception {
-        Collection col = getColV2();
+        Collection col = getCol(2);
         Note note = col.newNote();
         note.setItem("Front", "one");
         col.addNote(note);
@@ -834,7 +828,7 @@ public class SchedV2Test extends RobolectricTest {
     public void test_overdue_lapseV2() {
         // disabled in commit 3069729776990980f34c25be66410e947e9d51a2
         /* Upstream does not execute it
-           Collection col = getColV2()  // pylint: disable=unreachable
+           Collection col = getCol(2)  // pylint: disable=unreachable
            // add a note
            Note note = col.newNote();
            note.setItem("Front","one");
@@ -871,7 +865,7 @@ public class SchedV2Test extends RobolectricTest {
 
     @Test
     public void test_finishedV2() throws Exception {
-        Collection col = getColV2();
+        Collection col = getCol(2);
         // nothing due
         assertThat(col.getSched().finishedMsg(getTargetContext()).toString(), containsString("Congratulations"));
         assertThat(col.getSched().finishedMsg(getTargetContext()).toString(), not(containsString("limit")));
@@ -894,7 +888,7 @@ public class SchedV2Test extends RobolectricTest {
 
     @Test
     public void test_nextIvlV2() throws Exception {
-        Collection col = getColV2();
+        Collection col = getCol(2);
         Note note = col.newNote();
         note.setItem("Front", "one");
         note.setItem("Back", "two");
@@ -960,7 +954,7 @@ public class SchedV2Test extends RobolectricTest {
 
     @Test
     public void test_bury() throws Exception {
-        Collection col = getColV2();
+        Collection col = getCol(2);
         Note note = col.newNote();
         note.setItem("Front", "one");
         col.addNote(note);
@@ -1001,7 +995,7 @@ public class SchedV2Test extends RobolectricTest {
 
     @Test
     public void test_suspendv2() throws Exception {
-        Collection col = getColV2();
+        Collection col = getCol(2);
         Note note = col.newNote();
         note.setItem("Front", "one");
         col.addNote(note);
@@ -1053,7 +1047,7 @@ public class SchedV2Test extends RobolectricTest {
 
     @Test
     public void test_filt_reviewing_early_normal() throws Exception {
-        Collection col = getColV2();
+        Collection col = getCol(2);
         Note note = col.newNote();
         note.setItem("Front", "one");
         col.addNote(note);
@@ -1113,7 +1107,7 @@ public class SchedV2Test extends RobolectricTest {
 
     @Test
     public void test_filt_keep_lrn_state() throws Exception {
-        Collection col = getColV2();
+        Collection col = getCol(2);
 
         Note note = col.newNote();
         note.setItem("Front", "one");
@@ -1164,7 +1158,7 @@ public class SchedV2Test extends RobolectricTest {
     @Test
     public void test_preview() throws Exception {
         // add cards
-        Collection col = getColV2();
+        Collection col = getCol(2);
         Note note = col.newNote();
         note.setItem("Front", "one");
         col.addNote(note);
@@ -1215,7 +1209,7 @@ public class SchedV2Test extends RobolectricTest {
 
     @Test
     public void test_ordcycleV2() throws Exception {
-        Collection col = getColV2();
+        Collection col = getCol(2);
         // add two more templates and set second active
         Model m = col.getModels().current();
         Models mm = col.getModels();
@@ -1255,7 +1249,7 @@ public class SchedV2Test extends RobolectricTest {
 
     @Test
     public void test_counts_idxV2() throws Exception {
-        Collection col = getColV2();
+        Collection col = getCol(2);
         Note note = col.newNote();
         note.setItem("Front", "one");
         note.setItem("Back", "two");
@@ -1281,7 +1275,7 @@ public class SchedV2Test extends RobolectricTest {
 
     @Test
     public void test_repCountsV2() throws Exception {
-        Collection col = getColV2();
+        Collection col = getCol(2);
         Note note = col.newNote();
         note.setItem("Front", "one");
         col.addNote(note);
@@ -1336,7 +1330,7 @@ public class SchedV2Test extends RobolectricTest {
 
     @Test
     public void test_timingV2() throws Exception {
-        Collection col = getColV2();
+        Collection col = getCol(2);
         // add a few review cards, due today
         for (int i = 0; i < 5; i++) {
             Note note = col.newNote();
@@ -1366,7 +1360,7 @@ public class SchedV2Test extends RobolectricTest {
 
     @Test
     public void test_collapseV2() throws Exception {
-        Collection col = getColV2();
+        Collection col = getCol(2);
         // add a note
         Note note = col.newNote();
         note.setItem("Front", "one");
@@ -1383,7 +1377,7 @@ public class SchedV2Test extends RobolectricTest {
 
     @Test
     public void test_deckDueV2() throws Exception {
-        Collection col = getColV2();
+        Collection col = getCol(2);
         // add a note with default deck
         Note note = col.newNote();
         note.setItem("Front", "one");
@@ -1432,7 +1426,7 @@ public class SchedV2Test extends RobolectricTest {
 
     @Test
     public void test_deckTree() throws Exception {
-        Collection col = getColV2();
+        Collection col = getCol(2);
         addDeck("new::b::c");
         addDeck("new2");
         // new should not appear twice in tree
@@ -1447,7 +1441,7 @@ public class SchedV2Test extends RobolectricTest {
 
     @Test
     public void test_deckFlowV2() throws Exception {
-        Collection col = getColV2();
+        Collection col = getCol(2);
         // add a note with default deck
         Note note = col.newNote();
         note.setItem("Front", "one");
@@ -1477,7 +1471,7 @@ public class SchedV2Test extends RobolectricTest {
 
     @Test
     public void test_reorder() throws Exception {
-        Collection col = getColV2();
+        Collection col = getCol(2);
         // add a note with default deck
         Note note = col.newNote();
         note.setItem("Front", "one");
@@ -1521,7 +1515,7 @@ public class SchedV2Test extends RobolectricTest {
 
     @Test
     public void test_forgetV2() throws Exception {
-        Collection col = getColV2();
+        Collection col = getCol(2);
         Note note = col.newNote();
         note.setItem("Front", "one");
         col.addNote(note);
@@ -1541,7 +1535,7 @@ public class SchedV2Test extends RobolectricTest {
 
     @Test
     public void test_reschedV2() throws Exception {
-        Collection col = getColV2();
+        Collection col = getCol(2);
         Note note = col.newNote();
         note.setItem("Front", "one");
         col.addNote(note);
@@ -1561,7 +1555,7 @@ public class SchedV2Test extends RobolectricTest {
 
     @Test
     public void test_norelearnV2() throws Exception {
-        Collection col = getColV2();
+        Collection col = getCol(2);
         // add a note
         Note note = col.newNote();
         note.setItem("Front", "one");
@@ -1585,7 +1579,7 @@ public class SchedV2Test extends RobolectricTest {
 
     @Test
     public void test_failmultV2() throws Exception {
-        Collection col = getColV2();
+        Collection col = getCol(2);
         Note note = col.newNote();
         note.setItem("Front", "one");
         note.setItem("Back", "two");
@@ -1615,7 +1609,7 @@ public class SchedV2Test extends RobolectricTest {
 
     @Test
     public void test_moveVersions() throws Exception {
-        Collection col = getColV2();
+        Collection col = getCol(2);
         col.changeSchedulerVer(1);
 
         Note n = col.newNote();
@@ -1682,7 +1676,7 @@ public class SchedV2Test extends RobolectricTest {
     // their due date when removed
     @Test
     public void test_negativeDueFilter() throws Exception {
-        Collection col = getColV2();
+        Collection col = getCol(2);
 
         // card due prior to collection date
         Note note = col.newNote();
@@ -1713,7 +1707,7 @@ public class SchedV2Test extends RobolectricTest {
     @Test
     @Ignore("Port anki@a9c93d933cadbf5d9c7e3e2b4f7a25d2c59da5d3")
     public void test_initial_repeat() throws Exception {
-        Collection col = getColV2();
+        Collection col = getCol(2);
         Note note = col.newNote();
         note.setItem("Front", "one");
         note.setItem("Back", "two");
@@ -1735,7 +1729,7 @@ public class SchedV2Test extends RobolectricTest {
     @Test
     public void regression_test_preview() throws Exception {
         //"https://github.com/ankidroid/Anki-Android/issues/7285"
-        Collection col = getColV2();
+        Collection col = getCol(2);
         Decks decks = col.getDecks();
         AbstractSched sched = col.getSched();
         addNoteUsingBasicModel("foo", "bar");

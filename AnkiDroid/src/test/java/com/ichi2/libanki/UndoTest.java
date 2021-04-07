@@ -29,17 +29,11 @@ public class UndoTest extends RobolectricTest {
     /*****************
      ** Undo         *
      *****************/
-    public Collection getColV2() throws Exception {
-        Collection col = getCol();
-        col.changeSchedulerVer(2);
-        return col;
-    }
-
 
     @Test
     @Ignore("We need to figure out how to test save/undo")
     public void test_op() throws Exception {
-        Collection col = getColV2();
+        Collection col = getCol(2);
         // should have no undo by default
         assertNull(col.undoType());
         // let's adjust a study option
@@ -75,7 +69,7 @@ public class UndoTest extends RobolectricTest {
 
     @Test
     public void test_review() throws Exception {
-        Collection col = getColV2();
+        Collection col = getCol(2);
         col.getConf().put("counts", COUNT_REMAINING);
         Note note = col.newNote();
         note.setItem("Front", "one");
