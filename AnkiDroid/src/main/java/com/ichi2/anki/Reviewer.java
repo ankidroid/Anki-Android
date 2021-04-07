@@ -63,6 +63,8 @@ import androidx.vectordrawable.graphics.drawable.VectorDrawableCompat;
 
 import com.ichi2.anki.cardviewer.CardAppearance;
 import com.ichi2.anki.dialogs.ConfirmationDialog;
+import com.ichi2.anki.multimediacard.AudioPlayer;
+import com.ichi2.anki.multimediacard.AudioRecorder;
 import com.ichi2.anki.multimediacard.AudioView;
 import com.ichi2.anki.dialogs.RescheduleDialog;
 import com.ichi2.anki.reviewer.PeripheralKeymap;
@@ -466,7 +468,8 @@ public class Reviewer extends AbstractFlashcardViewer {
      * @return Whether the mic toolbar is usable
      */
     @SuppressWarnings("BooleanMethodIsAlwaysInverted")
-    private boolean openMicToolbar() {
+    @VisibleForTesting
+    public boolean openMicToolbar() {
         if (mMicToolBar == null || mMicToolBar.getVisibility() != View.VISIBLE) {
             openOrToggleMicToolbar();
         }
@@ -1273,6 +1276,10 @@ public class Reviewer extends AbstractFlashcardViewer {
         return mWhiteboard;
     }
 
+    @VisibleForTesting(otherwise = VisibleForTesting.NONE)
+    public AudioView getAudioView() {
+        return mMicToolBar;
+    }
 
     /**
      * Inner class which implements the submenu for the Suspend button

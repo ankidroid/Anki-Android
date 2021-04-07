@@ -49,8 +49,8 @@ public class AudioView extends LinearLayout {
     protected StopButton mStop = null;
     protected RecordButton mRecord = null;
 
-    private final AudioRecorder mAudioRecorder = new AudioRecorder();
-    private final AudioPlayer mPlayer = new AudioPlayer();
+    private AudioRecorder mAudioRecorder = new AudioRecorder();
+    private AudioPlayer mPlayer = new AudioPlayer();
 
     private OnRecordingFinishEventListener mOnRecordingFinishEventListener = null;
 
@@ -421,5 +421,23 @@ public class AudioView extends LinearLayout {
 
     public interface OnRecordingFinishEventListener {
         void onRecordingFinish(View v);
+    }
+
+
+    @VisibleForTesting(otherwise = VisibleForTesting.NONE)
+    public void setRecorder(@NonNull AudioRecorder recorder) {
+        this.mAudioRecorder = recorder;
+    }
+
+
+    @VisibleForTesting(otherwise = VisibleForTesting.NONE)
+    public void setPlayer(@NonNull AudioPlayer player) {
+        this.mPlayer = player;
+    }
+
+
+    @VisibleForTesting(otherwise = VisibleForTesting.NONE)
+    public Status getStatus() {
+        return mStatus;
     }
 }
