@@ -393,13 +393,12 @@ mw.mCol.mSched.extendLimits(1, 0)
 
     @Test
     public void regression_7984() {
-        Time time = mCol.getTime();
         Card[] cards = new Card[2];
         for (int i = 0; i < 2; i++) {
             cards[i] = addNoteUsingBasicModel(Integer.toString(i), "").cards().get(0);
             cards[i].setQueue(Consts.QUEUE_TYPE_LRN);
             cards[i].setType(Consts.CARD_TYPE_LRN);
-            cards[i].setDue(time.intTime() - 20 * 60 + i);
+            cards[i].setDue(mTime.intTime() - 20 * 60 + i);
             cards[i].flush();
         }
         mCol.reset();

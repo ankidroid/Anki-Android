@@ -5,6 +5,7 @@ import com.ichi2.libanki.Collection;
 import com.ichi2.libanki.Decks;
 import com.ichi2.libanki.Models;
 import com.ichi2.libanki.sched.AbstractSched;
+import com.ichi2.libanki.utils.Time;
 
 public class RobolectricTest extends RobolectricTestBase {
 
@@ -12,6 +13,7 @@ public class RobolectricTest extends RobolectricTestBase {
     protected Decks mDecks;
     protected Models mModels;
     protected AbstractSched mSched;
+    protected Time mTime;
 
     @Override
     public void setUp() {
@@ -26,6 +28,7 @@ public class RobolectricTest extends RobolectricTestBase {
         mDecks = mCol.getDecks();
         mModels = mCol.getModels();
         mSched = mCol.getSched();
+        mTime = mCol.getTime();
         return mCol;
     }
 

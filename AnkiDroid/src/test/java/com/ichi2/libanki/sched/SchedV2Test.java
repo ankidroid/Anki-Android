@@ -342,7 +342,7 @@ public class SchedV2Test extends RobolectricTest {
         assertEquals(QUEUE_TYPE_NEW, c.getQueue());
         assertEquals(CARD_TYPE_NEW, c.getType());
         // if we answer it, it should become a learn card
-        long t = mCol.getTime().intTime();
+        long t = mTime.intTime();
         mSched.answerCard(c, 1);
         assertEquals(QUEUE_TYPE_LRN, c.getQueue());
         assertEquals(CARD_TYPE_LRN, c.getType());
@@ -1015,7 +1015,7 @@ public class SchedV2Test extends RobolectricTest {
         mCol.reset();
         c = getCard();
         mSched.answerCard(c, 1);
-        assertThat(c.getDue(), is(greaterThanOrEqualTo(mCol.getTime().intTime())));
+        assertThat(c.getDue(), is(greaterThanOrEqualTo(mTime.intTime())));
         long due = c.getDue();
         assertEquals(QUEUE_TYPE_LRN, c.getQueue());
         assertEquals(CARD_TYPE_RELEARNING, c.getType());
@@ -1139,7 +1139,7 @@ public class SchedV2Test extends RobolectricTest {
         // should be able to advance learning steps
         mSched.answerCard(c, 3);
         // should be due at least an hour in the future
-        assertThat(c.getDue() - mCol.getTime().intTime(), is(greaterThan(60 * 60L)));
+        assertThat(c.getDue() - mTime.intTime(), is(greaterThan(60 * 60L)));
 
         // emptying the deck preserves learning state
         mSched.emptyDyn(did);
@@ -1147,7 +1147,7 @@ public class SchedV2Test extends RobolectricTest {
         assertEquals(CARD_TYPE_LRN, c.getQueue());
         assertEquals(QUEUE_TYPE_LRN, c.getType());
         assertEquals(1001, c.getLeft());
-        assertThat(c.getDue() - mCol.getTime().intTime(), is(greaterThan(60 * 60L)));
+        assertThat(c.getDue() - mTime.intTime(), is(greaterThan(60 * 60L)));
     }
 
 
@@ -1345,7 +1345,7 @@ public class SchedV2Test extends RobolectricTest {
         Card c2 = getCard();
         assertEquals(QUEUE_TYPE_REV, c2.getQueue());
         // if the failed card becomes due, it should show first
-        c.setDue(mCol.getTime().intTime() - 1);
+        c.setDue(mTime.intTime() - 1);
         c.flush();
         mCol.reset();
         c = getCard();
@@ -1712,7 +1712,7 @@ public class SchedV2Test extends RobolectricTest {
         Card c = getCard();
         mSched.answerCard(c, 2);
         // should be due in ~ 5.5 mins
-        long expected = mCol.getTime().intTime() + (int)(5.5 * 60);
+        long expected = mTime.intTime() + (int)(5.5 * 60);
         long due = c.getDue();
         assertThat(expected - 10, is(lessThan(due)));
         assertThat(due, is(lessThanOrEqualTo((long)(expected * 1.25))));

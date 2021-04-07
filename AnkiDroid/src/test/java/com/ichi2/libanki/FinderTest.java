@@ -108,7 +108,7 @@ public class FinderTest extends RobolectricTest {
      *****************/
 
     public boolean isNearCutoff(Collection col) {
-        int hour = mCol.getTime().calendar().get(Calendar.HOUR_OF_DAY);
+        int hour = mTime.calendar().get(Calendar.HOUR_OF_DAY);
         return hour >= 2 && hour < 4;
     }
 

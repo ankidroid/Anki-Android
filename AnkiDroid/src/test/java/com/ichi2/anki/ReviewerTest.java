@@ -190,7 +190,6 @@ public class ReviewerTest extends RobolectricTest {
     @Test
     public void testLrnQueueAfterUndo() {
         JSONObject nw = mDecks.confForDid(1).getJSONObject("new");
-        MockTime time = (MockTime) mCol.getTime();
         nw.put("delays", new JSONArray(new int[] {1, 10, 60, 120}));
 
         Card[] cards = new Card[4];
@@ -221,7 +220,7 @@ public class ReviewerTest extends RobolectricTest {
         waitForAsyncTasksToComplete();
 
         equalFirstField(cards[2], reviewer.mCurrentCard);
-        time.addM(2);
+        ((MockTime) mTime).addM(2);
         reviewer.answerCard(mSched.getGoodNewButton());
         advanceRobolectricLooperWithSleep();
         equalFirstField(cards[0], reviewer.mCurrentCard); // This failed in #6898 because this card was not in the queue
