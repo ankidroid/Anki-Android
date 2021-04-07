@@ -98,7 +98,7 @@ public class CardBrowserTest extends RobolectricTest {
     public void selectNoneIsVisibleWhenSelectingOne() {
         CardBrowser browser = getBrowserWithMultipleNotes();
         advanceRobolectricLooperWithSleep();
-        selectOneOfManyCards(browser, 0);
+        selectOneOfManyCards(browser);
         advanceRobolectricLooperWithSleep();
         assertThat(browser.isShowingSelectNone(), is(true));
     }
@@ -106,14 +106,14 @@ public class CardBrowserTest extends RobolectricTest {
     @Test
     public void selectAllIsVisibleWhenSelectingOne() {
         CardBrowser browser = getBrowserWithMultipleNotes();
-        selectOneOfManyCards(browser, 0);
+        selectOneOfManyCards(browser);
         assertThat(browser.isShowingSelectAll(), is(true));
     }
 
     @Test
     public void browserIsInMultiSelectModeWhenSelectingOne() {
         CardBrowser browser = getBrowserWithMultipleNotes();
-        selectOneOfManyCards(browser, 0);
+        selectOneOfManyCards(browser);
         assertThat(browser.isInMultiSelectMode(), is(true));
     }
 
@@ -572,6 +572,10 @@ public class CardBrowserTest extends RobolectricTest {
     private void deleteCardAtPosition(CardBrowser browser, int positionToCorrupt) {
         removeCardFromCollection(browser.getCardIds()[positionToCorrupt]);
         browser.clearCardData(positionToCorrupt);
+    }
+
+    private void selectOneOfManyCards(CardBrowser cardBrowser) {
+        selectOneOfManyCards(cardBrowser, 0);
     }
 
     private void selectOneOfManyCards(CardBrowser browser, int position) {
