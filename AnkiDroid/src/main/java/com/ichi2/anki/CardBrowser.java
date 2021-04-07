@@ -687,17 +687,17 @@ public class CardBrowser extends NavigationDrawerActivity implements
         });
         mCardsListView.setOnItemLongClickListener((adapterView, view, position, id) -> {
             if (mInMultiSelectMode) {
-                for (int i = Math.min(mLastSelectedPosition, position); i <= Math.max(mLastSelectedPosition, position); i++) {
-                    // Fetch card at position i.
-                    CardCache card = (CardCache) mCardsListView.getItemAtPosition(i);
+                if (!mCheckedCards.contains(mCardsListView.getItemAtPosition(position))) {
+                    for (int i = Math.min(mLastSelectedPosition, position); i <= Math.max(mLastSelectedPosition, position); i++) {
+                        // Fetch card at position i.
+                        CardCache card = (CardCache) mCardsListView.getItemAtPosition(i);
 
-                    // If card is not in the list of checked cards, then add it, otherwise remove it.
-                    if (!mCheckedCards.contains(card)) {
-                        mCheckedCards.add(card);
-                    } else {
-                        mCheckedCards.remove(card);
+                        // If card is not in the list of checked cards, then add it.
+                        if (!mCheckedCards.contains(card)) {
+                            mCheckedCards.add(card);
+                            onSelectionChanged();
+                        }
                     }
-                    onSelectionChanged();
                 }
             } else {
                 mLastSelectedPosition = position;
