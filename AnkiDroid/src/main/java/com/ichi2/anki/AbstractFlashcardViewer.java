@@ -4099,6 +4099,11 @@ see card.js for available functions
         public boolean ankiIsDisplayingAnswer() { return isDisplayingAnswer(); };
 
         @JavascriptInterface
+        public String ankiGetDeckName() {
+            return Decks.basename(getCol().getDecks().get(mCurrentCard.getDid()).getString("name"));
+        }
+
+        @JavascriptInterface
         public boolean ankiIsActiveNetworkMetered() {
             try {
                 ConnectivityManager cm = (ConnectivityManager) AnkiDroidApp.getInstance().getApplicationContext()
