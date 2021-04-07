@@ -57,12 +57,7 @@ public class PeripheralKeymap {
     }
 
 
-    @SuppressWarnings( {"unused", "RedundantSuppression"})
     public boolean onKeyDown(int keyCode, KeyEvent event) {
-        return false;
-    }
-
-    public boolean onKeyUp(int keyCode, KeyEvent event) {
         if (!mHasSetup) {
             return false;
         }
@@ -71,6 +66,11 @@ public class PeripheralKeymap {
         } else {
             return mQuestionKeyMap.onKeyUp(keyCode, event);
         }
+    }
+
+    @SuppressWarnings( {"unused", "RedundantSuppression"})
+    public boolean onKeyUp(int keyCode, KeyEvent event) {
+        return false;
     }
 
     private static class KeyMap {

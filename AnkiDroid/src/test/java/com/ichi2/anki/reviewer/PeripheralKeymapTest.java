@@ -45,7 +45,7 @@ public class PeripheralKeymapTest {
 
         assertThat((char) event.getUnicodeChar(), is('\0'));
         assertThat((char) event.getUnicodeChar(0), is('1'));
-        peripheralKeymap.onKeyUp(8, event);
+        peripheralKeymap.onKeyDown(8, event);
 
         assertThat(processed, hasSize(1));
         assertThat(processed.get(0), is(ViewerCommand.COMMAND_TOGGLE_FLAG_RED));
