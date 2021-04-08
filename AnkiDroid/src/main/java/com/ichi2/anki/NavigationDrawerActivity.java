@@ -320,6 +320,9 @@ public abstract class NavigationDrawerActivity extends AnkiActivity implements N
             } else if (itemId == R.id.nav_help) {
                 Timber.i("Navigating to help");
                 showDialogFragment(HelpDialog.createInstance(this));
+            } else if (itemId == R.id.support_ankidroid) {
+                Timber.i("Navigating to support AnkiDroid");
+                showDialogFragment(HelpDialog.createInstanceForSupportAnkiDroid(this));
             }
         };
 

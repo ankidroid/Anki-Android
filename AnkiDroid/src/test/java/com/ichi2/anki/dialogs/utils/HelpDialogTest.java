@@ -41,6 +41,17 @@ public class HelpDialogTest extends RobolectricTest {
 
         RecyclerView v = RecursivePictureMenuUtil.getRecyclerViewFor(dialog);
 
-        assertThat(v.getChildCount(), is(4));
+        assertThat(v.getChildCount(), is(3));
+    }
+
+    @Test
+    public void testmenuSupportAnkiDroidDoesNotCrash() {
+        RecursivePictureMenu dialog = (RecursivePictureMenu) HelpDialog.createInstanceForSupportAnkiDroid(getTargetContext());
+
+        super.openDialogFragmentUsingActivity(dialog);
+
+        RecyclerView v = RecursivePictureMenuUtil.getRecyclerViewFor(dialog);
+
+        assertThat(v.getChildCount(), is(5));
     }
 }
