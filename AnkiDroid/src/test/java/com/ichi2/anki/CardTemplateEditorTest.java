@@ -25,6 +25,7 @@ import com.afollestad.materialdialogs.DialogAction;
 import com.ichi2.anki.dialogs.DeckSelectionDialog;
 import com.ichi2.libanki.Model;
 import com.ichi2.libanki.Note;
+import com.ichi2.testutils.FastAnkiDroidApp;
 import com.ichi2.utils.JSONObject;
 
 import org.junit.Assert;
@@ -32,6 +33,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.robolectric.Robolectric;
 import org.robolectric.android.controller.ActivityController;
+import org.robolectric.annotation.Config;
 import org.robolectric.shadows.ShadowActivity;
 import org.robolectric.shadows.ShadowIntent;
 
@@ -44,6 +46,7 @@ import static org.robolectric.Shadows.shadowOf;
 
 
 @RunWith(AndroidJUnit4.class)
+@Config(application = FastAnkiDroidApp.class)
 public class CardTemplateEditorTest extends RobolectricTest {
 
     @Test

@@ -4,9 +4,11 @@ import android.content.Context;
 
 import com.ichi2.anki.RobolectricTest;
 
+import com.ichi2.testutils.FastAnkiDroidApp;
 import com.ichi2.utils.JSONException;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.robolectric.annotation.Config;
 
 import java.util.ArrayList;
 
@@ -23,6 +25,7 @@ import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 
 @RunWith(AndroidJUnit4.class)
+@Config(application = FastAnkiDroidApp.class)
 public class ClozeTest extends RobolectricTest {
 
     @Test

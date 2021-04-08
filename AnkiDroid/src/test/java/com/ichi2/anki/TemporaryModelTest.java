@@ -22,8 +22,10 @@ import android.os.Bundle;
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.robolectric.annotation.Config;
 
 import com.ichi2.libanki.Model;
+import com.ichi2.testutils.FastAnkiDroidApp;
 import com.ichi2.utils.JSONObject;
 
 import java.io.IOException;
@@ -36,6 +38,7 @@ import static com.ichi2.anki.TemporaryModel.ChangeType.ADD;
 import static com.ichi2.anki.TemporaryModel.ChangeType.DELETE;
 
 @RunWith(AndroidJUnit4.class)
+@Config(application = FastAnkiDroidApp.class)
 public class TemporaryModelTest extends RobolectricTest {
 
     @Test

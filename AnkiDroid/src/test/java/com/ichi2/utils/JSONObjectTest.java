@@ -16,8 +16,12 @@
 
 package com.ichi2.utils;
 
+import com.ichi2.testutils.EmptyApplication;
+import com.ichi2.testutils.FastAnkiDroidApp;
+
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.robolectric.annotation.Config;
 
 import androidx.test.ext.junit.runners.AndroidJUnit4;
 
@@ -25,6 +29,7 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.core.IsNull.notNullValue;
 
 @RunWith(AndroidJUnit4.class)
+@Config(application = EmptyApplication.class)
 public class JSONObjectTest {
     @Test
     public void objectNullIsNotNull() {

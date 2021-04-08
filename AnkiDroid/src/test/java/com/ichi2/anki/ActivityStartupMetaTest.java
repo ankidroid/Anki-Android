@@ -22,9 +22,11 @@ import android.content.pm.PackageManager;
 
 import com.ichi2.testutils.ActivityList;
 import com.ichi2.testutils.ActivityList.ActivityLaunchParam;
+import com.ichi2.testutils.FastAnkiDroidApp;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.robolectric.annotation.Config;
 
 import java.util.Arrays;
 import java.util.Set;
@@ -36,6 +38,7 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.containsInAnyOrder;
 
 @RunWith(AndroidJUnit4.class)
+@Config(application = FastAnkiDroidApp.class)
 public class ActivityStartupMetaTest extends RobolectricTest {
 
     @Test

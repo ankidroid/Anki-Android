@@ -22,9 +22,11 @@ import android.net.Uri;
 
 import com.ichi2.anki.IntentHandler.LaunchType;
 import com.ichi2.anki.services.ReminderService;
+import com.ichi2.testutils.FastAnkiDroidApp;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.robolectric.annotation.Config;
 
 import androidx.test.ext.junit.runners.AndroidJUnit4;
 
@@ -33,6 +35,7 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import static org.mockito.Mockito.mock;
 
 @RunWith(AndroidJUnit4.class)
+@Config(application = FastAnkiDroidApp.class)
 public class IntentHandlerTest {
     // COULD_BE_BETTER: We're testing class internals here, would like to see these tests be replaced with
     // higher-level tests at a later date when we better extract dependencies

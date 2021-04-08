@@ -21,11 +21,13 @@ import android.util.Pair;
 
 import com.ichi2.libanki.Collection;
 import com.ichi2.libanki.Collection.CheckDatabaseResult;
+import com.ichi2.testutils.FastAnkiDroidApp;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.robolectric.Robolectric;
 import org.robolectric.android.controller.ActivityController;
+import org.robolectric.annotation.Config;
 
 import androidx.annotation.NonNull;
 import androidx.test.ext.junit.runners.AndroidJUnit4;
@@ -33,6 +35,7 @@ import androidx.test.ext.junit.runners.AndroidJUnit4;
 import static org.hamcrest.MatcherAssert.assertThat;
 
 @RunWith(AndroidJUnit4.class)
+@Config(application = AnkiDroidApp.class)
 public class DeckPickerCheckDatabaseListenerTest extends RobolectricTest {
 
     private DeckPickerTestImpl impl;

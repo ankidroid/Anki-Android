@@ -21,9 +21,11 @@ import android.content.Intent;
 
 import com.ichi2.libanki.Card;
 import com.ichi2.libanki.Note;
+import com.ichi2.testutils.FastAnkiDroidApp;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.robolectric.annotation.Config;
 
 import androidx.test.ext.junit.runners.AndroidJUnit4;
 
@@ -33,6 +35,7 @@ import static org.hamcrest.Matchers.containsString;
 import static org.hamcrest.Matchers.is;
 
 @RunWith(AndroidJUnit4.class)
+@Config(application = FastAnkiDroidApp.class)
 public class PreviewerTest extends RobolectricTest {
 
     @Test

@@ -17,12 +17,14 @@ import android.text.TextUtils;
 
 import com.ichi2.anki.RobolectricTest;
 import com.ichi2.anki.exception.FilteredAncestor;
+import com.ichi2.testutils.FastAnkiDroidApp;
 
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.robolectric.ParameterizedRobolectricTestRunner;
 import org.robolectric.ParameterizedRobolectricTestRunner.Parameters;
+import org.robolectric.annotation.Config;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -39,6 +41,7 @@ import java.util.stream.Collectors;
 import static org.junit.Assert.assertEquals;
 
 @RunWith(ParameterizedRobolectricTestRunner.class)
+@Config(application = FastAnkiDroidApp.class)
 public class TextNoteExporterTest extends RobolectricTest {
 
     @Parameters(name = "{index} id:{0}\ttags:{1}\thtml:{2}")

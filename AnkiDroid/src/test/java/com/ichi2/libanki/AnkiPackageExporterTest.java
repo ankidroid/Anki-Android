@@ -19,10 +19,12 @@ package com.ichi2.libanki;
 import com.ichi2.anki.RobolectricTest;
 import com.ichi2.anki.exception.ImportExportException;
 import com.ichi2.libanki.exception.EmptyMediaException;
+import com.ichi2.testutils.FastAnkiDroidApp;
 
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.robolectric.annotation.Config;
 
 import java.io.File;
 import java.io.IOException;
@@ -44,6 +46,7 @@ import static org.hamcrest.Matchers.hasSize;
 import static org.junit.Assert.assertEquals;
 
 @RunWith(AndroidJUnit4.class)
+@Config(application = FastAnkiDroidApp.class)
 public class AnkiPackageExporterTest extends RobolectricTest {
 
     @Override

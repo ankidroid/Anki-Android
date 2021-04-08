@@ -14,6 +14,7 @@ import com.ichi2.libanki.Consts;
 import com.ichi2.libanki.Note;
 import com.ichi2.libanki.Deck;
 import com.ichi2.testutils.AnkiAssert;
+import com.ichi2.testutils.FastAnkiDroidApp;
 import com.ichi2.testutils.IntentAssert;
 
 import org.junit.Assert;
@@ -51,6 +52,7 @@ import static org.hamcrest.core.Is.is;
 import static org.robolectric.Shadows.shadowOf;
 
 @RunWith(AndroidJUnit4.class)
+@Config(application = FastAnkiDroidApp.class)
 public class CardBrowserTest extends RobolectricTest {
 
     @Test

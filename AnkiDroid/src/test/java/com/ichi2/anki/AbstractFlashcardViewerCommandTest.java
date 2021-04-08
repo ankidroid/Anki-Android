@@ -20,9 +20,11 @@ package com.ichi2.anki;
 import com.ichi2.anki.cardviewer.ViewerCommand;
 import com.ichi2.anki.reviewer.CardMarker.FlagDef;
 import com.ichi2.libanki.Card;
+import com.ichi2.testutils.FastAnkiDroidApp;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.robolectric.annotation.Config;
 
 import androidx.test.ext.junit.runners.AndroidJUnit4;
 
@@ -39,6 +41,7 @@ import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
 @RunWith(AndroidJUnit4.class)
+@Config(application = FastAnkiDroidApp.class)
 public class AbstractFlashcardViewerCommandTest extends RobolectricTest {
 
     @Test

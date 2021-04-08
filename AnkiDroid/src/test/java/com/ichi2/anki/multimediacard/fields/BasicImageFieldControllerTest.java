@@ -7,12 +7,14 @@ import android.content.Intent;
 import com.ichi2.anki.multimediacard.activity.MultimediaEditFieldActivity;
 import com.ichi2.anki.multimediacard.activity.MultimediaEditFieldActivityTestBase;
 import com.ichi2.testutils.AnkiAssert;
+import com.ichi2.testutils.FastAnkiDroidApp;
 import com.ichi2.testutils.MockContentResolver;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mockito;
 import org.robolectric.RobolectricTestRunner;
+import org.robolectric.annotation.Config;
 
 import java.io.File;
 
@@ -25,6 +27,7 @@ import static org.mockito.Mockito.when;
 
 
 @RunWith(RobolectricTestRunner.class)
+@Config(application = FastAnkiDroidApp.class)
 public class BasicImageFieldControllerTest extends MultimediaEditFieldActivityTestBase {
 
     @Test

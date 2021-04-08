@@ -19,10 +19,12 @@ package com.ichi2.libanki;
 import com.ichi2.anki.RobolectricTest;
 import com.ichi2.async.CollectionTask;
 import com.ichi2.async.TaskManager;
+import com.ichi2.testutils.FastAnkiDroidApp;
 import com.ichi2.utils.PairWithBoolean;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.robolectric.annotation.Config;
 
 import java.util.List;
 import java.util.concurrent.ExecutionException;
@@ -33,6 +35,7 @@ import static org.hamcrest.Matchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 
 @RunWith(AndroidJUnit4.class)
+@Config(application = FastAnkiDroidApp.class)
 public class CheckMediaTest extends RobolectricTest {
 
     @Override

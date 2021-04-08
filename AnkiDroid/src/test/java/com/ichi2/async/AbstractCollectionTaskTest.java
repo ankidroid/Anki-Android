@@ -17,8 +17,10 @@
 package com.ichi2.async;
 
 import com.ichi2.anki.RobolectricTest;
+import com.ichi2.testutils.FastAnkiDroidApp;
 
 import org.junit.runner.RunWith;
+import org.robolectric.annotation.Config;
 
 import androidx.test.ext.junit.runners.AndroidJUnit4;
 
@@ -28,6 +30,7 @@ import static org.hamcrest.Matchers.instanceOf;
 import static org.hamcrest.Matchers.notNullValue;
 
 @RunWith(AndroidJUnit4.class)
+@Config(application = FastAnkiDroidApp.class)
 public abstract class AbstractCollectionTaskTest extends RobolectricTest {
 
     protected <Progress, Result> Result execute(CollectionTask.Task<Progress, Result> task) {

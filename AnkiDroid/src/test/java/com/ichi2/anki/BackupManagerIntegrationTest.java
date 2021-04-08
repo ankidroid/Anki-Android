@@ -19,10 +19,12 @@ package com.ichi2.anki;
 import com.ichi2.async.CollectionTask;
 import com.ichi2.testutils.AnkiAssert;
 import com.ichi2.testutils.BackupManagerTestUtilities;
+import com.ichi2.testutils.FastAnkiDroidApp;
 
 import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.robolectric.annotation.Config;
 
 import java.io.File;
 
@@ -32,6 +34,7 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
 
 @RunWith(AndroidJUnit4.class)
+@Config(application = FastAnkiDroidApp.class)
 public class BackupManagerIntegrationTest extends RobolectricTest {
 
     @Test

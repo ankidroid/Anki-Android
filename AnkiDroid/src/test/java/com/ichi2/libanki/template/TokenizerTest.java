@@ -1,10 +1,12 @@
 package com.ichi2.libanki.template;
 
 import com.ichi2.anki.RobolectricTest;
+import com.ichi2.testutils.FastAnkiDroidApp;
 
 import org.hamcrest.Matchers;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.robolectric.annotation.Config;
 
 import androidx.test.ext.junit.runners.AndroidJUnit4;
 
@@ -29,6 +31,7 @@ import static org.junit.Assert.fail;
 
 
 @RunWith(AndroidJUnit4.class)
+@Config(application = FastAnkiDroidApp.class)
 public class TokenizerTest extends RobolectricTest {
 
     @Test

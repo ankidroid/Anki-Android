@@ -19,9 +19,12 @@ import android.content.Context;
 import android.content.ContextWrapper;
 import android.view.ContextThemeWrapper;
 
+import com.ichi2.testutils.FastAnkiDroidApp;
+
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.robolectric.RobolectricTestRunner;
+import org.robolectric.annotation.Config;
 
 import static org.hamcrest.CoreMatchers.instanceOf;
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -29,6 +32,7 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.fail;
 
 @RunWith(RobolectricTestRunner.class)
+@Config(application = FastAnkiDroidApp.class)
 public class RtlCompliantActionProviderTest {
 
 

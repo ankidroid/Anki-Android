@@ -26,6 +26,7 @@ import com.ichi2.anki.R;
 import com.ichi2.anki.RobolectricTest;
 import com.ichi2.anki.dialogs.CustomStudyDialog.CustomStudyListener;
 import com.ichi2.libanki.Deck;
+import com.ichi2.testutils.FastAnkiDroidApp;
 import com.ichi2.utils.JSONObject;
 
 import org.hamcrest.Matchers;
@@ -45,6 +46,7 @@ import static org.hamcrest.Matchers.is;
 import static org.hamcrest.core.IsNull.notNullValue;
 
 @RunWith(AndroidJUnit4.class)
+@Config(application = FastAnkiDroidApp.class)
 public class CustomStudyDialogTest extends RobolectricTest {
 
     @Test

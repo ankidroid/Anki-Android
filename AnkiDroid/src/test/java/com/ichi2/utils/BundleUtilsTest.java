@@ -2,10 +2,13 @@ package com.ichi2.utils;
 
 import android.os.Bundle;
 
+import com.ichi2.testutils.EmptyApplication;
+
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.stubbing.Answer;
 import org.robolectric.RobolectricTestRunner;
+import org.robolectric.annotation.Config;
 
 import java.util.Random;
 
@@ -14,6 +17,7 @@ import static org.junit.Assert.assertNull;
 import static org.mockito.Mockito.*;
 
 @RunWith(RobolectricTestRunner.class)
+@Config(application = EmptyApplication.class)
 public class BundleUtilsTest {
 
     public static final String KEY = "KEY";

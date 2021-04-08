@@ -19,9 +19,12 @@ package com.ichi2.anki;
 import android.content.Intent;
 import android.graphics.Color;
 
+import com.ichi2.testutils.FastAnkiDroidApp;
+
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.robolectric.ParameterizedRobolectricTestRunner;
+import org.robolectric.annotation.Config;
 
 import java.util.Arrays;
 
@@ -29,6 +32,7 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
 
 @RunWith(ParameterizedRobolectricTestRunner.class)
+@Config(application = FastAnkiDroidApp.class)
 public class WhiteboardDefaultForegroundColorTest extends RobolectricTest {
 
     @ParameterizedRobolectricTestRunner.Parameter()

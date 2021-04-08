@@ -17,6 +17,7 @@
 package com.ichi2.compat;
 
 import com.ichi2.anki.TestUtils;
+import com.ichi2.testutils.FastAnkiDroidApp;
 
 import org.junit.Assert;
 import org.junit.Test;
@@ -36,7 +37,7 @@ import java.util.Objects;
 import androidx.test.ext.junit.runners.AndroidJUnit4;
 
 @RunWith(AndroidJUnit4.class)
-@Config(sdk = { 21, 26 })
+@Config(sdk = { 21, 26 }, application = FastAnkiDroidApp.class)
 public class CompatCopyFileTest {
 
     @Test

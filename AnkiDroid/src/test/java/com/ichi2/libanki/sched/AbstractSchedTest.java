@@ -30,6 +30,7 @@ import com.ichi2.libanki.Models;
 import com.ichi2.libanki.Note;
 import com.ichi2.libanki.utils.Time;
 import com.ichi2.testutils.AnkiAssert;
+import com.ichi2.testutils.FastAnkiDroidApp;
 import com.ichi2.utils.JSONArray;
 
 import org.junit.Before;
@@ -39,6 +40,7 @@ import org.junit.runner.RunWith;
 import org.robolectric.ParameterizedRobolectricTestRunner;
 import org.robolectric.ParameterizedRobolectricTestRunner.Parameter;
 import org.robolectric.ParameterizedRobolectricTestRunner.Parameters;
+import org.robolectric.annotation.Config;
 
 import java.util.Arrays;
 
@@ -58,6 +60,7 @@ import static org.junit.Assert.assertNull;
 // Note: These tests can't be run individually but can from the class-level
 // gradlew AnkiDroid:testDebug --tests "com.ichi2.libanki.sched.AbstractSchedTest.*"
 @RunWith(ParameterizedRobolectricTestRunner.class)
+@Config(application = FastAnkiDroidApp.class)
 public class AbstractSchedTest extends RobolectricTest {
 
     @Parameter

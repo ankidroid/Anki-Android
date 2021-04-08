@@ -15,6 +15,7 @@ import com.ichi2.testutils.BackendEmulatingOpenConflict;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.robolectric.Robolectric;
+import org.robolectric.annotation.Config;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -34,6 +35,7 @@ import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 @RunWith(AndroidJUnit4.class)
+@Config(application = AnkiDroidApp.class)
 public class DeckPickerTest extends RobolectricTest {
 
     @Test

@@ -24,6 +24,7 @@ import com.ichi2.anki.dialogs.ImportDialog;
 import org.hamcrest.Matchers;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.robolectric.annotation.Config;
 
 import androidx.test.ext.junit.runners.AndroidJUnit4;
 
@@ -32,6 +33,7 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import static org.junit.Assert.fail;
 
 @RunWith(AndroidJUnit4.class)
+@Config(application = AnkiDroidApp.class)
 public class DeckPickerImportTest extends RobolectricTest {
 
     @Test

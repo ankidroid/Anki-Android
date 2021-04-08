@@ -7,9 +7,11 @@ import android.content.Intent;
 import com.ichi2.anki.CollectionHelper;
 import com.ichi2.anki.RobolectricTest;
 import com.ichi2.libanki.Collection;
+import com.ichi2.testutils.FastAnkiDroidApp;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.robolectric.annotation.Config;
 import org.robolectric.shadows.ShadowNotificationManager;
 
 import androidx.test.ext.junit.runners.AndroidJUnit4;
@@ -24,6 +26,7 @@ import static org.mockito.Mockito.when;
 import static org.robolectric.Shadows.shadowOf;
 
 @RunWith(AndroidJUnit4.class)
+@Config(application = FastAnkiDroidApp.class)
 public class ReminderServiceTest extends RobolectricTest {
 
     @Test

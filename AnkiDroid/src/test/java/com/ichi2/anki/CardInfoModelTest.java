@@ -17,10 +17,12 @@
 package com.ichi2.anki;
 
 import com.ichi2.libanki.Card;
+import com.ichi2.testutils.FastAnkiDroidApp;
 
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.robolectric.annotation.Config;
 
 import androidx.test.ext.junit.runners.AndroidJUnit4;
 
@@ -28,6 +30,7 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
 
 @RunWith(AndroidJUnit4.class)
+@Config(application = FastAnkiDroidApp.class)
 public class CardInfoModelTest extends RobolectricTest {
     private CardInfo.CardInfoModel mModel;
 

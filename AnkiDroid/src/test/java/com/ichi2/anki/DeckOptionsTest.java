@@ -1,23 +1,18 @@
 package com.ichi2.anki;
 
-import android.content.SharedPreferences;
-
 import com.ichi2.libanki.Collection;
-import com.ichi2.libanki.Deck;
-import com.ichi2.libanki.Decks;
+import com.ichi2.testutils.FastAnkiDroidApp;
 import com.ichi2.utils.JSONObject;
 
-import org.apache.http.util.Asserts;
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.robolectric.annotation.Config;
 
 import androidx.test.ext.junit.runners.AndroidJUnit4;
 
-import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.is;
-
 @RunWith(AndroidJUnit4.class)
+@Config(application = FastAnkiDroidApp.class)
 public class DeckOptionsTest extends RobolectricTest {
 
     @Test

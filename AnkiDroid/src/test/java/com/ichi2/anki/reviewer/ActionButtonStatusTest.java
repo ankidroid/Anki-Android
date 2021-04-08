@@ -19,10 +19,12 @@ package com.ichi2.anki.reviewer;
 import android.content.SharedPreferences;
 
 import com.ichi2.anki.RobolectricTest;
+import com.ichi2.testutils.FastAnkiDroidApp;
 import com.ichi2.testutils.PreferenceUtils;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.robolectric.annotation.Config;
 
 import java.util.HashSet;
 import java.util.Objects;
@@ -37,6 +39,7 @@ import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
 @RunWith(AndroidJUnit4.class)
+@Config(application = FastAnkiDroidApp.class)
 public class ActionButtonStatusTest extends RobolectricTest {
 
     @Test

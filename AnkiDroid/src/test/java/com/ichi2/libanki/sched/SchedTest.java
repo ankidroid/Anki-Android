@@ -31,6 +31,7 @@ import com.ichi2.libanki.DeckConfig;
 import com.ichi2.libanki.Model;
 import com.ichi2.libanki.Models;
 import com.ichi2.libanki.Note;
+import com.ichi2.testutils.FastAnkiDroidApp;
 import com.ichi2.testutils.MockTime;
 import com.ichi2.testutils.MutableTime;
 import com.ichi2.utils.JSONArray;
@@ -40,6 +41,7 @@ import org.junit.Assert;
 import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.robolectric.annotation.Config;
 
 import java.util.Collections;
 import java.util.List;
@@ -84,6 +86,7 @@ import static org.junit.Assume.assumeTrue;
 import static com.ichi2.libanki.sched.Counts.Queue.*;
 
 @RunWith(AndroidJUnit4.class)
+@Config(application = FastAnkiDroidApp.class)
 public class SchedTest extends RobolectricTest {
 
     @Test

@@ -24,6 +24,7 @@ import com.ichi2.libanki.Card;
 import com.ichi2.libanki.Model;
 import com.ichi2.libanki.Models;
 import com.ichi2.libanki.Note;
+import com.ichi2.testutils.FastAnkiDroidApp;
 import com.ichi2.utils.JSONObject;
 
 import org.junit.Assert;
@@ -32,11 +33,13 @@ import org.junit.runner.RunWith;
 import org.robolectric.Robolectric;
 import org.robolectric.RobolectricTestRunner;
 import org.robolectric.android.controller.ActivityController;
+import org.robolectric.annotation.Config;
 
 import java.util.ArrayList;
 import java.util.List;
 
 @RunWith(RobolectricTestRunner.class)
+@Config(application = FastAnkiDroidApp.class)
 public class CardTemplatePreviewerTest extends RobolectricTest {
 
     @Test

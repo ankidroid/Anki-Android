@@ -20,10 +20,12 @@ import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
 
 import com.ichi2.anki.AnkiDroidApp;
+import com.ichi2.testutils.FastAnkiDroidApp;
 
 import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.robolectric.annotation.Config;
 
 import androidx.annotation.NonNull;
 import androidx.test.ext.junit.runners.AndroidJUnit4;
@@ -32,6 +34,7 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
 
 @RunWith(AndroidJUnit4.class)
+@Config(application = FastAnkiDroidApp.class)
 public class RemoteMediaServerTest {
     //COULD_BE_BETTER: We currently fail on a trailing flash in these variables.
     private static final String sCustomServerWithNoFormatting = "https://sync.example.com/msync";

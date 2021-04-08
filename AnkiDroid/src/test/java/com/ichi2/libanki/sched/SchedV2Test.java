@@ -30,6 +30,7 @@ import com.ichi2.libanki.Model;
 import com.ichi2.libanki.Models;
 import com.ichi2.libanki.Note;
 import com.ichi2.libanki.backend.exception.BackendNotSupportedException;
+import com.ichi2.testutils.FastAnkiDroidApp;
 import com.ichi2.testutils.MockTime;
 import com.ichi2.testutils.libanki.FilteredDeckUtil;
 import com.ichi2.utils.JSONArray;
@@ -40,6 +41,7 @@ import org.junit.Assert;
 import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.robolectric.annotation.Config;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -86,6 +88,7 @@ import static org.junit.Assert.assertTrue;
 import static org.junit.platform.commons.util.CollectionUtils.getOnlyElement;
 
 @RunWith(AndroidJUnit4.class)
+@Config(application = FastAnkiDroidApp.class)
 public class SchedV2Test extends RobolectricTest {
 
     protected static List<DeckDueTreeNode> expectedTree(Collection col, boolean addRev) {

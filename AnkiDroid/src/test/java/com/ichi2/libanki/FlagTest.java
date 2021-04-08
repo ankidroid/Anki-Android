@@ -1,9 +1,11 @@
 package com.ichi2.libanki;
 
 import com.ichi2.anki.RobolectricTest;
+import com.ichi2.testutils.FastAnkiDroidApp;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.robolectric.annotation.Config;
 
 import java.util.Collections;
 
@@ -12,6 +14,7 @@ import androidx.test.ext.junit.runners.AndroidJUnit4;
 import static org.junit.Assert.assertEquals;
 
 @RunWith(AndroidJUnit4.class)
+@Config(application = FastAnkiDroidApp.class)
 public class FlagTest extends RobolectricTest {
     /*****************
      ** Flags        *

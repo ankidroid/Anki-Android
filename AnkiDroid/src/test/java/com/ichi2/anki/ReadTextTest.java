@@ -18,9 +18,12 @@ package com.ichi2.anki;
 
 import android.content.Context;
 
+import com.ichi2.testutils.FastAnkiDroidApp;
+
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.robolectric.annotation.Config;
 
 import androidx.annotation.CheckResult;
 import androidx.annotation.NonNull;
@@ -33,6 +36,7 @@ import static org.mockito.Mockito.mock;
 import static org.robolectric.Shadows.shadowOf;
 
 @RunWith(AndroidJUnit4.class)
+@Config(application = FastAnkiDroidApp.class)
 public class ReadTextTest extends RobolectricTest{
 
     @Before

@@ -26,11 +26,13 @@ import com.ichi2.anki.dialogs.RecursivePictureMenu.Item;
 import com.ichi2.anki.dialogs.RecursivePictureMenu.ItemHeader;
 import com.ichi2.anki.dialogs.utils.FragmentTestActivity;
 import com.ichi2.anki.dialogs.utils.RecursivePictureMenuUtil;
+import com.ichi2.testutils.FastAnkiDroidApp;
 import com.ichi2.utils.ArrayUtil;
 
 import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.robolectric.annotation.Config;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -44,6 +46,7 @@ import static org.hamcrest.Matchers.hasSize;
 import static org.hamcrest.Matchers.is;
 
 @RunWith(AndroidJUnit4.class)
+@Config(application = FastAnkiDroidApp.class)
 public class RecursivePictureMenuTest extends RobolectricTest {
 
     private FragmentTestActivity mActivity;

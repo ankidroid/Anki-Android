@@ -17,6 +17,7 @@ import com.ichi2.libanki.Decks;
 import com.ichi2.libanki.Model;
 import com.ichi2.libanki.Models;
 import com.ichi2.libanki.Note;
+import com.ichi2.testutils.FastAnkiDroidApp;
 import com.ichi2.testutils.MockTime;
 import com.ichi2.testutils.PreferenceUtils;
 import com.ichi2.utils.JSONArray;
@@ -26,6 +27,7 @@ import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.robolectric.ParameterizedRobolectricTestRunner;
+import org.robolectric.annotation.Config;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -49,6 +51,7 @@ import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
 
 @RunWith(ParameterizedRobolectricTestRunner.class)
+@Config(application = FastAnkiDroidApp.class)
 public class ReviewerTest extends RobolectricTest {
 
 

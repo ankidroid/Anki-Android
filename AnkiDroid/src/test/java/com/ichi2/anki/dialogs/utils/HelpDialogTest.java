@@ -20,9 +20,11 @@ package com.ichi2.anki.dialogs.utils;
 import com.ichi2.anki.RobolectricTest;
 import com.ichi2.anki.dialogs.HelpDialog;
 import com.ichi2.anki.dialogs.RecursivePictureMenu;
+import com.ichi2.testutils.FastAnkiDroidApp;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.robolectric.annotation.Config;
 
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.test.ext.junit.runners.AndroidJUnit4;
@@ -31,6 +33,7 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
 
 @RunWith(AndroidJUnit4.class)
+@Config(application = FastAnkiDroidApp.class)
 public class HelpDialogTest extends RobolectricTest {
 
     @Test

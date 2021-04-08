@@ -22,9 +22,11 @@ import com.ichi2.anki.reviewer.ReviewerUi;
 import com.ichi2.async.CollectionTask;
 import com.ichi2.libanki.Card;
 import com.ichi2.libanki.Collection;
+import com.ichi2.testutils.FastAnkiDroidApp;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.robolectric.annotation.Config;
 
 import androidx.annotation.CheckResult;
 import androidx.annotation.NonNull;
@@ -44,6 +46,7 @@ import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
 @RunWith(AndroidJUnit4.class)
+@Config(application = FastAnkiDroidApp.class)
 public class ReviewerKeyboardInputTest extends RobolectricTest {
 
     @Test

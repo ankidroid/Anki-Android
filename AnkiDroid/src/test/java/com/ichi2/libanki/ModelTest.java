@@ -3,6 +3,7 @@ package com.ichi2.libanki;
 import com.ichi2.anki.R;
 import com.ichi2.anki.RobolectricTest;
 import com.ichi2.anki.exception.ConfirmModSchemaException;
+import com.ichi2.testutils.FastAnkiDroidApp;
 import com.ichi2.utils.JSONArray;
 import com.ichi2.utils.JSONObject;
 
@@ -38,6 +39,7 @@ import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 
 @RunWith(AndroidJUnit4.class)
+@Config(application = FastAnkiDroidApp.class)
 public class ModelTest extends RobolectricTest {
     /*****************
      ** Models       *

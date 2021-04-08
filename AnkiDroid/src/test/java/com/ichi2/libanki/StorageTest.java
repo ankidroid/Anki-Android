@@ -20,11 +20,13 @@ import android.database.Cursor;
 
 import com.ichi2.anki.CollectionHelper;
 import com.ichi2.anki.RobolectricTest;
+import com.ichi2.testutils.FastAnkiDroidApp;
 import com.ichi2.utils.JSONObject;
 
 import org.json.JSONException;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.robolectric.annotation.Config;
 
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -38,6 +40,7 @@ import static org.hamcrest.MatcherAssert.assertThat;
 
 /** Regression test for Rust */
 @RunWith(AndroidJUnit4.class)
+@Config(application = FastAnkiDroidApp.class)
 public class StorageTest extends RobolectricTest {
 
     @Override

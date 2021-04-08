@@ -5,11 +5,13 @@ import android.content.Intent;
 
 import com.ichi2.libanki.Note;
 import com.ichi2.testutils.AnkiAssert;
+import com.ichi2.testutils.FastAnkiDroidApp;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.robolectric.Robolectric;
 import org.robolectric.android.controller.ActivityController;
+import org.robolectric.annotation.Config;
 
 import androidx.test.ext.junit.runners.AndroidJUnit4;
 
@@ -30,6 +32,7 @@ import static org.hamcrest.Matchers.not;
 import static org.junit.Assert.assertEquals;
 
 @RunWith(AndroidJUnit4.class)
+@Config(application = FastAnkiDroidApp.class)
 public class AbstractFlashcardViewerTest extends RobolectricTest {
 
     public static class NonAbstractFlashcardViewer extends AbstractFlashcardViewer {

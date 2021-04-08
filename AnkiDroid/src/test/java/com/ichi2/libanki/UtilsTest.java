@@ -17,6 +17,7 @@
 package com.ichi2.libanki;
 
 import com.ichi2.anki.TestUtils;
+import com.ichi2.testutils.FastAnkiDroidApp;
 
 import org.junit.Assert;
 import org.junit.Test;
@@ -37,6 +38,7 @@ import java.util.Set;
 import org.apache.commons.compress.archivers.zip.ZipArchiveEntry;
 import org.apache.commons.compress.archivers.zip.ZipFile;
 import org.junit.runner.RunWith;
+import org.robolectric.annotation.Config;
 
 import androidx.test.ext.junit.runners.AndroidJUnit4;
 
@@ -45,6 +47,7 @@ import static org.junit.Assert.assertEquals;
 
 
 @RunWith(AndroidJUnit4.class)
+@Config(application = FastAnkiDroidApp.class)
 public class UtilsTest {
 
     @Test

@@ -18,6 +18,7 @@ package com.ichi2.libanki.template;
 
 import com.ichi2.anki.R;
 import com.ichi2.anki.RobolectricTest;
+import com.ichi2.testutils.FastAnkiDroidApp;
 
 import org.hamcrest.Matchers;
 import org.junit.Ignore;
@@ -40,6 +41,7 @@ import static org.junit.Assert.assertThrows;
 import static org.junit.Assert.fail;
 
 @RunWith(AndroidJUnit4.class)
+@Config(application = FastAnkiDroidApp.class)
 public class TemplateTest extends RobolectricTest {
     private String render(String template, Map<String, String> fields) {
         return ParsedNode.parse_inner(template).render(fields, true, getTargetContext());

@@ -3,11 +3,13 @@ package com.ichi2.libanki;
 import com.ichi2.anki.RobolectricTest;
 import com.ichi2.anki.exception.DeckRenameException;
 import com.ichi2.anki.exception.FilteredAncestor;
+import com.ichi2.testutils.FastAnkiDroidApp;
 import com.ichi2.utils.JSONObject;
 
 import org.apache.http.util.Asserts;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.robolectric.annotation.Config;
 
 import java.util.List;
 
@@ -30,6 +32,7 @@ import static org.mockito.ArgumentMatchers.isNotNull;
 import static org.mockito.ArgumentMatchers.isNull;
 
 @RunWith(AndroidJUnit4.class)
+@Config(application = FastAnkiDroidApp.class)
 public class DecksTest extends RobolectricTest {
     // Used in other class to populate decks.
     public static final String[] TEST_DECKS = {

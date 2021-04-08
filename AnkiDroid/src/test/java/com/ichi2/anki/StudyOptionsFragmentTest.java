@@ -2,14 +2,18 @@ package com.ichi2.anki;
 
 import android.text.Spanned;
 
+import com.ichi2.testutils.FastAnkiDroidApp;
+
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.robolectric.annotation.Config;
 
 import androidx.test.ext.junit.runners.AndroidJUnit4;
 
 import static org.junit.Assert.assertEquals;
 
 @RunWith(AndroidJUnit4.class) //required for String -> Spannable conversion in formatDescription
+@Config(application = FastAnkiDroidApp.class)
 public class StudyOptionsFragmentTest {
 
     //Fixes for #5715: In deck description, ignore what is in style and script tag

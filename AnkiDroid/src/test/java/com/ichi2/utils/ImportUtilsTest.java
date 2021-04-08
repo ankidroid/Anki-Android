@@ -23,9 +23,12 @@ import android.content.Intent;
 import android.net.Uri;
 
 import com.ichi2.anki.RobolectricTest;
+import com.ichi2.testutils.EmptyApplication;
+import com.ichi2.testutils.FastAnkiDroidApp;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.robolectric.annotation.Config;
 
 import androidx.annotation.CheckResult;
 import androidx.annotation.NonNull;
@@ -42,6 +45,7 @@ import static org.junit.Assert.assertTrue;
 import static org.mockito.Mockito.spy;
 
 @RunWith(AndroidJUnit4.class)
+@Config(application = EmptyApplication.class)
 public class ImportUtilsTest extends RobolectricTest {
 
     @Test

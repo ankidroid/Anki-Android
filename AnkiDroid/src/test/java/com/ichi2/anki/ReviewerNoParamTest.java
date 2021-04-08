@@ -21,10 +21,12 @@ import android.graphics.Color;
 import com.ichi2.anki.cardviewer.ViewerCommand;
 import com.ichi2.anki.model.WhiteboardPenColor;
 import com.ichi2.libanki.Consts;
+import com.ichi2.testutils.FastAnkiDroidApp;
 
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.robolectric.annotation.Config;
 
 import androidx.annotation.CheckResult;
 import androidx.annotation.NonNull;
@@ -36,6 +38,7 @@ import static org.hamcrest.Matchers.is;
 
 /** A non-parmaterized ReviewerTest - we should probably rename ReviewerTest in future */
 @RunWith(AndroidJUnit4.class)
+@Config(application = FastAnkiDroidApp.class)
 public class ReviewerNoParamTest extends RobolectricTest {
     public static final int DEFAULT_LIGHT_PEN_COLOR = Color.BLACK;
     public static final int ARBITRARY_PEN_COLOR_VALUE = 555;

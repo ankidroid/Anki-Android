@@ -28,6 +28,7 @@ import com.ichi2.anki.multimediacard.fields.IField;
 import com.ichi2.libanki.Consts;
 import com.ichi2.libanki.Model;
 import com.ichi2.libanki.Note;
+import com.ichi2.testutils.FastAnkiDroidApp;
 
 import org.junit.Ignore;
 import org.junit.Test;
@@ -53,6 +54,7 @@ import static org.robolectric.Shadows.shadowOf;
 
 @SuppressWarnings("SameParameterValue")
 @RunWith(AndroidJUnit4.class)
+@Config(application = FastAnkiDroidApp.class)
 public class NoteEditorTest extends RobolectricTest {
 
     @Test

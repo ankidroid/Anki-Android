@@ -2,10 +2,12 @@ package com.ichi2.anki.multimediacard.fields;
 
 import com.ichi2.libanki.Collection;
 import com.ichi2.libanki.Media;
+import com.ichi2.testutils.FastAnkiDroidApp;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mockito;
+import org.robolectric.annotation.Config;
 
 import java.io.File;
 
@@ -18,6 +20,7 @@ import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
 @RunWith(AndroidJUnit4.class)
+@Config(application = FastAnkiDroidApp.class)
 public class ImageFieldTest {
 
     /** #5237 - quotation marks on Android differed from Windows */

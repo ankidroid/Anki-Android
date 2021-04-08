@@ -19,10 +19,12 @@ package com.ichi2.libanki.sync;
 import android.content.SharedPreferences;
 
 import com.ichi2.anki.AnkiDroidApp;
+import com.ichi2.testutils.FastAnkiDroidApp;
 
 import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.robolectric.annotation.Config;
 
 import androidx.annotation.NonNull;
 import androidx.test.ext.junit.runners.AndroidJUnit4;
@@ -31,6 +33,7 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
 
 @RunWith(AndroidJUnit4.class)
+@Config(application = FastAnkiDroidApp.class)
 public class HttpSyncerTest {
     private static final String sCustomServerWithNoFormatting = "https://sync.example.com/";
     private static final String sCustomServerWithFormatting   = "https://sync%s.example.com/";

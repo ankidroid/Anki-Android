@@ -2,15 +2,18 @@ package com.ichi2.anki;
 
 
 import com.ichi2.testutils.AnkiAssert;
+import com.ichi2.testutils.FastAnkiDroidApp;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.robolectric.annotation.Config;
 
 import androidx.test.ext.junit.runners.AndroidJUnit4;
 
 import static com.ichi2.anki.AnkiDroidApp.sendExceptionReport;
 
 @RunWith(AndroidJUnit4.class)
+@Config(application = FastAnkiDroidApp.class)
 public class AnkiDroidAppTest {
 
     @Test
