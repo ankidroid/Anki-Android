@@ -296,6 +296,8 @@
     <string name="note_editor_replace_newlines_summ">Замінювати у Редакторі нотаток будь-які випадки &lt;br&gt;  на нові рядки під час редагування картки.</string>
     <string name="no_code_formatting">Просте форматування введених відповідей</string>
     <string name="no_code_formatting_summ">Виправляє «􏿾», що з\'являються у результатах введених відповідей</string>
+    <string name="type_in_answer_focus">Focus ‘type in answer’</string>
+    <string name="type_in_answer_focus_summ">Automatically focus the ‘type in answer’ field in the reviewer</string>
     <!-- Open Changelog-->
     <string name="open_changelog">Відкрити список змін</string>
 </resources>

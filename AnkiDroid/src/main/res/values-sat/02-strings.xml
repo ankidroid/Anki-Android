@@ -122,6 +122,7 @@
     <string name="reordering_cards">ᱠᱟᱰ ᱨᱮᱠᱚᱰᱤᱝ&#8230;</string>
     <string name="field_remapping">%1$s (“%2$s” ᱠᱷᱚᱱ)</string>
     <string name="confirm_map_cards_to_nothing">ᱡᱟᱷᱟᱭ ᱠᱟᱰ ᱵᱟᱭ ᱢᱮᱯ ᱠᱚᱜᱼᱟ ᱚᱱᱟ ᱠᱟᱲ ᱫᱚ ᱜᱮᱫ ᱜᱤᱰᱤᱜᱼᱟ ᱾ ᱡᱚᱫᱤ ᱠᱷᱟᱴᱚ ᱵᱤᱪᱟᱹᱨ ᱨᱮ ᱠᱟᱰ ᱵᱟᱝ ᱛᱟᱦᱮᱱᱟ ᱠᱷᱟᱱ ᱪᱮᱫ ᱢᱟᱱᱮ ᱵᱟᱝ ᱛᱟᱦᱮᱱᱟ ᱾ ᱢᱤᱫ ᱞᱮᱛᱟᱲ ᱥᱮᱱᱟᱢ ᱠᱟᱱᱟ?</string>
+    <string name="timebox_reached_title">Timebox reached</string>
     <plurals name="timebox_reached">
         <item quantity="one">1$d ᱠᱟᱲ %2$s ᱨᱮ ᱯᱟᱲᱦᱟᱣ ᱠᱮᱜᱟᱢ</item>
         <item quantity="other">1$d ᱠᱟᱲᱥ %2$s ᱨᱮ ᱯᱟᱲᱦᱟᱣ ᱠᱮᱜᱟᱢ</item>

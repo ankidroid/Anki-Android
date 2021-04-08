@@ -291,6 +291,8 @@
     <string name="note_editor_replace_newlines_summ">Nell\'Editor delle Note, converti ogni istanza di &lt;br&gt; in newline quando modifichi una carta.</string>
     <string name="no_code_formatting">Formattazione semplice della risposta</string>
     <string name="no_code_formatting_summ">Correzioni ‘􏿾’ che appaiono nei risultati delle risposte digitate</string>
+    <string name="type_in_answer_focus">Focus ‘type in answer’</string>
+    <string name="type_in_answer_focus_summ">Automatically focus the ‘type in answer’ field in the reviewer</string>
     <!-- Open Changelog-->
     <string name="open_changelog">Apri il registro dei cambiamenti</string>
 </resources>

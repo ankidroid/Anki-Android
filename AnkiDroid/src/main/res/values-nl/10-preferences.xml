@@ -291,6 +291,8 @@
     <string name="note_editor_replace_newlines_summ">Zet in de memobewerker alle instanties van &lt;br&gt; om in nieuwe lijnen bij het bewerken van een kaart.</string>
     <string name="no_code_formatting">Eenvoudig getypte antwoordopmaak</string>
     <string name="no_code_formatting_summ">Herstelt het verschijnen van \'􏿾\' in getypte antwoordresultaten</string>
+    <string name="type_in_answer_focus">Focus ‘type in answer’</string>
+    <string name="type_in_answer_focus_summ">Automatically focus the ‘type in answer’ field in the reviewer</string>
     <!-- Open Changelog-->
     <string name="open_changelog">Open Changelog</string>
 </resources>
