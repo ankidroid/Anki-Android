@@ -20,6 +20,7 @@ import org.junit.runners.Parameterized;
 
 import java.lang.reflect.Field;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import static org.junit.Assert.assertEquals;
@@ -131,11 +132,10 @@ public class AnalyticsConstantsTest {
          * Because whenever a new constant is added in Actions Class but not added to the list present in this
          * class (listOfConstantFields) the test must fail.
          */
-        public static int getFieldSize() {
-            UsageAnalytics.Actions actions = new UsageAnalytics.Actions();
-            Field[] field;
-            field = actions.getClass().getDeclaredFields();
-            return field.length;
+        public static long getFieldSize() {
+            return Arrays.stream(UsageAnalytics.Actions.class.getDeclaredFields())
+                    .filter(x -> x.isAnnotationPresent(AnalyticsConstant.class))
+                    .count();
         }
     }
 }
