@@ -86,7 +86,7 @@ public class AnalyticsConstantsTest {
          */
         @Test
         public void checkAnalyticsString() {
-            assertEquals("There is no such string in Actions class, thus returning null. Re-check if you renamed any string in the analytics string constants of Actions class or AnalyticsConstantsTest.listOfConstantFields. If so, revert them as those string constants must not change as they are compared in analytics.",
+            assertEquals("Re-check if you renamed any string in the analytics string constants of Actions class or AnalyticsConstantsTest.listOfConstantFields. If so, revert them as those string constants must not change as they are compared in analytics.",
                     analyticsString, getStringFromReflection(analyticsString));
         }
 
