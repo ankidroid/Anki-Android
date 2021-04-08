@@ -43,4 +43,20 @@ public class Constants {
      */
     public static final Severity ANKI_CROWDIN_SEVERITY = Severity.FATAL;
 
+    /**
+     * A special {@link Category} which groups the Lint issues related to Code Style as a
+     * sub category for {@link Category#COMPLIANCE}.
+     */
+    public static final Category ANKI_CODE_STYLE_CATEGORY = create(Category.COMPLIANCE, "CodeStyle", 10);
+
+    /**
+     * The priority for the Lint issues used by rules related to Code Style.
+     */
+    public static final int ANKI_CODE_STYLE_PRIORITY = 10;
+
+    /**
+     * The severity for the Lint issues used by rules related to Code Style.
+     */
+    public static final Severity ANKI_CODE_STYLE_SEVERITY = Severity.FATAL;
+
 }
