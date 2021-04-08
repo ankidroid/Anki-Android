@@ -56,7 +56,7 @@ public class CreateDeckDialog {
         mBuilder = new MaterialDialog.Builder(context);
     }
 
-    public void createFilteredDeckDialog() {
+    public void showFilteredDeckDialog() {
         Timber.i("DeckPicker:: New filtered deck button pressed");
         ArrayList<String> names = mAnkiActivity.getCol().getDecks().allNames();
         int n = 1;

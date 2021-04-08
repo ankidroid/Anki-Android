@@ -20,16 +20,10 @@ public class CreateDeckDialogTest {
     @Test
     public void testDialogInDeckPicker() {
         // dialog in DeckPicker test
-        ActivityScenario activityScenario = null;
-        try {
-            activityScenario = ActivityScenario.launch(DeckPicker.class);
+        try (ActivityScenario activityScenario = ActivityScenario.launch(DeckPicker.class)) {
             onView(withId(R.id.fab_main)).perform(click());
             onView(withId(R.id.add_deck_action)).perform(click());
             onView(withText(R.string.new_deck)).check(matches(isDisplayed()));
-        } finally {
-            if (activityScenario != null) {
-                activityScenario.close();
-            }
         }
     }
 }

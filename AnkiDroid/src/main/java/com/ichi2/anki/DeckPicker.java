@@ -773,7 +773,7 @@ public class DeckPicker extends NavigationDrawerActivity implements
                 // a filtered deck was created
                 openStudyOptions(true);
             });
-            createDeckDialog.createFilteredDeckDialog();
+            createDeckDialog.showFilteredDeckDialog();
             return true;
         } else if (itemId == R.id.action_check_database) {
             Timber.i("DeckPicker:: Check database button pressed");
