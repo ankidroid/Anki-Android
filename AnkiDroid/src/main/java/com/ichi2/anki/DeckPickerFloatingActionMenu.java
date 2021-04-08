@@ -76,11 +76,10 @@ public class DeckPickerFloatingActionMenu {
                 closeFloatingActionMenu();
                 CreateDeckDialog createDeckDialog = new CreateDeckDialog(mDeckPicker, R.string.new_deck, false, null);
 
-                createDeckDialog.createDeck();
-
                 createDeckDialog.setOnNewDeckCreated((i) -> {
-                  deckPicker.updateDeckList();
+                    deckPicker.updateDeckList();
                 });
+                createDeckDialog.showDialog();
             }
         });
 

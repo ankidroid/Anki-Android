@@ -36,7 +36,6 @@ import com.ichi2.anki.analytics.AnalyticsDialogFragment;
 import com.ichi2.anki.exception.FilteredAncestor;
 import com.ichi2.libanki.Collection;
 import com.ichi2.libanki.Deck;
-import com.ichi2.libanki.Decks;
 import com.ichi2.utils.FunctionalInterfaces;
 import com.ichi2.utils.FilterResultsUtils;
 
@@ -175,33 +174,33 @@ public class DeckSelectionDialog extends AnalyticsDialogFragment {
         MenuItem addDecks = mToolbar.getMenu().findItem(R.id.deck_picker_dialog_action_add_deck);
         addDecks.setOnMenuItemClickListener(menuItem -> {
             // creating new deck without any parent deck
-            addDeckDialog();
+            showDeckDialog();
             return true;
         });
     }
 
-    private void addSubDeckDialog(String parentDeckPath) {
+    private void showSubDeckDialog(String parentDeckPath) {
         try {
             // create subdeck
             Long parentId = requireAnkiActivity().getCol().getDecks().id(parentDeckPath);
             CreateDeckDialog createDeckDialog = new CreateDeckDialog(requireActivity(), R.string.create_subdeck, false, parentId);
-            createDeckDialog.createDeck();
             createDeckDialog.setOnNewDeckCreated((id) -> {
                 // a sub deck was created
                 selectDeckWithDeckName(requireAnkiActivity().getCol().getDecks().name(id));
             });
-        } catch(FilteredAncestor filteredAncestor) {
+            createDeckDialog.showDialog();
+        } catch (FilteredAncestor filteredAncestor) {
             filteredAncestor.printStackTrace();
         }
     }
 
-    private void addDeckDialog() {
-        CreateDeckDialog createDeckDialog =  new CreateDeckDialog(requireActivity(), R.string.new_deck, false ,null);
-        createDeckDialog.createDeck();
+    private void showDeckDialog() {
+        CreateDeckDialog createDeckDialog =  new CreateDeckDialog(requireActivity(), R.string.new_deck, false, null);
         createDeckDialog.setOnNewDeckCreated((id) -> {
             // a deck was created
             selectDeckWithDeckName(requireAnkiActivity().getCol().getDecks().name(id));
         });
+        createDeckDialog.showDialog();
     }
 
     @NonNull
@@ -248,7 +247,7 @@ public class DeckSelectionDialog extends AnalyticsDialogFragment {
                     @Override
                     public boolean onLongClick(View view) {
                         // creating sub deck with parent deck path
-                        addSubDeckDialog(ctv.getText().toString());
+                        showSubDeckDialog(ctv.getText().toString());
                         return true;
                     }
                 });

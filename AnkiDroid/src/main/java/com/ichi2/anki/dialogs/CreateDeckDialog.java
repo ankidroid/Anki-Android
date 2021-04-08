@@ -56,7 +56,7 @@ public class CreateDeckDialog {
         mBuilder = new MaterialDialog.Builder(context);
     }
 
-    public void initializeFliteredDeck() {
+    public void createFilteredDeckDialog() {
         Timber.i("DeckPicker:: New filtered deck button pressed");
         ArrayList<String> names = mAnkiActivity.getCol().getDecks().allNames();
         int n = 1;
@@ -67,14 +67,14 @@ public class CreateDeckDialog {
         }
         mDialogEditText.setText(name);
 
-        createDeck();
+        showDialog();
     }
 
     public String getDeckName() {
         return mDialogEditText.getText().toString();
     }
 
-    public MaterialDialog createDeck() {
+    public MaterialDialog showDialog() {
         mDialogEditText.setSingleLine(true);
 
         return mBuilder.title(mTitle)

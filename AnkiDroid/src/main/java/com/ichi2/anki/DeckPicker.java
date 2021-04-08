@@ -768,12 +768,12 @@ public class DeckPicker extends NavigationDrawerActivity implements
             showImportDialog(ImportDialog.DIALOG_IMPORT_HINT);
             return true;
         } else if (itemId == R.id.action_new_filtered_deck) {
-            CreateDeckDialog createDeckDialog = new CreateDeckDialog(DeckPicker.this, R.string.new_deck, true ,null);
-            createDeckDialog.initializeFliteredDeck();
+            CreateDeckDialog createDeckDialog = new CreateDeckDialog(DeckPicker.this, R.string.new_deck, true, null);
             createDeckDialog.setOnNewDeckCreated((id) -> {
                 // a filtered deck was created
                 openStudyOptions(true);
             });
+            createDeckDialog.createFilteredDeckDialog();
             return true;
         } else if (itemId == R.id.action_check_database) {
             Timber.i("DeckPicker:: Check database button pressed");
@@ -2863,7 +2863,6 @@ public class DeckPicker extends NavigationDrawerActivity implements
 
     private void createSubDeckDialog(long did) {
         CreateDeckDialog createDeckDialog = new CreateDeckDialog(DeckPicker.this, R.string.create_subdeck, false, did);
-        createDeckDialog.createDeck();
         createDeckDialog.setOnNewDeckCreated((i) -> {
             // a deck was created
             mDeckListAdapter.notifyDataSetChanged();
@@ -2872,6 +2871,7 @@ public class DeckPicker extends NavigationDrawerActivity implements
                 loadStudyOptionsFragment(false);
             }
         });
+        createDeckDialog.showDialog();
     }
 
 
