@@ -654,7 +654,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
                         .positiveText(R.string.dialog_continue)
                         .negativeText(R.string.close)
                         .cancelable(true)
-                        .onNegative((materialDialog, dialogAction) -> finishWithAnimation(RIGHT))
+                        .onNegative((materialDialog, dialogAction) -> finishWithAnimation(END))
                         .onPositive((materialDialog, dialogAction) -> getCol().startTimebox())
                         .cancelListener(materialDialog -> getCol().startTimebox())
                         .show();
