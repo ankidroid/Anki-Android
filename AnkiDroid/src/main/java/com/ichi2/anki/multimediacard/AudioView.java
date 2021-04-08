@@ -226,7 +226,7 @@ public class AudioView extends LinearLayout {
     }
 
     protected class PlayPauseButton extends AppCompatImageButton {
-        private final OnClickListener onClickListener = new View.OnClickListener() {
+        private final OnClickListener mOnClickListener = new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if (mAudioPath == null) {
@@ -299,7 +299,7 @@ public class AudioView extends LinearLayout {
             super(context);
             setImageResource(mResPlayImage);
 
-            setOnClickListener(onClickListener);
+            setOnClickListener(mOnClickListener);
         }
 
 
@@ -323,7 +323,7 @@ public class AudioView extends LinearLayout {
     }
 
     protected class StopButton extends AppCompatImageButton {
-        private final OnClickListener onClickListener = v -> {
+        private final OnClickListener mOnClickListener = v -> {
             switch (mStatus) {
                 case PAUSED:
                 case PLAYING:
@@ -346,7 +346,7 @@ public class AudioView extends LinearLayout {
             super(context);
             setImageResource(mResStopImage);
 
-            setOnClickListener(onClickListener);
+            setOnClickListener(mOnClickListener);
         }
 
 
@@ -358,7 +358,7 @@ public class AudioView extends LinearLayout {
     }
 
     protected class RecordButton extends AppCompatImageButton {
-        private final OnClickListener onClickListener = new View.OnClickListener() {
+        private final OnClickListener mOnClickListener = new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 // Since mAudioPath is not compulsory, we check if it exists
@@ -449,7 +449,7 @@ public class AudioView extends LinearLayout {
             super(context);
             setImageResource(mResRecordStopImage);
 
-            setOnClickListener(onClickListener);
+            setOnClickListener(mOnClickListener);
         }
 
 
