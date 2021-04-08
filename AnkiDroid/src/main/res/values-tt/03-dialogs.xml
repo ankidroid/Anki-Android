@@ -160,7 +160,7 @@
     <!-- Multimedia - Audio View -->
     <string name="multimedia_editor_audio_permission_denied">Audio recording permission denied</string>
     <!-- Initial collection load -->
-    <string name="collection_load_welcome_request_permissions_title">Welcome to AnkiDroid!</string>
+    <string name="collection_load_welcome_request_permissions_title">AnkiDroid-ка рәхим итегез! </string>
     <string name="collection_load_welcome_request_permissions_details">AnkiDroid requires storage permission, which we use exclusively to store your AnkiDroid collection, flashcard media and backups. Our code is open-source, written by volunteers, and trusted by millions.\n\nIf you have any questions, please access our in-app manual or visit our support forums.\n\nThank you for trying AnkiDroid!\n—AnkiDroid Development Team</string>
     <string name="mutimedia_editor_assertion_failed">Unknown error occurred displaying Advanced Editor</string>
     <!-- Database Integrity Check -->
@@ -206,7 +206,7 @@
     <string name="help_title_using_ankidroid">Using AnkiDroid</string>
     <string name="help_item_ankidroid_manual">AnkiDroid Manual</string>
     <string name="help_item_anki_manual">Anki Manual</string>
-    <string name="help_item_ankidroid_faq">AnkiDroid FAQ</string>
+    <string name="help_item_ankidroid_faq">AnkiDroid Сорау-Җавап</string>
     <string name="help_title_get_help">Get Help</string>
     <string name="help_item_mailing_list">Mailing List</string>
     <string name="help_item_reddit">Reddit</string>

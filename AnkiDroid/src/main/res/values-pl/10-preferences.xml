@@ -295,6 +295,8 @@
     <string name="note_editor_replace_newlines_summ">W Edytorze Notatek zmień wszelkie przykłady &lt;br&gt; na nowy wiersz kiedy karta jest edytowana.</string>
     <string name="no_code_formatting">Proste formatowanie wpisywanej odpowiedzi</string>
     <string name="no_code_formatting_summ">Naprawia ‘􏿾’ pojawiające się we wpisywanych odpowiedziach</string>
+    <string name="type_in_answer_focus">Focus ‘type in answer’</string>
+    <string name="type_in_answer_focus_summ">Automatically focus the ‘type in answer’ field in the reviewer</string>
     <!-- Open Changelog-->
     <string name="open_changelog">Otwórz listę zmian w programie</string>
 </resources>

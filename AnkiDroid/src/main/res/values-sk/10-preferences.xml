@@ -296,6 +296,8 @@
     <string name="note_editor_replace_newlines_summ">Premeniť v editore poznámok každý prípad &lt;br&gt; do nového riadku pri editácii kartičky.</string>
     <string name="no_code_formatting">Simple typed answer formatting</string>
     <string name="no_code_formatting_summ">Fixes ‘􏿾’ appearing in typed answer results</string>
+    <string name="type_in_answer_focus">Focus ‘type in answer’</string>
+    <string name="type_in_answer_focus_summ">Automatically focus the ‘type in answer’ field in the reviewer</string>
     <!-- Open Changelog-->
     <string name="open_changelog">Open Changelog</string>
 </resources>

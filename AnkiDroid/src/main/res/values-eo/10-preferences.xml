@@ -291,6 +291,8 @@
     <string name="note_editor_replace_newlines_summ">En la kart‑redaktilo, konverti ĉiujn &lt;br&gt; al novaj linioj dum redakti karton.</string>
     <string name="no_code_formatting">Simpla aranĝo de enigita respondo</string>
     <string name="no_code_formatting_summ">Ripari “􏿾” aperantan en entajpita respondo</string>
+    <string name="type_in_answer_focus">Focus ‘type in answer’</string>
+    <string name="type_in_answer_focus_summ">Automatically focus the ‘type in answer’ field in the reviewer</string>
     <!-- Open Changelog-->
     <string name="open_changelog">Montri ŝanĝoprotokolon</string>
 </resources>

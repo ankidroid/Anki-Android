@@ -122,6 +122,7 @@
     <string name="reordering_cards">重新排列卡片中...</string>
     <string name="field_remapping">%1$s （从“%2$s”）</string>
     <string name="confirm_map_cards_to_nothing">在笔记类型中没有相应模板的卡片将被删除。如果该笔记没有生成其他的卡片，则该笔记将会丢失。你确定要继续吗？</string>
+    <string name="timebox_reached_title">Timebox reached</string>
     <plurals name="timebox_reached">
         <item quantity="other">在%2$s内学习了%1$d张卡片</item>
     </plurals>
@@ -334,5 +335,5 @@
     <!-- Used for credential empty warning message -->
     <string name="email_id_empty">电子邮件地址是必填项</string>
     <string name="password_empty">密码是必填项</string>
-    <string name="back_pressed_once">Press back again to exit</string>
+    <string name="back_pressed_once">再按一次返回键以退出</string>
 </resources>
