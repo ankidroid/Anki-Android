@@ -86,7 +86,8 @@ public class AnalyticsConstantsTest {
          */
         @Test
         public void checkAnalyticsString() {
-            assertEquals("There is no such string in Actions class, thus returning null.", analyticsString, getStringFromReflection(analyticsString));
+            assertEquals("There is no such string in Actions class, thus returning null. Re-check if you renamed any string in the analytics string constants of Actions class or AnalyticsConstantsTest.listOfConstantFields. If so, revert them as those string constants must not change as they are compared in analytics.",
+                    analyticsString, getStringFromReflection(analyticsString));
         }
 
 
@@ -117,9 +118,11 @@ public class AnalyticsConstantsTest {
         @Test
         public void fieldSizeEqualsListOfConstantFields() {
             if (getFieldSize() > listOfConstantFields.size()) {
-                assertEquals("Add the new constant here also in the list listOfConstantFields", listOfConstantFields.size(), getFieldSize());
+                assertEquals("Add the newly added analytics constant to AnalyticsConstantsTest.listOfConstantFields. NOTE: Constants should not be renamed as we cannot compare these in analytics.",
+                        listOfConstantFields.size(), getFieldSize());
             } else if (getFieldSize() < listOfConstantFields.size()) {
-                assertEquals("Remove the constant from the list listOfConstantFields", listOfConstantFields.size(), getFieldSize());
+                assertEquals("If a constant is removed, it should be removed from AnalyticsConstantsTest.listOfConstantFields. NOTE: Constants should not be renamed as we cannot compare these in analytics.",
+                        listOfConstantFields.size(), getFieldSize());
             } else {
                 assertEquals(listOfConstantFields.size(), getFieldSize());
             }
