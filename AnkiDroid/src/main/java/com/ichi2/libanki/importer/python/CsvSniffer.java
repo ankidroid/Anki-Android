@@ -22,6 +22,7 @@
 
 package com.ichi2.libanki.importer.python;
 
+import android.annotation.SuppressLint;
 import android.os.Build;
 
 import com.ichi2.libanki.importer.CsvException;
@@ -38,15 +39,17 @@ import java.util.regex.Pattern;
 import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
 
+@SuppressLint("FieldNamingPatternDetector")
 @RequiresApi(Build.VERSION_CODES.O) // Regex group(str)
 public class CsvSniffer {
 
-    private final char[] mPreferred;
+
+    private final char[] preferred;
 
 
     public CsvSniffer() {
         // in case there is more than one possible delimiter
-        mPreferred = new char[] {',', '\t', ';', ' ', ':'};
+        preferred = new char[] {',', '\t', ';', ' ', ':'};
     }
 
 
@@ -308,7 +311,7 @@ public class CsvSniffer {
 
         // if there's more than one, fall back to a 'preferred' list
         if (delims.size() > 1) {
-            for (char d : mPreferred) {
+            for (char d : preferred) {
                 if (delims.containsKey(d)) {
                     boolean skipinitialspace = countInString(data.get(0), d) == countInString(data.get(0), d + " ");
                     return new Guess(d, skipinitialspace);
