@@ -1317,7 +1317,7 @@ public class CardBrowser extends NavigationDrawerActivity implements
             try {
                 arrayAdapter.add(deck.getString("name"));
             } catch (JSONException e) {
-                e.printStackTrace();
+                Timber.w(e);
             }
         }
 

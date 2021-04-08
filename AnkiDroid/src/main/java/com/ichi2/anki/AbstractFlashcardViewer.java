@@ -965,7 +965,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
             String data = Utils.convertStreamToString(getAssets().open("card_template.html"));
             mCardTemplate = new CardTemplate(data);
         } catch (IOException e) {
-            e.printStackTrace();
+            Timber.w(e);
         }
 
         // Initialize text-to-speech. This is an asynchronous operation.
@@ -3615,7 +3615,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
             try {
                 startActivityWithoutAnimation(intent);
             } catch (ActivityNotFoundException e) {
-                e.printStackTrace(); // Don't crash if the intent is not handled
+                Timber.w(e); // Don't crash if the intent is not handled
             }
             return true;
         }

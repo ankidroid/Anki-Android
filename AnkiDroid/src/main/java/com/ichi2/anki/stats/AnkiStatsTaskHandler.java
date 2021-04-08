@@ -172,7 +172,7 @@ public class AnkiStatsTaskHandler {
                 try {
                     mWebView.loadData(URLEncoder.encode(html, "UTF-8").replaceAll("\\+", " "), "text/html; charset=utf-8", "utf-8");
                 } catch (UnsupportedEncodingException e) {
-                    e.printStackTrace();
+                    Timber.w(e);
                 }
                 mProgressBar.setVisibility(View.GONE);
                 int backgroundColor = Themes.getColorFromAttr(mWebView.getContext(), android.R.attr.colorBackground);
