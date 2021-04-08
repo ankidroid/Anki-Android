@@ -1,5 +1,7 @@
 package com.ichi2.anim;
+
 import android.app.Activity;
+
 import android.content.Context;
 import android.util.LayoutDirection;
 import com.ichi2.anki.R;
@@ -52,3 +54,4 @@ public class ActivityTransitionAnimation {
         return c.getResources().getConfiguration().getLayoutDirection() == LayoutDirection.RTL;
     }
 }
+
