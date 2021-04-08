@@ -39,8 +39,8 @@ public class ActivityTransitionAnimation {
             // this is the default animation, we shouldn't try to override it
         }
     }
-    
-    
+
+
     public enum Direction {
         START,
         END,
