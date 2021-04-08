@@ -330,22 +330,12 @@ public class Preferences extends AppCompatPreferenceActivity implements Preferen
                         Timber.e(e, "Could not initialize directory: %s", newPath);
                         AlertDialog.Builder builder = new AlertDialog.Builder(Preferences.this);
                         builder.setMessage(R.string.dialog_collection_path_not_dir)
-                                .setPositiveButton(R.string.dialog_ok, new DialogInterface.OnClickListener() {
-                                    public void onClick(DialogInterface dialog, int id) {
-                                        dialog.dismiss();
-                                    }
-                                })
-                                .setNegativeButton(R.string.reset_custom_buttons, new DialogInterface.OnClickListener() {
-                                    public void onClick(DialogInterface dialog, int id) {
-                                        try {
-                                            CollectionHelper.initializeAnkiDroidDirectory("/sdcard/AnkiDroid");
-                                            collectionPathPreference.setText("/sdcard/AnkiDroid");
-                                        } catch (StorageAccessException storageAccessException) {
-                                            storageAccessException.printStackTrace();
-                                        }
-                                    }
-                                });
-                        builder.create().show();
+                                .setPositiveButton(R.string.dialog_ok, (dialog, which) -> dialog.dismiss())
+                                .setNegativeButton(R.string.reset_custom_buttons, (dialog, which) -> {
+                                        CollectionHelper.getDefaultAnkiDroidDirectory();
+                                        collectionPathPreference.setText("/sdcard/AnkiDroid");
+                                    });
+                        builder.show();
                         return false;
                     }
                 });
