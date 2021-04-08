@@ -16,6 +16,8 @@
 
 package com.ichi2.anki;
 
+import com.ichi2.anki.exception.ConfirmModSchemaException;
+
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
@@ -37,6 +39,28 @@ public class PreferencesTest extends RobolectricTest {
         }
     }
 
+    @Test
+    public void testDayOffsetExhaustiveV2() throws ConfirmModSchemaException {
+        getCol().changeSchedulerVer(2);
+        Preferences preferences = getInstance();
+        for (int i = 0; i < 24; i++) {
+            preferences.setDayOffset(i);
+            assertThat(Preferences.getDayOffset(getCol()), is(i));
+        }
+    }
+
+    @Test
+    public void setDayOffsetSetsConfig() throws ConfirmModSchemaException {
+        getCol().changeSchedulerVer(2);
+        Preferences preferences = getInstance();
+
+        int offset = Preferences.getDayOffset(getCol());
+        assertThat("Default offset should be 4", offset, is(4));
+
+        preferences.setDayOffset(2);
+
+        assertThat("rollover config should be set to new value", getCol().getConf().optInt("rollover", 4), is(2));
+    }
 
     @NonNull
     protected Preferences getInstance() {
