@@ -14,15 +14,15 @@ public class ActivityTransitionAnimation {
                activity.overridePendingTransition(R.anim.slide_right_in, R.anim.slide_right_out);
             } else {
                activity.overridePendingTransition(R.anim.slide_left_in, R.anim.slide_left_out);
-             }
-               break;
+            }
+            break;
         case END:
             if (isRightToLeft(activity)) {
                activity.overridePendingTransition(R.anim.slide_left_in, R.anim.slide_left_out);
             } else {
                activity.overridePendingTransition(R.anim.slide_right_in, R.anim.slide_right_out);
-             }
-               break;
+            }
+            break;
         case FADE:
             activity.overridePendingTransition(R.anim.fade_out, R.anim.fade_in);
             break;
