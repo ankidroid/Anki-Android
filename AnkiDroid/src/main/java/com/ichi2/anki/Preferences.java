@@ -567,8 +567,7 @@ public class Preferences extends AppCompatPreferenceActivity implements Preferen
                             ((android.preference.ListPreference)pref).setValueIndex(conf.getInt("newSpread"));
                             break;
                         case "dayOffset":
-                            Calendar calendar = col.crtGregorianCalendar();
-                            ((SeekBarPreference)pref).setValue(calendar.get(Calendar.HOUR_OF_DAY));
+                            ((SeekBarPreference)pref).setValue(getDayOffset(col));
                             break;
                         case "newTimezoneHandling":
                             android.preference.CheckBoxPreference checkBox = (android.preference.CheckBoxPreference) pref;
@@ -596,6 +595,21 @@ public class Preferences extends AppCompatPreferenceActivity implements Preferen
         mOriginalSumarries.put(pref.getKey(), (s != null) ? s.toString() : "");
         // Update summary
         updateSummary(pref);
+    }
+
+    @VisibleForTesting
+    public static int getDayOffset(Collection col) {
+        Calendar calendar = col.crtGregorianCalendar();
+        return calendar.get(Calendar.HOUR_OF_DAY);
+    }
+
+    @VisibleForTesting
+    public void setDayOffset(int hours) {
+        Calendar date = getCol().crtGregorianCalendar();
+        date.set(Calendar.HOUR_OF_DAY, hours);
+        getCol().setCrt(date.getTimeInMillis() / 1000);
+        getCol().setMod();
+        BootService.scheduleNotification(getCol().getTime(), this);
     }
 
 
@@ -655,12 +669,7 @@ public class Preferences extends AppCompatPreferenceActivity implements Preferen
                     getCol().setMod();
                     break;
                 case "dayOffset": {
-                    int hours = ((SeekBarPreference) pref).getValue();
-                    Calendar date = getCol().crtGregorianCalendar();
-                    date.set(Calendar.HOUR_OF_DAY, hours);
-                    getCol().setCrt(date.getTimeInMillis() / 1000);
-                    getCol().setMod();
-                    BootService.scheduleNotification(getCol().getTime(), this);
+                    setDayOffset(((SeekBarPreference) pref).getValue());
                     break;
                 }
                 case "minimumCardsDueForNotification": {
@@ -1042,5 +1051,10 @@ public class Preferences extends AppCompatPreferenceActivity implements Preferen
         public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
             ((Preferences) getActivity()).updatePreference(sharedPreferences, key, this);
         }
+    }
+
+    @VisibleForTesting(otherwise = VisibleForTesting.NONE)
+    public void attachBaseContext(Context context) {
+        super.attachBaseContext(context);
     }
 }
