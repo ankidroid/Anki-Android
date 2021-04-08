@@ -48,7 +48,7 @@ public class CsvReaderIterator implements Iterator<List<String>> {
 
     private final static int field_size = 5000;
     // These were modified from a bare array and size to a StringBuilder
-    private final char[] mField = new char[field_size];
+    private final char[] field = new char[field_size];
 
 
     public CsvReaderIterator(@NonNull CsvReader reader) {
@@ -75,7 +75,7 @@ public class CsvReaderIterator implements Iterator<List<String>> {
 
     private int parse_save_field() {
 
-        String field = new String(this.mField, 0, this.field_len); // ignored field.length
+        String field = new String(this.field, 0, this.field_len); // ignored field.length
 
         this.field_len = 0;
         if (this.numeric_field != 0) {
@@ -104,7 +104,7 @@ public class CsvReaderIterator implements Iterator<List<String>> {
 //        }
         if (this.field_len == field_size)
             return -1;
-        this.mField[this.field_len++] = c;
+        this.field[this.field_len++] = c;
         return 0;
 
     }
