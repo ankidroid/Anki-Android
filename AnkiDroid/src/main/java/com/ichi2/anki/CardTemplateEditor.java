@@ -651,7 +651,7 @@ public class CardTemplateEditor extends AnkiActivity implements DeckSelectionDia
         ActivityResultLauncher<Intent> onCardBrowserAppearanceResult = registerForActivityResult(new onCardBrowserAppearanceContract(), new ActivityResultCallback<Intent>() {
             @Override
             public void onActivityResult(Intent data) {
-             onCardBrowserAppearanceResult(data);
+                onCardBrowserAppearanceResult(data);
             }
         });
 
