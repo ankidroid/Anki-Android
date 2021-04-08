@@ -332,8 +332,8 @@ public class Preferences extends AppCompatPreferenceActivity implements Preferen
                         builder.setMessage(R.string.dialog_collection_path_not_dir)
                                 .setPositiveButton(R.string.dialog_ok, (dialog, which) -> dialog.dismiss())
                                 .setNegativeButton(R.string.reset_custom_buttons, (dialog, which) -> {
-                                        CollectionHelper.getDefaultAnkiDroidDirectory();
-                                        collectionPathPreference.setText("/sdcard/AnkiDroid");
+                                        String defaultDirectory = CollectionHelper.getDefaultAnkiDroidDirectory();
+                                        collectionPathPreference.setText(defaultDirectory);
                                     });
                         builder.show();
                         return false;
