@@ -27,6 +27,7 @@ import com.afollestad.materialdialogs.MaterialDialog;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.ichi2.libanki.Decks;
 import com.ichi2.ui.FixedEditText;
+import com.ichi2.utils.AndroidUiUtils;
 
 import java.util.Objects;
 
@@ -82,7 +83,6 @@ public class DeckPickerFloatingActionMenu {
                 closeFloatingActionMenu();
                 EditText mDialogEditText = new FixedEditText(mDeckPicker);
                 mDialogEditText.setSingleLine(true);
-                mDialogEditText.requestFocus();
                 MaterialDialog materialDialog = new MaterialDialog.Builder(mDeckPicker)
                         .title(R.string.new_deck)
                         .positiveText(R.string.dialog_ok)
@@ -103,7 +103,7 @@ public class DeckPickerFloatingActionMenu {
                         .show();
 
                 // Open keyboard when dialog shows
-                Objects.requireNonNull(materialDialog.getWindow()).setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_VISIBLE);
+                AndroidUiUtils.setFocusAndOpenKeyboard(mDialogEditText, Objects.requireNonNull(materialDialog.getWindow()));
             }
         });
 

@@ -131,6 +131,7 @@ import com.ichi2.themes.StyledProgressDialog;
 import com.ichi2.ui.BadgeDrawableBuilder;
 import com.ichi2.ui.FixedEditText;
 import com.ichi2.utils.AdaptionUtil;
+import com.ichi2.utils.AndroidUiUtils;
 import com.ichi2.utils.BooleanGetter;
 import com.ichi2.utils.ImportUtils;
 import com.ichi2.utils.PairWithBoolean;
@@ -147,6 +148,7 @@ import java.io.FileOutputStream;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
+import java.util.Objects;
 import java.util.TreeMap;
 
 import timber.log.Timber;
@@ -2610,7 +2612,7 @@ public class DeckPicker extends NavigationDrawerActivity implements
         final String currentName = getCol().getDecks().name(did);
         mDialogEditText.setText(currentName);
         mDialogEditText.setSelection(mDialogEditText.getText().length());
-        new MaterialDialog.Builder(DeckPicker.this)
+        MaterialDialog materialDialog = new MaterialDialog.Builder(DeckPicker.this)
                 .title(res.getString(R.string.rename_deck))
                 .customView(mDialogEditText, true)
                 .positiveText(R.string.rename)
@@ -2638,7 +2640,10 @@ public class DeckPicker extends NavigationDrawerActivity implements
                     }
                 })
                 .onNegative((dialog, which) -> dismissAllDialogFragments())
-                .build().show();
+                .show();
+
+        // Open keyboard when dialog shows
+        AndroidUiUtils.setFocusAndOpenKeyboard(mDialogEditText, Objects.requireNonNull(materialDialog.getWindow()));
     }
 
 
@@ -2913,7 +2918,7 @@ public class DeckPicker extends NavigationDrawerActivity implements
         mDialogEditText = new FixedEditText(this);
         mDialogEditText.setSingleLine();
         mDialogEditText.setSelection(mDialogEditText.getText().length());
-        new MaterialDialog.Builder(DeckPicker.this)
+        MaterialDialog materialDialog = new MaterialDialog.Builder(DeckPicker.this)
                 .title(R.string.create_subdeck)
                 .customView(mDialogEditText, true)
                 .positiveText(R.string.dialog_ok)
@@ -2938,7 +2943,10 @@ public class DeckPicker extends NavigationDrawerActivity implements
                     }
                 })
                 .onNegative((dialog, which) -> dismissAllDialogFragments())
-                .build().show();
+                .show();
+
+        // Open keyboard when dialog shows
+        AndroidUiUtils.setFocusAndOpenKeyboard(mDialogEditText, Objects.requireNonNull(materialDialog.getWindow()));
     }
 
 
