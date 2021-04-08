@@ -233,7 +233,7 @@ public class StudyOptionsFragment extends Fragment implements Toolbar.OnMenuItem
         if (!mFragmented && a != null) {
             a.setResult(result);
             a.finish();
-            ActivityTransitionAnimation.slide(a, RIGHT);
+            ActivityTransitionAnimation.slide(a, END);
         } else if (a == null) {
             // getActivity() can return null if reference to fragment lingers after parent activity has been closed,
             // which is particularly relevant when using AsyncTasks.
@@ -259,7 +259,7 @@ public class StudyOptionsFragment extends Fragment implements Toolbar.OnMenuItem
 
 
     private void animateLeft() {
-        ActivityTransitionAnimation.slide(getActivity(), LEFT);
+        ActivityTransitionAnimation.slide(getActivity(), START);
     }
 
 
@@ -418,7 +418,7 @@ public class StudyOptionsFragment extends Fragment implements Toolbar.OnMenuItem
                 final Drawable icon = AppCompatResources.getDrawable(getContext(), R.drawable.ic_arrow_back_white_24dp);
                 icon.setAutoMirrored(true);
                 mToolbar.setNavigationIcon(icon);
-                mToolbar.setNavigationOnClickListener(v -> ((AnkiActivity) getActivity()).finishWithAnimation(RIGHT));
+                mToolbar.setNavigationOnClickListener(v -> ((AnkiActivity) getActivity()).finishWithAnimation(END));
             }
         } catch (IllegalStateException e) {
             if (!CollectionHelper.getInstance().colIsOpen()) {

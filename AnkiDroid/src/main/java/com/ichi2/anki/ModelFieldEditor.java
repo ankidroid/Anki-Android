@@ -537,7 +537,7 @@ public class ModelFieldEditor extends AnkiActivity implements LocaleSelectionDia
 
 
     private void closeActivity(int reason) {
-        finishWithAnimation(RIGHT);
+        finishWithAnimation(END);
     }
 
 

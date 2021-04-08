@@ -213,7 +213,7 @@ public class CardTemplateEditor extends AnkiActivity implements DeckSelectionDia
                     // Clear the edited model from any cache files, and clear it from this objects memory to discard changes
                     TemporaryModel.clearTempModelFiles();
                     mTempModel = null;
-                    finishWithAnimation(RIGHT);
+                    finishWithAnimation(END);
                 })
                 .build();
         discardDialog.show();
@@ -507,7 +507,7 @@ public class CardTemplateEditor extends AnkiActivity implements DeckSelectionDia
                     tempModel.saveToDatabase(saveModelAndExitHandler());
                 } else {
                     Timber.d("CardTemplateEditor:: model has not changed, exiting");
-                    mTemplateEditor.finishWithAnimation(RIGHT);
+                    mTemplateEditor.finishWithAnimation(END);
                 }
 
                 return true;
@@ -694,7 +694,7 @@ public class CardTemplateEditor extends AnkiActivity implements DeckSelectionDia
                 }
                 templateFragment.mTemplateEditor.mTempModel = null;
                 if (result.first) {
-                    templateFragment.mTemplateEditor.finishWithAnimation(RIGHT);
+                    templateFragment.mTemplateEditor.finishWithAnimation(END);
                 } else {
                     Timber.w("CardTemplateFragment:: save model task failed: %s", result.second);
                     UIUtils.showThemedToast(templateFragment.mTemplateEditor, templateFragment.getString(R.string.card_template_editor_save_error, result.second), false);

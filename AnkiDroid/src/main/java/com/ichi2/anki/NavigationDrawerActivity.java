@@ -276,7 +276,7 @@ public abstract class NavigationDrawerActivity extends AnkiActivity implements N
      */
     protected void onNavigationPressed() {
         if (mNavButtonGoesBack) {
-            finishWithAnimation(RIGHT);
+            finishWithAnimation(END);
         } else {
             openDrawer();
         }
@@ -300,14 +300,14 @@ public abstract class NavigationDrawerActivity extends AnkiActivity implements N
                 Timber.i("Navigating to decks");
                 Intent deckPicker = new Intent(NavigationDrawerActivity.this, DeckPicker.class);
                 deckPicker.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);    // opening DeckPicker should clear back history
-                startActivityWithAnimation(deckPicker, RIGHT);
+                startActivityWithAnimation(deckPicker, END);
             } else if (itemId == R.id.nav_browser) {
                 Timber.i("Navigating to card browser");
                 openCardBrowser();
             } else if (itemId == R.id.nav_stats) {
                 Timber.i("Navigating to stats");
                 Intent intent = new Intent(NavigationDrawerActivity.this, Statistics.class);
-                startActivityForResultWithAnimation(intent, REQUEST_STATISTICS, LEFT);
+                startActivityForResultWithAnimation(intent, REQUEST_STATISTICS, START);
             } else if (itemId == R.id.nav_night_mode) {
                 Timber.i("Toggling Night Mode");
                 mNightModeSwitch.performClick();
@@ -333,7 +333,7 @@ public abstract class NavigationDrawerActivity extends AnkiActivity implements N
         if (currentCardId != null) {
             intent.putExtra("currentCard", currentCardId);
         }
-        startActivityForResultWithAnimation(intent, REQUEST_BROWSE_CARDS, LEFT);
+        startActivityForResultWithAnimation(intent, REQUEST_BROWSE_CARDS, START);
     }
 
     // Override this to specify a specific card id

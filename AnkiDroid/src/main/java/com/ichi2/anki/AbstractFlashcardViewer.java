@@ -1327,7 +1327,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
         Intent editCard = new Intent(AbstractFlashcardViewer.this, NoteEditor.class);
         editCard.putExtra(NoteEditor.EXTRA_CALLER, NoteEditor.CALLER_REVIEWER);
         sEditorCard = mCurrentCard;
-        startActivityForResultWithAnimation(editCard, EDIT_CURRENT_CARD, LEFT);
+        startActivityForResultWithAnimation(editCard, EDIT_CURRENT_CARD, START);
     }
 
 
@@ -1868,7 +1868,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
             Intent deckPicker = new Intent(this, DeckPicker.class);
             deckPicker.putExtra("collectionLoadError", true); // don't currently do anything with this
             deckPicker.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
-            startActivityWithAnimation(deckPicker, LEFT);
+            startActivityWithAnimation(deckPicker, START);
         }
     }
 
@@ -2868,7 +2868,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
         if (saveDeck) {
             UIUtils.saveCollectionInBackground();
         }
-        finishWithAnimation(RIGHT);
+        finishWithAnimation(END);
     }
 
 

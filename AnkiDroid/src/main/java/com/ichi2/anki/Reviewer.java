@@ -167,7 +167,7 @@ public class Reviewer extends AbstractFlashcardViewer {
 
         if (FirefoxSnackbarWorkaround.handledLaunchFromWebBrowser(getIntent(), this)) {
             this.setResult(RESULT_CANCELED);
-            finishWithAnimation(RIGHT);
+            finishWithAnimation(END);
             return;
         }
 
@@ -551,7 +551,7 @@ public class Reviewer extends AbstractFlashcardViewer {
     private void addNote() {
         Intent intent = new Intent(this, NoteEditor.class);
         intent.putExtra(NoteEditor.EXTRA_CALLER, NoteEditor.CALLER_REVIEWER_ADD);
-        startActivityForResultWithAnimation(intent, ADD_NOTE, LEFT);
+        startActivityForResultWithAnimation(intent, ADD_NOTE, START);
     }
 
 
