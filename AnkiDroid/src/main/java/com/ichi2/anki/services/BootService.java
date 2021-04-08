@@ -148,8 +148,7 @@ public class BootService extends BroadcastReceiver {
     protected static int getRolloverHourOfDay(Context context) {
         // TODO; We might want to use the BootService retry code here when called from preferences.
 
-        // TODO: This is a historic value, might be better as the default 4 is used elsewhere for rollover
-        int defValue = 0;
+        int defValue = 4;
 
         try {
             Collection col = CollectionHelper.getInstance().getCol(context);
