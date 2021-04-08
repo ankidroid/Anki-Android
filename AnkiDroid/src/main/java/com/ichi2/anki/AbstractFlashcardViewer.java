@@ -648,8 +648,16 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
                 int nMins = elapsed.first / 60;
                 String mins = res.getQuantityString(R.plurals.in_minutes, nMins, nMins);
                 String timeboxMessage = res.getQuantityString(R.plurals.timebox_reached, nCards, nCards, mins);
-                UIUtils.showThemedToast(AbstractFlashcardViewer.this, timeboxMessage, true);
-                getCol().startTimebox();
+                new MaterialDialog.Builder(AbstractFlashcardViewer.this)
+                        .title(res.getString(R.string.timebox_reached_title))
+                        .content(timeboxMessage)
+                        .positiveText(R.string.dialog_continue)
+                        .negativeText(R.string.close)
+                        .cancelable(true)
+                        .onNegative((materialDialog, dialogAction) -> finishWithAnimation(END))
+                        .onPositive((materialDialog, dialogAction) -> getCol().startTimebox())
+                        .cancelListener(materialDialog -> getCol().startTimebox())
+                        .show();
             }
         }
 
