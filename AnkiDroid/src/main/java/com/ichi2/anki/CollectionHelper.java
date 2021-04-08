@@ -21,6 +21,7 @@ import android.content.SharedPreferences;
 import android.os.Environment;
 import android.text.format.Formatter;
 
+import androidx.annotation.CheckResult;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
@@ -240,6 +241,7 @@ public class CollectionHelper {
      * @return the folder path
      */
     @SuppressWarnings("deprecation") // TODO Tracked in https://github.com/ankidroid/Anki-Android/issues/5304
+    @CheckResult
     public static String getDefaultAnkiDroidDirectory() {
         return new File(Environment.getExternalStorageDirectory(), "AnkiDroid").getAbsolutePath();
     }
