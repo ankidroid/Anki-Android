@@ -598,7 +598,6 @@ public class Preferences extends AppCompatPreferenceActivity implements Preferen
     }
 
     /** Returns the hour that the collection rolls over to the next day */
-    @VisibleForTesting
     public static int getDayOffset(Collection col) {
         switch (col.schedVer()) {
             default:
