@@ -366,6 +366,7 @@ public class UsageAnalytics {
     /**
      * These Strings must not be changed as they are used for analytic comparisons between AnkiDroid versions.
      * If a new string is added here then the respective changes must also be made in AnalyticsConstantsTest.java
+     * All the constant strings added here must be annotated with @AnalyticsConstant.
      */
     public static class Actions {
         /* Analytics actions used in Help Dialog*/

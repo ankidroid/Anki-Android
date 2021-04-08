@@ -24,6 +24,11 @@ import java.util.List;
 
 import static org.junit.Assert.assertEquals;
 
+/**
+ * This class contains two nested classes and is using the concept of Enclosed runner that internally works as a Suite.
+ * The first inner class is a Parameterized class and will run according to the size of test case, while the second
+ * inner class is non-parameterized and will run only once.
+ */
 @RunWith(Enclosed.class)
 public class AnalyticsConstantsTest {
     private static final List<String> listOfConstantFields = new ArrayList<>();
@@ -73,6 +78,11 @@ public class AnalyticsConstantsTest {
         }
 
 
+        /**
+         * The message here means that the string being checked cannot be found in Actions class.
+         * If encountered with this message, re-check the list present here and constants in Actions class, to resolve
+         * the test failure.
+         */
         @Test
         public void checkAnalyticsString() {
             assertEquals("There is no such string in Actions class, thus returning null.", analyticsString, getStringFromReflection(analyticsString));
@@ -84,11 +94,11 @@ public class AnalyticsConstantsTest {
             UsageAnalytics.Actions actions = new UsageAnalytics.Actions();
             Field[] field;
             field = actions.getClass().getDeclaredFields();
-            for (int i = 0; i < field.length; i++) {
-                if (field[i].isAnnotationPresent(AnalyticsConstant.class)) {
+            for (Field value : field) {
+                if (value.isAnnotationPresent(AnalyticsConstant.class)) {
                     try {
-                        if (field[i].get(actions).equals(analyticsStringToBeChecked)) {
-                            reflectedString = (String) field[i].get(actions);
+                        if (value.get(actions).equals(analyticsStringToBeChecked)) {
+                            reflectedString = (String) value.get(actions);
                         }
                     } catch (IllegalAccessException e) {
                         throw new RuntimeException();
@@ -117,7 +127,7 @@ public class AnalyticsConstantsTest {
 
 
         /**
-         * This method is used to get th size of fields in Actions Class.
+         * This method is used to get the size of fields in Actions Class.
          * Because whenever a new constant is added in Actions Class but not added to the list present in this
          * class (listOfConstantFields) the test must fail.
          */
