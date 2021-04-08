@@ -335,7 +335,7 @@ public class Preferences extends AppCompatPreferenceActivity implements Preferen
                                         dialog.dismiss();
                                     }
                                 })
-                                .setNegativeButton(R.string.dialog_reset_to_default, new DialogInterface.OnClickListener() {
+                                .setNegativeButton(R.string.reset_custom_buttons, new DialogInterface.OnClickListener() {
                                     public void onClick(DialogInterface dialog, int id) {
                                         try {
                                             CollectionHelper.initializeAnkiDroidDirectory("/sdcard/AnkiDroid");
