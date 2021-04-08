@@ -19,7 +19,6 @@ package com.ichi2.anki;
 import android.animation.Animator;
 import android.content.SharedPreferences;
 import android.view.View;
-import android.view.WindowManager;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 
