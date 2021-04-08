@@ -568,7 +568,6 @@ public class Utils {
                 throw new RuntimeException(e);
             } catch (UnsupportedEncodingException e) {
                 Timber.e(e, "Utils.checksum :: UnsupportedEncodingException");
-                e.printStackTrace();
             }
             BigInteger biginteger = new BigInteger(1, digest);
             result = biginteger.toString(16);
@@ -679,7 +678,7 @@ public class Utils {
             rd.close();
             contentOfMyInputStream = sb.toString();
         } catch (Exception e) {
-            e.printStackTrace();
+            Timber.w(e);
         }
 
         return contentOfMyInputStream;
@@ -803,7 +802,7 @@ public class Utils {
                     try {
                         Thread.sleep(200);
                     } catch (InterruptedException e1) {
-                        e1.printStackTrace();
+                        Timber.w(e1);
                     }
                 }
             }

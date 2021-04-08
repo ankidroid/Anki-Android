@@ -495,7 +495,7 @@ public final class AnkiPackageExporter extends AnkiExporter {
                 media.put(Integer.toString(c), file.getName());
                 c++;
             } catch (JSONException e) {
-                e.printStackTrace();
+                Timber.w(e);
             }
         }
         return media;
@@ -608,7 +608,7 @@ class ZipFile {
         try {
             mZos.close();
         } catch (IOException e) {
-            e.printStackTrace();
+            Timber.w(e);
         }
     }
 }

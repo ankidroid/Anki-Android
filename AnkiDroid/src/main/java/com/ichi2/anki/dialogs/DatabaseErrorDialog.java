@@ -76,7 +76,7 @@ public class DatabaseErrorDialog extends AsyncDialogFragment {
         try {
             sqliteInstalled = Runtime.getRuntime().exec("sqlite3 --version").waitFor() == 0;
         } catch (IOException | InterruptedException e) {
-            e.printStackTrace();
+            Timber.w(e);
         }
 
         switch (mType) {

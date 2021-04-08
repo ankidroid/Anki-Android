@@ -356,7 +356,7 @@ public class CardContentProvider extends ContentProvider {
                                 }
                             }
                         } catch (NumberFormatException nfe) {
-                            nfe.printStackTrace();
+                            Timber.w(nfe);
                         }
                     }
                 }

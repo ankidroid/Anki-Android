@@ -103,7 +103,7 @@ public class Connection extends BaseAsyncTask<Connection.Payload, Object, Connec
                 sInstance.get();
             }
         } catch (Exception e) {
-            e.printStackTrace();
+            Timber.w(e);
         }
 
         sInstance = new Connection();
