@@ -267,6 +267,8 @@ public class CardBrowser extends NavigationDrawerActivity implements
             mCards.reverse();
             updateList();
         }
+        // To update the collection
+        getCol().flush();
     }
 
 
