@@ -597,19 +597,45 @@ public class Preferences extends AppCompatPreferenceActivity implements Preferen
         updateSummary(pref);
     }
 
+    /** Returns the hour that the collection rolls over to the next day */
     @VisibleForTesting
     public static int getDayOffset(Collection col) {
-        Calendar calendar = col.crtGregorianCalendar();
-        return calendar.get(Calendar.HOUR_OF_DAY);
+        switch (col.schedVer()) {
+            default:
+            case 1:
+                Calendar calendar = col.crtGregorianCalendar();
+                return calendar.get(Calendar.HOUR_OF_DAY);
+            case 2:
+                return col.getConf().optInt("rollover", 4);
+        }
     }
 
+    /** Sets the hour that the collection rolls over to the next day */
     @VisibleForTesting
     public void setDayOffset(int hours) {
-        Calendar date = getCol().crtGregorianCalendar();
-        date.set(Calendar.HOUR_OF_DAY, hours);
-        getCol().setCrt(date.getTimeInMillis() / 1000);
-        getCol().setMod();
+        switch (getSchedVer(getCol())) {
+            default:
+            case 1:
+                Calendar date = getCol().crtGregorianCalendar();
+                date.set(Calendar.HOUR_OF_DAY, hours);
+                getCol().setCrt(date.getTimeInMillis() / 1000);
+                getCol().setMod();
+                break;
+            case 2:
+                getCol().getConf().put("rollover", hours);
+                getCol().flush();
+                break;
+        }
         BootService.scheduleNotification(getCol().getTime(), this);
+    }
+
+
+    protected static int getSchedVer(Collection col) {
+        int ver = col.schedVer();
+        if (ver < 1 || ver > 2) {
+            Timber.w("Unknown scheduler version: %d", ver);
+        }
+        return ver;
     }
 
 
