@@ -246,6 +246,27 @@ public class ReviewerTest extends RobolectricTest {
         assertThat(reviewer.getSupportActionBar().getTitle(), is("B"));
     }
 
+    @Test
+    public void jsAnkiGetDeckName() {
+        Collection col = getCol();
+        Models models = col.getModels();
+        Decks decks = col.getDecks();
+
+        Long didAb = addDeck("A::B");
+        Model basic = models.byName(AnkiDroidApp.getAppResources().getString(R.string.basic_model_name));
+        basic.put("did", didAb);
+        addNoteUsingBasicModel("foo", "bar");
+
+        Long didA = addDeck("A");
+        decks.select(didA);
+
+        Reviewer reviewer = startReviewer();
+        JavaScriptFunction javaScriptFunction = reviewer.javaScriptFunction();
+
+        waitForAsyncTasksToComplete();
+        assertThat(javaScriptFunction.ankiGetDeckName(), is("B"));
+    }
+
     private void toggleWhiteboard(ReviewerForMenuItems reviewer) {
         reviewer.toggleWhiteboard();
 
