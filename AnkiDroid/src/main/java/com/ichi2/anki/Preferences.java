@@ -26,6 +26,7 @@ import android.app.PendingIntent;
 import android.content.ActivityNotFoundException;
 import android.content.ComponentName;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.OnSharedPreferenceChangeListener;
@@ -327,7 +328,24 @@ public class Preferences extends AppCompatPreferenceActivity implements Preferen
                         return true;
                     } catch (StorageAccessException e) {
                         Timber.e(e, "Could not initialize directory: %s", newPath);
-                        Toast.makeText(getApplicationContext(), R.string.dialog_collection_path_not_dir, Toast.LENGTH_LONG).show();
+                        AlertDialog.Builder builder = new AlertDialog.Builder(Preferences.this);
+                        builder.setMessage(R.string.dialog_collection_path_not_dir)
+                                .setPositiveButton(R.string.dialog_ok, new DialogInterface.OnClickListener() {
+                                    public void onClick(DialogInterface dialog, int id) {
+                                        dialog.dismiss();
+                                    }
+                                })
+                                .setNegativeButton(R.string.dialog_reset_to_default, new DialogInterface.OnClickListener() {
+                                    public void onClick(DialogInterface dialog, int id) {
+                                        try {
+                                            CollectionHelper.initializeAnkiDroidDirectory("/sdcard/AnkiDroid");
+                                            collectionPathPreference.setText("/sdcard/AnkiDroid");
+                                        } catch (StorageAccessException storageAccessException) {
+                                            storageAccessException.printStackTrace();
+                                        }
+                                    }
+                                });
+                        builder.create().show();
                         return false;
                     }
                 });
