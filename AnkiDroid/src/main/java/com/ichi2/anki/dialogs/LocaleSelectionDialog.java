@@ -54,7 +54,7 @@ import androidx.recyclerview.widget.RecyclerView;
 /** Locale selection dialog. Note: this must be dismissed onDestroy if not called from an activity implementing LocaleSelectionDialogHandler */
 public class LocaleSelectionDialog extends AnalyticsDialogFragment {
 
-    private LocaleSelectionDialogHandler dialogHandler;
+    private LocaleSelectionDialogHandler mDialogHandler;
 
     public interface LocaleSelectionDialogHandler {
         void onSelectedLocale(@NonNull Locale selectedLocale);
@@ -70,7 +70,7 @@ public class LocaleSelectionDialog extends AnalyticsDialogFragment {
     @NonNull
     public static LocaleSelectionDialog newInstance(@NonNull LocaleSelectionDialogHandler handler) {
         LocaleSelectionDialog t = new LocaleSelectionDialog();
-        t.dialogHandler = handler;
+        t.mDialogHandler = handler;
         Bundle args = new Bundle();
         t.setArguments(args);
 
@@ -90,11 +90,11 @@ public class LocaleSelectionDialog extends AnalyticsDialogFragment {
         super.onAttach(context);
         if (context instanceof Activity) {
             Activity activity = (Activity) context;
-            if (dialogHandler == null) {
+            if (mDialogHandler == null) {
                 if (!(context instanceof LocaleSelectionDialogHandler)) {
                     throw new IllegalArgumentException("Calling activity must implement LocaleSelectionDialogHandler");
                 }
-                this.dialogHandler = (LocaleSelectionDialogHandler) context;
+                this.mDialogHandler = (LocaleSelectionDialogHandler) context;
             }
             activity.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE);
         }
@@ -118,7 +118,7 @@ public class LocaleSelectionDialog extends AnalyticsDialogFragment {
         MaterialDialog.Builder builder = new MaterialDialog.Builder(activity)
                 .negativeText(getString(R.string.dialog_cancel))
                 .customView(tagsDialogView, false)
-                .onNegative((dialog, which) -> dialogHandler.onLocaleSelectionCancelled());
+                .onNegative((dialog, which) -> mDialogHandler.onLocaleSelectionCancelled());
 
         Dialog mDialog = builder.build();
 
@@ -141,7 +141,7 @@ public class LocaleSelectionDialog extends AnalyticsDialogFragment {
 
         recyclerView.addOnItemTouchListener(new RecyclerSingleTouchAdapter(activity, (view, position) -> {
             Locale l = adapter.getLocaleAtPosition(position);
-            LocaleSelectionDialog.this.dialogHandler.onSelectedLocale(l);
+            LocaleSelectionDialog.this.mDialogHandler.onSelectedLocale(l);
         }));
     }
 

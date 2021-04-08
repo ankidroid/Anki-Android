@@ -41,12 +41,12 @@ import androidx.annotation.RequiresApi;
 @RequiresApi(Build.VERSION_CODES.O) // Regex group(str)
 public class CsvSniffer {
 
-    private final char[] preferred;
+    private final char[] mPreferred;
 
 
     public CsvSniffer() {
         // in case there is more than one possible delimiter
-        preferred = new char[] {',', '\t', ';', ' ', ':'};
+        mPreferred = new char[] {',', '\t', ';', ' ', ':'};
     }
 
 
@@ -308,7 +308,7 @@ public class CsvSniffer {
 
         // if there's more than one, fall back to a 'preferred' list
         if (delims.size() > 1) {
-            for (char d : preferred) {
+            for (char d : mPreferred) {
                 if (delims.containsKey(d)) {
                     boolean skipinitialspace = countInString(data.get(0), d) == countInString(data.get(0), d + " ");
                     return new Guess(d, skipinitialspace);

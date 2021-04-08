@@ -557,20 +557,20 @@ public class ModelBrowser extends AnkiActivity {
      * along with the name.
      */
     public static class DisplayPair {
-        private final String name;
-        private final int count;
+        private final String mName;
+        private final int mCount;
 
         public DisplayPair(String name, int count) {
-            this.name = name;
-            this.count = count;
+            this.mName = name;
+            this.mCount = count;
         }
 
         public String getName() {
-            return name;
+            return mName;
         }
 
         public int getCount() {
-            return count;
+            return mCount;
         }
 
         @Override

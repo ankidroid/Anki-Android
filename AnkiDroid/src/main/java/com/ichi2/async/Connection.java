@@ -185,13 +185,13 @@ public class Connection extends BaseAsyncTask<Connection.Payload, Object, Connec
 
 
     public static Connection login(TaskListener listener, Payload data) {
-        data.taskType = LOGIN;
+        data.mTaskType = LOGIN;
         return launchConnectionTask(listener, data);
     }
 
 
     public static Connection sync(TaskListener listener, Payload data) {
-        data.taskType = SYNC;
+        data.mTaskType = SYNC;
         return launchConnectionTask(listener, data);
     }
 
@@ -207,7 +207,7 @@ public class Connection extends BaseAsyncTask<Connection.Payload, Object, Connec
 
 
     private Payload doOneInBackground(Payload data) {
-        switch (data.taskType) {
+        switch (data.mTaskType) {
             case LOGIN:
                 return doInBackgroundLogin(data);
 
@@ -613,7 +613,7 @@ public class Connection extends BaseAsyncTask<Connection.Payload, Object, Connec
     }
 
     public static class Payload {
-        private int taskType;
+        private int mTaskType;
         @NonNull public Object[] data;
         public ConnectionResultType resultType;
         public Object[] result;

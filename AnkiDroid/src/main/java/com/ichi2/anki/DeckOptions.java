@@ -93,7 +93,7 @@ public class DeckOptions extends AppCompatPreferenceActivity implements OnShared
         private final Map<String, String> mValues = new HashMap<>(30); // At most as many as in cacheValues
         private final Map<String, String> mSummaries = new HashMap<>();
         private MaterialDialog mProgressDialog;
-        private final List<OnSharedPreferenceChangeListener> listeners = new LinkedList<>();
+        private final List<OnSharedPreferenceChangeListener> mListeners = new LinkedList<>();
 
 
         private DeckPreferenceHack() {
@@ -456,7 +456,7 @@ public class DeckOptions extends AppCompatPreferenceActivity implements OnShared
                 updateSummaries();
 
                 // and update any listeners
-                for (OnSharedPreferenceChangeListener listener : listeners) {
+                for (OnSharedPreferenceChangeListener listener : mListeners) {
                     listener.onSharedPreferenceChanged(DeckPreferenceHack.this, null);
                 }
 
@@ -591,13 +591,13 @@ public class DeckOptions extends AppCompatPreferenceActivity implements OnShared
 
         @Override
         public void registerOnSharedPreferenceChangeListener(OnSharedPreferenceChangeListener listener) {
-            listeners.add(listener);
+            mListeners.add(listener);
         }
 
 
         @Override
         public void unregisterOnSharedPreferenceChangeListener(OnSharedPreferenceChangeListener listener) {
-            listeners.remove(listener);
+            mListeners.remove(listener);
         }
 
 
