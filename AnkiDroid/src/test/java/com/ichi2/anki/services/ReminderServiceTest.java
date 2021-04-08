@@ -4,7 +4,9 @@ import android.app.NotificationManager;
 import android.content.Context;
 import android.content.Intent;
 
+import com.ichi2.anki.CollectionHelper;
 import com.ichi2.anki.RobolectricTest;
+import com.ichi2.libanki.Collection;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -15,6 +17,10 @@ import androidx.test.ext.junit.runners.AndroidJUnit4;
 import static com.ichi2.anki.services.ReminderService.EXTRA_DECK_ID;
 import static com.ichi2.anki.services.ReminderService.EXTRA_DECK_OPTION_ID;
 import static org.hamcrest.MatcherAssert.assertThat;
+import static org.mockito.Mockito.spy;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 import static org.robolectric.Shadows.shadowOf;
 
 @RunWith(AndroidJUnit4.class)
@@ -44,6 +50,27 @@ public class ReminderServiceTest extends RobolectricTest {
         buildDefaultDeckReminders();
         // The collection was null so no reminders, but we should get here without exception
         assertThat("No notifications exist", getNotificationManagerShadow().size() == 0);
+    }
+
+
+    /**
+     * #8264: Crash on sync - getSched().getDueTree() failed
+     */
+    @Test
+    public void testDatabaseFailureWhileSyncingDoesNotCrash() {
+        // If getCol() fails, it triggers different exception handling in the service.
+        // The cause was getSched().deckDueTree()
+        Collection baseCol = getCol();
+        Collection mockCol = spy(baseCol);
+        when(mockCol.getSched()).thenThrow(new IllegalStateException("Unit test: simulating database exception"));
+
+        CollectionHelper.getInstance().setColForTests(mockCol);
+
+        buildDefaultDeckReminders();
+
+        // We retry after a database timeout so getSched is called twice
+        //noinspection ResultOfMethodCallIgnored
+        verify(mockCol, times(2)).getSched();
     }
 
 

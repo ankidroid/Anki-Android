@@ -169,9 +169,9 @@ public class ReminderService extends BroadcastReceiver {
             return null;
         }
 
-        List<DeckDueTreeNode> dues = col.getSched().deckDueTree();
-        List<DeckDueTreeNode> decks = new ArrayList<>(dues.size());
         try {
+            List<DeckDueTreeNode> dues = col.getSched().deckDueTree();
+            List<DeckDueTreeNode> decks = new ArrayList<>(dues.size());
             // This loop over top level deck only. No notification will ever occur for subdecks.
             for (DeckDueTreeNode node : dues) {
                 JSONObject deck = col.getDecks().get(node.getDid(), false);

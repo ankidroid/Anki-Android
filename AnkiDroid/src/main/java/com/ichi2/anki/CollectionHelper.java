@@ -400,4 +400,8 @@ public class CollectionHelper {
         }
     }
 
+    @VisibleForTesting(otherwise = VisibleForTesting.NONE)
+    public void setColForTests(Collection col) {
+        this.mCollection = col;
+    }
 }
