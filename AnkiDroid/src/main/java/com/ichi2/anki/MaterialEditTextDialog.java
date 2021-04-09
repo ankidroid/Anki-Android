@@ -32,8 +32,11 @@ public class MaterialEditTextDialog extends MaterialDialog {
             return materialDialog;
         }
 
+
         /**
-         * Open keyboard when dialog shows.
+         * Method to display keyboard when dialog shows.
+         * @param editText EditText present in the dialog.
+         * @param materialDialog Dialog which contains the EditText and needs the keyboard to be displayed.
          */
         public void displayKeyboard(EditText editText, MaterialDialog materialDialog) {
             AndroidUiUtils.setFocusAndOpenKeyboard(editText, Objects.requireNonNull(materialDialog.getWindow()));
