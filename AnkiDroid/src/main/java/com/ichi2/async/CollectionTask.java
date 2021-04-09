@@ -37,7 +37,7 @@ import com.ichi2.anki.exception.ImportExportException;
 import com.ichi2.libanki.Media;
 import com.ichi2.libanki.Model;
 import com.ichi2.libanki.Models;
-import com.ichi2.libanki.Undoable;
+import com.ichi2.libanki.UndoAction;
 import com.ichi2.libanki.WrongId;
 import com.ichi2.libanki.sched.AbstractSched;
 import com.ichi2.libanki.AnkiPackageExporter;
@@ -92,7 +92,7 @@ import timber.log.Timber;
 
 import static com.ichi2.async.TaskManager.setLatestInstance;
 import static com.ichi2.libanki.Card.deepCopyCardArray;
-import static com.ichi2.libanki.Undoable.*;
+import static com.ichi2.libanki.UndoAction.*;
 import static com.ichi2.utils.BooleanGetter.FALSE;
 import static com.ichi2.utils.BooleanGetter.TRUE;
 
@@ -404,7 +404,7 @@ public class CollectionTask<ProgressListener, ProgressBackground extends Progres
 
 
 
-    private static class UndoSuspendCard extends Undoable {
+    private static class UndoSuspendCard extends UndoAction {
         private final Card mSuspendedCard;
 
 
@@ -422,7 +422,7 @@ public class CollectionTask<ProgressListener, ProgressBackground extends Progres
     }
 
 
-    private static class UndoDeleteNote extends Undoable {
+    private static class UndoDeleteNote extends UndoAction {
         private final Note mNote;
         private final ArrayList<Card> mAllCs;
         private final @NonNull Card mCard;
@@ -561,7 +561,7 @@ public class CollectionTask<ProgressListener, ProgressBackground extends Progres
     }
 
 
-    protected static class UndoSuspendCardMulti extends Undoable {
+    protected static class UndoSuspendCardMulti extends UndoAction {
         private final Card[] mCards;
         private final boolean[] mOriginalSuspended;
 
@@ -608,7 +608,7 @@ public class CollectionTask<ProgressListener, ProgressBackground extends Progres
     }
 
 
-    private static class UndoDeleteNoteMulti extends Undoable {
+    private static class UndoDeleteNoteMulti extends UndoAction {
         private final Note[] mNotesArr;
         private final List<Card> mAllCards;
 
@@ -639,7 +639,7 @@ public class CollectionTask<ProgressListener, ProgressBackground extends Progres
     }
 
     
-    private static class UndoChangeDeckMulti extends Undoable {
+    private static class UndoChangeDeckMulti extends UndoAction {
         private final Card[] mCards;
         private final long[] mOriginalDids;
 
@@ -667,7 +667,7 @@ public class CollectionTask<ProgressListener, ProgressBackground extends Progres
         }
     }
 
-    private static class UndoMarkNoteMulti extends Undoable {
+    private static class UndoMarkNoteMulti extends UndoAction {
         private final List<Note> mOriginalMarked;
         private final List<Note> mOriginalUnmarked;
 
@@ -689,7 +689,7 @@ public class CollectionTask<ProgressListener, ProgressBackground extends Progres
     }
 
 
-    private static class UndoRepositionRescheduleResetCards extends Undoable {
+    private static class UndoRepositionRescheduleResetCards extends UndoAction {
         private final Card[] mCardsCopied;
 
 
@@ -931,7 +931,7 @@ public class CollectionTask<ProgressListener, ProgressBackground extends Progres
                 card.flush();
             }
 
-            Undoable changeDeckMulti = new UndoChangeDeckMulti(cards, originalDids);
+            UndoAction changeDeckMulti = new UndoChangeDeckMulti(cards, originalDids);
             // mark undo for all at once
             col.markUndo(changeDeckMulti);
             return null;
@@ -951,7 +951,7 @@ public class CollectionTask<ProgressListener, ProgressBackground extends Progres
             try {
                 Timber.d("Saving undo information of type %s on %d cards", getClass(), cards.length);
                 Card[] cards_copied = deepCopyCardArray(cards, collectionTask);
-                Undoable repositionRescheduleResetCards = new UndoRepositionRescheduleResetCards(mUndoNameId, cards_copied);
+                UndoAction repositionRescheduleResetCards = new UndoRepositionRescheduleResetCards(mUndoNameId, cards_copied);
                 col.markUndo(repositionRescheduleResetCards);
             } catch (CancellationException ce) {
                 Timber.i(ce, "Cancelled while handling type %s, skipping undo", mUndoNameId);

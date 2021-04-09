@@ -49,7 +49,6 @@ import com.ichi2.libanki.utils.Time;
 import com.ichi2.upgrade.Upgrade;
 import com.ichi2.utils.DatabaseChangeDecorator;
 import com.ichi2.utils.FunctionalInterfaces;
-import com.ichi2.utils.LanguageUtil;
 import com.ichi2.utils.VersionUtils;
 
 import com.ichi2.utils.JSONArray;
@@ -80,14 +79,12 @@ import java.util.regex.Pattern;
 import androidx.annotation.CheckResult;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.annotation.StringRes;
 import androidx.annotation.VisibleForTesting;
 import androidx.sqlite.db.SupportSQLiteDatabase;
 import androidx.sqlite.db.SupportSQLiteStatement;
 import timber.log.Timber;
 
 import static com.ichi2.async.CancelListener.isCancelled;
-import static com.ichi2.libanki.Consts.DECK_DYN;
 
 // Anki maintains a cache of used tags so it can quickly present a list of tags
 // for autocomplete and in the browser. For efficiency, deletions are not
@@ -126,7 +123,7 @@ public class Collection implements CollectionGetter {
     // END: SQL table columns
 
     // API 21: Use a ConcurrentLinkedDeque
-    private LinkedBlockingDeque<Undoable> mUndo;
+    private LinkedBlockingDeque<UndoAction> mUndo;
 
     private final String mPath;
     private final DroidBackend mDroidBackend;
@@ -1316,14 +1313,14 @@ public class Collection implements CollectionGetter {
 
     /** Undo menu item name, or "" if undo unavailable. */
     @VisibleForTesting
-    public @Nullable Undoable undoType() {
+    public @Nullable UndoAction undoType() {
         if (mUndo.size() > 0) {
             return mUndo.getLast();
         }
         return null;
     }
     public String undoName(Resources res) {
-        Undoable type = undoType();
+        UndoAction type = undoType();
         if (type != null) {
             return type.name(res);
         }
@@ -1336,12 +1333,12 @@ public class Collection implements CollectionGetter {
     }
 
     public @Nullable Card undo() {
-        Undoable lastUndo = mUndo.removeLast();
+        UndoAction lastUndo = mUndo.removeLast();
         Timber.d("undo() of type %s", lastUndo.getClass());
         return lastUndo.undo(this);
     }
 
-    public void markUndo(@NonNull Undoable undo) {
+    public void markUndo(@NonNull UndoAction undo) {
         Timber.d("markUndo() of type %s", undo.getClass());
         mUndo.add(undo);
         while (mUndo.size() > UNDO_SIZE_MAX) {
@@ -1350,7 +1347,7 @@ public class Collection implements CollectionGetter {
     }
 
     @VisibleForTesting
-    public static class UndoReview extends Undoable {
+    public static class UndoReview extends UndoAction {
         private final boolean mWasLeech;
         @NonNull private final Card mClonedCard;
         public UndoReview(boolean wasLeech, @NonNull Card clonedCard) {
