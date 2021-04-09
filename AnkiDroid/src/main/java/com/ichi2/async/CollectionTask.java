@@ -837,7 +837,6 @@ public class CollectionTask<ProgressListener, ProgressBackground extends Progres
             boolean hasUnmarked = !originalUnmarked.isEmpty();
             CardUtils.markAll(new ArrayList<>(notes), hasUnmarked);
 
-            Undoable markNoteMulti = new UndoMarkNoteMulti(originalMarked, originalUnmarked, hasUnmarked);
             // mark undo for all at once
             col.markUndo(new UndoMarkNoteMulti(originalMarked, originalUnmarked, hasUnmarked));
 
