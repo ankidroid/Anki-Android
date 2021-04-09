@@ -343,7 +343,6 @@ public class MultimediaEditFieldActivity extends AnkiActivity
     }
 
     public void onRequestPermissionsResult (int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
-        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
         if (mCurrentChangeRequest == null) {
             cancelActivityWithAssertionFailure("mCurrentChangeRequest should be set before requesting permissions");
             return;
