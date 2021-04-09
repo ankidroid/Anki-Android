@@ -17,6 +17,7 @@
 
 package com.ichi2.libanki;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Context;
 import android.graphics.Point;
@@ -394,6 +395,7 @@ public class Sound {
     }
 
     /** #5414 - Ensures playing a single sound performs cleanup */
+    @SuppressLint("FieldNamingPatternDetector")
     private final class SingleSoundCompletionListener implements OnCompletionListener {
         @Nullable
         private final OnCompletionListener userCallback;

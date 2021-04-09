@@ -1,6 +1,7 @@
 
 package com.ichi2.anki.dialogs;
 
+import android.annotation.SuppressLint;
 import android.content.res.Resources;
 import android.os.Bundle;
 import androidx.annotation.NonNull;
@@ -11,6 +12,7 @@ import com.ichi2.anki.R;
 import com.ichi2.anki.analytics.AnalyticsDialogFragment;
 import com.ichi2.utils.BundleUtils;
 
+@SuppressLint("FieldNamingPatternDetector")
 public class ExportDialog extends AnalyticsDialogFragment {
 
     public interface ExportDialogListener {

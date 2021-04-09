@@ -19,6 +19,7 @@
 
 package com.ichi2.anki.multimediacard.activity;
 
+import android.annotation.SuppressLint;
 import android.content.DialogInterface;
 import android.content.DialogInterface.OnCancelListener;
 import android.content.Intent;
@@ -63,6 +64,7 @@ import java.util.Locale;
  * Activity used now with Glosbe.com to enable translation of words.
  * FIXME why isn't this extending from our base classes?
  */
+@SuppressLint("FieldNamingPatternDetector")
 public class TranslationActivity extends FragmentActivity implements DialogInterface.OnClickListener, OnCancelListener {
 
     private static final String BUNDLE_KEY_SHUT_OFF = "key.multimedia.shut.off";

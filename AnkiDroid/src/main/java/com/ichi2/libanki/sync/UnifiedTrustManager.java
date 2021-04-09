@@ -16,6 +16,8 @@
 
 package com.ichi2.libanki.sync;
 
+import android.annotation.SuppressLint;
+
 import java.security.KeyStore;
 import java.security.KeyStoreException;
 import java.security.NoSuchAlgorithmException;
@@ -34,6 +36,7 @@ import timber.log.Timber;
 // We try the local manager first.
 // Cached the accepted issuers.
 // Did not ignore NoSuchAlgorithmException
+@SuppressLint("FieldNamingPatternDetector")
 class UnifiedTrustManager implements X509TrustManager {
     private X509TrustManager defaultTrustManager;
     private X509TrustManager localTrustManager;
