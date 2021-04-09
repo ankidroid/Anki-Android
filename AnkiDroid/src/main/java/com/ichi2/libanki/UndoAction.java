@@ -35,7 +35,13 @@ public abstract class UndoAction {
      * Returned positive integers are card id. Those ids is the card that was discarded and that may be sent back to the reviewer.*/
     public abstract @Nullable Card undo(@NonNull Collection col);
 
-    public static @NonNull UndoAction revertToProvidedState (@StringRes int undoNameId, Card card){
+    /**
+     * Create an UndoAction that set back `card` and its siblings to the current states.
+     * @param undoNameId The id of the string representing an action that could be undone
+     * @param card the card currently in the reviewer
+     * @return An UndoAction which, if executed, put back the `card` in the state given here
+     */
+    public static @NonNull UndoAction revertNoteToProvidedState(@StringRes int undoNameId, Card card){
         Note note = card.note();
         List<Card> cards = note.cards();
         return new UndoAction(undoNameId) {

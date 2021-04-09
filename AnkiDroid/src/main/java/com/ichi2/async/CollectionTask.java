@@ -508,7 +508,7 @@ public class CollectionTask<ProgressListener, ProgressBackground extends Progres
         @Override
         protected void actualTask(Collection col) {
             // collect undo information
-            col.markUndo(revertToProvidedState(R.string.menu_bury_card, mCard));
+            col.markUndo(revertNoteToProvidedState(R.string.menu_bury_card, mCard));
             // then bury
             col.getSched().buryCards(new long[] {mCard.getId()});
         }
@@ -522,7 +522,7 @@ public class CollectionTask<ProgressListener, ProgressBackground extends Progres
         @Override
         protected void actualTask(Collection col) {
             // collect undo information
-            col.markUndo(revertToProvidedState(R.string.menu_bury_note, mCard));
+            col.markUndo(revertNoteToProvidedState(R.string.menu_bury_note, mCard));
             // then bury
             col.getSched().buryNote(mCard.note().getId());
         }
@@ -560,7 +560,7 @@ public class CollectionTask<ProgressListener, ProgressBackground extends Progres
             for (int i = 0; i < cards.size(); i++) {
                 cids[i] = cards.get(i).getId();
             }
-            col.markUndo(revertToProvidedState(R.string.menu_suspend_note, mCard));
+            col.markUndo(revertNoteToProvidedState(R.string.menu_suspend_note, mCard));
             // suspend note
             col.getSched().suspendCards(cids);
         }
