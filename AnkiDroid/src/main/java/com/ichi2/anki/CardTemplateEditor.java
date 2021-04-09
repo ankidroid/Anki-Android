@@ -648,12 +648,7 @@ public class CardTemplateEditor extends AnkiActivity implements DeckSelectionDia
             }
         }
 
-        ActivityResultLauncher<Intent> onCardBrowserAppearanceResult = registerForActivityResult(new onCardBrowserAppearanceContract(), new ActivityResultCallback<Intent>() {
-            @Override
-            public void onActivityResult(Intent data) {
-                onCardBrowserAppearanceResult(data);
-            }
-        });
+        ActivityResultLauncher<Intent> onCardBrowserAppearanceResult = registerForActivityResult(new onCardBrowserAppearanceContract(), data -> onCardBrowserAppearanceResult(data));
 
         public class onRequestPreviewContract extends ActivityResultContract<Intent, Intent>{
             @NonNull
@@ -670,14 +665,11 @@ public class CardTemplateEditor extends AnkiActivity implements DeckSelectionDia
             }
         }
 
-        ActivityResultLauncher<Intent> onRequestPreviewResult = registerForActivityResult(new onRequestPreviewContract(), new ActivityResultCallback<Intent>() {
-            @Override
-            public void onActivityResult(Intent result) {
+        ActivityResultLauncher<Intent> onRequestPreviewResult = registerForActivityResult(new onRequestPreviewContract(), result ->  {
                 TemporaryModel.clearTempModelFiles();
                 // Make sure the fragments reinitialize, otherwise there is staleness on return
                 ((TemplatePagerAdapter)mTemplateEditor.mViewPager.getAdapter()).ordinalShift();
                 mTemplateEditor.mViewPager.getAdapter().notifyDataSetChanged();
-            }
         });
 
         private void onCardBrowserAppearanceResult(@Nullable Intent data) {
