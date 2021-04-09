@@ -21,4 +21,12 @@ import androidx.annotation.Nullable;
 @FunctionalInterface
 public interface ProgressSender<T> {
     void doProgress(@Nullable T value);
+
+
+    static <T> void publishProgress(ProgressSender<T> progress, T value) {
+        if (progress == null) {
+            return;
+        }
+        progress.doProgress(value);
+    }
 }
