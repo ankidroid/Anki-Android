@@ -450,22 +450,43 @@ public class CollectionTask<ProgressListener, ProgressBackground extends Progres
         }
     }
 
+
+
+    /**
+     * Represents an action that remove a card from the Reviewer without reviewing it.
+     */
     public static abstract class DismissNote extends Task<Card, BooleanGetter> {
-        private final Card mCard;
+        protected final Card mCard;
 
 
+        /**
+         * @param card The card that was in the reviewer. It usually is cloned and then restored if the action is undone
+         */
         public DismissNote(Card card) {
             this.mCard = card;
         }
 
-        protected abstract void actualTask(Collection col, Card card);
+
+        /**
+         * The part of the task that is specific to this object. E.g. suspending, deleting, burying...
+         * @param col The collection
+         *
+         */
+        protected abstract void actualTask(Collection col);
 
 
+        /**
+         * @param col
+         * @param collectionTask A listener for the task. It waits for a card to display in the reviewer.
+         *                       Fetching a new card can possibly be cancelled, however the actual task is not cancellable.
+                                 Indeed, if you clicked on suspend and leave the reviewer, the card should still be reviewed and there is no need for a next card.
+         * @return whether the action ended succesfully
+         */
         protected BooleanGetter task(Collection col, ProgressSenderAndCancelListener<Card> collectionTask) {
             try {
                 col.getDb().executeInTransaction(() -> {
                     col.getSched().deferReset();
-                    actualTask(col, mCard);
+                    actualTask(col);
                     // With sHadCardQueue set, getCard() resets the scheduler prior to getting the next card
                     collectionTask.doProgress(col.getSched().getCard());
                 });
@@ -484,11 +505,11 @@ public class CollectionTask<ProgressListener, ProgressBackground extends Progres
         }
 
         @Override
-        protected void actualTask(Collection col, Card card) {
+        protected void actualTask(Collection col) {
             // collect undo information
-            col.markUndo(revertToProvidedState(R.string.menu_bury_card, card));
+            col.markUndo(revertToProvidedState(R.string.menu_bury_card, mCard));
             // then bury
-            col.getSched().buryCards(new long[] {card.getId()});
+            col.getSched().buryCards(new long[] {mCard.getId()});
         }
     }
 
@@ -498,11 +519,11 @@ public class CollectionTask<ProgressListener, ProgressBackground extends Progres
         }
 
         @Override
-        protected void actualTask(Collection col, Card card) {
+        protected void actualTask(Collection col) {
             // collect undo information
-            col.markUndo(revertToProvidedState(R.string.menu_bury_note, card));
+            col.markUndo(revertToProvidedState(R.string.menu_bury_note, mCard));
             // then bury
-            col.getSched().buryNote(card.note().getId());
+            col.getSched().buryNote(mCard.note().getId());
         }
     }
 
@@ -512,15 +533,15 @@ public class CollectionTask<ProgressListener, ProgressBackground extends Progres
         }
 
         @Override
-        protected void actualTask(Collection col, Card card) {
+        protected void actualTask(Collection col) {
             // collect undo information
-            Card suspendedCard = card.clone();
+            Card suspendedCard = mCard.clone();
             col.markUndo(new UndoSuspendCard(suspendedCard));
             // suspend card
-            if (card.getQueue() == Consts.QUEUE_TYPE_SUSPENDED) {
-                col.getSched().unsuspendCards(new long[] {card.getId()});
+            if (mCard.getQueue() == Consts.QUEUE_TYPE_SUSPENDED) {
+                col.getSched().unsuspendCards(new long[] {mCard.getId()});
             } else {
-                col.getSched().suspendCards(new long[] {card.getId()});
+                col.getSched().suspendCards(new long[] {mCard.getId()});
             }
         }
     }
@@ -531,14 +552,14 @@ public class CollectionTask<ProgressListener, ProgressBackground extends Progres
         }
 
         @Override
-        protected void actualTask(Collection col, Card card) {
+        protected void actualTask(Collection col) {
             // collect undo information
-            ArrayList<Card> cards = card.note().cards();
+            ArrayList<Card> cards = mCard.note().cards();
             long[] cids = new long[cards.size()];
             for (int i = 0; i < cards.size(); i++) {
                 cids[i] = cards.get(i).getId();
             }
-            col.markUndo(revertToProvidedState(R.string.menu_suspend_note, card));
+            col.markUndo(revertToProvidedState(R.string.menu_suspend_note, mCard));
             // suspend note
             col.getSched().suspendCards(cids);
         }
@@ -550,11 +571,11 @@ public class CollectionTask<ProgressListener, ProgressBackground extends Progres
         }
 
         @Override
-        protected void actualTask(Collection col, Card card) {
-            Note note = card.note();
+        protected void actualTask(Collection col) {
+            Note note = mCard.note();
             // collect undo information
             ArrayList<Card> allCs = note.cards();
-            col.markUndo(new UndoDeleteNote(note, allCs, card));
+            col.markUndo(new UndoDeleteNote(note, allCs, mCard));
             // delete note
             col.remNotes(new long[] {note.getId()});
         }
