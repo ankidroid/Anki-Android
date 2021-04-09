@@ -68,7 +68,7 @@ public class LoadPronounciationActivity extends Activity implements OnCancelList
     private String mTranslationAddress;
 
     @SuppressWarnings("deprecation") // tracked in github as #5020
-    private android.app.ProgressDialog progressDialog = null;
+    private android.app.ProgressDialog mProgressDialog = null;
 
     private String mPronunciationAddress;
 
@@ -158,7 +158,7 @@ public class LoadPronounciationActivity extends Activity implements OnCancelList
             mPostTranslation.execute();
         } catch (Exception e) {
             Timber.w(e);
-            progressDialog.dismiss();
+            mProgressDialog.dismiss();
             showToast(gtxt(R.string.multimedia_editor_something_wrong));
         }
     }
@@ -169,10 +169,10 @@ public class LoadPronounciationActivity extends Activity implements OnCancelList
 
         dismissCarefullyProgressDialog();
 
-        progressDialog = android.app.ProgressDialog.show(this, gtxt(R.string.multimedia_editor_progress_wait_title), message, true,
+        mProgressDialog = android.app.ProgressDialog.show(this, gtxt(R.string.multimedia_editor_progress_wait_title), message, true,
                 false);
-        progressDialog.setCancelable(true);
-        progressDialog.setOnCancelListener(this);
+        mProgressDialog.setCancelable(true);
+        mProgressDialog.setOnCancelListener(this);
     }
 
     /**
@@ -291,7 +291,7 @@ public class LoadPronounciationActivity extends Activity implements OnCancelList
                 mPostPronunciation.execute();
             } catch (Exception e) {
                 Timber.w(e);
-                progressDialog.dismiss();
+                mProgressDialog.dismiss();
                 showToast(gtxt(R.string.multimedia_editor_something_wrong));
             }
 
@@ -320,7 +320,7 @@ public class LoadPronounciationActivity extends Activity implements OnCancelList
                 mDownloadMp3Task.execute();
             } catch (Exception e) {
                 Timber.w(e);
-                progressDialog.dismiss();
+                mProgressDialog.dismiss();
                 showToast(gtxt(R.string.multimedia_editor_something_wrong));
             }
         }
@@ -343,7 +343,7 @@ public class LoadPronounciationActivity extends Activity implements OnCancelList
             return;
         }
 
-        progressDialog.dismiss();
+        mProgressDialog.dismiss();
         showToast(gtxt(R.string.multimedia_editor_general_done));
         Intent resultData = new Intent();
         resultData.putExtra(EXTRA_PRONUNCIATION_FILE_PATH, result);
@@ -367,7 +367,7 @@ public class LoadPronounciationActivity extends Activity implements OnCancelList
 
 
     private void stop(String string) {
-        progressDialog.dismiss();
+        mProgressDialog.dismiss();
         showToast(string);
     }
 
@@ -429,8 +429,8 @@ public class LoadPronounciationActivity extends Activity implements OnCancelList
 
     private void dismissCarefullyProgressDialog() {
         try {
-            if ((progressDialog != null) && progressDialog.isShowing()) {
-                    progressDialog.dismiss();
+            if ((mProgressDialog != null) && mProgressDialog.isShowing()) {
+                    mProgressDialog.dismiss();
             }
         } catch (Exception e) {
             Timber.w(e);

@@ -244,9 +244,9 @@ public class HelpDialog {
     private static class ExceptionReportItem extends Item implements Parcelable {
 
         private static Long lastClickStamp;
-        final long currentTimestamp = SystemClock.uptimeMillis();
-        final int minIntervalMS = 60000;
-        final String exceptionMessage = "Exception report sent by user manually";
+        final long mCurrentTimestamp = SystemClock.uptimeMillis();
+        final int mMinIntervalMS = 60000;
+        final String mExceptionMessage = "Exception report sent by user manually";
 
         public ExceptionReportItem(@StringRes int titleRes, @DrawableRes int iconRes, String analyticsRes) {
             super(titleRes, iconRes, analyticsRes);
@@ -278,12 +278,12 @@ public class HelpDialog {
         }
 
         private void sendReport(AnkiActivity activity) {
-            if (lastClickStamp == null || currentTimestamp - lastClickStamp > minIntervalMS) {
+            if (lastClickStamp == null || mCurrentTimestamp - lastClickStamp > mMinIntervalMS) {
                 AnkiDroidApp.deleteACRALimiterData(activity);
                 AnkiDroidApp.sendExceptionReport(
-                        new UserSubmittedException(exceptionMessage),
+                        new UserSubmittedException(mExceptionMessage),
                         "AnkiDroidApp.HelpDialog");
-                lastClickStamp = currentTimestamp;
+                lastClickStamp = mCurrentTimestamp;
             } else {
                 UIUtils.showThemedToast(activity, activity.getString(R.string.help_dialog_exception_report_debounce),
                         true);

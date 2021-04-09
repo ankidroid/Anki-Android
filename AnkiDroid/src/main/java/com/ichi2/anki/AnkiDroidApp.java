@@ -183,7 +183,7 @@ public class AnkiDroidApp extends Application {
     public static final int CHECK_PREFERENCES_AT_VERSION = 20500225;
 
     /** Our ACRA configurations, initialized during onCreate() */
-    private CoreConfigurationBuilder acraCoreConfigBuilder;
+    private CoreConfigurationBuilder mAcraCoreConfigBuilder;
 
     /** An exception if the WebView subsystem fails to load */
     @Nullable
@@ -224,7 +224,7 @@ public class AnkiDroidApp extends Application {
      * @return ConfigurationBuilder for the current ACRA config
      */
     public CoreConfigurationBuilder getAcraCoreConfigBuilder() {
-        return acraCoreConfigBuilder;
+        return mAcraCoreConfigBuilder;
     }
 
 
@@ -233,7 +233,7 @@ public class AnkiDroidApp extends Application {
      * @param acraCoreConfigBuilder the full ACRA config to initialize ACRA with
      */
     private void setAcraConfigBuilder(CoreConfigurationBuilder acraCoreConfigBuilder) {
-        this.acraCoreConfigBuilder = acraCoreConfigBuilder;
+        this.mAcraCoreConfigBuilder = acraCoreConfigBuilder;
         ACRA.init(this, acraCoreConfigBuilder);
         ACRA.getErrorReporter().putCustomData("WEBVIEW_VER_NAME", fetchWebViewInformation().get("WEBVIEW_VER_NAME"));
         ACRA.getErrorReporter().putCustomData("WEBVIEW_VER_CODE", fetchWebViewInformation().get("WEBVIEW_VER_CODE"));
@@ -270,7 +270,7 @@ public class AnkiDroidApp extends Application {
         SharedPreferences preferences = getSharedPrefs(this);
 
         // Setup logging and crash reporting
-        acraCoreConfigBuilder = new CoreConfigurationBuilder(this);
+        mAcraCoreConfigBuilder = new CoreConfigurationBuilder(this);
         if (BuildConfig.DEBUG) {
             // Enable verbose error logging and do method tracing to put the Class name as log tag
             Timber.plant(new DebugTree());
