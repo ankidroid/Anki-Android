@@ -328,14 +328,13 @@ public class Preferences extends AppCompatPreferenceActivity implements Preferen
                         return true;
                     } catch (StorageAccessException e) {
                         Timber.e(e, "Could not initialize directory: %s", newPath);
-                        AlertDialog.Builder builder = new AlertDialog.Builder(Preferences.this);
-                        builder.setMessage(R.string.dialog_collection_path_not_dir)
-                                .setPositiveButton(R.string.dialog_ok, (dialog, which) -> dialog.dismiss())
-                                .setNegativeButton(R.string.reset_custom_buttons, (dialog, which) -> {
-                                        String defaultDirectory = CollectionHelper.getDefaultAnkiDroidDirectory();
-                                        collectionPathPreference.setText(defaultDirectory);
-                                    });
-                        builder.show();
+                        MaterialDialog materialDialog = new MaterialDialog.Builder(Preferences.this)
+                                .title(R.string.dialog_collection_path_not_dir)
+                                .positiveText(R.string.dialog_ok)
+                                .negativeText(R.string.reset_custom_buttons)
+                                .onPositive((dialog, which) -> dialog.dismiss())
+                                .onNegative((dialog, which) -> collectionPathPreference.setText(CollectionHelper.getDefaultAnkiDroidDirectory()))
+                                .show();
                         return false;
                     }
                 });
