@@ -928,7 +928,7 @@ public class Collection implements CollectionGetter {
         // Use template did (deck override) if valid, otherwise did in argument, otherwise model did
         if (did == 0) {
             did = template.optLong("did", 0);
-            if (did > 0 && mDecks.getDecks().containsKey(did)) {
+            if (did > 0 && mDecks.get(did, false) != null) {
             } else if (parameterDid != 0) {
                 did = parameterDid;
             } else {

@@ -36,6 +36,8 @@ import com.ichi2.utils.JSONArray;
 import com.ichi2.utils.JSONObject;
 import com.ichi2.utils.SyncStatus;
 
+import net.ankiweb.rsdroid.RustCleanup;
+
 import java.text.Normalizer;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -1270,7 +1272,8 @@ public class Decks {
         return current().optString("desc","");
     }
 
-
+    @Deprecated
+    @RustCleanup("This exists in Rust as DecksDictProxy, but its usage is warned against")
     public HashMap<Long, Deck> getDecks() {
         return mDecks;
     }
