@@ -74,3 +74,7 @@ Currently, any call to background tasks really starts a new thread. This sets up
 
 Once #8442 is merged, this section should be updated to indicate that the default changed, and that tasks will be run by default on foreground and that if required, some tasks should be run in background (e.g. tasks related to missing collection or broken database)
 
+### Parameterized Tests (Enclosed Runner)
+
+You may encounter few parameterized tests in the codebase. Parameterized tests allow a developer to run the same test over and over again using different values. The way to implement them can be seen [here](https://junit.org/junit4/javadoc/4.12/org/junit/runners/Parameterized.html) with an example. 
+Note : To run parameterized and non-parameterized tests in the same class, one must be familiar with the concept of **Enclosed** runner. To make such a  class, annotate the class with `@RunWith(Enclosed.class)`. Then, two inner classes can be created. One of them must be annotated with `@RunWith(Parameterized.class)` and the another must be kept non-annotated. By this way, we test both the classes at the same time without the need to create two separate classes.   
