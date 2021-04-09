@@ -2,8 +2,12 @@ package com.ichi2.libanki;
 
 import android.content.res.Resources;
 
+import com.ichi2.utils.ArrayUtil;
 import com.ichi2.utils.LanguageUtil;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Locale;
 
@@ -45,6 +49,16 @@ public abstract class UndoAction {
         return revertToProvidedState(undoNameId, card, card.note().cards());
     }
 
+    /**
+     * Create an UndoAction that set back `card` and its siblings to the current states.
+     * @param undoNameId The id of the string representing an action that could be undone
+     * @param card the card currently in the reviewer
+     * @return An UndoAction which, if executed, put back the `card` in the state given here
+     */
+    public static @NonNull UndoAction revertCardToProvidedState(@StringRes int undoNameId, Card card){
+        return revertToProvidedState(undoNameId, card, Arrays.asList(card.clone()));
+    }
+
 
     /**
      * Create an UndoAction that set back `card` and its siblings to the current states.
@@ -53,7 +67,7 @@ public abstract class UndoAction {
      * @param cards The cards that must be reverted
      * @return An UndoAction which, if executed, put back the `card` in the state given here
      */
-    private static @NonNull UndoAction revertToProvidedState(@StringRes int undoNameId, Card card, List<Card> cards){
+    private static @NonNull UndoAction revertToProvidedState(@StringRes int undoNameId, Card card, Iterable<Card> cards){
         return new UndoAction(undoNameId) {
             public @Nullable
             Card undo(@NonNull Collection col) {
