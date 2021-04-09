@@ -1,7 +1,6 @@
 
 package com.ichi2.anki.dialogs;
 
-import android.annotation.SuppressLint;
 import android.content.res.Resources;
 import android.os.Bundle;
 import androidx.annotation.NonNull;
@@ -12,7 +11,6 @@ import com.ichi2.anki.R;
 import com.ichi2.anki.analytics.AnalyticsDialogFragment;
 import com.ichi2.utils.BundleUtils;
 
-@SuppressLint("FieldNamingPatternDetector")
 public class ExportDialog extends AnalyticsDialogFragment {
 
     public interface ExportDialogListener {
@@ -21,8 +19,8 @@ public class ExportDialog extends AnalyticsDialogFragment {
         void dismissAllDialogFragments();
     }
 
-    private final int INCLUDE_SCHED = 0;
-    private final int INCLUDE_MEDIA = 1;
+    private final static int INCLUDE_SCHED = 0;
+    private final static int INCLUDE_MEDIA = 1;
     private boolean mIncludeSched = false;
     private boolean mIncludeMedia = false;
 
@@ -67,7 +65,7 @@ public class ExportDialog extends AnalyticsDialogFragment {
             checked = new Integer[]{};
         } else {
             mIncludeSched = true;
-            checked = new Integer[]{ INCLUDE_SCHED };
+            checked = new Integer[]{INCLUDE_SCHED};
         }
         final String[] items = { res.getString(R.string.export_include_schedule),
                 res.getString(R.string.export_include_media) };

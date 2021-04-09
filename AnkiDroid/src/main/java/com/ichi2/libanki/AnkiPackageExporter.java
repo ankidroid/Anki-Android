@@ -151,7 +151,7 @@ class Exporter {
     }
 }
 
-@SuppressLint("FieldNamingPatternDetector")
+
 @SuppressWarnings({"PMD.AvoidReassigningParameters","PMD.DefaultPackage",
         "PMD.NPathComplexity","PMD.MethodNamingConventions","PMD.ExcessiveMethodLength",
         "PMD.EmptyIfStmt","PMD.CollapsibleIfStatements"})
@@ -162,7 +162,7 @@ class AnkiExporter extends Exporter {
     String mMediaDir;
     // Actual capacity will be set when known, if media are imported.
     final ArrayList<String> mMediaFiles = new ArrayList<>(0);
-
+    @SuppressLint("FieldNamingPatternDetector")
     boolean _v2sched;
 
 
@@ -568,9 +568,8 @@ public final class AnkiPackageExporter extends AnkiExporter {
  * 
  * @author Tim
  */
-@SuppressLint("FieldNamingPatternDetector")
 class ZipFile {
-    private final int BUFFER_SIZE = 1024;
+    private static final int BUFFER_SIZE = 1024;
     private ZipArchiveOutputStream mZos;
 
 
