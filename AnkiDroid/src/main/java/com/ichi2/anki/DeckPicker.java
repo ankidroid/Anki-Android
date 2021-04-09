@@ -2612,7 +2612,6 @@ public class DeckPicker extends NavigationDrawerActivity implements
         mDialogEditText.setSelection(mDialogEditText.getText().length());
         new MaterialEditTextDialog.Builder(DeckPicker.this, mDialogEditText)
                 .title(res.getString(R.string.rename_deck))
-                .customView(mDialogEditText, true)
                 .positiveText(R.string.rename)
                 .negativeText(R.string.dialog_cancel)
                 .onPositive((dialog, which) -> {
@@ -2915,7 +2914,6 @@ public class DeckPicker extends NavigationDrawerActivity implements
         mDialogEditText.setSelection(mDialogEditText.getText().length());
         new MaterialEditTextDialog.Builder(DeckPicker.this, mDialogEditText)
                 .title(R.string.create_subdeck)
-                .customView(mDialogEditText, true)
                 .positiveText(R.string.dialog_ok)
                 .negativeText(R.string.dialog_cancel)
                 .onPositive((dialog, which) -> {

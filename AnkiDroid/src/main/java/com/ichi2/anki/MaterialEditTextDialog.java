@@ -26,12 +26,11 @@ public class MaterialEditTextDialog extends MaterialDialog {
 
         @Override
         public MaterialDialog show() {
+            customView(editText, true);
             MaterialDialog materialDialog = super.show();
             displayKeyboard(editText, materialDialog);
-
             return materialDialog;
         }
-
 
         /**
          * Method to display keyboard when dialog shows.

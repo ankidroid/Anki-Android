@@ -81,7 +81,6 @@ public class DeckPickerFloatingActionMenu {
                 new MaterialEditTextDialog.Builder(mDeckPicker, mDialogEditText)
                         .title(R.string.new_deck)
                         .positiveText(R.string.dialog_ok)
-                        .customView(mDialogEditText, true)
                         .onPositive((dialog, which) -> {
                             String deckName = mDialogEditText.getText().toString();
                             if (Decks.isValidDeckName(deckName)) {
