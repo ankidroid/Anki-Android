@@ -44,7 +44,6 @@ public class JSONArrayTest{
         Assert.assertEquals(201 , array.length());
     }
 
-
     /**
      * Actually the array will not expand as this value is set to the in the index in arraylist not add to .
      */
