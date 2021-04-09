@@ -42,8 +42,18 @@ public abstract class UndoAction {
      * @return An UndoAction which, if executed, put back the `card` in the state given here
      */
     public static @NonNull UndoAction revertNoteToProvidedState(@StringRes int undoNameId, Card card){
-        Note note = card.note();
-        List<Card> cards = note.cards();
+        return revertToProvidedState(undoNameId, card, card.note().cards());
+    }
+
+
+    /**
+     * Create an UndoAction that set back `card` and its siblings to the current states.
+     * @param undoNameId The id of the string representing an action that could be undone
+     * @param card the card currently in the reviewer
+     * @param cards The cards that must be reverted
+     * @return An UndoAction which, if executed, put back the `card` in the state given here
+     */
+    private static @NonNull UndoAction revertToProvidedState(@StringRes int undoNameId, Card card, List<Card> cards){
         return new UndoAction(undoNameId) {
             public @Nullable
             Card undo(@NonNull Collection col) {
