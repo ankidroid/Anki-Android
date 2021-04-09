@@ -1,3 +1,4 @@
+@@ -0,0 +1,67 @@
 package com.ichi2.libanki;
 
 import org.junit.Test;
