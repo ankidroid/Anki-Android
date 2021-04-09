@@ -75,7 +75,7 @@ public class JSONArrayTest{
         Assert.assertEquals(103 , array.length());
     }
 
-    @Test(expected = ArrayIndexOutOfBoundsException.class)
+    @Test(expected = IndexOutOfBoundsException.class)
     public void putTestOutOfBoundary(){
         x.put(-1 ,100) ;
     }
