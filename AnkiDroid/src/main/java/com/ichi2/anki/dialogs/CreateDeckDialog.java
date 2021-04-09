@@ -111,7 +111,7 @@ public class CreateDeckDialog {
             Timber.i("DeckPicker:: Creating filtered deck...");
             mOnNewDeckCreated.accept(mAnkiActivity.getCol().getDecks().newDyn(deckName));
         } catch (FilteredAncestor filteredAncestor) {
-            filteredAncestor.printStackTrace();
+            UIUtils.showThemedToast(mContext, mContext.getString(R.string.decks_rename_filtered_nosubdecks), false);
             return false;
         }
         return true;
@@ -123,7 +123,7 @@ public class CreateDeckDialog {
             Timber.i("DeckPicker:: Creating new deck...");
             mOnNewDeckCreated.accept(mAnkiActivity.getCol().getDecks().id(deckName));
         } catch (FilteredAncestor filteredAncestor) {
-            UIUtils.showThemedToast(mContext, mContext.getString(R.string.decks_rename_filtered_nosubdecks), false);
+            Timber.w(filteredAncestor);
             return false;
         }
         return true;

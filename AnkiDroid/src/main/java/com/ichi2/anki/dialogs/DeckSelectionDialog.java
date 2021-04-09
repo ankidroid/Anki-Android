@@ -52,6 +52,7 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import timber.log.Timber;
 
 public class DeckSelectionDialog extends AnalyticsDialogFragment {
 
@@ -190,7 +191,7 @@ public class DeckSelectionDialog extends AnalyticsDialogFragment {
             });
             createDeckDialog.showDialog();
         } catch (FilteredAncestor filteredAncestor) {
-            filteredAncestor.printStackTrace();
+            Timber.w(filteredAncestor);
         }
     }
 
