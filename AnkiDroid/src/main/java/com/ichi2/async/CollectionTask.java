@@ -719,6 +719,12 @@ public class CollectionTask<ProgressListener, ProgressBackground extends Progres
             this.mCardIds = cardIds;
         }
 
+
+        /**
+         * @param col
+         * @param collectionTask Represents the background tasks.
+         * @return whether the task succeeded, and the array of cards affected.
+         */
         protected PairWithBoolean<Card[]> task(Collection col, ProgressSenderAndCancelListener<Progress> collectionTask) {
             // query cards
             Card[] cards = new Card[mCardIds.size()];
@@ -729,9 +735,9 @@ public class CollectionTask<ProgressListener, ProgressBackground extends Progres
             try {
                 col.getDb().getDatabase().beginTransaction();
                 try {
-                    PairWithBoolean<Card[]> ret = actualTask(col, collectionTask, cards);
-                    if (ret != null) {
-                        return ret;
+                    boolean succeeded = actualTask(col, collectionTask, cards);
+                    if (!succeeded) {
+                        return new PairWithBoolean<>(false, null);
                     }
                     col.getDb().getDatabase().setTransactionSuccessful();
                 } finally {
@@ -751,9 +757,9 @@ public class CollectionTask<ProgressListener, ProgressBackground extends Progres
          * @param col The collection
          * @param collectionTask, where to send progress and listen for cancellation
          * @param cards Cards to which the task should be applied
-         * @return value to return, or null if `task` should deal with it directly.
+         * @return Whether the tasks succeeded.
          */
-        protected abstract PairWithBoolean<Card[]> actualTask(Collection col, ProgressSenderAndCancelListener<Progress> collectionTask, Card[] cards);
+        protected abstract boolean actualTask(Collection col, ProgressSenderAndCancelListener<Progress> collectionTask, Card[] cards);
     }
 
     public static class SuspendCardMulti extends DismissNotes<Void> {
@@ -761,7 +767,7 @@ public class CollectionTask<ProgressListener, ProgressBackground extends Progres
             super(cardIds);
         }
 
-        protected PairWithBoolean<Card[]> actualTask(Collection col, ProgressSenderAndCancelListener<Void> collectionTask, Card[] cards) {
+        protected boolean actualTask(Collection col, ProgressSenderAndCancelListener<Void> collectionTask, Card[] cards) {
             AbstractSched sched = col.getSched();
             // collect undo information
             long[] cids = new long[cards.length];
@@ -795,7 +801,7 @@ public class CollectionTask<ProgressListener, ProgressBackground extends Progres
             }
 
             sched.deferReset();
-            return null;
+            return true;
         }
     }
 
@@ -807,12 +813,12 @@ public class CollectionTask<ProgressListener, ProgressBackground extends Progres
             mFlag = flag;
         }
 
-        protected PairWithBoolean<Card[]> actualTask(Collection col, ProgressSenderAndCancelListener<Void> collectionTask, Card[] cards) {
+        protected boolean actualTask(Collection col, ProgressSenderAndCancelListener<Void> collectionTask, Card[] cards) {
             col.setUserFlag(mFlag, mCardIds);
             for (Card c : cards) {
                 c.load();
             }
-            return null;
+            return true;
         }
     }
 
@@ -821,7 +827,7 @@ public class CollectionTask<ProgressListener, ProgressBackground extends Progres
             super(cardIds);
         }
 
-        protected PairWithBoolean<Card[]> actualTask(Collection col, ProgressSenderAndCancelListener<Void> collectionTask, Card[] cards) {
+        protected boolean actualTask(Collection col, ProgressSenderAndCancelListener<Void> collectionTask, Card[] cards) {
             Set<Note> notes = CardUtils.getNotes(Arrays.asList(cards));
             // collect undo information
             List<Note> originalMarked = new ArrayList<>();
@@ -844,7 +850,7 @@ public class CollectionTask<ProgressListener, ProgressBackground extends Progres
             for (Card c : cards) {
                 c.load();
             }
-            return null;
+            return true;
         }
     }
 
@@ -854,7 +860,7 @@ public class CollectionTask<ProgressListener, ProgressBackground extends Progres
             super(cardIds);
         }
 
-        protected PairWithBoolean<Card[]> actualTask(Collection col, ProgressSenderAndCancelListener<Card[]> collectionTask, Card[] cards) {
+        protected boolean actualTask(Collection col, ProgressSenderAndCancelListener<Card[]> collectionTask, Card[] cards) {
             AbstractSched sched = col.getSched();
             // list of all ids to pass to remNotes method.
             // Need Set (-> unique) so we don't pass duplicates to col.remNotes()
@@ -877,7 +883,7 @@ public class CollectionTask<ProgressListener, ProgressBackground extends Progres
             sched.deferReset();
             // pass back all cards because they can't be retrieved anymore by the caller (since the note is deleted)
             collectionTask.doProgress(allCards.toArray(new Card[allCards.size()]));
-            return null;
+            return true;
         }
     }
 
@@ -888,14 +894,14 @@ public class CollectionTask<ProgressListener, ProgressBackground extends Progres
             mNewDid = newDid;
         }
 
-        protected PairWithBoolean<Card[]> actualTask(Collection col, ProgressSenderAndCancelListener<Void> collectionTask, Card[] cards) {
+        protected boolean actualTask(Collection col, ProgressSenderAndCancelListener<Void> collectionTask, Card[] cards) {
             Timber.i("Changing %d cards to deck: '%d'", cards.length, mNewDid);
             Deck deckData = col.getDecks().get(mNewDid);
 
             if (Decks.isDynamic(deckData)) {
                 //#5932 - can't change to a dynamic deck. Use "Rebuild"
                 Timber.w("Attempted to move to dynamic deck. Cancelling task.");
-                return new PairWithBoolean<>(false, null);
+                return false;
             }
 
             //Confirm that the deck exists (and is not the default)
@@ -903,11 +909,11 @@ public class CollectionTask<ProgressListener, ProgressBackground extends Progres
                 long actualId = deckData.getLong("id");
                 if (actualId != mNewDid) {
                     Timber.w("Attempted to move to deck %d, but got %d", mNewDid, actualId);
-                    return new PairWithBoolean<>(false, null);
+                    return false;
                 }
             } catch (Exception e) {
                 Timber.e(e, "failed to check deck");
-                return new PairWithBoolean<>(false, null);
+                return false;
             }
 
             long[] changedCardIds = new long[cards.length];
@@ -934,7 +940,7 @@ public class CollectionTask<ProgressListener, ProgressBackground extends Progres
             Undoable changeDeckMulti = new UndoChangeDeckMulti(cards, originalDids);
             // mark undo for all at once
             col.markUndo(changeDeckMulti);
-            return null;
+            return true;
         }
     }
 
@@ -945,7 +951,7 @@ public class CollectionTask<ProgressListener, ProgressBackground extends Progres
             mUndoNameId = undoNameId;
         }
 
-        protected PairWithBoolean<Card[]> actualTask(Collection col, ProgressSenderAndCancelListener<Card> collectionTask, Card[] cards) {
+        protected boolean actualTask(Collection col, ProgressSenderAndCancelListener<Card> collectionTask, Card[] cards) {
             AbstractSched sched = col.getSched();
             // collect undo information, sensitive to memory pressure, same for all 3 cases
             try {
@@ -960,7 +966,7 @@ public class CollectionTask<ProgressListener, ProgressBackground extends Progres
             // In all cases schedule a new card so Reviewer doesn't sit on the old one
             col.reset();
             collectionTask.doProgress(sched.getCard());
-            return null;
+            return true;
         }
 
         protected abstract void actualActualTask(AbstractSched sched);
