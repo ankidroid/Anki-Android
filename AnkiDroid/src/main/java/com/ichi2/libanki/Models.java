@@ -533,18 +533,18 @@ public class Models {
     }
 
     static class TransformFieldDelete implements TransformFieldVisitor {
-        private final int idx;
+        private final int mIdx;
 
 
         public TransformFieldDelete(int _idx) {
-            idx = _idx;
+            mIdx = _idx;
         }
 
 
         @Override
         public String[] transform(String[] fields) {
             ArrayList<String> fl = new ArrayList<>(Arrays.asList(fields));
-            fl.remove(idx);
+            fl.remove(mIdx);
             return fl.toArray(new String[fl.size()]);
         }
     }
@@ -585,22 +585,22 @@ public class Models {
     }
 
     static class TransformFieldMove implements TransformFieldVisitor {
-        private final int idx;
-        private final int oldidx;
+        private final int mIdx;
+        private final int mOldidx;
 
 
         public TransformFieldMove(int _idx, int _oldidx) {
-            idx = _idx;
-            oldidx = _oldidx;
+            mIdx = _idx;
+            mOldidx = _oldidx;
         }
 
 
         @Override
         public String[] transform(String[] fields) {
-            String val = fields[oldidx];
+            String val = fields[mOldidx];
             ArrayList<String> fl = new ArrayList<>(Arrays.asList(fields));
-            fl.remove(oldidx);
-            fl.add(idx, val);
+            fl.remove(mOldidx);
+            fl.add(mIdx, val);
             return fl.toArray(new String[fl.size()]);
         }
     }

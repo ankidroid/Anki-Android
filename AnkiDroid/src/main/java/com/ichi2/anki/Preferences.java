@@ -31,7 +31,6 @@ import android.content.SharedPreferences;
 import android.content.SharedPreferences.OnSharedPreferenceChangeListener;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
-import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
@@ -85,7 +84,6 @@ import java.util.TreeMap;
 import androidx.annotation.NonNull;
 import androidx.annotation.StringRes;
 import androidx.annotation.VisibleForTesting;
-import androidx.vectordrawable.graphics.drawable.VectorDrawableCompat;
 import timber.log.Timber;
 
 import static com.ichi2.anim.ActivityTransitionAnimation.Direction.FADE;
@@ -114,7 +112,7 @@ public class Preferences extends AppCompatPreferenceActivity implements Preferen
             "learnCutoff", "timeLimit", "useCurrent", "newSpread", "dayOffset", "schedVer"};
 
     private static final int RESULT_LOAD_IMG = 111;
-    private android.preference.CheckBoxPreference backgroundImage;
+    private android.preference.CheckBoxPreference mBackgroundImage;
     private static long fileLength;
 
 
@@ -228,18 +226,18 @@ public class Preferences extends AppCompatPreferenceActivity implements Preferen
             case "com.ichi2.anki.prefs.appearance":
                 listener.addPreferencesFromResource(R.xml.preferences_appearance);
                 screen = listener.getPreferenceScreen();
-                backgroundImage = (android.preference.CheckBoxPreference) screen.findPreference("deckPickerBackground");
-                backgroundImage.setOnPreferenceClickListener(preference -> {
-                    if (backgroundImage.isChecked()) {
+                mBackgroundImage = (android.preference.CheckBoxPreference) screen.findPreference("deckPickerBackground");
+                mBackgroundImage.setOnPreferenceClickListener(preference -> {
+                    if (mBackgroundImage.isChecked()) {
                         try {
                             Intent galleryIntent = new Intent(Intent.ACTION_PICK,android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
                             startActivityForResult(galleryIntent, RESULT_LOAD_IMG);
-                            backgroundImage.setChecked(true);
+                            mBackgroundImage.setChecked(true);
                         } catch (Exception ex) {
                             Timber.e("%s",ex.getLocalizedMessage());
                         }
                     } else {
-                        backgroundImage.setChecked(false);
+                        mBackgroundImage.setChecked(false);
                         String currentAnkiDroidDirectory = CollectionHelper.getCurrentAnkiDroidDirectory(this);
                         File imgFile = new File(currentAnkiDroidDirectory, "DeckPickerBackground.png" );
                         if (imgFile.exists()) {
@@ -479,12 +477,12 @@ public class Preferences extends AppCompatPreferenceActivity implements Preferen
                             UIUtils.showThemedToast(this, getString(R.string.background_image_applied), false);
                         }
                     } else {
-                        backgroundImage.setChecked(false);
+                        mBackgroundImage.setChecked(false);
                         UIUtils.showThemedToast(this, getString(R.string.image_max_size_allowed, 10), false);
                     }
                 }
             } else {
-                backgroundImage.setChecked(false);
+                mBackgroundImage.setChecked(false);
                 UIUtils.showThemedToast(this, getString(R.string.no_image_selected), false);
             }
         } catch (OutOfMemoryError | Exception e) {

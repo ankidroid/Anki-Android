@@ -10,19 +10,19 @@ public class StdModels {
     /** Essentially, the default name. As a resource, so that it can
      * be localized later. */
     @StringRes
-    private final int defaultName;
+    private final int mDefaultName;
     /**
      * Funtion creating the standard model. Needs to be a funtion to take the local language into account.
      */
-    private final CreateStdModels fun;
+    private final CreateStdModels mFun;
 
     interface CreateStdModels {
         Model create(Models mm, String name);
     }
 
     public StdModels(CreateStdModels fun, @StringRes int defaultName) {
-        this.fun = fun;
-        this.defaultName = defaultName;
+        this.mFun = fun;
+        this.mDefaultName = defaultName;
     }
 
     private Model _new(Models mm) {
@@ -31,7 +31,7 @@ public class StdModels {
     }
 
     private Model _new(Models mm, String name) {
-        return fun.create(mm, name);
+        return mFun.create(mm, name);
     }
 
     public Model add(Collection col, String name) {
@@ -49,7 +49,7 @@ public class StdModels {
     }
 
     public String getDefaultName() {
-        return AnkiDroidApp.getAppResources().getString(defaultName);
+        return AnkiDroidApp.getAppResources().getString(mDefaultName);
     }
 
 

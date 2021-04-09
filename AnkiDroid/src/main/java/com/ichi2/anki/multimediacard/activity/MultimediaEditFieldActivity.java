@@ -343,6 +343,7 @@ public class MultimediaEditFieldActivity extends AnkiActivity
     }
 
     public void onRequestPermissionsResult (int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
         if (mCurrentChangeRequest == null) {
             cancelActivityWithAssertionFailure("mCurrentChangeRequest should be set before requesting permissions");
             return;
@@ -434,8 +435,8 @@ public class MultimediaEditFieldActivity extends AnkiActivity
 
     /** Intermediate class to hold state for the onRequestPermissionsResult callback */
     private final static class ChangeUIRequest {
-        private final IField newField;
-        private final int state;
+        private final IField mNewField;
+        private final int mState;
         private boolean mRequiresPermissionCheck = true;
 
         /** Initial request when activity is created */
@@ -446,12 +447,12 @@ public class MultimediaEditFieldActivity extends AnkiActivity
         public static final int EXTERNAL_FIELD_CHANGE = 2;
 
         private ChangeUIRequest(IField field, int state) {
-            this.newField = field;
-            this.state = state;
+            this.mNewField = field;
+            this.mState = state;
         }
 
         private IField getField() {
-            return newField;
+            return mNewField;
         }
 
         private static ChangeUIRequest init(@NonNull IField field) {
@@ -475,7 +476,7 @@ public class MultimediaEditFieldActivity extends AnkiActivity
         }
 
         private int getState() {
-            return state;
+            return mState;
         }
     }
 
@@ -534,7 +535,7 @@ public class MultimediaEditFieldActivity extends AnkiActivity
 
         private static void onRequiredPermissionDenied(ChangeUIRequest request, MultimediaEditFieldActivity activity) {
             Timber.d("onRequiredPermissionDenied. State: %d", request.getState());
-            switch (request.state) {
+            switch (request.mState) {
                 case ChangeUIRequest.ACTIVITY_LOAD:
                     activity.finishCancel();
                     break;

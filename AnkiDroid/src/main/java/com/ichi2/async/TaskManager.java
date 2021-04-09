@@ -1,21 +1,10 @@
 package com.ichi2.async;
 
 import android.content.res.Resources;
-import android.os.AsyncTask;
-
-import com.ichi2.libanki.Collection;
-import com.ichi2.utils.ThreadUtil;
-
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.concurrent.TimeUnit;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.annotation.VisibleForTesting;
-import timber.log.Timber;
 
 public abstract class TaskManager {
     @NonNull private static TaskManager sTaskManager = new SingleTaskManager();
@@ -130,28 +119,28 @@ public abstract class TaskManager {
          * Helper class for allowing inner function to publish progress of an AsyncTask.
          */
     public static class ProgressCallback<Progress> {
-        private final Resources res;
-        private final ProgressSender<Progress> task;
+        private final Resources mRes;
+        private final ProgressSender<Progress> mTask;
 
 
         protected ProgressCallback(ProgressSender<Progress> task, Resources res) {
-            this.res = res;
+            this.mRes = res;
             if (res != null) {
-                this.task = task;
+                this.mTask = task;
             } else {
-                this.task = null;
+                this.mTask = null;
             }
         }
 
 
         public Resources getResources() {
-            return res;
+            return mRes;
         }
 
 
         public void publishProgress(Progress value) {
-            if (task != null) {
-                task.doProgress(value);
+            if (mTask != null) {
+                mTask.doProgress(value);
             }
         }
     }

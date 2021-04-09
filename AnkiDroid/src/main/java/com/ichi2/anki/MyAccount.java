@@ -130,7 +130,7 @@ public class MyAccount extends AnkiActivity {
 
         if (!"".equalsIgnoreCase(username) && !"".equalsIgnoreCase(password)) {
             Timber.i("Attempting auto-login");
-            Connection.login(loginListener, new Connection.Payload(new Object[]{username, password,
+            Connection.login(mLoginListener, new Connection.Payload(new Object[]{username, password,
                     HostNumFactory.getInstance(this) }));
         } else {
             Timber.i("Auto-login cancelled - username/password missing");
@@ -168,7 +168,7 @@ public class MyAccount extends AnkiActivity {
         }
 
         if (!"".equalsIgnoreCase(username) && !"".equalsIgnoreCase(password)) {
-            Connection.login(loginListener, new Connection.Payload(new Object[]{username, password,
+            Connection.login(mLoginListener, new Connection.Payload(new Object[]{username, password,
                     HostNumFactory.getInstance(this) }));
         } else {
             UIUtils.showSimpleSnackbar(this, R.string.invalid_username_password, true);
@@ -245,7 +245,7 @@ public class MyAccount extends AnkiActivity {
     /**
      * Listeners
      */
-    final Connection.TaskListener loginListener = new Connection.TaskListener() {
+    final Connection.TaskListener mLoginListener = new Connection.TaskListener() {
 
         @Override
         public void onProgressUpdate(Object... values) {
