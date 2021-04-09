@@ -130,7 +130,7 @@ public class Statistics extends NavigationDrawerActivity implements DeckDropDown
         mActionBarSpinner.setVisibility(View.VISIBLE);
 
         // Setup Task Handler
-        mTaskHandler = new AnkiStatsTaskHandler(col);
+        mTaskHandler = AnkiStatsTaskHandler.getInstance(col);
 
         // Dirty way to get text size from a TextView with current style, change if possible
         float size = new FixedTextView(this).getTextSize();

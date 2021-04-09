@@ -31,6 +31,7 @@ import com.ichi2.themes.Themes;
 import com.wildplot.android.rendering.PlotSheet;
 
 import java.io.UnsupportedEncodingException;
+import java.lang.ref.WeakReference;
 import java.net.URLEncoder;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
@@ -50,8 +51,7 @@ public class AnkiStatsTaskHandler {
     private static final Lock sLock = new ReentrantLock();
 
 
-    public AnkiStatsTaskHandler(Collection collection){
-        sInstance = this;
+    private AnkiStatsTaskHandler(Collection collection){
         mCollectionData = collection;
     }
 
@@ -63,13 +63,20 @@ public class AnkiStatsTaskHandler {
         return sInstance;
     }
 
+    public synchronized static AnkiStatsTaskHandler getInstance(Collection collection) {
+        if (sInstance == null) {
+            sInstance = new AnkiStatsTaskHandler(collection);
+        }
+        return sInstance;
+    }
+
     public CreateChartTask createChart(Stats.ChartType chartType, View... views){
-        CreateChartTask createChartTask = new CreateChartTask(chartType);
+        CreateChartTask createChartTask = new CreateChartTask(chartType, mCollectionData, mStatType, mDeckId);
         createChartTask.execute(views);
         return createChartTask;
     }
     public CreateStatisticsOverview createStatisticsOverview(View... views){
-        CreateStatisticsOverview createChartTask = new CreateStatisticsOverview();
+        CreateStatisticsOverview createChartTask = new CreateStatisticsOverview(mCollectionData, mStatType, mDeckId);
         createChartTask.execute(views);
         return createChartTask;
     }
@@ -79,17 +86,23 @@ public class AnkiStatsTaskHandler {
         return deckPreviewStatistics;
     }
 
-    private class CreateChartTask extends AsyncTask<View, Void, PlotSheet>{
-        private ChartView mImageView;
-        private ProgressBar mProgressBar;
+    private static class CreateChartTask extends AsyncTask<View, Void, PlotSheet>{
+        private WeakReference<ChartView> mImageView;
+        private WeakReference<ProgressBar> mProgressBar;
+        private final WeakReference<Collection> mCollectionData;
+        private final Stats.AxisType mStatType;
+        private final long mDeckId;
 
         private boolean mIsRunning = false;
         private final Stats.ChartType mChartType;
 
-        public CreateChartTask(Stats.ChartType chartType){
+        public CreateChartTask(Stats.ChartType chartType, Collection collection, Stats.AxisType statType, long deckId){
             super();
             mIsRunning = true;
             mChartType = chartType;
+            mCollectionData = new WeakReference<>(collection);
+            mStatType = statType;
+            mDeckId = deckId;
         }
 
         @Override
@@ -97,16 +110,19 @@ public class AnkiStatsTaskHandler {
             //make sure only one task of CreateChartTask is running, first to run should get sLock
             //only necessary on lower APIs because after honeycomb only one thread is used for all asynctasks
             sLock.lock();
+            Collection collectionData = mCollectionData.get();
             try {
-                if (!mIsRunning) {
+                if (!mIsRunning || (collectionData == null)) {
                     Timber.d("Quitting CreateChartTask (%s) before execution", mChartType.name());
                     return null;
                 } else {
                     Timber.d("Starting CreateChartTask, type: %s", mChartType.name());
                 }
-                mImageView = (ChartView) params[0];
-                mProgressBar = (ProgressBar) params[1];
-                ChartBuilder chartBuilder = new ChartBuilder(mImageView, mCollectionData,
+                ChartView imageView = (ChartView) params[0];
+                mImageView = new WeakReference<>(imageView);
+                mProgressBar = new WeakReference<>((ProgressBar) params[1]);
+
+                ChartBuilder chartBuilder = new ChartBuilder(imageView, collectionData,
                         mDeckId, mChartType);
                 return chartBuilder.renderChart(mStatType);
             } finally {
@@ -121,24 +137,33 @@ public class AnkiStatsTaskHandler {
 
         @Override
         protected void onPostExecute(PlotSheet plotSheet) {
-            if (plotSheet != null && mIsRunning) {
-                mImageView.setData(plotSheet);
-                mProgressBar.setVisibility(View.GONE);
-                mImageView.setVisibility(View.VISIBLE);
-                mImageView.invalidate();
+            ChartView imageView = mImageView.get();
+            ProgressBar progressBar = mProgressBar.get();
+
+            if ((plotSheet != null) && mIsRunning && (imageView != null) && (progressBar != null)) {
+                imageView.setData(plotSheet);
+                progressBar.setVisibility(View.GONE);
+                imageView.setVisibility(View.VISIBLE);
+                imageView.invalidate();
             }
         }
     }
 
-    private class CreateStatisticsOverview extends AsyncTask<View, Void, String>{
-        private WebView mWebView;
-        private ProgressBar mProgressBar;
+    private static class CreateStatisticsOverview extends AsyncTask<View, Void, String>{
+        private WeakReference<WebView> mWebView;
+        private WeakReference<ProgressBar> mProgressBar;
+        private final WeakReference<Collection> mCollectionData;
+        private final Stats.AxisType mStatType;
+        private final long mDeckId;
 
         private boolean mIsRunning = false;
 
-        public CreateStatisticsOverview(){
+        public CreateStatisticsOverview(Collection collection, Stats.AxisType statType, long deckId){
             super();
             mIsRunning = true;
+            mCollectionData = new WeakReference<>(collection);
+            mStatType = statType;
+            mDeckId = deckId;
         }
 
         @Override
@@ -146,16 +171,20 @@ public class AnkiStatsTaskHandler {
             //make sure only one task of CreateChartTask is running, first to run should get sLock
             //only necessary on lower APIs because after honeycomb only one thread is used for all asynctasks
             sLock.lock();
+            Collection collectionData = mCollectionData.get();
             try {
-                if (!mIsRunning) {
+                if (!mIsRunning || (collectionData == null)) {
                     Timber.d("Quitting CreateStatisticsOverview before execution");
                     return null;
                 } else {
                     Timber.d("Starting CreateStatisticsOverview");
                 }
-                mWebView = (WebView) params[0];
-                mProgressBar = (ProgressBar) params[1];
-                OverviewStatsBuilder overviewStatsBuilder = new OverviewStatsBuilder(mWebView, mCollectionData, mDeckId, mStatType);
+
+                WebView webView = (WebView) params[0];
+                mWebView = new WeakReference<>(webView);
+                mProgressBar = new WeakReference<>((ProgressBar) params[1]);
+
+                OverviewStatsBuilder overviewStatsBuilder = new OverviewStatsBuilder(webView, collectionData, mDeckId, mStatType);
                 return overviewStatsBuilder.createInfoHtmlString();
             } finally {
                 sLock.unlock();
@@ -169,23 +198,27 @@ public class AnkiStatsTaskHandler {
 
         @Override
         protected void onPostExecute(String html) {
-            if (html != null && mIsRunning) {
+            WebView webView = mWebView.get();
+            ProgressBar progressBar = mProgressBar.get();
+
+            if ((html != null) && mIsRunning && (webView != null) && (progressBar != null)) {
                 try {
-                    mWebView.loadData(URLEncoder.encode(html, "UTF-8").replaceAll("\\+", " "), "text/html; charset=utf-8", "utf-8");
+                    webView.loadData(URLEncoder.encode(html, "UTF-8").replaceAll("\\+", " "), "text/html; charset=utf-8", "utf-8");
                 } catch (UnsupportedEncodingException e) {
                     Timber.w(e);
                 }
-                mProgressBar.setVisibility(View.GONE);
-                int backgroundColor = Themes.getColorFromAttr(mWebView.getContext(), android.R.attr.colorBackground);
-                mWebView.setBackgroundColor(backgroundColor);
-                mWebView.setVisibility(View.VISIBLE);
-                mWebView.invalidate();
+                progressBar.setVisibility(View.GONE);
+                int backgroundColor = Themes.getColorFromAttr(webView.getContext(), android.R.attr.colorBackground);
+                webView.setBackgroundColor(backgroundColor);
+                webView.setVisibility(View.VISIBLE);
+                webView.invalidate();
             }
         }
     }
 
+
     private static class DeckPreviewStatistics extends AsyncTask<Pair<Collection, TextView>, Void, String> {
-        private TextView mTextView;
+        private WeakReference<TextView> mTextView;
 
         private boolean mIsRunning = false;
 
@@ -207,7 +240,9 @@ public class AnkiStatsTaskHandler {
                 } else {
                     Timber.d("Starting DeckPreviewStatistics");
                 }
-                mTextView = params[0].second;
+
+                TextView textView = params[0].second;
+                mTextView = new WeakReference<>(textView);
 
                 //eventually put this in Stats (in desktop it is not though)
                 int cards;
@@ -222,7 +257,7 @@ public class AnkiStatsTaskHandler {
                     cards = cur.getInt(0);
                     minutes = (int) Math.round(cur.getInt(1) / 60.0);
                 }
-                Resources res = mTextView.getResources();
+                Resources res = textView.getResources();
                 final String span = res.getQuantityString(R.plurals.in_minutes, minutes, minutes);
                 return res.getQuantityString(R.plurals.studied_cards_today, cards, cards, span);
             } finally {
@@ -237,10 +272,12 @@ public class AnkiStatsTaskHandler {
 
         @Override
         protected void onPostExecute(String todayStatString) {
-            if (todayStatString != null && mIsRunning) {
-                mTextView.setText(todayStatString);
-                mTextView.setVisibility(View.VISIBLE);
-                mTextView.invalidate();
+            TextView textView = mTextView.get();
+
+            if ((todayStatString != null) && mIsRunning && (textView != null)) {
+                textView.setText(todayStatString);
+                textView.setVisibility(View.VISIBLE);
+                textView.invalidate();
             }
         }
     }
