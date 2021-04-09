@@ -404,25 +404,6 @@ public class CollectionTask<ProgressListener, ProgressBackground extends Progres
     }
 
 
-
-    private static class UndoSuspendCard extends UndoAction {
-        private final Card mSuspendedCard;
-
-
-        public UndoSuspendCard(Card suspendedCard) {
-            super(R.string.menu_suspend_card);
-            this.mSuspendedCard = suspendedCard;
-        }
-
-
-        public @Nullable Card undo(@NonNull Collection col) {
-            Timber.i("UNDO: Suspend Card %d", mSuspendedCard.getId());
-            mSuspendedCard.flush(false);
-            return mSuspendedCard;
-        }
-    }
-
-
     private static class UndoDeleteNote extends UndoAction {
         private final Note mNote;
         private final ArrayList<Card> mAllCs;
@@ -537,7 +518,7 @@ public class CollectionTask<ProgressListener, ProgressBackground extends Progres
         protected void actualTask(Collection col) {
             // collect undo information
             Card suspendedCard = mCard.clone();
-            col.markUndo(new UndoSuspendCard(suspendedCard));
+            col.markUndo(revertCardToProvidedState(R.string.menu_suspend_card, suspendedCard));
             // suspend card
             if (mCard.getQueue() == Consts.QUEUE_TYPE_SUSPENDED) {
                 col.getSched().unsuspendCards(new long[] {mCard.getId()});
