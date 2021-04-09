@@ -618,8 +618,6 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
 
         protected void displayNext(Card nextCard) {
 
-            Resources res = getResources();
-
             if (mSched == null) {
                 // TODO: proper testing for restored activity
                 finishWithoutAnimation();
