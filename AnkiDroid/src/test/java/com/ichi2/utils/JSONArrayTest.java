@@ -2,7 +2,6 @@ package com.ichi2.utils;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
-import org.junit.jupiter.api.DisplayName;
 import org.junit.runner.RunWith;
 import androidx.test.ext.junit.runners.AndroidJUnit4;
 
@@ -76,9 +75,6 @@ public class JSONArrayTest{
         array = x.put(102,1);
         Assert.assertEquals(103 , array.length());
     }
-
-
-
 
     @Test(expected = ArrayIndexOutOfBoundsException.class)
     public void putTestOutOfBoundary(){
