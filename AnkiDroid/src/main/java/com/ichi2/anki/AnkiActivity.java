@@ -14,6 +14,7 @@ import android.media.AudioManager;
 import android.net.Uri;
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatDelegate;
 import androidx.appcompat.widget.Toolbar;
@@ -38,8 +39,10 @@ import android.widget.ProgressBar;
 import com.ichi2.anim.ActivityTransitionAnimation;
 import com.ichi2.anki.analytics.UsageAnalytics;
 import com.ichi2.anki.dialogs.AsyncDialogFragment;
+import com.ichi2.anki.dialogs.ConfirmationDialog;
 import com.ichi2.anki.dialogs.DialogHandler;
 import com.ichi2.anki.dialogs.SimpleMessageDialog;
+import com.ichi2.anki.exception.ConfirmModSchemaException;
 import com.ichi2.async.CollectionLoader;
 import com.ichi2.compat.customtabs.CustomTabActivityHelper;
 import com.ichi2.compat.customtabs.CustomTabsFallback;
@@ -635,5 +638,47 @@ public class AnkiActivity extends AppCompatActivity implements SimpleMessageDial
         }).start();
 
         return true;
+    }
+
+    protected interface SchemaModifier {
+        void run() throws ConfirmModSchemaException;
+    }
+
+
+    /**
+     * @param fn A function to execute if schema can be modified
+     */
+    protected void executeSchemaModified(@NonNull SchemaModifier fn) {
+        executeSchemaModified(fn, null);
+    }
+
+    /**
+     * @param fn A function to execute if schema can be modified
+     * @param cancel A function to run if the user asked to cancel.
+     */
+    protected void executeSchemaModified(@NonNull SchemaModifier fn, @Nullable Runnable cancel) {
+        try {
+            getCol().modSchema();
+            fn.run();
+        } catch (ConfirmModSchemaException sm) {
+            sm.log();
+            ConfirmationDialog d = new ConfirmationDialog();
+            d.setArgs(getResources().getString(R.string.full_sync_confirmation));
+            d.setConfirm(
+                    () -> {
+                        try {
+                            getCol().modSchemaNoCheck();
+                            fn.run();
+                        } catch (ConfirmModSchemaException cmse) {
+                            // This should never be reached as we just forced modSchema
+                            throw new RuntimeException(cmse);
+                        }
+                    }
+            );
+            if (cancel != null) {
+                d.setCancel(cancel);
+            }
+            showDialogFragment(d);
+        }
     }
 }
