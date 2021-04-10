@@ -1835,6 +1835,9 @@ public class CardBrowser extends NavigationDrawerActivity implements
         protected void actualOnValidPostExecute(CardBrowser browser, PairWithBoolean<Card[]> cards) {
             browser.updateCardsInList(Arrays.asList(cards.other));
             browser.hideProgressBar();
+            browser.searchCards();
+            browser.endMultiSelectMode();
+            browser.mCardsAdapter.notifyDataSetChanged();
             browser.invalidateOptionsMenu();    // maybe the availability of undo changed
         }
     }
