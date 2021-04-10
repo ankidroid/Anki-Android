@@ -16,6 +16,7 @@
 
 package com.ichi2.anki.dialogs;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -34,6 +35,7 @@ import java.util.function.Consumer;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.annotation.VisibleForTesting;
 import timber.log.Timber;
 
 public class CreateDeckDialog {
@@ -106,6 +108,7 @@ public class CreateDeckDialog {
         closeDialog();
     }
 
+    @VisibleForTesting(otherwise = VisibleForTesting.NONE)
     public boolean createFilteredDeck(@NonNull String deckName) {
         try {
             // create filtered deck
@@ -130,6 +133,7 @@ public class CreateDeckDialog {
         return true;
     }
 
+    @SuppressLint("RestrictedApi")
     private void onPositiveButtonClicked() {
         if(!getDeckName().isEmpty()) {
             if (mParentId != null) {
@@ -144,7 +148,7 @@ public class CreateDeckDialog {
             }
         }
     }
-
+    @VisibleForTesting(otherwise = VisibleForTesting.NONE)
     public void setOnNewDeckCreated(Consumer<Long> c) {
         this.mOnNewDeckCreated = c;
     }

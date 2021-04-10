@@ -216,6 +216,7 @@ public class DeckPicker extends NavigationDrawerActivity implements
     private EditText mDialogEditText;
 
     private DeckPickerFloatingActionMenu mFloatingActionMenu;
+    @VisibleForTesting(otherwise = VisibleForTesting.NONE)
     public CreateDeckDialog mCreateDeckDialog;
 
     // flag asking user to do a full sync which is used in upgrade path

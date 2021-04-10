@@ -16,11 +16,27 @@
 
 package com.ichi2.anki.dialogs;
 
+import android.os.Bundle;
+import android.os.Looper;
+
+import com.ichi2.anki.AnkiActivity;
 import com.ichi2.anki.DeckPicker;
+import com.ichi2.anki.R;
+import com.ichi2.anki.RobolectricTest;
 import com.ichi2.anki.exception.FilteredAncestor;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.junit.runners.model.InitializationError;
 import org.robolectric.RobolectricTestRunner;
+import org.robolectric.annotation.LooperMode;
+import org.robolectric.util.inject.Injector;
+
+import java.util.concurrent.atomic.AtomicReference;
+import java.util.function.Consumer;
+
+import androidx.fragment.app.testing.FragmentScenario;
+import androidx.lifecycle.Lifecycle;
+import androidx.test.core.app.ActivityScenario;
 import timber.log.Timber;
 import static android.os.Looper.getMainLooper;
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -28,70 +44,86 @@ import static org.hamcrest.core.Is.is;
 import static org.robolectric.Shadows.shadowOf;
 
 @RunWith(RobolectricTestRunner.class)
-public class CreateDeckDialogTest {
+@LooperMode(LooperMode.Mode.PAUSED)
+public class CreateDeckDialogTest extends RobolectricTest {
 
     private DeckPicker mActivityScenario;
 
-    @Test
-    public void setupDeckPicker() {
-        mActivityScenario = new DeckPicker();
-    }
+//
+//    @Test
+//    public void setupDeckPicker() {
+//        mActivityScenario = new DeckPicker();
+//    }
 
-    @Test
-    public void testCreateFilteredDeckFunction() {
-        try {
-            shadowOf(getMainLooper()).idle();
-            String deckName = "filteredDeck";
-            mActivityScenario.mCreateDeckDialog.createFilteredDeck(deckName);
-            mActivityScenario.mCreateDeckDialog.setOnNewDeckCreated((id) -> {
-                // a deck was created
-                try {
-                    assertThat(id, is(mActivityScenario.getCol().getDecks().id(deckName)));
-                } catch (FilteredAncestor filteredAncestor) {
-                    filteredAncestor.printStackTrace();
-                }
-            });
-        } catch (Exception e) {
-            Timber.w(e);
-        }
+    private static <T> T whatever() {
+        return null;
     }
+    @Test
+    public void testCreateFilteredDeckFunction() throws FilteredAncestor{
+            ensureCollectionLoadIsSynchronous();
+//            shadowOf(Looper.getMainLooper()).idle();
+//        Bundle args = new CustomStudyDialog(whatever(), whatever())
+//                .withArguments(CustomStudyDialog.CUSTOM_STUDY_AHEAD, 1)
+//                .getArguments();
 
-    @Test
-    public void testCreateSubDeckFunction() {
-        try {
-            shadowOf(getMainLooper()).idle();
-            Long mParentId = mActivityScenario.getCol().getDecks().id("filteredDeck");
-            String deckName = "I am child";
-            mActivityScenario.mCreateDeckDialog.createSubDeck(mParentId, deckName);
-            mActivityScenario.mCreateDeckDialog.setOnNewDeckCreated((id) -> {
-                try {
-                    String deckNameWithParentName = mActivityScenario.getCol().getDecks().getSubdeckName(mParentId, deckName);
-                    assertThat(id, is(mActivityScenario.getCol().getDecks().id(deckNameWithParentName)));
-                } catch (FilteredAncestor filteredAncestor) {
-                    filteredAncestor.printStackTrace();
-                }
-            });
-        } catch (Exception e) {
-            Timber.w(e);
-        }
-    }
+        ActivityScenario<DeckPicker> scenario = ActivityScenario.launch(DeckPicker.class);
 
-    @Test
-    public void testCreateDeckFunction() {
-        try {
-            shadowOf(getMainLooper()).idle();
-            String deckName = "Sample Deck Name";
-            mActivityScenario.mCreateDeckDialog.createDeck(deckName);
-            mActivityScenario.mCreateDeckDialog.setOnNewDeckCreated((id) -> {
-                // a deck was created
-                try {
-                    assertThat(id, is(mActivityScenario.getCol().getDecks().id(deckName)));
-                } catch (FilteredAncestor filteredAncestor) {
-                    filteredAncestor.printStackTrace();
-                }
+        scenario.moveToState(Lifecycle.State.STARTED);
+            scenario.onActivity(activity -> {
+                AtomicReference<Boolean> isCreated = new AtomicReference<>(false);
+                CreateDeckDialog createDeckDialog =new CreateDeckDialog(activity, R.string.new_deck, false, null);
+                String deckName = "filteredDeck";
+                shadowOf(getMainLooper()).idle();
+                createDeckDialog.createFilteredDeck(deckName);
+                createDeckDialog.setOnNewDeckCreated((id) -> {
+                    // a deck was created
+                    isCreated.set(true);
+                    try {
+                        assertThat(id, is(new AnkiActivity().getCol().getDecks().id(deckName)));
+                    } catch (FilteredAncestor filteredAncestor) {
+                        filteredAncestor.printStackTrace();
+                    }
+                });
+                assertThat(isCreated.get(), is(false));
             });
-        } catch (Exception e) {
-            Timber.w(e);
-        }
     }
+//
+//    @Test
+//    public void testCreateSubDeckFunction() {
+//        try {
+//            shadowOf(getMainLooper()).idle();
+//            Long mParentId = mActivityScenario.getCol().getDecks().id("filteredDeck");
+//            String deckName = "I am child";
+//            mActivityScenario.mCreateDeckDialog.createSubDeck(mParentId, deckName);
+//            mActivityScenario.mCreateDeckDialog.setOnNewDeckCreated((id) -> {
+//                try {
+//                    String deckNameWithParentName = mActivityScenario.getCol().getDecks().getSubdeckName(mParentId, deckName);
+//                    assertThat(id, is(mActivityScenario.getCol().getDecks().id(deckNameWithParentName)));
+//                } catch (FilteredAncestor filteredAncestor) {
+//                    filteredAncestor.printStackTrace();
+//                }
+//            });
+//        } catch (Exception e) {
+//            Timber.w(e);
+//        }
+//    }
+//
+//    @Test
+//    public void testCreateDeckFunction() {
+//        try {
+//            shadowOf(getMainLooper()).idle();
+//            String deckName = "Sample Deck Name";
+//            mActivityScenario.mCreateDeckDialog.createDeck(deckName);
+//            mActivityScenario.mCreateDeckDialog.setOnNewDeckCreated((id) -> {
+//                // a deck was created
+//                try {
+//                    assertThat(id, is(mActivityScenario.getCol().getDecks().id(deckName)));
+//                } catch (FilteredAncestor filteredAncestor) {
+//                    filteredAncestor.printStackTrace();
+//                }
+//            });
+//        } catch (Exception e) {
+//            Timber.w(e);
+//        }
+//    }
 }
