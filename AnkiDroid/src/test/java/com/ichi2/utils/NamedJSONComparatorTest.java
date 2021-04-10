@@ -21,8 +21,9 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.robolectric.RobolectricTestRunner;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotEquals;
+import static org.hamcrest.CoreMatchers.equalTo;
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.lessThan;
 
 @RunWith(RobolectricTestRunner.class)
 public class NamedJSONComparatorTest {
@@ -35,7 +36,7 @@ public class NamedJSONComparatorTest {
         JSONObject secondObject = new JSONObject();
         secondObject.put("name", "TestName");
 
-        assertEquals(NamedJSONComparator.INSTANCE.compare(firstObject, secondObject), 0);
+        assertThat(NamedJSONComparator.INSTANCE.compare(firstObject, secondObject), equalTo(0));
     }
 
     @Test
@@ -46,6 +47,6 @@ public class NamedJSONComparatorTest {
         JSONObject secondObject = new JSONObject();
         secondObject.put("name", "TestName2");
 
-        assertNotEquals(NamedJSONComparator.INSTANCE.compare(firstObject, secondObject), 0);
+        assertThat(NamedJSONComparator.INSTANCE.compare(firstObject, secondObject), lessThan(0));
     }
 }
