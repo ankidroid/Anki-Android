@@ -83,9 +83,13 @@ public class TagsDialog extends AnalyticsDialogFragment {
          * Mark a tag as checked tag
          *
          * @param tag the tag to be checked (case-insensitive)
-         * @return true if the tag changed its check status, false otherwise
+         * @return true if the tag changed its check status
+         *         false if the tag was already checked or not in the list
          */
         public boolean check(String tag) {
+            if (!mAllTags.contains(tag)) {
+                return false;
+            }
             return mCurrentTags.add(tag);
         }
 
