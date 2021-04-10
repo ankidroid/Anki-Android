@@ -803,6 +803,10 @@ public class Decks {
         assert deck != null;
         if (deck.has("conf")) {
             DeckConfig conf = getConf(deck.getLong("conf"));
+            if (conf == null) {
+                // fall back on default
+                conf = getConf(1L);
+            }
             conf.put("dyn", DECK_STD);
             return conf;
         }

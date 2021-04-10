@@ -316,4 +316,17 @@ public class DecksTest extends RobolectricTest {
         assertNull(decks.byName("filtered::sub"));
     }
 
+    @Test
+    public void confForDidReturnsDefaultIfNotFound() {
+        // https://github.com/ankitects/anki/commit/94d369db18c2a6ac3b0614498d8abcc7db538633
+        Decks decks = getCol().getDecks();
+
+        Deck d = decks.all().get(0);
+        d.put("conf", 12L);
+        decks.save();
+
+        DeckConfig config = decks.confForDid(d.getLong("id"));
+
+        assertThat("If a config is not found, return the default", config.getLong("id"), is(1L));
+    }
 }
