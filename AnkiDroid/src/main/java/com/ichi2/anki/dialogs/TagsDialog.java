@@ -46,7 +46,8 @@ public class TagsDialog extends AnalyticsDialogFragment {
 
 
     /**
-     * A container class that keeps track of tags and their status
+     * A container class that keeps track of tags and their status, handling of tags are done in a case insensitive matter
+     * For example adding tags with different letter casing (eg. TAG, tag, Tag) will only add the first one.
      *
      * {@link TagsList} provides an iterator over all tags
      */
@@ -72,7 +73,7 @@ public class TagsDialog extends AnalyticsDialogFragment {
         public TagsList(@NonNull List<String> allTags, @NonNull List<String> currentTags) {
             mCurrentTags = new TreeSet<>(String.CASE_INSENSITIVE_ORDER);
             mCurrentTags.addAll(currentTags);
-            mAllTags = UniqueArrayList.from(allTags);
+            mAllTags = UniqueArrayList.from(allTags, String.CASE_INSENSITIVE_ORDER);
             mAllTags.addAll(mCurrentTags);
         }
 
