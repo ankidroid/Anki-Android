@@ -18,6 +18,7 @@ package com.ichi2.anki.stats;
 import android.content.res.Resources;
 import android.database.Cursor;
 import android.os.AsyncTask;
+import android.util.Pair;
 import android.view.View;
 import android.webkit.WebView;
 import android.widget.ProgressBar;
@@ -74,7 +75,7 @@ public class AnkiStatsTaskHandler {
     }
     public static DeckPreviewStatistics createReviewSummaryStatistics(Collection col, TextView view){
         DeckPreviewStatistics deckPreviewStatistics = new DeckPreviewStatistics();
-        deckPreviewStatistics.execute(col, view);
+        deckPreviewStatistics.execute(new Pair<>(col, view));
         return deckPreviewStatistics;
     }
 
@@ -183,7 +184,7 @@ public class AnkiStatsTaskHandler {
         }
     }
 
-    private static class DeckPreviewStatistics extends AsyncTask<Object, Void, String> {
+    private static class DeckPreviewStatistics extends AsyncTask<Pair<Collection, TextView>, Void, String> {
         private TextView mTextView;
 
         private boolean mIsRunning = false;
@@ -194,19 +195,19 @@ public class AnkiStatsTaskHandler {
         }
 
         @Override
-        protected String doInBackground(Object... params) {
+        protected String doInBackground(Pair<Collection, TextView>... params) {
             //make sure only one task of CreateChartTask is running, first to run should get sLock
             //only necessary on lower APIs because after honeycomb only one thread is used for all asynctasks
             sLock.lock();
             try {
-                Collection collection = (Collection) params[0];
+                Collection collection = params[0].first;
                 if (!mIsRunning || collection == null || collection.getDb() == null) {
                     Timber.d("Quitting DeckPreviewStatistics before execution");
                     return null;
                 } else {
                     Timber.d("Starting DeckPreviewStatistics");
                 }
-                mTextView = (TextView) params[1];
+                mTextView = params[0].second;
 
                 //eventually put this in Stats (in desktop it is not though)
                 int cards;
