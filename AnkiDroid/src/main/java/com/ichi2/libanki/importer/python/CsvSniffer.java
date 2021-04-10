@@ -39,7 +39,7 @@ import java.util.regex.Pattern;
 import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
 
-@SuppressLint("FieldNamingPatternDetector")
+@SuppressLint("NonPublicNonStaticFieldName")
 @RequiresApi(Build.VERSION_CODES.O) // Regex group(str)
 public class CsvSniffer {
 
