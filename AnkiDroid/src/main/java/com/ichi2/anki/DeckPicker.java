@@ -449,15 +449,12 @@ public class DeckPicker extends NavigationDrawerActivity implements
         if (showedActivityFailedScreen(savedInstanceState)) {
             return;
         }
-
+        
         mCustomStudyDialogFactory = new CustomStudyDialogFactory(this::getCol, this).attachToActivity(this);
-
-        SharedPreferences preferences = AnkiDroidApp.getSharedPrefs(getBaseContext());
 
         //we need to restore here, as we need it before super.onCreate() is called.
         restoreWelcomeMessage(savedInstanceState);
-        // Open Collection on UI thread while splash screen is showing
-        boolean colOpen = firstCollectionOpen();
+        handleStartup();
 
         // Then set theme and content view
         super.onCreate(savedInstanceState);
@@ -529,28 +526,27 @@ public class DeckPicker extends NavigationDrawerActivity implements
 
         mReviewSummaryTextView = findViewById(R.id.today_stats_text_view);
 
-        Timber.i("colOpen: %b", colOpen);
-        // if permission is denied, firstCollectionOpen() requests it and onRequestPermissionsResult continues execution
-        if (Permissions.hasStorageAccessPermission(this)) {
-            handleStartup(colOpen);
-        }
-
-
         mShortAnimDuration = getResources().getInteger(android.R.integer.config_shortAnimTime);
     }
 
-    /** The first call in showing dialogs for startup - error or success */
-    private void handleStartup(boolean colOpen) {
-        // TODO: colOpen is not colIsOpen() if called from onCreate - we should fix this mismatch of terms
-        // or use the same variable if the semantics should have been equivalent
-        if (colOpen) {
-            // Show any necessary dialogs (e.g. changelog, special messages, etc)
-            SharedPreferences sharedPrefs = AnkiDroidApp.getSharedPrefs(this);
-            showStartupScreensAndDialogs(sharedPrefs, 0);
+    /**
+     * The first call in showing dialogs for startup - error or success.
+     * Attempts startup if storage permission has been acquired, else, it requests the permission
+     * */
+    private void handleStartup() {
+        if (Permissions.hasStorageAccessPermission(this)) {
+            boolean colOpen = firstCollectionOpen();
+            if (colOpen) {
+                // Show any necessary dialogs (e.g. changelog, special messages, etc)
+                SharedPreferences sharedPrefs = AnkiDroidApp.getSharedPrefs(this);
+                showStartupScreensAndDialogs(sharedPrefs, 0);
+            } else {
+                // Show error dialogs
+                StartupFailure failure = InitialActivity.getStartupFailureType(this);
+                handleStartupFailure(failure);
+            }
         } else {
-            // Show error dialogs
-            StartupFailure failure = InitialActivity.getStartupFailureType(this);
-            handleStartupFailure(failure);
+            requestStoragePermission();
         }
     }
 
@@ -607,7 +603,7 @@ public class DeckPicker extends NavigationDrawerActivity implements
     }
 
     /**
-     * Try to open the Collection for the first time, and do some error handling if it wasn't successful
+     * Try to open the Collection for the first time
      * @return whether or not we were successful
      */
     private boolean firstCollectionOpen() {
@@ -621,16 +617,16 @@ public class DeckPicker extends NavigationDrawerActivity implements
                     .show();
             return false;
         }
-        if (Permissions.hasStorageAccessPermission(this)) {
-            Timber.i("User has permissions to access collection");
-            // Show error dialog if collection could not be opened
-            return CollectionHelper.getInstance().getColSafe(this) != null;
-        } else if (mClosedWelcomeMessage) {
+
+        return CollectionHelper.getInstance().getColSafe(this) != null;
+    }
+
+    public void requestStoragePermission() {
+        if (mClosedWelcomeMessage) {
             // DEFECT #5847: This fails if the activity is killed.
             //Even if the dialog is showing, we want to show it again.
             ActivityCompat.requestPermissions(this, new String[] {Manifest.permission.WRITE_EXTERNAL_STORAGE},
                     REQUEST_STORAGE_PERMISSION);
-            return false;
         } else {
             Timber.i("Displaying initial permission request dialog");
             // Request storage permission if we don't have it (e.g. on Android 6.0+)
@@ -647,7 +643,6 @@ public class DeckPicker extends NavigationDrawerActivity implements
                     .cancelable(false)
                     .canceledOnTouchOutside(false)
                     .show();
-            return false;
         }
     }
 
@@ -942,7 +937,7 @@ public class DeckPicker extends NavigationDrawerActivity implements
         if (requestCode == REQUEST_STORAGE_PERMISSION && permissions.length == 1) {
             if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                 invalidateOptionsMenu();
-                handleStartup(colIsOpen());
+                handleStartup();
             } else {
                 // User denied access to file storage  so show error toast and display "App Info"
                 Toast.makeText(this, R.string.startup_no_storage_permission, Toast.LENGTH_LONG).show();
