@@ -50,7 +50,7 @@ public class StringUtil {
     @Nullable
     @Contract("null -> null; !null -> !null")
     public static String strip(@Nullable String string) {
-        if (string == null || string.length() == 0) {
+        if (string == null || string.isEmpty()) {
             return string;
         }
 

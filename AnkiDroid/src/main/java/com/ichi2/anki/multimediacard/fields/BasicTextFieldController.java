@@ -119,7 +119,7 @@ public class BasicTextFieldController extends FieldControllerBase implements IFi
         btnPronounce.setOnClickListener(v -> {
             String source = mEditText.getText().toString();
 
-            if (source.length() == 0) {
+            if (source.isEmpty()) {
                 showToast(gtxt(R.string.multimedia_editor_text_field_editing_no_text));
                 return;
             }
@@ -141,7 +141,7 @@ public class BasicTextFieldController extends FieldControllerBase implements IFi
             String source = mEditText.getText().toString();
 
             // Checks and warnings
-            if (source.length() == 0) {
+            if (source.isEmpty()) {
                 showToast(gtxt(R.string.multimedia_editor_text_field_editing_no_text));
                 return;
             }
@@ -211,7 +211,7 @@ public class BasicTextFieldController extends FieldControllerBase implements IFi
                     continue;
                 }
 
-                if (curField.getText().length() == 0) {
+                if (curField.getText().isEmpty()) {
                     continue;
                 }
 

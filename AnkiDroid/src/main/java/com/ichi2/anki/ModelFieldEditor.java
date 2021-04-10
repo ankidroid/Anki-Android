@@ -186,7 +186,7 @@ public class ModelFieldEditor extends AnkiActivity implements LocaleSelectionDia
             }
         }
         input = input.substring(offset).trim();
-        if (input.length() == 0) {
+        if (input.isEmpty()) {
             UIUtils.showThemedToast(this, getResources().getString(R.string.toast_empty_name), true);
             return null;
         }

@@ -48,7 +48,7 @@ public class Replacement extends ParsedNode {
     }
 
     private static String runHint(String txt, String tag) {
-        if (txt.trim().length() == 0) {
+        if (txt.trim().isEmpty()) {
             return "";
         }
         Resources res = AnkiDroidApp.getAppResources();

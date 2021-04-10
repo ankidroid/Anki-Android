@@ -333,7 +333,7 @@ public class Collection implements CollectionGetter {
                     return buf.toString();
                 }
                 String res = cursor.getString(0);
-                if (res.length() == 0) {
+                if (res.isEmpty()) {
                       break;
                 }
                 buf.append(res);

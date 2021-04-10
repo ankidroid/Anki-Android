@@ -186,7 +186,7 @@ public class NoteImporter extends Importer {
             String fld0 = n.mFields.get(fld0index);
             long csum = fieldChecksum(fld0);
             // first field must exist
-            if (fld0 == null || fld0.length() == 0) {
+            if (fld0 == null || fld0.isEmpty()) {
                 getLog().add(getString(R.string.note_importer_error_empty_first_field, TextUtils.join(" ", n.mFields)));
                 continue;
             }

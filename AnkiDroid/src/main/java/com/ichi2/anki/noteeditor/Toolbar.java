@@ -339,7 +339,7 @@ public class Toolbar extends FrameLayout {
         public StringFormat format(String s) {
             StringFormat stringFormat = new StringFormat();
             stringFormat.result = mPrefix + s + mSuffix;
-            if (s.length() == 0) {
+            if (s.isEmpty()) {
                 stringFormat.start = mPrefix.length();
                 stringFormat.end = mPrefix.length();
             } else {

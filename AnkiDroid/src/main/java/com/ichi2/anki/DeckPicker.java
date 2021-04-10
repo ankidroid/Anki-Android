@@ -1493,7 +1493,7 @@ public class DeckPicker extends NavigationDrawerActivity implements
                     res.getString(messageResource),
                     NotificationChannels.Channel.SYNC);
         } else {
-            if (syncMessage == null || syncMessage.length() == 0) {
+            if (syncMessage == null || syncMessage.isEmpty()) {
                 if (messageResource == R.string.youre_offline && !Connection.getAllowSyncOnNoConnection()) {
                     //#6396 - Add a temporary "Try Anyway" button until we sort out `isOnline`
                     View root = this.findViewById(R.id.root_layout);
@@ -1717,7 +1717,7 @@ public class DeckPicker extends NavigationDrawerActivity implements
     public void sync(Connection.ConflictResolution syncConflictResolution) {
         SharedPreferences preferences = AnkiDroidApp.getSharedPrefs(getBaseContext());
         String hkey = preferences.getString("hkey", "");
-        if (hkey.length() == 0) {
+        if (hkey.isEmpty()) {
             Timber.w("User not logged in");
             mPullToSyncWrapper.setRefreshing(false);
             showSyncErrorDialog(SyncErrorDialog.DIALOG_USER_NOT_LOGGED_IN_SYNC);

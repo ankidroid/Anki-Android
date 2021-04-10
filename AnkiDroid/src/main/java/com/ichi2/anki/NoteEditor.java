@@ -1990,7 +1990,7 @@ public class NoteEditor extends AnkiActivity implements
                 Toolbar.TextWrapper.StringFormat stringFormat = new Toolbar.TextWrapper.StringFormat();
                 String prefix = "{{c" + getNextClozeIndex() + "::";
                 stringFormat.result = prefix + s + "}}";
-                if (s.length() == 0) {
+                if (s.isEmpty()) {
                     stringFormat.start = prefix.length();
                     stringFormat.end = prefix.length();
                 } else {

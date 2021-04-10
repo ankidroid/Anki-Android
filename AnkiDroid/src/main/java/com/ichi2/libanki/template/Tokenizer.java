@@ -234,7 +234,7 @@ public class Tokenizer implements Iterator<Tokenizer.Token> {
      */
     @Override
     public Token next() throws TemplateError.NoClosingBrackets {
-        if (mTemplate.length() == 0) {
+        if (mTemplate.isEmpty()) {
             throw new NoSuchElementException();
         }
         IResult ir = next_token(mTemplate);

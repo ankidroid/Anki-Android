@@ -184,7 +184,7 @@ public class CsvSniffer {
 
     private char getCharOrNull(Matcher m, String delim) {
         String group = m.group(delim);
-        if (group == null || group.length() == 0) {
+        if (group == null || group.isEmpty()) {
             return '\0';
         }
         return group.charAt(0);
@@ -214,7 +214,7 @@ public class CsvSniffer {
         String[] samples = input.split("\n");
         List<String> data = new ArrayList<>(samples.length);
         for (String s : samples) {
-            if (s == null || s.length() == 0) {
+            if (s == null || s.isEmpty()) {
                 continue;
             }
             data.add(s);
