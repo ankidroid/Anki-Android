@@ -63,8 +63,6 @@ import androidx.vectordrawable.graphics.drawable.VectorDrawableCompat;
 
 import com.ichi2.anki.cardviewer.CardAppearance;
 import com.ichi2.anki.dialogs.ConfirmationDialog;
-import com.ichi2.anki.multimediacard.AudioPlayer;
-import com.ichi2.anki.multimediacard.AudioRecorder;
 import com.ichi2.anki.multimediacard.AudioView;
 import com.ichi2.anki.dialogs.RescheduleDialog;
 import com.ichi2.anki.reviewer.PeripheralKeymap;
@@ -103,13 +101,13 @@ public class Reviewer extends AbstractFlashcardViewer {
     private boolean mPrefFullscreenReview = false;
     private static final int ADD_NOTE = 12;
     private static final int REQUEST_AUDIO_PERMISSION = 0;
-    private LinearLayout colorPalette;
+    private LinearLayout mColorPalette;
 
     // TODO: Consider extracting to ViewModel
     // Card counts
-    private SpannableString newCount;
-    private SpannableString lrnCount;
-    private SpannableString revCount;
+    private SpannableString mNewCount;
+    private SpannableString mLrnCount;
+    private SpannableString mRevCount;
 
     private TextView mTextBarNew;
     private TextView mTextBarLearn;
@@ -118,7 +116,7 @@ public class Reviewer extends AbstractFlashcardViewer {
     private boolean mPrefHideDueCount;
 
     // ETA
-    private int eta;
+    private int mEta;
     private boolean mPrefShowETA;
 
 
@@ -178,7 +176,7 @@ public class Reviewer extends AbstractFlashcardViewer {
             selectDeckFromExtra();
         }
 
-        colorPalette = findViewById(R.id.whiteboard_pen_color);
+        mColorPalette = findViewById(R.id.whiteboard_pen_color);
 
         startLoadingCollection();
     }
@@ -362,10 +360,10 @@ public class Reviewer extends AbstractFlashcardViewer {
             showDeleteNoteDialog();
         } else if (itemId == R.id.action_change_whiteboard_pen_color) {
             Timber.i("Reviewer:: Pen Color button pressed");
-            if (colorPalette.getVisibility() == View.GONE) {
-                colorPalette.setVisibility(View.VISIBLE);
+            if (mColorPalette.getVisibility() == View.GONE) {
+                mColorPalette.setVisibility(View.VISIBLE);
             } else {
-                colorPalette.setVisibility(View.GONE);
+                mColorPalette.setVisibility(View.GONE);
             }
         } else if (itemId == R.id.action_save_whiteboard) {
             Timber.i("Reviewer:: Save whiteboard button pressed");
@@ -435,7 +433,7 @@ public class Reviewer extends AbstractFlashcardViewer {
         setWhiteboardEnabledState(mPrefWhiteboard);
         setWhiteboardVisibility(mPrefWhiteboard);
         if (!mPrefWhiteboard) {
-            colorPalette.setVisibility(View.GONE);
+            mColorPalette.setVisibility(View.GONE);
         }
         refreshActionBar();
     }
@@ -663,7 +661,7 @@ public class Reviewer extends AbstractFlashcardViewer {
                 whiteboardColorPaletteIcon.setAlpha(Themes.ALPHA_ICON_DISABLED_LIGHT);
                 change_pen_color_icon.setEnabled(false);
                 change_pen_color_icon.setIcon(whiteboardColorPaletteIcon);
-                colorPalette.setVisibility(View.GONE);
+                mColorPalette.setVisibility(View.GONE);
             }
         } else {
             toggle_whiteboard_icon.setTitle(R.string.enable_whiteboard);
@@ -941,37 +939,37 @@ public class Reviewer extends AbstractFlashcardViewer {
 
         if (actionBar != null) {
             if (mPrefShowETA) {
-                eta = mSched.eta(counts, false);
-                actionBar.setSubtitle(Utils.remainingTime(AnkiDroidApp.getInstance(), eta * 60));
+                mEta = mSched.eta(counts, false);
+                actionBar.setSubtitle(Utils.remainingTime(AnkiDroidApp.getInstance(), mEta * 60));
             }
         }
 
 
-        newCount = new SpannableString(String.valueOf(counts.getNew()));
-        lrnCount = new SpannableString(String.valueOf(counts.getLrn()));
-        revCount = new SpannableString(String.valueOf(counts.getRev()));
+        mNewCount = new SpannableString(String.valueOf(counts.getNew()));
+        mLrnCount = new SpannableString(String.valueOf(counts.getLrn()));
+        mRevCount = new SpannableString(String.valueOf(counts.getRev()));
         if (mPrefHideDueCount) {
-            revCount = new SpannableString("???");
+            mRevCount = new SpannableString("???");
         }
 
         switch (mSched.countIdx(mCurrentCard)) {
             case NEW:
-                newCount.setSpan(new UnderlineSpan(), 0, newCount.length(), 0);
+                mNewCount.setSpan(new UnderlineSpan(), 0, mNewCount.length(), 0);
                 break;
             case LRN:
-                lrnCount.setSpan(new UnderlineSpan(), 0, lrnCount.length(), 0);
+                mLrnCount.setSpan(new UnderlineSpan(), 0, mLrnCount.length(), 0);
                 break;
             case REV:
-                revCount.setSpan(new UnderlineSpan(), 0, revCount.length(), 0);
+                mRevCount.setSpan(new UnderlineSpan(), 0, mRevCount.length(), 0);
                 break;
             default:
                 Timber.w("Unknown card type %s", mSched.countIdx(mCurrentCard));
                 break;
         }
 
-        mTextBarNew.setText(newCount);
-        mTextBarLearn.setText(lrnCount);
-        mTextBarReview.setText(revCount);
+        mTextBarNew.setText(mNewCount);
+        mTextBarLearn.setText(mLrnCount);
+        mTextBarReview.setText(mRevCount);
     }
 
     @Override
@@ -1438,25 +1436,25 @@ public class Reviewer extends AbstractFlashcardViewer {
         @JavascriptInterface
         @Override
         public String ankiGetNewCardCount() {
-            return newCount.toString();
+            return mNewCount.toString();
         }
 
         @JavascriptInterface
         @Override
         public String ankiGetLrnCardCount() {
-            return lrnCount.toString();
+            return mLrnCount.toString();
         }
 
         @JavascriptInterface
         @Override
         public String ankiGetRevCardCount() {
-            return revCount.toString();
+            return mRevCount.toString();
         }
 
         @JavascriptInterface
         @Override
         public int ankiGetETA() {
-            return eta;
+            return mEta;
         }
     }
 }

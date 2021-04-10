@@ -54,7 +54,6 @@ import com.ichi2.libanki.Deck;
 import com.ichi2.themes.StyledProgressDialog;
 import com.ichi2.utils.BooleanGetter;
 import com.ichi2.utils.HtmlUtils;
-import com.ichi2.utils.UiUtil;
 
 import timber.log.Timber;
 
@@ -301,7 +300,7 @@ public class StudyOptionsFragment extends Fragment implements Toolbar.OnMenuItem
         parent.addView(newView);
     }
 
-    private final TaskListener<Card, BooleanGetter> undoListener = new TaskListener<Card, BooleanGetter>() {
+    private final TaskListener<Card, BooleanGetter> mUndoListener = new TaskListener<Card, BooleanGetter>() {
         @Override
         public void onPreExecute() {
 
@@ -320,7 +319,7 @@ public class StudyOptionsFragment extends Fragment implements Toolbar.OnMenuItem
         int itemId = item.getItemId();
         if (itemId == R.id.action_undo) {
             Timber.i("StudyOptionsFragment:: Undo button pressed");
-            TaskManager.launchCollectionTask(new CollectionTask.Undo(), undoListener);
+            TaskManager.launchCollectionTask(new CollectionTask.Undo(), mUndoListener);
             return true;
         } else if (itemId == R.id.action_deck_or_study_options) {
             Timber.i("StudyOptionsFragment:: Deck or study options button pressed");

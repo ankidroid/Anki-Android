@@ -70,7 +70,7 @@ public abstract class NavigationDrawerActivity extends AnkiActivity implements N
     /**
      * runnable that will be executed after the drawer has been closed.
      */
-    private Runnable pendingRunnable;
+    private Runnable mPendingRunnable;
 
     // Navigation drawer initialisation
     protected void initNavigationDrawer(View mainView) {
@@ -111,9 +111,9 @@ public abstract class NavigationDrawerActivity extends AnkiActivity implements N
                 // If animations are disabled, this is executed before onNavigationItemSelected is called
                 // PERF: May be able to reduce this delay
                 new Handler().postDelayed(() -> {
-                    if (pendingRunnable != null) {
-                        new Handler().post(pendingRunnable);
-                        pendingRunnable = null;
+                    if (mPendingRunnable != null) {
+                        new Handler().post(mPendingRunnable);
+                        mPendingRunnable = null;
                     }
                 }, 100);
 
@@ -293,7 +293,7 @@ public abstract class NavigationDrawerActivity extends AnkiActivity implements N
          * This runnable will be executed in onDrawerClosed(...)
          * to make the animation more fluid on older devices.
          */
-        pendingRunnable = () -> {
+        mPendingRunnable = () -> {
             // Take action if a different item selected
             int itemId = item.getItemId();
             if (itemId == R.id.nav_decks) {

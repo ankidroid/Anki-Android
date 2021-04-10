@@ -78,7 +78,7 @@ public class TranslationActivity extends FragmentActivity implements DialogInter
     private Spinner mSpinnerFrom;
     private Spinner mSpinnerTo;
     @SuppressWarnings("deprecation") // tracked in github as #5020
-    private android.app.ProgressDialog progressDialog = null;
+    private android.app.ProgressDialog mProgressDialog = null;
     private String mWebServiceAddress;
     private ArrayList<String> mPossibleTranslations;
     private String mLangCodeTo;
@@ -193,7 +193,7 @@ public class TranslationActivity extends FragmentActivity implements DialogInter
 
         @Override
         protected void onPostExecute(String result) {
-            progressDialog.dismiss();
+            mProgressDialog.dismiss();
             mTranslation = result;
             showPickTranslationDialog();
         }
@@ -208,11 +208,11 @@ public class TranslationActivity extends FragmentActivity implements DialogInter
             return;
         }
 
-        progressDialog = android.app.ProgressDialog.show(this, getText(R.string.multimedia_editor_progress_wait_title),
+        mProgressDialog = android.app.ProgressDialog.show(this, getText(R.string.multimedia_editor_progress_wait_title),
                 getText(R.string.multimedia_editor_trans_translating_online), true, false);
 
-        progressDialog.setCancelable(true);
-        progressDialog.setOnCancelListener(this);
+        mProgressDialog.setCancelable(true);
+        mProgressDialog.setOnCancelListener(this);
 
         mWebServiceAddress = computeAddress();
 
@@ -221,7 +221,7 @@ public class TranslationActivity extends FragmentActivity implements DialogInter
             mTranslationLoadPost.execute();
         } catch (Exception e) {
             Timber.w(e);
-            progressDialog.dismiss();
+            mProgressDialog.dismiss();
             showToast(getText(R.string.multimedia_editor_something_wrong));
         }
     }
@@ -427,8 +427,8 @@ public class TranslationActivity extends FragmentActivity implements DialogInter
 
     private void dismissCarefullyProgressDialog() {
         try {
-            if ((progressDialog != null) && progressDialog.isShowing()) {
-                    progressDialog.dismiss();
+            if ((mProgressDialog != null) && mProgressDialog.isShowing()) {
+                    mProgressDialog.dismiss();
             }
         } catch (Exception e) {
             Timber.w(e);

@@ -75,7 +75,7 @@ public class ModelBrowser extends AnkiActivity {
     private ArrayList<Long> mModelIds;
     private ArrayList<DisplayPair> mModelDisplayList;
 
-    private Collection col;
+    private Collection mCol;
     private ActionBar mActionBar;
 
     //Dialogue used in renaming
@@ -240,7 +240,7 @@ public class ModelBrowser extends AnkiActivity {
     @Override
     public void onCollectionLoaded(Collection col) {
         super.onCollectionLoaded(col);
-        this.col = col;
+        this.mCol = col;
         TaskManager.launchCollectionTask(new CollectionTask.CountModels(), loadingModelsHandler());
     }
 
@@ -384,17 +384,17 @@ public class ModelBrowser extends AnkiActivity {
         if (modelName.length() > 0) {
             int nbStdModels = StdModels.STD_MODELS.length;
             if (position < nbStdModels) {
-                model = StdModels.STD_MODELS[position].add(col);
+                model = StdModels.STD_MODELS[position].add(mCol);
             } else {
                 //New model
                 //Model that is being cloned
                 Model oldModel = mModels.get(position - nbStdModels).deepClone();
-                Model newModel = StdModels.BASIC_MODEL.add(col);
+                Model newModel = StdModels.BASIC_MODEL.add(mCol);
                 oldModel.put("id", newModel.getLong("id"));
                 model = oldModel;
             }
             model.put("name", modelName);
-            col.getModels().update(model);
+            mCol.getModels().update(model);
             fullRefresh();
         } else {
             showToast(getResources().getString(R.string.toast_empty_name));
@@ -408,14 +408,14 @@ public class ModelBrowser extends AnkiActivity {
     private void deleteModelDialog() {
         if (mModelIds.size() > 1) {
             Runnable confirm = () -> {
-                col.modSchemaNoCheck();
+                mCol.modSchemaNoCheck();
                 deleteModel();
                 dismissContextMenu();
             };
             Runnable cancel = this::dismissContextMenu;
 
             try {
-                col.modSchema();
+                mCol.modSchema();
                 ConfirmationDialog d = new ConfirmationDialog();
                 d.setArgs(getResources().getString(R.string.model_delete_warning));
                 d.setConfirm(confirm);
@@ -457,7 +457,7 @@ public class ModelBrowser extends AnkiActivity {
                                             .replaceAll("[\"\\n\\r]", "");
                                     if (deckName.length() > 0) {
                                         model.put("name", deckName);
-                                        col.getModels().update(model);
+                                        mCol.getModels().update(model);
                                         mModels.get(mModelListPosition).put("name", deckName);
                                         mModelDisplayList.set(mModelListPosition,
                                                 new DisplayPair(mModels.get(mModelListPosition).getString("name"),

@@ -16,6 +16,7 @@
 
 package com.ichi2.libanki;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 
@@ -161,6 +162,7 @@ class AnkiExporter extends Exporter {
     String mMediaDir;
     // Actual capacity will be set when known, if media are imported.
     final ArrayList<String> mMediaFiles = new ArrayList<>(0);
+    @SuppressLint("FieldNamingPatternDetector")
     boolean _v2sched;
 
 
@@ -567,7 +569,7 @@ public final class AnkiPackageExporter extends AnkiExporter {
  * @author Tim
  */
 class ZipFile {
-    private final int BUFFER_SIZE = 1024;
+    private static final int BUFFER_SIZE = 1024;
     private ZipArchiveOutputStream mZos;
 
 
