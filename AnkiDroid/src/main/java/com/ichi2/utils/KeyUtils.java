@@ -18,13 +18,16 @@ package com.ichi2.utils;
 
 import android.view.KeyEvent;
 
+import androidx.annotation.VisibleForTesting;
+
 public class KeyUtils {
+    @VisibleForTesting
     public static boolean isDigit(KeyEvent event) {
         int unicodeChar = event.getUnicodeChar(0);
         return unicodeChar >= '0' && unicodeChar <= '9';
     }
 
-
+    @VisibleForTesting
     public static int getDigit(KeyEvent event) {
         int unicodeChar = event.getUnicodeChar(0);
         return unicodeChar - '0';
