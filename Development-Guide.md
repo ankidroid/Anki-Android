@@ -145,6 +145,17 @@ After this you should find a coverage report that integrates unit and integratio
 
 **Note:** Some of the connected tests involve the deletion of models, which will force a full-sync, so it's not recommended to try running the tests on your main device.
 
+
+### Lint
+
+AnkiDroid defines custom lint rules to enforce code conventions and ensure that bugs are not introduced. We run these for every pull request on the `Code Quality Checks / Lint Release (pull_request)` check.
+
+To run these manually, open a terminal (either in Android Studio, or in `%AnkiDroidRoot%`) and execute:
+
+```
+./gradlew lintRelease
+```
+
 ### Troubleshooting step
 If tests do not behave as expected, you can replace `./gradlew` by `./gradlew clean` to clean the directory before running test.
 
