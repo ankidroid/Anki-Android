@@ -27,7 +27,7 @@ import com.wildplot.android.rendering.interfaces.Legendable;
 /**
  * BarGraph uses a point matrix or a function to render bar graphs on PlotSheet object
  */
-@SuppressLint("FieldNamingPatternDetector")
+@SuppressLint("NonPublicNonStaticFieldName")
 public class BarGraph implements Drawable, Legendable {
 
     private String mName = "";

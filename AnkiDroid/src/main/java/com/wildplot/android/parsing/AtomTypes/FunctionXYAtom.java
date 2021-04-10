@@ -29,7 +29,7 @@ import java.util.regex.Pattern;
 /**
  * @author Michael Goldbach
  */
-@SuppressLint("FieldNamingPatternDetector")
+@SuppressLint("NonPublicNonStaticFieldName")
 public class FunctionXYAtom implements TreeElement {
 
     private Atom.AtomType atomType = Atom.AtomType.FUNCTION_X;

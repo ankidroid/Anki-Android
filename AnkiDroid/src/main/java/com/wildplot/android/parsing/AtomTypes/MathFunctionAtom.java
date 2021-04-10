@@ -23,7 +23,7 @@ import com.wildplot.android.parsing.TopLevelParser;
 import com.wildplot.android.parsing.TreeElement;
 
 
-@SuppressLint("FieldNamingPatternDetector")
+@SuppressLint("NonPublicNonStaticFieldName")
 public class MathFunctionAtom implements TreeElement {
 
     private final TopLevelParser parser;
