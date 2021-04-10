@@ -52,6 +52,7 @@ import androidx.annotation.IdRes;
 import androidx.annotation.MenuRes;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.annotation.PluralsRes;
 import androidx.annotation.VisibleForTesting;
 import androidx.appcompat.view.menu.MenuBuilder;
 import androidx.appcompat.app.ActionBar;
@@ -129,13 +130,13 @@ public class Reviewer extends AbstractFlashcardViewer {
 
 
     private final ScheduleCollectionTaskListener mRescheduleCardHandler = new ScheduleCollectionTaskListener() {
-        protected int getToastResourceId() {
+        protected @PluralsRes int getToastResourceId() {
             return R.plurals.reschedule_cards_dialog_acknowledge;
         }
     };
 
     private final ScheduleCollectionTaskListener mResetProgressCardHandler = new ScheduleCollectionTaskListener() {
-        protected int getToastResourceId() {
+        protected @PluralsRes int getToastResourceId() {
             return R.plurals.reset_cards_dialog_acknowledge;
         }
     };
@@ -146,7 +147,7 @@ public class Reviewer extends AbstractFlashcardViewer {
     /** We need to listen for and handle reschedules / resets very similarly */
     abstract class ScheduleCollectionTaskListener extends NextCardHandler<PairWithBoolean<Card[]>> {
 
-        abstract protected int getToastResourceId();
+        abstract protected @PluralsRes int getToastResourceId();
 
 
         @Override
