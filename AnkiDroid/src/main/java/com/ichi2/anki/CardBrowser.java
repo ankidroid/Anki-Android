@@ -2338,7 +2338,7 @@ public class CardBrowser extends NavigationDrawerActivity implements
 
 
         @Override
-        public Object getItem(int position) {
+        public CardCache getItem(int position) {
             return getCards().get(position);
         }
 
