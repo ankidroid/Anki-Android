@@ -20,6 +20,7 @@
             android:id="@+id/CardEditorScroll"
             android:layout_width="match_parent"
             android:layout_height="fill_parent"
+            android:layout_marginBottom="30dp"
             android:layout_gravity="center_horizontal"
             android:padding="5dp" >
 

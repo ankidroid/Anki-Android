@@ -40,6 +40,8 @@
 
         <androidx.appcompat.widget.AppCompatImageButton
             android:id="@+id/note_editor_toolbar_button_bold"
+            android:layout_height="48dp"
+            android:layout_width="48dp"
             app:srcCompat="@drawable/ic_format_bold_black_24dp"
             android:contentDescription="@string/format_insert_bold"
             android:tag="b"
@@ -47,6 +49,8 @@
 
         <androidx.appcompat.widget.AppCompatImageButton
             android:id="@+id/note_editor_toolbar_button_italic"
+            android:layout_height="48dp"
+            android:layout_width="48dp"
             app:srcCompat="@drawable/ic_format_italic_black_24dp"
             android:contentDescription="@string/format_insert_italic"
             android:tag="i"
@@ -54,6 +58,8 @@
 
         <androidx.appcompat.widget.AppCompatImageButton
             android:id="@+id/note_editor_toolbar_button_underline"
+            android:layout_height="48dp"
+            android:layout_width="48dp"
             app:srcCompat="@drawable/ic_format_underlined_black_24dp"
             android:contentDescription="@string/format_insert_underline"
             android:tag="u"
@@ -61,6 +67,8 @@
 
         <androidx.appcompat.widget.AppCompatImageButton
             android:id="@+id/note_editor_toolbar_button_horizontal_rule"
+            android:layout_height="48dp"
+            android:layout_width="48dp"
             app:srcCompat="@drawable/ic_horizontal_rule_black_24dp"
             android:contentDescription="@string/insert_horizontal_line"
             android:tag="r"
@@ -68,6 +76,8 @@
 
         <androidx.appcompat.widget.AppCompatImageButton
             android:id="@+id/note_editor_toolbar_button_title"
+            android:layout_height="48dp"
+            android:layout_width="48dp"
             app:srcCompat="@drawable/ic_format_title_black_24dp"
             android:contentDescription="@string/insert_heading"
             android:tag="h"
@@ -75,6 +85,8 @@
 
         <androidx.appcompat.widget.AppCompatImageButton
             android:id="@+id/note_editor_toolbar_button_font_size"
+            android:layout_height="48dp"
+            android:layout_width="48dp"
             android:contentDescription="@string/format_font_size"
             app:srcCompat="@drawable/ic_format_font_size_24dp"
             android:tag="f"
@@ -83,6 +95,8 @@
 
         <androidx.appcompat.widget.AppCompatImageButton
             android:id="@+id/note_editor_toolbar_button_insert_mathjax"
+            android:layout_height="48dp"
+            android:layout_width="48dp"
             android:contentDescription="@string/insert_mathjax"
             app:srcCompat="@drawable/ic_add_equation_black_24dp"
             android:tag="m"
@@ -93,6 +107,8 @@
          so make it invisible and bring it back and add the listener when appropriate -->
         <androidx.appcompat.widget.AppCompatImageButton
             android:id="@+id/note_editor_toolbar_button_cloze"
+            android:layout_height="48dp"
+            android:layout_width="48dp"
             android:visibility="gone"
             android:contentDescription="@string/insert_cloze"
             app:srcCompat="@drawable/ic_cloze_black_24dp"

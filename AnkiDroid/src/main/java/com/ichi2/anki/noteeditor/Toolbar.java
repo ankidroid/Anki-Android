@@ -206,7 +206,7 @@ public class Toolbar extends FrameLayout {
         // Hack - items are truncated from the scrollview
         View v = findViewById(R.id.editor_toolbar_internal);
 
-        int expectedWidth = getVisibleItemCount() * dpToPixels(32);
+        int expectedWidth = getVisibleItemCount() * dpToPixels(56);
         int width = getScreenWidth();
         LayoutParams p = new LayoutParams(v.getLayoutParams());
         p.gravity = Gravity.CENTER_VERTICAL | ((expectedWidth > width) ? Gravity.LEFT : Gravity.CENTER_HORIZONTAL);
