@@ -43,6 +43,7 @@ public class ActionButtonStatusTest extends RobolectricTest {
     public void allCustomButtonsCanBeDisabled() {
         Set<String> reviewerExpectedKeys = getCustomButtonsExpectedKeys();
         Set<String> actualPreferenceKeys = PreferenceUtils.getAllCustomButtonKeys(getTargetContext());
+        reviewerExpectedKeys.add("customButtonLookup"); // preference isn't read if Lookup is disabled.
 
         assertThat("Each button in the Action Bar must be modifiable in Preferences - Reviewer - App Bar Buttons",
                 reviewerExpectedKeys,
