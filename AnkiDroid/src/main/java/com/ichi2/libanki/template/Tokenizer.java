@@ -34,7 +34,7 @@ public class Tokenizer implements Iterator<Tokenizer.Token> {
 
     @Override
     public boolean hasNext() {
-        return mTemplate.length() > 0 && !mFailed;
+        return !mTemplate.isEmpty() && !mFailed;
     }
 
 

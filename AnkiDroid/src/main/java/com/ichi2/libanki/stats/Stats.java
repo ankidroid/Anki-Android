@@ -127,7 +127,7 @@ public class Stats {
      */
     public int[] calculateTodayStats(){
         String lim = _getDeckFilter();
-        if (lim.length() > 0) {
+        if (!lim.isEmpty()) {
             lim = " and " + lim;
         }
 
@@ -271,7 +271,7 @@ public class Stats {
             lims.add(dayFilter);
         }
         String lim = _getDeckFilter().replaceAll("[\\[\\]]", "");
-        if (lim.length() > 0){
+        if (!lim.isEmpty()){
             lims.add(lim);
         }
 
@@ -568,7 +568,7 @@ public class Stats {
             lims.add("id > " + ((mCol.getSched().getDayCutoff() - ((num + 1) * chunk * SECONDS_PER_DAY)) * 1000));
         }
         String lim = _getDeckFilter().replaceAll("[\\[\\]]", "");
-        if (lim.length() > 0) {
+        if (!lim.isEmpty()) {
             lims.add(lim);
         }
         if (lims.size() > 0) {
@@ -862,7 +862,7 @@ public class Stats {
         mType = type;
         String lim = _getDeckFilter().replaceAll("[\\[\\]]", "");
 
-        if (lim.length() > 0) {
+        if (!lim.isEmpty()) {
             lim = " and " + lim;
         }
         int rolloverHour;
@@ -986,7 +986,7 @@ public class Stats {
         mType = type;
         String lim = _getDeckFilter().replaceAll("[\\[\\]]", "");
 
-        if (lim.length() > 0) {
+        if (!lim.isEmpty()) {
             lim = " and " + lim;
         }
 
@@ -1143,7 +1143,7 @@ public class Stats {
         Vector<String> lims = new Vector<>();
         int days;
 
-        if (lim.length() > 0) {
+        if (!lim.isEmpty()) {
             lims.add(lim);
         }
 

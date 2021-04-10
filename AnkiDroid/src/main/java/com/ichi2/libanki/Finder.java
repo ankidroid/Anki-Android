@@ -182,7 +182,7 @@ public class Finder {
                     } else {
                         token += c;
                     }
-                } else if (token.length() != 0) {
+                } else if (!token.isEmpty()) {
                     // quotes are allowed to start directly after a :
                     if (token.endsWith(":")) {
                         inQuote = c;
@@ -196,7 +196,7 @@ public class Finder {
             } else if (c == ' ') {
                 if (inQuote != 0) {
                     token += c;
-                } else if (token.length() != 0) {
+                } else if (!token.isEmpty()) {
                     // space marks token finished
                     tokens.add(token);
                     token = "";
@@ -206,7 +206,7 @@ public class Finder {
                 if (inQuote != 0) {
                     token += c;
                 } else {
-                    if (c == ')' && token.length() != 0) {
+                    if (c == ')' && !token.isEmpty()) {
                         tokens.add(token);
                         token = "";
                     }
@@ -214,7 +214,7 @@ public class Finder {
                 }
                 // negation
             } else if (c == '-') {
-                if (token.length() != 0) {
+                if (!token.isEmpty()) {
                     token += c;
                 } else if (tokens.size() == 0 || !"-".equals(tokens.get(tokens.size() - 1))) {
                     tokens.add("-");
@@ -225,7 +225,7 @@ public class Finder {
             }
         }
         // if we finished in a token, add it
-        if (token.length() != 0) {
+        if (!token.isEmpty()) {
             tokens.add(token);
         }
         return tokens.toArray(new String[tokens.size()]);

@@ -51,7 +51,7 @@ public class FunctionXAtom implements TreeElement {
 
             Pattern p = Pattern.compile("[^a-zA-Z0-9]");
             boolean hasSpecialChar = p.matcher(funcName).find();
-            if (!hasSpecialChar && (funcName.length() > 0)) {
+            if (!hasSpecialChar && (!funcName.isEmpty())) {
                 String expressionString = funcString.substring(leftBracket + 1, rightBracket);
                 Expression expressionInBrackets = new Expression(expressionString, parser);
                 boolean isValidExpression = expressionInBrackets.getExpressionType() != Expression.ExpressionType.INVALID;

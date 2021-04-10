@@ -78,7 +78,7 @@ public class Atom implements TreeElement {
 
 
     private boolean initAsExpInBrackets(String atomString) {
-        if (atomString.length() > 0 && atomString.charAt(0) == '(' && atomString.charAt(atomString.length() - 1) == ')') {
+        if (!atomString.isEmpty() && atomString.charAt(0) == '(' && atomString.charAt(atomString.length() - 1) == ')') {
             String expressionString = atomString.substring(1, atomString.length() - 1);
             Expression expressionInBrackets = new Expression(expressionString, parser);
             boolean isValidExpressionInBrackets = expressionInBrackets.getExpressionType() != Expression.ExpressionType.INVALID;

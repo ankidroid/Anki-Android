@@ -148,7 +148,7 @@ public class CsvSniffer {
                 delims.put(key, delims.getOrDefault(key, 0) + 1);
             }
 
-            if (m.space != null && m.space.length() > 0) {
+            if (m.space != null && !m.space.isEmpty()) {
                 spaces += 1;
             }
         }

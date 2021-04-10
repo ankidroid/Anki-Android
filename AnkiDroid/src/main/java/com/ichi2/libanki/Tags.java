@@ -271,7 +271,7 @@ public class Tags {
     public ArrayList<String> split(String tags) {
         ArrayList<String> list = new ArrayList<>(tags.length());
         for (String s : tags.replace('\u3000', ' ').split("\\s")) {
-            if (s.length() > 0) {
+            if (!s.isEmpty()) {
                 list.add(s);
             }
         }

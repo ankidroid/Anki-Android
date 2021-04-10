@@ -868,7 +868,7 @@ public class Utils {
         // Use android.net.Uri class to ensure whole path is properly encoded
         // File.toURL() does not work here, and URLEncoder class is not directly usable
         // with existing slashes
-        if (mediaDir.length() != 0 && !"null".equalsIgnoreCase(mediaDir)) {
+        if (!mediaDir.isEmpty() && !"null".equalsIgnoreCase(mediaDir)) {
             Uri mediaDirUri = Uri.fromFile(new File(mediaDir));
             return mediaDirUri.toString() +"/";
         }

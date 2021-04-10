@@ -32,7 +32,7 @@ public class StringUtils {
         String[] split = WHITESPACE_PATTERN.split(value);
         List<String> ret = new ArrayList<>(split.length);
         for (String s : split) {
-            if(s.length() > 0) {
+            if(!s.isEmpty()) {
                 ret.add(s);
             }
         }

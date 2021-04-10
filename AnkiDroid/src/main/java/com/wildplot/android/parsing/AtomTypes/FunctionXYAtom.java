@@ -63,7 +63,7 @@ public class FunctionXYAtom implements TreeElement {
 
                 Pattern p = Pattern.compile("[^a-zA-Z0-9]");
                 boolean hasSpecialChar = p.matcher(funcName).find();
-                if (!hasSpecialChar && (funcName.length() > 0)) {
+                if (!hasSpecialChar && (!funcName.isEmpty())) {
 
                     String leftExpressionString = funcString.substring(leftBracket + 1, comma);
                     String rightExpressionString = funcString.substring(comma + 1, rightBracket);

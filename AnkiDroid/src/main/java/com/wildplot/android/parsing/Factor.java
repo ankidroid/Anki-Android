@@ -54,7 +54,7 @@ public class Factor implements TreeElement {
 
 
     private boolean initAsPlusFactor(String factorString) {
-        if (factorString.length() > 0 && factorString.charAt(0) == '+') {
+        if (!factorString.isEmpty() && factorString.charAt(0) == '+') {
             String leftSubString = factorString.substring(1);
             Factor leftFactor = new Factor(leftSubString, parser);
             boolean isValidFactor = leftFactor.getFactorType() != FactorType.INVALID;
@@ -70,7 +70,7 @@ public class Factor implements TreeElement {
 
 
     private boolean initAsMinusFactor(String factorString) {
-        if (factorString.length() > 0 && factorString.charAt(0) == '-') {
+        if (!factorString.isEmpty() && factorString.charAt(0) == '-') {
             String leftSubString = factorString.substring(1);
             Factor leftFactor = new Factor(leftSubString, parser);
             boolean isValidFactor = leftFactor.getFactorType() != FactorType.INVALID;

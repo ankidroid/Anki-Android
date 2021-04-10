@@ -112,7 +112,7 @@ public class RemoteServer extends HttpSyncer {
 
     /** Note: these conversion helpers aren't needed in libanki as type deduction occurs automatically there **/
     private JSONObject parseDict(String s) {
-        if (!"null".equalsIgnoreCase(s) && s.length() != 0) {
+        if (!"null".equalsIgnoreCase(s) && !s.isEmpty()) {
             return new JSONObject(s);
         } else {
             return new JSONObject();

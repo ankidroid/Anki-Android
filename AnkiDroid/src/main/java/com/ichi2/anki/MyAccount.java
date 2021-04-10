@@ -110,7 +110,7 @@ public class MyAccount extends AnkiActivity {
         initAllContentViews();
 
         SharedPreferences preferences = AnkiDroidApp.getSharedPrefs(getBaseContext());
-        if (preferences.getString("hkey", "").length() > 0) {
+        if (!preferences.getString("hkey", "").isEmpty()) {
             switchToState(STATE_LOGGED_IN);
         } else {
             switchToState(STATE_LOG_IN);

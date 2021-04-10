@@ -1669,7 +1669,7 @@ public class NoteEditor extends AnkiActivity implements
     private void setMMButtonListener(ImageButton mediaButton, final int index) {
         mediaButton.setOnClickListener(v -> {
             Timber.i("NoteEditor:: Multimedia button pressed for field %d", index);
-            if (mEditorNote.items()[index][1].length() > 0) {
+            if (!mEditorNote.items()[index][1].isEmpty()) {
                 final Collection col = CollectionHelper.getInstance().getCol(NoteEditor.this);
                 // If the field already exists then we start the field editor, which figures out the type
                 // automatically
@@ -1794,7 +1794,7 @@ public class NoteEditor extends AnkiActivity implements
                         return;
                     }
                     String[] currentFieldStrings = getCurrentFieldStrings();
-                    if (currentFieldStrings.length != 2 || currentFieldStrings[1].length() > 0) {
+                    if (currentFieldStrings.length != 2 || !currentFieldStrings[1].isEmpty()) {
                         // we only decorate on 2-field cards while second field is still empty
                         return;
                     }

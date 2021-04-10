@@ -82,7 +82,7 @@ public enum SyncStatus {
     private static boolean isLoggedIn() {
         SharedPreferences preferences = AnkiDroidApp.getSharedPrefs(AnkiDroidApp.getInstance());
         String hkey = preferences.getString("hkey", "");
-        return hkey != null && hkey.length() != 0;
+        return hkey != null && !hkey.isEmpty();
     }
 
 

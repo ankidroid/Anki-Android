@@ -38,7 +38,7 @@ public class VariableAtom implements TreeElement {
         this.varName = factorString;
         Pattern p = Pattern.compile("[^a-zA-Z0-9]");
         boolean hasSpecialChar = p.matcher(varName).find();
-        if (!hasSpecialChar && varName.length() > 0) {
+        if (!hasSpecialChar && !varName.isEmpty()) {
             return;
         }
         this.atomType = Atom.AtomType.INVALID;

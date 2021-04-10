@@ -1035,7 +1035,7 @@ public class DeckPicker extends NavigationDrawerActivity implements
         // (currently 10 minutes)
         String hkey = preferences.getString("hkey", "");
         long lastSyncTime = preferences.getLong("lastSyncTime", 0);
-        if (hkey.length() != 0 && preferences.getBoolean("automaticSyncMode", false) &&
+        if (!hkey.isEmpty() && preferences.getBoolean("automaticSyncMode", false) &&
                 Connection.isOnline() && getCol().getTime().intTimeMS() - lastSyncTime > AUTOMATIC_SYNC_MIN_INTERVAL) {
             Timber.i("Triggering Automatic Sync");
             sync();
