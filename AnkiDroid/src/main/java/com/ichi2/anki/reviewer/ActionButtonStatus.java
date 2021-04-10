@@ -66,15 +66,16 @@ public class ActionButtonStatus {
         setupButton(preferences, R.id.action_toggle_whiteboard, "customButtonEnableWhiteboard", SHOW_AS_ACTION_NEVER);
         setupButton(preferences, R.id.action_save_whiteboard, "customButtonSaveWhiteboard", SHOW_AS_ACTION_NEVER);
         setupButton(preferences, R.id.action_change_whiteboard_pen_color, "customButtonWhiteboardPenColor", SHOW_AS_ACTION_IF_ROOM);
-        setupButton(preferences, R.id.action_search_dictionary, "customButtonLookup", SHOW_AS_ACTION_NEVER);
+        if (!Lookup.isAvailable()) {
+            mCustomButtons.put(R.id.action_search_dictionary, MENU_DISABLED);
+        }
+        else {
+            setupButton(preferences, R.id.action_search_dictionary, "customButtonLookup", SHOW_AS_ACTION_NEVER);
+        }
     }
 
 
     private void setupButton(SharedPreferences preferences, @IdRes int resourceId, String preferenceName, int showAsActionType) {
-        if(resourceId==R.id.action_search_dictionary && !Lookup.isAvailable()){
-            mCustomButtons.put(resourceId, MENU_DISABLED);
-        }
-
         mCustomButtons.put(resourceId, Integer.parseInt(preferences.getString(preferenceName, Integer.toString(showAsActionType))));
     }
 
