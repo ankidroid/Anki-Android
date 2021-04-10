@@ -134,10 +134,15 @@ public class TagsDialog extends AnalyticsDialogFragment {
          */
         public void sort() {
             Collections.sort(mAllTags, (lhs, rhs) -> {
-                boolean lhs_checked = isChecked(lhs);
-                boolean rhs_checked = isChecked(rhs);
-                //priority for checked items.
-                return lhs_checked == rhs_checked ? lhs.compareToIgnoreCase(rhs) : lhs_checked ? -1 : 1;
+                boolean lhsChecked = isChecked(lhs);
+                boolean rhsChecked = isChecked(rhs);
+
+                if (lhsChecked != rhsChecked) {
+                    // checked tags must appear first
+                    return lhsChecked ? -1 : 1;
+                } else {
+                    return lhs.compareToIgnoreCase(rhs);
+                }
             });
         }
     }
