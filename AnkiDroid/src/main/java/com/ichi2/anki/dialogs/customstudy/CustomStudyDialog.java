@@ -17,6 +17,7 @@ package com.ichi2.anki.dialogs.customstudy;
 
 import android.annotation.SuppressLint;
 import android.app.Dialog;
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.Resources;
@@ -38,7 +39,6 @@ import com.afollestad.materialdialogs.DialogAction;
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.ichi2.anki.AnkiActivity;
 import com.ichi2.anki.AnkiDroidApp;
-import com.ichi2.anki.CollectionHelper;
 import com.ichi2.anki.DeckOptions;
 import com.ichi2.anki.R;
 import com.ichi2.anki.Reviewer;
@@ -103,6 +103,18 @@ public class CustomStudyDialog extends AnalyticsDialogFragment implements
         return f;
     }
 
+
+    private Collection mCollection;
+
+
+    @Override
+    public void onAttach(@NonNull Context context) {
+        super.onAttach(context);
+        AnkiActivity ankiActivity = requireAnkiActivity();
+        mCollection = ankiActivity.getCol();
+    }
+
+
     @NonNull
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
@@ -110,7 +122,7 @@ public class CustomStudyDialog extends AnalyticsDialogFragment implements
         final int dialogId = requireArguments().getInt("id");
         if (dialogId < 100) {
             // Select the specified deck
-            CollectionHelper.getInstance().getCol(requireActivity()).getDecks().select(requireArguments().getLong("did"));
+            mCollection.getDecks().select(requireArguments().getLong("did"));
             return buildContextMenu(dialogId);
         } else {
             return buildInputDialog(dialogId);
@@ -155,7 +167,7 @@ public class CustomStudyDialog extends AnalyticsDialogFragment implements
                             long currentDeck = requireArguments().getLong("did");
                             TagsDialog dialogFragment = TagsDialog.newInstance(
                                     TagsDialog.DialogType.CUSTOM_STUDY_TAGS, new ArrayList<>(),
-                                    new ArrayList<>(activity.getCol().getTags().byDeck(currentDeck, true)));
+                                    new ArrayList<>(mCollection.getTags().byDeck(currentDeck, true)));
                             activity.showDialogFragment(dialogFragment);
                             break;
                         }
@@ -205,7 +217,6 @@ public class CustomStudyDialog extends AnalyticsDialogFragment implements
                 .positiveText(R.string.dialog_ok)
                 .negativeText(R.string.dialog_cancel)
                 .onPositive((dialog, which) -> {
-                    Collection col = CollectionHelper.getInstance().getCol(requireActivity());
                     // Get the value selected by user
                     int n;
                     try {
@@ -220,19 +231,19 @@ public class CustomStudyDialog extends AnalyticsDialogFragment implements
                     switch (dialogId) {
                         case CUSTOM_STUDY_NEW: {
                             AnkiDroidApp.getSharedPrefs(requireActivity()).edit().putInt("extendNew", n).apply();
-                            Deck deck = col.getDecks().get(did);
+                            Deck deck = mCollection.getDecks().get(did);
                             deck.put("extendNew", n);
-                            col.getDecks().save(deck);
-                            col.getSched().extendLimits(n, 0);
+                            mCollection.getDecks().save(deck);
+                            mCollection.getSched().extendLimits(n, 0);
                             onLimitsExtended(jumpToReviewer);
                             break;
                         }
                         case CUSTOM_STUDY_REV: {
                             AnkiDroidApp.getSharedPrefs(requireActivity()).edit().putInt("extendRev", n).apply();
-                            Deck deck = col.getDecks().get(did);
+                            Deck deck = mCollection.getDecks().get(did);
                             deck.put("extendRev", n);
-                            col.getDecks().save(deck);
-                            col.getSched().extendLimits(0, n);
+                            mCollection.getDecks().save(deck);
+                            mCollection.getSched().extendLimits(0, n);
                             onLimitsExtended(jumpToReviewer);
                             break;
                         }
@@ -343,7 +354,6 @@ public class CustomStudyDialog extends AnalyticsDialogFragment implements
      * @return the ids of which values to show
      */
     private int[] getListIds(int dialogId) {
-        Collection col = requireAnkiActivity().getCol();
         switch (dialogId) {
             case CONTEXT_MENU_STANDARD:
                 // Standard context menu
@@ -355,17 +365,17 @@ public class CustomStudyDialog extends AnalyticsDialogFragment implements
                 dialogOptions.add(CUSTOM_STUDY_RANDOM);
                 dialogOptions.add(CUSTOM_STUDY_PREVIEW);
                 dialogOptions.add(CUSTOM_STUDY_TAGS);
-                if (col.getSched().totalNewForCurrentDeck() == 0) {
+                if (mCollection.getSched().totalNewForCurrentDeck() == 0) {
                     // If no new cards we wont show CUSTOM_STUDY_NEW
                     dialogOptions.remove(Integer.valueOf(CUSTOM_STUDY_NEW));
                 }
                 return ContextMenuHelper.integerListToArray(dialogOptions);
             case CONTEXT_MENU_LIMITS:
                 // Special custom study options to show when the daily study limit has been reached
-                if (col.getSched().newDue() && col.getSched().revDue()) {
+                if (mCollection.getSched().newDue() && mCollection.getSched().revDue()) {
                     return new int[] {CUSTOM_STUDY_NEW, CUSTOM_STUDY_REV, DECK_OPTIONS, MORE_OPTIONS};
                 } else {
-                    if (col.getSched().newDue()) {
+                    if (mCollection.getSched().newDue()) {
                         return new int[]{CUSTOM_STUDY_NEW, DECK_OPTIONS, MORE_OPTIONS};
                     } else {
                         return new int[]{CUSTOM_STUDY_REV, DECK_OPTIONS, MORE_OPTIONS};
@@ -384,12 +394,11 @@ public class CustomStudyDialog extends AnalyticsDialogFragment implements
 
     private String getText1() {
         Resources res = AnkiDroidApp.getAppResources();
-        Collection col = CollectionHelper.getInstance().getCol(requireActivity());
         switch (requireArguments().getInt("id")) {
             case CUSTOM_STUDY_NEW:
-                return res.getString(R.string.custom_study_new_total_new, col.getSched().totalNewForCurrentDeck());
+                return res.getString(R.string.custom_study_new_total_new, mCollection.getSched().totalNewForCurrentDeck());
             case CUSTOM_STUDY_REV:
-                return res.getString(R.string.custom_study_rev_total_rev, col.getSched().totalRevForCurrentDeck());
+                return res.getString(R.string.custom_study_rev_total_rev, mCollection.getSched().totalRevForCurrentDeck());
             default:
                 return "";
         }
@@ -444,9 +453,8 @@ public class CustomStudyDialog extends AnalyticsDialogFragment implements
     private void createCustomStudySession(JSONArray delays, Object[] terms, Boolean resched) {
         Deck dyn;
         final AnkiActivity activity = requireAnkiActivity();
-        Collection col = CollectionHelper.getInstance().getCol(activity);
         long did = requireArguments().getLong("did");
-        Decks decks = col.getDecks();
+        Decks decks = mCollection.getDecks();
         String deckToStudyName = decks.get(did).getString("name");
         String customStudyDeck = getResources().getString(R.string.custom_study_deck_name);
         Deck cur = decks.byName(customStudyDeck);
@@ -459,7 +467,7 @@ public class CustomStudyDialog extends AnalyticsDialogFragment implements
             } else {
                 Timber.i("Emptying dynamic deck '%s' for custom study", customStudyDeck);
                 // safe to empty
-                col.getSched().emptyDyn(cur.getLong("id"));
+                mCollection.getSched().emptyDyn(cur.getLong("id"));
                 // reuse; don't delete as it may have children
                 dyn = cur;
                 decks.select(cur.getLong("id"));
