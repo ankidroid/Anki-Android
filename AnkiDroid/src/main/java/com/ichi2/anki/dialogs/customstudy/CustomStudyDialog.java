@@ -24,6 +24,7 @@ import android.content.res.Resources;
 import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.VisibleForTesting;
+import androidx.fragment.app.DialogFragment;
 import timber.log.Timber;
 
 import android.text.Editable;
@@ -84,6 +85,9 @@ public class CustomStudyDialog extends AnalyticsDialogFragment implements
 
     public interface CustomStudyListener extends CreateCustomStudySessionListener.Callback {
         void onExtendStudyLimits();
+        void showDialogFragment(DialogFragment newFragment);
+        void dismissAllDialogFragments();
+        void startActivityForResultWithoutAnimation(Intent intent, int requestCode);
     }
 
     /**
@@ -104,6 +108,7 @@ public class CustomStudyDialog extends AnalyticsDialogFragment implements
     }
 
 
+    private CustomStudyListener mCustomStudyListener;
     private Collection mCollection;
 
 
@@ -111,6 +116,7 @@ public class CustomStudyDialog extends AnalyticsDialogFragment implements
     public void onAttach(@NonNull Context context) {
         super.onAttach(context);
         AnkiActivity ankiActivity = requireAnkiActivity();
+        mCustomStudyListener = (CustomStudyListener) ankiActivity;
         mCollection = ankiActivity.getCol();
     }
 
@@ -155,7 +161,7 @@ public class CustomStudyDialog extends AnalyticsDialogFragment implements
                             // User asked to see all custom study options
                             CustomStudyDialog d = CustomStudyDialog.newInstance(CONTEXT_MENU_STANDARD,
                                     requireArguments().getLong("did"), jumpToReviewer);
-                            activity.showDialogFragment(d);
+                            mCustomStudyListener.showDialogFragment(d);
                             break;
                         }
                         case CUSTOM_STUDY_TAGS: {
@@ -168,14 +174,14 @@ public class CustomStudyDialog extends AnalyticsDialogFragment implements
                             TagsDialog dialogFragment = TagsDialog.newInstance(
                                     TagsDialog.DialogType.CUSTOM_STUDY_TAGS, new ArrayList<>(),
                                     new ArrayList<>(mCollection.getTags().byDeck(currentDeck, true)));
-                            activity.showDialogFragment(dialogFragment);
+                            mCustomStudyListener.showDialogFragment(dialogFragment);
                             break;
                         }
                         default: {
                             // User asked for a standard custom study option
                             CustomStudyDialog d = CustomStudyDialog.newInstance(view.getId(),
                                     requireArguments().getLong("did"), jumpToReviewer);
-                            requireAnkiActivity().showDialogFragment(d);
+                            mCustomStudyListener.showDialogFragment(d);
                         }
                     }
                 }).build();
@@ -251,7 +257,7 @@ public class CustomStudyDialog extends AnalyticsDialogFragment implements
                             JSONArray ar = new JSONArray();
                             ar.put(0, 1);
                             createCustomStudySession(ar, new Object[] {String.format(Locale.US,
-                                                                                     "rated:%d:1", n), Consts.DYN_MAX_SIZE, Consts.DYN_RANDOM}, false);
+                                    "rated:%d:1", n), Consts.DYN_MAX_SIZE, Consts.DYN_RANDOM}, false);
                             break;
                         }
                         case CUSTOM_STUDY_AHEAD: {
@@ -273,7 +279,7 @@ public class CustomStudyDialog extends AnalyticsDialogFragment implements
                             break;
                     }
                 })
-                .onNegative((dialog, which) -> requireAnkiActivity().dismissAllDialogFragments());
+                .onNegative((dialog, which) -> mCustomStudyListener.dismissAllDialogFragments());
         final MaterialDialog dialog = builder.build();
         mEditText.addTextChangedListener(new TextWatcher() {
             @Override
@@ -507,17 +513,17 @@ public class CustomStudyDialog extends AnalyticsDialogFragment implements
         TaskManager.launchCollectionTask(new CollectionTask.RebuildCram(), createCustomStudySessionListener());
 
         // Hide the dialogs
-        activity.dismissAllDialogFragments();
+        mCustomStudyListener.dismissAllDialogFragments();
     }
 
     private void onLimitsExtended(boolean jumpToReviewer) {
         AnkiActivity activity = requireAnkiActivity();
         if (jumpToReviewer) {
-            activity.startActivityForResultWithoutAnimation(new Intent(activity, Reviewer.class), AnkiActivity.REQUEST_REVIEW);
+            mCustomStudyListener.startActivityForResultWithoutAnimation(new Intent(activity, Reviewer.class), AnkiActivity.REQUEST_REVIEW);
         } else {
-            ((CustomStudyListener) activity).onExtendStudyLimits();
+            mCustomStudyListener.onExtendStudyLimits();
         }
-        activity.dismissAllDialogFragments();
+        mCustomStudyListener.dismissAllDialogFragments();
     }
 
     @NonNull
@@ -527,6 +533,6 @@ public class CustomStudyDialog extends AnalyticsDialogFragment implements
 
 
     private CreateCustomStudySessionListener createCustomStudySessionListener(){
-        return new CreateCustomStudySessionListener((CustomStudyListener) requireAnkiActivity());
+        return new CreateCustomStudySessionListener(mCustomStudyListener);
     }
 }
