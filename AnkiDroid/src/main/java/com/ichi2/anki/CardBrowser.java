@@ -241,7 +241,7 @@ public class CardBrowser extends NavigationDrawerActivity implements
                 return true;
             };
 
-
+    @VisibleForTesting(otherwise = VisibleForTesting.PROTECTED)
     protected void changeCardOrder(int which) {
         if (which != mOrder) {
             mOrder = which;
@@ -268,7 +268,7 @@ public class CardBrowser extends NavigationDrawerActivity implements
             updateList();
         }
         // To update the collection
-        getCol().flush();
+        getCol().getDb().setMod(true);
     }
 
 
