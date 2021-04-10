@@ -18,6 +18,7 @@ package com.ichi2.anki.dialogs;
 
 import android.content.Context;
 import android.widget.EditText;
+import android.widget.TextView;
 
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.ichi2.anki.AnkiActivity;
@@ -76,6 +77,7 @@ public class CreateDeckDialog {
 
     public MaterialDialog showDialog() {
         mDialogEditText.setSingleLine(true);
+        mDialogEditText.setId(R.id.action_edit);
 
         return mBuilder.title(mTitle)
                 .positiveText(R.string.dialog_ok)
@@ -89,8 +91,7 @@ public class CreateDeckDialog {
         mBuilder.build().dismiss();
     }
 
-    public void createSubDeck(@NonNull long did) {
-        String deckName = getDeckName();
+    public void createSubDeck(@NonNull long did, @Nullable String deckName) {
         String deckNameWithParentName = mAnkiActivity.getCol().getDecks().getSubdeckName(did, deckName);
         createDeck(deckNameWithParentName);
     }
@@ -105,7 +106,7 @@ public class CreateDeckDialog {
         closeDialog();
     }
 
-    private boolean createFilteredDeck(@NonNull String deckName) {
+    public boolean createFilteredDeck(@NonNull String deckName) {
         try {
             // create filtered deck
             Timber.i("DeckPicker:: Creating filtered deck...");
@@ -133,7 +134,7 @@ public class CreateDeckDialog {
         if(!getDeckName().isEmpty()) {
             if (mParentId != null) {
                 // create sub deck
-                createSubDeck(mParentId);
+                createSubDeck(mParentId, getDeckName());
             } else if (mIsFilteredDeck) {
                 // create filtered deck
                 createFilteredDeck(getDeckName());

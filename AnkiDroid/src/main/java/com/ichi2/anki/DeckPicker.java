@@ -216,6 +216,7 @@ public class DeckPicker extends NavigationDrawerActivity implements
     private EditText mDialogEditText;
 
     private DeckPickerFloatingActionMenu mFloatingActionMenu;
+    public CreateDeckDialog mCreateDeckDialog;
 
     // flag asking user to do a full sync which is used in upgrade path
     private boolean mRecommendFullSync = false;
@@ -768,12 +769,12 @@ public class DeckPicker extends NavigationDrawerActivity implements
             showImportDialog(ImportDialog.DIALOG_IMPORT_HINT);
             return true;
         } else if (itemId == R.id.action_new_filtered_deck) {
-            CreateDeckDialog createDeckDialog = new CreateDeckDialog(DeckPicker.this, R.string.new_deck, true, null);
-            createDeckDialog.setOnNewDeckCreated((id) -> {
+            mCreateDeckDialog = new CreateDeckDialog(DeckPicker.this, R.string.new_deck, true, null);
+            mCreateDeckDialog.setOnNewDeckCreated((id) -> {
                 // a filtered deck was created
                 openStudyOptions(true);
             });
-            createDeckDialog.showFilteredDeckDialog();
+            mCreateDeckDialog.showFilteredDeckDialog();
             return true;
         } else if (itemId == R.id.action_check_database) {
             Timber.i("DeckPicker:: Check database button pressed");
@@ -2862,8 +2863,8 @@ public class DeckPicker extends NavigationDrawerActivity implements
 
 
     private void createSubDeckDialog(long did) {
-        CreateDeckDialog createDeckDialog = new CreateDeckDialog(DeckPicker.this, R.string.create_subdeck, false, did);
-        createDeckDialog.setOnNewDeckCreated((i) -> {
+        mCreateDeckDialog = new CreateDeckDialog(DeckPicker.this, R.string.create_subdeck, false, did);
+        mCreateDeckDialog.setOnNewDeckCreated((i) -> {
             // a deck was created
             mDeckListAdapter.notifyDataSetChanged();
             updateDeckList();
@@ -2871,7 +2872,7 @@ public class DeckPicker extends NavigationDrawerActivity implements
                 loadStudyOptionsFragment(false);
             }
         });
-        createDeckDialog.showDialog();
+        mCreateDeckDialog.showDialog();
     }
 
 
