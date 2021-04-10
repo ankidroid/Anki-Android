@@ -318,7 +318,7 @@ public class TagsDialog extends AnalyticsDialogFragment {
         RecyclerView.LayoutManager tagsListLayout = new LinearLayoutManager(getActivity());
         mTagsListRecyclerView.setLayoutManager(tagsListLayout);
 
-        mTagsArrayAdapter = new TagsArrayAdapter();
+        mTagsArrayAdapter = new TagsArrayAdapter(mTags);
         mTagsListRecyclerView.setAdapter(mTagsArrayAdapter);
 
         mNoTagsTextView = tagsDialogView.findViewById(R.id.tags_dialog_no_tags_textview);
@@ -451,7 +451,7 @@ public class TagsDialog extends AnalyticsDialogFragment {
                 if (mNoTagsTextView.getVisibility() == View.VISIBLE) {
                     mNoTagsTextView.setVisibility(View.GONE);
                 }
-                mTagsArrayAdapter.mTagsList.add(tag);
+                mTags.add(tag);
                 mTagsArrayAdapter.sortData();
                 feedbackText = getString(R.string.tag_editor_add_feedback, tag, mPositiveText);
             } else {
@@ -465,8 +465,8 @@ public class TagsDialog extends AnalyticsDialogFragment {
         }
     }
 
-    public class TagsArrayAdapter extends  RecyclerView.Adapter<TagsArrayAdapter.ViewHolder> implements Filterable{
-        public class ViewHolder extends RecyclerView.ViewHolder {
+    public static class TagsArrayAdapter extends  RecyclerView.Adapter<TagsArrayAdapter.ViewHolder> implements Filterable{
+        public static class ViewHolder extends RecyclerView.ViewHolder {
             private final CheckedTextView mTagItemCheckedTextView;
             public ViewHolder(CheckedTextView ctv) {
                 super(ctv);
@@ -474,16 +474,27 @@ public class TagsDialog extends AnalyticsDialogFragment {
             }
         }
 
-        public List<String> mTagsList;
 
-        public  TagsArrayAdapter() {
-            mTagsList = new ArrayList<>(mTags.mAllTags);
+
+        /**
+         * A reference to the {@link TagsList} passed.
+         */
+        @NonNull
+        private final TagsList mTags;
+        /**
+         * A subset of all tags in {@link #mTags} satisfying the user's search
+         */
+        @NonNull
+        private List<String> mFilteredList;
+
+        public TagsArrayAdapter(@NonNull TagsList tags) {
+            mTags = tags;
+            mFilteredList = new ArrayList<>(tags.mAllTags);
             sortData();
         }
 
         public void sortData() {
             mTags.sort();
-            mTagsList = new ArrayList<>(mTags.mAllTags);
         }
 
         @NonNull
@@ -508,14 +519,14 @@ public class TagsDialog extends AnalyticsDialogFragment {
 
         @Override
         public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-            String tag = mTagsList.get(position);
+            String tag = mFilteredList.get(position);
             holder.mTagItemCheckedTextView.setText(tag);
             holder.mTagItemCheckedTextView.setChecked(mTags.isChecked(tag));
         }
 
         @Override
         public int getItemCount() {
-            return mTagsList.size();
+            return mFilteredList.size();
         }
 
         @Override
@@ -525,33 +536,25 @@ public class TagsDialog extends AnalyticsDialogFragment {
 
         /* Custom Filter class - as seen in http://stackoverflow.com/a/29792313/1332026 */
         private class TagsFilter extends Filter {
-            private final ArrayList<String> mFilteredTags;
-            private TagsFilter() {
-                super();
-                mFilteredTags = new ArrayList<>();
-            }
-
             @Override
             protected FilterResults performFiltering(CharSequence constraint) {
-                mFilteredTags.clear();
                 if (constraint.length() == 0) {
-                    mFilteredTags.addAll(mTags.mAllTags);
+                    mFilteredList = new ArrayList<>(mTags.mAllTags);
                 } else {
+                    mFilteredList = new ArrayList<>();
                     final String filterPattern = constraint.toString().toLowerCase(Locale.getDefault()).trim();
                     for (String tag : mTags) {
                         if (tag.toLowerCase(Locale.getDefault()).contains(filterPattern)) {
-                            mFilteredTags.add(tag);
+                            mFilteredList.add(tag);
                         }
                     }
                 }
 
-                return FilterResultsUtils.fromCollection(mFilteredTags);
+                return FilterResultsUtils.fromCollection(mFilteredList);
             }
 
             @Override
             protected void publishResults(CharSequence charSequence, FilterResults filterResults) {
-                mTagsList.clear();
-                mTagsList.addAll(mFilteredTags);
                 sortData();
                 notifyDataSetChanged();
             }
