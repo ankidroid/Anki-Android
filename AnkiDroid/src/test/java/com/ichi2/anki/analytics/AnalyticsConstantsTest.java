@@ -140,5 +140,22 @@ public class AnalyticsConstantsTest {
                     .filter(x -> x.isAnnotationPresent(AnalyticsConstant.class))
                     .count();
         }
+
+
+        /**
+         * This test is used to check whether all the string constants of Actions are annotated with @AnalyticsConstant.
+         * If not, then a runtime exception is thrown.
+         */
+        @Test
+        public void fieldAnnotatedOrNot(){
+            UsageAnalytics.Actions actions = new UsageAnalytics.Actions();
+            Field[] field;
+            field = actions.getClass().getDeclaredFields();
+            for (Field value : field) {
+                if (!value.isAnnotationPresent(AnalyticsConstant.class) && !value.isSynthetic()) {
+                    throw new RuntimeException("All the fields in Actions class must be annotated with @AnalyticsConstant. It seems " + value.getName() + " is not annotated.");
+                }
+            }
+        }
     }
 }
