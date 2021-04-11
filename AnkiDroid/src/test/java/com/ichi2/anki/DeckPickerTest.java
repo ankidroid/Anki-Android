@@ -1,5 +1,8 @@
 package com.ichi2.anki;
 
+import android.Manifest;
+import android.app.Application;
+import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -15,16 +18,21 @@ import com.ichi2.testutils.BackendEmulatingOpenConflict;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.robolectric.Robolectric;
+import org.robolectric.shadows.ShadowActivity;
+import org.robolectric.shadows.ShadowApplication;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Objects;
 
 import androidx.test.core.app.ActivityScenario;
+import androidx.test.core.app.ApplicationProvider;
 import androidx.test.ext.junit.runners.AndroidJUnit4;
 
 import static com.ichi2.anki.DeckPicker.UPGRADE_VERSION_KEY;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
+import static org.hamcrest.Matchers.notNullValue;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNull;
 import static org.mockito.Mockito.mock;
@@ -32,6 +40,7 @@ import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
+import static org.robolectric.Shadows.shadowOf;
 
 @RunWith(AndroidJUnit4.class)
 public class DeckPickerTest extends RobolectricTest {
@@ -244,6 +253,28 @@ public class DeckPickerTest extends RobolectricTest {
             BackendEmulatingOpenConflict.disable();
             InitialActivityTest.setupForDefault();
         }
+    }
+
+    @Test
+    public void deckPickerNotCrashOnNoPermissionTest() {
+        Application application = ApplicationProvider.getApplicationContext();
+        ShadowApplication app = shadowOf(application);
+        app.denyPermissions(Manifest.permission.READ_EXTERNAL_STORAGE);
+        app.denyPermissions(Manifest.permission.WRITE_EXTERNAL_STORAGE);
+
+        try (ActivityScenario<DeckPicker> scenario = ActivityScenario.launch(DeckPicker.class)) {
+            scenario.onActivity(deckPicker -> {
+                ShadowActivity shadowActivity = shadowOf(deckPicker);
+                Intent outputIntent = shadowActivity.getNextStartedActivity();
+                ComponentName component = outputIntent.getComponent();
+
+                assertThat(component, notNullValue());
+                ComponentName componentName = Objects.requireNonNull(component);
+
+                assertThat("Deck Picker currently handles permissions, so should be called", componentName.getClassName(), is("com.ichi2.anki.DeckPicker"));
+            });
+        }
+
     }
 
     private static class DeckPickerEx extends DeckPicker {
