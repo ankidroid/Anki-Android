@@ -1,7 +1,10 @@
 package com.ichi2.libanki;
 
 import android.content.res.Resources;
+import android.view.Menu;
+import android.view.MenuItem;
 
+import com.ichi2.anki.R;
 import com.ichi2.utils.LanguageUtil;
 
 import java.util.List;
@@ -15,33 +18,6 @@ import timber.log.Timber;
 public abstract class Undoable {
     @StringRes public final int mUndoNameId;
 
-
-    /**
-     * Set the item in the menu to display the last undoable element in the collection
-     * @param col The collection which may have task to undo
-     * @param res Ressources for localization
-     * @param menu A menu which is expected to contain an action_undo
-     */
-    public static void setMenu(@NonNull Collection col, @NonNull Resources res,  @Nullable Menu menu) {
-        if (menu == null) {
-            return;
-        }
-        setMenu(col, res, menu.findItem(R.id.action_undo));
-    }
-
-    /**
-     * Set the item in the menu to display the last undoable element in the collection
-     * @param col The collection which may have task to undo
-     * @param res Ressources for localization
-     * @param item A menu item representing undoing
-     */
-    public static void setMenu(@NonNull Collection col, @NonNull  Resources res, @Nullable MenuItem item) {
-        if (item == null) {
-            return;
-        }
-        item.setVisible(col.mUndo.undoAvailable());
-        item.setTitle(res.getString(R.string.studyoptions_congrats_undo, col.mUndo.undoName(res)));
-    }
 
     /**
      * For all descendants, we assume that a card/note/object passed as argument is never going to be changed again.

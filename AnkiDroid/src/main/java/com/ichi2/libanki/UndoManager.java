@@ -1,6 +1,8 @@
 package com.ichi2.libanki;
 
 import android.content.res.Resources;
+import android.view.Menu;
+import android.view.MenuItem;
 
 import com.ichi2.anki.R;
 
@@ -18,6 +20,33 @@ import timber.log.Timber;
 public class UndoManager {
     private static final int UNDO_SIZE_MAX = 20;
     private LinkedBlockingDeque<Undoable> mUndo;
+
+
+    /**
+     * Set the item in the menu to display the last undoable element in the collection
+     * @param res Ressources for localization
+     * @param menu A menu which is expected to contain an action_undo
+     */
+    public void setMenu(@NonNull Resources res,  @Nullable Menu menu) {
+        if (menu == null) {
+            return;
+        }
+        setMenu(res, menu.findItem(R.id.action_undo));
+    }
+
+
+    /**
+     * Set the item in the menu to display the last undoable element in the collection
+     * @param res Ressources for localization
+     * @param item A menu item representing undoing
+     */
+    public void setMenu(@NonNull  Resources res, @Nullable MenuItem item) {
+        if (item == null) {
+            return;
+        }
+        item.setVisible(undoAvailable());
+        item.setTitle(res.getString(R.string.studyoptions_congrats_undo, undoName(res)));
+    }
 
 
     // API 21: Use a ConcurrentLinkedDeque

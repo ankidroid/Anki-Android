@@ -76,6 +76,7 @@ import com.ichi2.libanki.Card;
 import com.ichi2.libanki.Collection;
 import com.ichi2.libanki.Consts;
 import com.ichi2.libanki.Decks;
+import com.ichi2.libanki.UndoManager;
 import com.ichi2.libanki.Utils;
 import com.ichi2.libanki.Deck;
 import com.ichi2.themes.Themes;
@@ -922,11 +923,7 @@ public class CardBrowser extends NavigationDrawerActivity implements
             showBackIcon();
         }
 
-        if (mActionBarMenu != null && mActionBarMenu.findItem(R.id.action_undo) != null) {
-            MenuItem undo =  mActionBarMenu.findItem(R.id.action_undo);
-            undo.setVisible(getCol().undoAvailable());
-            undo.setTitle(getResources().getString(R.string.studyoptions_congrats_undo, getCol().undoName(getResources())));
-        }
+        getCol().mUndo.setMenu(getResources(), mActionBarMenu);
 
         // Maybe we were called from ACTION_PROCESS_TEXT.
         // In that case we already fill in the search.

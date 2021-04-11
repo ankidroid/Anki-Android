@@ -121,6 +121,7 @@ import com.ichi2.libanki.Collection;
 import com.ichi2.libanki.Decks;
 import com.ichi2.libanki.Model;
 import com.ichi2.libanki.Models;
+import com.ichi2.libanki.UndoManager;
 import com.ichi2.libanki.Utils;
 import com.ichi2.libanki.importer.AnkiPackageImporter;
 import com.ichi2.libanki.sched.AbstractDeckTreeNode;
@@ -712,13 +713,10 @@ public class DeckPicker extends NavigationDrawerActivity implements
 
         if (colIsOpen()) {
             // Show / hide undo
-            if (mFragmented || !getCol().undoAvailable()) {
+            if (mFragmented) {
                 menu.findItem(R.id.action_undo).setVisible(false);
             } else {
-                Resources res = getResources();
-                menu.findItem(R.id.action_undo).setVisible(true);
-                String undo = res.getString(R.string.studyoptions_congrats_undo, getCol().undoName(res));
-                menu.findItem(R.id.action_undo).setTitle(undo);
+                getCol().mUndo.setMenu(getResources(), menu);
             }
 
             // Remove the filter - not necessary and search has other implications for new users.
