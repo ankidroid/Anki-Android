@@ -1212,7 +1212,7 @@ public class CardBrowser extends NavigationDrawerActivity implements
 
     @VisibleForTesting
     void onUndo() {
-        if (getCol().undoAvailable()) {
+        if (getCol().mUndo.undoAvailable()) {
             TaskManager.launchCollectionTask(new CollectionTask.Undo(), mUndoHandler);
         }
     }

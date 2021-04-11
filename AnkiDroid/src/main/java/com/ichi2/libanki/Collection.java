@@ -49,7 +49,6 @@ import com.ichi2.libanki.utils.Time;
 import com.ichi2.upgrade.Upgrade;
 import com.ichi2.utils.DatabaseChangeDecorator;
 import com.ichi2.utils.FunctionalInterfaces;
-import com.ichi2.utils.LanguageUtil;
 import com.ichi2.utils.VersionUtils;
 
 import com.ichi2.utils.JSONArray;
@@ -80,14 +79,12 @@ import java.util.regex.Pattern;
 import androidx.annotation.CheckResult;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.annotation.StringRes;
 import androidx.annotation.VisibleForTesting;
 import androidx.sqlite.db.SupportSQLiteDatabase;
 import androidx.sqlite.db.SupportSQLiteStatement;
 import timber.log.Timber;
 
 import static com.ichi2.async.CancelListener.isCancelled;
-import static com.ichi2.libanki.Consts.DECK_DYN;
 
 // Anki maintains a cache of used tags so it can quickly present a list of tags
 // for autocomplete and in the browser. For efficiency, deletions are not
@@ -125,8 +122,7 @@ public class Collection implements CollectionGetter {
     private JSONObject mConf;
     // END: SQL table columns
 
-    // API 21: Use a ConcurrentLinkedDeque
-    private LinkedBlockingDeque<Undoable> mUndo;
+    public final UndoManager mUndo = new UndoManager();
 
     private final String mPath;
     private final DroidBackend mDroidBackend;
@@ -154,7 +150,6 @@ public class Collection implements CollectionGetter {
             "'curModel': null, " + "'nextPos': 1, " + "'sortType': \"noteFld\", "
             + "'sortBackwards': False, 'addToCur': True }"; // add new to currently selected deck?
 
-    private static final int UNDO_SIZE_MAX = 20;
 
     @VisibleForTesting
     public Collection(Context context, DB db, String path, boolean server, boolean log, @NonNull Time time, @NonNull DroidBackend droidBackend) {
@@ -168,7 +163,7 @@ public class Collection implements CollectionGetter {
         log(path, VersionUtils.getPkgVersionName());
         mServer = server;
         //mLastSave = getTime().now(); // assigned but never accessed - only leaving in for upstream comparison
-        clearUndo();
+        mUndo.clearUndo();
         mMedia = new Media(this, server);
         mDecks = new Decks(this);
         mTags = new Tags(this);
@@ -234,7 +229,7 @@ public class Collection implements CollectionGetter {
         modSchema();
         @SuppressLint("VisibleForTests")
         SchedV2 v2Sched = new SchedV2(this);
-        clearUndo();
+        mUndo.clearUndo();
         if (ver == 1) {
             v2Sched.moveToV1();
         } else {
@@ -1303,51 +1298,72 @@ public class Collection implements CollectionGetter {
      * Undo ********************************************************************* **************************
      */
 
-    /* Note from upstream:
-     * this data structure is a mess, and will be updated soon
-     * in the review case, [1, "Review", [firstReviewedCard, secondReviewedCard, ...], wasLeech]
-     * in the checkpoint case, [2, "action name"]
-     * wasLeech should have been recorded for each card, not globally
-     */
-    public void clearUndo() {
-        mUndo = new LinkedBlockingDeque<>();
-    }
+    public static class UndoManager {
+        private LinkedBlockingDeque<Undoable> mUndo;
+        private static final int UNDO_SIZE_MAX = 20;
 
 
-    /** Undo menu item name, or "" if undo unavailable. */
-    @VisibleForTesting
-    public @Nullable Undoable undoType() {
-        if (mUndo.size() > 0) {
-            return mUndo.getLast();
+        // API 21: Use a ConcurrentLinkedDeque
+        /* Note from upstream:
+         * this data structure is a mess, and will be updated soon
+         * in the review case, [1, "Review", [firstReviewedCard, secondReviewedCard, ...], wasLeech]
+         * in the checkpoint case, [2, "action name"]
+         * wasLeech should have been recorded for each card, not globally
+         */
+        public void clearUndo() {
+            mUndo = new LinkedBlockingDeque<>();
         }
-        return null;
-    }
-    public String undoName(Resources res) {
-        Undoable type = undoType();
-        if (type != null) {
-            return type.name(res);
+
+
+        public void markUndo(@NonNull Undoable undo) {
+            Timber.d("markUndo() of type %s", undo.getClass());
+            this.mUndo.add(undo);
+            while (this.mUndo.size() > UNDO_SIZE_MAX) {
+                this.mUndo.removeFirst();
+            }
         }
-        return "";
-    }
 
-    public boolean undoAvailable() {
-        Timber.d("undoAvailable() undo size: %s", mUndo.size());
-        return mUndo.size() > 0;
-    }
 
-    public @Nullable Card undo() {
-        Undoable lastUndo = mUndo.removeLast();
-        Timber.d("undo() of type %s", lastUndo.getClass());
-        return lastUndo.undo(this);
-    }
+        /** Undo menu item name, or "" if undo unavailable.*/
+        @VisibleForTesting
+        public @Nullable Undoable undoType() {
+            if (mUndo.size() > 0) {
+                return mUndo.getLast();
+            }
+            return null;
+        }
 
-    public void markUndo(@NonNull Undoable undo) {
-        Timber.d("markUndo() of type %s", undo.getClass());
-        mUndo.add(undo);
-        while (mUndo.size() > UNDO_SIZE_MAX) {
-            mUndo.removeFirst();
+
+        public boolean undoAvailable() {
+            Timber.d("undoAvailable() undo size: %s", mUndo.size());
+            return mUndo.size() > 0;
+        }
+
+
+        public @Nullable Card undo(Collection collection) {
+            Undoable lastUndo = mUndo.removeLast();
+            Timber.d("undo() of type %s", lastUndo.getClass());
+            return lastUndo.undo(collection);
+        }
+
+
+        public String undoName(Resources res) {
+            Undoable type = undoType();
+            if (type != null) {
+                return type.name(res);
+            }
+            return "";
+        }
+
+
+        public void markReview(Card card, Collection collection) {
+            boolean wasLeech = card.note().hasTag("leech");
+            Card clonedCard = card.clone();
+            markUndo(new UndoReview(wasLeech, clonedCard));
         }
     }
+
+
 
     @VisibleForTesting
     public static class UndoReview extends Undoable {
@@ -1367,11 +1383,6 @@ public class Collection implements CollectionGetter {
         }
     }
 
-    public void markReview(Card card) {
-        boolean wasLeech = card.note().hasTag("leech");
-        Card clonedCard = card.clone();
-        markUndo(new UndoReview(wasLeech, clonedCard));
-    }
 
     /**
      * DB maintenance *********************************************************** ************************************

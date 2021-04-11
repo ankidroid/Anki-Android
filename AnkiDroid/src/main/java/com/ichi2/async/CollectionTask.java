@@ -486,7 +486,7 @@ public class CollectionTask<ProgressListener, ProgressBackground extends Progres
         @Override
         protected void actualTask(Collection col, Card card) {
             // collect undo information
-            col.markUndo(revertToProvidedState(R.string.menu_bury_card, card));
+            col.mUndo.markUndo(revertToProvidedState(R.string.menu_bury_card, card));
             // then bury
             col.getSched().buryCards(new long[] {card.getId()});
         }
@@ -500,7 +500,7 @@ public class CollectionTask<ProgressListener, ProgressBackground extends Progres
         @Override
         protected void actualTask(Collection col, Card card) {
             // collect undo information
-            col.markUndo(revertToProvidedState(R.string.menu_bury_note, card));
+            col.mUndo.markUndo(revertToProvidedState(R.string.menu_bury_note, card));
             // then bury
             col.getSched().buryNote(card.note().getId());
         }
@@ -515,7 +515,7 @@ public class CollectionTask<ProgressListener, ProgressBackground extends Progres
         protected void actualTask(Collection col, Card card) {
             // collect undo information
             Card suspendedCard = card.clone();
-            col.markUndo(new UndoSuspendCard(suspendedCard));
+            col.mUndo.markUndo(new UndoSuspendCard(suspendedCard));
             // suspend card
             if (card.getQueue() == Consts.QUEUE_TYPE_SUSPENDED) {
                 col.getSched().unsuspendCards(new long[] {card.getId()});
@@ -538,7 +538,7 @@ public class CollectionTask<ProgressListener, ProgressBackground extends Progres
             for (int i = 0; i < cards.size(); i++) {
                 cids[i] = cards.get(i).getId();
             }
-            col.markUndo(revertToProvidedState(R.string.menu_suspend_note, card));
+            col.mUndo.markUndo(revertToProvidedState(R.string.menu_suspend_note, card));
             // suspend note
             col.getSched().suspendCards(cids);
         }
@@ -554,7 +554,7 @@ public class CollectionTask<ProgressListener, ProgressBackground extends Progres
             Note note = card.note();
             // collect undo information
             ArrayList<Card> allCs = note.cards();
-            col.markUndo(new UndoDeleteNote(note, allCs, card));
+            col.mUndo.markUndo(new UndoDeleteNote(note, allCs, card));
             // delete note
             col.remNotes(new long[] {note.getId()});
         }
@@ -787,7 +787,7 @@ public class CollectionTask<ProgressListener, ProgressBackground extends Progres
             }
 
             // mark undo for all at once
-            col.markUndo(new UndoSuspendCardMulti(cards, originalSuspended, hasUnsuspended));
+            col.mUndo.markUndo(new UndoSuspendCardMulti(cards, originalSuspended, hasUnsuspended));
 
             // reload cards because they'll be passed back to caller
             for (Card c : cards) {
@@ -838,7 +838,7 @@ public class CollectionTask<ProgressListener, ProgressBackground extends Progres
             CardUtils.markAll(new ArrayList<>(notes), hasUnmarked);
 
             // mark undo for all at once
-            col.markUndo(new UndoMarkNoteMulti(originalMarked, originalUnmarked, hasUnmarked));
+            col.mUndo.markUndo(new UndoMarkNoteMulti(originalMarked, originalUnmarked, hasUnmarked));
 
             // reload cards because they'll be passed back to caller
             for (Card c : cards) {
@@ -871,7 +871,7 @@ public class CollectionTask<ProgressListener, ProgressBackground extends Progres
 
 
 
-            col.markUndo(new UndoDeleteNoteMulti(notesArr, allCards));
+            col.mUndo.markUndo(new UndoDeleteNoteMulti(notesArr, allCards));
 
             col.remNotes(uniqueNoteIds);
             sched.deferReset();
@@ -933,7 +933,7 @@ public class CollectionTask<ProgressListener, ProgressBackground extends Progres
 
             Undoable changeDeckMulti = new UndoChangeDeckMulti(cards, originalDids);
             // mark undo for all at once
-            col.markUndo(changeDeckMulti);
+            col.mUndo.markUndo(changeDeckMulti);
             return null;
         }
     }
@@ -952,7 +952,7 @@ public class CollectionTask<ProgressListener, ProgressBackground extends Progres
                 Timber.d("Saving undo information of type %s on %d cards", getClass(), cards.length);
                 Card[] cards_copied = deepCopyCardArray(cards, collectionTask);
                 Undoable repositionRescheduleResetCards = new UndoRepositionRescheduleResetCards(mUndoNameId, cards_copied);
-                col.markUndo(repositionRescheduleResetCards);
+                col.mUndo.markUndo(repositionRescheduleResetCards);
             } catch (CancellationException ce) {
                 Timber.i(ce, "Cancelled while handling type %s, skipping undo", mUndoNameId);
             }
@@ -1006,7 +1006,7 @@ public class CollectionTask<ProgressListener, ProgressBackground extends Progres
     @VisibleForTesting
     public static Card nonTaskUndo(Collection col) {
         AbstractSched sched = col.getSched();
-        Card card = col.undo();
+        Card card = col.mUndo.undo(col);
         if (card == null) {
             /* multi-card action undone, no action to take here */
             Timber.d("Multi-select undo succeeded");
@@ -1285,7 +1285,7 @@ public class CollectionTask<ProgressListener, ProgressBackground extends Progres
             Timber.d("doInBackgroundDeleteDeck");
             col.getDecks().rem(mDid, true);
             // TODO: if we had "undo delete note" like desktop client then we won't need this.
-            col.clearUndo();
+            col.mUndo.clearUndo();
             return null;
         }
     }

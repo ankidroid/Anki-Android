@@ -455,7 +455,7 @@ public class Connection extends BaseAsyncTask<Connection.Payload, Object, Connec
 
             // clear undo to avoid non syncing orphans (because undo resets usn too
             if (!noChanges) {
-                col.clearUndo();
+                col.mUndo.clearUndo();
             }
             // then move on to media sync
             sIsCancellable = true;

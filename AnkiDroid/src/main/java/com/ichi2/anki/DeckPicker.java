@@ -1430,7 +1430,7 @@ public class DeckPicker extends NavigationDrawerActivity implements
     private void undo() {
         Timber.i("undo()");
         String undoReviewString = getResources().getString(R.string.undo_action_review);
-        final boolean isReview = undoReviewString.equals(getCol().undoName(getResources()));
+        final boolean isReview = undoReviewString.equals(getCol().mUndo.undoName(getResources()));
         TaskManager.launchCollectionTask(new CollectionTask.Undo(), undoTaskListener(isReview));
     }
 
@@ -2278,7 +2278,7 @@ public class DeckPicker extends NavigationDrawerActivity implements
     private void handleDeckSelection(long did, DeckSelectionType selectionType) {
         // Clear the undo history when selecting a new deck
         if (getCol().getDecks().selected() != did) {
-            getCol().clearUndo();
+            getCol().mUndo.clearUndo();
         }
         // Select the deck
         getCol().getDecks().select(did);

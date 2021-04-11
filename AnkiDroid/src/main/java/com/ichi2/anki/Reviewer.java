@@ -240,7 +240,7 @@ public class Reviewer extends AbstractFlashcardViewer {
 
         // Clear the undo history when selecting a new deck
         if (getCol().getDecks().selected() != did) {
-            getCol().clearUndo();
+            getCol().mUndo.clearUndo();
         }
         // Select the deck
         getCol().getDecks().select(did);
@@ -610,7 +610,7 @@ public class Reviewer extends AbstractFlashcardViewer {
             // We can arrive here even if `mShowWhiteboard &&
             // mWhiteboard != null` if no stroke had ever been made
             undoIconId = R.drawable.ic_undo_white_24dp;
-            undoEnabled = (colIsOpen() && getCol().undoAvailable());
+            undoEnabled = (colIsOpen() && getCol().mUndo.undoAvailable());
         }
         int alpha_undo = (undoEnabled && getControlBlocked() != ReviewerUi.ControlBlock.SLOW) ? Themes.ALPHA_ICON_ENABLED_LIGHT : Themes.ALPHA_ICON_DISABLED_LIGHT ;
         MenuItem undoIcon = menu.findItem(R.id.action_undo);
@@ -618,7 +618,7 @@ public class Reviewer extends AbstractFlashcardViewer {
         undoIcon.setEnabled(undoEnabled).getIcon().mutate().setAlpha(alpha_undo);
         undoIcon.getActionView().setEnabled(undoEnabled);
         if (colIsOpen()) { // Required mostly because there are tests where `col` is null
-            undoIcon.setTitle(getResources().getString(R.string.studyoptions_congrats_undo, getCol().undoName(getResources())));
+            undoIcon.setTitle(getResources().getString(R.string.studyoptions_congrats_undo, getCol().mUndo.undoName(getResources())));
         }
 
         MenuItem toggle_whiteboard_icon = menu.findItem(R.id.action_toggle_whiteboard);

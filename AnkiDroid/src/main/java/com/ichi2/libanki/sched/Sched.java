@@ -54,7 +54,6 @@ import timber.log.Timber;
 
 
 import static com.ichi2.async.CancelListener.isCancelled;
-import static com.ichi2.libanki.Consts.DECK_DYN;
 import static com.ichi2.libanki.Consts.DECK_STD;
 import static com.ichi2.libanki.sched.Counts.Queue.*;
 import static com.ichi2.libanki.sched.Counts.Queue;
@@ -86,7 +85,7 @@ public class Sched extends SchedV2 {
     @Override
     public void answerCard(@NonNull Card card, @Consts.BUTTON_TYPE int ease) {
         mCol.log();
-        mCol.markReview(card);
+        mCol.mUndo.markReview(card, mCol);
         discardCurrentCard();
         _burySiblings(card);
         card.incrReps();

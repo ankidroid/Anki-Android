@@ -72,8 +72,6 @@ import androidx.annotation.VisibleForTesting;
 import timber.log.Timber;
 
 import static com.ichi2.libanki.Consts.CARD_TYPE_RELEARNING;
-import static com.ichi2.libanki.Consts.DECK_DYN;
-import static com.ichi2.libanki.Consts.DECK_STD;
 import static com.ichi2.libanki.Consts.QUEUE_TYPE_DAY_LEARN_RELEARN;
 import static com.ichi2.async.CancelListener.isCancelled;
 import static com.ichi2.libanki.sched.AbstractSched.UnburyType.*;
@@ -287,7 +285,7 @@ public class SchedV2 extends AbstractSched {
     public void answerCard(@NonNull Card card, @Consts.BUTTON_TYPE int ease) {
         mCol.log();
         discardCurrentCard();
-        mCol.markReview(card);
+        mCol.mUndo.markReview(card, mCol);
         _burySiblings(card);
 
         _answerCard(card, ease);

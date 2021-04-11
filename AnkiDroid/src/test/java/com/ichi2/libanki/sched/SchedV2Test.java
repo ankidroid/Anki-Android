@@ -631,7 +631,7 @@ public class SchedV2Test extends RobolectricTest {
         // if we fail it, it should be back in the correct queue
         col.getSched().answerCard(c, 1);
         assertEquals(QUEUE_TYPE_LRN, c.getQueue());
-        col.undo();
+        col.mUndo.undo(col);
         col.reset();
         c = getCard();
         col.getSched().answerCard(c, 3);
@@ -1755,6 +1755,6 @@ public class SchedV2Test extends RobolectricTest {
         card = sched.getCard();
         assertEquals(1, sched.counts(card).getLrn());
         sched.answerCard(card, Consts.BUTTON_ONE);
-        assertDoesNotThrow(col::undo);
+        assertDoesNotThrow(() -> col.mUndo.undo(col));
     }
 }

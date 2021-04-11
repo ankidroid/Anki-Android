@@ -41,35 +41,35 @@ public class UndoTest extends RobolectricTest {
     public void test_op() throws Exception {
         Collection col = getColV2();
         // should have no undo by default
-        assertNull(col.undoType());
+        assertNull(col.mUndo.undoType());
         // let's adjust a study option
         col.save("studyopts");
         col.getConf().put("abc", 5);
         // it should be listed as undoable
-        assertEquals("studyopts", col.undoName(getTargetContext().getResources()));
+        assertEquals("studyopts", col.mUndo.undoName(getTargetContext().getResources()));
         // with about 5 minutes until it's clobbered
         /* lastSave
            assertThat(getTime().now() - col._lastSave, lesserThan(1));
         */
         // undoing should restore the old value
-        col.undo();
-        assertNull(col.undoType());
+        col.mUndo.undo(col);
+        assertNull(col.mUndo.undoType());
         assertFalse(col.getConf().has("abc"));
         // an (auto)save will clear the undo
         col.save("foo");
-        assertEquals("foo", col.undoName(getTargetContext().getResources()));
+        assertEquals("foo", col.mUndo.undoName(getTargetContext().getResources()));
         col.save();
-        assertEquals("", col.undoName(getTargetContext().getResources()));
+        assertEquals("", col.mUndo.undoName(getTargetContext().getResources()));
         // and a review will, too
         col.save("add");
         Note note = col.newNote();
         note.setItem("Front", "one");
         col.addNote(note);
         col.reset();
-        assertEquals("add", col.undoName(getTargetContext().getResources()));
+        assertEquals("add", col.mUndo.undoName(getTargetContext().getResources()));
         Card c = col.getSched().getCard();
         col.getSched().answerCard(c, 2);
-        assertEquals("Review", col.undoName(getTargetContext().getResources()));
+        assertEquals("Review", col.mUndo.undoName(getTargetContext().getResources()));
     }
 
 
@@ -94,14 +94,14 @@ public class UndoTest extends RobolectricTest {
         assertEquals(new Counts(0, 1, 0), col.getSched().counts());
         assertEquals(QUEUE_TYPE_LRN, c.getQueue());
         // undo
-        assertNotNull(col.undoType());
-        col.undo();
+        assertNotNull(col.mUndo.undoType());
+        col.mUndo.undo(col);
         col.reset();
         assertEquals(new Counts(1, 0, 0), col.getSched().counts());
         c.load();
         assertEquals(QUEUE_TYPE_NEW, c.getQueue());
         assertNotEquals(1001, c.getLeft());
-        assertNull(col.undoType());
+        assertNull(col.mUndo.undoType());
         // we should be able to undo multiple answers too
         note = col.newNote();
         note.setItem("Front", "two");
@@ -113,19 +113,19 @@ public class UndoTest extends RobolectricTest {
         c = col.getSched().getCard();
         col.getSched().answerCard(c, 3);
         assertEquals(new Counts(0, 2, 0), col.getSched().counts());
-        col.undo();
+        col.mUndo.undo(col);
         col.reset();
         assertEquals(new Counts(1, 1, 0), col.getSched().counts());
-        col.undo();
+        col.mUndo.undo(col);
         col.reset();
         assertEquals(new Counts(2, 0, 0), col.getSched().counts());
         // performing a normal op will clear the review queue
         c = col.getSched().getCard();
         col.getSched().answerCard(c, 3);
-        assertThat(col.undoType(), is(instanceOf(Collection.UndoReview.class)));
+        assertThat(col.mUndo.undoType(), is(instanceOf(Collection.UndoReview.class)));
         col.save("foo");
         // Upstream, "save" can be undone. This test fails here because it's not the case in AnkiDroid
-        assumeThat(col.undoName(getTargetContext().getResources()), is("foo"));
-        col.undo();
+        assumeThat(col.mUndo.undoName(getTargetContext().getResources()), is("foo"));
+        col.mUndo.undo(col);
     }
 }

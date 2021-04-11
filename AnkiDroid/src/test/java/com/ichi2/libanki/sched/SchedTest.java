@@ -62,11 +62,9 @@ import static com.ichi2.testutils.AnkiAssert.checkRevIvl;
 import static com.ichi2.testutils.AnkiAssert.without_unicode_isolation;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.containsString;
-import static org.hamcrest.Matchers.either;
 import static org.hamcrest.Matchers.greaterThan;
 import static org.hamcrest.Matchers.greaterThanOrEqualTo;
 import static org.hamcrest.Matchers.is;
-import static org.hamcrest.Matchers.lessThan;
 import static org.hamcrest.Matchers.lessThanOrEqualTo;
 import static org.hamcrest.Matchers.not;
 import static org.hamcrest.Matchers.notNullValue;
@@ -469,7 +467,7 @@ public class SchedTest extends RobolectricTest {
         // if we fail it, it should be back in the correct queue
         col.getSched().answerCard(c, 1);
         assertEquals(QUEUE_TYPE_LRN, c.getQueue());
-        col.undo();
+        col.mUndo.undo(col);
         col.reset();
         c = getCard();
         col.getSched().answerCard(c, 2);

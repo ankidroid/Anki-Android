@@ -2841,7 +2841,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
 
     @VisibleForTesting
     protected boolean isUndoAvailable() {
-        return getCol().undoAvailable();
+        return getCol().mUndo.undoAvailable();
     }
 
     // ----------------------------------------------------------------------------
