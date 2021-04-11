@@ -347,7 +347,7 @@ public class RobolectricTest implements CollectionGetter {
         if (model == null) {
             throw new IllegalArgumentException(String.format("Could not find model '%s'", name));
         }
-        Note n = getCol().newNote(model);
+        @NonNull Note n = getCol().newNote(model);
         for(int i = 0; i < fields.length; i++) {
             n.setField(i, fields[i]);
         }

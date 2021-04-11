@@ -35,6 +35,7 @@ import org.robolectric.android.controller.ActivityController;
 import org.robolectric.shadows.ShadowActivity;
 import org.robolectric.shadows.ShadowIntent;
 
+import androidx.annotation.NonNull;
 import androidx.test.ext.junit.runners.AndroidJUnit4;
 import timber.log.Timber;
 
@@ -260,7 +261,7 @@ public class CardTemplateEditorTest extends RobolectricTest {
         Assert.assertFalse("Model should not have changed", testEditor.modelHasChanged());
 
         // Create note with forward and back info, Add Reverse is empty, so should only be one card
-        Note selectiveGeneratedNote = getCol().newNote(collectionBasicModelOriginal);
+        @NonNull Note selectiveGeneratedNote = getCol().newNote(collectionBasicModelOriginal);
         selectiveGeneratedNote.setField(0, "TestFront");
         selectiveGeneratedNote.setField(1, "TestBack");
         String[] fields = selectiveGeneratedNote.getFields();
