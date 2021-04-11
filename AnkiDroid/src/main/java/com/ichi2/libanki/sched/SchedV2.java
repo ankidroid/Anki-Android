@@ -526,7 +526,7 @@ public class SchedV2 extends AbstractSched {
     public @Nullable List<DeckDueTreeNode> deckDueList(@Nullable CancelListener collectionTask) {
         _checkDay();
         mCol.getDecks().checkIntegrity();
-        ArrayList<Deck> decks = mCol.getDecks().allSorted();
+        List<Deck> decks = mCol.getDecks().allSorted();
         HashMap<String, Integer[]> lims = new HashMap<>(decks.size());
         ArrayList<DeckDueTreeNode> deckNodes = new ArrayList<>(decks.size());
         Decks.Node childMap = mCol.getDecks().childMap();
@@ -570,7 +570,7 @@ public class SchedV2 extends AbstractSched {
     public @NonNull List<DeckTreeNode> quickDeckDueTree() {
         // Similar to deckDueTree, ignoring the numbers
 
-        ArrayList<Deck> decks = mCol.getDecks().allSorted();
+        List<Deck> decks = mCol.getDecks().allSorted();
         // Similar to deckDueList
         ArrayList<DeckTreeNode> data = new ArrayList<>();
         for (JSONObject deck : decks) {

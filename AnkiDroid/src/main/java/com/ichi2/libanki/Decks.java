@@ -460,7 +460,7 @@ public class Decks {
     }
 
 
-    public ArrayList<String> allNames() {
+    public List<String> allNames() {
         return allNames(true);
     }
 
@@ -468,8 +468,8 @@ public class Decks {
     /**
      * An unsorted list of all deck names.
      */
-    public ArrayList<String> allNames(boolean dyn) {
-        ArrayList<String> list = new ArrayList<>(mDecks.size());
+    public List<String> allNames(boolean dyn) {
+        List<String> list = new ArrayList<>(mDecks.size());
         if (dyn) {
             for (Deck x : mDecks.values()) {
                 list.add(x.getString("name"));
@@ -488,7 +488,7 @@ public class Decks {
     /**
      * A list of all decks.
      */
-    public ArrayList<Deck> all() {
+    public List<Deck> all() {
         return new ArrayList<>(mDecks.values());
     }
 
@@ -500,8 +500,8 @@ public class Decks {
      * This method does not exist in the original python module but *must* be used for any user
      * interface components that display a deck list to ensure the ordering is consistent.
      */
-    public ArrayList<Deck> allSorted() {
-        ArrayList<Deck> decks = all();
+    public List<Deck> allSorted() {
+        List<Deck> decks = all();
         Collections.sort(decks, DeckComparator.INSTANCE);
         return decks;
     }
@@ -976,7 +976,7 @@ public class Decks {
     }
 
     private void _checkDeckTree() {
-        ArrayList<Deck> decks = allSorted();
+        List<Deck> decks = allSorted();
         Map<String, Deck> names = new HashMap<>(decks.size());
 
         for (Deck deck: decks) {
@@ -1137,7 +1137,7 @@ public class Decks {
         Node childMap = new Node();
 
         // Go through all decks, sorted by name
-        ArrayList<Deck> decks = all();
+        List<Deck> decks = all();
 
         Collections.sort(decks, DeckComparator.INSTANCE);
 
