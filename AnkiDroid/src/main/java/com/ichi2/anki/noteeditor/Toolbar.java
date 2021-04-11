@@ -194,7 +194,6 @@ public class Toolbar extends FrameLayout {
 
 
         int fourDp = (int) Math.ceil(4 / context.getResources().getDisplayMetrics().density);
-        int widthDp = (int) Math.ceil(48 / context.getResources().getDisplayMetrics().density);
 
         button.setPadding(fourDp, fourDp, fourDp, fourDp);
         // end apply style
@@ -207,7 +206,7 @@ public class Toolbar extends FrameLayout {
         // Hack - items are truncated from the scrollview
         View v = findViewById(R.id.editor_toolbar_internal);
 
-        int expectedWidth = getVisibleItemCount() * dpToPixels(widthDp+2*fourDp); //width + 4dp padding on both sides
+        int expectedWidth = getVisibleItemCount() * dpToPixels(48 + 2 * 4); //width + 4dp padding on both sides
         int width = getScreenWidth();
         LayoutParams p = new LayoutParams(v.getLayoutParams());
         p.gravity = Gravity.CENTER_VERTICAL | ((expectedWidth > width) ? Gravity.LEFT : Gravity.CENTER_HORIZONTAL);
