@@ -122,7 +122,7 @@ public class UndoTest extends RobolectricTest {
         // performing a normal op will clear the review queue
         c = col.getSched().getCard();
         col.getSched().answerCard(c, 3);
-        assertThat(col.mUndo.undoType(), is(instanceOf(Collection.UndoReview.class)));
+        assertThat(col.mUndo.undoType(), is(instanceOf(UndoManager.UndoReview.class)));
         col.save("foo");
         // Upstream, "save" can be undone. This test fails here because it's not the case in AnkiDroid
         assumeThat(col.mUndo.undoName(getTargetContext().getResources()), is("foo"));
