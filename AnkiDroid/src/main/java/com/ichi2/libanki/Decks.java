@@ -28,7 +28,6 @@ import com.ichi2.anki.AnkiDroidApp;
 import com.ichi2.anki.exception.ConfirmModSchemaException;
 import com.ichi2.anki.exception.DeckRenameException;
 import com.ichi2.anki.exception.FilteredAncestor;
-import com.ichi2.libanki.exception.NoSuchDeckException;
 
 import com.ichi2.utils.DeckComparator;
 import com.ichi2.utils.DeckNameComparator;
@@ -1291,23 +1290,6 @@ public class Decks {
             }
         }
         return validValues.toArray(new Long[0]);
-    }
-
-    private Deck getDeckOrFail(long deckId) throws NoSuchDeckException {
-        Deck deck = get(deckId, false);
-        if (deck == null) {
-            throw new NoSuchDeckException(deckId);
-        }
-        return deck;
-    }
-
-    public boolean hasDeckOptions(long deckId) throws NoSuchDeckException {
-        return getDeckOrFail(deckId).has("conf");
-    }
-
-
-    public void removeDeckOptions(long deckId) throws NoSuchDeckException {
-        getDeckOrFail(deckId).remove("conf");
     }
 
     public static boolean isDynamic(Collection col, long deckId) {
