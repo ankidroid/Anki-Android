@@ -449,6 +449,8 @@ public class DeckPicker extends NavigationDrawerActivity implements
 
         SharedPreferences preferences = AnkiDroidApp.getSharedPrefs(getBaseContext());
 
+        mCreateDeckDialog = new CreateDeckDialog(this, R.string.new_deck, false, null);
+
         //we need to restore here, as we need it before super.onCreate() is called.
         restoreWelcomeMessage(savedInstanceState);
         // Open Collection on UI thread while splash screen is showing

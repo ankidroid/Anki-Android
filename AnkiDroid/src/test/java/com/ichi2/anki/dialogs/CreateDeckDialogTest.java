@@ -47,83 +47,76 @@ import static org.robolectric.Shadows.shadowOf;
 @LooperMode(LooperMode.Mode.PAUSED)
 public class CreateDeckDialogTest extends RobolectricTest {
 
-    private DeckPicker mActivityScenario;
+    private ActivityScenario<DeckPicker> mActivityScenario;
 
-//
-//    @Test
-//    public void setupDeckPicker() {
-//        mActivityScenario = new DeckPicker();
-//    }
-
-    private static <T> T whatever() {
-        return null;
+    @Override
+    public void setUp() {
+        super.setUp();
+        mActivityScenario = ActivityScenario.launch(DeckPicker.class);
+        mActivityScenario.moveToState(Lifecycle.State.STARTED);
     }
+
     @Test
     public void testCreateFilteredDeckFunction() throws FilteredAncestor{
-            ensureCollectionLoadIsSynchronous();
-//            shadowOf(Looper.getMainLooper()).idle();
-//        Bundle args = new CustomStudyDialog(whatever(), whatever())
-//                .withArguments(CustomStudyDialog.CUSTOM_STUDY_AHEAD, 1)
-//                .getArguments();
-
-        ActivityScenario<DeckPicker> scenario = ActivityScenario.launch(DeckPicker.class);
-
-        scenario.moveToState(Lifecycle.State.STARTED);
-            scenario.onActivity(activity -> {
-                AtomicReference<Boolean> isCreated = new AtomicReference<>(false);
-                CreateDeckDialog createDeckDialog =new CreateDeckDialog(activity, R.string.new_deck, false, null);
-                String deckName = "filteredDeck";
-                shadowOf(getMainLooper()).idle();
-                createDeckDialog.createFilteredDeck(deckName);
-                createDeckDialog.setOnNewDeckCreated((id) -> {
-                    // a deck was created
+        ensureCollectionLoadIsSynchronous();
+        mActivityScenario.onActivity(activity -> {
+            AtomicReference<Boolean> isCreated = new AtomicReference<>(false);
+            String deckName = "filteredDeck";
+            shadowOf(getMainLooper()).idle();
+            activity.mCreateDeckDialog.setOnNewDeckCreated((id) -> {
+                // a deck was created
+                try {
                     isCreated.set(true);
-                    try {
-                        assertThat(id, is(new AnkiActivity().getCol().getDecks().id(deckName)));
-                    } catch (FilteredAncestor filteredAncestor) {
-                        filteredAncestor.printStackTrace();
-                    }
-                });
-                assertThat(isCreated.get(), is(false));
+                    assertThat(id, is(new AnkiActivity().getCol().getDecks().id(deckName)));
+                } catch (FilteredAncestor filteredAncestor) {
+                    filteredAncestor.printStackTrace();
+                }
             });
+            activity.mCreateDeckDialog.createFilteredDeck(deckName);
+            assertThat(isCreated.get(), is(true));
+        });
     }
-//
-//    @Test
-//    public void testCreateSubDeckFunction() {
-//        try {
-//            shadowOf(getMainLooper()).idle();
-//            Long mParentId = mActivityScenario.getCol().getDecks().id("filteredDeck");
-//            String deckName = "I am child";
-//            mActivityScenario.mCreateDeckDialog.createSubDeck(mParentId, deckName);
-//            mActivityScenario.mCreateDeckDialog.setOnNewDeckCreated((id) -> {
-//                try {
-//                    String deckNameWithParentName = mActivityScenario.getCol().getDecks().getSubdeckName(mParentId, deckName);
-//                    assertThat(id, is(mActivityScenario.getCol().getDecks().id(deckNameWithParentName)));
-//                } catch (FilteredAncestor filteredAncestor) {
-//                    filteredAncestor.printStackTrace();
-//                }
-//            });
-//        } catch (Exception e) {
-//            Timber.w(e);
-//        }
-//    }
-//
-//    @Test
-//    public void testCreateDeckFunction() {
-//        try {
-//            shadowOf(getMainLooper()).idle();
-//            String deckName = "Sample Deck Name";
-//            mActivityScenario.mCreateDeckDialog.createDeck(deckName);
-//            mActivityScenario.mCreateDeckDialog.setOnNewDeckCreated((id) -> {
-//                // a deck was created
-//                try {
-//                    assertThat(id, is(mActivityScenario.getCol().getDecks().id(deckName)));
-//                } catch (FilteredAncestor filteredAncestor) {
-//                    filteredAncestor.printStackTrace();
-//                }
-//            });
-//        } catch (Exception e) {
-//            Timber.w(e);
-//        }
-//    }
+
+    @Test
+    public void testCreateSubDeckFunction() throws FilteredAncestor{
+        ensureCollectionLoadIsSynchronous();
+        Long deckParentId = new AnkiActivity().getCol().getDecks().id("Deck Name");
+        mActivityScenario.onActivity(activity -> {
+            AtomicReference<Boolean> isCreated = new AtomicReference<>(false);
+            String deckName = "filteredDeck";
+            shadowOf(getMainLooper()).idle();
+            activity.mCreateDeckDialog.setOnNewDeckCreated((id) -> {
+                try {
+                    isCreated.set(true);
+                    String deckNameWithParentName = activity.getCol().getDecks().getSubdeckName(deckParentId, deckName);
+                    assertThat(id, is(activity.getCol().getDecks().id(deckNameWithParentName)));
+                } catch (FilteredAncestor filteredAncestor) {
+                    filteredAncestor.printStackTrace();
+                }
+            });
+            activity.mCreateDeckDialog.createSubDeck(deckParentId, deckName);
+            assertThat(isCreated.get(), is(true));
+        });
+    }
+
+    @Test
+    public void testCreateDeckFunction() {
+        ensureCollectionLoadIsSynchronous();
+        mActivityScenario.onActivity(activity -> {
+            AtomicReference<Boolean> isCreated = new AtomicReference<>(false);
+            String deckName = "Deck Name";
+            shadowOf(getMainLooper()).idle();
+            activity.mCreateDeckDialog.setOnNewDeckCreated((id) -> {
+                // a deck was created
+                try {
+                    isCreated.set(true);
+                    assertThat(id, is(new AnkiActivity().getCol().getDecks().id(deckName)));
+                } catch (FilteredAncestor filteredAncestor) {
+                    filteredAncestor.printStackTrace();
+                }
+            });
+            activity.mCreateDeckDialog.createDeck(deckName);
+            assertThat(isCreated.get(), is(true));
+        });
+    }
 }
