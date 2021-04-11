@@ -517,10 +517,5 @@ public class ReviewerKeyboardInputTest extends RobolectricTest {
         public boolean hasBeenAnswered() {
             return mAnswered != null;
         }
-
-        @Override
-        protected void performClickWithVisualFeedback(int ease) {
-            answerCard(ease);
-        }
     }
 }
