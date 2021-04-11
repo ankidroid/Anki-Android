@@ -885,7 +885,7 @@ public class Decks {
         DeckConfig _new = new DeckConfig(DEFAULT_CONF);
         _new.put("id", conf.getLong("id"));
         _new.put("name", conf.getString("name"));
-        mDconf.put(conf.getLong("id"), _new);
+        mDconf.put(_new.getLong("id"), _new);
         save(_new);
         // if it was previously randomized, resort
         if (oldOrder == 0) {
