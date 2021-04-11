@@ -489,7 +489,7 @@ public class CollectionTask<ProgressListener, ProgressBackground extends Progres
         @Override
         protected void actualTask(Collection col) {
             // collect undo information
-            col.markUndo(revertNoteToProvidedState(R.string.menu_bury_card, mCard));
+            col.markUndo(revertCardToProvidedState(R.string.menu_bury_card, mCard));
             // then bury
             col.getSched().buryCards(new long[] {mCard.getId()});
         }
