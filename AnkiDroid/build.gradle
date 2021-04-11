@@ -281,6 +281,7 @@ dependencies {
     implementation 'com.github.yalantis:ucrop:2.2.6'
     implementation 'com.drakeet.drawer:drawer:1.0.3'
     api project(":api")
+    implementation 'com.github.QuadFlask:colorpicker:0.0.15'
 
     testImplementation 'org.junit.vintage:junit-vintage-engine:5.7.1'
     testImplementation 'org.mockito:mockito-inline:3.8.0'
