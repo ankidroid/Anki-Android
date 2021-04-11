@@ -49,7 +49,6 @@ import com.ichi2.libanki.utils.Time;
 import com.ichi2.upgrade.Upgrade;
 import com.ichi2.utils.DatabaseChangeDecorator;
 import com.ichi2.utils.FunctionalInterfaces;
-import com.ichi2.utils.LanguageUtil;
 import com.ichi2.utils.VersionUtils;
 
 import com.ichi2.utils.JSONArray;
@@ -80,14 +79,12 @@ import java.util.regex.Pattern;
 import androidx.annotation.CheckResult;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.annotation.StringRes;
 import androidx.annotation.VisibleForTesting;
 import androidx.sqlite.db.SupportSQLiteDatabase;
 import androidx.sqlite.db.SupportSQLiteStatement;
 import timber.log.Timber;
 
 import static com.ichi2.async.CancelListener.isCancelled;
-import static com.ichi2.libanki.Consts.DECK_DYN;
 
 // Anki maintains a cache of used tags so it can quickly present a list of tags
 // for autocomplete and in the browser. For efficiency, deletions are not
@@ -1718,8 +1715,8 @@ public class Collection implements CollectionGetter {
         int fixCount = 0;
         for (long id : mDecks.allDynamicDeckIds()) {
             try {
-                if (mDecks.hasDeckOptions(id)) {
-                    mDecks.removeDeckOptions(id);
+                if (hasDeckOptions(id)) {
+                    removeDeckOptions(id);
                     fixCount++;
                 }
             } catch (NoSuchDeckException e) {
@@ -1731,6 +1728,24 @@ public class Collection implements CollectionGetter {
             problems.add(String.format(Locale.US, "%d dynamic deck(s) had deck options.", fixCount));
         }
         return problems;
+    }
+
+
+    private Deck getDeckOrFail(long deckId) throws NoSuchDeckException {
+        Deck deck = getDecks().get(deckId, false);
+        if (deck == null) {
+            throw new NoSuchDeckException(deckId);
+        }
+        return deck;
+    }
+
+    private boolean hasDeckOptions(long deckId) throws NoSuchDeckException {
+        return getDeckOrFail(deckId).has("conf");
+    }
+
+
+    private void removeDeckOptions(long deckId) throws NoSuchDeckException {
+        getDeckOrFail(deckId).remove("conf");
     }
 
 
