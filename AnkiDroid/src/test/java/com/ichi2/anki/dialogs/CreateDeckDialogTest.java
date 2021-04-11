@@ -44,7 +44,6 @@ import static org.hamcrest.core.Is.is;
 import static org.robolectric.Shadows.shadowOf;
 
 @RunWith(RobolectricTestRunner.class)
-@LooperMode(LooperMode.Mode.PAUSED)
 public class CreateDeckDialogTest extends RobolectricTest {
 
     private ActivityScenario<DeckPicker> mActivityScenario;
@@ -59,19 +58,22 @@ public class CreateDeckDialogTest extends RobolectricTest {
     @Test
     public void testCreateFilteredDeckFunction() throws FilteredAncestor{
         ensureCollectionLoadIsSynchronous();
+
         mActivityScenario.onActivity(activity -> {
             AtomicReference<Boolean> isCreated = new AtomicReference<>(false);
             String deckName = "filteredDeck";
             shadowOf(getMainLooper()).idle();
+
             activity.mCreateDeckDialog.setOnNewDeckCreated((id) -> {
                 // a deck was created
                 try {
                     isCreated.set(true);
-                    assertThat(id, is(new AnkiActivity().getCol().getDecks().id(deckName)));
+                    assertThat(id, is(activity.getCol().getDecks().id(deckName)));
                 } catch (FilteredAncestor filteredAncestor) {
                     filteredAncestor.printStackTrace();
                 }
             });
+
             activity.mCreateDeckDialog.createFilteredDeck(deckName);
             assertThat(isCreated.get(), is(true));
         });
@@ -81,10 +83,12 @@ public class CreateDeckDialogTest extends RobolectricTest {
     public void testCreateSubDeckFunction() throws FilteredAncestor{
         ensureCollectionLoadIsSynchronous();
         Long deckParentId = new AnkiActivity().getCol().getDecks().id("Deck Name");
+
         mActivityScenario.onActivity(activity -> {
             AtomicReference<Boolean> isCreated = new AtomicReference<>(false);
             String deckName = "filteredDeck";
             shadowOf(getMainLooper()).idle();
+
             activity.mCreateDeckDialog.setOnNewDeckCreated((id) -> {
                 try {
                     isCreated.set(true);
@@ -94,27 +98,31 @@ public class CreateDeckDialogTest extends RobolectricTest {
                     filteredAncestor.printStackTrace();
                 }
             });
+
             activity.mCreateDeckDialog.createSubDeck(deckParentId, deckName);
             assertThat(isCreated.get(), is(true));
         });
     }
 
     @Test
-    public void testCreateDeckFunction() {
+    public void testCreateDeckFunction() throws FilteredAncestor{
         ensureCollectionLoadIsSynchronous();
+
         mActivityScenario.onActivity(activity -> {
             AtomicReference<Boolean> isCreated = new AtomicReference<>(false);
             String deckName = "Deck Name";
             shadowOf(getMainLooper()).idle();
+
             activity.mCreateDeckDialog.setOnNewDeckCreated((id) -> {
                 // a deck was created
                 try {
                     isCreated.set(true);
-                    assertThat(id, is(new AnkiActivity().getCol().getDecks().id(deckName)));
+                    assertThat(id, is(activity.getCol().getDecks().id(deckName)));
                 } catch (FilteredAncestor filteredAncestor) {
                     filteredAncestor.printStackTrace();
                 }
             });
+            
             activity.mCreateDeckDialog.createDeck(deckName);
             assertThat(isCreated.get(), is(true));
         });
