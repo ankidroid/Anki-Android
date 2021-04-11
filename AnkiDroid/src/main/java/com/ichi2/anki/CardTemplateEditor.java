@@ -132,6 +132,7 @@ public class CardTemplateEditor extends AnkiActivity implements DeckSelectionDia
             mStartingOrdId = savedInstanceState.getInt("ordId");
             mTempModel = TemporaryModel.fromBundle(savedInstanceState);
         }
+
         // Disable the home icon
         enableToolbar();
         startLoadingCollection();
@@ -195,7 +196,6 @@ public class CardTemplateEditor extends AnkiActivity implements DeckSelectionDia
         if (mStartingOrdId != -1) {
             mViewPager.setCurrentItem(mStartingOrdId, animationDisabled());
         }
-
     }
 
     public boolean modelHasChanged() {
