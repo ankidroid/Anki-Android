@@ -882,11 +882,11 @@ public class Decks {
 
     public void restoreToDefault(DeckConfig conf) {
         int oldOrder = conf.getJSONObject("new").getInt("order");
-        DeckConfig _new = new DeckConfig(DEFAULT_CONF);
+        DeckConfig _new = mCol.getBackend().new_deck_config_legacy();
         _new.put("id", conf.getLong("id"));
         _new.put("name", conf.getString("name"));
-        mDconf.put(_new.getLong("id"), _new);
-        save(_new);
+
+        updateConf(_new);
         // if it was previously randomized, resort
         if (oldOrder == 0) {
             mCol.getSched().resortConf(_new);
