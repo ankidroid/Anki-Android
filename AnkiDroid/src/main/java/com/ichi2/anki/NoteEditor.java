@@ -605,7 +605,7 @@ public class NoteEditor extends AnkiActivity implements
         }
         mNoteDeckSpinner = findViewById(R.id.note_deck_spinner);
 
-        ArrayList<Deck> decks = getCol().getDecks().all();
+        List<Deck> decks = getCol().getDecks().all();
         Collections.sort(decks, DeckComparator.INSTANCE);
         final ArrayList<String> deckNames = new ArrayList<>(decks.size());
         mAllDeckIds = new ArrayList<>(decks.size());

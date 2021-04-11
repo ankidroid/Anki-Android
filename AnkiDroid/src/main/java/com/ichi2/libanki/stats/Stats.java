@@ -1264,7 +1264,7 @@ public class Stats {
     public static String deckLimit(long deckId, Collection col) {
         if (deckId == ALL_DECKS_ID) {
             // All decks
-            ArrayList<Deck> decks = col.getDecks().all();
+            List<Deck> decks = col.getDecks().all();
             ArrayList<Long> ids = new ArrayList<>(decks.size());
             for (Deck d : decks) {
                 ids.add(d.getLong("id"));

@@ -144,7 +144,6 @@ import com.ichi2.utils.JSONException;
 
 import java.io.File;
 import java.io.FileOutputStream;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 import java.util.TreeMap;
@@ -790,7 +789,7 @@ public class DeckPicker extends NavigationDrawerActivity implements
         } else if (itemId == R.id.action_new_filtered_deck) {
             Timber.i("DeckPicker:: New filtered deck button pressed");
             mDialogEditText = new FixedEditText(DeckPicker.this);
-            ArrayList<String> names = getCol().getDecks().allNames();
+            List<String> names = getCol().getDecks().allNames();
             int n = 1;
             String name = String.format(Locale.getDefault(), "%s %d", res.getString(R.string.filtered_deck_name), n);
             while (names.contains(name)) {

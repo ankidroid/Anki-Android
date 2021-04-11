@@ -77,7 +77,6 @@ import androidx.core.text.HtmlCompat;
 import timber.log.Timber;
 
 import static com.ichi2.libanki.Consts.FIELD_SEPARATOR;
-import static com.ichi2.utils.CollectionUtils.addAll;
 
 @SuppressWarnings({"PMD.AvoidThrowingRawExceptionTypes","PMD.AvoidReassigningParameters",
         "PMD.MethodNamingConventions","PMD.FieldDeclarationsShouldBeAtStartOfClass"})
@@ -1069,7 +1068,7 @@ public class Utils {
        @return whether there was a non-zero usn; in this case the list
        should be saved before the upload.
      */
-    public static boolean markAsUploaded(ArrayList<? extends JSONObject> ar) {
+    public static boolean markAsUploaded(List<? extends JSONObject> ar) {
         boolean changed = false;
         for (JSONObject obj: ar) {
             if (obj.optInt("usn", 1) != 0) {

@@ -56,7 +56,7 @@ import com.ichi2.ui.FixedTextView;
 
 import com.ichi2.utils.JSONException;
 
-import java.util.ArrayList;
+import java.util.List;
 import java.util.Locale;
 
 import timber.log.Timber;
@@ -78,7 +78,7 @@ public class Statistics extends NavigationDrawerActivity implements DeckDropDown
     private TabLayout mSlidingTabLayout;
     private AnkiStatsTaskHandler mTaskHandler = null;
     private long mDeckId;
-    private ArrayList<Deck> mDropDownDecks;
+    private List<Deck> mDropDownDecks;
     private Spinner mActionBarSpinner;
     private static boolean sIsSubtitle;
 
