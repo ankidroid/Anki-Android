@@ -543,7 +543,7 @@ public final class AnkiPackageExporter extends AnkiExporter {
         String path = f.getAbsolutePath();
         f.delete();
         Collection c = Storage.Collection(context, path);
-        Note n = c.newNote();
+        @NonNull Note n = c.newNote();
         //The created dummy collection only contains the StdModels.
         //The field names for those are localised during creation, so we need to consider that when creating dummy note
         n.setItem(context.getString(R.string.front_field_name), context.getString(R.string.export_v2_dummy_note));

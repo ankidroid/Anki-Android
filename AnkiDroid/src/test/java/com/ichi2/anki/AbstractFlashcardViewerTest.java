@@ -12,6 +12,7 @@ import org.junit.runner.RunWith;
 import org.robolectric.Robolectric;
 import org.robolectric.android.controller.ActivityController;
 
+import androidx.annotation.NonNull;
 import androidx.test.ext.junit.runners.AndroidJUnit4;
 
 import static com.ichi2.anki.AbstractFlashcardViewer.WebViewSignalParserUtils.ANSWER_ORDINAL_1;
@@ -419,7 +420,7 @@ public class AbstractFlashcardViewerTest extends RobolectricTest {
     }
 
     private NonAbstractFlashcardViewer getViewer() {
-        Note n = getCol().newNote();
+        @NonNull Note n = getCol().newNote();
         n.setField(0, "a");
         getCol().addNote(n);
 
