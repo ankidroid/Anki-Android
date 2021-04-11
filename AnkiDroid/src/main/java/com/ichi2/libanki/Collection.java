@@ -599,7 +599,7 @@ public class Collection implements CollectionGetter {
      * Return a new note with the default model from the deck
      * @return The new note
      */
-    public Note newNote() {
+    public @NonNull Note newNote() {
         return newNote(true);
     }
 
@@ -609,7 +609,7 @@ public class Collection implements CollectionGetter {
      *                the configuration (curModel)
      * @return The new note
      */
-    public Note newNote(boolean forDeck) {
+    public @NonNull Note newNote(boolean forDeck) {
         return newNote(getModels().current(forDeck));
     }
 
@@ -618,7 +618,7 @@ public class Collection implements CollectionGetter {
      * @param m The model to use for the new note
      * @return The new note
      */
-    public Note newNote(Model m) {
+    public @NonNull Note newNote(Model m) {
         return new Note(this, m);
     }
 
@@ -627,7 +627,7 @@ public class Collection implements CollectionGetter {
      * @param note A note to add if it generates card
      * @return Number of card added.
      */
-    public int addNote(Note note) {
+    public int addNote(@NonNull Note note) {
         return addNote(note, Models.AllowEmpty.ONLY_CLOZE);
     }
 
@@ -637,7 +637,7 @@ public class Collection implements CollectionGetter {
      * @param allowEmpty Whether we accept to add it even if it should generate no card. Useful to import note even if buggy
      * @return Number of card added
      */
-    public int addNote(Note note, Models.AllowEmpty allowEmpty) {
+    public int addNote(@NonNull Note note, Models.AllowEmpty allowEmpty) {
         // check we have card models available, then save
         ArrayList<JSONObject> cms = findTemplates(note, allowEmpty);
         // Todo: upstream, we accept to add a not even if it generates no card. Should be ported to ankidroid
