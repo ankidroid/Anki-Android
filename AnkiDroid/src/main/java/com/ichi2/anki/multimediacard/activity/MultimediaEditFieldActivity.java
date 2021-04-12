@@ -342,13 +342,14 @@ public class MultimediaEditFieldActivity extends AnkiActivity
         recreateEditingUi(mCurrentChangeRequest);
     }
 
-    public void onRequestPermissionsResult (int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         if (mCurrentChangeRequest == null) {
             cancelActivityWithAssertionFailure("mCurrentChangeRequest should be set before requesting permissions");
             return;
         }
 
         Timber.d("onRequestPermissionsResult. Code: %d", requestCode);
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
         if (requestCode == REQUEST_AUDIO_PERMISSION && permissions.length == 1) {
 
             if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
