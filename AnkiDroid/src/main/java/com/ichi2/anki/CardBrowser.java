@@ -68,6 +68,7 @@ import com.ichi2.anki.dialogs.RescheduleDialog;
 import com.ichi2.anki.dialogs.SimpleMessageDialog;
 import com.ichi2.anki.dialogs.tags.TagsDialog;
 import com.ichi2.anki.dialogs.tags.TagsDialogFactory;
+import com.ichi2.anki.dialogs.tags.TagsDialogListener;
 import com.ichi2.anki.receiver.SdCardReceiver;
 import com.ichi2.anki.widgets.DeckDropDownAdapter;
 import com.ichi2.async.CollectionTask;
@@ -114,7 +115,7 @@ import static com.ichi2.libanki.stats.Stats.SECONDS_PER_DAY;
 import static com.ichi2.anim.ActivityTransitionAnimation.Direction.*;
 
 public class CardBrowser extends NavigationDrawerActivity implements
-        DeckDropDownAdapter.SubtitleListener, TagsDialog.TagsDialogListener {
+        DeckDropDownAdapter.SubtitleListener, TagsDialogListener {
 
     enum Column {
         QUESTION,

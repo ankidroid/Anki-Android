@@ -95,6 +95,7 @@ import com.ichi2.anki.cardviewer.GestureTapProcessor;
 import com.ichi2.anki.cardviewer.MissingImageHandler;
 import com.ichi2.anki.dialogs.tags.TagsDialog;
 import com.ichi2.anki.dialogs.tags.TagsDialogFactory;
+import com.ichi2.anki.dialogs.tags.TagsDialogListener;
 import com.ichi2.anki.multimediacard.AudioView;
 import com.ichi2.anki.cardviewer.CardAppearance;
 import com.ichi2.anki.receiver.SdCardReceiver;
@@ -168,7 +169,7 @@ import com.github.zafarkhaja.semver.Version;
 import static com.ichi2.anim.ActivityTransitionAnimation.Direction.*;
 
 @SuppressWarnings({"PMD.AvoidThrowingRawExceptionTypes","PMD.FieldDeclarationsShouldBeAtStartOfClass"})
-public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity implements ReviewerUi, CommandProcessor, TagsDialog.TagsDialogListener {
+public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity implements ReviewerUi, CommandProcessor, TagsDialogListener {
 
     /**
      * Result codes that are returned when this activity finishes.

@@ -73,6 +73,7 @@ import com.ichi2.anki.dialogs.IntegerDialog;
 import com.ichi2.anki.dialogs.LocaleSelectionDialog;
 import com.ichi2.anki.dialogs.tags.TagsDialog;
 import com.ichi2.anki.dialogs.tags.TagsDialogFactory;
+import com.ichi2.anki.dialogs.tags.TagsDialogListener;
 import com.ichi2.anki.exception.ConfirmModSchemaException;
 import com.ichi2.anki.multimediacard.IMultimediaEditableNote;
 import com.ichi2.anki.multimediacard.activity.MultimediaEditFieldActivity;
@@ -156,7 +157,7 @@ import static com.ichi2.libanki.Models.NOT_FOUND_NOTE_TYPE;
  */
 public class NoteEditor extends AnkiActivity implements
         DeckSelectionDialog.DeckSelectionListener,
-        TagsDialog.TagsDialogListener {
+        TagsDialogListener {
     // DA 2020-04-13 - Refactoring Plans once tested:
     // * There is a difference in functionality depending on whether we are editing
     // * Extract mAddNote and mCurrentEditedCard into inner class. Gate mCurrentEditedCard on edit state.
