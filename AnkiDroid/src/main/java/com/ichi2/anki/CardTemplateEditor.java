@@ -650,22 +650,10 @@ public class CardTemplateEditor extends AnkiActivity implements DeckSelectionDia
 
         ActivityResultLauncher<Intent> onCardBrowserAppearanceResult = registerForActivityResult(new onCardBrowserAppearanceContract(), data -> onCardBrowserAppearanceResult(data));
 
-        public class onRequestPreviewContract extends ActivityResultContract<Intent, Intent>{
-            @NonNull
-            @Override
-            public Intent createIntent(@NonNull Context context, Intent input) {
-                return input;
-            }
-            @Override
-            public Intent parseResult(int resultCode, @Nullable Intent intent) {
-                if(resultCode != Activity.RESULT_OK) {
-                    return null;
+        ActivityResultLauncher<Intent> onRequestPreviewResult = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(), result ->  {
+                if (result.getResultCode() != RESULT_OK) {
+                    return;
                 }
-                return intent;
-            }
-        }
-
-        ActivityResultLauncher<Intent> onRequestPreviewResult = registerForActivityResult(new onRequestPreviewContract(), result ->  {
                 TemporaryModel.clearTempModelFiles();
                 // Make sure the fragments reinitialize, otherwise there is staleness on return
                 ((TemplatePagerAdapter)mTemplateEditor.mViewPager.getAdapter()).ordinalShift();
