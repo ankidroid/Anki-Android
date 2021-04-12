@@ -118,7 +118,7 @@ public class Toolbar extends FrameLayout {
                 noteEditorColorPicker.setVisibility(VISIBLE);
             }
         });
-        setClick(R.id.note_editor_toolbar_color_red,"<span style=\"color:red;\">","</span>");
+        setClick(R.id.note_editor_toolbar_color_red, "<span style=\"color:red;\">", "</span>");
         setClick(R.id.note_editor_toolbar_color_blue,"<span style=\"color:blue;\">","</span>");
         setClick(R.id.note_editor_toolbar_color_green,"<span style=\"color:green;\">","</span>");
         setClick(R.id.note_editor_toolbar_color_yellow,"<span style=\"color:yellow;\">","</span>");
