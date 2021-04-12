@@ -23,7 +23,7 @@ public class HashUtilTest {
     }
 
     @Test
-    public void NoReThreshold() throws NoSuchFieldException, IllegalAccessException {
+    public void thresholdIsNotModifiedAfterCreationWithFixedSizeCollection() throws NoSuchFieldException, IllegalAccessException {
         for (int threshold : new int[] {0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 20, 100, 1000}) {
             HashSet<Integer> set = HashUtil.HashSetInit(threshold);
             HashMap<Integer, Integer> map = HashUtil.HashMapInit(threshold);
