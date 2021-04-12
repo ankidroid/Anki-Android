@@ -438,42 +438,31 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
         }
     };
 
-    private final View.OnTouchListener mSelectEaseHandler = new View.OnTouchListener() {
-        Card mPrevCard;
+    private final View.OnClickListener mSelectEaseHandler = new View.OnClickListener() {
         @Override
-        public boolean onTouch(View view, MotionEvent event) {
-            if (event.getAction() == MotionEvent.ACTION_DOWN) {
-                // Save card when button pressed
-                mPrevCard = mCurrentCard;
-                return true;
+        public void onClick(View view) {
+            // Ignore what is most likely an accidental double-tap.
+            if (SystemClock.elapsedRealtime() - mLastClickTime < DOUBLE_TAP_IGNORE_THRESHOLD) {
+                return;
             }
-            // Perform intended action only if the button has been pressed for current card
-            if (event.getAction() == MotionEvent.ACTION_UP && mPrevCard == mCurrentCard) {
-                // Ignore what is most likely an accidental double-tap.
-                if (SystemClock.elapsedRealtime() - mLastClickTime < DOUBLE_TAP_IGNORE_THRESHOLD) {
-                    return false;
-                }
-                mLastClickTime = SystemClock.elapsedRealtime();
-                mTimeoutHandler.removeCallbacks(mShowQuestionTask);
-                int id = view.getId();
-                if (id == R.id.flashcard_layout_ease1) {
-                    Timber.i("AbstractFlashcardViewer:: EASE_1 pressed");
-                    answerCard(Consts.BUTTON_ONE);
-                } else if (id == R.id.flashcard_layout_ease2) {
-                    Timber.i("AbstractFlashcardViewer:: EASE_2 pressed");
-                    answerCard(Consts.BUTTON_TWO);
-                } else if (id == R.id.flashcard_layout_ease3) {
-                    Timber.i("AbstractFlashcardViewer:: EASE_3 pressed");
-                    answerCard(Consts.BUTTON_THREE);
-                } else if (id == R.id.flashcard_layout_ease4) {
-                    Timber.i("AbstractFlashcardViewer:: EASE_4 pressed");
-                    answerCard(Consts.BUTTON_FOUR);
-                } else {
-                    mCurrentEase = 0;
-                }
-                return true;
+            mLastClickTime = SystemClock.elapsedRealtime();
+            mTimeoutHandler.removeCallbacks(mShowQuestionTask);
+            int id = view.getId();
+            if (id == R.id.flashcard_layout_ease1) {
+                Timber.i("AbstractFlashcardViewer:: EASE_1 pressed");
+                answerCard(Consts.BUTTON_ONE);
+            } else if (id == R.id.flashcard_layout_ease2) {
+                Timber.i("AbstractFlashcardViewer:: EASE_2 pressed");
+                answerCard(Consts.BUTTON_TWO);
+            } else if (id == R.id.flashcard_layout_ease3) {
+                Timber.i("AbstractFlashcardViewer:: EASE_3 pressed");
+                answerCard(Consts.BUTTON_THREE);
+            } else if (id == R.id.flashcard_layout_ease4) {
+                Timber.i("AbstractFlashcardViewer:: EASE_4 pressed");
+                answerCard(Consts.BUTTON_FOUR);
+            } else {
+                mCurrentEase = 0;
             }
-            return false;
         }
     };
 
@@ -1535,19 +1524,19 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
 
         mEase1 = findViewById(R.id.ease1);
         mEase1Layout = findViewById(R.id.flashcard_layout_ease1);
-        mEase1Layout.setOnTouchListener(mSelectEaseHandler);
+        mEase1Layout.setOnClickListener(mSelectEaseHandler);
 
         mEase2 = findViewById(R.id.ease2);
         mEase2Layout = findViewById(R.id.flashcard_layout_ease2);
-        mEase2Layout.setOnTouchListener(mSelectEaseHandler);
+        mEase2Layout.setOnClickListener(mSelectEaseHandler);
 
         mEase3 = findViewById(R.id.ease3);
         mEase3Layout = findViewById(R.id.flashcard_layout_ease3);
-        mEase3Layout.setOnTouchListener(mSelectEaseHandler);
+        mEase3Layout.setOnClickListener(mSelectEaseHandler);
 
         mEase4 = findViewById(R.id.ease4);
         mEase4Layout = findViewById(R.id.flashcard_layout_ease4);
-        mEase4Layout.setOnTouchListener(mSelectEaseHandler);
+        mEase4Layout.setOnClickListener(mSelectEaseHandler);
 
         mNext1 = findViewById(R.id.nextTime1);
         mNext2 = findViewById(R.id.nextTime2);
