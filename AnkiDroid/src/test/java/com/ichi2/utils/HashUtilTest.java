@@ -11,8 +11,10 @@ public class HashUtilTest {
 
     /** Size of the table used to save a map.*/
     private int mapThreshold(HashMap<?, ?> map) throws NoSuchFieldException, IllegalAccessException {
-        Field thresholdField = HashMap.class.getField("threshold");
-        return  thresholdField.getInt(map);
+        Field thresholdField = HashMap.class.getDeclaredField("threshold");
+        thresholdField.setAccessible(true);
+        return thresholdField.getInt(map);
+    }
     }
 
     /** Threshold of a set. Not a setter*/
