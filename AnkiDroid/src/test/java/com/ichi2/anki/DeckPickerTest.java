@@ -1,13 +1,16 @@
 package com.ichi2.anki;
 
 import android.Manifest;
+import android.app.Activity;
 import android.app.Application;
+import android.app.Instrumentation;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
 import android.content.pm.PackageManager;
+import android.view.Menu;
 
 import com.ichi2.anki.dialogs.DatabaseErrorDialog;
 import com.ichi2.libanki.Collection;
@@ -25,9 +28,11 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
 
+import androidx.appcompat.widget.Toolbar;
 import androidx.test.core.app.ActivityScenario;
 import androidx.test.core.app.ApplicationProvider;
 import androidx.test.ext.junit.runners.AndroidJUnit4;
+import timber.log.Timber;
 
 import static com.ichi2.anki.DeckPicker.UPGRADE_VERSION_KEY;
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -35,6 +40,7 @@ import static org.hamcrest.Matchers.is;
 import static org.hamcrest.Matchers.notNullValue;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNull;
+import static org.junit.Assert.assertTrue;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.times;
@@ -264,15 +270,12 @@ public class DeckPickerTest extends RobolectricTest {
 
         try (ActivityScenario<DeckPicker> scenario = ActivityScenario.launch(DeckPicker.class)) {
             scenario.onActivity(deckPicker -> {
-                ShadowActivity shadowActivity = shadowOf(deckPicker);
-                Intent outputIntent = shadowActivity.getNextStartedActivity();
-                ComponentName component = outputIntent.getComponent();
-
-                assertThat(component, notNullValue());
-                ComponentName componentName = Objects.requireNonNull(component);
-
-                assertThat("Deck Picker currently handles permissions, so should be called", componentName.getClassName(), is("com.ichi2.anki.DeckPicker"));
+                Toolbar toolbar = deckPicker.findViewById(R.id.toolbar);
+                deckPicker.onCreateOptionsMenu(toolbar.getMenu());
+                assertThat("Deck was added", getCol().getDecks().count(), is(1));
+                assertThat("Not visible",toolbar.getMenu().findItem(R.id.deck_picker_action_filter).isVisible(),is(false));
             });
+
         }
 
     }
