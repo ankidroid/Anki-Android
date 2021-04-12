@@ -131,7 +131,7 @@ public class Toolbar extends FrameLayout {
                     .wheelType(ColorPickerView.WHEEL_TYPE.FLOWER)
                     .density(12)
                     .setOnColorSelectedListener(selectedColor ->  {
-                        Toast.makeText(getContext(), "onColorSelected: 0x" + Integer.toHexString(selectedColor), Toast.LENGTH_SHORT).show();
+                        // Do nothing
                     })
                     .setPositiveButton("Choose", (d, selectedColor, allColors) -> {
                         onFormat(new TextWrapper("<span style=\"color:"+"#"+Integer.toHexString(selectedColor)+";\">","</span>"));

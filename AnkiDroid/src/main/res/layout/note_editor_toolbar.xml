@@ -53,46 +53,39 @@
             <androidx.appcompat.widget.AppCompatImageButton
                 android:id="@+id/note_editor_toolbar_color_red"
                 app:srcCompat="@drawable/ic_color_picker_red_24"
-                android:contentDescription="Red"
                 style="@style/color_picker_button"/>
 
             <androidx.appcompat.widget.AppCompatImageButton
                 android:id="@+id/note_editor_toolbar_color_blue"
                 app:srcCompat="@drawable/ic_color_picker_blue_24"
-                android:contentDescription="Blue"
                 style="@style/color_picker_button"/>
 
             <androidx.appcompat.widget.AppCompatImageButton
                 android:id="@+id/note_editor_toolbar_color_green"
                 app:srcCompat="@drawable/ic_color_picker_green_24"
-                android:contentDescription="Green"
                 style="@style/color_picker_button"/>
 
             <androidx.appcompat.widget.AppCompatImageButton
                 android:id="@+id/note_editor_toolbar_color_yellow"
                 app:srcCompat="@drawable/ic_color_picker_yellow_24"
-                android:contentDescription="Yellow"
                 style="@style/color_picker_button"
                 />
 
             <androidx.appcompat.widget.AppCompatImageButton
                 android:id="@+id/note_editor_toolbar_color_white"
                 app:srcCompat="@drawable/ic_color_picker_white_24"
-                android:contentDescription="White"
                 style="@style/color_picker_button"
                 />
 
             <androidx.appcompat.widget.AppCompatImageButton
                 android:id="@+id/note_editor_toolbar_color_black"
                 app:srcCompat="@drawable/ic_color_picker_black_24"
-                android:contentDescription="Black"
                 style="@style/color_picker_button"
                 />
 
             <androidx.appcompat.widget.AppCompatImageButton
                 android:id="@+id/note_editor_toolbar_color_custom"
                 app:srcCompat="@drawable/ic_add_toolbar_icon"
-                android:contentDescription="Custom Color"
                 style="@style/color_picker_button"/>
 
         </LinearLayout>
