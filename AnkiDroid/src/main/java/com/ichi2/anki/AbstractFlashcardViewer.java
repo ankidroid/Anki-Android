@@ -445,6 +445,8 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
             if (event.getAction() == MotionEvent.ACTION_DOWN) {
                 // Save card when button pressed
                 mPrevCard = mCurrentCard;
+                // Animate the button
+                view.setPressed(true);
                 return true;
             }
             // Perform intended action only if the button has been pressed for current card
@@ -453,6 +455,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
                 if (SystemClock.elapsedRealtime() - mLastClickTime < DOUBLE_TAP_IGNORE_THRESHOLD) {
                     return false;
                 }
+                view.setPressed(false);
                 mLastClickTime = SystemClock.elapsedRealtime();
                 mTimeoutHandler.removeCallbacks(mShowQuestionTask);
                 int id = view.getId();
@@ -1664,7 +1667,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
             displayCardAnswer();
             return;
         }
-        answerCard(cardOrdinal);
+        answerCardWithVisualFeedback(cardOrdinal);
     }
 
 
@@ -2809,8 +2812,33 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
         if (!sDisplayAnswer) {
             return false;
         }
-        answerCard(ease);
+        answerCardWithVisualFeedback(ease);
         return true;
+    }
+
+    protected void answerCardWithVisualFeedback(int ease) {
+        // Delay could potentially be lower - testing with 20 left a visible "click"
+        switch (ease) {
+            case EASE_1:
+                displayVisualFeedback(mEase1Layout);
+                break;
+            case EASE_2:
+                displayVisualFeedback(mEase2Layout);
+                break;
+            case EASE_3:
+                displayVisualFeedback(mEase3Layout);
+                break;
+            case EASE_4:
+                displayVisualFeedback(mEase4Layout);
+                break;
+        }
+        answerCard(ease);
+    }
+
+
+    private void displayVisualFeedback(LinearLayout easeLayout) {
+        easeLayout.setPressed(true);
+        easeLayout.postDelayed(() -> easeLayout.setPressed(false), 20);
     }
 
 
