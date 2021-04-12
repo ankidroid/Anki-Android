@@ -2821,18 +2821,21 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
         switch (ease) {
             case EASE_1:
                 displayVisualFeedback(mEase1Layout);
+                answerCard(ease);
                 break;
             case EASE_2:
                 displayVisualFeedback(mEase2Layout);
+                answerCard(ease);
                 break;
             case EASE_3:
                 displayVisualFeedback(mEase3Layout);
+                answerCard(ease);
                 break;
             case EASE_4:
                 displayVisualFeedback(mEase4Layout);
+                answerCard(ease);
                 break;
         }
-        answerCard(ease);
     }
 
 
