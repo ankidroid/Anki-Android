@@ -22,8 +22,10 @@ import android.content.SharedPreferences;
 import android.content.res.Resources;
 import android.os.Bundle;
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.annotation.VisibleForTesting;
 import androidx.fragment.app.DialogFragment;
+import androidx.fragment.app.FragmentResultListener;
 import timber.log.Timber;
 
 import android.text.Editable;
@@ -121,10 +123,15 @@ public class CustomStudyDialog extends AnalyticsDialogFragment implements
     }
 
 
-    TagsDialog newTagsDialog() {
-        // This can only work with configChanges set in AndroidManifest.xml
-        // this is a temp solution until using FragmentResultApi
-        return new TagsDialog(this);
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        getParentFragmentManager().setFragmentResultListener(TagsDialog.FRAGMENT_RESULT_ON_SELECTED_TAGS_KEY, this,
+                (requestKey, bundle) -> {
+                    final List<String> selectedTags = bundle.getStringArrayList(TagsDialog.FRAGMENT_RESULT_ON_SELECTED_TAGS__TAGS);
+                    final int option = bundle.getInt(TagsDialog.FRAGMENT_RESULT_ON_SELECTED_TAGS__OPTION);
+                    onSelectedTags(selectedTags, option);
+                });
     }
 
 
@@ -181,7 +188,7 @@ public class CustomStudyDialog extends AnalyticsDialogFragment implements
                              * of that Dialog.
                              */
                             long currentDeck = requireArguments().getLong("did");
-                            TagsDialog dialogFragment = newTagsDialog().withArguments(
+                            TagsDialog dialogFragment = new TagsDialog().withArguments(
                                     TagsDialog.DialogType.CUSTOM_STUDY_TAGS, new ArrayList<>(),
                                     new ArrayList<>(mCollection.getTags().byDeck(currentDeck, true)));
                             mCustomStudyListener.showDialogFragment(dialogFragment);
@@ -343,7 +350,6 @@ public class CustomStudyDialog extends AnalyticsDialogFragment implements
      * Gathers the final selection of tags and type of cards,
      * Generates the search screen for the custom study deck.
      */
-    @Override
     public void onSelectedTags(List<String> selectedTags, int option) {
         StringBuilder sb = new StringBuilder();
         switch (option) {
