@@ -429,10 +429,10 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
         public void onClick(View view) {
             Timber.i("AbstractFlashcardViewer:: Show answer button pressed");
             // Ignore what is most likely an accidental double-tap.
-            if (SystemClock.elapsedRealtime() - mLastClickTime < DOUBLE_TAP_IGNORE_THRESHOLD) {
+            if (getElapsedRealTime() - mLastClickTime < DOUBLE_TAP_IGNORE_THRESHOLD) {
                 return;
             }
-            mLastClickTime = SystemClock.elapsedRealtime();
+            mLastClickTime = getElapsedRealTime();
             mTimeoutHandler.removeCallbacks(mShowAnswerTask);
             displayCardAnswer();
         }
@@ -442,10 +442,11 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
         @Override
         public void onClick(View view) {
             // Ignore what is most likely an accidental double-tap.
-            if (SystemClock.elapsedRealtime() - mLastClickTime < DOUBLE_TAP_IGNORE_THRESHOLD) {
+            if (getElapsedRealTime() - mLastClickTime < DOUBLE_TAP_IGNORE_THRESHOLD) {
+                Timber.i("Ignored double-tap");
                 return;
             }
-            mLastClickTime = SystemClock.elapsedRealtime();
+            mLastClickTime = getElapsedRealTime();
             mTimeoutHandler.removeCallbacks(mShowQuestionTask);
             int id = view.getId();
             if (id == R.id.flashcard_layout_ease1) {
@@ -465,6 +466,12 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
             }
         }
     };
+
+    @VisibleForTesting
+    protected long getElapsedRealTime() {
+        return SystemClock.elapsedRealtime();
+    }
+
 
     private final View.OnTouchListener mGestureListener = new View.OnTouchListener() {
         @Override
@@ -1305,9 +1312,9 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
             mCurrentCard.resumeTimer();
             // Then update and resume the UI timer. Set the base time as if the timer had started
             // timeTaken() seconds ago.
-            mCardTimer.setBase(SystemClock.elapsedRealtime() - mCurrentCard.timeTaken());
+            mCardTimer.setBase(getElapsedRealTime() - mCurrentCard.timeTaken());
             // Don't start the timer if we have already reached the time limit or it will tick over
-            if ((SystemClock.elapsedRealtime() - mCardTimer.getBase()) < mCurrentCard.timeLimit()) {
+            if ((getElapsedRealTime() - mCardTimer.getBase()) < mCurrentCard.timeLimit()) {
                 mCardTimer.start();
             }
         }
@@ -1989,14 +1996,14 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
         getTheme().resolveAttribute(android.R.attr.textColor, typedValue, true);
         mCardTimer.setTextColor(typedValue.data);
 
-        mCardTimer.setBase(SystemClock.elapsedRealtime());
+        mCardTimer.setBase(getElapsedRealTime());
         mCardTimer.start();
 
         // Stop and highlight the timer if it reaches the time limit.
         getTheme().resolveAttribute(R.attr.maxTimerColor, typedValue, true);
         final int limit = mCurrentCard.timeLimit();
         mCardTimer.setOnChronometerTickListener(chronometer -> {
-            long elapsed = SystemClock.elapsedRealtime() - chronometer.getBase();
+            long elapsed = getElapsedRealTime() - chronometer.getBase();
             if (elapsed >= limit) {
                 chronometer.setTextColor(typedValue.data);
                 chronometer.stop();
