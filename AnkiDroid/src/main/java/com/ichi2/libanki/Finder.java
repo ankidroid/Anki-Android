@@ -24,11 +24,7 @@ import android.text.TextUtils;
 
 import android.util.Pair;
 
-import com.ichi2.async.CancelListener;
-
 import com.ichi2.async.CollectionTask;
-import com.ichi2.async.ProgressSender;
-import com.ichi2.libanki.Deck;
 import com.ichi2.utils.JSONArray;
 import com.ichi2.utils.JSONObject;
 
@@ -37,13 +33,10 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
-import java.util.Set;
-import java.util.TreeMap;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -675,10 +668,10 @@ public class Finder {
             ids = dids(mCol.getDecks().selected());
         } else if (!val.contains("*")) {
             // single deck
-            ids = dids(mCol.getDecks().id_dont_create(val));
+            ids = dids(mCol.getDecks().id_for_name(val));
         } else {
             // wildcard
-            ids = dids(mCol.getDecks().id_dont_create(val));
+            ids = dids(mCol.getDecks().id_for_name(val));
             if (ids == null) {
                 ids = new ArrayList<>();
                 val = val.replace("*", ".*");
