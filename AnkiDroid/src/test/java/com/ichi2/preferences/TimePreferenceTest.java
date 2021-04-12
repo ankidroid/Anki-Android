@@ -9,7 +9,7 @@ import java.util.Collection;
 
 import static org.junit.Assert.assertEquals;
 
-@RunWith(value = Parameterized.class)
+@RunWith(Parameterized.class)
 public class TimePreferenceTest {
     private final String parsableHour;
     private final int expectedHour;
