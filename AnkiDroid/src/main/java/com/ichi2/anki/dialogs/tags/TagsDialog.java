@@ -28,7 +28,12 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-public class TagsDialog extends AnalyticsDialogFragment {
+public class TagsDialog extends AnalyticsDialogFragment implements TagsDialogListener {
+
+    public static final String FRAGMENT_RESULT_ON_SELECTED_TAGS_KEY = "FRAGMENT_RESULT_ON_SELECTED_TAGS_KEY";
+    public static final String FRAGMENT_RESULT_ON_SELECTED_TAGS__TAGS = "TAGS";
+    public static final String FRAGMENT_RESULT_ON_SELECTED_TAGS__OPTION = "OPTION";
+
 
 
     /**
@@ -69,10 +74,25 @@ public class TagsDialog extends AnalyticsDialogFragment {
 
     private MaterialDialog mDialog;
 
+    @NonNull
     private final TagsDialogListener mListener;
 
-    public TagsDialog(TagsDialogListener listener) {
+
+    /**
+     * Constructs a new {@link TagsDialog} that will communicate the results using the provided listener.
+     */
+    public TagsDialog(@NonNull TagsDialogListener listener) {
         mListener = listener;
+    }
+
+
+    /**
+     * Constructs a new {@link TagsDialog} that will communicate the results using Fragment Result API.
+     *
+     * @see <a href="https://developer.android.com/guide/fragments/communicate#fragment-result">Fragment Result API</a>
+     */
+    public TagsDialog() {
+        mListener = this;
     }
 
     /**
@@ -161,6 +181,16 @@ public class TagsDialog extends AnalyticsDialogFragment {
         mDialog.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE);
         return mDialog;
     }
+
+
+    @Override
+    public void onSelectedTags(List<String> selectedTags, int option) {
+        final Bundle bundle = new Bundle();
+        bundle.putStringArrayList(FRAGMENT_RESULT_ON_SELECTED_TAGS__TAGS, new ArrayList<>(selectedTags));
+        bundle.putInt(FRAGMENT_RESULT_ON_SELECTED_TAGS__OPTION, option);
+        getParentFragmentManager().setFragmentResult(FRAGMENT_RESULT_ON_SELECTED_TAGS_KEY, bundle);
+    }
+
 
     private void adjustToolbar(View tagsDialogView) {
         Toolbar mToolbar = tagsDialogView.findViewById(R.id.tags_dialog_toolbar);
