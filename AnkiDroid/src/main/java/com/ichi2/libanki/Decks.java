@@ -314,7 +314,7 @@ public class Decks {
      * ***********************************************************
      */
 
-    public Long id_dont_create(String name) {
+    public Long id_for_name(String name) {
         name = usable_name(name);
         Deck deck = byName(name);
         if (deck != null) {
@@ -343,7 +343,7 @@ public class Decks {
      */
     public Long id(String name, String type) throws FilteredAncestor {
         name = usable_name(name);
-        Long id = id_dont_create(name);
+        Long id = id_for_name(name);
         if (id != null) {
             return id;
         }
@@ -382,7 +382,7 @@ public class Decks {
      */
     public Long id_safe(String name, String type)  {
         name = usable_name(name);
-        Long id = id_dont_create(name);
+        Long id = id_for_name(name);
         if (id != null) {
             return id;
         }
