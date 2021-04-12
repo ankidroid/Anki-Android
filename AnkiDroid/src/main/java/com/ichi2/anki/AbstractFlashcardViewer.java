@@ -131,6 +131,7 @@ import com.ichi2.utils.DiffEngine;
 import com.ichi2.utils.FunctionalInterfaces.Consumer;
 import com.ichi2.utils.FunctionalInterfaces.Function;
 
+import com.ichi2.utils.HashUtil;
 import com.ichi2.utils.JSONArray;
 import com.ichi2.utils.JSONException;
 import com.ichi2.utils.JSONObject;
@@ -3109,9 +3110,9 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
      * COULD_BE_BETTER: Make base class static and move this out of the CardViewer */
     class LinkDetectingGestureDetector extends AbstractFlashcardViewer.MyGestureDetector {
         /** A list of events to process when listening to WebView touches  */
-        private final HashSet<MotionEvent> mDesiredTouchEvents = new HashSet<>(2);
+        private final HashSet<MotionEvent> mDesiredTouchEvents = HashUtil.HashSetInit(2);
         /** A list of events we sent to the WebView (to block double-processing) */
-        private final HashSet<MotionEvent> mDispatchedTouchEvents = new HashSet<>(2);
+        private final HashSet<MotionEvent> mDispatchedTouchEvents = HashUtil.HashSetInit(2);
 
         @Override
         public void onFillFlashcard() {
@@ -3930,7 +3931,7 @@ see card.js for available functions
     // list of api that can be accessed
     private final String[] mApiList = {"toggleFlag", "markCard"};
     // JS api list enable/disable status
-    private final HashMap<String, Boolean> mJsApiListMap = new HashMap<>(mApiList.length);
+    private final HashMap<String, Boolean> mJsApiListMap = HashUtil.HashMapInit(mApiList.length);
     public JavaScriptFunction javaScriptFunction() {
         return new JavaScriptFunction();
     }

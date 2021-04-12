@@ -18,6 +18,8 @@ package com.ichi2.anki.noteeditor;
 
 import android.text.TextUtils;
 
+import com.ichi2.utils.HashUtil;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashSet;
@@ -89,7 +91,7 @@ public class CustomToolbarButton {
 
 
     public static Set<String> toStringSet(ArrayList<CustomToolbarButton> buttons) {
-        HashSet<String> ret = new HashSet<>(buttons.size());
+        HashSet<String> ret = HashUtil.HashSetInit(buttons.size());
         for (CustomToolbarButton b : buttons) {
             String[] values = new String[] { Integer.toString(b.mIndex), b.mPrefix, b.mSuffix };
 

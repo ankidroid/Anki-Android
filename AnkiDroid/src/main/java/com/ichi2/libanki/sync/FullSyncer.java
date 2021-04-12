@@ -27,6 +27,7 @@ import com.ichi2.async.Connection;
 import com.ichi2.libanki.Collection;
 import com.ichi2.libanki.DB;
 import com.ichi2.libanki.Utils;
+import com.ichi2.utils.HashUtil;
 import com.ichi2.utils.VersionUtils;
 
 import java.io.File;
@@ -54,7 +55,7 @@ public class FullSyncer extends HttpSyncer {
 
     public FullSyncer(Collection col, String hkey, Connection con, HostNum hostNum) {
         super(hkey, con, hostNum);
-        mPostVars = new HashMap<>(2);
+        mPostVars = HashUtil.HashMapInit(2);
         mPostVars.put("k", hkey);
         mPostVars.put("v",
                 String.format(Locale.US, "ankidroid,%s,%s", VersionUtils.getPkgVersionName(), Utils.platDesc()));
