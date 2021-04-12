@@ -19,7 +19,9 @@ public class HashUtilTest {
 
     /** Threshold of a set. Not a setter*/
     private int setThreshold(HashSet<?> set) throws NoSuchFieldException, IllegalAccessException {
-        return mapThreshold((HashMap) HashMap.class.getField("map").get(set));
+        Field map = HashMap.class.getDeclaredField("map");
+        map.setAccessible(true);
+        return mapThreshold((HashMap) map.get(set));
     }
 
     @Test
