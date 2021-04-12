@@ -15,7 +15,6 @@ public class HashUtilTest {
         thresholdField.setAccessible(true);
         return thresholdField.getInt(map);
     }
-    }
 
     /** Threshold of a set. Not a setter*/
     private int setThreshold(HashSet<?> set) throws NoSuchFieldException, IllegalAccessException {
