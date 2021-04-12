@@ -26,7 +26,7 @@ public class TimePreferenceTest {
         return Arrays.asList(new Object[][] {
                 {"00:00", 0},
                 {"01:00", 1},
-                {"24:00", 24}, // should this be "0"?
+                {"24:00", 24}
         });
     }
     
