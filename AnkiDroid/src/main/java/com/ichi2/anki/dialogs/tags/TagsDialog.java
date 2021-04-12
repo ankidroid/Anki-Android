@@ -2,7 +2,6 @@ package com.ichi2.anki.dialogs.tags;
 
 import android.annotation.SuppressLint;
 import android.app.Dialog;
-import android.content.Context;
 import android.os.Bundle;
 import android.text.InputFilter;
 import android.text.InputType;
@@ -30,10 +29,6 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 public class TagsDialog extends AnalyticsDialogFragment {
-    public interface TagsDialogListener {
-        void onSelectedTags(List<String> selectedTags, int option);
-    }
-
 
 
     /**

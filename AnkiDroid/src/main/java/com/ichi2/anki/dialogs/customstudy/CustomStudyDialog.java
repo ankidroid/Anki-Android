@@ -47,6 +47,7 @@ import com.ichi2.anki.analytics.AnalyticsDialogFragment;
 import com.ichi2.anki.dialogs.ContextMenuHelper;
 import com.ichi2.anki.dialogs.tags.TagsDialog;
 import com.ichi2.anki.dialogs.tags.TagsDialogFactory;
+import com.ichi2.anki.dialogs.tags.TagsDialogListener;
 import com.ichi2.anki.exception.FilteredAncestor;
 import com.ichi2.async.CollectionTask;
 import com.ichi2.async.TaskManager;
@@ -65,7 +66,7 @@ import java.util.Locale;
 
 
 public class CustomStudyDialog extends AnalyticsDialogFragment implements
-        TagsDialog.TagsDialogListener {
+        TagsDialogListener {
     // Different configurations for the context menu
     public static final int CONTEXT_MENU_STANDARD = 0;
     public static final int CONTEXT_MENU_LIMITS = 1;

@@ -15,7 +15,7 @@
  */
 package com.ichi2.anki.dialogs.tags;
 
-import com.ichi2.anki.dialogs.tags.TagsDialog.TagsDialogListener;
+import com.ichi2.anki.dialogs.tags.TagsDialogListener;
 import com.ichi2.utils.ExtendedFragmentFactory;
 
 import androidx.annotation.NonNull;
