@@ -6,8 +6,6 @@ import android.content.SharedPreferences;
 import android.content.res.Resources;
 import android.graphics.Typeface;
 
-import android.widget.Toast;
-
 import com.ichi2.libanki.Utils;
 
 import java.io.File;
@@ -158,8 +156,7 @@ public class AnkiFont {
                 // Show warning toast
                 String name = new File(path).getName();
                 Resources res = AnkiDroidApp.getAppResources();
-                Toast toast = Toast.makeText(ctx, res.getString(R.string.corrupt_font, name), Toast.LENGTH_LONG);
-                toast.show();
+                UIUtils.showThemedToast(ctx, res.getString(R.string.corrupt_font, name), false);
                 // Don't warn again in this session
                 corruptFonts.add(path);
             }

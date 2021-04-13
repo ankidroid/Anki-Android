@@ -80,7 +80,6 @@ import android.widget.Filterable;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.ichi2.anki.CollectionHelper.CollectionIntegrityStorageCheck;
@@ -562,7 +561,7 @@ public class DeckPicker extends NavigationDrawerActivity implements
                 Timber.i("AnkiDroid directory inaccessible");
                 Intent i = Preferences.getPreferenceSubscreenIntent(this, "com.ichi2.anki.prefs.advanced");
                 startActivityForResultWithoutAnimation(i, REQUEST_PATH_UPDATE);
-                Toast.makeText(this, R.string.directory_inaccessible, Toast.LENGTH_LONG).show();
+                UIUtils.showThemedToast(this, R.string.directory_inaccessible, false);
                 break;
             case FUTURE_ANKIDROID_VERSION:
                 Timber.i("Displaying database versioning");
@@ -940,7 +939,7 @@ public class DeckPicker extends NavigationDrawerActivity implements
                 handleStartup();
             } else {
                 // User denied access to file storage  so show error toast and display "App Info"
-                Toast.makeText(this, R.string.startup_no_storage_permission, Toast.LENGTH_LONG).show();
+                UIUtils.showThemedToast(this, R.string.startup_no_storage_permission, false);
                 finishWithoutAnimation();
                 // Open the Android settings page for our app so that the user can grant the missing permission
                 Intent intent = new Intent();
