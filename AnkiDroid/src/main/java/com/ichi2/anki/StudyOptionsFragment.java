@@ -20,6 +20,8 @@ import android.content.Intent;
 import android.content.res.Resources;
 import android.os.Bundle;
 
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.annotation.VisibleForTesting;
@@ -159,7 +161,7 @@ public class StudyOptionsFragment extends Fragment implements Toolbar.OnMenuItem
     private void openFilteredDeckOptions(boolean defaultConfig) {
         Intent i = new Intent(getActivity(), FilteredDeckOptions.class);
         i.putExtra("defaultConfig", defaultConfig);
-        getActivity().startActivityForResult(i, DECK_OPTIONS);
+        onDeckOptionsActivityResult.launch(i);
         ActivityTransitionAnimation.slide(getActivity(), FADE);
     }
 
@@ -244,7 +246,7 @@ public class StudyOptionsFragment extends Fragment implements Toolbar.OnMenuItem
         Intent reviewer = new Intent(getActivity(), Reviewer.class);
         if (mFragmented) {
             mToReviewer = true;
-            getActivity().startActivityForResult(reviewer, AnkiActivity.REQUEST_REVIEW);
+            onRequestPreviewActivityResult.launch(reviewer);
         } else {
             // Go to DeckPicker after studying when not tablet
             reviewer.setFlags(Intent.FLAG_ACTIVITY_FORWARD_RESULT);
@@ -325,7 +327,7 @@ public class StudyOptionsFragment extends Fragment implements Toolbar.OnMenuItem
                 openFilteredDeckOptions();
             } else {
                 Intent i = new Intent(getActivity(), DeckOptions.class);
-                getActivity().startActivityForResult(i, DECK_OPTIONS);
+                onDeckOptionsActivityResult.launch(i);
                 ActivityTransitionAnimation.slide(getActivity(), FADE);
             }
             return true;
@@ -433,57 +435,56 @@ public class StudyOptionsFragment extends Fragment implements Toolbar.OnMenuItem
         }
     }
 
-
-    @SuppressWarnings("deprecation") // Tracked as https://github.com/ankidroid/Anki-Android/issues/8293
-    @Override
-    public void onActivityResult(int requestCode, int resultCode, Intent intent) {
-        super.onActivityResult(requestCode, resultCode, intent);
-        Timber.d("onActivityResult (requestCode = %d, resultCode = %d)", requestCode, resultCode);
-
-        // rebuild action bar
+    ActivityResultLauncher<Intent> onRequestPreviewActivityResult = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(), result -> {
         configureToolbar();
-
-        // boot back to deck picker if there was an error
-        if (resultCode == DeckPicker.RESULT_DB_ERROR || resultCode == DeckPicker.RESULT_MEDIA_EJECTED) {
-            closeStudyOptions(resultCode);
+        if (result.getResultCode() == DeckPicker.RESULT_DB_ERROR || result.getResultCode() == DeckPicker.RESULT_MEDIA_EJECTED) {
+            closeStudyOptions(result.getResultCode());
             return;
         }
-
-        // perform some special actions depending on which activity we're returning from
-        if (requestCode == STATISTICS || requestCode == BROWSE_CARDS) {
-            // select original deck if the statistics or card browser were opened,
-            // which can change the selected deck
-            if (intent.hasExtra("originalDeck")) {
-                getCol().getDecks().select(intent.getLongExtra("originalDeck", 0L));
+        if (result.getResultCode() == Reviewer.RESULT_NO_MORE_CARDS) {
+            // If no more cards getting returned while counts > 0 (due to learn ahead limit) then show a snackbar
+            if (getCol().getSched().count() > 0 && mStudyOptionsView != null) {
+                View rootLayout = mStudyOptionsView.findViewById(R.id.studyoptions_main);
+                UIUtils.showSnackbar(getActivity(), R.string.studyoptions_no_cards_due, false, 0, null, rootLayout);
             }
         }
-        if (requestCode == DECK_OPTIONS) {
-            if (mLoadWithDeckOptions) {
-                mLoadWithDeckOptions = false;
-                Deck deck = getCol().getDecks().current();
-                if (deck.isDyn() && deck.has("empty")) {
-                    deck.remove("empty");
-                }
-                    mProgressDialog = StyledProgressDialog.show(getActivity(), null,
-                            getResources().getString(R.string.rebuild_filtered_deck), true);
-                    TaskManager.launchCollectionTask(new CollectionTask.RebuildCram(), getCollectionTaskListener(true));
-            } else {
-                TaskManager.waitToFinish();
-                refreshInterface(true);
+    });
+
+    ActivityResultLauncher<Intent> onDeckOptionsActivityResult = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(), result -> {
+        configureToolbar();
+        if (result.getResultCode() == DeckPicker.RESULT_DB_ERROR || result.getResultCode() == DeckPicker.RESULT_MEDIA_EJECTED) {
+            closeStudyOptions(result.getResultCode());
+            return;
+        }
+        if (mLoadWithDeckOptions) {
+            mLoadWithDeckOptions = false;
+            Deck deck = getCol().getDecks().current();
+            if (deck.isDyn() && deck.has("empty")) {
+                deck.remove("empty");
             }
-        } else if (requestCode == AnkiActivity.REQUEST_REVIEW) {
-            if (resultCode == Reviewer.RESULT_NO_MORE_CARDS) {
-                // If no more cards getting returned while counts > 0 (due to learn ahead limit) then show a snackbar
-                if (getCol().getSched().count() > 0 && mStudyOptionsView != null) {
-                    View rootLayout = mStudyOptionsView.findViewById(R.id.studyoptions_main);
-                    UIUtils.showSnackbar(getActivity(), R.string.studyoptions_no_cards_due, false, 0, null, rootLayout);
-                }
-            }
-        } else if (requestCode == STATISTICS && mCurrentContentView == CONTENT_CONGRATS) {
+            mProgressDialog = StyledProgressDialog.show(getActivity(), null,
+                    getResources().getString(R.string.rebuild_filtered_deck), true);
+            TaskManager.launchCollectionTask(new CollectionTask.RebuildCram(), getCollectionTaskListener(true));
+        } else {
+            TaskManager.waitToFinish();
+            refreshInterface(true);
+        }
+    });
+
+    ActivityResultLauncher<Intent> onStatisticsActivityResult = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(), result -> {
+        configureToolbar();
+        if (result.getResultCode() == DeckPicker.RESULT_DB_ERROR || result.getResultCode() == DeckPicker.RESULT_MEDIA_EJECTED) {
+            closeStudyOptions(result.getResultCode());
+            return;
+        }
+        if (result.getData().hasExtra("originalDeck")) {
+            getCol().getDecks().select(result.getData().getLongExtra("originalDeck", 0L));
+        }
+        if(mCurrentContentView == CONTENT_CONGRATS) {
             mCurrentContentView = CONTENT_STUDY_OPTIONS;
             setFragmentContentView(mStudyOptionsView);
         }
-    }
+    });
 
     private void dismissProgressDialog() {
         if (mStudyOptionsView != null && mStudyOptionsView.findViewById(R.id.progress_bar) != null) {
