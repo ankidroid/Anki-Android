@@ -80,4 +80,9 @@ public class StringUtilTest {
     public void strip_trailing_and_leading_spaces() {
         assertEquals("Tarek", StringUtil.strip("\n\u2006 \r\n\t\u000CTarek   \u0009"));
     }
+
+    @Test
+    public void strip_does_nothing_on_stripped_string() {
+        assertEquals("Java", StringUtil.strip("Java"));
+    }
 }
