@@ -27,6 +27,7 @@ import android.os.Bundle;
 import androidx.activity.result.ActivityResultCallback;
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContract;
+import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.CheckResult;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -588,7 +589,7 @@ public class CardTemplateEditor extends AnkiActivity implements DeckSelectionDia
                 return;
             }
             Intent browserAppearanceIntent = CardTemplateBrowserAppearanceEditor.getIntentFromTemplate(context, currentTemplate);
-            onCardBrowserAppearanceResult.launch(browserAppearanceIntent);
+            onCardBrowserAppearanceActivtyResult.launch(browserAppearanceIntent);
         }
 
 
@@ -631,24 +632,12 @@ public class CardTemplateEditor extends AnkiActivity implements DeckSelectionDia
             return false;
         }
 
-        public class onCardBrowserAppearanceContract extends ActivityResultContract<Intent, Intent>{
-            @NonNull
-            @Override
-            public Intent createIntent(@NonNull Context context, Intent input) {
-                return input;
+        ActivityResultLauncher<Intent> onCardBrowserAppearanceActivtyResult = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(), result -> {
+            if(result.getResultCode() != RESULT_OK) {
+                return;
             }
-
-
-            @Override
-            public Intent parseResult(int resultCode, @Nullable Intent intent) {
-                if (resultCode != Activity.RESULT_OK) {
-                    return null;
-                }
-                return intent;
-            }
-        }
-
-        ActivityResultLauncher<Intent> onCardBrowserAppearanceResult = registerForActivityResult(new onCardBrowserAppearanceContract(), data -> onCardBrowserAppearanceResult(data));
+            onCardBrowserAppearanceResult(result.getData());
+        });
 
         ActivityResultLauncher<Intent> onRequestPreviewResult = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(), result ->  {
                 if (result.getResultCode() != RESULT_OK) {
