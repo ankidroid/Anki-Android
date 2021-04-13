@@ -26,7 +26,6 @@ import android.app.PendingIntent;
 import android.content.ActivityNotFoundException;
 import android.content.ComponentName;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.OnSharedPreferenceChangeListener;
@@ -39,7 +38,6 @@ import android.text.TextUtils;
 import android.view.MenuItem;
 import android.view.WindowManager.BadTokenException;
 import android.webkit.URLUtil;
-import android.widget.Toast;
 
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.ichi2.anim.ActivityTransitionAnimation;
@@ -210,8 +208,8 @@ public class Preferences extends AppCompatPreferenceActivity implements Preferen
                     if (prefs.getBoolean("gestures", false) || !"2".equals(newValue)) {
                         return true;
                     } else {
-                        Toast.makeText(getApplicationContext(),
-                                R.string.full_screen_error_gestures, Toast.LENGTH_LONG).show();
+                        UIUtils.showThemedToast(getApplicationContext(),
+                                R.string.full_screen_error_gestures, false);
                         return false;
                     }
                 });
@@ -393,12 +391,12 @@ public class Preferences extends AppCompatPreferenceActivity implements Preferen
                 fullSyncPreference.setDialogTitle(R.string.force_full_sync_title);
                 fullSyncPreference.setOkHandler(() -> {
                     if (getCol() == null) {
-                        Toast.makeText(getApplicationContext(), R.string.directory_inaccessible, Toast.LENGTH_LONG).show();
+                        UIUtils.showThemedToast(getApplicationContext(), R.string.directory_inaccessible, false);
                         return;
                     }
                     getCol().modSchemaNoCheck();
                     getCol().setMod();
-                    Toast.makeText(getApplicationContext(), android.R.string.ok, Toast.LENGTH_SHORT).show();
+                    UIUtils.showThemedToast(getApplicationContext(), android.R.string.ok, true);
                 });
                 // Workaround preferences
                 removeUnnecessaryAdvancedPrefs(screen);

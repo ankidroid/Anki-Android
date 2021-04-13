@@ -31,9 +31,9 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.Spinner;
-import android.widget.Toast;
 
 import com.ichi2.anki.R;
+import com.ichi2.anki.UIUtils;
 import com.ichi2.anki.multimediacard.beolingus.parsing.BeolingusParser;
 import com.ichi2.anki.multimediacard.language.LanguageListerBeolingus;
 import com.ichi2.anki.runtimetools.TaskOperations;
@@ -402,16 +402,12 @@ public class LoadPronounciationActivity extends Activity implements OnCancelList
 
 
     private void showToast(CharSequence text) {
-        int duration = Toast.LENGTH_SHORT;
-        Toast toast = Toast.makeText(this, text, duration);
-        toast.show();
+        UIUtils.showThemedToast(this, text, true);
     }
 
 
     private void showToastLong(CharSequence text) {
-        int duration = Toast.LENGTH_LONG;
-        Toast toast = Toast.makeText(this, text, duration);
-        toast.show();
+        UIUtils.showThemedToast(this, text, false);
     }
 
 
