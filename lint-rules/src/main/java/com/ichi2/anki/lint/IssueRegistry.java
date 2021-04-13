@@ -22,16 +22,17 @@ public class IssueRegistry extends com.android.tools.lint.client.api.IssueRegist
     @NotNull
     @Override
     public List<Issue> getIssues() {
+        // Keep this list lexicographically ordered.
         List<Issue> issues = new ArrayList<>();
         issues.add(DirectCalendarInstanceUsage.ISSUE);
-        issues.add(DirectSystemCurrentTimeMillisUsage.ISSUE);
         issues.add(DirectDateInstantiation.ISSUE);
         issues.add(DirectGregorianInstantiation.ISSUE);
+        issues.add(DirectSystemCurrentTimeMillisUsage.ISSUE);
         issues.add(DirectSystemTimeInstantiation.ISSUE);
         issues.add(DirectToastMakeTextUsage.ISSUE);
-        issues.add(InconsistentAnnotationUsage.ISSUE);
-        issues.add(DuplicateTextInPreferencesXml.ISSUE);
         issues.add(DuplicateCrowdInStrings.ISSUE);
+        issues.add(DuplicateTextInPreferencesXml.ISSUE);
+        issues.add(InconsistentAnnotationUsage.ISSUE);
         issues.add(PrintStackTraceUsage.ISSUE);
         return issues;
     }
