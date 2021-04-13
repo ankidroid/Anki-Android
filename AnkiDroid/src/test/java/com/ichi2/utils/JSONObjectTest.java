@@ -152,6 +152,17 @@ public class JSONObjectTest {
         Assert.assertEquals(removeQuotes(correctJsonObjectNestedWithArray.toString()), jsonObjectSubType.toString());
     }
 
+
+    /**
+     * Tests that the a new copy is returned instead of a reference to the original.
+     */
+    @Test
+    public void deepCloneReferenceTest() {
+        JSONObject clone = correctJsonObjectBasic.deepClone();
+        // Both objects should point to different memory address
+        Assert.assertNotEquals(clone, correctJsonObjectBasic);
+    }
+
     @Test
     public void fromMapTest() {
         JSONObject fromMapJsonObject = JSONObject.fromMap(booleanMap);
