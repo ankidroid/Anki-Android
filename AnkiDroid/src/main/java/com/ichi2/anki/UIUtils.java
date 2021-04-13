@@ -7,6 +7,7 @@ import android.graphics.Color;
 import com.google.android.material.snackbar.Snackbar;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.StringRes;
 import androidx.core.content.ContextCompat;
 import android.view.View;
 import android.widget.TextView;
@@ -25,6 +26,12 @@ public class UIUtils {
 
     public static void showThemedToast(Context context, String text, boolean shortLength) {
         Toast.makeText(context, text, shortLength ? Toast.LENGTH_SHORT : Toast.LENGTH_LONG).show();
+    }
+    public static void showThemedToast(Context context, CharSequence text, boolean shortLength) {
+        UIUtils.showThemedToast(context, text.toString(), shortLength);
+    }
+    public static void showThemedToast(Context context, @StringRes int textResource, boolean shortLength) {
+        Toast.makeText(context, textResource, shortLength ? Toast.LENGTH_SHORT : Toast.LENGTH_LONG).show();
     }
 
 
