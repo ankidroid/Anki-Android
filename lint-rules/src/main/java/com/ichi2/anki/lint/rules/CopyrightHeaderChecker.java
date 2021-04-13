@@ -40,9 +40,13 @@ public class CopyrightHeaderChecker extends Detector implements SourceCodeScanne
     static final String ID = "CopyrightHeaderChecker";
     @VisibleForTesting
     static final String DESCRIPTION = "Add Copyright Header in each file";
-    private static final String EXPLANATION = "All files in AnkiDroid must contain  Copyright Header. " +
-            "The copyright header can be set in Settings - Editor - Copyright - Copyright Profiles - Add Profile - AnkiDroid. " +
-            "Search in Settings for 'Copyright'";
+    private static final String EXPLANATION = "All files in AnkiDroid must contain a " +
+            "GPLv3-compatible copyright header" +
+            "The copyright header can be set in " +
+            "Settings - Editor - Copyright - Copyright Profiles - Add Profile - AnkiDroid. " +
+            "Search in Settings for 'Copyright'" +
+            "Add Licence Notice given in this page " +
+            "https://www.gnu.org/licenses/gpl-faq.en.html#GPLIncompatibleLibs";
     private static final Implementation implementation = new Implementation(CopyrightHeaderChecker.class, Scope.JAVA_FILE_SCOPE);
     public static final Issue ISSUE = Issue.create(
             ID,
@@ -68,10 +72,8 @@ public class CopyrightHeaderChecker extends Detector implements SourceCodeScanne
 
     @Override
     public void afterCheckFile(@NotNull Context context) {
-        String source = context.getContents().toString();
+        CharSequence source = context.getContents();
         Pattern pattern = Pattern.compile("/*\n" +
-                " *  Copyright (c) $today.year David Allison <davidallisongithub@gmail.com>\n" +
-                " *\n" +
                 " *  This program is free software; you can redistribute it and/or modify it under\n" +
                 " *  the terms of the GNU General Public License as published by the Free Software\n" +
                 " *  Foundation; either version 3 of the License, or (at your option) any later\n" +

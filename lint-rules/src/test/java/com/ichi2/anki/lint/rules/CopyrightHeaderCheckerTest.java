@@ -27,8 +27,6 @@ public class CopyrightHeaderCheckerTest {
 
     @Language("JAVA")
     private final String mCopyrightHeader = "/*\n" +
-            " *  Copyright (c) $today.year David Allison <davidallisongithub@gmail.com>\n" +
-            " *\n" +
             " *  This program is free software; you can redistribute it and/or modify it under\n" +
             " *  the terms of the GNU General Public License as published by the Free Software\n" +
             " *  Foundation; either version 3 of the License, or (at your option) any later\n" +
@@ -46,7 +44,7 @@ public class CopyrightHeaderCheckerTest {
 
 
     @Test
-    public void showsErrorForNoCopyrightHeader() {
+    public void fileWithCopyrightHeaderPasses() {
         lint()
                 .allowMissingSdk()
                 .allowCompilationErrors()
