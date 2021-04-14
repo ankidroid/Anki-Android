@@ -633,7 +633,7 @@ public class CardTemplateEditor extends AnkiActivity implements DeckSelectionDia
         }
 
         ActivityResultLauncher<Intent> onCardBrowserAppearanceActivtyResult = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(), result -> {
-            if(result.getResultCode() != RESULT_OK) {
+            if (result.getResultCode() != RESULT_OK) {
                 return;
             }
             onCardBrowserAppearanceResult(result.getData());
