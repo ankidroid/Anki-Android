@@ -480,7 +480,7 @@ public class StudyOptionsFragment extends Fragment implements Toolbar.OnMenuItem
         if (result.getData().hasExtra("originalDeck")) {
             getCol().getDecks().select(result.getData().getLongExtra("originalDeck", 0L));
         }
-        if(mCurrentContentView == CONTENT_CONGRATS) {
+        if (mCurrentContentView == CONTENT_CONGRATS) {
             mCurrentContentView = CONTENT_STUDY_OPTIONS;
             setFragmentContentView(mStudyOptionsView);
         }
