@@ -11,7 +11,9 @@ import com.ichi2.libanki.Collection;
 import com.ichi2.libanki.DeckConfig;
 import com.ichi2.libanki.sched.AbstractSched;
 import com.ichi2.testutils.BackendEmulatingOpenConflict;
+import com.ichi2.testutils.BackupManagerTestUtilities;
 
+import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.robolectric.Robolectric;
@@ -246,8 +248,30 @@ public class DeckPickerTest extends RobolectricTest {
         }
     }
 
+    @Test
+    @Ignore("8610")
+    public void deckPickerOpensWithHelpMakeAnkiDroidBetterDialog() {
+        // Refactor: It would be much better to use a spy - see if we can get this into Robolecteic
+        try {
+            InitialActivityTest.grantWritePermissions();
+            BackupManagerTestUtilities.setupSpaceForBackup(getTargetContext());
+            // We don't show it if the user is new.
+            AnkiDroidApp.getSharedPrefs(getTargetContext()).edit().putString("lastVersion", "0.1").apply();
+
+            DeckPickerEx d = super.startActivityNormallyOpenCollectionWithIntent(DeckPickerEx.class, new Intent());
+
+            assertThat("Analytics opt-in should be displayed", d.mDisplayedAnalyticsOptIn, is(true));
+
+        } finally {
+            InitialActivityTest.revokeWritePermissions();
+            BackupManagerTestUtilities.reset();
+        }
+    }
+
     private static class DeckPickerEx extends DeckPicker {
         private int mDatabaseErrorDialog;
+        private boolean mDisplayedAnalyticsOptIn;
+
 
         @Override
         public void showDatabaseErrorDialog(int id) {
@@ -256,6 +280,13 @@ public class DeckPickerTest extends RobolectricTest {
 
         public void onStoragePermissionGranted() {
             onRequestPermissionsResult(DeckPicker.REQUEST_STORAGE_PERMISSION, new String[] { "" }, new int[] { PackageManager.PERMISSION_GRANTED });
+        }
+
+
+        @Override
+        protected void displayAnalyticsOptInDialog() {
+            this.mDisplayedAnalyticsOptIn = true;
+            super.displayAnalyticsOptInDialog();
         }
     }
 }
