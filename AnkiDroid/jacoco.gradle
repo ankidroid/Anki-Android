@@ -1,3 +1,5 @@
+import groovy.transform.*
+
 apply plugin: 'jacoco'
 
 jacoco {
@@ -8,6 +10,43 @@ jacoco {
 android {
     jacoco {
         version = "0.8.5"
+    }
+}
+
+@Memoized
+Properties getLocalProperties() {
+    final propertiesFile = project.rootProject.file("local.properties")
+
+    final properties = new Properties()
+
+    if (propertiesFile.exists()) {
+        properties.load(propertiesFile.newDataInputStream())
+    }
+
+    return properties
+}
+
+def openReport(htmlOutDir) {
+    final reportPath = "$htmlOutDir/index.html"
+
+    println "HTML Report: $reportPath"
+
+    if (!project.hasProperty("open-report")) {
+        println "to open the report automatically in your default browser add '-Popen-report' cli argument"
+        return
+    }
+
+    def os = org.gradle.internal.os.OperatingSystem.current()
+    if (os.isWindows()) {
+        exec { commandLine 'cmd', '/c', "start $reportPath" }
+    } else if (os.isMacOsX()) {
+        exec { commandLine 'open', "$reportPath" }
+    } else if (os.isLinux()) {
+        if (localProperties.containsKey("linux-html-cmd")) {
+            exec { commandLine properties.get("linux-html-cmd"), "$reportPath" }
+        } else {
+            println "'linux-html-cmd' property could not be found in 'local.properties'"
+        }
     }
 }
 
@@ -37,9 +76,15 @@ task jacocoTestReport(type: JacocoReport, dependsOn: ['jacocoAndroidTestReport',
 
 // A unit-test only report task
 task jacocoUnitTestReport(type: JacocoReport, dependsOn: ['testDebugUnitTest']) {
+    def htmlOutDir = layout.buildDirectory.dir("reports/jacoco/$name/html").get().asFile
+
+    doLast {
+        openReport htmlOutDir
+    }
 
     reports {
         xml.enabled = true
+        html.destination htmlOutDir
     }
 
     def fileFilter = ['**/R.class', '**/R$*.class', '**/BuildConfig.*', '**/Manifest*.*', '**/*Test*.*', 'android/**/*.*']
@@ -56,9 +101,15 @@ task jacocoUnitTestReport(type: JacocoReport, dependsOn: ['testDebugUnitTest']) 
 
 // Our merge report task
 task jacocoAndroidTestReport(type: JacocoReport, dependsOn: ['connectedDebugAndroidTest']) {
+    def htmlOutDir = layout.buildDirectory.dir("reports/jacoco/$name/html").get().asFile
+
+    doLast {
+        openReport htmlOutDir
+    }
 
     reports {
         xml.enabled = true
+        html.destination htmlOutDir
     }
 
     def fileFilter = ['**/R.class', '**/R$*.class', '**/BuildConfig.*', '**/Manifest*.*', '**/*Test*.*', 'android/**/*.*']
