@@ -1744,16 +1744,18 @@ public class SchedV2Test extends RobolectricTest {
         deck.put("resched", false);
         sched.rebuildDyn(did);
         col.reset();
-        advanceRobolectricLooper();
         Card card;
         for(int i = 0; i < 3; i++) {
+            advanceRobolectricLooperWithSleep();
             card = sched.getCard();
             assertNotNull(card);
             sched.answerCard(card, Consts.BUTTON_ONE);
         }
+        advanceRobolectricLooperWithSleep();
         assertEquals(1, sched.lrnCount());
         card = sched.getCard();
         assertEquals(1, sched.counts(card).getLrn());
+        advanceRobolectricLooperWithSleep();
         sched.answerCard(card, Consts.BUTTON_ONE);
         assertDoesNotThrow(col::undo);
     }
