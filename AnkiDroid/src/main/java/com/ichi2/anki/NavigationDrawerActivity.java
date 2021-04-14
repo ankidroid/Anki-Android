@@ -71,7 +71,7 @@ public abstract class NavigationDrawerActivity extends AnkiActivity implements N
     /**
      * runnable that will be executed after the drawer has been closed.
      */
-    private Runnable pendingRunnable;
+    private Runnable mPendingRunnable;
 
     // Navigation drawer initialisation
     protected void initNavigationDrawer(View mainView) {
@@ -112,9 +112,9 @@ public abstract class NavigationDrawerActivity extends AnkiActivity implements N
                 // If animations are disabled, this is executed before onNavigationItemSelected is called
                 // PERF: May be able to reduce this delay
                 new Handler().postDelayed(() -> {
-                    if (pendingRunnable != null) {
-                        new Handler().post(pendingRunnable);
-                        pendingRunnable = null;
+                    if (mPendingRunnable != null) {
+                        new Handler().post(mPendingRunnable);
+                        mPendingRunnable = null;
                     }
                 }, 100);
 
@@ -277,7 +277,7 @@ public abstract class NavigationDrawerActivity extends AnkiActivity implements N
      */
     protected void onNavigationPressed() {
         if (mNavButtonGoesBack) {
-            finishWithAnimation(RIGHT);
+            finishWithAnimation(END);
         } else {
             openDrawer();
         }
@@ -294,21 +294,21 @@ public abstract class NavigationDrawerActivity extends AnkiActivity implements N
          * This runnable will be executed in onDrawerClosed(...)
          * to make the animation more fluid on older devices.
          */
-        pendingRunnable = () -> {
+        mPendingRunnable = () -> {
             // Take action if a different item selected
             int itemId = item.getItemId();
             if (itemId == R.id.nav_decks) {
                 Timber.i("Navigating to decks");
                 Intent deckPicker = new Intent(NavigationDrawerActivity.this, DeckPicker.class);
                 deckPicker.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);    // opening DeckPicker should clear back history
-                startActivityWithAnimation(deckPicker, RIGHT);
+                startActivityWithAnimation(deckPicker, END);
             } else if (itemId == R.id.nav_browser) {
                 Timber.i("Navigating to card browser");
                 openCardBrowser();
             } else if (itemId == R.id.nav_stats) {
                 Timber.i("Navigating to stats");
                 Intent intent = new Intent(NavigationDrawerActivity.this, Statistics.class);
-                startActivityForResultWithAnimation(intent, REQUEST_STATISTICS, LEFT);
+                startActivityForResultWithAnimation(intent, REQUEST_STATISTICS, START);
             } else if (itemId == R.id.nav_night_mode) {
                 Timber.i("Toggling Night Mode");
                 mNightModeSwitch.performClick();
@@ -325,6 +325,9 @@ public abstract class NavigationDrawerActivity extends AnkiActivity implements N
             } else if (itemId == R.id.nav_help) {
                 Timber.i("Navigating to help");
                 showDialogFragment(HelpDialog.createInstance(this));
+            } else if (itemId == R.id.support_ankidroid) {
+                Timber.i("Navigating to support AnkiDroid");
+                showDialogFragment(HelpDialog.createInstanceForSupportAnkiDroid(this));
             }
         };
 
@@ -338,7 +341,7 @@ public abstract class NavigationDrawerActivity extends AnkiActivity implements N
         if (currentCardId != null) {
             intent.putExtra("currentCard", currentCardId);
         }
-        startActivityForResultWithAnimation(intent, REQUEST_BROWSE_CARDS, LEFT);
+        startActivityForResultWithAnimation(intent, REQUEST_BROWSE_CARDS, START);
     }
 
     // Override this to specify a specific card id

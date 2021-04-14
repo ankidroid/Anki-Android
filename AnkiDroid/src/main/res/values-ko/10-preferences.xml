@@ -151,6 +151,8 @@
     <string name="timeout_answer_seconds_summ" comment="The time to wait (in seconds) in the reviewer before automatically showing the next question or answer">XXX 초</string>
     <string name="timeout_question_seconds">다음 문제를 표시할 시간</string>
     <string name="select_locale_title">언어 선택</string>
+    <string name="software_render">Disable card hardware render</string>
+    <string name="software_render_summ">Hardware render is faster but may have problems, specifically on Android 8/8.1. If you cannot see parts of the card review user interface, try this setting.</string>
     <string name="safe_display">안전한 디스플레이 모드</string>
     <string name="safe_display_summ">모든 애니메이션을 비활성화하고 더 안전한 그리기 방법을 사용합니다. 전자 잉크 기기에는 이 기능이 필요할 수 있습니다.</string>
     <string name="disable_extended_text_ui">Disable Single-Field Edit Mode</string>
@@ -287,6 +289,8 @@
     <string name="note_editor_replace_newlines_summ">In the Note Editor, convert any instances of &lt;br&gt; to newlines when editing a card.</string>
     <string name="no_code_formatting">Simple typed answer formatting</string>
     <string name="no_code_formatting_summ">Fixes ‘􏿾’ appearing in typed answer results</string>
+    <string name="type_in_answer_focus">Focus ‘type in answer’</string>
+    <string name="type_in_answer_focus_summ">Automatically focus the ‘type in answer’ field in the reviewer</string>
     <!-- Open Changelog-->
     <string name="open_changelog">Open Changelog</string>
 </resources>

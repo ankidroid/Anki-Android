@@ -152,6 +152,8 @@
     <string name="timeout_answer_seconds_summ" comment="The time to wait (in seconds) in the reviewer before automatically showing the next question or answer">XXX másodperc</string>
     <string name="timeout_question_seconds">A következő kérdés megjelenítése ennyi idő után</string>
     <string name="select_locale_title">Nyelv kiválasztása</string>
+    <string name="software_render">Disable card hardware render</string>
+    <string name="software_render_summ">Hardware render is faster but may have problems, specifically on Android 8/8.1. If you cannot see parts of the card review user interface, try this setting.</string>
     <string name="safe_display">Biztonságos megjelenítési mód</string>
     <string name="safe_display_summ">Kapcsolja ki az összes animációt, és biztonságosabb módszereket használjon a kártya rajzok számára. Az e-tintaeszközök igényelhetik ezt.</string>
     <string name="disable_extended_text_ui">Egy-Mezőnyi Szerkesztési Mód Kikapcsolása</string>
@@ -290,6 +292,8 @@
     <string name="note_editor_replace_newlines_summ">In the Note Editor, convert any instances of &lt;br&gt; to newlines when editing a card.</string>
     <string name="no_code_formatting">Simple typed answer formatting</string>
     <string name="no_code_formatting_summ">Fixes ‘􏿾’ appearing in typed answer results</string>
+    <string name="type_in_answer_focus">Focus ‘type in answer’</string>
+    <string name="type_in_answer_focus_summ">Automatically focus the ‘type in answer’ field in the reviewer</string>
     <!-- Open Changelog-->
     <string name="open_changelog">Open Changelog</string>
 </resources>

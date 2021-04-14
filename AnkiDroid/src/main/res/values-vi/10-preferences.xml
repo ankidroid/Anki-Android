@@ -151,6 +151,8 @@
     <string name="timeout_answer_seconds_summ" comment="The time to wait (in seconds) in the reviewer before automatically showing the next question or answer">XXX s</string>
     <string name="timeout_question_seconds">Thời gian để hiển thị câu hỏi tiếp theo</string>
     <string name="select_locale_title">Chọn ngôn ngữ</string>
+    <string name="software_render">Disable card hardware render</string>
+    <string name="software_render_summ">Hardware render is faster but may have problems, specifically on Android 8/8.1. If you cannot see parts of the card review user interface, try this setting.</string>
     <string name="safe_display">Chế độ an toàn màn hình</string>
     <string name="safe_display_summ">Tắt tất cả hoạt ảnh và sử dụng phương pháp an toàn hơn để vẽ thẻ. Các thiết bị E-ink có thể yêu cầu điều này.</string>
     <string name="disable_extended_text_ui">Tắt chế độ chỉnh sửa trường đơn</string>
@@ -287,6 +289,8 @@
     <string name="note_editor_replace_newlines_summ">Trong Trình chỉnh sửa ghi chú, chuyển đổi thẻ &lt;br&gt; thành dòng mới khi chỉnh sửa thẻ.</string>
     <string name="no_code_formatting">Định dạng câu trả lời đã nhập đơn giản</string>
     <string name="no_code_formatting_summ">Sửa lỗi ‘􏿾’ xuất hiện trong kết quả câu trả lời đã nhập</string>
+    <string name="type_in_answer_focus">Focus ‘type in answer’</string>
+    <string name="type_in_answer_focus_summ">Automatically focus the ‘type in answer’ field in the reviewer</string>
     <!-- Open Changelog-->
     <string name="open_changelog">Open Changelog</string>
 </resources>

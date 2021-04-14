@@ -55,7 +55,6 @@ import androidx.annotation.Nullable;
 import androidx.annotation.VisibleForTesting;
 import timber.log.Timber;
 
-import static com.ichi2.libanki.Consts.DECK_DYN;
 import static com.ichi2.libanki.Consts.DECK_STD;
 import static com.ichi2.utils.CollectionUtils.addAll;
 
@@ -74,7 +73,7 @@ public class Decks {
     @SuppressWarnings("WeakerAccess")
     public static final String DECK_SEPARATOR = "::";
 
-    public static final String defaultDeck = ""
+    public static final String DEFAULT_DECK = ""
             + "{"
                 + "'newToday': [0, 0]," // currentDay, count
                 + "'revToday': [0, 0],"
@@ -108,7 +107,7 @@ public class Decks {
                 + "'return': True" // currently unused
             + "}";
 
-    public static final String defaultConf = ""
+    public static final String DEFAULT_CONF = ""
             + "{"
                 + "'name': \"Default\","
                 + "'new': {"
@@ -315,7 +314,7 @@ public class Decks {
      * ***********************************************************
      */
 
-    public Long id_dont_create(String name) {
+    public Long id_for_name(String name) {
         name = usable_name(name);
         Deck deck = byName(name);
         if (deck != null) {
@@ -325,11 +324,11 @@ public class Decks {
     }
 
     public Long id(String name) throws FilteredAncestor {
-        return id(name, defaultDeck);
+        return id(name, DEFAULT_DECK);
     }
 
     public Long id_safe(String name) {
-        return id_safe(name, defaultDeck);
+        return id_safe(name, DEFAULT_DECK);
     }
 
     private String usable_name(String name) {
@@ -344,7 +343,7 @@ public class Decks {
      */
     public Long id(String name, String type) throws FilteredAncestor {
         name = usable_name(name);
-        Long id = id_dont_create(name);
+        Long id = id_for_name(name);
         if (id != null) {
             return id;
         }
@@ -383,7 +382,7 @@ public class Decks {
      */
     public Long id_safe(String name, String type)  {
         name = usable_name(name);
-        Long id = id_dont_create(name);
+        Long id = id_for_name(name);
         if (id != null) {
             return id;
         }
@@ -502,14 +501,14 @@ public class Decks {
      */
     public ArrayList<Deck> allSorted() {
         ArrayList<Deck> decks = all();
-        Collections.sort(decks, DeckComparator.instance);
+        Collections.sort(decks, DeckComparator.INSTANCE);
         return decks;
     }
 
     @VisibleForTesting
     public List<String> allSortedNames() {
         List<String> names = allNames();
-        Collections.sort(names, DeckNameComparator.instance);
+        Collections.sort(names, DeckNameComparator.INSTANCE);
         return names;
     }
 
@@ -822,7 +821,7 @@ public class Decks {
 
 
     public long confId(String name) {
-        return confId(name, defaultConf);
+        return confId(name, DEFAULT_CONF);
     }
 
 
@@ -883,7 +882,7 @@ public class Decks {
 
     public void restoreToDefault(DeckConfig conf) {
         int oldOrder = conf.getJSONObject("new").getInt("order");
-        DeckConfig _new = new DeckConfig(defaultConf);
+        DeckConfig _new = new DeckConfig(DEFAULT_CONF);
         _new.put("id", conf.getLong("id"));
         _new.put("name", conf.getString("name"));
         mDconf.put(conf.getLong("id"), _new);
@@ -1135,7 +1134,7 @@ public class Decks {
         // Go through all decks, sorted by name
         ArrayList<Deck> decks = all();
 
-        Collections.sort(decks, DeckComparator.instance);
+        Collections.sort(decks, DeckComparator.INSTANCE);
 
         for (Deck deck : decks) {
             Node node = new Node();

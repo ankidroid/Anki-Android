@@ -23,8 +23,6 @@ import android.database.sqlite.SQLiteTransactionListener;
 import android.os.CancellationSignal;
 import android.util.Pair;
 
-import com.ichi2.libanki.DB;
-
 import java.io.IOException;
 import java.util.List;
 import java.util.Locale;
@@ -38,11 +36,11 @@ public class DatabaseChangeDecorator implements SupportSQLiteDatabase {
 
     private static final String[] MOD_SQLS = new String[] { "insert", "update", "delete" };
 
-    private final SupportSQLiteDatabase wrapped;
+    private final SupportSQLiteDatabase mWrapped;
 
 
     public DatabaseChangeDecorator(SupportSQLiteDatabase wrapped) {
-        this.wrapped = wrapped;
+        this.mWrapped = wrapped;
     }
 
     private void markDataAsChanged() {
@@ -76,211 +74,211 @@ public class DatabaseChangeDecorator implements SupportSQLiteDatabase {
 
 
     public SupportSQLiteStatement compileStatement(String sql) {
-        SupportSQLiteStatement supportSQLiteStatement = wrapped.compileStatement(sql);
+        SupportSQLiteStatement supportSQLiteStatement = mWrapped.compileStatement(sql);
         checkForChanges(sql); //technically a little hasty - as the statement hasn't been executed.
         return supportSQLiteStatement;
     }
 
 
     public void beginTransaction() {
-        wrapped.beginTransaction();
+        mWrapped.beginTransaction();
     }
 
 
     public void beginTransactionNonExclusive() {
-        wrapped.beginTransactionNonExclusive();
+        mWrapped.beginTransactionNonExclusive();
     }
 
 
     public void beginTransactionWithListener(SQLiteTransactionListener transactionListener) {
-        wrapped.beginTransactionWithListener(transactionListener);
+        mWrapped.beginTransactionWithListener(transactionListener);
     }
 
 
     public void beginTransactionWithListenerNonExclusive(SQLiteTransactionListener transactionListener) {
-        wrapped.beginTransactionWithListenerNonExclusive(transactionListener);
+        mWrapped.beginTransactionWithListenerNonExclusive(transactionListener);
     }
 
 
     public void endTransaction() {
-        wrapped.endTransaction();
+        mWrapped.endTransaction();
     }
 
 
     public void setTransactionSuccessful() {
-        wrapped.setTransactionSuccessful();
+        mWrapped.setTransactionSuccessful();
     }
 
 
     public boolean inTransaction() {
-        return wrapped.inTransaction();
+        return mWrapped.inTransaction();
     }
 
 
     public boolean isDbLockedByCurrentThread() {
-        return wrapped.isDbLockedByCurrentThread();
+        return mWrapped.isDbLockedByCurrentThread();
     }
 
 
     public boolean yieldIfContendedSafely() {
-        return wrapped.yieldIfContendedSafely();
+        return mWrapped.yieldIfContendedSafely();
     }
 
 
     public boolean yieldIfContendedSafely(long sleepAfterYieldDelay) {
-        return wrapped.yieldIfContendedSafely(sleepAfterYieldDelay);
+        return mWrapped.yieldIfContendedSafely(sleepAfterYieldDelay);
     }
 
 
     public int getVersion() {
-        return wrapped.getVersion();
+        return mWrapped.getVersion();
     }
 
 
     public void setVersion(int version) {
-        wrapped.setVersion(version);
+        mWrapped.setVersion(version);
     }
 
 
     public long getMaximumSize() {
-        return wrapped.getMaximumSize();
+        return mWrapped.getMaximumSize();
     }
 
 
     public long setMaximumSize(long numBytes) {
-        return wrapped.setMaximumSize(numBytes);
+        return mWrapped.setMaximumSize(numBytes);
     }
 
 
     public long getPageSize() {
-        return wrapped.getPageSize();
+        return mWrapped.getPageSize();
     }
 
 
     public void setPageSize(long numBytes) {
-        wrapped.setPageSize(numBytes);
+        mWrapped.setPageSize(numBytes);
     }
 
 
     public Cursor query(String query) {
-        return wrapped.query(query);
+        return mWrapped.query(query);
     }
 
 
     public Cursor query(String query, Object[] bindArgs) {
-        return wrapped.query(query, bindArgs);
+        return mWrapped.query(query, bindArgs);
     }
 
 
     public Cursor query(SupportSQLiteQuery query) {
-        return wrapped.query(query);
+        return mWrapped.query(query);
     }
 
 
     public Cursor query(SupportSQLiteQuery query, CancellationSignal cancellationSignal) {
-        return wrapped.query(query, cancellationSignal);
+        return mWrapped.query(query, cancellationSignal);
     }
 
 
     public long insert(String table, int conflictAlgorithm, ContentValues values) throws SQLException {
-        long insert = wrapped.insert(table, conflictAlgorithm, values);
+        long insert = mWrapped.insert(table, conflictAlgorithm, values);
         markDataAsChanged();
         return insert;
     }
 
 
     public int delete(String table, String whereClause, Object[] whereArgs) {
-        int delete = wrapped.delete(table, whereClause, whereArgs);
+        int delete = mWrapped.delete(table, whereClause, whereArgs);
         markDataAsChanged();
         return delete;
     }
 
 
     public int update(String table, int conflictAlgorithm, ContentValues values, String whereClause, Object[] whereArgs) {
-        int update = wrapped.update(table, conflictAlgorithm, values, whereClause, whereArgs);
+        int update = mWrapped.update(table, conflictAlgorithm, values, whereClause, whereArgs);
         markDataAsChanged();
         return update;
     }
 
 
     public void execSQL(String sql) throws SQLException {
-        wrapped.execSQL(sql);
+        mWrapped.execSQL(sql);
         checkForChanges(sql);
     }
 
 
     public void execSQL(String sql, Object[] bindArgs) throws SQLException {
-        wrapped.execSQL(sql, bindArgs);
+        mWrapped.execSQL(sql, bindArgs);
         checkForChanges(sql);
     }
 
 
     public boolean isReadOnly() {
-        return wrapped.isReadOnly();
+        return mWrapped.isReadOnly();
     }
 
 
     public boolean isOpen() {
-        return wrapped.isOpen();
+        return mWrapped.isOpen();
     }
 
 
     public boolean needUpgrade(int newVersion) {
-        return wrapped.needUpgrade(newVersion);
+        return mWrapped.needUpgrade(newVersion);
     }
 
 
     public String getPath() {
-        return wrapped.getPath();
+        return mWrapped.getPath();
     }
 
 
     public void setLocale(Locale locale) {
-        wrapped.setLocale(locale);
+        mWrapped.setLocale(locale);
     }
 
 
     public void setMaxSqlCacheSize(int cacheSize) {
-        wrapped.setMaxSqlCacheSize(cacheSize);
+        mWrapped.setMaxSqlCacheSize(cacheSize);
     }
 
 
     public void setForeignKeyConstraintsEnabled(boolean enable) {
-        wrapped.setForeignKeyConstraintsEnabled(enable);
+        mWrapped.setForeignKeyConstraintsEnabled(enable);
     }
 
 
     public boolean enableWriteAheadLogging() {
-        return wrapped.enableWriteAheadLogging();
+        return mWrapped.enableWriteAheadLogging();
     }
 
 
     public void disableWriteAheadLogging() {
-        wrapped.disableWriteAheadLogging();
+        mWrapped.disableWriteAheadLogging();
     }
 
 
     public boolean isWriteAheadLoggingEnabled() {
-        return wrapped.isWriteAheadLoggingEnabled();
+        return mWrapped.isWriteAheadLoggingEnabled();
     }
 
 
     public List<Pair<String, String>> getAttachedDbs() {
-        return wrapped.getAttachedDbs();
+        return mWrapped.getAttachedDbs();
     }
 
 
     public boolean isDatabaseIntegrityOk() {
-        return wrapped.isDatabaseIntegrityOk();
+        return mWrapped.isDatabaseIntegrityOk();
     }
 
 
     public void close() throws IOException {
-        wrapped.close();
+        mWrapped.close();
     }
 
     public SupportSQLiteDatabase getWrapped() {
-        return wrapped;
+        return mWrapped;
     }
 }
 

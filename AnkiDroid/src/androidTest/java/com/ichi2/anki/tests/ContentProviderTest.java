@@ -35,7 +35,6 @@ import com.ichi2.anki.AnkiDroidApp;
 import com.ichi2.anki.CollectionHelper;
 import com.ichi2.anki.FlashCardsContract;
 import com.ichi2.anki.exception.ConfirmModSchemaException;
-import com.ichi2.async.CollectionTask;
 import com.ichi2.async.TaskManager;
 import com.ichi2.libanki.Card;
 import com.ichi2.libanki.Collection;
@@ -43,7 +42,6 @@ import com.ichi2.libanki.Consts;
 import com.ichi2.libanki.Deck;
 import com.ichi2.libanki.Decks;
 import com.ichi2.libanki.Model;
-import com.ichi2.libanki.Models;
 import com.ichi2.libanki.Note;
 import com.ichi2.libanki.sched.AbstractSched;
 import com.ichi2.libanki.StdModels;
@@ -156,7 +154,7 @@ public class ContentProviderTest extends InstrumentedTest {
         // Do not teardown if setup was aborted
 
         // Add a new basic model that we use for testing purposes (existing models could potentially be corrupted)
-        Model model = StdModels.basicModel.add(col, BASIC_MODEL_NAME);
+        Model model = StdModels.BASIC_MODEL.add(col, BASIC_MODEL_NAME);
         mModelId = model.getLong("id");
         List<String> fields = model.getFieldsNames();
         // Use the names of the fields as test values for the notes which will be added
@@ -287,7 +285,7 @@ public class ContentProviderTest extends InstrumentedTest {
         final ContentResolver cr = getContentResolver();
         Collection col = getCol();
         // Add a new basic model that we use for testing purposes (existing models could potentially be corrupted)
-        Model model = StdModels.basicModel.add(col, BASIC_MODEL_NAME);
+        Model model = StdModels.BASIC_MODEL.add(col, BASIC_MODEL_NAME);
         long modelId = model.getLong("id");
         // Add the note
         Uri modelUri = ContentUris.withAppendedId(FlashCardsContract.Model.CONTENT_URI, modelId);
@@ -324,7 +322,7 @@ public class ContentProviderTest extends InstrumentedTest {
         // Get required objects for test
         final ContentResolver cr = getContentResolver();
         Collection col = getCol();
-        Model model = StdModels.basicModel.add(col, BASIC_MODEL_NAME);
+        Model model = StdModels.BASIC_MODEL.add(col, BASIC_MODEL_NAME);
         long modelId = model.getLong("id");
         JSONArray initialFieldsArr = model.getJSONArray("flds");
         int initialFieldCount = initialFieldsArr.length();

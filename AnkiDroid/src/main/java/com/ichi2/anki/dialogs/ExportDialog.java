@@ -19,8 +19,8 @@ public class ExportDialog extends AnalyticsDialogFragment {
         void dismissAllDialogFragments();
     }
 
-    private final int INCLUDE_SCHED = 0;
-    private final int INCLUDE_MEDIA = 1;
+    private final static int INCLUDE_SCHED = 0;
+    private final static int INCLUDE_MEDIA = 1;
     private boolean mIncludeSched = false;
     private boolean mIncludeMedia = false;
 
@@ -65,7 +65,7 @@ public class ExportDialog extends AnalyticsDialogFragment {
             checked = new Integer[]{};
         } else {
             mIncludeSched = true;
-            checked = new Integer[]{ INCLUDE_SCHED };
+            checked = new Integer[]{INCLUDE_SCHED};
         }
         final String[] items = { res.getString(R.string.export_include_schedule),
                 res.getString(R.string.export_include_media) };

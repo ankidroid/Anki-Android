@@ -5,6 +5,7 @@ import android.app.Activity;
 import android.app.Application;
 import android.content.ComponentName;
 import android.content.Intent;
+import android.os.Bundle;
 import android.view.MenuItem;
 import android.widget.AdapterView;
 import android.widget.ListView;
@@ -13,6 +14,7 @@ import com.ichi2.libanki.Card;
 import com.ichi2.libanki.Consts;
 import com.ichi2.libanki.Note;
 import com.ichi2.libanki.Deck;
+import com.ichi2.libanki.utils.Time;
 import com.ichi2.testutils.AnkiAssert;
 import com.ichi2.testutils.IntentAssert;
 
@@ -507,6 +509,57 @@ public class CardBrowserTest extends RobolectricTest {
         advanceRobolectricLooperWithSleep();
 
         assertUndoContains(b, R.string.deck_conf_cram_reschedule);
+    }
+
+    /** 8027 */
+    @Test
+    public void checkSearchString() {
+        addNoteUsingBasicModel("Hello", "John");
+        long deck = addDeck("Deck 1");
+        getCol().getDecks().select(deck);
+        Card c2 = addNoteUsingBasicModel("New", "world").firstCard();
+        c2.setDid(deck);
+        c2.flush();
+
+        CardBrowser cardBrowser = getBrowserWithNoNewCards();
+        cardBrowser.searchCards("world or hello");
+        advanceRobolectricLooperWithSleep();
+
+        assertThat("Cardbrowser has Deck 1 as selected deck", cardBrowser.getSelectedDeckNameForUi(), is("Deck 1"));
+        assertThat("Results should only be from the selected deck", cardBrowser.getCardCount(), is(1));
+    }
+
+    /** PR #8553 **/
+    @Test
+    public void checkDisplayOrderPersistence() {
+        // Start the Card Browser with Basic Model
+        ensureCollectionLoadIsSynchronous();
+        ActivityController<CardBrowser> cardBrowserController = Robolectric.buildActivity(CardBrowser.class, new Intent())
+                .create().start().resume().visible();
+        saveControllerForCleanup(cardBrowserController);
+        advanceRobolectricLooperWithSleep();
+
+        // Make sure card has default value in sortType field
+        assertThat("Initially Card Browser has order = noteFld", getCol().getConf().get("sortType"), is("noteFld"));
+
+        // Store the current (before changing the database) Mod Time
+        long initialMod = getCol().getMod();
+
+        // Change the display order of the card browser
+        cardBrowserController.get().changeCardOrder(7);     // order no. 7 corresponds to "cardEase"
+
+        // Kill and restart the activity and ensure that display order is preserved
+        Bundle outBundle = new Bundle();
+        cardBrowserController.saveInstanceState(outBundle);
+        cardBrowserController.pause().stop().destroy();
+        cardBrowserController = Robolectric.buildActivity(CardBrowser.class).create(outBundle).start().resume().visible();
+        saveControllerForCleanup(cardBrowserController);
+
+        // Find the current (after database has been changed) Mod time
+        long finalMod = getCol().getMod();
+
+        assertThat("Card Browser has the new sortType field", getCol().getConf().get("sortType"), is("cardEase"));
+        Assert.assertNotEquals("Modification time must change", initialMod, finalMod);
     }
 
     protected void assertUndoDoesNotContain(CardBrowser browser, @StringRes int resId) {

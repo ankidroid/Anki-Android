@@ -123,6 +123,7 @@
     <string name="reordering_cards">카드 순서 다시 정리중...</string>
     <string name="field_remapping">%1$s (\'%2$s\'에서)</string>
     <string name="confirm_map_cards_to_nothing">연결되지 않은 모든 카드는 삭제됩니다. 만약 노트에 남아있는 카드가 없다면 버려질 것입니다. 계속 진행할까요?</string>
+    <string name="timebox_reached_title">Timebox reached</string>
     <plurals name="timebox_reached">
         <item quantity="other">%1$d 카드가 %2$s에 학습됨</item>
     </plurals>
@@ -337,4 +338,5 @@ Context | Request Context    </string>
     <!-- Used for credential empty warning message -->
     <string name="email_id_empty">Email address is required</string>
     <string name="password_empty">Password is required</string>
+    <string name="back_pressed_once">Press back again to exit</string>
 </resources>

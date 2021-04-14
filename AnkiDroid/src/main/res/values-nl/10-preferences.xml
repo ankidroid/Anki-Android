@@ -151,6 +151,8 @@
     <string name="timeout_answer_seconds_summ" comment="The time to wait (in seconds) in the reviewer before automatically showing the next question or answer">XXX s</string>
     <string name="timeout_question_seconds">Tijd om de volgende vraag te tonen</string>
     <string name="select_locale_title">Taal selecteren</string>
+    <string name="software_render">Disable card hardware render</string>
+    <string name="software_render_summ">Hardware render is faster but may have problems, specifically on Android 8/8.1. If you cannot see parts of the card review user interface, try this setting.</string>
     <string name="safe_display">Veilige weergavemodus</string>
     <string name="safe_display_summ">Alle animaties uitschakelen en veiligere methode gebruiken om kaarten te trekken. Dit kan nodig zijn voor sommige E-inkt-apparaten.</string>
     <string name="disable_extended_text_ui">Bewerkingsmodus voor een enkel veld uitschakelen</string>
@@ -289,6 +291,8 @@
     <string name="note_editor_replace_newlines_summ">Zet in de memobewerker alle instanties van &lt;br&gt; om in nieuwe lijnen bij het bewerken van een kaart.</string>
     <string name="no_code_formatting">Eenvoudig getypte antwoordopmaak</string>
     <string name="no_code_formatting_summ">Herstelt het verschijnen van \'􏿾\' in getypte antwoordresultaten</string>
+    <string name="type_in_answer_focus">Focus ‘type in answer’</string>
+    <string name="type_in_answer_focus_summ">Automatically focus the ‘type in answer’ field in the reviewer</string>
     <!-- Open Changelog-->
     <string name="open_changelog">Open Changelog</string>
 </resources>

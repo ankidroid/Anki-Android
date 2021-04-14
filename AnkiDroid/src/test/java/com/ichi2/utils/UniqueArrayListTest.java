@@ -24,6 +24,7 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
+import static com.ichi2.utils.ListUtil.assertListEquals;
 import static org.hamcrest.CoreMatchers.instanceOf;
 import static org.hamcrest.CoreMatchers.not;
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -62,10 +63,6 @@ public class UniqueArrayListTest {
             "sd"
     );
 
-    private <E> void assertSameLists(List<E> a, List<E> b){
-        assertThat(b, IsIterableContainingInOrder.contains(a.toArray()));
-    }
-
     private <E> void assertNotSameLists(List<E> a, List<E> b){
         assertThat(b, not(IsIterableContainingInOrder.contains(a.toArray())));
     }
@@ -85,7 +82,7 @@ public class UniqueArrayListTest {
         UniqueArrayList<Integer> uniqueList = UniqueArrayList.from(longs);
         Collections.sort(longs);
         uniqueList.sort();
-        assertSameLists(longs, uniqueList);
+        assertListEquals(longs, uniqueList);
     }
 
 
@@ -95,13 +92,13 @@ public class UniqueArrayListTest {
         UniqueArrayList<Integer> uniqueList = UniqueArrayList.from(longs);
         Collections.sort(longs);
         uniqueList.sort();
-        assertSameLists(longs, uniqueList);
+        assertListEquals(longs, uniqueList);
 
         uniqueList.addAll(longs);
         uniqueList.add(10);
         uniqueList.add(5, 65);
 
-        assertSameLists(longs, uniqueList);
+        assertListEquals(longs, uniqueList);
 
         uniqueList.add(575757);
         assertNotSameLists(longs, uniqueList);
@@ -162,7 +159,7 @@ public class UniqueArrayListTest {
         uniqueArrayList.add("Z");
         uniqueArrayList.add("f");
 
-        assertEquals(Arrays.asList("a", "Z", "f"), uniqueArrayList);
+        assertListEquals(Arrays.asList("a", "Z", "f"), uniqueArrayList);
     }
 
 
@@ -174,7 +171,7 @@ public class UniqueArrayListTest {
         uniqueArrayList.add("Z");
         uniqueArrayList.add("f");
 
-        assertEquals(Arrays.asList("a", "Z", "f"), uniqueArrayList);
+        assertListEquals(Arrays.asList("a", "Z", "f"), uniqueArrayList);
 
         uniqueArrayList.add("a");
         uniqueArrayList.add("Z");
@@ -186,7 +183,7 @@ public class UniqueArrayListTest {
         uniqueArrayList.add("Z");
         uniqueArrayList.add("f");
 
-        assertEquals(Arrays.asList("a", "Z", "f"), uniqueArrayList);
+        assertListEquals(Arrays.asList("a", "Z", "f"), uniqueArrayList);
     }
 
 
@@ -201,7 +198,7 @@ public class UniqueArrayListTest {
 
         String res = uniqueArrayList.set(1, "m");
 
-        assertEquals(Arrays.asList("a", "m", "f"), uniqueArrayList);
+        assertListEquals(Arrays.asList("a", "m", "f"), uniqueArrayList);
         assertEquals("Z", res);
     }
 
@@ -217,7 +214,7 @@ public class UniqueArrayListTest {
 
         String res = uniqueArrayList.set(1, "a");
 
-        assertEquals(Arrays.asList("a", "f"), uniqueArrayList);
+        assertListEquals(Arrays.asList("a", "f"), uniqueArrayList);
         assertEquals("Z", res);
     }
 
@@ -229,7 +226,7 @@ public class UniqueArrayListTest {
         uniqueArrayList.set(0, "b");
         uniqueArrayList.add("a");
 
-        assertSameLists(Arrays.asList("b", "a"), uniqueArrayList);
+        assertListEquals(Arrays.asList("b", "a"), uniqueArrayList);
     }
 
 
@@ -243,7 +240,7 @@ public class UniqueArrayListTest {
 
         boolean res = uniqueArrayList.addAll(Arrays.asList("a", "Z", "f"));
 
-        assertEquals(Arrays.asList("a", "Z", "f"), uniqueArrayList);
+        assertListEquals(Arrays.asList("a", "Z", "f"), uniqueArrayList);
         assertFalse(res);
     }
 
@@ -258,7 +255,7 @@ public class UniqueArrayListTest {
 
         boolean res = uniqueArrayList.addAll(Arrays.asList("w", "x", "y"));
 
-        assertEquals(Arrays.asList("a", "Z", "f", "w", "x", "y"), uniqueArrayList);
+        assertListEquals(Arrays.asList("a", "Z", "f", "w", "x", "y"), uniqueArrayList);
         assertTrue(res);
     }
 
@@ -273,7 +270,7 @@ public class UniqueArrayListTest {
 
         boolean res = uniqueArrayList.addAll(Arrays.asList("f", "Y", "Z"));
 
-        assertEquals(Arrays.asList("a", "Z", "f", "Y"), uniqueArrayList);
+        assertListEquals(Arrays.asList("a", "Z", "f", "Y"), uniqueArrayList);
         assertTrue(res);
     }
 
@@ -288,7 +285,7 @@ public class UniqueArrayListTest {
 
         boolean res = uniqueArrayList.addAll(1, Arrays.asList("a", "Z", "f"));
 
-        assertEquals(Arrays.asList("a", "Z", "f"), uniqueArrayList);
+        assertListEquals(Arrays.asList("a", "Z", "f"), uniqueArrayList);
         assertFalse(res);
     }
 
@@ -303,7 +300,7 @@ public class UniqueArrayListTest {
 
         boolean res = uniqueArrayList.addAll(1, Arrays.asList("w", "x", "y"));
 
-        assertSameLists(Arrays.asList("a", "w", "x", "y", "Z", "f"), uniqueArrayList);
+        assertListEquals(Arrays.asList("a", "w", "x", "y", "Z", "f"), uniqueArrayList);
         assertTrue(res);
     }
 
@@ -318,7 +315,7 @@ public class UniqueArrayListTest {
 
         boolean res = uniqueArrayList.addAll(1, Arrays.asList("f", "Y", "Z"));
 
-        assertSameLists(Arrays.asList("a", "Y", "Z", "f"), uniqueArrayList);
+        assertListEquals(Arrays.asList("a", "Y", "Z", "f"), uniqueArrayList);
         assertTrue(res);
     }
 
@@ -333,7 +330,7 @@ public class UniqueArrayListTest {
 
         boolean res = uniqueArrayList.addAll(uniqueArrayList.size(), Arrays.asList("w", "x", "y"));
 
-        assertSameLists(Arrays.asList("a", "Z", "f", "w", "x", "y"), uniqueArrayList);
+        assertListEquals(Arrays.asList("a", "Z", "f", "w", "x", "y"), uniqueArrayList);
         assertTrue(res);
     }
 
@@ -344,13 +341,13 @@ public class UniqueArrayListTest {
 
         final List<Integer> l1 = Arrays.asList(1, 2, 3, 4, 5);
         assertTrue(uniqueArrayList.addAll(l1));
-        assertSameLists(l1, uniqueArrayList);
+        assertListEquals(l1, uniqueArrayList);
 
         final List<Integer> l2 = Arrays.asList(5, 4, 3, 2, 1, 0);
         assertTrue(uniqueArrayList.addAll(0,l2));
 
         final List<Integer> l3 = Arrays.asList(0, 1, 2, 3, 4, 5);
-        assertSameLists(l3, uniqueArrayList);
+        assertListEquals(l3, uniqueArrayList);
     }
 
 
@@ -360,12 +357,12 @@ public class UniqueArrayListTest {
 
         final List<Integer> l1 = Arrays.asList(1, 2, 3, 4, 5);
         assertTrue(uniqueArrayList.addAll(l1));
-        assertSameLists(l1, uniqueArrayList);
+        assertListEquals(l1, uniqueArrayList);
 
         final List<Integer> l2 = Arrays.asList(0, 1, 2, 3, 4, 5);
         assertTrue(uniqueArrayList.addAll(0,l2));
 
-        assertSameLists(l2, uniqueArrayList);
+        assertListEquals(l2, uniqueArrayList);
     }
 
 
@@ -545,11 +542,11 @@ public class UniqueArrayListTest {
         List<Long> longs = Arrays.asList(1L, 1L, 2L, 3L, 4L, 1L, 5L, 1L, 6L, 7L, 8L, 9L, 10L, 11L, 1L, 12L, 13L);
         UniqueArrayList<Long> uniqueList = UniqueArrayList.from(longs);
 
-        final Object[] arr = Arrays.asList(
+        final List<Long> arr = Arrays.asList(
                 1L, 2L, 3L, 4L, 5L, 6L, 7L, 8L, 9L, 10L, 11L, 12L, 13L
-        ).toArray();
+        );
 
-        assertArrayEquals(arr, uniqueList.toArray());
+        assertListEquals(arr, uniqueList);
     }
 
 
@@ -558,13 +555,12 @@ public class UniqueArrayListTest {
         List<Long> longs = Arrays.asList(1L, 1L, 2L, 3L, 4L, 1L, 5L, 1L, 6L, 7L, 8L, 9L, 10L, 11L, 1L, 12L, 13L);
         UniqueArrayList<Long> uniqueList = UniqueArrayList.from(longs);
 
-        final Long[] arr = Arrays.asList(
+        final List<Long> arr = Arrays.asList(
                 1L, 2L, 3L, 4L, 5L, 6L, 7L, 8L, 9L, 10L, 11L, 12L, 13L
-        ).toArray(new Long[] {});
+        );
 
-        final Long[] arr_res = uniqueList.toArray(new Long[] {});
-        assertArrayEquals(arr, arr_res);
+        assertListEquals(arr, uniqueList);
 
-        assertThat(arr_res[0], instanceOf(Long.class));
+        assertThat(uniqueList.get(0), instanceOf(Long.class));
     }
 }

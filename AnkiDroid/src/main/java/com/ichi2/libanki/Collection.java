@@ -49,7 +49,6 @@ import com.ichi2.libanki.utils.Time;
 import com.ichi2.upgrade.Upgrade;
 import com.ichi2.utils.DatabaseChangeDecorator;
 import com.ichi2.utils.FunctionalInterfaces;
-import com.ichi2.utils.LanguageUtil;
 import com.ichi2.utils.VersionUtils;
 
 import com.ichi2.utils.JSONArray;
@@ -80,14 +79,12 @@ import java.util.regex.Pattern;
 import androidx.annotation.CheckResult;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.annotation.StringRes;
 import androidx.annotation.VisibleForTesting;
 import androidx.sqlite.db.SupportSQLiteDatabase;
 import androidx.sqlite.db.SupportSQLiteStatement;
 import timber.log.Timber;
 
 import static com.ichi2.async.CancelListener.isCancelled;
-import static com.ichi2.libanki.Consts.DECK_DYN;
 
 // Anki maintains a cache of used tags so it can quickly present a list of tags
 // for autocomplete and in the browser. For efficiency, deletions are not
@@ -98,7 +95,7 @@ import static com.ichi2.libanki.Consts.DECK_DYN;
 @SuppressWarnings({"PMD.ExcessiveClassLength", "PMD.AvoidThrowingRawExceptionTypes","PMD.AvoidReassigningParameters",
         "PMD.NPathComplexity","PMD.MethodNamingConventions","PMD.AvoidBranchingStatementAsLastInLoop",
         "PMD.SwitchStmtsShouldHaveDefault","PMD.CollapsibleIfStatements","PMD.EmptyIfStmt","PMD.ExcessiveMethodLength"})
-public class Collection {
+public class Collection implements CollectionGetter {
 
     private final Context mContext;
 
@@ -126,7 +123,7 @@ public class Collection {
     // END: SQL table columns
 
     // API 21: Use a ConcurrentLinkedDeque
-    private LinkedBlockingDeque<Undoable> mUndo;
+    private LinkedBlockingDeque<UndoAction> mUndo;
 
     private final String mPath;
     private final DroidBackend mDroidBackend;
@@ -144,7 +141,7 @@ public class Collection {
     private final Time mTime;
 
     // other options
-    public static final String defaultConf = "{"
+    public static final String DEFAULT_CONF = "{"
             +
             // review options
             "'activeDecks': [1], " + "'curDeck': 1, " + "'newSpread': " + Consts.NEW_CARDS_DISTRIBUTE + ", "
@@ -602,7 +599,7 @@ public class Collection {
      * Return a new note with the default model from the deck
      * @return The new note
      */
-    public Note newNote() {
+    public @NonNull Note newNote() {
         return newNote(true);
     }
 
@@ -612,7 +609,7 @@ public class Collection {
      *                the configuration (curModel)
      * @return The new note
      */
-    public Note newNote(boolean forDeck) {
+    public @NonNull Note newNote(boolean forDeck) {
         return newNote(getModels().current(forDeck));
     }
 
@@ -621,7 +618,7 @@ public class Collection {
      * @param m The model to use for the new note
      * @return The new note
      */
-    public Note newNote(Model m) {
+    public @NonNull Note newNote(Model m) {
         return new Note(this, m);
     }
 
@@ -630,7 +627,7 @@ public class Collection {
      * @param note A note to add if it generates card
      * @return Number of card added.
      */
-    public int addNote(Note note) {
+    public int addNote(@NonNull Note note) {
         return addNote(note, Models.AllowEmpty.ONLY_CLOZE);
     }
 
@@ -640,7 +637,7 @@ public class Collection {
      * @param allowEmpty Whether we accept to add it even if it should generate no card. Useful to import note even if buggy
      * @return Number of card added
      */
-    public int addNote(Note note, Models.AllowEmpty allowEmpty) {
+    public int addNote(@NonNull Note note, Models.AllowEmpty allowEmpty) {
         // check we have card models available, then save
         ArrayList<JSONObject> cms = findTemplates(note, allowEmpty);
         // Todo: upstream, we accept to add a not even if it generates no card. Should be ported to ankidroid
@@ -1316,14 +1313,14 @@ public class Collection {
 
     /** Undo menu item name, or "" if undo unavailable. */
     @VisibleForTesting
-    public @Nullable Undoable undoType() {
+    public @Nullable UndoAction undoType() {
         if (mUndo.size() > 0) {
             return mUndo.getLast();
         }
         return null;
     }
     public String undoName(Resources res) {
-        Undoable type = undoType();
+        UndoAction type = undoType();
         if (type != null) {
             return type.name(res);
         }
@@ -1336,12 +1333,12 @@ public class Collection {
     }
 
     public @Nullable Card undo() {
-        Undoable lastUndo = mUndo.removeLast();
+        UndoAction lastUndo = mUndo.removeLast();
         Timber.d("undo() of type %s", lastUndo.getClass());
         return lastUndo.undo(this);
     }
 
-    public void markUndo(@NonNull Undoable undo) {
+    public void markUndo(@NonNull UndoAction undo) {
         Timber.d("markUndo() of type %s", undo.getClass());
         mUndo.add(undo);
         while (mUndo.size() > UNDO_SIZE_MAX) {
@@ -1350,7 +1347,7 @@ public class Collection {
     }
 
     @VisibleForTesting
-    public static class UndoReview extends Undoable {
+    public static class UndoReview extends UndoAction {
         private final boolean mWasLeech;
         @NonNull private final Card mClonedCard;
         public UndoReview(boolean wasLeech, @NonNull Card clonedCard) {
@@ -2264,5 +2261,14 @@ public class Collection {
     @NonNull
     public Time getTime() {
         return mTime;
+    }
+
+
+    /**
+     * Allows a collection to be used as a CollectionGetter
+     * @return Itself.
+     */
+    public Collection getCol() {
+        return this;
     }
 }

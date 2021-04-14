@@ -151,6 +151,8 @@
     <string name="timeout_answer_seconds_summ" comment="The time to wait (in seconds) in the reviewer before automatically showing the next question or answer">XXX 秒</string>
     <string name="timeout_question_seconds">显示下一个问题时间</string>
     <string name="select_locale_title">选择语言</string>
+    <string name="software_render">禁用卡牌硬件渲染</string>
+    <string name="software_render_summ">硬件渲染速度较快，但可能有问题，特别是在 Android 8/8.1。如果您看不到部分卡片复习用户界面，请尝试此设置。</string>
     <string name="safe_display">安全显示模式</string>
     <string name="safe_display_summ">禁用所有动画并使用更安全的方法绘制卡牌。使用墨水屏（E-ink）的设备可能需要此功能。</string>
     <string name="disable_extended_text_ui">禁用单字段编辑模式</string>
@@ -287,6 +289,8 @@
     <string name="note_editor_replace_newlines_summ">在笔记编辑器中，编辑卡片时将 &lt;br&gt; 的任何实例转换为换行。</string>
     <string name="no_code_formatting">简单输入的答案格式</string>
     <string name="no_code_formatting_summ">修复在输入的答案结果中出现的“􏿾”</string>
+    <string name="type_in_answer_focus">Focus ‘type in answer’</string>
+    <string name="type_in_answer_focus_summ">Automatically focus the ‘type in answer’ field in the reviewer</string>
     <!-- Open Changelog-->
     <string name="open_changelog">打开更新日志</string>
 </resources>

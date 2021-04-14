@@ -23,7 +23,7 @@ public class TemplateFilters {
 
     public static final String CLOZE_DELETION_REPLACEMENT = "[...]";
     private static final Pattern fHookFieldMod = Pattern.compile("^(.*?)(?:\\((.*)\\))?$");
-    public static final String clozeReg = "(?si)\\{\\{(c)%s::(.*?)(::(.*?))?\\}\\}";
+    public static final String CLOZE_REG = "(?si)\\{\\{(c)%s::(.*?)(::(.*?))?\\}\\}";
 
 
     /**
@@ -122,12 +122,12 @@ public class TemplateFilters {
 
 
     private static @NonNull String clozeText(@NonNull String txt, @NonNull String ord, char type) {
-        if (!Pattern.compile(String.format(Locale.US, clozeReg, ord)).matcher(txt).find()) {
+        if (!Pattern.compile(String.format(Locale.US, CLOZE_REG, ord)).matcher(txt).find()) {
             return "";
         }
 
         txt = removeFormattingFromMathjax(txt, ord);
-        Matcher m = Pattern.compile(String.format(Locale.US, clozeReg, ord)).matcher(txt);
+        Matcher m = Pattern.compile(String.format(Locale.US, CLOZE_REG, ord)).matcher(txt);
 
         StringBuffer repl = new StringBuffer();
         while (m.find()) {
@@ -151,7 +151,7 @@ public class TemplateFilters {
         }
         txt = m.appendTail(repl).toString();
         // and display other clozes normally
-        return txt.replaceAll(String.format(Locale.US, clozeReg, "\\d+"), "$2");
+        return txt.replaceAll(String.format(Locale.US, CLOZE_REG, "\\d+"), "$2");
     }
 
     /**
@@ -165,7 +165,7 @@ public class TemplateFilters {
      * Cloze in a <span>".
      */
     public static @NonNull String removeFormattingFromMathjax(@NonNull String txt, @NonNull String ord) {
-        String creg = clozeReg.replace("(?si)", "");
+        String creg = CLOZE_REG.replace("(?si)", "");
         // Scan the string left to right.
         // After a MathJax opening - \( or \[ - flip in_mathjax to True.
         // After a MathJax closing - \) or \] - flip in_mathjax to False.

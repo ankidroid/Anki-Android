@@ -12,13 +12,13 @@ import androidx.annotation.Nullable;
 import androidx.annotation.StringRes;
 import timber.log.Timber;
 
-public abstract class Undoable {
+public abstract class UndoAction {
     @StringRes public final int mUndoNameId;
 
     /**
      * For all descendants, we assume that a card/note/object passed as argument is never going to be changed again.
      * It's the caller reponsability to clone the object if necessary.*/
-    public Undoable(@StringRes int undoNameId) {
+    public UndoAction(@StringRes int undoNameId) {
         mUndoNameId = undoNameId;
     }
 
@@ -35,10 +35,10 @@ public abstract class Undoable {
      * Returned positive integers are card id. Those ids is the card that was discarded and that may be sent back to the reviewer.*/
     public abstract @Nullable Card undo(@NonNull Collection col);
 
-    public static @NonNull Undoable revertToProvidedState (@StringRes int undoNameId, Card card){
+    public static @NonNull UndoAction revertToProvidedState (@StringRes int undoNameId, Card card){
         Note note = card.note();
         List<Card> cards = note.cards();
-        return new Undoable(undoNameId) {
+        return new UndoAction(undoNameId) {
             public @Nullable
             Card undo(@NonNull Collection col) {
                 Timber.i("Undo: %d", undoNameId);

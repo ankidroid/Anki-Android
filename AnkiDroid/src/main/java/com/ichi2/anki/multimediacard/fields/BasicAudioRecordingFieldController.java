@@ -34,7 +34,7 @@ public class BasicAudioRecordingFieldController extends FieldControllerBase impl
     /**
      * This controller always return a temporary path where it writes the audio
      */
-    private String tempAudioPath;
+    private String mTempAudioPath;
     private AudioView mAudioView;
 
 
@@ -48,21 +48,21 @@ public class BasicAudioRecordingFieldController extends FieldControllerBase impl
             File f = new File(origAudioPath);
 
             if (f.exists()) {
-                tempAudioPath = f.getAbsolutePath();
+                mTempAudioPath = f.getAbsolutePath();
                 bExist = true;
             }
         }
 
         if (!bExist) {
-            tempAudioPath = AudioView.generateTempAudioFile(mActivity);
+            mTempAudioPath = AudioView.generateTempAudioFile(mActivity);
         }
 
         mAudioView = AudioView.createRecorderInstance(mActivity, R.drawable.av_play, R.drawable.av_pause,
-                R.drawable.av_stop, R.drawable.av_rec, R.drawable.av_rec_stop, tempAudioPath);
+                R.drawable.av_stop, R.drawable.av_rec, R.drawable.av_rec_stop, mTempAudioPath);
         mAudioView.setOnRecordingFinishEventListener(v -> {
             // currentFilePath.setText("Recording done, you can preview it. Hit save after finish");
             // FIXME is this okay if it is still null?
-            mField.setAudioPath(tempAudioPath);
+            mField.setAudioPath(mTempAudioPath);
             mField.setHasTemporaryMedia(true);
         });
         layout.addView(mAudioView, LinearLayout.LayoutParams.MATCH_PARENT);

@@ -122,6 +122,7 @@
     <string name="reordering_cards">Кәртләр чираты үзгәртелә...</string>
     <string name="field_remapping">%1$s (\"%2$s\"дан)</string>
     <string name="confirm_map_cards_to_nothing">Бернәрсәгә дә бәйләнмәгән кәртләр сөртелер. Кәртсез калган язулар югалыр. Дәвам итәргә телисезме?</string>
+    <string name="timebox_reached_title">Timebox reached</string>
     <plurals name="timebox_reached">
         <item quantity="other">%2$s эчендә %1$d кәрт өйрәнелде</item>
     </plurals>
@@ -210,16 +211,16 @@
     <string name="lookup_hint">After copying the text, tap anywhere on the flashcard to show the search icon</string>
     <!-- Time spans -->
     <plurals name="time_span_seconds">
-        <item quantity="other">%s seconds</item>
+        <item quantity="other">%s секунд</item>
     </plurals>
     <plurals name="time_span_minutes">
-        <item quantity="other">%s minutes</item>
+        <item quantity="other">%s минут</item>
     </plurals>
     <plurals name="time_span_hours">
         <item quantity="other">%s сәгатъ</item>
     </plurals>
     <plurals name="time_span_days">
-        <item quantity="other">%s days</item>
+        <item quantity="other">%s көн</item>
     </plurals>
     <plurals name="time_span_months">
         <item quantity="other">%s ай</item>
@@ -230,7 +231,7 @@
     <!-- A decimal number of seconds.
     Please give this a best-effort translation and explain the requirements for
     formatting decimals in your language in the CrowdIn comments -->
-    <string name="time_span_decimal_seconds">%s seconds</string>
+    <string name="time_span_decimal_seconds">%s секунд</string>
     <!-- The reason for making a simple “< x” translatable are RTL
          languages which apparently use the other symbol to mean less
          than. -->
@@ -293,7 +294,7 @@
     <string name="valid_js_api_version">Invalid AnkiDroid JS API version. Contact developer %s, or view wiki</string>
     <string name="update_js_api_version">AnkiDroid JS API update available. Contact developer %s, or view wiki</string>
     <string name="reviewer_invalid_api_version_visit_documentation">View</string>
-    <string name="anki_js_error_code">(Error Code: %d)</string>
+    <string name="anki_js_error_code">(Хата коды: %d)</string>
     <!-- About AnkiDroid screen -->
     <string name="about_ankidroid_successfully_copied_debug">Copied debug information to clipboard</string>
     <string name="about_ankidroid_error_copy_debug_info">Error copying debug information to clipboard</string>
@@ -334,4 +335,5 @@
     <!-- Used for credential empty warning message -->
     <string name="email_id_empty">Email address is required</string>
     <string name="password_empty">Password is required</string>
+    <string name="back_pressed_once">Press back again to exit</string>
 </resources>

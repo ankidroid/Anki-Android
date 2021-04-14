@@ -762,7 +762,7 @@ public class Anki2Importer extends Importer {
 
     // running splitFields() on every note is fairly expensive and actually not necessary
     private String _mungeMedia(long mid, String fields) {
-        for (Pattern p : Media.mRegexps) {
+        for (Pattern p : Media.REGEXPS) {
             Matcher m = p.matcher(fields);
             StringBuffer sb = new StringBuffer();
             int fnameIdx = Media.indexOfFname(p);

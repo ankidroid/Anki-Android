@@ -42,7 +42,7 @@
     <string name="disabled">Disabled</string>
     <string name="enabled">Enabled</string>
     <!-- preferences.xml categories-->
-    <string name="pref_cat_general_summ">General settings</string>
+    <string name="pref_cat_general_summ">Төп көйләүләр</string>
     <string name="pref_cat_reviewing">Reviewing</string>
     <string name="pref_cat_reviewing_summ">Non-deck-specific reviewer settings</string>
     <string name="pref_cat_reviewer_behaviour">Behavior</string>
@@ -60,7 +60,7 @@
     <string name="pref_cat_performance">Performance</string>
     <string name="pref_cat_workarounds">Workarounds</string>
     <string name="pref_cat_plugins">Plugins</string>
-    <string name="about_title">About AnkiDroid</string>
+    <string name="about_title">AnkiDroid турында</string>
     <string name="about_version">Версия: </string>
     <!-- preferences.xml entries-->
     <string name="whiteboard_stroke_width">Stroke width</string>
@@ -116,7 +116,7 @@
     <string name="gestures_volume_down">Тавышны киметү</string>
     <string name="more_scrolling_buttons">eReader</string>
     <string name="more_scrolling_buttons_summ">Also use kanji/katakana, emoji/kao-moji buttons for scrolling</string>
-    <string name="card_browser_enable_external_context_menu">‘%s’ Menu</string>
+    <string name="card_browser_enable_external_context_menu">‘%s’ Меню</string>
     <string name="card_browser_enable_external_context_menu_summary">Enables the ‘%s’ context menu globally</string>
     <string name="double_scrolling_gap">Double scrolling</string>
     <string name="double_scrolling_gap_summ">Double the scroll gap with eReader</string>
@@ -125,7 +125,7 @@
     <string name="tts_summ">Reads out question and answer if no sound file is included</string>
     <string name="sync_fetch_missing_media">Fetch media on sync</string>
     <string name="sync_fetch_missing_media_summ">Automatically fetch missing media when syncing</string>
-    <string name="sync_account">AnkiWeb account</string>
+    <string name="sync_account">AnkiWeb хисап язмасы</string>
     <string name="sync_account_summ_logged_out">Not logged in</string>
     <string name="sync_account_summ_logged_in">%s</string>
     <string name="automatic_sync_choice">Automatic synchronization</string>
@@ -133,7 +133,7 @@
         minutes ago.</string>
     <string name="sync_status_badge">Display synchronization status</string>
     <string name="sync_status_badge_summ">Change the sync icon when changes can be uploaded</string>
-    <string name="day_theme">Day theme</string>
+    <string name="day_theme">Көн темасы</string>
     <string name="night_theme">Төнге режим</string>
     <string name="default_font">Default font</string>
     <string name="override_font">Default font applicability</string>
@@ -152,6 +152,8 @@
     <string name="timeout_answer_seconds_summ" comment="The time to wait (in seconds) in the reviewer before automatically showing the next question or answer">XXX сек</string>
     <string name="timeout_question_seconds">Time to show next question</string>
     <string name="select_locale_title">Select language</string>
+    <string name="software_render">Disable card hardware render</string>
+    <string name="software_render_summ">Hardware render is faster but may have problems, specifically on Android 8/8.1. If you cannot see parts of the card review user interface, try this setting.</string>
     <string name="safe_display">Safe display mode</string>
     <string name="safe_display_summ">Disable all animations and use safer method for drawing cards. E-ink devices may require this.</string>
     <string name="disable_extended_text_ui">Disable Single-Field Edit Mode</string>
@@ -185,7 +187,7 @@
     <string name="pref_keep_screen_on_summ">Disable screen timeout</string>
     <string name="convert_fen_text">Chess notation support</string>
     <string name="convert_fen_text_summ">Draw chessboard from Forsyth–Edwards Notation. The notation must be enclosed in [fen][/fen] tags.</string>
-    <string name="enable_api_title">Enable AnkiDroid API</string>
+    <string name="enable_api_title">AnkiDroid API кабызу</string>
     <string name="enable_api_summary">Let other apps connect to AnkiDroid and read / write data without your intervention</string>
     <string name="custom_buttons">App bar buttons</string>
     <string name="custom_buttons_summary">Customize which actions appear in the app bar</string>
@@ -228,9 +230,9 @@
     <string name="deck_conf_reminders">Reminders</string>
     <string name="deck_conf_steps">Steps (in minutes)</string>
     <string name="deck_conf_order">Тәртипкә салу</string>
-    <string name="deck_conf_new_cards_day">New cards/day</string>
+    <string name="deck_conf_new_cards_day">Яңа кәртләр / көн </string>
     <string name="deck_conf_graduating_ivl">Graduating interval</string>
-    <string name="deck_conf_days">XXX day(s)</string>
+    <string name="deck_conf_days">XXX көн</string>
     <string name="deck_conf_easy_ivl">Easy interval</string>
     <string name="deck_conf_start_ease">Starting ease</string>
     <string name="deck_conf_max_rev">Maximum reviews/day</string>
@@ -238,7 +240,7 @@
     <string name="deck_conf_new_bury_summ">Related new cards are buried until the next day</string>
     <string name="deck_conf_rev_bury">Bury related reviews</string>
     <string name="deck_conf_rev_bury_summ">Related reviews are buried until the next day</string>
-    <string name="deck_conf_use_general_timeout_settings">Use general settings</string>
+    <string name="deck_conf_use_general_timeout_settings">Төп көйләүләрне куллану</string>
     <string name="deck_conf_use_general_timeout_settings_summ">Use general \'Automatic display answer\' settings instead of using the settings for this group.</string>
     <string name="deck_conf_easy_bonus">Easy bonus</string>
     <string name="deck_conf_hard_factor">Hard interval</string>
@@ -247,10 +249,10 @@
     <string name="deck_conf_new_lps_ivl">New interval</string>
     <string name="deck_conf_min_ivl">Minimum interval</string>
     <string name="deck_conf_leech_thres">Leech threshold</string>
-    <string name="deck_conf_fails">XXX lapse(s)</string>
+    <string name="deck_conf_fails">XXX хата</string>
     <string name="deck_conf_leech_action">Leech action</string>
     <string name="deck_conf_max_time">Maximal answer time</string>
-    <string name="deck_conf_seconds">XXX seconds</string>
+    <string name="deck_conf_seconds">XXX секунд</string>
     <string name="deck_conf_timer">Show answer timer</string>
     <string name="deck_conf_autoplay">Automatically play audio</string>
     <string name="deck_conf_replayq">Replay question</string>
@@ -258,7 +260,7 @@
     <string name="deck_conf_manage">Group management</string>
     <string name="deck_conf_manage_summ">Add and change options groups</string>
     <string name="deck_conf_current_group">Current group</string>
-    <string name="deck_conf_rename" comment="Menu entry to rename a deck">Rename</string>
+    <string name="deck_conf_rename" comment="Menu entry to rename a deck">Исемен үзгәртү</string>
     <string name="deck_conf_reset">Restore defaults</string>
     <string name="deck_conf_reset_message">Restore current options group to default values?</string>
     <string name="deck_conf_add" comment="Adding a new deck option group">Кушу</string>
@@ -288,6 +290,8 @@
     <string name="note_editor_replace_newlines_summ">In the Note Editor, convert any instances of &lt;br&gt; to newlines when editing a card.</string>
     <string name="no_code_formatting">Simple typed answer formatting</string>
     <string name="no_code_formatting_summ">Fixes ‘􏿾’ appearing in typed answer results</string>
+    <string name="type_in_answer_focus">Focus ‘type in answer’</string>
+    <string name="type_in_answer_focus_summ">Automatically focus the ‘type in answer’ field in the reviewer</string>
     <!-- Open Changelog-->
     <string name="open_changelog">Open Changelog</string>
 </resources>

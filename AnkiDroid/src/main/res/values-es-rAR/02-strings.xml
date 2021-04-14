@@ -122,6 +122,7 @@
     <string name="reordering_cards">Reordenando tarjetas...</string>
     <string name="field_remapping">%1$s (de \'%2$s\')</string>
     <string name="confirm_map_cards_to_nothing">Se eliminará cualquier tarjeta sin asignación. Si una nota no posee tarjetas restantes se perderá. ¿Está seguro de que desea continuar?</string>
+    <string name="timebox_reached_title">Timebox reached</string>
     <plurals name="timebox_reached">
         <item quantity="one">%1$d tarjeta estudiada en %2$s</item>
         <item quantity="other">%1$d tarjetas estudiadas en %2$s</item>
@@ -347,4 +348,5 @@
     <!-- Used for credential empty warning message -->
     <string name="email_id_empty">Se requiere dirección de correo electrónico</string>
     <string name="password_empty">La contraseña es requerida</string>
+    <string name="back_pressed_once">Press back again to exit</string>
 </resources>

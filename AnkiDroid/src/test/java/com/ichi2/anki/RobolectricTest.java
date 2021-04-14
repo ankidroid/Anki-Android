@@ -26,11 +26,14 @@ import com.ichi2.anki.dialogs.utils.FragmentTestActivity;
 import com.ichi2.anki.exception.ConfirmModSchemaException;
 import com.ichi2.anki.exception.FilteredAncestor;
 import com.ichi2.async.CollectionTask;
+import com.ichi2.async.ForegroundTaskManager;
+import com.ichi2.async.SingleTaskManager;
 import com.ichi2.async.TaskListener;
 import com.ichi2.async.TaskManager;
 import com.ichi2.compat.customtabs.CustomTabActivityHelper;
 import com.ichi2.libanki.Card;
 import com.ichi2.libanki.Collection;
+import com.ichi2.libanki.CollectionGetter;
 import com.ichi2.libanki.Consts;
 import com.ichi2.libanki.DB;
 import com.ichi2.libanki.Model;
@@ -64,6 +67,7 @@ import java.util.ArrayList;
 import androidx.annotation.CheckResult;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+
 import com.ichi2.utils.InMemorySQLiteOpenHelperFactory;
 
 import androidx.fragment.app.DialogFragment;
@@ -77,7 +81,9 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
 import static org.robolectric.Shadows.shadowOf;
 
-public class RobolectricTest {
+public class RobolectricTest implements CollectionGetter {
+
+    private static boolean mBackground = true;
 
     private final ArrayList<ActivityController<?>> controllersForCleanup = new ArrayList<>();
 
@@ -167,7 +173,28 @@ public class RobolectricTest {
             //called on each AnkiDroidApp.onCreate(), and spams the build
             //there is no onDestroy(), so call it here.
             Timber.uprootAll();
+
+            runTasksInBackground();
         }
+    }
+
+
+    /**
+     * Ensure that each task in backgrounds are executed immediately instead of being queued.
+     * This may help debugging test without requiring to guess where `advanceRobolectricLooper` are needed.
+     */
+    public void runTasksInForeground() {
+        TaskManager.setTaskManager(new ForegroundTaskManager(this));
+        mBackground = false;
+    }
+
+
+    /**
+     * Set back the standard background process
+     */
+    public void runTasksInBackground() {
+        TaskManager.setTaskManager(new SingleTaskManager());
+        mBackground = true;
     }
 
 
@@ -200,12 +227,18 @@ public class RobolectricTest {
 
     // Robolectric needs a manual advance with the new PAUSED looper mode
     public static void advanceRobolectricLooper() {
+        if (!mBackground) {
+            return;
+        }
         shadowOf(getMainLooper()).runToEndOfTasks();
         shadowOf(getMainLooper()).idle();
         shadowOf(getMainLooper()).runToEndOfTasks();
     }
     // Robolectric needs some help sometimes in form of a manual kick, then a wait, to stabilize UI activity
     public static void advanceRobolectricLooperWithSleep() {
+        if (!mBackground) {
+            return;
+        }
         advanceRobolectricLooper();
         try { Thread.sleep(500); } catch (Exception e) { Timber.e(e); }
         advanceRobolectricLooper();
@@ -243,7 +276,7 @@ public class RobolectricTest {
     /** A collection. Created one second ago, not near cutoff time.
     * Each time time is checked, it advance by 10 ms. Not enough to create any change visible to user, but ensure
      * we don't get two equal time.*/
-    protected Collection getCol() {
+    public Collection getCol() {
         MockTime time = new MockTime(2020, 7, 7, 7, 0, 0, 0, 10);
         return CollectionHelper.getInstance().getCol(getTargetContext(), time);
     }

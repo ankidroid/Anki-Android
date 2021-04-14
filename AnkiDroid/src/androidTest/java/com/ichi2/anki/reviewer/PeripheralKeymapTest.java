@@ -45,6 +45,7 @@ public class PeripheralKeymapTest {
         PeripheralKeymap peripheralKeymap = new PeripheralKeymap(MockReviewerUi.displayingAnswer(), processed::add);
         peripheralKeymap.setup();
 
+        peripheralKeymap.onKeyDown(KeyEvent.KEYCODE_NUMPAD_1, getNumpadEvent(KeyEvent.KEYCODE_NUMPAD_1));
         peripheralKeymap.onKeyUp(KeyEvent.KEYCODE_NUMPAD_1, getNumpadEvent(KeyEvent.KEYCODE_NUMPAD_1));
 
 

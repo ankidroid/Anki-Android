@@ -21,6 +21,8 @@ import android.content.res.Resources;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.annotation.VisibleForTesting;
@@ -41,7 +43,7 @@ import android.widget.TextView;
 
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.ichi2.anim.ActivityTransitionAnimation;
-import com.ichi2.anki.dialogs.CustomStudyDialog;
+import com.ichi2.anki.dialogs.customstudy.CustomStudyDialog;
 import com.ichi2.async.CollectionTask;
 import com.ichi2.async.TaskListener;
 import com.ichi2.async.TaskManager;
@@ -53,9 +55,10 @@ import com.ichi2.libanki.Utils;
 import com.ichi2.libanki.Deck;
 import com.ichi2.themes.StyledProgressDialog;
 import com.ichi2.utils.BooleanGetter;
+import com.ichi2.utils.FragmentFactoryUtils;
 import com.ichi2.utils.HtmlUtils;
-import com.ichi2.utils.UiUtil;
 
+import androidx.fragment.app.FragmentFactory;
 import timber.log.Timber;
 
 import static com.ichi2.anim.ActivityTransitionAnimation.Direction.*;
@@ -158,11 +161,10 @@ public class StudyOptionsFragment extends Fragment implements Toolbar.OnMenuItem
      *                      deck has no options associated with it yet and should use a default
      *                      set of values.
      */
-    @SuppressWarnings("deprecation") // Tracked as https://github.com/ankidroid/Anki-Android/issues/8293
     private void openFilteredDeckOptions(boolean defaultConfig) {
         Intent i = new Intent(getActivity(), FilteredDeckOptions.class);
         i.putExtra("defaultConfig", defaultConfig);
-        getActivity().startActivityForResult(i, DECK_OPTIONS);
+        onDeckOptionsActivityResult.launch(i);
         ActivityTransitionAnimation.slide(getActivity(), FADE);
     }
 
@@ -233,7 +235,7 @@ public class StudyOptionsFragment extends Fragment implements Toolbar.OnMenuItem
         if (!mFragmented && a != null) {
             a.setResult(result);
             a.finish();
-            ActivityTransitionAnimation.slide(a, RIGHT);
+            ActivityTransitionAnimation.slide(a, END);
         } else if (a == null) {
             // getActivity() can return null if reference to fragment lingers after parent activity has been closed,
             // which is particularly relevant when using AsyncTasks.
@@ -242,12 +244,11 @@ public class StudyOptionsFragment extends Fragment implements Toolbar.OnMenuItem
     }
 
 
-    @SuppressWarnings("deprecation") // Tracked as https://github.com/ankidroid/Anki-Android/issues/8293
     private void openReviewer() {
         Intent reviewer = new Intent(getActivity(), Reviewer.class);
         if (mFragmented) {
             mToReviewer = true;
-            getActivity().startActivityForResult(reviewer, AnkiActivity.REQUEST_REVIEW);
+            onRequestPreviewActivityResult.launch(reviewer);
         } else {
             // Go to DeckPicker after studying when not tablet
             reviewer.setFlags(Intent.FLAG_ACTIVITY_FORWARD_RESULT);
@@ -259,7 +260,7 @@ public class StudyOptionsFragment extends Fragment implements Toolbar.OnMenuItem
 
 
     private void animateLeft() {
-        ActivityTransitionAnimation.slide(getActivity(), LEFT);
+        ActivityTransitionAnimation.slide(getActivity(), START);
     }
 
 
@@ -289,9 +290,10 @@ public class StudyOptionsFragment extends Fragment implements Toolbar.OnMenuItem
      * Show the context menu for the custom study options
      */
     private void showCustomStudyContextMenu() {
-        CustomStudyDialog d = CustomStudyDialog.newInstance(CustomStudyDialog.CONTEXT_MENU_STANDARD,
-                getCol().getDecks().selected());
-        ((AnkiActivity)getActivity()).showDialogFragment(d);
+        final AnkiActivity ankiActivity = ((AnkiActivity) requireActivity());
+        CustomStudyDialog d = FragmentFactoryUtils.instantiate(ankiActivity, CustomStudyDialog.class);
+        d.withArguments(CustomStudyDialog.CONTEXT_MENU_STANDARD, getCol().getDecks().selected());
+        ankiActivity.showDialogFragment(d);
     }
 
 
@@ -301,7 +303,7 @@ public class StudyOptionsFragment extends Fragment implements Toolbar.OnMenuItem
         parent.addView(newView);
     }
 
-    private final TaskListener<Card, BooleanGetter> undoListener = new TaskListener<Card, BooleanGetter>() {
+    private final TaskListener<Card, BooleanGetter> mUndoListener = new TaskListener<Card, BooleanGetter>() {
         @Override
         public void onPreExecute() {
 
@@ -314,13 +316,12 @@ public class StudyOptionsFragment extends Fragment implements Toolbar.OnMenuItem
         }
     };
 
-    @SuppressWarnings("deprecation") // Tracked as https://github.com/ankidroid/Anki-Android/issues/8293
     @Override
     public boolean onMenuItemClick(MenuItem item) {
         int itemId = item.getItemId();
         if (itemId == R.id.action_undo) {
             Timber.i("StudyOptionsFragment:: Undo button pressed");
-            TaskManager.launchCollectionTask(new CollectionTask.Undo(), undoListener);
+            TaskManager.launchCollectionTask(new CollectionTask.Undo(), mUndoListener);
             return true;
         } else if (itemId == R.id.action_deck_or_study_options) {
             Timber.i("StudyOptionsFragment:: Deck or study options button pressed");
@@ -328,7 +329,7 @@ public class StudyOptionsFragment extends Fragment implements Toolbar.OnMenuItem
                 openFilteredDeckOptions();
             } else {
                 Intent i = new Intent(getActivity(), DeckOptions.class);
-                getActivity().startActivityForResult(i, DECK_OPTIONS);
+                onDeckOptionsActivityResult.launch(i);
                 ActivityTransitionAnimation.slide(getActivity(), FADE);
             }
             return true;
@@ -418,7 +419,7 @@ public class StudyOptionsFragment extends Fragment implements Toolbar.OnMenuItem
                 final Drawable icon = AppCompatResources.getDrawable(getContext(), R.drawable.ic_arrow_back_white_24dp);
                 icon.setAutoMirrored(true);
                 mToolbar.setNavigationIcon(icon);
-                mToolbar.setNavigationOnClickListener(v -> ((AnkiActivity) getActivity()).finishWithAnimation(RIGHT));
+                mToolbar.setNavigationOnClickListener(v -> ((AnkiActivity) getActivity()).finishWithAnimation(END));
             }
         } catch (IllegalStateException e) {
             if (!CollectionHelper.getInstance().colIsOpen()) {
@@ -438,57 +439,56 @@ public class StudyOptionsFragment extends Fragment implements Toolbar.OnMenuItem
         }
     }
 
-
-    @SuppressWarnings("deprecation") // Tracked as https://github.com/ankidroid/Anki-Android/issues/8293
-    @Override
-    public void onActivityResult(int requestCode, int resultCode, Intent intent) {
-        super.onActivityResult(requestCode, resultCode, intent);
-        Timber.d("onActivityResult (requestCode = %d, resultCode = %d)", requestCode, resultCode);
-
-        // rebuild action bar
+    ActivityResultLauncher<Intent> onRequestPreviewActivityResult = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(), result -> {
         configureToolbar();
-
-        // boot back to deck picker if there was an error
-        if (resultCode == DeckPicker.RESULT_DB_ERROR || resultCode == DeckPicker.RESULT_MEDIA_EJECTED) {
-            closeStudyOptions(resultCode);
+        if ((result.getResultCode() == DeckPicker.RESULT_DB_ERROR) || (result.getResultCode() == DeckPicker.RESULT_MEDIA_EJECTED)) {
+            closeStudyOptions(result.getResultCode());
             return;
         }
-
-        // perform some special actions depending on which activity we're returning from
-        if (requestCode == STATISTICS || requestCode == BROWSE_CARDS) {
-            // select original deck if the statistics or card browser were opened,
-            // which can change the selected deck
-            if (intent.hasExtra("originalDeck")) {
-                getCol().getDecks().select(intent.getLongExtra("originalDeck", 0L));
+        if (result.getResultCode() == Reviewer.RESULT_NO_MORE_CARDS) {
+            // If no more cards getting returned while counts > 0 (due to learn ahead limit) then show a snackbar
+            if ((getCol().getSched().count() > 0) && (mStudyOptionsView != null)) {
+                View rootLayout = mStudyOptionsView.findViewById(R.id.studyoptions_main);
+                UIUtils.showSnackbar(getActivity(), R.string.studyoptions_no_cards_due, false, 0, null, rootLayout);
             }
         }
-        if (requestCode == DECK_OPTIONS) {
-            if (mLoadWithDeckOptions) {
-                mLoadWithDeckOptions = false;
-                Deck deck = getCol().getDecks().current();
-                if (deck.isDyn() && deck.has("empty")) {
-                    deck.remove("empty");
-                }
-                    mProgressDialog = StyledProgressDialog.show(getActivity(), null,
-                            getResources().getString(R.string.rebuild_filtered_deck), true);
-                    TaskManager.launchCollectionTask(new CollectionTask.RebuildCram(), getCollectionTaskListener(true));
-            } else {
-                TaskManager.waitToFinish();
-                refreshInterface(true);
+    });
+
+    ActivityResultLauncher<Intent> onDeckOptionsActivityResult = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(), result -> {
+        configureToolbar();
+        if ((result.getResultCode() == DeckPicker.RESULT_DB_ERROR) || (result.getResultCode() == DeckPicker.RESULT_MEDIA_EJECTED)) {
+            closeStudyOptions(result.getResultCode());
+            return;
+        }
+        if (mLoadWithDeckOptions) {
+            mLoadWithDeckOptions = false;
+            Deck deck = getCol().getDecks().current();
+            if (deck.isDyn() && deck.has("empty")) {
+                deck.remove("empty");
             }
-        } else if (requestCode == AnkiActivity.REQUEST_REVIEW) {
-            if (resultCode == Reviewer.RESULT_NO_MORE_CARDS) {
-                // If no more cards getting returned while counts > 0 (due to learn ahead limit) then show a snackbar
-                if (getCol().getSched().count() > 0 && mStudyOptionsView != null) {
-                    View rootLayout = mStudyOptionsView.findViewById(R.id.studyoptions_main);
-                    UIUtils.showSnackbar(getActivity(), R.string.studyoptions_no_cards_due, false, 0, null, rootLayout);
-                }
-            }
-        } else if (requestCode == STATISTICS && mCurrentContentView == CONTENT_CONGRATS) {
+            mProgressDialog = StyledProgressDialog.show(getActivity(), null,
+                    getResources().getString(R.string.rebuild_filtered_deck), true);
+            TaskManager.launchCollectionTask(new CollectionTask.RebuildCram(), getCollectionTaskListener(true));
+        } else {
+            TaskManager.waitToFinish();
+            refreshInterface(true);
+        }
+    });
+
+    ActivityResultLauncher<Intent> onStatisticsActivityResult = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(), result -> {
+        configureToolbar();
+        if ((result.getResultCode() == DeckPicker.RESULT_DB_ERROR) || (result.getResultCode() == DeckPicker.RESULT_MEDIA_EJECTED)) {
+            closeStudyOptions(result.getResultCode());
+            return;
+        }
+        if (result.getData().hasExtra("originalDeck")) {
+            getCol().getDecks().select(result.getData().getLongExtra("originalDeck", 0L));
+        }
+        if (mCurrentContentView == CONTENT_CONGRATS) {
             mCurrentContentView = CONTENT_STUDY_OPTIONS;
             setFragmentContentView(mStudyOptionsView);
         }
-    }
+    });
 
     private void dismissProgressDialog() {
         if (mStudyOptionsView != null && mStudyOptionsView.findViewById(R.id.progress_bar) != null) {

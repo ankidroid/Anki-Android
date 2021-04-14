@@ -54,12 +54,18 @@
             android:title="@string/pref_cat_workarounds" >
             <CheckBoxPreference
                 android:defaultValue="false"
+                android:key="softwareRender"
+                android:summary="@string/software_render_summ"
+                android:title="@string/software_render" />
+            <CheckBoxPreference
+                android:defaultValue="false"
                 android:key="safeDisplay"
                 android:summary="@string/safe_display_summ"
                 android:title="@string/safe_display" />
             <CheckBoxPreference
                 android:defaultValue="false"
                 android:key="useInputTag"
+                android:disableDependentsState="true"
                 android:summary="@string/use_input_tag_summ"
                 android:title="@string/use_input_tag" />
             <!-- Workaround for #5533 -->
@@ -81,6 +87,17 @@
                 android:key="noCodeFormatting"
                 android:summary="@string/no_code_formatting_summ"
                 android:title="@string/no_code_formatting" />
+            <!-- #8424 - allow users to decide if they want to focus the EditText
+                Note: this functionality is already disabled if useInputTag is enabled
+                UseInputTag: has had `disableDependentsState` set, so this is disabled
+                if useInputTag is true
+             -->
+            <CheckBoxPreference
+                android:defaultValue="false"
+                android:key="autoFocusTypeInAnswer"
+                android:summary="@string/type_in_answer_focus_summ"
+                android:dependency="useInputTag"
+                android:title="@string/type_in_answer_focus" />
         </PreferenceCategory>
         <PreferenceCategory
             android:key="category_plugins"
