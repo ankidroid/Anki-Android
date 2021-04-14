@@ -26,7 +26,6 @@ import android.app.PendingIntent;
 import android.content.ActivityNotFoundException;
 import android.content.ComponentName;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.OnSharedPreferenceChangeListener;
@@ -116,6 +115,8 @@ public class Preferences extends AppCompatPreferenceActivity implements Preferen
     private android.preference.CheckBoxPreference mBackgroundImage;
     private static long fileLength;
 
+    /** The collection path when Preferences was opened  */
+    private String mOldCollectionPath = null;
 
     // ----------------------------------------------------------------------------
     // Overridden methods
@@ -129,6 +130,9 @@ public class Preferences extends AppCompatPreferenceActivity implements Preferen
         getSupportActionBar().setHomeButtonEnabled(true);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         setTitle(getResources().getText(R.string.preferences_title));
+
+        // onRestoreInstanceState takes priority, this is only set on init.
+        mOldCollectionPath = CollectionHelper.getCollectionPath(this);
     }
 
     private Collection getCol() {
@@ -163,6 +167,40 @@ public class Preferences extends AppCompatPreferenceActivity implements Preferen
         }
         return false;
     }
+
+    @Override
+    public void onBackPressed() {
+        // If the collection path has changed, we want to move back to the deck picker immediately
+        // This performs the move when back is pressed on the "Advanced" screen
+        if (!Utils.equals(CollectionHelper.getCollectionPath(this), mOldCollectionPath)) {
+            restartWithNewDeckPicker();
+        } else {
+            super.onBackPressed();
+        }
+    }
+
+
+    protected void restartWithNewDeckPicker() {
+        // PERF: DB access on foreground thread
+        CollectionHelper.getInstance().closeCollection(true, "Preference Modification: collection path changed");
+        Intent deckPicker = new Intent(this, DeckPicker.class);
+        deckPicker.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
+        startActivity(deckPicker);
+    }
+
+
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.putString("mOldCollectionPath", mOldCollectionPath);
+    }
+
+    @Override
+    protected void onRestoreInstanceState(Bundle state) {
+        super.onRestoreInstanceState(state);
+        mOldCollectionPath = state.getString("mOldCollectionPath");
+    }
+
 
     @Override
     public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
