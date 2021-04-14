@@ -56,10 +56,16 @@ tasks.withType(Test) {
 }
 
 // Our merge report task
-task jacocoTestReport(type: JacocoReport, dependsOn: ['jacocoAndroidTestReport', 'jacocoUnitTestReport']) {
+task jacocoTestReport(type: JacocoReport, dependsOn: ['testDebugUnitTest', 'connectedDebugAndroidTest']) {
+    def htmlOutDir = layout.buildDirectory.dir("reports/jacoco/$name/html").get().asFile
+
+    doLast {
+        openReport htmlOutDir
+    }
 
     reports {
         xml.enabled = true
+        html.destination htmlOutDir
     }
 
     def fileFilter = ['**/R.class', '**/R$*.class', '**/BuildConfig.*', '**/Manifest*.*', '**/*Test*.*', 'android/**/*.*']
@@ -99,7 +105,7 @@ task jacocoUnitTestReport(type: JacocoReport, dependsOn: ['testDebugUnitTest']) 
     ])
 }
 
-// Our merge report task
+// A connected android tests only report task
 task jacocoAndroidTestReport(type: JacocoReport, dependsOn: ['connectedDebugAndroidTest']) {
     def htmlOutDir = layout.buildDirectory.dir("reports/jacoco/$name/html").get().asFile
 
