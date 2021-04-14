@@ -452,10 +452,10 @@ public class DeckPicker extends NavigationDrawerActivity implements
 
         //we need to restore here, as we need it before super.onCreate() is called.
         restoreWelcomeMessage(savedInstanceState);
-        handleStartup();
 
         // Then set theme and content view
         super.onCreate(savedInstanceState);
+        handleStartup();
         setContentView(R.layout.homescreen);
         View mainView = findViewById(android.R.id.content);
 
