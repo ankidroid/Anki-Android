@@ -52,7 +52,7 @@ public class CopyrightHeaderChecker extends Detector implements SourceCodeScanne
             ID,
             DESCRIPTION,
             EXPLANATION,
-            Constants.ANKI_TIME_CATEGORY,
+            Constants.ANKI_CODE_STYLE_CATEGORY,
             Constants.ANKI_TIME_PRIORITY,
             Constants.ANKI_TIME_SEVERITY,
             implementation
