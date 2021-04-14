@@ -151,8 +151,8 @@
     <string name="timeout_answer_seconds_summ" comment="The time to wait (in seconds) in the reviewer before automatically showing the next question or answer">XXX s</string>
     <string name="timeout_question_seconds">Thời gian để hiển thị câu hỏi tiếp theo</string>
     <string name="select_locale_title">Chọn ngôn ngữ</string>
-    <string name="software_render">Disable card hardware render</string>
-    <string name="software_render_summ">Hardware render is faster but may have problems, specifically on Android 8/8.1. If you cannot see parts of the card review user interface, try this setting.</string>
+    <string name="software_render">Tắt kết xuất phần cứng thẻ</string>
+    <string name="software_render_summ">Kết xuất phần cứng nhanh hơn nhưng có thể gặp sự cố, cụ thể là trên Android 8 / 8.1. Nếu bạn không thể thấy các phần của giao diện người dùng xem xét thẻ, hãy thử cài đặt này.</string>
     <string name="safe_display">Chế độ an toàn màn hình</string>
     <string name="safe_display_summ">Tắt tất cả hoạt ảnh và sử dụng phương pháp an toàn hơn để vẽ thẻ. Các thiết bị E-ink có thể yêu cầu điều này.</string>
     <string name="disable_extended_text_ui">Tắt chế độ chỉnh sửa trường đơn</string>
@@ -174,8 +174,8 @@
     <string name="learn_cutoff">Tìm hiểu trước giới hạn</string>
     <string name="time_limit">Giới hạn thời gian của hộp thời gian</string>
     <string name="time_limit_summ">XXX phút</string>
-    <string name="new_timezone">New timezone handling</string>
-    <string name="day_offset_with_description">Start of next day (0 is midnight, 23 is 11PM)</string>
+    <string name="new_timezone">Xử lý múi giờ mới</string>
+    <string name="day_offset_with_description">Bắt đầu ngày hôm sau (0 là nửa đêm, 23 là 11 giờ tối)</string>
     <string name="day_offset_summ">XXX giờ quá nửa đêm</string>
     <string name="sched_ver">Trình lập lịch V2 thử nghiệm</string>
     <string name="sched_ver_summ">Bật công cụ lập lịch thử nghiệm. Buộc các thay đổi theo một hướng trong lần đồng bộ hóa tiếp theo</string>
@@ -289,8 +289,8 @@
     <string name="note_editor_replace_newlines_summ">Trong Trình chỉnh sửa ghi chú, chuyển đổi thẻ &lt;br&gt; thành dòng mới khi chỉnh sửa thẻ.</string>
     <string name="no_code_formatting">Định dạng câu trả lời đã nhập đơn giản</string>
     <string name="no_code_formatting_summ">Sửa lỗi ‘􏿾’ xuất hiện trong kết quả câu trả lời đã nhập</string>
-    <string name="type_in_answer_focus">Focus ‘type in answer’</string>
-    <string name="type_in_answer_focus_summ">Automatically focus the ‘type in answer’ field in the reviewer</string>
+    <string name="type_in_answer_focus">Tập trung \'Nhập câu trả lời\'</string>
+    <string name="type_in_answer_focus_summ">Tự động tập trung vào trường \"nhập câu trả lời\" trong trình đánh giá</string>
     <!-- Open Changelog-->
-    <string name="open_changelog">Open Changelog</string>
+    <string name="open_changelog">Mở Changelog</string>
 </resources>

@@ -126,6 +126,7 @@
     <string name="menu_edit_tags">Змянiць тэгi</string>
     <string name="delete_note_message">Сапраўды выдаліць гэту нататку і ўсе яе карткі?\n%s</string>
     <string name="menu_select">Выбраць тэкст</string>
+    <string name="menu_lookup">Lookup text</string>
     <string name="menu_search">Шукаць у %1$s</string>
     <string name="menu_mark_note">Пазначыць нататку</string>
     <string name="menu_unmark_note">Зняць пазнаку з нататкі</string>

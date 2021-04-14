@@ -151,8 +151,8 @@
     <string name="timeout_answer_seconds_summ" comment="The time to wait (in seconds) in the reviewer before automatically showing the next question or answer">XXX s</string>
     <string name="timeout_question_seconds">Czas do pokazania kolejnego pytania</string>
     <string name="select_locale_title">Wybór języka</string>
-    <string name="software_render">Disable card hardware render</string>
-    <string name="software_render_summ">Hardware render is faster but may have problems, specifically on Android 8/8.1. If you cannot see parts of the card review user interface, try this setting.</string>
+    <string name="software_render">Wyłącz renderowanie sprzętowe kart</string>
+    <string name="software_render_summ">Renderowanie sprzętowe jest szybsze, lecz mogą pojawić się problemy, zwłaszcza na Androidzie 8/8.1. Jeżeli nie widzisz części interfejsu przeglądarki, spróbuj tego ustawienia.</string>
     <string name="safe_display">Tryb bezpiecznego wyświetlania</string>
     <string name="safe_display_summ">Wyłącz wszystkie animacje i użyj bezpieczniejszej metody rysowania kart. Urządzenia E-ink mogą tego wymagać.</string>
     <string name="disable_extended_text_ui">Wyłącz tryb edycji pojedynczego pola</string>
@@ -175,7 +175,7 @@
     <string name="time_limit">Ograniczenie czasu</string>
     <string name="time_limit_summ">XXX min</string>
     <string name="new_timezone">Obsługa nowej strefy czasowej</string>
-    <string name="day_offset_with_description">Start of next day (0 is midnight, 23 is 11PM)</string>
+    <string name="day_offset_with_description">Początek nowego dnia</string>
     <string name="day_offset_summ">XXX godzin po północy</string>
     <string name="sched_ver">Eksperymentalny planista V2</string>
     <string name="sched_ver_summ">Włącz eksperymentalny program planujący. Wymusza zmiany w jednym kierunku przy następnej synchronizacji</string>
@@ -295,8 +295,8 @@
     <string name="note_editor_replace_newlines_summ">W Edytorze Notatek zmień wszelkie przykłady &lt;br&gt; na nowy wiersz kiedy karta jest edytowana.</string>
     <string name="no_code_formatting">Proste formatowanie wpisywanej odpowiedzi</string>
     <string name="no_code_formatting_summ">Naprawia ‘􏿾’ pojawiające się we wpisywanych odpowiedziach</string>
-    <string name="type_in_answer_focus">Focus ‘type in answer’</string>
-    <string name="type_in_answer_focus_summ">Automatically focus the ‘type in answer’ field in the reviewer</string>
+    <string name="type_in_answer_focus">Zaznacz pole \"podaj odpowiedź\"</string>
+    <string name="type_in_answer_focus_summ">Automatycznie zaznaczaj pole \"podaj odpowiedź\" w przeglądarce</string>
     <!-- Open Changelog-->
     <string name="open_changelog">Otwórz listę zmian w programie</string>
 </resources>

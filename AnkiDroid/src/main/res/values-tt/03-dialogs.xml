@@ -59,17 +59,17 @@
         <item><![CDATA[Non-developers can also help. For instance, you can <a href=\"%1$s\">help translate</a> AnkiDroid, update the wiki, provide screenshots, or blog about AnkiDroid.]]></item>
         <item><![CDATA[AnkiDroid is released under the <a href=\"%1$s\">GNU-GPL v3 license</a> and the source code is available <a href=\"%2$s\">on GitHub</a>.]]></item>
     </string-array>
-    <string name="preview_title" comment="Title of the window allowing to preview card(s)">Preview</string>
+    <string name="preview_title" comment="Title of the window allowing to preview card(s)">Карап алу</string>
     <string name="reposition_card_dialog_title">Reposition new card</string>
     <string name="reposition_card_dialog_message">Start position:</string>
     <string name="reposition_card_not_new_error">Only new cards can be repositioned</string>
     <plurals name="reposition_card_dialog_acknowledge">
         <item quantity="other">%d cards repositioned</item>
     </plurals>
-    <string name="reset_card_dialog_title">Reset card progress</string>
+    <string name="reset_card_dialog_title">Прогрессны бетерү</string>
     <string name="reset_card_dialog_message">This card will be placed at the end of the new card queue</string>
     <plurals name="reset_cards_dialog_acknowledge">
-        <item quantity="other">%d cards reset</item>
+        <item quantity="other">%d кәрт ясалган</item>
     </plurals>
     <!-- Reschedule Card Dialog -->
     <plurals name="reschedule_cards_dialog_title">
@@ -110,14 +110,14 @@
     <string name="sd_card_almost_full_title">SD card almost full</string>
     <string name="restore_backup_title">Restore backup?</string>
     <string name="restore_backup">Your collection will be replaced with an older copy. Any unsaved progress will be lost.</string>
-    <string name="dialog_cancel">Баш тарту</string>
+    <string name="dialog_cancel">Cancel</string>
     <string name="dialog_ok">OK</string>
     <string name="dialog_no">Юк</string>
     <string name="dialog_continue">Дәвам итү</string>
-    <string name="dialog_positive_create" comment="Create a new collection, probably erasing the previous one, may be necessary in case of error.">Create</string>
+    <string name="dialog_positive_create" comment="Create a new collection, probably erasing the previous one, may be necessary in case of error.">Ясарга</string>
     <string name="dialog_positive_delete">Бетерү</string>
     <!-- Currently unsued, should be useful in the future -->
-    <string name="dialog_positive_disable" tools:ignore="UnusedResources">Disable</string>
+    <string name="dialog_positive_disable" tools:ignore="UnusedResources">Cүндерү</string>
     <string name="dialog_positive_overwrite">Overwrite</string>
     <string name="dialog_positive_remove">Бетерү</string>
     <string name="dialog_positive_repair">Repair</string>
@@ -146,7 +146,7 @@
     <!-- Tags Dialog Options -->
     <string name="tags_dialog_option_all_cards">All cards</string>
     <string name="tags_dialog_option_new_cards">Яңа</string>
-    <string name="tags_dialog_option_due_cards" comment="Name of cards that are already been reviewed in the past, and that should be reviewed again">Вакыт</string>
+    <string name="tags_dialog_option_due_cards" comment="Name of cards that are already been reviewed in the past, and that should be reviewed again">Due</string>
     <!-- Empty cards -->
     <string name="emtpy_cards_finding">Finding empty cards&#8230;</string>
     <string name="confirm_cancel">Do you want to cancel?</string>
@@ -178,7 +178,7 @@
     <!-- Deck Options -->
     <string name="deck_options_corrupt">Failed to process deck options: %s</string>
     <!-- Database Errors-->
-    <string name="database_locked_title">Database Locked</string>
+    <string name="database_locked_title">Мәгълүматлар базасы бикләнгән </string>
     <string name="database_locked_summary">The AnkiDroid database is in use by another application. Please close the other application then reopen AnkiDroid.</string>
     <string name="incompatible_database_version_title">Incompatible Database Version</string>
     <string name="incompatible_database_version_summary">The database is a more advanced version than this version of AnkiDroid can work with. Upgrade AnkiDroid or downgrade the database to open it\n\nSupported version: %1$d\nDatabase version: %2$d\n\nThe following restore options will overwrite your current collection, possibly with a compatible database version:</string>
@@ -211,7 +211,7 @@
     <string name="help_item_mailing_list">Mailing List</string>
     <string name="help_item_reddit">Reddit</string>
     <string name="help_item_report_bug">Report a Bug</string>
-    <string name="help_title_support_ankidroid">Support AnkiDroid</string>
+    <string name="help_title_support_ankidroid">AnkiDroid ярдәме</string>
     <string name="help_item_support_opencollective_donate">Donate</string>
     <string name="help_item_support_develop_ankidroid">Develop</string>
     <string name="help_item_support_rate_ankidroid">Rate</string>
