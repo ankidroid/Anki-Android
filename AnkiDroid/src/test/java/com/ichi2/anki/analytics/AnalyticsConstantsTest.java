@@ -22,6 +22,10 @@ import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
+
+import androidx.annotation.NonNull;
 
 import static org.junit.Assert.assertEquals;
 
@@ -65,6 +69,12 @@ public class AnalyticsConstantsTest {
         listOfConstantFields.add("eijiro");
     }
 
+    @NonNull
+    protected static Stream<Field> getAnalyticsConstantFields() {
+        return Arrays.stream(UsageAnalytics.Actions.class.getDeclaredFields())
+                .filter(x -> x.isAnnotationPresent(AnalyticsConstant.class));
+    }
+
     @RunWith(Parameterized.class)
     public static class AnalyticsConstantsFieldValuesTest {
         private final String analyticsString;
@@ -87,29 +97,20 @@ public class AnalyticsConstantsTest {
          * the test failure.
          */
         @Test
-        public void checkAnalyticsString() {
+        public void checkAnalyticsString() throws IllegalAccessException {
             assertEquals("Re-check if you renamed any string in the analytics string constants of Actions class or AnalyticsConstantsTest.listOfConstantFields. If so, revert them as those string constants must not change as they are compared in analytics.",
                     analyticsString, getStringFromReflection(analyticsString));
         }
 
 
-        public String getStringFromReflection(String analyticsStringToBeChecked) {
-            String reflectedString = null;
-            UsageAnalytics.Actions actions = new UsageAnalytics.Actions();
-            Field[] field;
-            field = actions.getClass().getDeclaredFields();
-            for (Field value : field) {
-                if (value.isAnnotationPresent(AnalyticsConstant.class)) {
-                    try {
-                        if (value.get(actions).equals(analyticsStringToBeChecked)) {
-                            reflectedString = (String) value.get(actions);
-                        }
-                    } catch (IllegalAccessException e) {
-                        throw new RuntimeException();
-                    }
+        public String getStringFromReflection(String analyticsStringToBeChecked) throws IllegalAccessException {
+            for (Field value : getAnalyticsConstantFields().collect(Collectors.toList())) {
+                Object reflectedValue = value.get(null);
+                if (reflectedValue.equals(analyticsStringToBeChecked)) {
+                    return (String) reflectedValue;
                 }
             }
-            return reflectedString;
+            return null;
         }
 
     }
@@ -138,9 +139,7 @@ public class AnalyticsConstantsTest {
          * class (listOfConstantFields) the test must fail.
          */
         public static long getFieldSize() {
-            return Arrays.stream(UsageAnalytics.Actions.class.getDeclaredFields())
-                    .filter(x -> x.isAnnotationPresent(AnalyticsConstant.class))
-                    .count();
+            return getAnalyticsConstantFields().count();
         }
     }
 }
