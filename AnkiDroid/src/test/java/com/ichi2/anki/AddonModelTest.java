@@ -2,6 +2,7 @@ package com.ichi2.anki;
 
 import com.ichi2.utils.JSONObject;
 
+import org.junit.Before;
 import org.junit.Test;
 
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -94,10 +95,20 @@ public class AddonModelTest extends RobolectricTest {
             "  \"homepage\": \"\"\n" +
             "}\n";
 
+    private JSONObject progressBarJsonObject;
+    private JSONObject emptyPackageJsonObject;
+    private JSONObject keywordsEmptyJsonObject;
+
+    @Before
+    public void setUp() {
+        progressBarJsonObject = new JSONObject(progrssBarAddonPackageJson);
+        emptyPackageJsonObject = new JSONObject(emptyAddonPackageJson);
+        keywordsEmptyJsonObject = new JSONObject(keywordsEmptyAddonPackageJson);
+    }
+
     @Test
     public void isValidAddons() {
-        JSONObject jsonObject = new JSONObject(progrssBarAddonPackageJson);
-        AddonModel addonModel = AddonModel.tryParse(jsonObject, "reviewer");
+        AddonModel addonModel = AddonModel.tryParse(progressBarJsonObject, "reviewer");
         assertThat(addonModel.getName(), is("ankidroid-js-addon-progress-bar"));
         assertThat(addonModel.getVersion(), is("1.0.5"));
         assertThat(addonModel.getJsApiVersion(), is("0.0.1"));
@@ -107,11 +118,8 @@ public class AddonModelTest extends RobolectricTest {
 
     @Test
     public void testNullAddons() {
-        JSONObject jsonObject1 = new JSONObject(emptyAddonPackageJson);
-        JSONObject jsonObject2 = new JSONObject(keywordsEmptyAddonPackageJson);
-
-        AddonModel addonModel1 = AddonModel.tryParse(jsonObject1, "reviewer");
-        AddonModel addonModel2 = AddonModel.tryParse(jsonObject2, "reviewer");
+        AddonModel addonModel1 = AddonModel.tryParse(emptyPackageJsonObject, "reviewer");
+        AddonModel addonModel2 = AddonModel.tryParse(keywordsEmptyJsonObject, "reviewer");
 
         assertThat(addonModel1, is(nullValue()));
         assertThat(addonModel2, is(nullValue()));
