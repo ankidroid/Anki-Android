@@ -247,7 +247,7 @@ public class StudyOptionsFragment extends Fragment implements Toolbar.OnMenuItem
         Intent reviewer = new Intent(getActivity(), Reviewer.class);
         if (mFragmented) {
             mToReviewer = true;
-            mOnRequestPreviewActivityResult.launch(reviewer);
+            mOnRequestReviewActivityResult.launch(reviewer);
         } else {
             // Go to DeckPicker after studying when not tablet
             reviewer.setFlags(Intent.FLAG_ACTIVITY_FORWARD_RESULT);
@@ -438,7 +438,7 @@ public class StudyOptionsFragment extends Fragment implements Toolbar.OnMenuItem
         }
     }
 
-    ActivityResultLauncher<Intent> mOnRequestPreviewActivityResult = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(), result -> {
+    ActivityResultLauncher<Intent> mOnRequestReviewActivityResult = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(), result -> {
         configureToolbar();
         if ((result.getResultCode() == DeckPicker.RESULT_DB_ERROR) || (result.getResultCode() == DeckPicker.RESULT_MEDIA_EJECTED)) {
             closeStudyOptions(result.getResultCode());
