@@ -94,10 +94,11 @@ public class LanguageUtil {
                 locale = new Locale(localeParts[0], localeParts[1]);
             } catch (ArrayIndexOutOfBoundsException e) {
                 Timber.w(e, "LanguageUtil::getLocale variant split fail, using code '%s' raw.", localeCode);
-                locale = new Locale(localeCode);
+                locale = Locale.getDefault();
             }
         } else {
-            locale = new Locale(localeCode);
+            locale = Locale.getDefault();
+
         }
         return locale;
     }
