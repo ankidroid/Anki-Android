@@ -32,8 +32,38 @@ import static org.junit.Assert.assertEquals;
  */
 @RunWith(Enclosed.class)
 public class AnalyticsConstantsTest {
-    private static final List<String> listOfConstantFields = new ArrayList<>();
+    private final static List<String> listOfConstantFields = new ArrayList<>();
 
+    static {
+        listOfConstantFields.add("Opened HelpDialogBox");
+        listOfConstantFields.add("Opened Using AnkiDroid");
+        listOfConstantFields.add("Opened Get Help");
+        listOfConstantFields.add("Opened Support AnkiDroid");
+        listOfConstantFields.add("Opened Community");
+        listOfConstantFields.add("Opened AnkiDroid Manual");
+        listOfConstantFields.add("Opened Anki Manual");
+        listOfConstantFields.add("Opened AnkiDroid FAQ");
+        listOfConstantFields.add("Opened Mailing List");
+        listOfConstantFields.add("Opened Report a Bug");
+        listOfConstantFields.add("Opened Donate");
+        listOfConstantFields.add("Opened Translate");
+        listOfConstantFields.add("Opened Develop");
+        listOfConstantFields.add("Opened Rate");
+        listOfConstantFields.add("Opened Other");
+        listOfConstantFields.add("Opened Send Feedback");
+        listOfConstantFields.add("Opened Anki Forums");
+        listOfConstantFields.add("Opened Reddit");
+        listOfConstantFields.add("Opened Discord");
+        listOfConstantFields.add("Opened Facebook");
+        listOfConstantFields.add("Opened Twitter");
+        listOfConstantFields.add("Exception Report");
+        listOfConstantFields.add("aedict");
+        listOfConstantFields.add("leo");
+        listOfConstantFields.add("colordict");
+        listOfConstantFields.add("fora");
+        listOfConstantFields.add("nciku");
+        listOfConstantFields.add("eijiro");
+    }
 
     @RunWith(Parameterized.class)
     public static class AnalyticsConstantsFieldValuesTest {
@@ -47,34 +77,6 @@ public class AnalyticsConstantsTest {
 
         @Parameterized.Parameters
         public static List<String> addAnalyticsConstants() {
-            listOfConstantFields.add("Opened HelpDialogBox");
-            listOfConstantFields.add("Opened Using AnkiDroid");
-            listOfConstantFields.add("Opened Get Help");
-            listOfConstantFields.add("Opened Support AnkiDroid");
-            listOfConstantFields.add("Opened Community");
-            listOfConstantFields.add("Opened AnkiDroid Manual");
-            listOfConstantFields.add("Opened Anki Manual");
-            listOfConstantFields.add("Opened AnkiDroid FAQ");
-            listOfConstantFields.add("Opened Mailing List");
-            listOfConstantFields.add("Opened Report a Bug");
-            listOfConstantFields.add("Opened Donate");
-            listOfConstantFields.add("Opened Translate");
-            listOfConstantFields.add("Opened Develop");
-            listOfConstantFields.add("Opened Rate");
-            listOfConstantFields.add("Opened Other");
-            listOfConstantFields.add("Opened Send Feedback");
-            listOfConstantFields.add("Opened Anki Forums");
-            listOfConstantFields.add("Opened Reddit");
-            listOfConstantFields.add("Opened Discord");
-            listOfConstantFields.add("Opened Facebook");
-            listOfConstantFields.add("Opened Twitter");
-            listOfConstantFields.add("Exception Report");
-            listOfConstantFields.add("aedict");
-            listOfConstantFields.add("leo");
-            listOfConstantFields.add("colordict");
-            listOfConstantFields.add("fora");
-            listOfConstantFields.add("nciku");
-            listOfConstantFields.add("eijiro");
             return listOfConstantFields;
         }
 
