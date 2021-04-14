@@ -68,8 +68,7 @@ public class ActionButtonStatus {
         setupButton(preferences, R.id.action_change_whiteboard_pen_color, "customButtonWhiteboardPenColor", SHOW_AS_ACTION_IF_ROOM);
         if (!Lookup.isAvailable()) {
             mCustomButtons.put(R.id.action_search_dictionary, MENU_DISABLED);
-        }
-        else {
+        } else {
             setupButton(preferences, R.id.action_search_dictionary, "customButtonLookup", SHOW_AS_ACTION_NEVER);
         }
     }
