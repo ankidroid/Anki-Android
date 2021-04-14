@@ -42,10 +42,14 @@ def openReport(htmlOutDir) {
     } else if (os.isMacOsX()) {
         exec { commandLine 'open', "$reportPath" }
     } else if (os.isLinux()) {
-        if (localProperties.containsKey("linux-html-cmd")) {
-            exec { commandLine properties.get("linux-html-cmd"), "$reportPath" }
-        } else {
-            println "'linux-html-cmd' property could not be found in 'local.properties'"
+        try {
+            exec { commandLine 'xdg-open', "$reportPath" }
+        } catch (Exception ignored) {
+            if (localProperties.containsKey("linux-html-cmd")) {
+                exec { commandLine properties.get("linux-html-cmd"), "$reportPath" }
+            } else {
+                println "'linux-html-cmd' property could not be found in 'local.properties'"
+            }
         }
     }
 }
