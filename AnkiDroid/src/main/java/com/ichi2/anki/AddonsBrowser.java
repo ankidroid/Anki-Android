@@ -14,7 +14,6 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.ichi2.anki.widgets.DeckDropDownAdapter;
-import com.ichi2.utils.StringUtil;
 
 import org.json.JSONObject;
 
@@ -28,7 +27,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import timber.log.Timber;
 
-import static com.ichi2.anim.ActivityTransitionAnimation.Direction.RIGHT;
+import static com.ichi2.anim.ActivityTransitionAnimation.Direction.END;
 
 @SuppressWarnings("deprecation")
 public class AddonsBrowser extends NavigationDrawerActivity implements DeckDropDownAdapter.SubtitleListener, AddonsAdapter.OnAddonClickListener {
@@ -96,7 +95,7 @@ public class AddonsBrowser extends NavigationDrawerActivity implements DeckDropD
     @Override
     public void onBackPressed() {
         super.onBackPressed();
-        finishWithAnimation(RIGHT);
+        finishWithAnimation(END);
 
         if (downloadDialog.isShowing()) {
             downloadDialog.dismiss();

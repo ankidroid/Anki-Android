@@ -315,7 +315,7 @@ public abstract class NavigationDrawerActivity extends AnkiActivity implements N
             } else if (itemId == R.id.nav_addons) {
                 Timber.i("Navigating to addons");
                 Intent intent = new Intent(NavigationDrawerActivity.this, AddonsBrowser.class);
-                startActivityForResultWithAnimation(intent, REQUEST_ADDONS, LEFT);
+                startActivityForResultWithAnimation(intent, REQUEST_ADDONS, START);
             } else if (itemId == R.id.nav_settings) {
                 Timber.i("Navigating to settings");
                 mOldColPath = CollectionHelper.getCurrentAnkiDroidDirectory(NavigationDrawerActivity.this);
