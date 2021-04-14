@@ -473,7 +473,7 @@ public class StudyOptionsFragment extends Fragment implements Toolbar.OnMenuItem
 
     ActivityResultLauncher<Intent> onStatisticsActivityResult = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(), result -> {
         configureToolbar();
-        if (result.getResultCode() == DeckPicker.RESULT_DB_ERROR || result.getResultCode() == DeckPicker.RESULT_MEDIA_EJECTED) {
+        if ((result.getResultCode() == DeckPicker.RESULT_DB_ERROR) || (result.getResultCode() == DeckPicker.RESULT_MEDIA_EJECTED)) {
             closeStudyOptions(result.getResultCode());
             return;
         }
