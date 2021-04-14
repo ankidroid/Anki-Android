@@ -377,7 +377,8 @@ public abstract class NavigationDrawerActivity extends AnkiActivity implements N
             if (itemId == R.id.nav_decks) {
                 Timber.i("Navigating to decks");
                 Intent deckPicker = new Intent(NavigationDrawerActivity.this, DeckPicker.class);
-                deckPicker.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);    // opening DeckPicker should clear back history
+                // opening DeckPicker should use the instance on the back stack & clear back history
+                deckPicker.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
                 startActivityWithAnimation(deckPicker, END);
             } else if (itemId == R.id.nav_browser) {
                 Timber.i("Navigating to card browser");
