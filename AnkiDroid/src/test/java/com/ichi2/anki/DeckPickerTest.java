@@ -13,7 +13,6 @@ import com.ichi2.libanki.sched.AbstractSched;
 import com.ichi2.testutils.BackendEmulatingOpenConflict;
 import com.ichi2.testutils.BackupManagerTestUtilities;
 
-import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.robolectric.Robolectric;
@@ -249,7 +248,6 @@ public class DeckPickerTest extends RobolectricTest {
     }
 
     @Test
-    @Ignore("8610")
     public void deckPickerOpensWithHelpMakeAnkiDroidBetterDialog() {
         // Refactor: It would be much better to use a spy - see if we can get this into Robolecteic
         try {
