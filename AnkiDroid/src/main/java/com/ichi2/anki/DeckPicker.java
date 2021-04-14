@@ -1187,7 +1187,7 @@ public class DeckPicker extends NavigationDrawerActivity implements
             Timber.i("AnkiDroid is being updated and a collection already exists.");
             // The user might appreciate us now, see if they will help us get better?
             if (!preferences.contains(UsageAnalytics.ANALYTICS_OPTIN_KEY)) {
-                showDialogFragment(DeckPickerAnalyticsOptInDialog.newInstance());
+                displayAnalyticsOptInDialog();
             }
 
             // For upgrades, we check if we are upgrading
@@ -1324,6 +1324,12 @@ public class DeckPicker extends NavigationDrawerActivity implements
             onFinishedStartup();
         }
     }
+
+    @VisibleForTesting
+    protected void displayAnalyticsOptInDialog() {
+        showDialogFragment(DeckPickerAnalyticsOptInDialog.newInstance());
+    }
+
 
     protected long getPreviousVersion(SharedPreferences preferences, long current) {
         long previous;
