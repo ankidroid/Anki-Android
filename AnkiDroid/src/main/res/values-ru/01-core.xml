@@ -126,6 +126,7 @@
     <string name="menu_edit_tags">Редактировать метки</string>
     <string name="delete_note_message">Удалить эту запись и все связанные карточки?\n%s</string>
     <string name="menu_select">Выделить текст</string>
+    <string name="menu_lookup">Lookup text</string>
     <string name="menu_search">Посмотреть в %1$s</string>
     <string name="menu_mark_note">Отметить запись</string>
     <string name="menu_unmark_note">Снять отметку</string>
@@ -161,7 +162,7 @@
     <string name="empty_cram_label">Очистить</string>
     <string name="create_subdeck">Создать подколоду</string>
     <string name="empty_filtered_deck">Фильтрованная колода очищается&#8230;</string>
-    <string name="custom_study_deck_name">Дополнительная учебная сессия</string>
+    <string name="custom_study_deck_name">Дополнительное занятие</string>
     <string name="custom_study_deck_exists">Сначала переименуйте существующую дополнительную колоду</string>
     <string name="empty_deck">Эта колода пуста</string>
     <string name="search_deck">Deck Search</string>

@@ -76,7 +76,7 @@
     <string name="button_size">ଉତ୍ତର ବଟନ ଆକାର</string>
     <string name="card_browser_font_size">Card browser font scaling</string>
     <string name="card_browser_hide_media">କାର୍ଡ ବ୍ରାଉଜରରେ ଫାଇଲ ନାମ ଗୁଡ଼ିକୁ ଦର୍ଶାନ୍ତୁ</string>
-    <string name="card_browser_hide_media_summary">କାର୍ଡ ବ୍ରାଉଜର ପ୍ରଶ୍ନ/ଉତ୍ତର କ୍ଷେତ୍ରରେ ମିଡିଆ ଫାଇଲ ନାମ ଦର୍ଶାନ୍ତୁ</string>
+    <string name="card_browser_hide_media_summary">କାର୍ଡ ବ୍ରାଉଜର ପ୍ରଶ୍ନ/ଉତ୍ତର କ୍ଷେତ୍ରରେ ମିଡ଼ିଆ ଫାଇଲ୍ ନାମ ଦର୍ଶାନ୍ତୁ</string>
     <string name="col_path">AnkiDroid directory</string>
     <string name="fullscreen_review">ପୂର୍ଣ୍ଣଚିତ୍ରପଟ୍ଟ ମୋଡ୍</string>
     <string name="full_screen_off">ବନ୍ଦ</string>
@@ -123,8 +123,8 @@
     <string name="swipe_sensitivity">ସ୍ୱାଇପ୍ ସମ୍ବେଦନଶୀଳତା</string>
     <string name="tts">ପାଠ୍ୟ ରୁ କଥନ</string>
     <string name="tts_summ">ଯଦି କୌଣସି ଧ୍ୱନି ଫାଇଲ୍ ଅନ୍ତର୍ଭୂକ୍ତ ହୁଏ ନାହିଁ ତେବେ ଏହା ପ୍ରଶ୍ନ ଏବଂ ଉତ୍ତର ପଢ଼େ</string>
-    <string name="sync_fetch_missing_media">ସିଙ୍କରେ ମିଡିଆ ଆଣ</string>
-    <string name="sync_fetch_missing_media_summ">ସିଙ୍କ୍ କରିବା ସମୟରେ ସ୍ୱୟଂଚାଳିତ ଭାବରେ ନିଖୋଜ ମିଡିଆ ଆଣ</string>
+    <string name="sync_fetch_missing_media">ସିଙ୍କରେ ମିଡ଼ିଆ ଆଣ</string>
+    <string name="sync_fetch_missing_media_summ">ସିଙ୍କ୍ କରିବା ସମୟରେ ସ୍ୱୟଂଚାଳିତ ଭାବରେ ନିଖୋଜ ମିଡ଼ିଆ ଆଣ</string>
     <string name="sync_account">AnkiWeb ଖାତା</string>
     <string name="sync_account_summ_logged_out">ଲଗ୍ ଇନ୍‌ ହୋଇନାହି</string>
     <string name="sync_account_summ_logged_in">%s</string>
@@ -146,7 +146,7 @@
     <string name="notification_minimum_cards_due_vibrate">କମ୍ପନ</string>
     <string name="notification_minimum_cards_due_blink">LED ସୂଚକ</string>
     <string name="timeout_answer_text">ସ୍ୱୟଂଚାଳିତ ଉତ୍ତର ପ୍ରଦର୍ଶନ</string>
-    <string name="timeout_answer_summ">ଉପଭୋକ୍ତା ଇନପୁଟ୍ ବିନା ସ୍ୱୟଂଚାଳିତ ଭାବରେ ଉତ୍ତର ଦେଖାନ୍ତୁ | ବିଳମ୍ବ, ସ୍ୱୟଂଚାଳିତ ଭାବରେ ଖୋଲାଯାଇଥିବା ଅଡିଓ ଫାଇଲଗୁଡ଼ିକ ପାଇଁ ସମୟ ଅନ୍ତର୍ଭୁକ୍ତ କରେ </string>
+    <string name="timeout_answer_summ">ଉପଭୋକ୍ତା ଇନପୁଟ୍ ବିନା ସ୍ୱୟଂଚାଳିତ ଭାବରେ ଉତ୍ତର ଦେଖାନ୍ତୁ | ବିଳମ୍ବ, ସ୍ୱୟଂଚାଳିତ ଭାବରେ ଖୋଲାଯାଇଥିବା ଅଡ଼ିଓ ଫାଇଲଗୁଡ଼ିକ ପାଇଁ ସମୟ ଅନ୍ତର୍ଭୁକ୍ତ କରେ </string>
     <string name="timeout_answer_seconds">ଉତ୍ତର ଦେଖାଇବାର ସମୟ ଆସିଗଲା</string>
     <string name="timeout_answer_seconds_summ" comment="The time to wait (in seconds) in the reviewer before automatically showing the next question or answer">XXX s</string>
     <string name="timeout_question_seconds">ପରବର୍ତ୍ତୀ ପ୍ରଶ୍ନ ଦେଖାଇବାର ସମୟ ଆସିଗଲା </string>
@@ -211,8 +211,8 @@
     <string name="custom_sync_server_enable_summary">ଯଦି ଆପଣ ମାଲିକାନା AnkiWeb ସେବା ବ୍ୟବହାର କରିବାକୁ ଚାହୁଁନାହାଁନ୍ତି ତେବେ ଆପଣ ଏଠାରେ ଏକ ବିକଳ୍ପ ସର୍ଭର ନିର୍ଦ୍ଦିଷ୍ଟ କରିପାରିବେ</string>
     <string name="custom_sync_server_base_url_title">url ସିଙ୍କ୍ କର</string>
     <string name="custom_sync_server_base_url_invalid">ସିଙ୍କ୍ url ଅବୈଧ</string>
-    <string name="custom_sync_server_media_url_title">ମିଡିଆ ସିଙ୍କ୍ url</string>
-    <string name="custom_sync_server_media_url_invalid">ମିଡିଆ ସିଙ୍କ url ଅବୈଧ</string>
+    <string name="custom_sync_server_media_url_title">ମିଡ଼ିଆ ସିଙ୍କ୍ url</string>
+    <string name="custom_sync_server_media_url_invalid">ମିଡ଼ିଆ ସିଙ୍କ୍ url ଅବୈଧ ଅଟେ</string>
     <!-- studyoptions -->
     <string name="deck_conf_group_summ">ତାସଖଣ୍ଡ ଗୋଷ୍ଠୀର ବିକଳ୍ପଗୁଡ଼ିକର ପରିବର୍ତ୍ତନ ଏକାଧିକ ତାସଖଣ୍ଡ ଉପରେ ପ୍ରଭାବ ପକାଇବ | ଯଦି ଆପଣ କେବଳ ସାମ୍ପ୍ରତିକ ତାସଖଣ୍ଡ ପରିବର୍ତ୍ତନ କରିବାକୁ ଚାହୁଁଛନ୍ତି, ଦୟାକରି ପ୍ରଥମେ ଏକ ନୂତନ ବିକଳ୍ପ ଗୋଷ୍ଠୀ ଯୋଡନ୍ତୁ</string>
     <string name="studyoptions_limit_select_tags">ଟ୍ୟାଗ୍ ଚୟନ କରନ୍ତୁ</string>
@@ -254,9 +254,9 @@
     <string name="deck_conf_max_time">ସର୍ବାଧିକ ଉତ୍ତର ସମୟ</string>
     <string name="deck_conf_seconds">XXX ସେକେଣ୍ଡ୍</string>
     <string name="deck_conf_timer">ଉତ୍ତର ଟାଇମର୍ ଦେଖାନ୍ତୁ</string>
-    <string name="deck_conf_autoplay">ସ୍ୱୟଂଚାଳିତ ଭାବରେ ଅଡିଓ ଚଲାନ୍ତୁ</string>
+    <string name="deck_conf_autoplay">ସ୍ୱୟଂଚାଳିତ ଭାବରେ ଅଡ଼ିଓ ଚଲାନ୍ତୁ</string>
     <string name="deck_conf_replayq">ପ୍ରଶ୍ନର ପୁନରାବୃତ୍ତି କରନ୍ତୁ</string>
-    <string name="deck_conf_replayq_summ">ଯେତେବେଳେ ଉତ୍ତର ଦେଖାଯାଏ, ଉଭୟ ପ୍ରଶ୍ନର ଏବଂ ଉତ୍ତର ଅଡିଓର ପୁନରାବୃତ୍ତି କର </string>
+    <string name="deck_conf_replayq_summ">ଯେତେବେଳେ ଉତ୍ତର ଦେଖାଯାଏ, ଉଭୟ ପ୍ରଶ୍ନର ଏବଂ ଉତ୍ତର ଅଡ଼ିଓର ପୁନରାବୃତ୍ତି କର </string>
     <string name="deck_conf_manage">ଗୋଷ୍ଠୀ ପରିଚାଳନା</string>
     <string name="deck_conf_manage_summ">ବିକଳ୍ପ ଗୋଷ୍ଠୀ ଯୋଡନ୍ତୁ ଏବଂ ପରିବର୍ତ୍ତନ କରନ୍ତୁ</string>
     <string name="deck_conf_current_group">ସାମ୍ପ୍ରତିକ ଗୋଷ୍ଠୀ</string>
@@ -291,8 +291,8 @@
     <string name="note_editor_replace_newlines_summ">ନୋଟ୍ ସମ୍ପାଦକରେ, କାର୍ଡ ସମ୍ପାଦନ କରିବା ସମୟରେ &lt;br&gt; କୁ ନୂତନ ଲାଇନରେ ରୂପାନ୍ତର କରନ୍ତୁ।</string>
     <string name="no_code_formatting">ସରଳ ଟାଇପ୍ ହୋଇଥିବା ଉତ୍ତର ଫର୍ମାଟିଂ</string>
     <string name="no_code_formatting_summ">ଟାଇପ୍ ହୋଇଥିବା ଉତ୍ତର ଫଳାଫଳଗୁଡିକରେ ଦେଖାଯାଉଥିବା ‘�’ ଠିକ୍ କରେ |</string>
-    <string name="type_in_answer_focus">Focus ‘type in answer’</string>
-    <string name="type_in_answer_focus_summ">Automatically focus the ‘type in answer’ field in the reviewer</string>
+    <string name="type_in_answer_focus">‘ଉତ୍ତର ଟାଇପ୍ କର’ ଉପରେ ଧ୍ୟାନ ଦିଅନ୍ତୁ</string>
+    <string name="type_in_answer_focus_summ">ସମୀକ୍ଷକଙ୍କ ମଧ୍ୟରେ ‘ଉତ୍ତର ଟାଇପ୍ କର’ କ୍ଷେତ୍ରକୁ ସ୍ୱୟଂଚାଳିତ ଭାବରେ ଧ୍ୟାନ ଦିଅନ୍ତୁ</string>
     <!-- Open Changelog-->
     <string name="open_changelog">ପରିବର୍ତ୍ତନ ଲଗ୍ ଖୋଲନ୍ତୁ</string>
 </resources>

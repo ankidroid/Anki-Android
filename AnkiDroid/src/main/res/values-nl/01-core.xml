@@ -116,6 +116,7 @@
     <string name="menu_edit_tags">Tags bewerken</string>
     <string name="delete_note_message">Deze memo en al zijn kaarten verwijderen?\n%s</string>
     <string name="menu_select">Tekst selecteren</string>
+    <string name="menu_lookup">Lookup text</string>
     <string name="menu_search">Opzoeken in %1$s</string>
     <string name="menu_mark_note">Memo markeren</string>
     <string name="menu_unmark_note">Memo onmarkeren</string>
@@ -154,7 +155,7 @@
     <string name="custom_study_deck_name">Aangepaste studiesessie</string>
     <string name="custom_study_deck_exists">Gelieve eerst de bestaande aangepaste studieset te hernoemen.</string>
     <string name="empty_deck">Deze leerset is leeg</string>
-    <string name="search_deck">Deck Search</string>
+    <string name="search_deck">Leerset zoeken</string>
     <string name="empty_deck_add_note">Kaart toevoegen</string>
     <string name="invalid_deck_name">Ongeldige setnaam</string>
     <string name="studyoptions_empty">Deze leerset is leeg. Druk op de + knop om nieuwe inhoud toe te voegen.</string>
