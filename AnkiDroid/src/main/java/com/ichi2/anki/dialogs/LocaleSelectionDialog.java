@@ -133,7 +133,6 @@ public class LocaleSelectionDialog extends AnalyticsDialogFragment {
     private void setupRecyclerView(@NonNull Activity activity, @NonNull View tagsDialogView, LocaleListAdapter adapter) {
         RecyclerView recyclerView = tagsDialogView.findViewById(R.id.locale_dialog_selection_list);
         recyclerView.requestFocus();
-        recyclerView.setHasFixedSize(true);
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(activity);
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setAdapter(adapter);
