@@ -474,20 +474,6 @@ public class StudyOptionsFragment extends Fragment implements Toolbar.OnMenuItem
         }
     });
 
-    ActivityResultLauncher<Intent> mOnStatisticsActivityResult = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(), result -> {
-        configureToolbar();
-        if ((result.getResultCode() == DeckPicker.RESULT_DB_ERROR) || (result.getResultCode() == DeckPicker.RESULT_MEDIA_EJECTED)) {
-            closeStudyOptions(result.getResultCode());
-            return;
-        }
-        if (result.getData().hasExtra("originalDeck")) {
-            getCol().getDecks().select(result.getData().getLongExtra("originalDeck", 0L));
-        }
-        if (mCurrentContentView == CONTENT_CONGRATS) {
-            mCurrentContentView = CONTENT_STUDY_OPTIONS;
-            setFragmentContentView(mStudyOptionsView);
-        }
-    });
 
     private void dismissProgressDialog() {
         if (mStudyOptionsView != null && mStudyOptionsView.findViewById(R.id.progress_bar) != null) {
