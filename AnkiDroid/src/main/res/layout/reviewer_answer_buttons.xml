@@ -15,6 +15,29 @@
         android:hint="@string/type_answer_hint"
         android:imeOptions="actionDone"
         android:inputType="text|textNoSuggestions" />
+
+    <RadioGroup
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center">
+        <RadioButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Front"
+            android:padding="5dp"
+            android:checked="true"
+            android:id="@+id/show_front_card"/>
+
+        <RadioButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Back"
+            android:padding="5dp"
+            android:checked="false"
+            android:id="@+id/show_back_card"/>
+
+    </RadioGroup>
     <!--
          Looks like setting android:imeActionLabel confuses the
          original AOSP soft keyboard, so don't.
