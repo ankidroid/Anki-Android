@@ -132,7 +132,7 @@ public class Stats {
             lim = " and " + lim;
         }
 
-        String query = "select sum(case when type != " + Consts.CARD_TYPE_RESCHEDULED + " then 1 else 0 end), "+ /* cards, excludes rescheduled cards https://github.com/ankidroid/Anki-Android/issues/8592 */
+        String query = "select sum(case when ease > 0 then 1 else 0 end), "+ /* cards, excludes rescheduled cards https://github.com/ankidroid/Anki-Android/issues/8592 */
                 "sum(time)/1000, "+ /*time*/
                 "sum(case when ease = 1 then 1 else 0 end), "+ /* failed */
                 "sum(case when type = " + Consts.CARD_TYPE_NEW + " then 1 else 0 end), "+ /* learning */
@@ -160,10 +160,10 @@ public class Stats {
 
 
         }
-        query = "select sum(case when type != " + Consts.CARD_TYPE_RESCHEDULED + " then 1 else 0 end), "+ /* cards, excludes rescheduled cards https://github.com/ankidroid/Anki-Android/issues/8592 */
+        query = "select sum(case when ease > 0 then 1 else 0 end), "+ /* cards, excludes rescheduled cards https://github.com/ankidroid/Anki-Android/issues/8592 */
                 "sum(case when ease = 1 then 0 else 1 end) from revlog " +
                 "where ease > 0 "+ // Anki Desktop logs a '0' ease for manual reschedules, ignore them https://github.com/ankidroid/Anki-Android/issues/8008
-                "and lastIvl >= 21 and id > " + ((mCol.getSched().getDayCutoff()-SECONDS_PER_DAY)*1000) + " " +  lim;
+                "and lastIvl >= 21 and id > " + ((mCol.getSched().getDayCutoff() - SECONDS_PER_DAY) * 1000) + " " +  lim;
         Timber.d("todays statistics query 2: %s", query);
 
         int mcnt, msum;

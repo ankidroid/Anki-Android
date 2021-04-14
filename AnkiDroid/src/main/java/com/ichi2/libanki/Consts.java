@@ -68,7 +68,6 @@ public class Consts {
     public static final int CARD_TYPE_LRN = 1;
     public static final int CARD_TYPE_REV = 2;
     public static final int CARD_TYPE_RELEARNING = 3;
-    public static final int CARD_TYPE_RESCHEDULED = 4;
     @Retention(SOURCE)
     @IntDef({CARD_TYPE_NEW, CARD_TYPE_LRN, CARD_TYPE_REV, CARD_TYPE_RELEARNING})
     public @interface CARD_TYPE {}
