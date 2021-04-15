@@ -213,7 +213,7 @@ public class ModelFieldEditor extends AnkiActivity implements LocaleSelectionDia
                     changeHandler listener = changeFieldHandler();
                     String fieldName = _uniqueName(mFieldNameInput);
                     try {
-                        addField(fieldName, listener);
+                        addField(fieldName, listener, true);
                     } catch (ConfirmModSchemaException e) {
                         e.log();
 
@@ -221,8 +221,12 @@ public class ModelFieldEditor extends AnkiActivity implements LocaleSelectionDia
                         ConfirmationDialog c = new ConfirmationDialog();
                         c.setArgs(getResources().getString(R.string.full_sync_confirmation));
                         Runnable confirm = () -> {
-                            mCol.modSchemaNoCheck();
-                            TaskManager.launchCollectionTask(new CollectionTask.AddField(mMod, fieldName), listener);
+                            try {
+                                addField(fieldName, listener, false);
+                            } catch (ConfirmModSchemaException e1) {
+                                e1.log();
+                                //This should never be thrown
+                            }
                             dismissContextMenu();
                         };
 
@@ -238,21 +242,18 @@ public class ModelFieldEditor extends AnkiActivity implements LocaleSelectionDia
     }
 
 
-    @VisibleForTesting
-    void addField(EditText mFieldNameInput) throws ConfirmModSchemaException {
-        String fieldName = _uniqueName(mFieldNameInput);
+    private void addField(String fieldName, changeHandler listener, boolean modSchemaCheck)
+            throws ConfirmModSchemaException {
 
-        addField(fieldName, new changeHandler(this));
-    }
-
-
-    private void addField(String fieldName, changeHandler listener) throws ConfirmModSchemaException {
         if (fieldName == null) {
             return;
         }
-
         //Name is valid, now field is added
-        mCol.modSchema();
+        if (modSchemaCheck) {
+            mCol.modSchema();
+        } else {
+            mCol.modSchemaNoCheck();
+        }
         TaskManager.launchCollectionTask(new CollectionTask.AddField(mMod, fieldName), listener);
     }
 
@@ -421,13 +422,6 @@ public class ModelFieldEditor extends AnkiActivity implements LocaleSelectionDia
             mProgressDialog.dismiss();
         }
         mProgressDialog = null;
-    }
-
-    @VisibleForTesting
-    void renameField(EditText mFieldNameInput) throws ConfirmModSchemaException {
-        this.mFieldNameInput = mFieldNameInput;
-
-        renameField();
     }
 
     /*
@@ -632,5 +626,20 @@ public class ModelFieldEditor extends AnkiActivity implements LocaleSelectionDia
     @RequiresApi(api = Build.VERSION_CODES.N)
     public void onLocaleSelectionCancelled() {
         dismissAllDialogFragments();
+    }
+
+
+    @VisibleForTesting (otherwise = VisibleForTesting.NONE)
+    void addField(EditText fieldNameInput) throws ConfirmModSchemaException {
+        String fieldName = _uniqueName(fieldNameInput);
+
+        addField(fieldName, new changeHandler(this), true);
+    }
+
+    @VisibleForTesting (otherwise = VisibleForTesting.NONE)
+    void renameField(EditText fieldNameInput) throws ConfirmModSchemaException {
+        this.mFieldNameInput = fieldNameInput;
+
+        renameField();
     }
 }
