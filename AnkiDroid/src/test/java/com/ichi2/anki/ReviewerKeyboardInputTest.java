@@ -519,7 +519,7 @@ public class ReviewerKeyboardInputTest extends RobolectricTest {
         }
 
         @Override
-        protected void answerCardWithVisualFeedback(int ease) {
+        protected void performClickWithVisualFeedback(int ease) {
             answerCard(ease);
         }
     }

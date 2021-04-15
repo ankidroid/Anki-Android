@@ -299,6 +299,10 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
     protected LinearLayout mEase2Layout;
     protected LinearLayout mEase3Layout;
     protected LinearLayout mEase4Layout;
+    protected SelectEaseHandler mEase1Handler;
+    protected SelectEaseHandler mEase2Handler;
+    protected SelectEaseHandler mEase3Handler;
+    protected SelectEaseHandler mEase4Handler;
     protected FrameLayout mPreviewButtonsLayout;
     protected ImageView mPreviewPrevCard;
     protected ImageView mPreviewNextCard;
@@ -438,25 +442,37 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
         }
     };
 
-    private final View.OnTouchListener mSelectEaseHandler = new View.OnTouchListener() {
-        Card mPrevCard;
+    // Event handler for eases (answer buttons)
+    protected class SelectEaseHandler implements View.OnClickListener, View.OnTouchListener {
+        private Card mPrevCard = null;
+        private boolean mHasBeenTouched = false;
+
+        public SelectEaseHandler() {}
+
         @Override
         public boolean onTouch(View view, MotionEvent event) {
             if (event.getAction() == MotionEvent.ACTION_DOWN) {
-                // Save card when button pressed
+                // Save states when button pressed
                 mPrevCard = mCurrentCard;
-                // Animate the button
-                view.setPressed(true);
-                return true;
+                mHasBeenTouched = true;
             }
-            // Perform intended action only if the button has been pressed for current card
-            if (event.getAction() == MotionEvent.ACTION_UP && mPrevCard == mCurrentCard) {
+            return false;
+        }
+
+        @Override
+        public void onClick(View view) {
+            // Perform intended action only if the button has been pressed for current card,
+            // or if the button was not touched
+            if (mPrevCard == mCurrentCard || !mHasBeenTouched) {
                 // Ignore what is most likely an accidental double-tap.
-                if (SystemClock.elapsedRealtime() - mLastClickTime < DOUBLE_TAP_IGNORE_THRESHOLD) {
-                    return false;
+                if (getElapsedRealTime() - mLastClickTime < DOUBLE_TAP_IGNORE_THRESHOLD) {
+                    return;
                 }
-                view.setPressed(false);
-                mLastClickTime = SystemClock.elapsedRealtime();
+                // For whatever reason, performClick does not return a visual feedback anymore
+                if (!mHasBeenTouched) {
+                    view.setPressed(true);
+                }
+                mLastClickTime = getElapsedRealTime();
                 mTimeoutHandler.removeCallbacks(mShowQuestionTask);
                 int id = view.getId();
                 if (id == R.id.flashcard_layout_ease1) {
@@ -474,11 +490,13 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
                 } else {
                     mCurrentEase = 0;
                 }
-                return true;
+                if (!mHasBeenTouched) {
+                    view.setPressed(false);
+                }
+                mHasBeenTouched = false;
             }
-            return false;
         }
-    };
+    }
 
     @VisibleForTesting
     protected long getElapsedRealTime() {
@@ -1542,19 +1560,27 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
 
         mEase1 = findViewById(R.id.ease1);
         mEase1Layout = findViewById(R.id.flashcard_layout_ease1);
-        mEase1Layout.setOnTouchListener(mSelectEaseHandler);
+        mEase1Handler = new SelectEaseHandler();
+        mEase1Layout.setOnClickListener((View view) -> mEase1Handler.onClick(view));
+        mEase1Layout.setOnTouchListener((View view, MotionEvent event) -> mEase1Handler.onTouch(view, event));
 
         mEase2 = findViewById(R.id.ease2);
         mEase2Layout = findViewById(R.id.flashcard_layout_ease2);
-        mEase2Layout.setOnTouchListener(mSelectEaseHandler);
+        mEase2Handler = new SelectEaseHandler();
+        mEase2Layout.setOnClickListener((View view) -> mEase2Handler.onClick(view));
+        mEase2Layout.setOnTouchListener((View view, MotionEvent event) -> mEase2Handler.onTouch(view, event));
 
         mEase3 = findViewById(R.id.ease3);
         mEase3Layout = findViewById(R.id.flashcard_layout_ease3);
-        mEase3Layout.setOnTouchListener(mSelectEaseHandler);
+        mEase3Handler = new SelectEaseHandler();
+        mEase3Layout.setOnClickListener((View view) -> mEase3Handler.onClick(view));
+        mEase3Layout.setOnTouchListener((View view, MotionEvent event) -> mEase3Handler.onTouch(view, event));
 
         mEase4 = findViewById(R.id.ease4);
         mEase4Layout = findViewById(R.id.flashcard_layout_ease4);
-        mEase4Layout.setOnTouchListener(mSelectEaseHandler);
+        mEase4Handler = new SelectEaseHandler();
+        mEase4Layout.setOnClickListener((View view) -> mEase4Handler.onClick(view));
+        mEase4Layout.setOnTouchListener((View view, MotionEvent event) -> mEase4Handler.onTouch(view, event));
 
         mNext1 = findViewById(R.id.nextTime1);
         mNext2 = findViewById(R.id.nextTime2);
@@ -1673,7 +1699,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
             displayCardAnswer();
             return;
         }
-        answerCardWithVisualFeedback(cardOrdinal);
+        performClickWithVisualFeedback(cardOrdinal);
     }
 
 
@@ -2818,36 +2844,32 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
         if (!sDisplayAnswer) {
             return false;
         }
-        answerCardWithVisualFeedback(ease);
+        performClickWithVisualFeedback(ease);
         return true;
     }
 
-    protected void answerCardWithVisualFeedback(int ease) {
+    protected void performClickWithVisualFeedback(int ease) {
         // Delay could potentially be lower - testing with 20 left a visible "click"
         switch (ease) {
             case EASE_1:
-                displayVisualFeedback(mEase1Layout);
-                answerCard(ease);
+                performClickWithVisualFeedback(mEase1Layout);
                 break;
             case EASE_2:
-                displayVisualFeedback(mEase2Layout);
-                answerCard(ease);
+                performClickWithVisualFeedback(mEase2Layout);
                 break;
             case EASE_3:
-                displayVisualFeedback(mEase3Layout);
-                answerCard(ease);
+                performClickWithVisualFeedback(mEase3Layout);
                 break;
             case EASE_4:
-                displayVisualFeedback(mEase4Layout);
-                answerCard(ease);
+                performClickWithVisualFeedback(mEase4Layout);
                 break;
         }
     }
 
 
-    private void displayVisualFeedback(LinearLayout easeLayout) {
-        easeLayout.setPressed(true);
-        easeLayout.postDelayed(() -> easeLayout.setPressed(false), 20);
+    private void performClickWithVisualFeedback(LinearLayout easeLayout) {
+        easeLayout.requestFocus();
+        easeLayout.performClick();
     }
 
 
