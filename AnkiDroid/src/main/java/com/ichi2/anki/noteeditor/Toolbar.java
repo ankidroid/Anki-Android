@@ -134,7 +134,7 @@ public class Toolbar extends FrameLayout {
                         // Do nothing
                     })
                     .setPositiveButton("Choose", (d, selectedColor, allColors) -> {
-                        onFormat(new TextWrapper("<span style=\"color:"+"#"+Integer.toHexString(selectedColor)+";\">","</span>"));
+                        onFormat(new TextWrapper("<span style=\"color:" + "#" + Integer.toHexString(selectedColor) + ";\">", "</span>"));
                     })
                     .setNegativeButton("Cancel", (dialog, which) ->  {
                         dialog.dismiss();

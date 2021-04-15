@@ -154,7 +154,6 @@
 
             <androidx.appcompat.widget.AppCompatImageButton
                 android:id="@+id/note_editor_toolbar_button_color_picker"
-                android:contentDescription="Change Text Color"
                 app:srcCompat="@drawable/ic_color_picker_24"
                 style="@style/note_editor_toolbar_button" />
             <!-- We can't dynamically add this on API 16,
