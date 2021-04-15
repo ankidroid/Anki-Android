@@ -16,13 +16,8 @@
 
 package com.ichi2.anki;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
-import android.widget.Spinner;
-import android.widget.Toast;
 
 import com.ichi2.libanki.Card;
 import com.ichi2.libanki.Collection;
@@ -30,7 +25,6 @@ import com.ichi2.libanki.Model;
 import com.ichi2.libanki.Note;
 import com.ichi2.libanki.utils.NoteUtils;
 import com.ichi2.themes.Themes;
-import com.ichi2.utils.JSONArray;
 import com.ichi2.utils.JSONObject;
 
 import java.io.IOException;
@@ -56,7 +50,6 @@ public class CardTemplatePreviewer extends AbstractFlashcardViewer {
     private Bundle mNoteEditorBundle = null;
 
     private boolean mShowingAnswer;
-    private Spinner mReviewCardSpinner;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -156,8 +149,6 @@ public class CardTemplatePreviewer extends AbstractFlashcardViewer {
 
         findViewById(R.id.answer_options_layout).setVisibility(View.GONE);
         mPreviewButtonsLayout.setVisibility(View.VISIBLE);
-
-        mReviewCardSpinner = findViewById(R.id.review_card_spinner);
 
         mPreviewButtonsLayout.setOnClickListener(mToggleAnswerHandler);
 
