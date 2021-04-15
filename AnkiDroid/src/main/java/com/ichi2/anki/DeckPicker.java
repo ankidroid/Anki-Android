@@ -88,6 +88,7 @@ import com.ichi2.anki.StudyOptionsFragment.StudyOptionsListener;
 import com.ichi2.anki.analytics.UsageAnalytics;
 import com.ichi2.anki.dialogs.AsyncDialogFragment;
 import com.ichi2.anki.dialogs.ConfirmationDialog;
+import com.ichi2.anki.dialogs.CreateDeckDialog;
 import com.ichi2.anki.dialogs.customstudy.CustomStudyDialog;
 import com.ichi2.anki.dialogs.DatabaseErrorDialog;
 import com.ichi2.anki.dialogs.DeckPickerAnalyticsOptInDialog;
@@ -786,39 +787,12 @@ public class DeckPicker extends NavigationDrawerActivity implements
             showImportDialog(ImportDialog.DIALOG_IMPORT_HINT);
             return true;
         } else if (itemId == R.id.action_new_filtered_deck) {
-            Timber.i("DeckPicker:: New filtered deck button pressed");
-            mDialogEditText = new FixedEditText(DeckPicker.this);
-            List<String> names = getCol().getDecks().allNames();
-            int n = 1;
-            String name = String.format(Locale.getDefault(), "%s %d", res.getString(R.string.filtered_deck_name), n);
-            while (names.contains(name)) {
-                n++;
-                name = String.format(Locale.getDefault(), "%s %d", res.getString(R.string.filtered_deck_name), n);
-            }
-            mDialogEditText.setText(name);
-            // mDialogEditText.setFilters(new InputFilter[] { mDeckNameFilter });
-            new MaterialDialog.Builder(DeckPicker.this)
-                    .title(res.getString(R.string.new_deck))
-                    .customView(mDialogEditText, true)
-                    .positiveText(R.string.create)
-                    .negativeText(R.string.dialog_cancel)
-                    .onPositive((dialog, which) -> {
-                        String filteredDeckName = mDialogEditText.getText().toString();
-                        if (!Decks.isValidDeckName(filteredDeckName)) {
-                            Timber.i("Not creating deck with invalid name '%s'", filteredDeckName);
-                            UIUtils.showThemedToast(this, getString(R.string.invalid_deck_name), false);
-                            return;
-                        }
-                        Timber.i("DeckPicker:: Creating filtered deck...");
-                        try {
-                            getCol().getDecks().newDyn(filteredDeckName);
-                        } catch (FilteredAncestor filteredAncestor) {
-                            UIUtils.showThemedToast(this, getString(R.string.decks_rename_filtered_nosubdecks), false);
-                            return;
-                        }
-                        openStudyOptions(true);
-                    })
-                    .show();
+            CreateDeckDialog createFilteredDeckDialog = new CreateDeckDialog(DeckPicker.this, R.string.new_deck, CreateDeckDialog.DeckDialogType.FILTERED_DECK, null);
+            createFilteredDeckDialog.setOnNewDeckCreated((id) -> {
+                // a filtered deck was created
+                openStudyOptions(true);
+            });
+            createFilteredDeckDialog.showFilteredDeckDialog();
             return true;
         } else if (itemId == R.id.action_check_database) {
             Timber.i("DeckPicker:: Check database button pressed");
@@ -2609,39 +2583,18 @@ public class DeckPicker extends NavigationDrawerActivity implements
 
     public void renameDeckDialog(final long did) {
         final Resources res = getResources();
-        mDialogEditText = new FixedEditText(DeckPicker.this);
-        mDialogEditText.setSingleLine();
         final String currentName = getCol().getDecks().name(did);
-        mDialogEditText.setText(currentName);
-        mDialogEditText.setSelection(mDialogEditText.getText().length());
-        new MaterialEditTextDialog.Builder(DeckPicker.this, mDialogEditText)
-                .title(res.getString(R.string.rename_deck))
-                .positiveText(R.string.rename)
-                .negativeText(R.string.dialog_cancel)
-                .onPositive((dialog, which) -> {
-                    String newName = mDialogEditText.getText().toString().replaceAll("\"", "");
-                    Collection col = getCol();
-                    if (!Decks.isValidDeckName(newName)) {
-                        Timber.i("renameDeckDialog not renaming deck to invalid name '%s'", newName);
-                        UIUtils.showThemedToast(this, getString(R.string.invalid_deck_name), false);
-                    } else if (!newName.equals(currentName)) {
-                        try {
-                            col.getDecks().rename(col.getDecks().get(did), newName);
-                        } catch (DeckRenameException e) {
-                            Timber.w(e);
-                            // We get a localized string from libanki to explain the error
-                            UIUtils.showThemedToast(DeckPicker.this, e.getLocalizedMessage(res), false);
-                        }
-                    }
-                    dismissAllDialogFragments();
-                    mDeckListAdapter.notifyDataSetChanged();
-                    updateDeckList();
-                    if (mFragmented) {
-                        loadStudyOptionsFragment(false);
-                    }
-                })
-                .onNegative((dialog, which) -> dismissAllDialogFragments())
-                .show();
+        CreateDeckDialog createDeckDialog = new CreateDeckDialog(DeckPicker.this, R.string.rename_deck, CreateDeckDialog.DeckDialogType.RENAME_DECK, null);
+        createDeckDialog.setDeckName(currentName);
+        createDeckDialog.setOnNewDeckCreated((id) -> {
+            dismissAllDialogFragments();
+            mDeckListAdapter.notifyDataSetChanged();
+            updateDeckList();
+            if (mFragmented) {
+                loadStudyOptionsFragment(false);
+            }
+        });
+        createDeckDialog.showDialog();
     }
 
 
@@ -2912,35 +2865,16 @@ public class DeckPicker extends NavigationDrawerActivity implements
 
 
     private void createSubDeckDialog(long did) {
-        final Resources res = getResources();
-        mDialogEditText = new FixedEditText(this);
-        mDialogEditText.setSingleLine();
-        mDialogEditText.setSelection(mDialogEditText.getText().length());
-        new MaterialEditTextDialog.Builder(DeckPicker.this, mDialogEditText)
-                .title(R.string.create_subdeck)
-                .positiveText(R.string.dialog_ok)
-                .negativeText(R.string.dialog_cancel)
-                .onPositive((dialog, which) -> {
-                    String textValue = mDialogEditText.getText().toString();
-                    String newName = getCol().getDecks().getSubdeckName(did, textValue);
-                    if (Decks.isValidDeckName(newName)) {
-                        boolean creation_succeed = createNewDeck(newName);
-                        if (!creation_succeed) {
-                            return;
-                        }
-                    } else {
-                        Timber.i("createSubDeckDialog - not creating invalid subdeck name '%s'", newName);
-                        UIUtils.showThemedToast(this, getString(R.string.invalid_deck_name), false);
-                    }
-                    dismissAllDialogFragments();
-                    mDeckListAdapter.notifyDataSetChanged();
-                    updateDeckList();
-                    if (mFragmented) {
-                        loadStudyOptionsFragment(false);
-                    }
-                })
-                .onNegative((dialog, which) -> dismissAllDialogFragments())
-                .show();
+        CreateDeckDialog createDeckDialog = new CreateDeckDialog(DeckPicker.this, R.string.create_subdeck, CreateDeckDialog.DeckDialogType.SUB_DECK, did);
+        createDeckDialog.setOnNewDeckCreated((i) -> {
+            // a deck was created
+            mDeckListAdapter.notifyDataSetChanged();
+            updateDeckList();
+            if (mFragmented) {
+                loadStudyOptionsFragment(false);
+            }
+        });
+        createDeckDialog.showDialog();
     }
 
 
