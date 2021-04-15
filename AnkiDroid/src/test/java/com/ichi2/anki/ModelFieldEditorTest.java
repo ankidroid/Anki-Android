@@ -59,8 +59,7 @@ public class ModelFieldEditorTest extends RobolectricTest {
      */
     private void testForIllegalCharacters(String forbiddenFieldName) {
         List<String> modelFields = getCurrentDatabaseModelCopy("Basic").getFieldsNames();
-        String fieldName = getCurrentDatabaseModelCopy("Basic").getFieldsNames()
-                .get(modelFields.size() - 1);
+        String fieldName = modelFields.get(modelFields.size() - 1);
 
         assertThat("forbidden character detected!", !fieldName.equals(forbiddenFieldName));
     }
