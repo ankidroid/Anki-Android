@@ -26,11 +26,12 @@ import com.ichi2.testutils.AnkiAssert;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.robolectric.ParameterizedRobolectricTestRunner;
+import org.robolectric.ParameterizedRobolectricTestRunner.Parameters;
 
+import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
-
-import androidx.test.ext.junit.runners.AndroidJUnit4;
 
 import static com.afollestad.materialdialogs.DialogAction.POSITIVE;
 import static com.ichi2.anki.FieldOperationType.ADD_FIELD;
@@ -39,22 +40,34 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.not;
 
-@RunWith(AndroidJUnit4.class)
+@RunWith(ParameterizedRobolectricTestRunner.class)
 public class ModelFieldEditorTest extends RobolectricTest {
+    private static final String[] mForbiddenCharacters = new String[] {"#", "^", "/", " ", "\t"};
+    private String mForbiddenCharacter;
+
+
+    public ModelFieldEditorTest(String forbiddenCharacter) {
+        this.mForbiddenCharacter = forbiddenCharacter;
+    }
+
+
+    @Parameters
+    public static Iterable<? extends Object> forbiddenCharacters() {
+        return Arrays.asList(mForbiddenCharacters);
+    }
+
+
     /**
      * Tests if field names with illegal characters get removed from beginning of field names when adding field
      */
     @Test
     public void testIllegalCharactersInFieldName_addField() {
-        // iterate through the forbidden characters and test
-        for (String forbidden : new String[] {"#", "^", "/", " ", "\t"}) {
-            // Assertion fails in case of a ConfirmModSchemaException being thrown
-            AnkiAssert.assertDoesNotThrow(() -> {
-                String fieldName = setupInvalidFieldName(forbidden, ADD_FIELD);
+        // Assertion fails in case of a ConfirmModSchemaException being thrown
+        AnkiAssert.assertDoesNotThrow(() -> {
+            String fieldName = setupInvalidFieldName(mForbiddenCharacter, ADD_FIELD);
 
-                testForIllegalCharacters(fieldName);
-            });
-        }
+            testForIllegalCharacters(fieldName);
+        });
     }
 
 
@@ -63,14 +76,12 @@ public class ModelFieldEditorTest extends RobolectricTest {
      */
     @Test
     public void testIllegalCharactersInFieldName_renameField() {
-        for (String forbidden : new String[] {"#", "^", "/", " ", "\t"}) {
-            // Assertion fails in case of a ConfirmModSchemaException being thrown
-            AnkiAssert.assertDoesNotThrow(() -> {
-                String fieldName = setupInvalidFieldName(forbidden, RENAME_FIELD);
+        // Assertion fails in case of a ConfirmModSchemaException being thrown
+        AnkiAssert.assertDoesNotThrow(() -> {
+            String fieldName = setupInvalidFieldName(mForbiddenCharacter, RENAME_FIELD);
 
-                testForIllegalCharacters(fieldName);
-            });
-        }
+            testForIllegalCharacters(fieldName);
+        });
     }
 
 
@@ -173,6 +184,8 @@ public class ModelFieldEditorTest extends RobolectricTest {
                 .orElse(0L);
     }
 }
+
+
 
 enum FieldOperationType {
     ADD_FIELD,
