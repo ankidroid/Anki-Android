@@ -121,7 +121,7 @@ public class AddonModel {
 
         // js addons have full access to AnkiDroid JS API so needs to check the version
         // jsAddonKeywords help in distinguish from other npm package
-        if (!addonModel.getJsApiVersion().equals(AnkiDroidJsAPI) && !jsAddonKeywordsPresent) {
+        if (!addonModel.getJsApiVersion().equals(AnkiDroidJsAPI) || !jsAddonKeywordsPresent) {
             return null;
         }
 
