@@ -4,11 +4,15 @@ import com.ichi2.utils.JSONObject;
 
 import org.junit.Before;
 import org.junit.Test;
+import org.junit.runner.RunWith;
+
+import androidx.test.ext.junit.runners.AndroidJUnit4;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
 import static org.hamcrest.Matchers.nullValue;
 
+@RunWith(AndroidJUnit4.class)
 public class AddonModelTest extends RobolectricTest {
     private static final String progrssBarAddonPackageJson = "{\n" +
             "  \"name\": \"ankidroid-js-addon-progress-bar\",\n" +
