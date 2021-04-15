@@ -20,11 +20,9 @@ package com.ichi2.anki;
 
 import android.annotation.SuppressLint;
 import android.annotation.TargetApi;
-import android.app.AlertDialog;
 import android.content.BroadcastReceiver;
 import android.content.ClipboardManager;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.SharedPreferences;
@@ -1234,13 +1232,15 @@ public class NoteEditor extends AnkiActivity {
             String name = tmpls.getJSONObject(i).optString("name");
             cardsList.add(name);
         }
-        AlertDialog.Builder b = new AlertDialog.Builder(this);
-        b.setTitle(R.string.select_card_to_preview);
-        b.setItems(cardsList.toArray(new String[0]), (dialog, which) -> {
-                dialog.dismiss();
-                noteEditorBundle.putInt("previewCard", which);
-                startActivityForResultWithoutAnimation(previewer, REQUEST_PREVIEW);
-        }).show();
+        new MaterialDialog.Builder(this)
+                .title(R.string.select_card_to_preview)
+                .items(cardsList.toArray(new String[0]))
+                .itemsCallback((dialog, view, position, text) -> {
+                    dialog.dismiss();
+                    noteEditorBundle.putInt("previewCard", position);
+                    startActivityForResultWithoutAnimation(previewer, REQUEST_PREVIEW);
+                })
+                .show();
     }
 
 
