@@ -47,12 +47,12 @@ import com.ichi2.utils.JSONObject;
 
 import java.util.Arrays;
 import java.util.List;
-import java.util.ArrayList;
 import java.util.Locale;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
+import androidx.annotation.VisibleForTesting;
 import androidx.fragment.app.DialogFragment;
 import timber.log.Timber;
 import static com.ichi2.anim.ActivityTransitionAnimation.Direction.*;
@@ -209,15 +209,11 @@ public class ModelFieldEditor extends AnkiActivity implements LocaleSelectionDia
                 .positiveText(R.string.dialog_ok)
                 .customView(mFieldNameInput, true)
                 .onPositive((dialog, which) -> {
-                    String fieldName = _uniqueName(mFieldNameInput);
-                    if (fieldName == null) {
-                        return;
-                    }
                     //Name is valid, now field is added
                     changeHandler listener = changeFieldHandler();
+                    String fieldName = _uniqueName(mFieldNameInput);
                     try {
-                        mCol.modSchema();
-                        TaskManager.launchCollectionTask(new CollectionTask.AddField(mMod, fieldName), listener);
+                        addField(fieldName, listener);
                     } catch (ConfirmModSchemaException e) {
                         e.log();
 
@@ -239,6 +235,25 @@ public class ModelFieldEditor extends AnkiActivity implements LocaleSelectionDia
                 })
                 .negativeText(R.string.dialog_cancel)
                 .show();
+    }
+
+
+    @VisibleForTesting
+    void addField(EditText mFieldNameInput) throws ConfirmModSchemaException {
+        String fieldName = _uniqueName(mFieldNameInput);
+
+        addField(fieldName, new changeHandler(this));
+    }
+
+
+    private void addField(String fieldName, changeHandler listener) throws ConfirmModSchemaException {
+        if (fieldName == null) {
+            return;
+        }
+
+        //Name is valid, now field is added
+        mCol.modSchema();
+        TaskManager.launchCollectionTask(new CollectionTask.AddField(mMod, fieldName), listener);
     }
 
 
@@ -408,6 +423,12 @@ public class ModelFieldEditor extends AnkiActivity implements LocaleSelectionDia
         mProgressDialog = null;
     }
 
+    @VisibleForTesting
+    void renameField(EditText mFieldNameInput) throws ConfirmModSchemaException {
+        this.mFieldNameInput = mFieldNameInput;
+
+        renameField();
+    }
 
     /*
      * Renames the current field
