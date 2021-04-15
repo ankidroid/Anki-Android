@@ -3823,7 +3823,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
                 view -> openUrl(Uri.parse("https://github.com/ankidroid/Anki-Android/wiki")),
                 parentLayout,
                 null);
-        TextView snackbarTextView=snackbar.getView().findViewById(com.google.android.material.R.id.snackbar_text);
+        TextView snackbarTextView = snackbar.getView().findViewById(com.google.android.material.R.id.snackbar_text);
         snackbarTextView.setMaxLines(3);
         snackbar.show();
     }
