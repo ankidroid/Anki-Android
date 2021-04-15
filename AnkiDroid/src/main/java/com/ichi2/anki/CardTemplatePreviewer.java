@@ -237,31 +237,13 @@ public class CardTemplatePreviewer extends AbstractFlashcardViewer {
             closeCardTemplatePreviewer();
             return;
         }
-
-        ArrayList<String> cardsList = new ArrayList<>();
-        JSONArray tmpls = mCurrentCard.note().model().getJSONArray("tmpls");
-
-        for (int i = 0; i < tmpls.length(); i++) {
-            String name = tmpls.getJSONObject(i).optString("name");
-            cardsList.add(name);
+        if (mCardList != null && mOrdinal >= 0 && mOrdinal < mCardList.length) {
+            mCurrentCard = new PreviewerCard(col, mCardList[mOrdinal]);
         }
 
-        ArrayAdapter<String> adapter = new ArrayAdapter<>(this, R.layout.support_simple_spinner_dropdown_item, cardsList);
-        mReviewCardSpinner.setAdapter(adapter);
-        mReviewCardSpinner.setVisibility(View.VISIBLE);
-        mReviewCardSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-
-                if (mCardList != null && mOrdinal >= 0 && mOrdinal < mCardList.length) {
-                    mCurrentCard = new PreviewerCard(col, mCardList[mOrdinal]);
-                }
-
         if (mNoteEditorBundle != null) {
-            Toast.makeText(CardTemplatePreviewer.this, "Entered NoteEditorBundle not null", Toast.LENGTH_SHORT).show();
             long newDid = mNoteEditorBundle.getLong("did");
             if (col.getDecks().isDyn(newDid)) {
-                Toast.makeText(CardTemplatePreviewer.this, "setting Odid", Toast.LENGTH_SHORT).show();
                 mCurrentCard.setODid(mCurrentCard.getDid());
             }
             mCurrentCard.setDid(newDid);
@@ -272,34 +254,19 @@ public class CardTemplatePreviewer extends AbstractFlashcardViewer {
 
             Bundle noteFields = mNoteEditorBundle.getBundle("editFields");
             if (noteFields != null) {
-                Toast.makeText(CardTemplatePreviewer.this, "entered NoteFieldsBundle", Toast.LENGTH_SHORT).show();
                 for (String fieldOrd : noteFields.keySet()) {
                     // In case the fields on the card are out of sync with the bundle
                     int fieldOrdInt = Integer.parseInt(fieldOrd);
                     if (fieldOrdInt < currentNote.getFields().length) {
-                        Toast.makeText(CardTemplatePreviewer.this, "Entered in loop", Toast.LENGTH_SHORT).show();
-                        if(mReviewCardSpinner.getSelectedItemPosition() == 1) {
-                            int newInt = (fieldOrdInt == 0) ? 1 : 0;
-                            currentNote.setField(newInt, noteFields.getString(fieldOrd));
-                        } else {
-                            currentNote.setField(fieldOrdInt, noteFields.getString(fieldOrd));
-                        }
+                        currentNote.setField(fieldOrdInt, noteFields.getString(fieldOrd));
                     }
                 }
             }
         }
-
         displayCardQuestion();
         if (mShowingAnswer) {
             displayCardAnswer();
         }
-            }
-            @Override
-            public void onNothingSelected(AdapterView<?> parent) {
-
-            }
-        });
-
         showBackIcon();
     }
 
