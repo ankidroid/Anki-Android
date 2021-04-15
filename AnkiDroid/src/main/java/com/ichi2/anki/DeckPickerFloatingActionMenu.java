@@ -23,6 +23,7 @@ import android.widget.EditText;
 import android.widget.LinearLayout;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.ichi2.anki.dialogs.CreateDeckDialog;
 import com.ichi2.libanki.Decks;
 import com.ichi2.ui.FixedEditText;
 
@@ -76,25 +77,11 @@ public class DeckPickerFloatingActionMenu {
         mAddDeckButton.setOnClickListener(addDeckButtonView -> {
             if (mIsFABOpen) {
                 closeFloatingActionMenu();
-                EditText mDialogEditText = new FixedEditText(mDeckPicker);
-                mDialogEditText.setSingleLine(true);
-                new MaterialEditTextDialog.Builder(mDeckPicker, mDialogEditText)
-                        .title(R.string.new_deck)
-                        .positiveText(R.string.dialog_ok)
-                        .onPositive((dialog, which) -> {
-                            String deckName = mDialogEditText.getText().toString();
-                            if (Decks.isValidDeckName(deckName)) {
-                                boolean creation_succeed = deckPicker.createNewDeck(deckName);
-                                if (!creation_succeed) {
-                                    return;
-                                }
-                            } else {
-                                Timber.d("configureFloatingActionsMenu::addDeckButton::onPositiveListener - Not creating invalid deck name '%s'", deckName);
-                                UIUtils.showThemedToast(mDeckPicker, mDeckPicker.getString(R.string.invalid_deck_name), false);
-                            }
-                        })
-                        .negativeText(R.string.dialog_cancel)
-                        .show();
+                CreateDeckDialog createDeckDialog = new CreateDeckDialog(mDeckPicker, R.string.new_deck, CreateDeckDialog.DeckDialogType.DECK, null);
+                createDeckDialog.setOnNewDeckCreated((i) -> {
+                    deckPicker.updateDeckList();
+                });
+                createDeckDialog.showDialog();
             }
         });
 
