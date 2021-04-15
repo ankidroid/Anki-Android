@@ -249,12 +249,11 @@ public class CardTemplatePreviewer extends AbstractFlashcardViewer {
                     // In case the fields on the card are out of sync with the bundle
                     int fieldOrdInt = Integer.parseInt(fieldOrd);
                     if (fieldOrdInt < currentNote.getFields().length) {
-                        if(mNoteEditorBundle.getInt("previewCard") == 1) {
+                        if (mNoteEditorBundle.getInt("previewCard") == 1) {
                             currentNote.setField((fieldOrdInt == 0) ? 1 : 0, noteFields.getString(fieldOrd));
                         } else {
                             currentNote.setField(fieldOrdInt, noteFields.getString(fieldOrd));
                         }
-
                     }
                 }
             }

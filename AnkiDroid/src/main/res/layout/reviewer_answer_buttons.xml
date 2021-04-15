@@ -15,16 +15,6 @@
         android:hint="@string/type_answer_hint"
         android:imeOptions="actionDone"
         android:inputType="text|textNoSuggestions" />
-
-    <androidx.appcompat.widget.AppCompatSpinner
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:spinnerMode="dropdown"
-        android:id="@+id/review_card_spinner"
-        android:visibility="gone"
-        />
-
-
     <!--
          Looks like setting android:imeActionLabel confuses the
          original AOSP soft keyboard, so don't.

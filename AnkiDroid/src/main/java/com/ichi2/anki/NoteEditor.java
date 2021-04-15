@@ -1230,19 +1230,16 @@ public class NoteEditor extends AnkiActivity {
         previewer.putExtra("noteEditorBundle", noteEditorBundle);
         ArrayList<String> cardsList = new ArrayList<>();
         JSONArray tmpls = mEditorNote.model().getJSONArray("tmpls");
-        for (int i = 0; i < tmpls.length(); i++) {
+        for ( int i = 0 ; i < tmpls.length() ; i++) {
             String name = tmpls.getJSONObject(i).optString("name");
             cardsList.add(name);
         }
         AlertDialog.Builder b = new AlertDialog.Builder(this);
-        b.setTitle("Select card to preview");
-        b.setItems(cardsList.toArray(new String[0]), new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
+        b.setTitle(R.string.select_card_to_preview);
+        b.setItems(cardsList.toArray(new String[0]), (dialog, which) -> {
                 dialog.dismiss();
                 noteEditorBundle.putInt("previewCard", which);
                 startActivityForResultWithoutAnimation(previewer, REQUEST_PREVIEW);
-            }
         }).show();
     }
 
