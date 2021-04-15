@@ -98,7 +98,6 @@ public class LanguageUtil {
             }
         } else {
             locale = Locale.getDefault();
-
         }
         return locale;
     }
