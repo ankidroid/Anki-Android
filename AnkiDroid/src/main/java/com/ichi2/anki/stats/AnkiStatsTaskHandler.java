@@ -233,15 +233,16 @@ public class AnkiStatsTaskHandler {
             sLock.lock();
             try {
                 Collection collection = params[0].first;
+
+                TextView textView = params[0].second;
+                mTextView = new WeakReference<>(textView);
+
                 if (!mIsRunning || collection == null || collection.getDb() == null) {
                     Timber.d("Quitting DeckPreviewStatistics before execution");
                     return null;
                 } else {
                     Timber.d("Starting DeckPreviewStatistics");
                 }
-
-                TextView textView = params[0].second;
-                mTextView = new WeakReference<>(textView);
 
                 //eventually put this in Stats (in desktop it is not though)
                 int cards;
