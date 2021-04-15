@@ -20,14 +20,13 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import androidx.preference.PreferenceManager;
 
-import com.brsanthu.googleanalytics.GoogleAnalytics;
-
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.ArgumentMatchers;
 import org.mockito.Mock;
 import org.mockito.MockedStatic;
+import org.mockito.MockitoAnnotations;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
@@ -44,6 +43,8 @@ public class CardTemplateTest {
 
     @Before
     public void setUp() {
+        MockitoAnnotations.openMocks(this);
+
         when(mMockContext.getSharedPreferences("mock_context_preferences", Context.MODE_PRIVATE))
                 .thenReturn(mMockSharedPreferences);
     }
