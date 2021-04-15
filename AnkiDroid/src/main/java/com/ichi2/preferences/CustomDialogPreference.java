@@ -20,11 +20,11 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.SharedPreferences.Editor;
 import android.util.AttributeSet;
-import android.widget.Toast;
 
 import com.ichi2.anki.AnkiDroidApp;
 import com.ichi2.anki.MetaDB;
 import com.ichi2.anki.R;
+import com.ichi2.anki.UIUtils;
 
 @SuppressWarnings("deprecation") // TODO Tracked in https://github.com/ankidroid/Anki-Android/issues/5019
 public class CustomDialogPreference extends android.preference.DialogPreference implements DialogInterface.OnClickListener {
@@ -57,9 +57,7 @@ public class CustomDialogPreference extends android.preference.DialogPreference 
             } else {
                 // Main Preferences :: Reset Languages
                 if (MetaDB.resetLanguages(mContext)) {
-                    Toast successReport = Toast.makeText(this.getContext(),
-                            AnkiDroidApp.getAppResources().getString(R.string.reset_confirmation), Toast.LENGTH_SHORT);
-                    successReport.show();
+                    UIUtils.showThemedToast(this.getContext(), AnkiDroidApp.getAppResources().getString(R.string.reset_confirmation), true);
                 }
             }
         }

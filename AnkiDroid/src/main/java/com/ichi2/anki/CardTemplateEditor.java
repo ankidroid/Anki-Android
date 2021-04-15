@@ -18,15 +18,12 @@
 
 package com.ichi2.anki;
 
-import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.res.Resources;
 import android.os.Bundle;
 
-import androidx.activity.result.ActivityResultCallback;
 import androidx.activity.result.ActivityResultLauncher;
-import androidx.activity.result.contract.ActivityResultContract;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.CheckResult;
 import androidx.annotation.NonNull;
@@ -545,7 +542,7 @@ public class CardTemplateEditor extends AnkiActivity implements DeckSelectionDia
             // Save the model and pass the filename if updated
             tempModel.setEditedModelFileName(TemporaryModel.saveTempModel(mTemplateEditor, tempModel.getModel()));
             i.putExtra(TemporaryModel.INTENT_MODEL_FILENAME, tempModel.getEditedModelFileName());
-            onRequestPreviewResult.launch(i);
+            mOnRequestPreviewResult.launch(i);
         }
 
 
@@ -587,7 +584,7 @@ public class CardTemplateEditor extends AnkiActivity implements DeckSelectionDia
                 return;
             }
             Intent browserAppearanceIntent = CardTemplateBrowserAppearanceEditor.getIntentFromTemplate(context, currentTemplate);
-            onCardBrowserAppearanceActivtyResult.launch(browserAppearanceIntent);
+            mOnCardBrowserAppearanceActivityResult.launch(browserAppearanceIntent);
         }
 
 
@@ -630,14 +627,14 @@ public class CardTemplateEditor extends AnkiActivity implements DeckSelectionDia
             return false;
         }
 
-        ActivityResultLauncher<Intent> onCardBrowserAppearanceActivtyResult = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(), result -> {
+        ActivityResultLauncher<Intent> mOnCardBrowserAppearanceActivityResult = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(), result -> {
             if (result.getResultCode() != RESULT_OK) {
                 return;
             }
             onCardBrowserAppearanceResult(result.getData());
         });
 
-        ActivityResultLauncher<Intent> onRequestPreviewResult = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(), result ->  {
+        ActivityResultLauncher<Intent> mOnRequestPreviewResult = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(), result ->  {
                 if (result.getResultCode() != RESULT_OK) {
                     return;
                 }

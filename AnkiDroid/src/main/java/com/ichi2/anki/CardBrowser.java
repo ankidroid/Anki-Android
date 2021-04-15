@@ -139,7 +139,7 @@ public class CardBrowser extends NavigationDrawerActivity implements
     * When the list is changed, the position member of its elements should get changed.*/
     @NonNull
     private CardCollection<CardCache> mCards = new CardCollection<>();
-    private ArrayList<Deck> mDropDownDecks;
+    private List<Deck> mDropDownDecks;
     private ListView mCardsListView;
     private SearchView mSearchView;
     private MultiColumnListAdapter mCardsAdapter;

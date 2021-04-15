@@ -17,8 +17,12 @@
 package com.ichi2.libanki.backend;
 
 import com.ichi2.libanki.DB;
+import com.ichi2.libanki.DeckConfig;
+import com.ichi2.libanki.Decks;
 import com.ichi2.libanki.backend.exception.BackendNotSupportedException;
 import com.ichi2.libanki.backend.model.SchedTimingToday;
+
+import net.ankiweb.rsdroid.RustV1Cleanup;
 
 import androidx.annotation.VisibleForTesting;
 
@@ -59,4 +63,9 @@ public interface DroidBackend {
      * @return minutes west of UTC in the local timezone
      */
     int local_minutes_west(long timestampSeconds) throws BackendNotSupportedException;
+
+    @RustV1Cleanup("backend.newDeckConfigLegacy")
+    default DeckConfig new_deck_config_legacy() {
+        return new DeckConfig(Decks.DEFAULT_CONF);
+    }
 }

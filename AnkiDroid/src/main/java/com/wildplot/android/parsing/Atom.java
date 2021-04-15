@@ -25,7 +25,7 @@ import com.wildplot.android.parsing.AtomTypes.VariableAtom;
 import com.wildplot.android.parsing.AtomTypes.XVariableAtom;
 import com.wildplot.android.parsing.AtomTypes.YVariableAtom;
 
-@SuppressLint("FieldNamingPatternDetector")
+@SuppressLint("NonPublicNonStaticFieldName")
 public class Atom implements TreeElement {
     private final TopLevelParser parser;
 

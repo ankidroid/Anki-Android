@@ -23,7 +23,7 @@ import com.wildplot.android.parsing.TreeElement;
 
 import timber.log.Timber;
 
-@SuppressLint("FieldNamingPatternDetector")
+@SuppressLint("NonPublicNonStaticFieldName")
 public class NumberAtom implements TreeElement {
 
     private Atom.AtomType atomType = Atom.AtomType.NUMBER;

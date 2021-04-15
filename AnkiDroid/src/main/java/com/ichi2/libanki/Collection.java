@@ -925,7 +925,7 @@ public class Collection implements CollectionGetter {
         // Use template did (deck override) if valid, otherwise did in argument, otherwise model did
         if (did == 0) {
             did = template.optLong("did", 0);
-            if (did > 0 && mDecks.getDecks().containsKey(did)) {
+            if (did > 0 && mDecks.get(did, false) != null) {
             } else if (parameterDid != 0) {
                 did = parameterDid;
             } else {
@@ -1715,8 +1715,8 @@ public class Collection implements CollectionGetter {
         int fixCount = 0;
         for (long id : mDecks.allDynamicDeckIds()) {
             try {
-                if (mDecks.hasDeckOptions(id)) {
-                    mDecks.removeDeckOptions(id);
+                if (hasDeckOptions(id)) {
+                    removeDeckOptions(id);
                     fixCount++;
                 }
             } catch (NoSuchDeckException e) {
@@ -1728,6 +1728,24 @@ public class Collection implements CollectionGetter {
             problems.add(String.format(Locale.US, "%d dynamic deck(s) had deck options.", fixCount));
         }
         return problems;
+    }
+
+
+    private Deck getDeckOrFail(long deckId) throws NoSuchDeckException {
+        Deck deck = getDecks().get(deckId, false);
+        if (deck == null) {
+            throw new NoSuchDeckException(deckId);
+        }
+        return deck;
+    }
+
+    private boolean hasDeckOptions(long deckId) throws NoSuchDeckException {
+        return getDeckOrFail(deckId).has("conf");
+    }
+
+
+    private void removeDeckOptions(long deckId) throws NoSuchDeckException {
+        getDeckOrFail(deckId).remove("conf");
     }
 
 

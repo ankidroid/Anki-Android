@@ -63,14 +63,14 @@
     <string name="show_whiteboard">ଧଳାପଟା ଦେଖାଅ</string>
     <string name="hide_whiteboard">ଧଳାପଟା ଲୁଚାଅ</string>
     <string name="clear_whiteboard">ଧଳାପଟା ସଫା କରନ୍ତୁ</string>
-    <string name="replay_audio">ଅଡିଓ ପୁଣି ଚଲାନ୍ତୁ</string>
+    <string name="replay_audio">ଅଡ଼ିଓ ପୁଣି ଚଲାନ୍ତୁ</string>
     <string name="leech_suspend_notification">ପତ୍ର ଲିଚ ବୋଲି ଚିନ୍ହିତ ହୋଇ ନିଲମ୍ବିତ ହେଇଛି</string>
     <string name="leech_notification">ପତ୍ରକୁ ଲିଚ ବୋଲି ଚିନ୍ହିତ ହେଇଛି</string>
     <string name="corrupt_font">ଖରାପ ଫୋଣ୍ଟ ଫାଇଲ %s</string>
     <string name="webview_crash_unknown">ଅଜଣା ତ୍ରୁଟି</string>
     <string name="webview_crash_unknwon_detailed">ଏହା WebView ରେ ଏକ ଆନ୍ତରିକ ତ୍ରୁଟି ଯୋଗୁଁ ହେଇଛି</string>
     <string name="webview_crash_oom">ମେମୋରୀ ସରିଗଲା</string>
-    <string name="webview_crash_oom_details">WebView ସିଷ୍ଟମ୍ ଦ୍ୱାରା ସମାପ୍ତ ହେଲା। ଏହା ସାଧାରଣତଃ ଘଟେ ଯେତେବେଳେ ଆପ୍ ର ମେମୋରୀ ସରିଯାଏ, ପ୍ରାୟତଃ ବଡ଼ ଫଣ୍ଟ କିମ୍ବା ମିଡିଆ ହେତୁ।</string>
+    <string name="webview_crash_oom_details">WebView ସିଷ୍ଟମ୍ ଦ୍ୱାରା ସମାପ୍ତ ହେଲା। ଏହା ସାଧାରଣତଃ ଘଟେ ଯେତେବେଳେ ଆପ୍ ର ମେମୋରୀ ସରିଯାଏ, ପ୍ରାୟତଃ ବଡ଼ ଫଣ୍ଟ କିମ୍ବା ମିଡ଼ିଆ ହେତୁ।</string>
     <string name="webview_crash_nonfatal">WebView ପ୍ରସ୍ତୁତକର୍ତ୍ତା ଦୁର୍ଘଟଣାଗ୍ରସ୍ତ ହୋଇଛି। କାରଣ: %s</string>
     <string name="webview_crash_fatal">ସାଂଘାତିକ ତ୍ରୁଟି: WebView ପ୍ରସ୍ତୁତକର୍ତ୍ତା ଦୁର୍ଘଟଣାଗ୍ରସ୍ତ ହୋଇଛି। କାରଣ: %s</string>
     <string name="webview_crash_loop_dialog_title">ସିଷ୍ଟମର WebView ପ୍ରସ୍ତୁତକର୍ତ୍ତାରେ ବିଫଳତା</string>
@@ -122,7 +122,7 @@
     <string name="reordering_cards">ପତ୍ର ପୁନଃବ୍ୟବସ୍ଥିତ ହଉଛି </string>
     <string name="field_remapping">%1$s (“%2$s” ରୁ)</string>
     <string name="confirm_map_cards_to_nothing">ବିନା କୌଣସି ଜିନିଷକୁ ମ୍ୟାପ୍ ହୋଇଥିବା ପତ୍ର ବିଲୋପ ହେଇଯିବ। ଯଦି କୌଣସି ନୋଟ୍ ର ଅବଶିଷ୍ଟ ପତ୍ର ନାହିଁ, ତେବେ ଏହା ନଷ୍ଟ ହୋଇଯିବ। ଆପଣ ଜାରି ରଖିବାକୁ ଚାହୁଁଛନ୍ତି କି?</string>
-    <string name="timebox_reached_title">Timebox reached</string>
+    <string name="timebox_reached_title">ସମୟବାକ୍ସ ପହଞ୍ଚିଛି</string>
     <plurals name="timebox_reached">
         <item quantity="one">%1$d ପତ୍ର  %2$s ସମୟରେ ଅଧ୍ୟୟନ କଲେ</item>
         <item quantity="other">%1$d ଟି ପତ୍ର  %2$s ସମୟରେ ଅଧ୍ୟୟନ କଲେ</item>
@@ -177,7 +177,7 @@
     <string name="import_replacing">ସଂଗ୍ରହକୁ ବଦଳାଉଛି&#8230;</string>
     <string name="import_interrupted">ଆମଦାନୀ ବାଧାପ୍ରାପ୍ତ: AnkiDroid ବନ୍ଦ ହୋଇଗଲା |</string>
     <string name="export_include_schedule">କାର୍ଯ୍ୟସୂଚୀ ଅନ୍ତର୍ଭୂକ୍ତ କରନ୍ତୁ</string>
-    <string name="export_include_media">ମିଡିଆ ଅନ୍ତର୍ଭୂକ୍ତ କରନ୍ତୁ</string>
+    <string name="export_include_media">ମିଡ଼ିଆ ଅନ୍ତର୍ଭୂକ୍ତ କରନ୍ତୁ</string>
     <string name="confirm_apkg_export">ସଂଗ୍ରହକୁ Anki package ଭାବରେ ରପ୍ତାନି କରିବେ କି?</string>
     <string name="confirm_apkg_export_deck">“%s” କୁ apkg ଫାଇଲ ଭାବରେ ରପ୍ତାନି କରିବେ କି?</string>
     <string name="export_in_progress">Anki ପ୍ୟାକେଜ୍ ଫାଇଲ୍ ରପ୍ତାନି କରୁଛି&#8230;</string>
@@ -313,7 +313,7 @@
     <string name="about_ankidroid_error_copy_debug_info">କ୍ଲିପବୋର୍ଡରେ ଡିବଗ୍ ସୂଚନା କପି କରିବାରେ ତ୍ରୁଟି</string>
     <!-- Card Viewer -->
     <string name="card_viewer_could_not_find_image">କାର୍ଡ ବିଷୟବସ୍ତୁ ତ୍ରୁଟି: ‘%s ଲୋଡ୍ କରିବାରେ ବିଫଳ ହେଲା</string>
-    <string name="card_viewer_media_relative_protocol">କାର୍ଡ ବିଷୟବସ୍ତୁ ତ୍ରୁଟି: ମିଡିଆ ଅଦ୍ୟତନ ଆବଶ୍ୟକ</string>
+    <string name="card_viewer_media_relative_protocol">କାର୍ଡ ବିଷୟବସ୍ତୁ ତ୍ରୁଟି: ମିଡ଼ିଆ ଅଦ୍ୟତନ ଆବଶ୍ୟକ</string>
     <string name="cannot_load_http_resource">http ଉତ୍ସଗୁଡ଼ିକୁ ଧାରଣ କରିବା ଆଉ ସମର୍ଥିତ ନୁହେଁ</string>
     <!-- Deck Picker -->
     <string name="deck_picker_failed_deck_load">ଡେକ୍ ‘%s’ ଲୋଡ୍ ହବାରେ ବିଫଳ ହେଲା</string>
@@ -347,6 +347,6 @@
     <string name="minus_sign" comment="Label for decrement button in IncrementerNumberRangePreference">-</string>
     <!-- Used for credential empty warning message -->
     <string name="email_id_empty">ଇମେଲ୍ ଠିକଣା ଆବଶ୍ୟକ</string>
-    <string name="password_empty">ପାସୱାର୍ଡ ଆବଶ୍ୟକ</string>
+    <string name="password_empty">ପାସ୍ଓ୍ୱାର୍ଡ଼ ଆବଶ୍ୟକ</string>
     <string name="back_pressed_once">ପ୍ରସ୍ଥାନ କରିବା ପାଇଁ ପୁନର୍ବାର ଦବାନ୍ତୁ</string>
 </resources>

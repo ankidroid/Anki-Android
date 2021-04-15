@@ -58,7 +58,6 @@ import com.ichi2.utils.BooleanGetter;
 import com.ichi2.utils.FragmentFactoryUtils;
 import com.ichi2.utils.HtmlUtils;
 
-import androidx.fragment.app.FragmentFactory;
 import timber.log.Timber;
 
 import static com.ichi2.anim.ActivityTransitionAnimation.Direction.*;
@@ -164,7 +163,7 @@ public class StudyOptionsFragment extends Fragment implements Toolbar.OnMenuItem
     private void openFilteredDeckOptions(boolean defaultConfig) {
         Intent i = new Intent(getActivity(), FilteredDeckOptions.class);
         i.putExtra("defaultConfig", defaultConfig);
-        onDeckOptionsActivityResult.launch(i);
+        mOnDeckOptionsActivityResult.launch(i);
         ActivityTransitionAnimation.slide(getActivity(), FADE);
     }
 
@@ -248,7 +247,7 @@ public class StudyOptionsFragment extends Fragment implements Toolbar.OnMenuItem
         Intent reviewer = new Intent(getActivity(), Reviewer.class);
         if (mFragmented) {
             mToReviewer = true;
-            onRequestPreviewActivityResult.launch(reviewer);
+            mOnRequestReviewActivityResult.launch(reviewer);
         } else {
             // Go to DeckPicker after studying when not tablet
             reviewer.setFlags(Intent.FLAG_ACTIVITY_FORWARD_RESULT);
@@ -329,7 +328,7 @@ public class StudyOptionsFragment extends Fragment implements Toolbar.OnMenuItem
                 openFilteredDeckOptions();
             } else {
                 Intent i = new Intent(getActivity(), DeckOptions.class);
-                onDeckOptionsActivityResult.launch(i);
+                mOnDeckOptionsActivityResult.launch(i);
                 ActivityTransitionAnimation.slide(getActivity(), FADE);
             }
             return true;
@@ -439,7 +438,7 @@ public class StudyOptionsFragment extends Fragment implements Toolbar.OnMenuItem
         }
     }
 
-    ActivityResultLauncher<Intent> onRequestPreviewActivityResult = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(), result -> {
+    ActivityResultLauncher<Intent> mOnRequestReviewActivityResult = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(), result -> {
         configureToolbar();
         if ((result.getResultCode() == DeckPicker.RESULT_DB_ERROR) || (result.getResultCode() == DeckPicker.RESULT_MEDIA_EJECTED)) {
             closeStudyOptions(result.getResultCode());
@@ -454,7 +453,7 @@ public class StudyOptionsFragment extends Fragment implements Toolbar.OnMenuItem
         }
     });
 
-    ActivityResultLauncher<Intent> onDeckOptionsActivityResult = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(), result -> {
+    ActivityResultLauncher<Intent> mOnDeckOptionsActivityResult = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(), result -> {
         configureToolbar();
         if ((result.getResultCode() == DeckPicker.RESULT_DB_ERROR) || (result.getResultCode() == DeckPicker.RESULT_MEDIA_EJECTED)) {
             closeStudyOptions(result.getResultCode());
@@ -475,20 +474,6 @@ public class StudyOptionsFragment extends Fragment implements Toolbar.OnMenuItem
         }
     });
 
-    ActivityResultLauncher<Intent> onStatisticsActivityResult = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(), result -> {
-        configureToolbar();
-        if ((result.getResultCode() == DeckPicker.RESULT_DB_ERROR) || (result.getResultCode() == DeckPicker.RESULT_MEDIA_EJECTED)) {
-            closeStudyOptions(result.getResultCode());
-            return;
-        }
-        if (result.getData().hasExtra("originalDeck")) {
-            getCol().getDecks().select(result.getData().getLongExtra("originalDeck", 0L));
-        }
-        if (mCurrentContentView == CONTENT_CONGRATS) {
-            mCurrentContentView = CONTENT_STUDY_OPTIONS;
-            setFragmentContentView(mStudyOptionsView);
-        }
-    });
 
     private void dismissProgressDialog() {
         if (mStudyOptionsView != null && mStudyOptionsView.findViewById(R.id.progress_bar) != null) {

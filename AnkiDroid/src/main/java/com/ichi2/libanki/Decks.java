@@ -28,13 +28,14 @@ import com.ichi2.anki.AnkiDroidApp;
 import com.ichi2.anki.exception.ConfirmModSchemaException;
 import com.ichi2.anki.exception.DeckRenameException;
 import com.ichi2.anki.exception.FilteredAncestor;
-import com.ichi2.libanki.exception.NoSuchDeckException;
 
 import com.ichi2.utils.DeckComparator;
 import com.ichi2.utils.DeckNameComparator;
 import com.ichi2.utils.JSONArray;
 import com.ichi2.utils.JSONObject;
 import com.ichi2.utils.SyncStatus;
+
+import net.ankiweb.rsdroid.RustCleanup;
 
 import java.text.Normalizer;
 import java.util.ArrayList;
@@ -459,7 +460,7 @@ public class Decks {
     }
 
 
-    public ArrayList<String> allNames() {
+    public List<String> allNames() {
         return allNames(true);
     }
 
@@ -467,8 +468,8 @@ public class Decks {
     /**
      * An unsorted list of all deck names.
      */
-    public ArrayList<String> allNames(boolean dyn) {
-        ArrayList<String> list = new ArrayList<>(mDecks.size());
+    public List<String> allNames(boolean dyn) {
+        List<String> list = new ArrayList<>(mDecks.size());
         if (dyn) {
             for (Deck x : mDecks.values()) {
                 list.add(x.getString("name"));
@@ -487,7 +488,7 @@ public class Decks {
     /**
      * A list of all decks.
      */
-    public ArrayList<Deck> all() {
+    public List<Deck> all() {
         return new ArrayList<>(mDecks.values());
     }
 
@@ -499,8 +500,8 @@ public class Decks {
      * This method does not exist in the original python module but *must* be used for any user
      * interface components that display a deck list to ensure the ordering is consistent.
      */
-    public ArrayList<Deck> allSorted() {
-        ArrayList<Deck> decks = all();
+    public List<Deck> allSorted() {
+        List<Deck> decks = all();
         Collections.sort(decks, DeckComparator.INSTANCE);
         return decks;
     }
@@ -801,6 +802,10 @@ public class Decks {
         assert deck != null;
         if (deck.has("conf")) {
             DeckConfig conf = getConf(deck.getLong("conf"));
+            if (conf == null) {
+                // fall back on default
+                conf = getConf(1L);
+            }
             conf.put("dyn", DECK_STD);
             return conf;
         }
@@ -882,11 +887,11 @@ public class Decks {
 
     public void restoreToDefault(DeckConfig conf) {
         int oldOrder = conf.getJSONObject("new").getInt("order");
-        DeckConfig _new = new DeckConfig(DEFAULT_CONF);
+        DeckConfig _new = mCol.getBackend().new_deck_config_legacy();
         _new.put("id", conf.getLong("id"));
         _new.put("name", conf.getString("name"));
-        mDconf.put(conf.getLong("id"), _new);
-        save(_new);
+
+        updateConf(_new);
         // if it was previously randomized, resort
         if (oldOrder == 0) {
             mCol.getSched().resortConf(_new);
@@ -971,7 +976,7 @@ public class Decks {
     }
 
     private void _checkDeckTree() {
-        ArrayList<Deck> decks = allSorted();
+        List<Deck> decks = allSorted();
         Map<String, Deck> names = new HashMap<>(decks.size());
 
         for (Deck deck: decks) {
@@ -1132,7 +1137,7 @@ public class Decks {
         Node childMap = new Node();
 
         // Go through all decks, sorted by name
-        ArrayList<Deck> decks = all();
+        List<Deck> decks = all();
 
         Collections.sort(decks, DeckComparator.INSTANCE);
 
@@ -1270,7 +1275,8 @@ public class Decks {
         return current().optString("desc","");
     }
 
-
+    @Deprecated
+    @RustCleanup("This exists in Rust as DecksDictProxy, but its usage is warned against")
     public HashMap<Long, Deck> getDecks() {
         return mDecks;
     }
@@ -1284,23 +1290,6 @@ public class Decks {
             }
         }
         return validValues.toArray(new Long[0]);
-    }
-
-    private Deck getDeckOrFail(long deckId) throws NoSuchDeckException {
-        Deck deck = get(deckId, false);
-        if (deck == null) {
-            throw new NoSuchDeckException(deckId);
-        }
-        return deck;
-    }
-
-    public boolean hasDeckOptions(long deckId) throws NoSuchDeckException {
-        return getDeckOrFail(deckId).has("conf");
-    }
-
-
-    public void removeDeckOptions(long deckId) throws NoSuchDeckException {
-        getDeckOrFail(deckId).remove("conf");
     }
 
     public static boolean isDynamic(Collection col, long deckId) {

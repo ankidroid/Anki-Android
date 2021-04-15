@@ -36,11 +36,11 @@ import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.google.gson.Gson;
 import com.ichi2.anki.AnkiDroidApp;
 import com.ichi2.anki.R;
+import com.ichi2.anki.UIUtils;
 import com.ichi2.anki.multimediacard.glosbe.json.Meaning;
 import com.ichi2.anki.multimediacard.glosbe.json.Phrase;
 import com.ichi2.anki.multimediacard.glosbe.json.Response;
@@ -259,9 +259,7 @@ public class TranslationActivity extends FragmentActivity implements DialogInter
 
 
     private void showToastLong(CharSequence text) {
-        int duration = Toast.LENGTH_LONG;
-        Toast toast = Toast.makeText(this, text, duration);
-        toast.show();
+        UIUtils.showThemedToast(this, text, false);
     }
 
 
@@ -384,9 +382,7 @@ public class TranslationActivity extends FragmentActivity implements DialogInter
 
 
     private void showToast(CharSequence text) {
-        int duration = Toast.LENGTH_SHORT;
-        Toast toast = Toast.makeText(this, text, duration);
-        toast.show();
+        UIUtils.showThemedToast(this, text, true);
     }
 
 

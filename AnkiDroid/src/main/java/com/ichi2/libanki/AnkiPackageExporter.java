@@ -162,7 +162,7 @@ class AnkiExporter extends Exporter {
     String mMediaDir;
     // Actual capacity will be set when known, if media are imported.
     final ArrayList<String> mMediaFiles = new ArrayList<>(0);
-    @SuppressLint("FieldNamingPatternDetector")
+    @SuppressLint("NonPublicNonStaticFieldName")
     boolean _v2sched;
 
 

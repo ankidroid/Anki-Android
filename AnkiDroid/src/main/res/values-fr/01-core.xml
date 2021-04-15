@@ -116,6 +116,7 @@
     <string name="menu_edit_tags">Modifier les étiquettes</string>
     <string name="delete_note_message">Voulez-vous vraiment supprimer cette note et toutes ses cartes ?\n%s</string>
     <string name="menu_select">Sélectionner le texte</string>
+    <string name="menu_lookup">Lookup text</string>
     <string name="menu_search">Trouvé en %1$s</string>
     <string name="menu_mark_note">Marquer la note</string>
     <string name="menu_unmark_note">Démarquer la note</string>

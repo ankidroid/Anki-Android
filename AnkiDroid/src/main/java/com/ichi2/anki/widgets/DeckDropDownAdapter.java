@@ -11,8 +11,7 @@ import com.ichi2.anki.R;
 
 import com.ichi2.libanki.Deck;
 
-import java.util.ArrayList;
-
+import java.util.List;
 
 
 public final class DeckDropDownAdapter extends BaseAdapter {
@@ -22,9 +21,9 @@ public final class DeckDropDownAdapter extends BaseAdapter {
     }
 
     private final Context mContext;
-    private final ArrayList<Deck> mDecks;
+    private final List<Deck> mDecks;
 
-    public DeckDropDownAdapter(Context context, ArrayList<Deck> decks) {
+    public DeckDropDownAdapter(Context context, List<Deck> decks) {
         this.mContext = context;
         this.mDecks = decks;
     }

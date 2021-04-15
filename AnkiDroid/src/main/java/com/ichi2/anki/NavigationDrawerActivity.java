@@ -53,8 +53,6 @@ public abstract class NavigationDrawerActivity extends AnkiActivity implements N
     protected CharSequence mTitle;
     protected Boolean mFragmented = false;
     private boolean mNavButtonGoesBack = false;
-    // Other members
-    private String mOldColPath;
     private int mOldTheme;
     // Navigation drawer list item entries
     private DrawerLayout mDrawerLayout;
@@ -238,22 +236,16 @@ public abstract class NavigationDrawerActivity extends AnkiActivity implements N
         NotificationChannels.setup(getApplicationContext());
         // Restart the activity on preference change
         if (requestCode == REQUEST_PREFERENCES_UPDATE) {
-            if (mOldColPath != null && CollectionHelper.getCurrentAnkiDroidDirectory(this).equals(mOldColPath)) {
-                // collection path hasn't been changed so just restart the current activity
-                if ((this instanceof Reviewer) && preferences.getBoolean("tts", false)) {
-                    // Workaround to kick user back to StudyOptions after opening settings from Reviewer
-                    // because onDestroy() of old Activity interferes with TTS in new Activity
-                    finishWithoutAnimation();
-                } else if (mOldTheme != Themes.getCurrentTheme(getApplicationContext())) {
-                    // The current theme was changed, so need to reload the stack with the new theme
-                    restartActivityInvalidateBackstack(this);
-                } else {
-                    restartActivity();
-                }
-            } else {
-                // collection path has changed so kick the user back to the DeckPicker
-                CollectionHelper.getInstance().closeCollection(true, "Preference Modification: collection path changed");
+            // collection path hasn't been changed so just restart the current activity
+            if ((this instanceof Reviewer) && preferences.getBoolean("tts", false)) {
+                // Workaround to kick user back to StudyOptions after opening settings from Reviewer
+                // because onDestroy() of old Activity interferes with TTS in new Activity
+                finishWithoutAnimation();
+            } else if (mOldTheme != Themes.getCurrentTheme(getApplicationContext())) {
+                // The current theme was changed, so need to reload the stack with the new theme
                 restartActivityInvalidateBackstack(this);
+            } else {
+                restartActivity();
             }
         } else {
             super.onActivityResult(requestCode, resultCode, data);
@@ -318,7 +310,6 @@ public abstract class NavigationDrawerActivity extends AnkiActivity implements N
                 startActivityForResultWithAnimation(intent, REQUEST_ADDONS, START);
             } else if (itemId == R.id.nav_settings) {
                 Timber.i("Navigating to settings");
-                mOldColPath = CollectionHelper.getCurrentAnkiDroidDirectory(NavigationDrawerActivity.this);
                 // Remember the theme we started with so we can restart the Activity if it changes
                 mOldTheme = Themes.getCurrentTheme(getApplicationContext());
                 startActivityForResultWithAnimation(new Intent(NavigationDrawerActivity.this, Preferences.class), REQUEST_PREFERENCES_UPDATE, FADE);
