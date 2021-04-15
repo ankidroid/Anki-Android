@@ -50,6 +50,10 @@ public class CardTemplateTest {
 
         when(mMockContext.getSharedPreferences("mock_context_preferences", Context.MODE_PRIVATE))
                 .thenReturn(mMockSharedPreferences);
+
+        when(mMockContext.getSharedPreferences("mock_context_preferences", Context.MODE_PRIVATE)
+                .getBoolean("javascript_addons_support_prefs", false))
+                .thenReturn(true);
     }
 
     @After
