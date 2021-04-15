@@ -36,8 +36,6 @@
         android:layout_width="0dip"
         android:layout_height="fill_parent"
         android:layout_weight="1"
-        android:paddingLeft="4dp"
-        android:paddingRight="2dp"
         android:paddingStart="4dp"
         android:paddingEnd="2dp"
         android:paddingVertical="1dp"

@@ -11,8 +11,8 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
-        android:gravity="left|center_vertical"
-        android:layout_toLeftOf="@+id/card_browser_my_search_remove_button">
+        android:gravity="start|center_vertical"
+        android:layout_toStartOf="@+id/card_browser_my_search_remove_button">
         <com.ichi2.ui.FixedTextView android:id="@+id/card_browser_my_search_name_textview"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -25,7 +25,7 @@
     <ImageButton android:id="@+id/card_browser_my_search_remove_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
         android:layout_centerVertical="true"
         android:src="@drawable/ic_remove_circle_grey600_24dp"
         android:background="@color/transparent"/>
