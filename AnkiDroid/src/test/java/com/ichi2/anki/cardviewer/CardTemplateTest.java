@@ -18,7 +18,6 @@ package com.ichi2.anki.cardviewer;
 
 import android.content.Context;
 import android.content.SharedPreferences;
-import androidx.preference.PreferenceManager;
 
 import org.junit.After;
 import org.junit.Before;
@@ -57,7 +56,7 @@ public class CardTemplateTest {
     @Test
     @SuppressWarnings("deprecation") // TODO Tracked in https://github.com/ankidroid/Anki-Android/issues/5019
     public void testSendException() {
-        try (MockedStatic<PreferenceManager> ignored = mockStatic(androidx.preference.PreferenceManager.class)) {
+        try (MockedStatic<android.preference.PreferenceManager> ignored = mockStatic(android.preference.PreferenceManager.class)) {
             when(android.preference.PreferenceManager.getDefaultSharedPreferences(ArgumentMatchers.any()))
                     .thenReturn(mMockSharedPreferences);
         }
