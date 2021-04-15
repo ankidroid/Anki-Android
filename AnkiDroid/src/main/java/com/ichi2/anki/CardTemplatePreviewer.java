@@ -16,8 +16,13 @@
 
 package com.ichi2.anki;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
+import android.widget.Spinner;
+import android.widget.Toast;
 
 import com.ichi2.libanki.Card;
 import com.ichi2.libanki.Collection;
@@ -25,6 +30,7 @@ import com.ichi2.libanki.Model;
 import com.ichi2.libanki.Note;
 import com.ichi2.libanki.utils.NoteUtils;
 import com.ichi2.themes.Themes;
+import com.ichi2.utils.JSONArray;
 import com.ichi2.utils.JSONObject;
 
 import java.io.IOException;
@@ -50,6 +56,7 @@ public class CardTemplatePreviewer extends AbstractFlashcardViewer {
     private Bundle mNoteEditorBundle = null;
 
     private boolean mShowingAnswer;
+    private Spinner mReviewCardSpinner;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -150,6 +157,8 @@ public class CardTemplatePreviewer extends AbstractFlashcardViewer {
         findViewById(R.id.answer_options_layout).setVisibility(View.GONE);
         mPreviewButtonsLayout.setVisibility(View.VISIBLE);
 
+        mReviewCardSpinner = findViewById(R.id.review_card_spinner);
+
         mPreviewButtonsLayout.setOnClickListener(mToggleAnswerHandler);
 
         mPreviewPrevCard.setVisibility(View.GONE);
@@ -228,13 +237,31 @@ public class CardTemplatePreviewer extends AbstractFlashcardViewer {
             closeCardTemplatePreviewer();
             return;
         }
-        if (mCardList != null && mOrdinal >= 0 && mOrdinal < mCardList.length) {
-            mCurrentCard = new PreviewerCard(col, mCardList[mOrdinal]);
+
+        ArrayList<String> cardsList = new ArrayList<>();
+        JSONArray tmpls = mCurrentCard.note().model().getJSONArray("tmpls");
+
+        for (int i = 0; i < tmpls.length(); i++) {
+            String name = tmpls.getJSONObject(i).optString("name");
+            cardsList.add(name);
         }
 
+        ArrayAdapter<String> adapter = new ArrayAdapter<>(this, R.layout.support_simple_spinner_dropdown_item, cardsList);
+        mReviewCardSpinner.setAdapter(adapter);
+        mReviewCardSpinner.setVisibility(View.VISIBLE);
+        mReviewCardSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+
+                if (mCardList != null && mOrdinal >= 0 && mOrdinal < mCardList.length) {
+                    mCurrentCard = new PreviewerCard(col, mCardList[mOrdinal]);
+                }
+
         if (mNoteEditorBundle != null) {
+            Toast.makeText(CardTemplatePreviewer.this, "Entered NoteEditorBundle not null", Toast.LENGTH_SHORT).show();
             long newDid = mNoteEditorBundle.getLong("did");
             if (col.getDecks().isDyn(newDid)) {
+                Toast.makeText(CardTemplatePreviewer.this, "setting Odid", Toast.LENGTH_SHORT).show();
                 mCurrentCard.setODid(mCurrentCard.getDid());
             }
             mCurrentCard.setDid(newDid);
@@ -245,11 +272,18 @@ public class CardTemplatePreviewer extends AbstractFlashcardViewer {
 
             Bundle noteFields = mNoteEditorBundle.getBundle("editFields");
             if (noteFields != null) {
+                Toast.makeText(CardTemplatePreviewer.this, "entered NoteFieldsBundle", Toast.LENGTH_SHORT).show();
                 for (String fieldOrd : noteFields.keySet()) {
                     // In case the fields on the card are out of sync with the bundle
                     int fieldOrdInt = Integer.parseInt(fieldOrd);
                     if (fieldOrdInt < currentNote.getFields().length) {
-                        currentNote.setField(fieldOrdInt, noteFields.getString(fieldOrd));
+                        Toast.makeText(CardTemplatePreviewer.this, "Entered in loop", Toast.LENGTH_SHORT).show();
+                        if(mReviewCardSpinner.getSelectedItemPosition() == 1) {
+                            int newInt = (fieldOrdInt == 0) ? 1 : 0;
+                            currentNote.setField(newInt, noteFields.getString(fieldOrd));
+                        } else {
+                            currentNote.setField(fieldOrdInt, noteFields.getString(fieldOrd));
+                        }
                     }
                 }
             }
@@ -259,6 +293,12 @@ public class CardTemplatePreviewer extends AbstractFlashcardViewer {
         if (mShowingAnswer) {
             displayCardAnswer();
         }
+            }
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
 
         showBackIcon();
     }
