@@ -441,7 +441,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
 
     // Event handler for eases (answer buttons)
     class SelectEaseHandler implements View.OnClickListener, View.OnTouchListener {
-        private final int CLICK_ACTION_THRESHOLD = 200;
+        private static final int CLICK_ACTION_THRESHOLD = 200;
 
         private Card mPrevCard = null;
         private boolean mHasBeenTouched = false;
