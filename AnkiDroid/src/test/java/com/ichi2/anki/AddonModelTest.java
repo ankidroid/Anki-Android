@@ -122,8 +122,8 @@ public class AddonModelTest extends RobolectricTest {
 
     @Test
     public void testNullAddons() {
-        AddonModel addonModel1 = AddonModel.tryParse(emptyPackageJsonObject, "reviewer");
-        AddonModel addonModel2 = AddonModel.tryParse(keywordsEmptyJsonObject, "reviewer");
+        AddonModel addonModel1 = AddonModel.isValidAddonPackage(emptyPackageJsonObject, "reviewer");
+        AddonModel addonModel2 = AddonModel.isValidAddonPackage(keywordsEmptyJsonObject, "reviewer");
 
         assertThat(addonModel1, is(nullValue()));
         assertThat(addonModel2, is(nullValue()));

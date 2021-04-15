@@ -73,8 +73,10 @@ public class AddonModel {
         String addonAnkiDroidAPI = jsonObject.optString("ankidroid_js_api", "");
         String addonHomepage = jsonObject.optString("homepage", "");
         String addonType = jsonObject.optString("addon_type", "");
-        if (type.equals(addonType)) {
-            return new AddonModel(addonName, addonVersion, addonDev, addonAnkiDroidAPI, addonHomepage, addonType);
+
+        AddonModel addonModel = new AddonModel(addonName, addonVersion, addonDev, addonAnkiDroidAPI, addonHomepage, addonType);
+        if (type.equals(addonType) && !isKeyEmpty(addonModel)) {
+            return addonModel;
         }
         return null;
     }
@@ -123,16 +125,11 @@ public class AddonModel {
             return null;
         }
 
-        // if other strings are non empty
-        if (isValid(addonModel)) {
-            return addonModel;
-        }
-
-        return null;
+        return addonModel;
     }
 
-    public static boolean isValid(AddonModel addonModel) {
-        if (!addonModel.getName().isEmpty() && !addonModel.getVersion().isEmpty() && !addonModel.getDeveloper().isEmpty() && !addonModel.getHomepage().isEmpty()) {
+    public static boolean isKeyEmpty(AddonModel addonModel) {
+        if (addonModel.getName().isEmpty() && addonModel.getVersion().isEmpty() && addonModel.getDeveloper().isEmpty() && addonModel.getHomepage().isEmpty()) {
             return true;
         }
         return false;
