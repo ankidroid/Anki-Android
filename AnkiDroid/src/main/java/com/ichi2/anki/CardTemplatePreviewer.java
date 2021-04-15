@@ -258,6 +258,7 @@ public class CardTemplatePreviewer extends AbstractFlashcardViewer {
                 }
             }
         }
+
         displayCardQuestion();
         if (mShowingAnswer) {
             displayCardAnswer();
