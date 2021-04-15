@@ -220,11 +220,10 @@ public class AnkiStatsTaskHandler {
     private static class DeckPreviewStatistics extends AsyncTask<Pair<Collection, TextView>, Void, String> {
         private WeakReference<TextView> mTextView;
 
-        private boolean mIsRunning = false;
+        private boolean mIsRunning = true;
 
         public DeckPreviewStatistics() {
             super();
-            mIsRunning = true;
         }
 
         @Override
