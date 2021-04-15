@@ -13,6 +13,7 @@
         <com.ichi2.ui.FixedTextView
             android:id="@+id/new_number"
             android:layout_width="wrap_content"
+            android:focusable="true"
             android:layout_height="wrap_content"
             android:text=""
             android:textColor="?attr/newCountColor"
@@ -20,6 +21,7 @@
         <com.ichi2.ui.FixedTextView
             android:id="@+id/learn_number"
             android:layout_width="wrap_content"
+            android:focusable="true"
             android:layout_height="wrap_content"
             android:layout_toRightOf="@+id/new_number"
             android:paddingLeft="8dp"
@@ -31,6 +33,7 @@
             android:id="@+id/review_number"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:focusable="true"
             android:layout_toRightOf="@+id/learn_number"
             android:paddingLeft="8dp"
             android:text=""
@@ -42,6 +45,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textAlignment="center"
+            android:focusable="true"
             android:layout_centerHorizontal="true"
             android:minEms="4"
             android:gravity="center"

@@ -11,6 +11,7 @@
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:layout_margin="5dp"
+
         android:focusable="true"
         android:text="@string/card_template_editor_front" />
     <ScrollView
@@ -29,6 +30,7 @@
                 android:layout_width="fill_parent"
                 android:layout_height="fill_parent"
                 android:layout_margin="5dp"
+                android:focusable="true"
                 android:contentDescription="@string/card_template_editor_front"
                 android:inputType="textMultiLine"/>
         </LinearLayout>
@@ -56,6 +58,7 @@
                 android:layout_width="fill_parent"
                 android:layout_height="fill_parent"
                 android:layout_margin="5dp"
+                android:focusable="true"
                 android:contentDescription="@string/card_template_editor_styling"
                 android:text=""
                 android:inputType="textMultiLine"/>
@@ -84,6 +87,7 @@
                 android:layout_width="fill_parent"
                 android:layout_height="fill_parent"
                 android:layout_margin="5dp"
+                android:focusable="true"
                 android:contentDescription="@string/card_template_editor_back"
                 android:inputType="textMultiLine"/>
         </LinearLayout>

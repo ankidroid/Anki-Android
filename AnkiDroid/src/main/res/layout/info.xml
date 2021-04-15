@@ -39,6 +39,7 @@
             android:gravity="center">
             <WebView
                 android:id="@+id/info"
+                android:focusable="true"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:gravity="center_vertical" />
@@ -53,17 +54,20 @@
             <Button
                 android:id="@+id/left_button"
                 android:layout_width="0dip"
+                android:focusable="true"
                 android:layout_height="fill_parent"
                 android:layout_weight="1" />
 
             <Button
                 android:id="@+id/right_button"
                 android:layout_width="0dip"
+                android:focusable="true"
                 android:layout_height="fill_parent"
                 android:layout_weight="1" />
         </LinearLayout>
         <Button
             android:id="@+id/info_donate"
+            android:focusable="true"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/help_item_support_opencollective_donate" />

@@ -29,6 +29,8 @@
                     <Spinner
                         android:id="@+id/browser_column1_spinner"
                         android:layout_width="0dp"
+                        android:focusable="true"
+                        android:layout_height="wrap_content"
                         android:layout_height="match_parent"
                         android:layout_weight="1"
                         app:popupTheme="@style/ActionBar.Popup" />
@@ -38,7 +40,9 @@
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
                         android:layout_weight="1"
-                        app:popupTheme="@style/ActionBar.Popup" />
+                        android:focusable="true"
+                        app:popupTheme="@style/ActionBar.Popup"/>
+
                 </LinearLayout>
 
                 <ListView

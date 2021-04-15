@@ -12,6 +12,7 @@
         android:id="@+id/answer_field"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
+        android:focusable="true"
         android:hint="@string/type_answer_hint"
         android:imeOptions="actionDone"
         android:inputType="text|textNoSuggestions" />
@@ -34,6 +35,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
+            android:focusable="true"
             android:textColor="?attr/answerButtonTextColor"
             android:text="@string/show_answer"
             style="@style/FooterButton" />
@@ -82,6 +84,7 @@
                 android:layout_width="0dip"
                 android:layout_height="@dimen/touch_target"
                 android:layout_weight="1"
+                android:focusable="true"
                 android:orientation="vertical">
 
                 <com.ichi2.ui.FixedTextView
@@ -103,13 +106,15 @@
                 android:nextFocusLeft="@id/flashcard_layout_ease1"
                 android:layout_width="0dip"
                 android:layout_height="@dimen/touch_target"
+                android:focusable="true"
                 android:layout_weight="1"
                 android:orientation="vertical">
 
                 <com.ichi2.ui.FixedTextView
                     android:id="@+id/nextTime2"
                     style="@style/HardButtonTimeStyle"
-                    tools:text="2 d" />
+                    tools:text="2 d"
+                    />
 
                 <com.ichi2.ui.FixedTextView
                     android:id="@+id/ease2"
@@ -125,6 +130,7 @@
                 android:nextFocusLeft="@id/flashcard_layout_ease2"
                 android:layout_width="0dip"
                 android:layout_height="@dimen/touch_target"
+                android:focusable="true"
                 android:layout_weight="1"
                 android:orientation="vertical">
 
@@ -145,6 +151,7 @@
                 android:id="@+id/flashcard_layout_ease4"
                 android:nextFocusLeft="@id/flashcard_layout_ease3"
                 android:layout_width="0dip"
+                android:focusable="true"
                 android:layout_height="@dimen/touch_target"
                 android:layout_weight="1"
                 android:orientation="vertical">
@@ -175,6 +182,7 @@
                 android:background="?attr/hardButtonRef"
                 android:id="@+id/flip_card"
                 android:layout_width="fill_parent"
+                android:focusable="true"
                 android:layout_height="fill_parent"
                 android:clickable="false"
                 android:text="@string/show_answer"

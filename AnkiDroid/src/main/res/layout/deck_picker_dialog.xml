@@ -34,6 +34,7 @@
 
     <com.ichi2.ui.FixedTextView android:id="@+id/deck_picker_dialog_summary"
         android:layout_width="wrap_content"
+        android:focusable="true"
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
         android:textSize="18sp"
