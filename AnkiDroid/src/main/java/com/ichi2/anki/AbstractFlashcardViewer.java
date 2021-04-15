@@ -299,10 +299,6 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
     protected LinearLayout mEase2Layout;
     protected LinearLayout mEase3Layout;
     protected LinearLayout mEase4Layout;
-    protected SelectEaseHandler mEase1Handler;
-    protected SelectEaseHandler mEase2Handler;
-    protected SelectEaseHandler mEase3Handler;
-    protected SelectEaseHandler mEase4Handler;
     protected FrameLayout mPreviewButtonsLayout;
     protected ImageView mPreviewPrevCard;
     protected ImageView mPreviewNextCard;
@@ -442,10 +438,15 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
         }
     };
 
+
     // Event handler for eases (answer buttons)
-    protected class SelectEaseHandler implements View.OnClickListener, View.OnTouchListener {
+    class SelectEaseHandler implements View.OnClickListener, View.OnTouchListener {
+        private final int CLICK_ACTION_THRESHOLD = 200;
+
         private Card mPrevCard = null;
         private boolean mHasBeenTouched = false;
+        private float mTouchX;
+        private float mTouchY;
 
         public SelectEaseHandler() {}
 
@@ -455,48 +456,61 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
                 // Save states when button pressed
                 mPrevCard = mCurrentCard;
                 mHasBeenTouched = true;
+                mTouchX = event.getRawX();
+                mTouchY = event.getRawY();
+            } else if (event.getAction() == MotionEvent.ACTION_UP) {
+                float diffX = Math.abs(event.getRawX() - mTouchX);
+                float diffY = Math.abs(event.getRawY() - mTouchY);
+                // If a click is not coming then we reset the touch
+                if (diffX > CLICK_ACTION_THRESHOLD || diffY > CLICK_ACTION_THRESHOLD) {
+                    mHasBeenTouched = false;
+                }
             }
             return false;
         }
 
         @Override
         public void onClick(View view) {
-            // Perform intended action only if the button has been pressed for current card,
-            // or if the button was not touched
-            if (mPrevCard == mCurrentCard || !mHasBeenTouched) {
-                // Ignore what is most likely an accidental double-tap.
-                if (getElapsedRealTime() - mLastClickTime < DOUBLE_TAP_IGNORE_THRESHOLD) {
-                    return;
+            // Try to perform intended action only if the button has been pressed for current card,
+            // or if the button was not touched,
+            if (mPrevCard == mCurrentCard || !mHasBeenTouched)  {
+                // Only perform if the click was not an accidental double-tap
+                if (getElapsedRealTime() - mLastClickTime >= DOUBLE_TAP_IGNORE_THRESHOLD) {
+                    // For whatever reason, performClick does not return a visual feedback anymore
+                    if (!mHasBeenTouched) {
+                        view.setPressed(true);
+                    }
+                    mLastClickTime = getElapsedRealTime();
+                    mTimeoutHandler.removeCallbacks(mShowQuestionTask);
+                    int id = view.getId();
+                    if (id == R.id.flashcard_layout_ease1) {
+                        Timber.i("AbstractFlashcardViewer:: EASE_1 pressed");
+                        answerCard(Consts.BUTTON_ONE);
+                    } else if (id == R.id.flashcard_layout_ease2) {
+                        Timber.i("AbstractFlashcardViewer:: EASE_2 pressed");
+                        answerCard(Consts.BUTTON_TWO);
+                    } else if (id == R.id.flashcard_layout_ease3) {
+                        Timber.i("AbstractFlashcardViewer:: EASE_3 pressed");
+                        answerCard(Consts.BUTTON_THREE);
+                    } else if (id == R.id.flashcard_layout_ease4) {
+                        Timber.i("AbstractFlashcardViewer:: EASE_4 pressed");
+                        answerCard(Consts.BUTTON_FOUR);
+                    } else {
+                        mCurrentEase = 0;
+                    }
+                    if (!mHasBeenTouched) {
+                        view.setPressed(false);
+                    }
                 }
-                // For whatever reason, performClick does not return a visual feedback anymore
-                if (!mHasBeenTouched) {
-                    view.setPressed(true);
-                }
-                mLastClickTime = getElapsedRealTime();
-                mTimeoutHandler.removeCallbacks(mShowQuestionTask);
-                int id = view.getId();
-                if (id == R.id.flashcard_layout_ease1) {
-                    Timber.i("AbstractFlashcardViewer:: EASE_1 pressed");
-                    answerCard(Consts.BUTTON_ONE);
-                } else if (id == R.id.flashcard_layout_ease2) {
-                    Timber.i("AbstractFlashcardViewer:: EASE_2 pressed");
-                    answerCard(Consts.BUTTON_TWO);
-                } else if (id == R.id.flashcard_layout_ease3) {
-                    Timber.i("AbstractFlashcardViewer:: EASE_3 pressed");
-                    answerCard(Consts.BUTTON_THREE);
-                } else if (id == R.id.flashcard_layout_ease4) {
-                    Timber.i("AbstractFlashcardViewer:: EASE_4 pressed");
-                    answerCard(Consts.BUTTON_FOUR);
-                } else {
-                    mCurrentEase = 0;
-                }
-                if (!mHasBeenTouched) {
-                    view.setPressed(false);
-                }
-                mHasBeenTouched = false;
             }
+            // We will have to reset the touch after every onClick event
+            // Do not return early without considering this
+            mHasBeenTouched = false;
         }
     }
+
+    private final SelectEaseHandler mEaseHandler = new SelectEaseHandler();
+
 
     @VisibleForTesting
     protected long getElapsedRealTime() {
@@ -1560,27 +1574,23 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
 
         mEase1 = findViewById(R.id.ease1);
         mEase1Layout = findViewById(R.id.flashcard_layout_ease1);
-        mEase1Handler = new SelectEaseHandler();
-        mEase1Layout.setOnClickListener((View view) -> mEase1Handler.onClick(view));
-        mEase1Layout.setOnTouchListener((View view, MotionEvent event) -> mEase1Handler.onTouch(view, event));
+        mEase1Layout.setOnClickListener((View view) -> mEaseHandler.onClick(view));
+        mEase1Layout.setOnTouchListener((View view, MotionEvent event) -> mEaseHandler.onTouch(view, event));
 
         mEase2 = findViewById(R.id.ease2);
         mEase2Layout = findViewById(R.id.flashcard_layout_ease2);
-        mEase2Handler = new SelectEaseHandler();
-        mEase2Layout.setOnClickListener((View view) -> mEase2Handler.onClick(view));
-        mEase2Layout.setOnTouchListener((View view, MotionEvent event) -> mEase2Handler.onTouch(view, event));
+        mEase2Layout.setOnClickListener((View view) -> mEaseHandler.onClick(view));
+        mEase2Layout.setOnTouchListener((View view, MotionEvent event) -> mEaseHandler.onTouch(view, event));
 
         mEase3 = findViewById(R.id.ease3);
         mEase3Layout = findViewById(R.id.flashcard_layout_ease3);
-        mEase3Handler = new SelectEaseHandler();
-        mEase3Layout.setOnClickListener((View view) -> mEase3Handler.onClick(view));
-        mEase3Layout.setOnTouchListener((View view, MotionEvent event) -> mEase3Handler.onTouch(view, event));
+        mEase3Layout.setOnClickListener((View view) -> mEaseHandler.onClick(view));
+        mEase3Layout.setOnTouchListener((View view, MotionEvent event) -> mEaseHandler.onTouch(view, event));
 
         mEase4 = findViewById(R.id.ease4);
         mEase4Layout = findViewById(R.id.flashcard_layout_ease4);
-        mEase4Handler = new SelectEaseHandler();
-        mEase4Layout.setOnClickListener((View view) -> mEase4Handler.onClick(view));
-        mEase4Layout.setOnTouchListener((View view, MotionEvent event) -> mEase4Handler.onTouch(view, event));
+        mEase4Layout.setOnClickListener((View view) -> mEaseHandler.onClick(view));
+        mEase4Layout.setOnTouchListener((View view, MotionEvent event) -> mEaseHandler.onTouch(view, event));
 
         mNext1 = findViewById(R.id.nextTime1);
         mNext2 = findViewById(R.id.nextTime2);
