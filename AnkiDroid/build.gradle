@@ -260,10 +260,10 @@ dependencies {
     testImplementation "io.github.david-allison-1:anki-android-backend-testing:$backendVersion"
 
     // May need a resolution strategy for support libs to our versions
-    implementation'ch.acra:acra-http:5.5.1'
-    implementation'ch.acra:acra-dialog:5.5.1'
-    implementation'ch.acra:acra-toast:5.5.1'
-    implementation'ch.acra:acra-limiter:5.5.1'
+    implementation'ch.acra:acra-http:5.7.0'
+    implementation'ch.acra:acra-dialog:5.7.0'
+    implementation'ch.acra:acra-toast:5.7.0'
+    implementation'ch.acra:acra-limiter:5.7.0'
 
     implementation 'io.requery:sqlite-android:3.34.1'
     implementation 'com.afollestad.material-dialogs:core:0.9.6.0'
