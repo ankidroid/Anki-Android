@@ -95,5 +95,8 @@
     <string name="gesture_toggle_whiteboard">Toggle Whiteboard</string>
     <string name="record_voice">Record Voice</string>
     <string name="replay_voice">Replay Voice</string>
+    <string name="automatic_answer_option_2">Hard (or Good if Hard is not an option)</string>
+    <string name="automatic_answer_option_3">Good (Default)</string>
+    <string name="automatic_answer_option_4">Easy (or Good if Easy is not an option)</string>
 
 </resources>
