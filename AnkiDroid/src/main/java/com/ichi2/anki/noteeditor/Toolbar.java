@@ -41,14 +41,18 @@ import android.widget.Toast;
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.flask.colorpicker.ColorPickerView;
 import com.flask.colorpicker.builder.ColorPickerDialogBuilder;
+import com.ichi2.anki.CardTemplateEditor;
 import com.ichi2.anki.R;
+import com.ichi2.anki.TemporaryModel;
+import com.ichi2.libanki.Card;
 import com.ichi2.libanki.Utils;
+import com.ichi2.utils.JSONException;
+import com.ichi2.utils.JSONObject;
 import com.ichi2.utils.ViewGroupUtils;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import androidx.annotation.ColorInt;
 import androidx.annotation.DrawableRes;
 import androidx.annotation.IdRes;
 import androidx.annotation.NonNull;
@@ -119,11 +123,11 @@ public class Toolbar extends FrameLayout {
             }
         });
         setClick(R.id.note_editor_toolbar_color_red, "<span style=\"color:red;\">", "</span>");
-        setClick(R.id.note_editor_toolbar_color_blue,"<span style=\"color:blue;\">","</span>");
-        setClick(R.id.note_editor_toolbar_color_green,"<span style=\"color:green;\">","</span>");
-        setClick(R.id.note_editor_toolbar_color_yellow,"<span style=\"color:yellow;\">","</span>");
-        setClick(R.id.note_editor_toolbar_color_white,"<span style=\"color:white;\">","</span>");
-        setClick(R.id.note_editor_toolbar_color_black,"<span style=\"color:black;\">","</span>");
+        setClick(R.id.note_editor_toolbar_color_blue, "<span style=\"color:blue;\">", "</span>");
+        setClick(R.id.note_editor_toolbar_color_green, "<span style=\"color:green;\">", "</span>");
+        setClick(R.id.note_editor_toolbar_color_yellow, "<span style=\"color:yellow;\">", "</span>");
+        setClick(R.id.note_editor_toolbar_color_white, "<span style=\"color:white;\">", "</span>");
+        setClick(R.id.note_editor_toolbar_color_black, "<span style=\"color:black;\">", "</span>");
         findViewById(R.id.note_editor_toolbar_color_custom).setOnClickListener(l -> {
             ColorPickerDialogBuilder
                     .with(getContext())
@@ -158,7 +162,6 @@ public class Toolbar extends FrameLayout {
         try {
             c = (char) event.getUnicodeChar(0);
         } catch (Exception e) {
-            Timber.w(e);
             return false;
         }
 
@@ -341,14 +344,6 @@ public class Toolbar extends FrameLayout {
         }
 
         mFormatCallback.performFormat(formatter);
-    }
-
-    public void setIconColor(@ColorInt int color) {
-        for (int i = 0; i < this.mToolbar.getChildCount(); i++) {
-            AppCompatImageButton button = (AppCompatImageButton) this.mToolbar.getChildAt(i);
-            button.setColorFilter(color);
-        }
-        mStringPaint.setColor(color);
     }
 
 

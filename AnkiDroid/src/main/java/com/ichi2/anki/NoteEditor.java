@@ -498,7 +498,13 @@ public class NoteEditor extends AnkiActivity implements
 
         // Sets the background and icon color of toolbar respectively.
         mToolbar.setBackgroundColor(Themes.getColorFromAttr(NoteEditor.this, R.attr.toolbarBackgroundColor));
-        mToolbar.setIconColor(Themes.getColorFromAttr(NoteEditor.this, R.attr.toolbarIconColor));
+        mToolbar.setFormatListener(formatter -> {
+            View currentFocus = getCurrentFocus();
+            if (!(currentFocus instanceof FieldEditText)) {
+                return;
+            }
+            modifyCurrentSelection(formatter, (FieldEditText) currentFocus);
+        });
 
         enableToolbar(mainView);
 
