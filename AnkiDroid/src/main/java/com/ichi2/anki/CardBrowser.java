@@ -29,6 +29,8 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.SystemClock;
 
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.CheckResult;
 import androidx.annotation.NonNull;
 import com.google.android.material.snackbar.Snackbar;
@@ -170,7 +172,23 @@ public class CardBrowser extends NavigationDrawerActivity implements
 
     private static final int EDIT_CARD = 0;
     private static final int ADD_NOTE = 1;
-    private static final int PREVIEW_CARDS = 2;
+
+    ActivityResultLauncher<Intent> mOnPreviewCardsActivityResult = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(), result -> {
+        Timber.d("onPreviewCardsActivityResult: resultCode=%d", result.getResultCode());
+        if (result.getResultCode() == DeckPicker.RESULT_DB_ERROR) {
+            closeCardBrowser(DeckPicker.RESULT_DB_ERROR);
+        }
+        // Previewing can now perform an "edit", so it can pass on a reloadRequired
+        Intent data = result.getData();
+        if (data != null &&
+                (data.getBooleanExtra("reloadRequired", false) || data.getBooleanExtra("noteChanged", false))) {
+            searchCards();
+            if (getReviewerCardId() == mCurrentCardId) {
+                mReloadRequired = true;
+            }
+        }
+        invalidateOptionsMenu();    // maybe the availability of undo changed
+    });
 
     private static final int DEFAULT_FONT_SIZE_RATIO = 100;
     // Should match order of R.array.card_browser_order_labels
@@ -1250,7 +1268,7 @@ public class CardBrowser extends NavigationDrawerActivity implements
 
     protected void onPreview() {
         Intent previewer = getPreviewIntent();
-        startActivityForResultWithoutAnimation(previewer, PREVIEW_CARDS);
+        mOnPreviewCardsActivityResult.launch(previewer);
     }
 
 
@@ -1366,15 +1384,6 @@ public class CardBrowser extends NavigationDrawerActivity implements
                 searchCards();
             } else {
                 Timber.w("Note was added from browser and on return mSearchView == null");
-            }
-        }
-
-        // Previewing can now perform an "edit", so it can pass on a reloadRequired
-        if (requestCode == PREVIEW_CARDS && data != null
-                && (data.getBooleanExtra("reloadRequired", false) || data.getBooleanExtra("noteChanged", false))) {
-            searchCards();
-            if (getReviewerCardId() == mCurrentCardId) {
-                mReloadRequired = true;
             }
         }
 
