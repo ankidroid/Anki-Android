@@ -54,7 +54,7 @@ public class CreateDeckDialogTest extends RobolectricTest {
             CreateDeckDialog createDeckDialog = new CreateDeckDialog(activity, R.string.new_deck, CreateDeckDialog.DeckDialogType.FILTERED_DECK, null);
             AtomicReference<Boolean> isCreated = new AtomicReference<>(false);
             String deckName = "filteredDeck";
-            shadowOf(getMainLooper()).idle();
+            advanceRobolectricLooper();
 
             createDeckDialog.setOnNewDeckCreated((id) -> {
                 // a deck was created
@@ -80,7 +80,7 @@ public class CreateDeckDialogTest extends RobolectricTest {
             CreateDeckDialog createDeckDialog = new CreateDeckDialog(activity, R.string.new_deck, CreateDeckDialog.DeckDialogType.SUB_DECK, deckParentId);
             AtomicReference<Boolean> isCreated = new AtomicReference<>(false);
             String deckName = "filteredDeck";
-            shadowOf(getMainLooper()).idle();
+            advanceRobolectricLooper();
 
             createDeckDialog.setOnNewDeckCreated((id) -> {
                 try {
@@ -104,7 +104,7 @@ public class CreateDeckDialogTest extends RobolectricTest {
             CreateDeckDialog createDeckDialog = new CreateDeckDialog(activity, R.string.new_deck, CreateDeckDialog.DeckDialogType.DECK, null);
             AtomicReference<Boolean> isCreated = new AtomicReference<>(false);
             String deckName = "Deck Name";
-            shadowOf(getMainLooper()).idle();
+            advanceRobolectricLooper();
 
             createDeckDialog.setOnNewDeckCreated((id) -> {
                 // a deck was created
@@ -127,7 +127,7 @@ public class CreateDeckDialogTest extends RobolectricTest {
             CreateDeckDialog createDeckDialog = new CreateDeckDialog(activity, R.string.new_deck, CreateDeckDialog.DeckDialogType.RENAME_DECK, null);
             createDeckDialog.setDeckName(deckName);
             AtomicReference<Boolean> isCreated = new AtomicReference<>(false);
-            shadowOf(getMainLooper()).idle();
+            advanceRobolectricLooper();
 
             createDeckDialog.setOnNewDeckCreated((id) -> {
                 // a deck name was renamed

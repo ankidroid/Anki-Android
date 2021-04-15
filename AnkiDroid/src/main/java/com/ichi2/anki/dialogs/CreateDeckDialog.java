@@ -32,6 +32,7 @@ import com.ichi2.ui.FixedEditText;
 import java.util.List;
 import java.util.Locale;
 import java.util.function.Consumer;
+import java.util.stream.Collectors;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -73,15 +74,14 @@ public class CreateDeckDialog {
     }
 
     public void showFilteredDeckDialog() {
-        Timber.i("DeckPicker:: New filtered deck button pressed");
+        Timber.i("CreateDeckDialog::showFilteredDeckDialog");
         List<String> names = mAnkiActivity.getCol().getDecks().allNames();
         int n = 1;
-        String name = String.format(Locale.getDefault(), "%s %d", mContext.getResources().getString(R.string.filtered_deck_name), n);
-        while (names.contains(name)) {
+        String namePrefix = mContext.getResources().getString(R.string.filtered_deck_name) + " ";
+        while (names.contains(namePrefix + n)) {
             n++;
-            name = String.format(Locale.getDefault(), "%s %d", mContext.getResources().getString(R.string.filtered_deck_name), n);
         }
-        mDialogEditText.setText(name);
+        mDialogEditText.setText(namePrefix + n);
 
         showDialog();
     }
@@ -115,7 +115,7 @@ public class CreateDeckDialog {
         if (Decks.isValidDeckName(deckName)) {
             createNewDeck(deckName);
         } else {
-            Timber.d("configureFloatingActionsMenu::addDeckButton::onPositiveListener - Not creating invalid deck name '%s'", deckName);
+            Timber.d("CreateDeckDialog::createDeck - Not creating invalid deck name '%s'", deckName);
             UIUtils.showThemedToast(mContext, mContext.getString(R.string.invalid_deck_name), false);
         }
         closeDialog();
@@ -124,7 +124,7 @@ public class CreateDeckDialog {
     public boolean createFilteredDeck(@NonNull String deckName) {
         try {
             // create filtered deck
-            Timber.i("DeckPicker:: Creating filtered deck...");
+            Timber.i("CreateDeckDialog::createFilteredDeck...");
             long newDeckId = mAnkiActivity.getCol().getDecks().newDyn(deckName);
             mOnNewDeckCreated.accept(newDeckId);
         } catch (FilteredAncestor filteredAncestor) {
@@ -175,7 +175,7 @@ public class CreateDeckDialog {
     public void renameDeck(String newDeckName) {
         String newName = newDeckName.replaceAll("\"", "");
         if (!Decks.isValidDeckName(newName)) {
-            Timber.i("renameDeckDialog not renaming deck to invalid name '%s'", newName);
+            Timber.i("CreateDeckDialog::renameDeck not renaming deck to invalid name '%s'", newName);
             UIUtils.showThemedToast(mContext, mContext.getString(R.string.invalid_deck_name), false);
         } else if (!newName.equals(mPreviousDeckName)) {
             try {
