@@ -38,13 +38,13 @@ public class AddonsNpmUtility {
 
     private static final String ADDON_TYPE = "reviewer";
 
-    private final Activity activity;
-    private final Context context;
+    private final Activity mActivity;
+    private final Context mContext;
 
 
     public AddonsNpmUtility(Context context, Activity activity) {
-        this.context = context;
-        this.activity = activity;
+        this.mContext = context;
+        this.mActivity = activity;
     }
 
     /**
@@ -53,7 +53,7 @@ public class AddonsNpmUtility {
      */
     public void getPackageJson(String npmAddonName, Runnable runnable) {
         showProgressBar();
-        String url = context.getString(R.string.ankidroid_js_addon_npm_registry, npmAddonName);
+        String url = mContext.getString(R.string.ankidroid_js_addon_npm_registry, npmAddonName);
         Timber.i("npm url: %s", url);
 
         OkHttpClient client = new OkHttpClient.Builder()
@@ -70,7 +70,7 @@ public class AddonsNpmUtility {
             @Override
             public void onFailure(Call call, IOException e) {
                 Timber.e("js addon %s", e.toString());
-                showToast(context.getString(R.string.error_downloading_file_check_name));
+                showToast(mContext.getString(R.string.error_downloading_file_check_name));
                 call.cancel();
             }
 
@@ -88,7 +88,7 @@ public class AddonsNpmUtility {
                     }
                 } else {
                     hideProgressBar();
-                    showToast(context.getString(R.string.error_downloading_file_check_name));
+                    showToast(mContext.getString(R.string.error_downloading_file_check_name));
                 }
             }
         });
@@ -109,7 +109,7 @@ public class AddonsNpmUtility {
 
             if (addonModel == null) {
                 hideProgressBar();
-                showToast(context.getString(R.string.not_valid_package));
+                showToast(mContext.getString(R.string.not_valid_package));
                 return;
             }
 
@@ -129,7 +129,7 @@ public class AddonsNpmUtility {
      * @param tarballUrl   tarball url of addon.tgz package file
      */
     public void downloadAddonPackageFile(String tarballUrl, String npmAddonName) {
-        String downloadFilePath = downloadFileToSdCardMethod(tarballUrl, context, "addons", "GET");
+        String downloadFilePath = downloadFileToSdCardMethod(tarballUrl, mContext, "addons", "GET");
         Timber.d("download path %s", downloadFilePath);
         extractAndCopyAddonTgz(downloadFilePath, npmAddonName);
     }
@@ -142,7 +142,7 @@ public class AddonsNpmUtility {
      */
     public void extractAndCopyAddonTgz(String tarballPath, String npmAddonName) {
 
-        String currentAnkiDroidDirectory = CollectionHelper.getCurrentAnkiDroidDirectory(context);
+        String currentAnkiDroidDirectory = CollectionHelper.getCurrentAnkiDroidDirectory(mContext);
 
         // AnkiDroid/addons/js-addons
         // here npmAddonName is id of npm package which may not contain ../ or other bad path
@@ -163,7 +163,7 @@ public class AddonsNpmUtility {
             Archiver archiver = ArchiverFactory.createArchiver(tarballFile);
             archiver.extract(tarballFile, addonsDir);
             Timber.d("js addon .tgz extracted");
-            showToast(context.getString(R.string.addon_installed));
+            showToast(mContext.getString(R.string.addon_installed));
         } catch (IOException e) {
             Timber.e(e.getLocalizedMessage());
         } finally {
@@ -198,8 +198,8 @@ public class AddonsNpmUtility {
      * progress bar on ui thread
      */
     public void showProgressBar() {
-        activity.runOnUiThread(() -> {
-            ProgressBar progressBar = activity.findViewById(R.id.progress_bar);
+        mActivity.runOnUiThread(() -> {
+            ProgressBar progressBar = mActivity.findViewById(R.id.progress_bar);
             if (progressBar != null) {
                 progressBar.setVisibility(View.VISIBLE);
             }
@@ -208,8 +208,8 @@ public class AddonsNpmUtility {
 
 
     public void hideProgressBar() {
-        activity.runOnUiThread(() -> {
-            ProgressBar progressBar = activity.findViewById(R.id.progress_bar);
+        mActivity.runOnUiThread(() -> {
+            ProgressBar progressBar = mActivity.findViewById(R.id.progress_bar);
             if (progressBar != null) {
                 progressBar.setVisibility(View.GONE);
             }
@@ -219,8 +219,8 @@ public class AddonsNpmUtility {
 
     // showing toast on ui thread
     public void showToast(String msg) {
-        activity.runOnUiThread(() -> {
-            UIUtils.showThemedToast(context, msg, false);
+        mActivity.runOnUiThread(() -> {
+            UIUtils.showThemedToast(mContext, msg, false);
         });
     }
 

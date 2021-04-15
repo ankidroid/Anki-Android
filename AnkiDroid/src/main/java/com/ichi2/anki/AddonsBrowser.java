@@ -32,20 +32,20 @@ import static com.ichi2.anim.ActivityTransitionAnimation.Direction.END;
 @SuppressWarnings("deprecation")
 public class AddonsBrowser extends NavigationDrawerActivity implements DeckDropDownAdapter.SubtitleListener, AddonsAdapter.OnAddonClickListener {
 
-    private RecyclerView addonsListRecyclerView;
+    private RecyclerView mAddonsListRecyclerView;
 
-    private File addonsHomeDir;
-    private Dialog downloadDialog;
+    private File mAddonsHomeDir;
+    private Dialog mDownloadDialog;
 
-    private final List<AddonModel> addonsNames = new ArrayList<AddonModel>();
+    private final List<AddonModel> mAddonsNames = new ArrayList<AddonModel>();
 
-    private SharedPreferences preferences;
+    private SharedPreferences mPreferences;
 
-    private final String addonType = "reviewer";
+    private final String mADDON_TYPE = "reviewer";
 
-    private LinearLayout addonsDownloadButton;
+    private LinearLayout mAddonsDownloadButton;
 
-    AddonsNpmUtility npmUtility;
+    AddonsNpmUtility mNpmUtility;
 
 
     @Override
@@ -64,25 +64,25 @@ public class AddonsBrowser extends NavigationDrawerActivity implements DeckDropD
         getSupportActionBar().setTitle(getString(R.string.reviewer_addons));
         showBackIcon();
 
-        npmUtility = new AddonsNpmUtility(AddonsBrowser.this, this);
+        mNpmUtility = new AddonsNpmUtility(AddonsBrowser.this, this);
 
-        addonsDownloadButton = findViewById(R.id.addons_download_message_ll);
-        addonsDownloadButton.setOnClickListener(v -> {
+        mAddonsDownloadButton = findViewById(R.id.addons_download_message_ll);
+        mAddonsDownloadButton.setOnClickListener(v -> {
             openUrl(Uri.parse(getString(R.string.ankidroid_js_addon_npm_search_url)));
         });
 
-        addonsListRecyclerView = findViewById(R.id.addons);
-        addonsListRecyclerView.setLayoutManager(new LinearLayoutManager(this));
+        mAddonsListRecyclerView = findViewById(R.id.addons);
+        mAddonsListRecyclerView.setLayoutManager(new LinearLayoutManager(this));
 
         DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(this, DividerItemDecoration.VERTICAL);
-        addonsListRecyclerView.addItemDecoration(dividerItemDecoration);
+        mAddonsListRecyclerView.addItemDecoration(dividerItemDecoration);
 
         String currentAnkiDroidDirectory = CollectionHelper.getCurrentAnkiDroidDirectory(this);
-        addonsHomeDir = new File(currentAnkiDroidDirectory, "addons");
+        mAddonsHomeDir = new File(currentAnkiDroidDirectory, "addons");
 
-        preferences = AnkiDroidApp.getSharedPrefs(this);
+        mPreferences = AnkiDroidApp.getSharedPrefs(this);
 
-        listAddonsFromDir(addonType);
+        listAddonsFromDir(mADDON_TYPE);
     }
 
 
@@ -97,8 +97,8 @@ public class AddonsBrowser extends NavigationDrawerActivity implements DeckDropD
         super.onBackPressed();
         finishWithAnimation(END);
 
-        if (downloadDialog.isShowing()) {
-            downloadDialog.dismiss();
+        if (mDownloadDialog.isShowing()) {
+            mDownloadDialog.dismiss();
         }
     }
 
@@ -114,19 +114,19 @@ public class AddonsBrowser extends NavigationDrawerActivity implements DeckDropD
 
         reviewerAddons.setOnMenuItemClickListener(item -> {
             getSupportActionBar().setTitle(getString(R.string.reviewer_addons));
-            listAddonsFromDir(addonType);
+            listAddonsFromDir(mADDON_TYPE);
             return true;
         });
 
-        downloadDialog = new Dialog(this);
+        mDownloadDialog = new Dialog(this);
 
         installAddon.setOnMenuItemClickListener(item -> {
 
-            downloadDialog.setCanceledOnTouchOutside(true);
-            downloadDialog.setContentView(R.layout.addon_install_from_npm);
+            mDownloadDialog.setCanceledOnTouchOutside(true);
+            mDownloadDialog.setContentView(R.layout.addon_install_from_npm);
 
-            EditText downloadEditText = downloadDialog.findViewById(R.id.addon_download_edit_text);
-            Button downloadButton = downloadDialog.findViewById(R.id.addon_download_button);
+            EditText downloadEditText = mDownloadDialog.findViewById(R.id.addon_download_edit_text);
+            Button downloadButton = mDownloadDialog.findViewById(R.id.addon_download_button);
 
             downloadButton.setOnClickListener(v -> {
                 String npmAddonName = downloadEditText.getText().toString();
@@ -146,13 +146,13 @@ public class AddonsBrowser extends NavigationDrawerActivity implements DeckDropD
 
                 UIUtils.showThemedToast(this, getString(R.string.downloading_addon), true);
                 // download npm package for AnkiDroid as addons
-                npmUtility.getPackageJson(npmAddonName, () -> runOnUiThread(() -> listAddonsFromDir(addonType)));
+                mNpmUtility.getPackageJson(npmAddonName, () -> runOnUiThread(() -> listAddonsFromDir(mADDON_TYPE)));
 
-                downloadDialog.dismiss();
+                mDownloadDialog.dismiss();
 
             });
 
-            downloadDialog.show();
+            mDownloadDialog.show();
             return true;
         });
 
@@ -174,16 +174,16 @@ public class AddonsBrowser extends NavigationDrawerActivity implements DeckDropD
      */
     public void listAddonsFromDir(String addonType) {
         boolean success = true;
-        if (!addonsHomeDir.exists()) {
-            success = addonsHomeDir.mkdirs();
+        if (!mAddonsHomeDir.exists()) {
+            success = mAddonsHomeDir.mkdirs();
         }
 
         if (success) {
 
             // reset for new view create
-            addonsNames.clear();
+            mAddonsNames.clear();
 
-            File[] files = addonsHomeDir.listFiles();
+            File[] files = mAddonsHomeDir.listFiles();
             for (File file : files) {
                 Timber.d("Addons: %s", file.getName());
 
@@ -198,12 +198,12 @@ public class AddonsBrowser extends NavigationDrawerActivity implements DeckDropD
                 if (addonModel == null) {
                     continue;
                 }
-                addonsNames.add(addonModel);
+                mAddonsNames.add(addonModel);
             }
 
-            addonsListRecyclerView.setAdapter(new AddonsAdapter(addonsNames, this));
+            mAddonsListRecyclerView.setAdapter(new AddonsAdapter(mAddonsNames, this));
 
-            addonsDownloadButton.setVisibility(addonsNames.isEmpty() ? View.VISIBLE : View.GONE);
+            mAddonsDownloadButton.setVisibility(mAddonsNames.isEmpty() ? View.VISIBLE : View.GONE);
 
         } else {
             UIUtils.showThemedToast(this, getString(R.string.error_listing_addons), false);
@@ -218,7 +218,7 @@ public class AddonsBrowser extends NavigationDrawerActivity implements DeckDropD
      */
     @Override
     public void onAddonClick(int position) {
-        AddonModel addonModel = addonsNames.get(position);
+        AddonModel addonModel = mAddonsNames.get(position);
 
         Dialog infoDialog = new Dialog(this);
         infoDialog.setCanceledOnTouchOutside(true);
@@ -253,20 +253,20 @@ public class AddonsBrowser extends NavigationDrawerActivity implements DeckDropD
                     getString(R.string.dialog_ok),
                     (dialog, id) -> {
                         // remove the js addon folder
-                        File dir = new File(addonsHomeDir, addonModel.getName());
+                        File dir = new File(mAddonsHomeDir, addonModel.getName());
                         BackupManager.removeDir(dir);
 
                         // remove enabled status
-                        addonModel.updatePrefs(preferences, AddonModel.getReviewerAddonKey(), addonModel.getName(), true);
+                        addonModel.updatePrefs(mPreferences, AddonModel.getReviewerAddonKey(), addonModel.getName(), true);
 
-                        addonsNames.remove(position);
-                        addonsListRecyclerView.getAdapter().notifyItemRangeChanged(position, addonsNames.size());
-                        addonsListRecyclerView.getAdapter().notifyDataSetChanged();
+                        mAddonsNames.remove(position);
+                        mAddonsListRecyclerView.getAdapter().notifyItemRangeChanged(position, mAddonsNames.size());
+                        mAddonsListRecyclerView.getAdapter().notifyDataSetChanged();
 
-                        if (addonsNames.isEmpty()) {
-                            addonsDownloadButton.setVisibility(View.VISIBLE);
+                        if (mAddonsNames.isEmpty()) {
+                            mAddonsDownloadButton.setVisibility(View.VISIBLE);
                         } else {
-                            addonsDownloadButton.setVisibility(View.GONE);
+                            mAddonsDownloadButton.setVisibility(View.GONE);
                         }
 
                     });
@@ -277,7 +277,7 @@ public class AddonsBrowser extends NavigationDrawerActivity implements DeckDropD
 
         buttonUpdate.setOnClickListener(v -> {
             UIUtils.showThemedToast(this, getString(R.string.checking_addon_update), false);
-            npmUtility.getPackageJson(addonModel.getName(), () -> runOnUiThread(() -> listAddonsFromDir(addonType)));
+            mNpmUtility.getPackageJson(addonModel.getName(), () -> runOnUiThread(() -> listAddonsFromDir(mADDON_TYPE)));
         });
 
         infoDialog.show();
