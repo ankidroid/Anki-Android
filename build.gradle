@@ -21,11 +21,11 @@ buildscript {
 ext {
 
     jvmVersion = Jvm.current().javaVersion.majorVersion
-    if (jvmVersion != "8" && jvmVersion != "11" && jvmVersion != "14") {
+    if (jvmVersion != "8" && jvmVersion != "11" && jvmVersion != "16") {
         println "\n\n\n"
         println "**************************************************************************************************************"
         println "\n\n\n"
-        println "ERROR: AnkiDroid builds with JVM LTS and current releases (currently major version 8, 11, or 14)."
+        println "ERROR: AnkiDroid builds with JVM LTS and current releases (currently major version 8, 11, or 16)."
         println "  Incompatible major version detected: '" + jvmVersion + "'"
         println "\n\n\n"
         println "**************************************************************************************************************"
