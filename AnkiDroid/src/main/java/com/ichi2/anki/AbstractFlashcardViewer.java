@@ -3815,15 +3815,16 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
         View parentLayout = findViewById(android.R.id.content);
         String snackbarMsg = getString(R.string.api_version_developer_contact, mCardSuppliedDeveloperContact, errorMsg);
 
-        Snackbar snackbar = Snackbar.make(parentLayout, snackbarMsg, Snackbar.LENGTH_LONG);
-        View snackbarView = snackbar.getView();
-        TextView snackTextView = snackbarView.findViewById(com.google.android.material.R.id.snackbar_text);
-        snackTextView.setTextColor(Color.WHITE);
-        snackTextView.setMaxLines(3);
 
-        snackbar.setActionTextColor(Color.MAGENTA)
-                .setAction(getString(R.string.reviewer_invalid_api_version_visit_documentation), view -> openUrl(Uri.parse("https://github.com/ankidroid/Anki-Android/wiki")));
-
+        Snackbar snackbar = UIUtils.showSnackbar(this,
+                snackbarMsg,
+                false,
+                R.string.reviewer_invalid_api_version_visit_documentation,
+                view -> openUrl(Uri.parse("https://github.com/ankidroid/Anki-Android/wiki")),
+                parentLayout,
+                null);
+        TextView snackbarTextView = snackbar.getView().findViewById(com.google.android.material.R.id.snackbar_text);
+        snackbarTextView.setMaxLines(3);
         snackbar.show();
     }
 

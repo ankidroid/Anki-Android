@@ -220,11 +220,10 @@ public class AnkiStatsTaskHandler {
     private static class DeckPreviewStatistics extends AsyncTask<Pair<Collection, TextView>, Void, String> {
         private WeakReference<TextView> mTextView;
 
-        private boolean mIsRunning = false;
+        private boolean mIsRunning = true;
 
         public DeckPreviewStatistics() {
             super();
-            mIsRunning = true;
         }
 
         @Override
@@ -234,15 +233,16 @@ public class AnkiStatsTaskHandler {
             sLock.lock();
             try {
                 Collection collection = params[0].first;
+
+                TextView textView = params[0].second;
+                mTextView = new WeakReference<>(textView);
+
                 if (!mIsRunning || collection == null || collection.getDb() == null) {
                     Timber.d("Quitting DeckPreviewStatistics before execution");
                     return null;
                 } else {
                     Timber.d("Starting DeckPreviewStatistics");
                 }
-
-                TextView textView = params[0].second;
-                mTextView = new WeakReference<>(textView);
 
                 //eventually put this in Stats (in desktop it is not though)
                 int cards;

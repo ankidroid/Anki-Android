@@ -10,7 +10,7 @@ apply plugin: 'idea'
 
 repositories {
     google()
-    jcenter()
+    mavenCentral()
     maven { url "https://jitpack.io" }
 }
 
@@ -50,8 +50,8 @@ android {
         //
         // This ensures the correct ordering between the various types of releases (dev < alpha < beta < release) which is
         // needed for upgrades to be offered correctly.
-        versionCode=21500142
-        versionName="2.15alpha42"
+        versionCode=21500143
+        versionName="2.15alpha43"
         minSdkVersion 21
         //noinspection OldTargetApi - also performed in api/build.fradle
         targetSdkVersion 29 // change .travis.yml platform download at same time
@@ -252,7 +252,7 @@ dependencies {
     // build with ./gradlew rsdroid:assembleRelease
     // In my experience, using `files()` currently requires a reindex operation, which is slow.
     // implementation files("C:\\GitHub\\Rust-Test\\rsdroid\\build\\outputs\\aar\\rsdroid-release.aar")
-    implementation 'com.google.protobuf:protobuf-java:3.15.7' // This is required when loading from a file
+    implementation 'com.google.protobuf:protobuf-java:3.15.8' // This is required when loading from a file
     implementation "io.github.david-allison-1:anki-android-backend:$backendVersion"
     // build with ./gradlew rsdroid-testing:assembleRelease
     // RobolectricTest.java: replace RustBackendLoader.init(); with RustBackendLoader.loadRsdroid(path);
@@ -260,12 +260,12 @@ dependencies {
     testImplementation "io.github.david-allison-1:anki-android-backend-testing:$backendVersion"
 
     // May need a resolution strategy for support libs to our versions
-    implementation'ch.acra:acra-http:5.5.1'
-    implementation'ch.acra:acra-dialog:5.5.1'
-    implementation'ch.acra:acra-toast:5.5.1'
-    implementation'ch.acra:acra-limiter:5.5.1'
+    implementation'ch.acra:acra-http:5.7.0'
+    implementation'ch.acra:acra-dialog:5.7.0'
+    implementation'ch.acra:acra-toast:5.7.0'
+    implementation'ch.acra:acra-limiter:5.7.0'
 
-    implementation 'io.requery:sqlite-android:3.34.1'
+    implementation 'com.github.mikehardy:sqlite-android:3.35.1.1'
     implementation 'com.afollestad.material-dialogs:core:0.9.6.0'
     implementation 'com.getbase:floatingactionbutton:1.10.1'
     // io.github.java-diff-utils:java-diff-utils is the natural successor here, but requires API24, #7091
@@ -295,7 +295,6 @@ dependencies {
     debugImplementation 'androidx.fragment:fragment-testing:1.3.2'
 
     // May need a resolution strategy for support libs to our versions
-    androidTestImplementation 'com.azimolabs.conditionwatcher:conditionwatcher:0.2'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.3.0'
     androidTestImplementation 'androidx.test.espresso:espresso-contrib:3.3.0'
     androidTestImplementation 'androidx.test.ext:junit:1.1.2'

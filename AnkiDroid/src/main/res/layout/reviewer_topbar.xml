@@ -21,8 +21,8 @@
             android:id="@+id/learn_number"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_toRightOf="@+id/new_number"
-            android:paddingLeft="8dp"
+            android:layout_toEndOf="@+id/new_number"
+            android:paddingStart="8dp"
             android:text=""
             android:textColor="?attr/learnCountColor"
             android:textSize="14sp" />
@@ -31,8 +31,8 @@
             android:id="@+id/review_number"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_toRightOf="@+id/learn_number"
-            android:paddingLeft="8dp"
+            android:layout_toEndOf="@+id/learn_number"
+            android:paddingStart="8dp"
             android:text=""
             android:textColor="?attr/reviewCountColor"
             android:textSize="14sp" />
@@ -53,10 +53,10 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_toLeftOf="@+id/card_time"
+        android:layout_toStartOf="@+id/card_time"
         android:layout_alignTop="@+id/card_time"
         android:layout_alignBottom="@+id/card_time"
-        android:layout_toRightOf="@+id/choosen_answer"
+        android:layout_toEndOf="@+id/choosen_answer"
         android:gravity="center" >
 
         <ImageView
@@ -78,7 +78,7 @@
             android:id="@+id/card_time"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
+            android:layout_alignParentEnd="true"
             android:gravity="end"
             android:textSize="14sp"
             android:visibility="invisible" />
