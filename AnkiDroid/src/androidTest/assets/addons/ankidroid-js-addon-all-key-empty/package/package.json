@@ -1,0 +1,24 @@
+{
+  "name": "",
+  "version": "",
+  "description": "",
+  "main": "",
+  "ankidroid_js_api": "",
+  "addon_type": "",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/infinyte7/Anki-Custom-Card-Layout.git"
+  },
+  "keywords": [
+    ""
+  ],
+  "author": "",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/infinyte7/Anki-Custom-Card-Layout/issues"
+  },
+  "homepage": ""
+}
