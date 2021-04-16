@@ -63,6 +63,8 @@ public class AddonsNpmUtility {
         }
 
         showProgressBar();
+        showToast(mContext.getString(R.string.downloading_addon));
+
         String url = mContext.getString(R.string.ankidroid_js_addon_npm_registry, npmAddonName);
         Timber.i("npm url: %s", url);
 
@@ -280,7 +282,7 @@ public class AddonsNpmUtility {
 
                 // it seems addons does not exists, so remove key from prefs
                 if (addonsContent.isEmpty()) {
-                    AddonModel.updatePrefs(preferences, addonDir, AddonModel.getReviewerAddonKey(), true);
+                    AddonModel.updatePrefs(preferences, AddonModel.getReviewerAddonKey(), addonDir, true);
                 } else {
                     content.append(addonsContent);
                 }
@@ -300,10 +302,11 @@ public class AddonsNpmUtility {
      * @return String, js code inside index.js
      */
     public static String readIndexJs(File addonsContentFile) {
-        StringBuilder content = new StringBuilder();
         if (!addonsContentFile.exists()) {
-            return content.toString();
+            return "";
         }
+
+        StringBuilder content = new StringBuilder();
 
         try(BufferedReader br = new BufferedReader(new FileReader(addonsContentFile))) {
             String line;

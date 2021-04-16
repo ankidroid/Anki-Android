@@ -142,7 +142,6 @@ public class AddonsBrowser extends NavigationDrawerActivity implements DeckDropD
                     return;
                 }
 
-                UIUtils.showThemedToast(this, getString(R.string.downloading_addon), true);
                 // download npm package for AnkiDroid as addons
                 mNpmUtility.getPackageJson(npmAddonName, () -> runOnUiThread(() -> listAddonsFromDir(mNpmUtility.ADDON_TYPE)));
 

@@ -135,7 +135,14 @@ public class AddonModel {
         return false;
     }
 
-    // https://stackoverflow.com/questions/19949182/android-sharedpreferences-string-set-some-items-are-removed-after-app-restart/19949833
+    /**
+     * @param preferences SharedPreferences
+     * @param reviewerAddonKey REVIEWER_ADDON_KEY
+     * @param addonName addonName i.e addon directory in AnkiDroid/addons folder
+     * @param remove true for removing from prefs
+     *
+     * https://stackoverflow.com/questions/19949182/android-sharedpreferences-string-set-some-items-are-removed-after-app-restart/19949833
+     */
     public static void updatePrefs(SharedPreferences preferences, String reviewerAddonKey, String addonName, boolean remove) {
         Set<String> reviewerEnabledAddonSet = preferences.getStringSet(reviewerAddonKey, new HashSet<String>());
         Set<String> newStrSet = new HashSet<String>(reviewerEnabledAddonSet);
