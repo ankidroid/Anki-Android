@@ -19,11 +19,13 @@ package com.ichi2.anki.cardviewer;
 import android.content.Context;
 import android.content.SharedPreferences;
 
+import com.ichi2.anki.AddonsNpmUtility;
+import com.ichi2.anki.AnkiDroidApp;
+
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.mockito.ArgumentMatchers;
 import org.mockito.Mock;
 import org.mockito.MockedStatic;
 import org.mockito.Mockito;
@@ -31,8 +33,9 @@ import org.mockito.MockitoAnnotations;
 
 import androidx.test.ext.junit.runners.AndroidJUnit4;
 
-import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.is;
+import static org.junit.Assert.assertEquals;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.anyInt;
 import static org.mockito.Mockito.mockStatic;
 import static org.mockito.Mockito.validateMockitoUsage;
 import static org.mockito.Mockito.when;
@@ -45,31 +48,38 @@ public class CardTemplateTest {
     @Mock
     private SharedPreferences mMockSharedPreferences;
 
+    private MockedStatic<AnkiDroidApp> mMockAnkiDroidApp;
+
+    private MockedStatic<AddonsNpmUtility> mMockAddonsNpmUtility;
+
     @Before
     public void setUp() {
         MockitoAnnotations.openMocks(this);
 
-        when(mMockContext.getSharedPreferences("mock_context_preferences", Context.MODE_PRIVATE))
+        when(mMockContext.getSharedPreferences(any(), anyInt()))
                 .thenReturn(mMockSharedPreferences);
 
         when(mMockSharedPreferences.getBoolean("javascript_addons_support_prefs", false))
                 .thenReturn(true);
 
-        try (MockedStatic<CardTemplate> utilities = Mockito.mockStatic(CardTemplate.class)) {
-            utilities.when(() -> new CardTemplate(data, mMockContext).setAddons(mMockContext)).thenReturn("");
-        }
+        mMockAnkiDroidApp = Mockito.mockStatic(AnkiDroidApp.class);
+        mMockAddonsNpmUtility = Mockito.mockStatic(AddonsNpmUtility.class);
+
+        mMockAnkiDroidApp.when(() -> AnkiDroidApp.getSharedPrefs(mMockContext)).thenReturn(mMockSharedPreferences);
     }
 
     @After
     public void validate() {
         validateMockitoUsage();
+        mMockAnkiDroidApp.close();
+        mMockAddonsNpmUtility.close();
     }
 
     @Test
     @SuppressWarnings("deprecation") // TODO Tracked in https://github.com/ankidroid/Anki-Android/issues/5019
     public void testSendException() {
         try (MockedStatic<android.preference.PreferenceManager> ignored = mockStatic(android.preference.PreferenceManager.class)) {
-            when(android.preference.PreferenceManager.getDefaultSharedPreferences(ArgumentMatchers.any()))
+            when(android.preference.PreferenceManager.getDefaultSharedPreferences(any()))
                     .thenReturn(mMockSharedPreferences);
         }
     }
@@ -106,9 +116,17 @@ public class CardTemplateTest {
         String style = "bar";
         String cardClass = "baz";
         String addons = "addon";
+
+        mMockAddonsNpmUtility.when(() -> AddonsNpmUtility.getEnabledAddonsContent(mMockContext)).thenReturn(addons);
+
         String result = new CardTemplate(data, mMockContext).render(content, style, cardClass);
 
-        assertThat(result, is(data.replace("::content::", content).replace("::style::", style).replace("::class::", cardClass).replace("::addons::", addons)));
+        String expected = data
+                .replace("::content::", content)
+                .replace("::style::", style)
+                .replace("::class::", cardClass)
+                .replace("::addons::", addons);
+        assertEquals(result, expected);
     }
 
     @Test
