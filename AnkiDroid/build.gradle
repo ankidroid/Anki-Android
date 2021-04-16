@@ -11,7 +11,6 @@ apply plugin: 'idea'
 repositories {
     google()
     mavenCentral()
-    jcenter() // still needed for 'conditionwatcher' and 'sqlite-android'
     maven { url "https://jitpack.io" }
 }
 
