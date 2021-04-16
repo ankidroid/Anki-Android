@@ -136,7 +136,7 @@ public class AddonModel {
     }
 
     // https://stackoverflow.com/questions/19949182/android-sharedpreferences-string-set-some-items-are-removed-after-app-restart/19949833
-    public void updatePrefs(SharedPreferences preferences, String reviewerAddonKey, String addonName, boolean remove) {
+    public static void updatePrefs(SharedPreferences preferences, String reviewerAddonKey, String addonName, boolean remove) {
         Set<String> reviewerEnabledAddonSet = preferences.getStringSet(reviewerAddonKey, new HashSet<String>());
         Set<String> newStrSet = new HashSet<String>(reviewerEnabledAddonSet);
 

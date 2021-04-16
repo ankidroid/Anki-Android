@@ -130,6 +130,30 @@ public class CardTemplateTest {
     }
 
     @Test
+    public void JSErrorTest() {
+        // Method is sped up - ensure that it still works.
+        String content = "foo";
+        String style = "bar";
+        String cardClass = "baz";
+
+        // here addon not defined it show error:
+        // Uncaught ReferenceError: addon is not defined
+        String addons = "console.log(addon)";
+
+        mMockAddonsNpmUtility.when(() -> AddonsNpmUtility.getEnabledAddonsContent(mMockContext)).thenReturn(addons);
+
+        String result = new CardTemplate(data, mMockContext).render(content, style, cardClass);
+
+        String expected = data
+                .replace("::content::", content)
+                .replace("::style::", style)
+                .replace("::class::", cardClass)
+                .replace("::addons::", addons);
+        assertEquals(result, expected);
+    }
+
+
+    @Test
     public void stressTest() {
         // At length = 10000000
         // ~500ms before

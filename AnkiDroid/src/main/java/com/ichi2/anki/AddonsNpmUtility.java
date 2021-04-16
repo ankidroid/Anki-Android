@@ -6,8 +6,10 @@ import android.content.SharedPreferences;
 import android.view.View;
 import android.widget.ProgressBar;
 
+import com.ichi2.async.Connection;
 import com.ichi2.libanki.Utils;
 
+import org.apache.commons.compress.utils.IOUtils;
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.rauschig.jarchivelib.Archiver;
@@ -24,6 +26,7 @@ import java.util.HashSet;
 import java.util.Set;
 import java.util.concurrent.TimeUnit;
 
+import androidx.annotation.Nullable;
 import java8.util.StringJoiner;
 import okhttp3.Call;
 import okhttp3.Callback;
@@ -36,7 +39,7 @@ import static com.ichi2.anki.web.HttpFetcher.downloadFileToSdCardMethod;
 
 public class AddonsNpmUtility {
 
-    private static final String ADDON_TYPE = "reviewer";
+    public static final String ADDON_TYPE = "reviewer";
 
     private final Activity mActivity;
     private final Context mContext;
@@ -52,6 +55,13 @@ public class AddonsNpmUtility {
      * @param runnable for calling listAddonsFromDir in AddonsBrowser after download/extract of js-addons.tgz to addons folder
      */
     public void getPackageJson(String npmAddonName, Runnable runnable) {
+        // if not connected to internet
+        if (!Connection.isOnline()) {
+            showToast(mContext.getString(R.string.network_no_connection));
+            hideProgressBar();
+            return;
+        }
+
         showProgressBar();
         String url = mContext.getString(R.string.ankidroid_js_addon_npm_registry, npmAddonName);
         Timber.i("npm url: %s", url);
@@ -69,6 +79,7 @@ public class AddonsNpmUtility {
         client.newCall(request).enqueue(new Callback() {
             @Override
             public void onFailure(Call call, IOException e) {
+                hideProgressBar();
                 Timber.e("js addon %s", e.toString());
                 showToast(mContext.getString(R.string.error_downloading_file_check_name));
                 call.cancel();
@@ -82,6 +93,8 @@ public class AddonsNpmUtility {
                         String strResponse = response.body().string();
                         parseJsonData(strResponse, npmAddonName);
                     } catch (IOException | NullPointerException e) {
+                        // do not show progress bar indefinitely
+                        hideProgressBar();
                         Timber.e(e.getLocalizedMessage());
                     } finally {
                         runnable.run();
@@ -179,18 +192,15 @@ public class AddonsNpmUtility {
      * @param addonsFiles package.json file in ankidroid-js-addon/package/...
      * @return jsonObject json object of the addon files content
      */
+    @Nullable
     public static JSONObject packageJsonReader(File addonsFiles) {
-        JSONObject jsonObject = null;
-        try {
-
-            InputStream is = new FileInputStream(addonsFiles);
+        try(InputStream is = new FileInputStream(addonsFiles)) {
             String stream = Utils.convertStreamToString(is);
-            jsonObject = new JSONObject(stream);
-
-        } catch (FileNotFoundException | JSONException e) {
+            return new JSONObject(stream);
+        } catch (JSONException | IOException e) {
             Timber.e(e.getLocalizedMessage());
         }
-        return jsonObject;
+        return null;
     }
 
 
@@ -247,6 +257,8 @@ public class AddonsNpmUtility {
         // set of enabled addons only
         Set<String> reviewerEnabledAddonSet = preferences.getStringSet(AddonModel.getReviewerAddonKey(), new HashSet<String>());
 
+        // even if preferences enabled then the key exist in 'reviewerEnabledAddonSet' but when addons does not exist on disk then
+        // 'readIndexJs()' check if index.js i.e 'joinedPath' exist or not. If exist then read other wise return empty strings
         for (String addonDir : reviewerEnabledAddonSet) {
             try {
 
@@ -264,7 +276,14 @@ public class AddonsNpmUtility {
                 File addonsContentFile = new File(indexJsPath);
 
                 // wrap index.js content in script tag for each enabled addons
-                content.append(readIndexJs(addonsContentFile));
+                String addonsContent = readIndexJs(addonsContentFile);
+
+                // it seems addons does not exists, so remove key from prefs
+                if (addonsContent.isEmpty()) {
+                    AddonModel.updatePrefs(preferences, addonDir, AddonModel.getReviewerAddonKey(), true);
+                } else {
+                    content.append(addonsContent);
+                }
 
                 Timber.d("addon content path: %s", addonsContentFile);
 
@@ -286,15 +305,12 @@ public class AddonsNpmUtility {
             return content.toString();
         }
 
-        try {
-            FileReader fileReader = new FileReader(addonsContentFile);
-            BufferedReader br = new BufferedReader(fileReader);
+        try(BufferedReader br = new BufferedReader(new FileReader(addonsContentFile))) {
             String line;
             while ((line = br.readLine()) != null) {
                 content.append(line);
                 content.append('\n');
             }
-            br.close();
         } catch (IOException e) {
             Timber.e(e.getLocalizedMessage());
         }
