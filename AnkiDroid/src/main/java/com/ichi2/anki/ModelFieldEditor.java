@@ -424,6 +424,7 @@ public class ModelFieldEditor extends AnkiActivity implements LocaleSelectionDia
         mProgressDialog = null;
     }
 
+
     /*
      * Renames the current field
      */
