@@ -35,11 +35,11 @@ allprojects {
 ext {
 
     jvmVersion = Jvm.current().javaVersion.majorVersion
-    if (jvmVersion != "11" && jvmVersion != "14") {
+    if (jvmVersion != "11" && jvmVersion != "14" && jvmVersion != "16") {
         println "\n\n\n"
         println "**************************************************************************************************************"
         println "\n\n\n"
-        println "ERROR: AnkiDroid builds with JVM 11 and 14"
+        println "ERROR: AnkiDroid builds with JVM version 11, 14, or 16."
         println "  Incompatible major version detected: '" + jvmVersion + "'"
         println "\n\n\n"
         println "**************************************************************************************************************"
