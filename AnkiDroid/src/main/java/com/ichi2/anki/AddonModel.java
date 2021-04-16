@@ -19,7 +19,7 @@ public class AddonModel {
     private String mJsApiVersion;
     private String mHomepage;
     private String mType;
-    private static String mReviewerAddonKey = "enabled_reviewer_addon";
+    private static String REVIEWER_ADDON_KEY = "enabled_reviewer_addon";
 
 
     public AddonModel(String name, String version, String developer, String jsApiVersion, String homepage, String type) {
@@ -62,7 +62,7 @@ public class AddonModel {
     }
 
     public static String getReviewerAddonKey() {
-        return mReviewerAddonKey;
+        return REVIEWER_ADDON_KEY;
     }
 
     public static AddonModel tryParse(JSONObject jsonObject, String type) {

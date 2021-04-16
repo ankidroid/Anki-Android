@@ -41,7 +41,7 @@ public class AddonsBrowser extends NavigationDrawerActivity implements DeckDropD
 
     private SharedPreferences mPreferences;
 
-    private final String mADDON_TYPE = "reviewer";
+    private final String ADDON_TYPE = "reviewer";
 
     private LinearLayout mAddonsDownloadButton;
 
@@ -82,7 +82,7 @@ public class AddonsBrowser extends NavigationDrawerActivity implements DeckDropD
 
         mPreferences = AnkiDroidApp.getSharedPrefs(this);
 
-        listAddonsFromDir(mADDON_TYPE);
+        listAddonsFromDir(ADDON_TYPE);
     }
 
 
@@ -114,7 +114,7 @@ public class AddonsBrowser extends NavigationDrawerActivity implements DeckDropD
 
         reviewerAddons.setOnMenuItemClickListener(item -> {
             getSupportActionBar().setTitle(getString(R.string.reviewer_addons));
-            listAddonsFromDir(mADDON_TYPE);
+            listAddonsFromDir(ADDON_TYPE);
             return true;
         });
 
@@ -146,7 +146,7 @@ public class AddonsBrowser extends NavigationDrawerActivity implements DeckDropD
 
                 UIUtils.showThemedToast(this, getString(R.string.downloading_addon), true);
                 // download npm package for AnkiDroid as addons
-                mNpmUtility.getPackageJson(npmAddonName, () -> runOnUiThread(() -> listAddonsFromDir(mADDON_TYPE)));
+                mNpmUtility.getPackageJson(npmAddonName, () -> runOnUiThread(() -> listAddonsFromDir(ADDON_TYPE)));
 
                 mDownloadDialog.dismiss();
 
@@ -277,7 +277,7 @@ public class AddonsBrowser extends NavigationDrawerActivity implements DeckDropD
 
         buttonUpdate.setOnClickListener(v -> {
             UIUtils.showThemedToast(this, getString(R.string.checking_addon_update), false);
-            mNpmUtility.getPackageJson(addonModel.getName(), () -> runOnUiThread(() -> listAddonsFromDir(mADDON_TYPE)));
+            mNpmUtility.getPackageJson(addonModel.getName(), () -> runOnUiThread(() -> listAddonsFromDir(ADDON_TYPE)));
         });
 
         infoDialog.show();
