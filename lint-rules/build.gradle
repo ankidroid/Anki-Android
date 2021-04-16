@@ -7,7 +7,7 @@ java {
 
 repositories {
     google()
-    jcenter()
+    mavenCentral()
 }
 
 dependencies {
