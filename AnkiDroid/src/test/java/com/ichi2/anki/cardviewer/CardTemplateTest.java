@@ -26,6 +26,7 @@ import org.junit.runner.RunWith;
 import org.mockito.ArgumentMatchers;
 import org.mockito.Mock;
 import org.mockito.MockedStatic;
+import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
 
 import androidx.test.ext.junit.runners.AndroidJUnit4;
@@ -53,6 +54,10 @@ public class CardTemplateTest {
 
         when(mMockSharedPreferences.getBoolean("javascript_addons_support_prefs", false))
                 .thenReturn(true);
+
+        try (MockedStatic<CardTemplate> utilities = Mockito.mockStatic(CardTemplate.class)) {
+            utilities.when(() -> new CardTemplate(data, mMockContext).setAddons(mMockContext)).thenReturn("");
+        }
     }
 
     @After
