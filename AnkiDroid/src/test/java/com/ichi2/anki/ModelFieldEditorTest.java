@@ -22,7 +22,6 @@ import android.widget.EditText;
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.ichi2.anki.exception.ConfirmModSchemaException;
 import com.ichi2.libanki.Models;
-import com.ichi2.testutils.AnkiAssert;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -30,6 +29,7 @@ import org.robolectric.ParameterizedRobolectricTestRunner;
 import org.robolectric.ParameterizedRobolectricTestRunner.Parameters;
 
 import java.util.Arrays;
+import java.util.Collection;
 import java.util.List;
 import java.util.Map;
 
@@ -42,18 +42,18 @@ import static org.hamcrest.Matchers.not;
 
 @RunWith(ParameterizedRobolectricTestRunner.class)
 public class ModelFieldEditorTest extends RobolectricTest {
-    private static final String[] mForbiddenCharacters = new String[] {"#", "^", "/", " ", "\t"};
+    private static final String[] sForbiddenCharacters = new String[] {"#", "^", "/", " ", "\t"};
     private String mForbiddenCharacter;
 
 
     public ModelFieldEditorTest(String forbiddenCharacter) {
-        this.mForbiddenCharacter = forbiddenCharacter;
+        mForbiddenCharacter = forbiddenCharacter;
     }
 
 
-    @Parameters
-    public static Iterable<? extends Object> forbiddenCharacters() {
-        return Arrays.asList(mForbiddenCharacters);
+    @Parameters(name = "\"{0}\"")
+    public static Collection forbiddenCharacters() {
+        return Arrays.asList(sForbiddenCharacters);
     }
 
 
@@ -62,12 +62,9 @@ public class ModelFieldEditorTest extends RobolectricTest {
      */
     @Test
     public void testIllegalCharactersInFieldName_addField() {
-        // Assertion fails in case of a ConfirmModSchemaException being thrown
-        AnkiAssert.assertDoesNotThrow(() -> {
-            String fieldName = setupInvalidFieldName(mForbiddenCharacter, ADD_FIELD);
+        String fieldName = setupInvalidFieldName(mForbiddenCharacter, ADD_FIELD);
 
-            testForIllegalCharacters(fieldName);
-        });
+        testForIllegalCharacters(fieldName);
     }
 
 
@@ -76,12 +73,9 @@ public class ModelFieldEditorTest extends RobolectricTest {
      */
     @Test
     public void testIllegalCharactersInFieldName_renameField() {
-        // Assertion fails in case of a ConfirmModSchemaException being thrown
-        AnkiAssert.assertDoesNotThrow(() -> {
-            String fieldName = setupInvalidFieldName(mForbiddenCharacter, RENAME_FIELD);
+        String fieldName = setupInvalidFieldName(mForbiddenCharacter, RENAME_FIELD);
 
-            testForIllegalCharacters(fieldName);
-        });
+        testForIllegalCharacters(fieldName);
     }
 
 
