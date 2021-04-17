@@ -46,6 +46,7 @@ import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
@@ -63,6 +64,7 @@ import com.afollestad.materialdialogs.MaterialDialog;
 import com.ichi2.anki.dialogs.CardBrowserMySearchesDialog;
 import com.ichi2.anki.dialogs.CardBrowserOrderDialog;
 import com.ichi2.anki.dialogs.ConfirmationDialog;
+import com.ichi2.anki.dialogs.DeckSelectionDialog;
 import com.ichi2.anki.dialogs.IntegerDialog;
 import com.ichi2.anki.dialogs.RescheduleDialog;
 import com.ichi2.anki.dialogs.SimpleMessageDialog;
@@ -113,7 +115,9 @@ import static com.ichi2.libanki.stats.Stats.SECONDS_PER_DAY;
 import static com.ichi2.anim.ActivityTransitionAnimation.Direction.*;
 
 public class CardBrowser extends NavigationDrawerActivity implements
-        DeckDropDownAdapter.SubtitleListener, TagsDialog.TagsDialogListener {
+        DeckDropDownAdapter.SubtitleListener,
+        DeckSelectionDialog.DeckSelectionListener,
+        TagsDialog.TagsDialogListener {
 
     enum Column {
         QUESTION,
@@ -142,6 +146,7 @@ public class CardBrowser extends NavigationDrawerActivity implements
     @NonNull
     private CardCollection<CardCache> mCards = new CardCollection<>();
     private List<Deck> mDropDownDecks;
+    private ArrayList<Long> mAllDeckIds;
     private ListView mCardsListView;
     private SearchView mSearchView;
     private MultiColumnListAdapter mCardsAdapter;
@@ -258,6 +263,20 @@ public class CardBrowser extends NavigationDrawerActivity implements
                 changeCardOrder(which);
                 return true;
             };
+
+    @Override
+    public void onDeckSelected(@Nullable DeckSelectionDialog.SelectableDeck deck) {
+        if (deck != null) {
+            selectDropDownItem(mAllDeckIds.indexOf(deck.getDeckId()) + 1);
+        }
+    }
+
+    private void displayDeckOverrideDialog(Collection col) {
+        FunctionalInterfaces.Filter<Deck> nonDynamic = (d) -> !Decks.isDynamic(d);
+        List<DeckSelectionDialog.SelectableDeck> decks = DeckSelectionDialog.SelectableDeck.fromCollection(col, nonDynamic);
+        DeckSelectionDialog dialog = DeckSelectionDialog.newInstance(getString(R.string.search_deck), null, false, decks);
+        AnkiActivity.showDialogFragment(CardBrowser.this, dialog);
+    }
 
     @VisibleForTesting(otherwise = VisibleForTesting.PROTECTED)
     protected void changeCardOrder(int which) {
@@ -558,6 +577,11 @@ public class CardBrowser extends NavigationDrawerActivity implements
 
         // Add drop-down menu to select deck to action bar.
         mDropDownDecks = getCol().getDecks().allSorted();
+        mAllDeckIds = new ArrayList<>(mDropDownDecks.size());
+        for (Deck d : mDropDownDecks) {
+            long thisDid = d.getLong("id");
+            mAllDeckIds.add(thisDid);
+        }
         mDropDownAdapter = new DeckDropDownAdapter(this, mDropDownDecks);
         ActionBar mActionBar = getSupportActionBar();
         if (mActionBar != null) {
@@ -565,15 +589,13 @@ public class CardBrowser extends NavigationDrawerActivity implements
         }
         mActionBarSpinner = findViewById(R.id.toolbar_spinner);
         mActionBarSpinner.setAdapter(mDropDownAdapter);
-        mActionBarSpinner.setOnItemSelectedListener(new OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                deckDropDownItemChanged(position);
-            }
+        mActionBarSpinner.setOnTouchListener(new View.OnTouchListener() {
 
-            @Override
-            public void onNothingSelected(AdapterView<?> parent) {
-                // do nothing
+            public boolean onTouch(View view, MotionEvent motionEvent) {
+                if (motionEvent.getAction() == MotionEvent.ACTION_UP) {
+                    displayDeckOverrideDialog(getCol());
+                }
+                return true;
             }
         });
         mActionBarSpinner.setVisibility(View.VISIBLE);
