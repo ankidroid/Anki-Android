@@ -456,6 +456,10 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
                 // Save states when button pressed
                 mPrevCard = mCurrentCard;
                 mHasBeenTouched = true;
+                // We will need to check if a touch is followed by a click
+                // Since onTouch always come before onClick, we should check if
+                // the touch is going to be a click by storing the start coordinates
+                // and comparing with the end coordinates of the touch
                 mTouchX = event.getRawX();
                 mTouchY = event.getRawY();
             } else if (event.getAction() == MotionEvent.ACTION_UP) {
