@@ -14,6 +14,7 @@ import android.media.AudioManager;
 import android.net.Uri;
 import android.os.Bundle;
 
+import androidx.activity.result.ActivityResultLauncher;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatDelegate;
 import androidx.appcompat.widget.Toolbar;
@@ -255,6 +256,28 @@ public class AnkiActivity extends AppCompatActivity implements SimpleMessageDial
         enableIntentAnimation(intent);
         startActivityForResult(intent, requestCode);
         enableActivityAnimation(animation);
+    }
+
+
+    public void launchActivityForResult(Intent intent, ActivityResultLauncher<Intent> launcher, Direction animation) {
+        try {
+            launcher.launch(intent, ActivityTransitionAnimation.getAnimationOptions(this, animation));
+        } catch (ActivityNotFoundException e) {
+            Timber.w(e);
+            UIUtils.showSimpleSnackbar(this, R.string.activity_start_failed, true);
+        }
+    }
+
+
+    public void launchActivityForResultWithoutAnimation(Intent intent, ActivityResultLauncher<Intent> launcher) {
+        disableIntentAnimation(intent);
+        launchActivityForResult(intent, launcher, NONE);
+    }
+
+
+    public void launchActivityForResultWithAnimation(Intent intent, ActivityResultLauncher<Intent> launcher, Direction animation) {
+        enableIntentAnimation(intent);
+        launchActivityForResult(intent, launcher, animation);
     }
 
 
