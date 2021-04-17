@@ -12,6 +12,7 @@ import com.ichi2.anki.lint.rules.DirectGregorianInstantiation;
 import com.ichi2.anki.lint.rules.DirectToastMakeTextUsage;
 import com.ichi2.anki.lint.rules.DuplicateCrowdInStrings;
 import com.ichi2.anki.lint.rules.DuplicateTextInPreferencesXml;
+import com.ichi2.anki.lint.rules.FixedPreferencesTitleLength;
 import com.ichi2.anki.lint.rules.InconsistentAnnotationUsage;
 import com.ichi2.anki.lint.rules.NonPublicNonStaticFieldDetector;
 import com.ichi2.anki.lint.rules.PrintStackTraceUsage;
@@ -40,6 +41,8 @@ public class IssueRegistry extends com.android.tools.lint.client.api.IssueRegist
         issues.add(PrintStackTraceUsage.ISSUE);
         issues.add(NonPublicNonStaticFieldDetector.ISSUE);
         issues.add(ConstantFieldDetector.ISSUE);
+        issues.add(FixedPreferencesTitleLength.ISSUE_MAX_LENGTH);
+        issues.add(FixedPreferencesTitleLength.ISSUE_TITLE_LENGTH);
         return issues;
     }
 
