@@ -170,8 +170,46 @@ public class CardBrowser extends NavigationDrawerActivity implements
     /** The next deck for the "Change Deck" operation */
     private long mNewDid;
 
-    private static final int EDIT_CARD = 0;
-    private static final int ADD_NOTE = 1;
+
+    ActivityResultLauncher<Intent> mOnEditCardActivityResult = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(), result -> {
+        Timber.d("onEditCardActivityResult: resultCode=%d", result.getResultCode());
+        if (result.getResultCode() == DeckPicker.RESULT_DB_ERROR) {
+            closeCardBrowser(DeckPicker.RESULT_DB_ERROR);
+        }
+        if (result.getResultCode() != RESULT_CANCELED) {
+            Timber.i("CardBrowser:: CardBrowser: Saving card...");
+            TaskManager.launchCollectionTask(new CollectionTask.UpdateNote(sCardBrowserCard, false, false),
+                    updateCardHandler());
+        }
+        Intent data = result.getData();
+        if (data != null &&
+                (data.getBooleanExtra("reloadRequired", false) || data.getBooleanExtra("noteChanged", false))) {
+            // if reloadRequired or noteChanged flag was sent from note editor then reload card list
+            searchCards();
+            mShouldRestoreScroll = true;
+            // in use by reviewer?
+            if (getReviewerCardId() == mCurrentCardId) {
+                mReloadRequired = true;
+            }
+        }
+        invalidateOptionsMenu();    // maybe the availability of undo changed
+    });
+
+    ActivityResultLauncher<Intent> mOnAddNoteActivityResult = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(), result -> {
+        Timber.d("onAddNoteActivityResult: resultCode=%d", result.getResultCode());
+        if (result.getResultCode() == DeckPicker.RESULT_DB_ERROR) {
+            closeCardBrowser(DeckPicker.RESULT_DB_ERROR);
+        }
+        if (result.getResultCode() == RESULT_OK) {
+            if (mSearchView != null) {
+                mSearchTerms = mSearchView.getQuery().toString();
+                searchCards();
+            } else {
+                Timber.w("Note was added from browser and on return mSearchView == null");
+            }
+        }
+        invalidateOptionsMenu();    // maybe the availability of undo changed
+    });
 
     ActivityResultLauncher<Intent> mOnPreviewCardsActivityResult = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(), result -> {
         Timber.d("onPreviewCardsActivityResult: resultCode=%d", result.getResultCode());
@@ -806,10 +844,10 @@ public class CardBrowser extends NavigationDrawerActivity implements
         mCurrentCardId = cardId;
         sCardBrowserCard = getCol().getCard(mCurrentCardId);
         // start note editor using the card we just loaded
-        Intent editCard = new Intent(this, NoteEditor.class);
-        editCard.putExtra(NoteEditor.EXTRA_CALLER, NoteEditor.CALLER_CARDBROWSER_EDIT);
-        editCard.putExtra(NoteEditor.EXTRA_CARD_ID, sCardBrowserCard.getId());
-        startActivityForResultWithAnimation(editCard, EDIT_CARD, START);
+        Intent editCard = new Intent(this, NoteEditor.class)
+                .putExtra(NoteEditor.EXTRA_CALLER, NoteEditor.CALLER_CARDBROWSER_EDIT)
+                .putExtra(NoteEditor.EXTRA_CARD_ID, sCardBrowserCard.getId());
+        this.launchActivityForResultWithAnimation(editCard, mOnEditCardActivityResult, START);
         //#6432 - FIXME - onCreateOptionsMenu crashes if receiving an activity result from edit card when in multiselect
         endMultiSelectMode();
     }
@@ -1360,46 +1398,7 @@ public class CardBrowser extends NavigationDrawerActivity implements
     }
 
     private void addNoteFromCardBrowser() {
-        startActivityForResultWithAnimation(getAddNoteIntent(), ADD_NOTE, START);
-    }
-
-
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        // FIXME:
-        Timber.d("onActivityResult(requestCode=%d, resultCode=%d)", requestCode, resultCode);
-        super.onActivityResult(requestCode, resultCode, data);
-
-        if (resultCode == DeckPicker.RESULT_DB_ERROR) {
-            closeCardBrowser(DeckPicker.RESULT_DB_ERROR);
-        }
-
-        if (requestCode == EDIT_CARD && resultCode != RESULT_CANCELED) {
-            Timber.i("CardBrowser:: CardBrowser: Saving card...");
-            TaskManager.launchCollectionTask(new CollectionTask.UpdateNote(sCardBrowserCard, false, false),
-                    updateCardHandler());
-        } else if (requestCode == ADD_NOTE && resultCode == RESULT_OK) {
-            if (mSearchView != null) {
-                mSearchTerms = mSearchView.getQuery().toString();
-                searchCards();
-            } else {
-                Timber.w("Note was added from browser and on return mSearchView == null");
-            }
-        }
-
-        if (requestCode == EDIT_CARD &&  data != null &&
-                (data.getBooleanExtra("reloadRequired", false) ||
-                        data.getBooleanExtra("noteChanged", false))) {
-            // if reloadRequired or noteChanged flag was sent from note editor then reload card list
-            searchCards();
-            mShouldRestoreScroll = true;
-            // in use by reviewer?
-            if (getReviewerCardId() == mCurrentCardId) {
-                mReloadRequired = true;
-            }
-        }
-
-        invalidateOptionsMenu();    // maybe the availability of undo changed
+        this.launchActivityForResultWithAnimation(getAddNoteIntent(), mOnAddNoteActivityResult, START);
     }
 
 
