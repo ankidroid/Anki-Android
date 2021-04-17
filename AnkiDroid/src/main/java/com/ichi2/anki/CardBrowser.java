@@ -1308,7 +1308,7 @@ public class CardBrowser extends NavigationDrawerActivity implements
 
     protected void onPreview() {
         Intent previewer = getPreviewIntent();
-        mOnPreviewCardsActivityResult.launch(previewer);
+        this.launchActivityForResultWithoutAnimation(previewer, mOnPreviewCardsActivityResult);
     }
 
 
