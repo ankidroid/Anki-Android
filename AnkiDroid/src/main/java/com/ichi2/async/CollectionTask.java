@@ -1083,7 +1083,8 @@ public class CollectionTask<ProgressListener, ProgressBackground extends Progres
             // PERF: This performs an individual query to load each note
             while (mCards.size() < cards.size()) {
                 int nextPosition = mCards.size();
-                mCards.add(new CardBrowser.CardCache(cards.get(nextPosition), mCol, mCards.size()));
+                Long nextCardId = cards.get(nextPosition);
+                mCards.add(new CardBrowser.CardCache(nextCardId, mCol, mCards.size()));
             }
             for (CardBrowser.CardCache card : mCards) {
                 if (isCancelled()) {
