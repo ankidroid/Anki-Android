@@ -216,7 +216,7 @@ public class CardTemplatePreviewer extends AbstractFlashcardViewer {
             } else if (view.getId() == R.id.preview_next_flashcard) {
                 mIndex++;
             }
-            if(mIndex == 1) {
+            if (mIndex == 1) {
                 mPreviewPrevCard.setEnabled(true);
                 mPreviewNextCard.setEnabled(false);
                 mPreviewNextCard.setAlpha(0.38F);
