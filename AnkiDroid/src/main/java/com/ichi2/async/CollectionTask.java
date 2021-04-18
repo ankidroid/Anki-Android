@@ -1079,20 +1079,18 @@ public class CollectionTask<ProgressListener, ProgressBackground extends Progres
          */
         @Override
         public void doProgress(@NonNull List<Long> cards) {
-            // PERF: This is currently called on the background thread and blocks further execution of the search
-            // PERF: This performs an individual query to load each note
             while (mCards.size() < cards.size()) {
-                int nextPosition = mCards.size();
-                Long nextCardId = cards.get(nextPosition);
-                CardBrowser.CardCache card = new CardBrowser.CardCache(nextCardId, mCol, mCards.size());
-                mCards.add(card);
-            }
-            for (CardBrowser.CardCache card : mCards) {
                 if (isCancelled()) {
                     Timber.d("doInBackgroundSearchCards was cancelled so return");
                     return;
                 }
-                card.load(false, mColumn1Index, mColumn2Index);
+                int nextPosition = mCards.size();
+                Long nextCardId = cards.get(nextPosition);
+                CardBrowser.CardCache card = new CardBrowser.CardCache(nextCardId, mCol, mCards.size());
+                mCards.add(card);
+                if (nextPosition < mNumCardsToRender) {
+                    card.load(false, mColumn1Index, mColumn2Index);
+                }
             }
             mCollectionTask.doProgress(mCards);
         }
