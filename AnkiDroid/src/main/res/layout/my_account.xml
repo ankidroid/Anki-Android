@@ -75,7 +75,7 @@
                         android:layout_height="wrap_content"
                         android:inputType="textPassword"
                         android:layout_margin="@dimen/content_vertical_padding"
-                        android:paddingRight="40dp"/>
+                        android:paddingEnd="40dp"/>
                 </com.google.android.material.textfield.TextInputLayout>
 
                 <Button

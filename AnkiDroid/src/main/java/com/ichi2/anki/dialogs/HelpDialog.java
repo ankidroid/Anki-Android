@@ -21,7 +21,6 @@ import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Parcel;
 import android.os.Parcelable;
-import android.os.SystemClock;
 
 import com.ichi2.anki.AnkiActivity;
 import com.ichi2.anki.AnkiDroidApp;
@@ -36,14 +35,20 @@ import com.ichi2.utils.IntentUtil;
 
 import org.acra.ACRA;
 import org.acra.config.DialogConfigurationBuilder;
+import org.acra.config.LimiterData;
 
 import java.io.Serializable;
+import java.lang.reflect.Field;
+import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Calendar;
+import java.util.List;
 
 import androidx.annotation.DrawableRes;
 import androidx.annotation.StringRes;
 import androidx.fragment.app.DialogFragment;
+import timber.log.Timber;
 
 public class HelpDialog {
 
@@ -243,12 +248,10 @@ public class HelpDialog {
 
     private static class ExceptionReportItem extends Item implements Parcelable {
 
-        private static Long lastClickStamp;
-        final long mCurrentTimestamp = SystemClock.uptimeMillis();
-        final int mMinIntervalMS = 60000;
-        final String mExceptionMessage = "Exception report sent by user manually";
+        private final static int MIN_INTERVAL_MS = 60000;
+        private final static String EXCEPTION_MESSAGE = "Exception report sent by user manually";
 
-        public ExceptionReportItem(@StringRes int titleRes, @DrawableRes int iconRes, String analyticsRes) {
+        private ExceptionReportItem(@StringRes int titleRes, @DrawableRes int iconRes, String analyticsRes) {
             super(titleRes, iconRes, analyticsRes);
         }
 
@@ -277,20 +280,53 @@ public class HelpDialog {
             }
         }
 
+
+        /**
+         * Check the ACRA report store and return the timestamp of the last report.
+         *
+         * @param activity the Activity used for Context access when interrogating ACRA reports
+         * @return the timestamp of the most recent report, or -1 if no reports at all
+         */
+        @SuppressWarnings("unchecked") // Upstream issue for access to field/method: https://github.com/ACRA/acra/issues/843
+        private long getTimestampOfLastReport(AnkiActivity activity) {
+            try {
+                // The ACRA LimiterData holds a timestamp for every generated report
+                LimiterData limiterData = LimiterData.load(activity);
+                Field limiterDataListField = limiterData.getClass().getDeclaredField("list");
+                limiterDataListField.setAccessible(true);
+                List<LimiterData.ReportMetadata> limiterDataList = (List<LimiterData.ReportMetadata>)limiterDataListField.get(limiterData);
+                for (LimiterData.ReportMetadata report : limiterDataList) {
+                    if (!report.getExceptionClass().equals(UserSubmittedException.class.getName())) {
+                        continue;
+                    }
+                    Method timestampMethod = report.getClass().getDeclaredMethod("getTimestamp");
+                    timestampMethod.setAccessible(true);
+                    Calendar timestamp = (Calendar)timestampMethod.invoke(report);
+                    // Limiter ensures there is only one report for the class, so if we found it, return it
+                    return timestamp.getTimeInMillis();
+                }
+            } catch (Exception e) {
+                Timber.w(e, "Unexpected exception checking for recent reports");
+            }
+
+            return -1;
+        }
+
         private void sendReport(AnkiActivity activity) {
-            if (lastClickStamp == null || mCurrentTimestamp - lastClickStamp > mMinIntervalMS) {
+            long currentTimestamp = activity.getCol().getTime().intTimeMS();
+            long lastReportTimestamp = getTimestampOfLastReport(activity);
+            if ((currentTimestamp - lastReportTimestamp) > MIN_INTERVAL_MS) {
                 AnkiDroidApp.deleteACRALimiterData(activity);
                 AnkiDroidApp.sendExceptionReport(
-                        new UserSubmittedException(mExceptionMessage),
+                        new UserSubmittedException(EXCEPTION_MESSAGE),
                         "AnkiDroidApp.HelpDialog");
-                lastClickStamp = mCurrentTimestamp;
             } else {
                 UIUtils.showThemedToast(activity, activity.getString(R.string.help_dialog_exception_report_debounce),
                         true);
             }
         }
 
-        protected ExceptionReportItem(Parcel in) {
+        private ExceptionReportItem(Parcel in) {
             super(in);
         }
 

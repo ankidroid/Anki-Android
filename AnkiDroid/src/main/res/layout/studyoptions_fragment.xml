@@ -83,8 +83,6 @@
                                 android:layout_gravity="center_horizontal"
                                 android:layout_marginBottom="5dip"
                                 android:layout_marginEnd="3dip"
-                                android:layout_marginLeft="5dip"
-                                android:layout_marginRight="3dip"
                                 android:layout_marginStart="5dip"
                                 android:orientation="vertical">
 
@@ -93,8 +91,8 @@
                                     <com.ichi2.ui.FixedTextView
                                         android:layout_width="wrap_content"
                                         android:layout_height="wrap_content"
-                                        android:paddingLeft="0dip"
-                                        android:paddingRight="5dip"
+                                        android:paddingStart="0dip"
+                                        android:paddingEnd="5dip"
                                         android:text="@string/studyoptions_due_today"/>
 
                                     <LinearLayout
@@ -111,7 +109,6 @@
                                             android:id="@+id/studyoptions_lrn"
                                             android:layout_width="wrap_content"
                                             android:layout_height="wrap_content"
-                                            android:layout_marginLeft="5dip"
                                             android:layout_marginStart="5dip"
                                             android:textColor="?attr/learnCountColor" />
 
@@ -119,7 +116,6 @@
                                             android:id="@+id/studyoptions_rev"
                                             android:layout_width="wrap_content"
                                             android:layout_height="wrap_content"
-                                            android:layout_marginLeft="5dip"
                                             android:layout_marginStart="5dip"
                                             android:textColor="?attr/reviewCountColor" />
                                     </LinearLayout>
@@ -130,8 +126,8 @@
                                     <com.ichi2.ui.FixedTextView
                                         android:layout_width="wrap_content"
                                         android:layout_height="wrap_content"
-                                        android:paddingLeft="0dip"
-                                        android:paddingRight="5dip"
+                                        android:paddingStart="0dip"
+                                        android:paddingEnd="5dip"
                                         android:text="@string/studyoptions_new_total" />
 
                                     <com.ichi2.ui.FixedTextView
@@ -146,8 +142,8 @@
                                     <com.ichi2.ui.FixedTextView
                                         android:layout_width="wrap_content"
                                         android:layout_height="wrap_content"
-                                        android:paddingLeft="0dip"
-                                        android:paddingRight="5dip"
+                                        android:paddingStart="0dip"
+                                        android:paddingEnd="5dip"
                                         android:text="@string/studyoptions_total_cards" />
 
                                     <com.ichi2.ui.FixedTextView
@@ -162,8 +158,8 @@
                                     <com.ichi2.ui.FixedTextView
                                         android:layout_width="wrap_content"
                                         android:layout_height="wrap_content"
-                                        android:paddingLeft="0dip"
-                                        android:paddingRight="5dip"
+                                        android:paddingStart="0dip"
+                                        android:paddingEnd="5dip"
                                         android:text="@string/studyoptions_eta" />
 
                                     <com.ichi2.ui.FixedTextView

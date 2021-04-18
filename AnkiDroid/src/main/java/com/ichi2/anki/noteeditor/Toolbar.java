@@ -209,7 +209,7 @@ public class Toolbar extends FrameLayout {
         int expectedWidth = getVisibleItemCount() * dpToPixels(32);
         int width = getScreenWidth();
         LayoutParams p = new LayoutParams(v.getLayoutParams());
-        p.gravity = Gravity.CENTER_VERTICAL | ((expectedWidth > width) ? Gravity.LEFT : Gravity.CENTER_HORIZONTAL);
+        p.gravity = Gravity.CENTER_VERTICAL | ((expectedWidth > width) ? Gravity.START : Gravity.CENTER_HORIZONTAL);
         v.setLayoutParams(p);
 
         return button;
