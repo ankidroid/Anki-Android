@@ -429,53 +429,99 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
         public void onClick(View view) {
             Timber.i("AbstractFlashcardViewer:: Show answer button pressed");
             // Ignore what is most likely an accidental double-tap.
-            if (SystemClock.elapsedRealtime() - mLastClickTime < DOUBLE_TAP_IGNORE_THRESHOLD) {
+            if (getElapsedRealTime() - mLastClickTime < DOUBLE_TAP_IGNORE_THRESHOLD) {
                 return;
             }
-            mLastClickTime = SystemClock.elapsedRealtime();
+            mLastClickTime = getElapsedRealTime();
             mTimeoutHandler.removeCallbacks(mShowAnswerTask);
             displayCardAnswer();
         }
     };
 
-    private final View.OnTouchListener mSelectEaseHandler = new View.OnTouchListener() {
-        Card mPrevCard;
+
+    // Event handler for eases (answer buttons)
+    class SelectEaseHandler implements View.OnClickListener, View.OnTouchListener {
+        // maximum screen distance from initial touch where we will consider a click related to the touch
+        private static final int CLICK_ACTION_THRESHOLD = 200;
+
+        private Card mPrevCard = null;
+        private boolean mHasBeenTouched = false;
+        private float mTouchX;
+        private float mTouchY;
+
+        public SelectEaseHandler() {}
+
         @Override
         public boolean onTouch(View view, MotionEvent event) {
             if (event.getAction() == MotionEvent.ACTION_DOWN) {
-                // Save card when button pressed
+                // Save states when button pressed
                 mPrevCard = mCurrentCard;
-                return true;
-            }
-            // Perform intended action only if the button has been pressed for current card
-            if (event.getAction() == MotionEvent.ACTION_UP && mPrevCard == mCurrentCard) {
-                // Ignore what is most likely an accidental double-tap.
-                if (SystemClock.elapsedRealtime() - mLastClickTime < DOUBLE_TAP_IGNORE_THRESHOLD) {
-                    return false;
+                mHasBeenTouched = true;
+                // We will need to check if a touch is followed by a click
+                // Since onTouch always come before onClick, we should check if
+                // the touch is going to be a click by storing the start coordinates
+                // and comparing with the end coordinates of the touch
+                mTouchX = event.getRawX();
+                mTouchY = event.getRawY();
+            } else if (event.getAction() == MotionEvent.ACTION_UP) {
+                float diffX = Math.abs(event.getRawX() - mTouchX);
+                float diffY = Math.abs(event.getRawY() - mTouchY);
+                // If a click is not coming then we reset the touch
+                if (diffX > CLICK_ACTION_THRESHOLD || diffY > CLICK_ACTION_THRESHOLD) {
+                    mHasBeenTouched = false;
                 }
-                mLastClickTime = SystemClock.elapsedRealtime();
-                mTimeoutHandler.removeCallbacks(mShowQuestionTask);
-                int id = view.getId();
-                if (id == R.id.flashcard_layout_ease1) {
-                    Timber.i("AbstractFlashcardViewer:: EASE_1 pressed");
-                    answerCard(Consts.BUTTON_ONE);
-                } else if (id == R.id.flashcard_layout_ease2) {
-                    Timber.i("AbstractFlashcardViewer:: EASE_2 pressed");
-                    answerCard(Consts.BUTTON_TWO);
-                } else if (id == R.id.flashcard_layout_ease3) {
-                    Timber.i("AbstractFlashcardViewer:: EASE_3 pressed");
-                    answerCard(Consts.BUTTON_THREE);
-                } else if (id == R.id.flashcard_layout_ease4) {
-                    Timber.i("AbstractFlashcardViewer:: EASE_4 pressed");
-                    answerCard(Consts.BUTTON_FOUR);
-                } else {
-                    mCurrentEase = 0;
-                }
-                return true;
             }
             return false;
         }
-    };
+
+        @Override
+        public void onClick(View view) {
+            // Try to perform intended action only if the button has been pressed for current card,
+            // or if the button was not touched,
+            if (mPrevCard == mCurrentCard || !mHasBeenTouched)  {
+                // Only perform if the click was not an accidental double-tap
+                if (getElapsedRealTime() - mLastClickTime >= DOUBLE_TAP_IGNORE_THRESHOLD) {
+                    // For whatever reason, performClick does not return a visual feedback anymore
+                    if (!mHasBeenTouched) {
+                        view.setPressed(true);
+                    }
+                    mLastClickTime = getElapsedRealTime();
+                    mTimeoutHandler.removeCallbacks(mShowQuestionTask);
+                    int id = view.getId();
+                    if (id == R.id.flashcard_layout_ease1) {
+                        Timber.i("AbstractFlashcardViewer:: EASE_1 pressed");
+                        answerCard(Consts.BUTTON_ONE);
+                    } else if (id == R.id.flashcard_layout_ease2) {
+                        Timber.i("AbstractFlashcardViewer:: EASE_2 pressed");
+                        answerCard(Consts.BUTTON_TWO);
+                    } else if (id == R.id.flashcard_layout_ease3) {
+                        Timber.i("AbstractFlashcardViewer:: EASE_3 pressed");
+                        answerCard(Consts.BUTTON_THREE);
+                    } else if (id == R.id.flashcard_layout_ease4) {
+                        Timber.i("AbstractFlashcardViewer:: EASE_4 pressed");
+                        answerCard(Consts.BUTTON_FOUR);
+                    } else {
+                        mCurrentEase = 0;
+                    }
+                    if (!mHasBeenTouched) {
+                        view.setPressed(false);
+                    }
+                }
+            }
+            // We will have to reset the touch after every onClick event
+            // Do not return early without considering this
+            mHasBeenTouched = false;
+        }
+    }
+
+    private final SelectEaseHandler mEaseHandler = new SelectEaseHandler();
+
+
+    @VisibleForTesting
+    protected long getElapsedRealTime() {
+        return SystemClock.elapsedRealtime();
+    }
+
 
     private final View.OnTouchListener mGestureListener = new View.OnTouchListener() {
         @Override
@@ -1314,9 +1360,9 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
             mCurrentCard.resumeTimer();
             // Then update and resume the UI timer. Set the base time as if the timer had started
             // timeTaken() seconds ago.
-            mCardTimer.setBase(SystemClock.elapsedRealtime() - mCurrentCard.timeTaken());
+            mCardTimer.setBase(getElapsedRealTime() - mCurrentCard.timeTaken());
             // Don't start the timer if we have already reached the time limit or it will tick over
-            if ((SystemClock.elapsedRealtime() - mCardTimer.getBase()) < mCurrentCard.timeLimit()) {
+            if ((getElapsedRealTime() - mCardTimer.getBase()) < mCurrentCard.timeLimit()) {
                 mCardTimer.start();
             }
         }
@@ -1533,19 +1579,23 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
 
         mEase1 = findViewById(R.id.ease1);
         mEase1Layout = findViewById(R.id.flashcard_layout_ease1);
-        mEase1Layout.setOnTouchListener(mSelectEaseHandler);
+        mEase1Layout.setOnClickListener((View view) -> mEaseHandler.onClick(view));
+        mEase1Layout.setOnTouchListener((View view, MotionEvent event) -> mEaseHandler.onTouch(view, event));
 
         mEase2 = findViewById(R.id.ease2);
         mEase2Layout = findViewById(R.id.flashcard_layout_ease2);
-        mEase2Layout.setOnTouchListener(mSelectEaseHandler);
+        mEase2Layout.setOnClickListener((View view) -> mEaseHandler.onClick(view));
+        mEase2Layout.setOnTouchListener((View view, MotionEvent event) -> mEaseHandler.onTouch(view, event));
 
         mEase3 = findViewById(R.id.ease3);
         mEase3Layout = findViewById(R.id.flashcard_layout_ease3);
-        mEase3Layout.setOnTouchListener(mSelectEaseHandler);
+        mEase3Layout.setOnClickListener((View view) -> mEaseHandler.onClick(view));
+        mEase3Layout.setOnTouchListener((View view, MotionEvent event) -> mEaseHandler.onTouch(view, event));
 
         mEase4 = findViewById(R.id.ease4);
         mEase4Layout = findViewById(R.id.flashcard_layout_ease4);
-        mEase4Layout.setOnTouchListener(mSelectEaseHandler);
+        mEase4Layout.setOnClickListener((View view) -> mEaseHandler.onClick(view));
+        mEase4Layout.setOnTouchListener((View view, MotionEvent event) -> mEaseHandler.onTouch(view, event));
 
         mNext1 = findViewById(R.id.nextTime1);
         mNext2 = findViewById(R.id.nextTime2);
@@ -1998,14 +2048,14 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
         getTheme().resolveAttribute(android.R.attr.textColor, typedValue, true);
         mCardTimer.setTextColor(typedValue.data);
 
-        mCardTimer.setBase(SystemClock.elapsedRealtime());
+        mCardTimer.setBase(getElapsedRealTime());
         mCardTimer.start();
 
         // Stop and highlight the timer if it reaches the time limit.
         getTheme().resolveAttribute(R.attr.maxTimerColor, typedValue, true);
         final int limit = mCurrentCard.timeLimit();
         mCardTimer.setOnChronometerTickListener(chronometer -> {
-            long elapsed = SystemClock.elapsedRealtime() - chronometer.getBase();
+            long elapsed = getElapsedRealTime() - chronometer.getBase();
             if (elapsed >= limit) {
                 chronometer.setTextColor(typedValue.data);
                 chronometer.stop();
@@ -2813,7 +2863,6 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
         return true;
     }
 
-
     protected void performClickWithVisualFeedback(int ease) {
         // Delay could potentially be lower - testing with 20 left a visible "click"
         switch (ease) {
@@ -2835,7 +2884,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
 
     private void performClickWithVisualFeedback(LinearLayout easeLayout) {
         easeLayout.requestFocus();
-        easeLayout.postDelayed(easeLayout::performClick, 20);
+        easeLayout.performClick();
     }
 
 
