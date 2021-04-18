@@ -246,6 +246,5 @@
         <item quantity="one">An automatic sync may be triggered in %d second</item>
         <item quantity="other">An automatic sync may be triggered in %d seconds</item>
     </plurals>
-
-    <string name="select_card_to_preview">Select Card to preview</string>
+    
 </resources>
