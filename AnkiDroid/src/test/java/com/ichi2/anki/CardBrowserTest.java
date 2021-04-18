@@ -680,7 +680,6 @@ public class CardBrowserTest extends RobolectricTest {
     }
 
 
-    @Ignore
     @Test
     public void searchCardsNumberOfResultCount() {
         int cardsToRender = 1;
