@@ -1939,7 +1939,8 @@ public class CardBrowser extends NavigationDrawerActivity implements
 
 
     private final SearchCardsHandler mSearchCardsHandler = new SearchCardsHandler(this);
-    private class SearchCardsHandler extends ListenerWithProgressBar<List<CardCache>, List<CardCache>> {
+    @VisibleForTesting
+    public class SearchCardsHandler extends ListenerWithProgressBar<List<CardCache>, List<CardCache>> {
         public SearchCardsHandler(CardBrowser browser) {
             super(browser);
         }
@@ -2435,7 +2436,8 @@ public class CardBrowser extends NavigationDrawerActivity implements
         mCardsAdapter.notifyDataSetChanged();
     }
 
-    private CardCollection<CardCache> getCards() {
+    @VisibleForTesting
+    public CardCollection<CardCache> getCards() {
         mCards.ensureValidValue();
         return mCards;
     }
