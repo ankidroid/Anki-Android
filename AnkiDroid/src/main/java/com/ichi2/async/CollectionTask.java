@@ -1058,7 +1058,7 @@ public class CollectionTask<ProgressListener, ProgressBackground extends Progres
         private final Collection mCol;
 
         public PartialSearch(List<CardBrowser.CardCache> cards, int columnIndex1, int columnIndex2, int numCardsToRender, ProgressSenderAndCancelListener<List<CardBrowser.CardCache>> collectionTask, Collection col) {
-            mCards = new ArrayList<>(cards);
+            mCards = cards;
             mColumn1Index = columnIndex1;
             mColumn2Index = columnIndex2;
             mNumCardsToRender = numCardsToRender;
@@ -1146,26 +1146,8 @@ public class CollectionTask<ProgressListener, ProgressBackground extends Progres
             PartialSearch partialSearch = new PartialSearch(searchResult, mColumn1Index, mColumn2Index, mNumCardsToRender, collectionTask, col);
             List<Long> searchResult_ = col.findCards(mQuery, mOrder, partialSearch);
             Timber.d("The search found %d cards", searchResult_.size());
-            int position = 0;
-            for (Long cid : searchResult_) {
-                CardBrowser.CardCache card = new CardBrowser.CardCache(cid, col, position++);
-                searchResult.add(card);
-            }
-            // Render the first few items
-            for (int i = 0; i < Math.min(mNumCardsToRender, searchResult.size()); i++) {
-                if (collectionTask.isCancelled()) {
-                    Timber.d("doInBackgroundSearchCards was cancelled so return null");
-                    return null;
-                }
-                searchResult.get(i).load(false, mColumn1Index, mColumn2Index);
-            }
-            // Finish off the task
-            if (collectionTask.isCancelled()) {
-                Timber.d("doInBackgroundSearchCards was cancelled so return null");
-                return null;
-            } else {
-                return searchResult;
-            }
+            partialSearch.doProgress(searchResult_);
+            return searchResult;
         }
     }
 
