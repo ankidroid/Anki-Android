@@ -29,6 +29,7 @@ import com.ichi2.utils.JSONObject;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 import androidx.annotation.Nullable;
@@ -48,7 +49,8 @@ public class CardTemplatePreviewer extends AbstractFlashcardViewer {
     @Nullable
     private long[] mCardList;
     private Bundle mNoteEditorBundle = null;
-
+    private HashMap<Integer, String> mFieldData;
+    private int mIndex = 0;
     private boolean mShowingAnswer;
 
     @Override
@@ -59,6 +61,7 @@ public class CardTemplatePreviewer extends AbstractFlashcardViewer {
         Timber.d("onCreate()");
         super.onCreate(savedInstanceState);
 
+        mFieldData = new HashMap<>();
         Bundle parameters = savedInstanceState;
         if (parameters == null) {
             parameters = getIntent().getExtras();
@@ -152,8 +155,10 @@ public class CardTemplatePreviewer extends AbstractFlashcardViewer {
 
         mPreviewButtonsLayout.setOnClickListener(mToggleAnswerHandler);
 
-        mPreviewPrevCard.setVisibility(View.GONE);
-        mPreviewNextCard.setVisibility(View.GONE);
+        mPreviewPrevCard.setOnClickListener(mSelectScrollHandler);
+        mPreviewNextCard.setOnClickListener(mSelectScrollHandler);
+        mPreviewPrevCard.setEnabled(false);
+        mPreviewPrevCard.setAlpha(0.38F);
 
         if (animationEnabled()) {
             int resId = Themes.getResFromAttr(this, R.attr.hardButtonRippleRef);
@@ -203,6 +208,43 @@ public class CardTemplatePreviewer extends AbstractFlashcardViewer {
         }
     };
 
+    private final View.OnClickListener mSelectScrollHandler = new View.OnClickListener() {
+        @Override
+        public void onClick(View view) {
+            if (view.getId() == R.id.preview_previous_flashcard) {
+                mIndex--;
+            } else if (view.getId() == R.id.preview_next_flashcard) {
+                mIndex++;
+            }
+            if(mIndex == 1) {
+                mPreviewPrevCard.setEnabled(true);
+                mPreviewNextCard.setEnabled(false);
+                mPreviewNextCard.setAlpha(0.38F);
+                mPreviewPrevCard.setAlpha(1F);
+            }
+            if(mIndex == 0) {
+                mPreviewPrevCard.setEnabled(false);
+                mPreviewNextCard.setEnabled(true);
+                mPreviewPrevCard.setAlpha(0.38F);
+                mPreviewNextCard.setAlpha(1F);
+            }
+            loadFieldData();
+            displayCardQuestion();
+        }
+    };
+
+    private void loadFieldData() {
+        mCurrentCard.note().setField(0, mFieldData.get(mIndex));
+        if (mIndex == 1) {
+            mCurrentCard.note().setField(1, mFieldData.get(0));
+        } else if (mIndex == 0) {
+            mCurrentCard.note().setField(1,mFieldData.get(1));
+        }
+        displayCardQuestion(true);
+        if (mShowingAnswer) {
+            displayCardAnswer();
+        }
+    }
 
     private void updateButtonsState() {
         mPreviewToggleAnswerText.setText(mShowingAnswer ? R.string.hide_answer : R.string.show_answer);
@@ -243,26 +285,23 @@ public class CardTemplatePreviewer extends AbstractFlashcardViewer {
             ArrayList<String> tagsList = mNoteEditorBundle.getStringArrayList("tags");
             NoteUtils.setTags(currentNote, tagsList);
 
+            if (mNoteEditorBundle.getInt("cardListSize") < 2) {
+                    mPreviewPrevCard.setVisibility(View.GONE);
+                    mPreviewNextCard.setVisibility(View.GONE);
+            }
             Bundle noteFields = mNoteEditorBundle.getBundle("editFields");
             if (noteFields != null) {
                 for (String fieldOrd : noteFields.keySet()) {
                     // In case the fields on the card are out of sync with the bundle
                     int fieldOrdInt = Integer.parseInt(fieldOrd);
                     if (fieldOrdInt < currentNote.getFields().length) {
-                        if (mNoteEditorBundle.getInt("previewCard") == 1) {
-                            currentNote.setField((fieldOrdInt == 0) ? 1 : 0, noteFields.getString(fieldOrd));
-                        } else {
-                            currentNote.setField(fieldOrdInt, noteFields.getString(fieldOrd));
-                        }
+                        mFieldData.put(fieldOrdInt, noteFields.getString(fieldOrd));
                     }
                 }
             }
         }
 
-        displayCardQuestion();
-        if (mShowingAnswer) {
-            displayCardAnswer();
-        }
+        loadFieldData();
         showBackIcon();
     }
 

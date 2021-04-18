@@ -1232,15 +1232,8 @@ public class NoteEditor extends AnkiActivity {
             String name = tmpls.getJSONObject(i).optString("name");
             cardsList.add(name);
         }
-        new MaterialDialog.Builder(this)
-                .title(R.string.select_card_to_preview)
-                .items(cardsList.toArray(new String[0]))
-                .itemsCallback((dialog, view, position, text) -> {
-                    dialog.dismiss();
-                    noteEditorBundle.putInt("previewCard", position);
-                    startActivityForResultWithoutAnimation(previewer, REQUEST_PREVIEW);
-                })
-                .show();
+        noteEditorBundle.putInt("cardListSize", cardsList.size());
+        startActivityForResultWithoutAnimation(previewer, REQUEST_PREVIEW);
     }
 
 
