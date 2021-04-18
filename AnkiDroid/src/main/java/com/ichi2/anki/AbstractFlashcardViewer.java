@@ -441,6 +441,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
 
     // Event handler for eases (answer buttons)
     class SelectEaseHandler implements View.OnClickListener, View.OnTouchListener {
+        // maximum screen distance from initial touch where we will consider a click related to the touch
         private static final int CLICK_ACTION_THRESHOLD = 200;
 
         private Card mPrevCard = null;
