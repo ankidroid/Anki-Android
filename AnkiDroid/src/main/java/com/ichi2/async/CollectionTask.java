@@ -1105,10 +1105,6 @@ public class CollectionTask<ProgressBackground, ResultBackground> extends BaseAs
             mCollectionTask.doProgress(mCards);
         }
 
-        public int getNumCardsToRender() {
-            return mNumCardsToRender;
-        }
-
 
         public ProgressSender<Long> getProgressSender() {
             return new ProgressSender<Long>() {
@@ -1120,7 +1116,7 @@ public class CollectionTask<ProgressBackground, ResultBackground> extends BaseAs
                         return;
                     }
                     mRes.add(value);
-                    if (mRes.size() >= getNumCardsToRender()) {
+                    if (mRes.size() >= mNumCardsToRender) {
                         PartialSearch.this.doProgress(mRes);
                         mSendProgress = false;
                     }
