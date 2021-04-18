@@ -38,4 +38,10 @@ public abstract class AbstractCollectionTaskTest extends RobolectricTest {
             throw new RuntimeException(e);
         }
     }
+
+    protected <Progress, Result> void waitForTask(CollectionTask.Task<Progress, Result> task, TaskListener<Progress, Result> listener) {
+        TaskManager.launchCollectionTask(task, listener);
+
+        waitForAsyncTasksToComplete();
+    }
 }

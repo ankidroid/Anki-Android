@@ -1058,7 +1058,7 @@ public class CollectionTask<ProgressListener, ProgressBackground extends Progres
         private final Collection mCol;
 
         public PartialSearch(List<CardBrowser.CardCache> cards, int columnIndex1, int columnIndex2, int numCardsToRender, ProgressSenderAndCancelListener<List<CardBrowser.CardCache>> collectionTask, Collection col) {
-            mCards = cards;
+            mCards = new ArrayList<>(cards);
             mColumn1Index = columnIndex1;
             mColumn2Index = columnIndex2;
             mNumCardsToRender = numCardsToRender;
@@ -1113,7 +1113,7 @@ public class CollectionTask<ProgressListener, ProgressBackground extends Progres
                         return;
                     }
                     mRes.add(value);
-                    if (mRes.size() > getNumCardsToRender()) {
+                    if (mRes.size() >= getNumCardsToRender()) {
                         PartialSearch.this.doProgress(mRes);
                         mSendProgress = false;
                     }
