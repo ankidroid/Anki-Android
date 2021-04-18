@@ -11,6 +11,8 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
 
+import com.ichi2.async.CollectionTask;
+import com.ichi2.async.TaskManager;
 import com.ichi2.libanki.Card;
 import com.ichi2.libanki.Consts;
 import com.ichi2.libanki.Deck;
@@ -18,6 +20,7 @@ import com.ichi2.libanki.Note;
 import com.ichi2.testutils.AnkiAssert;
 import com.ichi2.testutils.IntentAssert;
 
+import org.hamcrest.Matchers;
 import org.junit.Assert;
 import org.junit.Ignore;
 import org.junit.Test;
@@ -52,6 +55,8 @@ import static org.hamcrest.Matchers.hasSize;
 import static org.hamcrest.Matchers.not;
 import static org.hamcrest.Matchers.notNullValue;
 import static org.hamcrest.core.Is.is;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 import static org.robolectric.Shadows.shadowOf;
 
 @RunWith(AndroidJUnit4.class)
@@ -724,13 +729,23 @@ public class CardBrowserTest extends RobolectricTest {
         return getBrowserWithNotes(3);
     }
 
+    private static class CardBrowserSizeOne extends CardBrowser {
+        @Override
+        protected int numCardsToRender() {
+            return 1;
+        }
+    }
 
     private CardBrowser getBrowserWithNotes(int count) {
+        return getBrowserWithNotes(count, CardBrowser.class);
+    }
+
+    private CardBrowser getBrowserWithNotes(int count, Class<? extends CardBrowser> cardBrowserClass) {
         ensureCollectionLoadIsSynchronous();
         for(int i = 0; i < count; i ++) {
             addNoteUsingBasicModel(Integer.toString(i), "back");
         }
-        ActivityController<CardBrowser> multimediaController = Robolectric.buildActivity(CardBrowser.class, new Intent())
+        ActivityController<? extends CardBrowser> multimediaController = Robolectric.buildActivity(cardBrowserClass, new Intent())
                 .create().start();
         multimediaController.resume().visible();
         saveControllerForCleanup(multimediaController);
@@ -761,5 +776,22 @@ public class CardBrowserTest extends RobolectricTest {
 
         CardBrowser.RenderOnScroll renderOnScroll = cardBrowser.new RenderOnScroll();
         renderOnScroll.onScroll(cardBrowser.mCardsListView, 0, 0, 2);
+    }
+
+    @Test
+    public void searchCardsNumberOfResultCount() {
+        int cardsToRender = 1;
+
+
+        CardBrowser cardBrowser = getBrowserWithNotes(2, CardBrowserSizeOne.class);
+
+        CollectionTask.SearchCards task = new CollectionTask.SearchCards("", false, cardsToRender, 0, 0);
+
+        TaskManager.launchCollectionTask(task, cardBrowser.new SearchCardsHandler(cardBrowser));
+        CardBrowser.CardCollection<CardBrowser.CardCache> cards = cardBrowser.getCards();
+        assertThat(2, is(cards.size()));
+        assertTrue(cards.get(0).isLoaded());
+        assertFalse(cards.get(1).isLoaded());
+
     }
 }
