@@ -1084,7 +1084,8 @@ public class CollectionTask<ProgressListener, ProgressBackground extends Progres
             while (mCards.size() < cards.size()) {
                 int nextPosition = mCards.size();
                 Long nextCardId = cards.get(nextPosition);
-                mCards.add(new CardBrowser.CardCache(nextCardId, mCol, mCards.size()));
+                CardBrowser.CardCache card = new CardBrowser.CardCache(nextCardId, mCol, mCards.size());
+                mCards.add(card);
             }
             for (CardBrowser.CardCache card : mCards) {
                 if (isCancelled()) {
