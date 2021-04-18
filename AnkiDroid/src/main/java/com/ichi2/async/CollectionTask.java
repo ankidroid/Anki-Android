@@ -1072,13 +1072,6 @@ public class CollectionTask<ProgressListener, ProgressBackground extends Progres
         }
 
 
-        public void add(@NonNull List<Long> cards) {
-            while (mCards.size() < cards.size()) {
-                mCards.add(new CardBrowser.CardCache(cards.get(mCards.size()), mCol, mCards.size()));
-            }
-        }
-
-
         /**
          * @param cards Card ids to display in the browser. It is assumed that it is as least as long as mCards, and that
          *             mCards[i].cid = cards[i].  It add the cards in cards after `mPosition` to mCards and load all cards.
@@ -1088,7 +1081,9 @@ public class CollectionTask<ProgressListener, ProgressBackground extends Progres
         public void doProgress(@NonNull List<Long> cards) {
             // PERF: This is currently called on the background thread and blocks further execution of the search
             // PERF: This performs an individual query to load each note
-            add(cards);
+            while (mCards.size() < cards.size()) {
+                mCards.add(new CardBrowser.CardCache(cards.get(mCards.size()), mCol, mCards.size()));
+            }
             for (CardBrowser.CardCache card : mCards) {
                 if (isCancelled()) {
                     Timber.d("doInBackgroundSearchCards was cancelled so return");
