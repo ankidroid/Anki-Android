@@ -222,7 +222,7 @@ public class CardTemplatePreviewer extends AbstractFlashcardViewer {
                 mPreviewNextCard.setAlpha(0.38F);
                 mPreviewPrevCard.setAlpha(1F);
             }
-            if(mIndex == 0) {
+            if (mIndex == 0) {
                 mPreviewPrevCard.setEnabled(false);
                 mPreviewNextCard.setEnabled(true);
                 mPreviewPrevCard.setAlpha(0.38F);
