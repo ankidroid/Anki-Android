@@ -1095,10 +1095,6 @@ public class CollectionTask<ProgressListener, ProgressBackground extends Progres
             mCollectionTask.doProgress(mCards);
         }
 
-        public int getNumCardsToRender() {
-            return mNumCardsToRender;
-        }
-
 
         /**
          * @return Enqueue the first mNumCardsToRender card ids. Once all cards are enqueued, send them to the PartialSearch
@@ -1113,7 +1109,7 @@ public class CollectionTask<ProgressListener, ProgressBackground extends Progres
                         return;
                     }
                     mRes.add(value);
-                    if (mRes.size() >= getNumCardsToRender()) {
+                    if (mRes.size() >= mNumCardsToRender) {
                         PartialSearch.this.doProgress(mRes);
                         mSendProgress = false;
                     }
