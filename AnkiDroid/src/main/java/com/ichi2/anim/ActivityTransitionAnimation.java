@@ -37,7 +37,8 @@ public class ActivityTransitionAnimation {
         case NONE:
             activity.overridePendingTransition(R.anim.none, R.anim.none);
             break;
-        default: //DOWN:
+        case DOWN:
+        default:
             // this is the default animation, we shouldn't try to override it
         }
     }
