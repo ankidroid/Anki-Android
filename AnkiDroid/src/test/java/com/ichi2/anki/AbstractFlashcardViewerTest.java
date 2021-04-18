@@ -11,7 +11,6 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.robolectric.Robolectric;
 import org.robolectric.android.controller.ActivityController;
-import org.robolectric.shadows.ShadowLooper;
 
 import androidx.test.ext.junit.runners.AndroidJUnit4;
 
@@ -415,8 +414,6 @@ public class AbstractFlashcardViewerTest extends RobolectricTest {
         assertThat("Displaying answer", viewer.isDisplayingAnswer(), is(true));
 
         viewer.executeCommand(ViewerCommand.COMMAND_FLIP_OR_ANSWER_BETTER_THAN_RECOMMENDED);
-
-        ShadowLooper.runUiThreadTasksIncludingDelayedTasks();
 
         assertThat(viewer.mAnswered, notNullValue());
     }
