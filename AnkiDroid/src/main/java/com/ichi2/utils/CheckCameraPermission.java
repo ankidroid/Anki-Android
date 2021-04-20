@@ -26,17 +26,17 @@ import timber.log.Timber;
 
 public class CheckCameraPermission {
 
-    public static boolean isPermissionAvailableInManifest(Context context) {
+    public static boolean manifestContainsPermission(Context context) {
         try {
             String[] requestedPermissions = context.getPackageManager()
                     .getPackageInfo(context.getPackageName(), PackageManager.GET_PERMISSIONS)
                     .requestedPermissions;
             if (Arrays.toString(requestedPermissions).contains("android.permission.CAMERA")) {
-                return false;
+                return true;
             }
         } catch (Exception e) {
             Timber.w(e);
         }
-        return true;
+        return false;
     }
 }
