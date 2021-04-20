@@ -229,7 +229,6 @@ public class CardTemplatePreviewer extends AbstractFlashcardViewer {
                 mPreviewNextCard.setAlpha(1F);
             }
             loadFieldData();
-            displayCardQuestion();
         }
     };
 
@@ -241,9 +240,6 @@ public class CardTemplatePreviewer extends AbstractFlashcardViewer {
             mCurrentCard.note().setField(1,mFieldData.get(1));
         }
         displayCardQuestion(true);
-        if (mShowingAnswer) {
-            displayCardAnswer();
-        }
     }
 
     private void updateButtonsState() {
@@ -295,13 +291,17 @@ public class CardTemplatePreviewer extends AbstractFlashcardViewer {
                     // In case the fields on the card are out of sync with the bundle
                     int fieldOrdInt = Integer.parseInt(fieldOrd);
                     if (fieldOrdInt < currentNote.getFields().length) {
+                        currentNote.setField(fieldOrdInt, noteFields.getString(fieldOrd));
                         mFieldData.put(fieldOrdInt, noteFields.getString(fieldOrd));
                     }
                 }
             }
         }
 
-        loadFieldData();
+        displayCardQuestion();
+        if (mShowingAnswer) {
+            displayCardAnswer();
+        }
         showBackIcon();
     }
 
