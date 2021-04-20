@@ -265,8 +265,7 @@ public class DeckPickerTest extends RobolectricTest {
     public void deckPickerNotCrashOnNoPermissionTest() {
         Application application = ApplicationProvider.getApplicationContext();
         ShadowApplication app = shadowOf(application);
-        app.denyPermissions(Manifest.permission.READ_EXTERNAL_STORAGE);
-        app.denyPermissions(Manifest.permission.WRITE_EXTERNAL_STORAGE);
+        app.denyPermissions(Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE);
 
         try (ActivityScenario<DeckPicker> scenario = ActivityScenario.launch(DeckPicker.class)) {
             scenario.onActivity(deckPicker -> {
