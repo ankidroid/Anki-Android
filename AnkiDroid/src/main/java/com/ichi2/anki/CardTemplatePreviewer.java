@@ -155,6 +155,8 @@ public class CardTemplatePreviewer extends AbstractFlashcardViewer {
 
         mPreviewButtonsLayout.setOnClickListener(mToggleAnswerHandler);
 
+        mPreviewPrevCard.setVisibility(View.GONE);
+        mPreviewNextCard.setVisibility(View.GONE);
         mPreviewPrevCard.setOnClickListener(mSelectScrollHandler);
         mPreviewNextCard.setOnClickListener(mSelectScrollHandler);
         mPreviewPrevCard.setEnabled(false);
@@ -240,6 +242,8 @@ public class CardTemplatePreviewer extends AbstractFlashcardViewer {
             mCurrentCard.note().setField(1,mFieldData.get(1));
         }
         displayCardQuestion(true);
+        mShowingAnswer = false;
+        updateButtonsState();
     }
 
     private void updateButtonsState() {
@@ -281,9 +285,9 @@ public class CardTemplatePreviewer extends AbstractFlashcardViewer {
             ArrayList<String> tagsList = mNoteEditorBundle.getStringArrayList("tags");
             NoteUtils.setTags(currentNote, tagsList);
 
-            if (mNoteEditorBundle.getInt("cardListSize") < 2) {
-                    mPreviewPrevCard.setVisibility(View.GONE);
-                    mPreviewNextCard.setVisibility(View.GONE);
+            if (mNoteEditorBundle.getInt("cardListSize") >= 2) {
+                    mPreviewPrevCard.setVisibility(View.VISIBLE);
+                    mPreviewNextCard.setVisibility(View.VISIBLE);
             }
             Bundle noteFields = mNoteEditorBundle.getBundle("editFields");
             if (noteFields != null) {
