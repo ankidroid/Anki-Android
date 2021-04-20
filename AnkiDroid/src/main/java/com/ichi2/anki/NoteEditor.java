@@ -105,6 +105,7 @@ import com.ichi2.themes.StyledProgressDialog;
 import com.ichi2.themes.Themes;
 import com.ichi2.anki.widgets.PopupMenuWithIcons;
 import com.ichi2.utils.AdaptionUtil;
+import com.ichi2.utils.CheckCameraPermission;
 import com.ichi2.utils.ContentResolverUtil;
 import com.ichi2.utils.DeckComparator;
 import com.ichi2.utils.FileUtil;
@@ -1682,6 +1683,13 @@ public class NoteEditor extends AnkiActivity implements
                 PopupMenuWithIcons popup = new PopupMenuWithIcons(NoteEditor.this, v, true);
                 MenuInflater inflater = popup.getMenuInflater();
                 inflater.inflate(R.menu.popupmenu_multimedia_options, popup.getMenu());
+
+                /* To check whether Camera Permission is asked in AndroidManifest.xml */
+                if (!CheckCameraPermission.manifestContainsPermission(this)) {
+                    MenuItem item = popup.getMenu().findItem(R.id.menu_multimedia_photo);
+                    item.setVisible(false);
+                }
+
                 popup.setOnMenuItemClickListener(item -> {
 
                     int itemId = item.getItemId();
