@@ -23,7 +23,7 @@
             android:key="search"
             android:title="@string/deck_conf_cram_search" />
 
-        <com.ichi2.preferences.NumberRangePreference
+        <com.ichi2.preferences.IncrementerNumberRangePreference
             android:key="limit"
             android:numeric="integer"
             android:title="@string/deck_conf_cram_limit"
