@@ -39,13 +39,13 @@ public class MapUtilTest {
 
 
     @Test
-    public void getKeyByValueIsEqualTest() {
+    public void testGetKeyByValue_IsEqual() {
         assertThat(getKeyByValue(map, "AnkiDroid"), is(20));
     }
 
 
     @Test
-    public void getKeyByValueIsNotEqualTest() {
+    public void testGetKeyByValue_IsNotEqual() {
         assertThat(getKeyByValue(map, "AnkiDesktop"), not(5));
     }
 }
