@@ -67,7 +67,7 @@ public class JSONArrayTest {
 
 
     /**
-     * Actually the array will not expand as this value is set to the in the index in arraylist not add to .
+     * Actually the array will not expand as this value is set to the index in the arraylist not added to .
      */
     @Test(expected = AssertionError.class)
     public void testPut_atTheBeginningAndNotExpand() {
@@ -78,7 +78,7 @@ public class JSONArrayTest {
 
 
     /**
-     * Actually the array will not expand as this value is set to the in the index in arraylist not add to .
+     * Actually the array will not expand as this value is set to the index in the arraylist not added to .
      */
     @Test(expected = AssertionError.class)
     public void testPut_atTheMiddleAndNotExpand() {
@@ -89,8 +89,8 @@ public class JSONArrayTest {
 
 
     /**
-     * Actually the array will  expand as this value is set to the in the index in arraylist,
-     * but he check first if the array.length < index , then fill every empty indexes with null until reach index  .
+     * Actually the array will  expand as this value is set to the index in arraylist,
+     * but he check first if the array.length < index , then fill every empty indexes with null until he reaches the index  .
      */
     @Test
     public void testPut_atTheEndOAndExpand() {
