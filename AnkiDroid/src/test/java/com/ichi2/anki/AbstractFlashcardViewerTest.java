@@ -3,6 +3,7 @@ package com.ichi2.anki;
 import android.app.Activity;
 import android.content.Intent;
 
+import com.ichi2.anki.cardviewer.ViewerCommand;
 import com.ichi2.libanki.Note;
 import com.ichi2.testutils.AnkiAssert;
 
@@ -22,17 +23,20 @@ import static com.ichi2.anki.AbstractFlashcardViewer.WebViewSignalParserUtils.SH
 import static com.ichi2.anki.AbstractFlashcardViewer.WebViewSignalParserUtils.SIGNAL_NOOP;
 import static com.ichi2.anki.AbstractFlashcardViewer.WebViewSignalParserUtils.TYPE_FOCUS;
 import static com.ichi2.anki.AbstractFlashcardViewer.WebViewSignalParserUtils.getSignalFromUrl;
-
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.containsString;
 import static org.hamcrest.Matchers.is;
 import static org.hamcrest.Matchers.not;
+import static org.hamcrest.Matchers.notNullValue;
 import static org.junit.Assert.assertEquals;
 
 @RunWith(AndroidJUnit4.class)
 public class AbstractFlashcardViewerTest extends RobolectricTest {
 
     public static class NonAbstractFlashcardViewer extends AbstractFlashcardViewer {
+        public Integer mAnswered;
+        private int lastTime = 0;
+
         @Override
         protected void setTitle() {
         }
@@ -41,6 +45,20 @@ public class AbstractFlashcardViewerTest extends RobolectricTest {
         @Override
         protected void performReload() {
             // intentionally blank
+        }
+
+
+        @Override
+        protected void answerCard(int ease) {
+            super.answerCard(ease);
+            this.mAnswered = ease;
+        }
+
+
+        @Override
+        protected long getElapsedRealTime() {
+            lastTime += DOUBLE_TAP_IGNORE_THRESHOLD;
+            return lastTime;
         }
 
 
@@ -384,6 +402,21 @@ public class AbstractFlashcardViewerTest extends RobolectricTest {
         assertEquals("test, test, test2", nafv.contentForCloze(cloze2, 1));
     }
 
+    @Test
+    public void testCommandPerformsAnswerCard() {
+        // Regression for #8527/#8572
+        // Note: Couldn't get a spy working, so overriding the method
+        NonAbstractFlashcardViewer viewer = getViewer();
+
+        assertThat("Displaying question", viewer.isDisplayingAnswer(), is(false));
+        viewer.executeCommand(ViewerCommand.COMMAND_FLIP_OR_ANSWER_BETTER_THAN_RECOMMENDED);
+
+        assertThat("Displaying answer", viewer.isDisplayingAnswer(), is(true));
+
+        viewer.executeCommand(ViewerCommand.COMMAND_FLIP_OR_ANSWER_BETTER_THAN_RECOMMENDED);
+
+        assertThat(viewer.mAnswered, notNullValue());
+    }
 
     private NonAbstractFlashcardViewer getViewer() {
         Note n = getCol().newNote();

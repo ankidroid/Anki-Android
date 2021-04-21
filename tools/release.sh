@@ -99,7 +99,7 @@ fi
 
 # Build signed APK using Gradle and publish to Play
 # Configuration for pushing to Play specified in build.gradle 'play' task
-if ! ./gradlew publishReleaseApk
+if ! ./gradlew publishPlayReleaseApk
 then
   # APK contains problems, abort release
   git checkout -- $GRADLEFILE # Revert version change
@@ -107,7 +107,7 @@ then
 fi
 
 # Now build the universal release also
-if ! ./gradlew assembleRelease -Duniversal-apk=true
+if ! ./gradlew assemblePlayRelease -Duniversal-apk=true
 then
   # APK contains problems, abort release
   git checkout -- $GRADLEFILE # Revert version change
@@ -117,7 +117,7 @@ fi
 # Copy universal APK to cwd
 ABIS='universal arm64-v8a x86 x86_64 armeabi-v7a'
 for ABI in $ABIS; do
-  cp AnkiDroid/build/outputs/apk/release/AnkiDroid-"$ABI"-release.apk AnkiDroid-"$VERSION"-"$ABI".apk
+  cp AnkiDroid/build/outputs/apk/play/release/AnkiDroid-play-"$ABI"-release.apk AnkiDroid-"$VERSION"-"$ABI".apk
 done
 
 
