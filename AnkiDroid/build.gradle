@@ -305,7 +305,7 @@ dependencies {
     testImplementation 'androidx.test:core:1.3.0'
     testImplementation 'androidx.test.ext:junit:1.1.2'
     // debugImplementation required vs testImplementation: https://issuetracker.google.com/issues/128612536
-    debugImplementation 'androidx.fragment:fragment-testing:1.3.2'
+    debugImplementation 'androidx.fragment:fragment-testing:1.3.3'
 
     // May need a resolution strategy for support libs to our versions
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.3.0'
