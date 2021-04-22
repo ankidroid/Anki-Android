@@ -12,17 +12,15 @@ import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
-import org.robolectric.RobolectricTestRunner;
-import org.robolectric.annotation.LooperMode;
 
 import java.util.concurrent.ExecutionException;
 
+import androidx.test.ext.junit.runners.AndroidJUnit4;
+
 import static org.mockito.Mockito.*;
-import static org.robolectric.annotation.LooperMode.Mode.PAUSED;
 import static org.robolectric.shadows.ShadowLooper.shadowMainLooper;
 
-@RunWith(RobolectricTestRunner.class)
-@LooperMode(PAUSED)
+@RunWith(AndroidJUnit4.class)
 public class AnkiStatsTaskHandlerTest {
 
     @Mock
