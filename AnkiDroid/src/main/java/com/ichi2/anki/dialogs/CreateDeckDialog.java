@@ -137,7 +137,7 @@ public class CreateDeckDialog {
     private boolean createNewDeck(@NonNull String deckName) {
         try {
             // create normal deck or sub deck
-            Timber.i("DeckPicker:: Creating new deck...");
+            Timber.i("CreateDeckDialog::createNewDeck");
             long newDeckId = mAnkiActivity.getCol().getDecks().id(deckName);
             mOnNewDeckCreated.accept(newDeckId);
         } catch (FilteredAncestor filteredAncestor) {
