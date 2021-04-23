@@ -1228,7 +1228,6 @@ public class NoteEditor extends AnkiActivity {
         previewer.putExtra("noteEditorBundle", noteEditorBundle);
         ArrayList<String> cardsList = new ArrayList<>();
         JSONArray tmpls = mEditorNote.model().getJSONArray("tmpls");
-        Log.d("debug: ", tmpls.toString());
         for ( int i = 0 ; i < tmpls.length() ; i++) {
             String name = tmpls.getJSONObject(i).optString("name");
             cardsList.add(name);
