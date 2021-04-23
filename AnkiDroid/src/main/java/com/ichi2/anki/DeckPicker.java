@@ -665,7 +665,7 @@ public class DeckPicker extends NavigationDrawerActivity implements
     @Override
     public boolean onPrepareOptionsMenu(Menu menu) {
         // Null check to prevent crash when col inaccessible
-        if (CollectionHelper.getInstance().getColSafe(this) == null) {
+        if (!colIsOpen()) {
             return false;
         }
         return super.onPrepareOptionsMenu(menu);
@@ -681,13 +681,6 @@ public class DeckPicker extends NavigationDrawerActivity implements
         menu.findItem(R.id.action_check_database).setEnabled(sdCardAvailable);
         menu.findItem(R.id.action_check_media).setEnabled(sdCardAvailable);
         menu.findItem(R.id.action_empty_cards).setEnabled(sdCardAvailable);
-
-        // I haven't had an exception here, but it feels this may be flaky
-        try {
-            displaySyncBadge(menu);
-        } catch (Exception e) {
-            Timber.w(e, "Error Displaying Sync Badge");
-        }
 
         MenuItem toolbarSearchItem = menu.findItem(R.id.deck_picker_action_filter);
         mToolbarSearchView = (SearchView) toolbarSearchItem.getActionView();
@@ -709,6 +702,8 @@ public class DeckPicker extends NavigationDrawerActivity implements
         });
 
         if (colIsOpen()) {
+            displaySyncBadge(menu);
+
             // Show / hide undo
             if (mFragmented || !getCol().undoAvailable()) {
                 menu.findItem(R.id.action_undo).setVisible(false);
@@ -728,7 +723,8 @@ public class DeckPicker extends NavigationDrawerActivity implements
     }
 
 
-    private void displaySyncBadge(Menu menu) {
+    @VisibleForTesting
+    protected void displaySyncBadge(Menu menu) {
         MenuItem syncMenu = menu.findItem(R.id.action_sync);
         SyncStatus syncStatus = SyncStatus.getSyncStatus(this::getCol);
         switch (syncStatus) {
@@ -970,7 +966,9 @@ public class DeckPicker extends NavigationDrawerActivity implements
         }
         /* Complete task and enqueue fetching nonessential data for
           startup. */
-        TaskManager.launchCollectionTask(new CollectionTask.LoadCollectionComplete());
+        if (colIsOpen()) {
+            TaskManager.launchCollectionTask(new CollectionTask.LoadCollectionComplete());
+        }
         // Update sync status (if we've come back from a screen)
         supportInvalidateOptionsMenu();
     }
