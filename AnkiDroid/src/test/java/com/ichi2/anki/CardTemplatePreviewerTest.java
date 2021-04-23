@@ -129,7 +129,7 @@ public class CardTemplatePreviewerTest extends RobolectricTest {
         intent.putExtra("noteEditorBundle", noteFieldBundleTest);
 
         CardTemplatePreviewer testCardTemplatePreviewerActivity = Robolectric.buildActivity( CardTemplatePreviewer.class ).create().resume().get();
-        View previewNextCard = testCardTemplatePreviewerActivity.mPreviewNextCard;
+        View previewNextCard = testCardTemplatePreviewerActivity.findViewById(R.id.preview_next_flashcard);
         previewNextCard.performClick();
         Assert.assertTrue("Previewing Card2?", testCardTemplatePreviewerActivity.mAnswerField.getText().equals("Front Test"));
     }
