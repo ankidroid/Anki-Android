@@ -120,18 +120,14 @@ public class CardTemplatePreviewerTest extends RobolectricTest {
 
         Intent intent = new Intent(Intent.ACTION_VIEW);
         intent.putExtra(TemporaryModel.INTENT_MODEL_FILENAME, TemporaryModel.saveTempModel(getTargetContext(), collectionBasicModelOriginal));
-        Bundle fieldsTest = new Bundle();
-        fieldsTest.putString(String.valueOf(0), "Front Test");
-        fieldsTest.putString(String.valueOf(1), "Back Test");
         Bundle noteFieldBundleTest = new Bundle();
-        noteFieldBundleTest.putBundle("editFields", fieldsTest);
         noteFieldBundleTest.putInt("cardListSize", 2);
         intent.putExtra("noteEditorBundle", noteFieldBundleTest);
 
         CardTemplatePreviewer testCardTemplatePreviewerActivity = Robolectric.buildActivity( CardTemplatePreviewer.class, intent).create().resume().get();
         View previewNextCard = testCardTemplatePreviewerActivity.findViewById(R.id.preview_next_flashcard);
         previewNextCard.performClick();
-        Assert.assertTrue("Previewing Card2?", testCardTemplatePreviewerActivity.mAnswerField.getText().equals("Front Test"));
+        Assert.assertTrue("Previewing Card2?", testCardTemplatePreviewerActivity.mAnswerField.getText().equals("Front"));
     }
 
     private Card getSavedCard(Model model, int ordinal) {
