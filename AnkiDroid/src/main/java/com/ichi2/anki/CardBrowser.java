@@ -686,32 +686,17 @@ public class CardBrowser extends NavigationDrawerActivity implements
             }
         });
 
-        setLongClickListenerOnItems();
-
-        getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
-
-        // If a valid value for last deck exists then use it, otherwise use libanki selected deck
-        if (getLastDeckId() != null && getLastDeckId() == ALL_DECKS_ID) {
-            selectAllDecks();
-        } else  if (getLastDeckId() != null && getCol().getDecks().get(getLastDeckId(), false) != null) {
-            selectDeckById(getLastDeckId());
-        } else {
-            selectDeckById(getCol().getDecks().selected());
-        }
-    }
-
-    @VisibleForTesting
-    public void setLongClickListenerOnItems() {
         mCardsListView.setOnItemLongClickListener((adapterView, view, position, id) -> {
             if (mInMultiSelectMode) {
+                boolean hasChanged = false;
                 for (int i = Math.min(mLastSelectedPosition, position); i <= Math.max(mLastSelectedPosition, position); i++) {
-                    // Fetch card at position i.
                     CardCache card = (CardCache) mCardsListView.getItemAtPosition(i);
 
-                    // If card is not in the list of checked cards, then add it.
-                    if (mCheckedCards.add(card)) {
-                        onSelectionChanged();
-                    }
+                    // Add to the set of checked cards
+                    hasChanged |= mCheckedCards.add(card);
+                }
+                if (hasChanged) {
+                    onSelectionChanged();
                 }
             } else {
                 mLastSelectedPosition = position;
@@ -727,6 +712,17 @@ public class CardBrowser extends NavigationDrawerActivity implements
             }
             return true;
         });
+
+        getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
+
+        // If a valid value for last deck exists then use it, otherwise use libanki selected deck
+        if (getLastDeckId() != null && getLastDeckId() == ALL_DECKS_ID) {
+            selectAllDecks();
+        } else  if (getLastDeckId() != null && getCol().getDecks().get(getLastDeckId(), false) != null) {
+            selectDeckById(getLastDeckId());
+        } else {
+            selectDeckById(getCol().getDecks().selected());
+        }
     }
 
 
@@ -1983,7 +1979,7 @@ public class CardBrowser extends NavigationDrawerActivity implements
         private void handleSearchResult() {
             Timber.i("CardBrowser:: Completed doInBackgroundSearchCards Successfully");
             updateList();
-
+            
             if ((mSearchView == null) || mSearchView.isIconified()) {
                 return;
             }

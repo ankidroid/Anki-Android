@@ -7,6 +7,7 @@ import android.content.ComponentName;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
 
@@ -564,11 +565,11 @@ public class CardBrowserTest extends RobolectricTest {
 
     @Test
     public void checkIfLongSelectChecksAllCardsInBetween() {
-        CardBrowser browser = getBrowserWithNotes(10);
-        browser.setLongClickListenerOnItems();
-        selectOneOfManyCards(browser, 4);
-        selectOneOfManyCards(browser, 8);
-        assertThat(browser.checkedCardCount(), is(5));
+        // #8467 - selecting cards outside the view pane (20) caused a crash as we were using view-based positions
+        CardBrowser browser = getBrowserWithNotes(25);
+        selectOneOfManyCards(browser, 7); // HACK: Fix a bug in tests by choosing a value < 8
+        selectOneOfManyCards(browser, 24);
+        assertThat(browser.checkedCardCount(), is(18));
     }
 
     protected void assertUndoDoesNotContain(CardBrowser browser, @StringRes int resId) {
@@ -618,11 +619,17 @@ public class CardBrowserTest extends RobolectricTest {
         ShadowActivity shadowActivity = shadowOf(browser);
         ListView toSelect = shadowActivity.getContentView().findViewById(R.id.card_browser_list);
 
-        //roboelectric doesn't easily seem to allow us to fire an onItemLongClick
+        // Robolectric doesn't easily seem to allow us to fire an onItemLongClick
         AdapterView.OnItemLongClickListener listener = toSelect.getOnItemLongClickListener();
-        if (listener == null)
+        if (listener == null) {
             throw new IllegalStateException("no listener found");
-        listener.onItemLongClick(null, toSelect.getChildAt(position),
+        }
+
+        View childAt = toSelect.getChildAt(position);
+        if (childAt == null) {
+            Timber.w("Can't use childAt on position " + position + " for a single click as it is not visible");
+        }
+        listener.onItemLongClick(null, childAt,
                 position, toSelect.getItemIdAtPosition(position));
     }
 
