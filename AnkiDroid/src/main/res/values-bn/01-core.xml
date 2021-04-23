@@ -122,7 +122,6 @@
     <string name="menu_unmark_note">নোটের টীকা চিহ্ন মুছুন</string>
     <string name="menu_toggle_mic_tool_bar">Check pronunciation</string>
     <string name="new_deck">ডেক তৈরি করুন</string>
-    <string name="create" comment="Button to create a filtered deck">তৈরি করুন</string>
     <string name="new_dynamic_deck">ফিল্টার করা ডেক তৈরি করুন</string>
     <string name="night_mode">নাইট মোড</string>
     <string name="directory_inaccessible">আনকিড্রইড ডাইরেক্টরি অপ্রবেশ্য।</string>

@@ -96,10 +96,10 @@
     <string name="card_info_added" comment="Label of the information showing at which date a card was added.">Eklendi</string>
     <string name="card_info_first_review">İlk tekrar</string>
     <string name="card_info_latest_review">Son tekrar</string>
-    <string name="card_info_interval">Interval</string>
+    <string name="card_info_interval">Zaman Aralığı</string>
     <string name="card_info_ease">Kolaylık</string>
     <string name="card_info_reviews" comment="Number of times a card was reviewed">Tekrarlar</string>
-    <string name="card_info_lapses" comment="Label indicating the number of lapses of a card.">Lapses</string>
+    <string name="card_info_lapses" comment="Label indicating the number of lapses of a card.">Zaman Aşımları</string>
     <string name="card_info_average_time">Ortalama süre</string>
     <string name="card_info_total_time">Toplam Süre</string>
     <string name="card_info_card_type">Kart tipi</string>
@@ -107,7 +107,7 @@
     <string name="card_info_deck_name">Deste adı</string>
     <string name="card_info_card_id">Kart numarası</string>
     <string name="card_info_note_id">Not numarası</string>
-    <string name="card_info_revlog_time">Time</string>
+    <string name="card_info_revlog_time">Süre</string>
     <string name="card_info_revlog_date">Tarih</string>
     <string name="card_info_revlog_rating">Derecelendirme</string>
     <string name="card_info_revlog_type">Tür</string>

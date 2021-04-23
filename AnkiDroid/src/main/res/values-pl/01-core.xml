@@ -132,7 +132,6 @@
     <string name="menu_unmark_note">Cofnij wyróżnienie notatki</string>
     <string name="menu_toggle_mic_tool_bar">Sprawdź wymowę</string>
     <string name="new_deck">Stwórz talię</string>
-    <string name="create" comment="Button to create a filtered deck">Utwórz</string>
     <string name="new_dynamic_deck">Stwórz filtrowaną talię</string>
     <string name="night_mode">Tryb nocny</string>
     <string name="directory_inaccessible">Katalog AnkiDroid jest niedostępny</string>

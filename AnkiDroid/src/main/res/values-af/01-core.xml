@@ -122,7 +122,6 @@
     <string name="menu_unmark_note">Unmark note</string>
     <string name="menu_toggle_mic_tool_bar">Check pronunciation</string>
     <string name="new_deck">Skep pak</string>
-    <string name="create" comment="Button to create a filtered deck">Skep</string>
     <string name="new_dynamic_deck">Skep gefiltreerde kaartpak</string>
     <string name="night_mode">Nag modus</string>
     <string name="directory_inaccessible">AnkiDroid directory is inaccessible</string>

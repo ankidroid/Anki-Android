@@ -127,7 +127,6 @@
     <string name="menu_unmark_note">Odznači bilješku</string>
     <string name="menu_toggle_mic_tool_bar">Check pronunciation</string>
     <string name="new_deck">Stvori skupinu</string>
-    <string name="create" comment="Button to create a filtered deck">Stvori</string>
     <string name="new_dynamic_deck">Stvori filtriranu skupinu</string>
     <string name="night_mode">Noćni način rada</string>
     <string name="directory_inaccessible">AnkiDroid mapa nije dostupna</string>

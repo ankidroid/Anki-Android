@@ -92,8 +92,8 @@
     <string name="gestures_summ">Asignar gestos a acciones tales como contestar o editar tarjetas.</string>
     <string name="gestures_allow_links">Ignorar gestos táctiles en los enlaces</string>
     <string name="gestures_allow_links_summary">Los gestos de toque no se procesarán si se presiona un enlace/pista.</string>
-    <string name="gestures_corner_touch">9-point touch</string>
-    <string name="gestures_corner_touch_summary">Allow touch gestures in screen corners</string>
+    <string name="gestures_corner_touch">Toque de 9 puntos</string>
+    <string name="gestures_corner_touch_summary">Permitir gestos táctiles en las esquinas de pantalla</string>
     <string name="gestures_swipe_up">Deslizar hacia arriba</string>
     <string name="gestures_swipe_down">Deslizar hacia abajo</string>
     <string name="gestures_swipe_left">Deslizar hacia la izquierda</string>
@@ -103,15 +103,15 @@
     <string name="gestures_tap_left">Tocar la parte izquierda</string>
     <string name="gestures_tap_right">Tocar la parte derecha</string>
     <string name="gestures_tap_bottom">Tocar la parte inferior</string>
-    <string name="gestures_corner_tap_top_left">Touch top left</string>
-    <string name="gestures_corner_tap_top_center">Touch top center</string>
-    <string name="gestures_corner_tap_top_right">Touch top right</string>
-    <string name="gestures_corner_tap_middle_left">Touch middle left</string>
-    <string name="gestures_corner_tap_middle_center">Touch middle center</string>
-    <string name="gestures_corner_tap_middle_right">Touch middle right</string>
-    <string name="gestures_corner_tap_bottom_left">Touch bottom left</string>
-    <string name="gestures_corner_tap_bottom_center">Touch bottom center</string>
-    <string name="gestures_corner_tap_bottom_right">Touch bottom right</string>
+    <string name="gestures_corner_tap_top_left">Tocar arriba a la izquierda</string>
+    <string name="gestures_corner_tap_top_center">Tocar centro superior</string>
+    <string name="gestures_corner_tap_top_right">Tocar arriba a la derecha</string>
+    <string name="gestures_corner_tap_middle_left">Tocar a la izquierda</string>
+    <string name="gestures_corner_tap_middle_center">Tocar el centro</string>
+    <string name="gestures_corner_tap_middle_right">Tocar a la derecha</string>
+    <string name="gestures_corner_tap_bottom_left">Tocar abajo a la izquierda</string>
+    <string name="gestures_corner_tap_bottom_center">Tocar centro inferior</string>
+    <string name="gestures_corner_tap_bottom_right">Tocar abajo a la derecha</string>
     <string name="gestures_volume_up">Subir volumen</string>
     <string name="gestures_volume_down">Bajar volumen</string>
     <string name="more_scrolling_buttons">eReader</string>
@@ -130,8 +130,8 @@
     <string name="sync_account_summ_logged_in">%s</string>
     <string name="automatic_sync_choice">Sincronización automática</string>
     <string name="automatic_sync_choice_summ">Sincronizar automáticamente al abrir/cerrar la aplicación si hace        más de 10 minutos desde la última sincronización.</string>
-    <string name="sync_status_badge">Display synchronization status</string>
-    <string name="sync_status_badge_summ">Change the sync icon when changes can be uploaded</string>
+    <string name="sync_status_badge">Mostrar estado de sincronización</string>
+    <string name="sync_status_badge_summ">Cambiar el icono de sincronización cuando se pueden subir los cambios</string>
     <string name="day_theme">Tema del día</string>
     <string name="night_theme">Tema nocturno</string>
     <string name="default_font">Fuente predeterminada</string>
@@ -151,8 +151,8 @@
     <string name="timeout_answer_seconds_summ" comment="The time to wait (in seconds) in the reviewer before automatically showing the next question or answer">XXX s</string>
     <string name="timeout_question_seconds">Tiempo para mostrar la siguiente pregunta</string>
     <string name="select_locale_title">Selecciona idioma</string>
-    <string name="software_render">Disable card hardware render</string>
-    <string name="software_render_summ">Hardware render is faster but may have problems, specifically on Android 8/8.1. If you cannot see parts of the card review user interface, try this setting.</string>
+    <string name="software_render">Deshabilitar el procesamiento de hardware de la tarjeta</string>
+    <string name="software_render_summ">El procesamiento de hardware es más rápido, pero puede tener problemas, específicamente en Android 8/8.1. Si no puede ver partes de la interfaz de usuario de la tarjeta, prueba esta opción.</string>
     <string name="safe_display">Modo de visualización segura</string>
     <string name="safe_display_summ">Deshabilita todas las animaciones y utiliza un método más seguro para dibujar las tarjetas. Dispositivos E-ink podrían requerir esto.</string>
     <string name="disable_extended_text_ui">Desactivar modo de edición de un campo</string>
@@ -174,8 +174,8 @@
     <string name="learn_cutoff">Aprender por delante del límite</string>
     <string name="time_limit">Límite de tiempo del Timebox</string>
     <string name="time_limit_summ">XXX min</string>
-    <string name="new_timezone">New timezone handling</string>
-    <string name="day_offset_with_description">Start of next day (0 is midnight, 23 is 11PM)</string>
+    <string name="new_timezone">Nuevo manejo de zona horaria</string>
+    <string name="day_offset_with_description">Comienzo del día siguiente (0 es medianoche, 23 es 11PM)</string>
     <string name="day_offset_summ">XXX horas tras la medianoche</string>
     <string name="sched_ver">Programador Experimental V2</string>
     <string name="sched_ver_summ">Activar el programador experimental. Fuerza los cambios en una dirección en la próxima sincronización</string>
@@ -243,7 +243,7 @@
     <string name="deck_conf_use_general_timeout_settings">Usar ajustes generales</string>
     <string name="deck_conf_use_general_timeout_settings_summ">Utilice la configuración general de \'Respuesta de pantalla automática\' en lugar de usar la configuración de este grupo.</string>
     <string name="deck_conf_easy_bonus">Bonus para Fácil</string>
-    <string name="deck_conf_hard_factor">Hard interval</string>
+    <string name="deck_conf_hard_factor">Intervalo Difícil</string>
     <string name="deck_conf_ivl_fct">Modificador de intervalo</string>
     <string name="deck_conf_max_ivl">Intervalo máximo</string>
     <string name="deck_conf_new_lps_ivl">Intervalo de nuevas</string>
@@ -258,7 +258,7 @@
     <string name="deck_conf_replayq">Volver a reproducir pregunta</string>
     <string name="deck_conf_replayq_summ">Cuando la respuesta sea mostrada, reproducir el audio de la pregunta y de la respuesta</string>
     <string name="deck_conf_manage">Administración de grupos</string>
-    <string name="deck_conf_manage_summ">Add and change options groups</string>
+    <string name="deck_conf_manage_summ">Añadir y cambiar opciones de grupo</string>
     <string name="deck_conf_current_group">Grupo actual</string>
     <string name="deck_conf_rename" comment="Menu entry to rename a deck">Renombrar</string>
     <string name="deck_conf_reset">Restablecer predefinidos</string>
@@ -287,12 +287,12 @@
     <string name="analytics_dialog_title">¡Ayuda a mejorar AnkiDroid!</string>
     <string name="analytics_title">Compartir uso de funciones</string>
     <string name="analytics_summ">Puedes contribuir a AnkiDroid ayudando al equipo de desarrollo a ver qué características usan las personas</string>
-    <string name="note_editor_replace_newlines">Replace newlines with HTML</string>
-    <string name="note_editor_replace_newlines_summ">In the Note Editor, convert any instances of &lt;br&gt; to newlines when editing a card.</string>
-    <string name="no_code_formatting">Simple typed answer formatting</string>
-    <string name="no_code_formatting_summ">Fixes ‘􏿾’ appearing in typed answer results</string>
-    <string name="type_in_answer_focus">Focus ‘type in answer’</string>
-    <string name="type_in_answer_focus_summ">Automatically focus the ‘type in answer’ field in the reviewer</string>
+    <string name="note_editor_replace_newlines">Reemplazar nuevas líneas con HTML</string>
+    <string name="note_editor_replace_newlines_summ">En el editor de notas, convierte cualquier instancia de &lt;br&gt; a nuevas líneas al editar una tarjeta.</string>
+    <string name="no_code_formatting">Formato de respuesta simple</string>
+    <string name="no_code_formatting_summ">Corregir ‘􏿾’ al aspecto de respuesta tipográfica</string>
+    <string name="type_in_answer_focus">Enfoque \"escribe la respuesta\"</string>
+    <string name="type_in_answer_focus_summ">Enfocar automáticamente el campo \"escribir en respuesta\" en el revisor</string>
     <!-- Open Changelog-->
-    <string name="open_changelog">Open Changelog</string>
+    <string name="open_changelog">Abrir el Registro de Cambios</string>
 </resources>

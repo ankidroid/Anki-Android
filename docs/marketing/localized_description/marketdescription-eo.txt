@@ -19,7 +19,7 @@ Aldonu lern-enhavon per komputila programo Anki aŭ senpere per AnkiDroid. La ap
 • malfermkoda programaro
 
 ★ Pliaj eblaĵoj:
-• entajpi respondojn (malnepre)
+• enigi respondojn (malnepre)
 • skribtabulo
 • kart-redaktilo
 • kart-foliumilo

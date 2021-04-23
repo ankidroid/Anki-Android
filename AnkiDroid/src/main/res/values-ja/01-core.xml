@@ -117,7 +117,6 @@
     <string name="menu_unmark_note">ノートのマークをはずす</string>
     <string name="menu_toggle_mic_tool_bar">録音用マイクアイコン</string>
     <string name="new_deck">デッキを新規作成</string>
-    <string name="create" comment="Button to create a filtered deck">新規作成</string>
     <string name="new_dynamic_deck">フィルターデッキを作成</string>
     <string name="night_mode">ナイトモード</string>
     <string name="directory_inaccessible">AnkiDroid ディレクトリにアクセスできません</string>

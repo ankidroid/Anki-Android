@@ -122,7 +122,6 @@
     <string name="menu_unmark_note">Desmarcar</string>
     <string name="menu_toggle_mic_tool_bar">Comprova pronunciació</string>
     <string name="new_deck">Crea un paquet</string>
-    <string name="create" comment="Button to create a filtered deck">Genera</string>
     <string name="new_dynamic_deck">Crear un paquet filtrat</string>
     <string name="night_mode">Mode nocturn</string>
     <string name="directory_inaccessible">El directori d\'AnkiDroid és inaccessible</string>

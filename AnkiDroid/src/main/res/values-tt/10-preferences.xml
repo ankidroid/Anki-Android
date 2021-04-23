@@ -94,8 +94,8 @@
     <string name="gestures_allow_links_summary">Touch gestures will not be processed if a link/hint is pressed.</string>
     <string name="gestures_corner_touch">9-point touch</string>
     <string name="gestures_corner_touch_summary">Allow touch gestures in screen corners</string>
-    <string name="gestures_swipe_up">Swipe up</string>
-    <string name="gestures_swipe_down">Swipe down</string>
+    <string name="gestures_swipe_up">Ачу өчен өскә шудыру</string>
+    <string name="gestures_swipe_down">Аска шудыру</string>
     <string name="gestures_swipe_left">Swipe left</string>
     <string name="gestures_swipe_right">Swipe right</string>
     <string name="gestures_double_tap">Double touch</string>
@@ -151,7 +151,7 @@
     <string name="timeout_answer_seconds">Time to show answer</string>
     <string name="timeout_answer_seconds_summ" comment="The time to wait (in seconds) in the reviewer before automatically showing the next question or answer">XXX сек</string>
     <string name="timeout_question_seconds">Time to show next question</string>
-    <string name="select_locale_title">Select language</string>
+    <string name="select_locale_title">Телне сайлау</string>
     <string name="software_render">Disable card hardware render</string>
     <string name="software_render_summ">Hardware render is faster but may have problems, specifically on Android 8/8.1. If you cannot see parts of the card review user interface, try this setting.</string>
     <string name="safe_display">Safe display mode</string>
@@ -183,7 +183,7 @@
     <string name="sched_ver_toggle_title">Confirm</string>
     <string name="sched_ver_2to1">This will reset any cards in learning, clear filtered decks, and change the scheduler version. Proceed?</string>
     <string name="sched_ver_1to2">The experimental scheduler could cause incorrect scheduling. Please ensure you have read the documentation first. Proceed?</string>
-    <string name="pref_keep_screen_on">Keep screen on</string>
+    <string name="pref_keep_screen_on">Экран гел ачык</string>
     <string name="pref_keep_screen_on_summ">Disable screen timeout</string>
     <string name="convert_fen_text">Chess notation support</string>
     <string name="convert_fen_text_summ">Draw chessboard from Forsyth–Edwards Notation. The notation must be enclosed in [fen][/fen] tags.</string>
@@ -223,7 +223,7 @@
     <plurals name="deck_conf_group_summ">
         <item quantity="other">%1$s\n%2$d decks use this group</item>
     </plurals>
-    <string name="deck_conf_new_cards">New cards</string>
+    <string name="deck_conf_new_cards">Яңа кәртләр</string>
     <string name="deck_conf_rev_cards" comment="Name of the deck options submenu for configuring reviews of due cards.">Reviews</string>
     <string name="deck_conf_lps_cards" comment="Label of the submenu stating how lapses cards are treated.">Lapses</string>
     <string name="deck_conf_general">General</string>

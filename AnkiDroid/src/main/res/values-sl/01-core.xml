@@ -132,7 +132,6 @@
     <string name="menu_unmark_note">Odznači zapisek</string>
     <string name="menu_toggle_mic_tool_bar">Check pronunciation</string>
     <string name="new_deck">Ustvari komplet</string>
-    <string name="create" comment="Button to create a filtered deck">Ustvari</string>
     <string name="new_dynamic_deck">Ustvari filtriran komplet</string>
     <string name="night_mode">Nočni način</string>
     <string name="directory_inaccessible">Slovar AnkiDroid ni na voljo</string>

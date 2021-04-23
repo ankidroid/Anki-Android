@@ -42,8 +42,8 @@
     <string name="statistics_mature">Maduras</string>
     <string name="statistics_young_and_learn">Jovenes+Aprendiendo</string>
     <string name="statistics_unlearned">No vistas</string>
-    <string name="statistics_suspended">Suspended</string>
-    <string name="statistics_buried">Buried</string>
+    <string name="statistics_suspended">Suspendidas</string>
+    <string name="statistics_buried">Enterradas</string>
     <string name="statistics_relearn" comment="Labbel of the axis in the graph indicating the number of reviews of cards while they are in relearning mode.">Vueltas a aprender</string>
     <string name="statistics_learn" comment="Label of the number of review of card in learning done in some amount of time">Aprendidas</string>
     <string name="statistics_cram">Intensivas</string>
