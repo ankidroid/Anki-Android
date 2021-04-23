@@ -29,7 +29,6 @@ import com.ichi2.utils.JSONObject;
 
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 
 import androidx.annotation.Nullable;
@@ -49,7 +48,6 @@ public class CardTemplatePreviewer extends AbstractFlashcardViewer {
     @Nullable
     private long[] mCardList;
     private Bundle mNoteEditorBundle = null;
-    private HashMap<Integer, String> mFieldData;
     private int mIndex = 0;
     private boolean mShowingAnswer;
     private int mCardListSize;
@@ -62,7 +60,6 @@ public class CardTemplatePreviewer extends AbstractFlashcardViewer {
         Timber.d("onCreate()");
         super.onCreate(savedInstanceState);
 
-        mFieldData = new HashMap<>();
         Bundle parameters = savedInstanceState;
         if (parameters == null) {
             parameters = getIntent().getExtras();
