@@ -133,7 +133,7 @@ public class CardTemplatePreviewerTest extends RobolectricTest {
 
         View previewNextCard = testCardTemplatePreviewer.mPreviewNextCard;
         previewNextCard.performClick();
-        Assert.assertTrue("Previewing Card2?", testCardTemplatePreviewer.mAnswerField.getText() == "Front Test");
+        Assert.assertTrue("Previewing Card2?", (testCardTemplatePreviewer.mAnswerField.getText().equals("Front Test")) ? true : false);
     }
 
     private Card getSavedCard(Model model, int ordinal) {
