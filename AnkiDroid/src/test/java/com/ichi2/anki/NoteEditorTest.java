@@ -75,6 +75,7 @@ public class NoteEditorTest extends RobolectricTest {
         assertThat("Bundle has empty tag list", noteEditorBundle.getStringArrayList("tags"), is(new ArrayList<>()));
         assertThat("Bundle has no ordinal for ephemeral preview", intent.intent.hasExtra("ordinal"), is(false));
         assertThat("Bundle has a temporary model saved", intent.intent.hasExtra(TemporaryModel.INTENT_MODEL_FILENAME), is(true));
+        assertThat("Bundle has Card list size", intent.intent.hasExtra("cardListSize"), is(1));
     }
 
     @Test
