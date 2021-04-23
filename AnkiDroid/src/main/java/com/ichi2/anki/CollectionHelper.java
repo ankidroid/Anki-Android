@@ -386,9 +386,14 @@ public class CollectionHelper {
         col.getModels();
     }
 
-    public static boolean isFutureAnkiDroidVersion(Context context) throws UnknownDatabaseVersionException {
+    public static DatabaseVersion isFutureAnkiDroidVersion(Context context) throws UnknownDatabaseVersionException {
         int databaseVersion = getDatabaseVersion(context);
-        return databaseVersion > SCHEMA_VERSION;
+
+        if (databaseVersion > SCHEMA_VERSION) {
+            return DatabaseVersion.FUTURE_NOT_DOWNGRADABLE;
+        } else {
+            return DatabaseVersion.USABLE;
+        }
     }
 
 
@@ -400,6 +405,12 @@ public class CollectionHelper {
             Timber.w(e, "Failed to query version");
             return Storage.getDatabaseVersion(getCollectionPath(context));
         }
+    }
+
+    public enum DatabaseVersion {
+        USABLE,
+        FUTURE_NOT_DOWNGRADABLE,
+        UNKNOWN
     }
 
     @VisibleForTesting(otherwise = VisibleForTesting.NONE)

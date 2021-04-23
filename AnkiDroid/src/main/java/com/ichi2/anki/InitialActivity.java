@@ -38,26 +38,32 @@ public class InitialActivity {
             return StartupFailure.SD_CARD_NOT_MOUNTED;
         } else if (!CollectionHelper.isCurrentAnkiDroidDirAccessible(context)) {
             return StartupFailure.DIRECTORY_NOT_ACCESSIBLE;
-        } else if (isFutureAnkiDroidVersion(context)) {
-            return StartupFailure.FUTURE_ANKIDROID_VERSION;
-        } else {
-            try {
-                CollectionHelper.getInstance().getCol(context);
-            } catch (BackendException.BackendDbException.BackendDbLockedException e) {
-                return StartupFailure.DATABASE_LOCKED;
-            } catch (Exception ignored) {
+        }
 
-            }
-            return StartupFailure.DB_ERROR;
+        CollectionHelper.DatabaseVersion databaseVersion = isFutureAnkiDroidVersion(context);
+        switch (databaseVersion) {
+            case FUTURE_NOT_DOWNGRADABLE:
+                return StartupFailure.FUTURE_ANKIDROID_VERSION;
+            case UNKNOWN:
+            case USABLE:
+            default:
+                try {
+                    CollectionHelper.getInstance().getCol(context);
+                    return StartupFailure.DB_ERROR;
+                } catch (BackendException.BackendDbException.BackendDbLockedException e) {
+                    return StartupFailure.DATABASE_LOCKED;
+                } catch (Exception ignored) {
+                    return StartupFailure.DB_ERROR;
+                }
         }
     }
 
-    private static boolean isFutureAnkiDroidVersion(Context context) {
+    private static CollectionHelper.DatabaseVersion isFutureAnkiDroidVersion(Context context) {
         try {
             return CollectionHelper.isFutureAnkiDroidVersion(context);
         } catch (Exception e) {
             Timber.w(e, "Could not determine if future AnkiDroid version - assuming not");
-            return false;
+            return CollectionHelper.DatabaseVersion.UNKNOWN;
         }
     }
 
