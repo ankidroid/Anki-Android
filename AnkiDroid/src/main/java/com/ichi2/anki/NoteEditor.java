@@ -1225,7 +1225,6 @@ public class NoteEditor extends AnkiActivity {
         Bundle noteEditorBundle = new Bundle();
         addInstanceStateToBundle(noteEditorBundle);
         noteEditorBundle.putBundle("editFields", getFieldsAsBundleForPreview());
-        previewer.putExtra("noteEditorBundle", noteEditorBundle);
         ArrayList<String> cardsList = new ArrayList<>();
         JSONArray tmpls = mEditorNote.model().getJSONArray("tmpls");
         for ( int i = 0 ; i < tmpls.length() ; i++) {
@@ -1233,6 +1232,7 @@ public class NoteEditor extends AnkiActivity {
             cardsList.add(name);
         }
         noteEditorBundle.putInt("cardListSize", cardsList.size());
+        previewer.putExtra("noteEditorBundle", noteEditorBundle);
         startActivityForResultWithoutAnimation(previewer, REQUEST_PREVIEW);
     }
 

@@ -21,6 +21,7 @@ import android.os.Bundle;
 import android.view.View;
 
 import com.ichi2.libanki.Card;
+import com.ichi2.libanki.Collection;
 import com.ichi2.libanki.Model;
 import com.ichi2.libanki.Models;
 import com.ichi2.libanki.Note;
@@ -108,6 +109,31 @@ public class CardTemplatePreviewerTest extends RobolectricTest {
         View showAnswerButton = testCardTemplatePreviewer.findViewById(R.id.preview_buttons_layout);
         showAnswerButton.performClick();
         Assert.assertTrue("Not showing the answer?", testCardTemplatePreviewer.getShowingAnswer());
+    }
+
+    @Test
+    public void testPreviewNoteEditorFieldData() {
+        String modelName = "Basic (and reversed card)";
+        Model collectionBasicModelOriginal = getCurrentDatabaseModelCopy(modelName);
+
+        Intent intent = new Intent(Intent.ACTION_VIEW);
+        intent.putExtra(TemporaryModel.INTENT_MODEL_FILENAME, TemporaryModel.saveTempModel(getTargetContext(), collectionBasicModelOriginal));
+        Bundle fieldsTest = new Bundle();
+        fieldsTest.putString(String.valueOf(0), "Front Test");
+        fieldsTest.putString(String.valueOf(1), "Back Test");
+        Bundle noteFieldBundleTest = new Bundle();
+        noteFieldBundleTest.putBundle("editFields", fieldsTest);
+        noteFieldBundleTest.putInt("cardListSize", 2);
+        intent.putExtra("noteEditorBundle", noteFieldBundleTest);
+
+        ActivityController<TestCardTemplatePreviewer> previewerController = Robolectric.buildActivity(TestCardTemplatePreviewer.class, intent).create().start().resume().visible();
+        saveControllerForCleanup(previewerController);
+
+        TestCardTemplatePreviewer testCardTemplatePreviewer = previewerController.get();
+
+        View previewNextCard = testCardTemplatePreviewer.mPreviewNextCard;
+        previewNextCard.performClick();
+        Assert.assertTrue("Previewing Card2?", testCardTemplatePreviewer.mAnswerField.getText() == "Front Test");
     }
 
     private Card getSavedCard(Model model, int ordinal) {
