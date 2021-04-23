@@ -230,9 +230,8 @@ public class CardTemplatePreviewer extends AbstractFlashcardViewer {
     };
 
     private void loadFieldData() {
-        Collection collection = getCol();
         mCurrentCard = getDummyCard(mEditedModel, mIndex);
-        setFieldFromNoteEditorBundle(collection);
+        setFieldFromNoteEditorBundle();
         displayCardQuestion(true);
         mShowingAnswer = false;
         updateButtonsState();
@@ -267,7 +266,7 @@ public class CardTemplatePreviewer extends AbstractFlashcardViewer {
         }
 
         if (mNoteEditorBundle != null) {
-            setFieldFromNoteEditorBundle(col);
+            setFieldFromNoteEditorBundle();
         }
 
         displayCardQuestion();
@@ -281,7 +280,8 @@ public class CardTemplatePreviewer extends AbstractFlashcardViewer {
         return new PreviewerCard(col, cardListIndex);
     }
 
-    private void setFieldFromNoteEditorBundle(Collection col) {
+    private void setFieldFromNoteEditorBundle() {
+        Collection col = getCol();
         long newDid = mNoteEditorBundle.getLong("did");
         if (col.getDecks().isDyn(newDid)) {
             mCurrentCard.setODid(mCurrentCard.getDid());
