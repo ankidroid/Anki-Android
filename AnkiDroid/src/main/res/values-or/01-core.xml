@@ -116,13 +116,12 @@
     <string name="menu_edit_tags">ଟ୍ୟାଗ୍ ସମ୍ପାଦନା</string>
     <string name="delete_note_message">ଆପଣ ପ୍ରକୃତରେ ଏହି ନୋଟ୍ ଏବଂ ଏହାର ସମସ୍ତ କାର୍ଡ ବିଲୋପ କରିବାକୁ ଚାହୁଁଛନ୍ତି କି?\n%s</string>
     <string name="menu_select">ପାଠ୍ୟ ଚୟନ କରନ୍ତୁ</string>
-    <string name="menu_lookup">Lookup text</string>
-    <string name="menu_search">%1$s ରେ ଦେଖନ୍ତୁ</string>
+    <string name="menu_lookup">ଦୃଷ୍ଟିପାତ ପାଠ୍ୟ</string>
+    <string name="menu_search">%1$s ରେ ଦୃଷ୍ଟିପାତ</string>
     <string name="menu_mark_note">ନୋଟ ଚିନ୍ହିତ କରନ୍ତୁ</string>
     <string name="menu_unmark_note">ନୋଟ ଅଣଚିନ୍ହିତ କରନ୍ତୁ</string>
     <string name="menu_toggle_mic_tool_bar">ଉଚ୍ଚାରଣ ଯାଞ୍ଚ କରନ୍ତୁ</string>
     <string name="new_deck">ଡେକ୍ ସୃଷ୍ଟି କରନ୍ତୁ</string>
-    <string name="create" comment="Button to create a filtered deck">ସୃଷ୍ଟି କରନ୍ତୁ</string>
     <string name="new_dynamic_deck">ଫିଲ୍ଟର୍ ଡେକ୍ ସୃଷ୍ଟି କରନ୍ତୁ</string>
     <string name="night_mode">ରାତ୍ରି ମୋଡ୍</string>
     <string name="directory_inaccessible">AnkiDroid directory ଅପ୍ରବେଶନୀୟ ଅଟେ</string>
@@ -138,12 +137,12 @@
         not be translated, at least not for languages using the Latin
         alphabet.
     -->
-    <string name="time_quantity_seconds">%d ସେକେଣ୍ଡ</string>
-    <string name="time_quantity_minutes">%d ମିନିଟ୍‌</string>
-    <string name="time_quantity_hours_minutes">%1$d ଘଣ୍ଟା %2$d ମିନିଟ୍‌</string>
-    <string name="time_quantity_hours">%d ଘଣ୍ଟା</string>
-    <string name="time_quantity_days">%d ଦିନ</string>
-    <string name="time_quantity_days_hours">%1$d ଦିନ %2$d ଘଣ୍ଟା</string>
+    <string name="time_quantity_seconds">%d ସେ</string>
+    <string name="time_quantity_minutes">%d ମି</string>
+    <string name="time_quantity_hours_minutes">%1$d ଘ %2$d ମି</string>
+    <string name="time_quantity_hours">%d ଘ</string>
+    <string name="time_quantity_days">%d ଦି</string>
+    <string name="time_quantity_days_hours">%1$d ଦି %2$d ଘ</string>
     <string name="time_quantity_months">%.1f ମା</string>
     <string name="time_quantity_years">%.1f ବର୍ଷ</string>
     <!-- or "%.1f a" -->

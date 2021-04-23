@@ -117,7 +117,6 @@
     <string name="menu_unmark_note">Билгеләүне бетерергә</string>
     <string name="menu_toggle_mic_tool_bar">Әйтелешне тикшерү</string>
     <string name="new_deck">Колода ясау</string>
-    <string name="create" comment="Button to create a filtered deck">Ясарга</string>
     <string name="new_dynamic_deck">Фильтрлы колода ясау</string>
     <string name="night_mode">Төнге режим</string>
     <string name="directory_inaccessible">AnkiDroid папкасына рөхсәт юк</string>

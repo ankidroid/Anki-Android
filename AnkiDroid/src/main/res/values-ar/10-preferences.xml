@@ -151,8 +151,8 @@
     <string name="timeout_answer_seconds_summ" comment="The time to wait (in seconds) in the reviewer before automatically showing the next question or answer">XXX ثانية</string>
     <string name="timeout_question_seconds">مهلة إظهار السؤال التالي</string>
     <string name="select_locale_title">حدد اللغة</string>
-    <string name="software_render">Disable card hardware render</string>
-    <string name="software_render_summ">Hardware render is faster but may have problems, specifically on Android 8/8.1. If you cannot see parts of the card review user interface, try this setting.</string>
+    <string name="software_render">تعطيل عارض العتاد للبطاقات</string>
+    <string name="software_render_summ">عرض العتاد أسرع لكنه قد يسبب مشاكل، خصوصًا على أندرويد 8/8.1. إذا لم تكن قادرًا على رؤية أقسام من واجهة مراجعة البطاقة، جرب هذا الخيار.</string>
     <string name="safe_display">وضع العرض الآمن</string>
     <string name="safe_display_summ">تعطيل كل التأثيرات المتحركة واستخدام طريقة أأمن لرسم البطاقات. قد تتطلب أجهزة الحبر الإلكتروني هذا.</string>
     <string name="disable_extended_text_ui">تعطيل وضع تحرير الحقل الفردي</string>
@@ -299,8 +299,8 @@
     <string name="note_editor_replace_newlines_summ">في محرر الملحوظات، حوّل أي ظهور لـ &lt;br&gt; إلى سطور جديدة عند تحرير بطاقة.</string>
     <string name="no_code_formatting">تنسيق الإجابة الكتابية البسيطة</string>
     <string name="no_code_formatting_summ">يُصلِح وجود ‘􏿾’ في نتائِج الأجابة المكتوبة</string>
-    <string name="type_in_answer_focus">Focus ‘type in answer’</string>
-    <string name="type_in_answer_focus_summ">Automatically focus the ‘type in answer’ field in the reviewer</string>
+    <string name="type_in_answer_focus">التركيز على «أدخل الإجابة»</string>
+    <string name="type_in_answer_focus_summ">التركيز التلقائي على حقل «أدخل الإجابة» في شاشة المراجعة</string>
     <!-- Open Changelog-->
     <string name="open_changelog">فتح سجل التغييرات</string>
 </resources>

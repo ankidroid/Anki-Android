@@ -132,7 +132,6 @@
     <string name="menu_unmark_note">Зняць пазнаку з нататкі</string>
     <string name="menu_toggle_mic_tool_bar">Праверыць вымаўленне</string>
     <string name="new_deck">Стварыць калоду</string>
-    <string name="create" comment="Button to create a filtered deck">Стварыць</string>
     <string name="new_dynamic_deck">Стварыць адфільтраваную калоду</string>
     <string name="night_mode">Начны рэжым</string>
     <string name="directory_inaccessible">Недаступны каталог AnkiDroid</string>

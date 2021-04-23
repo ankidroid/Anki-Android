@@ -117,7 +117,6 @@
     <string name="menu_unmark_note">노트 표시 해제</string>
     <string name="menu_toggle_mic_tool_bar">發音確認</string>
     <string name="new_deck">카드 묶음 만들기</string>
-    <string name="create" comment="Button to create a filtered deck">만들기</string>
     <string name="new_dynamic_deck">필터링된 카드 묶음 만들기</string>
     <string name="night_mode">야간 모드</string>
     <string name="directory_inaccessible">AnkiDroid 폴더에 접근할 수 없습니다</string>

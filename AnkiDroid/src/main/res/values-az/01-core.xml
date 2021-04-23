@@ -122,7 +122,6 @@
     <string name="menu_unmark_note">İşarəni götür</string>
     <string name="menu_toggle_mic_tool_bar">Check pronunciation</string>
     <string name="new_deck">Dəstə yarat</string>
-    <string name="create" comment="Button to create a filtered deck">Yarat</string>
     <string name="new_dynamic_deck">Filtrli dəstə yarat</string>
     <string name="night_mode">Gecə rejimi</string>
     <string name="directory_inaccessible">AnkiDroid kataloqu əlçatmazdır</string>

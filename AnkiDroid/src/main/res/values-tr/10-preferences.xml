@@ -46,7 +46,7 @@
     <string name="pref_cat_reviewing">Çalışma</string>
     <string name="pref_cat_reviewing_summ">Desteye özel olmayan çalışma ayarları</string>
     <string name="pref_cat_reviewer_behaviour">Davranış</string>
-    <string name="pref_cat_flashcard">Ekran</string>
+    <string name="pref_cat_flashcard">Görünüm</string>
     <string name="pref_cat_whiteboard">Yazı tahtası</string>
     <string name="pref_cat_appearance">Görünüş</string>
     <string name="pref_cat_appearance_summ">Temaları ve varsayılan fontu değiştir</string>
@@ -75,8 +75,8 @@
     <string name="image_zoom">Görüntü yakınlaştırma</string>
     <string name="button_size">Cevap düğmesi büyüklüğü</string>
     <string name="card_browser_font_size">Kart tarayıcısı font ölçeği</string>
-    <string name="card_browser_hide_media">Display filenames in card browser</string>
-    <string name="card_browser_hide_media_summary">Display media filenames in the card browser question/answer fields</string>
+    <string name="card_browser_hide_media">Kart gözatıcısında dosya isimlerini göster</string>
+    <string name="card_browser_hide_media_summary">Kart gözatıcısı soru/cevap alanlarında medya dosyası isimlerini göster</string>
     <string name="col_path">AnkiDroid dizini</string>
     <string name="fullscreen_review">Tam ekran modu</string>
     <string name="full_screen_off">Devre Dışı</string>
@@ -90,10 +90,10 @@
     </string-array>
     <string name="gestures">El hareketlerini etkinleştir</string>
     <string name="gestures_summ">Cevap verme ve kart düzenleme gibi eylemlere el hareketleri ata.</string>
-    <string name="gestures_allow_links">Ignore touch gestures on links</string>
-    <string name="gestures_allow_links_summary">Touch gestures will not be processed if a link/hint is pressed.</string>
-    <string name="gestures_corner_touch">9-point touch</string>
-    <string name="gestures_corner_touch_summary">Allow touch gestures in screen corners</string>
+    <string name="gestures_allow_links">Linklerde el hareketlerini görmezden gel</string>
+    <string name="gestures_allow_links_summary">Bir linke/ipucuna basılırsa el hareketleri işlenmez.</string>
+    <string name="gestures_corner_touch">9 noktadan dokunma</string>
+    <string name="gestures_corner_touch_summary">Ekran köşelerinde dokunma hareketlerine izin ver</string>
     <string name="gestures_swipe_up">Yukarı sürükleme</string>
     <string name="gestures_swipe_down">Aşağı sürükleme</string>
     <string name="gestures_swipe_left">Sola sürükleme</string>
@@ -103,21 +103,21 @@
     <string name="gestures_tap_left">Sola dokunma</string>
     <string name="gestures_tap_right">Sağa dokunma</string>
     <string name="gestures_tap_bottom">Aşağıya dokunma</string>
-    <string name="gestures_corner_tap_top_left">Touch top left</string>
-    <string name="gestures_corner_tap_top_center">Touch top center</string>
-    <string name="gestures_corner_tap_top_right">Touch top right</string>
-    <string name="gestures_corner_tap_middle_left">Touch middle left</string>
-    <string name="gestures_corner_tap_middle_center">Touch middle center</string>
-    <string name="gestures_corner_tap_middle_right">Touch middle right</string>
-    <string name="gestures_corner_tap_bottom_left">Touch bottom left</string>
-    <string name="gestures_corner_tap_bottom_center">Touch bottom center</string>
-    <string name="gestures_corner_tap_bottom_right">Touch bottom right</string>
-    <string name="gestures_volume_up">Volume up</string>
-    <string name="gestures_volume_down">Volume down</string>
+    <string name="gestures_corner_tap_top_left">Sol üste dokun</string>
+    <string name="gestures_corner_tap_top_center">Orta üste dokun</string>
+    <string name="gestures_corner_tap_top_right">Sağ üste dokun</string>
+    <string name="gestures_corner_tap_middle_left">Sol ortaya dokun</string>
+    <string name="gestures_corner_tap_middle_center">Orta merkeze dokun</string>
+    <string name="gestures_corner_tap_middle_right">Sağ ortaya dokun</string>
+    <string name="gestures_corner_tap_bottom_left">Sol alta dokun</string>
+    <string name="gestures_corner_tap_bottom_center">Orta alta dokun</string>
+    <string name="gestures_corner_tap_bottom_right">Sağ alta dokun</string>
+    <string name="gestures_volume_up">Sesi aç</string>
+    <string name="gestures_volume_down">Sesi kıs</string>
     <string name="more_scrolling_buttons">eOkuyucu</string>
     <string name="more_scrolling_buttons_summ">Kaydırma için Kanji/Katakana, Emoji/Kao-moji düğmelerini de kullan</string>
-    <string name="card_browser_enable_external_context_menu">‘%s’ Menu</string>
-    <string name="card_browser_enable_external_context_menu_summary">Enables the ‘%s’ context menu globally</string>
+    <string name="card_browser_enable_external_context_menu">\"%s\" Menüsü</string>
+    <string name="card_browser_enable_external_context_menu_summary">\"%s\" durum menüsünü uygulama çapında etkinleştirir</string>
     <string name="double_scrolling_gap">Hızlı kaydırma</string>
     <string name="double_scrolling_gap_summ">eOkuyucu\'yla kaydırma mesafesini iki katına çıkarmak istiyorsanız bunu etkinleştirin</string>
     <string name="swipe_sensitivity">Kaydırma duyarlılığı</string>
@@ -130,8 +130,8 @@
     <string name="sync_account_summ_logged_in">%s</string>
     <string name="automatic_sync_choice">Otomatik eşleme</string>
     <string name="automatic_sync_choice_summ">Uygulama açılış/kapanışında son eşleme 10 dakikadan daha önce idiyse otomatik olarak eşle.</string>
-    <string name="sync_status_badge">Display synchronization status</string>
-    <string name="sync_status_badge_summ">Change the sync icon when changes can be uploaded</string>
+    <string name="sync_status_badge">Senkronizasyon durumunu göster</string>
+    <string name="sync_status_badge_summ">Değişiklikler yüklenebildiğinde senkronizasyon simgesini değiştir</string>
     <string name="day_theme">Gündüz teması</string>
     <string name="night_theme">Gece teması</string>
     <string name="default_font">Varsayılan yazı tipi</string>
@@ -151,20 +151,20 @@
     <string name="timeout_answer_seconds_summ" comment="The time to wait (in seconds) in the reviewer before automatically showing the next question or answer">XXX s</string>
     <string name="timeout_question_seconds">Sonraki soruyu gösterme zamanı</string>
     <string name="select_locale_title">Dil Seç</string>
-    <string name="software_render">Disable card hardware render</string>
-    <string name="software_render_summ">Hardware render is faster but may have problems, specifically on Android 8/8.1. If you cannot see parts of the card review user interface, try this setting.</string>
+    <string name="software_render">Kart donanım renderını devredışı bırak</string>
+    <string name="software_render_summ">Donanım renderı daha hızlıdır ama sorunları olabilir, özellikle de Android 8/8.1\'de. Kart çalışma kullanıcı arayüzünün bazı kısımlarını göremiyorsanız, bunu ayarı deneyin.</string>
     <string name="safe_display">Güvenli görüntü modu</string>
     <string name="safe_display_summ">Bütün animasyonları devredışı bırak ve kartları çizmek için daha güvenli yöntem kullan. Bu e-mürekkepli cihazlar için gerekebilir.</string>
-    <string name="disable_extended_text_ui">Disable Single-Field Edit Mode</string>
+    <string name="disable_extended_text_ui">Tek Alan Düzenleme Modunu Devredışı Bırak</string>
     <!--See: multimedia_editor_popup_cloze. We can\'t use format strings as this is auto-generated-->
-    <string name="disable_extended_text_ui_summ">Allows \'Cloze Deletion\' context menu when in landscape mode.</string>
+    <string name="disable_extended_text_ui_summ">Yatay moddayken \"boşluk doldurma\" durum menüsüne izin ver</string>
     <string name="vertical_centering">Ortaya hizala</string>
     <string name="vertical_centering_summ">Kartların içeriğini dikey olarak ortala</string>
     <string name="pref_backup_max">En fazla yedek sayısı</string>
     <string name="show_estimates">Düğmede zaman göster</string>
     <string name="show_estimates_summ">Cevap düğmelerinin üzerinde sonraki çıkma zamanını göster</string>
-    <string name="show_top_bar">Show Top Bar</string>
-    <string name="show_top_bar_summ">Show card counts, flag and mark in top bar</string>
+    <string name="show_top_bar">Üst Çubuğu Göster</string>
+    <string name="show_top_bar_summ">Üst çubukta kart sayılarını ve işaretlemeleri göster</string>
     <string name="show_progress">Kalanı göster</string>
     <string name="show_progress_summ">Kalan kart sayısını göster</string>
     <string name="show_eta">ETA göster</string>
@@ -174,8 +174,8 @@
     <string name="learn_cutoff">Önceden öğrenme sınırı</string>
     <string name="time_limit">Timebox zaman sınırı</string>
     <string name="time_limit_summ">XXX dk</string>
-    <string name="new_timezone">New timezone handling</string>
-    <string name="day_offset_with_description">Start of next day (0 is midnight, 23 is 11PM)</string>
+    <string name="new_timezone">Yeni zaman dilimi idaresi</string>
+    <string name="day_offset_with_description">Sonraki günün başlangıcı (0 geceyarısı, 23 akşam 11)</string>
     <string name="day_offset_summ">Geceyarısından XXX saat sonra</string>
     <string name="sched_ver">Deneysel V2 zamanlayıcı</string>
     <string name="sched_ver_summ">Deneysel zamanlayıcıyı etkinleştir. Bir sonraki senkronizasyonda değişiklikleri zorla gönderir.</string>
@@ -210,9 +210,9 @@
     <string name="custom_sync_server_enable_title">Özel senkronizasyon sunucusu kullan</string>
     <string name="custom_sync_server_enable_summary">Özel AnkiWeb hizmetini kullanmak istemiyorsanız burada alternatif bir sunucu belirtebilirsiniz</string>
     <string name="custom_sync_server_base_url_title">Senkronizasyon Url\'i</string>
-    <string name="custom_sync_server_base_url_invalid">Sync url invalid</string>
+    <string name="custom_sync_server_base_url_invalid">Senkronizasyon urli geçersiz</string>
     <string name="custom_sync_server_media_url_title">Medya Senkronizasyon Url\'i</string>
-    <string name="custom_sync_server_media_url_invalid">Media sync url invalid</string>
+    <string name="custom_sync_server_media_url_invalid">Medya senkronizasyonu urli geçersiz</string>
     <!-- studyoptions -->
     <string name="deck_conf_group_summ">Deste grubu seçeneklerinde yapılan değişiklikler birden fazla desteyi etkiler. Eğer sadece şu anki desteyi değiştirmek istiyorsanız, lütfen önce yeni bir seçenek grubu ekleyin.</string>
     <string name="studyoptions_limit_select_tags">Etiketleri Seçin</string>
@@ -240,10 +240,10 @@
     <string name="deck_conf_new_bury_summ">İlgili yeni kartlar sonraki güne kadar gizlenir</string>
     <string name="deck_conf_rev_bury">İlgili çalışmaları gizle</string>
     <string name="deck_conf_rev_bury_summ">İlgili çalışmalar sonraki güne kadar gizlenir</string>
-    <string name="deck_conf_use_general_timeout_settings">Use general settings</string>
-    <string name="deck_conf_use_general_timeout_settings_summ">Use general \'Automatic display answer\' settings instead of using the settings for this group.</string>
+    <string name="deck_conf_use_general_timeout_settings">Genel ayarları kullan</string>
+    <string name="deck_conf_use_general_timeout_settings_summ">Bu grubun ayarlarını kullanmak yerine genel \"Cevabı otomatik göster\" ayarlarını kullan.</string>
     <string name="deck_conf_easy_bonus">Kolay bonusu</string>
-    <string name="deck_conf_hard_factor">Hard interval</string>
+    <string name="deck_conf_hard_factor">Sert zaman aralığı</string>
     <string name="deck_conf_ivl_fct">Aralık düzenleyicisi</string>
     <string name="deck_conf_max_ivl">Maksimum aralık</string>
     <string name="deck_conf_new_lps_ivl">Yeni aralık</string>
@@ -258,7 +258,7 @@
     <string name="deck_conf_replayq">Tekrar Sor</string>
     <string name="deck_conf_replayq_summ">Cevap gösterildiği zaman, hem sesi hem de soru ve cevabı tekrarla</string>
     <string name="deck_conf_manage">Grup yönetimi</string>
-    <string name="deck_conf_manage_summ">Add and change options groups</string>
+    <string name="deck_conf_manage_summ">Ayar grupları ekle ve değiştir</string>
     <string name="deck_conf_current_group">Şu anki grup</string>
     <string name="deck_conf_rename" comment="Menu entry to rename a deck">Adını değiştir</string>
     <string name="deck_conf_reset">Varsayılanlara geri dön</string>
@@ -287,12 +287,12 @@
     <string name="analytics_dialog_title">AnkiDroid\'in iyileştirilmesine yardım et!</string>
     <string name="analytics_title">Özellik kullanımını paylaş</string>
     <string name="analytics_summ">Geliştirme ekibinin insanların hangi özellikleri kullandığını görmesine yardım ederek AnkiDroid\'e katkıda bulunabilirsiniz.</string>
-    <string name="note_editor_replace_newlines">Replace newlines with HTML</string>
-    <string name="note_editor_replace_newlines_summ">In the Note Editor, convert any instances of &lt;br&gt; to newlines when editing a card.</string>
-    <string name="no_code_formatting">Simple typed answer formatting</string>
-    <string name="no_code_formatting_summ">Fixes ‘􏿾’ appearing in typed answer results</string>
-    <string name="type_in_answer_focus">Focus ‘type in answer’</string>
-    <string name="type_in_answer_focus_summ">Automatically focus the ‘type in answer’ field in the reviewer</string>
+    <string name="note_editor_replace_newlines">Satırbaşlarını HTML\'le değiştir</string>
+    <string name="note_editor_replace_newlines_summ">Not Düzenleyicide kart değiştirirken, bütün &lt;br&gt;leri satırbaşına çevir</string>
+    <string name="no_code_formatting">Basit yazılı cevap formatı</string>
+    <string name="no_code_formatting_summ">Yazılı cevap sonuçlarında \"􏿾\" çıkmasını düzeltir</string>
+    <string name="type_in_answer_focus">\"Cevabı yaz\"a odaklan</string>
+    <string name="type_in_answer_focus_summ">Çalışıcıda otomatik olarak \"Cevabı yaz\" alanına odaklan</string>
     <!-- Open Changelog-->
-    <string name="open_changelog">Open Changelog</string>
+    <string name="open_changelog">Değişim Kaydını Aç</string>
 </resources>

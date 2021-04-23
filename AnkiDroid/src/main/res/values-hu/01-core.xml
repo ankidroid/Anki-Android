@@ -122,7 +122,6 @@
     <string name="menu_unmark_note">Jegyzet megjelölés megszüntetése</string>
     <string name="menu_toggle_mic_tool_bar">Kiejtés ellenőrzése</string>
     <string name="new_deck">Pakli létrehozása</string>
-    <string name="create" comment="Button to create a filtered deck">Létrehozás</string>
     <string name="new_dynamic_deck">Szűrt pakli létrehozása</string>
     <string name="night_mode">Éjszakai mód</string>
     <string name="directory_inaccessible">Nem érhető el az AnkiDroid könyvtár</string>

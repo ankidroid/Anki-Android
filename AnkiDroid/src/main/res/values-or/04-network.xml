@@ -61,7 +61,7 @@
     <string name="invalid_username_password">ଅବୈଧ ଇମେଲ୍ ଠିକଣା କିମ୍ବା ପାସ୍ଓ୍ୱାର୍ଡ଼</string>
     <string name="reset_password">ପାସ୍ଓ୍ୱାର୍ଡ଼ ପୁନଃସେଟ୍ କରନ୍ତୁ</string>
     <!-- AndroidManifest.xml -->
-    <string name="preferences_title">ଅଭିରୁଚି</string>
+    <string name="preferences_title">ଅଗ୍ରାଧିକାରସମୂହ</string>
     <string name="deckpreferences_title">XXX ପାଇଁ ବିକଳ୍ପଗୁଡ଼ିକ</string>
     <string name="sync_conflict_message">ଆପଣ ନିଶ୍ଚିତ ଭାବରେ ଏହି ସଂଗ୍ରହକୁ ଅପଲୋଡ୍ କରିବେ କିମ୍ବା ଆଙ୍କିୱେବରୁ ଡାଉନଲୋଡ୍ କରିବେ, ଯେହେତୁ ସେଗୁଡିକ ମିଶ୍ରିତ ହୋଇପାରିବ ନାହିଁ | ଗୋଟିଏ ପାର୍ଶ୍ୱରେ ଥିବା ସଂଗ୍ରହର ନବୀକରଣ କରାଯିବ |</string>
     <string name="sync_conflict_local">ଅପଲୋଡ୍</string>
