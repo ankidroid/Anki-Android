@@ -18,6 +18,8 @@ package com.ichi2.anki;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Looper;
 import android.view.View;
 
 import com.ichi2.libanki.Card;
@@ -126,14 +128,10 @@ public class CardTemplatePreviewerTest extends RobolectricTest {
         noteFieldBundleTest.putInt("cardListSize", 2);
         intent.putExtra("noteEditorBundle", noteFieldBundleTest);
 
-        ActivityController<TestCardTemplatePreviewer> previewerController = Robolectric.buildActivity(TestCardTemplatePreviewer.class, intent).create().start().resume().visible();
-        saveControllerForCleanup(previewerController);
-
-        TestCardTemplatePreviewer testCardTemplatePreviewer = previewerController.get();
-
-        View previewNextCard = testCardTemplatePreviewer.mPreviewNextCard;
+        CardTemplatePreviewer testCardTemplatePreviewerActivity = Robolectric.buildActivity( CardTemplatePreviewer.class ).create().resume().get();
+        View previewNextCard = testCardTemplatePreviewerActivity.mPreviewNextCard;
         previewNextCard.performClick();
-        Assert.assertTrue("Previewing Card2?", (testCardTemplatePreviewer.mAnswerField.getText().equals("Front Test")) ? true : false);
+        Assert.assertTrue("Previewing Card2?", testCardTemplatePreviewerActivity.mAnswerField.getText().equals("Front Test"));
     }
 
     private Card getSavedCard(Model model, int ordinal) {
