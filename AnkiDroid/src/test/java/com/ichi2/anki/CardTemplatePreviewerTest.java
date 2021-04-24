@@ -129,9 +129,9 @@ public class CardTemplatePreviewerTest extends RobolectricTest {
         noteFieldBundleTest.putInt("cardListSize", 2);
         intent.putExtra("noteEditorBundle", noteFieldBundleTest);
 
-        ActivityController<TestCardTemplatePreviewer> previewerController = Robolectric.buildActivity(TestCardTemplatePreviewer.class, intent).create().start().resume().visible();
+        ActivityController<CardTemplatePreviewer> previewerController = Robolectric.buildActivity(CardTemplatePreviewer.class, intent).create().start().resume().visible();
         saveControllerForCleanup(previewerController);
-        TestCardTemplatePreviewer testCardTemplatePreviewer = previewerController.get();
+        CardTemplatePreviewer testCardTemplatePreviewer = previewerController.get();
         Assert.assertTrue(testCardTemplatePreviewer.mPreviewNextCard.isEnabled());
         testCardTemplatePreviewer.mPreviewNextCard.performClick();
         testCardTemplatePreviewer.displayCardAnswer();
