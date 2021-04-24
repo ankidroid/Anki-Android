@@ -69,7 +69,7 @@ jobs:
           command: ./gradlew :AnkiDroid:compilePlayReleaseJavaWithJavac compileLint lint-rules:compileTestJava
 
       - name: Run Lint Release
-        run: ./gradlew lintRelease
+        run: ./gradlew :api:lintRelease :AnkiDroid:lintPlayRelease
 
       - name: Test Lint Rules
         run: ./gradlew lint-rules:test
