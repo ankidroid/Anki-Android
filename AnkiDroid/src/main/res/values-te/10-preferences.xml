@@ -43,256 +43,258 @@
     <string name="enabled">ప్రారంభించబడింది</string>
     <!-- preferences.xml categories-->
     <string name="pref_cat_general_summ">సాధారణ సెట్టింగులు</string>
-    <string name="pref_cat_reviewing">సమీక్షిస్తోంది</string>
+    <string name="pref_cat_reviewing" maxLength="41">సమీక్షిస్తోంది</string>
     <string name="pref_cat_reviewing_summ">నాన్-డెక్-నిర్దిష్ట సమీక్షకుడు సెట్టింగులు</string>
-    <string name="pref_cat_reviewer_behaviour">ప్రవర్తన</string>
-    <string name="pref_cat_flashcard">ప్రదర్శన</string>
-    <string name="pref_cat_whiteboard">వైట్‌బోర్డ్</string>
-    <string name="pref_cat_appearance">స్వరూపం</string>
+    <string name="pref_cat_reviewer_behaviour" maxLength="41">ప్రవర్తన</string>
+    <string name="pref_cat_flashcard" maxLength="41">ప్రదర్శన</string>
+    <string name="pref_cat_whiteboard" maxLength="41">వైట్‌బోర్డ్</string>
+    <string name="pref_cat_appearance" maxLength="41">స్వరూపం</string>
     <string name="pref_cat_appearance_summ">థీమ్లను మరియు డిఫాల్ట్ ఫాంట్ను మార్చండి</string>
-    <string name="pref_cat_themes">థీమ్లు</string>
-    <string name="pref_cat_fonts">ఫాంట్లు</string>
-    <string name="pref_cat_gestures">సైగలు</string>
+    <string name="pref_cat_themes" maxLength="41">థీమ్లు</string>
+    <string name="pref_cat_fonts" maxLength="41">ఫాంట్లు</string>
+    <string name="pref_cat_gestures" maxLength="41">సైగలు</string>
     <string name="pref_cat_gestures_summ">బటన్ల బదులుగా కుళాయిలు మరియు స్వైప్లను ఉపయోగించండి</string>
-    <string name="pref_cat_actions">ఆచరణలు</string>
-    <string name="pref_cat_advanced">ఉన్నతస్థాయి</string>
+    <string name="pref_cat_actions" maxLength="41">ఆచరణలు</string>
+    <string name="pref_cat_advanced" maxLength="41">ఉన్నతస్థాయి</string>
     <string name="pref_cat_advanced_summ">ఆప్టిమైజేషన్ మరియు ప్రయోగాత్మక లక్షణాలు</string>
-    <string name="pref_cat_performance">ప్రదర్శన</string>
-    <string name="pref_cat_workarounds">పరిష్కారాలను</string>
-    <string name="pref_cat_plugins">ప్లగ్ఇన్</string>
-    <string name="about_title">AnkiDroid గురించి</string>
+    <string name="pref_cat_performance" maxLength="41">ప్రదర్శన</string>
+    <string name="pref_cat_workarounds" maxLength="41">పరిష్కారాలను</string>
+    <string name="pref_cat_plugins" maxLength="41">ప్లగ్ఇన్</string>
+    <string name="about_title" maxLength="41">AnkiDroid గురించి</string>
     <string name="about_version">వెర్షన్: </string>
     <!-- preferences.xml entries-->
-    <string name="whiteboard_stroke_width">స్ట్రోక్ వెడల్పు</string>
-    <string name="use_input_tag">కార్డుకు సమాధానం టైప్ చేయండి</string>
+    <string name="whiteboard_stroke_width" maxLength="41">స్ట్రోక్ వెడల్పు</string>
+    <string name="use_input_tag" maxLength="41">కార్డుకు సమాధానం టైప్ చేయండి</string>
     <string name="use_input_tag_summ">సమాధానం టైప్ చేయడానికి కార్డు లోపల టెక్స్ట్ ఇన్పుట్ బాక్స్ ఉపయోగించండి</string>
-    <string name="dictionary">నిఘంటువును చూడండి</string>
-    <string name="reset_languages">భాషలను రీసెట్ చేయండి</string>
+    <string name="dictionary" maxLength="41">నిఘంటువును చూడండి</string>
+    <string name="reset_languages" maxLength="41">భాషలను రీసెట్ చేయండి</string>
     <string name="reset_languages_summ">అన్ని డెక్స్ కోసం భాషా కేటాయింపులను రీసెట్ చేయండి (టెక్స్ట్ మరియు ప్రసంగాలకు టెక్స్ట్)</string>
     <string name="reset_languages_question">అన్ని భాషల కేటాయింపులను రీసెట్ చేయాలా?</string>
     <string name="reset_confirmation">అన్ని రాష్ట్రాలను రీసెట్ చేయండి</string>
-    <string name="card_zoom">కార్డ్ జూమ్</string>
-    <string name="image_zoom">చిత్రం జూమ్</string>
-    <string name="button_size">సమాధానం బటన్ పరిమాణం</string>
-    <string name="card_browser_font_size">కార్డ్ బ్రౌజర్ ఫాంట్ స్కేలింగ్</string>
-    <string name="card_browser_hide_media">Display filenames in card browser</string>
+    <string name="card_zoom" maxLength="41">కార్డ్ జూమ్</string>
+    <string name="image_zoom" maxLength="41">చిత్రం జూమ్</string>
+    <string name="button_size" maxLength="41">సమాధానం బటన్ పరిమాణం</string>
+    <string name="card_browser_font_size" maxLength="41">కార్డ్ బ్రౌజర్ ఫాంట్ స్కేలింగ్</string>
+    <string name="card_browser_hide_media" maxLength="41">Display filenames in card browser</string>
     <string name="card_browser_hide_media_summary">Display media filenames in the card browser question/answer fields</string>
-    <string name="col_path">AnkiDroid డైరెక్టరీ</string>
-    <string name="fullscreen_review">పూర్తి స్క్రీన్ మోడ్</string>
+    <string name="col_path" maxLength="41">AnkiDroid డైరెక్టరీ</string>
+    <string name="fullscreen_review" maxLength="41">పూర్తి స్క్రీన్ మోడ్</string>
     <string name="full_screen_off">ఆఫ్</string>
     <string name="full_screen_system">సిస్టమ్ బార్లను దాచు</string>
     <string name="full_screen_complete">సిస్టమ్ బార్లను దాచిపెట్టి, సమాధానం బటన్లను దాచిపెట్టు</string>
     <string name="full_screen_error_gestures">మీరు సమాధానం బటన్లను దాచడానికి సంజ్ఞలను ప్రారంభించాలి</string>
-    <string name="answer_buttons_position">సమాధానం బటన్లు స్థానం</string>
+    <string name="answer_buttons_position" maxLength="41">సమాధానం బటన్లు స్థానం</string>
     <string-array name="answer_buttons_position_labels">
         <item>టాప్</item>
         <item>దిగువ</item>
     </string-array>
-    <string name="gestures">సంజ్ఞలను ప్రారంభించండి</string>
+    <string name="gestures" maxLength="41">సంజ్ఞలను ప్రారంభించండి</string>
     <string name="gestures_summ">కార్డులకు సమాధానం ఇవ్వడం మరియు సవరించడం వంటి చర్యలకు సంజ్ఞలను కేటాయించండి.</string>
-    <string name="gestures_allow_links">Ignore touch gestures on links</string>
+    <string name="gestures_allow_links" maxLength="41">Ignore touch gestures on links</string>
     <string name="gestures_allow_links_summary">Touch gestures will not be processed if a link/hint is pressed.</string>
-    <string name="gestures_corner_touch">9-point touch</string>
+    <string name="gestures_corner_touch" maxLength="41">9-point touch</string>
     <string name="gestures_corner_touch_summary">Allow touch gestures in screen corners</string>
-    <string name="gestures_swipe_up">పైకి స్వైప్ చేయండి</string>
-    <string name="gestures_swipe_down">క్రిందకి లాగండి</string>
-    <string name="gestures_swipe_left">ఎడమకు స్వైప్ చేయండి</string>
-    <string name="gestures_swipe_right">కుడికి స్వైప్ చేయండి</string>
-    <string name="gestures_double_tap">రెండు సార్లు తాకండి</string>
-    <string name="gestures_tap_top">పైన తాకండి</string>
-    <string name="gestures_tap_left">ఎడమవైపు తాకండి</string>
-    <string name="gestures_tap_right">కుడివైపు తాకండి</string>
-    <string name="gestures_tap_bottom">దిగువ తాకండి</string>
-    <string name="gestures_corner_tap_top_left">Touch top left</string>
+    <string name="gestures_swipe_up" maxLength="41">పైకి స్వైప్ చేయండి</string>
+    <string name="gestures_swipe_down" maxLength="41">క్రిందకి లాగండి</string>
+    <string name="gestures_swipe_left" maxLength="41">ఎడమకు స్వైప్ చేయండి</string>
+    <string name="gestures_swipe_right" maxLength="41">కుడికి స్వైప్ చేయండి</string>
+    <string name="gestures_double_tap" maxLength="41">రెండు సార్లు తాకండి</string>
+    <string name="gestures_tap_top" maxLength="41">పైన తాకండి</string>
+    <string name="gestures_tap_left" maxLength="41">ఎడమవైపు తాకండి</string>
+    <string name="gestures_tap_right" maxLength="41">కుడివైపు తాకండి</string>
+    <string name="gestures_tap_bottom" maxLength="41">దిగువ తాకండి</string>
+    <string name="gestures_corner_tap_top_left" maxLength="41">Touch top left</string>
     <string name="gestures_corner_tap_top_center">Touch top center</string>
-    <string name="gestures_corner_tap_top_right">Touch top right</string>
+    <string name="gestures_corner_tap_top_right" maxLength="41">Touch top right</string>
     <string name="gestures_corner_tap_middle_left">Touch middle left</string>
-    <string name="gestures_corner_tap_middle_center">Touch middle center</string>
+    <string name="gestures_corner_tap_middle_center" maxLength="41">Touch middle center</string>
     <string name="gestures_corner_tap_middle_right">Touch middle right</string>
-    <string name="gestures_corner_tap_bottom_left">Touch bottom left</string>
+    <string name="gestures_corner_tap_bottom_left" maxLength="41">Touch bottom left</string>
     <string name="gestures_corner_tap_bottom_center">Touch bottom center</string>
-    <string name="gestures_corner_tap_bottom_right">Touch bottom right</string>
-    <string name="gestures_volume_up">Volume up</string>
-    <string name="gestures_volume_down">Volume down</string>
-    <string name="more_scrolling_buttons">eReader</string>
+    <string name="gestures_corner_tap_bottom_right" maxLength="41">Touch bottom right</string>
+    <string name="gestures_volume_up" maxLength="41">Volume up</string>
+    <string name="gestures_volume_down" maxLength="41">Volume down</string>
+    <string name="more_scrolling_buttons" maxLength="41">eReader</string>
     <string name="more_scrolling_buttons_summ">కూడా స్క్రోలింగ్ కోసం కంజి / కటన, ఎమోజి / కావో మోజి బటన్లను ఉపయోగించండి</string>
     <string name="card_browser_enable_external_context_menu">‘%s’ Menu</string>
     <string name="card_browser_enable_external_context_menu_summary">Enables the ‘%s’ context menu globally</string>
-    <string name="double_scrolling_gap">డబుల్ స్క్రోలింగ్</string>
+    <string name="double_scrolling_gap" maxLength="41">డబుల్ స్క్రోలింగ్</string>
     <string name="double_scrolling_gap_summ">eReader తో డబుల్ స్క్రోల్ స్పేస్</string>
-    <string name="swipe_sensitivity">స్వైప్ సున్నితత్వం</string>
-    <string name="tts">సంభాషణకు వచనం</string>
+    <string name="swipe_sensitivity" maxLength="41">స్వైప్ సున్నితత్వం</string>
+    <string name="tts" maxLength="41">సంభాషణకు వచనం</string>
     <string name="tts_summ">ధ్వని ఫైల్ చేర్చబడకపోతే ప్రశ్న మరియు సమాధానాన్ని చదవండి</string>
-    <string name="sync_fetch_missing_media">మీడియా సమకాలీకరణలో పొందండి</string>
+    <string name="sync_fetch_missing_media" maxLength="41">మీడియా సమకాలీకరణలో పొందండి</string>
     <string name="sync_fetch_missing_media_summ">సమకాలీకరించినప్పుడు తప్పిపోయిన మీడియాను స్వయంచాలకంగా పొందడం</string>
-    <string name="sync_account">AnkiWeb ఖాతా</string>
+    <string name="sync_account" maxLength="41">AnkiWeb ఖాతా</string>
     <string name="sync_account_summ_logged_out">లాగిన్ చేయలేదు</string>
     <string name="sync_account_summ_logged_in">%s</string>
-    <string name="automatic_sync_choice">స్వయంచాలక సమకాలీకరణ</string>
+    <string name="automatic_sync_choice" maxLength="41">స్వయంచాలక సమకాలీకరణ</string>
     <string name="automatic_sync_choice_summ">గత సమకాలీకరణ 10         నిముషాల కంటే ఎక్కువగా ఉంటే అనువర్తనం ప్రారంభించండి / నిష్క్రమణలో స్వయంచాలకంగా సమకాలీకరించండి.</string>
-    <string name="sync_status_badge">Display synchronization status</string>
+    <string name="sync_status_badge" maxLength="41">Display synchronization status</string>
     <string name="sync_status_badge_summ">Change the sync icon when changes can be uploaded</string>
-    <string name="day_theme">డే థీమ్</string>
-    <string name="night_theme">నైట్ థీమ్</string>
-    <string name="default_font">డిఫాల్ట్ ఫాంట్</string>
-    <string name="override_font">డిఫాల్ట్ ఫాంట్ అన్వయం</string>
-    <string name="language">భాష</string>
+    <string name="day_theme" maxLength="41">డే థీమ్</string>
+    <string name="night_theme" maxLength="41">నైట్ థీమ్</string>
+    <string name="default_font" maxLength="41">డిఫాల్ట్ ఫాంట్</string>
+    <string name="override_font" maxLength="41">డిఫాల్ట్ ఫాంట్ అన్వయం</string>
+    <string name="language" maxLength="41">భాష</string>
     <string name="language_system">సిస్టమ్ భాష</string>
-    <string name="notification_pref">ప్రకటనలు</string>
-    <string name="notification_pref_title">ఎప్పుడు తెలియజేయండి</string>
+    <string name="notification_pref" maxLength="41">ప్రకటనలు</string>
+    <string name="notification_pref_title" maxLength="41">ఎప్పుడు తెలియజేయండి</string>
     <string name="never_notify">ఎప్పుడు తెలియజేయవద్దు</string>
     <string name="notify_when_pending">పెండింగ్ సందేశాలు అందుబాటులో ఉన్నాయి</string>
     <string name="notification_minimum_cards_due">%d కార్ల కంటే ఎక్కువ</string>
-    <string name="notification_minimum_cards_due_vibrate">కదలుట</string>
-    <string name="notification_minimum_cards_due_blink">బ్లింక్ కాంతి</string>
-    <string name="timeout_answer_text">స్వయంచాలక ప్రదర్శన సమాధానం</string>
+    <string name="notification_minimum_cards_due_vibrate" maxLength="41">కదలుట</string>
+    <string name="notification_minimum_cards_due_blink" maxLength="41">బ్లింక్ కాంతి</string>
+    <string name="timeout_answer_text" maxLength="41">స్వయంచాలక ప్రదర్శన సమాధానం</string>
     <string name="timeout_answer_summ">వినియోగదారు ఇన్పుట్ లేకుండా స్వయంచాలకంగా సమాధానం చూపు. 
 ఆలస్యం స్వయంచాలకంగా ప్లే చేయబడిన ఆడియో ఫైల్లకు సమయాన్ని కలిగి ఉంటుంది.</string>
-    <string name="timeout_answer_seconds">సమాధానం చూపించడానికి సమయం</string>
+    <string name="timeout_answer_seconds" maxLength="41">సమాధానం చూపించడానికి సమయం</string>
     <string name="timeout_answer_seconds_summ" comment="The time to wait (in seconds) in the reviewer before automatically showing the next question or answer">XXX s</string>
-    <string name="timeout_question_seconds">తదుపరి ప్రశ్న చూపించడానికి సమయం</string>
+    <string name="timeout_question_seconds" maxLength="41">తదుపరి ప్రశ్న చూపించడానికి సమయం</string>
     <string name="select_locale_title">భాషను ఎంచుకోండి</string>
-    <string name="software_render">Disable card hardware render</string>
+    <string name="software_render" maxLength="41">Disable card hardware render</string>
     <string name="software_render_summ">Hardware render is faster but may have problems, specifically on Android 8/8.1. If you cannot see parts of the card review user interface, try this setting.</string>
-    <string name="safe_display">సురక్షిత ప్రదర్శన మోడ్</string>
+    <string name="safe_display" maxLength="41">సురక్షిత ప్రదర్శన మోడ్</string>
     <string name="safe_display_summ">Disable all animations and use safer method for drawing cards. E-ink devices may require this.</string>
-    <string name="disable_extended_text_ui">Disable Single-Field Edit Mode</string>
+    <string name="disable_extended_text_ui" maxLength="41">Disable Single-Field Edit Mode</string>
     <!--See: multimedia_editor_popup_cloze. We can\'t use format strings as this is auto-generated-->
     <string name="disable_extended_text_ui_summ">Allows \'Cloze Deletion\' context menu when in landscape mode.</string>
-    <string name="vertical_centering">సెంటర్ సమలేఖనం</string>
+    <string name="vertical_centering" maxLength="41">సెంటర్ సమలేఖనం</string>
     <string name="vertical_centering_summ">నిలువుగా కార్డుల విషయాన్ని కేంద్రీకరించండి</string>
-    <string name="pref_backup_max">అత్యధిక సంఖ్యలో బ్యాకప్లు</string>
-    <string name="show_estimates">బటన్ సమయం చూపించు</string>
+    <string name="pref_backup_max" maxLength="41">అత్యధిక సంఖ్యలో బ్యాకప్లు</string>
+    <string name="show_estimates" maxLength="41">బటన్ సమయం చూపించు</string>
     <string name="show_estimates_summ">సమాధానం బటన్లపై తదుపరి సమీక్ష సమయం చూపించు</string>
-    <string name="show_top_bar">Show Top Bar</string>
+    <string name="show_top_bar" maxLength="41">Show Top Bar</string>
     <string name="show_top_bar_summ">Show card counts, flag and mark in top bar</string>
-    <string name="show_progress">మిగిలిన చూపు</string>
+    <string name="show_progress" maxLength="41">మిగిలిన చూపు</string>
     <string name="show_progress_summ">మిగిలిన కార్డ్ సంఖ్యను చూపు</string>
-    <string name="show_eta">ETA ను చూపించు</string>
+    <string name="show_eta" maxLength="41">ETA ను చూపించు</string>
     <string name="show_eta_summ">మిగిలివున్న సమయాన్ని చుపించు</string>
-    <string name="use_current">కొత్త కార్డుల కోసం డెక్</string>
-    <string name="new_spread">కొత్త కార్డ్ స్థానం</string>
-    <string name="learn_cutoff">Learn ahead limit</string>
-    <string name="time_limit">టైమ్బాక్స్ సమయం పరిమితి</string>
+    <string name="use_current" maxLength="41">కొత్త కార్డుల కోసం డెక్</string>
+    <string name="new_spread" maxLength="41">కొత్త కార్డ్ స్థానం</string>
+    <string name="learn_cutoff" maxLength="41">Learn ahead limit</string>
+    <string name="time_limit" maxLength="41">టైమ్బాక్స్ సమయం పరిమితి</string>
     <string name="time_limit_summ">XXX min</string>
-    <string name="new_timezone">New timezone handling</string>
-    <string name="day_offset_with_description">Start of next day (0 is midnight, 23 is 11PM)</string>
+    <string name="new_timezone" maxLength="41">New timezone handling</string>
+    <string name="day_offset_with_description" maxLength="41">Start of next day</string>
     <string name="day_offset_summ">అర్ధరాత్రి XXX గంటలు</string>
-    <string name="sched_ver">Experimental V2 scheduler</string>
+    <string name="xlabel_dayoffset_seekbar" maxLength="41">Midnight</string>
+    <string name="ylabel_dayoffset_seekbar" maxLength="41">11PM</string>
+    <string name="sched_ver" maxLength="41">Experimental V2 scheduler</string>
     <string name="sched_ver_summ">Enable the experimental scheduler. Forces changes in one direction on next sync</string>
     <string name="sched_ver_toggle_title">Confirm</string>
     <string name="sched_ver_2to1">This will reset any cards in learning, clear filtered decks, and change the scheduler version. Proceed?</string>
     <string name="sched_ver_1to2">The experimental scheduler could cause incorrect scheduling. Please ensure you have read the documentation first. Proceed?</string>
-    <string name="pref_keep_screen_on">స్క్రీన్పై ఉంచండి</string>
+    <string name="pref_keep_screen_on" maxLength="41">స్క్రీన్పై ఉంచండి</string>
     <string name="pref_keep_screen_on_summ">స్క్రీన్ గడువు ముగియడాన్ని నిలిపివేయి</string>
-    <string name="convert_fen_text">చదరంగం సంకేత మద్దతు</string>
+    <string name="convert_fen_text" maxLength="41">చదరంగం సంకేత మద్దతు</string>
     <string name="convert_fen_text_summ">Forsyth–Edwards సంజ్ఞామానం నుండి ఒక చదరంగం బండి గీయండి. ఈ కోడ్ [fen] [/fen] ట్యాగ్ల్లో ఉండాలి.</string>
-    <string name="enable_api_title">AnkiDroid API ని ప్రారంభించండి</string>
+    <string name="enable_api_title" maxLength="41">AnkiDroid API ని ప్రారంభించండి</string>
     <string name="enable_api_summary">ఇతర అనువర్తనాలు AnkiDroid కు కనెక్ట్ చేయండి మరియు మీ ప్రమేయం లేకుండా డేటాను చదవడం / వ్రాయడం అనుమతించండి</string>
-    <string name="custom_buttons">అనువర్తన పట్టీ బటన్లు</string>
+    <string name="custom_buttons" maxLength="41">అనువర్తన పట్టీ బటన్లు</string>
     <string name="custom_buttons_summary">అనువర్తన బార్లో ఏ చర్యలు కనిపిస్తాయో అనుకూలీకరించండి</string>
     <string name="custom_buttons_setting_always_show">ఎల్లప్పుడూ చూపించు</string>
     <string name="custom_buttons_setting_if_room">గది ఉంటే చూపించు</string>
     <string name="custom_buttons_setting_menu_only">మెనూ మాత్రమే</string>
-    <string name="reset_custom_buttons">డిఫాల్ట్ కి రీసెట్</string>
-    <string name="thirdparty_apps_title">Third-party API apps</string>
+    <string name="reset_custom_buttons" maxLength="41">డిఫాల్ట్ కి రీసెట్</string>
+    <string name="thirdparty_apps_title" maxLength="41">Third-party API apps</string>
     <string name="thirdparty_apps_summary">See a list of applications which make use of the AnkiDroid API such as dictionaries, utilities.</string>
-    <string name="html_javascript_debugging">HTML / Javascript Debugging</string>
+    <string name="html_javascript_debugging" maxLength="41">HTML / Javascript Debugging</string>
     <string name="html_javascript_debugging_summ">Enable remote WebView connections, and save card HTML to AnkiDroid directory</string>
     <!-- Advanced statistics settings -->
-    <string name="advanced_statistics_title">అధునాతన గణాంకాలు</string>
-    <string name="enable_advanced_statistics_title">అధునాతన గణాంకాలు ప్రారంభించు</string>
+    <string name="advanced_statistics_title" maxLength="41">అధునాతన గణాంకాలు</string>
+    <string name="enable_advanced_statistics_title" maxLength="41">అధునాతన గణాంకాలు ప్రారంభించు</string>
     <string name="enable_advanced_statistics_summ">భవిష్యత్ సమీక్షలు (ఎనేబుల్) లేదా భవిష్య సూచించిన సమీక్షలు (డిసేబుల్) యొక్క లెక్కింపు లేదా అనుకరణ ఆధారంగా విశ్లేషణ గణాంకాలను ప్రదర్శించండి.</string>
-    <string name="advanced_forecast_stats_compute_n_days_title">మొదటి n రోజుల గణన, మిగిలిన అనుకరించండి</string>
-    <string name="advanced_forecast_stats_compute_precision_title">గణన యొక్క ప్రెసిషన్</string>
-    <string name="advanced_forecast_stats_mc_n_iterations_title">అనుకరణ యొక్క పునరావృత సంఖ్య</string>
+    <string name="advanced_forecast_stats_compute_n_days_title" maxLength="41">మొదటి n రోజుల గణన, మిగిలిన అనుకరించండి</string>
+    <string name="advanced_forecast_stats_compute_precision_title" maxLength="41">గణన యొక్క ప్రెసిషన్</string>
+    <string name="advanced_forecast_stats_mc_n_iterations_title" maxLength="41">అనుకరణ యొక్క పునరావృత సంఖ్య</string>
     <!-- Custom sync server settings -->
-    <string name="custom_sync_server_title">అనుకూల సమకాలీకరణ సర్వర్</string>
-    <string name="custom_sync_server_enable_title">అనుకూల సమకాలీకరణ సర్వర్ని ఉపయోగించండి</string>
+    <string name="custom_sync_server_title" maxLength="41">అనుకూల సమకాలీకరణ సర్వర్</string>
+    <string name="custom_sync_server_enable_title" maxLength="41">అనుకూల సమకాలీకరణ సర్వర్ని ఉపయోగించండి</string>
     <string name="custom_sync_server_enable_summary">మీరు ఇక్కడ యాజమాన్య AnkiWeb సేవను ఉపయోగించకూడదనుకుంటే, మీరు ఒక ప్రత్యామ్నాయ సర్వర్ని పేర్కొనవచ్చు</string>
-    <string name="custom_sync_server_base_url_title">Url ని సమకాలీకరించండి</string>
+    <string name="custom_sync_server_base_url_title" maxLength="41">Url ని సమకాలీకరించండి</string>
     <string name="custom_sync_server_base_url_invalid">Sync url invalid</string>
-    <string name="custom_sync_server_media_url_title">మీడియా సమకాలీకరణ url</string>
+    <string name="custom_sync_server_media_url_title" maxLength="41">మీడియా సమకాలీకరణ url</string>
     <string name="custom_sync_server_media_url_invalid">Media sync url invalid</string>
     <!-- studyoptions -->
     <string name="deck_conf_group_summ">Changes to deck group options will affect multiple decks. If you wish to change only the current deck, please add a new options group first</string>
     <string name="studyoptions_limit_select_tags">ట్యాగ్లను ఎంచుకోండి</string>
     <!-- Deck configurations -->
-    <string name="deck_conf_deck_description">Deck description (affects current deck only)</string>
-    <string name="deck_conf_group">ఐచ్ఛికాలు సమూహం</string>
+    <string name="deck_conf_deck_description" maxLength="41">Deck description (current deck only)</string>
+    <string name="deck_conf_group" maxLength="41">ఐచ్ఛికాలు సమూహం</string>
     <plurals name="deck_conf_group_summ">
         <item quantity="one">%1$s\n%2$d డెక్ ఈ సమూహాన్ని ఉపయోగిస్తుంది</item>
         <item quantity="other">%1$s\n%2$d డెక్స్ ఈ గుంపును ఉపయోగిస్తాయి</item>
     </plurals>
-    <string name="deck_conf_new_cards">కొత్త కార్డులు</string>
-    <string name="deck_conf_rev_cards" comment="Name of the deck options submenu for configuring reviews of due cards.">సమీక్షలు</string>
-    <string name="deck_conf_lps_cards" comment="Label of the submenu stating how lapses cards are treated.">లాప్సెస్</string>
-    <string name="deck_conf_general">సాధారణం</string>
-    <string name="deck_conf_reminders">జ్ఞాపికలు</string>
-    <string name="deck_conf_steps">దశలు (నిమిషాల్లో)</string>
-    <string name="deck_conf_order">ఆర్డర్</string>
-    <string name="deck_conf_new_cards_day">కొత్త కార్డులు / రోజు</string>
-    <string name="deck_conf_graduating_ivl">గ్రాడ్యుయేటింగ్ విరామం</string>
+    <string name="deck_conf_new_cards" maxLength="41">కొత్త కార్డులు</string>
+    <string name="deck_conf_rev_cards" maxLength="41" comment="Name of the deck options submenu for configuring reviews of due cards.">సమీక్షలు</string>
+    <string name="deck_conf_lps_cards" maxLength="41" comment="Label of the submenu stating how lapses cards are treated.">లాప్సెస్</string>
+    <string name="deck_conf_general" maxLength="41">సాధారణం</string>
+    <string name="deck_conf_reminders" maxLength="41">జ్ఞాపికలు</string>
+    <string name="deck_conf_steps" maxLength="41">దశలు (నిమిషాల్లో)</string>
+    <string name="deck_conf_order" maxLength="41">ఆర్డర్</string>
+    <string name="deck_conf_new_cards_day" maxLength="41">కొత్త కార్డులు / రోజు</string>
+    <string name="deck_conf_graduating_ivl" maxLength="41">గ్రాడ్యుయేటింగ్ విరామం</string>
     <string name="deck_conf_days">XXX రోజు(లు)</string>
-    <string name="deck_conf_easy_ivl">సులువు విరామం</string>
-    <string name="deck_conf_start_ease">సులభంగా ప్రారంభిస్తోంది</string>
-    <string name="deck_conf_max_rev">గరిష్ఠ సమీక్షలు / రోజు</string>
-    <string name="deck_conf_new_bury">కొత్త కార్డులతో సంబంధమున్న బరీ చేయండి</string>
+    <string name="deck_conf_easy_ivl" maxLength="41">సులువు విరామం</string>
+    <string name="deck_conf_start_ease" maxLength="41">సులభంగా ప్రారంభిస్తోంది</string>
+    <string name="deck_conf_max_rev" maxLength="41">గరిష్ఠ సమీక్షలు / రోజు</string>
+    <string name="deck_conf_new_bury" maxLength="41">కొత్త కార్డులతో సంబంధమున్న బరీ చేయండి</string>
     <string name="deck_conf_new_bury_summ">సంబంధిత కార్డులు తదుపరి రోజు వరకు ఖననం చేయబడతాయి</string>
-    <string name="deck_conf_rev_bury">సంబంధిత సమీక్షలను మంజూరు చేయండి</string>
+    <string name="deck_conf_rev_bury" maxLength="41">సంబంధిత సమీక్షలను మంజూరు చేయండి</string>
     <string name="deck_conf_rev_bury_summ">సంబంధిత సమీక్షలు తదుపరి రోజు వరకు ఖననం చేయబడతాయి</string>
-    <string name="deck_conf_use_general_timeout_settings">Use general settings</string>
+    <string name="deck_conf_use_general_timeout_settings" maxLength="41">Use general settings</string>
     <string name="deck_conf_use_general_timeout_settings_summ">Use general \'Automatic display answer\' settings instead of using the settings for this group.</string>
-    <string name="deck_conf_easy_bonus">సులువు బోనస్</string>
-    <string name="deck_conf_hard_factor">Hard interval</string>
-    <string name="deck_conf_ivl_fct">ఇంటర్వల్ మాడిఫైయర్</string>
-    <string name="deck_conf_max_ivl">గరిష్ఠ విరామం</string>
-    <string name="deck_conf_new_lps_ivl">క్రొత్త విరామం</string>
-    <string name="deck_conf_min_ivl">కనీస విరామం</string>
-    <string name="deck_conf_leech_thres">Leech threshold</string>
+    <string name="deck_conf_easy_bonus" maxLength="41">సులువు బోనస్</string>
+    <string name="deck_conf_hard_factor" maxLength="41">Hard interval</string>
+    <string name="deck_conf_ivl_fct" maxLength="41">ఇంటర్వల్ మాడిఫైయర్</string>
+    <string name="deck_conf_max_ivl" maxLength="41">గరిష్ఠ విరామం</string>
+    <string name="deck_conf_new_lps_ivl" maxLength="41">క్రొత్త విరామం</string>
+    <string name="deck_conf_min_ivl" maxLength="41">కనీస విరామం</string>
+    <string name="deck_conf_leech_thres" maxLength="41">Leech threshold</string>
     <string name="deck_conf_fails">XXX లాప్స్ (లు)</string>
-    <string name="deck_conf_leech_action">జలగ చర్య</string>
-    <string name="deck_conf_max_time">గరిష్ట సమాధానం సమయం</string>
+    <string name="deck_conf_leech_action" maxLength="41">జలగ చర్య</string>
+    <string name="deck_conf_max_time" maxLength="41">గరిష్ట సమాధానం సమయం</string>
     <string name="deck_conf_seconds">XXX సెకన్లు</string>
-    <string name="deck_conf_timer">సమాధానం టైమర్ను చూపు</string>
-    <string name="deck_conf_autoplay">స్వయంచాలకంగా ఆడియో ప్లే చేయండి</string>
-    <string name="deck_conf_replayq">ప్రశ్నని రీప్లే చేయండి</string>
+    <string name="deck_conf_timer" maxLength="41">సమాధానం టైమర్ను చూపు</string>
+    <string name="deck_conf_autoplay" maxLength="41">స్వయంచాలకంగా ఆడియో ప్లే చేయండి</string>
+    <string name="deck_conf_replayq" maxLength="41">ప్రశ్నని రీప్లే చేయండి</string>
     <string name="deck_conf_replayq_summ">జవాబుకు సమాధానమివ్వగానే ప్రశ్న మరియు సమాధానం ఆడియో రెండింటిని రీప్లే చేయండి</string>
-    <string name="deck_conf_manage">గ్రూప్ మేనేజ్మెంట్</string>
+    <string name="deck_conf_manage" maxLength="41">గ్రూప్ మేనేజ్మెంట్</string>
     <string name="deck_conf_manage_summ">Add and change options groups</string>
-    <string name="deck_conf_current_group">ప్రస్తుత సమూహం</string>
-    <string name="deck_conf_rename" comment="Menu entry to rename a deck">పేరుమార్చు</string>
-    <string name="deck_conf_reset">నిర్ణీత విలువలకు మార్చు</string>
+    <string name="deck_conf_current_group" maxLength="41">ప్రస్తుత సమూహం</string>
+    <string name="deck_conf_rename" maxLength="41" comment="Menu entry to rename a deck">పేరుమార్చు</string>
+    <string name="deck_conf_reset" maxLength="41">నిర్ణీత విలువలకు మార్చు</string>
     <string name="deck_conf_reset_message">డిఫాల్ట్ విలువల కోసం ప్రస్తుత ఎంపికల సమూహాన్ని పునరుద్ధరించాలా?</string>
-    <string name="deck_conf_add" comment="Adding a new deck option group">చేర్చు</string>
+    <string name="deck_conf_add" maxLength="41" comment="Adding a new deck option group">చేర్చు</string>
     <string name="deck_conf_add_summ">ప్రస్తుత ఎంపికల సమూహపు నకలును సృష్టించండి</string>
     <string name="deck_conf_remove_message">ప్రస్తుత ఎంపికల సమూహాన్ని తీసివేయాలా?</string>
-    <string name="deck_conf_set_subdecks">అన్ని subdecks కోసం సెట్</string>
+    <string name="deck_conf_set_subdecks" maxLength="41">అన్ని subdecks కోసం సెట్</string>
     <plurals name="deck_conf_set_subdecks_summ">
         <item quantity="one">%s subdeck ఈ గుంపును ఉపయోగిస్తుంది</item>
         <item quantity="other">%s subdecks ఈ గుంపును ఉపయోగిస్తుంది</item>
     </plurals>
     <string name="deck_conf_set_subdecks_message">ఈ డెక్ యొక్క subdecks అన్ని ప్రస్తుత ఎంపికలు సమూహం సెట్?</string>
-    <string name="pref_browser_editor_font">బ్రౌజర్ మరియు ఎడిటర్ ఫాంట్</string>
-    <string name="deck_conf_cram_filter">వడపోత</string>
-    <string name="deck_conf_cram_search">శోధన</string>
-    <string name="deck_conf_cram_limit">పరిమితి</string>
-    <string name="deck_conf_cram_order">కార్డులు ఎంపిక చేశాయి</string>
-    <string name="deck_conf_cram_reschedule" comment="Title of the box labelled by deck_conf_cram_reschedule_summ">వాయిదా</string>
+    <string name="pref_browser_editor_font" maxLength="41">బ్రౌజర్ మరియు ఎడిటర్ ఫాంట్</string>
+    <string name="deck_conf_cram_filter" maxLength="41">వడపోత</string>
+    <string name="deck_conf_cram_search" maxLength="41">శోధన</string>
+    <string name="deck_conf_cram_limit" maxLength="41">పరిమితి</string>
+    <string name="deck_conf_cram_order" maxLength="41">కార్డులు ఎంపిక చేశాయి</string>
+    <string name="deck_conf_cram_reschedule" maxLength="41" comment="Title of the box labelled by deck_conf_cram_reschedule_summ">వాయిదా</string>
     <string name="deck_conf_cram_reschedule_summ">ఈ డెక్లో నా సమాధానాల ఆధారంగా కార్డులను రిచెస్ చేయండి</string>
-    <string name="deck_conf_cram_steps">అనుకూల దశలు (నిమిషాల్లో)</string>
-    <string name="deck_conf_cram_steps_summ">అనుకూల దశలను నిర్వచించండి</string>
-    <string name="deck_conf_reminders_enabled">Enable reminder notifications for decks in this deck group</string>
-    <string name="deck_conf_reminders_time">వద్ద రిమైండర్ చేయండి</string>
+    <string name="deck_conf_cram_steps" maxLength="41">అనుకూల దశలు (నిమిషాల్లో)</string>
+    <string name="deck_conf_cram_steps_summ" maxLength="41">అనుకూల దశలను నిర్వచించండి</string>
+    <string name="deck_conf_reminders_enabled" maxLength="41">Enable notifications for this deck group</string>
+    <string name="deck_conf_reminders_time" maxLength="41">వద్ద రిమైండర్ చేయండి</string>
     <!-- analytics options -->
     <string name="analytics_dialog_title">Help make AnkiDroid better!</string>
-    <string name="analytics_title">Share feature usage</string>
+    <string name="analytics_title" maxLength="41">Share feature usage</string>
     <string name="analytics_summ">You can contribute to AnkiDroid by helping the development team see which features people use</string>
-    <string name="note_editor_replace_newlines">Replace newlines with HTML</string>
+    <string name="note_editor_replace_newlines" maxLength="41">Replace newlines with HTML</string>
     <string name="note_editor_replace_newlines_summ">In the Note Editor, convert any instances of &lt;br&gt; to newlines when editing a card.</string>
-    <string name="no_code_formatting">Simple typed answer formatting</string>
+    <string name="no_code_formatting" maxLength="41">Simple typed answer formatting</string>
     <string name="no_code_formatting_summ">Fixes ‘􏿾’ appearing in typed answer results</string>
-    <string name="type_in_answer_focus">Focus ‘type in answer’</string>
+    <string name="type_in_answer_focus" maxLength="41">Focus ‘type in answer’</string>
     <string name="type_in_answer_focus_summ">Automatically focus the ‘type in answer’ field in the reviewer</string>
     <!-- Open Changelog-->
     <string name="open_changelog">Open Changelog</string>

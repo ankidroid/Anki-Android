@@ -64,72 +64,72 @@
         <item quantity="other">मिनिट शिल्लक</item>
     </plurals>
     <plurals name="reviewer_window_title_hours">
-        <item quantity="one">%d hour %d left</item>
-        <item quantity="other">तास बाकी</item>
+        <item quantity="one">%d तास %d शिल्लक</item>
+        <item quantity="other">%d तास %d शिल्लक</item>
     </plurals>
     <plurals name="reviewer_window_title_days">
         <item quantity="one">तास बाकी</item>
         <item quantity="other">तास बाकी</item>
     </plurals>
-    <string name="no_cards_placeholder_title">Collection is empty</string>
-    <string name="no_cards_placeholder_description">Start adding cards\nusing the + icon.</string>
+    <string name="no_cards_placeholder_title">संग्रह रिक्त आहे</string>
+    <string name="no_cards_placeholder_description">कार्ड जोडण्यास प्रारंभ करा \n चिन्हाचा उपयोग करून.</string>
     <!-- The deck picker via AnkiStatsTaskHandler.java -->
     <plurals name="studied_cards_today">
-        <item quantity="one">Studied %1$d card in %2$s today</item>
-        <item quantity="other">Studied %1$d cards in %2$s today</item>
+        <item quantity="one">आज% %1$d मध्ये %2$s कार्डचा अभ्यास केला</item>
+        <item quantity="other">आज%  %1$d मध्ये% %2$s कार्डांचा अभ्यास केला</item>
     </plurals>
     <!-- flashcard_portrait.xml -->
-    <string name="type_answer_hint">Type answer</string>
+    <string name="type_answer_hint">उत्तर टाइप करा</string>
     <string name="show_answer">उत्तर दाखवा</string>
-    <string name="hide_answer">Hide answer</string>
+    <string name="hide_answer">उत्तर लपवा</string>
     <string name="ease_button_again">पुन्हा</string>
     <string name="ease_button_hard">कठीण</string>
     <string name="ease_button_good">चांगले</string>
     <string name="ease_button_easy">सोपे</string>
     <string name="studyoptions_congrats_undo">पूर्ववत् करा %s</string>
-    <string name="menu_import">Import</string>
+    <string name="menu_import">आयात करा</string>
     <string name="undo">पूर्ववत् करा</string>
-    <string name="undo_action_review">last review</string>
-    <string name="undo_action_change_deck_multi">change decks</string>
-    <string name="move_all_to_deck">Move all to deck</string>
-    <string name="unbury">Unbury</string>
-    <string name="rename_deck">Rename deck</string>
-    <string name="create_shortcut">Create shortcut</string>
-    <string name="menu_add" comment="A generic add button - Main Deck Picker and card templates. Please inform us if you need more specific strings">Add</string>
-    <string name="menu_add_note">Add note</string>
-    <string name="menu_my_account" comment="Label of the window in which the user should enter their account. This text can\'t be found in AnkiDroid directly.">Sync account</string>
-    <string name="menu_dismiss_note">Hide / delete</string>
-    <string name="menu_bury_card">Bury card</string>
-    <string name="menu_bury_note">Bury note</string>
-    <string name="menu_suspend_card">Suspend card</string>
-    <string name="menu_suspend_note">Suspend note</string>
-    <string name="menu_bury">Bury</string>
-    <string name="menu_suspend">Suspend</string>
-    <string name="menu_delete_note">Delete note</string>
-    <string name="menu_flag">Flag</string>
-    <string name="menu_flag_card">Flag card</string>
-    <string name="menu_flag_card_zero">No flag</string>
-    <string name="menu_flag_card_one">Red flag</string>
-    <string name="menu_flag_card_two">Orange flag</string>
-    <string name="menu_flag_card_three">Green flag</string>
-    <string name="menu_flag_card_four">Blue flag</string>
-    <string name="menu_edit_tags">Edit tags</string>
-    <string name="delete_note_message">Really delete this note and all its cards?\n%s</string>
-    <string name="menu_select">Select text</string>
-    <string name="menu_lookup">Lookup text</string>
-    <string name="menu_search">Lookup in %1$s</string>
-    <string name="menu_mark_note">Mark note</string>
-    <string name="menu_unmark_note">Unmark note</string>
-    <string name="menu_toggle_mic_tool_bar">Check pronunciation</string>
-    <string name="new_deck">Create deck</string>
-    <string name="new_dynamic_deck">Create filtered deck</string>
-    <string name="night_mode">Night mode</string>
-    <string name="directory_inaccessible">AnkiDroid directory is inaccessible</string>
+    <string name="undo_action_review">अंतिम पुनरावलोकन</string>
+    <string name="undo_action_change_deck_multi">डेक बदला</string>
+    <string name="move_all_to_deck">सर्व डेकवर हलवा</string>
+    <string name="unbury">अनबरी</string>
+    <string name="rename_deck">डेक पुनर्नामित करा</string>
+    <string name="create_shortcut">डेक पुनर्नामित करा</string>
+    <string name="menu_add" comment="A generic add button - Main Deck Picker and card templates. Please inform us if you need more specific strings">जोडा</string>
+    <string name="menu_add_note">नोंदी जोडा</string>
+    <string name="menu_my_account" comment="Label of the window in which the user should enter their account. This text can\'t be found in AnkiDroid directly.">खाते समक्रमित करा</string>
+    <string name="menu_dismiss_note">लपवा / हटवा</string>
+    <string name="menu_bury_card">बरी कार्ड</string>
+    <string name="menu_bury_note">बरी नोट</string>
+    <string name="menu_suspend_card">निलंबन कार्ड</string>
+    <string name="menu_suspend_note">निलंबित नोट</string>
+    <string name="menu_bury">दफन</string>
+    <string name="menu_suspend"> निलंबित करा</string>
+    <string name="menu_delete_note">टीप हटवा</string>
+    <string name="menu_flag">झेंडा</string>
+    <string name="menu_flag_card">फ्लॅग कार्ड</string>
+    <string name="menu_flag_card_zero">ध्वज नाही</string>
+    <string name="menu_flag_card_one">लाल झेंडा</string>
+    <string name="menu_flag_card_two">केशरी ध्वज</string>
+    <string name="menu_flag_card_three">हिरवा झेंडा</string>
+    <string name="menu_flag_card_four">निळा ध्वज</string>
+    <string name="menu_edit_tags">टॅग संपादित करा</string>
+    <string name="delete_note_message">खरोखर ही टीप आणि त्याची सर्व कार्ड हटवायची?\n%s</string>
+    <string name="menu_select">मजकूर निवडा</string>
+    <string name="menu_lookup">मजकूर पहा</string>
+    <string name="menu_search">%1$s मध्ये पहा</string>
+    <string name="menu_mark_note">चिन्हांकित करा</string>
+    <string name="menu_unmark_note">अचिन्हांची नोंद</string>
+    <string name="menu_toggle_mic_tool_bar">उच्चारण तपासा</string>
+    <string name="new_deck">डेक तयार करा</string>
+    <string name="new_dynamic_deck">फिल्टर केलेले डेक तयार करा</string>
+    <string name="night_mode">रात्री मोड</string>
+    <string name="directory_inaccessible">AnkiDroid निर्देशिका प्रवेश करण्यायोग्य आहे</string>
     <!--This is shown when AnkiDroid starts up with no storage permissions.
     The user is taken to the "App Info" screen, and needs to click "Permissions" and
     grant AnkiDroid the \'Storage\' permission. This needs to be a fairly generic message as implementations
     of the permissions/app info screen will differ between devices. -->
-    <string name="startup_no_storage_permission">Please grant AnkiDroid the ‘Storage’ permission to continue</string>
+    <string name="startup_no_storage_permission">कृपया सुरू ठेवण्यासाठी अंकीड्रोइडला ‘स्टोरेज’ परवानगी द्या</string>
     <!--
         The time_quantities are units of time. They are used without
         plurals or dots.
@@ -137,78 +137,78 @@
         not be translated, at least not for languages using the Latin
         alphabet.
     -->
-    <string name="time_quantity_seconds">%d s</string>
-    <string name="time_quantity_minutes">%d min</string>
-    <string name="time_quantity_hours_minutes">%1$d h %2$d m</string>
-    <string name="time_quantity_hours">%d h</string>
-    <string name="time_quantity_days">%d d</string>
-    <string name="time_quantity_days_hours">%1$d d %2$d h</string>
-    <string name="time_quantity_months">%.1f mo</string>
-    <string name="time_quantity_years">%.1f yr</string>
+    <string name="time_quantity_seconds">%d एस</string>
+    <string name="time_quantity_minutes">%d मि</string>
+    <string name="time_quantity_hours_minutes">%1$d एच %2$d मी</string>
+    <string name="time_quantity_hours">%d एच</string>
+    <string name="time_quantity_days">%d डी</string>
+    <string name="time_quantity_days_hours">%1$d डी %2$d एच</string>
+    <string name="time_quantity_months">%.1f मो</string>
+    <string name="time_quantity_years">%.1f वर्ष</string>
     <!-- or "%.1f a" -->
-    <string name="rebuild_filtered_deck">Rebuilding filtered deck&#8230;</string>
-    <string name="rebuild_cram_label">Rebuild</string>
-    <string name="empty_cram_label">Empty</string>
-    <string name="create_subdeck">Create subdeck</string>
-    <string name="empty_filtered_deck">Emptying filtered deck&#8230;</string>
-    <string name="custom_study_deck_name">Custom study session</string>
-    <string name="custom_study_deck_exists">Rename the existing custom study deck first</string>
-    <string name="empty_deck">This deck is empty</string>
-    <string name="search_deck">Deck Search</string>
-    <string name="empty_deck_add_note">Add card</string>
-    <string name="invalid_deck_name">Invalid deck name</string>
-    <string name="studyoptions_empty">This deck is empty. Press the + button to add new content.</string>
-    <string name="studyoptions_limit_reached">Daily study limit reached</string>
-    <string name="studyoptions_empty_schedule">No cards scheduled to study</string>
-    <string name="studyoptions_congrats_finished">Congratulations! You have finished for now.</string>
-    <string name="studyoptions_congrats_more_rev">Today’s limit has been reached, but there are still cards to review. You can increase the limit in the options.</string>
+    <string name="rebuild_filtered_deck">फिल्टर केलेले डेक पुन्हा तयार करीत आहे ...</string>
+    <string name="rebuild_cram_label">पुन्हा तयार करा</string>
+    <string name="empty_cram_label">रिक्त</string>
+    <string name="create_subdeck">सबडेक तयार करा</string>
+    <string name="empty_filtered_deck">फिल्टर केलेले डेक रिक्त करत आहे&#8230;</string>
+    <string name="custom_study_deck_name">सानुकूल अभ्यास सत्र</string>
+    <string name="custom_study_deck_exists">आधी अस्तित्त्वात असलेल्या सानुकूल स्टडी डेकचे नाव बदला</string>
+    <string name="empty_deck">हा डेक रिक्त आहे</string>
+    <string name="search_deck">डेक शोध</string>
+    <string name="empty_deck_add_note">कार्ड जोडा</string>
+    <string name="invalid_deck_name">अवैध डेक नाव</string>
+    <string name="studyoptions_empty">हा डेक रिक्त आहे. नवीन सामग्री जोडण्यासाठी + बटण दाबा.</string>
+    <string name="studyoptions_limit_reached">दररोज अभ्यासाची मर्यादा गाठली</string>
+    <string name="studyoptions_empty_schedule">अभ्यासासाठी कोणतेही कार्ड शेड्यूल केलेले नाही</string>
+    <string name="studyoptions_congrats_finished">अभिनंदन! आपण आत्ताच संपविले आहे.</string>
+    <string name="studyoptions_congrats_more_rev">आजची मर्यादा गाठली आहे, परंतु अद्याप पुनरावलोकने करण्यासाठी कार्डे आहेत. आपण पर्यायांमध्ये मर्यादा वाढवू शकता.</string>
     <string name="studyoptions_congrats_more_new">Today’s limit has been reached. There are more new cards available; you can increase the limit in the options, but this will increase your short-term review workload.</string>
-    <string name="studyoptions_congrats_custom">To study outside of the normal schedule, touch the “Custom study” button</string>
-    <string name="studyoptions_no_cards_due">No cards are due yet</string>
-    <string name="sd_card_not_mounted">Device storage not mounted</string>
-    <string name="empty_cloze_warning">Edit this note and add some cloze deletions. (%1$s)</string>
-    <string name="button_sync">Sync</string>
-    <string name="cancel_sync_confirm">Do you want to cancel the sync?</string>
-    <string name="continue_sync">Continue sync</string>
-    <string name="sync_cancelled">Sync cancelled</string>
-    <string name="sync_cancel_message">Cancelling&#8230;\nThis may take some time.</string>
-    <string name="export">Export</string>
-    <string name="export_collection">Export collection</string>
-    <string name="export_deck">Export deck</string>
-    <string name="nothing">Nothing</string>
+    <string name="studyoptions_congrats_custom">सामान्य वेळापत्रक बाहेर अभ्यास करण्यासाठी, “सानुकूल अभ्यास” बटणावर स्पर्श करा</string>
+    <string name="studyoptions_no_cards_due">अद्याप कोणतीही कार्ड शिल्लक नाही</string>
+    <string name="sd_card_not_mounted">डिव्हाइस संचयन आरोहित नाही</string>
+    <string name="empty_cloze_warning">ही टीप संपादित करा आणि काही क्लोझ हटवणे जोडा. (%1$s)</string>
+    <string name="button_sync">समक्रमित करा</string>
+    <string name="cancel_sync_confirm">आपण संकालन रद्द करू इच्छिता?</string>
+    <string name="continue_sync">संकालन सुरू ठेवा</string>
+    <string name="sync_cancelled">संकालन रद्द केले</string>
+    <string name="sync_cancel_message">रद्द करीत आहे... \n यास काही वेळ लागू शकेल.</string>
+    <string name="export">निर्यात करा</string>
+    <string name="export_collection">निर्यात संग्रह</string>
+    <string name="export_deck">निर्यात डेक</string>
+    <string name="nothing">काही नाही</string>
     <!-- Card template editor -->
-    <string name="title_activity_template_editor">Card types</string>
-    <string name="card_template_editor_front">Front template</string>
-    <string name="card_template_editor_back">Back template</string>
-    <string name="card_template_editor_styling">Styling</string>
-    <string name="card_template_editor_menu_card_browser_appearance">Card Browser Appearance</string>
-    <string name="card_template_editor_deck_override">Deck Override</string>
-    <string name="card_template_editor_cant_delete">At least one card type is required</string>
+    <string name="title_activity_template_editor">कार्ड प्रकार</string>
+    <string name="card_template_editor_front">समोरचा टेम्पलेट</string>
+    <string name="card_template_editor_back">मागील टेम्पलेट</string>
+    <string name="card_template_editor_styling">स्टाईलिंग</string>
+    <string name="card_template_editor_menu_card_browser_appearance">कार्ड ब्राउझर स्वरूप</string>
+    <string name="card_template_editor_deck_override">डेक ओव्हरराइड</string>
+    <string name="card_template_editor_cant_delete">कमीतकमी एक कार्ड प्रकार आवश्यक आहे</string>
     <plurals name="card_template_editor_confirm_delete">
-        <item quantity="one">Delete the “%2$s” card type, and its %1$d card?</item>
-        <item quantity="other">Delete the “%2$s” card type, and its %1$d cards?</item>
+        <item quantity="one">“%2$s” कार्ड प्रकार आणि त्याचे %1$d कार्ड हटवायचे?</item>
+        <item quantity="other">“%2$s” कार्ड प्रकार आणि त्याची %1$d कार्ड हटवायची?</item>
     </plurals>
-    <string name="invalid_template">A card could not be generated</string>
-    <string name="card_template_editor_would_delete_note">Removing this card type would cause one or more notes to be deleted. Please create and save a new card type first.</string>
-    <string name="card_template_editor_save_error">Unable to save card template changes: %s</string>
-    <string name="template_for_current_card_deleted">The card type for the current card was deleted.</string>
+    <string name="invalid_template">कार्ड व्युत्पन्न करणे शक्य नाही</string>
+    <string name="card_template_editor_would_delete_note">हा कार्ड प्रकार हटविल्यामुळे एक किंवा अधिक नोट्स हटविल्या जाऊ शकतात. कृपया प्रथम एक नवीन कार्ड प्रकार तयार करा आणि जतन करा.</string>
+    <string name="card_template_editor_save_error">कार्ड टेम्पलेट बदल जतन करण्यात अक्षम:%s</string>
+    <string name="template_for_current_card_deleted">वर्तमान कार्डासाठी कार्ड प्रकार हटविला गेला.</string>
     <!-- Card Browser Appearance -->
-    <string name="card_template_browser_appearance_title">Browser appearance</string>
+    <string name="card_template_browser_appearance_title">ब्राउझर देखावा</string>
     <string name="current_and_default_deck">%1$s (%2$s)</string>
     <!-- card Info -->
-    <string name="card_info_title">Card info</string>
+    <string name="card_info_title">कार्ड माहिती</string>
     <!-- Permissions -->
-    <string name="read_write_permission_label">Read and write to the AnkiDroid database</string>
-    <string name="read_write_permission_description">access existing notes, cards, note types, and decks, as well as create new ones</string>
+    <string name="read_write_permission_label">AnkiDroid डेटाबेस वाचा आणि लिहा</string>
+    <string name="read_write_permission_description">विद्यमान नोट्स, कार्डे, नोट्स प्रकार आणि डेकमध्ये प्रवेश करा तसेच नवीन तयार करा</string>
     <!-- Context Menu -->
-    <string name="card_browser_context_menu" comment="The value which appears in the system context menu. Note the casing difference">Card Browser</string>
-    <string name="context_menu_anki_card_label">Anki Card</string>
-    <string name="has_a_problem" comment="First field is either front template or back template. Second field is the error message.">%1$s has a problem:<br/>%2$s</string>
-    <string name="more_information">More information</string>
-    <string name="no_field">Found \'{{%1$s}}\', but there is no field called \'%1$s\'.</string>
-    <string name="closed_tag_not_open">Found \'{{/%1$s}}\', but missing \'{{#%1$s}}\' or \'{{^%1$s}}\'.</string>
-    <string name="missing_closing_bracket">Missing \'}}\' in \'%s\'.</string>
-    <string name="open_tag_not_closed">Missing \'{{%s}}\'.</string>
-    <string name="wrong_tag_closed">Found \'{{/%1$s}}\', but expected \'{{/%2$s}}\'</string>
-    <string name="filter_error">Error in filter %s</string>
+    <string name="card_browser_context_menu" comment="The value which appears in the system context menu. Note the casing difference">कार्ड ब्राउझर</string>
+    <string name="context_menu_anki_card_label">अंकी कार्ड</string>
+    <string name="has_a_problem" comment="First field is either front template or back template. Second field is the error message.">%1$s मध्ये एक समस्या आहे:  <br/> %2$s</string>
+    <string name="more_information">अधिक माहिती</string>
+    <string name="no_field">\'{{%1$s}}\' आढळले, परंतु \'%1$s\' नावाचे कोणतेही फील्ड नाही.</string>
+    <string name="closed_tag_not_open">\'{{/%1$s}}\' सापडला, परंतु \'{{#%1$s}}\' किंवा \'{{^%1$s}}\' गहाळ आहे.</string>
+    <string name="missing_closing_bracket">\'%s\' मध्ये \'}}\' गहाळ आहे.</string>
+    <string name="open_tag_not_closed">\'{{%s}}\' गहाळ आहे.</string>
+    <string name="wrong_tag_closed">\'{{/%1$s}}\' सापडला, परंतु अपेक्षित \'{{/%2$s}}\'</string>
+    <string name="filter_error">%s फिल्टरमध्ये त्रुटी</string>
 </resources>
