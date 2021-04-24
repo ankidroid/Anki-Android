@@ -2171,9 +2171,9 @@ public class NoteEditor extends AnkiActivity implements
         if (fieldText != null) {
             fieldContent = fieldText.toString();
         }
-        String newValue = convertToHtmlNewline(fieldContent);
-        if (!mEditorNote.values()[field.getOrd()].equals(newValue)) {
-            mEditorNote.values()[field.getOrd()] = newValue;
+        String correctedFieldContent = convertToHtmlNewline(fieldContent);
+        if (!mEditorNote.values()[field.getOrd()].equals(correctedFieldContent)) {
+            mEditorNote.values()[field.getOrd()] = correctedFieldContent;
             return true;
         }
         return false;
