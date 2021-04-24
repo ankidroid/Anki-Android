@@ -38,6 +38,7 @@ import org.robolectric.android.controller.ActivityController;
 
 import java.util.ArrayList;
 import java.util.List;
+import androidx.test.core.app.ApplicationProvider;
 
 @RunWith(RobolectricTestRunner.class)
 public class CardTemplatePreviewerTest extends RobolectricTest {
@@ -119,15 +120,26 @@ public class CardTemplatePreviewerTest extends RobolectricTest {
         Model collectionBasicModelOriginal = getCurrentDatabaseModelCopy(modelName);
 
         Intent intent = new Intent(Intent.ACTION_VIEW);
-        intent.putExtra(TemporaryModel.INTENT_MODEL_FILENAME, TemporaryModel.saveTempModel(getTargetContext(), collectionBasicModelOriginal));
+        intent.putExtra(TemporaryModel.INTENT_MODEL_FILENAME, TemporaryModel.saveTempModel(ApplicationProvider.getApplicationContext(), collectionBasicModelOriginal));
+        Bundle fieldsTest = new Bundle();
         Bundle noteFieldBundleTest = new Bundle();
+        fieldsTest.putString("0", "Front Test");
+        fieldsTest.putString("1", "Back Test");
+        noteFieldBundleTest.putBundle("editFields", fieldsTest);
         noteFieldBundleTest.putInt("cardListSize", 2);
         intent.putExtra("noteEditorBundle", noteFieldBundleTest);
 
-        CardTemplatePreviewer testCardTemplatePreviewerActivity = Robolectric.buildActivity( CardTemplatePreviewer.class, intent).create().resume().get();
-        View previewNextCard = testCardTemplatePreviewerActivity.findViewById(R.id.preview_next_flashcard);
-        previewNextCard.performClick();
-        Assert.assertTrue("Previewing Card2?", testCardTemplatePreviewerActivity.mAnswerField.getText().equals("Front"));
+        ActivityController<TestCardTemplatePreviewer> previewerController = Robolectric.buildActivity(TestCardTemplatePreviewer.class, intent).create().start().resume().visible();
+        saveControllerForCleanup(previewerController);
+        TestCardTemplatePreviewer testCardTemplatePreviewer = previewerController.get();
+        Assert.assertTrue(testCardTemplatePreviewer.mPreviewNextCard.isEnabled());
+        testCardTemplatePreviewer.mPreviewNextCard.performClick();
+        testCardTemplatePreviewer.displayCardAnswer();
+        Assert.assertTrue(testCardTemplatePreviewer.mAnswerField.equals("Front Test"));
+        Assert.assertTrue(testCardTemplatePreviewer.mPreviewPrevCard.isEnabled());
+        testCardTemplatePreviewer.mPreviewPrevCard.performClick();
+        testCardTemplatePreviewer.displayCardAnswer();
+        Assert.assertTrue(testCardTemplatePreviewer.mAnswerField.equals("Back Test"));
     }
 
     private Card getSavedCard(Model model, int ordinal) {
