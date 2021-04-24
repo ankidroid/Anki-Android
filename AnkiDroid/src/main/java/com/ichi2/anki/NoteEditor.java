@@ -750,8 +750,8 @@ public class NoteEditor extends AnkiActivity implements
 
         // Update text field with updated text and selection
         int length = beforeText.length() + newText.length() + afterText.length();
-        StringBuilder newValue = new StringBuilder(length).append(beforeText).append(newText).append(afterText);
-        textBox.setText(newValue);
+        StringBuilder newFieldContent = new StringBuilder(length).append(beforeText).append(newText).append(afterText);
+        textBox.setText(newFieldContent);
 
         int newStart = formatResult.start;
         int newEnd = formatResult.end;
