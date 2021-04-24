@@ -24,45 +24,44 @@ import androidx.test.ext.junit.runners.AndroidJUnit4;
 
 @RunWith(AndroidJUnit4.class)
 public class JSONArrayTest {
-    JSONArray mArray;
-    int mInitialArrayLength;
+
+    final int mInitialArrayLength = 100;
 
 
-    @Before
-    public void initializeNewObject() {
-        mArray = new JSONArray();
-    }
-
-
-    public void initializeArray() {
-        for (int i = 0, value = 1; i < 100; i++) {
-            mArray.put(i, value);
+    public JSONArray initializeArray(int ArrayLength) {
+        JSONArray array = new JSONArray();
+        for (int i = 0, value = 1; i < ArrayLength; i++) {
+            array.put(i, value);
         }
-        mInitialArrayLength = 100;
+        return array;
+
     }
 
 
     @Test
     public void testPut_existingArray() {
-        initializeArray();
+
+        JSONArray array = initializeArray(mInitialArrayLength);
         for (int i = 10; i < 20; i++) {
-            mArray.put(i, 20);
+            array.put(i, 20);
         }
         for (int i = 10; i < 20; i++) {
-            Assert.assertEquals(20, mArray.get(i));
+            Assert.assertEquals(20, array.get(i));
         }
         for (int i = 0, j = 20; i < 10; i++, j++) {
-            Assert.assertEquals(1, mArray.get(i));
+            Assert.assertEquals(1, array.get(i));
         }
-        Assert.assertEquals(mInitialArrayLength, mArray.length());
+        Assert.assertEquals(mInitialArrayLength, array.length());
 
     }
 
 
     @Test
     public void testPut_emptyArray() {
-        mArray.put(200, null);
-        Assert.assertEquals(201, mArray.length());
+        JSONArray array = new JSONArray();
+        int index = 200;
+        array.put(index, null);
+        Assert.assertEquals(index + 1, array.length());
     }
 
 
@@ -71,9 +70,9 @@ public class JSONArrayTest {
      */
     @Test(expected = AssertionError.class)
     public void testPut_atTheBeginningAndNotExpand() {
-        initializeArray();
-        mArray.put(0, 200);
-        Assert.assertEquals(mInitialArrayLength + 1, mArray.length());
+        JSONArray array = initializeArray(mInitialArrayLength);
+        array.put(0, 200);
+        Assert.assertEquals(mInitialArrayLength + 1, array.length());
     }
 
 
@@ -82,9 +81,9 @@ public class JSONArrayTest {
      */
     @Test(expected = AssertionError.class)
     public void testPut_atTheMiddleAndNotExpand() {
-        initializeArray();
-        mArray.put(mArray.length() / 2, 1);
-        Assert.assertEquals(mInitialArrayLength + 1, mArray.length());
+        JSONArray array = initializeArray(mInitialArrayLength);
+        array.put(array.length() / 2, 1);
+        Assert.assertEquals(mInitialArrayLength + 1, array.length());
     }
 
 
@@ -94,35 +93,41 @@ public class JSONArrayTest {
      */
     @Test
     public void testPut_atTheEndOAndExpand() {
-        initializeArray();
-        mArray.put(102, 1);
-        Assert.assertEquals(103, mArray.length());
+        JSONArray array = initializeArray(mInitialArrayLength);
+        int endArrayIndex = 102;
+        array.put(endArrayIndex, 1);
+        Assert.assertEquals(endArrayIndex + 1, array.length());
     }
 
 
     @Test(expected = IndexOutOfBoundsException.class)
     public void testPut_indexOutOfBoundary() {
-        mArray.put(-1, 100);
+        JSONArray array = initializeArray(mInitialArrayLength);
+        array.put(-1, 100);
     }
 
 
     @Test
     public void testGet_existingValue() {
-        mArray.put(200, 1150);
-        Assert.assertEquals(1150, mArray.get(200));
+        JSONArray array = initializeArray(mInitialArrayLength);
+        array.put(200, 1150);
+        Assert.assertEquals(1150, array.get(200));
 
     }
 
 
     @Test(expected = JSONException.class)
     public void testGet_null() {
-        mArray.put(199, null);
-        mArray.get(199);
+        JSONArray array = initializeArray(mInitialArrayLength);
+        array.put(199, null);
+        array.get(199);
     }
 
 
     @Test(expected = JSONException.class)
     public void testGet_valueOutOfIndex() {
-        mArray.get(200);
+        JSONArray array = initializeArray(mInitialArrayLength);
+        int outOfRangeIndex = 200;
+        array.get(outOfRangeIndex);
     }
 }
