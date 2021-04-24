@@ -64,8 +64,8 @@
     <string name="about_version">Versio: </string>
     <!-- preferences.xml entries-->
     <string name="whiteboard_stroke_width">Larĝo de streko</string>
-    <string name="use_input_tag">Entajpi respondon al karto</string>
-    <string name="use_input_tag_summ">Uzi tekstan enigan kampon en la karto por entajpi respondon</string>
+    <string name="use_input_tag">Enigu respondon al karto</string>
+    <string name="use_input_tag_summ">Uzi tekstan enigan kampon en la karto por enigi respondon</string>
     <string name="dictionary">Vortaro</string>
     <string name="reset_languages">Restarigi lingvojn</string>
     <string name="reset_languages_summ">Restarigi lingvajn alĝustigojn (por parolsinteziloj kaj vortaroj) por ĉiuj kartaroj</string>
@@ -151,8 +151,8 @@
     <string name="timeout_answer_seconds_summ" comment="The time to wait (in seconds) in the reviewer before automatically showing the next question or answer">XXX s</string>
     <string name="timeout_question_seconds">Montri sekvan demandon post</string>
     <string name="select_locale_title">Elekti lingvon</string>
-    <string name="software_render">Disable card hardware render</string>
-    <string name="software_render_summ">Hardware render is faster but may have problems, specifically on Android 8/8.1. If you cannot see parts of the card review user interface, try this setting.</string>
+    <string name="software_render">Malaktivigi aparataran bildigilon de kartoj</string>
+    <string name="software_render_summ">Aparatara bildigilo estas pli rapida, sed povas kaŭzi problemojn, precipe ĉe Android 8/8.1. Se parto de fasado ĉe la ekrano “ripeti karton” ne aperas, provu aktivigi tiun ĉi agordon.</string>
     <string name="safe_display">Sekura vidiga reĝimo</string>
     <string name="safe_display_summ">Malaktivigi ĉiujn movbildojn kaj uzi pli sekuran manieron por bildigi kartojn. Elektronik-paperaj aparatoj povas bezoni tion ĉi.</string>
     <string name="disable_extended_text_ui">Malaktivigi unukampan redakt‑reĝimon</string>
@@ -290,9 +290,9 @@
     <string name="note_editor_replace_newlines">Anstataŭigi novajn liniojn en HTML</string>
     <string name="note_editor_replace_newlines_summ">En la kart‑redaktilo, konverti ĉiujn &lt;br&gt; al novaj linioj dum redakti karton.</string>
     <string name="no_code_formatting">Simpla aranĝo de enigita respondo</string>
-    <string name="no_code_formatting_summ">Ripari “􏿾” aperantan en entajpita respondo</string>
-    <string name="type_in_answer_focus">Focus ‘type in answer’</string>
-    <string name="type_in_answer_focus_summ">Automatically focus the ‘type in answer’ field in the reviewer</string>
+    <string name="no_code_formatting_summ">Ripari “􏿾” aperantan en enigita respondo</string>
+    <string name="type_in_answer_focus">Marki kampon “enigi respondon”</string>
+    <string name="type_in_answer_focus_summ">Aŭtomate marki la kampon “enigi respondon” dum ripetado</string>
     <!-- Open Changelog-->
     <string name="open_changelog">Montri ŝanĝoprotokolon</string>
 </resources>

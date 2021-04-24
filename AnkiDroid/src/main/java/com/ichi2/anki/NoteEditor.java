@@ -265,6 +265,7 @@ public class NoteEditor extends AnkiActivity implements
     public void onDeckSelected(@Nullable DeckSelectionDialog.SelectableDeck deck) {
         if (deck != null) {
             mCurrentDid = deck.getDeckId();
+            initializeNoteDeckSpinner();
             mNoteDeckSpinner.setSelection(mAllDeckIds.indexOf(deck.getDeckId()), false);
         }
     }
@@ -606,46 +607,7 @@ public class NoteEditor extends AnkiActivity implements
             deckTextView.setText(R.string.CardEditorCardDeck);
         }
         mNoteDeckSpinner = findViewById(R.id.note_deck_spinner);
-
-        List<Deck> decks = getCol().getDecks().all();
-        Collections.sort(decks, DeckComparator.INSTANCE);
-        final ArrayList<String> deckNames = new ArrayList<>(decks.size());
-        mAllDeckIds = new ArrayList<>(decks.size());
-        for (Deck d : decks) {
-            // add current deck and all other non-filtered decks to deck list
-            long thisDid = d.getLong("id");
-            String currentName = d.getString("name");
-            String lineContent = null;
-            if (d.isStd()) {
-                lineContent = currentName ;
-            } else if (!mAddNote && mCurrentEditedCard != null && mCurrentEditedCard.getDid() == thisDid) {
-                lineContent = getApplicationContext().getString(R.string.current_and_default_deck, currentName, col.getDecks().name(mCurrentEditedCard.getODid()));
-            } else {
-                continue;
-            }
-            deckNames.add(lineContent);
-            mAllDeckIds.add(thisDid);
-        }
-
-        ArrayAdapter<String> noteDeckAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, deckNames) {
-            @Override
-            public View getDropDownView(int position, View convertView, ViewGroup parent) {
-
-                // Cast the drop down items (popup items) as text view
-                TextView tv = (TextView) super.getDropDownView(position, convertView, parent);
-
-                // If this item is selected
-                if (position == mNoteDeckSpinner.getSelectedItemPosition()) {
-                    tv.setBackgroundColor(ContextCompat.getColor(NoteEditor.this, R.color.note_editor_selected_item_background));
-                    tv.setTextColor(ContextCompat.getColor(NoteEditor.this, R.color.note_editor_selected_item_text));
-                }
-
-                // Return the modified view
-                return tv;
-            }
-        };
-        mNoteDeckSpinner.setAdapter(noteDeckAdapter);
-        noteDeckAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        initializeNoteDeckSpinner();
         mNoteDeckSpinner.setOnTouchListener(new View.OnTouchListener() {
 
                 public boolean onTouch(View view, MotionEvent motionEvent) {
@@ -720,6 +682,48 @@ public class NoteEditor extends AnkiActivity implements
         }
     }
 
+    public void initializeNoteDeckSpinner() {
+        List<Deck> decks = getCol().getDecks().all();
+        Collections.sort(decks, DeckComparator.INSTANCE);
+        final ArrayList<String> deckNames = new ArrayList<>(decks.size());
+        mAllDeckIds = new ArrayList<>(decks.size());
+        for (Deck d : decks) {
+            // add current deck and all other non-filtered decks to deck list
+            long thisDid = d.getLong("id");
+            String currentName = d.getString("name");
+            String lineContent = null;
+            if (d.isStd()) {
+                lineContent = currentName ;
+            } else if (!mAddNote && mCurrentEditedCard != null && mCurrentEditedCard.getDid() == thisDid) {
+                lineContent = getApplicationContext().getString(R.string.current_and_default_deck, currentName, getCol().getDecks().name(mCurrentEditedCard.getODid()));
+            } else {
+                continue;
+            }
+            deckNames.add(lineContent);
+            mAllDeckIds.add(thisDid);
+        }
+
+        ArrayAdapter<String> noteDeckAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, deckNames) {
+            @Override
+            public View getDropDownView(int position, View convertView, ViewGroup parent) {
+
+                // Cast the drop down items (popup items) as text view
+                TextView tv = (TextView) super.getDropDownView(position, convertView, parent);
+
+                // If this item is selected
+                if (position == mNoteDeckSpinner.getSelectedItemPosition()) {
+                    tv.setBackgroundColor(ContextCompat.getColor(NoteEditor.this, R.color.note_editor_selected_item_background));
+                    tv.setTextColor(ContextCompat.getColor(NoteEditor.this, R.color.note_editor_selected_item_text));
+                }
+
+                // Return the modified view
+                return tv;
+            }
+        };
+        mNoteDeckSpinner.setAdapter(noteDeckAdapter);
+        noteDeckAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+    }
+
 
     private void modifyCurrentSelection(Toolbar.TextFormatter formatter, FieldEditText textBox) {
 
@@ -746,8 +750,8 @@ public class NoteEditor extends AnkiActivity implements
 
         // Update text field with updated text and selection
         int length = beforeText.length() + newText.length() + afterText.length();
-        StringBuilder newValue = new StringBuilder(length).append(beforeText).append(newText).append(afterText);
-        textBox.setText(newValue);
+        StringBuilder newFieldContent = new StringBuilder(length).append(beforeText).append(newText).append(afterText);
+        textBox.setText(newFieldContent);
 
         int newStart = formatResult.start;
         int newEnd = formatResult.end;
@@ -2162,14 +2166,14 @@ public class NoteEditor extends AnkiActivity implements
 
 
     private boolean updateField(FieldEditText field) {
-        String currentValue = "";
+        String fieldContent = "";
         Editable fieldText = field.getText();
         if (fieldText != null) {
-            currentValue = fieldText.toString();
+            fieldContent = fieldText.toString();
         }
-        String newValue = convertToHtmlNewline(currentValue);
-        if (!mEditorNote.values()[field.getOrd()].equals(newValue)) {
-            mEditorNote.values()[field.getOrd()] = newValue;
+        String correctedFieldContent = convertToHtmlNewline(fieldContent);
+        if (!mEditorNote.values()[field.getOrd()].equals(correctedFieldContent)) {
+            mEditorNote.values()[field.getOrd()] = correctedFieldContent;
             return true;
         }
         return false;

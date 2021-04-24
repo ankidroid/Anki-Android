@@ -685,16 +685,18 @@ public class CardBrowser extends NavigationDrawerActivity implements
                 openNoteEditorForCard(clickedCardId);
             }
         });
+
         mCardsListView.setOnItemLongClickListener((adapterView, view, position, id) -> {
             if (mInMultiSelectMode) {
+                boolean hasChanged = false;
                 for (int i = Math.min(mLastSelectedPosition, position); i <= Math.max(mLastSelectedPosition, position); i++) {
-                    // getting the view of particular view and then checking whether it's already checked or not
-                    View childView = mCardsListView.getChildAt(i);
-                    CheckBox cb = childView.findViewById(R.id.card_checkbox);
-                    if (!cb.isChecked()) {
-                        cb.toggle();
-                        onCheck(i, childView);
-                    }
+                    CardCache card = (CardCache) mCardsListView.getItemAtPosition(i);
+
+                    // Add to the set of checked cards
+                    hasChanged |= mCheckedCards.add(card);
+                }
+                if (hasChanged) {
+                    onSelectionChanged();
                 }
             } else {
                 mLastSelectedPosition = position;

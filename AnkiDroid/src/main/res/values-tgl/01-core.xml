@@ -132,7 +132,6 @@ Pinagaralang %1$d mga baraha %2$s ngayong araw</item>
     <string name="menu_unmark_note">Tangalin ang marka ng paalala</string>
     <string name="menu_toggle_mic_tool_bar">Check pronunciation</string>
     <string name="new_deck">Gumawa ng deck</string>
-    <string name="create" comment="Button to create a filtered deck">Gumawa</string>
     <string name="new_dynamic_deck">Gumawa ng salang deck</string>
     <string name="night_mode">Pang-gabing mode</string>
     <string name="directory_inaccessible">Hindi ma-access ang talahanapan ng AnkiDroid</string>

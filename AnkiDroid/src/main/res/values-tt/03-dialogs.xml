@@ -110,7 +110,7 @@
     <string name="sd_card_almost_full_title">SD card almost full</string>
     <string name="restore_backup_title">Restore backup?</string>
     <string name="restore_backup">Your collection will be replaced with an older copy. Any unsaved progress will be lost.</string>
-    <string name="dialog_cancel">Cancel</string>
+    <string name="dialog_cancel">Баш тарту</string>
     <string name="dialog_ok">OK</string>
     <string name="dialog_no">Юк</string>
     <string name="dialog_continue">Дәвам итү</string>
@@ -141,7 +141,7 @@
     <string name="delete_media_message">Deleting media&#8230;</string>
     <string name="delete_media_result_title">Deletion result</string>
     <plurals name="delete_media_result_message">
-        <item quantity="other">%d files deleted</item>
+        <item quantity="other">%d файл бетерелгән</item>
     </plurals>
     <!-- Tags Dialog Options -->
     <string name="tags_dialog_option_all_cards">All cards</string>
@@ -152,7 +152,7 @@
     <string name="confirm_cancel">Do you want to cancel?</string>
     <string name="empty_cards_none">No empty cards</string>
     <string name="empty_cards_count">Cards to delete: %d</string>
-    <string name="empty_cards_deleted">Cards deleted: %d</string>
+    <string name="empty_cards_deleted">Бетерелгән кәртләр: %d</string>
     <!-- Multimedia - Edit Field Activity -->
     <string name="multimedia_editor_audio_permission_refused">Could not obtain microphone permission.</string>
     <string name="multimedia_editor_camera_permission_refused">Could not obtain camera permission. Functionality has been disabled.</string>

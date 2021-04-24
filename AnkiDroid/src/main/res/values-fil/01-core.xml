@@ -123,7 +123,6 @@ mga natitirang minuto</item>
     <string name="menu_unmark_note">Alisin ang marka ng tala</string>
     <string name="menu_toggle_mic_tool_bar">Check pronunciation</string>
     <string name="new_deck">Gumawa ng deck</string>
-    <string name="create" comment="Button to create a filtered deck">Gumawa</string>
     <string name="new_dynamic_deck">Gumawa ng na-filter na deck</string>
     <string name="night_mode">Pang-gabing mode</string>
     <string name="directory_inaccessible">Ang AnkiDroid directory ay hindi mahanap</string>

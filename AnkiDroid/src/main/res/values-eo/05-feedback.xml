@@ -43,7 +43,7 @@
     <string name="error_reporting_choice">Reĝimo de raportado de eraroj</string>
     <string name="feedback_disclaimer">Averto: ni ne kolektas iujn ajn personajn informojn kiel via retpoŝta adreso, telefonnumero aŭ IMEI de via telefono. Ni kolektas iujn informojn pri via aparato kiel produktiston, modelon kaj version de Android, kaj ecaron de raportataj eraroj kaj manieron por okazigi ilin.</string>
     <string name="feedback_title">Opinio pri AnkiDroid</string>
-    <string name="feedback_default_text">Entajpu komenton aŭ informojn pri ecaro de raportataj eraroj.</string>
+    <string name="feedback_default_text">Enigu komenton aŭ informojn pri ecaro de la raportataj eraroj.</string>
     <string name="feedback_auto_toast_text">Eraro okazis al AnkiDroid; sendado de raporto al ĝiaj programistoj&#8230;</string>
     <string name="feedback_manual_toast_text">Eraro okazis al AnkiDroid; kreado de erar-raporto&#8230;</string>
     <string name="feedback_copy_debug">Kopii senerarigajn informojn</string>

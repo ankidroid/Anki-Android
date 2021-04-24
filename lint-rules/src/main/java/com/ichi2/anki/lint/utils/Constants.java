@@ -59,4 +59,20 @@ public class Constants {
      */
     public static final Severity ANKI_CODE_STYLE_SEVERITY = Severity.FATAL;
 
+    /**
+     * A special {@link Category} which groups the Lint issues related to XML as a
+     * sub category for {@link Category#CORRECTNESS}.
+     */
+    public static final Category ANKI_XML_CATEGORY = create(Category.CORRECTNESS, "XML", 10);
+
+    /**
+     * The priority for the Lint issues used by rules related to XML.
+     */
+    public static final int ANKI_XML_PRIORITY = 10;
+
+    /**
+     * The severity for the Lint issues used by rules related to XML.
+     */
+    public static final Severity ANKI_XML_SEVERITY =  Severity.FATAL;
+
 }

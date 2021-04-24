@@ -122,7 +122,6 @@
     <string name="menu_unmark_note">नोट अचिह्नित करें</string>
     <string name="menu_toggle_mic_tool_bar">आप उच्चारण जाँचिये</string>
     <string name="new_deck">डेक बनाने</string>
-    <string name="create" comment="Button to create a filtered deck">बनाएँ</string>
     <string name="new_dynamic_deck">फ़िल्टर्ड डेक बनाएं</string>
     <string name="night_mode">रात मोड</string>
     <string name="directory_inaccessible">AnkiDroid निर्देशिका पहुंच योग्य नहीं है</string>

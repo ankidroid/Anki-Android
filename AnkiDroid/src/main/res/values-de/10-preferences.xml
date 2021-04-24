@@ -151,8 +151,8 @@
     <string name="timeout_answer_seconds_summ" comment="The time to wait (in seconds) in the reviewer before automatically showing the next question or answer">XXX s</string>
     <string name="timeout_question_seconds">Zeit bis zur Anzeige der nächsten Frage</string>
     <string name="select_locale_title">Sprache wählen</string>
-    <string name="software_render">Disable card hardware render</string>
-    <string name="software_render_summ">Hardware render is faster but may have problems, specifically on Android 8/8.1. If you cannot see parts of the card review user interface, try this setting.</string>
+    <string name="software_render">Karten-Hardware-Rendering deaktivieren</string>
+    <string name="software_render_summ">Hardware-Rendering ist schneller, kann aber Probleme haben, insbesondere auf Android 8/8.1. Wenn Sie Teile der Benutzeroberfläche der Karte nicht sehen können, versuchen Sie diese Einstellung.</string>
     <string name="safe_display">Sicherer Anzeigemodus</string>
     <string name="safe_display_summ">Alle Animationen deaktivieren und Karten mit sichererer Methode darstellen. Eventuell erforderlich für E-Ink-Geräte.</string>
     <string name="disable_extended_text_ui">Einzelfeldbearbeitungsmodus deaktivieren</string>
@@ -291,8 +291,8 @@
     <string name="note_editor_replace_newlines_summ">Beim Bearbeiten einer Karte im Notizeditor alle vorkommenden »&lt;br&gt;« in Zeilenbrüche umwandeln.</string>
     <string name="no_code_formatting">Einfache Formatierung von Antworten</string>
     <string name="no_code_formatting_summ">Behebt das Erscheinen von  »􏿾« in eingetippten Antworten</string>
-    <string name="type_in_answer_focus">Focus ‘type in answer’</string>
-    <string name="type_in_answer_focus_summ">Automatically focus the ‘type in answer’ field in the reviewer</string>
+    <string name="type_in_answer_focus">Auf \"Antwort eingeben\" fokussieren</string>
+    <string name="type_in_answer_focus_summ">Automatisch im Übungsbildschirm auf \"Antwort eingeben\" fokussieren</string>
     <!-- Open Changelog-->
     <string name="open_changelog">Änderungsprotokoll öffnen</string>
 </resources>

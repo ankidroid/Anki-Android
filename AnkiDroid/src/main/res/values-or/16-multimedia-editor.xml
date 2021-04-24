@@ -38,7 +38,7 @@
     <string name="multimedia_editor_popup_audio_clip">ଅଡ଼ିଓ କ୍ଲିପ୍ ଯୋଡ଼ନ୍ତୁ</string>
     <string name="multimedia_editor_popup_audio">ଅଡ଼ିଓ ରେକର୍ଡ କରନ୍ତୁ</string>
     <string name="multimedia_editor_popup_text">ଉନ୍ନତ ସମ୍ପାଦକ</string>
-    <string name="multimedia_editor_popup_cloze">କ୍ଲୋଜ୍ ଡିଲିଶନ</string>
+    <string name="multimedia_editor_popup_cloze">କ୍ଲୋଜ୍ ବିଲୋପ</string>
     <string name="multimedia_editor_popup_clear_field">କ୍ଷେତ୍ର ସଫା କରନ୍ତୁ</string>
     <!-- Translation activity (Glosbe) -->
     <string name="multimedia_editor_trans_poweredglosbe">glosbe.com ଦ୍ୱାରା ଚାଳିତ</string>

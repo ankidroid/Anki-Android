@@ -127,25 +127,18 @@ public class Reviewer extends AbstractFlashcardViewer {
     private final ActionButtons mActionButtons = new ActionButtons(this);
 
 
-    private final ScheduleCollectionTaskListener mRescheduleCardHandler = new ScheduleCollectionTaskListener() {
-        protected @PluralsRes int getToastResourceId() {
-            return R.plurals.reschedule_cards_dialog_acknowledge;
-        }
-    };
-
-    private final ScheduleCollectionTaskListener mResetProgressCardHandler = new ScheduleCollectionTaskListener() {
-        protected @PluralsRes int getToastResourceId() {
-            return R.plurals.reset_cards_dialog_acknowledge;
-        }
-    };
-
     @VisibleForTesting
     protected final PeripheralKeymap mProcessor = new PeripheralKeymap(this, this);
 
     /** We need to listen for and handle reschedules / resets very similarly */
-    abstract class ScheduleCollectionTaskListener extends NextCardHandler<PairWithBoolean<Card[]>> {
+    class ScheduleCollectionTaskListener extends NextCardHandler<PairWithBoolean<Card[]>> {
 
-        abstract protected @PluralsRes int getToastResourceId();
+        private final @PluralsRes int mToastResourceId;
+
+
+        protected ScheduleCollectionTaskListener(@PluralsRes int toastResourceId) {
+            mToastResourceId = toastResourceId;
+        }
 
 
         @Override
@@ -154,7 +147,7 @@ public class Reviewer extends AbstractFlashcardViewer {
             invalidateOptionsMenu();
             int cardCount = result.other.length;
             UIUtils.showThemedToast(Reviewer.this,
-                    getResources().getQuantityString(getToastResourceId(), cardCount, cardCount), true);
+                    getResources().getQuantityString(mToastResourceId, cardCount, cardCount), true);
         }
     }
 
@@ -525,7 +518,7 @@ public class Reviewer extends AbstractFlashcardViewer {
 
     private void showRescheduleCardDialog() {
         Consumer<Integer> runnable = days ->
-            TaskManager.launchCollectionTask(new CollectionTask.RescheduleCards(Collections.singletonList(mCurrentCard.getId()), days), mRescheduleCardHandler);
+            TaskManager.launchCollectionTask(new CollectionTask.RescheduleCards(Collections.singletonList(mCurrentCard.getId()), days), new ScheduleCollectionTaskListener(R.plurals.reschedule_cards_dialog_acknowledge));
         RescheduleDialog dialog = RescheduleDialog.rescheduleSingleCard(getResources(), mCurrentCard, runnable);
 
         showDialogFragment(dialog);
@@ -543,7 +536,7 @@ public class Reviewer extends AbstractFlashcardViewer {
         Runnable confirm = () -> {
             Timber.i("NoteEditor:: ResetProgress button pressed");
             TaskManager.launchCollectionTask(new CollectionTask.ResetCards(Collections.singletonList(mCurrentCard.getId())),
-                    mResetProgressCardHandler);
+                    new ScheduleCollectionTaskListener(R.plurals.reset_cards_dialog_acknowledge));
         };
         dialog.setConfirm(confirm);
         showDialogFragment(dialog);
