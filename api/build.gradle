@@ -51,7 +51,6 @@ android {
 apply from: "../lint.gradle"
 
 dependencies {
-    api fileTree(dir: 'libs', include: ['*.jar'])
     implementation 'androidx.annotation:annotation:1.2.0'
     testImplementation 'org.junit.vintage:junit-vintage-engine:5.7.1'
     testImplementation 'org.robolectric:robolectric:4.5.1'
