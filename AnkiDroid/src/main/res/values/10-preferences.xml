@@ -159,6 +159,8 @@
     <string name="new_timezone" maxLength="41">New timezone handling</string>
     <string name="day_offset_with_description" maxLength="41">Start of next day</string>
     <string name="day_offset_summ">XXX hours past midnight</string>
+    <string name="xlabel_dayoffset_seekbar" maxLength="41">Midnight</string>
+    <string name="ylabel_dayoffset_seekbar" maxLength="41">11PM</string>
     <string name="sched_ver" maxLength="41">Experimental V2 scheduler</string>
     <string name="sched_ver_summ">Enable the experimental scheduler. Forces changes in one direction on next sync</string>
     <string name="sched_ver_toggle_title">Confirm</string>
