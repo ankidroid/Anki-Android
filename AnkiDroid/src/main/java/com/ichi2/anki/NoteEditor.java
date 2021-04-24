@@ -2166,12 +2166,12 @@ public class NoteEditor extends AnkiActivity implements
 
 
     private boolean updateField(FieldEditText field) {
-        String currentValue = "";
+        String fieldContent = "";
         Editable fieldText = field.getText();
         if (fieldText != null) {
-            currentValue = fieldText.toString();
+            fieldContent = fieldText.toString();
         }
-        String newValue = convertToHtmlNewline(currentValue);
+        String newValue = convertToHtmlNewline(fieldContent);
         if (!mEditorNote.values()[field.getOrd()].equals(newValue)) {
             mEditorNote.values()[field.getOrd()] = newValue;
             return true;
