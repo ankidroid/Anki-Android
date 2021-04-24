@@ -2316,11 +2316,11 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
             cardClass += " mathjax-needs-to-render";
         }
 
-        if (isInNightMode()) {
-            if (!mCardAppearance.hasUserDefinedNightMode(mCurrentCard)) {
-                content = HtmlColors.invertColors(content);
-            }
-        }
+       // if (isInNightMode()) {
+          //  if (!mCardAppearance.hasUserDefinedNightMode(mCurrentCard)) {
+              //  content = HtmlColors.invertColors(content);
+          //  }
+      //  }
 
         mCardContent = mCardTemplate.render(content, style, cardClass);
         Timber.d("base url = %s", mBaseUrl);
