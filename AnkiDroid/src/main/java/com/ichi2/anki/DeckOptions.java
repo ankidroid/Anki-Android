@@ -209,8 +209,8 @@ public class DeckOptions extends AppCompatPreferenceActivity implements OnShared
                             case "newOrder": {
                                 int newOrder = Integer.parseInt((String) value);
                                 // Sorting is slow, so only do it if we change order
-                                int oldValue = mOptions.getJSONObject("new").getInt("order");
-                                if (oldValue != newOrder) {
+                                int oldOrder = mOptions.getJSONObject("new").getInt("order");
+                                if (oldOrder != newOrder) {
                                     mOptions.getJSONObject("new").put("order", newOrder);
                                     TaskManager.launchCollectionTask(new CollectionTask.Reorder(mOptions), confChangeHandler());
                                 }
