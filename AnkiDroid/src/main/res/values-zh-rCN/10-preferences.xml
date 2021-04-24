@@ -43,253 +43,255 @@
     <string name="enabled">启用</string>
     <!-- preferences.xml categories-->
     <string name="pref_cat_general_summ">常用设置</string>
-    <string name="pref_cat_reviewing">复习</string>
+    <string name="pref_cat_reviewing" maxLength="41">复习</string>
     <string name="pref_cat_reviewing_summ">复习通用设置</string>
-    <string name="pref_cat_reviewer_behaviour">行为</string>
-    <string name="pref_cat_flashcard">显示</string>
-    <string name="pref_cat_whiteboard">白板</string>
-    <string name="pref_cat_appearance">外观</string>
+    <string name="pref_cat_reviewer_behaviour" maxLength="41">行为</string>
+    <string name="pref_cat_flashcard" maxLength="41">显示</string>
+    <string name="pref_cat_whiteboard" maxLength="41">白板</string>
+    <string name="pref_cat_appearance" maxLength="41">外观</string>
     <string name="pref_cat_appearance_summ">更改主题和默认字体</string>
-    <string name="pref_cat_themes">主题</string>
-    <string name="pref_cat_fonts">字体</string>
-    <string name="pref_cat_gestures">手势操作</string>
+    <string name="pref_cat_themes" maxLength="41">主题</string>
+    <string name="pref_cat_fonts" maxLength="41">字体</string>
+    <string name="pref_cat_gestures" maxLength="41">手势操作</string>
     <string name="pref_cat_gestures_summ">使用点击和滑动代替按钮</string>
-    <string name="pref_cat_actions">动作</string>
-    <string name="pref_cat_advanced">高级设置</string>
+    <string name="pref_cat_actions" maxLength="41">动作</string>
+    <string name="pref_cat_advanced" maxLength="41">高级设置</string>
     <string name="pref_cat_advanced_summ">优化和实验性的功能</string>
-    <string name="pref_cat_performance">性能</string>
-    <string name="pref_cat_workarounds">变通方法</string>
-    <string name="pref_cat_plugins">插件</string>
-    <string name="about_title">关于</string>
+    <string name="pref_cat_performance" maxLength="41">性能</string>
+    <string name="pref_cat_workarounds" maxLength="41">变通方法</string>
+    <string name="pref_cat_plugins" maxLength="41">插件</string>
+    <string name="about_title" maxLength="41">关于</string>
     <string name="about_version">版本：</string>
     <!-- preferences.xml entries-->
-    <string name="whiteboard_stroke_width">笔画粗细</string>
-    <string name="use_input_tag">在卡片中输入答案</string>
+    <string name="whiteboard_stroke_width" maxLength="41">笔画粗细</string>
+    <string name="use_input_tag" maxLength="41">在卡片中输入答案</string>
     <string name="use_input_tag_summ">在卡片中使用一个文本框里输入答案</string>
-    <string name="dictionary">查找字典</string>
-    <string name="reset_languages">重设语言</string>
+    <string name="dictionary" maxLength="41">查找字典</string>
+    <string name="reset_languages" maxLength="41">重设语言</string>
     <string name="reset_languages_summ">重置指定牌组语言(TTS和字典)</string>
     <string name="reset_languages_question">要重置所有牌组指定的语言吗？</string>
     <string name="reset_confirmation">重置所有状态</string>
-    <string name="card_zoom">卡片缩放</string>
-    <string name="image_zoom">图片缩放</string>
-    <string name="button_size">“显示答案”按钮大小</string>
-    <string name="card_browser_font_size">卡片浏览器字体缩放</string>
-    <string name="card_browser_hide_media">在卡牌浏览器中显示文件名</string>
+    <string name="card_zoom" maxLength="41">卡片缩放</string>
+    <string name="image_zoom" maxLength="41">图片缩放</string>
+    <string name="button_size" maxLength="41">“显示答案”按钮大小</string>
+    <string name="card_browser_font_size" maxLength="41">卡片浏览器字体缩放</string>
+    <string name="card_browser_hide_media" maxLength="41">在卡牌浏览器中显示文件名</string>
     <string name="card_browser_hide_media_summary">在卡牌浏览器问题/回答字段中显示媒体文件名</string>
-    <string name="col_path">AnkiDroid路径</string>
-    <string name="fullscreen_review">全屏显示</string>
+    <string name="col_path" maxLength="41">AnkiDroid路径</string>
+    <string name="fullscreen_review" maxLength="41">全屏显示</string>
     <string name="full_screen_off">关闭</string>
     <string name="full_screen_system">隐藏系统状态栏</string>
     <string name="full_screen_complete">隐藏系统状态栏和回答按钮</string>
     <string name="full_screen_error_gestures">您必须启用手势操作才能隐藏回答按钮</string>
-    <string name="answer_buttons_position">显示答案按钮位置</string>
+    <string name="answer_buttons_position" maxLength="41">显示答案按钮位置</string>
     <string-array name="answer_buttons_position_labels">
         <item>顶部</item>
         <item>底部</item>
     </string-array>
-    <string name="gestures">启用手势</string>
+    <string name="gestures" maxLength="41">启用手势</string>
     <string name="gestures_summ">为回答或编辑卡片等动作指定手势。</string>
-    <string name="gestures_allow_links">忽略链接上的触摸手势</string>
+    <string name="gestures_allow_links" maxLength="41">忽略链接上的触摸手势</string>
     <string name="gestures_allow_links_summary">如果按下链接/提示，触摸手势将不会被处理。</string>
-    <string name="gestures_corner_touch">9 点触摸</string>
+    <string name="gestures_corner_touch" maxLength="41">9 点触摸</string>
     <string name="gestures_corner_touch_summary">允许屏幕边缘的触摸手势</string>
-    <string name="gestures_swipe_up">向上滑动</string>
-    <string name="gestures_swipe_down">向下滑动</string>
-    <string name="gestures_swipe_left">向左滑动</string>
-    <string name="gestures_swipe_right">向右滑动</string>
-    <string name="gestures_double_tap">双击</string>
-    <string name="gestures_tap_top">点击顶部</string>
-    <string name="gestures_tap_left">点击左侧</string>
-    <string name="gestures_tap_right">点击右侧</string>
-    <string name="gestures_tap_bottom">点击底部</string>
-    <string name="gestures_corner_tap_top_left">触摸左上方</string>
+    <string name="gestures_swipe_up" maxLength="41">向上滑动</string>
+    <string name="gestures_swipe_down" maxLength="41">向下滑动</string>
+    <string name="gestures_swipe_left" maxLength="41">向左滑动</string>
+    <string name="gestures_swipe_right" maxLength="41">向右滑动</string>
+    <string name="gestures_double_tap" maxLength="41">双击</string>
+    <string name="gestures_tap_top" maxLength="41">点击顶部</string>
+    <string name="gestures_tap_left" maxLength="41">点击左侧</string>
+    <string name="gestures_tap_right" maxLength="41">点击右侧</string>
+    <string name="gestures_tap_bottom" maxLength="41">点击底部</string>
+    <string name="gestures_corner_tap_top_left" maxLength="41">触摸左上方</string>
     <string name="gestures_corner_tap_top_center">触摸顶部中心</string>
-    <string name="gestures_corner_tap_top_right">触摸右上方</string>
+    <string name="gestures_corner_tap_top_right" maxLength="41">触摸右上方</string>
     <string name="gestures_corner_tap_middle_left">触摸中部左侧</string>
-    <string name="gestures_corner_tap_middle_center">触摸正中处</string>
+    <string name="gestures_corner_tap_middle_center" maxLength="41">触摸正中处</string>
     <string name="gestures_corner_tap_middle_right">触摸中部右侧</string>
-    <string name="gestures_corner_tap_bottom_left">触摸左下方</string>
+    <string name="gestures_corner_tap_bottom_left" maxLength="41">触摸左下方</string>
     <string name="gestures_corner_tap_bottom_center">触摸底部中心</string>
-    <string name="gestures_corner_tap_bottom_right">触摸右下方</string>
-    <string name="gestures_volume_up">调高音量</string>
-    <string name="gestures_volume_down">调低音量</string>
-    <string name="more_scrolling_buttons">电子书阅读器</string>
+    <string name="gestures_corner_tap_bottom_right" maxLength="41">触摸右下方</string>
+    <string name="gestures_volume_up" maxLength="41">调高音量</string>
+    <string name="gestures_volume_down" maxLength="41">调低音量</string>
+    <string name="more_scrolling_buttons" maxLength="41">电子书阅读器</string>
     <string name="more_scrolling_buttons_summ">也使用 kanji/katakana， emoji/kao-moji 按钮来滚动</string>
     <string name="card_browser_enable_external_context_menu">“%s” 菜单</string>
     <string name="card_browser_enable_external_context_menu_summary">全局启用 “%s” 上下文菜单</string>
-    <string name="double_scrolling_gap">双滚动</string>
+    <string name="double_scrolling_gap" maxLength="41">双滚动</string>
     <string name="double_scrolling_gap_summ">电子阅读器中使用双滚动</string>
-    <string name="swipe_sensitivity">滑动灵敏度</string>
-    <string name="tts">文本转语音</string>
+    <string name="swipe_sensitivity" maxLength="41">滑动灵敏度</string>
+    <string name="tts" maxLength="41">文本转语音</string>
     <string name="tts_summ">若没有附带声音文件则读出问题和答案</string>
-    <string name="sync_fetch_missing_media">同步时获取媒体文件</string>
+    <string name="sync_fetch_missing_media" maxLength="41">同步时获取媒体文件</string>
     <string name="sync_fetch_missing_media_summ">同步时自动获取缺失的媒体文件</string>
-    <string name="sync_account">AnkiWeb 帐户</string>
+    <string name="sync_account" maxLength="41">AnkiWeb 帐户</string>
     <string name="sync_account_summ_logged_out">未登录</string>
     <string name="sync_account_summ_logged_in">%s</string>
-    <string name="automatic_sync_choice">自动同步</string>
+    <string name="automatic_sync_choice" maxLength="41">自动同步</string>
     <string name="automatic_sync_choice_summ">如果距离上次同步了超过10分钟，在应用程序启动/退出自动同步。</string>
-    <string name="sync_status_badge">显示同步状态</string>
+    <string name="sync_status_badge" maxLength="41">显示同步状态</string>
     <string name="sync_status_badge_summ">当更改可被上传时改变同步图标</string>
-    <string name="day_theme">白天主题</string>
-    <string name="night_theme">夜间主题</string>
-    <string name="default_font">默认字体</string>
-    <string name="override_font">默认字体适用范围</string>
-    <string name="language">语言</string>
+    <string name="day_theme" maxLength="41">白天主题</string>
+    <string name="night_theme" maxLength="41">夜间主题</string>
+    <string name="default_font" maxLength="41">默认字体</string>
+    <string name="override_font" maxLength="41">默认字体适用范围</string>
+    <string name="language" maxLength="41">语言</string>
     <string name="language_system">系统语言</string>
-    <string name="notification_pref">通知</string>
-    <string name="notification_pref_title">通知类型</string>
+    <string name="notification_pref" maxLength="41">通知</string>
+    <string name="notification_pref_title" maxLength="41">通知类型</string>
     <string name="never_notify">从不</string>
     <string name="notify_when_pending">有新消息</string>
     <string name="notification_minimum_cards_due">超过%d张卡牌需要查看</string>
-    <string name="notification_minimum_cards_due_vibrate">振动</string>
-    <string name="notification_minimum_cards_due_blink">呼吸灯</string>
-    <string name="timeout_answer_text">自动显示答案</string>
+    <string name="notification_minimum_cards_due_vibrate" maxLength="41">振动</string>
+    <string name="notification_minimum_cards_due_blink" maxLength="41">呼吸灯</string>
+    <string name="timeout_answer_text" maxLength="41">自动显示答案</string>
     <string name="timeout_answer_summ">无需用户输入自动显示答案。延迟时间包括自动播放音频文件的时间。</string>
-    <string name="timeout_answer_seconds">显示答案时间</string>
+    <string name="timeout_answer_seconds" maxLength="41">显示答案时间</string>
     <string name="timeout_answer_seconds_summ" comment="The time to wait (in seconds) in the reviewer before automatically showing the next question or answer">XXX 秒</string>
-    <string name="timeout_question_seconds">显示下一个问题时间</string>
+    <string name="timeout_question_seconds" maxLength="41">显示下一个问题时间</string>
     <string name="select_locale_title">选择语言</string>
-    <string name="software_render">禁用卡牌硬件渲染</string>
+    <string name="software_render" maxLength="41">禁用卡牌硬件渲染</string>
     <string name="software_render_summ">硬件渲染速度较快，但可能有问题，特别是在 Android 8/8.1。如果您看不到部分卡片复习用户界面，请尝试此设置。</string>
-    <string name="safe_display">安全显示模式</string>
+    <string name="safe_display" maxLength="41">安全显示模式</string>
     <string name="safe_display_summ">禁用所有动画并使用更安全的方法绘制卡牌。使用墨水屏（E-ink）的设备可能需要此功能。</string>
-    <string name="disable_extended_text_ui">禁用单字段编辑模式</string>
+    <string name="disable_extended_text_ui" maxLength="41">禁用单字段编辑模式</string>
     <!--See: multimedia_editor_popup_cloze. We can\'t use format strings as this is auto-generated-->
     <string name="disable_extended_text_ui_summ">旋转至横屏时允许上下文菜单中选择“创建填空”。</string>
-    <string name="vertical_centering">居中对齐</string>
+    <string name="vertical_centering" maxLength="41">居中对齐</string>
     <string name="vertical_centering_summ">垂直居中卡片内容</string>
-    <string name="pref_backup_max">最大备份数量</string>
-    <string name="show_estimates">显示回答按钮的时间</string>
+    <string name="pref_backup_max" maxLength="41">最大备份数量</string>
+    <string name="show_estimates" maxLength="41">显示回答按钮的时间</string>
     <string name="show_estimates_summ">在答案按钮上方显示下次复习的时间</string>
-    <string name="show_top_bar">显示顶部栏</string>
+    <string name="show_top_bar" maxLength="41">显示顶部栏</string>
     <string name="show_top_bar_summ">在顶部栏中显示卡牌计数、标志和标记</string>
-    <string name="show_progress">显示剩余数量</string>
+    <string name="show_progress" maxLength="41">显示剩余数量</string>
     <string name="show_progress_summ">显示剩余卡片数量</string>
-    <string name="show_eta">显示预计完成时间</string>
+    <string name="show_eta" maxLength="41">显示预计完成时间</string>
     <string name="show_eta_summ">显示剩余时间</string>
-    <string name="use_current">新牌组</string>
-    <string name="new_spread">新卡片位置</string>
-    <string name="learn_cutoff">提前学习的限制</string>
-    <string name="time_limit">时间盒时间限制</string>
+    <string name="use_current" maxLength="41">新牌组</string>
+    <string name="new_spread" maxLength="41">新卡片位置</string>
+    <string name="learn_cutoff" maxLength="41">提前学习的限制</string>
+    <string name="time_limit" maxLength="41">时间盒时间限制</string>
     <string name="time_limit_summ">XXX 分钟</string>
-    <string name="new_timezone">新时区处理</string>
-    <string name="day_offset_with_description">次日开始时间 (0为午夜，23为 11PM)</string>
+    <string name="new_timezone" maxLength="41">新时区处理</string>
+    <string name="day_offset_with_description" maxLength="41">次日开始时间 (0为午夜，23为 11PM)</string>
     <string name="day_offset_summ">午夜过后的XXX小时</string>
-    <string name="sched_ver">实验性 V2 调度器</string>
+    <string name="xlabel_dayoffset_seekbar" maxLength="41">Midnight</string>
+    <string name="ylabel_dayoffset_seekbar" maxLength="41">11PM</string>
+    <string name="sched_ver" maxLength="41">实验性 V2 调度器</string>
     <string name="sched_ver_summ">启用实验性调度器。在下次同步时强制单向变更</string>
     <string name="sched_ver_toggle_title">确认</string>
     <string name="sched_ver_2to1">这将重置学习中的任何卡牌，清除已筛选的牌组，并更改调度器版本。继续吗？</string>
     <string name="sched_ver_1to2">实验性调度器可能会产生错误的进度。请确保您首先已阅读文档。继续吗？</string>
-    <string name="pref_keep_screen_on">保持屏幕常亮</string>
+    <string name="pref_keep_screen_on" maxLength="41">保持屏幕常亮</string>
     <string name="pref_keep_screen_on_summ">禁用屏幕超时</string>
-    <string name="convert_fen_text">国际象棋标注支持</string>
+    <string name="convert_fen_text" maxLength="41">国际象棋标注支持</string>
     <string name="convert_fen_text_summ">使用福斯夫－爱德华兹记号法来画棋盘。记号必须用[fen][/fen]标签括起来。</string>
-    <string name="enable_api_title">启用AnkiDroid API</string>
+    <string name="enable_api_title" maxLength="41">启用AnkiDroid API</string>
     <string name="enable_api_summary">让其他的应用程序连接到AnkiDroid读写数据</string>
-    <string name="custom_buttons">顶栏按钮</string>
+    <string name="custom_buttons" maxLength="41">顶栏按钮</string>
     <string name="custom_buttons_summary">自定义顶栏按钮</string>
     <string name="custom_buttons_setting_always_show">总是显示</string>
     <string name="custom_buttons_setting_if_room">有空间时显示</string>
     <string name="custom_buttons_setting_menu_only">仅限菜单</string>
-    <string name="reset_custom_buttons">重置为默认设置</string>
-    <string name="thirdparty_apps_title">第三方 API 应用</string>
+    <string name="reset_custom_buttons" maxLength="41">重置为默认设置</string>
+    <string name="thirdparty_apps_title" maxLength="41">第三方 API 应用</string>
     <string name="thirdparty_apps_summary">查看使用 AnkiDroid API 的应用程序清单，如字典、实用工具。</string>
-    <string name="html_javascript_debugging">HTML / Javascript 调试</string>
+    <string name="html_javascript_debugging" maxLength="41">HTML / Javascript 调试</string>
     <string name="html_javascript_debugging_summ">启用远程 WebView 连接，并将卡片 HTML 保存到 AnkiDroid 目录</string>
     <!-- Advanced statistics settings -->
-    <string name="advanced_statistics_title">高级统计</string>
-    <string name="enable_advanced_statistics_title">启用高级统计</string>
+    <string name="advanced_statistics_title" maxLength="41">高级统计</string>
+    <string name="enable_advanced_statistics_title" maxLength="41">启用高级统计</string>
     <string name="enable_advanced_statistics_summ">显示预测统计：基于对未来复习进行的计算或模拟（启用）和已安排好的未来复习（禁用）。</string>
-    <string name="advanced_forecast_stats_compute_n_days_title">计算前n天，从而模拟出接下来的</string>
-    <string name="advanced_forecast_stats_compute_precision_title">计算精度</string>
-    <string name="advanced_forecast_stats_mc_n_iterations_title">模拟的迭代次数</string>
+    <string name="advanced_forecast_stats_compute_n_days_title" maxLength="41">计算前n天，从而模拟出接下来的</string>
+    <string name="advanced_forecast_stats_compute_precision_title" maxLength="41">计算精度</string>
+    <string name="advanced_forecast_stats_mc_n_iterations_title" maxLength="41">模拟的迭代次数</string>
     <!-- Custom sync server settings -->
-    <string name="custom_sync_server_title">自定义同步服务器</string>
-    <string name="custom_sync_server_enable_title">使用自定义同步服务器</string>
+    <string name="custom_sync_server_title" maxLength="41">自定义同步服务器</string>
+    <string name="custom_sync_server_enable_title" maxLength="41">使用自定义同步服务器</string>
     <string name="custom_sync_server_enable_summary">如果你不想使用专有的 AnkiWeb 服务，您可以指定替代的服务器</string>
-    <string name="custom_sync_server_base_url_title">同步地址</string>
+    <string name="custom_sync_server_base_url_title" maxLength="41">同步地址</string>
     <string name="custom_sync_server_base_url_invalid">同步地址无效</string>
-    <string name="custom_sync_server_media_url_title">媒体文件同步地址</string>
+    <string name="custom_sync_server_media_url_title" maxLength="41">媒体文件同步地址</string>
     <string name="custom_sync_server_media_url_invalid">媒体同步地址无效</string>
     <!-- studyoptions -->
     <string name="deck_conf_group_summ">更改牌组集选项会影响多个牌组。如果您想仅更改当前牌组，请先添加一个新的选项组</string>
     <string name="studyoptions_limit_select_tags">选择标签</string>
     <!-- Deck configurations -->
-    <string name="deck_conf_deck_description">牌组描述（仅影响当前牌组）</string>
-    <string name="deck_conf_group">选项组</string>
+    <string name="deck_conf_deck_description" maxLength="41">牌组描述（仅影响当前牌组）</string>
+    <string name="deck_conf_group" maxLength="41">选项组</string>
     <plurals name="deck_conf_group_summ">
         <item quantity="other">%1$s\n%2$d 牌组使用此选项组</item>
     </plurals>
-    <string name="deck_conf_new_cards">新卡片</string>
-    <string name="deck_conf_rev_cards" comment="Name of the deck options submenu for configuring reviews of due cards.">复习</string>
-    <string name="deck_conf_lps_cards" comment="Label of the submenu stating how lapses cards are treated.">失误</string>
-    <string name="deck_conf_general">常规</string>
-    <string name="deck_conf_reminders">提醒</string>
-    <string name="deck_conf_steps">间隔的步伐(以分钟计)</string>
-    <string name="deck_conf_order">顺序</string>
-    <string name="deck_conf_new_cards_day">新卡片/天</string>
-    <string name="deck_conf_graduating_ivl">毕业时间间隔</string>
+    <string name="deck_conf_new_cards" maxLength="41">新卡片</string>
+    <string name="deck_conf_rev_cards" maxLength="41" comment="Name of the deck options submenu for configuring reviews of due cards.">复习</string>
+    <string name="deck_conf_lps_cards" maxLength="41" comment="Label of the submenu stating how lapses cards are treated.">失误</string>
+    <string name="deck_conf_general" maxLength="41">常规</string>
+    <string name="deck_conf_reminders" maxLength="41">提醒</string>
+    <string name="deck_conf_steps" maxLength="41">间隔的步伐(以分钟计)</string>
+    <string name="deck_conf_order" maxLength="41">顺序</string>
+    <string name="deck_conf_new_cards_day" maxLength="41">新卡片/天</string>
+    <string name="deck_conf_graduating_ivl" maxLength="41">毕业时间间隔</string>
     <string name="deck_conf_days">XXX 天</string>
-    <string name="deck_conf_easy_ivl">简单按钮对应的时间间隔</string>
-    <string name="deck_conf_start_ease">初始简易度</string>
-    <string name="deck_conf_max_rev">最大复习数量/天</string>
-    <string name="deck_conf_new_bury">隐藏相关新卡片</string>
+    <string name="deck_conf_easy_ivl" maxLength="41">简单按钮对应的时间间隔</string>
+    <string name="deck_conf_start_ease" maxLength="41">初始简易度</string>
+    <string name="deck_conf_max_rev" maxLength="41">最大复习数量/天</string>
+    <string name="deck_conf_new_bury" maxLength="41">隐藏相关新卡片</string>
     <string name="deck_conf_new_bury_summ">相关新卡片隐藏至第二天显示</string>
-    <string name="deck_conf_rev_bury">隐藏相关复习</string>
+    <string name="deck_conf_rev_bury" maxLength="41">隐藏相关复习</string>
     <string name="deck_conf_rev_bury_summ">相关复习隐藏至第二天显示</string>
-    <string name="deck_conf_use_general_timeout_settings">使用常规设置</string>
+    <string name="deck_conf_use_general_timeout_settings" maxLength="41">使用常规设置</string>
     <string name="deck_conf_use_general_timeout_settings_summ">使用一般的 “自动显示答案” 设置，而不是使用此组的设置。</string>
-    <string name="deck_conf_easy_bonus">回答简单的时间间隔增加比例</string>
-    <string name="deck_conf_hard_factor">困难按钮对应的时间间隔</string>
-    <string name="deck_conf_ivl_fct">时间间隔因子</string>
-    <string name="deck_conf_max_ivl">最大时间间隔</string>
-    <string name="deck_conf_new_lps_ivl">新的时间间隔</string>
-    <string name="deck_conf_min_ivl">最小时间间隔</string>
-    <string name="deck_conf_leech_thres">记忆难点阈值</string>
+    <string name="deck_conf_easy_bonus" maxLength="41">回答简单的时间间隔增加比例</string>
+    <string name="deck_conf_hard_factor" maxLength="41">困难按钮对应的时间间隔</string>
+    <string name="deck_conf_ivl_fct" maxLength="41">时间间隔因子</string>
+    <string name="deck_conf_max_ivl" maxLength="41">最大时间间隔</string>
+    <string name="deck_conf_new_lps_ivl" maxLength="41">新的时间间隔</string>
+    <string name="deck_conf_min_ivl" maxLength="41">最小时间间隔</string>
+    <string name="deck_conf_leech_thres" maxLength="41">记忆难点阈值</string>
     <string name="deck_conf_fails">XXX 失败</string>
-    <string name="deck_conf_leech_action">记忆难点动作</string>
-    <string name="deck_conf_max_time">最大的回答时间</string>
+    <string name="deck_conf_leech_action" maxLength="41">记忆难点动作</string>
+    <string name="deck_conf_max_time" maxLength="41">最大的回答时间</string>
     <string name="deck_conf_seconds">XXX 秒</string>
-    <string name="deck_conf_timer">显示计时器</string>
-    <string name="deck_conf_autoplay">自动播放音频</string>
-    <string name="deck_conf_replayq">重播问题</string>
+    <string name="deck_conf_timer" maxLength="41">显示计时器</string>
+    <string name="deck_conf_autoplay" maxLength="41">自动播放音频</string>
+    <string name="deck_conf_replayq" maxLength="41">重播问题</string>
     <string name="deck_conf_replayq_summ">显示答案时，同时播放问题和答案的音频。</string>
-    <string name="deck_conf_manage">组管理</string>
+    <string name="deck_conf_manage" maxLength="41">组管理</string>
     <string name="deck_conf_manage_summ">添加和更改选项组</string>
-    <string name="deck_conf_current_group">当前组</string>
-    <string name="deck_conf_rename" comment="Menu entry to rename a deck">重命名</string>
-    <string name="deck_conf_reset">恢复默认</string>
+    <string name="deck_conf_current_group" maxLength="41">当前组</string>
+    <string name="deck_conf_rename" maxLength="41" comment="Menu entry to rename a deck">重命名</string>
+    <string name="deck_conf_reset" maxLength="41">恢复默认</string>
     <string name="deck_conf_reset_message">是否将当前选项组还原到默认值？</string>
-    <string name="deck_conf_add" comment="Adding a new deck option group">添加选项组</string>
+    <string name="deck_conf_add" maxLength="41" comment="Adding a new deck option group">添加选项组</string>
     <string name="deck_conf_add_summ">创建当前选项组的副本</string>
     <string name="deck_conf_remove_message">是否确认删除当前选项组？</string>
-    <string name="deck_conf_set_subdecks">所有子牌组使用此选项组</string>
+    <string name="deck_conf_set_subdecks" maxLength="41">所有子牌组使用此选项组</string>
     <plurals name="deck_conf_set_subdecks_summ">
         <item quantity="other">%s 子牌组将使用此选项组</item>
     </plurals>
     <string name="deck_conf_set_subdecks_message">为当前牌组的所有子牌组应用此选项组?</string>
-    <string name="pref_browser_editor_font">浏览器和编辑器字体</string>
-    <string name="deck_conf_cram_filter">筛选器</string>
-    <string name="deck_conf_cram_search">搜索</string>
-    <string name="deck_conf_cram_limit">限制至</string>
-    <string name="deck_conf_cram_order">卡片选择标准</string>
-    <string name="deck_conf_cram_reschedule" comment="Title of the box labelled by deck_conf_cram_reschedule_summ">重新安排学习进度</string>
+    <string name="pref_browser_editor_font" maxLength="41">浏览器和编辑器字体</string>
+    <string name="deck_conf_cram_filter" maxLength="41">筛选器</string>
+    <string name="deck_conf_cram_search" maxLength="41">搜索</string>
+    <string name="deck_conf_cram_limit" maxLength="41">限制至</string>
+    <string name="deck_conf_cram_order" maxLength="41">卡片选择标准</string>
+    <string name="deck_conf_cram_reschedule" maxLength="41" comment="Title of the box labelled by deck_conf_cram_reschedule_summ">重新安排学习进度</string>
     <string name="deck_conf_cram_reschedule_summ">按当前牌组的回答重排卡牌</string>
-    <string name="deck_conf_cram_steps">自定义步伐(以分钟计)</string>
-    <string name="deck_conf_cram_steps_summ">自定义步伐</string>
-    <string name="deck_conf_reminders_enabled">为此牌组集中的牌组启用提醒通知</string>
-    <string name="deck_conf_reminders_time">提醒时间</string>
+    <string name="deck_conf_cram_steps" maxLength="41">自定义步伐(以分钟计)</string>
+    <string name="deck_conf_cram_steps_summ" maxLength="41">自定义步伐</string>
+    <string name="deck_conf_reminders_enabled" maxLength="41">为此牌组集中的牌组启用提醒通知</string>
+    <string name="deck_conf_reminders_time" maxLength="41">提醒时间</string>
     <!-- analytics options -->
     <string name="analytics_dialog_title">帮助让 AnkiDroid 更好！</string>
-    <string name="analytics_title">分享功能使用</string>
+    <string name="analytics_title" maxLength="41">分享功能使用</string>
     <string name="analytics_summ">您可以通过帮助开发团队了解用户使用哪些功能来帮助 AnkiDroid</string>
-    <string name="note_editor_replace_newlines">用 HTML 替换换行</string>
+    <string name="note_editor_replace_newlines" maxLength="41">用 HTML 替换换行</string>
     <string name="note_editor_replace_newlines_summ">在笔记编辑器中，编辑卡片时将 &lt;br&gt; 的任何实例转换为换行。</string>
-    <string name="no_code_formatting">简单输入的答案格式</string>
+    <string name="no_code_formatting" maxLength="41">简单输入的答案格式</string>
     <string name="no_code_formatting_summ">修复在输入的答案结果中出现的“􏿾”</string>
-    <string name="type_in_answer_focus">聚焦“输入答案”</string>
+    <string name="type_in_answer_focus" maxLength="41">聚焦“输入答案”</string>
     <string name="type_in_answer_focus_summ">自动聚焦在复习者的“输入答案”字段</string>
     <!-- Open Changelog-->
     <string name="open_changelog">打开更新日志</string>

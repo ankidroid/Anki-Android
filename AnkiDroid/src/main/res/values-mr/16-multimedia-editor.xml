@@ -34,92 +34,92 @@
 -->
 <resources>
     <!-- Main editor popup menu items -->
-    <string name="multimedia_editor_popup_image">Add image</string>
-    <string name="multimedia_editor_popup_audio_clip">Add audio clip</string>
-    <string name="multimedia_editor_popup_audio">Record audio</string>
-    <string name="multimedia_editor_popup_text">Advanced editor</string>
-    <string name="multimedia_editor_popup_cloze">Cloze deletion</string>
-    <string name="multimedia_editor_popup_clear_field">Clear field</string>
+    <string name="multimedia_editor_popup_image">प्रतिमा जोडा</string>
+    <string name="multimedia_editor_popup_audio_clip">ऑडिओ क्लिप जोडा</string>
+    <string name="multimedia_editor_popup_audio">ऑडिओ रेकॉर्ड करा</string>
+    <string name="multimedia_editor_popup_text">प्रगत संपादक</string>
+    <string name="multimedia_editor_popup_cloze">क्लोज हटविणे</string>
+    <string name="multimedia_editor_popup_clear_field">साफ फील्ड</string>
     <!-- Translation activity (Glosbe) -->
-    <string name="multimedia_editor_trans_poweredglosbe">Powered by glosbe.com</string>
+    <string name="multimedia_editor_trans_poweredglosbe">Glosbe.com द्वारा समर्थित</string>
     <!-- these are like translate f r o m  and t o  some othe languages -->
-    <string name="multimedia_editor_trans_from">From</string>
-    <string name="multimedia_editor_trans_to">To</string>
+    <string name="multimedia_editor_trans_from">पासून</string>
+    <string name="multimedia_editor_trans_to">करण्यासाठी</string>
     <!-- imperative for the button title -->
-    <string name="multimedia_editor_trans_translate">Translate</string>
+    <string name="multimedia_editor_trans_translate">भाषांतर करा</string>
     <!-- waiting message -->
-    <string name="multimedia_editor_trans_translating_online">Translating online</string>
+    <string name="multimedia_editor_trans_translating_online">ऑनलाईन अनुवाद करत आहे</string>
     <!-- pick the right translation imperative -->
-    <string name="multimedia_editor_trans_pick_translation">Pick translation</string>
+    <string name="multimedia_editor_trans_pick_translation">भाषांतर निवडा</string>
     <!-- from controller -->
     <!-- dialog title to ask for translation source -->
-    <string name="multimedia_editor_trans_pick_translation_source">Pick dictionary</string>
+    <string name="multimedia_editor_trans_pick_translation_source">शब्दकोश निवडा</string>
     <!-- dialog asking to install ColorDict -->
-    <string name="multimedia_editor_trans_install_color_dict">Install ColorDict first</string>
+    <string name="multimedia_editor_trans_install_color_dict">प्रथम कलरडिक्ट स्थापित करा</string>
     <!-- Pronunciation activity (Beolingus) -->
-    <string name="multimedia_editor_pron_load">Load</string>
-    <string name="multimedia_editor_pron_looking_up">Looking up pronunciation</string>
+    <string name="multimedia_editor_pron_load">लोड</string>
+    <string name="multimedia_editor_pron_looking_up">उच्चार पहात आहात</string>
     <!-- in controller when fails -->
-    <string name="multimedia_editor_pron_pronunciation_failed">Pronunciation failed</string>
-    <string name="multimedia_editor_word_search_try_lower_case">Try using only lower case characters</string>
-    <string name="multimedia_editor_poweredbeolingus">Powered by Beolingus</string>
+    <string name="multimedia_editor_pron_pronunciation_failed">उच्चारण अयशस्वी</string>
+    <string name="multimedia_editor_word_search_try_lower_case">फक्त लोअर केस वर्ण वापरुन पहा</string>
+    <string name="multimedia_editor_poweredbeolingus">बेओलिंगस द्वारा समर्थित</string>
     <!-- Field editing general -->
     <!-- these are button names to convert field type -->
-    <string name="multimedia_editor_field_editing_text" comment="Select the field\'s type to Text.">Text</string>
-    <string name="multimedia_editor_field_editing_image">Image</string>
-    <string name="multimedia_editor_field_editing_audio">Audio recording</string>
-    <string name="multimedia_editor_field_editing_audio_clip">Audio Clip</string>
-    <string name="multimedia_editor_field_editing_done" comment="Label of a button to tell the app that the current action is \'Done\'.">Done</string>
+    <string name="multimedia_editor_field_editing_text" comment="Select the field\'s type to Text.">मजकूर</string>
+    <string name="multimedia_editor_field_editing_image">चित्रे</string>
+    <string name="multimedia_editor_field_editing_audio">ऑडिओ रेकॉर्डिंग</string>
+    <string name="multimedia_editor_field_editing_audio_clip">ऑडिओ क्लिप</string>
+    <string name="multimedia_editor_field_editing_done" comment="Label of a button to tell the app that the current action is \'Done\'.">पूर्ण झाले</string>
     <!-- Text field editing -->
     <!-- buttons -->
-    <string name="multimedia_editor_text_field_editing_search_label">Search for:</string>
-    <string name="multimedia_editor_text_field_editing_say">Pronunciation</string>
-    <string name="multimedia_editor_text_field_editing_clear">Clear</string>
-    <string name="multimedia_editor_text_field_editing_clone">Clone from</string>
+    <string name="multimedia_editor_text_field_editing_search_label">यासाठी शोधा:</string>
+    <string name="multimedia_editor_text_field_editing_say">उच्चारण</string>
+    <string name="multimedia_editor_text_field_editing_clear">साफ</string>
+    <string name="multimedia_editor_text_field_editing_clone">पासून क्लोन</string>
     <string name="multimedia_editor_text_field_editing_translate" comment="Label of a button opening the translation activity">Translation</string>
     <!-- message to user, when there is no text or many words, but the user tries something -->
-    <string name="multimedia_editor_text_field_editing_no_text">Input some text first</string>
-    <string name="multimedia_editor_text_field_editing_many_words">Dictionary usually expects one word</string>
+    <string name="multimedia_editor_text_field_editing_no_text">प्रथम काही मजकूर इनपुट करा</string>
+    <string name="multimedia_editor_text_field_editing_many_words">शब्दकोशात सहसा एक शब्द अपेक्षित असतो</string>
     <!-- message when cloning -->
-    <string name="multimedia_editor_text_field_editing_clone_source">Take from</string>
+    <string name="multimedia_editor_text_field_editing_clone_source">कडून घेणें</string>
     <!-- Multimedia card editor activity -->
     <!-- for buttons -->
     <!-- delete confirmation -->
     <!-- Image editing -->
     <!-- for buttons -->
-    <string name="multimedia_editor_image_field_editing_galery">Gallery</string>
-    <string name="multimedia_editor_image_field_editing_photo">Camera</string>
-    <string name="multimedia_editor_image_field_editing_library">Library</string>
+    <string name="multimedia_editor_image_field_editing_galery">गॅलरी</string>
+    <string name="multimedia_editor_image_field_editing_photo">कॅमेरा</string>
+    <string name="multimedia_editor_image_field_editing_library">ग्रंथालय</string>
     <!-- General -->
     <!-- message on the progress dialog for the user to wait, means process -->
-    <string name="multimedia_editor_general_downloading">Downloading</string>
+    <string name="multimedia_editor_general_downloading">डाउनलोड करत आहे</string>
     <!-- when process finishes -->
-    <string name="multimedia_editor_general_done" comment="Message informing the user that the action is done">Done</string>
+    <string name="multimedia_editor_general_done" comment="Message informing the user that the action is done">पूर्ण झाले</string>
     <!-- General word search and failures -->
-    <string name="multimedia_editor_error_word_not_found">The word was not found</string>
+    <string name="multimedia_editor_error_word_not_found">शब्द सापडला नाही</string>
     <!-- failure when contacting glosbe or similar -->
-    <string name="multimedia_editor_trans_getting_failure">Getting translation failed</string>
-    <string name="multimedia_editor_searching_word">Searching the word</string>
+    <string name="multimedia_editor_trans_getting_failure">अनुवाद मिळविणे अयशस्वी</string>
+    <string name="multimedia_editor_searching_word">शब्द शोधत आहे</string>
     <!-- General -->
-    <string name="multimedia_editor_progress_wait_title">Wait</string>
+    <string name="multimedia_editor_progress_wait_title">थांबा</string>
     <!-- not a good message, when an unexpected error happens -->
-    <string name="multimedia_editor_something_wrong">Something went wrong</string>
-    <string name="multimedia_editor_attach_mm_content" comment="used for screen readers. Not visible to the user">Attach multimedia content to the %1$s field</string>
-    <string name="multimedia_editor_attach_media">Attach media</string>
+    <string name="multimedia_editor_something_wrong">काहीतरी चूक झाली</string>
+    <string name="multimedia_editor_attach_mm_content" comment="used for screen readers. Not visible to the user">%1$s फील्डमध्ये मल्टीमीडिया सामग्री जोडा</string>
+    <string name="multimedia_editor_attach_media">मीडिया संलग्न करा</string>
     <!-- Audio view -->
     <!-- Message when recording fails -->
-    <string name="multimedia_editor_audio_view_recording_failed">Recording failed</string>
-    <string name="multimedia_editor_audio_view_playing_failed">Playing failed</string>
-    <string name="multimedia_editor_audio_view_create_failed">Unable to create recorder tool bar</string>
+    <string name="multimedia_editor_audio_view_recording_failed">रेकॉर्डिंग अयशस्वी</string>
+    <string name="multimedia_editor_audio_view_playing_failed">खेळणे अयशस्वी झाले</string>
+    <string name="multimedia_editor_audio_view_create_failed">रेकॉर्डर टूल बार तयार करण्यात अक्षम</string>
     <!-- Activity titles -->
-    <string name="title_activity_edit_text" comment="Name of the window allowing to edit field. This text can not be seen in AnkiDroid directly.">Editing field</string>
-    <string name="title_activity_translation" comment="Name of the window allowing to translate. This text can not be seen in AnkiDroid directly.">Translation</string>
+    <string name="title_activity_edit_text" comment="Name of the window allowing to edit field. This text can not be seen in AnkiDroid directly.">संपादन फील्ड</string>
+    <string name="title_activity_translation" comment="Name of the window allowing to translate. This text can not be seen in AnkiDroid directly.">भाषांतर</string>
     <!-- Network failure -->
     <string name="network_no_connection">No connection</string>
     <!-- Crop function-->
-    <string name="crop_image">Do you want to crop this image?</string>
-    <string name="crop_button">Crop image</string>
-    <string name="save_dialog_content">Current image size is %sMB. Default image size limit is 1MB. Do you want to crop it?</string>
-    <string name="select_image_failed">"Select image failed, Please retry"</string>
-    <string name="activity_result_unexpected">App returned an unexpected value. You may need to use a different app</string>
+    <string name="crop_image">आपण ही प्रतिमा क्रॉप करू इच्छिता?</string>
+    <string name="crop_button">प्रतिमा क्रॉप करा</string>
+    <string name="save_dialog_content">वर्तमान प्रतिमेचा आकार %s MB आहे. डीफॉल्ट प्रतिमेची आकार मर्यादा 1MB आहे. आपण ते क्रॉप करू इच्छिता?</string>
+    <string name="select_image_failed">"प्रतिमा निवडा अयशस्वी, कृपया पुन्हा प्रयत्न करा"</string>
+    <string name="activity_result_unexpected">अॅपने एक अनपेक्षित मूल्य परत केले. आपल्याला भिन्न अ‍ॅप वापरण्याची आवश्यकता असू शकते</string>
 </resources>

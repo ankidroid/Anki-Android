@@ -40,14 +40,14 @@
 <resources>
     <!-- Feedback.java -->
     <string name="empty_string"></string>
-    <string name="error_reporting_choice">Error reporting mode</string>
-    <string name="feedback_disclaimer">Disclaimer: We don’t collect any personal information such as your email address, phone number, or your phone IMEI. We do collect some information about your device such as the manufacturer, model and version of Android, as well as the nature of reported errors themselves and the steps which led up to them occurring.</string>
-    <string name="feedback_title">AnkiDroid Feedback</string>
-    <string name="feedback_default_text">Enter your feedback or information about the nature of any errors you’re reporting.</string>
-    <string name="feedback_auto_toast_text">AnkiDroid has encountered a problem; a report is being sent to the developers&#8230;</string>
-    <string name="feedback_manual_toast_text">AnkiDroid has encountered a problem; a report is being generated&#8230;</string>
-    <string name="feedback_copy_debug">Copy debug info</string>
-    <string name="feedback_report">Report</string>
-    <string name="feedback_report_automatically">Send error reports automatically</string>
-    <string name="feedback_no_suitable_app_found">No suitable app found</string>
+    <string name="error_reporting_choice">मोडचा अहवाल देताना त्रुटी</string>
+    <string name="feedback_disclaimer">अस्वीकरण: आम्ही आपला ईमेल पत्ता, फोन नंबर किंवा आपला फोन आयएमईआय यासारखी कोणतीही वैयक्तिक माहिती संकलित करत नाही. आम्ही आपल्या डिव्हाइसबद्दल काही माहिती संकलित करतो जसे की Android चे निर्माता, मॉडेल आणि आवृत्ती, तसेच स्वतःच नोंदवलेल्या त्रुटींचे स्वरूप आणि त्यांच्यामुळे उद्भवलेल्या चरणांबद्दल.</string>
+    <string name="feedback_title">AnkiDroid अभिप्राय</string>
+    <string name="feedback_default_text">आपण नोंदवित असलेल्या कोणत्याही त्रुटींच्या स्वरूपाबद्दल आपला अभिप्राय किंवा माहिती प्रविष्ट करा.</string>
+    <string name="feedback_auto_toast_text">AnkiDroid ला एक समस्या आली आहे; विकासकांना अहवाल पाठविला जात आहे&#8230;</string>
+    <string name="feedback_manual_toast_text">AnkiDroid ला एक समस्या आली आहे; एक अहवाल तयार केला जात आहे&#8230;</string>
+    <string name="feedback_copy_debug">डीबग माहिती कॉपी करा</string>
+    <string name="feedback_report">अहवाल द्या</string>
+    <string name="feedback_report_automatically">त्रुटी अहवाल स्वयंचलितपणे पाठवा</string>
+    <string name="feedback_no_suitable_app_found">योग्य अॅप आढळला नाही</string>
 </resources>

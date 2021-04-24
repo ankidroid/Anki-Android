@@ -43,255 +43,257 @@
     <string name="enabled">ᱦᱩᱞ ᱦᱚᱪᱚ</string>
     <!-- preferences.xml categories-->
     <string name="pref_cat_general_summ">ᱥᱟᱫᱷᱟᱨᱚᱬ ᱥᱟᱡᱟᱣ</string>
-    <string name="pref_cat_reviewing">ᱫᱩᱦᱲᱟ ᱧᱮᱞ</string>
+    <string name="pref_cat_reviewing" maxLength="41">ᱫᱩᱦᱲᱟ ᱧᱮᱞ</string>
     <string name="pref_cat_reviewing_summ">ᱱᱚᱱ-ᱰᱮᱠ-ᱵᱤᱥᱮᱥ ᱫᱩᱦᱲᱟ ᱧᱮᱞ ᱥᱟᱡᱟᱣᱠᱚ</string>
-    <string name="pref_cat_reviewer_behaviour">ᱵᱮᱵᱷᱟᱨ</string>
-    <string name="pref_cat_flashcard">ᱩᱫᱩᱜᱽ</string>
-    <string name="pref_cat_whiteboard">ᱯᱩᱸᱰ ᱥᱤᱞᱚᱴ</string>
-    <string name="pref_cat_appearance">ᱧᱮᱞᱚᱜ ᱠᱚ</string>
+    <string name="pref_cat_reviewer_behaviour" maxLength="41">ᱵᱮᱵᱷᱟᱨ</string>
+    <string name="pref_cat_flashcard" maxLength="41">ᱩᱫᱩᱜᱽ</string>
+    <string name="pref_cat_whiteboard" maxLength="41">ᱯᱩᱸᱰ ᱥᱤᱞᱚᱴ</string>
+    <string name="pref_cat_appearance" maxLength="41">ᱧᱮᱞᱚᱜ ᱠᱚ</string>
     <string name="pref_cat_appearance_summ">ᱩᱱᱩᱭᱦᱟᱹᱨ ᱟᱨ ᱢᱩᱞ ᱯᱷᱮᱲᱟᱛ ᱪᱤᱠᱤ ᱵᱚᱫᱚᱞ</string>
-    <string name="pref_cat_themes">ᱩᱱᱩᱭᱦᱟᱹᱨ</string>
-    <string name="pref_cat_fonts">ᱪᱤᱠᱤ</string>
-    <string name="pref_cat_gestures">ᱪᱤᱱᱦᱟᱹ</string>
+    <string name="pref_cat_themes" maxLength="41">ᱩᱱᱩᱭᱦᱟᱹᱨ</string>
+    <string name="pref_cat_fonts" maxLength="41">ᱪᱤᱠᱤ</string>
+    <string name="pref_cat_gestures" maxLength="41">ᱪᱤᱱᱦᱟᱹ</string>
     <string name="pref_cat_gestures_summ">ᱵᱚᱴᱚᱱ ᱵᱚᱫᱚᱞ ᱛᱮ ᱴᱤᱰᱟᱹᱜ ᱟᱨ ᱜᱟᱹᱫᱩᱡ ᱢᱮ</string>
-    <string name="pref_cat_actions">ᱠᱟᱹᱢᱤ</string>
-    <string name="pref_cat_advanced">ᱞᱟᱦᱟ ᱦᱚᱪᱚ</string>
+    <string name="pref_cat_actions" maxLength="41">ᱠᱟᱹᱢᱤ</string>
+    <string name="pref_cat_advanced" maxLength="41">ᱞᱟᱦᱟ ᱦᱚᱪᱚ</string>
     <string name="pref_cat_advanced_summ">ᱵᱮᱥ ᱚᱵᱚᱥᱛᱟ ᱟᱨ ᱵᱤᱰᱟᱹᱣ ᱠᱟᱛᱮ ᱵᱟᱰᱜᱚᱜᱽ ᱧᱮᱞ</string>
-    <string name="pref_cat_performance">ᱠᱟᱹᱢᱤ ᱫᱟᱲᱮ</string>
-    <string name="pref_cat_workarounds">ᱥᱚᱢᱟᱫᱷᱟᱱ</string>
-    <string name="pref_cat_plugins">ᱠᱷᱚᱸᱡᱟ ᱟᱫᱮᱨ</string>
-    <string name="about_title">AnkiDroid ᱵᱟᱵᱚᱫ</string>
+    <string name="pref_cat_performance" maxLength="41">ᱠᱟᱹᱢᱤ ᱫᱟᱲᱮ</string>
+    <string name="pref_cat_workarounds" maxLength="41">ᱥᱚᱢᱟᱫᱷᱟᱱ</string>
+    <string name="pref_cat_plugins" maxLength="41">ᱠᱷᱚᱸᱡᱟ ᱟᱫᱮᱨ</string>
+    <string name="about_title" maxLength="41">AnkiDroid ᱵᱟᱵᱚᱫ</string>
     <string name="about_version">ᱦᱟᱹᱞᱤᱭᱟᱜ: </string>
     <!-- preferences.xml entries-->
-    <string name="whiteboard_stroke_width">ᱥᱴᱨᱚᱠ ᱨᱮᱭᱟᱜ ᱚᱥᱟᱨ</string>
-    <string name="use_input_tag">ᱠᱟᱰ ᱨᱮ ᱛᱮᱞᱟ ᱚᱞ ᱛᱟᱢ</string>
+    <string name="whiteboard_stroke_width" maxLength="41">ᱥᱴᱨᱚᱠ ᱨᱮᱭᱟᱜ ᱚᱥᱟᱨ</string>
+    <string name="use_input_tag" maxLength="41">ᱠᱟᱰ ᱨᱮ ᱛᱮᱞᱟ ᱚᱞ ᱛᱟᱢ</string>
     <string name="use_input_tag_summ">ᱛᱮᱞᱟ ᱚᱞ ᱞᱟᱹᱜᱤᱫ ᱠᱟᱰ ᱨᱮᱭᱟᱜ ᱚᱞ ᱟᱫᱮᱨ ᱵᱚᱠᱥᱟ ᱵᱮᱵᱦᱟᱨ ᱢᱮ</string>
-    <string name="dictionary">ᱥᱟᱵᱟᱫ ᱢᱚᱱᱮ ᱯᱩᱛᱷᱤ ᱧᱮᱞᱢᱮ</string>
-    <string name="reset_languages">ᱯᱟᱹᱨᱥᱤ ᱫᱚᱦᱲᱟ ᱵᱚᱫᱚᱞ</string>
+    <string name="dictionary" maxLength="41">ᱥᱟᱵᱟᱫ ᱢᱚᱱᱮ ᱯᱩᱛᱷᱤ ᱧᱮᱞᱢᱮ</string>
+    <string name="reset_languages" maxLength="41">ᱯᱟᱹᱨᱥᱤ ᱫᱚᱦᱲᱟ ᱵᱚᱫᱚᱞ</string>
     <string name="reset_languages_summ">ᱯᱟᱹᱨᱥᱤ ᱮᱥᱭᱥᱴᱮᱸᱴ ᱫᱚᱦᱲᱟ ᱵᱚᱫᱚᱞ (ᱟᱞ ᱠᱷᱚᱱ ᱢᱮᱱ ᱛᱮ ᱟᱨ ᱯᱩᱛᱷᱤ) ᱡᱷᱚᱛᱚ ᱰᱮᱠ ᱞᱟᱹᱜᱤᱫ</string>
     <string name="reset_languages_question">ᱡᱷᱚᱛᱚ ᱯᱟᱹᱨᱥᱤ ᱮᱥᱭᱥᱴᱮᱸᱴ ᱫᱚᱦᱲᱟ ᱵᱚᱫᱚᱞ?</string>
     <string name="reset_confirmation">ᱡᱷᱚᱛᱚ ᱡᱟᱭᱜᱚ ᱫᱩ.-ᱵᱚ.</string>
-    <string name="card_zoom">ᱟᱠᱰ ᱢᱟᱨᱟᱝ</string>
-    <string name="image_zoom">ᱪᱤᱛᱟᱨ ᱢᱟᱨᱟᱝ</string>
-    <string name="button_size">ᱛᱮᱞᱟ ᱵᱚᱴᱚᱱ ᱢᱟᱯ</string>
-    <string name="card_browser_font_size">ᱠᱟᱰ ᱵᱨᱟᱣᱡᱚᱨ ᱪᱤᱠᱤ ᱢᱟᱯ</string>
-    <string name="card_browser_hide_media">ᱠᱟᱰ ᱵᱨᱟᱣᱡᱚᱨ ᱨᱮ ᱨᱮᱫᱼᱧᱩᱛᱩᱢ ᱫᱮᱠᱷᱟᱣᱢᱮ</string>
+    <string name="card_zoom" maxLength="41">ᱟᱠᱰ ᱢᱟᱨᱟᱝ</string>
+    <string name="image_zoom" maxLength="41">ᱪᱤᱛᱟᱨ ᱢᱟᱨᱟᱝ</string>
+    <string name="button_size" maxLength="41">ᱛᱮᱞᱟ ᱵᱚᱴᱚᱱ ᱢᱟᱯ</string>
+    <string name="card_browser_font_size" maxLength="41">ᱠᱟᱰ ᱵᱨᱟᱣᱡᱚᱨ ᱪᱤᱠᱤ ᱢᱟᱯ</string>
+    <string name="card_browser_hide_media" maxLength="41">ᱠᱟᱰ ᱵᱨᱟᱣᱡᱚᱨ ᱨᱮ ᱨᱮᱫᱼᱧᱩᱛᱩᱢ ᱫᱮᱠᱷᱟᱣᱢᱮ</string>
     <string name="card_browser_hide_media_summary">ᱠᱟᱰ ᱵᱨᱟᱣᱡᱚᱨ ᱠᱩᱞᱤ ᱨᱮ ᱢᱮᱰᱤᱭᱟ ᱨᱮᱫᱼᱧᱩᱛᱩᱢ ᱫᱮᱠᱷᱟᱣᱢᱮ/ᱛᱮᱞᱟ ᱡᱟᱭᱜᱟ</string>
-    <string name="col_path">AnkiDroid ᱩᱫᱩᱜ ᱯᱩᱛᱷᱤ</string>
-    <string name="fullscreen_review">ᱯᱩᱨᱟᱹᱥᱠᱨᱤᱱ ᱢᱚᱰ</string>
+    <string name="col_path" maxLength="41">AnkiDroid ᱩᱫᱩᱜ ᱯᱩᱛᱷᱤ</string>
+    <string name="fullscreen_review" maxLength="41">ᱯᱩᱨᱟᱹᱥᱠᱨᱤᱱ ᱢᱚᱰ</string>
     <string name="full_screen_off">ᱵᱚᱸᱫ</string>
     <string name="full_screen_system">ᱥᱭᱥᱴᱚᱢ ᱵᱟᱨ ᱩᱠᱩᱭ ᱢᱮ</string>
     <string name="full_screen_complete">ᱥᱭᱥᱴᱚᱢ ᱵᱟᱨ ᱟᱨ ᱛᱮᱞᱟ ᱵᱚᱴᱚᱱ ᱩᱠᱩᱭᱢᱮ</string>
     <string name="full_screen_error_gestures">ᱛᱮᱞᱟ ᱩᱠᱩ ᱞᱟᱹᱜᱤᱫ ᱪᱤᱱᱦᱟᱹ ᱮᱢ ᱛᱮ ᱯᱟᱲᱟᱣᱼᱜᱟ</string>
-    <string name="answer_buttons_position">ᱛᱮᱞᱟ ᱵᱚᱴᱚᱱ ᱡᱟᱭᱜᱟ</string>
+    <string name="answer_buttons_position" maxLength="41">ᱛᱮᱞᱟ ᱵᱚᱴᱚᱱ ᱡᱟᱭᱜᱟ</string>
     <string-array name="answer_buttons_position_labels">
         <item>ᱪᱚᱴ</item>
         <item>ᱞᱟᱛᱟᱨ</item>
     </string-array>
-    <string name="gestures">ᱪᱤᱱᱦᱟ ᱮᱢᱚᱜᱢᱮ</string>
+    <string name="gestures" maxLength="41">ᱪᱤᱱᱦᱟ ᱮᱢᱚᱜᱢᱮ</string>
     <string name="gestures_summ">ᱛᱮᱞᱟ ᱮᱢ ᱟᱨ ᱠᱟᱰᱥ ᱥᱟᱯᱰᱟᱣ ᱞᱟᱹᱜᱤᱫ ᱜᱮᱥᱪᱚᱨ ᱠᱚ ᱴᱷᱤᱠ ᱢᱮ ᱾</string>
-    <string name="gestures_allow_links">ᱞᱤᱝᱠ ᱨᱮ ᱴᱤᱰᱟᱹᱜ ᱪᱤᱱᱦᱟ ᱮᱨᱮᱲ ᱢᱮ</string>
+    <string name="gestures_allow_links" maxLength="41">ᱞᱤᱝᱠ ᱨᱮ ᱴᱤᱰᱟᱹᱜ ᱪᱤᱱᱦᱟ ᱮᱨᱮᱲ ᱢᱮ</string>
     <string name="gestures_allow_links_summary">ᱴᱤᱰᱹᱟᱜ ᱪᱤᱱᱦᱟᱹ ᱵᱟᱭ ᱠᱟᱹᱢᱤᱟᱭ ᱡᱚᱫᱤ ᱞᱤᱝᱠ/ᱦᱤᱸᱴ ᱨᱮ ᱚᱛᱟᱭᱟ ᱾</string>
-    <string name="gestures_corner_touch">᱙ᱼᱤᱸᱪ ᱚᱛᱟ</string>
+    <string name="gestures_corner_touch" maxLength="41">᱙ᱼᱤᱸᱪ ᱚᱛᱟ</string>
     <string name="gestures_corner_touch_summary">ᱥᱠᱨᱤᱱ ᱠᱩᱱᱟᱹ ᱠᱚᱨᱮ  ᱚᱛᱟ ᱜᱮᱥᱪᱚᱨᱠᱚ ᱮᱢ ᱪᱷᱚ</string>
-    <string name="gestures_swipe_up">ᱪᱮᱛᱟᱱ ᱴᱷᱮᱞᱟᱣ</string>
-    <string name="gestures_swipe_down">ᱞᱟᱛᱟᱨ ᱴᱷᱮᱞᱟᱣ</string>
-    <string name="gestures_swipe_left">ᱞᱮᱸᱜᱟ ᱴᱷᱮᱞᱟᱣ</string>
-    <string name="gestures_swipe_right">ᱡᱚᱡᱚᱢ ᱴᱷᱮᱞᱟᱣ</string>
-    <string name="gestures_double_tap">ᱫᱚᱦᱲᱟ ᱡᱚᱴᱮᱫ</string>
-    <string name="gestures_tap_top">ᱪᱮᱛᱟᱱ ᱡᱚᱴᱮᱫ</string>
-    <string name="gestures_tap_left">ᱞᱮᱸᱜᱟ ᱡᱚᱴᱮᱫ</string>
-    <string name="gestures_tap_right">ᱡᱚᱡᱚᱢ ᱡᱚᱴᱮᱫ</string>
-    <string name="gestures_tap_bottom">ᱞᱟᱛᱟᱨ ᱡᱚᱴᱮᱫ</string>
-    <string name="gestures_corner_tap_top_left">ᱪᱮᱛᱟᱱ ᱞᱮᱸᱜᱟ ᱯᱟᱦᱴᱟ ᱚᱛᱟᱭ ᱢᱮ</string>
+    <string name="gestures_swipe_up" maxLength="41">ᱪᱮᱛᱟᱱ ᱴᱷᱮᱞᱟᱣ</string>
+    <string name="gestures_swipe_down" maxLength="41">ᱞᱟᱛᱟᱨ ᱴᱷᱮᱞᱟᱣ</string>
+    <string name="gestures_swipe_left" maxLength="41">ᱞᱮᱸᱜᱟ ᱴᱷᱮᱞᱟᱣ</string>
+    <string name="gestures_swipe_right" maxLength="41">ᱡᱚᱡᱚᱢ ᱴᱷᱮᱞᱟᱣ</string>
+    <string name="gestures_double_tap" maxLength="41">ᱫᱚᱦᱲᱟ ᱡᱚᱴᱮᱫ</string>
+    <string name="gestures_tap_top" maxLength="41">ᱪᱮᱛᱟᱱ ᱡᱚᱴᱮᱫ</string>
+    <string name="gestures_tap_left" maxLength="41">ᱞᱮᱸᱜᱟ ᱡᱚᱴᱮᱫ</string>
+    <string name="gestures_tap_right" maxLength="41">ᱡᱚᱡᱚᱢ ᱡᱚᱴᱮᱫ</string>
+    <string name="gestures_tap_bottom" maxLength="41">ᱞᱟᱛᱟᱨ ᱡᱚᱴᱮᱫ</string>
+    <string name="gestures_corner_tap_top_left" maxLength="41">ᱪᱮᱛᱟᱱ ᱞᱮᱸᱜᱟ ᱯᱟᱦᱴᱟ ᱚᱛᱟᱭ ᱢᱮ</string>
     <string name="gestures_corner_tap_top_center">ᱪᱮᱛᱟᱱ ᱛᱟᱞᱟᱨᱮ ᱚᱛᱟᱭ ᱢᱮ</string>
-    <string name="gestures_corner_tap_top_right">ᱪᱮᱛᱟᱱ ᱡᱚᱡᱚᱢ ᱯᱟᱦᱴᱟ ᱚᱛᱟᱭ ᱢᱮ</string>
+    <string name="gestures_corner_tap_top_right" maxLength="41">ᱪᱮᱛᱟᱱ ᱡᱚᱡᱚᱢ ᱯᱟᱦᱴᱟ ᱚᱛᱟᱭ ᱢᱮ</string>
     <string name="gestures_corner_tap_middle_left">ᱛᱟᱞᱟ ᱞᱮᱸᱜᱟ ᱯᱟᱦᱴᱟ ᱚᱛᱟᱭ ᱢᱮ</string>
-    <string name="gestures_corner_tap_middle_center">ᱛᱟᱞᱟ ᱟᱨ ᱛᱟᱞᱟ ᱨᱮ ᱚᱛᱟᱭ ᱢᱮ</string>
+    <string name="gestures_corner_tap_middle_center" maxLength="41">ᱛᱟᱞᱟ ᱟᱨ ᱛᱟᱞᱟ ᱨᱮ ᱚᱛᱟᱭ ᱢᱮ</string>
     <string name="gestures_corner_tap_middle_right">ᱛᱟᱞᱟ ᱡᱚᱡᱚᱢ ᱯᱟᱦᱴᱟ ᱨᱮ ᱚᱛᱟᱭ ᱢᱮ</string>
-    <string name="gestures_corner_tap_bottom_left">ᱞᱟᱛᱟᱨ ᱞᱮᱸᱜᱟ ᱯᱟᱦᱴᱟ ᱨᱮ ᱚᱛᱟᱭ ᱢᱮ</string>
+    <string name="gestures_corner_tap_bottom_left" maxLength="41">ᱞᱟᱛᱟᱨ ᱞᱮᱸᱜᱟ ᱯᱟᱦᱴᱟ ᱨᱮ ᱚᱛᱟᱭ ᱢᱮ</string>
     <string name="gestures_corner_tap_bottom_center">ᱞᱟᱛᱟᱨ ᱵᱩᱛᱟᱹᱢ ᱚᱛᱟᱭ ᱢᱮ</string>
-    <string name="gestures_corner_tap_bottom_right">ᱞᱟᱛᱟᱨ ᱡᱟᱡᱚᱢ ᱛᱤ ᱯᱟᱦᱴᱟ ᱚᱛᱟᱭ ᱢᱮ</string>
-    <string name="gestures_volume_up">ᱥᱟᱲᱮ ᱰᱷᱮᱨ</string>
-    <string name="gestures_volume_down">ᱥᱟᱰᱮ ᱞᱟᱛᱟᱨ</string>
-    <string name="more_scrolling_buttons">ᱤᱼᱨᱤᱰᱚᱨ</string>
+    <string name="gestures_corner_tap_bottom_right" maxLength="41">ᱞᱟᱛᱟᱨ ᱡᱟᱡᱚᱢ ᱛᱤ ᱯᱟᱦᱴᱟ ᱚᱛᱟᱭ ᱢᱮ</string>
+    <string name="gestures_volume_up" maxLength="41">ᱥᱟᱲᱮ ᱰᱷᱮᱨ</string>
+    <string name="gestures_volume_down" maxLength="41">ᱥᱟᱰᱮ ᱞᱟᱛᱟᱨ</string>
+    <string name="more_scrolling_buttons" maxLength="41">ᱤᱼᱨᱤᱰᱚᱨ</string>
     <string name="more_scrolling_buttons_summ">kanji/katakana, emoji/kao-moji ᱵᱚᱴᱚᱱ ᱥᱠᱨᱚᱞ ᱨᱮ ᱵᱚᱵᱷᱟᱨ ᱢᱮ</string>
     <string name="card_browser_enable_external_context_menu">‘%s’ ᱢᱚᱱᱩ</string>
     <string name="card_browser_enable_external_context_menu_summary">ᱠᱚᱱᱴᱮᱠᱥᱴ ᱢᱮᱱᱩ ᱠᱡᱟᱜᱟᱛ ᱨᱮ ‘%s’ ᱦᱩᱭ ᱦᱚᱪᱚ</string>
-    <string name="double_scrolling_gap">ᱫᱚᱦᱲᱟ ᱥᱠᱨᱚᱞ</string>
+    <string name="double_scrolling_gap" maxLength="41">ᱫᱚᱦᱲᱟ ᱥᱠᱨᱚᱞ</string>
     <string name="double_scrolling_gap_summ">ᱤᱼᱨᱤᱰᱚᱨ ᱮᱨ ᱥᱠᱨᱚᱞ ᱜᱮᱯ ᱫᱚᱦᱲᱟᱭ ᱢᱮ</string>
-    <string name="swipe_sensitivity">ᱥᱮᱱᱥᱴᱤᱵᱷᱤᱴᱭ ᱴᱷᱮᱞᱟᱣ</string>
-    <string name="tts">ᱚᱱᱚᱞ ᱠᱷᱟᱱ ᱢᱮᱱ</string>
+    <string name="swipe_sensitivity" maxLength="41">ᱥᱮᱱᱥᱴᱤᱵᱷᱤᱴᱭ ᱴᱷᱮᱞᱟᱣ</string>
+    <string name="tts" maxLength="41">ᱚᱱᱚᱞ ᱠᱷᱟᱱ ᱢᱮᱱ</string>
     <string name="tts_summ">ᱟᱱᱡᱚᱢ ᱨᱮᱫ ᱵᱟᱝ ᱛᱟᱦᱮᱱ ᱠᱷᱟᱱ ᱠᱩᱠᱞᱤ ᱟᱨ ᱛᱮᱞᱟ ᱡᱩᱨ ᱛᱮ ᱯᱟᱲᱦᱟᱣᱢᱮ</string>
-    <string name="sync_fetch_missing_media">ᱟᱹᱭ-ᱢᱤ. ᱡᱷᱚᱜ ᱢᱮᱰ. ᱟᱹᱜᱩᱭᱼᱟ</string>
+    <string name="sync_fetch_missing_media" maxLength="41">ᱟᱹᱭ-ᱢᱤ. ᱡᱷᱚᱜ ᱢᱮᱰ. ᱟᱹᱜᱩᱭᱼᱟ</string>
     <string name="sync_fetch_missing_media_summ">ᱟᱡ ᱛᱮᱜᱮ ᱟᱹᱭ-ᱢᱤ. ᱡᱷᱚᱜ ᱟᱫ ᱠᱚ ᱢᱮᱰ.ᱤᱭᱟ ᱟᱹᱜᱩᱭᱼᱟ</string>
-    <string name="sync_account">AnkiWeb ᱠᱷᱟᱛᱟ</string>
+    <string name="sync_account" maxLength="41">AnkiWeb ᱠᱷᱟᱛᱟ</string>
     <string name="sync_account_summ_logged_out">ᱵᱟᱝ ᱵᱚᱞᱚᱣᱟᱠ</string>
     <string name="sync_account_summ_logged_in">%s</string>
-    <string name="automatic_sync_choice">ᱟᱡ ᱛᱮᱜᱮ ᱟᱹᱭᱩᱨ ᱢᱤᱫ</string>
+    <string name="automatic_sync_choice" maxLength="41">ᱟᱡ ᱛᱮᱜᱮ ᱟᱹᱭᱩᱨ ᱢᱤᱫ</string>
     <string name="automatic_sync_choice_summ">ᱟᱭᱩᱨ ᱢᱤᱫ ᱢᱮ ᱡᱚᱫᱤ ᱑᱐ ᱴᱤᱡ ᱠᱷᱚᱱ ᱡᱟᱹᱥᱛᱤ ᱥᱚᱢᱚᱭ ᱤᱫᱤᱮᱫ ᱠᱷᱟᱱ ᱮᱯ ᱮᱛᱚᱦᱚ ᱟᱨ ᱵᱚᱸᱫ ᱢᱟᱲᱟᱝ ᱨᱮ</string>
-    <string name="sync_status_badge">ᱥᱭᱸᱠᱨᱚᱱᱟᱭᱡᱮᱥᱚᱱ ᱥᱴᱟᱴᱟᱹᱥ ᱫᱮᱠᱷᱟᱣ</string>
+    <string name="sync_status_badge" maxLength="41">ᱥᱭᱸᱠᱨᱚᱱᱟᱭᱡᱮᱥᱚᱱ ᱥᱴᱟᱴᱟᱹᱥ ᱫᱮᱠᱷᱟᱣ</string>
     <string name="sync_status_badge_summ">ᱡᱩᱫᱤ ᱵᱚᱫᱚᱞ ᱠᱚ ᱟᱹᱯᱞᱚᱰ ᱜᱟᱱᱚᱜ ᱠᱷᱟᱱ ᱥᱭᱸᱠ ᱟᱭᱠᱚᱱ ᱵᱚᱫᱚᱞ ᱢᱮ</string>
-    <string name="day_theme">ᱫᱤᱱ ᱛᱟᱞ</string>
-    <string name="night_theme">ᱟᱹᱭᱩᱵ ᱛᱟᱞ</string>
-    <string name="default_font">ᱢᱩᱞ ᱯᱷᱮᱲᱟᱛ ᱪᱤᱠᱤ</string>
-    <string name="override_font">ᱢᱩᱞ ᱯᱷᱮᱲᱟᱛ ᱪᱤᱠᱤ ᱥᱮᱴᱚᱜ</string>
-    <string name="language">ᱯᱟᱹᱨᱥᱤ</string>
+    <string name="day_theme" maxLength="41">ᱫᱤᱱ ᱛᱟᱞ</string>
+    <string name="night_theme" maxLength="41">ᱟᱹᱭᱩᱵ ᱛᱟᱞ</string>
+    <string name="default_font" maxLength="41">ᱢᱩᱞ ᱯᱷᱮᱲᱟᱛ ᱪᱤᱠᱤ</string>
+    <string name="override_font" maxLength="41">ᱢᱩᱞ ᱯᱷᱮᱲᱟᱛ ᱪᱤᱠᱤ ᱥᱮᱴᱚᱜ</string>
+    <string name="language" maxLength="41">ᱯᱟᱹᱨᱥᱤ</string>
     <string name="language_system">ᱥᱭᱥᱚᱴᱚᱢ ᱟᱲᱟᱝ</string>
-    <string name="notification_pref">ᱤᱛᱞᱟᱹᱭ</string>
-    <string name="notification_pref_title">ᱚᱠᱟ ᱡᱷᱟᱚᱜ ᱤᱰᱞᱟᱹᱭ</string>
+    <string name="notification_pref" maxLength="41">ᱤᱛᱞᱟᱹᱭ</string>
+    <string name="notification_pref_title" maxLength="41">ᱚᱠᱟ ᱡᱷᱟᱚᱜ ᱤᱰᱞᱟᱹᱭ</string>
     <string name="never_notify">ᱛᱤᱥᱦᱚᱸ ᱵᱟᱝ ᱤᱛᱞᱟᱹᱭ</string>
     <string name="notify_when_pending">ᱢᱟᱲᱟᱝᱟ ᱠᱷᱚᱵᱚᱨ ᱥᱟᱨᱮᱡ ᱢᱮᱱᱟᱜᱼᱟ</string>
     <string name="notification_minimum_cards_due"> %d ᱠᱦᱚᱱ ᱡᱟᱹᱥᱛᱤ ᱠᱟᱰᱥ ᱥᱟᱨᱮᱡ</string>
-    <string name="notification_minimum_cards_due_vibrate">ᱛᱷᱟᱨᱼᱛᱷᱟᱨᱟᱣ</string>
-    <string name="notification_minimum_cards_due_blink">ᱫᱷᱩᱯᱼᱫᱷᱟᱯ ᱟᱨᱥᱟᱞ</string>
-    <string name="timeout_answer_text">ᱟᱡᱽ ᱛᱮ ᱛᱮᱞᱟ ᱫᱮᱠᱷᱟᱣ</string>
+    <string name="notification_minimum_cards_due_vibrate" maxLength="41">ᱛᱷᱟᱨᱼᱛᱷᱟᱨᱟᱣ</string>
+    <string name="notification_minimum_cards_due_blink" maxLength="41">ᱫᱷᱩᱯᱼᱫᱷᱟᱯ ᱟᱨᱥᱟᱞ</string>
+    <string name="timeout_answer_text" maxLength="41">ᱟᱡᱽ ᱛᱮ ᱛᱮᱞᱟ ᱫᱮᱠᱷᱟᱣ</string>
     <string name="timeout_answer_summ">ᱵᱮᱜᱚᱨ ᱟᱫᱮᱨ ᱛᱮ ᱟᱡᱛᱮ ᱛᱮᱞᱟ ᱫᱮᱠᱷᱟᱣ ᱢᱮ ᱾ ᱟᱡ ᱛᱮ ᱥᱟᱲᱮ ᱨᱮᱫ ᱟᱱᱡᱚᱢ ᱠᱚ ᱮᱢᱟᱱ ᱞᱟᱹᱜᱤᱫ ᱥᱚᱢᱚᱭ ᱤᱫᱤ ᱫᱟᱲᱮᱟᱜᱼᱟᱭ ᱾</string>
-    <string name="timeout_answer_seconds">ᱛᱮᱞᱟ ᱫᱮᱠᱷᱟᱣ ᱥᱚᱢᱚᱭ ᱦᱩᱡᱮᱱᱟ</string>
+    <string name="timeout_answer_seconds" maxLength="41">ᱛᱮᱞᱟ ᱫᱮᱠᱷᱟᱣ ᱥᱚᱢᱚᱭ ᱦᱩᱡᱮᱱᱟ</string>
     <string name="timeout_answer_seconds_summ" comment="The time to wait (in seconds) in the reviewer before automatically showing the next question or answer">XXX ᱴᱤᱯᱤᱡ</string>
-    <string name="timeout_question_seconds">ᱤᱱᱟᱹ ᱛᱟᱭᱚᱢ ᱯᱚᱨᱥᱚᱱ ᱫᱮᱠᱷᱟᱣᱼᱟ</string>
+    <string name="timeout_question_seconds" maxLength="41">ᱤᱱᱟᱹ ᱛᱟᱭᱚᱢ ᱯᱚᱨᱥᱚᱱ ᱫᱮᱠᱷᱟᱣᱼᱟ</string>
     <string name="select_locale_title">ᱟᱲᱟᱝ ᱪᱚᱭᱚᱱ</string>
-    <string name="software_render">Disable card hardware render</string>
+    <string name="software_render" maxLength="41">Disable card hardware render</string>
     <string name="software_render_summ">Hardware render is faster but may have problems, specifically on Android 8/8.1. If you cannot see parts of the card review user interface, try this setting.</string>
-    <string name="safe_display">ᱡᱟᱹᱯᱛᱤ ᱚᱵᱚᱥᱛᱷᱟ ᱩᱫᱩᱜᱽ ᱢᱚᱰ</string>
+    <string name="safe_display" maxLength="41">ᱡᱟᱹᱯᱛᱤ ᱚᱵᱚᱥᱛᱷᱟ ᱩᱫᱩᱜᱽ ᱢᱚᱰ</string>
     <string name="safe_display_summ">ᱡᱷᱚᱛᱚ ᱮᱱᱤᱢᱮᱥᱚᱱ ᱵᱚᱱᱫᱽ ᱠᱟᱛᱮ ᱟᱨ ᱴᱷᱤᱠ ᱛᱚᱨᱤᱠᱟ ᱛᱮ ᱠᱟᱰ ᱤᱫᱤ ᱢᱮ ᱾ ᱤᱼᱠᱟᱲᱤ ᱰᱤᱵᱷᱟᱤᱥ ᱫᱚᱨᱠᱟᱨ ᱯᱟᱲᱟᱣ ᱜᱮᱭᱟ ᱾ </string>
-    <string name="disable_extended_text_ui">ᱢᱤᱫᱴᱟᱹᱝ ᱡᱟᱭᱜᱟ ᱥᱟᱯᱰᱟᱣ ᱢᱚᱰ ᱵᱸᱫᱚ</string>
+    <string name="disable_extended_text_ui" maxLength="41">ᱢᱤᱫᱴᱟᱹᱝ ᱡᱟᱭᱜᱟ ᱥᱟᱯᱰᱟᱣ ᱢᱚᱰ ᱵᱸᱫᱚ</string>
     <!--See: multimedia_editor_popup_cloze. We can\'t use format strings as this is auto-generated-->
     <string name="disable_extended_text_ui_summ">\'ᱠᱞᱚᱡ ᱢᱮᱴᱟᱣ\' ᱠᱚᱱᱴᱮᱠᱥᱴ ᱢᱮᱱᱩ ᱚᱛᱱᱚᱜ ᱧᱮᱸᱞ ᱢᱚᱰ ᱨᱮ ᱵᱟᱛᱟᱣ ᱢᱮ ᱾.</string>
-    <string name="vertical_centering">ᱛᱟᱞᱟ ᱥᱟᱡᱟᱣ</string>
+    <string name="vertical_centering" maxLength="41">ᱛᱟᱞᱟ ᱥᱟᱡᱟᱣ</string>
     <string name="vertical_centering_summ">ᱠᱟᱰ ᱨᱮᱭᱟᱜ ᱡᱤᱱᱤᱥ ᱠᱚ ᱛᱟᱞᱟ ᱨᱮ ᱥᱤᱫᱷᱟ ᱛᱮ ᱟᱹᱜᱩᱭᱢᱮ</string>
-    <string name="pref_backup_max">ᱵᱮᱠᱟᱹᱯ ᱨᱮᱭᱟᱜ ᱡᱟᱹᱥᱛᱤ ᱮᱞ</string>
-    <string name="show_estimates">ᱵᱟᱹᱴᱟᱹᱱ ᱥᱚᱢᱚᱭ ᱫᱮᱠᱷᱟᱣ</string>
+    <string name="pref_backup_max" maxLength="41">ᱵᱮᱠᱟᱹᱯ ᱨᱮᱭᱟᱜ ᱡᱟᱹᱥᱛᱤ ᱮᱞ</string>
+    <string name="show_estimates" maxLength="41">ᱵᱟᱹᱴᱟᱹᱱ ᱥᱚᱢᱚᱭ ᱫᱮᱠᱷᱟᱣ</string>
     <string name="show_estimates_summ">ᱛᱮᱞᱟ ᱵᱟᱹᱴᱚᱱ ᱨᱮ ᱞᱟᱦᱟ ᱫᱩᱦᱲᱟ ᱧᱮᱞ ᱥᱚᱢᱚᱭ ᱫᱮᱠᱷᱟᱣᱢᱮ</string>
-    <string name="show_top_bar">ᱪᱮᱛᱟᱱ ᱵᱟᱨ ᱫᱮᱠᱷᱟᱣᱢᱮ</string>
+    <string name="show_top_bar" maxLength="41">ᱪᱮᱛᱟᱱ ᱵᱟᱨ ᱫᱮᱠᱷᱟᱣᱢᱮ</string>
     <string name="show_top_bar_summ">ᱪᱮᱛᱟᱱ ᱵᱟᱨ ᱨᱮ ᱠᱟᱰ ᱦᱤᱥᱟᱹᱵ ᱠᱚ, ᱯᱚᱛᱠᱟ ᱟᱨ ᱪᱤᱱᱦᱟᱹ ᱫᱮᱠᱷᱟᱣᱢᱮ</string>
-    <string name="show_progress">ᱵᱟᱹᱠᱤ ᱠᱚ ᱫᱮᱠᱷᱟᱣᱢᱮ</string>
+    <string name="show_progress" maxLength="41">ᱵᱟᱹᱠᱤ ᱠᱚ ᱫᱮᱠᱷᱟᱣᱢᱮ</string>
     <string name="show_progress_summ">ᱥᱟᱨᱮᱡ ᱠᱟᱱ ᱠᱟᱰ ᱦᱤᱥᱟᱹᱵ ᱫᱮᱠᱷᱟᱣᱢᱮ</string>
-    <string name="show_eta">ETA ᱫᱮᱠᱷᱟᱣᱢᱮ</string>
+    <string name="show_eta" maxLength="41">ETA ᱫᱮᱠᱷᱟᱣᱢᱮ</string>
     <string name="show_eta_summ">ᱥᱚᱢᱚᱭ ᱥᱟᱨᱮᱡ ᱫᱮᱠᱷᱟᱣᱢᱮ</string>
-    <string name="use_current">ᱱᱟᱶᱟ ᱠᱟᱰ ᱠᱚ ᱞᱟᱹᱜᱤᱫ ᱰᱮᱠ</string>
-    <string name="new_spread">ᱱᱟᱣᱟ ᱠᱟᱰ ᱡᱟᱭᱜᱟ</string>
-    <string name="learn_cutoff">ᱢᱟᱲᱟᱝ ᱥᱮᱫ ᱯᱟᱲᱦᱟᱣ ᱪᱮᱫᱚᱜ</string>
-    <string name="time_limit">ᱥᱚᱢᱚᱭ ᱵᱟᱠᱥᱚ ᱚᱠᱛᱚ ᱥᱤᱢᱟᱹ</string>
+    <string name="use_current" maxLength="41">ᱱᱟᱶᱟ ᱠᱟᱰ ᱠᱚ ᱞᱟᱹᱜᱤᱫ ᱰᱮᱠ</string>
+    <string name="new_spread" maxLength="41">ᱱᱟᱣᱟ ᱠᱟᱰ ᱡᱟᱭᱜᱟ</string>
+    <string name="learn_cutoff" maxLength="41">ᱢᱟᱲᱟᱝ ᱥᱮᱫ ᱯᱟᱲᱦᱟᱣ ᱪᱮᱫᱚᱜ</string>
+    <string name="time_limit" maxLength="41">ᱥᱚᱢᱚᱭ ᱵᱟᱠᱥᱚ ᱚᱠᱛᱚ ᱥᱤᱢᱟᱹ</string>
     <string name="time_limit_summ">XXX ᱴᱤᱯᱤᱡ</string>
-    <string name="new_timezone">New timezone handling</string>
-    <string name="day_offset_with_description">Start of next day (0 is midnight, 23 is 11PM)</string>
+    <string name="new_timezone" maxLength="41">New timezone handling</string>
+    <string name="day_offset_with_description" maxLength="41">Start of next day</string>
     <string name="day_offset_summ">XXX ᱴᱟᱲᱟᱝ ᱢᱟᱲᱟᱝ ᱟᱹᱭᱩᱵ</string>
-    <string name="sched_ver">ᱮᱠᱥᱯᱮᱨᱭᱢᱮᱱᱴᱟᱞ V2 ᱥᱮᱰᱭᱩᱞᱟᱹᱨ</string>
+    <string name="xlabel_dayoffset_seekbar" maxLength="41">Midnight</string>
+    <string name="ylabel_dayoffset_seekbar" maxLength="41">11PM</string>
+    <string name="sched_ver" maxLength="41">ᱮᱠᱥᱯᱮᱨᱭᱢᱮᱱᱴᱟᱞ V2 ᱥᱮᱰᱭᱩᱞᱟᱹᱨ</string>
     <string name="sched_ver_summ">ᱮᱠᱥᱯᱮᱨᱭᱢᱮᱱᱴᱟᱞ ᱥᱮᱰᱭᱩᱞᱟᱹᱨ ᱮᱢᱼᱢᱮ ᱾ ᱢᱟᱲᱟᱝᱟᱜ ᱥᱭᱸᱠ ᱱᱟᱠᱷᱟ ᱛᱮ ᱡᱩᱨ ᱵᱚᱫᱚᱞ ᱢᱮ ᱾</string>
     <string name="sched_ver_toggle_title">ᱴᱷᱤᱠ</string>
     <string name="sched_ver_2to1">This will reset any cards in learning, clear filtered decks, and change the scheduler version. Proceed?</string>
     <string name="sched_ver_1to2">The experimental scheduler could cause incorrect scheduling. Please ensure you have read the documentation first. Proceed?</string>
-    <string name="pref_keep_screen_on">Keep screen on</string>
+    <string name="pref_keep_screen_on" maxLength="41">Keep screen on</string>
     <string name="pref_keep_screen_on_summ">Disable screen timeout</string>
-    <string name="convert_fen_text">Chess notation support</string>
+    <string name="convert_fen_text" maxLength="41">Chess notation support</string>
     <string name="convert_fen_text_summ">Draw chessboard from Forsyth–Edwards Notation. The notation must be enclosed in [fen][/fen] tags.</string>
-    <string name="enable_api_title">Enable AnkiDroid API</string>
+    <string name="enable_api_title" maxLength="41">Enable AnkiDroid API</string>
     <string name="enable_api_summary">Let other apps connect to AnkiDroid and read / write data without your intervention</string>
-    <string name="custom_buttons">App bar buttons</string>
+    <string name="custom_buttons" maxLength="41">App bar buttons</string>
     <string name="custom_buttons_summary">Customize which actions appear in the app bar</string>
     <string name="custom_buttons_setting_always_show">Always show</string>
     <string name="custom_buttons_setting_if_room">Show if room</string>
     <string name="custom_buttons_setting_menu_only">Menu only</string>
-    <string name="reset_custom_buttons">Reset to default</string>
-    <string name="thirdparty_apps_title">Third-party API apps</string>
+    <string name="reset_custom_buttons" maxLength="41">Reset to default</string>
+    <string name="thirdparty_apps_title" maxLength="41">Third-party API apps</string>
     <string name="thirdparty_apps_summary">See a list of applications which make use of the AnkiDroid API such as dictionaries, utilities.</string>
-    <string name="html_javascript_debugging">HTML / Javascript Debugging</string>
+    <string name="html_javascript_debugging" maxLength="41">HTML / Javascript Debugging</string>
     <string name="html_javascript_debugging_summ">Enable remote WebView connections, and save card HTML to AnkiDroid directory</string>
     <!-- Advanced statistics settings -->
-    <string name="advanced_statistics_title">Advanced statistics</string>
-    <string name="enable_advanced_statistics_title">Enable advanced statistics</string>
+    <string name="advanced_statistics_title" maxLength="41">Advanced statistics</string>
+    <string name="enable_advanced_statistics_title" maxLength="41">Enable advanced statistics</string>
     <string name="enable_advanced_statistics_summ">Display forecast statistics based on a computation or simulation of future reviews (enabled) or on the future reviews already scheduled (disabled).</string>
-    <string name="advanced_forecast_stats_compute_n_days_title">Compute first n days, simulate remainder</string>
-    <string name="advanced_forecast_stats_compute_precision_title">Precision of computation</string>
-    <string name="advanced_forecast_stats_mc_n_iterations_title">Number of iterations of the simulation</string>
+    <string name="advanced_forecast_stats_compute_n_days_title" maxLength="41">Compute first n days, simulate remainder</string>
+    <string name="advanced_forecast_stats_compute_precision_title" maxLength="41">Precision of computation</string>
+    <string name="advanced_forecast_stats_mc_n_iterations_title" maxLength="41">Number of iterations of the simulation</string>
     <!-- Custom sync server settings -->
-    <string name="custom_sync_server_title">Custom sync server</string>
-    <string name="custom_sync_server_enable_title">Use custom sync server</string>
+    <string name="custom_sync_server_title" maxLength="41">Custom sync server</string>
+    <string name="custom_sync_server_enable_title" maxLength="41">Use custom sync server</string>
     <string name="custom_sync_server_enable_summary">If you don\'t want to use the proprietary AnkiWeb service you can specify an alternative server here</string>
-    <string name="custom_sync_server_base_url_title">Sync url</string>
+    <string name="custom_sync_server_base_url_title" maxLength="41">Sync url</string>
     <string name="custom_sync_server_base_url_invalid">url ᱟᱛᱩᱨ ᱟᱬᱜᱚ ᱰᱤᱜᱟᱹᱣ</string>
-    <string name="custom_sync_server_media_url_title">Media sync url</string>
+    <string name="custom_sync_server_media_url_title" maxLength="41">Media sync url</string>
     <string name="custom_sync_server_media_url_invalid">ᱢᱮᱰᱤᱭᱟ ᱟᱹᱛᱩᱨ ᱟᱬᱜᱚ url ᱵᱷᱩᱞ</string>
     <!-- studyoptions -->
     <string name="deck_conf_group_summ">Changes to deck group options will affect multiple decks. If you wish to change only the current deck, please add a new options group first</string>
     <string name="studyoptions_limit_select_tags">Select tags</string>
     <!-- Deck configurations -->
-    <string name="deck_conf_deck_description">Deck description (affects current deck only)</string>
-    <string name="deck_conf_group">Options group</string>
+    <string name="deck_conf_deck_description" maxLength="41">Deck description (affects current deck only)</string>
+    <string name="deck_conf_group" maxLength="41">Options group</string>
     <plurals name="deck_conf_group_summ">
         <item quantity="one">%1$s\n%2$d deck uses this group</item>
         <item quantity="other">%1$s\n%2$d decks use this group</item>
     </plurals>
-    <string name="deck_conf_new_cards">New cards</string>
-    <string name="deck_conf_rev_cards" comment="Name of the deck options submenu for configuring reviews of due cards.">ᱫᱩᱦᱲᱟ ᱧᱮᱞ</string>
-    <string name="deck_conf_lps_cards" comment="Label of the submenu stating how lapses cards are treated.">Lapses</string>
-    <string name="deck_conf_general">ᱥᱟᱱᱟᱢ</string>
-    <string name="deck_conf_reminders">Reminders</string>
-    <string name="deck_conf_steps">Steps (in minutes)</string>
-    <string name="deck_conf_order">Order</string>
-    <string name="deck_conf_new_cards_day">New cards/day</string>
-    <string name="deck_conf_graduating_ivl">Graduating interval</string>
+    <string name="deck_conf_new_cards" maxLength="41">New cards</string>
+    <string name="deck_conf_rev_cards" maxLength="41" comment="Name of the deck options submenu for configuring reviews of due cards.">ᱫᱩᱦᱲᱟ ᱧᱮᱞ</string>
+    <string name="deck_conf_lps_cards" maxLength="41" comment="Label of the submenu stating how lapses cards are treated.">Lapses</string>
+    <string name="deck_conf_general" maxLength="41">ᱥᱟᱱᱟᱢ</string>
+    <string name="deck_conf_reminders" maxLength="41">Reminders</string>
+    <string name="deck_conf_steps" maxLength="41">Steps (in minutes)</string>
+    <string name="deck_conf_order" maxLength="41">Order</string>
+    <string name="deck_conf_new_cards_day" maxLength="41">New cards/day</string>
+    <string name="deck_conf_graduating_ivl" maxLength="41">Graduating interval</string>
     <string name="deck_conf_days">XXX ᱫᱤᱱ(ᱠᱚ)</string>
-    <string name="deck_conf_easy_ivl">Easy interval</string>
-    <string name="deck_conf_start_ease">Starting ease</string>
-    <string name="deck_conf_max_rev">Maximum reviews/day</string>
-    <string name="deck_conf_new_bury">Bury related new cards</string>
+    <string name="deck_conf_easy_ivl" maxLength="41">Easy interval</string>
+    <string name="deck_conf_start_ease" maxLength="41">Starting ease</string>
+    <string name="deck_conf_max_rev" maxLength="41">Maximum reviews/day</string>
+    <string name="deck_conf_new_bury" maxLength="41">Bury related new cards</string>
     <string name="deck_conf_new_bury_summ">Related new cards are buried until the next day</string>
-    <string name="deck_conf_rev_bury">Bury related reviews</string>
+    <string name="deck_conf_rev_bury" maxLength="41">Bury related reviews</string>
     <string name="deck_conf_rev_bury_summ">Related reviews are buried until the next day</string>
-    <string name="deck_conf_use_general_timeout_settings">Use general settings</string>
+    <string name="deck_conf_use_general_timeout_settings" maxLength="41">Use general settings</string>
     <string name="deck_conf_use_general_timeout_settings_summ">Use general \'Automatic display answer\' settings instead of using the settings for this group.</string>
-    <string name="deck_conf_easy_bonus">Easy bonus</string>
-    <string name="deck_conf_hard_factor">ᱠᱚᱰᱟ ᱤᱱᱴᱚᱨᱣᱟᱞ</string>
-    <string name="deck_conf_ivl_fct">Interval modifier</string>
-    <string name="deck_conf_max_ivl">Maximum interval</string>
-    <string name="deck_conf_new_lps_ivl">New interval</string>
-    <string name="deck_conf_min_ivl">Minimum interval</string>
-    <string name="deck_conf_leech_thres">Leech threshold</string>
+    <string name="deck_conf_easy_bonus" maxLength="41">Easy bonus</string>
+    <string name="deck_conf_hard_factor" maxLength="41">ᱠᱚᱰᱟ ᱤᱱᱴᱚᱨᱣᱟᱞ</string>
+    <string name="deck_conf_ivl_fct" maxLength="41">Interval modifier</string>
+    <string name="deck_conf_max_ivl" maxLength="41">Maximum interval</string>
+    <string name="deck_conf_new_lps_ivl" maxLength="41">New interval</string>
+    <string name="deck_conf_min_ivl" maxLength="41">Minimum interval</string>
+    <string name="deck_conf_leech_thres" maxLength="41">Leech threshold</string>
     <string name="deck_conf_fails">XXX lapse(s)</string>
-    <string name="deck_conf_leech_action">Leech action</string>
-    <string name="deck_conf_max_time">Maximal answer time</string>
+    <string name="deck_conf_leech_action" maxLength="41">Leech action</string>
+    <string name="deck_conf_max_time" maxLength="41">Maximal answer time</string>
     <string name="deck_conf_seconds">XXX ᱴᱤᱡ</string>
-    <string name="deck_conf_timer">Show answer timer</string>
-    <string name="deck_conf_autoplay">Automatically play audio</string>
-    <string name="deck_conf_replayq">Replay question</string>
+    <string name="deck_conf_timer" maxLength="41">Show answer timer</string>
+    <string name="deck_conf_autoplay" maxLength="41">Automatically play audio</string>
+    <string name="deck_conf_replayq" maxLength="41">Replay question</string>
     <string name="deck_conf_replayq_summ">When answer shown, replay both question and answer audio</string>
-    <string name="deck_conf_manage">Group management</string>
+    <string name="deck_conf_manage" maxLength="41">Group management</string>
     <string name="deck_conf_manage_summ">Add and change options groups</string>
-    <string name="deck_conf_current_group">Current group</string>
-    <string name="deck_conf_rename" comment="Menu entry to rename a deck">ᱫᱚᱦᱲᱟ ᱧᱩᱛᱩᱢ</string>
-    <string name="deck_conf_reset">Restore defaults</string>
+    <string name="deck_conf_current_group" maxLength="41">Current group</string>
+    <string name="deck_conf_rename" maxLength="41" comment="Menu entry to rename a deck">ᱫᱚᱦᱲᱟ ᱧᱩᱛᱩᱢ</string>
+    <string name="deck_conf_reset" maxLength="41">Restore defaults</string>
     <string name="deck_conf_reset_message">Restore current options group to default values?</string>
-    <string name="deck_conf_add" comment="Adding a new deck option group">ᱥᱮᱞᱮᱫ</string>
+    <string name="deck_conf_add" maxLength="41" comment="Adding a new deck option group">ᱥᱮᱞᱮᱫ</string>
     <string name="deck_conf_add_summ">Create a copy of the current options group</string>
     <string name="deck_conf_remove_message">Remove current options group?</string>
-    <string name="deck_conf_set_subdecks">Set for all subdecks</string>
+    <string name="deck_conf_set_subdecks" maxLength="41">Set for all subdecks</string>
     <plurals name="deck_conf_set_subdecks_summ">
         <item quantity="one">%s subdeck will use this group</item>
         <item quantity="other">%s subdecks will use this group</item>
     </plurals>
     <string name="deck_conf_set_subdecks_message">Set current options group for all of this deck’s subdecks?</string>
-    <string name="pref_browser_editor_font">Browser and editor font</string>
-    <string name="deck_conf_cram_filter">ᱪᱷᱟᱹᱱᱤᱭᱟᱜ</string>
-    <string name="deck_conf_cram_search">ᱥᱮᱸᱫᱽᱨᱟ</string>
-    <string name="deck_conf_cram_limit">ᱥᱤᱢᱟᱹ ᱛᱮ</string>
-    <string name="deck_conf_cram_order">ᱠᱟᱰᱥ ᱪᱚᱭᱚᱱ ᱯᱨᱚᱠᱟᱨ ᱠᱚ</string>
-    <string name="deck_conf_cram_reschedule" comment="Title of the box labelled by deck_conf_cram_reschedule_summ">ᱨᱤᱥᱮᱰᱭᱩᱞ ᱢᱮ</string>
+    <string name="pref_browser_editor_font" maxLength="41">Browser and editor font</string>
+    <string name="deck_conf_cram_filter" maxLength="41">ᱪᱷᱟᱹᱱᱤᱭᱟᱜ</string>
+    <string name="deck_conf_cram_search" maxLength="41">ᱥᱮᱸᱫᱽᱨᱟ</string>
+    <string name="deck_conf_cram_limit" maxLength="41">ᱥᱤᱢᱟᱹ ᱛᱮ</string>
+    <string name="deck_conf_cram_order" maxLength="41">ᱠᱟᱰᱥ ᱪᱚᱭᱚᱱ ᱯᱨᱚᱠᱟᱨ ᱠᱚ</string>
+    <string name="deck_conf_cram_reschedule" maxLength="41" comment="Title of the box labelled by deck_conf_cram_reschedule_summ">ᱨᱤᱥᱮᱰᱭᱩᱞ ᱢᱮ</string>
     <string name="deck_conf_cram_reschedule_summ">Reschedule cards based on my answers in this deck</string>
-    <string name="deck_conf_cram_steps">Custom steps (in minutes)</string>
-    <string name="deck_conf_cram_steps_summ">Define custom steps</string>
-    <string name="deck_conf_reminders_enabled">Enable reminder notifications for decks in this deck group</string>
-    <string name="deck_conf_reminders_time">Remind at</string>
+    <string name="deck_conf_cram_steps" maxLength="41">Custom steps (in minutes)</string>
+    <string name="deck_conf_cram_steps_summ" maxLength="41">Define custom steps</string>
+    <string name="deck_conf_reminders_enabled" maxLength="41">Enable reminder notifications for decks in this deck group</string>
+    <string name="deck_conf_reminders_time" maxLength="41">Remind at</string>
     <!-- analytics options -->
     <string name="analytics_dialog_title">Help make AnkiDroid better!</string>
-    <string name="analytics_title">Share feature usage</string>
+    <string name="analytics_title" maxLength="41">Share feature usage</string>
     <string name="analytics_summ">You can contribute to AnkiDroid by helping the development team see which features people use</string>
-    <string name="note_editor_replace_newlines">Replace newlines with HTML</string>
+    <string name="note_editor_replace_newlines" maxLength="41">Replace newlines with HTML</string>
     <string name="note_editor_replace_newlines_summ">In the Note Editor, convert any instances of &lt;br&gt; to newlines when editing a card.</string>
-    <string name="no_code_formatting">Simple typed answer formatting</string>
+    <string name="no_code_formatting" maxLength="41">Simple typed answer formatting</string>
     <string name="no_code_formatting_summ">Fixes ‘􏿾’ appearing in typed answer results</string>
-    <string name="type_in_answer_focus">Focus ‘type in answer’</string>
+    <string name="type_in_answer_focus" maxLength="41">Focus ‘type in answer’</string>
     <string name="type_in_answer_focus_summ">Automatically focus the ‘type in answer’ field in the reviewer</string>
     <!-- Open Changelog-->
     <string name="open_changelog">Open Changelog</string>
