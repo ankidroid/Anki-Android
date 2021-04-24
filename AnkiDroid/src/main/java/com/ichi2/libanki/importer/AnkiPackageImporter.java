@@ -111,9 +111,7 @@ public class AnkiPackageImporter extends Anki2Importer {
                     return;
                 }
             } finally {
-                if (tmpCol != null) {
-                    tmpCol.close();
-                }
+                tmpCol.close();
             }
             mFile = colpath;
             // we need the media dict in advance, and we'll need a map of fname ->
@@ -131,13 +129,26 @@ public class AnkiPackageImporter extends Anki2Importer {
                 while (jr.hasNext()) {
                     num = jr.nextName();
                     name = jr.nextString();
-                    File file= new File(dir, name);
+                    File file = new File(dir, name);
                     if (!Utils.isInside(file, dir)) {
                         throw (new RuntimeException("Invalid file"));
                     }
                     Utils.nfcNormalized(num);
                     mNameToNum.put(name, num);
                     numToName.put(num, name);
+
+                    // import static media
+                    if (!name.startsWith("_") && !name.startsWith("latex-")){
+                        continue;
+                    }
+                    File path = new File(mCol.getMedia().dir(), Utils.nfcNormalized(name));
+                    if (!path.exists()) {
+                        try {
+                            Utils.unzipFiles(mZip, mCol.getMedia().dir(), new String[]{num}, numToName);
+                        } catch (IOException e) {
+                            Timber.e("Failed to extract static media file. Ignoring.");
+                        }
+                    }
                 }
                 jr.endObject();
             } catch (FileNotFoundException e) {
@@ -147,22 +158,6 @@ public class AnkiPackageImporter extends Anki2Importer {
             }
             // run anki2 importer
             super.run();
-            // import static media
-            for (Map.Entry<String, String> entry : mNameToNum.entrySet()) {
-                String file = entry.getKey();
-                String c = entry.getValue();
-                if (!file.startsWith("_") && !file.startsWith("latex-")) {
-                    continue;
-                }
-                File path = new File(mCol.getMedia().dir(), Utils.nfcNormalized(file));
-                if (!path.exists()) {
-                    try {
-                        Utils.unzipFiles(mZip, mCol.getMedia().dir(), new String[]{c}, numToName);
-                    } catch (IOException e) {
-                        Timber.e("Failed to extract static media file. Ignoring.");
-                    }
-                }
-            }
         } finally {
             long availableSpace = Utils.determineBytesAvailable(mCol.getPath());
             Timber.d("Total available size is: %d", availableSpace);
@@ -187,3 +182,4 @@ public class AnkiPackageImporter extends Anki2Importer {
         return null;
     }
 }
+
