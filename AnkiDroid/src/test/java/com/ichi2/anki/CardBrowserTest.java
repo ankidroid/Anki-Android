@@ -5,6 +5,7 @@ import android.app.Activity;
 import android.app.Application;
 import android.content.ComponentName;
 import android.content.Intent;
+import android.view.KeyEvent;
 import android.view.MenuItem;
 import android.widget.AdapterView;
 import android.widget.ListView;
@@ -39,6 +40,7 @@ import androidx.test.core.app.ApplicationProvider;
 import androidx.test.ext.junit.runners.AndroidJUnit4;
 import timber.log.Timber;
 
+import static com.ichi2.anim.ActivityTransitionAnimation.Direction.FADE;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.containsString;
 import static org.hamcrest.Matchers.equalTo;
@@ -525,6 +527,15 @@ public class CardBrowserTest extends RobolectricTest {
 
         assertThat("Cardbrowser has Deck 1 as selected deck", cardBrowser.getSelectedDeckNameForUi(), is("Deck 1"));
         assertThat("Results should only be from the selected deck", cardBrowser.getCardCount(), is(1));
+    }
+
+    @Test
+    public void check() {
+        CardBrowser browser = getBrowserWithNotes(1);
+        ShadowActivity shadowActivity = shadowOf(browser);
+        Preferences p = super.startPreferenceActivityNormallyOpenCollectionWithIntent(Preferences.class, new Intent(shadowActivity.getContentView().getContext(), Preferences.class));
+        p.finish();
+        assertThat("", browser.getCardCount(), is(1));
     }
 
     protected void assertUndoDoesNotContain(CardBrowser browser, @StringRes int resId) {
