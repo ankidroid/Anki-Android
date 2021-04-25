@@ -115,6 +115,18 @@ public class BackupManagerTest {
         verify(bm, times(1)).isBackupUnnecessary(any(), any());
     }
 
+    @Test
+    public void noBackupPerformedIfBackupAlreadyExists() {
+        File file = mock(File.class, new ThrowingAnswer());
+        doReturn(true).when(file).exists();
+
+        BackupManager bm = getPassingBackupManagerSpy(file);
+
+        boolean result = performBackup(bm);
+
+        assertThat("should fail if backups exists", result, is(false));
+    }
+
     private boolean performBackup(BackupManager bm) {
         return performBackup(bm, new MockTime(100000000));
     }
@@ -134,18 +146,30 @@ public class BackupManagerTest {
 
     /** Returns a spy of BackupManager which would pass */
     protected BackupManager getPassingBackupManagerSpy() {
+        return getPassingBackupManagerSpy(null);
+    }
+
+    /** Returns a spy of BackupManager which would pass */
+    protected BackupManager getPassingBackupManagerSpy(File backupFileMock) {
         BackupManager spy = spy(BackupManager.createInstance());
         doReturn(true).when(spy).hasFreeDiscSpace(any());
         doReturn(false).when(spy).collectionIsTooSmallToBeValid(any());
         doNothing().when(spy).performBackupInNewThread(any(), any(), any(), any());
         doReturn(null).when(spy).getLastBackupDate(any(), any());
 
-        // strict mock
-        File f = mock(File.class, new ThrowingAnswer());
-        doReturn(false).when(f).exists();
+        File f = backupFileMock != null ? backupFileMock : getBackupFileMock();
         doReturn(f).when(spy).getBackupFile(any(), any());
         return spy;
     }
+
+
+    // strict mock
+    private File getBackupFileMock() {
+        File f = mock(File.class, new ThrowingAnswer());
+        doReturn(false).when(f).exists();
+        return f;
+    }
+
 
     // Likely a better way. Using: https://stackoverflow.com/a/36206766
     public static class ThrowingAnswer implements Answer<Object> {
