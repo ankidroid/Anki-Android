@@ -109,7 +109,6 @@ public class CardTemplatePreviewerTest extends RobolectricTest {
         showAnswerButton.performClick();
         Assert.assertTrue("Not showing the answer?", testCardTemplatePreviewer.getShowingAnswer());
     }
-
     
     private Card getSavedCard(Model model, int ordinal) {
         Note n = getCol().newNote(model);
