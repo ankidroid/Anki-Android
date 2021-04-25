@@ -279,7 +279,6 @@ dependencies {
     implementation'ch.acra:acra-toast:5.7.0'
     implementation'ch.acra:acra-limiter:5.7.0'
 
-    implementation 'com.github.requery:sqlite-android:3.35.4'
     implementation 'com.afollestad.material-dialogs:core:0.9.6.0'
     implementation 'com.getbase:floatingactionbutton:1.10.1'
     // io.github.java-diff-utils:java-diff-utils is the natural successor here, but requires API24, #7091
