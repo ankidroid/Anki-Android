@@ -124,15 +124,18 @@ public class CardTemplatePreviewerTest extends RobolectricTest {
         noteFieldBundleTest.putInt("cardListSize", 2);
         intent.putExtra("noteEditorBundle", noteFieldBundleTest);
 
-        CardTemplatePreviewer testCardTemplatePreviewer = Robolectric.buildActivity(CardTemplatePreviewer.class, intent).create().start().get();
-        Assert.assertTrue(testCardTemplatePreviewer.mPreviewNextCard.isEnabled());
-        testCardTemplatePreviewer.mPreviewNextCard.performClick();
-        testCardTemplatePreviewer.displayCardAnswer();
-        Assert.assertTrue(testCardTemplatePreviewer.mAnswerField.equals("Front Test"));
-        Assert.assertTrue(testCardTemplatePreviewer.mPreviewPrevCard.isEnabled());
-        testCardTemplatePreviewer.mPreviewPrevCard.performClick();
-        testCardTemplatePreviewer.displayCardAnswer();
-        Assert.assertTrue(testCardTemplatePreviewer.mAnswerField.equals("Back Test"));
+        ActivityController<TestCardTemplatePreviewer> previewerController = Robolectric.buildActivity(TestCardTemplatePreviewer.class, intent).create().start().resume().visible();
+        saveControllerForCleanup(previewerController);
+
+        TestCardTemplatePreviewer testCardTemplatePreviewer = previewerController.get();
+
+        View previewNextCardButton = testCardTemplatePreviewer.findViewById(R.id.preview_next_flashcard);
+        View previewPrevCardButton = testCardTemplatePreviewer.findViewById(R.id.preview_previous_flashcard);
+        Assert.assertTrue(previewNextCardButton.isEnabled());
+        Assert.assertFalse(previewPrevCardButton.isEnabled());
+        previewNextCardButton.performClick();
+        Assert.assertTrue(previewPrevCardButton.isEnabled());
+        Assert.assertFalse(previewNextCardButton.isEnabled());
     }
 
     private Card getSavedCard(Model model, int ordinal) {
