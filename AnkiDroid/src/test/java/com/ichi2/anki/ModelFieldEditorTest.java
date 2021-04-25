@@ -114,6 +114,7 @@ public class ModelFieldEditorTest extends RobolectricTest {
         fieldNameInput.setText(fieldName);
         dialog.getActionButton(POSITIVE)
                 .performClick();
+        advanceRobolectricLooperWithSleep();
 
         return fieldName;
     }
