@@ -108,36 +108,7 @@ public class CardTemplatePreviewerTest extends RobolectricTest {
         showAnswerButton.performClick();
         Assert.assertTrue("Not showing the answer?", testCardTemplatePreviewer.getShowingAnswer());
     }
-
-    @Test
-    public void testPreviewNoteEditorFieldData() {
-        String modelName = "Basic (and reversed card)";
-        Model collectionBasicModelOriginal = getCurrentDatabaseModelCopy(modelName);
-
-        Intent intent = new Intent(Intent.ACTION_VIEW);
-        intent.putExtra(TemporaryModel.INTENT_MODEL_FILENAME, TemporaryModel.saveTempModel(ApplicationProvider.getApplicationContext(), collectionBasicModelOriginal));
-        Bundle fieldsTest = new Bundle();
-        Bundle noteFieldBundleTest = new Bundle();
-        fieldsTest.putString("0", "Front Test");
-        fieldsTest.putString("1", "Back Test");
-        noteFieldBundleTest.putBundle("editFields", fieldsTest);
-        noteFieldBundleTest.putInt("cardListSize", 2);
-        intent.putExtra("noteEditorBundle", noteFieldBundleTest);
-
-        ActivityController<TestCardTemplatePreviewer> previewerController = Robolectric.buildActivity(TestCardTemplatePreviewer.class, intent).create().start().resume().visible();
-        saveControllerForCleanup(previewerController);
-
-        TestCardTemplatePreviewer testCardTemplatePreviewer = previewerController.get();
-
-        View previewNextCardButton = testCardTemplatePreviewer.findViewById(R.id.preview_next_flashcard);
-        View previewPrevCardButton = testCardTemplatePreviewer.findViewById(R.id.preview_previous_flashcard);
-        Assert.assertTrue(previewNextCardButton.isEnabled());
-        Assert.assertFalse(previewPrevCardButton.isEnabled());
-        previewNextCardButton.performClick();
-        Assert.assertTrue(previewPrevCardButton.isEnabled());
-        Assert.assertFalse(previewNextCardButton.isEnabled());
-    }
-
+    
     private Card getSavedCard(Model model, int ordinal) {
         Note n = getCol().newNote(model);
         List<String> fieldNames = model.getFieldsNames();
