@@ -8,17 +8,14 @@
         android:id="@+id/web_view_stats"
         android:layout_alignParentTop="true"
         android:layout_alignParentStart="true"
-        android:layout_alignParentLeft="true"
         android:layout_alignParentBottom="true"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentRight="true"/>
+        android:layout_alignParentEnd="true"/>
     <ProgressBar
         android:id="@+id/progress_bar_stats_overview"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:indeterminate="true"
         android:layout_alignParentEnd="false"
-        android:layout_alignParentRight="false"
         android:layout_centerInParent="true"/>
 
 

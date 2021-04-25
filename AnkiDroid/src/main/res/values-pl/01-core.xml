@@ -126,12 +126,12 @@
     <string name="menu_edit_tags">Edytuj etykiety</string>
     <string name="delete_note_message">Jesteś pewny, że chcesz usunąć tę notatkę i wszystkie jej karty?\n%s</string>
     <string name="menu_select">Zaznacz tekst</string>
+    <string name="menu_lookup">Lookup text</string>
     <string name="menu_search">Wyszukiwanie w %1$s</string>
     <string name="menu_mark_note">Wyróżnij notatkę</string>
     <string name="menu_unmark_note">Cofnij wyróżnienie notatki</string>
     <string name="menu_toggle_mic_tool_bar">Sprawdź wymowę</string>
     <string name="new_deck">Stwórz talię</string>
-    <string name="create" comment="Button to create a filtered deck">Utwórz</string>
     <string name="new_dynamic_deck">Stwórz filtrowaną talię</string>
     <string name="night_mode">Tryb nocny</string>
     <string name="directory_inaccessible">Katalog AnkiDroid jest niedostępny</string>
@@ -164,7 +164,7 @@
     <string name="custom_study_deck_name">Sesja nauki niestandardowej</string>
     <string name="custom_study_deck_exists">Najpierw zmień nazwę istniejącej talii nauki niestandardowej.</string>
     <string name="empty_deck">Ta talia jest pusta</string>
-    <string name="search_deck">Deck Search</string>
+    <string name="search_deck">Przeszukaj talię</string>
     <string name="empty_deck_add_note">Dodaj kartę</string>
     <string name="invalid_deck_name">Nieprawidłowa nazwa talii</string>
     <string name="studyoptions_empty">Talia jest pusta. Wybierz przycisk + żeby dodać karty.</string>

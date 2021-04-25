@@ -44,7 +44,6 @@
         android:layout_height="wrap_content"
         android:layout_gravity="start"
         android:layout_marginBottom="16dip"
-        android:layout_marginLeft="4dip"
         android:layout_marginStart="4dip"
         android:layout_weight="4"
         android:gravity="start|center"

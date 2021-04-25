@@ -23,7 +23,7 @@ import com.wildplot.android.rendering.interfaces.Drawable;
 import java.util.Vector;
 
 
-@SuppressLint("FieldNamingPatternDetector")
+@SuppressLint("NonPublicNonStaticFieldName")
 public class DrawableContainer implements Drawable {
 
     private final Vector<Drawable> drawableVector = new Vector<>();

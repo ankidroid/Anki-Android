@@ -111,12 +111,12 @@
     <string name="menu_edit_tags">Тегларны үзгәртү</string>
     <string name="delete_note_message">Бу язуны һәм бөтен аның кәртләрен бетерергәме?\n%s</string>
     <string name="menu_select">Текстны сайлау</string>
+    <string name="menu_lookup">Lookup text</string>
     <string name="menu_search">%1$sдә карарга</string>
     <string name="menu_mark_note">Язуны билгеләү</string>
     <string name="menu_unmark_note">Билгеләүне бетерергә</string>
     <string name="menu_toggle_mic_tool_bar">Әйтелешне тикшерү</string>
     <string name="new_deck">Колода ясау</string>
-    <string name="create" comment="Button to create a filtered deck">Ясарга</string>
     <string name="new_dynamic_deck">Фильтрлы колода ясау</string>
     <string name="night_mode">Төнге режим</string>
     <string name="directory_inaccessible">AnkiDroid папкасына рөхсәт юк</string>
@@ -141,11 +141,11 @@
     <string name="time_quantity_months">%.1f ай</string>
     <string name="time_quantity_years">%.1f ел</string>
     <!-- or "%.1f a" -->
-    <string name="rebuild_filtered_deck">Фильтрлы колода үзгәртелә</string>
+    <string name="rebuild_filtered_deck">Rebuilding filtered deck&#8230;</string>
     <string name="rebuild_cram_label">Яңадан тезү</string>
     <string name="empty_cram_label">Бушату</string>
     <string name="create_subdeck">Колода эчендә колода ясау</string>
-    <string name="empty_filtered_deck">Фильтрлы колода бушатыла</string>
+    <string name="empty_filtered_deck">Фильтрлы колода бушатыла...</string>
     <string name="custom_study_deck_name">Шәхси өйрәнү сессиясе</string>
     <string name="custom_study_deck_exists">Башта булган артык өйрәнү колода исемен үзгәртегез</string>
     <string name="empty_deck">Бу колода буш</string>

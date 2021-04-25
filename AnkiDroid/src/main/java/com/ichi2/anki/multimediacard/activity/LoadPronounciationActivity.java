@@ -31,9 +31,10 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.Spinner;
-import android.widget.Toast;
+import android.widget.TextView;
 
 import com.ichi2.anki.R;
+import com.ichi2.anki.UIUtils;
 import com.ichi2.anki.multimediacard.beolingus.parsing.BeolingusParser;
 import com.ichi2.anki.multimediacard.language.LanguageListerBeolingus;
 import com.ichi2.anki.runtimetools.TaskOperations;
@@ -67,9 +68,6 @@ public class LoadPronounciationActivity extends Activity implements OnCancelList
 
     private String mTranslationAddress;
 
-    @SuppressWarnings("deprecation") // tracked in github as #5020
-    private android.app.ProgressDialog mProgressDialog = null;
-
     private String mPronunciationAddress;
 
     private String mMp3Address;
@@ -77,6 +75,11 @@ public class LoadPronounciationActivity extends Activity implements OnCancelList
     private LoadPronounciationActivity mActivity;
     private LanguageListerBeolingus mLanguageLister;
     private Spinner mSpinnerFrom;
+
+    private LinearLayout mMainLayout;
+    private TextView mLoadingLayoutTitle;
+    private TextView mLoadingLayoutMessage;
+    private View mLoadingLayout;
 
     private BackgroundPost mPostTranslation = null;
     private BackgroundPost mPostPronunciation = null;
@@ -105,7 +108,10 @@ public class LoadPronounciationActivity extends Activity implements OnCancelList
         setContentView(R.layout.activity_load_pronounciation);
         mSource = getIntent().getExtras().getString(EXTRA_SOURCE);
 
-        LinearLayout linearLayout = findViewById(R.id.layoutInLoadPronActivity);
+        mMainLayout = findViewById(R.id.layoutInLoadPronActivity);
+        mLoadingLayout = findViewById(R.id.progress_bar_layout);
+        mLoadingLayoutTitle = findViewById(R.id.progress_bar_layout_title);
+        mLoadingLayoutMessage = findViewById(R.id.progress_bar_layout_message);
 
         mLanguageLister = new LanguageListerBeolingus();
 
@@ -114,11 +120,11 @@ public class LoadPronounciationActivity extends Activity implements OnCancelList
                 mLanguageLister.getLanguages());
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         mSpinnerFrom.setAdapter(adapter);
-        linearLayout.addView(mSpinnerFrom);
+        mMainLayout.addView(mSpinnerFrom);
 
         Button buttonLoadPronunciation = new Button(this);
         buttonLoadPronunciation.setText(gtxt(R.string.multimedia_editor_pron_load));
-        linearLayout.addView(buttonLoadPronunciation);
+        mMainLayout.addView(buttonLoadPronunciation);
         buttonLoadPronunciation.setOnClickListener(this::onLoadPronunciation);
         Button mSaveButton = new Button(this);
         mSaveButton.setText("Save");
@@ -136,6 +142,23 @@ public class LoadPronounciationActivity extends Activity implements OnCancelList
     }
 
 
+    private void showProgressBar(String message) {
+        showProgressBar(gtxt(R.string.multimedia_editor_progress_wait_title), message);
+    }
+
+    private void showProgressBar(CharSequence title, CharSequence message) {
+        mMainLayout.setVisibility(View.GONE);
+        mLoadingLayout.setVisibility(View.VISIBLE);
+        mLoadingLayoutTitle.setText(title);
+        mLoadingLayoutMessage.setText(message);
+    }
+
+    private void hideProgressBar() {
+        mLoadingLayout.setVisibility(View.GONE);
+        mMainLayout.setVisibility(View.VISIBLE);
+    }
+
+
     /**
      * @param v Start of the story.
      */
@@ -147,7 +170,7 @@ public class LoadPronounciationActivity extends Activity implements OnCancelList
 
         String message = gtxt(R.string.multimedia_editor_searching_word);
 
-        showProgressDialog(message);
+        showProgressBar(message);
 
         mTranslationAddress = computeAddressOfTranslationPage();
 
@@ -158,22 +181,11 @@ public class LoadPronounciationActivity extends Activity implements OnCancelList
             mPostTranslation.execute();
         } catch (Exception e) {
             Timber.w(e);
-            mProgressDialog.dismiss();
+            hideProgressBar();
             showToast(gtxt(R.string.multimedia_editor_something_wrong));
         }
     }
 
-
-    @SuppressWarnings("deprecation") // ProgressDialog change tracked in github as #5020
-    private void showProgressDialog(String message) {
-
-        dismissCarefullyProgressDialog();
-
-        mProgressDialog = android.app.ProgressDialog.show(this, gtxt(R.string.multimedia_editor_progress_wait_title), message, true,
-                false);
-        mProgressDialog.setCancelable(true);
-        mProgressDialog.setOnCancelListener(this);
-    }
 
     /**
      * @author zaur This class is used two times. First time from Beolingus it requests a page with the word
@@ -285,13 +297,13 @@ public class LoadPronounciationActivity extends Activity implements OnCancelList
             }
 
             try {
-                showProgressDialog(gtxt(R.string.multimedia_editor_pron_looking_up));
+                showProgressBar(gtxt(R.string.multimedia_editor_pron_looking_up));
                 mPostPronunciation = new BackgroundPost();
                 mPostPronunciation.setAddress(mPronunciationAddress);
                 mPostPronunciation.execute();
             } catch (Exception e) {
                 Timber.w(e);
-                mProgressDialog.dismiss();
+                hideProgressBar();
                 showToast(gtxt(R.string.multimedia_editor_something_wrong));
             }
 
@@ -314,13 +326,13 @@ public class LoadPronounciationActivity extends Activity implements OnCancelList
 
             // Download MP3 file
             try {
-                showProgressDialog(gtxt(R.string.multimedia_editor_general_downloading));
+                showProgressBar(gtxt(R.string.multimedia_editor_general_downloading));
                 mDownloadMp3Task = new DownloadFileTask();
                 mDownloadMp3Task.setAddress(mMp3Address);
                 mDownloadMp3Task.execute();
             } catch (Exception e) {
                 Timber.w(e);
-                mProgressDialog.dismiss();
+                hideProgressBar();
                 showToast(gtxt(R.string.multimedia_editor_something_wrong));
             }
         }
@@ -343,7 +355,7 @@ public class LoadPronounciationActivity extends Activity implements OnCancelList
             return;
         }
 
-        mProgressDialog.dismiss();
+        hideProgressBar();
         showToast(gtxt(R.string.multimedia_editor_general_done));
         Intent resultData = new Intent();
         resultData.putExtra(EXTRA_PRONUNCIATION_FILE_PATH, result);
@@ -367,7 +379,7 @@ public class LoadPronounciationActivity extends Activity implements OnCancelList
 
 
     private void stop(String string) {
-        mProgressDialog.dismiss();
+        hideProgressBar();
         showToast(string);
     }
 
@@ -402,16 +414,12 @@ public class LoadPronounciationActivity extends Activity implements OnCancelList
 
 
     private void showToast(CharSequence text) {
-        int duration = Toast.LENGTH_SHORT;
-        Toast toast = Toast.makeText(this, text, duration);
-        toast.show();
+        UIUtils.showThemedToast(this, text, true);
     }
 
 
     private void showToastLong(CharSequence text) {
-        int duration = Toast.LENGTH_LONG;
-        Toast toast = Toast.makeText(this, text, duration);
-        toast.show();
+        UIUtils.showThemedToast(this, text, false);
     }
 
 
@@ -419,25 +427,12 @@ public class LoadPronounciationActivity extends Activity implements OnCancelList
     @Override
     public void onCancel(DialogInterface dialog) {
         mStopped = true;
-        dismissCarefullyProgressDialog();
+        hideProgressBar();
         stopAllTasks();
         Intent resultData = new Intent();
         setResult(RESULT_CANCELED, resultData);
         finish();
     }
-
-
-    private void dismissCarefullyProgressDialog() {
-        try {
-            if ((mProgressDialog != null) && mProgressDialog.isShowing()) {
-                    mProgressDialog.dismiss();
-            }
-        } catch (Exception e) {
-            Timber.w(e);
-            // nothing is done intentionally
-        }
-    }
-
 
     private void stopAllTasks() {
         AsyncTask<?, ?, ?> t = mPostTranslation;
@@ -452,7 +447,7 @@ public class LoadPronounciationActivity extends Activity implements OnCancelList
     @Override
     protected void onPause() {
         super.onPause();
-        dismissCarefullyProgressDialog();
+        hideProgressBar();
         stopAllTasks();
     }
 

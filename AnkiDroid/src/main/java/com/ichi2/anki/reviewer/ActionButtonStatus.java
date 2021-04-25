@@ -1,3 +1,19 @@
+/*
+ *  Copyright (c) 2020 David Allison <davidallisongithub@gmail.com>
+ *
+ *  This program is free software; you can redistribute it and/or modify it under
+ *  the terms of the GNU General Public License as published by the Free Software
+ *  Foundation; either version 3 of the License, or (at your option) any later
+ *  version.
+ *
+ *  This program is distributed in the hope that it will be useful, but WITHOUT ANY
+ *  WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A
+ *  PARTICULAR PURPOSE. See the GNU General Public License for more details.
+ *
+ *  You should have received a copy of the GNU General Public License along with
+ *  this program.  If not, see <http://www.gnu.org/licenses/>.
+ */
+
 package com.ichi2.anki.reviewer;
 
 import android.content.SharedPreferences;
@@ -5,6 +21,7 @@ import android.graphics.drawable.Drawable;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import com.ichi2.anki.Lookup;
 import com.ichi2.anki.R;
 import com.ichi2.themes.Themes;
 
@@ -65,6 +82,11 @@ public class ActionButtonStatus {
         setupButton(preferences, R.id.action_toggle_whiteboard, "customButtonEnableWhiteboard", SHOW_AS_ACTION_NEVER);
         setupButton(preferences, R.id.action_save_whiteboard, "customButtonSaveWhiteboard", SHOW_AS_ACTION_NEVER);
         setupButton(preferences, R.id.action_change_whiteboard_pen_color, "customButtonWhiteboardPenColor", SHOW_AS_ACTION_IF_ROOM);
+        if (!Lookup.isAvailable()) {
+            mCustomButtons.put(R.id.action_search_dictionary, MENU_DISABLED);
+        } else {
+            setupButton(preferences, R.id.action_search_dictionary, "customButtonLookup", SHOW_AS_ACTION_NEVER);
+        }
     }
 
 

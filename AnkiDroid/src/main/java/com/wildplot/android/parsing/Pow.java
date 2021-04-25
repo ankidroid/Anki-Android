@@ -18,7 +18,7 @@ package com.wildplot.android.parsing;
 
 import android.annotation.SuppressLint;
 
-@SuppressLint("FieldNamingPatternDetector")
+@SuppressLint("NonPublicNonStaticFieldName")
 public class Pow implements TreeElement {
     private final TopLevelParser parser;
 

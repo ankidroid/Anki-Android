@@ -5,8 +5,9 @@ import android.app.Activity;
 import android.app.Application;
 import android.content.ComponentName;
 import android.content.Intent;
-import android.view.KeyEvent;
+import android.os.Bundle;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
 
@@ -14,6 +15,7 @@ import com.ichi2.libanki.Card;
 import com.ichi2.libanki.Consts;
 import com.ichi2.libanki.Note;
 import com.ichi2.libanki.Deck;
+import com.ichi2.libanki.utils.Time;
 import com.ichi2.testutils.AnkiAssert;
 import com.ichi2.testutils.IntentAssert;
 
@@ -517,7 +519,7 @@ public class CardBrowserTest extends RobolectricTest {
         addNoteUsingBasicModel("Hello", "John");
         long deck = addDeck("Deck 1");
         getCol().getDecks().select(deck);
-        Card c2 = addNoteUsingBasicModel("New", "world").firstCard();
+        Card c2 = addNoteUsingBasicModel("New", "world").firstCard();AnkiDroid/src/main/java/com/ichi2/anki/CardBrowser.java
         c2.setDid(deck);
         c2.flush();
 
@@ -529,13 +531,46 @@ public class CardBrowserTest extends RobolectricTest {
         assertThat("Results should only be from the selected deck", cardBrowser.getCardCount(), is(1));
     }
 
+    /** PR #8553 **/
     @Test
-    public void check() {
-        CardBrowser browser = getBrowserWithNotes(1);
-        ShadowActivity shadowActivity = shadowOf(browser);
-        Preferences p = super.startPreferenceActivityNormallyOpenCollectionWithIntent(Preferences.class, new Intent(shadowActivity.getContentView().getContext(), Preferences.class));
-        p.finish();
-        assertThat("", browser.getCardCount(), is(1));
+    public void checkDisplayOrderPersistence() {
+        // Start the Card Browser with Basic Model
+        ensureCollectionLoadIsSynchronous();
+        ActivityController<CardBrowser> cardBrowserController = Robolectric.buildActivity(CardBrowser.class, new Intent())
+                .create().start().resume().visible();
+        saveControllerForCleanup(cardBrowserController);
+        advanceRobolectricLooperWithSleep();
+
+        // Make sure card has default value in sortType field
+        assertThat("Initially Card Browser has order = noteFld", getCol().getConf().get("sortType"), is("noteFld"));
+
+        // Store the current (before changing the database) Mod Time
+        long initialMod = getCol().getMod();
+
+        // Change the display order of the card browser
+        cardBrowserController.get().changeCardOrder(7);     // order no. 7 corresponds to "cardEase"
+
+        // Kill and restart the activity and ensure that display order is preserved
+        Bundle outBundle = new Bundle();
+        cardBrowserController.saveInstanceState(outBundle);
+        cardBrowserController.pause().stop().destroy();
+        cardBrowserController = Robolectric.buildActivity(CardBrowser.class).create(outBundle).start().resume().visible();
+        saveControllerForCleanup(cardBrowserController);
+
+        // Find the current (after database has been changed) Mod time
+        long finalMod = getCol().getMod();
+
+        assertThat("Card Browser has the new sortType field", getCol().getConf().get("sortType"), is("cardEase"));
+        Assert.assertNotEquals("Modification time must change", initialMod, finalMod);
+    }
+
+    @Test
+    public void checkIfLongSelectChecksAllCardsInBetween() {
+        // #8467 - selecting cards outside the view pane (20) caused a crash as we were using view-based positions
+        CardBrowser browser = getBrowserWithNotes(25);
+        selectOneOfManyCards(browser, 7); // HACK: Fix a bug in tests by choosing a value < 8
+        selectOneOfManyCards(browser, 24);
+        assertThat(browser.checkedCardCount(), is(18));
     }
 
     protected void assertUndoDoesNotContain(CardBrowser browser, @StringRes int resId) {
@@ -576,17 +611,26 @@ public class CardBrowserTest extends RobolectricTest {
         browser.clearCardData(positionToCorrupt);
     }
 
-    private void selectOneOfManyCards(CardBrowser browser) {
+    private void selectOneOfManyCards(CardBrowser cardBrowser) {
+        selectOneOfManyCards(cardBrowser, 0);
+    }
+
+    private void selectOneOfManyCards(CardBrowser browser, int position) {
         Timber.d("Selecting single card");
         ShadowActivity shadowActivity = shadowOf(browser);
         ListView toSelect = shadowActivity.getContentView().findViewById(R.id.card_browser_list);
-        int position = 0;
 
-        //roboelectric doesn't easily seem to allow us to fire an onItemLongClick
+        // Robolectric doesn't easily seem to allow us to fire an onItemLongClick
         AdapterView.OnItemLongClickListener listener = toSelect.getOnItemLongClickListener();
-        if (listener == null)
+        if (listener == null) {
             throw new IllegalStateException("no listener found");
-        listener.onItemLongClick(null, toSelect.getChildAt(position),
+        }
+
+        View childAt = toSelect.getChildAt(position);
+        if (childAt == null) {
+            Timber.w("Can't use childAt on position " + position + " for a single click as it is not visible");
+        }
+        listener.onItemLongClick(null, childAt,
                 position, toSelect.getItemIdAtPosition(position));
     }
 

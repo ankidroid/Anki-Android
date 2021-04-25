@@ -35,8 +35,8 @@ for BUILD in $BUILDNAMES; do
     git clean -f
     LCBUILD=`tr '[:upper:]' '[:lower:]' <<< $BUILD`
     ./tools/parallel-package-name.sh com.ichi2.anki.$LCBUILD AnkiDroid.$BUILD
-    ./gradlew assembleRelease -Duniversal-apk=true
-    cp AnkiDroid/build/outputs/apk/release/AnkiDroid-universal-release.apk ./AnkiDroid-$TAG.parallel.$BUILD.apk
+    ./gradlew assemblePlayRelease -Duniversal-apk=true
+    cp AnkiDroid/build/outputs/apk/play/release/AnkiDroid-play-universal-release.apk ./AnkiDroid-$TAG.parallel.$BUILD.apk
 done
 git reset --hard
 git clean -f

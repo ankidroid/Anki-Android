@@ -25,7 +25,7 @@ import com.wildplot.android.parsing.TreeElement;
 import java.util.regex.Pattern;
 
 
-@SuppressLint("FieldNamingPatternDetector")
+@SuppressLint("NonPublicNonStaticFieldName")
 public class VariableAtom implements TreeElement {
 
     private Atom.AtomType atomType = Atom.AtomType.NUMBER;

@@ -1,4 +1,3 @@
-package com.ichi2.compat.customtabs;
 // Copyright 2015 Google Inc. All Rights Reserved.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
@@ -13,6 +12,7 @@ package com.ichi2.compat.customtabs;
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+package com.ichi2.compat.customtabs;
 
 import android.content.ComponentName;
 

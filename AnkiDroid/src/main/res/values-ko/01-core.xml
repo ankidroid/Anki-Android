@@ -111,12 +111,12 @@
     <string name="menu_edit_tags">태그編輯</string>
     <string name="delete_note_message">다음 노트와 그 노트의 모든 카드를 정말로 삭제하시겠습니까?\n%s</string>
     <string name="menu_select">텍스트 선택</string>
+    <string name="menu_lookup">Lookup text</string>
     <string name="menu_search">%1$s에서 찾아보기</string>
     <string name="menu_mark_note">노트 표시</string>
     <string name="menu_unmark_note">노트 표시 해제</string>
     <string name="menu_toggle_mic_tool_bar">發音確認</string>
     <string name="new_deck">카드 묶음 만들기</string>
-    <string name="create" comment="Button to create a filtered deck">만들기</string>
     <string name="new_dynamic_deck">필터링된 카드 묶음 만들기</string>
     <string name="night_mode">야간 모드</string>
     <string name="directory_inaccessible">AnkiDroid 폴더에 접근할 수 없습니다</string>

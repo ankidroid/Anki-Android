@@ -25,7 +25,7 @@ import com.wildplot.android.parsing.TreeElement;
 
 import java.util.regex.Pattern;
 
-@SuppressLint("FieldNamingPatternDetector")
+@SuppressLint("NonPublicNonStaticFieldName")
 public class FunctionXAtom implements TreeElement {
     private Atom.AtomType atomType = Atom.AtomType.FUNCTION_X;
     private final TopLevelParser parser;

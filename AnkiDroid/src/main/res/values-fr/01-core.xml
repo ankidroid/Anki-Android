@@ -116,12 +116,12 @@
     <string name="menu_edit_tags">Modifier les étiquettes</string>
     <string name="delete_note_message">Voulez-vous vraiment supprimer cette note et toutes ses cartes ?\n%s</string>
     <string name="menu_select">Sélectionner le texte</string>
+    <string name="menu_lookup">Lookup text</string>
     <string name="menu_search">Trouvé en %1$s</string>
     <string name="menu_mark_note">Marquer la note</string>
     <string name="menu_unmark_note">Démarquer la note</string>
     <string name="menu_toggle_mic_tool_bar">Vérifier la prononciation</string>
     <string name="new_deck">Créer un jeu de cartes</string>
-    <string name="create" comment="Button to create a filtered deck">Créer</string>
     <string name="new_dynamic_deck">Créer un paquet filtré</string>
     <string name="night_mode">Mode nuit</string>
     <string name="directory_inaccessible">Le répertoire d\'AnkiDroid est inaccessible</string>

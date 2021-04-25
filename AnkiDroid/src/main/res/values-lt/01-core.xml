@@ -126,12 +126,12 @@
     <string name="menu_edit_tags">Edit tags</string>
     <string name="delete_note_message">Ar tikrai norite ištrinti šį užrašą ir visas su juo susijusias korteles?\n%s</string>
     <string name="menu_select">Žymėti tekstą</string>
+    <string name="menu_lookup">Lookup text</string>
     <string name="menu_search">Ieškoti: %1$s</string>
     <string name="menu_mark_note">Žymėti užrašą</string>
     <string name="menu_unmark_note">Atžymėti užrašą</string>
     <string name="menu_toggle_mic_tool_bar">Patikrinti tarimą</string>
     <string name="new_deck">Kurti rinkinį</string>
-    <string name="create" comment="Button to create a filtered deck">Kurti</string>
     <string name="new_dynamic_deck">Kurti rinktinį rinkinį</string>
     <string name="night_mode">Naktinis režimas</string>
     <string name="directory_inaccessible">„AnkiDroid“ katalogas yra nepasiekiamas</string>

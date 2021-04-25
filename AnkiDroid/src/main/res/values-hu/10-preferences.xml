@@ -43,256 +43,258 @@
     <string name="enabled">Engedélyezve</string>
     <!-- preferences.xml categories-->
     <string name="pref_cat_general_summ">Általános beállítások</string>
-    <string name="pref_cat_reviewing">Ismétlés</string>
+    <string name="pref_cat_reviewing" maxLength="41">Ismétlés</string>
     <string name="pref_cat_reviewing_summ">Paklifüggetlen beállítások</string>
-    <string name="pref_cat_reviewer_behaviour">Viselkedés</string>
-    <string name="pref_cat_flashcard">Kijelző</string>
-    <string name="pref_cat_whiteboard">Tábla</string>
-    <string name="pref_cat_appearance">Kinézet</string>
+    <string name="pref_cat_reviewer_behaviour" maxLength="41">Viselkedés</string>
+    <string name="pref_cat_flashcard" maxLength="41">Kijelző</string>
+    <string name="pref_cat_whiteboard" maxLength="41">Tábla</string>
+    <string name="pref_cat_appearance" maxLength="41">Kinézet</string>
     <string name="pref_cat_appearance_summ">Témák és az alapértelmezett betűtípus módosítása</string>
-    <string name="pref_cat_themes">Témák</string>
-    <string name="pref_cat_fonts">Betűtípusok</string>
-    <string name="pref_cat_gestures">Gesztusok</string>
+    <string name="pref_cat_themes" maxLength="41">Témák</string>
+    <string name="pref_cat_fonts" maxLength="41">Betűtípusok</string>
+    <string name="pref_cat_gestures" maxLength="41">Gesztusok</string>
     <string name="pref_cat_gestures_summ">A gombok helyett érintsd meg, és csúsztasd ujjad</string>
-    <string name="pref_cat_actions">Műveletek</string>
-    <string name="pref_cat_advanced">Haladó</string>
+    <string name="pref_cat_actions" maxLength="41">Műveletek</string>
+    <string name="pref_cat_advanced" maxLength="41">Haladó</string>
     <string name="pref_cat_advanced_summ">Optimalizálás és kísérleti funkciók</string>
-    <string name="pref_cat_performance">Teljesítmény</string>
-    <string name="pref_cat_workarounds">Lehetséges megoldások</string>
-    <string name="pref_cat_plugins">Bővítmények</string>
-    <string name="about_title">AnkiDroid-ról</string>
+    <string name="pref_cat_performance" maxLength="41">Teljesítmény</string>
+    <string name="pref_cat_workarounds" maxLength="41">Lehetséges megoldások</string>
+    <string name="pref_cat_plugins" maxLength="41">Bővítmények</string>
+    <string name="about_title" maxLength="41">AnkiDroid-ról</string>
     <string name="about_version">Verzió: </string>
     <!-- preferences.xml entries-->
-    <string name="whiteboard_stroke_width">Ceruza vastagsága</string>
-    <string name="use_input_tag">Válasz begépelése</string>
+    <string name="whiteboard_stroke_width" maxLength="41">Ceruza vastagsága</string>
+    <string name="use_input_tag" maxLength="41">Válasz begépelése</string>
     <string name="use_input_tag_summ">A kártyán megjelenő beviteli mezőbe kell begépelni a választ</string>
-    <string name="dictionary">Szótár keresés</string>
-    <string name="reset_languages">Nyelvek visszaállítása</string>
+    <string name="dictionary" maxLength="41">Szótár keresés</string>
+    <string name="reset_languages" maxLength="41">Nyelvek visszaállítása</string>
     <string name="reset_languages_summ">Nyelvek visszaállítása (hangos olvasáshoz és szótárakhoz) az összes paklihoz</string>
     <string name="reset_languages_question">Állítsa vissza az összes nyelvi beállítást?</string>
     <string name="reset_confirmation">Mindent alapállapotba</string>
-    <string name="card_zoom">Kártyák nagyítása</string>
-    <string name="image_zoom">Képek nagyítása</string>
-    <string name="button_size">Válasz gombok mérete</string>
-    <string name="card_browser_font_size">Kártya böngésző betűméretezése</string>
-    <string name="card_browser_hide_media">Fájlnevek megjelenítése a kártya böngészőben.</string>
+    <string name="card_zoom" maxLength="41">Kártyák nagyítása</string>
+    <string name="image_zoom" maxLength="41">Képek nagyítása</string>
+    <string name="button_size" maxLength="41">Válasz gombok mérete</string>
+    <string name="card_browser_font_size" maxLength="41">Kártya böngésző betűméretezése</string>
+    <string name="card_browser_hide_media" maxLength="41">Fájlnevek megjelenítése a kártya böngészőben.</string>
     <string name="card_browser_hide_media_summary">A média fájlneveinek megjelenítése a kártya böngésző kérdés/válasz mezőjében</string>
-    <string name="col_path">AnkiDroid könyvtár</string>
-    <string name="fullscreen_review">Teljes képernyős mód</string>
+    <string name="col_path" maxLength="41">AnkiDroid könyvtár</string>
+    <string name="fullscreen_review" maxLength="41">Teljes képernyős mód</string>
     <string name="full_screen_off">Kikapcsol</string>
     <string name="full_screen_system">Rendszer sávok elrejtése</string>
     <string name="full_screen_complete">Rendszer sávok és válasz gombok elrejtése</string>
     <string name="full_screen_error_gestures">Engedélyezni kell a gesztusokat a válasz gombok elrejtéséhez</string>
-    <string name="answer_buttons_position">A válasz gombok elhelyezkedése</string>
+    <string name="answer_buttons_position" maxLength="41">A válasz gombok elhelyezkedése</string>
     <string-array name="answer_buttons_position_labels">
         <item>Oldal teteje</item>
         <item>Oldal alján</item>
     </string-array>
-    <string name="gestures">Gesztusvezérlés engedélyezése</string>
+    <string name="gestures" maxLength="41">Gesztusvezérlés engedélyezése</string>
     <string name="gestures_summ">Gesztusok hozzárendelése olyan műveletekhez, mint a kártyák megválaszolása és szerkesztése.</string>
-    <string name="gestures_allow_links">Érintő gesztusok figyelmen kívül hagyása a linkeken</string>
+    <string name="gestures_allow_links" maxLength="41">Érintő gesztusok figyelmen kívül hagyása a linkeken</string>
     <string name="gestures_allow_links_summary">Az érintő gesztusok nem lesznek feldolgozva ha egy link/segítség le van nyomva.</string>
-    <string name="gestures_corner_touch">9-point touch</string>
+    <string name="gestures_corner_touch" maxLength="41">9-point touch</string>
     <string name="gestures_corner_touch_summary">Allow touch gestures in screen corners</string>
-    <string name="gestures_swipe_up">Felfelé csúsztatás</string>
-    <string name="gestures_swipe_down">Lefelé csúsztatás</string>
-    <string name="gestures_swipe_left">Balra csúsztatás</string>
-    <string name="gestures_swipe_right">Jobbra csúsztatás</string>
-    <string name="gestures_double_tap">Dupla érintés</string>
-    <string name="gestures_tap_top">Felső rész érintése</string>
-    <string name="gestures_tap_left">Baloldali rész érintése</string>
-    <string name="gestures_tap_right">Jobboldali rész érintése</string>
-    <string name="gestures_tap_bottom">Alsó rész érintése</string>
-    <string name="gestures_corner_tap_top_left">Érintés bal felül</string>
+    <string name="gestures_swipe_up" maxLength="41">Felfelé csúsztatás</string>
+    <string name="gestures_swipe_down" maxLength="41">Lefelé csúsztatás</string>
+    <string name="gestures_swipe_left" maxLength="41">Balra csúsztatás</string>
+    <string name="gestures_swipe_right" maxLength="41">Jobbra csúsztatás</string>
+    <string name="gestures_double_tap" maxLength="41">Dupla érintés</string>
+    <string name="gestures_tap_top" maxLength="41">Felső rész érintése</string>
+    <string name="gestures_tap_left" maxLength="41">Baloldali rész érintése</string>
+    <string name="gestures_tap_right" maxLength="41">Jobboldali rész érintése</string>
+    <string name="gestures_tap_bottom" maxLength="41">Alsó rész érintése</string>
+    <string name="gestures_corner_tap_top_left" maxLength="41">Érintés bal felül</string>
     <string name="gestures_corner_tap_top_center">Érintés középen</string>
-    <string name="gestures_corner_tap_top_right">Érintés jobb felül</string>
+    <string name="gestures_corner_tap_top_right" maxLength="41">Érintés jobb felül</string>
     <string name="gestures_corner_tap_middle_left">Érintés bal középen</string>
-    <string name="gestures_corner_tap_middle_center">Érintés a közepén</string>
+    <string name="gestures_corner_tap_middle_center" maxLength="41">Érintés a közepén</string>
     <string name="gestures_corner_tap_middle_right">Érintés jobb középen</string>
-    <string name="gestures_corner_tap_bottom_left">Érintés bal alul</string>
+    <string name="gestures_corner_tap_bottom_left" maxLength="41">Érintés bal alul</string>
     <string name="gestures_corner_tap_bottom_center">Érintés alul középen</string>
-    <string name="gestures_corner_tap_bottom_right">Érintés jobb alul</string>
-    <string name="gestures_volume_up">Hangerő fel</string>
-    <string name="gestures_volume_down">Hangerő le</string>
-    <string name="more_scrolling_buttons">e-Olvasó</string>
+    <string name="gestures_corner_tap_bottom_right" maxLength="41">Érintés jobb alul</string>
+    <string name="gestures_volume_up" maxLength="41">Hangerő fel</string>
+    <string name="gestures_volume_down" maxLength="41">Hangerő le</string>
+    <string name="more_scrolling_buttons" maxLength="41">e-Olvasó</string>
     <string name="more_scrolling_buttons_summ">Kanji/Katakana használata is, az Emoji/Kao-moji gombok görgetéséhez</string>
     <string name="card_browser_enable_external_context_menu">\'%s\' Menü</string>
     <string name="card_browser_enable_external_context_menu_summary">Engedélyezi a \'%s\' kontextus menüt globálisan</string>
-    <string name="double_scrolling_gap">Dupla görgetés</string>
+    <string name="double_scrolling_gap" maxLength="41">Dupla görgetés</string>
     <string name="double_scrolling_gap_summ">Görgess a kétszeres méretű e-Olvasó méretre</string>
-    <string name="swipe_sensitivity">Törlés érzékenysége</string>
-    <string name="tts">Beszéd</string>
+    <string name="swipe_sensitivity" maxLength="41">Törlés érzékenysége</string>
+    <string name="tts" maxLength="41">Beszéd</string>
     <string name="tts_summ">Felolvassa a kérdést és a választ, ha nincs csatolt hangfájl</string>
-    <string name="sync_fetch_missing_media">Média letöltése szinkronizáláskor</string>
+    <string name="sync_fetch_missing_media" maxLength="41">Média letöltése szinkronizáláskor</string>
     <string name="sync_fetch_missing_media_summ">Automatikusan töltse le a hiányzó médiát, amikor szinkronizál.</string>
-    <string name="sync_account">AnkiWeb fiók</string>
+    <string name="sync_account" maxLength="41">AnkiWeb fiók</string>
     <string name="sync_account_summ_logged_out">Nem vagy bejelentkezve</string>
     <string name="sync_account_summ_logged_in">%s</string>
-    <string name="automatic_sync_choice">Automatikus szinkronizálás</string>
+    <string name="automatic_sync_choice" maxLength="41">Automatikus szinkronizálás</string>
     <string name="automatic_sync_choice_summ">Automatikus szinkronizálás az applikáció indításakor/kilépéskor, ha az utolsó több mint 10
         perce volt.</string>
-    <string name="sync_status_badge">Szinkronizálás állapotának megjelenítése</string>
+    <string name="sync_status_badge" maxLength="41">Szinkronizálás állapotának megjelenítése</string>
     <string name="sync_status_badge_summ">A szinkronizálás ikonjának módosítása, amikor a változások feltölthetők</string>
-    <string name="day_theme">Nappali téma</string>
-    <string name="night_theme">Éjszakai téma</string>
-    <string name="default_font">Alapértelmezett betűtípus</string>
-    <string name="override_font">Alapértelmezett betűtípus alkalmazhatóság</string>
-    <string name="language">Nyelv</string>
+    <string name="day_theme" maxLength="41">Nappali téma</string>
+    <string name="night_theme" maxLength="41">Éjszakai téma</string>
+    <string name="default_font" maxLength="41">Alapértelmezett betűtípus</string>
+    <string name="override_font" maxLength="41">Alapértelmezett betűtípus alkalmazhatóság</string>
+    <string name="language" maxLength="41">Nyelv</string>
     <string name="language_system">Rendszer nyelvének használata</string>
-    <string name="notification_pref">Értesítések</string>
-    <string name="notification_pref_title">Értesítsen, ha</string>
+    <string name="notification_pref" maxLength="41">Értesítések</string>
+    <string name="notification_pref_title" maxLength="41">Értesítsen, ha</string>
     <string name="never_notify">Ne legyen értesítés</string>
     <string name="notify_when_pending">Ha olvasatlan üzeneteim vannak</string>
     <string name="notification_minimum_cards_due">Amikor több, mint %d kártya esedékes</string>
-    <string name="notification_minimum_cards_due_vibrate">Rezgés</string>
-    <string name="notification_minimum_cards_due_blink">Villogó fény</string>
-    <string name="timeout_answer_text">Automatikusan mutassa a választ</string>
+    <string name="notification_minimum_cards_due_vibrate" maxLength="41">Rezgés</string>
+    <string name="notification_minimum_cards_due_blink" maxLength="41">Villogó fény</string>
+    <string name="timeout_answer_text" maxLength="41">Automatikusan mutassa a választ</string>
     <string name="timeout_answer_summ">Válasz automatikus megjelenítése, felhasználói beavatkozása nélkül. A késleltetés magában foglalja az automatikusan lejátszott audió fájlok idejét.</string>
-    <string name="timeout_answer_seconds">Válasz mutatása ennyi idő elteltével</string>
+    <string name="timeout_answer_seconds" maxLength="41">Válasz mutatása ennyi idő elteltével</string>
     <string name="timeout_answer_seconds_summ" comment="The time to wait (in seconds) in the reviewer before automatically showing the next question or answer">XXX másodperc</string>
-    <string name="timeout_question_seconds">A következő kérdés megjelenítése ennyi idő után</string>
+    <string name="timeout_question_seconds" maxLength="41">A következő kérdés megjelenítése ennyi idő után</string>
     <string name="select_locale_title">Nyelv kiválasztása</string>
-    <string name="software_render">Disable card hardware render</string>
+    <string name="software_render" maxLength="41">Disable card hardware render</string>
     <string name="software_render_summ">Hardware render is faster but may have problems, specifically on Android 8/8.1. If you cannot see parts of the card review user interface, try this setting.</string>
-    <string name="safe_display">Biztonságos megjelenítési mód</string>
+    <string name="safe_display" maxLength="41">Biztonságos megjelenítési mód</string>
     <string name="safe_display_summ">Kapcsolja ki az összes animációt, és biztonságosabb módszereket használjon a kártya rajzok számára. Az e-tintaeszközök igényelhetik ezt.</string>
-    <string name="disable_extended_text_ui">Egy-Mezőnyi Szerkesztési Mód Kikapcsolása</string>
+    <string name="disable_extended_text_ui" maxLength="41">Egy-Mezőnyi Szerkesztési Mód Kikapcsolása</string>
     <!--See: multimedia_editor_popup_cloze. We can\'t use format strings as this is auto-generated-->
     <string name="disable_extended_text_ui_summ">Engedélyezi a \'Részleges Törlés\' lehetőséget tájkép módban.</string>
-    <string name="vertical_centering">Középre igazítás</string>
+    <string name="vertical_centering" maxLength="41">Középre igazítás</string>
     <string name="vertical_centering_summ">A kártyák tartalmának középre igazítása függőlegesen</string>
-    <string name="pref_backup_max">Biztonsági másolatok maximális száma</string>
-    <string name="show_estimates">Idő mutatása a gombokon</string>
+    <string name="pref_backup_max" maxLength="41">Biztonsági másolatok maximális száma</string>
+    <string name="show_estimates" maxLength="41">Idő mutatása a gombokon</string>
     <string name="show_estimates_summ">A gombokon látszódjon a következő esedékesség időpontja</string>
-    <string name="show_top_bar">Felső Bár mutatása</string>
+    <string name="show_top_bar" maxLength="41">Felső Bár mutatása</string>
     <string name="show_top_bar_summ">Kártya számlálók, jelölők és jelölések mutatása a felső bárban,</string>
-    <string name="show_progress">Hátralévő mutatása</string>
+    <string name="show_progress" maxLength="41">Hátralévő mutatása</string>
     <string name="show_progress_summ">Hátralévő kártyák számának megjelenítése</string>
-    <string name="show_eta">ETA megjelenítése</string>
+    <string name="show_eta" maxLength="41">ETA megjelenítése</string>
     <string name="show_eta_summ">Hátralévő idő mutatása</string>
-    <string name="use_current">Új kártyák paklija</string>
-    <string name="new_spread">Új kártyák beszúrása</string>
-    <string name="learn_cutoff">Korai tanulás korlátai</string>
-    <string name="time_limit">Időkorlát érték</string>
+    <string name="use_current" maxLength="41">Új kártyák paklija</string>
+    <string name="new_spread" maxLength="41">Új kártyák beszúrása</string>
+    <string name="learn_cutoff" maxLength="41">Korai tanulás korlátai</string>
+    <string name="time_limit" maxLength="41">Időkorlát érték</string>
     <string name="time_limit_summ">XXX perc</string>
-    <string name="new_timezone">New timezone handling</string>
-    <string name="day_offset_with_description">Start of next day (0 is midnight, 23 is 11PM)</string>
+    <string name="new_timezone" maxLength="41">New timezone handling</string>
+    <string name="day_offset_with_description" maxLength="41">Start of next day</string>
     <string name="day_offset_summ">XXX órával éjfél után</string>
-    <string name="sched_ver">Kísérleti V2 ütemező</string>
+    <string name="xlabel_dayoffset_seekbar" maxLength="41">Midnight</string>
+    <string name="ylabel_dayoffset_seekbar" maxLength="41">11PM</string>
+    <string name="sched_ver" maxLength="41">Kísérleti V2 ütemező</string>
     <string name="sched_ver_summ">Kísérleti ütemező engedélyezése. A változásokat egy irányba erőlteti a következő szinkronizáláskor</string>
     <string name="sched_ver_toggle_title">Megerősítés</string>
     <string name="sched_ver_2to1">Ez visszaállít minden tanult kártyát, kiüríti a szúrt paklikat és megváltoztatja az ütemező verzióját. Folytatja?</string>
     <string name="sched_ver_1to2">A kísérleti ütemező helytelenül ütemezhet. Kérjük olvassa el a dokumentációt először. Folytatja?</string>
-    <string name="pref_keep_screen_on">Ne kapcsolja ki a képernyőt</string>
+    <string name="pref_keep_screen_on" maxLength="41">Ne kapcsolja ki a képernyőt</string>
     <string name="pref_keep_screen_on_summ">Képernyő időtúllépésének kikapcsolása</string>
-    <string name="convert_fen_text">A sakk-jelölés támogatása</string>
+    <string name="convert_fen_text" maxLength="41">A sakk-jelölés támogatása</string>
     <string name="convert_fen_text_summ">Sakktábla bevitele Forsyth-Edwards jelöléssel. A jelölést [fen][/fen] címkék közé kell tenni.</string>
-    <string name="enable_api_title">Engedélyezze az AnkiDroid API-t</string>
+    <string name="enable_api_title" maxLength="41">Engedélyezze az AnkiDroid API-t</string>
     <string name="enable_api_summary">Engedélyezd, hogy más alkalmazások csatlakozzanak az AnkiDroidhoz, és lehetővé tegyék az adatok beolvasását/írását automatikusan</string>
-    <string name="custom_buttons">Eszköztár gombok</string>
+    <string name="custom_buttons" maxLength="41">Eszköztár gombok</string>
     <string name="custom_buttons_summary">Testreszabhatod az eszköztárban megjelenő műveleteket</string>
     <string name="custom_buttons_setting_always_show">Mindig mutasd</string>
     <string name="custom_buttons_setting_if_room">Mutasd ha van hely</string>
     <string name="custom_buttons_setting_menu_only">Csak a menü</string>
-    <string name="reset_custom_buttons">Alapértelmezett értékek visszaállítása</string>
-    <string name="thirdparty_apps_title">Külsős API alkalmazások</string>
+    <string name="reset_custom_buttons" maxLength="41">Alapértelmezett értékek visszaállítása</string>
+    <string name="thirdparty_apps_title" maxLength="41">Külsős API alkalmazások</string>
     <string name="thirdparty_apps_summary">Egy lista az alkalmazásokról, amik az AnkiDroid API-t használják, mint például szótárak és segédprogramok.</string>
-    <string name="html_javascript_debugging">HTML / Javascript hibakeresés</string>
+    <string name="html_javascript_debugging" maxLength="41">HTML / Javascript hibakeresés</string>
     <string name="html_javascript_debugging_summ">Távoli WebView kapcsolatok engedélyezése és a HTML kártyák AnkiDroid mappába mentése</string>
     <!-- Advanced statistics settings -->
-    <string name="advanced_statistics_title">Bővített statisztikák</string>
-    <string name="enable_advanced_statistics_title">Bővített statisztikák bekapcsolása</string>
+    <string name="advanced_statistics_title" maxLength="41">Bővített statisztikák</string>
+    <string name="enable_advanced_statistics_title" maxLength="41">Bővített statisztikák bekapcsolása</string>
     <string name="enable_advanced_statistics_summ">A statisztikai nézetben lévő előrejelzéshez szimulálja a jövőbeni ismétléseket (aktiválva), vagy csak a már ütemezett ismétléseket használja (deaktiválva).</string>
-    <string name="advanced_forecast_stats_compute_n_days_title">Számítsd ki az első n napot, szimuláld a többit</string>
-    <string name="advanced_forecast_stats_compute_precision_title">A számítás pontossága</string>
-    <string name="advanced_forecast_stats_mc_n_iterations_title">A szimuláció ismétléseinek száma</string>
+    <string name="advanced_forecast_stats_compute_n_days_title" maxLength="41">Számítsd ki az első n napot, szimuláld a többit</string>
+    <string name="advanced_forecast_stats_compute_precision_title" maxLength="41">A számítás pontossága</string>
+    <string name="advanced_forecast_stats_mc_n_iterations_title" maxLength="41">A szimuláció ismétléseinek száma</string>
     <!-- Custom sync server settings -->
-    <string name="custom_sync_server_title">Egyéni szinkronizáló kiszolgáló</string>
-    <string name="custom_sync_server_enable_title">Használj egyéni szinkronizáló szervert</string>
+    <string name="custom_sync_server_title" maxLength="41">Egyéni szinkronizáló kiszolgáló</string>
+    <string name="custom_sync_server_enable_title" maxLength="41">Használj egyéni szinkronizáló szervert</string>
     <string name="custom_sync_server_enable_summary">Ha nem szeretnéd használni az AnkiWeb saját szolgáltatását, itt egy alternatív kiszolgálót adhatsz meg</string>
-    <string name="custom_sync_server_base_url_title">Szinkronizáló Url</string>
+    <string name="custom_sync_server_base_url_title" maxLength="41">Szinkronizáló Url</string>
     <string name="custom_sync_server_base_url_invalid">url szinkronizálás érvénytelen</string>
-    <string name="custom_sync_server_media_url_title">Média szinkronizáló url</string>
+    <string name="custom_sync_server_media_url_title" maxLength="41">Média szinkronizáló url</string>
     <string name="custom_sync_server_media_url_invalid">Média url szinkronizálás érvénytelen</string>
     <!-- studyoptions -->
     <string name="deck_conf_group_summ">A pakli csoport változtatása több más csoportot is érint. Ha csak a jelenlegi paklit kívánja megváltoztatni, akkor kérjük adjon hozzá egy új csoportot.</string>
     <string name="studyoptions_limit_select_tags">Válassz címkét</string>
     <!-- Deck configurations -->
-    <string name="deck_conf_deck_description">Pakli leírás (csak a jelenlegi paklit érinti)</string>
-    <string name="deck_conf_group">Beállítás csoport</string>
+    <string name="deck_conf_deck_description" maxLength="41">Pakli leírás (csak a jelenlegi paklit érinti)</string>
+    <string name="deck_conf_group" maxLength="41">Beállítás csoport</string>
     <plurals name="deck_conf_group_summ">
         <item quantity="one">%1$s\n%2$d pakli ezt a csoportot használja</item>
         <item quantity="other">%1$s\n%2$d pakli használata ebben a csoportban</item>
     </plurals>
-    <string name="deck_conf_new_cards">Új kártyák</string>
-    <string name="deck_conf_rev_cards" comment="Name of the deck options submenu for configuring reviews of due cards.">Ismétlések</string>
-    <string name="deck_conf_lps_cards" comment="Label of the submenu stating how lapses cards are treated.">Körök</string>
-    <string name="deck_conf_general">Általános</string>
-    <string name="deck_conf_reminders">Emlékeztetők</string>
-    <string name="deck_conf_steps">Lépések (percben)</string>
-    <string name="deck_conf_order">Rendezés</string>
-    <string name="deck_conf_new_cards_day">Új kártyák/nap</string>
-    <string name="deck_conf_graduating_ivl">Befejező időtartam</string>
+    <string name="deck_conf_new_cards" maxLength="41">Új kártyák</string>
+    <string name="deck_conf_rev_cards" maxLength="41" comment="Name of the deck options submenu for configuring reviews of due cards.">Ismétlések</string>
+    <string name="deck_conf_lps_cards" maxLength="41" comment="Label of the submenu stating how lapses cards are treated.">Körök</string>
+    <string name="deck_conf_general" maxLength="41">Általános</string>
+    <string name="deck_conf_reminders" maxLength="41">Emlékeztetők</string>
+    <string name="deck_conf_steps" maxLength="41">Lépések (percben)</string>
+    <string name="deck_conf_order" maxLength="41">Rendezés</string>
+    <string name="deck_conf_new_cards_day" maxLength="41">Új kártyák/nap</string>
+    <string name="deck_conf_graduating_ivl" maxLength="41">Befejező időtartam</string>
     <string name="deck_conf_days">XXX nap</string>
-    <string name="deck_conf_easy_ivl">Egyszerű időtartam</string>
-    <string name="deck_conf_start_ease">Kezdeti könnyített bónusz</string>
-    <string name="deck_conf_max_rev">Maximális ismétlések/nap</string>
-    <string name="deck_conf_new_bury">Kapcsolódó új kártyák elrejtése</string>
+    <string name="deck_conf_easy_ivl" maxLength="41">Egyszerű időtartam</string>
+    <string name="deck_conf_start_ease" maxLength="41">Kezdeti könnyített bónusz</string>
+    <string name="deck_conf_max_rev" maxLength="41">Maximális ismétlések/nap</string>
+    <string name="deck_conf_new_bury" maxLength="41">Kapcsolódó új kártyák elrejtése</string>
     <string name="deck_conf_new_bury_summ">A kapcsolódó új kártyákat félretenni a következő napra</string>
-    <string name="deck_conf_rev_bury">A kapcsolódó kártyák visszaállítása</string>
+    <string name="deck_conf_rev_bury" maxLength="41">A kapcsolódó kártyák visszaállítása</string>
     <string name="deck_conf_rev_bury_summ">A kapcsolódó kártyákat a következő napra halasztani</string>
-    <string name="deck_conf_use_general_timeout_settings">Általános beállítások használata</string>
+    <string name="deck_conf_use_general_timeout_settings" maxLength="41">Általános beállítások használata</string>
     <string name="deck_conf_use_general_timeout_settings_summ">Az általános \'Automatikus válaszmegjelenítő\' beállítás használata, a jelenlegi csoporthoz használt beállítások helyett.</string>
-    <string name="deck_conf_easy_bonus">Bónusz az \"egyszerű\"</string>
-    <string name="deck_conf_hard_factor">Hard interval</string>
-    <string name="deck_conf_ivl_fct">Időtartam változtatása</string>
-    <string name="deck_conf_max_ivl">Maximális időtartam</string>
-    <string name="deck_conf_new_lps_ivl">Új időtartam</string>
-    <string name="deck_conf_min_ivl">Minimális időtartam</string>
-    <string name="deck_conf_leech_thres">Ragadós kártya küszöbértéke</string>
+    <string name="deck_conf_easy_bonus" maxLength="41">Bónusz az \"egyszerű\"</string>
+    <string name="deck_conf_hard_factor" maxLength="41">Hard interval</string>
+    <string name="deck_conf_ivl_fct" maxLength="41">Időtartam változtatása</string>
+    <string name="deck_conf_max_ivl" maxLength="41">Maximális időtartam</string>
+    <string name="deck_conf_new_lps_ivl" maxLength="41">Új időtartam</string>
+    <string name="deck_conf_min_ivl" maxLength="41">Minimális időtartam</string>
+    <string name="deck_conf_leech_thres" maxLength="41">Ragadós kártya küszöbértéke</string>
     <string name="deck_conf_fails">XXX sikertelen</string>
-    <string name="deck_conf_leech_action">Művelet a ragadós kártyákhoz</string>
-    <string name="deck_conf_max_time">Maximális idő válaszadásra</string>
+    <string name="deck_conf_leech_action" maxLength="41">Művelet a ragadós kártyákhoz</string>
+    <string name="deck_conf_max_time" maxLength="41">Maximális idő válaszadásra</string>
     <string name="deck_conf_seconds">XXX másodperc</string>
-    <string name="deck_conf_timer">Válasz időmérő mutatása</string>
-    <string name="deck_conf_autoplay">Hang lejátszása automatikusan</string>
-    <string name="deck_conf_replayq">Ismételje meg a kérdést</string>
+    <string name="deck_conf_timer" maxLength="41">Válasz időmérő mutatása</string>
+    <string name="deck_conf_autoplay" maxLength="41">Hang lejátszása automatikusan</string>
+    <string name="deck_conf_replayq" maxLength="41">Ismételje meg a kérdést</string>
     <string name="deck_conf_replayq_summ">Ismételje meg a kérdést és a választ hanggal együtt, amikor a válasz megjelenik</string>
-    <string name="deck_conf_manage">Konfigurációkezelés</string>
+    <string name="deck_conf_manage" maxLength="41">Konfigurációkezelés</string>
     <string name="deck_conf_manage_summ">Opciócsoportok hozzáadása és változtatása</string>
-    <string name="deck_conf_current_group">Aktuális csoport</string>
-    <string name="deck_conf_rename" comment="Menu entry to rename a deck">Átnevezés</string>
-    <string name="deck_conf_reset">Alapértelmezések visszaállítása</string>
+    <string name="deck_conf_current_group" maxLength="41">Aktuális csoport</string>
+    <string name="deck_conf_rename" maxLength="41" comment="Menu entry to rename a deck">Átnevezés</string>
+    <string name="deck_conf_reset" maxLength="41">Alapértelmezések visszaállítása</string>
     <string name="deck_conf_reset_message">Alaphelyzetbe állítod az aktuális opciócsoportot?</string>
-    <string name="deck_conf_add" comment="Adding a new deck option group">Új beállítás</string>
+    <string name="deck_conf_add" maxLength="41" comment="Adding a new deck option group">Új beállítás</string>
     <string name="deck_conf_add_summ">Készítsen egy másolatot az aktuális opciócsoportról</string>
     <string name="deck_conf_remove_message">Törlöd az aktuális opciócsoportot?</string>
-    <string name="deck_conf_set_subdecks">Alkalmazás minden alcsoportra</string>
+    <string name="deck_conf_set_subdecks" maxLength="41">Alkalmazás minden alcsoportra</string>
     <plurals name="deck_conf_set_subdecks_summ">
         <item quantity="one">%s pakli használata ebben a csoportban</item>
         <item quantity="other">%s alpakli használata ebben a csoportban</item>
     </plurals>
     <string name="deck_conf_set_subdecks_message">Állítsa be az aktuális opciócsoportot a pakli minden alcsoportjában?</string>
-    <string name="pref_browser_editor_font">Böngésző és szerkesztő betűtípus</string>
-    <string name="deck_conf_cram_filter">Szűrő</string>
-    <string name="deck_conf_cram_search">Keresés</string>
-    <string name="deck_conf_cram_limit">Határ</string>
-    <string name="deck_conf_cram_order">kártyák kiválasztása után</string>
-    <string name="deck_conf_cram_reschedule" comment="Title of the box labelled by deck_conf_cram_reschedule_summ">Átütemezés</string>
+    <string name="pref_browser_editor_font" maxLength="41">Böngésző és szerkesztő betűtípus</string>
+    <string name="deck_conf_cram_filter" maxLength="41">Szűrő</string>
+    <string name="deck_conf_cram_search" maxLength="41">Keresés</string>
+    <string name="deck_conf_cram_limit" maxLength="41">Határ</string>
+    <string name="deck_conf_cram_order" maxLength="41">kártyák kiválasztása után</string>
+    <string name="deck_conf_cram_reschedule" maxLength="41" comment="Title of the box labelled by deck_conf_cram_reschedule_summ">Átütemezés</string>
     <string name="deck_conf_cram_reschedule_summ">A telepített kártyák átütemezése adott válaszaim alapján</string>
-    <string name="deck_conf_cram_steps">Egyéni lépések (percben)</string>
-    <string name="deck_conf_cram_steps_summ">Add meg az egyéni lépéseket</string>
-    <string name="deck_conf_reminders_enabled">Emlékeztetők engedélyezése ebben a paklicsoportban található paklikhoz</string>
-    <string name="deck_conf_reminders_time">Ne feledd</string>
+    <string name="deck_conf_cram_steps" maxLength="41">Egyéni lépések (percben)</string>
+    <string name="deck_conf_cram_steps_summ" maxLength="41">Add meg az egyéni lépéseket</string>
+    <string name="deck_conf_reminders_enabled" maxLength="41">Emlékeztetők engedélyezése ebben a paklicsoportban található paklikhoz</string>
+    <string name="deck_conf_reminders_time" maxLength="41">Ne feledd</string>
     <!-- analytics options -->
     <string name="analytics_dialog_title">Segítsen az AnkiDroidot jobbá tenni!</string>
-    <string name="analytics_title">Funkiók megosztása</string>
+    <string name="analytics_title" maxLength="41">Funkiók megosztása</string>
     <string name="analytics_summ">Hozzájárulhat az AnkiDroidhoz azáltal, hogy megmutatja a fejlesztői csapatnak, milyen funkciókat használnak az emberek</string>
-    <string name="note_editor_replace_newlines">Replace newlines with HTML</string>
+    <string name="note_editor_replace_newlines" maxLength="41">Replace newlines with HTML</string>
     <string name="note_editor_replace_newlines_summ">In the Note Editor, convert any instances of &lt;br&gt; to newlines when editing a card.</string>
-    <string name="no_code_formatting">Simple typed answer formatting</string>
+    <string name="no_code_formatting" maxLength="41">Simple typed answer formatting</string>
     <string name="no_code_formatting_summ">Fixes ‘􏿾’ appearing in typed answer results</string>
-    <string name="type_in_answer_focus">Focus ‘type in answer’</string>
+    <string name="type_in_answer_focus" maxLength="41">Focus ‘type in answer’</string>
     <string name="type_in_answer_focus_summ">Automatically focus the ‘type in answer’ field in the reviewer</string>
     <!-- Open Changelog-->
     <string name="open_changelog">Open Changelog</string>

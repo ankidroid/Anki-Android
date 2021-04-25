@@ -56,7 +56,7 @@ import com.ichi2.ui.FixedTextView;
 
 import com.ichi2.utils.JSONException;
 
-import java.util.ArrayList;
+import java.util.List;
 import java.util.Locale;
 
 import timber.log.Timber;
@@ -78,7 +78,7 @@ public class Statistics extends NavigationDrawerActivity implements DeckDropDown
     private TabLayout mSlidingTabLayout;
     private AnkiStatsTaskHandler mTaskHandler = null;
     private long mDeckId;
-    private ArrayList<Deck> mDropDownDecks;
+    private List<Deck> mDropDownDecks;
     private Spinner mActionBarSpinner;
     private static boolean sIsSubtitle;
 
@@ -130,7 +130,7 @@ public class Statistics extends NavigationDrawerActivity implements DeckDropDown
         mActionBarSpinner.setVisibility(View.VISIBLE);
 
         // Setup Task Handler
-        mTaskHandler = new AnkiStatsTaskHandler(col);
+        mTaskHandler = AnkiStatsTaskHandler.getInstance(col);
 
         // Dirty way to get text size from a TextView with current style, change if possible
         float size = new FixedTextView(this).getTextSize();

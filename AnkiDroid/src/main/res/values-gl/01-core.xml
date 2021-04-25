@@ -116,12 +116,12 @@
     <string name="menu_edit_tags">Edit tags</string>
     <string name="delete_note_message">Tes a certeza de querer eliminar esta nota e todos os seus cartóns?\n%s</string>
     <string name="menu_select">Seleccionar texto</string>
+    <string name="menu_lookup">Lookup text</string>
     <string name="menu_search">Procurar en %1$s</string>
     <string name="menu_mark_note">Marcar nota</string>
     <string name="menu_unmark_note">Desmarcar nota</string>
     <string name="menu_toggle_mic_tool_bar">comprobar pronunciación</string>
     <string name="new_deck">Crear baralla</string>
-    <string name="create" comment="Button to create a filtered deck">Crear</string>
     <string name="new_dynamic_deck">Crear baralla filtrada</string>
     <string name="night_mode">Modo noite</string>
     <string name="directory_inaccessible">O directorio AnkiDroid non está accesible</string>

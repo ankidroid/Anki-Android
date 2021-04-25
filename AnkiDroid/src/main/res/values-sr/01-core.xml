@@ -121,12 +121,12 @@
     <string name="menu_edit_tags">Edit tags</string>
     <string name="delete_note_message">Да ли заисте желите да избришете белешку и све повезане карте?\n%s</string>
     <string name="menu_select">Означи текст</string>
+    <string name="menu_lookup">Lookup text</string>
     <string name="menu_search">Потражи у %1$s</string>
     <string name="menu_mark_note">Означи белешку</string>
     <string name="menu_unmark_note">Уклони ознаку белешке</string>
     <string name="menu_toggle_mic_tool_bar">Провери изговор</string>
     <string name="new_deck">Направи шпил</string>
-    <string name="create" comment="Button to create a filtered deck">Креирај</string>
     <string name="new_dynamic_deck">Направи филтриран шпил</string>
     <string name="night_mode">Ноћни режим</string>
     <string name="directory_inaccessible">Недоступан каталог AnkiDroid</string>

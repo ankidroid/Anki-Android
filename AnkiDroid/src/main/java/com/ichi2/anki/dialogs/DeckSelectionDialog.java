@@ -29,8 +29,11 @@ import android.widget.Filterable;
 import android.widget.TextView;
 
 import com.afollestad.materialdialogs.MaterialDialog;
+import com.ichi2.anki.AnkiActivity;
 import com.ichi2.anki.R;
+import com.ichi2.anki.UIUtils;
 import com.ichi2.anki.analytics.AnalyticsDialogFragment;
+import com.ichi2.anki.exception.FilteredAncestor;
 import com.ichi2.libanki.Collection;
 import com.ichi2.libanki.Deck;
 import com.ichi2.utils.FunctionalInterfaces;
@@ -49,6 +52,7 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import timber.log.Timber;
 
 public class DeckSelectionDialog extends AnalyticsDialogFragment {
 
@@ -98,7 +102,6 @@ public class DeckSelectionDialog extends AnalyticsDialogFragment {
 
         RecyclerView recyclerView = dialogView.findViewById(R.id.deck_picker_dialog_list);
         recyclerView.requestFocus();
-        recyclerView.setHasFixedSize(true);
 
         RecyclerView.LayoutManager deckLayoutManager = new LinearLayoutManager(requireActivity());
         recyclerView.setLayoutManager(deckLayoutManager);
@@ -167,6 +170,52 @@ public class DeckSelectionDialog extends AnalyticsDialogFragment {
                 return true;
             }
         });
+
+        MenuItem addDecks = mToolbar.getMenu().findItem(R.id.deck_picker_dialog_action_add_deck);
+        addDecks.setOnMenuItemClickListener(menuItem -> {
+            // creating new deck without any parent deck
+            showDeckDialog();
+            return true;
+        });
+    }
+
+    private void showSubDeckDialog(String parentDeckPath) {
+        try {
+            // create subdeck
+            Long parentId = requireAnkiActivity().getCol().getDecks().id(parentDeckPath);
+            CreateDeckDialog createDeckDialog = new CreateDeckDialog(requireActivity(), R.string.create_subdeck, CreateDeckDialog.DeckDialogType.SUB_DECK, parentId);
+            createDeckDialog.setOnNewDeckCreated((id) -> {
+                // a sub deck was created
+                selectDeckWithDeckName(requireAnkiActivity().getCol().getDecks().name(id));
+            });
+            createDeckDialog.showDialog();
+        } catch (FilteredAncestor filteredAncestor) {
+            Timber.w(filteredAncestor);
+        }
+    }
+
+    private void showDeckDialog() {
+        CreateDeckDialog createDeckDialog =  new CreateDeckDialog(requireActivity(), R.string.new_deck, CreateDeckDialog.DeckDialogType.DECK, null);
+        createDeckDialog.setOnNewDeckCreated((id) -> {
+            // a deck was created
+            selectDeckWithDeckName(requireAnkiActivity().getCol().getDecks().name(id));
+        });
+        createDeckDialog.showDialog();
+    }
+
+    @NonNull
+    protected AnkiActivity requireAnkiActivity() {
+        return (AnkiActivity) requireActivity();
+    }
+
+    private void selectDeckWithDeckName(@NonNull String deckName) {
+        try {
+            Long id = requireAnkiActivity().getCol().getDecks().id(deckName);
+            SelectableDeck dec = new SelectableDeck(id, deckName);
+            selectDeckAndClose(dec);
+        } catch (FilteredAncestor filteredAncestor) {
+            UIUtils.showThemedToast(requireActivity(), getString(R.string.decks_rename_filtered_nosubdecks), false);
+        }
     }
 
 
@@ -193,6 +242,15 @@ public class DeckSelectionDialog extends AnalyticsDialogFragment {
                 mDeckTextView.setOnClickListener(view -> {
                     String deckName = ctv.getText().toString();
                     selectDeckByNameAndClose(deckName);
+                });
+
+                mDeckTextView.setOnLongClickListener(new View.OnLongClickListener() {
+                    @Override
+                    public boolean onLongClick(View view) {
+                        // creating sub deck with parent deck path
+                        showSubDeckDialog(ctv.getText().toString());
+                        return true;
+                    }
                 });
             }
 

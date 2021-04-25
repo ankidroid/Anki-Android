@@ -126,12 +126,12 @@
     <string name="menu_edit_tags">Editovať štítky</string>
     <string name="delete_note_message">Naozaj chcete odstrániť túto poznámku a všetky jej kartičky?\n%s</string>
     <string name="menu_select">Zvoliť text</string>
+    <string name="menu_lookup">Lookup text</string>
     <string name="menu_search">Vyhľadať v %1$s</string>
     <string name="menu_mark_note">Označiť poznámku</string>
     <string name="menu_unmark_note">Odznačiť poznámku</string>
     <string name="menu_toggle_mic_tool_bar">Skontrolovať výslovnosť</string>
     <string name="new_deck">Vytvoriť balíček</string>
-    <string name="create" comment="Button to create a filtered deck">Vytvoriť</string>
     <string name="new_dynamic_deck">Vytvoriť filtrovaný balíček</string>
     <string name="night_mode">Nočný režim</string>
     <string name="directory_inaccessible">Adresár AnkiDroid je neprístupný</string>

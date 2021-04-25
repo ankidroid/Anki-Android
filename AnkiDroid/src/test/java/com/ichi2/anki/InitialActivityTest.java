@@ -67,14 +67,25 @@ public class InitialActivityTest extends RobolectricTest {
     }
 
     public static void setupForDatabaseConflict() {
-        ShadowApplication app = Shadows.shadowOf((Application) ApplicationProvider.getApplicationContext());
-        app.grantPermissions(android.Manifest.permission.WRITE_EXTERNAL_STORAGE, android.Manifest.permission.READ_EXTERNAL_STORAGE);
+        grantWritePermissions();
         ShadowEnvironment.setExternalStorageState("mounted");
     }
 
+
+
     public static void setupForDefault() {
+        revokeWritePermissions();
+        ShadowEnvironment.setExternalStorageState("removed");
+    }
+
+
+    protected static void grantWritePermissions() {
+        ShadowApplication app = Shadows.shadowOf((Application) ApplicationProvider.getApplicationContext());
+        app.grantPermissions(android.Manifest.permission.WRITE_EXTERNAL_STORAGE, android.Manifest.permission.READ_EXTERNAL_STORAGE);
+    }
+
+    protected static void revokeWritePermissions() {
         ShadowApplication app = Shadows.shadowOf((Application) ApplicationProvider.getApplicationContext());
         app.denyPermissions(android.Manifest.permission.WRITE_EXTERNAL_STORAGE, android.Manifest.permission.READ_EXTERNAL_STORAGE);
-        ShadowEnvironment.setExternalStorageState("removed");
     }
 }
