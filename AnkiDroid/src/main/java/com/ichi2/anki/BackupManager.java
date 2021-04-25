@@ -41,6 +41,7 @@ import java.util.zip.ZipEntry;
 import java.util.zip.ZipOutputStream;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.VisibleForTesting;
 import timber.log.Timber;
 
 public class BackupManager {
@@ -86,19 +87,19 @@ public class BackupManager {
 
 
     public static boolean performBackupInBackground(String path, @NonNull Time time) {
-        return performBackupInBackground(path, BACKUP_INTERVAL, false, time);
+        return new BackupManager().performBackupInBackground(path, BACKUP_INTERVAL, false, time);
     }
 
 
     public static boolean performBackupInBackground(String path, boolean force, @NonNull Time time) {
-        return performBackupInBackground(path, BACKUP_INTERVAL, force, time);
+        return new BackupManager().performBackupInBackground(path, BACKUP_INTERVAL, force, time);
     }
 
 
     @SuppressWarnings("PMD.NPathComplexity")
-    private static boolean performBackupInBackground(final String colPath, int interval, boolean force, @NonNull Time time) {
+    public boolean performBackupInBackground(final String colPath, int interval, boolean force, @NonNull Time time) {
         SharedPreferences prefs = AnkiDroidApp.getSharedPrefs(AnkiDroidApp.getInstance().getBaseContext());
-        if (prefs.getInt("backupMax", 8) == 0 && !force) {
+        if (hasDisabledBackups(prefs) && !force) {
             Timber.w("backups are disabled");
             return false;
         }
@@ -192,6 +193,11 @@ public class BackupManager {
         };
         thread.start();
         return true;
+    }
+
+    @VisibleForTesting
+    boolean hasDisabledBackups(SharedPreferences prefs) {
+        return prefs.getInt("backupMax", 8) == 0;
     }
 
 
@@ -334,5 +340,10 @@ public class BackupManager {
             }
         }
         return dir.delete();
+    }
+
+    @VisibleForTesting(otherwise = VisibleForTesting.NONE)
+    public static BackupManager createInstance() {
+        return new BackupManager();
     }
 }
