@@ -286,32 +286,10 @@ public class Collection implements CollectionGetter {
         if (sChunk != 0) {
             return sChunk;
         }
-        // the window size is saved in
-        // io.requery.android.database.CursorWindow.sCursorWindowSize.
-        // Values are copied here. Ideally, a getter would allow to access it.
+        // This is valid for the framework sqlite as far back as Android 5 / SDK21
+        // https://github.com/aosp-mirror/platform_frameworks_base/blob/ba35a77c7c4494c9eb74e87d8eaa9a7205c426d2/core/res/res/values/config.xml#L1141
         final int WINDOW_SIZE_KB = 2048;
         int sCursorWindowSize = WINDOW_SIZE_KB * 1024;
-
-        // We have the ability to look into our sqlite implementation on Android and use it's value
-        // as a ceiling. Try it, with a reasonable fallback in case of failure
-        SupportSQLiteDatabase db = mDb.getDatabase();
-        String db_name = (db instanceof DatabaseChangeDecorator) ? ((DatabaseChangeDecorator) db).getWrapped().getClass().getName() : null;
-
-        if ("io.requery.android.database.sqlite.SQLiteDatabase".equals(db_name)) {
-            try {
-                Field cursorWindowSize = io.requery.android.database.CursorWindow.class.getDeclaredField("sDefaultCursorWindowSize");
-                cursorWindowSize.setAccessible(true);
-                int possibleCursorWindowSize = cursorWindowSize.getInt(null);
-                Timber.d("Reflectively discovered database default cursor window size %d", possibleCursorWindowSize);
-                if (possibleCursorWindowSize > 0) {
-                    sCursorWindowSize = possibleCursorWindowSize;
-                } else {
-                    Timber.w("Obtained unusable cursor window size: %d. Using default %d", possibleCursorWindowSize, sCursorWindowSize);
-                }
-            } catch (Exception e) {
-                Timber.w(e, "Unable to get window size from requery cursor.");
-            }
-        }
 
         // reduce the actual size a little bit.
         // In case db is not an instance of DatabaseChangeDecorator, sChunk evaluated on default window size
