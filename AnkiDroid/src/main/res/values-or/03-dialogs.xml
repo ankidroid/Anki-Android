@@ -235,11 +235,11 @@
         <item quantity="one">%d ସେକେଣ୍ଡରେ ଏକ ସ୍ୱୟଂଚାଳିତ ସିଙ୍କ୍ ଚାଳିତ ହୋଇପାରେ</item>
         <item quantity="other">%d ସେକେଣ୍ଡରେ ଏକ ସ୍ୱୟଂଚାଳିତ ସିଙ୍କ୍ ଚାଳିତ ହୋଇପାରେ</item>
     </plurals>
-    <string name="deck_picker_new">Number of new cards to see today in this deck.</string>
-    <string name="deck_picker_rev">Number of cards due today in this deck.</string>
-    <string name="deck_picker_lrn">Number of cards in learning in this deck.</string>
+    <string name="deck_picker_new">ଏହି ଡେକ୍ ରେ ଆଜି ଦେଖିବାକୁ ଥିବା ନୂତନ କାର୍ଡର ସଂଖ୍ୟା।</string>
+    <string name="deck_picker_rev">ଏହି ଡେକ୍ ରେ ଆଜି ପାଇଁ ଧାର୍ଯ୍ୟ ଥିବା ନୂତନ କାର୍ଡର ସଂଖ୍ୟା।</string>
+    <string name="deck_picker_lrn">ଏହି ଡେକ୍ ର ଶିକ୍ଷାଧିନ କାର୍ଡ ସଂଖ୍ୟା।</string>
     <!-- This description is valid fos
     sched V2. For V1, it was counting the number of repetitions of cards in learning. This approximation is acceptable
     for the sake of simplicity and because V1 will leave.-->
-    <string name="deck_picker_counts">Open the deck overview page containing the number of cards to see today.</string>
+    <string name="deck_picker_counts">ଆଜି ଦେଖିବାକୁ ଥିବା କାର୍ଡର ସଂଖ୍ୟା ଧାରଣ କରିଥିବା ଡେକ୍ ବର୍ଣ୍ଣନା ପୃଷ୍ଠା ଖୋଲନ୍ତୁ।</string>
 </resources>

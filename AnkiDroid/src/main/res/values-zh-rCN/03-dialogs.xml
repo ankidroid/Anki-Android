@@ -227,11 +227,11 @@
     <plurals name="sync_automatic_sync_needs_more_time">
         <item quantity="other">可能在 %d 秒后触发自动同步</item>
     </plurals>
-    <string name="deck_picker_new">Number of new cards to see today in this deck.</string>
-    <string name="deck_picker_rev">Number of cards due today in this deck.</string>
-    <string name="deck_picker_lrn">Number of cards in learning in this deck.</string>
+    <string name="deck_picker_new">此牌组中今天要看的新卡片数</string>
+    <string name="deck_picker_rev">此牌组今天到期的卡片数量。</string>
+    <string name="deck_picker_lrn">此牌组中学习中的卡片数</string>
     <!-- This description is valid fos
     sched V2. For V1, it was counting the number of repetitions of cards in learning. This approximation is acceptable
     for the sake of simplicity and because V1 will leave.-->
-    <string name="deck_picker_counts">Open the deck overview page containing the number of cards to see today.</string>
+    <string name="deck_picker_counts">打开包含今天要查看的卡片数量的牌组概览页。</string>
 </resources>

@@ -177,8 +177,8 @@
     <string name="new_timezone" maxLength="41">新时区处理</string>
     <string name="day_offset_with_description" maxLength="41">次日开始时间 (0为午夜，23为 11PM)</string>
     <string name="day_offset_summ">午夜过后的XXX小时</string>
-    <string name="xlabel_dayoffset_seekbar" maxLength="41">Midnight</string>
-    <string name="ylabel_dayoffset_seekbar" maxLength="41">11PM</string>
+    <string name="xlabel_dayoffset_seekbar" maxLength="41">午夜</string>
+    <string name="ylabel_dayoffset_seekbar" maxLength="41">晚上 11 点</string>
     <string name="sched_ver" maxLength="41">实验性 V2 调度器</string>
     <string name="sched_ver_summ">启用实验性调度器。在下次同步时强制单向变更</string>
     <string name="sched_ver_toggle_title">确认</string>

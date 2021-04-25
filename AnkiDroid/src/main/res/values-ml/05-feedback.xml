@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?> 
+ <!-- 
+ ~ Copyright (c) 2009 Andrew <andrewdubya@gmail> 
+ ~ Copyright (c) 2009 Edu Zamora <edu.zasu@gmail.com> 
+ ~ Copyright (c) 2009 Daniel Svaerd <daniel.svard@gmail.com> 
+ ~ Copyright (c) 2009 Nicolas Raoul <nicolas.raoul@gmail.com> 
+ ~ Copyright (c) 2010 Norbert Nagold <norbert.nagold@gmail.com> 
+ ~ This program is free software; you can redistribute it and/or modify it under 
+ ~ the terms of the GNU General Public License as published by the Free Software 
+ ~ Foundation; either version 3 of the License, or (at your option) any later 
+ ~ version. 
+ ~ 
+ ~ This program is distributed in the hope that it will be useful, but WITHOUT ANY 
+ ~ WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A 
+ ~ PARTICULAR PURPOSE. See the GNU General Public License for more details. 
+ ~ 
+ ~ You should have received a copy of the GNU General Public License along with 
+ ~ this program.  If not, see <http://www.gnu.org/licenses/>. 
+ --> 
+ 
+<!--
+~ Copyright (c) 2009 Andrew <andrewdubya@gmail>
+~ Copyright (c) 2009 Edu Zamora <edu.zasu@gmail.com>
+~ Copyright (c) 2009 Daniel Svärd <daniel.svard@gmail.com>
+~ Copyright (c) 2009 Nicolas Raoul <nicolas.raoul@gmail.com>
+~ Copyright (c) 2010 Norbert Nagold <norbert.nagold@gmail.com>
+~
+~ This program is free software; you can redistribute it and/or modify it under
+~ the terms of the GNU General Public License as published by the Free Software
+~ Foundation; either version 3 of the License, or (at your option) any later
+~ version.
+~
+~ This program is distributed in the hope that it will be useful, but WITHOUT ANY
+~ WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A
+~ PARTICULAR PURPOSE. See the GNU General Public License for more details.
+~
+~ You should have received a copy of the GNU General Public License along with
+~ this program.  If not, see <http://www.gnu.org/licenses/>.
+-->
+<resources>
+    <!-- Feedback.java -->
+    <string name="empty_string"></string>
+    <string name="error_reporting_choice">റിപ്പോർട്ടിംഗ് മോഡ് പിശക്</string>
+    <string name="feedback_disclaimer">നിരാകരണം: നിങ്ങളുടെ ഇമെയിൽ വിലാസം, ഫോൺ നമ്പർ അല്ലെങ്കിൽ നിങ്ങളുടെ ഫോൺ IMEI പോലുള്ള സ്വകാര്യ വിവരങ്ങളൊന്നും ഞങ്ങൾ ശേഖരിക്കുന്നില്ല. Android- ന്റെ നിർമ്മാതാവ്, മോഡൽ, പതിപ്പ് എന്നിവപോലുള്ള നിങ്ങളുടെ ഉപകരണത്തെക്കുറിച്ചും റിപ്പോർട്ടുചെയ്‌ത പിശകുകളുടെ സ്വഭാവത്തെക്കുറിച്ചും അവ സംഭവിക്കുന്ന ഘട്ടങ്ങളെക്കുറിച്ചും ഞങ്ങൾ ചില വിവരങ്ങൾ ശേഖരിക്കും.</string>
+    <string name="feedback_title">AnkiDroid ഫീഡ്‌ബാക്ക്</string>
+    <string name="feedback_default_text">നിങ്ങൾ റിപ്പോർട്ടുചെയ്യുന്ന പിശകുകളുടെ സ്വഭാവത്തെക്കുറിച്ചുള്ള നിങ്ങളുടെ ഫീഡ്‌ബാക്കോ വിവരമോ നൽകുക.</string>
+    <string name="feedback_auto_toast_text">AnkiDroid ഒരു പ്രശ്നം നേരിട്ടു; ഡവലപ്പർമാർക്ക് ഒരു റിപ്പോർട്ട് അയയ്ക്കുന്നു&#8230;</string>
+    <string name="feedback_manual_toast_text">AnkiDroid ഒരു പ്രശ്നം നേരിട്ടു; ഡവലപ്പർമാർക്ക് ഒരു റിപ്പോർട്ട് അയയ്ക്കുന്നു&#8230;</string>
+    <string name="feedback_copy_debug">ഡീബഗ് വിവരം പകർത്തുക</string>
+    <string name="feedback_report">റിപ്പോർട്ട്</string>
+    <string name="feedback_report_automatically">പിശക് റിപ്പോർട്ടുകൾ യാന്ത്രികമായി അയയ്‌ക്കുക</string>
+    <string name="feedback_no_suitable_app_found">അനുയോജ്യമായ അപ്ലിക്കേഷനുകളൊന്നും കണ്ടെത്തിയില്ല</string>
+</resources>

@@ -70,7 +70,7 @@
     <string name="reset_languages" maxLength="41">Réinitialiser les langages</string>
     <string name="reset_languages_summ">Réinitialiser les paramètres de langue (pour le TTS et les dictionnaires) pour tous les paquets de cartes</string>
     <string name="reset_languages_question">Réinitialiser toutes les affectations de langues ?</string>
-    <string name="reset_confirmation">Réinitialisation des états</string>
+    <string name="reset_confirmation">Réinitialisation de tous les états</string>
     <string name="card_zoom" maxLength="41">Zoom de carte</string>
     <string name="image_zoom" maxLength="41">Zoom d\'image</string>
     <string name="button_size" maxLength="41">Taille des boutons de réponse</string>
@@ -177,8 +177,8 @@
     <string name="new_timezone" maxLength="41">Nouvelle gestion du fuseau horaire</string>
     <string name="day_offset_with_description" maxLength="41">Début du jour suivant (0 est minuit, 23 est 23 h)</string>
     <string name="day_offset_summ">XXX heures après minuit</string>
-    <string name="xlabel_dayoffset_seekbar" maxLength="41">Midnight</string>
-    <string name="ylabel_dayoffset_seekbar" maxLength="41">11PM</string>
+    <string name="xlabel_dayoffset_seekbar" maxLength="41">Minuit</string>
+    <string name="ylabel_dayoffset_seekbar" maxLength="41">23h00</string>
     <string name="sched_ver" maxLength="41">Planificateur V2 expérimental</string>
     <string name="sched_ver_summ">Activer le planificateur expérimental. Force les changements dans un sens lors de la prochaine synchronisation</string>
     <string name="sched_ver_toggle_title">Confirmer</string>
