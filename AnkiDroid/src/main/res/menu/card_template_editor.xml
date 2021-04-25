@@ -14,12 +14,10 @@
         android:visible="true"/>
     <item
         android:id="@+id/action_add"
-        android:icon="@drawable/ic_menu_add"
         android:title="@string/menu_add"
         ankidroid:showAsAction="never"/>
     <item
         android:id="@+id/action_delete"
-        android:icon="@drawable/ic_action_cancel"
         android:title="@string/dialog_positive_delete"
         ankidroid:showAsAction="never"/>
     <item
