@@ -424,11 +424,10 @@ public abstract class NavigationDrawerActivity extends AnkiActivity implements N
     protected void restartActivityInvalidateBackstack(AnkiActivity activity) {
         Timber.i("AnkiActivity -- restartActivityInvalidateBackstack()");
         Intent intent = new Intent();
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
         intent.setClass(activity, activity.getClass());
-        TaskStackBuilder stackBuilder = TaskStackBuilder.create(activity);
-        stackBuilder.addNextIntentWithParentStack(intent);
-        stackBuilder.startActivities(new Bundle());
-        activity.finishWithoutAnimation();
+        startActivityWithoutAnimation(intent);
+        finishWithoutAnimation();
     }
 
 
