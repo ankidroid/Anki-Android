@@ -127,6 +127,17 @@ public class BackupManagerTest {
         assertThat("should fail if backups exists", result, is(false));
     }
 
+    @Test
+    public void noBackupPerformedIfCollectionTooSmall() {
+        BackupManager bm = getPassingBackupManagerSpy();
+
+        doReturn(true).when(bm).collectionIsTooSmallToBeValid(any());
+
+        boolean result = performBackup(bm);
+
+        assertThat("should fail if collection too small", result, is(false));
+    }
+
     private boolean performBackup(BackupManager bm) {
         return performBackup(bm, new MockTime(100000000));
     }
