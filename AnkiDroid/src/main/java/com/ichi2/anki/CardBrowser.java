@@ -511,7 +511,7 @@ public class CardBrowser extends NavigationDrawerActivity implements
 
         // Saves the present Night Mode Preference on activity start.
         isDarkModeAtStart=AnkiDroidApp.getSharedPrefs(getApplicationContext())
-                .getBoolean(NIGHT_MODE_PREFERENCE,false);
+                .getBoolean(NIGHT_MODE_PREFERENCE, false);
 
         if (showedActivityFailedScreen(savedInstanceState)) {
             return;
