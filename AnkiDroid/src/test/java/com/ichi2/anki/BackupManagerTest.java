@@ -102,6 +102,19 @@ public class BackupManagerTest {
         assertThat("PerformBackup should pass", result, is(true));
     }
 
+    @Test
+    public void noBackupPerformedIfNoBackupNecessary() {
+        BackupManager bm = getPassingBackupManagerSpy();
+
+        doReturn(true).when(bm).isBackupUnnecessary(any(), any());
+
+        boolean result = performBackup(bm);
+
+        assertThat("should fail if backups not necessary", result, is(false));
+
+        verify(bm, times(1)).isBackupUnnecessary(any(), any());
+    }
+
     private boolean performBackup(BackupManager bm) {
         return performBackup(bm, new MockTime(100000000));
     }

@@ -106,8 +106,7 @@ public class BackupManager {
         }
         final File colFile = new File(colPath);
         File[] deckBackups = getBackups(colFile);
-        int len = deckBackups.length;
-        if (len > 0 && deckBackups[len - 1].lastModified() == colFile.lastModified()) {
+        if (isBackupUnnecessary(colFile, deckBackups)) {
             Timber.d("performBackup: No backup necessary due to no collection changes");
             return false;
         }
@@ -160,6 +159,19 @@ public class BackupManager {
         // Backup collection as Anki package in new thread
         performBackupInNewThread(colPath, colFile, backupFilename, backupFile);
         return true;
+    }
+
+
+    protected boolean isBackupUnnecessary(File colFile, File[] deckBackups) {
+        int len = deckBackups.length;
+
+        // If have no backups, then a backup is necessary
+        if (len <= 0) {
+            return false;
+        }
+
+        // no collection changes means we don't need a backup
+        return deckBackups[len - 1].lastModified() == colFile.lastModified();
     }
 
 
