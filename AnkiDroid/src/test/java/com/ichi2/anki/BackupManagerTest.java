@@ -16,10 +16,15 @@
 
 package com.ichi2.anki;
 
+import com.ichi2.libanki.utils.Time;
 import com.ichi2.testutils.MockTime;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.mockito.invocation.InvocationOnMock;
+import org.mockito.stubbing.Answer;
+
+import java.io.File;
 
 import androidx.test.ext.junit.runners.AndroidJUnit4;
 
@@ -29,7 +34,9 @@ import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyBoolean;
 import static org.mockito.ArgumentMatchers.anyInt;
 import static org.mockito.ArgumentMatchers.anyString;
+import static org.mockito.Mockito.doNothing;
 import static org.mockito.Mockito.doReturn;
+import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.spy;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
@@ -42,15 +49,15 @@ public class BackupManagerTest {
     public void failsIfNoBackupsAllowedAndForceIsDisabled() {
         // arrange
 
-        BackupManager bm = spy(BackupManager.createInstance());
+        BackupManager bm = getPassingBackupManagerSpy();
 
         doReturn(true).when(bm).hasDisabledBackups(any());
 
-        MockTime time = new MockTime(2010, 1, 1, 1, 1, 1, 1, 0);
 
         // act
+        boolean force = false;
 
-        boolean performBackupResult = bm.performBackupInBackground("", 100, false, time);
+        boolean performBackupResult = performBackup(bm, force);
 
         // assert
 
@@ -60,5 +67,77 @@ public class BackupManagerTest {
         verify(bm, times(1)).hasDisabledBackups(any());
 
         verifyNoMoreInteractions(bm);
+    }
+
+    @Test
+    public void passesIfNoBackupsAllowedAndForceIsEnabled() {
+        // arrange
+
+        BackupManager bm = getPassingBackupManagerSpy();
+
+        doReturn(true).when(bm).hasDisabledBackups(any());
+
+
+        // act
+        boolean force = true;
+
+        boolean performBackupResult = performBackup(bm, force);
+
+        // assert
+
+        assertThat("should pass if backups are disabled and force is enabled", performBackupResult, is(true));
+
+        verify(bm, times(1)).hasDisabledBackups(any());
+        verify(bm, times(1)).performBackupInBackground(anyString(), anyInt(), anyBoolean(), any());
+    }
+
+    /** Meta test: ensuring passingBackupManagerSpy passes */
+    @Test
+    public void testPassingSpy() {
+        BackupManager bm = getPassingBackupManagerSpy();
+
+        boolean result = performBackup(bm);
+
+        verify(bm, times(1)).performBackupInNewThread(any(), any(), any(), any());
+        assertThat("PerformBackup should pass", result, is(true));
+    }
+
+    private boolean performBackup(BackupManager bm) {
+        return performBackup(bm, new MockTime(100000000));
+    }
+
+    protected boolean performBackup(BackupManager bm, Time time) {
+        return performBackup(bm, time, false);
+    }
+
+    protected boolean performBackup(BackupManager bm, boolean force) {
+        return performBackup(bm, new MockTime(100000000), force);
+    }
+
+
+    private boolean performBackup(BackupManager bm, Time time, boolean force) {
+        return bm.performBackupInBackground("", 100, force, time);
+    }
+
+    /** Returns a spy of BackupManager which would pass */
+    protected BackupManager getPassingBackupManagerSpy() {
+        BackupManager spy = spy(BackupManager.createInstance());
+        doReturn(true).when(spy).hasFreeDiscSpace(any());
+        doReturn(false).when(spy).collectionIsTooSmallToBeValid(any());
+        doNothing().when(spy).performBackupInNewThread(any(), any(), any(), any());
+        doReturn(null).when(spy).getLastBackupDate(any(), any());
+
+        // strict mock
+        File f = mock(File.class, new ThrowingAnswer());
+        doReturn(false).when(f).exists();
+        doReturn(f).when(spy).getBackupFile(any(), any());
+        return spy;
+    }
+
+    // Likely a better way. Using: https://stackoverflow.com/a/36206766
+    public static class ThrowingAnswer implements Answer<Object> {
+        @Override public Object answer(InvocationOnMock invocation) {
+            throw new AssertionError("Unexpected invocation: " + invocation);
+        }
     }
 }

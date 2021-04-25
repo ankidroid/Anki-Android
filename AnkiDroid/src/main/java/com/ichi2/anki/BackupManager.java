@@ -41,6 +41,7 @@ import java.util.zip.ZipEntry;
 import java.util.zip.ZipOutputStream;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.annotation.VisibleForTesting;
 import timber.log.Timber;
 
@@ -115,17 +116,7 @@ public class BackupManager {
         Calendar cal = time.gregorianCalendar();
 
         // Abort backup if one was already made less than 5 hours ago
-        Date lastBackupDate = null;
-        while (lastBackupDate == null && len > 0) {
-            try {
-                len--;
-                lastBackupDate = df.parse(deckBackups[len].getName().replaceAll(
-                        "^.*-(\\d{4}-\\d{2}-\\d{2}-\\d{2}-\\d{2}).colpkg$", "$1"));
-            } catch (ParseException e) {
-                Timber.w(e);
-                lastBackupDate = null;
-            }
-        }
+        Date lastBackupDate = getLastBackupDate(deckBackups, df);
         if (lastBackupDate != null && lastBackupDate.getTime() + interval * 3600000L > time.intTimeMS() && !force) {
             Timber.d("performBackup: No backup created. Last backup younger than 5 hours");
             return false;
@@ -141,21 +132,21 @@ public class BackupManager {
         }
 
         // Abort backup if destination already exists (extremely unlikely)
-        final File backupFile = new File(getBackupDirectory(colFile.getParentFile()), backupFilename);
+        final File backupFile = getBackupFile(colFile, backupFilename);
         if (backupFile.exists()) {
             Timber.d("performBackup: No new backup created. File already exists");
             return false;
         }
 
         // Abort backup if not enough free space
-        if (getFreeDiscSpace(colFile) < colFile.length() + (MIN_FREE_SPACE * 1024 * 1024)) {
+        if (!hasFreeDiscSpace(colFile)) {
             Timber.e("performBackup: Not enough space on sd card to backup.");
             prefs.edit().putBoolean("noSpaceLeft", true).apply();
             return false;
         }
 
         // Don't bother trying to do backup if the collection is too small to be valid
-        if (colFile.length() < MIN_BACKUP_COL_SIZE) {
+        if (collectionIsTooSmallToBeValid(colFile)) {
             Timber.d("performBackup: No backup created as the collection is too small to be valid");
             return false;
         }
@@ -165,9 +156,42 @@ public class BackupManager {
         if (CollectionHelper.getInstance().colIsOpen()) {
             Timber.w("Collection is already open during backup... we probably shouldn't be doing this");
         }
-        Timber.i("Launching new thread to backup %s to %s", colPath, backupFile.getPath());
 
         // Backup collection as Anki package in new thread
+        performBackupInNewThread(colPath, colFile, backupFilename, backupFile);
+        return true;
+    }
+
+
+    /** Returns the last date of a backup, or null if none */
+    @Nullable
+    protected Date getLastBackupDate(File[] deckBackups, SimpleDateFormat df) {
+        // TODO: It appears that we can just use a loop here
+        // TODO: This doesn't seem to work properly - we don't use a min()
+        int len = deckBackups.length;
+        Date lastBackupDate = null;
+        while (lastBackupDate == null && len > 0) {
+            try {
+                len--;
+                lastBackupDate = df.parse(deckBackups[len].getName().replaceAll(
+                        "^.*-(\\d{4}-\\d{2}-\\d{2}-\\d{2}-\\d{2}).colpkg$", "$1"));
+            } catch (ParseException e) {
+                Timber.w(e);
+                lastBackupDate = null;
+            }
+        }
+        return lastBackupDate;
+    }
+
+
+    @NonNull
+    protected File getBackupFile(File colFile, String backupFilename) {
+        return new File(getBackupDirectory(colFile.getParentFile()), backupFilename);
+    }
+
+
+    protected void performBackupInNewThread(String colPath, File colFile, String backupFilename, File backupFile) {
+        Timber.i("Launching new thread to backup %s to %s", colPath, backupFile.getPath());
         Thread thread = new Thread() {
             @Override
             public void run() {
@@ -192,8 +216,19 @@ public class BackupManager {
             }
         };
         thread.start();
-        return true;
     }
+
+
+    protected boolean collectionIsTooSmallToBeValid(File colFile) {
+        return colFile.length()
+                < MIN_BACKUP_COL_SIZE;
+    }
+
+
+    protected boolean hasFreeDiscSpace(File colFile) {
+        return getFreeDiscSpace(colFile) >= colFile.length() + (MIN_FREE_SPACE * 1024 * 1024);
+    }
+
 
     @VisibleForTesting
     boolean hasDisabledBackups(SharedPreferences prefs) {
