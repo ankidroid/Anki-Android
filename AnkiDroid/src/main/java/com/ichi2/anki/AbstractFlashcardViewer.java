@@ -41,6 +41,10 @@ import android.os.Handler;
 import android.os.Message;
 import android.os.SystemClock;
 
+import androidx.activity.result.ActivityResult;
+import androidx.activity.result.ActivityResultCallback;
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.CheckResult;
 import androidx.annotation.IdRes;
 import androidx.annotation.NonNull;
@@ -178,11 +182,81 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
     public static final int RESULT_NO_MORE_CARDS = 52;
     public static final int RESULT_ABORT_AND_SYNC = 53;
 
+    @VisibleForTesting
+    protected static class onEditCardActivityResultCallback implements ActivityResultCallback<ActivityResult> {
+
+        AbstractFlashcardViewer mAbstractFlashcardViewer;
+        onEditCardActivityResultCallback(AbstractFlashcardViewer activity) {
+            this.mAbstractFlashcardViewer = activity;
+        }
+
+        @Override
+        public void onActivityResult(ActivityResult result) {
+            Timber.d("onEditCardActivityResult: resultCode=%d", result.getResultCode());
+            int resultCode = result.getResultCode();
+            if (resultCode == DeckPicker.RESULT_DB_ERROR) {
+                this.mAbstractFlashcardViewer.closeReviewer(DeckPicker.RESULT_DB_ERROR, false);
+            }
+            if (resultCode == DeckPicker.RESULT_MEDIA_EJECTED) {
+                this.mAbstractFlashcardViewer.finishNoStorageAvailable();
+            }
+            /* Reset the schedule and reload the latest card off the top of the stack if required.
+               The card could have been rescheduled, the deck could have changed, or a change of
+               note type could have lead to the card being deleted */
+            Intent data = result.getData();
+            if (data != null && data.hasExtra("reloadRequired")) {
+                this.mAbstractFlashcardViewer.performReload();
+            }
+
+            if (resultCode == RESULT_OK) {
+                // content of note was changed so update the note and current card
+                Timber.i("AbstractFlashcardViewer:: Saving card...");
+                TaskManager.launchCollectionTask(
+                        new CollectionTask.UpdateNote(sEditorCard, true, this.mAbstractFlashcardViewer.canAccessScheduler()),
+                        this.mAbstractFlashcardViewer.mUpdateCardHandler);
+                this.mAbstractFlashcardViewer.onEditedNoteChanged();
+            } else if (resultCode == RESULT_CANCELED && !(data != null && data.hasExtra("reloadRequired"))) {
+                // nothing was changed by the note editor so just redraw the card
+                this.mAbstractFlashcardViewer.redrawCard();
+            }
+            if (this.mAbstractFlashcardViewer.mDisableClipboard) {
+                this.mAbstractFlashcardViewer.clearClipboard();
+            }
+        }
+    }
+
     /**
      * Available options performed by other activities.
      */
-    public static final int EDIT_CURRENT_CARD = 0;
-    public static final int DECK_OPTIONS = 1;
+    private final ActivityResultLauncher<Intent> mOnEditCardActivityResult = registerForActivityResult(
+        new ActivityResultContracts.StartActivityForResult(),
+        new onEditCardActivityResultCallback(this)
+    );
+    protected final ActivityResultLauncher<Intent> mOnDeckOptionsActivityResult = registerForActivityResult(
+        new ActivityResultContracts.StartActivityForResult(),
+        result -> {
+            int resultCode = result.getResultCode();
+            if (resultCode == DeckPicker.RESULT_DB_ERROR) {
+                closeReviewer(DeckPicker.RESULT_DB_ERROR, false);
+            }
+            if (resultCode == DeckPicker.RESULT_MEDIA_EJECTED) {
+                finishNoStorageAvailable();
+            }
+            /* Reset the schedule and reload the latest card off the top of the stack if required.
+               The card could have been rescheduled, the deck could have changed, or a change of
+               note type could have lead to the card being deleted */
+            if (result.getData() != null && result.getData().hasExtra("reloadRequired")) {
+                performReload();
+            }
+            if (resultCode == RESULT_OK) {
+                performReload();
+            }
+            if (!this.mDisableClipboard) {
+                clearClipboard();
+            }
+        }
+    );
+
 
     public static final int EASE_1 = 1;
     public static final int EASE_2 = 2;
@@ -1231,45 +1305,6 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
     }
 
 
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-
-        if (resultCode == DeckPicker.RESULT_DB_ERROR) {
-            closeReviewer(DeckPicker.RESULT_DB_ERROR, false);
-        }
-
-        if (resultCode == DeckPicker.RESULT_MEDIA_EJECTED) {
-            finishNoStorageAvailable();
-        }
-
-        /* Reset the schedule and reload the latest card off the top of the stack if required.
-           The card could have been rescheduled, the deck could have changed, or a change of
-           note type could have lead to the card being deleted */
-        if (data != null && data.hasExtra("reloadRequired")) {
-            performReload();
-        }
-
-        if (requestCode == EDIT_CURRENT_CARD) {
-            if (resultCode == RESULT_OK) {
-                // content of note was changed so update the note and current card
-                Timber.i("AbstractFlashcardViewer:: Saving card...");
-                TaskManager.launchCollectionTask(
-                        new CollectionTask.UpdateNote(sEditorCard, true, canAccessScheduler()),
-                        mUpdateCardHandler);
-                onEditedNoteChanged();
-            } else if (resultCode == RESULT_CANCELED && !(data!=null && data.hasExtra("reloadRequired"))) {
-                // nothing was changed by the note editor so just redraw the card
-                redrawCard();
-            }
-        } else if (requestCode == DECK_OPTIONS && resultCode == RESULT_OK) {
-            performReload();
-        }
-        if (!mDisableClipboard) {
-            clearClipboard();
-        }
-    }
-
     /**
      * Whether the class should use collection.getSched() when performing tasks.
      * The aim of this method is to completely distinguish FlashcardViewer from Reviewer
@@ -1389,10 +1424,10 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
             // This should never occurs. It means the review button was pressed while there is no more card in the reviewer.
             return;
         }
-        Intent editCard = new Intent(AbstractFlashcardViewer.this, NoteEditor.class);
-        editCard.putExtra(NoteEditor.EXTRA_CALLER, NoteEditor.CALLER_REVIEWER);
+        Intent editCard = new Intent(AbstractFlashcardViewer.this, NoteEditor.class)
+            .putExtra(NoteEditor.EXTRA_CALLER, NoteEditor.CALLER_REVIEWER);
         sEditorCard = mCurrentCard;
-        startActivityForResultWithAnimation(editCard, EDIT_CURRENT_CARD, START);
+        launchActivityForResult(editCard, mOnEditCardActivityResult, START);
     }
 
 

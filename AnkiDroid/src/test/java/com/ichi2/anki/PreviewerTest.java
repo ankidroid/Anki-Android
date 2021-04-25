@@ -16,17 +16,17 @@
 
 package com.ichi2.anki;
 
-import android.app.Activity;
 import android.content.Intent;
 
 import com.ichi2.libanki.Card;
-import com.ichi2.libanki.Note;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
+import androidx.activity.result.ActivityResult;
 import androidx.test.ext.junit.runners.AndroidJUnit4;
 
+import static android.app.Activity.RESULT_OK;
 import static org.hamcrest.CoreMatchers.not;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.containsString;
@@ -47,7 +47,9 @@ public class PreviewerTest extends RobolectricTest {
 
         assertThat("Initially should be previewing selected card", previewer.getCurrentCardId(), is(cardToPreview.getId()));
 
-        previewer.onActivityResult(AbstractFlashcardViewer.EDIT_CURRENT_CARD, Activity.RESULT_OK, null);
+        AbstractFlashcardViewer.onEditCardActivityResultCallback onActivityResult =
+                new AbstractFlashcardViewer.onEditCardActivityResultCallback(previewer);
+        onActivityResult.onActivityResult(new ActivityResult(RESULT_OK, null));
 
         advanceRobolectricLooperWithSleep();
 
@@ -68,7 +70,9 @@ public class PreviewerTest extends RobolectricTest {
 
         cardToPreview.note().setField(0, "Hi");
 
-        previewer.onActivityResult(AbstractFlashcardViewer.EDIT_CURRENT_CARD, Activity.RESULT_OK, null);
+        AbstractFlashcardViewer.onEditCardActivityResultCallback onActivityResult =
+                new AbstractFlashcardViewer.onEditCardActivityResultCallback(previewer);
+        onActivityResult.onActivityResult(new ActivityResult(RESULT_OK, null));
 
         advanceRobolectricLooperWithSleep();
 

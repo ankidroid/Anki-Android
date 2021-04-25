@@ -1,6 +1,5 @@
 package com.ichi2.anki;
 
-import android.app.Activity;
 import android.content.Intent;
 
 import com.ichi2.anki.cardviewer.ViewerCommand;
@@ -13,8 +12,10 @@ import org.robolectric.Robolectric;
 import org.robolectric.android.controller.ActivityController;
 
 import androidx.annotation.NonNull;
+import androidx.activity.result.ActivityResult;
 import androidx.test.ext.junit.runners.AndroidJUnit4;
 
+import static android.app.Activity.RESULT_OK;
 import static com.ichi2.anki.AbstractFlashcardViewer.WebViewSignalParserUtils.ANSWER_ORDINAL_1;
 import static com.ichi2.anki.AbstractFlashcardViewer.WebViewSignalParserUtils.ANSWER_ORDINAL_2;
 import static com.ichi2.anki.AbstractFlashcardViewer.WebViewSignalParserUtils.ANSWER_ORDINAL_3;
@@ -354,7 +355,9 @@ public class AbstractFlashcardViewerTest extends RobolectricTest {
         Note note = nafv.mCurrentCard.note();
         note.setField(1, "David");
 
-        nafv.onActivityResult(AbstractFlashcardViewer.EDIT_CURRENT_CARD, Activity.RESULT_OK, new Intent());
+        AbstractFlashcardViewer.onEditCardActivityResultCallback onActivityResult =
+                new AbstractFlashcardViewer.onEditCardActivityResultCallback(nafv);
+        onActivityResult.onActivityResult(new ActivityResult(RESULT_OK, new Intent()));
 
         waitForAsyncTasksToComplete();
 
@@ -381,7 +384,9 @@ public class AbstractFlashcardViewerTest extends RobolectricTest {
         Note note = nafv.mCurrentCard.note();
         note.setField(1, "David");
 
-        nafv.onActivityResult(AbstractFlashcardViewer.EDIT_CURRENT_CARD, Activity.RESULT_OK, new Intent());
+        AbstractFlashcardViewer.onEditCardActivityResultCallback onActivityResult =
+                new AbstractFlashcardViewer.onEditCardActivityResultCallback(nafv);
+        onActivityResult.onActivityResult(new ActivityResult(RESULT_OK, new Intent()));
 
         waitForAsyncTasksToComplete();
 
