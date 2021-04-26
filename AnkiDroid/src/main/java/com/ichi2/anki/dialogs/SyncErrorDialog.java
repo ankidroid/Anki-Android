@@ -115,7 +115,8 @@ public class SyncErrorDialog extends AsyncDialogFragment {
             }
             case DIALOG_SYNC_CONFLICT_CONFIRM_KEEP_LOCAL: {
                 // Confirmation before pushing local collection to server after sync conflict
-                return builder.positiveText(res().getString(R.string.dialog_positive_replace))
+                return builder.iconAttr(R.attr.dialogSyncErrorIcon)
+                        .positiveText(res().getString(R.string.dialog_positive_replace))
                         .negativeText(res().getString(R.string.dialog_cancel))
                         .onPositive((dialog, which) -> {
                             SyncErrorDialogListener activity = (SyncErrorDialogListener) getActivity();
@@ -126,7 +127,8 @@ public class SyncErrorDialog extends AsyncDialogFragment {
             }
             case DIALOG_SYNC_CONFLICT_CONFIRM_KEEP_REMOTE: {
                 // Confirmation before overwriting local collection with server collection after sync conflict
-                return builder.positiveText(res().getString(R.string.dialog_positive_replace))
+                return builder.iconAttr(R.attr.dialogSyncErrorIcon)
+                        .positiveText(res().getString(R.string.dialog_positive_replace))
                         .negativeText(res().getString(R.string.dialog_cancel))
                         .onPositive((dialog, which) -> {
                             SyncErrorDialogListener activity = (SyncErrorDialogListener) getActivity();
