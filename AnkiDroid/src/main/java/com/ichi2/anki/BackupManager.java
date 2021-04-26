@@ -157,7 +157,7 @@ public class BackupManager {
         }
 
         // Backup collection as Anki package in new thread
-        performBackupInNewThread(colPath, colFile, backupFilename, backupFile);
+        performBackupInNewThread(colFile, backupFile);
         return true;
     }
 
@@ -202,11 +202,12 @@ public class BackupManager {
     }
 
 
-    protected void performBackupInNewThread(String colPath, File colFile, String backupFilename, File backupFile) {
-        Timber.i("Launching new thread to backup %s to %s", colPath, backupFile.getPath());
+    protected void performBackupInNewThread(File colFile, File backupFile) {
+        Timber.i("Launching new thread to backup %s to %s", colFile.getAbsolutePath(), backupFile.getPath());
         Thread thread = new Thread() {
             @Override
             public void run() {
+                String colPath = colFile.getAbsolutePath();
                 // Save collection file as zip archive
                 try {
                     ZipOutputStream zos = new ZipOutputStream(new BufferedOutputStream(new FileOutputStream(backupFile)));
@@ -219,7 +220,7 @@ public class BackupManager {
                     deleteDeckBackups(colPath, prefs.getInt("backupMax", 8));
                     // set timestamp of file in order to avoid creating a new backup unless its changed
                     if (!backupFile.setLastModified(colFile.lastModified())) {
-                        Timber.w("performBackupInBackground() setLastModified() failed on file %s", backupFilename);
+                        Timber.w("performBackupInBackground() setLastModified() failed on file %s", backupFile.getName());
                     }
                     Timber.i("Backup created succesfully");
                 } catch (IOException e) {
