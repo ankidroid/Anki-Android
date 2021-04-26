@@ -63,6 +63,7 @@ import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.ichi2.anki.dialogs.ConfirmationDialog;
@@ -1227,8 +1228,7 @@ public class NoteEditor extends AnkiActivity {
         noteEditorBundle.putBundle("editFields", getFieldsAsBundleForPreview());
         ArrayList<String> cardsList = new ArrayList<>();
         JSONArray tmpls = mEditorNote.model().getJSONArray("tmpls");
-        for ( int i = 0 ; i < tmpls.length() ; i++) {
-            String name = tmpls.getJSONObject(i).optString("name");
+        for(String name : tmpls.stringIterable()) {
             cardsList.add(name);
         }
         noteEditorBundle.putInt("cardListSize", cardsList.size());

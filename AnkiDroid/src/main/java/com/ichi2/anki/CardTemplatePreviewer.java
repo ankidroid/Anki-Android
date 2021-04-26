@@ -216,14 +216,14 @@ public class CardTemplatePreviewer extends AbstractFlashcardViewer {
             } else if (view.getId() == R.id.preview_next_flashcard) {
                 mIndex++;
             }
-            boolean prevBtnDisabled = mIndex <= 0;
-            boolean nextBtnDisabled = mIndex >= mCardListSize - 1;
+            boolean prevBtnEnabled = mIndex > 0;
+            boolean nextBtnEnabled = mIndex < mCardListSize-1;
 
-            mPreviewPrevCard.setEnabled(!prevBtnDisabled);
-            mPreviewNextCard.setEnabled(!nextBtnDisabled);
+            mPreviewPrevCard.setEnabled(prevBtnEnabled);
+            mPreviewNextCard.setEnabled(nextBtnEnabled);
 
-            mPreviewPrevCard.setAlpha(prevBtnDisabled ? 0.38F : 1);
-            mPreviewNextCard.setAlpha(nextBtnDisabled ? 0.38F : 1);
+            mPreviewPrevCard.setAlpha(prevBtnEnabled ? 1 : 0.38F);
+            mPreviewNextCard.setAlpha(nextBtnEnabled ? 1 : 0.38F);
 
             loadFieldData();
         }
