@@ -491,10 +491,42 @@ public class CardContentProvider extends ContentProvider {
                 currentNote.flush();
                 break;
             }
-            case NOTES_ID_CARDS:
+            case NOTES_ID_CARDS: {
                 // TODO: To be implemented
-                throw new UnsupportedOperationException("Not yet implemented");
-//                break;
+                // the following code has much code repetition with NOTES_ID_CARDS_ORD
+                //  i can reduce them when i am sure that this kind of update is valid
+                List<Card> cardsList = getCardsFromUri(uri, col);
+                long did = Decks.NOT_FOUND_DECK_ID;
+                // the key of the ContentValues contains the column name
+                // the value of the ContentValues contains the row value.
+                Set<Map.Entry<String, Object>> valueSet = values.valueSet();
+                for (Map.Entry<String, Object> entry : valueSet) {
+                    // Only updates on deck id is supported
+                    // move all cards related to that note to specific deck
+                    String key = entry.getKey();
+                    if (key.equals(FlashCardsContract.Card.DECK_ID)) {
+                        did = values.getAsLong(key);
+                    }
+                }
+                if (col.getDecks().isDyn(did)) {
+                    throw new IllegalArgumentException("Cards cannot be moved to a filtered deck");
+                }
+
+                if (did >= 0) {
+                    for (Card card : cardsList) {
+                        Timber.d("CardContentProvider: Moving card to other deck...");
+                        col.getDecks().flush();
+                        card.setDid(did);
+                        card.flush();
+                        col.save();
+                        updated++;
+                    }
+                } else {
+                    // User tries an operation that is not (yet?) supported.
+                    throw new IllegalArgumentException("Currently only updates of decks are supported");
+                }
+                break;
+            }
             case NOTES_ID_CARDS_ORD: {
                 Card currentCard = getCardFromUri(uri, col);
                 boolean isDeckUpdate = false;
