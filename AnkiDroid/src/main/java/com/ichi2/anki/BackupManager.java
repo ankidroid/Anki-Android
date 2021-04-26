@@ -207,28 +207,36 @@ public class BackupManager {
         Thread thread = new Thread() {
             @Override
             public void run() {
-                String colPath = colFile.getAbsolutePath();
-                // Save collection file as zip archive
-                try {
-                    ZipOutputStream zos = new ZipOutputStream(new BufferedOutputStream(new FileOutputStream(backupFile)));
-                    ZipEntry ze = new ZipEntry(CollectionHelper.COLLECTION_FILENAME);
-                    zos.putNextEntry(ze);
-                    CompatHelper.getCompat().copyFile(colPath, zos);
-                    zos.close();
-                    // Delete old backup files if needed
-                    SharedPreferences prefs = AnkiDroidApp.getSharedPrefs(AnkiDroidApp.getInstance().getBaseContext());
-                    deleteDeckBackups(colPath, prefs.getInt("backupMax", 8));
-                    // set timestamp of file in order to avoid creating a new backup unless its changed
-                    if (!backupFile.setLastModified(colFile.lastModified())) {
-                        Timber.w("performBackupInBackground() setLastModified() failed on file %s", backupFile.getName());
-                    }
-                    Timber.i("Backup created succesfully");
-                } catch (IOException e) {
-                    Timber.w(e);
-                }
+                performBackup(colFile, backupFile);
             }
         };
         thread.start();
+    }
+
+
+    protected boolean performBackup(File colFile, File backupFile) {
+        String colPath = colFile.getAbsolutePath();
+        // Save collection file as zip archive
+        try {
+            ZipOutputStream zos = new ZipOutputStream(new BufferedOutputStream(new FileOutputStream(backupFile)));
+            ZipEntry ze = new ZipEntry(CollectionHelper.COLLECTION_FILENAME);
+            zos.putNextEntry(ze);
+            CompatHelper.getCompat().copyFile(colPath, zos);
+            zos.close();
+            // Delete old backup files if needed
+            SharedPreferences prefs = AnkiDroidApp.getSharedPrefs(AnkiDroidApp.getInstance().getBaseContext());
+            deleteDeckBackups(colPath, prefs.getInt("backupMax", 8));
+            // set timestamp of file in order to avoid creating a new backup unless its changed
+            if (!backupFile.setLastModified(colFile.lastModified())) {
+                Timber.w("performBackupInBackground() setLastModified() failed on file %s", backupFile.getName());
+                return false;
+            }
+            Timber.i("Backup created succesfully");
+            return true;
+        } catch (IOException e) {
+            Timber.w(e);
+            return false;
+        }
     }
 
 
