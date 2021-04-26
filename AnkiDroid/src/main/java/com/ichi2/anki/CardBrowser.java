@@ -2151,10 +2151,10 @@ public class CardBrowser extends NavigationDrawerActivity implements
             int icon;
             if (hasUnsuspended) {
                 title = R.string.card_browser_suspend_card;
-                icon = R.drawable.ic_action_suspend;
+                icon = R.drawable.ic_pause_circle_outline;
             } else {
                 title = R.string.card_browser_unsuspend_card;
-                icon = R.drawable.ic_action_unsuspend;
+                icon = R.drawable.ic_pause_circle_filled;
             }
             MenuItem suspend_item = actionBarMenu.findItem(R.id.action_suspend_card);
             suspend_item.setTitle(browser.getString(title));
@@ -2162,10 +2162,10 @@ public class CardBrowser extends NavigationDrawerActivity implements
 
             if (hasUnmarked) {
                 title = R.string.card_browser_mark_card;
-                icon = R.drawable.ic_star_outline_white_24dp;
+                icon = R.drawable.ic_star_border_white;
             } else {
                 title = R.string.card_browser_unmark_card;
-                icon = R.drawable.ic_star_white_24dp;
+                icon = R.drawable.ic_star_white;
             }
             MenuItem mark_item = actionBarMenu.findItem(R.id.action_mark_card);
             mark_item.setTitle(browser.getString(title));

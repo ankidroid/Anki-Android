@@ -27,7 +27,7 @@
         android:layout_height="wrap_content"
         android:layout_alignParentEnd="true"
         android:layout_centerVertical="true"
-        android:src="@drawable/ic_remove_circle_grey600_24dp"
+        android:src="@drawable/ic_remove_circle_grey"
         android:background="@color/transparent"/>
 
 </RelativeLayout>

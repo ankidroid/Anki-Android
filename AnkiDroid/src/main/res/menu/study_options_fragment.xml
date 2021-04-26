@@ -3,7 +3,7 @@
     <item
         android:id="@+id/action_undo"
         android:enabled="true"
-        android:icon="@drawable/ic_undo_white_24dp"
+        android:icon="@drawable/ic_undo_white"
         android:title="@string/undo"
         ankidroid:actionProviderClass="com.ichi2.ui.RtlCompliantActionProvider"
         ankidroid:showAsAction="always"/>
@@ -11,18 +11,18 @@
         android:id="@+id/action_rebuild"
         android:title="@string/rebuild_cram_label"
         android:visibility = "gone"
-        android:icon="@drawable/ic_refresh_white_24dp"
+        android:icon="@drawable/ic_refresh_white"
         ankidroid:showAsAction="ifRoom"/>
     <item
         android:id="@+id/action_empty"
         android:title="@string/empty_cram_label"
         android:visibility = "gone"
-        android:icon="@drawable/ic_clear_white_24dp"
+        android:icon="@drawable/ic_clear_white"
         ankidroid:showAsAction="ifRoom"/>
     <item
         android:id="@+id/action_custom_study"
         android:title="@string/custom_study"
-        android:icon="@drawable/ic_build_white_24dp"
+        android:icon="@drawable/ic_build_white"
         ankidroid:showAsAction="ifRoom"/>
     <item
         android:id="@+id/action_rename"

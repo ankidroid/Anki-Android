@@ -177,7 +177,7 @@
     <string name="new_timezone" maxLength="41">ନୂତନ ସମୟ କ୍ଷେତ୍ର ପରିଚାଳନା</string>
     <string name="day_offset_with_description" maxLength="41">ପରବର୍ତ୍ତୀ ଦିନର ଆରମ୍ଭ (0 ଅର୍ଥ ମଧ୍ୟରାତ୍ରି, 23 ହେଉଛି 11 PM)</string>
     <string name="day_offset_summ">XXX ଘଣ୍ଟା ମଧ୍ୟରାତ୍ରି</string>
-    <string name="xlabel_dayoffset_seekbar" maxLength="41">Midnight</string>
+    <string name="xlabel_dayoffset_seekbar" maxLength="41">ମଧ୍ୟରାତ୍ରି</string>
     <string name="ylabel_dayoffset_seekbar" maxLength="41">11PM</string>
     <string name="sched_ver" maxLength="41">ପରୀକ୍ଷାମୂଳକ V2 ନିର୍ଧାରକ |</string>
     <string name="sched_ver_summ">ପରୀକ୍ଷାମୂଳକ କାର୍ଯ୍ୟସୂଚୀ ସକ୍ଷମ କରନ୍ତୁ | ପରବର୍ତ୍ତୀ ସିଙ୍କରେ ଗୋଟିଏ ଦିଗରେ ପରିବର୍ତ୍ତନ କରିବାକୁ ବାଧ୍ୟ କରେ</string>
