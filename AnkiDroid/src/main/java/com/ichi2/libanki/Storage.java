@@ -398,4 +398,9 @@ public class Storage {
     public static void setUseInMemory(boolean useInMemoryDatabase) {
         sUseInMemory = useInMemoryDatabase;
     }
+
+
+    public static boolean isInMemory() {
+        return sUseInMemory;
+    }
 }
