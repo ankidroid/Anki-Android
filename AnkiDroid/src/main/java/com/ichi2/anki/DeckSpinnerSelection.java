@@ -16,7 +16,6 @@
 
 package com.ichi2.anki;
 
-import android.graphics.Color;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
@@ -44,6 +43,8 @@ import androidx.appcompat.app.ActionBar;
 import androidx.core.content.ContextCompat;
 import timber.log.Timber;
 
+import static com.ichi2.anki.CardBrowser.clearLastDeckId;
+
 public class DeckSpinnerSelection {
 
     private long mDeckId;
@@ -52,17 +53,15 @@ public class DeckSpinnerSelection {
     private AnkiActivity mContext;
     private List<Deck> mDropDownDecks;
     private DeckDropDownAdapter mDeckDropDownAdapter;
-    private SpinnerType mSpinnerType;
+    private boolean mNoteEditorSpinner;
+    private static final long ALL_DECKS_ID = 0L;
+    private static final String PERSISTENT_STATE_FILE = "DeckPickerState";
+    private static final String LAST_DECK_ID_KEY = "lastDeckId";
 
-    public enum SpinnerType {
-        NOTE_EDITOR,
-        CARD_BROWSER,
-        STATISTICS
-    }
 
-    public DeckSpinnerSelection(@NonNull AnkiActivity context, @NonNull int spinnerId, @NonNull SpinnerType spinnerType) {
+    public DeckSpinnerSelection(@NonNull AnkiActivity context, @NonNull int spinnerId, @NonNull boolean noteEditorSpinner) {
         this.mContext = context;
-        this.mSpinnerType = spinnerType;
+        this.mNoteEditorSpinner = noteEditorSpinner;
         ActionBar actionBar = mContext.getSupportActionBar();
         actionBar.setDisplayShowTitleEnabled(false);
         mSpinner = mContext.findViewById(spinnerId);
@@ -84,10 +83,6 @@ public class DeckSpinnerSelection {
         mSpinner.setAdapter(mDeckDropDownAdapter);
 
         setSpinnerListner();
-
-
-        // Default to libanki's selected deck
-        selectDeckById(mContext.getCol().getDecks().selected());
 
     }
 
@@ -184,14 +179,34 @@ public class DeckSpinnerSelection {
 
     // Iterates the drop down decks, and selects the one matching the given id
     public boolean selectDeckById(long deckId) {
+        if (deckId == ALL_DECKS_ID) {
+            selectAllDecks();
+            return true;
+        }
         for (int dropDownDeckIdx = 0; dropDownDeckIdx < mAllDeckIds.size(); dropDownDeckIdx++) {
             if (mAllDeckIds.get(dropDownDeckIdx) == deckId) {
-                int position = mSpinnerType == SpinnerType.NOTE_EDITOR ? dropDownDeckIdx : dropDownDeckIdx + 1;
+                int position = mNoteEditorSpinner ? dropDownDeckIdx : dropDownDeckIdx + 1;
                 selectDropDownItem(position);
+                if (!mNoteEditorSpinner) {
+                    saveLastDeckId(deckId);
+                }
                 return true;
             }
         }
         return false;
+    }
+
+    void selectAllDecks() {
+        selectDropDownItem(0);
+        saveLastDeckId(Stats.ALL_DECKS_ID);
+    }
+
+    private void saveLastDeckId(Long id) {
+        if (id == null) {
+            clearLastDeckId();
+            return;
+        }
+        mContext.getSharedPreferences(PERSISTENT_STATE_FILE, 0).edit().putLong(LAST_DECK_ID_KEY, id).apply();
     }
 
     public void selectDropDownItem(int position) {
@@ -206,6 +221,11 @@ public class DeckSpinnerSelection {
     public void displayDeckOverrideDialog(Collection col) {
         FunctionalInterfaces.Filter<Deck> nonDynamic = (d) -> !Decks.isDynamic(d);
         List<DeckSelectionDialog.SelectableDeck> decks = DeckSelectionDialog.SelectableDeck.fromCollection(col, nonDynamic);
+
+        if (!mNoteEditorSpinner) {
+            decks.add(new DeckSelectionDialog.SelectableDeck(ALL_DECKS_ID, "All Decks"));
+        }
+
         DeckSelectionDialog dialog = DeckSelectionDialog.newInstance(mContext.getString(R.string.search_deck), null, false, decks);
         AnkiActivity.showDialogFragment(mContext, dialog);
     }

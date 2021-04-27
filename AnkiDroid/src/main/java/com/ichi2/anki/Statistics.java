@@ -114,7 +114,7 @@ public class Statistics extends NavigationDrawerActivity implements
         supportInvalidateOptionsMenu();
 //        StatisticFragment.updateAllFragments();
 
-        mDeckSpinnerSelection = new DeckSpinnerSelection(Statistics.this, R.id.toolbar_spinner, DeckSpinnerSelection.SpinnerType.STATISTICS);
+        mDeckSpinnerSelection = new DeckSpinnerSelection(Statistics.this, R.id.toolbar_spinner, false);
         mDeckSpinnerSelection.inizatizeActionBarDeckSpinner();
     }
 
@@ -212,12 +212,13 @@ public class Statistics extends NavigationDrawerActivity implements
 
     @Override
     public void onDeckSelected(@Nullable DeckSelectionDialog.SelectableDeck deck) {
-        if (deck != null) {
-            mDeckSpinnerSelection.inizatizeActionBarDeckSpinner();
-            mDeckSpinnerSelection.selectDeckById(deck.getDeckId());
-            mTaskHandler.setDeckId(deck.getDeckId());
-            mViewPager.getAdapter().notifyDataSetChanged();
+        if (deck == null) {
+            return;
         }
+        mDeckSpinnerSelection.inizatizeActionBarDeckSpinner();
+        mDeckSpinnerSelection.selectDeckById(deck.getDeckId());
+        mTaskHandler.setDeckId(deck.getDeckId());
+        mViewPager.getAdapter().notifyDataSetChanged();
     }
 
 
