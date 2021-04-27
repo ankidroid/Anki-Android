@@ -494,7 +494,7 @@ public class Reviewer extends AbstractFlashcardViewer {
                 return;
             }
             mMicToolBar = AudioView.createRecorderInstance(this, R.drawable.ic_play_arrow_white_24dp, R.drawable.ic_pause_white_24dp,
-                        R.drawable.ic_stop_white_24dp, R.drawable.ic_rec, R.drawable.av_rec_stop, mTempAudioPath);
+                        R.drawable.ic_stop_white_24dp, R.drawable.ic_rec, R.drawable.ic_rec_stop, mTempAudioPath);
             if (mMicToolBar == null) {
                 mTempAudioPath = null;
                 return;
