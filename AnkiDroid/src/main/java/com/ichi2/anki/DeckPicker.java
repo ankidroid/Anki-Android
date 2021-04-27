@@ -2872,6 +2872,10 @@ public class DeckPicker extends NavigationDrawerActivity implements
         createDeckDialog.showDialog();
     }
 
+    @VisibleForTesting
+    public int getDeckCount() {
+        return mDeckListAdapter.getItemCount();
+    }
 
     @VisibleForTesting
     class CheckDatabaseListener extends TaskListener<String, Pair<Boolean, Collection.CheckDatabaseResult>> {
