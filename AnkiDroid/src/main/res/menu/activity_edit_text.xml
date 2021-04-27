@@ -21,7 +21,7 @@
         ankidroid:showAsAction="ifRoom|withText" />
     <item
         android:id="@+id/multimedia_edit_field_to_audio_clip"
-        android:icon="@drawable/ic_mic_white"
+        android:icon="@drawable/ic_audioclip_white"
         android:orderInCategory="100"
         android:title="@string/multimedia_editor_field_editing_audio_clip"
         ankidroid:showAsAction="ifRoom|withText" />
