@@ -19,6 +19,7 @@ package com.ichi2.anki;
 import android.content.SharedPreferences;
 
 
+import com.ichi2.anki.exception.OutOfSpaceException;
 import com.ichi2.compat.CompatHelper;
 import com.ichi2.libanki.Collection;
 import com.ichi2.libanki.Utils;
@@ -57,13 +58,6 @@ public class BackupManager {
     /** Number of hours after which a backup new backup is created */
     private static final int BACKUP_INTERVAL = 5;
 
-
-    /* Prevent class from being instantiated */
-    private BackupManager() {
-        // do nothing
-    }
-
-
     public static boolean isActivated() {
         return true;
     }
@@ -96,6 +90,25 @@ public class BackupManager {
         return new BackupManager().performBackupInBackground(path, BACKUP_INTERVAL, force, time);
     }
 
+    public boolean performDowngradeBackupInForeground(String path) throws OutOfSpaceException {
+
+        File colFile = new File(path);
+
+        if (!hasFreeDiscSpace(colFile)) {
+            Timber.w("Could not backup: no free disc space");
+            throw new OutOfSpaceException();
+        }
+
+        File backupFile = getBackupFile(colFile, "ankiDroidv16.colpkg");
+
+        try {
+            return performBackup(colFile, backupFile);
+        } catch (Exception e) {
+            Timber.w(e);
+            AnkiDroidApp.sendExceptionReport(e, "performBackupInForeground");
+            return false;
+        }
+    }
 
     @SuppressWarnings("PMD.NPathComplexity")
     public boolean performBackupInBackground(final String colPath, int interval, boolean force, @NonNull Time time) {

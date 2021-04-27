@@ -18,7 +18,6 @@ import com.ichi2.testutils.BackupManagerTestUtilities;
 import com.ichi2.testutils.DbUtils;
 import com.ichi2.utils.ResourceLoader;
 
-import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.robolectric.Robolectric;
@@ -38,8 +37,11 @@ import static org.hamcrest.Matchers.notNullValue;
 import static org.hamcrest.Matchers.nullValue;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNull;
+import static org.mockito.Mockito.any;
+import static org.mockito.Mockito.doReturn;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.never;
+import static org.mockito.Mockito.spy;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
@@ -348,7 +350,6 @@ public class DeckPickerTest extends RobolectricTest {
     }
 
     @Test
-    @Ignore("8529")
     public void version16CollectionOpens() {
         try {
             setupColV16();
@@ -369,7 +370,6 @@ public class DeckPickerTest extends RobolectricTest {
     }
 
     @Test
-    @Ignore("8529")
     public void corruptVersion16CollectionShowsDatabaseError() {
         try {
             setupColV16();
@@ -384,6 +384,24 @@ public class DeckPickerTest extends RobolectricTest {
 
             assertThat("Collection should not be open", !CollectionHelper.getInstance().colIsOpen());
             assertThat("An error dialog should be displayed", deckPicker.mDatabaseErrorDialog, is(DatabaseErrorDialog.DIALOG_LOAD_FAILED));
+        } finally {
+            InitialActivityTest.setupForDefault();
+        }
+    }
+
+    @Test
+    public void notEnoughSpaceToBackupShowsError() {
+        Class<DeckPickerNoSpaceForBackup> clazz = DeckPickerNoSpaceForBackup.class;
+        try {
+            setupColV16();
+
+            InitialActivityTest.setupForValid(getTargetContext());
+
+            DeckPickerNoSpaceForBackup deckPicker = super.startActivityNormallyOpenCollectionWithIntent(clazz, new Intent());
+            waitForAsyncTasksToComplete();
+
+            assertThat("Collection should not be open", !CollectionHelper.getInstance().colIsOpen());
+            assertThat("A downgrade failed dialog should be shown", deckPicker.mDisplayedDowngradeFailed, is(true));
         } finally {
             InitialActivityTest.setupForDefault();
         }
@@ -415,7 +433,6 @@ public class DeckPickerTest extends RobolectricTest {
 
 
     public enum CollectionType {
-        DEFAULT(null, null),
         SCHEMA_V_16("schema16.anki2", "ThisIsSchema16");
 
         private final String mAssetFile;
@@ -434,6 +451,26 @@ public class DeckPickerTest extends RobolectricTest {
 
         public boolean isCollection(Collection col) {
             return col.getDecks().allNames().contains(mDeckName);
+        }
+    }
+
+    private static class DeckPickerNoSpaceForBackup extends DeckPickerEx {
+
+        private boolean mDisplayedDowngradeFailed;
+
+
+        @Override
+        public BackupManager getBackupManager() {
+            BackupManager bm = spy(new BackupManager());
+            doReturn(false).when(bm).hasFreeDiscSpace(any());
+            return bm;
+        }
+
+
+        @Override
+        public void displayDowngradeFailedNoSpace() {
+            this.mDisplayedDowngradeFailed = true;
+            super.displayDowngradeFailedNoSpace();
         }
     }
 
