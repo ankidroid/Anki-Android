@@ -328,14 +328,14 @@ public class Toolbar extends FrameLayout {
     }
 
     public void setIconColor(@ColorInt int color) {
-        for (int i = 0; i < this.mToolbar.getChildCount(); i++) {
-            AppCompatImageButton button = (AppCompatImageButton) this.mToolbar.getChildAt(i);
+        LinearLayout note_toolbar_internal_layout = (LinearLayout) this.mToolbar.getChildAt(1);
+        for (int i = 0; i < note_toolbar_internal_layout.getChildCount(); i++) {
+            AppCompatImageButton button = (AppCompatImageButton) note_toolbar_internal_layout.getChildAt(i);
             button.setColorFilter(color);
         }
         mStringPaint.setColor(color);
     }
 
-    
     public interface TextFormatListener {
         void performFormat(TextFormatter formatter);
     }
