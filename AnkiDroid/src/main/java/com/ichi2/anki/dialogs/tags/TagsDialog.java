@@ -488,7 +488,7 @@ public class TagsDialog extends AnalyticsDialogFragment {
 
         public TagsArrayAdapter(@NonNull TagsList tags) {
             mTags = tags;
-            mFilteredList = new ArrayList<>(tags.mAllTags);
+            mFilteredList = tags.copyOfAllTagList();
             sortData();
         }
 
@@ -538,7 +538,7 @@ public class TagsDialog extends AnalyticsDialogFragment {
             @Override
             protected FilterResults performFiltering(CharSequence constraint) {
                 if (constraint.length() == 0) {
-                    mFilteredList = new ArrayList<>(mTags.mAllTags);
+                    mFilteredList = mTags.copyOfAllTagList();
                 } else {
                     mFilteredList = new ArrayList<>();
                     final String filterPattern = constraint.toString().toLowerCase(Locale.getDefault()).trim();
