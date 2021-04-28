@@ -9,12 +9,8 @@ import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.ViewGroup;
 import android.view.WindowManager;
-import android.widget.CheckedTextView;
 import android.widget.EditText;
-import android.widget.Filter;
-import android.widget.Filterable;
 import android.widget.RadioGroup;
 import android.widget.TextView;
 
@@ -22,11 +18,9 @@ import com.afollestad.materialdialogs.MaterialDialog;
 import com.ichi2.anki.R;
 import com.ichi2.anki.UIUtils;
 import com.ichi2.anki.analytics.AnalyticsDialogFragment;
-import com.ichi2.utils.FilterResultsUtils;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Locale;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.widget.SearchView;
@@ -275,99 +269,4 @@ public class TagsDialog extends AnalyticsDialogFragment {
         }
     }
 
-    public static class TagsArrayAdapter extends  RecyclerView.Adapter<TagsArrayAdapter.ViewHolder> implements Filterable{
-        public static class ViewHolder extends RecyclerView.ViewHolder {
-            private final CheckedTextView mTagItemCheckedTextView;
-            public ViewHolder(CheckedTextView ctv) {
-                super(ctv);
-                mTagItemCheckedTextView = ctv;
-            }
-        }
-
-
-
-        /**
-         * A reference to the {@link TagsList} passed.
-         */
-        @NonNull
-        private final TagsList mTags;
-        /**
-         * A subset of all tags in {@link #mTags} satisfying the user's search
-         */
-        @NonNull
-        private List<String> mFilteredList;
-
-        public TagsArrayAdapter(@NonNull TagsList tags) {
-            mTags = tags;
-            mFilteredList = tags.copyOfAllTagList();
-            sortData();
-        }
-
-        public void sortData() {
-            mTags.sort();
-        }
-
-        @NonNull
-        @Override
-        public TagsArrayAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent,int viewType) {
-            View v = LayoutInflater.from(parent.getContext())
-                    .inflate(R.layout.tags_item_list_dialog, parent, false);
-
-            ViewHolder vh = new ViewHolder(v.findViewById(R.id.tags_dialog_tag_item));
-            vh.mTagItemCheckedTextView.setOnClickListener(view -> {
-                CheckedTextView ctv = (CheckedTextView) view;
-                ctv.toggle();
-                String tag = ctv.getText().toString();
-                if (ctv.isChecked()) {
-                    mTags.check(tag);
-                } else {
-                    mTags.uncheck(tag);
-                }
-            });
-            return vh;
-        }
-
-        @Override
-        public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-            String tag = mFilteredList.get(position);
-            holder.mTagItemCheckedTextView.setText(tag);
-            holder.mTagItemCheckedTextView.setChecked(mTags.isChecked(tag));
-        }
-
-        @Override
-        public int getItemCount() {
-            return mFilteredList.size();
-        }
-
-        @Override
-        public Filter getFilter() {
-            return new TagsFilter();
-        }
-
-        /* Custom Filter class - as seen in http://stackoverflow.com/a/29792313/1332026 */
-        private class TagsFilter extends Filter {
-            @Override
-            protected FilterResults performFiltering(CharSequence constraint) {
-                if (constraint.length() == 0) {
-                    mFilteredList = mTags.copyOfAllTagList();
-                } else {
-                    mFilteredList = new ArrayList<>();
-                    final String filterPattern = constraint.toString().toLowerCase(Locale.getDefault()).trim();
-                    for (String tag : mTags) {
-                        if (tag.toLowerCase(Locale.getDefault()).contains(filterPattern)) {
-                            mFilteredList.add(tag);
-                        }
-                    }
-                }
-
-                return FilterResultsUtils.fromCollection(mFilteredList);
-            }
-
-            @Override
-            protected void publishResults(CharSequence charSequence, FilterResults filterResults) {
-                sortData();
-                notifyDataSetChanged();
-            }
-        }
-    }
 }
