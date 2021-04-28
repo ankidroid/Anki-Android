@@ -597,7 +597,7 @@ public class Reviewer extends AbstractFlashcardViewer {
         boolean undoEnabled;
         if (mShowWhiteboard && mWhiteboard != null && mWhiteboard.isUndoModeActive()) {
             // Whiteboard is here and strokes have been added at some point
-            undoIconId = R.drawable.ic_eraser_variant_white_24dp;
+            undoIconId = R.drawable.eraser;
             undoEnabled = !mWhiteboard.undoEmpty();
         } else {
             // We can arrive here even if `mShowWhiteboard &&
