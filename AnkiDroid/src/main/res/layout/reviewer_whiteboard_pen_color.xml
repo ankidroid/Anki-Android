@@ -45,4 +45,13 @@
         android:layout_height="40dp"
         android:layout_margin="5dp"/>
 
+    <Button
+        android:id="@+id/pen_color_dialog"
+        android:background="@drawable/ic_color_lens_white_24dp"
+        android:backgroundTint="@color/black"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_margin="5dp"/>
+
+
 </LinearLayout>

@@ -20,6 +20,7 @@
 package com.ichi2.anki;
 
 import android.annotation.SuppressLint;
+import android.app.Activity;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
@@ -41,6 +42,9 @@ import android.widget.LinearLayout;
 
 import com.ichi2.libanki.utils.Time;
 import com.ichi2.libanki.utils.TimeUtils;
+import com.jaredrummler.android.colorpicker.ColorPickerDialog;
+import com.jaredrummler.android.colorpicker.ColorPickerDialogListener;
+import com.jaredrummler.android.colorpicker.ColorShape;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -64,6 +68,8 @@ import timber.log.Timber;
 public class Whiteboard extends View {
 
     private static final float TOUCH_TOLERANCE = 4;
+    private static final int COLOR_PICKER_WHITEBOARD = 3;
+    private static int COLOR_SELECTED_WHITEBOARD = Color.WHITE;
 
     private final Paint mPaint;
     private final UndoList mUndo = new UndoList();
@@ -72,6 +78,7 @@ public class Whiteboard extends View {
     private final Path mPath;
     private final Paint mBitmapPaint;
     private final WeakReference<AbstractFlashcardViewer> mCardViewer;
+    private final AbstractFlashcardViewer mActivity;
 
     private float mX;
     private float mY;
@@ -94,6 +101,7 @@ public class Whiteboard extends View {
     public Whiteboard(AbstractFlashcardViewer cardViewer, boolean inverted) {
         super(cardViewer, null);
         mCardViewer = new WeakReference<>(cardViewer);
+        mActivity = cardViewer;
 
         Button whitePenColorButton = cardViewer.findViewById(R.id.pen_color_white);
         Button blackPenColorButton = cardViewer.findViewById(R.id.pen_color_black);
@@ -128,6 +136,7 @@ public class Whiteboard extends View {
         cardViewer.findViewById(R.id.pen_color_green).setOnClickListener(this::onClick);
         cardViewer.findViewById(R.id.pen_color_blue).setOnClickListener(this::onClick);
         cardViewer.findViewById(R.id.pen_color_yellow).setOnClickListener(this::onClick);
+        cardViewer.findViewById(R.id.pen_color_dialog).setOnClickListener(this::onClick);
     }
 
 
@@ -386,7 +395,6 @@ public class Whiteboard extends View {
 
 
     public void onClick(View view) {
-
         int id = view.getId();
         if (id == R.id.pen_color_white) {
             setPenColor(Color.WHITE);
@@ -404,6 +412,8 @@ public class Whiteboard extends View {
         } else if (id == R.id.pen_color_yellow) {
             int yellowPenColor = ContextCompat.getColor(getContext(), R.color.material_yellow_500);
             setPenColor(yellowPenColor);
+        } else if (id == R.id.pen_color_dialog) {
+            openColorPicker(COLOR_PICKER_WHITEBOARD, COLOR_SELECTED_WHITEBOARD);
         }
     }
 
@@ -425,6 +435,21 @@ public class Whiteboard extends View {
 
     public void setOnPaintColorChangeListener(@Nullable OnPaintColorChangeListener mOnPaintColorChangeListener) {
         this.mOnPaintColorChangeListener = mOnPaintColorChangeListener;
+    }
+
+    private void openColorPicker(int dialogId, Integer defaultColor) {
+        ColorPickerDialog.Builder d = ColorPickerDialog
+                .newBuilder()
+                .setDialogId(dialogId)
+                .setColorShape(ColorShape.CIRCLE)
+                .setAllowPresets(true)
+                .setShowColorShades(false);
+
+        if (defaultColor != null) {
+            d.setColor(defaultColor);
+        }
+        mActivity.showDialogFragment(d.create());
+
     }
 
 

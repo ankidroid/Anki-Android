@@ -164,10 +164,16 @@ import static com.ichi2.anki.reviewer.CardMarker.*;
 import static com.ichi2.libanki.Sound.SoundSide;
 
 import com.github.zafarkhaja.semver.Version;
+import com.jaredrummler.android.colorpicker.ColorPickerDialogListener;
+
 import static com.ichi2.anim.ActivityTransitionAnimation.Direction.*;
 
 @SuppressWarnings({"PMD.AvoidThrowingRawExceptionTypes","PMD.FieldDeclarationsShouldBeAtStartOfClass"})
-public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity implements ReviewerUi, CommandProcessor, TagsDialog.TagsDialogListener {
+public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity
+        implements ReviewerUi,
+        ColorPickerDialogListener,
+        CommandProcessor,
+        TagsDialog.TagsDialogListener {
 
     /**
      * Result codes that are returned when this activity finishes.
@@ -512,6 +518,17 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
             // Do not return early without considering this
             mHasBeenTouched = false;
         }
+    }
+
+    @Override
+    public void onColorSelected(int dialogId, int color) {
+        mWhiteboard.setPenColor(color);
+    }
+
+
+    @Override
+    public void onDialogDismissed(int dialogId) {
+        //Required for ColorPickerDialogListener interface. Not required.
     }
 
     private final SelectEaseHandler mEaseHandler = new SelectEaseHandler();
