@@ -83,11 +83,6 @@
                 style="@style/color_picker_button"
                 />
 
-            <androidx.appcompat.widget.AppCompatImageButton
-                android:id="@+id/note_editor_toolbar_color_custom"
-                app:srcCompat="@drawable/ic_add_toolbar_icon"
-                style="@style/color_picker_button"/>
-
         </LinearLayout>
 
 
