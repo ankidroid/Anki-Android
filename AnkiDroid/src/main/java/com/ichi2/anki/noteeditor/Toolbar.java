@@ -335,6 +335,7 @@ public class Toolbar extends FrameLayout {
         mStringPaint.setColor(color);
     }
 
+    
     public interface TextFormatListener {
         void performFormat(TextFormatter formatter);
     }
