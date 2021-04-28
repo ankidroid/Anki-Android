@@ -680,7 +680,7 @@ public class Reviewer extends AbstractFlashcardViewer {
             suspend_icon.setTitle(R.string.menu_suspend_card);
         }
         if (buryNoteAvailable()) {
-            bury_icon.setIcon(R.drawable.ic_flip_to_back_white_24px_dropdown); // FIXME NEEDS A "DROPDOWN" VERSION WITH BOTTOM RIGHT TRIANGLE (AND PURGE EXISTING)
+            bury_icon.setIcon(R.drawable.ic_flip_to_back_dropdown); // FIXME NEEDS A "DROPDOWN" VERSION WITH BOTTOM RIGHT TRIANGLE (AND PURGE EXISTING)
             bury_icon.setTitle(R.string.menu_bury);
         } else {
             bury_icon.setIcon(R.drawable.ic_flip_to_back_white);
