@@ -15,7 +15,7 @@
  */
 package com.ichi2.anki.dialogs.tags;
 
-import com.ichi2.anki.dialogs.TagsDialog.TagsList;
+import com.ichi2.anki.dialogs.tags.TagsDialog.TagsList;
 
 import org.junit.Before;
 import org.junit.Test;
