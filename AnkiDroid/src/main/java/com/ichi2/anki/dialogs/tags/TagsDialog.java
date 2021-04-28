@@ -1,4 +1,4 @@
-package com.ichi2.anki.dialogs;
+package com.ichi2.anki.dialogs.tags;
 
 import android.annotation.SuppressLint;
 import android.app.Dialog;
@@ -33,7 +33,6 @@ import java.util.Locale;
 import java.util.TreeSet;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.appcompat.widget.SearchView;
 import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.LinearLayoutManager;
