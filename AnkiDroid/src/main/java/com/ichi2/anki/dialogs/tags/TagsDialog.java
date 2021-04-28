@@ -187,7 +187,7 @@ public class TagsDialog extends AnalyticsDialogFragment {
         /**
          * @return return a copy of checked tags
          */
-        public List<String> getCheckedTagList() {
+        public List<String> copyOfCheckedTagList() {
             return new ArrayList<>(mCurrentTags);
         }
 
@@ -195,7 +195,7 @@ public class TagsDialog extends AnalyticsDialogFragment {
         /**
          * @return return a copy of all tags list
          */
-        public List<String> getAllTagList() {
+        public List<String> copyOfAllTagList() {
             return new ArrayList<>(mAllTags);
         }
 
@@ -349,7 +349,7 @@ public class TagsDialog extends AnalyticsDialogFragment {
                 .negativeText(R.string.dialog_cancel)
                 .customView(tagsDialogView, false)
                 .onPositive((dialog, which) -> ((TagsDialogListener)requireActivity())
-                        .onSelectedTags(mTags.getCheckedTagList(), mSelectedOption));
+                        .onSelectedTags(mTags.copyOfCheckedTagList(), mSelectedOption));
         mDialog = builder.build();
 
         mDialog.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE);

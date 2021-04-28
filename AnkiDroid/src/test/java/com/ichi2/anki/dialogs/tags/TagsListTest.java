@@ -111,9 +111,9 @@ public class TagsListTest {
         );
 
         assertEquals("All tags list should not contain any duplicates",
-                Arrays.asList("a", "b"), list.getAllTagList());
+                Arrays.asList("a", "b"), list.copyOfAllTagList());
         assertEquals("Checked tags list should not contain any duplicates",
-                Arrays.asList("b"), list.getCheckedTagList());
+                Arrays.asList("b"), list.copyOfCheckedTagList());
     }
 
 
@@ -125,9 +125,9 @@ public class TagsListTest {
         );
 
         assertEquals("All tags list should not contain any duplicates (case insensitive)",
-                Arrays.asList("aA", "bb"), list.getAllTagList());
+                Arrays.asList("aA", "bb"), list.copyOfAllTagList());
         assertEquals("Checked tags list should not contain any duplicates  (case insensitive)",
-                Arrays.asList("bb"), list.getCheckedTagList());
+                Arrays.asList("bb"), list.copyOfCheckedTagList());
     }
 
     @Test
@@ -138,9 +138,9 @@ public class TagsListTest {
         );
 
         assertEquals("Extra tags in checked not found in all tags, must be added to all tags list",
-                Arrays.asList("aA", "bb", "cc"), list.getAllTagList());
+                Arrays.asList("aA", "bb", "cc"), list.copyOfAllTagList());
         assertEquals("Extra tags in checked not found in all tags, must be found when retrieving checked tag list",
-                Arrays.asList("bb","cc"), list.getCheckedTagList());
+                Arrays.asList("bb","cc"), list.copyOfCheckedTagList());
     }
 
 
@@ -170,9 +170,9 @@ public class TagsListTest {
                 TAGS_LIST.add("colors"));
 
         assertEquals("The newly added 'anki' tag should be found when retrieving all tags list",
-                join(TAGS, "anki"), TAGS_LIST.getAllTagList());
+                join(TAGS, "anki"), TAGS_LIST.copyOfAllTagList());
         assertSameElementsIgnoreOrder("Adding operations should have nothing to do with the checked status of tags",
-                CHECKED_TAGS, TAGS_LIST.getCheckedTagList());
+                CHECKED_TAGS, TAGS_LIST.copyOfCheckedTagList());
     }
 
 
@@ -187,9 +187,9 @@ public class TagsListTest {
 
 
         assertEquals("Changing the status of tags to be checked should have noting to do with all tag list",
-                TAGS, TAGS_LIST.getAllTagList());//no change
+                TAGS, TAGS_LIST.copyOfAllTagList());//no change
         assertSameElementsIgnoreOrder("The checked 'flags' tag should be found when retrieving list of checked tag",
-                join(CHECKED_TAGS, "flags"), TAGS_LIST.getCheckedTagList());
+                join(CHECKED_TAGS, "flags"), TAGS_LIST.copyOfCheckedTagList());
     }
 
 
@@ -204,26 +204,26 @@ public class TagsListTest {
 
 
         assertEquals("Changing the status of tags to be unchecked should have noting to do with all tag list",
-                TAGS, TAGS_LIST.getAllTagList());//no change
+                TAGS, TAGS_LIST.copyOfAllTagList());//no change
         assertSameElementsIgnoreOrder("The unchecked 'colors' tag should be not be found when retrieving list of checked tag",
-                minus(CHECKED_TAGS, "colors"), TAGS_LIST.getCheckedTagList());
+                minus(CHECKED_TAGS, "colors"), TAGS_LIST.copyOfCheckedTagList());
     }
 
 
     @Test
     public void test_toggleAllCheckedStatuses() {
-        assertEquals(TAGS, TAGS_LIST.getAllTagList());
-        assertSameElementsIgnoreOrder(CHECKED_TAGS, TAGS_LIST.getCheckedTagList());
+        assertEquals(TAGS, TAGS_LIST.copyOfAllTagList());
+        assertSameElementsIgnoreOrder(CHECKED_TAGS, TAGS_LIST.copyOfCheckedTagList());
 
         assertTrue(TAGS_LIST.toggleAllCheckedStatuses());
 
-        assertEquals(TAGS, TAGS_LIST.getAllTagList());
-        assertSameElementsIgnoreOrder(TAGS, TAGS_LIST.getCheckedTagList());
+        assertEquals(TAGS, TAGS_LIST.copyOfAllTagList());
+        assertSameElementsIgnoreOrder(TAGS, TAGS_LIST.copyOfCheckedTagList());
 
         assertTrue(TAGS_LIST.toggleAllCheckedStatuses());
 
-        assertEquals(TAGS, TAGS_LIST.getAllTagList());
-        assertSameElementsIgnoreOrder(new ArrayList<>(), TAGS_LIST.getCheckedTagList());
+        assertEquals(TAGS, TAGS_LIST.copyOfAllTagList());
+        assertSameElementsIgnoreOrder(new ArrayList<>(), TAGS_LIST.copyOfCheckedTagList());
     }
 
 
@@ -241,9 +241,9 @@ public class TagsListTest {
 
     @Test
     public void test_sort() {
-        assertEquals(TAGS, TAGS_LIST.getAllTagList());
+        assertEquals(TAGS, TAGS_LIST.copyOfAllTagList());
         TAGS_LIST.sort();
         assertEquals("Calling #sort on TagsList should result on sorting all tags",
-                SORTED_TAGS, TAGS_LIST.getAllTagList());
+                SORTED_TAGS, TAGS_LIST.copyOfAllTagList());
     }
 }
