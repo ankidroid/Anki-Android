@@ -22,6 +22,7 @@ package com.ichi2.anki;
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Color;
@@ -34,14 +35,18 @@ import android.graphics.RectF;
 import android.graphics.Region;
 import android.os.Environment;
 import android.view.Display;
+import android.view.Gravity;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.LinearLayout;
+import android.widget.SeekBar;
 
+import com.afollestad.materialdialogs.MaterialDialog;
 import com.ichi2.libanki.utils.Time;
 import com.ichi2.libanki.utils.TimeUtils;
+import com.ichi2.ui.FixedTextView;
 import com.jaredrummler.android.colorpicker.ColorPickerDialog;
 import com.jaredrummler.android.colorpicker.ColorPickerDialogListener;
 import com.jaredrummler.android.colorpicker.ColorShape;
@@ -61,16 +66,19 @@ import androidx.annotation.VisibleForTesting;
 import androidx.core.content.ContextCompat;
 import timber.log.Timber;
 
+import static com.ichi2.anki.AnkiDroidApp.getSharedPrefs;
+
 /**
  * Whiteboard allowing the user to draw the card's answer on the touchscreen.
  */
 @SuppressLint("ViewConstructor")
-public class Whiteboard extends View {
+public class Whiteboard extends View implements SeekBar.OnSeekBarChangeListener {
 
     private static final float TOUCH_TOLERANCE = 4;
     private static final int COLOR_PICKER_WHITEBOARD = 3;
     private static int COLOR_SELECTED_WHITEBOARD = Color.WHITE;
 
+    private FixedTextView mWbStrokeWidthText;
     private final Paint mPaint;
     private final UndoList mUndo = new UndoList();
     private Bitmap mBitmap;
@@ -88,6 +96,7 @@ public class Whiteboard extends View {
     private float mSecondFingerY;
 
     private int mSecondFingerPointerId;
+    private int mWbStrokeWidth;
 
     private boolean mSecondFingerWithinTapTolerance;
     private boolean mCurrentlyDrawing = false;
@@ -123,8 +132,8 @@ public class Whiteboard extends View {
         mPaint.setStyle(Paint.Style.STROKE);
         mPaint.setStrokeJoin(Paint.Join.ROUND);
         mPaint.setStrokeCap(Paint.Cap.ROUND);
-        int wbStrokeWidth = AnkiDroidApp.getSharedPrefs(cardViewer).getInt("whiteBoardStrokeWidth", 6);
-        mPaint.setStrokeWidth((float) wbStrokeWidth);
+        mWbStrokeWidth = getSharedPrefs(cardViewer).getInt("whiteBoardStrokeWidth", 6);
+        mPaint.setStrokeWidth((float) mWbStrokeWidth);
         createBitmap();
         mPath = new Path();
         mBitmapPaint = new Paint(Paint.DITHER_FLAG);
@@ -137,6 +146,7 @@ public class Whiteboard extends View {
         cardViewer.findViewById(R.id.pen_color_blue).setOnClickListener(this::onClick);
         cardViewer.findViewById(R.id.pen_color_yellow).setOnClickListener(this::onClick);
         cardViewer.findViewById(R.id.pen_color_dialog).setOnClickListener(this::onClick);
+        cardViewer.findViewById(R.id.stroke_width).setOnClickListener(this::onClick);
     }
 
 
@@ -414,7 +424,50 @@ public class Whiteboard extends View {
             setPenColor(yellowPenColor);
         } else if (id == R.id.pen_color_dialog) {
             openColorPicker(COLOR_PICKER_WHITEBOARD, COLOR_SELECTED_WHITEBOARD);
+        } else if (id == R.id.stroke_width) {
+            openStrokeWidthDialog();
         }
+    }
+
+
+    private void openStrokeWidthDialog() {
+
+        LinearLayout layout = new LinearLayout(mCardViewer.get());
+        layout.setOrientation(LinearLayout.VERTICAL);
+        layout.setPadding(6, 6, 6, 6);
+
+        mWbStrokeWidthText = new FixedTextView(mCardViewer.get());
+        mWbStrokeWidthText.setGravity(Gravity.CENTER_HORIZONTAL);
+        mWbStrokeWidthText.setTextSize(30);
+        mWbStrokeWidthText.setText("" + mWbStrokeWidth);
+
+        LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT,
+                LinearLayout.LayoutParams.WRAP_CONTENT);
+
+        layout.addView(mWbStrokeWidthText, params);
+
+        SeekBar seekBar = new SeekBar(mCardViewer.get());
+        seekBar.setProgress(mWbStrokeWidth);
+        seekBar.setOnSeekBarChangeListener(this);
+
+        layout.addView(seekBar, new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT,
+                LinearLayout.LayoutParams.WRAP_CONTENT));
+
+        new MaterialDialog.Builder(mCardViewer.get())
+                .positiveText(R.string.dialog_ok)
+                .negativeText(R.string.dialog_no)
+                .customView(layout,true)
+                .onPositive((dialog, which) -> {
+                    saveStrokeWidth();
+                })
+                .show();
+    }
+
+
+    private void saveStrokeWidth() {
+        SharedPreferences.Editor edit = getSharedPrefs(mCardViewer.get()).edit();
+        edit.putInt("whiteBoardStrokeWidth", mWbStrokeWidth);
+        mPaint.setStrokeWidth((float) mWbStrokeWidth);
     }
 
 
@@ -448,7 +501,26 @@ public class Whiteboard extends View {
         if (defaultColor != null) {
             d.setColor(defaultColor);
         }
-        mActivity.showDialogFragment(d.create());
+        mCardViewer.get().showDialogFragment(d.create());
+
+    }
+
+
+    @Override
+    public void onProgressChanged(SeekBar seekBar, int value, boolean b) {
+        mWbStrokeWidth = value;
+        mWbStrokeWidthText.setText("" + value);
+    }
+
+
+    @Override
+    public void onStartTrackingTouch(SeekBar seekBar) {
+
+    }
+
+
+    @Override
+    public void onStopTrackingTouch(SeekBar seekBar) {
 
     }
 

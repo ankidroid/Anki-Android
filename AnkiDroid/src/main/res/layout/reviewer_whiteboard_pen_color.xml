@@ -52,6 +52,12 @@
         android:layout_width="40dp"
         android:layout_height="40dp"
         android:layout_margin="5dp"/>
-
+    <Button
+        android:id="@+id/stroke_width"
+        android:background="@drawable/ic_mode_edit_white"
+        android:layout_width="40dp"
+        android:backgroundTint="@color/black"
+        android:layout_height="40dp"
+        android:layout_margin="5dp"/>
 
 </LinearLayout>
