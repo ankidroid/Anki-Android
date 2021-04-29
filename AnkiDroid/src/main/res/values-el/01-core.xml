@@ -116,12 +116,12 @@
     <string name="menu_edit_tags">Επεξεργασία ετικετών</string>
     <string name="delete_note_message">Πραγματικά να διαγραφεί αυτή η σημείωση και όλες οι κάρτες της;\n%s</string>
     <string name="menu_select">Επιλογή κειμένου</string>
+    <string name="menu_lookup">Lookup text</string>
     <string name="menu_search">Αναζήτηση στο %1$s</string>
     <string name="menu_mark_note">Μαρκάρισμα σημείωσης</string>
     <string name="menu_unmark_note">Ξεμαρκάρισμα σημείωσης</string>
     <string name="menu_toggle_mic_tool_bar">Έλεγχος προφοράς</string>
     <string name="new_deck">Δημιουργία τράπουλας</string>
-    <string name="create" comment="Button to create a filtered deck">Δημιουργία</string>
     <string name="new_dynamic_deck">Δημιουργία φιλτραρισμένης τράπουλας</string>
     <string name="night_mode">Νυκτερινή λειτουργία</string>
     <string name="directory_inaccessible">Η τοποθεσία τού Άνκι-Ντρόιντ είναι απρόσιτη</string>

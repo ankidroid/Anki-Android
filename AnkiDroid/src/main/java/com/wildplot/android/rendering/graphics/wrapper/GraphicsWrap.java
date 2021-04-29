@@ -27,7 +27,7 @@ import android.graphics.Typeface;
  *
  * @author Michael Goldbach
  */
-@SuppressLint("FieldNamingPatternDetector")
+@SuppressLint("NonPublicNonStaticFieldName")
 public class GraphicsWrap {
     private final Canvas canvas;
     private final Paint paint;

@@ -19,7 +19,7 @@
     xmlns:ankidroid="http://schemas.android.com/apk/res-auto" >
     <item
         android:id="@+id/action_edit"
-        android:icon="@drawable/ic_mode_edit_white_24dp"
+        android:icon="@drawable/ic_mode_edit_white"
         android:title="@string/cardeditor_title_edit_card"
         ankidroid:showAsAction="ifRoom"/>
 </menu>

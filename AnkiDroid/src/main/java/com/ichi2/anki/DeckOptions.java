@@ -93,7 +93,7 @@ public class DeckOptions extends AppCompatPreferenceActivity implements OnShared
         private final Map<String, String> mValues = new HashMap<>(30); // At most as many as in cacheValues
         private final Map<String, String> mSummaries = new HashMap<>();
         private MaterialDialog mProgressDialog;
-        private final List<OnSharedPreferenceChangeListener> listeners = new LinkedList<>();
+        private final List<OnSharedPreferenceChangeListener> mListeners = new LinkedList<>();
 
 
         private DeckPreferenceHack() {
@@ -207,11 +207,11 @@ public class DeckOptions extends AppCompatPreferenceActivity implements OnShared
                                 mOptions.getJSONObject("new").put("initialFactor", (Integer) value * 10);
                                 break;
                             case "newOrder": {
-                                int newValue = Integer.parseInt((String) value);
+                                int newOrder = Integer.parseInt((String) value);
                                 // Sorting is slow, so only do it if we change order
-                                int oldValue = mOptions.getJSONObject("new").getInt("order");
-                                if (oldValue != newValue) {
-                                    mOptions.getJSONObject("new").put("order", newValue);
+                                int oldOrder = mOptions.getJSONObject("new").getInt("order");
+                                if (oldOrder != newOrder) {
+                                    mOptions.getJSONObject("new").put("order", newOrder);
                                     TaskManager.launchCollectionTask(new CollectionTask.Reorder(mOptions), confChangeHandler());
                                 }
                                 mOptions.getJSONObject("new").put("order", Integer.parseInt((String) value));
@@ -456,7 +456,7 @@ public class DeckOptions extends AppCompatPreferenceActivity implements OnShared
                 updateSummaries();
 
                 // and update any listeners
-                for (OnSharedPreferenceChangeListener listener : listeners) {
+                for (OnSharedPreferenceChangeListener listener : mListeners) {
                     listener.onSharedPreferenceChanged(DeckPreferenceHack.this, null);
                 }
 
@@ -591,13 +591,13 @@ public class DeckOptions extends AppCompatPreferenceActivity implements OnShared
 
         @Override
         public void registerOnSharedPreferenceChangeListener(OnSharedPreferenceChangeListener listener) {
-            listeners.add(listener);
+            mListeners.add(listener);
         }
 
 
         @Override
         public void unregisterOnSharedPreferenceChangeListener(OnSharedPreferenceChangeListener listener) {
-            listeners.remove(listener);
+            mListeners.remove(listener);
         }
 
 
@@ -808,7 +808,7 @@ public class DeckOptions extends AppCompatPreferenceActivity implements OnShared
     protected void buildLists() {
         android.preference.ListPreference deckConfPref = (android.preference.ListPreference) findPreference("deckConf");
         ArrayList<DeckConfig> confs = mCol.getDecks().allConf();
-        Collections.sort(confs, NamedJSONComparator.instance);
+        Collections.sort(confs, NamedJSONComparator.INSTANCE);
         String[] confValues = new String[confs.size()];
         String[] confLabels = new String[confs.size()];
         for (int i = 0; i < confs.size(); i++) {

@@ -44,18 +44,18 @@
         <item>କେବଳ ଟ୍ୟାଗ୍ କରନ୍ତୁ</item>
     </string-array>
     <string-array name="new_order_labels">
-        <item>ଯାଦୃଚ୍ଛିକ କ୍ରମରେ ନୂତନ କାର୍ଡ</item>
+        <item>ଅନିୟମିତ କ୍ରମରେ ନୂତନ କାର୍ଡ</item>
         <item>ଯୋଗ କ୍ରମରେ ନୂତନ କାର୍ଡ</item>
     </string-array>
     <string-array name="cram_deck_conf_order_labels">
         <item>ସର୍ବପୁରାତନ ଆଗ </item>
-        <item>ଯାଦୃଚ୍ଛିକ</item>
-        <item>ବଢୁଥିବା ବ୍ୟବଧାନ </item>
-        <item>କମୁଥିବା ବ୍ୟବଧାନ </item>
+        <item>ଅନିୟମିତ</item>
+        <item>ବଢ଼ୁଥିବା ବ୍ୟବଧାନ</item>
+        <item>କମୁଥିବା ବ୍ୟବଧାନ</item>
         <item>ସବୁଠୁ ଅଧିକ ତ୍ରୁଟିଜନିତ </item>
         <item>ଯୋଡ଼ାହେବା କ୍ରମାନୁସାରେ</item>
         <item>ବଳକା କ୍ରମାନୁସାରେ</item>
-        <item>ସର୍ଵଶାରେ ଯୋଡ଼ାହେଇଥିବା ଆଗ </item>
+        <item>ସର୍ବଶେଷରେ ଯୋଡ଼ା ଯାଇଥିବା ପ୍ରଥମେ</item>
         <item>ଆପେକ୍ଷିକ ଅତ୍ୟଧିକତା</item>
     </string-array>
     <string-array name="add_to_cur_labels">
@@ -100,7 +100,7 @@
     <string name="gesture_answer_green">ସୁପାରିଶିତ ଉତ୍ତର (ସବୁଜ)</string>
     <string name="gesture_answer_better_recommended">ଉତ୍ତର ସୁପାରିଶିତ ଅପେକ୍ଷା ଭଲ</string>
     <string name="gesture_tag_note">ନୋଟ୍ ଟ୍ୟାଗ୍ କରନ୍ତୁ</string>
-    <string name="gesture_lookup">ଅଭିବ୍ୟକ୍ତି ଦେଖନ୍ତୁ</string>
+    <string name="gesture_lookup">ଅଭିବ୍ୟକ୍ତି ଦୃଷ୍ଟିପାତ</string>
     <string name="gesture_play">ମିଡ଼ିଆ ଚଲାନ୍ତୁ</string>
     <string name="gesture_abort_learning">ପଢ଼ିବା ବନ୍ଦ କରନ୍ତୁ</string>
     <string name="gesture_flag_red">ନାଲି ପତାକା ଟୋଗଲ୍ କରନ୍ତୁ</string>

@@ -308,17 +308,17 @@ public class JSONArray extends org.json.JSONArray {
     }
     public Iterator<JSONArray> jsonArrayIterator() {
         return new Iterator<JSONArray>() {
-            private int index = 0;
+            private int mIndex = 0;
             @Override
             public boolean hasNext() {
-                return index < length();
+                return mIndex < length();
             }
 
 
             @Override
             public JSONArray next() {
-                JSONArray array = getJSONArray(index);
-                index++;
+                JSONArray array = getJSONArray(mIndex);
+                mIndex++;
                 return array;
             }
         };
@@ -329,17 +329,17 @@ public class JSONArray extends org.json.JSONArray {
     }
     public Iterator<JSONObject> jsonObjectIterator() {
         return new Iterator<JSONObject>() {
-            private int index = 0;
+            private int mIndex = 0;
             @Override
             public boolean hasNext() {
-                return index < length();
+                return mIndex < length();
             }
 
 
             @Override
             public JSONObject next() {
-                JSONObject object = getJSONObject(index);
-                index++;
+                JSONObject object = getJSONObject(mIndex);
+                mIndex++;
                 return object;
             }
         };
@@ -350,17 +350,17 @@ public class JSONArray extends org.json.JSONArray {
     }
     public Iterator<String> stringIterator() {
         return new Iterator<String>() {
-            private int index = 0;
+            private int mIndex = 0;
             @Override
             public boolean hasNext() {
-                return index < length();
+                return mIndex < length();
             }
 
 
             @Override
             public String next() {
-                String string = getString(index);
-                index++;
+                String string = getString(mIndex);
+                mIndex++;
                 return string;
             }
         };
@@ -371,17 +371,17 @@ public class JSONArray extends org.json.JSONArray {
     }
     public Iterator<Long> longIterator() {
         return new Iterator<Long>() {
-            private int index = 0;
+            private int mIndex = 0;
             @Override
             public boolean hasNext() {
-                return index < length();
+                return mIndex < length();
             }
 
 
             @Override
             public Long next() {
-                Long long_ = getLong(index);
-                index++;
+                Long long_ = getLong(mIndex);
+                mIndex++;
                 return long_;
             }
         };

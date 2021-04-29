@@ -1,3 +1,19 @@
+/*
+ *  Copyright (c) 2020 David Allison <davidallisongithub@gmail.com>
+ *
+ *  This program is free software; you can redistribute it and/or modify it under
+ *  the terms of the GNU General Public License as published by the Free Software
+ *  Foundation; either version 3 of the License, or (at your option) any later
+ *  version.
+ *
+ *  This program is distributed in the hope that it will be useful, but WITHOUT ANY
+ *  WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A
+ *  PARTICULAR PURPOSE. See the GNU General Public License for more details.
+ *
+ *  You should have received a copy of the GNU General Public License along with
+ *  this program.  If not, see <http://www.gnu.org/licenses/>.
+ */
+
 package com.ichi2.anki.reviewer;
 
 import android.view.View;
@@ -26,22 +42,22 @@ public class CardMarker {
     public @interface FlagDef {}
 
     @NonNull
-    private final ImageView markView;
+    private final ImageView mMarkView;
     @NonNull
-    private final ImageView flagView;
+    private final ImageView mFlagView;
 
     public CardMarker(@NonNull ImageView markView, @NonNull ImageView flagView) {
-        this.markView = markView;
-        this.flagView = flagView;
+        this.mMarkView = markView;
+        this.mFlagView = flagView;
     }
 
     /** Sets the mark icon on a card (the star) */
     public void displayMark(boolean markStatus) {
         if (markStatus) {
-            markView.setVisibility(View.VISIBLE);
-            markView.setImageResource(R.drawable.ic_star_white_bordered_24dp);
+            mMarkView.setVisibility(View.VISIBLE);
+            mMarkView.setImageResource(R.drawable.ic_star_white_bordered_24dp);
         } else {
-            markView.setVisibility(View.INVISIBLE);
+            mMarkView.setVisibility(View.INVISIBLE);
         }
     }
 
@@ -62,7 +78,7 @@ public class CardMarker {
                 break;
             case FLAG_NONE:
             default:
-                flagView.setVisibility(View.INVISIBLE);
+                mFlagView.setVisibility(View.INVISIBLE);
                 break;
         }
     }
@@ -70,7 +86,7 @@ public class CardMarker {
 
     private void setFlagView(@DrawableRes int drawableId) {
         //set the resource before to ensure we display the correct icon.
-        flagView.setImageResource(drawableId);
-        flagView.setVisibility(View.VISIBLE);
+        mFlagView.setImageResource(drawableId);
+        mFlagView.setVisibility(View.VISIBLE);
     }
 }

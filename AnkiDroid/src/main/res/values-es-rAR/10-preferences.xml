@@ -43,254 +43,258 @@
     <string name="enabled">Habilitado</string>
     <!-- preferences.xml categories-->
     <string name="pref_cat_general_summ">Ajustes generales</string>
-    <string name="pref_cat_reviewing">Repasando</string>
+    <string name="pref_cat_reviewing" maxLength="41">Repasando</string>
     <string name="pref_cat_reviewing_summ">Configuración de repasos sin especificación de mazo</string>
-    <string name="pref_cat_reviewer_behaviour">Comportamiento</string>
-    <string name="pref_cat_flashcard">Mostrar</string>
-    <string name="pref_cat_whiteboard">Pizarra</string>
-    <string name="pref_cat_appearance">Apariencia</string>
+    <string name="pref_cat_reviewer_behaviour" maxLength="41">Comportamiento</string>
+    <string name="pref_cat_flashcard" maxLength="41">Mostrar</string>
+    <string name="pref_cat_whiteboard" maxLength="41">Pizarra</string>
+    <string name="pref_cat_appearance" maxLength="41">Apariencia</string>
     <string name="pref_cat_appearance_summ">Cambiar temas y fuente predeterminada</string>
-    <string name="pref_cat_themes">Temas</string>
-    <string name="pref_cat_fonts">Fuentes</string>
-    <string name="pref_cat_gestures">Gestos</string>
+    <string name="pref_cat_themes" maxLength="41">Temas</string>
+    <string name="pref_cat_fonts" maxLength="41">Fuentes</string>
+    <string name="pref_cat_gestures" maxLength="41">Gestos</string>
     <string name="pref_cat_gestures_summ">Usar toques y deslizamientos en lugar de botones</string>
-    <string name="pref_cat_actions">Acciones</string>
-    <string name="pref_cat_advanced">Avanzado</string>
+    <string name="pref_cat_actions" maxLength="41">Acciones</string>
+    <string name="pref_cat_advanced" maxLength="41">Avanzado</string>
     <string name="pref_cat_advanced_summ">Optimización y características experimentales</string>
-    <string name="pref_cat_performance">Rendimiento</string>
-    <string name="pref_cat_workarounds">Soluciones</string>
-    <string name="pref_cat_plugins">Plugins</string>
-    <string name="about_title">Acerca de AnkiDroid</string>
+    <string name="pref_cat_performance" maxLength="41">Rendimiento</string>
+    <string name="pref_cat_workarounds" maxLength="41">Soluciones</string>
+    <string name="pref_cat_plugins" maxLength="41">Plugins</string>
+    <string name="about_title" maxLength="41">Acerca de AnkiDroid</string>
     <string name="about_version">Versión: </string>
     <!-- preferences.xml entries-->
-    <string name="whiteboard_stroke_width">Ancho del trazo</string>
-    <string name="use_input_tag">Tipear la respuesta en la tarjeta</string>
+    <string name="whiteboard_stroke_width" maxLength="41">Ancho del trazo</string>
+    <string name="use_input_tag" maxLength="41">Tipear la respuesta en la tarjeta</string>
     <string name="use_input_tag_summ">Utilice un cuadro de ingreso de texto dentro de la tarjeta para tipear la respuesta</string>
-    <string name="dictionary">Diccionario de búsqueda</string>
-    <string name="reset_languages">Restablecer idiomas</string>
+    <string name="dictionary" maxLength="41">Diccionario de búsqueda</string>
+    <string name="reset_languages" maxLength="41">Restablecer idiomas</string>
     <string name="reset_languages_summ">Resetear disposiciones de idioma (para texto a voz y diccionarios) para todos los mazos</string>
     <string name="reset_languages_question">¿Restablecer todas las asignaciones de idiomas?</string>
     <string name="reset_confirmation">Restablecer todos los estados</string>
-    <string name="card_zoom">Zoom de la tarjeta</string>
-    <string name="image_zoom">Zoom de la imagen</string>
-    <string name="button_size">Tamaño del botón de respuesta</string>
-    <string name="card_browser_font_size">Escalado de fuentes del explorador de tarjetas</string>
-    <string name="card_browser_hide_media">Mostrar nombres de archivo en el navegador de tarjetas</string>
+    <string name="card_zoom" maxLength="41">Zoom de la tarjeta</string>
+    <string name="image_zoom" maxLength="41">Zoom de la imagen</string>
+    <string name="button_size" maxLength="41">Tamaño del botón de respuesta</string>
+    <string name="card_browser_font_size" maxLength="41">Escalado de fuentes del explorador de tarjetas</string>
+    <string name="card_browser_hide_media" maxLength="41">Mostrar nombres de archivo en el navegador de tarjetas</string>
     <string name="card_browser_hide_media_summary">Mostrar nombres de archivos multimedia en los campos de pregunta/respuesta del navegador de tarjetas</string>
-    <string name="col_path">Directorio de AnkiDroid</string>
-    <string name="fullscreen_review">Pantalla completa</string>
+    <string name="col_path" maxLength="41">Directorio de AnkiDroid</string>
+    <string name="fullscreen_review" maxLength="41">Pantalla completa</string>
     <string name="full_screen_off">Apagado</string>
     <string name="full_screen_system">Ocultar las barras del sistema</string>
     <string name="full_screen_complete">Ocultar las barras del sistema y los botones de respuesta</string>
     <string name="full_screen_error_gestures">Debe habilitar los gestos para ocultar los botones de respuesta</string>
-    <string name="answer_buttons_position">Posición de los botones de respuesta</string>
+    <string name="answer_buttons_position" maxLength="41">Posición de los botones de respuesta</string>
     <string-array name="answer_buttons_position_labels">
         <item>Arriba</item>
         <item>Abajo</item>
     </string-array>
-    <string name="gestures">Habilitar gestos</string>
+    <string name="gestures" maxLength="41">Habilitar gestos</string>
     <string name="gestures_summ">Asignar gestos a acciones tales como contestar o editar tarjetas.</string>
-    <string name="gestures_allow_links">Ignorar gestos táctiles en los enlaces</string>
+    <string name="gestures_allow_links" maxLength="41">Ignorar gestos táctiles en los enlaces</string>
     <string name="gestures_allow_links_summary">Los gestos de toque no se procesarán si se presiona un enlace/pista.</string>
-    <string name="gestures_corner_touch">9-point touch</string>
-    <string name="gestures_corner_touch_summary">Allow touch gestures in screen corners</string>
-    <string name="gestures_swipe_up">Deslizar hacia arriba</string>
-    <string name="gestures_swipe_down">Deslizar hacia abajo</string>
-    <string name="gestures_swipe_left">Deslizar hacia la izquierda</string>
-    <string name="gestures_swipe_right">Deslizar hacia la derecha</string>
-    <string name="gestures_double_tap">Doble toque</string>
-    <string name="gestures_tap_top">Presione arriba</string>
-    <string name="gestures_tap_left">Presione izquierda</string>
-    <string name="gestures_tap_right">Presione derecha</string>
-    <string name="gestures_tap_bottom">Presione abajo</string>
-    <string name="gestures_corner_tap_top_left">Touch top left</string>
-    <string name="gestures_corner_tap_top_center">Touch top center</string>
-    <string name="gestures_corner_tap_top_right">Touch top right</string>
-    <string name="gestures_corner_tap_middle_left">Touch middle left</string>
-    <string name="gestures_corner_tap_middle_center">Touch middle center</string>
-    <string name="gestures_corner_tap_middle_right">Touch middle right</string>
-    <string name="gestures_corner_tap_bottom_left">Touch bottom left</string>
-    <string name="gestures_corner_tap_bottom_center">Touch bottom center</string>
-    <string name="gestures_corner_tap_bottom_right">Touch bottom right</string>
-    <string name="gestures_volume_up">Subir volumen</string>
-    <string name="gestures_volume_down">Bajar volumen</string>
-    <string name="more_scrolling_buttons">Lector electrónico</string>
+    <string name="gestures_corner_touch" maxLength="41">Toque de 9 puntos</string>
+    <string name="gestures_corner_touch_summary">Permitir gestos táctiles en las esquinas de pantalla</string>
+    <string name="gestures_swipe_up" maxLength="41">Deslizar hacia arriba</string>
+    <string name="gestures_swipe_down" maxLength="41">Deslizar hacia abajo</string>
+    <string name="gestures_swipe_left" maxLength="41">Deslizar hacia la izquierda</string>
+    <string name="gestures_swipe_right" maxLength="41">Deslizar hacia la derecha</string>
+    <string name="gestures_double_tap" maxLength="41">Doble toque</string>
+    <string name="gestures_tap_top" maxLength="41">Presione arriba</string>
+    <string name="gestures_tap_left" maxLength="41">Presione izquierda</string>
+    <string name="gestures_tap_right" maxLength="41">Presione derecha</string>
+    <string name="gestures_tap_bottom" maxLength="41">Presione abajo</string>
+    <string name="gestures_corner_tap_top_left" maxLength="41">Tocar arriba a la izquierda</string>
+    <string name="gestures_corner_tap_top_center">Tocar centro superior</string>
+    <string name="gestures_corner_tap_top_right" maxLength="41">Tocar arriba a la derecha</string>
+    <string name="gestures_corner_tap_middle_left">Tocar a la izquierda</string>
+    <string name="gestures_corner_tap_middle_center" maxLength="41">Tocar el centro</string>
+    <string name="gestures_corner_tap_middle_right">Tocar a la derecha</string>
+    <string name="gestures_corner_tap_bottom_left" maxLength="41">Tocar abajo a la izquierda</string>
+    <string name="gestures_corner_tap_bottom_center">Tocar centro inferior</string>
+    <string name="gestures_corner_tap_bottom_right" maxLength="41">Tocar abajo a la derecha</string>
+    <string name="gestures_volume_up" maxLength="41">Subir volumen</string>
+    <string name="gestures_volume_down" maxLength="41">Bajar volumen</string>
+    <string name="more_scrolling_buttons" maxLength="41">Lector electrónico</string>
     <string name="more_scrolling_buttons_summ">Utilizar también los botones Kanji/Katakana, Emoji/Kao-moji para desplazar</string>
     <string name="card_browser_enable_external_context_menu">Menú ‘%s’</string>
     <string name="card_browser_enable_external_context_menu_summary">Habilita globalmente el menú contextual ‘%s</string>
-    <string name="double_scrolling_gap">Doble desplazamiento</string>
+    <string name="double_scrolling_gap" maxLength="41">Doble desplazamiento</string>
     <string name="double_scrolling_gap_summ">Doblar la distancia de desplazamiento con e-Reader</string>
-    <string name="swipe_sensitivity">Sensibilidad de deslizado</string>
-    <string name="tts">Texto a voz</string>
+    <string name="swipe_sensitivity" maxLength="41">Sensibilidad de deslizado</string>
+    <string name="tts" maxLength="41">Texto a voz</string>
     <string name="tts_summ">Lee pregunta y respuesta si no hay un archivo de sonido incluido</string>
-    <string name="sync_fetch_missing_media">Buscar archivos media al sincronizar</string>
+    <string name="sync_fetch_missing_media" maxLength="41">Buscar archivos media al sincronizar</string>
     <string name="sync_fetch_missing_media_summ">Buscar automáticamente archivos media faltantes al sincronizar.</string>
-    <string name="sync_account">Cuenta de AnkiWeb</string>
+    <string name="sync_account" maxLength="41">Cuenta de AnkiWeb</string>
     <string name="sync_account_summ_logged_out">No ha iniciado sesión</string>
     <string name="sync_account_summ_logged_in">%s</string>
-    <string name="automatic_sync_choice">Sincronización automática</string>
+    <string name="automatic_sync_choice" maxLength="41">Sincronización automática</string>
     <string name="automatic_sync_choice_summ">Sincronizar automáticamente al abrir / cerrar la aplicación si la última sincronización fue hace más de 10 minutos.</string>
-    <string name="sync_status_badge">Display synchronization status</string>
-    <string name="sync_status_badge_summ">Change the sync icon when changes can be uploaded</string>
-    <string name="day_theme">Tema del día</string>
-    <string name="night_theme">Tema nocturno</string>
-    <string name="default_font">Tipografía por defecto</string>
-    <string name="override_font">Aplicabilidad de fuente por defecto</string>
-    <string name="language">Idioma</string>
+    <string name="sync_status_badge" maxLength="41">Mostrar estado de sincronización</string>
+    <string name="sync_status_badge_summ">Cambiar el icono de sincronización cuando se pueden subir los cambios</string>
+    <string name="day_theme" maxLength="41">Tema del día</string>
+    <string name="night_theme" maxLength="41">Tema nocturno</string>
+    <string name="default_font" maxLength="41">Tipografía por defecto</string>
+    <string name="override_font" maxLength="41">Aplicabilidad de fuente por defecto</string>
+    <string name="language" maxLength="41">Idioma</string>
     <string name="language_system">Idioma del sistema</string>
-    <string name="notification_pref">Notificaciones</string>
-    <string name="notification_pref_title">Notificar al</string>
+    <string name="notification_pref" maxLength="41">Notificaciones</string>
+    <string name="notification_pref_title" maxLength="41">Notificar al</string>
     <string name="never_notify">Nunca notificar</string>
     <string name="notify_when_pending">Mensajes pendientes disponibles</string>
     <string name="notification_minimum_cards_due">Más de %d tarjeta programada</string>
-    <string name="notification_minimum_cards_due_vibrate">Vibrar</string>
-    <string name="notification_minimum_cards_due_blink">Luz parpadeante</string>
-    <string name="timeout_answer_text">Mostrar automáticamente la respuesta</string>
+    <string name="notification_minimum_cards_due_vibrate" maxLength="41">Vibrar</string>
+    <string name="notification_minimum_cards_due_blink" maxLength="41">Luz parpadeante</string>
+    <string name="timeout_answer_text" maxLength="41">Mostrar automáticamente la respuesta</string>
     <string name="timeout_answer_summ">Mostrar respuesta automáticamente sin intervención del usuario. Retraso incluye tiempo para archivos de audio automáticamente reproducidas.</string>
-    <string name="timeout_answer_seconds">Tiempo para mostrar respuesta</string>
+    <string name="timeout_answer_seconds" maxLength="41">Tiempo para mostrar respuesta</string>
     <string name="timeout_answer_seconds_summ" comment="The time to wait (in seconds) in the reviewer before automatically showing the next question or answer">XXX s</string>
-    <string name="timeout_question_seconds">Tiempo para mostrar la siguiente pregunta</string>
+    <string name="timeout_question_seconds" maxLength="41">Tiempo para mostrar la siguiente pregunta</string>
     <string name="select_locale_title">Seleccionar idioma</string>
-    <string name="software_render">Disable card hardware render</string>
-    <string name="software_render_summ">Hardware render is faster but may have problems, specifically on Android 8/8.1. If you cannot see parts of the card review user interface, try this setting.</string>
-    <string name="safe_display">Modo de visualización segura</string>
+    <string name="software_render" maxLength="41">Deshabilitar el procesamiento de hardware de la tarjeta</string>
+    <string name="software_render_summ">El procesamiento de hardware es más rápido, pero puede tener problemas, específicamente en Android 8/8.1. Si no puede ver partes de la interfaz de usuario de la tarjeta, prueba esta opción.</string>
+    <string name="safe_display" maxLength="41">Modo de visualización segura</string>
     <string name="safe_display_summ">Desactiva todas las animaciones y utiliza un método más seguro para presentar las tarjetas. Los dspositivos de tinta electrónica (e-ink) podrían requerir esta opción.</string>
-    <string name="disable_extended_text_ui">Desactivar modo de edición de un campo</string>
+    <string name="disable_extended_text_ui" maxLength="41">Desactivar modo de edición de un campo</string>
     <!--See: multimedia_editor_popup_cloze. We can\'t use format strings as this is auto-generated-->
     <string name="disable_extended_text_ui_summ">Permite el menú contextual \'huecos\' cuando está en modo horizontal.</string>
-    <string name="vertical_centering">Alinear al centro</string>
+    <string name="vertical_centering" maxLength="41">Alinear al centro</string>
     <string name="vertical_centering_summ">Centra verticalmente el contenido de las tarjetas</string>
-    <string name="pref_backup_max">Número máximo de copias de seguridad</string>
-    <string name="show_estimates">Mostar el botón tiempo</string>
+    <string name="pref_backup_max" maxLength="41">Número máximo de copias de seguridad</string>
+    <string name="show_estimates" maxLength="41">Mostar el botón tiempo</string>
     <string name="show_estimates_summ">Mostrar el tiempo para el próximo repaso encima de los botones de respuesta</string>
-    <string name="show_top_bar">Mostrar Barra Superior</string>
+    <string name="show_top_bar" maxLength="41">Mostrar Barra Superior</string>
     <string name="show_top_bar_summ">Mostrar recuento de tarjetas, banderas y marcas en la barra superior</string>
-    <string name="show_progress">Mostar restantes</string>
+    <string name="show_progress" maxLength="41">Mostar restantes</string>
     <string name="show_progress_summ">Mostrar contador de tarjetas restantes</string>
-    <string name="show_eta">Mostrar ETA</string>
+    <string name="show_eta" maxLength="41">Mostrar ETA</string>
     <string name="show_eta_summ">Mostrar tiempo restante</string>
-    <string name="use_current">Mazo para nuevas tarjetas</string>
-    <string name="new_spread">Nueva posición de tarjeta</string>
-    <string name="learn_cutoff">Aprender antes del límite</string>
-    <string name="time_limit">Límite de tiempo para Timebox</string>
+    <string name="use_current" maxLength="41">Mazo para nuevas tarjetas</string>
+    <string name="new_spread" maxLength="41">Nueva posición de tarjeta</string>
+    <string name="learn_cutoff" maxLength="41">Aprender antes del límite</string>
+    <string name="time_limit" maxLength="41">Límite de tiempo para Timebox</string>
     <string name="time_limit_summ">XXX min</string>
-    <string name="new_timezone">New timezone handling</string>
-    <string name="day_offset_with_description">Start of next day (0 is midnight, 23 is 11PM)</string>
+    <string name="new_timezone" maxLength="41">Nuevo manejo de zona horaria</string>
+    <string name="day_offset_with_description" maxLength="41">Comienzo del día siguiente (0 es medianoche, 23 es 11PM)</string>
     <string name="day_offset_summ">XXX horas luego pasada la medianoche</string>
-    <string name="sched_ver">Programador Experimental V2</string>
+    <string name="xlabel_dayoffset_seekbar" maxLength="41">Midnight</string>
+    <string name="ylabel_dayoffset_seekbar" maxLength="41">11PM</string>
+    <string name="sched_ver" maxLength="41">Programador Experimental V2</string>
     <string name="sched_ver_summ">Activar el programador experimental. Fuerza los cambios en una dirección en la próxima sincronización</string>
     <string name="sched_ver_toggle_title">Confirmar</string>
     <string name="sched_ver_2to1">Esto restablecerá cualquier carta en el aprendizaje, limpiará mazos filtrados y cambiará la versión del programador. ¿Proceder?</string>
     <string name="sched_ver_1to2">El programador experimental podría causar una programación incorrecta. Por favor, asegúrese de haber leído la documentación primero. ¿Proceder?</string>
-    <string name="pref_keep_screen_on">Mantener la pantalla encendida</string>
+    <string name="pref_keep_screen_on" maxLength="41">Mantener la pantalla encendida</string>
     <string name="pref_keep_screen_on_summ">Desactivar el tiempo de espera de pantalla</string>
-    <string name="convert_fen_text">Soporte para notación de ajedrez</string>
+    <string name="convert_fen_text" maxLength="41">Soporte para notación de ajedrez</string>
     <string name="convert_fen_text_summ">Dibujar un tablero de ajedrez a partir de la notación de Edward Forsyth. La notación debe estar enmarcada en una etiqueta que contenga [fen][/fen].</string>
-    <string name="enable_api_title">Habilitar API de AnkiDroid</string>
+    <string name="enable_api_title" maxLength="41">Habilitar API de AnkiDroid</string>
     <string name="enable_api_summary">Permitir que otras aplicaciones se conecten a AnkiDroid y lean / escriban datos sin tu intervención</string>
-    <string name="custom_buttons">Botones de la barra de la aplicación</string>
+    <string name="custom_buttons" maxLength="41">Botones de la barra de la aplicación</string>
     <string name="custom_buttons_summary">Personalizar qué acciones aparecen en la barra de la aplicación</string>
     <string name="custom_buttons_setting_always_show">Mostrar siempre</string>
     <string name="custom_buttons_setting_if_room">Mostrar si hay espacio</string>
     <string name="custom_buttons_setting_menu_only">Sólo el menú</string>
-    <string name="reset_custom_buttons">Restaurar a predeterminado</string>
-    <string name="thirdparty_apps_title">Aplicaciones API de terceros</string>
+    <string name="reset_custom_buttons" maxLength="41">Restaurar a predeterminado</string>
+    <string name="thirdparty_apps_title" maxLength="41">Aplicaciones API de terceros</string>
     <string name="thirdparty_apps_summary">Vea una lista de aplicaciones que hacen uso de la API de AnkiDroid como diccionarios, utilidades.</string>
-    <string name="html_javascript_debugging">Depuración de HTML / Javascript</string>
+    <string name="html_javascript_debugging" maxLength="41">Depuración de HTML / Javascript</string>
     <string name="html_javascript_debugging_summ">Habilitar conexiones remotas de WebView y guardar el HTML de la tarjeta en el directorio AnkiDroid</string>
     <!-- Advanced statistics settings -->
-    <string name="advanced_statistics_title">Estadísticas avanzadas</string>
-    <string name="enable_advanced_statistics_title">Activar estadísticas avanzadas</string>
+    <string name="advanced_statistics_title" maxLength="41">Estadísticas avanzadas</string>
+    <string name="enable_advanced_statistics_title" maxLength="41">Activar estadísticas avanzadas</string>
     <string name="enable_advanced_statistics_summ">Despliega estadísticas de pronóstico basadas en un cálculo o simulación de futuros repasos (activado) o de repasos futuros ya programados (desactivado).</string>
-    <string name="advanced_forecast_stats_compute_n_days_title">Calcular los primeros n días, simular los recordatorios</string>
-    <string name="advanced_forecast_stats_compute_precision_title">Precisión del cálculo</string>
-    <string name="advanced_forecast_stats_mc_n_iterations_title">Número de repeticiones del cálculo</string>
+    <string name="advanced_forecast_stats_compute_n_days_title" maxLength="41">Calcular los primeros n días, simular los recordatorios</string>
+    <string name="advanced_forecast_stats_compute_precision_title" maxLength="41">Precisión del cálculo</string>
+    <string name="advanced_forecast_stats_mc_n_iterations_title" maxLength="41">Número de repeticiones del cálculo</string>
     <!-- Custom sync server settings -->
-    <string name="custom_sync_server_title">Servidor de sincronización personalizado</string>
-    <string name="custom_sync_server_enable_title">Utilizar el servidor de sincronización personalizado</string>
+    <string name="custom_sync_server_title" maxLength="41">Servidor de sincronización personalizado</string>
+    <string name="custom_sync_server_enable_title" maxLength="41">Utilizar el servidor de sincronización personalizado</string>
     <string name="custom_sync_server_enable_summary">Si no quieres utilizar el servicio propietario de AnkiWeb, puedes especificar un servidor alternativo aquí</string>
-    <string name="custom_sync_server_base_url_title">Sincronizar url</string>
+    <string name="custom_sync_server_base_url_title" maxLength="41">Sincronizar url</string>
     <string name="custom_sync_server_base_url_invalid">Url de sincronización no inválido</string>
-    <string name="custom_sync_server_media_url_title">Sincronizar media url</string>
+    <string name="custom_sync_server_media_url_title" maxLength="41">Sincronizar media url</string>
     <string name="custom_sync_server_media_url_invalid">URL de sincronización de medios inválida</string>
     <!-- studyoptions -->
     <string name="deck_conf_group_summ">Los cambios en las opciones del grupo de mazos afectarán a varios mazos. Si desea cambiar sólo el mazo actual, primero añada un nuevo grupo de opciones</string>
     <string name="studyoptions_limit_select_tags">Seleccionar etiquetas</string>
     <!-- Deck configurations -->
-    <string name="deck_conf_deck_description">Descripción del mazo (sólo afecta al mazo actual)</string>
-    <string name="deck_conf_group">Grupo de opciones</string>
+    <string name="deck_conf_deck_description" maxLength="41">Descripción del mazo (sólo afecta al mazo actual)</string>
+    <string name="deck_conf_group" maxLength="41">Grupo de opciones</string>
     <plurals name="deck_conf_group_summ">
         <item quantity="one">El mazo %1$s\n%2$d utiliza este grupo</item>
         <item quantity="other">Los mazos %1$s\n%2$d utilizan este grupo</item>
     </plurals>
-    <string name="deck_conf_new_cards">Nuevas tarjetas</string>
-    <string name="deck_conf_rev_cards" comment="Name of the deck options submenu for configuring reviews of due cards.">Revisiones</string>
-    <string name="deck_conf_lps_cards" comment="Label of the submenu stating how lapses cards are treated.">Intervalos</string>
-    <string name="deck_conf_general">General</string>
-    <string name="deck_conf_reminders">Recordatorios</string>
-    <string name="deck_conf_steps">Pasos (en minutos)</string>
-    <string name="deck_conf_order">Orden</string>
-    <string name="deck_conf_new_cards_day">Nuevas tarjetas por día</string>
-    <string name="deck_conf_graduating_ivl">Intervalo gradual</string>
+    <string name="deck_conf_new_cards" maxLength="41">Nuevas tarjetas</string>
+    <string name="deck_conf_rev_cards" maxLength="41" comment="Name of the deck options submenu for configuring reviews of due cards.">Revisiones</string>
+    <string name="deck_conf_lps_cards" maxLength="41" comment="Label of the submenu stating how lapses cards are treated.">Intervalos</string>
+    <string name="deck_conf_general" maxLength="41">General</string>
+    <string name="deck_conf_reminders" maxLength="41">Recordatorios</string>
+    <string name="deck_conf_steps" maxLength="41">Pasos (en minutos)</string>
+    <string name="deck_conf_order" maxLength="41">Orden</string>
+    <string name="deck_conf_new_cards_day" maxLength="41">Nuevas tarjetas por día</string>
+    <string name="deck_conf_graduating_ivl" maxLength="41">Intervalo gradual</string>
     <string name="deck_conf_days">XXX día(s)</string>
-    <string name="deck_conf_easy_ivl">Intervalo fácil</string>
-    <string name="deck_conf_start_ease">Dificultad de inicio</string>
-    <string name="deck_conf_max_rev">Revisiones máximas por día</string>
-    <string name="deck_conf_new_bury">Enterrar tarjetas nuevas relacionadas</string>
+    <string name="deck_conf_easy_ivl" maxLength="41">Intervalo fácil</string>
+    <string name="deck_conf_start_ease" maxLength="41">Dificultad de inicio</string>
+    <string name="deck_conf_max_rev" maxLength="41">Revisiones máximas por día</string>
+    <string name="deck_conf_new_bury" maxLength="41">Enterrar tarjetas nuevas relacionadas</string>
     <string name="deck_conf_new_bury_summ">Las tarjetas nuevas relacionadas se entierran hasta el próximo día</string>
-    <string name="deck_conf_rev_bury">Enterrar repasos relacionados</string>
+    <string name="deck_conf_rev_bury" maxLength="41">Enterrar repasos relacionados</string>
     <string name="deck_conf_rev_bury_summ">Los repasos relacionados se entierran hasta el siguiente día</string>
-    <string name="deck_conf_use_general_timeout_settings">Usar ajustes generales</string>
+    <string name="deck_conf_use_general_timeout_settings" maxLength="41">Usar ajustes generales</string>
     <string name="deck_conf_use_general_timeout_settings_summ">Utilice la configuración general de \'Respuesta de pantalla automática\' en lugar de usar la configuración de este grupo.</string>
-    <string name="deck_conf_easy_bonus">Bonus por facilidad</string>
-    <string name="deck_conf_hard_factor">Hard interval</string>
-    <string name="deck_conf_ivl_fct">Modificador de intervalo</string>
-    <string name="deck_conf_max_ivl">Intervalo máximo</string>
-    <string name="deck_conf_new_lps_ivl">Nuevo intervalo</string>
-    <string name="deck_conf_min_ivl">Intervalo mínimo</string>
-    <string name="deck_conf_leech_thres">Umbral de sanguijuelas</string>
+    <string name="deck_conf_easy_bonus" maxLength="41">Bonus por facilidad</string>
+    <string name="deck_conf_hard_factor" maxLength="41">Intervalo Difícil</string>
+    <string name="deck_conf_ivl_fct" maxLength="41">Modificador de intervalo</string>
+    <string name="deck_conf_max_ivl" maxLength="41">Intervalo máximo</string>
+    <string name="deck_conf_new_lps_ivl" maxLength="41">Nuevo intervalo</string>
+    <string name="deck_conf_min_ivl" maxLength="41">Intervalo mínimo</string>
+    <string name="deck_conf_leech_thres" maxLength="41">Umbral de sanguijuelas</string>
     <string name="deck_conf_fails">Falla XXX</string>
-    <string name="deck_conf_leech_action">Acción para sanguijuelas</string>
-    <string name="deck_conf_max_time">Tiempo máximo de respuesta</string>
+    <string name="deck_conf_leech_action" maxLength="41">Acción para sanguijuelas</string>
+    <string name="deck_conf_max_time" maxLength="41">Tiempo máximo de respuesta</string>
     <string name="deck_conf_seconds">XXX segundos</string>
-    <string name="deck_conf_timer">Mostrar tiempo de respuesta</string>
-    <string name="deck_conf_autoplay">Reproducir audio automáticamente</string>
-    <string name="deck_conf_replayq">Reproducir pregunta</string>
+    <string name="deck_conf_timer" maxLength="41">Mostrar tiempo de respuesta</string>
+    <string name="deck_conf_autoplay" maxLength="41">Reproducir audio automáticamente</string>
+    <string name="deck_conf_replayq" maxLength="41">Reproducir pregunta</string>
     <string name="deck_conf_replayq_summ">Cuando se muestra la respuesta reproduce ambos audios de pregunta y respuesta</string>
-    <string name="deck_conf_manage">Gestión de los grupos</string>
-    <string name="deck_conf_manage_summ">Add and change options groups</string>
-    <string name="deck_conf_current_group">Grupo actual</string>
-    <string name="deck_conf_rename" comment="Menu entry to rename a deck">Renombrar</string>
-    <string name="deck_conf_reset">Restaurar valores predeterminados</string>
+    <string name="deck_conf_manage" maxLength="41">Gestión de los grupos</string>
+    <string name="deck_conf_manage_summ">Añadir y cambiar opciones de grupo</string>
+    <string name="deck_conf_current_group" maxLength="41">Grupo actual</string>
+    <string name="deck_conf_rename" maxLength="41" comment="Menu entry to rename a deck">Renombrar</string>
+    <string name="deck_conf_reset" maxLength="41">Restaurar valores predeterminados</string>
     <string name="deck_conf_reset_message">¿Restaurar el grupo de opciones actuales a sus valores predeterminados?</string>
-    <string name="deck_conf_add" comment="Adding a new deck option group">Añadir configuración</string>
+    <string name="deck_conf_add" maxLength="41" comment="Adding a new deck option group">Añadir configuración</string>
     <string name="deck_conf_add_summ">Crea una copia del grupo de opciones actuales</string>
     <string name="deck_conf_remove_message">¿Remover el grupo de opciones actuales?</string>
-    <string name="deck_conf_set_subdecks">Aplicar a todos los submazos</string>
+    <string name="deck_conf_set_subdecks" maxLength="41">Aplicar a todos los submazos</string>
     <plurals name="deck_conf_set_subdecks_summ">
         <item quantity="one">%s submazo utilizará este grupo</item>
         <item quantity="other">%s submazos utilizarán este grupo</item>
     </plurals>
     <string name="deck_conf_set_subdecks_message">¿Aplicar el grupo de opciones actuales a todos los submazos de este mazo?</string>
-    <string name="pref_browser_editor_font">Fuente del explorador y editor</string>
-    <string name="deck_conf_cram_filter">Filtro</string>
-    <string name="deck_conf_cram_search">Buscar</string>
-    <string name="deck_conf_cram_limit">Limitar a</string>
-    <string name="deck_conf_cram_order">Tarjetas seleccionadas por</string>
-    <string name="deck_conf_cram_reschedule" comment="Title of the box labelled by deck_conf_cram_reschedule_summ">Reprogramar</string>
+    <string name="pref_browser_editor_font" maxLength="41">Fuente del explorador y editor</string>
+    <string name="deck_conf_cram_filter" maxLength="41">Filtro</string>
+    <string name="deck_conf_cram_search" maxLength="41">Buscar</string>
+    <string name="deck_conf_cram_limit" maxLength="41">Limitar a</string>
+    <string name="deck_conf_cram_order" maxLength="41">Tarjetas seleccionadas por</string>
+    <string name="deck_conf_cram_reschedule" maxLength="41" comment="Title of the box labelled by deck_conf_cram_reschedule_summ">Reprogramar</string>
     <string name="deck_conf_cram_reschedule_summ">Reprogramar las tarjetas basándose en mis respuestas en este mazo</string>
-    <string name="deck_conf_cram_steps">Pasos personalizados (en minutos)</string>
-    <string name="deck_conf_cram_steps_summ">Definir pasos personalizados</string>
-    <string name="deck_conf_reminders_enabled">Habilitar notificaciones de recordatorio para mazos en este grupo de mazos</string>
-    <string name="deck_conf_reminders_time">Recordarme a las</string>
+    <string name="deck_conf_cram_steps" maxLength="41">Pasos personalizados (en minutos)</string>
+    <string name="deck_conf_cram_steps_summ" maxLength="41">Definir pasos personalizados</string>
+    <string name="deck_conf_reminders_enabled" maxLength="41">Habilitar notificaciones de recordatorio para mazos en este grupo de mazos</string>
+    <string name="deck_conf_reminders_time" maxLength="41">Recordarme a las</string>
     <!-- analytics options -->
     <string name="analytics_dialog_title">¡Ayuda a mejorar AnkiDroid!</string>
-    <string name="analytics_title">Compartir uso de funciones</string>
+    <string name="analytics_title" maxLength="41">Compartir uso de funciones</string>
     <string name="analytics_summ">Puedes contribuir a AnkiDroid ayudando al equipo de desarrollo a ver qué características usan las personas</string>
-    <string name="note_editor_replace_newlines">Replace newlines with HTML</string>
-    <string name="note_editor_replace_newlines_summ">In the Note Editor, convert any instances of &lt;br&gt; to newlines when editing a card.</string>
-    <string name="no_code_formatting">Simple typed answer formatting</string>
-    <string name="no_code_formatting_summ">Fixes ‘􏿾’ appearing in typed answer results</string>
+    <string name="note_editor_replace_newlines" maxLength="41">Reemplazar nuevas líneas con HTML</string>
+    <string name="note_editor_replace_newlines_summ">En el editor de notas, convierte cualquier instancia de &lt;br&gt; a nuevas líneas al editar una tarjeta.</string>
+    <string name="no_code_formatting" maxLength="41">Formato de respuesta simple</string>
+    <string name="no_code_formatting_summ">Corregir ‘􏿾’ al aspecto de respuesta tipográfica</string>
+    <string name="type_in_answer_focus" maxLength="41">Enfoque \"escribe la respuesta\"</string>
+    <string name="type_in_answer_focus_summ">Enfocar automáticamente el campo \"escribir en respuesta\" en el revisor</string>
     <!-- Open Changelog-->
-    <string name="open_changelog">Open Changelog</string>
+    <string name="open_changelog">Abrir el Registro de Cambios</string>
 </resources>

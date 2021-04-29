@@ -115,7 +115,7 @@
     <string name="title_activity_edit_text" comment="Name of the window allowing to edit field. This text can not be seen in AnkiDroid directly.">Editing field</string>
     <string name="title_activity_translation" comment="Name of the window allowing to translate. This text can not be seen in AnkiDroid directly.">Тәрҗемә</string>
     <!-- Network failure -->
-    <string name="network_no_connection">No connection</string>
+    <string name="network_no_connection">Бәйләнеш юк</string>
     <!-- Crop function-->
     <string name="crop_image">Do you want to crop this image?</string>
     <string name="crop_button">Crop image</string>

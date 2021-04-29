@@ -122,9 +122,10 @@
     <string name="reordering_cards">Kartların sırası değiştiriliyor...</string>
     <string name="field_remapping">%1$s (\'%2$s\')\'dan/den</string>
     <string name="confirm_map_cards_to_nothing">Hiçbiriyle eşlemeyen herhangi bir kart silinecek. Geriye kalan kartları olmayan not varsa, kaybolur. Devam etmek istediğinizden emin misiniz?</string>
+    <string name="timebox_reached_title">Timebox reached</string>
     <plurals name="timebox_reached">
-        <item quantity="one">%2$s %1$d kart çalışıldı</item>
-        <item quantity="other">%2$s %1$d kart çalışıldı</item>
+        <item quantity="one">%2$s dakikada %1$d kart çalışıldı</item>
+        <item quantity="other">%2$s dakikada %1$d kart çalışıldı</item>
     </plurals>
     <!-- minutes used in \'[studied in] x minutes\' context, causing inflexion in some languages -->
     <plurals name="in_minutes">

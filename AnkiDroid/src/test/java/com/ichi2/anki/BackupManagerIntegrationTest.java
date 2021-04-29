@@ -18,11 +18,11 @@ package com.ichi2.anki;
 
 import com.ichi2.async.CollectionTask;
 import com.ichi2.testutils.AnkiAssert;
+import com.ichi2.testutils.BackupManagerTestUtilities;
 
 import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.robolectric.shadows.ShadowStatFs;
 
 import java.io.File;
 
@@ -51,12 +51,16 @@ public class BackupManagerIntegrationTest extends RobolectricTest {
 
 
     private String createBackup() {
-        int blockCount = 100000;
-        ShadowStatFs.registerStats(new File(getCol().getPath()).getParentFile().getPath(), blockCount, blockCount, blockCount);
+        try {
+            BackupManagerTestUtilities.setupSpaceForBackup(getTargetContext());
 
-        assertThat("Backup should work", BackupManager.performBackupInBackground(getCol().getPath(), getCol().getTime()), is(true));
+            assertThat("Backup should work", BackupManager.performBackupInBackground(getCol().getPath(), getCol().getTime()), is(true));
 
-        return spinUntilBackupExists(1000);
+            return spinUntilBackupExists(1000);
+        } finally {
+            BackupManagerTestUtilities.reset();
+        }
+
     }
 
 

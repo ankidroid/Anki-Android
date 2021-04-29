@@ -52,7 +52,6 @@ import java.util.Set;
 import timber.log.Timber;
 
 import static com.ichi2.anim.ActivityTransitionAnimation.Direction.FADE;
-import static com.ichi2.libanki.Consts.DECK_STD;
 
 /**
  * Preferences for the current deck.
@@ -67,7 +66,7 @@ public class FilteredDeckOptions extends AppCompatPreferenceActivity implements 
     private BroadcastReceiver mUnmountReceiver = null;
 
     // TODO: not anymore used in libanki?
-    private final String[] dynExamples = new String[] { null,
+    private final String[] mDynExamples = new String[] { null,
             "{'search'=\"is:new\", 'resched'=False, 'steps'=\"1\", 'order'=5}",
             "{'search'=\"added:1\", 'resched'=False, 'steps'=\"1\", 'order'=5}",
             "{'search'=\"rated:1:1\", 'order'=4}",
@@ -150,7 +149,7 @@ public class FilteredDeckOptions extends AppCompatPreferenceActivity implements 
                     } else if ("preset".equals(entry.getKey())) {
                         int i = Integer.parseInt((String) entry.getValue());
                         if (i > 0) {
-                            JSONObject presetValues = new JSONObject(dynExamples[i]);
+                            JSONObject presetValues = new JSONObject(mDynExamples[i]);
                             JSONArray ar = presetValues.names();
                             for (String name: ar.stringIterable()) {
                                 if ("steps".equals(name)) {

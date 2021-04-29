@@ -385,6 +385,9 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
     /** Handle providing help for "Image Not Found" */
     private static final MissingImageHandler mMissingImageHandler = new MissingImageHandler();
 
+    /** Preference: Whether the user wants to focus "type in answer" */
+    private boolean mFocusTypeAnswer;
+
     // ----------------------------------------------------------------------------
     // LISTENERS
     // ----------------------------------------------------------------------------
@@ -426,42 +429,99 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
         public void onClick(View view) {
             Timber.i("AbstractFlashcardViewer:: Show answer button pressed");
             // Ignore what is most likely an accidental double-tap.
-            if (SystemClock.elapsedRealtime() - mLastClickTime < DOUBLE_TAP_IGNORE_THRESHOLD) {
+            if (getElapsedRealTime() - mLastClickTime < DOUBLE_TAP_IGNORE_THRESHOLD) {
                 return;
             }
-            mLastClickTime = SystemClock.elapsedRealtime();
+            mLastClickTime = getElapsedRealTime();
             mTimeoutHandler.removeCallbacks(mShowAnswerTask);
             displayCardAnswer();
         }
     };
 
-    private final View.OnClickListener mSelectEaseHandler = new View.OnClickListener() {
+
+    // Event handler for eases (answer buttons)
+    class SelectEaseHandler implements View.OnClickListener, View.OnTouchListener {
+        // maximum screen distance from initial touch where we will consider a click related to the touch
+        private static final int CLICK_ACTION_THRESHOLD = 200;
+
+        private Card mPrevCard = null;
+        private boolean mHasBeenTouched = false;
+        private float mTouchX;
+        private float mTouchY;
+
+        public SelectEaseHandler() {}
+
+        @Override
+        public boolean onTouch(View view, MotionEvent event) {
+            if (event.getAction() == MotionEvent.ACTION_DOWN) {
+                // Save states when button pressed
+                mPrevCard = mCurrentCard;
+                mHasBeenTouched = true;
+                // We will need to check if a touch is followed by a click
+                // Since onTouch always come before onClick, we should check if
+                // the touch is going to be a click by storing the start coordinates
+                // and comparing with the end coordinates of the touch
+                mTouchX = event.getRawX();
+                mTouchY = event.getRawY();
+            } else if (event.getAction() == MotionEvent.ACTION_UP) {
+                float diffX = Math.abs(event.getRawX() - mTouchX);
+                float diffY = Math.abs(event.getRawY() - mTouchY);
+                // If a click is not coming then we reset the touch
+                if (diffX > CLICK_ACTION_THRESHOLD || diffY > CLICK_ACTION_THRESHOLD) {
+                    mHasBeenTouched = false;
+                }
+            }
+            return false;
+        }
+
         @Override
         public void onClick(View view) {
-            // Ignore what is most likely an accidental double-tap.
-            if (SystemClock.elapsedRealtime() - mLastClickTime < DOUBLE_TAP_IGNORE_THRESHOLD) {
-                return;
+            // Try to perform intended action only if the button has been pressed for current card,
+            // or if the button was not touched,
+            if (mPrevCard == mCurrentCard || !mHasBeenTouched)  {
+                // Only perform if the click was not an accidental double-tap
+                if (getElapsedRealTime() - mLastClickTime >= DOUBLE_TAP_IGNORE_THRESHOLD) {
+                    // For whatever reason, performClick does not return a visual feedback anymore
+                    if (!mHasBeenTouched) {
+                        view.setPressed(true);
+                    }
+                    mLastClickTime = getElapsedRealTime();
+                    mTimeoutHandler.removeCallbacks(mShowQuestionTask);
+                    int id = view.getId();
+                    if (id == R.id.flashcard_layout_ease1) {
+                        Timber.i("AbstractFlashcardViewer:: EASE_1 pressed");
+                        answerCard(Consts.BUTTON_ONE);
+                    } else if (id == R.id.flashcard_layout_ease2) {
+                        Timber.i("AbstractFlashcardViewer:: EASE_2 pressed");
+                        answerCard(Consts.BUTTON_TWO);
+                    } else if (id == R.id.flashcard_layout_ease3) {
+                        Timber.i("AbstractFlashcardViewer:: EASE_3 pressed");
+                        answerCard(Consts.BUTTON_THREE);
+                    } else if (id == R.id.flashcard_layout_ease4) {
+                        Timber.i("AbstractFlashcardViewer:: EASE_4 pressed");
+                        answerCard(Consts.BUTTON_FOUR);
+                    } else {
+                        mCurrentEase = 0;
+                    }
+                    if (!mHasBeenTouched) {
+                        view.setPressed(false);
+                    }
+                }
             }
-            mLastClickTime = SystemClock.elapsedRealtime();
-            mTimeoutHandler.removeCallbacks(mShowQuestionTask);
-            int id = view.getId();
-            if (id == R.id.flashcard_layout_ease1) {
-                Timber.i("AbstractFlashcardViewer:: EASE_1 pressed");
-                answerCard(Consts.BUTTON_ONE);
-            } else if (id == R.id.flashcard_layout_ease2) {
-                Timber.i("AbstractFlashcardViewer:: EASE_2 pressed");
-                answerCard(Consts.BUTTON_TWO);
-            } else if (id == R.id.flashcard_layout_ease3) {
-                Timber.i("AbstractFlashcardViewer:: EASE_3 pressed");
-                answerCard(Consts.BUTTON_THREE);
-            } else if (id == R.id.flashcard_layout_ease4) {
-                Timber.i("AbstractFlashcardViewer:: EASE_4 pressed");
-                answerCard(Consts.BUTTON_FOUR);
-            } else {
-                mCurrentEase = 0;
-            }
+            // We will have to reset the touch after every onClick event
+            // Do not return early without considering this
+            mHasBeenTouched = false;
         }
-    };
+    }
+
+    private final SelectEaseHandler mEaseHandler = new SelectEaseHandler();
+
+
+    @VisibleForTesting
+    protected long getElapsedRealTime() {
+        return SystemClock.elapsedRealtime();
+    }
+
 
     private final View.OnTouchListener mGestureListener = new View.OnTouchListener() {
         @Override
@@ -604,8 +664,6 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
 
         protected void displayNext(Card nextCard) {
 
-            Resources res = getResources();
-
             if (mSched == null) {
                 // TODO: proper testing for restored activity
                 finishWithoutAnimation();
@@ -634,8 +692,16 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
                 int nMins = elapsed.first / 60;
                 String mins = res.getQuantityString(R.plurals.in_minutes, nMins, nMins);
                 String timeboxMessage = res.getQuantityString(R.plurals.timebox_reached, nCards, nCards, mins);
-                UIUtils.showThemedToast(AbstractFlashcardViewer.this, timeboxMessage, true);
-                getCol().startTimebox();
+                new MaterialDialog.Builder(AbstractFlashcardViewer.this)
+                        .title(res.getString(R.string.timebox_reached_title))
+                        .content(timeboxMessage)
+                        .positiveText(R.string.dialog_continue)
+                        .negativeText(R.string.close)
+                        .cancelable(true)
+                        .onNegative((materialDialog, dialogAction) -> finishWithAnimation(END))
+                        .onPositive((materialDialog, dialogAction) -> getCol().startTimebox())
+                        .cancelListener(materialDialog -> getCol().startTimebox())
+                        .show();
             }
         }
 
@@ -962,7 +1028,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
             String data = Utils.convertStreamToString(getAssets().open("card_template.html"));
             mCardTemplate = new CardTemplate(data);
         } catch (IOException e) {
-            e.printStackTrace();
+            Timber.w(e);
         }
 
         // Initialize text-to-speech. This is an asynchronous operation.
@@ -1294,9 +1360,9 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
             mCurrentCard.resumeTimer();
             // Then update and resume the UI timer. Set the base time as if the timer had started
             // timeTaken() seconds ago.
-            mCardTimer.setBase(SystemClock.elapsedRealtime() - mCurrentCard.timeTaken());
+            mCardTimer.setBase(getElapsedRealTime() - mCurrentCard.timeTaken());
             // Don't start the timer if we have already reached the time limit or it will tick over
-            if ((SystemClock.elapsedRealtime() - mCardTimer.getBase()) < mCurrentCard.timeLimit()) {
+            if ((getElapsedRealTime() - mCardTimer.getBase()) < mCurrentCard.timeLimit()) {
                 mCardTimer.start();
             }
         }
@@ -1324,7 +1390,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
         Intent editCard = new Intent(AbstractFlashcardViewer.this, NoteEditor.class);
         editCard.putExtra(NoteEditor.EXTRA_CALLER, NoteEditor.CALLER_REVIEWER);
         sEditorCard = mCurrentCard;
-        startActivityForResultWithAnimation(editCard, EDIT_CURRENT_CARD, LEFT);
+        startActivityForResultWithAnimation(editCard, EDIT_CURRENT_CARD, START);
     }
 
 
@@ -1513,19 +1579,23 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
 
         mEase1 = findViewById(R.id.ease1);
         mEase1Layout = findViewById(R.id.flashcard_layout_ease1);
-        mEase1Layout.setOnClickListener(mSelectEaseHandler);
+        mEase1Layout.setOnClickListener((View view) -> mEaseHandler.onClick(view));
+        mEase1Layout.setOnTouchListener((View view, MotionEvent event) -> mEaseHandler.onTouch(view, event));
 
         mEase2 = findViewById(R.id.ease2);
         mEase2Layout = findViewById(R.id.flashcard_layout_ease2);
-        mEase2Layout.setOnClickListener(mSelectEaseHandler);
+        mEase2Layout.setOnClickListener((View view) -> mEaseHandler.onClick(view));
+        mEase2Layout.setOnTouchListener((View view, MotionEvent event) -> mEaseHandler.onTouch(view, event));
 
         mEase3 = findViewById(R.id.ease3);
         mEase3Layout = findViewById(R.id.flashcard_layout_ease3);
-        mEase3Layout.setOnClickListener(mSelectEaseHandler);
+        mEase3Layout.setOnClickListener((View view) -> mEaseHandler.onClick(view));
+        mEase3Layout.setOnTouchListener((View view, MotionEvent event) -> mEaseHandler.onTouch(view, event));
 
         mEase4 = findViewById(R.id.ease4);
         mEase4Layout = findViewById(R.id.flashcard_layout_ease4);
-        mEase4Layout.setOnClickListener(mSelectEaseHandler);
+        mEase4Layout.setOnClickListener((View view) -> mEaseHandler.onClick(view));
+        mEase4Layout.setOnTouchListener((View view, MotionEvent event) -> mEaseHandler.onTouch(view, event));
 
         mNext1 = findViewById(R.id.nextTime1);
         mNext2 = findViewById(R.id.nextTime2);
@@ -1757,7 +1827,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
     private void focusAnswerCompletionField() {
         // This does not handle mUseInputTag (the WebView contains an input field with a typable answer).
         // In this case, the user can use touch to focus the field if necessary.
-        if (typeAnswer()) {
+        if (typeAnswer() && mFocusTypeAnswer) {
             mAnswerField.focusWithKeyboard();
         } else {
             mFlipCardLayout.requestFocus();
@@ -1814,6 +1884,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
         mScrollingButtons = preferences.getBoolean("scrolling_buttons", false);
         mDoubleScrolling = preferences.getBoolean("double_scrolling", false);
         mPrefShowTopbar = preferences.getBoolean("showTopbar", true);
+        mFocusTypeAnswer = preferences.getBoolean("autoFocusTypeInAnswer", false);
 
         mGesturesEnabled = AnkiDroidApp.initiateGestures(preferences);
         mLinkOverridesTouchGesture = preferences.getBoolean("linkOverridesTouchGesture", false);
@@ -1864,7 +1935,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
             Intent deckPicker = new Intent(this, DeckPicker.class);
             deckPicker.putExtra("collectionLoadError", true); // don't currently do anything with this
             deckPicker.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
-            startActivityWithAnimation(deckPicker, LEFT);
+            startActivityWithAnimation(deckPicker, START);
         }
     }
 
@@ -1977,14 +2048,14 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
         getTheme().resolveAttribute(android.R.attr.textColor, typedValue, true);
         mCardTimer.setTextColor(typedValue.data);
 
-        mCardTimer.setBase(SystemClock.elapsedRealtime());
+        mCardTimer.setBase(getElapsedRealTime());
         mCardTimer.start();
 
         // Stop and highlight the timer if it reaches the time limit.
         getTheme().resolveAttribute(R.attr.maxTimerColor, typedValue, true);
         final int limit = mCurrentCard.timeLimit();
         mCardTimer.setOnChronometerTickListener(chronometer -> {
-            long elapsed = SystemClock.elapsedRealtime() - chronometer.getBase();
+            long elapsed = getElapsedRealTime() - chronometer.getBase();
             if (elapsed >= limit) {
                 chronometer.setTextColor(typedValue.data);
                 chronometer.stop();
@@ -2792,7 +2863,6 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
         return true;
     }
 
-
     protected void performClickWithVisualFeedback(int ease) {
         // Delay could potentially be lower - testing with 20 left a visible "click"
         switch (ease) {
@@ -2814,7 +2884,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
 
     private void performClickWithVisualFeedback(LinearLayout easeLayout) {
         easeLayout.requestFocus();
-        easeLayout.postDelayed(easeLayout::performClick, 20);
+        easeLayout.performClick();
     }
 
 
@@ -2864,7 +2934,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
         if (saveDeck) {
             UIUtils.saveCollectionInBackground();
         }
-        finishWithAnimation(RIGHT);
+        finishWithAnimation(END);
     }
 
 
@@ -3185,7 +3255,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
         String newAnswerContent = answerContent;
         if (answerFormat.contains("{{FrontSide}}")) { // possible audio removal necessary
             String frontSideFormat = mCurrentCard._getQA(false).get("q");
-            Matcher audioReferences = Sound.sSoundPattern.matcher(frontSideFormat);
+            Matcher audioReferences = Sound.SOUND_PATTERN.matcher(frontSideFormat);
             // remove the first instance of audio contained in "{{FrontSide}}"
             while (audioReferences.find()) {
                 newAnswerContent = newAnswerContent.replaceFirst(Pattern.quote(audioReferences.group()), "");
@@ -3611,7 +3681,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
             try {
                 startActivityWithoutAnimation(intent);
             } catch (ActivityNotFoundException e) {
-                e.printStackTrace(); // Don't crash if the intent is not handled
+                Timber.w(e); // Don't crash if the intent is not handled
             }
             return true;
         }
@@ -3794,15 +3864,16 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
         View parentLayout = findViewById(android.R.id.content);
         String snackbarMsg = getString(R.string.api_version_developer_contact, mCardSuppliedDeveloperContact, errorMsg);
 
-        Snackbar snackbar = Snackbar.make(parentLayout, snackbarMsg, Snackbar.LENGTH_LONG);
-        View snackbarView = snackbar.getView();
-        TextView snackTextView = snackbarView.findViewById(com.google.android.material.R.id.snackbar_text);
-        snackTextView.setTextColor(Color.WHITE);
-        snackTextView.setMaxLines(3);
 
-        snackbar.setActionTextColor(Color.MAGENTA)
-                .setAction(getString(R.string.reviewer_invalid_api_version_visit_documentation), view -> openUrl(Uri.parse("https://github.com/ankidroid/Anki-Android/wiki")));
-
+        Snackbar snackbar = UIUtils.showSnackbar(this,
+                snackbarMsg,
+                false,
+                R.string.reviewer_invalid_api_version_visit_documentation,
+                view -> openUrl(Uri.parse("https://github.com/ankidroid/Anki-Android/wiki")),
+                parentLayout,
+                null);
+        TextView snackbarTextView = snackbar.getView().findViewById(com.google.android.material.R.id.snackbar_text);
+        snackbarTextView.setMaxLines(3);
         snackbar.show();
     }
 
@@ -4093,6 +4164,11 @@ see card.js for available functions
 
         @JavascriptInterface
         public boolean ankiIsDisplayingAnswer() { return isDisplayingAnswer(); };
+
+        @JavascriptInterface
+        public String ankiGetDeckName() {
+            return Decks.basename(getCol().getDecks().get(mCurrentCard.getDid()).getString("name"));
+        }
 
         @JavascriptInterface
         public boolean ankiIsActiveNetworkMetered() {

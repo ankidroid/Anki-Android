@@ -17,7 +17,7 @@ package com.wildplot.android.rendering.graphics.wrapper;
 
 import android.annotation.SuppressLint;
 
-@SuppressLint("FieldNamingPatternDetector")
+@SuppressLint("NonPublicNonStaticFieldName")
 public class FontMetricsWrap {
     private final GraphicsWrap g;
 

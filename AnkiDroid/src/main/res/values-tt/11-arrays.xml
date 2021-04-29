@@ -92,7 +92,7 @@
     #7794 - it\'s better to use @string references in non-translated arrays as this handles
     changes in the array ordering better
      -->
-    <string name="gesture_no_action">No action</string>
+    <string name="gesture_no_action">Гамәл юк</string>
     <string name="gesture_answer_1">Answer button 1</string>
     <string name="gesture_answer_2">Answer button 2</string>
     <string name="gesture_answer_3">Answer button 3</string>

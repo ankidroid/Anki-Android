@@ -111,12 +111,12 @@
     <string name="menu_edit_tags">Edit tags</string>
     <string name="delete_note_message">Really delete this note and all its cards?\n%s</string>
     <string name="menu_select">Select text</string>
+    <string name="menu_lookup">Lookup text</string>
     <string name="menu_search">Lookup in %1$s</string>
     <string name="menu_mark_note">Mark note</string>
     <string name="menu_unmark_note">Unmark note</string>
     <string name="menu_toggle_mic_tool_bar">Check pronunciation</string>
     <string name="new_deck">Create deck</string>
-    <string name="create" comment="Button to create a filtered deck">Create</string>
     <string name="new_dynamic_deck">Create filtered deck</string>
     <string name="night_mode">Night mode</string>
     <string name="directory_inaccessible">Apa yang anda perlu lakukan direktori tidak boleh diakses</string>

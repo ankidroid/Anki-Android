@@ -23,7 +23,7 @@ import com.wildplot.android.rendering.interfaces.Function3D;
 import java.util.HashMap;
 import java.util.regex.Pattern;
 
-@SuppressLint("FieldNamingPatternDetector")
+@SuppressLint("NonPublicNonStaticFieldName")
 public class TopLevelParser implements Function2D, Function3D, Cloneable {
     private final HashMap<String, TopLevelParser> parserRegister;
     private final HashMap<String, Double> varMap = new HashMap<>(2); // Number form initVarMap

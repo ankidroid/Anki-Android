@@ -63,14 +63,14 @@
     <string name="show_whiteboard">ଧଳାପଟା ଦେଖାଅ</string>
     <string name="hide_whiteboard">ଧଳାପଟା ଲୁଚାଅ</string>
     <string name="clear_whiteboard">ଧଳାପଟା ସଫା କରନ୍ତୁ</string>
-    <string name="replay_audio">ଅଡିଓ ପୁଣି ଚଲାନ୍ତୁ</string>
+    <string name="replay_audio">ଅଡ଼ିଓ ପୁଣି ଚଲାନ୍ତୁ</string>
     <string name="leech_suspend_notification">ପତ୍ର ଲିଚ ବୋଲି ଚିନ୍ହିତ ହୋଇ ନିଲମ୍ବିତ ହେଇଛି</string>
     <string name="leech_notification">ପତ୍ରକୁ ଲିଚ ବୋଲି ଚିନ୍ହିତ ହେଇଛି</string>
-    <string name="corrupt_font">ଖରାପ ଫୋଣ୍ଟ ଫାଇଲ %s</string>
+    <string name="corrupt_font">ଖରାପ ଫଣ୍ଟ ଫାଇଲ୍ %s</string>
     <string name="webview_crash_unknown">ଅଜଣା ତ୍ରୁଟି</string>
     <string name="webview_crash_unknwon_detailed">ଏହା WebView ରେ ଏକ ଆନ୍ତରିକ ତ୍ରୁଟି ଯୋଗୁଁ ହେଇଛି</string>
     <string name="webview_crash_oom">ମେମୋରୀ ସରିଗଲା</string>
-    <string name="webview_crash_oom_details">WebView ସିଷ୍ଟମ୍ ଦ୍ୱାରା ସମାପ୍ତ ହେଲା। ଏହା ସାଧାରଣତଃ ଘଟେ ଯେତେବେଳେ ଆପ୍ ର ମେମୋରୀ ସରିଯାଏ, ପ୍ରାୟତଃ ବଡ଼ ଫଣ୍ଟ କିମ୍ବା ମିଡିଆ ହେତୁ।</string>
+    <string name="webview_crash_oom_details">WebView ସିଷ୍ଟମ୍ ଦ୍ୱାରା ସମାପ୍ତ ହେଲା। ଏହା ସାଧାରଣତଃ ଘଟେ ଯେତେବେଳେ ଆପ୍ ର ମେମୋରୀ ସରିଯାଏ, ପ୍ରାୟତଃ ବଡ଼ ଫଣ୍ଟ କିମ୍ବା ମିଡ଼ିଆ ହେତୁ।</string>
     <string name="webview_crash_nonfatal">WebView ପ୍ରସ୍ତୁତକର୍ତ୍ତା ଦୁର୍ଘଟଣାଗ୍ରସ୍ତ ହୋଇଛି। କାରଣ: %s</string>
     <string name="webview_crash_fatal">ସାଂଘାତିକ ତ୍ରୁଟି: WebView ପ୍ରସ୍ତୁତକର୍ତ୍ତା ଦୁର୍ଘଟଣାଗ୍ରସ୍ତ ହୋଇଛି। କାରଣ: %s</string>
     <string name="webview_crash_loop_dialog_title">ସିଷ୍ଟମର WebView ପ୍ରସ୍ତୁତକର୍ତ୍ତାରେ ବିଫଳତା</string>
@@ -100,7 +100,7 @@
     <string name="custom_study_increase_new_limit">ଆଜିର ନୂଆ ପତ୍ରସଂଖ୍ୟା ସୀମା ସଂଶୋଧନ</string>
     <string name="custom_study_increase_review_limit">ଆଜିର ସମୀକ୍ଷା ପତ୍ରସଂଖ୍ୟା ସୀମା ସଂଶୋଧନ</string>
     <string name="custom_study_review_forgotten">ଭୁଲିଯାଇଥିବା ପତ୍ରର ସମୀକ୍ଷା</string>
-    <string name="custom_study_review_ahead">ଆଗକୁ ସମୀକ୍ଷା</string>
+    <string name="custom_study_review_ahead">ପୂର୍ବରୁ ସମୀକ୍ଷା କରନ୍ତୁ</string>
     <string name="custom_study_random_selection">ପତ୍ରଗୁଡ଼ିକଙ୍କର ଏକ ଅନିୟମିତ ଚୟନ ପଢ଼ନ୍ତୁ</string>
     <string name="custom_study_preview_new">ନୂଆ ପତ୍ରଙ୍କର ପୂର୍ବାବଲୋକନ</string>
     <string name="custom_study_limit_tags">ନିର୍ଦ୍ଧିଷ୍ଟ ଟ୍ୟାଗରେ ସୀମିତ ରଖ</string>
@@ -109,10 +109,10 @@
     <string name="discard_unsaved_changes">ବନ୍ଦ କରି ଏବେର ଇନପୁଟ୍ ହରାନ୍ତୁ?</string>
     <string name="note_editor_no_cards_created">କୌଣସି କାର୍ଡ ସୃଷ୍ଟି ହୋଇନାହିଁ। ଦୟାକରି ଅଧିକ କ୍ଷେତ୍ର ପୂରଣ କରନ୍ତୁ</string>
     <string name="note_editor_no_first_field">ପ୍ରଥମ କ୍ଷେତ୍ର ଖାଲି ଅଛି</string>
-    <string name="note_editor_no_cloze_delations">ଏହି ନୋଟ ପ୍ରକାରରେ କ୍ଲୋଜ ଡିଲିଶନ ରହିବା ନିହାତି ଆବଶ୍ୟକ</string>
+    <string name="note_editor_no_cloze_delations">ଏହି ନୋଟ ପ୍ରକାରରେ କ୍ଲୋଜ ବିଲୋପ ରହିବା ନିହାତି ଆବଶ୍ୟକ</string>
     <string name="note_editor_set_field_language">ଭାଷା ନିର୍ଧାରଣ</string>
     <string name="note_editor_no_cards_created_all_fields">ଏହି ନୋଟ୍ ପ୍ରକାର କୌଣସି ପତ୍ର ଉତ୍ପାଦନ କରି ନାହିଁ। \nଦୟାକରି ଅନ୍ୟ ଏକ ନୋଟ୍ ପ୍ରକାର ବାଛନ୍ତୁ/‘ପତ୍ର’ କ୍ଲିକ୍ କରନ୍ତୁ ଏବଂ ଏକ କ୍ଷେତ୍ର ପ୍ରତିସ୍ଥାପନ ଯୋଡ଼ନ୍ତୁ।</string>
-    <string name="note_editor_insert_cloze_no_cloze_note_type">କ୍ଲୋଜ ଡୀଲିଶନ କେବଳ କ୍ଲୋଜ ନୋଟ ପ୍ରକାରରେ ହିଁ କାମ କରେ</string>
+    <string name="note_editor_insert_cloze_no_cloze_note_type">କ୍ଲୋଜ ବିଲୋପ କେବଳ କ୍ଲୋଜ ନୋଟ ପ୍ରକାରରେ ହିଁ କାମ କରେ</string>
     <string name="saving_facts">ନୋଟ୍ ସଂରକ୍ଷିତ କରାଯାଉଛି </string>
     <string name="saving_model">ନୋଟ୍ ପ୍ରକାର ସଂରକ୍ଷିତ ହଉଛି </string>
     <string name="save">ସଞ୍ଚୟ</string>
@@ -122,6 +122,7 @@
     <string name="reordering_cards">ପତ୍ର ପୁନଃବ୍ୟବସ୍ଥିତ ହଉଛି </string>
     <string name="field_remapping">%1$s (“%2$s” ରୁ)</string>
     <string name="confirm_map_cards_to_nothing">ବିନା କୌଣସି ଜିନିଷକୁ ମ୍ୟାପ୍ ହୋଇଥିବା ପତ୍ର ବିଲୋପ ହେଇଯିବ। ଯଦି କୌଣସି ନୋଟ୍ ର ଅବଶିଷ୍ଟ ପତ୍ର ନାହିଁ, ତେବେ ଏହା ନଷ୍ଟ ହୋଇଯିବ। ଆପଣ ଜାରି ରଖିବାକୁ ଚାହୁଁଛନ୍ତି କି?</string>
+    <string name="timebox_reached_title">ସମୟବାକ୍ସ ପହଞ୍ଚିଛି</string>
     <plurals name="timebox_reached">
         <item quantity="one">%1$d ପତ୍ର  %2$s ସମୟରେ ଅଧ୍ୟୟନ କଲେ</item>
         <item quantity="other">%1$d ଟି ପତ୍ର  %2$s ସମୟରେ ଅଧ୍ୟୟନ କଲେ</item>
@@ -156,7 +157,7 @@
     <string name="import_title">ଆମଦାନୀ ହଉଛି</string>
     <string name="import_select_title">ଆମଦାନୀ କରିବା ପାଇଁ ଫାଇଲ୍ ବାଛନ୍ତୁ</string>
     <string name="import_message_add" comment="Adding a new deck to the collection (import)">ଯୋଡ଼ନ୍ତୁ</string>
-    <string name="import_message_replace_confirm">ଏହା ଆପଣଙ୍କର ବିଦ୍ୟମାନ ସଂଗ୍ରହକୁ ବିଲୋପ କରିବ ଏବଂ ଏହାକୁ %s ଫାଇଲ୍ ତଥ୍ୟ ସହିତ ବଦଳାଇବ </string>
+    <string name="import_message_replace_confirm">ଏହା ଆପଣଙ୍କର ବିଦ୍ୟମାନ ସଂଗ୍ରହକୁ ବିଲୋପ କରିବ ଏବଂ ଏହାକୁ %s ଫାଇଲ୍ ତଥ୍ୟ ସହିତ ବିସ୍ଥାପନ ହେବ</string>
     <string name="import_message_add_confirm">%s କୁ ସଂଗ୍ରହରେ ଯୋଡ଼ନ୍ତୁ? ଏହା ବହୁତ ସମୟ ନେଇପାରେ</string>
     <string name="import_log_no_apkg">ଏହା ଏକ ବୈଧ Anki package ଫାଇଲ୍ ନୁହେଁ</string>
     <string name="import_log_failed_unzip">apkg: %s କୁ unzip କରିବାରେ ବିଫଳ</string>
@@ -169,14 +170,14 @@
     <string name="import_error_corrupt_zip">apkg ଫାଇଲଟି ତ୍ରୁଟିଗ୍ରସ୍ତ ଅଟେ। ଦୟାକରି ଏହାକୁ ବିଲୋପ କରନ୍ତୁ ଏବଂ ପୁନଃ ଡାଉନଲୋଡ୍ କରନ୍ତୁ।\n\nମୂଳ କାରଣ: %s</string>
     <string name="import_error_exception">ପ୍ୟାକେଜ୍ ଆମଦାନି କରିବାରେ ବିଫଳ |\n\n%s</string>
     <string name="import_error_not_apkg_extension">ଫାଇଲ୍ ନାମ “%s” ପାଖରେ .apkg କିମ୍ବା .colpkg extension ନାହିଁ</string>
-    <string name="import_error_load_imported_database">Anki ଡାଟାବେସ୍ (.anki2) ସ୍ଥାନାନ୍ତରଗୁଡ଼ିକ ଏପର୍ଯ୍ୟନ୍ତ ସମର୍ଥିତ ନୁହେଁ। ବଦଳ ନିର୍ଦ୍ଦେଶାବଳୀ ପାଇଁ ଦୟାକରି ମାନୁଆଲ୍ ଦେଖନ୍ତୁ।</string>
+    <string name="import_error_load_imported_database">Anki ଡାଟାବେସ୍ (.anki2) ପ୍ରତିସ୍ଥାପନ ଗୁଡ଼ିକ ଏପର୍ଯ୍ୟନ୍ତ ସମର୍ଥିତ ନୁହେଁ। ପ୍ରତିସ୍ଥାପନ ନିର୍ଦ୍ଦେଶାବଳୀ ପାଇଁ ଦୟାକରି ମାନୁଆଲ୍ ଦେଖନ୍ତୁ।</string>
     <string name="import_error_content_provider">ମନୋନୀତ ଫାଇଲ୍ AnkiDroid ଦ୍ୱାରା ସ୍ୱୟଂଚାଳିତ ଭାବରେ ଆମଦାନୀ ହୋଇପାରିବ ନାହିଁ। Anki ଫାଇଲଗୁଡ଼ିକୁ କିପରି ମାନୁଆଲ ଆମଦାନୀ କରିବେ ଦୟାକରି ଉପଭୋକ୍ତା ମାନୁଆଲ୍ ଦେଖନ୍ତୁ: \n%s</string>
     <string name="import_error_copy_file_to_cache">copyFileToCache () ବିଫଳ ହେଲା (ସମ୍ଭବତ ଆଉ ଷ୍ଟୋରେଜ୍ ନାହିଁ)</string>
     <string name="import_error_unhandled_scheme">\"%s\" ରୁ ଅନିୟନ୍ତ୍ରିତ ଆମଦାନୀ</string>
     <string name="import_replacing">ସଂଗ୍ରହକୁ ବଦଳାଉଛି&#8230;</string>
     <string name="import_interrupted">ଆମଦାନୀ ବାଧାପ୍ରାପ୍ତ: AnkiDroid ବନ୍ଦ ହୋଇଗଲା |</string>
     <string name="export_include_schedule">କାର୍ଯ୍ୟସୂଚୀ ଅନ୍ତର୍ଭୂକ୍ତ କରନ୍ତୁ</string>
-    <string name="export_include_media">ମିଡିଆ ଅନ୍ତର୍ଭୂକ୍ତ କରନ୍ତୁ</string>
+    <string name="export_include_media">ମିଡ଼ିଆ ଅନ୍ତର୍ଭୂକ୍ତ କରନ୍ତୁ</string>
     <string name="confirm_apkg_export">ସଂଗ୍ରହକୁ Anki package ଭାବରେ ରପ୍ତାନି କରିବେ କି?</string>
     <string name="confirm_apkg_export_deck">“%s” କୁ apkg ଫାଇଲ ଭାବରେ ରପ୍ତାନି କରିବେ କି?</string>
     <string name="export_in_progress">Anki ପ୍ୟାକେଜ୍ ଫାଇଲ୍ ରପ୍ତାନି କରୁଛି&#8230;</string>
@@ -312,7 +313,7 @@
     <string name="about_ankidroid_error_copy_debug_info">କ୍ଲିପବୋର୍ଡରେ ଡିବଗ୍ ସୂଚନା କପି କରିବାରେ ତ୍ରୁଟି</string>
     <!-- Card Viewer -->
     <string name="card_viewer_could_not_find_image">କାର୍ଡ ବିଷୟବସ୍ତୁ ତ୍ରୁଟି: ‘%s ଲୋଡ୍ କରିବାରେ ବିଫଳ ହେଲା</string>
-    <string name="card_viewer_media_relative_protocol">କାର୍ଡ ବିଷୟବସ୍ତୁ ତ୍ରୁଟି: ମିଡିଆ ଅଦ୍ୟତନ ଆବଶ୍ୟକ</string>
+    <string name="card_viewer_media_relative_protocol">କାର୍ଡ ବିଷୟବସ୍ତୁ ତ୍ରୁଟି: ମିଡ଼ିଆ ଅଦ୍ୟତନ ଆବଶ୍ୟକ</string>
     <string name="cannot_load_http_resource">http ଉତ୍ସଗୁଡ଼ିକୁ ଧାରଣ କରିବା ଆଉ ସମର୍ଥିତ ନୁହେଁ</string>
     <!-- Deck Picker -->
     <string name="deck_picker_failed_deck_load">ଡେକ୍ ‘%s’ ଲୋଡ୍ ହବାରେ ବିଫଳ ହେଲା</string>
@@ -320,16 +321,16 @@
     <string name="ankidroid_init_failed_webview_title">ସାଂଘାତିକ ତ୍ରୁଟି</string>
     <string name="ankidroid_init_failed_webview">AnkiDroid ସିଷ୍ଟମ୍ ୱେବ୍ ଭିୟୁ ଉପରେ ନିର୍ଭର କରେ ଯାହାକି ଉପଲବ୍ଧ ନାହିଁ। ଯଦି ସିଷ୍ଟମ୍ ଅପଡେଟ୍ ସଂସ୍ଥାପନ କରୁଛି ତେବେ ଏହା ହୋଇପାରେ। ଦୟାକରି କିଛି ମିନିଟରେ ପୁନର୍ବାର ଚେଷ୍ଟା କରନ୍ତୁ।\n\n%s</string>
     <!-- A Menu item to change the Font Size (currently in the Note Editor) -->
-    <string name="menu_font_size">ଅକ୍ଷର ଆକାର</string>
+    <string name="menu_font_size">ଫଣ୍ଟ ଆକାର</string>
     <string name="menu_show_toolbar" comment="Checkable item stating whether the note editor toolbar should be shown">ଟୁଲ୍ ବାର୍ ଦର୍ଶାନ୍ତୁ</string>
     <string name="format_insert_bold">ଅକ୍ଷରକୁ ଗାଢ଼ କରନ୍ତୁ</string>
     <string name="format_insert_italic">ଇଟାଲିକ୍ ଭାବରେ ଫର୍ମାଟ୍ କରନ୍ତୁ</string>
     <string name="format_insert_underline">ଲେଖା ତଳେ ଗାର ଦିଅନ୍ତୁ</string>
     <string name="insert_horizontal_line">ଭୂସମାନ୍ତର ଗାର ସନ୍ନିବେଶ କରନ୍ତୁ</string>
     <string name="insert_heading">ଶୀର୍ଷଲେଖ ସନ୍ନିବେଶ କରନ୍ତୁ</string>
-    <string name="format_font_size">ଅକ୍ଷର ଆକାର ପରିବର୍ତ୍ତନ କରନ୍ତୁ</string>
+    <string name="format_font_size">ଫଣ୍ଟ ଆକାର ପରିବର୍ତ୍ତନ କରନ୍ତୁ</string>
     <string name="insert_mathjax">MathJax ସମୀକରଣ ସନ୍ନିବେଶ କରନ୍ତୁ</string>
-    <string name="insert_cloze">କ୍ଲୋଜ୍ ଡିଲିଶନ ସନ୍ନିବେଶ କରନ୍ତୁ</string>
+    <string name="insert_cloze">କ୍ଲୋଜ୍ ବିଲୋପ ସନ୍ନିବେଶ କରନ୍ତୁ</string>
     <string name="before_text">ଚୟନ ପୂର୍ବର HTML</string>
     <string name="after_text">ଚୟନ ପରେ HTML</string>
     <string name="add_toolbar_item">ଟୁଲ୍ ବାର୍ ଆଇଟମ୍ ସୃଷ୍ଟି କରନ୍ତୁ</string>
@@ -346,6 +347,6 @@
     <string name="minus_sign" comment="Label for decrement button in IncrementerNumberRangePreference">-</string>
     <!-- Used for credential empty warning message -->
     <string name="email_id_empty">ଇମେଲ୍ ଠିକଣା ଆବଶ୍ୟକ</string>
-    <string name="password_empty">ପାସୱାର୍ଡ ଆବଶ୍ୟକ</string>
-    <string name="back_pressed_once">Press back again to exit</string>
+    <string name="password_empty">ପାସ୍ଓ୍ୱାର୍ଡ଼ ଆବଶ୍ୟକ</string>
+    <string name="back_pressed_once">ପ୍ରସ୍ଥାନ କରିବା ପାଇଁ ପୁନର୍ବାର ଦବାନ୍ତୁ</string>
 </resources>

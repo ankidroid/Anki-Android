@@ -50,7 +50,7 @@
     <string name="login_create_account_message">You must log in to a third party account to use the cloud sync service. You can create one in the next step.</string>
     <!-- MyAccount.java -->
     <string name="username">Email address</string>
-    <string name="password">Password</string>
+    <string name="password">Парол</string>
     <string name="log_in">Керү</string>
     <string name="sign_up_description">Don’t have an AnkiWeb account? It’s free!</string>
     <string name="sign_up_not_affiliated">Note: AnkiWeb is not affiliated with AnkiDroid</string>
@@ -62,7 +62,7 @@
     <string name="reset_password">Reset password</string>
     <!-- AndroidManifest.xml -->
     <string name="preferences_title">Preferences</string>
-    <string name="deckpreferences_title">Options for XXX</string>
+    <string name="deckpreferences_title">XXX көйләүләрдә</string>
     <string name="sync_conflict_message">You must either upload this collection or download it from Ankiweb, as they can’t be merged. The collection on one side will be overwritten.</string>
     <string name="sync_conflict_local">Upload</string>
     <string name="sync_conflict_remote">Йөкләп алу</string>

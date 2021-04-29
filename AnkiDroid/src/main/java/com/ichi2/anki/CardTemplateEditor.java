@@ -23,6 +23,8 @@ import android.content.Intent;
 import android.content.res.Resources;
 import android.os.Bundle;
 
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.CheckResult;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -53,7 +55,6 @@ import com.ichi2.anki.dialogs.DiscardChangesDialog;
 import com.ichi2.anki.exception.ConfirmModSchemaException;
 import com.ichi2.async.TaskListenerWithContext;
 import com.ichi2.libanki.Collection;
-import com.ichi2.libanki.Consts;
 import com.ichi2.libanki.Deck;
 import com.ichi2.libanki.Decks;
 import com.ichi2.libanki.Model;
@@ -213,7 +214,7 @@ public class CardTemplateEditor extends AnkiActivity implements DeckSelectionDia
                     // Clear the edited model from any cache files, and clear it from this objects memory to discard changes
                     TemporaryModel.clearTempModelFiles();
                     mTempModel = null;
-                    finishWithAnimation(RIGHT);
+                    finishWithAnimation(END);
                 })
                 .build();
         discardDialog.show();
@@ -296,7 +297,7 @@ public class CardTemplateEditor extends AnkiActivity implements DeckSelectionDia
      */
     public class TemplatePagerAdapter extends FragmentStateAdapter {
 
-        private long baseId = 0;
+        private long mBaseId = 0;
 
         public TemplatePagerAdapter(@NonNull FragmentActivity fragmentActivity) {
             super(fragmentActivity);
@@ -321,18 +322,18 @@ public class CardTemplateEditor extends AnkiActivity implements DeckSelectionDia
 
         @Override
         public long getItemId(int position) {
-            return baseId + position;
+            return mBaseId + position;
         }
 
 
         @Override
         public boolean containsItem(long id) {
-            return (id - baseId < getItemCount() && id - baseId >= 0);
+            return (id - mBaseId < getItemCount() && id - mBaseId >= 0);
         }
 
         /** Force fragments to reinitialize contents by invalidating previous set of ordinal-based ids */
         public void ordinalShift() {
-            baseId += getItemCount() + 1;
+            mBaseId += getItemCount() + 1;
         }
     }
 
@@ -507,7 +508,7 @@ public class CardTemplateEditor extends AnkiActivity implements DeckSelectionDia
                     tempModel.saveToDatabase(saveModelAndExitHandler());
                 } else {
                     Timber.d("CardTemplateEditor:: model has not changed, exiting");
-                    mTemplateEditor.finishWithAnimation(RIGHT);
+                    mTemplateEditor.finishWithAnimation(END);
                 }
 
                 return true;
@@ -521,7 +522,6 @@ public class CardTemplateEditor extends AnkiActivity implements DeckSelectionDia
         }
 
 
-        @SuppressWarnings("deprecation") // Tracked as https://github.com/ankidroid/Anki-Android/issues/8293
         private void performPreview() {
             Collection col = mTemplateEditor.getCol();
             TemporaryModel tempModel = mTemplateEditor.getTempModel();
@@ -542,7 +542,7 @@ public class CardTemplateEditor extends AnkiActivity implements DeckSelectionDia
             // Save the model and pass the filename if updated
             tempModel.setEditedModelFileName(TemporaryModel.saveTempModel(mTemplateEditor, tempModel.getModel()));
             i.putExtra(TemporaryModel.INTENT_MODEL_FILENAME, tempModel.getEditedModelFileName());
-            startActivityForResult(i, REQUEST_PREVIEWER);
+            mOnRequestPreviewResult.launch(i);
         }
 
 
@@ -576,7 +576,6 @@ public class CardTemplateEditor extends AnkiActivity implements DeckSelectionDia
         }
 
 
-        @SuppressWarnings("deprecation") // Tracked as https://github.com/ankidroid/Anki-Android/issues/8293
         private void launchCardBrowserAppearance(JSONObject currentTemplate) {
             Context context = AnkiDroidApp.getInstance().getBaseContext();
             if (context == null) {
@@ -585,7 +584,7 @@ public class CardTemplateEditor extends AnkiActivity implements DeckSelectionDia
                 return;
             }
             Intent browserAppearanceIntent = CardTemplateBrowserAppearanceEditor.getIntentFromTemplate(context, currentTemplate);
-            startActivityForResult(browserAppearanceIntent, REQUEST_CARD_BROWSER_APPEARANCE);
+            mOnCardBrowserAppearanceActivityResult.launch(browserAppearanceIntent);
         }
 
 
@@ -628,31 +627,24 @@ public class CardTemplateEditor extends AnkiActivity implements DeckSelectionDia
             return false;
         }
 
-
-        @SuppressWarnings("deprecation") // Tracked as https://github.com/ankidroid/Anki-Android/issues/8293
-        @Override
-        public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
-            super.onActivityResult(requestCode, resultCode, data);
-            if (requestCode == REQUEST_CARD_BROWSER_APPEARANCE) {
-                onCardBrowserAppearanceResult(resultCode, data);
+        ActivityResultLauncher<Intent> mOnCardBrowserAppearanceActivityResult = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(), result -> {
+            if (result.getResultCode() != RESULT_OK) {
                 return;
             }
+            onCardBrowserAppearanceResult(result.getData());
+        });
 
-            if (requestCode == REQUEST_PREVIEWER) {
+        ActivityResultLauncher<Intent> mOnRequestPreviewResult = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(), result ->  {
+                if (result.getResultCode() != RESULT_OK) {
+                    return;
+                }
                 TemporaryModel.clearTempModelFiles();
                 // Make sure the fragments reinitialize, otherwise there is staleness on return
                 ((TemplatePagerAdapter)mTemplateEditor.mViewPager.getAdapter()).ordinalShift();
                 mTemplateEditor.mViewPager.getAdapter().notifyDataSetChanged();
-            }
-        }
+        });
 
-
-        private void onCardBrowserAppearanceResult(int resultCode, @Nullable Intent data) {
-            if (resultCode != RESULT_OK) {
-                Timber.i("Activity Cancelled: Card Template Browser Appearance");
-                return;
-            }
-
+        private void onCardBrowserAppearanceResult(@Nullable Intent data) {
             CardTemplateBrowserAppearanceEditor.Result result = CardTemplateBrowserAppearanceEditor.Result.fromIntent(data);
             if (result == null) {
                 Timber.w("Error processing Card Template Browser Appearance result");
@@ -694,7 +686,7 @@ public class CardTemplateEditor extends AnkiActivity implements DeckSelectionDia
                 }
                 templateFragment.mTemplateEditor.mTempModel = null;
                 if (result.first) {
-                    templateFragment.mTemplateEditor.finishWithAnimation(RIGHT);
+                    templateFragment.mTemplateEditor.finishWithAnimation(END);
                 } else {
                     Timber.w("CardTemplateFragment:: save model task failed: %s", result.second);
                     UIUtils.showThemedToast(templateFragment.mTemplateEditor, templateFragment.getString(R.string.card_template_editor_save_error, result.second), false);

@@ -92,8 +92,8 @@ public class Storage {
                 throw new RuntimeException("This file requires a newer version of Anki.");
             } else if (create) {
                 // add in reverse order so basic is default
-                for (int i = StdModels.stdModels.length-1; i>=0; i--) {
-                    StdModels.stdModels[i].add(col);
+                for (int i = StdModels.STD_MODELS.length-1; i>=0; i--) {
+                    StdModels.STD_MODELS[i].add(col);
                 }
                 col.save();
             }
@@ -179,7 +179,7 @@ public class Storage {
             if (ver < 6) {
                 col.modSchemaNoCheck();
                 for (Model m : col.getModels().all()) {
-                    m.put("css", new JSONObject(Models.defaultModel).getString("css"));
+                    m.put("css", new JSONObject(Models.DEFAULT_MODEL).getString("css"));
                     JSONArray ar = m.getJSONArray("tmpls");
                     for (JSONObject t: ar.jsonObjectIterable()) {
                         if (!t.has("css")) {
@@ -355,19 +355,19 @@ public class Storage {
 
 
     private static void _setColVars(DB db, @NonNull Time time) {
-        JSONObject g = new JSONObject(Decks.defaultDeck);
+        JSONObject g = new JSONObject(Decks.DEFAULT_DECK);
         g.put("id", 1);
         g.put("name", "Default");
         g.put("conf", 1);
         g.put("mod", time.intTime());
-        JSONObject gc = new JSONObject(Decks.defaultConf);
+        JSONObject gc = new JSONObject(Decks.DEFAULT_CONF);
         gc.put("id", 1);
         JSONObject ag = new JSONObject();
         ag.put("1", g);
         JSONObject agc = new JSONObject();
         agc.put("1", gc);
         ContentValues values = new ContentValues();
-        values.put("conf", Collection.defaultConf);
+        values.put("conf", Collection.DEFAULT_CONF);
         values.put("decks", Utils.jsonToString(ag));
         values.put("dconf", Utils.jsonToString(agc));
         db.update("col", values);

@@ -3,11 +3,6 @@ package com.ichi2.anki.dialogs;
 import android.annotation.SuppressLint;
 import android.app.Dialog;
 import android.os.Bundle;
-import androidx.annotation.NonNull;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-import androidx.appcompat.widget.SearchView;
-import androidx.appcompat.widget.Toolbar;
 import android.text.InputFilter;
 import android.text.InputType;
 import android.text.TextUtils;
@@ -28,16 +23,210 @@ import com.ichi2.anki.R;
 import com.ichi2.anki.UIUtils;
 import com.ichi2.anki.analytics.AnalyticsDialogFragment;
 import com.ichi2.utils.FilterResultsUtils;
+import com.ichi2.utils.UniqueArrayList;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Locale;
 import java.util.TreeSet;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.appcompat.widget.SearchView;
+import androidx.appcompat.widget.Toolbar;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
 public class TagsDialog extends AnalyticsDialogFragment {
     public interface TagsDialogListener {
         void onSelectedTags(List<String> selectedTags, int option);
+    }
+
+
+    /**
+     * A container class that keeps track of tags and their status, handling of tags are done in a case insensitive matter
+     * For example adding tags with different letter casing (eg. TAG, tag, Tag) will only add the first one.
+     *
+     * {@link TagsList} provides an iterator over all tags
+     */
+    public static class TagsList implements Iterable<String> {
+        /**
+         * A Set containing the currently selected tags
+         */
+        private final @NonNull TreeSet<String> mCurrentTags;
+        /**
+         * List of all available tags
+         */
+        private final @NonNull List<String> mAllTags;
+
+
+        /**
+         * Construct a new {@link TagsList}
+         *
+         * @param allTags A list of all available tags
+         *                any duplicates will be ignored
+         * @param currentTags a list containing the currently selected tags
+         *                    any duplicates will be ignored
+         */
+        public TagsList(@NonNull List<String> allTags, @NonNull List<String> currentTags) {
+            mCurrentTags = new TreeSet<>(String.CASE_INSENSITIVE_ORDER);
+            mCurrentTags.addAll(currentTags);
+            mAllTags = UniqueArrayList.from(allTags, String.CASE_INSENSITIVE_ORDER);
+            mAllTags.addAll(mCurrentTags);
+        }
+
+
+        /**
+         * Return true if a tag is checked given its index in the list
+         *
+         * @param index index of the tag to check
+         * @return whether the tag is checked or not
+         * @throws IndexOutOfBoundsException if the index is out of range
+         *                                   (<tt>index &lt; 0 || index &gt;= size()</tt>)
+         */
+        public boolean isChecked(int index) {
+            return isChecked(mAllTags.get(index));
+        }
+
+
+        /**
+         * Return true if a tag is checked
+         *
+         * @param tag the tag to check (case-insensitive)
+         * @return whether the tag is checked or not
+         */
+        public boolean isChecked(String tag) {
+            return mCurrentTags.contains(tag);
+        }
+
+
+        /**
+         * Adds a tag to the list if it is not already present.
+         *
+         * @param tag  the tag to add
+         * @return true if tag was added (new tag)
+         */
+        public boolean add(String tag) {
+            return mAllTags.add(tag);
+        }
+
+
+        /**
+         * Mark a tag as checked tag
+         *
+         * @param tag the tag to be checked (case-insensitive)
+         * @return true if the tag changed its check status
+         *         false if the tag was already checked or not in the list
+         */
+        public boolean check(String tag) {
+            if (!mAllTags.contains(tag)) {
+                return false;
+            }
+            return mCurrentTags.add(tag);
+        }
+
+        /**
+         * Mark a tag as unchecked tag
+         *
+         * @param tag the tag to be checked (case-insensitive)
+         * @return true if the tag changed its check status
+         *         false if the tag was already unchecked or not in the list
+         */
+        public boolean uncheck(String tag) {
+            return mCurrentTags.remove(tag);
+        }
+
+
+        /**
+         * Toggle the status of all tags,
+         * if all tags are checked, then uncheck them
+         * otherwise check all tags
+         *
+         * @return true if this tag list changed as a result of the call
+         */
+        public boolean toggleAllCheckedStatuses() {
+            if (mAllTags.size() == mCurrentTags.size()) {
+                mCurrentTags.clear();
+                return true;
+            }
+            return mCurrentTags.addAll(mAllTags);
+        }
+
+
+        /**
+         * @return Number of tags in the list
+         */
+        public int size() {
+            return mAllTags.size();
+        }
+
+
+        /**
+         * Returns the tag at the specified position in this list.
+         *
+         * @param index index of the tag to return
+         * @return the tag at the specified position in this list
+         * @throws IndexOutOfBoundsException if the index is out of range
+         *                                   (<tt>index &lt; 0 || index &gt;= size()</tt>)
+         */
+        @NonNull
+        public String get(int index) {
+            return mAllTags.get(index);
+        }
+
+
+        /**
+         * @return true if there is no tags in the list
+         */
+        public boolean isEmpty() {
+            return mAllTags.isEmpty();
+        }
+
+
+        /**
+         * @return return a copy of checked tags
+         */
+        public List<String> getCheckedTagList() {
+            return new ArrayList<>(mCurrentTags);
+        }
+
+
+        /**
+         * @return return a copy of all tags list
+         */
+        public List<String> getAllTagList() {
+            return new ArrayList<>(mAllTags);
+        }
+
+
+        /**
+         * Sort the tag list alphabetically ignoring the case, with priority for checked tags
+         */
+        public void sort() {
+            Collections.sort(mAllTags, (lhs, rhs) -> {
+                boolean lhsChecked = isChecked(lhs);
+                boolean rhsChecked = isChecked(rhs);
+
+                if (lhsChecked != rhsChecked) {
+                    // checked tags must appear first
+                    return lhsChecked ? -1 : 1;
+                } else {
+                    return lhs.compareToIgnoreCase(rhs);
+                }
+            });
+        }
+
+
+        /**
+         * @return Iterator over all tags
+         */
+        @NonNull
+        @Override
+        public Iterator<String> iterator() {
+            return mAllTags.iterator();
+        }
     }
 
 
@@ -65,8 +254,7 @@ public class TagsDialog extends AnalyticsDialogFragment {
     private static final String ALL_TAGS_KEY = "all_tags";
 
     private DialogType mType;
-    private TreeSet<String> mCurrentTags;
-    private List<String> mAllTags;
+    private TagsList mTags;
 
     private String mPositiveText;
     private String mDialogTitle;
@@ -110,16 +298,10 @@ public class TagsDialog extends AnalyticsDialogFragment {
 
         mType = DialogType.values()[requireArguments().getInt(DIALOG_TYPE_KEY)];
 
-        mCurrentTags = new TreeSet<>(String.CASE_INSENSITIVE_ORDER);
-        mCurrentTags.addAll(requireArguments().getStringArrayList(CHECKED_TAGS_KEY));
 
-        mAllTags = requireArguments().getStringArrayList(ALL_TAGS_KEY);
-
-        for (String tag : mCurrentTags) {
-            if (!mAllTags.contains(tag)) {
-                mAllTags.add(tag);
-            }
-        }
+        mTags = new TagsList(
+                    requireArguments().getStringArrayList(ALL_TAGS_KEY),
+                    requireArguments().getStringArrayList(CHECKED_TAGS_KEY));
 
         setCancelable(true);
     }
@@ -132,16 +314,15 @@ public class TagsDialog extends AnalyticsDialogFragment {
         View tagsDialogView = LayoutInflater.from(getActivity()).inflate(R.layout.tags_dialog, null, false);
         mTagsListRecyclerView = tagsDialogView.findViewById(R.id.tags_dialog_tags_list);
         mTagsListRecyclerView.requestFocus();
-        mTagsListRecyclerView.setHasFixedSize(true);
 
         RecyclerView.LayoutManager tagsListLayout = new LinearLayoutManager(getActivity());
         mTagsListRecyclerView.setLayoutManager(tagsListLayout);
 
-        mTagsArrayAdapter = new TagsArrayAdapter();
+        mTagsArrayAdapter = new TagsArrayAdapter(mTags);
         mTagsListRecyclerView.setAdapter(mTagsArrayAdapter);
 
         mNoTagsTextView = tagsDialogView.findViewById(R.id.tags_dialog_no_tags_textview);
-        if (mAllTags.isEmpty()) {
+        if (mTags.isEmpty()) {
             mNoTagsTextView.setVisibility(View.VISIBLE);
         }
         RadioGroup mOptionsGroup = tagsDialogView.findViewById(R.id.tags_dialog_options_radiogroup);
@@ -169,7 +350,7 @@ public class TagsDialog extends AnalyticsDialogFragment {
                 .negativeText(R.string.dialog_cancel)
                 .customView(tagsDialogView, false)
                 .onPositive((dialog, which) -> ((TagsDialogListener)requireActivity())
-                        .onSelectedTags(new ArrayList<>(mCurrentTags), mSelectedOption));
+                        .onSelectedTags(mTags.getCheckedTagList(), mSelectedOption));
         mDialog = builder.build();
 
         mDialog.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE);
@@ -236,20 +417,8 @@ public class TagsDialog extends AnalyticsDialogFragment {
 
         MenuItem checkAllItem = mToolbar.getMenu().findItem(R.id.tags_dialog_action_select_all);
         checkAllItem.setOnMenuItemClickListener(menuItem -> {
-            boolean changed = false;
-            if (mCurrentTags.containsAll(mTagsArrayAdapter.mTagsList)) {
-                mCurrentTags.removeAll(mTagsArrayAdapter.mTagsList);
-                changed = true;
-            } else {
-                for (String tag : mTagsArrayAdapter.mTagsList) {
-                    if (!mCurrentTags.contains(tag)) {
-                        mCurrentTags.add(tag);
-                        changed = true;
-                    }
-                }
-            }
-
-            if (changed) {
+            final boolean didChange = mTags.toggleAllCheckedStatuses();
+            if (didChange) {
                 mTagsArrayAdapter.notifyDataSetChanged();
             }
             return true;
@@ -278,18 +447,17 @@ public class TagsDialog extends AnalyticsDialogFragment {
     public void addTag(String tag) {
         if (!TextUtils.isEmpty(tag)) {
             String feedbackText;
-            if (!mAllTags.contains(tag)) {
-                mAllTags.add(tag);
+            if (mTags.add(tag)) {
                 if (mNoTagsTextView.getVisibility() == View.VISIBLE) {
                     mNoTagsTextView.setVisibility(View.GONE);
                 }
-                mTagsArrayAdapter.mTagsList.add(tag);
+                mTags.add(tag);
                 mTagsArrayAdapter.sortData();
                 feedbackText = getString(R.string.tag_editor_add_feedback, tag, mPositiveText);
             } else {
                 feedbackText = getString(R.string.tag_editor_add_feedback_existing, tag);
             }
-            mCurrentTags.add(tag);
+            mTags.check(tag);
             mTagsArrayAdapter.notifyDataSetChanged();
             // Show a snackbar to let the user know the tag was added successfully
             UIUtils.showSnackbar(getActivity(), feedbackText, false, -1, null,
@@ -297,8 +465,8 @@ public class TagsDialog extends AnalyticsDialogFragment {
         }
     }
 
-    public class TagsArrayAdapter extends  RecyclerView.Adapter<TagsArrayAdapter.ViewHolder> implements Filterable{
-        public class ViewHolder extends RecyclerView.ViewHolder {
+    public static class TagsArrayAdapter extends  RecyclerView.Adapter<TagsArrayAdapter.ViewHolder> implements Filterable{
+        public static class ViewHolder extends RecyclerView.ViewHolder {
             private final CheckedTextView mTagItemCheckedTextView;
             public ViewHolder(CheckedTextView ctv) {
                 super(ctv);
@@ -306,20 +474,27 @@ public class TagsDialog extends AnalyticsDialogFragment {
             }
         }
 
-        public final List<String> mTagsList;
 
-        public  TagsArrayAdapter() {
-            mTagsList = new ArrayList<>(mAllTags);
+
+        /**
+         * A reference to the {@link TagsList} passed.
+         */
+        @NonNull
+        private final TagsList mTags;
+        /**
+         * A subset of all tags in {@link #mTags} satisfying the user's search
+         */
+        @NonNull
+        private List<String> mFilteredList;
+
+        public TagsArrayAdapter(@NonNull TagsList tags) {
+            mTags = tags;
+            mFilteredList = new ArrayList<>(tags.mAllTags);
             sortData();
         }
 
         public void sortData() {
-            Collections.sort(mTagsList, (lhs, rhs) -> {
-                boolean lhs_checked = mCurrentTags.contains(lhs);
-                boolean rhs_checked = mCurrentTags.contains(rhs);
-                //priority for checked items.
-                return lhs_checked == rhs_checked ? lhs.compareToIgnoreCase(rhs) : lhs_checked ? -1 : 1;
-            });
+            mTags.sort();
         }
 
         @NonNull
@@ -333,10 +508,10 @@ public class TagsDialog extends AnalyticsDialogFragment {
                 CheckedTextView ctv = (CheckedTextView) view;
                 ctv.toggle();
                 String tag = ctv.getText().toString();
-                if (ctv.isChecked() && !mCurrentTags.contains(tag)) {
-                    mCurrentTags.add(tag);
-                } else if (!ctv.isChecked()) {
-                    mCurrentTags.remove(tag);
+                if (ctv.isChecked()) {
+                    mTags.check(tag);
+                } else {
+                    mTags.uncheck(tag);
                 }
             });
             return vh;
@@ -344,14 +519,14 @@ public class TagsDialog extends AnalyticsDialogFragment {
 
         @Override
         public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-            String tag = mTagsList.get(position);
+            String tag = mFilteredList.get(position);
             holder.mTagItemCheckedTextView.setText(tag);
-            holder.mTagItemCheckedTextView.setChecked(mCurrentTags.contains(tag));
+            holder.mTagItemCheckedTextView.setChecked(mTags.isChecked(tag));
         }
 
         @Override
         public int getItemCount() {
-            return mTagsList.size();
+            return mFilteredList.size();
         }
 
         @Override
@@ -361,33 +536,25 @@ public class TagsDialog extends AnalyticsDialogFragment {
 
         /* Custom Filter class - as seen in http://stackoverflow.com/a/29792313/1332026 */
         private class TagsFilter extends Filter {
-            private final ArrayList<String> mFilteredTags;
-            private TagsFilter() {
-                super();
-                mFilteredTags = new ArrayList<>();
-            }
-
             @Override
             protected FilterResults performFiltering(CharSequence constraint) {
-                mFilteredTags.clear();
                 if (constraint.length() == 0) {
-                    mFilteredTags.addAll(mAllTags);
+                    mFilteredList = new ArrayList<>(mTags.mAllTags);
                 } else {
+                    mFilteredList = new ArrayList<>();
                     final String filterPattern = constraint.toString().toLowerCase(Locale.getDefault()).trim();
-                    for (String tag : mAllTags) {
+                    for (String tag : mTags) {
                         if (tag.toLowerCase(Locale.getDefault()).contains(filterPattern)) {
-                            mFilteredTags.add(tag);
+                            mFilteredList.add(tag);
                         }
                     }
                 }
 
-                return FilterResultsUtils.fromCollection(mFilteredTags);
+                return FilterResultsUtils.fromCollection(mFilteredList);
             }
 
             @Override
             protected void publishResults(CharSequence charSequence, FilterResults filterResults) {
-                mTagsList.clear();
-                mTagsList.addAll(mFilteredTags);
                 sortData();
                 notifyDataSetChanged();
             }

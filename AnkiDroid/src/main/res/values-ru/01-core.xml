@@ -126,12 +126,12 @@
     <string name="menu_edit_tags">Редактировать метки</string>
     <string name="delete_note_message">Удалить эту запись и все связанные карточки?\n%s</string>
     <string name="menu_select">Выделить текст</string>
+    <string name="menu_lookup">Посмотреть в словаре</string>
     <string name="menu_search">Посмотреть в %1$s</string>
     <string name="menu_mark_note">Отметить запись</string>
     <string name="menu_unmark_note">Снять отметку</string>
     <string name="menu_toggle_mic_tool_bar">Проверить произношение</string>
     <string name="new_deck">Создать колоду</string>
-    <string name="create" comment="Button to create a filtered deck">Создать</string>
     <string name="new_dynamic_deck">Создать фильтрованную колоду</string>
     <string name="night_mode">Ночной режим</string>
     <string name="directory_inaccessible">Папка AnkiDroid недоступна</string>
@@ -161,10 +161,10 @@
     <string name="empty_cram_label">Очистить</string>
     <string name="create_subdeck">Создать подколоду</string>
     <string name="empty_filtered_deck">Фильтрованная колода очищается&#8230;</string>
-    <string name="custom_study_deck_name">Дополнительная учебная сессия</string>
+    <string name="custom_study_deck_name">Дополнительное занятие</string>
     <string name="custom_study_deck_exists">Сначала переименуйте существующую дополнительную колоду</string>
     <string name="empty_deck">Эта колода пуста</string>
-    <string name="search_deck">Deck Search</string>
+    <string name="search_deck">Поиск колод</string>
     <string name="empty_deck_add_note">Добавить карточку</string>
     <string name="invalid_deck_name">Недопустимое название колоды</string>
     <string name="studyoptions_empty">Эта колода пуста. Нажмите кнопку +, чтобы добавить что-нибудь.</string>

@@ -31,7 +31,6 @@ import android.content.SharedPreferences;
 import android.content.SharedPreferences.OnSharedPreferenceChangeListener;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
-import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
@@ -39,7 +38,6 @@ import android.text.TextUtils;
 import android.view.MenuItem;
 import android.view.WindowManager.BadTokenException;
 import android.webkit.URLUtil;
-import android.widget.Toast;
 
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.ichi2.anim.ActivityTransitionAnimation;
@@ -85,7 +83,6 @@ import java.util.TreeMap;
 import androidx.annotation.NonNull;
 import androidx.annotation.StringRes;
 import androidx.annotation.VisibleForTesting;
-import androidx.vectordrawable.graphics.drawable.VectorDrawableCompat;
 import timber.log.Timber;
 
 import static com.ichi2.anim.ActivityTransitionAnimation.Direction.FADE;
@@ -114,9 +111,11 @@ public class Preferences extends AppCompatPreferenceActivity implements Preferen
             "learnCutoff", "timeLimit", "useCurrent", "newSpread", "dayOffset", "schedVer"};
 
     private static final int RESULT_LOAD_IMG = 111;
-    private android.preference.CheckBoxPreference backgroundImage;
+    private android.preference.CheckBoxPreference mBackgroundImage;
     private static long fileLength;
 
+    /** The collection path when Preferences was opened  */
+    private String mOldCollectionPath = null;
 
     // ----------------------------------------------------------------------------
     // Overridden methods
@@ -130,6 +129,9 @@ public class Preferences extends AppCompatPreferenceActivity implements Preferen
         getSupportActionBar().setHomeButtonEnabled(true);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         setTitle(getResources().getText(R.string.preferences_title));
+
+        // onRestoreInstanceState takes priority, this is only set on init.
+        mOldCollectionPath = CollectionHelper.getCollectionPath(this);
     }
 
     private Collection getCol() {
@@ -164,6 +166,40 @@ public class Preferences extends AppCompatPreferenceActivity implements Preferen
         }
         return false;
     }
+
+    @Override
+    public void onBackPressed() {
+        // If the collection path has changed, we want to move back to the deck picker immediately
+        // This performs the move when back is pressed on the "Advanced" screen
+        if (!Utils.equals(CollectionHelper.getCollectionPath(this), mOldCollectionPath)) {
+            restartWithNewDeckPicker();
+        } else {
+            super.onBackPressed();
+        }
+    }
+
+
+    protected void restartWithNewDeckPicker() {
+        // PERF: DB access on foreground thread
+        CollectionHelper.getInstance().closeCollection(true, "Preference Modification: collection path changed");
+        Intent deckPicker = new Intent(this, DeckPicker.class);
+        deckPicker.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
+        startActivity(deckPicker);
+    }
+
+
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.putString("mOldCollectionPath", mOldCollectionPath);
+    }
+
+    @Override
+    protected void onRestoreInstanceState(Bundle state) {
+        super.onRestoreInstanceState(state);
+        mOldCollectionPath = state.getString("mOldCollectionPath");
+    }
+
 
     @Override
     public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
@@ -211,8 +247,8 @@ public class Preferences extends AppCompatPreferenceActivity implements Preferen
                     if (prefs.getBoolean("gestures", false) || !"2".equals(newValue)) {
                         return true;
                     } else {
-                        Toast.makeText(getApplicationContext(),
-                                R.string.full_screen_error_gestures, Toast.LENGTH_LONG).show();
+                        UIUtils.showThemedToast(getApplicationContext(),
+                                R.string.full_screen_error_gestures, false);
                         return false;
                     }
                 });
@@ -228,18 +264,18 @@ public class Preferences extends AppCompatPreferenceActivity implements Preferen
             case "com.ichi2.anki.prefs.appearance":
                 listener.addPreferencesFromResource(R.xml.preferences_appearance);
                 screen = listener.getPreferenceScreen();
-                backgroundImage = (android.preference.CheckBoxPreference) screen.findPreference("deckPickerBackground");
-                backgroundImage.setOnPreferenceClickListener(preference -> {
-                    if (backgroundImage.isChecked()) {
+                mBackgroundImage = (android.preference.CheckBoxPreference) screen.findPreference("deckPickerBackground");
+                mBackgroundImage.setOnPreferenceClickListener(preference -> {
+                    if (mBackgroundImage.isChecked()) {
                         try {
                             Intent galleryIntent = new Intent(Intent.ACTION_PICK,android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
                             startActivityForResult(galleryIntent, RESULT_LOAD_IMG);
-                            backgroundImage.setChecked(true);
+                            mBackgroundImage.setChecked(true);
                         } catch (Exception ex) {
                             Timber.e("%s",ex.getLocalizedMessage());
                         }
                     } else {
-                        backgroundImage.setChecked(false);
+                        mBackgroundImage.setChecked(false);
                         String currentAnkiDroidDirectory = CollectionHelper.getCurrentAnkiDroidDirectory(this);
                         File imgFile = new File(currentAnkiDroidDirectory, "DeckPickerBackground.png" );
                         if (imgFile.exists()) {
@@ -308,7 +344,13 @@ public class Preferences extends AppCompatPreferenceActivity implements Preferen
                         return true;
                     } catch (StorageAccessException e) {
                         Timber.e(e, "Could not initialize directory: %s", newPath);
-                        Toast.makeText(getApplicationContext(), R.string.dialog_collection_path_not_dir, Toast.LENGTH_LONG).show();
+                        MaterialDialog materialDialog = new MaterialDialog.Builder(Preferences.this)
+                                .title(R.string.dialog_collection_path_not_dir)
+                                .positiveText(R.string.dialog_ok)
+                                .negativeText(R.string.reset_custom_buttons)
+                                .onPositive((dialog, which) -> dialog.dismiss())
+                                .onNegative((dialog, which) -> collectionPathPreference.setText(CollectionHelper.getDefaultAnkiDroidDirectory()))
+                                .show();
                         return false;
                     }
                 });
@@ -388,12 +430,12 @@ public class Preferences extends AppCompatPreferenceActivity implements Preferen
                 fullSyncPreference.setDialogTitle(R.string.force_full_sync_title);
                 fullSyncPreference.setOkHandler(() -> {
                     if (getCol() == null) {
-                        Toast.makeText(getApplicationContext(), R.string.directory_inaccessible, Toast.LENGTH_LONG).show();
+                        UIUtils.showThemedToast(getApplicationContext(), R.string.directory_inaccessible, false);
                         return;
                     }
                     getCol().modSchemaNoCheck();
                     getCol().setMod();
-                    Toast.makeText(getApplicationContext(), android.R.string.ok, Toast.LENGTH_SHORT).show();
+                    UIUtils.showThemedToast(getApplicationContext(), android.R.string.ok, true);
                 });
                 // Workaround preferences
                 removeUnnecessaryAdvancedPrefs(screen);
@@ -479,12 +521,12 @@ public class Preferences extends AppCompatPreferenceActivity implements Preferen
                             UIUtils.showThemedToast(this, getString(R.string.background_image_applied), false);
                         }
                     } else {
-                        backgroundImage.setChecked(false);
+                        mBackgroundImage.setChecked(false);
                         UIUtils.showThemedToast(this, getString(R.string.image_max_size_allowed, 10), false);
                     }
                 }
             } else {
-                backgroundImage.setChecked(false);
+                mBackgroundImage.setChecked(false);
                 UIUtils.showThemedToast(this, getString(R.string.no_image_selected), false);
             }
         } catch (OutOfMemoryError | Exception e) {
@@ -567,8 +609,7 @@ public class Preferences extends AppCompatPreferenceActivity implements Preferen
                             ((android.preference.ListPreference)pref).setValueIndex(conf.getInt("newSpread"));
                             break;
                         case "dayOffset":
-                            Calendar calendar = col.crtGregorianCalendar();
-                            ((SeekBarPreference)pref).setValue(calendar.get(Calendar.HOUR_OF_DAY));
+                            ((SeekBarPreference)pref).setValue(getDayOffset(col));
                             break;
                         case "newTimezoneHandling":
                             android.preference.CheckBoxPreference checkBox = (android.preference.CheckBoxPreference) pref;
@@ -596,6 +637,46 @@ public class Preferences extends AppCompatPreferenceActivity implements Preferen
         mOriginalSumarries.put(pref.getKey(), (s != null) ? s.toString() : "");
         // Update summary
         updateSummary(pref);
+    }
+
+    /** Returns the hour that the collection rolls over to the next day */
+    public static int getDayOffset(Collection col) {
+        switch (col.schedVer()) {
+            default:
+            case 1:
+                Calendar calendar = col.crtGregorianCalendar();
+                return calendar.get(Calendar.HOUR_OF_DAY);
+            case 2:
+                return col.getConf().optInt("rollover", 4);
+        }
+    }
+
+    /** Sets the hour that the collection rolls over to the next day */
+    @VisibleForTesting
+    public void setDayOffset(int hours) {
+        switch (getSchedVer(getCol())) {
+            default:
+            case 1:
+                Calendar date = getCol().crtGregorianCalendar();
+                date.set(Calendar.HOUR_OF_DAY, hours);
+                getCol().setCrt(date.getTimeInMillis() / 1000);
+                getCol().setMod();
+                break;
+            case 2:
+                getCol().getConf().put("rollover", hours);
+                getCol().flush();
+                break;
+        }
+        BootService.scheduleNotification(getCol().getTime(), this);
+    }
+
+
+    protected static int getSchedVer(Collection col) {
+        int ver = col.schedVer();
+        if (ver < 1 || ver > 2) {
+            Timber.w("Unknown scheduler version: %d", ver);
+        }
+        return ver;
     }
 
 
@@ -655,12 +736,7 @@ public class Preferences extends AppCompatPreferenceActivity implements Preferen
                     getCol().setMod();
                     break;
                 case "dayOffset": {
-                    int hours = ((SeekBarPreference) pref).getValue();
-                    Calendar date = getCol().crtGregorianCalendar();
-                    date.set(Calendar.HOUR_OF_DAY, hours);
-                    getCol().setCrt(date.getTimeInMillis() / 1000);
-                    getCol().setMod();
-                    BootService.scheduleNotification(getCol().getTime(), this);
+                    setDayOffset(((SeekBarPreference) pref).getValue());
                     break;
                 }
                 case "minimumCardsDueForNotification": {
@@ -1042,5 +1118,10 @@ public class Preferences extends AppCompatPreferenceActivity implements Preferen
         public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
             ((Preferences) getActivity()).updatePreference(sharedPreferences, key, this);
         }
+    }
+
+    @VisibleForTesting(otherwise = VisibleForTesting.NONE)
+    public void attachBaseContext(Context context) {
+        super.attachBaseContext(context);
     }
 }

@@ -116,12 +116,12 @@
     <string name="menu_edit_tags">Edit tags</string>
     <string name="delete_note_message">ნამდვილად წავშალო ეს შენიშვნა და ყველა მისი ბარათი?\n%s</string>
     <string name="menu_select">აირჩიე ტექსტი</string>
+    <string name="menu_lookup">Lookup text</string>
     <string name="menu_search">Lookup in %1$s</string>
     <string name="menu_mark_note">მონიშნე შენიშვნა</string>
     <string name="menu_unmark_note">გააუქმე შენიშვნა</string>
     <string name="menu_toggle_mic_tool_bar">Check pronunciation</string>
     <string name="new_deck">შექმენი დასტა</string>
-    <string name="create" comment="Button to create a filtered deck">შექმნა</string>
     <string name="new_dynamic_deck">ფილტრირებული დასტის შექმნა</string>
     <string name="night_mode">ღამის რეჟიმი</string>
     <string name="directory_inaccessible">AnkiDroid ბიბლიოთეკა მიუწვდომელია</string>

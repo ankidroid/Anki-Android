@@ -2,24 +2,22 @@
     xmlns:ankidroid="http://schemas.android.com/apk/res-auto" >
     <item
         android:id="@+id/action_confirm"
-        android:icon="@drawable/ic_done_white_24dp"
+        android:icon="@drawable/ic_done_white"
         android:title="@string/save"
         ankidroid:showAsAction="ifRoom"
         android:visible="true"/>
     <item
         android:id="@+id/action_preview"
-        android:icon="@drawable/ic_remove_red_eye_white_24dp"
+        android:icon="@drawable/ic_remove_red_eye_white"
         android:title="@string/card_editor_preview_card"
         ankidroid:showAsAction="ifRoom"
         android:visible="true"/>
     <item
         android:id="@+id/action_add"
-        android:icon="@drawable/ic_menu_add"
         android:title="@string/menu_add"
         ankidroid:showAsAction="never"/>
     <item
         android:id="@+id/action_delete"
-        android:icon="@drawable/ic_action_cancel"
         android:title="@string/dialog_positive_delete"
         ankidroid:showAsAction="never"/>
     <item

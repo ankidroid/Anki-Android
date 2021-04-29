@@ -106,7 +106,7 @@
     <string name="custom_study_limit_tags">Limigi al specialaj etikedoj</string>
     <!-- Card editor -->
     <string name="cardeditor_title_edit_card">Redakti noton</string>
-    <string name="discard_unsaved_changes">Ĉu fermi kaj perdi entajpitan tekston?</string>
+    <string name="discard_unsaved_changes">Ĉu fermi kaj perdi la enigitan tekston?</string>
     <string name="note_editor_no_cards_created">Neniu karto kreita. Bonvolu plenigi pliajn kampojn</string>
     <string name="note_editor_no_first_field">La unua kampo estas malplena</string>
     <string name="note_editor_no_cloze_delations">Tiu ĉi noto enhavu “malplenojn” en la teksto</string>
@@ -122,6 +122,7 @@
     <string name="reordering_cards">Reordigado de kartoj&#8230;</string>
     <string name="field_remapping">%1$s (de “%2$s”)</string>
     <string name="confirm_map_cards_to_nothing">Ĉiuj senasignitaj kartoj estos forigitaj. Se noto ne havas restajn kartojn, ĝi ankaŭ perdiĝos. Ĉu vi certe volas pluigi?</string>
+    <string name="timebox_reached_title">Limigo de lernada tempo atingita</string>
     <plurals name="timebox_reached">
         <item quantity="one">Lernis %1$d karton dum %2$s</item>
         <item quantity="other">Lernis %1$d kartojn dum %2$s</item>
@@ -149,7 +150,7 @@
     <string name="empty_cards">Malplenaj kartoj</string>
     <string name="check_db_message">Kontrolado de datumbazo&#8230;</string>
     <string name="empty_card_warning">Tiu ĉi karto estas malplena. Uzu la agon “malplenaj kartoj” en la menuo ĉe la ekrano de kartaroj.</string>
-    <string name="unknown_type_field_warning">Entajpu respondon: nekonata kampo %s</string>
+    <string name="unknown_type_field_warning">Enigu respondon: nekonata kampo %s</string>
     <string name="delete_deck">Forigado de kartaro&#8230;</string>
     <string name="show_hint">Montri %s</string>
     <string name="info_rate">Taksi AnkiDroid</string>
@@ -347,5 +348,5 @@
     <!-- Used for credential empty warning message -->
     <string name="email_id_empty">Retpoŝta adreso estas postulata</string>
     <string name="password_empty">Pasvorto estas postulata</string>
-    <string name="back_pressed_once">Press back again to exit</string>
+    <string name="back_pressed_once">Frapetu denove por eliri</string>
 </resources>

@@ -116,12 +116,12 @@
     <string name="menu_edit_tags">Редакция на етикети</string>
     <string name="delete_note_message">Наистина изтрий тази бележка и всичките и карти? \n%s</string>
     <string name="menu_select">Избор на текст</string>
+    <string name="menu_lookup">Lookup text</string>
     <string name="menu_search">Търсене в %1$s</string>
     <string name="menu_mark_note">Маркирай бележка</string>
     <string name="menu_unmark_note">Размаркирай бележка</string>
     <string name="menu_toggle_mic_tool_bar">Проверете произношението</string>
     <string name="new_deck">Създай тесте</string>
-    <string name="create" comment="Button to create a filtered deck">Създай</string>
     <string name="new_dynamic_deck">Създайте филтрирано тесте</string>
     <string name="night_mode">Нощен режим</string>
     <string name="directory_inaccessible">AnkiDroid директорията е недостъпна</string>

@@ -26,59 +26,59 @@ import java.util.List;
  *         the root class, from which response starts.
  */
 public class Response {
-    private String dest;
-    private String from;
-    private String phrase;
-    private String result;
-    private List<Tuc> tuc;
+    private String mDest;
+    private String mFrom;
+    private String mPhrase;
+    private String mResult;
+    private List<Tuc> mTuc;
 
 
     public String getDest() {
-        return this.dest;
+        return this.mDest;
     }
 
 
     public void setDest(String dest) {
-        this.dest = dest;
+        this.mDest = dest;
     }
 
 
     public String getFrom() {
-        return this.from;
+        return this.mFrom;
     }
 
 
     public void setFrom(String from) {
-        this.from = from;
+        this.mFrom = from;
     }
 
 
     public String getPhrase() {
-        return this.phrase;
+        return this.mPhrase;
     }
 
 
     public void setPhrase(String phrase) {
-        this.phrase = phrase;
+        this.mPhrase = phrase;
     }
 
 
     public String getResult() {
-        return this.result;
+        return this.mResult;
     }
 
 
     public void setResult(String result) {
-        this.result = result;
+        this.mResult = result;
     }
 
 
     public List<Tuc> getTuc() {
-        return this.tuc;
+        return this.mTuc;
     }
 
 
     public void setTuc(List<Tuc> tuc) {
-        this.tuc = tuc;
+        this.mTuc = tuc;
     }
 }

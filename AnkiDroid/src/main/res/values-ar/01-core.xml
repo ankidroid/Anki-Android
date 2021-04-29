@@ -136,12 +136,12 @@
     <string name="menu_edit_tags">تعديل الوسوم</string>
     <string name="delete_note_message">هل تريد حقًا حذف هذه الملحوظة وكل بطاقاتها؟\n%s</string>
     <string name="menu_select">تحديد النص</string>
+    <string name="menu_lookup">بحث عن النص</string>
     <string name="menu_search">البحث في %1$s</string>
     <string name="menu_mark_note">تعليم الملحوظة</string>
     <string name="menu_unmark_note">إلغاء تعليم الملحوظة</string>
     <string name="menu_toggle_mic_tool_bar">تحقق من النطق</string>
     <string name="new_deck">إنشاء شَدّة أوراق</string>
-    <string name="create" comment="Button to create a filtered deck">إنشاء</string>
     <string name="new_dynamic_deck">انشئ شَدّة أوراق مُفَلتَرة</string>
     <string name="night_mode">وضع ليلي</string>
     <string name="directory_inaccessible">لا يمكن الوصول لمجلد أنكيدرويد</string>

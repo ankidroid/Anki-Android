@@ -29,7 +29,7 @@ import androidx.annotation.NonNull;
  */
 public class DiffEngine {
 
-    private final DiffMatchPatch diffMatchPatch = new DiffMatchPatch();
+    private final DiffMatchPatch mDiffMatchPatch = new DiffMatchPatch();
 
 
     /**
@@ -42,7 +42,7 @@ public class DiffEngine {
     public String[] diffedHtmlStrings(String typed, String correct) {
         StringBuilder prettyTyped = new StringBuilder();
         StringBuilder prettyCorrect = new StringBuilder();
-        for (DiffMatchPatch.Diff aDiff : diffMatchPatch.diffMain(typed, correct)) {
+        for (DiffMatchPatch.Diff aDiff : mDiffMatchPatch.diffMain(typed, correct)) {
             switch (aDiff.operation) {
                 case INSERT:
                     prettyTyped.append(wrapBad(aDiff.text));

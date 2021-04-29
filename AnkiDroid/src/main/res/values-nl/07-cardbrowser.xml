@@ -46,7 +46,7 @@
     <string name="card_browser_all_decks">Alle leersets</string>
     <string name="card_browser_delete_card">Memo\'s verwijderen</string>
     <string name="card_browser_suspend_card">Kaart opschorten</string>
-    <string name="card_browser_change_deck">WIjzig dek</string>
+    <string name="card_browser_change_deck">Wijzig leerset</string>
     <string name="card_browser_unsuspend_card">Kaarten herstellen</string>
     <string name="card_browser_mark_card">Memo\'s markeren</string>
     <string name="card_browser_unmark_card">Memo onmarkeren</string>
@@ -85,8 +85,8 @@
     <string name="card_browser_interval_new_card" comment="Message indicating that a card is currently new, and so has no interval/ease.">(nieuw)</string>
     <string name="card_browser_due_filtered_card">(gefilterd)</string>
     <string name="card_browser_interval_learning_card">(leren)</string>
-    <string name="card_browser_no_cards_in_deck">Geen kaarten gevonden in set ‘%s</string>
-    <string name="card_browser_search_all_decks">Alle sets doorzoeken</string>
+    <string name="card_browser_no_cards_in_deck">Geen kaarten gevonden in leerset ‘%s</string>
+    <string name="card_browser_search_all_decks">Alle leersets doorzoeken</string>
     <string name="card_browser_unknown_deck_name">Onbekend</string>
     <plurals name="card_browser_cards_deleted">
         <item quantity="one">%d kaart verwijderd</item>
@@ -104,7 +104,7 @@
     <string name="card_info_total_time">Totale tijd</string>
     <string name="card_info_card_type">Kaarttype</string>
     <string name="card_info_note_type">Memotype</string>
-    <string name="card_info_deck_name">Kaartenset Naam</string>
+    <string name="card_info_deck_name">Leerset Naam</string>
     <string name="card_info_card_id">Kaart ID</string>
     <string name="card_info_note_id">Memo-ID</string>
     <string name="card_info_revlog_time">Tijd</string>

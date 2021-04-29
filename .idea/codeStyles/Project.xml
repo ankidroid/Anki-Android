@@ -25,6 +25,7 @@
       </value>
     </option>
     <JavaCodeStyleSettings>
+      <option name="FIELD_NAME_PREFIX" value="m" />
       <option name="BLANK_LINES_AROUND_INITIALIZER" value="2" />
       <option name="IMPORT_LAYOUT_TABLE">
         <value>

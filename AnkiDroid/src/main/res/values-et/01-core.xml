@@ -116,12 +116,12 @@
     <string name="menu_edit_tags">Muuda silte</string>
     <string name="delete_note_message">Kas tõesti kustutada see märge ja kõik selle kaardid?\n%s</string>
     <string name="menu_select">Vali text</string>
+    <string name="menu_lookup">Lookup text</string>
     <string name="menu_search">Otsi %1$s</string>
     <string name="menu_mark_note">Tähista märge</string>
     <string name="menu_unmark_note">Eemalda tähistus märkelt</string>
     <string name="menu_toggle_mic_tool_bar">Kontrolli hääldust</string>
     <string name="new_deck">Loo kaardipakk</string>
-    <string name="create" comment="Button to create a filtered deck">Loo</string>
     <string name="new_dynamic_deck">Loo filtritud kaardipakk</string>
     <string name="night_mode">Öörežiim</string>
     <string name="directory_inaccessible">Ei saa ligi kaustale \"AnkiDroid\"</string>

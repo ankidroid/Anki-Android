@@ -57,9 +57,9 @@ public class IncrementerNumberRangePreference extends NumberRangePreference {
 
     @Override
     protected View onCreateDialogView() {
-        mLinearLayout.addView(mIncrementButton);
-        mLinearLayout.addView(mEditText);
         mLinearLayout.addView(mDecrementButton);
+        mLinearLayout.addView(mEditText);
+        mLinearLayout.addView(mIncrementButton);
 
         return mLinearLayout;
     }

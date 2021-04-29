@@ -43,253 +43,257 @@
     <string name="enabled">Aktif</string>
     <!-- preferences.xml categories-->
     <string name="pref_cat_general_summ">Pengaturan umum</string>
-    <string name="pref_cat_reviewing">Mengulas</string>
+    <string name="pref_cat_reviewing" maxLength="41">Mengulas</string>
     <string name="pref_cat_reviewing_summ">Pengaturan ulasan yang bukan tentang dek</string>
-    <string name="pref_cat_reviewer_behaviour">Perilaku</string>
-    <string name="pref_cat_flashcard">Tampilan</string>
-    <string name="pref_cat_whiteboard">Whiteboard</string>
-    <string name="pref_cat_appearance">Tampilan</string>
+    <string name="pref_cat_reviewer_behaviour" maxLength="41">Perilaku</string>
+    <string name="pref_cat_flashcard" maxLength="41">Tampilan</string>
+    <string name="pref_cat_whiteboard" maxLength="41">Whiteboard</string>
+    <string name="pref_cat_appearance" maxLength="41">Tampilan</string>
     <string name="pref_cat_appearance_summ">Ubah tema dan fon dasar</string>
-    <string name="pref_cat_themes">Tema</string>
-    <string name="pref_cat_fonts">Fon</string>
-    <string name="pref_cat_gestures">Gestur</string>
+    <string name="pref_cat_themes" maxLength="41">Tema</string>
+    <string name="pref_cat_fonts" maxLength="41">Fon</string>
+    <string name="pref_cat_gestures" maxLength="41">Gestur</string>
     <string name="pref_cat_gestures_summ">Gunakan tekan dan usapan menggantikan tombol</string>
-    <string name="pref_cat_actions">Tindakan</string>
-    <string name="pref_cat_advanced">Tingkat lanjut</string>
+    <string name="pref_cat_actions" maxLength="41">Tindakan</string>
+    <string name="pref_cat_advanced" maxLength="41">Tingkat lanjut</string>
     <string name="pref_cat_advanced_summ">Optimisasi dan fitur percobaan</string>
-    <string name="pref_cat_performance">Performa</string>
-    <string name="pref_cat_workarounds">Solusi</string>
-    <string name="pref_cat_plugins">Pengaya</string>
-    <string name="about_title">Tentang AnkiDroid</string>
+    <string name="pref_cat_performance" maxLength="41">Performa</string>
+    <string name="pref_cat_workarounds" maxLength="41">Solusi</string>
+    <string name="pref_cat_plugins" maxLength="41">Pengaya</string>
+    <string name="about_title" maxLength="41">Tentang AnkiDroid</string>
     <string name="about_version">Versi: </string>
     <!-- preferences.xml entries-->
-    <string name="whiteboard_stroke_width">Tebal garis</string>
-    <string name="use_input_tag">Ketik jawaban ke dalam kartu</string>
+    <string name="whiteboard_stroke_width" maxLength="41">Tebal garis</string>
+    <string name="use_input_tag" maxLength="41">Ketik jawaban ke dalam kartu</string>
     <string name="use_input_tag_summ">Gunakan kotak input teks di dalam kartu untuk mengetik jawaban</string>
-    <string name="dictionary">Kamus pencarian</string>
-    <string name="reset_languages">Reset bahasa</string>
+    <string name="dictionary" maxLength="41">Kamus pencarian</string>
+    <string name="reset_languages" maxLength="41">Reset bahasa</string>
     <string name="reset_languages_summ">Reset penempatan bahasa (untuk teks-suara dan kamus) untuk semua dek</string>
     <string name="reset_languages_question">Reset semua penempatan bahasa?</string>
     <string name="reset_confirmation">Reset semua keadaan</string>
-    <string name="card_zoom">Perbesar kartu</string>
-    <string name="image_zoom">Perbesar gambar</string>
-    <string name="button_size">Ukuran tombol jawaban</string>
-    <string name="card_browser_font_size">Skala fon penelusur kartu</string>
-    <string name="card_browser_hide_media">Tampilkan nama berkas di penelusur kartu</string>
+    <string name="card_zoom" maxLength="41">Perbesar kartu</string>
+    <string name="image_zoom" maxLength="41">Perbesar gambar</string>
+    <string name="button_size" maxLength="41">Ukuran tombol jawaban</string>
+    <string name="card_browser_font_size" maxLength="41">Skala fon penelusur kartu</string>
+    <string name="card_browser_hide_media" maxLength="41">Tampilkan nama berkas di penelusur kartu</string>
     <string name="card_browser_hide_media_summary">Tampilkan nama berkas media di kolom tanya/jawab penelusur kartu</string>
-    <string name="col_path">Direktori AnkiDroid</string>
-    <string name="fullscreen_review">Mode layar penuh</string>
+    <string name="col_path" maxLength="41">Direktori AnkiDroid</string>
+    <string name="fullscreen_review" maxLength="41">Mode layar penuh</string>
     <string name="full_screen_off">Mati</string>
     <string name="full_screen_system">Sembunyikan bar sistem</string>
     <string name="full_screen_complete">Sembunyikan bar sistem dan tombol jawab</string>
     <string name="full_screen_error_gestures">Kamu harus mengaktifkan gestur untuk menyembunyikan tombol jawab</string>
-    <string name="answer_buttons_position">Posisi tombol jawab</string>
+    <string name="answer_buttons_position" maxLength="41">Posisi tombol jawab</string>
     <string-array name="answer_buttons_position_labels">
         <item>Atas</item>
         <item>Bawah</item>
     </string-array>
-    <string name="gestures">Aktifkan gestur</string>
+    <string name="gestures" maxLength="41">Aktifkan gestur</string>
     <string name="gestures_summ">Menerapkan gestur sebagai tindakan untuk menjawab dan mengedit kartu.</string>
-    <string name="gestures_allow_links">Abaikan gestur sentuhan di tautan</string>
+    <string name="gestures_allow_links" maxLength="41">Abaikan gestur sentuhan di tautan</string>
     <string name="gestures_allow_links_summary">Sentuhan gestur tidak akan diproses jika ada tautan ditekan.</string>
-    <string name="gestures_corner_touch">9-point touch</string>
+    <string name="gestures_corner_touch" maxLength="41">9-point touch</string>
     <string name="gestures_corner_touch_summary">Allow touch gestures in screen corners</string>
-    <string name="gestures_swipe_up">Usap ke atas</string>
-    <string name="gestures_swipe_down">Usap ke bawah</string>
-    <string name="gestures_swipe_left">Usap ke kiri</string>
-    <string name="gestures_swipe_right">Usap ke kanan</string>
-    <string name="gestures_double_tap">Sentuh ganda</string>
-    <string name="gestures_tap_top">Sentuh atas</string>
-    <string name="gestures_tap_left">Sentuh kiri</string>
-    <string name="gestures_tap_right">Sentuh kanan</string>
-    <string name="gestures_tap_bottom">Sentuh bawah</string>
-    <string name="gestures_corner_tap_top_left">Touch top left</string>
+    <string name="gestures_swipe_up" maxLength="41">Usap ke atas</string>
+    <string name="gestures_swipe_down" maxLength="41">Usap ke bawah</string>
+    <string name="gestures_swipe_left" maxLength="41">Usap ke kiri</string>
+    <string name="gestures_swipe_right" maxLength="41">Usap ke kanan</string>
+    <string name="gestures_double_tap" maxLength="41">Sentuh ganda</string>
+    <string name="gestures_tap_top" maxLength="41">Sentuh atas</string>
+    <string name="gestures_tap_left" maxLength="41">Sentuh kiri</string>
+    <string name="gestures_tap_right" maxLength="41">Sentuh kanan</string>
+    <string name="gestures_tap_bottom" maxLength="41">Sentuh bawah</string>
+    <string name="gestures_corner_tap_top_left" maxLength="41">Touch top left</string>
     <string name="gestures_corner_tap_top_center">Touch top center</string>
-    <string name="gestures_corner_tap_top_right">Touch top right</string>
+    <string name="gestures_corner_tap_top_right" maxLength="41">Touch top right</string>
     <string name="gestures_corner_tap_middle_left">Touch middle left</string>
-    <string name="gestures_corner_tap_middle_center">Touch middle center</string>
+    <string name="gestures_corner_tap_middle_center" maxLength="41">Touch middle center</string>
     <string name="gestures_corner_tap_middle_right">Touch middle right</string>
-    <string name="gestures_corner_tap_bottom_left">Touch bottom left</string>
+    <string name="gestures_corner_tap_bottom_left" maxLength="41">Touch bottom left</string>
     <string name="gestures_corner_tap_bottom_center">Touch bottom center</string>
-    <string name="gestures_corner_tap_bottom_right">Touch bottom right</string>
-    <string name="gestures_volume_up">Volume naik</string>
-    <string name="gestures_volume_down">Volume turun</string>
-    <string name="more_scrolling_buttons">Pembaca elektronik</string>
+    <string name="gestures_corner_tap_bottom_right" maxLength="41">Touch bottom right</string>
+    <string name="gestures_volume_up" maxLength="41">Volume naik</string>
+    <string name="gestures_volume_down" maxLength="41">Volume turun</string>
+    <string name="more_scrolling_buttons" maxLength="41">Pembaca elektronik</string>
     <string name="more_scrolling_buttons_summ">Gunakan kanji/katakana juga, tombol emoji/kao-moji untuk menggulir</string>
     <string name="card_browser_enable_external_context_menu">Menu ‘%s’</string>
     <string name="card_browser_enable_external_context_menu_summary">Mengaktifkan konteks menu ‘%s’ secara global</string>
-    <string name="double_scrolling_gap">Guliran ganda</string>
+    <string name="double_scrolling_gap" maxLength="41">Guliran ganda</string>
     <string name="double_scrolling_gap_summ">Gandakan jarak gulir dengan pembaca elektronik</string>
-    <string name="swipe_sensitivity">Sensitivitas usapan</string>
-    <string name="tts">Teks ke suara</string>
+    <string name="swipe_sensitivity" maxLength="41">Sensitivitas usapan</string>
+    <string name="tts" maxLength="41">Teks ke suara</string>
     <string name="tts_summ">Membaca pertanyaan dan jawaban jika tidak ada berkas audio</string>
-    <string name="sync_fetch_missing_media">Ambil media saat sinkronisasi</string>
+    <string name="sync_fetch_missing_media" maxLength="41">Ambil media saat sinkronisasi</string>
     <string name="sync_fetch_missing_media_summ">Otomatis ambil media yang kurang ketika sinkronisasi.</string>
-    <string name="sync_account">Akun AnkiWeb</string>
+    <string name="sync_account" maxLength="41">Akun AnkiWeb</string>
     <string name="sync_account_summ_logged_out">Belum masuk</string>
     <string name="sync_account_summ_logged_in">%s</string>
-    <string name="automatic_sync_choice">Sinkronisasi otomatis</string>
+    <string name="automatic_sync_choice" maxLength="41">Sinkronisasi otomatis</string>
     <string name="automatic_sync_choice_summ">Sinkronkan secara otomatis saat masuk/keluar aplikasi jika sinkronisasi terakhir lebih dari 10
          menit yang lalu.</string>
-    <string name="sync_status_badge">Tampilkan status sinkronisasi</string>
+    <string name="sync_status_badge" maxLength="41">Tampilkan status sinkronisasi</string>
     <string name="sync_status_badge_summ">Ubah ikon sinkronisasi saat perubahan dapat diunggah</string>
-    <string name="day_theme">Tema siang</string>
-    <string name="night_theme">Tema malam</string>
-    <string name="default_font">Fon dasar</string>
-    <string name="override_font">Penerapan fon bawaan</string>
-    <string name="language">Bahasa</string>
+    <string name="day_theme" maxLength="41">Tema siang</string>
+    <string name="night_theme" maxLength="41">Tema malam</string>
+    <string name="default_font" maxLength="41">Fon dasar</string>
+    <string name="override_font" maxLength="41">Penerapan fon bawaan</string>
+    <string name="language" maxLength="41">Bahasa</string>
     <string name="language_system">Bahasa sistem</string>
-    <string name="notification_pref">Notifikasi</string>
-    <string name="notification_pref_title">Notifikasi saat</string>
+    <string name="notification_pref" maxLength="41">Notifikasi</string>
+    <string name="notification_pref_title" maxLength="41">Notifikasi saat</string>
     <string name="never_notify">Jangan beri notifikasi</string>
     <string name="notify_when_pending">Ada pesan tertunda</string>
     <string name="notification_minimum_cards_due">Lebih dari %d kartu jatuh tempo</string>
-    <string name="notification_minimum_cards_due_vibrate">Getar</string>
-    <string name="notification_minimum_cards_due_blink">Berkedip</string>
-    <string name="timeout_answer_text">Otomatis tampilkan jawaban</string>
+    <string name="notification_minimum_cards_due_vibrate" maxLength="41">Getar</string>
+    <string name="notification_minimum_cards_due_blink" maxLength="41">Berkedip</string>
+    <string name="timeout_answer_text" maxLength="41">Otomatis tampilkan jawaban</string>
     <string name="timeout_answer_summ">Tampilkan jawaban secara otomatis tanpa masukan dari pengguna. Jeda termasuk waktu untuk memutar berkas audio secara otomatis.</string>
-    <string name="timeout_answer_seconds">Waktu menampilkan jawaban</string>
+    <string name="timeout_answer_seconds" maxLength="41">Waktu menampilkan jawaban</string>
     <string name="timeout_answer_seconds_summ" comment="The time to wait (in seconds) in the reviewer before automatically showing the next question or answer">XXX dtk</string>
-    <string name="timeout_question_seconds">Waktu menampilkan pertanyaan selanjutnya</string>
+    <string name="timeout_question_seconds" maxLength="41">Waktu menampilkan pertanyaan selanjutnya</string>
     <string name="select_locale_title">Pilih bahasa</string>
-    <string name="software_render">Disable card hardware render</string>
+    <string name="software_render" maxLength="41">Disable card hardware render</string>
     <string name="software_render_summ">Hardware render is faster but may have problems, specifically on Android 8/8.1. If you cannot see parts of the card review user interface, try this setting.</string>
-    <string name="safe_display">Mode tampilan aman</string>
+    <string name="safe_display" maxLength="41">Mode tampilan aman</string>
     <string name="safe_display_summ">Nonaktifkan semua animasi dan gunakan metode yang lebih aman untuk menggambar kartu. Perangkat E-ink mungkin memerlukan ini.</string>
-    <string name="disable_extended_text_ui">Nonaktifkan mode edit kolom tunggal</string>
+    <string name="disable_extended_text_ui" maxLength="41">Nonaktifkan mode edit kolom tunggal</string>
     <!--See: multimedia_editor_popup_cloze. We can\'t use format strings as this is auto-generated-->
     <string name="disable_extended_text_ui_summ">Membolehkan konteks menu \'titik-titik\' saat mode lanskap</string>
-    <string name="vertical_centering">Rata tengah</string>
+    <string name="vertical_centering" maxLength="41">Rata tengah</string>
     <string name="vertical_centering_summ">Ratakan tengah isi kartu secara vertikal</string>
-    <string name="pref_backup_max">Jumlah cadangan maksimal</string>
-    <string name="show_estimates">Tampilkan waktu di tombol</string>
+    <string name="pref_backup_max" maxLength="41">Jumlah cadangan maksimal</string>
+    <string name="show_estimates" maxLength="41">Tampilkan waktu di tombol</string>
     <string name="show_estimates_summ">Tampilkan waktu ulasan berikutnya di tombol jawab</string>
-    <string name="show_top_bar">Tampilkan bar atas</string>
+    <string name="show_top_bar" maxLength="41">Tampilkan bar atas</string>
     <string name="show_top_bar_summ">Tampilkan jumlah kartu, panji dan tanda di bar atas</string>
-    <string name="show_progress">Tampilkan kartu yang tersisa</string>
+    <string name="show_progress" maxLength="41">Tampilkan kartu yang tersisa</string>
     <string name="show_progress_summ">Tampilkan jumlah kartu yang tersisa</string>
-    <string name="show_eta">Tampilkan EWM</string>
+    <string name="show_eta" maxLength="41">Tampilkan EWM</string>
     <string name="show_eta_summ">Menampilkan Estimasi Waktu Muncul kembali</string>
-    <string name="use_current">Dek untuk kartu baru</string>
-    <string name="new_spread">Posisi kartu baru</string>
-    <string name="learn_cutoff">Batas belajar duluan</string>
-    <string name="time_limit">Batas waktu Timebox</string>
+    <string name="use_current" maxLength="41">Dek untuk kartu baru</string>
+    <string name="new_spread" maxLength="41">Posisi kartu baru</string>
+    <string name="learn_cutoff" maxLength="41">Batas belajar duluan</string>
+    <string name="time_limit" maxLength="41">Batas waktu Timebox</string>
     <string name="time_limit_summ">XXX mnt</string>
-    <string name="new_timezone">New timezone handling</string>
-    <string name="day_offset_with_description">Start of next day (0 is midnight, 23 is 11PM)</string>
+    <string name="new_timezone" maxLength="41">New timezone handling</string>
+    <string name="day_offset_with_description" maxLength="41">Start of next day</string>
     <string name="day_offset_summ">XXX jam lewat tengah malam</string>
-    <string name="sched_ver">Penjadwalan eksperimental V2</string>
+    <string name="xlabel_dayoffset_seekbar" maxLength="41">Midnight</string>
+    <string name="ylabel_dayoffset_seekbar" maxLength="41">11PM</string>
+    <string name="sched_ver" maxLength="41">Penjadwalan eksperimental V2</string>
     <string name="sched_ver_summ">Aktifkan penjadwalan eksperimental. Perubahan dipaksa ke satu arah saat sinkronisasi berikutnya</string>
     <string name="sched_ver_toggle_title">Konfirmasi</string>
     <string name="sched_ver_2to1">Ini akan mereset kartu yang dipelajari, dek terfilter, dan mengubah versi penjadwalan. Lanjut?</string>
     <string name="sched_ver_1to2">Penjadwalan eksperimental dapat mengakibatkan jadwal yang salah. Harap pastikan kamu telah membaca dokumentasi terlebih dulu. Lanjutkan?</string>
-    <string name="pref_keep_screen_on">Layar tetap menyala</string>
+    <string name="pref_keep_screen_on" maxLength="41">Layar tetap menyala</string>
     <string name="pref_keep_screen_on_summ">Nonaktifkan batas waktu layar mati</string>
-    <string name="convert_fen_text">Dukungan notasi catur</string>
+    <string name="convert_fen_text" maxLength="41">Dukungan notasi catur</string>
     <string name="convert_fen_text_summ">Menggambar papan catur dari Notasi Forsyth-Edwards. Notasi harus tertutup dalam tag [fen][/fen].</string>
-    <string name="enable_api_title">Aktifkan API AnkiDroid</string>
+    <string name="enable_api_title" maxLength="41">Aktifkan API AnkiDroid</string>
     <string name="enable_api_summary">Biarkan aplikasi lain terhubung ke AnkiDroid dan baca / tulis data tanpa intervensimu</string>
-    <string name="custom_buttons">Bar tombol aplikasi</string>
+    <string name="custom_buttons" maxLength="41">Bar tombol aplikasi</string>
     <string name="custom_buttons_summary">Sesuaikan tindakan mana yang muncul di bar aplikasi</string>
     <string name="custom_buttons_setting_always_show">Selalu tampilkan</string>
     <string name="custom_buttons_setting_if_room">Tampilkan jika muat</string>
     <string name="custom_buttons_setting_menu_only">Menu saja</string>
-    <string name="reset_custom_buttons">Setel ulang ke awal</string>
-    <string name="thirdparty_apps_title">Aplikasi API pihak ketiga</string>
+    <string name="reset_custom_buttons" maxLength="41">Setel ulang ke awal</string>
+    <string name="thirdparty_apps_title" maxLength="41">Aplikasi API pihak ketiga</string>
     <string name="thirdparty_apps_summary">Lihat daftar aplikasi yang menggunakan API AnkiDroid seperti kamus, alat.</string>
-    <string name="html_javascript_debugging">Pengawakutuan HTML / Javascript</string>
+    <string name="html_javascript_debugging" maxLength="41">Pengawakutuan HTML / Javascript</string>
     <string name="html_javascript_debugging_summ">Aktifkan koneksi WebView jarak jauh, dan simpan kartu HTML ke direktori AnkiDroid</string>
     <!-- Advanced statistics settings -->
-    <string name="advanced_statistics_title">Statistik lanjutan</string>
-    <string name="enable_advanced_statistics_title">Aktifkan statistik lanjutan</string>
+    <string name="advanced_statistics_title" maxLength="41">Statistik lanjutan</string>
+    <string name="enable_advanced_statistics_title" maxLength="41">Aktifkan statistik lanjutan</string>
     <string name="enable_advanced_statistics_summ">Tampilkan statistik prakiraan menurut komputasi atau simulasi ulasan masa depan (diaktifkan) atau di ulasan masa depan yang sudah terjadwal(nonaktif).</string>
-    <string name="advanced_forecast_stats_compute_n_days_title">Hitung n hari pertama, simulasikan sisanya</string>
-    <string name="advanced_forecast_stats_compute_precision_title">Akurasi perhitungan</string>
-    <string name="advanced_forecast_stats_mc_n_iterations_title">Jumlah iterasi dari simulasi</string>
+    <string name="advanced_forecast_stats_compute_n_days_title" maxLength="41">Hitung n hari pertama, simulasikan sisanya</string>
+    <string name="advanced_forecast_stats_compute_precision_title" maxLength="41">Akurasi perhitungan</string>
+    <string name="advanced_forecast_stats_mc_n_iterations_title" maxLength="41">Jumlah iterasi dari simulasi</string>
     <!-- Custom sync server settings -->
-    <string name="custom_sync_server_title">Server sinkronisasi kustom</string>
-    <string name="custom_sync_server_enable_title">Gunakan server sinkronisasi kustom</string>
+    <string name="custom_sync_server_title" maxLength="41">Server sinkronisasi kustom</string>
+    <string name="custom_sync_server_enable_title" maxLength="41">Gunakan server sinkronisasi kustom</string>
     <string name="custom_sync_server_enable_summary">Jika kamu tidak ingin menggunakan layanan AnkiWeb kamu bisa menentukan server alternatif di sini</string>
-    <string name="custom_sync_server_base_url_title">Sinkronisasi url</string>
+    <string name="custom_sync_server_base_url_title" maxLength="41">Sinkronisasi url</string>
     <string name="custom_sync_server_base_url_invalid">Sinkronisasi url tidak valid</string>
-    <string name="custom_sync_server_media_url_title">Url sinkronisasi media</string>
+    <string name="custom_sync_server_media_url_title" maxLength="41">Url sinkronisasi media</string>
     <string name="custom_sync_server_media_url_invalid">Sinkronisasi media tidak valid</string>
     <!-- studyoptions -->
     <string name="deck_conf_group_summ">Perubahan ke opsi grup dek akan mempengaruhi banyak dek. Jika kamu hanya ingin mengubah dek saat ini, harap tambahkan grup opsi baru terlebih dahulu</string>
     <string name="studyoptions_limit_select_tags">Pilih tag</string>
     <!-- Deck configurations -->
-    <string name="deck_conf_deck_description">Deskripsi dek (hanya mengubah dek saat ini)</string>
-    <string name="deck_conf_group">Grup opsi</string>
+    <string name="deck_conf_deck_description" maxLength="41">Deskripsi dek (hanya mengubah dek saat ini)</string>
+    <string name="deck_conf_group" maxLength="41">Grup opsi</string>
     <plurals name="deck_conf_group_summ">
         <item quantity="other">%1$s\n%2$d dek menggunakan grup ini</item>
     </plurals>
-    <string name="deck_conf_new_cards">Kartu baru</string>
-    <string name="deck_conf_rev_cards" comment="Name of the deck options submenu for configuring reviews of due cards.">Ulasan</string>
-    <string name="deck_conf_lps_cards" comment="Label of the submenu stating how lapses cards are treated.">Kelupaan</string>
-    <string name="deck_conf_general">Umum</string>
-    <string name="deck_conf_reminders">Pengingat</string>
-    <string name="deck_conf_steps">Langkah-langkah (dalam menit)</string>
-    <string name="deck_conf_order">Urutan</string>
-    <string name="deck_conf_new_cards_day">Kartu baru/hari</string>
-    <string name="deck_conf_graduating_ivl">Interval kelulusan</string>
+    <string name="deck_conf_new_cards" maxLength="41">Kartu baru</string>
+    <string name="deck_conf_rev_cards" maxLength="41" comment="Name of the deck options submenu for configuring reviews of due cards.">Ulasan</string>
+    <string name="deck_conf_lps_cards" maxLength="41" comment="Label of the submenu stating how lapses cards are treated.">Kelupaan</string>
+    <string name="deck_conf_general" maxLength="41">Umum</string>
+    <string name="deck_conf_reminders" maxLength="41">Pengingat</string>
+    <string name="deck_conf_steps" maxLength="41">Langkah-langkah (dalam menit)</string>
+    <string name="deck_conf_order" maxLength="41">Urutan</string>
+    <string name="deck_conf_new_cards_day" maxLength="41">Kartu baru/hari</string>
+    <string name="deck_conf_graduating_ivl" maxLength="41">Interval kelulusan</string>
     <string name="deck_conf_days">XXX hari</string>
-    <string name="deck_conf_easy_ivl">Interval mudah</string>
-    <string name="deck_conf_start_ease">Mulai renggang</string>
-    <string name="deck_conf_max_rev">Ulasan maksimal/hari</string>
-    <string name="deck_conf_new_bury">Pendam kartu baru terkait</string>
+    <string name="deck_conf_easy_ivl" maxLength="41">Interval mudah</string>
+    <string name="deck_conf_start_ease" maxLength="41">Mulai renggang</string>
+    <string name="deck_conf_max_rev" maxLength="41">Ulasan maksimal/hari</string>
+    <string name="deck_conf_new_bury" maxLength="41">Pendam kartu baru terkait</string>
     <string name="deck_conf_new_bury_summ">Kartu baru terkait dipendam sampai besok</string>
-    <string name="deck_conf_rev_bury">Pendam ulasan terkait</string>
+    <string name="deck_conf_rev_bury" maxLength="41">Pendam ulasan terkait</string>
     <string name="deck_conf_rev_bury_summ">Ulasan terkait dipendam sampai besok</string>
-    <string name="deck_conf_use_general_timeout_settings">Gunakan pengaturan umum</string>
+    <string name="deck_conf_use_general_timeout_settings" maxLength="41">Gunakan pengaturan umum</string>
     <string name="deck_conf_use_general_timeout_settings_summ">Gunakan pengaturan umum \'Tampilkan jawaban otomatis\' daripada menggunakan pengaturan grup ini.</string>
-    <string name="deck_conf_easy_bonus">Bonus mudah</string>
-    <string name="deck_conf_hard_factor">Hard interval</string>
-    <string name="deck_conf_ivl_fct">Pengubah interval</string>
-    <string name="deck_conf_max_ivl">Interval maksimal</string>
-    <string name="deck_conf_new_lps_ivl">Interval baru</string>
-    <string name="deck_conf_min_ivl">Interval minimal</string>
-    <string name="deck_conf_leech_thres">Ambang leech</string>
+    <string name="deck_conf_easy_bonus" maxLength="41">Bonus mudah</string>
+    <string name="deck_conf_hard_factor" maxLength="41">Hard interval</string>
+    <string name="deck_conf_ivl_fct" maxLength="41">Pengubah interval</string>
+    <string name="deck_conf_max_ivl" maxLength="41">Interval maksimal</string>
+    <string name="deck_conf_new_lps_ivl" maxLength="41">Interval baru</string>
+    <string name="deck_conf_min_ivl" maxLength="41">Interval minimal</string>
+    <string name="deck_conf_leech_thres" maxLength="41">Ambang leech</string>
     <string name="deck_conf_fails">XXX kelupaan</string>
-    <string name="deck_conf_leech_action">Tindakan leech</string>
-    <string name="deck_conf_max_time">Batas waktu menjawab</string>
+    <string name="deck_conf_leech_action" maxLength="41">Tindakan leech</string>
+    <string name="deck_conf_max_time" maxLength="41">Batas waktu menjawab</string>
     <string name="deck_conf_seconds">XXX detik</string>
-    <string name="deck_conf_timer">Tampilkan hitung mundur menjawab</string>
-    <string name="deck_conf_autoplay">Otomatis putar audio</string>
-    <string name="deck_conf_replayq">Ulangi pertanyaan</string>
+    <string name="deck_conf_timer" maxLength="41">Tampilkan hitung mundur menjawab</string>
+    <string name="deck_conf_autoplay" maxLength="41">Otomatis putar audio</string>
+    <string name="deck_conf_replayq" maxLength="41">Ulangi pertanyaan</string>
     <string name="deck_conf_replayq_summ">Saat jawaban ditampilkan, ulangi pertanyaan dan audio jawaban</string>
-    <string name="deck_conf_manage">Manajemen grup</string>
+    <string name="deck_conf_manage" maxLength="41">Manajemen grup</string>
     <string name="deck_conf_manage_summ">Add and change options groups</string>
-    <string name="deck_conf_current_group">Grup saat ini</string>
-    <string name="deck_conf_rename" comment="Menu entry to rename a deck">Ubah nama</string>
-    <string name="deck_conf_reset">Kembalikan ke awal</string>
+    <string name="deck_conf_current_group" maxLength="41">Grup saat ini</string>
+    <string name="deck_conf_rename" maxLength="41" comment="Menu entry to rename a deck">Ubah nama</string>
+    <string name="deck_conf_reset" maxLength="41">Kembalikan ke awal</string>
     <string name="deck_conf_reset_message">Kembalikan opsi kelompok sekarang menjadi seperti awal?</string>
-    <string name="deck_conf_add" comment="Adding a new deck option group">Tambah</string>
+    <string name="deck_conf_add" maxLength="41" comment="Adding a new deck option group">Tambah</string>
     <string name="deck_conf_add_summ">Buat salinan dari grup opsi saat ini</string>
     <string name="deck_conf_remove_message">Hapus grup opsi saat ini?</string>
-    <string name="deck_conf_set_subdecks">Set untuk semua subdek</string>
+    <string name="deck_conf_set_subdecks" maxLength="41">Set untuk semua subdek</string>
     <plurals name="deck_conf_set_subdecks_summ">
         <item quantity="other">%s subdek akan menggunakan grup ini</item>
     </plurals>
     <string name="deck_conf_set_subdecks_message">Set opsi grup pilihan saat ini untuk semua subdek dek ini?</string>
-    <string name="pref_browser_editor_font">Penelusur dan editor fon</string>
-    <string name="deck_conf_cram_filter">Filter</string>
-    <string name="deck_conf_cram_search">Cari</string>
-    <string name="deck_conf_cram_limit">Batasi ke</string>
-    <string name="deck_conf_cram_order">kartu dipilih menurut </string>
-    <string name="deck_conf_cram_reschedule" comment="Title of the box labelled by deck_conf_cram_reschedule_summ">Jadwalkan ulang</string>
+    <string name="pref_browser_editor_font" maxLength="41">Penelusur dan editor fon</string>
+    <string name="deck_conf_cram_filter" maxLength="41">Filter</string>
+    <string name="deck_conf_cram_search" maxLength="41">Cari</string>
+    <string name="deck_conf_cram_limit" maxLength="41">Batasi ke</string>
+    <string name="deck_conf_cram_order" maxLength="41">kartu dipilih menurut </string>
+    <string name="deck_conf_cram_reschedule" maxLength="41" comment="Title of the box labelled by deck_conf_cram_reschedule_summ">Jadwalkan ulang</string>
     <string name="deck_conf_cram_reschedule_summ">Jadwalkan ulang kartu berdasarkan jawabanku di dek ini</string>
-    <string name="deck_conf_cram_steps">Langkah kustom(dalam menit)</string>
-    <string name="deck_conf_cram_steps_summ">Tentukan langkah kustom</string>
-    <string name="deck_conf_reminders_enabled">Aktifkan notifikasi pengingat untuk dek di grup dek ini</string>
-    <string name="deck_conf_reminders_time">Ingatkan saat</string>
+    <string name="deck_conf_cram_steps" maxLength="41">Langkah kustom(dalam menit)</string>
+    <string name="deck_conf_cram_steps_summ" maxLength="41">Tentukan langkah kustom</string>
+    <string name="deck_conf_reminders_enabled" maxLength="41">Aktifkan notifikasi pengingat untuk dek di grup dek ini</string>
+    <string name="deck_conf_reminders_time" maxLength="41">Ingatkan saat</string>
     <!-- analytics options -->
     <string name="analytics_dialog_title">Bantu AnkiDroid jadi lebih baik!</string>
-    <string name="analytics_title">Bagikan data penggunaan fitur</string>
+    <string name="analytics_title" maxLength="41">Bagikan data penggunaan fitur</string>
     <string name="analytics_summ">Kamu bisa berkontribusi ke AnkiDroid dengan membantu tim pengembangan tahu fitur mana yang orang gunakan</string>
-    <string name="note_editor_replace_newlines">Replace newlines with HTML</string>
+    <string name="note_editor_replace_newlines" maxLength="41">Replace newlines with HTML</string>
     <string name="note_editor_replace_newlines_summ">In the Note Editor, convert any instances of &lt;br&gt; to newlines when editing a card.</string>
-    <string name="no_code_formatting">Simple typed answer formatting</string>
+    <string name="no_code_formatting" maxLength="41">Simple typed answer formatting</string>
     <string name="no_code_formatting_summ">Fixes ‘􏿾’ appearing in typed answer results</string>
+    <string name="type_in_answer_focus" maxLength="41">Focus ‘type in answer’</string>
+    <string name="type_in_answer_focus_summ">Automatically focus the ‘type in answer’ field in the reviewer</string>
     <!-- Open Changelog-->
     <string name="open_changelog">Open Changelog</string>
 </resources>

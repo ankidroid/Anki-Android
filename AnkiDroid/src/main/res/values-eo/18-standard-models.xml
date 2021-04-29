@@ -30,7 +30,7 @@
     <!--Note type-->
     <string name="basic_model_name">Baza</string>
     <string name="cloze_model_name">Truteksto</string>
-    <string name="basic_typing_model_name">Bazo (entajpi respondon)</string>
+    <string name="basic_typing_model_name">Bazo (enigi respondon)</string>
     <string name="forward_reverse_model_name">Baza (en ambaŭ direktoj)</string>
     <string name="forward_optional_reverse_model_name">Baza (en unu aŭ ambaŭ direktoj)</string>
 </resources>

@@ -121,12 +121,12 @@
     <string name="menu_edit_tags">Edit tags</string>
     <string name="delete_note_message">Chiar doriţi să ştergeţi această notă şi toate cardurile ei?\n%s sale</string>
     <string name="menu_select">Selectaţi text</string>
+    <string name="menu_lookup">Lookup text</string>
     <string name="menu_search">Căutare în %1$s</string>
     <string name="menu_mark_note">Mark note</string>
     <string name="menu_unmark_note">Unmark note</string>
     <string name="menu_toggle_mic_tool_bar">Check pronunciation</string>
     <string name="new_deck">Create deck</string>
-    <string name="create" comment="Button to create a filtered deck">Creare</string>
     <string name="new_dynamic_deck">Create filtered deck</string>
     <string name="night_mode">Mod de noapte</string>
     <string name="directory_inaccessible">AnkiDroid directory is inaccessible</string>

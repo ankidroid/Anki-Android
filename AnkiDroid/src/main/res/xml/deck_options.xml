@@ -35,7 +35,7 @@
                 android:title="@string/deck_conf_add" />
 
             <com.ichi2.preferences.CustomDialogPreference
-                android:dialogIcon="@drawable/ic_dialog_alert"
+                android:dialogIcon="@drawable/ic_warning_black"
                 android:dialogMessage="@string/deck_conf_remove_message"
                 android:dialogTitle="@string/dialog_positive_remove"
                 android:key="confRemove"
@@ -48,7 +48,7 @@
                 android:title="@string/deck_conf_rename" />
 
             <com.ichi2.preferences.CustomDialogPreference
-                android:dialogIcon="@drawable/ic_dialog_alert"
+                android:dialogIcon="@drawable/ic_warning_black"
                 android:dialogMessage="@string/deck_conf_reset_message"
                 android:dialogTitle="@string/deck_conf_reset"
                 android:key="confRestore"
@@ -56,7 +56,7 @@
                 android:positiveButtonText="@string/dialog_positive_restore"
                 android:title="@string/deck_conf_reset" />
             <com.ichi2.preferences.CustomDialogPreference
-                android:dialogIcon="@drawable/ic_dialog_alert"
+                android:dialogIcon="@drawable/ic_warning_black"
                 android:dialogMessage="@string/deck_conf_set_subdecks_message"
                 android:dialogTitle="@string/deck_conf_set_subdecks"
                 android:key="confSetSubdecks"
@@ -80,13 +80,13 @@
                 android:title="@string/deck_conf_new_cards_day"
                 app:max="9999"
                 app:min="0" />
-            <com.ichi2.preferences.NumberRangePreference
+            <com.ichi2.preferences.IncrementerNumberRangePreference
                 android:key="newGradIvl"
                 android:summary="@string/deck_conf_days"
                 android:title="@string/deck_conf_graduating_ivl"
                 app:max="99"
                 app:min="1" />
-            <com.ichi2.preferences.NumberRangePreference
+            <com.ichi2.preferences.IncrementerNumberRangePreference
                 android:key="newEasy"
                 android:summary="@string/deck_conf_days"
                 android:title="@string/deck_conf_easy_ivl"
@@ -105,7 +105,7 @@
                 android:title="@string/deck_conf_new_bury" />
         </PreferenceScreen>
         <PreferenceScreen android:title="@string/deck_conf_rev_cards" >
-            <com.ichi2.preferences.NumberRangePreference
+            <com.ichi2.preferences.IncrementerNumberRangePreference
                 android:key="revPerDay"
                 android:title="@string/deck_conf_max_rev"
                 app:max="9999"
@@ -178,19 +178,19 @@
                 android:title="@string/deck_conf_steps"
                 app:allowEmpty="true" />
 
-            <com.ichi2.preferences.NumberRangePreference
+            <com.ichi2.preferences.IncrementerNumberRangePreference
                 android:key="lapNewIvl"
                 android:summary="@string/deck_conf_percent"
                 android:title="@string/deck_conf_new_lps_ivl"
                 app:max="100"
                 app:min="0" />
-            <com.ichi2.preferences.NumberRangePreference
+            <com.ichi2.preferences.IncrementerNumberRangePreference
                 android:key="lapMinIvl"
                 android:summary="@string/deck_conf_days"
                 android:title="@string/deck_conf_min_ivl"
                 app:max="99"
                 app:min="1" />
-            <com.ichi2.preferences.NumberRangePreference
+            <com.ichi2.preferences.IncrementerNumberRangePreference
                 android:key="lapLeechThres"
                 android:summary="@string/deck_conf_fails"
                 android:title="@string/deck_conf_leech_thres"
@@ -202,7 +202,7 @@
                 android:title="@string/deck_conf_leech_action" />
         </PreferenceScreen>
         <PreferenceScreen android:title="@string/deck_conf_general" >
-            <com.ichi2.preferences.NumberRangePreference
+            <com.ichi2.preferences.IncrementerNumberRangePreference
                 android:key="maxAnswerTime"
                 android:summary="@string/deck_conf_seconds"
                 android:title="@string/deck_conf_max_time"

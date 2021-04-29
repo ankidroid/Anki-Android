@@ -28,7 +28,7 @@ import java.text.DecimalFormat;
 /**
  * This Class represents a Drawable x-axis
  */
-@SuppressLint("FieldNamingPatternDetector")
+@SuppressLint("NonPublicNonStaticFieldName")
 public class XAxis implements Drawable {
 
     private boolean isIntegerNumbering = false;

@@ -116,12 +116,12 @@
     <string name="menu_edit_tags">Címkék szerkesztése</string>
     <string name="delete_note_message">Biztosan törölni akarod ezt a jegyzetet és az összes kártyáját?\n%s</string>
     <string name="menu_select">Szöveg kijelölése</string>
+    <string name="menu_lookup">Lookup text</string>
     <string name="menu_search">Keresés itt: %1$s</string>
     <string name="menu_mark_note">Jegyzet megjelölése</string>
     <string name="menu_unmark_note">Jegyzet megjelölés megszüntetése</string>
     <string name="menu_toggle_mic_tool_bar">Kiejtés ellenőrzése</string>
     <string name="new_deck">Pakli létrehozása</string>
-    <string name="create" comment="Button to create a filtered deck">Létrehozás</string>
     <string name="new_dynamic_deck">Szűrt pakli létrehozása</string>
     <string name="night_mode">Éjszakai mód</string>
     <string name="directory_inaccessible">Nem érhető el az AnkiDroid könyvtár</string>

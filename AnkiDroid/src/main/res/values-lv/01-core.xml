@@ -121,12 +121,12 @@
     <string name="menu_edit_tags">Edit tags</string>
     <string name="delete_note_message">Tiešām dzēst šo piezīmi un visas pievienotās kārtis?\n%s</string>
     <string name="menu_select">Iezīmēt tekstu</string>
+    <string name="menu_lookup">Lookup text</string>
     <string name="menu_search">Meklēt iekš %1$s</string>
     <string name="menu_mark_note">Mark note</string>
     <string name="menu_unmark_note">Unmark note</string>
     <string name="menu_toggle_mic_tool_bar">Check pronunciation</string>
     <string name="new_deck">Create deck</string>
-    <string name="create" comment="Button to create a filtered deck">Izveidot</string>
     <string name="new_dynamic_deck">Create filtered deck</string>
     <string name="night_mode">Nakts režīms</string>
     <string name="directory_inaccessible">AnkiDroid directory is inaccessible</string>

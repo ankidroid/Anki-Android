@@ -1,3 +1,19 @@
+/****************************************************************************************
+ * Copyright (c) 2015 Timothy Rae <perceptualchaos2@gmail.com>                          *
+ *                                                                                      *
+ * This program is free software; you can redistribute it and/or modify it under        *
+ * the terms of the GNU General Public License as published by the Free Software        *
+ * Foundation; either version 3 of the License, or (at your option) any later           *
+ * version.                                                                             *
+ *                                                                                      *
+ * This program is distributed in the hope that it will be useful, but WITHOUT ANY      *
+ * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A      *
+ * PARTICULAR PURPOSE. See the GNU General Public License for more details.             *
+ *                                                                                      *
+ * You should have received a copy of the GNU General Public License along with         *
+ * this program.  If not, see <http://www.gnu.org/licenses/>.                           *
+ ****************************************************************************************/
+
 package com.ichi2.anki.widgets;
 
 import android.content.Context;
@@ -11,8 +27,7 @@ import com.ichi2.anki.R;
 
 import com.ichi2.libanki.Deck;
 
-import java.util.ArrayList;
-
+import java.util.List;
 
 
 public final class DeckDropDownAdapter extends BaseAdapter {
@@ -21,12 +36,12 @@ public final class DeckDropDownAdapter extends BaseAdapter {
         String getSubtitleText();
     }
 
-    private final Context context;
-    private final ArrayList<Deck> decks;
+    private final Context mContext;
+    private final List<Deck> mDecks;
 
-    public DeckDropDownAdapter(Context context, ArrayList<Deck> decks) {
-        this.context = context;
-        this.decks = decks;
+    public DeckDropDownAdapter(Context context, List<Deck> decks) {
+        this.mContext = context;
+        this.mDecks = decks;
     }
 
     static class DeckDropDownViewHolder {
@@ -37,7 +52,7 @@ public final class DeckDropDownAdapter extends BaseAdapter {
 
     @Override
     public int getCount() {
-        return decks.size() + 1;
+        return mDecks.size() + 1;
     }
 
 
@@ -46,7 +61,7 @@ public final class DeckDropDownAdapter extends BaseAdapter {
         if (position == 0) {
             return null;
         } else {
-            return decks.get(position + 1);
+            return mDecks.get(position + 1);
         }
     }
 
@@ -63,7 +78,7 @@ public final class DeckDropDownAdapter extends BaseAdapter {
         TextView deckNameView;
         TextView deckCountsView;
         if (convertView == null) {
-            convertView = LayoutInflater.from(context).inflate(R.layout.dropdown_deck_selected_item, parent, false);
+            convertView = LayoutInflater.from(mContext).inflate(R.layout.dropdown_deck_selected_item, parent, false);
             deckNameView = convertView.findViewById(R.id.dropdown_deck_name);
             deckCountsView = convertView.findViewById(R.id.dropdown_deck_counts);
             viewHolder = new DeckDropDownViewHolder();
@@ -76,13 +91,13 @@ public final class DeckDropDownAdapter extends BaseAdapter {
             deckCountsView = viewHolder.deckCountsView;
         }
         if (position == 0) {
-            deckNameView.setText(context.getResources().getString(R.string.card_browser_all_decks));
+            deckNameView.setText(mContext.getResources().getString(R.string.card_browser_all_decks));
         } else {
-            Deck deck = decks.get(position - 1);
+            Deck deck = mDecks.get(position - 1);
             String deckName = deck.getString("name");
             deckNameView.setText(deckName);
         }
-        deckCountsView.setText(((SubtitleListener) context).getSubtitleText());
+        deckCountsView.setText(((SubtitleListener) mContext).getSubtitleText());
         return convertView;
     }
 
@@ -91,16 +106,16 @@ public final class DeckDropDownAdapter extends BaseAdapter {
     public View getDropDownView(int position, View convertView, ViewGroup parent) {
         TextView deckNameView;
         if (convertView == null) {
-            convertView = LayoutInflater.from(context).inflate(R.layout.dropdown_deck_item, parent, false);
+            convertView = LayoutInflater.from(mContext).inflate(R.layout.dropdown_deck_item, parent, false);
             deckNameView = convertView.findViewById(R.id.dropdown_deck_name);
             convertView.setTag(deckNameView);
         } else {
             deckNameView = (TextView) convertView.getTag();
         }
         if (position == 0) {
-            deckNameView.setText(context.getResources().getString(R.string.card_browser_all_decks));
+            deckNameView.setText(mContext.getResources().getString(R.string.card_browser_all_decks));
         } else {
-            Deck deck = decks.get(position - 1);
+            Deck deck = mDecks.get(position - 1);
             String deckName = deck.getString("name");
             deckNameView.setText(deckName);
         }

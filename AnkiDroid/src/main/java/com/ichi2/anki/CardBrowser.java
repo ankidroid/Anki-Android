@@ -29,6 +29,8 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.SystemClock;
 
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.CheckResult;
 import androidx.annotation.NonNull;
 import com.google.android.material.snackbar.Snackbar;
@@ -139,7 +141,7 @@ public class CardBrowser extends NavigationDrawerActivity implements
     * When the list is changed, the position member of its elements should get changed.*/
     @NonNull
     private CardCollection<CardCache> mCards = new CardCollection<>();
-    private ArrayList<Deck> mDropDownDecks;
+    private List<Deck> mDropDownDecks;
     private ListView mCardsListView;
     private SearchView mSearchView;
     private MultiColumnListAdapter mCardsAdapter;
@@ -168,9 +170,63 @@ public class CardBrowser extends NavigationDrawerActivity implements
     /** The next deck for the "Change Deck" operation */
     private long mNewDid;
 
-    private static final int EDIT_CARD = 0;
-    private static final int ADD_NOTE = 1;
-    private static final int PREVIEW_CARDS = 2;
+
+    ActivityResultLauncher<Intent> mOnEditCardActivityResult = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(), result -> {
+        Timber.d("onEditCardActivityResult: resultCode=%d", result.getResultCode());
+        if (result.getResultCode() == DeckPicker.RESULT_DB_ERROR) {
+            closeCardBrowser(DeckPicker.RESULT_DB_ERROR);
+        }
+        if (result.getResultCode() != RESULT_CANCELED) {
+            Timber.i("CardBrowser:: CardBrowser: Saving card...");
+            TaskManager.launchCollectionTask(new CollectionTask.UpdateNote(sCardBrowserCard, false, false),
+                    updateCardHandler());
+        }
+        Intent data = result.getData();
+        if (data != null &&
+                (data.getBooleanExtra("reloadRequired", false) || data.getBooleanExtra("noteChanged", false))) {
+            // if reloadRequired or noteChanged flag was sent from note editor then reload card list
+            searchCards();
+            mShouldRestoreScroll = true;
+            // in use by reviewer?
+            if (getReviewerCardId() == mCurrentCardId) {
+                mReloadRequired = true;
+            }
+        }
+        invalidateOptionsMenu();    // maybe the availability of undo changed
+    });
+
+    ActivityResultLauncher<Intent> mOnAddNoteActivityResult = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(), result -> {
+        Timber.d("onAddNoteActivityResult: resultCode=%d", result.getResultCode());
+        if (result.getResultCode() == DeckPicker.RESULT_DB_ERROR) {
+            closeCardBrowser(DeckPicker.RESULT_DB_ERROR);
+        }
+        if (result.getResultCode() == RESULT_OK) {
+            if (mSearchView != null) {
+                mSearchTerms = mSearchView.getQuery().toString();
+                searchCards();
+            } else {
+                Timber.w("Note was added from browser and on return mSearchView == null");
+            }
+        }
+        invalidateOptionsMenu();    // maybe the availability of undo changed
+    });
+
+    ActivityResultLauncher<Intent> mOnPreviewCardsActivityResult = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(), result -> {
+        Timber.d("onPreviewCardsActivityResult: resultCode=%d", result.getResultCode());
+        if (result.getResultCode() == DeckPicker.RESULT_DB_ERROR) {
+            closeCardBrowser(DeckPicker.RESULT_DB_ERROR);
+        }
+        // Previewing can now perform an "edit", so it can pass on a reloadRequired
+        Intent data = result.getData();
+        if (data != null &&
+                (data.getBooleanExtra("reloadRequired", false) || data.getBooleanExtra("noteChanged", false))) {
+            searchCards();
+            if (getReviewerCardId() == mCurrentCardId) {
+                mReloadRequired = true;
+            }
+        }
+        invalidateOptionsMenu();    // maybe the availability of undo changed
+    });
 
     private static final int DEFAULT_FONT_SIZE_RATIO = 100;
     // Should match order of R.array.card_browser_order_labels
@@ -241,7 +297,7 @@ public class CardBrowser extends NavigationDrawerActivity implements
                 return true;
             };
 
-
+    @VisibleForTesting(otherwise = VisibleForTesting.PROTECTED)
     protected void changeCardOrder(int which) {
         if (which != mOrder) {
             mOrder = which;
@@ -267,6 +323,8 @@ public class CardBrowser extends NavigationDrawerActivity implements
             mCards.reverse();
             updateList();
         }
+        // To update the collection
+        getCol().getDb().setMod(true);
     }
 
 
@@ -665,16 +723,18 @@ public class CardBrowser extends NavigationDrawerActivity implements
                 openNoteEditorForCard(clickedCardId);
             }
         });
+
         mCardsListView.setOnItemLongClickListener((adapterView, view, position, id) -> {
             if (mInMultiSelectMode) {
+                boolean hasChanged = false;
                 for (int i = Math.min(mLastSelectedPosition, position); i <= Math.max(mLastSelectedPosition, position); i++) {
-                    // getting the view of particular view and then checking whether it's already checked or not
-                    View childView = mCardsListView.getChildAt(i);
-                    CheckBox cb = childView.findViewById(R.id.card_checkbox);
-                    if (!cb.isChecked()) {
-                        cb.toggle();
-                        onCheck(i, childView);
-                    }
+                    CardCache card = (CardCache) mCardsListView.getItemAtPosition(i);
+
+                    // Add to the set of checked cards
+                    hasChanged |= mCheckedCards.add(card);
+                }
+                if (hasChanged) {
+                    onSelectionChanged();
                 }
             } else {
                 mLastSelectedPosition = position;
@@ -786,10 +846,10 @@ public class CardBrowser extends NavigationDrawerActivity implements
         mCurrentCardId = cardId;
         sCardBrowserCard = getCol().getCard(mCurrentCardId);
         // start note editor using the card we just loaded
-        Intent editCard = new Intent(this, NoteEditor.class);
-        editCard.putExtra(NoteEditor.EXTRA_CALLER, NoteEditor.CALLER_CARDBROWSER_EDIT);
-        editCard.putExtra(NoteEditor.EXTRA_CARD_ID, sCardBrowserCard.getId());
-        startActivityForResultWithAnimation(editCard, EDIT_CARD, LEFT);
+        Intent editCard = new Intent(this, NoteEditor.class)
+                .putExtra(NoteEditor.EXTRA_CALLER, NoteEditor.CALLER_CARDBROWSER_EDIT)
+                .putExtra(NoteEditor.EXTRA_CARD_ID, sCardBrowserCard.getId());
+        this.launchActivityForResultWithAnimation(editCard, mOnEditCardActivityResult, START);
         //#6432 - FIXME - onCreateOptionsMenu crashes if receiving an activity result from edit card when in multiselect
         endMultiSelectMode();
     }
@@ -1248,7 +1308,7 @@ public class CardBrowser extends NavigationDrawerActivity implements
 
     protected void onPreview() {
         Intent previewer = getPreviewIntent();
-        startActivityForResultWithoutAnimation(previewer, PREVIEW_CARDS);
+        this.launchActivityForResultWithoutAnimation(previewer, mOnPreviewCardsActivityResult);
     }
 
 
@@ -1317,7 +1377,7 @@ public class CardBrowser extends NavigationDrawerActivity implements
             try {
                 arrayAdapter.add(deck.getString("name"));
             } catch (JSONException e) {
-                e.printStackTrace();
+                Timber.w(e);
             }
         }
 
@@ -1340,55 +1400,7 @@ public class CardBrowser extends NavigationDrawerActivity implements
     }
 
     private void addNoteFromCardBrowser() {
-        startActivityForResultWithAnimation(getAddNoteIntent(), ADD_NOTE, LEFT);
-    }
-
-
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        // FIXME:
-        Timber.d("onActivityResult(requestCode=%d, resultCode=%d)", requestCode, resultCode);
-        super.onActivityResult(requestCode, resultCode, data);
-
-        if (resultCode == DeckPicker.RESULT_DB_ERROR) {
-            closeCardBrowser(DeckPicker.RESULT_DB_ERROR);
-        }
-
-        if (requestCode == EDIT_CARD && resultCode != RESULT_CANCELED) {
-            Timber.i("CardBrowser:: CardBrowser: Saving card...");
-            TaskManager.launchCollectionTask(new CollectionTask.UpdateNote(sCardBrowserCard, false, false),
-                    updateCardHandler());
-        } else if (requestCode == ADD_NOTE && resultCode == RESULT_OK) {
-            if (mSearchView != null) {
-                mSearchTerms = mSearchView.getQuery().toString();
-                searchCards();
-            } else {
-                Timber.w("Note was added from browser and on return mSearchView == null");
-            }
-        }
-
-        // Previewing can now perform an "edit", so it can pass on a reloadRequired
-        if (requestCode == PREVIEW_CARDS && data != null
-                && (data.getBooleanExtra("reloadRequired", false) || data.getBooleanExtra("noteChanged", false))) {
-            searchCards();
-            if (getReviewerCardId() == mCurrentCardId) {
-                mReloadRequired = true;
-            }
-        }
-
-        if (requestCode == EDIT_CARD &&  data != null &&
-                (data.getBooleanExtra("reloadRequired", false) ||
-                        data.getBooleanExtra("noteChanged", false))) {
-            // if reloadRequired or noteChanged flag was sent from note editor then reload card list
-            searchCards();
-            mShouldRestoreScroll = true;
-            // in use by reviewer?
-            if (getReviewerCardId() == mCurrentCardId) {
-                mReloadRequired = true;
-            }
-        }
-
-        invalidateOptionsMenu();    // maybe the availability of undo changed
+        this.launchActivityForResultWithAnimation(getAddNoteIntent(), mOnAddNoteActivityResult, START);
     }
 
 
@@ -2139,10 +2151,10 @@ public class CardBrowser extends NavigationDrawerActivity implements
             int icon;
             if (hasUnsuspended) {
                 title = R.string.card_browser_suspend_card;
-                icon = R.drawable.ic_action_suspend;
+                icon = R.drawable.ic_pause_circle_outline;
             } else {
                 title = R.string.card_browser_unsuspend_card;
-                icon = R.drawable.ic_action_unsuspend;
+                icon = R.drawable.ic_pause_circle_filled;
             }
             MenuItem suspend_item = actionBarMenu.findItem(R.id.action_suspend_card);
             suspend_item.setTitle(browser.getString(title));
@@ -2150,10 +2162,10 @@ public class CardBrowser extends NavigationDrawerActivity implements
 
             if (hasUnmarked) {
                 title = R.string.card_browser_mark_card;
-                icon = R.drawable.ic_star_outline_white_24dp;
+                icon = R.drawable.ic_star_border_white;
             } else {
                 title = R.string.card_browser_unmark_card;
-                icon = R.drawable.ic_star_white_24dp;
+                icon = R.drawable.ic_star_white;
             }
             MenuItem mark_item = actionBarMenu.findItem(R.id.action_mark_card);
             mark_item.setTitle(browser.getString(title));
@@ -2176,7 +2188,7 @@ public class CardBrowser extends NavigationDrawerActivity implements
     private void closeCardBrowser(int result, Intent data) {
         // Set result and finish
         setResult(result, data);
-        finishWithAnimation(RIGHT);
+        finishWithAnimation(END);
     }
 
     /**
@@ -2338,7 +2350,7 @@ public class CardBrowser extends NavigationDrawerActivity implements
 
 
         @Override
-        public Object getItem(int position) {
+        public CardCache getItem(int position) {
             return getCards().get(position);
         }
 

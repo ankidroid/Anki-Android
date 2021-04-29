@@ -1,21 +1,26 @@
+/****************************************************************************************
+ * Copyright (c) 2021 Arthur Milchior <arthur@milchior.fr>                              *
+ *                                                                                      *
+ * This program is free software; you can redistribute it and/or modify it under        *
+ * the terms of the GNU General Public License as published by the Free Software        *
+ * Foundation; either version 3 of the License, or (at your option) any later           *
+ * version.                                                                             *
+ *                                                                                      *
+ * This program is distributed in the hope that it will be useful, but WITHOUT ANY      *
+ * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A      *
+ * PARTICULAR PURPOSE. See the GNU General Public License for more details.             *
+ *                                                                                      *
+ * You should have received a copy of the GNU General Public License along with         *
+ * this program.  If not, see <http://www.gnu.org/licenses/>.                           *
+ ****************************************************************************************/
+
 package com.ichi2.async;
 
 import android.content.res.Resources;
-import android.os.AsyncTask;
-
-import com.ichi2.libanki.Collection;
-import com.ichi2.utils.ThreadUtil;
-
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.concurrent.TimeUnit;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.annotation.VisibleForTesting;
-import timber.log.Timber;
 
 public abstract class TaskManager {
     @NonNull private static TaskManager sTaskManager = new SingleTaskManager();
@@ -130,28 +135,28 @@ public abstract class TaskManager {
          * Helper class for allowing inner function to publish progress of an AsyncTask.
          */
     public static class ProgressCallback<Progress> {
-        private final Resources res;
-        private final ProgressSender<Progress> task;
+        private final Resources mRes;
+        private final ProgressSender<Progress> mTask;
 
 
         protected ProgressCallback(ProgressSender<Progress> task, Resources res) {
-            this.res = res;
+            this.mRes = res;
             if (res != null) {
-                this.task = task;
+                this.mTask = task;
             } else {
-                this.task = null;
+                this.mTask = null;
             }
         }
 
 
         public Resources getResources() {
-            return res;
+            return mRes;
         }
 
 
         public void publishProgress(Progress value) {
-            if (task != null) {
-                task.doProgress(value);
+            if (mTask != null) {
+                mTask.doProgress(value);
             }
         }
     }

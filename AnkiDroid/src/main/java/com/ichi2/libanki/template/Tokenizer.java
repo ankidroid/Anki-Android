@@ -1,3 +1,19 @@
+/****************************************************************************************
+ * Copyright (c) 2020 Arthur Milchior <arthur@milchior.fr>                              *
+ *                                                                                      *
+ * This program is free software; you can redistribute it and/or modify it under        *
+ * the terms of the GNU General Public License as published by the Free Software        *
+ * Foundation; either version 3 of the License, or (at your option) any later           *
+ * version.                                                                             *
+ *                                                                                      *
+ * This program is distributed in the hope that it will be useful, but WITHOUT ANY      *
+ * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A      *
+ * PARTICULAR PURPOSE. See the GNU General Public License for more details.             *
+ *                                                                                      *
+ * You should have received a copy of the GNU General Public License along with         *
+ * this program.  If not, see <http://www.gnu.org/licenses/>.                           *
+ ****************************************************************************************/
+
 package com.ichi2.libanki.template;
 
 import java.util.Iterator;
@@ -7,11 +23,11 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.annotation.VisibleForTesting;
 
-import static com.ichi2.libanki.template.Tokenizer.TokenKind.CloseConditional;
-import static com.ichi2.libanki.template.Tokenizer.TokenKind.OpenConditional;
-import static com.ichi2.libanki.template.Tokenizer.TokenKind.OpenNegated;
-import static com.ichi2.libanki.template.Tokenizer.TokenKind.Replacement;
-import static com.ichi2.libanki.template.Tokenizer.TokenKind.Text;
+import static com.ichi2.libanki.template.Tokenizer.TokenKind.CLOSE_CONDITIONAL;
+import static com.ichi2.libanki.template.Tokenizer.TokenKind.OPEN_CONDITIONAL;
+import static com.ichi2.libanki.template.Tokenizer.TokenKind.OPEN_NEGATED;
+import static com.ichi2.libanki.template.Tokenizer.TokenKind.REPLACEMENT;
+import static com.ichi2.libanki.template.Tokenizer.TokenKind.TEXT;
 
 /**
  * This class encodes template.rs's file creating template.
@@ -45,23 +61,23 @@ public class Tokenizer implements Iterator<Tokenizer.Token> {
         /**
          * Some text, assumed not to contains {{*}}
          */
-        Text,
+        TEXT,
         /**
          * {{Field name}}
          */
-        Replacement,
+        REPLACEMENT,
         /**
          * {{#Field name}}
          */
-        OpenConditional,
+        OPEN_CONDITIONAL,
         /**
          * {{^Field name}}
          */
-        OpenNegated,
+        OPEN_NEGATED,
         /**
          * {{/Field name}}
          */
-        CloseConditional
+        CLOSE_CONDITIONAL
     }
 
 
@@ -165,7 +181,7 @@ public class Tokenizer implements Iterator<Tokenizer.Token> {
         if (text_size == 0) {
             return null;
         }
-        return new IResult(new Token(Text, template.substring(0, text_size)), template.substring(text_size));
+        return new IResult(new Token(TEXT, template.substring(0, text_size)), template.substring(text_size));
     }
 
 
@@ -180,17 +196,17 @@ public class Tokenizer implements Iterator<Tokenizer.Token> {
         }
         String start = handle.substring(start_pos).trim();
         if (start.length() < 2) {
-            return new Token(Replacement, start);
+            return new Token(REPLACEMENT, start);
         }
         switch (start.charAt(0)) {
             case '#':
-                return new Token(OpenConditional, start.substring(1));
+                return new Token(OPEN_CONDITIONAL, start.substring(1));
             case '/':
-                return new Token(CloseConditional, start.substring(1));
+                return new Token(CLOSE_CONDITIONAL, start.substring(1));
             case '^':
-                return new Token(OpenNegated, start.substring(1));
+                return new Token(OPEN_NEGATED, start.substring(1));
             default:
-                return new Token(Replacement, start);
+                return new Token(REPLACEMENT, start);
         }
     }
 

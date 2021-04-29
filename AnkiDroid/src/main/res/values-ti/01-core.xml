@@ -116,12 +116,12 @@
     <string name="menu_edit_tags">Edit tags</string>
     <string name="delete_note_message">ናይባሓቂ ነዚ ጽሑፍ ከምኡ ውን ነዞም ካርድታትን ክትድምስስ ደሊኻ?\n%s</string>
     <string name="menu_select">ጽሑፍ ምረጽ</string>
+    <string name="menu_lookup">Lookup text</string>
     <string name="menu_search">ኣብ %1$s ርአ</string>
     <string name="menu_mark_note">ጽሑፍ ምልክት ግበረሉ</string>
     <string name="menu_unmark_note">ምልክት ዝገበርካሉ ጽሑፍ ምልክቱ ደምስስ</string>
     <string name="menu_toggle_mic_tool_bar">Check pronunciation</string>
     <string name="new_deck">ሓዲሽ ባይታ ፍጠር</string>
-    <string name="create" comment="Button to create a filtered deck">ፍጠር</string>
     <string name="new_dynamic_deck">ዝፍለ ባይታ ፍጠር</string>
     <string name="night_mode">ናይ እዋን ለይቲ ኩነት</string>
     <string name="directory_inaccessible">ዲክሽነርይ AnkiDroid ክእቶ ኣይክእልን ኢዩ።</string>

@@ -41,6 +41,13 @@
     <issue id="WrongConstant" severity="fatal" />
     <issue id="WrongViewCast" severity="fatal" />
 
+    <!--           RTL Rules               -->
+    <issue id="RtlCompat" severity="fatal" />
+    <issue id="RtlEnabled" severity="fatal" />
+    <issue id="RtlHardcoded" severity="fatal" />
+    <!-- RtlSymmetry is disabled because we already have RtlHardcoded rule enabled -->
+    <issue id="RtlSymmetry" severity="ignore" />
+
     <!-- This come from Timber and we need to also ignore them  -->
     <issue id="BinaryOperationInTimber" severity="ignore" />
     <issue id="LogNotTimber" severity="ignore" />
@@ -271,10 +278,6 @@
     <issue id="ResourceCycle" severity="ignore" />
     <issue id="ResourceName" severity="ignore" />
     <issue id="ValidRestrictions" severity="ignore" />
-    <issue id="RtlCompat" severity="ignore" />
-    <issue id="RtlEnabled" severity="ignore" />
-    <issue id="RtlSymmetry" severity="ignore" />
-    <issue id="RtlHardcoded" severity="ignore" />
     <issue id="ScrollViewSize" severity="ignore" />
     <issue id="SdCardPath" severity="ignore" />
     <issue id="SecureRandom" severity="ignore" />

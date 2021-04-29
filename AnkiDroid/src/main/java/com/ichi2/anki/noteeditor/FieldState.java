@@ -82,7 +82,7 @@ public class FieldState {
             JSONArray flds = mEditor.getCurrentFields();
             for (int fldIdx = 0; fldIdx < flds.length(); fldIdx++) {
                 if (flds.getJSONObject(fldIdx).getBoolean("sticky")) {
-                    fieldEditLines.get(fldIdx).setContent(currentFieldStrings[fldIdx], type.replaceNewlines);
+                    fieldEditLines.get(fldIdx).setContent(currentFieldStrings[fldIdx], type.mReplaceNewlines);
                 }
             }
         }
@@ -91,7 +91,7 @@ public class FieldState {
             String[] currentFieldStrings = mEditor.getCurrentFieldStrings();
 
             for (int i = 0; i < Math.min(currentFieldStrings.length, fieldEditLines.size()); i++) {
-                fieldEditLines.get(i).setContent(currentFieldStrings[i], type.replaceNewlines);
+                fieldEditLines.get(i).setContent(currentFieldStrings[i], type.mReplaceNewlines);
             }
         }
 
@@ -123,7 +123,7 @@ public class FieldState {
             FieldEditLine edit_line_view = new FieldEditLine(mEditor);
             editLines.add(edit_line_view);
             edit_line_view.setName(fields[i][0]);
-            edit_line_view.setContent(fields[i][1], type.replaceNewlines);
+            edit_line_view.setContent(fields[i][1], type.mReplaceNewlines);
             edit_line_view.setOrd(i);
         }
         return editLines;
@@ -133,8 +133,8 @@ public class FieldState {
     private String[][] getFields(FieldChangeType type) {
         if (type.mType == Type.REFRESH_WITH_MAP) {
             String[][] items = mEditor.getFieldsFromSelectedNote();
-            Map<String, Pair<Integer, JSONObject>> fMapNew = Models.fieldMap(type.newModel);
-            return FieldState.fromFieldMap(mEditor, items, fMapNew, type.modelChangeFieldMap);
+            Map<String, Pair<Integer, JSONObject>> fMapNew = Models.fieldMap(type.mNewModel);
+            return FieldState.fromFieldMap(mEditor, items, fMapNew, type.mModelChangeFieldMap);
         }
         return mEditor.getFieldsFromSelectedNote();
     }
@@ -212,19 +212,19 @@ public class FieldState {
     public static class FieldChangeType {
         private final Type mType;
 
-        private Map<Integer, Integer> modelChangeFieldMap;
-        private Model newModel;
-        private final boolean replaceNewlines;
+        private Map<Integer, Integer> mModelChangeFieldMap;
+        private Model mNewModel;
+        private final boolean mReplaceNewlines;
 
         public FieldChangeType(Type type, boolean replaceNewlines) {
             this.mType = type;
-            this.replaceNewlines = replaceNewlines;
+            this.mReplaceNewlines = replaceNewlines;
         }
 
         public static FieldChangeType refreshWithMap(Model newModel, Map<Integer, Integer> modelChangeFieldMap, boolean replaceNewlines) {
             FieldChangeType typeClass = new FieldChangeType(Type.REFRESH_WITH_MAP, replaceNewlines);
-            typeClass.newModel = newModel;
-            typeClass.modelChangeFieldMap = modelChangeFieldMap;
+            typeClass.mNewModel = newModel;
+            typeClass.mModelChangeFieldMap = modelChangeFieldMap;
             return typeClass;
         }
 

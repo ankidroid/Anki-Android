@@ -21,7 +21,6 @@ import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Parcel;
 import android.os.Parcelable;
-import android.os.SystemClock;
 
 import com.ichi2.anki.AnkiActivity;
 import com.ichi2.anki.AnkiDroidApp;
@@ -36,14 +35,20 @@ import com.ichi2.utils.IntentUtil;
 
 import org.acra.ACRA;
 import org.acra.config.DialogConfigurationBuilder;
+import org.acra.config.LimiterData;
 
 import java.io.Serializable;
+import java.lang.reflect.Field;
+import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Calendar;
+import java.util.List;
 
 import androidx.annotation.DrawableRes;
 import androidx.annotation.StringRes;
 import androidx.fragment.app.DialogFragment;
+import timber.log.Timber;
 
 public class HelpDialog {
 
@@ -71,21 +76,13 @@ public class HelpDialog {
                         new FunctionItem(R.string.help_item_report_bug, R.drawable.ic_bug_report_black_24dp, UsageAnalytics.Actions.OPENED_REPORT_BUG, HelpDialog::openFeedback),
                         exceptionReportItem
                 ),
-                new ItemHeader(R.string.help_title_support_ankidroid, R.drawable.ic_heart_black_24dp, UsageAnalytics.Actions.OPENED_SUPPORT_ANKIDROID,
-                        new LinkItem(R.string.help_item_support_opencollective_donate, R.drawable.ic_donate_black_24dp, UsageAnalytics.Actions.OPENED_DONATE, R.string.link_opencollective_donate),
-                        new LinkItem(R.string.multimedia_editor_trans_translate, R.drawable.ic_language_black_24dp, UsageAnalytics.Actions.OPENED_TRANSLATE, R.string.link_translation),
-                        new LinkItem(R.string.help_item_support_develop_ankidroid, R.drawable.ic_build_black_24, UsageAnalytics.Actions.OPENED_DEVELOP, R.string.link_ankidroid_development_guide),
-                        rateAppItem,
-                        new LinkItem(R.string.help_item_support_other_ankidroid, R.drawable.ic_help_black_24dp, UsageAnalytics.Actions.OPENED_OTHER, R.string.link_contribution),
-                        new FunctionItem(R.string.send_feedback, R.drawable.ic_email_black_24dp, UsageAnalytics.Actions.OPENED_SEND_FEEDBACK, HelpDialog::openFeedback)
-                ),
                 new ItemHeader(R.string.help_title_community, R.drawable.ic_people_black_24dp, UsageAnalytics.Actions.OPENED_COMMUNITY,
                         new LinkItem(R.string.help_item_anki_forums, R.drawable.ic_forum_black_24dp, UsageAnalytics.Actions.OPENED_ANKI_FORUMS, R.string.link_anki_forum),
-                        new LinkItem(R.string.help_item_reddit, R.drawable.ic_mail_outline_black_24dp, UsageAnalytics.Actions.OPENED_REDDIT, R.string.link_reddit),
+                        new LinkItem(R.string.help_item_reddit, R.drawable.reddit, UsageAnalytics.Actions.OPENED_REDDIT, R.string.link_reddit),
                         new LinkItem(R.string.help_item_mailing_list, R.drawable.ic_email_black_24dp, UsageAnalytics.Actions.OPENED_MAILING_LIST, R.string.link_forum),
-                        new LinkItem(R.string.help_item_discord, R.drawable.ic_message_black_24dp, UsageAnalytics.Actions.OPENED_DISCORD, R.string.link_discord),
-                        new LinkItem(R.string.help_item_facebook, R.drawable.ic_link_black_24dp, UsageAnalytics.Actions.OPENED_FACEBOOK, R.string.link_facebook),
-                        new LinkItem(R.string.help_item_twitter, R.drawable.ic_link_black_24dp, UsageAnalytics.Actions.OPENED_TWITTER, R.string.link_twitter)
+                        new LinkItem(R.string.help_item_discord, R.drawable.discord, UsageAnalytics.Actions.OPENED_DISCORD, R.string.link_discord),
+                        new LinkItem(R.string.help_item_facebook, R.drawable.facebook, UsageAnalytics.Actions.OPENED_FACEBOOK, R.string.link_facebook),
+                        new LinkItem(R.string.help_item_twitter, R.drawable.twitter, UsageAnalytics.Actions.OPENED_TWITTER, R.string.link_twitter)
                 )
         };
 
@@ -96,6 +93,26 @@ public class HelpDialog {
         }
 
         return RecursivePictureMenu.createInstance(itemList, R.string.help);
+    }
+
+    public static DialogFragment createInstanceForSupportAnkiDroid(Context context) {
+        UsageAnalytics.sendAnalyticsEvent(UsageAnalytics.Category.LINK_CLICKED, UsageAnalytics.Actions.OPENED_SUPPORT_ANKIDROID);
+        RateAppItem rateAppItem = new RateAppItem(R.string.help_item_support_rate_ankidroid, R.drawable.ic_star_black_24, UsageAnalytics.Actions.OPENED_RATE);
+        Item[] allItems = {
+                new LinkItem(R.string.help_item_support_opencollective_donate, R.drawable.ic_donate_black_24dp, UsageAnalytics.Actions.OPENED_DONATE, R.string.link_opencollective_donate),
+                new LinkItem(R.string.multimedia_editor_trans_translate, R.drawable.ic_language_black_24dp, UsageAnalytics.Actions.OPENED_TRANSLATE, R.string.link_translation),
+                new LinkItem(R.string.help_item_support_develop_ankidroid, R.drawable.ic_build_black_24, UsageAnalytics.Actions.OPENED_DEVELOP, R.string.link_ankidroid_development_guide),
+                rateAppItem,
+                new LinkItem(R.string.help_item_support_other_ankidroid, R.drawable.ic_help_black_24dp, UsageAnalytics.Actions.OPENED_OTHER, R.string.link_contribution),
+                new FunctionItem(R.string.send_feedback, R.drawable.ic_email_black_24dp, UsageAnalytics.Actions.OPENED_SEND_FEEDBACK, HelpDialog::openFeedback)
+        };
+
+        ArrayList<Item> itemList = new ArrayList<>(Arrays.asList(allItems));
+
+        if (!IntentUtil.canOpenIntent(context, AnkiDroidApp.getMarketIntent(context))) {
+            RecursivePictureMenu.removeFrom(itemList, rateAppItem);
+        }
+        return RecursivePictureMenu.createInstance(itemList, R.string.help_title_support_ankidroid);
     }
 
     public static class RateAppItem extends Item implements Parcelable {
@@ -231,12 +248,10 @@ public class HelpDialog {
 
     private static class ExceptionReportItem extends Item implements Parcelable {
 
-        private static Long lastClickStamp;
-        final long currentTimestamp = SystemClock.uptimeMillis();
-        final int minIntervalMS = 60000;
-        final String exceptionMessage = "Exception report sent by user manually";
+        private final static int MIN_INTERVAL_MS = 60000;
+        private final static String EXCEPTION_MESSAGE = "Exception report sent by user manually";
 
-        public ExceptionReportItem(@StringRes int titleRes, @DrawableRes int iconRes, String analyticsRes) {
+        private ExceptionReportItem(@StringRes int titleRes, @DrawableRes int iconRes, String analyticsRes) {
             super(titleRes, iconRes, analyticsRes);
         }
 
@@ -265,20 +280,53 @@ public class HelpDialog {
             }
         }
 
+
+        /**
+         * Check the ACRA report store and return the timestamp of the last report.
+         *
+         * @param activity the Activity used for Context access when interrogating ACRA reports
+         * @return the timestamp of the most recent report, or -1 if no reports at all
+         */
+        @SuppressWarnings("unchecked") // Upstream issue for access to field/method: https://github.com/ACRA/acra/issues/843
+        private long getTimestampOfLastReport(AnkiActivity activity) {
+            try {
+                // The ACRA LimiterData holds a timestamp for every generated report
+                LimiterData limiterData = LimiterData.load(activity);
+                Field limiterDataListField = limiterData.getClass().getDeclaredField("list");
+                limiterDataListField.setAccessible(true);
+                List<LimiterData.ReportMetadata> limiterDataList = (List<LimiterData.ReportMetadata>)limiterDataListField.get(limiterData);
+                for (LimiterData.ReportMetadata report : limiterDataList) {
+                    if (!report.getExceptionClass().equals(UserSubmittedException.class.getName())) {
+                        continue;
+                    }
+                    Method timestampMethod = report.getClass().getDeclaredMethod("getTimestamp");
+                    timestampMethod.setAccessible(true);
+                    Calendar timestamp = (Calendar)timestampMethod.invoke(report);
+                    // Limiter ensures there is only one report for the class, so if we found it, return it
+                    return timestamp.getTimeInMillis();
+                }
+            } catch (Exception e) {
+                Timber.w(e, "Unexpected exception checking for recent reports");
+            }
+
+            return -1;
+        }
+
         private void sendReport(AnkiActivity activity) {
-            if (lastClickStamp == null || currentTimestamp - lastClickStamp > minIntervalMS) {
+            long currentTimestamp = activity.getCol().getTime().intTimeMS();
+            long lastReportTimestamp = getTimestampOfLastReport(activity);
+            if ((currentTimestamp - lastReportTimestamp) > MIN_INTERVAL_MS) {
                 AnkiDroidApp.deleteACRALimiterData(activity);
                 AnkiDroidApp.sendExceptionReport(
-                        new UserSubmittedException(exceptionMessage),
+                        new UserSubmittedException(EXCEPTION_MESSAGE),
                         "AnkiDroidApp.HelpDialog");
-                lastClickStamp = currentTimestamp;
             } else {
                 UIUtils.showThemedToast(activity, activity.getString(R.string.help_dialog_exception_report_debounce),
                         true);
             }
         }
 
-        protected ExceptionReportItem(Parcel in) {
+        private ExceptionReportItem(Parcel in) {
             super(in);
         }
 

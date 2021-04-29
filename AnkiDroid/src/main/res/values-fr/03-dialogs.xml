@@ -43,7 +43,7 @@
     <string name="check_db_acknowledge">Base de données vérifiée</string>
     <string name="check_db_acknowledge_shrunk">Base de données vérifiée et optimisée.\nRéduite de %d Mo.</string>
     <string name="contextmenu_deckpicker_delete_deck">Supprimer le jeu de cartes</string>
-    <string name="delete_deck_default_deck">Le parquet par défaut ne peut pas être supprimé.</string>
+    <string name="delete_deck_default_deck">Le paquet par défaut ne peut pas être supprimé.</string>
     <string name="delete_deck_title">Supprimer le paquet ?</string>
     <plurals name="delete_deck_message">
         <item quantity="one">Supprimez toutes les cartes dans %1$s ? Il contient %2$d carte.</item>
@@ -98,7 +98,7 @@
     <string name="intent_aedict_empty">La catégorie « default » est vide</string>
     <string name="intent_aedict_category">Pour ajouter des cartes à AnkiDroid, enlevez toutes les catégories du Bloc-notes, ou créez une catégorie « default »</string>
     <string name="custom_study_new_total_new">Nouvelles cartes dans le paquet: %d</string>
-    <string name="custom_study_rev_total_rev">Révisions dues dans le paquet: %d</string>
+    <string name="custom_study_rev_total_rev">À revoir dans ce paquet : %d</string>
     <string name="custom_study_new_extend">Augmentation/diminution (« -3 ») de la limite actuelle de la nouvelle carte</string>
     <string name="custom_study_rev_extend">Augmentation/diminution (« -3 ») de la limite de révision d\'aujourd\'hui de</string>
     <string name="custom_study_forgotten">Revoir les cartes oubliées dans les x derniers jours :</string>
@@ -235,4 +235,11 @@
         <item quantity="one">Une synchronisation automatique peut être déclenchée dans %d seconde</item>
         <item quantity="other">Une synchronisation automatique peut être déclenchée dans %d secondes</item>
     </plurals>
+    <string name="deck_picker_new">Nombre de nouvelles cartes à voir aujourd\'hui dans ce paquet.</string>
+    <string name="deck_picker_rev">Nombre de cartes prévues aujourd\'hui dans ce paquet.</string>
+    <string name="deck_picker_lrn">Nombre de cartes en cours d\'apprentissage dans ce paquet.</string>
+    <!-- This description is valid fos
+    sched V2. For V1, it was counting the number of repetitions of cards in learning. This approximation is acceptable
+    for the sake of simplicity and because V1 will leave.-->
+    <string name="deck_picker_counts">Ouvrir la page d\'aperçu du paquet contenant le nombre de cartes à voir aujourd\'hui.</string>
 </resources>

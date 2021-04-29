@@ -1,3 +1,19 @@
+/****************************************************************************************
+ * Copyright (c) 2020 Arthur Milchior <arthur@milchior.fr>                              *
+ *                                                                                      *
+ * This program is free software; you can redistribute it and/or modify it under        *
+ * the terms of the GNU General Public License as published by the Free Software        *
+ * Foundation; either version 3 of the License, or (at your option) any later           *
+ * version.                                                                             *
+ *                                                                                      *
+ * This program is distributed in the hope that it will be useful, but WITHOUT ANY      *
+ * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A      *
+ * PARTICULAR PURPOSE. See the GNU General Public License for more details.             *
+ *                                                                                      *
+ * You should have received a copy of the GNU General Public License along with         *
+ * this program.  If not, see <http://www.gnu.org/licenses/>.                           *
+ ****************************************************************************************/
+
 package com.ichi2.libanki;
 
 import com.ichi2.anki.AnkiDroidApp;
@@ -10,19 +26,19 @@ public class StdModels {
     /** Essentially, the default name. As a resource, so that it can
      * be localized later. */
     @StringRes
-    private final int defaultName;
+    private final int mDefaultName;
     /**
      * Funtion creating the standard model. Needs to be a funtion to take the local language into account.
      */
-    private final CreateStdModels fun;
+    private final CreateStdModels mFun;
 
     interface CreateStdModels {
         Model create(Models mm, String name);
     }
 
     public StdModels(CreateStdModels fun, @StringRes int defaultName) {
-        this.fun = fun;
-        this.defaultName = defaultName;
+        this.mFun = fun;
+        this.mDefaultName = defaultName;
     }
 
     private Model _new(Models mm) {
@@ -31,7 +47,7 @@ public class StdModels {
     }
 
     private Model _new(Models mm, String name) {
-        return fun.create(mm, name);
+        return mFun.create(mm, name);
     }
 
     public Model add(Collection col, String name) {
@@ -49,13 +65,13 @@ public class StdModels {
     }
 
     public String getDefaultName() {
-        return AnkiDroidApp.getAppResources().getString(defaultName);
+        return AnkiDroidApp.getAppResources().getString(mDefaultName);
     }
 
 
     /// create the standard models
 
-    public static final StdModels basicModel = new StdModels(
+    public static final StdModels BASIC_MODEL = new StdModels(
             (mm, name) -> {
                 Model m = mm.newModel(name);
                 String frontName = AnkiDroidApp.getAppResources().getString(R.string.front_field_name);
@@ -73,9 +89,9 @@ public class StdModels {
             },
             R.string.basic_model_name);
 
-    public static final StdModels basicTypingModel = new StdModels
+    public static final StdModels BASIC_TYPING_MODEL = new StdModels
         ((mm, name) -> {
-        Model m = basicModel._new(mm, name);
+        Model m = BASIC_MODEL._new(mm, name);
         JSONObject t = m.getJSONArray("tmpls").getJSONObject(0);
         String frontName = m.getJSONArray("flds").getJSONObject(0).getString("name");
         String backName = m.getJSONArray("flds").getJSONObject(1).getString("name");
@@ -85,9 +101,9 @@ public class StdModels {
     },
         R.string.basic_typing_model_name);
 
-    public static final StdModels forwardReverseModel = new StdModels
+    public static final StdModels FORWARD_REVERSE_MODEL = new StdModels
         ((mm, name) -> {
-        Model m = basicModel._new(mm, name);
+        Model m = BASIC_MODEL._new(mm, name);
         String frontName = m.getJSONArray("flds").getJSONObject(0).getString("name");
         String backName = m.getJSONArray("flds").getJSONObject(1).getString("name");
         String cardTwoName = AnkiDroidApp.getAppResources().getString(R.string.card_n_name, 2);
@@ -99,9 +115,9 @@ public class StdModels {
     },
         R.string.forward_reverse_model_name);
 
-    public static final StdModels forwardOptionalReverseModel = new StdModels
+    public static final StdModels FORWARD_OPTIONAL_REVERSE_MODEL = new StdModels
         ((mm, name) -> {
-        Model m = forwardReverseModel._new(mm, name);
+        Model m = FORWARD_REVERSE_MODEL._new(mm, name);
         String av = AnkiDroidApp.getAppResources().getString(R.string.field_to_ask_front_name);
         JSONObject fm = mm.newField(av);
         mm.addFieldInNewModel(m, fm);
@@ -111,7 +127,7 @@ public class StdModels {
     },
         R.string.forward_optional_reverse_model_name);
 
-    public static final StdModels clozeModel = new StdModels
+    public static final StdModels CLOZE_MODEL = new StdModels
         ((mm, name) -> {
         Model m = mm.newModel(name);
         m.put("type", Consts.MODEL_CLOZE);
@@ -132,13 +148,13 @@ public class StdModels {
     },
         R.string.cloze_model_name);
 
-    public static final StdModels[] stdModels =
+    public static final StdModels[] STD_MODELS =
     {
-        basicModel,
-        basicTypingModel,
-        forwardReverseModel,
-        forwardOptionalReverseModel,
-        clozeModel,
+        BASIC_MODEL,
+        BASIC_TYPING_MODEL,
+        FORWARD_REVERSE_MODEL,
+        FORWARD_OPTIONAL_REVERSE_MODEL,
+        CLOZE_MODEL,
     };
 }
 

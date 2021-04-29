@@ -116,6 +116,11 @@ public class AnkiDroidCrashReportDialog extends CrashReportDialog implements Dia
             // Send the crash report
             mHelper.sendCrash(mUserComment.getText().toString(), "");
         } else {
+            // If the user got to the dialog, they were not limited.
+            // The limiter persists it's limit info *before* the user cancels.
+            // Therefore, on cancel, purge limits to make sure the user may actually send in future.
+            // Better to maybe send to many reports than definitely too few.
+            AnkiDroidApp.deleteACRALimiterData(this);
             mHelper.cancelReports();
         }
 

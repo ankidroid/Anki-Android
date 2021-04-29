@@ -25,10 +25,8 @@ import android.text.TextUtils;
 import android.util.Pair;
 
 import com.ichi2.async.CancelListener;
-
 import com.ichi2.async.CollectionTask;
 import com.ichi2.async.ProgressSender;
-import com.ichi2.libanki.Deck;
 import com.ichi2.utils.JSONArray;
 import com.ichi2.utils.JSONObject;
 
@@ -37,13 +35,10 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
-import java.util.Set;
-import java.util.TreeMap;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -51,6 +46,7 @@ import androidx.annotation.CheckResult;
 import timber.log.Timber;
 
 import static com.ichi2.async.CancelListener.isCancelled;
+import static com.ichi2.async.ProgressSender.publishProgress;
 import static com.ichi2.libanki.stats.Stats.SECONDS_PER_DAY;
 
 @SuppressWarnings({"PMD.ExcessiveClassLength", "PMD.AvoidThrowingRawExceptionTypes","PMD.AvoidReassigningParameters","PMD.NPathComplexity","PMD.MethodNamingConventions"})
@@ -87,17 +83,17 @@ public class Finder {
 
     @CheckResult
     public List<Long> findCards(String query, boolean _order, CollectionTask.PartialSearch task) {
-        return _findCards(query, _order, task);
+        return _findCards(query, _order, task, task == null ? null : task.getProgressSender());
     }
 
 
     @CheckResult
     private List<Long> _findCards(String query, Object _order) {
-        return _findCards(query, _order, null);
+        return _findCards(query, _order, null, null);
     }
 
     @CheckResult
-    private List<Long> _findCards(String query, Object _order, CollectionTask.PartialSearch task) {
+    private List<Long> _findCards(String query, Object _order, CancelListener cancellation, ProgressSender<Long> progress) {
         String[] tokens = _tokenize(query);
         Pair<String, String[]> res1 = _where(tokens);
         String preds = res1.first;
@@ -111,17 +107,13 @@ public class Finder {
         boolean rev = res2.second;
         String sql = _query(preds, order);
         Timber.v("Search query '%s' is compiled as '%s'.", query, sql);
-        boolean sendProgress = task != null;
         try (Cursor cur = mCol.getDb().getDatabase().query(sql, args)) {
             while (cur.moveToNext()) {
-                if (isCancelled(task)) {
+                if (isCancelled(cancellation)) {
                     return new ArrayList<>(0);
                 }
                 res.add(cur.getLong(0));
-                if (sendProgress && res.size() > task.getNumCardsToRender()) {
-                    task.doProgress(res);
-                    sendProgress = false;
-                }
+                publishProgress(progress, cur.getLong(0));
             }
         } catch (SQLException e) {
             // invalid grouping
@@ -675,10 +667,10 @@ public class Finder {
             ids = dids(mCol.getDecks().selected());
         } else if (!val.contains("*")) {
             // single deck
-            ids = dids(mCol.getDecks().id_dont_create(val));
+            ids = dids(mCol.getDecks().id_for_name(val));
         } else {
             // wildcard
-            ids = dids(mCol.getDecks().id_dont_create(val));
+            ids = dids(mCol.getDecks().id_for_name(val));
             if (ids == null) {
                 ids = new ArrayList<>();
                 val = val.replace("*", ".*");
