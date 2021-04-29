@@ -361,7 +361,9 @@ public class ModelFieldEditor extends AnkiActivity implements LocaleSelectionDia
                 .positiveText(R.string.dialog_ok)
                 .onPositive((dialog, which) -> {
                         String newPosition = mFieldNameInput.getText().toString();
-                        int pos;
+                        final int pos;
+                        final Model model = mMod;
+                        final JSONObject noteField = mNoteFields.getJSONObject(mCurrentPos);
                         try {
                             pos = Integer.parseInt(newPosition);
                         } catch (NumberFormatException n) {
@@ -375,8 +377,19 @@ public class ModelFieldEditor extends AnkiActivity implements LocaleSelectionDia
                         } else {
                             changeHandler listener = changeFieldHandler();
                             // Input is valid, now attempt to modify
-                            TaskDelegate<Void, Boolean> repositionField = new CollectionTask.RepositionField(mMod,
-                                    mNoteFields.getJSONObject(mCurrentPos), pos - 1);
+                            TaskDelegate<Void, Boolean> repositionField = (@NonNull Collection col, @NonNull ProgressSenderAndCancelListener<Void> collectionTask) -> {
+                                Timber.d("doInBackgroundRepositionField");
+
+                                try {
+                                    col.getModels().moveField(mMod, noteField, pos - 1);
+                                    col.save();
+                                } catch (ConfirmModSchemaException e) {
+                                    e.log();
+                                    //Should never be reached
+                                    return false;
+                                }
+                                return true;
+                            };
                             try {
                                 mCol.modSchema();
                                 TaskManager.launchCollectionTask(repositionField, listener);

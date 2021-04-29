@@ -1815,35 +1815,4 @@ public class CollectionTask<Progress, Result> extends BaseAsyncTask<Void, Progre
             return true;
         }
     }
-
-    /**
-     * Repositions the given field in the given model
-     */
-    public static class RepositionField implements TaskDelegate<Void, Boolean> {
-        private final Model mModel;
-        private final JSONObject mField;
-        private final int mIndex;
-
-
-        public RepositionField(Model model, JSONObject field, int index) {
-            this.mModel = model;
-            this.mField = field;
-            this.mIndex = index;
-        }
-
-
-        public Boolean task(@NonNull Collection col, @NonNull ProgressSenderAndCancelListener<Void> collectionTask){
-            Timber.d("doInBackgroundRepositionField");
-
-            try {
-                col.getModels().moveField(mModel, mField, mIndex);
-                col.save();
-            } catch (ConfirmModSchemaException e) {
-                e.log();
-                //Should never be reached
-                return false;
-            }
-            return true;
-        }
-    }
 }
