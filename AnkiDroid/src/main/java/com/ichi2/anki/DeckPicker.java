@@ -2840,7 +2840,9 @@ public class DeckPicker extends NavigationDrawerActivity implements
     }
 
     public void handleEmptyCards() {
-        mEmptyCardTask = TaskManager.launchCollectionTask(new CollectionTask.FindEmptyCards(), handlerEmptyCardListener());
+        mEmptyCardTask = TaskManager.launchCollectionTask(
+                (@NonNull Collection col, @NonNull ProgressSenderAndCancelListener<Integer> collectionTask) -> col.emptyCids(collectionTask),
+            handlerEmptyCardListener());
     }
     private HandleEmptyCardListener handlerEmptyCardListener() {
         return new HandleEmptyCardListener(this);

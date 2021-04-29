@@ -1895,10 +1895,4 @@ public class CollectionTask<Progress, Result> extends BaseAsyncTask<Void, Progre
             return true;
         }
     }
-    
-    public static class FindEmptyCards implements TaskDelegate<Integer, List<Long>> {
-        public List<Long> task(@NonNull Collection col, @NonNull ProgressSenderAndCancelListener<Integer> collectionTask) {
-            return col.emptyCids(collectionTask);
-        }
-    }
 }
