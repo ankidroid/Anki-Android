@@ -1513,7 +1513,9 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
         mSoundPlayer.stopSounds();
         mCurrentEase = ease;
 
-        TaskManager.launchCollectionTask(new CollectionTask.AnswerAndGetCard(mCurrentCard, mCurrentEase), new AnswerCardHandler(true));
+        CollectionTask.AnswerAndGetCard answerAndGetCard = new CollectionTask.AnswerAndGetCard(mCurrentCard, mCurrentEase);
+
+        TaskManager.launchCollectionTask(answerAndGetCard, new AnswerCardHandler(true));
     }
 
 
