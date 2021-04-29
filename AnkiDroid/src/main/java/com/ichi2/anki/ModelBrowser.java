@@ -42,15 +42,19 @@ import com.ichi2.anki.dialogs.ModelBrowserContextMenu;
 import com.ichi2.anki.exception.ConfirmModSchemaException;
 import com.ichi2.async.CollectionTask;
 import com.ichi2.async.ProgressSenderAndCancelListener;
+import com.ichi2.async.TaskDelegate;
 import com.ichi2.async.TaskListenerWithContext;
 import com.ichi2.async.TaskManager;
 import com.ichi2.libanki.Collection;
 import com.ichi2.libanki.Model;
 import com.ichi2.libanki.StdModels;
 import com.ichi2.ui.FixedEditText;
+import com.ichi2.utils.JSONObject;
 import com.ichi2.widget.WidgetStatus;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.Random;
 
 import timber.log.Timber;
@@ -229,10 +233,39 @@ public class ModelBrowser extends AnkiActivity {
 
     @Override
     public void onDestroy() {
-        TaskManager.cancelAllTasks(CollectionTask.CountModels.class);
+        TaskManager.cancelAllTasks(CountModels.class);
         super.onDestroy();
     }
 
+
+
+    /*
+     * Async task for the ModelBrowser Class
+     * Returns an ArrayList of all models alphabetically ordered and the number of notes
+     * associated with each model.
+     *
+     * @return {ArrayList<JSONObject> models, ArrayList<Integer> cardCount}
+     */
+    public static class CountModels implements TaskDelegate<Void, Pair<ArrayList<Model>, ArrayList<Integer>>> {
+        public Pair<ArrayList<Model>, ArrayList<Integer>> task(@NonNull Collection col, @NonNull ProgressSenderAndCancelListener<Void> collectionTask) {
+            Timber.d("doInBackgroundLoadModels");
+
+            ArrayList<Model> models = col.getModels().all();
+            ArrayList<Integer> cardCount = new ArrayList<>();
+            Collections.sort(models, (Comparator<JSONObject>) (a, b) -> a.getString("name").compareTo(b.getString("name")));
+
+            for (Model n : models) {
+                if (collectionTask.isCancelled()) {
+                    Timber.e("doInBackgroundLoadModels :: Cancelled");
+                    // onPostExecute not executed if cancelled. Return value not used.
+                    return null;
+                }
+                cardCount.add(col.getModels().useCount(n));
+            }
+
+            return new Pair<>(models, cardCount);
+        }
+    }
 
     // ----------------------------------------------------------------------------
     // ANKI METHODS
@@ -241,7 +274,7 @@ public class ModelBrowser extends AnkiActivity {
     public void onCollectionLoaded(Collection col) {
         super.onCollectionLoaded(col);
         this.mCol = col;
-        TaskManager.launchCollectionTask(new CollectionTask.CountModels(), loadingModelsHandler());
+        TaskManager.launchCollectionTask(new CountModels(), loadingModelsHandler());
     }
 
 
@@ -503,7 +536,7 @@ public class ModelBrowser extends AnkiActivity {
      * Reloads everything
      */
     private void fullRefresh() {
-        TaskManager.launchCollectionTask(new CollectionTask.CountModels(), loadingModelsHandler());
+        TaskManager.launchCollectionTask(new CountModels(), loadingModelsHandler());
     }
 
     /*
@@ -621,7 +654,7 @@ public class ModelBrowser extends AnkiActivity {
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == REQUEST_TEMPLATE_EDIT) {
-            TaskManager.launchCollectionTask(new CollectionTask.CountModels(), loadingModelsHandler());
+            TaskManager.launchCollectionTask(new CountModels(), loadingModelsHandler());
         }
     }
 }

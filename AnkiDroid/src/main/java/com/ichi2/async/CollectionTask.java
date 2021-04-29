@@ -1728,33 +1728,4 @@ public class CollectionTask<Progress, Result> extends BaseAsyncTask<Void, Progre
             return new Pair<>(true, null);
         }
     }
-
-
-    /*
-     * Async task for the ModelBrowser Class
-     * Returns an ArrayList of all models alphabetically ordered and the number of notes
-     * associated with each model.
-     *
-     * @return {ArrayList<JSONObject> models, ArrayList<Integer> cardCount}
-     */
-    public static class CountModels implements TaskDelegate<Void, Pair<ArrayList<Model>, ArrayList<Integer>>> {
-        public Pair<ArrayList<Model>, ArrayList<Integer>> task(@NonNull Collection col, @NonNull ProgressSenderAndCancelListener<Void> collectionTask) {
-            Timber.d("doInBackgroundLoadModels");
-
-            ArrayList<Model> models = col.getModels().all();
-            ArrayList<Integer> cardCount = new ArrayList<>();
-            Collections.sort(models, (Comparator<JSONObject>) (a, b) -> a.getString("name").compareTo(b.getString("name")));
-
-            for (Model n : models) {
-                if (collectionTask.isCancelled()) {
-                    Timber.e("doInBackgroundLoadModels :: Cancelled");
-                    // onPostExecute not executed if cancelled. Return value not used.
-                    return null;
-                }
-                cardCount.add(col.getModels().useCount(n));
-            }
-
-            return new Pair<>(models, cardCount);
-        }
-    }
 }
