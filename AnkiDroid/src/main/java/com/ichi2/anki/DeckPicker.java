@@ -1699,7 +1699,13 @@ public class DeckPicker extends NavigationDrawerActivity implements
     }
     @Override
     public void deleteUnused(List<String> unused) {
-        TaskManager.launchCollectionTask(new CollectionTask.DeleteMedia(unused), mediaDeleteListener());
+        TaskManager.launchCollectionTask((@NonNull Collection col, @NonNull ProgressSenderAndCancelListener<Void> collectionTask) -> {
+            com.ichi2.libanki.Media m = col.getMedia();
+            for (String fname : unused) {
+                m.removeFile(fname);
+            }
+            return unused.size();
+        }, mediaDeleteListener());
     }
 
 

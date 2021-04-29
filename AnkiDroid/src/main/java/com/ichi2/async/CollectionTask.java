@@ -1639,23 +1639,4 @@ public class CollectionTask<Progress, Result> extends BaseAsyncTask<Void, Progre
             return new Computation<>(col.getMedia().check());
         }
     }
-
-
-    public static class DeleteMedia implements TaskDelegate<Void, Integer> {
-        private final List<String> mUnused;
-
-
-        public DeleteMedia(List<String> unused) {
-            this.mUnused = unused;
-        }
-
-
-        public Integer task(@NonNull Collection col, @NonNull ProgressSenderAndCancelListener<Void> collectionTask) {
-            com.ichi2.libanki.Media m = col.getMedia();
-            for (String fname : mUnused) {
-                m.removeFile(fname);
-            }
-            return mUnused.size();
-        }
-    }
 }
