@@ -1309,7 +1309,7 @@ public class Reviewer extends AbstractFlashcardViewer {
             if (itemId == R.id.action_suspend_card) {
                 return suspendCard();
             } else if (itemId == R.id.action_suspend_note) {
-                return dismiss(new CollectionTask.SuspendNote(mCurrentCard));
+                return suspendNote();
             }
             return false;
         }
