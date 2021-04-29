@@ -219,15 +219,11 @@ public class Reviewer extends AbstractFlashcardViewer {
 
     private void selectDeckFromExtra() {
         Bundle extras = getIntent().getExtras();
-        long did = Long.MIN_VALUE;
-        if (extras != null) {
-            did = extras.getLong("deckId", Long.MIN_VALUE);
-        }
-
-        if(did == Long.MIN_VALUE) {
+        if (extras == null || !extras.containsKey("deckId")) {
             // deckId is not set, load default
             return;
         }
+        long did = extras.getLong("deckId", Long.MIN_VALUE);
 
         Timber.d("selectDeckFromExtra() with deckId = %d", did);
 
