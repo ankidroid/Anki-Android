@@ -21,7 +21,6 @@ import android.view.KeyEvent;
 import com.ichi2.anki.reviewer.ReviewerUi;
 import com.ichi2.async.CollectionTask;
 import com.ichi2.libanki.Card;
-import com.ichi2.libanki.Collection;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -474,8 +473,9 @@ public class ReviewerKeyboardInputTest extends RobolectricTest {
         }
 
         @Override
-        protected void dismiss(CollectionTask.DismissNote dismiss) {
+        protected boolean dismiss(CollectionTask.DismissNote dismiss) {
             this.mDismissType = dismiss;
+            return true;
         }
 
         @Override

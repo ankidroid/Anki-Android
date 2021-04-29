@@ -2706,17 +2706,13 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
                 lookUpOrSelectText();
                 return true;
             case COMMAND_BURY_CARD:
-                dismiss(new CollectionTask.BuryCard(mCurrentCard));
-                return true;
+                return dismiss(new CollectionTask.BuryCard(mCurrentCard));
             case COMMAND_BURY_NOTE:
-                dismiss(new CollectionTask.BuryNote(mCurrentCard));
-                return true;
+                return dismiss(new CollectionTask.BuryNote(mCurrentCard));
             case COMMAND_SUSPEND_CARD:
-                dismiss(new CollectionTask.SuspendCard(mCurrentCard));
-                return true;
+                return dismiss(new CollectionTask.SuspendCard(mCurrentCard));
             case COMMAND_SUSPEND_NOTE:
-                dismiss(new CollectionTask.SuspendNote(mCurrentCard));
-                return true;
+                return dismiss(new CollectionTask.SuspendNote(mCurrentCard));
             case COMMAND_DELETE:
                 showDeleteNoteDialog();
                 return true;
@@ -3347,9 +3343,15 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
             } */
     }
 
-    protected void dismiss(CollectionTask.DismissNote dismiss) {
+
+    /**
+     * @param dismiss An action to execute, to ignore current card and get another one
+     * @return whether the action succeeded.
+     */
+    protected boolean dismiss(CollectionTask.DismissNote dismiss) {
         blockControls(false);
         TaskManager.launchCollectionTask(dismiss, mDismissCardHandler);
+        return true;
     }
 
     /** Signals from a WebView represent actions with no parameters */
