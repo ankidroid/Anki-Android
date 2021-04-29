@@ -33,6 +33,7 @@ import com.ichi2.anki.dialogs.ModelEditorContextMenu;
 import com.ichi2.anki.exception.ConfirmModSchemaException;
 import com.ichi2.async.CollectionTask;
 import com.ichi2.async.TaskDelegate;
+import com.ichi2.async.ProgressSenderAndCancelListener;
 import com.ichi2.async.TaskListenerWithContext;
 import com.ichi2.async.TaskManager;
 import com.ichi2.libanki.Collection;
@@ -441,7 +442,19 @@ public class ModelFieldEditor extends AnkiActivity implements LocaleSelectionDia
      */
     private void sortByField() {
         changeHandler listener = changeFieldHandler();
-        TaskDelegate<Void, Boolean> changeSortField = new CollectionTask.ChangeSortField(mMod, mCurrentPos);
+        final Model currentMod = mMod;
+        final int currentPos = mCurrentPos;
+        TaskDelegate<Void, Boolean> changeSortField = (@NonNull Collection col, @NonNull ProgressSenderAndCancelListener<Void> collectionTask)-> {
+            try {
+                Timber.d("doInBackgroundChangeSortField");
+                col.getModels().setSortIdx(currentMod, currentPos);
+                col.save();
+            } catch(Exception e){
+                Timber.e(e, "Error changing sort field");
+                return false;
+            }
+            return true;
+        };
         try {
             mCol.modSchema();
             TaskManager.launchCollectionTask(changeSortField, listener);
@@ -452,7 +465,7 @@ public class ModelFieldEditor extends AnkiActivity implements LocaleSelectionDia
             c.setArgs(getResources().getString(R.string.full_sync_confirmation));
             Runnable confirm = () -> {
                 mCol.modSchemaNoCheck();
-                TaskManager.launchCollectionTask(new CollectionTask.ChangeSortField(mMod, mCurrentPos), listener);
+                TaskManager.launchCollectionTask(changeSortField, listener);
                 dismissContextMenu();
             };
             c.setConfirm(confirm);

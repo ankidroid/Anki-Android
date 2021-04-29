@@ -1868,31 +1868,4 @@ public class CollectionTask<Progress, Result> extends BaseAsyncTask<Void, Progre
             return true;
         }
     }
-
-    /**
-     * Adds a field of with name in given model
-     */
-    public static class ChangeSortField implements TaskDelegate<Void, Boolean> {
-        private final Model mModel;
-        private final int mIdx;
-
-
-        public ChangeSortField(Model model, int idx) {
-            this.mModel = model;
-            this.mIdx = idx;
-        }
-
-
-        public Boolean task(@NonNull Collection col, @NonNull ProgressSenderAndCancelListener<Void> collectionTask){
-            try {
-                Timber.d("doInBackgroundChangeSortField");
-                col.getModels().setSortIdx(mModel, mIdx);
-                col.save();
-            } catch(Exception e){
-                Timber.e(e, "Error changing sort field");
-                return false;
-            }
-            return true;
-        }
-    }
 }
