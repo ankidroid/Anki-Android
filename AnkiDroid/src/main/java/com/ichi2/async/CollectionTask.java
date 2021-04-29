@@ -334,7 +334,7 @@ public class CollectionTask<ProgressListener, ProgressBackground extends Progres
         }
     }
 
-    /** This task simply update with the card whose id is cid and return true.
+    /** This task simply update with the card whose id is cid, set this card in the scheduler, and return true.
         It is usually very quick, but since it's a database access, it should still be in background
      */
     public static class GetSpecificCard extends Task<Card, BooleanGetter> {

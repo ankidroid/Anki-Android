@@ -62,7 +62,7 @@ import timber.log.Timber;
 
 import static com.ichi2.anim.ActivityTransitionAnimation.Direction.*;
 
-public class StudyOptionsFragment extends Fragment implements Toolbar.OnMenuItemClickListener {
+public class StudyOptionsFragment extends Fragment implements ActivityWithUndo, Toolbar.OnMenuItemClickListener {
 
 
     /**
@@ -244,7 +244,16 @@ public class StudyOptionsFragment extends Fragment implements Toolbar.OnMenuItem
 
 
     private void openReviewer() {
+        openReviewer(null);
+    }
+
+    private void openReviewer(@Nullable Card card) {
         Intent reviewer = new Intent(getActivity(), Reviewer.class);
+        if (card != null) {
+            Bundle bundle = new Bundle();
+            bundle.putLong("cid", card.getId());
+            reviewer.putExtras(bundle);
+        }
         if (mFragmented) {
             mToReviewer = true;
             mOnRequestReviewActivityResult.launch(reviewer);
@@ -302,25 +311,38 @@ public class StudyOptionsFragment extends Fragment implements Toolbar.OnMenuItem
         parent.addView(newView);
     }
 
-    private final TaskListener<Card, BooleanGetter> mUndoListener = new TaskListener<Card, BooleanGetter>() {
-        @Override
-        public void onPreExecute() {
 
-        }
+    @Override
+    public TaskListener<Card, BooleanGetter> getUndoListener() {
+        return new TaskListener<Card, BooleanGetter>() {
+            private @Nullable Card mCard = null;
+            @Override
+            public void onPreExecute() {
+            }
 
 
-        @Override
-        public void onPostExecute(BooleanGetter v) {
-            openReviewer();
-        }
-    };
+            @Override
+            public void onProgressUpdate(Card card) {
+                if (card != null) {
+                    mCard = card;
+                }
+            }
+
+
+            @Override
+            public void onPostExecute(BooleanGetter v) {
+                openReviewer(mCard);
+            }
+        };
+    }
+
 
     @Override
     public boolean onMenuItemClick(MenuItem item) {
         int itemId = item.getItemId();
         if (itemId == R.id.action_undo) {
             Timber.i("StudyOptionsFragment:: Undo button pressed");
-            TaskManager.launchCollectionTask(new CollectionTask.Undo(), mUndoListener);
+            undo();
             return true;
         } else if (itemId == R.id.action_deck_or_study_options) {
             Timber.i("StudyOptionsFragment:: Deck or study options button pressed");
@@ -726,7 +748,7 @@ public class StudyOptionsFragment extends Fragment implements Toolbar.OnMenuItem
         return HtmlCompat.fromHtml(withFixedNewlines, HtmlCompat.FROM_HTML_MODE_LEGACY);
     }
 
-    private Collection getCol() {
+    public Collection getCol() {
         return CollectionHelper.getInstance().getCol(getContext());
     }
 

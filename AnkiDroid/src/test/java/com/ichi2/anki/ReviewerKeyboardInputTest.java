@@ -21,6 +21,8 @@ import android.view.KeyEvent;
 import com.ichi2.anki.reviewer.ReviewerUi;
 import com.ichi2.async.CollectionTask;
 import com.ichi2.libanki.Card;
+import com.ichi2.libanki.Collection;
+import com.ichi2.utils.BooleanGetter;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -445,10 +447,14 @@ public class ReviewerKeyboardInputTest extends RobolectricTest {
             handleKeyPress(buttonCode, '\0');
         }
 
+
         @Override
-        protected void undo() {
-            mUndoCalled = true;
+        public CollectionTask<Card, Card, BooleanGetter, BooleanGetter> undo() {
+             mUndoCalled = true;
+             return null;
         }
+
+
         public boolean getUndoCalled() {
             return mUndoCalled;
         }
@@ -504,7 +510,7 @@ public class ReviewerKeyboardInputTest extends RobolectricTest {
         }
 
         @Override
-        protected boolean isUndoAvailable() {
+        public boolean isUndoAvailable() {
             return mUndoAvailable;
         }
 

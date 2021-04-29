@@ -113,7 +113,7 @@ import static com.ichi2.libanki.stats.Stats.SECONDS_PER_DAY;
 import static com.ichi2.anim.ActivityTransitionAnimation.Direction.*;
 
 public class CardBrowser extends NavigationDrawerActivity implements
-        DeckDropDownAdapter.SubtitleListener, TagsDialog.TagsDialogListener {
+        ActivityWithUndo, DeckDropDownAdapter.SubtitleListener, TagsDialog.TagsDialogListener {
 
     enum Column {
         QUESTION,
@@ -1273,7 +1273,7 @@ public class CardBrowser extends NavigationDrawerActivity implements
     @VisibleForTesting
     void onUndo() {
         if (getCol().undoAvailable()) {
-            TaskManager.launchCollectionTask(new CollectionTask.Undo(), mUndoHandler);
+            undo();
         }
     }
 
@@ -1751,7 +1751,7 @@ public class CardBrowser extends NavigationDrawerActivity implements
             // snackbar to offer undo
             String deckName = browser.getCol().getDecks().name(browser.mNewDid);
             browser.mUndoSnackbar = UIUtils.showSnackbar(browser, String.format(browser.getString(R.string.changed_deck_message), deckName), SNACKBAR_DURATION,
-                                                         R.string.undo, v -> TaskManager.launchCollectionTask(new CollectionTask.Undo(), browser.mUndoHandler), browser.mCardsListView, null);
+                                                         R.string.undo, v -> browser.undo(), browser.mCardsListView, null);
         }
     }
 
@@ -1910,7 +1910,7 @@ public class CardBrowser extends NavigationDrawerActivity implements
             // snackbar to offer undo
             String deletedMessage = browser.getResources().getQuantityString(R.plurals.card_browser_cards_deleted, mCardsDeleted, mCardsDeleted);
             browser.mUndoSnackbar = UIUtils.showSnackbar(browser, deletedMessage, SNACKBAR_DURATION,
-                    R.string.undo, v -> TaskManager.launchCollectionTask(new CollectionTask.Undo(), browser.mUndoHandler),
+                    R.string.undo, v -> browser.undo(),
                     browser.mCardsListView, null);
             browser.searchCards();
         }
@@ -1918,7 +1918,13 @@ public class CardBrowser extends NavigationDrawerActivity implements
 
 
 
-    private final UndoHandler mUndoHandler = new UndoHandler(this);
+
+
+    @Override
+    public TaskListenerWithContext<CardBrowser, Card, BooleanGetter> getUndoListener() {
+        return new UndoHandler(this);
+    }
+
     private static class UndoHandler extends ListenerWithProgressBarCloseOnFalse<Card, BooleanGetter> {
         public UndoHandler(CardBrowser browser) {
             super(browser);

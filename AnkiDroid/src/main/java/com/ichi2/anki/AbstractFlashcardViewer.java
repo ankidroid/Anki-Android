@@ -167,7 +167,7 @@ import com.github.zafarkhaja.semver.Version;
 import static com.ichi2.anim.ActivityTransitionAnimation.Direction.*;
 
 @SuppressWarnings({"PMD.AvoidThrowingRawExceptionTypes","PMD.FieldDeclarationsShouldBeAtStartOfClass"})
-public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity implements ReviewerUi, CommandProcessor, TagsDialog.TagsDialogListener {
+public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity implements ActivityWithUndo, ReviewerUi, CommandProcessor, TagsDialog.TagsDialogListener {
 
     /**
      * Result codes that are returned when this activity finishes.
@@ -1367,10 +1367,9 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
     }
 
 
-    protected void undo() {
-        if (isUndoAvailable()) {
-            TaskManager.launchCollectionTask(new CollectionTask.Undo(), new AnswerCardHandler(false));
-        }
+    @Override
+    public TaskListener<Card, BooleanGetter> getUndoListener() {
+        return new AnswerCardHandler(false);
     }
 
 
@@ -2898,10 +2897,6 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
     }
 
 
-    @VisibleForTesting
-    protected boolean isUndoAvailable() {
-        return getCol().undoAvailable();
-    }
 
     // ----------------------------------------------------------------------------
     // INNER CLASSES

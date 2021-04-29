@@ -153,7 +153,7 @@ import static com.ichi2.async.Connection.ConflictResolution.FULL_DOWNLOAD;
 import static com.ichi2.anim.ActivityTransitionAnimation.Direction.*;
 
 
-public class DeckPicker extends NavigationDrawerActivity implements
+public class DeckPicker extends NavigationDrawerActivity implements ActivityWithUndo,
         StudyOptionsListener, SyncErrorDialog.SyncErrorDialogListener, ImportDialog.ImportDialogListener,
         MediaCheckDialog.MediaCheckDialogListener, ExportDialog.ExportDialogListener,
         ActivityCompat.OnRequestPermissionsResultCallback, CustomStudyDialog.CustomStudyListener {
@@ -1366,15 +1366,15 @@ public class DeckPicker extends NavigationDrawerActivity implements
         }
     }
 
-    private UndoTaskListener undoTaskListener(boolean isReview) {
-        return new UndoTaskListener(isReview, this);
+    @Override
+    public UndoTaskListener getUndoListener() {
+        return new UndoTaskListener(this);
     }
     private static class UndoTaskListener extends TaskListenerWithContext<DeckPicker, Card, BooleanGetter> {
-        private final boolean mIsreview;
+        private @Nullable Card mCard = null;
 
-        public UndoTaskListener(boolean isReview, DeckPicker deckPicker) {
+        public UndoTaskListener(DeckPicker deckPicker) {
             super(deckPicker);
-            this.mIsreview = isReview;
         }
 
 
@@ -1391,20 +1391,22 @@ public class DeckPicker extends NavigationDrawerActivity implements
 
 
         @Override
+        public void actualOnProgressUpdate(@NonNull DeckPicker context, Card card) {
+            if (card != null) {
+                mCard = card;
+            }
+        }
+
+
+        @Override
         public void actualOnPostExecute(@NonNull DeckPicker deckPicker, BooleanGetter voi) {
             deckPicker.hideProgressBar();
             Timber.i("Undo completed");
-            if (mIsreview) {
+            if (mCard != null) {
                 Timber.i("Review undone - opening reviewer.");
-                deckPicker.openReviewer();
+                deckPicker.openReviewer(mCard);
             }
         }
-    }
-    private void undo() {
-        Timber.i("undo()");
-        String undoReviewString = getResources().getString(R.string.undo_action_review);
-        final boolean isReview = undoReviewString.equals(getCol().undoName(getResources()));
-        TaskManager.launchCollectionTask(new CollectionTask.Undo(), undoTaskListener(isReview));
     }
 
 
@@ -2744,9 +2746,18 @@ public class DeckPicker extends NavigationDrawerActivity implements
     }
 
 
-    private void openReviewer() {
+    private void openReviewer(@Nullable Card card) {
         Intent reviewer = new Intent(this, Reviewer.class);
+        if (card != null) {
+            Bundle bundle = new Bundle();
+            bundle.putLong("cid", card.getId());
+            reviewer.putExtras(bundle);
+        }
         startActivityForResultWithAnimation(reviewer, REQUEST_REVIEW, START);
+    }
+
+    private void openReviewer() {
+        openReviewer(null);
     }
 
     @Override
