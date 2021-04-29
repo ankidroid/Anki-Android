@@ -1311,11 +1311,9 @@ public class Reviewer extends AbstractFlashcardViewer {
         public boolean onMenuItemClick(MenuItem item) {
             int itemId = item.getItemId();
             if (itemId == R.id.action_suspend_card) {
-                dismiss(new CollectionTask.SuspendCard(mCurrentCard));
-                return true;
+                return dismiss(new CollectionTask.SuspendCard(mCurrentCard));
             } else if (itemId == R.id.action_suspend_note) {
-                dismiss(new CollectionTask.SuspendNote(mCurrentCard));
-                return true;
+                return dismiss(new CollectionTask.SuspendNote(mCurrentCard));
             }
             return false;
         }
@@ -1359,11 +1357,9 @@ public class Reviewer extends AbstractFlashcardViewer {
         public boolean onMenuItemClick(MenuItem item) {
             int itemId = item.getItemId();
             if (itemId == R.id.action_bury_card) {
-                dismiss(new CollectionTask.BuryCard(mCurrentCard));
-                return true;
+                return dismiss(new CollectionTask.BuryCard(mCurrentCard));
             } else if (itemId == R.id.action_bury_note) {
-                dismiss(new CollectionTask.BuryNote(mCurrentCard));
-                return true;
+                return dismiss(new CollectionTask.BuryNote(mCurrentCard));
             }
             return false;
         }
