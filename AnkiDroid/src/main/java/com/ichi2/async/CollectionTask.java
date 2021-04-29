@@ -1785,34 +1785,4 @@ public class CollectionTask<Progress, Result> extends BaseAsyncTask<Void, Progre
             return true;
         }
     }
-
-    /**
-     * Deletes the given field in the given model
-     */
-    public static class DeleteField implements TaskDelegate<Void, Boolean> {
-        private final Model mModel;
-        private final JSONObject mField;
-
-
-        public DeleteField(Model model, JSONObject field) {
-            this.mModel = model;
-            this.mField = field;
-        }
-
-
-        public Boolean task(@NonNull Collection col, @NonNull ProgressSenderAndCancelListener<Void> collectionTask){
-            Timber.d("doInBackGroundDeleteField");
-
-
-            try {
-                col.getModels().remField(mModel, mField);
-                col.save();
-            } catch (ConfirmModSchemaException e) {
-                //Should never be reached
-                e.log();
-                return false;
-            }
-            return true;
-        }
-    }
 }

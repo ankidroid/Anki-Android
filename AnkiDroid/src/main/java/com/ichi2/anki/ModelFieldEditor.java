@@ -298,7 +298,24 @@ public class ModelFieldEditor extends AnkiActivity implements LocaleSelectionDia
     }
 
     private void deleteField() {
-        TaskManager.launchCollectionTask(new CollectionTask.DeleteField(mMod, mNoteFields.getJSONObject(mCurrentPos)), changeFieldHandler());
+        final Model model = mMod;
+        final JSONObject noteField = mNoteFields.getJSONObject(mCurrentPos);
+        TaskManager.launchCollectionTask(
+                (@NonNull Collection col, @NonNull ProgressSenderAndCancelListener<Void> collectionTask) -> {
+                    Timber.d("doInBackGroundDeleteField");
+
+
+                    try {
+                        col.getModels().remField(model, noteField);
+                        col.save();
+                    } catch (ConfirmModSchemaException e) {
+                        //Should never be reached
+                        e.log();
+                        return false;
+                    }
+                    return true;
+                },
+                changeFieldHandler());
     }
 
 
