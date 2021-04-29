@@ -329,20 +329,6 @@ public class CollectionTask<Progress, Result> extends BaseAsyncTask<Void, Progre
         }
     }
 
-    public static class LoadDeck implements TaskDelegate<Void, List<DeckTreeNode>> {
-        public List<DeckTreeNode> task(@NonNull Collection col, @NonNull ProgressSenderAndCancelListener<Void> collectionTask) {
-            Timber.d("doInBackgroundLoadDeckCounts");
-            try {
-                // Get due tree
-                return col.getSched().quickDeckDueTree();
-            } catch (RuntimeException e) {
-                Timber.w(e, "doInBackgroundLoadDeckCounts - error");
-                return null;
-            }
-        }
-    }
-
-
     public static class LoadDeckCounts implements TaskDelegate<Void, List<DeckDueTreeNode>> {
         public List<DeckDueTreeNode> task(@NonNull Collection col, @NonNull ProgressSenderAndCancelListener<Void> collectionTask) {
             Timber.d("doInBackgroundLoadDeckCounts");

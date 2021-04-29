@@ -114,6 +114,8 @@ import com.ichi2.anki.widgets.DeckAdapter;
 import com.ichi2.async.Connection;
 import com.ichi2.async.Connection.Payload;
 import com.ichi2.async.CollectionTask;
+import com.ichi2.async.ProgressSenderAndCancelListener;
+import com.ichi2.async.TaskDelegate;
 import com.ichi2.async.TaskListener;
 import com.ichi2.async.TaskListenerWithContext;
 import com.ichi2.async.TaskManager;
@@ -126,6 +128,7 @@ import com.ichi2.libanki.Models;
 import com.ichi2.libanki.Utils;
 import com.ichi2.libanki.importer.AnkiPackageImporter;
 import com.ichi2.libanki.sched.AbstractDeckTreeNode;
+import com.ichi2.libanki.sched.DeckTreeNode;
 import com.ichi2.libanki.sync.CustomSyncServerUrlException;
 import com.ichi2.libanki.sync.Syncer;
 import com.ichi2.libanki.utils.TimeUtils;
@@ -2419,7 +2422,18 @@ public class DeckPicker extends NavigationDrawerActivity implements
 
     private void updateDeckList(boolean quick) {
         if (quick) {
-            TaskManager.launchCollectionTask(new CollectionTask.LoadDeck(), updateDeckListListener());
+            TaskDelegate<Void, List<DeckTreeNode>> loadDeck =
+                    (@NonNull Collection col, @NonNull ProgressSenderAndCancelListener<Void> collectionTask) -> {
+                        Timber.d("doInBackgroundLoadDeckCounts");
+                        try {
+                            // Get due tree
+                            return col.getSched().quickDeckDueTree();
+                        } catch (RuntimeException e) {
+                            Timber.w(e, "doInBackgroundLoadDeckCounts - error");
+                            return null;
+                        }
+                    };
+            TaskManager.launchCollectionTask(loadDeck, updateDeckListListener());
         } else {
             TaskManager.launchCollectionTask(new CollectionTask.LoadDeckCounts(), updateDeckListListener());
         }
