@@ -1954,11 +1954,4 @@ public class CollectionTask<Progress, Result> extends BaseAsyncTask<Void, Progre
             return null;
         }
     }
-
-    public static class Reset implements TaskDelegate<Void, Void> {
-        public Void task(@NonNull Collection col, @NonNull ProgressSenderAndCancelListener<Void> collectionTask) {
-            col.getSched().reset();
-            return null;
-        }
-    }
 }
