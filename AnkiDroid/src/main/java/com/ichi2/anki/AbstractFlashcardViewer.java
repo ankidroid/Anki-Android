@@ -658,12 +658,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
 
 
         @Override
-        public void onProgressUpdate(Card card) {
-            displayNext(card);
-        }
-
-        protected void displayNext(Card nextCard) {
-
+        public void onProgressUpdate(Card nextCard) {
             if (mSched == null) {
                 // TODO: proper testing for restored activity
                 finishWithoutAnimation();
