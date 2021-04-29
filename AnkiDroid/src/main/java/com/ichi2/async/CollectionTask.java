@@ -1901,36 +1901,4 @@ public class CollectionTask<Progress, Result> extends BaseAsyncTask<Void, Progre
             return col.emptyCids(collectionTask);
         }
     }
-
-    /**
-     * Goes through selected cards and checks selected and marked attribute
-     * @return If there are unselected cards, if there are unmarked cards
-     */
-    public static class CheckCardSelection implements TaskDelegate<Void, Pair<Boolean, Boolean>> {
-        private final @NonNull Set<CardBrowser.CardCache> mCheckedCards;
-
-
-        public CheckCardSelection(@NonNull Set<CardBrowser.CardCache> checkedCards) {
-            this.mCheckedCards = checkedCards;
-        }
-
-
-        public @Nullable Pair<Boolean, Boolean> task(@NonNull Collection col, @NonNull ProgressSenderAndCancelListener<Void> collectionTask) {
-            boolean hasUnsuspended = false;
-            boolean hasUnmarked = false;
-            for (CardBrowser.CardCache c: mCheckedCards) {
-                if (collectionTask.isCancelled()) {
-                    Timber.v("doInBackgroundCheckCardSelection: cancelled.");
-                    return null;
-                }
-                Card card = c.getCard();
-                hasUnsuspended = hasUnsuspended || card.getQueue() != Consts.QUEUE_TYPE_SUSPENDED;
-                hasUnmarked = hasUnmarked || !card.note().hasTag("marked");
-                if (hasUnsuspended && hasUnmarked)
-                    break;
-            }
-
-            return new Pair<>(hasUnsuspended, hasUnmarked);
-        }
-    }
 }

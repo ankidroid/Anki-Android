@@ -72,6 +72,8 @@ import com.ichi2.anki.dialogs.tags.TagsDialogListener;
 import com.ichi2.anki.receiver.SdCardReceiver;
 import com.ichi2.anki.widgets.DeckDropDownAdapter;
 import com.ichi2.async.CollectionTask;
+import com.ichi2.async.ProgressSenderAndCancelListener;
+import com.ichi2.async.TaskDelegate;
 import com.ichi2.async.TaskListenerWithContext;
 import com.ichi2.async.TaskManager;
 import com.ichi2.compat.Compat;
@@ -1080,6 +1082,39 @@ public class CardBrowser extends NavigationDrawerActivity implements
     }
 
 
+
+    /**
+     * Goes through selected cards and checks selected and marked attribute
+     * @return If there are unselected cards, if there are unmarked cards
+     */
+    private static class CheckCardSelection implements TaskDelegate<Void, Pair<Boolean, Boolean>> {
+        private final @NonNull Set<CardBrowser.CardCache> mCheckedCards;
+
+
+        public CheckCardSelection(@NonNull Set<CardBrowser.CardCache> checkedCards) {
+            this.mCheckedCards = checkedCards;
+        }
+
+
+        public  @Nullable Pair<Boolean, Boolean> task(@NonNull Collection col, @NonNull ProgressSenderAndCancelListener<Void> collectionTask) {
+            boolean hasUnsuspended = false;
+            boolean hasUnmarked = false;
+            for (CardBrowser.CardCache c: mCheckedCards) {
+                if (collectionTask.isCancelled()) {
+                    Timber.v("doInBackgroundCheckCardSelection: cancelled.");
+                    return null;
+                }
+                Card card = c.getCard();
+                hasUnsuspended = hasUnsuspended || card.getQueue() != Consts.QUEUE_TYPE_SUSPENDED;
+                hasUnmarked = hasUnmarked || !card.note().hasTag("marked");
+                if (hasUnsuspended && hasUnmarked)
+                    break;
+            }
+
+            return new Pair<>(hasUnsuspended, hasUnmarked);
+        }
+    }
+
     private void updateMultiselectMenu() {
         Timber.d("updateMultiselectMenu()");
         if (mActionBarMenu == null || mActionBarMenu.findItem(R.id.action_suspend_card) == null) {
@@ -1087,8 +1122,8 @@ public class CardBrowser extends NavigationDrawerActivity implements
         }
 
         if (!mCheckedCards.isEmpty()) {
-            TaskManager.cancelAllTasks(CollectionTask.CheckCardSelection.class);
-            TaskManager.launchCollectionTask(new CollectionTask.CheckCardSelection(mCheckedCards),
+            TaskManager.cancelAllTasks(CheckCardSelection.class);
+            TaskManager.launchCollectionTask(new CheckCardSelection(mCheckedCards),
                     mCheckSelectedCardsHandler);
         }
 
@@ -1483,7 +1518,7 @@ public class CardBrowser extends NavigationDrawerActivity implements
     private void invalidate() {
         TaskManager.cancelAllTasks(CollectionTask.SearchCards.class);
         TaskManager.cancelAllTasks(CollectionTask.RenderBrowserQA.class);
-        TaskManager.cancelAllTasks(CollectionTask.CheckCardSelection.class);
+        TaskManager.cancelAllTasks(CheckCardSelection.class);
         mCards.clear();
         mCheckedCards.clear();
     }
