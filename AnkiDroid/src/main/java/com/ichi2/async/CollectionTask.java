@@ -329,22 +329,6 @@ public class CollectionTask<Progress, Result> extends BaseAsyncTask<Void, Progre
         }
     }
 
-    public static class AnswerAndGetCard extends GetCard {
-        private final @NonNull Card mOldCard;
-        private final @Consts.BUTTON_TYPE int mEase;
-        public AnswerAndGetCard(@NonNull Card oldCard, @Consts.BUTTON_TYPE int ease) {
-            this.mOldCard = oldCard;
-            this.mEase = ease;
-        }
-
-        public Computation<?> task(@NonNull Collection col, @NonNull ProgressSenderAndCancelListener<Card> collectionTask) {
-            Timber.i("Answering card %d", mOldCard.getId());
-            col.getSched().answerCard(mOldCard, mEase);
-            return super.task(col, collectionTask);
-        }
-    }
-
-
     public static class LoadDeck implements TaskDelegate<Void, List<DeckTreeNode>> {
         public List<DeckTreeNode> task(@NonNull Collection col, @NonNull ProgressSenderAndCancelListener<Void> collectionTask) {
             Timber.d("doInBackgroundLoadDeckCounts");

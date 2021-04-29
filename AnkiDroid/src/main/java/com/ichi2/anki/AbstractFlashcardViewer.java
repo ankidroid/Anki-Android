@@ -107,6 +107,8 @@ import com.ichi2.anki.reviewer.ReviewerCustomFonts;
 import com.ichi2.anki.reviewer.ReviewerUi;
 import com.ichi2.anki.cardviewer.TypedAnswer;
 import com.ichi2.async.CollectionTask;
+import com.ichi2.async.ProgressSenderAndCancelListener;
+import com.ichi2.async.TaskDelegate;
 import com.ichi2.async.TaskListener;
 import com.ichi2.async.TaskManager;
 import com.ichi2.compat.CompatHelper;
@@ -1469,7 +1471,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
     }
 
 
-    protected void answerCard(@Consts.BUTTON_TYPE int ease) {
+    protected void answerCard(final @Consts.BUTTON_TYPE int ease) {
         if (mInAnswer) {
             return;
         }
@@ -1512,9 +1514,15 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
         mTimerHandler.postDelayed(mRemoveChosenAnswerText, sShowChosenAnswerLength);
         mSoundPlayer.stopSounds();
         mCurrentEase = ease;
+        final Card oldCard = mCurrentCard;
 
-        CollectionTask.AnswerAndGetCard answerAndGetCard = new CollectionTask.AnswerAndGetCard(mCurrentCard, mCurrentEase);
-
+        TaskDelegate<Card, Computation<?>> answerAndGetCard = new CollectionTask.GetCard (){
+                public Computation<?> task(@NonNull Collection col, @NonNull ProgressSenderAndCancelListener<Card> collectionTask) {
+                    Timber.i("Answering card %d", oldCard.getId());
+                    col.getSched().answerCard(oldCard, ease);
+                    return super.task(col, collectionTask);
+                }
+            };
         TaskManager.launchCollectionTask(answerAndGetCard, new AnswerCardHandler(true));
     }
 
