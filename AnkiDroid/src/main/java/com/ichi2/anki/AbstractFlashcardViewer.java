@@ -703,10 +703,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
 
         @Override
         public void onPostExecute(Result result) {
-            postNextCardDisplay(result.getBoolean());
-        }
-
-        protected void postNextCardDisplay(boolean displaySuccess) {
+            boolean displaySuccess = result.getBoolean();
             if (!displaySuccess) {
                 // RuntimeException occurred on answering cards
                 closeReviewer(DeckPicker.RESULT_DB_ERROR, false);
