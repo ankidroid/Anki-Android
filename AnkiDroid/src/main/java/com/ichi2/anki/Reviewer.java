@@ -80,6 +80,7 @@ import com.ichi2.libanki.Utils;
 import com.ichi2.libanki.sched.Counts;
 import com.ichi2.themes.Themes;
 import com.ichi2.utils.AndroidUiUtils;
+import com.ichi2.utils.BooleanGetter;
 import com.ichi2.utils.FunctionalInterfaces.Consumer;
 import com.ichi2.utils.PairWithBoolean;
 import com.ichi2.utils.Permissions;
@@ -263,6 +264,22 @@ public class Reviewer extends AbstractFlashcardViewer {
         }
     }
 
+    private void showFirstCard() {
+        Intent intent = getIntent();
+        Bundle extras = intent.getExtras();
+        CollectionTask.Task<Card, BooleanGetter> task;
+        boolean quick;
+        if (extras == null || !extras.containsKey("cid")) {
+            task = new CollectionTask.GetCard();
+            quick = false;
+        } else {
+            long cid = extras.getLong("cid");
+            task = new CollectionTask.GetSpecificCard(cid);
+            quick = true;
+        }
+        TaskManager.launchCollectionTask(task, new AnswerCardHandler(quick));
+    }
+
     @Override
     protected void onCollectionLoaded(Collection col) {
         super.onCollectionLoaded(col);
@@ -280,7 +297,7 @@ public class Reviewer extends AbstractFlashcardViewer {
 
         col.getSched().deferReset();     // Reset schedule in case card was previously loaded
         getCol().startTimebox();
-        TaskManager.launchCollectionTask(new CollectionTask.GetCard(), new AnswerCardHandler(false));
+        showFirstCard();
 
         disableDrawerSwipeOnConflicts();
         // Add a weak reference to current activity so that scheduler can talk to to Activity
