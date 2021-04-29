@@ -2389,11 +2389,8 @@ public class DeckPicker extends NavigationDrawerActivity implements
     }
 
     private void updateDeckList(boolean quick) {
-        if (quick) {
-            TaskManager.launchCollectionTask(new CollectionTask.LoadDeck(), updateDeckListListener());
-        } else {
-            TaskManager.launchCollectionTask(new CollectionTask.LoadDeckCounts(), updateDeckListListener());
-        }
+        CollectionTask.Task<Void, ? extends List<? extends AbstractDeckTreeNode>> task = (quick)? new CollectionTask.LoadDeck() : new CollectionTask.LoadDeckCounts();
+        TaskManager.launchCollectionTask(task, updateDeckListListener());
     }
 
     public void __renderPage() {
