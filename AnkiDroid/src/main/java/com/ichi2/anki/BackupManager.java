@@ -260,7 +260,17 @@ public class BackupManager {
 
 
     protected boolean hasFreeDiscSpace(File colFile) {
-        return getFreeDiscSpace(colFile) >= colFile.length() + (MIN_FREE_SPACE * 1024 * 1024);
+        return getFreeDiscSpace(colFile) >= getRequiredFreeSpace(colFile);
+    }
+
+
+    /**
+     * @param colFile The current collection file to backup
+     * @return the amount of free space required for a backup.
+     */
+    public static long getRequiredFreeSpace(File colFile) {
+        // We add a minimum amount of free space to ensure against
+        return colFile.length() + (MIN_FREE_SPACE * 1024 * 1024);
     }
 
 

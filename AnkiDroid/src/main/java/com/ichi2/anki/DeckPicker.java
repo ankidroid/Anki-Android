@@ -90,6 +90,7 @@ import com.ichi2.anki.dialogs.AsyncDialogFragment;
 import com.ichi2.anki.dialogs.ConfirmationDialog;
 import com.ichi2.anki.dialogs.CreateDeckDialog;
 import com.ichi2.anki.dialogs.DeckPickerNoSpaceToDowngradeDialog;
+import com.ichi2.anki.dialogs.DeckPickerNoSpaceToDowngradeDialog.FileSizeFormatter;
 import com.ichi2.anki.dialogs.customstudy.CustomStudyDialog;
 import com.ichi2.anki.dialogs.DatabaseErrorDialog;
 import com.ichi2.anki.dialogs.DeckPickerAnalyticsOptInDialog;
@@ -1315,7 +1316,10 @@ public class DeckPicker extends NavigationDrawerActivity implements
 
     public void displayDowngradeFailedNoSpace() {
         Timber.w("Not enough space to downgrade");
-        showDialogFragment(DeckPickerNoSpaceToDowngradeDialog.newInstance());
+        FileSizeFormatter formatter = new FileSizeFormatter(this);
+        String collectionPath = CollectionHelper.getCollectionPath(this);
+        File collectionFile = new File(collectionPath);
+        showDialogFragment(DeckPickerNoSpaceToDowngradeDialog.newInstance(formatter, collectionFile));
     }
 
 
