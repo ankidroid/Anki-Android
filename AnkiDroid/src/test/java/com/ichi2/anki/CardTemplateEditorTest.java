@@ -61,7 +61,7 @@ public class CardTemplateEditorTest extends RobolectricTest {
         Assert.assertFalse("Model should not have changed yet", testEditor.modelHasChanged());
 
         // Change the model and make sure it registers as changed, but the database is unchanged
-        EditText templateFront = testEditor.findViewById(R.id.front_edit);
+        EditText templateFront = testEditor.findViewById(R.id.editor_editText);
         String TEST_MODEL_QFMT_EDIT = "!@#$%^&*TEST*&^%$#@!";
         templateFront.getText().append(TEST_MODEL_QFMT_EDIT);
         advanceRobolectricLooperWithSleep();
@@ -99,7 +99,7 @@ public class CardTemplateEditorTest extends RobolectricTest {
         saveControllerForCleanup(templateEditorController);
         testEditor = templateEditorController.get();
         shadowTestEditor = shadowOf(testEditor);
-        templateFront = testEditor.findViewById(R.id.front_edit);
+        templateFront = testEditor.findViewById(R.id.editor_editText);
         templateFront.getText().append(TEST_MODEL_QFMT_EDIT);
         advanceRobolectricLooperWithSleep();
         Assert.assertTrue("Model did not change after edit?", testEditor.modelHasChanged());
