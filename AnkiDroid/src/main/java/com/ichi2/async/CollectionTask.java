@@ -329,19 +329,6 @@ public class CollectionTask<Progress, Result> extends BaseAsyncTask<Void, Progre
         }
     }
 
-    public static class LoadDeckCounts implements TaskDelegate<Void, List<DeckDueTreeNode>> {
-        public List<DeckDueTreeNode> task(@NonNull Collection col, @NonNull ProgressSenderAndCancelListener<Void> collectionTask) {
-            Timber.d("doInBackgroundLoadDeckCounts");
-            try {
-                // Get due tree
-                return col.getSched().deckDueTree(collectionTask);
-            } catch (RuntimeException e) {
-                Timber.e(e, "doInBackgroundLoadDeckCounts - error");
-                return null;
-            }
-        }
-    }
-
     public static class SaveCollection implements TaskDelegate<Void, Void> {
         private final boolean mSyncIgnoresDatabaseModification;
 

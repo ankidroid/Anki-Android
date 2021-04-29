@@ -128,6 +128,7 @@ import com.ichi2.libanki.Models;
 import com.ichi2.libanki.Utils;
 import com.ichi2.libanki.importer.AnkiPackageImporter;
 import com.ichi2.libanki.sched.AbstractDeckTreeNode;
+import com.ichi2.libanki.sched.DeckDueTreeNode;
 import com.ichi2.libanki.sched.DeckTreeNode;
 import com.ichi2.libanki.sync.CustomSyncServerUrlException;
 import com.ichi2.libanki.sync.Syncer;
@@ -997,12 +998,26 @@ public class DeckPicker extends NavigationDrawerActivity implements
     }
 
 
+    public static class LoadDeckCounts implements TaskDelegate<Void, List<DeckDueTreeNode>> {
+        // A named class because it should be cancellable.
+        public List<DeckDueTreeNode> task(@NonNull Collection col, @NonNull ProgressSenderAndCancelListener<Void> collectionTask) {
+            Timber.d("doInBackgroundLoadDeckCounts");
+            try {
+                // Get due tree
+                return col.getSched().deckDueTree(collectionTask);
+            } catch (RuntimeException e) {
+                Timber.e(e, "doInBackgroundLoadDeckCounts - error");
+                return null;
+            }
+        }
+    }
+
     @Override
     protected void onPause() {
         Timber.d("onPause()");
         mActivityPaused = true;
         // The deck count will be computed on resume. No need to compute it now
-        TaskManager.cancelAllTasks(CollectionTask.LoadDeckCounts.class);
+        TaskManager.cancelAllTasks(LoadDeckCounts.class);
         super.onPause();
     }
 
@@ -2435,7 +2450,7 @@ public class DeckPicker extends NavigationDrawerActivity implements
                     };
             TaskManager.launchCollectionTask(loadDeck, updateDeckListListener());
         } else {
-            TaskManager.launchCollectionTask(new CollectionTask.LoadDeckCounts(), updateDeckListListener());
+            TaskManager.launchCollectionTask(new LoadDeckCounts(), updateDeckListListener());
         }
     }
 
