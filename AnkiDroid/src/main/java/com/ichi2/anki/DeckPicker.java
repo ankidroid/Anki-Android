@@ -974,7 +974,12 @@ public class DeckPicker extends NavigationDrawerActivity implements
         /* Complete task and enqueue fetching nonessential data for
           startup. */
         if (colIsOpen()) {
-            TaskManager.launchCollectionTask(new CollectionTask.LoadCollectionComplete());
+            TaskManager.launchCollectionTask((@NonNull Collection col, @NonNull ProgressSenderAndCancelListener<Void> collectionTask) -> {
+                if (col != null) {
+                    CollectionHelper.loadCollectionComplete(col);
+                }
+                return null;
+            });
         }
         // Update sync status (if we've come back from a screen)
         supportInvalidateOptionsMenu();
