@@ -2647,6 +2647,10 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
         }
     }
 
+    protected boolean buryCard() {
+        return dismiss(new CollectionTask.BuryCard(mCurrentCard));
+    }
+
     public boolean executeCommand(@ViewerCommandDef int which) {
         if (isControlBlocked() && which != COMMAND_EXIT) {
             return false;
@@ -2703,7 +2707,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
                 lookUpOrSelectText();
                 return true;
             case COMMAND_BURY_CARD:
-                return dismiss(new CollectionTask.BuryCard(mCurrentCard));
+                return buryCard();
             case COMMAND_BURY_NOTE:
                 return dismiss(new CollectionTask.BuryNote(mCurrentCard));
             case COMMAND_SUSPEND_CARD:
