@@ -1757,32 +1757,4 @@ public class CollectionTask<Progress, Result> extends BaseAsyncTask<Void, Progre
             return new Pair<>(models, cardCount);
         }
     }
-
-
-    /**
-     * Deletes the given model
-     * and all notes associated with it
-     */
-    public static class DeleteModel implements TaskDelegate<Void, Boolean> {
-        private final long mModID;
-
-
-        public DeleteModel(long modID) {
-            this.mModID = modID;
-        }
-
-
-        public Boolean task(@NonNull Collection col, @NonNull ProgressSenderAndCancelListener<Void> collectionTask) {
-            Timber.d("doInBackGroundDeleteModel");
-            try {
-                col.getModels().rem(col.getModels().get(mModID));
-                col.save();
-            } catch (ConfirmModSchemaException e) {
-                e.log();
-                Timber.e("doInBackGroundDeleteModel :: ConfirmModSchemaException");
-                return false;
-            }
-            return true;
-        }
-    }
 }

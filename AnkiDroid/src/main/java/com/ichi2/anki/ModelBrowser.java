@@ -41,6 +41,7 @@ import com.ichi2.anki.dialogs.ConfirmationDialog;
 import com.ichi2.anki.dialogs.ModelBrowserContextMenu;
 import com.ichi2.anki.exception.ConfirmModSchemaException;
 import com.ichi2.async.CollectionTask;
+import com.ichi2.async.ProgressSenderAndCancelListener;
 import com.ichi2.async.TaskListenerWithContext;
 import com.ichi2.async.TaskManager;
 import com.ichi2.libanki.Collection;
@@ -509,7 +510,19 @@ public class ModelBrowser extends AnkiActivity {
      * Deletes the currently selected model
      */
     private void deleteModel() {
-        TaskManager.launchCollectionTask(new CollectionTask.DeleteModel(mCurrentID), deleteModelHandler());
+        final long modelId = mCurrentID;
+        TaskManager.launchCollectionTask((@NonNull Collection col, @NonNull ProgressSenderAndCancelListener<Void> collectionTask) -> {
+            Timber.d("doInBackGroundDeleteModel");
+            try {
+                col.getModels().rem(col.getModels().get(modelId));
+                col.save();
+            } catch (ConfirmModSchemaException e) {
+                e.log();
+                Timber.e("doInBackGroundDeleteModel :: ConfirmModSchemaException");
+                return false;
+            }
+            return true;
+        }, deleteModelHandler());
         mModels.remove(mModelListPosition);
         mModelIds.remove(mModelListPosition);
         mModelDisplayList.remove(mModelListPosition);
