@@ -1933,16 +1933,4 @@ public class CollectionTask<Progress, Result> extends BaseAsyncTask<Void, Progre
             return new Pair<>(hasUnsuspended, hasUnmarked);
         }
     }
-
-    public static class PreloadNextCard implements TaskDelegate<Void, Void> {
-        public Void task(@NonNull Collection col, @NonNull ProgressSenderAndCancelListener<Void> collectionTask) {
-            try {
-                col.getSched().counts(); // Ensure counts are recomputed if necessary, to know queue to look for
-                col.getSched().preloadNextCard();
-            } catch (RuntimeException e) {
-                Timber.e(e, "doInBackgroundPreloadNextCard - RuntimeException on preloading card");
-            }
-            return null;
-        }
-    }
 }

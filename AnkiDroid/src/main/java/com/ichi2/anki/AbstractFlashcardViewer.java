@@ -599,7 +599,15 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
             }
 
             mCurrentCard = card;
-            TaskManager.launchCollectionTask(new CollectionTask.PreloadNextCard()); // Tasks should always be launched from GUI. So in
+            TaskManager.launchCollectionTask((@NonNull Collection col, @NonNull ProgressSenderAndCancelListener<Void> collectionTask) -> {
+                try {
+                    col.getSched().counts(); // Ensure counts are recomputed if necessary, to know queue to look for
+                    col.getSched().preloadNextCard();
+                } catch (RuntimeException e) {
+                    Timber.e(e, "doInBackgroundPreloadNextCard - RuntimeException on preloading card");
+                }
+                return null;
+            }); // Tasks should always be launched from GUI. So in
                                                                     // listener and not in background
             if (mCurrentCard == null) {
                 // If the card is null means that there are no more cards scheduled for review.
