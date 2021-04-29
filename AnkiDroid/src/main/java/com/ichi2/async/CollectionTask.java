@@ -334,6 +334,26 @@ public class CollectionTask<ProgressListener, ProgressBackground extends Progres
         }
     }
 
+    /** This task simply update with the card whose id is cid and return true.
+        It is usually very quick, but since it's a database access, it should still be in background
+     */
+    public static class GetSpecificCard extends Task<Card, BooleanGetter> {
+        private final long mCid;
+
+
+        public GetSpecificCard(long cid) {
+            mCid = cid;
+        }
+
+
+        protected BooleanGetter task(@NonNull Collection col, @NonNull ProgressSenderAndCancelListener<Card> collectionTask) {
+            Card card = col.getCard(mCid);
+            col.getSched().setCurrentCard(card);
+            collectionTask.doProgress(card);
+            return TRUE;
+        }
+    }
+
     public static class AnswerAndGetCard extends GetCard {
         private final @NonNull Card mOldCard;
         private final @Consts.BUTTON_TYPE int mEase;
