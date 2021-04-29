@@ -255,7 +255,13 @@ public class ModelFieldEditor extends AnkiActivity implements LocaleSelectionDia
         } else {
             mCol.modSchemaNoCheck();
         }
-        TaskManager.launchCollectionTask(new CollectionTask.AddField(mMod, fieldName), listener);
+        final Model model = mMod;
+        TaskManager.launchCollectionTask((@NonNull Collection col, @NonNull ProgressSenderAndCancelListener<Void> collectionTask) -> {
+            Timber.d("doInBackgroundRepositionField");
+            col.getModels().addFieldModChanged(model, col.getModels().newField(fieldName));
+            col.save();
+            return true;
+        }, listener);
     }
 
 

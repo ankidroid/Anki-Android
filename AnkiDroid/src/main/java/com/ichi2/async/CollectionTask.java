@@ -1846,26 +1846,4 @@ public class CollectionTask<Progress, Result> extends BaseAsyncTask<Void, Progre
             return true;
         }
     }
-
-    /**
-     * Adds a field with name in given model
-     */
-    public static class AddField implements TaskDelegate<Void, Boolean> {
-        private final Model mModel;
-        private final String mFieldName;
-
-
-        public AddField(Model model, String fieldName) {
-            this.mModel = model;
-            this.mFieldName = fieldName;
-        }
-
-
-        public Boolean task(@NonNull Collection col, @NonNull ProgressSenderAndCancelListener<Void> collectionTask){
-            Timber.d("doInBackgroundRepositionField");
-            col.getModels().addFieldModChanged(mModel, col.getModels().newField(mFieldName));
-            col.save();
-            return true;
-        }
-    }
 }
