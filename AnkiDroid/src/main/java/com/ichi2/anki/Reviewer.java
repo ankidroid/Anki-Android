@@ -1355,7 +1355,7 @@ public class Reviewer extends AbstractFlashcardViewer {
             if (itemId == R.id.action_bury_card) {
                 return buryCard();
             } else if (itemId == R.id.action_bury_note) {
-                return dismiss(new CollectionTask.BuryNote(mCurrentCard));
+                return buryNote();
             }
             return false;
         }
