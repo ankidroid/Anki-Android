@@ -103,6 +103,10 @@ public class CollectionTask<ProgressListener, ProgressBackground extends Progres
 
     public abstract static class Task<ProgressBackground, ResultBackground> {
         protected abstract ResultBackground task(@NonNull Collection col, @NonNull ProgressSenderAndCancelListener<ProgressBackground> collectionTask);
+
+        protected boolean requiresOpenCollection() {
+            return true;
+        }
     }
 
     /**
@@ -186,7 +190,7 @@ public class CollectionTask<ProgressListener, ProgressBackground extends Progres
         mContext = AnkiDroidApp.getInstance().getApplicationContext();
 
         // Skip the task if the collection cannot be opened
-        if ( mTask.getClass() != RepairCollection.class && mTask.getClass() != ImportReplace.class && CollectionHelper.getInstance().getColSafe(mContext) == null) {
+        if (mTask.requiresOpenCollection() && CollectionHelper.getInstance().getColSafe(mContext) == null) {
             Timber.e("CollectionTask CollectionTask %s as Collection could not be opened", mTask.getClass());
             return null;
         }
@@ -1271,6 +1275,11 @@ public class CollectionTask<ProgressListener, ProgressBackground extends Progres
             }
             return BackupManager.repairCollection(col);
         }
+
+        @Override
+        protected boolean requiresOpenCollection() {
+            return false;
+        }
     }
 
 
@@ -1504,6 +1513,11 @@ public class CollectionTask<ProgressListener, ProgressBackground extends Progres
                 AnkiDroidApp.sendExceptionReport(e, "doInBackgroundImportReplace3");
                 return FALSE;
             }
+        }
+
+        @Override
+        protected boolean requiresOpenCollection() {
+            return false;
         }
     }
 
