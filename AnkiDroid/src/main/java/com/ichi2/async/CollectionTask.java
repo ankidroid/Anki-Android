@@ -186,7 +186,7 @@ public class CollectionTask<ProgressListener, ProgressBackground extends Progres
         mContext = AnkiDroidApp.getInstance().getApplicationContext();
 
         // Skip the task if the collection cannot be opened
-        if ( mTask.getClass() != RepairCollectionn.class && mTask.getClass() != ImportReplace.class && CollectionHelper.getInstance().getColSafe(mContext) == null) {
+        if ( mTask.getClass() != RepairCollection.class && mTask.getClass() != ImportReplace.class && CollectionHelper.getInstance().getColSafe(mContext) == null) {
             Timber.e("CollectionTask CollectionTask %s as Collection could not be opened", mTask.getClass());
             return null;
         }
@@ -1262,7 +1262,7 @@ public class CollectionTask<ProgressListener, ProgressBackground extends Progres
     }
 
 
-    public static class RepairCollectionn extends Task<Void, Boolean> {
+    public static class RepairCollection extends Task<Void, Boolean> {
         protected Boolean task(@NonNull Collection col, @NonNull ProgressSenderAndCancelListener<Void> collectionTask) {
             Timber.d("doInBackgroundRepairCollection");
             if (col != null) {

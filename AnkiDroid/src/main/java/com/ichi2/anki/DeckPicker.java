@@ -104,7 +104,6 @@ import com.ichi2.anki.dialogs.MediaCheckDialog;
 import com.ichi2.anki.dialogs.SyncErrorDialog;
 import com.ichi2.anki.dialogs.customstudy.CustomStudyDialogFactory;
 import com.ichi2.anki.exception.ConfirmModSchemaException;
-import com.ichi2.anki.exception.DeckRenameException;
 import com.ichi2.anki.exception.FilteredAncestor;
 import com.ichi2.anki.receiver.SdCardReceiver;
 import com.ichi2.anki.stats.AnkiStatsTaskHandler;
@@ -130,7 +129,6 @@ import com.ichi2.libanki.sync.Syncer;
 import com.ichi2.libanki.utils.TimeUtils;
 import com.ichi2.themes.StyledProgressDialog;
 import com.ichi2.ui.BadgeDrawableBuilder;
-import com.ichi2.ui.FixedEditText;
 import com.ichi2.utils.AdaptionUtil;
 import com.ichi2.utils.BooleanGetter;
 import com.ichi2.utils.ImportUtils;
@@ -146,7 +144,6 @@ import com.ichi2.utils.JSONException;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.util.List;
-import java.util.Locale;
 import java.util.TreeMap;
 
 import timber.log.Timber;
@@ -1552,7 +1549,7 @@ public class DeckPicker extends NavigationDrawerActivity implements
     // Callback method to handle repairing deck
     public void repairCollection() {
         Timber.i("Repairing the Collection");
-        TaskManager.launchCollectionTask(new CollectionTask.RepairCollectionn(), repairCollectionTask());
+        TaskManager.launchCollectionTask(new CollectionTask.RepairCollection(), repairCollectionTask());
     }
 
 
