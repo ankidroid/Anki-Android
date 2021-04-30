@@ -272,4 +272,58 @@
         <item>x-large</item>
         <item>xx-large</item>
     </string-array>
+    <string-array name="error_reporting_choice_labels">
+        <item>@string/error_reporting_choice_labels_always_report</item>
+        <item>@string/error_reporting_choice_labels_never_report</item>
+        <item>@string/error_reporting_choice_labels_ask_me</item>
+    </string-array>
+    <string-array name="leech_action_labels">
+        <item>@string/leech_action_labels_suspend_card</item>
+        <item>@string/leech_action_labels_tag_only</item>
+    </string-array>
+    <string-array name="new_order_labels">
+        <item>@string/new_order_labels_new_cards_in_random_order</item>
+        <item>@string/new_order_labels_new_cards_in_order_added</item>
+    </string-array>
+    <string-array name="cram_deck_conf_order_labels">
+        <item>@string/cram_deck_conf_order_labels_oldest_seen_first</item>
+        <item>@string/cram_deck_conf_order_labels_random</item>
+        <item>@string/cram_deck_conf_order_labels_increasing_intervals</item>
+        <item>@string/cram_deck_conf_order_labels_decreasing_intervals</item>
+        <item>@string/cram_deck_conf_order_labels_most_lapsed</item>
+        <item>@string/cram_deck_conf_order_labels_order_added</item>
+        <item>@string/cram_deck_conf_order_labels_order_due</item>
+        <item>@string/cram_deck_conf_order_labels_latest_added_first</item>
+        <item>@string/cram_deck_conf_order_labels_relative_overdueness</item>
+    </string-array>
+    <string-array name="add_to_cur_labels">
+        <item>@string/add_to_cur_labels_use_current_deck</item>
+        <item>@string/add_to_cur_labels_decide_by_note_type</item>
+    </string-array>
+    <string-array name="new_spread_labels">
+        <item>@string/new_spread_labels_mix_new_cards_and_reviews</item>
+        <item>@string/new_spread_labels_new_cards_after_reviews</item>
+        <item>@string/new_spread_labels_new_cards_before_reviews</item>
+    </string-array>
+    <string-array name="override_font_labels">
+        <item>@string/override_font_labels_when_no_font_specified_on_flashcards</item>
+        <item>@string/override_font_labels_always</item>
+    </string-array>
+    <string-array name="day_theme_labels">
+        <item>@string/day_theme_labels_light</item>
+        <item>@string/day_theme_labels_plain</item>
+    </string-array>
+    <string-array name="night_theme_labels">
+        <item>@string/night_theme_labels_black</item>
+        <item>@string/night_theme_labels_dark</item>
+    </string-array>
+    <string-array name="html_size_code_labels">
+        <item>@string/html_size_code_labels_xx_small</item>
+        <item>@string/html_size_code_labels_x_small</item>
+        <item>@string/html_size_code_labels_small</item>
+        <item>@string/html_size_code_labels_medium</item>
+        <item>@string/html_size_code_labels_large</item>
+        <item>@string/html_size_code_labels_x_large</item>
+        <item>@string/html_size_code_labels_xx_large</item>
+    </string-array>
 </resources>
