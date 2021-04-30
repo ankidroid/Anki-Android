@@ -24,8 +24,8 @@ import android.text.TextUtils;
 
 import android.util.Pair;
 
+import com.ichi2.anki.PartialSearch;
 import com.ichi2.async.CancelListener;
-import com.ichi2.async.CollectionTask;
 import com.ichi2.async.ProgressSender;
 import com.ichi2.utils.JSONArray;
 import com.ichi2.utils.JSONObject;
@@ -82,7 +82,7 @@ public class Finder {
     }
 
     @CheckResult
-    public List<Long> findCards(String query, boolean _order, CollectionTask.PartialSearch task) {
+    public List<Long> findCards(String query, boolean _order, PartialSearch task) {
         return _findCards(query, _order, task, task == null ? null : task.getProgressSender());
     }
 
