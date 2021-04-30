@@ -1,5 +1,5 @@
-<?xml version="1.0" encoding="utf-8"?> 
- <!-- 
+<?xml version='1.0' encoding='UTF-8'?>
+<!-- 
  ~ Copyright (c) 2009 Andrew <andrewdubya@gmail> 
  ~ Copyright (c) 2009 Edu Zamora <edu.zasu@gmail.com> 
  ~ Copyright (c) 2009 Daniel Svaerd <daniel.svard@gmail.com> 
@@ -16,8 +16,7 @@
  ~ 
  ~ You should have received a copy of the GNU General Public License along with 
  ~ this program.  If not, see <http://www.gnu.org/licenses/>. 
- --> 
- 
+ -->
 <!--
 ~ Copyright (c) 2009 Casey Link <unnamedrambler@gmail.com>
 ~
@@ -114,4 +113,48 @@
     <string name="gesture_toggle_whiteboard">Chuyển đổi Bảng trắng</string>
     <string name="record_voice">Ghi âm giọng nói</string>
     <string name="replay_voice">Phát lại giọng nói</string>
+    <string name="error_reporting_choice_labels_always_report">Always report</string>
+    <string name="error_reporting_choice_labels_never_report">Never report</string>
+    <string name="error_reporting_choice_labels_ask_me">Ask me</string>
+
+    <string name="leech_action_labels_suspend_card" comment="leech_action_labels array">Suspend card</string>
+    <string name="leech_action_labels_tag_only">Tag only</string>
+
+    <string name="new_order_labels_new_cards_in_random_order">New cards in random order</string>
+    <string name="new_order_labels_new_cards_in_order_added">New cards in order added</string>
+
+    <string name="cram_deck_conf_order_labels_oldest_seen_first">Oldest seen first</string>
+    <string name="cram_deck_conf_order_labels_random">Random</string>
+    <string name="cram_deck_conf_order_labels_increasing_intervals">Increasing intervals</string>
+    <string name="cram_deck_conf_order_labels_decreasing_intervals">Decreasing intervals</string>
+    <string name="cram_deck_conf_order_labels_most_lapsed">Most lapsed</string>
+    <string name="cram_deck_conf_order_labels_order_added">Order added</string>
+    <string name="cram_deck_conf_order_labels_order_due">Order due</string>
+    <string name="cram_deck_conf_order_labels_latest_added_first">Latest added first</string>
+    <string name="cram_deck_conf_order_labels_relative_overdueness">Relative overdueness</string>
+
+    <string name="add_to_cur_labels_use_current_deck">Use current deck</string>
+    <string name="add_to_cur_labels_decide_by_note_type">Decide by note type</string>
+
+    <string name="new_spread_labels_mix_new_cards_and_reviews">Mix new cards and reviews</string>
+    <string name="new_spread_labels_new_cards_after_reviews">New cards after reviews</string>
+    <string name="new_spread_labels_new_cards_before_reviews">New cards before reviews</string>
+
+    <string name="override_font_labels_when_no_font_specified_on_flashcards">When no font specified on flashcards</string>
+    <string name="override_font_labels_always">Always</string>
+
+    <string name="day_theme_labels_light">Light</string>
+    <string name="day_theme_labels_plain">Plain</string>
+
+    <string name="night_theme_labels_black">Black</string>
+    <string name="night_theme_labels_dark">Dark</string>
+
+    <string name="html_size_code_labels_xx_small">xx-small</string>
+    <string name="html_size_code_labels_x_small">x-small</string>
+    <string name="html_size_code_labels_small">small</string>
+    <string name="html_size_code_labels_medium">medium</string>
+    <string name="html_size_code_labels_large">large</string>
+    <string name="html_size_code_labels_x_large">x-large</string>
+    <string name="html_size_code_labels_xx_large">xx-large</string>
+
 </resources>
