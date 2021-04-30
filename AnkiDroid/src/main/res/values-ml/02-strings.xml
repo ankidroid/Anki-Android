@@ -305,7 +305,7 @@
     <string name="api_version_developer_contact">ഈ കാർഡ് പിന്തുണയ്‌ക്കാത്ത അങ്കിഡ്രോയിഡ് സവിശേഷതകൾ ഉപയോഗിക്കുന്നു. %1$s ഡവലപ്പറുമായി ബന്ധപ്പെടുക, അല്ലെങ്കിൽ വിക്കി കാണുക. %2$s</string>
     <string name="invalid_json_data">കാർഡ് അസാധുവായ ഡാറ്റ നൽകി. %s</string>
     <string name="valid_js_api_version">അങ്കിഡ്രോയിഡ് ജെഎസ് എപിഐ പതിപ്പ് അസാധുവാണ്. ഡവലപ്പറുമായി ബന്ധപ്പെടുക %s, അല്ലെങ്കിൽ വിക്കി കാണുക</string>
-    <string name="update_js_api_version">AnkiDroid JS API അപ്‌ഡേറ്റ് ലഭ്യമാണ്. ഡവലപ്പറുമായി ബന്ധപ്പെടുക%s, അല്ലെങ്കിൽ വിക്കി കാണുക</string>
+    <string name="update_js_api_version">AnkiDroid JS API അപ്‌ഡേറ്റ് ലഭ്യമാണ്. ഡവലപ്പറുമായി ബന്ധപ്പെടുക %s, അല്ലെങ്കിൽ വിക്കി കാണുക</string>
     <string name="reviewer_invalid_api_version_visit_documentation">കാണുക</string>
     <string name="anki_js_error_code">(പിശക് കോഡ്: %d)</string>
     <!-- About AnkiDroid screen -->
