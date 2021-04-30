@@ -33,60 +33,6 @@
 ~ this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <resources>
-    <string-array name="error_reporting_choice_labels">
-        <item>Always report</item>
-        <item>Never report</item>
-        <item>Миннән сорау</item>
-    </string-array>
-    <string-array name="leech_action_labels">
-        <item>Suspend card</item>
-        <item>Tag only</item>
-    </string-array>
-    <string-array name="new_order_labels">
-        <item>New cards in random order</item>
-        <item>New cards in order added</item>
-    </string-array>
-    <string-array name="cram_deck_conf_order_labels">
-        <item>Oldest seen first</item>
-        <item>Random</item>
-        <item>Increasing intervals</item>
-        <item>Decreasing intervals</item>
-        <item>Most lapsed</item>
-        <item>Order added</item>
-        <item>Order due</item>
-        <item>Latest added first</item>
-        <item>Relative overdueness</item>
-    </string-array>
-    <string-array name="add_to_cur_labels">
-        <item>Use current deck</item>
-        <item>Decide by note type</item>
-    </string-array>
-    <string-array name="new_spread_labels">
-        <item>Mix new cards and reviews</item>
-        <item>New cards after reviews</item>
-        <item>New cards before reviews</item>
-    </string-array>
-    <string-array name="override_font_labels">
-        <item>When no font specified on flashcards</item>
-        <item>Always</item>
-    </string-array>
-    <string-array name="day_theme_labels">
-        <item>Ак</item>
-        <item>Plain</item>
-    </string-array>
-    <string-array name="night_theme_labels">
-        <item>Кара</item>
-        <item>Караңгы</item>
-    </string-array>
-    <string-array name="html_size_code_labels">
-        <item>xx-small</item>
-        <item>x-small</item>
-        <item>small</item>
-        <item>medium</item>
-        <item>large</item>
-        <item>x-large</item>
-        <item>xx-large</item>
-    </string-array>
     <!--
     #7794 - it\'s better to use @string references in non-translated arrays as this handles
     changes in the array ordering better
@@ -115,7 +61,7 @@
     <string name="replay_voice">Replay Voice</string>
     <string name="error_reporting_choice_labels_always_report">Always report</string>
     <string name="error_reporting_choice_labels_never_report">Never report</string>
-    <string name="error_reporting_choice_labels_ask_me">Ask me</string>
+    <string name="error_reporting_choice_labels_ask_me">Миннән сорау</string>
 
     <string name="leech_action_labels_suspend_card" comment="leech_action_labels array">Suspend card</string>
     <string name="leech_action_labels_tag_only">Tag only</string>
@@ -143,11 +89,11 @@
     <string name="override_font_labels_when_no_font_specified_on_flashcards">When no font specified on flashcards</string>
     <string name="override_font_labels_always">Always</string>
 
-    <string name="day_theme_labels_light">Light</string>
+    <string name="day_theme_labels_light">Ак</string>
     <string name="day_theme_labels_plain">Plain</string>
 
-    <string name="night_theme_labels_black">Black</string>
-    <string name="night_theme_labels_dark">Dark</string>
+    <string name="night_theme_labels_black">Кара</string>
+    <string name="night_theme_labels_dark">Караңгы</string>
 
     <string name="html_size_code_labels_xx_small">xx-small</string>
     <string name="html_size_code_labels_x_small">x-small</string>

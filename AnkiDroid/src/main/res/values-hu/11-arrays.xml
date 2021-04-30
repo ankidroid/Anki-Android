@@ -33,60 +33,6 @@
 ~ this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <resources>
-    <string-array name="error_reporting_choice_labels">
-        <item>Mindig jelentse</item>
-        <item>Soha ne jelentse</item>
-        <item>Kérdezzen rá</item>
-    </string-array>
-    <string-array name="leech_action_labels">
-        <item>Kártya felfüggesztése</item>
-        <item>Csak címke</item>
-    </string-array>
-    <string-array name="new_order_labels">
-        <item>Új kártyák véletlenszerűen</item>
-        <item>Új kártyák hozzáadás sorrendjében</item>
-    </string-array>
-    <string-array name="cram_deck_conf_order_labels">
-        <item>Legrégebben látottat először</item>
-        <item>Véletlenszerű</item>
-        <item>Növekvő időközönként</item>
-        <item>Csökkenő időközönként</item>
-        <item>A legtöbbször lejárt</item>
-        <item>Rendezés hozzáadva</item>
-        <item>Rendezés</item>
-        <item>Utoljára hozzáadott előbb</item>
-        <item>Relatív lejárt</item>
-    </string-array>
-    <string-array name="add_to_cur_labels">
-        <item>Jelenlegi pakli használata</item>
-        <item>Jegyzettípustól függ</item>
-    </string-array>
-    <string-array name="new_spread_labels">
-        <item>Új kártyák az ismétlendők közé</item>
-        <item>Új kártyák az ismétlendők után</item>
-        <item>Új kártyák az ismétlendők elé</item>
-    </string-array>
-    <string-array name="override_font_labels">
-        <item>Ha a kártyára nincs megadva betűtípus</item>
-        <item>Mindig</item>
-    </string-array>
-    <string-array name="day_theme_labels">
-        <item>Világos</item>
-        <item>Egyszerű</item>
-    </string-array>
-    <string-array name="night_theme_labels">
-        <item>Fekete</item>
-        <item>Sötét</item>
-    </string-array>
-    <string-array name="html_size_code_labels">
-        <item>xx-small</item>
-        <item>x-small</item>
-        <item>kicsi</item>
-        <item>közepes</item>
-        <item>nagy</item>
-        <item>x-large</item>
-        <item>xx-large</item>
-    </string-array>
     <!--
     #7794 - it\'s better to use @string references in non-translated arrays as this handles
     changes in the array ordering better
@@ -113,47 +59,47 @@
     <string name="gesture_toggle_whiteboard">Toggle Whiteboard</string>
     <string name="record_voice">Felvétel</string>
     <string name="replay_voice">Visszajátszás</string>
-    <string name="error_reporting_choice_labels_always_report">Always report</string>
-    <string name="error_reporting_choice_labels_never_report">Never report</string>
-    <string name="error_reporting_choice_labels_ask_me">Ask me</string>
+    <string name="error_reporting_choice_labels_always_report">Mindig jelentse</string>
+    <string name="error_reporting_choice_labels_never_report">Soha ne jelentse</string>
+    <string name="error_reporting_choice_labels_ask_me">Kérdezzen rá</string>
 
-    <string name="leech_action_labels_suspend_card" comment="leech_action_labels array">Suspend card</string>
-    <string name="leech_action_labels_tag_only">Tag only</string>
+    <string name="leech_action_labels_suspend_card" comment="leech_action_labels array">Kártya felfüggesztése</string>
+    <string name="leech_action_labels_tag_only">Csak címke</string>
 
-    <string name="new_order_labels_new_cards_in_random_order">New cards in random order</string>
-    <string name="new_order_labels_new_cards_in_order_added">New cards in order added</string>
+    <string name="new_order_labels_new_cards_in_random_order">Új kártyák véletlenszerűen</string>
+    <string name="new_order_labels_new_cards_in_order_added">Új kártyák hozzáadás sorrendjében</string>
 
-    <string name="cram_deck_conf_order_labels_oldest_seen_first">Oldest seen first</string>
-    <string name="cram_deck_conf_order_labels_random">Random</string>
-    <string name="cram_deck_conf_order_labels_increasing_intervals">Increasing intervals</string>
-    <string name="cram_deck_conf_order_labels_decreasing_intervals">Decreasing intervals</string>
-    <string name="cram_deck_conf_order_labels_most_lapsed">Most lapsed</string>
-    <string name="cram_deck_conf_order_labels_order_added">Order added</string>
-    <string name="cram_deck_conf_order_labels_order_due">Order due</string>
-    <string name="cram_deck_conf_order_labels_latest_added_first">Latest added first</string>
-    <string name="cram_deck_conf_order_labels_relative_overdueness">Relative overdueness</string>
+    <string name="cram_deck_conf_order_labels_oldest_seen_first">Legrégebben látottat először</string>
+    <string name="cram_deck_conf_order_labels_random">Véletlenszerű</string>
+    <string name="cram_deck_conf_order_labels_increasing_intervals">Növekvő időközönként</string>
+    <string name="cram_deck_conf_order_labels_decreasing_intervals">Csökkenő időközönként</string>
+    <string name="cram_deck_conf_order_labels_most_lapsed">A legtöbbször lejárt</string>
+    <string name="cram_deck_conf_order_labels_order_added">Rendezés hozzáadva</string>
+    <string name="cram_deck_conf_order_labels_order_due">Rendezés</string>
+    <string name="cram_deck_conf_order_labels_latest_added_first">Utoljára hozzáadott előbb</string>
+    <string name="cram_deck_conf_order_labels_relative_overdueness">Relatív lejárt</string>
 
-    <string name="add_to_cur_labels_use_current_deck">Use current deck</string>
-    <string name="add_to_cur_labels_decide_by_note_type">Decide by note type</string>
+    <string name="add_to_cur_labels_use_current_deck">Jelenlegi pakli használata</string>
+    <string name="add_to_cur_labels_decide_by_note_type">Jegyzettípustól függ</string>
 
-    <string name="new_spread_labels_mix_new_cards_and_reviews">Mix new cards and reviews</string>
-    <string name="new_spread_labels_new_cards_after_reviews">New cards after reviews</string>
-    <string name="new_spread_labels_new_cards_before_reviews">New cards before reviews</string>
+    <string name="new_spread_labels_mix_new_cards_and_reviews">Új kártyák az ismétlendők közé</string>
+    <string name="new_spread_labels_new_cards_after_reviews">Új kártyák az ismétlendők után</string>
+    <string name="new_spread_labels_new_cards_before_reviews">Új kártyák az ismétlendők elé</string>
 
-    <string name="override_font_labels_when_no_font_specified_on_flashcards">When no font specified on flashcards</string>
-    <string name="override_font_labels_always">Always</string>
+    <string name="override_font_labels_when_no_font_specified_on_flashcards">Ha a kártyára nincs megadva betűtípus</string>
+    <string name="override_font_labels_always">Mindig</string>
 
-    <string name="day_theme_labels_light">Light</string>
-    <string name="day_theme_labels_plain">Plain</string>
+    <string name="day_theme_labels_light">Világos</string>
+    <string name="day_theme_labels_plain">Egyszerű</string>
 
-    <string name="night_theme_labels_black">Black</string>
-    <string name="night_theme_labels_dark">Dark</string>
+    <string name="night_theme_labels_black">Fekete</string>
+    <string name="night_theme_labels_dark">Sötét</string>
 
     <string name="html_size_code_labels_xx_small">xx-small</string>
     <string name="html_size_code_labels_x_small">x-small</string>
-    <string name="html_size_code_labels_small">small</string>
-    <string name="html_size_code_labels_medium">medium</string>
-    <string name="html_size_code_labels_large">large</string>
+    <string name="html_size_code_labels_small">kicsi</string>
+    <string name="html_size_code_labels_medium">közepes</string>
+    <string name="html_size_code_labels_large">nagy</string>
     <string name="html_size_code_labels_x_large">x-large</string>
     <string name="html_size_code_labels_xx_large">xx-large</string>
 

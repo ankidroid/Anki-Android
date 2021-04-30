@@ -33,60 +33,6 @@
 ~ this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <resources>
-    <string-array name="error_reporting_choice_labels">
-        <item>总是发送报告</item>
-        <item>从不发送报告</item>
-        <item>询问我</item>
-    </string-array>
-    <string-array name="leech_action_labels">
-        <item>暂停卡片</item>
-        <item>仅标签</item>
-    </string-array>
-    <string-array name="new_order_labels">
-        <item>按随机顺序学习新卡片</item>
-        <item>按添加顺序学习新卡片</item>
-    </string-array>
-    <string-array name="cram_deck_conf_order_labels">
-        <item>优先显示老卡片</item>
-        <item>随机</item>
-        <item>增加时间间隔</item>
-        <item>减少时间间隔</item>
-        <item>忘记最多的</item>
-        <item>添加顺序</item>
-        <item>到期顺序</item>
-        <item>优先显示最晚添加的卡片</item>
-        <item>相对到期</item>
-    </string-array>
-    <string-array name="add_to_cur_labels">
-        <item>使用当前牌组</item>
-        <item>由笔记类型决定</item>
-    </string-array>
-    <string-array name="new_spread_labels">
-        <item>混合新卡片和复习</item>
-        <item>复习后再学习新卡片</item>
-        <item>学习新卡片后再复习</item>
-    </string-array>
-    <string-array name="override_font_labels">
-        <item>当卡片中没有指定字体时</item>
-        <item>总是</item>
-    </string-array>
-    <string-array name="day_theme_labels">
-        <item>亮色</item>
-        <item>简洁</item>
-    </string-array>
-    <string-array name="night_theme_labels">
-        <item>黑色</item>
-        <item>暗色</item>
-    </string-array>
-    <string-array name="html_size_code_labels">
-        <item>极小</item>
-        <item>很小</item>
-        <item>小</item>
-        <item>中</item>
-        <item>大</item>
-        <item>很大</item>
-        <item>极大</item>
-    </string-array>
     <!--
     #7794 - it\'s better to use @string references in non-translated arrays as this handles
     changes in the array ordering better
@@ -113,48 +59,48 @@
     <string name="gesture_toggle_whiteboard">切换白板</string>
     <string name="record_voice">录制音频</string>
     <string name="replay_voice">重播音频</string>
-    <string name="error_reporting_choice_labels_always_report">Always report</string>
-    <string name="error_reporting_choice_labels_never_report">Never report</string>
-    <string name="error_reporting_choice_labels_ask_me">Ask me</string>
+    <string name="error_reporting_choice_labels_always_report">总是发送报告</string>
+    <string name="error_reporting_choice_labels_never_report">从不发送报告</string>
+    <string name="error_reporting_choice_labels_ask_me">询问我</string>
 
-    <string name="leech_action_labels_suspend_card" comment="leech_action_labels array">Suspend card</string>
-    <string name="leech_action_labels_tag_only">Tag only</string>
+    <string name="leech_action_labels_suspend_card" comment="leech_action_labels array">暂停卡片</string>
+    <string name="leech_action_labels_tag_only">仅标签</string>
 
-    <string name="new_order_labels_new_cards_in_random_order">New cards in random order</string>
-    <string name="new_order_labels_new_cards_in_order_added">New cards in order added</string>
+    <string name="new_order_labels_new_cards_in_random_order">按随机顺序学习新卡片</string>
+    <string name="new_order_labels_new_cards_in_order_added">按添加顺序学习新卡片</string>
 
-    <string name="cram_deck_conf_order_labels_oldest_seen_first">Oldest seen first</string>
-    <string name="cram_deck_conf_order_labels_random">Random</string>
-    <string name="cram_deck_conf_order_labels_increasing_intervals">Increasing intervals</string>
-    <string name="cram_deck_conf_order_labels_decreasing_intervals">Decreasing intervals</string>
-    <string name="cram_deck_conf_order_labels_most_lapsed">Most lapsed</string>
-    <string name="cram_deck_conf_order_labels_order_added">Order added</string>
-    <string name="cram_deck_conf_order_labels_order_due">Order due</string>
-    <string name="cram_deck_conf_order_labels_latest_added_first">Latest added first</string>
-    <string name="cram_deck_conf_order_labels_relative_overdueness">Relative overdueness</string>
+    <string name="cram_deck_conf_order_labels_oldest_seen_first">优先显示老卡片</string>
+    <string name="cram_deck_conf_order_labels_random">随机</string>
+    <string name="cram_deck_conf_order_labels_increasing_intervals">增加时间间隔</string>
+    <string name="cram_deck_conf_order_labels_decreasing_intervals">减少时间间隔</string>
+    <string name="cram_deck_conf_order_labels_most_lapsed">忘记最多的</string>
+    <string name="cram_deck_conf_order_labels_order_added">添加顺序</string>
+    <string name="cram_deck_conf_order_labels_order_due">到期顺序</string>
+    <string name="cram_deck_conf_order_labels_latest_added_first">优先显示最晚添加的卡片</string>
+    <string name="cram_deck_conf_order_labels_relative_overdueness">相对到期</string>
 
-    <string name="add_to_cur_labels_use_current_deck">Use current deck</string>
-    <string name="add_to_cur_labels_decide_by_note_type">Decide by note type</string>
+    <string name="add_to_cur_labels_use_current_deck">使用当前牌组</string>
+    <string name="add_to_cur_labels_decide_by_note_type">由笔记类型决定</string>
 
-    <string name="new_spread_labels_mix_new_cards_and_reviews">Mix new cards and reviews</string>
-    <string name="new_spread_labels_new_cards_after_reviews">New cards after reviews</string>
-    <string name="new_spread_labels_new_cards_before_reviews">New cards before reviews</string>
+    <string name="new_spread_labels_mix_new_cards_and_reviews">混合新卡片和复习</string>
+    <string name="new_spread_labels_new_cards_after_reviews">复习后再学习新卡片</string>
+    <string name="new_spread_labels_new_cards_before_reviews">学习新卡片后再复习</string>
 
-    <string name="override_font_labels_when_no_font_specified_on_flashcards">When no font specified on flashcards</string>
-    <string name="override_font_labels_always">Always</string>
+    <string name="override_font_labels_when_no_font_specified_on_flashcards">当卡片中没有指定字体时</string>
+    <string name="override_font_labels_always">总是</string>
 
-    <string name="day_theme_labels_light">Light</string>
-    <string name="day_theme_labels_plain">Plain</string>
+    <string name="day_theme_labels_light">亮色</string>
+    <string name="day_theme_labels_plain">简洁</string>
 
-    <string name="night_theme_labels_black">Black</string>
-    <string name="night_theme_labels_dark">Dark</string>
+    <string name="night_theme_labels_black">黑色</string>
+    <string name="night_theme_labels_dark">暗色</string>
 
-    <string name="html_size_code_labels_xx_small">xx-small</string>
-    <string name="html_size_code_labels_x_small">x-small</string>
-    <string name="html_size_code_labels_small">small</string>
-    <string name="html_size_code_labels_medium">medium</string>
-    <string name="html_size_code_labels_large">large</string>
-    <string name="html_size_code_labels_x_large">x-large</string>
-    <string name="html_size_code_labels_xx_large">xx-large</string>
+    <string name="html_size_code_labels_xx_small">极小</string>
+    <string name="html_size_code_labels_x_small">很小</string>
+    <string name="html_size_code_labels_small">小</string>
+    <string name="html_size_code_labels_medium">中</string>
+    <string name="html_size_code_labels_large">大</string>
+    <string name="html_size_code_labels_x_large">很大</string>
+    <string name="html_size_code_labels_xx_large">极大</string>
 
 </resources>

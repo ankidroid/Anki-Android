@@ -33,60 +33,6 @@
 ~ this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <resources>
-    <string-array name="error_reporting_choice_labels">
-        <item>Всегда сообщать</item>
-        <item>Никогда не сообщать</item>
-        <item>Спрашивать меня</item>
-    </string-array>
-    <string-array name="leech_action_labels">
-        <item>Исключить карточку</item>
-        <item>Добавить метку</item>
-    </string-array>
-    <string-array name="new_order_labels">
-        <item>Новые в случайном порядке</item>
-        <item>Новые карточки в порядке добавления</item>
-    </string-array>
-    <string-array name="cram_deck_conf_order_labels">
-        <item>давно не повторяемые</item>
-        <item> случайные</item>
-        <item>увеличению интервалов</item>
-        <item>уменьшению интервалов</item>
-        <item>самые сложные</item>
-        <item>по порядку добавления</item>
-        <item>по расписанию повторения</item>
-        <item>последние добавленные</item>
-        <item>по просрочке</item>
-    </string-array>
-    <string-array name="add_to_cur_labels">
-        <item>Использовать текущую колоду</item>
-        <item>Решать по типу записи</item>
-    </string-array>
-    <string-array name="new_spread_labels">
-        <item>Перемешивать новые и повторяемые</item>
-        <item>Повторяемые до новых</item>
-        <item>Новые до повторяемых</item>
-    </string-array>
-    <string-array name="override_font_labels">
-        <item>Если в карточке не указан шрифт</item>
-        <item>Всегда</item>
-    </string-array>
-    <string-array name="day_theme_labels">
-        <item>Светлый</item>
-        <item>Простой</item>
-    </string-array>
-    <string-array name="night_theme_labels">
-        <item>Чёрный</item>
-        <item>Тёмный</item>
-    </string-array>
-    <string-array name="html_size_code_labels">
-        <item>самый маленький</item>
-        <item>очень маленький</item>
-        <item>маленький</item>
-        <item>средний</item>
-        <item>большой</item>
-        <item>очень большой</item>
-        <item>самый большой</item>
-    </string-array>
     <!--
     #7794 - it\'s better to use @string references in non-translated arrays as this handles
     changes in the array ordering better
@@ -113,48 +59,48 @@
     <string name="gesture_toggle_whiteboard">Переключить доску</string>
     <string name="record_voice">Записать голос</string>
     <string name="replay_voice">Воспроизвести голос</string>
-    <string name="error_reporting_choice_labels_always_report">Always report</string>
-    <string name="error_reporting_choice_labels_never_report">Never report</string>
-    <string name="error_reporting_choice_labels_ask_me">Ask me</string>
+    <string name="error_reporting_choice_labels_always_report">Всегда сообщать</string>
+    <string name="error_reporting_choice_labels_never_report">Никогда не сообщать</string>
+    <string name="error_reporting_choice_labels_ask_me">Спрашивать меня</string>
 
-    <string name="leech_action_labels_suspend_card" comment="leech_action_labels array">Suspend card</string>
-    <string name="leech_action_labels_tag_only">Tag only</string>
+    <string name="leech_action_labels_suspend_card" comment="leech_action_labels array">Исключить карточку</string>
+    <string name="leech_action_labels_tag_only">Добавить метку</string>
 
-    <string name="new_order_labels_new_cards_in_random_order">New cards in random order</string>
-    <string name="new_order_labels_new_cards_in_order_added">New cards in order added</string>
+    <string name="new_order_labels_new_cards_in_random_order">Новые в случайном порядке</string>
+    <string name="new_order_labels_new_cards_in_order_added">Новые карточки в порядке добавления</string>
 
-    <string name="cram_deck_conf_order_labels_oldest_seen_first">Oldest seen first</string>
-    <string name="cram_deck_conf_order_labels_random">Random</string>
-    <string name="cram_deck_conf_order_labels_increasing_intervals">Increasing intervals</string>
-    <string name="cram_deck_conf_order_labels_decreasing_intervals">Decreasing intervals</string>
-    <string name="cram_deck_conf_order_labels_most_lapsed">Most lapsed</string>
-    <string name="cram_deck_conf_order_labels_order_added">Order added</string>
-    <string name="cram_deck_conf_order_labels_order_due">Order due</string>
-    <string name="cram_deck_conf_order_labels_latest_added_first">Latest added first</string>
-    <string name="cram_deck_conf_order_labels_relative_overdueness">Relative overdueness</string>
+    <string name="cram_deck_conf_order_labels_oldest_seen_first">давно не повторяемые</string>
+    <string name="cram_deck_conf_order_labels_random"> случайные</string>
+    <string name="cram_deck_conf_order_labels_increasing_intervals">увеличению интервалов</string>
+    <string name="cram_deck_conf_order_labels_decreasing_intervals">уменьшению интервалов</string>
+    <string name="cram_deck_conf_order_labels_most_lapsed">самые сложные</string>
+    <string name="cram_deck_conf_order_labels_order_added">по порядку добавления</string>
+    <string name="cram_deck_conf_order_labels_order_due">по расписанию повторения</string>
+    <string name="cram_deck_conf_order_labels_latest_added_first">последние добавленные</string>
+    <string name="cram_deck_conf_order_labels_relative_overdueness">по просрочке</string>
 
-    <string name="add_to_cur_labels_use_current_deck">Use current deck</string>
-    <string name="add_to_cur_labels_decide_by_note_type">Decide by note type</string>
+    <string name="add_to_cur_labels_use_current_deck">Использовать текущую колоду</string>
+    <string name="add_to_cur_labels_decide_by_note_type">Решать по типу записи</string>
 
-    <string name="new_spread_labels_mix_new_cards_and_reviews">Mix new cards and reviews</string>
-    <string name="new_spread_labels_new_cards_after_reviews">New cards after reviews</string>
-    <string name="new_spread_labels_new_cards_before_reviews">New cards before reviews</string>
+    <string name="new_spread_labels_mix_new_cards_and_reviews">Перемешивать новые и повторяемые</string>
+    <string name="new_spread_labels_new_cards_after_reviews">Повторяемые до новых</string>
+    <string name="new_spread_labels_new_cards_before_reviews">Новые до повторяемых</string>
 
-    <string name="override_font_labels_when_no_font_specified_on_flashcards">When no font specified on flashcards</string>
-    <string name="override_font_labels_always">Always</string>
+    <string name="override_font_labels_when_no_font_specified_on_flashcards">Если в карточке не указан шрифт</string>
+    <string name="override_font_labels_always">Всегда</string>
 
-    <string name="day_theme_labels_light">Light</string>
-    <string name="day_theme_labels_plain">Plain</string>
+    <string name="day_theme_labels_light">Светлый</string>
+    <string name="day_theme_labels_plain">Простой</string>
 
-    <string name="night_theme_labels_black">Black</string>
-    <string name="night_theme_labels_dark">Dark</string>
+    <string name="night_theme_labels_black">Чёрный</string>
+    <string name="night_theme_labels_dark">Тёмный</string>
 
-    <string name="html_size_code_labels_xx_small">xx-small</string>
-    <string name="html_size_code_labels_x_small">x-small</string>
-    <string name="html_size_code_labels_small">small</string>
-    <string name="html_size_code_labels_medium">medium</string>
-    <string name="html_size_code_labels_large">large</string>
-    <string name="html_size_code_labels_x_large">x-large</string>
-    <string name="html_size_code_labels_xx_large">xx-large</string>
+    <string name="html_size_code_labels_xx_small">самый маленький</string>
+    <string name="html_size_code_labels_x_small">очень маленький</string>
+    <string name="html_size_code_labels_small">маленький</string>
+    <string name="html_size_code_labels_medium">средний</string>
+    <string name="html_size_code_labels_large">большой</string>
+    <string name="html_size_code_labels_x_large">очень большой</string>
+    <string name="html_size_code_labels_xx_large">самый большой</string>
 
 </resources>

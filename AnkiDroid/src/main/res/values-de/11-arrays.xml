@@ -33,60 +33,6 @@
 ~ this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <resources>
-    <string-array name="error_reporting_choice_labels">
-        <item>Immer melden</item>
-        <item>Niemals melden</item>
-        <item>Nachfragen</item>
-    </string-array>
-    <string-array name="leech_action_labels">
-        <item>Karte ausschließen</item>
-        <item>Nur Schlagwort</item>
-    </string-array>
-    <string-array name="new_order_labels">
-        <item>Neue Karten in zufälliger Reihenfolge</item>
-        <item>Neue Karten in Reihenfolge des Hinzufügens</item>
-    </string-array>
-    <string-array name="cram_deck_conf_order_labels">
-        <item>Älteste zuerst</item>
-        <item>Zufällig</item>
-        <item>Steigende Intervalle</item>
-        <item>abnehmenden Intervallen</item>
-        <item>Häufigkeit des Vergessens</item>
-        <item>Reihenfolge des Hinzufügens</item>
-        <item>Fälligkeit</item>
-        <item>Zuletzt hinzugefügte zuerst</item>
-        <item>relativer Überfälligkeit</item>
-    </string-array>
-    <string-array name="add_to_cur_labels">
-        <item>Aktuellen Stapel verwenden</item>
-        <item>Nach Notiztyp entscheiden</item>
-    </string-array>
-    <string-array name="new_spread_labels">
-        <item>Neue Karten und Wiederholungen mischen</item>
-        <item>Neue Karten nach Wiederholungen</item>
-        <item>Neue Karten vor Wiederholungen</item>
-    </string-array>
-    <string-array name="override_font_labels">
-        <item>Falls keine Schriftart auf Karten angegeben</item>
-        <item>Immer</item>
-    </string-array>
-    <string-array name="day_theme_labels">
-        <item>Hell</item>
-        <item>Schlicht</item>
-    </string-array>
-    <string-array name="night_theme_labels">
-        <item>Schwarz</item>
-        <item>Dunkel</item>
-    </string-array>
-    <string-array name="html_size_code_labels">
-        <item>am kleinsten</item>
-        <item>kleiner</item>
-        <item>klein</item>
-        <item>mittel</item>
-        <item>groß</item>
-        <item>größer</item>
-        <item>am größten</item>
-    </string-array>
     <!--
     #7794 - it\'s better to use @string references in non-translated arrays as this handles
     changes in the array ordering better
@@ -113,48 +59,48 @@
     <string name="gesture_toggle_whiteboard">Whiteboard ein-/ausschalten</string>
     <string name="record_voice">Sprache aufzeichnen</string>
     <string name="replay_voice">Sprache wiedergeben</string>
-    <string name="error_reporting_choice_labels_always_report">Always report</string>
-    <string name="error_reporting_choice_labels_never_report">Never report</string>
-    <string name="error_reporting_choice_labels_ask_me">Ask me</string>
+    <string name="error_reporting_choice_labels_always_report">Immer melden</string>
+    <string name="error_reporting_choice_labels_never_report">Niemals melden</string>
+    <string name="error_reporting_choice_labels_ask_me">Nachfragen</string>
 
-    <string name="leech_action_labels_suspend_card" comment="leech_action_labels array">Suspend card</string>
-    <string name="leech_action_labels_tag_only">Tag only</string>
+    <string name="leech_action_labels_suspend_card" comment="leech_action_labels array">Karte ausschließen</string>
+    <string name="leech_action_labels_tag_only">Nur Schlagwort</string>
 
-    <string name="new_order_labels_new_cards_in_random_order">New cards in random order</string>
-    <string name="new_order_labels_new_cards_in_order_added">New cards in order added</string>
+    <string name="new_order_labels_new_cards_in_random_order">Neue Karten in zufälliger Reihenfolge</string>
+    <string name="new_order_labels_new_cards_in_order_added">Neue Karten in Reihenfolge des Hinzufügens</string>
 
-    <string name="cram_deck_conf_order_labels_oldest_seen_first">Oldest seen first</string>
-    <string name="cram_deck_conf_order_labels_random">Random</string>
-    <string name="cram_deck_conf_order_labels_increasing_intervals">Increasing intervals</string>
-    <string name="cram_deck_conf_order_labels_decreasing_intervals">Decreasing intervals</string>
-    <string name="cram_deck_conf_order_labels_most_lapsed">Most lapsed</string>
-    <string name="cram_deck_conf_order_labels_order_added">Order added</string>
-    <string name="cram_deck_conf_order_labels_order_due">Order due</string>
-    <string name="cram_deck_conf_order_labels_latest_added_first">Latest added first</string>
-    <string name="cram_deck_conf_order_labels_relative_overdueness">Relative overdueness</string>
+    <string name="cram_deck_conf_order_labels_oldest_seen_first">Älteste zuerst</string>
+    <string name="cram_deck_conf_order_labels_random">Zufällig</string>
+    <string name="cram_deck_conf_order_labels_increasing_intervals">Steigende Intervalle</string>
+    <string name="cram_deck_conf_order_labels_decreasing_intervals">abnehmenden Intervallen</string>
+    <string name="cram_deck_conf_order_labels_most_lapsed">Häufigkeit des Vergessens</string>
+    <string name="cram_deck_conf_order_labels_order_added">Reihenfolge des Hinzufügens</string>
+    <string name="cram_deck_conf_order_labels_order_due">Fälligkeit</string>
+    <string name="cram_deck_conf_order_labels_latest_added_first">Zuletzt hinzugefügte zuerst</string>
+    <string name="cram_deck_conf_order_labels_relative_overdueness">relativer Überfälligkeit</string>
 
-    <string name="add_to_cur_labels_use_current_deck">Use current deck</string>
-    <string name="add_to_cur_labels_decide_by_note_type">Decide by note type</string>
+    <string name="add_to_cur_labels_use_current_deck">Aktuellen Stapel verwenden</string>
+    <string name="add_to_cur_labels_decide_by_note_type">Nach Notiztyp entscheiden</string>
 
-    <string name="new_spread_labels_mix_new_cards_and_reviews">Mix new cards and reviews</string>
-    <string name="new_spread_labels_new_cards_after_reviews">New cards after reviews</string>
-    <string name="new_spread_labels_new_cards_before_reviews">New cards before reviews</string>
+    <string name="new_spread_labels_mix_new_cards_and_reviews">Neue Karten und Wiederholungen mischen</string>
+    <string name="new_spread_labels_new_cards_after_reviews">Neue Karten nach Wiederholungen</string>
+    <string name="new_spread_labels_new_cards_before_reviews">Neue Karten vor Wiederholungen</string>
 
-    <string name="override_font_labels_when_no_font_specified_on_flashcards">When no font specified on flashcards</string>
-    <string name="override_font_labels_always">Always</string>
+    <string name="override_font_labels_when_no_font_specified_on_flashcards">Falls keine Schriftart auf Karten angegeben</string>
+    <string name="override_font_labels_always">Immer</string>
 
-    <string name="day_theme_labels_light">Light</string>
-    <string name="day_theme_labels_plain">Plain</string>
+    <string name="day_theme_labels_light">Hell</string>
+    <string name="day_theme_labels_plain">Schlicht</string>
 
-    <string name="night_theme_labels_black">Black</string>
-    <string name="night_theme_labels_dark">Dark</string>
+    <string name="night_theme_labels_black">Schwarz</string>
+    <string name="night_theme_labels_dark">Dunkel</string>
 
-    <string name="html_size_code_labels_xx_small">xx-small</string>
-    <string name="html_size_code_labels_x_small">x-small</string>
-    <string name="html_size_code_labels_small">small</string>
-    <string name="html_size_code_labels_medium">medium</string>
-    <string name="html_size_code_labels_large">large</string>
-    <string name="html_size_code_labels_x_large">x-large</string>
-    <string name="html_size_code_labels_xx_large">xx-large</string>
+    <string name="html_size_code_labels_xx_small">am kleinsten</string>
+    <string name="html_size_code_labels_x_small">kleiner</string>
+    <string name="html_size_code_labels_small">klein</string>
+    <string name="html_size_code_labels_medium">mittel</string>
+    <string name="html_size_code_labels_large">groß</string>
+    <string name="html_size_code_labels_x_large">größer</string>
+    <string name="html_size_code_labels_xx_large">am größten</string>
 
 </resources>

@@ -33,60 +33,6 @@
 ~ this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <resources>
-    <string-array name="error_reporting_choice_labels">
-        <item>Rapporter alltid</item>
-        <item>Aldri rapporter</item>
-        <item>Spør meg</item>
-    </string-array>
-    <string-array name="leech_action_labels">
-        <item>Suspender kort</item>
-        <item>Kun emneord</item>
-    </string-array>
-    <string-array name="new_order_labels">
-        <item>Nye kort i tilfeldig rekkefølge</item>
-        <item>Nye kort i den rekkefølgen de ble lagt til</item>
-    </string-array>
-    <string-array name="cram_deck_conf_order_labels">
-        <item>Lengst siden sett først</item>
-        <item>Tilfeldig</item>
-        <item>Økende intervaller</item>
-        <item>Synkende intervaller</item>
-        <item>Besvart feil flest ganger</item>
-        <item>I rekkefølgen lagt til</item>
-        <item>Rekkefølge etter forfallsdato</item>
-        <item>Latest added first</item>
-        <item>Relative overdueness</item>
-    </string-array>
-    <string-array name="add_to_cur_labels">
-        <item>Use current deck</item>
-        <item>Decide by note type</item>
-    </string-array>
-    <string-array name="new_spread_labels">
-        <item>Mix new cards and reviews</item>
-        <item>New cards after reviews</item>
-        <item>New cards before reviews</item>
-    </string-array>
-    <string-array name="override_font_labels">
-        <item>When no font specified on flashcards</item>
-        <item>Alltid</item>
-    </string-array>
-    <string-array name="day_theme_labels">
-        <item>Light</item>
-        <item>Plain</item>
-    </string-array>
-    <string-array name="night_theme_labels">
-        <item>Svart</item>
-        <item>Mørk</item>
-    </string-array>
-    <string-array name="html_size_code_labels">
-        <item>xx-small</item>
-        <item>x-small</item>
-        <item>small</item>
-        <item>medium</item>
-        <item>large</item>
-        <item>x-large</item>
-        <item>xx-large</item>
-    </string-array>
     <!--
     #7794 - it\'s better to use @string references in non-translated arrays as this handles
     changes in the array ordering better
@@ -113,23 +59,23 @@
     <string name="gesture_toggle_whiteboard">Toggle Whiteboard</string>
     <string name="record_voice">Record Voice</string>
     <string name="replay_voice">Replay Voice</string>
-    <string name="error_reporting_choice_labels_always_report">Always report</string>
-    <string name="error_reporting_choice_labels_never_report">Never report</string>
-    <string name="error_reporting_choice_labels_ask_me">Ask me</string>
+    <string name="error_reporting_choice_labels_always_report">Rapporter alltid</string>
+    <string name="error_reporting_choice_labels_never_report">Aldri rapporter</string>
+    <string name="error_reporting_choice_labels_ask_me">Spør meg</string>
 
-    <string name="leech_action_labels_suspend_card" comment="leech_action_labels array">Suspend card</string>
-    <string name="leech_action_labels_tag_only">Tag only</string>
+    <string name="leech_action_labels_suspend_card" comment="leech_action_labels array">Suspender kort</string>
+    <string name="leech_action_labels_tag_only">Kun emneord</string>
 
-    <string name="new_order_labels_new_cards_in_random_order">New cards in random order</string>
-    <string name="new_order_labels_new_cards_in_order_added">New cards in order added</string>
+    <string name="new_order_labels_new_cards_in_random_order">Nye kort i tilfeldig rekkefølge</string>
+    <string name="new_order_labels_new_cards_in_order_added">Nye kort i den rekkefølgen de ble lagt til</string>
 
-    <string name="cram_deck_conf_order_labels_oldest_seen_first">Oldest seen first</string>
-    <string name="cram_deck_conf_order_labels_random">Random</string>
-    <string name="cram_deck_conf_order_labels_increasing_intervals">Increasing intervals</string>
-    <string name="cram_deck_conf_order_labels_decreasing_intervals">Decreasing intervals</string>
-    <string name="cram_deck_conf_order_labels_most_lapsed">Most lapsed</string>
-    <string name="cram_deck_conf_order_labels_order_added">Order added</string>
-    <string name="cram_deck_conf_order_labels_order_due">Order due</string>
+    <string name="cram_deck_conf_order_labels_oldest_seen_first">Lengst siden sett først</string>
+    <string name="cram_deck_conf_order_labels_random">Tilfeldig</string>
+    <string name="cram_deck_conf_order_labels_increasing_intervals">Økende intervaller</string>
+    <string name="cram_deck_conf_order_labels_decreasing_intervals">Synkende intervaller</string>
+    <string name="cram_deck_conf_order_labels_most_lapsed">Besvart feil flest ganger</string>
+    <string name="cram_deck_conf_order_labels_order_added">I rekkefølgen lagt til</string>
+    <string name="cram_deck_conf_order_labels_order_due">Rekkefølge etter forfallsdato</string>
     <string name="cram_deck_conf_order_labels_latest_added_first">Latest added first</string>
     <string name="cram_deck_conf_order_labels_relative_overdueness">Relative overdueness</string>
 
@@ -141,13 +87,13 @@
     <string name="new_spread_labels_new_cards_before_reviews">New cards before reviews</string>
 
     <string name="override_font_labels_when_no_font_specified_on_flashcards">When no font specified on flashcards</string>
-    <string name="override_font_labels_always">Always</string>
+    <string name="override_font_labels_always">Alltid</string>
 
     <string name="day_theme_labels_light">Light</string>
     <string name="day_theme_labels_plain">Plain</string>
 
-    <string name="night_theme_labels_black">Black</string>
-    <string name="night_theme_labels_dark">Dark</string>
+    <string name="night_theme_labels_black">Svart</string>
+    <string name="night_theme_labels_dark">Mørk</string>
 
     <string name="html_size_code_labels_xx_small">xx-small</string>
     <string name="html_size_code_labels_x_small">x-small</string>

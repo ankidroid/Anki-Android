@@ -33,60 +33,6 @@
 ~ this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <resources>
-    <string-array name="error_reporting_choice_labels">
-        <item>항상 보고하기</item>
-        <item>보고하지 않기</item>
-        <item>오류 보고전 묻기</item>
-    </string-array>
-    <string-array name="leech_action_labels">
-        <item>카드 비활성화</item>
-        <item>태그 전용</item>
-    </string-array>
-    <string-array name="new_order_labels">
-        <item>무작위 순서대로 새 카드</item>
-        <item>추가한 순서대로 새 카드</item>
-    </string-array>
-    <string-array name="cram_deck_conf_order_labels">
-        <item>오래된 카드 먼저</item>
-        <item>무작위</item>
-        <item>학습 간격 늘이기</item>
-        <item>학습 간격 줄이기</item>
-        <item>오답 빈도가 가장 높은</item>
-        <item>추가된 순서대로</item>
-        <item>기간 순서대로</item>
-        <item>최근 추가된 것이 처음으로</item>
-        <item>상대적 기간초과</item>
-    </string-array>
-    <string-array name="add_to_cur_labels">
-        <item>현재 카드 묶음을 사용</item>
-        <item>노트 형식에 따라 결정</item>
-    </string-array>
-    <string-array name="new_spread_labels">
-        <item>새 카드와 복습 섞기</item>
-        <item>복습을 새 카드보다 먼저</item>
-        <item>새 카드를 복습보다 먼저</item>
-    </string-array>
-    <string-array name="override_font_labels">
-        <item>플래시카드에 특정 글꼴이 지정되지 않은 경우</item>
-        <item>항상</item>
-    </string-array>
-    <string-array name="day_theme_labels">
-        <item>밝음</item>
-        <item>플레인</item>
-    </string-array>
-    <string-array name="night_theme_labels">
-        <item>블랙</item>
-        <item>어두움</item>
-    </string-array>
-    <string-array name="html_size_code_labels">
-        <item>xx-small</item>
-        <item>x-small</item>
-        <item>small</item>
-        <item>medium</item>
-        <item>large</item>
-        <item>x-large</item>
-        <item>xx-large</item>
-    </string-array>
     <!--
     #7794 - it\'s better to use @string references in non-translated arrays as this handles
     changes in the array ordering better
@@ -113,41 +59,41 @@
     <string name="gesture_toggle_whiteboard">Toggle Whiteboard</string>
     <string name="record_voice">Record Voice</string>
     <string name="replay_voice">Replay Voice</string>
-    <string name="error_reporting_choice_labels_always_report">Always report</string>
-    <string name="error_reporting_choice_labels_never_report">Never report</string>
-    <string name="error_reporting_choice_labels_ask_me">Ask me</string>
+    <string name="error_reporting_choice_labels_always_report">항상 보고하기</string>
+    <string name="error_reporting_choice_labels_never_report">보고하지 않기</string>
+    <string name="error_reporting_choice_labels_ask_me">오류 보고전 묻기</string>
 
-    <string name="leech_action_labels_suspend_card" comment="leech_action_labels array">Suspend card</string>
-    <string name="leech_action_labels_tag_only">Tag only</string>
+    <string name="leech_action_labels_suspend_card" comment="leech_action_labels array">카드 비활성화</string>
+    <string name="leech_action_labels_tag_only">태그 전용</string>
 
-    <string name="new_order_labels_new_cards_in_random_order">New cards in random order</string>
-    <string name="new_order_labels_new_cards_in_order_added">New cards in order added</string>
+    <string name="new_order_labels_new_cards_in_random_order">무작위 순서대로 새 카드</string>
+    <string name="new_order_labels_new_cards_in_order_added">추가한 순서대로 새 카드</string>
 
-    <string name="cram_deck_conf_order_labels_oldest_seen_first">Oldest seen first</string>
-    <string name="cram_deck_conf_order_labels_random">Random</string>
-    <string name="cram_deck_conf_order_labels_increasing_intervals">Increasing intervals</string>
-    <string name="cram_deck_conf_order_labels_decreasing_intervals">Decreasing intervals</string>
-    <string name="cram_deck_conf_order_labels_most_lapsed">Most lapsed</string>
-    <string name="cram_deck_conf_order_labels_order_added">Order added</string>
-    <string name="cram_deck_conf_order_labels_order_due">Order due</string>
-    <string name="cram_deck_conf_order_labels_latest_added_first">Latest added first</string>
-    <string name="cram_deck_conf_order_labels_relative_overdueness">Relative overdueness</string>
+    <string name="cram_deck_conf_order_labels_oldest_seen_first">오래된 카드 먼저</string>
+    <string name="cram_deck_conf_order_labels_random">무작위</string>
+    <string name="cram_deck_conf_order_labels_increasing_intervals">학습 간격 늘이기</string>
+    <string name="cram_deck_conf_order_labels_decreasing_intervals">학습 간격 줄이기</string>
+    <string name="cram_deck_conf_order_labels_most_lapsed">오답 빈도가 가장 높은</string>
+    <string name="cram_deck_conf_order_labels_order_added">추가된 순서대로</string>
+    <string name="cram_deck_conf_order_labels_order_due">기간 순서대로</string>
+    <string name="cram_deck_conf_order_labels_latest_added_first">최근 추가된 것이 처음으로</string>
+    <string name="cram_deck_conf_order_labels_relative_overdueness">상대적 기간초과</string>
 
-    <string name="add_to_cur_labels_use_current_deck">Use current deck</string>
-    <string name="add_to_cur_labels_decide_by_note_type">Decide by note type</string>
+    <string name="add_to_cur_labels_use_current_deck">현재 카드 묶음을 사용</string>
+    <string name="add_to_cur_labels_decide_by_note_type">노트 형식에 따라 결정</string>
 
-    <string name="new_spread_labels_mix_new_cards_and_reviews">Mix new cards and reviews</string>
-    <string name="new_spread_labels_new_cards_after_reviews">New cards after reviews</string>
-    <string name="new_spread_labels_new_cards_before_reviews">New cards before reviews</string>
+    <string name="new_spread_labels_mix_new_cards_and_reviews">새 카드와 복습 섞기</string>
+    <string name="new_spread_labels_new_cards_after_reviews">복습을 새 카드보다 먼저</string>
+    <string name="new_spread_labels_new_cards_before_reviews">새 카드를 복습보다 먼저</string>
 
-    <string name="override_font_labels_when_no_font_specified_on_flashcards">When no font specified on flashcards</string>
-    <string name="override_font_labels_always">Always</string>
+    <string name="override_font_labels_when_no_font_specified_on_flashcards">플래시카드에 특정 글꼴이 지정되지 않은 경우</string>
+    <string name="override_font_labels_always">항상</string>
 
-    <string name="day_theme_labels_light">Light</string>
-    <string name="day_theme_labels_plain">Plain</string>
+    <string name="day_theme_labels_light">밝음</string>
+    <string name="day_theme_labels_plain">플레인</string>
 
-    <string name="night_theme_labels_black">Black</string>
-    <string name="night_theme_labels_dark">Dark</string>
+    <string name="night_theme_labels_black">블랙</string>
+    <string name="night_theme_labels_dark">어두움</string>
 
     <string name="html_size_code_labels_xx_small">xx-small</string>
     <string name="html_size_code_labels_x_small">x-small</string>

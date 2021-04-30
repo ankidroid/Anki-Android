@@ -33,60 +33,6 @@
 ~ this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <resources>
-    <string-array name="error_reporting_choice_labels">
-        <item>नेहमी नोंदवा</item>
-        <item>कधीही रिपोर्ट करू नका</item>
-        <item>मला विचार</item>
-    </string-array>
-    <string-array name="leech_action_labels">
-        <item>निलंबन कार्ड</item>
-        <item>केवळ टॅग करा</item>
-    </string-array>
-    <string-array name="new_order_labels">
-        <item>यादृच्छिक क्रमाने नवीन कार्डे</item>
-        <item>क्रमाने नवीन कार्डे जोडली</item>
-    </string-array>
-    <string-array name="cram_deck_conf_order_labels">
-        <item>सर्वात पहिले पाहिलेले</item>
-        <item>यादृच्छिक</item>
-        <item>वाढती मध्यांतर</item>
-        <item>मध्यांतर कमी होत आहे</item>
-        <item>बहुतेक संपले</item>
-        <item>ऑर्डर जोडली</item>
-        <item>ऑर्डर देय</item>
-        <item>प्रथम नवीन जोडले</item>
-        <item>सापेक्ष प्रमाणाबाहेरपणा</item>
-    </string-array>
-    <string-array name="add_to_cur_labels">
-        <item>वर्तमान डेक वापरा</item>
-        <item>नोट प्रकाराद्वारे निर्णय घ्या</item>
-    </string-array>
-    <string-array name="new_spread_labels">
-        <item>नवीन कार्डे आणि पुनरावलोकने मिक्स करा</item>
-        <item>पुनरावलोकने नंतर नवीन कार्डे</item>
-        <item>पुनरावलोकनापूर्वी नवीन कार्डे</item>
-    </string-array>
-    <string-array name="override_font_labels">
-        <item>जेव्हा फ्लॅशकार्डवर कोणताही फॉन्ट निर्दिष्ट केलेला नाही</item>
-        <item>नेहमी</item>
-    </string-array>
-    <string-array name="day_theme_labels">
-        <item>प्रकाश</item>
-        <item>साधा</item>
-    </string-array>
-    <string-array name="night_theme_labels">
-        <item>काळा</item>
-        <item>गडद</item>
-    </string-array>
-    <string-array name="html_size_code_labels">
-        <item>xx- लहान</item>
-        <item>x-लहान</item>
-        <item>लहान</item>
-        <item>मध्यम</item>
-        <item>मोठे</item>
-        <item>x- मोठा</item>
-        <item>xx- मोठे</item>
-    </string-array>
     <!--
     #7794 - it\'s better to use @string references in non-translated arrays as this handles
     changes in the array ordering better
@@ -113,48 +59,48 @@
     <string name="gesture_toggle_whiteboard">व्हाईटबोर्ड टॉगल करा</string>
     <string name="record_voice">आवाज रेकॉर्ड करा</string>
     <string name="replay_voice">आवाज पुन्हा प्ले करा</string>
-    <string name="error_reporting_choice_labels_always_report">Always report</string>
-    <string name="error_reporting_choice_labels_never_report">Never report</string>
-    <string name="error_reporting_choice_labels_ask_me">Ask me</string>
+    <string name="error_reporting_choice_labels_always_report">नेहमी नोंदवा</string>
+    <string name="error_reporting_choice_labels_never_report">कधीही रिपोर्ट करू नका</string>
+    <string name="error_reporting_choice_labels_ask_me">मला विचार</string>
 
-    <string name="leech_action_labels_suspend_card" comment="leech_action_labels array">Suspend card</string>
-    <string name="leech_action_labels_tag_only">Tag only</string>
+    <string name="leech_action_labels_suspend_card" comment="leech_action_labels array">निलंबन कार्ड</string>
+    <string name="leech_action_labels_tag_only">केवळ टॅग करा</string>
 
-    <string name="new_order_labels_new_cards_in_random_order">New cards in random order</string>
-    <string name="new_order_labels_new_cards_in_order_added">New cards in order added</string>
+    <string name="new_order_labels_new_cards_in_random_order">यादृच्छिक क्रमाने नवीन कार्डे</string>
+    <string name="new_order_labels_new_cards_in_order_added">क्रमाने नवीन कार्डे जोडली</string>
 
-    <string name="cram_deck_conf_order_labels_oldest_seen_first">Oldest seen first</string>
-    <string name="cram_deck_conf_order_labels_random">Random</string>
-    <string name="cram_deck_conf_order_labels_increasing_intervals">Increasing intervals</string>
-    <string name="cram_deck_conf_order_labels_decreasing_intervals">Decreasing intervals</string>
-    <string name="cram_deck_conf_order_labels_most_lapsed">Most lapsed</string>
-    <string name="cram_deck_conf_order_labels_order_added">Order added</string>
-    <string name="cram_deck_conf_order_labels_order_due">Order due</string>
-    <string name="cram_deck_conf_order_labels_latest_added_first">Latest added first</string>
-    <string name="cram_deck_conf_order_labels_relative_overdueness">Relative overdueness</string>
+    <string name="cram_deck_conf_order_labels_oldest_seen_first">सर्वात पहिले पाहिलेले</string>
+    <string name="cram_deck_conf_order_labels_random">यादृच्छिक</string>
+    <string name="cram_deck_conf_order_labels_increasing_intervals">वाढती मध्यांतर</string>
+    <string name="cram_deck_conf_order_labels_decreasing_intervals">मध्यांतर कमी होत आहे</string>
+    <string name="cram_deck_conf_order_labels_most_lapsed">बहुतेक संपले</string>
+    <string name="cram_deck_conf_order_labels_order_added">ऑर्डर जोडली</string>
+    <string name="cram_deck_conf_order_labels_order_due">ऑर्डर देय</string>
+    <string name="cram_deck_conf_order_labels_latest_added_first">प्रथम नवीन जोडले</string>
+    <string name="cram_deck_conf_order_labels_relative_overdueness">सापेक्ष प्रमाणाबाहेरपणा</string>
 
-    <string name="add_to_cur_labels_use_current_deck">Use current deck</string>
-    <string name="add_to_cur_labels_decide_by_note_type">Decide by note type</string>
+    <string name="add_to_cur_labels_use_current_deck">वर्तमान डेक वापरा</string>
+    <string name="add_to_cur_labels_decide_by_note_type">नोट प्रकाराद्वारे निर्णय घ्या</string>
 
-    <string name="new_spread_labels_mix_new_cards_and_reviews">Mix new cards and reviews</string>
-    <string name="new_spread_labels_new_cards_after_reviews">New cards after reviews</string>
-    <string name="new_spread_labels_new_cards_before_reviews">New cards before reviews</string>
+    <string name="new_spread_labels_mix_new_cards_and_reviews">नवीन कार्डे आणि पुनरावलोकने मिक्स करा</string>
+    <string name="new_spread_labels_new_cards_after_reviews">पुनरावलोकने नंतर नवीन कार्डे</string>
+    <string name="new_spread_labels_new_cards_before_reviews">पुनरावलोकनापूर्वी नवीन कार्डे</string>
 
-    <string name="override_font_labels_when_no_font_specified_on_flashcards">When no font specified on flashcards</string>
-    <string name="override_font_labels_always">Always</string>
+    <string name="override_font_labels_when_no_font_specified_on_flashcards">जेव्हा फ्लॅशकार्डवर कोणताही फॉन्ट निर्दिष्ट केलेला नाही</string>
+    <string name="override_font_labels_always">नेहमी</string>
 
-    <string name="day_theme_labels_light">Light</string>
-    <string name="day_theme_labels_plain">Plain</string>
+    <string name="day_theme_labels_light">प्रकाश</string>
+    <string name="day_theme_labels_plain">साधा</string>
 
-    <string name="night_theme_labels_black">Black</string>
-    <string name="night_theme_labels_dark">Dark</string>
+    <string name="night_theme_labels_black">काळा</string>
+    <string name="night_theme_labels_dark">गडद</string>
 
-    <string name="html_size_code_labels_xx_small">xx-small</string>
-    <string name="html_size_code_labels_x_small">x-small</string>
-    <string name="html_size_code_labels_small">small</string>
-    <string name="html_size_code_labels_medium">medium</string>
-    <string name="html_size_code_labels_large">large</string>
-    <string name="html_size_code_labels_x_large">x-large</string>
-    <string name="html_size_code_labels_xx_large">xx-large</string>
+    <string name="html_size_code_labels_xx_small">xx- लहान</string>
+    <string name="html_size_code_labels_x_small">x-लहान</string>
+    <string name="html_size_code_labels_small">लहान</string>
+    <string name="html_size_code_labels_medium">मध्यम</string>
+    <string name="html_size_code_labels_large">मोठे</string>
+    <string name="html_size_code_labels_x_large">x- मोठा</string>
+    <string name="html_size_code_labels_xx_large">xx- मोठे</string>
 
 </resources>

@@ -33,60 +33,6 @@
 ~ this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <resources>
-    <string-array name="error_reporting_choice_labels">
-        <item>Raportoi aina</item>
-        <item>Älä raportoi koskaan</item>
-        <item>Kysy</item>
-    </string-array>
-    <string-array name="leech_action_labels">
-        <item>Jäädytä kortti</item>
-        <item>Vain tunniste</item>
-    </string-array>
-    <string-array name="new_order_labels">
-        <item>Uusia kortteja satunnaisessa järjestyksessä</item>
-        <item>Uudet kortit lisäysjärjestyksessä</item>
-    </string-array>
-    <string-array name="cram_deck_conf_order_labels">
-        <item>Vanhimmat nähdyt ensin</item>
-        <item>Satunnainen</item>
-        <item>Kasvavin välein</item>
-        <item>Vähentyvin välein</item>
-        <item>Eniten unohdetut</item>
-        <item>Lisäysjärjestyksessä</item>
-        <item>Näyttöjärjestyksessä</item>
-        <item>Viimeisimmät lisätyt ensin</item>
-        <item>Suhteellinen erääntyneisyys</item>
-    </string-array>
-    <string-array name="add_to_cur_labels">
-        <item>Käytä tätä pakkaa</item>
-        <item>Valitse korttityyppi</item>
-    </string-array>
-    <string-array name="new_spread_labels">
-        <item>Sekoita uusiakortteja ja kertauksia</item>
-        <item>Uudet kortit kertauksien jälkeen</item>
-        <item>Uudet kortit ennen kertauksia</item>
-    </string-array>
-    <string-array name="override_font_labels">
-        <item>Kun korteille ei ole määritelty kirjasintyyppiä</item>
-        <item>Aina</item>
-    </string-array>
-    <string-array name="day_theme_labels">
-        <item>Vaalea</item>
-        <item>Pelkistetty</item>
-    </string-array>
-    <string-array name="night_theme_labels">
-        <item>Musta</item>
-        <item>Tumma</item>
-    </string-array>
-    <string-array name="html_size_code_labels">
-        <item>xx-small</item>
-        <item>x-small</item>
-        <item>small</item>
-        <item>medium</item>
-        <item>large</item>
-        <item>x-large</item>
-        <item>xx-large</item>
-    </string-array>
     <!--
     #7794 - it\'s better to use @string references in non-translated arrays as this handles
     changes in the array ordering better
@@ -113,41 +59,41 @@
     <string name="gesture_toggle_whiteboard">Toggle Whiteboard</string>
     <string name="record_voice">Record Voice</string>
     <string name="replay_voice">Replay Voice</string>
-    <string name="error_reporting_choice_labels_always_report">Always report</string>
-    <string name="error_reporting_choice_labels_never_report">Never report</string>
-    <string name="error_reporting_choice_labels_ask_me">Ask me</string>
+    <string name="error_reporting_choice_labels_always_report">Raportoi aina</string>
+    <string name="error_reporting_choice_labels_never_report">Älä raportoi koskaan</string>
+    <string name="error_reporting_choice_labels_ask_me">Kysy</string>
 
-    <string name="leech_action_labels_suspend_card" comment="leech_action_labels array">Suspend card</string>
-    <string name="leech_action_labels_tag_only">Tag only</string>
+    <string name="leech_action_labels_suspend_card" comment="leech_action_labels array">Jäädytä kortti</string>
+    <string name="leech_action_labels_tag_only">Vain tunniste</string>
 
-    <string name="new_order_labels_new_cards_in_random_order">New cards in random order</string>
-    <string name="new_order_labels_new_cards_in_order_added">New cards in order added</string>
+    <string name="new_order_labels_new_cards_in_random_order">Uusia kortteja satunnaisessa järjestyksessä</string>
+    <string name="new_order_labels_new_cards_in_order_added">Uudet kortit lisäysjärjestyksessä</string>
 
-    <string name="cram_deck_conf_order_labels_oldest_seen_first">Oldest seen first</string>
-    <string name="cram_deck_conf_order_labels_random">Random</string>
-    <string name="cram_deck_conf_order_labels_increasing_intervals">Increasing intervals</string>
-    <string name="cram_deck_conf_order_labels_decreasing_intervals">Decreasing intervals</string>
-    <string name="cram_deck_conf_order_labels_most_lapsed">Most lapsed</string>
-    <string name="cram_deck_conf_order_labels_order_added">Order added</string>
-    <string name="cram_deck_conf_order_labels_order_due">Order due</string>
-    <string name="cram_deck_conf_order_labels_latest_added_first">Latest added first</string>
-    <string name="cram_deck_conf_order_labels_relative_overdueness">Relative overdueness</string>
+    <string name="cram_deck_conf_order_labels_oldest_seen_first">Vanhimmat nähdyt ensin</string>
+    <string name="cram_deck_conf_order_labels_random">Satunnainen</string>
+    <string name="cram_deck_conf_order_labels_increasing_intervals">Kasvavin välein</string>
+    <string name="cram_deck_conf_order_labels_decreasing_intervals">Vähentyvin välein</string>
+    <string name="cram_deck_conf_order_labels_most_lapsed">Eniten unohdetut</string>
+    <string name="cram_deck_conf_order_labels_order_added">Lisäysjärjestyksessä</string>
+    <string name="cram_deck_conf_order_labels_order_due">Näyttöjärjestyksessä</string>
+    <string name="cram_deck_conf_order_labels_latest_added_first">Viimeisimmät lisätyt ensin</string>
+    <string name="cram_deck_conf_order_labels_relative_overdueness">Suhteellinen erääntyneisyys</string>
 
-    <string name="add_to_cur_labels_use_current_deck">Use current deck</string>
-    <string name="add_to_cur_labels_decide_by_note_type">Decide by note type</string>
+    <string name="add_to_cur_labels_use_current_deck">Käytä tätä pakkaa</string>
+    <string name="add_to_cur_labels_decide_by_note_type">Valitse korttityyppi</string>
 
-    <string name="new_spread_labels_mix_new_cards_and_reviews">Mix new cards and reviews</string>
-    <string name="new_spread_labels_new_cards_after_reviews">New cards after reviews</string>
-    <string name="new_spread_labels_new_cards_before_reviews">New cards before reviews</string>
+    <string name="new_spread_labels_mix_new_cards_and_reviews">Sekoita uusiakortteja ja kertauksia</string>
+    <string name="new_spread_labels_new_cards_after_reviews">Uudet kortit kertauksien jälkeen</string>
+    <string name="new_spread_labels_new_cards_before_reviews">Uudet kortit ennen kertauksia</string>
 
-    <string name="override_font_labels_when_no_font_specified_on_flashcards">When no font specified on flashcards</string>
-    <string name="override_font_labels_always">Always</string>
+    <string name="override_font_labels_when_no_font_specified_on_flashcards">Kun korteille ei ole määritelty kirjasintyyppiä</string>
+    <string name="override_font_labels_always">Aina</string>
 
-    <string name="day_theme_labels_light">Light</string>
-    <string name="day_theme_labels_plain">Plain</string>
+    <string name="day_theme_labels_light">Vaalea</string>
+    <string name="day_theme_labels_plain">Pelkistetty</string>
 
-    <string name="night_theme_labels_black">Black</string>
-    <string name="night_theme_labels_dark">Dark</string>
+    <string name="night_theme_labels_black">Musta</string>
+    <string name="night_theme_labels_dark">Tumma</string>
 
     <string name="html_size_code_labels_xx_small">xx-small</string>
     <string name="html_size_code_labels_x_small">x-small</string>
