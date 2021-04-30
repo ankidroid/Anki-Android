@@ -1206,6 +1206,96 @@ public class CardBrowser extends NavigationDrawerActivity implements
         filterByFlag();
     }
 
+    public static class SuspendCardMulti extends CollectionTask.DismissNotes<Void> {
+        public SuspendCardMulti(List<Long> cardIds) {
+            super(cardIds);
+        }
+
+        protected boolean actualTask(Collection col, ProgressSenderAndCancelListener<Void> collectionTask, Card[] cards) {
+            AbstractSched sched = col.getSched();
+            // collect undo information
+            long[] cids = new long[cards.length];
+            boolean[] originalSuspended = new boolean[cards.length];
+            boolean hasUnsuspended = false;
+            for (int i = 0; i < cards.length; i++) {
+                Card card = cards[i];
+                cids[i] = card.getId();
+                if (card.getQueue() != Consts.QUEUE_TYPE_SUSPENDED) {
+                    hasUnsuspended = true;
+                    originalSuspended[i] = false;
+                } else {
+                    originalSuspended[i] = true;
+                }
+            }
+
+            // if at least one card is unsuspended -> suspend all
+            // otherwise unsuspend all
+            if (hasUnsuspended) {
+                sched.suspendCards(cids);
+            } else {
+                sched.unsuspendCards(cids);
+            }
+
+            // mark undo for all at once
+            col.markUndo(new UndoSuspendCardMulti(cards, originalSuspended, hasUnsuspended));
+
+            // reload cards because they'll be passed back to caller
+            for (Card c : cards) {
+                c.load();
+            }
+
+            sched.deferReset();
+            return true;
+        }
+
+
+        protected static class UndoSuspendCardMulti extends UndoAction {
+            private final Card[] mCards;
+            private final boolean[] mOriginalSuspended;
+
+            /** @param hasUnsuspended  whether there were any unsuspended card (in which card the action was "Suspend",
+             *                          otherwise the action was "Unsuspend")  */
+            public UndoSuspendCardMulti(Card[] cards, boolean[] originalSuspended,
+                                        boolean hasUnsuspended) {
+                super((hasUnsuspended) ? R.string.menu_suspend_card : R.string.card_browser_unsuspend_card);
+                this.mCards = cards;
+                this.mOriginalSuspended = originalSuspended;
+            }
+
+
+            public @Nullable Card undo(@NonNull Collection col) {
+                Timber.i("Undo: Suspend multiple cards");
+                int nbOfCards = mCards.length;
+                List<Long> toSuspendIds = new ArrayList<>(nbOfCards);
+                List<Long> toUnsuspendIds = new ArrayList<>(nbOfCards);
+                for (int i = 0; i < nbOfCards; i++) {
+                    Card card = mCards[i];
+                    if (mOriginalSuspended[i]) {
+                        toSuspendIds.add(card.getId());
+                    } else {
+                        toUnsuspendIds.add(card.getId());
+                    }
+                }
+
+                // unboxing
+                long[] toSuspendIdsArray = new long[toSuspendIds.size()];
+                long[] toUnsuspendIdsArray = new long[toUnsuspendIds.size()];
+                for (int i = 0; i < toSuspendIds.size(); i++) {
+                    toSuspendIdsArray[i] = toSuspendIds.get(i);
+                }
+                for (int i = 0; i < toUnsuspendIds.size(); i++) {
+                    toUnsuspendIdsArray[i] = toUnsuspendIds.get(i);
+                }
+
+                col.getSched().suspendCards(toSuspendIdsArray);
+                col.getSched().unsuspendCards(toUnsuspendIdsArray);
+
+                return null;  // don't fetch new card
+
+            }
+        }
+    }
+
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         if (getDrawerToggle().onOptionsItemSelected(item)) {
@@ -1300,7 +1390,7 @@ public class CardBrowser extends NavigationDrawerActivity implements
 
             return true;
         } else if (itemId == R.id.action_suspend_card) {
-            TaskManager.launchCollectionTask(new CollectionTask.SuspendCardMulti(getSelectedCardIds()),
+            TaskManager.launchCollectionTask(new SuspendCardMulti(getSelectedCardIds()),
                     suspendCardHandler());
 
             return true;
