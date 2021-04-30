@@ -1479,21 +1479,4 @@ public class CollectionTask<Progress, Result> extends BaseAsyncTask<Void, Progre
             return new Pair<>(false, mApkgPath);
         }
     }
-
-
-    public static class Reorder implements TaskDelegate<Void, Boolean> {
-        private final DeckConfig mConf;
-
-
-        public Reorder(DeckConfig conf) {
-            this.mConf = conf;
-        }
-
-
-        public Boolean task(@NonNull Collection col, @NonNull ProgressSenderAndCancelListener<Void> collectionTask) {
-            Timber.d("doInBackgroundReorder");
-            col.getSched().resortConf(mConf);
-            return true;
-        }
-    }
 }

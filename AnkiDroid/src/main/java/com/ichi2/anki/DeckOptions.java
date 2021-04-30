@@ -238,7 +238,12 @@ public class DeckOptions extends AppCompatPreferenceActivity implements OnShared
                                 int oldOrder = mOptions.getJSONObject("new").getInt("order");
                                 if (oldOrder != newOrder) {
                                     mOptions.getJSONObject("new").put("order", newOrder);
-                                    TaskManager.launchCollectionTask(new CollectionTask.Reorder(mOptions), confChangeHandler());
+                                    final DeckConfig options = mOptions;
+                                    TaskManager.launchCollectionTask((@NonNull Collection col, @NonNull ProgressSenderAndCancelListener<Void> collectionTask) -> {
+                                        Timber.d("doInBackgroundReorder");
+                                        col.getSched().resortConf(options);
+                                        return true;
+                                    }, confChangeHandler());
                                 }
                                 mOptions.getJSONObject("new").put("order", Integer.parseInt((String) value));
                                 break;
