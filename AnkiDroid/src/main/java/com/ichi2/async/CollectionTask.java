@@ -89,6 +89,7 @@ import androidx.annotation.StringRes;
 import androidx.annotation.VisibleForTesting;
 import timber.log.Timber;
 
+import static com.ichi2.anki.DeckOptions.confChange;
 import static com.ichi2.async.TaskManager.setLatestInstance;
 import static com.ichi2.libanki.Card.deepCopyCardArray;
 import static com.ichi2.libanki.UndoAction.*;
@@ -1509,29 +1510,7 @@ public class CollectionTask<Progress, Result> extends BaseAsyncTask<Void, Progre
 
 
         public Boolean task(@NonNull Collection col, @NonNull ProgressSenderAndCancelListener<Void> collectionTask) {
-            Timber.d("doInBackgroundConfChange");
-            try {
-                long newConfId = mConf.getLong("id");
-                // If new config has a different sorting order, reorder the cards
-                int oldOrder = col.getDecks().getConf(mDeck.getLong("conf")).getJSONObject("new").getInt("order");
-                int newOrder = col.getDecks().getConf(newConfId).getJSONObject("new").getInt("order");
-                if (oldOrder != newOrder) {
-                    switch (newOrder) {
-                        case 0:
-                            col.getSched().randomizeCards(mDeck.getLong("id"));
-                            break;
-                        case 1:
-                            col.getSched().orderCards(mDeck.getLong("id"));
-                            break;
-                    }
-                }
-                col.getDecks().setConf(mDeck, newConfId);
-                col.save();
-                return true;
-            } catch (JSONException e) {
-                Timber.w(e);
-                return false;
-            }
+            return confChange(col, mConf, mDeck);
         }
     }
 }

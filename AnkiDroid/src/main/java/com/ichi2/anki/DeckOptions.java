@@ -89,6 +89,32 @@ public class DeckOptions extends AppCompatPreferenceActivity implements OnShared
     private BroadcastReceiver mUnmountReceiver = null;
     private DeckPreferenceHack mPref;
 
+    public static boolean confChange(@NonNull Collection col, DeckConfig conf, Deck deck) {
+        Timber.d("doInBackgroundConfChange");
+        try {
+            long newConfId = conf.getLong("id");
+            // If new config has a different sorting order, reorder the cards
+            int oldOrder = col.getDecks().getConf(deck.getLong("conf")).getJSONObject("new").getInt("order");
+            int newOrder = col.getDecks().getConf(newConfId).getJSONObject("new").getInt("order");
+            if (oldOrder != newOrder) {
+                switch (newOrder) {
+                    case 0:
+                        col.getSched().randomizeCards(deck.getLong("id"));
+                        break;
+                    case 1:
+                        col.getSched().orderCards(deck.getLong("id"));
+                        break;
+                }
+            }
+            col.getDecks().setConf(deck, newConfId);
+            col.save();
+            return true;
+        } catch (JSONException e) {
+            Timber.w(e);
+            return false;
+        }
+    }
+
     public class DeckPreferenceHack implements SharedPreferences {
 
         private final Map<String, String> mValues = new HashMap<>(30); // At most as many as in cacheValues
@@ -175,7 +201,6 @@ public class DeckOptions extends AppCompatPreferenceActivity implements OnShared
         private boolean parseTimerValue(DeckConfig options) {
             return DeckConfig.parseTimerOpt(options, true);
         }
-
 
         public class Editor implements SharedPreferences.Editor {
 
@@ -382,7 +407,7 @@ public class DeckOptions extends AppCompatPreferenceActivity implements OnShared
                                                 if (child.isDyn()) {
                                                     continue;
                                                 }
-                                                boolean changed = new CollectionTask.ConfChange(child, options).task(col, collectionTask);
+                                                boolean changed = confChange(col, options, child);
                                                 if (!changed) {
                                                     return false;
                                                 }
