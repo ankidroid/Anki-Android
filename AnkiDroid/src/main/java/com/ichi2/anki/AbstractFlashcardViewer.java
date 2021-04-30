@@ -114,6 +114,7 @@ import com.ichi2.async.TaskManager;
 import com.ichi2.compat.CompatHelper;
 import com.ichi2.libanki.Decks;
 import com.ichi2.libanki.Model;
+import com.ichi2.libanki.UndoAction;
 import com.ichi2.libanki.sched.AbstractSched;
 import com.ichi2.libanki.Card;
 import com.ichi2.libanki.Collection;
@@ -1372,7 +1373,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
 
     protected void undo() {
         if (isUndoAvailable()) {
-            TaskManager.launchCollectionTask(new CollectionTask.Undo(), new AnswerCardHandler(false));
+            TaskManager.launchCollectionTask(new UndoAction.Undo(), new AnswerCardHandler(false));
         }
     }
 

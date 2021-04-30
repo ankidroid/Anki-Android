@@ -18,7 +18,13 @@ package com.ichi2.libanki;
 
 import android.content.res.Resources;
 
+import com.ichi2.anki.AnkiDroidApp;
+import com.ichi2.async.CollectionTask;
+import com.ichi2.async.ProgressSenderAndCancelListener;
+import com.ichi2.async.TaskDelegate;
+import com.ichi2.libanki.sched.AbstractSched;
 import com.ichi2.utils.ArrayUtil;
+import com.ichi2.utils.Computation;
 import com.ichi2.utils.LanguageUtil;
 
 import java.util.ArrayList;
@@ -30,6 +36,7 @@ import java.util.Locale;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.annotation.StringRes;
+import androidx.annotation.VisibleForTesting;
 import timber.log.Timber;
 
 public abstract class UndoAction {
@@ -94,5 +101,41 @@ public abstract class UndoAction {
                 return card;
             }
         };
+    }
+
+    @VisibleForTesting
+    public static Card nonTaskUndo(Collection col) {
+        AbstractSched sched = col.getSched();
+        Card card = col.undo();
+        if (card == null) {
+            /* multi-card action undone, no action to take here */
+            Timber.d("Multi-select undo succeeded");
+        } else {
+            // cid is actually a card id.
+            // a review was undone,
+            /* card review undone, set up to review that card again */
+            Timber.d("Single card review undo succeeded");
+            card.startTimer();
+            col.reset();
+            sched.deferReset(card);
+        }
+        return card;
+    }
+
+
+    public static class Undo implements TaskDelegate<Card, Computation<?>> {
+        public Computation<?> task(@NonNull Collection col, @NonNull ProgressSenderAndCancelListener<Card> collectionTask) {
+            try {
+                col.getDb().executeInTransaction(() -> {
+                    Card card = nonTaskUndo(col);
+                    collectionTask.doProgress(card);
+                });
+            } catch (RuntimeException e) {
+                Timber.e(e, "doInBackgroundUndo - RuntimeException on undoing");
+                AnkiDroidApp.sendExceptionReport(e, "doInBackgroundUndo");
+                return Computation.ERR;
+            }
+            return Computation.OK;
+        }
     }
 }

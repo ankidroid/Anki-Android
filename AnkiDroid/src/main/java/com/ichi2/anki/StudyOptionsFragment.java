@@ -53,6 +53,7 @@ import com.ichi2.libanki.Card;
 import com.ichi2.libanki.Collection;
 import com.ichi2.libanki.Consts;
 import com.ichi2.libanki.Decks;
+import com.ichi2.libanki.UndoAction;
 import com.ichi2.libanki.Utils;
 import com.ichi2.libanki.Deck;
 import com.ichi2.libanki.sched.AbstractSched;
@@ -330,7 +331,7 @@ public class StudyOptionsFragment extends Fragment implements Toolbar.OnMenuItem
         int itemId = item.getItemId();
         if (itemId == R.id.action_undo) {
             Timber.i("StudyOptionsFragment:: Undo button pressed");
-            TaskManager.launchCollectionTask(new CollectionTask.Undo(), mUndoListener);
+            TaskManager.launchCollectionTask(new UndoAction.Undo(), mUndoListener);
             return true;
         } else if (itemId == R.id.action_deck_or_study_options) {
             Timber.i("StudyOptionsFragment:: Deck or study options button pressed");

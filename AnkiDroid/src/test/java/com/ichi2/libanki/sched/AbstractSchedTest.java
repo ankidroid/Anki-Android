@@ -28,6 +28,7 @@ import com.ichi2.libanki.Decks;
 import com.ichi2.libanki.Model;
 import com.ichi2.libanki.Models;
 import com.ichi2.libanki.Note;
+import com.ichi2.libanki.UndoAction;
 import com.ichi2.libanki.utils.Time;
 import com.ichi2.testutils.AnkiAssert;
 import com.ichi2.utils.JSONArray;
@@ -43,14 +44,12 @@ import org.robolectric.ParameterizedRobolectricTestRunner.Parameters;
 import java.util.Arrays;
 
 import static com.ichi2.anki.AbstractFlashcardViewer.EASE_3;
-import static com.ichi2.async.CollectionTask.nonTaskUndo;
+import static com.ichi2.libanki.UndoAction.nonTaskUndo;
 import static com.ichi2.testutils.AnkiAssert.assertDoesNotThrow;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.greaterThan;
 import static org.hamcrest.Matchers.is;
 import static org.hamcrest.Matchers.lessThanOrEqualTo;
-import static org.hamcrest.Matchers.notNullValue;
-import static org.junit.Assert.assertArrayEquals;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
@@ -97,7 +96,7 @@ public class AbstractSchedTest extends RobolectricTest {
 
         sched.answerCard(cardBeforeUndo, EASE_3);
 
-        waitFortask(new CollectionTask.Undo(), 5000);
+        waitFortask(new UndoAction.Undo(), 5000);
 
         Counts countsAfterUndo = sched.counts();
 

@@ -941,41 +941,6 @@ public class CollectionTask<Progress, Result> extends BaseAsyncTask<Void, Progre
         }
     }
 
-    @VisibleForTesting
-    public static Card nonTaskUndo(Collection col) {
-        AbstractSched sched = col.getSched();
-        Card card = col.undo();
-        if (card == null) {
-            /* multi-card action undone, no action to take here */
-            Timber.d("Multi-select undo succeeded");
-        } else {
-            // cid is actually a card id.
-            // a review was undone,
-            /* card review undone, set up to review that card again */
-            Timber.d("Single card review undo succeeded");
-            card.startTimer();
-            col.reset();
-            sched.deferReset(card);
-        }
-        return card;
-    }
-
-    public static class Undo implements TaskDelegate<Card, Computation<?>> {
-        public Computation<?> task(@NonNull Collection col, @NonNull ProgressSenderAndCancelListener<Card> collectionTask) {
-            try {
-                col.getDb().executeInTransaction(() -> {
-                    Card card = nonTaskUndo(col);
-                    collectionTask.doProgress(card);
-                });
-            } catch (RuntimeException e) {
-                Timber.e(e, "doInBackgroundUndo - RuntimeException on undoing");
-                AnkiDroidApp.sendExceptionReport(e, "doInBackgroundUndo");
-                return ERR;
-            }
-            return OK;
-        }
-    }
-
     /**
      * A class allowing to send partial search result to the browser to display while the search ends
      */

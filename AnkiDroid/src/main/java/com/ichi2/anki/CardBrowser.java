@@ -82,6 +82,7 @@ import com.ichi2.libanki.Card;
 import com.ichi2.libanki.Collection;
 import com.ichi2.libanki.Consts;
 import com.ichi2.libanki.Decks;
+import com.ichi2.libanki.UndoAction;
 import com.ichi2.libanki.Utils;
 import com.ichi2.libanki.Deck;
 import com.ichi2.libanki.WrongId;
@@ -1338,7 +1339,7 @@ public class CardBrowser extends NavigationDrawerActivity implements
     @VisibleForTesting
     void onUndo() {
         if (getCol().undoAvailable()) {
-            TaskManager.launchCollectionTask(new CollectionTask.Undo(), mUndoHandler);
+            TaskManager.launchCollectionTask(new UndoAction.Undo(), mUndoHandler);
         }
     }
 
@@ -1823,7 +1824,7 @@ public class CardBrowser extends NavigationDrawerActivity implements
             // snackbar to offer undo
             String deckName = browser.getCol().getDecks().name(browser.mNewDid);
             browser.mUndoSnackbar = UIUtils.showSnackbar(browser, String.format(browser.getString(R.string.changed_deck_message), deckName), SNACKBAR_DURATION,
-                                                         R.string.undo, v -> TaskManager.launchCollectionTask(new CollectionTask.Undo(), browser.mUndoHandler), browser.mCardsListView, null);
+                                                         R.string.undo, v -> TaskManager.launchCollectionTask(new UndoAction.Undo(), browser.mUndoHandler), browser.mCardsListView, null);
         }
     }
 
@@ -1983,7 +1984,7 @@ public class CardBrowser extends NavigationDrawerActivity implements
             // snackbar to offer undo
             String deletedMessage = browser.getResources().getQuantityString(R.plurals.card_browser_cards_deleted, mCardsDeleted, mCardsDeleted);
             browser.mUndoSnackbar = UIUtils.showSnackbar(browser, deletedMessage, SNACKBAR_DURATION,
-                    R.string.undo, v -> TaskManager.launchCollectionTask(new CollectionTask.Undo(), browser.mUndoHandler),
+                    R.string.undo, v -> TaskManager.launchCollectionTask(new UndoAction.Undo(), browser.mUndoHandler),
                     browser.mCardsListView, null);
             browser.searchCards();
         }

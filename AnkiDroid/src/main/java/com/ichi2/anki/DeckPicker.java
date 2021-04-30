@@ -130,6 +130,7 @@ import com.ichi2.libanki.Media;
 import com.ichi2.libanki.Model;
 import com.ichi2.libanki.Models;
 import com.ichi2.libanki.Storage;
+import com.ichi2.libanki.UndoAction;
 import com.ichi2.libanki.Utils;
 import com.ichi2.libanki.importer.AnkiPackageImporter;
 import com.ichi2.libanki.sched.AbstractDeckTreeNode;
@@ -1480,7 +1481,7 @@ public class DeckPicker extends NavigationDrawerActivity implements
         Timber.i("undo()");
         String undoReviewString = getResources().getString(R.string.undo_action_review);
         final boolean isReview = undoReviewString.equals(getCol().undoName(getResources()));
-        TaskManager.launchCollectionTask(new CollectionTask.Undo(), undoTaskListener(isReview));
+        TaskManager.launchCollectionTask(new UndoAction.Undo(), undoTaskListener(isReview));
     }
 
 
