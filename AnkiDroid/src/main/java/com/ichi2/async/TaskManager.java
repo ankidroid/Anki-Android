@@ -150,7 +150,7 @@ public abstract class TaskManager {
         private final ProgressSender<Progress> mTask;
 
 
-        protected ProgressCallback(ProgressSender<Progress> task, Resources res) {
+        public ProgressCallback(ProgressSender<Progress> task, Resources res) {
             this.mRes = res;
             if (res != null) {
                 this.mTask = task;

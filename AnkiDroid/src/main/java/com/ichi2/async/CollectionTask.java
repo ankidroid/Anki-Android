@@ -1265,28 +1265,4 @@ public class CollectionTask<Progress, Result> extends BaseAsyncTask<Void, Progre
             return new UpdateValuesFromDeck(true).task(col, collectionTask);
         }
     }
-
-    public static class ImportAdd implements TaskDelegate<String, Triple<AnkiPackageImporter, Boolean, String>> {
-        private final String mPath;
-
-
-        public ImportAdd(String path) {
-            this.mPath = path;
-        }
-
-
-        public Triple<AnkiPackageImporter, Boolean, String> task(@NonNull Collection col, @NonNull ProgressSenderAndCancelListener<String> collectionTask) {
-            Timber.d("doInBackgroundImportAdd");
-            Resources res = AnkiDroidApp.getInstance().getBaseContext().getResources();
-            AnkiPackageImporter imp = new AnkiPackageImporter(col, mPath);
-            imp.setProgressCallback(new TaskManager.ProgressCallback(collectionTask, res));
-            try {
-                imp.run();
-            } catch (ImportExportException e) {
-                Timber.w(e);
-                return new Triple(null, true, e.getMessage());
-            }
-            return new Triple<>(imp, false, null);
-        }
-    }
 }

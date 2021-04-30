@@ -2176,7 +2176,19 @@ public class DeckPicker extends NavigationDrawerActivity implements
     @Override
     public void importAdd(String importPath) {
         Timber.d("importAdd() for file %s", importPath);
-        TaskManager.launchCollectionTask(new CollectionTask.ImportAdd(importPath), mImportAddListener);
+        TaskManager.<String, Triple<AnkiPackageImporter, Boolean, String>>launchCollectionTask((@NonNull Collection col, @NonNull ProgressSenderAndCancelListener<String> collectionTask) -> {
+            Timber.d("doInBackgroundImportAdd");
+            Resources res = AnkiDroidApp.getInstance().getBaseContext().getResources();
+            AnkiPackageImporter imp = new AnkiPackageImporter(col, importPath);
+            imp.setProgressCallback(new TaskManager.ProgressCallback(collectionTask, res));
+            try {
+                imp.run();
+            } catch (ImportExportException e) {
+                Timber.w(e);
+                return new Triple(null, true, e.getMessage());
+            }
+            return new Triple<>(imp, false, null);
+        }, mImportAddListener);
     }
 
 
