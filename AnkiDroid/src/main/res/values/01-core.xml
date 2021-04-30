@@ -86,7 +86,7 @@
     <string name="menu_dismiss_note">Hide / delete</string>
     <string name="menu_bury_card">Bury card</string>
     <string name="menu_bury_note">Bury note</string>
-    <string name="menu_suspend_card">Suspend card</string>
+    <string name="menu_suspend_card" comment="menu">Suspend card</string>
     <string name="menu_suspend_note">Suspend note</string>
     <string name="menu_bury">Bury</string>
     <string name="menu_suspend">Suspend</string>
