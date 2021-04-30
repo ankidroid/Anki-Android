@@ -25,7 +25,6 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.annotation.VisibleForTesting;
 import androidx.fragment.app.DialogFragment;
-import androidx.fragment.app.FragmentResultListener;
 import timber.log.Timber;
 
 import android.text.Editable;
@@ -48,7 +47,6 @@ import com.ichi2.anki.UIUtils;
 import com.ichi2.anki.analytics.AnalyticsDialogFragment;
 import com.ichi2.anki.dialogs.ContextMenuHelper;
 import com.ichi2.anki.dialogs.tags.TagsDialog;
-import com.ichi2.anki.dialogs.tags.TagsDialogFactory;
 import com.ichi2.anki.dialogs.tags.TagsDialogListener;
 import com.ichi2.anki.exception.FilteredAncestor;
 import com.ichi2.async.CollectionTask;
@@ -126,12 +124,7 @@ public class CustomStudyDialog extends AnalyticsDialogFragment implements
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        getParentFragmentManager().setFragmentResultListener(TagsDialog.FRAGMENT_RESULT_ON_SELECTED_TAGS_KEY, this,
-                (requestKey, bundle) -> {
-                    final List<String> selectedTags = bundle.getStringArrayList(TagsDialog.FRAGMENT_RESULT_ON_SELECTED_TAGS__TAGS);
-                    final int option = bundle.getInt(TagsDialog.FRAGMENT_RESULT_ON_SELECTED_TAGS__OPTION);
-                    onSelectedTags(selectedTags, option);
-                });
+        registerFragmentResultReceiver(this);
     }
 
 
@@ -350,6 +343,7 @@ public class CustomStudyDialog extends AnalyticsDialogFragment implements
      * Gathers the final selection of tags and type of cards,
      * Generates the search screen for the custom study deck.
      */
+    @Override
     public void onSelectedTags(List<String> selectedTags, int option) {
         StringBuilder sb = new StringBuilder();
         switch (option) {

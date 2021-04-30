@@ -39,6 +39,7 @@ import androidx.lifecycle.LifecycleOwner;
 import androidx.lifecycle.LifecycleRegistry;
 import androidx.test.ext.junit.runners.AndroidJUnit4;
 
+import static com.ichi2.anki.dialogs.tags.TagsDialogListener.*;
 import static com.ichi2.testutils.ParametersUtils.whatever;
 import static com.ichi2.utils.ListUtil.assertListEquals;
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -127,10 +128,10 @@ public class TagsDialogTest {
             AtomicReference<List<String>> returnedList = new AtomicReference<>();
             AtomicInteger returnedOption = new AtomicInteger();
 
-            f.getParentFragmentManager().setFragmentResultListener(TagsDialog.FRAGMENT_RESULT_ON_SELECTED_TAGS_KEY, mockLifecycleOwner(),
+            f.getParentFragmentManager().setFragmentResultListener(ON_SELECTED_TAGS_KEY, mockLifecycleOwner(),
                     (requestKey, bundle) -> {
-                        returnedList.set(bundle.getStringArrayList(TagsDialog.FRAGMENT_RESULT_ON_SELECTED_TAGS__TAGS));
-                        returnedOption.set(bundle.getInt(TagsDialog.FRAGMENT_RESULT_ON_SELECTED_TAGS__OPTION));
+                        returnedList.set(bundle.getStringArrayList(ON_SELECTED_TAGS__TAGS));
+                        returnedOption.set(bundle.getInt(ON_SELECTED_TAGS__OPTION));
                     });
 
 
