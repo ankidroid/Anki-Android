@@ -1496,21 +1496,4 @@ public class CollectionTask<Progress, Result> extends BaseAsyncTask<Void, Progre
             return true;
         }
     }
-
-
-    public static class ConfChange implements TaskDelegate<Void, Boolean> {
-        private final Deck mDeck;
-        private final DeckConfig mConf;
-
-
-        public ConfChange(Deck deck, DeckConfig conf) {
-            this.mDeck = deck;
-            this.mConf = conf;
-        }
-
-
-        public Boolean task(@NonNull Collection col, @NonNull ProgressSenderAndCancelListener<Void> collectionTask) {
-            return confChange(col, mConf, mDeck);
-        }
-    }
 }

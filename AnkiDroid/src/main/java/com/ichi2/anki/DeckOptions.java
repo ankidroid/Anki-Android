@@ -329,8 +329,11 @@ public class DeckOptions extends AppCompatPreferenceActivity implements OnShared
                                 break;
                             case "deckConf": {
                                 long newConfId = Long.parseLong((String) value);
-                                mOptions = mCol.getDecks().getConf(newConfId);
-                                TaskManager.launchCollectionTask(new CollectionTask.ConfChange(mDeck, mOptions), confChangeHandler());
+                                Deck deck = mDeck;
+                                DeckConfig options = mOptions = mCol.getDecks().getConf(newConfId);
+                                TaskManager.launchCollectionTask(
+                                        (@NonNull Collection col, @NonNull ProgressSenderAndCancelListener<Void> collectionTask) -> confChange(col, options, deck),
+                                        confChangeHandler());
                                 break;
                             }
                             case "confRename": {
