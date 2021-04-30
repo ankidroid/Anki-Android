@@ -87,6 +87,7 @@ import com.ichi2.libanki.UndoAction;
 import com.ichi2.libanki.Utils;
 import com.ichi2.libanki.Deck;
 import com.ichi2.libanki.WrongId;
+import com.ichi2.libanki.sched.AbstractSched;
 import com.ichi2.themes.Themes;
 import com.ichi2.ui.CardBrowserSearchView;
 import com.ichi2.upgrade.Upgrade;
@@ -1368,8 +1369,11 @@ public class CardBrowser extends NavigationDrawerActivity implements
 
     @VisibleForTesting
     void repositionCardsNoValidation(List<Long> cardIds, Integer position) {
-        TaskManager.launchCollectionTask(new CollectionTask.RepositionCards(cardIds, position),
-                                            repositionCardHandler());
+        TaskManager.launchCollectionTask(new CollectionTask.RescheduleRepositionReset(cardIds, R.string.card_editor_reposition_card) {
+            protected void actualActualTask(AbstractSched sched)  {
+            sched.sortCards(cardIds, position, 1, false, true);
+        }},
+        repositionCardHandler());
     }
 
 

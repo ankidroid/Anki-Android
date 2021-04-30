@@ -876,7 +876,7 @@ public class CollectionTask<Progress, Result> extends BaseAsyncTask<Void, Progre
         }
     }
 
-    private abstract static class RescheduleRepositionReset extends DismissNotes<Card> {
+    public abstract static class RescheduleRepositionReset extends DismissNotes<Card> {
         @StringRes private final int mUndoNameId;
         public RescheduleRepositionReset(List<Long> cardIds, @StringRes int undoNameId) {
             super(cardIds);
@@ -914,19 +914,6 @@ public class CollectionTask<Progress, Result> extends BaseAsyncTask<Void, Progre
         @Override
         protected void actualActualTask(AbstractSched sched) {
             sched.reschedCards(mCardIds, mSchedule, mSchedule);
-        }
-    }
-
-    public static class RepositionCards extends RescheduleRepositionReset {
-        private final int mPosition;
-        public RepositionCards(List<Long> cardIds, int position) {
-            super(cardIds, R.string.card_editor_reposition_card);
-            this.mPosition = position;
-        }
-
-        @Override
-        protected void actualActualTask(AbstractSched sched) {
-            sched.sortCards(mCardIds, mPosition, 1, false, true);
         }
     }
 
