@@ -1974,10 +1974,10 @@ public class CollectionTask<ProgressListener, ProgressBackground extends Progres
      * @return If there are unselected cards, if there are unmarked cards
      */
     public static class CheckCardSelection extends Task<Void, Pair<Boolean, Boolean>> {
-        private final CardBrowser.CardCollection<CardBrowser.CardCache> mCheckedCards;
+        private final @NonNull Set<CardBrowser.CardCache> mCheckedCards;
 
 
-        public CheckCardSelection(CardBrowser.CardCollection<CardBrowser.CardCache> checkedCards) {
+        public CheckCardSelection(@NonNull Set<CardBrowser.CardCache> checkedCards) {
             this.mCheckedCards = checkedCards;
         }
 
