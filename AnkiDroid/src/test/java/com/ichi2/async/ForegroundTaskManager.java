@@ -36,12 +36,18 @@ public class ForegroundTaskManager extends TaskManager {
     public <ProgressListener, ProgressBackground extends ProgressListener, ResultListener, ResultBackground extends ResultListener> CollectionTask<ProgressListener, ProgressBackground, ResultListener, ResultBackground> launchCollectionTaskConcrete(
             @NonNull CollectionTask.Task<ProgressBackground, ResultBackground> task,
             @Nullable TaskListener<ProgressListener, ResultListener> listener) {
+        return executeTaskWithListener(task, listener, mColGetter);
+    }
+
+    public static <ProgressListener, ProgressBackground extends ProgressListener, ResultListener, ResultBackground extends ResultListener> CollectionTask<ProgressListener, ProgressBackground, ResultListener, ResultBackground> executeTaskWithListener(
+            @NonNull CollectionTask.Task<ProgressBackground, ResultBackground> task,
+            @Nullable TaskListener<ProgressListener, ResultListener> listener, CollectionGetter colGetter) {
         if (listener != null) {
             listener.onPreExecute();
         }
         final ResultBackground res;
         try {
-            res = task.task(mColGetter.getCol(), new MockTaskManager<>(listener));
+            res = task.task(colGetter.getCol(), new MockTaskManager<>(listener));
         } catch (Exception e) {
             Timber.w(e, "A new failure may have something to do with running in the foreground.");
             throw e;
@@ -79,7 +85,7 @@ public class ForegroundTaskManager extends TaskManager {
         return true;
     }
 
-    public class MockTaskManager<ProgressListener, ProgressBackground extends ProgressListener> implements ProgressSenderAndCancelListener<ProgressBackground> {
+    public static class MockTaskManager<ProgressListener, ProgressBackground extends ProgressListener> implements ProgressSenderAndCancelListener<ProgressBackground> {
 
         private final @Nullable TaskListener<ProgressListener, ?> mTaskListener;
 
@@ -101,7 +107,7 @@ public class ForegroundTaskManager extends TaskManager {
         }
     }
 
-    public class EmptyTask<ProgressListener, ProgressBackground extends ProgressListener, ResultListener, ResultBackground extends ResultListener> extends
+    public static class EmptyTask<ProgressListener, ProgressBackground extends ProgressListener, ResultListener, ResultBackground extends ResultListener> extends
             CollectionTask<ProgressListener, ProgressBackground, ResultListener, ResultBackground> {
 
         protected EmptyTask(Task<ProgressBackground, ResultBackground> task, TaskListener<ProgressListener, ResultListener> listener) {
