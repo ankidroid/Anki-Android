@@ -175,7 +175,7 @@
     <string name="learn_cutoff" maxLength="41">Korai tanulás korlátai</string>
     <string name="time_limit" maxLength="41">Időkorlát érték</string>
     <string name="time_limit_summ">XXX perc</string>
-    <string name="new_timezone" maxLength="41">New timezone handling</string>
+    <string name="new_timezone" maxLength="41">Új időzóna kezelés</string>
     <string name="day_offset_with_description" maxLength="41">Start of next day</string>
     <string name="day_offset_summ">XXX órával éjfél után</string>
     <string name="xlabel_dayoffset_seekbar" maxLength="41">Midnight</string>

@@ -111,7 +111,7 @@
     <string name="gesture_page_up">Strana nahor</string>
     <string name="gesture_page_down">Strana nadol</string>
     <string name="gesture_abort_sync">Prerušiť učenie a synchronizáciu</string>
-    <string name="gesture_toggle_whiteboard">Toggle Whiteboard</string>
-    <string name="record_voice">Record Voice</string>
-    <string name="replay_voice">Replay Voice</string>
+    <string name="gesture_toggle_whiteboard">Zapnúť/vypnúť tabuľu</string>
+    <string name="record_voice">Nahrať hlas</string>
+    <string name="replay_voice">Prehrať hlas</string>
 </resources>

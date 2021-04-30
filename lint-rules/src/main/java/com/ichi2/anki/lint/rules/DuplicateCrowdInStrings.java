@@ -185,7 +185,7 @@ public class DuplicateCrowdInStrings extends ResourceXmlDetector {
                     firstLocation = location;
                 } else {
                     prevLocation.setSecondary(location);
-                    location.setMessage(String.format("Duplicates value in `%s`. Add a `comment` attribute to explain this duplication", names.get(0)));
+                    location.setMessage(String.format("Duplicates value in `%s`. Add a `comment` attribute on both strings to explain this duplication", names.get(0)));
                     location.setSelfExplanatory(false);
                     if (!string.equals(prevString)) {
                         caseVaries = true;

@@ -219,15 +219,11 @@ public class Reviewer extends AbstractFlashcardViewer {
 
     private void selectDeckFromExtra() {
         Bundle extras = getIntent().getExtras();
-        long did = Long.MIN_VALUE;
-        if (extras != null) {
-            did = extras.getLong("deckId", Long.MIN_VALUE);
-        }
-
-        if(did == Long.MIN_VALUE) {
+        if (extras == null || !extras.containsKey("deckId")) {
             // deckId is not set, load default
             return;
         }
+        long did = extras.getLong("deckId", Long.MIN_VALUE);
 
         Timber.d("selectDeckFromExtra() with deckId = %d", did);
 
@@ -284,7 +280,7 @@ public class Reviewer extends AbstractFlashcardViewer {
 
         col.getSched().deferReset();     // Reset schedule in case card was previously loaded
         getCol().startTimebox();
-        TaskManager.launchCollectionTask(new CollectionTask.GetCard(), mAnswerCardHandler(false));
+        TaskManager.launchCollectionTask(new CollectionTask.GetCard(), new AnswerCardHandler(false));
 
         disableDrawerSwipeOnConflicts();
         // Add a weak reference to current activity so that scheduler can talk to to Activity
@@ -561,9 +557,9 @@ public class Reviewer extends AbstractFlashcardViewer {
         int alpha = (getControlBlocked() != ReviewerUi.ControlBlock.SLOW) ? Themes.ALPHA_ICON_ENABLED_LIGHT : Themes.ALPHA_ICON_DISABLED_LIGHT ;
         MenuItem markCardIcon = menu.findItem(R.id.action_mark_card);
         if (mCurrentCard != null && mCurrentCard.note().hasTag("marked")) {
-            markCardIcon.setTitle(R.string.menu_unmark_note).setIcon(R.drawable.ic_star_white_24dp);
+            markCardIcon.setTitle(R.string.menu_unmark_note).setIcon(R.drawable.ic_star_white);
         } else {
-            markCardIcon.setTitle(R.string.menu_mark_note).setIcon(R.drawable.ic_star_outline_white_24dp);
+            markCardIcon.setTitle(R.string.menu_mark_note).setIcon(R.drawable.ic_star_border_white);
         }
         markCardIcon.getIcon().mutate().setAlpha(alpha);
 
@@ -602,7 +598,7 @@ public class Reviewer extends AbstractFlashcardViewer {
         } else {
             // We can arrive here even if `mShowWhiteboard &&
             // mWhiteboard != null` if no stroke had ever been made
-            undoIconId = R.drawable.ic_undo_white_24dp;
+            undoIconId = R.drawable.ic_undo_white;
             undoEnabled = (colIsOpen() && getCol().undoAvailable());
         }
         int alpha_undo = (undoEnabled && getControlBlocked() != ReviewerUi.ControlBlock.SLOW) ? Themes.ALPHA_ICON_ENABLED_LIGHT : Themes.ALPHA_ICON_DISABLED_LIGHT ;
@@ -637,7 +633,7 @@ public class Reviewer extends AbstractFlashcardViewer {
                 change_pen_color_icon.setVisible(true);
             }
 
-            Drawable whiteboardIcon = ContextCompat.getDrawable(this, R.drawable.ic_gesture_white_24dp).mutate();
+            Drawable whiteboardIcon = ContextCompat.getDrawable(this, R.drawable.ic_gesture_white).mutate();
             Drawable whiteboardColorPaletteIcon = VectorDrawableCompat.create(getResources(), R.drawable.ic_color_lens_white_24dp, null).mutate();
 
             if (mShowWhiteboard) {
@@ -676,14 +672,14 @@ public class Reviewer extends AbstractFlashcardViewer {
             suspend_icon.setIcon(R.drawable.ic_action_suspend_dropdown);
             suspend_icon.setTitle(R.string.menu_suspend);
         } else {
-            suspend_icon.setIcon(R.drawable.ic_action_suspend);
+            suspend_icon.setIcon(R.drawable.ic_pause_circle_outline);
             suspend_icon.setTitle(R.string.menu_suspend_card);
         }
         if (buryNoteAvailable()) {
-            bury_icon.setIcon(R.drawable.ic_flip_to_back_white_24px_dropdown);
+            bury_icon.setIcon(R.drawable.ic_flip_to_back_white_24px_dropdown); // FIXME NEEDS A "DROPDOWN" VERSION WITH BOTTOM RIGHT TRIANGLE (AND PURGE EXISTING)
             bury_icon.setTitle(R.string.menu_bury);
         } else {
-            bury_icon.setIcon(R.drawable.ic_flip_to_back_white_24dp);
+            bury_icon.setIcon(R.drawable.ic_flip_to_back_white);
             bury_icon.setTitle(R.string.menu_bury_card);
         }
         alpha = (getControlBlocked() != ReviewerUi.ControlBlock.SLOW) ? Themes.ALPHA_ICON_ENABLED_LIGHT : Themes.ALPHA_ICON_DISABLED_LIGHT ;
@@ -808,7 +804,7 @@ public class Reviewer extends AbstractFlashcardViewer {
     @Override
     protected void performReload() {
         getCol().getSched().deferReset();
-        TaskManager.launchCollectionTask(new CollectionTask.GetCard(), mAnswerCardHandler(false));
+        TaskManager.launchCollectionTask(new CollectionTask.GetCard(), new AnswerCardHandler(false));
     }
 
 
@@ -1311,11 +1307,9 @@ public class Reviewer extends AbstractFlashcardViewer {
         public boolean onMenuItemClick(MenuItem item) {
             int itemId = item.getItemId();
             if (itemId == R.id.action_suspend_card) {
-                dismiss(new CollectionTask.SuspendCard(mCurrentCard));
-                return true;
+                return dismiss(new CollectionTask.SuspendCard(mCurrentCard));
             } else if (itemId == R.id.action_suspend_note) {
-                dismiss(new CollectionTask.SuspendNote(mCurrentCard));
-                return true;
+                return dismiss(new CollectionTask.SuspendNote(mCurrentCard));
             }
             return false;
         }
@@ -1359,11 +1353,9 @@ public class Reviewer extends AbstractFlashcardViewer {
         public boolean onMenuItemClick(MenuItem item) {
             int itemId = item.getItemId();
             if (itemId == R.id.action_bury_card) {
-                dismiss(new CollectionTask.BuryCard(mCurrentCard));
-                return true;
+                return dismiss(new CollectionTask.BuryCard(mCurrentCard));
             } else if (itemId == R.id.action_bury_note) {
-                dismiss(new CollectionTask.BuryNote(mCurrentCard));
-                return true;
+                return dismiss(new CollectionTask.BuryNote(mCurrentCard));
             }
             return false;
         }

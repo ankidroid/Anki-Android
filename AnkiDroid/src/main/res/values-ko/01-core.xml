@@ -62,13 +62,13 @@
         <item quantity="other">%d분 남음</item>
     </plurals>
     <plurals name="reviewer_window_title_hours">
-        <item quantity="other">殘餘時間%d時間%d分</item>
+        <item quantity="other">%d 시간 남음</item>
     </plurals>
     <plurals name="reviewer_window_title_days">
-        <item quantity="other">殘餘時間%d日%d時間</item>
+        <item quantity="other">%d일 남음</item>
     </plurals>
-    <string name="no_cards_placeholder_title">아직 生成된 덱이 없습니다</string>
-    <string name="no_cards_placeholder_description">＋아이콘을 눌러 \n카드를 追加해 주십시오</string>
+    <string name="no_cards_placeholder_title">이 컬렉션은 비어 있습니다</string>
+    <string name="no_cards_placeholder_description">＋아이콘을 눌러 \n카드를 추가해 주십시오</string>
     <!-- The deck picker via AnkiStatsTaskHandler.java -->
     <plurals name="studied_cards_today">
         <item quantity="other">오늘 %1$d개의 카드를 %2$s에 학습했습니다</item>
@@ -76,7 +76,7 @@
     <!-- flashcard_portrait.xml -->
     <string name="type_answer_hint">정답 입력</string>
     <string name="show_answer">정답 보기</string>
-    <string name="hide_answer">回答非表示</string>
+    <string name="hide_answer">정답 숨기기</string>
     <string name="ease_button_again">다시</string>
     <string name="ease_button_hard">어려움</string>
     <string name="ease_button_good">괜찮음</string>
@@ -89,7 +89,7 @@
     <string name="move_all_to_deck">카드묶음으로 모두 이동</string>
     <string name="unbury">지금 보기</string>
     <string name="rename_deck">카드 묶음 이름 바꾸기</string>
-    <string name="create_shortcut">쇼트컷生成</string>
+    <string name="create_shortcut">바로가기 만들기</string>
     <string name="menu_add" comment="A generic add button - Main Deck Picker and card templates. Please inform us if you need more specific strings">추가</string>
     <string name="menu_add_note">노트 추가</string>
     <string name="menu_my_account" comment="Label of the window in which the user should enter their account. This text can\'t be found in AnkiDroid directly.">계정 동기화</string>
@@ -111,7 +111,7 @@
     <string name="menu_edit_tags">태그編輯</string>
     <string name="delete_note_message">다음 노트와 그 노트의 모든 카드를 정말로 삭제하시겠습니까?\n%s</string>
     <string name="menu_select">텍스트 선택</string>
-    <string name="menu_lookup">Lookup text</string>
+    <string name="menu_lookup">텍스트 검색</string>
     <string name="menu_search">%1$s에서 찾아보기</string>
     <string name="menu_mark_note">노트 표시</string>
     <string name="menu_unmark_note">노트 표시 해제</string>
@@ -149,7 +149,7 @@
     <string name="custom_study_deck_name">맞춤 학습 세션</string>
     <string name="custom_study_deck_exists">기존의 맞춤 학습 덱의 이름을 먼저 변경하세요.</string>
     <string name="empty_deck">이 카드 묶음은 비어있습니다.</string>
-    <string name="search_deck">Deck Search</string>
+    <string name="search_deck">덱 검색</string>
     <string name="empty_deck_add_note">카드追加</string>
     <string name="invalid_deck_name">無效한 덱名입니다</string>
     <string name="studyoptions_empty">이 카드 묶음은 비어있습니다. + 버튼을 눌러 새 컨텐츠를 추가하세요.</string>
@@ -201,8 +201,8 @@
     <string name="more_information">詳細情報</string>
     <string name="no_field">\'{{%1$s}}\'는 찾았읍니다만、%1$s라는 필드는 存在하지않습니다</string>
     <string name="closed_tag_not_open">{{/%1$s}}\'는찾았읍니다만、{{#%1$s}}\' 或은\'{{^%1$s}}\'이없읍니다。</string>
-    <string name="missing_closing_bracket">Missing \'}}\' in \'%s\'.</string>
-    <string name="open_tag_not_closed">Missing \'{{%s}}\'.</string>
-    <string name="wrong_tag_closed">Found \'{{/%1$s}}\', but expected \'{{/%2$s}}\'</string>
+    <string name="missing_closing_bracket">\"%s\"에 \"}}\"이 없습니다.</string>
+    <string name="open_tag_not_closed">\'{{%s}}\'가 없습니다.</string>
+    <string name="wrong_tag_closed">{{/%1$s}}\"를 찾았지만, \"{{/%2$s}}\"가 필요합니다.</string>
     <string name="filter_error">필터%s에誤謬가있습니다</string>
 </resources>

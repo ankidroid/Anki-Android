@@ -24,7 +24,6 @@ import android.content.ContentValues;
 import android.database.Cursor;
 import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
-import android.widget.Toast;
 
 import com.ichi2.anki.AnkiDroidApp;
 import com.ichi2.anki.BuildConfig;
@@ -35,8 +34,6 @@ import com.ichi2.utils.DatabaseChangeDecorator;
 import net.ankiweb.rsdroid.BackendFactory;
 import net.ankiweb.rsdroid.database.RustSQLiteOpenHelperFactory;
 
-import java.lang.reflect.InvocationTargetException;
-import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
@@ -45,7 +42,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.sqlite.db.SupportSQLiteDatabase;
 import androidx.sqlite.db.SupportSQLiteOpenHelper;
-import io.requery.android.database.sqlite.RequerySQLiteOpenHelperFactory;
+import androidx.sqlite.db.framework.FrameworkSQLiteOpenHelperFactory;
 import timber.log.Timber;
 
 /**
@@ -104,7 +101,7 @@ public class DB {
         }
 
         if (sqliteOpenHelperFactory == null) {
-            return new RequerySQLiteOpenHelperFactory();
+            return new FrameworkSQLiteOpenHelperFactory();
         }
         return sqliteOpenHelperFactory;
     }
