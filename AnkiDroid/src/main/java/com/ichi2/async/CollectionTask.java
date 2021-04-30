@@ -1233,23 +1233,6 @@ public class CollectionTask<Progress, Result> extends BaseAsyncTask<Void, Progre
     }
 
 
-    public static class DeleteDeck implements TaskDelegate<Void, int[]> {
-        private final long mDid;
-
-        public DeleteDeck(long did) {
-            this.mDid = did;
-        }
-
-        public int[] task(@NonNull Collection col, @NonNull ProgressSenderAndCancelListener<Void> collectionTask) {
-            Timber.d("doInBackgroundDeleteDeck");
-            col.getDecks().rem(mDid, true);
-            // TODO: if we had "undo delete note" like desktop client then we won't need this.
-            col.clearUndo();
-            return null;
-        }
-    }
-
-
     public static class RebuildCram implements TaskDelegate<Void, StudyOptionsFragment.DeckStudyData> {
         public StudyOptionsFragment.DeckStudyData task(@NonNull Collection col, @NonNull ProgressSenderAndCancelListener<Void> collectionTask) {
             Timber.d("doInBackgroundRebuildCram");

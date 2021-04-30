@@ -2949,7 +2949,15 @@ public class DeckPicker extends NavigationDrawerActivity implements
         deleteDeck(mContextMenuDid);
     }
     public void deleteDeck(final long did) {
-        TaskManager.launchCollectionTask(new CollectionTask.DeleteDeck(did), deleteDeckListener(did));
+        TaskManager.launchCollectionTask((
+                @NonNull Collection col, @NonNull ProgressSenderAndCancelListener<Void> collectionTask) -> {
+                    Timber.d("doInBackgroundDeleteDeck");
+                    col.getDecks().rem(did, true);
+                    // TODO: if we had "undo delete note" like desktop client then we won't need this.
+                    col.clearUndo();
+                    return null;
+                },
+                deleteDeckListener(did));
     }
     private DeleteDeckListener deleteDeckListener(long did) {
         return new DeleteDeckListener(did, this);
