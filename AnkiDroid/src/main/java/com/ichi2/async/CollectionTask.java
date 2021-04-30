@@ -1584,37 +1584,4 @@ public class CollectionTask<Progress, Result> extends BaseAsyncTask<Void, Progre
             }
         }
     }
-
-    public static class ConfSetSubdecks implements TaskDelegate<Void, Boolean> {
-        private final Deck mDeck;
-        private final DeckConfig mConf;
-
-
-        public ConfSetSubdecks(Deck deck, DeckConfig conf) {
-            this.mDeck = deck;
-            this.mConf = conf;
-        }
-
-
-        public Boolean task(@NonNull Collection col, @NonNull ProgressSenderAndCancelListener<Void> collectionTask) {
-            Timber.d("doInBackgroundConfSetSubdecks");
-            try {
-                TreeMap<String, Long> children = col.getDecks().children(mDeck.getLong("id"));
-                for (long childDid : children.values()) {
-                    Deck child = col.getDecks().get(childDid);
-                    if (child.isDyn()) {
-                        continue;
-                    }
-                    boolean changed = new ConfChange(child, mConf).task(col, collectionTask);
-                    if (!changed) {
-                        return false;
-                    }
-                }
-                return true;
-            } catch (JSONException e) {
-                Timber.w(e);
-                return false;
-            }
-        }
-    }
 }

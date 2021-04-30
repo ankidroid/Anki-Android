@@ -40,6 +40,7 @@ import com.ichi2.anki.exception.ConfirmModSchemaException;
 import com.ichi2.anki.receiver.SdCardReceiver;
 import com.ichi2.anki.services.ReminderService;
 import com.ichi2.async.CollectionTask;
+import com.ichi2.async.ProgressSenderAndCancelListener;
 import com.ichi2.async.TaskListenerWithContext;
 import com.ichi2.async.TaskManager;
 import com.ichi2.libanki.Collection;
@@ -362,7 +363,29 @@ public class DeckOptions extends AppCompatPreferenceActivity implements OnShared
                                 break;
                             case "confSetSubdecks":
                                 if ((Boolean) value) {
-                                    TaskManager.launchCollectionTask(new CollectionTask.ConfSetSubdecks(mDeck, mOptions), confChangeHandler());
+                                    final Deck deck = mDeck;
+                                    final DeckConfig options = mOptions;
+                                    TaskManager.launchCollectionTask(
+                                            (@NonNull Collection col, @NonNull ProgressSenderAndCancelListener<Void> collectionTask) -> {
+                                        Timber.d("doInBackgroundConfSetSubdecks");
+                                        try {
+                                            TreeMap<String, Long> children = col.getDecks().children(deck.getLong("id"));
+                                            for (long childDid : children.values()) {
+                                                Deck child = col.getDecks().get(childDid);
+                                                if (child.isDyn()) {
+                                                    continue;
+                                                }
+                                                boolean changed = new CollectionTask.ConfChange(child, options).task(col, collectionTask);
+                                                if (!changed) {
+                                                    return false;
+                                                }
+                                            }
+                                            return true;
+                                        } catch (JSONException e) {
+                                            Timber.w(e);
+                                            return false;
+                                        }
+                                    }, confChangeHandler());
                                 }
                                 break;
                             case "reminderEnabled": {
