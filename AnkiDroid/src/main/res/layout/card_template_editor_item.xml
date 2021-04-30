@@ -1,11 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/main_layout"
     android:layout_height="fill_parent"
     android:layout_width="match_parent"
     android:layout_gravity="center_horizontal"
     android:orientation="vertical"
-    android:paddingTop="12dp" >
+    android:paddingTop="12dp">
 
     <!-- Editor -->
     <com.ichi2.ui.FixedTextView
@@ -31,55 +32,20 @@
                 android:layout_width="fill_parent"
                 android:layout_height="fill_parent"
                 android:layout_margin="5dp"
+                android:layout_gravity="top"
+                android:gravity="top"
                 android:contentDescription="@string/card_template_editor_front"
                 android:inputType="textMultiLine"/>
         </LinearLayout>
     </ScrollView>
 
-    <ScrollView
-        android:layout_width="fill_parent"
+    <com.google.android.material.bottomnavigation.BottomNavigationView
+        android:id="@+id/card_template_editor_bottom_navigation"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:fadeScrollbars="false"
-        android:fillViewport="true" >
+        android:layout_gravity="bottom"
+        android:background="@color/white"
+        app:menu="@menu/card_template_editor_navigation_bar_menu"
+        />
 
-        <RadioGroup
-            android:layout_width="match_parent"
-            android:orientation="horizontal"
-            android:padding="10dp"
-            android:layout_height="wrap_content"
-            android:id="@+id/radioGroup">
-
-            <RadioButton
-                android:layout_weight="1"
-                android:id="@+id/front_edit"
-                android:gravity="center"
-                android:layout_width="fill_parent"
-                android:layout_height="match_parent"
-                android:text="@string/card_template_editor_front"
-                android:checked="true"
-                android:layout_marginTop="20dp"
-                android:textSize="15dp" />
-
-            <RadioButton
-                android:layout_weight="1"
-                android:id="@+id/styling_edit"
-                android:gravity="center"
-                android:layout_width="fill_parent"
-                android:layout_height="match_parent"
-                android:text="@string/card_template_editor_styling"
-                android:layout_marginTop="20dp"
-                android:textSize="15dp" />
-
-            <RadioButton
-                android:layout_weight="1"
-                android:id="@+id/back_edit"
-                android:gravity="center"
-                android:layout_width="fill_parent"
-                android:layout_height="match_parent"
-                android:text="@string/card_template_editor_back"
-                android:layout_marginTop="20dp"
-                android:textSize="15dp" />
-
-        </RadioGroup>
-    </ScrollView>
 </LinearLayout>

@@ -48,6 +48,7 @@ import android.widget.RadioButton;
 import android.widget.RadioGroup;
 
 import com.afollestad.materialdialogs.MaterialDialog;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.tabs.TabLayout;
 import com.google.android.material.tabs.TabLayoutMediator;
 import com.ichi2.anki.dialogs.ConfirmationDialog;
@@ -390,21 +391,24 @@ public class CardTemplateEditor extends AnkiActivity implements DeckSelectionDia
             mCurrentEdtiorTitle.setText(R.string.card_template_editor_front);
 
 
-            // setting radiobutton
-            RadioGroup radioGroup1 = (RadioGroup) mainView.findViewById(R.id.radioGroup);
-            radioGroup1.setOnCheckedChangeListener((radioGroup, i) -> {
-                if (i == R.id.styling_edit) {
-                    mCurrentEdittextId = R.id.styling_edit;
-                    mEditorEditText.setText(mCssString);
-                    mCurrentEdtiorTitle.setText(R.string.card_template_editor_styling);
-                } else if (i == R.id.back_edit) {
-                    mCurrentEdittextId = R.id.back_edit;
-                    mEditorEditText.setText(mBackString);
-                    mCurrentEdtiorTitle.setText(R.string.card_template_editor_back);
-                } else {
-                    mCurrentEdittextId = R.id.front_edit;
-                    mEditorEditText.setText(mFrontString);
-                    mCurrentEdtiorTitle.setText(R.string.card_template_editor_front);
+            BottomNavigationView bottomNavigation = mainView.findViewById(R.id.card_template_editor_bottom_navigation);
+            bottomNavigation.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
+                @Override
+                public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+                    mCurrentEdittextId = item.getItemId();
+                    if (mCurrentEdittextId == R.id.styling_edit) {
+                        mEditorEditText.setText(mCssString);
+                        mCurrentEdtiorTitle.setText(R.string.card_template_editor_styling);
+                        return true;
+                    } else if (mCurrentEdittextId == R.id.back_edit) {
+                        mEditorEditText.setText(mBackString);
+                        mCurrentEdtiorTitle.setText(R.string.card_template_editor_back);
+                        return true;
+                    } else {
+                        mEditorEditText.setText(mFrontString);
+                        mCurrentEdtiorTitle.setText(R.string.card_template_editor_front);
+                        return true;
+                    }
                 }
             });
 
