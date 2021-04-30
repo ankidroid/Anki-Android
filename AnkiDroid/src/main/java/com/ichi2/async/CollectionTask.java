@@ -239,32 +239,6 @@ public class CollectionTask<Progress, Result> extends BaseAsyncTask<Void, Progre
         }
     }
 
-    public static class AddNote implements TaskDelegate<Integer, Boolean> {
-        private final Note mNote;
-
-        public AddNote(Note note) {
-            this.mNote = note;
-        }
-
-
-        @Override
-        public Boolean task(@NonNull Collection col, @NonNull ProgressSenderAndCancelListener<Integer> collectionTask) {
-            Timber.d("doInBackgroundAddNote");
-            try {
-                DB db = col.getDb();
-                db.executeInTransaction(() -> {
-                        int value = col.addNote(mNote, Models.AllowEmpty.ONLY_CLOZE);
-                        collectionTask.doProgress(value);
-                    });
-            } catch (RuntimeException e) {
-                Timber.e(e, "doInBackgroundAddNote - RuntimeException on adding note");
-                AnkiDroidApp.sendExceptionReport(e, "doInBackgroundAddNote");
-                return false;
-            }
-            return true;
-        }
-    }
-
 
     public static class UpdateNote implements TaskDelegate<Card, Computation<?>> {
         private final Card mEditCard;
