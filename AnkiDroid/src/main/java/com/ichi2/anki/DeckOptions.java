@@ -317,7 +317,14 @@ public class DeckOptions extends AppCompatPreferenceActivity implements OnShared
                             }
                             case "confReset":
                                 if ((Boolean) value) {
-                                    TaskManager.launchCollectionTask(new CollectionTask.ConfReset(mOptions), confChangeHandler());
+                                    final DeckConfig options = mOptions;
+                                    TaskManager.launchCollectionTask(
+                                            (@NonNull Collection col, @NonNull ProgressSenderAndCancelListener<Void> collectionTask) -> {
+                                        Timber.d("doInBackgroundConfReset");
+                                        col.getDecks().restoreToDefault(options);
+                                        col.save();
+                                        return null;
+                                    }, confChangeHandler());
                                 }
                                 break;
                             case "confAdd": {

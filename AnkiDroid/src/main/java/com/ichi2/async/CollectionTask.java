@@ -1534,21 +1534,4 @@ public class CollectionTask<Progress, Result> extends BaseAsyncTask<Void, Progre
             }
         }
     }
-
-    public static class ConfReset implements TaskDelegate<Void, Boolean> {
-        private final DeckConfig mConf;
-
-
-        public ConfReset(DeckConfig conf) {
-            this.mConf = conf;
-        }
-
-
-        public Boolean task(@NonNull Collection col, @NonNull ProgressSenderAndCancelListener<Void> collectionTask) {
-            Timber.d("doInBackgroundConfReset");
-            col.getDecks().restoreToDefault(mConf);
-            col.save();
-            return null;
-        }
-    }
 }
