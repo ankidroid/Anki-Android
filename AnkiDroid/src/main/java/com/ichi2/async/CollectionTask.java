@@ -91,6 +91,7 @@ import androidx.annotation.VisibleForTesting;
 import timber.log.Timber;
 
 import static com.ichi2.anki.DeckOptions.confChange;
+import static com.ichi2.anki.StudyOptionsFragment.updateValuesFromDeck;
 import static com.ichi2.async.TaskManager.setLatestInstance;
 import static com.ichi2.libanki.Card.deepCopyCardArray;
 import static com.ichi2.libanki.UndoAction.*;
@@ -1211,24 +1212,8 @@ public class CollectionTask<Progress, Result> extends BaseAsyncTask<Void, Progre
             this.mReset = reset;
         }
 
-
-        public StudyOptionsFragment.DeckStudyData task(@NonNull Collection col, @NonNull ProgressSenderAndCancelListener<Void> collectionTask) {
-            Timber.d("doInBackgroundUpdateValuesFromDeck");
-            try {
-                AbstractSched sched = col.getSched();
-                if (mReset) {
-                    // reset actually required because of counts, which is used in getCollectionTaskListener
-                    sched.resetCounts();
-                }
-                Counts counts = sched.counts();
-                int totalNewCount = sched.totalNewForCurrentDeck();
-                int totalCount = sched.cardCount();
-                return new StudyOptionsFragment.DeckStudyData(counts.getNew(), counts.getLrn(), counts.getRev(), totalNewCount,
-                        totalCount, sched.eta(counts));
-            } catch (RuntimeException e) {
-                Timber.e(e, "doInBackgroundUpdateValuesFromDeck - an error occurred");
-                return null;
-            }
+        public StudyOptionsFragment.DeckStudyData task(@NonNull Collection col, @Nullable ProgressSenderAndCancelListener<Void> collectionTask) {
+            return updateValuesFromDeck(col, mReset);
         }
     }
 
@@ -1237,7 +1222,7 @@ public class CollectionTask<Progress, Result> extends BaseAsyncTask<Void, Progre
         public StudyOptionsFragment.DeckStudyData task(@NonNull Collection col, @NonNull ProgressSenderAndCancelListener<Void> collectionTask) {
             Timber.d("doInBackgroundRebuildCram");
             col.getSched().rebuildDyn(col.getDecks().selected());
-            return new UpdateValuesFromDeck(true).task(col, collectionTask);
+            return updateValuesFromDeck(col, true);
         }
     }
 
@@ -1245,7 +1230,7 @@ public class CollectionTask<Progress, Result> extends BaseAsyncTask<Void, Progre
         public StudyOptionsFragment.DeckStudyData task(@NonNull Collection col, @NonNull ProgressSenderAndCancelListener<Void> collectionTask) {
             Timber.d("doInBackgroundEmptyCram");
             col.getSched().emptyDyn(col.getDecks().selected());
-            return new UpdateValuesFromDeck(true).task(col, collectionTask);
+            return updateValuesFromDeck(col, true);
         }
     }
 }

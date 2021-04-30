@@ -53,6 +53,8 @@ import com.ichi2.libanki.Consts;
 import com.ichi2.libanki.Decks;
 import com.ichi2.libanki.Utils;
 import com.ichi2.libanki.Deck;
+import com.ichi2.libanki.sched.AbstractSched;
+import com.ichi2.libanki.sched.Counts;
 import com.ichi2.themes.StyledProgressDialog;
 import com.ichi2.utils.Computation;
 import com.ichi2.utils.FragmentFactoryUtils;
@@ -513,6 +515,25 @@ public class StudyOptionsFragment extends Fragment implements Toolbar.OnMenuItem
 
     protected void refreshInterface(boolean resetSched) {
         refreshInterface(resetSched, false);
+    }
+
+    public static StudyOptionsFragment.DeckStudyData updateValuesFromDeck(@NonNull Collection col, boolean reset) {
+        Timber.d("doInBackgroundUpdateValuesFromDeck");
+        try {
+            AbstractSched sched = col.getSched();
+            if (reset) {
+                // reset actually required because of counts, which is used in getCollectionTaskListener
+                sched.resetCounts();
+            }
+            Counts counts = sched.counts();
+            int totalNewCount = sched.totalNewForCurrentDeck();
+            int totalCount = sched.cardCount();
+            return new StudyOptionsFragment.DeckStudyData(counts.getNew(), counts.getLrn(), counts.getRev(), totalNewCount,
+                    totalCount, sched.eta(counts));
+        } catch (RuntimeException e) {
+            Timber.e(e, "doInBackgroundUpdateValuesFromDeck - an error occurred");
+            return null;
+        }
     }
 
     /**
