@@ -201,7 +201,7 @@
     <string name="more_information">詳細情報</string>
     <string name="no_field">\'{{%1$s}}\'는 찾았읍니다만、%1$s라는 필드는 存在하지않습니다</string>
     <string name="closed_tag_not_open">{{/%1$s}}\'는찾았읍니다만、{{#%1$s}}\' 或은\'{{^%1$s}}\'이없읍니다。</string>
-    <string name="missing_closing_bracket">\"% s\"에 \"}}\"이 없습니다.</string>
+    <string name="missing_closing_bracket">\"%s\"에 \"}}\"이 없습니다.</string>
     <string name="open_tag_not_closed">\'{{%s}}\'가 없습니다.</string>
     <string name="wrong_tag_closed">{{/%1$s}}\"를 찾았지만, \"{{/%2$s}}\"가 필요합니다.</string>
     <string name="filter_error">필터%s에誤謬가있습니다</string>
