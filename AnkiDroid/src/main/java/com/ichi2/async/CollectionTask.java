@@ -1204,20 +1204,6 @@ public class CollectionTask<Progress, Result> extends BaseAsyncTask<Void, Progre
     }
 
 
-    public static class UpdateValuesFromDeck implements TaskDelegate<Void, StudyOptionsFragment.DeckStudyData> {
-        private final boolean mReset;
-
-
-        public UpdateValuesFromDeck(boolean reset) {
-            this.mReset = reset;
-        }
-
-        public StudyOptionsFragment.DeckStudyData task(@NonNull Collection col, @Nullable ProgressSenderAndCancelListener<Void> collectionTask) {
-            return updateValuesFromDeck(col, mReset);
-        }
-    }
-
-
     public static class RebuildCram implements TaskDelegate<Void, StudyOptionsFragment.DeckStudyData> {
         public StudyOptionsFragment.DeckStudyData task(@NonNull Collection col, @NonNull ProgressSenderAndCancelListener<Void> collectionTask) {
             Timber.d("doInBackgroundRebuildCram");

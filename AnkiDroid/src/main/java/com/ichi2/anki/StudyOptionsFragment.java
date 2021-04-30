@@ -45,6 +45,8 @@ import com.afollestad.materialdialogs.MaterialDialog;
 import com.ichi2.anim.ActivityTransitionAnimation;
 import com.ichi2.anki.dialogs.customstudy.CustomStudyDialog;
 import com.ichi2.async.CollectionTask;
+import com.ichi2.async.ProgressSenderAndCancelListener;
+import com.ichi2.async.TaskDelegate;
 import com.ichi2.async.TaskListener;
 import com.ichi2.async.TaskManager;
 import com.ichi2.libanki.Card;
@@ -536,6 +538,19 @@ public class StudyOptionsFragment extends Fragment implements Toolbar.OnMenuItem
         }
     }
 
+    public static class UpdateValuesFromDeck implements TaskDelegate<Void, DeckStudyData> {
+        private final boolean mReset;
+
+
+        public UpdateValuesFromDeck(boolean reset) {
+            this.mReset = reset;
+        }
+
+        public StudyOptionsFragment.DeckStudyData task(@NonNull Collection col, @Nullable ProgressSenderAndCancelListener<Void> collectionTask) {
+            return updateValuesFromDeck(col, mReset);
+        }
+    }
+
     /**
      * Rebuild the fragment's interface to reflect the status of the currently selected deck.
      *
@@ -546,9 +561,9 @@ public class StudyOptionsFragment extends Fragment implements Toolbar.OnMenuItem
      */
     protected void refreshInterface(boolean resetSched, boolean resetDecklist) {
         Timber.d("Refreshing StudyOptionsFragment");
-        TaskManager.cancelAllTasks(CollectionTask.UpdateValuesFromDeck.class);
+        TaskManager.cancelAllTasks(UpdateValuesFromDeck.class);
         // Load the deck counts for the deck from Collection asynchronously
-        TaskManager.launchCollectionTask(new CollectionTask.UpdateValuesFromDeck(resetSched), getCollectionTaskListener(resetDecklist));
+        TaskManager.launchCollectionTask(new UpdateValuesFromDeck(resetSched), getCollectionTaskListener(resetDecklist));
     }
 
 
@@ -772,7 +787,7 @@ public class StudyOptionsFragment extends Fragment implements Toolbar.OnMenuItem
         if (!mToReviewer) {
             // In the reviewer, we need the count. So don't cancel it. Otherwise, (e.g. go to browser, selecting another
             // deck) cancel counts.
-            TaskManager.cancelAllTasks(CollectionTask.UpdateValuesFromDeck.class);
+            TaskManager.cancelAllTasks(UpdateValuesFromDeck.class);
         }
     }
 }
