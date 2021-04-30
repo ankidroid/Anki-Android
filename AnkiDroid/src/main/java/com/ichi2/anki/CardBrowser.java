@@ -84,6 +84,7 @@ import com.ichi2.libanki.Consts;
 import com.ichi2.libanki.Decks;
 import com.ichi2.libanki.Utils;
 import com.ichi2.libanki.Deck;
+import com.ichi2.libanki.WrongId;
 import com.ichi2.themes.Themes;
 import com.ichi2.ui.CardBrowserSearchView;
 import com.ichi2.upgrade.Upgrade;
@@ -1517,7 +1518,7 @@ public class CardBrowser extends NavigationDrawerActivity implements
 
     private void invalidate() {
         TaskManager.cancelAllTasks(CollectionTask.SearchCards.class);
-        TaskManager.cancelAllTasks(CollectionTask.RenderBrowserQA.class);
+        TaskManager.cancelAllTasks(RenderBrowserQA.class);
         TaskManager.cancelAllTasks(CheckCardSelection.class);
         mCards.clear();
         mCheckedCards.clear();
@@ -2260,7 +2261,7 @@ public class CardBrowser extends NavigationDrawerActivity implements
                 long currentTime = SystemClock.elapsedRealtime();
                 if ((currentTime - mLastRenderStart > 300 || lastVisibleItem + 1 >= totalItemCount)) {
                     mLastRenderStart = currentTime;
-                    TaskManager.cancelAllTasks(CollectionTask.RenderBrowserQA.class);
+                    TaskManager.cancelAllTasks(RenderBrowserQA.class);
                     TaskManager.launchCollectionTask(renderBrowserQAParams(firstVisibleItem, visibleItemCount, cards), mRenderQAHandler);
                 }
             }
@@ -2282,9 +2283,77 @@ public class CardBrowser extends NavigationDrawerActivity implements
     }
 
 
+
+    public static class RenderBrowserQA implements TaskDelegate<Integer, Pair<CardBrowser.CardCollection<CardBrowser.CardCache>, List<Long>>> {
+        private final CardBrowser.CardCollection<CardBrowser.CardCache> mCards;
+        private final Integer mStartPos;
+        private final Integer mN;
+        private final int mColumn1Index;
+        private final int mColumn2Index;
+
+
+        public RenderBrowserQA(CardBrowser.CardCollection<CardBrowser.CardCache> cards, Integer mStartPos, Integer n, int column1Index, int column2Index) {
+            this.mCards = cards;
+            this.mStartPos = mStartPos;
+            this.mN = n;
+            this.mColumn1Index = column1Index;
+            this.mColumn2Index = column2Index;
+        }
+
+
+        public Pair<CardBrowser.CardCollection<CardBrowser.CardCache>, List<Long>> task(@NonNull Collection col, @NonNull ProgressSenderAndCancelListener<Integer> collectionTask) {
+            Timber.d("doInBackgroundRenderBrowserQA");
+
+            List<Long> invalidCardIds = new ArrayList<>();
+            // for each specified card in the browser list
+            for (int i = mStartPos; i < mStartPos + mN; i++) {
+                // Stop if cancelled
+                if (collectionTask.isCancelled()) {
+                    Timber.d("doInBackgroundRenderBrowserQA was aborted");
+                    return null;
+                }
+                if (i < 0 || i >= mCards.size()) {
+                    continue;
+                }
+                CardBrowser.CardCache card;
+                try {
+                    card = mCards.get(i);
+                }
+                catch (IndexOutOfBoundsException e) {
+                    //even though we test against card.size() above, there's still a race condition
+                    //We might be able to optimise this to return here. Logically if we're past the end of the collection,
+                    //we won't reach any more cards.
+                    continue;
+                }
+                if (card.isLoaded()) {
+                    //We've already rendered the answer, we don't need to do it again.
+                    continue;
+                }
+                // Extract card item
+                try {
+                    // Ensure that card still exists.
+                    card.getCard();
+                } catch (WrongId e) {
+                    //#5891 - card can be inconsistent between the deck browser screen and the collection.
+                    //Realistically, we can skip any exception as it's a rendering task which should not kill the
+                    //process
+                    long cardId = card.getId();
+                    Timber.e(e, "Could not process card '%d' - skipping and removing from sight", cardId);
+                    invalidCardIds.add(cardId);
+                    continue;
+                }
+                // Update item
+                card.load(false, mColumn1Index, mColumn2Index);
+                float progress = (float) i / mN * 100;
+                collectionTask.doProgress((int) progress);
+            }
+            return new Pair<>(mCards, invalidCardIds);
+        }
+    }
+
     @NonNull
-    protected CollectionTask.RenderBrowserQA renderBrowserQAParams(int firstVisibleItem, int visibleItemCount, CardCollection<CardCache> cards) {
-        return new CollectionTask.RenderBrowserQA(cards, firstVisibleItem, visibleItemCount, mColumn1Index, mColumn2Index);
+    protected RenderBrowserQA renderBrowserQAParams(int firstVisibleItem, int visibleItemCount, CardCollection<CardCache> cards) {
+        return new RenderBrowserQA(cards, firstVisibleItem, visibleItemCount, mColumn1Index, mColumn2Index);
     }
 
 
