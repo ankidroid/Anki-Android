@@ -337,13 +337,13 @@ public class Reviewer extends AbstractFlashcardViewer {
             Timber.i("Reviewer:: Bury button pressed");
             if (!MenuItemCompat.getActionProvider(item).hasSubMenu()) {
                 Timber.d("Bury card due to no submenu");
-                dismiss(new CollectionTask.BuryCard(mCurrentCard));
+                buryCard();
             }
         } else if (itemId == R.id.action_suspend) {
             Timber.i("Reviewer:: Suspend button pressed");
             if (!MenuItemCompat.getActionProvider(item).hasSubMenu()) {
                 Timber.d("Suspend card due to no submenu");
-                dismiss(new CollectionTask.SuspendCard(mCurrentCard));
+                suspendCard();
             }
         } else if (itemId == R.id.action_delete) {
             Timber.i("Reviewer:: Delete note button pressed");
@@ -1307,9 +1307,9 @@ public class Reviewer extends AbstractFlashcardViewer {
         public boolean onMenuItemClick(MenuItem item) {
             int itemId = item.getItemId();
             if (itemId == R.id.action_suspend_card) {
-                return dismiss(new CollectionTask.SuspendCard(mCurrentCard));
+                return suspendCard();
             } else if (itemId == R.id.action_suspend_note) {
-                return dismiss(new CollectionTask.SuspendNote(mCurrentCard));
+                return suspendNote();
             }
             return false;
         }
@@ -1353,9 +1353,9 @@ public class Reviewer extends AbstractFlashcardViewer {
         public boolean onMenuItemClick(MenuItem item) {
             int itemId = item.getItemId();
             if (itemId == R.id.action_bury_card) {
-                return dismiss(new CollectionTask.BuryCard(mCurrentCard));
+                return buryCard();
             } else if (itemId == R.id.action_bury_note) {
-                return dismiss(new CollectionTask.BuryNote(mCurrentCard));
+                return buryNote();
             }
             return false;
         }

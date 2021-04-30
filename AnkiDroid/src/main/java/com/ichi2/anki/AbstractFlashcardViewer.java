@@ -2647,6 +2647,22 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
         }
     }
 
+    protected boolean buryCard() {
+        return dismiss(new CollectionTask.BuryCard(mCurrentCard));
+    }
+
+    protected boolean suspendCard() {
+        return dismiss(new CollectionTask.SuspendCard(mCurrentCard));
+    }
+
+    protected boolean suspendNote() {
+        return dismiss(new CollectionTask.SuspendNote(mCurrentCard));
+    }
+
+    protected boolean buryNote() {
+        return dismiss(new CollectionTask.BuryNote(mCurrentCard));
+    }
+
     public boolean executeCommand(@ViewerCommandDef int which) {
         if (isControlBlocked() && which != COMMAND_EXIT) {
             return false;
@@ -2703,13 +2719,13 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
                 lookUpOrSelectText();
                 return true;
             case COMMAND_BURY_CARD:
-                return dismiss(new CollectionTask.BuryCard(mCurrentCard));
+                return buryCard();
             case COMMAND_BURY_NOTE:
-                return dismiss(new CollectionTask.BuryNote(mCurrentCard));
+                return buryNote();
             case COMMAND_SUSPEND_CARD:
-                return dismiss(new CollectionTask.SuspendCard(mCurrentCard));
+                return suspendCard();
             case COMMAND_SUSPEND_NOTE:
-                return dismiss(new CollectionTask.SuspendNote(mCurrentCard));
+                return suspendNote();
             case COMMAND_DELETE:
                 showDeleteNoteDialog();
                 return true;
