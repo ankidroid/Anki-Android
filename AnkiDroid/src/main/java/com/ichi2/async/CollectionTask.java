@@ -616,23 +616,6 @@ public class CollectionTask<Progress, Result> extends BaseAsyncTask<Void, Progre
         }
     }
 
-    public static class Flag extends DismissNotes<Void> {
-        private final int mFlag;
-
-        public Flag(List<Long> cardIds, int flag) {
-            super(cardIds);
-            mFlag = flag;
-        }
-
-        protected boolean actualTask(Collection col, ProgressSenderAndCancelListener<Void> collectionTask, Card[] cards) {
-            col.setUserFlag(mFlag, mCardIds);
-            for (Card c : cards) {
-                c.load();
-            }
-            return true;
-        }
-    }
-
     public abstract static class RescheduleRepositionReset extends DismissNotes<Card> {
         @StringRes private final int mUndoNameId;
         public RescheduleRepositionReset(List<Long> cardIds, @StringRes int undoNameId) {

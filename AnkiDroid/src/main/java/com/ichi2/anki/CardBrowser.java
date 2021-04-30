@@ -1186,8 +1186,17 @@ public class CardBrowser extends NavigationDrawerActivity implements
 
     @VisibleForTesting
     public void flagTask (int flag) {
+        final List<Long> cardIds = getSelectedCardIds();
         TaskManager.launchCollectionTask(
-                new CollectionTask.Flag(getSelectedCardIds(), flag),
+                new CollectionTask.DismissNotes<Void>(cardIds) {
+                    protected boolean actualTask(Collection col, ProgressSenderAndCancelListener<Void> collectionTask, Card[] cards) {
+                        col.setUserFlag(flag, cardIds);
+                        for (Card c : cards) {
+                            c.load();
+                        }
+                        return true;
+                    }
+                },
                 flagCardHandler());
     }
 
