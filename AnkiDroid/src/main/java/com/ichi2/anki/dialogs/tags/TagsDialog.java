@@ -21,20 +21,16 @@ import com.ichi2.anki.analytics.AnalyticsDialogFragment;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.widget.SearchView;
 import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-public class TagsDialog extends AnalyticsDialogFragment implements TagsDialogListener {
-
-    public static final String FRAGMENT_RESULT_ON_SELECTED_TAGS_KEY = "FRAGMENT_RESULT_ON_SELECTED_TAGS_KEY";
-    public static final String FRAGMENT_RESULT_ON_SELECTED_TAGS__TAGS = "TAGS";
-    public static final String FRAGMENT_RESULT_ON_SELECTED_TAGS__OPTION = "OPTION";
-
-
+public class TagsDialog extends AnalyticsDialogFragment {
 
     /**
      * Enum that define all possible types of TagsDialog
@@ -74,7 +70,7 @@ public class TagsDialog extends AnalyticsDialogFragment implements TagsDialogLis
 
     private MaterialDialog mDialog;
 
-    @NonNull
+    @Nullable
     private final TagsDialogListener mListener;
 
 
@@ -92,7 +88,7 @@ public class TagsDialog extends AnalyticsDialogFragment implements TagsDialogLis
      * @see <a href="https://developer.android.com/guide/fragments/communicate#fragment-result">Fragment Result API</a>
      */
     public TagsDialog() {
-        mListener = this;
+        mListener = null;
     }
 
     /**
@@ -132,6 +128,10 @@ public class TagsDialog extends AnalyticsDialogFragment implements TagsDialogLis
         setCancelable(true);
     }
 
+    @NonNull
+    private TagsDialogListener getTagsDialogListener() {
+        return mListener != null ? mListener : TagsDialogListener.createFragmentResultSender(getParentFragmentManager());
+    }
 
     @NonNull
     @Override
@@ -175,22 +175,12 @@ public class TagsDialog extends AnalyticsDialogFragment implements TagsDialogLis
                 .positiveText(mPositiveText)
                 .negativeText(R.string.dialog_cancel)
                 .customView(tagsDialogView, false)
-                .onPositive((dialog, which) -> mListener.onSelectedTags(mTags.copyOfCheckedTagList(), mSelectedOption));
+                .onPositive((dialog, which) -> getTagsDialogListener().onSelectedTags(mTags.copyOfCheckedTagList(), mSelectedOption));
         mDialog = builder.build();
 
         mDialog.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE);
         return mDialog;
     }
-
-
-    @Override
-    public void onSelectedTags(List<String> selectedTags, int option) {
-        final Bundle bundle = new Bundle();
-        bundle.putStringArrayList(FRAGMENT_RESULT_ON_SELECTED_TAGS__TAGS, new ArrayList<>(selectedTags));
-        bundle.putInt(FRAGMENT_RESULT_ON_SELECTED_TAGS__OPTION, option);
-        getParentFragmentManager().setFragmentResult(FRAGMENT_RESULT_ON_SELECTED_TAGS_KEY, bundle);
-    }
-
 
     private void adjustToolbar(View tagsDialogView) {
         Toolbar mToolbar = tagsDialogView.findViewById(R.id.tags_dialog_toolbar);
