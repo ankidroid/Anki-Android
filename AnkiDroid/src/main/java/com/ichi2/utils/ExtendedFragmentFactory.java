@@ -75,9 +75,16 @@ public abstract class ExtendedFragmentFactory extends FragmentFactory {
      * and updating the activity with the extended factory
      */
     public <F extends ExtendedFragmentFactory> F attachToActivity(@NonNull AppCompatActivity activity) {
-        final FragmentManager fm = activity.getSupportFragmentManager();
-        mBaseFactory = fm.getFragmentFactory();
-        fm.setFragmentFactory(this);
+        return (F) attachToFragmentManager(activity.getSupportFragmentManager());
+    }
+
+    /**
+     * Attaches the factory to a fragment manager by setting the current fragment factory as the base factory
+     * and updating the fragment manager with the extended factory
+     */
+    public <F extends ExtendedFragmentFactory> F attachToFragmentManager(@NonNull FragmentManager fragmentManager) {
+        mBaseFactory = fragmentManager.getFragmentFactory();
+        fragmentManager.setFragmentFactory(this);
         return (F) this;
     }
 }
