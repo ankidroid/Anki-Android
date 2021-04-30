@@ -1517,7 +1517,7 @@ public class CardBrowser extends NavigationDrawerActivity implements
     }
 
     private void invalidate() {
-        TaskManager.cancelAllTasks(CollectionTask.SearchCards.class);
+        TaskManager.cancelAllTasks(SearchCards.class);
         TaskManager.cancelAllTasks(RenderBrowserQA.class);
         TaskManager.cancelAllTasks(CheckCardSelection.class);
         mCards.clear();
@@ -1527,6 +1527,57 @@ public class CardBrowser extends NavigationDrawerActivity implements
     /** Currently unused - to be used in #7676 */
     private void forceRefreshSearch() {
         searchCards();
+    }
+
+
+    @VisibleForTesting
+    public static class SearchCards implements TaskDelegate<List<CardCache>, List<CardCache>> {
+        private final String mQuery;
+        private final boolean mOrder;
+        private final int mNumCardsToRender;
+        private final int mColumn1Index;
+        private final int mColumn2Index;
+
+
+        public SearchCards(String query, boolean order, int numCardsToRender, int column1Index, int column2Index) {
+            this.mQuery = query;
+            this.mOrder = order;
+            this.mNumCardsToRender = numCardsToRender;
+            this.mColumn1Index = column1Index;
+            this.mColumn2Index = column2Index;
+        }
+
+
+        public List<CardBrowser.CardCache> task(@NonNull Collection col, @NonNull ProgressSenderAndCancelListener<List<CardBrowser.CardCache>> collectionTask) {
+            Timber.d("doInBackgroundSearchCards");
+            if (collectionTask.isCancelled()) {
+                Timber.d("doInBackgroundSearchCards was cancelled so return null");
+                return null;
+            }
+            List<CardBrowser.CardCache> searchResult = new ArrayList<>();
+            List<Long> searchResult_ = col.findCards(mQuery, mOrder, new CollectionTask.PartialSearch(searchResult, mColumn1Index, mColumn2Index, mNumCardsToRender, collectionTask, col));
+            Timber.d("The search found %d cards", searchResult_.size());
+            int position = 0;
+            for (Long cid : searchResult_) {
+                CardBrowser.CardCache card = new CardBrowser.CardCache(cid, col, position++);
+                searchResult.add(card);
+            }
+            // Render the first few items
+            for (int i = 0; i < Math.min(mNumCardsToRender, searchResult.size()); i++) {
+                if (collectionTask.isCancelled()) {
+                    Timber.d("doInBackgroundSearchCards was cancelled so return null");
+                    return null;
+                }
+                searchResult.get(i).load(false, mColumn1Index, mColumn2Index);
+            }
+            // Finish off the task
+            if (collectionTask.isCancelled()) {
+                Timber.d("doInBackgroundSearchCards was cancelled so return null");
+                return null;
+            } else {
+                return searchResult;
+            }
+        }
     }
 
 
@@ -1555,7 +1606,7 @@ public class CardBrowser extends NavigationDrawerActivity implements
             mCardsAdapter.notifyDataSetChanged();
             //  estimate maximum number of cards that could be visible (assuming worst-case minimum row height of 20dp)
             // Perform database query to get all card ids
-            TaskManager.launchCollectionTask(new CollectionTask.SearchCards(searchText,
+            TaskManager.launchCollectionTask(new SearchCards(searchText,
                             (mOrder != CARD_ORDER_NONE),
                             numCardsToRender(),
                             mColumn1Index,

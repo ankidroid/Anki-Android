@@ -1048,55 +1048,6 @@ public class CollectionTask<Progress, Result> extends BaseAsyncTask<Void, Progre
     }
 
 
-    public static class SearchCards implements TaskDelegate<List<CardBrowser.CardCache>, List<CardBrowser.CardCache>> {
-        private final String mQuery;
-        private final boolean mOrder;
-        private final int mNumCardsToRender;
-        private final int mColumn1Index;
-        private final int mColumn2Index;
-
-
-        public SearchCards(String query, boolean order, int numCardsToRender, int column1Index, int column2Index) {
-            this.mQuery = query;
-            this.mOrder = order;
-            this.mNumCardsToRender = numCardsToRender;
-            this.mColumn1Index = column1Index;
-            this.mColumn2Index = column2Index;
-        }
-
-
-        public List<CardBrowser.CardCache> task(@NonNull Collection col, @NonNull ProgressSenderAndCancelListener<List<CardBrowser.CardCache>> collectionTask) {
-            Timber.d("doInBackgroundSearchCards");
-            if (collectionTask.isCancelled()) {
-                Timber.d("doInBackgroundSearchCards was cancelled so return null");
-                return null;
-            }
-            List<CardBrowser.CardCache> searchResult = new ArrayList<>();
-            List<Long> searchResult_ = col.findCards(mQuery, mOrder, new PartialSearch(searchResult, mColumn1Index, mColumn2Index, mNumCardsToRender, collectionTask, col));
-            Timber.d("The search found %d cards", searchResult_.size());
-            int position = 0;
-            for (Long cid : searchResult_) {
-                CardBrowser.CardCache card = new CardBrowser.CardCache(cid, col, position++);
-                searchResult.add(card);
-            }
-            // Render the first few items
-            for (int i = 0; i < Math.min(mNumCardsToRender, searchResult.size()); i++) {
-                if (collectionTask.isCancelled()) {
-                    Timber.d("doInBackgroundSearchCards was cancelled so return null");
-                    return null;
-                }
-                searchResult.get(i).load(false, mColumn1Index, mColumn2Index);
-            }
-            // Finish off the task
-            if (collectionTask.isCancelled()) {
-                Timber.d("doInBackgroundSearchCards was cancelled so return null");
-                return null;
-            } else {
-                return searchResult;
-            }
-        }
-    }
-
     public static class RebuildCram implements TaskDelegate<Void, StudyOptionsFragment.DeckStudyData> {
         public StudyOptionsFragment.DeckStudyData task(@NonNull Collection col, @NonNull ProgressSenderAndCancelListener<Void> collectionTask) {
             Timber.d("doInBackgroundRebuildCram");
