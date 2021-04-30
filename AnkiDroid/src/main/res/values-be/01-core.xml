@@ -41,7 +41,7 @@
     <string name="yes">так</string>
     <!-- Navigation drawer items-->
     <string name="decks">Калоды</string>
-    <string name="card_browser" comment="The usage of card browser inside the app (note the casing)">Браўзер картак</string>
+    <string name="card_browser" comment="The usage of card browser inside the app (note the casing)">Аглядальнік картак</string>
     <string name="statistics">Статыстыка</string>
     <string name="settings">Налады</string>
     <string name="help">Даведка</string>
@@ -106,16 +106,16 @@
     <string name="rename_deck">Перайменаваць калоду</string>
     <string name="create_shortcut">Стварыць ярлык</string>
     <string name="menu_add" comment="A generic add button - Main Deck Picker and card templates. Please inform us if you need more specific strings">Дадаць</string>
-    <string name="menu_add_note">Дадаць нататку</string>
+    <string name="menu_add_note">Дадаць запіс</string>
     <string name="menu_my_account" comment="Label of the window in which the user should enter their account. This text can\'t be found in AnkiDroid directly.">Сінхранізаваць уліковы запіс</string>
     <string name="menu_dismiss_note">Схаваць / выдаліць</string>
     <string name="menu_bury_card">Адкласці картку</string>
-    <string name="menu_bury_note">Адкласці нататку</string>
+    <string name="menu_bury_note">Адкласці запіс</string>
     <string name="menu_suspend_card">Выключыць картку</string>
-    <string name="menu_suspend_note">Выключыць нататку</string>
+    <string name="menu_suspend_note">Прыпыніць запіс</string>
     <string name="menu_bury">Адкласці</string>
     <string name="menu_suspend">Выключыць</string>
-    <string name="menu_delete_note">Выдаліць нататку</string>
+    <string name="menu_delete_note">Выдаліць запіс</string>
     <string name="menu_flag">Сцяжок</string>
     <string name="menu_flag_card">Пазначыць картку</string>
     <string name="menu_flag_card_zero">Без сцяжка</string>
@@ -123,13 +123,13 @@
     <string name="menu_flag_card_two">Аранжавы сцяжок</string>
     <string name="menu_flag_card_three">Зялёны сцяжок</string>
     <string name="menu_flag_card_four">Блакітны сцяжок</string>
-    <string name="menu_edit_tags">Змянiць тэгi</string>
-    <string name="delete_note_message">Сапраўды выдаліць гэту нататку і ўсе яе карткі?\n%s</string>
+    <string name="menu_edit_tags">Змяніць меткі</string>
+    <string name="delete_note_message">Сапраўды выдаліць гэты запіс і ўсе яе карткі?\n%s</string>
     <string name="menu_select">Выбраць тэкст</string>
     <string name="menu_lookup">Шукаць у тэксце</string>
     <string name="menu_search">Шукаць у %1$s</string>
-    <string name="menu_mark_note">Пазначыць нататку</string>
-    <string name="menu_unmark_note">Зняць пазнаку з нататкі</string>
+    <string name="menu_mark_note">Пазначыць запіс</string>
+    <string name="menu_unmark_note">Зняць пазнаку з запісу</string>
     <string name="menu_toggle_mic_tool_bar">Праверыць вымаўленне</string>
     <string name="new_deck">Стварыць калоду</string>
     <string name="new_dynamic_deck">Стварыць фільтраваную калоду</string>
@@ -147,42 +147,42 @@
         not be translated, at least not for languages using the Latin
         alphabet.
     -->
-    <string name="time_quantity_seconds">%d с</string>
+    <string name="time_quantity_seconds">%d сек</string>
     <string name="time_quantity_minutes">%d хв</string>
-    <string name="time_quantity_hours_minutes">%1$d г. %2$d хв.</string>
-    <string name="time_quantity_hours">%d г</string>
-    <string name="time_quantity_days">%d дзён</string>
-    <string name="time_quantity_days_hours">%1$d дз. %2$d г.</string>
+    <string name="time_quantity_hours_minutes">%1$d гадз %2$d хв</string>
+    <string name="time_quantity_hours">%d гадз</string>
+    <string name="time_quantity_days">%d дз</string>
+    <string name="time_quantity_days_hours">%1$d дз %2$d гадз</string>
     <string name="time_quantity_months">%.1f мес</string>
-    <string name="time_quantity_years">%.1f гадоў</string>
+    <string name="time_quantity_years">%.1f г</string>
     <!-- or "%.1f a" -->
-    <string name="rebuild_filtered_deck">Rebuilding filtered deck&#8230;</string>
+    <string name="rebuild_filtered_deck">Перабудова фільтраванай калоды&#8230;</string>
     <string name="rebuild_cram_label">Перабудаваць</string>
     <string name="empty_cram_label">Ачысціць</string>
     <string name="create_subdeck">Стварыць падкалоду</string>
-    <string name="empty_filtered_deck">Emptying filtered deck&#8230;</string>
-    <string name="custom_study_deck_name">Спецыяльная навучальная сесія</string>
-    <string name="custom_study_deck_exists">Спачатку дайце новую назву бягучай спецыяльнай калодзе</string>
+    <string name="empty_filtered_deck">Ачыстка фільтраванай калоды...</string>
+    <string name="custom_study_deck_name">Дадатковая навучанне</string>
+    <string name="custom_study_deck_exists">Спачатку дайце новую назву калодзе дадатковага навучання</string>
     <string name="empty_deck">Гэта калода пустая</string>
-    <string name="search_deck">Deck Search</string>
-    <string name="empty_deck_add_note">Add card</string>
-    <string name="invalid_deck_name">Invalid deck name</string>
+    <string name="search_deck">Пошук калоды</string>
+    <string name="empty_deck_add_note">Дадаць картку</string>
+    <string name="invalid_deck_name">Памылковая назва калоды</string>
     <string name="studyoptions_empty">Гэта калода пустая. Націсніце кнопку +, каб дадаць новае змесціва.</string>
     <string name="studyoptions_limit_reached">Вы выканалі дзённую норму</string>
     <string name="studyoptions_empty_schedule">Няма запланаваных картак для навучання</string>
     <string name="studyoptions_congrats_finished">Віншуем! Пакуль няма картак для навучання.</string>
-    <string name="studyoptions_congrats_more_rev">Вы выканалі дзённую норму, але новыя карткі яшчэ засталіся. Вы можаце змяніць абмежаванні ў наладах праграмы.</string>
-    <string name="studyoptions_congrats_more_new">Вы выканалі дзённую норму, але новыя карткі яшчэ засталіся. Вы можаце змяніць абмежаванні ў наладах праграмы, але ўлічыце, што гэта павялічыць і аб\'ёмы паўтарэнняў у наступныя дні.</string>
-    <string name="studyoptions_congrats_custom">Каб змяніць звыклы графік вывучэння калоды, націсніце \"Дадатковае навучанне\" ніжэй</string>
-    <string name="studyoptions_no_cards_due">Не засталося картак для прагляду.</string>
+    <string name="studyoptions_congrats_more_rev">Вы выканалі дзённую норму, але карткі для паўтору яшчэ засталіся. Вы можаце змяніць абмежаванні дзённай нормы ў наладах праграмы.</string>
+    <string name="studyoptions_congrats_more_new">Вы выканалі дзённую норму, але новыя карткі яшчэ засталіся. Вы можаце змяніць абмежаванні ў наладах праграмы, але гэта павялічыць аб\'ёмы паўтарэнняў у наступныя дні.</string>
+    <string name="studyoptions_congrats_custom">Для змянення звыклага графіка вывучэння калоды, націсніце кнопку \"Дадатковае навучанне\"</string>
+    <string name="studyoptions_no_cards_due">На сёння картак не засталося.</string>
     <string name="sd_card_not_mounted">Картка памяці не падключаная</string>
-    <string name="empty_cloze_warning">Калі ласка, змяніце гэту нататку і запоўніце пропускі. (%1$s)</string>
+    <string name="empty_cloze_warning">Змяніце гэты запіс і дадайце пропускі. (%1$s)</string>
     <string name="button_sync">Сінхранізаваць</string>
-    <string name="cancel_sync_confirm">Адмяніць сiнхранiзацыю?</string>
+    <string name="cancel_sync_confirm">Скасаваць сінхранізацыю?</string>
     <string name="continue_sync">Працягнуць сiнхранiзацыю</string>
-    <string name="sync_cancelled">Сiнхранiзацыя адменена</string>
-    <string name="sync_cancel_message">Адмена сінхранізацыі...\nГэта можа заняць некаторы час.</string>
-    <string name="export">Экспарт</string>
+    <string name="sync_cancelled">Сiнхранiзацыя скасаваная</string>
+    <string name="sync_cancel_message">Адбываецца скасаванне сінхранізацыі...\nГэта можа заняць некаторы час.</string>
+    <string name="export">Экспартаваць</string>
     <string name="export_collection">Экспартаваць калекцыю</string>
     <string name="export_deck">Экспартаваць калоду</string>
     <string name="nothing">Нічога</string>
@@ -191,36 +191,36 @@
     <string name="card_template_editor_front">Шаблон пярэдняга боку</string>
     <string name="card_template_editor_back">Шаблон задняга боку</string>
     <string name="card_template_editor_styling">Знешні выгляд</string>
-    <string name="card_template_editor_menu_card_browser_appearance">Знешні выгляд аглядніка карт</string>
-    <string name="card_template_editor_deck_override">Deck Override</string>
-    <string name="card_template_editor_cant_delete">Патрабуецца прынамсі адзін тып.</string>
+    <string name="card_template_editor_menu_card_browser_appearance">Выгляд аглядальніка картак</string>
+    <string name="card_template_editor_deck_override">Перавызначэнне калоды</string>
+    <string name="card_template_editor_cant_delete">Патрабуецца прынамсі адзін тып картак</string>
     <plurals name="card_template_editor_confirm_delete">
-        <item quantity="one">Выдаліць тып карткі \'%2$s\' і яе %1$d картку?</item>
-        <item quantity="few">Выдаліць тып карткі \'%2$s\' і яе %1$d карткі?</item>
-        <item quantity="many">Выдаліць тып карткі \'%2$s\' і яе %1$d карткак?</item>
-        <item quantity="other">Выдаліць тып карткі \'%2$s\' і яе %1$d карткі?</item>
+        <item quantity="one">Выдаліць тып карткі \'%2$s\' і %1$d яе картку?</item>
+        <item quantity="few">Выдаліць тып карткі \'%2$s\' і %1$d яе карткі?</item>
+        <item quantity="many">Выдаліць тып карткі \'%2$s\' і %1$d яе картак?</item>
+        <item quantity="other">Выдаліць тып карткі \'%2$s\' і %1$d яе карткі?</item>
     </plurals>
     <string name="invalid_template">Немагчыма згенерыраваць картку</string>
-    <string name="card_template_editor_would_delete_note">Выдаленне гэтага тыпу картак прывядзе да выдалення некаторых запісаў. Спачатку, стварыце і захавайце новы тып картак.</string>
-    <string name="card_template_editor_save_error">Не атрымалася захаваць змену шаблону карткі: %s</string>
-    <string name="template_for_current_card_deleted">Тып для бягучай карткі быў выдалены.</string>
+    <string name="card_template_editor_would_delete_note">Выдаленне гэтага тыпу картак прывядзе да выдалення некаторых запісаў. Спачатку стварыце і захавайце новы тып картак.</string>
+    <string name="card_template_editor_save_error">Немагчыма захаваць змены ў шаблоне карткі: %s</string>
+    <string name="template_for_current_card_deleted">Тып карткі для бягучай карткі быў выдалены.</string>
     <!-- Card Browser Appearance -->
-    <string name="card_template_browser_appearance_title">Знешні выгляд аглядніка карт</string>
+    <string name="card_template_browser_appearance_title">Выгляд аглядальніка</string>
     <string name="current_and_default_deck">%1$s (%2$s)</string>
     <!-- card Info -->
     <string name="card_info_title">Звесткі пра картку</string>
     <!-- Permissions -->
     <string name="read_write_permission_label">Чытанне і запіс у базу даных AnkiDroid</string>
-    <string name="read_write_permission_description">доступ да бягучых нататак, картак, тыпаў нататак і калод, а таксама стварэнне новых</string>
+    <string name="read_write_permission_description">доступ да існуючых запісаў, картак, тыпаў запісаў і калод, а таксама стварэнне новых</string>
     <!-- Context Menu -->
     <string name="card_browser_context_menu" comment="The value which appears in the system context menu. Note the casing difference">Аглядальнік картак</string>
-    <string name="context_menu_anki_card_label">Anki Card</string>
-    <string name="has_a_problem" comment="First field is either front template or back template. Second field is the error message.">%1$s has a problem:<br/>%2$s</string>
-    <string name="more_information">More information</string>
-    <string name="no_field">Found \'{{%1$s}}\', but there is no field called \'%1$s\'.</string>
-    <string name="closed_tag_not_open">Found \'{{/%1$s}}\', but missing \'{{#%1$s}}\' or \'{{^%1$s}}\'.</string>
-    <string name="missing_closing_bracket">Missing \'}}\' in \'%s\'.</string>
-    <string name="open_tag_not_closed">Missing \'{{%s}}\'.</string>
-    <string name="wrong_tag_closed">Found \'{{/%1$s}}\', but expected \'{{/%2$s}}\'</string>
+    <string name="context_menu_anki_card_label">Картка Anki</string>
+    <string name="has_a_problem" comment="First field is either front template or back template. Second field is the error message.">У %1$s праблема:<br/>%2$s</string>
+    <string name="more_information">Больш інфармацыі</string>
+    <string name="no_field">Знойдзена \'{{%1$s}}\', але поле з назвай \'%1$s\' адсутнічае.</string>
+    <string name="closed_tag_not_open">Знойдзена \'{{/%1$s}}\', але адсутнічае \'{{#%1$s}}\' або \'{{^%1$s}}\'.</string>
+    <string name="missing_closing_bracket">Адсутнічаюць \'}}\' у \'%s\'.</string>
+    <string name="open_tag_not_closed">Адсутнічае \'{{%s}}\'.</string>
+    <string name="wrong_tag_closed">Знойдзена \'{{/%1$s}}\', але чакалася \'{{/%2$s}}\'</string>
     <string name="filter_error">Памылка ў фільтры %s</string>
 </resources>

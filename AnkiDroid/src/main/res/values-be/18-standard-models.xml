@@ -26,7 +26,7 @@
     <string name="extra_field_name">Дадаткова</string>
     <string name="field_to_ask_front_name">Дадаць зваротны бок</string>
     <!--Card type-->
-    <string name="card_n_name">Card %d</string>
+    <string name="card_n_name">Картка %d</string>
     <!--Note type-->
     <string name="basic_model_name">Асноўны</string>
     <string name="cloze_model_name">З пропускамі</string>

@@ -251,11 +251,11 @@
         <item quantity="many">Автоматическая синхронизация может быть запущена через %d секунд</item>
         <item quantity="other">Автоматическая синхронизация может быть запущена через %d секунд</item>
     </plurals>
-    <string name="deck_picker_new">Number of new cards to see today in this deck.</string>
-    <string name="deck_picker_rev">Number of cards due today in this deck.</string>
-    <string name="deck_picker_lrn">Number of cards in learning in this deck.</string>
+    <string name="deck_picker_new">Количество новых карт, которые сегодня можно увидеть в этой колоде.</string>
+    <string name="deck_picker_rev">Количество карт на сегодня в этой колоде.</string>
+    <string name="deck_picker_lrn">Количество карт в обучении в этой колоде.</string>
     <!-- This description is valid fos
     sched V2. For V1, it was counting the number of repetitions of cards in learning. This approximation is acceptable
     for the sake of simplicity and because V1 will leave.-->
-    <string name="deck_picker_counts">Open the deck overview page containing the number of cards to see today.</string>
+    <string name="deck_picker_counts">Откройте страницу предварительного просмотра колоды, содержащую количество карточек для просмотра сегодня.</string>
 </resources>
