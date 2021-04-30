@@ -74,34 +74,31 @@ public class TagsDialog extends AnalyticsDialogFragment {
 
     private MaterialDialog mDialog;
 
-    private TagsDialogListener mListener;
+    private final TagsDialogListener mListener;
+
+    public TagsDialog(TagsDialogListener listener) {
+        mListener = listener;
+    }
 
     /**
-     * Initializes an instance of {@link TagsDialog} using passed parameters
-     *
      * @param type the type of dialog @see {@link DialogType}
      * @param checkedTags tags of the note
      * @param allTags all possible tags in the collection
      * @return Initialized instance of {@link TagsDialog}
      */
     @NonNull
-    public static TagsDialog newInstance(@NonNull DialogType type, @NonNull List<String> checkedTags, @NonNull List<String> allTags) {
-        TagsDialog t = new TagsDialog();
+    public TagsDialog withArguments(@NonNull DialogType type, @NonNull List<String> checkedTags, @NonNull List<String> allTags) {
+        Bundle args = this.getArguments();
+        if (args == null) {
+            args = new Bundle();
+        }
 
-        Bundle args = new Bundle();
         args.putInt(DIALOG_TYPE_KEY, type.ordinal());
         args.putStringArrayList(CHECKED_TAGS_KEY, new ArrayList<>(checkedTags));
         args.putStringArrayList(ALL_TAGS_KEY, new ArrayList<>(allTags));
-        t.setArguments(args);
+        setArguments(args);
 
-        return t;
-    }
-
-
-    @Override
-    public void onAttach(@NonNull Context context) {
-        super.onAttach(context);
-        mListener = (TagsDialogListener) requireActivity();
+        return this;
     }
 
 
