@@ -47,9 +47,6 @@ import com.afollestad.materialdialogs.MaterialDialog;
 import com.ichi2.libanki.utils.Time;
 import com.ichi2.libanki.utils.TimeUtils;
 import com.ichi2.ui.FixedTextView;
-import com.jaredrummler.android.colorpicker.ColorPickerDialog;
-import com.jaredrummler.android.colorpicker.ColorPickerDialogListener;
-import com.jaredrummler.android.colorpicker.ColorShape;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -66,8 +63,6 @@ import androidx.annotation.VisibleForTesting;
 import androidx.core.content.ContextCompat;
 import timber.log.Timber;
 
-import static com.ichi2.anki.AnkiDroidApp.getSharedPrefs;
-
 /**
  * Whiteboard allowing the user to draw the card's answer on the touchscreen.
  */
@@ -75,8 +70,6 @@ import static com.ichi2.anki.AnkiDroidApp.getSharedPrefs;
 public class Whiteboard extends View implements SeekBar.OnSeekBarChangeListener {
 
     private static final float TOUCH_TOLERANCE = 4;
-    private static final int COLOR_PICKER_WHITEBOARD = 3;
-    private static int COLOR_SELECTED_WHITEBOARD = Color.WHITE;
 
     private FixedTextView mWbStrokeWidthText;
     private final Paint mPaint;
@@ -86,7 +79,6 @@ public class Whiteboard extends View implements SeekBar.OnSeekBarChangeListener 
     private final Path mPath;
     private final Paint mBitmapPaint;
     private final WeakReference<AbstractFlashcardViewer> mCardViewer;
-    private final AbstractFlashcardViewer mActivity;
 
     private float mX;
     private float mY;
@@ -110,7 +102,6 @@ public class Whiteboard extends View implements SeekBar.OnSeekBarChangeListener 
     public Whiteboard(AbstractFlashcardViewer cardViewer, boolean inverted) {
         super(cardViewer, null);
         mCardViewer = new WeakReference<>(cardViewer);
-        mActivity = cardViewer;
 
         Button whitePenColorButton = cardViewer.findViewById(R.id.pen_color_white);
         Button blackPenColorButton = cardViewer.findViewById(R.id.pen_color_black);
@@ -132,7 +123,7 @@ public class Whiteboard extends View implements SeekBar.OnSeekBarChangeListener 
         mPaint.setStyle(Paint.Style.STROKE);
         mPaint.setStrokeJoin(Paint.Join.ROUND);
         mPaint.setStrokeCap(Paint.Cap.ROUND);
-        mWbStrokeWidth = getSharedPrefs(cardViewer).getInt("whiteBoardStrokeWidth", 6);
+        mWbStrokeWidth = AnkiDroidApp.getSharedPrefs(cardViewer).getInt("whiteBoardStrokeWidth", 6);
         mPaint.setStrokeWidth((float) mWbStrokeWidth);
         createBitmap();
         mPath = new Path();
@@ -145,7 +136,6 @@ public class Whiteboard extends View implements SeekBar.OnSeekBarChangeListener 
         cardViewer.findViewById(R.id.pen_color_green).setOnClickListener(this::onClick);
         cardViewer.findViewById(R.id.pen_color_blue).setOnClickListener(this::onClick);
         cardViewer.findViewById(R.id.pen_color_yellow).setOnClickListener(this::onClick);
-        cardViewer.findViewById(R.id.pen_color_dialog).setOnClickListener(this::onClick);
         cardViewer.findViewById(R.id.stroke_width).setOnClickListener(this::onClick);
     }
 
@@ -422,8 +412,6 @@ public class Whiteboard extends View implements SeekBar.OnSeekBarChangeListener 
         } else if (id == R.id.pen_color_yellow) {
             int yellowPenColor = ContextCompat.getColor(getContext(), R.color.material_yellow_500);
             setPenColor(yellowPenColor);
-        } else if (id == R.id.pen_color_dialog) {
-            openColorPicker(COLOR_PICKER_WHITEBOARD, COLOR_SELECTED_WHITEBOARD);
         } else if (id == R.id.stroke_width) {
             openStrokeWidthDialog();
         }
@@ -465,9 +453,10 @@ public class Whiteboard extends View implements SeekBar.OnSeekBarChangeListener 
 
 
     private void saveStrokeWidth() {
-        SharedPreferences.Editor edit = getSharedPrefs(mCardViewer.get()).edit();
+        SharedPreferences.Editor edit = AnkiDroidApp.getSharedPrefs(mCardViewer.get()).edit();
         edit.putInt("whiteBoardStrokeWidth", mWbStrokeWidth);
         mPaint.setStrokeWidth((float) mWbStrokeWidth);
+        edit.apply();
     }
 
 
@@ -488,21 +477,6 @@ public class Whiteboard extends View implements SeekBar.OnSeekBarChangeListener 
 
     public void setOnPaintColorChangeListener(@Nullable OnPaintColorChangeListener mOnPaintColorChangeListener) {
         this.mOnPaintColorChangeListener = mOnPaintColorChangeListener;
-    }
-
-    private void openColorPicker(int dialogId, Integer defaultColor) {
-        ColorPickerDialog.Builder d = ColorPickerDialog
-                .newBuilder()
-                .setDialogId(dialogId)
-                .setColorShape(ColorShape.CIRCLE)
-                .setAllowPresets(true)
-                .setShowColorShades(false);
-
-        if (defaultColor != null) {
-            d.setColor(defaultColor);
-        }
-        mCardViewer.get().showDialogFragment(d.create());
-
     }
 
 
