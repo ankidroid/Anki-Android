@@ -65,6 +65,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.text.TextUtils;
+import android.util.JsonReader;
 import android.util.Pair;
 import android.util.TypedValue;
 import android.view.KeyEvent;
@@ -125,8 +126,10 @@ import com.ichi2.libanki.AnkiPackageExporter;
 import com.ichi2.libanki.Card;
 import com.ichi2.libanki.Collection;
 import com.ichi2.libanki.Decks;
+import com.ichi2.libanki.Media;
 import com.ichi2.libanki.Model;
 import com.ichi2.libanki.Models;
+import com.ichi2.libanki.Storage;
 import com.ichi2.libanki.Utils;
 import com.ichi2.libanki.importer.AnkiPackageImporter;
 import com.ichi2.libanki.sched.AbstractDeckTreeNode;
@@ -134,6 +137,7 @@ import com.ichi2.libanki.sched.DeckDueTreeNode;
 import com.ichi2.libanki.sched.DeckTreeNode;
 import com.ichi2.libanki.sync.CustomSyncServerUrlException;
 import com.ichi2.libanki.sync.Syncer;
+import com.ichi2.libanki.utils.Time;
 import com.ichi2.libanki.utils.TimeUtils;
 import com.ichi2.themes.StyledProgressDialog;
 import com.ichi2.ui.BadgeDrawableBuilder;
@@ -148,11 +152,16 @@ import com.ichi2.widget.WidgetStatus;
 
 import com.ichi2.utils.JSONException;
 
+import org.apache.commons.compress.archivers.zip.ZipFile;
+
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
+import java.io.FileReader;
 import java.io.IOException;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.TreeMap;
 
 import timber.log.Timber;
@@ -163,6 +172,8 @@ import static com.ichi2.anki.Preferences.FULL_SCREEN_MODE;
 import static com.ichi2.async.Connection.ConflictResolution.FULL_DOWNLOAD;
 
 import static com.ichi2.anim.ActivityTransitionAnimation.Direction.*;
+import static com.ichi2.utils.Computation.ERR;
+import static com.ichi2.utils.Computation.OK;
 
 
 public class DeckPicker extends NavigationDrawerActivity implements
@@ -1690,7 +1701,7 @@ public class DeckPicker extends NavigationDrawerActivity implements
                 col.getMedia().rebuildIfInvalid();
             } catch (IOException e) {
                 Timber.w(e);
-                return Computation.ERR;
+                return ERR;
             }
             // A media check on AnkiDroid will also update the media db
             col.getMedia().findChanges(true);
@@ -2169,10 +2180,162 @@ public class DeckPicker extends NavigationDrawerActivity implements
     }
 
 
+
+    public static class ImportReplace implements TaskDelegate<String, Computation<?>> {
+        private final String mPath;
+
+
+        public ImportReplace(String path) {
+            this.mPath = path;
+        }
+
+
+        @Override
+        public boolean requiresOpenCollection() {
+            return false;
+        }
+
+
+        public Computation<?> task(@NonNull Collection col, @NonNull ProgressSenderAndCancelListener<String> collectionTask) {
+            Timber.d("doInBackgroundImportReplace");
+            Resources res = AnkiDroidApp.getInstance().getBaseContext().getResources();
+            Context context = col.getContext();
+
+            // extract the deck from the zip file
+            String colPath = CollectionHelper.getCollectionPath(context);
+            File dir = new File(new File(colPath).getParentFile(), "tmpzip");
+            if (dir.exists()) {
+                BackupManager.removeDir(dir);
+            }
+
+            // from anki2.py
+            String colname = "collection.anki21";
+            ZipFile zip;
+            try {
+                zip = new ZipFile(new File(mPath));
+            } catch (IOException e) {
+                Timber.e(e, "doInBackgroundImportReplace - Error while unzipping");
+                AnkiDroidApp.sendExceptionReport(e, "doInBackgroundImportReplace0");
+                return ERR;
+            }
+            try {
+                // v2 scheduler?
+                if (zip.getEntry(colname) == null) {
+                    colname = CollectionHelper.COLLECTION_FILENAME;
+                }
+                Utils.unzipFiles(zip, dir.getAbsolutePath(), new String[] {colname, "media"}, null);
+            } catch (IOException e) {
+                AnkiDroidApp.sendExceptionReport(e, "doInBackgroundImportReplace - unzip");
+                return ERR;
+            }
+            String colFile = new File(dir, colname).getAbsolutePath();
+            if (!(new File(colFile)).exists()) {
+                return ERR;
+            }
+
+            Collection tmpCol = null;
+            try {
+                tmpCol = Storage.Collection(context, colFile);
+                if (!tmpCol.validCollection()) {
+                    tmpCol.close();
+                    return ERR;
+                }
+            } catch (Exception e) {
+                Timber.e("Error opening new collection file... probably it's invalid");
+                try {
+                    tmpCol.close();
+                } catch (Exception e2) {
+                    Timber.w(e2);
+                    // do nothing
+                }
+                AnkiDroidApp.sendExceptionReport(e, "doInBackgroundImportReplace - open col");
+                return ERR;
+            } finally {
+                if (tmpCol != null) {
+                    tmpCol.close();
+                }
+            }
+
+            collectionTask.doProgress(res.getString(R.string.importing_collection));
+
+            try {
+                CollectionHelper.getInstance().getCol(context);
+                // unload collection and trigger a backup
+                Time time = CollectionHelper.getInstance().getTimeSafe(context);
+                CollectionHelper.getInstance().closeCollection(true, "Importing new collection");
+                CollectionHelper.getInstance().lockCollection();
+                BackupManager.performBackupInBackground(colPath, true, time);
+            } catch (Exception e) {
+                Timber.w(e);
+            }
+            // overwrite collection
+            File f = new File(colFile);
+            if (!f.renameTo(new File(colPath))) {
+                // Exit early if this didn't work
+                return ERR;
+            }
+            int addedCount = -1;
+            try {
+                CollectionHelper.getInstance().unlockCollection();
+
+                // because users don't have a backup of media, it's safer to import new
+                // data and rely on them running a media db check to get rid of any
+                // unwanted media. in the future we might also want to duplicate this step
+                // import media
+                HashMap<String, String> nameToNum = new HashMap<>();
+                HashMap<String, String> numToName = new HashMap<>();
+                File mediaMapFile = new File(dir.getAbsolutePath(), "media");
+                if (mediaMapFile.exists()) {
+                    JsonReader jr = new JsonReader(new FileReader(mediaMapFile));
+                    jr.beginObject();
+                    String name;
+                    String num;
+                    while (jr.hasNext()) {
+                        num = jr.nextName();
+                        name = jr.nextString();
+                        nameToNum.put(name, num);
+                        numToName.put(num, name);
+                    }
+                    jr.endObject();
+                    jr.close();
+                }
+                String mediaDir = Media.getCollectionMediaPath(colPath);
+                int total = nameToNum.size();
+                int i = 0;
+                for (Map.Entry<String, String> entry : nameToNum.entrySet()) {
+                    String file = entry.getKey();
+                    String c = entry.getValue();
+                    File of = new File(mediaDir, file);
+                    if (!of.exists()) {
+                        Utils.unzipFiles(zip, mediaDir, new String[] {c}, numToName);
+                    }
+                    ++i;
+                    collectionTask.doProgress(res.getString(R.string.import_media_count, (i + 1) * 100 / total));
+                }
+                zip.close();
+                // delete tmp dir
+                BackupManager.removeDir(dir);
+                return OK;
+            } catch (RuntimeException e) {
+                Timber.e(e, "doInBackgroundImportReplace - RuntimeException");
+                AnkiDroidApp.sendExceptionReport(e, "doInBackgroundImportReplace1");
+                return ERR;
+            } catch (FileNotFoundException e) {
+                Timber.e(e, "doInBackgroundImportReplace - FileNotFoundException");
+                AnkiDroidApp.sendExceptionReport(e, "doInBackgroundImportReplace2");
+                return ERR;
+            } catch (IOException e) {
+                Timber.e(e, "doInBackgroundImportReplace - IOException");
+                AnkiDroidApp.sendExceptionReport(e, "doInBackgroundImportReplace3");
+                return ERR;
+            }
+        }
+    }
+
     // Callback to import a file -- replacing the existing collection
     @Override
     public void importReplace(String importPath) {
-        TaskManager.launchCollectionTask(new CollectionTask.ImportReplace(importPath), importReplaceListener());
+        TaskManager.launchCollectionTask(new ImportReplace(importPath), importReplaceListener());
     }
 
 
