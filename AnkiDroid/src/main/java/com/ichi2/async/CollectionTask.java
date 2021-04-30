@@ -318,20 +318,6 @@ public class CollectionTask<Progress, Result> extends BaseAsyncTask<Void, Progre
         }
     }
 
-    public static class GetCard implements TaskDelegate<Card, Computation<?>> {
-        public Computation<?> task(@NonNull Collection col, @NonNull ProgressSenderAndCancelListener<Card> collectionTask) {
-            AbstractSched sched = col.getSched();
-            Timber.i("Obtaining card");
-            Card newCard = sched.getCard();
-            if (newCard != null) {
-                // render cards before locking database
-                newCard._getQA(true);
-            }
-            collectionTask.doProgress(newCard);
-            return OK;
-        }
-    }
-
 
     private static class UndoDeleteNote extends UndoAction {
         private final Note mNote;

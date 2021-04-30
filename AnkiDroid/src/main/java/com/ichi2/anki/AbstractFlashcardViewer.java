@@ -1480,6 +1480,20 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
     }
 
 
+    public static class GetCard implements TaskDelegate<Card, Computation<?>> {
+        public Computation<?> task(@NonNull Collection col, @NonNull ProgressSenderAndCancelListener<Card> collectionTask) {
+            AbstractSched sched = col.getSched();
+            Timber.i("Obtaining card");
+            Card newCard = sched.getCard();
+            if (newCard != null) {
+                // render cards before locking database
+                newCard._getQA(true);
+            }
+            collectionTask.doProgress(newCard);
+            return Computation.OK;
+        }
+    }
+
     protected void answerCard(final @Consts.BUTTON_TYPE int ease) {
         if (mInAnswer) {
             return;
@@ -1525,7 +1539,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
         mCurrentEase = ease;
         final Card oldCard = mCurrentCard;
 
-        TaskDelegate<Card, Computation<?>> answerAndGetCard = new CollectionTask.GetCard (){
+        TaskDelegate<Card, Computation<?>> answerAndGetCard = new GetCard (){
                 public Computation<?> task(@NonNull Collection col, @NonNull ProgressSenderAndCancelListener<Card> collectionTask) {
                     Timber.i("Answering card %d", oldCard.getId());
                     col.getSched().answerCard(oldCard, ease);
@@ -3925,7 +3939,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
 
     @VisibleForTesting
     void loadInitialCard() {
-        TaskManager.launchCollectionTask(new CollectionTask.GetCard(), new AnswerCardHandler(false));
+        TaskManager.launchCollectionTask(new GetCard(), new AnswerCardHandler(false));
     }
 
     public ReviewerUi.ControlBlock getControlBlocked() {
