@@ -46,6 +46,7 @@ import com.ichi2.anki.UIUtils;
 import com.ichi2.anki.analytics.AnalyticsDialogFragment;
 import com.ichi2.anki.dialogs.ContextMenuHelper;
 import com.ichi2.anki.dialogs.tags.TagsDialog;
+import com.ichi2.anki.dialogs.tags.TagsDialogFactory;
 import com.ichi2.anki.exception.FilteredAncestor;
 import com.ichi2.async.CollectionTask;
 import com.ichi2.async.TaskManager;
@@ -119,6 +120,13 @@ public class CustomStudyDialog extends AnalyticsDialogFragment implements
     }
 
 
+    TagsDialog newTagsDialog() {
+        // This can only work with configChanges set in AndroidManifest.xml
+        // this is a temp solution until using FragmentResultApi
+        return new TagsDialog(this);
+    }
+
+
     @NonNull
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
@@ -172,7 +180,7 @@ public class CustomStudyDialog extends AnalyticsDialogFragment implements
                              * of that Dialog.
                              */
                             long currentDeck = requireArguments().getLong("did");
-                            TagsDialog dialogFragment = TagsDialog.newInstance(
+                            TagsDialog dialogFragment = newTagsDialog().withArguments(
                                     TagsDialog.DialogType.CUSTOM_STUDY_TAGS, new ArrayList<>(),
                                     new ArrayList<>(mCollection.getTags().byDeck(currentDeck, true)));
                             mCustomStudyListener.showDialogFragment(dialogFragment);

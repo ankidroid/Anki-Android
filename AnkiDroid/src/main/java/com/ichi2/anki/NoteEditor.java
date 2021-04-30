@@ -72,6 +72,7 @@ import com.ichi2.anki.dialogs.DiscardChangesDialog;
 import com.ichi2.anki.dialogs.IntegerDialog;
 import com.ichi2.anki.dialogs.LocaleSelectionDialog;
 import com.ichi2.anki.dialogs.tags.TagsDialog;
+import com.ichi2.anki.dialogs.tags.TagsDialogFactory;
 import com.ichi2.anki.exception.ConfirmModSchemaException;
 import com.ichi2.anki.multimediacard.IMultimediaEditableNote;
 import com.ichi2.anki.multimediacard.activity.MultimediaEditFieldActivity;
@@ -217,6 +218,8 @@ public class NoteEditor extends AnkiActivity implements
     private BroadcastReceiver mUnmountReceiver = null;
 
     private LinearLayout mFieldsLayoutContainer;
+
+    private TagsDialogFactory mTagsDialogFactory;
 
     private TextView mTagsButton;
     private TextView mCardsButton;
@@ -407,6 +410,9 @@ public class NoteEditor extends AnkiActivity implements
             return;
         }
         Timber.d("onCreate()");
+
+        mTagsDialogFactory = new TagsDialogFactory(this).attachToActivity(this);
+
         super.onCreate(savedInstanceState);
         mFieldState.setInstanceState(savedInstanceState);
         setContentView(R.layout.note_editor);
@@ -1379,7 +1385,7 @@ public class NoteEditor extends AnkiActivity implements
         }
         ArrayList<String> tags = new ArrayList<>(getCol().getTags().all());
         ArrayList<String> selTags = new ArrayList<>(mSelectedTags);
-        TagsDialog dialog = TagsDialog.newInstance(TagsDialog.DialogType.ADD_TAG, selTags, tags);
+        TagsDialog dialog = mTagsDialogFactory.newTagsDialog().withArguments(TagsDialog.DialogType.ADD_TAG, selTags, tags);
         showDialogFragment(dialog);
     }
 
