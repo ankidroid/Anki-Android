@@ -1551,37 +1551,4 @@ public class CollectionTask<Progress, Result> extends BaseAsyncTask<Void, Progre
             return null;
         }
     }
-
-
-    public static class ConfRemove implements TaskDelegate<Void, Boolean> {
-        private final DeckConfig mConf;
-
-
-        public ConfRemove(DeckConfig conf) {
-            this.mConf = conf;
-        }
-
-
-        public Boolean task(@NonNull Collection col, @NonNull ProgressSenderAndCancelListener<Void> collectionTask) {
-            Timber.d("doInBackgroundConfRemove");
-            try {
-                // Note: We do the actual removing of the options group in the main thread so that we
-                // can ask the user to confirm if they're happy to do a full sync, and just do the resorting here
-
-                // When a conf is deleted, all decks using it revert to the default conf.
-                // Cards must be reordered according to the default conf.
-                int order = mConf.getJSONObject("new").getInt("order");
-                int defaultOrder = col.getDecks().getConf(1).getJSONObject("new").getInt("order");
-                if (order != defaultOrder) {
-                    mConf.getJSONObject("new").put("order", defaultOrder);
-                    col.getSched().resortConf(mConf);
-                }
-                col.save();
-                return true;
-            } catch (JSONException e) {
-                Timber.w(e);
-                return false;
-            }
-        }
-    }
 }

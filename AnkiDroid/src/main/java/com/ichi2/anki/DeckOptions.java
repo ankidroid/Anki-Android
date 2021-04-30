@@ -555,8 +555,29 @@ public class DeckOptions extends AppCompatPreferenceActivity implements OnShared
             private void remConf() throws ConfirmModSchemaException {
                 // Remove options group, asking user to confirm full sync if necessary
                 mCol.getDecks().remConf(mOptions.getLong("id"));
+                final DeckConfig options = mOptions;
                 // Run the CPU intensive re-sort operation in a background thread
-                TaskManager.launchCollectionTask(new CollectionTask.ConfRemove(mOptions), confChangeHandler());
+                TaskManager.launchCollectionTask((@NonNull Collection col, @NonNull ProgressSenderAndCancelListener<Void> collectionTask) -> {
+                    Timber.d("doInBackgroundConfRemove");
+                    try {
+                        // Note: We do the actual removing of the options group in the main thread so that we
+                        // can ask the user to confirm if they're happy to do a full sync, and just do the resorting here
+
+                        // When a conf is deleted, all decks using it revert to the default conf.
+                        // Cards must be reordered according to the default conf.
+                        int order = options.getJSONObject("new").getInt("order");
+                        int defaultOrder = col.getDecks().getConf(1).getJSONObject("new").getInt("order");
+                        if (order != defaultOrder) {
+                            options.getJSONObject("new").put("order", defaultOrder);
+                            col.getSched().resortConf(options);
+                        }
+                        col.save();
+                        return true;
+                    } catch (JSONException e) {
+                        Timber.w(e);
+                        return false;
+                    }
+                }, confChangeHandler());
                 mDeck.put("conf", 1);
             }
         }
