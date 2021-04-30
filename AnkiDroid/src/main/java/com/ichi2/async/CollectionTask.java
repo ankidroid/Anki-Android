@@ -329,32 +329,6 @@ public class CollectionTask<Progress, Result> extends BaseAsyncTask<Void, Progre
         }
     }
 
-    public static class SaveCollection implements TaskDelegate<Void, Void> {
-        private final boolean mSyncIgnoresDatabaseModification;
-
-
-        public SaveCollection(boolean syncIgnoresDatabaseModification) {
-            this.mSyncIgnoresDatabaseModification = syncIgnoresDatabaseModification;
-        }
-
-
-        public Void task(@NonNull Collection col, @NonNull ProgressSenderAndCancelListener<Void> collectionTask) {
-            Timber.d("doInBackgroundSaveCollection");
-            if (col != null) {
-                try {
-                    if (mSyncIgnoresDatabaseModification) {
-                        SyncStatus.ignoreDatabaseModification(col::save);
-                    } else {
-                        col.save();
-                    }
-                } catch (RuntimeException e) {
-                    Timber.e(e, "Error on saving deck in background");
-                }
-            }
-            return null;
-        }
-    }
-
 
     private static class UndoDeleteNote extends UndoAction {
         private final Note mNote;
