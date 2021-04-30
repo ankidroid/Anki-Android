@@ -1622,10 +1622,28 @@ public class DeckPicker extends NavigationDrawerActivity implements
             }
         }
     }
+
     // Callback method to handle repairing deck
     public void repairCollection() {
         Timber.i("Repairing the Collection");
-        TaskManager.launchCollectionTask(new CollectionTask.RepairCollection(), repairCollectionTask());
+        TaskManager.launchCollectionTask(
+                new TaskDelegate<Void, Boolean>() {
+                    @Override
+                    public Boolean task(@NonNull Collection col, @NonNull ProgressSenderAndCancelListener<Void> collectionTask) {
+                        Timber.d("doInBackgroundRepairCollection");
+                        if (col != null) {
+                            Timber.i("RepairCollection: Closing collection");
+                            col.close(false);
+                        }
+                        return BackupManager.repairCollection(col);
+                    }
+
+
+                    @Override
+                    public boolean requiresOpenCollection() {
+                        return false;
+                    }
+                }, repairCollectionTask());
     }
 
 

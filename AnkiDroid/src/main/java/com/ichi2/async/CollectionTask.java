@@ -1187,23 +1187,6 @@ public class CollectionTask<Progress, Result> extends BaseAsyncTask<Void, Progre
     }
 
 
-    public static class RepairCollection implements TaskDelegate<Void, Boolean> {
-        public Boolean task(@NonNull Collection col, @NonNull ProgressSenderAndCancelListener<Void> collectionTask) {
-            Timber.d("doInBackgroundRepairCollection");
-            if (col != null) {
-                Timber.i("RepairCollection: Closing collection");
-                col.close(false);
-            }
-            return BackupManager.repairCollection(col);
-        }
-
-        @Override
-        public boolean requiresOpenCollection() {
-            return false;
-        }
-    }
-
-
     public static class RebuildCram implements TaskDelegate<Void, StudyOptionsFragment.DeckStudyData> {
         public StudyOptionsFragment.DeckStudyData task(@NonNull Collection col, @NonNull ProgressSenderAndCancelListener<Void> collectionTask) {
             Timber.d("doInBackgroundRebuildCram");
