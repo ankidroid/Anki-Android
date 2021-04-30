@@ -1666,10 +1666,31 @@ public class DeckPicker extends NavigationDrawerActivity implements
         }
     }
 
+    @VisibleForTesting
+    public static class CheckDatabase implements TaskDelegate<String, Pair<Boolean, Collection.CheckDatabaseResult>> {
+        public Pair<Boolean, Collection.CheckDatabaseResult> task(@NonNull Collection col, @NonNull ProgressSenderAndCancelListener<String> collectionTask) {
+            Timber.d("doInBackgroundCheckDatabase");
+            // Don't proceed if collection closed
+            if (col == null) {
+                Timber.e("doInBackgroundCheckDatabase :: supplied collection was null");
+                return new Pair<>(false, null);
+            }
+
+            Collection.CheckDatabaseResult result = col.fixIntegrity(new TaskManager.ProgressCallback(collectionTask, AnkiDroidApp.getAppResources()));
+            if (result.getFailed()) {
+                //we can fail due to a locked database, which requires knowledge of the failure.
+                return new Pair<>(false, result);
+            } else {
+                // Close the collection and we restart the app to reload
+                CollectionHelper.getInstance().closeCollection(true, "Check Database Completed");
+                return new Pair<>(true, result);
+            }
+        }
+    }
 
     private void performIntegrityCheck() {
         Timber.i("performIntegrityCheck()");
-        TaskManager.launchCollectionTask(new CollectionTask.CheckDatabase(), new CheckDatabaseListener());
+        TaskManager.launchCollectionTask(new CheckDatabase(), new CheckDatabaseListener());
     }
 
 
