@@ -83,6 +83,7 @@ import com.ichi2.libanki.Card;
 import com.ichi2.libanki.Collection;
 import com.ichi2.libanki.Consts;
 import com.ichi2.libanki.Decks;
+import com.ichi2.libanki.Note;
 import com.ichi2.libanki.UndoAction;
 import com.ichi2.libanki.Utils;
 import com.ichi2.libanki.Deck;
@@ -3043,11 +3044,95 @@ public class CardBrowser extends NavigationDrawerActivity implements
         return cardIds;
     }
 
+    public static class ChangeDeckMulti extends CollectionTask.DismissNotes<Void> {
+        private final long mNewDid;
+        public ChangeDeckMulti(List<Long> cardIds, long newDid) {
+            super(cardIds);
+            mNewDid = newDid;
+        }
+
+        protected boolean actualTask(Collection col, ProgressSenderAndCancelListener<Void> collectionTask, Card[] cards) {
+            Timber.i("Changing %d cards to deck: '%d'", cards.length, mNewDid);
+            Deck deckData = col.getDecks().get(mNewDid);
+
+            if (Decks.isDynamic(deckData)) {
+                //#5932 - can't change to a dynamic deck. Use "Rebuild"
+                Timber.w("Attempted to move to dynamic deck. Cancelling task.");
+                return false;
+            }
+
+            //Confirm that the deck exists (and is not the default)
+            try {
+                long actualId = deckData.getLong("id");
+                if (actualId != mNewDid) {
+                    Timber.w("Attempted to move to deck %d, but got %d", mNewDid, actualId);
+                    return false;
+                }
+            } catch (Exception e) {
+                Timber.e(e, "failed to check deck");
+                return false;
+            }
+
+            long[] changedCardIds = new long[cards.length];
+            for (int i = 0; i < cards.length; i++) {
+                changedCardIds[i] = cards[i].getId();
+            }
+            col.getSched().remFromDyn(changedCardIds);
+
+            long[] originalDids = new long[cards.length];
+
+            for (int i = 0; i < cards.length; i++) {
+                Card card = cards[i];
+                card.load();
+                // save original did for undo
+                originalDids[i] = card.getDid();
+                // then set the card ID to the new deck
+                card.setDid(mNewDid);
+                Note note = card.note();
+                note.flush();
+                // flush card too, in case, did has been changed
+                card.flush();
+            }
+
+            UndoAction changeDeckMulti = new UndoChangeDeckMulti(cards, originalDids);
+            // mark undo for all at once
+            col.markUndo(changeDeckMulti);
+            return true;
+        }
+
+        private static class UndoChangeDeckMulti extends UndoAction {
+            private final Card[] mCards;
+            private final long[] mOriginalDids;
+
+
+            public UndoChangeDeckMulti(Card[] cards, long[] originalDids) {
+                super(R.string.undo_action_change_deck_multi);
+                this.mCards = cards;
+                this.mOriginalDids = originalDids;
+            }
+
+
+            public @Nullable Card undo(@NonNull Collection col) {
+                Timber.i("Undo: Change Decks");
+                // move cards to original deck
+                for (int i = 0; i < mCards.length; i++) {
+                    Card card = mCards[i];
+                    card.load();
+                    card.setDid(mOriginalDids[i]);
+                    Note note = card.note();
+                    note.flush();
+                    card.flush();
+                }
+                return null;  // don't fetch new card
+            }
+        }
+    }
+
     @VisibleForTesting(otherwise = VisibleForTesting.NONE) //should only be called from changeDeck()
     void executeChangeCollectionTask(List<Long> ids, long newDid) {
         mNewDid = newDid; //line required for unit tests, not necessary, but a noop in regular call.
         TaskManager.launchCollectionTask(
-                new CollectionTask.ChangeDeckMulti(ids, newDid),
+                new ChangeDeckMulti(ids, newDid),
                 new ChangeDeckHandler(this));
     }
 
