@@ -1617,26 +1617,4 @@ public class CollectionTask<Progress, Result> extends BaseAsyncTask<Void, Progre
             }
         }
     }
-
-
-    /**
-     * @return The results list from the check, or false if any errors.
-     */
-    public static class CheckMedia implements TaskDelegate<Void, Computation<List<List<String>>>> {
-        @Override
-        public Computation<List<List<String>>> task(@NonNull Collection col, @NonNull ProgressSenderAndCancelListener<Void> collectionTask) {
-            Timber.d("doInBackgroundCheckMedia");
-            // Ensure that the DB is valid - unknown why, but some users were missing the meta table.
-            try {
-                col.getMedia().rebuildIfInvalid();
-            } catch (IOException e) {
-                Timber.w(e);
-                return ERR;
-            }
-            // A media check on AnkiDroid will also update the media db
-            col.getMedia().findChanges(true);
-            // Then do the actual check
-            return new Computation<>(col.getMedia().check());
-        }
-    }
 }

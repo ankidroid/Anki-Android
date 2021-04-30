@@ -148,6 +148,7 @@ import com.ichi2.utils.JSONException;
 
 import java.io.File;
 import java.io.FileOutputStream;
+import java.io.IOException;
 import java.util.List;
 import java.util.TreeMap;
 
@@ -1669,9 +1670,35 @@ public class DeckPicker extends NavigationDrawerActivity implements
             }
         }
     }
+
+
+
+
+    /**
+     * @return The results list from the check, or false if any errors.
+     */
+    @VisibleForTesting
+    public static class CheckMedia implements TaskDelegate<Void, Computation<List<List<String>>>> {
+        @Override
+        public Computation<List<List<String>>> task(@NonNull Collection col, @NonNull ProgressSenderAndCancelListener<Void> collectionTask) {
+            Timber.d("doInBackgroundCheckMedia");
+            // Ensure that the DB is valid - unknown why, but some users were missing the meta table.
+            try {
+                col.getMedia().rebuildIfInvalid();
+            } catch (IOException e) {
+                Timber.w(e);
+                return Computation.ERR;
+            }
+            // A media check on AnkiDroid will also update the media db
+            col.getMedia().findChanges(true);
+            // Then do the actual check
+            return new Computation<>(col.getMedia().check());
+        }
+    }
+
     @Override
     public void mediaCheck() {
-        TaskManager.launchCollectionTask(new CollectionTask.CheckMedia(), mediaCheckListener());
+        TaskManager.launchCollectionTask(new CheckMedia(), mediaCheckListener());
     }
 
     private MediaDeleteListener mediaDeleteListener() {
