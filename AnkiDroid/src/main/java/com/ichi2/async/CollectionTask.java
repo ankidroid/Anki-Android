@@ -1440,43 +1440,4 @@ public class CollectionTask<Progress, Result> extends BaseAsyncTask<Void, Progre
             return false;
         }
     }
-
-
-    public static class ExportApkg implements TaskDelegate<Void, Pair<Boolean, String>> {
-        private final String mApkgPath;
-        private final Long mDid;
-        private final Boolean mIncludeSched;
-        private final Boolean mIncludeMedia;
-
-
-        public ExportApkg(String apkgPath, Long did, Boolean includeSched, Boolean includeMedia) {
-            this.mApkgPath = apkgPath;
-            this.mDid = did;
-            this.mIncludeSched = includeSched;
-            this.mIncludeMedia = includeMedia;
-        }
-
-
-        public Pair<Boolean, String> task(@NonNull Collection col, @NonNull ProgressSenderAndCancelListener<Void> collectionTask) {
-            Timber.d("doInBackgroundExportApkg");
-
-            try {
-                AnkiPackageExporter exporter = new AnkiPackageExporter(col, mDid, mIncludeSched, mIncludeMedia);
-                exporter.exportInto(mApkgPath, col.getContext());
-            } catch (FileNotFoundException e) {
-                Timber.e(e, "FileNotFoundException in doInBackgroundExportApkg");
-                return new Pair<>(false, null);
-            } catch (IOException e) {
-                Timber.e(e, "IOException in doInBackgroundExportApkg");
-                return new Pair<>(false, null);
-            } catch (JSONException e) {
-                Timber.e(e, "JSOnException in doInBackgroundExportApkg");
-                return new Pair<>(false, null);
-            } catch (ImportExportException e) {
-                Timber.e(e, "ImportExportException in doInBackgroundExportApkg");
-                return new Pair<>(true, e.getMessage());
-            }
-            return new Pair<>(false, mApkgPath);
-        }
-    }
 }

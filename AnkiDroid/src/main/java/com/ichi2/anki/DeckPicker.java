@@ -107,6 +107,7 @@ import com.ichi2.anki.dialogs.SyncErrorDialog;
 import com.ichi2.anki.dialogs.customstudy.CustomStudyDialogFactory;
 import com.ichi2.anki.exception.ConfirmModSchemaException;
 import com.ichi2.anki.exception.FilteredAncestor;
+import com.ichi2.anki.exception.ImportExportException;
 import com.ichi2.anki.receiver.SdCardReceiver;
 import com.ichi2.anki.stats.AnkiStatsTaskHandler;
 import com.ichi2.anki.web.HostNumFactory;
@@ -120,6 +121,7 @@ import com.ichi2.async.TaskListener;
 import com.ichi2.async.TaskListenerWithContext;
 import com.ichi2.async.TaskManager;
 import com.ichi2.compat.CompatHelper;
+import com.ichi2.libanki.AnkiPackageExporter;
 import com.ichi2.libanki.Card;
 import com.ichi2.libanki.Collection;
 import com.ichi2.libanki.Decks;
@@ -147,6 +149,7 @@ import com.ichi2.widget.WidgetStatus;
 import com.ichi2.utils.JSONException;
 
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.List;
@@ -2194,7 +2197,30 @@ public class DeckPicker extends NavigationDrawerActivity implements
             String newFileName = colPath.getName().replace(".anki2", timeStampSuffix + ".colpkg");
             exportPath = new File(exportDir, newFileName);
         }
-        TaskManager.launchCollectionTask(new CollectionTask.ExportApkg(exportPath.getPath(), did, includeSched, includeMedia), exportListener());
+        String apkgPath = exportPath.getPath();
+        TaskManager.launchCollectionTask(
+                (@NonNull Collection col, @NonNull ProgressSenderAndCancelListener<Void> collectionTask) -> {
+                    Timber.d("doInBackgroundExportApkg");
+
+                    try {
+                        AnkiPackageExporter exporter = new AnkiPackageExporter(col, did, includeSched, includeMedia);
+                        exporter.exportInto(apkgPath, col.getContext());
+                    } catch (FileNotFoundException e) {
+                        Timber.e(e, "FileNotFoundException in doInBackgroundExportApkg");
+                        return new Pair<>(false, null);
+                    } catch (IOException e) {
+                        Timber.e(e, "IOException in doInBackgroundExportApkg");
+                        return new Pair<>(false, null);
+                    } catch (JSONException e) {
+                        Timber.e(e, "JSOnException in doInBackgroundExportApkg");
+                        return new Pair<>(false, null);
+                    } catch (ImportExportException e) {
+                        Timber.e(e, "ImportExportException in doInBackgroundExportApkg");
+                        return new Pair<>(true, e.getMessage());
+                    }
+                    return new Pair<>(false, apkgPath);
+                },
+                exportListener());
     }
 
 
