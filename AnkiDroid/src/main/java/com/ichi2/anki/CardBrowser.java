@@ -1326,11 +1326,74 @@ public class CardBrowser extends NavigationDrawerActivity implements
     }
 
 
+    public static class DeleteNoteMulti extends CollectionTask.DismissNotes<Card[]> {
+        public DeleteNoteMulti(List<Long> cardIds) {
+            super(cardIds);
+        }
+
+        protected boolean actualTask(Collection col, ProgressSenderAndCancelListener<Card[]> collectionTask, Card[] cards) {
+            AbstractSched sched = col.getSched();
+            // list of all ids to pass to remNotes method.
+            // Need Set (-> unique) so we don't pass duplicates to col.remNotes()
+            Set<Note> notes = CardUtils.getNotes(Arrays.asList(cards));
+            List<Card> allCards = CardUtils.getAllCards(notes);
+            // delete note
+            long[] uniqueNoteIds = new long[notes.size()];
+            Note[] notesArr = notes.toArray(new Note[notes.size()]);
+            int count = 0;
+            for (Note note : notes) {
+                uniqueNoteIds[count] = note.getId();
+                count++;
+            }
+
+
+
+            col.markUndo(new UndoDeleteNoteMulti(notesArr, allCards));
+
+            col.remNotes(uniqueNoteIds);
+            sched.deferReset();
+            // pass back all cards because they can't be retrieved anymore by the caller (since the note is deleted)
+            collectionTask.doProgress(allCards.toArray(new Card[allCards.size()]));
+            return true;
+        }
+
+
+        private static class UndoDeleteNoteMulti extends UndoAction {
+            private final Note[] mNotesArr;
+            private final List<Card> mAllCards;
+
+
+            public UndoDeleteNoteMulti(Note[] notesArr, List<Card> allCards) {
+                super(R.string.card_browser_delete_card);
+                this.mNotesArr = notesArr;
+                this.mAllCards = allCards;
+            }
+
+
+            public @Nullable Card undo(@NonNull Collection col) {
+                Timber.i("Undo: Delete notes");
+                // undo all of these at once instead of one-by-one
+                ArrayList<Long> ids = new ArrayList<>(mNotesArr.length + mAllCards.size());
+                for (Note n : mNotesArr) {
+                    n.flush(n.getMod(), false);
+                    ids.add(n.getId());
+                }
+                for (Card c : mAllCards) {
+                    c.flush(false);
+                    ids.add(c.getId());
+                }
+                col.getDb().execute("DELETE FROM graves WHERE oid IN " + Utils.ids2str(ids));
+                return null;  // don't fetch new card
+
+            }
+        }
+    }
+
     protected void deleteSelectedNote() {
         if (!mInMultiSelectMode) {
             return;
         }
-        TaskManager.launchCollectionTask(new CollectionTask.DeleteNoteMulti(getSelectedCardIds()),
+        TaskManager.launchCollectionTask(new DeleteNoteMulti(getSelectedCardIds()),
                                             mDeleteNoteHandler);
 
         mCheckedCards.clear();
