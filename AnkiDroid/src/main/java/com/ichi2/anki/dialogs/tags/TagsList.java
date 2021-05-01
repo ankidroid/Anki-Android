@@ -21,6 +21,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Set;
 import java.util.TreeSet;
 
 import androidx.annotation.NonNull;
@@ -36,7 +37,7 @@ public class TagsList implements Iterable<String> {
      * A Set containing the currently selected tags
      */
     private final @NonNull
-    TreeSet<String> mCurrentTags;
+    Set<String> mCheckedTags;
     /**
      * List of all available tags
      */
@@ -49,14 +50,14 @@ public class TagsList implements Iterable<String> {
      *
      * @param allTags A list of all available tags
      *                any duplicates will be ignored
-     * @param currentTags a list containing the currently selected tags
+     * @param checkedTags a list containing the currently selected tags
      *                    any duplicates will be ignored
      */
-    public TagsList(@NonNull List<String> allTags, @NonNull List<String> currentTags) {
-        mCurrentTags = new TreeSet<>(String.CASE_INSENSITIVE_ORDER);
-        mCurrentTags.addAll(currentTags);
+    public TagsList(@NonNull List<String> allTags, @NonNull List<String> checkedTags) {
+        mCheckedTags = new TreeSet<>(String.CASE_INSENSITIVE_ORDER);
+        mCheckedTags.addAll(checkedTags);
         mAllTags = UniqueArrayList.from(allTags, String.CASE_INSENSITIVE_ORDER);
-        mAllTags.addAll(mCurrentTags);
+        mAllTags.addAll(mCheckedTags);
     }
 
 
@@ -80,7 +81,7 @@ public class TagsList implements Iterable<String> {
      * @return whether the tag is checked or not
      */
     public boolean isChecked(String tag) {
-        return mCurrentTags.contains(tag);
+        return mCheckedTags.contains(tag);
     }
 
 
@@ -106,7 +107,7 @@ public class TagsList implements Iterable<String> {
         if (!mAllTags.contains(tag)) {
             return false;
         }
-        return mCurrentTags.add(tag);
+        return mCheckedTags.add(tag);
     }
 
     /**
@@ -117,7 +118,7 @@ public class TagsList implements Iterable<String> {
      *         false if the tag was already unchecked or not in the list
      */
     public boolean uncheck(String tag) {
-        return mCurrentTags.remove(tag);
+        return mCheckedTags.remove(tag);
     }
 
 
@@ -129,11 +130,11 @@ public class TagsList implements Iterable<String> {
      * @return true if this tag list changed as a result of the call
      */
     public boolean toggleAllCheckedStatuses() {
-        if (mAllTags.size() == mCurrentTags.size()) {
-            mCurrentTags.clear();
+        if (mAllTags.size() == mCheckedTags.size()) {
+            mCheckedTags.clear();
             return true;
         }
-        return mCurrentTags.addAll(mAllTags);
+        return mCheckedTags.addAll(mAllTags);
     }
 
 
@@ -171,7 +172,7 @@ public class TagsList implements Iterable<String> {
      * @return return a copy of checked tags
      */
     public List<String> copyOfCheckedTagList() {
-        return new ArrayList<>(mCurrentTags);
+        return new ArrayList<>(mCheckedTags);
     }
 
 
