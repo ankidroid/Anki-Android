@@ -31,14 +31,15 @@ import com.ichi2.ui.FixedTextView;
 import java.util.function.Consumer;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 
 public class WhiteBoardWidthDialog {
 
-    private MaterialDialog.Builder mBuilder;
     private final Context mContext;
-    private int mWbStrokeWidth;
+    private Integer mWbStrokeWidth;
     private FixedTextView mWbStrokeWidthText;
-    public Consumer<Integer> mOnStrokeWidthChanged;
+    public @Nullable
+    Consumer<Integer> mOnStrokeWidthChanged;
 
 
     public WhiteBoardWidthDialog(@NonNull Context context, @NonNull int wbStrokeWidth) {
@@ -93,20 +94,14 @@ public class WhiteBoardWidthDialog {
                 .negativeText(R.string.dialog_cancel)
                 .customView(layout, true)
                 .onPositive((dialog, which) -> {
-                    saveStrokeWidth();
+                    if (mOnStrokeWidthChanged != null) {
+                        mOnStrokeWidthChanged.accept(mWbStrokeWidth);
+                    }
                 })
                 .show();
     }
 
-    private void saveStrokeWidth() {
-        SharedPreferences.Editor edit = AnkiDroidApp.getSharedPrefs(mContext).edit();
-        edit.putInt("whiteBoardStrokeWidth", mWbStrokeWidth);
-        edit.apply();
-
-        mOnStrokeWidthChanged.accept(mWbStrokeWidth);
-    }
-
-    public void setWbStrokeWidth(Consumer<Integer> c) {
+    public void onStrokeWidthChanged(Consumer<Integer> c) {
         this.mOnStrokeWidthChanged = c;
     }
 }

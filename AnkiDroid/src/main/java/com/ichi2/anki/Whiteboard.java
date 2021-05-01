@@ -21,6 +21,7 @@ package com.ichi2.anki;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Color;
@@ -416,12 +417,16 @@ public class Whiteboard extends View {
 
     private void handleWidthChangeDialog() {
         WhiteBoardWidthDialog whiteBoardWidthDialog = new WhiteBoardWidthDialog(mCardViewer.get(), getCurrentStrokeWidth());
-        whiteBoardWidthDialog.setWbStrokeWidth((width) ->{
-            mPaint.setStrokeWidth((float) width);
-        });
+        whiteBoardWidthDialog.onStrokeWidthChanged(this::saveStrokeWidth);
         whiteBoardWidthDialog.showStrokeWidthDialog();
     }
 
+    private void saveStrokeWidth(int wbStrokeWidth) {
+        mPaint.setStrokeWidth((float) wbStrokeWidth);
+        SharedPreferences.Editor edit = AnkiDroidApp.getSharedPrefs(mCardViewer.get()).edit();
+        edit.putInt("whiteBoardStrokeWidth", wbStrokeWidth);
+        edit.apply();
+    }
 
     public void setPenColor(int color) {
         Timber.d("Setting pen color to %d", color);
