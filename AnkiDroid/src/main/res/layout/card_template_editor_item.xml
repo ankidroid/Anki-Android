@@ -34,7 +34,7 @@
                 android:layout_margin="5dp"
                 android:layout_gravity="top"
                 android:gravity="top"
-                android:contentDescription="@string/card_template_editor_front"
+                android:contentDescription="@string/front_field_name"
                 android:inputType="textMultiLine"/>
         </LinearLayout>
     </ScrollView>
@@ -44,7 +44,9 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="bottom"
-        android:background="@color/white"
+        android:background="?attr/colorPrimary"
+        app:itemIconTint="@color/bottom_navigation_icon_color"
+        app:itemTextColor="@color/bottom_navigation_text_color"
         app:menu="@menu/card_template_editor_navigation_bar_menu"
         />
 

@@ -3,11 +3,11 @@
     <item
         android:id="@+id/front_edit"
         android:icon="@drawable/ic_front"
-        android:title="@string/card_template_editor_front" />
+        android:title="@string/front_field_name" />
     <item
         android:id="@+id/back_edit"
         android:icon="@drawable/ic_back"
-        android:title="@string/card_template_editor_back" />
+        android:title="@string/back_field_name" />
     <item
         android:id="@+id/styling_edit"
         android:icon="@drawable/ic_css"
