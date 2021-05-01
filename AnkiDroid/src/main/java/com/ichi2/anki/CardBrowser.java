@@ -267,7 +267,7 @@ public class CardBrowser extends NavigationDrawerActivity implements
     private TextView mActionBarTitle;
     private boolean mReloadRequired = false;
     private boolean mInMultiSelectMode = false;
-    private final Set<CardCache> mCheckedCards = Collections.synchronizedSet(new LinkedHashSet<>());
+    private final @NonNull Set<CardCache> mCheckedCards = Collections.synchronizedSet(new LinkedHashSet<>());
     private int mLastSelectedPosition;
     @Nullable
     private Menu mActionBarMenu;
@@ -1060,7 +1060,7 @@ public class CardBrowser extends NavigationDrawerActivity implements
 
         if (!mCheckedCards.isEmpty()) {
             TaskManager.cancelAllTasks(CollectionTask.CheckCardSelection.class);
-            TaskManager.launchCollectionTask(new CollectionTask.CheckCardSelection(getCards()),
+            TaskManager.launchCollectionTask(new CollectionTask.CheckCardSelection(mCheckedCards),
                     mCheckSelectedCardsHandler);
         }
 
