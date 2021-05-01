@@ -63,11 +63,6 @@
     <!-- AndroidManifest.xml -->
     <string name="preferences_title">Možnosti</string>
     <string name="deckpreferences_title">Možnosti za XXX</string>
-    <string name="sync_conflict_message">To zbirko morate ali poslati ali prejeti iz AnkiWeba, ker se jih ne da združiti. Zbirka na eni strani bo prepisana.</string>
-    <string name="sync_conflict_local">Pošlji</string>
-    <string name="sync_conflict_remote">Prejmi</string>
-    <string name="sync_conflict_remote_confirm">Prepiši lokalno zbirko?</string>
-    <string name="sync_conflict_local_confirm">Prepiši zbirko na strežniku?</string>
     <string name="sync_prepare_syncing">Pripravljanje sinhronizacije &#8230;</string>
     <string name="sync_preparing_full_sync_message">Pripravljanje polne sinhronizacije &#8230;</string>
     <string name="sync_uploading_message">Pošiljanje &#8230;</string>
@@ -78,7 +73,6 @@
     <string name="sync_log_clocks_unsynchronized">Vaša ura je zamaknjena za %1$d s%2$s. Prepričajte se, da so datum, čas in časovni pas na vašem telefonu pravilno nastavljeni in potem sinhronizirajte znova.</string>
     <string name="sync_log_clocks_unsynchronized_tz">, časovni pas je verjetno napačen</string>
     <string name="sync_log_clocks_unsynchronized_date">, datum je verjetno napačen</string>
-    <string name="sync_conflict_title">Spor sinhronizacije</string>
     <string name="sync_no_changes_message">Sprememb ni bilo mogoče najti</string>
     <string name="sync_database_acknowledge">Zbirka sinhronizirana</string>
     <string name="sync_log_error_specific">Napaka sinhronizacije: %1$s, sporočilo: %2$s</string>

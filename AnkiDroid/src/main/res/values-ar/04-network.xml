@@ -63,11 +63,6 @@
     <!-- AndroidManifest.xml -->
     <string name="preferences_title">تفضيلات</string>
     <string name="deckpreferences_title">خيارات XXX</string>
-    <string name="sync_conflict_message">رزمك الخاص بك هنا وعلى أنكي ويب تختلف بطريقة بحيث لا يمكن دمجهما معا، لذلك من الضروري إحلال الرزم من جهة إلى جهة أخرى .\n\nهل تريد رفع الرزم من هنا، أو تنزيل الرزم من أنكي ويب؟</string>
-    <string name="sync_conflict_local">رفع</string>
-    <string name="sync_conflict_remote">تنزيل</string>
-    <string name="sync_conflict_remote_confirm">هل تريد استبدال مجموعتك المحلية؟</string>
-    <string name="sync_conflict_local_confirm">هل تريد استبدال مجموعتك الموجودة على الخادم؟</string>
     <string name="sync_prepare_syncing">إعداد المزامنة...</string>
     <string name="sync_preparing_full_sync_message">إعداد مزامنة كاملة...</string>
     <string name="sync_uploading_message">رفع...</string>
@@ -78,7 +73,6 @@
     <string name="sync_log_clocks_unsynchronized">ساعتك مخطئة بمقدار %1$d ثانية%2$s. تأكد من ضبط التاريخ، والوقت، والمنطقة الزمنية في هاتفك بشكل صحيح، ثم زامن مجددًا.</string>
     <string name="sync_log_clocks_unsynchronized_tz">، من المحتمل أن المنطقة الزمنية للجهاز غير صحيحة</string>
     <string name="sync_log_clocks_unsynchronized_date">، من المحتمل أن تاريخ الجهاز غير صحيح</string>
-    <string name="sync_conflict_title">تضارب في المزامنة</string>
     <string name="sync_no_changes_message">لا توجد تغييرات.</string>
     <string name="sync_database_acknowledge">تمت مزامنة المجموعة</string>
     <string name="sync_log_error_specific">خطأ المزامنة، نوع: %1$s، رسالة: %2$s</string>

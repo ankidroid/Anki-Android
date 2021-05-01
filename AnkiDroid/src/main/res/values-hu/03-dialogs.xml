@@ -114,6 +114,8 @@
     <string name="import_complete_count">Importált kártyák: %d</string>
     <string name="sd_card_full_title">SD kártya tele</string>
     <string name="sd_card_almost_full_title">Az SD kártya már majdnem tele van</string>
+    <string name="no_space_to_downgrade_title">No space</string>
+    <string name="no_space_to_downgrade_content">AnkiDroid needs %s free storage space to continue. Please clear some space</string>
     <string name="restore_backup_title">Biztonsági mentés visszaállítása?</string>
     <string name="restore_backup">A gyűjteményed egy régi másolattal felül lesz írva. A nem mentett változások elvesznek.</string>
     <string name="dialog_cancel">Mégsem</string>

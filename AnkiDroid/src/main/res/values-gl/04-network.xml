@@ -63,11 +63,6 @@
     <!-- AndroidManifest.xml -->
     <string name="preferences_title">Preferencias</string>
     <string name="deckpreferences_title">Opcións para XXX</string>
-    <string name="sync_conflict_message">You must either upload this collection or download it from Ankiweb, as they can’t be merged. The collection on one side will be overwritten.</string>
-    <string name="sync_conflict_local">Cargar</string>
-    <string name="sync_conflict_remote">Descargar</string>
-    <string name="sync_conflict_remote_confirm">Sobrescribir a túa colección local?</string>
-    <string name="sync_conflict_local_confirm">Sobrescribir a túa colección no servidor?</string>
     <string name="sync_prepare_syncing">Preparando a sincronización&#8230;</string>
     <string name="sync_preparing_full_sync_message">Preparando sincronización completa&#8230;</string>
     <string name="sync_uploading_message">A cargar&#8230;</string>
@@ -78,7 +73,6 @@
     <string name="sync_log_clocks_unsynchronized">A hora está desfasada en %1$d segundos%2$s. Verifica que a data, hora e o fuso horario do teu teléfono son correctos e sincroniza de novo.</string>
     <string name="sync_log_clocks_unsynchronized_tz">, parece que o fuso horario é incorrecto</string>
     <string name="sync_log_clocks_unsynchronized_date">, parece que a data é incorrecta</string>
-    <string name="sync_conflict_title">Conflito ao sincronizar</string>
     <string name="sync_no_changes_message">Non se atoparon cambios</string>
     <string name="sync_database_acknowledge">Colección sincronizada</string>
     <string name="sync_log_error_specific">Erro na sincronización, tipo: %1$s, mensaxe: %2$s</string>

@@ -63,11 +63,6 @@
     <!-- AndroidManifest.xml -->
     <string name="preferences_title">पसंद</string>
     <string name="deckpreferences_title">XXX के लिए विकल्प</string>
-    <string name="sync_conflict_message">आपको या तो यह संग्रह अपलोड करना होगा या इसे Ankiweb से डाउनलोड करना चाहिए, क्योंकि वे मर्ज नहीं किए जा सकते । एक तरफ का संग्रह अधिलेखित हो जाएगा ।</string>
-    <string name="sync_conflict_local">अपलोड करें</string>
-    <string name="sync_conflict_remote">डाउनलोड करें</string>
-    <string name="sync_conflict_remote_confirm">अपने स्थानीय संग्रह को अधिलेखित करें?</string>
-    <string name="sync_conflict_local_confirm">आपके परिसेवक के संग्रह को अधिलेखित करें?</string>
     <string name="sync_prepare_syncing">सिंक्रनाइज़ करने की तैयारी कर रहा है.. ।</string>
     <string name="sync_preparing_full_sync_message">पूर्ण समकालन की तैयारी हो रही है...</string>
     <string name="sync_uploading_message">अपलोड हो रहा है...</string>
@@ -78,7 +73,6 @@
     <string name="sync_log_clocks_unsynchronized">अपनी घड़ी %1$d seconds%2$s द्वारा बंद है । सुनिश्चित करें कि आपके फ़ोन पर दिनांक, समय और क्षेत्र सही तरीके से सेट हैं, फिर पुन: सिंक्रनाइज़ करें ।</string>
     <string name="sync_log_clocks_unsynchronized_tz">, समय ज़ोन संभवत: गलत</string>
     <string name="sync_log_clocks_unsynchronized_date">, तारीख संभवत: गलत</string>
-    <string name="sync_conflict_title">विरोध सिंक्रनाइज़ कर रहा है</string>
     <string name="sync_no_changes_message">कोई परिवर्तन नहीं मिला</string>
     <string name="sync_database_acknowledge">संग्रह सिंक्रनाइज़</string>
     <string name="sync_log_error_specific">सिंक्रनाइज़ेशन त्रुटि, प्रकार: %1$s, संदेश: %2$s</string>

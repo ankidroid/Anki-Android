@@ -142,7 +142,7 @@
     <plurals name="factadder_cards_added">
         <item quantity="other">已添加%d张卡片</item>
     </plurals>
-    <string name="check_db">检查数据</string>
+    <string name="check_db">检查数据库</string>
     <string name="check_media">检查媒体</string>
     <string name="empty_cards">空白卡片</string>
     <string name="check_db_message">正在检查数据库\n请等待...</string>

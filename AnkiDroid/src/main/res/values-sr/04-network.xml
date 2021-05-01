@@ -63,11 +63,6 @@
     <!-- AndroidManifest.xml -->
     <string name="preferences_title">Поставке</string>
     <string name="deckpreferences_title">Опције за XXX</string>
-    <string name="sync_conflict_message">Ваши шпилови овде и на AnkiWeb се разликују и не могу бити обједињени, јер је неопходно попуно презаписати један шпил другим.\n\nЖелите ли да учитате шпил одавде или да преузмете шпил са AnkiWeb овамо?</string>
-    <string name="sync_conflict_local">Учитавање</string>
-    <string name="sync_conflict_remote">Преузми</string>
-    <string name="sync_conflict_remote_confirm">Презапиши локалну колекцију?</string>
-    <string name="sync_conflict_local_confirm">Презапиши колекцију на серверу?</string>
     <string name="sync_prepare_syncing">Припрема синхронизације...</string>
     <string name="sync_preparing_full_sync_message">Pripremanje pune sinhronizacije...</string>
     <string name="sync_uploading_message">Слање података...</string>
@@ -78,7 +73,6 @@
     <string name="sync_log_clocks_unsynchronized">Сат на вашем уређају је нетачан за %1$d секунди%2$s; За синхронизацију је неопходно да сат и временска зона буду приказани коректно. Поставите коректан датум, временску зону вашег телефона и покрените синхронизацију поново.</string>
     <string name="sync_log_clocks_unsynchronized_tz">, постављена временска зона уређаја је вероватно погрешна</string>
     <string name="sync_log_clocks_unsynchronized_date">, датум, постављен на уређају је вероватно погрешан</string>
-    <string name="sync_conflict_title">Конфликт у синхронизацији</string>
     <string name="sync_no_changes_message">Нема промена.</string>
     <string name="sync_database_acknowledge">Колекција синхронизована</string>
     <string name="sync_log_error_specific">Грешка синхронизације, тип: %1$s, порука: %2$s</string>

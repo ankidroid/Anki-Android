@@ -63,11 +63,6 @@
     <!-- AndroidManifest.xml -->
     <string name="preferences_title">ᱟᱹᱲᱤ ᱠᱩᱥᱤᱭᱟᱠ</string>
     <string name="deckpreferences_title">XXX ᱞᱟᱹᱜᱤᱫ ᱟᱯᱟᱱᱟᱨ ᱢᱚᱱᱮᱛᱮᱭᱟᱜ</string>
-    <string name="sync_conflict_message">ᱟᱢ ᱴᱩᱢᱟᱹᱞ ᱛᱮ ᱞᱟᱫᱮ ᱢᱮ ᱟᱨ ᱵᱟᱝᱠᱷᱟ Ankiweb ᱠᱷᱚᱱ ᱟᱹᱛᱩᱨ ᱟᱬᱜᱚᱭ ᱢᱮ, ᱚᱱᱠᱩ ᱫᱚ ᱠᱟᱠᱚ ᱢᱮᱥᱟᱜᱽᱟ ᱾ ᱢᱤᱫ ᱯᱟᱦᱴᱟ ᱨᱮᱭᱟᱜ ᱴᱩᱢᱟᱹᱞ ᱫᱮ ᱫᱩᱦᱰᱟ ᱚᱞᱚᱜᱚᱣᱟ ᱾</string>
-    <string name="sync_conflict_local">ᱞᱟᱫᱮ ᱢᱮ</string>
-    <string name="sync_conflict_remote">ᱟᱹᱛᱩᱨ ᱟᱬᱜᱚ</string>
-    <string name="sync_conflict_remote_confirm">ᱞᱚᱠᱟᱞ ᱴᱩᱢᱟᱹᱞ ᱨᱮ ᱫᱩᱦᱰᱟ ᱚᱞᱟᱢ ᱥᱮ?</string>
-    <string name="sync_conflict_local_confirm">ᱥᱚᱨᱵᱷᱚᱨ ᱛᱮ ᱴᱩᱢᱟᱹᱞ ᱫᱩᱦᱰᱟ ᱚᱞᱟᱢ ᱥᱮ?</string>
     <string name="sync_prepare_syncing">ᱟᱹᱭᱩᱨᱚᱜ ᱥᱚᱡᱚᱜ ᱠᱟᱱᱟ&#8230;</string>
     <string name="sync_preparing_full_sync_message">ᱯᱩᱨᱟ ᱟᱹᱭᱩᱨᱚᱜ ᱥᱚᱡᱚᱜ ᱠᱟᱱᱟ&#8230;</string>
     <string name="sync_uploading_message">ᱞᱟᱫᱮᱜ ᱠᱟᱱᱟ</string>
@@ -78,7 +73,6 @@
     <string name="sync_log_clocks_unsynchronized">ᱟᱢᱟᱜ ᱥᱚᱢᱚᱭ %1$d ᱴᱤᱡ %2$s ᱠᱷᱚᱱ ᱵᱚᱸᱫ ᱜᱮᱭᱟ ᱾  Make sure that the date, time, and timezone on your phone are set correctly, then sync again.</string>
     <string name="sync_log_clocks_unsynchronized_tz">, ᱚᱠᱛᱚ ᱡᱟᱭᱜᱟ ᱵᱷᱩᱞᱽ</string>
     <string name="sync_log_clocks_unsynchronized_date">, ᱢᱟᱹᱦᱤᱛ ᱵᱷᱩᱞ</string>
-    <string name="sync_conflict_title">ᱟᱹᱭᱩᱨ ᱢᱤᱫ ᱠᱷᱟᱹᱯᱨᱤᱭᱟᱣ</string>
     <string name="sync_no_changes_message">ᱵᱟᱭ ᱵᱚᱫᱚᱞ ᱠᱟᱱᱟ</string>
     <string name="sync_database_acknowledge">ᱴᱩᱢᱟᱹᱞ ᱟᱹᱭᱩᱨ ᱢᱤᱫ</string>
     <string name="sync_log_error_specific">ᱟᱹᱭᱩᱨ ᱢᱤᱫ ᱵᱷᱩᱞ , ᱯᱨᱚᱠᱟᱨ: %1$s, ᱠᱷᱚᱵᱚᱨ: %2$s</string>

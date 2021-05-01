@@ -63,11 +63,6 @@
     <!-- AndroidManifest.xml -->
     <string name="preferences_title">Einstellungen</string>
     <string name="deckpreferences_title">Optionen für XXX</string>
-    <string name="sync_conflict_message">Sie müssen entweder diese Sammlung hochladen oder sie von AnkiWeb herunterladen, da beide nicht zusammengeführt werden können. Die Sammlung auf einer Seite wird überschrieben.</string>
-    <string name="sync_conflict_local">Hochladen</string>
-    <string name="sync_conflict_remote">Herunterladen</string>
-    <string name="sync_conflict_remote_confirm">Ihre lokale Sammlung überschreiben?</string>
-    <string name="sync_conflict_local_confirm">Ihre Sammlung auf dem Server überschreiben?</string>
     <string name="sync_prepare_syncing">Synchronisation wird vorbereitet &#8230;</string>
     <string name="sync_preparing_full_sync_message">Vollsynchronisation wird vorbereitet &#8230;</string>
     <string name="sync_uploading_message">Daten werden hochgeladen &#8230;</string>
@@ -78,7 +73,6 @@
     <string name="sync_log_clocks_unsynchronized">Die Uhr auf Ihrem Gerät geht um %1$d Sekunden falsch.%2$s Stellen Sie sicher, dass Datum, Zeit und Zeitzone auf Ihrem Handy korrekt sind und synchronisieren Sie nochmals.</string>
     <string name="sync_log_clocks_unsynchronized_tz"> (Die Zeitzone ist vermutlich falsch eingestellt.)</string>
     <string name="sync_log_clocks_unsynchronized_date"> (Vermutlich stimmt das Datum nicht.)</string>
-    <string name="sync_conflict_title">Synchronisierungskonflikt</string>
     <string name="sync_no_changes_message">Keine Änderungen gefunden</string>
     <string name="sync_database_acknowledge">Sammlung synchronisiert</string>
     <string name="sync_log_error_specific">Synchronisierungsfehler: Typ: %1$s, Nachricht: %2$s</string>
