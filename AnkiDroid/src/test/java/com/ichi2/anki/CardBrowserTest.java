@@ -42,7 +42,6 @@ import androidx.test.core.app.ApplicationProvider;
 import androidx.test.ext.junit.runners.AndroidJUnit4;
 import timber.log.Timber;
 
-import static com.ichi2.anim.ActivityTransitionAnimation.Direction.FADE;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.containsString;
 import static org.hamcrest.Matchers.equalTo;
@@ -519,7 +518,7 @@ public class CardBrowserTest extends RobolectricTest {
         addNoteUsingBasicModel("Hello", "John");
         long deck = addDeck("Deck 1");
         getCol().getDecks().select(deck);
-        Card c2 = addNoteUsingBasicModel("New", "world").firstCard();AnkiDroid/src/main/java/com/ichi2/anki/CardBrowser.java
+        Card c2 = addNoteUsingBasicModel("New", "world").firstCard();
         c2.setDid(deck);
         c2.flush();
 

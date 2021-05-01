@@ -45,7 +45,6 @@ import com.ichi2.libanki.sched.AbstractSched;
 import com.ichi2.libanki.sched.Sched;
 import com.ichi2.libanki.sched.SchedV2;
 import com.ichi2.testutils.MockTime;
-import com.ichi2.ui.AppCompatPreferenceActivity;
 import com.ichi2.utils.BooleanGetter;
 import com.ichi2.utils.JSONException;
 
@@ -316,21 +315,8 @@ public class RobolectricTest implements CollectionGetter {
         return controller.get();
     }
 
-    protected static <T extends AppCompatPreferenceActivity> T startPreferenceActivityNormallyOpenCollectionWithIntent(RobolectricTest testClass, Class<T> clazz, Intent i) {
-        ActivityController<T> controller = Robolectric.buildActivity(clazz, i)
-                .create().start().resume().visible();
-        advanceRobolectricLooperWithSleep();
-        advanceRobolectricLooperWithSleep();
-        testClass.saveControllerForCleanup(controller);
-        return controller.get();
-    }
-
     protected <T extends AnkiActivity> T startActivityNormallyOpenCollectionWithIntent(Class<T> clazz, Intent i) {
         return startActivityNormallyOpenCollectionWithIntent(this, clazz, i);
-    }
-
-    protected <T extends AppCompatPreferenceActivity> T startPreferenceActivityNormallyOpenCollectionWithIntent(Class<T> clazz, Intent i) {
-        return startPreferenceActivityNormallyOpenCollectionWithIntent(this, clazz, i);
     }
 
     protected Note addNoteUsingBasicModel(String front, String back) {
