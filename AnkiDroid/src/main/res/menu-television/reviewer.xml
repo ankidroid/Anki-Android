@@ -32,7 +32,7 @@
     <item
         android:id="@+id/action_change_whiteboard_pen_color"
         android:icon="@drawable/ic_color_lens_white_24dp"
-        android:title="@string/title_whiteboard_pen_color"
+        android:title="@string/title_whiteboard_editor"
         android:visible="false"
         ankidroid:showAsAction="ifRoom"/>
     <item

@@ -170,7 +170,7 @@ public class Reviewer extends AbstractFlashcardViewer {
             selectDeckFromExtra();
         }
 
-        mColorPalette = findViewById(R.id.whiteboard_pen_color);
+        mColorPalette = findViewById(R.id.whiteboard_editor);
 
         startLoadingCollection();
     }

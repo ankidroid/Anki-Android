@@ -280,6 +280,7 @@
     <string name="white_board_image_saved">Whiteboard image saved to %s</string>
 
     <string name="title_whiteboard_pen_color">Whiteboard pen color</string>
+    <string name="title_whiteboard_editor">Whiteboard editor</string>
 
 
     <!-- CSV/Note Import -->
