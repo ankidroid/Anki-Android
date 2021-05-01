@@ -390,7 +390,7 @@ public class Whiteboard extends View {
 
 
     public void onClick(View view) {
-        
+
         int id = view.getId();
         if (id == R.id.pen_color_white) {
             setPenColor(Color.WHITE);
@@ -441,6 +441,7 @@ public class Whiteboard extends View {
     public void setOnPaintColorChangeListener(@Nullable OnPaintColorChangeListener mOnPaintColorChangeListener) {
         this.mOnPaintColorChangeListener = mOnPaintColorChangeListener;
     }
+
 
     /**
      * Keep a list of all points and paths so that the last stroke can be undone
