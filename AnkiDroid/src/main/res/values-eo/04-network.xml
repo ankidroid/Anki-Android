@@ -63,11 +63,6 @@
     <!-- AndroidManifest.xml -->
     <string name="preferences_title">Agordoj</string>
     <string name="deckpreferences_title">Agordoj por XXX</string>
-    <string name="sync_conflict_message">Vi devas aŭ alŝuti tiun ĉi kolekton aŭ elŝuti ĝin el AnkiWeb, ĉar ili tro malsamas por esti kunigitaj. Kelka kolekto estos anstataŭigita.</string>
-    <string name="sync_conflict_local">Alŝuti</string>
-    <string name="sync_conflict_remote">Elŝuti</string>
-    <string name="sync_conflict_remote_confirm">Ĉu anstataŭigi vian lokan kolekton?</string>
-    <string name="sync_conflict_local_confirm">Ĉu anstataŭigi vian kolekton en la servilo?</string>
     <string name="sync_prepare_syncing">Preparado de samtempigo&#8230;</string>
     <string name="sync_preparing_full_sync_message">Preparado de tuta samtempigo&#8230;</string>
     <string name="sync_uploading_message">Alŝutado&#8230;</string>
@@ -78,7 +73,6 @@
     <string name="sync_log_clocks_unsynchronized">Via horloĝo estas deŝovita je %1$d sekundoj, %2$s. Certiĝu, ke la dato, tempo kaj horzono ĉe via telefono estas ĝuste agorditaj kaj reprovu.</string>
     <string name="sync_log_clocks_unsynchronized_tz">la horzono probable estas misagordita</string>
     <string name="sync_log_clocks_unsynchronized_date">la dato estas probable misagordita</string>
-    <string name="sync_conflict_title">Samtempigada konflikto</string>
     <string name="sync_no_changes_message">Ne trovis ŝanĝojn.</string>
     <string name="sync_database_acknowledge">Kolekto estas sinkronigita</string>
     <string name="sync_log_error_specific">Sinkronigoeraro, tipo: %1$s, mesaĝo: %2$s</string>

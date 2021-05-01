@@ -63,11 +63,6 @@
     <!-- AndroidManifest.xml -->
     <string name="preferences_title">העדפות</string>
     <string name="deckpreferences_title">אפשרויות עבור XXX</string>
-    <string name="sync_conflict_message">לא ניתן לאחד את אוסף החפיסות הזה עם זה שב־Ankiweb, ולכן יש לבחור בין העלאה של האוסף הזה לשרת או הורדה של האוסף שבשרת אל המכשיר. אחד משני האוספים יוחלף באחר.</string>
-    <string name="sync_conflict_local">העלאה</string>
-    <string name="sync_conflict_remote">הורדה</string>
-    <string name="sync_conflict_remote_confirm">לשכתב על האוסף המקומי שלך?</string>
-    <string name="sync_conflict_local_confirm">להחליף את אוסף החפיסות שבשרת?</string>
     <string name="sync_prepare_syncing">הסינכרון בהכנה&#8230;</string>
     <string name="sync_preparing_full_sync_message">סינכרון מלא בהכנה&#8230;</string>
     <string name="sync_uploading_message">מעלה&#8230;</string>
@@ -78,7 +73,6 @@
     <string name="sync_log_clocks_unsynchronized">השעון לא מכוון ב־%1$d שניות%2$s. יש לוודא שהתאריך, השעה ואיזור הזמן בטלפון שלך מכוונים כראוי, ואז לבצע סנכרון מחדש.</string>
     <string name="sync_log_clocks_unsynchronized_tz">; יתכן שאיזור הזמן שגוי</string>
     <string name="sync_log_clocks_unsynchronized_date">; יתכן שהתאריך שגוי</string>
-    <string name="sync_conflict_title">סתירת סנכרון</string>
     <string name="sync_no_changes_message">לא נמצאו שינויים</string>
     <string name="sync_database_acknowledge">האוסף סונכרן</string>
     <string name="sync_log_error_specific">תקלת סינכרון מסוג %1$s; הודעה: %2$s</string>

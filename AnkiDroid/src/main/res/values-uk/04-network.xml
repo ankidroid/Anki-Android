@@ -63,11 +63,6 @@
     <!-- AndroidManifest.xml -->
     <string name="preferences_title">Налаштування</string>
     <string name="deckpreferences_title">Параметри для XXX</string>
-    <string name="sync_conflict_message">Ваші колоди тут та в AnkiWeb відрізняються так, що їх не можна об’єднати, тому потрібно перезаписати колоди з одного боку колодами з іншого.\n\nБажаєте відвантажити колоди звідси, чи завантажити з AnkiWeb?</string>
-    <string name="sync_conflict_local">Відвантаження</string>
-    <string name="sync_conflict_remote">Завантаження</string>
-    <string name="sync_conflict_remote_confirm">Ви справді бажаєте завантажити колекцію з сервера? Ця операція затре вашу локальну колекцію.</string>
-    <string name="sync_conflict_local_confirm">Ви справді бажаєте відвантажити локальну колекцію на сервер? Ця операція затре вашу колекцію на сервері.</string>
     <string name="sync_prepare_syncing">Підготовка синхронізації...</string>
     <string name="sync_preparing_full_sync_message">Підготовка до повної синхронізації...</string>
     <string name="sync_uploading_message">Відвантаження...</string>
@@ -78,7 +73,6 @@
     <string name="sync_log_clocks_unsynchronized">Годинник на вашому пристрої відхилився на %1$d секунд %2$s; Для синхронізації необхідно, щоб і годинник і часовий пояс були коректними для уникнення помилок. Будь ласка, встановіть коректну дату, час і часовий пояс вашого телефону і почніть синхронізацію знову.</string>
     <string name="sync_log_clocks_unsynchronized_tz">, часовий пояс на пристрої ймовірно не правильний</string>
     <string name="sync_log_clocks_unsynchronized_date">, дата на пристрої ймовірно не правильна</string>
-    <string name="sync_conflict_title">Конфлікт синхронізації</string>
     <string name="sync_no_changes_message">Зміни не виявлено.</string>
     <string name="sync_database_acknowledge">Збірка синхронізована</string>
     <string name="sync_log_error_specific">Помилка синхронізації, тип:%1$s, повідомлення: %2$s</string>

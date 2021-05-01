@@ -63,11 +63,6 @@
     <!-- AndroidManifest.xml -->
     <string name="preferences_title">Настройки</string>
     <string name="deckpreferences_title">Опции для XXX</string>
-    <string name="sync_conflict_message">Коллекции не могут быть объединены. Вы можете перезаписать локальную коллекцию версией с AnkiWeb или наоборот.</string>
-    <string name="sync_conflict_local">Выгрузить</string>
-    <string name="sync_conflict_remote">Загрузить</string>
-    <string name="sync_conflict_remote_confirm">Перезаписать локальную коллекцию?</string>
-    <string name="sync_conflict_local_confirm">Перезаписать коллекцию на сервере?</string>
     <string name="sync_prepare_syncing">Подготавливается синхронизация&#8230;</string>
     <string name="sync_preparing_full_sync_message">Подготавливается полная синхронизация&#8230;</string>
     <string name="sync_uploading_message">Выгружается&#8230;</string>
@@ -78,7 +73,6 @@
     <string name="sync_log_clocks_unsynchronized">Часы устройства сбиты на %1$d с %2$s. Проверьте, что дата, время и часовой пояс выставлены правильно и попробуйте снова.</string>
     <string name="sync_log_clocks_unsynchronized_tz">, неверный часовой пояс</string>
     <string name="sync_log_clocks_unsynchronized_date">, неверная дата</string>
-    <string name="sync_conflict_title">Конфликт синхронизации</string>
     <string name="sync_no_changes_message">Изменений не найдено</string>
     <string name="sync_database_acknowledge">Коллекция синхронизирована</string>
     <string name="sync_log_error_specific">Ошибка синхронизации, тип: %1$s, сообщение: %2$s</string>

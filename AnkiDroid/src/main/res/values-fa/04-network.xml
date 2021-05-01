@@ -63,11 +63,6 @@
     <!-- AndroidManifest.xml -->
     <string name="preferences_title">تنظيمات</string>
     <string name="deckpreferences_title">گزینه هایي برای XXX</string>
-    <string name="sync_conflict_message">دسته های شما اینجا و در آنکی وب با یکدیگر متفاوتند چنانکه نمی توان آنها را با یکدیگر ادغام کرد, همچنین ضروری است دسته ها  از یک طرف با دسته های از طرف دیگر بازنویسی شوند.\n\nآیا مایلید دسته ها را از اینجا بارگذاری کنید, یا دسته ها را از آنکی وب بارگیری می کنید؟</string>
-    <string name="sync_conflict_local">بارگذاری</string>
-    <string name="sync_conflict_remote">بارگیری</string>
-    <string name="sync_conflict_remote_confirm">آیا مایلید مجموعه را از سرور بارگیری کنید؟ توجه داشته باشید که این مجموعه جایگزین مجموعه روی دستگاه شما خواهد شد.</string>
-    <string name="sync_conflict_local_confirm">آیا مایلید مجموعه موجود بر روی دستگاه را بارگذاری كنيد؟ توجه كنيد كه این مجموعه جایگزین مجموعه موجود در سرویس دهنده خواهد شد.</string>
     <string name="sync_prepare_syncing">آماده سازى همگام سازي&#8230;</string>
     <string name="sync_preparing_full_sync_message">درحال آماده سازی همگام سازی کامل&#8230;</string>
     <string name="sync_uploading_message">درحال بارگذاری...</string>
@@ -78,7 +73,6 @@
     <string name="sync_log_clocks_unsynchronized">ساعت دستگاهتان تا %1$d ثانیه%2$s صحیح نیست; برای همگامسازی و به منظور  جلوگیری از خطا لازم است که هر دو ساعت دستگاه و منطقه زمانی به طور صحیح تنظیم شوند. لطفا مطمئن شوید که تاریخ و زمان دستگاه شما بطور صحیح تنظیم گردیده, سپس دوباره همگامسازی کنید.</string>
     <string name="sync_log_clocks_unsynchronized_tz">منطقه زماني دستگاه احتمالا اشتباه است</string>
     <string name="sync_log_clocks_unsynchronized_date">تاريخ دستگاه احتمالا اشتباه است</string>
-    <string name="sync_conflict_title">مشكل در همگام سازي</string>
     <string name="sync_no_changes_message">هيچ تغييري يافت نشد.</string>
     <string name="sync_database_acknowledge">کل مجموعه همگام سازی شد</string>
     <string name="sync_log_error_specific">خطای همگام سازی, نوع: %1$s, پیام: %2$s</string>

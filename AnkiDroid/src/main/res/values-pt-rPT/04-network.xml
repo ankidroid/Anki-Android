@@ -63,11 +63,6 @@
     <!-- AndroidManifest.xml -->
     <string name="preferences_title">Preferências</string>
     <string name="deckpreferences_title">Opções para XXX</string>
-    <string name="sync_conflict_message">Deve enviar esta coleção ou transferi-la da AnkiWeb, porque estas não podem ser unidas. A coleção de um dos lados será substituída.</string>
-    <string name="sync_conflict_local">Carregar</string>
-    <string name="sync_conflict_remote">Descarregar</string>
-    <string name="sync_conflict_remote_confirm">Substituir a sua coleção local?</string>
-    <string name="sync_conflict_local_confirm">Substituir a sua coleção no servidor?</string>
     <string name="sync_prepare_syncing">A preparar a sincronização&#8230;</string>
     <string name="sync_preparing_full_sync_message">A preparar a sincronização completa&#8230;</string>
     <string name="sync_uploading_message">A carregar&#8230;</string>
@@ -78,7 +73,6 @@
     <string name="sync_log_clocks_unsynchronized">O seu relógio está incorreto por %1$d segundos%2$s. Por favor, certifique-se de que a data, a hora e o fuso horário do seu dispositivo estão definidos corretamente e volte a sincronizar.</string>
     <string name="sync_log_clocks_unsynchronized_tz">, o fuso horário pode estar errado</string>
     <string name="sync_log_clocks_unsynchronized_date">, a data pode estar errada</string>
-    <string name="sync_conflict_title">Conflito de sincronização</string>
     <string name="sync_no_changes_message">Não foram encontradas alterações.</string>
     <string name="sync_database_acknowledge">Coleção sincronizada</string>
     <string name="sync_log_error_specific">Erro de sincronização, tipo: %1$s, mensagem: %2$s</string>

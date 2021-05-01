@@ -63,11 +63,6 @@
     <!-- AndroidManifest.xml -->
     <string name="preferences_title">Налады</string>
     <string name="deckpreferences_title">Параметры для XXX</string>
-    <string name="sync_conflict_message">Немагчыма сінхранізаваць лакальную калекцыю калод з калодамі з Ankiweb. Вы можа перазапісаць лакальную калекцыю з Ankiweb або наадварот.</string>
-    <string name="sync_conflict_local">Запампоўка</string>
-    <string name="sync_conflict_remote">Спампаваць</string>
-    <string name="sync_conflict_remote_confirm">Перазапісаць лакальную калекцыю?</string>
-    <string name="sync_conflict_local_confirm">Перазапісаць вашу калекцыю на серверы?</string>
     <string name="sync_prepare_syncing">Падрыхтоўка да сінхранізацыі&#8230;</string>
     <string name="sync_preparing_full_sync_message">Падрыхтоўка да поўнай сінхранізацыі&#8230;</string>
     <string name="sync_uploading_message">Запампаванне&#8230;</string>
@@ -78,7 +73,6 @@
     <string name="sync_log_clocks_unsynchronized">Гадзіннік на вашай прыладзе паказвае час з памылкай на %1$d секунд %2$s. Пераканайцеся, што дата і часавы пояс прызначаныя слушна і паспрабуйце зноў.</string>
     <string name="sync_log_clocks_unsynchronized_tz">, магчыма, што часавы пояс прызначаны няправільна</string>
     <string name="sync_log_clocks_unsynchronized_date">, магчыма, што дата прызначаная няправільна</string>
-    <string name="sync_conflict_title">Канфлікт сінхранізацыі</string>
     <string name="sync_no_changes_message">Змяненняў не знойдзена</string>
     <string name="sync_database_acknowledge">Калекцыя сінхранізавана</string>
     <string name="sync_log_error_specific">Памылка сінхранізацыі, тып: %1$s, паведамленне: %2$s</string>

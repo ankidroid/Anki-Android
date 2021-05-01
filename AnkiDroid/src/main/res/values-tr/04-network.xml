@@ -63,11 +63,6 @@
     <!-- AndroidManifest.xml -->
     <string name="preferences_title">Tercihler</string>
     <string name="deckpreferences_title">XXX Seçenekleri</string>
-    <string name="sync_conflict_message">Buradaki ve AnkiWeb\'deki desteleriniz birbirleriyle birleştirilemeyecek şekilde farklıdır, bu yüzden bir taraftaki desteleri diğerleriyle değiştirmek gerekir.\n\nBuradaki desteleri yüklemek mi, yoksa AnkiWeb\'deki desteleri indirmek mi istiyorsunuz?</string>
-    <string name="sync_conflict_local">Karşıya Yükle</string>
-    <string name="sync_conflict_remote">İndir</string>
-    <string name="sync_conflict_remote_confirm">Sunucunun koleksiyonu istediğinizden emin misiniz? Unutmayın, yerel koleksiyonunuzun üzerine yazılır.</string>
-    <string name="sync_conflict_local_confirm">Yerel koleksiyonuzu göndermek istediğinizden emin misiniz? Unutmayın, bu sunucu üzerindeki koleksiyonun üzerine yazılır.</string>
     <string name="sync_prepare_syncing">Senkronizasyon hazırlanıyor&#8230;</string>
     <string name="sync_preparing_full_sync_message">Tam senkronizasyon hazırlanıyor&#8230;</string>
     <string name="sync_uploading_message">Karşıya yükleniyor...</string>
@@ -78,7 +73,6 @@
     <string name="sync_log_clocks_unsynchronized">Cihazınızdaki saat %1$d saniye%2$s hatalı. Telefonunuzdaki tarih, zaman ve zaman diliminin doğru ayarlandığından emin olup yeniden senkronize edin.</string>
     <string name="sync_log_clocks_unsynchronized_tz">, muhtemelen cihazınızın saat dilimi yanlış</string>
     <string name="sync_log_clocks_unsynchronized_date">, muhtemelen cihazınızın tarihi yanlış</string>
-    <string name="sync_conflict_title">Senkronizasyon çatışması</string>
     <string name="sync_no_changes_message">Değişiklik bulunmuyor.</string>
     <string name="sync_database_acknowledge">Koleksiyon senkronize edildi</string>
     <string name="sync_log_error_specific">Eşitleme hatası, türü: %1$s, ileti: %2$s</string>

@@ -118,9 +118,9 @@
     <string name="stats_answer_buttons">उत्तर बटन</string>
     <string-array name="stats_day_time_strings">
         <item>4AM</item>
-        <item>10am</item>
-        <item>4pm</item>
-        <item>10pm</item>
+        <item>10AM</item>
+        <item>4PM</item>
+        <item>10PM</item>
         <item>3AM</item>
     </string-array>
     <string-array name="stats_week_days">

@@ -114,6 +114,8 @@
     <string name="import_complete_count">Cartes importées : %d</string>
     <string name="sd_card_full_title">Carte SD pleine</string>
     <string name="sd_card_almost_full_title">Carte SD presque pleine</string>
+    <string name="no_space_to_downgrade_title">No space</string>
+    <string name="no_space_to_downgrade_content">AnkiDroid needs %s free storage space to continue. Please clear some space</string>
     <string name="restore_backup_title">Restaurer la sauvegarde ?</string>
     <string name="restore_backup">Votre collection sera remplacée par une copie plus ancienne. Tout progrès non enregistré sera perdu.</string>
     <string name="dialog_cancel">Annuler</string>

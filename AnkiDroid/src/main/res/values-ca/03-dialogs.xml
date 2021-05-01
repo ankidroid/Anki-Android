@@ -114,6 +114,8 @@
     <string name="import_complete_count">Targetes importades: %d</string>
     <string name="sd_card_full_title">Targeta SD plena</string>
     <string name="sd_card_almost_full_title">Targeta SD gairebé plena</string>
+    <string name="no_space_to_downgrade_title">No space</string>
+    <string name="no_space_to_downgrade_content">AnkiDroid needs %s free storage space to continue. Please clear some space</string>
     <string name="restore_backup_title">Restaurar la còpia de seguretat?</string>
     <string name="restore_backup">La seva col·lecció serà replaçada per una còpia anterior. Tots els canvis fets després de desar es perdran.</string>
     <string name="dialog_cancel">Cancel·la</string>

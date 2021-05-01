@@ -114,6 +114,8 @@
     <string name="import_complete_count">Kort importerade: %d</string>
     <string name="sd_card_full_title">SD-kort fullt</string>
     <string name="sd_card_almost_full_title">SD-kort nästan fullt</string>
+    <string name="no_space_to_downgrade_title">No space</string>
+    <string name="no_space_to_downgrade_content">AnkiDroid needs %s free storage space to continue. Please clear some space</string>
     <string name="restore_backup_title">Återställ säkerhetskopia?</string>
     <string name="restore_backup">Din samling kommer att ersättas med en äldre kopia. Ej sparade framsteg kommer att gå förlorade.</string>
     <string name="dialog_cancel">Avbryt</string>

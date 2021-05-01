@@ -63,11 +63,6 @@
     <!-- AndroidManifest.xml -->
     <string name="preferences_title">設定</string>
     <string name="deckpreferences_title">XXX のオプション</string>
-    <string name="sync_conflict_message">コレクションのファイルを AnkiWebへアップロードするか、AnkiWebからダウンロードする必要があります。いずれの場合も一方のファイルは上書きされます。</string>
-    <string name="sync_conflict_local">アップロード</string>
-    <string name="sync_conflict_remote">ダウンロード</string>
-    <string name="sync_conflict_remote_confirm">AnkiWebのコレクションをダウンロードしてもよろしいですか？　この端末のコレクションは上書きされ、元に戻すことはできません。</string>
-    <string name="sync_conflict_local_confirm">AnkiWebへコレクションをアップロードしてもよろしいですか？　AnkiWebのコレクションは上書きされ、元に戻すことはできません。</string>
     <string name="sync_prepare_syncing">同期の準備中...</string>
     <string name="sync_preparing_full_sync_message">完全同期の準備をしています&#8230;</string>
     <string name="sync_uploading_message">アップロード中...</string>
@@ -78,7 +73,6 @@
     <string name="sync_log_clocks_unsynchronized">端末の時計が正しくありません（%1$d 秒 %2$s）；データ同期時のエラー発生を防止するため、時計を正しくセットしてください。日付、時刻、およびタイムゾーンが正しく設定した後、再び同期を開始してください。</string>
     <string name="sync_log_clocks_unsynchronized_tz">, 端末のタイムゾーンが間違っています</string>
     <string name="sync_log_clocks_unsynchronized_date">, 端末の日付が間違っています</string>
-    <string name="sync_conflict_title">同期の競合</string>
     <string name="sync_no_changes_message">変更はありません。</string>
     <string name="sync_database_acknowledge">コレクションの同期が完了しました</string>
     <string name="sync_log_error_specific">同期エラーです 形式: %1$s, メッセージ: %2$s</string>

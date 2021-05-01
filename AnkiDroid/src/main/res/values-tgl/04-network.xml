@@ -63,11 +63,6 @@
     <!-- AndroidManifest.xml -->
     <string name="preferences_title">Preperensiya</string>
     <string name="deckpreferences_title">Mga pagpipilian para sa XXX</string>
-    <string name="sync_conflict_message">Kailangan mong i-upload ang koleksyon na ito o i-download ito mula sa Ankiweb, dahil hindi sila maaaring pagsamahin. Ang koleksyon sa isang panig ay mapapalitan.</string>
-    <string name="sync_conflict_local">I-upload</string>
-    <string name="sync_conflict_remote">I-download</string>
-    <string name="sync_conflict_remote_confirm">Patungan ang iyong lokal na koleksyon?</string>
-    <string name="sync_conflict_local_confirm">Patungan ang iyong koleksyon sa sever?</string>
     <string name="sync_prepare_syncing">Inihahanda ang pagsisingkronisa&#8230;</string>
     <string name="sync_preparing_full_sync_message">Inihahanda ang buong pagsisingkronisa&#8230;</string>
     <string name="sync_uploading_message">Nag-uupload&#8230;</string>
@@ -78,7 +73,6 @@
     <string name="sync_log_clocks_unsynchronized">Ang iyong orasan ay sa may kaibahan na %1$d segundo%2$s. Tiyaking tama ang araw, oras, at timezone sa iyong telepono, pagkatapos ay i-singkronisa muli.</string>
     <string name="sync_log_clocks_unsynchronized_tz">, ang time zone ay maaaring mali</string>
     <string name="sync_log_clocks_unsynchronized_date">, ang araw ay maaaring mali</string>
-    <string name="sync_conflict_title">May salungatan sa pag-sisingkronisa</string>
     <string name="sync_no_changes_message">Walang pagbabagong natagpuan</string>
     <string name="sync_database_acknowledge">Na-isingkronisa na ang koleksyon</string>
     <string name="sync_log_error_specific">May mali sa pag-sisingkronisa, uri: %1$s, mensahe: %2$s</string>

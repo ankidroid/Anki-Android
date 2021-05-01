@@ -63,11 +63,6 @@
     <!-- AndroidManifest.xml -->
     <string name="preferences_title">Preferencie</string>
     <string name="deckpreferences_title">Možnosti pre XXX</string>
-    <string name="sync_conflict_message">Musíte buď nahrať túto zbierku na Ankiweb alebo stiahnuť zbierku z Ankiweb, nakoľko nemôžu byť zlúčené. Zbierka na jednej strane musí byť prepísaná.</string>
-    <string name="sync_conflict_local">Nahrať</string>
-    <string name="sync_conflict_remote">Stiahnuť</string>
-    <string name="sync_conflict_remote_confirm">Naozaj chcete stiahnuť zbierku zo serveru a prepísať zbierku v zariadení?</string>
-    <string name="sync_conflict_local_confirm">Naozaj chcete nahrať vašu zbierku zo zariadenia a prepísať tak zbierku na Ankiweb servery?</string>
     <string name="sync_prepare_syncing">Pripravuje sa synchronizácia...</string>
     <string name="sync_preparing_full_sync_message">Pripravuje sa úplná synchronizácia...</string>
     <string name="sync_uploading_message">Nahrávanie...</string>
@@ -78,7 +73,6 @@
     <string name="sync_log_clocks_unsynchronized">Čas vo vašom prístroji je nepresný o %1$d sekúnd%2$s. Prosím uistite sa, že dátum, čas a časové pásmo na vašom zariadení sú nastavené správne, potom synchronizáciu zopakujte.</string>
     <string name="sync_log_clocks_unsynchronized_tz">, časové pásmo zariadenia pravdepodobne nie je správne</string>
     <string name="sync_log_clocks_unsynchronized_date">, dátum zariadenia pravdepodobne nie je správny</string>
-    <string name="sync_conflict_title">Konflikt synchronizácie</string>
     <string name="sync_no_changes_message">Nenašli sa žiadne zmeny.</string>
     <string name="sync_database_acknowledge">Kolekcia synchronizovaná</string>
     <string name="sync_log_error_specific">Chyba synchronizácie, typ: %1$s, správa: %2$s</string>

@@ -63,11 +63,6 @@
     <!-- AndroidManifest.xml -->
     <string name="preferences_title">Beállítások</string>
     <string name="deckpreferences_title">XXX lehetőségei</string>
-    <string name="sync_conflict_message">Az itteni és az AnkiWeb-es paklik között olyan a különbség, hogy nem lehet őket egybegyúrni, ezért szükséges felülirni az egyik helyen lévő paklit a másik helyen lévővel.\n\nSzeretnéd feltölteni innen a paklikat, vagy letöltöd őket az AnkiWeb-ről?</string>
-    <string name="sync_conflict_local">Feltöltés</string>
-    <string name="sync_conflict_remote">Letöltés</string>
-    <string name="sync_conflict_remote_confirm">Biztos, hogy le akarja tölteni a szerveren lévő gyűjteményt? Vigyázat, ez felül fogja írni a helyi gyűjteményt.</string>
-    <string name="sync_conflict_local_confirm">Írja felül a gyűjteményed a szerveren?</string>
     <string name="sync_prepare_syncing">Felkészülés a szinkronizálásra...</string>
     <string name="sync_preparing_full_sync_message">Teljes szinkronizálásra való felkészülés...</string>
     <string name="sync_uploading_message">Feltöltés...</string>
@@ -78,7 +73,6 @@
     <string name="sync_log_clocks_unsynchronized">Az órád pontatlan %1$d másodperccel %2$s. Győződj meg arról, hogy a dátum, idő és időzóna a telefonon helyes, majd szinkronizálj újra.</string>
     <string name="sync_log_clocks_unsynchronized_tz">, lehetséges, hogy az eszköz időzóna beállítása rossz</string>
     <string name="sync_log_clocks_unsynchronized_date">, lehetséges, hogy az eszköz dátumbeállítása rossz</string>
-    <string name="sync_conflict_title">Szinkronizálási ütközés</string>
     <string name="sync_no_changes_message">Nem találtam változtatást.</string>
     <string name="sync_database_acknowledge">Gyűjtemény szinkronizálva</string>
     <string name="sync_log_error_specific">Szinkronizációs hiba, típus: %1$s, üzenet: %2$s</string>

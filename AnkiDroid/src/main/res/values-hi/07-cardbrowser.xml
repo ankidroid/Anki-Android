@@ -112,7 +112,7 @@
     <string name="card_info_revlog_rating">Rating</string>
     <string name="card_info_revlog_type">प्रकार</string>
     <string name="card_info_revlog_learn" comment="Label indicating that a review in the log of a card occured while the card was in learning mode">Learn</string>
-    <string name="card_info_revlog_review">Review</string>
+    <string name="card_info_revlog_review">समीक्षा</string>
     <string name="card_info_revlog_relearn" comment="Label of a log entry of a card, indicating that a review was done with a note in relearning mode">Relearn</string>
     <string name="card_info_revlog_filtered">Filtered</string>
     <string name="card_info_ease_not_applicable">N/A</string>

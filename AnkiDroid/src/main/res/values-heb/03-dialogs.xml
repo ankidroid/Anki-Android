@@ -126,6 +126,8 @@
     <string name="import_complete_count">קלפים שייובאו: %d</string>
     <string name="sd_card_full_title">כרטיס ה־SD מלא</string>
     <string name="sd_card_almost_full_title">כרטיס ה־SD כמעט מלא</string>
+    <string name="no_space_to_downgrade_title">No space</string>
+    <string name="no_space_to_downgrade_content">AnkiDroid needs %s free storage space to continue. Please clear some space</string>
     <string name="restore_backup_title">לשחזר מגיבוי?</string>
     <string name="restore_backup">האוסף שלך יוחלף בעותק ישן יותר. כל תהליך שלא נשמר ילך לאיבוד.</string>
     <string name="dialog_cancel">ביטול</string>

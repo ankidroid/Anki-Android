@@ -63,11 +63,6 @@
     <!-- AndroidManifest.xml -->
     <string name="preferences_title">Preferenze</string>
     <string name="deckpreferences_title">Opzioni per XXX</string>
-    <string name="sync_conflict_message">I tuoi mazzi qui e su AnkiWeb differiscono in modo tale che non è possibile unirli. È necessario sovrascrivere i mazzi in un posto con quelli nell\'altro posto.\n\nVuoi caricare i mazzi da qui o scaricare i mazzi da AnkiWeb?</string>
-    <string name="sync_conflict_local">Carica</string>
-    <string name="sync_conflict_remote">Scarica</string>
-    <string name="sync_conflict_remote_confirm">Vuoi davvero scaricare la collezione del server? Fai attenzione che questo sovrascriverà la tua collezione locale.</string>
-    <string name="sync_conflict_local_confirm">Vuoi davvero caricare la collezione locale? Fai attenzione che questo sovrascriverà la tua collezione sul server.</string>
     <string name="sync_prepare_syncing">Preparazione sincronizzazione...</string>
     <string name="sync_preparing_full_sync_message">Sincronizzazione completa in preparazione...</string>
     <string name="sync_uploading_message">Carico...</string>
@@ -78,7 +73,6 @@
     <string name="sync_log_clocks_unsynchronized">L\'orologio sul tuo dispositivo è errato di %1$d secondi%2$s; La sincronizzazione richiede che il tuo orologio ed il fuso orario siano impostati correttamente per evitare errori. Assicurati che la data, l\'ora e il fuso orario sul tuo telefono cellulare siano impostati correttamente, quindi sincronizza nuovamente.</string>
     <string name="sync_log_clocks_unsynchronized_tz">, il fuso orario del dispositivo è forse sbagliato</string>
     <string name="sync_log_clocks_unsynchronized_date">, la data del dispositivo è forse sbagliata</string>
-    <string name="sync_conflict_title">Conflitto in fase di sincronizzazione</string>
     <string name="sync_no_changes_message">Nessuna modifica trovata.</string>
     <string name="sync_database_acknowledge">Collezione sincronizzata</string>
     <string name="sync_log_error_specific">Errore sincronizzazione, tipo: %1$s, messaggio: %2$s</string>
