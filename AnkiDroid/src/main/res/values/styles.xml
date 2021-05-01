@@ -144,4 +144,13 @@
     <style name="card_browser_spinner_layout">
         <item name="android:layout_height">48dp</item>
     </style>
+
+
+    <style name="reviewer_whiteboard_editor_button_style">
+        <item name="android:layout_height">40dp</item>
+        <item name="android:layout_width">40dp</item>
+        <item name="android:layout_margin">5dp</item>
+    </style>
+
+
 </resources>

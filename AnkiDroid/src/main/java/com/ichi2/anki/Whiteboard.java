@@ -122,7 +122,7 @@ public class Whiteboard extends View {
         mBitmapPaint = new Paint(Paint.DITHER_FLAG);
 
         // selecting pen color to draw
-        mColorPalette = cardViewer.findViewById(R.id.whiteboard_pen_color);
+        mColorPalette = cardViewer.findViewById(R.id.whiteboard_editor);
 
         cardViewer.findViewById(R.id.pen_color_red).setOnClickListener(this::onClick);
         cardViewer.findViewById(R.id.pen_color_green).setOnClickListener(this::onClick);
@@ -390,6 +390,7 @@ public class Whiteboard extends View {
 
 
     public void onClick(View view) {
+        
         int id = view.getId();
         if (id == R.id.pen_color_white) {
             setPenColor(Color.WHITE);
