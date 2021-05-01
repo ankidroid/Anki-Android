@@ -20,6 +20,7 @@ package com.ichi2.anki;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.res.Resources;
 import android.os.Bundle;
 
@@ -46,6 +47,11 @@ import android.view.ViewGroup;
 import android.widget.EditText;
 
 import com.afollestad.materialdialogs.MaterialDialog;
+import com.brackeys.ui.editorkit.model.EditorConfig;
+import com.brackeys.ui.editorkit.theme.EditorTheme;
+import com.brackeys.ui.editorkit.widget.TextProcessor;
+import com.brackeys.ui.language.javascript.JavaScriptLanguage;
+import com.brackeys.ui.language.json.JsonLanguage;
 import com.google.android.material.tabs.TabLayout;
 import com.google.android.material.tabs.TabLayoutMediator;
 import com.ichi2.anki.dialogs.ConfirmationDialog;
@@ -65,6 +71,7 @@ import com.ichi2.utils.FunctionalInterfaces;
 import com.ichi2.utils.JSONArray;
 import com.ichi2.utils.JSONException;
 import com.ichi2.utils.JSONObject;
+import com.ichi2.utils.ThemeUtils;
 
 import java.util.List;
 import java.util.regex.Matcher;
@@ -370,20 +377,50 @@ public class CardTemplateEditor extends AnkiActivity implements DeckSelectionDia
                 return mainView;
             }
             // Load EditText Views
-            mFront = mainView.findViewById(R.id.front_edit);
-            mCss = mainView.findViewById(R.id.styling_edit);
-            mBack = mainView.findViewById(R.id.back_edit);
+
+            TextProcessor stylingEditor = mainView.findViewById(R.id.styling_editor);
+            // Using JSON here because the library doesn't support CSS yet.
+            // CSS support might be added soon: https://github.com/massivemadness/Brackeys-IDE/issues/34
+            stylingEditor.setLanguage(new JsonLanguage());
+
+            TextProcessor frontEditor = mainView.findViewById(R.id.front_editor);
+            frontEditor.setLanguage(new JavaScriptLanguage());
+
+            TextProcessor backEditor = mainView.findViewById(R.id.back_editor);
+            backEditor.setLanguage(new JavaScriptLanguage());
+
+            EditorConfig editorConfig = new EditorConfig();
+            editorConfig.setLineNumbers(false);
+            editorConfig.setFontSize(16f);
+
+            stylingEditor.setEditorConfig(editorConfig);
+            frontEditor.setEditorConfig(editorConfig);
+            backEditor.setEditorConfig(editorConfig);
+
+            SharedPreferences prefs = AnkiDroidApp.getSharedPrefs(getActivity());
+
+            if (prefs.getBoolean("invertedColors", false)) {
+                stylingEditor.setColorScheme(EditorTheme.INSTANCE.getDARCULA());
+                frontEditor.setColorScheme(EditorTheme.INSTANCE.getDARCULA());
+                backEditor.setColorScheme(EditorTheme.INSTANCE.getDARCULA());
+            } else {
+                stylingEditor.setColorScheme(ThemeUtils.lightColourScheme);
+                frontEditor.setColorScheme(ThemeUtils.lightColourScheme);
+                backEditor.setColorScheme(ThemeUtils.lightColourScheme);
+            }
+
             // Set EditText content
-            mFront.setText(template.getString("qfmt"));
-            mCss.setText(tempModel.getCss());
-            mBack.setText(template.getString("afmt"));
+            stylingEditor.setTextContent(tempModel.getCss());
+            frontEditor.setTextContent(template.getString("qfmt"));
+            backEditor.setTextContent(template.getString("afmt"));
+
             // Set text change listeners
             TextWatcher templateEditorWatcher = new TextWatcher() {
                 @Override
                 public void afterTextChanged(Editable arg0) {
-                    template.put("qfmt", mFront.getText());
-                    template.put("afmt", mBack.getText());
-                    mTemplateEditor.getTempModel().updateCss(mCss.getText().toString());
+                    template.put("qfmt", frontEditor.getText().toString());
+                    template.put("afmt", backEditor.getText().toString());
+                    mTemplateEditor.getTempModel().updateCss(stylingEditor.getText().toString());
                     mTemplateEditor.getTempModel().updateTemplate(position, template);
                 }
 
@@ -395,9 +432,9 @@ public class CardTemplateEditor extends AnkiActivity implements DeckSelectionDia
                 @Override
                 public void onTextChanged(CharSequence arg0, int arg1, int arg2, int arg3) { /* do nothing */ }
             };
-            mFront.addTextChangedListener(templateEditorWatcher);
-            mCss.addTextChangedListener(templateEditorWatcher);
-            mBack.addTextChangedListener(templateEditorWatcher);
+            frontEditor.addTextChangedListener(templateEditorWatcher);
+            stylingEditor.addTextChangedListener(templateEditorWatcher);
+            backEditor.addTextChangedListener(templateEditorWatcher);
             // Enable menu
             setHasOptionsMenu(true);
             return mainView;
