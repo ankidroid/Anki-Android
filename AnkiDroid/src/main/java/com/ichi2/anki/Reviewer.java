@@ -489,8 +489,8 @@ public class Reviewer extends AbstractFlashcardViewer {
             if (mTempAudioPath == null) {
                 return;
             }
-            mMicToolBar = AudioView.createRecorderInstance(this, R.drawable.av_play, R.drawable.av_pause,
-                        R.drawable.av_stop, R.drawable.av_rec, R.drawable.av_rec_stop, mTempAudioPath);
+            mMicToolBar = AudioView.createRecorderInstance(this, R.drawable.ic_play_arrow_white_24dp, R.drawable.ic_pause_white_24dp,
+                        R.drawable.ic_stop_white_24dp, R.drawable.ic_rec, R.drawable.ic_rec_stop, mTempAudioPath);
             if (mMicToolBar == null) {
                 mTempAudioPath = null;
                 return;
@@ -593,7 +593,7 @@ public class Reviewer extends AbstractFlashcardViewer {
         boolean undoEnabled;
         if (mShowWhiteboard && mWhiteboard != null && mWhiteboard.isUndoModeActive()) {
             // Whiteboard is here and strokes have been added at some point
-            undoIconId = R.drawable.ic_eraser_variant_white_24dp;
+            undoIconId = R.drawable.eraser;
             undoEnabled = !mWhiteboard.undoEmpty();
         } else {
             // We can arrive here even if `mShowWhiteboard &&
@@ -676,7 +676,7 @@ public class Reviewer extends AbstractFlashcardViewer {
             suspend_icon.setTitle(R.string.menu_suspend_card);
         }
         if (buryNoteAvailable()) {
-            bury_icon.setIcon(R.drawable.ic_flip_to_back_white_24px_dropdown); // FIXME NEEDS A "DROPDOWN" VERSION WITH BOTTOM RIGHT TRIANGLE (AND PURGE EXISTING)
+            bury_icon.setIcon(R.drawable.ic_flip_to_back_dropdown);
             bury_icon.setTitle(R.string.menu_bury);
         } else {
             bury_icon.setIcon(R.drawable.ic_flip_to_back_white);
