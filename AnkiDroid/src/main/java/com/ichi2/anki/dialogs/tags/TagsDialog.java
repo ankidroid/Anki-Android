@@ -38,7 +38,7 @@ public class TagsDialog extends AnalyticsDialogFragment {
      */
     public enum DialogType {
         /**
-         * Adding tag to a note/s
+         * Edit tags of note(s)
          */
         EDIT_TAGS,
         /**
