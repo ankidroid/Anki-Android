@@ -164,6 +164,10 @@ public class CardBrowser extends NavigationDrawerActivity implements
         REVIEWS
     }
 
+    private enum TagsDialogListenerAction {
+        FILTER
+    }
+
     /** List of cards in the browser.
     * When the list is changed, the position member of its elements should get changed.*/
     @NonNull
@@ -199,6 +203,8 @@ public class CardBrowser extends NavigationDrawerActivity implements
     //DEFECT: Doesn't need to be a local
     /** The next deck for the "Change Deck" operation */
     private long mNewDid;
+
+    private TagsDialogListenerAction mTagsDialogListenerAction;
 
     /** The query which is currently in the search box, potentially null. Only set when search box was open */
     private String mTempSearchQuery;
@@ -1197,7 +1203,7 @@ public class CardBrowser extends NavigationDrawerActivity implements
             searchCards();
             return true;
         } else if (itemId == R.id.action_search_by_tag) {
-            showTagsDialog();
+            showFilterByTagsDialog();
             return true;
         } else if (itemId == R.id.action_flag_zero) {
             flagTask(0);
@@ -1487,7 +1493,8 @@ public class CardBrowser extends NavigationDrawerActivity implements
         }
     }
 
-    private void showTagsDialog() {
+    private void showFilterByTagsDialog() {
+        mTagsDialogListenerAction = TagsDialogListenerAction.FILTER;
         TagsDialog dialog = mTagsDialogFactory.newTagsDialog().withArguments(
                 TagsDialog.DialogType.FILTER_BY_TAG, new ArrayList<>(0), new ArrayList<>(getCol().getTags().all()));
         showDialogFragment(dialog);
@@ -1624,6 +1631,15 @@ public class CardBrowser extends NavigationDrawerActivity implements
     @Override
     @RustCleanup("this isn't how Desktop Anki does it")
     public void onSelectedTags(List<String> selectedTags, List<String> indeterminateTags, int option) {
+        switch (mTagsDialogListenerAction) {
+            case FILTER:
+                filterByTags(selectedTags, option);
+                break;
+        }
+    }
+
+
+    private void filterByTags(List<String> selectedTags, int option) {
         //TODO: Duplication between here and CustomStudyDialog:onSelectedTags
         mSearchView.setQuery("", false);
         String tags = selectedTags.toString();
@@ -2956,9 +2972,11 @@ public class CardBrowser extends NavigationDrawerActivity implements
     }
 
 
-    @VisibleForTesting
+    @VisibleForTesting(otherwise = VisibleForTesting.NONE)
     void filterByTag(String... tags) {
+        mTagsDialogListenerAction = TagsDialogListenerAction.FILTER;
         onSelectedTags(Arrays.asList(tags), Collections.emptyList(), 0);
+        filterByTags(Arrays.asList(tags), 0);
     }
 
     @VisibleForTesting
