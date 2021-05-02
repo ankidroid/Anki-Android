@@ -19,9 +19,9 @@ package com.ichi2.anki;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
-import android.widget.EditText;
 
 import com.afollestad.materialdialogs.DialogAction;
+import com.brackeys.ui.editorkit.widget.TextProcessor;
 import com.ichi2.anki.dialogs.DeckSelectionDialog;
 import com.ichi2.libanki.Model;
 import com.ichi2.libanki.Note;
@@ -61,7 +61,7 @@ public class CardTemplateEditorTest extends RobolectricTest {
         Assert.assertFalse("Model should not have changed yet", testEditor.modelHasChanged());
 
         // Change the model and make sure it registers as changed, but the database is unchanged
-        EditText templateFront = testEditor.findViewById(R.id.front_edit);
+        TextProcessor templateFront = testEditor.findViewById(R.id.front_editor);
         String TEST_MODEL_QFMT_EDIT = "!@#$%^&*TEST*&^%$#@!";
         templateFront.getText().append(TEST_MODEL_QFMT_EDIT);
         advanceRobolectricLooperWithSleep();
@@ -99,7 +99,7 @@ public class CardTemplateEditorTest extends RobolectricTest {
         saveControllerForCleanup(templateEditorController);
         testEditor = templateEditorController.get();
         shadowTestEditor = shadowOf(testEditor);
-        templateFront = testEditor.findViewById(R.id.front_edit);
+        templateFront = testEditor.findViewById(R.id.front_editor);
         templateFront.getText().append(TEST_MODEL_QFMT_EDIT);
         advanceRobolectricLooperWithSleep();
         Assert.assertTrue("Model did not change after edit?", testEditor.modelHasChanged());
