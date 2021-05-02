@@ -37,7 +37,6 @@ import com.google.android.material.snackbar.Snackbar;
 
 import androidx.annotation.Nullable;
 import androidx.annotation.VisibleForTesting;
-import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.widget.SearchView;
 import android.text.TextUtils;
 import android.util.Pair;
@@ -127,7 +126,7 @@ public class CardBrowser extends NavigationDrawerActivity implements
             return;
         }
         long deckId = deck.getDeckId();
-        mDeckSpinnerSelection.inizatizeActionBarDeckSpinner();
+        mDeckSpinnerSelection.initializeActionBarDeckSpinner();
         selectDeckAndSave(deckId);
     }
 
@@ -751,7 +750,7 @@ public class CardBrowser extends NavigationDrawerActivity implements
 
         long deckId = getCol().getDecks().selected();
         mDeckSpinnerSelection = new DeckSpinnerSelection(CardBrowser.this, R.id.toolbar_spinner, false);
-        mDeckSpinnerSelection.inizatizeActionBarDeckSpinner();
+        mDeckSpinnerSelection.initializeActionBarDeckSpinner();
         selectDeckAndSave(deckId);
 
         // If a valid value for last deck exists then use it, otherwise use libanki selected deck

@@ -67,7 +67,7 @@ public class DeckSpinnerSelection {
         mSpinner = mContext.findViewById(spinnerId);
     }
 
-    public void inizatizeActionBarDeckSpinner() {
+    public void initializeActionBarDeckSpinner() {
 
         // Add drop-down menu to select deck to action bar.
         mDropDownDecks = mContext.getCol().getDecks().allSorted();
