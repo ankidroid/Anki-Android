@@ -274,7 +274,7 @@ public class RobolectricTest implements CollectionGetter {
 
 
     /** A collection. Created one second ago, not near cutoff time.
-     * Each time time is checked, it advance by 10 ms. Not enough to create any change visible to user, but ensure
+    * Each time time is checked, it advance by 10 ms. Not enough to create any change visible to user, but ensure
      * we don't get two equal time.*/
     public Collection getCol() {
         MockTime time = new MockTime(2020, 7, 7, 7, 0, 0, 0, 10);
