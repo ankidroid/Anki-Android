@@ -356,10 +356,9 @@ public class ModelBrowser extends AnkiActivity {
                         mModelNameInput.setSelection(mModelNameInput.getText().length());
 
                         //Create textbox to name new model
-                        new MaterialDialog.Builder(ModelBrowser.this)
+                        new MaterialEditTextDialog.Builder(ModelBrowser.this, mModelNameInput)
                                 .title(R.string.model_browser_add)
                                 .positiveText(R.string.dialog_ok)
-                                .customView(mModelNameInput, true)
                                 .onPositive((innerDialog, innerWhich) -> {
                                         String modelName = mModelNameInput.getText().toString();
                                         addNewNoteType(modelName, addSelectionSpinner.getSelectedItemPosition());
@@ -444,11 +443,10 @@ public class ModelBrowser extends AnkiActivity {
         mModelNameInput.setSingleLine(true);
         mModelNameInput.setText(mModels.get(mModelListPosition).getString("name"));
         mModelNameInput.setSelection(mModelNameInput.getText().length());
-        new MaterialDialog.Builder(this)
+        new MaterialEditTextDialog.Builder(this, mModelNameInput)
                             .title(R.string.rename_model)
                             .positiveText(R.string.rename)
                             .negativeText(R.string.dialog_cancel)
-                            .customView(mModelNameInput, true)
                             .onPositive((dialog, which) -> {
                                     Model model = mModels.get(mModelListPosition);
                                     String deckName = mModelNameInput.getText().toString()

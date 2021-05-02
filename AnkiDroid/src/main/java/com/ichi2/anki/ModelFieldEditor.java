@@ -204,10 +204,9 @@ public class ModelFieldEditor extends AnkiActivity implements LocaleSelectionDia
         mFieldNameInput = new FixedEditText(this);
         mFieldNameInput.setSingleLine(true);
 
-        new MaterialDialog.Builder(this)
+        new MaterialEditTextDialog.Builder(this, mFieldNameInput)
                 .title(R.string.model_field_editor_add)
                 .positiveText(R.string.dialog_ok)
-                .customView(mFieldNameInput, true)
                 .onPositive((dialog, which) -> {
                     //Name is valid, now field is added
                     changeHandler listener = changeFieldHandler();
@@ -304,10 +303,9 @@ public class ModelFieldEditor extends AnkiActivity implements LocaleSelectionDia
         mFieldNameInput.setSingleLine(true);
         mFieldNameInput.setText(mFieldLabels.get(mCurrentPos));
         mFieldNameInput.setSelection(mFieldNameInput.getText().length());
-        new MaterialDialog.Builder(this)
+        new MaterialEditTextDialog.Builder(this, mFieldNameInput)
                 .title(R.string.model_field_editor_rename)
                 .positiveText(R.string.rename)
-                .customView(mFieldNameInput, true)
                 .onPositive((dialog, which) -> {
                     String fieldName = _uniqueName(mFieldNameInput);
                     if (fieldName == null) {
@@ -350,10 +348,9 @@ public class ModelFieldEditor extends AnkiActivity implements LocaleSelectionDia
     private void repositionFieldDialog() {
         mFieldNameInput = new FixedEditText(this);
         mFieldNameInput.setRawInputType(InputType.TYPE_CLASS_NUMBER);
-        new MaterialDialog.Builder(this)
+        new MaterialEditTextDialog.Builder(this, mFieldNameInput)
                 .title(String.format(getResources().getString(R.string.model_field_editor_reposition), 1, mFieldLabels.size()))
                 .positiveText(R.string.dialog_ok)
-                .customView(mFieldNameInput, true)
                 .onPositive((dialog, which) -> {
                         String newPosition = mFieldNameInput.getText().toString();
                         int pos;
