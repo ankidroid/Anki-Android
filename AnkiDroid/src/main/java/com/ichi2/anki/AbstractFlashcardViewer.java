@@ -3020,7 +3020,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
     }
 
     @Override
-    public void onSelectedTags(List<String> selectedTags, int option) {
+    public void onSelectedTags(List<String> selectedTags, List<String> indeterminateTags, int option) {
         if (!mCurrentCard.note().getTags().equals(selectedTags)) {
             String tagString = TextUtils.join(" ", selectedTags);
             Note note = mCurrentCard.note();

@@ -344,7 +344,7 @@ public class CustomStudyDialog extends AnalyticsDialogFragment implements
      * Generates the search screen for the custom study deck.
      */
     @Override
-    public void onSelectedTags(List<String> selectedTags, int option) {
+    public void onSelectedTags(List<String> selectedTags, List<String> indeterminateTags, int option) {
         StringBuilder sb = new StringBuilder();
         switch (option) {
             case 1:
