@@ -21,7 +21,6 @@ import com.ichi2.anki.analytics.AnalyticsDialogFragment;
 import com.ichi2.utils.DisplayUtils;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 import androidx.annotation.NonNull;
@@ -54,6 +53,7 @@ public class TagsDialog extends AnalyticsDialogFragment {
 
     private static final String DIALOG_TYPE_KEY = "dialog_type";
     private static final String CHECKED_TAGS_KEY = "checked_tags";
+    private static final String UNCHECKED_TAGS_KEY = "unchecked_tags";
     private static final String ALL_TAGS_KEY = "all_tags";
 
     private DialogType mType;
@@ -101,6 +101,21 @@ public class TagsDialog extends AnalyticsDialogFragment {
      */
     @NonNull
     public TagsDialog withArguments(@NonNull DialogType type, @NonNull List<String> checkedTags, @NonNull List<String> allTags) {
+        return withArguments(type, checkedTags, null, allTags);
+    }
+
+    /**
+     * Construct a tags dialog for a collection of notes
+     *
+     * @param type the type of dialog @see {@link DialogType}
+     * @param checkedTags sum of all checked tags
+     * @param uncheckedTags sum of all unchecked tags
+     * @param allTags all possible tags in the collection
+     * @return Initialized instance of {@link TagsDialog}
+     */
+    @NonNull
+    public TagsDialog withArguments(@NonNull DialogType type,@NonNull List<String> checkedTags,
+                                    @Nullable List<String> uncheckedTags, @NonNull List<String> allTags) {
         Bundle args = this.getArguments();
         if (args == null) {
             args = new Bundle();
@@ -108,6 +123,9 @@ public class TagsDialog extends AnalyticsDialogFragment {
 
         args.putInt(DIALOG_TYPE_KEY, type.ordinal());
         args.putStringArrayList(CHECKED_TAGS_KEY, new ArrayList<>(checkedTags));
+        if (uncheckedTags != null) {
+            args.putStringArrayList(UNCHECKED_TAGS_KEY, new ArrayList<>(uncheckedTags));
+        }
         args.putStringArrayList(ALL_TAGS_KEY, new ArrayList<>(allTags));
         setArguments(args);
 
@@ -124,8 +142,10 @@ public class TagsDialog extends AnalyticsDialogFragment {
 
 
         mTags = new TagsList(
-                    requireArguments().getStringArrayList(ALL_TAGS_KEY),
-                    requireArguments().getStringArrayList(CHECKED_TAGS_KEY));
+                requireArguments().getStringArrayList(ALL_TAGS_KEY),
+                requireArguments().getStringArrayList(CHECKED_TAGS_KEY),
+                requireArguments().getStringArrayList(UNCHECKED_TAGS_KEY)
+        );
 
         setCancelable(true);
     }
@@ -177,7 +197,7 @@ public class TagsDialog extends AnalyticsDialogFragment {
                 .positiveText(mPositiveText)
                 .negativeText(R.string.dialog_cancel)
                 .customView(tagsDialogView, false)
-                .onPositive((dialog, which) -> getTagsDialogListener().onSelectedTags(mTags.copyOfCheckedTagList(), Collections.emptyList(), mSelectedOption));
+                .onPositive((dialog, which) -> getTagsDialogListener().onSelectedTags(mTags.copyOfCheckedTagList(), mTags.copyOfIndeterminateTagList(), mSelectedOption));
         mDialog = builder.build();
 
         DisplayUtils.resizeWhenSoftInputShown(mDialog.getWindow());
