@@ -318,6 +318,48 @@ public class CollectionTask<Progress, Result> extends BaseAsyncTask<Void, Progre
         }
     }
 
+
+    public static class UpdateMultipleNotes extends TaskDelegate<List<Note>, Computation<?>> {
+        private final List<Note> mNotesToUpdate;
+        private final boolean mShouldUpdateCards;
+
+
+        public UpdateMultipleNotes(List<Note> notesToUpdate) {
+            this(notesToUpdate, false);
+        }
+
+
+        public UpdateMultipleNotes(List<Note> notesToUpdate, boolean shouldUpdateCards) {
+            mNotesToUpdate = notesToUpdate;
+            mShouldUpdateCards = shouldUpdateCards;
+        }
+
+
+        @Override
+        protected Computation<?> task(@NonNull Collection col, @NonNull ProgressSenderAndCancelListener<List<Note>> collectionTask) {
+            Timber.d("doInBackgroundUpdateMultipleNotes");
+
+            try {
+                col.getDb().executeInTransaction(() -> {
+                    for (Note note : mNotesToUpdate) {
+                        note.flush();
+                        if (mShouldUpdateCards) {
+                            for (Card card : note.cards()) {
+                                card.flush();
+                            }
+                        }
+                    }
+                    collectionTask.doProgress(mNotesToUpdate);
+                });
+            } catch (RuntimeException e) {
+                Timber.w(e, "doInBackgroundUpdateMultipleNotes - RuntimeException on updating multiple note");
+                AnkiDroidApp.sendExceptionReport(e, "doInBackgroundUpdateMultipleNotes");
+                return ERR;
+            }
+            return OK;
+        }
+    }
+
     public static class LoadDeck extends TaskDelegate<Void, List<DeckTreeNode>> {
         protected List<DeckTreeNode> task(@NonNull Collection col, @NonNull ProgressSenderAndCancelListener<Void> collectionTask) {
             Timber.d("doInBackgroundLoadDeckCounts");
