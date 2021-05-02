@@ -25,6 +25,7 @@ import java.util.Set;
 import java.util.TreeSet;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 
 /**
  * A container class that keeps track of tags and their status, handling of tags are done in a case insensitive matter
@@ -36,13 +37,18 @@ public class TagsList implements Iterable<String> {
     /**
      * A Set containing the currently selected tags
      */
-    private final @NonNull
-    Set<String> mCheckedTags;
+    @NonNull
+    private final Set<String> mCheckedTags;
+    /**
+     * A Set containing the tags with indeterminate state
+     */
+    @NonNull
+    private final Set<String> mIndeterminateTags;
     /**
      * List of all available tags
      */
-    private final @NonNull
-    UniqueArrayList<String> mAllTags;
+    @NonNull
+    private final UniqueArrayList<String> mAllTags;
 
 
     /**
@@ -54,10 +60,38 @@ public class TagsList implements Iterable<String> {
      *                    any duplicates will be ignored
      */
     public TagsList(@NonNull List<String> allTags, @NonNull List<String> checkedTags) {
+        this(allTags, checkedTags, null);
+    }
+
+    /**
+     * Construct a new {@link TagsList} with possibility of indeterminate tags,
+     *
+     * for a tag to be in indeterminate state it should be present in checkedTags and also in uncheckedTags
+     *
+     * @param allTags A list of all available tags
+     *                any duplicates will be ignored
+     * @param checkedTags a list containing the currently selected tags
+     *                    any duplicates will be ignored
+     * @param uncheckedTags a list containing the currently unselected tags
+     *                    any duplicates will be ignored
+     */
+    public TagsList(@NonNull List<String> allTags, @NonNull List<String> checkedTags, @Nullable List<String> uncheckedTags) {
         mCheckedTags = new TreeSet<>(String.CASE_INSENSITIVE_ORDER);
         mCheckedTags.addAll(checkedTags);
         mAllTags = UniqueArrayList.from(allTags, String.CASE_INSENSITIVE_ORDER);
         mAllTags.addAll(mCheckedTags);
+        if (uncheckedTags != null) {
+            mAllTags.addAll(uncheckedTags);
+            mIndeterminateTags = new TreeSet<>(String.CASE_INSENSITIVE_ORDER);
+            // intersection between mCheckedTags and uncheckedTags
+            mIndeterminateTags.addAll(mCheckedTags);
+            Set<String> uncheckedSet = new TreeSet<>(String.CASE_INSENSITIVE_ORDER);
+            uncheckedSet.addAll(uncheckedTags);
+            mIndeterminateTags.retainAll(uncheckedSet);
+            mCheckedTags.removeAll(mIndeterminateTags);
+        } else {
+            mIndeterminateTags = Collections.emptySet();
+        }
     }
 
 
@@ -86,6 +120,30 @@ public class TagsList implements Iterable<String> {
 
 
     /**
+     * Return true if a tag is indeterminate given its index in the list
+     *
+     * @param index index of the tag to check
+     * @return whether the tag is indeterminate or not
+     * @throws IndexOutOfBoundsException if the index is out of range
+     *                                   (<tt>index &lt; 0 || index &gt;= size()</tt>)
+     */
+    public boolean isIndeterminate(int index) {
+        return isIndeterminate(mAllTags.get(index));
+    }
+
+
+    /**
+     * Return true if a tag is indeterminate
+     *
+     * @param tag the tag to check (case-insensitive)
+     * @return whether the tag is indeterminate or not
+     */
+    public boolean isIndeterminate(String tag) {
+        return mIndeterminateTags.contains(tag);
+    }
+
+
+    /**
      * Adds a tag to the list if it is not already present.
      *
      * @param tag  the tag to add
@@ -107,6 +165,7 @@ public class TagsList implements Iterable<String> {
         if (!mAllTags.contains(tag)) {
             return false;
         }
+        mIndeterminateTags.remove(tag);
         return mCheckedTags.add(tag);
     }
 
@@ -118,7 +177,7 @@ public class TagsList implements Iterable<String> {
      *         false if the tag was already unchecked or not in the list
      */
     public boolean uncheck(String tag) {
-        return mCheckedTags.remove(tag);
+        return mIndeterminateTags.remove(tag) || mCheckedTags.remove(tag);
     }
 
 
@@ -130,6 +189,7 @@ public class TagsList implements Iterable<String> {
      * @return true if this tag list changed as a result of the call
      */
     public boolean toggleAllCheckedStatuses() {
+        mIndeterminateTags.clear();
         if (mAllTags.size() == mCheckedTags.size()) {
             mCheckedTags.clear();
             return true;
@@ -177,6 +237,14 @@ public class TagsList implements Iterable<String> {
 
 
     /**
+     * @return return a copy of checked tags
+     */
+    public List<String> copyOfIndeterminateTagList() {
+        return new ArrayList<>(mIndeterminateTags);
+    }
+
+
+    /**
      * @return return a copy of all tags list
      */
     public List<String> copyOfAllTagList() {
@@ -189,8 +257,8 @@ public class TagsList implements Iterable<String> {
      */
     public void sort() {
         mAllTags.sort((lhs, rhs) -> {
-            boolean lhsChecked = isChecked(lhs);
-            boolean rhsChecked = isChecked(rhs);
+            boolean lhsChecked = isChecked(lhs) || isIndeterminate(lhs);
+            boolean rhsChecked = isChecked(rhs) || isIndeterminate(rhs);
 
             if (lhsChecked != rhsChecked) {
                 // checked tags must appear first
