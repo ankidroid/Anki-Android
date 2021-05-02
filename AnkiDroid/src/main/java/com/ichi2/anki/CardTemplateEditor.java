@@ -44,8 +44,11 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
 
 import com.afollestad.materialdialogs.MaterialDialog;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.tabs.TabLayout;
 import com.google.android.material.tabs.TabLayoutMediator;
 import com.ichi2.anki.dialogs.ConfirmationDialog;
@@ -61,6 +64,7 @@ import com.ichi2.libanki.Model;
 import com.ichi2.libanki.Models;
 import com.ichi2.themes.StyledProgressDialog;
 
+import com.ichi2.ui.FixedTextView;
 import com.ichi2.utils.FunctionalInterfaces;
 import com.ichi2.utils.JSONArray;
 import com.ichi2.utils.JSONException;
@@ -339,9 +343,14 @@ public class CardTemplateEditor extends AnkiActivity implements DeckSelectionDia
 
 
     public static class CardTemplateFragment extends Fragment {
-        private EditText mFront;
-        private EditText mCss;
-        private EditText mBack;
+        private String mFrontString;
+        private String mCssString;
+        private String mBackString;
+        private FixedTextView mCurrentEdtiorTitle;
+        private EditText mEditorEditText;
+
+        private int mCurrentEdittextId;
+
         private CardTemplateEditor mTemplateEditor;
         private TabLayoutMediator mTabLayoutMediator;
 
@@ -369,21 +378,51 @@ public class CardTemplateEditor extends AnkiActivity implements DeckSelectionDia
                 Timber.d(e, "Exception loading template in CardTemplateFragment. Probably stale fragment.");
                 return mainView;
             }
-            // Load EditText Views
-            mFront = mainView.findViewById(R.id.front_edit);
-            mCss = mainView.findViewById(R.id.styling_edit);
-            mBack = mainView.findViewById(R.id.back_edit);
-            // Set EditText content
-            mFront.setText(template.getString("qfmt"));
-            mCss.setText(tempModel.getCss());
-            mBack.setText(template.getString("afmt"));
+            // Setting content
+            mFrontString = template.getString("qfmt");
+            mCssString = tempModel.getCss();
+            mBackString = template.getString("afmt");
+
+            // setting to default editor as front template
+            mCurrentEdtiorTitle = mainView.findViewById(R.id.title_edit);
+            mEditorEditText = mainView.findViewById(R.id.editor_editText);
+            mCurrentEdittextId = R.id.front_edit;
+            mEditorEditText.setText(mFrontString);
+            mCurrentEdtiorTitle.setText(R.string.card_template_editor_front);
+
+
+            BottomNavigationView bottomNavigation = mainView.findViewById(R.id.card_template_editor_bottom_navigation);
+            bottomNavigation.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
+                @Override
+                public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+                    mCurrentEdittextId = item.getItemId();
+                    if (mCurrentEdittextId == R.id.styling_edit) {
+                        mEditorEditText.setText(mCssString);
+                        mCurrentEdtiorTitle.setText(R.string.card_template_editor_styling);
+                        return true;
+                    } else if (mCurrentEdittextId == R.id.back_edit) {
+                        mEditorEditText.setText(mBackString);
+                        mCurrentEdtiorTitle.setText(R.string.card_template_editor_back);
+                        return true;
+                    } else {
+                        mEditorEditText.setText(mFrontString);
+                        mCurrentEdtiorTitle.setText(R.string.card_template_editor_front);
+                        return true;
+                    }
+                }
+            });
+
             // Set text change listeners
             TextWatcher templateEditorWatcher = new TextWatcher() {
                 @Override
                 public void afterTextChanged(Editable arg0) {
-                    template.put("qfmt", mFront.getText());
-                    template.put("afmt", mBack.getText());
-                    mTemplateEditor.getTempModel().updateCss(mCss.getText().toString());
+                    if (mCurrentEdittextId == R.id.styling_edit) {
+                        mTemplateEditor.getTempModel().updateCss(mEditorEditText.getText().toString());
+                    } else if (mCurrentEdittextId == R.id.back_edit) {
+                        template.put("afmt", mEditorEditText.getText());
+                    } else {
+                        template.put("qfmt", mEditorEditText.getText());
+                    }
                     mTemplateEditor.getTempModel().updateTemplate(position, template);
                 }
 
@@ -395,9 +434,9 @@ public class CardTemplateEditor extends AnkiActivity implements DeckSelectionDia
                 @Override
                 public void onTextChanged(CharSequence arg0, int arg1, int arg2, int arg3) { /* do nothing */ }
             };
-            mFront.addTextChangedListener(templateEditorWatcher);
-            mCss.addTextChangedListener(templateEditorWatcher);
-            mBack.addTextChangedListener(templateEditorWatcher);
+
+            mEditorEditText.addTextChangedListener(templateEditorWatcher);
+
             // Enable menu
             setHasOptionsMenu(true);
             return mainView;
