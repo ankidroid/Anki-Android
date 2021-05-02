@@ -21,8 +21,8 @@ import com.ichi2.anki.UIUtils;
 import com.ichi2.anki.analytics.AnalyticsDialogFragment;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
-import java.util.Optional;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -177,7 +177,7 @@ public class TagsDialog extends AnalyticsDialogFragment {
                 .positiveText(mPositiveText)
                 .negativeText(R.string.dialog_cancel)
                 .customView(tagsDialogView, false)
-                .onPositive((dialog, which) -> getTagsDialogListener().onSelectedTags(mTags.copyOfCheckedTagList(), mSelectedOption));
+                .onPositive((dialog, which) -> getTagsDialogListener().onSelectedTags(mTags.copyOfCheckedTagList(), Collections.emptyList(), mSelectedOption));
         mDialog = builder.build();
 
         mDialog.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE);

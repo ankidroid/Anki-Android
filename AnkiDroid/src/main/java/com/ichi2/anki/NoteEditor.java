@@ -1319,7 +1319,7 @@ public class NoteEditor extends AnkiActivity implements
     }
 
     @Override
-    public void onSelectedTags(List<String> selectedTags, int option) {
+    public void onSelectedTags(List<String> selectedTags, List<String> indeterminateTags, int option) {
         if (!mSelectedTags.equals(selectedTags)) {
             mTagsEdited = true;
         }
