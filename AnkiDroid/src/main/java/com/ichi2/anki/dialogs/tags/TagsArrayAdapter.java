@@ -18,11 +18,12 @@ package com.ichi2.anki.dialogs.tags;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.CheckedTextView;
 import android.widget.Filter;
 import android.widget.Filterable;
+import android.widget.TextView;
 
 import com.ichi2.anki.R;
+import com.ichi2.ui.CheckBoxTriStates;
 import com.ichi2.utils.FilterResultsUtils;
 
 import java.util.ArrayList;
@@ -38,21 +39,23 @@ import static androidx.annotation.VisibleForTesting.*;
 
 public class TagsArrayAdapter extends  RecyclerView.Adapter<TagsArrayAdapter.ViewHolder> implements Filterable {
     public static class ViewHolder extends RecyclerView.ViewHolder {
-        private final CheckedTextView mTagItemCheckedTextView;
-        public ViewHolder(CheckedTextView ctv) {
-            super(ctv);
-            mTagItemCheckedTextView = ctv;
+        private final CheckBoxTriStates mCheckBoxView;
+        private final TextView mTextView;
+        public ViewHolder(View itemView) {
+            super(itemView);
+            mCheckBoxView = itemView.findViewById(R.id.tags_dialog_tag_item_checkbox);
+            mTextView = itemView.findViewById(R.id.tags_dialog_tag_item_text);
         }
 
         @VisibleForTesting(otherwise = NONE)
         public String getText() {
-            return ((CheckedTextView) itemView).getText().toString();
+            return mTextView.getText().toString();
         }
 
 
         @VisibleForTesting(otherwise = NONE)
         public boolean isChecked() {
-            return ((CheckedTextView) itemView).isChecked();
+            return mCheckBoxView.isChecked();
         }
     }
 
@@ -89,13 +92,13 @@ public class TagsArrayAdapter extends  RecyclerView.Adapter<TagsArrayAdapter.Vie
                 .inflate(R.layout.tags_item_list_dialog, parent, false);
 
         ViewHolder vh = new ViewHolder(v.findViewById(R.id.tags_dialog_tag_item));
-        vh.mTagItemCheckedTextView.setOnClickListener(view -> {
-            CheckedTextView ctv = (CheckedTextView) view;
-            ctv.toggle();
-            String tag = ctv.getText().toString();
-            if (ctv.isChecked()) {
+        vh.itemView.setOnClickListener(view -> {
+            CheckBoxTriStates checkBox = vh.mCheckBoxView;
+            String tag = vh.mTextView.getText().toString();
+            checkBox.toggle();
+            if (checkBox.getState() == CheckBoxTriStates.State.CHECKED) {
                 mTags.check(tag);
-            } else {
+            } else if (checkBox.getState() == CheckBoxTriStates.State.UNCHECKED) {
                 mTags.uncheck(tag);
             }
         });
@@ -105,8 +108,14 @@ public class TagsArrayAdapter extends  RecyclerView.Adapter<TagsArrayAdapter.Vie
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         String tag = getTagByIndex(position);
-        holder.mTagItemCheckedTextView.setText(tag);
-        holder.mTagItemCheckedTextView.setChecked(mTags.isChecked(tag));
+        holder.mTextView.setText(tag);
+        if (mTags.isIndeterminate(tag)) {
+            holder.mCheckBoxView.setState(CheckBoxTriStates.State.INDETERMINATE);
+        } else {
+            holder.mCheckBoxView.setState(mTags.isChecked(tag) ?
+                            CheckBoxTriStates.State.CHECKED :
+                            CheckBoxTriStates.State.UNCHECKED);
+        }
     }
 
     private String getTagByIndex(int index) {

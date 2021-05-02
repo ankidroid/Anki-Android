@@ -1,16 +1,33 @@
 <?xml version="1.0" encoding="utf-8"?>
-<CheckedTextView xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/tags_dialog_tag_item"
-    android:layout_width="match_parent"
+<LinearLayout android:id="@+id/tags_dialog_tag_item"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="fill_parent"
     android:layout_height="wrap_content"
-    android:paddingLeft="8dp"
-    android:minHeight="?android:attr/listPreferredItemHeight"
-    android:paddingRight="8dp"
-    android:paddingEnd="8dp"
-    android:paddingBottom="5dp"
-    android:gravity="center_vertical"
     android:background="?attr/selectableItemBackground"
-    android:textSize="16sp"
-    android:checkMark="?android:attr/listChoiceIndicatorMultiple"
+    android:clickable="true"
     android:focusable="true"
-    android:clickable="true"/>
+    android:gravity="center_vertical"
+    android:minHeight="?android:attr/listPreferredItemHeight"
+    android:orientation="horizontal"
+    android:paddingBottom="5dp"
+    android:paddingEnd="8dp"
+    android:paddingLeft="8dp"
+    android:paddingRight="8dp"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <TextView
+        android:id="@+id/tags_dialog_tag_item_text"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:textSize="16sp"
+        tools:text="Items Text" />
+
+    <com.ichi2.ui.CheckBoxTriStates
+        android:id="@+id/tags_dialog_tag_item_checkbox"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:clickable="false"
+        app:cycle_back_to_indeterminate="false"/>
+</LinearLayout>
