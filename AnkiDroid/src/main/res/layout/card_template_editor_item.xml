@@ -36,6 +36,7 @@
                 android:layout_gravity="top"
                 android:gravity="top"
                 android:inputType="textMultiLine"
+                android:fontFamily="monospace"
                 tools:text="{{Front}}"/>
         </LinearLayout>
     </ScrollView>
