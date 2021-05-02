@@ -468,6 +468,11 @@ public class DeckPicker extends NavigationDrawerActivity implements
         // set protected variable from NavigationDrawerActivity
         mFragmented = mStudyoptionsFrame != null && mStudyoptionsFrame.getVisibility() == View.VISIBLE;
 
+        // Open StudyOptionsFragment if in fragmented mode
+        if (mFragmented) {
+            loadStudyOptionsFragment(false);
+        }
+
         registerExternalStorageListener();
 
         // create inherited navigation drawer layout here so that it can be used by parent class
@@ -1130,10 +1135,7 @@ public class DeckPicker extends NavigationDrawerActivity implements
                 getDialogHandler().sendMessage(handlerMessage);
             }
         }
-        // Open StudyOptionsFragment if in fragmented mode
-        if (mFragmented) {
-            loadStudyOptionsFragment(false);
-        }
+
         automaticSync();
     }
 
