@@ -30,6 +30,12 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import timber.log.Timber;
 
+/**
+ * This class consists essentially in executing each received TaskDelegate in the order in which they are received.
+ * A single instance should exists and be saved in TaskManager.sTaskManager.
+ * TODO: It uses the deprecated AsyncTask and should eventually be replaced by a non deprecated class.
+ * Even better would be to ensure that the TaskDelegate that reads (the majority of them) can be executed in parallels.
+ */
 public class SingleTaskManager extends TaskManager {
 
     /**
