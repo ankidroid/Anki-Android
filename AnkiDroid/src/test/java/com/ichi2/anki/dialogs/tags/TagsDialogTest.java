@@ -162,7 +162,7 @@ public class TagsDialogTest {
     // test for #8763
     @Test
     public void test_AddNewTag_shouldBeVisibleInRecyclerView_andSortedCorrectly() {
-        final DialogType type = DialogType.ADD_TAG;
+        final DialogType type = DialogType.EDIT_TAGS;
         final List<String> allTags = Arrays.asList("a", "b", "d", "e");
         final List<String> checkedTags = Arrays.asList("a", "b");
 
@@ -210,7 +210,7 @@ public class TagsDialogTest {
     // test for #8763
     @Test
     public void test_AddNewTag_existingTag_shouldBeSelectedAndSorted() {
-        final DialogType type = DialogType.ADD_TAG;
+        final DialogType type = DialogType.EDIT_TAGS;
         final List<String> allTags = Arrays.asList("a", "b", "d", "e");
         final List<String> checkedTags = Arrays.asList("a", "b");
 
