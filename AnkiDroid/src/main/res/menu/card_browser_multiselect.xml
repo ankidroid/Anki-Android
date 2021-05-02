@@ -84,6 +84,10 @@
         android:title="@string/card_editor_reschedule_card"/>
 
     <item
+        android:id="@+id/action_edit_tags"
+        android:title="@string/menu_edit_tags"/>
+
+    <item
         android:id="@+id/action_reset_cards_progress"
         android:title="@string/card_editor_reset_card"/>
 
