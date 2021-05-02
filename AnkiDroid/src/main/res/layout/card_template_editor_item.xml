@@ -34,7 +34,6 @@
                 android:layout_margin="5dp"
                 android:layout_gravity="top"
                 android:gravity="top"
-                android:contentDescription="@string/front_field_name"
                 android:inputType="textMultiLine"/>
         </LinearLayout>
     </ScrollView>
