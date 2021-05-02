@@ -38,9 +38,9 @@ public class TagsDialog extends AnalyticsDialogFragment {
      */
     public enum DialogType {
         /**
-         * Adding tag to a single note
+         * Adding tag to a note/s
          */
-        ADD_TAG,
+        EDIT_TAGS,
         /**
          * Filter notes by tags
          */
@@ -182,7 +182,7 @@ public class TagsDialog extends AnalyticsDialogFragment {
         mSelectedOption = optionsGroup.getCheckedRadioButtonId();
         optionsGroup.setOnCheckedChangeListener((radioGroup, checkedId) -> mSelectedOption = checkedId);
 
-        if (mType == DialogType.ADD_TAG) {
+        if (mType == DialogType.EDIT_TAGS) {
             mDialogTitle = getResources().getString(R.string.card_details_tags);
             optionsGroup.setVisibility(View.GONE);
             mPositiveText = getString(R.string.dialog_ok);
@@ -271,7 +271,7 @@ public class TagsDialog extends AnalyticsDialogFragment {
             return true;
         });
 
-        if (mType == DialogType.ADD_TAG) {
+        if (mType == DialogType.EDIT_TAGS) {
             mToolbarSearchView.setQueryHint(getString(R.string.add_new_filter_tags));
         } else {
             toolbarAddItem.setVisible(false);

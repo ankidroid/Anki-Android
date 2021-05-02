@@ -3015,7 +3015,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
     protected void showTagsDialog() {
         ArrayList<String> tags = new ArrayList<>(getCol().getTags().all());
         ArrayList<String> selTags = new ArrayList<>(mCurrentCard.note().getTags());
-        TagsDialog dialog = mTagsDialogFactory.newTagsDialog().withArguments(TagsDialog.DialogType.ADD_TAG, selTags, tags);
+        TagsDialog dialog = mTagsDialogFactory.newTagsDialog().withArguments(TagsDialog.DialogType.EDIT_TAGS, selTags, tags);
         showDialogFragment(dialog);
     }
 
