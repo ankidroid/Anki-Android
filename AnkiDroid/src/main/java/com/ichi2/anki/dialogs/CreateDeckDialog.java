@@ -21,6 +21,7 @@ import android.widget.EditText;
 
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.ichi2.anki.AnkiActivity;
+import com.ichi2.anki.MaterialEditTextDialog;
 import com.ichi2.anki.R;
 import com.ichi2.anki.UIUtils;
 import com.ichi2.anki.exception.DeckRenameException;
@@ -30,9 +31,7 @@ import com.ichi2.libanki.Decks;
 import com.ichi2.ui.FixedEditText;
 
 import java.util.List;
-import java.util.Locale;
 import java.util.function.Consumer;
-import java.util.stream.Collectors;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -65,7 +64,7 @@ public class CreateDeckDialog {
         this.mDeckDialogType = deckDialogType;
         this.mDialogEditText = new FixedEditText(context);
         mAnkiActivity = new AnkiActivity();
-        mBuilder = new MaterialDialog.Builder(context);
+        mBuilder = new MaterialEditTextDialog.Builder(context, mDialogEditText);
     }
 
     public void setDeckName(@NonNull String deckName) {
@@ -96,7 +95,6 @@ public class CreateDeckDialog {
 
         return mBuilder.title(mTitle)
                 .positiveText(R.string.dialog_ok)
-                .customView(mDialogEditText, true)
                 .negativeText(R.string.dialog_cancel)
                 .onPositive((dialog, which) -> onPositiveButtonClicked())
                 .show();
