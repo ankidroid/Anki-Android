@@ -45,7 +45,6 @@ import com.ichi2.libanki.sched.AbstractSched;
 import com.ichi2.libanki.sched.Sched;
 import com.ichi2.libanki.sched.SchedV2;
 import com.ichi2.testutils.MockTime;
-import com.ichi2.ui.AppCompatPreferenceActivity;
 import com.ichi2.utils.BooleanGetter;
 import com.ichi2.utils.JSONException;
 
@@ -275,7 +274,7 @@ public class RobolectricTest implements CollectionGetter {
 
 
     /** A collection. Created one second ago, not near cutoff time.
-    * Each time time is checked, it advance by 10 ms. Not enough to create any change visible to user, but ensure
+     * Each time time is checked, it advance by 10 ms. Not enough to create any change visible to user, but ensure
      * we don't get two equal time.*/
     public Collection getCol() {
         MockTime time = new MockTime(2020, 7, 7, 7, 0, 0, 0, 10);
@@ -316,21 +315,8 @@ public class RobolectricTest implements CollectionGetter {
         return controller.get();
     }
 
-    protected static <T extends AppCompatPreferenceActivity> T startPreferenceActivityNormallyOpenCollectionWithIntent(RobolectricTest testClass, Class<T> clazz, Intent i) {
-        ActivityController<T> controller = Robolectric.buildActivity(clazz, i)
-                .create().start().resume().visible();
-        advanceRobolectricLooperWithSleep();
-        advanceRobolectricLooperWithSleep();
-        testClass.saveControllerForCleanup(controller);
-        return controller.get();
-    }
-
     protected <T extends AnkiActivity> T startActivityNormallyOpenCollectionWithIntent(Class<T> clazz, Intent i) {
         return startActivityNormallyOpenCollectionWithIntent(this, clazz, i);
-    }
-
-    protected <T extends AppCompatPreferenceActivity> T startPreferenceActivityNormallyOpenCollectionWithIntent(Class<T> clazz, Intent i) {
-        return startPreferenceActivityNormallyOpenCollectionWithIntent(this, clazz, i);
     }
 
     protected Note addNoteUsingBasicModel(String front, String back) {
