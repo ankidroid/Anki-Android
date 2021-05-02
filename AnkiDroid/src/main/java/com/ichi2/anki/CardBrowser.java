@@ -1623,7 +1623,7 @@ public class CardBrowser extends NavigationDrawerActivity implements
 
     @Override
     @RustCleanup("this isn't how Desktop Anki does it")
-    public void onSelectedTags(List<String> selectedTags, int option) {
+    public void onSelectedTags(List<String> selectedTags, List<String> indeterminateTags, int option) {
         //TODO: Duplication between here and CustomStudyDialog:onSelectedTags
         mSearchView.setQuery("", false);
         String tags = selectedTags.toString();
@@ -2958,7 +2958,7 @@ public class CardBrowser extends NavigationDrawerActivity implements
 
     @VisibleForTesting
     void filterByTag(String... tags) {
-        onSelectedTags(Arrays.asList(tags), 0);
+        onSelectedTags(Arrays.asList(tags), Collections.emptyList(), 0);
     }
 
     @VisibleForTesting

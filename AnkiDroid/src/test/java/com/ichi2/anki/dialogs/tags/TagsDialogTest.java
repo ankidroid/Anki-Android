@@ -102,7 +102,7 @@ public class TagsDialogTest {
 
             dialog.getActionButton(DialogAction.POSITIVE).callOnClick();
 
-            verify(mockListener, times(1)).onSelectedTags(new ArrayList<>(), expectedOption);
+            verify(mockListener, times(1)).onSelectedTags(new ArrayList<>(), new ArrayList<>(), expectedOption);
         });
     }
 
@@ -135,7 +135,7 @@ public class TagsDialogTest {
 
             f.getParentFragmentManager().setFragmentResultListener(ON_SELECTED_TAGS_KEY, mockLifecycleOwner(),
                     (requestKey, bundle) -> {
-                        returnedList.set(bundle.getStringArrayList(ON_SELECTED_TAGS__TAGS));
+                        returnedList.set(bundle.getStringArrayList(ON_SELECTED_TAGS__SELECTED_TAGS));
                         returnedOption.set(bundle.getInt(ON_SELECTED_TAGS__OPTION));
                     });
 
