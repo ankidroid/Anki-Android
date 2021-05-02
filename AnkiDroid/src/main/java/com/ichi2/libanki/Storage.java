@@ -58,7 +58,9 @@ public class Storage {
     public static int getDatabaseVersion(String path) throws UnknownDatabaseVersionException {
         try {
             DB db = new DB(path);
-            return db.queryScalar("SELECT ver FROM col");
+            int result = db.queryScalar("SELECT ver FROM col");
+            db.close();
+            return result;
         } catch (Exception e) {
             Timber.w(e, "Can't open database");
             throw new UnknownDatabaseVersionException(e);
@@ -397,5 +399,10 @@ public class Storage {
 
     public static void setUseInMemory(boolean useInMemoryDatabase) {
         sUseInMemory = useInMemoryDatabase;
+    }
+
+
+    public static boolean isInMemory() {
+        return sUseInMemory;
     }
 }

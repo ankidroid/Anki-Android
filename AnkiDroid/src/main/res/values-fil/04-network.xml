@@ -63,11 +63,6 @@
     <!-- AndroidManifest.xml -->
     <string name="preferences_title">Preferences</string>
     <string name="deckpreferences_title">Mga opsiyon para sa XXX</string>
-    <string name="sync_conflict_message">Dapat mong i-upload itong koleksyon o i-download sa Ankiweb, dahil hindi sila maaaring pagsamahin. Ang koleksyon sa isang panig ay mapapatungan.</string>
-    <string name="sync_conflict_local">I - upload</string>
-    <string name="sync_conflict_remote">I - download</string>
-    <string name="sync_conflict_remote_confirm">Patungan ang iyong lokal na koleksyon?</string>
-    <string name="sync_conflict_local_confirm">Patungan ang iyong koleksyon sa server?</string>
     <string name="sync_prepare_syncing">Inihahanda ang pag-sync&#8230;</string>
     <string name="sync_preparing_full_sync_message">Inihahanda ang buong pag-sync&#8230;</string>
     <string name="sync_uploading_message">Uploading&#8230;</string>
@@ -78,7 +73,6 @@
     <string name="sync_log_clocks_unsynchronized">Ang iyong orasan ay sa may diperensya na %1$d segundo%2$s. Tiyaking tama ang petsa, oras, at timezone sa iyong telepono, pagkatapos ay i-sync muli.</string>
     <string name="sync_log_clocks_unsynchronized_tz">ang time zone ay maaaring mali</string>
     <string name="sync_log_clocks_unsynchronized_date">ang date ay maaaring mali</string>
-    <string name="sync_conflict_title">May conflict sa pag-sync</string>
     <string name="sync_no_changes_message">Walang pagbabago na nakita</string>
     <string name="sync_database_acknowledge">Nai-sync na ang mga koleksyon</string>
     <string name="sync_log_error_specific">Error sa pag-sync, type: %1$s, mensahe: %2$s</string>

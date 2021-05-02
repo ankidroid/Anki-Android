@@ -114,6 +114,8 @@
     <string name="import_complete_count">ᱠᱟᱰ ᱟᱹᱜᱩᱜᱭᱮᱱᱟ: %d</string>
     <string name="sd_card_full_title">SD ᱠᱟᱰ ᱯᱮᱨᱮᱡ ᱮᱱᱟ</string>
     <string name="sd_card_almost_full_title">SD ᱠᱟᱰ ᱯᱟᱠᱷᱟᱯᱟᱹᱠᱷᱤ ᱯᱮᱨᱮᱡ ᱮᱱᱟ</string>
+    <string name="no_space_to_downgrade_title">No space</string>
+    <string name="no_space_to_downgrade_content">AnkiDroid needs %s free storage space to continue. Please clear some space</string>
     <string name="restore_backup_title">ᱱᱚᱠᱚᱞ ᱡᱚᱜᱟᱣ ᱫᱚᱦᱰᱟᱭᱟ ᱥᱮ?</string>
     <string name="restore_backup">ᱟᱢᱟᱜ ᱱᱚᱠᱚᱞ ᱫᱚ ᱢᱟᱨᱮ ᱴᱩᱢᱟᱹᱞ ᱥᱟᱞᱟᱜ ᱵᱚᱫᱚᱞᱚᱜ ᱟ ᱾ ᱵᱟᱝ ᱥᱚᱝᱪᱟᱣᱟᱠᱟᱱ ᱠᱟᱹᱢᱤ ᱚᱫ ᱚᱫᱚᱜᱽᱟ ᱾</string>
     <string name="dialog_cancel">ᱵᱟᱰᱨᱟ</string>

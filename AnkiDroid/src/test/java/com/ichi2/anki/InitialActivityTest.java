@@ -17,8 +17,10 @@
 package com.ichi2.anki;
 
 import android.app.Application;
+import android.content.Context;
 
 import com.ichi2.testutils.BackendEmulatingOpenConflict;
+import com.ichi2.testutils.BackupManagerTestUtilities;
 import com.ichi2.testutils.EmptyApplication;
 
 import org.junit.After;
@@ -71,7 +73,11 @@ public class InitialActivityTest extends RobolectricTest {
         ShadowEnvironment.setExternalStorageState("mounted");
     }
 
-
+    public static void setupForValid(Context context) {
+        grantWritePermissions();
+        ShadowEnvironment.setExternalStorageState("mounted");
+        BackupManagerTestUtilities.setupSpaceForBackup(context);
+    }
 
     public static void setupForDefault() {
         revokeWritePermissions();

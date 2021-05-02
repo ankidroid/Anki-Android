@@ -94,6 +94,8 @@ import com.ichi2.anim.ViewAnimation;
 import com.ichi2.anki.cardviewer.GestureTapProcessor;
 import com.ichi2.anki.cardviewer.MissingImageHandler;
 import com.ichi2.anki.dialogs.tags.TagsDialog;
+import com.ichi2.anki.dialogs.tags.TagsDialogFactory;
+import com.ichi2.anki.dialogs.tags.TagsDialogListener;
 import com.ichi2.anki.multimediacard.AudioView;
 import com.ichi2.anki.cardviewer.CardAppearance;
 import com.ichi2.anki.receiver.SdCardReceiver;
@@ -167,7 +169,7 @@ import com.github.zafarkhaja.semver.Version;
 import static com.ichi2.anim.ActivityTransitionAnimation.Direction.*;
 
 @SuppressWarnings({"PMD.AvoidThrowingRawExceptionTypes","PMD.FieldDeclarationsShouldBeAtStartOfClass"})
-public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity implements ReviewerUi, CommandProcessor, TagsDialog.TagsDialogListener {
+public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity implements ReviewerUi, CommandProcessor, TagsDialogListener {
 
     /**
      * Result codes that are returned when this activity finishes.
@@ -223,6 +225,8 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
      * Broadcast that informs us when the sd card is about to be unmounted
      */
     private BroadcastReceiver mUnmountReceiver = null;
+
+    private TagsDialogFactory mTagsDialogFactory;
 
     /**
      * Variables to hold preferences
@@ -580,9 +584,6 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
             readLock.unlock();
         }
     }
-
-
-    protected final NextCardHandler<BooleanGetter> mDismissCardHandler = new NextCardHandler();
 
 
     private final TaskListener<CardGetter, BooleanGetter> mUpdateCardHandler = new TaskListener<CardGetter, BooleanGetter>() {
@@ -945,6 +946,9 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
         Timber.d("onCreate()");
         SharedPreferences preferences = restorePreferences();
         mCardAppearance = CardAppearance.create(new ReviewerCustomFonts(this.getBaseContext()), preferences);
+
+        mTagsDialogFactory = new TagsDialogFactory(this).attachToActivity(this);
+
         super.onCreate(savedInstanceState);
         setContentView(getContentViewAttr(mPrefFullscreenReview));
 
@@ -3363,7 +3367,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
      */
     protected boolean dismiss(CollectionTask.DismissNote dismiss) {
         blockControls(false);
-        TaskManager.launchCollectionTask(dismiss, mDismissCardHandler);
+        TaskManager.launchCollectionTask(dismiss, new NextCardHandler());
         return true;
     }
 
@@ -3963,7 +3967,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
     protected void showTagsDialog() {
         ArrayList<String> tags = new ArrayList<>(getCol().getTags().all());
         ArrayList<String> selTags = new ArrayList<>(mCurrentCard.note().getTags());
-        TagsDialog dialog = TagsDialog.newInstance(TagsDialog.DialogType.ADD_TAG, selTags, tags);
+        TagsDialog dialog = mTagsDialogFactory.newTagsDialog().withArguments(TagsDialog.DialogType.ADD_TAG, selTags, tags);
         showDialogFragment(dialog);
     }
 

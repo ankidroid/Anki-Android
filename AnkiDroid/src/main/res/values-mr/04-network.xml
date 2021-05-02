@@ -63,11 +63,6 @@
     <!-- AndroidManifest.xml -->
     <string name="preferences_title">प्राधान्ये</string>
     <string name="deckpreferences_title">XXX साठी पर्याय</string>
-    <string name="sync_conflict_message">आपण एकतर हा संग्रह अपलोड करणे किंवा ते अनकीवेब वरून डाउनलोड करणे आवश्यक आहे, कारण त्यांचे विलीनीकरण केले जाऊ शकत नाही. एका बाजूला संग्रह अधिलिखित केला जाईल.</string>
-    <string name="sync_conflict_local">अपलोड करा</string>
-    <string name="sync_conflict_remote">डाउनलोड करा</string>
-    <string name="sync_conflict_remote_confirm">आपले स्थानिक संग्रह अधिलिखित करा?</string>
-    <string name="sync_conflict_local_confirm">सर्व्हरवर आपला संग्रह अधिलिखित करायचा?</string>
     <string name="sync_prepare_syncing">संकालनाची तयारी करत आहे&#8230;</string>
     <string name="sync_preparing_full_sync_message">पूर्ण संकालन तयार करीत आहे ...</string>
     <string name="sync_uploading_message">अपलोड करीत आहे&#8230;</string>
@@ -78,7 +73,6 @@
     <string name="sync_log_clocks_unsynchronized">आपले घड्याळ%1$d सेकंद%2$s ने बंद आहे. आपल्या फोनवरील तारीख, वेळ आणि वेळ क्षेत्र योग्यरित्या सेट केले असल्याचे सुनिश्चित करा, त्यानंतर पुन्हा संकालन करा.</string>
     <string name="sync_log_clocks_unsynchronized_tz">, टाईम झोन शक्यतो चुकीचा आहे</string>
     <string name="sync_log_clocks_unsynchronized_date">, तारीख शक्यतो चुकीची आहे</string>
-    <string name="sync_conflict_title">संघर्ष समक्रमित करीत आहे</string>
     <string name="sync_no_changes_message">कोणतेही बदल आढळले नाहीत</string>
     <string name="sync_database_acknowledge">संकलन समक्रमित केले</string>
     <string name="sync_log_error_specific">समक्रमण त्रुटी, प्रकार:%1$s, संदेश:%2$s</string>

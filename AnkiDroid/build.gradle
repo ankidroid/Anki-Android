@@ -50,8 +50,8 @@ android {
         //
         // This ensures the correct ordering between the various types of releases (dev < alpha < beta < release) which is
         // needed for upgrades to be offered correctly.
-        versionCode=21500147
-        versionName="2.15alpha47"
+        versionCode=21500148
+        versionName="2.15alpha48"
         minSdkVersion 21
         //noinspection OldTargetApi - also performed in api/build.fradle
         targetSdkVersion 29 // change .travis.yml platform download at same time
@@ -262,7 +262,7 @@ dependencies {
     implementation 'com.google.code.gson:gson:2.8.6'
 
     // == Rust conversion (from Anki-Android-Backend on GitHub) ==
-    String backendVersion = "0.1.4" // We want both testing and implementation on the same version
+    String backendVersion = "0.1.5" // We want both testing and implementation on the same version
     // build with ./gradlew rsdroid:assembleRelease
     // In my experience, using `files()` currently requires a reindex operation, which is slow.
     // implementation files("C:\\GitHub\\Rust-Test\\rsdroid\\build\\outputs\\aar\\rsdroid-release.aar")

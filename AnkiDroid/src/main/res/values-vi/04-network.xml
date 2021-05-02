@@ -63,11 +63,6 @@
     <!-- AndroidManifest.xml -->
     <string name="preferences_title">Tuỳ chỉnh</string>
     <string name="deckpreferences_title">Tùy chọn cho XXX</string>
-    <string name="sync_conflict_message">Bạn phải tải lên bộ sưu tập này hoặc tải nó xuống từ Ankiweb vì chúng không thể sáp nhập với nhau. Bộ sưu tập đó sẽ bị ghi đè một phía.</string>
-    <string name="sync_conflict_local">Tải lên</string>
-    <string name="sync_conflict_remote">Tải xuống</string>
-    <string name="sync_conflict_remote_confirm">Ghi đè lên bộ sưu tập trên thiết bị?</string>
-    <string name="sync_conflict_local_confirm">Ghi đè lên bộ sưu tập trên máy chủ?</string>
     <string name="sync_prepare_syncing">Đang chuẩn bị đồng bộ...</string>
     <string name="sync_preparing_full_sync_message">Đang chuẩn bị đồng bộ hoàn toàn&#8230;</string>
     <string name="sync_uploading_message">Đang tải lên&#8230;</string>
@@ -78,7 +73,6 @@
     <string name="sync_log_clocks_unsynchronized">Đồng hồ của bạn lệch %1$d giây%2$s. Hãy chắc chắn rằng ngày tháng, thời gian và múi giờ trên điện thoại được thiết lập chính xác rồi đồng bộ lại.</string>
     <string name="sync_log_clocks_unsynchronized_tz">, có thể múi giờ bị sai</string>
     <string name="sync_log_clocks_unsynchronized_date">, có thể ngày tháng bị sai</string>
-    <string name="sync_conflict_title">Mâu thuẫn khi đồng bộ</string>
     <string name="sync_no_changes_message">Không thấy thay đổi nào</string>
     <string name="sync_database_acknowledge">Bộ sưu tập đã được đồng bộ</string>
     <string name="sync_log_error_specific">Lỗi đồng bộ, hãy gõ: %1$s, tin nhắn: %2$s</string>

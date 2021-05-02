@@ -21,19 +21,16 @@ import com.ichi2.anki.analytics.AnalyticsDialogFragment;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.widget.SearchView;
 import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 public class TagsDialog extends AnalyticsDialogFragment {
-    public interface TagsDialogListener {
-        void onSelectedTags(List<String> selectedTags, int option);
-    }
-
-
 
     /**
      * Enum that define all possible types of TagsDialog
@@ -73,25 +70,46 @@ public class TagsDialog extends AnalyticsDialogFragment {
 
     private MaterialDialog mDialog;
 
+    @Nullable
+    private final TagsDialogListener mListener;
+
+
     /**
-     * Initializes an instance of {@link TagsDialog} using passed parameters
+     * Constructs a new {@link TagsDialog} that will communicate the results using the provided listener.
+     */
+    public TagsDialog(@NonNull TagsDialogListener listener) {
+        mListener = listener;
+    }
+
+
+    /**
+     * Constructs a new {@link TagsDialog} that will communicate the results using Fragment Result API.
      *
+     * @see <a href="https://developer.android.com/guide/fragments/communicate#fragment-result">Fragment Result API</a>
+     */
+    public TagsDialog() {
+        mListener = null;
+    }
+
+    /**
      * @param type the type of dialog @see {@link DialogType}
      * @param checkedTags tags of the note
      * @param allTags all possible tags in the collection
      * @return Initialized instance of {@link TagsDialog}
      */
     @NonNull
-    public static TagsDialog newInstance(@NonNull DialogType type, @NonNull List<String> checkedTags, @NonNull List<String> allTags) {
-        TagsDialog t = new TagsDialog();
+    public TagsDialog withArguments(@NonNull DialogType type, @NonNull List<String> checkedTags, @NonNull List<String> allTags) {
+        Bundle args = this.getArguments();
+        if (args == null) {
+            args = new Bundle();
+        }
 
-        Bundle args = new Bundle();
         args.putInt(DIALOG_TYPE_KEY, type.ordinal());
         args.putStringArrayList(CHECKED_TAGS_KEY, new ArrayList<>(checkedTags));
         args.putStringArrayList(ALL_TAGS_KEY, new ArrayList<>(allTags));
-        t.setArguments(args);
+        setArguments(args);
 
-        return t;
+        return this;
     }
 
 
@@ -110,6 +128,10 @@ public class TagsDialog extends AnalyticsDialogFragment {
         setCancelable(true);
     }
 
+    @NonNull
+    private TagsDialogListener getTagsDialogListener() {
+        return mListener != null ? mListener : TagsDialogListener.createFragmentResultSender(getParentFragmentManager());
+    }
 
     @NonNull
     @Override
@@ -153,8 +175,7 @@ public class TagsDialog extends AnalyticsDialogFragment {
                 .positiveText(mPositiveText)
                 .negativeText(R.string.dialog_cancel)
                 .customView(tagsDialogView, false)
-                .onPositive((dialog, which) -> ((TagsDialogListener)requireActivity())
-                        .onSelectedTags(mTags.copyOfCheckedTagList(), mSelectedOption));
+                .onPositive((dialog, which) -> getTagsDialogListener().onSelectedTags(mTags.copyOfCheckedTagList(), mSelectedOption));
         mDialog = builder.build();
 
         mDialog.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE);

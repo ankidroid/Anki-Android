@@ -98,7 +98,7 @@ public class BackupManagerTest {
 
         boolean result = performBackup(bm);
 
-        verify(bm, times(1)).performBackupInNewThread(any(), any(), any(), any());
+        verify(bm, times(1)).performBackupInNewThread(any(), any());
         assertThat("PerformBackup should pass", result, is(true));
     }
 
@@ -165,7 +165,7 @@ public class BackupManagerTest {
         BackupManager spy = spy(BackupManager.createInstance());
         doReturn(true).when(spy).hasFreeDiscSpace(any());
         doReturn(false).when(spy).collectionIsTooSmallToBeValid(any());
-        doNothing().when(spy).performBackupInNewThread(any(), any(), any(), any());
+        doNothing().when(spy).performBackupInNewThread(any(), any());
         doReturn(null).when(spy).getLastBackupDate(any(), any());
 
         File f = backupFileMock != null ? backupFileMock : getBackupFileMock();

@@ -63,11 +63,6 @@
     <!-- AndroidManifest.xml -->
     <string name="preferences_title">ప్రాధాన్యతలు</string>
     <string name="deckpreferences_title">XXX కోసం ఎంపికలు</string>
-    <string name="sync_conflict_message">ఈ సేకరణను మీరు అప్లోడ్ చెయ్యాలి లేదా Ankiweb నుండి డౌన్లోడ్ చేసుకోవాలి, ఎందుకంటే అవి విలీనం చేయబడవు. ఒక వైపు సేకరణ భర్తీ చేయబడుతుంది.</string>
-    <string name="sync_conflict_local">అప్లోడ్</string>
-    <string name="sync_conflict_remote">డౌన్లోడ్</string>
-    <string name="sync_conflict_remote_confirm">మీ స్థానిక సేకరణను ఓవర్రైట్ చేయాలా?</string>
-    <string name="sync_conflict_local_confirm">సర్వర్లో మీ సేకరణను ఓవర్రైట్ చేయాలా?</string>
     <string name="sync_prepare_syncing">సమకాలీకరించడానికి సిద్ధం చేస్తోంది&#8230;</string>
     <string name="sync_preparing_full_sync_message">పూర్తి సమకాలీకరణను సిద్ధం చేస్తోంది&#8230;</string>
     <string name="sync_uploading_message">అప్లోడ్ అవుతోంది&#8230;</string>
@@ -78,7 +73,6 @@
     <string name="sync_log_clocks_unsynchronized">మీ గడియారం%1$d సెకన్లు%2$s ఆఫ్లో ఉంది. తేదీ, సమయం మరియు సమయ మండలి మీ ఫోన్లో సరిగ్గా సెట్ చేయబడి, మళ్లీ సమకాలీకరించినట్లు నిర్ధారించుకోండి.</string>
     <string name="sync_log_clocks_unsynchronized_tz">టైమ్ జోన్ బహుశా తప్పు</string>
     <string name="sync_log_clocks_unsynchronized_date">తేదీ బహుశా తప్పు</string>
-    <string name="sync_conflict_title">సంఘర్షణ సమకాలీకరణ</string>
     <string name="sync_no_changes_message">మార్పులు ఏవీ కనుగొనబడలేదు</string>
     <string name="sync_database_acknowledge">సేకరణ సమకాలీకరించబడింది</string>
     <string name="sync_log_error_specific">సమకాలీకరణ లోపం, రకం: %1$s, సందేశం:%2$s</string>

@@ -108,6 +108,8 @@
     <string name="import_complete_count">카드 가져옴: %d</string>
     <string name="sd_card_full_title">SD 카드 꽉 참</string>
     <string name="sd_card_almost_full_title">SD 카드 거의 꽉 참</string>
+    <string name="no_space_to_downgrade_title">No space</string>
+    <string name="no_space_to_downgrade_content">AnkiDroid needs %s free storage space to continue. Please clear some space</string>
     <string name="restore_backup_title">백업을 복원할까요?</string>
     <string name="restore_backup">컬렉션이 기존의 것으로 대체됩니다. 저장되지 않은 모든 작업은 손실됩니다.</string>
     <string name="dialog_cancel">취소</string>

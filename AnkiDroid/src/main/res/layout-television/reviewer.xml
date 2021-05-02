@@ -63,7 +63,7 @@
 
                 <include
                     android:id="@+id/reviewer_whiteboard_pen_color_layout"
-                    layout="@layout/reviewer_whiteboard_pen_color"
+                    layout="@layout/reviewer_whiteboard_editor"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_centerHorizontal="true"

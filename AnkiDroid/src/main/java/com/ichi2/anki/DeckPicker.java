@@ -89,6 +89,8 @@ import com.ichi2.anki.analytics.UsageAnalytics;
 import com.ichi2.anki.dialogs.AsyncDialogFragment;
 import com.ichi2.anki.dialogs.ConfirmationDialog;
 import com.ichi2.anki.dialogs.CreateDeckDialog;
+import com.ichi2.anki.dialogs.DeckPickerNoSpaceToDowngradeDialog;
+import com.ichi2.anki.dialogs.DeckPickerNoSpaceToDowngradeDialog.FileSizeFormatter;
 import com.ichi2.anki.dialogs.customstudy.CustomStudyDialog;
 import com.ichi2.anki.dialogs.DatabaseErrorDialog;
 import com.ichi2.anki.dialogs.DeckPickerAnalyticsOptInDialog;
@@ -314,6 +316,10 @@ public class DeckPicker extends NavigationDrawerActivity implements
         }
     };
 
+    public BackupManager getBackupManager() {
+        return new BackupManager();
+    }
+
     private final ImportAddListener mImportAddListener = new ImportAddListener(this);
     private static class ImportAddListener extends TaskListenerWithContext<DeckPicker, String, Triple<AnkiPackageImporter, Boolean, String>> {
         public ImportAddListener(DeckPicker deckPicker) {
@@ -529,7 +535,7 @@ public class DeckPicker extends NavigationDrawerActivity implements
      * The first call in showing dialogs for startup - error or success.
      * Attempts startup if storage permission has been acquired, else, it requests the permission
      * */
-    private void handleStartup() {
+    public void handleStartup() {
         if (Permissions.hasStorageAccessPermission(this)) {
             boolean colOpen = firstCollectionOpen();
             if (colOpen) {
@@ -568,11 +574,20 @@ public class DeckPicker extends NavigationDrawerActivity implements
                 Timber.i("Displaying database locked error");
                 showDatabaseErrorDialog(DatabaseErrorDialog.DIALOG_DB_LOCKED);
                 break;
+            case DATABASE_DOWNGRADE_REQUIRED:
+                // This has a callback to continue with handleStartup
+                InitialActivity.downgradeBackend(this);
+                break;
             case DB_ERROR:
             default:
-                Timber.i("Displaying database error");
-                showDatabaseErrorDialog(DatabaseErrorDialog.DIALOG_LOAD_FAILED);
+                displayDatabaseFailure();
         }
+    }
+
+
+    public void displayDatabaseFailure() {
+        Timber.i("Displaying database error");
+        showDatabaseErrorDialog(DatabaseErrorDialog.DIALOG_LOAD_FAILED);
     }
 
 
@@ -922,6 +937,11 @@ public class DeckPicker extends NavigationDrawerActivity implements
     protected void onResume() {
         Timber.d("onResume()");
         super.onResume();
+        refreshState();
+    }
+
+
+    public void refreshState() {
         mActivityPaused = false;
         if (mSyncOnResume) {
             Timber.i("Performing Sync on Resume");
@@ -1293,6 +1313,15 @@ public class DeckPicker extends NavigationDrawerActivity implements
             onFinishedStartup();
         }
     }
+
+    public void displayDowngradeFailedNoSpace() {
+        Timber.w("Not enough space to downgrade");
+        FileSizeFormatter formatter = new FileSizeFormatter(this);
+        String collectionPath = CollectionHelper.getCollectionPath(this);
+        File collectionFile = new File(collectionPath);
+        showDialogFragment(DeckPickerNoSpaceToDowngradeDialog.newInstance(formatter, collectionFile));
+    }
+
 
     @VisibleForTesting
     protected void displayAnalyticsOptInDialog() {
@@ -2872,6 +2901,10 @@ public class DeckPicker extends NavigationDrawerActivity implements
         createDeckDialog.showDialog();
     }
 
+    @VisibleForTesting
+    public int getDeckCount() {
+        return mDeckListAdapter.getItemCount();
+    }
 
     @VisibleForTesting
     class CheckDatabaseListener extends TaskListener<String, Pair<Boolean, Collection.CheckDatabaseResult>> {

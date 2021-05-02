@@ -19,6 +19,7 @@ package com.ichi2.anki;
 import android.content.SharedPreferences;
 
 
+import com.ichi2.anki.exception.OutOfSpaceException;
 import com.ichi2.compat.CompatHelper;
 import com.ichi2.libanki.Collection;
 import com.ichi2.libanki.Utils;
@@ -57,13 +58,6 @@ public class BackupManager {
     /** Number of hours after which a backup new backup is created */
     private static final int BACKUP_INTERVAL = 5;
 
-
-    /* Prevent class from being instantiated */
-    private BackupManager() {
-        // do nothing
-    }
-
-
     public static boolean isActivated() {
         return true;
     }
@@ -96,6 +90,25 @@ public class BackupManager {
         return new BackupManager().performBackupInBackground(path, BACKUP_INTERVAL, force, time);
     }
 
+    public boolean performDowngradeBackupInForeground(String path) throws OutOfSpaceException {
+
+        File colFile = new File(path);
+
+        if (!hasFreeDiscSpace(colFile)) {
+            Timber.w("Could not backup: no free disc space");
+            throw new OutOfSpaceException();
+        }
+
+        File backupFile = getBackupFile(colFile, "ankiDroidv16.colpkg");
+
+        try {
+            return performBackup(colFile, backupFile);
+        } catch (Exception e) {
+            Timber.w(e);
+            AnkiDroidApp.sendExceptionReport(e, "performBackupInForeground");
+            return false;
+        }
+    }
 
     @SuppressWarnings("PMD.NPathComplexity")
     public boolean performBackupInBackground(final String colPath, int interval, boolean force, @NonNull Time time) {
@@ -157,7 +170,7 @@ public class BackupManager {
         }
 
         // Backup collection as Anki package in new thread
-        performBackupInNewThread(colPath, colFile, backupFilename, backupFile);
+        performBackupInNewThread(colFile, backupFile);
         return true;
     }
 
@@ -202,32 +215,41 @@ public class BackupManager {
     }
 
 
-    protected void performBackupInNewThread(String colPath, File colFile, String backupFilename, File backupFile) {
-        Timber.i("Launching new thread to backup %s to %s", colPath, backupFile.getPath());
+    protected void performBackupInNewThread(File colFile, File backupFile) {
+        Timber.i("Launching new thread to backup %s to %s", colFile.getAbsolutePath(), backupFile.getPath());
         Thread thread = new Thread() {
             @Override
             public void run() {
-                // Save collection file as zip archive
-                try {
-                    ZipOutputStream zos = new ZipOutputStream(new BufferedOutputStream(new FileOutputStream(backupFile)));
-                    ZipEntry ze = new ZipEntry(CollectionHelper.COLLECTION_FILENAME);
-                    zos.putNextEntry(ze);
-                    CompatHelper.getCompat().copyFile(colPath, zos);
-                    zos.close();
-                    // Delete old backup files if needed
-                    SharedPreferences prefs = AnkiDroidApp.getSharedPrefs(AnkiDroidApp.getInstance().getBaseContext());
-                    deleteDeckBackups(colPath, prefs.getInt("backupMax", 8));
-                    // set timestamp of file in order to avoid creating a new backup unless its changed
-                    if (!backupFile.setLastModified(colFile.lastModified())) {
-                        Timber.w("performBackupInBackground() setLastModified() failed on file %s", backupFilename);
-                    }
-                    Timber.i("Backup created succesfully");
-                } catch (IOException e) {
-                    Timber.w(e);
-                }
+                performBackup(colFile, backupFile);
             }
         };
         thread.start();
+    }
+
+
+    protected boolean performBackup(File colFile, File backupFile) {
+        String colPath = colFile.getAbsolutePath();
+        // Save collection file as zip archive
+        try {
+            ZipOutputStream zos = new ZipOutputStream(new BufferedOutputStream(new FileOutputStream(backupFile)));
+            ZipEntry ze = new ZipEntry(CollectionHelper.COLLECTION_FILENAME);
+            zos.putNextEntry(ze);
+            CompatHelper.getCompat().copyFile(colPath, zos);
+            zos.close();
+            // Delete old backup files if needed
+            SharedPreferences prefs = AnkiDroidApp.getSharedPrefs(AnkiDroidApp.getInstance().getBaseContext());
+            deleteDeckBackups(colPath, prefs.getInt("backupMax", 8));
+            // set timestamp of file in order to avoid creating a new backup unless its changed
+            if (!backupFile.setLastModified(colFile.lastModified())) {
+                Timber.w("performBackupInBackground() setLastModified() failed on file %s", backupFile.getName());
+                return false;
+            }
+            Timber.i("Backup created succesfully");
+            return true;
+        } catch (IOException e) {
+            Timber.w(e);
+            return false;
+        }
     }
 
 
@@ -238,7 +260,17 @@ public class BackupManager {
 
 
     protected boolean hasFreeDiscSpace(File colFile) {
-        return getFreeDiscSpace(colFile) >= colFile.length() + (MIN_FREE_SPACE * 1024 * 1024);
+        return getFreeDiscSpace(colFile) >= getRequiredFreeSpace(colFile);
+    }
+
+
+    /**
+     * @param colFile The current collection file to backup
+     * @return the amount of free space required for a backup.
+     */
+    public static long getRequiredFreeSpace(File colFile) {
+        // We add a minimum amount of free space to ensure against
+        return colFile.length() + (MIN_FREE_SPACE * 1024 * 1024);
     }
 
 

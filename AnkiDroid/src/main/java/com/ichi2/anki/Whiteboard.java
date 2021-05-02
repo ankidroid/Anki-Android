@@ -21,6 +21,7 @@ package com.ichi2.anki;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Color;
@@ -39,6 +40,7 @@ import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.LinearLayout;
 
+import com.ichi2.anki.dialogs.WhiteBoardWidthDialog;
 import com.ichi2.libanki.utils.Time;
 import com.ichi2.libanki.utils.TimeUtils;
 
@@ -115,21 +117,24 @@ public class Whiteboard extends View {
         mPaint.setStyle(Paint.Style.STROKE);
         mPaint.setStrokeJoin(Paint.Join.ROUND);
         mPaint.setStrokeCap(Paint.Cap.ROUND);
-        int wbStrokeWidth = AnkiDroidApp.getSharedPrefs(cardViewer).getInt("whiteBoardStrokeWidth", 6);
-        mPaint.setStrokeWidth((float) wbStrokeWidth);
+        mPaint.setStrokeWidth((float) getCurrentStrokeWidth());
         createBitmap();
         mPath = new Path();
         mBitmapPaint = new Paint(Paint.DITHER_FLAG);
 
         // selecting pen color to draw
-        mColorPalette = cardViewer.findViewById(R.id.whiteboard_pen_color);
+        mColorPalette = cardViewer.findViewById(R.id.whiteboard_editor);
 
         cardViewer.findViewById(R.id.pen_color_red).setOnClickListener(this::onClick);
         cardViewer.findViewById(R.id.pen_color_green).setOnClickListener(this::onClick);
         cardViewer.findViewById(R.id.pen_color_blue).setOnClickListener(this::onClick);
         cardViewer.findViewById(R.id.pen_color_yellow).setOnClickListener(this::onClick);
+        cardViewer.findViewById(R.id.stroke_width).setOnClickListener(this::onClick);
     }
 
+    public int getCurrentStrokeWidth() {
+        return AnkiDroidApp.getSharedPrefs(mCardViewer.get()).getInt("whiteBoardStrokeWidth", 6);
+    }
 
     @Override
     protected void onDraw(Canvas canvas) {
@@ -404,9 +409,24 @@ public class Whiteboard extends View {
         } else if (id == R.id.pen_color_yellow) {
             int yellowPenColor = ContextCompat.getColor(getContext(), R.color.material_yellow_500);
             setPenColor(yellowPenColor);
+        } else if (id == R.id.stroke_width) {
+            handleWidthChangeDialog();
         }
     }
 
+
+    private void handleWidthChangeDialog() {
+        WhiteBoardWidthDialog whiteBoardWidthDialog = new WhiteBoardWidthDialog(mCardViewer.get(), getCurrentStrokeWidth());
+        whiteBoardWidthDialog.onStrokeWidthChanged(this::saveStrokeWidth);
+        whiteBoardWidthDialog.showStrokeWidthDialog();
+    }
+
+    private void saveStrokeWidth(int wbStrokeWidth) {
+        mPaint.setStrokeWidth((float) wbStrokeWidth);
+        SharedPreferences.Editor edit = AnkiDroidApp.getSharedPrefs(mCardViewer.get()).edit();
+        edit.putInt("whiteBoardStrokeWidth", wbStrokeWidth);
+        edit.apply();
+    }
 
     public void setPenColor(int color) {
         Timber.d("Setting pen color to %d", color);

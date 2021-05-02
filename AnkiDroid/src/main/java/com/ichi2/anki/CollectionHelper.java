@@ -43,6 +43,7 @@ import androidx.annotation.VisibleForTesting;
 import timber.log.Timber;
 
 import static com.ichi2.libanki.Consts.SCHEMA_VERSION;
+import static com.ichi2.libanki.Consts.SCHEMA_DOWNGRADE_SUPPORTED_VERSION;
 
 /**
  * Singleton which opens, stores, and closes the reference to the Collection.
@@ -386,9 +387,16 @@ public class CollectionHelper {
         col.getModels();
     }
 
-    public static boolean isFutureAnkiDroidVersion(Context context) throws UnknownDatabaseVersionException {
+    public static DatabaseVersion isFutureAnkiDroidVersion(Context context) throws UnknownDatabaseVersionException {
         int databaseVersion = getDatabaseVersion(context);
-        return databaseVersion > SCHEMA_VERSION;
+
+        if (databaseVersion > SCHEMA_VERSION && databaseVersion != SCHEMA_DOWNGRADE_SUPPORTED_VERSION) {
+            return DatabaseVersion.FUTURE_NOT_DOWNGRADABLE;
+        } else if (databaseVersion == SCHEMA_DOWNGRADE_SUPPORTED_VERSION) {
+            return DatabaseVersion.FUTURE_DOWNGRADABLE;
+        } else {
+            return DatabaseVersion.USABLE;
+        }
     }
 
 
@@ -398,8 +406,16 @@ public class CollectionHelper {
             return col.queryVer();
         } catch (Exception e) {
             Timber.w(e, "Failed to query version");
+            // fallback to a pure DB implementation
             return Storage.getDatabaseVersion(getCollectionPath(context));
         }
+    }
+
+    public enum DatabaseVersion {
+        USABLE,
+        FUTURE_DOWNGRADABLE,
+        FUTURE_NOT_DOWNGRADABLE,
+        UNKNOWN
     }
 
     @VisibleForTesting(otherwise = VisibleForTesting.NONE)

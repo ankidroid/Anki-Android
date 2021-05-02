@@ -63,11 +63,6 @@
     <!-- AndroidManifest.xml -->
     <string name="preferences_title">Nuostatos</string>
     <string name="deckpreferences_title">XXX parinktys</string>
-    <string name="sync_conflict_message">Šią kolekciją galite įkelti arba parsisiųsti iš „Ankiweb“, kadangi kolekcijos negali dubliuotis. Sinchronizuojant kolekcija bus perrašyta.</string>
-    <string name="sync_conflict_local">Įkelti</string>
-    <string name="sync_conflict_remote">Parsisiųsti</string>
-    <string name="sync_conflict_remote_confirm">Ar perrašyti įrenginyje esančią kolekciją?</string>
-    <string name="sync_conflict_local_confirm">Ar perrašyti serveryje esančią kolekciją?</string>
     <string name="sync_prepare_syncing">Ruošiamasi sinchronizuoti&#8230;</string>
     <string name="sync_preparing_full_sync_message">Ruošiamasi išsamiam sinchronizavimui&#8230;</string>
     <string name="sync_uploading_message">Išsiunčiama&#8230;</string>
@@ -78,7 +73,6 @@
     <string name="sync_log_clocks_unsynchronized">Jūsų laikrodis atsilieka %1$d sek.%2$s. Prašome įsitikinti, kad telefone laikas ir laiko juosta yra nustatyti teisingai ir bandyti sinchronizuoti iš naujo.</string>
     <string name="sync_log_clocks_unsynchronized_tz">, gali būti, kad blogai nustatyta laiko juosta</string>
     <string name="sync_log_clocks_unsynchronized_date">, gali būti, kad blogai nustatyta data</string>
-    <string name="sync_conflict_title">Sinchronizavimo konfliktas</string>
     <string name="sync_no_changes_message">Pakeitimų nerasta</string>
     <string name="sync_database_acknowledge">Kolekcija susinchronizuota</string>
     <string name="sync_log_error_specific">Sinchronizavimo klaida, tipas: %1$s, pranešimas: %2$s</string>

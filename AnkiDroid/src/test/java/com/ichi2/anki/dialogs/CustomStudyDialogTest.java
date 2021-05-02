@@ -28,6 +28,7 @@ import com.ichi2.anki.dialogs.customstudy.CustomStudyDialogFactory;
 import com.ichi2.libanki.Collection;
 import com.ichi2.libanki.Deck;
 import com.ichi2.libanki.sched.AbstractSched;
+import com.ichi2.testutils.ParametersUtils;
 
 import org.hamcrest.Matchers;
 import org.junit.After;
@@ -40,6 +41,7 @@ import androidx.fragment.app.testing.FragmentScenario;
 import androidx.lifecycle.Lifecycle;
 import androidx.test.ext.junit.runners.AndroidJUnit4;
 
+import static com.ichi2.testutils.ParametersUtils.whatever;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
 import static org.hamcrest.core.IsNull.notNullValue;
@@ -65,10 +67,6 @@ public class CustomStudyDialogTest extends RobolectricTest {
         reset(mockListener);
     }
 
-
-    private static <T> T whatever() {
-        return null;
-    }
 
     @Test
     public void learnAheadCardsRegressionTest() {

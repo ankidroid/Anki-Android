@@ -63,11 +63,6 @@
     <!-- AndroidManifest.xml -->
     <string name="preferences_title">偏好设置</string>
     <string name="deckpreferences_title">XXX 选项</string>
-    <string name="sync_conflict_message">您的本地牌组和AnkiWeb上的牌组存在冲突，需要以其中一个覆盖另一个。\n您想上传本地牌组，还是下载AnkiWeb上的牌组？</string>
-    <string name="sync_conflict_local">上传</string>
-    <string name="sync_conflict_remote">下载</string>
-    <string name="sync_conflict_remote_confirm">确认要下载服务器的牌组集合吗？这会覆盖本地的牌组集合。</string>
-    <string name="sync_conflict_local_confirm">确认要上传本地牌组集合吗？这会覆盖掉服务器的牌组集合。</string>
     <string name="sync_prepare_syncing">准备同步&#8230;&#8230;</string>
     <string name="sync_preparing_full_sync_message">准备完全同步&#8230;</string>
     <string name="sync_uploading_message">正在上传&#8230;&#8230;</string>
@@ -78,7 +73,6 @@
     <string name="sync_log_clocks_unsynchronized">你设备上的时间有%1$d秒%2$s的误差；为避免出现错误，你的时间和时区需要设置正确才能进行同步。请确保你手机上的日期、时间和时区都已设置正确再进行同步。</string>
     <string name="sync_log_clocks_unsynchronized_tz">，设备的时区可能是错误的</string>
     <string name="sync_log_clocks_unsynchronized_date">，设备的日期可能是错误的</string>
-    <string name="sync_conflict_title">同步冲突</string>
     <string name="sync_no_changes_message">没有发现变化</string>
     <string name="sync_database_acknowledge">同步完成</string>
     <string name="sync_log_error_specific">同步错误，类型：%1$s，信息：%2$s</string>
