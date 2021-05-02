@@ -127,4 +127,8 @@
     <attr name="popupBackgroundColor" format="reference"/>
 
     <attr name="editTextDisabled" format="color"/>
+
+    <declare-styleable name="CheckBoxTriStates">
+        <attr name="cycle_back_to_indeterminate" format="boolean" />
+    </declare-styleable>
 </resources>
