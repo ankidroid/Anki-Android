@@ -5,6 +5,8 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
 import android.content.pm.PackageManager;
+import android.database.SQLException;
+import android.os.Bundle;
 import android.view.Menu;
 
 import com.ichi2.anki.dialogs.DatabaseErrorDialog;
@@ -21,6 +23,7 @@ import com.ichi2.utils.ResourceLoader;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.robolectric.Robolectric;
+import org.robolectric.annotation.Config;
 
 import java.io.File;
 import java.util.HashMap;
@@ -405,6 +408,15 @@ public class DeckPickerTest extends RobolectricTest {
         } finally {
             InitialActivityTest.setupForDefault();
         }
+    }
+
+    @Test
+    @Config(qualifiers = "xlarge-port")
+    public void checkDisplayOfStudyOptionsOnTablet() {
+        DeckPickerEx deckPickerEx = super.startActivityNormallyOpenCollectionWithIntent(DeckPickerEx.class, new Intent());
+
+        StudyOptionsFragment studyOptionsFragment = (StudyOptionsFragment) deckPickerEx.getSupportFragmentManager().findFragmentById(R.id.studyoptions_fragment);
+        assertThat("Study options should show on start on tablet", studyOptionsFragment != null, is(true));
     }
 
 
