@@ -25,6 +25,7 @@ import java.util.Optional;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.annotation.VisibleForTesting;
 import androidx.appcompat.widget.SearchView;
 import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -269,7 +270,8 @@ public class TagsDialog extends AnalyticsDialogFragment {
         return editText;
     }
 
-    public void addTag(String tag) {
+    @VisibleForTesting
+    protected void addTag(String tag) {
         if (!TextUtils.isEmpty(tag)) {
             String feedbackText;
             if (mTags.add(tag)) {
