@@ -114,7 +114,7 @@ public class Statistics extends NavigationDrawerActivity implements
         supportInvalidateOptionsMenu();
 //        StatisticFragment.updateAllFragments();
 
-        mDeckSpinnerSelection = new DeckSpinnerSelection(Statistics.this, R.id.toolbar_spinner, false);
+        mDeckSpinnerSelection = new DeckSpinnerSelection(this, R.id.toolbar_spinner);
         mDeckSpinnerSelection.initializeActionBarDeckSpinner();
     }
 
