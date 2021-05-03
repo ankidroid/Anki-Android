@@ -113,10 +113,11 @@ public class Statistics extends NavigationDrawerActivity implements
         // Prepare options menu only after loading everything
         supportInvalidateOptionsMenu();
 //        StatisticFragment.updateAllFragments();
-
+        long deckId = getCol().getDecks().selected();
         mDeckSpinnerSelection = new DeckSpinnerSelection(this, R.id.toolbar_spinner);
         mDeckSpinnerSelection.initializeActionBarDeckSpinner();
         mDeckSpinnerSelection.setShowAllDecks(true);
+        mDeckSpinnerSelection.selectDeckById(deckId);
     }
 
     @Override
