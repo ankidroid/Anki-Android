@@ -17,6 +17,7 @@ package com.ichi2.anki.dialogs.tags;
 
 import android.os.Bundle;
 import android.view.View;
+import android.widget.CheckedTextView;
 import android.widget.RadioGroup;
 
 import com.afollestad.materialdialogs.DialogAction;
@@ -37,6 +38,7 @@ import androidx.fragment.app.testing.FragmentScenario;
 import androidx.lifecycle.Lifecycle;
 import androidx.lifecycle.LifecycleOwner;
 import androidx.lifecycle.LifecycleRegistry;
+import androidx.recyclerview.widget.RecyclerView;
 import androidx.test.ext.junit.runners.AndroidJUnit4;
 
 import static com.ichi2.anki.dialogs.tags.TagsDialogListener.*;
@@ -45,6 +47,7 @@ import static com.ichi2.utils.ListUtil.assertListEquals;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.core.IsNull.notNullValue;
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
@@ -149,6 +152,49 @@ public class TagsDialogTest {
 
             assertListEquals(new ArrayList<>(), returnedList.get());
             assertEquals(expectedOption, returnedOption.get());
+        });
+    }
+
+
+    // regression test #8762
+    @Test
+    public void test_AddNewTag_shouldBeVisibleInRecyclerView() {
+        final DialogType type = DialogType.ADD_TAG;
+        final List<String> allTags = Arrays.asList("a", "b", "d", "e");
+        final List<String> checkedTags = Arrays.asList("a", "b");
+
+        Bundle args = new TagsDialog(whatever())
+                .withArguments(type, checkedTags, allTags)
+                .getArguments();
+
+        final TagsDialogListener mockListener = mock(TagsDialogListener.class);
+
+        TagsDialogFactory factory = new TagsDialogFactory(mockListener);
+        FragmentScenario<TagsDialog> scenario = FragmentScenario.launch(TagsDialog.class, args, R.style.Theme_AppCompat, factory);
+
+        scenario.moveToState(Lifecycle.State.STARTED);
+
+        scenario.onFragment((f) -> {
+            MaterialDialog dialog = (MaterialDialog) f.getDialog();
+            assertThat(dialog, notNullValue());
+
+            final View body = dialog.getCustomView();
+            RecyclerView recycler = body.findViewById(R.id.tags_dialog_tags_list);
+
+            final String NEW_TAG = "c";
+
+            f.addTag(NEW_TAG);
+
+            // workaround robolectric recyclerView issue
+            // update recycler
+            recycler.measure(0, 0);
+            recycler.layout(0, 0, 100, 1000);
+
+            TagsArrayAdapter.ViewHolder vh = (TagsArrayAdapter.ViewHolder) recycler.findViewHolderForAdapterPosition(2);
+            CheckedTextView itemView = (CheckedTextView) vh.itemView;
+
+            assertEquals(NEW_TAG, itemView.getText());
+            assertTrue(itemView.isChecked());
         });
     }
 
