@@ -33,15 +33,15 @@ public class ForegroundTaskManager extends TaskManager {
 
 
     @Override
-    public <ProgressBackground, ResultListener, ResultBackground extends ResultListener> CollectionTask<ProgressBackground, ResultBackground> launchCollectionTaskConcrete(
+    public <ProgressBackground, ResultBackground> CollectionTask<ProgressBackground, ResultBackground> launchCollectionTaskConcrete(
             @NonNull CollectionTask.Task<ProgressBackground, ResultBackground> task,
-            @Nullable TaskListener<? super ProgressBackground, ResultListener> listener) {
+            @Nullable TaskListener<? super ProgressBackground, ? super ResultBackground> listener) {
         return executeTaskWithListener(task, listener, mColGetter);
     }
 
-    public static <ProgressBackground, ResultListener, ResultBackground extends ResultListener> CollectionTask<ProgressBackground, ResultBackground> executeTaskWithListener(
+    public static <ProgressBackground, ResultBackground> CollectionTask<ProgressBackground, ResultBackground> executeTaskWithListener(
             @NonNull CollectionTask.Task<ProgressBackground, ResultBackground> task,
-            @Nullable TaskListener<? super ProgressBackground, ResultListener> listener, CollectionGetter colGetter) {
+            @Nullable TaskListener<? super ProgressBackground, ? super ResultBackground> listener, CollectionGetter colGetter) {
         if (listener != null) {
             listener.onPreExecute();
         }
@@ -107,10 +107,10 @@ public class ForegroundTaskManager extends TaskManager {
         }
     }
 
-    public static class EmptyTask<ProgressBackground, ResultListener, ResultBackground extends ResultListener> extends
+    public static class EmptyTask<ProgressBackground, ResultBackground> extends
             CollectionTask<ProgressBackground, ResultBackground> {
 
-        protected EmptyTask(Task<ProgressBackground, ResultBackground> task, TaskListener<? super ProgressBackground, ResultListener> listener) {
+        protected EmptyTask(Task<ProgressBackground, ResultBackground> task, TaskListener<? super ProgressBackground, ? super ResultBackground> listener) {
             super(task, listener, null);
         }
     }
