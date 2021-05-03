@@ -86,9 +86,9 @@ public class SingleTaskManager extends TaskManager {
      * @param listener to the status and result of the task, may be null
      * @return the newly created task
      */
-    public <ProgressListener, ProgressBackground extends ProgressListener, ResultListener, ResultBackground extends ResultListener> CollectionTask<ProgressBackground, ResultListener, ResultBackground>
+    public <ProgressBackground, ResultListener, ResultBackground extends ResultListener> CollectionTask<ProgressBackground, ResultListener, ResultBackground>
     launchCollectionTaskConcrete(@NonNull CollectionTask.Task<ProgressBackground, ResultBackground> task,
-                         @Nullable TaskListener<ProgressListener, ResultListener> listener) {
+                         @Nullable TaskListener<? super ProgressBackground, ResultListener> listener) {
         // Start new task
         CollectionTask<ProgressBackground, ResultListener, ResultBackground> newTask = new CollectionTask<>(task, listener, mLatestInstance);
         addTasks(newTask);

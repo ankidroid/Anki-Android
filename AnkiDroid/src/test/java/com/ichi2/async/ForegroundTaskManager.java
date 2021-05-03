@@ -33,15 +33,15 @@ public class ForegroundTaskManager extends TaskManager {
 
 
     @Override
-    public <ProgressListener, ProgressBackground extends ProgressListener, ResultListener, ResultBackground extends ResultListener> CollectionTask<ProgressBackground, ResultListener, ResultBackground> launchCollectionTaskConcrete(
+    public <ProgressBackground, ResultListener, ResultBackground extends ResultListener> CollectionTask<ProgressBackground, ResultListener, ResultBackground> launchCollectionTaskConcrete(
             @NonNull CollectionTask.Task<ProgressBackground, ResultBackground> task,
-            @Nullable TaskListener<ProgressListener, ResultListener> listener) {
+            @Nullable TaskListener<? super ProgressBackground, ResultListener> listener) {
         return executeTaskWithListener(task, listener, mColGetter);
     }
 
-    public static <ProgressListener, ProgressBackground extends ProgressListener, ResultListener, ResultBackground extends ResultListener> CollectionTask<ProgressBackground, ResultListener, ResultBackground> executeTaskWithListener(
+    public static <ProgressBackground, ResultListener, ResultBackground extends ResultListener> CollectionTask<ProgressBackground, ResultListener, ResultBackground> executeTaskWithListener(
             @NonNull CollectionTask.Task<ProgressBackground, ResultBackground> task,
-            @Nullable TaskListener<ProgressListener, ResultListener> listener, CollectionGetter colGetter) {
+            @Nullable TaskListener<? super ProgressBackground, ResultListener> listener, CollectionGetter colGetter) {
         if (listener != null) {
             listener.onPreExecute();
         }
@@ -87,10 +87,10 @@ public class ForegroundTaskManager extends TaskManager {
 
     public static class MockTaskManager<ProgressListener, ProgressBackground extends ProgressListener> implements ProgressSenderAndCancelListener<ProgressBackground> {
 
-        private final @Nullable TaskListener<ProgressListener, ?> mTaskListener;
+        private final @Nullable TaskListener<? super ProgressBackground, ?> mTaskListener;
 
 
-        public MockTaskManager(@Nullable TaskListener<ProgressListener, ?> listener) {
+        public MockTaskManager(@Nullable TaskListener<? super ProgressBackground, ?> listener) {
             mTaskListener = listener;
         }
 
