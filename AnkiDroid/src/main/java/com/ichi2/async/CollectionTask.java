@@ -99,7 +99,7 @@ import static com.ichi2.utils.BooleanGetter.TRUE;
 /**
  * Loading in the background, so that AnkiDroid does not look like frozen.
  */
-public class CollectionTask<ProgressListener, ProgressBackground extends ProgressListener, ResultListener, ResultBackground extends ResultListener> extends BaseAsyncTask<Void, ProgressBackground, ResultBackground> {
+public class CollectionTask<ProgressBackground, ResultListener, ResultBackground extends ResultListener> extends BaseAsyncTask<Void, ProgressBackground, ResultBackground> {
 
     public abstract static class Task<ProgressBackground, ResultBackground> {
         protected abstract ResultBackground task(@NonNull Collection col, @NonNull ProgressSenderAndCancelListener<ProgressBackground> collectionTask);
@@ -145,11 +145,11 @@ public class CollectionTask<ProgressListener, ProgressBackground extends Progres
     public Task<ProgressBackground, ResultBackground> getTask() {
         return mTask;
     }
-    private final TaskListener<ProgressListener, ResultListener> mListener;
+    private final TaskListener<? super ProgressBackground, ResultListener> mListener;
     private CollectionTask mPreviousTask;
 
 
-    protected CollectionTask(Task<ProgressBackground, ResultBackground> task, TaskListener<ProgressListener, ResultListener> listener, CollectionTask previousTask) {
+    protected CollectionTask(Task<ProgressBackground, ResultBackground> task, TaskListener<? super ProgressBackground, ResultListener> listener, CollectionTask previousTask) {
         mTask = task;
         mListener = listener;
         mPreviousTask = previousTask;

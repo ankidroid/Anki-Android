@@ -226,7 +226,7 @@ public class DeckPicker extends NavigationDrawerActivity implements
 
     private String mExportFileName;
 
-    @Nullable private CollectionTask<?, ?, ?, ?> mEmptyCardTask = null;
+    @Nullable private CollectionTask<?, ?, ?> mEmptyCardTask = null;
 
     @VisibleForTesting
     public List<? extends AbstractDeckTreeNode<?>> mDueTree;
@@ -2809,7 +2809,7 @@ public class DeckPicker extends NavigationDrawerActivity implements
             mOnePercent = mNumberOfCards / 100;
         }
 
-        private void confirmCancel(@NonNull DeckPicker deckPicker, @NonNull CollectionTask<?, ?, ?, ?>  task) {
+        private void confirmCancel(@NonNull DeckPicker deckPicker, @NonNull CollectionTask<?, ?, ?>  task) {
             new MaterialDialog.Builder(deckPicker)
                     .content(R.string.confirm_cancel)
                     .positiveText(deckPicker.getResources().getString(R.string.yes))
@@ -2822,7 +2822,7 @@ public class DeckPicker extends NavigationDrawerActivity implements
         @Override
         public void actualOnPreExecute(@NonNull DeckPicker deckPicker) {
             DialogInterface.OnCancelListener onCancel = (dialogInterface) -> {
-                CollectionTask<?, ?, ?, ?>  emptyCardTask = deckPicker.mEmptyCardTask;
+                CollectionTask<?, ?, ?>  emptyCardTask = deckPicker.mEmptyCardTask;
                 if (emptyCardTask != null) {
                     confirmCancel(deckPicker, emptyCardTask);
                 }};
