@@ -765,13 +765,13 @@ public class CardBrowser extends NavigationDrawerActivity implements
 
     private void selectDeckAndSave(long deckId) {
         mDeckSpinnerSelection.selectDeckById(deckId);
-        if (deckId == ALL_DECKS_ID){
+        if (deckId == ALL_DECKS_ID) {
             mRestrictOnDeck = "";
-            saveLastDeckId(ALL_DECKS_ID);
         } else {
             String deckName = getCol().getDecks().name(deckId);
             mRestrictOnDeck = "deck:\"" + deckName + "\" ";
         }
+        saveLastDeckId(deckId);
         searchCards();
     }
 

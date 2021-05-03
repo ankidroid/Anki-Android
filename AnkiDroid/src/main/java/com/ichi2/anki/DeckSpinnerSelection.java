@@ -49,11 +49,11 @@ public class DeckSpinnerSelection {
 
     private long mDeckId;
     private ArrayList<Long> mAllDeckIds;
-    private Spinner mSpinner;
-    private AnkiActivity mContext;
+    private final Spinner mSpinner;
+    private final AnkiActivity mContext;
     private List<Deck> mDropDownDecks;
     private DeckDropDownAdapter mDeckDropDownAdapter;
-    private boolean mNoteEditorSpinner;
+    private final boolean mNoteEditorSpinner;
     private static final long ALL_DECKS_ID = 0L;
     private static final String PERSISTENT_STATE_FILE = "DeckPickerState";
     private static final String LAST_DECK_ID_KEY = "lastDeckId";
@@ -183,13 +183,15 @@ public class DeckSpinnerSelection {
             selectAllDecks();
             return true;
         }
+        return searchInList(deckId);
+    }
+
+
+    private boolean searchInList(long deckId) {
         for (int dropDownDeckIdx = 0; dropDownDeckIdx < mAllDeckIds.size(); dropDownDeckIdx++) {
             if (mAllDeckIds.get(dropDownDeckIdx) == deckId) {
                 int position = mNoteEditorSpinner ? dropDownDeckIdx : dropDownDeckIdx + 1;
                 selectDropDownItem(position);
-                if (!mNoteEditorSpinner) {
-                    saveLastDeckId(deckId);
-                }
                 return true;
             }
         }
@@ -198,15 +200,6 @@ public class DeckSpinnerSelection {
 
     void selectAllDecks() {
         selectDropDownItem(0);
-        saveLastDeckId(Stats.ALL_DECKS_ID);
-    }
-
-    private void saveLastDeckId(Long id) {
-        if (id == null) {
-            clearLastDeckId();
-            return;
-        }
-        mContext.getSharedPreferences(PERSISTENT_STATE_FILE, 0).edit().putLong(LAST_DECK_ID_KEY, id).apply();
     }
 
     public void selectDropDownItem(int position) {
