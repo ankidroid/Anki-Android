@@ -76,15 +76,15 @@ public abstract class TaskManager {
      * @param listener to the status and result of the task, may be null
      * @return the newly created task
      */
-    public static <ProgressListener, ProgressBackground extends ProgressListener, ResultListener, ResultBackground extends ResultListener> CollectionTask<ProgressBackground, ResultListener, ResultBackground>
+    public static <ProgressBackground, ResultListener, ResultBackground extends ResultListener> CollectionTask<ProgressBackground, ResultListener, ResultBackground>
     launchCollectionTask(@NonNull CollectionTask.Task<ProgressBackground, ResultBackground> task,
-                         @Nullable TaskListener<ProgressListener, ResultListener> listener) {
+                         @Nullable TaskListener<? super ProgressBackground, ResultListener> listener) {
         return sTaskManager.launchCollectionTaskConcrete(task, listener);
     }
 
-    public abstract <ProgressListener, ProgressBackground extends ProgressListener, ResultListener, ResultBackground extends ResultListener> CollectionTask<ProgressBackground, ResultListener, ResultBackground>
+    public abstract <ProgressBackground, ResultListener, ResultBackground extends ResultListener> CollectionTask<ProgressBackground, ResultListener, ResultBackground>
     launchCollectionTaskConcrete(@NonNull CollectionTask.Task<ProgressBackground, ResultBackground> task,
-                         @Nullable TaskListener<ProgressListener, ResultListener> listener);
+                         @Nullable TaskListener<? super ProgressBackground, ResultListener> listener);
 
     /**
      * Block the current thread until the currently running CollectionTask instance (if any) has finished.
