@@ -30,6 +30,7 @@ import java.util.List;
 import java.util.Locale;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.RecyclerView;
 
 public class TagsArrayAdapter extends  RecyclerView.Adapter<TagsArrayAdapter.ViewHolder> implements Filterable {
@@ -49,14 +50,17 @@ public class TagsArrayAdapter extends  RecyclerView.Adapter<TagsArrayAdapter.Vie
     @NonNull
     private final TagsList mTags;
     /**
-     * A subset of all tags in {@link #mTags} satisfying the user's search
+     * A subset of all tags in {@link #mTags} satisfying the user's search.
+     *
+     * it will be null if the user search term is empty, in that case
+     * the adapter should use {@link #mTags} instead to access full list.
      */
-    @NonNull
+    @Nullable
     private List<String> mFilteredList;
 
     public TagsArrayAdapter(@NonNull TagsList tags) {
         mTags = tags;
-        mFilteredList = tags.copyOfAllTagList();
+        mFilteredList = null;
         sortData();
     }
 
@@ -86,13 +90,23 @@ public class TagsArrayAdapter extends  RecyclerView.Adapter<TagsArrayAdapter.Vie
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        String tag = mFilteredList.get(position);
+        String tag = getTagByIndex(position);
         holder.mTagItemCheckedTextView.setText(tag);
         holder.mTagItemCheckedTextView.setChecked(mTags.isChecked(tag));
     }
 
+    private String getTagByIndex(int index) {
+        if (mFilteredList == null) {
+            return mTags.get(index);
+        }
+        return mFilteredList.get(index);
+    }
+
     @Override
     public int getItemCount() {
+        if (mFilteredList == null) {
+            return mTags.size();
+        }
         return mFilteredList.size();
     }
 
@@ -106,7 +120,7 @@ public class TagsArrayAdapter extends  RecyclerView.Adapter<TagsArrayAdapter.Vie
         @Override
         protected FilterResults performFiltering(CharSequence constraint) {
             if (constraint.length() == 0) {
-                mFilteredList = mTags.copyOfAllTagList();
+                mFilteredList = null;
             } else {
                 mFilteredList = new ArrayList<>();
                 final String filterPattern = constraint.toString().toLowerCase(Locale.getDefault()).trim();
