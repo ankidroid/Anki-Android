@@ -416,7 +416,7 @@ public class DeckPickerTest extends RobolectricTest {
         DeckPickerEx deckPickerEx = super.startActivityNormallyOpenCollectionWithIntent(DeckPickerEx.class, new Intent());
 
         StudyOptionsFragment studyOptionsFragment = (StudyOptionsFragment) deckPickerEx.getSupportFragmentManager().findFragmentById(R.id.studyoptions_fragment);
-        assertThat("Study options should show on start on tablet", studyOptionsFragment != null, is(true));
+        assertThat("Study options should show on start on tablet", studyOptionsFragment, notNullValue());
     }
 
 
