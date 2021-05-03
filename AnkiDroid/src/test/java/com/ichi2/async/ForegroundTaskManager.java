@@ -22,7 +22,7 @@ public class ForegroundTaskManager extends TaskManager {
 
 
     @Override
-    public <ProgressBackground, ResultBackground> CollectionTask<ProgressBackground, ResultBackground, ResultBackground> launchCollectionTaskConcrete(CollectionTask.Task<ProgressBackground, ResultBackground> task) {
+    public <ProgressBackground, ResultBackground> CollectionTask<ProgressBackground, ResultBackground> launchCollectionTaskConcrete(CollectionTask.Task<ProgressBackground, ResultBackground> task) {
         return launchCollectionTaskConcrete(task, null);
     }
 
@@ -33,13 +33,13 @@ public class ForegroundTaskManager extends TaskManager {
 
 
     @Override
-    public <ProgressBackground, ResultListener, ResultBackground extends ResultListener> CollectionTask<ProgressBackground, ResultListener, ResultBackground> launchCollectionTaskConcrete(
+    public <ProgressBackground, ResultListener, ResultBackground extends ResultListener> CollectionTask<ProgressBackground, ResultBackground> launchCollectionTaskConcrete(
             @NonNull CollectionTask.Task<ProgressBackground, ResultBackground> task,
             @Nullable TaskListener<? super ProgressBackground, ResultListener> listener) {
         return executeTaskWithListener(task, listener, mColGetter);
     }
 
-    public static <ProgressBackground, ResultListener, ResultBackground extends ResultListener> CollectionTask<ProgressBackground, ResultListener, ResultBackground> executeTaskWithListener(
+    public static <ProgressBackground, ResultListener, ResultBackground extends ResultListener> CollectionTask<ProgressBackground, ResultBackground> executeTaskWithListener(
             @NonNull CollectionTask.Task<ProgressBackground, ResultBackground> task,
             @Nullable TaskListener<? super ProgressBackground, ResultListener> listener, CollectionGetter colGetter) {
         if (listener != null) {
@@ -108,7 +108,7 @@ public class ForegroundTaskManager extends TaskManager {
     }
 
     public static class EmptyTask<ProgressBackground, ResultListener, ResultBackground extends ResultListener> extends
-            CollectionTask<ProgressBackground, ResultListener, ResultBackground> {
+            CollectionTask<ProgressBackground, ResultBackground> {
 
         protected EmptyTask(Task<ProgressBackground, ResultBackground> task, TaskListener<? super ProgressBackground, ResultListener> listener) {
             super(task, listener, null);
