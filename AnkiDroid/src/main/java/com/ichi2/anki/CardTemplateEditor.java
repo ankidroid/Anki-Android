@@ -18,9 +18,11 @@
 
 package com.ichi2.anki;
 
+import android.annotation.TargetApi;
 import android.content.Context;
 import android.content.Intent;
 import android.content.res.Resources;
+import android.os.Build;
 import android.os.Bundle;
 
 import androidx.activity.result.ActivityResultLauncher;
@@ -28,6 +30,7 @@ import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.CheckResult;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.annotation.RequiresApi;
 import androidx.annotation.StringRes;
 import androidx.annotation.VisibleForTesting;
 import androidx.fragment.app.Fragment;
@@ -36,6 +39,7 @@ import androidx.viewpager2.widget.ViewPager2;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Pair;
+import android.view.ActionMode;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -43,7 +47,6 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.EditText;
 
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
@@ -53,6 +56,8 @@ import com.ichi2.anki.dialogs.ConfirmationDialog;
 import com.ichi2.anki.dialogs.DeckSelectionDialog;
 import com.ichi2.anki.dialogs.DeckSelectionDialog.SelectableDeck;
 import com.ichi2.anki.dialogs.DiscardChangesDialog;
+import com.ichi2.anki.dialogs.InsertFieldDialog;
+import com.ichi2.anki.dialogs.InsertFieldDialogFactory;
 import com.ichi2.anki.exception.ConfirmModSchemaException;
 import com.ichi2.async.TaskListenerWithContext;
 import com.ichi2.libanki.Collection;
@@ -62,6 +67,7 @@ import com.ichi2.libanki.Model;
 import com.ichi2.libanki.Models;
 import com.ichi2.themes.StyledProgressDialog;
 
+import com.ichi2.ui.FixedEditText;
 import com.ichi2.ui.FixedTextView;
 import com.ichi2.utils.FunctionalInterfaces;
 import com.ichi2.utils.JSONArray;
@@ -89,6 +95,10 @@ public class CardTemplateEditor extends AnkiActivity implements DeckSelectionDia
     protected ViewPager2 mViewPager;
     private TabLayout mSlidingTabLayout;
     private TemporaryModel mTempModel;
+    private InsertFieldDialogFactory mInsertFieldDialogFactory;
+
+    @Nullable
+    private List<String> mFieldNames;
     private long mModelId;
     private long mNoteId;
 
@@ -129,6 +139,7 @@ public class CardTemplateEditor extends AnkiActivity implements DeckSelectionDia
         // Load the args either from the intent or savedInstanceState bundle
         mEditorPosition = new HashMap<>();
         mEditorViewId = new HashMap<>();
+        mInsertFieldDialogFactory = new InsertFieldDialogFactory(s -> getCurrentFragment().insertField(s)).attachToActivity(this);
 
         if (savedInstanceState == null) {
             // get model id
@@ -201,6 +212,7 @@ public class CardTemplateEditor extends AnkiActivity implements DeckSelectionDia
             mTempModel = new TemporaryModel(new Model(col.getModels().get(mModelId).toString()));
             //Timber.d("onCollectionLoaded() model is %s", mTempModel.getModel().toString(2));
         }
+        mFieldNames = mTempModel.getModel().getFieldsNames();
         // Set up the ViewPager with the sections adapter.
         mViewPager = findViewById(R.id.pager);
         mViewPager.setAdapter(new TemplatePagerAdapter((this)));
@@ -372,7 +384,7 @@ public class CardTemplateEditor extends AnkiActivity implements DeckSelectionDia
 
     public static class CardTemplateFragment extends Fragment {
         private FixedTextView mCurrentEdtiorTitle;
-        private EditText mEditorEditText;
+        private FixedEditText mEditorEditText;
 
         private int mCurrentEditorViewId;
         private int mEditorPosition;
@@ -424,22 +436,19 @@ public class CardTemplateEditor extends AnkiActivity implements DeckSelectionDia
 
 
             BottomNavigationView bottomNavigation = mainView.findViewById(R.id.card_template_editor_bottom_navigation);
-            bottomNavigation.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
-                @Override
-                public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-                    int currentSelectedId = item.getItemId();
-                    mTemplateEditor.mEditorViewId.put(position, currentSelectedId);
-                    if (currentSelectedId == R.id.styling_edit) {
-                        setCurrentEditorView(currentSelectedId, tempModel.getCss(), R.string.card_template_editor_styling);
-                        return true;
-                    } else if (currentSelectedId == R.id.back_edit) {
-                        setCurrentEditorView(currentSelectedId, template.getString("afmt"), R.string.card_template_editor_back);
-                        return true;
-                    } else {
-                        setCurrentEditorView(currentSelectedId, template.getString("qfmt"), R.string.card_template_editor_front);
-                        return true;
-                    }
+            bottomNavigation.setOnNavigationItemSelectedListener(item -> {
+                int currentSelectedId = item.getItemId();
+                mTemplateEditor.mEditorViewId.put(position, currentSelectedId);
+                if (currentSelectedId == R.id.styling_edit) {
+                    setCurrentEditorView(currentSelectedId, tempModel.getCss(), R.string.card_template_editor_styling);
+                } else if (currentSelectedId == R.id.back_edit) {
+                    setCurrentEditorView(currentSelectedId, template.getString("afmt"), R.string.card_template_editor_back);
+                } else {
+                    setCurrentEditorView(currentSelectedId, template.getString("qfmt"), R.string.card_template_editor_front);
                 }
+                // contents of menu have changed and menu should be redrawn
+                mTemplateEditor.invalidateOptionsMenu();
+                return true;
             });
             // set saved or default view
             bottomNavigation.setSelectedItemId(getArguments().getInt(EDITOR_VIEW_ID_KEY));
@@ -473,6 +482,25 @@ public class CardTemplateEditor extends AnkiActivity implements DeckSelectionDia
             // Enable menu
             setHasOptionsMenu(true);
             return mainView;
+        }
+
+        private void showInsertFieldDialog() {
+            if (mTemplateEditor.mFieldNames == null) {
+                return;
+            }
+            InsertFieldDialog insertFieldDialog = mTemplateEditor.mInsertFieldDialogFactory
+                    .newInsertFieldDialog()
+                    .withArguments(mTemplateEditor.mFieldNames);
+            mTemplateEditor.showDialogFragment(insertFieldDialog);
+        }
+
+
+        private void insertField(String fieldName) {
+            int start = Math.max(mEditorEditText.getSelectionStart(), 0);
+            int end = Math.max(mEditorEditText.getSelectionEnd(), 0);
+            // add string to editText
+            String updatedString = "{{" + fieldName + "}}";
+            mEditorEditText.getText().replace(Math.min(start, end), Math.max(start, end), updatedString, 0, updatedString.length());
         }
 
         public void setCurrentEditorView(@NonNull int id, @NonNull String editorContent, @NonNull int editorTitleId) {
@@ -533,6 +561,9 @@ public class CardTemplateEditor extends AnkiActivity implements DeckSelectionDia
                 menu.findItem(R.id.action_delete).setVisible(false);
             }
 
+            // marked insert field menu item invisible for style view
+            boolean isInsertFieldItemVisible = mCurrentEditorViewId != R.id.styling_edit;
+            menu.findItem(R.id.action_insert_field).setVisible(isInsertFieldItemVisible);
             super.onCreateOptionsMenu(menu, inflater);
         }
 
@@ -548,6 +579,8 @@ public class CardTemplateEditor extends AnkiActivity implements DeckSelectionDia
                 //      AnkiDroid never had this so it isn't a regression but it is a miss for AnkiDesktop parity
                 addNewTemplateWithCheck(tempModel.getModel());
                 return true;
+            } else if (itemId == R.id.action_insert_field) {
+                showInsertFieldDialog();
             } else if (itemId == R.id.action_delete) {
                 Timber.i("CardTemplateEditor:: Delete template button pressed");
                 Resources res = getResources();
