@@ -139,9 +139,11 @@ public class TagsListTest {
 
     @Test
     public void test_constructor_will_remove_dups() {
+        List<String> allTags = Arrays.asList("a", "b", "a");
+        List<String> checkedTags = Arrays.asList("b", "b", "b");
         TagsList list = new TagsList(
-                Arrays.asList("a", "b", "a"),
-                Arrays.asList("b", "b", "b")
+                allTags,
+                checkedTags
         );
 
         assertEquals("All tags list should not contain any duplicates",
@@ -153,10 +155,13 @@ public class TagsListTest {
 
     @Test
     public void test_constructor_will_remove_dups_unchecked() {
+        List<String> allTags = Arrays.asList("a", "b", "a", "c", "c", "d");
+        List<String> checkedTags = Arrays.asList("b", "b", "b");
+        List<String> uncheckedTags = Arrays.asList("c", "c", "d");
         TagsList list = new TagsList(
-                Arrays.asList("a", "b", "a", "c", "c", "d"),
-                Arrays.asList("b", "b", "b"),
-                Arrays.asList("c", "c", "d")
+                allTags,
+                checkedTags,
+                uncheckedTags
         );
 
         assertEquals("All tags list should not contain any duplicates",
@@ -170,9 +175,11 @@ public class TagsListTest {
 
     @Test
     public void test_constructor_will_ignore_casing() {
+        List<String> allTags = Arrays.asList("aA", "bb", "aa");
+        List<String> checkedTags = Arrays.asList("bb", "Bb", "bB");
         TagsList list = new TagsList(
-                Arrays.asList("aA", "bb", "aa"),
-                Arrays.asList("bb", "Bb", "bB")
+                allTags,
+                checkedTags
         );
 
         assertEquals("All tags list should not contain any duplicates (case insensitive)",
@@ -183,10 +190,13 @@ public class TagsListTest {
 
     @Test
     public void test_constructor_will_ignore_casing_unchecked() {
+        List<String> allTags = Arrays.asList("aA", "bb", "aa", "cc", "dd");
+        List<String> checkedTags = Arrays.asList("bb", "Bb", "bB", "dd", "ff");
+        List<String> uncheckedTags = Arrays.asList("BB", "cC", "cC", "dD", "CC");
         TagsList list = new TagsList(
-                Arrays.asList("aA", "bb", "aa", "cc", "dd"),
-                Arrays.asList("bb", "Bb", "bB", "dd", "ff"),
-                Arrays.asList("BB", "cC", "cC", "dD", "CC")
+                allTags,
+                checkedTags,
+                uncheckedTags
         );
 
         assertEquals("All tags list should not contain any duplicates (case insensitive)",
@@ -200,9 +210,11 @@ public class TagsListTest {
 
     @Test
     public void test_constructor_will_add_checked_to_all() {
+        List<String> allTags = Arrays.asList("aA", "bb", "aa");
+        List<String> checkedTags = Arrays.asList("bb", "Bb", "bB", "cc");
         TagsList list = new TagsList(
-                Arrays.asList("aA", "bb", "aa"),
-                Arrays.asList("bb", "Bb", "bB", "cc")
+                allTags,
+                checkedTags
         );
 
         assertEquals("Extra tags in checked not found in all tags, must be added to all tags list",
@@ -214,10 +226,13 @@ public class TagsListTest {
 
     @Test
     public void test_constructor_will_add_checked_and_unchecked_to_all() {
+        List<String> allTags = Arrays.asList("aA", "bb", "aa");
+        List<String> checkedTags = Arrays.asList("bb", "Bb", "bB", "Cc", "zz");
+        List<String> uncheckedTags = Arrays.asList("BB", "cC", "cC", "dD", "CC");
         TagsList list = new TagsList(
-                Arrays.asList("aA", "bb", "aa"),
-                Arrays.asList("bb", "Bb", "bB", "Cc", "zz"),
-                Arrays.asList("BB", "cC", "cC", "dD", "CC")
+                allTags,
+                checkedTags,
+                uncheckedTags
         );
 
         assertEquals("Extra tags in checked not found in all tags, must be added to all tags list",
