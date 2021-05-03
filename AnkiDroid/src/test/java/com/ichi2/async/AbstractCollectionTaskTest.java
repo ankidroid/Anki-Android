@@ -31,7 +31,7 @@ import static org.hamcrest.Matchers.notNullValue;
 public abstract class AbstractCollectionTaskTest extends RobolectricTest {
 
     protected <Progress, Result> Result execute(CollectionTask.Task<Progress, Result> task) {
-        CollectionTask<Progress, Progress, Result, Result> collectionTask = TaskManager.launchCollectionTask(task);
+        CollectionTask<Progress, Result, Result> collectionTask = TaskManager.launchCollectionTask(task);
         try {
             return collectionTask.get();
         } catch (Exception e) {

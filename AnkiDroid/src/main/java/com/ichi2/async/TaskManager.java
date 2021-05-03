@@ -56,11 +56,11 @@ public abstract class TaskManager {
         sTaskManager.setLatestInstanceConcrete(task);
     }
 
-    public static <ProgressBackground, ResultBackground> CollectionTask<ProgressBackground, ProgressBackground, ResultBackground, ResultBackground> launchCollectionTask(CollectionTask.Task<ProgressBackground, ResultBackground> task) {
+    public static <ProgressBackground, ResultBackground> CollectionTask<ProgressBackground, ResultBackground, ResultBackground> launchCollectionTask(CollectionTask.Task<ProgressBackground, ResultBackground> task) {
         return sTaskManager.launchCollectionTaskConcrete(task);
     }
 
-    public abstract <ProgressBackground, ResultBackground> CollectionTask<ProgressBackground, ProgressBackground, ResultBackground, ResultBackground> launchCollectionTaskConcrete(CollectionTask.Task<ProgressBackground, ResultBackground> task);
+    public abstract <ProgressBackground, ResultBackground> CollectionTask<ProgressBackground, ResultBackground, ResultBackground> launchCollectionTaskConcrete(CollectionTask.Task<ProgressBackground, ResultBackground> task);
 
 
     protected abstract void setLatestInstanceConcrete(CollectionTask task);
@@ -76,13 +76,13 @@ public abstract class TaskManager {
      * @param listener to the status and result of the task, may be null
      * @return the newly created task
      */
-    public static <ProgressListener, ProgressBackground extends ProgressListener, ResultListener, ResultBackground extends ResultListener> CollectionTask<ProgressListener, ProgressBackground, ResultListener, ResultBackground>
+    public static <ProgressListener, ProgressBackground extends ProgressListener, ResultListener, ResultBackground extends ResultListener> CollectionTask<ProgressBackground, ResultListener, ResultBackground>
     launchCollectionTask(@NonNull CollectionTask.Task<ProgressBackground, ResultBackground> task,
                          @Nullable TaskListener<ProgressListener, ResultListener> listener) {
         return sTaskManager.launchCollectionTaskConcrete(task, listener);
     }
 
-    public abstract <ProgressListener, ProgressBackground extends ProgressListener, ResultListener, ResultBackground extends ResultListener> CollectionTask<ProgressListener, ProgressBackground, ResultListener, ResultBackground>
+    public abstract <ProgressListener, ProgressBackground extends ProgressListener, ResultListener, ResultBackground extends ResultListener> CollectionTask<ProgressBackground, ResultListener, ResultBackground>
     launchCollectionTaskConcrete(@NonNull CollectionTask.Task<ProgressBackground, ResultBackground> task,
                          @Nullable TaskListener<ProgressListener, ResultListener> listener);
 
