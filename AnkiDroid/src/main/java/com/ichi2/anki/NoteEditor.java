@@ -611,7 +611,6 @@ public class NoteEditor extends AnkiActivity implements
         }
         mDeckSpinnerSelection = new DeckSpinnerSelection(this, R.id.note_deck_spinner);
         mDeckSpinnerSelection.initializeNoteEditorDeckSpinner(mCurrentEditedCard, mAddNote);
-        mDeckSpinnerSelection.setIncludeAllDeckOption(true);
 
         mCurrentDid = intent.getLongExtra(EXTRA_DID, mCurrentDid);
         String mGetTextFromSearchView = intent.getStringExtra(EXTRA_TEXT_FROM_SEARCH_VIEW);

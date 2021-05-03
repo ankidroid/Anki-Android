@@ -48,7 +48,7 @@ public class DeckSpinnerSelection {
     private final AnkiActivity mContext;
     private List<Deck> mDropDownDecks;
     private DeckDropDownAdapter mDeckDropDownAdapter;
-    private boolean mIsIncludeAllDeckOption = false;
+    private boolean mShowAllDecks = false;
     private static final long ALL_DECKS_ID = 0L;
 
 
@@ -59,8 +59,8 @@ public class DeckSpinnerSelection {
         mSpinner = mContext.findViewById(spinnerId);
     }
 
-    public void setIncludeAllDeckOption(boolean includeAllDeckOption) {
-        mIsIncludeAllDeckOption = includeAllDeckOption;
+    public void setShowAllDecks(boolean showAllDecks) {
+        mShowAllDecks = showAllDecks;
     }
 
     public void initializeActionBarDeckSpinner() {
@@ -186,7 +186,7 @@ public class DeckSpinnerSelection {
     private boolean searchInList(long deckId) {
         for (int dropDownDeckIdx = 0; dropDownDeckIdx < mAllDeckIds.size(); dropDownDeckIdx++) {
             if (mAllDeckIds.get(dropDownDeckIdx) == deckId) {
-                int position = mIsIncludeAllDeckOption ? dropDownDeckIdx : dropDownDeckIdx + 1;
+                int position = mShowAllDecks ? dropDownDeckIdx + 1 : dropDownDeckIdx;
                 selectDropDownItem(position);
                 return true;
             }
@@ -210,9 +210,8 @@ public class DeckSpinnerSelection {
     public void displayDeckOverrideDialog(Collection col) {
         FunctionalInterfaces.Filter<Deck> nonDynamic = (d) -> !Decks.isDynamic(d);
         List<DeckSelectionDialog.SelectableDeck> decks = DeckSelectionDialog.SelectableDeck.fromCollection(col, nonDynamic);
-
-        if (!mIsIncludeAllDeckOption) {
-            decks.add(new DeckSelectionDialog.SelectableDeck(ALL_DECKS_ID, "All Decks"));
+        if (mShowAllDecks) {
+            decks.add(0, new DeckSelectionDialog.SelectableDeck(ALL_DECKS_ID, "ALL DECKS"));
         }
 
         DeckSelectionDialog dialog = DeckSelectionDialog.newInstance(mContext.getString(R.string.search_deck), null, false, decks);

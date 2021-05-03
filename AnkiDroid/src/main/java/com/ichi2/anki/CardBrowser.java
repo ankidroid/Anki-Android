@@ -750,6 +750,7 @@ public class CardBrowser extends NavigationDrawerActivity implements
 
         long deckId = getCol().getDecks().selected();
         mDeckSpinnerSelection = new DeckSpinnerSelection(this, R.id.toolbar_spinner);
+        mDeckSpinnerSelection.setShowAllDecks(true);
         mDeckSpinnerSelection.initializeActionBarDeckSpinner();
         selectDeckAndSave(deckId);
 
