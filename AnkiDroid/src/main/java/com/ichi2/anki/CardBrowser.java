@@ -764,7 +764,7 @@ public class CardBrowser extends NavigationDrawerActivity implements
         }
     }
 
-    private void selectDeckAndSave(long deckId) {
+    public void selectDeckAndSave(long deckId) {
         mDeckSpinnerSelection.selectDeckById(deckId);
         if (deckId == ALL_DECKS_ID) {
             mRestrictOnDeck = "";
