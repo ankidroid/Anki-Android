@@ -279,12 +279,12 @@ public class TagsDialog extends AnalyticsDialogFragment {
                     mNoTagsTextView.setVisibility(View.GONE);
                 }
                 mTags.add(tag);
-                mTagsArrayAdapter.sortData();
                 feedbackText = getString(R.string.tag_editor_add_feedback, tag, mPositiveText);
             } else {
                 feedbackText = getString(R.string.tag_editor_add_feedback_existing, tag);
             }
             mTags.check(tag);
+            mTagsArrayAdapter.sortData();
             mTagsArrayAdapter.notifyDataSetChanged();
             // Show a snackbar to let the user know the tag was added successfully
             UIUtils.showSnackbar(getActivity(), feedbackText, false, -1, null,
