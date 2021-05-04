@@ -134,7 +134,7 @@ public class Collection implements CollectionGetter {
     private static final Pattern fClozePatternA = Pattern.compile("\\{\\{(.*?)cloze:");
     private static final Pattern fClozeTagStart = Pattern.compile("<%cloze:");
 
-    private static final int fDefaultSchedulerVersion = 1;
+    private static final int fDefaultSchedulerVersion = 2;
     private static final List<Integer> fSupportedSchedulerVersions = Arrays.asList(1, 2);
 
     // Not in libAnki.

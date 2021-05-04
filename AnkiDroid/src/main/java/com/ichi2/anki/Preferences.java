@@ -620,7 +620,7 @@ public class Preferences extends AppCompatPreferenceActivity implements Preferen
                             }
                             break;
                         case "schedVer":
-                            ((android.preference.CheckBoxPreference)pref).setChecked(conf.optInt("schedVer", 1) == 2);
+                            ((android.preference.CheckBoxPreference)pref).setChecked(col.schedVer() == 2);
                     }
                 } catch (NumberFormatException e) {
                     throw new RuntimeException(e);
