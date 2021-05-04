@@ -57,6 +57,12 @@ public class TagsArrayAdapter extends  RecyclerView.Adapter<TagsArrayAdapter.Vie
         public boolean isChecked() {
             return mCheckBoxView.isChecked();
         }
+
+
+        @VisibleForTesting(otherwise = NONE)
+        public CheckBoxTriStates.State getCheckboxState() {
+            return mCheckBoxView.getState();
+        }
     }
 
 
