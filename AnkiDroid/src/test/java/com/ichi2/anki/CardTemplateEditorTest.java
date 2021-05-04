@@ -537,7 +537,7 @@ public class CardTemplateEditorTest extends RobolectricTest {
     }
 
     @Test
-    public void testContentPreserveAfterChangingEditorView() {
+    public void testContentPreservedAfterChangingEditorView() {
         String modelName = "Basic";
 
         // Start the CardTemplateEditor with a specific model, and make sure the model starts unchanged
@@ -567,7 +567,7 @@ public class CardTemplateEditorTest extends RobolectricTest {
     }
 
     @Test
-    public void testCheckBottomNavigationView() {
+    public void testBottomNavigationViewLayoutTransition() {
         String modelName = "Basic";
 
         // Start the CardTemplateEditor with a specific model, and make sure the model starts unchanged
