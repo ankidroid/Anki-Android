@@ -327,6 +327,7 @@ public class Toolbar extends FrameLayout {
         mFormatCallback.performFormat(formatter);
     }
 
+    // updating toolbar button colors w.r.t. the theme
     public void setIconColor(@ColorInt int color) {
         LinearLayout note_toolbar_internal_layout = (LinearLayout) this.mToolbar.getChildAt(1);
         for (int i = 0; i < note_toolbar_internal_layout.getChildCount(); i++) {
@@ -336,6 +337,7 @@ public class Toolbar extends FrameLayout {
         mStringPaint.setColor(color);
     }
 
+    
     public interface TextFormatListener {
         void performFormat(TextFormatter formatter);
     }

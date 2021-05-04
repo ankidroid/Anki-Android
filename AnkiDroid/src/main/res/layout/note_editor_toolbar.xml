@@ -150,6 +150,7 @@
             <androidx.appcompat.widget.AppCompatImageButton
                 android:id="@+id/note_editor_toolbar_button_color_picker"
                 app:srcCompat="@drawable/ic_color_picker_24"
+                android:tag="c"
                 style="@style/note_editor_toolbar_button" />
             <!-- We can't dynamically add this on API 16,
              which is a shame, as we need the note editor to know the cloze ordinal
