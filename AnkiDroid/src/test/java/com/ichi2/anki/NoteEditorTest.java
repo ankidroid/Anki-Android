@@ -45,6 +45,7 @@ import androidx.test.ext.junit.runners.AndroidJUnit4;
 
 import static com.ichi2.compat.Compat.EXTRA_PROCESS_TEXT;
 import static com.ichi2.libanki.Collection.CUR_DECK;
+import static com.ichi2.libanki.Model.MODEL_S_DID;
 import static com.ichi2.testutils.AnkiAssert.assertDoesNotThrow;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.contains;
@@ -221,7 +222,7 @@ public class NoteEditorTest extends RobolectricTest {
         long currentDid = addDeck("Basic::Test");
         getCol().getConf().put(CUR_DECK, currentDid);
         Note n = super.addNoteUsingBasicModel("Test", "Note");
-        n.model().put("did", currentDid);
+        n.model().put(MODEL_S_DID, currentDid);
         NoteEditor editor = getNoteEditorEditingExistingBasicNote("Test", "Note", FromScreen.DECK_LIST);
 
         getCol().getConf().put(CUR_DECK, Consts.DEFAULT_DECK_ID); // Change DID if going through default path

@@ -40,6 +40,7 @@ import timber.log.Timber;
 
 import static com.ichi2.anki.AbstractFlashcardViewer.EASE_4;
 import static com.ichi2.anki.AbstractFlashcardViewer.RESULT_DEFAULT;
+import static com.ichi2.libanki.Model.MODEL_S_DID;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.empty;
 import static org.hamcrest.Matchers.is;
@@ -237,7 +238,7 @@ public class ReviewerTest extends RobolectricTest {
         Decks decks = col.getDecks();
         Long didAb = addDeck("A::B");
         Model basic = models.byName(AnkiDroidApp.getAppResources().getString(R.string.basic_model_name));
-        basic.put("did", didAb);
+        basic.put(MODEL_S_DID, didAb);
         addNoteUsingBasicModel("foo", "bar");
         Long didA = addDeck("A");
         decks.select(didA);
@@ -254,7 +255,7 @@ public class ReviewerTest extends RobolectricTest {
 
         Long didAb = addDeck("A::B");
         Model basic = models.byName(AnkiDroidApp.getAppResources().getString(R.string.basic_model_name));
-        basic.put("did", didAb);
+        basic.put(MODEL_S_DID, didAb);
         addNoteUsingBasicModel("foo", "bar");
 
         Long didA = addDeck("A");

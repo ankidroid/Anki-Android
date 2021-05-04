@@ -47,7 +47,6 @@ import com.ichi2.libanki.template.ParsedNode;
 import com.ichi2.libanki.template.TemplateError;
 import com.ichi2.libanki.utils.Time;
 import com.ichi2.upgrade.Upgrade;
-import com.ichi2.utils.DatabaseChangeDecorator;
 import com.ichi2.utils.FunctionalInterfaces;
 import com.ichi2.utils.VersionUtils;
 
@@ -60,7 +59,6 @@ import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Calendar;
@@ -87,6 +85,7 @@ import timber.log.Timber;
 import static com.ichi2.async.CancelListener.isCancelled;
 import static com.ichi2.libanki.Card.ANSWER_KEY;
 import static com.ichi2.libanki.Card.QUESTION_KEY;
+import static com.ichi2.libanki.Model.MODEL_S_DID;
 
 // Anki maintains a cache of used tags so it can quickly present a list of tags
 // for autocomplete and in the browser. For efficiency, deletions are not
@@ -827,7 +826,7 @@ public class Collection implements CollectionGetter {
                     due = (long) nextID("pos");
                 }
                 if (did == null || did == 0L) {
-                    did = model.getLong("did");
+                    did = model.getLong(MODEL_S_DID);
                 }
                 // add any missing cards
                 ArrayList<JSONObject> tmpls = _tmplsFromOrds(model, avail);
@@ -911,7 +910,7 @@ public class Collection implements CollectionGetter {
             } else if (parameterDid != 0) {
                 did = parameterDid;
             } else {
-                did = note.model().optLong("did", 0);
+                did = note.model().optLong(MODEL_S_DID, 0);
             }
         }
         card.setDid(did);

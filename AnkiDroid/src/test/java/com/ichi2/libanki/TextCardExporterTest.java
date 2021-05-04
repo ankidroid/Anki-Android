@@ -30,6 +30,7 @@ import java.util.Locale;
 
 import androidx.test.ext.junit.runners.AndroidJUnit4;
 
+import static com.ichi2.libanki.Model.MODEL_S_DID;
 import static org.junit.Assert.assertEquals;
 
 @RunWith(AndroidJUnit4.class)
@@ -52,7 +53,7 @@ public class TextCardExporterTest extends RobolectricTest {
         note = col.newNote();
         note.setItem("Front", "baz");
         note.setItem("Back", "qux");
-        note.model().put("did", addDeck("new col"));
+        note.model().put(MODEL_S_DID, addDeck("new col"));
         col.addNote(note);
         noteList.add(note);
     }

@@ -81,6 +81,7 @@ import timber.log.Timber;
 
 import static com.ichi2.anki.FlashCardsContract.READ_WRITE_PERMISSION;
 import static com.ichi2.libanki.Card.ANSWER_KEY;
+import static com.ichi2.libanki.Model.MODEL_S_DID;
 import static com.ichi2.libanki.Models.NOT_FOUND_NOTE_TYPE;
 
 /**
@@ -558,7 +559,7 @@ public class CardContentProvider extends ContentProvider {
                         if (col.getDecks().isDyn(Long.parseLong(newDid))) {
                             throw new IllegalArgumentException("Cannot set a filtered deck as default deck for a model");
                         }
-                        model.put("did", newDid);
+                        model.put(MODEL_S_DID, newDid);
                         updated++;
                     }
                     if (newSortf != null) {
@@ -944,7 +945,7 @@ public class CardContentProvider extends ContentProvider {
                     }
                     // Add the did if specified
                     if (did != null) {
-                        newModel.put("did", did);
+                        newModel.put(MODEL_S_DID, did);
                     }
                     if (sortf != null && sortf < allFields.length) {
                         newModel.put("sortf", sortf);
@@ -1178,7 +1179,7 @@ public class CardContentProvider extends ContentProvider {
                         break;
                     case FlashCardsContract.Model.DECK_ID:
                         //#6378 - Anki Desktop changed schema temporarily to allow null
-                        rb.add(model.optLong("did", Consts.DEFAULT_DECK_ID));
+                        rb.add(model.optLong(MODEL_S_DID, Consts.DEFAULT_DECK_ID));
                         break;
                     case FlashCardsContract.Model.SORT_FIELD_INDEX:
                         rb.add(model.getLong("sortf"));

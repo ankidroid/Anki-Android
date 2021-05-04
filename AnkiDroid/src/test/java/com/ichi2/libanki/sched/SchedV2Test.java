@@ -61,6 +61,7 @@ import static com.ichi2.libanki.Consts.QUEUE_TYPE_REV;
 import static com.ichi2.libanki.Consts.QUEUE_TYPE_SIBLING_BURIED;
 import static com.ichi2.libanki.Consts.STARTING_FACTOR;
 import static com.ichi2.libanki.DecksTest.TEST_DECKS;
+import static com.ichi2.libanki.Model.MODEL_S_DID;
 import static com.ichi2.libanki.sched.Counts.Queue.LRN;
 import static com.ichi2.libanki.sched.Counts.Queue.NEW;
 import static com.ichi2.libanki.stats.Stats.SECONDS_PER_DAY;
@@ -387,7 +388,7 @@ public class SchedV2Test extends RobolectricTest {
             Note note = col.newNote();
             note.setItem("Front", Integer.toString(i));
             if (i > 4) {
-                note.model().put("did", deck2);
+                note.model().put(MODEL_S_DID, deck2);
             }
             col.addNote(note);
         }
@@ -753,7 +754,7 @@ public class SchedV2Test extends RobolectricTest {
         col.getDecks().setConf(child, cconf.getLong("id"));
 
         Model m = col.getModels().current();
-        m.put("did", child.getLong("id"));
+        m.put(MODEL_S_DID, child.getLong("id"));
         col.getModels().save(m, false);
 
         // add some cards
@@ -1386,7 +1387,7 @@ public class SchedV2Test extends RobolectricTest {
         note = col.newNote();
         note.setItem("Front", "two");
         long default1 = addDeck("Default::1");
-        note.model().put("did", default1);
+        note.model().put(MODEL_S_DID, default1);
         col.addNote(note);
         // make it a review card
         Card c = note.cards().get(0);
@@ -1396,12 +1397,12 @@ public class SchedV2Test extends RobolectricTest {
         // add one more with a new deck
         note = col.newNote();
         note.setItem("Front", "two");
-        note.model().put("did", addDeck("foo::bar"));
+        note.model().put(MODEL_S_DID, addDeck("foo::bar"));
         col.addNote(note);
         // and one that's a sibling
         note = col.newNote();
         note.setItem("Front", "three");
-        note.model().put("did", addDeck("foo::baz"));
+        note.model().put(MODEL_S_DID, addDeck("foo::baz"));
         col.addNote(note);
         col.reset();
         assertEquals(5, col.getDecks().allSortedNames().size());
@@ -1450,13 +1451,13 @@ public class SchedV2Test extends RobolectricTest {
         note = col.newNote();
         note.setItem("Front", "two");
         long default1 = addDeck("Default::2");
-        note.model().put("did", default1);
+        note.model().put(MODEL_S_DID, default1);
         col.addNote(note);
         // and another that's higher up
         note = col.newNote();
         note.setItem("Front", "three");
         default1 = addDeck("Default::1");
-        note.model().put("did", default1);
+        note.model().put(MODEL_S_DID, default1);
         col.addNote(note);
         // should get top level one first, then ::1, then ::2
         col.reset();

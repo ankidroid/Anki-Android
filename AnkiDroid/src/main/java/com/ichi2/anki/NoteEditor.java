@@ -144,6 +144,7 @@ import static com.ichi2.compat.Compat.EXTRA_PROCESS_TEXT;
 
 import static com.ichi2.anim.ActivityTransitionAnimation.Direction.*;
 import static com.ichi2.libanki.Collection.CUR_DECK;
+import static com.ichi2.libanki.Model.MODEL_S_DID;
 import static com.ichi2.libanki.Models.NOT_FOUND_NOTE_TYPE;
 
 /**
@@ -948,7 +949,7 @@ public class NoteEditor extends AnkiActivity implements
                 updateField(f);
             }
             // Save deck to model
-            mEditorNote.model().put("did", mCurrentDid);
+            mEditorNote.model().put(MODEL_S_DID, mCurrentDid);
             // Save tags to model
             mEditorNote.setTagsFromStr(tagsAsString(mSelectedTags));
             JSONArray tags = new JSONArray();
@@ -1894,7 +1895,7 @@ public class NoteEditor extends AnkiActivity implements
                     mCurrentDid = 1;
                 }
             } else {
-                mCurrentDid = model.getLong("did");
+                mCurrentDid = model.getLong(MODEL_S_DID);
             }
         } else {
             mCurrentDid = mCurrentEditedCard.getDid();
@@ -2186,7 +2187,7 @@ public class NoteEditor extends AnkiActivity implements
                 getCol().getDecks().save(currentDeck);
                 // Update deck
                 if (!getCol().getConf().optBoolean("addToCur", true)) {
-                    mCurrentDid = model.getLong("did");
+                    mCurrentDid = model.getLong(MODEL_S_DID);
                     mDeckSpinnerSelection.updateDeckPosition();
                 }
 

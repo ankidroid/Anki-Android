@@ -1048,7 +1048,7 @@ public class ContentProviderTest extends InstrumentedTest {
      public void testProviderProvidesDefaultForEmptyModelDeck() {
          assumeTrue("This causes mild data corruption - should not be run on a collection you care about", isEmulator());
          Collection col = getCol();
-         col.getModels().all().get(0).put("did", JSONObject.NULL);
+         col.getModels().all().get(0).put(DID, JSONObject.NULL);
          col.save();
 
          final ContentResolver cr = getContentResolver();

@@ -40,6 +40,7 @@ import timber.log.Timber;
  * If a change affect card generation, (i.e. any change on the list of field, or the question side of a card type), `Models.save(this, true)` should be called. However, you should do the change in batch and change only when aall are done, because recomputing the list of card is an expensive operation.
  */
 public class Model extends JSONObject {
+    public static String MODEL_S_DID = "did";
     public Model() {
         super();
     }

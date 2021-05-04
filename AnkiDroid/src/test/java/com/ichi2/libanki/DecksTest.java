@@ -14,6 +14,7 @@ import java.util.List;
 import androidx.test.ext.junit.runners.AndroidJUnit4;
 
 import static com.ichi2.libanki.Collection.CUR_DECK;
+import static com.ichi2.libanki.Model.MODEL_S_DID;
 import static com.ichi2.testutils.AnkiAssert.assertEqualsArrayList;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
@@ -114,7 +115,7 @@ public class DecksTest extends RobolectricTest {
         // parents with a different case should be handled correctly
         addDeck("ONE");
         Model m = col.getModels().current();
-        m.put("did", addDeck("one::two"));
+        m.put(MODEL_S_DID, addDeck("one::two"));
         col.getModels().save(m, false);
         Note n = col.newNote();
         n.setItem("Front", "abc");
@@ -134,7 +135,7 @@ public class DecksTest extends RobolectricTest {
         long deck1 = addDeck("deck1");
         Note note = col.newNote();
         note.setItem("Front", "1");
-        note.model().put("did", deck1);
+        note.model().put(MODEL_S_DID, deck1);
         col.addNote(note);
         Card c = note.cards().get(0);
         assertEquals(deck1, c.getDid());

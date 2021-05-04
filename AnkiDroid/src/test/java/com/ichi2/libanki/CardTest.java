@@ -22,6 +22,7 @@ import java.util.List;
 
 import androidx.test.ext.junit.runners.AndroidJUnit4;
 
+import static com.ichi2.libanki.Model.MODEL_S_DID;
 import static com.ichi2.utils.JSONObject.NULL;
 import static org.hamcrest.Matchers.hasItemInArray;
 import static org.hamcrest.Matchers.is;
@@ -109,7 +110,7 @@ public class CardTest extends RobolectricTest {
         assertEquals(1, note.cards().get(0).getDid());
         // set the model to a new default col
         long newId = addDeck("new");
-        cloze.put("did", newId);
+        cloze.put(MODEL_S_DID, newId);
         col.getModels().save(cloze, false);
         // a newly generated card should share the first card's col
         note.setItem("Text", "{{c2::two}}");
