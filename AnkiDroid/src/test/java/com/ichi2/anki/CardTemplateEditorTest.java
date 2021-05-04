@@ -536,6 +536,69 @@ public class CardTemplateEditorTest extends RobolectricTest {
 
     }
 
+    @Test
+    public void testContentPreservedAfterChangingEditorView() {
+        String modelName = "Basic";
+
+        // Start the CardTemplateEditor with a specific model, and make sure the model starts unchanged
+        JSONObject collectionBasicModelOriginal = getCurrentDatabaseModelCopy(modelName);
+        Intent intent = new Intent(Intent.ACTION_VIEW);
+        intent.putExtra("modelId", collectionBasicModelOriginal.getLong("id"));
+        ActivityController<CardTemplateEditor> templateEditorController = Robolectric.buildActivity(CardTemplateEditor.class, intent).create().start().resume().visible();
+        saveControllerForCleanup(templateEditorController);
+        CardTemplateEditor testEditor = templateEditorController.get();
+
+        // Change the model and make sure it registers as changed, but the database is unchanged
+        EditText templateEditText = testEditor.findViewById(R.id.editor_editText);
+        String TEST_MODEL_QFMT_EDIT = "!@#$%^&*TEST*&^%$#@!";
+        String updatedFrontContent = templateEditText.getText().append(TEST_MODEL_QFMT_EDIT).toString();
+        advanceRobolectricLooperWithSleep();
+
+        CardTemplateEditor.CardTemplateFragment cardTemplateFragment = testEditor.getCurrentFragment();
+        TemporaryModel tempModel = testEditor.getTempModel();
+        // set Bottom Navigation View to Style
+        cardTemplateFragment.setCurrentEditorView(R.id.styling_edit, tempModel.getCss(), R.string.card_template_editor_styling);
+
+        // set Bottom Navigation View to Front
+        cardTemplateFragment.setCurrentEditorView(R.id.front_edit, tempModel.getTemplate(0).getString("qfmt"), R.string.card_template_editor_front);
+
+        // check if current content is updated or not
+        assumeThat(templateEditText.getText().toString(), is(updatedFrontContent));
+    }
+
+    @Test
+    public void testBottomNavigationViewLayoutTransition() {
+        String modelName = "Basic";
+
+        // Start the CardTemplateEditor with a specific model, and make sure the model starts unchanged
+        JSONObject collectionBasicModelOriginal = getCurrentDatabaseModelCopy(modelName);
+        Intent intent = new Intent(Intent.ACTION_VIEW);
+        intent.putExtra("modelId", collectionBasicModelOriginal.getLong("id"));
+        ActivityController<CardTemplateEditor> templateEditorController = Robolectric.buildActivity(CardTemplateEditor.class, intent).create().start().resume().visible();
+        saveControllerForCleanup(templateEditorController);
+        CardTemplateEditor testEditor = templateEditorController.get();
+
+        // Change the model and make sure it registers as changed, but the database is unchanged
+        EditText templateEditText = testEditor.findViewById(R.id.editor_editText);
+        advanceRobolectricLooperWithSleep();
+
+        CardTemplateEditor.CardTemplateFragment cardTemplateFragment = testEditor.getCurrentFragment();
+        TemporaryModel tempModel = testEditor.getTempModel();
+
+
+        // check if current view is front(default) view
+        assumeThat(templateEditText.getText().toString(), is(tempModel.getTemplate(0).getString("qfmt")));
+        assumeThat(cardTemplateFragment.getCurrentEditorViewId(), is(R.id.front_edit));
+
+        // set Bottom Navigation View to Style
+        cardTemplateFragment.setCurrentEditorView(R.id.styling_edit, tempModel.getCss(), R.string.card_template_editor_styling);
+
+        // check if current view is changed or not
+        assumeThat(templateEditText.getText().toString(), is(tempModel.getCss()));
+        assumeThat(cardTemplateFragment.getCurrentEditorViewId(), is(R.id.styling_edit));
+    }
+
+
     private int getModelCardCount(Model model) {
         int cardCount = 0;
         for (Long noteId : getCol().getModels().nids(model)) {
