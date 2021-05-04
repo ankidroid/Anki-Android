@@ -37,14 +37,12 @@ import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.widget.SwitchCompat;
 import androidx.appcompat.widget.Toolbar;
 
-import android.provider.Settings;
 import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 
 import com.ichi2.anki.dialogs.HelpDialog;
-import com.ichi2.libanki.stats.Stats;
 import com.ichi2.themes.Themes;
 
 import java.util.Arrays;
@@ -369,6 +367,10 @@ public abstract class NavigationDrawerActivity extends AnkiActivity implements N
                 // Remember the theme we started with so we can restart the Activity if it changes
                 mOldTheme = Themes.getCurrentTheme(getApplicationContext());
                 startActivityForResultWithAnimation(new Intent(NavigationDrawerActivity.this, Preferences.class), REQUEST_PREFERENCES_UPDATE, FADE);
+                // #6192 - stop crash on changing collection path - cancel tasks if moving to settings
+                if (this instanceof Statistics) {
+                    finishWithAnimation(FADE);
+                }
             } else if (itemId == R.id.nav_help) {
                 Timber.i("Navigating to help");
                 showDialogFragment(HelpDialog.createInstance(this));
