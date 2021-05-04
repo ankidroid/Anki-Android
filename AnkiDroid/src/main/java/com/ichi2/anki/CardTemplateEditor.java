@@ -343,9 +343,6 @@ public class CardTemplateEditor extends AnkiActivity implements DeckSelectionDia
 
 
     public static class CardTemplateFragment extends Fragment {
-        private String mFrontString;
-        private String mCssString;
-        private String mBackString;
         private FixedTextView mCurrentEdtiorTitle;
         private EditText mEditorEditText;
 
@@ -378,16 +375,12 @@ public class CardTemplateEditor extends AnkiActivity implements DeckSelectionDia
                 Timber.d(e, "Exception loading template in CardTemplateFragment. Probably stale fragment.");
                 return mainView;
             }
-            // Setting content
-            mFrontString = template.getString("qfmt");
-            mCssString = tempModel.getCss();
-            mBackString = template.getString("afmt");
 
             // setting to default editor as front template
             mCurrentEdtiorTitle = mainView.findViewById(R.id.title_edit);
             mEditorEditText = mainView.findViewById(R.id.editor_editText);
             mCurrentEdittextId = R.id.front_edit;
-            mEditorEditText.setText(mFrontString);
+            mEditorEditText.setText(template.getString("qfmt"));
             mCurrentEdtiorTitle.setText(R.string.card_template_editor_front);
 
 
@@ -397,15 +390,15 @@ public class CardTemplateEditor extends AnkiActivity implements DeckSelectionDia
                 public boolean onNavigationItemSelected(@NonNull MenuItem item) {
                     mCurrentEdittextId = item.getItemId();
                     if (mCurrentEdittextId == R.id.styling_edit) {
-                        mEditorEditText.setText(mCssString);
+                        mEditorEditText.setText(tempModel.getCss());
                         mCurrentEdtiorTitle.setText(R.string.card_template_editor_styling);
                         return true;
                     } else if (mCurrentEdittextId == R.id.back_edit) {
-                        mEditorEditText.setText(mBackString);
+                        mEditorEditText.setText(template.getString("afmt"));
                         mCurrentEdtiorTitle.setText(R.string.card_template_editor_back);
                         return true;
                     } else {
-                        mEditorEditText.setText(mFrontString);
+                        mEditorEditText.setText(template.getString("qfmt"));
                         mCurrentEdtiorTitle.setText(R.string.card_template_editor_front);
                         return true;
                     }
