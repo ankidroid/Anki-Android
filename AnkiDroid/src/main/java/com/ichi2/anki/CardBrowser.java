@@ -246,6 +246,7 @@ public class CardBrowser extends NavigationDrawerActivity implements
         invalidateOptionsMenu();    // maybe the availability of undo changed
     });
 
+    public static final String SORT_TYPE = "sortType";
     private static final int DEFAULT_FONT_SIZE_RATIO = 100;
     // Should match order of R.array.card_browser_order_labels
     public static final int CARD_ORDER_NONE = 0;
@@ -320,12 +321,12 @@ public class CardBrowser extends NavigationDrawerActivity implements
             mOrderAsc = false;
             if (mOrder == 0) {
                 // if the sort value in the card browser was changed, then perform a new search
-                getCol().getConf().put("sortType", fSortTypes[1]);
+                getCol().getConf().put(SORT_TYPE, fSortTypes[1]);
                 AnkiDroidApp.getSharedPrefs(getBaseContext()).edit()
                         .putBoolean("cardBrowserNoSorting", true)
                         .commit();
             } else {
-                getCol().getConf().put("sortType", fSortTypes[mOrder]);
+                getCol().getConf().put(SORT_TYPE, fSortTypes[mOrder]);
                 AnkiDroidApp.getSharedPrefs(getBaseContext()).edit()
                         .putBoolean("cardBrowserNoSorting", false)
                         .commit();
@@ -612,7 +613,7 @@ public class CardBrowser extends NavigationDrawerActivity implements
         mActionBarTitle = findViewById(R.id.toolbar_title);
 
         mOrder = CARD_ORDER_NONE;
-        String colOrder = getCol().getConf().getString("sortType");
+        String colOrder = getCol().getConf().getString(SORT_TYPE);
         for (int c = 0; c < fSortTypes.length; ++c) {
             if (fSortTypes[c].equals(colOrder)) {
                 mOrder = c;

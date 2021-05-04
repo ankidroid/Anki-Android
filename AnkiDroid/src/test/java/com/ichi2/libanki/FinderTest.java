@@ -38,6 +38,7 @@ import androidx.annotation.NonNull;
 import androidx.test.ext.junit.runners.AndroidJUnit4;
 import timber.log.Timber;
 
+import static com.ichi2.anki.CardBrowser.SORT_TYPE;
 import static com.ichi2.libanki.Consts.CARD_TYPE_REV;
 import static com.ichi2.libanki.Consts.QUEUE_TYPE_REV;
 import static com.ichi2.libanki.Consts.QUEUE_TYPE_SUSPENDED;
@@ -213,16 +214,16 @@ public class FinderTest extends RobolectricTest {
         assertEquals(0, col.findCards("front:do").size());
         assertEquals(5, col.findCards("front:*").size());
         // ordering
-        col.getConf().put("sortType", "noteCrt");
+        col.getConf().put(SORT_TYPE, "noteCrt");
         col.flush();
         assertTrue(latestCardIds.contains(getLastListElement(col.findCards("front:*", true))));
         assertTrue(latestCardIds.contains(getLastListElement(col.findCards("", true))));
 
-        col.getConf().put("sortType", "noteFld");
+        col.getConf().put(SORT_TYPE, "noteFld");
         col.flush();
         assertEquals(catCard.getId(), (long) col.findCards("", true).get(0));
         assertTrue(latestCardIds.contains(getLastListElement(col.findCards("", true))));
-        col.getConf().put("sortType", "cardMod");
+        col.getConf().put(SORT_TYPE, "cardMod");
         col.flush();
         assertTrue(latestCardIds.contains(getLastListElement(col.findCards("", true))));
         assertEquals(firstCardId, (long) col.findCards("", true).get(0));

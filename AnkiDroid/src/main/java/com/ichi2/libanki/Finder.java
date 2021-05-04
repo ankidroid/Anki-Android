@@ -45,6 +45,7 @@ import java.util.regex.Pattern;
 import androidx.annotation.CheckResult;
 import timber.log.Timber;
 
+import static com.ichi2.anki.CardBrowser.SORT_TYPE;
 import static com.ichi2.async.CancelListener.isCancelled;
 import static com.ichi2.async.ProgressSender.publishProgress;
 import static com.ichi2.libanki.stats.Stats.SECONDS_PER_DAY;
@@ -415,7 +416,7 @@ public class Finder {
             return new Pair<>("", false);
         }
         // use deck default
-        String type = mCol.getConf().getString("sortType");
+        String type = mCol.getConf().getString(SORT_TYPE);
         String sort = null;
         if (type.startsWith("note")) {
             if (type.startsWith("noteCrt")) {
