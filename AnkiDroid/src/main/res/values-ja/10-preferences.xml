@@ -179,8 +179,8 @@
     <string name="day_offset_summ">XXX 時</string>
     <string name="xlabel_dayoffset_seekbar" maxLength="41">Midnight</string>
     <string name="ylabel_dayoffset_seekbar" maxLength="41">11PM</string>
-    <string name="sched_ver" maxLength="41">実験的な新型スケジューラ</string>
-    <string name="sched_ver_summ">実験的なスケジューラを有効にします。次の同期時に一方向の変更を強制実行します。</string>
+    <string name="sched_v2" maxLength="41">V2 scheduler</string>
+    <string name="sched_v2_summ">Enable the new scheduler. Forces changes in one direction on next sync</string>
     <string name="sched_ver_toggle_title">確認</string>
     <string name="sched_ver_2to1">学習中のカードがリセットされ、スケジューラのバージョンが変更されます。続行しますか？</string>
     <string name="sched_ver_1to2">実験的なスケジューラは間違ったスケジューリングを引き起こす可能性があります。最初に関係するドキュメントを読んで確認してください。続行しますか？</string>

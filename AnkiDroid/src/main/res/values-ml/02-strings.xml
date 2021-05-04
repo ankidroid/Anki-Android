@@ -279,6 +279,7 @@
     <string name="white_board_image_save_failed">വൈറ്റ്ബോർഡ് ചിത്രം സംരക്ഷിക്കുന്നതിൽ പരാജയപ്പെട്ടു. %s</string>
     <string name="white_board_image_saved">വൈറ്റ്ബോർഡ് ചിത്രം %s ലേക്ക് സംരക്ഷിച്ചു</string>
     <string name="title_whiteboard_pen_color">വൈറ്റ്ബോർഡ് പേന നിറം</string>
+    <string name="title_whiteboard_editor">Whiteboard editor</string>
     <!-- CSV/Note Import -->
     <string name="note_importer_empty_cards_found"><![CDATA[ശൂന്യമായ കാർഡുകൾ കണ്ടെത്തി. ഉപകരണങ്ങൾ> ശൂന്യ കാർഡുകൾ പ്രവർത്തിപ്പിക്കുക.]]></string>
     <string name="note_importer_error_empty_first_field">ആദ്യ ഫീൽഡ് ശൂന്യമാക്കുക:%s</string>

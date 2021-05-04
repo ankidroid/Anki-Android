@@ -114,8 +114,8 @@
     <string name="import_complete_count">ଆମଦାନୀ ହେଇଥିବା ପତ୍ର: %d</string>
     <string name="sd_card_full_title">SD କାର୍ଡ ପୂର୍ଣ୍ଣ</string>
     <string name="sd_card_almost_full_title">SD କାର୍ଡ ପ୍ରାୟ ପୂର୍ଣ୍ଣ</string>
-    <string name="no_space_to_downgrade_title">No space</string>
-    <string name="no_space_to_downgrade_content">AnkiDroid needs %s free storage space to continue. Please clear some space</string>
+    <string name="no_space_to_downgrade_title">ଜାଗା ନାହିଁ</string>
+    <string name="no_space_to_downgrade_content">ଜାରି ରଖିବାକୁ AnkiDroid %s ମାଗଣା ଷ୍ଟୋରେଜ୍ ସ୍ପେସ୍ ଆବଶ୍ୟକ କରେ। ଦୟାକରି କିଛି ସ୍ଥାନ ଖାଲି କରନ୍ତୁ</string>
     <string name="restore_backup_title">ବ୍ୟାକଅପ୍ ପୁନରୁଦ୍ଧାର କରିବେ?</string>
     <string name="restore_backup">ତୁମର ସଂଗ୍ରହ ଏକ ପୁରୁଣା କପି ସହିତ ବଦଳାଯିବ | ଯେକୌଣସି ସଞ୍ଚିତ ଅଗ୍ରଗତି ହଜିଯିବ </string>
     <string name="dialog_cancel">ବାତିଲ</string>

@@ -206,11 +206,11 @@
     <string name="wrong_tag_closed">找到了 “{{/%1$s}}”，但预期 “{{/%2$s}}”</string>
     <string name="filter_error">过滤器 %s 出错</string>
     <!-- Sync conflict -->
-    <string name="sync_conflict_message_new">The collections can’t be combined.\nWhich collection do you want to keep?</string>
+    <string name="sync_conflict_message_new">卡片组无法合并。\n您想要保留哪个卡片组？</string>
     <string name="sync_conflict_keep_local_new" comment="Select AnkiDroid files to keep while syncing">AnkiDroid</string>
     <string name="sync_conflict_keep_remote_new" comment="Select AnkiWeb files to keep while syncing">AnkiWeb</string>
-    <string name="sync_conflict_remote_confirm_new">Replace your collection on AnkiDroid with your collection from AnkiWeb?</string>
-    <string name="sync_conflict_local_confirm_new">Replace your collection on AnkiWeb with your collection from AnkiDroid?</string>
-    <string name="sync_conflict_title_new">Select collection to keep</string>
-    <string name="sync_conflict_replace_title">Replace collection</string>
+    <string name="sync_conflict_remote_confirm_new">用来自AnkiWeb的卡片组替换AnkiDroid上的卡片组吗？</string>
+    <string name="sync_conflict_local_confirm_new">用来自AnkiDroid的卡片组替换您在AnkiWeb上的卡片组吗？</string>
+    <string name="sync_conflict_title_new">选择要保留的卡片组</string>
+    <string name="sync_conflict_replace_title">替换卡组集合</string>
 </resources>

@@ -299,6 +299,7 @@
     <string name="white_board_image_save_failed">Failed to save whiteboard image. %s</string>
     <string name="white_board_image_saved">Whiteboard image saved to %s</string>
     <string name="title_whiteboard_pen_color">Whiteboard pen color</string>
+    <string name="title_whiteboard_editor">Whiteboard editor</string>
     <!-- CSV/Note Import -->
     <string name="note_importer_empty_cards_found"><![CDATA[Empty cards found. Please run Tools>Empty Cards.]]></string>
     <string name="note_importer_error_empty_first_field">שדה ראשון ריק: %s</string>

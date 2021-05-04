@@ -279,6 +279,7 @@
     <string name="white_board_image_save_failed">Fiaskis konservi bildon de skribtabulo. %s</string>
     <string name="white_board_image_saved">Konservis bildon de skribtabulo al %s</string>
     <string name="title_whiteboard_pen_color">Koloro por skribi sur skribtabulo</string>
+    <string name="title_whiteboard_editor">Whiteboard editor</string>
     <!-- CSV/Note Import -->
     <string name="note_importer_empty_cards_found"><![CDATA[Trovis malplenajn kartojn. Ekigu “iloj” → “malplenaj kartoj”]]></string>
     <string name="note_importer_error_empty_first_field">Unua kampo malplena: %s</string>

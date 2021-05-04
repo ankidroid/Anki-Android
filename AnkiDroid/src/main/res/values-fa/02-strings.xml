@@ -279,6 +279,7 @@
     <string name="white_board_image_save_failed">ذخیرۀ تصویر تخته سفید با مشکل مواجه شد. %s</string>
     <string name="white_board_image_saved">تصویر تخته سفید در %s ذخیره شد</string>
     <string name="title_whiteboard_pen_color">رنگ ماژیک تخته سفید</string>
+    <string name="title_whiteboard_editor">Whiteboard editor</string>
     <!-- CSV/Note Import -->
     <string name="note_importer_empty_cards_found"><![CDATA[کارت های خالی پیدا شد. لطفا ابزار>کارت های خالی را اجرا کنید.]]></string>
     <string name="note_importer_error_empty_first_field">فیلد اول خالی: %s</string>

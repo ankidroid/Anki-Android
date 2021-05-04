@@ -41,7 +41,7 @@
     </string-array>
     <string-array name="leech_action_labels">
         <item>Адкласці картку</item>
-        <item>Толькі пазнака</item>
+        <item>Толькі метка</item>
     </string-array>
     <string-array name="new_order_labels">
         <item>Новыя карткі ў выпадковым парадку</item>
@@ -52,7 +52,7 @@
         <item>Выпадкова</item>
         <item>Па павелічэнні інтэрвалаў</item>
         <item>Па змяншэнні інтэрвалаў</item>
-        <item>Колькасць пропускаў</item>
+        <item>Самыя складаныя</item>
         <item>У парадку дадання</item>
         <item>У парадку прагляду</item>
         <item>Апошнія дададзеныя першымі</item>
@@ -60,7 +60,7 @@
     </string-array>
     <string-array name="add_to_cur_labels">
         <item>Выкарыстоўваць цякучую калоду</item>
-        <item>Выбар па тыпе нататкі</item>
+        <item>Вырашаць па тыпе запісу</item>
     </string-array>
     <string-array name="new_spread_labels">
         <item>Перамяшаць новыя і паўтораныя карткі</item>
@@ -99,7 +99,7 @@
     <string name="gesture_answer_4">Кнопка адказу 4</string>
     <string name="gesture_answer_green">Рэкамендаваны адказ (зялёны)</string>
     <string name="gesture_answer_better_recommended">Лепш, чым рэкамендаваны</string>
-    <string name="gesture_tag_note">Пазначыць</string>
+    <string name="gesture_tag_note">Метка запісу</string>
     <string name="gesture_lookup">Пошук выразу</string>
     <string name="gesture_play">Прайграць медыа</string>
     <string name="gesture_abort_learning">Перапыніць навучанне</string>

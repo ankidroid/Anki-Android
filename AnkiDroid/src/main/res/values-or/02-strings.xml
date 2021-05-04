@@ -279,6 +279,7 @@
     <string name="white_board_image_save_failed">ଧଳାପଟା ଛବି ଦେଖିବାରେ ବିଫଳ। %s</string>
     <string name="white_board_image_saved">ଧଳାପଟା ଛବି %sରେ ସଂରକ୍ଷିତ</string>
     <string name="title_whiteboard_pen_color">ଧଳାପଟା କଲମ ରଙ୍ଗ</string>
+    <string name="title_whiteboard_editor">Whiteboard editor</string>
     <!-- CSV/Note Import -->
     <string name="note_importer_empty_cards_found"><![CDATA[ଖାଲି ପତ୍ର ମିଳିଲା। ଦୟାକରି ଉପକରଣଗୁଡିକ> ଖାଲି ପତ୍ରଗୁଡିକ ଚଲାନ୍ତୁ।]]></string>
     <string name="note_importer_error_empty_first_field">ଖାଲି ଥିବା ପ୍ରଥମ କ୍ଷେତ୍ର : %s</string>

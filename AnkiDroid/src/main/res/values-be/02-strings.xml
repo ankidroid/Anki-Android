@@ -107,7 +107,7 @@
     <!-- Card editor -->
     <string name="cardeditor_title_edit_card">Змяніць запіс</string>
     <string name="discard_unsaved_changes">Закрыць і згубіць бягучыя змяненні?</string>
-    <string name="note_editor_no_cards_created">Карткі не створаны. Калі ласка, запоўніце больш палёў.</string>
+    <string name="note_editor_no_cards_created">Карткі не створаныя. Калі ласка, запоўніце больш палёў.</string>
     <string name="note_editor_no_first_field">Першае поле пустое</string>
     <string name="note_editor_no_cloze_delations">Гэты тып запісу павінен змяшчаць пропускі ў тэксце</string>
     <string name="note_editor_set_field_language">Прызначыць мову поля</string>
@@ -299,6 +299,7 @@
     <string name="white_board_image_save_failed">Не атрымалася захаваць выяву дошкі. %s</string>
     <string name="white_board_image_saved">Выява дошкі захавана ў %s</string>
     <string name="title_whiteboard_pen_color">Колер крэйды дошкі</string>
+    <string name="title_whiteboard_editor">Whiteboard editor</string>
     <!-- CSV/Note Import -->
     <string name="note_importer_empty_cards_found"><![CDATA[Знойдзеныя пустыя карткі. Калі ласка, запусціце Інструменты->Пустыя карткі.]]></string>
     <string name="note_importer_error_empty_first_field">Першае поле пустое: %s</string>

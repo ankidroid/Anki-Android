@@ -180,8 +180,8 @@
     <string name="day_offset_summ">XXX jam lewat tengah malam</string>
     <string name="xlabel_dayoffset_seekbar" maxLength="41">Midnight</string>
     <string name="ylabel_dayoffset_seekbar" maxLength="41">11PM</string>
-    <string name="sched_ver" maxLength="41">Penjadwalan eksperimental V2</string>
-    <string name="sched_ver_summ">Aktifkan penjadwalan eksperimental. Perubahan dipaksa ke satu arah saat sinkronisasi berikutnya</string>
+    <string name="sched_v2" maxLength="41">V2 scheduler</string>
+    <string name="sched_v2_summ">Enable the new scheduler. Forces changes in one direction on next sync</string>
     <string name="sched_ver_toggle_title">Konfirmasi</string>
     <string name="sched_ver_2to1">Ini akan mereset kartu yang dipelajari, dek terfilter, dan mengubah versi penjadwalan. Lanjut?</string>
     <string name="sched_ver_1to2">Penjadwalan eksperimental dapat mengakibatkan jadwal yang salah. Harap pastikan kamu telah membaca dokumentasi terlebih dulu. Lanjutkan?</string>

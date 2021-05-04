@@ -179,8 +179,8 @@
     <string name="day_offset_summ">XXX uur na middernacht</string>
     <string name="xlabel_dayoffset_seekbar" maxLength="41">Midnight</string>
     <string name="ylabel_dayoffset_seekbar" maxLength="41">11PM</string>
-    <string name="sched_ver" maxLength="41">Experimentele V2-planner</string>
-    <string name="sched_ver_summ">Schakel de experimentele planner in. Dwingt veranderingen in een bepaalde richting bij de volgende synchronisatie</string>
+    <string name="sched_v2" maxLength="41">V2 scheduler</string>
+    <string name="sched_v2_summ">Enable the new scheduler. Forces changes in one direction on next sync</string>
     <string name="sched_ver_toggle_title">Bevestigen</string>
     <string name="sched_ver_2to1">Dit zal alle kaarten in het leerproces resetten, de gefilterde decks wissen en de versie van de planner wijzigen. Verdergaan?</string>
     <string name="sched_ver_1to2">De experimentele planner kan leiden tot een verkeerde planning. Zorg ervoor dat u eerst de documentatie hebt gelezen. Verdergaan?</string>

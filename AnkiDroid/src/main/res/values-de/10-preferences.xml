@@ -177,10 +177,10 @@
     <string name="new_timezone" maxLength="41">Umgang mit neuer Zeitzone</string>
     <string name="day_offset_with_description" maxLength="41">Start des nächsten Tages (0 ist Mitternacht, 23 ist 23 Uhr)</string>
     <string name="day_offset_summ">XXX Stunden nach Mitternacht</string>
-    <string name="xlabel_dayoffset_seekbar" maxLength="41">Midnight</string>
-    <string name="ylabel_dayoffset_seekbar" maxLength="41">11PM</string>
-    <string name="sched_ver" maxLength="41">Experimenteller Zeitplaner V2</string>
-    <string name="sched_ver_summ">Experimentellen Zeitplaner aktivieren. Erzwingt bei der nächsten Synchronisation Änderungen in einer Richtung</string>
+    <string name="xlabel_dayoffset_seekbar" maxLength="41">Mitternacht</string>
+    <string name="ylabel_dayoffset_seekbar" maxLength="41">23 Uhr</string>
+    <string name="sched_v2" maxLength="41">V2 scheduler</string>
+    <string name="sched_v2_summ">Enable the new scheduler. Forces changes in one direction on next sync</string>
     <string name="sched_ver_toggle_title">Bestätigen</string>
     <string name="sched_ver_2to1">Dies wird alle in der Lernphase befindlichen Karten zurücksetzen, gefilterte Stapel löschen und die Version des Zeitplaners ändern. Möchten Sie fortfahren?</string>
     <string name="sched_ver_1to2">Der experimentelle Zeitplaner könnte eine falsche Zeitplanung verursachen. Bitte lesen Sie zuerst die Dokumentation. Möchten Sie fortfahren?</string>

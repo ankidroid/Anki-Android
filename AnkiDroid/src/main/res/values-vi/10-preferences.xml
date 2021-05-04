@@ -179,8 +179,8 @@
     <string name="day_offset_summ">XXX giờ quá nửa đêm</string>
     <string name="xlabel_dayoffset_seekbar" maxLength="41">Midnight</string>
     <string name="ylabel_dayoffset_seekbar" maxLength="41">11PM</string>
-    <string name="sched_ver" maxLength="41">Trình lập lịch V2 thử nghiệm</string>
-    <string name="sched_ver_summ">Bật công cụ lập lịch thử nghiệm. Buộc các thay đổi theo một hướng trong lần đồng bộ hóa tiếp theo</string>
+    <string name="sched_v2" maxLength="41">V2 scheduler</string>
+    <string name="sched_v2_summ">Enable the new scheduler. Forces changes in one direction on next sync</string>
     <string name="sched_ver_toggle_title">Xác nhận</string>
     <string name="sched_ver_2to1">Điều này sẽ đặt lại bất kỳ thẻ nào trong học tập, xóa các bộ thẻ được lọc và thay đổi phiên bản của bộ lập lịch. Tiếp tục?</string>
     <string name="sched_ver_1to2">Trình lập lịch thử nghiệm có thể gây ra lập lịch không chính xác. Hãy đảm bảo rằng bạn đã đọc tài liệu trước. Tiếp tục?</string>

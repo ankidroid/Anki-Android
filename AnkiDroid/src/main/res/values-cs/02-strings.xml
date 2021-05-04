@@ -299,6 +299,7 @@
     <string name="white_board_image_save_failed">Nepodařilo se uložit obrázek tabule. %s</string>
     <string name="white_board_image_saved">Obrázek tabule uložen do %s</string>
     <string name="title_whiteboard_pen_color">Barva pera tabule</string>
+    <string name="title_whiteboard_editor">Whiteboard editor</string>
     <!-- CSV/Note Import -->
     <string name="note_importer_empty_cards_found"><![CDATA[Nalezeny prázdné karty. Spusťte prosím Nástroje>Prázdné karty.]]></string>
     <string name="note_importer_error_empty_first_field">Prázdné první pole: %s</string>

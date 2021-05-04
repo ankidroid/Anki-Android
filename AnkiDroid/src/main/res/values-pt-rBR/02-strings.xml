@@ -279,6 +279,7 @@
     <string name="white_board_image_save_failed">Falha ao salvar imagem do quadro. %s</string>
     <string name="white_board_image_saved">Imagem do quadro branco salva em %s</string>
     <string name="title_whiteboard_pen_color">Cor da caneta.</string>
+    <string name="title_whiteboard_editor">Whiteboard editor</string>
     <!-- CSV/Note Import -->
     <string name="note_importer_empty_cards_found"><![CDATA[Cards vazios encontrados. Por favor, execute Ferramentas>Cards Vazios.]]></string>
     <string name="note_importer_error_empty_first_field">Primeiro campo vazio: %s</string>

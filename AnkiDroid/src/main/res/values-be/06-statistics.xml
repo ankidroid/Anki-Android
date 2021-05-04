@@ -40,51 +40,51 @@
 <resources>
     <string name="statistics_young">Свежыя</string>
     <string name="statistics_mature">Замацаваныя</string>
-    <string name="statistics_young_and_learn">Свежыя і вывучаныя</string>
+    <string name="statistics_young_and_learn">Свежыя і якія вучацца</string>
     <string name="statistics_unlearned">Не прагледжаныя</string>
-    <string name="statistics_suspended">Suspended</string>
-    <string name="statistics_buried">Buried</string>
+    <string name="statistics_suspended">Прыпыненыя</string>
+    <string name="statistics_buried">Адкладзеныя</string>
     <string name="statistics_relearn" comment="Labbel of the axis in the graph indicating the number of reviews of cards while they are in relearning mode.">Паўторна завучаныя</string>
-    <string name="statistics_learn" comment="Label of the number of review of card in learning done in some amount of time">Вывучаюцца</string>
-    <string name="statistics_cram">Завучванне</string>
+    <string name="statistics_learn" comment="Label of the number of review of card in learning done in some amount of time">Вывучаемыя</string>
+    <string name="statistics_cram">Зазубраныя</string>
     <string name="stats_cards">Карткі</string>
-    <string name="stats_cards_intervals">Карты з зададзеным інтэрвалам</string>
-    <string name="stats_cumulative_cards">Картак у сукупнасці</string>
-    <string name="stats_cumulative_answers">Адказаў у сукупнасці</string>
-    <string name="stats_cumulative_time_minutes">Хвілін у сукупнасці</string>
-    <string name="stats_cumulative_time_hours">Гадзін у сукупнасці</string>
-    <string name="stats_cumulative">Сукупна</string>
-    <string name="stats_cumulative_percentage">Сукупна адсоткаў</string>
-    <string formatted="false" name="stats_cumulative_correct_percentage">Сукупна слушных, %</string>
+    <string name="stats_cards_intervals">Карткі з зададзеным інтэрвалам</string>
+    <string name="stats_cumulative_cards">Сукупнасць картак</string>
+    <string name="stats_cumulative_answers">Сукупнасць адказаў</string>
+    <string name="stats_cumulative_time_minutes">Сукупнасць хвілін</string>
+    <string name="stats_cumulative_time_hours">Сукупнасць гадзін</string>
+    <string name="stats_cumulative">Сукупнасць</string>
+    <string name="stats_cumulative_percentage">Сукупнасць адсоткаў</string>
+    <string formatted="false" name="stats_cumulative_correct_percentage">Сукупнасць слушных %</string>
     <string name="stats_answers">Адказы</string>
     <string name="stats_minutes">Хвіліны</string>
     <string name="stats_hours">Гадзіны</string>
-    <string name="stats_percentage">Адсоткі</string>
+    <string name="stats_percentage">Адсотак</string>
     <string name="stats_period_month">1 месяц</string>
     <string name="stats_period_year">1 год</string>
     <string name="stats_period_lifetime">за ўвесь час</string>
     <string name="stats_deck_collection">калекцыя</string>
     <string name="stats_time_of_day">Час сутак</string>
     <string name="stats_day_of_week">Дзень тыдня</string>
-    <string formatted="false" name="stats_percentage_correct">Слушна %</string>
+    <string formatted="false" name="stats_percentage_correct">% слушнага</string>
     <string name="stats_reviews" comment="Label of a graph, indicating cumulative number of review of all cards">Паўтарэнні</string>
     <string name="stats_answer_type">Тып адказу</string>
-    <string name="stats_today_again_count">Паўторна вывучаных: &lt;b&gt;%d&lt;/b&gt;</string>
-    <string name="stats_today_correct_count">(&lt;b&gt;%.1f%%&lt;/b&gt; правільных)</string>
-    <string name="stats_today_type_breakdown">Вывучаных: &lt;b&gt;%1$d&lt;/b&gt;, паўтораных: &lt;b&gt;%2$d&lt;/b&gt;, перавучаных: &lt;b&gt;%3$d&lt;/b&gt;, адфільтраваных: &lt;b&gt;%4$d&lt;/b&gt;</string>
-    <string name="stats_today_mature_cards">Правільных адказаў у замацаваных картках: %1$d/%2$d (%3$.1f%%)</string>
+    <string name="stats_today_again_count">Колькасць паўтораных: &lt;b&gt;%d&lt;/b&gt;</string>
+    <string name="stats_today_correct_count">(&lt;b&gt;%.1f%%&lt;/b&gt; слушных)</string>
+    <string name="stats_today_type_breakdown">Вывучаемых: &lt;b&gt;%1$d&lt;/b&gt;, паўтораных: &lt;b&gt;%2$d&lt;/b&gt;, паўторна завучаных: &lt;b&gt;%3$d&lt;/b&gt;, адфільтраваных: &lt;b&gt;%4$d&lt;/b&gt;</string>
+    <string name="stats_today_mature_cards">Слушных адказаў у замацаваных картках: %1$d/%2$d (%3$.1f%%)</string>
     <string name="stats_today_no_mature_cards">Сёння не было вывучана ніводнай замацаванай карткі</string>
-    <string name="stats_overview_forecast_total">Усяго: &lt;b&gt;%1$d&lt;/b&gt; паўтарэнняў</string>
-    <string name="stats_overview_forecast_average">У сярэднім: &lt;b&gt;%1$.1f&lt;/b&gt; паўтарэнняў/дзень</string>
+    <string name="stats_overview_forecast_total">Усяго: &lt;b&gt;%1$d&lt;/b&gt; паўторана</string>
+    <string name="stats_overview_forecast_average">У сярэднім: &lt;b&gt;%1$.1f&lt;/b&gt; паўтарэнняў за дзень</string>
     <string name="stats_overview_forecast_due_tomorrow">На заўтра: &lt;b&gt;%1$d&lt;/b&gt;</string>
     <string name="stats_overview_days_studied">Дзён навучання: &lt;b&gt;%1$d%%&lt;/b&gt; (%2$d за %3$d)</string>
-    <string name="stats_overview_reviews_per_day_studydays">Дзён навучання (у сярэднім): &lt;b&gt;%1$.1f&lt;/b&gt; паўтарэнняў/дзень</string>
-    <string name="stats_overview_reviews_per_day_all">Калі вучыць штодзень: &lt;b&gt;%1$.1f&lt;/b&gt; паўтарэнняў/дзень</string>
-    <string name="stats_overview_total_time_in_period">Total: &lt;b&gt;%d&lt;/b&gt; minutes</string>
-    <string name="stats_overview_time_per_day_studydays">У сярэднім навучанне: &lt;b&gt;%1$.1f&lt;/b&gt; хвілін/дзень</string>
-    <string name="stats_overview_time_per_day_all">Калі вучыць кожны дзень:  &lt;b&gt;%1$.1f&lt;/b&gt; хвілін/дзень</string>
-    <string name="stats_overview_average_answer_time">Average answer time: &lt;b&gt;%1$.1fs&lt;/b&gt; (&lt;b&gt;%2$.2f&lt;/b&gt; cards/minute)</string>
-    <string name="stats_overview_new_cards_per_day">У сярэднім: &lt;b&gt;%1$.1f&lt;/b&gt; картак/дзень</string>
+    <string name="stats_overview_reviews_per_day_studydays">У сярэднім за дні навучання: &lt;b&gt;%1$.1f&lt;/b&gt; паўтарэнняў за дзень</string>
+    <string name="stats_overview_reviews_per_day_all">У сярэднім за ўсе дні: &lt;b&gt;%1$.1f&lt;/b&gt; паўтарэнняў за дзень</string>
+    <string name="stats_overview_total_time_in_period">Усяго: &lt;b&gt;%d&lt;/b&gt; хвілін</string>
+    <string name="stats_overview_time_per_day_studydays">У сярэднім за дні навучання: &lt;b&gt;%1$.1f&lt;/b&gt; хвілін за дзень</string>
+    <string name="stats_overview_time_per_day_all">У сярэднім за ўсе дні:  &lt;b&gt;%1$.1f&lt;/b&gt; хвілін за дзень</string>
+    <string name="stats_overview_average_answer_time">Сярэдні час адказу: &lt;b&gt;%1$.1fs&lt;/b&gt; (&lt;b&gt;%2$.2f&lt;/b&gt; картак/хвіліну)</string>
+    <string name="stats_overview_new_cards_per_day">У сярэднім: &lt;b&gt;%1$.1f&lt;/b&gt; картак за дзень</string>
     <string name="stats_overview_total_new_cards">Усяго: &lt;b&gt;%1$d&lt;/b&gt; картак</string>
     <string name="stats_overview_average_interval">"Сярэдні інтэрвал: "</string>
     <string name="stats_overview_longest_interval">"Самы доўгі інтэрвал: "</string>
@@ -92,15 +92,15 @@
     <string name="stats_overview_months">&lt;b&gt;%1$.1f&lt;/b&gt; месяцаў</string>
     <string name="stats_overview_days">&lt;b&gt;%1$.1f&lt;/b&gt; дзён</string>
     <string name="stats_overview_hours">&lt;b&gt;%1$.1f&lt;/b&gt; гадзін</string>
-    <string name="stats_overview_answer_buttons_learn">Learning: &lt;b&gt;%1$.2f%%&lt;/b&gt; correct (%2$d of %3$d)</string>
-    <string name="stats_overview_answer_buttons_young">Young: &lt;b&gt;%1$.2f%%&lt;/b&gt; correct (%2$d of %3$d)</string>
-    <string name="stats_overview_answer_buttons_mature">Mature: &lt;b&gt;%1$.2f%%&lt;/b&gt; correct (%2$d of %3$d)</string>
-    <string name="stats_overview_card_types_total_cards">Total cards: &lt;b&gt;%d&lt;/b&gt;</string>
-    <string name="stats_overview_card_types_total_notes">Total notes: &lt;b&gt;%d&lt;/b&gt;</string>
-    <string name="stats_overview_card_types_lowest_ease">Lowest ease: &lt;b&gt;%.0f%%&lt;/b&gt;</string>
-    <string name="stats_overview_card_types_average_ease">Average ease: &lt;b&gt;%.0f%%&lt;/b&gt;</string>
-    <string name="stats_overview_card_types_highest_ease">Highest ease: &lt;b&gt;%.0f%%&lt;/b&gt;</string>
-    <string name="stats_select_time_scale">Выбар шкалы часу</string>
+    <string name="stats_overview_answer_buttons_learn">Вывучаюцца: &lt;b&gt;%1$.2f%%&lt;/b&gt; слушных (%2$d з %3$d)</string>
+    <string name="stats_overview_answer_buttons_young">Свежыя: &lt;b&gt;%1$.2f%%&lt;/b&gt; слушных (%2$d з %3$d)</string>
+    <string name="stats_overview_answer_buttons_mature">Замацаваныя: &lt;b&gt;%1$.2f%%&lt;/b&gt; слушных (%2$d з %3$d)</string>
+    <string name="stats_overview_card_types_total_cards">Усяго картак: &lt;b&gt;%d&lt;/b&gt;</string>
+    <string name="stats_overview_card_types_total_notes">Усяго запісаў: &lt;b&gt;%d&lt;/b&gt;</string>
+    <string name="stats_overview_card_types_lowest_ease">Нізкая лёгкасць: &lt;b&gt;%.0f%%&lt;/b&gt;</string>
+    <string name="stats_overview_card_types_average_ease">Сярэдняя лёгкасць: &lt;b&gt;%.0f%%&lt;/b&gt;</string>
+    <string name="stats_overview_card_types_highest_ease">Высокая лёгкасць: &lt;b&gt;%.0f%%&lt;/b&gt;</string>
+    <string name="stats_select_time_scale">Выбраць шкалу часу</string>
     <string-array name="due_x_axis_title">
         <item>Дні</item>
         <item>Тыдні</item>
@@ -113,8 +113,8 @@
     <string name="stats_review_time">Час паўтарэння</string>
     <string name="stats_added" comment="Label of the number of added card">Дададзена</string>
     <string name="stats_review_intervals">Інтэрвалы</string>
-    <string name="stats_breakdown">Дзённае размеркаванне</string>
-    <string name="stats_weekly_breakdown">Тыднёвае размеркаванне</string>
+    <string name="stats_breakdown">Па гадзінах</string>
+    <string name="stats_weekly_breakdown">Па тыднях</string>
     <string name="stats_answer_buttons">Кнопкі адказу</string>
     <string-array name="stats_day_time_strings">
         <item>4:00</item>

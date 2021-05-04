@@ -179,8 +179,8 @@
     <string name="day_offset_summ">XXX timmar efter midnatt</string>
     <string name="xlabel_dayoffset_seekbar" maxLength="41">Midnight</string>
     <string name="ylabel_dayoffset_seekbar" maxLength="41">11PM</string>
-    <string name="sched_ver" maxLength="41">Experimentell V2 schemaläggare</string>
-    <string name="sched_ver_summ">Aktivera den experimentella schemaläggaren. Tvingar förändringar åt ett håll nästa synkning</string>
+    <string name="sched_v2" maxLength="41">V2 scheduler</string>
+    <string name="sched_v2_summ">Enable the new scheduler. Forces changes in one direction on next sync</string>
     <string name="sched_ver_toggle_title">Bekräfta</string>
     <string name="sched_ver_2to1">Detta kommer att återställa alla kort i nyinlärda-kön, rensa bort alla filtrerade kortlekar och ändra schemaläggarens version. Vill du fortsätta?</string>
     <string name="sched_ver_1to2">Den experimentella schemaläggaren kan komma att orsaka felakting schemaläggning. Försäkra dig om att du först har läst dokumentationen. Vill du fortsätta?</string>

@@ -279,6 +279,7 @@
     <string name="white_board_image_save_failed">Salvataggio dell\'immagine della lavagna fallito. %s</string>
     <string name="white_board_image_saved">Immagine lavagna salvata in %s</string>
     <string name="title_whiteboard_pen_color">Colore della penna della lavagna</string>
+    <string name="title_whiteboard_editor">Whiteboard editor</string>
     <!-- CSV/Note Import -->
     <string name="note_importer_empty_cards_found"><![CDATA[Trovate carte vuote. Si prega di eseguire Strumenti>Carte Vuote.]]></string>
     <string name="note_importer_error_empty_first_field">Primo campo vuoto: %s</string>

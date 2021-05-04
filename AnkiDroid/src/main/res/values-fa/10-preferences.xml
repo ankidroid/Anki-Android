@@ -179,8 +179,8 @@
     <string name="day_offset_summ">XXX ساعت پس از نیمه شب</string>
     <string name="xlabel_dayoffset_seekbar" maxLength="41">Midnight</string>
     <string name="ylabel_dayoffset_seekbar" maxLength="41">11PM</string>
-    <string name="sched_ver" maxLength="41">زمانبندی آزمایشی ورژن 2</string>
-    <string name="sched_ver_summ">فعالسازی سیستم زمانبندی آزمایشی. اعمال تغییرات در یک جهت در همگام‌سازی بعدی</string>
+    <string name="sched_v2" maxLength="41">V2 scheduler</string>
+    <string name="sched_v2_summ">Enable the new scheduler. Forces changes in one direction on next sync</string>
     <string name="sched_ver_toggle_title">تایید</string>
     <string name="sched_ver_2to1">این عمل همۀ کارت‌های موجود در مراحل یادگیری و یادگیری دوباره را به حالت تازه وارد کرده، همه دسته‌های فیلترشده را پاک و نسخۀ سیستم زمانبندی کارت‌ها را عوض خواهد کرد. آیا از انجام این عمل مطمئن هستید؟</string>
     <string name="sched_ver_1to2">سیستم زمانبندی آزمایشی ممکن است کارت‌ها را اشتباه زمانبندی کند. لطفاً قبل از اعمال تغییرات راهنما را بخوانید. اعمال تغییرات؟</string>
