@@ -217,6 +217,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
     private static final String sMinimumJsApiVersion = "0.0.1";
 
     private static final String MARK_CARD = "markCard";
+    private static final String TOGGLE_FLAG = "toggleFlag";
 
     // JS API ERROR CODE
     private static final int ankiJsErrorCodeDefault = 0;
@@ -3634,10 +3635,10 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
             }
             // flag card (blue, green, orange, red) using javascript from AnkiDroid webview
             if (url.startsWith("signal:flag_")) {
-                if (isAnkiApiNull("toggleFlag")) {
+                if (isAnkiApiNull(TOGGLE_FLAG)) {
                     showDeveloperContact(ankiJsErrorCodeDefault);
                     return true;
-                } else if (!mJsApiListMap.get("toggleFlag")) {
+                } else if (!mJsApiListMap.get(TOGGLE_FLAG)) {
                     // see 02-string.xml
                     showDeveloperContact(ankiJsErrorCodeFlagCard);
                     return true;
@@ -4071,7 +4072,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
 see card.js for available functions
  */
     // list of api that can be accessed
-    private final String[] mApiList = {"toggleFlag", MARK_CARD};
+    private final String[] mApiList = {TOGGLE_FLAG, MARK_CARD};
     // JS api list enable/disable status
     private final HashMap<String, Boolean> mJsApiListMap = new HashMap<>(mApiList.length);
     public JavaScriptFunction javaScriptFunction() {
