@@ -77,8 +77,9 @@ public class StorageTest extends RobolectricTest {
                 JSONObject actualJson = new JSONObject(actual.get(i).toString());
                 JSONObject expectedJson = new JSONObject(expected.get(i).toString());
 
-                actualJson.remove("curModel");
-                expectedJson.remove("curModel");
+                remove(actualJson, expectedJson, "curModel");
+                remove(actualJson, expectedJson, "creationOffset");
+                remove(actualJson, expectedJson, "localOffset");
 
                 assertThat(actualJson.toString(), is(expectedJson.toString()));
                 continue;
@@ -92,8 +93,7 @@ public class StorageTest extends RobolectricTest {
                 renameKeys(expectedJson);
 
                 for (String k : actualJson) {
-                    actualJson.getJSONObject(k).remove("id");
-                    expectedJson.getJSONObject(k).remove("id");
+                    remove(actualJson.getJSONObject(k), expectedJson.getJSONObject(k), "id");
                 }
 
                 assertThat(actualJson.toString(4), is(expectedJson.toString(4)));
@@ -102,6 +102,12 @@ public class StorageTest extends RobolectricTest {
 
             assertThat(Integer.toString(i), actual.get(i), is(expected.get(i)));
         }
+    }
+
+
+    protected void remove(JSONObject actualJson, JSONObject expectedJson, String key) {
+        actualJson.remove(key);
+        expectedJson.remove(key);
     }
 
 

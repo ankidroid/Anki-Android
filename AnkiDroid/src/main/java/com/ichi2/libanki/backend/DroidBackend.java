@@ -16,6 +16,7 @@
 
 package com.ichi2.libanki.backend;
 
+import com.ichi2.libanki.Collection;
 import com.ichi2.libanki.DB;
 import com.ichi2.libanki.DeckConfig;
 import com.ichi2.libanki.Decks;
@@ -68,4 +69,6 @@ public interface DroidBackend {
     default DeckConfig new_deck_config_legacy() {
         return new DeckConfig(Decks.DEFAULT_CONF);
     }
+
+    void useNewTimezoneCode(Collection col);
 }
