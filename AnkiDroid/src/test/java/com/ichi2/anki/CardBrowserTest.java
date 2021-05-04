@@ -386,7 +386,7 @@ public class CardBrowserTest extends RobolectricTest {
 
         assertThat("The target deck should not yet be selected", b.getLastDeckId(), not(is(targetDid)));
 
-        b.selectDeckId(targetDid);
+        b.selectDeckAndSave(targetDid);
 
         assertThat("The target deck should be selected", b.getLastDeckId(), is(targetDid));
 
