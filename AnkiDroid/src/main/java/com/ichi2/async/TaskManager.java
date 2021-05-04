@@ -56,11 +56,11 @@ public abstract class TaskManager {
         sTaskManager.setLatestInstanceConcrete(task);
     }
 
-    public static <ProgressBackground, ResultBackground> CollectionTask<ProgressBackground, ResultBackground> launchCollectionTask(CollectionTask.Task<ProgressBackground, ResultBackground> task) {
+    public static <Progress, Result> CollectionTask<Progress, Result> launchCollectionTask(CollectionTask.Task<Progress, Result> task) {
         return sTaskManager.launchCollectionTaskConcrete(task);
     }
 
-    public abstract <ProgressBackground, ResultBackground> CollectionTask<ProgressBackground, ResultBackground> launchCollectionTaskConcrete(CollectionTask.Task<ProgressBackground, ResultBackground> task);
+    public abstract <Progress, Result> CollectionTask<Progress, Result> launchCollectionTaskConcrete(CollectionTask.Task<Progress, Result> task);
 
 
     protected abstract void setLatestInstanceConcrete(CollectionTask task);
@@ -76,15 +76,15 @@ public abstract class TaskManager {
      * @param listener to the status and result of the task, may be null
      * @return the newly created task
      */
-    public static <ProgressBackground, ResultBackground> CollectionTask<ProgressBackground, ResultBackground>
-    launchCollectionTask(@NonNull CollectionTask.Task<ProgressBackground, ResultBackground> task,
-                         @Nullable TaskListener<? super ProgressBackground, ? super ResultBackground> listener) {
+    public static <Progress, Result> CollectionTask<Progress, Result>
+    launchCollectionTask(@NonNull CollectionTask.Task<Progress, Result> task,
+                         @Nullable TaskListener<? super Progress, ? super Result> listener) {
         return sTaskManager.launchCollectionTaskConcrete(task, listener);
     }
 
-    public abstract <ProgressBackground, ResultBackground> CollectionTask<ProgressBackground, ResultBackground>
-    launchCollectionTaskConcrete(@NonNull CollectionTask.Task<ProgressBackground, ResultBackground> task,
-                         @Nullable TaskListener<? super ProgressBackground, ? super ResultBackground> listener);
+    public abstract <Progress, Result> CollectionTask<Progress, Result>
+    launchCollectionTaskConcrete(@NonNull CollectionTask.Task<Progress, Result> task,
+                         @Nullable TaskListener<? super Progress, ? super Result> listener);
 
     /**
      * Block the current thread until the currently running CollectionTask instance (if any) has finished.

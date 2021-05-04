@@ -99,10 +99,10 @@ import static com.ichi2.utils.BooleanGetter.TRUE;
 /**
  * Loading in the background, so that AnkiDroid does not look like frozen.
  */
-public class CollectionTask<ProgressBackground, ResultBackground> extends BaseAsyncTask<Void, ProgressBackground, ResultBackground> {
+public class CollectionTask<Progress, Result> extends BaseAsyncTask<Void, Progress, Result> {
 
-    public abstract static class Task<ProgressBackground, ResultBackground> {
-        protected abstract ResultBackground task(@NonNull Collection col, @NonNull ProgressSenderAndCancelListener<ProgressBackground> collectionTask);
+    public abstract static class Task<Progress, Result> {
+        protected abstract Result task(@NonNull Collection col, @NonNull ProgressSenderAndCancelListener<Progress> collectionTask);
 
         protected boolean requiresOpenCollection() {
             return true;
@@ -141,22 +141,22 @@ public class CollectionTask<ProgressBackground, ResultBackground> extends BaseAs
         return mContext;
     }
 
-    private final Task<ProgressBackground, ResultBackground> mTask;
-    public Task<ProgressBackground, ResultBackground> getTask() {
+    private final Task<Progress, Result> mTask;
+    public Task<Progress, Result> getTask() {
         return mTask;
     }
-    private final TaskListener<? super ProgressBackground, ? super ResultBackground> mListener;
+    private final TaskListener<? super Progress, ? super Result> mListener;
     private CollectionTask mPreviousTask;
 
 
-    protected CollectionTask(Task<ProgressBackground, ResultBackground> task, TaskListener<? super ProgressBackground, ? super ResultBackground> listener, CollectionTask previousTask) {
+    protected CollectionTask(Task<Progress, Result> task, TaskListener<? super Progress, ? super Result> listener, CollectionTask previousTask) {
         mTask = task;
         mListener = listener;
         mPreviousTask = previousTask;
     }
 
     @Override
-    protected ResultBackground doInBackground(Void... params) {
+    protected Result doInBackground(Void... params) {
         try {
             return actualDoInBackground();
         } finally {
@@ -165,7 +165,7 @@ public class CollectionTask<ProgressBackground, ResultBackground> extends BaseAs
     }
 
     // This method and those that are called here are executed in a new thread
-    protected ResultBackground actualDoInBackground() {
+    protected Result actualDoInBackground() {
         super.doInBackground();
         // Wait for previous thread (if any) to finish before continuing
         if (mPreviousTask != null && mPreviousTask.getStatus() != AsyncTask.Status.FINISHED) {
@@ -211,7 +211,7 @@ public class CollectionTask<ProgressBackground, ResultBackground> extends BaseAs
 
     /** Delegates to the {@link TaskListener} for this task. */
     @Override
-    protected void onProgressUpdate(ProgressBackground... values) {
+    protected void onProgressUpdate(Progress... values) {
         super.onProgressUpdate(values);
         if (mListener != null) {
             mListener.onProgressUpdate(values[0]);
@@ -221,7 +221,7 @@ public class CollectionTask<ProgressBackground, ResultBackground> extends BaseAs
 
     /** Delegates to the {@link TaskListener} for this task. */
     @Override
-    protected void onPostExecute(ResultBackground result) {
+    protected void onPostExecute(Result result) {
         super.onPostExecute(result);
         if (mListener != null) {
             mListener.onPostExecute(result);
