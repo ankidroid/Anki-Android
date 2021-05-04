@@ -116,6 +116,7 @@ import static com.ichi2.libanki.Card.ANSWER_KEY;
 import static com.ichi2.libanki.Card.QUESTION_KEY;
 import static com.ichi2.libanki.Model.MODEL_S_NAME;
 import static com.ichi2.libanki.Deck.DECK_S_NAME;
+import static com.ichi2.libanki.Model.TEMPLATE_S_NAME;
 import static com.ichi2.libanki.stats.Stats.SECONDS_PER_DAY;
 import static com.ichi2.anim.ActivityTransitionAnimation.Direction.*;
 
@@ -2563,7 +2564,7 @@ public class CardBrowser extends NavigationDrawerActivity implements
             case TAGS:
                 return getCard().note().stringTags();
             case CARD:
-                return getCard().template().optString("name");
+                return getCard().template().optString(TEMPLATE_S_NAME);
             case DUE:
                 return getCard().getDueString();
             case EASE:

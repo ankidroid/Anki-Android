@@ -306,7 +306,7 @@ public class ContentProviderTest extends InstrumentedTest {
         assertNotNull("Check model", model);
         JSONObject template = model.getJSONArray("tmpls").getJSONObject(expectedOrd);
         assertEquals("Check template JSONObject ord", expectedOrd, template.getInt("ord"));
-        assertEquals("Check template name", TEST_MODEL_CARDS[testIndex], template.getString("name"));
+        assertEquals("Check template name", TEST_MODEL_CARDS[testIndex], template.getString(TEMPLATE_S_NAME));
         assertEquals("Check qfmt", TEST_MODEL_QFMT[testIndex], template.getString("qfmt"));
         assertEquals("Check afmt", TEST_MODEL_AFMT[testIndex], template.getString("afmt"));
         assertEquals("Check bqfmt", TEST_MODEL_QFMT[testIndex], template.getString("bqfmt"));
@@ -521,7 +521,7 @@ public class ContentProviderTest extends InstrumentedTest {
                 model = col.getModels().get(mid);
                 assertNotNull("Check model", model);
                 JSONObject template = model.getJSONArray("tmpls").getJSONObject(i);
-                assertEquals("Check template name", TEST_MODEL_CARDS[i], template.getString("name"));
+                assertEquals("Check template name", TEST_MODEL_CARDS[i], template.getString(TEMPLATE_S_NAME));
                 assertEquals("Check qfmt", TEST_MODEL_QFMT[i], template.getString("qfmt"));
                 assertEquals("Check afmt", TEST_MODEL_AFMT[i], template.getString("afmt"));
                 assertEquals("Check bqfmt", TEST_MODEL_QFMT[i], template.getString("bqfmt"));

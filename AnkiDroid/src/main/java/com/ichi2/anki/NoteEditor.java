@@ -149,6 +149,7 @@ import static com.ichi2.libanki.Collection.CUR_DECK;
 import static com.ichi2.libanki.Deck.DECK_S_NAME;
 import static com.ichi2.libanki.Model.MODEL_S_DID;
 import static com.ichi2.libanki.Model.MODEL_S_NAME;
+import static com.ichi2.libanki.Model.TEMPLATE_S_NAME;
 import static com.ichi2.libanki.Models.NOT_FOUND_NOTE_TYPE;
 
 /**
@@ -2090,10 +2091,10 @@ public class NoteEditor extends AnkiActivity implements
         Timber.d("updateCards() template count is %s", tmpls.length());
 
         for (int i = 0; i < tmpls.length(); i++) {
-            String name = tmpls.getJSONObject(i).optString("name");
+            String name = tmpls.getJSONObject(i).optString(TEMPLATE_S_NAME);
             // If more than one card, and we have an existing card, underline existing card
             if (!mAddNote && tmpls.length() > 1 && model == mEditorNote.model() && mCurrentEditedCard != null &&
-                mCurrentEditedCard.template().optString("name").equals(name)) {
+                mCurrentEditedCard.template().optString(TEMPLATE_S_NAME).equals(name)) {
                 name = "<u>" + name + "</u>";
             }
             cardsList.append(name);

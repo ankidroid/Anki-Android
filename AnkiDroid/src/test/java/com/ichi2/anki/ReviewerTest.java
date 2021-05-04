@@ -43,6 +43,7 @@ import static com.ichi2.anki.AbstractFlashcardViewer.RESULT_DEFAULT;
 import static com.ichi2.libanki.Model.MODEL_S_DID;
 import static com.ichi2.anki.dialogs.DeckPickerContextMenu.DID;
 import static com.ichi2.libanki.Model.MODEL_S_NAME;
+import static com.ichi2.libanki.Model.TEMPLATE_S_NAME;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.empty;
 import static org.hamcrest.Matchers.is;
@@ -365,7 +366,7 @@ public class ReviewerTest extends RobolectricTest {
         newTemplate.put("ord", tmpls.length());
 
         String card_name = getTargetContext().getString(R.string.card_n_name, tmpls.length() + 1);
-        newTemplate.put("name", card_name);
+        newTemplate.put(TEMPLATE_S_NAME, card_name);
 
         models.addTemplate(m, newTemplate);
     }

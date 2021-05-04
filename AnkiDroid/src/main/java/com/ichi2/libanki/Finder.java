@@ -51,6 +51,7 @@ import static com.ichi2.async.ProgressSender.publishProgress;
 import static com.ichi2.libanki.Deck.DECK_S_NAME;
 import static com.ichi2.libanki.Model.FIELD_S_NAME;
 import static com.ichi2.libanki.Model.MODEL_S_NAME;
+import static com.ichi2.libanki.Model.TEMPLATE_S_NAME;
 import static com.ichi2.libanki.stats.Stats.SECONDS_PER_DAY;
 
 @SuppressWarnings({"PMD.ExcessiveClassLength", "PMD.AvoidThrowingRawExceptionTypes","PMD.AvoidReassigningParameters","PMD.NPathComplexity","PMD.MethodNamingConventions"})
@@ -718,7 +719,7 @@ public class Finder {
         for (Model m : mCol.getModels().all()) {
             JSONArray tmpls = m.getJSONArray("tmpls");
             for (JSONObject t: tmpls.jsonObjectIterable()) {
-                String templateName = t.getString("name");
+                String templateName = t.getString(TEMPLATE_S_NAME);
                 Normalizer.normalize(templateName, Normalizer.Form.NFC);
                 if (templateName.equalsIgnoreCase(val)) {
                     if (m.isCloze()) {

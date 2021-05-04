@@ -56,6 +56,8 @@ import androidx.core.content.ContextCompat;
 import timber.log.Timber;
 
 import static com.ichi2.libanki.Deck.DECK_S_NAME;
+import static com.ichi2.libanki.Model.MODEL_S_NAME;
+import static com.ichi2.libanki.Model.TEMPLATE_S_NAME;
 import static com.ichi2.libanki.stats.Stats.SECONDS_PER_DAY;
 
 public class CardInfo extends AnkiActivity {
@@ -388,7 +390,7 @@ public class CardInfo extends AnkiActivity {
                 if (c.model().isCloze()) {
                     ord = 0;
                 }
-                return model.getJSONArray("tmpls").getJSONObject(ord).getString("name");
+                return model.getJSONArray("tmpls").getJSONObject(ord).getString(TEMPLATE_S_NAME);
             } catch (Exception e) {
                 Timber.w(e);
                 return null;

@@ -84,6 +84,7 @@ import static com.ichi2.libanki.Card.ANSWER_KEY;
 import static com.ichi2.libanki.Model.FIELD_S_NAME;
 import static com.ichi2.libanki.Model.MODEL_S_DID;
 import static com.ichi2.libanki.Model.MODEL_S_NAME;
+import static com.ichi2.libanki.Model.TEMPLATE_S_NAME;
 import static com.ichi2.libanki.Models.NOT_FOUND_NOTE_TYPE;
 
 /**
@@ -607,7 +608,7 @@ public class CardContentProvider extends ContentProvider {
                     JSONArray templates = existingModel.getJSONArray("tmpls");
                     JSONObject template = templates.getJSONObject(templateOrd);
                     if (name != null) {
-                        template.put("name", name);
+                        template.put(TEMPLATE_S_NAME, name);
                         updated++;
                     }
                     if (qfmt != null) {
@@ -1211,7 +1212,7 @@ public class CardContentProvider extends ContentProvider {
     private void addCardToCursor(Card currentCard, MatrixCursor rv, Collection col, String[] columns) {
         String cardName;
         try {
-            cardName = currentCard.template().getString("name");
+            cardName = currentCard.template().getString(TEMPLATE_S_NAME);
         } catch (JSONException je) {
             throw new IllegalArgumentException("Card is using an invalid template", je);
         }
@@ -1335,7 +1336,7 @@ public class CardContentProvider extends ContentProvider {
                         rb.add(tmpl.getInt("ord"));
                         break;
                     case CardTemplate.NAME:
-                        rb.add(tmpl.getString("name"));
+                        rb.add(tmpl.getString(TEMPLATE_S_NAME));
                         break;
                     case CardTemplate.QUESTION_FORMAT:
                         rb.add(tmpl.getString("qfmt"));

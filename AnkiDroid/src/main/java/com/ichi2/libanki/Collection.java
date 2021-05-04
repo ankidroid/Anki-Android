@@ -89,6 +89,7 @@ import static com.ichi2.libanki.Deck.DECK_S_NAME;
 import static com.ichi2.libanki.Model.MODEL_S_DID;
 import static com.ichi2.libanki.Model.MODEL_S_NAME;
 import static com.ichi2.libanki.Model.TEMPLATE_S_DID;
+import static com.ichi2.libanki.Model.TEMPLATE_S_NAME;
 
 // Anki maintains a cache of used tags so it can quickly present a list of tags
 // for autocomplete and in the browser. For efficiency, deletions are not
@@ -1105,7 +1106,7 @@ public class Collection implements CollectionGetter {
         } else {
             template = model.getJSONArray("tmpls").getJSONObject(0);
         }
-        fields.put("Card", template.getString("name"));
+        fields.put("Card", template.getString(TEMPLATE_S_NAME));
         fields.put(String.format(Locale.US, "c%d", cardNum), "1");
         // render q & a
         HashMap<String, String> d = new HashMap<>(2);

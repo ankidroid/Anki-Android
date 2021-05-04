@@ -52,6 +52,7 @@ import androidx.annotation.NonNull;
 import static com.ichi2.libanki.Card.QUESTION_KEY;
 import static com.ichi2.libanki.Model.FIELD_S_NAME;
 import static com.ichi2.libanki.Model.MODEL_S_NAME;
+import static com.ichi2.libanki.Model.TEMPLATE_S_NAME;
 import static com.ichi2.libanki.Models.AllowEmpty.ONLY_CLOZE;
 import static com.ichi2.libanki.Models.AllowEmpty.TRUE;
 
@@ -671,7 +672,7 @@ public class Models {
 
     public static JSONObject newTemplate(String name) {
         JSONObject t = new JSONObject(defaultTemplate);
-        t.put("name", name);
+        t.put(TEMPLATE_S_NAME, name);
         return t;
     }
 
@@ -950,7 +951,7 @@ public class Models {
         }
         JSONArray tmpls = m.getJSONArray("tmpls");
         for (JSONObject t: tmpls.jsonObjectIterable()) {
-            s.append(t.getString("name"));
+            s.append(t.getString(TEMPLATE_S_NAME));
         }
         return Utils.checksum(s.toString());
     }
@@ -1192,7 +1193,7 @@ public class Models {
             JSONArray templates = m.getJSONArray("tmpls");
             HashMap<Integer, String> names = new HashMap<>(templates.length());
             for (JSONObject t: templates.jsonObjectIterable()) {
-                names.put(t.getInt("ord"), t.getString("name"));
+                names.put(t.getInt("ord"), t.getString(TEMPLATE_S_NAME));
             }
             result.put(m.getLong("id"), names);
         }

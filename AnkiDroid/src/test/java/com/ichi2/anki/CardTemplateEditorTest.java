@@ -39,6 +39,7 @@ import androidx.annotation.NonNull;
 import androidx.test.ext.junit.runners.AndroidJUnit4;
 import timber.log.Timber;
 
+import static com.ichi2.libanki.Model.TEMPLATE_S_DID;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
 import static org.robolectric.Shadows.shadowOf;

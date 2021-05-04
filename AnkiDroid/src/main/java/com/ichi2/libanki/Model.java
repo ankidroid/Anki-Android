@@ -44,6 +44,7 @@ public class Model extends JSONObject {
     public static String TEMPLATE_S_DID = "did";
     public static String MODEL_S_NAME = "name";
     public static String FIELD_S_NAME = "name";
+    public static String TEMPLATE_S_NAME = "name";
     public Model() {
         super();
     }
@@ -68,7 +69,7 @@ public class Model extends JSONObject {
     }
 
     public List<String> getTemplatesNames() {
-        return getJSONArray("tmpls").toStringList("name");
+        return getJSONArray("tmpls").toStringList(TEMPLATE_S_NAME);
     }
 
     public boolean isStd() {

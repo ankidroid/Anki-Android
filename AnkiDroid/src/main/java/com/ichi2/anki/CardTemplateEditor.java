@@ -78,6 +78,7 @@ import timber.log.Timber;
 import static com.ichi2.anim.ActivityTransitionAnimation.Direction.*;
 import static com.ichi2.libanki.Model.MODEL_S_NAME;
 import static com.ichi2.libanki.Model.TEMPLATE_S_DID;
+import static com.ichi2.libanki.Model.TEMPLATE_S_NAME;
 import static com.ichi2.libanki.Models.NOT_FOUND_NOTE_TYPE;
 
 
@@ -237,7 +238,7 @@ public class CardTemplateEditor extends AnkiActivity implements DeckSelectionDia
 
         int ordinal = mViewPager.getCurrentItem();
         JSONObject template = getTempModel().getTemplate(ordinal);
-        String templateName = template.getString("name");
+        String templateName = template.getString(TEMPLATE_S_NAME);
 
         if (deck != null && Decks.isDynamic(getCol(), deck.getDeckId())) {
             Timber.w("Attempted to set default deck of %s to dynamic deck %s", templateName, deck.getName());
@@ -461,7 +462,7 @@ public class CardTemplateEditor extends AnkiActivity implements DeckSelectionDia
                 mTabLayoutMediator.detach();
             }
             mTabLayoutMediator = new TabLayoutMediator(mTemplateEditor.mSlidingTabLayout, mTemplateEditor.mViewPager,
-                    (tab, position) -> tab.setText(mTemplateEditor.getTempModel().getTemplate(position).getString("name"))
+                    (tab, position) -> tab.setText(mTemplateEditor.getTempModel().getTemplate(position).getString(TEMPLATE_S_NAME))
             );
              mTabLayoutMediator.attach();
         }
@@ -615,7 +616,7 @@ public class CardTemplateEditor extends AnkiActivity implements DeckSelectionDia
             try {
                 int ordinal = mTemplateEditor.mViewPager.getCurrentItem();
                 final JSONObject template = tempModel.getTemplate(ordinal);
-                return template.getString("name");
+                return template.getString(TEMPLATE_S_NAME);
             } catch (Exception e) {
                 Timber.w(e, "Failed to get name for template");
                 return "";
@@ -757,7 +758,7 @@ public class CardTemplateEditor extends AnkiActivity implements DeckSelectionDia
             ConfirmationDialog d = new ConfirmationDialog();
             Resources res = getResources();
             String msg = String.format(res.getQuantityString(R.plurals.card_template_editor_confirm_delete,
-                            numAffectedCards), numAffectedCards, tmpl.optString("name"));
+                            numAffectedCards), numAffectedCards, tmpl.optString(TEMPLATE_S_NAME));
             d.setArgs(msg);
             Runnable confirm = () -> deleteTemplateWithCheck(tmpl, model);
             d.setConfirm(confirm);
@@ -899,7 +900,7 @@ public class CardTemplateEditor extends AnkiActivity implements DeckSelectionDia
                 // Cycle through all templates checking if new name exists
                 boolean exists = false;
                 for (JSONObject template: templates.jsonObjectIterable()) {
-                    if (name.equals(template.getString("name"))) {
+                    if (name.equals(template.getString(TEMPLATE_S_NAME))) {
                         exists = true;
                         break;
                     }
