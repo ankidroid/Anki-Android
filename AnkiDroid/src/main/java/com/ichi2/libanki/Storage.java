@@ -97,6 +97,7 @@ public class Storage {
                 for (int i = StdModels.STD_MODELS.length-1; i>=0; i--) {
                     StdModels.STD_MODELS[i].add(col);
                 }
+                backend.useNewTimezoneCode(col);
                 col.save();
             }
             return col;
