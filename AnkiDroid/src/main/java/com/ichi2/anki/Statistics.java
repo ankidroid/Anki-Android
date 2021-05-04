@@ -43,6 +43,7 @@ import com.google.android.material.tabs.TabLayout;
 import com.google.android.material.tabs.TabLayoutMediator;
 import com.ichi2.anim.ActivityTransitionAnimation;
 import com.ichi2.anki.dialogs.DeckSelectionDialog;
+import com.ichi2.anki.runtimetools.TaskOperations;
 import com.ichi2.anki.stats.AnkiStatsTaskHandler;
 import com.ichi2.anki.stats.ChartView;
 import com.ichi2.anki.widgets.DeckDropDownAdapter;
@@ -253,6 +254,7 @@ public class Statistics extends NavigationDrawerActivity implements
         //track current settings for each individual fragment
         protected long mDeckId;
         protected AsyncTask mStatisticsTask;
+        protected AsyncTask mStatisticsOverviewTask;
         private ViewPager2 mActivityPager;
         private TabLayout mSlidingTabLayout;
         private TabLayoutMediator mTabLayoutMediator;
@@ -310,14 +312,19 @@ public class Statistics extends NavigationDrawerActivity implements
 
         @Override
         public void onDestroy() {
-            if (mStatisticsTask != null && !mStatisticsTask.isCancelled()) {
-                mStatisticsTask.cancel(true);
-            }
+            cancelTasks();
             if (mActivityPager.getAdapter() != null) {
                 mActivityPager.getAdapter().unregisterAdapterDataObserver(mDataObserver);
             }
             super.onDestroy();
         }
+
+        protected void cancelTasks() {
+            Timber.w("canceling tasks");
+            TaskOperations.stopTaskGracefully(mStatisticsTask);
+            TaskOperations.stopTaskGracefully(mStatisticsOverviewTask);
+        }
+
 
         private String getTabTitle(int position) {
             Locale l = Locale.getDefault();
@@ -506,9 +513,7 @@ public class Statistics extends NavigationDrawerActivity implements
                     mProgressBar.setVisibility(View.VISIBLE);
                     mChart.setVisibility(View.GONE);
                     mDeckId = ((Statistics) requireActivity()).getDeckId();
-                    if (mStatisticsTask != null && !mStatisticsTask.isCancelled()) {
-                        mStatisticsTask.cancel(true);
-                    }
+                    cancelTasks();
                     createChart();
                 }
             }
@@ -585,7 +590,7 @@ public class Statistics extends NavigationDrawerActivity implements
 
         private void createStatisticOverview(){
             AnkiStatsTaskHandler handler = (((Statistics)requireActivity()).getTaskHandler());
-            mStatisticsTask = handler.createStatisticsOverview(mWebView, mProgressBar);
+            mStatisticsOverviewTask = handler.createStatisticsOverview(mWebView, mProgressBar);
         }
 
 
@@ -600,9 +605,7 @@ public class Statistics extends NavigationDrawerActivity implements
                 mProgressBar.setVisibility(View.VISIBLE);
                 mWebView.setVisibility(View.GONE);
                 mDeckId = ((Statistics) requireActivity()).getDeckId();
-                if (mStatisticsTask != null && !mStatisticsTask.isCancelled()) {
-                    mStatisticsTask.cancel(true);
-                }
+                cancelTasks();
                 createStatisticOverview();
             }
         }
