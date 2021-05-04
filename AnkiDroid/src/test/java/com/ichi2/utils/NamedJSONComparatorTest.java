@@ -22,6 +22,7 @@ import org.junit.runner.RunWith;
 
 import androidx.test.ext.junit.runners.AndroidJUnit4;
 
+import static com.ichi2.utils.NamedJSONComparator.NAME;
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.lessThan;
@@ -32,10 +33,10 @@ public class NamedJSONComparatorTest {
     @Test
     public void checkIfReturnsCorrectValueForSameNames() {
         JSONObject firstObject = new JSONObject();
-        firstObject.put("name", "TestName");
+        firstObject.put(NAME, "TestName");
 
         JSONObject secondObject = new JSONObject();
-        secondObject.put("name", "TestName");
+        secondObject.put(NAME, "TestName");
 
         assertThat(NamedJSONComparator.INSTANCE.compare(firstObject, secondObject), equalTo(0));
     }
@@ -43,10 +44,10 @@ public class NamedJSONComparatorTest {
     @Test
     public void checkIfReturnsCorrectValueForDifferentNames() {
         JSONObject firstObject = new JSONObject();
-        firstObject.put("name", "TestName1");
+        firstObject.put(NAME, "TestName1");
 
         JSONObject secondObject = new JSONObject();
-        secondObject.put("name", "TestName2");
+        secondObject.put(NAME, "TestName2");
 
         assertThat(NamedJSONComparator.INSTANCE.compare(firstObject, secondObject), lessThan(0));
     }

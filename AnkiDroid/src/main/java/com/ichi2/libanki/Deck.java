@@ -20,8 +20,10 @@ import com.ichi2.utils.JSONObject;
 
 import androidx.annotation.CheckResult;
 
+import static com.ichi2.utils.NamedJSONComparator.NAME;
+
 public class Deck extends JSONObject {
-    public static String DECK_S_NAME = "name";
+    public static String DECK_S_NAME = NAME;
 
     public Deck(JSONObject json) {
         super(json);

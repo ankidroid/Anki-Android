@@ -21,9 +21,11 @@ import com.ichi2.utils.JSONObject;
 import androidx.annotation.Nullable;
 import timber.log.Timber;
 
+import static com.ichi2.utils.NamedJSONComparator.NAME;
+
 public class DeckConfig extends JSONObject{
 
-    public static String DECK_CONFIG_S_NAME = "name";
+    public static String DECK_CONFIG_S_NAME = NAME;
 
     private DeckConfig() {
         super();

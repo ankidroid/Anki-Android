@@ -33,6 +33,7 @@ import java.util.List;
 import androidx.core.util.Pair;
 import androidx.test.ext.junit.runners.AndroidJUnit4;
 
+import static com.ichi2.utils.NamedJSONComparator.NAME;
 import static org.hamcrest.Matchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 
@@ -116,7 +117,7 @@ public class StorageTest extends RobolectricTest {
         Iterator<String> keyIt = actualJson.keys();
         while (keyIt.hasNext()) {
             String name = keyIt.next();
-            keys.add(new Pair<>(name, actualJson.getJSONObject(name).getString("name")));
+            keys.add(new Pair<>(name, actualJson.getJSONObject(name).getString(NAME)));
         }
 
         keys.sort((x,y) -> x.second.compareTo(y.second));

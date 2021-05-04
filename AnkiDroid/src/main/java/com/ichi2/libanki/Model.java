@@ -33,6 +33,8 @@ import java.util.Set;
 import androidx.annotation.CheckResult;
 import timber.log.Timber;
 
+import static com.ichi2.utils.NamedJSONComparator.NAME;
+
 /**
  * Represents a note type, a.k.a. Model.
  * The content of an object is described in https://github.com/ankidroid/Anki-Android/wiki/Database-Structure
@@ -42,9 +44,9 @@ import timber.log.Timber;
 public class Model extends JSONObject {
     public static String MODEL_S_DID = "did";
     public static String TEMPLATE_S_DID = "did";
-    public static String MODEL_S_NAME = "name";
-    public static String FIELD_S_NAME = "name";
-    public static String TEMPLATE_S_NAME = "name";
+    public static String MODEL_S_NAME = NAME;
+    public static String FIELD_S_NAME = NAME;
+    public static String TEMPLATE_S_NAME = NAME;
     public Model() {
         super();
     }
