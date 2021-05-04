@@ -101,6 +101,7 @@ public class Collection implements CollectionGetter {
 
     private final Context mContext;
 
+    private static final String DECK = "deck";
     private DB mDb;
     private boolean mServer;
     //private double mLastSave;
@@ -1091,8 +1092,8 @@ public class Collection implements CollectionGetter {
         int cardNum = ord + 1;
         fields.put("Tags", tags.trim());
         fields.put("Type", model.getString("name"));
-        fields.put("Deck", mDecks.name(did));
-        String baseName = Decks.basename(fields.get("Deck"));
+        fields.put(DECK, mDecks.name(did));
+        String baseName = Decks.basename(fields.get(DECK));
         fields.put("Subdeck", baseName);
         fields.put("CardFlag", _flagNameFromCardFlags(flags));
         JSONObject template;
