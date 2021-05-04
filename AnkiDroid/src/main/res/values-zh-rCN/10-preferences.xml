@@ -179,8 +179,8 @@
     <string name="day_offset_summ">午夜过后的XXX小时</string>
     <string name="xlabel_dayoffset_seekbar" maxLength="41">午夜</string>
     <string name="ylabel_dayoffset_seekbar" maxLength="41">晚上 11 点</string>
-    <string name="sched_ver" maxLength="41">实验性 V2 调度器</string>
-    <string name="sched_ver_summ">启用实验性调度器。在下次同步时强制单向变更</string>
+    <string name="sched_v2" maxLength="41">V2 scheduler</string>
+    <string name="sched_v2_summ">Enable the new scheduler. Forces changes in one direction on next sync</string>
     <string name="sched_ver_toggle_title">确认</string>
     <string name="sched_ver_2to1">这将重置学习中的任何卡牌，清除已筛选的牌组，并更改调度器版本。继续吗？</string>
     <string name="sched_ver_1to2">实验性调度器可能会产生错误的进度。请确保您首先已阅读文档。继续吗？</string>

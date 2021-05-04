@@ -179,8 +179,8 @@
     <string name="day_offset_summ">午夜過後 XXX 小時</string>
     <string name="xlabel_dayoffset_seekbar" maxLength="41">Midnight</string>
     <string name="ylabel_dayoffset_seekbar" maxLength="41">11PM</string>
-    <string name="sched_ver" maxLength="41">實驗性 V2 排程器</string>
-    <string name="sched_ver_summ">啟用實驗性排程器。強制改變下次同步的方向</string>
+    <string name="sched_v2" maxLength="41">V2 scheduler</string>
+    <string name="sched_v2_summ">Enable the new scheduler. Forces changes in one direction on next sync</string>
     <string name="sched_ver_toggle_title">確認</string>
     <string name="sched_ver_2to1">這將重設學習中的所有卡片，清除已過濾牌組，並改變排程器版本。繼續嗎？</string>
     <string name="sched_ver_1to2">實驗性排程器可能造成不正確的排程。請確認您已預先閱讀文檔。繼續嗎？</string>

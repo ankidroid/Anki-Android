@@ -179,8 +179,8 @@
     <string name="day_offset_summ">XXX godzin po północy</string>
     <string name="xlabel_dayoffset_seekbar" maxLength="41">Midnight</string>
     <string name="ylabel_dayoffset_seekbar" maxLength="41">11PM</string>
-    <string name="sched_ver" maxLength="41">Eksperymentalny planista V2</string>
-    <string name="sched_ver_summ">Włącz eksperymentalny program planujący. Wymusza zmiany w jednym kierunku przy następnej synchronizacji</string>
+    <string name="sched_v2" maxLength="41">V2 scheduler</string>
+    <string name="sched_v2_summ">Enable the new scheduler. Forces changes in one direction on next sync</string>
     <string name="sched_ver_toggle_title">Potwierdź</string>
     <string name="sched_ver_2to1">To zresetuje wszystkie karty uczone, wyczyści filtrowane talie i zmieni wersję programu planującego. Kontynuować?</string>
     <string name="sched_ver_1to2">Eksperymentalny planista może powodować nieprawidłowe planowanie. Upewnij się, że przeczytałeś wcześniej dokumentację. Kontynuować?</string>

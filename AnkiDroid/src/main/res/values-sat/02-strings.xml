@@ -275,6 +275,7 @@
     <string name="white_board_image_save_failed">ᱯᱩᱸᱰ ᱵᱚᱰ ᱪᱤᱛᱟᱹᱨ ᱥᱟᱱᱪᱟᱣ ᱵᱷᱩᱞ ᱾. %s </string>
     <string name="white_board_image_saved">ᱯᱩᱸᱰ ᱵᱚᱰ ᱪᱤᱛᱟᱹᱨ %s ᱛᱮ ᱥᱟᱱᱪᱟᱣ</string>
     <string name="title_whiteboard_pen_color">ᱯᱩᱸᱰ ᱵᱚᱰ ᱪᱤᱛᱟᱹᱨ ᱠᱚᱞᱚᱢ ᱨᱚᱰ</string>
+    <string name="title_whiteboard_editor">Whiteboard editor</string>
     <!-- CSV/Note Import -->
     <string name="note_importer_empty_cards_found"><![CDATA[ᱠᱷᱟᱹᱞᱤ ᱠᱟᱰ ᱧᱟᱢᱮᱱᱟ ᱾ ᱫᱚᱭᱟᱠᱟᱛᱮ ᱦᱟᱹᱛᱤᱭᱟᱨ>ᱠᱷᱟᱹᱞᱤ ᱠᱟᱰ ᱠᱚ ᱨᱮ ᱫᱟᱹᱲ ᱪᱷᱚᱭ ᱢᱮ ᱾ ]]></string>
     <string name="note_importer_error_empty_first_field">ᱢᱟᱲᱟᱝ ᱠᱷᱟᱹᱞᱤ ᱡᱟᱭᱜᱟ: %s</string>

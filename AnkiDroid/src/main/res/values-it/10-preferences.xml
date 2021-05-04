@@ -179,8 +179,8 @@
     <string name="day_offset_summ">XXX ore dopo mezzanotte</string>
     <string name="xlabel_dayoffset_seekbar" maxLength="41">Midnight</string>
     <string name="ylabel_dayoffset_seekbar" maxLength="41">11PM</string>
-    <string name="sched_ver" maxLength="41">Pianificatore sperimentale V2</string>
-    <string name="sched_ver_summ">Abilita la pianificazione sperimentale. Forza le modifiche in una direzione alla prossima sincronizzazione</string>
+    <string name="sched_v2" maxLength="41">V2 scheduler</string>
+    <string name="sched_v2_summ">Enable the new scheduler. Forces changes in one direction on next sync</string>
     <string name="sched_ver_toggle_title">Conferma</string>
     <string name="sched_ver_2to1">Questo resetta tutte le carte in apprendimento, cancella i mazzi filtrati e cambia la versione di pianificatore. Procedere?</string>
     <string name="sched_ver_1to2">Il pianificatore sperimentale potrebbe causare una pianificazione non corretta. Assicurati di aver prima letto la documentazione. Procedere?</string>

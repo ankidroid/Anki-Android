@@ -299,6 +299,7 @@
     <string name="white_board_image_save_failed">Не вдалося зберегти зображення дошки. %s</string>
     <string name="white_board_image_saved">Зображення дошки збережено до %s</string>
     <string name="title_whiteboard_pen_color">Колір пензля</string>
+    <string name="title_whiteboard_editor">Whiteboard editor</string>
     <!-- CSV/Note Import -->
     <string name="note_importer_empty_cards_found"><![CDATA[Знайдено порожні картки. Натисніть Інструменти > Порожні картки.]]></string>
     <string name="note_importer_error_empty_first_field">Порожнє перше поле: %s</string>

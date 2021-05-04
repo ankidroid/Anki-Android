@@ -269,6 +269,7 @@
     <string name="white_board_image_save_failed">Không thể lưu hình ảnh bảng trắng. %s</string>
     <string name="white_board_image_saved">Hình ảnh bảng trắng được lưu vào %s</string>
     <string name="title_whiteboard_pen_color">Bảng màu bút</string>
+    <string name="title_whiteboard_editor">Whiteboard editor</string>
     <!-- CSV/Note Import -->
     <string name="note_importer_empty_cards_found"><![CDATA[Đã tìm thấy thẻ trống. Vui lòng chạy Công cụ > Thẻ trống.]]></string>
     <string name="note_importer_error_empty_first_field">Trường đầu tiên trống: %s</string>

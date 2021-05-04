@@ -279,6 +279,7 @@
     <string name="white_board_image_save_failed">Запазването на изображението на бялата дъска не бе успешно. %s</string>
     <string name="white_board_image_saved">Изображението на бялата дъска е запазено в %s</string>
     <string name="title_whiteboard_pen_color">Цвят на писалката за бяла дъска</string>
+    <string name="title_whiteboard_editor">Whiteboard editor</string>
     <!-- CSV/Note Import -->
     <string name="note_importer_empty_cards_found"><![CDATA[Намерени са празни карти. Моля, стартирайте Инструменти>Празни карти.]]></string>
     <string name="note_importer_error_empty_first_field">Празно първо поле: %s</string>

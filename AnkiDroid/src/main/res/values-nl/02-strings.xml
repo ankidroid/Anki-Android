@@ -280,6 +280,7 @@
     <string name="white_board_image_save_failed">Opslaan van schrijfbordafbeelding is mislukt. %s</string>
     <string name="white_board_image_saved">schrijfbordafbeelding opgeslagen in %s</string>
     <string name="title_whiteboard_pen_color">Penkleur schrijfbord</string>
+    <string name="title_whiteboard_editor">Whiteboard editor</string>
     <!-- CSV/Note Import -->
     <string name="note_importer_empty_cards_found"><![CDATA[Lege kaarten gevonden. Gelieve Gereedschap>Lege kaarten uit te voeren.]]></string>
     <string name="note_importer_error_empty_first_field">Leeg eerste veld: %s</string>

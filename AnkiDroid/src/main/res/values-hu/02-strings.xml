@@ -279,6 +279,7 @@
     <string name="white_board_image_save_failed">A rajztábla kép mentése sikertelen. %s</string>
     <string name="white_board_image_saved">A rajztábla kép elmentve %s-ba</string>
     <string name="title_whiteboard_pen_color">Rajtábla tollszín </string>
+    <string name="title_whiteboard_editor">Whiteboard editor</string>
     <!-- CSV/Note Import -->
     <string name="note_importer_empty_cards_found"><![CDATA[Üres kártyákat találtam. Kérlek, futtasd az Eszközök/Üres kártyák menüt.]]></string>
     <string name="note_importer_error_empty_first_field">Üres első mező: %s</string>

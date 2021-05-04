@@ -279,6 +279,7 @@
     <string name="white_board_image_save_failed">Impossible d\'enregistrer l\'image du tableau blanc. %s</string>
     <string name="white_board_image_saved">Image du tableau blanc enregistrée dans %s</string>
     <string name="title_whiteboard_pen_color">Couleur du stylo du tableau blanc</string>
+    <string name="title_whiteboard_editor">Whiteboard editor</string>
     <!-- CSV/Note Import -->
     <string name="note_importer_empty_cards_found"><![CDATA[Cartes vides trouvées. Veuillez exécuter Outils>Cartes vides.]]></string>
     <string name="note_importer_error_empty_first_field">Premier champ vide : %s</string>

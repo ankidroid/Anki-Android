@@ -179,8 +179,8 @@
     <string name="day_offset_summ">XXX ଘଣ୍ଟା ମଧ୍ୟରାତ୍ରି</string>
     <string name="xlabel_dayoffset_seekbar" maxLength="41">ମଧ୍ୟରାତ୍ରି</string>
     <string name="ylabel_dayoffset_seekbar" maxLength="41">11PM</string>
-    <string name="sched_ver" maxLength="41">ପରୀକ୍ଷାମୂଳକ V2 ନିର୍ଧାରକ |</string>
-    <string name="sched_ver_summ">ପରୀକ୍ଷାମୂଳକ କାର୍ଯ୍ୟସୂଚୀ ସକ୍ଷମ କରନ୍ତୁ | ପରବର୍ତ୍ତୀ ସିଙ୍କରେ ଗୋଟିଏ ଦିଗରେ ପରିବର୍ତ୍ତନ କରିବାକୁ ବାଧ୍ୟ କରେ</string>
+    <string name="sched_v2" maxLength="41">V2 scheduler</string>
+    <string name="sched_v2_summ">Enable the new scheduler. Forces changes in one direction on next sync</string>
     <string name="sched_ver_toggle_title">ନିଶ୍ଚିତ କରନ୍ତୁ</string>
     <string name="sched_ver_2to1">ଏହା ଶିଖିବାରେ ଯେକୌଣସି ପତ୍ରକୁ ପୁନଃସେଟ୍ କରିବ, ଶୋଧିତ ତାସଖଣ୍ଡଙ୍କୁ ସଫା କରିବ ଏବଂ ନିର୍ଧାରକ ସଂସ୍କରଣକୁ ପରିବର୍ତ୍ତନ କରିବ | ଅଗ୍ରଗତି କରିବେ?</string>
     <string name="sched_ver_1to2">ପରୀକ୍ଷାମୂଳକ କାର୍ଯ୍ୟସୂଚୀ ଭୁଲ କାର୍ଯ୍ୟସୂଚୀ ସୃଷ୍ଟି କରିପାରେ | ଦୟାକରି ନିଶ୍ଚିତ କରନ୍ତୁ ଯେ ଆପଣ ପ୍ରଥମେ ଡକ୍ୟୁମେଣ୍ଟେସନ୍ ପଢ଼ିଛନ୍ତି | ଅଗ୍ରଗତି କରିବେ?</string>

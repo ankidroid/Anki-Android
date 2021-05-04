@@ -279,6 +279,7 @@
     <string name="white_board_image_save_failed">व्हाइटबोर्ड छवि को बचाने में विफल। %s</string>
     <string name="white_board_image_saved">व्हाइटबोर्ड छवि %s में सहेजी गई</string>
     <string name="title_whiteboard_pen_color">व्हाईट बोर्ड के पेन</string>
+    <string name="title_whiteboard_editor">Whiteboard editor</string>
     <!-- CSV/Note Import -->
     <string name="note_importer_empty_cards_found"><![CDATA[खाली कार्ड मिले। कृपया उपकरण> खाली कार्ड चलाएं।]]></string>
     <string name="note_importer_error_empty_first_field">खाली पहला क्षेत्र: %s</string>
@@ -348,5 +349,5 @@
     <!-- Used for credential empty warning message -->
     <string name="email_id_empty">ई-मेल पते की आवश्यकता है</string>
     <string name="password_empty">पासवर्ड की आवश्यकता है</string>
-    <string name="back_pressed_once">Press back again to exit</string>
+    <string name="back_pressed_once">बाहर निकलने के लिए फिर से दबाएं</string>
 </resources>

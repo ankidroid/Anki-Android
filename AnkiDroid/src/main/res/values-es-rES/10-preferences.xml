@@ -179,8 +179,8 @@
     <string name="day_offset_summ">XXX horas tras la medianoche</string>
     <string name="xlabel_dayoffset_seekbar" maxLength="41">Midnight</string>
     <string name="ylabel_dayoffset_seekbar" maxLength="41">11PM</string>
-    <string name="sched_ver" maxLength="41">Programador Experimental V2</string>
-    <string name="sched_ver_summ">Activar el programador experimental. Fuerza los cambios en una dirección en la próxima sincronización</string>
+    <string name="sched_v2" maxLength="41">V2 scheduler</string>
+    <string name="sched_v2_summ">Enable the new scheduler. Forces changes in one direction on next sync</string>
     <string name="sched_ver_toggle_title">Confirmar</string>
     <string name="sched_ver_2to1">Esto restablecerá cualquier carta en el aprendizaje, limpiará mazos filtrados y cambiará la versión del programador. ¿Proceder?</string>
     <string name="sched_ver_1to2">El programador experimental podría causar una programación incorrecta. Por favor, asegúrese de haber leído la documentación primero. ¿Proceder?</string>

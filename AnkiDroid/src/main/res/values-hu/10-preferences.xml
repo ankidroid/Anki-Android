@@ -180,8 +180,8 @@
     <string name="day_offset_summ">XXX órával éjfél után</string>
     <string name="xlabel_dayoffset_seekbar" maxLength="41">Midnight</string>
     <string name="ylabel_dayoffset_seekbar" maxLength="41">11PM</string>
-    <string name="sched_ver" maxLength="41">Kísérleti V2 ütemező</string>
-    <string name="sched_ver_summ">Kísérleti ütemező engedélyezése. A változásokat egy irányba erőlteti a következő szinkronizáláskor</string>
+    <string name="sched_v2" maxLength="41">V2 scheduler</string>
+    <string name="sched_v2_summ">Enable the new scheduler. Forces changes in one direction on next sync</string>
     <string name="sched_ver_toggle_title">Megerősítés</string>
     <string name="sched_ver_2to1">Ez visszaállít minden tanult kártyát, kiüríti a szúrt paklikat és megváltoztatja az ütemező verzióját. Folytatja?</string>
     <string name="sched_ver_1to2">A kísérleti ütemező helytelenül ütemezhet. Kérjük olvassa el a dokumentációt először. Folytatja?</string>

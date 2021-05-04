@@ -319,6 +319,7 @@
     <string name="white_board_image_save_failed">فشل حفظ صورة السبورة. %s</string>
     <string name="white_board_image_saved">تم حفظ صورة السبورة إلى %s</string>
     <string name="title_whiteboard_pen_color">لون قلم السبورة</string>
+    <string name="title_whiteboard_editor">Whiteboard editor</string>
     <!-- CSV/Note Import -->
     <string name="note_importer_empty_cards_found"><![CDATA[عُثِر على بطاقات فارغة. استخدم أدوات>بطاقات فارغة.]]></string>
     <string name="note_importer_error_empty_first_field">حقل أول فارغ: %s</string>

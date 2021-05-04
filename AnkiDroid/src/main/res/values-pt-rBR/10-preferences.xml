@@ -179,8 +179,8 @@
     <string name="day_offset_summ">XXX horas após a meia-noite</string>
     <string name="xlabel_dayoffset_seekbar" maxLength="41">Midnight</string>
     <string name="ylabel_dayoffset_seekbar" maxLength="41">11PM</string>
-    <string name="sched_ver" maxLength="41">Agendador V2 Experimental</string>
-    <string name="sched_ver_summ">Habilitar o agendador experimental. Força mudanças em uma direção na próxima sincronização</string>
+    <string name="sched_v2" maxLength="41">V2 scheduler</string>
+    <string name="sched_v2_summ">Enable the new scheduler. Forces changes in one direction on next sync</string>
     <string name="sched_ver_toggle_title">Confirmar</string>
     <string name="sched_ver_2to1">Isto irá redefinir quaisquer cartões no aprendizado, limpar decks filtrados e alterar a versão do agendador. Continuar?</string>
     <string name="sched_ver_1to2">O agendador experimental pode causar agendamento incorreto. Por favor, certifique-se que você leu a documentação primeiro. Continuar?</string>

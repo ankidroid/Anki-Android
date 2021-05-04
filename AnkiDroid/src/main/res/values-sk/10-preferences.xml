@@ -180,8 +180,8 @@
     <string name="day_offset_summ">Počet hodín po polnoci: XXX</string>
     <string name="xlabel_dayoffset_seekbar" maxLength="41">Midnight</string>
     <string name="ylabel_dayoffset_seekbar" maxLength="41">11PM</string>
-    <string name="sched_ver" maxLength="41">Experimentálny V2 plánovač</string>
-    <string name="sched_ver_summ">Povoliť experimentálny plánovač. Vyžaduje si zmeny v jednom smere pri ďalej synchronizácii</string>
+    <string name="sched_v2" maxLength="41">V2 scheduler</string>
+    <string name="sched_v2_summ">Enable the new scheduler. Forces changes in one direction on next sync</string>
     <string name="sched_ver_toggle_title">Potvrdiť</string>
     <string name="sched_ver_2to1">Nasledovné zresetuje kartičky v procese učenia, zmaže filtrované balíčky a zmení verziu plánovača. Pokračovať?</string>
     <string name="sched_ver_1to2">Experimentálny plánovač by mohol spôsobiť nesprávne plánovanie. Prosím, uistite sa, že ste si prv prečítali dokumentáciu. Pokračovať?</string>
