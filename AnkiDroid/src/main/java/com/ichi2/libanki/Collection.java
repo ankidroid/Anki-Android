@@ -123,6 +123,7 @@ public class Collection implements CollectionGetter {
     private int mUsn;
     private long mLs;
     private JSONObject mConf;
+    public static String CUR_DECK = "curDeck";
     // END: SQL table columns
 
     // API 21: Use a ConcurrentLinkedDeque

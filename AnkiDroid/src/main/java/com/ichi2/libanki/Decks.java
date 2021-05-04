@@ -56,6 +56,7 @@ import androidx.annotation.Nullable;
 import androidx.annotation.VisibleForTesting;
 import timber.log.Timber;
 
+import static com.ichi2.libanki.Collection.CUR_DECK;
 import static com.ichi2.libanki.Consts.DECK_STD;
 import static com.ichi2.utils.CollectionUtils.addAll;
 
@@ -1069,7 +1070,7 @@ public class Decks {
      * The currently selected did.
      */
     public long selected() {
-        return mCol.getConf().getLong("curDeck");
+        return mCol.getConf().getLong(CUR_DECK);
     }
 
 
@@ -1085,7 +1086,7 @@ public class Decks {
         String name = mDecks.get(did).getString("name");
 
         // current deck
-        mCol.getConf().put("curDeck", did);
+        mCol.getConf().put(CUR_DECK, did);
         // and active decks (current + all children)
         TreeMap<String, Long> actv = children(did); // Note: TreeMap is already sorted
         actv.put(name, did);
