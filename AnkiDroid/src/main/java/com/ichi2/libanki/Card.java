@@ -78,6 +78,8 @@ import static com.ichi2.libanki.stats.Stats.SECONDS_PER_DAY;
                     "PMD.MethodNamingConventions"})
 public class Card implements Cloneable {
 
+    public static final String ANSWER_KEY = "a";
+
     public static final int TYPE_REV = 2;
 
     private Collection mCol;
@@ -267,7 +269,7 @@ public class Card implements Cloneable {
 
 
     public String a() {
-        return css() + _getQA().get("a");
+        return css() + _getQA().get(ANSWER_KEY);
     }
 
 
@@ -383,7 +385,7 @@ public class Card implements Cloneable {
      * Returns the answer with anything before the <hr id=answer> tag removed
      */
     public String getPureAnswer() {
-        String s = _getQA(false).get("a");
+        String s = _getQA(false).get(ANSWER_KEY);
         String target = "<hr id=answer>";
         int pos = s.indexOf(target);
         if (pos == -1) {

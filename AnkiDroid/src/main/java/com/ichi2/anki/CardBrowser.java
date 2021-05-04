@@ -112,6 +112,7 @@ import java.util.regex.Pattern;
 import timber.log.Timber;
 
 import static com.ichi2.anki.CardBrowser.Column.*;
+import static com.ichi2.libanki.Card.ANSWER_KEY;
 import static com.ichi2.libanki.stats.Stats.SECONDS_PER_DAY;
 import static com.ichi2.anim.ActivityTransitionAnimation.Direction.*;
 
@@ -2635,18 +2636,18 @@ public class CardBrowser extends NavigationDrawerActivity implements
             // render question and answer
             Map<String, String> qa = getCard()._getQA(true, true);
             // Render full question / answer if the bafmt (i.e. "browser appearance") setting forced blank result
-            if ("".equals(qa.get("q")) || "".equals(qa.get("a"))) {
+            if ("".equals(qa.get("q")) || "".equals(qa.get(ANSWER_KEY))) {
                 HashMap<String, String> qaFull = getCard()._getQA(true, false);
                 if ("".equals(qa.get("q"))) {
                     qa.put("q", qaFull.get("q"));
                 }
-                if ("".equals(qa.get("a"))) {
-                    qa.put("a", qaFull.get("a"));
+                if ("".equals(qa.get(ANSWER_KEY))) {
+                    qa.put(ANSWER_KEY, qaFull.get(ANSWER_KEY));
                 }
             }
             // update the original hash map to include rendered question & answer
             String q = qa.get("q");
-            String a = qa.get("a");
+            String a = qa.get(ANSWER_KEY);
             // remove the question from the start of the answer if it exists
             if (a.startsWith(q)) {
                 a = a.substring(q.length());

@@ -80,6 +80,7 @@ import androidx.sqlite.db.SupportSQLiteDatabase;
 import timber.log.Timber;
 
 import static com.ichi2.anki.FlashCardsContract.READ_WRITE_PERMISSION;
+import static com.ichi2.libanki.Card.ANSWER_KEY;
 import static com.ichi2.libanki.Models.NOT_FOUND_NOTE_TYPE;
 
 /**
@@ -1239,7 +1240,7 @@ public class CardContentProvider extends ContentProvider {
                     rb.add(currentCard.qSimple());
                     break;
                 case FlashCardsContract.Card.ANSWER_SIMPLE:
-                    rb.add(currentCard._getQA(false).get("a"));
+                    rb.add(currentCard._getQA(false).get(ANSWER_KEY));
                     break;
                 case FlashCardsContract.Card.ANSWER_PURE:
                     rb.add(currentCard.getPureAnswer());

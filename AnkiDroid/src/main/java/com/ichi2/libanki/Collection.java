@@ -85,6 +85,7 @@ import androidx.sqlite.db.SupportSQLiteStatement;
 import timber.log.Timber;
 
 import static com.ichi2.async.CancelListener.isCancelled;
+import static com.ichi2.libanki.Card.ANSWER_KEY;
 
 // Anki maintains a cache of used tags so it can quickly present a list of tags
 // for autocomplete and in the browser. For efficiency, deletions are not
@@ -1106,7 +1107,7 @@ public class Collection implements CollectionGetter {
         d.put("id", Long.toString(cid));
         qfmt = TextUtils.isEmpty(qfmt) ? template.getString("qfmt") : qfmt;
         afmt = TextUtils.isEmpty(afmt) ? template.getString("afmt") : afmt;
-        for (Pair<String, String> p : new Pair[]{new Pair<>("q", qfmt), new Pair<>("a", afmt)}) {
+        for (Pair<String, String> p : new Pair[]{new Pair<>("q", qfmt), new Pair<>(ANSWER_KEY, afmt)}) {
             String type = p.first;
             String format = p.second;
             if ("q".equals(type)) {
