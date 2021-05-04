@@ -64,7 +64,7 @@ public class AnkiStatsTaskHandler {
     }
 
     public synchronized static AnkiStatsTaskHandler getInstance(Collection collection) {
-        if (sInstance == null) {
+        if (sInstance == null || sInstance.mCollectionData != collection) {
             sInstance = new AnkiStatsTaskHandler(collection);
         }
         return sInstance;
