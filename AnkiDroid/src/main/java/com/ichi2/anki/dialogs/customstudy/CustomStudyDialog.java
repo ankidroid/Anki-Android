@@ -65,6 +65,7 @@ import java.util.List;
 import java.util.Locale;
 
 import static com.ichi2.anki.dialogs.DeckPickerContextMenu.DID;
+import static com.ichi2.libanki.Deck.DECK_S_NAME;
 
 
 public class CustomStudyDialog extends AnalyticsDialogFragment implements
@@ -476,7 +477,7 @@ public class CustomStudyDialog extends AnalyticsDialogFragment implements
         Deck dyn;
         long did = requireArguments().getLong(DID);
         Decks decks = mCollection.getDecks();
-        String deckToStudyName = decks.get(did).getString("name");
+        String deckToStudyName = decks.get(did).getString(DECK_S_NAME);
         String customStudyDeck = getResources().getString(R.string.custom_study_deck_name);
         Deck cur = decks.byName(customStudyDeck);
         if (cur != null) {

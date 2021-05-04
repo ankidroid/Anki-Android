@@ -48,6 +48,8 @@ import timber.log.Timber;
 import static com.ichi2.anki.CardBrowser.SORT_TYPE;
 import static com.ichi2.async.CancelListener.isCancelled;
 import static com.ichi2.async.ProgressSender.publishProgress;
+import static com.ichi2.libanki.Deck.DECK_S_NAME;
+import static com.ichi2.libanki.Model.MODEL_S_NAME;
 import static com.ichi2.libanki.stats.Stats.SECONDS_PER_DAY;
 
 @SuppressWarnings({"PMD.ExcessiveClassLength", "PMD.AvoidThrowingRawExceptionTypes","PMD.AvoidReassigningParameters","PMD.NPathComplexity","PMD.MethodNamingConventions"})
@@ -678,7 +680,7 @@ public class Finder {
                 val = val.replace("+", "\\+");
 
                 for (Deck d : mCol.getDecks().all()) {
-                    String deckName = d.getString("name");
+                    String deckName = d.getString(DECK_S_NAME);
                     deckName = Normalizer.normalize(deckName, Normalizer.Form.NFC);
                     if (deckName.matches("(?i)" + val)) {
                         for (long id : dids(d.getLong("id"))) {

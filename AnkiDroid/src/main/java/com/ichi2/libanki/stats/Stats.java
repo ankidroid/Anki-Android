@@ -43,6 +43,8 @@ import java.util.Vector;
 
 import timber.log.Timber;
 
+import static com.ichi2.libanki.Deck.DECK_S_NAME;
+
 
 @SuppressWarnings({"PMD.ExcessiveClassLength","PMD.AvoidThrowingRawExceptionTypes","PMD.AvoidReassigningParameters",
         "PMD.NPathComplexity","PMD.MethodNamingConventions","PMD.ExcessiveMethodLength","PMD.OneDeclarationPerLine",
@@ -114,7 +116,7 @@ public class Stats {
         if (mWholeCollection) {
             title = AnkiDroidApp.getInstance().getResources().getString(R.string.card_browser_all_decks);
         } else {
-            title = mCol.getDecks().get(mDeckId).getString("name");
+            title = mCol.getDecks().get(mDeckId).getString(DECK_S_NAME);
         }
         return new Object[] {/*0*/ mType, /*1*/mTitle, /*2*/mBackwards, /*3*/mValueLabels, /*4*/mColors,
          /*5*/mAxisTitles, /*6*/title, /*7*/mMaxCards, /*8*/mMaxElements, /*9*/mFirstElement, /*10*/mLastElement,

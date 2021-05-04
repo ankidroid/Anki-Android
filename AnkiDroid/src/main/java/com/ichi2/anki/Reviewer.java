@@ -94,6 +94,7 @@ import timber.log.Timber;
 import static com.ichi2.anki.reviewer.CardMarker.*;
 import static com.ichi2.anki.cardviewer.ViewerCommand.COMMAND_NOTHING;
 import static com.ichi2.anim.ActivityTransitionAnimation.Direction.*;
+import static com.ichi2.libanki.Deck.DECK_S_NAME;
 
 
 public class Reviewer extends AbstractFlashcardViewer {
@@ -241,7 +242,7 @@ public class Reviewer extends AbstractFlashcardViewer {
     protected void setTitle() {
         String title;
         if (colIsOpen()) {
-            title = Decks.basename(getCol().getDecks().current().getString("name"));
+            title = Decks.basename(getCol().getDecks().current().getString(DECK_S_NAME));
         } else {
             Timber.e("Could not set title in reviewer because collection closed");
             title = "";

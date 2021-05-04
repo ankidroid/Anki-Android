@@ -164,6 +164,7 @@ import static com.ichi2.anki.cardviewer.CardAppearance.calculateDynamicFontSize;
 import static com.ichi2.anki.cardviewer.ViewerCommand.*;
 import static com.ichi2.anki.reviewer.CardMarker.*;
 import static com.ichi2.libanki.Card.QUESTION_KEY;
+import static com.ichi2.libanki.Deck.DECK_S_NAME;
 import static com.ichi2.libanki.Sound.SoundSide;
 
 import com.github.zafarkhaja.semver.Version;
@@ -1989,7 +1990,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
         ActionBar actionBar = getSupportActionBar();
 
         if (actionBar != null) {
-            String title = Decks.basename(getCol().getDecks().get(mCurrentCard.getDid()).getString("name"));
+            String title = Decks.basename(getCol().getDecks().get(mCurrentCard.getDid()).getString(DECK_S_NAME));
             actionBar.setTitle(title);
         }
 
@@ -4191,7 +4192,7 @@ see card.js for available functions
 
         @JavascriptInterface
         public String ankiGetDeckName() {
-            return Decks.basename(getCol().getDecks().get(mCurrentCard.getDid()).getString("name"));
+            return Decks.basename(getCol().getDecks().get(mCurrentCard.getDid()).getString(DECK_S_NAME));
         }
 
         @JavascriptInterface

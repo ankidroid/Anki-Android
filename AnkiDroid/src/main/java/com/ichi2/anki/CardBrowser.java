@@ -115,6 +115,7 @@ import static com.ichi2.anki.CardBrowser.Column.*;
 import static com.ichi2.libanki.Card.ANSWER_KEY;
 import static com.ichi2.libanki.Card.QUESTION_KEY;
 import static com.ichi2.libanki.Model.MODEL_S_NAME;
+import static com.ichi2.libanki.Deck.DECK_S_NAME;
 import static com.ichi2.libanki.stats.Stats.SECONDS_PER_DAY;
 import static com.ichi2.anim.ActivityTransitionAnimation.Direction.*;
 
@@ -1394,7 +1395,7 @@ public class CardBrowser extends NavigationDrawerActivity implements
         final ArrayAdapter<String> arrayAdapter = new ArrayAdapter<>(this, R.layout.dropdown_deck_item);
         for (Deck deck : getValidDecksForChangeDeck()) {
             try {
-                arrayAdapter.add(deck.getString("name"));
+                arrayAdapter.add(deck.getString(DECK_S_NAME));
             } catch (JSONException e) {
                 Timber.w(e);
             }

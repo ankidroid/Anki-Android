@@ -76,6 +76,7 @@ import timber.log.Timber;
 
 import static com.ichi2.anim.ActivityTransitionAnimation.Direction.FADE;
 import static com.ichi2.anki.dialogs.DeckPickerContextMenu.DID;
+import static com.ichi2.libanki.Deck.DECK_S_NAME;
 
 /**
  * Preferences for the current deck.
@@ -111,7 +112,7 @@ public class DeckOptions extends AppCompatPreferenceActivity implements OnShared
             try {
                 mOptions = mCol.getDecks().confForDid(mDeck.getLong("id"));
 
-                mValues.put("name", mDeck.getString("name"));
+                mValues.put(DECK_S_NAME, mDeck.getString(DECK_S_NAME));
                 mValues.put("desc", mDeck.getString("desc"));
                 mValues.put("deckConf", mDeck.getString("conf"));
                 // general
@@ -681,7 +682,7 @@ public class DeckOptions extends AppCompatPreferenceActivity implements OnShared
             String title = getResources().getString(R.string.deckpreferences_title);
             if (title.contains("XXX")) {
                 try {
-                    title = title.replace("XXX", mDeck.getString("name"));
+                    title = title.replace("XXX", mDeck.getString(DECK_S_NAME));
                 } catch (JSONException e) {
                     Timber.w(e);
                     title = title.replace("XXX", "???");

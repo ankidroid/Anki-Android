@@ -21,6 +21,8 @@ import com.ichi2.utils.JSONObject;
 import androidx.annotation.CheckResult;
 
 public class Deck extends JSONObject {
+    public static String DECK_S_NAME = "name";
+
     public Deck(JSONObject json) {
         super(json);
     }

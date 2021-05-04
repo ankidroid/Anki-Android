@@ -85,6 +85,7 @@ import timber.log.Timber;
 import static com.ichi2.async.CancelListener.isCancelled;
 import static com.ichi2.libanki.Card.ANSWER_KEY;
 import static com.ichi2.libanki.Card.QUESTION_KEY;
+import static com.ichi2.libanki.Deck.DECK_S_NAME;
 import static com.ichi2.libanki.Model.MODEL_S_DID;
 import static com.ichi2.libanki.Model.MODEL_S_NAME;
 import static com.ichi2.libanki.Model.TEMPLATE_S_DID;
@@ -1509,7 +1510,7 @@ public class Collection implements CollectionGetter {
             }
 
             if (!configIds.contains(d.getLong("conf"))) {
-                Timber.d("Reset %s's config to default", d.optString("name", "unknown deck"));
+                Timber.d("Reset %s's config to default", d.optString(DECK_S_NAME, "unknown deck"));
                 d.put("conf", Consts.DEFAULT_DECK_CONFIG_ID);
                 changed++;
             }

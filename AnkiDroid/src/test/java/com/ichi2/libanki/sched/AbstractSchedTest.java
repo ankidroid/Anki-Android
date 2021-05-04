@@ -44,6 +44,7 @@ import java.util.Arrays;
 
 import static com.ichi2.anki.AbstractFlashcardViewer.EASE_3;
 import static com.ichi2.async.CollectionTask.nonTaskUndo;
+import static com.ichi2.libanki.Deck.DECK_S_NAME;
 import static com.ichi2.libanki.Model.MODEL_S_DID;
 import static com.ichi2.testutils.AnkiAssert.assertDoesNotThrow;
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -384,10 +385,10 @@ mw.col.sched.extendLimits(1, 0)
 
         long did = addDeck(name);
         Deck d = decks.get(did);
-        d.put("name", name);
+        d.put(DECK_S_NAME, name);
         decks.update(d);
 
-        boolean hasMatch = decks.all().stream().anyMatch(x -> name.equals(x.getString("name")));
+        boolean hasMatch = decks.all().stream().anyMatch(x -> name.equals(x.getString(DECK_S_NAME)));
         assertThat(String.format("Deck %s should exist", name), hasMatch, is(true));
     }
 

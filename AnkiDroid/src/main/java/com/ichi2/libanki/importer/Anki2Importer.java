@@ -63,6 +63,7 @@ import static com.ichi2.libanki.Consts.QUEUE_TYPE_DAY_LEARN_RELEARN;
 import static com.ichi2.libanki.Consts.QUEUE_TYPE_NEW;
 import static com.ichi2.libanki.Consts.QUEUE_TYPE_REV;
 import static com.ichi2.libanki.Model.MODEL_S_NAME;
+import static com.ichi2.libanki.Deck.DECK_S_NAME;
 
 @SuppressWarnings({"PMD.AvoidThrowingRawExceptionTypes","PMD.AvoidReassigningParameters",
         "PMD.NPathComplexity","PMD.MethodNamingConventions","PMD.ExcessiveMethodLength",
@@ -455,7 +456,7 @@ public class Anki2Importer extends Importer {
         }
         // get the name in src
         Deck g = mSrc.getDecks().get(did);
-        String name = g.getString("name");
+        String name = g.getString(DECK_S_NAME);
         // if there's a prefix, replace the top level deck
         if (!TextUtils.isEmpty(mDeckPrefix)) {
             List<String> parts = Arrays.asList(Decks.path(name));

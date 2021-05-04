@@ -14,6 +14,7 @@ import java.util.List;
 import androidx.test.ext.junit.runners.AndroidJUnit4;
 
 import static com.ichi2.libanki.Collection.CUR_DECK;
+import static com.ichi2.libanki.Deck.DECK_S_NAME;
 import static com.ichi2.libanki.Model.MODEL_S_DID;
 import static com.ichi2.testutils.AnkiAssert.assertEqualsArrayList;
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -44,7 +45,7 @@ public class DecksTest extends RobolectricTest {
         decks.checkIntegrity();
         JSONObject deckA = decks.byName("A");
         Asserts.notNull(deckA, "A deck with name \"A\" should still exists");
-        assertThat("A deck with name \"A\" should have name \"A\"", deckA.getString("name"), is("A"));
+        assertThat("A deck with name \"A\" should have name \"A\"", deckA.getString(DECK_S_NAME), is("A"));
         JSONObject deckAPlus = decks.byName("A+");
         Asserts.notNull(deckAPlus, "A deck with name \"A+\" should still exists");
     }
@@ -57,7 +58,7 @@ public class DecksTest extends RobolectricTest {
         JSONObject brokenDeck = decks.byName("cmxieunwoogyxsctnjmv::INSBGDS");
         Asserts.notNull(brokenDeck,"We should get deck with given name");
         // Changing the case. That could exists in an old collection or during sync.
-        brokenDeck.put("name", "CMXIEUNWOOGYXSCTNJMV::INSBGDS");
+        brokenDeck.put(DECK_S_NAME, "CMXIEUNWOOGYXSCTNJMV::INSBGDS");
         decks.save(brokenDeck);
 
         decks.childMap();
@@ -294,7 +295,7 @@ public class DecksTest extends RobolectricTest {
 
         Long subdeck_id = decks.id_safe("filtered::subdeck::subsubdeck");
         Deck subdeck = decks.get(subdeck_id);
-        assertEquals("filtered'::subdeck::subsubdeck", subdeck.getString("name"));
+        assertEquals("filtered'::subdeck::subsubdeck", subdeck.getString(DECK_S_NAME));
     }
 
     @Test

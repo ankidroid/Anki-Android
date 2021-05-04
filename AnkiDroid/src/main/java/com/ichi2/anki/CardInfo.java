@@ -55,6 +55,7 @@ import androidx.annotation.VisibleForTesting;
 import androidx.core.content.ContextCompat;
 import timber.log.Timber;
 
+import static com.ichi2.libanki.Deck.DECK_S_NAME;
 import static com.ichi2.libanki.stats.Stats.SECONDS_PER_DAY;
 
 public class CardInfo extends AnkiActivity {
@@ -336,7 +337,7 @@ public class CardInfo extends AnkiActivity {
             Model model = collection.getModels().get(c.note().getMid());
             String cardType = getCardType(c, model);
             String noteType = model.getString(MODEL_S_NAME);
-            String deckName = collection.getDecks().get(c.getDid()).getString("name");
+            String deckName = collection.getDecks().get(c.getDid()).getString(DECK_S_NAME);
             long noteId = c.getNid();
 
             Integer interval = c.getIvl();

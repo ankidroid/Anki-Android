@@ -55,6 +55,7 @@ import timber.log.Timber;
 
 import static com.ichi2.anim.ActivityTransitionAnimation.Direction.FADE;
 import static com.ichi2.anki.dialogs.DeckPickerContextMenu.DID;
+import static com.ichi2.libanki.Deck.DECK_S_NAME;
 
 /**
  * Preferences for the current deck.
@@ -377,7 +378,7 @@ public class FilteredDeckOptions extends AppCompatPreferenceActivity implements 
         String title = getResources().getString(R.string.deckpreferences_title);
         if (title.contains("XXX")) {
             try {
-                title = title.replace("XXX", mDeck.getString("name"));
+                title = title.replace("XXX", mDeck.getString(DECK_S_NAME));
             } catch (JSONException e) {
                 Timber.w(e);
                 title = title.replace("XXX", "???");

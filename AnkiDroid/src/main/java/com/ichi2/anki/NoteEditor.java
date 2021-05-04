@@ -146,6 +146,7 @@ import static com.ichi2.compat.Compat.EXTRA_PROCESS_TEXT;
 
 import static com.ichi2.anim.ActivityTransitionAnimation.Direction.*;
 import static com.ichi2.libanki.Collection.CUR_DECK;
+import static com.ichi2.libanki.Deck.DECK_S_NAME;
 import static com.ichi2.libanki.Model.MODEL_S_DID;
 import static com.ichi2.libanki.Model.MODEL_S_NAME;
 import static com.ichi2.libanki.Models.NOT_FOUND_NOTE_TYPE;

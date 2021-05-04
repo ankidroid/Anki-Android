@@ -741,7 +741,7 @@ public class ContentProviderTest extends InstrumentedTest {
 
                 Deck deck = decks.get(deckID);
                 assertNotNull("Check that the deck we received actually exists", deck);
-                assertEquals("Check that the received deck has the correct name", deck.getString("name"), deckName);
+                assertEquals("Check that the received deck has the correct name", deck.getString(DECK_S_NAME), deckName);
             }
         } finally {
             decksCursor.close();
@@ -766,7 +766,7 @@ public class ContentProviderTest extends InstrumentedTest {
 
                 Deck realDeck = col.getDecks().get(deckId);
                 assertEquals("Check that received deck ID equals real deck ID", deckId, returnedDeckID);
-                assertEquals("Check that received deck name equals real deck name", realDeck.getString("name"), returnedDeckName);
+                assertEquals("Check that received deck name equals real deck name", realDeck.getString(DECK_S_NAME), returnedDeckName);
             }
         }
     }

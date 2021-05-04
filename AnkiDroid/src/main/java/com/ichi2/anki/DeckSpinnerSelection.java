@@ -40,6 +40,8 @@ import androidx.appcompat.app.ActionBar;
 import androidx.core.content.ContextCompat;
 import timber.log.Timber;
 
+import static com.ichi2.libanki.Deck.DECK_S_NAME;
+
 public class DeckSpinnerSelection {
 
     private long mDeckId;
@@ -90,7 +92,7 @@ public class DeckSpinnerSelection {
         for (Deck d : mDropDownDecks) {
             // add current deck and all other non-filtered decks to deck list
             long thisDid = d.getLong("id");
-            String currentName = d.getString("name");
+            String currentName = d.getString(DECK_S_NAME);
             String lineContent = null;
             if (d.isStd()) {
                 lineContent = currentName;
