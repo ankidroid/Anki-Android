@@ -211,7 +211,7 @@ public class DeckSpinnerSelection {
         FunctionalInterfaces.Filter<Deck> nonDynamic = (d) -> !Decks.isDynamic(d);
         List<DeckSelectionDialog.SelectableDeck> decks = DeckSelectionDialog.SelectableDeck.fromCollection(col, nonDynamic);
         if (mShowAllDecks) {
-            decks.add(0, new DeckSelectionDialog.SelectableDeck(ALL_DECKS_ID, "ALL DECKS"));
+            decks.add(new DeckSelectionDialog.SelectableDeck(ALL_DECKS_ID, mContext.getResources().getString(R.string.card_browser_all_decks)));
         }
 
         DeckSelectionDialog dialog = DeckSelectionDialog.newInstance(mContext.getString(R.string.search_deck), null, false, decks);

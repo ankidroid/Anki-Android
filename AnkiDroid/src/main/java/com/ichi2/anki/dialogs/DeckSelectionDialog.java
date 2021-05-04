@@ -36,6 +36,7 @@ import com.ichi2.anki.analytics.AnalyticsDialogFragment;
 import com.ichi2.anki.exception.FilteredAncestor;
 import com.ichi2.libanki.Collection;
 import com.ichi2.libanki.Deck;
+import com.ichi2.libanki.stats.Stats;
 import com.ichi2.utils.FunctionalInterfaces;
 import com.ichi2.utils.FilterResultsUtils;
 
@@ -398,6 +399,9 @@ public class DeckSelectionDialog extends AnalyticsDialogFragment {
 
         @Override
         public int compareTo(@NonNull SelectableDeck o) {
+            if (o.mDeckId == Stats.ALL_DECKS_ID || this.mDeckId == Stats.ALL_DECKS_ID){
+                return -1;
+            }
             return this.mName.compareTo(o.mName);
         }
 
