@@ -150,6 +150,7 @@ import java.util.TreeMap;
 
 import timber.log.Timber;
 
+import static com.ichi2.anki.dialogs.DeckPickerContextMenu.DID;
 import static com.ichi2.async.Connection.ConflictResolution.FULL_DOWNLOAD;
 
 import static com.ichi2.anim.ActivityTransitionAnimation.Direction.*;
@@ -2551,12 +2552,12 @@ public class DeckPicker extends NavigationDrawerActivity implements
         if (getCol().getDecks().isDyn(mContextMenuDid)) {
             // open cram options if filtered deck
             Intent i = new Intent(DeckPicker.this, FilteredDeckOptions.class);
-            i.putExtra("did", mContextMenuDid);
+            i.putExtra(DID, mContextMenuDid);
             startActivityWithAnimation(i, FADE);
         } else {
             // otherwise open regular options
             Intent i = new Intent(DeckPicker.this, DeckOptions.class);
-            i.putExtra("did", mContextMenuDid);
+            i.putExtra(DID, mContextMenuDid);
             startActivityWithAnimation(i, FADE);
         }
     }

@@ -46,6 +46,7 @@ import androidx.annotation.Nullable;
 import androidx.annotation.VisibleForTesting;
 import timber.log.Timber;
 
+import static com.ichi2.anki.dialogs.DeckPickerContextMenu.DID;
 import static com.ichi2.libanki.stats.Stats.SECONDS_PER_DAY;
 
 /**
@@ -247,7 +248,7 @@ public class Card implements Cloneable {
         values.put("left", mLeft);
         values.put("odue", mODue);
         values.put("odid", mODid);
-        values.put("did", mDid);
+        values.put(DID, mDid);
         // TODO: The update DB call sets mod=true. Verify if this is intended.
         mCol.getDb().update("cards", values, "id = ?", new String[] {Long.toString(mId)});
         mCol.log(this);

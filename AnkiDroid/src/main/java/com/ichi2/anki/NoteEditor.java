@@ -139,6 +139,8 @@ import androidx.core.content.res.ResourcesCompat;
 import androidx.core.text.HtmlCompat;
 import androidx.fragment.app.DialogFragment;
 import timber.log.Timber;
+
+import static com.ichi2.anki.dialogs.DeckPickerContextMenu.DID;
 import static com.ichi2.compat.Compat.ACTION_PROCESS_TEXT;
 import static com.ichi2.compat.Compat.EXTRA_PROCESS_TEXT;
 
@@ -419,7 +421,7 @@ public class NoteEditor extends AnkiActivity implements
         if (savedInstanceState != null) {
             mCaller = savedInstanceState.getInt("caller");
             mAddNote = savedInstanceState.getBoolean("addNote");
-            mCurrentDid = savedInstanceState.getLong("did");
+            mCurrentDid = savedInstanceState.getLong(DID);
             mSelectedTags = savedInstanceState.getStringArrayList("tags");
             mReloadRequired = savedInstanceState.getBoolean("reloadRequired");
             mPastedImageCache = (HashMap<String, String>) savedInstanceState.getSerializable("imageCache");
@@ -448,7 +450,7 @@ public class NoteEditor extends AnkiActivity implements
         Timber.i("Saving instance");
         savedInstanceState.putInt("caller", mCaller);
         savedInstanceState.putBoolean("addNote", mAddNote);
-        savedInstanceState.putLong("did", mCurrentDid);
+        savedInstanceState.putLong(DID, mCurrentDid);
         savedInstanceState.putBoolean("changed", mChanged);
         savedInstanceState.putBoolean("reloadRequired", mReloadRequired);
         savedInstanceState.putIntegerArrayList("customViewIds", mCustomViewIds);

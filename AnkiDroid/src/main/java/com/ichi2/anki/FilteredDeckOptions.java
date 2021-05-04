@@ -54,6 +54,7 @@ import androidx.annotation.Nullable;
 import timber.log.Timber;
 
 import static com.ichi2.anim.ActivityTransitionAnimation.Direction.FADE;
+import static com.ichi2.anki.dialogs.DeckPickerContextMenu.DID;
 
 /**
  * Preferences for the current deck.
@@ -351,8 +352,8 @@ public class FilteredDeckOptions extends AppCompatPreferenceActivity implements 
             return;
         }
         Bundle extras = getIntent().getExtras();
-        if (extras != null && extras.containsKey("did")) {
-            mDeck = mCol.getDecks().get(extras.getLong("did"));
+        if (extras != null && extras.containsKey(DID)) {
+            mDeck = mCol.getDecks().get(extras.getLong(DID));
         } else {
             mDeck = mCol.getDecks().current();
         }
