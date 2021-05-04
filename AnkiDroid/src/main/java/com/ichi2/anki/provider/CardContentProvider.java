@@ -1151,7 +1151,7 @@ public class CardContentProvider extends ContentProvider {
     }
 
     private void addModelToCursor(Long modelId, Models models, MatrixCursor rv, String[] columns) {
-        Model jsonObject = models.get(modelId);
+        Model model = models.get(modelId);
         MatrixCursor.RowBuilder rb = rv.newRow();
         try {
             for (String column : columns) {
@@ -1160,10 +1160,10 @@ public class CardContentProvider extends ContentProvider {
                         rb.add(modelId);
                         break;
                     case FlashCardsContract.Model.NAME:
-                        rb.add(jsonObject.getString("name"));
+                        rb.add(model.getString("name"));
                         break;
                     case FlashCardsContract.Model.FIELD_NAMES:
-                        JSONArray flds = jsonObject.getJSONArray("flds");
+                        JSONArray flds = model.getJSONArray("flds");
                         String[] allFlds = new String[flds.length()];
                         for (int idx = 0; idx < flds.length(); idx++) {
                             allFlds[idx] = flds.getJSONObject(idx).optString("name", "");
@@ -1171,29 +1171,29 @@ public class CardContentProvider extends ContentProvider {
                         rb.add(Utils.joinFields(allFlds));
                         break;
                     case FlashCardsContract.Model.NUM_CARDS:
-                        rb.add(jsonObject.getJSONArray("tmpls").length());
+                        rb.add(model.getJSONArray("tmpls").length());
                         break;
                     case FlashCardsContract.Model.CSS:
-                        rb.add(jsonObject.getString("css"));
+                        rb.add(model.getString("css"));
                         break;
                     case FlashCardsContract.Model.DECK_ID:
                         //#6378 - Anki Desktop changed schema temporarily to allow null
-                        rb.add(jsonObject.optLong("did", Consts.DEFAULT_DECK_ID));
+                        rb.add(model.optLong("did", Consts.DEFAULT_DECK_ID));
                         break;
                     case FlashCardsContract.Model.SORT_FIELD_INDEX:
-                        rb.add(jsonObject.getLong("sortf"));
+                        rb.add(model.getLong("sortf"));
                         break;
                     case FlashCardsContract.Model.TYPE:
-                        rb.add(jsonObject.getLong("type"));
+                        rb.add(model.getLong("type"));
                         break;
                     case FlashCardsContract.Model.LATEX_POST:
-                        rb.add(jsonObject.getString("latexPost"));
+                        rb.add(model.getString("latexPost"));
                         break;
                     case FlashCardsContract.Model.LATEX_PRE:
-                        rb.add(jsonObject.getString("latexPre"));
+                        rb.add(model.getString("latexPre"));
                         break;
                     case FlashCardsContract.Model.NOTE_COUNT:
-                        rb.add(models.useCount(jsonObject));
+                        rb.add(models.useCount(model));
                         break;
                     default:
                         throw new UnsupportedOperationException("Queue \"" + column + "\" is unknown");
