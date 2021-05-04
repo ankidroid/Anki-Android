@@ -2648,7 +2648,7 @@ public class CardBrowser extends NavigationDrawerActivity implements
             String a = qa.get("a");
             // remove the question from the start of the answer if it exists
             if (a.startsWith(q)) {
-                a = a.replaceFirst(Pattern.quote(q), "");
+                a = a.substring(q.length());
             }
             a = formatQA(a, AnkiDroidApp.getInstance());
             q = formatQA(q, AnkiDroidApp.getInstance());
