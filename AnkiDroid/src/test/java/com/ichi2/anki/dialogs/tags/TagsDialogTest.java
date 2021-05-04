@@ -17,13 +17,13 @@ package com.ichi2.anki.dialogs.tags;
 
 import android.os.Bundle;
 import android.view.View;
-import android.widget.CheckedTextView;
 import android.widget.RadioGroup;
 
 import com.afollestad.materialdialogs.DialogAction;
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.ichi2.anki.R;
 import com.ichi2.anki.dialogs.tags.TagsDialog.DialogType;
+import com.ichi2.testutils.RecyclerViewUtils;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -190,8 +190,7 @@ public class TagsDialogTest {
             recycler.measure(0, 0);
             recycler.layout(0, 0, 100, 1000);
 
-            TagsArrayAdapter.ViewHolder vh = (TagsArrayAdapter.ViewHolder) recycler.findViewHolderForAdapterPosition(2);
-            CheckedTextView itemView = (CheckedTextView) vh.itemView;
+            TagsArrayAdapter.ViewHolder itemView = RecyclerViewUtils.viewHolderAt(recycler, 2);
 
             assertEquals(NEW_TAG, itemView.getText());
             assertTrue(itemView.isChecked());

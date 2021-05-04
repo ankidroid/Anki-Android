@@ -31,7 +31,10 @@ import java.util.Locale;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.annotation.VisibleForTesting;
 import androidx.recyclerview.widget.RecyclerView;
+
+import static androidx.annotation.VisibleForTesting.*;
 
 public class TagsArrayAdapter extends  RecyclerView.Adapter<TagsArrayAdapter.ViewHolder> implements Filterable {
     public static class ViewHolder extends RecyclerView.ViewHolder {
@@ -39,6 +42,17 @@ public class TagsArrayAdapter extends  RecyclerView.Adapter<TagsArrayAdapter.Vie
         public ViewHolder(CheckedTextView ctv) {
             super(ctv);
             mTagItemCheckedTextView = ctv;
+        }
+
+        @VisibleForTesting(otherwise = NONE)
+        public String getText() {
+            return ((CheckedTextView) itemView).getText().toString();
+        }
+
+
+        @VisibleForTesting(otherwise = NONE)
+        public boolean isChecked() {
+            return ((CheckedTextView) itemView).isChecked();
         }
     }
 
