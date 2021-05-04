@@ -152,6 +152,7 @@ import static timber.log.Timber.DebugTree;
 public class AnkiDroidApp extends Application {
 
     private static final String WEBVIEW_VER_NAME = "WEBVIEW_VER_NAME";
+    private static final String WEBVIEW_VER_CODE = "WEBVIEW_VER_CODE";
 
     public static final String XML_CUSTOM_NAMESPACE = "http://arbitrary.app.namespace/com.ichi2.anki";
 
@@ -238,7 +239,7 @@ public class AnkiDroidApp extends Application {
         this.mAcraCoreConfigBuilder = acraCoreConfigBuilder;
         ACRA.init(this, acraCoreConfigBuilder);
         ACRA.getErrorReporter().putCustomData(WEBVIEW_VER_NAME, fetchWebViewInformation().get(WEBVIEW_VER_NAME));
-        ACRA.getErrorReporter().putCustomData("WEBVIEW_VER_CODE", fetchWebViewInformation().get("WEBVIEW_VER_CODE"));
+        ACRA.getErrorReporter().putCustomData(WEBVIEW_VER_CODE, fetchWebViewInformation().get(WEBVIEW_VER_CODE));
     }
 
     @Override
@@ -726,7 +727,7 @@ public class AnkiDroidApp extends Application {
     private HashMap<String, String> fetchWebViewInformation() {
         HashMap<String, String> webViewInfo = new HashMap<>();
         webViewInfo.put(WEBVIEW_VER_NAME, "");
-        webViewInfo.put("WEBVIEW_VER_CODE", "");
+        webViewInfo.put(WEBVIEW_VER_CODE, "");
         try {
             PackageInfo pi = WebViewCompat.getCurrentWebViewPackage(this);
             if (pi == null) {
@@ -734,7 +735,7 @@ public class AnkiDroidApp extends Application {
                 return webViewInfo;
             }
             webViewInfo.put(WEBVIEW_VER_NAME, pi.versionName);
-            webViewInfo.put("WEBVIEW_VER_CODE", String.valueOf(PackageInfoCompat.getLongVersionCode(pi)));
+            webViewInfo.put(WEBVIEW_VER_CODE, String.valueOf(PackageInfoCompat.getLongVersionCode(pi)));
         } catch (Throwable e) {
             Timber.w(e);
         }
