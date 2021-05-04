@@ -632,7 +632,7 @@ public class Finder {
     private String _findModel(String val) {
         LinkedList<Long> ids = new LinkedList<>();
         for (JSONObject m : mCol.getModels().all()) {
-            String modelName = m.getString("name");
+            String modelName = m.getString(MODEL_S_NAME);
             modelName = Normalizer.normalize(modelName, Normalizer.Form.NFC);
             if (modelName.equalsIgnoreCase(val)) {
                 ids.add(m.getLong("id"));

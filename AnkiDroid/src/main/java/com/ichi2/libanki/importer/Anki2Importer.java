@@ -62,6 +62,7 @@ import static com.ichi2.libanki.Consts.CARD_TYPE_REV;
 import static com.ichi2.libanki.Consts.QUEUE_TYPE_DAY_LEARN_RELEARN;
 import static com.ichi2.libanki.Consts.QUEUE_TYPE_NEW;
 import static com.ichi2.libanki.Consts.QUEUE_TYPE_REV;
+import static com.ichi2.libanki.Model.MODEL_S_NAME;
 
 @SuppressWarnings({"PMD.AvoidThrowingRawExceptionTypes","PMD.AvoidReassigningParameters",
         "PMD.NPathComplexity","PMD.MethodNamingConventions","PMD.ExcessiveMethodLength",
@@ -288,7 +289,7 @@ public class Anki2Importer extends Importer {
                                 dirty.add(nid);
                             } else {
                                 dupesIgnored.add(String.format("%s: %s",
-                                        mCol.getModels().get(oldMid).getString("name"),
+                                        mCol.getModels().get(oldMid).getString(MODEL_S_NAME),
                                         flds.replace('\u001f', ',')));
                                 mIgnoredGuids.add(guid);
                             }

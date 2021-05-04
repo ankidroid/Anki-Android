@@ -50,6 +50,7 @@ import java.util.regex.Pattern;
 import androidx.annotation.NonNull;
 
 import static com.ichi2.libanki.Card.QUESTION_KEY;
+import static com.ichi2.libanki.Model.MODEL_S_NAME;
 import static com.ichi2.libanki.Models.AllowEmpty.ONLY_CLOZE;
 import static com.ichi2.libanki.Models.AllowEmpty.TRUE;
 
@@ -300,7 +301,7 @@ public class Models {
     /** get model with NAME. */
     public Model byName(String name) {
         for (Model m : mModels.values()) {
-            if (m.getString("name").equals(name)) {
+            if (m.getString(MODEL_S_NAME).equals(name)) {
                 return m;
             }
         }
@@ -314,7 +315,7 @@ public class Models {
     public Model newModel(String name) {
         // caller should call save() after modifying
         Model m = new Model(DEFAULT_MODEL);
-        m.put("name", name);
+        m.put(MODEL_S_NAME, name);
         m.put("mod", mCol.getTime().intTime());
         m.put("flds", new JSONArray());
         m.put("tmpls", new JSONArray());
@@ -416,7 +417,7 @@ public class Models {
     /** Copy, save and return. */
     public Model copy(Model m) {
         Model m2 = m.deepClone();        
-        m2.put("name", m2.getString("name") + " copy");
+        m2.put(MODEL_S_NAME, m2.getString(MODEL_S_NAME) + " copy");
         add(m2);
         return m2;
     }

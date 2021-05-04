@@ -147,6 +147,7 @@ import static com.ichi2.compat.Compat.EXTRA_PROCESS_TEXT;
 import static com.ichi2.anim.ActivityTransitionAnimation.Direction.*;
 import static com.ichi2.libanki.Collection.CUR_DECK;
 import static com.ichi2.libanki.Model.MODEL_S_DID;
+import static com.ichi2.libanki.Model.MODEL_S_NAME;
 import static com.ichi2.libanki.Models.NOT_FOUND_NOTE_TYPE;
 
 /**
@@ -583,7 +584,7 @@ public class NoteEditor extends AnkiActivity implements
         final ArrayList<String> modelNames = new ArrayList<>(models.size());
         mAllModelIds = new ArrayList<>(models.size());
         for (JSONObject m : models) {
-            modelNames.add(m.getString("name"));
+            modelNames.add(m.getString(MODEL_S_NAME));
             mAllModelIds.add(m.getLong("id"));
         }
 

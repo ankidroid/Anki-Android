@@ -36,6 +36,7 @@ import java.util.Map;
 import static com.afollestad.materialdialogs.DialogAction.POSITIVE;
 import static com.ichi2.anki.FieldOperationType.ADD_FIELD;
 import static com.ichi2.anki.FieldOperationType.RENAME_FIELD;
+import static com.ichi2.libanki.Model.MODEL_S_NAME;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.not;
@@ -173,7 +174,7 @@ public class ModelFieldEditorTest extends RobolectricTest {
     private long findModelIdByName(String modelName) {
         return getCol().getModels().getModels().entrySet()
                 .stream()
-                .filter(idModels -> idModels.getValue().getString("name").equals(modelName))
+                .filter(idModels -> idModels.getValue().getString(MODEL_S_NAME).equals(modelName))
                 .map(Map.Entry::getKey) // get the ID
                 .findFirst()
                 .orElse(0L);

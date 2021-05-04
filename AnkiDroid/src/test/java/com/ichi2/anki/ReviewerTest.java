@@ -41,6 +41,8 @@ import timber.log.Timber;
 import static com.ichi2.anki.AbstractFlashcardViewer.EASE_4;
 import static com.ichi2.anki.AbstractFlashcardViewer.RESULT_DEFAULT;
 import static com.ichi2.libanki.Model.MODEL_S_DID;
+import static com.ichi2.anki.dialogs.DeckPickerContextMenu.DID;
+import static com.ichi2.libanki.Model.MODEL_S_NAME;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.empty;
 import static org.hamcrest.Matchers.is;
@@ -340,7 +342,7 @@ public class ReviewerTest extends RobolectricTest {
     private void addNoteWithThreeCards() throws ConfirmModSchemaException {
         Models models = getCol().getModels();
         Model m = models.copy(models.current());
-        m.put("name", "Three");
+        m.put(MODEL_S_NAME, "Three");
         models.add(m);
         m = models.byName("Three");
         models.flush();
@@ -349,7 +351,7 @@ public class ReviewerTest extends RobolectricTest {
 
         @NonNull Note newNote = getCol().newNote();
         newNote.setField(0, "Hello");
-        assertThat(newNote.model().get("name"), is("Three"));
+        assertThat(newNote.model().get(MODEL_S_NAME), is("Three"));
 
         assertThat(getCol().addNote(newNote), is(3));
     }

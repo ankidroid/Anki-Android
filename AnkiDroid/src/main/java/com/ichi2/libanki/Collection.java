@@ -86,6 +86,7 @@ import static com.ichi2.async.CancelListener.isCancelled;
 import static com.ichi2.libanki.Card.ANSWER_KEY;
 import static com.ichi2.libanki.Card.QUESTION_KEY;
 import static com.ichi2.libanki.Model.MODEL_S_DID;
+import static com.ichi2.libanki.Model.MODEL_S_NAME;
 import static com.ichi2.libanki.Model.TEMPLATE_S_DID;
 
 // Anki maintains a cache of used tags so it can quickly present a list of tags
@@ -1092,7 +1093,7 @@ public class Collection implements CollectionGetter {
         }
         int cardNum = ord + 1;
         fields.put("Tags", tags.trim());
-        fields.put("Type", model.getString("name"));
+        fields.put("Type", model.getString(MODEL_S_NAME));
         fields.put(DECK, mDecks.name(did));
         String baseName = Decks.basename(fields.get(DECK));
         fields.put("Subdeck", baseName);

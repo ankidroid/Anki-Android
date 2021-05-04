@@ -92,6 +92,7 @@ import timber.log.Timber;
 
 import static com.ichi2.async.TaskManager.setLatestInstance;
 import static com.ichi2.libanki.Card.deepCopyCardArray;
+import static com.ichi2.libanki.Model.MODEL_S_NAME;
 import static com.ichi2.libanki.UndoAction.*;
 import static com.ichi2.utils.BooleanGetter.FALSE;
 import static com.ichi2.utils.BooleanGetter.TRUE;
@@ -1824,7 +1825,7 @@ public class CollectionTask<ProgressBackground, ResultBackground> extends BaseAs
 
             ArrayList<Model> models = col.getModels().all();
             ArrayList<Integer> cardCount = new ArrayList<>();
-            Collections.sort(models, (Comparator<Model>) (a, b) -> a.getString("name").compareTo(b.getString("name")));
+            Collections.sort(models, (Comparator<Model>) (a, b) -> a.getString(MODEL_S_NAME).compareTo(b.getString(MODEL_S_NAME)));
 
             for (Model n : models) {
                 if (collectionTask.isCancelled()) {

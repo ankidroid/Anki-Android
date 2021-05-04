@@ -76,6 +76,7 @@ import androidx.viewpager2.adapter.FragmentStateAdapter;
 import timber.log.Timber;
 
 import static com.ichi2.anim.ActivityTransitionAnimation.Direction.*;
+import static com.ichi2.libanki.Model.MODEL_S_NAME;
 import static com.ichi2.libanki.Model.TEMPLATE_S_DID;
 import static com.ichi2.libanki.Models.NOT_FOUND_NOTE_TYPE;
 
@@ -187,7 +188,7 @@ public class CardTemplateEditor extends AnkiActivity implements DeckSelectionDia
         // Set activity title
         if (getSupportActionBar() != null) {
             getSupportActionBar().setTitle(R.string.title_activity_template_editor);
-            getSupportActionBar().setSubtitle(mTempModel.getModel().optString("name"));
+            getSupportActionBar().setSubtitle(mTempModel.getModel().optString(MODEL_S_NAME));
         }
         // Close collection opening dialog if needed
         Timber.i("CardTemplateEditor:: Card template editor successfully started for model id %d", mModelId);

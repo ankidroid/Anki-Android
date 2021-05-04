@@ -82,6 +82,7 @@ import timber.log.Timber;
 import static com.ichi2.anki.FlashCardsContract.READ_WRITE_PERMISSION;
 import static com.ichi2.libanki.Card.ANSWER_KEY;
 import static com.ichi2.libanki.Model.MODEL_S_DID;
+import static com.ichi2.libanki.Model.MODEL_S_NAME;
 import static com.ichi2.libanki.Models.NOT_FOUND_NOTE_TYPE;
 
 /**
@@ -548,7 +549,7 @@ public class CardContentProvider extends ContentProvider {
                 try {
                     // Update model name and/or css
                     if (newModelName != null) {
-                        model.put("name", newModelName);
+                        model.put(MODEL_S_NAME, newModelName);
                         updated++;
                     }
                     if (newCss != null) {
@@ -1161,7 +1162,7 @@ public class CardContentProvider extends ContentProvider {
                         rb.add(modelId);
                         break;
                     case FlashCardsContract.Model.NAME:
-                        rb.add(model.getString("name"));
+                        rb.add(model.getString(MODEL_S_NAME));
                         break;
                     case FlashCardsContract.Model.FIELD_NAMES:
                         JSONArray flds = model.getJSONArray("flds");

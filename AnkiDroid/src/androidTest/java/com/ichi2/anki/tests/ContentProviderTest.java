@@ -492,7 +492,7 @@ public class ContentProviderTest extends InstrumentedTest {
         try {
             JSONObject model = col.getModels().get(mid);
             assertNotNull("Check model", model);
-            assertEquals("Check model name", TEST_MODEL_NAME, model.getString("name"));
+            assertEquals("Check model name", TEST_MODEL_NAME, model.getString(MODEL_S_NAME));
             assertEquals("Check templates length", TEST_MODEL_CARDS.length, model.getJSONArray("tmpls").length());
             assertEquals("Check field length", TEST_MODEL_FIELDS.length, model.getJSONArray("flds").length());
             JSONArray fields = model.getJSONArray("flds");

@@ -55,6 +55,7 @@ import java.util.Random;
 import timber.log.Timber;
 
 import static com.ichi2.anim.ActivityTransitionAnimation.Direction.START;
+import static com.ichi2.libanki.Model.MODEL_S_NAME;
 
 
 public class ModelBrowser extends AnkiActivity {
@@ -261,7 +262,7 @@ public class ModelBrowser extends AnkiActivity {
 
         for (int i = 0; i < mModels.size(); i++) {
             mModelIds.add(mModels.get(i).getLong("id"));
-            mModelDisplayList.add(new DisplayPair(mModels.get(i).getString("name"), mCardCounts.get(i)));
+            mModelDisplayList.add(new DisplayPair(mModels.get(i).getString(MODEL_S_NAME), mCardCounts.get(i)));
         }
 
         mModelDisplayAdapter = new DisplayPairAdapter(this, mModelDisplayList);
@@ -323,7 +324,7 @@ public class ModelBrowser extends AnkiActivity {
 
         if (mModels != null) {
             for (Model model : mModels) {
-                String name = model.getString("name");
+                String name = model.getString(MODEL_S_NAME);
                 newModelLabels.add(String.format(clone, name));
                 mNewModelNames.add(name);
                 existingModelsNames.add(name);
@@ -391,7 +392,7 @@ public class ModelBrowser extends AnkiActivity {
                 oldModel.put("id", newModel.getLong("id"));
                 model = oldModel;
             }
-            model.put("name", modelName);
+            model.put(MODEL_S_NAME, modelName);
             mCol.getModels().update(model);
             fullRefresh();
         } else {
@@ -441,7 +442,7 @@ public class ModelBrowser extends AnkiActivity {
     private void renameModelDialog() {
         mModelNameInput = new FixedEditText(this);
         mModelNameInput.setSingleLine(true);
-        mModelNameInput.setText(mModels.get(mModelListPosition).getString("name"));
+        mModelNameInput.setText(mModels.get(mModelListPosition).getString(MODEL_S_NAME));
         mModelNameInput.setSelection(mModelNameInput.getText().length());
         new MaterialEditTextDialog.Builder(this, mModelNameInput)
                             .title(R.string.rename_model)
@@ -453,11 +454,11 @@ public class ModelBrowser extends AnkiActivity {
                                             // Anki desktop doesn't allow double quote characters in deck names
                                             .replaceAll("[\"\\n\\r]", "");
                                     if (deckName.length() > 0) {
-                                        model.put("name", deckName);
+                                        model.put(MODEL_S_NAME, deckName);
                                         mCol.getModels().update(model);
-                                        mModels.get(mModelListPosition).put("name", deckName);
+                                        mModels.get(mModelListPosition).put(MODEL_S_NAME, deckName);
                                         mModelDisplayList.set(mModelListPosition,
-                                                new DisplayPair(mModels.get(mModelListPosition).getString("name"),
+                                                new DisplayPair(mModels.get(mModelListPosition).getString(MODEL_S_NAME),
                                                         mCardCounts.get(mModelListPosition)));
                                         refreshList();
                                     } else {

@@ -335,7 +335,7 @@ public class CardInfo extends AnkiActivity {
             int reviews = c.getReps();
             Model model = collection.getModels().get(c.note().getMid());
             String cardType = getCardType(c, model);
-            String noteType = model.getString("name");
+            String noteType = model.getString(MODEL_S_NAME);
             String deckName = collection.getDecks().get(c.getDid()).getString("name");
             long noteId = c.getNid();
 
