@@ -1,6 +1,6 @@
 plugins {
  // Gradle plugin portal 
- id 'com.github.triplet.play' version '3.0.0'
+ id 'com.github.triplet.play' version '3.4.0-agp4.2'
 }
 
 apply plugin: 'com.android.application'
@@ -138,7 +138,7 @@ android {
 
         // We want the same version stream for all ABIs in debug but for release we can split them
         if (variant.buildType.name == 'release') {
-            variant.outputs.each { output ->
+            variant.outputs.all { output ->
 
                 // For each separate APK per architecture, set a unique version code as described here:
                 // https://developer.android.com/studio/build/configure-apk-splits.html
