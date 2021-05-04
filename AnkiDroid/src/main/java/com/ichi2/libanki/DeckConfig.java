@@ -23,6 +23,8 @@ import timber.log.Timber;
 
 public class DeckConfig extends JSONObject{
 
+    public static String DECK_CONFIG_S_NAME = "name";
+
     private DeckConfig() {
         super();
     }

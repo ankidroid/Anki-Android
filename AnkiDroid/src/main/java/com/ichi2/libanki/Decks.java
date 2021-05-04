@@ -59,6 +59,7 @@ import timber.log.Timber;
 import static com.ichi2.libanki.Collection.CUR_DECK;
 import static com.ichi2.libanki.Consts.DECK_STD;
 import static com.ichi2.libanki.Deck.DECK_S_NAME;
+import static com.ichi2.libanki.DeckConfig.DECK_CONFIG_S_NAME;
 import static com.ichi2.utils.CollectionUtils.addAll;
 
 // fixmes:
@@ -842,7 +843,7 @@ public class Decks {
             id = mCol.getTime().intTimeMS();
         } while (mDconf.containsKey(id));
         c.put("id", id);
-        c.put("name", name);
+        c.put(DECK_CONFIG_S_NAME, name);
         mDconf.put(id, c);
         save(c);
         return id;
@@ -891,7 +892,7 @@ public class Decks {
         int oldOrder = conf.getJSONObject("new").getInt("order");
         DeckConfig _new = mCol.getBackend().new_deck_config_legacy();
         _new.put("id", conf.getLong("id"));
-        _new.put("name", conf.getString("name"));
+        _new.put(DECK_CONFIG_S_NAME, conf.getString(DECK_CONFIG_S_NAME));
 
         updateConf(_new);
         // if it was previously randomized, resort
