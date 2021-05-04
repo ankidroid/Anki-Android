@@ -22,7 +22,7 @@ public class ForegroundTaskManager extends TaskManager {
 
 
     @Override
-    public <ProgressBackground, ResultBackground> CollectionTask<ProgressBackground, ResultBackground> launchCollectionTaskConcrete(CollectionTask.Task<ProgressBackground, ResultBackground> task) {
+    public <Progress, Result> CollectionTask<Progress, Result> launchCollectionTaskConcrete(CollectionTask.Task<Progress, Result> task) {
         return launchCollectionTaskConcrete(task, null);
     }
 
@@ -33,19 +33,19 @@ public class ForegroundTaskManager extends TaskManager {
 
 
     @Override
-    public <ProgressBackground, ResultBackground> CollectionTask<ProgressBackground, ResultBackground> launchCollectionTaskConcrete(
-            @NonNull CollectionTask.Task<ProgressBackground, ResultBackground> task,
-            @Nullable TaskListener<? super ProgressBackground, ? super ResultBackground> listener) {
+    public <Progress, Result> CollectionTask<Progress, Result> launchCollectionTaskConcrete(
+            @NonNull CollectionTask.Task<Progress, Result> task,
+            @Nullable TaskListener<? super Progress, ? super Result> listener) {
         return executeTaskWithListener(task, listener, mColGetter);
     }
 
-    public static <ProgressBackground, ResultBackground> CollectionTask<ProgressBackground, ResultBackground> executeTaskWithListener(
-            @NonNull CollectionTask.Task<ProgressBackground, ResultBackground> task,
-            @Nullable TaskListener<? super ProgressBackground, ? super ResultBackground> listener, CollectionGetter colGetter) {
+    public static <Progress, Result> CollectionTask<Progress, Result> executeTaskWithListener(
+            @NonNull CollectionTask.Task<Progress, Result> task,
+            @Nullable TaskListener<? super Progress, ? super Result> listener, CollectionGetter colGetter) {
         if (listener != null) {
             listener.onPreExecute();
         }
-        final ResultBackground res;
+        final Result res;
         try {
             res = task.task(colGetter.getCol(), new MockTaskManager<>(listener));
         } catch (Exception e) {
@@ -85,12 +85,12 @@ public class ForegroundTaskManager extends TaskManager {
         return true;
     }
 
-    public static class MockTaskManager<ProgressListener, ProgressBackground extends ProgressListener> implements ProgressSenderAndCancelListener<ProgressBackground> {
+    public static class MockTaskManager<ProgressListener, Progress extends ProgressListener> implements ProgressSenderAndCancelListener<Progress> {
 
-        private final @Nullable TaskListener<? super ProgressBackground, ?> mTaskListener;
+        private final @Nullable TaskListener<? super Progress, ?> mTaskListener;
 
 
-        public MockTaskManager(@Nullable TaskListener<? super ProgressBackground, ?> listener) {
+        public MockTaskManager(@Nullable TaskListener<? super Progress, ?> listener) {
             mTaskListener = listener;
         }
 
@@ -102,15 +102,15 @@ public class ForegroundTaskManager extends TaskManager {
 
 
         @Override
-        public void doProgress(@Nullable ProgressBackground value) {
+        public void doProgress(@Nullable Progress value) {
             mTaskListener.onProgressUpdate(value);
         }
     }
 
-    public static class EmptyTask<ProgressBackground, ResultBackground> extends
-            CollectionTask<ProgressBackground, ResultBackground> {
+    public static class EmptyTask<Progress, Result> extends
+            CollectionTask<Progress, Result> {
 
-        protected EmptyTask(Task<ProgressBackground, ResultBackground> task, TaskListener<? super ProgressBackground, ? super ResultBackground> listener) {
+        protected EmptyTask(Task<Progress, Result> task, TaskListener<? super Progress, ? super Result> listener) {
             super(task, listener, null);
         }
     }
