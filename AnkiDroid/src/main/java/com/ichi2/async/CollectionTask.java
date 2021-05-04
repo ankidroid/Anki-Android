@@ -1824,7 +1824,7 @@ public class CollectionTask<ProgressBackground, ResultBackground> extends BaseAs
 
             ArrayList<Model> models = col.getModels().all();
             ArrayList<Integer> cardCount = new ArrayList<>();
-            Collections.sort(models, (Comparator<JSONObject>) (a, b) -> a.getString("name").compareTo(b.getString("name")));
+            Collections.sort(models, (Comparator<Model>) (a, b) -> a.getString("name").compareTo(b.getString("name")));
 
             for (Model n : models) {
                 if (collectionTask.isCancelled()) {
