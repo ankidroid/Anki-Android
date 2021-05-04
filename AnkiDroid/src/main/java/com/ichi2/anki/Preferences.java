@@ -108,7 +108,7 @@ public class Preferences extends AppCompatPreferenceActivity implements Preferen
     // Other variables
     private final HashMap<String, String> mOriginalSumarries = new HashMap<>();
     private static final String [] sCollectionPreferences = {"showEstimates", "showProgress",
-            "learnCutoff", "timeLimit", "useCurrent", "newSpread", "dayOffset", "schedVer"};
+            "learnCutoff", "timeLimit", "useCurrent", "newSpread", "dayOffset", "schedVer", "newTimezoneHandling"};
 
     private static final int RESULT_LOAD_IMG = 111;
     private android.preference.CheckBoxPreference mBackgroundImage;
