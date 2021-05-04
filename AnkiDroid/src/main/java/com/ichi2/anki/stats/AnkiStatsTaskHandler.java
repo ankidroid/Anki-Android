@@ -86,7 +86,7 @@ public class AnkiStatsTaskHandler {
         return deckPreviewStatistics;
     }
 
-    private static class CreateChartTask extends AsyncTask<View, Void, PlotSheet>{
+    private static class CreateChartTask extends StatsAsyncTask<PlotSheet>{
         private WeakReference<ChartView> mImageView;
         private WeakReference<ProgressBar> mProgressBar;
         private final WeakReference<Collection> mCollectionData;
@@ -106,7 +106,7 @@ public class AnkiStatsTaskHandler {
         }
 
         @Override
-        protected PlotSheet doInBackground(View... params) {
+        protected PlotSheet doInBackgroundSafe(View... params) {
             //make sure only one task of CreateChartTask is running, first to run should get sLock
             //only necessary on lower APIs because after honeycomb only one thread is used for all asynctasks
             sLock.lock();
@@ -149,7 +149,7 @@ public class AnkiStatsTaskHandler {
         }
     }
 
-    private static class CreateStatisticsOverview extends AsyncTask<View, Void, String>{
+    private static class CreateStatisticsOverview extends StatsAsyncTask<String>{
         private WeakReference<WebView> mWebView;
         private WeakReference<ProgressBar> mProgressBar;
         private final WeakReference<Collection> mCollectionData;
@@ -167,7 +167,7 @@ public class AnkiStatsTaskHandler {
         }
 
         @Override
-        protected String doInBackground(View... params) {
+        protected String doInBackgroundSafe(View... params) {
             //make sure only one task of CreateChartTask is running, first to run should get sLock
             //only necessary on lower APIs because after honeycomb only one thread is used for all asynctasks
             sLock.lock();
