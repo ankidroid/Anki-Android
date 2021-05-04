@@ -44,8 +44,6 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
-import android.widget.RadioButton;
-import android.widget.RadioGroup;
 
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
@@ -347,7 +345,7 @@ public class CardTemplateEditor extends AnkiActivity implements DeckSelectionDia
         private FixedTextView mCurrentEdtiorTitle;
         private EditText mEditorEditText;
 
-        private int mCurrentEdittextId;
+        private int mCurrentEditorViewId;
 
         private CardTemplateEditor mTemplateEditor;
         private TabLayoutMediator mTabLayoutMediator;
@@ -362,13 +360,13 @@ public class CardTemplateEditor extends AnkiActivity implements DeckSelectionDia
         }
 
 
-        public int getCurrentEdittextId() {
-            return mCurrentEdittextId;
+        public int getCurrentEditorViewId() {
+            return mCurrentEditorViewId;
         }
 
 
-        public void setCurrentEdittextId(int currentEdittextId) {
-            mCurrentEdittextId = currentEdittextId;
+        public void setCurrentEditorViewId(int currentEditorViewId) {
+            mCurrentEditorViewId = currentEditorViewId;
         }
 
 
@@ -391,7 +389,7 @@ public class CardTemplateEditor extends AnkiActivity implements DeckSelectionDia
             // setting to default editor as front template
             mCurrentEdtiorTitle = mainView.findViewById(R.id.title_edit);
             mEditorEditText = mainView.findViewById(R.id.editor_editText);
-            mCurrentEdittextId = R.id.front_edit;
+            mCurrentEditorViewId = R.id.front_edit;
             mEditorEditText.setText(template.getString("qfmt"));
             mCurrentEdtiorTitle.setText(R.string.card_template_editor_front);
 
@@ -418,9 +416,9 @@ public class CardTemplateEditor extends AnkiActivity implements DeckSelectionDia
             TextWatcher templateEditorWatcher = new TextWatcher() {
                 @Override
                 public void afterTextChanged(Editable arg0) {
-                    if (mCurrentEdittextId == R.id.styling_edit) {
+                    if (mCurrentEditorViewId == R.id.styling_edit) {
                         mTemplateEditor.getTempModel().updateCss(mEditorEditText.getText().toString());
-                    } else if (mCurrentEdittextId == R.id.back_edit) {
+                    } else if (mCurrentEditorViewId == R.id.back_edit) {
                         template.put("afmt", mEditorEditText.getText());
                     } else {
                         template.put("qfmt", mEditorEditText.getText());
@@ -445,7 +443,7 @@ public class CardTemplateEditor extends AnkiActivity implements DeckSelectionDia
         }
 
         public void setCurrentEditorView(@NonNull int id, @NonNull String editorContent, @NonNull int editorTitleId) {
-            setCurrentEdittextId(id);
+            setCurrentEditorViewId(id);
             mEditorEditText.setText(editorContent);
             mCurrentEdtiorTitle.setText(getResources().getString(editorTitleId));
         }

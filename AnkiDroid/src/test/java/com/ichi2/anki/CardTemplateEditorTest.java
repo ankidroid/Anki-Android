@@ -588,14 +588,14 @@ public class CardTemplateEditorTest extends RobolectricTest {
 
         // check if current view is front(default) view
         assumeThat(templateEditText.getText().toString(), is(tempModel.getTemplate(0).getString("qfmt")));
-        assumeThat(cardTemplateFragment.getCurrentEdittextId(), is(R.id.front_edit));
+        assumeThat(cardTemplateFragment.getCurrentEditorViewId(), is(R.id.front_edit));
 
         // set Bottom Navigation View to Style
         cardTemplateFragment.setCurrentEditorView(R.id.styling_edit, tempModel.getCss(), R.string.card_template_editor_styling);
 
         // check if current view is changed or not
         assumeThat(templateEditText.getText().toString(), is(tempModel.getCss()));
-        assumeThat(cardTemplateFragment.getCurrentEdittextId(), is(R.id.styling_edit));
+        assumeThat(cardTemplateFragment.getCurrentEditorViewId(), is(R.id.styling_edit));
     }
 
 
