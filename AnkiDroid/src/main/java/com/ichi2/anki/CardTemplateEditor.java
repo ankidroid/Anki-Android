@@ -76,6 +76,7 @@ import androidx.viewpager2.adapter.FragmentStateAdapter;
 import timber.log.Timber;
 
 import static com.ichi2.anim.ActivityTransitionAnimation.Direction.*;
+import static com.ichi2.libanki.Model.TEMPLATE_S_DID;
 import static com.ichi2.libanki.Models.NOT_FOUND_NOTE_TYPE;
 
 
@@ -246,11 +247,11 @@ public class CardTemplateEditor extends AnkiActivity implements DeckSelectionDia
         String message;
         if (deck == null) {
             Timber.i("Removing default template from template '%s'", templateName);
-            template.put("did", JSONObject.NULL);
+            template.put(TEMPLATE_S_DID, JSONObject.NULL);
             message = getString(R.string.model_manager_deck_override_removed_message, templateName);
         } else {
             Timber.i("Setting template '%s' to '%s'", templateName, deck.getName());
-            template.put("did", deck.getDeckId());
+            template.put(TEMPLATE_S_DID, deck.getDeckId());
             message = getString(R.string.model_manager_deck_override_added_message, templateName, deck.getName());
         }
 
@@ -483,7 +484,7 @@ public class CardTemplateEditor extends AnkiActivity implements DeckSelectionDia
                 menu.findItem(R.id.action_add_deck_override).setVisible(false);
             } else {
                 JSONObject template = getCurrentTemplate();
-                @StringRes int overrideStringRes = template.has("did") && !template.isNull("did") ?
+                @StringRes int overrideStringRes = template.has(TEMPLATE_S_DID) && !template.isNull(TEMPLATE_S_DID) ?
                         R.string.card_template_editor_deck_override_on :
                         R.string.card_template_editor_deck_override_off;
 

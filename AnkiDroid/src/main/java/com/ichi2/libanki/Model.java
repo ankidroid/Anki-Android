@@ -41,6 +41,7 @@ import timber.log.Timber;
  */
 public class Model extends JSONObject {
     public static String MODEL_S_DID = "did";
+    public static String TEMPLATE_S_DID = "did";
     public Model() {
         super();
     }

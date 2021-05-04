@@ -526,13 +526,13 @@ public class CardTemplateEditorTest extends RobolectricTest {
 
 
         JSONObject template = editor.getTempModel().getTemplate(0);
-        assertThat("Deck ID element should exist", template.has("did"), is(true));
-        assertThat("Deck ID element should be null", template.get("did"), is(org.json.JSONObject.NULL));
+        assertThat("Deck ID element should exist", template.has(TEMPLATE_S_DID), is(true));
+        assertThat("Deck ID element should be null", template.get(TEMPLATE_S_DID), is(org.json.JSONObject.NULL));
         editor.onDeckSelected(new DeckSelectionDialog.SelectableDeck(1, "hello"));
-        assertThat("Deck ID element should be changed", template.get("did"), is(1L));
+        assertThat("Deck ID element should be changed", template.get(TEMPLATE_S_DID), is(1L));
         editor.onDeckSelected(null);
-        assertThat("Deck ID element should exist", template.has("did"), is(true));
-        assertThat("Deck ID element should be null", template.get("did"), is(org.json.JSONObject.NULL));
+        assertThat("Deck ID element should exist", template.has(TEMPLATE_S_DID), is(true));
+        assertThat("Deck ID element should be null", template.get(TEMPLATE_S_DID), is(org.json.JSONObject.NULL));
 
     }
 

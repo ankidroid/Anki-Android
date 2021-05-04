@@ -86,6 +86,7 @@ import static com.ichi2.async.CancelListener.isCancelled;
 import static com.ichi2.libanki.Card.ANSWER_KEY;
 import static com.ichi2.libanki.Card.QUESTION_KEY;
 import static com.ichi2.libanki.Model.MODEL_S_DID;
+import static com.ichi2.libanki.Model.TEMPLATE_S_DID;
 
 // Anki maintains a cache of used tags so it can quickly present a list of tags
 // for autocomplete and in the browser. For efficiency, deletions are not
@@ -837,7 +838,7 @@ public class Collection implements CollectionGetter {
                         // check deck is not a cram deck
                         long ndid;
                         try {
-                            ndid = t.getLong("did");
+                            ndid = t.getLong(TEMPLATE_S_DID);
                             if (ndid != 0) {
                                 did = ndid;
                             }
@@ -905,7 +906,7 @@ public class Collection implements CollectionGetter {
         long did = mDb.queryLongScalar("select did from cards where nid = ? and ord = ?", nid, ord);
         // Use template did (deck override) if valid, otherwise did in argument, otherwise model did
         if (did == 0) {
-            did = template.optLong("did", 0);
+            did = template.optLong(TEMPLATE_S_DID, 0);
             if (did > 0 && mDecks.get(did, false) != null) {
             } else if (parameterDid != 0) {
                 did = parameterDid;
