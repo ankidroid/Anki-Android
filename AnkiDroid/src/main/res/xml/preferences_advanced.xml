@@ -171,8 +171,8 @@
 
     <CheckBoxPreference
         android:key="schedVer"
-        android:title="@string/sched_ver"
-        android:summary="@string/sched_ver_summ" />
+        android:title="@string/sched_v2"
+        android:summary="@string/sched_v2_summ" />
     <Preference
         android:key="about_dialog_preference"
         android:title="@string/about_title">
