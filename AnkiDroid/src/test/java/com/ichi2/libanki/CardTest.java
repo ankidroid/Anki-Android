@@ -22,6 +22,7 @@ import java.util.List;
 
 import androidx.test.ext.junit.runners.AndroidJUnit4;
 
+import static com.ichi2.libanki.Model.FIELD_S_NAME;
 import static com.ichi2.libanki.Model.MODEL_S_DID;
 import static com.ichi2.utils.JSONObject.NULL;
 import static org.hamcrest.Matchers.hasItemInArray;
@@ -198,7 +199,7 @@ public class CardTest extends RobolectricTest {
         models.renameField(model, flds.getJSONObject(0), "First");
         models.renameField(model, flds.getJSONObject(1), "Front");
         JSONObject fld2 = models.newField("AddIfEmpty");
-        fld2.put("name", "AddIfEmpty");
+        fld2.put(FIELD_S_NAME, "AddIfEmpty");
         models.addField(model, fld2);
 
         // ensure first card is always generated,

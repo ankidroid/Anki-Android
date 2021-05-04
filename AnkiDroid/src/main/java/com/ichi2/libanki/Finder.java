@@ -49,6 +49,7 @@ import static com.ichi2.anki.CardBrowser.SORT_TYPE;
 import static com.ichi2.async.CancelListener.isCancelled;
 import static com.ichi2.async.ProgressSender.publishProgress;
 import static com.ichi2.libanki.Deck.DECK_S_NAME;
+import static com.ichi2.libanki.Model.FIELD_S_NAME;
 import static com.ichi2.libanki.Model.MODEL_S_NAME;
 import static com.ichi2.libanki.stats.Stats.SECONDS_PER_DAY;
 
@@ -763,7 +764,7 @@ public class Finder {
         for (JSONObject m : mCol.getModels().all()) {
             JSONArray flds = m.getJSONArray("flds");
             for (JSONObject f: flds.jsonObjectIterable()) {
-                String fieldName = f.getString("name");
+                String fieldName = f.getString(FIELD_S_NAME);
                 fieldName = Normalizer.normalize(fieldName, Normalizer.Form.NFC);
                 if (fieldName.equalsIgnoreCase(field)) {
                     mods.put(m.getLong("id"), new Object[] { m, f.getInt("ord") });
@@ -888,7 +889,7 @@ public class Finder {
             for (JSONObject m : col.getModels().all()) {
                 JSONArray flds = m.getJSONArray("flds");
                 for (JSONObject f: flds.jsonObjectIterable()) {
-                    if (f.getString("name").equalsIgnoreCase(field)) {
+                    if (f.getString(FIELD_S_NAME).equalsIgnoreCase(field)) {
                         mmap.put(m.getLong("id"), f.getInt("ord"));
                     }
                 }
@@ -972,7 +973,7 @@ public class Finder {
             JSONArray flds = model.getJSONArray("flds");
             for (int c = 0; c < flds.length(); c++) {
                 JSONObject f = flds.getJSONObject(c);
-                if (f.getString("name").equalsIgnoreCase(fieldName)) {
+                if (f.getString(FIELD_S_NAME).equalsIgnoreCase(fieldName)) {
                     fields.put(mid, c);
                     return c;
                 }

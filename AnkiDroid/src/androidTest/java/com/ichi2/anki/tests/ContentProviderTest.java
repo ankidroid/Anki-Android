@@ -340,7 +340,7 @@ public class ContentProviderTest extends InstrumentedTest {
         assertNotNull("Check model", model);
         JSONArray fldsArr = model.getJSONArray("flds");
         assertEquals("Check fields length", initialFieldCount + 1, fldsArr.length());
-        assertEquals("Check last field name", TEST_FIELD_NAME, fldsArr.getJSONObject(fldsArr.length() - 1).optString("name", ""));
+        assertEquals("Check last field name", TEST_FIELD_NAME, fldsArr.getJSONObject(fldsArr.length() - 1).optString(FIELD_S_NAME, ""));
         col.getModels().rem(model);
     }
 
@@ -497,7 +497,7 @@ public class ContentProviderTest extends InstrumentedTest {
             assertEquals("Check field length", TEST_MODEL_FIELDS.length, model.getJSONArray("flds").length());
             JSONArray fields = model.getJSONArray("flds");
             for (int i = 0; i < fields.length(); i++) {
-                assertEquals("Check name of fields", TEST_MODEL_FIELDS[i], fields.getJSONObject(i).getString("name"));
+                assertEquals("Check name of fields", TEST_MODEL_FIELDS[i], fields.getJSONObject(i).getString(FIELD_S_NAME));
             }
             // Test updating the model CSS (to test updating MODELS_ID Uri)
             cv = new ContentValues();

@@ -43,6 +43,7 @@ public class Model extends JSONObject {
     public static String MODEL_S_DID = "did";
     public static String TEMPLATE_S_DID = "did";
     public static String MODEL_S_NAME = "name";
+    public static String FIELD_S_NAME = "name";
     public Model() {
         super();
     }
@@ -63,7 +64,7 @@ public class Model extends JSONObject {
     }
 
     public List<String> getFieldsNames() {
-        return getJSONArray("flds").toStringList("name");
+        return getJSONArray("flds").toStringList(FIELD_S_NAME);
     }
 
     public List<String> getTemplatesNames() {

@@ -56,6 +56,7 @@ import androidx.annotation.VisibleForTesting;
 import androidx.fragment.app.DialogFragment;
 import timber.log.Timber;
 import static com.ichi2.anim.ActivityTransitionAnimation.Direction.*;
+import static com.ichi2.libanki.Model.FIELD_S_NAME;
 
 public class ModelFieldEditor extends AnkiActivity implements LocaleSelectionDialog.LocaleSelectionDialogHandler {
 
@@ -161,7 +162,7 @@ public class ModelFieldEditor extends AnkiActivity implements LocaleSelectionDia
         mMod = mCol.getModels().get(noteTypeID);
 
         mNoteFields = mMod.getJSONArray("flds");
-        mFieldLabels = mNoteFields.toStringList("name");
+        mFieldLabels = mNoteFields.toStringList(FIELD_S_NAME);
     }
 
 

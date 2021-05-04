@@ -31,6 +31,7 @@ import androidx.annotation.PluralsRes;
 import androidx.annotation.StringRes;
 
 import static com.ichi2.libanki.Consts.NEW_CARDS_RANDOM;
+import static com.ichi2.libanki.Model.FIELD_S_NAME;
 import static com.ichi2.libanki.Utils.fieldChecksum;
 import static com.ichi2.libanki.Utils.guid64;
 import static com.ichi2.libanki.Utils.joinFields;
@@ -114,7 +115,7 @@ public class NoteImporter extends Importer {
 
 
     boolean mappingOk() {
-        return mMapping.contains(mModel.getJSONArray("flds").getJSONObject(0).getString("name"));
+        return mMapping.contains(mModel.getJSONArray("flds").getJSONObject(0).getString(FIELD_S_NAME));
     }
 
 
@@ -161,7 +162,7 @@ public class NoteImporter extends Importer {
         }
 
         HashSet<String> firsts = new HashSet<>(notes.size());
-        int fld0index = mMapping.indexOf(mModel.getJSONArray("flds").getJSONObject(0).getString("name"));
+        int fld0index = mMapping.indexOf(mModel.getJSONArray("flds").getJSONObject(0).getString(FIELD_S_NAME));
         mFMap = Models.fieldMap(mModel);
         mNextId = mCol.getTime().timestampID(mCol.getDb(), "notes");
         // loop through the notes

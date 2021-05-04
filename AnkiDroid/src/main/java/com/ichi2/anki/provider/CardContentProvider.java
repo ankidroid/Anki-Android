@@ -81,6 +81,7 @@ import timber.log.Timber;
 
 import static com.ichi2.anki.FlashCardsContract.READ_WRITE_PERMISSION;
 import static com.ichi2.libanki.Card.ANSWER_KEY;
+import static com.ichi2.libanki.Model.FIELD_S_NAME;
 import static com.ichi2.libanki.Model.MODEL_S_DID;
 import static com.ichi2.libanki.Model.MODEL_S_NAME;
 import static com.ichi2.libanki.Models.NOT_FOUND_NOTE_TYPE;
@@ -1168,7 +1169,7 @@ public class CardContentProvider extends ContentProvider {
                         JSONArray flds = model.getJSONArray("flds");
                         String[] allFlds = new String[flds.length()];
                         for (int idx = 0; idx < flds.length(); idx++) {
-                            allFlds[idx] = flds.getJSONObject(idx).optString("name", "");
+                            allFlds[idx] = flds.getJSONObject(idx).optString(FIELD_S_NAME, "");
                         }
                         rb.add(Utils.joinFields(allFlds));
                         break;

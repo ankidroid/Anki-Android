@@ -22,6 +22,8 @@ import com.ichi2.utils.JSONObject;
 
 import androidx.annotation.StringRes;
 
+import static com.ichi2.libanki.Model.FIELD_S_NAME;
+
 public class StdModels {
     /** Essentially, the default name. As a resource, so that it can
      * be localized later. */
@@ -93,8 +95,8 @@ public class StdModels {
         ((mm, name) -> {
         Model m = BASIC_MODEL._new(mm, name);
         JSONObject t = m.getJSONArray("tmpls").getJSONObject(0);
-        String frontName = m.getJSONArray("flds").getJSONObject(0).getString("name");
-        String backName = m.getJSONArray("flds").getJSONObject(1).getString("name");
+        String frontName = m.getJSONArray("flds").getJSONObject(0).getString(FIELD_S_NAME);
+        String backName = m.getJSONArray("flds").getJSONObject(1).getString(FIELD_S_NAME);
         t.put("qfmt", "{{" + frontName + "}}\n\n{{type:" + backName + "}}");
         t.put("afmt", "{{" + frontName + "}}\n\n<hr id=answer>\n\n{{type:" + backName + "}}");
         return m;
@@ -104,8 +106,8 @@ public class StdModels {
     public static final StdModels FORWARD_REVERSE_MODEL = new StdModels
         ((mm, name) -> {
         Model m = BASIC_MODEL._new(mm, name);
-        String frontName = m.getJSONArray("flds").getJSONObject(0).getString("name");
-        String backName = m.getJSONArray("flds").getJSONObject(1).getString("name");
+        String frontName = m.getJSONArray("flds").getJSONObject(0).getString(FIELD_S_NAME);
+        String backName = m.getJSONArray("flds").getJSONObject(1).getString(FIELD_S_NAME);
         String cardTwoName = AnkiDroidApp.getAppResources().getString(R.string.card_n_name, 2);
         JSONObject t = Models.newTemplate(cardTwoName);
         t.put("qfmt", "{{" + backName + "}}");

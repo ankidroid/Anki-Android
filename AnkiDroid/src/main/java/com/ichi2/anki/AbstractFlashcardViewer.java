@@ -165,6 +165,7 @@ import static com.ichi2.anki.cardviewer.ViewerCommand.*;
 import static com.ichi2.anki.reviewer.CardMarker.*;
 import static com.ichi2.libanki.Card.QUESTION_KEY;
 import static com.ichi2.libanki.Deck.DECK_S_NAME;
+import static com.ichi2.libanki.Model.FIELD_S_NAME;
 import static com.ichi2.libanki.Sound.SoundSide;
 
 import com.github.zafarkhaja.semver.Version;
@@ -780,7 +781,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
         // loop through fields for a match
         JSONArray flds = mCurrentCard.model().getJSONArray("flds");
         for (JSONObject fld: flds.jsonObjectIterable()) {
-            String name = fld.getString("name");
+            String name = fld.getString(FIELD_S_NAME);
             if (name.equals(fldTag)) {
                 mTypeCorrect = mCurrentCard.note().getItem(name);
                 if (clozeIdx != 0) {

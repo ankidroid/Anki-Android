@@ -40,6 +40,8 @@ import java.io.IOException;
 
 import timber.log.Timber;
 
+import static com.ichi2.libanki.Model.FIELD_S_NAME;
+
 public class NoteService {
     /**
      * Creates an empty Note from given Model
@@ -58,8 +60,8 @@ public class NoteService {
                 for (int i = 0; i < numOfFields; i++) {
                     JSONObject fieldObject = fieldsArray.getJSONObject(i);
                     TextField uiTextField = new TextField();
-                    uiTextField.setName(fieldObject.getString("name"));
-                    uiTextField.setText(fieldObject.getString("name"));
+                    uiTextField.setName(fieldObject.getString(FIELD_S_NAME));
+                    uiTextField.setText(fieldObject.getString(FIELD_S_NAME));
                     note.setField(i, uiTextField);
                 }
                 note.setModelId(model.getLong("id"));

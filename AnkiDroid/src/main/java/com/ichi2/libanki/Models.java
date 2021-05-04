@@ -50,6 +50,7 @@ import java.util.regex.Pattern;
 import androidx.annotation.NonNull;
 
 import static com.ichi2.libanki.Card.QUESTION_KEY;
+import static com.ichi2.libanki.Model.FIELD_S_NAME;
 import static com.ichi2.libanki.Model.MODEL_S_NAME;
 import static com.ichi2.libanki.Models.AllowEmpty.ONLY_CLOZE;
 import static com.ichi2.libanki.Models.AllowEmpty.TRUE;
@@ -429,7 +430,7 @@ public class Models {
 
     public JSONObject newField(String name) {
         JSONObject f = new JSONObject(defaultField);
-        f.put("name", name);
+        f.put(FIELD_S_NAME, name);
         return f;
     }
 
@@ -441,7 +442,7 @@ public class Models {
         // TreeMap<Integer, String> map = new TreeMap<Integer, String>();
         Map<String, Pair<Integer, JSONObject>> result = new HashMap<>(flds.length());
         for (JSONObject f: flds.jsonObjectIterable()) {
-            result.put(f.getString("name"), new Pair<>(f.getInt("ord"), f));
+            result.put(f.getString(FIELD_S_NAME), new Pair<>(f.getInt("ord"), f));
         }
         return result;
     }
@@ -611,7 +612,7 @@ public class Models {
     public void renameField(Model m, JSONObject field, String newName) throws ConfirmModSchemaException {
         mCol.modSchema();
         String pat = String.format("\\{\\{([^{}]*)([:#^/]|[^:#/^}][^:}]*?:|)%s\\}\\}",
-                                   Pattern.quote(field.getString("name")));
+                                   Pattern.quote(field.getString(FIELD_S_NAME)));
         if (newName == null) {
             newName = "";
         }
@@ -627,7 +628,7 @@ public class Models {
                 }
             }
         }
-        field.put("name", newName);
+        field.put(FIELD_S_NAME, newName);
         save(m);
     }
 
@@ -945,7 +946,7 @@ public class Models {
         StringBuilder s = new StringBuilder();
         JSONArray flds = m.getJSONArray("flds");
         for (JSONObject fld: flds.jsonObjectIterable()) {
-            s.append(fld.getString("name"));
+            s.append(fld.getString(FIELD_S_NAME));
         }
         JSONArray tmpls = m.getJSONArray("tmpls");
         for (JSONObject t: tmpls.jsonObjectIterable()) {
