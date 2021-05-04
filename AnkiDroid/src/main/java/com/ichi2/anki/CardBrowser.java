@@ -2625,10 +2625,10 @@ public class CardBrowser extends NavigationDrawerActivity implements
             case REVIEWS:
                 return Integer.toString(getCard().getReps());
             case QUESTION:
-                updateSearchItemQA();
+                updateSearchItemQA(false);
                 return mQa.first;
             case ANSWER:
-                updateSearchItemQA();
+                updateSearchItemQA(false);
                 return mQa.second;
             default:
                 return null;
@@ -2649,7 +2649,7 @@ public class CardBrowser extends NavigationDrawerActivity implements
                 // First column can not be the answer. If it were to
                 // change, this code should also be changed.
                 ) {
-                updateSearchItemQA();
+                updateSearchItemQA(reload);
             }
             mLoaded = true;
         }
@@ -2663,15 +2663,15 @@ public class CardBrowser extends NavigationDrawerActivity implements
            uses non-browser format. If answer starts by question, remove
            question.
         */
-        public void updateSearchItemQA() {
+        public void updateSearchItemQA(boolean reload) {
             if (mQa != null) {
                 return;
             }
             // render question and answer
-            Map<String, String> qa = getCard()._getQA(true, true);
+            Map<String, String> qa = getCard()._getQA(reload, true);
             // Render full question / answer if the bafmt (i.e. "browser appearance") setting forced blank result
             if ("".equals(qa.get("q")) || "".equals(qa.get("a"))) {
-                HashMap<String, String> qaFull = getCard()._getQA(true, false);
+                HashMap<String, String> qaFull = getCard()._getQA(reload, false);
                 if ("".equals(qa.get("q"))) {
                     qa.put("q", qaFull.get("q"));
                 }
