@@ -64,6 +64,7 @@ public class FilteredDeckOptions extends AppCompatPreferenceActivity implements 
     private Collection mCol;
     private boolean mAllowCommit = true;
     private boolean mPrefChanged = false;
+    private final static String STEPS = "steps";
 
     private BroadcastReceiver mUnmountReceiver = null;
 
@@ -97,10 +98,10 @@ public class FilteredDeckOptions extends AppCompatPreferenceActivity implements 
             mValues.put("order", ar.getString(2));
             JSONArray delays = mDeck.optJSONArray("delays");
             if (delays != null) {
-                mValues.put("steps", StepsPreference.convertFromJSON(delays));
+                mValues.put(STEPS, StepsPreference.convertFromJSON(delays));
                 mValues.put("stepsOn", Boolean.toString(true));
             } else {
-                mValues.put("steps", "1 10");
+                mValues.put(STEPS, "1 10");
                 mValues.put("stepsOn", Boolean.toString(false));
             }
             mValues.put("resched", Boolean.toString(mDeck.getBoolean("resched")));
@@ -139,14 +140,14 @@ public class FilteredDeckOptions extends AppCompatPreferenceActivity implements 
                     } else if ("stepsOn".equals(entry.getKey())) {
                         boolean on = (Boolean) entry.getValue();
                         if (on) {
-                            JSONArray steps =  StepsPreference.convertToJSON(mValues.get("steps"));
+                            JSONArray steps =  StepsPreference.convertToJSON(mValues.get(STEPS));
                             if (steps.length() > 0) {
                                 mDeck.put("delays", steps);
                             }
                         } else {
                             mDeck.put("delays", JSONObject.NULL);
                         }
-                    } else if ("steps".equals(entry.getKey())) {
+                    } else if (STEPS.equals(entry.getKey())) {
                         mDeck.put("delays", StepsPreference.convertToJSON((String) entry.getValue()));
                     } else if ("preset".equals(entry.getKey())) {
                         int i = Integer.parseInt((String) entry.getValue());
@@ -154,7 +155,7 @@ public class FilteredDeckOptions extends AppCompatPreferenceActivity implements 
                             JSONObject presetValues = new JSONObject(mDynExamples[i]);
                             JSONArray ar = presetValues.names();
                             for (String name: ar.stringIterable()) {
-                                if ("steps".equals(name)) {
+                                if (STEPS.equals(name)) {
                                     mUpdate.put("stepsOn", true);
                                 }
                                 if ("resched".equals(name)) {
@@ -398,7 +399,7 @@ public class FilteredDeckOptions extends AppCompatPreferenceActivity implements 
             // getPreferenceScreen.removePreference didn't return true, so remove from the category
             android.preference.PreferenceCategory category = (android.preference.PreferenceCategory) this.findPreference("studyOptions");
             removePreference(category, "stepsOn");
-            removePreference(category, "steps");
+            removePreference(category, STEPS);
         }
 
     }
