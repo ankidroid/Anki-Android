@@ -49,6 +49,7 @@ import java.util.regex.Pattern;
 
 import androidx.annotation.NonNull;
 
+import static com.ichi2.libanki.Card.QUESTION_KEY;
 import static com.ichi2.libanki.Models.AllowEmpty.ONLY_CLOZE;
 import static com.ichi2.libanki.Models.AllowEmpty.TRUE;
 
@@ -966,8 +967,8 @@ public class Models {
         Arrays.fill(a, "ankiflag");
         Arrays.fill(b, "");
         int ord = t.getInt("ord");
-        String full = mCol._renderQA(1L, m, 1L, ord, "", a, 0).get("q");
-        String empty = mCol._renderQA(1L, m, 1L, ord, "", b, 0).get("q");
+        String full = mCol._renderQA(1L, m, 1L, ord, "", a, 0).get(QUESTION_KEY);
+        String empty = mCol._renderQA(1L, m, 1L, ord, "", b, 0).get(QUESTION_KEY);
         // if full and empty are the same, the template is invalid and there is no way to satisfy it
         if (full.equals(empty)) {
             return new Object[] { REQ_NONE, new JSONArray(), new JSONArray() };
@@ -977,7 +978,7 @@ public class Models {
         for (int i = 0; i < flds.size(); i++) {
             a[i] = "";
             // if no field content appeared, field is required
-            if (!mCol._renderQA(1L, m, 1L, ord, "", a, 0).get("q").contains("ankiflag")) {
+            if (!mCol._renderQA(1L, m, 1L, ord, "", a, 0).get(QUESTION_KEY).contains("ankiflag")) {
                 req.put(i);
             }
             a[i] = "ankiflag";
@@ -991,7 +992,7 @@ public class Models {
         for (int i = 0; i < flds.size(); i++) {
             b[i] = "1";
             // if not the same as empty, this field can make the card non-blank
-            if (!mCol._renderQA(1L, m, 1L, ord, "", b, 0).get("q").equals(empty)) {
+            if (!mCol._renderQA(1L, m, 1L, ord, "", b, 0).get(QUESTION_KEY).equals(empty)) {
                 req.put(i);
             }
             b[i] = "";

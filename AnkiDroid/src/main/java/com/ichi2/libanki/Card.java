@@ -79,6 +79,7 @@ import static com.ichi2.libanki.stats.Stats.SECONDS_PER_DAY;
 public class Card implements Cloneable {
 
     public static final String ANSWER_KEY = "a";
+    public static final String QUESTION_KEY = "q";
 
     public static final int TYPE_REV = 2;
 
@@ -264,7 +265,7 @@ public class Card implements Cloneable {
 
 
     public String q(boolean reload, boolean browser) {
-        return css() + _getQA(reload, browser).get("q");
+        return css() + _getQA(reload, browser).get(QUESTION_KEY);
     }
 
 
@@ -377,7 +378,7 @@ public class Card implements Cloneable {
 
 
     public String qSimple() {
-        return _getQA(false).get("q");
+        return _getQA(false).get(QUESTION_KEY);
     }
 
 

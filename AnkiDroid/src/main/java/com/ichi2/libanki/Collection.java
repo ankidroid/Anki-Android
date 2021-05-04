@@ -86,6 +86,7 @@ import timber.log.Timber;
 
 import static com.ichi2.async.CancelListener.isCancelled;
 import static com.ichi2.libanki.Card.ANSWER_KEY;
+import static com.ichi2.libanki.Card.QUESTION_KEY;
 
 // Anki maintains a cache of used tags so it can quickly present a list of tags
 // for autocomplete and in the browser. For efficiency, deletions are not
@@ -1107,21 +1108,21 @@ public class Collection implements CollectionGetter {
         d.put("id", Long.toString(cid));
         qfmt = TextUtils.isEmpty(qfmt) ? template.getString("qfmt") : qfmt;
         afmt = TextUtils.isEmpty(afmt) ? template.getString("afmt") : afmt;
-        for (Pair<String, String> p : new Pair[]{new Pair<>("q", qfmt), new Pair<>(ANSWER_KEY, afmt)}) {
+        for (Pair<String, String> p : new Pair[]{new Pair<>(QUESTION_KEY, qfmt), new Pair<>(ANSWER_KEY, afmt)}) {
             String type = p.first;
             String format = p.second;
-            if ("q".equals(type)) {
+            if (QUESTION_KEY.equals(type)) {
                 format = fClozePatternQ.matcher(format).replaceAll(String.format(Locale.US, "{{$1cq-%d:", cardNum));
                 format = fClozeTagStart.matcher(format).replaceAll(String.format(Locale.US, "<%%cq:%d:", cardNum));
             } else {
                 format = fClozePatternA.matcher(format).replaceAll(String.format(Locale.US, "{{$1ca-%d:", cardNum));
                 format = fClozeTagStart.matcher(format).replaceAll(String.format(Locale.US, "<%%ca:%d:", cardNum));
                 // the following line differs from libanki // TODO: why?
-                fields.put("FrontSide", d.get("q")); // fields.put("FrontSide", mMedia.stripAudio(d.get("q")));
+                fields.put("FrontSide", d.get(QUESTION_KEY)); // fields.put("FrontSide", mMedia.stripAudio(d.get(QUESTION_KEY)));
             }
             String html;
             try {
-                html = ParsedNode.parse_inner(format).render(fields, "q".equals(type), getContext());
+                html = ParsedNode.parse_inner(format).render(fields, QUESTION_KEY.equals(type), getContext());
             } catch (TemplateError er) {
                 Timber.w(er);
                 html = er.message(getContext());
@@ -1133,10 +1134,10 @@ public class Collection implements CollectionGetter {
             }
             d.put(type, html);
             // empty cloze?
-            if ("q".equals(type) && model.isCloze()) {
+            if (QUESTION_KEY.equals(type) && model.isCloze()) {
                 if (Models._availClozeOrds(model, flist, false).size() == 0) {
                     String link = String.format("<a href=%s#cloze>%s</a>", Consts.HELP_SITE, "help");
-                    d.put("q", mContext.getString(R.string.empty_cloze_warning, link));
+                    d.put(QUESTION_KEY, mContext.getString(R.string.empty_cloze_warning, link));
                 }
             }
         }
