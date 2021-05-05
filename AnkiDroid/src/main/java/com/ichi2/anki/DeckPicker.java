@@ -39,7 +39,6 @@ import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Message;
-import android.os.ParcelFileDescriptor;
 import android.provider.Settings;
 
 import com.afollestad.materialdialogs.GravityEnum;
@@ -52,13 +51,11 @@ import androidx.annotation.VisibleForTesting;
 import androidx.appcompat.widget.SearchView;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
-import androidx.core.content.FileProvider;
 import androidx.core.content.pm.ShortcutInfoCompat;
 import androidx.core.content.pm.ShortcutManagerCompat;
 import androidx.core.graphics.drawable.IconCompat;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
-import androidx.core.app.ShareCompat;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -97,16 +94,15 @@ import com.ichi2.anki.dialogs.DeckPickerAnalyticsOptInDialog;
 import com.ichi2.anki.dialogs.DeckPickerBackupNoSpaceLeftDialog;
 import com.ichi2.anki.dialogs.DeckPickerConfirmDeleteDeckDialog;
 import com.ichi2.anki.dialogs.DeckPickerContextMenu;
-import com.ichi2.anki.dialogs.DeckPickerExportCompleteDialog;
 import com.ichi2.anki.dialogs.DeckPickerNoSpaceLeftDialog;
 import com.ichi2.anki.dialogs.DialogHandler;
-import com.ichi2.anki.dialogs.ExportDialog;
 import com.ichi2.anki.dialogs.ImportDialog;
 import com.ichi2.anki.dialogs.MediaCheckDialog;
 import com.ichi2.anki.dialogs.SyncErrorDialog;
 import com.ichi2.anki.dialogs.customstudy.CustomStudyDialogFactory;
 import com.ichi2.anki.exception.ConfirmModSchemaException;
 import com.ichi2.anki.exception.FilteredAncestor;
+import com.ichi2.anki.export.ActivityExportingDelegate;
 import com.ichi2.anki.receiver.SdCardReceiver;
 import com.ichi2.anki.stats.AnkiStatsTaskHandler;
 import com.ichi2.anki.web.HostNumFactory;
@@ -128,7 +124,6 @@ import com.ichi2.libanki.importer.AnkiPackageImporter;
 import com.ichi2.libanki.sched.AbstractDeckTreeNode;
 import com.ichi2.libanki.sync.CustomSyncServerUrlException;
 import com.ichi2.libanki.sync.Syncer;
-import com.ichi2.libanki.utils.TimeUtils;
 import com.ichi2.themes.StyledProgressDialog;
 import com.ichi2.ui.BadgeDrawableBuilder;
 import com.ichi2.utils.AdaptionUtil;
@@ -144,6 +139,7 @@ import com.ichi2.widget.WidgetStatus;
 import com.ichi2.utils.JSONException;
 
 import java.io.File;
+import java.util.ArrayList;
 import java.io.FileOutputStream;
 import java.util.List;
 import java.util.TreeMap;
@@ -157,8 +153,8 @@ import static com.ichi2.anim.ActivityTransitionAnimation.Direction.*;
 
 public class DeckPicker extends NavigationDrawerActivity implements
         StudyOptionsListener, SyncErrorDialog.SyncErrorDialogListener, ImportDialog.ImportDialogListener,
-        MediaCheckDialog.MediaCheckDialogListener, ExportDialog.ExportDialogListener,
-        ActivityCompat.OnRequestPermissionsResultCallback, CustomStudyDialog.CustomStudyListener {
+        MediaCheckDialog.MediaCheckDialogListener, ActivityCompat.OnRequestPermissionsResultCallback,
+        CustomStudyDialog.CustomStudyListener{
 
 
     /**
@@ -203,6 +199,8 @@ public class DeckPicker extends NavigationDrawerActivity implements
     private DeckAdapter mDeckListAdapter;
 	
     private final Snackbar.Callback mSnackbarShowHideCallback = new Snackbar.Callback();
+
+    private ActivityExportingDelegate mExportingDelegate;
 
     private LinearLayout mNoDecksPlaceholder;
 
@@ -400,44 +398,6 @@ public class DeckPicker extends NavigationDrawerActivity implements
         }
     }
 
-    private ExportListener exportListener() {
-        return new ExportListener(this);
-    }
-    private static class ExportListener extends TaskListenerWithContext<DeckPicker, Void, Pair<Boolean, String>>{
-        public ExportListener(DeckPicker deckPicker) {
-            super(deckPicker);
-        }
-
-        @Override
-        public void actualOnPreExecute(@NonNull DeckPicker deckPicker) {
-            deckPicker.mProgressDialog = StyledProgressDialog.show(deckPicker, null,
-                    deckPicker.getResources().getString(R.string.export_in_progress), false);
-        }
-
-
-        @Override
-        public void actualOnPostExecute(@NonNull DeckPicker deckPicker, Pair<Boolean, String> result) {
-            if (deckPicker.mProgressDialog != null && deckPicker.mProgressDialog.isShowing()) {
-                deckPicker.mProgressDialog.dismiss();
-            }
-
-            // If boolean and string are both set, we are signalling an error message
-            // instead of a successful result.
-            if (result.first && result.second != null) {
-                Timber.w("Export Failed: %s", result.second);
-                deckPicker.showSimpleMessageDialog(result.second);
-            } else {
-                Timber.i("Export successful");
-                String exportPath = result.second;
-                if (exportPath != null) {
-                    deckPicker.showAsyncDialogFragment(DeckPickerExportCompleteDialog.newInstance(exportPath));
-                } else {
-                    UIUtils.showThemedToast(deckPicker, deckPicker.getResources().getString(R.string.export_unsuccessful), true);
-                }
-            }
-        }
-    }
-
 
     // ----------------------------------------------------------------------------
     // ANDROID ACTIVITY METHODS
@@ -446,12 +406,13 @@ public class DeckPicker extends NavigationDrawerActivity implements
     /** Called when the activity is first created. */
     @Override
     protected void onCreate(Bundle savedInstanceState) throws SQLException {
-        Timber.d("onCreate()");
-
         if (showedActivityFailedScreen(savedInstanceState)) {
             return;
         }
-        
+        Timber.d("onCreate()");
+
+        mExportingDelegate = new ActivityExportingDelegate(this, this::getCol);
+
         mCustomStudyDialogFactory = new CustomStudyDialogFactory(this::getCol, this).attachToActivity(this);
 
         //we need to restore here, as we need it before super.onCreate() is called.
@@ -826,7 +787,7 @@ public class DeckPicker extends NavigationDrawerActivity implements
         } else if (itemId == R.id.action_export) {
             Timber.i("DeckPicker:: Export collection button pressed");
             String msg = getResources().getString(R.string.confirm_apkg_export);
-            showDialogFragment(ExportDialog.newInstance(msg));
+            mExportingDelegate.showExportDialog(msg);
             return true;
         }
         return super.onOptionsItemSelected(item);
@@ -870,45 +831,7 @@ public class DeckPicker extends NavigationDrawerActivity implements
             if (!importResult.isSuccess()) {
                 ImportUtils.showImportUnsuccessfulDialog(this, importResult.getHumanReadableMessage(), false);
             }
-        } else if ((requestCode == PICK_EXPORT_FILE) && (resultCode == RESULT_OK)) {
-            if (exportToProvider(intent, true)) {
-                UIUtils.showSimpleSnackbar(this, getString(R.string.export_save_apkg_successful), true);
-            } else {
-                UIUtils.showSimpleSnackbar(this, getString(R.string.export_save_apkg_unsuccessful), false);
-            }
         }
-    }
-
-
-    private boolean exportToProvider(Intent intent, boolean deleteAfterExport) {
-        if ((intent == null) || (intent.getData() == null)) {
-            Timber.e("exportToProvider() provided with insufficient intent data %s", intent);
-            return false;
-        }
-        Uri uri = intent.getData();
-        Timber.d("Exporting from file to ContentProvider URI: %s/%s", mExportFileName, uri.toString());
-        FileOutputStream fileOutputStream;
-        ParcelFileDescriptor pfd;
-        try {
-            pfd = getContentResolver().openFileDescriptor(uri, "w");
-
-            if (pfd != null) {
-                fileOutputStream = new FileOutputStream(pfd.getFileDescriptor());
-                CompatHelper.getCompat().copyFile(mExportFileName, fileOutputStream);
-                fileOutputStream.close();
-                pfd.close();
-            } else {
-                Timber.w("exportToProvider() failed - ContentProvider returned null file descriptor for %s", uri);
-                return false;
-            }
-            if (deleteAfterExport && !new File(mExportFileName).delete()) {
-                Timber.w("Failed to delete temporary export file %s", mExportFileName);
-            }
-        } catch (Exception e) {
-            Timber.e(e, "Unable to export file to Uri: %s/%s", mExportFileName, uri.toString());
-            return false;
-        }
-        return true;
     }
 
 
@@ -2114,86 +2037,6 @@ public class DeckPicker extends NavigationDrawerActivity implements
     }
 
 
-    @Override
-    public void exportApkg(String filename, Long did, boolean includeSched, boolean includeMedia) {
-        File exportDir = new File(getExternalCacheDir(), "export");
-        exportDir.mkdirs();
-        File exportPath;
-        String timeStampSuffix = "-" + TimeUtils.getTimestamp(getCol().getTime());
-        if (filename != null) {
-            // filename has been explicitly specified
-            exportPath = new File(exportDir, filename);
-        } else if (did != null) {
-            // filename not explicitly specified, but a deck has been specified so use deck name
-            exportPath = new File(exportDir, getCol().getDecks().get(did).getString("name").replaceAll("\\W+", "_") + timeStampSuffix + ".apkg");
-        } else if (!includeSched) {
-            // full export without scheduling is assumed to be shared with someone else -- use "All Decks.apkg"
-            exportPath = new File(exportDir, "All Decks" + timeStampSuffix + ".apkg");
-        } else {
-            // full collection export -- use "collection.colpkg"
-            File colPath = new File(getCol().getPath());
-            String newFileName = colPath.getName().replace(".anki2", timeStampSuffix + ".colpkg");
-            exportPath = new File(exportDir, newFileName);
-        }
-        TaskManager.launchCollectionTask(new CollectionTask.ExportApkg(exportPath.getPath(), did, includeSched, includeMedia), exportListener());
-    }
-
-
-    public void emailFile(String path) {
-        // Make sure the file actually exists
-        File attachment = new File(path);
-        if (!attachment.exists()) {
-            Timber.e("Specified apkg file %s does not exist", path);
-            UIUtils.showThemedToast(this, getResources().getString(R.string.apk_share_error), false);
-            return;
-        }
-        // Get a URI for the file to be shared via the FileProvider API
-        Uri uri;
-        try {
-            uri = FileProvider.getUriForFile(DeckPicker.this, "com.ichi2.anki.apkgfileprovider", attachment);
-        } catch (IllegalArgumentException e) {
-            Timber.w(e, "Could not generate a valid URI for the apkg file");
-            UIUtils.showThemedToast(this, getResources().getString(R.string.apk_share_error), false);
-            return;
-        }
-        Intent shareIntent = new ShareCompat.IntentBuilder(DeckPicker.this)
-                .setType("application/apkg")
-                .setStream(uri)
-                .setSubject(getString(R.string.export_email_subject, attachment.getName()))
-                .setHtmlText(getString(R.string.export_email_text))
-                .getIntent();
-        if (shareIntent.resolveActivity(getPackageManager()) != null) {
-            startActivityWithoutAnimation(shareIntent);
-        } else {
-            // Try to save it?
-            UIUtils.showSimpleSnackbar(this, R.string.export_send_no_handlers, false);
-            saveExportFile(path);
-        }
-    }
-
-
-    public void saveExportFile(String path) {
-        // Make sure the file actually exists
-        File attachment = new File(path);
-        if (!attachment.exists()) {
-            Timber.e("saveExportFile() Specified apkg file %s does not exist", path);
-            UIUtils.showSimpleSnackbar(this, R.string.export_save_apkg_unsuccessful, false);
-            return;
-        }
-
-        // Send the user to the standard Android file picker via Intent
-        mExportFileName = path;
-        Intent saveIntent = new Intent(Intent.ACTION_CREATE_DOCUMENT);
-        saveIntent.addCategory(Intent.CATEGORY_OPENABLE);
-        saveIntent.setType("application/apkg");
-        saveIntent.putExtra(Intent.EXTRA_TITLE, attachment.getName());
-        saveIntent.putExtra("android.content.extra.SHOW_ADVANCED", true);
-        saveIntent.putExtra("android.content.extra.FANCY", true);
-        saveIntent.putExtra("android.content.extra.SHOW_FILESIZE", true);
-        startActivityForResultWithoutAnimation(saveIntent, PICK_EXPORT_FILE);
-    }
-
-
     /**
      * Load a new studyOptionsFragment. If withDeckOptions is true, the deck options activity will
      * be loaded on top of it. Use this flag when creating a new filtered deck to allow the user to
@@ -2568,7 +2411,7 @@ public class DeckPicker extends NavigationDrawerActivity implements
     }
     public void exportDeck(long did) {
         String msg = getResources().getString(R.string.confirm_apkg_export_deck, getCol().getDecks().get(did).getString("name"));
-        showDialogFragment(ExportDialog.newInstance(msg, did));
+        mExportingDelegate.showExportDialog(msg, did);
     }
 
     public void createIcon(Context context) {
