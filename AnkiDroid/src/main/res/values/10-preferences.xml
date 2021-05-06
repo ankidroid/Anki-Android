@@ -268,9 +268,13 @@
     <string name="deck_conf_set_subdecks_message">Set current options group for all of this deck’s subdecks?</string>
     <string name="pref_browser_editor_font" maxLength="41">Browser and editor font</string>
     <string name="deck_conf_cram_filter" maxLength="41">Filter</string>
+    <string name="deck_conf_cram_filter_2" maxLength="41">Filter 2</string>
     <string name="deck_conf_cram_search" maxLength="41">Search</string>
+    <string name="deck_conf_cram_search_2" maxLength="41">Search</string>
     <string name="deck_conf_cram_limit" maxLength="41">Limit to</string>
+    <string name="deck_conf_cram_limit_2" maxLength="41">Limit to</string>
     <string name="deck_conf_cram_order" maxLength="41">cards selected by</string>
+    <string name="deck_conf_cram_order_2" maxLength="41">cards selected by</string>
     <string name="deck_conf_cram_reschedule"  maxLength="41" comment="Title of the box labelled by deck_conf_cram_reschedule_summ">Reschedule</string>
     <string name="deck_conf_cram_reschedule_summ">Reschedule cards based on my answers in this deck</string>
     <string name="deck_conf_cram_filter_2_check">Enable second filter</string>
