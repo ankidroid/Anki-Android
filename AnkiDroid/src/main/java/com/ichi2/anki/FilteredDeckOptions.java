@@ -42,6 +42,7 @@ import com.ichi2.utils.JSONArray;
 import com.ichi2.utils.JSONException;
 import com.ichi2.utils.JSONObject;
 
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
@@ -81,7 +82,7 @@ public class FilteredDeckOptions extends AppCompatPreferenceActivity implements 
 
         private final Map<String, String> mValues = new HashMap<>();
         private final Map<String, String> mSummaries = new HashMap<>();
-
+        private boolean mSecondFilter;
 
         public DeckPreferenceHack() {
             this.cacheValues();
@@ -92,9 +93,17 @@ public class FilteredDeckOptions extends AppCompatPreferenceActivity implements 
             Timber.d("cacheValues()");
 
             JSONArray ar = mDeck.getJSONArray("terms").getJSONArray(0);
+            mSecondFilter = mDeck.getJSONArray("terms").length() > 1 ? true : false;
+            JSONArray ar2 = null;
             mValues.put("search", ar.getString(0));
             mValues.put("limit", ar.getString(1));
             mValues.put("order", ar.getString(2));
+            if (mSecondFilter) {
+                ar2 = mDeck.getJSONArray("terms").getJSONArray(1);
+                mValues.put("search_2", ar2.getString(0));
+                mValues.put("limit_2", ar2.getString(1));
+                mValues.put("order_2", ar2.getString(2));
+            }
             JSONArray delays = mDeck.optJSONArray("delays");
             if (delays != null) {
                 mValues.put("steps", StepsPreference.convertFromJSON(delays));
@@ -125,6 +134,18 @@ public class FilteredDeckOptions extends AppCompatPreferenceActivity implements 
 
                 for (Entry<String, Object> entry : mUpdate.valueSet()) {
                     Timber.i("Change value for key '%s': %s", entry.getKey(), entry.getValue());
+                    if (mPref.mSecondFilter) {
+                        if ("search_2".equals(entry.getKey())) {
+                            JSONArray ar = mDeck.getJSONArray("terms");
+                            ar.getJSONArray(1).put(0, entry.getValue());
+                        } else if ("limit_2".equals(entry.getKey())) {
+                            JSONArray ar = mDeck.getJSONArray("terms");
+                            ar.getJSONArray(1).put(1, entry.getValue());
+                        } else if ("order_2".equals(entry.getKey())) {
+                            JSONArray ar = mDeck.getJSONArray("terms");
+                            ar.getJSONArray(1).put(2, Integer.parseInt((String) entry.getValue()));
+                        }
+                    }
                     if ("search".equals(entry.getKey())) {
                         JSONArray ar = mDeck.getJSONArray("terms");
                         ar.getJSONArray(0).put(0, entry.getValue());
@@ -393,6 +414,7 @@ public class FilteredDeckOptions extends AppCompatPreferenceActivity implements 
     private void addPreferences(@NonNull Collection col) {
         this.addPreferencesFromResource(R.xml.cram_deck_options);
 
+        this.second_filter_listener();
         if (col.schedVer() != 1) {
             Timber.d("sched v2: removing filtered deck custom study steps");
             // getPreferenceScreen.removePreference didn't return true, so remove from the category
@@ -517,9 +539,13 @@ public class FilteredDeckOptions extends AppCompatPreferenceActivity implements 
     @SuppressWarnings("deprecation") // Tracked as #5019 on github
     protected void buildLists() {
         android.preference.ListPreference newOrderPref = (android.preference.ListPreference) findPreference("order");
+        android.preference.ListPreference newOrderPrefSecond = (android.preference.ListPreference) findPreference("order_2");
         newOrderPref.setEntries(R.array.cram_deck_conf_order_labels);
         newOrderPref.setEntryValues(R.array.cram_deck_conf_order_values);
         newOrderPref.setValue(mPref.getString("order", "0"));
+        newOrderPrefSecond.setEntries(R.array.cram_deck_conf_order_labels);
+        newOrderPrefSecond.setEntryValues(R.array.cram_deck_conf_order_values);
+        newOrderPrefSecond.setValue(mPref.getString("order_2", "0"));
     }
 
     /**
@@ -539,6 +565,34 @@ public class FilteredDeckOptions extends AppCompatPreferenceActivity implements 
             iFilter.addAction(SdCardReceiver.MEDIA_EJECT);
             registerReceiver(mUnmountReceiver, iFilter);
         }
+    }
+
+    @SuppressWarnings("deprecation")
+    private void second_filter_listener()
+    {
+        android.preference.CheckBoxPreference second_filter_sign = (android.preference.CheckBoxPreference) this.findPreference("filter_second");
+        android.preference.PreferenceCategory second_filter = (android.preference.PreferenceCategory) this.findPreference("second_filter");
+        if (mPref.mSecondFilter) {
+            second_filter.setEnabled(true);
+            second_filter_sign.setChecked(true);
+        }
+        second_filter_sign.setOnPreferenceChangeListener((preference, newValue) -> {
+            if (newValue instanceof Boolean){
+                Boolean boolVal = (Boolean)newValue;
+
+                if (!boolVal) {
+                    mDeck.getJSONArray("terms").remove(1);
+                    second_filter.setEnabled(false);
+                } else {
+
+                    second_filter.setEnabled(true);
+                    JSONArray narr = new JSONArray(Arrays.asList("\"deck:*\"", 20, 5));
+                    mDeck.getJSONArray("terms").put(1, narr);
+                }
+            }
+            return true;
+        });
+
     }
 
 }
