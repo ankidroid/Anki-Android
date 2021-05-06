@@ -38,17 +38,6 @@
         <item>Latest added first</item>
         <item>Relative overdueness</item>
     </string-array>
-    <string-array name="cram_deck_conf_order_labels_2">
-        <item>Oldest seen first</item>
-        <item>Random</item>
-        <item>Increasing intervals</item>
-        <item>Decreasing intervals</item>
-        <item>Most lapsed</item>
-        <item>Order added</item>
-        <item>Order due</item>
-        <item>Latest added first</item>
-        <item>Relative overdueness</item>
-    </string-array>
     <string-array name="add_to_cur_labels">
         <item>Use current deck</item>
         <item>Decide by note type</item>
