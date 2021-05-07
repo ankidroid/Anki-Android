@@ -5,7 +5,6 @@ import org.gradle.internal.jvm.Jvm
 buildscript {
     repositories {
         google()
-        jcenter()
         maven {
             url "https://plugins.gradle.org/m2/"
         }
@@ -19,18 +18,7 @@ buildscript {
         // End temporary #7558 work
     }
     dependencies {
-        // Temporary, for #7558 where AGP4.0.x works, 4.1.x fails, from https://issuetracker.google.com/issues/169584856
-        // Without workarounds we get 'com.android.tools.r8.CompilationFailedException: Compilation failed to complete'
-        // test case is to run `./gradlew assembleRelease` - if it gets to the point where it fails on keystore password, R8 already worked == success
-        //classpath 'com.android.tools:r8:25999632a8450072e0e39f2b28085ccb9766203f'  // This is diagnostic. Should Assertion error. Works?
-        //classpath 'com.android.tools:r8:89ac4c72113fdb73b43159522c932a1665de96c9' // This is diagnostic. Expect Assertion failure. Works?
-        //classpath 'com.android.tools:r8:2.2.28' // Release version, should work. Works.
-        //classpath 'com.android.tools:r8:2.1.74' // Cherry-picked / backport release, should work, fails with NullPointerException.
-        //classpath 'com.android.tools:r8:2.1.80' // Current stable release matched to AGP4.1.1 I think. Should work, fails with NullPointerException.
-        classpath 'com.android.tools:r8:2.2.60' // Current stable release matched to AGP4.2 I think. Should work.
-        // End of Temporary #7558 work
-
-        classpath 'com.android.tools.build:gradle:4.1.3' // This includes R8, and future versions will allow removal of #7558 workarounds.
+        classpath 'com.android.tools.build:gradle:4.2.0'
         // NOTE: Do not place your application dependencies here; they belong
         // in the individual module build.gradle files
         classpath "app.brant:amazonappstorepublisher:0.1.0"
