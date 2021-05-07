@@ -1,0 +1,16 @@
+version: 2
+updates:
+- package-ecosystem: gradle
+  directory: "/"
+  schedule:
+    interval: daily
+    time: "10:00"
+  open-pull-requests-limit: 10
+  target-branch: dependency-updates
+  ignore:
+  - dependency-name: com.afollestad.material-dialogs:core
+    versions:
+    - ">= 2.a, < 3"
+  - dependency-name: com.afollestad.material-dialogs:core
+    versions:
+    - ">= 3.a, < 4"
