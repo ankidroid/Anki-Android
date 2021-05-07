@@ -319,6 +319,7 @@ mw.col.sched.extendLimits(1, 0)
         Note note = addNoteUsingBasicModel("foo", "bar");
 
         col.reset();
+        advanceRobolectricLooper();
 
         Card card = sched.getCard();
         assertNotNull(card);
@@ -328,6 +329,7 @@ mw.col.sched.extendLimits(1, 0)
         }
 
         sched.answerCard(card, sched.getGoodNewButton());
+        advanceRobolectricLooper();
 
         card = sched.getCard();
         assertNotNull(card);
@@ -338,26 +340,31 @@ mw.col.sched.extendLimits(1, 0)
 
 
         sched.answerCard(card, sched.getGoodNewButton());
+        advanceRobolectricLooper();
 
         card = sched.getCard();
         assertNotNull(card);
         assertEquals(new Counts(0, (schedVersion == 1) ? 2 : 1, 0), sched.counts(card));
         if (preload) {
             sched.preloadNextCard();
+            advanceRobolectricLooper();
         }
 
         assertNotNull(card);
 
         card = nonTaskUndo(col);
+        advanceRobolectricLooper();
         assertNotNull(card);
         assertEquals(new Counts(0, (schedVersion == 1) ? 3 : 1, 0), sched.counts(card));
         sched.count();
         if (preload) {
             sched.preloadNextCard();
+            advanceRobolectricLooper();
         }
 
 
         sched.answerCard(card, sched.getGoodNewButton());
+        advanceRobolectricLooper();
         card = sched.getCard();
         assertNotNull(card);
         if (preload) {
