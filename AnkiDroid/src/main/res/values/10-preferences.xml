@@ -276,6 +276,7 @@
     <string name="deck_conf_cram_search" maxLength="41">Search</string>
     <string name="deck_conf_cram_limit" maxLength="41">Limit to</string>
     <string name="deck_conf_cram_order" maxLength="41">cards selected by</string>
+    <string name="deck_conf_cram_header"> A filtered deck is a temporary deck that contains cards based on various criteria, such as "forgotten today", "is tagged 'hard'", and so on. After studying cards in a filtered deck, or when the filtered deck is deleted, the cards are automatically returned to their original deck.</string>
     <string name="deck_conf_cram_reschedule"  maxLength="41" comment="Title of the box labelled by deck_conf_cram_reschedule_summ">Reschedule</string>
     <string name="deck_conf_cram_reschedule_summ">Reschedule cards based on my answers in this deck</string>
     <string name="deck_conf_cram_filter_2_check">Enable second filter</string>

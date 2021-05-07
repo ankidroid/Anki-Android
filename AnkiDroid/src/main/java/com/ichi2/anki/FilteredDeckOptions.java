@@ -27,6 +27,8 @@ import android.content.SharedPreferences;
 import android.content.SharedPreferences.OnSharedPreferenceChangeListener;
 import android.os.Bundle;
 import android.view.KeyEvent;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.MenuItem;
 
 import com.ichi2.anim.ActivityTransitionAnimation;
@@ -357,6 +359,15 @@ public class FilteredDeckOptions extends AppCompatPreferenceActivity implements 
 
 
     @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.deck_option, menu);
+        return true;
+    }
+
+
+
+    @Override
     @SuppressWarnings("deprecation") // Tracked as #5019 on github
     protected void onCreate(Bundle icicle) {
         Themes.setThemeLegacy(this);
@@ -441,8 +452,15 @@ public class FilteredDeckOptions extends AppCompatPreferenceActivity implements 
     @Override
     @SuppressWarnings("deprecation") // TODO Tracked in https://github.com/ankidroid/Anki-Android/issues/5019
     public boolean onOptionsItemSelected(MenuItem item) {
-        if (item.getItemId() == android.R.id.home) {
+        int id = item.getItemId();
+        if (id == android.R.id.home) {
             closeDeckOptions();
+            return true;
+        } else if (id == R.id.action_help) {
+            Intent intent = new Intent(this, HelperActivity.class);
+            intent.putExtra("questionId", R.array.filtered_deck_questions);
+            intent.putExtra("answerId", R.array.filtered_deck_answer);
+            startActivity(intent);
             return true;
         }
         return false;

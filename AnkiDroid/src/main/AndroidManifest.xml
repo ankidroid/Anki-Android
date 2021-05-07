@@ -205,6 +205,12 @@
                 />
         </activity>
         <activity
+            android:name=".HelperActivity"
+            android:label="@string/helper_title"
+            android:exported="false"
+            android:configChanges="keyboardHidden|orientation|locale|screenSize"
+            />
+        <activity
             android:name=".ModelBrowser"
             android:label="@string/model_browser_label"
             android:exported="false"

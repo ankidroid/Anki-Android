@@ -18,6 +18,9 @@
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://arbitrary.app.namespace/com.ichi2.anki" >
 
+    <Preference
+        android:summary="@string/deck_conf_cram_header" />
+
     <PreferenceCategory android:title="@string/deck_conf_cram_filter" >
         <EditTextPreference
             android:key="search"
