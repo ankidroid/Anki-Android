@@ -102,6 +102,9 @@
     <attr name="editTextBackgroundColor" format="color"/>
     <attr name="toolbarBackgroundColor" format="color"/>
     <attr name="toolbarIconColor" format="color"/>
+    <attr name="buttonShadowColor" format="color"/>
+    <attr name="buttonRippleColor" format="color"/>
+    <attr name="buttonForegroundColor" format="color"/>
     <!-- Images -->
     <attr name="navDrawerImage" format="integer"/>
     <attr name="attachFileImage" format="integer"/>
