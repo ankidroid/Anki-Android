@@ -130,7 +130,7 @@
     <string name="sync_account_summ_logged_in">%s</string>
     <string name="automatic_sync_choice" maxLength="41">Аўтаматычная сінхранізацыя</string>
     <string name="automatic_sync_choice_summ">Аўтаматычна сінхранізаваць, калі адбываецца адкрыццё/закрыццё праграмы,
-        калі з часу апошняй сінхранізацыі мінула 10 хвілін.</string>
+        калі з часу апошняй сінхранізацыі мінула больш чым 10 хвілін.</string>
     <string name="sync_status_badge" maxLength="41">Адлюстроўваць статус сінхранізацыі</string>
     <string name="sync_status_badge_summ">Значок сінхранізацыі зменіцца, калі можна будзе загрузіць змены</string>
     <string name="day_theme" maxLength="41">Дзённая тэма</string>
@@ -180,10 +180,10 @@
     <string name="day_offset_summ">Гадзін пасля поўначы: XXX</string>
     <string name="xlabel_dayoffset_seekbar" maxLength="41">Поўнач</string>
     <string name="ylabel_dayoffset_seekbar" maxLength="41">23:00</string>
-    <string name="sched_v2" maxLength="41">V2 scheduler</string>
-    <string name="sched_v2_summ">Enable the new scheduler. Forces changes in one direction on next sync</string>
+    <string name="sched_v2" maxLength="41">2-ая версія планіроўшчыка</string>
+    <string name="sched_v2_summ">Уключыць новы планіроўшчык. Падчас наступнай сінхранізацыі змены будуць запісаныя ў адным напрамку.</string>
     <string name="sched_ver_toggle_title">Пацвердзіць</string>
-    <string name="sched_ver_2to1">Гэта скіне ўсе вывучаемыя карткі, ачысціць фільтраваныя калоды і зменіць версію плароўшчыка. Працягнуць?</string>
+    <string name="sched_ver_2to1">Гэта скіне ўсе вашы вывучаныя карткі, ачысціць фільтраваныя калоды і зменіць версію планіроўшчыка. Працягнуць?</string>
     <string name="sched_ver_1to2">Эксперыментальны планіроўшчык можа стаць прычынаю памылковага планавання. Пераканайцеся, што вы азнаёміліся з дакументацыяй. Працягнуць?</string>
     <string name="pref_keep_screen_on" maxLength="41">Не выключаць экран</string>
     <string name="pref_keep_screen_on_summ">Адключыць час чакання экрана</string>
@@ -197,25 +197,24 @@
     <string name="custom_buttons_setting_if_room">Паказваць, калі ёсць месца</string>
     <string name="custom_buttons_setting_menu_only">Толькі меню</string>
     <string name="reset_custom_buttons" maxLength="41">Скід па змаўчанні</string>
-    <string name="thirdparty_apps_title" maxLength="41">ПраграмныяAPI іншых распрацоўшчыкаў</string>
-    <string name="thirdparty_apps_summary">Паглядзець спіс праграм, які выкарыстоўваць API AnkiDroid (слоўнікі, утыліты і г.д.).</string>
-    <string name="html_javascript_debugging" maxLength="41">Адладка HTML / Javascript</string>
+    <string name="thirdparty_apps_title" maxLength="41">Праграмныя API іншых распрацоўшчыкаў</string>
+    <string name="thirdparty_apps_summary">Паглядзець спіс праграм, якія выкарыстоўваць API AnkiDroid (слоўнікі, службовыя праграмы і г.д.).</string>
+    <string name="html_javascript_debugging" maxLength="41">Адладка HTML / JavaScript</string>
     <string name="html_javascript_debugging_summ">Уключыць аддаленыя злучэнні WebView і захаваць картку HTML у каталозе AnkiDroid</string>
     <!-- Advanced statistics settings -->
     <string name="advanced_statistics_title" maxLength="41">Пашыраная статыстыка</string>
     <string name="enable_advanced_statistics_title" maxLength="41">Уключыць пашыраную статыстыку</string>
-    <string name="enable_advanced_statistics_summ">Адлюстроўваць прагноз статыстыкі, заснаваны на вылічэннях і мадэляванні паўтарэнні ў будучым (уключана) або на ўжо спланаваным паўтарэнні ў будучым (выключана).</string>
-    <string name="advanced_forecast_stats_compute_n_days_title" maxLength="41">Вылічаць першыя Х дн., імітуючы рэштку</string>
+    <string name="enable_advanced_statistics_summ">Калі гэты параметр уключаны, то будзе адлюстроўвацца прагноз, які заснаваны на вылічэнні і мадэляванні будучых паўтарэнняў, а калі выключана, то на падставе ўжо запланаваных паўтарэнняў.</string>
+    <string name="advanced_forecast_stats_compute_n_days_title" maxLength="41">Вылічаць першыя Х дзён і імітаваць іншыя</string>
     <string name="advanced_forecast_stats_compute_precision_title" maxLength="41">Дакладнасць вылічэнняў</string>
-    <string name="advanced_forecast_stats_mc_n_iterations_title" maxLength="41">Лік крокаў мадэлявання</string>
+    <string name="advanced_forecast_stats_mc_n_iterations_title" maxLength="41">Колькасць крокаў мадэлявання</string>
     <!-- Custom sync server settings -->
-    <string name="custom_sync_server_title" maxLength="41">Карыстацкі сервер</string>
-    <string name="custom_sync_server_enable_title" maxLength="41">Сервер сінхранізацыі</string>
-    <string name="custom_sync_server_enable_summary">Калі вы не хочаце скарыстаць сервер AnkiWeb, то
- можаце паказаць альтэрнатыўны сервер</string>
-    <string name="custom_sync_server_base_url_title" maxLength="41">URL для сінхранізацыі</string>
+    <string name="custom_sync_server_title" maxLength="41">Уласны сервер сінхранізацыі</string>
+    <string name="custom_sync_server_enable_title" maxLength="41">Уласны сервер сінхранізацыі</string>
+    <string name="custom_sync_server_enable_summary">У тым выпадку, калі вы па нейкіх прычынах не хочаце карыстацца серверам AnkiWeb, то тут можна азначыць іншы сервер</string>
+    <string name="custom_sync_server_base_url_title" maxLength="41">Спасылка для сінхранізацыі</string>
     <string name="custom_sync_server_base_url_invalid">Памылковы адрас сінхранізацыі</string>
-    <string name="custom_sync_server_media_url_title" maxLength="41">URL для Media-дадзеных</string>
+    <string name="custom_sync_server_media_url_title" maxLength="41">Спасылка для медыяфайлаў</string>
     <string name="custom_sync_server_media_url_invalid">Памылковая спасылка сінхранізацыі медыяфайлаў</string>
     <!-- studyoptions -->
     <string name="deck_conf_group_summ">Змяненні параметраў у групавой калодзе закране некалькі калод. Калі вы хочаце змяніць толькі бягучую калоду, калі ласка, спачатку дадайце новую групу параметраў</string>
@@ -230,27 +229,27 @@
         <item quantity="other">%1$s\n%2$d калоды выкарыстоўваюць гэту групу</item>
     </plurals>
     <string name="deck_conf_new_cards" maxLength="41">Новыя карткі</string>
-    <string name="deck_conf_rev_cards" maxLength="41" comment="Name of the deck options submenu for configuring reviews of due cards.">Паўтораў</string>
+    <string name="deck_conf_rev_cards" maxLength="41" comment="Name of the deck options submenu for configuring reviews of due cards.">Паўтарэнні</string>
     <string name="deck_conf_lps_cards" maxLength="41" comment="Label of the submenu stating how lapses cards are treated.">Памылкі</string>
     <string name="deck_conf_general" maxLength="41">Агульныя</string>
-    <string name="deck_conf_reminders" maxLength="41">Напамінкі</string>
+    <string name="deck_conf_reminders" maxLength="41">Напаміны</string>
     <string name="deck_conf_steps" maxLength="41">Крокі (у хвілінах)</string>
-    <string name="deck_conf_order" maxLength="41">Чарговасць</string>
+    <string name="deck_conf_order" maxLength="41">Парадак</string>
     <string name="deck_conf_new_cards_day" maxLength="41">Новых картак за дзень</string>
-    <string name="deck_conf_graduating_ivl" maxLength="41">Інтэрвал сканчэння</string>
+    <string name="deck_conf_graduating_ivl" maxLength="41">Інтэрвал завяршэння</string>
     <string name="deck_conf_days">XXX дзён</string>
     <string name="deck_conf_easy_ivl" maxLength="41">Лёгкі інтэрвал</string>
-    <string name="deck_conf_start_ease" maxLength="41">Просты старт</string>
+    <string name="deck_conf_start_ease" maxLength="41">Пачатковая лёгкасць</string>
     <string name="deck_conf_max_rev" maxLength="41">Максімум паўтарэнняў за дзень</string>
-    <string name="deck_conf_new_bury" maxLength="41">Хаваць новыя карты</string>
+    <string name="deck_conf_new_bury" maxLength="41">Адкласці звязаныя новыя карткі</string>
     <string name="deck_conf_new_bury_summ">Звязаныя новыя карткі адкладзеныя на наступны дзень</string>
-    <string name="deck_conf_rev_bury" maxLength="41">Схаваць звязаныя паўтарэнні</string>
+    <string name="deck_conf_rev_bury" maxLength="41">Адкласці звязаныя паўтарэнні</string>
     <string name="deck_conf_rev_bury_summ">Звязаныя паўтарэнні адкладзеныя на наступны дзень</string>
     <string name="deck_conf_use_general_timeout_settings" maxLength="41">Выкарыстоўваць агульныя налады</string>
-    <string name="deck_conf_use_general_timeout_settings_summ">Выкарыстоўваць агульныя налады \"Аўтаматычнае адлюстраванне адказу\" замест параметраў для гэтай групы.</string>
-    <string name="deck_conf_easy_bonus" maxLength="41">Лёгкі бонус</string>
-    <string name="deck_conf_hard_factor" maxLength="41">Інтэрвал цяжкіх картак</string>
-    <string name="deck_conf_ivl_fct" maxLength="41">Мадыфікацыя інтэрвалаў</string>
+    <string name="deck_conf_use_general_timeout_settings_summ">Выкарыстоўваць агульныя налады \"Аўтаматычнага адлюстравання адказу\" замест параметраў для гэтай групы.</string>
+    <string name="deck_conf_easy_bonus" maxLength="41">Бонус лёгкасці</string>
+    <string name="deck_conf_hard_factor" maxLength="41">Цяжкі інтэрвал</string>
+    <string name="deck_conf_ivl_fct" maxLength="41">Мадыфікатар інтэрвалу</string>
     <string name="deck_conf_max_ivl" maxLength="41">Максімальны інтэрвал</string>
     <string name="deck_conf_new_lps_ivl" maxLength="41">Новы інтэрвал</string>
     <string name="deck_conf_min_ivl" maxLength="41">Мінімальны інтэрвал</string>
@@ -259,16 +258,16 @@
     <string name="deck_conf_leech_action" maxLength="41">Дзеянне для надакучлівай карткі</string>
     <string name="deck_conf_max_time" maxLength="41">Максімальны час адказу</string>
     <string name="deck_conf_seconds">XXX секунд</string>
-    <string name="deck_conf_timer" maxLength="41">Паказаць таймер для адказу</string>
+    <string name="deck_conf_timer" maxLength="41">Паказаць таймер адказу</string>
     <string name="deck_conf_autoplay" maxLength="41">Аўтаматычна ўзнаўляць аўдыя</string>
-    <string name="deck_conf_replayq" maxLength="41">Прайграванне пытання</string>
-    <string name="deck_conf_replayq_summ">Пасля паказу адказу прайграць аўдыя пытання і адказу</string>
-    <string name="deck_conf_manage" maxLength="41">Кіраванне канфігурацыямі</string>
+    <string name="deck_conf_replayq" maxLength="41">Узнаўляць пытанне</string>
+    <string name="deck_conf_replayq_summ">Пасля адказу, узнавіць аўдыя пытання і адказу</string>
+    <string name="deck_conf_manage" maxLength="41">Кіраванне групамі</string>
     <string name="deck_conf_manage_summ">Дадаць і змяніць параметры групы</string>
-    <string name="deck_conf_current_group" maxLength="41">Цякучая група</string>
-    <string name="deck_conf_rename" maxLength="41" comment="Menu entry to rename a deck">Пераіменаваць</string>
+    <string name="deck_conf_current_group" maxLength="41">Бягучая група</string>
+    <string name="deck_conf_rename" maxLength="41" comment="Menu entry to rename a deck">Перайменаваць</string>
     <string name="deck_conf_reset" maxLength="41">Скінуць налады</string>
-    <string name="deck_conf_reset_message">Аднавіць значэнні бягучых групавых параметраў па змаўчанні?</string>
+    <string name="deck_conf_reset_message">Аднавіць значэнні бягучых групавых параметраў да пачатковых?</string>
     <string name="deck_conf_add" maxLength="41" comment="Adding a new deck option group">Дадаць</string>
     <string name="deck_conf_add_summ">Стварыць копію бягучых групавых параметраў</string>
     <string name="deck_conf_remove_message">Выдаліць бягучыя групавыя параметры?</string>
@@ -279,16 +278,16 @@
         <item quantity="many">%s падкалод будуць выкарыстоўваць гэту групу</item>
         <item quantity="other">%s падкалоды будуць выкарыстоўваць гэту групу</item>
     </plurals>
-    <string name="deck_conf_set_subdecks_message">Усталяваць бягучыя групавыя параметры для ўсіх падкалод гэтай калоды?</string>
-    <string name="pref_browser_editor_font" maxLength="41">Шрыфт аглядніка і рэдактара</string>
+    <string name="deck_conf_set_subdecks_message">Прызначыць бягучыя групавыя параметры для ўсіх падкалод гэтай калоды?</string>
+    <string name="pref_browser_editor_font" maxLength="41">Шрыфт аглядальніка і рэдактара</string>
     <string name="deck_conf_cram_filter" maxLength="41">Фільтр</string>
     <string name="deck_conf_cram_search" maxLength="41">Пошук</string>
-    <string name="deck_conf_cram_limit" maxLength="41">Абмежаваць</string>
-    <string name="deck_conf_cram_order" maxLength="41">карты адабраць па</string>
-    <string name="deck_conf_cram_reschedule" maxLength="41" comment="Title of the box labelled by deck_conf_cram_reschedule_summ">Змяніць расклад</string>
-    <string name="deck_conf_cram_reschedule_summ">Змяніць расклад картак на падставе маіх адказаў у гэтай калодзе</string>
-    <string name="deck_conf_cram_steps" maxLength="41">Карыстацкія крокі (у хвілінах)</string>
-    <string name="deck_conf_cram_steps_summ" maxLength="41">Вызначыць дадатковыя крокі</string>
+    <string name="deck_conf_cram_limit" maxLength="41">Абмежаваць да</string>
+    <string name="deck_conf_cram_order" maxLength="41">карткі выбраныя па</string>
+    <string name="deck_conf_cram_reschedule" maxLength="41" comment="Title of the box labelled by deck_conf_cram_reschedule_summ">Перапланаваць</string>
+    <string name="deck_conf_cram_reschedule_summ">Перапланаваць карткі на падставе маіх адказаў у гэтай калодзе</string>
+    <string name="deck_conf_cram_steps" maxLength="41">Уласныя крокі (у хвілінах)</string>
+    <string name="deck_conf_cram_steps_summ" maxLength="41">Вызначыць уласныя крокі</string>
     <string name="deck_conf_reminders_enabled" maxLength="41">Уключыць апавяшчэнні для калод у групе</string>
     <string name="deck_conf_reminders_time" maxLength="41">Нагадаць у</string>
     <!-- analytics options -->
@@ -298,7 +297,7 @@
     <string name="note_editor_replace_newlines" maxLength="41">Замяняць новыя радкі на HTML</string>
     <string name="note_editor_replace_newlines_summ">Змяняць у рэдактары нататак любыя выпадкі &lt;br&gt; на новыя радкі падчас рэдагавання карткі.</string>
     <string name="no_code_formatting" maxLength="41">Простае фарматаванне ўведзеных адказаў</string>
-    <string name="no_code_formatting_summ">Выпраўляць ‘􏿾’ падчас уводу адказу</string>
+    <string name="no_code_formatting_summ">Выпраўляе ‘􏿾’ падчас уводу адказу</string>
     <string name="type_in_answer_focus" maxLength="41">Пераключацца на поле \"Увесці адказ\"</string>
     <string name="type_in_answer_focus_summ">Падчас паўтарэння аўтаматычна пераключацца на поле \"Увесці адказ\"</string>
     <!-- Open Changelog-->

@@ -93,15 +93,15 @@
         <item quantity="many">Бягучы інтэрвал: %d дзён</item>
         <item quantity="other">Бягучы інтэрвал: %d дні</item>
     </plurals>
-    <string name="reschedule_card_dialog_message">Запланаваць паўтарэнне праз некалькі дзён</string>
+    <string name="reschedule_card_dialog_message">Запланаваць паўтарэнне ў наступныя х дзён:</string>
     <plurals name="reschedule_cards_dialog_acknowledge">
-        <item quantity="one">У %d картцы зменены расклад</item>
-        <item quantity="few">У %d картак зменены расклад</item>
-        <item quantity="many">У %d картак зменены расклад</item>
-        <item quantity="other">У %d картак зменены расклад</item>
+        <item quantity="one">%d картка перапланаваная</item>
+        <item quantity="few">%d карткі перапланаваныя</item>
+        <item quantity="many">%d картак перапланаваныя</item>
+        <item quantity="other">%d карткі перапланаваныя</item>
     </plurals>
-    <string name="reschedule_card_dialog_new_card_warning">A new card is being rescheduled. Rescheduling also turns new cards into review cards. Use the ‘reposition card’ option to change a new card\'s position within the new queue</string>
-    <string name="reschedule_card_dialog_warning_ease_reset">Rescheduling also resets how the scheduler treats the card in the future (ease will be set to %d%%)</string>
+    <string name="reschedule_card_dialog_new_card_warning">Новая картка перапланаваная. Дадзеная аперацыя дадае новыя карткі ў паўтораныя. Скарыстайцеся параметрам \"перамясціць картку\" для змянення пазіцыі новай карткі ў чарзе.</string>
+    <string name="reschedule_card_dialog_warning_ease_reset">Перапланаванне таксама скіне налады таго, як планіроўшчык будзе апрацоўваць картку ў будучым (лёгкасць карткі будзе прызначаная на %d%%) </string>
     <string name="firefox_workaround_launched_reviewer_opening_deck">Выберыце калоду ў вашым менеджары файлаў або наведайце старонку about:downloads (пра:спампоўкі) для яе імпарту.</string>
     <string name="answering_error_title">Памылка базы даных</string>
     <string name="answering_error_message">Адбылася памылка падчас запісу ў калекцыю. Прычынаю можа быць пашкоджаная база даных або недахоп свабоднага месца на дыску.\n\nПаспрабуйце праверыць базу даных або аднавіць калекцыю з рэзервовай копіі. Для гэтага націсніце \"Параметры\". \n\Таксама гэта памылка можа быць выклікана самой праграмай; калі ласка, паведаміце пра гэта распрацоўшчыкам.</string>
