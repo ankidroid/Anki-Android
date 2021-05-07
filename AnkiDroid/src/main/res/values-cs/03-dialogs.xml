@@ -126,8 +126,8 @@
     <string name="import_complete_count">Importováno karet: %d</string>
     <string name="sd_card_full_title">SD karta je plná</string>
     <string name="sd_card_almost_full_title">SD karta téměř plná</string>
-    <string name="no_space_to_downgrade_title">No space</string>
-    <string name="no_space_to_downgrade_content">AnkiDroid needs %s free storage space to continue. Please clear some space</string>
+    <string name="no_space_to_downgrade_title">Není místo</string>
+    <string name="no_space_to_downgrade_content">AnkiDroid potřebuje %s volného úložiště. Abyste mohli pokračovat. Uvolněte prosím nějaké místo</string>
     <string name="restore_backup_title">Obnovit zálohu?</string>
     <string name="restore_backup">Vaše kolekce bude nahrazena starší kopií. Všechny neuložené změny budou ztraceny.</string>
     <string name="dialog_cancel">Zrušit</string>
@@ -253,9 +253,9 @@
         <item quantity="many">Automatická synchronizace může být spuštěna za %d sekundy</item>
         <item quantity="other">Automatická synchronizace může být spuštěna za %d sekund</item>
     </plurals>
-    <string name="deck_picker_new">Number of new cards to see today in this deck.</string>
-    <string name="deck_picker_rev">Number of cards due today in this deck.</string>
-    <string name="deck_picker_lrn">Number of cards in learning in this deck.</string>
+    <string name="deck_picker_new">Počet nových karet dnes k učení v tomto balíčku.</string>
+    <string name="deck_picker_rev">Počet karet dnes ke zkoušení v tomto balíčku.</string>
+    <string name="deck_picker_lrn">Počet karet v procesu učení v tomto balíčku.</string>
     <!-- This description is valid fos
     sched V2. For V1, it was counting the number of repetitions of cards in learning. This approximation is acceptable
     for the sake of simplicity and because V1 will leave.-->

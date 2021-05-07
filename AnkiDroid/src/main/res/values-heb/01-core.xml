@@ -127,7 +127,7 @@
     <string name="menu_edit_tags">ערוך תגיות</string>
     <string name="delete_note_message">למחוק את הרשומה הזאת ואת כל הקלפים שלה?‏\n%s</string>
     <string name="menu_select">בחירת טקסט</string>
-    <string name="menu_lookup">Lookup text</string>
+    <string name="menu_lookup">חיפוש טקסט</string>
     <string name="menu_search">חפש ב%1$s</string>
     <string name="menu_mark_note">סמן הערה</string>
     <string name="menu_unmark_note">הסר סימון הערה</string>
@@ -165,7 +165,7 @@
     <string name="custom_study_deck_name">שיעור למידה מותאם</string>
     <string name="custom_study_deck_exists">ראשית, ערוך שם חפיסה חדשה</string>
     <string name="empty_deck">החפיסה ריקה</string>
-    <string name="search_deck">Deck Search</string>
+    <string name="search_deck">חיפוש חפיסה</string>
     <string name="empty_deck_add_note">הוספת קלף</string>
     <string name="invalid_deck_name">שם חפיסה לא חוקי</string>
     <string name="studyoptions_empty">החפיסה ריקה. לחץ על כפתור ה+ להוספת תוכן חדש.</string>
@@ -216,8 +216,8 @@
     <!-- Context Menu -->
     <string name="card_browser_context_menu" comment="The value which appears in the system context menu. Note the casing difference">דפדפן הקלפים</string>
     <string name="context_menu_anki_card_label">קלף של Anki</string>
-    <string name="has_a_problem" comment="First field is either front template or back template. Second field is the error message.">%1$s has a problem:<br/>%2$s</string>
-    <string name="more_information">More information</string>
+    <string name="has_a_problem" comment="First field is either front template or back template. Second field is the error message.">%1$s נתקל בבעיה:<br/>%2$s</string>
+    <string name="more_information">מידע נוסף</string>
     <string name="no_field">Found \'{{%1$s}}\', but there is no field called \'%1$s\'.</string>
     <string name="closed_tag_not_open">Found \'{{/%1$s}}\', but missing \'{{#%1$s}}\' or \'{{^%1$s}}\'.</string>
     <string name="missing_closing_bracket">Missing \'}}\' in \'%s\'.</string>

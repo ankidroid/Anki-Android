@@ -177,10 +177,10 @@
     <string name="new_timezone" maxLength="41">New timezone handling</string>
     <string name="day_offset_with_description" maxLength="41">Začátek příštího dne (0 je půlnoc, 23 je 11 večer)</string>
     <string name="day_offset_summ">XXX hodin po půlnoci</string>
-    <string name="xlabel_dayoffset_seekbar" maxLength="41">Midnight</string>
-    <string name="ylabel_dayoffset_seekbar" maxLength="41">11PM</string>
-    <string name="sched_v2" maxLength="41">V2 scheduler</string>
-    <string name="sched_v2_summ">Enable the new scheduler. Forces changes in one direction on next sync</string>
+    <string name="xlabel_dayoffset_seekbar" maxLength="41">Půlnoc</string>
+    <string name="ylabel_dayoffset_seekbar" maxLength="41">23:00</string>
+    <string name="sched_v2" maxLength="41">V2 plánovač</string>
+    <string name="sched_v2_summ">Povolit nový plánovač. To vynutí změny v jednom směru při příští synchronizaci</string>
     <string name="sched_ver_toggle_title">Potvrdit</string>
     <string name="sched_ver_2to1">To obnoví všechny karty v procesu učení, vyprázdní filtrované balíčky a změní verzi plánovače. Pokračovat?</string>
     <string name="sched_ver_1to2">Experimentální plánovač by mohl způsobit nesprávné plánování. Ujistěte se prosím, že jste si nejdříve přečetli dokumentaci. Pokračovat?</string>

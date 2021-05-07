@@ -279,7 +279,7 @@
     <string name="white_board_image_save_failed">Whiteboardbild konnte nicht gespeichert werden. %s</string>
     <string name="white_board_image_saved">Whiteboardbild in %s gespeichert</string>
     <string name="title_whiteboard_pen_color">Stiftfarbe des Whiteboards</string>
-    <string name="title_whiteboard_editor">Whiteboard editor</string>
+    <string name="title_whiteboard_editor">Whiteboard-Editor</string>
     <!-- CSV/Note Import -->
     <string name="note_importer_empty_cards_found"><![CDATA[Leere Karten gefunden. Bitte führen Sie Werkzeuge>Leere Karten aus.]]></string>
     <string name="note_importer_error_empty_first_field">Leeres erstes Feld: %s</string>

@@ -71,15 +71,15 @@
     <string name="model_browser_add_clone">Кланіраваць: %1$s </string>
     <!--Browser Appearance-->
     <string name="card_template_browser_appearance_summary">Enter the template that the card browser will use to display your cards. Use this to display a more concise answer.\n\nA front template of\n“The capital of {{Country}} is:”\ncould be compressed in the card browser to\n“Capital: {{Country}}”</string>
-    <string name="card_template_browser_appearance_question_format">Question Format</string>
-    <string name="card_template_browser_appearance_answer_format">Answer Format</string>
-    <string name="card_template_browser_appearance_restore_default_dialog">Restore Default Values?</string>
+    <string name="card_template_browser_appearance_question_format">Фармат пытання</string>
+    <string name="card_template_browser_appearance_answer_format">Фармат адказу</string>
+    <string name="card_template_browser_appearance_restore_default_dialog">Узнавіць значэнні па змаўчанні?</string>
     <string name="card_template_browser_appearance_saving_note">Гэтыя змены будуць ужытыя пасля захавання шаблону карткі</string>
     <!-- Deck Override -->
     <string name="card_template_editor_deck_override_on">Deck Override (on)</string>
     <string name="card_template_editor_deck_override_off">Deck Override (off)</string>
-    <string name="model_manager_deck_override_added_message">Set ‘%1$s’ default deck to ‘%2$s’</string>
-    <string name="model_manager_deck_override_removed_message">Removed default deck for ‘%s’</string>
+    <string name="model_manager_deck_override_added_message">Лічыць ‘%2$s’ калодай па змаўчанню для ‘%1$s’</string>
+    <string name="model_manager_deck_override_removed_message">Калода па змаўчанню для ‘%s’ была выдалена.</string>
     <string name="deck_override_explanation">Select deck to place new ‘%s’ cards into</string>
-    <string name="deck_picker_dialog_filter_decks">Filter decks</string>
+    <string name="deck_picker_dialog_filter_decks">Фільтраваць калоды</string>
 </resources>
