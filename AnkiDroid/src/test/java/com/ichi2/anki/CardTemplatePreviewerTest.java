@@ -24,6 +24,7 @@ import com.ichi2.libanki.Card;
 import com.ichi2.libanki.Model;
 import com.ichi2.libanki.Models;
 import com.ichi2.libanki.Note;
+import com.ichi2.utils.JSONArray;
 import com.ichi2.utils.JSONObject;
 
 import org.junit.Assert;
@@ -108,6 +109,26 @@ public class CardTemplatePreviewerTest extends RobolectricTest {
         View showAnswerButton = testCardTemplatePreviewer.findViewById(R.id.preview_buttons_layout);
         showAnswerButton.performClick();
         Assert.assertTrue("Not showing the answer?", testCardTemplatePreviewer.getShowingAnswer());
+    }
+
+    @Test
+    public void testPreviewNoteEditorFieldData() {
+        String cloze = "Cloze";
+        String basicAndReverseOptional = "Basic (optional reversed card)";
+        Model collectionBasicModelOriginal = getCurrentDatabaseModelCopy(cloze);
+        Model basicAndReverseOptionalModel = getCurrentDatabaseModelCopy(basicAndReverseOptional);
+        ArrayList<String> cardsList = new ArrayList<>();
+        JSONArray tmpls = collectionBasicModelOriginal.getJSONArray("tmpls");
+        for(String name : tmpls.stringIterable()) {
+            cardsList.add(name);
+        }
+        Assert.assertTrue(cardsList.size() == 1);
+        cardsList.clear();
+        JSONArray tmplsBR = basicAndReverseOptionalModel.getJSONArray("tmpls");
+        for(String name : tmplsBR.stringIterable()) {
+            cardsList.add(name);
+        }
+        Assert.assertTrue(cardsList.size() == 2);
     }
 
     private Card getSavedCard(Model model, int ordinal) {
