@@ -23,7 +23,9 @@ import android.content.res.Resources;
 import android.os.AsyncTask;
 import android.util.Pair;
 
-import com.google.gson.stream.JsonReader;
+import com.fasterxml.jackson.core.JsonFactory;
+import com.fasterxml.jackson.core.JsonParser;
+import com.fasterxml.jackson.core.JsonToken;
 import com.ichi2.anki.AnkiDroidApp;
 import com.ichi2.anki.BackupManager;
 import com.ichi2.anki.CardBrowser;
@@ -1470,18 +1472,19 @@ public class CollectionTask<ProgressBackground, ResultBackground> extends BaseAs
                 HashMap<String, String> numToName = new HashMap<>();
                 File mediaMapFile = new File(dir.getAbsolutePath(), "media");
                 if (mediaMapFile.exists()) {
-                    JsonReader jr = new JsonReader(new FileReader(mediaMapFile));
-                    jr.beginObject();
+                    JsonParser jp = new JsonFactory().createParser(mediaMapFile);
                     String name;
                     String num;
-                    while (jr.hasNext()) {
-                        num = jr.nextName();
-                        name = jr.nextString();
+                    if (jp.nextToken() != JsonToken.START_OBJECT) {
+                        throw new IllegalStateException("Expected content to be an object");
+                    }
+                    while (jp.nextToken() != JsonToken.END_OBJECT) {
+                        num = jp.currentName();
+                        name = jp.nextTextValue();
                         nameToNum.put(name, num);
                         numToName.put(num, name);
                     }
-                    jr.endObject();
-                    jr.close();
+                    jp.close();
                 }
                 String mediaDir = Media.getCollectionMediaPath(colPath);
                 int total = nameToNum.size();
