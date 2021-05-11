@@ -596,6 +596,9 @@ public class Preferences extends AppCompatPreferenceActivity implements Preferen
                                 checkBox.setEnabled(false);
                             }
                             break;
+                        case "pastePNG":
+                            ((android.preference.CheckBoxPreference)pref).setChecked(conf.optBoolean("pastePNG"));
+                            break;
                         case "schedVer":
                             ((android.preference.CheckBoxPreference)pref).setChecked(conf.optInt("schedVer", 1) == 2);
                     }
@@ -803,6 +806,10 @@ public class Preferences extends AppCompatPreferenceActivity implements Preferen
                     break;
                 case AnkiCardContextMenu.ANKI_CARD_CONTEXT_MENU_PREF_KEY:
                     AnkiCardContextMenu.ensureConsistentStateWithSharedPreferences(this);
+                    break;
+                case "pastePNG":
+                    getCol().getConf().put("pastePNG", ((android.preference.CheckBoxPreference) pref).isChecked());
+                    getCol().setMod();
                     break;
                 case "gestureCornerTouch": {
                     updateGestureCornerTouch(screen);

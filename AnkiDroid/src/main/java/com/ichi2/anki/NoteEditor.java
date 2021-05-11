@@ -1589,7 +1589,12 @@ public class NoteEditor extends AnkiActivity {
 
         Map.Entry<String, String> fileNameAndExtension = FileUtil.getFileNameAndExtension(filename);
 
-        File clipCopy = File.createTempFile(fileNameAndExtension.getKey(), fileNameAndExtension.getValue());
+        File clipCopy;
+        if(getCol().getConf().optBoolean("pastePNG")) {
+        clipCopy = File.createTempFile(fileNameAndExtension.getKey(), ".png");
+        } else {
+        clipCopy = File.createTempFile(fileNameAndExtension.getKey(), ".jpg");
+        }
         String tempFilePath = clipCopy.getAbsolutePath();
         long bytesWritten = CompatHelper.getCompat().copyFile(fd, tempFilePath);
 
