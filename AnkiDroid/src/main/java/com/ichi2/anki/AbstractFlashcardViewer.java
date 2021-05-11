@@ -163,6 +163,9 @@ import timber.log.Timber;
 import static com.ichi2.anki.cardviewer.CardAppearance.calculateDynamicFontSize;
 import static com.ichi2.anki.cardviewer.ViewerCommand.*;
 import static com.ichi2.anki.reviewer.CardMarker.*;
+import static com.ichi2.libanki.Card.QUESTION_KEY;
+import static com.ichi2.libanki.Deck.DECK_S_NAME;
+import static com.ichi2.libanki.Model.FIELD_S_NAME;
 import static com.ichi2.libanki.Sound.SoundSide;
 
 import com.github.zafarkhaja.semver.Version;
@@ -215,6 +218,9 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
 
     private static final String sCurrentJsApiVersion = "0.0.1";
     private static final String sMinimumJsApiVersion = "0.0.1";
+
+    private static final String MARK_CARD = "markCard";
+    private static final String TOGGLE_FLAG = "toggleFlag";
 
     // JS API ERROR CODE
     private static final int ankiJsErrorCodeDefault = 0;
@@ -775,7 +781,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
         // loop through fields for a match
         JSONArray flds = mCurrentCard.model().getJSONArray("flds");
         for (JSONObject fld: flds.jsonObjectIterable()) {
-            String name = fld.getString("name");
+            String name = fld.getString(FIELD_S_NAME);
             if (name.equals(fldTag)) {
                 mTypeCorrect = mCurrentCard.note().getItem(name);
                 if (clozeIdx != 0) {
@@ -1985,7 +1991,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
         ActionBar actionBar = getSupportActionBar();
 
         if (actionBar != null) {
-            String title = Decks.basename(getCol().getDecks().get(mCurrentCard.getDid()).getString("name"));
+            String title = Decks.basename(getCol().getDecks().get(mCurrentCard.getDid()).getString(DECK_S_NAME));
             actionBar.setTitle(title);
         }
 
@@ -3268,7 +3274,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
         String answerFormat = getAnswerFormat();
         String newAnswerContent = answerContent;
         if (answerFormat.contains("{{FrontSide}}")) { // possible audio removal necessary
-            String frontSideFormat = mCurrentCard._getQA(false).get("q");
+            String frontSideFormat = mCurrentCard._getQA(false).get(QUESTION_KEY);
             Matcher audioReferences = Sound.SOUND_PATTERN.matcher(frontSideFormat);
             // remove the first instance of audio contained in "{{FrontSide}}"
             while (audioReferences.find()) {
@@ -3566,10 +3572,10 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
             }
             // mark card using javascript
             if (url.startsWith("signal:mark_current_card")) {
-                if (isAnkiApiNull("markCard")) {
+                if (isAnkiApiNull(MARK_CARD)) {
                     showDeveloperContact(ankiJsErrorCodeDefault);
                     return true;
-                } else if (mJsApiListMap.get("markCard")) {
+                } else if (mJsApiListMap.get(MARK_CARD)) {
                     executeCommand(COMMAND_MARK);
                 } else {
                     // see 02-string.xml
@@ -3579,10 +3585,10 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
             }
             // flag card (blue, green, orange, red) using javascript from AnkiDroid webview
             if (url.startsWith("signal:flag_")) {
-                if (isAnkiApiNull("toggleFlag")) {
+                if (isAnkiApiNull(TOGGLE_FLAG)) {
                     showDeveloperContact(ankiJsErrorCodeDefault);
                     return true;
-                } else if (!mJsApiListMap.get("toggleFlag")) {
+                } else if (!mJsApiListMap.get(TOGGLE_FLAG)) {
                     // see 02-string.xml
                     showDeveloperContact(ankiJsErrorCodeFlagCard);
                     return true;
@@ -3998,7 +4004,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
 see card.js for available functions
  */
     // list of api that can be accessed
-    private final String[] mApiList = {"toggleFlag", "markCard"};
+    private final String[] mApiList = {TOGGLE_FLAG, MARK_CARD};
     // JS api list enable/disable status
     private final HashMap<String, Boolean> mJsApiListMap = new HashMap<>(mApiList.length);
     public JavaScriptFunction javaScriptFunction() {
@@ -4187,7 +4193,7 @@ see card.js for available functions
 
         @JavascriptInterface
         public String ankiGetDeckName() {
-            return Decks.basename(getCol().getDecks().get(mCurrentCard.getDid()).getString("name"));
+            return Decks.basename(getCol().getDecks().get(mCurrentCard.getDid()).getString(DECK_S_NAME));
         }
 
         @JavascriptInterface

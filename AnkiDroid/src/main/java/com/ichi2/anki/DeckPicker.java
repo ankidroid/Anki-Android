@@ -150,9 +150,11 @@ import java.util.TreeMap;
 
 import timber.log.Timber;
 
+import static com.ichi2.anki.dialogs.DeckPickerContextMenu.DID;
 import static com.ichi2.async.Connection.ConflictResolution.FULL_DOWNLOAD;
 
 import static com.ichi2.anim.ActivityTransitionAnimation.Direction.*;
+import static com.ichi2.libanki.Deck.DECK_S_NAME;
 
 
 public class DeckPicker extends NavigationDrawerActivity implements
@@ -2125,7 +2127,7 @@ public class DeckPicker extends NavigationDrawerActivity implements
             exportPath = new File(exportDir, filename);
         } else if (did != null) {
             // filename not explicitly specified, but a deck has been specified so use deck name
-            exportPath = new File(exportDir, getCol().getDecks().get(did).getString("name").replaceAll("\\W+", "_") + timeStampSuffix + ".apkg");
+            exportPath = new File(exportDir, getCol().getDecks().get(did).getString(DECK_S_NAME).replaceAll("\\W+", "_") + timeStampSuffix + ".apkg");
         } else if (!includeSched) {
             // full export without scheduling is assumed to be shared with someone else -- use "All Decks.apkg"
             exportPath = new File(exportDir, "All Decks" + timeStampSuffix + ".apkg");
@@ -2551,12 +2553,12 @@ public class DeckPicker extends NavigationDrawerActivity implements
         if (getCol().getDecks().isDyn(mContextMenuDid)) {
             // open cram options if filtered deck
             Intent i = new Intent(DeckPicker.this, FilteredDeckOptions.class);
-            i.putExtra("did", mContextMenuDid);
+            i.putExtra(DID, mContextMenuDid);
             startActivityWithAnimation(i, FADE);
         } else {
             // otherwise open regular options
             Intent i = new Intent(DeckPicker.this, DeckOptions.class);
-            i.putExtra("did", mContextMenuDid);
+            i.putExtra(DID, mContextMenuDid);
             startActivityWithAnimation(i, FADE);
         }
     }
@@ -2567,7 +2569,7 @@ public class DeckPicker extends NavigationDrawerActivity implements
         exportDeck(mContextMenuDid);
     }
     public void exportDeck(long did) {
-        String msg = getResources().getString(R.string.confirm_apkg_export_deck, getCol().getDecks().get(did).getString("name"));
+        String msg = getResources().getString(R.string.confirm_apkg_export_deck, getCol().getDecks().get(did).getString(DECK_S_NAME));
         showDialogFragment(ExportDialog.newInstance(msg, did));
     }
 

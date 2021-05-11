@@ -52,6 +52,9 @@ import java.util.Map;
 import androidx.annotation.NonNull;
 import okhttp3.Response;
 import timber.log.Timber;
+import static com.ichi2.libanki.Model.MODEL_S_NAME;
+
+import static com.ichi2.libanki.Deck.DECK_S_NAME;
 import static com.ichi2.libanki.sync.Syncer.ConnectionResultType.*;
 
 @SuppressWarnings({"deprecation", // tracking HTTP transport change in github already
@@ -417,7 +420,7 @@ public class Syncer {
             }
             for (Deck g : mCol.getDecks().all()) {
                 if (g.getInt("usn") == -1) {
-                    Timber.e("Sync - SanityCheck: unsynced deck: %s", g.getString("name"));
+                    Timber.e("Sync - SanityCheck: unsynced deck: %s", g.getString(DECK_S_NAME));
                     result.put("client", "deck had usn = -1");
                     return result;
                 }
@@ -437,7 +440,7 @@ public class Syncer {
                     }
                 } else {
                     if (m.getInt("usn") == -1) {
-                        Timber.e("Sync - SanityCheck: unsynced model: %s", m.getString("name"));
+                        Timber.e("Sync - SanityCheck: unsynced model: %s", m.getString(MODEL_S_NAME));
                         result.put("client", "model had usn = -1");
                         return result;
                     }

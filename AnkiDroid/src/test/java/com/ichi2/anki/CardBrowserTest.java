@@ -42,6 +42,8 @@ import androidx.test.core.app.ApplicationProvider;
 import androidx.test.ext.junit.runners.AndroidJUnit4;
 import timber.log.Timber;
 
+import static com.ichi2.anki.CardBrowser.SORT_TYPE;
+import static com.ichi2.libanki.Deck.DECK_S_NAME;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.containsString;
 import static org.hamcrest.Matchers.equalTo;
@@ -173,7 +175,7 @@ public class CardBrowserTest extends RobolectricTest {
         List<Deck> decks = b.getValidDecksForChangeDeck();
 
         for (Deck d : decks) {
-            if (d.getString("name").equals("Hello")) {
+            if (d.getString(DECK_S_NAME).equals("Hello")) {
                 return;
             }
         }
@@ -189,7 +191,7 @@ public class CardBrowserTest extends RobolectricTest {
         List<Deck> decks = b.getValidDecksForChangeDeck();
 
         for (Deck d : decks) {
-            if (d.getString("name").equals("World")) {
+            if (d.getString(DECK_S_NAME).equals("World")) {
                 Assert.fail("Dynamic decks should not be transferred to by the browser.");
             }
         }
@@ -209,7 +211,7 @@ public class CardBrowserTest extends RobolectricTest {
 
         List<Deck> decks = b.getValidDecksForChangeDeck();
         for (Deck d : decks) {
-            assertThat(validNames, hasItem(d.getString("name")));
+            assertThat(validNames, hasItem(d.getString(DECK_S_NAME)));
         }
         assertThat("Additional unexpected decks were present", decks.size(), is(2));
     }
@@ -541,7 +543,7 @@ public class CardBrowserTest extends RobolectricTest {
         advanceRobolectricLooperWithSleep();
 
         // Make sure card has default value in sortType field
-        assertThat("Initially Card Browser has order = noteFld", getCol().getConf().get("sortType"), is("noteFld"));
+        assertThat("Initially Card Browser has order = noteFld", getCol().getConf().get(SORT_TYPE), is("noteFld"));
 
         // Store the current (before changing the database) Mod Time
         long initialMod = getCol().getMod();
@@ -559,7 +561,7 @@ public class CardBrowserTest extends RobolectricTest {
         // Find the current (after database has been changed) Mod time
         long finalMod = getCol().getMod();
 
-        assertThat("Card Browser has the new sortType field", getCol().getConf().get("sortType"), is("cardEase"));
+        assertThat("Card Browser has the new sortType field", getCol().getConf().get(SORT_TYPE), is("cardEase"));
         Assert.assertNotEquals("Modification time must change", initialMod, finalMod);
     }
 

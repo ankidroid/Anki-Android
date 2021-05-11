@@ -56,6 +56,8 @@ import java.util.Locale;
 
 import timber.log.Timber;
 
+import static com.ichi2.libanki.Deck.DECK_S_NAME;
+
 
 public class Statistics extends NavigationDrawerActivity implements
         DeckSelectionDialog.DeckSelectionListener,
@@ -434,7 +436,7 @@ public class Statistics extends NavigationDrawerActivity implements
             mDeckId = ((Statistics) requireActivity()).getDeckId();
             if (mDeckId != Stats.ALL_DECKS_ID) {
                 Collection col = CollectionHelper.getInstance().getCol(requireActivity());
-                String baseName = Decks.basename(col.getDecks().current().getString("name"));
+                String baseName = Decks.basename(col.getDecks().current().getString(DECK_S_NAME));
                 if (sIsSubtitle) {
                     ((AppCompatActivity) requireActivity()).getSupportActionBar().setSubtitle(baseName);
                 } else {
@@ -572,7 +574,7 @@ public class Statistics extends NavigationDrawerActivity implements
             Collection col = CollectionHelper.getInstance().getCol(requireActivity());
             mDeckId = ((Statistics) requireActivity()).getDeckId();
             if (mDeckId != Stats.ALL_DECKS_ID) {
-                String basename = Decks.basename(col.getDecks().current().getString("name"));
+                String basename = Decks.basename(col.getDecks().current().getString(DECK_S_NAME));
                 if (sIsSubtitle) {
                     ((AppCompatActivity) requireActivity()).getSupportActionBar().setSubtitle(basename);
                 } else {

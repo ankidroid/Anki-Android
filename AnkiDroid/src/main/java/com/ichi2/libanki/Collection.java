@@ -47,7 +47,6 @@ import com.ichi2.libanki.template.ParsedNode;
 import com.ichi2.libanki.template.TemplateError;
 import com.ichi2.libanki.utils.Time;
 import com.ichi2.upgrade.Upgrade;
-import com.ichi2.utils.DatabaseChangeDecorator;
 import com.ichi2.utils.FunctionalInterfaces;
 import com.ichi2.utils.VersionUtils;
 
@@ -60,7 +59,6 @@ import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Calendar;
@@ -85,6 +83,13 @@ import androidx.sqlite.db.SupportSQLiteStatement;
 import timber.log.Timber;
 
 import static com.ichi2.async.CancelListener.isCancelled;
+import static com.ichi2.libanki.Card.ANSWER_KEY;
+import static com.ichi2.libanki.Card.QUESTION_KEY;
+import static com.ichi2.libanki.Deck.DECK_S_NAME;
+import static com.ichi2.libanki.Model.MODEL_S_DID;
+import static com.ichi2.libanki.Model.MODEL_S_NAME;
+import static com.ichi2.libanki.Model.TEMPLATE_S_DID;
+import static com.ichi2.libanki.Model.TEMPLATE_S_NAME;
 
 // Anki maintains a cache of used tags so it can quickly present a list of tags
 // for autocomplete and in the browser. For efficiency, deletions are not
@@ -99,6 +104,7 @@ public class Collection implements CollectionGetter {
 
     private final Context mContext;
 
+    private static final String DECK = "deck";
     private DB mDb;
     private boolean mServer;
     //private double mLastSave;
@@ -120,6 +126,7 @@ public class Collection implements CollectionGetter {
     private int mUsn;
     private long mLs;
     private JSONObject mConf;
+    public static String CUR_DECK = "curDeck";
     // END: SQL table columns
 
     // API 21: Use a ConcurrentLinkedDeque
@@ -823,7 +830,7 @@ public class Collection implements CollectionGetter {
                     due = (long) nextID("pos");
                 }
                 if (did == null || did == 0L) {
-                    did = model.getLong("did");
+                    did = model.getLong(MODEL_S_DID);
                 }
                 // add any missing cards
                 ArrayList<JSONObject> tmpls = _tmplsFromOrds(model, avail);
@@ -834,7 +841,7 @@ public class Collection implements CollectionGetter {
                         // check deck is not a cram deck
                         long ndid;
                         try {
-                            ndid = t.getLong("did");
+                            ndid = t.getLong(TEMPLATE_S_DID);
                             if (ndid != 0) {
                                 did = ndid;
                             }
@@ -902,12 +909,12 @@ public class Collection implements CollectionGetter {
         long did = mDb.queryLongScalar("select did from cards where nid = ? and ord = ?", nid, ord);
         // Use template did (deck override) if valid, otherwise did in argument, otherwise model did
         if (did == 0) {
-            did = template.optLong("did", 0);
+            did = template.optLong(TEMPLATE_S_DID, 0);
             if (did > 0 && mDecks.get(did, false) != null) {
             } else if (parameterDid != 0) {
                 did = parameterDid;
             } else {
-                did = note.model().optLong("did", 0);
+                did = note.model().optLong(MODEL_S_DID, 0);
             }
         }
         card.setDid(did);
@@ -1088,9 +1095,9 @@ public class Collection implements CollectionGetter {
         }
         int cardNum = ord + 1;
         fields.put("Tags", tags.trim());
-        fields.put("Type", model.getString("name"));
-        fields.put("Deck", mDecks.name(did));
-        String baseName = Decks.basename(fields.get("Deck"));
+        fields.put("Type", model.getString(MODEL_S_NAME));
+        fields.put(DECK, mDecks.name(did));
+        String baseName = Decks.basename(fields.get(DECK));
         fields.put("Subdeck", baseName);
         fields.put("CardFlag", _flagNameFromCardFlags(flags));
         JSONObject template;
@@ -1099,28 +1106,28 @@ public class Collection implements CollectionGetter {
         } else {
             template = model.getJSONArray("tmpls").getJSONObject(0);
         }
-        fields.put("Card", template.getString("name"));
+        fields.put("Card", template.getString(TEMPLATE_S_NAME));
         fields.put(String.format(Locale.US, "c%d", cardNum), "1");
         // render q & a
         HashMap<String, String> d = new HashMap<>(2);
         d.put("id", Long.toString(cid));
         qfmt = TextUtils.isEmpty(qfmt) ? template.getString("qfmt") : qfmt;
         afmt = TextUtils.isEmpty(afmt) ? template.getString("afmt") : afmt;
-        for (Pair<String, String> p : new Pair[]{new Pair<>("q", qfmt), new Pair<>("a", afmt)}) {
+        for (Pair<String, String> p : new Pair[]{new Pair<>(QUESTION_KEY, qfmt), new Pair<>(ANSWER_KEY, afmt)}) {
             String type = p.first;
             String format = p.second;
-            if ("q".equals(type)) {
+            if (QUESTION_KEY.equals(type)) {
                 format = fClozePatternQ.matcher(format).replaceAll(String.format(Locale.US, "{{$1cq-%d:", cardNum));
                 format = fClozeTagStart.matcher(format).replaceAll(String.format(Locale.US, "<%%cq:%d:", cardNum));
             } else {
                 format = fClozePatternA.matcher(format).replaceAll(String.format(Locale.US, "{{$1ca-%d:", cardNum));
                 format = fClozeTagStart.matcher(format).replaceAll(String.format(Locale.US, "<%%ca:%d:", cardNum));
                 // the following line differs from libanki // TODO: why?
-                fields.put("FrontSide", d.get("q")); // fields.put("FrontSide", mMedia.stripAudio(d.get("q")));
+                fields.put("FrontSide", d.get(QUESTION_KEY)); // fields.put("FrontSide", mMedia.stripAudio(d.get(QUESTION_KEY)));
             }
             String html;
             try {
-                html = ParsedNode.parse_inner(format).render(fields, "q".equals(type), getContext());
+                html = ParsedNode.parse_inner(format).render(fields, QUESTION_KEY.equals(type), getContext());
             } catch (TemplateError er) {
                 Timber.w(er);
                 html = er.message(getContext());
@@ -1132,10 +1139,10 @@ public class Collection implements CollectionGetter {
             }
             d.put(type, html);
             // empty cloze?
-            if ("q".equals(type) && model.isCloze()) {
+            if (QUESTION_KEY.equals(type) && model.isCloze()) {
                 if (Models._availClozeOrds(model, flist, false).size() == 0) {
                     String link = String.format("<a href=%s#cloze>%s</a>", Consts.HELP_SITE, "help");
-                    d.put("q", mContext.getString(R.string.empty_cloze_warning, link));
+                    d.put(QUESTION_KEY, mContext.getString(R.string.empty_cloze_warning, link));
                 }
             }
         }
@@ -1504,7 +1511,7 @@ public class Collection implements CollectionGetter {
             }
 
             if (!configIds.contains(d.getLong("conf"))) {
-                Timber.d("Reset %s's config to default", d.optString("name", "unknown deck"));
+                Timber.d("Reset %s's config to default", d.optString(DECK_S_NAME, "unknown deck"));
                 d.put("conf", Consts.DEFAULT_DECK_CONFIG_ID);
                 changed++;
             }

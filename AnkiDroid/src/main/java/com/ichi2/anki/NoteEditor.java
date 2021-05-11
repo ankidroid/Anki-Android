@@ -139,10 +139,17 @@ import androidx.core.content.res.ResourcesCompat;
 import androidx.core.text.HtmlCompat;
 import androidx.fragment.app.DialogFragment;
 import timber.log.Timber;
+
+import static com.ichi2.anki.dialogs.DeckPickerContextMenu.DID;
 import static com.ichi2.compat.Compat.ACTION_PROCESS_TEXT;
 import static com.ichi2.compat.Compat.EXTRA_PROCESS_TEXT;
 
 import static com.ichi2.anim.ActivityTransitionAnimation.Direction.*;
+import static com.ichi2.libanki.Collection.CUR_DECK;
+import static com.ichi2.libanki.Deck.DECK_S_NAME;
+import static com.ichi2.libanki.Model.MODEL_S_DID;
+import static com.ichi2.libanki.Model.MODEL_S_NAME;
+import static com.ichi2.libanki.Model.TEMPLATE_S_NAME;
 import static com.ichi2.libanki.Models.NOT_FOUND_NOTE_TYPE;
 
 /**
@@ -417,7 +424,7 @@ public class NoteEditor extends AnkiActivity implements
         if (savedInstanceState != null) {
             mCaller = savedInstanceState.getInt("caller");
             mAddNote = savedInstanceState.getBoolean("addNote");
-            mCurrentDid = savedInstanceState.getLong("did");
+            mCurrentDid = savedInstanceState.getLong(DID);
             mSelectedTags = savedInstanceState.getStringArrayList("tags");
             mReloadRequired = savedInstanceState.getBoolean("reloadRequired");
             mPastedImageCache = (HashMap<String, String>) savedInstanceState.getSerializable("imageCache");
@@ -446,7 +453,7 @@ public class NoteEditor extends AnkiActivity implements
         Timber.i("Saving instance");
         savedInstanceState.putInt("caller", mCaller);
         savedInstanceState.putBoolean("addNote", mAddNote);
-        savedInstanceState.putLong("did", mCurrentDid);
+        savedInstanceState.putLong(DID, mCurrentDid);
         savedInstanceState.putBoolean("changed", mChanged);
         savedInstanceState.putBoolean("reloadRequired", mReloadRequired);
         savedInstanceState.putIntegerArrayList("customViewIds", mCustomViewIds);
@@ -579,7 +586,7 @@ public class NoteEditor extends AnkiActivity implements
         final ArrayList<String> modelNames = new ArrayList<>(models.size());
         mAllModelIds = new ArrayList<>(models.size());
         for (JSONObject m : models) {
-            modelNames.add(m.getString("name"));
+            modelNames.add(m.getString(MODEL_S_NAME));
             mAllModelIds.add(m.getLong("id"));
         }
 
@@ -947,7 +954,7 @@ public class NoteEditor extends AnkiActivity implements
                 updateField(f);
             }
             // Save deck to model
-            mEditorNote.model().put("did", mCurrentDid);
+            mEditorNote.model().put(MODEL_S_DID, mCurrentDid);
             // Save tags to model
             mEditorNote.setTagsFromStr(tagsAsString(mSelectedTags));
             JSONArray tags = new JSONArray();
@@ -1883,7 +1890,7 @@ public class NoteEditor extends AnkiActivity implements
             JSONObject conf = getCol().getConf();
             JSONObject model = getCol().getModels().current();
             if (conf.optBoolean("addToCur", true)) {
-                mCurrentDid = conf.getLong("curDeck");
+                mCurrentDid = conf.getLong(CUR_DECK);
                 if (getCol().getDecks().isDyn(mCurrentDid)) {
                     /*
                      * If the deck in mCurrentDid is a filtered (dynamic) deck, then we can't create cards in it,
@@ -1893,7 +1900,7 @@ public class NoteEditor extends AnkiActivity implements
                     mCurrentDid = 1;
                 }
             } else {
-                mCurrentDid = model.getLong("did");
+                mCurrentDid = model.getLong(MODEL_S_DID);
             }
         } else {
             mCurrentDid = mCurrentEditedCard.getDid();
@@ -2084,10 +2091,10 @@ public class NoteEditor extends AnkiActivity implements
         Timber.d("updateCards() template count is %s", tmpls.length());
 
         for (int i = 0; i < tmpls.length(); i++) {
-            String name = tmpls.getJSONObject(i).optString("name");
+            String name = tmpls.getJSONObject(i).optString(TEMPLATE_S_NAME);
             // If more than one card, and we have an existing card, underline existing card
             if (!mAddNote && tmpls.length() > 1 && model == mEditorNote.model() && mCurrentEditedCard != null &&
-                mCurrentEditedCard.template().optString("name").equals(name)) {
+                mCurrentEditedCard.template().optString(TEMPLATE_S_NAME).equals(name)) {
                 name = "<u>" + name + "</u>";
             }
             cardsList.append(name);
@@ -2185,7 +2192,7 @@ public class NoteEditor extends AnkiActivity implements
                 getCol().getDecks().save(currentDeck);
                 // Update deck
                 if (!getCol().getConf().optBoolean("addToCur", true)) {
-                    mCurrentDid = model.getLong("did");
+                    mCurrentDid = model.getLong(MODEL_S_DID);
                     mDeckSpinnerSelection.updateDeckPosition();
                 }
 

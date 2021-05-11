@@ -306,7 +306,7 @@ public class ContentProviderTest extends InstrumentedTest {
         assertNotNull("Check model", model);
         JSONObject template = model.getJSONArray("tmpls").getJSONObject(expectedOrd);
         assertEquals("Check template JSONObject ord", expectedOrd, template.getInt("ord"));
-        assertEquals("Check template name", TEST_MODEL_CARDS[testIndex], template.getString("name"));
+        assertEquals("Check template name", TEST_MODEL_CARDS[testIndex], template.getString(TEMPLATE_S_NAME));
         assertEquals("Check qfmt", TEST_MODEL_QFMT[testIndex], template.getString("qfmt"));
         assertEquals("Check afmt", TEST_MODEL_AFMT[testIndex], template.getString("afmt"));
         assertEquals("Check bqfmt", TEST_MODEL_QFMT[testIndex], template.getString("bqfmt"));
@@ -340,7 +340,7 @@ public class ContentProviderTest extends InstrumentedTest {
         assertNotNull("Check model", model);
         JSONArray fldsArr = model.getJSONArray("flds");
         assertEquals("Check fields length", initialFieldCount + 1, fldsArr.length());
-        assertEquals("Check last field name", TEST_FIELD_NAME, fldsArr.getJSONObject(fldsArr.length() - 1).optString("name", ""));
+        assertEquals("Check last field name", TEST_FIELD_NAME, fldsArr.getJSONObject(fldsArr.length() - 1).optString(FIELD_S_NAME, ""));
         col.getModels().rem(model);
     }
 
@@ -492,12 +492,12 @@ public class ContentProviderTest extends InstrumentedTest {
         try {
             JSONObject model = col.getModels().get(mid);
             assertNotNull("Check model", model);
-            assertEquals("Check model name", TEST_MODEL_NAME, model.getString("name"));
+            assertEquals("Check model name", TEST_MODEL_NAME, model.getString(MODEL_S_NAME));
             assertEquals("Check templates length", TEST_MODEL_CARDS.length, model.getJSONArray("tmpls").length());
             assertEquals("Check field length", TEST_MODEL_FIELDS.length, model.getJSONArray("flds").length());
             JSONArray fields = model.getJSONArray("flds");
             for (int i = 0; i < fields.length(); i++) {
-                assertEquals("Check name of fields", TEST_MODEL_FIELDS[i], fields.getJSONObject(i).getString("name"));
+                assertEquals("Check name of fields", TEST_MODEL_FIELDS[i], fields.getJSONObject(i).getString(FIELD_S_NAME));
             }
             // Test updating the model CSS (to test updating MODELS_ID Uri)
             cv = new ContentValues();
@@ -521,7 +521,7 @@ public class ContentProviderTest extends InstrumentedTest {
                 model = col.getModels().get(mid);
                 assertNotNull("Check model", model);
                 JSONObject template = model.getJSONArray("tmpls").getJSONObject(i);
-                assertEquals("Check template name", TEST_MODEL_CARDS[i], template.getString("name"));
+                assertEquals("Check template name", TEST_MODEL_CARDS[i], template.getString(TEMPLATE_S_NAME));
                 assertEquals("Check qfmt", TEST_MODEL_QFMT[i], template.getString("qfmt"));
                 assertEquals("Check afmt", TEST_MODEL_AFMT[i], template.getString("afmt"));
                 assertEquals("Check bqfmt", TEST_MODEL_QFMT[i], template.getString("bqfmt"));
@@ -741,7 +741,7 @@ public class ContentProviderTest extends InstrumentedTest {
 
                 Deck deck = decks.get(deckID);
                 assertNotNull("Check that the deck we received actually exists", deck);
-                assertEquals("Check that the received deck has the correct name", deck.getString("name"), deckName);
+                assertEquals("Check that the received deck has the correct name", deck.getString(DECK_S_NAME), deckName);
             }
         } finally {
             decksCursor.close();
@@ -766,7 +766,7 @@ public class ContentProviderTest extends InstrumentedTest {
 
                 Deck realDeck = col.getDecks().get(deckId);
                 assertEquals("Check that received deck ID equals real deck ID", deckId, returnedDeckID);
-                assertEquals("Check that received deck name equals real deck name", realDeck.getString("name"), returnedDeckName);
+                assertEquals("Check that received deck name equals real deck name", realDeck.getString(DECK_S_NAME), returnedDeckName);
             }
         }
     }
@@ -1048,7 +1048,7 @@ public class ContentProviderTest extends InstrumentedTest {
      public void testProviderProvidesDefaultForEmptyModelDeck() {
          assumeTrue("This causes mild data corruption - should not be run on a collection you care about", isEmulator());
          Collection col = getCol();
-         col.getModels().all().get(0).put("did", JSONObject.NULL);
+         col.getModels().all().get(0).put(DID, JSONObject.NULL);
          col.save();
 
          final ContentResolver cr = getContentResolver();

@@ -75,6 +75,9 @@ import androidx.annotation.NonNull;
 import timber.log.Timber;
 
 import static com.ichi2.anim.ActivityTransitionAnimation.Direction.FADE;
+import static com.ichi2.anki.dialogs.DeckPickerContextMenu.DID;
+import static com.ichi2.libanki.Deck.DECK_S_NAME;
+import static com.ichi2.libanki.DeckConfig.DECK_CONFIG_S_NAME;
 
 /**
  * Preferences for the current deck.
@@ -110,7 +113,7 @@ public class DeckOptions extends AppCompatPreferenceActivity implements OnShared
             try {
                 mOptions = mCol.getDecks().confForDid(mDeck.getLong("id"));
 
-                mValues.put("name", mDeck.getString("name"));
+                mValues.put(DECK_S_NAME, mDeck.getString(DECK_S_NAME));
                 mValues.put("desc", mDeck.getString("desc"));
                 mValues.put("deckConf", mDeck.getString("conf"));
                 // general
@@ -149,7 +152,7 @@ public class DeckOptions extends AppCompatPreferenceActivity implements OnShared
                 mValues.put("lapLeechThres", lapOptions.getString("leechFails"));
                 mValues.put("lapLeechAct", lapOptions.getString("leechAction"));
                 // options group management
-                mValues.put("currentConf", mCol.getDecks().getConf(mDeck.getLong("conf")).getString("name"));
+                mValues.put("currentConf", mCol.getDecks().getConf(mDeck.getLong("conf")).getString(DECK_CONFIG_S_NAME));
                 // reminders
                 if (mOptions.has("reminder")) {
                     final JSONObject reminder = mOptions.getJSONObject("reminder");
@@ -310,7 +313,7 @@ public class DeckOptions extends AppCompatPreferenceActivity implements OnShared
                             case "confRename": {
                                 String newName = (String) value;
                                 if (!TextUtils.isEmpty(newName)) {
-                                    mOptions.put("name", newName);
+                                    mOptions.put(DECK_CONFIG_S_NAME, newName);
                                 }
                                 break;
                             }
@@ -652,8 +655,8 @@ public class DeckOptions extends AppCompatPreferenceActivity implements OnShared
             return;
         }
         Bundle extras = getIntent().getExtras();
-        if (extras != null && extras.containsKey("did")) {
-            mDeck = mCol.getDecks().get(extras.getLong("did"));
+        if (extras != null && extras.containsKey(DID)) {
+            mDeck = mCol.getDecks().get(extras.getLong(DID));
         } else {
             mDeck = mCol.getDecks().current();
         }
@@ -680,7 +683,7 @@ public class DeckOptions extends AppCompatPreferenceActivity implements OnShared
             String title = getResources().getString(R.string.deckpreferences_title);
             if (title.contains("XXX")) {
                 try {
-                    title = title.replace("XXX", mDeck.getString("name"));
+                    title = title.replace("XXX", mDeck.getString(DECK_S_NAME));
                 } catch (JSONException e) {
                     Timber.w(e);
                     title = title.replace("XXX", "???");
@@ -814,7 +817,7 @@ public class DeckOptions extends AppCompatPreferenceActivity implements OnShared
         for (int i = 0; i < confs.size(); i++) {
             DeckConfig o = confs.get(i);
             confValues[i] = o.getString("id");
-            confLabels[i] = o.getString("name");
+            confLabels[i] = o.getString(DECK_CONFIG_S_NAME);
         }
         deckConfPref.setEntries(confLabels);
         deckConfPref.setEntryValues(confValues);
@@ -870,7 +873,7 @@ public class DeckOptions extends AppCompatPreferenceActivity implements OnShared
      */
     private String getOptionsGroupName() {
         long confId = mPref.getLong("deckConf", 0);
-        return mCol.getDecks().getConf(confId).getString("name");
+        return mCol.getDecks().getConf(confId).getString(DECK_CONFIG_S_NAME);
     }
 
 

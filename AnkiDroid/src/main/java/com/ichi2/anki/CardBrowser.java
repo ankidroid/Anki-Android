@@ -112,6 +112,11 @@ import java.util.regex.Pattern;
 import timber.log.Timber;
 
 import static com.ichi2.anki.CardBrowser.Column.*;
+import static com.ichi2.libanki.Card.ANSWER_KEY;
+import static com.ichi2.libanki.Card.QUESTION_KEY;
+import static com.ichi2.libanki.Model.MODEL_S_NAME;
+import static com.ichi2.libanki.Deck.DECK_S_NAME;
+import static com.ichi2.libanki.Model.TEMPLATE_S_NAME;
 import static com.ichi2.libanki.stats.Stats.SECONDS_PER_DAY;
 import static com.ichi2.anim.ActivityTransitionAnimation.Direction.*;
 
@@ -246,6 +251,7 @@ public class CardBrowser extends NavigationDrawerActivity implements
         invalidateOptionsMenu();    // maybe the availability of undo changed
     });
 
+    public static final String SORT_TYPE = "sortType";
     private static final int DEFAULT_FONT_SIZE_RATIO = 100;
     // Should match order of R.array.card_browser_order_labels
     public static final int CARD_ORDER_NONE = 0;
@@ -320,12 +326,12 @@ public class CardBrowser extends NavigationDrawerActivity implements
             mOrderAsc = false;
             if (mOrder == 0) {
                 // if the sort value in the card browser was changed, then perform a new search
-                getCol().getConf().put("sortType", fSortTypes[1]);
+                getCol().getConf().put(SORT_TYPE, fSortTypes[1]);
                 AnkiDroidApp.getSharedPrefs(getBaseContext()).edit()
                         .putBoolean("cardBrowserNoSorting", true)
                         .commit();
             } else {
-                getCol().getConf().put("sortType", fSortTypes[mOrder]);
+                getCol().getConf().put(SORT_TYPE, fSortTypes[mOrder]);
                 AnkiDroidApp.getSharedPrefs(getBaseContext()).edit()
                         .putBoolean("cardBrowserNoSorting", false)
                         .commit();
@@ -612,7 +618,7 @@ public class CardBrowser extends NavigationDrawerActivity implements
         mActionBarTitle = findViewById(R.id.toolbar_title);
 
         mOrder = CARD_ORDER_NONE;
-        String colOrder = getCol().getConf().getString("sortType");
+        String colOrder = getCol().getConf().getString(SORT_TYPE);
         for (int c = 0; c < fSortTypes.length; ++c) {
             if (fSortTypes[c].equals(colOrder)) {
                 mOrder = c;
@@ -1390,7 +1396,7 @@ public class CardBrowser extends NavigationDrawerActivity implements
         final ArrayAdapter<String> arrayAdapter = new ArrayAdapter<>(this, R.layout.dropdown_deck_item);
         for (Deck deck : getValidDecksForChangeDeck()) {
             try {
-                arrayAdapter.add(deck.getString("name"));
+                arrayAdapter.add(deck.getString(DECK_S_NAME));
             } catch (JSONException e) {
                 Timber.w(e);
             }
@@ -2558,7 +2564,7 @@ public class CardBrowser extends NavigationDrawerActivity implements
             case TAGS:
                 return getCard().note().stringTags();
             case CARD:
-                return getCard().template().optString("name");
+                return getCard().template().optString(TEMPLATE_S_NAME);
             case DUE:
                 return getCard().getDueString();
             case EASE:
@@ -2585,7 +2591,7 @@ public class CardBrowser extends NavigationDrawerActivity implements
             case LAPSES:
                 return Integer.toString(getCard().getLapses());
             case NOTE_TYPE:
-                return getCard().model().optString("name");
+                return getCard().model().optString(MODEL_S_NAME);
             case REVIEWS:
                 return Integer.toString(getCard().getReps());
             case QUESTION:
@@ -2634,18 +2640,18 @@ public class CardBrowser extends NavigationDrawerActivity implements
             // render question and answer
             Map<String, String> qa = getCard()._getQA(true, true);
             // Render full question / answer if the bafmt (i.e. "browser appearance") setting forced blank result
-            if ("".equals(qa.get("q")) || "".equals(qa.get("a"))) {
+            if ("".equals(qa.get(QUESTION_KEY)) || "".equals(qa.get(ANSWER_KEY))) {
                 HashMap<String, String> qaFull = getCard()._getQA(true, false);
-                if ("".equals(qa.get("q"))) {
-                    qa.put("q", qaFull.get("q"));
+                if ("".equals(qa.get(QUESTION_KEY))) {
+                    qa.put(QUESTION_KEY, qaFull.get(QUESTION_KEY));
                 }
-                if ("".equals(qa.get("a"))) {
-                    qa.put("a", qaFull.get("a"));
+                if ("".equals(qa.get(ANSWER_KEY))) {
+                    qa.put(ANSWER_KEY, qaFull.get(ANSWER_KEY));
                 }
             }
             // update the original hash map to include rendered question & answer
-            String q = qa.get("q");
-            String a = qa.get("a");
+            String q = qa.get(QUESTION_KEY);
+            String a = qa.get(ANSWER_KEY);
             // remove the question from the start of the answer if it exists
             if (a.startsWith(q)) {
                 a = a.substring(q.length());

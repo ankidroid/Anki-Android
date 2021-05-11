@@ -33,6 +33,8 @@ import java.util.Set;
 import androidx.annotation.CheckResult;
 import timber.log.Timber;
 
+import static com.ichi2.utils.NamedJSONComparator.NAME;
+
 /**
  * Represents a note type, a.k.a. Model.
  * The content of an object is described in https://github.com/ankidroid/Anki-Android/wiki/Database-Structure
@@ -40,6 +42,11 @@ import timber.log.Timber;
  * If a change affect card generation, (i.e. any change on the list of field, or the question side of a card type), `Models.save(this, true)` should be called. However, you should do the change in batch and change only when aall are done, because recomputing the list of card is an expensive operation.
  */
 public class Model extends JSONObject {
+    public static String MODEL_S_DID = "did";
+    public static String TEMPLATE_S_DID = "did";
+    public static String MODEL_S_NAME = NAME;
+    public static String FIELD_S_NAME = NAME;
+    public static String TEMPLATE_S_NAME = NAME;
     public Model() {
         super();
     }
@@ -60,11 +67,11 @@ public class Model extends JSONObject {
     }
 
     public List<String> getFieldsNames() {
-        return getJSONArray("flds").toStringList("name");
+        return getJSONArray("flds").toStringList(FIELD_S_NAME);
     }
 
     public List<String> getTemplatesNames() {
-        return getJSONArray("tmpls").toStringList("name");
+        return getJSONArray("tmpls").toStringList(TEMPLATE_S_NAME);
     }
 
     public boolean isStd() {

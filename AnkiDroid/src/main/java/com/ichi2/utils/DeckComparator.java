@@ -18,11 +18,13 @@ package com.ichi2.utils;
 
 import java.util.Comparator;
 
+import static com.ichi2.libanki.Deck.DECK_S_NAME;
+
 public class DeckComparator implements Comparator<JSONObject> {
     public static final DeckComparator INSTANCE = new DeckComparator();
 
     @Override
     public int compare(JSONObject lhs, JSONObject rhs) {
-        return DeckNameComparator.INSTANCE.compare(lhs.getString("name"), rhs.getString("name"));
+        return DeckNameComparator.INSTANCE.compare(lhs.getString(DECK_S_NAME), rhs.getString(DECK_S_NAME));
     }
 }

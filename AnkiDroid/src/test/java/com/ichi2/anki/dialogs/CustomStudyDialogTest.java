@@ -41,6 +41,7 @@ import androidx.fragment.app.testing.FragmentScenario;
 import androidx.lifecycle.Lifecycle;
 import androidx.test.ext.junit.runners.AndroidJUnit4;
 
+import static com.ichi2.libanki.Deck.DECK_S_NAME;
 import static com.ichi2.testutils.ParametersUtils.whatever;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
@@ -93,7 +94,7 @@ public class CustomStudyDialogTest extends RobolectricTest {
         assertThat("could not find deck: Custom study session", customStudy, notNullValue());
         customStudy.remove("id");
         customStudy.remove("mod");
-        customStudy.remove("name");
+        customStudy.remove(DECK_S_NAME);
 
         String expected = "{\"newToday\":[0,0],\"revToday\":[0,0],\"lrnToday\":[0,0],\"timeToday\":[0,0],\"collapsed\":false,\"dyn\":1,\"desc\":\"\",\"usn\":-1,\"delays\":null,\"separate\":true,\"terms\":[[\"deck:\\\"Default\\\" prop:due<=1\",99999,6]],\"resched\":true,\"return\":true}";
         assertThat(customStudy.toString(), is(expected));

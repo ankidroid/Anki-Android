@@ -56,6 +56,7 @@ import timber.log.Timber;
 import static com.ichi2.async.CancelListener.isCancelled;
 import static com.ichi2.libanki.Consts.DECK_DYN;
 import static com.ichi2.libanki.Consts.DECK_STD;
+import static com.ichi2.libanki.Deck.DECK_S_NAME;
 import static com.ichi2.libanki.sched.Counts.Queue.*;
 import static com.ichi2.libanki.sched.Counts.Queue;
 import static com.ichi2.libanki.stats.Stats.SECONDS_PER_DAY;
@@ -222,7 +223,7 @@ public class Sched extends SchedV2 {
             if (isCancelled(cancelListener)) {
                 return null;
             }
-            String deckName = deck.getString("name");
+            String deckName = deck.getString(DECK_S_NAME);
             String p = Decks.parent(deckName);
             // new
             int nlim = _deckNewLimitSingle(deck, false);
@@ -241,9 +242,9 @@ public class Sched extends SchedV2 {
             // reviews
             int rev = _revForDeck(deck.getLong("id"), rlim);
             // save to list
-            deckNodes.add(new DeckDueTreeNode(mCol, deck.getString("name"), deck.getLong("id"), rev, lrn, _new));
+            deckNodes.add(new DeckDueTreeNode(mCol, deck.getString(DECK_S_NAME), deck.getLong("id"), rev, lrn, _new));
             // add deck as a parent
-            lims.put(Decks.normalizeName(deck.getString("name")), new Integer[]{nlim, rlim});
+            lims.put(Decks.normalizeName(deck.getString(DECK_S_NAME)), new Integer[]{nlim, rlim});
         }
         return deckNodes;
     }

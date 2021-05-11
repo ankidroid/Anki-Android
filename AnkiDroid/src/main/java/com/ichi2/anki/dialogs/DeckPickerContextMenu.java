@@ -55,6 +55,9 @@ public class DeckPickerContextMenu extends AnalyticsDialogFragment {
     private static final int CONTEXT_MENU_CUSTOM_STUDY_EMPTY = 7;
     private static final int CONTEXT_MENU_CREATE_SUBDECK = 8;
     private static final int CONTEXT_MENU_CREATE_SHORTCUT = 9;
+
+    public static final String DID = "did";
+
     @Retention(SOURCE)
     @IntDef( {CONTEXT_MENU_RENAME_DECK,
             CONTEXT_MENU_DECK_OPTIONS,
@@ -73,7 +76,7 @@ public class DeckPickerContextMenu extends AnalyticsDialogFragment {
     public static DeckPickerContextMenu newInstance(long did) {
         DeckPickerContextMenu f = new DeckPickerContextMenu();
         Bundle args = new Bundle();
-        args.putLong("did", did);
+        args.putLong(DID, did);
         f.setArguments(args);
         return f;
     }
@@ -83,7 +86,7 @@ public class DeckPickerContextMenu extends AnalyticsDialogFragment {
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        long did = getArguments().getLong("did");
+        long did = getArguments().getLong(DID);
         String title = CollectionHelper.getInstance().getCol(getContext()).getDecks().name(did);
         int[] itemIds = getListIds();
         return new MaterialDialog.Builder(getActivity())
@@ -120,7 +123,7 @@ public class DeckPickerContextMenu extends AnalyticsDialogFragment {
     private @DECK_PICKER_CONTEXT_MENU
     int[] getListIds() {
         Collection col = CollectionHelper.getInstance().getCol(getContext());
-        long did = getArguments().getLong("did");
+        long did = getArguments().getLong(DID);
         boolean dyn = col.getDecks().isDyn(did);
         ArrayList<Integer> itemIds = new ArrayList<>(9);
         if (dyn) {
@@ -161,7 +164,7 @@ public class DeckPickerContextMenu extends AnalyticsDialogFragment {
                 break;
             case CONTEXT_MENU_CUSTOM_STUDY: {
                 Timber.i("Custom study option selected");
-                long did = getArguments().getLong("did");
+                long did = getArguments().getLong(DID);
 
                 final AnkiActivity ankiActivity = ((AnkiActivity) requireActivity());
                 CustomStudyDialog d = FragmentFactoryUtils.instantiate(ankiActivity, CustomStudyDialog.class);
@@ -187,7 +190,7 @@ public class DeckPickerContextMenu extends AnalyticsDialogFragment {
             case CONTEXT_MENU_UNBURY: {
                 Timber.i("Unbury deck selected");
                 Collection col = CollectionHelper.getInstance().getCol(getContext());
-                col.getSched().unburyCardsForDeck(getArguments().getLong("did"));
+                col.getSched().unburyCardsForDeck(getArguments().getLong(DID));
                 ((StudyOptionsFragment.StudyOptionsListener) getActivity()).onRequireDeckListUpdate();
                 ((AnkiActivity) getActivity()).dismissAllDialogFragments();
                 break;

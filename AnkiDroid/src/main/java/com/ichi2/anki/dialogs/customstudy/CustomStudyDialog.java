@@ -64,6 +64,9 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 
+import static com.ichi2.anki.dialogs.DeckPickerContextMenu.DID;
+import static com.ichi2.libanki.Deck.DECK_S_NAME;
+
 
 public class CustomStudyDialog extends AnalyticsDialogFragment implements
         TagsDialogListener {
@@ -114,7 +117,7 @@ public class CustomStudyDialog extends AnalyticsDialogFragment implements
             args = new Bundle();
         }
         args.putInt("id", id);
-        args.putLong("did", did);
+        args.putLong(DID, did);
         args.putBoolean("jumpToReviewer", jumpToReviewer);
         this.setArguments(args);
         return this;
@@ -135,7 +138,7 @@ public class CustomStudyDialog extends AnalyticsDialogFragment implements
         final int dialogId = requireArguments().getInt("id");
         if (dialogId < 100) {
             // Select the specified deck
-            mCollection.getDecks().select(requireArguments().getLong("did"));
+            mCollection.getDecks().select(requireArguments().getLong(DID));
             return buildContextMenu(dialogId);
         } else {
             return buildInputDialog(dialogId);
@@ -159,7 +162,7 @@ public class CustomStudyDialog extends AnalyticsDialogFragment implements
                         case DECK_OPTIONS: {
                             // User asked to permanently change the deck options
                             Intent i = new Intent(requireContext(), DeckOptions.class);
-                            i.putExtra("did", requireArguments().getLong("did"));
+                            i.putExtra(DID, requireArguments().getLong(DID));
                             requireActivity().startActivity(i);
                             break;
                         }
@@ -168,7 +171,7 @@ public class CustomStudyDialog extends AnalyticsDialogFragment implements
                             final CustomStudyDialog d = new CustomStudyDialog(mCollection, mCustomStudyListener)
                                     .withArguments(
                                             CONTEXT_MENU_STANDARD,
-                                            requireArguments().getLong("did"),
+                                            requireArguments().getLong(DID),
                                             jumpToReviewer
                                     );
                             mCustomStudyListener.showDialogFragment(d);
@@ -180,7 +183,7 @@ public class CustomStudyDialog extends AnalyticsDialogFragment implements
                              * number, it is necessary to collect a list of tags. This case handles the creation
                              * of that Dialog.
                              */
-                            long currentDeck = requireArguments().getLong("did");
+                            long currentDeck = requireArguments().getLong(DID);
                             TagsDialog dialogFragment = new TagsDialog().withArguments(
                                     TagsDialog.DialogType.CUSTOM_STUDY_TAGS, new ArrayList<>(),
                                     new ArrayList<>(mCollection.getTags().byDeck(currentDeck, true)));
@@ -192,7 +195,7 @@ public class CustomStudyDialog extends AnalyticsDialogFragment implements
                             final CustomStudyDialog d = new CustomStudyDialog(mCollection, mCustomStudyListener)
                                     .withArguments(
                                             view.getId(),
-                                            requireArguments().getLong("did"),
+                                            requireArguments().getLong(DID),
                                             jumpToReviewer
                                     );
                             mCustomStudyListener.showDialogFragment(d);
@@ -228,7 +231,7 @@ public class CustomStudyDialog extends AnalyticsDialogFragment implements
             mEditText.setInputType(EditorInfo.TYPE_CLASS_NUMBER | EditorInfo.TYPE_NUMBER_FLAG_SIGNED);
         }
         // deck id
-        final long did = requireArguments().getLong("did");
+        final long did = requireArguments().getLong(DID);
         // Whether or not to jump straight to the reviewer
         final boolean jumpToReviewer = requireArguments().getBoolean("jumpToReviewer");
         // Set builder parameters
@@ -472,9 +475,9 @@ public class CustomStudyDialog extends AnalyticsDialogFragment implements
      */
     private void createCustomStudySession(JSONArray delays, Object[] terms, Boolean resched) {
         Deck dyn;
-        long did = requireArguments().getLong("did");
+        long did = requireArguments().getLong(DID);
         Decks decks = mCollection.getDecks();
-        String deckToStudyName = decks.get(did).getString("name");
+        String deckToStudyName = decks.get(did).getString(DECK_S_NAME);
         String customStudyDeck = getResources().getString(R.string.custom_study_deck_name);
         Deck cur = decks.byName(customStudyDeck);
         if (cur != null) {

@@ -80,6 +80,11 @@ import androidx.sqlite.db.SupportSQLiteDatabase;
 import timber.log.Timber;
 
 import static com.ichi2.anki.FlashCardsContract.READ_WRITE_PERMISSION;
+import static com.ichi2.libanki.Card.ANSWER_KEY;
+import static com.ichi2.libanki.Model.FIELD_S_NAME;
+import static com.ichi2.libanki.Model.MODEL_S_DID;
+import static com.ichi2.libanki.Model.MODEL_S_NAME;
+import static com.ichi2.libanki.Model.TEMPLATE_S_NAME;
 import static com.ichi2.libanki.Models.NOT_FOUND_NOTE_TYPE;
 
 /**
@@ -546,7 +551,7 @@ public class CardContentProvider extends ContentProvider {
                 try {
                     // Update model name and/or css
                     if (newModelName != null) {
-                        model.put("name", newModelName);
+                        model.put(MODEL_S_NAME, newModelName);
                         updated++;
                     }
                     if (newCss != null) {
@@ -557,7 +562,7 @@ public class CardContentProvider extends ContentProvider {
                         if (col.getDecks().isDyn(Long.parseLong(newDid))) {
                             throw new IllegalArgumentException("Cannot set a filtered deck as default deck for a model");
                         }
-                        model.put("did", newDid);
+                        model.put(MODEL_S_DID, newDid);
                         updated++;
                     }
                     if (newSortf != null) {
@@ -603,7 +608,7 @@ public class CardContentProvider extends ContentProvider {
                     JSONArray templates = existingModel.getJSONArray("tmpls");
                     JSONObject template = templates.getJSONObject(templateOrd);
                     if (name != null) {
-                        template.put("name", name);
+                        template.put(TEMPLATE_S_NAME, name);
                         updated++;
                     }
                     if (qfmt != null) {
@@ -943,7 +948,7 @@ public class CardContentProvider extends ContentProvider {
                     }
                     // Add the did if specified
                     if (did != null) {
-                        newModel.put("did", did);
+                        newModel.put(MODEL_S_DID, did);
                     }
                     if (sortf != null && sortf < allFields.length) {
                         newModel.put("sortf", sortf);
@@ -1150,7 +1155,7 @@ public class CardContentProvider extends ContentProvider {
     }
 
     private void addModelToCursor(Long modelId, Models models, MatrixCursor rv, String[] columns) {
-        Model jsonObject = models.get(modelId);
+        Model model = models.get(modelId);
         MatrixCursor.RowBuilder rb = rv.newRow();
         try {
             for (String column : columns) {
@@ -1159,40 +1164,40 @@ public class CardContentProvider extends ContentProvider {
                         rb.add(modelId);
                         break;
                     case FlashCardsContract.Model.NAME:
-                        rb.add(jsonObject.getString("name"));
+                        rb.add(model.getString(MODEL_S_NAME));
                         break;
                     case FlashCardsContract.Model.FIELD_NAMES:
-                        JSONArray flds = jsonObject.getJSONArray("flds");
+                        JSONArray flds = model.getJSONArray("flds");
                         String[] allFlds = new String[flds.length()];
                         for (int idx = 0; idx < flds.length(); idx++) {
-                            allFlds[idx] = flds.getJSONObject(idx).optString("name", "");
+                            allFlds[idx] = flds.getJSONObject(idx).optString(FIELD_S_NAME, "");
                         }
                         rb.add(Utils.joinFields(allFlds));
                         break;
                     case FlashCardsContract.Model.NUM_CARDS:
-                        rb.add(jsonObject.getJSONArray("tmpls").length());
+                        rb.add(model.getJSONArray("tmpls").length());
                         break;
                     case FlashCardsContract.Model.CSS:
-                        rb.add(jsonObject.getString("css"));
+                        rb.add(model.getString("css"));
                         break;
                     case FlashCardsContract.Model.DECK_ID:
                         //#6378 - Anki Desktop changed schema temporarily to allow null
-                        rb.add(jsonObject.optLong("did", Consts.DEFAULT_DECK_ID));
+                        rb.add(model.optLong(MODEL_S_DID, Consts.DEFAULT_DECK_ID));
                         break;
                     case FlashCardsContract.Model.SORT_FIELD_INDEX:
-                        rb.add(jsonObject.getLong("sortf"));
+                        rb.add(model.getLong("sortf"));
                         break;
                     case FlashCardsContract.Model.TYPE:
-                        rb.add(jsonObject.getLong("type"));
+                        rb.add(model.getLong("type"));
                         break;
                     case FlashCardsContract.Model.LATEX_POST:
-                        rb.add(jsonObject.getString("latexPost"));
+                        rb.add(model.getString("latexPost"));
                         break;
                     case FlashCardsContract.Model.LATEX_PRE:
-                        rb.add(jsonObject.getString("latexPre"));
+                        rb.add(model.getString("latexPre"));
                         break;
                     case FlashCardsContract.Model.NOTE_COUNT:
-                        rb.add(models.useCount(jsonObject));
+                        rb.add(models.useCount(model));
                         break;
                     default:
                         throw new UnsupportedOperationException("Queue \"" + column + "\" is unknown");
@@ -1207,7 +1212,7 @@ public class CardContentProvider extends ContentProvider {
     private void addCardToCursor(Card currentCard, MatrixCursor rv, Collection col, String[] columns) {
         String cardName;
         try {
-            cardName = currentCard.template().getString("name");
+            cardName = currentCard.template().getString(TEMPLATE_S_NAME);
         } catch (JSONException je) {
             throw new IllegalArgumentException("Card is using an invalid template", je);
         }
@@ -1239,7 +1244,7 @@ public class CardContentProvider extends ContentProvider {
                     rb.add(currentCard.qSimple());
                     break;
                 case FlashCardsContract.Card.ANSWER_SIMPLE:
-                    rb.add(currentCard._getQA(false).get("a"));
+                    rb.add(currentCard._getQA(false).get(ANSWER_KEY));
                     break;
                 case FlashCardsContract.Card.ANSWER_PURE:
                     rb.add(currentCard.getPureAnswer());
@@ -1331,7 +1336,7 @@ public class CardContentProvider extends ContentProvider {
                         rb.add(tmpl.getInt("ord"));
                         break;
                     case CardTemplate.NAME:
-                        rb.add(tmpl.getString("name"));
+                        rb.add(tmpl.getString(TEMPLATE_S_NAME));
                         break;
                     case CardTemplate.QUESTION_FORMAT:
                         rb.add(tmpl.getString("qfmt"));

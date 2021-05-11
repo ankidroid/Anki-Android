@@ -46,6 +46,7 @@ import androidx.annotation.Nullable;
 import androidx.annotation.VisibleForTesting;
 import timber.log.Timber;
 
+import static com.ichi2.anki.dialogs.DeckPickerContextMenu.DID;
 import static com.ichi2.libanki.stats.Stats.SECONDS_PER_DAY;
 
 /**
@@ -77,6 +78,9 @@ import static com.ichi2.libanki.stats.Stats.SECONDS_PER_DAY;
 @SuppressWarnings({"PMD.AvoidThrowingRawExceptionTypes","PMD.ExcessiveMethodLength","PMD.FieldDeclarationsShouldBeAtStartOfClass",
                     "PMD.MethodNamingConventions"})
 public class Card implements Cloneable {
+
+    public static final String ANSWER_KEY = "a";
+    public static final String QUESTION_KEY = "q";
 
     public static final int TYPE_REV = 2;
 
@@ -244,7 +248,7 @@ public class Card implements Cloneable {
         values.put("left", mLeft);
         values.put("odue", mODue);
         values.put("odid", mODid);
-        values.put("did", mDid);
+        values.put(DID, mDid);
         // TODO: The update DB call sets mod=true. Verify if this is intended.
         mCol.getDb().update("cards", values, "id = ?", new String[] {Long.toString(mId)});
         mCol.log(this);
@@ -262,12 +266,12 @@ public class Card implements Cloneable {
 
 
     public String q(boolean reload, boolean browser) {
-        return css() + _getQA(reload, browser).get("q");
+        return css() + _getQA(reload, browser).get(QUESTION_KEY);
     }
 
 
     public String a() {
-        return css() + _getQA().get("a");
+        return css() + _getQA().get(ANSWER_KEY);
     }
 
 
@@ -375,7 +379,7 @@ public class Card implements Cloneable {
 
 
     public String qSimple() {
-        return _getQA(false).get("q");
+        return _getQA(false).get(QUESTION_KEY);
     }
 
 
@@ -383,7 +387,7 @@ public class Card implements Cloneable {
      * Returns the answer with anything before the <hr id=answer> tag removed
      */
     public String getPureAnswer() {
-        String s = _getQA(false).get("a");
+        String s = _getQA(false).get(ANSWER_KEY);
         String target = "<hr id=answer>";
         int pos = s.indexOf(target);
         if (pos == -1) {

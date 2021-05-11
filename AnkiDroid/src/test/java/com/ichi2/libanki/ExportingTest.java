@@ -7,6 +7,8 @@ import org.junit.runner.RunWith;
 
 import androidx.test.ext.junit.runners.AndroidJUnit4;
 
+import static com.ichi2.libanki.Model.MODEL_S_DID;
+
 @RunWith(AndroidJUnit4.class)
 public class ExportingTest extends RobolectricTest {
     private Collection col;
@@ -25,7 +27,7 @@ public class ExportingTest extends RobolectricTest {
         note = col.newNote();
         note.setItem("Front", "baz");
         note.setItem("Back", "qux");
-        note.model().put("did", addDeck("new col"));
+        note.model().put(MODEL_S_DID, addDeck("new col"));
         col.addNote(note);
     }
 

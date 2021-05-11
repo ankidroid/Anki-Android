@@ -26,6 +26,8 @@ import com.ichi2.anki.R;
 import com.ichi2.anki.analytics.AnalyticsDialogFragment;
 import com.ichi2.utils.BundleUtils;
 
+import static com.ichi2.anki.dialogs.DeckPickerContextMenu.DID;
+
 public class ExportDialog extends AnalyticsDialogFragment {
 
     public interface ExportDialogListener {
@@ -51,7 +53,7 @@ public class ExportDialog extends AnalyticsDialogFragment {
         ExportDialog f = new ExportDialog();
         Bundle args = new Bundle();
         if (did != null) {
-            args.putLong("did", did);
+            args.putLong(DID, did);
         }
         args.putString("dialogMessage", dialogMessage);
         f.setArguments(args);
@@ -73,7 +75,7 @@ public class ExportDialog extends AnalyticsDialogFragment {
     public MaterialDialog onCreateDialog(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         Resources res = getResources();
-        final Long did = BundleUtils.getNullableLong(getArguments(), "did");
+        final Long did = BundleUtils.getNullableLong(getArguments(), DID);
         Integer[] checked;
         if (did != null) {
             mIncludeSched = false;

@@ -36,6 +36,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import static com.ichi2.libanki.Model.MODEL_S_DID;
 import static org.junit.Assert.assertEquals;
 
 @RunWith(ParameterizedRobolectricTestRunner.class)
@@ -88,7 +89,7 @@ public class TextNoteExporterTest extends RobolectricTest {
         n2.setItem("Back", "qux");
 
         try {
-            n2.model().put("did", mCollection.getDecks().id("new col"));
+            n2.model().put(MODEL_S_DID, mCollection.getDecks().id("new col"));
         } catch (FilteredAncestor filteredAncestor) {
             filteredAncestor.printStackTrace();
         }

@@ -49,6 +49,10 @@ import java.util.regex.Pattern;
 
 import androidx.annotation.NonNull;
 
+import static com.ichi2.libanki.Card.QUESTION_KEY;
+import static com.ichi2.libanki.Model.FIELD_S_NAME;
+import static com.ichi2.libanki.Model.MODEL_S_NAME;
+import static com.ichi2.libanki.Model.TEMPLATE_S_NAME;
 import static com.ichi2.libanki.Models.AllowEmpty.ONLY_CLOZE;
 import static com.ichi2.libanki.Models.AllowEmpty.TRUE;
 
@@ -299,7 +303,7 @@ public class Models {
     /** get model with NAME. */
     public Model byName(String name) {
         for (Model m : mModels.values()) {
-            if (m.getString("name").equals(name)) {
+            if (m.getString(MODEL_S_NAME).equals(name)) {
                 return m;
             }
         }
@@ -313,7 +317,7 @@ public class Models {
     public Model newModel(String name) {
         // caller should call save() after modifying
         Model m = new Model(DEFAULT_MODEL);
-        m.put("name", name);
+        m.put(MODEL_S_NAME, name);
         m.put("mod", mCol.getTime().intTime());
         m.put("flds", new JSONArray());
         m.put("tmpls", new JSONArray());
@@ -415,7 +419,7 @@ public class Models {
     /** Copy, save and return. */
     public Model copy(Model m) {
         Model m2 = m.deepClone();        
-        m2.put("name", m2.getString("name") + " copy");
+        m2.put(MODEL_S_NAME, m2.getString(MODEL_S_NAME) + " copy");
         add(m2);
         return m2;
     }
@@ -427,7 +431,7 @@ public class Models {
 
     public JSONObject newField(String name) {
         JSONObject f = new JSONObject(defaultField);
-        f.put("name", name);
+        f.put(FIELD_S_NAME, name);
         return f;
     }
 
@@ -439,7 +443,7 @@ public class Models {
         // TreeMap<Integer, String> map = new TreeMap<Integer, String>();
         Map<String, Pair<Integer, JSONObject>> result = new HashMap<>(flds.length());
         for (JSONObject f: flds.jsonObjectIterable()) {
-            result.put(f.getString("name"), new Pair<>(f.getInt("ord"), f));
+            result.put(f.getString(FIELD_S_NAME), new Pair<>(f.getInt("ord"), f));
         }
         return result;
     }
@@ -609,7 +613,7 @@ public class Models {
     public void renameField(Model m, JSONObject field, String newName) throws ConfirmModSchemaException {
         mCol.modSchema();
         String pat = String.format("\\{\\{([^{}]*)([:#^/]|[^:#/^}][^:}]*?:|)%s\\}\\}",
-                                   Pattern.quote(field.getString("name")));
+                                   Pattern.quote(field.getString(FIELD_S_NAME)));
         if (newName == null) {
             newName = "";
         }
@@ -625,7 +629,7 @@ public class Models {
                 }
             }
         }
-        field.put("name", newName);
+        field.put(FIELD_S_NAME, newName);
         save(m);
     }
 
@@ -668,7 +672,7 @@ public class Models {
 
     public static JSONObject newTemplate(String name) {
         JSONObject t = new JSONObject(defaultTemplate);
-        t.put("name", name);
+        t.put(TEMPLATE_S_NAME, name);
         return t;
     }
 
@@ -943,11 +947,11 @@ public class Models {
         StringBuilder s = new StringBuilder();
         JSONArray flds = m.getJSONArray("flds");
         for (JSONObject fld: flds.jsonObjectIterable()) {
-            s.append(fld.getString("name"));
+            s.append(fld.getString(FIELD_S_NAME));
         }
         JSONArray tmpls = m.getJSONArray("tmpls");
         for (JSONObject t: tmpls.jsonObjectIterable()) {
-            s.append(t.getString("name"));
+            s.append(t.getString(TEMPLATE_S_NAME));
         }
         return Utils.checksum(s.toString());
     }
@@ -966,8 +970,8 @@ public class Models {
         Arrays.fill(a, "ankiflag");
         Arrays.fill(b, "");
         int ord = t.getInt("ord");
-        String full = mCol._renderQA(1L, m, 1L, ord, "", a, 0).get("q");
-        String empty = mCol._renderQA(1L, m, 1L, ord, "", b, 0).get("q");
+        String full = mCol._renderQA(1L, m, 1L, ord, "", a, 0).get(QUESTION_KEY);
+        String empty = mCol._renderQA(1L, m, 1L, ord, "", b, 0).get(QUESTION_KEY);
         // if full and empty are the same, the template is invalid and there is no way to satisfy it
         if (full.equals(empty)) {
             return new Object[] { REQ_NONE, new JSONArray(), new JSONArray() };
@@ -977,7 +981,7 @@ public class Models {
         for (int i = 0; i < flds.size(); i++) {
             a[i] = "";
             // if no field content appeared, field is required
-            if (!mCol._renderQA(1L, m, 1L, ord, "", a, 0).get("q").contains("ankiflag")) {
+            if (!mCol._renderQA(1L, m, 1L, ord, "", a, 0).get(QUESTION_KEY).contains("ankiflag")) {
                 req.put(i);
             }
             a[i] = "ankiflag";
@@ -991,7 +995,7 @@ public class Models {
         for (int i = 0; i < flds.size(); i++) {
             b[i] = "1";
             // if not the same as empty, this field can make the card non-blank
-            if (!mCol._renderQA(1L, m, 1L, ord, "", b, 0).get("q").equals(empty)) {
+            if (!mCol._renderQA(1L, m, 1L, ord, "", b, 0).get(QUESTION_KEY).equals(empty)) {
                 req.put(i);
             }
             b[i] = "";
@@ -1189,7 +1193,7 @@ public class Models {
             JSONArray templates = m.getJSONArray("tmpls");
             HashMap<Integer, String> names = new HashMap<>(templates.length());
             for (JSONObject t: templates.jsonObjectIterable()) {
-                names.put(t.getInt("ord"), t.getString("name"));
+                names.put(t.getInt("ord"), t.getString(TEMPLATE_S_NAME));
             }
             result.put(m.getLong("id"), names);
         }

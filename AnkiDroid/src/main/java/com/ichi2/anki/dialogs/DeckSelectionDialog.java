@@ -55,6 +55,8 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import timber.log.Timber;
 
+import static com.ichi2.libanki.Deck.DECK_S_NAME;
+
 public class DeckSelectionDialog extends AnalyticsDialogFragment {
 
     private MaterialDialog mDialog;
@@ -376,7 +378,7 @@ public class DeckSelectionDialog extends AnalyticsDialogFragment {
 
 
         protected SelectableDeck(@NonNull Deck d) {
-            this(d.getLong("id"), d.getString("name"));
+            this(d.getLong("id"), d.getString(DECK_S_NAME));
         }
 
 

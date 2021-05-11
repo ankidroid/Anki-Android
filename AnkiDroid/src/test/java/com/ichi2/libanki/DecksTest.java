@@ -13,6 +13,9 @@ import java.util.List;
 
 import androidx.test.ext.junit.runners.AndroidJUnit4;
 
+import static com.ichi2.libanki.Collection.CUR_DECK;
+import static com.ichi2.libanki.Deck.DECK_S_NAME;
+import static com.ichi2.libanki.Model.MODEL_S_DID;
 import static com.ichi2.testutils.AnkiAssert.assertEqualsArrayList;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
@@ -42,7 +45,7 @@ public class DecksTest extends RobolectricTest {
         decks.checkIntegrity();
         JSONObject deckA = decks.byName("A");
         Asserts.notNull(deckA, "A deck with name \"A\" should still exists");
-        assertThat("A deck with name \"A\" should have name \"A\"", deckA.getString("name"), is("A"));
+        assertThat("A deck with name \"A\" should have name \"A\"", deckA.getString(DECK_S_NAME), is("A"));
         JSONObject deckAPlus = decks.byName("A+");
         Asserts.notNull(deckAPlus, "A deck with name \"A+\" should still exists");
     }
@@ -55,7 +58,7 @@ public class DecksTest extends RobolectricTest {
         JSONObject brokenDeck = decks.byName("cmxieunwoogyxsctnjmv::INSBGDS");
         Asserts.notNull(brokenDeck,"We should get deck with given name");
         // Changing the case. That could exists in an old collection or during sync.
-        brokenDeck.put("name", "CMXIEUNWOOGYXSCTNJMV::INSBGDS");
+        brokenDeck.put(DECK_S_NAME, "CMXIEUNWOOGYXSCTNJMV::INSBGDS");
         decks.save(brokenDeck);
 
         decks.childMap();
@@ -113,7 +116,7 @@ public class DecksTest extends RobolectricTest {
         // parents with a different case should be handled correctly
         addDeck("ONE");
         Model m = col.getModels().current();
-        m.put("did", addDeck("one::two"));
+        m.put(MODEL_S_DID, addDeck("one::two"));
         col.getModels().save(m, false);
         Note n = col.newNote();
         n.setItem("Front", "abc");
@@ -133,7 +136,7 @@ public class DecksTest extends RobolectricTest {
         long deck1 = addDeck("deck1");
         Note note = col.newNote();
         note.setItem("Front", "1");
-        note.model().put("did", deck1);
+        note.model().put(MODEL_S_DID, deck1);
         col.addNote(note);
         Card c = note.cards().get(0);
         assertEquals(deck1, c.getDid());
@@ -241,7 +244,7 @@ public class DecksTest extends RobolectricTest {
         Decks decks = col.getDecks();
         long id = addDeck("test");
         decks.select(id);
-        assertThat("curDeck should be saved as a long. A deck id.", col.getConf().get("curDeck") instanceof Long);
+        assertThat("curDeck should be saved as a long. A deck id.", col.getConf().get(CUR_DECK) instanceof Long);
     }
 
 
@@ -292,7 +295,7 @@ public class DecksTest extends RobolectricTest {
 
         Long subdeck_id = decks.id_safe("filtered::subdeck::subsubdeck");
         Deck subdeck = decks.get(subdeck_id);
-        assertEquals("filtered'::subdeck::subsubdeck", subdeck.getString("name"));
+        assertEquals("filtered'::subdeck::subsubdeck", subdeck.getString(DECK_S_NAME));
     }
 
     @Test

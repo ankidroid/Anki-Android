@@ -61,6 +61,7 @@ import com.ichi2.utils.HtmlUtils;
 import timber.log.Timber;
 
 import static com.ichi2.anim.ActivityTransitionAnimation.Direction.*;
+import static com.ichi2.libanki.Deck.DECK_S_NAME;
 
 public class StudyOptionsFragment extends Fragment implements Toolbar.OnMenuItemClickListener {
 
@@ -588,7 +589,7 @@ public class StudyOptionsFragment extends Fragment implements Toolbar.OnMenuItem
                     // Set the deck name
                     Deck deck = getCol().getDecks().current();
                     // Main deck name
-                    String fullName = deck.getString("name");
+                    String fullName = deck.getString(DECK_S_NAME);
                     String[] name = Decks.path(fullName);
                     StringBuilder nameBuilder = new StringBuilder();
                     if (name.length > 0) {

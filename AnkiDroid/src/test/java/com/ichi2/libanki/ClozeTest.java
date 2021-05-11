@@ -13,6 +13,7 @@ import java.util.ArrayList;
 import androidx.test.core.app.ApplicationProvider;
 import androidx.test.ext.junit.runners.AndroidJUnit4;
 
+import static com.ichi2.libanki.Model.MODEL_S_NAME;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.containsString;
 import static org.hamcrest.Matchers.greaterThan;
@@ -33,7 +34,7 @@ public class ClozeTest extends RobolectricTest {
         Note f = d.newNote(d.getModels().byName("Cloze"));
 
         try {
-            String name = f.model().getString("name");
+            String name = f.model().getString(MODEL_S_NAME);
             assertEquals("Cloze", name);
         } catch (JSONException e) {
             fail();

@@ -39,6 +39,8 @@ import androidx.annotation.NonNull;
 import timber.log.Timber;
 
 import static com.ichi2.libanki.Consts.DECK_STD;
+import static com.ichi2.libanki.Deck.DECK_S_NAME;
+import static com.ichi2.libanki.Model.TEMPLATE_S_NAME;
 
 @SuppressWarnings({"PMD.AvoidThrowingRawExceptionTypes","PMD.AvoidReassigningParameters",
         "PMD.NPathComplexity","PMD.MethodNamingConventions","PMD.ExcessiveMethodLength","PMD.OneDeclarationPerLine",
@@ -273,7 +275,7 @@ public class Storage {
             //noinspection RegExpRedundantEscape            // In Android, } should be escaped
             t.put(type, t.getString(type).replaceAll("\\{\\{cloze:1:(.+?)\\}\\}", "{{cloze:$1}}"));
         }
-        t.put("name", "Cloze");
+        t.put(TEMPLATE_S_NAME, "Cloze");
         // delete non-cloze cards for the model
         JSONArray tmpls = m.getJSONArray("tmpls");
         ArrayList<JSONObject> rem = new ArrayList<>();
@@ -360,7 +362,7 @@ public class Storage {
     private static void _setColVars(DB db, @NonNull Time time) {
         JSONObject g = new JSONObject(Decks.DEFAULT_DECK);
         g.put("id", 1);
-        g.put("name", "Default");
+        g.put(DECK_S_NAME, "Default");
         g.put("conf", 1);
         g.put("mod", time.intTime());
         JSONObject gc = new JSONObject(Decks.DEFAULT_CONF);

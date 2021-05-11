@@ -55,6 +55,9 @@ import androidx.annotation.VisibleForTesting;
 import androidx.core.content.ContextCompat;
 import timber.log.Timber;
 
+import static com.ichi2.libanki.Deck.DECK_S_NAME;
+import static com.ichi2.libanki.Model.MODEL_S_NAME;
+import static com.ichi2.libanki.Model.TEMPLATE_S_NAME;
 import static com.ichi2.libanki.stats.Stats.SECONDS_PER_DAY;
 
 public class CardInfo extends AnkiActivity {
@@ -335,8 +338,8 @@ public class CardInfo extends AnkiActivity {
             int reviews = c.getReps();
             Model model = collection.getModels().get(c.note().getMid());
             String cardType = getCardType(c, model);
-            String noteType = model.getString("name");
-            String deckName = collection.getDecks().get(c.getDid()).getString("name");
+            String noteType = model.getString(MODEL_S_NAME);
+            String deckName = collection.getDecks().get(c.getDid()).getString(DECK_S_NAME);
             long noteId = c.getNid();
 
             Integer interval = c.getIvl();
@@ -387,7 +390,7 @@ public class CardInfo extends AnkiActivity {
                 if (c.model().isCloze()) {
                     ord = 0;
                 }
-                return model.getJSONArray("tmpls").getJSONObject(ord).getString("name");
+                return model.getJSONArray("tmpls").getJSONObject(ord).getString(TEMPLATE_S_NAME);
             } catch (Exception e) {
                 Timber.w(e);
                 return null;

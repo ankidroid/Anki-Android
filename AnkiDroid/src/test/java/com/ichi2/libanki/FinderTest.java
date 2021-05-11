@@ -38,9 +38,11 @@ import androidx.annotation.NonNull;
 import androidx.test.ext.junit.runners.AndroidJUnit4;
 import timber.log.Timber;
 
+import static com.ichi2.anki.CardBrowser.SORT_TYPE;
 import static com.ichi2.libanki.Consts.CARD_TYPE_REV;
 import static com.ichi2.libanki.Consts.QUEUE_TYPE_REV;
 import static com.ichi2.libanki.Consts.QUEUE_TYPE_SUSPENDED;
+import static com.ichi2.libanki.Model.MODEL_S_DID;
 import static com.ichi2.libanki.stats.Stats.SECONDS_PER_DAY;
 import static com.ichi2.testutils.AnkiAssert.assertEqualsArrayList;
 import static com.ichi2.utils.CollectionUtils.getLastListElement;
@@ -213,16 +215,16 @@ public class FinderTest extends RobolectricTest {
         assertEquals(0, col.findCards("front:do").size());
         assertEquals(5, col.findCards("front:*").size());
         // ordering
-        col.getConf().put("sortType", "noteCrt");
+        col.getConf().put(SORT_TYPE, "noteCrt");
         col.flush();
         assertTrue(latestCardIds.contains(getLastListElement(col.findCards("front:*", true))));
         assertTrue(latestCardIds.contains(getLastListElement(col.findCards("", true))));
 
-        col.getConf().put("sortType", "noteFld");
+        col.getConf().put(SORT_TYPE, "noteFld");
         col.flush();
         assertEquals(catCard.getId(), (long) col.findCards("", true).get(0));
         assertTrue(latestCardIds.contains(getLastListElement(col.findCards("", true))));
-        col.getConf().put("sortType", "cardMod");
+        col.getConf().put(SORT_TYPE, "cardMod");
         col.flush();
         assertTrue(latestCardIds.contains(getLastListElement(col.findCards("", true))));
         assertEquals(firstCardId, (long) col.findCards("", true).get(0));
@@ -346,7 +348,7 @@ public class FinderTest extends RobolectricTest {
         Note note = col.newNote();
         note.setItem("Front", "foo");
         note.setItem("Back", "bar");
-        note.model().put("did", currentDid);
+        note.model().put(MODEL_S_DID, currentDid);
         col.addNote(note);
         long did = note.firstCard().getDid();
         assertEquals(currentDid, did);

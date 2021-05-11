@@ -76,6 +76,9 @@ import androidx.viewpager2.adapter.FragmentStateAdapter;
 import timber.log.Timber;
 
 import static com.ichi2.anim.ActivityTransitionAnimation.Direction.*;
+import static com.ichi2.libanki.Model.MODEL_S_NAME;
+import static com.ichi2.libanki.Model.TEMPLATE_S_DID;
+import static com.ichi2.libanki.Model.TEMPLATE_S_NAME;
 import static com.ichi2.libanki.Models.NOT_FOUND_NOTE_TYPE;
 
 
@@ -186,7 +189,7 @@ public class CardTemplateEditor extends AnkiActivity implements DeckSelectionDia
         // Set activity title
         if (getSupportActionBar() != null) {
             getSupportActionBar().setTitle(R.string.title_activity_template_editor);
-            getSupportActionBar().setSubtitle(mTempModel.getModel().optString("name"));
+            getSupportActionBar().setSubtitle(mTempModel.getModel().optString(MODEL_S_NAME));
         }
         // Close collection opening dialog if needed
         Timber.i("CardTemplateEditor:: Card template editor successfully started for model id %d", mModelId);
@@ -235,7 +238,7 @@ public class CardTemplateEditor extends AnkiActivity implements DeckSelectionDia
 
         int ordinal = mViewPager.getCurrentItem();
         JSONObject template = getTempModel().getTemplate(ordinal);
-        String templateName = template.getString("name");
+        String templateName = template.getString(TEMPLATE_S_NAME);
 
         if (deck != null && Decks.isDynamic(getCol(), deck.getDeckId())) {
             Timber.w("Attempted to set default deck of %s to dynamic deck %s", templateName, deck.getName());
@@ -246,11 +249,11 @@ public class CardTemplateEditor extends AnkiActivity implements DeckSelectionDia
         String message;
         if (deck == null) {
             Timber.i("Removing default template from template '%s'", templateName);
-            template.put("did", JSONObject.NULL);
+            template.put(TEMPLATE_S_DID, JSONObject.NULL);
             message = getString(R.string.model_manager_deck_override_removed_message, templateName);
         } else {
             Timber.i("Setting template '%s' to '%s'", templateName, deck.getName());
-            template.put("did", deck.getDeckId());
+            template.put(TEMPLATE_S_DID, deck.getDeckId());
             message = getString(R.string.model_manager_deck_override_added_message, templateName, deck.getName());
         }
 
@@ -459,7 +462,7 @@ public class CardTemplateEditor extends AnkiActivity implements DeckSelectionDia
                 mTabLayoutMediator.detach();
             }
             mTabLayoutMediator = new TabLayoutMediator(mTemplateEditor.mSlidingTabLayout, mTemplateEditor.mViewPager,
-                    (tab, position) -> tab.setText(mTemplateEditor.getTempModel().getTemplate(position).getString("name"))
+                    (tab, position) -> tab.setText(mTemplateEditor.getTempModel().getTemplate(position).getString(TEMPLATE_S_NAME))
             );
              mTabLayoutMediator.attach();
         }
@@ -483,7 +486,7 @@ public class CardTemplateEditor extends AnkiActivity implements DeckSelectionDia
                 menu.findItem(R.id.action_add_deck_override).setVisible(false);
             } else {
                 JSONObject template = getCurrentTemplate();
-                @StringRes int overrideStringRes = template.has("did") && !template.isNull("did") ?
+                @StringRes int overrideStringRes = template.has(TEMPLATE_S_DID) && !template.isNull(TEMPLATE_S_DID) ?
                         R.string.card_template_editor_deck_override_on :
                         R.string.card_template_editor_deck_override_off;
 
@@ -613,7 +616,7 @@ public class CardTemplateEditor extends AnkiActivity implements DeckSelectionDia
             try {
                 int ordinal = mTemplateEditor.mViewPager.getCurrentItem();
                 final JSONObject template = tempModel.getTemplate(ordinal);
-                return template.getString("name");
+                return template.getString(TEMPLATE_S_NAME);
             } catch (Exception e) {
                 Timber.w(e, "Failed to get name for template");
                 return "";
@@ -755,7 +758,7 @@ public class CardTemplateEditor extends AnkiActivity implements DeckSelectionDia
             ConfirmationDialog d = new ConfirmationDialog();
             Resources res = getResources();
             String msg = String.format(res.getQuantityString(R.plurals.card_template_editor_confirm_delete,
-                            numAffectedCards), numAffectedCards, tmpl.optString("name"));
+                            numAffectedCards), numAffectedCards, tmpl.optString(TEMPLATE_S_NAME));
             d.setArgs(msg);
             Runnable confirm = () -> deleteTemplateWithCheck(tmpl, model);
             d.setConfirm(confirm);
@@ -897,7 +900,7 @@ public class CardTemplateEditor extends AnkiActivity implements DeckSelectionDia
                 // Cycle through all templates checking if new name exists
                 boolean exists = false;
                 for (JSONObject template: templates.jsonObjectIterable()) {
-                    if (name.equals(template.getString("name"))) {
+                    if (name.equals(template.getString(TEMPLATE_S_NAME))) {
                         exists = true;
                         break;
                     }

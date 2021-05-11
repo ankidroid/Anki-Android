@@ -56,7 +56,10 @@ import androidx.annotation.Nullable;
 import androidx.annotation.VisibleForTesting;
 import timber.log.Timber;
 
+import static com.ichi2.libanki.Collection.CUR_DECK;
 import static com.ichi2.libanki.Consts.DECK_STD;
+import static com.ichi2.libanki.Deck.DECK_S_NAME;
+import static com.ichi2.libanki.DeckConfig.DECK_CONFIG_S_NAME;
 import static com.ichi2.utils.CollectionUtils.addAll;
 
 // fixmes:
@@ -196,7 +199,7 @@ public class Decks {
             if (deck == null) {
                 return null;
             }
-            String foundName = deck.getString("name");
+            String foundName = deck.getString(DECK_S_NAME);
             if (!equalName(name, foundName)) {
                 AnkiDroidApp.sendExceptionReport("We looked for deck \"" + name + "\" and instead got deck \"" + foundName + "\".", "Decks - byName");
             }
@@ -208,7 +211,7 @@ public class Decks {
          * @param g Add a deck. Allow from its name to get quick access to the deck.
          */
         public synchronized void add(Deck g) {
-            String name = g.getString("name");
+            String name = g.getString(DECK_S_NAME);
             mNameMap.put(name, g);
             // Normalized name is also added because it's required to use it in by name.
             // Non normalized is kept for Parent
@@ -364,7 +367,7 @@ public class Decks {
     private Long id_create_name_valid(String name, String type) {
         Long id;
         Deck g = new Deck(type);
-        g.put("name", name);
+        g.put(DECK_S_NAME, name);
         do {
             id = mCol.getTime().intTimeMS();
         } while (mDecks.containsKey(id));
@@ -413,8 +416,8 @@ public class Decks {
         if (did == 1) {
             // we won't allow the default deck to be deleted, but if it's a
             // child of an existing deck then it needs to be renamed
-            if (deck != null && deck.getString("name").contains("::")) {
-                deck.put("name", "Default");
+            if (deck != null && deck.getString(DECK_S_NAME).contains("::")) {
+                deck.put(DECK_S_NAME, "Default");
                 save(deck);
             }
             return;
@@ -451,7 +454,7 @@ public class Decks {
         }
         // delete the deck and add a grave
         mDecks.remove(did);
-        mNameMap.remove(deck.getString("name"), deck);
+        mNameMap.remove(deck.getString(DECK_S_NAME), deck);
         // ensure we have an active deck
         if (active().contains(did)) {
             select(mDecks.keySet().iterator().next());
@@ -472,12 +475,12 @@ public class Decks {
         List<String> list = new ArrayList<>(mDecks.size());
         if (dyn) {
             for (Deck x : mDecks.values()) {
-                list.add(x.getString("name"));
+                list.add(x.getString(DECK_S_NAME));
             }
         } else {
             for (Deck x : mDecks.values()) {
                 if (x.isStd()) {
-                    list.add(x.getString("name"));
+                    list.add(x.getString(DECK_S_NAME));
                 }
             }
         }
@@ -578,7 +581,7 @@ public class Decks {
         if (oldDeck != null) {
             // In case where another update got the name
             // `oldName`, it would be a mistake to remove it from nameMap
-            mNameMap.remove(oldDeck.getString("name"), oldDeck);
+            mNameMap.remove(oldDeck.getString(DECK_S_NAME), oldDeck);
         }
         mNameMap.add(g);
         mDecks.put(g.getLong("id"), g);
@@ -611,21 +614,21 @@ public class Decks {
             throw new DeckRenameException(DeckRenameException.FILTERED_NOSUBDECKS);
         }
         // rename children
-        String oldName = g.getString("name");
+        String oldName = g.getString(DECK_S_NAME);
         for (Deck grp : all()) {
-            String grpOldName = grp.getString("name");
+            String grpOldName = grp.getString(DECK_S_NAME);
             if (grpOldName.startsWith(oldName + "::")) {
                 String grpNewName = grpOldName.replaceFirst(Pattern.quote(oldName + "::"), newName + "::");
                 // In Java, String.replaceFirst consumes a regex so we need to quote the pattern to be safe
                 mNameMap.remove(grpOldName, grp);
-                grp.put("name", grpNewName);
+                grp.put(DECK_S_NAME, grpNewName);
                 mNameMap.add(grp);
                 save(grp);
             }
         }
         mNameMap.remove(oldName, g);
         // adjust name
-        g.put("name", newName);
+        g.put(DECK_S_NAME, newName);
         // ensure we have parents again, as we may have renamed parent->child
         // No ancestor can be filtered after renaming
         newName = _ensureParentsNotFiltered(newName);
@@ -639,8 +642,8 @@ public class Decks {
     /* Buggy implementation. Keep as first draft if we want to use it again
     public void renameForDragAndDrop(Long draggedDeckDid, Long ontoDeckDid) throws DeckRenameException {
         Deck draggedDeck = get(draggedDeckDid);
-        String draggedDeckName = draggedDeck.getString("name");
-        String ontoDeckName = get(ontoDeckDid).getString("name");
+        String draggedDeckName = draggedDeck.getString(DECK_S_NAME);
+        String ontoDeckName = get(ontoDeckDid).getString(DECK_S_NAME);
 
         String draggedBasename = basename(draggedDeckName);
         if (ontoDeckDid == null) {
@@ -840,7 +843,7 @@ public class Decks {
             id = mCol.getTime().intTimeMS();
         } while (mDconf.containsKey(id));
         c.put("id", id);
-        c.put("name", name);
+        c.put(DECK_CONFIG_S_NAME, name);
         mDconf.put(id, c);
         save(c);
         return id;
@@ -889,7 +892,7 @@ public class Decks {
         int oldOrder = conf.getJSONObject("new").getInt("order");
         DeckConfig _new = mCol.getBackend().new_deck_config_legacy();
         _new.put("id", conf.getLong("id"));
-        _new.put("name", conf.getString("name"));
+        _new.put(DECK_CONFIG_S_NAME, conf.getString(DECK_CONFIG_S_NAME));
 
         updateConf(_new);
         // if it was previously randomized, resort
@@ -913,7 +916,7 @@ public class Decks {
     public String name(long did, boolean _default) {
         Deck deck = get(did, _default);
         if (deck != null) {
-            return deck.getString("name");
+            return deck.getString(DECK_S_NAME);
         }
         return "[no deck]";
     }
@@ -922,7 +925,7 @@ public class Decks {
     public String nameOrNone(long did) {
         Deck deck= get(did, false);
         if (deck != null) {
-            return deck.getString("name");
+            return deck.getString(DECK_S_NAME);
         }
         return null;
     }
@@ -980,7 +983,7 @@ public class Decks {
         Map<String, Deck> names = new HashMap<>(decks.size());
 
         for (Deck deck: decks) {
-            String deckName = deck.getString("name");
+            String deckName = deck.getString(DECK_S_NAME);
 
             /* With 2.1.28, anki started strips whitespace of deck name.  This method paragraph is here for
               compatibility while we wait for rust.  It should be executed before other changes, because both "FOO "
@@ -990,7 +993,7 @@ public class Decks {
             if (!deckName.equals(strippedName)) {
                 mNameMap.remove(deckName, deck);
                 deckName = strippedName;
-                deck.put("name", deckName);
+                deck.put(DECK_S_NAME, deckName);
                 mNameMap.add(deck);
                 save(deck);
             }
@@ -1000,19 +1003,19 @@ public class Decks {
                 Timber.i("Fix deck with empty name");
                 mNameMap.remove(deckName, deck);
                 deckName = "blank";
-                deck.put("name", "blank");
+                deck.put(DECK_S_NAME, "blank");
                 mNameMap.add(deck);
                 save(deck);
             }
 
             if (deckName.contains("::::")) {
-                Timber.i("fix deck with missing sections %s", deck.getString("name"));
+                Timber.i("fix deck with missing sections %s", deck.getString(DECK_S_NAME));
                 mNameMap.remove(deckName, deck);
                 do {
-                    deckName = deck.getString("name").replace("::::", "::blank::");
+                    deckName = deck.getString(DECK_S_NAME).replace("::::", "::blank::");
                     // We may need to iterate, in order to replace "::::::" and adding to "blank" in it.
                 } while (deckName.contains("::::"));
-                deck.put("name", deckName);
+                deck.put(DECK_S_NAME, deckName);
                 mNameMap.add(deck);
                 save(deck);
             }
@@ -1023,7 +1026,7 @@ public class Decks {
                 Timber.i("fix duplicate deck name %s", deckName);
                 do {
                     deckName += "+";
-                    deck.put("name", deckName);
+                    deck.put(DECK_S_NAME, deckName);
                 } while (names.containsKey(normalizeName(deckName)));
                 mNameMap.add(deck);
                 mNameMap.add(homonym); // Ensuring both names are correctly in mNameMap
@@ -1069,7 +1072,7 @@ public class Decks {
      * The currently selected did.
      */
     public long selected() {
-        return mCol.getConf().getLong("curDeck");
+        return mCol.getConf().getLong(CUR_DECK);
     }
 
 
@@ -1082,10 +1085,10 @@ public class Decks {
      * Select a new branch.
      */
     public void select(long did) {
-        String name = mDecks.get(did).getString("name");
+        String name = mDecks.get(did).getString(DECK_S_NAME);
 
         // current deck
-        mCol.getConf().put("curDeck", did);
+        mCol.getConf().put(CUR_DECK, did);
         // and active decks (current + all children)
         TreeMap<String, Long> actv = children(did); // Note: TreeMap is already sorted
         actv.put(name, did);
@@ -1105,11 +1108,11 @@ public class Decks {
      * need to sort on behalf of select().
      */
     public TreeMap<String, Long> children(long did) {
-        String name = get(did).getString("name");
+        String name = get(did).getString(DECK_S_NAME);
         TreeMap<String, Long> actv = new TreeMap<>();
         for (Deck g : all()) {
-            if (g.getString("name").startsWith(name + "::")) {
-                actv.put(g.getString("name"), g.getLong("id"));
+            if (g.getString(DECK_S_NAME).startsWith(name + "::")) {
+                actv.put(g.getString(DECK_S_NAME), g.getLong("id"));
             }
         }
         return actv;
@@ -1145,7 +1148,7 @@ public class Decks {
             Node node = new Node();
             childMap.put(deck.getLong("id"), node);
 
-            List<String> parts = Arrays.asList(path(deck.getString("name")));
+            List<String> parts = Arrays.asList(path(deck.getString(DECK_S_NAME)));
             if (parts.size() > 1) {
                 String immediateParent = TextUtils.join("::", parts.subList(0, parts.size() - 1));
                 long pid = byName(immediateParent).getLong("id");
@@ -1178,7 +1181,7 @@ public class Decks {
      */
     public List<Deck> parents(long did) {
         // get parent and grandparent names
-        String[] parents = parentsNames(get(did).getString("name"));
+        String[] parents = parentsNames(get(did).getString(DECK_S_NAME));
         // convert to objects
         List<Deck> oParents = new ArrayList<>(parents.length);
         for (int i = 0; i < parents.length; i++) {
@@ -1314,6 +1317,6 @@ public class Decks {
         if (deck == null) {
             return null;
         }
-        return deck.getString("name") + DECK_SEPARATOR + subdeckName;
+        return deck.getString(DECK_S_NAME) + DECK_SEPARATOR + subdeckName;
     }
 }

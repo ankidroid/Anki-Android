@@ -76,6 +76,7 @@ import static com.ichi2.libanki.Consts.DECK_DYN;
 import static com.ichi2.libanki.Consts.DECK_STD;
 import static com.ichi2.libanki.Consts.QUEUE_TYPE_DAY_LEARN_RELEARN;
 import static com.ichi2.async.CancelListener.isCancelled;
+import static com.ichi2.libanki.Deck.DECK_S_NAME;
 import static com.ichi2.libanki.sched.AbstractSched.UnburyType.*;
 import static com.ichi2.libanki.sched.Counts.Queue.*;
 import static com.ichi2.libanki.sched.Counts.Queue;
@@ -246,17 +247,17 @@ public class SchedV2 extends AbstractSched {
         mHaveCounts = false;
         _resetLrnCount(cancelListener);
         if (isCancelled(cancelListener)) {
-            Timber.v("Cancel computing counts of deck %s", mCol.getDecks().current().getString("name"));
+            Timber.v("Cancel computing counts of deck %s", mCol.getDecks().current().getString(DECK_S_NAME));
             return;
         }
         _resetRevCount(cancelListener);
         if (isCancelled(cancelListener)) {
-            Timber.v("Cancel computing counts of deck %s", mCol.getDecks().current().getString("name"));
+            Timber.v("Cancel computing counts of deck %s", mCol.getDecks().current().getString(DECK_S_NAME));
             return;
         }
         _resetNewCount(cancelListener);
         if (isCancelled(cancelListener)) {
-            Timber.v("Cancel computing counts of deck %s", mCol.getDecks().current().getString("name"));
+            Timber.v("Cancel computing counts of deck %s", mCol.getDecks().current().getString(DECK_S_NAME));
             return;
         }
         mHaveCounts = true;
@@ -534,7 +535,7 @@ public class SchedV2 extends AbstractSched {
             if (isCancelled(collectionTask)) {
                 return null;
             }
-            String deckName = deck.getString("name");
+            String deckName = deck.getString(DECK_S_NAME);
             String p = Decks.parent(deckName);
             // new
             int nlim = _deckNewLimitSingle(deck, false);
@@ -554,9 +555,9 @@ public class SchedV2 extends AbstractSched {
             int rlim = _deckRevLimitSingle(deck, plim, false);
             int rev = _revForDeck(deck.getLong("id"), rlim, childMap);
             // save to list
-            deckNodes.add(new DeckDueTreeNode(mCol, deck.getString("name"), deck.getLong("id"), rev, lrn, _new));
+            deckNodes.add(new DeckDueTreeNode(mCol, deck.getString(DECK_S_NAME), deck.getLong("id"), rev, lrn, _new));
             // add deck as a parent
-            lims.put(Decks.normalizeName(deck.getString("name")), new Integer[]{nlim, rlim});
+            lims.put(Decks.normalizeName(deck.getString(DECK_S_NAME)), new Integer[]{nlim, rlim});
         }
         return deckNodes;
     }
@@ -574,7 +575,7 @@ public class SchedV2 extends AbstractSched {
         // Similar to deckDueList
         ArrayList<DeckTreeNode> data = new ArrayList<>();
         for (JSONObject deck : decks) {
-            DeckTreeNode g = new DeckTreeNode(mCol, deck.getString("name"), deck.getLong("id"));
+            DeckTreeNode g = new DeckTreeNode(mCol, deck.getString(DECK_S_NAME), deck.getLong("id"));
             data.add(g);
         }
         // End of the similar part.
@@ -635,7 +636,7 @@ public class SchedV2 extends AbstractSched {
              * itertools.groupby. */
             if (!checkDone && child.getDepth() != depth) {
                 Deck deck = mCol.getDecks().get(child.getDid());
-                Timber.d("Deck %s (%d)'s parent is missing. Ignoring for quick display.", deck.getString("name"), child.getDid());
+                Timber.d("Deck %s (%d)'s parent is missing. Ignoring for quick display.", deck.getString(DECK_S_NAME), child.getDid());
                 continue;
             }
             while (it.hasNext()) {
@@ -644,7 +645,7 @@ public class SchedV2 extends AbstractSched {
                     // Same head - add to tail of current head.
                     if (!checkDone && descendantOfChild.getDepth() == depth) {
                         Deck deck = mCol.getDecks().get(descendantOfChild.getDid());
-                        Timber.d("Deck %s (%d)'s is a duplicate name. Ignoring for quick display.", deck.getString("name"), descendantOfChild.getDid());
+                        Timber.d("Deck %s (%d)'s is a duplicate name. Ignoring for quick display.", deck.getString(DECK_S_NAME), descendantOfChild.getDid());
                         continue;
                     }
                     descendantsOfChild.add(descendantOfChild);

@@ -45,8 +45,13 @@ import java.util.regex.Pattern;
 import androidx.annotation.CheckResult;
 import timber.log.Timber;
 
+import static com.ichi2.anki.CardBrowser.SORT_TYPE;
 import static com.ichi2.async.CancelListener.isCancelled;
 import static com.ichi2.async.ProgressSender.publishProgress;
+import static com.ichi2.libanki.Deck.DECK_S_NAME;
+import static com.ichi2.libanki.Model.FIELD_S_NAME;
+import static com.ichi2.libanki.Model.MODEL_S_NAME;
+import static com.ichi2.libanki.Model.TEMPLATE_S_NAME;
 import static com.ichi2.libanki.stats.Stats.SECONDS_PER_DAY;
 
 @SuppressWarnings({"PMD.ExcessiveClassLength", "PMD.AvoidThrowingRawExceptionTypes","PMD.AvoidReassigningParameters","PMD.NPathComplexity","PMD.MethodNamingConventions"})
@@ -415,7 +420,7 @@ public class Finder {
             return new Pair<>("", false);
         }
         // use deck default
-        String type = mCol.getConf().getString("sortType");
+        String type = mCol.getConf().getString(SORT_TYPE);
         String sort = null;
         if (type.startsWith("note")) {
             if (type.startsWith("noteCrt")) {
@@ -631,7 +636,7 @@ public class Finder {
     private String _findModel(String val) {
         LinkedList<Long> ids = new LinkedList<>();
         for (JSONObject m : mCol.getModels().all()) {
-            String modelName = m.getString("name");
+            String modelName = m.getString(MODEL_S_NAME);
             modelName = Normalizer.normalize(modelName, Normalizer.Form.NFC);
             if (modelName.equalsIgnoreCase(val)) {
                 ids.add(m.getLong("id"));
@@ -677,7 +682,7 @@ public class Finder {
                 val = val.replace("+", "\\+");
 
                 for (Deck d : mCol.getDecks().all()) {
-                    String deckName = d.getString("name");
+                    String deckName = d.getString(DECK_S_NAME);
                     deckName = Normalizer.normalize(deckName, Normalizer.Form.NFC);
                     if (deckName.matches("(?i)" + val)) {
                         for (long id : dids(d.getLong("id"))) {
@@ -714,7 +719,7 @@ public class Finder {
         for (Model m : mCol.getModels().all()) {
             JSONArray tmpls = m.getJSONArray("tmpls");
             for (JSONObject t: tmpls.jsonObjectIterable()) {
-                String templateName = t.getString("name");
+                String templateName = t.getString(TEMPLATE_S_NAME);
                 Normalizer.normalize(templateName, Normalizer.Form.NFC);
                 if (templateName.equalsIgnoreCase(val)) {
                     if (m.isCloze()) {
@@ -760,7 +765,7 @@ public class Finder {
         for (JSONObject m : mCol.getModels().all()) {
             JSONArray flds = m.getJSONArray("flds");
             for (JSONObject f: flds.jsonObjectIterable()) {
-                String fieldName = f.getString("name");
+                String fieldName = f.getString(FIELD_S_NAME);
                 fieldName = Normalizer.normalize(fieldName, Normalizer.Form.NFC);
                 if (fieldName.equalsIgnoreCase(field)) {
                     mods.put(m.getLong("id"), new Object[] { m, f.getInt("ord") });
@@ -885,7 +890,7 @@ public class Finder {
             for (JSONObject m : col.getModels().all()) {
                 JSONArray flds = m.getJSONArray("flds");
                 for (JSONObject f: flds.jsonObjectIterable()) {
-                    if (f.getString("name").equalsIgnoreCase(field)) {
+                    if (f.getString(FIELD_S_NAME).equalsIgnoreCase(field)) {
                         mmap.put(m.getLong("id"), f.getInt("ord"));
                     }
                 }
@@ -969,7 +974,7 @@ public class Finder {
             JSONArray flds = model.getJSONArray("flds");
             for (int c = 0; c < flds.length(); c++) {
                 JSONObject f = flds.getJSONObject(c);
-                if (f.getString("name").equalsIgnoreCase(fieldName)) {
+                if (f.getString(FIELD_S_NAME).equalsIgnoreCase(fieldName)) {
                     fields.put(mid, c);
                     return c;
                 }

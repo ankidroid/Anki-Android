@@ -36,6 +36,7 @@ import androidx.annotation.Nullable;
 import timber.log.Timber;
 
 import static com.ichi2.anim.ActivityTransitionAnimation.Direction.END;
+import static com.ichi2.anki.dialogs.DeckPickerContextMenu.DID;
 
 /**
  * The card template previewer intent must supply one or more cards to show and the index in the list from where
@@ -234,7 +235,7 @@ public class CardTemplatePreviewer extends AbstractFlashcardViewer {
         }
 
         if (mNoteEditorBundle != null) {
-            long newDid = mNoteEditorBundle.getLong("did");
+            long newDid = mNoteEditorBundle.getLong(DID);
             if (col.getDecks().isDyn(newDid)) {
                 mCurrentCard.setODid(mCurrentCard.getDid());
             }

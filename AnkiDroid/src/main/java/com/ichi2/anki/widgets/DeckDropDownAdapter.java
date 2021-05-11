@@ -29,6 +29,8 @@ import com.ichi2.libanki.Deck;
 
 import java.util.List;
 
+import static com.ichi2.libanki.Deck.DECK_S_NAME;
+
 
 public final class DeckDropDownAdapter extends BaseAdapter {
 
@@ -94,7 +96,7 @@ public final class DeckDropDownAdapter extends BaseAdapter {
             deckNameView.setText(mContext.getResources().getString(R.string.card_browser_all_decks));
         } else {
             Deck deck = mDecks.get(position - 1);
-            String deckName = deck.getString("name");
+            String deckName = deck.getString(DECK_S_NAME);
             deckNameView.setText(deckName);
         }
         deckCountsView.setText(((SubtitleListener) mContext).getSubtitleText());
@@ -116,7 +118,7 @@ public final class DeckDropDownAdapter extends BaseAdapter {
             deckNameView.setText(mContext.getResources().getString(R.string.card_browser_all_decks));
         } else {
             Deck deck = mDecks.get(position - 1);
-            String deckName = deck.getString("name");
+            String deckName = deck.getString(DECK_S_NAME);
             deckNameView.setText(deckName);
         }
         return convertView;

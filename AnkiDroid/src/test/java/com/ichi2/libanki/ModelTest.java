@@ -22,6 +22,7 @@ import java.util.Set;
 import androidx.test.ext.junit.runners.AndroidJUnit4;
 
 import static com.ichi2.libanki.Consts.MODEL_CLOZE;
+import static com.ichi2.libanki.Model.MODEL_S_NAME;
 import static com.ichi2.libanki.Models.REQ_ALL;
 import static com.ichi2.libanki.Models.REQ_ANY;
 import static com.ichi2.libanki.Utils.stripHTML;
@@ -61,7 +62,7 @@ public class ModelTest extends RobolectricTest {
         Collection col = getCol();
         Model m = col.getModels().current();
         Model m2 = col.getModels().copy(m);
-        assertEquals("Basic copy", m2.getString("name"));
+        assertEquals("Basic copy", m2.getString(MODEL_S_NAME));
         assertNotEquals(m2.getLong("id"), m.getLong("id"));
         assertEquals(2, m2.getJSONArray("flds").length());
         assertEquals(2, m.getJSONArray("flds").length());
@@ -222,7 +223,7 @@ public class ModelTest extends RobolectricTest {
         Collection col = getCol();
         col.getModels().setCurrent(col.getModels().byName("Cloze"));
         Note note = col.newNote();
-        assertEquals("Cloze", note.model().getString("name"));
+        assertEquals("Cloze", note.model().getString(MODEL_S_NAME));
         // a cloze model with no clozes is not empty
         note.setItem("Text", "nothing");
         assertEquals(1, col.addNote(note));
