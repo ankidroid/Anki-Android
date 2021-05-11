@@ -1600,9 +1600,9 @@ public class NoteEditor extends AnkiActivity implements
 
         File clipCopy;
         if (getCol().getConf().optBoolean("pastePNG")) {
-        clipCopy = File.createTempFile(fileNameAndExtension.getKey(), ".png");
+            clipCopy = File.createTempFile(fileNameAndExtension.getKey(), ".png");
         } else {
-        clipCopy = File.createTempFile(fileNameAndExtension.getKey(), ".jpg");
+            clipCopy = File.createTempFile(fileNameAndExtension.getKey(), ".jpg");
         }
         String tempFilePath = clipCopy.getAbsolutePath();
         long bytesWritten = CompatHelper.getCompat().copyFile(fd, tempFilePath);
