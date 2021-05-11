@@ -366,7 +366,26 @@ public class Note implements Cloneable {
 
 
     public String[] getFields() {
-        return mFields;
+        return Arrays.stream(mFields)
+                .map(Note::adjustStringForHtml)
+                .toArray(String[]::new);
+    }
+
+
+    private static String adjustStringForHtml(String str) {
+        return str
+                .replaceAll("<", "&lt;")
+                .replaceAll(">", "&gt;")
+                .replaceAll("\"", "&quot;")
+                .replaceAll("'", "&apos;")
+                .replaceAll("￠", "&cent;")
+                .replaceAll("£", "&pound;")
+                .replaceAll("¥", "&yen;")
+                .replaceAll("€", "&euro;")
+                .replaceAll("©", "&copy;")
+                .replaceAll("®", "&reg;")
+                .replaceAll("&lt;([^<>]+)&gt;","<$1>")
+                .replaceAll("&lt;/([^<>]+)&gt;","</$1>");
     }
 
 
