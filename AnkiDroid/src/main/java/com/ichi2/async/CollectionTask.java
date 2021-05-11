@@ -1473,19 +1473,19 @@ public class CollectionTask<ProgressBackground, ResultBackground> extends BaseAs
                 HashMap<String, String> numToName = new HashMap<>();
                 File mediaMapFile = new File(dir.getAbsolutePath(), "media");
                 if (mediaMapFile.exists()) {
-                    JsonParser jp = AnkiSerialization.getFactory().createParser(mediaMapFile);
-                    String name;
-                    String num;
-                    if (jp.nextToken() != JsonToken.START_OBJECT) {
-                        throw new IllegalStateException("Expected content to be an object");
+                    try(JsonParser jp = AnkiSerialization.getFactory().createParser(mediaMapFile)) {
+                        String name;
+                        String num;
+                        if (jp.nextToken() != JsonToken.START_OBJECT) {
+                            throw new IllegalStateException("Expected content to be an object");
+                        }
+                        while (jp.nextToken() != JsonToken.END_OBJECT) {
+                            num = jp.currentName();
+                            name = jp.nextTextValue();
+                            nameToNum.put(name, num);
+                            numToName.put(num, name);
+                        }
                     }
-                    while (jp.nextToken() != JsonToken.END_OBJECT) {
-                        num = jp.currentName();
-                        name = jp.nextTextValue();
-                        nameToNum.put(name, num);
-                        numToName.put(num, name);
-                    }
-                    jp.close();
                 }
                 String mediaDir = Media.getCollectionMediaPath(colPath);
                 int total = nameToNum.size();
