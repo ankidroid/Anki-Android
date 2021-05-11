@@ -67,8 +67,8 @@
             android:title="@string/analytics_title" />
         <CheckBoxPreference
             android:defaultValue="false"
-            android:title="Paste clipboard images as PNG"
-            android:summary="By default Anki pastes images on the clipboard as JPG files, to save disk space. You can use this option to paste as PNG images instead."
+            android:title="@string/paste_as_png"
+            android:summary="@string/paste_as_png_summary"
             android:key="pastePNG"/>
         <ListPreference
             android:defaultValue="2"

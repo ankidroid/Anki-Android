@@ -1590,7 +1590,7 @@ public class NoteEditor extends AnkiActivity {
         Map.Entry<String, String> fileNameAndExtension = FileUtil.getFileNameAndExtension(filename);
 
         File clipCopy;
-        if(getCol().getConf().optBoolean("pastePNG")) {
+        if (getCol().getConf().optBoolean("pastePNG")) {
         clipCopy = File.createTempFile(fileNameAndExtension.getKey(), ".png");
         } else {
         clipCopy = File.createTempFile(fileNameAndExtension.getKey(), ".jpg");

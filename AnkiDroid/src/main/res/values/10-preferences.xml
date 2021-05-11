@@ -278,4 +278,8 @@
 
     <string name="no_code_formatting">Simple typed answer formatting</string>
     <string name="no_code_formatting_summ">Fixes ‘􏿾’ appearing in typed answer results</string>
+
+    <!-- Paste clipboard image as png option -->
+    <string name="paste_as_png">Paste clipboard images as PNG</string>
+    <string name="paste_as_png_summary">By default Anki pastes images on the clipboard as JPG files, to save disk space. You can use this option to paste as PNG images instead.</string>
 </resources>
