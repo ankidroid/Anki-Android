@@ -6,7 +6,7 @@ on:
 jobs:
   release_app:
     name: 'Release App'
-    timeout-minutes: 20
+    timeout-minutes: 40
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
@@ -17,10 +17,16 @@ jobs:
           path: ~/.gradle/caches
           key: gradle-${{ hashFiles('**/*.gradle*') }}-v1
 
-      - name: Verify JDK 1.8
-        # OpenJDK1.8 is the default in GitHub macOS 10.15 runner, setup is not required
-        # Run a check that exits with error unless it is 1.8 version to future-proof against unexpected upgrades
-        run: java -fullversion 2>&1 | grep '1.8'
+      - name: Configure JDK 1.11
+        uses: actions/setup-java@v2
+        with:
+          distribution: "adopt"
+          java-version: "11" # ubuntu-latest is about to default to 11, force it everywhere
+
+      - name: Verify JDK11
+        # Default JDK varies depending on different runner flavors, make sure we are on 11
+        # Run a check that exits with error unless it is 11 version to future-proof against unexpected upgrades
+        run: java -fullversion 2>&1 | grep '11.0'
         shell: bash
 
       - name: Install Release Utilities
@@ -42,7 +48,7 @@ jobs:
           git remote set-url origin git@github.com:$GITHUB_REPOSITORY
         shell: bash
 
-      - uses: webfactory/ssh-agent@v0.4.1
+      - uses: webfactory/ssh-agent@v0.5.2
         with:
           ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
 

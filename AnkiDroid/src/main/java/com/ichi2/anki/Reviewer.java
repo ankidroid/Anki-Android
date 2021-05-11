@@ -34,7 +34,6 @@ import android.os.Handler;
 import android.os.Message;
 import android.text.SpannableString;
 import android.text.style.UnderlineSpan;
-import android.util.Pair;
 import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -53,6 +52,7 @@ import androidx.annotation.IdRes;
 import androidx.annotation.MenuRes;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.annotation.PluralsRes;
 import androidx.annotation.VisibleForTesting;
 import androidx.appcompat.view.menu.MenuBuilder;
 import androidx.appcompat.app.ActionBar;
@@ -71,12 +71,9 @@ import com.ichi2.anki.reviewer.ReviewerUi;
 import com.ichi2.anki.workarounds.FirefoxSnackbarWorkaround;
 import com.ichi2.anki.reviewer.ActionButtons;
 import com.ichi2.async.CollectionTask;
-import com.ichi2.async.TaskListener;
 import com.ichi2.async.TaskManager;
-import com.ichi2.compat.CompatHelper;
 import com.ichi2.libanki.Card;
 import com.ichi2.libanki.Collection;
-import com.ichi2.libanki.Collection.DismissType;
 import com.ichi2.libanki.Consts;
 import com.ichi2.libanki.Decks;
 import com.ichi2.libanki.Utils;
@@ -86,6 +83,7 @@ import com.ichi2.utils.AndroidUiUtils;
 import com.ichi2.utils.FunctionalInterfaces.Consumer;
 import com.ichi2.utils.PairWithBoolean;
 import com.ichi2.utils.Permissions;
+import com.ichi2.utils.ViewGroupUtils;
 import com.ichi2.widget.WidgetStatus;
 
 import java.lang.ref.WeakReference;
@@ -104,13 +102,13 @@ public class Reviewer extends AbstractFlashcardViewer {
     private boolean mPrefFullscreenReview = false;
     private static final int ADD_NOTE = 12;
     private static final int REQUEST_AUDIO_PERMISSION = 0;
-    private LinearLayout colorPalette;
+    private LinearLayout mColorPalette;
 
     // TODO: Consider extracting to ViewModel
     // Card counts
-    private SpannableString newCount;
-    private SpannableString lrnCount;
-    private SpannableString revCount;
+    private SpannableString mNewCount;
+    private SpannableString mLrnCount;
+    private SpannableString mRevCount;
 
     private TextView mTextBarNew;
     private TextView mTextBarLearn;
@@ -119,7 +117,7 @@ public class Reviewer extends AbstractFlashcardViewer {
     private boolean mPrefHideDueCount;
 
     // ETA
-    private int eta;
+    private int mEta;
     private boolean mPrefShowETA;
 
 
@@ -129,25 +127,18 @@ public class Reviewer extends AbstractFlashcardViewer {
     private final ActionButtons mActionButtons = new ActionButtons(this);
 
 
-    private final ScheduleCollectionTaskListener mRescheduleCardHandler = new ScheduleCollectionTaskListener() {
-        protected int getToastResourceId() {
-            return R.plurals.reschedule_cards_dialog_acknowledge;
-        }
-    };
-
-    private final ScheduleCollectionTaskListener mResetProgressCardHandler = new ScheduleCollectionTaskListener() {
-        protected int getToastResourceId() {
-            return R.plurals.reset_cards_dialog_acknowledge;
-        }
-    };
-
     @VisibleForTesting
     protected final PeripheralKeymap mProcessor = new PeripheralKeymap(this, this);
 
     /** We need to listen for and handle reschedules / resets very similarly */
-    abstract class ScheduleCollectionTaskListener extends NextCardHandler<PairWithBoolean<Card[]>> {
+    class ScheduleCollectionTaskListener extends NextCardHandler<PairWithBoolean<Card[]>> {
 
-        abstract protected int getToastResourceId();
+        private final @PluralsRes int mToastResourceId;
+
+
+        protected ScheduleCollectionTaskListener(@PluralsRes int toastResourceId) {
+            mToastResourceId = toastResourceId;
+        }
 
 
         @Override
@@ -156,7 +147,7 @@ public class Reviewer extends AbstractFlashcardViewer {
             invalidateOptionsMenu();
             int cardCount = result.other.length;
             UIUtils.showThemedToast(Reviewer.this,
-                    getResources().getQuantityString(getToastResourceId(), cardCount, cardCount), true);
+                    getResources().getQuantityString(mToastResourceId, cardCount, cardCount), true);
         }
     }
 
@@ -170,7 +161,7 @@ public class Reviewer extends AbstractFlashcardViewer {
 
         if (FirefoxSnackbarWorkaround.handledLaunchFromWebBrowser(getIntent(), this)) {
             this.setResult(RESULT_CANCELED);
-            finishWithAnimation(RIGHT);
+            finishWithAnimation(END);
             return;
         }
 
@@ -179,7 +170,7 @@ public class Reviewer extends AbstractFlashcardViewer {
             selectDeckFromExtra();
         }
 
-        colorPalette = findViewById(R.id.whiteboard_pen_color);
+        mColorPalette = findViewById(R.id.whiteboard_editor);
 
         startLoadingCollection();
     }
@@ -209,6 +200,12 @@ public class Reviewer extends AbstractFlashcardViewer {
     }
 
     @Override
+    protected void recreateWebView() {
+        super.recreateWebView();
+        ViewGroupUtils.setRenderWorkaround(this);
+    }
+
+    @Override
     protected boolean shouldDisplayMark() {
         boolean markValue = super.shouldDisplayMark();
         if (!markValue) {
@@ -222,15 +219,11 @@ public class Reviewer extends AbstractFlashcardViewer {
 
     private void selectDeckFromExtra() {
         Bundle extras = getIntent().getExtras();
-        long did = Long.MIN_VALUE;
-        if (extras != null) {
-            did = extras.getLong("deckId", Long.MIN_VALUE);
-        }
-
-        if(did == Long.MIN_VALUE) {
+        if (extras == null || !extras.containsKey("deckId")) {
             // deckId is not set, load default
             return;
         }
+        long did = extras.getLong("deckId", Long.MIN_VALUE);
 
         Timber.d("selectDeckFromExtra() with deckId = %d", did);
 
@@ -287,7 +280,7 @@ public class Reviewer extends AbstractFlashcardViewer {
 
         col.getSched().deferReset();     // Reset schedule in case card was previously loaded
         getCol().startTimebox();
-        TaskManager.launchCollectionTask(new CollectionTask.GetCard(), mAnswerCardHandler(false));
+        TaskManager.launchCollectionTask(new CollectionTask.GetCard(), new AnswerCardHandler(false));
 
         disableDrawerSwipeOnConflicts();
         // Add a weak reference to current activity so that scheduler can talk to to Activity
@@ -297,6 +290,8 @@ public class Reviewer extends AbstractFlashcardViewer {
         if (mPrefFullscreenReview) {
             setFullScreen(this);
         }
+
+        ViewGroupUtils.setRenderWorkaround(this);
     }
 
 
@@ -342,23 +337,23 @@ public class Reviewer extends AbstractFlashcardViewer {
             Timber.i("Reviewer:: Bury button pressed");
             if (!MenuItemCompat.getActionProvider(item).hasSubMenu()) {
                 Timber.d("Bury card due to no submenu");
-                dismiss(DismissType.BURY_CARD);
+                buryCard();
             }
         } else if (itemId == R.id.action_suspend) {
             Timber.i("Reviewer:: Suspend button pressed");
             if (!MenuItemCompat.getActionProvider(item).hasSubMenu()) {
                 Timber.d("Suspend card due to no submenu");
-                dismiss(DismissType.SUSPEND_CARD);
+                suspendCard();
             }
         } else if (itemId == R.id.action_delete) {
             Timber.i("Reviewer:: Delete note button pressed");
             showDeleteNoteDialog();
         } else if (itemId == R.id.action_change_whiteboard_pen_color) {
             Timber.i("Reviewer:: Pen Color button pressed");
-            if (colorPalette.getVisibility() == View.GONE) {
-                colorPalette.setVisibility(View.VISIBLE);
+            if (mColorPalette.getVisibility() == View.GONE) {
+                mColorPalette.setVisibility(View.VISIBLE);
             } else {
-                colorPalette.setVisibility(View.GONE);
+                mColorPalette.setVisibility(View.GONE);
             }
         } else if (itemId == R.id.action_save_whiteboard) {
             Timber.i("Reviewer:: Save whiteboard button pressed");
@@ -367,6 +362,7 @@ public class Reviewer extends AbstractFlashcardViewer {
                     String savedWhiteboardFileName = mWhiteboard.saveWhiteboard(getCol().getTime());
                     UIUtils.showThemedToast(Reviewer.this, getString(R.string.white_board_image_saved, savedWhiteboardFileName), true);
                 } catch (Exception e) {
+                    Timber.w(e);
                     UIUtils.showThemedToast(Reviewer.this, getString(R.string.white_board_image_save_failed, e.getLocalizedMessage()), true);
                 }
             }
@@ -427,7 +423,7 @@ public class Reviewer extends AbstractFlashcardViewer {
         setWhiteboardEnabledState(mPrefWhiteboard);
         setWhiteboardVisibility(mPrefWhiteboard);
         if (!mPrefWhiteboard) {
-            colorPalette.setVisibility(View.GONE);
+            mColorPalette.setVisibility(View.GONE);
         }
         refreshActionBar();
     }
@@ -460,7 +456,8 @@ public class Reviewer extends AbstractFlashcardViewer {
      * @return Whether the mic toolbar is usable
      */
     @SuppressWarnings("BooleanMethodIsAlwaysInverted")
-    private boolean openMicToolbar() {
+    @VisibleForTesting
+    public boolean openMicToolbar() {
         if (mMicToolBar == null || mMicToolBar.getVisibility() != View.VISIBLE) {
             openOrToggleMicToolbar();
         }
@@ -492,8 +489,8 @@ public class Reviewer extends AbstractFlashcardViewer {
             if (mTempAudioPath == null) {
                 return;
             }
-            mMicToolBar = AudioView.createRecorderInstance(this, R.drawable.av_play, R.drawable.av_pause,
-                        R.drawable.av_stop, R.drawable.av_rec, R.drawable.av_rec_stop, mTempAudioPath);
+            mMicToolBar = AudioView.createRecorderInstance(this, R.drawable.ic_play_arrow_white_24dp, R.drawable.ic_pause_white_24dp,
+                        R.drawable.ic_stop_white_24dp, R.drawable.ic_rec, R.drawable.ic_rec_stop, mTempAudioPath);
             if (mMicToolBar == null) {
                 mTempAudioPath = null;
                 return;
@@ -506,8 +503,9 @@ public class Reviewer extends AbstractFlashcardViewer {
         }
     }
 
-    public void onRequestPermissionsResult (int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
-        if ( (requestCode == REQUEST_AUDIO_PERMISSION) &&
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        if ((requestCode == REQUEST_AUDIO_PERMISSION) &&
                 (permissions.length >= 1) && (grantResults[0] == PackageManager.PERMISSION_GRANTED)) {
             // Get get audio record permission, so we can create the record tool bar
             toggleMicToolBar();
@@ -516,7 +514,7 @@ public class Reviewer extends AbstractFlashcardViewer {
 
     private void showRescheduleCardDialog() {
         Consumer<Integer> runnable = days ->
-            TaskManager.launchCollectionTask(new CollectionTask.RescheduleCards(Collections.singletonList(mCurrentCard.getId()), days), mRescheduleCardHandler);
+            TaskManager.launchCollectionTask(new CollectionTask.RescheduleCards(Collections.singletonList(mCurrentCard.getId()), days), new ScheduleCollectionTaskListener(R.plurals.reschedule_cards_dialog_acknowledge));
         RescheduleDialog dialog = RescheduleDialog.rescheduleSingleCard(getResources(), mCurrentCard, runnable);
 
         showDialogFragment(dialog);
@@ -534,7 +532,7 @@ public class Reviewer extends AbstractFlashcardViewer {
         Runnable confirm = () -> {
             Timber.i("NoteEditor:: ResetProgress button pressed");
             TaskManager.launchCollectionTask(new CollectionTask.ResetCards(Collections.singletonList(mCurrentCard.getId())),
-                    mResetProgressCardHandler);
+                    new ScheduleCollectionTaskListener(R.plurals.reset_cards_dialog_acknowledge));
         };
         dialog.setConfirm(confirm);
         showDialogFragment(dialog);
@@ -544,7 +542,7 @@ public class Reviewer extends AbstractFlashcardViewer {
     private void addNote() {
         Intent intent = new Intent(this, NoteEditor.class);
         intent.putExtra(NoteEditor.EXTRA_CALLER, NoteEditor.CALLER_REVIEWER_ADD);
-        startActivityForResultWithAnimation(intent, ADD_NOTE, LEFT);
+        startActivityForResultWithAnimation(intent, ADD_NOTE, START);
     }
 
 
@@ -559,9 +557,9 @@ public class Reviewer extends AbstractFlashcardViewer {
         int alpha = (getControlBlocked() != ReviewerUi.ControlBlock.SLOW) ? Themes.ALPHA_ICON_ENABLED_LIGHT : Themes.ALPHA_ICON_DISABLED_LIGHT ;
         MenuItem markCardIcon = menu.findItem(R.id.action_mark_card);
         if (mCurrentCard != null && mCurrentCard.note().hasTag("marked")) {
-            markCardIcon.setTitle(R.string.menu_unmark_note).setIcon(R.drawable.ic_star_white_24dp);
+            markCardIcon.setTitle(R.string.menu_unmark_note).setIcon(R.drawable.ic_star_white);
         } else {
-            markCardIcon.setTitle(R.string.menu_mark_note).setIcon(R.drawable.ic_star_outline_white_24dp);
+            markCardIcon.setTitle(R.string.menu_mark_note).setIcon(R.drawable.ic_star_border_white);
         }
         markCardIcon.getIcon().mutate().setAlpha(alpha);
 
@@ -595,18 +593,19 @@ public class Reviewer extends AbstractFlashcardViewer {
         boolean undoEnabled;
         if (mShowWhiteboard && mWhiteboard != null && mWhiteboard.isUndoModeActive()) {
             // Whiteboard is here and strokes have been added at some point
-            undoIconId = R.drawable.ic_eraser_variant_white_24dp;
+            undoIconId = R.drawable.eraser;
             undoEnabled = !mWhiteboard.undoEmpty();
         } else {
             // We can arrive here even if `mShowWhiteboard &&
             // mWhiteboard != null` if no stroke had ever been made
-            undoIconId = R.drawable.ic_undo_white_24dp;
+            undoIconId = R.drawable.ic_undo_white;
             undoEnabled = (colIsOpen() && getCol().undoAvailable());
         }
         int alpha_undo = (undoEnabled && getControlBlocked() != ReviewerUi.ControlBlock.SLOW) ? Themes.ALPHA_ICON_ENABLED_LIGHT : Themes.ALPHA_ICON_DISABLED_LIGHT ;
         MenuItem undoIcon = menu.findItem(R.id.action_undo);
         undoIcon.setIcon(undoIconId);
         undoIcon.setEnabled(undoEnabled).getIcon().mutate().setAlpha(alpha_undo);
+        undoIcon.getActionView().setEnabled(undoEnabled);
         if (colIsOpen()) { // Required mostly because there are tests where `col` is null
             undoIcon.setTitle(getResources().getString(R.string.studyoptions_congrats_undo, getCol().undoName(getResources())));
         }
@@ -634,7 +633,7 @@ public class Reviewer extends AbstractFlashcardViewer {
                 change_pen_color_icon.setVisible(true);
             }
 
-            Drawable whiteboardIcon = ContextCompat.getDrawable(this, R.drawable.ic_gesture_white_24dp).mutate();
+            Drawable whiteboardIcon = ContextCompat.getDrawable(this, R.drawable.ic_gesture_white).mutate();
             Drawable whiteboardColorPaletteIcon = VectorDrawableCompat.create(getResources(), R.drawable.ic_color_lens_white_24dp, null).mutate();
 
             if (mShowWhiteboard) {
@@ -652,7 +651,7 @@ public class Reviewer extends AbstractFlashcardViewer {
                 whiteboardColorPaletteIcon.setAlpha(Themes.ALPHA_ICON_DISABLED_LIGHT);
                 change_pen_color_icon.setEnabled(false);
                 change_pen_color_icon.setIcon(whiteboardColorPaletteIcon);
-                colorPalette.setVisibility(View.GONE);
+                mColorPalette.setVisibility(View.GONE);
             }
         } else {
             toggle_whiteboard_icon.setTitle(R.string.enable_whiteboard);
@@ -673,14 +672,14 @@ public class Reviewer extends AbstractFlashcardViewer {
             suspend_icon.setIcon(R.drawable.ic_action_suspend_dropdown);
             suspend_icon.setTitle(R.string.menu_suspend);
         } else {
-            suspend_icon.setIcon(R.drawable.ic_action_suspend);
+            suspend_icon.setIcon(R.drawable.ic_pause_circle_outline);
             suspend_icon.setTitle(R.string.menu_suspend_card);
         }
         if (buryNoteAvailable()) {
-            bury_icon.setIcon(R.drawable.ic_flip_to_back_white_24px_dropdown);
+            bury_icon.setIcon(R.drawable.ic_flip_to_back_dropdown);
             bury_icon.setTitle(R.string.menu_bury);
         } else {
-            bury_icon.setIcon(R.drawable.ic_flip_to_back_white_24dp);
+            bury_icon.setIcon(R.drawable.ic_flip_to_back_white);
             bury_icon.setTitle(R.string.menu_bury_card);
         }
         alpha = (getControlBlocked() != ReviewerUi.ControlBlock.SLOW) ? Themes.ALPHA_ICON_ENABLED_LIGHT : Themes.ALPHA_ICON_DISABLED_LIGHT ;
@@ -805,7 +804,7 @@ public class Reviewer extends AbstractFlashcardViewer {
     @Override
     protected void performReload() {
         getCol().getSched().deferReset();
-        TaskManager.launchCollectionTask(new CollectionTask.GetCard(), mAnswerCardHandler(false));
+        TaskManager.launchCollectionTask(new CollectionTask.GetCard(), new AnswerCardHandler(false));
     }
 
 
@@ -930,37 +929,37 @@ public class Reviewer extends AbstractFlashcardViewer {
 
         if (actionBar != null) {
             if (mPrefShowETA) {
-                eta = mSched.eta(counts, false);
-                actionBar.setSubtitle(Utils.remainingTime(AnkiDroidApp.getInstance(), eta * 60));
+                mEta = mSched.eta(counts, false);
+                actionBar.setSubtitle(Utils.remainingTime(AnkiDroidApp.getInstance(), mEta * 60));
             }
         }
 
 
-        newCount = new SpannableString(String.valueOf(counts.getNew()));
-        lrnCount = new SpannableString(String.valueOf(counts.getLrn()));
-        revCount = new SpannableString(String.valueOf(counts.getRev()));
+        mNewCount = new SpannableString(String.valueOf(counts.getNew()));
+        mLrnCount = new SpannableString(String.valueOf(counts.getLrn()));
+        mRevCount = new SpannableString(String.valueOf(counts.getRev()));
         if (mPrefHideDueCount) {
-            revCount = new SpannableString("???");
+            mRevCount = new SpannableString("???");
         }
 
         switch (mSched.countIdx(mCurrentCard)) {
             case NEW:
-                newCount.setSpan(new UnderlineSpan(), 0, newCount.length(), 0);
+                mNewCount.setSpan(new UnderlineSpan(), 0, mNewCount.length(), 0);
                 break;
             case LRN:
-                lrnCount.setSpan(new UnderlineSpan(), 0, lrnCount.length(), 0);
+                mLrnCount.setSpan(new UnderlineSpan(), 0, mLrnCount.length(), 0);
                 break;
             case REV:
-                revCount.setSpan(new UnderlineSpan(), 0, revCount.length(), 0);
+                mRevCount.setSpan(new UnderlineSpan(), 0, mRevCount.length(), 0);
                 break;
             default:
                 Timber.w("Unknown card type %s", mSched.countIdx(mCurrentCard));
                 break;
         }
 
-        mTextBarNew.setText(newCount);
-        mTextBarLearn.setText(lrnCount);
-        mTextBarReview.setText(revCount);
+        mTextBarNew.setText(mNewCount);
+        mTextBarLearn.setText(mLrnCount);
+        mTextBarReview.setText(mRevCount);
     }
 
     @Override
@@ -1265,6 +1264,10 @@ public class Reviewer extends AbstractFlashcardViewer {
         return mWhiteboard;
     }
 
+    @VisibleForTesting(otherwise = VisibleForTesting.NONE)
+    public AudioView getAudioView() {
+        return mMicToolBar;
+    }
 
     /**
      * Inner class which implements the submenu for the Suspend button
@@ -1304,11 +1307,9 @@ public class Reviewer extends AbstractFlashcardViewer {
         public boolean onMenuItemClick(MenuItem item) {
             int itemId = item.getItemId();
             if (itemId == R.id.action_suspend_card) {
-                dismiss(DismissType.SUSPEND_CARD);
-                return true;
+                return suspendCard();
             } else if (itemId == R.id.action_suspend_note) {
-                dismiss(DismissType.SUSPEND_NOTE);
-                return true;
+                return suspendNote();
             }
             return false;
         }
@@ -1352,11 +1353,9 @@ public class Reviewer extends AbstractFlashcardViewer {
         public boolean onMenuItemClick(MenuItem item) {
             int itemId = item.getItemId();
             if (itemId == R.id.action_bury_card) {
-                dismiss(DismissType.BURY_CARD);
-                return true;
+                return buryCard();
             } else if (itemId == R.id.action_bury_note) {
-                dismiss(DismissType.BURY_NOTE);
-                return true;
+                return buryNote();
             }
             return false;
         }
@@ -1423,25 +1422,25 @@ public class Reviewer extends AbstractFlashcardViewer {
         @JavascriptInterface
         @Override
         public String ankiGetNewCardCount() {
-            return newCount.toString();
+            return mNewCount.toString();
         }
 
         @JavascriptInterface
         @Override
         public String ankiGetLrnCardCount() {
-            return lrnCount.toString();
+            return mLrnCount.toString();
         }
 
         @JavascriptInterface
         @Override
         public String ankiGetRevCardCount() {
-            return revCount.toString();
+            return mRevCount.toString();
         }
 
         @JavascriptInterface
         @Override
         public int ankiGetETA() {
-            return eta;
+            return mEta;
         }
     }
 }

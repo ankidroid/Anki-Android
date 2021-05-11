@@ -25,6 +25,7 @@ import android.content.Context;
 import com.ichi2.async.Connection;
 import com.ichi2.compat.CompatHelper;
 import com.ichi2.libanki.sync.Tls12SocketFactory;
+import com.ichi2.utils.VersionUtils;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -47,10 +48,42 @@ import timber.log.Timber;
  */
 public class HttpFetcher {
 
+    /**
+     * Get an OkHttpClient configured with correct timeouts and headers
+     *
+     * @param fakeUserAgent true if we should issue "fake" User-Agent header 'Mozilla/5.0' for compatibility
+     * @return OkHttpClient.Builder ready for use or further configuration
+     */
+    public static OkHttpClient.Builder getOkHttpBuilder(boolean fakeUserAgent) {
+        OkHttpClient.Builder clientBuilder = new OkHttpClient.Builder();
+        Tls12SocketFactory.enableTls12OnPreLollipop(clientBuilder)
+                .connectTimeout(Connection.CONN_TIMEOUT, TimeUnit.SECONDS)
+                .writeTimeout(Connection.CONN_TIMEOUT, TimeUnit.SECONDS)
+                .readTimeout(Connection.CONN_TIMEOUT, TimeUnit.SECONDS);
+
+        if (fakeUserAgent) {
+            clientBuilder.addNetworkInterceptor(chain -> chain.proceed(
+                    chain.request()
+                            .newBuilder()
+                            .header("Referer", "com.ichi2.anki")
+                            .header("User-Agent", "Mozilla/5.0 ( compatible ) ")
+                            .header("Accept", "*/*")
+                            .build()
+            ));
+        } else {
+            clientBuilder.addNetworkInterceptor(chain -> chain.proceed(
+                    chain.request()
+                            .newBuilder()
+                            .header("User-Agent", "AnkiDroid-" + VersionUtils.getPkgVersionName())
+                            .build()
+            ));
+        }
+        return clientBuilder;
+    }
+
     public static String fetchThroughHttp(String address) {
         return fetchThroughHttp(address, "utf-8");
     }
-
 
     public static String fetchThroughHttp(String address, String encoding) {
 
@@ -62,12 +95,7 @@ public class HttpFetcher {
             requestBuilder.url(address).get();
             Request httpGet = requestBuilder.build();
 
-            OkHttpClient.Builder clientBuilder = new OkHttpClient.Builder();
-            Tls12SocketFactory.enableTls12OnPreLollipop(clientBuilder)
-                    .connectTimeout(Connection.CONN_TIMEOUT, TimeUnit.SECONDS)
-                    .writeTimeout(Connection.CONN_TIMEOUT, TimeUnit.SECONDS)
-                    .readTimeout(Connection.CONN_TIMEOUT, TimeUnit.SECONDS);
-            OkHttpClient client = clientBuilder.build();
+            OkHttpClient client = getOkHttpBuilder(true).build();
             response = client.newCall(httpGet).execute();
 
 
@@ -123,24 +151,10 @@ public class HttpFetcher {
             if ("GET".equals(method)) {
                 requestBuilder.get();
             } else {
-                requestBuilder.post(RequestBody.create(null, new byte[0]));
+                requestBuilder.post(RequestBody.create(new byte[0], null));
             }
             Request request = requestBuilder.build();
-
-            OkHttpClient.Builder clientBuilder = new OkHttpClient.Builder();
-            clientBuilder.addNetworkInterceptor(chain -> chain.proceed(
-                    chain.request()
-                            .newBuilder()
-                            .header("Referer", "com.ichi2.anki")
-                            .header("User-Agent", "Mozilla/5.0 ( compatible ) ")
-                            .header("Accept", "*/*")
-                            .build()
-            ));
-            Tls12SocketFactory.enableTls12OnPreLollipop(clientBuilder)
-                    .connectTimeout(Connection.CONN_TIMEOUT, TimeUnit.SECONDS)
-                    .writeTimeout(Connection.CONN_TIMEOUT, TimeUnit.SECONDS)
-                    .readTimeout(Connection.CONN_TIMEOUT, TimeUnit.SECONDS);
-            OkHttpClient client = clientBuilder.build();
+            OkHttpClient client = getOkHttpBuilder(true).build();
             response = client.newCall(request).execute();
 
             File file = File.createTempFile(prefix, extension, context.getCacheDir());
@@ -150,6 +164,7 @@ public class HttpFetcher {
             return file.getAbsolutePath();
 
         } catch (Exception e) {
+            Timber.w(e);
             return "FAILED " + e.getMessage();
         } finally {
             if (response != null && response.body() != null) {

@@ -126,6 +126,8 @@
     <string name="import_complete_count">Importovaných kartičiek: %d</string>
     <string name="sd_card_full_title">SD karta je plná</string>
     <string name="sd_card_almost_full_title">SD karta je takmer plná</string>
+    <string name="no_space_to_downgrade_title">No space</string>
+    <string name="no_space_to_downgrade_content">AnkiDroid needs %s free storage space to continue. Please clear some space</string>
     <string name="restore_backup_title">Obnoviť zálohu?</string>
     <string name="restore_backup">Vaša kolekcia bude nahradená staršou kópiou. Všetky neuložené zmeny budú stratené.</string>
     <string name="dialog_cancel">Zrušiť</string>
@@ -242,6 +244,8 @@
     <string name="help_item_discord">Discord</string>
     <string name="help_item_facebook">Facebook</string>
     <string name="help_item_twitter">Twitter</string>
+    <string name="help_title_send_exception">Send troubleshooting report</string>
+    <string name="help_dialog_exception_report_debounce">Report already submitted</string>
     <!--Sync-->
     <plurals name="sync_automatic_sync_needs_more_time">
         <item quantity="one">Automatická synchronizácia sa môže spustiť za %d sekundu</item>
@@ -249,4 +253,11 @@
         <item quantity="many">Automatická synchronizácia sa môže spustiť za %d sekúnd</item>
         <item quantity="other">Automatická synchronizácia sa môže spustiť za %d sekúnd</item>
     </plurals>
+    <string name="deck_picker_new">Number of new cards to see today in this deck.</string>
+    <string name="deck_picker_rev">Number of cards due today in this deck.</string>
+    <string name="deck_picker_lrn">Number of cards in learning in this deck.</string>
+    <!-- This description is valid fos
+    sched V2. For V1, it was counting the number of repetitions of cards in learning. This approximation is acceptable
+    for the sake of simplicity and because V1 will leave.-->
+    <string name="deck_picker_counts">Open the deck overview page containing the number of cards to see today.</string>
 </resources>

@@ -15,6 +15,8 @@
  ****************************************************************************************/
 package com.wildplot.android.rendering;
 
+import android.annotation.SuppressLint;
+
 import com.wildplot.android.rendering.graphics.wrapper.ColorWrap;
 import com.wildplot.android.rendering.graphics.wrapper.FontMetricsWrap;
 import com.wildplot.android.rendering.graphics.wrapper.GraphicsWrap;
@@ -24,6 +26,7 @@ import com.wildplot.android.rendering.interfaces.Legendable;
 
 import androidx.annotation.NonNull;
 
+@SuppressLint("NonPublicNonStaticFieldName")
 public class PieChart implements Drawable, Legendable {
     // First sector starts at 12 o'clock.
     private static final float FIRST_SECTOR_OFFSET = -90;

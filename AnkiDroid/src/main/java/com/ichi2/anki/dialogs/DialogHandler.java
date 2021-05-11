@@ -1,3 +1,19 @@
+/****************************************************************************************
+ * Copyright (c) 2015 Timothy Rae <perceptualchaos2@gmail.com>                          *
+ *                                                                                      *
+ * This program is free software; you can redistribute it and/or modify it under        *
+ * the terms of the GNU General Public License as published by the Free Software        *
+ * Foundation; either version 3 of the License, or (at your option) any later           *
+ * version.                                                                             *
+ *                                                                                      *
+ * This program is distributed in the hope that it will be useful, but WITHOUT ANY      *
+ * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A      *
+ * PARTICULAR PURPOSE. See the GNU General Public License for more details.             *
+ *                                                                                      *
+ * You should have received a copy of the GNU General Public License along with         *
+ * this program.  If not, see <http://www.gnu.org/licenses/>.                           *
+ ****************************************************************************************/
+
 package com.ichi2.anki.dialogs;
 
 import android.content.SharedPreferences;
@@ -46,7 +62,7 @@ public class DialogHandler extends Handler {
     public static final int MSG_SHOW_FORCE_FULL_SYNC_DIALOG = 7;
     public static final int MSG_DO_SYNC = 8;
 
-    public static final String[] sMessageNameList = {
+    public static final String[] MESSAGE_NAME_LIST = {
             "CollectionLoadErrorDialog",
             "ImportReplaceDialog",
             "ImportAddDialog",
@@ -70,7 +86,7 @@ public class DialogHandler extends Handler {
     @Override
     public void handleMessage(Message msg) {
         Bundle msgData = msg.getData();
-        String messageName = sMessageNameList[msg.what];
+        String messageName = MESSAGE_NAME_LIST[msg.what];
         UsageAnalytics.sendAnalyticsScreenView(messageName);
         Timber.i("Handling Message: %s", messageName);
         if (msg.what == MSG_SHOW_COLLECTION_LOADING_ERROR_DIALOG) {

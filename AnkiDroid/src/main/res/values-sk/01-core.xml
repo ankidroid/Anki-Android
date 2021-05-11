@@ -126,12 +126,12 @@
     <string name="menu_edit_tags">Editovať štítky</string>
     <string name="delete_note_message">Naozaj chcete odstrániť túto poznámku a všetky jej kartičky?\n%s</string>
     <string name="menu_select">Zvoliť text</string>
+    <string name="menu_lookup">Vyhľadať text</string>
     <string name="menu_search">Vyhľadať v %1$s</string>
     <string name="menu_mark_note">Označiť poznámku</string>
     <string name="menu_unmark_note">Odznačiť poznámku</string>
     <string name="menu_toggle_mic_tool_bar">Skontrolovať výslovnosť</string>
     <string name="new_deck">Vytvoriť balíček</string>
-    <string name="create" comment="Button to create a filtered deck">Vytvoriť</string>
     <string name="new_dynamic_deck">Vytvoriť filtrovaný balíček</string>
     <string name="night_mode">Nočný režim</string>
     <string name="directory_inaccessible">Adresár AnkiDroid je neprístupný</string>
@@ -164,7 +164,8 @@
     <string name="custom_study_deck_name">Vlastné štúdium</string>
     <string name="custom_study_deck_exists">Prosím premenujte najprv existujúci balíček Vlastné štúdium.</string>
     <string name="empty_deck">Tento balíček je prázdny</string>
-    <string name="empty_deck_add_note">Add card</string>
+    <string name="search_deck">Vyhľadávanie v balíčku</string>
+    <string name="empty_deck_add_note">Pridať kartičku</string>
     <string name="invalid_deck_name">Neplatný názov balíčka</string>
     <string name="studyoptions_empty">Tento balíček je prázdny. Stlačte + pre pridávanie obsahu.</string>
     <string name="studyoptions_limit_reached">Denný limit učenia bol dosiahnutý</string>
@@ -214,12 +215,20 @@
     <!-- Context Menu -->
     <string name="card_browser_context_menu" comment="The value which appears in the system context menu. Note the casing difference">Prehliadač kartičiek</string>
     <string name="context_menu_anki_card_label">Anki kartička</string>
-    <string name="has_a_problem" comment="First field is either front template or back template. Second field is the error message.">%1$s has a problem:<br/>%2$s</string>
-    <string name="more_information">More information</string>
+    <string name="has_a_problem" comment="First field is either front template or back template. Second field is the error message.">%1$s má problém:<br/>%2$s</string>
+    <string name="more_information">Viac informácií</string>
     <string name="no_field">Found \'{{%1$s}}\', but there is no field called \'%1$s\'.</string>
     <string name="closed_tag_not_open">Found \'{{/%1$s}}\', but missing \'{{#%1$s}}\' or \'{{^%1$s}}\'.</string>
     <string name="missing_closing_bracket">Missing \'}}\' in \'%s\'.</string>
     <string name="open_tag_not_closed">Missing \'{{%s}}\'.</string>
     <string name="wrong_tag_closed">Found \'{{/%1$s}}\', but expected \'{{/%2$s}}\'</string>
-    <string name="filter_error">Error in filter %s</string>
+    <string name="filter_error">Chyba vo filtri %s</string>
+    <!-- Sync conflict -->
+    <string name="sync_conflict_message_new">The collections can’t be combined.\nWhich collection do you want to keep?</string>
+    <string name="sync_conflict_keep_local_new" comment="Select AnkiDroid files to keep while syncing">AnkiDroid</string>
+    <string name="sync_conflict_keep_remote_new" comment="Select AnkiWeb files to keep while syncing">AnkiWeb</string>
+    <string name="sync_conflict_remote_confirm_new">Replace your collection on AnkiDroid with your collection from AnkiWeb?</string>
+    <string name="sync_conflict_local_confirm_new">Replace your collection on AnkiWeb with your collection from AnkiDroid?</string>
+    <string name="sync_conflict_title_new">Select collection to keep</string>
+    <string name="sync_conflict_replace_title">Replace collection</string>
 </resources>

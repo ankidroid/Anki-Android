@@ -63,11 +63,6 @@
     <!-- AndroidManifest.xml -->
     <string name="preferences_title">Seçimlərimiz</string>
     <string name="deckpreferences_title">XXX seçimləri</string>
-    <string name="sync_conflict_message">Bu koleksiyanı yükləyin və ya Ankiweb-dan yükləyin,çünki onlar birləşdirilə bilməz.Bir tərəfdən toplanan siyahının üzərində yazılacaq.</string>
-    <string name="sync_conflict_local">Yükləmək</string>
-    <string name="sync_conflict_remote">Endirilənlər</string>
-    <string name="sync_conflict_remote_confirm">Yerli toplusunu yenidən yazmalısınız?</string>
-    <string name="sync_conflict_local_confirm">Serverdə kolleksiyanızın üzərində yazmaq?</string>
     <string name="sync_prepare_syncing">Sinxronlaşdırma hazırlanılır...</string>
     <string name="sync_preparing_full_sync_message">Tam sinxronizasiya hazırlanır...</string>
     <string name="sync_uploading_message">Yüklənilir...</string>
@@ -78,7 +73,6 @@
     <string name="sync_log_clocks_unsynchronized">Your clock’s off by %1$d seconds%2$s. Make sure that the date, time, and timezone on your phone are set correctly, then sync again.</string>
     <string name="sync_log_clocks_unsynchronized_tz">, saat diliminin ehtimal yanlışdır.</string>
     <string name="sync_log_clocks_unsynchronized_date">, saat diliminin ehtimal yanlışdır</string>
-    <string name="sync_conflict_title">Münaqişənin sinxronlaşdırılması</string>
     <string name="sync_no_changes_message">Heç bir dəyişiklik yoxdur</string>
     <string name="sync_database_acknowledge">Kolleksiya sinxronizasiya olunmuşdur</string>
     <string name="sync_log_error_specific">Sinxronizasiya səhvi növü: %1$s, mesaj: %2$s</string>

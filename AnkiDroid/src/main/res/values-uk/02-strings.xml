@@ -122,6 +122,7 @@
     <string name="reordering_cards">Зміна порядку карт...</string>
     <string name="field_remapping">%1$s (з\"%2$s\")</string>
     <string name="confirm_map_cards_to_nothing">Картки, які не прив\'язані, будуть видалені. Якщо запис не має жодної картки, то запис буде втрачено. Ви хочете продовжити?</string>
+    <string name="timebox_reached_title">Досягнуто часу</string>
     <plurals name="timebox_reached">
         <item quantity="one">%1$d картка переглянута за %2$s</item>
         <item quantity="few">%1$d картки переглянуті за %2$s</item>
@@ -298,6 +299,7 @@
     <string name="white_board_image_save_failed">Не вдалося зберегти зображення дошки. %s</string>
     <string name="white_board_image_saved">Зображення дошки збережено до %s</string>
     <string name="title_whiteboard_pen_color">Колір пензля</string>
+    <string name="title_whiteboard_editor">Whiteboard editor</string>
     <!-- CSV/Note Import -->
     <string name="note_importer_empty_cards_found"><![CDATA[Знайдено порожні картки. Натисніть Інструменти > Порожні картки.]]></string>
     <string name="note_importer_error_empty_first_field">Порожнє перше поле: %s</string>
@@ -339,6 +341,7 @@
     <!-- Card Viewer -->
     <string name="card_viewer_could_not_find_image">Не вдалося завантажити «\'%s»</string>
     <string name="card_viewer_media_relative_protocol">Помилка вмісту картки: необхідне оновлення медіа</string>
+    <string name="cannot_load_http_resource">Завантаження ресурсів http більше не підтримується</string>
     <!-- Deck Picker -->
     <string name="deck_picker_failed_deck_load">Не вдалося завантажити колоду «%s»</string>
     <string name="search_decks">Шукати колоди</string>
@@ -366,4 +369,11 @@
     <string name="create_shortcut_failed" comment="home screen == launcher">Ваш головний екран не дозволяє AnkiDroid додати ярлики</string>
     <string name="create_shortcut_error">Помилка при створенні ярлика: %s</string>
     <string name="note_editor_capitalize" comment="This is for a switch with a checkbox - on: enabled">Підняти регістр речень</string>
+    <!-- Symbols used as Button text in IncrementNumberRangePreference -->
+    <string name="plus_sign" comment="Label for increment button in IncrementerNumberRangePreference">+</string>
+    <string name="minus_sign" comment="Label for decrement button in IncrementerNumberRangePreference">-</string>
+    <!-- Used for credential empty warning message -->
+    <string name="email_id_empty">Необхідно вказати адресу електронної пошти</string>
+    <string name="password_empty">Поле «Пароль» обов\'язкове до заповнення</string>
+    <string name="back_pressed_once">Натисніть ще раз, щоб вийти</string>
 </resources>

@@ -35,10 +35,10 @@
 <resources>
     <!-- Main editor popup menu items -->
     <string name="multimedia_editor_popup_image">ପ୍ରତିଛବି ଯୋଡ଼ନ୍ତୁ</string>
-    <string name="multimedia_editor_popup_audio_clip">ଅଡିଓ କ୍ଲିପ୍ ଯୋଡ଼ନ୍ତୁ</string>
-    <string name="multimedia_editor_popup_audio">ଅଡିଓ ରେକର୍ଡ କରନ୍ତୁ</string>
+    <string name="multimedia_editor_popup_audio_clip">ଅଡ଼ିଓ କ୍ଲିପ୍ ଯୋଡ଼ନ୍ତୁ</string>
+    <string name="multimedia_editor_popup_audio">ଅଡ଼ିଓ ରେକର୍ଡ କରନ୍ତୁ</string>
     <string name="multimedia_editor_popup_text">ଉନ୍ନତ ସମ୍ପାଦକ</string>
-    <string name="multimedia_editor_popup_cloze">କ୍ଲୋଜ୍ ଡିଲିଶନ</string>
+    <string name="multimedia_editor_popup_cloze">କ୍ଲୋଜ୍ ବିଲୋପ</string>
     <string name="multimedia_editor_popup_clear_field">କ୍ଷେତ୍ର ସଫା କରନ୍ତୁ</string>
     <!-- Translation activity (Glosbe) -->
     <string name="multimedia_editor_trans_poweredglosbe">glosbe.com ଦ୍ୱାରା ଚାଳିତ</string>
@@ -67,8 +67,8 @@
     <!-- these are button names to convert field type -->
     <string name="multimedia_editor_field_editing_text" comment="Select the field\'s type to Text.">ଲେଖା</string>
     <string name="multimedia_editor_field_editing_image">ପ୍ରତିଛବି</string>
-    <string name="multimedia_editor_field_editing_audio">ଅଡିଓ ରେକର୍ଡିଂ</string>
-    <string name="multimedia_editor_field_editing_audio_clip">ଅଡିଓ କ୍ଲିପ୍</string>
+    <string name="multimedia_editor_field_editing_audio">ଅଡ଼ିଓ ରେକର୍ଡିଂ</string>
+    <string name="multimedia_editor_field_editing_audio_clip">ଅଡ଼ିଓ କ୍ଲିପ୍</string>
     <string name="multimedia_editor_field_editing_done" comment="Label of a button to tell the app that the current action is \'Done\'.">ସମାପ୍ତ</string>
     <!-- Text field editing -->
     <!-- buttons -->
@@ -105,7 +105,7 @@
     <!-- not a good message, when an unexpected error happens -->
     <string name="multimedia_editor_something_wrong">କିଛି ଭୁଲ ହେଲା</string>
     <string name="multimedia_editor_attach_mm_content" comment="used for screen readers. Not visible to the user">%1$s କ୍ଷେତ୍ରରେ ମଲ୍ଟିମିଡ଼ିଆ ବିଷୟବସ୍ତୁ ସଂଲଗ୍ନ କରନ୍ତୁ</string>
-    <string name="multimedia_editor_attach_media">ମିଡିଆ ସଂଲଗ୍ନ କରନ୍ତୁ</string>
+    <string name="multimedia_editor_attach_media">ମିଡ଼ିଆ ସଂଲଗ୍ନ କରନ୍ତୁ</string>
     <!-- Audio view -->
     <!-- Message when recording fails -->
     <string name="multimedia_editor_audio_view_recording_failed">ରେକର୍ଡିଂ ବିଫଳ ହେଲା</string>
@@ -119,7 +119,7 @@
     <!-- Crop function-->
     <string name="crop_image">ଆପଣ ଏହି ପ୍ରତିଛବି କ୍ରପ୍ କରିବାକୁ ଚାହୁଁଛନ୍ତି କି?</string>
     <string name="crop_button">Crop image</string>
-    <string name="save_dialog_content">ବର୍ତ୍ତମାନର ପ୍ରତିଛବି ଆକାର ହେଉଛି %sMB | Default ପ୍ରତିଛବି ଆକାର ସୀମା ହେଉଛି 1MB | ଆପଣ ଏହାକୁ crop କରିବାକୁ ଚାହୁଁଛନ୍ତି କି?</string>
+    <string name="save_dialog_content">ବର୍ତ୍ତମାନର ପ୍ରତିଛବି ଆକାର ହେଉଛି %sMB। Default ପ୍ରତିଛବି ଆକାର ସୀମା ହେଉଛି 1MB। ଆପଣ ଏହାକୁ crop କରିବାକୁ ଚାହୁଁଛନ୍ତି କି?</string>
     <string name="select_image_failed">"ପ୍ରତିଛବି ଚୟନ ବିଫଳ ହୋଇଛି, ଦୟାକରି ପୁନଃଚେଷ୍ଟା କରନ୍ତୁ"</string>
-    <string name="activity_result_unexpected">ଆପ୍ ଏକ ଅପ୍ରତ୍ୟାଶିତ ମୂଲ୍ୟ ଫେରସ୍ତ କଲା | ଆପଣଙ୍କୁ ଏକ ଭିନ୍ନ ଆପ୍ ବ୍ୟବହାର କରିବାକୁ ପଡ଼଼ିପାରେ</string>
+    <string name="activity_result_unexpected">ଆପ୍ ଏକ ଅପ୍ରତ୍ୟାଶିତ ମୂଲ୍ୟ ଫେରସ୍ତ କଲା। ଆପଣଙ୍କୁ ଏକ ଭିନ୍ନ ଆପ୍ ବ୍ୟବହାର କରିବାକୁ ପଡ଼଼ିପାରେ</string>
 </resources>

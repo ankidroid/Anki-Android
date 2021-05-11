@@ -63,11 +63,6 @@
     <!-- AndroidManifest.xml -->
     <string name="preferences_title">Inställningar</string>
     <string name="deckpreferences_title">Alternativ för XXX</string>
-    <string name="sync_conflict_message">Dina kortlekar här och på AnkiWeb skiljer sig på ett sätt så att de inte kan slås samman, så kortlekarna på ena sidan måste skrivas över med de från den andra sidan.\n\nVill du ladda upp kortlekarna som används här, eller hämta kortlekarna från AnkiWeb?</string>
-    <string name="sync_conflict_local">Ladda upp</string>
-    <string name="sync_conflict_remote">Hämta</string>
-    <string name="sync_conflict_remote_confirm">Vill du verkligen hämta serverns samling? Var medveten om att detta skriver över din lokala samling.</string>
-    <string name="sync_conflict_local_confirm">Vill du verkligen ladda upp den lokala samlingen? Var medveten om att detta skriver över din samling på servern.</string>
     <string name="sync_prepare_syncing">Förbereder synkronisering...</string>
     <string name="sync_preparing_full_sync_message">Förbereder fullständig synkronisering...</string>
     <string name="sync_uploading_message">Laddar upp...</string>
@@ -78,7 +73,6 @@
     <string name="sync_log_clocks_unsynchronized">Klockan på din enhet gick fel med %1$d sekunder%2$s; Synkronisering kräver att både din klocka och tidszon är korrekt inställda för att undvika fel. Vänligen kontrollera att datum, tid och tidszon på din telefon är korrekt inställda och synkronisera igen.</string>
     <string name="sync_log_clocks_unsynchronized_tz">, enhetens tidszon kan vara felaktig</string>
     <string name="sync_log_clocks_unsynchronized_date">, enhetens datum kan vara felaktigt</string>
-    <string name="sync_conflict_title">Synkroniseringskonflikt</string>
     <string name="sync_no_changes_message">Inga ändringar hittades.</string>
     <string name="sync_database_acknowledge">Samling synkroniserad</string>
     <string name="sync_log_error_specific">Synkroniseringsfel, typ: %1$s, meddelande: %2$s</string>

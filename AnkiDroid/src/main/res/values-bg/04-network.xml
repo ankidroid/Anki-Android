@@ -63,11 +63,6 @@
     <!-- AndroidManifest.xml -->
     <string name="preferences_title">Предпочитания</string>
     <string name="deckpreferences_title">Опции за ХХХ</string>
-    <string name="sync_conflict_message">Или трябва да качите тази колекция, или да я изтеглите от Ankiweb, тъй като те не могат да се слеят. Колекцията от едната страна ще бъде презаписана.</string>
-    <string name="sync_conflict_local">Качи</string>
-    <string name="sync_conflict_remote">Свали</string>
-    <string name="sync_conflict_remote_confirm">Презаписване на колекция от от устройството Ви?</string>
-    <string name="sync_conflict_local_confirm">Заменете Вашата колекция на сървъра?</string>
     <string name="sync_prepare_syncing">Подготовка за синхронизиране...</string>
     <string name="sync_preparing_full_sync_message">Подготовка на пълно синхронизиране...</string>
     <string name="sync_uploading_message">Качване на...</string>
@@ -78,7 +73,6 @@
     <string name="sync_log_clocks_unsynchronized">Вашият часовник е неправилен с %1$d секунди%2$s. Уверете се, че датата, часа и часовата зона на телефона са зададени правилно и тогава синхронизирайте отново.</string>
     <string name="sync_log_clocks_unsynchronized_tz">, часовата зона на устройството е вероятно грешна</string>
     <string name="sync_log_clocks_unsynchronized_date">, датата на устройството е вероятно грешна</string>
-    <string name="sync_conflict_title">Синхронизиране на конфликт</string>
     <string name="sync_no_changes_message">Не са намерени промени.</string>
     <string name="sync_database_acknowledge">Колекцията синхронизирана</string>
     <string name="sync_log_error_specific">Синхронизиране на грешка, въведете: %1$s, съобщение: %2$s</string>

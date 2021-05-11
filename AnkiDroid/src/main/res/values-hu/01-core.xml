@@ -116,12 +116,12 @@
     <string name="menu_edit_tags">Címkék szerkesztése</string>
     <string name="delete_note_message">Biztosan törölni akarod ezt a jegyzetet és az összes kártyáját?\n%s</string>
     <string name="menu_select">Szöveg kijelölése</string>
+    <string name="menu_lookup">Lookup text</string>
     <string name="menu_search">Keresés itt: %1$s</string>
     <string name="menu_mark_note">Jegyzet megjelölése</string>
     <string name="menu_unmark_note">Jegyzet megjelölés megszüntetése</string>
     <string name="menu_toggle_mic_tool_bar">Kiejtés ellenőrzése</string>
     <string name="new_deck">Pakli létrehozása</string>
-    <string name="create" comment="Button to create a filtered deck">Létrehozás</string>
     <string name="new_dynamic_deck">Szűrt pakli létrehozása</string>
     <string name="night_mode">Éjszakai mód</string>
     <string name="directory_inaccessible">Nem érhető el az AnkiDroid könyvtár</string>
@@ -154,6 +154,7 @@
     <string name="custom_study_deck_name">Egyéni tanulás pakli</string>
     <string name="custom_study_deck_exists">Kérlek, előbb nevezd át a meglévő, Egyéni tanulás paklit</string>
     <string name="empty_deck">Ez a pakli üres</string>
+    <string name="search_deck">Deck Search</string>
     <string name="empty_deck_add_note">Kártya hozzáadása</string>
     <string name="invalid_deck_name">Érvénytelen paklinév</string>
     <string name="studyoptions_empty">Ez a pakli üres. Adj hozzá új tartalmat a \"+\" megnyomásával.</string>
@@ -210,4 +211,12 @@
     <string name="open_tag_not_closed">Missing \'{{%s}}\'.</string>
     <string name="wrong_tag_closed">Found \'{{/%1$s}}\', but expected \'{{/%2$s}}\'</string>
     <string name="filter_error">Error in filter %s</string>
+    <!-- Sync conflict -->
+    <string name="sync_conflict_message_new">The collections can’t be combined.\nWhich collection do you want to keep?</string>
+    <string name="sync_conflict_keep_local_new" comment="Select AnkiDroid files to keep while syncing">AnkiDroid</string>
+    <string name="sync_conflict_keep_remote_new" comment="Select AnkiWeb files to keep while syncing">AnkiWeb</string>
+    <string name="sync_conflict_remote_confirm_new">Replace your collection on AnkiDroid with your collection from AnkiWeb?</string>
+    <string name="sync_conflict_local_confirm_new">Replace your collection on AnkiWeb with your collection from AnkiDroid?</string>
+    <string name="sync_conflict_title_new">Select collection to keep</string>
+    <string name="sync_conflict_replace_title">Replace collection</string>
 </resources>

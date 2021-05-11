@@ -22,6 +22,9 @@ import com.ichi2.anki.reviewer.CardMarker.FlagDef;
 import com.ichi2.libanki.Card;
 
 import org.junit.Test;
+import org.junit.runner.RunWith;
+
+import androidx.test.ext.junit.runners.AndroidJUnit4;
 
 import static com.ichi2.anki.reviewer.CardMarker.FLAG_BLUE;
 import static com.ichi2.anki.reviewer.CardMarker.FLAG_GREEN;
@@ -35,7 +38,8 @@ import static org.mockito.Mockito.doAnswer;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
-public class AbstractFlashcardViewerCommandTest {
+@RunWith(AndroidJUnit4.class)
+public class AbstractFlashcardViewerCommandTest extends RobolectricTest {
 
     @Test
     public void doubleTapSetsNone() {

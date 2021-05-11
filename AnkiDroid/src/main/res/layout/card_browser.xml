@@ -5,51 +5,57 @@
                                            android:layout_width="match_parent"
                                            android:layout_height="match_parent"
                                            android:fitsSystemWindows="true">
-    <androidx.coordinatorlayout.widget.CoordinatorLayout
-        android:id="@+id/root_layout"
-        android:layout_width="fill_parent"
-        android:layout_height="fill_parent">
-        <LinearLayout
+    <com.drakeet.drawer.FullDraggableContainer
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <androidx.coordinatorlayout.widget.CoordinatorLayout
+            android:id="@+id/root_layout"
             android:layout_width="fill_parent"
-            android:layout_height="fill_parent"
-            android:orientation="vertical" >
-
-            <include layout="@layout/toolbar" />
-
+            android:layout_height="fill_parent">
             <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="?android:attr/colorBackground"
-                android:orientation="horizontal" >
-
-                <Spinner
-                    android:id="@+id/browser_column1_spinner"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    app:popupTheme="@style/ActionBar.Popup"/>
-
-                <Spinner
-                    android:id="@+id/browser_column2_spinner"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    app:popupTheme="@style/ActionBar.Popup"/>
-            </LinearLayout>
-
-            <ListView
-                android:id="@+id/card_browser_list"
                 android:layout_width="fill_parent"
                 android:layout_height="fill_parent"
-                android:background="?android:attr/colorBackground"
-                android:divider="?attr/cardBrowserDivider"
-                android:overScrollFooter="@color/transparent"
-                android:dividerHeight="0.5dp"
-                android:drawSelectorOnTop="true"
-                android:fastScrollEnabled="true" />
+                android:orientation="vertical" >
 
-        </LinearLayout>
-        <include layout="@layout/anki_progress"/>
-    </androidx.coordinatorlayout.widget.CoordinatorLayout>
+                <include layout="@layout/toolbar" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:background="?android:attr/colorBackground"
+                    android:orientation="horizontal"
+                    style="@style/card_browser_spinner_layout">
+
+                    <Spinner
+                        android:id="@+id/browser_column1_spinner"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        app:popupTheme="@style/ActionBar.Popup" />
+
+                    <Spinner
+                        android:id="@+id/browser_column2_spinner"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        app:popupTheme="@style/ActionBar.Popup" />
+                </LinearLayout>
+
+                <ListView
+                    android:id="@+id/card_browser_list"
+                    android:layout_width="fill_parent"
+                    android:layout_height="fill_parent"
+                    android:background="?android:attr/colorBackground"
+                    android:divider="?attr/cardBrowserDivider"
+                    android:overScrollFooter="@color/transparent"
+                    android:dividerHeight="0.5dp"
+                    android:drawSelectorOnTop="true"
+                    android:fastScrollEnabled="true" />
+
+            </LinearLayout>
+            <include layout="@layout/anki_progress"/>
+        </androidx.coordinatorlayout.widget.CoordinatorLayout>
+
+    </com.drakeet.drawer.FullDraggableContainer>
     <include layout="@layout/navigation_drawer" />
 </androidx.drawerlayout.widget.ClosableDrawerLayout>

@@ -48,7 +48,9 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import androidx.annotation.NonNull;
-import static com.ichi2.libanki.Utils.trimArray;
+
+import static com.ichi2.libanki.Models.AllowEmpty.ONLY_CLOZE;
+import static com.ichi2.libanki.Models.AllowEmpty.TRUE;
 
 @SuppressWarnings({"PMD.ExcessiveClassLength", "PMD.AvoidThrowingRawExceptionTypes","PMD.AvoidReassigningParameters",
         "PMD.NPathComplexity","PMD.MethodNamingConventions",
@@ -68,7 +70,7 @@ public class Models {
     @SuppressWarnings("RegExpRedundantEscape")
     private static final Pattern fClozeOrdPattern = Pattern.compile("(?si)\\{\\{c(\\d+)::.*?\\}\\}");
 
-    public static final String defaultModel =
+    public static final String DEFAULT_MODEL =
               "{'sortf': 0, "
             + "'did': 1, "
             + "'latexPre': \""
@@ -229,7 +231,7 @@ public class Models {
     public boolean ensureNotEmpty() {
         if (mModels.isEmpty()) {
             // TODO: Maybe we want to restore all models if we don't have any
-            StdModels.basicModel.add(mCol);
+            StdModels.BASIC_MODEL.add(mCol);
             return true;
         } else {
             return false;
@@ -310,7 +312,7 @@ public class Models {
 	// not in python. Thus the method has to be renamed.
     public Model newModel(String name) {
         // caller should call save() after modifying
-        Model m = new Model(defaultModel);
+        Model m = new Model(DEFAULT_MODEL);
         m.put("name", name);
         m.put("mod", mCol.getTime().intTime());
         m.put("flds", new JSONArray());
@@ -531,18 +533,18 @@ public class Models {
     }
 
     static class TransformFieldDelete implements TransformFieldVisitor {
-        private final int idx;
+        private final int mIdx;
 
 
         public TransformFieldDelete(int _idx) {
-            idx = _idx;
+            mIdx = _idx;
         }
 
 
         @Override
         public String[] transform(String[] fields) {
             ArrayList<String> fl = new ArrayList<>(Arrays.asList(fields));
-            fl.remove(idx);
+            fl.remove(mIdx);
             return fl.toArray(new String[fl.size()]);
         }
     }
@@ -583,22 +585,22 @@ public class Models {
     }
 
     static class TransformFieldMove implements TransformFieldVisitor {
-        private final int idx;
-        private final int oldidx;
+        private final int mIdx;
+        private final int mOldidx;
 
 
         public TransformFieldMove(int _idx, int _oldidx) {
-            idx = _idx;
-            oldidx = _oldidx;
+            mIdx = _idx;
+            mOldidx = _oldidx;
         }
 
 
         @Override
         public String[] transform(String[] fields) {
-            String val = fields[oldidx];
+            String val = fields[mOldidx];
             ArrayList<String> fl = new ArrayList<>(Arrays.asList(fields));
-            fl.remove(oldidx);
-            fl.add(idx, val);
+            fl.remove(mOldidx);
+            fl.add(mIdx, val);
             return fl.toArray(new String[fl.size()]);
         }
     }
@@ -999,7 +1001,7 @@ public class Models {
 
 
     /**
-     * @param m A model
+     * @param m A note type
      * @param ord a card type number of this model
      * @param sfld Fields of a note of this model. (Not trimmed)
      * @return Whether this card is empty
@@ -1022,30 +1024,63 @@ public class Models {
 
 
     /**
+     * Whether to allow empty note to generate a card. When importing a deck, this is useful to be able to correct it. When doing "check card" it avoids to delete empty note.
+     * By default, it is allowed for cloze type but not for standard type.
+     */
+    public enum AllowEmpty {
+        TRUE,
+        FALSE,
+        ONLY_CLOZE;
+
+        /**
+         * @param allowEmpty a Boolean representing whether empty note should be allowed. Null is understood as default
+         * @return AllowEmpty similar to the boolean
+         */
+        public static @NonNull AllowEmpty fromBoolean(@Nullable Boolean allowEmpty) {
+            if (allowEmpty == null) {
+                return Models.AllowEmpty.ONLY_CLOZE;
+            } else if (allowEmpty == true) {
+                return Models.AllowEmpty.TRUE;
+            } else {
+                return Models.AllowEmpty.FALSE;
+            }
+        }
+    }
+
+    /**
      * @param m A model
      * @param sfld Fields of a note
      * @param nodes Nodes used for parsing the variaous templates. Null for cloze
+     * @param allowEmpty whether to always return an ord, even if all cards are actually empty
      * @return The index of the cards that are generated. For cloze cards, if no card is generated, then {0} */
-    public static ArrayList<Integer> availOrds(Model m, String[] sfld, List<ParsedNode> nodes) {
+    public static ArrayList<Integer> availOrds(Model m, String[] sfld, List<ParsedNode> nodes, @NonNull AllowEmpty allowEmpty) {
         if (m.getInt("type") == Consts.MODEL_CLOZE) {
-            return _availClozeOrds(m, sfld);
+            return _availClozeOrds(m, sfld, allowEmpty == TRUE || allowEmpty == ONLY_CLOZE);
         }
-        return _availStandardOrds(m, sfld, nodes);
+        return _availStandardOrds(m, sfld, nodes, allowEmpty == TRUE);
     }
 
     public static ArrayList<Integer> availOrds(Model m, String[] sfld) {
+        return availOrds(m, sfld, ONLY_CLOZE);
+    }
+
+    public static ArrayList<Integer> availOrds(Model m, String[] sfld, @NonNull AllowEmpty allowEmpty) {
         if (m.isCloze()) {
-            return _availClozeOrds(m, sfld);
+            return _availClozeOrds(m, sfld, allowEmpty == TRUE || allowEmpty == ONLY_CLOZE);
         }
-        return _availStandardOrds(m, sfld);
+        return _availStandardOrds(m, sfld, allowEmpty == TRUE);
     }
 
     public static ArrayList<Integer> _availStandardOrds(Model m, String[] sfld) {
-        return _availStandardOrds(m, sfld, m.parsedNodes());
+        return _availStandardOrds(m, sfld, false);
+    }
+
+    public static ArrayList<Integer> _availStandardOrds(Model m, String[] sfld, boolean allowEmpty) {
+        return _availStandardOrds(m, sfld, m.parsedNodes(), allowEmpty);
     }
 
     /** Given a joined field string and a standard note type, return available template ordinals */
-    public static ArrayList<Integer> _availStandardOrds(Model m, String[] sfld, List<ParsedNode> nodes) {
+    public static ArrayList<Integer> _availStandardOrds(Model m, String[] sfld, List<ParsedNode> nodes, boolean allowEmpty) {
         Set<String> nonEmptyFields = m.nonEmptyFields(sfld);
         ArrayList<Integer> avail = new ArrayList<>(nodes.size());
         for (int i = 0 ; i < nodes.size(); i++) {
@@ -1053,6 +1088,11 @@ public class Models {
             if (node != null && !node.template_is_empty(nonEmptyFields)) {
                 avail.add(i);
             }
+        }
+        if (allowEmpty && avail.isEmpty()) {
+            /* According to anki documentation:
+            When adding/importing, if a normal note doesn’t generate any cards, Anki will now add a blank card 1 instead of refusing to add the note. */
+            avail.add(0);
         }
         return avail;
     }

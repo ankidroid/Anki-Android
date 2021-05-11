@@ -19,10 +19,13 @@ import android.widget.TextView;
 
 import com.ichi2.anki.AnkiDroidApp;
 
+import androidx.annotation.StringRes;
+
 @SuppressWarnings("deprecation") // TODO Tracked in https://github.com/ankidroid/Anki-Android/issues/5019
 public class SeekBarPreference extends android.preference.DialogPreference implements SeekBar.OnSeekBarChangeListener {
     private static final String androidns = "http://schemas.android.com/apk/res/android";
 
+    private LinearLayout mSeekLine;
     private SeekBar mSeekBar;
     private TextView mValueText;
     private final Context mContext;
@@ -33,7 +36,10 @@ public class SeekBarPreference extends android.preference.DialogPreference imple
     private final int mMin;
     private final int mInterval;
     private int mValue = 0;
-
+    @StringRes
+    private final int mXLabel;
+    @StringRes
+    private final int mYLabel;
 
     public SeekBarPreference(Context context, AttributeSet attrs) {
         super(context, attrs);
@@ -44,6 +50,8 @@ public class SeekBarPreference extends android.preference.DialogPreference imple
         mMax = attrs.getAttributeIntValue(androidns, "max", 100);
         mMin = attrs.getAttributeIntValue(AnkiDroidApp.XML_CUSTOM_NAMESPACE, "min", 0);
         mInterval = attrs.getAttributeIntValue(AnkiDroidApp.XML_CUSTOM_NAMESPACE, "interval", 1);
+        mXLabel = attrs.getAttributeResourceValue(AnkiDroidApp.XML_CUSTOM_NAMESPACE, "xlabel", 0);
+        mYLabel = attrs.getAttributeResourceValue(AnkiDroidApp.XML_CUSTOM_NAMESPACE, "ylabel", 0);
     }
 
 
@@ -65,6 +73,18 @@ public class SeekBarPreference extends android.preference.DialogPreference imple
 
         layout.addView(mSeekBar, new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT,
                 LinearLayout.LayoutParams.WRAP_CONTENT));
+
+
+        if (mXLabel != 0 && mYLabel != 0) {
+            LinearLayout.LayoutParams params_seekbar = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT,
+                    LinearLayout.LayoutParams.WRAP_CONTENT);
+            params_seekbar.setMargins(0, 12, 0, 0);
+            mSeekLine = new LinearLayout(mContext);
+            mSeekLine.setOrientation(LinearLayout.HORIZONTAL);
+            mSeekLine.setPadding(6, 6, 6, 6);
+            addLabelsBelowSeekBar();
+            layout.addView(mSeekLine, params_seekbar);
+        }
 
         if (shouldPersist()) {
             mValue = getPersistedInt(mDefault);
@@ -140,5 +160,25 @@ public class SeekBarPreference extends android.preference.DialogPreference imple
         builder.setNegativeButton(null, null);
         builder.setPositiveButton(null, null);
         builder.setTitle(null);
+    }
+
+    private void addLabelsBelowSeekBar() {
+        int labels[] = {mXLabel, mYLabel};
+        for (int count = 0; count < 2; count++) {
+            TextView textView = new FixedTextView(mContext);
+            textView.setText(mContext.getString(labels[count]));
+            textView.setGravity(Gravity.START);
+            mSeekLine.addView(textView);
+            if(mContext.getResources().getConfiguration().getLayoutDirection() == View.LAYOUT_DIRECTION_LTR)
+                textView.setLayoutParams((count == 1) ? getLayoutParams(0.0f) : getLayoutParams(1.0f));
+            else
+                textView.setLayoutParams((count == 0) ? getLayoutParams(0.0f) : getLayoutParams(1.0f));
+        }
+    }
+
+    LinearLayout.LayoutParams getLayoutParams(float weight) {
+        return new LinearLayout.LayoutParams(
+                LinearLayout.LayoutParams.WRAP_CONTENT,
+                LinearLayout.LayoutParams.WRAP_CONTENT, weight);
     }
 }

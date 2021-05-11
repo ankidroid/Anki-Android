@@ -116,12 +116,12 @@
     <string name="menu_edit_tags">Schlagwörter bearbeiten</string>
     <string name="delete_note_message">Diese Notiz und alle ihre Karten tatsächlich löschen?\n%s</string>
     <string name="menu_select">Text auswählen</string>
+    <string name="menu_lookup">Text nachschlagen</string>
     <string name="menu_search">In %1$s nachschlagen</string>
     <string name="menu_mark_note">Notiz markieren</string>
     <string name="menu_unmark_note">Markierung entfernen</string>
     <string name="menu_toggle_mic_tool_bar">Ausprache überprüfen</string>
     <string name="new_deck">Stapel erstellen</string>
-    <string name="create" comment="Button to create a filtered deck">Erstellen</string>
     <string name="new_dynamic_deck">Gefilterten Stapel erstellen</string>
     <string name="night_mode">Nachtmodus</string>
     <string name="directory_inaccessible">Auf das AnkiDroid-Verzeichnis kann nicht zugegriffen werden</string>
@@ -154,6 +154,7 @@
     <string name="custom_study_deck_name">Benutzerdefinierte Sitzung</string>
     <string name="custom_study_deck_exists">Bitte benennen Sie zunächst den existierenden Stapel »Benutzerdefinierte Sitzung« um</string>
     <string name="empty_deck">Dieser Stapel ist leer</string>
+    <string name="search_deck">Stapelsuche</string>
     <string name="empty_deck_add_note">Karte hinzufügen</string>
     <string name="invalid_deck_name">Ungültiger Stapelname</string>
     <string name="studyoptions_empty">Dieser Stapel ist leer. Berühren Sie die »+«-Schaltfläche, um neue Inhalte hinzuzufügen.</string>
@@ -210,4 +211,12 @@
     <string name="open_tag_not_closed">Fehlendes »{{%s}}«.</string>
     <string name="wrong_tag_closed">»{{/%1$s}}« gefunden, aber »{{/%2$s}}« erwartet.</string>
     <string name="filter_error">Fehler in Filter %s</string>
+    <!-- Sync conflict -->
+    <string name="sync_conflict_message_new">Die Sammlungen können nicht zusammengeführt werden.\nWelche Sammlung möchten Sie behalten?</string>
+    <string name="sync_conflict_keep_local_new" comment="Select AnkiDroid files to keep while syncing">AnkiDroid</string>
+    <string name="sync_conflict_keep_remote_new" comment="Select AnkiWeb files to keep while syncing">AnkiWeb</string>
+    <string name="sync_conflict_remote_confirm_new">Soll Ihre Sammlung auf AnkiDroid durch die Sammlung auf AnkiWeb ersetzt werden?</string>
+    <string name="sync_conflict_local_confirm_new">Soll Ihre Sammlung auf AnkiWeb durch die Sammlung auf AnkiDroid ersetzt werden?</string>
+    <string name="sync_conflict_title_new">Zu behaltende Sammlung auswählen</string>
+    <string name="sync_conflict_replace_title">Sammlung ersetzen</string>
 </resources>

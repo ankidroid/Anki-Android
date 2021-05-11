@@ -63,11 +63,6 @@
     <!-- AndroidManifest.xml -->
     <string name="preferences_title">Preferensi</string>
     <string name="deckpreferences_title">Opsi untuk XXX</string>
-    <string name="sync_conflict_message">Kamu harus mengunggah koleksi ini atau menngunduhnya dari Ankiweb, karena tidak dapat digabung. Salah satu koleksi akan ditimpa.</string>
-    <string name="sync_conflict_local">Unggah</string>
-    <string name="sync_conflict_remote">Unduh</string>
-    <string name="sync_conflict_remote_confirm">Timpa koleksi lokalmu?</string>
-    <string name="sync_conflict_local_confirm">Timpa koleksimu di server?</string>
     <string name="sync_prepare_syncing">Menyiapkan sinkronisasi&#8230;</string>
     <string name="sync_preparing_full_sync_message">Menyiapkan sinkronisasi penuh&#8230;</string>
     <string name="sync_uploading_message">Mengunggah&#8230;</string>
@@ -78,7 +73,6 @@
     <string name="sync_log_clocks_unsynchronized">Jam perangkatmu meleset sebesar %1$d detik %2$s. Pastikan tanggal, waktu, dan zona waktu pada teleponmu sudah benar, lalu sinkronkan lagi.</string>
     <string name="sync_log_clocks_unsynchronized_tz">, zona waktunya mungkin salah</string>
     <string name="sync_log_clocks_unsynchronized_date">, tanggalnya mungkin salah</string>
-    <string name="sync_conflict_title">Konflik sinkronisasi</string>
     <string name="sync_no_changes_message">Tidak ada perubahan ditemukan</string>
     <string name="sync_database_acknowledge">Koleksi disinkronkan</string>
     <string name="sync_log_error_specific">Galat sinkronisasi , tipe: %1$s, pesan: %2$s</string>

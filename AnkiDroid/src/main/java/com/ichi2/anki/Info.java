@@ -18,27 +18,30 @@
 
 package com.ichi2.anki;
 
+import android.annotation.SuppressLint;
 import android.content.ClipData;
 import android.content.Context;
 import android.content.res.Resources;
+import android.content.res.TypedArray;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
-import android.util.TypedValue;
 import android.view.KeyEvent;
 import android.view.View;
 import android.webkit.WebChromeClient;
 import android.webkit.WebView;
+import android.webkit.WebViewClient;
 import android.widget.Button;
 
 import com.ichi2.utils.IntentUtil;
 import com.ichi2.utils.VersionUtils;
+import com.ichi2.utils.ViewGroupUtils;
 
 import org.acra.util.Installation;
 
 import timber.log.Timber;
 
-import static com.ichi2.anim.ActivityTransitionAnimation.Direction.LEFT;
+import static com.ichi2.anim.ActivityTransitionAnimation.Direction.START;
 
 /**
  * Shows an about box, which is a small HTML page.
@@ -52,6 +55,7 @@ public class Info extends AnkiActivity {
     public static final int TYPE_NEW_VERSION = 2;
 
 
+    @SuppressLint("SetJavaScriptEnabled")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         if (showedActivityFailedScreen(savedInstanceState)) {
@@ -94,16 +98,18 @@ public class Info extends AnkiActivity {
         }
 
         StringBuilder sb = new StringBuilder();
+
+        // Apply Theme colors
+        TypedArray typedArray = getTheme().obtainStyledAttributes(new int[] {android.R.attr.colorBackground, android.R.attr.textColor});
+        int backgroundColor = typedArray.getColor(0, -1);
+        String textColor = String.format("#%06X", (0xFFFFFF & typedArray.getColor(1, -1))); // Color to hex string
+        webView.setBackgroundColor(backgroundColor);
+
+        ViewGroupUtils.setRenderWorkaround(this);
+
         switch (mType) {
             case TYPE_ABOUT: {
                 String[] content = res.getStringArray(R.array.about_content);
-
-                // Apply theme colours.
-                TypedValue typedValue = new TypedValue();
-                getTheme().resolveAttribute(android.R.attr.colorBackground, typedValue, true);
-                webView.setBackgroundColor(typedValue.data);
-                getTheme().resolveAttribute(android.R.attr.textColor, typedValue, true);
-                String textColor = String.format("#%06X", (0xFFFFFF & typedValue.data)); // Color to hex string
                 sb.append("<html><style>body {color:").append(textColor).append(";}</style>");
 
                 sb.append("<body text=\"#000000\" link=\"#E37068\" alink=\"#E37068\" vlink=\"#E37068\">");
@@ -134,9 +140,28 @@ public class Info extends AnkiActivity {
                 Button continueButton = (findViewById(R.id.right_button));
                 continueButton.setText(res.getString(R.string.dialog_continue));
                 continueButton.setOnClickListener((arg) -> close());
+                String background = String.format("#%06X", (0xFFFFFF & backgroundColor));
                 webView.loadUrl("file:///android_asset/changelog.html");
-                break;
+                webView.getSettings().setJavaScriptEnabled(true);
+
+                webView.setWebViewClient(new WebViewClient() {
+                    @Override
+                    public void onPageFinished(WebView view, String url) {
+
+                        /* The order of below javascript code must not change (this order works both in debug and release mode)
+                         *  or else it will break in any one mode.
+                         */
+                        webView.loadUrl(
+                                "javascript:document.body.style.setProperty(\"color\", \"" + textColor + "\");"
+                                        + "x=document.getElementsByTagName(\"a\"); for(i=0;i<x.length;i++){x[i].style.color=\"#E37068\";}"
+                                        + "document.getElementsByTagName(\"h1\")[0].style.color=\"" + textColor + "\";"
+                                        + "x=document.getElementsByTagName(\"h2\"); for(i=0;i<x.length;i++){x[i].style.color=\"#E37068\";}"
+                                        + "document.body.style.setProperty(\"background\", \"" + background + "\");"
+                        );
+                    }
+                });
             }
+            break;
             default:
                 finishWithoutAnimation();
                 break;
@@ -173,7 +198,7 @@ public class Info extends AnkiActivity {
 
 
     private void finishWithAnimation() {
-        finishWithAnimation(LEFT);
+        finishWithAnimation(START);
     }
 
 
@@ -196,9 +221,13 @@ public class Info extends AnkiActivity {
             Timber.w(e, "Unable to detect Rust Backend");
         }
 
-
+        String webviewUserAgent = getWebviewUserAgent();
         String debugInfo = "AnkiDroid Version = " + VersionUtils.getPkgVersionName() + "\n\n" +
                 "Android Version = " + Build.VERSION.RELEASE + "\n\n" +
+                "Manufacturer = " + Build.MANUFACTURER + "\n\n" +
+                "Model = " + Build.MODEL + "\n\n" +
+                "Hardware = " + Build.HARDWARE + "\n\n" +
+                "Webview User Agent = " + webviewUserAgent + "\n\n" +
                 "ACRA UUID = " + Installation.id(this) + "\n\n" +
                 "Scheduler = " + schedName + "\n\n" +
                 "Crash Reports Enabled = " + isSendingCrashReports() + "\n\n" +
@@ -214,6 +243,14 @@ public class Info extends AnkiActivity {
         return debugInfo;
     }
 
+    private String getWebviewUserAgent() {
+        try {
+            return new WebView(this).getSettings().getUserAgentString();
+        } catch (Throwable e) {
+            AnkiDroidApp.sendExceptionReport(e, "Info::copyDebugInfo()", "some issue occured while extracting webview user agent");
+        }
+        return null;
+    }
 
     private boolean isSendingCrashReports() {
         return AnkiDroidApp.isAcraEnbled(this, false);

@@ -177,6 +177,7 @@ public class Anki2Importer extends Importer {
         try {
             mDst.getDb().execute("vacuum");
         } catch (Exception e) {
+            Timber.w(e);
             // This is actually not fatal but can fail since vacuum takes so much space
             // Allow the import to succeed but recommend the user run check database
             mLog.add(getRes().getString(R.string.import_succeeded_but_check_database, e.getLocalizedMessage()));
@@ -185,6 +186,7 @@ public class Anki2Importer extends Importer {
         try {
             mDst.getDb().execute("analyze");
         } catch (Exception e) {
+            Timber.w(e);
             // This is actually not fatal but can fail
             // Allow the import to succeed but recommend the user run check database
             mLog.add(getRes().getString(R.string.import_succeeded_but_check_database, e.getLocalizedMessage()));
@@ -715,6 +717,7 @@ public class Anki2Importer extends Importer {
         try {
             return new BufferedInputStream(new FileInputStream(path), MEDIAPICKLIMIT * 2);
         } catch (IOException e) {
+            Timber.w(e);
             return null;
         }
     }
@@ -759,7 +762,7 @@ public class Anki2Importer extends Importer {
 
     // running splitFields() on every note is fairly expensive and actually not necessary
     private String _mungeMedia(long mid, String fields) {
-        for (Pattern p : Media.mRegexps) {
+        for (Pattern p : Media.REGEXPS) {
             Matcher m = p.matcher(fields);
             StringBuffer sb = new StringBuffer();
             int fnameIdx = Media.indexOfFname(p);
@@ -859,6 +862,7 @@ public class Anki2Importer extends Importer {
             System.arraycopy(baos.toByteArray(), 0, result, 0, Math.min(baos.size(), MEDIAPICKLIMIT));
             return result;
         } catch (IOException e) {
+            Timber.w(e);
             return null;
         }
     }

@@ -4,10 +4,9 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.res.Resources;
 import android.util.Pair;
-import android.widget.Toast;
-
 
 import com.ichi2.anki.R;
+import com.ichi2.anki.UIUtils;
 import com.ichi2.async.CancelListener;
 import com.ichi2.libanki.Card;
 import com.ichi2.libanki.Consts;
@@ -190,7 +189,7 @@ public abstract class AbstractSched {
     public abstract int _newForDeck(long did, int lim);
 
     /**
-     * @return Number of new card to see today in current deck. */
+     * @return Number of new card in current deck and its descendants. Capped at reportLimit = 99999. */
     public abstract int totalNewForCurrentDeck();
 
     /** @return Number of review cards in current deck.  */
@@ -484,7 +483,7 @@ public abstract class AbstractSched {
             } else {
                 leechMessage = res.getString(R.string.leech_notification);
             }
-            activity.runOnUiThread(() -> Toast.makeText(activity, leechMessage, Toast.LENGTH_SHORT).show());
+            activity.runOnUiThread(() -> UIUtils.showThemedToast(activity, leechMessage, true));
 
         } else {
             Timber.w("LeechHook :: could not show leech toast as activity was null");

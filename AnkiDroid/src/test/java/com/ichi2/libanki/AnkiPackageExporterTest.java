@@ -41,6 +41,7 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.contains;
 import static org.hamcrest.Matchers.containsInAnyOrder;
 import static org.hamcrest.Matchers.hasSize;
+import static org.junit.Assert.assertEquals;
 
 @RunWith(AndroidJUnit4.class)
 public class AnkiPackageExporterTest extends RobolectricTest {
@@ -110,6 +111,25 @@ public class AnkiPackageExporterTest extends RobolectricTest {
     }
 
 
+    @Test
+    public void stripHTML_will_remove_html_with_unicode_whitespace() {
+        Exporter exporter = getExporterForDeckWithMedia();
+
+        final String res = exporter.stripHTML(String.join(
+                "\n",//delimiter
+                "\n\u205F\t<[sound",
+                ":test.mp3]>",
+                "\n\u2029\t",
+                "\u2004",
+                "<!-- Comment \n \u1680 --> <",
+                "tag\n>",
+                "<style><s>"
+        ));
+
+        assertEquals("", res);
+    }
+
+
     private void checkMediaExportStringIs(File[] files, String s) throws IOException {
         for (File f : files) {
             if (!"media".equals(f.getName())) {
@@ -127,10 +147,7 @@ public class AnkiPackageExporterTest extends RobolectricTest {
 
     @NonNull
     private AnkiPackageExporter getExporterForDeckWithMedia() {
-        AnkiPackageExporter exporter = new AnkiPackageExporter(getCol());
-        exporter.setIncludeMedia(true);
-        exporter.setIncludeSched(true);
-        exporter.setDid(1L);
+        AnkiPackageExporter exporter = new AnkiPackageExporter(getCol(), 1L, true, true);
         return exporter;
     }
 

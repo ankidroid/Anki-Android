@@ -1,0 +1,300 @@
+<?xml version="1.0" encoding="utf-8"?> 
+ <!-- 
+ ~ Copyright (c) 2009 Andrew <andrewdubya@gmail> 
+ ~ Copyright (c) 2009 Edu Zamora <edu.zasu@gmail.com> 
+ ~ Copyright (c) 2009 Daniel Svaerd <daniel.svard@gmail.com> 
+ ~ Copyright (c) 2009 Nicolas Raoul <nicolas.raoul@gmail.com> 
+ ~ Copyright (c) 2010 Norbert Nagold <norbert.nagold@gmail.com> 
+ ~ This program is free software; you can redistribute it and/or modify it under 
+ ~ the terms of the GNU General Public License as published by the Free Software 
+ ~ Foundation; either version 3 of the License, or (at your option) any later 
+ ~ version. 
+ ~ 
+ ~ This program is distributed in the hope that it will be useful, but WITHOUT ANY 
+ ~ WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A 
+ ~ PARTICULAR PURPOSE. See the GNU General Public License for more details. 
+ ~ 
+ ~ You should have received a copy of the GNU General Public License along with 
+ ~ this program.  If not, see <http://www.gnu.org/licenses/>. 
+ --> 
+ 
+<!--
+~ Copyright (c) 2009 Andrew <andrewdubya@gmail>
+~ Copyright (c) 2009 Edu Zamora <edu.zasu@gmail.com>
+~ Copyright (c) 2009 Daniel Svärd <daniel.svard@gmail.com>
+~ Copyright (c) 2009 Nicolas Raoul <nicolas.raoul@gmail.com>
+~ Copyright (c) 2010 Norbert Nagold <norbert.nagold@gmail.com>
+~
+~ This program is free software; you can redistribute it and/or modify it under
+~ the terms of the GNU General Public License as published by the Free Software
+~ Foundation; either version 3 of the License, or (at your option) any later
+~ version.
+~
+~ This program is distributed in the hope that it will be useful, but WITHOUT ANY
+~ WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A
+~ PARTICULAR PURPOSE. See the GNU General Public License for more details.
+~
+~ You should have received a copy of the GNU General Public License along with
+~ this program.  If not, see <http://www.gnu.org/licenses/>.
+-->
+<resources>
+    <!-- generic strings -->
+    <string name="disabled">പ്രവര്‍ത്തന രഹിതമാക്കിയത്‌</string>
+    <string name="enabled">പ്രാപ്തമാക്കി</string>
+    <!-- preferences.xml categories-->
+    <string name="pref_cat_general_summ">പൊതുവായ ക്രമീകരണങ്ങൾ</string>
+    <string name="pref_cat_reviewing" maxLength="41">അവലോകനം ചെയ്യുന്നു</string>
+    <string name="pref_cat_reviewing_summ">നോൺ-ഡെക്ക്-നിർദ്ദിഷ്ട അവലോകന ക്രമീകരണങ്ങൾ</string>
+    <string name="pref_cat_reviewer_behaviour" maxLength="41">പെരുമാറ്റം</string>
+    <string name="pref_cat_flashcard" maxLength="41">പ്രദർശിപ്പിക്കുക</string>
+    <string name="pref_cat_whiteboard" maxLength="41">വൈറ്റ്ബോർഡ്</string>
+    <string name="pref_cat_appearance" maxLength="41">രൂപം</string>
+    <string name="pref_cat_appearance_summ">തീമുകളും സ്ഥിരസ്ഥിതി ഫോണ്ടും മാറ്റുക</string>
+    <string name="pref_cat_themes" maxLength="41">തീമുകൾ</string>
+    <string name="pref_cat_fonts" maxLength="41">ഫോണ്ട്</string>
+    <string name="pref_cat_gestures" maxLength="41">ആംഗ്യങ്ങൾ</string>
+    <string name="pref_cat_gestures_summ">ബട്ടണുകൾക്ക് പകരം ടാപ്പുകളും സ്വൈപ്പുകളും ഉപയോഗിക്കുക</string>
+    <string name="pref_cat_actions" maxLength="41">പ്രവർത്തനങ്ങൾ</string>
+    <string name="pref_cat_advanced" maxLength="41">സംഗീർണതയുള്ളവ</string>
+    <string name="pref_cat_advanced_summ">ഒപ്റ്റിമൈസേഷനും പരീക്ഷണാത്മക സവിശേഷതകളും</string>
+    <string name="pref_cat_performance" maxLength="41">പ്രകടനം</string>
+    <string name="pref_cat_workarounds" maxLength="41">പരിഹാരങ്ങൾ</string>
+    <string name="pref_cat_plugins" maxLength="41">പ്ലഗിൻ</string>
+    <string name="about_title" maxLength="41">AnkiDroid നെക്കുറിച്ച്</string>
+    <string name="about_version">പതിപ്പ്: </string>
+    <!-- preferences.xml entries-->
+    <string name="whiteboard_stroke_width" maxLength="41">സ്ട്രോക്ക് വീതി</string>
+    <string name="use_input_tag" maxLength="41">കാർഡിൽ ഉത്തരം ടൈപ്പുചെയ്യുക</string>
+    <string name="use_input_tag_summ">ഉത്തരം ടൈപ്പുചെയ്യുന്നതിന് കാർഡിനുള്ളിലെ ഒരു വാചക ഇൻപുട്ട് ബോക്സ് ഉപയോഗിക്കുക</string>
+    <string name="dictionary" maxLength="41">ലുക്കപ്പ് നിഘണ്ടു</string>
+    <string name="reset_languages" maxLength="41">ഭാഷകൾ പുന  സജ്ജമാക്കുക</string>
+    <string name="reset_languages_summ">എല്ലാ ഡെക്കുകൾക്കുമായി ഭാഷാ അസൈൻമെന്റുകൾ പുന text സജ്ജമാക്കുക (വാചകം മുതൽ സംഭാഷണം, നിഘണ്ടുക്കൾ വരെ)</string>
+    <string name="reset_languages_question">എല്ലാ ഭാഷാ അസൈൻമെന്റുകളും പുന സജ്ജമാക്കണോ?</string>
+    <string name="reset_confirmation">എല്ലാ സംസ്ഥാനങ്ങളും പുന .സജ്ജമാക്കുന്നു</string>
+    <string name="card_zoom" maxLength="41">കാർഡ് സൂം</string>
+    <string name="image_zoom" maxLength="41">ഇമേജ് സൂം</string>
+    <string name="button_size" maxLength="41">\"ഉത്തരം ബട്ടൺ\" വലുപ്പം</string>
+    <string name="card_browser_font_size" maxLength="41">കാർഡ് ബ്ര browser സർ ഫോണ്ട് സ്കെയിലിംഗ്</string>
+    <string name="card_browser_hide_media" maxLength="41">Display filenames in card browser</string>
+    <string name="card_browser_hide_media_summary">കാർഡ് ബ്ര browser സർ ചോദ്യ / ഉത്തര ഫീൽഡുകളിൽ മീഡിയ ഫയൽ നാമങ്ങൾ പ്രദർശിപ്പിക്കുക</string>
+    <string name="col_path" maxLength="41">AnkiDroid ഡയറക്ടറി</string>
+    <string name="fullscreen_review" maxLength="41">പൂർണ്ണസ്ക്രീൻ മോഡ്</string>
+    <string name="full_screen_off">ഓഫ്</string>
+    <string name="full_screen_system">സിസ്റ്റം ബാറുകൾ മറയ്‌ക്കുക</string>
+    <string name="full_screen_complete">സിസ്റ്റം ബാറുകളും ഉത്തര ബട്ടണുകളും മറയ്‌ക്കുക</string>
+    <string name="full_screen_error_gestures">ഉത്തര ബട്ടണുകൾ‌ മറയ്‌ക്കാൻ നിങ്ങൾ‌ ജെസ്റ്ററുകൾ‌ പ്രാപ്‌തമാക്കണം</string>
+    <string name="answer_buttons_position" maxLength="41">ഉത്തരം ബട്ടണുകളുടെ സ്ഥാനം</string>
+    <string-array name="answer_buttons_position_labels">
+        <item>മുകളിൽ</item>
+        <item>ചുവടെ</item>
+    </string-array>
+    <string name="gestures" maxLength="41">ആംഗ്യങ്ങൾ പ്രവർത്തനക്ഷമമാക്കുക</string>
+    <string name="gestures_summ">കാർഡുകൾക്ക് ഉത്തരം നൽകൽ, എഡിറ്റുചെയ്യൽ എന്നിവ പോലുള്ള പ്രവർത്തനങ്ങൾക്ക് ആംഗ്യങ്ങൾ നൽകുക.</string>
+    <string name="gestures_allow_links" maxLength="41">ലിങ്കുകളിലെ ടച്ച് സവിശേഷതകൾ അവഗണിക്കുക</string>
+    <string name="gestures_allow_links_summary">ഒരു ലിങ്ക് / സൂചന അമർത്തിയാൽ ടച്ച് സവിശേഷതകൾ പ്രോസസ്സ് ചെയ്യില്ല.</string>
+    <string name="gestures_corner_touch" maxLength="41">9-point touch</string>
+    <string name="gestures_corner_touch_summary">സ്‌ക്രീൻ കോണുകളിൽ ടച്ച് സവിശേഷതകൾ അനുവദിക്കുക</string>
+    <string name="gestures_swipe_up" maxLength="41">മുകളിലേക്ക് നീക്കുക</string>
+    <string name="gestures_swipe_down" maxLength="41">താഴോട്ടു സ്വൈപ്പ് ചെയ്യുക</string>
+    <string name="gestures_swipe_left" maxLength="41">ഇടത്തേക്ക് സ്വൈപ് ചെയ്യുക</string>
+    <string name="gestures_swipe_right" maxLength="41">വലത്തേക്ക് സ്വൈപ്പ് ചെയ്യുക</string>
+    <string name="gestures_double_tap" maxLength="41">ഇരട്ട സ്‌പർശനം</string>
+    <string name="gestures_tap_top" maxLength="41">മുകളിൽ സ്‌പർശിക്കുക</string>
+    <string name="gestures_tap_left" maxLength="41">ഇടത് സ്‌പർശിക്കുക</string>
+    <string name="gestures_tap_right" maxLength="41">വലത് സ്‌പർശിക്കുക</string>
+    <string name="gestures_tap_bottom" maxLength="41">ചുവടെ സ്‌പർശിക്കുക</string>
+    <string name="gestures_corner_tap_top_left" maxLength="41">മുകളിൽ ഇടത് സ്പർശിക്കുക</string>
+    <string name="gestures_corner_tap_top_center">ടോപ്പ് സെന്റർ സ്‌പർശിക്കുക</string>
+    <string name="gestures_corner_tap_top_right" maxLength="41">മുകളിൽ വലത് സ്പർശിക്കുക</string>
+    <string name="gestures_corner_tap_middle_left">ഇടത് ഇടത് സ്പർശിക്കുക</string>
+    <string name="gestures_corner_tap_middle_center" maxLength="41">മധ്യഭാഗത്ത് സ്പർശിക്കുക</string>
+    <string name="gestures_corner_tap_middle_right">മധ്യ വലതുവശത്ത് സ്‌പർശിക്കുക</string>
+    <string name="gestures_corner_tap_bottom_left" maxLength="41">ചുവടെ ഇടത് സ്പർശിക്കുക</string>
+    <string name="gestures_corner_tap_bottom_center">ചുവടെയുള്ള മധ്യത്തിൽ സ്‌പർശിക്കുക</string>
+    <string name="gestures_corner_tap_bottom_right" maxLength="41">ചുവടെ വലതുവശത്ത് സ്‌പർശിക്കുക</string>
+    <string name="gestures_volume_up" maxLength="41">വോളിയം ഉയർത്തുക</string>
+    <string name="gestures_volume_down" maxLength="41">വോളിയം കുറയ്ക്കുക</string>
+    <string name="more_scrolling_buttons" maxLength="41">eReader</string>
+    <string name="more_scrolling_buttons_summ">സ്ക്രോളിംഗിനായി കാഞ്ചി / കറ്റക്കാന, ഇമോജി / കാവോ-മോജി ബട്ടണുകളും ഉപയോഗിക്കുക</string>
+    <string name="card_browser_enable_external_context_menu">‘%s’ മെനു</string>
+    <string name="card_browser_enable_external_context_menu_summary">ആഗോളതലത്തിൽ ‘%s’ സന്ദർഭ മെനു പ്രവർത്തനക്ഷമമാക്കുന്നു</string>
+    <string name="double_scrolling_gap" maxLength="41">ഇരട്ട സ്ക്രോളിംഗ്</string>
+    <string name="double_scrolling_gap_summ">eReader ഉപയോഗിച്ച് സ്ക്രോൾ വിടവ് ഇരട്ടിയാക്കുക</string>
+    <string name="swipe_sensitivity" maxLength="41">സ്വൈപ്പ് സംവേദനക്ഷമത</string>
+    <string name="tts" maxLength="41">സംഭാഷണത്തിലേക്ക് വാചകം</string>
+    <string name="tts_summ">ശബ്‌ദ ഫയലുകളൊന്നും ഉൾപ്പെടുത്തിയിട്ടില്ലെങ്കിൽ ചോദ്യോത്തരങ്ങൾ വായിക്കുന്നു</string>
+    <string name="sync_fetch_missing_media" maxLength="41">സമന്വയത്തിൽ മീഡിയ ലഭ്യമാക്കുക</string>
+    <string name="sync_fetch_missing_media_summ">സമന്വയിപ്പിക്കുമ്പോൾ കാണാതായ മീഡിയ സ്വപ്രേരിതമായി ലഭ്യമാക്കുക</string>
+    <string name="sync_account" maxLength="41">AnkiWeb അക്കൗണ്ട്</string>
+    <string name="sync_account_summ_logged_out">ലോഗിൻ ചെയ്തിട്ടില്ല</string>
+    <string name="sync_account_summ_logged_in">%s</string>
+    <string name="automatic_sync_choice" maxLength="41">യാന്ത്രിക സമന്വയം</string>
+    <string name="automatic_sync_choice_summ">അവസാന സമന്വയം 10 ​​ൽ കൂടുതലാണെങ്കിൽ അപ്ലിക്കേഷൻ ആരംഭത്തിൽ / പുറത്തുകടക്കുമ്പോൾ യാന്ത്രികമായി സമന്വയിപ്പിക്കുക</string>
+    <string name="sync_status_badge" maxLength="41">സമന്വയ നില പ്രദർശിപ്പിക്കുക</string>
+    <string name="sync_status_badge_summ">മാറ്റങ്ങൾ അപ്‌ലോഡ് ചെയ്യാൻ കഴിയുമ്പോൾ സമന്വയ ഐക്കൺ മാറ്റുക</string>
+    <string name="day_theme" maxLength="41">ദിവസത്തെ തീം</string>
+    <string name="night_theme" maxLength="41">രാത്രി തീം</string>
+    <string name="default_font" maxLength="41">സ്ഥിരസ്ഥിതി ഫോണ്ട്</string>
+    <string name="override_font" maxLength="41">സ്ഥിരസ്ഥിതി ഫോണ്ട് പ്രയോഗക്ഷമത</string>
+    <string name="language" maxLength="41">ഭാഷ</string>
+    <string name="language_system">സിസ്റ്റത്തിലെ ഭാഷ</string>
+    <string name="notification_pref" maxLength="41">അറിയിപ്പുകൾ</string>
+    <string name="notification_pref_title" maxLength="41">എപ്പോൾ എന്ന് അറിയിക്കുക</string>
+    <string name="never_notify">ഒരിക്കലും അറിയിക്കരുത്</string>
+    <string name="notify_when_pending">തീർപ്പുകൽപ്പിക്കാത്ത സന്ദേശങ്ങൾ ലഭ്യമാണ്</string>
+    <string name="notification_minimum_cards_due">%d കാർഡുകളിൽ കൂടുതൽ</string>
+    <string name="notification_minimum_cards_due_vibrate" maxLength="41">വൈബ്രേറ്റുചെയ്യുക</string>
+    <string name="notification_minimum_cards_due_blink" maxLength="41">ബ്ലിങ്ക് ലൈറ്റ്</string>
+    <string name="timeout_answer_text" maxLength="41">യാന്ത്രിക പ്രദർശന ഉത്തരം</string>
+    <string name="timeout_answer_summ">ഉപയോക്തൃ ഇൻ‌പുട്ട് ഇല്ലാതെ സ്വപ്രേരിതമായി ഉത്തരം കാണിക്കുക. സ്വപ്രേരിതമായി പ്ലേ ചെയ്യുന്ന ഓഡിയോ ഫയലുകൾക്കുള്ള സമയം കാലതാമസം ഉൾക്കൊള്ളുന്നു.</string>
+    <string name="timeout_answer_seconds" maxLength="41">ഉത്തരം കാണിക്കാനുള്ള സമയം</string>
+    <string name="timeout_answer_seconds_summ" comment="The time to wait (in seconds) in the reviewer before automatically showing the next question or answer">XXX s</string>
+    <string name="timeout_question_seconds" maxLength="41">അടുത്ത ചോദ്യം കാണിക്കാനുള്ള സമയം</string>
+    <string name="select_locale_title">ഭാഷ തിരഞ്ഞെടുക്കുക</string>
+    <string name="software_render" maxLength="41">Disable card hardware render</string>
+    <string name="software_render_summ">ഹാർഡ്‌വെയർ റെൻഡർ വേഗതയേറിയതാണെങ്കിലും പ്രശ്‌നങ്ങളുണ്ടാകാം, പ്രത്യേകിച്ചും Android 8 / 8.1. കാർഡ് അവലോകന ഉപയോക്തൃ ഇന്റർഫേസിന്റെ ഭാഗങ്ങൾ നിങ്ങൾക്ക് കാണാൻ കഴിയുന്നില്ലെങ്കിൽ, ഈ ക്രമീകരണം പരീക്ഷിക്കുക.</string>
+    <string name="safe_display" maxLength="41">സുരക്ഷിത പ്രദർശന മോഡ്</string>
+    <string name="safe_display_summ">എല്ലാ ആനിമേഷനുകളും അപ്രാപ്‌തമാക്കി കാർഡുകൾ വരയ്‌ക്കുന്നതിന് സുരക്ഷിതമായ രീതി ഉപയോഗിക്കുക. ഇ-മഷി ഉപകരണങ്ങൾക്ക് ഇത് ആവശ്യമായി വന്നേക്കാം.</string>
+    <string name="disable_extended_text_ui" maxLength="41">സിംഗിൾ-ഫീൽഡ് എഡിറ്റ് മോഡ് അപ്രാപ്തമാക്കുക</string>
+    <!--See: multimedia_editor_popup_cloze. We can\'t use format strings as this is auto-generated-->
+    <string name="disable_extended_text_ui_summ">ലാൻഡ്‌സ്‌കേപ്പ് മോഡിലായിരിക്കുമ്പോൾ \'ക്ലോസ് ഡിലീറ്റ്\' സന്ദർഭ മെനു അനുവദിക്കുന്നു.</string>
+    <string name="vertical_centering" maxLength="41">സെന്റർ വിന്യാസം</string>
+    <string name="vertical_centering_summ">കാർഡുകളുടെ ഉള്ളടക്കം ലംബമായി കേന്ദ്രീകരിക്കുക</string>
+    <string name="pref_backup_max" maxLength="41">ബാക്കപ്പുകളുടെ പരമാവധി എണ്ണം</string>
+    <string name="show_estimates" maxLength="41">ബട്ടൺ സമയം കാണിക്കുക</string>
+    <string name="show_estimates_summ">Show next review time on answer buttons</string>
+    <string name="show_top_bar" maxLength="41">Show Top Bar</string>
+    <string name="show_top_bar_summ">Show card counts, flag and mark in top bar</string>
+    <string name="show_progress" maxLength="41">Show remaining</string>
+    <string name="show_progress_summ">Show remaining card count</string>
+    <string name="show_eta" maxLength="41">Show ETA</string>
+    <string name="show_eta_summ">Show remaining time</string>
+    <string name="use_current" maxLength="41">Deck for new cards</string>
+    <string name="new_spread" maxLength="41">New card position</string>
+    <string name="learn_cutoff" maxLength="41">Learn ahead limit</string>
+    <string name="time_limit" maxLength="41">Timebox time limit</string>
+    <string name="time_limit_summ">XXX min</string>
+    <string name="new_timezone" maxLength="41">New timezone handling</string>
+    <string name="day_offset_with_description" maxLength="41">Start of next day</string>
+    <string name="day_offset_summ">XXX hours past midnight</string>
+    <string name="xlabel_dayoffset_seekbar" maxLength="41">അർദ്ധരാത്രി</string>
+    <string name="ylabel_dayoffset_seekbar" maxLength="41">11pm</string>
+    <string name="sched_v2" maxLength="41">V2 scheduler</string>
+    <string name="sched_v2_summ">Enable the new scheduler. Forces changes in one direction on next sync</string>
+    <string name="sched_ver_toggle_title">നിജപ്പെടുത്തുക</string>
+    <string name="sched_ver_2to1">This will reset any cards in learning, clear filtered decks, and change the scheduler version. Proceed?</string>
+    <string name="sched_ver_1to2">The experimental scheduler could cause incorrect scheduling. Please ensure you have read the documentation first. Proceed?</string>
+    <string name="pref_keep_screen_on" maxLength="41">സ്ക്രീൻ ഓണാക്കി വയ്ക്കുക</string>
+    <string name="pref_keep_screen_on_summ">Disable screen timeout</string>
+    <string name="convert_fen_text" maxLength="41">Chess notation support</string>
+    <string name="convert_fen_text_summ">Draw chessboard from Forsyth–Edwards Notation. The notation must be enclosed in [fen][/fen] tags.</string>
+    <string name="enable_api_title" maxLength="41">Enable AnkiDroid API</string>
+    <string name="enable_api_summary">Let other apps connect to AnkiDroid and read / write data without your intervention</string>
+    <string name="custom_buttons" maxLength="41">App bar buttons</string>
+    <string name="custom_buttons_summary">Customize which actions appear in the app bar</string>
+    <string name="custom_buttons_setting_always_show">Always show</string>
+    <string name="custom_buttons_setting_if_room">Show if room</string>
+    <string name="custom_buttons_setting_menu_only">Menu only</string>
+    <string name="reset_custom_buttons" maxLength="41">Reset to default</string>
+    <string name="thirdparty_apps_title" maxLength="41">Third-party API apps</string>
+    <string name="thirdparty_apps_summary">See a list of applications which make use of the AnkiDroid API such as dictionaries, utilities.</string>
+    <string name="html_javascript_debugging" maxLength="41">HTML / Javascript Debugging</string>
+    <string name="html_javascript_debugging_summ">Enable remote WebView connections, and save card HTML to AnkiDroid directory</string>
+    <!-- Advanced statistics settings -->
+    <string name="advanced_statistics_title" maxLength="41">വിശദമായ സ്റ്ററ്റിസ്റ്റിക്സ്‌</string>
+    <string name="enable_advanced_statistics_title" maxLength="41">Enable advanced statistics</string>
+    <string name="enable_advanced_statistics_summ">Display forecast statistics based on a computation or simulation of future reviews (enabled) or on the future reviews already scheduled (disabled).</string>
+    <string name="advanced_forecast_stats_compute_n_days_title" maxLength="41">Compute first n days, simulate remainder</string>
+    <string name="advanced_forecast_stats_compute_precision_title" maxLength="41">Precision of computation</string>
+    <string name="advanced_forecast_stats_mc_n_iterations_title" maxLength="41">Number of iterations of the simulation</string>
+    <!-- Custom sync server settings -->
+    <string name="custom_sync_server_title" maxLength="41">Custom sync server</string>
+    <string name="custom_sync_server_enable_title" maxLength="41">Use custom sync server</string>
+    <string name="custom_sync_server_enable_summary">If you don\'t want to use the proprietary AnkiWeb service you can specify an alternative server here</string>
+    <string name="custom_sync_server_base_url_title" maxLength="41">Sync url</string>
+    <string name="custom_sync_server_base_url_invalid">Sync url invalid</string>
+    <string name="custom_sync_server_media_url_title" maxLength="41">Media sync url</string>
+    <string name="custom_sync_server_media_url_invalid">Media sync url invalid</string>
+    <!-- studyoptions -->
+    <string name="deck_conf_group_summ">Changes to deck group options will affect multiple decks. If you wish to change only the current deck, please add a new options group first</string>
+    <string name="studyoptions_limit_select_tags">ടാഗ് തിരഞ്ഞെടുക്കുക</string>
+    <!-- Deck configurations -->
+    <string name="deck_conf_deck_description" maxLength="41">Deck description (current deck only)</string>
+    <string name="deck_conf_group" maxLength="41">Options group</string>
+    <plurals name="deck_conf_group_summ">
+        <item quantity="one">%1$s\n%2$d deck uses this group</item>
+        <item quantity="other">%1$s\n%2$d decks use this group</item>
+    </plurals>
+    <string name="deck_conf_new_cards" maxLength="41">കാർഡ് പുതിയതാണോ?</string>
+    <string name="deck_conf_rev_cards" maxLength="41" comment="Name of the deck options submenu for configuring reviews of due cards.">അവലോകനങ്ങൾ</string>
+    <string name="deck_conf_lps_cards" maxLength="41" comment="Label of the submenu stating how lapses cards are treated.">ലാപ്‌സുകൾ</string>
+    <string name="deck_conf_general" maxLength="41">പൊതുവായ</string>
+    <string name="deck_conf_reminders" maxLength="41">ഓർമ്മപ്പെടുത്തലുകൾ</string>
+    <string name="deck_conf_steps" maxLength="41">Steps (in minutes)</string>
+    <string name="deck_conf_order" maxLength="41">ഓർഡറുകൾ</string>
+    <string name="deck_conf_new_cards_day" maxLength="41">New cards/day</string>
+    <string name="deck_conf_graduating_ivl" maxLength="41">Graduating interval</string>
+    <string name="deck_conf_days">XXX day(s)</string>
+    <string name="deck_conf_easy_ivl" maxLength="41">Easy interval</string>
+    <string name="deck_conf_start_ease" maxLength="41">Starting ease</string>
+    <string name="deck_conf_max_rev" maxLength="41">Maximum reviews/day</string>
+    <string name="deck_conf_new_bury" maxLength="41">Bury related new cards</string>
+    <string name="deck_conf_new_bury_summ">Related new cards are buried until the next day</string>
+    <string name="deck_conf_rev_bury" maxLength="41">Bury related reviews</string>
+    <string name="deck_conf_rev_bury_summ">Related reviews are buried until the next day</string>
+    <string name="deck_conf_use_general_timeout_settings" maxLength="41">Use general settings</string>
+    <string name="deck_conf_use_general_timeout_settings_summ">Use general \'Automatic display answer\' settings instead of using the settings for this group.</string>
+    <string name="deck_conf_easy_bonus" maxLength="41">Easy bonus</string>
+    <string name="deck_conf_hard_factor" maxLength="41">Hard interval</string>
+    <string name="deck_conf_ivl_fct" maxLength="41">Interval modifier</string>
+    <string name="deck_conf_max_ivl" maxLength="41">Maximum interval</string>
+    <string name="deck_conf_new_lps_ivl" maxLength="41">New interval</string>
+    <string name="deck_conf_min_ivl" maxLength="41">Minimum interval</string>
+    <string name="deck_conf_leech_thres" maxLength="41">Leech threshold</string>
+    <string name="deck_conf_fails">XXX lapse(s)</string>
+    <string name="deck_conf_leech_action" maxLength="41">Leech action</string>
+    <string name="deck_conf_max_time" maxLength="41">Maximal answer time</string>
+    <string name="deck_conf_seconds">XXX seconds</string>
+    <string name="deck_conf_timer" maxLength="41">Show answer timer</string>
+    <string name="deck_conf_autoplay" maxLength="41">Automatically play audio</string>
+    <string name="deck_conf_replayq" maxLength="41">Replay question</string>
+    <string name="deck_conf_replayq_summ">When answer shown, replay both question and answer audio</string>
+    <string name="deck_conf_manage" maxLength="41">Group management</string>
+    <string name="deck_conf_manage_summ">Add and change options groups</string>
+    <string name="deck_conf_current_group" maxLength="41">നിലവിലെ ഗ്രൂപ്പ്</string>
+    <string name="deck_conf_rename" maxLength="41" comment="Menu entry to rename a deck">പേരുമാറ്റുക</string>
+    <string name="deck_conf_reset" maxLength="41">ഡിഫോൾട്ടുകൾ പുനഃസ്ഥാപിക്കുക</string>
+    <string name="deck_conf_reset_message">Restore current options group to default values?</string>
+    <string name="deck_conf_add" maxLength="41" comment="Adding a new deck option group">ചേർക്കുക</string>
+    <string name="deck_conf_add_summ">Create a copy of the current options group</string>
+    <string name="deck_conf_remove_message">Remove current options group?</string>
+    <string name="deck_conf_set_subdecks" maxLength="41">Set for all subdecks</string>
+    <plurals name="deck_conf_set_subdecks_summ">
+        <item quantity="one">%s subdeck will use this group</item>
+        <item quantity="other">%s subdecks will use this group</item>
+    </plurals>
+    <string name="deck_conf_set_subdecks_message">Set current options group for all of this deck’s subdecks?</string>
+    <string name="pref_browser_editor_font" maxLength="41">Browser and editor font</string>
+    <string name="deck_conf_cram_filter" maxLength="41">Filter</string>
+    <string name="deck_conf_cram_search" maxLength="41">തിരയുക</string>
+    <string name="deck_conf_cram_limit" maxLength="41">Limit to</string>
+    <string name="deck_conf_cram_order" maxLength="41">cards selected by</string>
+    <string name="deck_conf_cram_reschedule" maxLength="41" comment="Title of the box labelled by deck_conf_cram_reschedule_summ">വീണ്ടും ഷെഡ്യൂൾ ചെയ്യുക</string>
+    <string name="deck_conf_cram_reschedule_summ">Reschedule cards based on my answers in this deck</string>
+    <string name="deck_conf_cram_steps" maxLength="41">Custom steps (in minutes)</string>
+    <string name="deck_conf_cram_steps_summ" maxLength="41">Define custom steps</string>
+    <string name="deck_conf_reminders_enabled" maxLength="41">Enable notifications for this deck group</string>
+    <string name="deck_conf_reminders_time" maxLength="41">Remind at</string>
+    <!-- analytics options -->
+    <string name="analytics_dialog_title">Help make AnkiDroid better!</string>
+    <string name="analytics_title" maxLength="41">Share feature usage</string>
+    <string name="analytics_summ">You can contribute to AnkiDroid by helping the development team see which features people use</string>
+    <string name="note_editor_replace_newlines" maxLength="41">Replace newlines with HTML</string>
+    <string name="note_editor_replace_newlines_summ">In the Note Editor, convert any instances of &lt;br&gt; to newlines when editing a card.</string>
+    <string name="no_code_formatting" maxLength="41">Simple typed answer formatting</string>
+    <string name="no_code_formatting_summ">Fixes ‘􏿾’ appearing in typed answer results</string>
+    <string name="type_in_answer_focus" maxLength="41">Focus ‘type in answer’</string>
+    <string name="type_in_answer_focus_summ">Automatically focus the ‘type in answer’ field in the reviewer</string>
+    <!-- Open Changelog-->
+    <string name="open_changelog">Open Changelog</string>
+</resources>

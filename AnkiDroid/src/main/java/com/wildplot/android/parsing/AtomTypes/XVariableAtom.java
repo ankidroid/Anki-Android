@@ -15,11 +15,14 @@
  ****************************************************************************************/
 package com.wildplot.android.parsing.AtomTypes;
 
+import android.annotation.SuppressLint;
+
 import com.wildplot.android.parsing.Atom;
 import com.wildplot.android.parsing.ExpressionFormatException;
 import com.wildplot.android.parsing.TopLevelParser;
 import com.wildplot.android.parsing.TreeElement;
 
+@SuppressLint("NonPublicNonStaticFieldName")
 public class XVariableAtom implements TreeElement {
 
     private final Atom.AtomType atomType = Atom.AtomType.VARIABLE;

@@ -116,12 +116,12 @@
     <string name="menu_edit_tags">Modifica etichette</string>
     <string name="delete_note_message">Vuoi veramente eliminare questa nota e tutte le sue carte?\n%s</string>
     <string name="menu_select">Seleziona testo</string>
+    <string name="menu_lookup">Lookup text</string>
     <string name="menu_search">Ricerca in %1$s</string>
     <string name="menu_mark_note">Contrassegna nota</string>
     <string name="menu_unmark_note">Rimuovi contrassegno nota</string>
     <string name="menu_toggle_mic_tool_bar">Controlla la pronuncia</string>
     <string name="new_deck">Crea mazzo</string>
-    <string name="create" comment="Button to create a filtered deck">Crea</string>
     <string name="new_dynamic_deck">Crea mazzo filtrato</string>
     <string name="night_mode">Modalità notturna</string>
     <string name="directory_inaccessible">La directory AnkiDroid è inaccessibile</string>
@@ -154,6 +154,7 @@
     <string name="custom_study_deck_name">Sessione di Studio Personalizzato</string>
     <string name="custom_study_deck_exists">Rinomina dapprima il mazzo di Studio Personalizzato esistente.</string>
     <string name="empty_deck">Questo mazzo è vuoto</string>
+    <string name="search_deck">Deck Search</string>
     <string name="empty_deck_add_note">Aggiungi carta</string>
     <string name="invalid_deck_name">Nome mazzo non valido</string>
     <string name="studyoptions_empty">Questo mazzo è vuoto. Premi il pulsante + per aggiungere nuovi contenuti.</string>
@@ -184,8 +185,8 @@
     <string name="card_template_editor_deck_override">Sovrascrittura Mazzo</string>
     <string name="card_template_editor_cant_delete">È necessario almeno un tipo di carta.</string>
     <plurals name="card_template_editor_confirm_delete">
-        <item quantity="one">Eliminare il tipo di carta \'%2$s\', e la sua carta %1$d?</item>
-        <item quantity="other">Eliminare il tipo di carta \'%2$s\', e le sue carte %1$d?</item>
+        <item quantity="one">Eliminare il tipo di carta «%2$s», e la sua carta %1$d?</item>
+        <item quantity="other">Eliminare il tipo di carta «%2$s», e le sue carte %1$d?</item>
     </plurals>
     <string name="invalid_template">Una carta non può essere generata</string>
     <string name="card_template_editor_would_delete_note">La rimozione di questo tipo di carta causerebbe l\'eliminazione di una o più note. Si prega di creare e salvare prima un nuovo tipo di carta.</string>
@@ -210,4 +211,12 @@
     <string name="open_tag_not_closed">Manca \'{{%s}}\'.</string>
     <string name="wrong_tag_closed">Trovato \'{{/%1$s}}\', ma atteso \'{/%2$s}}\'</string>
     <string name="filter_error">Errore nel filtro %s</string>
+    <!-- Sync conflict -->
+    <string name="sync_conflict_message_new">The collections can’t be combined.\nWhich collection do you want to keep?</string>
+    <string name="sync_conflict_keep_local_new" comment="Select AnkiDroid files to keep while syncing">AnkiDroid</string>
+    <string name="sync_conflict_keep_remote_new" comment="Select AnkiWeb files to keep while syncing">AnkiWeb</string>
+    <string name="sync_conflict_remote_confirm_new">Replace your collection on AnkiDroid with your collection from AnkiWeb?</string>
+    <string name="sync_conflict_local_confirm_new">Replace your collection on AnkiWeb with your collection from AnkiDroid?</string>
+    <string name="sync_conflict_title_new">Select collection to keep</string>
+    <string name="sync_conflict_replace_title">Replace collection</string>
 </resources>

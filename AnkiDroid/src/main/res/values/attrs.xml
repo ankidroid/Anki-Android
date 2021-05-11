@@ -99,6 +99,9 @@
     <attr name="flagBlue" format="color"/>
     <!-- Note editor colors -->
     <attr name="duplicateColor" format="color"/>
+    <attr name="editTextBackgroundColor" format="color"/>
+    <attr name="toolbarBackgroundColor" format="color"/>
+    <attr name="toolbarIconColor" format="color"/>
     <!-- Images -->
     <attr name="navDrawerImage" format="integer"/>
     <attr name="attachFileImage" format="integer"/>
@@ -109,7 +112,9 @@
     <!-- FAB -->
     <attr name="fab_normal" format="color"/> <!-- Also color of the Study button in StudyOptions -->
     <attr name="fab_pressed" format="color"/>
-    <attr name="fab_labelsTextColor" format="color"/>
-    <attr name="fab_background" format="color"/>
+    <attr name="fab_labelsTextColor" format="color">#fff</attr>
     <attr name="fab_item_background" format="reference"/>
+    <!--Custom Tabs colors-->
+    <attr name="customTabToolbarColor" format="color"/>
+    <attr name="customTabNavBarColor" format="color"/>
 </resources>

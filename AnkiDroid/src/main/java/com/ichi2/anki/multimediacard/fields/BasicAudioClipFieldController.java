@@ -45,7 +45,7 @@ public class BasicAudioClipFieldController extends FieldControllerBase implement
 
     private static final int ACTIVITY_SELECT_AUDIO_CLIP = 1;
 
-    private File storingDirectory;
+    private File mStoringDirectory;
 
     private TextView mTvAudioClip;
 
@@ -54,7 +54,7 @@ public class BasicAudioClipFieldController extends FieldControllerBase implement
     public void createUI(Context context, LinearLayout layout) {
 
         Collection col = CollectionHelper.getInstance().getCol(context);
-        storingDirectory = new File(col.getMedia().dir());
+        mStoringDirectory = new File(col.getMedia().dir());
 
         Button mBtnLibrary = new Button(mActivity);
         mBtnLibrary.setText(mActivity.getText(R.string.multimedia_editor_image_field_editing_library));
@@ -117,6 +117,7 @@ public class BasicAudioClipFieldController extends FieldControllerBase implement
                     Timber.i("Audio clip name does not have extension, using second half of mime type");
                     audioClipFullNameParts = new String[] {audioClipFullName, cursor.getString(2).split("/")[1]};
                 } catch (Exception e) {
+                    Timber.w(e);
                     // This code is difficult to stabilize - it is not clear how to handle files with no extension
                     // and apparently we may fail to get MIME_TYPE information - in that case we will gather information
                     // about what people are experiencing in the real world and decide later, but without crashing at least
@@ -133,7 +134,7 @@ public class BasicAudioClipFieldController extends FieldControllerBase implement
         try {
             clipCopy = File.createTempFile("ankidroid_audioclip_" + audioClipFullNameParts[0],
                     "." + audioClipFullNameParts[1],
-                    storingDirectory);
+                    mStoringDirectory);
             Timber.d("audio clip picker file path is: %s", clipCopy.getAbsolutePath());
         } catch (Exception e) {
             Timber.e(e, "Could not create temporary audio file. ");

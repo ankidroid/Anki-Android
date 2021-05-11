@@ -33,25 +33,24 @@ jobs:
     timeout-minutes: 15
     runs-on: ubuntu-latest
     steps:
-      - uses: styfle/cancel-workflow-action@0.6.0
+      - uses: styfle/cancel-workflow-action@0.9.0
         with:
-          access_token: ${{ github.token }}
+          all_but_latest: true
 
       - uses: actions/checkout@v2
         with:
           fetch-depth: 1
 
-      - name: Configure JDK 1.8
-        uses: actions/setup-java@v1
+      - name: Configure JDK 1.11
+        uses: actions/setup-java@v2
         with:
-          java-version: '8' # ubuntu-latest is about to default to 11, force 8
+          distribution: "adopt"
+          java-version: "11" # ubuntu-latest is about to default to 11, force it everywhere
 
-      - name: Verify JDK8
-        # OpenJDK1.8 is the default in GitHub macOS 10.15 runner, setup is not required
-        # On ubuntu-latest it is OpenJDK1.8 but is about to switch, so we should setup
-        # It may be required on other runners though
-        # Run a check that exits with error unless it is 1.8 version to future-proof against unexpected upgrades
-        run: java -fullversion 2>&1 | grep '1.8'
+      - name: Verify JDK11
+        # Default JDK varies depending on different runner flavors, make sure we are on 11
+        # Run a check that exits with error unless it is 11 version to future-proof against unexpected upgrades
+        run: java -fullversion 2>&1 | grep '11.0'
         shell: bash
 
       - name: Gradle Cache
@@ -67,10 +66,10 @@ jobs:
           timeout_minutes: 10
           retry_wait_seconds: 60
           max_attempts: 3
-          command: ./gradlew :AnkiDroid:compileReleaseJavaWithJavac compileLint lint-rules:compileTestJava
+          command: ./gradlew :AnkiDroid:compilePlayReleaseJavaWithJavac compileLint lint-rules:compileTestJava
 
       - name: Run Lint Release
-        run: ./gradlew lintRelease
+        run: ./gradlew :api:lintRelease :AnkiDroid:lintPlayRelease
 
       - name: Test Lint Rules
         run: ./gradlew lint-rules:test

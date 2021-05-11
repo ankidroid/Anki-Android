@@ -1,0 +1,247 @@
+<?xml version="1.0" encoding="utf-8"?> 
+ <!-- 
+ ~ Copyright (c) 2009 Andrew <andrewdubya@gmail> 
+ ~ Copyright (c) 2009 Edu Zamora <edu.zasu@gmail.com> 
+ ~ Copyright (c) 2009 Daniel Svaerd <daniel.svard@gmail.com> 
+ ~ Copyright (c) 2009 Nicolas Raoul <nicolas.raoul@gmail.com> 
+ ~ Copyright (c) 2010 Norbert Nagold <norbert.nagold@gmail.com> 
+ ~ This program is free software; you can redistribute it and/or modify it under 
+ ~ the terms of the GNU General Public License as published by the Free Software 
+ ~ Foundation; either version 3 of the License, or (at your option) any later 
+ ~ version. 
+ ~ 
+ ~ This program is distributed in the hope that it will be useful, but WITHOUT ANY 
+ ~ WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A 
+ ~ PARTICULAR PURPOSE. See the GNU General Public License for more details. 
+ ~ 
+ ~ You should have received a copy of the GNU General Public License along with 
+ ~ this program.  If not, see <http://www.gnu.org/licenses/>. 
+ --> 
+ 
+<!--
+~ Copyright (c) 2009 Andrew <andrewdubya@gmail>
+~ Copyright (c) 2009 Edu Zamora <edu.zasu@gmail.com>
+~ Copyright (c) 2009 Daniel Svärd <daniel.svard@gmail.com>
+~ Copyright (c) 2009 Nicolas Raoul <nicolas.raoul@gmail.com>
+~ Copyright (c) 2010 Norbert Nagold <norbert.nagold@gmail.com>
+~
+~ This program is free software; you can redistribute it and/or modify it under
+~ the terms of the GNU General Public License as published by the Free Software
+~ Foundation; either version 3 of the License, or (at your option) any later
+~ version.
+~
+~ This program is distributed in the hope that it will be useful, but WITHOUT ANY
+~ WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A
+~ PARTICULAR PURPOSE. See the GNU General Public License for more details.
+~
+~ You should have received a copy of the GNU General Public License along with
+~ this program.  If not, see <http://www.gnu.org/licenses/>.
+-->
+<resources xmlns:tools="http://schemas.android.com/tools">
+    <string name="check_db_title">ഡാറ്റാബേസ് പരിശോധിക്കുക?</string>
+    <string name="check_db_warning">ഇതിന് വളരെയധികം സമയമെടുത്തേക്കാം</string>
+    <string name="check_db_acknowledge">ഡാറ്റാബേസ് പരിശോധിച്ചു</string>
+    <string name="check_db_acknowledge_shrunk">ഡാറ്റാബേസ് പരിശോധിച്ച് ഒപ്റ്റിമൈസ് ചെയ്തു.\n%d MB ചുരുക്കി.</string>
+    <string name="contextmenu_deckpicker_delete_deck">ഡെക്ക് ഇല്ലാതാക്കുക</string>
+    <string name="delete_deck_default_deck">സ്ഥിരസ്ഥിതി ഡെക്ക് ഇല്ലാതാക്കാൻ കഴിയില്ല</string>
+    <string name="delete_deck_title">ഡെക്ക് ഇല്ലാതാക്കുക?</string>
+    <plurals name="delete_deck_message">
+        <item quantity="one">%1$s ലെ എല്ലാ കാർഡുകളും ഇല്ലാതാക്കണോ? ഇതിൽ %2$d കാർഡ് അടങ്ങിയിരിക്കുന്നു.</item>
+        <item quantity="other">%1$s ലെ എല്ലാ കാർഡുകളും ഇല്ലാതാക്കണോ? ഇതിൽ %2$d കാർഡുകൾ അടങ്ങിയിരിക്കുന്നു.</item>
+    </plurals>
+    <string name="delete_cram_deck_message">%s ലെ എല്ലാ കാർഡുകളും അവയുടെ യഥാർത്ഥ ഡെക്കുകളിലേക്ക് തിരികെ അയയ്‌ക്കണോ?</string>
+    <string name="no_tts_available_message">ടെക്സ്റ്റ്-ടു-സ്പീച്ച് ഭാഷ ലഭ്യമല്ല</string>
+    <string name="initializing_tts">Initializing TTS&#8230;</string>
+    <string name="tts_no_tts">സംസാരിക്കരുത്</string>
+    <string-array name="about_content">
+        <item><![CDATA[<h2>%1$s:<br/>Flashcards for Android</h2>AnkiDroid is a flashcard application which is fully compatible with the desktop software <a href=\"%2$s\">Anki</a>. You can create, download and learn material on both AnkiDroid or Anki Desktop, and synchronize them easily with AnkiWeb.]]></item>
+        <item><![CDATA[AnkiDroid മികച്ചതാക്കാൻ ഞങ്ങളെ സഹായിക്കുന്നതിന്, ദയവായി <a href=\"%1$s\"> പ്രശ്ന ട്രാക്കറിൽ </a> ബഗുകൾ റിപ്പോർട്ടുചെയ്യുക; പുതിയ സവിശേഷത ആശയങ്ങളും വളരെ സ്വാഗതം ചെയ്യുന്നു. <a href=\"%2$s\"> വിക്കി </a> യിൽ ഉത്തരങ്ങൾ കണ്ടെത്തുക അല്ലെങ്കിൽ <a href=\"%3$s\"> ഫോറത്തിൽ </a> ഒരു ചർച്ച ആരംഭിക്കുക.]]></item>
+        <item><![CDATA[AnkiDroid <a href=\"%1$s\"> ഓപ്പൺ സോഴ്‌സ് സോഫ്റ്റ്വെയർ <a/> ആണ്, അതിനാൽ എല്ലാവരേയും <a href=\"%2$s\"> ഒരു സംഭാവകനാകാൻ പ്രോത്സാഹിപ്പിക്കുന്നു </a>: - )]]></item>
+        <item><![CDATA[ഡവലപ്പർമാരല്ലാത്തവർക്കും സഹായിക്കാനാകും. ഉദാഹരണത്തിന്, നിങ്ങൾക്ക് <a href=\"%1$s\"> വിവർത്തനം ചെയ്യാൻ സഹായിക്കാം </a> അങ്കിഡ്രോയിഡ്, വിക്കി അപ്‌ഡേറ്റ് ചെയ്യുക, സ്ക്രീൻഷോട്ടുകൾ നൽകുക, അല്ലെങ്കിൽ അങ്കിഡ്രോയിഡിനെക്കുറിച്ച് ബ്ലോഗ് ചെയ്യുക.]]></item>
+        <item><![CDATA[AnkiDroid is released under the <a href=\"%1$s\">GNU-GPL v3 license</a> and the source code is available <a href=\"%2$s\">on GitHub</a>.]]></item>
+    </string-array>
+    <string name="preview_title" comment="Title of the window allowing to preview card(s)">പ്രിവ്യൂ</string>
+    <string name="reposition_card_dialog_title">പുതിയ കാർഡ് പുന  സ്ഥാപിക്കുക</string>
+    <string name="reposition_card_dialog_message">പ്രാരംഭ സ്ഥാനം</string>
+    <string name="reposition_card_not_new_error">പുതിയ കാർഡുകൾ മാത്രമേ പുന  സ്ഥാപിക്കാൻ കഴിയൂ</string>
+    <plurals name="reposition_card_dialog_acknowledge">
+        <item quantity="one">%d കാർഡ് സ്ഥാനം മാറ്റി</item>
+        <item quantity="other">%d കാർഡുകൾ സ്ഥാനം മാറ്റി</item>
+    </plurals>
+    <string name="reset_card_dialog_title">കാർഡ് പുരോഗതി പുന Res സജ്ജമാക്കുക</string>
+    <string name="reset_card_dialog_message">ഈ കാർഡ് പുതിയ കാർഡ് ക്യൂവിന്റെ അവസാനം സ്ഥാപിക്കും</string>
+    <plurals name="reset_cards_dialog_acknowledge">
+        <item quantity="one">%dകാർഡ് പുന സജ്ജമാക്കുക</item>
+        <item quantity="other">%dകാർഡുകൾ പുന സജ്ജമാക്കുക</item>
+    </plurals>
+    <!-- Reschedule Card Dialog -->
+    <plurals name="reschedule_cards_dialog_title">
+        <item quantity="one">കാർഡ് വീണ്ടും ഷെഡ്യൂൾ ചെയ്യുക</item>
+        <item quantity="other">കാർഡുകൾ വീണ്ടും ഷെഡ്യൂൾ ചെയ്യുക</item>
+    </plurals>
+    <plurals name="reschedule_card_dialog_interval">
+        <item quantity="one">നിലവിലെ ഇടവേള:%d ദിവസം</item>
+        <item quantity="other">നിലവിലെ ഇടവേള:%d ദിവസം</item>
+    </plurals>
+    <string name="reschedule_card_dialog_message">X ദിവസത്തിനുള്ളിൽ അവലോകനത്തിനായി വീണ്ടും ഷെഡ്യൂൾ ചെയ്യുക</string>
+    <plurals name="reschedule_cards_dialog_acknowledge">
+        <item quantity="one">%d കാർഡ് വീണ്ടും ഷെഡ്യൂൾ ചെയ്‌തു</item>
+        <item quantity="other">%d കാർഡുകൾ വീണ്ടും ഷെഡ്യൂൾ ചെയ്‌തു</item>
+    </plurals>
+    <string name="reschedule_card_dialog_new_card_warning">ഒരു പുതിയ കാർഡ് വീണ്ടും ഷെഡ്യൂൾ ചെയ്യുന്നു. പുന ക്രമീകരണം പുതിയ കാർഡുകളെ അവലോകന കാർഡുകളാക്കി മാറ്റുന്നു. പുതിയ ക്യൂവിനുള്ളിൽ ഒരു പുതിയ കാർഡിന്റെ സ്ഥാനം മാറ്റാൻ ‘റിപോസിഷൻ കാർഡ്’ ഓപ്ഷൻ ഉപയോഗിക്കുക</string>
+    <string name="reschedule_card_dialog_warning_ease_reset">ഭാവിയിൽ ഷെഡ്യൂളർ കാർഡിനെ എങ്ങനെ കൈകാര്യം ചെയ്യുന്നുവെന്നും പുന  ക്രമീകരിക്കുന്നു (എളുപ്പത്തിൽ %d%% ആയി സജ്ജമാക്കും)</string>
+    <string name="firefox_workaround_launched_reviewer_opening_deck">നിങ്ങളുടെ ഫയൽ മാനേജറിലെ ഡെക്ക് തിരഞ്ഞെടുക്കുക അല്ലെങ്കിൽ ഇറക്കുമതി ചെയ്യുന്നതിന് about: downloads പേജ് സന്ദർശിക്കുക</string>
+    <string name="answering_error_title">ഡാറ്റാബേസ് പിശക്</string>
+    <string name="answering_error_message">ശേഖരത്തിലേക്ക് എഴുതുന്നത് പരാജയപ്പെട്ടു. ഡാറ്റാബേസ് കേടായതാകാം അല്ലെങ്കിൽ ഡിസ്കിൽ വേണ്ടത്ര ശൂന്യമായ ഇടം ഉണ്ടാകണമെന്നില്ല. \n\n ഇത് പലപ്പോഴും സംഭവിക്കുകയാണെങ്കിൽ, ഡാറ്റാബേസ് പരിശോധിക്കാനോ ശേഖരം നന്നാക്കാനോ ബാക്കപ്പിൽ നിന്ന് പുന സ്ഥാപിക്കാനോ ശ്രമിക്കുക. അതിനായി “ഓപ്ഷനുകൾ” സ്‌പർശിക്കുക. \n\ അല്ലെങ്കിൽ ഇത് ഒരു അങ്കിഡ്രോയിഡ് ബഗ് ആകാം; പിശക് റിപ്പോർട്ടുചെയ്യുക, അതുവഴി ഞങ്ങൾക്ക് ഇത് പരിശോധിക്കാൻ കഴിയും.</string>
+    <string name="answering_error_report">റിപ്പോർട്ട് പിശക്</string>
+    <string name="repair_deck_dialog">ഡാറ്റാബേസ് നന്നാക്കാൻ നിങ്ങൾ ശരിക്കും ആഗ്രഹിക്കുന്നുണ്ടോ? \n\n ശ്രമം ആരംഭിക്കുന്നതിന് മുമ്പ്, “%s” എന്ന സബ്ഫോൾഡറിൽ ഒരു പകർപ്പ് സൃഷ്ടിക്കപ്പെടും.</string>
+    <string name="intent_aedict_empty">വിഭാഗം “സ്ഥിരസ്ഥിതി” ശൂന്യമാണ്</string>
+    <string name="intent_aedict_category">AnkiDroid- ലേക്ക് കാർഡുകൾ ചേർക്കുന്നതിന് എല്ലാ നോട്ട്പാഡ് വിഭാഗങ്ങളും നീക്കംചെയ്യുക അല്ലെങ്കിൽ “സ്ഥിരസ്ഥിതി” എന്ന് പേരുള്ള ഒന്ന് ചേർക്കുക</string>
+    <string name="custom_study_new_total_new">ഡെക്കിലെ പുതിയ കാർഡുകൾ:%d</string>
+    <string name="custom_study_rev_total_rev">ഡെക്കിലുള്ള അവലോകനങ്ങൾ:%d</string>
+    <string name="custom_study_new_extend">ഇന്നത്തെ പുതിയ കാർഡ് പരിധി വർദ്ധിപ്പിക്കുക / കുറയ്ക്കുക (“-3”)</string>
+    <string name="custom_study_rev_extend">ഇന്നത്തെ അവലോകന പരിധി വർദ്ധിപ്പിക്കുക / കുറയ്ക്കുക (“-3”)</string>
+    <string name="custom_study_forgotten">കഴിഞ്ഞ x ദിവസങ്ങളിൽ മറന്ന അവലോകന കാർഡുകൾ:</string>
+    <string name="custom_study_ahead">X ദിവസത്തിനകം അവലോകനം ചെയ്യുക:</string>
+    <string name="custom_study_random">ഡെക്കിൽ നിന്ന് ക്രമരഹിതമായി x കാർഡുകൾ തിരഞ്ഞെടുക്കുക:</string>
+    <string name="custom_study_preview">അവസാന x ദിവസങ്ങളിൽ ചേർത്ത പുതിയ കാർഡുകൾ പ്രിവ്യൂ ചെയ്യുക:</string>
+    <string name="custom_study_rebuild_deck_corrupt">ഇഷ്‌ടാനുസൃത പഠന ഡെക്ക് പുനർനിർമ്മിക്കാൻ കഴിഞ്ഞില്ല</string>
+    <string name="importing_collection">ശേഖരം ഇറക്കുമതി ചെയ്യുന്നു&#8230;</string>
+    <string name="import_media_count">മീഡിയ ഫയലുകൾ ഇമ്പോർട്ടുചെയ്യുന്നു %1$d%%&#8230;</string>
+    <string name="import_progress">Notes കുറിപ്പുകൾ ഇറക്കുമതി ചെയ്യുന്നു:%1$d %% \n • കാർഡുകൾ ഇറക്കുമതി ചെയ്യുന്നു:%2$d %% \n • പോസ്റ്റ് പ്രോസസ്സിംഗ്:%3$d%%</string>
+    <string name="import_update_details">Updated %1$d of %2$d existing notes.</string>
+    <string name="import_update_ignored">കുറിപ്പ് തരം മാറിയതിനാൽ ചില അപ്‌ഡേറ്റുകൾ അവഗണിച്ചു</string>
+    <string name="import_complete_count">ഇമ്പോർട്ടുചെയ്‌ത കാർഡുകൾ:%d</string>
+    <string name="sd_card_full_title">SD card നിറഞ്ഞു</string>
+    <string name="sd_card_almost_full_title">SD കാർഡ് നിറഞ്ഞു</string>
+    <string name="no_space_to_downgrade_title">No space</string>
+    <string name="no_space_to_downgrade_content">AnkiDroid needs %s free storage space to continue. Please clear some space</string>
+    <string name="restore_backup_title">ബാക്കപ്പ് പുന  സ്ഥാപിക്കണോ?</string>
+    <string name="restore_backup">നിങ്ങളുടെ ശേഖരം പഴയ പകർപ്പ് ഉപയോഗിച്ച് മാറ്റിസ്ഥാപിക്കും. സംരക്ഷിക്കാത്ത ഏതെങ്കിലും പുരോഗതി നഷ്‌ടപ്പെടും.</string>
+    <string name="dialog_cancel">റദ്ദാക്കുക</string>
+    <string name="dialog_ok">ശരി</string>
+    <string name="dialog_no">No (വേണ്ട)</string>
+    <string name="dialog_continue">തുടരുക</string>
+    <string name="dialog_positive_create" comment="Create a new collection, probably erasing the previous one, may be necessary in case of error.">സൃഷ്ടിച്ചു</string>
+    <string name="dialog_positive_delete">ഇല്ലാതാക്കുക</string>
+    <!-- Currently unsued, should be useful in the future -->
+    <string name="dialog_positive_disable" tools:ignore="UnusedResources">പ്രവര്‍ത്തന രഹിതമാക്കുക</string>
+    <string name="dialog_positive_overwrite">തിരുത്തിയെഴുതുക</string>
+    <string name="dialog_positive_remove">റിമൂവ്</string>
+    <string name="dialog_positive_repair">റിപ്പെയർ ചെയ്യുക</string>
+    <string name="dialog_positive_replace">മാറ്റി മറ്റൊന്നുവയ്ക്കുക</string>
+    <string name="dialog_positive_restore">പുനസ്ഥാപിക്കുക</string>
+    <string name="dialog_positive_set">സെറ്റ് ചെയ്യൂ</string>
+    <string name="lookup_button_content">തിരയുക</string>
+    <string name="dialog_collection_path_not_dir">വ്യക്തമാക്കിയ പാത്ത് സാധുവായ ഒരു ഡയറക്‌ടറിയായിരുന്നില്ല</string>
+    <!-- Media checking -->
+    <string name="check_media_title">മീഡിയ പരിശോധിക്കുക?</string>
+    <string name="check_media_warning">വലിയ മീഡിയ ശേഖരണങ്ങളുമായി ഇത് വളരെയധികം സമയമെടുക്കും</string>
+    <string name="check_media_message">മീഡിയ പരിശോധിക്കുന്നു&#8230;</string>
+    <string name="check_media_acknowledge">മീഡിയ പരിശോധിച്ചു</string>
+    <string name="check_media_failed">മീഡിയ പരിശോധിച്ചു</string>
+    <string name="check_media_invalid">അസാധുവായ എൻ‌കോഡിംഗ് ഉള്ള ഫയലുകൾ‌:%d</string>
+    <string name="check_media_unused">മീഡിയ ഫോൾഡറിലെ ഫയലുകൾ എന്നാൽ ഏതെങ്കിലും കാർഡുകൾ ഉപയോഗിക്കുന്നില്ല:%d</string>
+    <string name="check_media_nohave">കാർഡുകളിൽ ഉപയോഗിക്കുന്ന ഫയലുകൾ പക്ഷേ മീഡിയ ഫോൾഡറിൽ ഇല്ല:%d</string>
+    <string name="check_media_no_unused_missing">ഉപയോഗിക്കാത്തതോ നഷ്‌ടമായതോ ആയ ഫയലുകളൊന്നും കണ്ടെത്തിയില്ല</string>
+    <string name="check_media_db_updated">മീഡിയ ഡാറ്റാബേസ് പുനർനിർമ്മിച്ചു</string>
+    <string name="check_media_delete_unused">ഉപയോഗിക്കാത്തവ ഇല്ലാതാക്കുക</string>
+    <string name="delete_media_message">മീഡിയ ഇല്ലാതാക്കുന്നു&#8230;</string>
+    <string name="delete_media_result_title">ഇല്ലാതാക്കൽ ഫലം</string>
+    <plurals name="delete_media_result_message">
+        <item quantity="one">%d ഫയൽ ഇല്ലാതാക്കി</item>
+        <item quantity="other">%d ഫയലുകൾ ഇല്ലാതാക്കി</item>
+    </plurals>
+    <!-- Tags Dialog Options -->
+    <string name="tags_dialog_option_all_cards">എല്ലാ കാർഡുകളും</string>
+    <string name="tags_dialog_option_new_cards">പുതിയത്</string>
+    <string name="tags_dialog_option_due_cards" comment="Name of cards that are already been reviewed in the past, and that should be reviewed again">കാരണം</string>
+    <!-- Empty cards -->
+    <string name="emtpy_cards_finding">ശൂന്യമായ കാർഡുകൾ കണ്ടെത്തുന്നു&#8230;</string>
+    <string name="confirm_cancel">നിങ്ങൾക്ക് റദ്ദാക്കണോ?</string>
+    <string name="empty_cards_none">ശൂന്യമായ കാർഡുകളൊന്നുമില്ല</string>
+    <string name="empty_cards_count">ഇല്ലാതാക്കാനുള്ള കാർഡുകൾ: %d</string>
+    <string name="empty_cards_deleted">കാർഡുകൾ ഇല്ലാതാക്കി: %d</string>
+    <!-- Multimedia - Edit Field Activity -->
+    <string name="multimedia_editor_audio_permission_refused">മൈക്രോഫോൺ അനുമതി നേടാനായില്ല.</string>
+    <string name="multimedia_editor_camera_permission_refused">ക്യാമറ അനുമതി നേടാനായില്ല. പ്രവർത്തനം പ്രവർത്തനരഹിതമാക്കി.</string>
+    <string name="multimedia_editor_failed">മൾട്ടിമീഡിയ എഡിറ്റർ തുറക്കുന്നതിൽ പരാജയപ്പെട്ടു</string>
+    <!-- Multimedia - Audio View -->
+    <string name="multimedia_editor_audio_permission_denied">ഓഡിയോ റെക്കോർഡിംഗ് അനുമതി നിരസിച്ചു</string>
+    <!-- Initial collection load -->
+    <string name="collection_load_welcome_request_permissions_title">AnkiDroid- ലേക്ക് സ്വാഗതം!</string>
+    <string name="collection_load_welcome_request_permissions_details">AnkiDroid requires storage permission, which we use exclusively to store your AnkiDroid collection, flashcard media and backups. Our code is open-source, written by volunteers, and trusted by millions.\n\nIf you have any questions, please access our in-app manual or visit our support forums.\n\nThank you for trying AnkiDroid!\n—AnkiDroid Development Team</string>
+    <string name="mutimedia_editor_assertion_failed">വിപുലമായ എഡിറ്റർ പ്രദർശിപ്പിക്കുന്നതിൽ അജ്ഞാത പിശക് സംഭവിച്ചു</string>
+    <!-- Database Integrity Check -->
+    <string name="integrity_check_startup_title">AnkiDroid അപ്‌ഗ്രേഡുചെയ്‌തു</string>
+    <string name="integrity_check_startup_content">AnkiDroid അപ്‌ഗ്രേഡുചെയ്‌തു. ഈ അപ്‌ഗ്രേഡിൽ സാധ്യമായ ഡാറ്റാബേസ് പ്രശ്‌നങ്ങൾക്കുള്ള പരിഹാരങ്ങൾ ഉൾപ്പെടുന്നു, ഇപ്പോൾ ചെക്ക് ഡാറ്റാബേസ് പ്രവർത്തിപ്പിക്കാൻ ഞങ്ങൾ നിങ്ങളെ ഉപദേശിക്കുന്നു.</string>
+    <string name="integrity_check_continue_anyway">എന്തായാലും തുടരുക</string>
+    <string name="integrity_check_insufficient_space">ചെക്ക് ഡാറ്റാബേസ് ഒരു വലിയ അളവിലുള്ള താൽക്കാലിക സംഭരണം ഉപയോഗിക്കുന്നു. \n\n തുടരുന്നതിന് മുമ്പ് നിങ്ങളുടെ ഉപകരണത്തിൽ കുറഞ്ഞത് %s സ space ജന്യ സ്ഥലമെങ്കിലും ഉണ്ടായിരിക്കണമെന്ന് ശക്തമായി ശുപാർശ ചെയ്യുന്നു.</string>
+    <string name="integrity_check_insufficient_space_extra_content">\n\nനിങ്ങൾക്ക് നിലവിൽ %s സ .ജന്യമാണ്.</string>
+    <string name="integrity_check_fixed_no_home_deck">തെറ്റായ ഹോം ഡെക്കുകളുള്ള %d കാർഡുകൾ കണ്ടെടുത്തു. കൂടുതൽ വിവരങ്ങൾക്ക് മാനുവൽ കാണുക</string>
+    <string name="video_creation_error">വീഡിയോ പ്ലേ ചെയ്യാൻ കഴിഞ്ഞില്ല</string>
+    <!-- Card Browser -->
+    <string name="card_browser_deck_change_error">ഡെക്ക് മാറ്റാൻ കഴിഞ്ഞില്ല</string>
+    <!-- AbstractFlashCardViewer -->
+    <string name="card_viewer_url_decode_error">കാർഡിൽ നിന്ന് ഡാറ്റ ഡീകോഡ് ചെയ്യുന്നതിൽ പിശക്</string>
+    <!-- Deck Options -->
+    <string name="deck_options_corrupt">ഡെക്ക് ഓപ്ഷനുകൾ പ്രോസസ്സ് ചെയ്യുന്നതിൽ പരാജയപ്പെട്ടു:%s</string>
+    <!-- Database Errors-->
+    <string name="database_locked_title">ഡാറ്റാബേസ് ലോക്കുചെയ്തു</string>
+    <string name="database_locked_summary">മറ്റൊരു ആപ്ലിക്കേഷൻ AnkiDroid ഡാറ്റാബേസ് ഉപയോഗത്തിലാണ്. ദയവായി മറ്റ് ആപ്ലിക്കേഷൻ അടച്ച് അങ്കിഡ്രോയിഡ് വീണ്ടും തുറക്കുക.</string>
+    <string name="incompatible_database_version_title">അനുയോജ്യമല്ലാത്ത ഡാറ്റാബേസ് പതിപ്പ്</string>
+    <string name="incompatible_database_version_summary">The database is a more advanced version than this version of AnkiDroid can work with. Upgrade AnkiDroid or downgrade the database to open it\n\nSupported version: %1$d\nDatabase version: %2$d\n\nThe following restore options will overwrite your current collection, possibly with a compatible database version:</string>
+    <!-- Deck Picker Background-->
+    <string name="background_image_applied">പശ്ചാത്തല ചിത്രം പ്രയോഗിച്ചു</string>
+    <string name="background_image_removed">പശ്ചാത്തല ചിത്രം നീക്കംചെയ്‌തു</string>
+    <string name="no_image_selected">ചിത്രമൊന്നും തിരഞ്ഞെടുത്തിട്ടില്ല</string>
+    <string name="error_selecting_image">ചിത്രം തിരഞ്ഞെടുക്കുന്നതിൽ പിശക്. മാനുവൽ കാണുക. %s</string>
+    <string name="error_deleting_image">ചിത്രം ഇല്ലാതാക്കുന്നതിൽ പിശക്</string>
+    <string name="failed_to_apply_background_image">പശ്ചാത്തല ചിത്രം %s പ്രയോഗിക്കുന്നതിൽ പരാജയപ്പെട്ടു</string>
+    <string name="background_image_too_large">ഡെക്ക് പിക്കർ പശ്ചാത്തലം വളരെ വലുതാണ്</string>
+    <string name="image_max_size_allowed">പരമാവധി ഇമേജ് വലുപ്പം %d MB അനുവദനീയമാണ്</string>
+    <!-- Global Intent handler -->
+    <!-- Also used by Card Browser, not renaming to save translators effort -->
+    <string name="intent_handler_failed_no_storage_permission">ആവശ്യമായ സംഭരണ ​​അനുമതി നഷ്‌ടമായി. സംഭരണ ​​അനുമതി നൽകി നിങ്ങളുടെ പ്രവർത്തനം വീണ്ടും ശ്രമിക്കുക.</string>
+    <!-- Browser Appearance -->
+    <string name="card_template_editor_card_browser_appearance_failed">കാർഡ് Browser സർ രൂപം ലോഡുചെയ്യാനായില്ല</string>
+    <!-- Boot Service -->
+    <string name="boot_service_failed_to_schedule_notifications">ഓർമ്മപ്പെടുത്തലുകൾ ഷെഡ്യൂൾ ചെയ്യുന്നതിൽ പരാജയപ്പെട്ടു</string>
+    <string name="boot_service_too_many_notifications">വളരെയധികം ഓർമ്മപ്പെടുത്തലുകൾ ഷെഡ്യൂൾ ചെയ്‌തു. ചിലത് ദൃശ്യമാകില്ല</string>
+    <!-- Locale Selection Dialog -->
+    <string name="locale_selection_dialog_title">കീബോർഡ് ഭാഷാ തിരഞ്ഞെടുപ്പ്</string>
+    <string name="locale_selection_dialog_summary">വാചകം എഡിറ്റുചെയ്യുമ്പോൾ ഭാഷ മാറ്റുന്നതിനെ GBoard പോലുള്ള ചില ബഹുഭാഷാ കീബോർഡുകൾ \n\n നിങ്ങളുടെ കീബോർഡ് ഭാഷ മാറ്റിയില്ലെങ്കിൽ കീബോർഡ് നിർമ്മാതാവിൽ നിന്ന് “setImeHintLocales” സവിശേഷത അഭ്യർത്ഥിക്കുക.</string>
+    <!-- Help Dialog -->
+    <string name="help_title_using_ankidroid">AnkiDroid ഉപയോഗിക്കുന്നു</string>
+    <string name="help_item_ankidroid_manual">AnkiDroid മാനുവൽ</string>
+    <string name="help_item_anki_manual">Anki മാനുവൽ</string>
+    <string name="help_item_ankidroid_faq">AnkiDroid FAQ</string>
+    <string name="help_title_get_help">സഹായം തേടു</string>
+    <string name="help_item_mailing_list">അയക്കേണ്ട പട്ടിക</string>
+    <string name="help_item_reddit">റെഡ്ഡിറ്റ്</string>
+    <string name="help_item_report_bug">ഒരു ബഗ് റിപ്പോർട്ടുചെയ്യുക</string>
+    <string name="help_title_support_ankidroid">AnkiDroid- നെ പിന്തുണയ്ക്കുക</string>
+    <string name="help_item_support_opencollective_donate">സംഭാവനചെയ്യുക</string>
+    <string name="help_item_support_develop_ankidroid">വികസിപ്പിക്കുക</string>
+    <string name="help_item_support_rate_ankidroid">നിരക്ക്</string>
+    <string name="help_item_support_other_ankidroid">മറ്റുള്ളവ</string>
+    <string name="help_title_community">കമ്മ്യൂണിറ്റി</string>
+    <string name="help_item_anki_forums">Anki Forums</string>
+    <string name="help_item_discord">ഡിസ്കോർഡ്</string>
+    <string name="help_item_facebook">ഫേസ്‌ബുക്ക്</string>
+    <string name="help_item_twitter">ട്വിറ്റർ</string>
+    <string name="help_title_send_exception">പ്രശ്‌നപരിഹാര റിപ്പോർട്ട് അയയ്‌ക്കുക</string>
+    <string name="help_dialog_exception_report_debounce">റിപ്പോർട്ട് ഇതിനകം സമർപ്പിച്ചു</string>
+    <!--Sync-->
+    <plurals name="sync_automatic_sync_needs_more_time">
+        <item quantity="one">%d സെക്കൻഡിൽ ഒരു യാന്ത്രിക സമന്വയം പ്രവർത്തനക്ഷമമാക്കാം</item>
+        <item quantity="other">%d സെക്കൻഡിനുള്ളിൽ ഒരു യാന്ത്രിക സമന്വയം പ്രവർത്തനക്ഷമമാക്കാം</item>
+    </plurals>
+    <string name="deck_picker_new">ഈ ഡെക്കിൽ ഇന്ന് കാണാനുള്ള പുതിയ കാർഡുകളുടെ എണ്ണം.</string>
+    <string name="deck_picker_rev">ഈ ഡെക്കിൽ ഇന്ന് കാണാനുള്ള പുതിയ കാർഡുകളുടെ എണ്ണം.</string>
+    <string name="deck_picker_lrn">ഈ ഡെക്കിൽ ഇന്ന് കാണാനുള്ള പുതിയ കാർഡുകളുടെ എണ്ണം.</string>
+    <!-- This description is valid fos
+    sched V2. For V1, it was counting the number of repetitions of cards in learning. This approximation is acceptable
+    for the sake of simplicity and because V1 will leave.-->
+    <string name="deck_picker_counts">ഇന്ന് കാണുന്നതിന് കാർഡുകളുടെ എണ്ണം അടങ്ങിയ ഡെക്ക് അവലോകന പേജ് തുറക്കുക.</string>
+</resources>

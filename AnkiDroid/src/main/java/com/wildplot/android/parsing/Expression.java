@@ -16,6 +16,9 @@
 package com.wildplot.android.parsing;
 
 
+import android.annotation.SuppressLint;
+
+@SuppressLint("NonPublicNonStaticFieldName")
 public class Expression implements TreeElement {
     private final TopLevelParser parser;
 

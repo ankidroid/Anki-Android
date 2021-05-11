@@ -77,7 +77,6 @@ import androidx.core.text.HtmlCompat;
 import timber.log.Timber;
 
 import static com.ichi2.libanki.Consts.FIELD_SEPARATOR;
-import static com.ichi2.utils.CollectionUtils.addAll;
 
 @SuppressWarnings({"PMD.AvoidThrowingRawExceptionTypes","PMD.AvoidReassigningParameters",
         "PMD.MethodNamingConventions","PMD.FieldDeclarationsShouldBeAtStartOfClass"})
@@ -107,9 +106,10 @@ public class Utils {
     private Utils() { }
 
     // Regex pattern used in removing tags from text before diff
+    private static final Pattern commentPattern = Pattern.compile("(?s)<!--.*?-->");
     private static final Pattern stylePattern = Pattern.compile("(?si)<style.*?>.*?</style>");
     private static final Pattern scriptPattern = Pattern.compile("(?si)<script.*?>.*?</script>");
-    private static final Pattern tagPattern = Pattern.compile("<.*?>");
+    private static final Pattern tagPattern = Pattern.compile("(?s)<.*?>");
     private static final Pattern imgPattern = Pattern.compile("(?i)<img[^>]+src=[\"']?([^\"'>]+)[\"']?[^>]*>");
     private static final Pattern soundPattern = Pattern.compile("(?i)\\[sound:([^]]+)]");
     private static final Pattern htmlEntitiesPattern = Pattern.compile("&#?\\w+;");
@@ -193,7 +193,8 @@ public class Utils {
         int remaining; // Time in the unit smaller than x
         Resources res = context.getResources();
         if (time_s < TIME_HOUR_LONG) {
-            time_x = (int) Math.round(time_s / TIME_MINUTE);
+            // get time remaining, but never less than 1
+            time_x = Math.max((int) Math.round(time_s / TIME_MINUTE), 1);
             return res.getQuantityString(R.plurals.reviewer_window_title, time_x, time_x);
             //It used to be minutes only. So the word "minutes" is not
             //explicitly written in the ressource name.
@@ -296,6 +297,7 @@ public class Utils {
      * @return The text without the aforementioned tags.
      */
     public static String stripHTML(String s) {
+        s = commentPattern.matcher(s).replaceAll("");
         s = stripHTMLScriptAndStyleTags(s);
         Matcher htmlMatcher = tagPattern.matcher(s);
         s = htmlMatcher.replaceAll("");
@@ -565,7 +567,6 @@ public class Utils {
                 throw new RuntimeException(e);
             } catch (UnsupportedEncodingException e) {
                 Timber.e(e, "Utils.checksum :: UnsupportedEncodingException");
-                e.printStackTrace();
             }
             BigInteger biginteger = new BigInteger(1, digest);
             result = biginteger.toString(16);
@@ -676,7 +677,7 @@ public class Utils {
             rd.close();
             contentOfMyInputStream = sb.toString();
         } catch (Exception e) {
-            e.printStackTrace();
+            Timber.w(e);
         }
 
         return contentOfMyInputStream;
@@ -800,7 +801,7 @@ public class Utils {
                     try {
                         Thread.sleep(200);
                     } catch (InterruptedException e1) {
-                        e1.printStackTrace();
+                        Timber.w(e1);
                     }
                 }
             }
@@ -1067,7 +1068,7 @@ public class Utils {
        @return whether there was a non-zero usn; in this case the list
        should be saved before the upload.
      */
-    public static boolean markAsUploaded(ArrayList<? extends JSONObject> ar) {
+    public static boolean markAsUploaded(List<? extends JSONObject> ar) {
         boolean changed = false;
         for (JSONObject obj: ar) {
             if (obj.optInt("usn", 1) != 0) {

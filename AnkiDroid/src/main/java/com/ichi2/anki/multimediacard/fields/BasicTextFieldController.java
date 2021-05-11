@@ -30,9 +30,9 @@ import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.LinearLayout.LayoutParams;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.ichi2.anki.R;
+import com.ichi2.anki.UIUtils;
 import com.ichi2.anki.multimediacard.activity.LoadPronounciationActivity;
 import com.ichi2.anki.multimediacard.activity.PickStringDialogFragment;
 import com.ichi2.anki.multimediacard.activity.TranslationActivity;
@@ -43,6 +43,8 @@ import com.ichi2.ui.FixedTextView;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
+
+import timber.log.Timber;
 
 /**
  * One of the most powerful controllers - creates UI and works with the field of textual type.
@@ -266,6 +268,7 @@ public class BasicTextFieldController extends FieldControllerBase implements IFi
                 String translation = data.getExtras().get(TranslationActivity.EXTRA_TRANSLATION).toString();
                 mEditText.setText(translation);
             } catch (Exception e) {
+                Timber.w(e);
                 showToast(gtxt(R.string.multimedia_editor_something_wrong));
             }
         } else if (requestCode == REQUEST_CODE_PRONOUNCIATION && resultCode == Activity.RESULT_OK) {
@@ -283,6 +286,7 @@ public class BasicTextFieldController extends FieldControllerBase implements IFi
                 af.setHasTemporaryMedia(true);
                 mActivity.handleFieldChanged(af);
             } catch (Exception e) {
+                Timber.w(e);
                 showToast(gtxt(R.string.multimedia_editor_pron_pronunciation_failed));
             }
         } else if (requestCode == REQUEST_CODE_TRANSLATE_COLORDICT && resultCode == Activity.RESULT_OK) {
@@ -330,9 +334,7 @@ public class BasicTextFieldController extends FieldControllerBase implements IFi
      * @param text A short cut to show a toast
      */
     private void showToast(CharSequence text) {
-        int duration = Toast.LENGTH_SHORT;
-        Toast toast = Toast.makeText(mActivity, text, duration);
-        toast.show();
+        UIUtils.showThemedToast(mActivity, text, true);
     }
 
 

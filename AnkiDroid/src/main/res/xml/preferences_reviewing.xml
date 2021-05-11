@@ -35,16 +35,18 @@
             android:key="dayOffset"
             android:max="23"
             android:summary="@string/day_offset_summ"
-            android:title="@string/day_offset"
+            android:title="@string/day_offset_with_description"
             app:interval="1"
-            app:min="0" />
-        <com.ichi2.preferences.NumberRangePreference
+            app:min="0"
+            app:xlabel="@string/xlabel_dayoffset_seekbar"
+            app:ylabel="@string/ylabel_dayoffset_seekbar" />
+        <com.ichi2.preferences.IncrementerNumberRangePreference
             android:key="learnCutoff"
             android:summary="@string/time_limit_summ"
             android:title="@string/learn_cutoff"
             app:max="999"
             app:min="0" />
-        <com.ichi2.preferences.NumberRangePreference
+        <com.ichi2.preferences.IncrementerNumberRangePreference
             android:key="timeLimit"
             android:summary="@string/time_limit_summ"
             android:title="@string/time_limit"

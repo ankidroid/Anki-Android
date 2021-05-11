@@ -122,6 +122,7 @@
     <string name="reordering_cards">Đang sắp sếp lại các thẻ...</string>
     <string name="field_remapping">%1$s (từ \"%2$s\")</string>
     <string name="confirm_map_cards_to_nothing">Bất kỳ thẻ nào không được gán sẽ bị xoá. Nếu một ghi chú không có thẻ nào kèm theo, nó sẽ bị mất. Có chắc là bạn muốn tiếp tục?</string>
+    <string name="timebox_reached_title">Đã đạt đến giới hạn thời gian</string>
     <plurals name="timebox_reached">
         <item quantity="other">Đã học %1$d thẻ trong %2$s</item>
     </plurals>
@@ -268,6 +269,7 @@
     <string name="white_board_image_save_failed">Không thể lưu hình ảnh bảng trắng. %s</string>
     <string name="white_board_image_saved">Hình ảnh bảng trắng được lưu vào %s</string>
     <string name="title_whiteboard_pen_color">Bảng màu bút</string>
+    <string name="title_whiteboard_editor">Whiteboard editor</string>
     <!-- CSV/Note Import -->
     <string name="note_importer_empty_cards_found"><![CDATA[Đã tìm thấy thẻ trống. Vui lòng chạy Công cụ > Thẻ trống.]]></string>
     <string name="note_importer_error_empty_first_field">Trường đầu tiên trống: %s</string>
@@ -300,6 +302,7 @@
     <!-- Card Viewer -->
     <string name="card_viewer_could_not_find_image">Lỗi hiện thị nội dung thẻ: Không thể mở ‘%s’</string>
     <string name="card_viewer_media_relative_protocol">Lỗi hiện thị nội dung thẻ: Cần cập nhật media</string>
+    <string name="cannot_load_http_resource">Tải tài nguyên http không còn được hỗ trợ</string>
     <!-- Deck Picker -->
     <string name="deck_picker_failed_deck_load">Không thể mở bộ thẻ ‘%s’</string>
     <string name="search_decks">Tìm kiếm bộ thẻ</string>
@@ -327,4 +330,11 @@
     <string name="create_shortcut_failed" comment="home screen == launcher">Màn hình chính của bạn không cho phép AnkiDroid thêm phím tắt</string>
     <string name="create_shortcut_error">Không thể thêm shortcut: %s</string>
     <string name="note_editor_capitalize" comment="This is for a switch with a checkbox - on: enabled">Viết hoa các câu</string>
+    <!-- Symbols used as Button text in IncrementNumberRangePreference -->
+    <string name="plus_sign" comment="Label for increment button in IncrementerNumberRangePreference">+</string>
+    <string name="minus_sign" comment="Label for decrement button in IncrementerNumberRangePreference">-</string>
+    <!-- Used for credential empty warning message -->
+    <string name="email_id_empty">Bắt buộc có địa chỉ email</string>
+    <string name="password_empty">Bắt buộc có mật khẩu</string>
+    <string name="back_pressed_once">Nhấn trở lại lần nữa để thoát ứng dụng</string>
 </resources>

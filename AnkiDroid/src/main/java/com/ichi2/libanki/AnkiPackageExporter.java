@@ -16,6 +16,7 @@
 
 package com.ichi2.libanki;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 
@@ -25,6 +26,7 @@ import com.ichi2.anki.exception.ImportExportException;
 import com.ichi2.utils.JSONArray;
 import com.ichi2.utils.JSONException;
 import com.ichi2.utils.JSONObject;
+import com.ichi2.utils.StringUtil;
 
 import java.io.BufferedInputStream;
 import java.io.BufferedOutputStream;
@@ -38,32 +40,55 @@ import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
+
 import org.apache.commons.compress.archivers.zip.ZipArchiveEntry;
 import org.apache.commons.compress.archivers.zip.ZipArchiveOutputStream;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import timber.log.Timber;
 
 import static com.ichi2.utils.CollectionUtils.addAll;
 
 class Exporter {
+    @NonNull
     protected final Collection mCol;
-    protected Long mDid;
+    /**
+     * If set exporter will export only this deck, otherwise will export all cards
+     */
+    @Nullable
+    protected final Long mDid;
     protected int mCount;
+    protected boolean mIncludeHTML;
 
-
-    public Exporter(Collection col) {
+    /**
+     * An exporter for the whole collection of decks
+     *
+     * @param col deck collection
+     */
+    public Exporter(@NonNull Collection col) {
         mCol = col;
         mDid = null;
     }
 
 
-    public Exporter(Collection col, Long did) {
+    /**
+     * An exporter for the content of a deck
+     *
+     * @param col deck collection
+     * @param did deck id
+     */
+    public Exporter(@NonNull Collection col, @NonNull Long did) {
         mCol = col;
         mDid = did;
     }
 
-    /** card ids of cards in deck self.did if it is set, all ids otherwise. */
+
+    /**
+     * Fetches the ids of cards to be exported
+     *
+     * @return list of card ids
+     */
     public Long[] cardIds() {
         Long[] cids;
         if (mDid == null) {
@@ -74,6 +99,56 @@ class Exporter {
         mCount = cids.length;
         return cids;
     }
+
+
+    @NonNull
+    protected String processText(@NonNull String text) {
+        if (!mIncludeHTML) {
+            text = stripHTML(text);
+        }
+
+        text = escapeText(text);
+
+        return text;
+    }
+
+
+    /**
+     * Escape newlines, tabs, CSS and quotechar.
+     */
+    @NonNull
+    protected String escapeText(@NonNull String text) {
+        //pylib:fixme: we should probably quote fields with newlines instead of converting them to spaces
+        text = text.replace("\\n", " ");
+        text = text.replace("\\r", "");
+
+        //pylib: text = text.replace("\t", " " * 8)
+        text = text.replace("\\t", "        "/*8 spaced*/);
+
+        text = text.replaceAll("(?i)<style>.*?</style>", "");
+        text = text.replaceAll("\\[\\[type:[^]]+\\]\\]", "");
+
+        if (text.contains("\"")) {
+            text = '"' + text.replace("\"", "\"\"") + "\"";
+        }
+
+        return text;
+    }
+
+
+    /**
+     * very basic conversion to text
+     */
+    @NonNull
+    protected String stripHTML(@NonNull String text) {
+        String s = text;
+        s = s.replaceAll("(?i)<(br ?/?|div|p)>", " ");
+        s = s.replaceAll("\\[sound:[^]]+\\]", "");
+        s = Utils.stripHTML(s);
+        s = s.replaceAll("[ \\n\\t]+", " ");
+        s = StringUtil.strip(s);
+        return s;
+    }
 }
 
 
@@ -81,19 +156,42 @@ class Exporter {
         "PMD.NPathComplexity","PMD.MethodNamingConventions","PMD.ExcessiveMethodLength",
         "PMD.EmptyIfStmt","PMD.CollapsibleIfStatements"})
 class AnkiExporter extends Exporter {
-    protected boolean mIncludeSched;
-    protected boolean mIncludeMedia;
+    protected final boolean mIncludeSched;
+    protected final boolean mIncludeMedia;
     private Collection mSrc;
     String mMediaDir;
     // Actual capacity will be set when known, if media are imported.
     final ArrayList<String> mMediaFiles = new ArrayList<>(0);
+    @SuppressLint("NonPublicNonStaticFieldName")
     boolean _v2sched;
 
 
-    public AnkiExporter(Collection col) {
+    /**
+     * An exporter for the whole collection of decks
+     *
+     * @param col deck collection
+     * @param includeSched should include scheduling
+     * @param includeMedia should include media
+     */
+    public AnkiExporter(@NonNull Collection col, boolean includeSched, boolean includeMedia) {
         super(col);
-        mIncludeSched = false;
-        mIncludeMedia = true;
+        mIncludeSched = includeSched;
+        mIncludeMedia = includeMedia;
+    }
+
+
+    /**
+     * An exporter for the selected deck
+     *
+     * @param col deck collection
+     * @param did selected deck id
+     * @param includeSched should include scheduling
+     * @param includeMedia should include media
+     */
+    public AnkiExporter(@NonNull Collection col, @NonNull Long did, boolean includeSched, boolean includeMedia) {
+        super(col, did);
+        mIncludeSched = includeSched;
+        mIncludeMedia = includeMedia;
     }
 
 
@@ -101,7 +199,7 @@ class AnkiExporter extends Exporter {
      * Export source database into new destination database Note: The following python syntax isn't supported in
      * Android: for row in mSrc.db.execute("select * from cards where id in "+ids2str(cids)): therefore we use a
      * different method for copying tables
-     * 
+     *
      * @param path String path to destination database
      * @throws JSONException
      * @throws IOException
@@ -296,29 +394,34 @@ class AnkiExporter extends Exporter {
     private String removeSystemTags(String tags) {
         return mSrc.getTags().remFromStr("marked leech", tags);
     }
-
-
-    public void setIncludeSched(boolean includeSched) {
-        mIncludeSched = includeSched;
-    }
-
-
-    public void setIncludeMedia(boolean includeMedia) {
-        mIncludeMedia = includeMedia;
-    }
-
-
-    public void setDid(Long did) {
-        mDid = did;
-    }
 }
 
 
 
 public final class AnkiPackageExporter extends AnkiExporter {
 
-    public AnkiPackageExporter(Collection col) {
-        super(col);
+    /**
+     * An exporter for the whole collection of decks
+     *
+     * @param col deck collection
+     * @param includeSched should include scheduling
+     * @param includeMedia should include media
+     */
+    public AnkiPackageExporter(@NonNull Collection col, boolean includeSched, boolean includeMedia) {
+        super(col, includeSched, includeMedia);
+    }
+
+
+    /**
+     * An exporter for a selected deck
+     *
+     * @param col deck collection
+     * @param did selected deck id
+     * @param includeSched should include scheduling
+     * @param includeMedia should include media
+     */
+    public AnkiPackageExporter(@NonNull Collection col, @NonNull Long did, boolean includeSched, boolean includeMedia) {
+        super(col, did, includeSched, includeMedia);
     }
 
 
@@ -394,7 +497,7 @@ public final class AnkiPackageExporter extends AnkiExporter {
                 media.put(Integer.toString(c), file.getName());
                 c++;
             } catch (JSONException e) {
-                e.printStackTrace();
+                Timber.w(e);
             }
         }
         return media;
@@ -421,6 +524,7 @@ public final class AnkiPackageExporter extends AnkiExporter {
             try {
                 runtime.exec(deleteCmd);
             } catch (IOException ignored) {
+                Timber.w(ignored);
             }
         }
         return media;
@@ -439,7 +543,7 @@ public final class AnkiPackageExporter extends AnkiExporter {
         String path = f.getAbsolutePath();
         f.delete();
         Collection c = Storage.Collection(context, path);
-        Note n = c.newNote();
+        @NonNull Note n = c.newNote();
         //The created dummy collection only contains the StdModels.
         //The field names for those are localised during creation, so we need to consider that when creating dummy note
         n.setItem(context.getString(R.string.front_field_name), context.getString(R.string.export_v2_dummy_note));
@@ -465,7 +569,7 @@ public final class AnkiPackageExporter extends AnkiExporter {
  * @author Tim
  */
 class ZipFile {
-    private final int BUFFER_SIZE = 1024;
+    private static final int BUFFER_SIZE = 1024;
     private ZipArchiveOutputStream mZos;
 
 
@@ -506,7 +610,7 @@ class ZipFile {
         try {
             mZos.close();
         } catch (IOException e) {
-            e.printStackTrace();
+            Timber.w(e);
         }
     }
 }

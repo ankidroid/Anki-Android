@@ -43,250 +43,258 @@
     <string name="enabled">सक्षम</string>
     <!-- preferences.xml categories-->
     <string name="pref_cat_general_summ">सामान्य सेटिंग</string>
-    <string name="pref_cat_reviewing">समीक्षा</string>
+    <string name="pref_cat_reviewing" maxLength="41">समीक्षा</string>
     <string name="pref_cat_reviewing_summ">डेक असंबंधित समीक्षक सेटिंग</string>
-    <string name="pref_cat_reviewer_behaviour">व्यवहार</string>
-    <string name="pref_cat_flashcard">प्रदर्शन</string>
-    <string name="pref_cat_whiteboard">स्लेट</string>
-    <string name="pref_cat_appearance">दिखावट</string>
+    <string name="pref_cat_reviewer_behaviour" maxLength="41">व्यवहार</string>
+    <string name="pref_cat_flashcard" maxLength="41">प्रदर्शन</string>
+    <string name="pref_cat_whiteboard" maxLength="41">श्वेतपट्ट</string>
+    <string name="pref_cat_appearance" maxLength="41">दिखावट</string>
     <string name="pref_cat_appearance_summ">थीम और डिफ़ॉल्ट फ़ॉन्ट बदलें</string>
-    <string name="pref_cat_themes">थीम</string>
-    <string name="pref_cat_fonts">फ़ॉन्ट</string>
-    <string name="pref_cat_gestures">इशारे</string>
+    <string name="pref_cat_themes" maxLength="41">थीम</string>
+    <string name="pref_cat_fonts" maxLength="41">फ़ॉन्ट</string>
+    <string name="pref_cat_gestures" maxLength="41">इशारे</string>
     <string name="pref_cat_gestures_summ">स्पर्श और स्वाइप के बजाय बटनों का उपयोग करें</string>
-    <string name="pref_cat_actions">क्रियाएँ</string>
-    <string name="pref_cat_advanced">उन्नत</string>
+    <string name="pref_cat_actions" maxLength="41">क्रियाएँ</string>
+    <string name="pref_cat_advanced" maxLength="41">उन्नत</string>
     <string name="pref_cat_advanced_summ">अनुकूलन और प्रायोगिक सुविधाएँ</string>
-    <string name="pref_cat_performance">निष्पादन</string>
-    <string name="pref_cat_workarounds">वैकल्पिक हल</string>
-    <string name="pref_cat_plugins">प्लगइन</string>
-    <string name="about_title">AnkiDroid के बारे में</string>
+    <string name="pref_cat_performance" maxLength="41">निष्पादन</string>
+    <string name="pref_cat_workarounds" maxLength="41">वैकल्पिक हल</string>
+    <string name="pref_cat_plugins" maxLength="41">प्लगइन</string>
+    <string name="about_title" maxLength="41">AnkiDroid के बारे में</string>
     <string name="about_version">संस्करण: </string>
     <!-- preferences.xml entries-->
-    <string name="whiteboard_stroke_width">अंकन की चौड़ाई</string>
-    <string name="use_input_tag">पत्ता में उत्तर दर्ज करें</string>
+    <string name="whiteboard_stroke_width" maxLength="41">अंकन की चौड़ाई</string>
+    <string name="use_input_tag" maxLength="41">पत्ता में उत्तर दर्ज करें</string>
     <string name="use_input_tag_summ">जवाब में टाइप करने के लिए कार्ड के अंदर एक पाठ इनपुट बॉक्स का उपयोग करें</string>
-    <string name="dictionary">शब्दकोष खोजें</string>
-    <string name="reset_languages">भाषाएँ रीसेट करें</string>
+    <string name="dictionary" maxLength="41">शब्दकोष खोजें</string>
+    <string name="reset_languages" maxLength="41">भाषाएँ रीसेट करें</string>
     <string name="reset_languages_summ">सभी डेक के लिए भाषा असाइनमेंट (पाठ के लिए वाक् और शब्दकोशों के लिए) रीसेट करें</string>
     <string name="reset_languages_question">सभी भाषा असाइनमेंट रीसेट करें?</string>
     <string name="reset_confirmation">सभी राज्य रीसेट करें</string>
-    <string name="card_zoom">कार्ड ज़ूम</string>
-    <string name="image_zoom">छवि ज़ूम</string>
-    <string name="button_size">उत्तर बटन आकार</string>
-    <string name="card_browser_font_size">कार्ड ब्राउज़र फ़ॉन्ट स्केलिंग</string>
-    <string name="card_browser_hide_media">Display filenames in card browser</string>
+    <string name="card_zoom" maxLength="41">कार्ड ज़ूम</string>
+    <string name="image_zoom" maxLength="41">छवि ज़ूम</string>
+    <string name="button_size" maxLength="41">उत्तर बटन आकार</string>
+    <string name="card_browser_font_size" maxLength="41">कार्ड ब्राउज़र फ़ॉन्ट स्केलिंग</string>
+    <string name="card_browser_hide_media" maxLength="41">Display filenames in card browser</string>
     <string name="card_browser_hide_media_summary">Display media filenames in the card browser question/answer fields</string>
-    <string name="col_path">AnkiDroid निर्देशिका</string>
-    <string name="fullscreen_review">फुल स्क्रीन मोड</string>
+    <string name="col_path" maxLength="41">AnkiDroid निर्देशिका</string>
+    <string name="fullscreen_review" maxLength="41">फुल स्क्रीन मोड</string>
     <string name="full_screen_off">ऑफ</string>
     <string name="full_screen_system">सिस्टम पट्टियां छुपाएं</string>
     <string name="full_screen_complete">सिस्टम पट्टियां और उत्तर बटन छुपाएं</string>
     <string name="full_screen_error_gestures">उत्तर बटनों को छुपाने के लिए आपको जेस्चर सक्षम करना आवश्यक है</string>
-    <string name="answer_buttons_position">उत्तर बटन स्थिति</string>
+    <string name="answer_buttons_position" maxLength="41">उत्तर बटन स्थिति</string>
     <string-array name="answer_buttons_position_labels">
         <item>सर्वोच्च</item>
         <item>तल</item>
     </string-array>
-    <string name="gestures">जेस्चर सक्षम करें</string>
+    <string name="gestures" maxLength="41">जेस्चर सक्षम करें</string>
     <string name="gestures_summ">ऐसे जवाब और संपादन कार्ड के रूप में कार्रवाई करने के लिए इशारों निरुपित ।</string>
-    <string name="gestures_allow_links">Ignore touch gestures on links</string>
+    <string name="gestures_allow_links" maxLength="41">Ignore touch gestures on links</string>
     <string name="gestures_allow_links_summary">Touch gestures will not be processed if a link/hint is pressed.</string>
-    <string name="gestures_corner_touch">9-point touch</string>
+    <string name="gestures_corner_touch" maxLength="41">९-बिंदु स्पर्श</string>
     <string name="gestures_corner_touch_summary">Allow touch gestures in screen corners</string>
-    <string name="gestures_swipe_up">ऊपर की ओर स्वाइप</string>
-    <string name="gestures_swipe_down">निचे की ओर स्वाइप</string>
-    <string name="gestures_swipe_left">बाएं स्वाइप करें</string>
-    <string name="gestures_swipe_right">दाएं स्वाइप करें</string>
-    <string name="gestures_double_tap">डबल टच</string>
-    <string name="gestures_tap_top">टच टॉप</string>
-    <string name="gestures_tap_left">बाएं स्पर्श करें</string>
-    <string name="gestures_tap_right">दाएं स्पर्श करें</string>
-    <string name="gestures_tap_bottom">नीचे स्पर्श करें</string>
-    <string name="gestures_corner_tap_top_left">Touch top left</string>
+    <string name="gestures_swipe_up" maxLength="41">ऊपर की ओर स्वाइप</string>
+    <string name="gestures_swipe_down" maxLength="41">निचे की ओर स्वाइप</string>
+    <string name="gestures_swipe_left" maxLength="41">बाएं स्वाइप करें</string>
+    <string name="gestures_swipe_right" maxLength="41">दाएं स्वाइप करें</string>
+    <string name="gestures_double_tap" maxLength="41">डबल टच</string>
+    <string name="gestures_tap_top" maxLength="41">टच टॉप</string>
+    <string name="gestures_tap_left" maxLength="41">बाएं स्पर्श करें</string>
+    <string name="gestures_tap_right" maxLength="41">दाएं स्पर्श करें</string>
+    <string name="gestures_tap_bottom" maxLength="41">नीचे स्पर्श करें</string>
+    <string name="gestures_corner_tap_top_left" maxLength="41">Touch top left</string>
     <string name="gestures_corner_tap_top_center">Touch top center</string>
-    <string name="gestures_corner_tap_top_right">Touch top right</string>
+    <string name="gestures_corner_tap_top_right" maxLength="41">Touch top right</string>
     <string name="gestures_corner_tap_middle_left">Touch middle left</string>
-    <string name="gestures_corner_tap_middle_center">Touch middle center</string>
+    <string name="gestures_corner_tap_middle_center" maxLength="41">Touch middle center</string>
     <string name="gestures_corner_tap_middle_right">Touch middle right</string>
-    <string name="gestures_corner_tap_bottom_left">Touch bottom left</string>
+    <string name="gestures_corner_tap_bottom_left" maxLength="41">Touch bottom left</string>
     <string name="gestures_corner_tap_bottom_center">Touch bottom center</string>
-    <string name="gestures_corner_tap_bottom_right">Touch bottom right</string>
-    <string name="gestures_volume_up">Volume up</string>
-    <string name="gestures_volume_down">Volume down</string>
-    <string name="more_scrolling_buttons">ई-रीडर</string>
+    <string name="gestures_corner_tap_bottom_right" maxLength="41">Touch bottom right</string>
+    <string name="gestures_volume_up" maxLength="41">Volume up</string>
+    <string name="gestures_volume_down" maxLength="41">Volume down</string>
+    <string name="more_scrolling_buttons" maxLength="41">ई-रीडर</string>
     <string name="more_scrolling_buttons_summ">साथ ही स्क्रॉलिंग के लिए कांजी/कतकान, इमोजी/काओ-मोजी बटन का उपयोग करें</string>
-    <string name="card_browser_enable_external_context_menu">‘%s’ Menu</string>
+    <string name="card_browser_enable_external_context_menu">‘%s’ मेन्यू</string>
     <string name="card_browser_enable_external_context_menu_summary">Enables the ‘%s’ context menu globally</string>
-    <string name="double_scrolling_gap">डबल स्क्रॉल</string>
+    <string name="double_scrolling_gap" maxLength="41">डबल स्क्रॉल</string>
     <string name="double_scrolling_gap_summ">ई-रीडर के साथ स्क्रॉल गैप डबल</string>
-    <string name="swipe_sensitivity">उच्च संवेदनशीलता</string>
-    <string name="tts">भाषण के पाठ</string>
+    <string name="swipe_sensitivity" maxLength="41">उच्च संवेदनशीलता</string>
+    <string name="tts" maxLength="41">भाषण के पाठ</string>
     <string name="tts_summ">कोई ध्वनि फ़ाइल शामिल है, तो प्रश्न और उत्तर बाहर पढ़ता है</string>
-    <string name="sync_fetch_missing_media">मीडिया को सिंक पर लाएं</string>
+    <string name="sync_fetch_missing_media" maxLength="41">मीडिया को सिंक पर लाएं</string>
     <string name="sync_fetch_missing_media_summ">सिंक्रनाइज़ करते समय गुम मीडिया स्वचालित रूप से लाएं</string>
-    <string name="sync_account">AnkiWeb खाता</string>
+    <string name="sync_account" maxLength="41">AnkiWeb खाता</string>
     <string name="sync_account_summ_logged_out">लॉगिन नहीं हैं</string>
     <string name="sync_account_summ_logged_in">%s</string>
-    <string name="automatic_sync_choice">स्वचालित सिंक्रनाइज़ेशन</string>
+    <string name="automatic_sync_choice" maxLength="41">स्वचालित सिंक्रनाइज़ेशन</string>
     <string name="automatic_sync_choice_summ">यदि अंतिम सिंक्रनाइज़ेशन 10 मिनट पहले से अधिक था, तो अनुप्रयोग प्रारंभ/निकास पर स्वचालित रूप से सिंक्रनाइज़ करें ।</string>
-    <string name="sync_status_badge">Display synchronization status</string>
+    <string name="sync_status_badge" maxLength="41">Display synchronization status</string>
     <string name="sync_status_badge_summ">Change the sync icon when changes can be uploaded</string>
-    <string name="day_theme">दिवस थीम</string>
-    <string name="night_theme">रात विषय</string>
-    <string name="default_font">डिफ़ॉल्ट फ़ॉंट</string>
-    <string name="override_font">डिफ़ॉल्ट फ़ॉंट लागू</string>
-    <string name="language">भाषा</string>
+    <string name="day_theme" maxLength="41">दिवस थीम</string>
+    <string name="night_theme" maxLength="41">रात विषय</string>
+    <string name="default_font" maxLength="41">डिफ़ॉल्ट फ़ॉंट</string>
+    <string name="override_font" maxLength="41">डिफ़ॉल्ट फ़ॉंट लागू</string>
+    <string name="language" maxLength="41">भाषा</string>
     <string name="language_system">सिस्टम भाषा</string>
-    <string name="notification_pref">सूचनाएँ</string>
-    <string name="notification_pref_title">मुझे सूचित करें</string>
+    <string name="notification_pref" maxLength="41">सूचनाएँ</string>
+    <string name="notification_pref_title" maxLength="41">मुझे सूचित करें</string>
     <string name="never_notify">कभी सूचित</string>
     <string name="notify_when_pending">लंबित संदेश उपलब्ध</string>
     <string name="notification_minimum_cards_due">कारण %d से अधिक कार्ड</string>
-    <string name="notification_minimum_cards_due_vibrate">वाइब्रेट</string>
-    <string name="notification_minimum_cards_due_blink">पलक लाइट</string>
-    <string name="timeout_answer_text">स्वचालित प्रदर्शन उत्तर</string>
+    <string name="notification_minimum_cards_due_vibrate" maxLength="41">वाइब्रेट</string>
+    <string name="notification_minimum_cards_due_blink" maxLength="41">पलक लाइट</string>
+    <string name="timeout_answer_text" maxLength="41">स्वचालित प्रदर्शन उत्तर</string>
     <string name="timeout_answer_summ">उपयोगकर्ता इनपुट के बिना स्वचालित रूप से उत्तर दिखाएं । देरी स्वचालित रूप से खेला ऑडियो फ़ाइलों के लिए समय शामिल है ।</string>
-    <string name="timeout_answer_seconds">जवाब दिखाने के लिए समय</string>
+    <string name="timeout_answer_seconds" maxLength="41">जवाब दिखाने के लिए समय</string>
     <string name="timeout_answer_seconds_summ" comment="The time to wait (in seconds) in the reviewer before automatically showing the next question or answer">XXX s</string>
-    <string name="timeout_question_seconds">अगला प्रश्न दिखाने का समय</string>
+    <string name="timeout_question_seconds" maxLength="41">अगला प्रश्न दिखाने का समय</string>
     <string name="select_locale_title">भाषा चुनें</string>
-    <string name="safe_display">सुरक्षित प्रदर्शन मोड</string>
+    <string name="software_render" maxLength="41">Disable card hardware render</string>
+    <string name="software_render_summ">Hardware render is faster but may have problems, specifically on Android 8/8.1. If you cannot see parts of the card review user interface, try this setting.</string>
+    <string name="safe_display" maxLength="41">सुरक्षित प्रदर्शन मोड</string>
     <string name="safe_display_summ">Disable all animations and use safer method for drawing cards. E-ink devices may require this.</string>
-    <string name="disable_extended_text_ui">Disable Single-Field Edit Mode</string>
+    <string name="disable_extended_text_ui" maxLength="41">Disable Single-Field Edit Mode</string>
     <!--See: multimedia_editor_popup_cloze. We can\'t use format strings as this is auto-generated-->
     <string name="disable_extended_text_ui_summ">Allows \'Cloze Deletion\' context menu when in landscape mode.</string>
-    <string name="vertical_centering">मध्य संरेखित करें</string>
+    <string name="vertical_centering" maxLength="41">मध्य संरेखित करें</string>
     <string name="vertical_centering_summ">कार्ड की सामग्री को अनुलंब रूप से केंद्रित करना</string>
-    <string name="pref_backup_max">बैकअप की अधिकतम संख्या</string>
-    <string name="show_estimates">बटन समय दिखाएं</string>
+    <string name="pref_backup_max" maxLength="41">बैकअप की अधिकतम संख्या</string>
+    <string name="show_estimates" maxLength="41">बटन समय दिखाएं</string>
     <string name="show_estimates_summ">उत्तर बटंस पर अगली समीक्षा समय दिखाएं</string>
-    <string name="show_top_bar">Show Top Bar</string>
+    <string name="show_top_bar" maxLength="41">Show Top Bar</string>
     <string name="show_top_bar_summ">Show card counts, flag and mark in top bar</string>
-    <string name="show_progress">शेष दिखाएं</string>
+    <string name="show_progress" maxLength="41">शेष दिखाएं</string>
     <string name="show_progress_summ">शेष कार्ड गणना दिखाएं</string>
-    <string name="show_eta">ईटीए दिखाएं</string>
+    <string name="show_eta" maxLength="41">ईटीए दिखाएं</string>
     <string name="show_eta_summ">शेष समय दिखाएँ</string>
-    <string name="use_current">नए कार्ड के लिए डेक</string>
-    <string name="new_spread">नए कार्ड की स्थिति</string>
-    <string name="learn_cutoff">आगे की सीमा जानें</string>
-    <string name="time_limit">Timebox समय सीमा</string>
+    <string name="use_current" maxLength="41">नए कार्ड के लिए डेक</string>
+    <string name="new_spread" maxLength="41">नए कार्ड की स्थिति</string>
+    <string name="learn_cutoff" maxLength="41">आगे की सीमा जानें</string>
+    <string name="time_limit" maxLength="41">Timebox समय सीमा</string>
     <string name="time_limit_summ">XXX min</string>
-    <string name="new_timezone">New timezone handling</string>
-    <string name="day_offset">अगले दिन की शुरुआत</string>
+    <string name="new_timezone" maxLength="41">New timezone handling</string>
+    <string name="day_offset_with_description" maxLength="41">अगले दिन की शुरुआत (0 आधी रात है, 23 11PM है)</string>
     <string name="day_offset_summ">XXX घंटे पिछले आधी रात</string>
-    <string name="sched_ver">Experimental V2 scheduler</string>
-    <string name="sched_ver_summ">Enable the experimental scheduler. Forces changes in one direction on next sync</string>
+    <string name="xlabel_dayoffset_seekbar" maxLength="41">Midnight</string>
+    <string name="ylabel_dayoffset_seekbar" maxLength="41">11PM</string>
+    <string name="sched_v2" maxLength="41">V2 scheduler</string>
+    <string name="sched_v2_summ">Enable the new scheduler. Forces changes in one direction on next sync</string>
     <string name="sched_ver_toggle_title">पुष्टि करें</string>
     <string name="sched_ver_2to1">This will reset any cards in learning, clear filtered decks, and change the scheduler version. Proceed?</string>
     <string name="sched_ver_1to2">The experimental scheduler could cause incorrect scheduling. Please ensure you have read the documentation first. Proceed?</string>
-    <string name="pref_keep_screen_on">स्क्रीन चालू रखें</string>
+    <string name="pref_keep_screen_on" maxLength="41">स्क्रीन चालू रखें</string>
     <string name="pref_keep_screen_on_summ">स्क्रीन टाइमआउट अक्षम करें</string>
-    <string name="convert_fen_text">शतरंज संकेतन समर्थन</string>
+    <string name="convert_fen_text" maxLength="41">शतरंज संकेतन समर्थन</string>
     <string name="convert_fen_text_summ">Forsyth से बिसात ड्रा-एडवर्ड्स संकेतन । अंकन [fen][/fen] टैग में संलग्न किया जाना चाहिए.</string>
-    <string name="enable_api_title">AnkiDroid API सक्षम करें</string>
+    <string name="enable_api_title" maxLength="41">AnkiDroid API सक्षम करें</string>
     <string name="enable_api_summary">अपने हस्तक्षेप के बिना डेटा AnkiDroid और पढ़ने/लिखने के लिए कनेक्ट करने दें</string>
-    <string name="custom_buttons">ऐप बार बटन</string>
+    <string name="custom_buttons" maxLength="41">ऐप बार बटन</string>
     <string name="custom_buttons_summary">अनुकूलित करें कि कौन सी क्रियाएं ऐप बार में दिखाई देती है</string>
     <string name="custom_buttons_setting_always_show">हमेशा दिखाएं</string>
     <string name="custom_buttons_setting_if_room">यदि कक्ष दिखाएं</string>
     <string name="custom_buttons_setting_menu_only">केवल मेनू</string>
-    <string name="reset_custom_buttons">डिफ़ॉल्ट पर रीसेट करें</string>
-    <string name="thirdparty_apps_title">Third-party API apps</string>
+    <string name="reset_custom_buttons" maxLength="41">डिफ़ॉल्ट पर रीसेट करें</string>
+    <string name="thirdparty_apps_title" maxLength="41">तृतीय-पक्ष API ऐप्स</string>
     <string name="thirdparty_apps_summary">See a list of applications which make use of the AnkiDroid API such as dictionaries, utilities.</string>
-    <string name="html_javascript_debugging">HTML / Javascript Debugging</string>
+    <string name="html_javascript_debugging" maxLength="41">HTML / Javascript Debugging</string>
     <string name="html_javascript_debugging_summ">Enable remote WebView connections, and save card HTML to AnkiDroid directory</string>
     <!-- Advanced statistics settings -->
-    <string name="advanced_statistics_title">उंनत सांख्यिकी</string>
-    <string name="enable_advanced_statistics_title">उंनत आंकड़े सक्षम करें</string>
+    <string name="advanced_statistics_title" maxLength="41">उंनत सांख्यिकी</string>
+    <string name="enable_advanced_statistics_title" maxLength="41">उंनत आंकड़े सक्षम करें</string>
     <string name="enable_advanced_statistics_summ">एक गणना या भविष्य की समीक्षा (सक्षम) के अनुकरण पर या भविष्य की समीक्षा पहले से ही अनुसूचित (विकलांग) पर आधारित पूर्वानुमान आंकड़े प्रदर्शित करें ।</string>
-    <string name="advanced_forecast_stats_compute_n_days_title">गणना पहले n दिन, शेष अनुकरण</string>
-    <string name="advanced_forecast_stats_compute_precision_title">परिकलन की शुद्धता</string>
-    <string name="advanced_forecast_stats_mc_n_iterations_title">अनुकरण की पुनरावृत्तियों की संख्या</string>
+    <string name="advanced_forecast_stats_compute_n_days_title" maxLength="41">गणना पहले n दिन, शेष अनुकरण</string>
+    <string name="advanced_forecast_stats_compute_precision_title" maxLength="41">परिकलन की शुद्धता</string>
+    <string name="advanced_forecast_stats_mc_n_iterations_title" maxLength="41">अनुकरण की पुनरावृत्तियों की संख्या</string>
     <!-- Custom sync server settings -->
-    <string name="custom_sync_server_title">कस्टम सिंक्रनाइज़ेशन सर्वर</string>
-    <string name="custom_sync_server_enable_title">कस्टम सिंक्रनाइज़ेशन सर्वर का उपयोग करें</string>
+    <string name="custom_sync_server_title" maxLength="41">कस्टम सिंक्रनाइज़ेशन सर्वर</string>
+    <string name="custom_sync_server_enable_title" maxLength="41">कस्टम सिंक्रनाइज़ेशन सर्वर का उपयोग करें</string>
     <string name="custom_sync_server_enable_summary">यदि आप स्वामित्व AnkiWeb सेवा का उपयोग नहीं करना चाहते आप एक वैकल्पिक सर्वर यहां निर्दिष्ट कर सकते है</string>
-    <string name="custom_sync_server_base_url_title">सिंक्रनाइज़ेशन url</string>
+    <string name="custom_sync_server_base_url_title" maxLength="41">सिंक्रनाइज़ेशन url</string>
     <string name="custom_sync_server_base_url_invalid">Sync url invalid</string>
-    <string name="custom_sync_server_media_url_title">मीडिया सिंक्रनाइज़ेशन url</string>
+    <string name="custom_sync_server_media_url_title" maxLength="41">मीडिया सिंक्रनाइज़ेशन url</string>
     <string name="custom_sync_server_media_url_invalid">Media sync url invalid</string>
     <!-- studyoptions -->
     <string name="deck_conf_group_summ">Changes to deck group options will affect multiple decks. If you wish to change only the current deck, please add a new options group first</string>
     <string name="studyoptions_limit_select_tags">टैग का चयन करें</string>
     <!-- Deck configurations -->
-    <string name="deck_conf_deck_description">Deck description (affects current deck only)</string>
-    <string name="deck_conf_group">विकल्प समूह</string>
+    <string name="deck_conf_deck_description" maxLength="41">Deck description (current deck only)</string>
+    <string name="deck_conf_group" maxLength="41">विकल्प समूह</string>
     <plurals name="deck_conf_group_summ">
         <item quantity="one">%1$s\n%2$d डेक इस समूह का उपयोग करता है</item>
         <item quantity="other">%1$s\n%2$d डेक इस समूह का उपयोग करता है</item>
     </plurals>
-    <string name="deck_conf_new_cards">नए कार्ड</string>
-    <string name="deck_conf_rev_cards" comment="Name of the deck options submenu for configuring reviews of due cards.">समीक्षाएँ</string>
-    <string name="deck_conf_lps_cards" comment="Label of the submenu stating how lapses cards are treated.">चूक</string>
-    <string name="deck_conf_general">सामान्य</string>
-    <string name="deck_conf_reminders">रिमाइंडर्स</string>
-    <string name="deck_conf_steps">चरण (मिनटों में)</string>
-    <string name="deck_conf_order">आर्डर्स</string>
-    <string name="deck_conf_new_cards_day">नया कार्ड / दिन</string>
-    <string name="deck_conf_graduating_ivl">ग्रेजुएशन अंतराल</string>
+    <string name="deck_conf_new_cards" maxLength="41">नए कार्ड</string>
+    <string name="deck_conf_rev_cards" maxLength="41" comment="Name of the deck options submenu for configuring reviews of due cards.">समीक्षाएँ</string>
+    <string name="deck_conf_lps_cards" maxLength="41" comment="Label of the submenu stating how lapses cards are treated.">चूक</string>
+    <string name="deck_conf_general" maxLength="41">सामान्य</string>
+    <string name="deck_conf_reminders" maxLength="41">रिमाइंडर्स</string>
+    <string name="deck_conf_steps" maxLength="41">चरण (मिनटों में)</string>
+    <string name="deck_conf_order" maxLength="41">आर्डर्स</string>
+    <string name="deck_conf_new_cards_day" maxLength="41">नया कार्ड / दिन</string>
+    <string name="deck_conf_graduating_ivl" maxLength="41">ग्रेजुएशन अंतराल</string>
     <string name="deck_conf_days">XXX दिवस (s)</string>
-    <string name="deck_conf_easy_ivl">आसान अंतराल</string>
-    <string name="deck_conf_start_ease">आसानी शुरू</string>
-    <string name="deck_conf_max_rev">अधिकतम समीक्षा/</string>
-    <string name="deck_conf_new_bury">दफनाने संबंधित नए कार्ड</string>
-    <string name="deck_conf_new_bury_summ">संबंधित नए कार्ड अगले दिन तक दफन कर रहे है</string>
-    <string name="deck_conf_rev_bury">दफनाने संबंधित समीक्षाएं</string>
-    <string name="deck_conf_rev_bury_summ">संबंधित समीक्षाएं अगले दिन तक दफन कर रहे है</string>
-    <string name="deck_conf_use_general_timeout_settings">सामान्य सेटिंग्स का उपयोग करें</string>
+    <string name="deck_conf_easy_ivl" maxLength="41">आसान अंतराल</string>
+    <string name="deck_conf_start_ease" maxLength="41">आसानी शुरू</string>
+    <string name="deck_conf_max_rev" maxLength="41">अधिकतम समीक्षा/</string>
+    <string name="deck_conf_new_bury" maxLength="41">संबंधित नए कार्ड स्थगित करें</string>
+    <string name="deck_conf_new_bury_summ">संबंधित नए पत्ते अगले दिन तक दफन कर दिए जाते हैं</string>
+    <string name="deck_conf_rev_bury" maxLength="41">संबंधित समीक्षाएं स्थगित करें</string>
+    <string name="deck_conf_rev_bury_summ">संबंधित समीक्षाओं को अगले दिन तक स्थगित किया जाता है</string>
+    <string name="deck_conf_use_general_timeout_settings" maxLength="41">सामान्य सेटिंग्स का उपयोग करें</string>
     <string name="deck_conf_use_general_timeout_settings_summ">Use general \'Automatic display answer\' settings instead of using the settings for this group.</string>
-    <string name="deck_conf_easy_bonus">आसान बोनस</string>
-    <string name="deck_conf_hard_factor">Hard interval</string>
-    <string name="deck_conf_ivl_fct">अंतराल संशोधक</string>
-    <string name="deck_conf_max_ivl">अधिकतम अंतराल</string>
-    <string name="deck_conf_new_lps_ivl">नया अंतराल</string>
-    <string name="deck_conf_min_ivl">न्यूनतम अंतराल</string>
-    <string name="deck_conf_leech_thres">जोंक दहलीज</string>
+    <string name="deck_conf_easy_bonus" maxLength="41">आसान बोनस</string>
+    <string name="deck_conf_hard_factor" maxLength="41">Hard interval</string>
+    <string name="deck_conf_ivl_fct" maxLength="41">अंतराल संशोधक</string>
+    <string name="deck_conf_max_ivl" maxLength="41">अधिकतम अंतराल</string>
+    <string name="deck_conf_new_lps_ivl" maxLength="41">नया अंतराल</string>
+    <string name="deck_conf_min_ivl" maxLength="41">न्यूनतम अंतराल</string>
+    <string name="deck_conf_leech_thres" maxLength="41">जोंक दहलीज</string>
     <string name="deck_conf_fails">XXX चूक (ओं)</string>
-    <string name="deck_conf_leech_action">जोंक कार्रवाई</string>
-    <string name="deck_conf_max_time">अधिक से अधिक उत्तर समय</string>
+    <string name="deck_conf_leech_action" maxLength="41">जोंक कार्रवाई</string>
+    <string name="deck_conf_max_time" maxLength="41">अधिक से अधिक उत्तर समय</string>
     <string name="deck_conf_seconds">XXX सेकंड</string>
-    <string name="deck_conf_timer">उत्तर टाइमर दिखाएं</string>
-    <string name="deck_conf_autoplay">स्वचालित रूप से ऑडियो चलाएं</string>
-    <string name="deck_conf_replayq">फिर से खेलना सवाल</string>
+    <string name="deck_conf_timer" maxLength="41">उत्तर टाइमर दिखाएं</string>
+    <string name="deck_conf_autoplay" maxLength="41">स्वचालित रूप से ऑडियो चलाएं</string>
+    <string name="deck_conf_replayq" maxLength="41">फिर से खेलना सवाल</string>
     <string name="deck_conf_replayq_summ">जब जवाब दिखाया, फिर से खेलना दोनों प्रश्न और उत्तर ऑडियो</string>
-    <string name="deck_conf_manage">समूह प्रबंधन</string>
+    <string name="deck_conf_manage" maxLength="41">समूह प्रबंधन</string>
     <string name="deck_conf_manage_summ">Add and change options groups</string>
-    <string name="deck_conf_current_group">वर्तमान समूह</string>
-    <string name="deck_conf_rename" comment="Menu entry to rename a deck">नाम बदलें</string>
-    <string name="deck_conf_reset">मूल पुनस्थापित करें</string>
+    <string name="deck_conf_current_group" maxLength="41">वर्तमान समूह</string>
+    <string name="deck_conf_rename" maxLength="41" comment="Menu entry to rename a deck">नाम बदलें</string>
+    <string name="deck_conf_reset" maxLength="41">मूल पुनस्थापित करें</string>
     <string name="deck_conf_reset_message">वर्तमान विकल्प समूह को डिफ़ॉल्ट मानों में पुनर्स्थापित करें?</string>
-    <string name="deck_conf_add" comment="Adding a new deck option group">जोड़ें</string>
+    <string name="deck_conf_add" maxLength="41" comment="Adding a new deck option group">जोड़ें</string>
     <string name="deck_conf_add_summ">वर्तमान विकल्प समूह की प्रतिलिपि बनाएं</string>
     <string name="deck_conf_remove_message">वर्तमान विकल्प समूह निकालें?</string>
-    <string name="deck_conf_set_subdecks">सभी उपडेक के लिए सेट करें</string>
+    <string name="deck_conf_set_subdecks" maxLength="41">सभी उपडेक के लिए सेट करें</string>
     <plurals name="deck_conf_set_subdecks_summ">
         <item quantity="one">%s subdeck इस समूह का उपयोग करेगा</item>
         <item quantity="other">%s subdeck इस समूह का उपयोग करेगा</item>
     </plurals>
     <string name="deck_conf_set_subdecks_message">इस डेक उपडेक के सभी के लिए वर्तमान विकल्प समूह सेट करें?</string>
-    <string name="pref_browser_editor_font">ब्राउज़र और संपादक फ़ॉन्ट</string>
-    <string name="deck_conf_cram_filter">फ़िल्टर</string>
-    <string name="deck_conf_cram_search">खोज</string>
-    <string name="deck_conf_cram_limit">करने के लिए सीमा</string>
-    <string name="deck_conf_cram_order">द्वारा चयनित कार्ड</string>
-    <string name="deck_conf_cram_reschedule" comment="Title of the box labelled by deck_conf_cram_reschedule_summ">पुनः शेड्यूल करें</string>
+    <string name="pref_browser_editor_font" maxLength="41">ब्राउज़र और संपादक फ़ॉन्ट</string>
+    <string name="deck_conf_cram_filter" maxLength="41">फ़िल्टर</string>
+    <string name="deck_conf_cram_search" maxLength="41">खोज</string>
+    <string name="deck_conf_cram_limit" maxLength="41">करने के लिए सीमा</string>
+    <string name="deck_conf_cram_order" maxLength="41">द्वारा चयनित कार्ड</string>
+    <string name="deck_conf_cram_reschedule" maxLength="41" comment="Title of the box labelled by deck_conf_cram_reschedule_summ">पुनः शेड्यूल करें</string>
     <string name="deck_conf_cram_reschedule_summ">इस डेक में मेरे जवाब के आधार पर कार्ड पुनर्निर्धारित</string>
-    <string name="deck_conf_cram_steps">कस्टम चरण (मिनटों में)</string>
-    <string name="deck_conf_cram_steps_summ">कस्टम चरणों को परिभाषित करें</string>
-    <string name="deck_conf_reminders_enabled">Enable reminder notifications for decks in this deck group</string>
-    <string name="deck_conf_reminders_time">पर याद दिलाना</string>
+    <string name="deck_conf_cram_steps" maxLength="41">कस्टम चरण (मिनटों में)</string>
+    <string name="deck_conf_cram_steps_summ" maxLength="41">कस्टम चरणों को परिभाषित करें</string>
+    <string name="deck_conf_reminders_enabled" maxLength="41">Enable notifications for this deck group</string>
+    <string name="deck_conf_reminders_time" maxLength="41">पर याद दिलाना</string>
     <!-- analytics options -->
     <string name="analytics_dialog_title">AnkiDroid को बेहतर बनाने में मदद करें!</string>
-    <string name="analytics_title">सुविधा उपयोग साझा करें</string>
+    <string name="analytics_title" maxLength="41">सुविधा उपयोग साझा करें</string>
     <string name="analytics_summ">आप AnkiDroid में योगदान कर सकते हैं, आप AnkiDroid Team को यह देखने में मदद कर सकते हैं कि लोग किन सुविधाओं का उपयोग करते हैं</string>
-    <string name="note_editor_replace_newlines">Replace newlines with HTML</string>
+    <string name="note_editor_replace_newlines" maxLength="41">Replace newlines with HTML</string>
     <string name="note_editor_replace_newlines_summ">In the Note Editor, convert any instances of &lt;br&gt; to newlines when editing a card.</string>
-    <string name="no_code_formatting">Simple typed answer formatting</string>
-    <string name="no_code_formatting_summ">Fixes ‘􏿾’ appearing in typed answer results</string>
+    <string name="no_code_formatting" maxLength="41">Simple typed answer formatting</string>
+    <string name="no_code_formatting_summ">टाइप किए गए उत्तर परिणामों में प्रदर्शित होने वाले ‘􏿾’ को ठीक करता है</string>
+    <string name="type_in_answer_focus" maxLength="41">Focus ‘type in answer’</string>
+    <string name="type_in_answer_focus_summ">Automatically focus the ‘type in answer’ field in the reviewer</string>
+    <!-- Open Changelog-->
+    <string name="open_changelog">परिवर्तन लॉग खोलें</string>
 </resources>

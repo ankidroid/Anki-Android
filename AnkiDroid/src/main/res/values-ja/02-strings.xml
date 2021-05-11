@@ -122,6 +122,7 @@
     <string name="reordering_cards">カードを並べ替えています...</string>
     <string name="field_remapping">%1$s (\'%2$s\'から)</string>
     <string name="confirm_map_cards_to_nothing">Nothing に設定したカードは削除され、同じノートタイプに１つもカードが残っていない場合は、そのノートタイプも同時に失われます。それでも処理を続行しますか。</string>
+    <string name="timebox_reached_title">Timebox reached</string>
     <plurals name="timebox_reached">
         <item quantity="other">%1$d枚のカードを%2$sで学習しました</item>
     </plurals>
@@ -267,6 +268,7 @@
     <string name="white_board_image_save_failed">ホワイトボード画像の保存に失敗しました。 %s</string>
     <string name="white_board_image_saved">ホワイトボードの画像を %s に保存しました</string>
     <string name="title_whiteboard_pen_color">ホワイトボードペンの色を選択</string>
+    <string name="title_whiteboard_editor">Whiteboard editor</string>
     <!-- CSV/Note Import -->
     <string name="note_importer_empty_cards_found"><![CDATA[空のカードが見つかりました。ツール>空のカードを実行してください。]]></string>
     <string name="note_importer_error_empty_first_field">最初のフィールドが空: %s</string>
@@ -299,6 +301,7 @@
     <!-- Card Viewer -->
     <string name="card_viewer_could_not_find_image">カードのエラー: 読み込み失敗 ‘%s’</string>
     <string name="card_viewer_media_relative_protocol">カードコンテンツエラー: メディアの更新が必要です</string>
+    <string name="cannot_load_http_resource">Loading http resources is no longer supported</string>
     <!-- Deck Picker -->
     <string name="deck_picker_failed_deck_load">\'%s\'デッキの読み込みに失敗しました</string>
     <string name="search_decks">デッキ名を検索</string>
@@ -326,4 +329,11 @@
     <string name="create_shortcut_failed" comment="home screen == launcher">ホーム画面にAnkiDroidのショートカットを追加することはできません。</string>
     <string name="create_shortcut_error">ショートカット追加のエラー: %s</string>
     <string name="note_editor_capitalize" comment="This is for a switch with a checkbox - on: enabled">文章を大文字にする</string>
+    <!-- Symbols used as Button text in IncrementNumberRangePreference -->
+    <string name="plus_sign" comment="Label for increment button in IncrementerNumberRangePreference">+</string>
+    <string name="minus_sign" comment="Label for decrement button in IncrementerNumberRangePreference">-</string>
+    <!-- Used for credential empty warning message -->
+    <string name="email_id_empty">Email address is required</string>
+    <string name="password_empty">Password is required</string>
+    <string name="back_pressed_once">Press back again to exit</string>
 </resources>

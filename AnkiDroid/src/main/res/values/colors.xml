@@ -102,6 +102,9 @@
 
     <color name="material_theme_grey">#303030</color>
 
+    <color name="note_editor_selected_item_background">#D1D0CE</color>
+    <color name="note_editor_selected_item_text">#000000</color>
+
     <color name="flag_red">#ff0000</color>
     <color name="flag_orange">#FF9800</color>
     <color name="flag_green">#00ff00</color>
@@ -109,4 +112,7 @@
 
     <color name="badge_error">#f45000</color>
     <color name="badge_warning">#ff5e13</color>
+
+    <color name="fab_background">#777</color>
 </resources>
+

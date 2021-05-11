@@ -63,11 +63,6 @@
     <!-- AndroidManifest.xml -->
     <string name="preferences_title">Preferències</string>
     <string name="deckpreferences_title">Opcions per XXX</string>
-    <string name="sync_conflict_message">Els vostres paquets aquí i a AnkiWeb difereixen de tal manera que no es poden combinar junts, per això cal que trieu un dels dos paquets.\n\nVoleu carregar el paquets des d\'aquí, o descarregar el d\'AnkiWeb?</string>
-    <string name="sync_conflict_local">Puja</string>
-    <string name="sync_conflict_remote">Descarrega</string>
-    <string name="sync_conflict_remote_confirm">Segur que voleu descarregar la col·lecció del servidor? Tingueu en compte que això sobreescriurà la vostra col·lecció local.</string>
-    <string name="sync_conflict_local_confirm">Segur que voleu pujar la col·lecció local? Tingueu en compte que això sobreescriurà la vostra col. lecció del servidor.</string>
     <string name="sync_prepare_syncing">S\'està preparant la sincronització...</string>
     <string name="sync_preparing_full_sync_message">S\'està preparant una sincronització completa...</string>
     <string name="sync_uploading_message">S\'està pujant...</string>
@@ -78,7 +73,6 @@
     <string name="sync_log_clocks_unsynchronized">El rellotge del vostre dispositiu mostra un error de %1$d segons%2$s; Per sincronitzar cal que el vostre rellotge i la vostra zona horària siguin correctes per tal d\'evitar errors. Si us plau assegureu-vos que la data, hora i zona horària del vostre telèfon són correctes, i torneu a sincronitzar.</string>
     <string name="sync_log_clocks_unsynchronized_tz">Sembla que la zona horària del dispositiu és incorrecta</string>
     <string name="sync_log_clocks_unsynchronized_date">Sembla que la data del dispositiu podria ser incorrecta</string>
-    <string name="sync_conflict_title">Conflicte de sincronització</string>
     <string name="sync_no_changes_message">No s\'ha trobat cap canvi.</string>
     <string name="sync_database_acknowledge">Col·lecció sincronitzada</string>
     <string name="sync_log_error_specific">Error de sincronització, tipus: %1$s, missatge: %2$s</string>

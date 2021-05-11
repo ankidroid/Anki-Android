@@ -116,12 +116,12 @@
     <string name="menu_edit_tags">Edit tags</string>
     <string name="delete_note_message">ናይባሓቂ ነዚ ጽሑፍ ከምኡ ውን ነዞም ካርድታትን ክትድምስስ ደሊኻ?\n%s</string>
     <string name="menu_select">ጽሑፍ ምረጽ</string>
+    <string name="menu_lookup">Lookup text</string>
     <string name="menu_search">ኣብ %1$s ርአ</string>
     <string name="menu_mark_note">ጽሑፍ ምልክት ግበረሉ</string>
     <string name="menu_unmark_note">ምልክት ዝገበርካሉ ጽሑፍ ምልክቱ ደምስስ</string>
     <string name="menu_toggle_mic_tool_bar">Check pronunciation</string>
     <string name="new_deck">ሓዲሽ ባይታ ፍጠር</string>
-    <string name="create" comment="Button to create a filtered deck">ፍጠር</string>
     <string name="new_dynamic_deck">ዝፍለ ባይታ ፍጠር</string>
     <string name="night_mode">ናይ እዋን ለይቲ ኩነት</string>
     <string name="directory_inaccessible">ዲክሽነርይ AnkiDroid ክእቶ ኣይክእልን ኢዩ።</string>
@@ -154,6 +154,7 @@
     <string name="custom_study_deck_name">መጽናዕቲ ብዝጠዕም ምምዕርራይ</string>
     <string name="custom_study_deck_exists">መጀመርያ ዝነበረ ምምዕርራይ መጽናዕቲ ባይታ ከምባሓዱሽ ሰዩም።</string>
     <string name="empty_deck">እዚ ባይታ እዚ ጥርሑ እዩ ዘሎ።</string>
+    <string name="search_deck">Deck Search</string>
     <string name="empty_deck_add_note">Add card</string>
     <string name="invalid_deck_name">Invalid deck name</string>
     <string name="studyoptions_empty">ባይታ ጥርሑ ኣሎ። መልጎም + ጠውቅ ሓዲሽ ትሕዝቶ ክትውስኹ።</string>
@@ -210,4 +211,12 @@
     <string name="open_tag_not_closed">Missing \'{{%s}}\'.</string>
     <string name="wrong_tag_closed">Found \'{{/%1$s}}\', but expected \'{{/%2$s}}\'</string>
     <string name="filter_error">Error in filter %s</string>
+    <!-- Sync conflict -->
+    <string name="sync_conflict_message_new">The collections can’t be combined.\nWhich collection do you want to keep?</string>
+    <string name="sync_conflict_keep_local_new" comment="Select AnkiDroid files to keep while syncing">AnkiDroid</string>
+    <string name="sync_conflict_keep_remote_new" comment="Select AnkiWeb files to keep while syncing">AnkiWeb</string>
+    <string name="sync_conflict_remote_confirm_new">Replace your collection on AnkiDroid with your collection from AnkiWeb?</string>
+    <string name="sync_conflict_local_confirm_new">Replace your collection on AnkiWeb with your collection from AnkiDroid?</string>
+    <string name="sync_conflict_title_new">Select collection to keep</string>
+    <string name="sync_conflict_replace_title">Replace collection</string>
 </resources>

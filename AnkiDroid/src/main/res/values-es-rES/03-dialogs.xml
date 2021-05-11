@@ -88,8 +88,8 @@
         <item quantity="one">%d tarjeta reprogramada</item>
         <item quantity="other">%d tarjetas reprogramadas</item>
     </plurals>
-    <string name="reschedule_card_dialog_new_card_warning">A new card is being rescheduled. Rescheduling also turns new cards into review cards. Use the ‘reposition card’ option to change a new card\'s position within the new queue</string>
-    <string name="reschedule_card_dialog_warning_ease_reset">Rescheduling also resets how the scheduler treats the card in the future (ease will be set to %d%%)</string>
+    <string name="reschedule_card_dialog_new_card_warning">Se está reprogramando una nueva tarjeta. Reprogramar también convierte nuevas tarjetas en tarjetas de revisión. Utilice la opción \'reposiciónar tarjetas\' para cambiar la posición de una nueva tarjeta dentro de la nueva cola</string>
+    <string name="reschedule_card_dialog_warning_ease_reset">Reprogramar también reinicia cómo el planificador trata la tarjeta en el futuro (la facilidad se establecerá en %d%%)</string>
     <string name="firefox_workaround_launched_reviewer_opening_deck">Selecciona el mazo en tu gestor de archivos o visita la página about:downloads para importarlo</string>
     <string name="answering_error_title">Error en la base de datos</string>
     <string name="answering_error_message">Se ha producido un error al escribir en la colección. Esto podría estar relacionado con una base de datos dañada o con un espacio en disco insuficiente.\n\nSi esto ocurre con más frecuencia, intenta verificar la base de datos, reparar la colección o restaurar desde una copia de seguridad. Para ello, presiona \"Opciones\".\n\nDe todos modos, podría ser un error de AnkiDroid; por favor, informa del error para que podamos comprobarlo.</string>
@@ -99,8 +99,8 @@
     <string name="intent_aedict_category">Para añadir tarjetas AnkiDroid borra todas las categorías del Bloc de notas o agrega una llamada \'por defecto\'</string>
     <string name="custom_study_new_total_new">Tarjetas nuevas en el mazo: %d</string>
     <string name="custom_study_rev_total_rev">Repasos pendientes en el mazo: %d</string>
-    <string name="custom_study_new_extend">Increase/decrease (“-3”) today’s new card limit by</string>
-    <string name="custom_study_rev_extend">Increase/decrease (“-3”) today’s review limit by</string>
+    <string name="custom_study_new_extend">Aumentar/disminuir (“-3”) el límite actual de tarjetas en</string>
+    <string name="custom_study_rev_extend">Aumentar/disminuir (“-3”) el límite actual de revisión por</string>
     <string name="custom_study_forgotten">Revisar tarjetas olvidadas en los últimos x días:</string>
     <string name="custom_study_ahead">Revisar con x días de adelanto:</string>
     <string name="custom_study_random">Selecciona x tarjetas al azar del mazo:</string>
@@ -114,6 +114,8 @@
     <string name="import_complete_count">Tarjetas importadas: %d</string>
     <string name="sd_card_full_title">Tarjeta SD llena</string>
     <string name="sd_card_almost_full_title">Tarjeta SD casi llena</string>
+    <string name="no_space_to_downgrade_title">No space</string>
+    <string name="no_space_to_downgrade_content">AnkiDroid needs %s free storage space to continue. Please clear some space</string>
     <string name="restore_backup_title">¿Restaurar copia de seguridad?</string>
     <string name="restore_backup">Su colección será reemplazada con una copia más antigua. Cualquier progreso no guardado se perderá.</string>
     <string name="dialog_cancel">Cancelar</string>
@@ -144,11 +146,11 @@
     <string name="check_media_no_unused_missing">No hay archivos no utilizados o perdidos.</string>
     <string name="check_media_db_updated">Base de datos de archivos multimedia reconstruida</string>
     <string name="check_media_delete_unused">Eliminar no utilizados</string>
-    <string name="delete_media_message">Deleting media&#8230;</string>
-    <string name="delete_media_result_title">Deletion result</string>
+    <string name="delete_media_message">Eliminando multimedia&#8230;</string>
+    <string name="delete_media_result_title">Resultado de la eliminación</string>
     <plurals name="delete_media_result_message">
-        <item quantity="one">%d file deleted</item>
-        <item quantity="other">%d files deleted</item>
+        <item quantity="one">%d archivo eliminado</item>
+        <item quantity="other">%d archivos eliminados</item>
     </plurals>
     <!-- Tags Dialog Options -->
     <string name="tags_dialog_option_all_cards">Todas las tarjetas</string>
@@ -156,7 +158,7 @@
     <string name="tags_dialog_option_due_cards" comment="Name of cards that are already been reviewed in the past, and that should be reviewed again">Pendientes</string>
     <!-- Empty cards -->
     <string name="emtpy_cards_finding">Buscando tarjetas vacías&#8230;</string>
-    <string name="confirm_cancel">Do you want to cancel?</string>
+    <string name="confirm_cancel">¿Desea cancelar?</string>
     <string name="empty_cards_none">No hay tarjetas vacías</string>
     <string name="empty_cards_count">Tarjetas a eliminar: %d</string>
     <string name="empty_cards_deleted">Tarjetas eliminadas: %d</string>
@@ -187,8 +189,8 @@
     <!-- Database Errors-->
     <string name="database_locked_title">Base de datos bloqueada</string>
     <string name="database_locked_summary">La base de datos de AnkiDroid está en uso por otra aplicación. Por favor, cierre la otra aplicación y vuelva a abrir AnkiDroid.</string>
-    <string name="incompatible_database_version_title">Incompatible Database Version</string>
-    <string name="incompatible_database_version_summary">The database is a more advanced version than this version of AnkiDroid can work with. Upgrade AnkiDroid or downgrade the database to open it\n\nSupported version: %1$d\nDatabase version: %2$d\n\nThe following restore options will overwrite your current collection, possibly with a compatible database version:</string>
+    <string name="incompatible_database_version_title">Versión de base de datos incompatible</string>
+    <string name="incompatible_database_version_summary">La base de datos es una versión más avanzada con la que esta versión de AnkiDroid puede trabajar. Actualice AnkiDroid o degrade la base de datos para abrirla\n\nVersión soportada: %1$d\nVersión de la base de datos: %2$d\n\nLas siguientes opciones de restauración sobrescribirán su colección actual, posiblemente con una versión compatible de la base de datos:</string>
     <!-- Deck Picker Background-->
     <string name="background_image_applied">Imagen de fondo aplicada</string>
     <string name="background_image_removed">Imagen de fondo eliminada</string>
@@ -207,30 +209,39 @@
     <string name="boot_service_failed_to_schedule_notifications">Error al programar recordatorios</string>
     <string name="boot_service_too_many_notifications">Demasiados recordatorios programados. Algunos no aparecerán</string>
     <!-- Locale Selection Dialog -->
-    <string name="locale_selection_dialog_title">Keyboard Language Selection</string>
-    <string name="locale_selection_dialog_summary">Some multilingual keyboards, such as GBoard support changing language when editing text\n\nPlease request the “setImeHintLocales” feature from your keyboard manufacturer if your keyboard does not change language.</string>
+    <string name="locale_selection_dialog_title">Selección de idioma del teclado</string>
+    <string name="locale_selection_dialog_summary">Algunos teclados multilingües, tales como el soporte de GBoard para cambiar el idioma cuando se edite el texto\n\nSolicite la función \"setImeHintLocales\" de su fabricante de teclado si su teclado no cambia el idioma.</string>
     <!-- Help Dialog -->
-    <string name="help_title_using_ankidroid">Using AnkiDroid</string>
-    <string name="help_item_ankidroid_manual">AnkiDroid Manual</string>
-    <string name="help_item_anki_manual">Anki Manual</string>
-    <string name="help_item_ankidroid_faq">AnkiDroid FAQ</string>
-    <string name="help_title_get_help">Get Help</string>
-    <string name="help_item_mailing_list">Mailing List</string>
+    <string name="help_title_using_ankidroid">Usando AnkiDroid</string>
+    <string name="help_item_ankidroid_manual">Manual de AnkiDroid</string>
+    <string name="help_item_anki_manual">Manual de Anki</string>
+    <string name="help_item_ankidroid_faq">Preguntas frecuentes de AnkiDroid</string>
+    <string name="help_title_get_help">Obtener Ayuda</string>
+    <string name="help_item_mailing_list">Listas de Correo</string>
     <string name="help_item_reddit">Reddit</string>
-    <string name="help_item_report_bug">Report a Bug</string>
-    <string name="help_title_support_ankidroid">Support AnkiDroid</string>
-    <string name="help_item_support_opencollective_donate">Donate</string>
-    <string name="help_item_support_develop_ankidroid">Develop</string>
-    <string name="help_item_support_rate_ankidroid">Rate</string>
-    <string name="help_item_support_other_ankidroid">Other</string>
-    <string name="help_title_community">Community</string>
-    <string name="help_item_anki_forums">Anki Forums</string>
+    <string name="help_item_report_bug">Reportar un error</string>
+    <string name="help_title_support_ankidroid">Apoya AnkiDroid</string>
+    <string name="help_item_support_opencollective_donate">Donar</string>
+    <string name="help_item_support_develop_ankidroid">Desarrollar</string>
+    <string name="help_item_support_rate_ankidroid">Calificar</string>
+    <string name="help_item_support_other_ankidroid">Otros</string>
+    <string name="help_title_community">Comunidad</string>
+    <string name="help_item_anki_forums">Foro de Anki</string>
     <string name="help_item_discord">Discord</string>
     <string name="help_item_facebook">Facebook</string>
     <string name="help_item_twitter">Twitter</string>
+    <string name="help_title_send_exception">Enviar informe de resolución de problemas</string>
+    <string name="help_dialog_exception_report_debounce">El informe ya ha sido enviado</string>
     <!--Sync-->
     <plurals name="sync_automatic_sync_needs_more_time">
-        <item quantity="one">An automatic sync may be triggered in %d second</item>
-        <item quantity="other">An automatic sync may be triggered in %d seconds</item>
+        <item quantity="one">Una sincronización automática puede activarse en %d segundo</item>
+        <item quantity="other">Una sincronización automática puede activarse en %d segundos</item>
     </plurals>
+    <string name="deck_picker_new">Number of new cards to see today in this deck.</string>
+    <string name="deck_picker_rev">Number of cards due today in this deck.</string>
+    <string name="deck_picker_lrn">Number of cards in learning in this deck.</string>
+    <!-- This description is valid fos
+    sched V2. For V1, it was counting the number of repetitions of cards in learning. This approximation is acceptable
+    for the sake of simplicity and because V1 will leave.-->
+    <string name="deck_picker_counts">Open the deck overview page containing the number of cards to see today.</string>
 </resources>

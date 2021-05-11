@@ -21,7 +21,7 @@
         NOT edit them, unless you change their corresponding values
     -->
     <!-- App name -->
-    <string name="app_name">AnkiDroid</string>
+    <string name="app_name" comment="The name of the app">AnkiDroid</string>
     <!-- Text to be shown in preference summary -->
     <string name="preference_summary_literal">XXX</string>
     <!-- Used in deck preferences -->
@@ -190,6 +190,7 @@
     <string name="link_faq_tts">https://github.com/ankidroid/Anki-Android/wiki/FAQ#tts--text-to-speech-is-not-speaking</string>
     <string name="link_faq_missing_media" tools:ignore="Typos">https://github.com/ankidroid/Anki-Android/wiki/FAQ#why-doesnt-my-sound-or-image-work-on-ankidroid</string>
     <string name="link_faq_invalid_protocol_relative">https://github.com/ankidroid/Anki-Android/wiki/FAQ#why-do-my-images-need-a-protocol</string>
+    <string name="link_faq_external_http_content">https://github.com/ankidroid/Anki-Android/wiki/FAQ#external-content</string>
     <string name="shared_decks_url">https://ankiweb.net/shared/decks/</string>
     <string name="repair_deck">https://docs.ankiweb.net/#/files?id=corrupt-collections</string>
     <string name="resetpw_url">http://ankiweb.net/account/resetpw</string>

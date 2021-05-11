@@ -122,6 +122,7 @@
     <string name="reordering_cards">Reordenando cards...</string>
     <string name="field_remapping">%1$s (de \'%2$s\')</string>
     <string name="confirm_map_cards_to_nothing">Quaisquer cards não-mapeados serão removidos. Se não houverem cards para uma nota, ela será perdida. Tem certeza de que deseja continuar?</string>
+    <string name="timebox_reached_title">Timebox reached</string>
     <plurals name="timebox_reached">
         <item quantity="one">%1$d card estudado em %2$s</item>
         <item quantity="other">%1$d cards estudados em %2$s</item>
@@ -278,6 +279,7 @@
     <string name="white_board_image_save_failed">Falha ao salvar imagem do quadro. %s</string>
     <string name="white_board_image_saved">Imagem do quadro branco salva em %s</string>
     <string name="title_whiteboard_pen_color">Cor da caneta.</string>
+    <string name="title_whiteboard_editor">Whiteboard editor</string>
     <!-- CSV/Note Import -->
     <string name="note_importer_empty_cards_found"><![CDATA[Cards vazios encontrados. Por favor, execute Ferramentas>Cards Vazios.]]></string>
     <string name="note_importer_error_empty_first_field">Primeiro campo vazio: %s</string>
@@ -313,6 +315,7 @@
     <!-- Card Viewer -->
     <string name="card_viewer_could_not_find_image">Erro de Conteúdo do Card: Falha ao carregar ‘%s\'</string>
     <string name="card_viewer_media_relative_protocol">Erro de Conteúdo do Card: Atualização de Mídia necessária</string>
+    <string name="cannot_load_http_resource">Loading http resources is no longer supported</string>
     <!-- Deck Picker -->
     <string name="deck_picker_failed_deck_load">Falha ao carregar o baralho ‘%s\'</string>
     <string name="search_decks">Pesquisar baralhos</string>
@@ -340,4 +343,11 @@
     <string name="create_shortcut_failed" comment="home screen == launcher">Sua tela de início não permite que AnkiDroid adicione atalhos</string>
     <string name="create_shortcut_error">Erro ao adicionar atalho: %s</string>
     <string name="note_editor_capitalize" comment="This is for a switch with a checkbox - on: enabled">Iniciar frases em letra maíuscula</string>
+    <!-- Symbols used as Button text in IncrementNumberRangePreference -->
+    <string name="plus_sign" comment="Label for increment button in IncrementerNumberRangePreference">+</string>
+    <string name="minus_sign" comment="Label for decrement button in IncrementerNumberRangePreference">-</string>
+    <!-- Used for credential empty warning message -->
+    <string name="email_id_empty">Email address is required</string>
+    <string name="password_empty">Password is required</string>
+    <string name="back_pressed_once">Press back again to exit</string>
 </resources>

@@ -43,21 +43,21 @@ import java.util.Collections;
  */
 public class ButtonItemAdapter extends RecyclerView.Adapter<ButtonItemAdapter.ButtonVH> {
 
-    private final ArrayList<String> items;
-    private ItemCallback itemCallback;
-    private ButtonCallback buttonCallback;
+    private final ArrayList<String> mItems;
+    private ItemCallback mItemCallback;
+    private ButtonCallback mButtonCallback;
 
     public ButtonItemAdapter(ArrayList<String> items) {
-        this.items = items;
+        this.mItems = items;
     }
 
     public void remove(String searchName) {
-        items.remove(searchName);
+        mItems.remove(searchName);
     }
 
     public void setCallbacks(ItemCallback itemCallback, ButtonCallback buttonCallback) {
-        this.itemCallback = itemCallback;
-        this.buttonCallback = buttonCallback;
+        this.mItemCallback = itemCallback;
+        this.mButtonCallback = buttonCallback;
     }
 
     @Override
@@ -70,13 +70,13 @@ public class ButtonItemAdapter extends RecyclerView.Adapter<ButtonItemAdapter.Bu
 
     @Override
     public void onBindViewHolder(@NonNull ButtonVH holder, int position) {
-        holder.title.setText(items.get(position));
-        holder.button.setTag(items.get(position));
+        holder.mTitle.setText(mItems.get(position));
+        holder.mButton.setTag(mItems.get(position));
     }
 
     @Override
     public int getItemCount() {
-        return items.size();
+        return mItems.size();
     }
 
     public interface ItemCallback {
@@ -89,30 +89,30 @@ public class ButtonItemAdapter extends RecyclerView.Adapter<ButtonItemAdapter.Bu
 
     class ButtonVH extends RecyclerView.ViewHolder implements View.OnClickListener {
 
-        private final TextView title;
-        private final ImageButton button;
-        private final ButtonItemAdapter adapter;
+        private final TextView mTitle;
+        private final ImageButton mButton;
+        private final ButtonItemAdapter mAdapter;
 
-        ButtonVH(View itemView, ButtonItemAdapter adapter) {
+        private ButtonVH(View itemView, ButtonItemAdapter adapter) {
             super(itemView);
-            title = itemView.findViewById(R.id.card_browser_my_search_name_textview);
-            button = itemView.findViewById(R.id.card_browser_my_search_remove_button);
+            mTitle = itemView.findViewById(R.id.card_browser_my_search_name_textview);
+            mButton = itemView.findViewById(R.id.card_browser_my_search_remove_button);
 
-            this.adapter = adapter;
+            this.mAdapter = adapter;
             itemView.setOnClickListener(this);
-            button.setOnClickListener(this);
+            mButton.setOnClickListener(this);
         }
 
         @Override
         public void onClick(View view) {
-            if (adapter.itemCallback == null) {
+            if (mAdapter.mItemCallback == null) {
                 return;
             }
             if (view instanceof ImageButton) {
-                adapter.buttonCallback.onButtonClicked(items.get(getAdapterPosition()));
+                mAdapter.mButtonCallback.onButtonClicked(mItems.get(getBindingAdapterPosition()));
             }
             else {
-                adapter.itemCallback.onItemClicked(items.get(getAdapterPosition()));
+                mAdapter.mItemCallback.onItemClicked(mItems.get(getBindingAdapterPosition()));
             }
         }
     }
@@ -123,7 +123,7 @@ public class ButtonItemAdapter extends RecyclerView.Adapter<ButtonItemAdapter.Bu
      * the saved searches in any way, prior to displaying them again
      */
     public void notifyAdapterDataSetChanged() {
-        Collections.sort(items, String::compareToIgnoreCase);
+        Collections.sort(mItems, String::compareToIgnoreCase);
         super.notifyDataSetChanged();
     }
 }

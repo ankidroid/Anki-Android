@@ -17,7 +17,6 @@ package com.ichi2.anki.dialogs;
 
 import android.app.Dialog;
 import android.content.res.Resources;
-import android.os.Build;
 import android.os.Bundle;
 
 import com.afollestad.materialdialogs.MaterialDialog;
@@ -27,7 +26,9 @@ import com.ichi2.anki.DeckPicker;
 import com.ichi2.anki.R;
 import com.ichi2.anki.StudyOptionsFragment;
 import com.ichi2.anki.analytics.AnalyticsDialogFragment;
+import com.ichi2.anki.dialogs.customstudy.CustomStudyDialog;
 import com.ichi2.libanki.Collection;
+import com.ichi2.utils.FragmentFactoryUtils;
 
 import java.lang.annotation.Retention;
 import java.util.ArrayList;
@@ -35,6 +36,7 @@ import java.util.HashMap;
 
 import androidx.annotation.IntDef;
 import androidx.annotation.NonNull;
+import androidx.fragment.app.FragmentFactory;
 import timber.log.Timber;
 
 import static java.lang.annotation.RetentionPolicy.SOURCE;
@@ -160,9 +162,11 @@ public class DeckPickerContextMenu extends AnalyticsDialogFragment {
             case CONTEXT_MENU_CUSTOM_STUDY: {
                 Timber.i("Custom study option selected");
                 long did = getArguments().getLong("did");
-                CustomStudyDialog d = CustomStudyDialog.newInstance(
-                        CustomStudyDialog.CONTEXT_MENU_STANDARD, did);
-                ((AnkiActivity) getActivity()).showDialogFragment(d);
+
+                final AnkiActivity ankiActivity = ((AnkiActivity) requireActivity());
+                CustomStudyDialog d = FragmentFactoryUtils.instantiate(ankiActivity, CustomStudyDialog.class);
+                d.withArguments(CustomStudyDialog.CONTEXT_MENU_STANDARD, did);
+                ankiActivity.showDialogFragment(d);
                 break;
             }
             case CONTEXT_MENU_CREATE_SHORTCUT:

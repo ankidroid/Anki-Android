@@ -49,7 +49,6 @@ import com.ichi2.libanki.utils.Time;
 import com.ichi2.upgrade.Upgrade;
 import com.ichi2.utils.DatabaseChangeDecorator;
 import com.ichi2.utils.FunctionalInterfaces;
-import com.ichi2.utils.LanguageUtil;
 import com.ichi2.utils.VersionUtils;
 
 import com.ichi2.utils.JSONArray;
@@ -86,8 +85,6 @@ import androidx.sqlite.db.SupportSQLiteStatement;
 import timber.log.Timber;
 
 import static com.ichi2.async.CancelListener.isCancelled;
-import static com.ichi2.libanki.Collection.DismissType.REVIEW;
-import static com.ichi2.libanki.Consts.DECK_DYN;
 
 // Anki maintains a cache of used tags so it can quickly present a list of tags
 // for autocomplete and in the browser. For efficiency, deletions are not
@@ -98,7 +95,7 @@ import static com.ichi2.libanki.Consts.DECK_DYN;
 @SuppressWarnings({"PMD.ExcessiveClassLength", "PMD.AvoidThrowingRawExceptionTypes","PMD.AvoidReassigningParameters",
         "PMD.NPathComplexity","PMD.MethodNamingConventions","PMD.AvoidBranchingStatementAsLastInLoop",
         "PMD.SwitchStmtsShouldHaveDefault","PMD.CollapsibleIfStatements","PMD.EmptyIfStmt","PMD.ExcessiveMethodLength"})
-public class Collection {
+public class Collection implements CollectionGetter {
 
     private final Context mContext;
 
@@ -126,7 +123,7 @@ public class Collection {
     // END: SQL table columns
 
     // API 21: Use a ConcurrentLinkedDeque
-    private LinkedBlockingDeque<Undoable> mUndo;
+    private LinkedBlockingDeque<UndoAction> mUndo;
 
     private final String mPath;
     private final DroidBackend mDroidBackend;
@@ -137,14 +134,14 @@ public class Collection {
     private static final Pattern fClozePatternA = Pattern.compile("\\{\\{(.*?)cloze:");
     private static final Pattern fClozeTagStart = Pattern.compile("<%cloze:");
 
-    private static final int fDefaultSchedulerVersion = 1;
+    private static final int fDefaultSchedulerVersion = 2;
     private static final List<Integer> fSupportedSchedulerVersions = Arrays.asList(1, 2);
 
     // Not in libAnki.
     private final Time mTime;
 
     // other options
-    public static final String defaultConf = "{"
+    public static final String DEFAULT_CONF = "{"
             +
             // review options
             "'activeDecks': [1], " + "'curDeck': 1, " + "'newSpread': " + Consts.NEW_CARDS_DISTRIBUTE + ", "
@@ -153,38 +150,6 @@ public class Collection {
             // other config
             "'curModel': null, " + "'nextPos': 1, " + "'sortType': \"noteFld\", "
             + "'sortBackwards': False, 'addToCur': True }"; // add new to currently selected deck?
-
-    public enum DismissType {
-        REVIEW(R.string.undo_action_review),
-        BURY_CARD(R.string.menu_bury_card),
-        BURY_NOTE(R.string.menu_bury_note),
-        SUSPEND_CARD(R.string.menu_suspend_card),
-        SUSPEND_CARD_MULTI(R.string.menu_suspend_card),
-        UNSUSPEND_CARD_MULTI(R.string.card_browser_unsuspend_card),
-        SUSPEND_NOTE(R.string.menu_suspend_note),
-        DELETE_NOTE(R.string.menu_delete_note),
-        DELETE_NOTE_MULTI(R.string.card_browser_delete_card),
-        CHANGE_DECK_MULTI(R.string.undo_action_change_deck_multi),
-        MARK_NOTE_MULTI(R.string.card_browser_mark_card),
-        UNMARK_NOTE_MULTI(R.string.card_browser_unmark_card),
-        FLAG(R.string.menu_flag),
-        REPOSITION_CARDS(R.string.card_editor_reposition_card),
-        RESCHEDULE_CARDS(R.string.card_editor_reschedule_card),
-        RESET_CARDS(R.string.card_editor_reset_card);
-
-        private final int mUndoNameId;
-
-        DismissType(int undoNameId) {
-            this.mUndoNameId = undoNameId;
-        }
-
-        private Locale getLocale(Resources resources) {
-            return LanguageUtil.getLocaleCompat(resources);
-        }
-        public String getString(Resources res) {
-            return res.getString(mUndoNameId).toLowerCase(getLocale(res));
-        }
-    }
 
     private static final int UNDO_SIZE_MAX = 20;
 
@@ -321,36 +286,13 @@ public class Collection {
         if (sChunk != 0) {
             return sChunk;
         }
-        // the window size is saved in
-        // io.requery.android.database.CursorWindow.sCursorWindowSize.
-        // Values are copied here. Ideally, a getter would allow to access it.
+        // This is valid for the framework sqlite as far back as Android 5 / SDK21
+        // https://github.com/aosp-mirror/platform_frameworks_base/blob/ba35a77c7c4494c9eb74e87d8eaa9a7205c426d2/core/res/res/values/config.xml#L1141
         final int WINDOW_SIZE_KB = 2048;
         int sCursorWindowSize = WINDOW_SIZE_KB * 1024;
 
-        // We have the ability to look into our sqlite implementation on Android and use it's value
-        // as a ceiling. Try it, with a reasonable fallback in case of failure
-        SupportSQLiteDatabase db = mDb.getDatabase();
-        if (! (db instanceof DatabaseChangeDecorator)) {
-            return sChunk;
-        }
-        String db_name = ((DatabaseChangeDecorator) db).getWrapped().getClass().getName();
-        if ("io.requery.android.database.sqlite.SQLiteDatabase".equals(db_name)) {
-            try {
-                Field cursorWindowSize = io.requery.android.database.CursorWindow.class.getDeclaredField("sDefaultCursorWindowSize");
-                cursorWindowSize.setAccessible(true);
-                int possibleCursorWindowSize = cursorWindowSize.getInt(null);
-                Timber.d("Reflectively discovered database default cursor window size %d", possibleCursorWindowSize);
-                if (possibleCursorWindowSize > 0) {
-                    sCursorWindowSize = possibleCursorWindowSize;
-                } else {
-                    Timber.w("Obtained unusable cursor window size: %d. Using default %d", possibleCursorWindowSize, sCursorWindowSize);
-                }
-            } catch (Exception e) {
-                Timber.w(e, "Unable to get window size from requery cursor.");
-            }
-        }
-
         // reduce the actual size a little bit.
+        // In case db is not an instance of DatabaseChangeDecorator, sChunk evaluated on default window size
         sChunk = (int) (sCursorWindowSize * 15. / 16.);
         return sChunk;
     }
@@ -462,6 +404,7 @@ public class Collection {
                     DB.safeEndInTransaction(db);
                 }
             } catch (RuntimeException e) {
+                Timber.w(e);
                 AnkiDroidApp.sendExceptionReport(e, "closeDB");
             }
             if (!mServer) {
@@ -581,6 +524,7 @@ public class Collection {
         try {
             id = mConf.getInt(type);
         } catch (JSONException e) {
+            Timber.w(e);
             id = 1;
         }
         mConf.put(type, id + 1);
@@ -633,7 +577,7 @@ public class Collection {
      * Return a new note with the default model from the deck
      * @return The new note
      */
-    public Note newNote() {
+    public @NonNull Note newNote() {
         return newNote(true);
     }
 
@@ -643,7 +587,7 @@ public class Collection {
      *                the configuration (curModel)
      * @return The new note
      */
-    public Note newNote(boolean forDeck) {
+    public @NonNull Note newNote(boolean forDeck) {
         return newNote(getModels().current(forDeck));
     }
 
@@ -652,17 +596,28 @@ public class Collection {
      * @param m The model to use for the new note
      * @return The new note
      */
-    public Note newNote(Model m) {
+    public @NonNull Note newNote(Model m) {
         return new Note(this, m);
     }
 
 
     /**
-     * Add a note to the collection. Return number of new cards.
+     * @param note A note to add if it generates card
+     * @return Number of card added.
      */
-    public int addNote(Note note) {
+    public int addNote(@NonNull Note note) {
+        return addNote(note, Models.AllowEmpty.ONLY_CLOZE);
+    }
+
+    /**
+     * Add a note and cards to the collection. If allowEmpty, at least one card is generated.
+     * @param note  The note to add to the collection
+     * @param allowEmpty Whether we accept to add it even if it should generate no card. Useful to import note even if buggy
+     * @return Number of card added
+     */
+    public int addNote(@NonNull Note note, Models.AllowEmpty allowEmpty) {
         // check we have card models available, then save
-        ArrayList<JSONObject> cms = findTemplates(note);
+        ArrayList<JSONObject> cms = findTemplates(note, allowEmpty);
         // Todo: upstream, we accept to add a not even if it generates no card. Should be ported to ankidroid
         if (cms.size() == 0) {
             return 0;
@@ -706,13 +661,18 @@ public class Collection {
       Card creation ************************************************************ ***********************************
      */
 
+    public ArrayList<JSONObject> findTemplates(Note note) {
+        return findTemplates(note, Models.AllowEmpty.ONLY_CLOZE);
+    }
+
     /**
      * @param note A note
+     * @param allowEmpty whether we allow to have a card which is actually empty if it is necessary to return a non-empty list
      * @return (active), non-empty templates.
      */
-    public ArrayList<JSONObject> findTemplates(Note note) {
+    public ArrayList<JSONObject> findTemplates(Note note, Models.AllowEmpty allowEmpty) {
         Model model = note.model();
-        ArrayList<Integer> avail = Models.availOrds(model, note.getFields());
+        ArrayList<Integer> avail = Models.availOrds(model, note.getFields(), allowEmpty);
         return _tmplsFromOrds(model, avail);
     }
 
@@ -850,7 +810,7 @@ public class Collection {
                 }
                 @NonNull Long nid = cur.getLong(0);
                 String flds = cur.getString(1);
-                ArrayList<Integer> avail = Models.availOrds(model, Utils.splitFields(flds), nodes);
+                ArrayList<Integer> avail = Models.availOrds(model, Utils.splitFields(flds), nodes, Models.AllowEmpty.TRUE);
                 if (task != null) {
                     task.doProgress(avail.size());
                 }
@@ -879,6 +839,7 @@ public class Collection {
                                 did = ndid;
                             }
                         } catch (JSONException e) {
+                            Timber.w(e);
                             // do nothing
                         }
                         if (getDecks().isDyn(did)) {
@@ -942,7 +903,7 @@ public class Collection {
         // Use template did (deck override) if valid, otherwise did in argument, otherwise model did
         if (did == 0) {
             did = template.optLong("did", 0);
-            if (did > 0 && mDecks.getDecks().containsKey(did)) {
+            if (did > 0 && mDecks.get(did, false) != null) {
             } else if (parameterDid != 0) {
                 did = parameterDid;
             } else {
@@ -1161,6 +1122,7 @@ public class Collection {
             try {
                 html = ParsedNode.parse_inner(format).render(fields, "q".equals(type), getContext());
             } catch (TemplateError er) {
+                Timber.w(er);
                 html = er.message(getContext());
             }
             html = ChessFilter.fenToChessboard(html, getContext());
@@ -1329,16 +1291,16 @@ public class Collection {
 
     /** Undo menu item name, or "" if undo unavailable. */
     @VisibleForTesting
-    public @Nullable DismissType undoType() {
+    public @Nullable UndoAction undoType() {
         if (mUndo.size() > 0) {
-            return mUndo.getLast().getDismissType();
+            return mUndo.getLast();
         }
         return null;
     }
     public String undoName(Resources res) {
-        DismissType type = undoType();
+        UndoAction type = undoType();
         if (type != null) {
-            return type.getString(res);
+            return type.name(res);
         }
         return "";
     }
@@ -1349,29 +1311,41 @@ public class Collection {
     }
 
     public @Nullable Card undo() {
-        Undoable lastUndo = mUndo.removeLast();
-        Timber.d("undo() of type %s", lastUndo.getDismissType());
+        UndoAction lastUndo = mUndo.removeLast();
+        Timber.d("undo() of type %s", lastUndo.getClass());
         return lastUndo.undo(this);
     }
 
-    public void markUndo(@NonNull Undoable undo) {
-        Timber.d("markUndo() of type %s", undo.getDismissType());
+    public void markUndo(@NonNull UndoAction undo) {
+        Timber.d("markUndo() of type %s", undo.getClass());
         mUndo.add(undo);
         while (mUndo.size() > UNDO_SIZE_MAX) {
             mUndo.removeFirst();
         }
     }
 
+    @VisibleForTesting
+    public static class UndoReview extends UndoAction {
+        private final boolean mWasLeech;
+        @NonNull private final Card mClonedCard;
+        public UndoReview(boolean wasLeech, @NonNull Card clonedCard) {
+            super(R.string.undo_action_review);
+            mClonedCard = clonedCard;
+            mWasLeech = wasLeech;
+        }
+
+        @NonNull
+        @Override
+        public Card undo(@NonNull Collection col) {
+            col.getSched().undoReview(mClonedCard, mWasLeech);
+            return mClonedCard;
+        }
+    }
+
     public void markReview(Card card) {
         boolean wasLeech = card.note().hasTag("leech");
         Card clonedCard = card.clone();
-        Undoable undoableReview = new Undoable(REVIEW) {
-            public @Nullable Card undo(@NonNull Collection col) {
-                col.getSched().undoReview(clonedCard, wasLeech);
-                return clonedCard;
-            }
-        };
-        markUndo(undoableReview);
+        markUndo(new UndoReview(wasLeech, clonedCard));
     }
 
     /**
@@ -1451,7 +1425,7 @@ public class Collection {
             }
             mDb.getDatabase().setTransactionSuccessful();
         } catch (SQLiteDatabaseLockedException ex) {
-            Timber.e("doInBackgroundCheckDatabase - Database locked");
+            Timber.w(ex,"doInBackgroundCheckDatabase - Database locked");
             return result.markAsLocked();
         } catch (RuntimeException e) {
             Timber.e(e, "doInBackgroundCheckDatabase - RuntimeException on marking card");
@@ -1719,12 +1693,12 @@ public class Collection {
         int fixCount = 0;
         for (long id : mDecks.allDynamicDeckIds()) {
             try {
-                if (mDecks.hasDeckOptions(id)) {
-                    mDecks.removeDeckOptions(id);
+                if (hasDeckOptions(id)) {
+                    removeDeckOptions(id);
                     fixCount++;
                 }
             } catch (NoSuchDeckException e) {
-                Timber.e("Unable to find dynamic deck %d", id);
+                Timber.w(e, "Unable to find dynamic deck %d", id);
             }
         }
         if (fixCount > 0) {
@@ -1732,6 +1706,24 @@ public class Collection {
             problems.add(String.format(Locale.US, "%d dynamic deck(s) had deck options.", fixCount));
         }
         return problems;
+    }
+
+
+    private Deck getDeckOrFail(long deckId) throws NoSuchDeckException {
+        Deck deck = getDecks().get(deckId, false);
+        if (deck == null) {
+            throw new NoSuchDeckException(deckId);
+        }
+        return deck;
+    }
+
+    private boolean hasDeckOptions(long deckId) throws NoSuchDeckException {
+        return getDeckOrFail(deckId).has("conf");
+    }
+
+
+    private void removeDeckOptions(long deckId) throws NoSuchDeckException {
+        getDeckOrFail(deckId).remove("conf");
     }
 
 
@@ -2265,5 +2257,14 @@ public class Collection {
     @NonNull
     public Time getTime() {
         return mTime;
+    }
+
+
+    /**
+     * Allows a collection to be used as a CollectionGetter
+     * @return Itself.
+     */
+    public Collection getCol() {
+        return this;
     }
 }

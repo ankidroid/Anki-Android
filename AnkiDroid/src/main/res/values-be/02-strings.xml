@@ -47,14 +47,14 @@
     <string name="CardEditorCardDeck">Калода картак:</string>
     <string name="CardEditorNoteDeck">Калода:</string>
     <string name="CardEditorModel">Тып:</string>
-    <string name="CardEditorTags">Пазнакі: %1$s</string>
+    <string name="CardEditorTags">Меткі: %1$s</string>
     <string name="CardEditorCards">Карткі: %1$s</string>
-    <string name="tag_name">Назва пазнакі</string>
-    <string name="add_new_filter_tags">Дадаць/фільтраваць пазнакі</string>
-    <string name="add_tag">Дадаць пазнаку</string>
-    <string name="check_all_tags">Выбраць/зняць усе пазнакі</string>
-    <string name="filter_tags">Фільтраваць пазнакі</string>
-    <string name="no_tags">Вы пакуль не дадалі ніводнай пазнакі</string>
+    <string name="tag_name">Назва меткі</string>
+    <string name="add_new_filter_tags">Дадаць/фільтраваць меткі</string>
+    <string name="add_tag">Дадаць метку</string>
+    <string name="check_all_tags">Выбраць/зняць пазнаку з усіх метак</string>
+    <string name="filter_tags">Фільтраваць меткі</string>
+    <string name="no_tags">Вы пакуль не дадалі ніводнай меткі</string>
     <string name="updated_version">Абноўлена да версіі %s</string>
     <!-- Reviewer.java -->
     <string name="save_whiteboard">Захаваць дошку</string>
@@ -64,17 +64,17 @@
     <string name="hide_whiteboard">Схаваць дошку</string>
     <string name="clear_whiteboard">Ачысціць дошку</string>
     <string name="replay_audio">Паўтарыць аўдыя</string>
-    <string name="leech_suspend_notification">Картка пазначана як надакучлівая і яна была прыпынена</string>
-    <string name="leech_notification">Картка пазначана як надакучлівая</string>
-    <string name="corrupt_font">Пашкоджаны файл шрыфту %s</string>
+    <string name="leech_suspend_notification">Картка пазначана як надакучлівая і яна была прыпыненая</string>
+    <string name="leech_notification">Картка пазначаная як надакучлівая</string>
+    <string name="corrupt_font">Файл шрыфту %s пашкоджаны</string>
     <string name="webview_crash_unknown">Невядомая памылка</string>
-    <string name="webview_crash_unknwon_detailed">This was caused by an internal error in the WebView</string>
-    <string name="webview_crash_oom">Нестае памяці</string>
-    <string name="webview_crash_oom_details">The WebView was terminated by the system. This typically happens when the application runs out of memory, often due to large fonts or media.</string>
-    <string name="webview_crash_nonfatal">WebView renderer crashed. Cause: %s</string>
-    <string name="webview_crash_fatal">Fatal Error: WebView renderer crashed. Cause: %s</string>
-    <string name="webview_crash_loop_dialog_title">Памылка сістэмнага WebView</string>
-    <string name="webview_crash_loop_dialog_content">System WebView failed to render card \'%1$s\'.\n %2$s</string>
+    <string name="webview_crash_unknwon_detailed">Выклікана ўнутранай памылкай у WebView</string>
+    <string name="webview_crash_oom">Недастаткова памяці</string>
+    <string name="webview_crash_oom_details">WebView завершаны сістэмай. Звычайны гэта здараецца, калі праграме пачынае не хапаць сістэмнай памяці з-за вялікіх шрыфтоў або медыяфайлаў. </string>
+    <string name="webview_crash_nonfatal">Збой апрацоўшчыка WebView. Прычына: %s</string>
+    <string name="webview_crash_fatal">Крытычная памылка: збой апрацоўшчыка WebView. Прычына: %s</string>
+    <string name="webview_crash_loop_dialog_title">Памылка апрацоўшчыка сістэмнага WebView</string>
+    <string name="webview_crash_loop_dialog_content">Сістэмнаму WebView не атрымалася апрацаваць картку \'%1$s\'.\n %2$s</string>
     <!-- Browser -->
     <string-array name="browser_column1_headings">
         <item>Пытанне</item>
@@ -84,49 +84,50 @@
         <item>Адказ</item>
         <item>Картка</item>
         <item>Калода</item>
-        <item>Нататка</item>
+        <item>Запіс</item>
         <item>Пытанне</item>
-        <item>Пазнакі</item>
-        <item>Правалы</item>
+        <item>Меткі</item>
+        <item>Памылковых</item>
         <item>Паўтарэнняў</item>
         <item>Інтэрвал</item>
         <item>Лёгкасць</item>
         <item>Засталося</item>
-        <item>Card Modified</item>
+        <item>Картка змененая</item>
         <item>Створана</item>
-        <item>Note Modified</item>
+        <item>Запіс зменены</item>
     </string-array>
     <!-- Custom study options -->
-    <string name="custom_study_increase_new_limit">Modify today’s new card limit</string>
-    <string name="custom_study_increase_review_limit">Modify today’s review card limit</string>
+    <string name="custom_study_increase_new_limit">Змяніць абмежаванні новых картак на сёння</string>
+    <string name="custom_study_increase_review_limit">Змяніць абмежаванні паўтарэння картак на сёння</string>
     <string name="custom_study_review_forgotten">Паўтарыць забытыя карткі</string>
     <string name="custom_study_review_ahead">Паўтарыць наперад</string>
     <string name="custom_study_random_selection">Вывучыць выпадкова адабраныя карткі</string>
     <string name="custom_study_preview_new">Папярэдні прагляд новых картак</string>
-    <string name="custom_study_limit_tags">Абмежаваць вызначанымі пазнакамі</string>
+    <string name="custom_study_limit_tags">Абмежаваць вызначанымі меткамі</string>
     <!-- Card editor -->
-    <string name="cardeditor_title_edit_card">Змяніць нататку</string>
-    <string name="discard_unsaved_changes">Закрыць і згубіць бягучыя звесткі?</string>
-    <string name="note_editor_no_cards_created">Карткі не створаны. Калі ласка, запоўніце неабходныя палі.</string>
+    <string name="cardeditor_title_edit_card">Змяніць запіс</string>
+    <string name="discard_unsaved_changes">Закрыць і згубіць бягучыя змяненні?</string>
+    <string name="note_editor_no_cards_created">Карткі не створаныя. Калі ласка, запоўніце больш палёў.</string>
     <string name="note_editor_no_first_field">Першае поле пустое</string>
-    <string name="note_editor_no_cloze_delations">This note type must contain cloze deletions</string>
-    <string name="note_editor_set_field_language">Set field language</string>
-    <string name="note_editor_no_cards_created_all_fields">The current note type did not produce any cards.\nPlease choose another note type, or click ‘Cards’ and add a field substitution</string>
-    <string name="note_editor_insert_cloze_no_cloze_note_type">Cloze deletions will only work on a Cloze note type</string>
-    <string name="saving_facts">Захаванне нататкі</string>
-    <string name="saving_model">Захоўваецца тып нататкі</string>
+    <string name="note_editor_no_cloze_delations">Гэты тып запісу павінен змяшчаць пропускі ў тэксце</string>
+    <string name="note_editor_set_field_language">Прызначыць мову поля</string>
+    <string name="note_editor_no_cards_created_all_fields">Бягучы тып запісу не мае ніводнай карткі.\nКалі ласка выберыце іншы тып запісу або націсніце \"Карткі\" і дадайце поле падстаноўкі.</string>
+    <string name="note_editor_insert_cloze_no_cloze_note_type">Заданні з пропускамі будуць працаваць толькі ў тыпе запісу з пропускамі</string>
+    <string name="saving_facts">Захаванне запісу</string>
+    <string name="saving_model">Захоўваецца тып запісу</string>
     <string name="save">Захаваць</string>
     <string name="close">Закрыць</string>
     <string name="select">Выбраць</string>
     <string name="saving_changes">Захаванне змен&#8230;</string>
     <string name="reordering_cards">Перамешванне картак&#8230;</string>
     <string name="field_remapping">%1$s (з “%2$s”)</string>
-    <string name="confirm_map_cards_to_nothing">Не супастаўленыя карткі будуць выдаленыя. Калі нататка не мае ніводнай карткі, то яна будзе згубленая. Працягнуць?</string>
+    <string name="confirm_map_cards_to_nothing">Не супастаўленыя карткі будуць выдаленыя. Калі запіс не мае ніводнай карткі, то ён будзе згублены. Працягнуць?</string>
+    <string name="timebox_reached_title">Дасягнутыя абмежаванні па часе</string>
     <plurals name="timebox_reached">
         <item quantity="one">%1$d картка вывучана за %2$s</item>
-        <item quantity="few">%1$d карткі вывучана за %2$s</item>
-        <item quantity="many">%1$d картак вывучана за %2$s</item>
-        <item quantity="other">%1$d карткі вывучана за %2$s</item>
+        <item quantity="few">%1$d карткі вывучаныя за %2$s</item>
+        <item quantity="many">%1$d картак вывучаныя за %2$s</item>
+        <item quantity="other">%1$d карткі вывучаныя за %2$s</item>
     </plurals>
     <!-- minutes used in \'[studied in] x minutes\' context, causing inflexion in some languages -->
     <plurals name="in_minutes">
@@ -136,24 +137,24 @@
         <item quantity="other">%1$d хвіліны</item>
     </plurals>
     <string name="fact_adder_intent_title" comment="Label of the \'Add Note\' window. This title can\'t be seen in AnkiDroid directly.">Картка AnkiDroid</string>
-    <string name="note_editor_copy_note">Скапіяваць нататку</string>
+    <string name="note_editor_copy_note">Скапіяваць запіс</string>
     <string name="card_editor_reposition_card">Перамясціць</string>
     <string name="card_editor_reset_card">Скінуць дасягненні</string>
-    <string name="card_editor_reschedule_card" comment="Action to reschedule a card">Змяніць расклад</string>
+    <string name="card_editor_reschedule_card" comment="Action to reschedule a card">Перапланаваць</string>
     <string name="card_editor_preview_card" comment="Button offering to preview some card(s)">Папярэдні прагляд</string>
     <string name="error_insufficient_memory">Дзеянне немагчыма з-за недахопу памяці на прыладзе</string>
     <string name="rename" comment="Confirm that the renaming action should be processed.">Перайменаваць</string>
     <string name="default_conf_delete_error">Немагчыма выдаліць групавыя параметры па змаўчанні</string>
     <plurals name="factadder_cards_added">
-        <item quantity="one">%d картка дададзена</item>
-        <item quantity="few">%d карткі дададзена</item>
-        <item quantity="many">%d картак дададзена</item>
-        <item quantity="other">%d карткі дададзена</item>
+        <item quantity="one">%d картка дададзеная</item>
+        <item quantity="few">%d карткі дададзеныя</item>
+        <item quantity="many">%d картак дададзеныя</item>
+        <item quantity="other">%d карткі дададзеныя</item>
     </plurals>
     <string name="check_db">Праверыць базу даных</string>
     <string name="check_media">Праверыць медыяфайлы</string>
     <string name="empty_cards">Пустыя карткі</string>
-    <string name="check_db_message">Ідзе праверка базы даных&#8230;</string>
+    <string name="check_db_message">Праверка базы даных&#8230;</string>
     <string name="empty_card_warning">Гэта картка пустая. Скарыстайцеся параметрам \"Пустыя карткі\" ў меню на экране спіса калод.</string>
     <string name="unknown_type_field_warning">Тып адказу: невядомае поле %s</string>
     <string name="delete_deck">Выдаленне калоды&#8230;</string>
@@ -167,18 +168,18 @@
     <string name="import_log_no_apkg">Пашкоджаны файл праграмы Anki</string>
     <string name="import_log_failed_unzip">Не атрымалася распакаваць apkg: %s</string>
     <string name="import_log_failed_copy_to">Не атрымалася скапіяваць apkg у %s</string>
-    <string name="import_log_failed_validate">не атрымалася праверыць apkg</string>
-    <string name="import_log_insufficient_space">There is not enough space to unzip the package. Needed %1$d, available %2$d</string>
-    <string name="import_log_file_cache_cleared">Error importing file, likely a cache clear during processing.\nPlease try again</string>
-    <string name="import_succeeded_but_check_database">Data import succeeded but post-import cleanup failed. Run check database later. Root cause: %s</string>
+    <string name="import_log_failed_validate">Не атрымалася праверыць apkg</string>
+    <string name="import_log_insufficient_space">Недастаткова месца для распакоўвання архіва. Вам неабходна %1$d, а ў дадзены час даступна %2$d</string>
+    <string name="import_log_file_cache_cleared">Памылка імпартавання файла. Верагодна, што кэш-памяць была ачышчаная падчас апрацоўкі.\nПаспрабуйце яшчэ раз.</string>
+    <string name="import_succeeded_but_check_database">Імпартаванне даных паспяхова выканана, але пасля гэтага працэсу адбылася памылка ачысткі. Запусціць праверку базы даных пазней. Галоўная прычына: %s</string>
     <string name="import_error_unhandled_request">Не атрымалася апрацаваць запыт на імпарт</string>
-    <string name="import_error_corrupt_zip">The apkg file is corrupt. Please delete and re-download it.\n\nRoot cause: %s</string>
+    <string name="import_error_corrupt_zip">Пашкоджаны файл apkg. Спачатку выдаліце яго, а потым спампуйце дадзены файл паўторна. \n\nГалоўная прычына: %s</string>
     <string name="import_error_exception">Не атрымалася імпартаваць пакет\n\n%s</string>
     <string name="import_error_not_apkg_extension">Назва файла \"%s\" не мае пашырэння .apkg або .colpkg</string>
-    <string name="import_error_load_imported_database">Anki Database (.anki2) replacements are not yet supported. Please see the manual for replacement instructions.</string>
-    <string name="import_error_content_provider">Выбраны файл немагчыма імпартаваць аўтаматычна ў праграму. Звярніцеся да кіраўніцтва карыстальніка для таго, каб імпартаваць файлы ўручную: \n %s</string>
-    <string name="import_error_copy_file_to_cache">copyFileToCache() не спрацавала (мажліва няма месца)</string>
-    <string name="import_error_unhandled_scheme">Unhandled import from: “%s”</string>
+    <string name="import_error_load_imported_database">Замена базы даных Anki (.anki2) пакуль не падтрымліваецца. Звярніцеся да даведніка для інструкцыі па замене.</string>
+    <string name="import_error_content_provider">Выбраны файл немагчыма імпартаваць аўтаматычна ў праграму. Звярніцеся да даведніка карыстальніка для імпартавання файла ўручную: \n %s</string>
+    <string name="import_error_copy_file_to_cache">Памылка аперацыі copyFileToCache() (верагодна не засталося месца)</string>
+    <string name="import_error_unhandled_scheme">Неапрацаваны імпарт з: “%s”</string>
     <string name="import_replacing">Замена калекцыі&#8230;</string>
     <string name="import_interrupted">Імпарт перарваны</string>
     <string name="export_include_schedule">Разам з раскладам</string>
@@ -189,34 +190,34 @@
     <string name="export_successful_title">Адправіць пакет Anki?</string>
     <string name="export_send_button">Адправіць</string>
     <string name="export_save_button">Захаваць у файл</string>
-    <string name="export_send_no_handlers">Няма адпаведнай праграмы для чытання пакета apkg. Захаванне...</string>
+    <string name="export_send_no_handlers">Няма адпаведнай праграмы для апрацоўкі пакета apkg. Захаванне...</string>
     <string name="export_save_apkg_successful">Пакет Anki паспяхова захаваны</string>
-    <string name="export_save_apkg_unsuccessful">Не атрымалася захаваць пакет Anki</string>
+    <string name="export_save_apkg_unsuccessful">Памылка захавання пакета Anki</string>
     <string name="export_successful">Файл \"%s\" быў экспартаваны. Адправіць яго з дапамогай іншай праграмы?</string>
     <string name="export_email_subject">AnkiDroid экспартаваў калоды картак: %s</string>
     <string name="export_email_text"><![CDATA[        Добры дзень!
         <br/><br/>
         Гэта калода картак была адпраўленая з праграмы <a href="https://ankidroid.org/docs/manual.html">AnkiDroid</a>.
-        Вы можаце адкрыць яе з дапамогай адной з версій праграмы <a href="http://ankisrs.net/#download">Anki</a> і атрымаць асалоду ад лёгкага і эфектыўнага навучання!
+        Вы можаце адкрыць яе з дапамогай праграмы <a href="http://ankisrs.net/#download">Anki</a> і атрымаць асалоду ад лёгкага і эфектыўнага навучання!
         ]]></string>
     <string name="export_unsuccessful">Памылка экспарту файла apkg</string>
-    <string name="import_hint">Змясціце файл apkg у каталог %s і націсніце \"Добра\" для імпарту картак</string>
+    <string name="import_hint">Змясціце файл apkg у каталог \"%s\" і націсніце \"Добра\" для імпарту картак</string>
     <string name="upgrade_import_no_file_found">Знойдзены не імпартаваны файл %1$s</string>
     <string name="study_options" comment="Name for a preference category in Filtered deck (aka Cram deck, aka Custom study) options">Параметры</string>
-    <string name="menu__deck_options">Deck options</string>
-    <string name="menu__study_options" comment="Menu item that opens options for a Filtered deck (aka Cram deck, aka Custom study)">Study options</string>
-    <string name="select_tts">Задаць сінтэз маўлення</string>
+    <string name="menu__deck_options">Параметры калоды</string>
+    <string name="menu__study_options" comment="Menu item that opens options for a Filtered deck (aka Cram deck, aka Custom study)">Параметры навучання</string>
+    <string name="select_tts">Прызначыць сінтэз маўлення</string>
     <string name="custom_study">Дадатковае навучанне</string>
     <string name="more_options">Яшчэ</string>
-    <string name="dyn_deck_desc">Гэта спецыяльная калода для вывучэння па-за звыклым графікам. Пасля прагляду, карткі будуць аўтаматычна вяртацца ў сваю першапачатковую калоду. Выдаленне гэтай калоды верне ўсе карткі ў іх першапачатковую калоду.</string>
+    <string name="dyn_deck_desc">Гэта спецыяльная калода для навучання па-за межамі звыклага графіка. Пасля паўтору, карткі будуць аўтаматычна вяртацца ў сваю першапачатковую калоду. Выдаленне гэтай калоды верне ўсе карткі ў іх першапачатковую калоду.</string>
     <string name="steps_error">Крокі павінны быць лікамі, якія больш за 0</string>
     <string name="steps_min_error">Патрабуецца прынамсі адзін крок</string>
     <string name="sched_end">(канец)</string>
     <string name="sched_unbury_action">Для таго, каб убачыць іх зараз, неабходна выбраць \"Паказаць\" у меню</string>
     <string name="sched_has_buried">Некаторыя звязаныя або адкладзеныя карткі былі перанесеныя на заўтра</string>
-    <string name="tag_editor_add_feedback">Выберыце “%2$s”, каб пацвердзіць даданне “%1$s”</string>
-    <string name="tag_editor_add_feedback_existing">Выбрана існуючая пазнака \"%1$s\"</string>
-    <string name="lookup_hint">Пасля таго, як тэкст будзе скапіяваны, націсніце ў любым месцы карткі, каб паказаць значок пошуку</string>
+    <string name="tag_editor_add_feedback">Націсніце “%2$s”, каб пацвердзіць даданне “%1$s”</string>
+    <string name="tag_editor_add_feedback_existing">Выбрана існуючая метка \"%1$s\"</string>
+    <string name="lookup_hint">Пасля капіявання тэксту, націсніце ў любым месцы карткі, каб паказаць значок пошуку</string>
     <!-- Time spans -->
     <plurals name="time_span_seconds">
         <item quantity="one">%s секунда</item>
@@ -257,7 +258,7 @@
     <!-- A decimal number of seconds.
     Please give this a best-effort translation and explain the requirements for
     formatting decimals in your language in the CrowdIn comments -->
-    <string name="time_span_decimal_seconds">%s seconds</string>
+    <string name="time_span_decimal_seconds">%s секунд</string>
     <!-- The reason for making a simple “< x” translatable are RTL
          languages which apparently use the other symbol to mean less
          than. -->
@@ -277,93 +278,102 @@
     <!-- Import and export v2 feedback -->
     <string name="export_v2_dummy_note">Дадзены файл патрабуе больш новую версію праграмы.</string>
     <!-- Placed in a snackbar with a long URL. Limit the length and move the URL to the start of the string -->
-    <string name="activity_start_failed_load_url">Не атрымалася зпампаваць \'%s\'.</string>
-    <string name="activity_start_failed">У сістэме нестае патрэбнай прылады каб гэта выканаць.</string>
-    <string name="multimedia_editor_image_compression_failed"><![CDATA[Camera images may be large. You may wish to compress & resize images in the media directory]]></string>
-    <string name="no_browser_notification">No browser found，please visit web page by pc or mobile: </string>
-    <string name="web_page_error">Error loading page: %s</string>
+    <string name="activity_start_failed_load_url">Памылка загрузкі \'%s\'.</string>
+    <string name="activity_start_failed">У сістэме адсутнічае ўсталяваная праграма, якая можа выканаць гэта дзеянне.</string>
+    <string name="multimedia_editor_image_compression_failed"><![CDATA[Выявы камеры могуць быць надта вялікімі. Магчыма, што вы захочаце сціснуць або змяніць іх памер у адпаведным каталогу]]></string>
+    <string name="no_browser_notification">Браўзер не знойдзены. Вы можаце наведаць вэб-старонку з камп\'ютара або мабільнай прылады: </string>
+    <string name="web_page_error">Памылка загрузкі старонкі: %s</string>
     <string name="no_outgoing_link_in_cardbrowser">Знешнія спасылкі ў картках не падтрымліваюцца.</string>
     <!-- The name of the deck which corrupt cards will be moved to -->
     <string name="check_integrity_recovered_deck_name">Адноўленыя карткі</string>
     <!-- Deckpicker Background -->
     <string name="background_image_title">Фон</string>
-    <string name="choose_an_image">Абярыце выяву</string>
+    <string name="choose_an_image">Выберыце выяву</string>
     <!-- Card Template Browser Appearance -->
-    <string name="restore_default">Скінуць налады</string>
+    <string name="restore_default">Вярнуць пачатковыя</string>
     <string name="reviewer_tts_cloze_spoken_replacement">Пуста</string>
     <!-- in options menu & Navigation Drawer -->
-    <string name="ankidroid_turn_on_fullscreen_nav_drawer">Please turn on fullscreen to use Show Navigation Drawer using JavaScript.</string>
-    <string name="ankidroid_turn_on_fullscreen_options_menu">Please turn on fullscreen to use Show Options Menu using JavaScript.</string>
+    <string name="ankidroid_turn_on_fullscreen_nav_drawer">Уключыце поўнаэкранны рэжым для паказу навігацыйнай панэлі з дапамогай JavaScript.</string>
+    <string name="ankidroid_turn_on_fullscreen_options_menu">Уключыце поўнаэкранны рэжым для паказу наладаў меню з дапамогай JavaScript.</string>
     <!-- Whiteboard save image message in Reviewer -->
-    <string name="white_board_image_save_failed">Failed to save whiteboard image. %s</string>
-    <string name="white_board_image_saved">Whiteboard image saved to %s</string>
-    <string name="title_whiteboard_pen_color">Whiteboard pen color</string>
+    <string name="white_board_image_save_failed">Не атрымалася захаваць выяву дошкі. %s</string>
+    <string name="white_board_image_saved">Выява дошкі захавана ў %s</string>
+    <string name="title_whiteboard_pen_color">Колер крэйды дошкі</string>
+    <string name="title_whiteboard_editor">Рэдактар дошкі</string>
     <!-- CSV/Note Import -->
-    <string name="note_importer_empty_cards_found"><![CDATA[Empty cards found. Please run Tools>Empty Cards.]]></string>
-    <string name="note_importer_error_empty_first_field">Empty first field: %s</string>
-    <string name="note_importer_error_first_field_matched">First field matched: %s</string>
-    <string name="note_importer_error_added_duplicate_first_field">Added duplicate with first field: %s</string>
-    <string name="note_importer_error_appeared_twice">Appeared twice in file: %s</string>
-    <string name="note_importer_error_empty_notes">One or more notes were not imported, because they didn\'t generate any cards. This can happen when you have empty fields or when you have not mapped the content in the text file to the correct fields</string>
-    <string name="csv_importer_error_invalid_field_count">‘%1$s’ had %2$d fields, expected %3$d</string>
-    <string name="csv_importer_error_exception">Aborted: %s</string>
-    <string name="user_is_a_robot">Detected automated test. If you are a human, contact AnkiDroid support</string>
+    <string name="note_importer_empty_cards_found"><![CDATA[Знойдзеныя пустыя карткі. Калі ласка, запусціце Інструменты->Пустыя карткі.]]></string>
+    <string name="note_importer_error_empty_first_field">Першае поле пустое: %s</string>
+    <string name="note_importer_error_first_field_matched">Першае поле супадае: %s</string>
+    <string name="note_importer_error_added_duplicate_first_field">Даданы дублікат з першым полем: %s</string>
+    <string name="note_importer_error_appeared_twice">Двойчы сустракаецца ў файле: %s</string>
+    <string name="note_importer_error_empty_notes">Адзін або больш запісаў не імпартаваныя з той прычыны, што яны не стварылі ніякіх картак. Гэта здараецца таму, што прысутнічалі пустыя палі або вы памылкова супаставілі змесціва тэкставага файла з правільнымі палямі</string>
+    <string name="csv_importer_error_invalid_field_count">У ‘%1$s’ мала %2$d палёў, а павінна быць %3$d</string>
+    <string name="csv_importer_error_exception">Перарвана: %s</string>
+    <string name="user_is_a_robot">Выяўлены аўтаматычны тэст. У выпадку, калі вы чалавек, калі ласка, напішыце ў падтрымку AnkiDroid</string>
     <plurals name="note_importer_notes_added">
-        <item quantity="one">%d note added</item>
-        <item quantity="few">%d notes added</item>
-        <item quantity="many">%d notes added</item>
-        <item quantity="other">%d notes added</item>
+        <item quantity="one">Дададзены %d запіс</item>
+        <item quantity="few">Дададзеныя %d запісы</item>
+        <item quantity="many">Дададзеныя %d запісаў</item>
+        <item quantity="other">Дададзеныя %d запісы</item>
     </plurals>
     <plurals name="note_importer_notes_updated">
-        <item quantity="one">%d note updated</item>
-        <item quantity="few">%d notes updated</item>
-        <item quantity="many">%d notes updated</item>
-        <item quantity="other">%d notes updated</item>
+        <item quantity="one">Абноўлены %d запіс</item>
+        <item quantity="few">Абноўленыя %d запісы</item>
+        <item quantity="many">Абноўленыя %d запісаў</item>
+        <item quantity="other">Абноўленыя %d запісы</item>
     </plurals>
     <plurals name="note_importer_notes_unchanged">
-        <item quantity="one">%d note unchanged</item>
-        <item quantity="few">%d notes unchanged</item>
-        <item quantity="many">%d notes unchanged</item>
-        <item quantity="other">%d notes unchanged</item>
+        <item quantity="one">Не зменены %d запіс</item>
+        <item quantity="few">Не змененыя %d запісы</item>
+        <item quantity="many">Не змененыя %d запісаў</item>
+        <item quantity="other">Не змененыя %d запісы</item>
     </plurals>
     <!-- JS api -->
-    <string name="api_version_developer_contact">This card uses unsupported AnkiDroid features. Contact developer %1$s, or view the wiki. %2$s</string>
-    <string name="invalid_json_data">Card provided invalid data. %s</string>
-    <string name="valid_js_api_version">Invalid AnkiDroid JS API version. Contact developer %s, or view wiki</string>
-    <string name="update_js_api_version">AnkiDroid JS API update available. Contact developer %s, or view wiki</string>
-    <string name="reviewer_invalid_api_version_visit_documentation">View</string>
-    <string name="anki_js_error_code">(Error Code: %d)</string>
+    <string name="api_version_developer_contact">У гэтай карткі ёсць магчымасці, якія не падтрымлівае AnkiDroid. Звярніцеся да распрацоўшчыка %1$s або паспрабуйце знайсці неабходную інфармацыю ў Wikipedia. %2$s</string>
+    <string name="invalid_json_data">У картцы прысутнічаюць недапушчальныя даныя. %s</string>
+    <string name="valid_js_api_version">Памылковая версія AnkiDroid JS API. Звярніцеся да распрацоўшчыка %s або паспрабуйце знайсці неабходную інфармацыю ў Wikipedia.</string>
+    <string name="update_js_api_version">З\'явілася новая версія AnkiDroid JS API. Звярніцеся да распрацоўшчыка %s або паспрабуйце знайсці неабходную інфармацыю ў Wikipedia.</string>
+    <string name="reviewer_invalid_api_version_visit_documentation">Выгляд</string>
+    <string name="anki_js_error_code">(Код памылкі: %d)</string>
     <!-- About AnkiDroid screen -->
-    <string name="about_ankidroid_successfully_copied_debug">Copied debug information to clipboard</string>
-    <string name="about_ankidroid_error_copy_debug_info">Error copying debug information to clipboard</string>
+    <string name="about_ankidroid_successfully_copied_debug">Адладачная інфармацыя скапіяваная ў буфер абмену</string>
+    <string name="about_ankidroid_error_copy_debug_info">Памылка капіявання адладачнай інфармацыі ў буфер абмену</string>
     <!-- Card Viewer -->
-    <string name="card_viewer_could_not_find_image">Card Content Error: Failed to load ‘%s’</string>
-    <string name="card_viewer_media_relative_protocol">Card Content Error: Media update required</string>
+    <string name="card_viewer_could_not_find_image">Памылка змесціва карткі: немагчыма загрузіць ‘%s’</string>
+    <string name="card_viewer_media_relative_protocol">Памылка змесціва карткі: неабходна абнаўленне медыяфайлаў</string>
+    <string name="cannot_load_http_resource">Загрузка рэсурсаў http больш не падтрымліваецца</string>
     <!-- Deck Picker -->
-    <string name="deck_picker_failed_deck_load">Failed to load deck ‘%s’</string>
-    <string name="search_decks">Search decks</string>
-    <string name="ankidroid_init_failed_webview_title">Fatal Error</string>
-    <string name="ankidroid_init_failed_webview">AnkiDroid relies on the System WebView which is unavailable. This can happen if the system is installing updates. Please try again in a few minutes.\n\n%s</string>
+    <string name="deck_picker_failed_deck_load">Памылка загрузкі калоды ‘%s’</string>
+    <string name="search_decks">Пошук калод</string>
+    <string name="ankidroid_init_failed_webview_title">Крытычная памылка</string>
+    <string name="ankidroid_init_failed_webview">AnkiDroid выкарыстоўвае сістэмныя WebView, якія зараз недаступныя. Гэта можа здарыцца таму, што ў дадзены момант адбываюцца ўсталяванне абнаўленняў. Паспрабуйце, калі ласка, пачакаць і паўтарыць спробу праз некалькі хвілін.\n\n%s</string>
     <!-- A Menu item to change the Font Size (currently in the Note Editor) -->
-    <string name="menu_font_size">Font Size</string>
-    <string name="menu_show_toolbar" comment="Checkable item stating whether the note editor toolbar should be shown">Show Toolbar</string>
-    <string name="format_insert_bold">Format as Bold</string>
-    <string name="format_insert_italic">Format as Italic</string>
-    <string name="format_insert_underline">Format as Underline</string>
-    <string name="insert_horizontal_line">Insert Horizontal Line</string>
-    <string name="insert_heading">Insert Heading</string>
-    <string name="format_font_size">Change Font Size</string>
-    <string name="insert_mathjax">Insert MathJax Equation</string>
-    <string name="insert_cloze">Insert Cloze Deletion</string>
-    <string name="before_text">HTML Before Selection</string>
-    <string name="after_text">HTML After Selection</string>
-    <string name="add_toolbar_item">Create Toolbar Item</string>
-    <string name="toolbar_item_explain_remove">Enter HTML to be inserted before and after the selected text\n\nLong press a toolbar item to remove it</string>
-    <string name="remove_toolbar_item">Remove Toolbar Item?</string>
-    <string name="note_editor_paste_too_large">The image is too large to paste, please insert the image manually</string>
-    <string name="ankidroid_cannot_open_after_backup_try_again" comment="After an Android backup is restored, AnkiDroid opens and shows this message.         Opening AnkiDroid again will work correctly">        Android backup in progress. Please try again</string>
-    <string name="create_shortcut_error_vivo" comment="iManager is an app on Vivo phones">You may need to use iManager to allow AnkiDroid to add shortcuts</string>
-    <string name="create_shortcut_failed" comment="home screen == launcher">Your home screen does not allow AnkiDroid to add shortcuts</string>
-    <string name="create_shortcut_error">Error adding shortcut: %s</string>
-    <string name="note_editor_capitalize" comment="This is for a switch with a checkbox - on: enabled">Capitalize sentences</string>
+    <string name="menu_font_size">Памер шрыфту</string>
+    <string name="menu_show_toolbar" comment="Checkable item stating whether the note editor toolbar should be shown">Паказаць панэль інструментаў</string>
+    <string name="format_insert_bold">Фарматаваць як тоўсты</string>
+    <string name="format_insert_italic">Фарматаваць як курсіў</string>
+    <string name="format_insert_underline">Фарматаваць як падкрэслены</string>
+    <string name="insert_horizontal_line">Уставіць гарызантальную лінію</string>
+    <string name="insert_heading">Уставіць загаловак</string>
+    <string name="format_font_size">Змяніць памер шрыфту</string>
+    <string name="insert_mathjax">Уставіць ураўненне MathJax</string>
+    <string name="insert_cloze">Уставіць заданне з пропускамі</string>
+    <string name="before_text">HTML перад вылучэннем</string>
+    <string name="after_text">HTML пасля вылучэння</string>
+    <string name="add_toolbar_item">Стварыць элемент панэлі інструментаў</string>
+    <string name="toolbar_item_explain_remove">Увядзіце HTML, які будзе ўстаўлены да і пасля вылучанага тэксту\n\nДоўгі націск на элемент панэлі інструментаў выдаліць яго</string>
+    <string name="remove_toolbar_item">Выдаліць элемент панэлі інструментаў?</string>
+    <string name="note_editor_paste_too_large">Надта вялікая выява для ўстаўкі, калі ласка, паспрабуйце ўставіць выяву ўручную</string>
+    <string name="ankidroid_cannot_open_after_backup_try_again" comment="After an Android backup is restored, AnkiDroid opens and shows this message.         Opening AnkiDroid again will work correctly">        Адбываецца рэзервовае капіяванне аперацыйнай сістэмы. Паспрабуйце яшчэ раз</string>
+    <string name="create_shortcut_error_vivo" comment="iManager is an app on Vivo phones">Паспрабуйце скарыстацца праграмай iManager для таго, каб дазволіць AnkiDroid дадаваць ярлыкі</string>
+    <string name="create_shortcut_failed" comment="home screen == launcher">Ваш галоўны экран не дазваляе праграме дадаваць ярлыкі</string>
+    <string name="create_shortcut_error">\"Памылка дабаўлення ярлыка: %s</string>
+    <string name="note_editor_capitalize" comment="This is for a switch with a checkbox - on: enabled">Пачынаць сказ з вялікай літары</string>
+    <!-- Symbols used as Button text in IncrementNumberRangePreference -->
+    <string name="plus_sign" comment="Label for increment button in IncrementerNumberRangePreference">+</string>
+    <string name="minus_sign" comment="Label for decrement button in IncrementerNumberRangePreference">-</string>
+    <!-- Used for credential empty warning message -->
+    <string name="email_id_empty">Патрабуецца адрас электроннай пошты</string>
+    <string name="password_empty">Патрабуецца пароль</string>
+    <string name="back_pressed_once">Націсніце \"Назад\" яшчэ раз, каб выйсці</string>
 </resources>

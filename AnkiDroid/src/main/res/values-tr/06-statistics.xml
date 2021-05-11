@@ -67,7 +67,7 @@
     <string name="stats_time_of_day">Saat</string>
     <string name="stats_day_of_week">Gün</string>
     <string formatted="false" name="stats_percentage_correct">% Doğru</string>
-    <string name="stats_reviews" comment="Label of a graph, indicating cumulative number of review of all cards">Yorumlar</string>
+    <string name="stats_reviews" comment="Label of a graph, indicating cumulative number of review of all cards">Tekrarlar</string>
     <string name="stats_answer_type">Cevap türü</string>
     <string name="stats_today_again_count">Tekrar Sayın: &lt;b&gt;%d&lt;/b&gt;</string>
     <string name="stats_today_correct_count">(&lt;b&gt;%.1f%%&lt;/b&gt; doğru)</string>

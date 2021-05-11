@@ -63,11 +63,6 @@
     <!-- AndroidManifest.xml -->
     <string name="preferences_title">Preferinţe</string>
     <string name="deckpreferences_title">Opţiuni pentru XXX</string>
-    <string name="sync_conflict_message">Trebuie fie sa încărcati această colecţie fie sa o descărcati de pe Ankiweb, deoarece acestea nu pot fi îmbinate. Colecțiile vor fi suprascrise.</string>
-    <string name="sync_conflict_local">Încarcă</string>
-    <string name="sync_conflict_remote">Descărcaţi</string>
-    <string name="sync_conflict_remote_confirm">Rescrie colectia ta?</string>
-    <string name="sync_conflict_local_confirm">Rescrie colecția de pe server?</string>
     <string name="sync_prepare_syncing">Pregăteste sincronizarea&#8230;</string>
     <string name="sync_preparing_full_sync_message">Pregătire completă pentru sincronizare&#8230;</string>
     <string name="sync_uploading_message">Se încarcă&#8230;</string>
@@ -78,7 +73,6 @@
     <string name="sync_log_clocks_unsynchronized">Ceasul off de %1$d seconds%2$s. Asiguraţi-vă că data, ora şi fusul orar pe telefon sunt stabilite corect, apoi sincronizați din nou.</string>
     <string name="sync_log_clocks_unsynchronized_tz">, fusul orar este eventual, greşit</string>
     <string name="sync_log_clocks_unsynchronized_date">, data este eventual greşita</string>
-    <string name="sync_conflict_title">Conflictelor de sincronizare</string>
     <string name="sync_no_changes_message">Fără modificări găsite</string>
     <string name="sync_database_acknowledge">Colectia sincronizata</string>
     <string name="sync_log_error_specific">Eroare de sincronizare, tip: %1$s, mesaj: %2$s</string>

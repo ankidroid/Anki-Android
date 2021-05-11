@@ -67,8 +67,10 @@ public class BootService extends BroadcastReceiver {
         try {
             runnable.run();
         } catch (SecurityException ex) {
+            Timber.w(ex);
             error = R.string.boot_service_too_many_notifications;
         } catch (Exception e) {
+            Timber.w(e);
             error = R.string.boot_service_failed_to_schedule_notifications;
         }
         if (error != null) {
@@ -129,7 +131,7 @@ public class BootService extends BroadcastReceiver {
         }
 
         final Calendar calendar = time.calendar();
-        calendar.set(Calendar.HOUR_OF_DAY, sp.getInt("dayOffset", 0));
+        calendar.set(Calendar.HOUR_OF_DAY, getRolloverHourOfDay(context));
         calendar.set(Calendar.MINUTE, 0);
         calendar.set(Calendar.SECOND, 0);
         final PendingIntent notificationIntent =
@@ -140,5 +142,27 @@ public class BootService extends BroadcastReceiver {
                 AlarmManager.INTERVAL_DAY,
                 notificationIntent
         );
+    }
+
+    /** Returns the hour of day when rollover to the next day occurs */
+    protected static int getRolloverHourOfDay(Context context) {
+        // TODO; We might want to use the BootService retry code here when called from preferences.
+
+        int defValue = 4;
+
+        try {
+            Collection col = CollectionHelper.getInstance().getCol(context);
+            switch (col.schedVer()) {
+                default:
+                case 1:
+                    SharedPreferences sp = AnkiDroidApp.getSharedPrefs(context);
+                    return sp.getInt("dayOffset", defValue);
+                case 2:
+                    return col.getConf().optInt("rollover", defValue);
+            }
+        } catch (Exception e) {
+            Timber.w(e);
+            return defValue;
+        }
     }
 }

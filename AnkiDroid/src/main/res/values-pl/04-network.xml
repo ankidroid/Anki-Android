@@ -63,11 +63,6 @@
     <!-- AndroidManifest.xml -->
     <string name="preferences_title">Ustawienia</string>
     <string name="deckpreferences_title">Opcje dla XXX</string>
-    <string name="sync_conflict_message">Twoje talie tutaj oraz na AnkiWeb różnią się do tego stopnia, że nie mogą być połączone. Konieczne jest zatem nadpisanie talii w jednym miejscu taliami skądinąd.\n\nCzy chciałbyś przesłać talie stąd czy pobrać talie z AnkiWeb?</string>
-    <string name="sync_conflict_local">Wysyłanie</string>
-    <string name="sync_conflict_remote">Pobieranie</string>
-    <string name="sync_conflict_remote_confirm">Czy chcesz pobrać kolekcję z serwera? Należy pamiętać, że zastąpi ona lokalną kolekcję.</string>
-    <string name="sync_conflict_local_confirm">Czy naprawdę chcesz przesłać lokalną kolekcję? Twoja kolekcja na serwerze zostanie nadpisana.</string>
     <string name="sync_prepare_syncing">Przygotowywanie synchronizacji...</string>
     <string name="sync_preparing_full_sync_message">Przygotowanie pełnej synchronizacji...</string>
     <string name="sync_uploading_message">Wysyłanie...</string>
@@ -78,7 +73,6 @@
     <string name="sync_log_clocks_unsynchronized">Zegar na Twoim urządzeniu działa nieprawidłowo (o %1$d sekund%2$s); synchronizacja wymaga prawidłowego ustawienia zegara i strefy czasowej aby uniknąć błędów. Upewnij się, że w Twoim telefonie data, czas i Twoja strefa czasowa są ustawione prawidłowo i spróbuj ponownie zsynchronizować.</string>
     <string name="sync_log_clocks_unsynchronized_tz">, być może źle ustawiono strefę czasową</string>
     <string name="sync_log_clocks_unsynchronized_date">, być może źle ustawiono datę</string>
-    <string name="sync_conflict_title">Konflikt synchronizacji</string>
     <string name="sync_no_changes_message">Nie znaleziono zmian.</string>
     <string name="sync_database_acknowledge">Kolekcja zsynchronizowana</string>
     <string name="sync_log_error_specific">Błąd synchronizacji, typ: %1$s, wiadomość: %2$s</string>

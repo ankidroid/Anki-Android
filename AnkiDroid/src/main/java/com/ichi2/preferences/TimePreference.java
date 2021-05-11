@@ -12,9 +12,9 @@ import com.ichi2.compat.CompatHelper;
 public class TimePreference extends android.preference.DialogPreference {
     public static final String DEFAULT_VALUE = "00:00";
 
-    private TimePicker timePicker;
-    private int hours;
-    private int minutes;
+    private TimePicker mTimepicker;
+    private int mHours;
+    private int mMinutes;
 
     public TimePreference(Context context, AttributeSet attrs) {
         super(context, attrs);
@@ -25,11 +25,11 @@ public class TimePreference extends android.preference.DialogPreference {
 
     @Override
     protected View onCreateDialogView() {
-        timePicker = new TimePicker(getContext());
+        mTimepicker = new TimePicker(getContext());
 
-        timePicker.setIs24HourView(true);
+        mTimepicker.setIs24HourView(true);
 
-        return timePicker;
+        return mTimepicker;
     }
 
     @Override
@@ -46,14 +46,14 @@ public class TimePreference extends android.preference.DialogPreference {
             time = defaultValue.toString();
         }
 
-        hours = parseHours(time);
-        minutes = parseMinutes(time);
+        mHours = parseHours(time);
+        mMinutes = parseMinutes(time);
     }
 
     @Override
     protected void onBindDialogView(View view) {
         super.onBindDialogView(view);
-        CompatHelper.getCompat().setTime(timePicker, hours, minutes);
+        CompatHelper.getCompat().setTime(mTimepicker, mHours, mMinutes);
     }
 
     @Override
@@ -61,10 +61,10 @@ public class TimePreference extends android.preference.DialogPreference {
         super.onDialogClosed(positiveResult);
 
         if (positiveResult) {
-            hours = CompatHelper.getCompat().getHour(timePicker);
-            minutes = CompatHelper.getCompat().getMinute(timePicker);
+            mHours = CompatHelper.getCompat().getHour(mTimepicker);
+            mMinutes = CompatHelper.getCompat().getMinute(mTimepicker);
 
-            final String time = String.format("%1$02d:%2$02d", hours, minutes);
+            final String time = String.format("%1$02d:%2$02d", mHours, mMinutes);
 
             if (callChangeListener(time)) {
                 persistString(time);

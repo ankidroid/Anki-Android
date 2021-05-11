@@ -15,6 +15,8 @@
  ****************************************************************************************/
 package com.wildplot.android.rendering;
 
+import android.annotation.SuppressLint;
+
 import com.wildplot.android.rendering.graphics.wrapper.ColorWrap;
 import com.wildplot.android.rendering.graphics.wrapper.GraphicsWrap;
 import com.wildplot.android.rendering.graphics.wrapper.RectangleWrap;
@@ -24,6 +26,7 @@ import com.wildplot.android.rendering.interfaces.Drawable;
 /**
  * This class represents grid lines parallel to the y-axis
  */
+@SuppressLint("NonPublicNonStaticFieldName")
 public class YGrid implements Drawable {
 
     /**

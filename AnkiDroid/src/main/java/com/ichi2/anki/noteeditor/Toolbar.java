@@ -45,6 +45,7 @@ import com.ichi2.utils.ViewGroupUtils;
 import java.util.ArrayList;
 import java.util.List;
 
+import androidx.annotation.ColorInt;
 import androidx.annotation.DrawableRes;
 import androidx.annotation.IdRes;
 import androidx.annotation.NonNull;
@@ -122,6 +123,7 @@ public class Toolbar extends FrameLayout {
         try {
             c = (char) event.getUnicodeChar(0);
         } catch (Exception e) {
+            Timber.w(e);
             return false;
         }
 
@@ -186,8 +188,10 @@ public class Toolbar extends FrameLayout {
         */
 
         // apply style
+        int marginEnd = (int) Math.ceil(8 / context.getResources().getDisplayMetrics().density);
         LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
         params.gravity = Gravity.CENTER;
+        params.setMarginEnd(marginEnd);
         button.setLayoutParams(params);
 
 
@@ -204,10 +208,10 @@ public class Toolbar extends FrameLayout {
         // Hack - items are truncated from the scrollview
         View v = findViewById(R.id.editor_toolbar_internal);
 
-        int expectedWidth = getVisibleItemCount() * dpToPixels(32);
+        int expectedWidth = getVisibleItemCount() * dpToPixels(48 + 2 * 4); //width + 4dp padding on both sides
         int width = getScreenWidth();
         LayoutParams p = new LayoutParams(v.getLayoutParams());
-        p.gravity = Gravity.CENTER_VERTICAL | ((expectedWidth > width) ? Gravity.LEFT : Gravity.CENTER_HORIZONTAL);
+        p.gravity = Gravity.CENTER_VERTICAL | ((expectedWidth > width) ? Gravity.START : Gravity.CENTER_HORIZONTAL);
         v.setLayoutParams(p);
 
         return button;
@@ -304,6 +308,14 @@ public class Toolbar extends FrameLayout {
         }
 
         mFormatCallback.performFormat(formatter);
+    }
+
+    public void setIconColor(@ColorInt int color) {
+        for (int i = 0; i < this.mToolbar.getChildCount(); i++) {
+            AppCompatImageButton button = (AppCompatImageButton) this.mToolbar.getChildAt(i);
+            button.setColorFilter(color);
+        }
+        mStringPaint.setColor(color);
     }
 
 

@@ -43,250 +43,258 @@
     <string name="enabled">Habilitat</string>
     <!-- preferences.xml categories-->
     <string name="pref_cat_general_summ">Configuració general</string>
-    <string name="pref_cat_reviewing">Revisió</string>
+    <string name="pref_cat_reviewing" maxLength="41">Revisió</string>
     <string name="pref_cat_reviewing_summ">Configuracions de revisió no específiques de malls</string>
-    <string name="pref_cat_reviewer_behaviour">Comportament</string>
-    <string name="pref_cat_flashcard">Pantalla</string>
-    <string name="pref_cat_whiteboard">Pissarra</string>
-    <string name="pref_cat_appearance">Aparença</string>
+    <string name="pref_cat_reviewer_behaviour" maxLength="41">Comportament</string>
+    <string name="pref_cat_flashcard" maxLength="41">Pantalla</string>
+    <string name="pref_cat_whiteboard" maxLength="41">Pissarra</string>
+    <string name="pref_cat_appearance" maxLength="41">Aparença</string>
     <string name="pref_cat_appearance_summ">Canviar els temes i la font per defecte</string>
-    <string name="pref_cat_themes">Temes</string>
-    <string name="pref_cat_fonts">Tipus de lletra</string>
-    <string name="pref_cat_gestures">Gestos</string>
+    <string name="pref_cat_themes" maxLength="41">Temes</string>
+    <string name="pref_cat_fonts" maxLength="41">Tipus de lletra</string>
+    <string name="pref_cat_gestures" maxLength="41">Gestos</string>
     <string name="pref_cat_gestures_summ">Utilitzar lliscades i tocs en lloc de botons</string>
-    <string name="pref_cat_actions">Accions</string>
-    <string name="pref_cat_advanced">Avançat</string>
+    <string name="pref_cat_actions" maxLength="41">Accions</string>
+    <string name="pref_cat_advanced" maxLength="41">Avançat</string>
     <string name="pref_cat_advanced_summ">Optimització i característiques experimentals</string>
-    <string name="pref_cat_performance">Rendiment</string>
-    <string name="pref_cat_workarounds">Solucions</string>
-    <string name="pref_cat_plugins">Plugins</string>
-    <string name="about_title">Sobre AnkiDroid</string>
+    <string name="pref_cat_performance" maxLength="41">Rendiment</string>
+    <string name="pref_cat_workarounds" maxLength="41">Solucions</string>
+    <string name="pref_cat_plugins" maxLength="41">Plugins</string>
+    <string name="about_title" maxLength="41">Sobre AnkiDroid</string>
     <string name="about_version">Versió: </string>
     <!-- preferences.xml entries-->
-    <string name="whiteboard_stroke_width">Amplada del traç</string>
-    <string name="use_input_tag">Tipus de resposta a la targeta</string>
+    <string name="whiteboard_stroke_width" maxLength="41">Amplada del traç</string>
+    <string name="use_input_tag" maxLength="41">Tipus de resposta a la targeta</string>
     <string name="use_input_tag_summ">Utilitzar un quadre d\'entrada de text dins de la targeta per escriure la resposta</string>
-    <string name="dictionary">Diccionari de cerca</string>
-    <string name="reset_languages">Reinicialització de llengües</string>
+    <string name="dictionary" maxLength="41">Diccionari de cerca</string>
+    <string name="reset_languages" maxLength="41">Reinicialització de llengües</string>
     <string name="reset_languages_summ">Restablir les assignacions de llengua (per text a discurs i diccionaris) per tots els malls</string>
     <string name="reset_languages_question">Voleu reiniciar les assignacions de tots el idiomes?</string>
     <string name="reset_confirmation">Restablir tots els estats</string>
-    <string name="card_zoom">Zoom de carta</string>
-    <string name="image_zoom">Zoom d\'imatge</string>
-    <string name="button_size">Mida de botó de resposta</string>
-    <string name="card_browser_font_size">Tamany de lletra al cercador de targetes</string>
-    <string name="card_browser_hide_media">Display filenames in card browser</string>
+    <string name="card_zoom" maxLength="41">Zoom de carta</string>
+    <string name="image_zoom" maxLength="41">Zoom d\'imatge</string>
+    <string name="button_size" maxLength="41">Mida de botó de resposta</string>
+    <string name="card_browser_font_size" maxLength="41">Tamany de lletra al cercador de targetes</string>
+    <string name="card_browser_hide_media" maxLength="41">Display filenames in card browser</string>
     <string name="card_browser_hide_media_summary">Display media filenames in the card browser question/answer fields</string>
-    <string name="col_path">Directori de l\'AnkiDroid</string>
-    <string name="fullscreen_review">Mode de pantalla completa</string>
+    <string name="col_path" maxLength="41">Directori de l\'AnkiDroid</string>
+    <string name="fullscreen_review" maxLength="41">Mode de pantalla completa</string>
     <string name="full_screen_off">Desactivat</string>
     <string name="full_screen_system">Amagar les barres del sistema</string>
     <string name="full_screen_complete">Amagar les barres del sistema i els botons de resposta</string>
     <string name="full_screen_error_gestures">Has d\'habilitar els gestos per poder amagar els botons de resposta</string>
-    <string name="answer_buttons_position">Posició dels botons de resposta</string>
+    <string name="answer_buttons_position" maxLength="41">Posició dels botons de resposta</string>
     <string-array name="answer_buttons_position_labels">
         <item>A dalt</item>
         <item>A baix</item>
     </string-array>
-    <string name="gestures">Activa gestos</string>
+    <string name="gestures" maxLength="41">Activa gestos</string>
     <string name="gestures_summ">Assignar gestos a accions com cartes de resposta i d\'edició.</string>
-    <string name="gestures_allow_links">Ignore touch gestures on links</string>
+    <string name="gestures_allow_links" maxLength="41">Ignore touch gestures on links</string>
     <string name="gestures_allow_links_summary">Touch gestures will not be processed if a link/hint is pressed.</string>
-    <string name="gestures_corner_touch">9-point touch</string>
+    <string name="gestures_corner_touch" maxLength="41">9-point touch</string>
     <string name="gestures_corner_touch_summary">Allow touch gestures in screen corners</string>
-    <string name="gestures_swipe_up">Passeu el dit cap amunt</string>
-    <string name="gestures_swipe_down">Passeu el dit cap a sota</string>
-    <string name="gestures_swipe_left">Passseu el dit cap a l\'esquerra</string>
-    <string name="gestures_swipe_right">Passeu el dit cap a la dreta</string>
-    <string name="gestures_double_tap">Doble toc</string>
-    <string name="gestures_tap_top">Toqueu la part superior</string>
-    <string name="gestures_tap_left">Toqueu a l\'esquerra</string>
-    <string name="gestures_tap_right">Toqueu a la dreta</string>
-    <string name="gestures_tap_bottom">Toqueu la part inferior</string>
-    <string name="gestures_corner_tap_top_left">Touch top left</string>
+    <string name="gestures_swipe_up" maxLength="41">Passeu el dit cap amunt</string>
+    <string name="gestures_swipe_down" maxLength="41">Passeu el dit cap a sota</string>
+    <string name="gestures_swipe_left" maxLength="41">Passseu el dit cap a l\'esquerra</string>
+    <string name="gestures_swipe_right" maxLength="41">Passeu el dit cap a la dreta</string>
+    <string name="gestures_double_tap" maxLength="41">Doble toc</string>
+    <string name="gestures_tap_top" maxLength="41">Toqueu la part superior</string>
+    <string name="gestures_tap_left" maxLength="41">Toqueu a l\'esquerra</string>
+    <string name="gestures_tap_right" maxLength="41">Toqueu a la dreta</string>
+    <string name="gestures_tap_bottom" maxLength="41">Toqueu la part inferior</string>
+    <string name="gestures_corner_tap_top_left" maxLength="41">Touch top left</string>
     <string name="gestures_corner_tap_top_center">Touch top center</string>
-    <string name="gestures_corner_tap_top_right">Touch top right</string>
+    <string name="gestures_corner_tap_top_right" maxLength="41">Touch top right</string>
     <string name="gestures_corner_tap_middle_left">Touch middle left</string>
-    <string name="gestures_corner_tap_middle_center">Touch middle center</string>
+    <string name="gestures_corner_tap_middle_center" maxLength="41">Touch middle center</string>
     <string name="gestures_corner_tap_middle_right">Touch middle right</string>
-    <string name="gestures_corner_tap_bottom_left">Touch bottom left</string>
+    <string name="gestures_corner_tap_bottom_left" maxLength="41">Touch bottom left</string>
     <string name="gestures_corner_tap_bottom_center">Touch bottom center</string>
-    <string name="gestures_corner_tap_bottom_right">Touch bottom right</string>
-    <string name="gestures_volume_up">Volume up</string>
-    <string name="gestures_volume_down">Volume down</string>
-    <string name="more_scrolling_buttons">eReader</string>
+    <string name="gestures_corner_tap_bottom_right" maxLength="41">Touch bottom right</string>
+    <string name="gestures_volume_up" maxLength="41">Volume up</string>
+    <string name="gestures_volume_down" maxLength="41">Volume down</string>
+    <string name="more_scrolling_buttons" maxLength="41">eReader</string>
     <string name="more_scrolling_buttons_summ">També utilitzar els botons kanji/katakana, emoji/kao-moji per moure\'s</string>
     <string name="card_browser_enable_external_context_menu">‘%s’ Menu</string>
     <string name="card_browser_enable_external_context_menu_summary">Enables the ‘%s’ context menu globally</string>
-    <string name="double_scrolling_gap">Desplaçament doble</string>
+    <string name="double_scrolling_gap" maxLength="41">Desplaçament doble</string>
     <string name="double_scrolling_gap_summ">Doble el scrolling amb l\'eReader</string>
-    <string name="swipe_sensitivity">Sensibilitat de lliscar</string>
-    <string name="tts">Text a discurs</string>
+    <string name="swipe_sensitivity" maxLength="41">Sensibilitat de lliscar</string>
+    <string name="tts" maxLength="41">Text a discurs</string>
     <string name="tts_summ">Llegeix en veu alta les preguntes i respostes si no s\'inclou arxiu de so</string>
-    <string name="sync_fetch_missing_media">Recupera els media en sincronitzar</string>
+    <string name="sync_fetch_missing_media" maxLength="41">Recupera els media en sincronitzar</string>
     <string name="sync_fetch_missing_media_summ">Recupera automàticament els mitjans que falten en sincronitzar.</string>
-    <string name="sync_account">Compte d\'AnkiWeb</string>
+    <string name="sync_account" maxLength="41">Compte d\'AnkiWeb</string>
     <string name="sync_account_summ_logged_out">No heu iniciat sessió</string>
     <string name="sync_account_summ_logged_in">%s</string>
-    <string name="automatic_sync_choice">Sincronització automàtica</string>
+    <string name="automatic_sync_choice" maxLength="41">Sincronització automàtica</string>
     <string name="automatic_sync_choice_summ">Sincronitza automàticament en l\'app al Inici/sortir si el sync anterior va ser fa més de 10 minuts.</string>
-    <string name="sync_status_badge">Display synchronization status</string>
+    <string name="sync_status_badge" maxLength="41">Display synchronization status</string>
     <string name="sync_status_badge_summ">Change the sync icon when changes can be uploaded</string>
-    <string name="day_theme">Tema diürn</string>
-    <string name="night_theme">Tema nocturn</string>
-    <string name="default_font">Tipus de lletra per omissió</string>
-    <string name="override_font">Aplicabilitat de tipus de lletra per defecte</string>
-    <string name="language">Idioma</string>
+    <string name="day_theme" maxLength="41">Tema diürn</string>
+    <string name="night_theme" maxLength="41">Tema nocturn</string>
+    <string name="default_font" maxLength="41">Tipus de lletra per omissió</string>
+    <string name="override_font" maxLength="41">Aplicabilitat de tipus de lletra per defecte</string>
+    <string name="language" maxLength="41">Idioma</string>
     <string name="language_system">Idioma del sistema</string>
-    <string name="notification_pref">Notificacions</string>
-    <string name="notification_pref_title">Avisi quan</string>
+    <string name="notification_pref" maxLength="41">Notificacions</string>
+    <string name="notification_pref_title" maxLength="41">Avisi quan</string>
     <string name="never_notify">No notifiquis mai</string>
     <string name="notify_when_pending">Missatges pendents disponibles</string>
     <string name="notification_minimum_cards_due">Més de %d cartes per fer</string>
-    <string name="notification_minimum_cards_due_vibrate">Vibra</string>
-    <string name="notification_minimum_cards_due_blink">Parpellejar el llum</string>
-    <string name="timeout_answer_text">Visualització automàtica de la resposta</string>
+    <string name="notification_minimum_cards_due_vibrate" maxLength="41">Vibra</string>
+    <string name="notification_minimum_cards_due_blink" maxLength="41">Parpellejar el llum</string>
+    <string name="timeout_answer_text" maxLength="41">Visualització automàtica de la resposta</string>
     <string name="timeout_answer_summ">Mostra la resposta automàticament sense aportació d\'usuari. El retard inclou el temps de les reproduccions automàtiques d\'arxius d\'àudio.</string>
-    <string name="timeout_answer_seconds">Temps per mostrar la resposta</string>
+    <string name="timeout_answer_seconds" maxLength="41">Temps per mostrar la resposta</string>
     <string name="timeout_answer_seconds_summ" comment="The time to wait (in seconds) in the reviewer before automatically showing the next question or answer">XXX s</string>
-    <string name="timeout_question_seconds">Temps per mostrar la següent pregunta</string>
+    <string name="timeout_question_seconds" maxLength="41">Temps per mostrar la següent pregunta</string>
     <string name="select_locale_title">Seleccioneu l\'idioma</string>
-    <string name="safe_display">Mode d\'exhibició segur</string>
+    <string name="software_render" maxLength="41">Disable card hardware render</string>
+    <string name="software_render_summ">Hardware render is faster but may have problems, specifically on Android 8/8.1. If you cannot see parts of the card review user interface, try this setting.</string>
+    <string name="safe_display" maxLength="41">Mode d\'exhibició segur</string>
     <string name="safe_display_summ">Disable all animations and use safer method for drawing cards. E-ink devices may require this.</string>
-    <string name="disable_extended_text_ui">Disable Single-Field Edit Mode</string>
+    <string name="disable_extended_text_ui" maxLength="41">Disable Single-Field Edit Mode</string>
     <!--See: multimedia_editor_popup_cloze. We can\'t use format strings as this is auto-generated-->
     <string name="disable_extended_text_ui_summ">Allows \'Cloze Deletion\' context menu when in landscape mode.</string>
-    <string name="vertical_centering">Alinear al centre</string>
+    <string name="vertical_centering" maxLength="41">Alinear al centre</string>
     <string name="vertical_centering_summ">Centra verticalment el contingut de cartes</string>
-    <string name="pref_backup_max">Màxim número de còpies de seguretat</string>
-    <string name="show_estimates">Mostra el temps al botó</string>
+    <string name="pref_backup_max" maxLength="41">Màxim número de còpies de seguretat</string>
+    <string name="show_estimates" maxLength="41">Mostra el temps al botó</string>
     <string name="show_estimates_summ">Mostra el temps de la pròxima revisió al botons de resposta</string>
-    <string name="show_top_bar">Show Top Bar</string>
+    <string name="show_top_bar" maxLength="41">Show Top Bar</string>
     <string name="show_top_bar_summ">Show card counts, flag and mark in top bar</string>
-    <string name="show_progress">Mostra el romanent</string>
+    <string name="show_progress" maxLength="41">Mostra el romanent</string>
     <string name="show_progress_summ">Mostra el recompte de cartes restants</string>
-    <string name="show_eta">Mostra el temps restant</string>
+    <string name="show_eta" maxLength="41">Mostra el temps restant</string>
     <string name="show_eta_summ">Mostra el temps restant</string>
-    <string name="use_current">Paquet per a cartes noves</string>
-    <string name="new_spread">Nova posició de la carta</string>
-    <string name="learn_cutoff">Informeu-vos de límit per davant</string>
-    <string name="time_limit">Límit de temps de Timebox</string>
+    <string name="use_current" maxLength="41">Paquet per a cartes noves</string>
+    <string name="new_spread" maxLength="41">Nova posició de la carta</string>
+    <string name="learn_cutoff" maxLength="41">Informeu-vos de límit per davant</string>
+    <string name="time_limit" maxLength="41">Límit de temps de Timebox</string>
     <string name="time_limit_summ">XXX min</string>
-    <string name="new_timezone">New timezone handling</string>
-    <string name="day_offset">Inici de l\'endemà</string>
+    <string name="new_timezone" maxLength="41">New timezone handling</string>
+    <string name="day_offset_with_description" maxLength="41">Start of next day</string>
     <string name="day_offset_summ">XXX hores passada la mitjanit</string>
-    <string name="sched_ver">Experimental V2 scheduler</string>
-    <string name="sched_ver_summ">Enable the experimental scheduler. Forces changes in one direction on next sync</string>
+    <string name="xlabel_dayoffset_seekbar" maxLength="41">Midnight</string>
+    <string name="ylabel_dayoffset_seekbar" maxLength="41">11PM</string>
+    <string name="sched_v2" maxLength="41">V2 scheduler</string>
+    <string name="sched_v2_summ">Enable the new scheduler. Forces changes in one direction on next sync</string>
     <string name="sched_ver_toggle_title">Confirma</string>
     <string name="sched_ver_2to1">This will reset any cards in learning, clear filtered decks, and change the scheduler version. Proceed?</string>
     <string name="sched_ver_1to2">The experimental scheduler could cause incorrect scheduling. Please ensure you have read the documentation first. Proceed?</string>
-    <string name="pref_keep_screen_on">Mantenir la pantalla encesa</string>
+    <string name="pref_keep_screen_on" maxLength="41">Mantenir la pantalla encesa</string>
     <string name="pref_keep_screen_on_summ">Desactiva la pantalla de bloqueig</string>
-    <string name="convert_fen_text">Suport de notació d\'escacs</string>
+    <string name="convert_fen_text" maxLength="41">Suport de notació d\'escacs</string>
     <string name="convert_fen_text_summ">Dibuixar el tauler d\'escacs de notació Forsyth-Edwards. S\'ha de justificar la notació en etiquetes [fen][/fen].</string>
-    <string name="enable_api_title">Activa l\'API de l\'AnkiDroid</string>
+    <string name="enable_api_title" maxLength="41">Activa l\'API de l\'AnkiDroid</string>
     <string name="enable_api_summary">Deixar altres apps connectar-se a AnkiDroid i llegir / escriure dades sense la seva intervenció</string>
-    <string name="custom_buttons">Butons de la barra lateral</string>
+    <string name="custom_buttons" maxLength="41">Butons de la barra lateral</string>
     <string name="custom_buttons_summary">Personalitzar quines accions apareixen a la barra lateral</string>
     <string name="custom_buttons_setting_always_show">Mostrar sempre</string>
     <string name="custom_buttons_setting_if_room">Mostrar si hi ha espai</string>
     <string name="custom_buttons_setting_menu_only">Només el menú</string>
-    <string name="reset_custom_buttons">Restableix als valors per defecte</string>
-    <string name="thirdparty_apps_title">Third-party API apps</string>
+    <string name="reset_custom_buttons" maxLength="41">Restableix als valors per defecte</string>
+    <string name="thirdparty_apps_title" maxLength="41">Third-party API apps</string>
     <string name="thirdparty_apps_summary">See a list of applications which make use of the AnkiDroid API such as dictionaries, utilities.</string>
-    <string name="html_javascript_debugging">HTML / Javascript Debugging</string>
+    <string name="html_javascript_debugging" maxLength="41">HTML / Javascript Debugging</string>
     <string name="html_javascript_debugging_summ">Enable remote WebView connections, and save card HTML to AnkiDroid directory</string>
     <!-- Advanced statistics settings -->
-    <string name="advanced_statistics_title">Estadístiques avançades</string>
-    <string name="enable_advanced_statistics_title">Permetre estadístiques avançades</string>
+    <string name="advanced_statistics_title" maxLength="41">Estadístiques avançades</string>
+    <string name="enable_advanced_statistics_title" maxLength="41">Permetre estadístiques avançades</string>
     <string name="enable_advanced_statistics_summ">Mostra la previsió d\'estadístiques basades en un càlcul o simulació de futures repasos (activat) o sobre els futurs repasos ja programats (desactivat).</string>
-    <string name="advanced_forecast_stats_compute_n_days_title">Computa els n primers dies, simula els restants</string>
-    <string name="advanced_forecast_stats_compute_precision_title">Precisió de la computació</string>
-    <string name="advanced_forecast_stats_mc_n_iterations_title">Nombre d\'iteracions de la simulació</string>
+    <string name="advanced_forecast_stats_compute_n_days_title" maxLength="41">Computa els n primers dies, simula els restants</string>
+    <string name="advanced_forecast_stats_compute_precision_title" maxLength="41">Precisió de la computació</string>
+    <string name="advanced_forecast_stats_mc_n_iterations_title" maxLength="41">Nombre d\'iteracions de la simulació</string>
     <!-- Custom sync server settings -->
-    <string name="custom_sync_server_title">Servidor de sincronització personalitzat</string>
-    <string name="custom_sync_server_enable_title">Utilitzar un servidor de sincronització personalitzat</string>
+    <string name="custom_sync_server_title" maxLength="41">Servidor de sincronització personalitzat</string>
+    <string name="custom_sync_server_enable_title" maxLength="41">Utilitzar un servidor de sincronització personalitzat</string>
     <string name="custom_sync_server_enable_summary">Si no vols utilitzar el servei de AnkiWeb patentada podeu especificar un servidor alternatiu aquí</string>
-    <string name="custom_sync_server_base_url_title">Url de sincronització</string>
+    <string name="custom_sync_server_base_url_title" maxLength="41">Url de sincronització</string>
     <string name="custom_sync_server_base_url_invalid">Sync url invalid</string>
-    <string name="custom_sync_server_media_url_title">Url de sincronització de multimèdia</string>
+    <string name="custom_sync_server_media_url_title" maxLength="41">Url de sincronització de multimèdia</string>
     <string name="custom_sync_server_media_url_invalid">Media sync url invalid</string>
     <!-- studyoptions -->
     <string name="deck_conf_group_summ">Changes to deck group options will affect multiple decks. If you wish to change only the current deck, please add a new options group first</string>
     <string name="studyoptions_limit_select_tags">Trieu les etiquetes</string>
     <!-- Deck configurations -->
-    <string name="deck_conf_deck_description">Deck description (affects current deck only)</string>
-    <string name="deck_conf_group">Grup d\'opcions</string>
+    <string name="deck_conf_deck_description" maxLength="41">Deck description (current deck only)</string>
+    <string name="deck_conf_group" maxLength="41">Grup d\'opcions</string>
     <plurals name="deck_conf_group_summ">
         <item quantity="one">%1$s\n%2$d paquet utilitza aquest grup</item>
         <item quantity="other">%1$s\n%2$d paquets utilitzen aquest grup</item>
     </plurals>
-    <string name="deck_conf_new_cards">Noves fitxes</string>
-    <string name="deck_conf_rev_cards" comment="Name of the deck options submenu for configuring reviews of due cards.">Revisions</string>
-    <string name="deck_conf_lps_cards" comment="Label of the submenu stating how lapses cards are treated.">Intervals</string>
-    <string name="deck_conf_general">General</string>
-    <string name="deck_conf_reminders">Recordatoris</string>
-    <string name="deck_conf_steps">Passos (en minuts)</string>
-    <string name="deck_conf_order">Ordre</string>
-    <string name="deck_conf_new_cards_day">Noves fitxes per dia</string>
-    <string name="deck_conf_graduating_ivl">Interval gradual</string>
+    <string name="deck_conf_new_cards" maxLength="41">Noves fitxes</string>
+    <string name="deck_conf_rev_cards" maxLength="41" comment="Name of the deck options submenu for configuring reviews of due cards.">Revisions</string>
+    <string name="deck_conf_lps_cards" maxLength="41" comment="Label of the submenu stating how lapses cards are treated.">Intervals</string>
+    <string name="deck_conf_general" maxLength="41">General</string>
+    <string name="deck_conf_reminders" maxLength="41">Recordatoris</string>
+    <string name="deck_conf_steps" maxLength="41">Passos (en minuts)</string>
+    <string name="deck_conf_order" maxLength="41">Ordre</string>
+    <string name="deck_conf_new_cards_day" maxLength="41">Noves fitxes per dia</string>
+    <string name="deck_conf_graduating_ivl" maxLength="41">Interval gradual</string>
     <string name="deck_conf_days">XXX dia(es)</string>
-    <string name="deck_conf_easy_ivl">Interval amb facilitat</string>
-    <string name="deck_conf_start_ease">Interval de partida</string>
-    <string name="deck_conf_max_rev">Nombre màxim de revisions/dia</string>
-    <string name="deck_conf_new_bury">Enterra noves cartes relacionades</string>
+    <string name="deck_conf_easy_ivl" maxLength="41">Interval amb facilitat</string>
+    <string name="deck_conf_start_ease" maxLength="41">Interval de partida</string>
+    <string name="deck_conf_max_rev" maxLength="41">Nombre màxim de revisions/dia</string>
+    <string name="deck_conf_new_bury" maxLength="41">Enterra noves cartes relacionades</string>
     <string name="deck_conf_new_bury_summ">Les noves targetes relacionades seran enterrades fins al dia següent</string>
-    <string name="deck_conf_rev_bury">Enterra revisions relacionades</string>
+    <string name="deck_conf_rev_bury" maxLength="41">Enterra revisions relacionades</string>
     <string name="deck_conf_rev_bury_summ">Les revisions relacionades estan enterrades fins al dia següent</string>
-    <string name="deck_conf_use_general_timeout_settings">Use general settings</string>
+    <string name="deck_conf_use_general_timeout_settings" maxLength="41">Use general settings</string>
     <string name="deck_conf_use_general_timeout_settings_summ">Use general \'Automatic display answer\' settings instead of using the settings for this group.</string>
-    <string name="deck_conf_easy_bonus">Bonus de facilitat</string>
-    <string name="deck_conf_hard_factor">Hard interval</string>
-    <string name="deck_conf_ivl_fct">Modificador de l\'interval</string>
-    <string name="deck_conf_max_ivl">Interval màxim</string>
-    <string name="deck_conf_new_lps_ivl">Interval nou</string>
-    <string name="deck_conf_min_ivl">Interval mínim</string>
-    <string name="deck_conf_leech_thres">Llindar de lapa</string>
+    <string name="deck_conf_easy_bonus" maxLength="41">Bonus de facilitat</string>
+    <string name="deck_conf_hard_factor" maxLength="41">Hard interval</string>
+    <string name="deck_conf_ivl_fct" maxLength="41">Modificador de l\'interval</string>
+    <string name="deck_conf_max_ivl" maxLength="41">Interval màxim</string>
+    <string name="deck_conf_new_lps_ivl" maxLength="41">Interval nou</string>
+    <string name="deck_conf_min_ivl" maxLength="41">Interval mínim</string>
+    <string name="deck_conf_leech_thres" maxLength="41">Llindar de lapa</string>
     <string name="deck_conf_fails">XXX errors</string>
-    <string name="deck_conf_leech_action">Acció de lapa</string>
-    <string name="deck_conf_max_time">Temps màxim de la resposta</string>
+    <string name="deck_conf_leech_action" maxLength="41">Acció de lapa</string>
+    <string name="deck_conf_max_time" maxLength="41">Temps màxim de la resposta</string>
     <string name="deck_conf_seconds">XXX segons</string>
-    <string name="deck_conf_timer">Temporitzador de mostra la resposta</string>
-    <string name="deck_conf_autoplay">Reprodueix l\'àudio automàticament</string>
-    <string name="deck_conf_replayq">Torna a mostra la pregunta</string>
+    <string name="deck_conf_timer" maxLength="41">Temporitzador de mostra la resposta</string>
+    <string name="deck_conf_autoplay" maxLength="41">Reprodueix l\'àudio automàticament</string>
+    <string name="deck_conf_replayq" maxLength="41">Torna a mostra la pregunta</string>
     <string name="deck_conf_replayq_summ">Al mostra la resposta, torna a reproduir l\'àudio de la pregunta i de la resposta</string>
-    <string name="deck_conf_manage">Administració dels grups</string>
+    <string name="deck_conf_manage" maxLength="41">Administració dels grups</string>
     <string name="deck_conf_manage_summ">Add and change options groups</string>
-    <string name="deck_conf_current_group">Grup actual</string>
-    <string name="deck_conf_rename" comment="Menu entry to rename a deck">Canvia el nom</string>
-    <string name="deck_conf_reset">Restaurar valors predeterminats</string>
+    <string name="deck_conf_current_group" maxLength="41">Grup actual</string>
+    <string name="deck_conf_rename" maxLength="41" comment="Menu entry to rename a deck">Canvia el nom</string>
+    <string name="deck_conf_reset" maxLength="41">Restaurar valors predeterminats</string>
     <string name="deck_conf_reset_message">Restaurar l\'actual grup d\'opcions als valors per defecte?</string>
-    <string name="deck_conf_add" comment="Adding a new deck option group">Afegeix una configuració</string>
+    <string name="deck_conf_add" maxLength="41" comment="Adding a new deck option group">Afegeix una configuració</string>
     <string name="deck_conf_add_summ">Crear una còpia de l\'actual grup d\'opcions</string>
     <string name="deck_conf_remove_message">Eliminar l\'actual grup d\'opcions?</string>
-    <string name="deck_conf_set_subdecks">Aplica per a totes les sub-coleccions</string>
+    <string name="deck_conf_set_subdecks" maxLength="41">Aplica per a totes les sub-coleccions</string>
     <plurals name="deck_conf_set_subdecks_summ">
         <item quantity="one">La sub-colecció %s utilitzarà aquest grup</item>
         <item quantity="other">Les sub-coleccions %s utilitzaran aquest grup</item>
     </plurals>
     <string name="deck_conf_set_subdecks_message">Vols aplicar l\'actual grup d\'opcions per a totes les sub-coleccions de aquesta targeta?</string>
-    <string name="pref_browser_editor_font">Tipus de lletra del navegador i de l\'editor</string>
-    <string name="deck_conf_cram_filter">Filtre</string>
-    <string name="deck_conf_cram_search">Cerca</string>
-    <string name="deck_conf_cram_limit">Limita-ho a</string>
-    <string name="deck_conf_cram_order">fitxes triades per</string>
-    <string name="deck_conf_cram_reschedule" comment="Title of the box labelled by deck_conf_cram_reschedule_summ">Torna a planificar</string>
+    <string name="pref_browser_editor_font" maxLength="41">Tipus de lletra del navegador i de l\'editor</string>
+    <string name="deck_conf_cram_filter" maxLength="41">Filtre</string>
+    <string name="deck_conf_cram_search" maxLength="41">Cerca</string>
+    <string name="deck_conf_cram_limit" maxLength="41">Limita-ho a</string>
+    <string name="deck_conf_cram_order" maxLength="41">fitxes triades per</string>
+    <string name="deck_conf_cram_reschedule" maxLength="41" comment="Title of the box labelled by deck_conf_cram_reschedule_summ">Torna a planificar</string>
     <string name="deck_conf_cram_reschedule_summ">Torna a planificar les fitxes en base a les meves respostes en aquest paquet</string>
-    <string name="deck_conf_cram_steps">Passos personalitzats (en minuts)</string>
-    <string name="deck_conf_cram_steps_summ">Defines els passos personalitzats</string>
-    <string name="deck_conf_reminders_enabled">Enable reminder notifications for decks in this deck group</string>
-    <string name="deck_conf_reminders_time">Recordar a</string>
+    <string name="deck_conf_cram_steps" maxLength="41">Passos personalitzats (en minuts)</string>
+    <string name="deck_conf_cram_steps_summ" maxLength="41">Defines els passos personalitzats</string>
+    <string name="deck_conf_reminders_enabled" maxLength="41">Enable notifications for this deck group</string>
+    <string name="deck_conf_reminders_time" maxLength="41">Recordar a</string>
     <!-- analytics options -->
     <string name="analytics_dialog_title">Help make AnkiDroid better!</string>
-    <string name="analytics_title">Share feature usage</string>
+    <string name="analytics_title" maxLength="41">Share feature usage</string>
     <string name="analytics_summ">You can contribute to AnkiDroid by helping the development team see which features people use</string>
-    <string name="note_editor_replace_newlines">Replace newlines with HTML</string>
+    <string name="note_editor_replace_newlines" maxLength="41">Replace newlines with HTML</string>
     <string name="note_editor_replace_newlines_summ">In the Note Editor, convert any instances of &lt;br&gt; to newlines when editing a card.</string>
-    <string name="no_code_formatting">Simple typed answer formatting</string>
+    <string name="no_code_formatting" maxLength="41">Simple typed answer formatting</string>
     <string name="no_code_formatting_summ">Fixes ‘􏿾’ appearing in typed answer results</string>
+    <string name="type_in_answer_focus" maxLength="41">Focus ‘type in answer’</string>
+    <string name="type_in_answer_focus_summ">Automatically focus the ‘type in answer’ field in the reviewer</string>
+    <!-- Open Changelog-->
+    <string name="open_changelog">Open Changelog</string>
 </resources>

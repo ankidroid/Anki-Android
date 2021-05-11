@@ -21,6 +21,7 @@ import android.content.SharedPreferences;
 import android.os.Environment;
 import android.text.format.Formatter;
 
+import androidx.annotation.CheckResult;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
@@ -33,6 +34,8 @@ import com.ichi2.libanki.utils.Time;
 import com.ichi2.preferences.PreferenceExtensions;
 import com.ichi2.utils.FileUtil;
 
+import net.ankiweb.rsdroid.BackendException;
+
 import java.io.File;
 import java.io.IOException;
 
@@ -40,6 +43,7 @@ import androidx.annotation.VisibleForTesting;
 import timber.log.Timber;
 
 import static com.ichi2.libanki.Consts.SCHEMA_VERSION;
+import static com.ichi2.libanki.Consts.SCHEMA_DOWNGRADE_SUPPORTED_VERSION;
 
 /**
  * Singleton which opens, stores, and closes the reference to the Collection.
@@ -137,6 +141,7 @@ public class CollectionHelper {
         try {
             return getCol(context).getTime();
         } catch (Exception e) {
+            Timber.w(e);
             return new SystemTime();
         }
     }
@@ -150,7 +155,11 @@ public class CollectionHelper {
     public synchronized Collection getColSafe(Context context) {
         try {
             return getCol(context);
+        } catch (BackendException.BackendDbException.BackendDbLockedException e) {
+            Timber.w(e);
+            return null;
         } catch (Exception e) {
+            Timber.w(e);
             AnkiDroidApp.sendExceptionReport(e, "CollectionHelper.getColSafe");
             return null;
         }
@@ -220,6 +229,7 @@ public class CollectionHelper {
             initializeAnkiDroidDirectory(getCurrentAnkiDroidDirectory(context));
             return true;
         } catch (StorageAccessException e) {
+            Timber.w(e);
             return false;
         }
     }
@@ -232,6 +242,7 @@ public class CollectionHelper {
      * @return the folder path
      */
     @SuppressWarnings("deprecation") // TODO Tracked in https://github.com/ankidroid/Anki-Android/issues/5304
+    @CheckResult
     public static String getDefaultAnkiDroidDirectory() {
         return new File(Environment.getExternalStorageDirectory(), "AnkiDroid").getAbsolutePath();
     }
@@ -376,9 +387,16 @@ public class CollectionHelper {
         col.getModels();
     }
 
-    public static boolean isFutureAnkiDroidVersion(Context context) throws UnknownDatabaseVersionException {
+    public static DatabaseVersion isFutureAnkiDroidVersion(Context context) throws UnknownDatabaseVersionException {
         int databaseVersion = getDatabaseVersion(context);
-        return databaseVersion > SCHEMA_VERSION;
+
+        if (databaseVersion > SCHEMA_VERSION && databaseVersion != SCHEMA_DOWNGRADE_SUPPORTED_VERSION) {
+            return DatabaseVersion.FUTURE_NOT_DOWNGRADABLE;
+        } else if (databaseVersion == SCHEMA_DOWNGRADE_SUPPORTED_VERSION) {
+            return DatabaseVersion.FUTURE_DOWNGRADABLE;
+        } else {
+            return DatabaseVersion.USABLE;
+        }
     }
 
 
@@ -388,8 +406,20 @@ public class CollectionHelper {
             return col.queryVer();
         } catch (Exception e) {
             Timber.w(e, "Failed to query version");
+            // fallback to a pure DB implementation
             return Storage.getDatabaseVersion(getCollectionPath(context));
         }
     }
 
+    public enum DatabaseVersion {
+        USABLE,
+        FUTURE_DOWNGRADABLE,
+        FUTURE_NOT_DOWNGRADABLE,
+        UNKNOWN
+    }
+
+    @VisibleForTesting(otherwise = VisibleForTesting.NONE)
+    public void setColForTests(Collection col) {
+        this.mCollection = col;
+    }
 }

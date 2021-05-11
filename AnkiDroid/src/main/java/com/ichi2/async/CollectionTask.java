@@ -30,12 +30,14 @@ import com.ichi2.anki.CardBrowser;
 import com.ichi2.anki.CardUtils;
 import com.ichi2.anki.CollectionHelper;
 import com.ichi2.anki.R;
+import com.ichi2.anki.StudyOptionsFragment;
 import com.ichi2.anki.TemporaryModel;
 import com.ichi2.anki.exception.ConfirmModSchemaException;
 import com.ichi2.anki.exception.ImportExportException;
 import com.ichi2.libanki.Media;
 import com.ichi2.libanki.Model;
-import com.ichi2.libanki.Undoable;
+import com.ichi2.libanki.Models;
+import com.ichi2.libanki.UndoAction;
 import com.ichi2.libanki.WrongId;
 import com.ichi2.libanki.sched.AbstractSched;
 import com.ichi2.libanki.AnkiPackageExporter;
@@ -62,7 +64,6 @@ import com.ichi2.utils.JSONObject;
 import com.ichi2.utils.PairWithBoolean;
 import com.ichi2.utils.PairWithCard;
 import com.ichi2.utils.SyncStatus;
-import com.ichi2.utils.ThreadUtil;
 import com.ichi2.utils.Triple;
 
 import java.io.File;
@@ -85,30 +86,27 @@ import org.apache.commons.compress.archivers.zip.ZipFile;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.annotation.StringRes;
 import androidx.annotation.VisibleForTesting;
 import timber.log.Timber;
 
 import static com.ichi2.async.TaskManager.setLatestInstance;
 import static com.ichi2.libanki.Card.deepCopyCardArray;
-import static com.ichi2.libanki.Collection.DismissType.BURY_CARD;
-import static com.ichi2.libanki.Collection.DismissType.BURY_NOTE;
-import static com.ichi2.libanki.Collection.DismissType.REPOSITION_CARDS;
-import static com.ichi2.libanki.Collection.DismissType.RESCHEDULE_CARDS;
-import static com.ichi2.libanki.Collection.DismissType.RESET_CARDS;
-import static com.ichi2.libanki.Collection.DismissType.SUSPEND_NOTE;
-import static com.ichi2.libanki.Consts.DECK_DYN;
-import static com.ichi2.libanki.Undoable.*;
-import static com.ichi2.utils.BooleanGetter.False;
-import static com.ichi2.utils.BooleanGetter.True;
-import static com.ichi2.utils.BooleanGetter.fromBoolean;
+import static com.ichi2.libanki.UndoAction.*;
+import static com.ichi2.utils.BooleanGetter.FALSE;
+import static com.ichi2.utils.BooleanGetter.TRUE;
 
 /**
  * Loading in the background, so that AnkiDroid does not look like frozen.
  */
-public class CollectionTask<ProgressListener, ProgressBackground extends ProgressListener, ResultListener, ResultBackground extends ResultListener> extends BaseAsyncTask<Void, ProgressBackground, ResultBackground> {
+public class CollectionTask<ProgressBackground, ResultBackground> extends BaseAsyncTask<Void, ProgressBackground, ResultBackground> {
 
     public abstract static class Task<ProgressBackground, ResultBackground> {
-        protected abstract ResultBackground task(Collection col, ProgressSenderAndCancelListener<ProgressBackground> collectionTask);
+        protected abstract ResultBackground task(@NonNull Collection col, @NonNull ProgressSenderAndCancelListener<ProgressBackground> collectionTask);
+
+        protected boolean requiresOpenCollection() {
+            return true;
+        }
     }
 
     /**
@@ -116,27 +114,6 @@ public class CollectionTask<ProgressListener, ProgressBackground extends Progres
      */
     private Context mContext;
 
-    /**
-     * Block the current thread until all CollectionTasks have finished.
-     * @param timeoutSeconds timeout in seconds
-     * @return whether all tasks exited successfully
-     */
-    @SuppressWarnings("UnusedReturnValue")
-    public static boolean waitForAllToFinish(Integer timeoutSeconds) {
-        // HACK: This should be better - there is currently a race condition in sLatestInstance, and no means to obtain this information.
-        // This should work in all reasonable cases given how few tasks we have concurrently blocking.
-        boolean result;
-        result = TaskManager.waitToFinish(timeoutSeconds / 4);
-        ThreadUtil.sleep(10);
-        result &= TaskManager.waitToFinish(timeoutSeconds / 4);
-        ThreadUtil.sleep(10);
-        result &= TaskManager.waitToFinish(timeoutSeconds / 4);
-        ThreadUtil.sleep(10);
-        result &= TaskManager.waitToFinish(timeoutSeconds / 4);
-        ThreadUtil.sleep(10);
-        Timber.i("Waited for all tasks to finish");
-        return result;
-    }
 
     /** Cancel the current task.
      * @return whether cancelling did occur.*/
@@ -168,15 +145,14 @@ public class CollectionTask<ProgressListener, ProgressBackground extends Progres
     public Task<ProgressBackground, ResultBackground> getTask() {
         return mTask;
     }
-    private final TaskListener<ProgressListener, ResultListener> mListener;
+    private final TaskListener<? super ProgressBackground, ? super ResultBackground> mListener;
     private CollectionTask mPreviousTask;
 
 
-    protected CollectionTask(Task<ProgressBackground, ResultBackground> task, TaskListener<ProgressListener, ResultListener> listener, CollectionTask previousTask) {
+    protected CollectionTask(Task<ProgressBackground, ResultBackground> task, TaskListener<? super ProgressBackground, ? super ResultBackground> listener, CollectionTask previousTask) {
         mTask = task;
         mListener = listener;
         mPreviousTask = previousTask;
-        TaskManager.addTasks(this);
     }
 
     @Override
@@ -214,7 +190,7 @@ public class CollectionTask<ProgressListener, ProgressBackground extends Progres
         mContext = AnkiDroidApp.getInstance().getApplicationContext();
 
         // Skip the task if the collection cannot be opened
-        if ( mTask.getClass() != RepairCollectionn.class && mTask.getClass() != ImportReplace.class && CollectionHelper.getInstance().getColSafe(mContext) == null) {
+        if (mTask.requiresOpenCollection() && CollectionHelper.getInstance().getColSafe(mContext) == null) {
             Timber.e("CollectionTask CollectionTask %s as Collection could not be opened", mTask.getClass());
             return null;
         }
@@ -263,20 +239,27 @@ public class CollectionTask<ProgressListener, ProgressBackground extends Progres
     }
 
     public static class AddNote extends Task<Integer, Boolean> {
-        private final Note note;
+        private final Note mNote;
+        private final Models.AllowEmpty mAllowEmpty;
 
+
+        public AddNote(Note note, Models.AllowEmpty allowEmpty) {
+            this.mNote = note;
+            this.mAllowEmpty = allowEmpty;
+        }
 
         public AddNote(Note note) {
-            this.note = note;
+            this(note, Models.AllowEmpty.ONLY_CLOZE);
         }
 
 
-        protected Boolean task(Collection col, ProgressSenderAndCancelListener<Integer> collectionTask) {
+        @Override
+        protected Boolean task(@NonNull Collection col, @NonNull ProgressSenderAndCancelListener<Integer> collectionTask) {
             Timber.d("doInBackgroundAddNote");
             try {
                 DB db = col.getDb();
                 db.executeInTransaction(() -> {
-                        int value = col.addNote(note);
+                        int value = col.addNote(mNote, mAllowEmpty);
                         collectionTask.doProgress(value);
                     });
             } catch (RuntimeException e) {
@@ -290,33 +273,33 @@ public class CollectionTask<ProgressListener, ProgressBackground extends Progres
 
 
     public static class UpdateNote extends Task<PairWithCard<String>, BooleanGetter> {
-        private final Card editCard;
-        private final boolean fromReviewer;
-        private final boolean canAccessScheduler;
+        private final Card mEditCard;
+        private final boolean mFromReviewer;
+        private final boolean mCanAccessScheduler;
 
 
         public UpdateNote(Card editCard, boolean fromReviewer, boolean canAccessScheduler) {
-            this.editCard = editCard;
-            this.fromReviewer = fromReviewer;
-            this.canAccessScheduler = canAccessScheduler;
+            this.mEditCard = editCard;
+            this.mFromReviewer = fromReviewer;
+            this.mCanAccessScheduler = canAccessScheduler;
         }
 
-        protected BooleanGetter task(Collection col, ProgressSenderAndCancelListener<PairWithCard<String>> collectionTask) {
+        protected BooleanGetter task(@NonNull Collection col, @NonNull ProgressSenderAndCancelListener<PairWithCard<String>> collectionTask) {
             Timber.d("doInBackgroundUpdateNote");
             // Save the note
             AbstractSched sched = col.getSched();
-            Note editNote = editCard.note();
+            Note editNote = mEditCard.note();
 
             try {
                 col.getDb().executeInTransaction(() -> {
                     // TODO: undo integration
                     editNote.flush();
                     // flush card too, in case, did has been changed
-                    editCard.flush();
-                    if (fromReviewer) {
+                    mEditCard.flush();
+                    if (mFromReviewer) {
                         Card newCard;
-                        if (col.getDecks().active().contains(editCard.getDid()) || !canAccessScheduler) {
-                            newCard = editCard;
+                        if (col.getDecks().active().contains(mEditCard.getDid()) || !mCanAccessScheduler) {
+                            newCard = mEditCard;
                             newCard.load();
                             // reload qa-cache
                             newCard.q(true);
@@ -325,24 +308,24 @@ public class CollectionTask<ProgressListener, ProgressBackground extends Progres
                         }
                         collectionTask.doProgress(new PairWithCard<>(newCard, null)); // check: are there deleted too?
                     } else {
-                        collectionTask.doProgress(new PairWithCard<>(editCard, editNote.stringTags()));
+                        collectionTask.doProgress(new PairWithCard<>(mEditCard, editNote.stringTags()));
                     }
                 });
             } catch (RuntimeException e) {
                 Timber.e(e, "doInBackgroundUpdateNote - RuntimeException on updating note");
                 AnkiDroidApp.sendExceptionReport(e, "doInBackgroundUpdateNote");
-                return False;
+                return FALSE;
             }
-            return True;
+            return TRUE;
         }
 
         public boolean isFromReviewer() {
-            return fromReviewer;
+            return mFromReviewer;
         }
     }
 
     public static class GetCard extends Task<Card, BooleanGetter> {
-        protected BooleanGetter task(Collection col, ProgressSenderAndCancelListener<Card> collectionTask) {
+        protected BooleanGetter task(@NonNull Collection col, @NonNull ProgressSenderAndCancelListener<Card> collectionTask) {
             AbstractSched sched = col.getSched();
             Timber.i("Obtaining card");
             Card newCard = sched.getCard();
@@ -351,28 +334,28 @@ public class CollectionTask<ProgressListener, ProgressBackground extends Progres
                 newCard._getQA(true);
             }
             collectionTask.doProgress(newCard);
-            return True;
+            return TRUE;
         }
     }
 
     public static class AnswerAndGetCard extends GetCard {
-        private final @NonNull Card oldCard;
-        private final @Consts.BUTTON_TYPE int ease;
+        private final @NonNull Card mOldCard;
+        private final @Consts.BUTTON_TYPE int mEase;
         public AnswerAndGetCard(@NonNull Card oldCard, @Consts.BUTTON_TYPE int ease) {
-            this.oldCard = oldCard;
-            this.ease = ease;
+            this.mOldCard = oldCard;
+            this.mEase = ease;
         }
 
-        protected BooleanGetter task(Collection col, ProgressSenderAndCancelListener<Card> collectionTask) {
-            Timber.i("Answering card %d", oldCard.getId());
-            col.getSched().answerCard(oldCard, ease);
+        protected BooleanGetter task(@NonNull Collection col, @NonNull ProgressSenderAndCancelListener<Card> collectionTask) {
+            Timber.i("Answering card %d", mOldCard.getId());
+            col.getSched().answerCard(mOldCard, mEase);
             return super.task(col, collectionTask);
         }
     }
 
 
     public static class LoadDeck extends Task<Void, List<DeckTreeNode>> {
-        protected List<DeckTreeNode> task(Collection col, ProgressSenderAndCancelListener<Void> collectionTask) {
+        protected List<DeckTreeNode> task(@NonNull Collection col, @NonNull ProgressSenderAndCancelListener<Void> collectionTask) {
             Timber.d("doInBackgroundLoadDeckCounts");
             try {
                 // Get due tree
@@ -386,7 +369,7 @@ public class CollectionTask<ProgressListener, ProgressBackground extends Progres
 
 
     public static class LoadDeckCounts extends Task<Void, List<DeckDueTreeNode>> {
-        protected List<DeckDueTreeNode> task(Collection col, ProgressSenderAndCancelListener<Void> collectionTask) {
+        protected List<DeckDueTreeNode> task(@NonNull Collection col, @NonNull ProgressSenderAndCancelListener<Void> collectionTask) {
             Timber.d("doInBackgroundLoadDeckCounts");
             try {
                 // Get due tree
@@ -399,19 +382,19 @@ public class CollectionTask<ProgressListener, ProgressBackground extends Progres
     }
 
     public static class SaveCollection extends Task<Void, Void> {
-        private final boolean syncIgnoresDatabaseModification;
+        private final boolean mSyncIgnoresDatabaseModification;
 
 
         public SaveCollection(boolean syncIgnoresDatabaseModification) {
-            this.syncIgnoresDatabaseModification = syncIgnoresDatabaseModification;
+            this.mSyncIgnoresDatabaseModification = syncIgnoresDatabaseModification;
         }
 
 
-        protected Void task(Collection col, ProgressSenderAndCancelListener<Void> collectionTask) {
+        protected Void task(@NonNull Collection col, @NonNull ProgressSenderAndCancelListener<Void> collectionTask) {
             Timber.d("doInBackgroundSaveCollection");
             if (col != null) {
                 try {
-                    if (syncIgnoresDatabaseModification) {
+                    if (mSyncIgnoresDatabaseModification) {
                         SyncStatus.ignoreDatabaseModification(col::save);
                     } else {
                         col.save();
@@ -425,152 +408,188 @@ public class CollectionTask<ProgressListener, ProgressBackground extends Progres
     }
 
 
-
-    private static class UndoSuspendCard extends Undoable {
-        private final Card suspendedCard;
-
-
-        public UndoSuspendCard(Card suspendedCard) {
-            super(Collection.DismissType.SUSPEND_CARD);
-            this.suspendedCard = suspendedCard;
-        }
-
-
-        public @Nullable Card undo(@NonNull Collection col) {
-            Timber.i("UNDO: Suspend Card %d", suspendedCard.getId());
-            suspendedCard.flush(false);
-            return suspendedCard;
-        }
-    }
-
-
-    private static class UndoDeleteNote extends Undoable {
-        private final Note note;
-        private final ArrayList<Card> allCs;
-        private final @NonNull Card card;
+    private static class UndoDeleteNote extends UndoAction {
+        private final Note mNote;
+        private final ArrayList<Card> mAllCs;
+        private final @NonNull Card mCard;
 
 
         public UndoDeleteNote(Note note, ArrayList<Card> allCs, @NonNull Card card) {
-            super(Collection.DismissType.DELETE_NOTE);
-            this.note = note;
-            this.allCs = allCs;
-            this.card = card;
+            super(R.string.menu_delete_note);
+            this.mNote = note;
+            this.mAllCs = allCs;
+            this.mCard = card;
         }
 
 
         public @Nullable Card undo(@NonNull Collection col) {
             Timber.i("Undo: Delete note");
-            ArrayList<Long> ids = new ArrayList<>(allCs.size() + 1 );
-            note.flush(note.getMod(), false);
-            ids.add(note.getId());
-            for (Card c : allCs) {
+            ArrayList<Long> ids = new ArrayList<>(mAllCs.size() + 1 );
+            mNote.flush(mNote.getMod(), false);
+            ids.add(mNote.getId());
+            for (Card c : mAllCs) {
                 c.flush(false);
                 ids.add(c.getId());
             }
             col.getDb().execute("DELETE FROM graves WHERE oid IN " + Utils.ids2str(ids));
-            return card;
+            return mCard;
         }
     }
 
 
-    public static class DismissNote extends Task<Card, BooleanGetter> {
-        private final Card card;
-        private final Collection.DismissType type;
+
+    /**
+     * Represents an action that remove a card from the Reviewer without reviewing it.
+     */
+    public static abstract class DismissNote extends Task<Card, BooleanGetter> {
+        protected final Card mCard;
 
 
-        public DismissNote(Card card, Collection.DismissType type) {
-            this.card = card;
-            this.type = type;
+        /**
+         * @param card The card that was in the reviewer. It usually is cloned and then restored if the action is undone
+         */
+        public DismissNote(Card card) {
+            this.mCard = card;
         }
 
 
-        protected BooleanGetter task(Collection col, ProgressSenderAndCancelListener<Card> collectionTask) {
-            AbstractSched sched = col.getSched();
-            Note note = card.note();
+        /**
+         * The part of the task that is specific to this object. E.g. suspending, deleting, burying...
+         * @param col The collection
+         *
+         */
+        protected abstract void actualTask(Collection col);
+
+
+        /**
+         * @param col
+         * @param collectionTask A listener for the task. It waits for a card to display in the reviewer.
+         *                       Fetching a new card can possibly be cancelled, however the actual task is not cancellable.
+                                 Indeed, if you clicked on suspend and leave the reviewer, the card should still be reviewed and there is no need for a next card.
+         * @return whether the action ended succesfully
+         */
+        protected BooleanGetter task(@NonNull Collection col, @NonNull ProgressSenderAndCancelListener<Card> collectionTask) {
             try {
                 col.getDb().executeInTransaction(() -> {
-                    sched.deferReset();
-                    switch (type) {
-                        case BURY_CARD:
-                            // collect undo information
-                            col.markUndo(revertToProvidedState(BURY_CARD, card));
-                            // then bury
-                            sched.buryCards(new long[] {card.getId()});
-                            break;
-                        case BURY_NOTE:
-                            // collect undo information
-                            col.markUndo(revertToProvidedState(BURY_NOTE, card));
-                            // then bury
-                            sched.buryNote(note.getId());
-                            break;
-                        case SUSPEND_CARD:
-                            // collect undo information
-                            Card suspendedCard = card.clone();
-                            col.markUndo(new UndoSuspendCard(suspendedCard));
-                            // suspend card
-                            if (card.getQueue() == Consts.QUEUE_TYPE_SUSPENDED) {
-                                sched.unsuspendCards(new long[] {card.getId()});
-                            } else {
-                                sched.suspendCards(new long[] {card.getId()});
-                            }
-                            break;
-                        case SUSPEND_NOTE: {
-                            // collect undo information
-                            ArrayList<Card> cards = note.cards();
-                            long[] cids = new long[cards.size()];
-                            for (int i = 0; i < cards.size(); i++) {
-                                cids[i] = cards.get(i).getId();
-                            }
-                            col.markUndo(revertToProvidedState(SUSPEND_NOTE, card));
-                            // suspend note
-                            sched.suspendCards(cids);
-                            break;
-                        }
-
-                        case DELETE_NOTE: {
-                            // collect undo information
-                            ArrayList<Card> allCs = note.cards();
-                            col.markUndo(new UndoDeleteNote(note, allCs, card));
-                            // delete note
-                            col.remNotes(new long[] {note.getId()});
-                            break;
-                        }
-                    }
+                    col.getSched().deferReset();
+                    actualTask(col);
                     // With sHadCardQueue set, getCard() resets the scheduler prior to getting the next card
                     collectionTask.doProgress(col.getSched().getCard());
                 });
             } catch (RuntimeException e) {
-                Timber.e(e, "doInBackgroundDismissNote - RuntimeException on dismissing note, dismiss type %s", type);
+                Timber.e(e, "doInBackgroundDismissNote - RuntimeException on dismissing note, dismiss type %s", this.getClass());
                 AnkiDroidApp.sendExceptionReport(e, "doInBackgroundDismissNote");
-                return False;
+                return FALSE;
             }
-            return True;
+            return TRUE;
+        }
+    }
+
+    public static class BuryCard extends DismissNote {
+        public BuryCard(Card card) {
+            super(card);
+        }
+
+        @Override
+        protected void actualTask(Collection col) {
+            // collect undo information
+            col.markUndo(revertCardToProvidedState(R.string.menu_bury_card, mCard));
+            // then bury
+            col.getSched().buryCards(new long[] {mCard.getId()});
+        }
+    }
+
+    public static class BuryNote extends DismissNote {
+        public BuryNote(Card card) {
+            super(card);
+        }
+
+        @Override
+        protected void actualTask(Collection col) {
+            // collect undo information
+            col.markUndo(revertNoteToProvidedState(R.string.menu_bury_note, mCard));
+            // then bury
+            col.getSched().buryNote(mCard.note().getId());
+        }
+    }
+
+    public static class SuspendCard extends DismissNote {
+        public SuspendCard(Card card) {
+            super(card);
+        }
+
+        @Override
+        protected void actualTask(Collection col) {
+            // collect undo information
+            Card suspendedCard = mCard.clone();
+            col.markUndo(revertCardToProvidedState(R.string.menu_suspend_card, suspendedCard));
+            // suspend card
+            if (mCard.getQueue() == Consts.QUEUE_TYPE_SUSPENDED) {
+                col.getSched().unsuspendCards(new long[] {mCard.getId()});
+            } else {
+                col.getSched().suspendCards(new long[] {mCard.getId()});
+            }
+        }
+    }
+
+    public static class SuspendNote extends DismissNote {
+        public SuspendNote(Card card) {
+            super(card);
+        }
+
+        @Override
+        protected void actualTask(Collection col) {
+            // collect undo information
+            ArrayList<Card> cards = mCard.note().cards();
+            long[] cids = new long[cards.size()];
+            for (int i = 0; i < cards.size(); i++) {
+                cids[i] = cards.get(i).getId();
+            }
+            col.markUndo(revertNoteToProvidedState(R.string.menu_suspend_note, mCard));
+            // suspend note
+            col.getSched().suspendCards(cids);
+        }
+    }
+
+    public static class DeleteNote extends DismissNote {
+        public DeleteNote(Card card) {
+            super(card);
+        }
+
+        @Override
+        protected void actualTask(Collection col) {
+            Note note = mCard.note();
+            // collect undo information
+            ArrayList<Card> allCs = note.cards();
+            col.markUndo(new UndoDeleteNote(note, allCs, mCard));
+            // delete note
+            col.remNotes(new long[] {note.getId()});
         }
     }
 
 
-    protected static class UndoSuspendCardMulti extends Undoable {
-        private final Card[] cards;
-        private final boolean[] originalSuspended;
+    protected static class UndoSuspendCardMulti extends UndoAction {
+        private final Card[] mCards;
+        private final boolean[] mOriginalSuspended;
 
         /** @param hasUnsuspended  whether there were any unsuspended card (in which card the action was "Suspend",
          *                          otherwise the action was "Unsuspend")  */
         public UndoSuspendCardMulti(Card[] cards, boolean[] originalSuspended,
                                     boolean hasUnsuspended) {
-            super((hasUnsuspended) ? Collection.DismissType.SUSPEND_CARD_MULTI: Collection.DismissType.UNSUSPEND_CARD_MULTI);
-            this.cards = cards;
-            this.originalSuspended = originalSuspended;
+            super((hasUnsuspended) ? R.string.menu_suspend_card : R.string.card_browser_unsuspend_card);
+            this.mCards = cards;
+            this.mOriginalSuspended = originalSuspended;
         }
 
 
         public @Nullable Card undo(@NonNull Collection col) {
             Timber.i("Undo: Suspend multiple cards");
-            int nbOfCards = cards.length;
+            int nbOfCards = mCards.length;
             List<Long> toSuspendIds = new ArrayList<>(nbOfCards);
             List<Long> toUnsuspendIds = new ArrayList<>(nbOfCards);
             for (int i = 0; i < nbOfCards; i++) {
-                Card card = cards[i];
-                if (originalSuspended[i]) {
+                Card card = mCards[i];
+                if (mOriginalSuspended[i]) {
                     toSuspendIds.add(card.getId());
                 } else {
                     toUnsuspendIds.add(card.getId());
@@ -596,27 +615,27 @@ public class CollectionTask<ProgressListener, ProgressBackground extends Progres
     }
 
 
-    private static class UndoDeleteNoteMulti extends Undoable {
-        private final Note[] notesArr;
-        private final List<Card> allCards;
+    private static class UndoDeleteNoteMulti extends UndoAction {
+        private final Note[] mNotesArr;
+        private final List<Card> mAllCards;
 
 
         public UndoDeleteNoteMulti(Note[] notesArr, List<Card> allCards) {
-            super(Collection.DismissType.DELETE_NOTE_MULTI);
-            this.notesArr = notesArr;
-            this.allCards = allCards;
+            super(R.string.card_browser_delete_card);
+            this.mNotesArr = notesArr;
+            this.mAllCards = allCards;
         }
 
 
         public @Nullable Card undo(@NonNull Collection col) {
             Timber.i("Undo: Delete notes");
             // undo all of these at once instead of one-by-one
-            ArrayList<Long> ids = new ArrayList<>(notesArr.length + allCards.size());
-            for (Note n : notesArr) {
+            ArrayList<Long> ids = new ArrayList<>(mNotesArr.length + mAllCards.size());
+            for (Note n : mNotesArr) {
                 n.flush(n.getMod(), false);
                 ids.add(n.getId());
             }
-            for (Card c : allCards) {
+            for (Card c : mAllCards) {
                 c.flush(false);
                 ids.add(c.getId());
             }
@@ -627,25 +646,25 @@ public class CollectionTask<ProgressListener, ProgressBackground extends Progres
     }
 
     
-    private static class UndoChangeDeckMulti extends Undoable {
-        private final Card[] cards;
-        private final long[] originalDids;
+    private static class UndoChangeDeckMulti extends UndoAction {
+        private final Card[] mCards;
+        private final long[] mOriginalDids;
 
 
         public UndoChangeDeckMulti(Card[] cards, long[] originalDids) {
-            super(Collection.DismissType.CHANGE_DECK_MULTI);
-            this.cards = cards;
-            this.originalDids = originalDids;
+            super(R.string.undo_action_change_deck_multi);
+            this.mCards = cards;
+            this.mOriginalDids = originalDids;
         }
 
 
         public @Nullable Card undo(@NonNull Collection col) {
             Timber.i("Undo: Change Decks");
             // move cards to original deck
-            for (int i = 0; i < cards.length; i++) {
-                Card card = cards[i];
+            for (int i = 0; i < mCards.length; i++) {
+                Card card = mCards[i];
                 card.load();
-                card.setDid(originalDids[i]);
+                card.setDid(mOriginalDids[i]);
                 Note note = card.note();
                 note.flush();
                 card.flush();
@@ -655,41 +674,41 @@ public class CollectionTask<ProgressListener, ProgressBackground extends Progres
         }
     }
 
-    private static class UndoMarkNoteMulti extends Undoable {
-        private final List<Note> originalMarked;
-        private final List<Note> originalUnmarked;
+    private static class UndoMarkNoteMulti extends UndoAction {
+        private final List<Note> mOriginalMarked;
+        private final List<Note> mOriginalUnmarked;
 
         /** @param hasUnmarked whether there were any unmarked card (in which card the action was "mark",
          *                      otherwise the action was "Unmark")  */
         public UndoMarkNoteMulti(List<Note> originalMarked, List<Note> originalUnmarked, boolean hasUnmarked) {
-            super((hasUnmarked) ? Collection.DismissType.MARK_NOTE_MULTI : Collection.DismissType.UNMARK_NOTE_MULTI);
-            this.originalMarked = originalMarked;
-            this.originalUnmarked = originalUnmarked;
+            super((hasUnmarked) ? R.string.card_browser_mark_card : R.string.card_browser_unmark_card);
+            this.mOriginalMarked = originalMarked;
+            this.mOriginalUnmarked = originalUnmarked;
         }
 
 
         public @Nullable Card undo(@NonNull Collection col) {
             Timber.i("Undo: Mark notes");
-            CardUtils.markAll(originalMarked, true);
-            CardUtils.markAll(originalUnmarked, false);
+            CardUtils.markAll(mOriginalMarked, true);
+            CardUtils.markAll(mOriginalUnmarked, false);
             return null;  // don't fetch new card
         }
     }
 
 
-    private static class UndoRepositionRescheduleResetCards extends Undoable {
-        private final Card[] cards_copied;
+    private static class UndoRepositionRescheduleResetCards extends UndoAction {
+        private final Card[] mCardsCopied;
 
 
-        public UndoRepositionRescheduleResetCards(Collection.DismissType type, Card[] cards_copied) {
-            super(type);
-            this.cards_copied = cards_copied;
+        public UndoRepositionRescheduleResetCards(@StringRes int undoNameId, Card[] cards_copied) {
+            super(undoNameId);
+            this.mCardsCopied = cards_copied;
         }
 
 
         public @Nullable Card undo(@NonNull Collection col) {
-            Timber.i("Undoing action of type %s on %d cards", getDismissType(), cards_copied.length);
-            for (Card card : cards_copied) {
+            Timber.i("Undoing action of type %s on %d cards", getClass(), mCardsCopied.length);
+            for (Card card : mCardsCopied) {
                 card.flush(false);
             }
             // /* card schedule change undone, reset and get
@@ -707,7 +726,13 @@ public class CollectionTask<ProgressListener, ProgressBackground extends Progres
             this.mCardIds = cardIds;
         }
 
-        protected PairWithBoolean<Card[]> task(Collection col, ProgressSenderAndCancelListener<Progress> collectionTask) {
+
+        /**
+         * @param col
+         * @param collectionTask Represents the background tasks.
+         * @return whether the task succeeded, and the array of cards affected.
+         */
+        protected PairWithBoolean<Card[]> task(@NonNull Collection col, @NonNull ProgressSenderAndCancelListener<Progress> collectionTask) {
             // query cards
             Card[] cards = new Card[mCardIds.size()];
             for (int i = 0; i < mCardIds.size(); i++) {
@@ -717,9 +742,9 @@ public class CollectionTask<ProgressListener, ProgressBackground extends Progres
             try {
                 col.getDb().getDatabase().beginTransaction();
                 try {
-                    PairWithBoolean<Card[]> ret = actualTask(col, collectionTask, cards);
-                    if (ret != null) {
-                        return ret;
+                    boolean succeeded = actualTask(col, collectionTask, cards);
+                    if (!succeeded) {
+                        return new PairWithBoolean<>(false, null);
                     }
                     col.getDb().getDatabase().setTransactionSuccessful();
                 } finally {
@@ -739,9 +764,9 @@ public class CollectionTask<ProgressListener, ProgressBackground extends Progres
          * @param col The collection
          * @param collectionTask, where to send progress and listen for cancellation
          * @param cards Cards to which the task should be applied
-         * @return value to return, or null if `task` should deal with it directly.
+         * @return Whether the tasks succeeded.
          */
-        protected abstract PairWithBoolean<Card[]> actualTask(Collection col, ProgressSenderAndCancelListener<Progress> collectionTask, Card[] cards);
+        protected abstract boolean actualTask(Collection col, ProgressSenderAndCancelListener<Progress> collectionTask, Card[] cards);
     }
 
     public static class SuspendCardMulti extends DismissNotes<Void> {
@@ -749,7 +774,7 @@ public class CollectionTask<ProgressListener, ProgressBackground extends Progres
             super(cardIds);
         }
 
-        protected PairWithBoolean<Card[]> actualTask(Collection col, ProgressSenderAndCancelListener<Void> collectionTask, Card[] cards) {
+        protected boolean actualTask(Collection col, ProgressSenderAndCancelListener<Void> collectionTask, Card[] cards) {
             AbstractSched sched = col.getSched();
             // collect undo information
             long[] cids = new long[cards.length];
@@ -783,7 +808,7 @@ public class CollectionTask<ProgressListener, ProgressBackground extends Progres
             }
 
             sched.deferReset();
-            return null;
+            return true;
         }
     }
 
@@ -795,12 +820,12 @@ public class CollectionTask<ProgressListener, ProgressBackground extends Progres
             mFlag = flag;
         }
 
-        protected PairWithBoolean<Card[]> actualTask(Collection col, ProgressSenderAndCancelListener<Void> collectionTask, Card[] cards) {
+        protected boolean actualTask(Collection col, ProgressSenderAndCancelListener<Void> collectionTask, Card[] cards) {
             col.setUserFlag(mFlag, mCardIds);
             for (Card c : cards) {
                 c.load();
             }
-            return null;
+            return true;
         }
     }
 
@@ -809,7 +834,7 @@ public class CollectionTask<ProgressListener, ProgressBackground extends Progres
             super(cardIds);
         }
 
-        protected PairWithBoolean<Card[]> actualTask(Collection col, ProgressSenderAndCancelListener<Void> collectionTask, Card[] cards) {
+        protected boolean actualTask(Collection col, ProgressSenderAndCancelListener<Void> collectionTask, Card[] cards) {
             Set<Note> notes = CardUtils.getNotes(Arrays.asList(cards));
             // collect undo information
             List<Note> originalMarked = new ArrayList<>();
@@ -825,7 +850,6 @@ public class CollectionTask<ProgressListener, ProgressBackground extends Progres
             boolean hasUnmarked = !originalUnmarked.isEmpty();
             CardUtils.markAll(new ArrayList<>(notes), hasUnmarked);
 
-            Undoable markNoteMulti = new UndoMarkNoteMulti(originalMarked, originalUnmarked, hasUnmarked);
             // mark undo for all at once
             col.markUndo(new UndoMarkNoteMulti(originalMarked, originalUnmarked, hasUnmarked));
 
@@ -833,7 +857,7 @@ public class CollectionTask<ProgressListener, ProgressBackground extends Progres
             for (Card c : cards) {
                 c.load();
             }
-            return null;
+            return true;
         }
     }
 
@@ -843,7 +867,7 @@ public class CollectionTask<ProgressListener, ProgressBackground extends Progres
             super(cardIds);
         }
 
-        protected PairWithBoolean<Card[]> actualTask(Collection col, ProgressSenderAndCancelListener<Card[]> collectionTask, Card[] cards) {
+        protected boolean actualTask(Collection col, ProgressSenderAndCancelListener<Card[]> collectionTask, Card[] cards) {
             AbstractSched sched = col.getSched();
             // list of all ids to pass to remNotes method.
             // Need Set (-> unique) so we don't pass duplicates to col.remNotes()
@@ -866,7 +890,7 @@ public class CollectionTask<ProgressListener, ProgressBackground extends Progres
             sched.deferReset();
             // pass back all cards because they can't be retrieved anymore by the caller (since the note is deleted)
             collectionTask.doProgress(allCards.toArray(new Card[allCards.size()]));
-            return null;
+            return true;
         }
     }
 
@@ -877,14 +901,14 @@ public class CollectionTask<ProgressListener, ProgressBackground extends Progres
             mNewDid = newDid;
         }
 
-        protected PairWithBoolean<Card[]> actualTask(Collection col, ProgressSenderAndCancelListener<Void> collectionTask, Card[] cards) {
+        protected boolean actualTask(Collection col, ProgressSenderAndCancelListener<Void> collectionTask, Card[] cards) {
             Timber.i("Changing %d cards to deck: '%d'", cards.length, mNewDid);
             Deck deckData = col.getDecks().get(mNewDid);
 
             if (Decks.isDynamic(deckData)) {
                 //#5932 - can't change to a dynamic deck. Use "Rebuild"
                 Timber.w("Attempted to move to dynamic deck. Cancelling task.");
-                return new PairWithBoolean<>(false, null);
+                return false;
             }
 
             //Confirm that the deck exists (and is not the default)
@@ -892,11 +916,11 @@ public class CollectionTask<ProgressListener, ProgressBackground extends Progres
                 long actualId = deckData.getLong("id");
                 if (actualId != mNewDid) {
                     Timber.w("Attempted to move to deck %d, but got %d", mNewDid, actualId);
-                    return new PairWithBoolean<>(false, null);
+                    return false;
                 }
             } catch (Exception e) {
                 Timber.e(e, "failed to check deck");
-                return new PairWithBoolean<>(false, null);
+                return false;
             }
 
             long[] changedCardIds = new long[cards.length];
@@ -920,36 +944,36 @@ public class CollectionTask<ProgressListener, ProgressBackground extends Progres
                 card.flush();
             }
 
-            Undoable changeDeckMulti = new UndoChangeDeckMulti(cards, originalDids);
+            UndoAction changeDeckMulti = new UndoChangeDeckMulti(cards, originalDids);
             // mark undo for all at once
             col.markUndo(changeDeckMulti);
-            return null;
+            return true;
         }
     }
 
     private abstract static class RescheduleRepositionReset extends DismissNotes<Card> {
-        private final Collection.DismissType mType;
-        public RescheduleRepositionReset(List<Long> cardIds, Collection.DismissType type) {
+        @StringRes private final int mUndoNameId;
+        public RescheduleRepositionReset(List<Long> cardIds, @StringRes int undoNameId) {
             super(cardIds);
-            mType = type;
+            mUndoNameId = undoNameId;
         }
 
-        protected PairWithBoolean<Card[]> actualTask(Collection col, ProgressSenderAndCancelListener<Card> collectionTask, Card[] cards) {
+        protected boolean actualTask(Collection col, ProgressSenderAndCancelListener<Card> collectionTask, Card[] cards) {
             AbstractSched sched = col.getSched();
             // collect undo information, sensitive to memory pressure, same for all 3 cases
             try {
-                Timber.d("Saving undo information of type %s on %d cards", mType, cards.length);
+                Timber.d("Saving undo information of type %s on %d cards", getClass(), cards.length);
                 Card[] cards_copied = deepCopyCardArray(cards, collectionTask);
-                Undoable repositionRescheduleResetCards = new UndoRepositionRescheduleResetCards(mType, cards_copied);
+                UndoAction repositionRescheduleResetCards = new UndoRepositionRescheduleResetCards(mUndoNameId, cards_copied);
                 col.markUndo(repositionRescheduleResetCards);
             } catch (CancellationException ce) {
-                Timber.i(ce, "Cancelled while handling type %s, skipping undo", mType);
+                Timber.i(ce, "Cancelled while handling type %s, skipping undo", mUndoNameId);
             }
             actualActualTask(sched);
             // In all cases schedule a new card so Reviewer doesn't sit on the old one
             col.reset();
             collectionTask.doProgress(sched.getCard());
-            return null;
+            return true;
         }
 
         protected abstract void actualActualTask(AbstractSched sched);
@@ -958,7 +982,7 @@ public class CollectionTask<ProgressListener, ProgressBackground extends Progres
     public static class RescheduleCards extends RescheduleRepositionReset {
         private final int mSchedule;
         public RescheduleCards(List<Long> cardIds, int schedule) {
-            super(cardIds, RESCHEDULE_CARDS);
+            super(cardIds, R.string.card_editor_reschedule_card);
             this.mSchedule = schedule;
         }
 
@@ -971,7 +995,7 @@ public class CollectionTask<ProgressListener, ProgressBackground extends Progres
     public static class RepositionCards extends RescheduleRepositionReset {
         private final int mPosition;
         public RepositionCards(List<Long> cardIds, int position) {
-            super(cardIds, REPOSITION_CARDS);
+            super(cardIds, R.string.card_editor_reposition_card);
             this.mPosition = position;
         }
 
@@ -983,7 +1007,7 @@ public class CollectionTask<ProgressListener, ProgressBackground extends Progres
 
     public static class ResetCards extends RescheduleRepositionReset {
         public ResetCards(List<Long> cardIds) {
-            super(cardIds, RESET_CARDS);
+            super(cardIds, R.string.card_editor_reset_card);
         }
 
         @Override
@@ -1012,7 +1036,7 @@ public class CollectionTask<ProgressListener, ProgressBackground extends Progres
     }
 
     public static class Undo extends Task<Card, BooleanGetter> {
-        protected BooleanGetter task(Collection col, ProgressSenderAndCancelListener<Card> collectionTask) {
+        protected BooleanGetter task(@NonNull Collection col, @NonNull ProgressSenderAndCancelListener<Card> collectionTask) {
             try {
                 col.getDb().executeInTransaction(() -> {
                     Card card = nonTaskUndo(col);
@@ -1021,9 +1045,9 @@ public class CollectionTask<ProgressListener, ProgressBackground extends Progres
             } catch (RuntimeException e) {
                 Timber.e(e, "doInBackgroundUndo - RuntimeException on undoing");
                 AnkiDroidApp.sendExceptionReport(e, "doInBackgroundUndo");
-                return False;
+                return FALSE;
             }
-            return True;
+            return TRUE;
         }
     }
 
@@ -1038,7 +1062,7 @@ public class CollectionTask<ProgressListener, ProgressBackground extends Progres
         private final Collection mCol;
 
         public PartialSearch(List<CardBrowser.CardCache> cards, int columnIndex1, int columnIndex2, int numCardsToRender, ProgressSenderAndCancelListener<List<CardBrowser.CardCache>> collectionTask, Collection col) {
-            mCards = cards;
+            mCards = new ArrayList<>(cards);
             mColumn1Index = columnIndex1;
             mColumn2Index = columnIndex2;
             mNumCardsToRender = numCardsToRender;
@@ -1065,6 +1089,8 @@ public class CollectionTask<ProgressListener, ProgressBackground extends Progres
 
         @Override
         public void doProgress(@NonNull List<Long> value) {
+            // PERF: This is currently called on the background thread and blocks further execution of the search
+            // PERF: This performs an individual query to load each note
             add(value);
             for (CardBrowser.CardCache card : mCards) {
                 if (isCancelled()) {
@@ -1079,34 +1105,53 @@ public class CollectionTask<ProgressListener, ProgressBackground extends Progres
         public int getNumCardsToRender() {
             return mNumCardsToRender;
         }
+
+
+        public ProgressSender<Long> getProgressSender() {
+            return new ProgressSender<Long>() {
+                private final List<Long> mRes = new ArrayList<>();
+                private boolean mSendProgress = true;
+                @Override
+                public void doProgress(@Nullable Long value) {
+                    if (!mSendProgress) {
+                        return;
+                    }
+                    mRes.add(value);
+                    if (mRes.size() >= getNumCardsToRender()) {
+                        PartialSearch.this.doProgress(mRes);
+                        mSendProgress = false;
+                    }
+                }
+            };
+        }
     }
 
 
     public static class SearchCards extends Task<List<CardBrowser.CardCache>, List<CardBrowser.CardCache>> {
-        private final String query;
-        private final boolean order;
-        private final int numCardsToRender;
-        private final int column1Index;
-        private final int column2Index;
+        private final String mQuery;
+        private final boolean mOrder;
+        private final int mNumCardsToRender;
+        private final int mColumn1Index;
+        private final int mColumn2Index;
 
 
         public SearchCards(String query, boolean order, int numCardsToRender, int column1Index, int column2Index) {
-            this.query = query;
-            this.order = order;
-            this.numCardsToRender = numCardsToRender;
-            this.column1Index = column1Index;
-            this.column2Index = column2Index;
+            this.mQuery = query;
+            this.mOrder = order;
+            this.mNumCardsToRender = numCardsToRender;
+            this.mColumn1Index = column1Index;
+            this.mColumn2Index = column2Index;
         }
 
 
-        protected List<CardBrowser.CardCache> task(Collection col, ProgressSenderAndCancelListener<List<CardBrowser.CardCache>> collectionTask) {
+        protected List<CardBrowser.CardCache> task(@NonNull Collection col, @NonNull ProgressSenderAndCancelListener<List<CardBrowser.CardCache>> collectionTask) {
             Timber.d("doInBackgroundSearchCards");
             if (collectionTask.isCancelled()) {
                 Timber.d("doInBackgroundSearchCards was cancelled so return null");
                 return null;
             }
             List<CardBrowser.CardCache> searchResult = new ArrayList<>();
-            List<Long> searchResult_ = col.findCards(query, order, new PartialSearch(searchResult, column1Index, column2Index, numCardsToRender, collectionTask, col));
+            List<Long> searchResult_ = col.findCards(mQuery, mOrder, new PartialSearch(searchResult, mColumn1Index, mColumn2Index, mNumCardsToRender, collectionTask, col));
             Timber.d("The search found %d cards", searchResult_.size());
             int position = 0;
             for (Long cid : searchResult_) {
@@ -1114,12 +1159,12 @@ public class CollectionTask<ProgressListener, ProgressBackground extends Progres
                 searchResult.add(card);
             }
             // Render the first few items
-            for (int i = 0; i < Math.min(numCardsToRender, searchResult.size()); i++) {
+            for (int i = 0; i < Math.min(mNumCardsToRender, searchResult.size()); i++) {
                 if (collectionTask.isCancelled()) {
                     Timber.d("doInBackgroundSearchCards was cancelled so return null");
                     return null;
                 }
-                searchResult.get(i).load(false, column1Index, column2Index);
+                searchResult.get(i).load(false, mColumn1Index, mColumn2Index);
             }
             // Finish off the task
             if (collectionTask.isCancelled()) {
@@ -1133,39 +1178,39 @@ public class CollectionTask<ProgressListener, ProgressBackground extends Progres
 
 
     public static class RenderBrowserQA extends Task<Integer, Pair<CardBrowser.CardCollection<CardBrowser.CardCache>, List<Long>>> {
-        private final CardBrowser.CardCollection<CardBrowser.CardCache> cards;
-        private final Integer startPos;
-        private final Integer n;
-        private final int column1Index;
-        private final int column2Index;
+        private final CardBrowser.CardCollection<CardBrowser.CardCache> mCards;
+        private final Integer mStartPos;
+        private final Integer mN;
+        private final int mColumn1Index;
+        private final int mColumn2Index;
 
 
         public RenderBrowserQA(CardBrowser.CardCollection<CardBrowser.CardCache> cards, Integer mStartPos, Integer n, int column1Index, int column2Index) {
-            this.cards = cards;
-            this.startPos = mStartPos;
-            this.n = n;
-            this.column1Index = column1Index;
-            this.column2Index = column2Index;
+            this.mCards = cards;
+            this.mStartPos = mStartPos;
+            this.mN = n;
+            this.mColumn1Index = column1Index;
+            this.mColumn2Index = column2Index;
         }
 
 
-        protected Pair<CardBrowser.CardCollection<CardBrowser.CardCache>, List<Long>> task(Collection col, ProgressSenderAndCancelListener<Integer> collectionTask) {
+        protected Pair<CardBrowser.CardCollection<CardBrowser.CardCache>, List<Long>> task(@NonNull Collection col, @NonNull ProgressSenderAndCancelListener<Integer> collectionTask) {
             Timber.d("doInBackgroundRenderBrowserQA");
 
             List<Long> invalidCardIds = new ArrayList<>();
             // for each specified card in the browser list
-            for (int i = startPos; i < startPos + n; i++) {
+            for (int i = mStartPos; i < mStartPos + mN; i++) {
                 // Stop if cancelled
                 if (collectionTask.isCancelled()) {
                     Timber.d("doInBackgroundRenderBrowserQA was aborted");
                     return null;
                 }
-                if (i < 0 || i >= cards.size()) {
+                if (i < 0 || i >= mCards.size()) {
                     continue;
                 }
                 CardBrowser.CardCache card;
                 try {
-                    card = cards.get(i);
+                    card = mCards.get(i);
                 }
                 catch (IndexOutOfBoundsException e) {
                     //even though we test against card.size() above, there's still a race condition
@@ -1191,16 +1236,16 @@ public class CollectionTask<ProgressListener, ProgressBackground extends Progres
                     continue;
                 }
                 // Update item
-                card.load(false, column1Index, column2Index);
-                float progress = (float) i / n * 100;
+                card.load(false, mColumn1Index, mColumn2Index);
+                float progress = (float) i / mN * 100;
                 collectionTask.doProgress((int) progress);
             }
-            return new Pair<>(cards, invalidCardIds);
+            return new Pair<>(mCards, invalidCardIds);
         }
     }
 
     public static class CheckDatabase extends Task<String, Pair<Boolean, Collection.CheckDatabaseResult>> {
-    protected Pair<Boolean, Collection.CheckDatabaseResult> task(Collection col, ProgressSenderAndCancelListener<String> collectionTask) {
+    protected Pair<Boolean, Collection.CheckDatabaseResult> task(@NonNull Collection col, @NonNull ProgressSenderAndCancelListener<String> collectionTask) {
         Timber.d("doInBackgroundCheckDatabase");
         // Don't proceed if collection closed
         if (col == null) {
@@ -1221,8 +1266,8 @@ public class CollectionTask<ProgressListener, ProgressBackground extends Progres
     }
 
 
-    public static class RepairCollectionn extends Task<Void, Boolean> {
-        protected Boolean task(Collection col, ProgressSenderAndCancelListener<Void> collectionTask) {
+    public static class RepairCollection extends Task<Void, Boolean> {
+        protected Boolean task(@NonNull Collection col, @NonNull ProgressSenderAndCancelListener<Void> collectionTask) {
             Timber.d("doInBackgroundRepairCollection");
             if (col != null) {
                 Timber.i("RepairCollection: Closing collection");
@@ -1230,31 +1275,36 @@ public class CollectionTask<ProgressListener, ProgressBackground extends Progres
             }
             return BackupManager.repairCollection(col);
         }
+
+        @Override
+        protected boolean requiresOpenCollection() {
+            return false;
+        }
     }
 
 
-    public static class UpdateValuesFromDeck extends Task<Void, int[]> {
-        private final boolean reset;
+    public static class UpdateValuesFromDeck extends Task<Void, StudyOptionsFragment.DeckStudyData> {
+        private final boolean mReset;
 
 
         public UpdateValuesFromDeck(boolean reset) {
-            this.reset = reset;
+            this.mReset = reset;
         }
 
 
-        public int[] task(Collection col, ProgressSenderAndCancelListener<Void> collectionTask) {
+        public StudyOptionsFragment.DeckStudyData task(@NonNull Collection col, @NonNull ProgressSenderAndCancelListener<Void> collectionTask) {
             Timber.d("doInBackgroundUpdateValuesFromDeck");
             try {
                 AbstractSched sched = col.getSched();
-                if (reset) {
+                if (mReset) {
                     // reset actually required because of counts, which is used in getCollectionTaskListener
                     sched.resetCounts();
                 }
                 Counts counts = sched.counts();
                 int totalNewCount = sched.totalNewForCurrentDeck();
                 int totalCount = sched.cardCount();
-                return new int[] {counts.getNew(), counts.getLrn(), counts.getRev(), totalNewCount,
-                        totalCount, sched.eta(counts)};
+                return new StudyOptionsFragment.DeckStudyData(counts.getNew(), counts.getLrn(), counts.getRev(), totalNewCount,
+                        totalCount, sched.eta(counts));
             } catch (RuntimeException e) {
                 Timber.e(e, "doInBackgroundUpdateValuesFromDeck - an error occurred");
                 return null;
@@ -1264,15 +1314,15 @@ public class CollectionTask<ProgressListener, ProgressBackground extends Progres
 
 
     public static class DeleteDeck extends Task<Void, int[]> {
-        private final long did;
+        private final long mDid;
 
         public DeleteDeck(long did) {
-            this.did = did;
+            this.mDid = did;
         }
 
-        protected int[] task(Collection col, ProgressSenderAndCancelListener<Void> collectionTask) {
+        protected int[] task(@NonNull Collection col, @NonNull ProgressSenderAndCancelListener<Void> collectionTask) {
             Timber.d("doInBackgroundDeleteDeck");
-            col.getDecks().rem(did, true);
+            col.getDecks().rem(mDid, true);
             // TODO: if we had "undo delete note" like desktop client then we won't need this.
             col.clearUndo();
             return null;
@@ -1280,16 +1330,16 @@ public class CollectionTask<ProgressListener, ProgressBackground extends Progres
     }
 
 
-    public static class RebuildCram extends Task<Void, int[]> {
-        protected int[] task(Collection col, ProgressSenderAndCancelListener<Void> collectionTask) {
+    public static class RebuildCram extends Task<Void, StudyOptionsFragment.DeckStudyData> {
+        protected StudyOptionsFragment.DeckStudyData task(@NonNull Collection col, @NonNull ProgressSenderAndCancelListener<Void> collectionTask) {
             Timber.d("doInBackgroundRebuildCram");
             col.getSched().rebuildDyn(col.getDecks().selected());
             return new UpdateValuesFromDeck(true).task(col, collectionTask);
         }
     }
 
-    public static class EmptyCram extends Task<Void, int[]> {
-        protected int[] task(Collection col, ProgressSenderAndCancelListener<Void> collectionTask) {
+    public static class EmptyCram extends Task<Void, StudyOptionsFragment.DeckStudyData> {
+        protected StudyOptionsFragment.DeckStudyData task(@NonNull Collection col, @NonNull ProgressSenderAndCancelListener<Void> collectionTask) {
             Timber.d("doInBackgroundEmptyCram");
             col.getSched().emptyDyn(col.getDecks().selected());
             return new UpdateValuesFromDeck(true).task(col, collectionTask);
@@ -1297,22 +1347,23 @@ public class CollectionTask<ProgressListener, ProgressBackground extends Progres
     }
 
     public static class ImportAdd extends Task<String, Triple<AnkiPackageImporter, Boolean, String>> {
-        private final String path;
+        private final String mPath;
 
 
         public ImportAdd(String path) {
-            this.path = path;
+            this.mPath = path;
         }
 
 
-        protected Triple<AnkiPackageImporter, Boolean, String> task(Collection col, ProgressSenderAndCancelListener<String> collectionTask) {
+        protected Triple<AnkiPackageImporter, Boolean, String> task(@NonNull Collection col, @NonNull ProgressSenderAndCancelListener<String> collectionTask) {
             Timber.d("doInBackgroundImportAdd");
             Resources res = AnkiDroidApp.getInstance().getBaseContext().getResources();
-            AnkiPackageImporter imp = new AnkiPackageImporter(col, path);
+            AnkiPackageImporter imp = new AnkiPackageImporter(col, mPath);
             imp.setProgressCallback(new TaskManager.ProgressCallback(collectionTask, res));
             try {
                 imp.run();
             } catch (ImportExportException e) {
+                Timber.w(e);
                 return new Triple(null, true, e.getMessage());
             }
             return new Triple<>(imp, false, null);
@@ -1321,15 +1372,15 @@ public class CollectionTask<ProgressListener, ProgressBackground extends Progres
 
 
     public static class ImportReplace extends Task<String, BooleanGetter> {
-        private final String path;
+        private final String mPath;
 
 
         public ImportReplace(String path) {
-            this.path = path;
+            this.mPath = path;
         }
 
 
-        protected BooleanGetter task(Collection col, ProgressSenderAndCancelListener<String> collectionTask) {
+        protected BooleanGetter task(@NonNull Collection col, @NonNull ProgressSenderAndCancelListener<String> collectionTask) {
             Timber.d("doInBackgroundImportReplace");
             Resources res = AnkiDroidApp.getInstance().getBaseContext().getResources();
             Context context = col.getContext();
@@ -1345,11 +1396,11 @@ public class CollectionTask<ProgressListener, ProgressBackground extends Progres
             String colname = "collection.anki21";
             ZipFile zip;
             try {
-                zip = new ZipFile(new File(path));
+                zip = new ZipFile(new File(mPath));
             } catch (IOException e) {
                 Timber.e(e, "doInBackgroundImportReplace - Error while unzipping");
                 AnkiDroidApp.sendExceptionReport(e, "doInBackgroundImportReplace0");
-                return False;
+                return FALSE;
             }
             try {
                 // v2 scheduler?
@@ -1359,11 +1410,11 @@ public class CollectionTask<ProgressListener, ProgressBackground extends Progres
                 Utils.unzipFiles(zip, dir.getAbsolutePath(), new String[] {colname, "media"}, null);
             } catch (IOException e) {
                 AnkiDroidApp.sendExceptionReport(e, "doInBackgroundImportReplace - unzip");
-                return False;
+                return FALSE;
             }
             String colFile = new File(dir, colname).getAbsolutePath();
             if (!(new File(colFile)).exists()) {
-                return False;
+                return FALSE;
             }
 
             Collection tmpCol = null;
@@ -1371,17 +1422,18 @@ public class CollectionTask<ProgressListener, ProgressBackground extends Progres
                 tmpCol = Storage.Collection(context, colFile);
                 if (!tmpCol.validCollection()) {
                     tmpCol.close();
-                    return False;
+                    return FALSE;
                 }
             } catch (Exception e) {
                 Timber.e("Error opening new collection file... probably it's invalid");
                 try {
                     tmpCol.close();
                 } catch (Exception e2) {
+                    Timber.w(e2);
                     // do nothing
                 }
                 AnkiDroidApp.sendExceptionReport(e, "doInBackgroundImportReplace - open col");
-                return False;
+                return FALSE;
             } finally {
                 if (tmpCol != null) {
                     tmpCol.close();
@@ -1398,12 +1450,13 @@ public class CollectionTask<ProgressListener, ProgressBackground extends Progres
                 CollectionHelper.getInstance().lockCollection();
                 BackupManager.performBackupInBackground(colPath, true, time);
             } catch (Exception e) {
+                Timber.w(e);
             }
             // overwrite collection
             File f = new File(colFile);
             if (!f.renameTo(new File(colPath))) {
                 // Exit early if this didn't work
-                return False;
+                return FALSE;
             }
             int addedCount = -1;
             try {
@@ -1446,48 +1499,50 @@ public class CollectionTask<ProgressListener, ProgressBackground extends Progres
                 zip.close();
                 // delete tmp dir
                 BackupManager.removeDir(dir);
-                return True;
+                return TRUE;
             } catch (RuntimeException e) {
                 Timber.e(e, "doInBackgroundImportReplace - RuntimeException");
                 AnkiDroidApp.sendExceptionReport(e, "doInBackgroundImportReplace1");
-                return False;
+                return FALSE;
             } catch (FileNotFoundException e) {
                 Timber.e(e, "doInBackgroundImportReplace - FileNotFoundException");
                 AnkiDroidApp.sendExceptionReport(e, "doInBackgroundImportReplace2");
-                return False;
+                return FALSE;
             } catch (IOException e) {
                 Timber.e(e, "doInBackgroundImportReplace - IOException");
                 AnkiDroidApp.sendExceptionReport(e, "doInBackgroundImportReplace3");
-                return False;
+                return FALSE;
             }
+        }
+
+        @Override
+        protected boolean requiresOpenCollection() {
+            return false;
         }
     }
 
 
     public static class ExportApkg extends Task<Void, Pair<Boolean, String>> {
-        private final String apkgPath;
-        private final Long did;
-        private final Boolean includeSched;
-        private final Boolean includeMedia;
+        private final String mApkgPath;
+        private final Long mDid;
+        private final Boolean mIncludeSched;
+        private final Boolean mIncludeMedia;
 
 
         public ExportApkg(String apkgPath, Long did, Boolean includeSched, Boolean includeMedia) {
-            this.apkgPath = apkgPath;
-            this.did = did;
-            this.includeSched = includeSched;
-            this.includeMedia = includeMedia;
+            this.mApkgPath = apkgPath;
+            this.mDid = did;
+            this.mIncludeSched = includeSched;
+            this.mIncludeMedia = includeMedia;
         }
 
 
-        protected Pair<Boolean, String> task(Collection col, ProgressSenderAndCancelListener<Void> collectionTask) {
+        protected Pair<Boolean, String> task(@NonNull Collection col, @NonNull ProgressSenderAndCancelListener<Void> collectionTask) {
             Timber.d("doInBackgroundExportApkg");
 
             try {
-                AnkiPackageExporter exporter = new AnkiPackageExporter(col);
-                exporter.setIncludeSched(includeSched);
-                exporter.setIncludeMedia(includeMedia);
-                exporter.setDid(did);
-                exporter.exportInto(apkgPath, col.getContext());
+                AnkiPackageExporter exporter = new AnkiPackageExporter(col, mDid, mIncludeSched, mIncludeMedia);
+                exporter.exportInto(mApkgPath, col.getContext());
             } catch (FileNotFoundException e) {
                 Timber.e(e, "FileNotFoundException in doInBackgroundExportApkg");
                 return new Pair<>(false, null);
@@ -1501,77 +1556,78 @@ public class CollectionTask<ProgressListener, ProgressBackground extends Progres
                 Timber.e(e, "ImportExportException in doInBackgroundExportApkg");
                 return new Pair<>(true, e.getMessage());
             }
-            return new Pair<>(false, apkgPath);
+            return new Pair<>(false, mApkgPath);
         }
     }
 
 
     public static class Reorder extends Task<Void, Boolean> {
-        private final DeckConfig conf;
+        private final DeckConfig mConf;
 
 
         public Reorder(DeckConfig conf) {
-            this.conf = conf;
+            this.mConf = conf;
         }
 
 
-        protected Boolean task(Collection col, ProgressSenderAndCancelListener<Void> collectionTask) {
+        protected Boolean task(@NonNull Collection col, @NonNull ProgressSenderAndCancelListener<Void> collectionTask) {
             Timber.d("doInBackgroundReorder");
-            col.getSched().resortConf(conf);
+            col.getSched().resortConf(mConf);
             return true;
         }
     }
 
 
     public static class ConfChange extends Task<Void, Boolean> {
-        private final Deck deck;
-        private final DeckConfig conf;
+        private final Deck mDeck;
+        private final DeckConfig mConf;
 
 
         public ConfChange(Deck deck, DeckConfig conf) {
-            this.deck = deck;
-            this.conf = conf;
+            this.mDeck = deck;
+            this.mConf = conf;
         }
 
 
-        protected Boolean task(Collection col, ProgressSenderAndCancelListener<Void> collectionTask) {
+        protected Boolean task(@NonNull Collection col, @NonNull ProgressSenderAndCancelListener<Void> collectionTask) {
             Timber.d("doInBackgroundConfChange");
             try {
-                long newConfId = conf.getLong("id");
+                long newConfId = mConf.getLong("id");
                 // If new config has a different sorting order, reorder the cards
-                int oldOrder = col.getDecks().getConf(deck.getLong("conf")).getJSONObject("new").getInt("order");
+                int oldOrder = col.getDecks().getConf(mDeck.getLong("conf")).getJSONObject("new").getInt("order");
                 int newOrder = col.getDecks().getConf(newConfId).getJSONObject("new").getInt("order");
                 if (oldOrder != newOrder) {
                     switch (newOrder) {
                         case 0:
-                            col.getSched().randomizeCards(deck.getLong("id"));
+                            col.getSched().randomizeCards(mDeck.getLong("id"));
                             break;
                         case 1:
-                            col.getSched().orderCards(deck.getLong("id"));
+                            col.getSched().orderCards(mDeck.getLong("id"));
                             break;
                     }
                 }
-                col.getDecks().setConf(deck, newConfId);
+                col.getDecks().setConf(mDeck, newConfId);
                 col.save();
                 return true;
             } catch (JSONException e) {
+                Timber.w(e);
                 return false;
             }
         }
     }
 
     public static class ConfReset extends Task<Void, Boolean> {
-        private final DeckConfig conf;
+        private final DeckConfig mConf;
 
 
         public ConfReset(DeckConfig conf) {
-            this.conf = conf;
+            this.mConf = conf;
         }
 
 
-        protected Boolean task(Collection col, ProgressSenderAndCancelListener<Void> collectionTask) {
+        protected Boolean task(@NonNull Collection col, @NonNull ProgressSenderAndCancelListener<Void> collectionTask) {
             Timber.d("doInBackgroundConfReset");
-            col.getDecks().restoreToDefault(conf);
+            col.getDecks().restoreToDefault(mConf);
             col.save();
             return null;
         }
@@ -1579,15 +1635,15 @@ public class CollectionTask<ProgressListener, ProgressBackground extends Progres
 
 
     public static class ConfRemove extends Task<Void, Boolean> {
-        private final DeckConfig conf;
+        private final DeckConfig mConf;
 
 
         public ConfRemove(DeckConfig conf) {
-            this.conf = conf;
+            this.mConf = conf;
         }
 
 
-        protected Boolean task(Collection col, ProgressSenderAndCancelListener<Void> collectionTask) {
+        protected Boolean task(@NonNull Collection col, @NonNull ProgressSenderAndCancelListener<Void> collectionTask) {
             Timber.d("doInBackgroundConfRemove");
             try {
                 // Note: We do the actual removing of the options group in the main thread so that we
@@ -1595,47 +1651,49 @@ public class CollectionTask<ProgressListener, ProgressBackground extends Progres
 
                 // When a conf is deleted, all decks using it revert to the default conf.
                 // Cards must be reordered according to the default conf.
-                int order = conf.getJSONObject("new").getInt("order");
+                int order = mConf.getJSONObject("new").getInt("order");
                 int defaultOrder = col.getDecks().getConf(1).getJSONObject("new").getInt("order");
                 if (order != defaultOrder) {
-                    conf.getJSONObject("new").put("order", defaultOrder);
-                    col.getSched().resortConf(conf);
+                    mConf.getJSONObject("new").put("order", defaultOrder);
+                    col.getSched().resortConf(mConf);
                 }
                 col.save();
                 return true;
             } catch (JSONException e) {
+                Timber.w(e);
                 return false;
             }
         }
     }
 
     public static class ConfSetSubdecks extends Task<Void, Boolean> {
-        private final Deck deck;
-        private final DeckConfig conf;
+        private final Deck mDeck;
+        private final DeckConfig mConf;
 
 
         public ConfSetSubdecks(Deck deck, DeckConfig conf) {
-            this.deck = deck;
-            this.conf = conf;
+            this.mDeck = deck;
+            this.mConf = conf;
         }
 
 
-        protected Boolean task(Collection col, ProgressSenderAndCancelListener<Void> collectionTask) {
+        protected Boolean task(@NonNull Collection col, @NonNull ProgressSenderAndCancelListener<Void> collectionTask) {
             Timber.d("doInBackgroundConfSetSubdecks");
             try {
-                TreeMap<String, Long> children = col.getDecks().children(deck.getLong("id"));
+                TreeMap<String, Long> children = col.getDecks().children(mDeck.getLong("id"));
                 for (long childDid : children.values()) {
                     Deck child = col.getDecks().get(childDid);
                     if (child.isDyn()) {
                         continue;
                     }
-                    boolean changed = new ConfChange(child, conf).task(col, collectionTask);
+                    boolean changed = new ConfChange(child, mConf).task(col, collectionTask);
                     if (!changed) {
                         return false;
                     }
                 }
                 return true;
             } catch (JSONException e) {
+                Timber.w(e);
                 return false;
             }
         }
@@ -1647,12 +1705,13 @@ public class CollectionTask<ProgressListener, ProgressBackground extends Progres
      */
     public static class CheckMedia extends Task<Void, PairWithBoolean<List<List<String>>>> {
         @Override
-        protected PairWithBoolean<List<List<String>>> task(Collection col, ProgressSenderAndCancelListener<Void> collectionTask) {
+        protected PairWithBoolean<List<List<String>>> task(@NonNull Collection col, @NonNull ProgressSenderAndCancelListener<Void> collectionTask) {
             Timber.d("doInBackgroundCheckMedia");
             // Ensure that the DB is valid - unknown why, but some users were missing the meta table.
             try {
                 col.getMedia().rebuildIfInvalid();
             } catch (IOException e) {
+                Timber.w(e);
                 return new PairWithBoolean<>(false, null);
             }
             // A media check on AnkiDroid will also update the media db
@@ -1664,20 +1723,20 @@ public class CollectionTask<ProgressListener, ProgressBackground extends Progres
 
 
     public static class DeleteMedia extends Task<Void, Integer> {
-        private final List<String> unused;
+        private final List<String> mUnused;
 
 
         public DeleteMedia(List<String> unused) {
-            this.unused = unused;
+            this.mUnused = unused;
         }
 
 
-        protected Integer task(Collection col, ProgressSenderAndCancelListener<Void> collectionTask) {
+        protected Integer task(@NonNull Collection col, @NonNull ProgressSenderAndCancelListener<Void> collectionTask) {
             com.ichi2.libanki.Media m = col.getMedia();
-            for (String fname : unused) {
+            for (String fname : mUnused) {
                 m.removeFile(fname);
             }
-            return unused.size();
+            return mUnused.size();
         }
     }
 
@@ -1686,29 +1745,29 @@ public class CollectionTask<ProgressListener, ProgressBackground extends Progres
      * Handles everything for a model change at once - template add / deletes as well as content updates
      */
     public static class SaveModel extends Task<Void, Pair<Boolean, String>> {
-        private final Model model;
-        private final ArrayList<Object[]> templateChanges;
+        private final Model mModel;
+        private final ArrayList<Object[]> mTemplateChanges;
 
 
         public SaveModel(Model model, ArrayList<Object[]> templateChanges) {
-            this.model = model;
-            this.templateChanges = templateChanges;
+            this.mModel = model;
+            this.mTemplateChanges = templateChanges;
         }
 
 
-        protected Pair<Boolean, String> task(Collection col, ProgressSenderAndCancelListener<Void> collectionTask) {
+        protected Pair<Boolean, String> task(@NonNull Collection col, @NonNull ProgressSenderAndCancelListener<Void> collectionTask) {
             Timber.d("doInBackgroundSaveModel");
-            Model oldModel = col.getModels().get(model.getLong("id"));
+            Model oldModel = col.getModels().get(mModel.getLong("id"));
 
             // TODO need to save all the cards that will go away, for undo
             //  (do I need to remove them from graves during undo also?)
             //    - undo (except for cards) could just be Models.update(model) / Models.flush() / Collection.reset() (that was prior "undo")
-            JSONArray newTemplates = model.getJSONArray("tmpls");
+            JSONArray newTemplates = mModel.getJSONArray("tmpls");
 
             col.getDb().getDatabase().beginTransaction();
 
             try {
-                for (Object[] change : templateChanges) {
+                for (Object[] change : mTemplateChanges) {
                     JSONArray oldTemplates = oldModel.getJSONArray("tmpls");
                     switch ((TemporaryModel.ChangeType) change[1]) {
                         case ADD:
@@ -1716,7 +1775,7 @@ public class CollectionTask<ProgressListener, ProgressBackground extends Progres
                             try {
                                 col.getModels().addTemplate(oldModel, newTemplates.getJSONObject((int) change[0]));
                             } catch (Exception e) {
-                                Timber.e(e, "Unable to add template %s to model %s", change[0], model.getLong("id"));
+                                Timber.e(e, "Unable to add template %s to model %s", change[0], mModel.getLong("id"));
                                 return new Pair<>(false, e.getLocalizedMessage());
                             }
                             break;
@@ -1725,7 +1784,7 @@ public class CollectionTask<ProgressListener, ProgressBackground extends Progres
                             try {
                                 col.getModels().remTemplate(oldModel, oldTemplates.getJSONObject((int) change[0]));
                             } catch (Exception e) {
-                                Timber.e(e, "Unable to delete template %s from model %s", change[0], model.getLong("id"));
+                                Timber.e(e, "Unable to delete template %s from model %s", change[0], mModel.getLong("id"));
                                 return new Pair<>(false, e.getLocalizedMessage());
                             }
                             break;
@@ -1735,8 +1794,8 @@ public class CollectionTask<ProgressListener, ProgressBackground extends Progres
                     }
                 }
 
-                col.getModels().save(model, true);
-                col.getModels().update(model);
+                col.getModels().save(mModel, true);
+                col.getModels().update(mModel);
                 col.reset();
                 col.save();
                 if (col.getDb().getDatabase().inTransaction()) {
@@ -1760,7 +1819,7 @@ public class CollectionTask<ProgressListener, ProgressBackground extends Progres
      * @return {ArrayList<JSONObject> models, ArrayList<Integer> cardCount}
      */
     public static class CountModels extends Task<Void, Pair<ArrayList<Model>, ArrayList<Integer>>> {
-        protected Pair<ArrayList<Model>, ArrayList<Integer>> task(Collection col, ProgressSenderAndCancelListener<Void> collectionTask) {
+        protected Pair<ArrayList<Model>, ArrayList<Integer>> task(@NonNull Collection col, @NonNull ProgressSenderAndCancelListener<Void> collectionTask) {
             Timber.d("doInBackgroundLoadModels");
 
             ArrayList<Model> models = col.getModels().all();
@@ -1786,20 +1845,21 @@ public class CollectionTask<ProgressListener, ProgressBackground extends Progres
      * and all notes associated with it
      */
     public static class DeleteModel extends Task<Void, Boolean> {
-        private final long modID;
+        private final long mModID;
 
 
         public DeleteModel(long modID) {
-            this.modID = modID;
+            this.mModID = modID;
         }
 
 
-        protected Boolean task(Collection col, ProgressSenderAndCancelListener<Void> collectionTask) {
+        protected Boolean task(@NonNull Collection col, @NonNull ProgressSenderAndCancelListener<Void> collectionTask) {
             Timber.d("doInBackGroundDeleteModel");
             try {
-                col.getModels().rem(col.getModels().get(modID));
+                col.getModels().rem(col.getModels().get(mModID));
                 col.save();
             } catch (ConfirmModSchemaException e) {
+                e.log();
                 Timber.e("doInBackGroundDeleteModel :: ConfirmModSchemaException");
                 return false;
             }
@@ -1811,25 +1871,26 @@ public class CollectionTask<ProgressListener, ProgressBackground extends Progres
      * Deletes the given field in the given model
      */
     public static class DeleteField extends Task<Void, Boolean> {
-        private final Model model;
-        private final JSONObject field;
+        private final Model mModel;
+        private final JSONObject mField;
 
 
         public DeleteField(Model model, JSONObject field) {
-            this.model = model;
-            this.field = field;
+            this.mModel = model;
+            this.mField = field;
         }
 
 
-        protected Boolean task(Collection col, ProgressSenderAndCancelListener<Void> collectionTask){
+        protected Boolean task(@NonNull Collection col, @NonNull ProgressSenderAndCancelListener<Void> collectionTask){
             Timber.d("doInBackGroundDeleteField");
 
 
             try {
-                col.getModels().remField(model, field);
+                col.getModels().remField(mModel, mField);
                 col.save();
             } catch (ConfirmModSchemaException e) {
                 //Should never be reached
+                e.log();
                 return false;
             }
             return true;
@@ -1840,25 +1901,26 @@ public class CollectionTask<ProgressListener, ProgressBackground extends Progres
      * Repositions the given field in the given model
      */
     public static class RepositionField extends Task<Void, Boolean> {
-        private final Model model;
-        private final JSONObject field;
-        private final int index;
+        private final Model mModel;
+        private final JSONObject mField;
+        private final int mIndex;
 
 
         public RepositionField(Model model, JSONObject field, int index) {
-            this.model = model;
-            this.field = field;
-            this.index = index;
+            this.mModel = model;
+            this.mField = field;
+            this.mIndex = index;
         }
 
 
-        protected Boolean task(Collection col, ProgressSenderAndCancelListener<Void> collectionTask){
+        protected Boolean task(@NonNull Collection col, @NonNull ProgressSenderAndCancelListener<Void> collectionTask){
             Timber.d("doInBackgroundRepositionField");
 
             try {
-                col.getModels().moveField(model, field, index);
+                col.getModels().moveField(mModel, mField, mIndex);
                 col.save();
             } catch (ConfirmModSchemaException e) {
+                e.log();
                 //Should never be reached
                 return false;
             }
@@ -1870,19 +1932,19 @@ public class CollectionTask<ProgressListener, ProgressBackground extends Progres
      * Adds a field with name in given model
      */
     public static class AddField extends Task<Void, Boolean> {
-        private final Model model;
-        private final String fieldName;
+        private final Model mModel;
+        private final String mFieldName;
 
 
         public AddField(Model model, String fieldName) {
-            this.model = model;
-            this.fieldName = fieldName;
+            this.mModel = model;
+            this.mFieldName = fieldName;
         }
 
 
-        protected Boolean task(Collection col, ProgressSenderAndCancelListener<Void> collectionTask){
+        protected Boolean task(@NonNull Collection col, @NonNull ProgressSenderAndCancelListener<Void> collectionTask){
             Timber.d("doInBackgroundRepositionField");
-            col.getModels().addFieldModChanged(model, col.getModels().newField(fieldName));
+            col.getModels().addFieldModChanged(mModel, col.getModels().newField(mFieldName));
             col.save();
             return true;
         }
@@ -1892,20 +1954,20 @@ public class CollectionTask<ProgressListener, ProgressBackground extends Progres
      * Adds a field of with name in given model
      */
     public static class ChangeSortField extends Task<Void, Boolean> {
-        private final Model model;
-        private final int idx;
+        private final Model mModel;
+        private final int mIdx;
 
 
         public ChangeSortField(Model model, int idx) {
-            this.model = model;
-            this.idx = idx;
+            this.mModel = model;
+            this.mIdx = idx;
         }
 
 
-        protected Boolean task(Collection col, ProgressSenderAndCancelListener<Void> collectionTask){
+        protected Boolean task(@NonNull Collection col, @NonNull ProgressSenderAndCancelListener<Void> collectionTask){
             try {
                 Timber.d("doInBackgroundChangeSortField");
-                col.getModels().setSortIdx(model, idx);
+                col.getModels().setSortIdx(mModel, mIdx);
                 col.save();
             } catch(Exception e){
                 Timber.e(e, "Error changing sort field");
@@ -1916,7 +1978,7 @@ public class CollectionTask<ProgressListener, ProgressBackground extends Progres
     }
     
     public static class FindEmptyCards extends Task<Integer, List<Long>> {
-        protected List<Long> task(Collection col, ProgressSenderAndCancelListener<Integer> collectionTask) {
+        protected List<Long> task(@NonNull Collection col, @NonNull ProgressSenderAndCancelListener<Integer> collectionTask) {
             return col.emptyCids(collectionTask);
         }
     }
@@ -1926,18 +1988,18 @@ public class CollectionTask<ProgressListener, ProgressBackground extends Progres
      * @return If there are unselected cards, if there are unmarked cards
      */
     public static class CheckCardSelection extends Task<Void, Pair<Boolean, Boolean>> {
-        private final CardBrowser.CardCollection<CardBrowser.CardCache> checkedCards;
+        private final @NonNull Set<CardBrowser.CardCache> mCheckedCards;
 
 
-        public CheckCardSelection(CardBrowser.CardCollection<CardBrowser.CardCache> checkedCards) {
-            this.checkedCards = checkedCards;
+        public CheckCardSelection(@NonNull Set<CardBrowser.CardCache> checkedCards) {
+            this.mCheckedCards = checkedCards;
         }
 
 
-        protected @Nullable Pair<Boolean, Boolean> task(Collection col, ProgressSenderAndCancelListener<Void> collectionTask) {
+        protected @Nullable Pair<Boolean, Boolean> task(@NonNull Collection col, @NonNull ProgressSenderAndCancelListener<Void> collectionTask) {
             boolean hasUnsuspended = false;
             boolean hasUnmarked = false;
-            for (CardBrowser.CardCache c: checkedCards) {
+            for (CardBrowser.CardCache c: mCheckedCards) {
                 if (collectionTask.isCancelled()) {
                     Timber.v("doInBackgroundCheckCardSelection: cancelled.");
                     return null;
@@ -1954,7 +2016,7 @@ public class CollectionTask<ProgressListener, ProgressBackground extends Progres
     }
 
     public static class PreloadNextCard extends Task<Void, Void> {
-        public Void task(Collection col, ProgressSenderAndCancelListener<Void> collectionTask) {
+        public Void task(@NonNull Collection col, @NonNull ProgressSenderAndCancelListener<Void> collectionTask) {
             try {
                 col.getSched().counts(); // Ensure counts are recomputed if necessary, to know queue to look for
                 col.getSched().preloadNextCard();
@@ -1966,7 +2028,7 @@ public class CollectionTask<ProgressListener, ProgressBackground extends Progres
     }
 
     public static class LoadCollectionComplete extends Task<Void, Void> {
-        protected Void task(Collection col, ProgressSenderAndCancelListener<Void> collectionTask) {
+        protected Void task(@NonNull Collection col, @NonNull ProgressSenderAndCancelListener<Void> collectionTask) {
             if (col != null) {
                 CollectionHelper.loadCollectionComplete(col);
             }
@@ -1975,7 +2037,7 @@ public class CollectionTask<ProgressListener, ProgressBackground extends Progres
     }
 
     public static class Reset extends Task<Void, Void> {
-        public Void task(Collection col, ProgressSenderAndCancelListener<Void> collectionTask) {
+        public Void task(@NonNull Collection col, @NonNull ProgressSenderAndCancelListener<Void> collectionTask) {
             col.getSched().reset();
             return null;
         }

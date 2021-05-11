@@ -63,11 +63,6 @@
     <!-- AndroidManifest.xml -->
     <string name="preferences_title">Asetukset</string>
     <string name="deckpreferences_title">Asetukset XXX:lle</string>
-    <string name="sync_conflict_message">Tämä kokoelma täytyy joko lähettää AnkiWebiin tai se täytyy ladata sieltä, sillä niitä ei voida yhdistää. Toisella puolla oleva kokoelma tuhoutuu.</string>
-    <string name="sync_conflict_local">Vie</string>
-    <string name="sync_conflict_remote">Nouda</string>
-    <string name="sync_conflict_remote_confirm">Haluatko korvata paikallisen kokoelman?</string>
-    <string name="sync_conflict_local_confirm">Haluatko korvata palvelimella olevan kokoelman?</string>
     <string name="sync_prepare_syncing">Valmistellaan synkronointia&#8230;</string>
     <string name="sync_preparing_full_sync_message">Valmistellaan koko synkronointiin...</string>
     <string name="sync_uploading_message">Lähetetään...</string>
@@ -78,7 +73,6 @@
     <string name="sync_log_clocks_unsynchronized">Laitteesi kello on %1$d sekuntia%2$s väärässä. Varmista, että laitteesi päivämäärä, aika ja aikavyöhyke ovat oikeat, ja synkronoi sitten uudelleen.</string>
     <string name="sync_log_clocks_unsynchronized_tz">, laitteen aikavyöhyke on ehkä väärä</string>
     <string name="sync_log_clocks_unsynchronized_date">, laitteen päivämäärä on mahdollisesti väärä</string>
-    <string name="sync_conflict_title">Ristiriitan synkronointi</string>
     <string name="sync_no_changes_message">Muutoksia ei löytynyt.</string>
     <string name="sync_database_acknowledge">Kokoelma synkronoitu</string>
     <string name="sync_log_error_specific">Synkronointivirhe, tyyppi: %1$s, viesti: %2$s</string>

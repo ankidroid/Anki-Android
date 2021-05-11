@@ -15,6 +15,9 @@
  ****************************************************************************************/
 package com.wildplot.android.rendering.graphics.wrapper;
 
+import android.annotation.SuppressLint;
+
+@SuppressLint({"NonPublicNonStaticFieldName", "ConstantFieldName"})
 public class ColorWrap {
     //android.graphics.Color
     private final int colorValue;

@@ -111,12 +111,12 @@
     <string name="menu_edit_tags">编辑标签​​​​​</string>
     <string name="delete_note_message">确定要删除此笔记及生成的卡片？\n%s</string>
     <string name="menu_select">选择文本</string>
+    <string name="menu_lookup">查找文本</string>
     <string name="menu_search">在%1$s中查找</string>
     <string name="menu_mark_note">标记笔记</string>
     <string name="menu_unmark_note">取消标记</string>
     <string name="menu_toggle_mic_tool_bar">检查发音</string>
     <string name="new_deck">创建牌组</string>
-    <string name="create" comment="Button to create a filtered deck">创建</string>
     <string name="new_dynamic_deck">创建筛选牌组</string>
     <string name="night_mode">夜间模式</string>
     <string name="directory_inaccessible">无法访问AnkiDroid目录</string>
@@ -149,6 +149,7 @@
     <string name="custom_study_deck_name">自定义学习的进程</string>
     <string name="custom_study_deck_exists">请先重命名现有的自定义学习牌组。</string>
     <string name="empty_deck">此列表为空</string>
+    <string name="search_deck">牌组搜索</string>
     <string name="empty_deck_add_note">添加卡片</string>
     <string name="invalid_deck_name">无效的牌组名称</string>
     <string name="studyoptions_empty">这个牌组是空的，请点击 + 按钮来添加内容。</string>
@@ -204,4 +205,12 @@
     <string name="open_tag_not_closed">缺少 “{{%s}}”。</string>
     <string name="wrong_tag_closed">找到了 “{{/%1$s}}”，但预期 “{{/%2$s}}”</string>
     <string name="filter_error">过滤器 %s 出错</string>
+    <!-- Sync conflict -->
+    <string name="sync_conflict_message_new">卡片组无法合并。\n您想要保留哪个卡片组？</string>
+    <string name="sync_conflict_keep_local_new" comment="Select AnkiDroid files to keep while syncing">AnkiDroid</string>
+    <string name="sync_conflict_keep_remote_new" comment="Select AnkiWeb files to keep while syncing">AnkiWeb</string>
+    <string name="sync_conflict_remote_confirm_new">用来自AnkiWeb的卡片组替换AnkiDroid上的卡片组吗？</string>
+    <string name="sync_conflict_local_confirm_new">用来自AnkiDroid的卡片组替换您在AnkiWeb上的卡片组吗？</string>
+    <string name="sync_conflict_title_new">选择要保留的卡片组</string>
+    <string name="sync_conflict_replace_title">替换卡组集合</string>
 </resources>

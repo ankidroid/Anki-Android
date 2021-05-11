@@ -122,6 +122,7 @@
     <string name="reordering_cards">Reordering cards&#8230;</string>
     <string name="field_remapping">%1$s (van \"%2$s\")</string>
     <string name="confirm_map_cards_to_nothing">Any cards mapped to nothing will be deleted. If a note has no remaining cards, it will be lost. Are you sure you want to continue?</string>
+    <string name="timebox_reached_title">Timebox reached</string>
     <plurals name="timebox_reached">
         <item quantity="one">%1$d kaart gestudeer in %2$s</item>
         <item quantity="other">%1$d kaarte gestudeer in %2$s</item>
@@ -278,6 +279,7 @@
     <string name="white_board_image_save_failed">Failed to save whiteboard image. %s</string>
     <string name="white_board_image_saved">Whiteboard image saved to %s</string>
     <string name="title_whiteboard_pen_color">Whiteboard pen color</string>
+    <string name="title_whiteboard_editor">Whiteboard editor</string>
     <!-- CSV/Note Import -->
     <string name="note_importer_empty_cards_found"><![CDATA[Empty cards found. Please run Tools>Empty Cards.]]></string>
     <string name="note_importer_error_empty_first_field">Empty first field: %s</string>
@@ -313,6 +315,7 @@
     <!-- Card Viewer -->
     <string name="card_viewer_could_not_find_image">Card Content Error: Failed to load ‘%s’</string>
     <string name="card_viewer_media_relative_protocol">Card Content Error: Media update required</string>
+    <string name="cannot_load_http_resource">Loading http resources is no longer supported</string>
     <!-- Deck Picker -->
     <string name="deck_picker_failed_deck_load">Failed to load deck ‘%s’</string>
     <string name="search_decks">Search decks</string>
@@ -340,4 +343,11 @@
     <string name="create_shortcut_failed" comment="home screen == launcher">Your home screen does not allow AnkiDroid to add shortcuts</string>
     <string name="create_shortcut_error">Error adding shortcut: %s</string>
     <string name="note_editor_capitalize" comment="This is for a switch with a checkbox - on: enabled">Capitalize sentences</string>
+    <!-- Symbols used as Button text in IncrementNumberRangePreference -->
+    <string name="plus_sign" comment="Label for increment button in IncrementerNumberRangePreference">+</string>
+    <string name="minus_sign" comment="Label for decrement button in IncrementerNumberRangePreference">-</string>
+    <!-- Used for credential empty warning message -->
+    <string name="email_id_empty">Email address is required</string>
+    <string name="password_empty">Password is required</string>
+    <string name="back_pressed_once">Press back again to exit</string>
 </resources>

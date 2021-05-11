@@ -64,7 +64,7 @@ public class NoteImporter extends Importer {
 
     /** _nextID in python */
     private long mNextId;
-    private ArrayList<Long> _ids;
+    private ArrayList<Long> mIds;
     private boolean mEmptyNotes;
     private int mUpdateCount;
     private List<ParsedNode> mTemplateParsed;
@@ -169,7 +169,7 @@ public class NoteImporter extends Importer {
         List<String> updateLog = new ArrayList<>(notes.size());
         // PORT: Translations moved closer to their sources
         List<Object[]> _new = new ArrayList<>();
-        _ids = new ArrayList<>();
+        mIds = new ArrayList<>();
         mEmptyNotes = false;
         int dupeCount = 0;
         List<String> dupes = new ArrayList<>(notes.size());
@@ -243,9 +243,9 @@ public class NoteImporter extends Importer {
         addNew(_new);
         addUpdates(updates);
         // make sure to update sflds, etc
-        mCol.updateFieldCache(_ids);
+        mCol.updateFieldCache(mIds);
         // generate cards
-        if (!mCol.genCards(_ids, mModel).isEmpty()) {
+        if (!mCol.genCards(mIds, mModel).isEmpty()) {
             this.getLog().add(0, getString(R.string.note_importer_empty_cards_found));
         }
 
@@ -274,14 +274,14 @@ public class NoteImporter extends Importer {
         if (mEmptyNotes) {
             mLog.add(getString(R.string.note_importer_error_empty_notes));
         }
-        mTotal = _ids.size();
+        mTotal = mIds.size();
     }
 
     @Nullable
     private Object[] newData(ForeignNote n) {
         long id = mNextId;
         mNextId++;
-        _ids.add(id);
+        mIds.add(id);
         if (!processFields(n)) {
             return null;
         }
@@ -306,7 +306,7 @@ public class NoteImporter extends Importer {
 
 
     private Object[] updateData(ForeignNote n, long id, String[] sflds) {
-        _ids.add(id);
+        mIds.add(id);
         if (!processFields(n, sflds)) {
             return null;
         }
@@ -379,7 +379,7 @@ public class NoteImporter extends Importer {
             }
         }
         note.fieldsStr = joinFields(fields);
-        ArrayList<Integer> ords = Models.availOrds(mModel, fields, mTemplateParsed);
+        ArrayList<Integer> ords = Models.availOrds(mModel, fields, mTemplateParsed, Models.AllowEmpty.TRUE);
         if (ords.isEmpty()) {
             mEmptyNotes = true;
             return false;

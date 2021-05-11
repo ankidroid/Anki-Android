@@ -59,6 +59,7 @@
         <ListPreference
             android:defaultValue="@string/empty_string"
             android:key="language"
+            android:icon="@drawable/ic_language_black_24dp"
             android:title="@string/language" />
         <CheckBoxPreference
             android:defaultValue="false"

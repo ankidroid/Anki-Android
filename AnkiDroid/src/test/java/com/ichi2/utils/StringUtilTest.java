@@ -23,6 +23,7 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
 import static org.hamcrest.Matchers.nullValue;
 import static org.hamcrest.Matchers.sameInstance;
+import static org.junit.Assert.*;
 
 public class StringUtilTest {
 
@@ -45,5 +46,43 @@ public class StringUtilTest {
     public void trimRightDoesNothingOnTrimmedString() {
         String input = " foo";
         assertThat(trimRight(input), sameInstance(input));
+    }
+
+    @Test
+    public void strip_on_null_return_null() {
+        assertNull(StringUtil.strip(null));
+    }
+
+    @Test
+    public void strip_on_empty_return_empty() {
+        assertEquals("", StringUtil.strip(""));
+    }
+
+
+    @Test
+    public void string_on_nonempty_full_of_whitespace_return_empty() {
+        assertEquals("", StringUtil.strip(" \u0020\u2001  "));
+    }
+
+
+    @Test
+    public void strip_leading_spaces() {
+        assertEquals("Hello", StringUtil.strip("   \t\n Hello"));
+    }
+
+    @Test
+    public void strip_trailing_spaces() {
+        assertEquals("MyNameIs", StringUtil.strip("MyNameIs\n\u2009\u205F\t   \u3000 "));
+    }
+
+
+    @Test
+    public void strip_trailing_and_leading_spaces() {
+        assertEquals("Tarek", StringUtil.strip("\n\u2006 \r\n\t\u000CTarek   \u0009"));
+    }
+
+    @Test
+    public void strip_does_nothing_on_stripped_string() {
+        assertEquals("Java", StringUtil.strip("Java"));
     }
 }

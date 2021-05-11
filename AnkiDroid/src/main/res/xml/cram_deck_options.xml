@@ -23,7 +23,7 @@
             android:key="search"
             android:title="@string/deck_conf_cram_search" />
 
-        <com.ichi2.preferences.NumberRangePreference
+        <com.ichi2.preferences.IncrementerNumberRangePreference
             android:key="limit"
             android:numeric="integer"
             android:title="@string/deck_conf_cram_limit"
@@ -34,7 +34,7 @@
             android:key="order"
             android:title="@string/deck_conf_cram_order" />
     </PreferenceCategory>
-    <PreferenceCategory android:title="@string/study_options" >
+    <PreferenceCategory android:title="@string/study_options" android:key="studyOptions" >
         <CheckBoxPreference
             android:defaultValue="true"
             android:key="resched"

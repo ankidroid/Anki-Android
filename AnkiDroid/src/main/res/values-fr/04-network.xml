@@ -63,11 +63,6 @@
     <!-- AndroidManifest.xml -->
     <string name="preferences_title">Préférences</string>
     <string name="deckpreferences_title">Options pour XXX</string>
-    <string name="sync_conflict_message">Vos paquets ici et sur AnkiWeb diffèrent de telle manière qu\'ils ne peuvent pas être fusionnés, il est donc nécessaire d\'écraser les uns ou les autres.\n\nVoulez vous garder et envoyer les paquets d\'ici, ou téléchargez les paquets de AnkiWeb ?</string>
-    <string name="sync_conflict_local">Envoi</string>
-    <string name="sync_conflict_remote">Télécharger</string>
-    <string name="sync_conflict_remote_confirm">Êtes-vous sûr de vouloir récupérer la collection du serveur ? Soyez conscient que cela va écraser votre collection locale.</string>
-    <string name="sync_conflict_local_confirm">Êtes-vous sûr de vouloir charger la collection locale sur le serveur ? Soyez conscient que cela va écraser la collection du serveur.</string>
     <string name="sync_prepare_syncing">Préparation de la synchronisation...</string>
     <string name="sync_preparing_full_sync_message">Préparation de la synchronisation complète&#8230;</string>
     <string name="sync_uploading_message">Envoi en cours&#8230;</string>
@@ -78,7 +73,6 @@
     <string name="sync_log_clocks_unsynchronized">L’heure sur votre appareil est incorrecte de %1$d secondes %2$s; La synchronisation requiert que votre horloge et le fuseau horaire soient définis correctement afin d’éviter les erreurs. Veuillez vous assurer que les date, heure et fuseau horaire sur votre appareil sont correctement réglés, puis resynchronisez.</string>
     <string name="sync_log_clocks_unsynchronized_tz">, le fuseau horaire de l\'appareil est peut-être erroné</string>
     <string name="sync_log_clocks_unsynchronized_date">, la date de l\'appareil est peut-être erronée</string>
-    <string name="sync_conflict_title">Conflit de synchronisation</string>
     <string name="sync_no_changes_message">Aucun changement trouvé.</string>
     <string name="sync_database_acknowledge">Collection synchronisée</string>
     <string name="sync_log_error_specific">Erreur de synchronisation, type:%1$s, message:%2$s</string>

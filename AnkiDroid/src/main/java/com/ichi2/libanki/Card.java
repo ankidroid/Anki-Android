@@ -120,35 +120,35 @@ public class Card implements Cloneable {
     private int mLastIvl;
 
 
-    public Card(Collection col) {
-        this(col, null);
-    }
-
-
-    public Card(Collection col, Long id) {
+    public Card(@NonNull Collection col) {
         mCol = col;
         mTimerStarted = 0L;
         mQA = null;
         mNote = null;
-        if (id != null) {
-            mId = id;
-            load();
-        } else {
-            // to flush, set nid, ord, and due
-            mId = mCol.getTime().timestampID(mCol.getDb(), "cards");
-            mDid = 1;
-            mType = Consts.CARD_TYPE_NEW;
-            mQueue = Consts.QUEUE_TYPE_NEW;
-            mIvl = 0;
-            mFactor = 0;
-            mReps = 0;
-            mLapses = 0;
-            mLeft = 0;
-            mODue = 0;
-            mODid = 0;
-            mFlags = 0;
-            mData = "";
-        }
+        // to flush, set nid, ord, and due
+        mId = mCol.getTime().timestampID(mCol.getDb(), "cards");
+        mDid = 1;
+        mType = Consts.CARD_TYPE_NEW;
+        mQueue = Consts.QUEUE_TYPE_NEW;
+        mIvl = 0;
+        mFactor = 0;
+        mReps = 0;
+        mLapses = 0;
+        mLeft = 0;
+        mODue = 0;
+        mODid = 0;
+        mFlags = 0;
+        mData = "";
+    }
+
+
+    public Card(@NonNull Collection col, @NonNull Long id) {
+        mCol = col;
+        mTimerStarted = 0L;
+        mQA = null;
+        mNote = null;
+        mId = id;
+        load();
     }
 
 
@@ -702,7 +702,8 @@ public class Card implements Cloneable {
     }
 
     // as in Anki aqt/browser.py
-    private String nextDue() {
+    @VisibleForTesting
+    public String nextDue() {
         long date;
         long due = getDue();
         if (isInDynamicDeck()) {

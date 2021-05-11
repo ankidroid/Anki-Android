@@ -31,6 +31,7 @@ import java.util.List;
 import java.util.Set;
 
 import androidx.annotation.CheckResult;
+import timber.log.Timber;
 
 /**
  * Represents a note type, a.k.a. Model.
@@ -102,6 +103,7 @@ public class Model extends JSONObject {
             try {
                 node = ParsedNode.parse_inner(format_question);
             } catch (TemplateError er) {
+                Timber.w(er);
             }
             nodes.add(node);
         }

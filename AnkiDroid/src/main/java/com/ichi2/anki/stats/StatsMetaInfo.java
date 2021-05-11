@@ -40,15 +40,15 @@ public class StatsMetaInfo {
 
     double[][] mSeriesList;
 
-    boolean statsCalculated;
-    boolean dataAvailable;
+    boolean mStatsCalculated;
+    boolean mDataAvailable;
 
     public boolean isStatsCalculated() {
-        return statsCalculated;
+        return mStatsCalculated;
     }
 
     public void setStatsCalculated(boolean statsCalculated) {
-        this.statsCalculated = statsCalculated;
+        this.mStatsCalculated = statsCalculated;
     }
 
     public double[][] getmSeriesList() {
@@ -60,11 +60,11 @@ public class StatsMetaInfo {
     }
 
     public boolean isDataAvailable() {
-        return dataAvailable;
+        return mDataAvailable;
     }
 
     public void setDataAvailable(boolean dataAvailable) {
-        this.dataAvailable = dataAvailable;
+        this.mDataAvailable = dataAvailable;
     }
 
     public boolean ismDynamicAxis() {

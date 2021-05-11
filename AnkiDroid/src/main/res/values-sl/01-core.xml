@@ -38,7 +38,7 @@
 ~ this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <resources>
-    <string name="yes">yes</string>
+    <string name="yes">da</string>
     <!-- Navigation drawer items-->
     <string name="decks">Kompleti</string>
     <string name="card_browser" comment="The usage of card browser inside the app (note the casing)">Brskalnik kartic</string>
@@ -126,12 +126,12 @@
     <string name="menu_edit_tags">Edit tags</string>
     <string name="delete_note_message">Ali res želite izbrisati ta zapisek in vse vezane kartice?\n%s</string>
     <string name="menu_select">Označi besedilo</string>
+    <string name="menu_lookup">Lookup text</string>
     <string name="menu_search">Poišči v %1$s</string>
     <string name="menu_mark_note">Označi zapisek</string>
     <string name="menu_unmark_note">Odznači zapisek</string>
     <string name="menu_toggle_mic_tool_bar">Check pronunciation</string>
     <string name="new_deck">Ustvari komplet</string>
-    <string name="create" comment="Button to create a filtered deck">Ustvari</string>
     <string name="new_dynamic_deck">Ustvari filtriran komplet</string>
     <string name="night_mode">Nočni način</string>
     <string name="directory_inaccessible">Slovar AnkiDroid ni na voljo</string>
@@ -164,6 +164,7 @@
     <string name="custom_study_deck_name">Seja učenja po meri</string>
     <string name="custom_study_deck_exists">Najprej preimenujte obstoječi komplet za učenje po meri.</string>
     <string name="empty_deck">Ta komplet je prazen</string>
+    <string name="search_deck">Deck Search</string>
     <string name="empty_deck_add_note">Add card</string>
     <string name="invalid_deck_name">Invalid deck name</string>
     <string name="studyoptions_empty">Ta komplet je prazen. Pritisnite na gumb +, da dodate novo vsebino.</string>
@@ -222,4 +223,12 @@
     <string name="open_tag_not_closed">Missing \'{{%s}}\'.</string>
     <string name="wrong_tag_closed">Found \'{{/%1$s}}\', but expected \'{{/%2$s}}\'</string>
     <string name="filter_error">Error in filter %s</string>
+    <!-- Sync conflict -->
+    <string name="sync_conflict_message_new">The collections can’t be combined.\nWhich collection do you want to keep?</string>
+    <string name="sync_conflict_keep_local_new" comment="Select AnkiDroid files to keep while syncing">AnkiDroid</string>
+    <string name="sync_conflict_keep_remote_new" comment="Select AnkiWeb files to keep while syncing">AnkiWeb</string>
+    <string name="sync_conflict_remote_confirm_new">Replace your collection on AnkiDroid with your collection from AnkiWeb?</string>
+    <string name="sync_conflict_local_confirm_new">Replace your collection on AnkiWeb with your collection from AnkiDroid?</string>
+    <string name="sync_conflict_title_new">Select collection to keep</string>
+    <string name="sync_conflict_replace_title">Replace collection</string>
 </resources>

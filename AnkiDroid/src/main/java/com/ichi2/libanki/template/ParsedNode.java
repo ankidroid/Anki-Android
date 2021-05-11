@@ -1,7 +1,22 @@
+/****************************************************************************************
+ * Copyright (c) 2020 Arthur Milchior <arthur@milchior.fr>                              *
+ *                                                                                      *
+ * This program is free software; you can redistribute it and/or modify it under        *
+ * the terms of the GNU General Public License as published by the Free Software        *
+ * Foundation; either version 3 of the License, or (at your option) any later           *
+ * version.                                                                             *
+ *                                                                                      *
+ * This program is distributed in the hope that it will be useful, but WITHOUT ANY      *
+ * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A      *
+ * PARTICULAR PURPOSE. See the GNU General Public License for more details.             *
+ *                                                                                      *
+ * You should have received a copy of the GNU General Public License along with         *
+ * this program.  If not, see <http://www.gnu.org/licenses/>.                           *
+ ****************************************************************************************/
+
 package com.ichi2.libanki.template;
 
 import android.content.Context;
-import android.text.TextUtils;
 import android.util.Pair;
 
 import com.ichi2.anki.R;
@@ -9,7 +24,6 @@ import com.ichi2.libanki.Utils;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
@@ -20,7 +34,7 @@ import java.util.WeakHashMap;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.annotation.VisibleForTesting;
-import okhttp3.internal.Util;
+import timber.log.Timber;
 
 /**
  * Represents a template, allow to check in linear time which card is empty/render card.
@@ -97,11 +111,11 @@ public abstract class ParsedNode {
         while (tokens.hasNext()) {
             Tokenizer.Token token = tokens.next();
             switch (token.getKind()) {
-                case Text: {
+                case TEXT: {
                     nodes.add(new Text(token.getText()));
                     break;
                 }
-                case Replacement: {
+                case REPLACEMENT: {
                     String[] it = token.getText().split(":", -1);
                     String key = it[it.length - 1];
                     List<String> filters = new ArrayList<>(it.length - 1);
@@ -111,17 +125,17 @@ public abstract class ParsedNode {
                     nodes.add(new Replacement(key, filters, token.getText()));
                     break;
                 }
-                case OpenConditional: {
+                case OPEN_CONDITIONAL: {
                     String tag = token.getText();
                     nodes.add(new Conditional(tag, parse_inner(tokens, tag)));
                     break;
                 }
-                case OpenNegated: {
+                case OPEN_NEGATED: {
                     String tag = token.getText();
                     nodes.add(new NegatedConditional(tag, parse_inner(tokens, tag)));
                     break;
                 }
-                case CloseConditional: {
+                case CLOSE_CONDITIONAL: {
                     String tag = token.getText();
                     if (open_tag == null) {
                         throw new TemplateError.ConditionalNotOpen(tag);
@@ -146,6 +160,7 @@ public abstract class ParsedNode {
             render_into(fields, Utils.nonEmptyFields(fields), builder);
             return builder.toString();
         } catch (TemplateError er) {
+            Timber.w(er);
             String side = (question)? context.getString(R.string.card_template_editor_front): context.getString(R.string.card_template_editor_back);
             String explanation = context.getString(R.string.has_a_problem, side, er.message(context));
             String more_explanation = "<a href=\""+ TEMPLATE_ERROR_LINK+"\">" + context.getString(R.string.more_information) + "</a>";

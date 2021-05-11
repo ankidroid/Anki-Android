@@ -15,7 +15,13 @@
  ****************************************************************************************/
 package com.wildplot.android.rendering;
 
-import com.wildplot.android.rendering.graphics.wrapper.*;
+import android.annotation.SuppressLint;
+
+import com.wildplot.android.rendering.graphics.wrapper.BasicStrokeWrap;
+import com.wildplot.android.rendering.graphics.wrapper.ColorWrap;
+import com.wildplot.android.rendering.graphics.wrapper.GraphicsWrap;
+import com.wildplot.android.rendering.graphics.wrapper.RectangleWrap;
+import com.wildplot.android.rendering.graphics.wrapper.StrokeWrap;
 import com.wildplot.android.rendering.interfaces.Drawable;
 import com.wildplot.android.rendering.interfaces.Legendable;
 
@@ -24,6 +30,7 @@ import com.wildplot.android.rendering.interfaces.Legendable;
  * The LinesPoints objects draw points from a data array and connect them with lines on.
  * These LinesPoints are drawn onto a PlotSheet object
  */
+@SuppressLint("NonPublicNonStaticFieldName")
 public class Lines implements Drawable, Legendable {
 
     private boolean mHasShadow = false;

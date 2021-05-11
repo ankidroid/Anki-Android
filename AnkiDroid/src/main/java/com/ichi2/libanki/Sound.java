@@ -60,7 +60,7 @@ public class Sound {
     /**
      * Pattern used to identify the markers for sound files
      */
-    public static final Pattern sSoundPattern = Pattern.compile("\\[sound:([^\\[\\]]*)]");
+    public static final Pattern SOUND_PATTERN = Pattern.compile("\\[sound:([^\\[\\]]*)]");
 
     /**
      * Pattern used to parse URI (according to http://tools.ietf.org/html/rfc3986#page-50)
@@ -140,7 +140,7 @@ public class Sound {
      * @param qa -- the base categorization of the sounds in the content, SoundSide.SOUNDS_QUESTION or SoundSide.SOUNDS_ANSWER
      */
     public void addSounds(String soundDir, String content, SoundSide qa) {
-        Matcher matcher = sSoundPattern.matcher(content);
+        Matcher matcher = SOUND_PATTERN.matcher(content);
         // While there is matches of the pattern for sound markers
         while (matcher.find()) {
             // Create appropriate list if needed; list must not be empty so long as code does no check
@@ -203,7 +203,7 @@ public class Sound {
 
         Timber.d("expandSounds");
 
-        Matcher matcher = sSoundPattern.matcher(content);
+        Matcher matcher = SOUND_PATTERN.matcher(content);
         // While there is matches of the pattern for sound markers
         while (matcher.find()) {
             // Get the sound file name
@@ -396,17 +396,17 @@ public class Sound {
     /** #5414 - Ensures playing a single sound performs cleanup */
     private final class SingleSoundCompletionListener implements OnCompletionListener {
         @Nullable
-        private final OnCompletionListener userCallback;
+        private final OnCompletionListener mUserCallback;
 
         public SingleSoundCompletionListener(@Nullable OnCompletionListener userCallback) {
-            this.userCallback = userCallback;
+            this.mUserCallback = userCallback;
         }
 
         @Override
         public void onCompletion(MediaPlayer mp) {
             Timber.d("Single Sound completed");
-            if (userCallback != null) {
-                userCallback.onCompletion(mp);
+            if (mUserCallback != null) {
+                mUserCallback.onCompletion(mp);
             } else {
                 releaseSound();
             }

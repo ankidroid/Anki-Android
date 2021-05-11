@@ -43,230 +43,234 @@
     <string name="enabled">Включено</string>
     <!-- preferences.xml categories-->
     <string name="pref_cat_general_summ">Общие настроки</string>
-    <string name="pref_cat_reviewing">Обучение</string>
+    <string name="pref_cat_reviewing" maxLength="41">Обучение</string>
     <string name="pref_cat_reviewing_summ">Настройки обучения, не зависящие от колоды</string>
-    <string name="pref_cat_reviewer_behaviour">Поведение</string>
-    <string name="pref_cat_flashcard">Экран</string>
-    <string name="pref_cat_whiteboard">Доска</string>
-    <string name="pref_cat_appearance">Внешний вид</string>
+    <string name="pref_cat_reviewer_behaviour" maxLength="41">Поведение</string>
+    <string name="pref_cat_flashcard" maxLength="41">Экран</string>
+    <string name="pref_cat_whiteboard" maxLength="41">Доска</string>
+    <string name="pref_cat_appearance" maxLength="41">Внешний вид</string>
     <string name="pref_cat_appearance_summ">Выбор темы и шрифтов</string>
-    <string name="pref_cat_themes">Темы</string>
-    <string name="pref_cat_fonts">Шрифты</string>
-    <string name="pref_cat_gestures">Жесты</string>
+    <string name="pref_cat_themes" maxLength="41">Темы</string>
+    <string name="pref_cat_fonts" maxLength="41">Шрифты</string>
+    <string name="pref_cat_gestures" maxLength="41">Жесты</string>
     <string name="pref_cat_gestures_summ">Использовать касания и смахивание вместо кнопок</string>
-    <string name="pref_cat_actions">Действия</string>
-    <string name="pref_cat_advanced">Расширенные</string>
+    <string name="pref_cat_actions" maxLength="41">Действия</string>
+    <string name="pref_cat_advanced" maxLength="41">Расширенные</string>
     <string name="pref_cat_advanced_summ">Оптимизация и экспериментальные функции</string>
-    <string name="pref_cat_performance">Производительность</string>
-    <string name="pref_cat_workarounds">Костыли и велосипеды</string>
-    <string name="pref_cat_plugins">Плагины</string>
-    <string name="about_title">Об AnkiDroid</string>
+    <string name="pref_cat_performance" maxLength="41">Производительность</string>
+    <string name="pref_cat_workarounds" maxLength="41">Костыли и велосипеды</string>
+    <string name="pref_cat_plugins" maxLength="41">Плагины</string>
+    <string name="about_title" maxLength="41">Об AnkiDroid</string>
     <string name="about_version">Версия: </string>
     <!-- preferences.xml entries-->
-    <string name="whiteboard_stroke_width">Толщина линии</string>
-    <string name="use_input_tag">Ввод ответа на карточке</string>
+    <string name="whiteboard_stroke_width" maxLength="41">Толщина линии</string>
+    <string name="use_input_tag" maxLength="41">Ввод ответа на карточке</string>
     <string name="use_input_tag_summ">Добавляет на карточку поле ввода для ответа</string>
-    <string name="dictionary">Посмотреть в словаре</string>
-    <string name="reset_languages">Сбросить языки</string>
+    <string name="dictionary" maxLength="41">Посмотреть в словаре</string>
+    <string name="reset_languages" maxLength="41">Сбросить языки</string>
     <string name="reset_languages_summ">Сбрасывает сопоставленные всем колодам языки</string>
     <string name="reset_languages_question">Сбросить все языковые соответствия?</string>
     <string name="reset_confirmation">Все сопоставления сброшены</string>
-    <string name="card_zoom">Масштаб карточек</string>
-    <string name="image_zoom">Масштаб картинок</string>
-    <string name="button_size">Размер кнопки ответа</string>
-    <string name="card_browser_font_size">Масштаб шрифта в списке карточек</string>
-    <string name="card_browser_hide_media">Показывать имена файлов</string>
+    <string name="card_zoom" maxLength="41">Масштаб карточек</string>
+    <string name="image_zoom" maxLength="41">Масштаб картинок</string>
+    <string name="button_size" maxLength="41">Размер кнопки ответа</string>
+    <string name="card_browser_font_size" maxLength="41">Масштаб шрифта в списке карточек</string>
+    <string name="card_browser_hide_media" maxLength="41">Показывать имена файлов</string>
     <string name="card_browser_hide_media_summary">Показывает имена медиафайлов в полях вопросов и ответов в списке карточек</string>
-    <string name="col_path">Папка AnkiDroid</string>
-    <string name="fullscreen_review">Полноэкранный режим</string>
+    <string name="col_path" maxLength="41">Папка AnkiDroid</string>
+    <string name="fullscreen_review" maxLength="41">Полноэкранный режим</string>
     <string name="full_screen_off">Выключен</string>
     <string name="full_screen_system">Скрыть системную панель</string>
     <string name="full_screen_complete">Скрыть системную панель и кнопки ответа</string>
     <string name="full_screen_error_gestures">Включите жесты, чтобы скрыть кнопки</string>
-    <string name="answer_buttons_position">Положение кнопок ответа</string>
+    <string name="answer_buttons_position" maxLength="41">Положение кнопок ответа</string>
     <string-array name="answer_buttons_position_labels">
         <item>Сверху</item>
         <item>Снизу</item>
     </string-array>
-    <string name="gestures">Включить жесты</string>
+    <string name="gestures" maxLength="41">Включить жесты</string>
     <string name="gestures_summ">Назначает жесты действиям вроде ответа и правки</string>
-    <string name="gestures_allow_links">Игнорировать жесты на ссылках</string>
+    <string name="gestures_allow_links" maxLength="41">Игнорировать жесты на ссылках</string>
     <string name="gestures_allow_links_summary">Жесты не будут учитываться, если нажата ссылка или подсказка.</string>
-    <string name="gestures_corner_touch">9 зон касания</string>
+    <string name="gestures_corner_touch" maxLength="41">9 зон касания</string>
     <string name="gestures_corner_touch_summary">Разрешить сенсорные жесты в углах экрана</string>
-    <string name="gestures_swipe_up">Смахивание вверх</string>
-    <string name="gestures_swipe_down">Смахивание вниз</string>
-    <string name="gestures_swipe_left">Смахивание влево</string>
-    <string name="gestures_swipe_right">Смахивание вправо</string>
-    <string name="gestures_double_tap">Двойное касание</string>
-    <string name="gestures_tap_top">Касание вверху</string>
-    <string name="gestures_tap_left">Касание слева</string>
-    <string name="gestures_tap_right">Касание справа</string>
-    <string name="gestures_tap_bottom">Касание внизу</string>
-    <string name="gestures_corner_tap_top_left">Касание вверху в левом углу</string>
+    <string name="gestures_swipe_up" maxLength="41">Смахивание вверх</string>
+    <string name="gestures_swipe_down" maxLength="41">Смахивание вниз</string>
+    <string name="gestures_swipe_left" maxLength="41">Смахивание влево</string>
+    <string name="gestures_swipe_right" maxLength="41">Смахивание вправо</string>
+    <string name="gestures_double_tap" maxLength="41">Двойное касание</string>
+    <string name="gestures_tap_top" maxLength="41">Касание вверху</string>
+    <string name="gestures_tap_left" maxLength="41">Касание слева</string>
+    <string name="gestures_tap_right" maxLength="41">Касание справа</string>
+    <string name="gestures_tap_bottom" maxLength="41">Касание внизу</string>
+    <string name="gestures_corner_tap_top_left" maxLength="41">Касание вверху в левом углу</string>
     <string name="gestures_corner_tap_top_center">Касание вверху по центру</string>
-    <string name="gestures_corner_tap_top_right">Касание вверху в правом углу</string>
+    <string name="gestures_corner_tap_top_right" maxLength="41">Касание вверху в правом углу</string>
     <string name="gestures_corner_tap_middle_left">Касание по центру слева</string>
-    <string name="gestures_corner_tap_middle_center">Касание в центре экрана</string>
+    <string name="gestures_corner_tap_middle_center" maxLength="41">Касание в центре экрана</string>
     <string name="gestures_corner_tap_middle_right">Касание по центру справа</string>
-    <string name="gestures_corner_tap_bottom_left">Касание внизу в левом углу</string>
+    <string name="gestures_corner_tap_bottom_left" maxLength="41">Касание внизу в левом углу</string>
     <string name="gestures_corner_tap_bottom_center">Касание внизу по центру</string>
-    <string name="gestures_corner_tap_bottom_right">Касание внизу в правом углу</string>
-    <string name="gestures_volume_up">Увеличить громкость</string>
-    <string name="gestures_volume_down">Уменьшить громкость</string>
-    <string name="more_scrolling_buttons">eReader</string>
+    <string name="gestures_corner_tap_bottom_right" maxLength="41">Касание внизу в правом углу</string>
+    <string name="gestures_volume_up" maxLength="41">Увеличить громкость</string>
+    <string name="gestures_volume_down" maxLength="41">Уменьшить громкость</string>
+    <string name="more_scrolling_buttons" maxLength="41">eReader</string>
     <string name="more_scrolling_buttons_summ">Также использовать клавиши kanji/katakana, emoji/kao-moji для прокрутки</string>
     <string name="card_browser_enable_external_context_menu">Пункт «%s» в меню</string>
     <string name="card_browser_enable_external_context_menu_summary">Добавляет пункт «%s» в контекстное меню системы</string>
-    <string name="double_scrolling_gap">Двойная прокрутка</string>
+    <string name="double_scrolling_gap" maxLength="41">Двойная прокрутка</string>
     <string name="double_scrolling_gap_summ">Удвоить дистанцию прокрутки на читалках</string>
-    <string name="swipe_sensitivity">Чувствительность смахивания</string>
-    <string name="tts">Синтез речи</string>
+    <string name="swipe_sensitivity" maxLength="41">Чувствительность смахивания</string>
+    <string name="tts" maxLength="41">Синтез речи</string>
     <string name="tts_summ">Зачитывает вопрос и ответ, если нет прикреплённого аудиофайла</string>
-    <string name="sync_fetch_missing_media">Загружать медиафайлы</string>
+    <string name="sync_fetch_missing_media" maxLength="41">Загружать медиафайлы</string>
     <string name="sync_fetch_missing_media_summ">Автоматически загружает медиафайлы при синхронизации</string>
-    <string name="sync_account">Учётная запись AnkiWeb</string>
+    <string name="sync_account" maxLength="41">Учётная запись AnkiWeb</string>
     <string name="sync_account_summ_logged_out">Вы не вошли в учётную запись</string>
     <string name="sync_account_summ_logged_in">%s</string>
-    <string name="automatic_sync_choice">Автоматическая синхронизация</string>
+    <string name="automatic_sync_choice" maxLength="41">Автоматическая синхронизация</string>
     <string name="automatic_sync_choice_summ">Автоматически синхронизирует при запуске и выходе, но не чаще, чем раз в 10 минут.</string>
-    <string name="sync_status_badge">Отображать состояние синхронизации</string>
+    <string name="sync_status_badge" maxLength="41">Отображать состояние синхронизации</string>
     <string name="sync_status_badge_summ">Добавлять точку на значок синхронизации, когда можно выгрузить изменения</string>
-    <string name="day_theme">Дневная тема</string>
-    <string name="night_theme">Ночная тема</string>
-    <string name="default_font">Шрифт по умолчанию</string>
-    <string name="override_font">Когда применять шрифт по умолчанию</string>
-    <string name="language">Язык</string>
+    <string name="day_theme" maxLength="41">Дневная тема</string>
+    <string name="night_theme" maxLength="41">Ночная тема</string>
+    <string name="default_font" maxLength="41">Шрифт по умолчанию</string>
+    <string name="override_font" maxLength="41">Когда применять шрифт по умолчанию</string>
+    <string name="language" maxLength="41">Язык</string>
     <string name="language_system">системный</string>
-    <string name="notification_pref">Уведомления</string>
-    <string name="notification_pref_title">Какие показывать</string>
+    <string name="notification_pref" maxLength="41">Уведомления</string>
+    <string name="notification_pref_title" maxLength="41">Какие показывать</string>
     <string name="never_notify">Никакие</string>
     <string name="notify_when_pending">Только важные</string>
     <string name="notification_minimum_cards_due">Когда >%d карточек</string>
-    <string name="notification_minimum_cards_due_vibrate">Вибросигнал</string>
-    <string name="notification_minimum_cards_due_blink">Мерцание светодиода</string>
-    <string name="timeout_answer_text">Автоматически показывать ответ</string>
+    <string name="notification_minimum_cards_due_vibrate" maxLength="41">Вибросигнал</string>
+    <string name="notification_minimum_cards_due_blink" maxLength="41">Мерцание светодиода</string>
+    <string name="timeout_answer_text" maxLength="41">Автоматически показывать ответ</string>
     <string name="timeout_answer_summ">Показывает ответ автоматически. Задержка включает в себя время для воспроизведения звука.</string>
-    <string name="timeout_answer_seconds">Показать ответ через</string>
+    <string name="timeout_answer_seconds" maxLength="41">Показать ответ через</string>
     <string name="timeout_answer_seconds_summ" comment="The time to wait (in seconds) in the reviewer before automatically showing the next question or answer">XXX с</string>
-    <string name="timeout_question_seconds">Показать следующий вопрос через</string>
+    <string name="timeout_question_seconds" maxLength="41">Показать следующий вопрос через</string>
     <string name="select_locale_title">Выберите язык</string>
-    <string name="safe_display">Статический режим экрана</string>
+    <string name="software_render" maxLength="41">Отключить аппаратную отрисовку карточек</string>
+    <string name="software_render_summ">Аппаратная отрисовка быстрее, но может вызывать проблемы (особенно на Android 8/8.1). Попробуйте отключить её если при повторении пропадают элементы интерфейса.</string>
+    <string name="safe_display" maxLength="41">Статический режим экрана</string>
     <string name="safe_display_summ">Отключает всю анимацию и использует безопасную отрисовку. Может понадобиться для экранов на электронных чернилах</string>
-    <string name="disable_extended_text_ui">Отключить режим одного поля</string>
+    <string name="disable_extended_text_ui" maxLength="41">Отключить режим одного поля</string>
     <!--See: multimedia_editor_popup_cloze. We can\'t use format strings as this is auto-generated-->
     <string name="disable_extended_text_ui_summ">Включает контекстное меню «Задание с пропусками» в альбомном режиме</string>
-    <string name="vertical_centering">Выравнивать по центру</string>
+    <string name="vertical_centering" maxLength="41">Выравнивать по центру</string>
     <string name="vertical_centering_summ">Выравнивает содержимое карточек по вертикали</string>
-    <string name="pref_backup_max">Число резервных копий</string>
-    <string name="show_estimates">Показывать время на кнопках</string>
+    <string name="pref_backup_max" maxLength="41">Число резервных копий</string>
+    <string name="show_estimates" maxLength="41">Показывать время на кнопках</string>
     <string name="show_estimates_summ">Показывает время следующего повторения над кнопками ответа</string>
-    <string name="show_top_bar">Показывать верхнюю панель</string>
+    <string name="show_top_bar" maxLength="41">Показывать верхнюю панель</string>
     <string name="show_top_bar_summ">Показывает счётчик карточек и кнопки «Флажок» и «Отметить»</string>
-    <string name="show_progress">Показать оставшиеся</string>
+    <string name="show_progress" maxLength="41">Показать оставшиеся</string>
     <string name="show_progress_summ">Показывает число оставшихся карточек</string>
-    <string name="show_eta">Показывать оценку времени</string>
+    <string name="show_eta" maxLength="41">Показывать оценку времени</string>
     <string name="show_eta_summ">Показывает оставшееся время</string>
-    <string name="use_current">Колода для новых карточек</string>
-    <string name="new_spread">Позиция новых карточек</string>
-    <string name="learn_cutoff">Лимит опережения</string>
-    <string name="time_limit">Лимит учебного блока</string>
+    <string name="use_current" maxLength="41">Колода для новых карточек</string>
+    <string name="new_spread" maxLength="41">Позиция новых карточек</string>
+    <string name="learn_cutoff" maxLength="41">Лимит опережения</string>
+    <string name="time_limit" maxLength="41">Лимит учебного блока</string>
     <string name="time_limit_summ">XXX мин.</string>
-    <string name="new_timezone">Обработка нового часового пояса</string>
-    <string name="day_offset">Начало следующего дня</string>
+    <string name="new_timezone" maxLength="41">Обработка нового часового пояса</string>
+    <string name="day_offset_with_description" maxLength="41">Начало следующего дня (0 — полночь, 23 — 11 вечера)</string>
     <string name="day_offset_summ">XXX ч. утра</string>
-    <string name="sched_ver">Экспериментальный планировщик — 2</string>
-    <string name="sched_ver_summ">Включает экспериментальный планировщик. При синхронизации изменения будут перезаписаны в одну сторону</string>
+    <string name="xlabel_dayoffset_seekbar" maxLength="41">Полночь</string>
+    <string name="ylabel_dayoffset_seekbar" maxLength="41">23:00</string>
+    <string name="sched_v2" maxLength="41">V2 scheduler</string>
+    <string name="sched_v2_summ">Enable the new scheduler. Forces changes in one direction on next sync</string>
     <string name="sched_ver_toggle_title">Подтвердить</string>
     <string name="sched_ver_2to1">Это сбросит все изучаемые карточки, очистит фильтрованные колоды и поменяет версию планировщика. Продолжить?</string>
     <string name="sched_ver_1to2">Экспериментальный планировщик может ошибаться. Сначала прочтите документацию. Продолжить?</string>
-    <string name="pref_keep_screen_on">Не выключать экран</string>
+    <string name="pref_keep_screen_on" maxLength="41">Не выключать экран</string>
     <string name="pref_keep_screen_on_summ">Отключает спящий режим экрана</string>
-    <string name="convert_fen_text">Поддержка шахматной нотации</string>
+    <string name="convert_fen_text" maxLength="41">Поддержка шахматной нотации</string>
     <string name="convert_fen_text_summ">Рисует шахматную доску из нотации Форсайта — Эдвардса. Нотация должна быть заключена в [fen][/fen] теги.</string>
-    <string name="enable_api_title">Включить AnkiDroid API</string>
+    <string name="enable_api_title" maxLength="41">Включить AnkiDroid API</string>
     <string name="enable_api_summary">Позволяет другим приложениям подключаться к AnkiDroid, читать и записывать данные без вашего вмешательства</string>
-    <string name="custom_buttons">Панель кнопок</string>
+    <string name="custom_buttons" maxLength="41">Панель кнопок</string>
     <string name="custom_buttons_summary">Выбрать кнопки на панели</string>
     <string name="custom_buttons_setting_always_show">Показывать всегда</string>
     <string name="custom_buttons_setting_if_room">Если есть место</string>
     <string name="custom_buttons_setting_menu_only">Только меню</string>
-    <string name="reset_custom_buttons">Сбросить</string>
-    <string name="thirdparty_apps_title">Сторонние приложения</string>
+    <string name="reset_custom_buttons" maxLength="41">Сбросить</string>
+    <string name="thirdparty_apps_title" maxLength="41">Сторонние приложения</string>
     <string name="thirdparty_apps_summary">Покажет список приложений, которые используют API AnkiDroid, например, словари</string>
-    <string name="html_javascript_debugging">Отладка HTML и JavaScript</string>
+    <string name="html_javascript_debugging" maxLength="41">Отладка HTML и JavaScript</string>
     <string name="html_javascript_debugging_summ">Включает удалённые соединения WebView и сохраняет HTML карточек в директорию AnkiDroid</string>
     <!-- Advanced statistics settings -->
-    <string name="advanced_statistics_title">Расширенная статистика</string>
-    <string name="enable_advanced_statistics_title">Включить расширенную статистику</string>
+    <string name="advanced_statistics_title" maxLength="41">Расширенная статистика</string>
+    <string name="enable_advanced_statistics_title" maxLength="41">Включить расширенную статистику</string>
     <string name="enable_advanced_statistics_summ">Если включена, отображает прогноз, основанный на вычислениях и моделировании будущих повторений, иначе — на основе уже запланированных повторений.</string>
-    <string name="advanced_forecast_stats_compute_n_days_title">Вычислять первые N дней, симулировать остальные</string>
-    <string name="advanced_forecast_stats_compute_precision_title">Точность вычислений</string>
-    <string name="advanced_forecast_stats_mc_n_iterations_title">Число итераций моделирования</string>
+    <string name="advanced_forecast_stats_compute_n_days_title" maxLength="41">Вычислять первые N дней, симулировать остальные</string>
+    <string name="advanced_forecast_stats_compute_precision_title" maxLength="41">Точность вычислений</string>
+    <string name="advanced_forecast_stats_mc_n_iterations_title" maxLength="41">Число итераций моделирования</string>
     <!-- Custom sync server settings -->
-    <string name="custom_sync_server_title">Пользовательский сервер</string>
-    <string name="custom_sync_server_enable_title">Использовать пользовательский сервер</string>
+    <string name="custom_sync_server_title" maxLength="41">Пользовательский сервер</string>
+    <string name="custom_sync_server_enable_title" maxLength="41">Использовать пользовательский сервер</string>
     <string name="custom_sync_server_enable_summary">Если вы не хотите использовать AnkiWeb, то вы можете указать альтернативный сервер</string>
-    <string name="custom_sync_server_base_url_title">URL для синхронизации</string>
+    <string name="custom_sync_server_base_url_title" maxLength="41">URL для синхронизации</string>
     <string name="custom_sync_server_base_url_invalid">Недопустимый адрес синхронизации</string>
-    <string name="custom_sync_server_media_url_title">URL для медиафайлов</string>
+    <string name="custom_sync_server_media_url_title" maxLength="41">URL для медиафайлов</string>
     <string name="custom_sync_server_media_url_invalid">Недопустимый адрес синхронизация медиафайлов</string>
     <!-- studyoptions -->
     <string name="deck_conf_group_summ">Изменения конфигурации затронут несколько колод. Если вы хотите изменить только текущую колоду, сначала добавьте новую конфигурацию</string>
     <string name="studyoptions_limit_select_tags">Выберите метки</string>
     <!-- Deck configurations -->
-    <string name="deck_conf_deck_description">Описание колоды (влияет только на текущую)</string>
-    <string name="deck_conf_group">Конфигурация</string>
+    <string name="deck_conf_deck_description" maxLength="41">Описание колоды (влияет только на текущую)</string>
+    <string name="deck_conf_group" maxLength="41">Конфигурация</string>
     <plurals name="deck_conf_group_summ">
         <item quantity="one">%1$s\n%2$d колода использует эту группу</item>
         <item quantity="few">%1$s\n%2$d колоды использует эту группу</item>
         <item quantity="many">%1$s\n%2$d колод использует эту группу</item>
         <item quantity="other">%1$s\n%2$d колод использует эту группу</item>
     </plurals>
-    <string name="deck_conf_new_cards">Новые карточки</string>
-    <string name="deck_conf_rev_cards" comment="Name of the deck options submenu for configuring reviews of due cards.">Повторения</string>
-    <string name="deck_conf_lps_cards" comment="Label of the submenu stating how lapses cards are treated.">Ошибки</string>
-    <string name="deck_conf_general">Общие</string>
-    <string name="deck_conf_reminders">Напоминания</string>
-    <string name="deck_conf_steps">Шаги (в минутах)</string>
-    <string name="deck_conf_order">Порядок</string>
-    <string name="deck_conf_new_cards_day">Новых карточек в день</string>
-    <string name="deck_conf_graduating_ivl">Интервал для «Хорошо»</string>
+    <string name="deck_conf_new_cards" maxLength="41">Новые карточки</string>
+    <string name="deck_conf_rev_cards" maxLength="41" comment="Name of the deck options submenu for configuring reviews of due cards.">Повторения</string>
+    <string name="deck_conf_lps_cards" maxLength="41" comment="Label of the submenu stating how lapses cards are treated.">Ошибки</string>
+    <string name="deck_conf_general" maxLength="41">Общие</string>
+    <string name="deck_conf_reminders" maxLength="41">Напоминания</string>
+    <string name="deck_conf_steps" maxLength="41">Шаги (в минутах)</string>
+    <string name="deck_conf_order" maxLength="41">Порядок</string>
+    <string name="deck_conf_new_cards_day" maxLength="41">Новых карточек в день</string>
+    <string name="deck_conf_graduating_ivl" maxLength="41">Интервал для «Хорошо»</string>
     <string name="deck_conf_days">XXX дней</string>
-    <string name="deck_conf_easy_ivl">Интервал для «Легко»</string>
-    <string name="deck_conf_start_ease">Начальная лёгкость</string>
-    <string name="deck_conf_max_rev">Максимум повторений в день</string>
-    <string name="deck_conf_new_bury">Отложить связанные новые карточки</string>
+    <string name="deck_conf_easy_ivl" maxLength="41">Интервал для «Легко»</string>
+    <string name="deck_conf_start_ease" maxLength="41">Начальная лёгкость</string>
+    <string name="deck_conf_max_rev" maxLength="41">Максимум повторений в день</string>
+    <string name="deck_conf_new_bury" maxLength="41">Отложить связанные новые карточки</string>
     <string name="deck_conf_new_bury_summ">Связанные новые карточки отложены на завтра</string>
-    <string name="deck_conf_rev_bury">Отложить связанные повторения</string>
+    <string name="deck_conf_rev_bury" maxLength="41">Отложить связанные повторения</string>
     <string name="deck_conf_rev_bury_summ">Связанные повторения отложены до завтра</string>
-    <string name="deck_conf_use_general_timeout_settings">Использовать общие настройки</string>
+    <string name="deck_conf_use_general_timeout_settings" maxLength="41">Использовать общие настройки</string>
     <string name="deck_conf_use_general_timeout_settings_summ">Использовать общие настройки «Автоматически показывать ответ» вместо настроек для этой группы.</string>
-    <string name="deck_conf_easy_bonus">Множитель для \"Легко\"</string>
-    <string name="deck_conf_hard_factor">Интервал для «Трудно»</string>
-    <string name="deck_conf_ivl_fct">Множитель интервалов</string>
-    <string name="deck_conf_max_ivl">Максимальный интервал</string>
-    <string name="deck_conf_new_lps_ivl">Новый интервал</string>
-    <string name="deck_conf_min_ivl">Минимальный интервал</string>
-    <string name="deck_conf_leech_thres">Ошибок для приставучей</string>
+    <string name="deck_conf_easy_bonus" maxLength="41">Множитель для \"Легко\"</string>
+    <string name="deck_conf_hard_factor" maxLength="41">Интервал для «Трудно»</string>
+    <string name="deck_conf_ivl_fct" maxLength="41">Множитель интервалов</string>
+    <string name="deck_conf_max_ivl" maxLength="41">Максимальный интервал</string>
+    <string name="deck_conf_new_lps_ivl" maxLength="41">Новый интервал</string>
+    <string name="deck_conf_min_ivl" maxLength="41">Минимальный интервал</string>
+    <string name="deck_conf_leech_thres" maxLength="41">Ошибок для приставучей</string>
     <string name="deck_conf_fails">XXX ошибок</string>
-    <string name="deck_conf_leech_action">Что делать с приставучей</string>
-    <string name="deck_conf_max_time">Максимальное время ответа</string>
+    <string name="deck_conf_leech_action" maxLength="41">Что делать с приставучей</string>
+    <string name="deck_conf_max_time" maxLength="41">Максимальное время ответа</string>
     <string name="deck_conf_seconds">XXX секунд</string>
-    <string name="deck_conf_timer">Показать таймер ответа</string>
-    <string name="deck_conf_autoplay">Воспроизводить звук</string>
-    <string name="deck_conf_replayq">Повторять вопрос</string>
+    <string name="deck_conf_timer" maxLength="41">Показать таймер ответа</string>
+    <string name="deck_conf_autoplay" maxLength="41">Воспроизводить звук</string>
+    <string name="deck_conf_replayq" maxLength="41">Повторять вопрос</string>
     <string name="deck_conf_replayq_summ">Воспроизводит вопрос при показе ответа</string>
-    <string name="deck_conf_manage">Управление конфигурациями</string>
+    <string name="deck_conf_manage" maxLength="41">Управление конфигурациями</string>
     <string name="deck_conf_manage_summ">Добавить или изменить конфигурации</string>
-    <string name="deck_conf_current_group">Текущая конфигурация</string>
-    <string name="deck_conf_rename" comment="Menu entry to rename a deck">Переименовать</string>
-    <string name="deck_conf_reset">Сбросить настройки</string>
+    <string name="deck_conf_current_group" maxLength="41">Текущая конфигурация</string>
+    <string name="deck_conf_rename" maxLength="41" comment="Menu entry to rename a deck">Переименовать</string>
+    <string name="deck_conf_reset" maxLength="41">Сбросить настройки</string>
     <string name="deck_conf_reset_message">Сбросить эту конфигурацию?</string>
-    <string name="deck_conf_add" comment="Adding a new deck option group">Добавить</string>
+    <string name="deck_conf_add" maxLength="41" comment="Adding a new deck option group">Добавить</string>
     <string name="deck_conf_add_summ">Создать копию этой конфигурации</string>
     <string name="deck_conf_remove_message">Удалить текущую конфигурацию?</string>
-    <string name="deck_conf_set_subdecks">Установить для всех подколод</string>
+    <string name="deck_conf_set_subdecks" maxLength="41">Установить для всех подколод</string>
     <plurals name="deck_conf_set_subdecks_summ">
         <item quantity="one">%s подколода задействует конфигурацию</item>
         <item quantity="few">%s подколоды задействуют конфигурацию</item>
@@ -274,23 +278,27 @@
         <item quantity="other">%s подколод задействуют конфигурацию</item>
     </plurals>
     <string name="deck_conf_set_subdecks_message">Установить текущую конфигурацию для всех подколод этой колоды?</string>
-    <string name="pref_browser_editor_font">Шрифт в списке и редакторе</string>
-    <string name="deck_conf_cram_filter">Фильтр</string>
-    <string name="deck_conf_cram_search">Запрос</string>
-    <string name="deck_conf_cram_limit">Количество</string>
-    <string name="deck_conf_cram_order">Отобрать</string>
-    <string name="deck_conf_cram_reschedule" comment="Title of the box labelled by deck_conf_cram_reschedule_summ">Перепланировать</string>
+    <string name="pref_browser_editor_font" maxLength="41">Шрифт в списке и редакторе</string>
+    <string name="deck_conf_cram_filter" maxLength="41">Фильтр</string>
+    <string name="deck_conf_cram_search" maxLength="41">Запрос</string>
+    <string name="deck_conf_cram_limit" maxLength="41">Количество</string>
+    <string name="deck_conf_cram_order" maxLength="41">Отобрать</string>
+    <string name="deck_conf_cram_reschedule" maxLength="41" comment="Title of the box labelled by deck_conf_cram_reschedule_summ">Перепланировать</string>
     <string name="deck_conf_cram_reschedule_summ">Перепланировать карточки в зависимости от ответов</string>
-    <string name="deck_conf_cram_steps">Заданные шаги (мин.)</string>
-    <string name="deck_conf_cram_steps_summ">Задать свои шаги</string>
-    <string name="deck_conf_reminders_enabled">Включает напоминания для колод в этой группе</string>
-    <string name="deck_conf_reminders_time">Напомнить в</string>
+    <string name="deck_conf_cram_steps" maxLength="41">Заданные шаги (мин.)</string>
+    <string name="deck_conf_cram_steps_summ" maxLength="41">Задать свои шаги</string>
+    <string name="deck_conf_reminders_enabled" maxLength="41">Включает напоминания для колод в этой группе</string>
+    <string name="deck_conf_reminders_time" maxLength="41">Напомнить в</string>
     <!-- analytics options -->
     <string name="analytics_dialog_title">Помогите сделать AnkiDroid лучше!</string>
-    <string name="analytics_title">Делиться статистикой использования</string>
+    <string name="analytics_title" maxLength="41">Делиться статистикой использования</string>
     <string name="analytics_summ">Отправляет информацию о функциях, которые предпочитают пользователи</string>
-    <string name="note_editor_replace_newlines">Заменять перенос строк на HTML</string>
+    <string name="note_editor_replace_newlines" maxLength="41">Заменять перенос строк на HTML</string>
     <string name="note_editor_replace_newlines_summ">Заменять &lt;br&gt; в редакторе записей на перенос строки</string>
-    <string name="no_code_formatting">Простое форматирование ответа</string>
+    <string name="no_code_formatting" maxLength="41">Простое форматирование ответа</string>
     <string name="no_code_formatting_summ">Исправляет «􏿾» при вводе ответа</string>
+    <string name="type_in_answer_focus" maxLength="41">Переключать на «Ввести ответ»</string>
+    <string name="type_in_answer_focus_summ">При повторении автоматически переходит к полю «Ввести ответ»</string>
+    <!-- Open Changelog-->
+    <string name="open_changelog">Показать список изменений</string>
 </resources>

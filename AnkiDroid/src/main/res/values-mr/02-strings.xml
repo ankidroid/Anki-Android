@@ -57,7 +57,7 @@
     <string name="no_tags">You haven’t added any tags yet</string>
     <string name="updated_version">Āvr̥ttīmadhyē adyatanita kēlē%s</string>
     <!-- Reviewer.java -->
-    <string name="save_whiteboard">Save whiteboard</string>
+    <string name="save_whiteboard">व्हाईटबोर्ड जतन करा</string>
     <string name="enable_whiteboard">Vhā\'iṭabōrḍa sakṣama karā</string>
     <string name="disable_whiteboard">Vhā\'iṭabōrḍa akṣama karā</string>
     <string name="show_whiteboard">Vhā\'īṭabōrḍa darśavā</string>
@@ -68,13 +68,13 @@
     <string name="leech_notification">Kārḍa jaḷū mhaṇūna cinhāṅkita</string>
     <string name="corrupt_font">Dūṣita phŏnṭa phā\'īla%s</string>
     <string name="webview_crash_unknown">Unknown error</string>
-    <string name="webview_crash_unknwon_detailed">This was caused by an internal error in the WebView</string>
-    <string name="webview_crash_oom">Out of Memory</string>
-    <string name="webview_crash_oom_details">The WebView was terminated by the system. This typically happens when the application runs out of memory, often due to large fonts or media.</string>
-    <string name="webview_crash_nonfatal">WebView renderer crashed. Cause: %s</string>
-    <string name="webview_crash_fatal">Fatal Error: WebView renderer crashed. Cause: %s</string>
-    <string name="webview_crash_loop_dialog_title">System WebView Rendering Failure</string>
-    <string name="webview_crash_loop_dialog_content">System WebView failed to render card \'%1$s\'.\n %2$s</string>
+    <string name="webview_crash_unknwon_detailed">हे वेब व्ह्यूमध्ये अंतर्गत त्रुटीमुळे होते</string>
+    <string name="webview_crash_oom">स्मृतीच्याबाहेर</string>
+    <string name="webview_crash_oom_details">वेबव्ह्यू सिस्टमद्वारे संपुष्टात आले. जेव्हा अनुप्रयोग मोठ्या प्रमाणात फॉन्ट किंवा मीडियामुळे मेमरी संपत नाही तेव्हा असे होते.</string>
+    <string name="webview_crash_nonfatal">वेबव्यू प्रस्तुतकर्ता क्रॅश झाला. कारणः%s</string>
+    <string name="webview_crash_fatal">गंभीर त्रुटी: वेबव्यू प्रस्तुतकर्ता क्रॅश झाला. कारणः%s</string>
+    <string name="webview_crash_loop_dialog_title">सिस्टम वेबव्यू प्रस्तुत करणे अयशस्वी</string>
+    <string name="webview_crash_loop_dialog_content">सिस्टम \'वेबव्यू\' \'%1$s\' कार्ड प्रस्तुत करण्यात अयशस्वी. \ N%2$s</string>
     <!-- Browser -->
     <string-array name="browser_column1_headings">
         <item>Praśna</item>
@@ -89,16 +89,16 @@
         <item>Ṭĕgja</item>
         <item>Lapses</item>
         <item>Punarāvalōkanē</item>
-        <item>Interval</item>
-        <item>Ease</item>
-        <item>Due</item>
-        <item>Card Modified</item>
-        <item>Created</item>
-        <item>Note Modified</item>
+        <item>मध्यांतर</item>
+        <item>सहजता</item>
+        <item>देय</item>
+        <item>कार्ड सुधारित</item>
+        <item>तयार केले</item>
+        <item>टीप सुधारित</item>
     </string-array>
     <!-- Custom study options -->
-    <string name="custom_study_increase_new_limit">Modify today’s new card limit</string>
-    <string name="custom_study_increase_review_limit">Modify today’s review card limit</string>
+    <string name="custom_study_increase_new_limit">आजची नवीन कार्ड मर्यादा सुधारित करा</string>
+    <string name="custom_study_increase_review_limit">आजची पुनरावलोकन कार्ड मर्यादा सुधारित करा</string>
     <string name="custom_study_review_forgotten">Visaralēlī kārḍē pahā</string>
     <string name="custom_study_review_ahead">Puḍhē punarāvalōkana karā</string>
     <string name="custom_study_random_selection">Kārḍān̄cī ēka yādr̥cchika nivaḍa abhyāsa</string>
@@ -107,14 +107,14 @@
     <!-- Card editor -->
     <string name="cardeditor_title_edit_card">Ṭīpa sampādita karā</string>
     <string name="discard_unsaved_changes">Vartamāna impuṭa banda karā āṇi haravū nakā?</string>
-    <string name="note_editor_no_cards_created">No cards created. Please fill in more fields</string>
-    <string name="note_editor_no_first_field">The first field is empty</string>
-    <string name="note_editor_no_cloze_delations">This note type must contain cloze deletions</string>
-    <string name="note_editor_set_field_language">Set field language</string>
-    <string name="note_editor_no_cards_created_all_fields">The current note type did not produce any cards.\nPlease choose another note type, or click ‘Cards’ and add a field substitution</string>
-    <string name="note_editor_insert_cloze_no_cloze_note_type">Cloze deletions will only work on a Cloze note type</string>
+    <string name="note_editor_no_cards_created">कोणतीही कार्ड तयार केली नाही. कृपया अधिक फील्ड भरा</string>
+    <string name="note_editor_no_first_field">प्रथम फील्ड रिक्त आहे</string>
+    <string name="note_editor_no_cloze_delations">या टीप प्रकारात क्लोझ डिलीटन्स असणे आवश्यक आहे</string>
+    <string name="note_editor_set_field_language">फील्ड भाषा सेट करा</string>
+    <string name="note_editor_no_cards_created_all_fields">वर्तमान नोट प्रकाराने कोणतीही कार्ड तयार केली नाही. आणखी एक \n कृपया दुसरा टीप प्रकार निवडा किंवा ‘कार्ड’ क्लिक करा आणि फील्ड प्रतिस्थापना जोडा</string>
+    <string name="note_editor_insert_cloze_no_cloze_note_type">क्लोझ हटविणे केवळ क्लोज नोट प्रकारावरच कार्य करेल</string>
     <string name="saving_facts">Ṭīpa jatana karīta āhē</string>
-    <string name="saving_model">Saving note type</string>
+    <string name="saving_model">नोट प्रकार जतन करीत आहे</string>
     <string name="save">Jatana karā</string>
     <string name="close">Banda</string>
     <string name="select">Nivaḍā</string>
@@ -122,6 +122,7 @@
     <string name="reordering_cards">Punarkramita kārḍa&#8230;</string>
     <string name="field_remapping">%1$s(Pāsūna \"%2$s\")</string>
     <string name="confirm_map_cards_to_nothing">Kāhīhī na kēlēlyā kōṇatyāhī kārḍānnā haṭavilē jā\'īla. Ṭīpakaḍē urvarita kārḍa nasalyāsa tō gamāvalā jā\'īla. Āpalyālā khātrī āhē kī āpaṇa surū ṭhēvū icchitā?</string>
+    <string name="timebox_reached_title">टाइमबॉक्स गाठला</string>
     <plurals name="timebox_reached">
         <item quantity="one">%1$d Madhyē abhyāsa kēlēlā kārḍa %2$s</item>
         <item quantity="other">%1$d Madhyē abhyāsa kēlēlā kārḍa %2$s</item>
@@ -129,13 +130,13 @@
     <!-- minutes used in \'[studied in] x minutes\' context, causing inflexion in some languages -->
     <plurals name="in_minutes">
         <item quantity="one">%1$d minute</item>
-        <item quantity="other">%1$d minutes</item>
+        <item quantity="other">%1$d मिनिटे</item>
     </plurals>
     <string name="fact_adder_intent_title" comment="Label of the \'Add Note\' window. This title can\'t be seen in AnkiDroid directly.">AnkiDroid kārḍa</string>
-    <string name="note_editor_copy_note">Copy note</string>
-    <string name="card_editor_reposition_card">Reposition</string>
+    <string name="note_editor_copy_note">टीप कॉपी करा</string>
+    <string name="card_editor_reposition_card">स्थान</string>
     <string name="card_editor_reset_card">Pragatī rīsēṭa karā</string>
-    <string name="card_editor_reschedule_card" comment="Action to reschedule a card">Reschedule</string>
+    <string name="card_editor_reschedule_card" comment="Action to reschedule a card">रीशेड्यूल</string>
     <string name="card_editor_preview_card" comment="Button offering to preview some card(s)">Pūrvāvalōkana</string>
     <string name="error_insufficient_memory">Āpalyā ḍivhā\'isavara aparyāpta mēmarīmuḷē ŏparēśana śakya nāhī</string>
     <string name="rename" comment="Confirm that the renaming action should be processed.">Punarnāmita karā</string>
@@ -158,32 +159,32 @@
     <string name="import_message_add" comment="Adding a new deck to the collection (import)">Jōḍā</string>
     <string name="import_message_replace_confirm">Hē āpalē vidyamāna saṅkalana haṭavēla āṇi phā\'ilacyā ḍēṭāśī punarsthita karēla%s</string>
     <string name="import_message_add_confirm">\"%s\" saṅgrahāmadhyē jōḍāyacē? Yāsa barāca vēḷa lāgū śakatō</string>
-    <string name="import_log_no_apkg">This isn’t a valid Anki package file</string>
-    <string name="import_log_failed_unzip">Failed to unzip apkg: %s</string>
-    <string name="import_log_failed_copy_to">Failed to copy apkg to %s</string>
-    <string name="import_log_failed_validate">apkg failed validation</string>
-    <string name="import_log_insufficient_space">There is not enough space to unzip the package. Needed %1$d, available %2$d</string>
-    <string name="import_log_file_cache_cleared">Error importing file, likely a cache clear during processing.\nPlease try again</string>
-    <string name="import_succeeded_but_check_database">Data import succeeded but post-import cleanup failed. Run check database later. Root cause: %s</string>
-    <string name="import_error_unhandled_request">Unable to process import request</string>
-    <string name="import_error_corrupt_zip">The apkg file is corrupt. Please delete and re-download it.\n\nRoot cause: %s</string>
-    <string name="import_error_exception">Failed to import package\n\n%s</string>
-    <string name="import_error_not_apkg_extension">Filename “%s” doesn’t have .apkg or .colpkg extension</string>
-    <string name="import_error_load_imported_database">Anki Database (.anki2) replacements are not yet supported. Please see the manual for replacement instructions.</string>
+    <string name="import_log_no_apkg">ही वैध अंकी पॅकेज फाइल नाही</string>
+    <string name="import_log_failed_unzip">एपीकेजी अनझिप करण्यात अयशस्वी:%s</string>
+    <string name="import_log_failed_copy_to">%s वर apkg कॉपी करण्यात अयशस्वी</string>
+    <string name="import_log_failed_validate">apkg प्रमाणीकरण अयशस्वी</string>
+    <string name="import_log_insufficient_space">पॅकेज अनझिप करण्यासाठी पुरेसे स्थान नाही. %1$d आवश्यक,%2$d उपलब्ध</string>
+    <string name="import_log_file_cache_cleared">फाइल आयात करताना त्रुटी, प्रक्रियेदरम्यान कदाचित कॅशे साफ होईल. Lease n कृपया पुन्हा प्रयत्न करा</string>
+    <string name="import_succeeded_but_check_database">डेटा आयात यशस्वी झाले परंतु आयातानंतरची साफसफाई अयशस्वी झाली. नंतर चेक डेटाबेस चालवा. मूळ कारणे:%s</string>
+    <string name="import_error_unhandled_request">आयात विनंतीवर प्रक्रिया करण्यात अक्षम</string>
+    <string name="import_error_corrupt_zip">Apkg फाईल दूषित आहे. कृपया ते हटवा आणि पुन्हा डाउनलोड करा. \n\n मूळ कारण:%s</string>
+    <string name="import_error_exception">पॅकेज आयात करण्यात अयशस्वी \n\n%s</string>
+    <string name="import_error_not_apkg_extension">फाइलनाव \"%s\" मध्ये .apkg किंवा .colpkg विस्तार नाही</string>
+    <string name="import_error_load_imported_database">अंकी डेटाबेस (.anki2) बदली अद्याप समर्थित नाहीत. कृपया बदलीच्या सूचनांसाठी मॅन्युअल पहा.</string>
     <string name="import_error_content_provider">Nivaḍalēlī phā\'ila AnkiDroid dvārē svayan̄calitapaṇē āyāta karaṇē śakya navhatē. Kr̥payā ēnkī phā\'ilsa svahastē kaśī āyāta karāvī yābaddala vāparakartā mĕn\'yu\'ala pahā: \n%s</string>
-    <string name="import_error_copy_file_to_cache">copyFileToCache() failed (possibly out of storage space)</string>
-    <string name="import_error_unhandled_scheme">Unhandled import from: “%s”</string>
+    <string name="import_error_copy_file_to_cache">copyFileToCache () अयशस्वी (संभाव्यत: संचय स्थानाबाहेर)</string>
+    <string name="import_error_unhandled_scheme">कडून नसलेले आयात: \"%s\"</string>
     <string name="import_replacing">Saṅgraha punarsthita&#8230;</string>
-    <string name="import_interrupted">Import interrupted: AnkiDroid was closed</string>
+    <string name="import_interrupted">आयात व्यत्यय: अंकीड्रोइड बंद होता</string>
     <string name="export_include_schedule">Śēḍyūliṅga samāviṣṭa karā</string>
     <string name="export_include_media">Mādhyama samāviṣṭa karā</string>
-    <string name="confirm_apkg_export">Export collection as Anki package?</string>
+    <string name="confirm_apkg_export">अनकी पॅकेज म्हणून संग्रह निर्यात करायचा?</string>
     <string name="confirm_apkg_export_deck">Apkg phā\'ila mhaṇūna \"%s\" niryāta karāy?</string>
-    <string name="export_in_progress">Exporting Anki package file&#8230;</string>
-    <string name="export_successful_title">Send Anki package?</string>
-    <string name="export_send_button">Send</string>
-    <string name="export_save_button">Save to file</string>
-    <string name="export_send_no_handlers">No applications available to handle apkg. Saving...</string>
+    <string name="export_in_progress">अंकी पॅकेज फाईल निर्यात करीत आहे ...</string>
+    <string name="export_successful_title">अंकी पॅकेज पाठवायचे?</string>
+    <string name="export_send_button">पाठवा</string>
+    <string name="export_save_button">फाईलमधे सेव्ह करा</string>
+    <string name="export_send_no_handlers">एपीकेजी हाताळण्यासाठी कोणतेही अनुप्रयोग उपलब्ध नाहीत. बचत...</string>
     <string name="export_save_apkg_successful">Successfully saved Anki package</string>
     <string name="export_save_apkg_unsuccessful">Save Anki package failed</string>
     <string name="export_successful">Phā\'ila \"%s\" niryāta karaṇyāta ālī. Āpaṇa dusaryā a̔ĕpasaha pāṭhavū icchitā?</string>
@@ -278,66 +279,75 @@
     <string name="white_board_image_save_failed">Failed to save whiteboard image. %s</string>
     <string name="white_board_image_saved">Whiteboard image saved to %s</string>
     <string name="title_whiteboard_pen_color">Whiteboard pen color</string>
+    <string name="title_whiteboard_editor">Whiteboard editor</string>
     <!-- CSV/Note Import -->
     <string name="note_importer_empty_cards_found"><![CDATA[Empty cards found. Please run Tools>Empty Cards.]]></string>
-    <string name="note_importer_error_empty_first_field">Empty first field: %s</string>
-    <string name="note_importer_error_first_field_matched">First field matched: %s</string>
-    <string name="note_importer_error_added_duplicate_first_field">Added duplicate with first field: %s</string>
-    <string name="note_importer_error_appeared_twice">Appeared twice in file: %s</string>
-    <string name="note_importer_error_empty_notes">One or more notes were not imported, because they didn\'t generate any cards. This can happen when you have empty fields or when you have not mapped the content in the text file to the correct fields</string>
-    <string name="csv_importer_error_invalid_field_count">‘%1$s’ had %2$d fields, expected %3$d</string>
-    <string name="csv_importer_error_exception">Aborted: %s</string>
-    <string name="user_is_a_robot">Detected automated test. If you are a human, contact AnkiDroid support</string>
+    <string name="note_importer_error_empty_first_field">रिक्त प्रथम फील्ड:%s</string>
+    <string name="note_importer_error_first_field_matched">प्रथम फील्ड जुळले:%s</string>
+    <string name="note_importer_error_added_duplicate_first_field">पहिल्या फील्डसह डुप्लिकेट जोडले:%s</string>
+    <string name="note_importer_error_appeared_twice">फाइलमध्ये दोनदा दिसू लागले:%s</string>
+    <string name="note_importer_error_empty_notes">एक किंवा अधिक नोट्स आयात केल्या नव्हत्या, कारण त्यांनी कोणतीही कार्ड व्युत्पन्न केली नाही. जेव्हा आपल्याकडे रिक्त फील्ड असेल किंवा मजकूर फाईलमधील सामग्री योग्य फील्डमध्ये मॅप केली नसेल तेव्हा असे होऊ शकते</string>
+    <string name="csv_importer_error_invalid_field_count">‘%1$s’ मध्ये %2$d फील्ड होती, अपेक्षित %3$d</string>
+    <string name="csv_importer_error_exception">निरस्त: %s</string>
+    <string name="user_is_a_robot">स्वयंचलित चाचणी आढळली. आपण मनुष्य असल्यास, अँकीड्रोइड समर्थनाशी संपर्क साधा</string>
     <plurals name="note_importer_notes_added">
         <item quantity="one">%d note added</item>
-        <item quantity="other">%d notes added</item>
+        <item quantity="other">%d टिपा जोडल्या</item>
     </plurals>
     <plurals name="note_importer_notes_updated">
         <item quantity="one">%d note updated</item>
-        <item quantity="other">%d notes updated</item>
+        <item quantity="other">%d टिपा अद्यतनित केल्या</item>
     </plurals>
     <plurals name="note_importer_notes_unchanged">
         <item quantity="one">%d note unchanged</item>
-        <item quantity="other">%d notes unchanged</item>
+        <item quantity="other">%d नोटा बदलल्या नाहीत</item>
     </plurals>
     <!-- JS api -->
-    <string name="api_version_developer_contact">This card uses unsupported AnkiDroid features. Contact developer %1$s, or view the wiki. %2$s</string>
-    <string name="invalid_json_data">Card provided invalid data. %s</string>
-    <string name="valid_js_api_version">Invalid AnkiDroid JS API version. Contact developer %s, or view wiki</string>
-    <string name="update_js_api_version">AnkiDroid JS API update available. Contact developer %s, or view wiki</string>
-    <string name="reviewer_invalid_api_version_visit_documentation">View</string>
-    <string name="anki_js_error_code">(Error Code: %d)</string>
+    <string name="api_version_developer_contact">हे कार्ड असमर्थित AnkiDroid वैशिष्ट्ये वापरते. विकसक %1$s शी संपर्क साधा किंवा विकी पहा. %2$s</string>
+    <string name="invalid_json_data">कार्डने अवैध डेटा प्रदान केला. %s</string>
+    <string name="valid_js_api_version">अवैध AnkiDroid JS API आवृत्ती. विकसक %s शी संपर्क साधा किंवा विकी पहा</string>
+    <string name="update_js_api_version">AnkiDroid JS API अद्यतन उपलब्ध. विकसक %s शी संपर्क साधा किंवा विकी पहा</string>
+    <string name="reviewer_invalid_api_version_visit_documentation">पहा</string>
+    <string name="anki_js_error_code">(त्रुटी कोड: %d)</string>
     <!-- About AnkiDroid screen -->
-    <string name="about_ankidroid_successfully_copied_debug">Copied debug information to clipboard</string>
-    <string name="about_ankidroid_error_copy_debug_info">Error copying debug information to clipboard</string>
+    <string name="about_ankidroid_successfully_copied_debug">क्लिपबोर्डवर डीबग माहिती कॉपी केली</string>
+    <string name="about_ankidroid_error_copy_debug_info">क्लिपबोर्डवर डीबग माहिती कॉपी करताना त्रुटी</string>
     <!-- Card Viewer -->
-    <string name="card_viewer_could_not_find_image">Card Content Error: Failed to load ‘%s’</string>
-    <string name="card_viewer_media_relative_protocol">Card Content Error: Media update required</string>
+    <string name="card_viewer_could_not_find_image">कार्ड सामग्री त्रुटी: ‘%s’ लोड करण्यात अयशस्वी</string>
+    <string name="card_viewer_media_relative_protocol">कार्ड सामग्री त्रुटी: मीडिया अद्यतन आवश्यक</string>
+    <string name="cannot_load_http_resource">Http स्त्रोत लोड करणे यापुढे समर्थित नाही</string>
     <!-- Deck Picker -->
-    <string name="deck_picker_failed_deck_load">Failed to load deck ‘%s’</string>
-    <string name="search_decks">Search decks</string>
-    <string name="ankidroid_init_failed_webview_title">Fatal Error</string>
-    <string name="ankidroid_init_failed_webview">AnkiDroid relies on the System WebView which is unavailable. This can happen if the system is installing updates. Please try again in a few minutes.\n\n%s</string>
+    <string name="deck_picker_failed_deck_load">डेक ‘%s’ लोड करण्यात अयशस्वी</string>
+    <string name="search_decks">शोध डेक</string>
+    <string name="ankidroid_init_failed_webview_title">गंभीर त्रुटी</string>
+    <string name="ankidroid_init_failed_webview">AnkiDroid अनुपलब्ध सिस्टम वेब दृश्यावर अवलंबून आहे. सिस्टम अद्यतने स्थापित करीत असल्यास हे होऊ शकते. कृपया काही मिनिटांत पुन्हा प्रयत्न करा.. \n\n%s</string>
     <!-- A Menu item to change the Font Size (currently in the Note Editor) -->
-    <string name="menu_font_size">Font Size</string>
-    <string name="menu_show_toolbar" comment="Checkable item stating whether the note editor toolbar should be shown">Show Toolbar</string>
-    <string name="format_insert_bold">Format as Bold</string>
-    <string name="format_insert_italic">Format as Italic</string>
-    <string name="format_insert_underline">Format as Underline</string>
-    <string name="insert_horizontal_line">Insert Horizontal Line</string>
-    <string name="insert_heading">Insert Heading</string>
-    <string name="format_font_size">Change Font Size</string>
-    <string name="insert_mathjax">Insert MathJax Equation</string>
-    <string name="insert_cloze">Insert Cloze Deletion</string>
-    <string name="before_text">HTML Before Selection</string>
-    <string name="after_text">HTML After Selection</string>
-    <string name="add_toolbar_item">Create Toolbar Item</string>
-    <string name="toolbar_item_explain_remove">Enter HTML to be inserted before and after the selected text\n\nLong press a toolbar item to remove it</string>
-    <string name="remove_toolbar_item">Remove Toolbar Item?</string>
-    <string name="note_editor_paste_too_large">The image is too large to paste, please insert the image manually</string>
-    <string name="ankidroid_cannot_open_after_backup_try_again" comment="After an Android backup is restored, AnkiDroid opens and shows this message.         Opening AnkiDroid again will work correctly">        Android backup in progress. Please try again</string>
-    <string name="create_shortcut_error_vivo" comment="iManager is an app on Vivo phones">You may need to use iManager to allow AnkiDroid to add shortcuts</string>
-    <string name="create_shortcut_failed" comment="home screen == launcher">Your home screen does not allow AnkiDroid to add shortcuts</string>
-    <string name="create_shortcut_error">Error adding shortcut: %s</string>
-    <string name="note_editor_capitalize" comment="This is for a switch with a checkbox - on: enabled">Capitalize sentences</string>
+    <string name="menu_font_size">अक्षराचा आकार</string>
+    <string name="menu_show_toolbar" comment="Checkable item stating whether the note editor toolbar should be shown">टूलबार दर्शवा</string>
+    <string name="format_insert_bold">ठळक म्हणून स्वरूपित करा</string>
+    <string name="format_insert_italic">इटालिक म्हणून स्वरूपित करा</string>
+    <string name="format_insert_underline">अधोरेखित म्हणून स्वरूपित करा</string>
+    <string name="insert_horizontal_line">क्षैतिज रेखा घाला</string>
+    <string name="insert_heading">मथळा घाला</string>
+    <string name="format_font_size">फॉन्ट आकार बदला</string>
+    <string name="insert_mathjax">मॅथजॅक्स समीकरण घाला</string>
+    <string name="insert_cloze">क्लोज डिलीशन घाला</string>
+    <string name="before_text">निवड करण्यापूर्वी एचटीएमएल</string>
+    <string name="after_text">निवडानंतर एचटीएमएल</string>
+    <string name="add_toolbar_item">टूलबार आयटम तयार करा</string>
+    <string name="toolbar_item_explain_remove">निवडलेल्या मजकूराच्या आधी आणि नंतर घालण्यासाठी HTML प्रविष्ट करा \n\n टूलबार आयटम काढण्यासाठी तो दाबा</string>
+    <string name="remove_toolbar_item">टूलबार आयटम काढायचा?</string>
+    <string name="note_editor_paste_too_large">पेस्ट करण्यासाठी प्रतिमा खूप मोठी आहे, कृपया व्यक्तिचलितपणे प्रतिमा घाला</string>
+    <string name="ankidroid_cannot_open_after_backup_try_again" comment="After an Android backup is restored, AnkiDroid opens and shows this message.         Opening AnkiDroid again will work correctly">Android बॅकअप प्रगतीपथावर आहे. कृपया पुन्हा प्रयत्न करा</string>
+    <string name="create_shortcut_error_vivo" comment="iManager is an app on Vivo phones">Android बॅकअप प्रगतीपथावर आहे. कृपया पुन्हा प्रयत्न करा</string>
+    <string name="create_shortcut_failed" comment="home screen == launcher">आपली मुख्य स्क्रीन AnkiDroid ला शॉर्टकट जोडण्याची परवानगी देत ​​नाही</string>
+    <string name="create_shortcut_error">शॉर्टकट जोडताना त्रुटी:%s</string>
+    <string name="note_editor_capitalize" comment="This is for a switch with a checkbox - on: enabled">वाक्य भांडवल करा</string>
+    <!-- Symbols used as Button text in IncrementNumberRangePreference -->
+    <string name="plus_sign" comment="Label for increment button in IncrementerNumberRangePreference">+</string>
+    <string name="minus_sign" comment="Label for decrement button in IncrementerNumberRangePreference">-</string>
+    <!-- Used for credential empty warning message -->
+    <string name="email_id_empty">ईमेल पत्ता आवश्यक आहे</string>
+    <string name="password_empty">संकेतशब्द आवश्यक आहे</string>
+    <string name="back_pressed_once">बाहेर पडण्यासाठी पुन्हा परत दाबा</string>
 </resources>

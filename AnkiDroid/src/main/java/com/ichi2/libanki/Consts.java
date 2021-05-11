@@ -122,6 +122,8 @@ public class Consts {
 
     // deck schema & syncing vars
     public static final int SCHEMA_VERSION = 11;
+    /** The database schema version that we can downgrade from */
+    public static final int SCHEMA_DOWNGRADE_SUPPORTED_VERSION = 16;
     public static final int SYNC_ZIP_SIZE = (int)(2.5*1024*1024);
     public static final int SYNC_ZIP_COUNT = 25;
     public static final String SYNC_BASE = "https://sync%s.ankiweb.net/";

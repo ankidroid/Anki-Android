@@ -122,6 +122,7 @@
     <string name="reordering_cards">Tri des cartes...</string>
     <string name="field_remapping">%1$s (de « %2$s »)</string>
     <string name="confirm_map_cards_to_nothing">Toute carte sans connexion sera effacée. Si une note n’a aucune carte restante, elle sera perdue. Êtes-vous sûr de vouloir continuer ?</string>
+    <string name="timebox_reached_title">Le temps imparti est écoulé.</string>
     <plurals name="timebox_reached">
         <item quantity="one">%1$d carte étudiée en %2$s</item>
         <item quantity="other">%1$d cartes étudiées en %2$s</item>
@@ -187,7 +188,7 @@
     <string name="export_save_apkg_successful">Fichier Anki sauvegardé avec succès</string>
     <string name="export_save_apkg_unsuccessful">Échec de la sauvegarde du fichier Anki</string>
     <string name="export_successful">Le fichier « %s » a été exporté. Voulez-vous le partager à l\'aide d\'une autre app ?</string>
-    <string name="export_email_subject">AnkiDroid a exporté %s flashcards</string>
+    <string name="export_email_subject">AnkiDroid a exporté %s cartes mémoire</string>
     <string name="export_email_text"><![CDATA[        Salut !
         <br/><br/>
         Ceci est un paquet Anki envoyé depuis <a href="https://ankidroid.org/docs/manual.html">AnkiDroid</a>.
@@ -278,6 +279,7 @@
     <string name="white_board_image_save_failed">Impossible d\'enregistrer l\'image du tableau blanc. %s</string>
     <string name="white_board_image_saved">Image du tableau blanc enregistrée dans %s</string>
     <string name="title_whiteboard_pen_color">Couleur du stylo du tableau blanc</string>
+    <string name="title_whiteboard_editor">Éditeur de tableau blanc</string>
     <!-- CSV/Note Import -->
     <string name="note_importer_empty_cards_found"><![CDATA[Cartes vides trouvées. Veuillez exécuter Outils>Cartes vides.]]></string>
     <string name="note_importer_error_empty_first_field">Premier champ vide : %s</string>
@@ -313,6 +315,7 @@
     <!-- Card Viewer -->
     <string name="card_viewer_could_not_find_image">Impossible de charger « %s »</string>
     <string name="card_viewer_media_relative_protocol">Erreur de contenu de la carte : mise à jour du média requise</string>
+    <string name="cannot_load_http_resource">Le chargement des ressources http n\'est plus supporté</string>
     <!-- Deck Picker -->
     <string name="deck_picker_failed_deck_load">Impossible de charger le paquet « %s »</string>
     <string name="search_decks">Rechercher dans les paquets</string>
@@ -340,4 +343,11 @@
     <string name="create_shortcut_failed" comment="home screen == launcher">Votre écran d\'accueil ne permet pas à AnkiDroid d\'ajouter des raccourcis</string>
     <string name="create_shortcut_error">Erreur lors de l\'ajout du raccourci : %s</string>
     <string name="note_editor_capitalize" comment="This is for a switch with a checkbox - on: enabled">Mettre en majuscules les phrases</string>
+    <!-- Symbols used as Button text in IncrementNumberRangePreference -->
+    <string name="plus_sign" comment="Label for increment button in IncrementerNumberRangePreference">+</string>
+    <string name="minus_sign" comment="Label for decrement button in IncrementerNumberRangePreference">-</string>
+    <!-- Used for credential empty warning message -->
+    <string name="email_id_empty">L\'adresse courriel est requise</string>
+    <string name="password_empty">Mot de passe requis</string>
+    <string name="back_pressed_once">Réappuyez sur la touche Retour pour quitter</string>
 </resources>

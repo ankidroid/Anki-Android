@@ -1,3 +1,18 @@
+/****************************************************************************************
+ * Copyright (c) 2015 Timothy Rae <perceptualchaos2@gmail.com>                          *
+ *                                                                                      *
+ * This program is free software; you can redistribute it and/or modify it under        *
+ * the terms of the GNU General Public License as published by the Free Software        *
+ * Foundation; either version 3 of the License, or (at your option) any later           *
+ * version.                                                                             *
+ *                                                                                      *
+ * This program is distributed in the hope that it will be useful, but WITHOUT ANY      *
+ * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A      *
+ * PARTICULAR PURPOSE. See the GNU General Public License for more details.             *
+ *                                                                                      *
+ * You should have received a copy of the GNU General Public License along with         *
+ * this program.  If not, see <http://www.gnu.org/licenses/>.                           *
+ ****************************************************************************************/
 
 package com.ichi2.anki.dialogs;
 
@@ -41,7 +56,7 @@ public class DatabaseErrorDialog extends AsyncDialogFragment {
     public static final int DIALOG_FULL_SYNC_FROM_SERVER = 8;
     /** If the database is locked, all we can do is reset the app */
     public static final int DIALOG_DB_LOCKED = 9;
-    /** If the datbase is at a version higher than what we can currently handle */
+    /** If the database is at a version higher than what we can currently handle */
     public static final int INCOMPATIBLE_DB_VERSION = 10;
 
     // public flag which lets us distinguish between inaccessible and corrupt database
@@ -76,7 +91,7 @@ public class DatabaseErrorDialog extends AsyncDialogFragment {
         try {
             sqliteInstalled = Runtime.getRuntime().exec("sqlite3 --version").waitFor() == 0;
         } catch (IOException | InterruptedException e) {
-            e.printStackTrace();
+            Timber.w(e);
         }
 
         switch (mType) {

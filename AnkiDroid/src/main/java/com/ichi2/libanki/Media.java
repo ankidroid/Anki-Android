@@ -114,7 +114,7 @@ public class Media {
      */
     private static final Pattern fImgRegExpU = Pattern.compile("(?i)(<img[^>]* src=(?!['\"])([^ >]+)[^>]*?>)");
 
-    public static final List<Pattern> mRegexps =  Arrays.asList(fSoundRegexps, fImgRegExpQ, fImgRegExpU);
+    public static final List<Pattern> REGEXPS =  Arrays.asList(fSoundRegexps, fImgRegExpQ, fImgRegExpU);
 
     private final Collection mCol;
     private final String mDir;
@@ -324,7 +324,7 @@ public class Media {
             s =  LaTeX.mungeQA(s, mCol, model);
             // extract filenames
             Matcher m;
-            for (Pattern p : mRegexps) {
+            for (Pattern p : REGEXPS) {
                 // NOTE: python uses the named group 'fname'. Java doesn't have named groups, so we have to determine
                 // the index based on which pattern we are using
                 int fnameIdx = p.equals(fSoundRegexps) ? 2 : p.equals(fImgRegExpU) ? 2 : 3;
@@ -350,7 +350,7 @@ public class Media {
             ords.add(m.group(1));
         }
         ArrayList<String> strings = new ArrayList<>(ords.size() + 1);
-        String clozeReg = TemplateFilters.clozeReg;
+        String clozeReg = TemplateFilters.CLOZE_REG;
         
         for (String ord : ords) {
             StringBuffer buf = new StringBuffer();
@@ -378,7 +378,7 @@ public class Media {
      * @return The media-free string.
      */
     public String strip(String txt) {
-        for (Pattern p : mRegexps) {
+        for (Pattern p : REGEXPS) {
             txt = p.matcher(txt).replaceAll("");
         }
         return txt;
@@ -514,6 +514,7 @@ public class Media {
         try {
             findChanges();
         } catch (SQLException ignored) {
+            Timber.w(ignored);
             _deleteDB();
         }
         List<List<String>> result = new ArrayList<>(3);
@@ -895,6 +896,7 @@ public class Media {
                         meta.put(new JSONArray().put(normname).put(Integer.toString(c)));
                         sz += file.length();
                     } catch (FileNotFoundException e) {
+                        Timber.w(e);
                         // A file has been marked as added but no longer exists in the media directory.
                         // Skip over it and mark it as removed in the db.
                         removeFile(fname);

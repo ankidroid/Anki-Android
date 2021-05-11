@@ -24,6 +24,8 @@ import android.util.AttributeSet;
 
 import com.ichi2.anki.AnkiDroidApp;
 
+import timber.log.Timber;
+
 @SuppressWarnings("deprecation") // TODO Tracked in https://github.com/ankidroid/Anki-Android/issues/5019
 public class NumberRangePreference extends android.preference.EditTextPreference {
 
@@ -97,6 +99,7 @@ public class NumberRangePreference extends android.preference.EditTextPreference
             try {
                 return getValidatedRangeFromInt(Integer.parseInt(input));
             } catch (NumberFormatException e) {
+                Timber.w(e);
                 return mMin;
             }
         }
@@ -109,7 +112,7 @@ public class NumberRangePreference extends android.preference.EditTextPreference
      * @param input Integer to validate.
      * @return The input value within acceptable range.
      */
-    private int getValidatedRangeFromInt(int input) {
+    protected int getValidatedRangeFromInt(int input) {
         if (input < mMin) {
             input = mMin;
         } else if (input > mMax) {

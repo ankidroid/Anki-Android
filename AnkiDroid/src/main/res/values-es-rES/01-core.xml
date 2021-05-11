@@ -71,7 +71,7 @@
         <item quantity="one">%d día %d restante</item>
         <item quantity="other">%d días %d restantes</item>
     </plurals>
-    <string name="no_cards_placeholder_title">Esta colección está vacía</string>
+    <string name="no_cards_placeholder_title">La colección está vacía</string>
     <string name="no_cards_placeholder_description">Empieza añadiendo tarjetas usando el ícono +</string>
     <!-- The deck picker via AnkiStatsTaskHandler.java -->
     <plurals name="studied_cards_today">
@@ -116,12 +116,12 @@
     <string name="menu_edit_tags">Editar etiquetas</string>
     <string name="delete_note_message">¿Realmente deseas eliminar esta nota y todas sus tarjetas?\n%s</string>
     <string name="menu_select">Seleccionar texto</string>
+    <string name="menu_lookup">Texto de búsqueda</string>
     <string name="menu_search">Búsqueda en %1$s</string>
     <string name="menu_mark_note">Marcar nota</string>
     <string name="menu_unmark_note">Desmarcar nota</string>
     <string name="menu_toggle_mic_tool_bar">Comprobar pronunciación</string>
     <string name="new_deck">Crear mazo</string>
-    <string name="create" comment="Button to create a filtered deck">Crear</string>
     <string name="new_dynamic_deck">Crear mazo filtrado</string>
     <string name="night_mode">Modo nocturno</string>
     <string name="directory_inaccessible">El directorio AnkiDroid es inaccesible</string>
@@ -154,7 +154,8 @@
     <string name="custom_study_deck_name">Sesión de estudio personalizado</string>
     <string name="custom_study_deck_exists">Renombra el mazo de estudio personalizado primero</string>
     <string name="empty_deck">Este mazo está vacío</string>
-    <string name="empty_deck_add_note">Add card</string>
+    <string name="search_deck">Búsqueda de Mazos</string>
+    <string name="empty_deck_add_note">Añadir tarjeta</string>
     <string name="invalid_deck_name">Nombre de mazo no válido</string>
     <string name="studyoptions_empty">Este mazo está vacío. Pulsa el botón + para añadir contenido nuevo.</string>
     <string name="studyoptions_limit_reached">Límite de estudio diario alcanzado</string>
@@ -202,12 +203,20 @@
     <!-- Context Menu -->
     <string name="card_browser_context_menu" comment="The value which appears in the system context menu. Note the casing difference">Navegador de la tarjeta</string>
     <string name="context_menu_anki_card_label">Tarjeta Anki</string>
-    <string name="has_a_problem" comment="First field is either front template or back template. Second field is the error message.">%1$s has a problem:<br/>%2$s</string>
-    <string name="more_information">More information</string>
-    <string name="no_field">Found \'{{%1$s}}\', but there is no field called \'%1$s\'.</string>
-    <string name="closed_tag_not_open">Found \'{{/%1$s}}\', but missing \'{{#%1$s}}\' or \'{{^%1$s}}\'.</string>
-    <string name="missing_closing_bracket">Missing \'}}\' in \'%s\'.</string>
-    <string name="open_tag_not_closed">Missing \'{{%s}}\'.</string>
-    <string name="wrong_tag_closed">Found \'{{/%1$s}}\', but expected \'{{/%2$s}}\'</string>
-    <string name="filter_error">Error in filter %s</string>
+    <string name="has_a_problem" comment="First field is either front template or back template. Second field is the error message.">%1$s tiene un problema:<br/>%2$s</string>
+    <string name="more_information">Más información</string>
+    <string name="no_field">Se ha encontrado \'{{%1$s}}\', pero no hay ningún campo llamado \'%1$s\'.</string>
+    <string name="closed_tag_not_open">Se ha encontrado \'{{/%1$s}}\', pero falta \'{{#%1$s}}\' o \'{{^%1$s}}\'.</string>
+    <string name="missing_closing_bracket">Falta \'}}\' en \'%s\'.</string>
+    <string name="open_tag_not_closed">Falta \'{{%s}}\'.</string>
+    <string name="wrong_tag_closed">Se ha encontrado \'{{/%1$s}}\', pero se esperaba \'{{/%2$s}}\'</string>
+    <string name="filter_error">Error en el filtro %s</string>
+    <!-- Sync conflict -->
+    <string name="sync_conflict_message_new">Las colecciones no se pueden combinar.\n¿Qué colección quieres mantener?</string>
+    <string name="sync_conflict_keep_local_new" comment="Select AnkiDroid files to keep while syncing">AnkiDroid</string>
+    <string name="sync_conflict_keep_remote_new" comment="Select AnkiWeb files to keep while syncing">AnkiWeb</string>
+    <string name="sync_conflict_remote_confirm_new">¿Reemplazar tu colección en AnkiDroid con tu colección de AnkiWeb?</string>
+    <string name="sync_conflict_local_confirm_new">¿Reemplazar tu colección en AnkiWeb con tu colección de AnkiDroid?</string>
+    <string name="sync_conflict_title_new">Selecciona la colección a mantener</string>
+    <string name="sync_conflict_replace_title">Reemplazar colección</string>
 </resources>

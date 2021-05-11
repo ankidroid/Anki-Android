@@ -4,6 +4,6 @@
     <item
         android:id="@+id/action_add_new_note_type"
         android:title="@string/model_browser_add"
-        android:icon="@drawable/ic_add_white_24dp"
+        android:icon="@drawable/ic_add_white"
         app:showAsAction="always"/>
 </menu>

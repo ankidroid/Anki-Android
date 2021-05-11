@@ -41,7 +41,7 @@
     <string name="statistics_young">ଯୁବ</string>
     <string name="statistics_mature">ପରିପକ୍ୱ</string>
     <string name="statistics_young_and_learn">ଯୁବ+ଶିଖୁଛନ୍ତି</string>
-    <string name="statistics_unlearned">ଅଦୃଶ୍ୟ</string>
+    <string name="statistics_unlearned">ଅଣଦେଖା</string>
     <string name="statistics_suspended">ନିଲମ୍ବିତ ଅଛି</string>
     <string name="statistics_buried">ସ୍ଥଗିତ ଅଛି</string>
     <string name="statistics_relearn" comment="Labbel of the axis in the graph indicating the number of reviews of cards while they are in relearning mode.">ପୁନଃ ଶିକ୍ଷାଧିନ</string>
@@ -87,7 +87,7 @@
     <string name="stats_overview_new_cards_per_day">ହାରାହାରି: &lt;b&gt;%1$.1f&lt;/b&gt; ପତ୍ର/ଦିନ</string>
     <string name="stats_overview_total_new_cards">ସମୁଦାୟ: &lt;b&gt;%1$d&lt;/b&gt; ଟି ପତ୍ର </string>
     <string name="stats_overview_average_interval">"ହାରାହାରି ଅନ୍ତରାଳ: "</string>
-    <string name="stats_overview_longest_interval">"ଦୀର୍ଘତମ  ଅନ୍ତରାଳ: "</string>
+    <string name="stats_overview_longest_interval">"ଦୀର୍ଘତମ ଅନ୍ତରାଳ: "</string>
     <string name="stats_overview_years">&lt;b&gt;%1$.1f&lt;/b&gt; ବର୍ଷ</string>
     <string name="stats_overview_months">&lt;b&gt;%1$.1f&lt;/b&gt; ମାସ</string>
     <string name="stats_overview_days">&lt;b&gt;%1$.1f&lt;/b&gt; ଦିନ</string>
@@ -107,13 +107,13 @@
         <item>ମାସ</item>
     </string-array>
     <string name="stats_today">ଆଜି</string>
-    <string name="stats_overview">ଅବଲୋକନ </string>
+    <string name="stats_overview">ଅବଲୋକନ</string>
     <string name="stats_forecast">ପୂର୍ବାନୁମାନ</string>
     <string name="stats_review_count">ସମୀକ୍ଷା ଗଣନା</string>
     <string name="stats_review_time">ସମୀକ୍ଷା ସମୟ</string>
-    <string name="stats_added" comment="Label of the number of added card">ଯୋଡା ଯାଇଛି</string>
+    <string name="stats_added" comment="Label of the number of added card">ଯୋଡ଼ା ଯାଇଛି</string>
     <string name="stats_review_intervals">ଅନ୍ତରାଳ </string>
-    <string name="stats_breakdown">ଘଣ୍ଟାକ୍ରମେ ଦେଖିବା </string>
+    <string name="stats_breakdown">ଘଣ୍ଟାକ୍ରମେ ଦେଖିବା</string>
     <string name="stats_weekly_breakdown">ସପ୍ତାହକ୍ରମେ ଦେଖିବା </string>
     <string name="stats_answer_buttons">ଉତ୍ତର ବଟନ୍</string>
     <string-array name="stats_day_time_strings">

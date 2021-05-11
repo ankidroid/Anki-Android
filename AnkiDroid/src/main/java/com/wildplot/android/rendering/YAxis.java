@@ -15,6 +15,8 @@
  ****************************************************************************************/
 package com.wildplot.android.rendering;
 
+import android.annotation.SuppressLint;
+
 import com.wildplot.android.rendering.graphics.wrapper.FontMetricsWrap;
 import com.wildplot.android.rendering.graphics.wrapper.GraphicsWrap;
 import com.wildplot.android.rendering.graphics.wrapper.RectangleWrap;
@@ -25,6 +27,7 @@ import java.text.DecimalFormat;
 /**
  * This Class represents a Drawable x-axis
  */
+@SuppressLint("NonPublicNonStaticFieldName")
 public class YAxis implements Drawable {
 
     private boolean mHasNumbersRotated = false;

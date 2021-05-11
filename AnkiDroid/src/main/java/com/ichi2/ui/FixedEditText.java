@@ -43,6 +43,8 @@ import android.graphics.Canvas;
 import android.util.AttributeSet;
 import android.view.MotionEvent;
 
+import com.ichi2.utils.AndroidUiUtils;
+
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.widget.AppCompatEditText;
@@ -134,5 +136,12 @@ public class FixedEditText extends AppCompatEditText {
             Timber.w(ex);
             return false;
         }
+    }
+
+    /**
+     * Focuses the edit text and opens the soft keyboard.
+     */
+    public void focusWithKeyboard() {
+        AndroidUiUtils.setFocusAndOpenKeyboard(this);
     }
 }

@@ -46,7 +46,7 @@
     <string name="multimedia_editor_trans_from">From</string>
     <string name="multimedia_editor_trans_to">To</string>
     <!-- imperative for the button title -->
-    <string name="multimedia_editor_trans_translate">Translate</string>
+    <string name="multimedia_editor_trans_translate">Тәрҗемә итү</string>
     <!-- waiting message -->
     <string name="multimedia_editor_trans_translating_online">Translating online</string>
     <!-- pick the right translation imperative -->
@@ -57,7 +57,7 @@
     <!-- dialog asking to install ColorDict -->
     <string name="multimedia_editor_trans_install_color_dict">Install ColorDict first</string>
     <!-- Pronunciation activity (Beolingus) -->
-    <string name="multimedia_editor_pron_load">Load</string>
+    <string name="multimedia_editor_pron_load">Йөкләү</string>
     <string name="multimedia_editor_pron_looking_up">Looking up pronunciation</string>
     <!-- in controller when fails -->
     <string name="multimedia_editor_pron_pronunciation_failed">Pronunciation failed</string>
@@ -65,8 +65,8 @@
     <string name="multimedia_editor_poweredbeolingus">Powered by Beolingus</string>
     <!-- Field editing general -->
     <!-- these are button names to convert field type -->
-    <string name="multimedia_editor_field_editing_text" comment="Select the field\'s type to Text.">Text</string>
-    <string name="multimedia_editor_field_editing_image">Image</string>
+    <string name="multimedia_editor_field_editing_text" comment="Select the field\'s type to Text.">Текст</string>
+    <string name="multimedia_editor_field_editing_image">Рәсем</string>
     <string name="multimedia_editor_field_editing_audio">Audio recording</string>
     <string name="multimedia_editor_field_editing_audio_clip">Audio Clip</string>
     <string name="multimedia_editor_field_editing_done" comment="Label of a button to tell the app that the current action is \'Done\'.">Done</string>
@@ -74,9 +74,9 @@
     <!-- buttons -->
     <string name="multimedia_editor_text_field_editing_search_label">Search for:</string>
     <string name="multimedia_editor_text_field_editing_say">Pronunciation</string>
-    <string name="multimedia_editor_text_field_editing_clear">Clear</string>
+    <string name="multimedia_editor_text_field_editing_clear">Чистарту</string>
     <string name="multimedia_editor_text_field_editing_clone">Clone from</string>
-    <string name="multimedia_editor_text_field_editing_translate" comment="Label of a button opening the translation activity">Translation</string>
+    <string name="multimedia_editor_text_field_editing_translate" comment="Label of a button opening the translation activity">Тәрҗемә</string>
     <!-- message to user, when there is no text or many words, but the user tries something -->
     <string name="multimedia_editor_text_field_editing_no_text">Input some text first</string>
     <string name="multimedia_editor_text_field_editing_many_words">Dictionary usually expects one word</string>
@@ -88,8 +88,8 @@
     <!-- Image editing -->
     <!-- for buttons -->
     <string name="multimedia_editor_image_field_editing_galery">Gallery</string>
-    <string name="multimedia_editor_image_field_editing_photo">Camera</string>
-    <string name="multimedia_editor_image_field_editing_library">Library</string>
+    <string name="multimedia_editor_image_field_editing_photo">Камера</string>
+    <string name="multimedia_editor_image_field_editing_library">Китапханә</string>
     <!-- General -->
     <!-- message on the progress dialog for the user to wait, means process -->
     <string name="multimedia_editor_general_downloading">Downloading</string>
@@ -113,9 +113,9 @@
     <string name="multimedia_editor_audio_view_create_failed">Unable to create recorder tool bar</string>
     <!-- Activity titles -->
     <string name="title_activity_edit_text" comment="Name of the window allowing to edit field. This text can not be seen in AnkiDroid directly.">Editing field</string>
-    <string name="title_activity_translation" comment="Name of the window allowing to translate. This text can not be seen in AnkiDroid directly.">Translation</string>
+    <string name="title_activity_translation" comment="Name of the window allowing to translate. This text can not be seen in AnkiDroid directly.">Тәрҗемә</string>
     <!-- Network failure -->
-    <string name="network_no_connection">No connection</string>
+    <string name="network_no_connection">Бәйләнеш юк</string>
     <!-- Crop function-->
     <string name="crop_image">Do you want to crop this image?</string>
     <string name="crop_button">Crop image</string>

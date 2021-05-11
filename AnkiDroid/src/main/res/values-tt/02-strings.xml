@@ -122,6 +122,7 @@
     <string name="reordering_cards">Кәртләр чираты үзгәртелә...</string>
     <string name="field_remapping">%1$s (\"%2$s\"дан)</string>
     <string name="confirm_map_cards_to_nothing">Бернәрсәгә дә бәйләнмәгән кәртләр сөртелер. Кәртсез калган язулар югалыр. Дәвам итәргә телисезме?</string>
+    <string name="timebox_reached_title">Timebox reached</string>
     <plurals name="timebox_reached">
         <item quantity="other">%2$s эчендә %1$d кәрт өйрәнелде</item>
     </plurals>
@@ -154,13 +155,13 @@
     <string name="import_select_title">Импорт өчен файл сайлагыз</string>
     <string name="import_message_add" comment="Adding a new deck to the collection (import)">Кушу</string>
     <string name="import_message_replace_confirm">Бу сезнең хәзерге коллекцияне бетерер hәм аны %s файлы белән алыштырыр</string>
-    <string name="import_message_add_confirm">\"%s\" коллекциягә кушыргамы? Бу күп вакыт алырга мөмкин.</string>
+    <string name="import_message_add_confirm">\"%s\" коллекциягә кушыргамы? Бу күп вакыт алырга мөмкин</string>
     <string name="import_log_no_apkg">Бу эшли торган Anki файлы түгел</string>
     <string name="import_log_failed_unzip">Бу apkgны ачып булмады: %s</string>
     <string name="import_log_failed_copy_to">apkgны %sга копияләп булмады</string>
     <string name="import_log_failed_validate">apkgны тикшереп булмады</string>
     <string name="import_log_insufficient_space">Пакетны ачу өчен урын җитми. Кирәк: %1$d, бар: %2$d</string>
-    <string name="import_log_file_cache_cleared">Файлны импортланганда хата: бәлки, кэш чистартылган иде. Яңадан тырышып карагыз.</string>
+    <string name="import_log_file_cache_cleared">Файлны импортланганда хата: бәлки, кэш чистартылган иде.\nЯңадан тырышып карагыз</string>
     <string name="import_succeeded_but_check_database">Импортлау уңышлы үтте, чистарту - уңышсыз. Мәгълүмәт базасын тикшерегез. Төп сәбәп: %s</string>
     <string name="import_error_unhandled_request">Импортлау таләбен эшкәртеп булмый</string>
     <string name="import_error_corrupt_zip">apkg файлы бозык. Зинhар, аны бетерегез hәм яңадан йөкләгез.\n\nТөп сәбәп: %s</string>
@@ -196,7 +197,7 @@
     <string name="study_options" comment="Name for a preference category in Filtered deck (aka Cram deck, aka Custom study) options">Көйләүләр</string>
     <string name="menu__deck_options">Deck options</string>
     <string name="menu__study_options" comment="Menu item that opens options for a Filtered deck (aka Cram deck, aka Custom study)">Study options</string>
-    <string name="select_tts">Set TTS language</string>
+    <string name="select_tts">Текст телен көйләргә</string>
     <string name="custom_study">Тагын өйрәнү</string>
     <string name="more_options">Күбрәк</string>
     <string name="dyn_deck_desc">Бу - гадәттәгедән тыш күбрәк уку өчен колода. Кәртләрне карап чыккач, алар үзенең колодаларына кире кайтачаклар. Бу колоданы бетерү аның эчендәге кәртләрнең үзенең колодаларына кайтуына китерер. </string>
@@ -210,27 +211,27 @@
     <string name="lookup_hint">After copying the text, tap anywhere on the flashcard to show the search icon</string>
     <!-- Time spans -->
     <plurals name="time_span_seconds">
-        <item quantity="other">%s seconds</item>
+        <item quantity="other">%s секунд</item>
     </plurals>
     <plurals name="time_span_minutes">
-        <item quantity="other">%s minutes</item>
+        <item quantity="other">%s минут</item>
     </plurals>
     <plurals name="time_span_hours">
-        <item quantity="other">%s hours</item>
+        <item quantity="other">%s сәгатъ</item>
     </plurals>
     <plurals name="time_span_days">
-        <item quantity="other">%s days</item>
+        <item quantity="other">%s көн</item>
     </plurals>
     <plurals name="time_span_months">
-        <item quantity="other">%s months</item>
+        <item quantity="other">%s ай</item>
     </plurals>
     <plurals name="time_span_years">
-        <item quantity="other">%s years</item>
+        <item quantity="other">%s ел</item>
     </plurals>
     <!-- A decimal number of seconds.
     Please give this a best-effort translation and explain the requirements for
     formatting decimals in your language in the CrowdIn comments -->
-    <string name="time_span_decimal_seconds">%s seconds</string>
+    <string name="time_span_decimal_seconds">%s секунд</string>
     <!-- The reason for making a simple “< x” translatable are RTL
          languages which apparently use the other symbol to mean less
          than. -->
@@ -243,7 +244,7 @@
         <item quantity="other">%2$d cards to review in %1$s</item>
     </plurals>
     <!-- Currently only used if exporting APKG fails -->
-    <string name="apk_share_error">Error sharing apkg file</string>
+    <string name="apk_share_error">apkg файлын экспортлаганда хата</string>
     <!-- Import and export v2 feedback -->
     <string name="export_v2_dummy_note">This file requires a newer version of Anki.</string>
     <!-- Placed in a snackbar with a long URL. Limit the length and move the URL to the start of the string -->
@@ -256,7 +257,7 @@
     <!-- The name of the deck which corrupt cards will be moved to -->
     <string name="check_integrity_recovered_deck_name">Recovered Cards</string>
     <!-- Deckpicker Background -->
-    <string name="background_image_title">Background</string>
+    <string name="background_image_title">Җирлек</string>
     <string name="choose_an_image">Choose an Image</string>
     <!-- Card Template Browser Appearance -->
     <string name="restore_default">Restore Default</string>
@@ -268,6 +269,7 @@
     <string name="white_board_image_save_failed">Failed to save whiteboard image. %s</string>
     <string name="white_board_image_saved">Whiteboard image saved to %s</string>
     <string name="title_whiteboard_pen_color">Whiteboard pen color</string>
+    <string name="title_whiteboard_editor">Whiteboard editor</string>
     <!-- CSV/Note Import -->
     <string name="note_importer_empty_cards_found"><![CDATA[Empty cards found. Please run Tools>Empty Cards.]]></string>
     <string name="note_importer_error_empty_first_field">Empty first field: %s</string>
@@ -293,13 +295,14 @@
     <string name="valid_js_api_version">Invalid AnkiDroid JS API version. Contact developer %s, or view wiki</string>
     <string name="update_js_api_version">AnkiDroid JS API update available. Contact developer %s, or view wiki</string>
     <string name="reviewer_invalid_api_version_visit_documentation">View</string>
-    <string name="anki_js_error_code">(Error Code: %d)</string>
+    <string name="anki_js_error_code">(Хата коды: %d)</string>
     <!-- About AnkiDroid screen -->
     <string name="about_ankidroid_successfully_copied_debug">Copied debug information to clipboard</string>
     <string name="about_ankidroid_error_copy_debug_info">Error copying debug information to clipboard</string>
     <!-- Card Viewer -->
     <string name="card_viewer_could_not_find_image">Card Content Error: Failed to load ‘%s’</string>
     <string name="card_viewer_media_relative_protocol">Card Content Error: Media update required</string>
+    <string name="cannot_load_http_resource">Loading http resources is no longer supported</string>
     <!-- Deck Picker -->
     <string name="deck_picker_failed_deck_load">Failed to load deck ‘%s’</string>
     <string name="search_decks">Search decks</string>
@@ -327,4 +330,11 @@
     <string name="create_shortcut_failed" comment="home screen == launcher">Your home screen does not allow AnkiDroid to add shortcuts</string>
     <string name="create_shortcut_error">Error adding shortcut: %s</string>
     <string name="note_editor_capitalize" comment="This is for a switch with a checkbox - on: enabled">Capitalize sentences</string>
+    <!-- Symbols used as Button text in IncrementNumberRangePreference -->
+    <string name="plus_sign" comment="Label for increment button in IncrementerNumberRangePreference">+</string>
+    <string name="minus_sign" comment="Label for decrement button in IncrementerNumberRangePreference">-</string>
+    <!-- Used for credential empty warning message -->
+    <string name="email_id_empty">Email address is required</string>
+    <string name="password_empty">Password is required</string>
+    <string name="back_pressed_once">Press back again to exit</string>
 </resources>

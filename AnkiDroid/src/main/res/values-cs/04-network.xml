@@ -63,11 +63,6 @@
     <!-- AndroidManifest.xml -->
     <string name="preferences_title">Nastavení</string>
     <string name="deckpreferences_title">Možnosti pro XXX</string>
-    <string name="sync_conflict_message">Musíte buď nahrát tuto kolekci, nebo ji stáhnout z Ankiwebu, protože je nelze sloučit. Kolekce na jedné straně bude přepsána.</string>
-    <string name="sync_conflict_local">Odeslat</string>
-    <string name="sync_conflict_remote">Stáhnout</string>
-    <string name="sync_conflict_remote_confirm">Přepsat místní kolekci?</string>
-    <string name="sync_conflict_local_confirm">Přepsat kolekci na serveru?</string>
     <string name="sync_prepare_syncing">Příprava synchronizace...</string>
     <string name="sync_preparing_full_sync_message">Příprava úplné synchronizace...</string>
     <string name="sync_uploading_message">Nahrávání...</string>
@@ -78,7 +73,6 @@
     <string name="sync_log_clocks_unsynchronized">Čas na vašem zařízení je rozdílný o %1$d sekund %2$s. Ujistěte se, že datum, čas a časové pásmo jsou na telefonu nastaveny správně, pak znovu synchronizujte.</string>
     <string name="sync_log_clocks_unsynchronized_tz">, časové pásmo je možná špatné</string>
     <string name="sync_log_clocks_unsynchronized_date">, datum je možná špatné</string>
-    <string name="sync_conflict_title">Konflikt synchronizace</string>
     <string name="sync_no_changes_message">Nenalezeny žádné změny</string>
     <string name="sync_database_acknowledge">Kolekce synchronizována</string>
     <string name="sync_log_error_specific">Chyba synchronizace, typ: %1$s, zpráva: %2$s</string>

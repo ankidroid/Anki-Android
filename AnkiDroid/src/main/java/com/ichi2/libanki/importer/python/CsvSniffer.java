@@ -22,6 +22,7 @@
 
 package com.ichi2.libanki.importer.python;
 
+import android.annotation.SuppressLint;
 import android.os.Build;
 
 import com.ichi2.libanki.importer.CsvException;
@@ -38,8 +39,10 @@ import java.util.regex.Pattern;
 import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
 
+@SuppressLint("NonPublicNonStaticFieldName")
 @RequiresApi(Build.VERSION_CODES.O) // Regex group(str)
 public class CsvSniffer {
+
 
     private final char[] preferred;
 

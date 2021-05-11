@@ -1,31 +1,30 @@
-/****************************************************************************************
- * Copyright (c) 2013 Bibek Shrestha <bibekshrestha@gmail.com>                          *
- * Copyright (c) 2013 Zaur Molotnikov <qutorial@gmail.com>                              *
- * Copyright (c) 2013 Nicolas Raoul <nicolas.raoul@gmail.com>                           *
- * Copyright (c) 2013 Flavio Lerda <flerda@gmail.com>                                   *
- *                                                                                      *
- * This program is free software; you can redistribute it and/or modify it under        *
- * the terms of the GNU General Public License as published by the Free Software        *
- * Foundation; either version 3 of the License, or (at your option) any later           *
- * version.                                                                             *
- *                                                                                      *
- * This program is distributed in the hope that it will be useful, but WITHOUT ANY      *
- * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A      *
- * PARTICULAR PURPOSE. See the GNU General Public License for more details.             *
- *                                                                                      *
- * You should have received a copy of the GNU General Public License along with         *
- * this program.  If not, see <http://www.gnu.org/licenses/>.                           *
- ****************************************************************************************/
+/*
+ *  Copyright (c) 2013 Bibek Shrestha <bibekshrestha@gmail.com>
+ *  Copyright (c) 2013 Zaur Molotnikov <qutorial@gmail.com>
+ *  Copyright (c) 2013 Nicolas Raoul <nicolas.raoul@gmail.com>
+ *  Copyright (c) 2013 Flavio Lerda <flerda@gmail.com>
+ *
+ *  This program is free software; you can redistribute it and/or modify it under
+ *  the terms of the GNU General Public License as published by the Free Software
+ *  Foundation; either version 3 of the License, or (at your option) any later
+ *  version.
+ *
+ *  This program is distributed in the hope that it will be useful, but WITHOUT ANY
+ *  WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A
+ *  PARTICULAR PURPOSE. See the GNU General Public License for more details.
+ *
+ *  You should have received a copy of the GNU General Public License along with
+ *  this program.  If not, see <http://www.gnu.org/licenses/>.
+ */
 
 package com.ichi2.anki.multimediacard;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
-import android.media.MediaPlayer;
-import android.media.MediaRecorder;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.annotation.VisibleForTesting;
 import androidx.appcompat.widget.AppCompatImageButton;
 
 import android.view.Gravity;
@@ -46,12 +45,12 @@ import timber.log.Timber;
 public class AudioView extends LinearLayout {
     protected final String mAudioPath;
 
-    protected PlayPauseButton mPlayPause = null;
-    protected StopButton mStop = null;
+    protected PlayPauseButton mPlayPause;
+    protected StopButton mStop;
     protected RecordButton mRecord = null;
 
-    private MediaRecorder mRecorder = null;
-    private MediaPlayer mPlayer = null;
+    private AudioRecorder mAudioRecorder = new AudioRecorder();
+    private AudioPlayer mPlayer = new AudioPlayer();
 
     private OnRecordingFinishEventListener mOnRecordingFinishEventListener = null;
 
@@ -65,7 +64,8 @@ public class AudioView extends LinearLayout {
 
     private final Context mContext;
 
-    enum Status {
+    @VisibleForTesting(otherwise = VisibleForTesting.PACKAGE_PRIVATE)
+    public enum Status {
         IDLE, // Default initial state
         INITIALIZED, // When datasource has been set
         PLAYING, PAUSED, STOPPED, // The different possible states once playing
@@ -103,6 +103,11 @@ public class AudioView extends LinearLayout {
 
     private AudioView(Context context, int resPlay, int resPause, int resStop, String audioPath) {
         super(context);
+
+        mPlayer.setOnStoppingListener(() -> mStatus = Status.STOPPED);
+        mPlayer.setOnStoppedListener(this::notifyStop);
+
+        mAudioRecorder.setOnRecordingInitializedHandler(() -> mStatus = Status.INITIALIZED);
 
         mContext = context;
 
@@ -188,9 +193,9 @@ public class AudioView extends LinearLayout {
 
 
     public void notifyStopRecord() {
-        if (mRecorder != null && mStatus == Status.RECORDING) {
+        if (mStatus == Status.RECORDING) {
             try {
-                mRecorder.stop();
+                mAudioRecorder.stopRecording();
             } catch (RuntimeException e) {
                 Timber.i(e, "Recording stop failed, this happens if stop was hit immediately after start");
                 UIUtils.showThemedToast(mContext, gtxt(R.string.multimedia_editor_audio_view_recording_failed), true);
@@ -208,25 +213,46 @@ public class AudioView extends LinearLayout {
     }
 
     public void notifyReleaseRecorder() {
-        if (mRecorder != null) {
-            mRecorder.release();
-        }
+        mAudioRecorder.release();
     }
 
+    /** Stops playing and records */
     public void toggleRecord() {
+        stopPlaying();
+
         if (mRecord != null) {
             mRecord.callOnClick();
         }
     }
 
+
+    /** Stops recording and presses the play button */
     public void togglePlay() {
+        // cancelling recording is done via pressing the record button again
+        stopRecording();
+
         if (mPlayPause != null) {
             mPlayPause.callOnClick();
         }
     }
 
+    /** If recording is occurring, stop it */
+    private void stopRecording() {
+        if (mStatus == Status.RECORDING && mRecord != null) {
+            mRecord.callOnClick();
+        }
+    }
+
+    /** If playing, stop it */
+    protected void stopPlaying() {
+        // The stop button only applies to the player, and does nothing if no action is needed
+        if (mStop != null) {
+            mStop.callOnClick();
+        }
+    }
+
     protected class PlayPauseButton extends AppCompatImageButton {
-        private final OnClickListener onClickListener = new View.OnClickListener() {
+        private final OnClickListener mOnClickListener = new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if (mAudioPath == null) {
@@ -236,15 +262,7 @@ public class AudioView extends LinearLayout {
                 switch (mStatus) {
                     case IDLE:
                         try {
-                            mPlayer = new MediaPlayer();
-                            mPlayer.setDataSource(getAudioPath());
-                            mPlayer.setOnCompletionListener(mp -> {
-                                mStatus = Status.STOPPED;
-                                mPlayer.stop();
-                                notifyStop();
-                            });
-                            mPlayer.prepare();
-                            mPlayer.start();
+                            mPlayer.play(getAudioPath());
 
                             setImageResource(mResPauseImage);
                             mStatus = Status.PLAYING;
@@ -268,12 +286,7 @@ public class AudioView extends LinearLayout {
                         // -> Play, start from beginning
                         mStatus = Status.PLAYING;
                         setImageResource(mResPauseImage);
-                        try {
-                            mPlayer.prepare();
-                            mPlayer.seekTo(0);
-                        } catch (Exception e) {
-                            Timber.e(e);
-                        }
+                        mPlayer.stop();
                         mPlayer.start();
                         notifyPlay();
                         break;
@@ -299,7 +312,7 @@ public class AudioView extends LinearLayout {
             super(context);
             setImageResource(mResPlayImage);
 
-            setOnClickListener(onClickListener);
+            setOnClickListener(mOnClickListener);
         }
 
 
@@ -323,7 +336,7 @@ public class AudioView extends LinearLayout {
     }
 
     protected class StopButton extends AppCompatImageButton {
-        private final OnClickListener onClickListener = v -> {
+        private final OnClickListener mOnClickListener = v -> {
             switch (mStatus) {
                 case PAUSED:
                 case PLAYING:
@@ -346,7 +359,7 @@ public class AudioView extends LinearLayout {
             super(context);
             setImageResource(mResStopImage);
 
-            setOnClickListener(onClickListener);
+            setOnClickListener(mOnClickListener);
         }
 
 
@@ -358,7 +371,7 @@ public class AudioView extends LinearLayout {
     }
 
     protected class RecordButton extends AppCompatImageButton {
-        private final OnClickListener onClickListener = new View.OnClickListener() {
+        private final OnClickListener mOnClickListener = new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 // Since mAudioPath is not compulsory, we check if it exists
@@ -366,7 +379,7 @@ public class AudioView extends LinearLayout {
                     return;
                 }
 
-                //We can get to this screen without permissions through the "Pronunciation" feature.
+                // We can get to this screen without permissions through the "Pronunciation" feature.
                 if (!Permissions.canRecordAudio(mContext)) {
                     Timber.w("Audio recording permission denied.");
                     UIUtils.showThemedToast(mContext,
@@ -378,41 +391,15 @@ public class AudioView extends LinearLayout {
                 switch (mStatus) {
                     case IDLE: // If not already recorded or not already played
                     case STOPPED: // if already recorded or played
-                        boolean highSampling = false;
+
                         try {
-                            // try high quality AAC @ 44.1kHz / 192kbps first
-                            // can throw IllegalArgumentException if codec isn't supported
-                            mRecorder = initMediaRecorder();
-                            mRecorder.setAudioEncoder(MediaRecorder.AudioEncoder.AAC);
-                            mRecorder.setAudioChannels(2);
-                            mRecorder.setAudioSamplingRate(44100);
-                            mRecorder.setAudioEncodingBitRate(192000);
-                            // this can also throw IOException if output path is invalid
-                            mRecorder.prepare();
-                            mRecorder.start();
-                            highSampling = true;
+                            mAudioRecorder.startRecording(mAudioPath);
                         } catch (Exception e) {
-                            // in all cases, fall back to low sampling
-                        }
-
-                        if (!highSampling) {
-                            // if we are here, either the codec didn't work or output file was invalid
-                            // fall back on default
-                            try {
-                                mRecorder = initMediaRecorder();
-                                mRecorder.setAudioEncoder(MediaRecorder.AudioEncoder.AMR_NB);
-
-                                mRecorder.prepare();
-                                mRecorder.start();
-
-                            } catch (Exception e) {
-                                // either output file failed or codec didn't work, in any case fail out
-                                Timber.e("RecordButton.onClick() :: error recording to %s\n%s", mAudioPath, e.getMessage());
-                                UIUtils.showThemedToast(mContext, gtxt(R.string.multimedia_editor_audio_view_recording_failed), true);
-                                mStatus = Status.STOPPED;
-                                break;
-                            }
-
+                            // either output file failed or codec didn't work, in any case fail out
+                            Timber.e("RecordButton.onClick() :: error recording to %s\n%s", mAudioPath, e.getMessage());
+                            UIUtils.showThemedToast(mContext, gtxt(R.string.multimedia_editor_audio_view_recording_failed), true);
+                            mStatus = Status.STOPPED;
+                            break;
                         }
 
                         mStatus = Status.RECORDING;
@@ -430,17 +417,6 @@ public class AudioView extends LinearLayout {
                         break;
                 }
             }
-
-            private MediaRecorder initMediaRecorder() {
-                MediaRecorder mr = new MediaRecorder();
-                mr.setAudioSource(MediaRecorder.AudioSource.MIC);
-                mr.setOutputFormat(MediaRecorder.OutputFormat.THREE_GPP);
-                mStatus = Status.INITIALIZED;
-                mr.setOutputFile(mAudioPath); // audioPath
-                                              // could
-                                              // change
-                return mr;
-            }
         };
 
 
@@ -448,7 +424,7 @@ public class AudioView extends LinearLayout {
             super(context);
             setImageResource(mResRecordStopImage);
 
-            setOnClickListener(onClickListener);
+            setOnClickListener(mOnClickListener);
         }
 
 
@@ -468,5 +444,23 @@ public class AudioView extends LinearLayout {
 
     public interface OnRecordingFinishEventListener {
         void onRecordingFinish(View v);
+    }
+
+
+    @VisibleForTesting(otherwise = VisibleForTesting.NONE)
+    public void setRecorder(@NonNull AudioRecorder recorder) {
+        this.mAudioRecorder = recorder;
+    }
+
+
+    @VisibleForTesting(otherwise = VisibleForTesting.NONE)
+    public void setPlayer(@NonNull AudioPlayer player) {
+        this.mPlayer = player;
+    }
+
+
+    @VisibleForTesting(otherwise = VisibleForTesting.NONE)
+    public Status getStatus() {
+        return mStatus;
     }
 }

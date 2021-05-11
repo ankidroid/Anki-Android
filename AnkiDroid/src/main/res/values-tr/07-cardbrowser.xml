@@ -48,14 +48,14 @@
     <string name="card_browser_suspend_card">Kartları askıya al</string>
     <string name="card_browser_change_deck">Desteyi değiştir</string>
     <string name="card_browser_unsuspend_card">Kartları askıdan al</string>
-    <string name="card_browser_mark_card">Notları işâretle</string>
-    <string name="card_browser_unmark_card">Notlardan işâreti kaldır</string>
+    <string name="card_browser_mark_card">Notları işaretle</string>
+    <string name="card_browser_unmark_card">Notlardan işareti kaldır</string>
     <string name="delete_card_title">Notu sil</string>
     <string name="changed_deck_message">%s\'e taşındı</string>
-    <string name="card_browser_show_marked">İşâretlileri göster</string>
+    <string name="card_browser_show_marked">İşaretlileri göster</string>
     <string name="card_browser_show_suspended">Askıdakileri göster</string>
     <string name="card_browser_search_by_tag">Etikete göre filtrele</string>
-    <string name="card_browser_search_by_flag">Filter by flag</string>
+    <string name="card_browser_search_by_flag">Bayrağa göre filtrele</string>
     <string name="card_browser_list_my_searches">Aramalarım</string>
     <string name="card_browser_list_my_searches_save">Aramayı kaydet</string>
     <string name="card_browser_list_my_searches_title">Kayıtlı arama seç</string>
@@ -72,48 +72,48 @@
         <item>Sıralamadan (daha hızlı)</item>
         <item>Sıralama alanına göre</item>
         <item>Oluşturulma zamanına göre</item>
-        <item>By note modification time</item>
-        <item>By card modification time</item>
+        <item>Not düzenleme tarihine göre</item>
+        <item>Kart düzenleme tarihine göre</item>
         <item>Zamana göre</item>
         <item>Aralığa göre</item>
         <item>Kolaylığa göre</item>
-        <item>İncelemelere göre</item>
+        <item>Tekrara göre</item>
         <item>Süresi dolana göre</item>
     </string-array>
     <string name="card_browser_select_all">Hepsini seç</string>
     <string name="card_browser_select_none">Hiçbirini seçme</string>
     <string name="card_browser_interval_new_card" comment="Message indicating that a card is currently new, and so has no interval/ease.">(yeni)</string>
-    <string name="card_browser_due_filtered_card">(filtered)</string>
-    <string name="card_browser_interval_learning_card">(learning)</string>
-    <string name="card_browser_no_cards_in_deck">No cards found in deck ‘%s’</string>
-    <string name="card_browser_search_all_decks">Search all decks</string>
-    <string name="card_browser_unknown_deck_name">Unknown</string>
+    <string name="card_browser_due_filtered_card">(filtrelendi)</string>
+    <string name="card_browser_interval_learning_card">(öğreniliyor)</string>
+    <string name="card_browser_no_cards_in_deck">%s\'de hiçbir kart bulunamadı</string>
+    <string name="card_browser_search_all_decks">Tüm desteleri ara</string>
+    <string name="card_browser_unknown_deck_name">Bilinmeyen</string>
     <plurals name="card_browser_cards_deleted">
-        <item quantity="one">%d card deleted</item>
-        <item quantity="other">%d cards deleted</item>
+        <item quantity="one">%d kartı silindi</item>
+        <item quantity="other">%d kartları silindi</item>
     </plurals>
     <!-- Card Info subscreen -->
-    <string name="card_info_added" comment="Label of the information showing at which date a card was added.">Added</string>
-    <string name="card_info_first_review">First Review</string>
-    <string name="card_info_latest_review">Latest Review</string>
-    <string name="card_info_interval">Interval</string>
-    <string name="card_info_ease">Ease</string>
-    <string name="card_info_reviews" comment="Number of times a card was reviewed">Reviews</string>
-    <string name="card_info_lapses" comment="Label indicating the number of lapses of a card.">Lapses</string>
-    <string name="card_info_average_time">Average Time</string>
-    <string name="card_info_total_time">Total Time</string>
-    <string name="card_info_card_type">Card Type</string>
-    <string name="card_info_note_type">Note Type</string>
-    <string name="card_info_deck_name">Deck Name</string>
-    <string name="card_info_card_id">Card Id</string>
-    <string name="card_info_note_id">Note Id</string>
-    <string name="card_info_revlog_time">Time</string>
-    <string name="card_info_revlog_date">Date</string>
-    <string name="card_info_revlog_rating">Rating</string>
-    <string name="card_info_revlog_type">Type</string>
-    <string name="card_info_revlog_learn" comment="Label indicating that a review in the log of a card occured while the card was in learning mode">Learn</string>
-    <string name="card_info_revlog_review">Review</string>
-    <string name="card_info_revlog_relearn" comment="Label of a log entry of a card, indicating that a review was done with a note in relearning mode">Relearn</string>
-    <string name="card_info_revlog_filtered">Filtered</string>
-    <string name="card_info_ease_not_applicable">N/A</string>
+    <string name="card_info_added" comment="Label of the information showing at which date a card was added.">Eklendi</string>
+    <string name="card_info_first_review">İlk tekrar</string>
+    <string name="card_info_latest_review">Son tekrar</string>
+    <string name="card_info_interval">Zaman Aralığı</string>
+    <string name="card_info_ease">Kolaylık</string>
+    <string name="card_info_reviews" comment="Number of times a card was reviewed">Tekrarlar</string>
+    <string name="card_info_lapses" comment="Label indicating the number of lapses of a card.">Zaman Aşımları</string>
+    <string name="card_info_average_time">Ortalama süre</string>
+    <string name="card_info_total_time">Toplam Süre</string>
+    <string name="card_info_card_type">Kart tipi</string>
+    <string name="card_info_note_type">Not tipi</string>
+    <string name="card_info_deck_name">Deste adı</string>
+    <string name="card_info_card_id">Kart numarası</string>
+    <string name="card_info_note_id">Not numarası</string>
+    <string name="card_info_revlog_time">Süre</string>
+    <string name="card_info_revlog_date">Tarih</string>
+    <string name="card_info_revlog_rating">Derecelendirme</string>
+    <string name="card_info_revlog_type">Tür</string>
+    <string name="card_info_revlog_learn" comment="Label indicating that a review in the log of a card occured while the card was in learning mode">Öğren</string>
+    <string name="card_info_revlog_review">Gözden geçir</string>
+    <string name="card_info_revlog_relearn" comment="Label of a log entry of a card, indicating that a review was done with a note in relearning mode">Yeniden öğren</string>
+    <string name="card_info_revlog_filtered">Filtrelenmiş</string>
+    <string name="card_info_ease_not_applicable">Yok</string>
 </resources>

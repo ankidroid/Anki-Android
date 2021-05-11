@@ -16,9 +16,9 @@ Ajoutez des cartes par le biais de l’application Anki pour ordinateur ou direc
 • widget progression
 • statistiques détaillées
 • synchronisation avec AnkiWeb
-• open source
+• code source ouvert
 
-★ Fonctionnalités supplémentaires:
+★ Fonctionnalités supplémentaires :
 • écrire les réponses (en option)
 • tableau blanc
 • éditeur de cartes

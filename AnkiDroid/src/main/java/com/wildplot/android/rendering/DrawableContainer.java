@@ -15,12 +15,15 @@
  ****************************************************************************************/
 package com.wildplot.android.rendering;
 
+import android.annotation.SuppressLint;
+
 import com.wildplot.android.rendering.graphics.wrapper.GraphicsWrap;
 import com.wildplot.android.rendering.interfaces.Drawable;
 
 import java.util.Vector;
 
 
+@SuppressLint("NonPublicNonStaticFieldName")
 public class DrawableContainer implements Drawable {
 
     private final Vector<Drawable> drawableVector = new Vector<>();

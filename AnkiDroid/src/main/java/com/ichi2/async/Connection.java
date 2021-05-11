@@ -21,7 +21,10 @@ package com.ichi2.async;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.net.ConnectivityManager;
+import android.net.Network;
+import android.net.NetworkCapabilities;
 import android.os.AsyncTask;
+import android.os.Build;
 import android.os.PowerManager;
 import android.util.Pair;
 
@@ -46,7 +49,6 @@ import com.ichi2.utils.JSONObject;
 import java.io.IOException;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import okhttp3.Response;
 import timber.log.Timber;
 
@@ -101,7 +103,7 @@ public class Connection extends BaseAsyncTask<Connection.Payload, Object, Connec
                 sInstance.get();
             }
         } catch (Exception e) {
-            e.printStackTrace();
+            Timber.w(e);
         }
 
         sInstance = new Connection();
@@ -183,13 +185,13 @@ public class Connection extends BaseAsyncTask<Connection.Payload, Object, Connec
 
 
     public static Connection login(TaskListener listener, Payload data) {
-        data.taskType = LOGIN;
+        data.mTaskType = LOGIN;
         return launchConnectionTask(listener, data);
     }
 
 
     public static Connection sync(TaskListener listener, Payload data) {
-        data.taskType = SYNC;
+        data.mTaskType = SYNC;
         return launchConnectionTask(listener, data);
     }
 
@@ -205,7 +207,7 @@ public class Connection extends BaseAsyncTask<Connection.Payload, Object, Connec
 
 
     private Payload doOneInBackground(Payload data) {
-        switch (data.taskType) {
+        switch (data.mTaskType) {
             case LOGIN:
                 return doInBackgroundLogin(data);
 
@@ -227,11 +229,13 @@ public class Connection extends BaseAsyncTask<Connection.Payload, Object, Connec
         try {
             ret = server.hostKey(username, password);
         } catch (UnknownHttpResponseException e) {
+            Timber.w(e);
             data.success = false;
             data.resultType = ERROR;
             data.result = new Object[]{e.getResponseCode(), e.getMessage() };
             return data;
         } catch (Exception e2) {
+            Timber.w(e2);
             // Ask user to report all bugs which aren't timeout errors
             if (!timeoutOccurred(e2)) {
                 AnkiDroidApp.sendExceptionReport(e2, "doInBackgroundLogin");
@@ -252,6 +256,7 @@ public class Connection extends BaseAsyncTask<Connection.Payload, Object, Connec
                     hostkey = response.getString("key");
                     valid = (hostkey != null) && (hostkey.length() > 0);
                 } catch (JSONException e) {
+                    Timber.w(e);
                     valid = false;
                 } catch (IllegalStateException | IOException | NullPointerException e) {
                     throw new RuntimeException(e);
@@ -426,12 +431,14 @@ public class Connection extends BaseAsyncTask<Connection.Payload, Object, Connec
                     default:
                     }
                 } catch (OutOfMemoryError e) {
+                    Timber.w(e);
                     AnkiDroidApp.sendExceptionReport(e, "doInBackgroundSync-fullSync");
                     data.success = false;
                     data.resultType = OUT_OF_MEMORY_ERROR;
                     data.result = new Object[0];
                     return data;
                 } catch (RuntimeException e) {
+                    Timber.w(e);
                     if (timeoutOccurred(e)) {
                         data.resultType = CONNECTION_ERROR;
                     } else if (USER_ABORTED_SYNC.toString().equals(e.getMessage())) {
@@ -479,6 +486,7 @@ public class Connection extends BaseAsyncTask<Connection.Payload, Object, Connec
                         }
                     }
                 } catch (RuntimeException e) {
+                    Timber.w(e);
                     if (timeoutOccurred(e)) {
                         data.resultType = CONNECTION_ERROR;
                         data.result = new Object[]{e};
@@ -556,18 +564,34 @@ public class Connection extends BaseAsyncTask<Connection.Payload, Object, Connec
         super.publishProgress(id, up, down);
     }
 
-    @SuppressWarnings("deprecation") // TODO Tracked in https://github.com/ankidroid/Anki-Android/issues/7013
+    @SuppressWarnings("deprecation")
     public static boolean isOnline() {
         if (sAllowSyncOnNoConnection) {
             return true;
         }
         ConnectivityManager cm = (ConnectivityManager) AnkiDroidApp.getInstance().getApplicationContext()
                 .getSystemService(Context.CONNECTIVITY_SERVICE);
-        if (cm != null) {
-            android.net.NetworkInfo netInfo = cm.getActiveNetworkInfo();
-            return (netInfo != null) && netInfo.isConnected();
+        if (cm == null) {
+            return false;
         }
-        return false;
+        /* NetworkInfo is deprecated in API 29 so we have to check separately for higher API Levels */
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) {
+            Network network = cm.getActiveNetwork();
+            if (network == null) {
+                return false;
+            }
+            NetworkCapabilities networkCapabilities = cm.getNetworkCapabilities(network);
+            if (networkCapabilities == null) {
+                return false;
+            }
+            boolean isInternetSuspended = !networkCapabilities.hasCapability(NetworkCapabilities.NET_CAPABILITY_NOT_SUSPENDED);
+            return networkCapabilities.hasCapability(NetworkCapabilities.NET_CAPABILITY_INTERNET)
+                    && networkCapabilities.hasCapability(NetworkCapabilities.NET_CAPABILITY_VALIDATED)
+                    && !isInternetSuspended;
+        } else {
+            android.net.NetworkInfo networkInfo = cm.getActiveNetworkInfo();
+            return networkInfo != null && networkInfo.isConnected();
+        }
     }
 
 
@@ -589,7 +613,7 @@ public class Connection extends BaseAsyncTask<Connection.Payload, Object, Connec
     }
 
     public static class Payload {
-        private int taskType;
+        private int mTaskType;
         @NonNull public Object[] data;
         public ConnectionResultType resultType;
         public Object[] result;

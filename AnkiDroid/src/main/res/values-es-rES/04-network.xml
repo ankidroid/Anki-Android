@@ -63,11 +63,6 @@
     <!-- AndroidManifest.xml -->
     <string name="preferences_title">Preferencias</string>
     <string name="deckpreferences_title">Opciones para XXX</string>
-    <string name="sync_conflict_message">Tus mazos aquí y en AnkiWeb difieren de tal manera que no se pueden combinar juntos, por lo que es necesario sobrescribir los mazos de un lado con las mazos del otro.\n\n¿Deseas cargar los mazos desde aquí, o bien descargar los mazos de AnkiWeb?</string>
-    <string name="sync_conflict_local">Subir</string>
-    <string name="sync_conflict_remote">Descargar</string>
-    <string name="sync_conflict_remote_confirm">¿Realmente deseas descargar la colección del servidor? Sé consciente de que esto sobrescribirá tu colección local.</string>
-    <string name="sync_conflict_local_confirm">¿Realmente deseas subir la colección local? Sé consciente de que esto sobrescribirá tu colección en el servidor.</string>
     <string name="sync_prepare_syncing">Preparando la sincronización...</string>
     <string name="sync_preparing_full_sync_message">Preparando sincronización completa...</string>
     <string name="sync_uploading_message">Subiendo&#8230;</string>
@@ -78,7 +73,6 @@
     <string name="sync_log_clocks_unsynchronized">El reloj en tu dispositivo está desfasado en %1$d segundos%2$s; La sincronización requiere que tanto tu reloj como tu zona horaria estén ajustados correctamente para evitar errores. Por favor, asegúrate de que tus ajustes de fecha y hora estén configurados correctamente, y vuelve a sincronizar.</string>
     <string name="sync_log_clocks_unsynchronized_tz">, la zona horaria del dispositivo es probablemente errónea</string>
     <string name="sync_log_clocks_unsynchronized_date">, la fecha de dispositivo probablemente es errónea</string>
-    <string name="sync_conflict_title">Conflicto al sincronizar</string>
     <string name="sync_no_changes_message">No se encontraron cambios.</string>
     <string name="sync_database_acknowledge">Colección sincronizada</string>
     <string name="sync_log_error_specific">Error de sincronización, tipo: %1$s, mensaje: %2$s</string>
@@ -128,5 +122,5 @@
     <!-- Deck Picker Sync Icon -->
     <string name="sync_menu_title_full_sync">Sincronizar (completo)</string>
     <string name="sync_menu_title_no_account">Sincronizar (iniciar sesión)</string>
-    <string name="sync_error_unknown_host_readable">Could not connect to AnkiWeb. Is your internet working?\n\n%s</string>
+    <string name="sync_error_unknown_host_readable">No se pudo conectar a AnkiWeb. ¿Está funcionando tu conexión a internet?\n\n%s</string>
 </resources>

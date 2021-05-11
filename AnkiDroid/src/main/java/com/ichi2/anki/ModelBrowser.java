@@ -35,7 +35,6 @@ import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.Spinner;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.ichi2.anki.dialogs.ConfirmationDialog;
@@ -48,7 +47,6 @@ import com.ichi2.libanki.Collection;
 import com.ichi2.libanki.Model;
 import com.ichi2.libanki.StdModels;
 import com.ichi2.ui.FixedEditText;
-import com.ichi2.utils.Triple;
 import com.ichi2.widget.WidgetStatus;
 
 import java.util.ArrayList;
@@ -56,7 +54,7 @@ import java.util.Random;
 
 import timber.log.Timber;
 
-import static com.ichi2.anim.ActivityTransitionAnimation.Direction.LEFT;
+import static com.ichi2.anim.ActivityTransitionAnimation.Direction.START;
 
 
 public class ModelBrowser extends AnkiActivity {
@@ -76,7 +74,7 @@ public class ModelBrowser extends AnkiActivity {
     private ArrayList<Long> mModelIds;
     private ArrayList<DisplayPair> mModelDisplayList;
 
-    private Collection col;
+    private Collection mCol;
     private ActionBar mActionBar;
 
     //Dialogue used in renaming
@@ -241,7 +239,7 @@ public class ModelBrowser extends AnkiActivity {
     @Override
     public void onCollectionLoaded(Collection col) {
         super.onCollectionLoaded(col);
-        this.col = col;
+        this.mCol = col;
         TaskManager.launchCollectionTask(new CollectionTask.CountModels(), loadingModelsHandler());
     }
 
@@ -275,7 +273,7 @@ public class ModelBrowser extends AnkiActivity {
             Intent noteOpenIntent = new Intent(ModelBrowser.this, ModelFieldEditor.class);
             noteOpenIntent.putExtra("title", mModelDisplayList.get(position).getName());
             noteOpenIntent.putExtra("noteTypeID", noteTypeID);
-            startActivityForResultWithAnimation(noteOpenIntent, 0, LEFT);
+            startActivityForResultWithAnimation(noteOpenIntent, 0, START);
         });
 
         mModelListView.setOnItemLongClickListener((parent, view, position, id) -> {
@@ -309,13 +307,13 @@ public class ModelBrowser extends AnkiActivity {
 
         //Populates arrayadapters listing the mModels (includes prefixes/suffixes)
         int existingModelSize = (mModels == null) ? 0 : mModels.size();
-        int stdModelSize = StdModels.stdModels.length;
+        int stdModelSize = StdModels.STD_MODELS.length;
         ArrayList<String> newModelLabels = new ArrayList<>(existingModelSize + stdModelSize);
         ArrayList<String> existingModelsNames = new ArrayList<>(existingModelSize);
 
         //Used to fetch model names
         mNewModelNames = new ArrayList<>(stdModelSize);
-        for (StdModels StdModels: StdModels.stdModels) {
+        for (StdModels StdModels: StdModels.STD_MODELS) {
             String defaultName = StdModels.getDefaultName();
             newModelLabels.add(String.format(add, defaultName));
             mNewModelNames.add(defaultName);
@@ -358,10 +356,9 @@ public class ModelBrowser extends AnkiActivity {
                         mModelNameInput.setSelection(mModelNameInput.getText().length());
 
                         //Create textbox to name new model
-                        new MaterialDialog.Builder(ModelBrowser.this)
+                        new MaterialEditTextDialog.Builder(ModelBrowser.this, mModelNameInput)
                                 .title(R.string.model_browser_add)
                                 .positiveText(R.string.dialog_ok)
-                                .customView(mModelNameInput, true)
                                 .onPositive((innerDialog, innerWhich) -> {
                                         String modelName = mModelNameInput.getText().toString();
                                         addNewNoteType(modelName, addSelectionSpinner.getSelectedItemPosition());
@@ -383,19 +380,19 @@ public class ModelBrowser extends AnkiActivity {
     private void addNewNoteType(String modelName, int position) {
         Model model;
         if (modelName.length() > 0) {
-            int nbStdModels = StdModels.stdModels.length;
+            int nbStdModels = StdModels.STD_MODELS.length;
             if (position < nbStdModels) {
-                model = StdModels.stdModels[position].add(col);
+                model = StdModels.STD_MODELS[position].add(mCol);
             } else {
                 //New model
                 //Model that is being cloned
                 Model oldModel = mModels.get(position - nbStdModels).deepClone();
-                Model newModel = StdModels.basicModel.add(col);
+                Model newModel = StdModels.BASIC_MODEL.add(mCol);
                 oldModel.put("id", newModel.getLong("id"));
                 model = oldModel;
             }
             model.put("name", modelName);
-            col.getModels().update(model);
+            mCol.getModels().update(model);
             fullRefresh();
         } else {
             showToast(getResources().getString(R.string.toast_empty_name));
@@ -409,20 +406,21 @@ public class ModelBrowser extends AnkiActivity {
     private void deleteModelDialog() {
         if (mModelIds.size() > 1) {
             Runnable confirm = () -> {
-                col.modSchemaNoCheck();
+                mCol.modSchemaNoCheck();
                 deleteModel();
                 dismissContextMenu();
             };
             Runnable cancel = this::dismissContextMenu;
 
             try {
-                col.modSchema();
+                mCol.modSchema();
                 ConfirmationDialog d = new ConfirmationDialog();
                 d.setArgs(getResources().getString(R.string.model_delete_warning));
                 d.setConfirm(confirm);
                 d.setCancel(cancel);
                 ModelBrowser.this.showDialogFragment(d);
             } catch (ConfirmModSchemaException e) {
+                e.log();
                 ConfirmationDialog c = new ConfirmationDialog();
                 c.setArgs(getResources().getString(R.string.full_sync_confirmation));
                 c.setConfirm(confirm);
@@ -445,11 +443,10 @@ public class ModelBrowser extends AnkiActivity {
         mModelNameInput.setSingleLine(true);
         mModelNameInput.setText(mModels.get(mModelListPosition).getString("name"));
         mModelNameInput.setSelection(mModelNameInput.getText().length());
-        new MaterialDialog.Builder(this)
+        new MaterialEditTextDialog.Builder(this, mModelNameInput)
                             .title(R.string.rename_model)
                             .positiveText(R.string.rename)
                             .negativeText(R.string.dialog_cancel)
-                            .customView(mModelNameInput, true)
                             .onPositive((dialog, which) -> {
                                     Model model = mModels.get(mModelListPosition);
                                     String deckName = mModelNameInput.getText().toString()
@@ -457,7 +454,7 @@ public class ModelBrowser extends AnkiActivity {
                                             .replaceAll("[\"\\n\\r]", "");
                                     if (deckName.length() > 0) {
                                         model.put("name", deckName);
-                                        col.getModels().update(model);
+                                        mCol.getModels().update(model);
                                         mModels.get(mModelListPosition).put("name", deckName);
                                         mModelDisplayList.set(mModelListPosition,
                                                 new DisplayPair(mModels.get(mModelListPosition).getString("name"),
@@ -485,7 +482,7 @@ public class ModelBrowser extends AnkiActivity {
     private void openTemplateEditor() {
         Intent intent = new Intent(this, CardTemplateEditor.class);
         intent.putExtra("modelId", mCurrentID);
-        startActivityForResultWithAnimation(intent, REQUEST_TEMPLATE_EDIT, LEFT);
+        startActivityForResultWithAnimation(intent, REQUEST_TEMPLATE_EDIT, START);
     }
 
     // ----------------------------------------------------------------------------
@@ -541,9 +538,7 @@ public class ModelBrowser extends AnkiActivity {
 
 
     private void showToast(CharSequence text) {
-        int duration = Toast.LENGTH_SHORT;
-        Toast toast = Toast.makeText(this, text, duration);
-        toast.show();
+        UIUtils.showThemedToast(this, text, true);
     }
 
 
@@ -557,20 +552,20 @@ public class ModelBrowser extends AnkiActivity {
      * along with the name.
      */
     public static class DisplayPair {
-        private final String name;
-        private final int count;
+        private final String mName;
+        private final int mCount;
 
         public DisplayPair(String name, int count) {
-            this.name = name;
-            this.count = count;
+            this.mName = name;
+            this.mCount = count;
         }
 
         public String getName() {
-            return name;
+            return mName;
         }
 
         public int getCount() {
-            return count;
+            return mCount;
         }
 
         @Override

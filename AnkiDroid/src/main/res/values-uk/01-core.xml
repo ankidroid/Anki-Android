@@ -116,7 +116,7 @@
     <string name="menu_bury">Відкласти</string>
     <string name="menu_suspend">Призупинити</string>
     <string name="menu_delete_note">Видалити запис</string>
-    <string name="menu_flag">Позначка</string>
+    <string name="menu_flag">Прапорець</string>
     <string name="menu_flag_card">Позначити картку</string>
     <string name="menu_flag_card_zero">Без позначки</string>
     <string name="menu_flag_card_one">Червоний прапорець</string>
@@ -126,12 +126,12 @@
     <string name="menu_edit_tags">Редагувати примітки</string>
     <string name="delete_note_message">Дійсно видалити цей запис разом з усіма його картками?\n%s</string>
     <string name="menu_select">Виділити текст</string>
+    <string name="menu_lookup">Lookup text</string>
     <string name="menu_search">Пошук у %1$s</string>
     <string name="menu_mark_note">Позначити запис</string>
     <string name="menu_unmark_note">Зняти позначку запису</string>
     <string name="menu_toggle_mic_tool_bar">Перевірити вимову</string>
     <string name="new_deck">Створити колоду</string>
-    <string name="create" comment="Button to create a filtered deck">Створити</string>
     <string name="new_dynamic_deck">Створити фільтровану колоду</string>
     <string name="night_mode">Нічний режим</string>
     <string name="directory_inaccessible">AnkiDroid каталог не доступний</string>
@@ -164,6 +164,7 @@
     <string name="custom_study_deck_name">Додаткове навчання</string>
     <string name="custom_study_deck_exists">Спочатку перейменуйте колоду додаткового навчання</string>
     <string name="empty_deck">Ця колода порожня</string>
+    <string name="search_deck">Пошук колоди</string>
     <string name="empty_deck_add_note">Додати картку</string>
     <string name="invalid_deck_name">Некоректна назва колоди</string>
     <string name="studyoptions_empty">Ця колода порожня. Натисніть на кнопку +, щоб додати новий вміст.</string>
@@ -222,4 +223,12 @@
     <string name="open_tag_not_closed">Відсутнє «{{%s}».</string>
     <string name="wrong_tag_closed">Знайдено «{{/%1$s}}», але очікувалось «{{/%2$s}}»</string>
     <string name="filter_error">Помилка в фільтрі %s</string>
+    <!-- Sync conflict -->
+    <string name="sync_conflict_message_new">The collections can’t be combined.\nWhich collection do you want to keep?</string>
+    <string name="sync_conflict_keep_local_new" comment="Select AnkiDroid files to keep while syncing">AnkiDroid</string>
+    <string name="sync_conflict_keep_remote_new" comment="Select AnkiWeb files to keep while syncing">AnkiWeb</string>
+    <string name="sync_conflict_remote_confirm_new">Replace your collection on AnkiDroid with your collection from AnkiWeb?</string>
+    <string name="sync_conflict_local_confirm_new">Replace your collection on AnkiWeb with your collection from AnkiDroid?</string>
+    <string name="sync_conflict_title_new">Select collection to keep</string>
+    <string name="sync_conflict_replace_title">Replace collection</string>
 </resources>

@@ -112,12 +112,12 @@
     <string name="menu_edit_tags">編輯標籤</string>
     <string name="delete_note_message">真的要刪除這個筆記跟它的卡片嗎？\n%s</string>
     <string name="menu_select">選擇文字</string>
+    <string name="menu_lookup">Lookup text</string>
     <string name="menu_search">在%1$s中查詢</string>
     <string name="menu_mark_note">標記筆記</string>
     <string name="menu_unmark_note">取消標記筆記</string>
     <string name="menu_toggle_mic_tool_bar">檢查發音</string>
     <string name="new_deck">建立牌組</string>
-    <string name="create" comment="Button to create a filtered deck">建立</string>
     <string name="new_dynamic_deck">新增篩選牌組</string>
     <string name="night_mode">夜間模式</string>
     <string name="directory_inaccessible">無法存取 AnkiDroid 目錄</string>
@@ -150,6 +150,7 @@
     <string name="custom_study_deck_name">自訂學程</string>
     <string name="custom_study_deck_exists">請先重新命名現有的「自訂學習」牌組。</string>
     <string name="empty_deck">這個牌組是空的</string>
+    <string name="search_deck">Deck Search</string>
     <string name="empty_deck_add_note">新增卡片</string>
     <string name="invalid_deck_name">無效牌組名稱</string>
     <string name="studyoptions_empty">這個牌組是空的。按下 + 按鈕增加新內容。</string>
@@ -205,4 +206,12 @@
     <string name="open_tag_not_closed">缺少 \'{{%s}}\'.</string>
     <string name="wrong_tag_closed">找到 \'{{/%1$s}}\', 但預期是 \'{{/%2$s}}\'</string>
     <string name="filter_error">篩選器有誤 %s</string>
+    <!-- Sync conflict -->
+    <string name="sync_conflict_message_new">The collections can’t be combined.\nWhich collection do you want to keep?</string>
+    <string name="sync_conflict_keep_local_new" comment="Select AnkiDroid files to keep while syncing">AnkiDroid</string>
+    <string name="sync_conflict_keep_remote_new" comment="Select AnkiWeb files to keep while syncing">AnkiWeb</string>
+    <string name="sync_conflict_remote_confirm_new">Replace your collection on AnkiDroid with your collection from AnkiWeb?</string>
+    <string name="sync_conflict_local_confirm_new">Replace your collection on AnkiWeb with your collection from AnkiDroid?</string>
+    <string name="sync_conflict_title_new">Select collection to keep</string>
+    <string name="sync_conflict_replace_title">Replace collection</string>
 </resources>

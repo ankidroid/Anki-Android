@@ -122,6 +122,7 @@
     <string name="reordering_cards">重新排列卡片中...</string>
     <string name="field_remapping">%1$s （从“%2$s”）</string>
     <string name="confirm_map_cards_to_nothing">在笔记类型中没有相应模板的卡片将被删除。如果该笔记没有生成其他的卡片，则该笔记将会丢失。你确定要继续吗？</string>
+    <string name="timebox_reached_title">已到达时间盒</string>
     <plurals name="timebox_reached">
         <item quantity="other">在%2$s内学习了%1$d张卡片</item>
     </plurals>
@@ -141,7 +142,7 @@
     <plurals name="factadder_cards_added">
         <item quantity="other">已添加%d张卡片</item>
     </plurals>
-    <string name="check_db">检查数据</string>
+    <string name="check_db">检查数据库</string>
     <string name="check_media">检查媒体</string>
     <string name="empty_cards">空白卡片</string>
     <string name="check_db_message">正在检查数据库\n请等待...</string>
@@ -268,6 +269,7 @@
     <string name="white_board_image_save_failed">保存白板图像失败。 %s</string>
     <string name="white_board_image_saved">白板图像已保存到 %s</string>
     <string name="title_whiteboard_pen_color">白板笔颜色</string>
+    <string name="title_whiteboard_editor">白板编辑器</string>
     <!-- CSV/Note Import -->
     <string name="note_importer_empty_cards_found"><![CDATA[找到空的卡片。请运行 工具 > 空卡片。]]></string>
     <string name="note_importer_error_empty_first_field">第一个字段为空：%s</string>
@@ -300,6 +302,7 @@
     <!-- Card Viewer -->
     <string name="card_viewer_could_not_find_image">加载“%s”失败</string>
     <string name="card_viewer_media_relative_protocol">卡片内容错误：需要更新媒体</string>
+    <string name="cannot_load_http_resource">不再支持加载 http 资源</string>
     <!-- Deck Picker -->
     <string name="deck_picker_failed_deck_load">加载牌组“%s”失败</string>
     <string name="search_decks">搜索牌组</string>
@@ -327,4 +330,11 @@
     <string name="create_shortcut_failed" comment="home screen == launcher">您的主屏幕不允许 AnkiDroid 添加快捷方式</string>
     <string name="create_shortcut_error">添加快捷方式时出错：%s</string>
     <string name="note_editor_capitalize" comment="This is for a switch with a checkbox - on: enabled">大写句子</string>
+    <!-- Symbols used as Button text in IncrementNumberRangePreference -->
+    <string name="plus_sign" comment="Label for increment button in IncrementerNumberRangePreference">+</string>
+    <string name="minus_sign" comment="Label for decrement button in IncrementerNumberRangePreference">-</string>
+    <!-- Used for credential empty warning message -->
+    <string name="email_id_empty">电子邮件地址是必填项</string>
+    <string name="password_empty">密码是必填项</string>
+    <string name="back_pressed_once">再按一次返回键以退出</string>
 </resources>

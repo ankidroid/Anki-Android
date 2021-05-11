@@ -92,18 +92,18 @@
     <string name="undo_action_review">पिछली समीक्षा</string>
     <string name="undo_action_change_deck_multi">डेक बदलें</string>
     <string name="move_all_to_deck">सभी को डेक में ले जाएं</string>
-    <string name="unbury">निकालें</string>
+    <string name="unbury">स्थगित से वापस लाएं</string>
     <string name="rename_deck">डेक का नाम बदलें</string>
     <string name="create_shortcut">क्षुद्र मार्ग बनाएँ </string>
     <string name="menu_add" comment="A generic add button - Main Deck Picker and card templates. Please inform us if you need more specific strings">जोड़ें</string>
     <string name="menu_add_note">नोट जोड़ें</string>
     <string name="menu_my_account" comment="Label of the window in which the user should enter their account. This text can\'t be found in AnkiDroid directly.">खाता को तुल्यकालन करें</string>
     <string name="menu_dismiss_note">छुपाएं/हटाना</string>
-    <string name="menu_bury_card">कार्ड दफनाना</string>
-    <string name="menu_bury_note">नोट दफनाना</string>
+    <string name="menu_bury_card">पत्ता स्थगित करें</string>
+    <string name="menu_bury_note">नोट स्थगित करें</string>
     <string name="menu_suspend_card">कार्ड को निलंबित</string>
     <string name="menu_suspend_note">नोट निलंबित करें</string>
-    <string name="menu_bury">दफनाना</string>
+    <string name="menu_bury">स्थगित करें</string>
     <string name="menu_suspend">निलंबित</string>
     <string name="menu_delete_note">नोट हटाएँ</string>
     <string name="menu_flag">झंडा</string>
@@ -116,12 +116,12 @@
     <string name="menu_edit_tags">टैग संपादित करें</string>
     <string name="delete_note_message">वास्तव में इस नोट और उसके सभी cards?\n%s को हटाना</string>
     <string name="menu_select">पाठ का चयन करें</string>
+    <string name="menu_lookup">Lookup text</string>
     <string name="menu_search">लुकअप में %1$s</string>
     <string name="menu_mark_note">मार्क नोट करें</string>
     <string name="menu_unmark_note">नोट अचिह्नित करें</string>
     <string name="menu_toggle_mic_tool_bar">आप उच्चारण जाँचिये</string>
     <string name="new_deck">डेक बनाने</string>
-    <string name="create" comment="Button to create a filtered deck">बनाएँ</string>
     <string name="new_dynamic_deck">फ़िल्टर्ड डेक बनाएं</string>
     <string name="night_mode">रात मोड</string>
     <string name="directory_inaccessible">AnkiDroid निर्देशिका पहुंच योग्य नहीं है</string>
@@ -154,6 +154,7 @@
     <string name="custom_study_deck_name">कस्टम अध्ययन सत्र</string>
     <string name="custom_study_deck_exists">कृपया पहले मौजूदा कस्टम अध्ययन डेक का नाम बदलें।</string>
     <string name="empty_deck">इस डेक खाली है</string>
+    <string name="search_deck">डेक खोज</string>
     <string name="empty_deck_add_note">कार्ड जोड़ें</string>
     <string name="invalid_deck_name">अमान्य डेक नाम</string>
     <string name="studyoptions_empty">यह डेक खाली है । नई सामग्री जोड़ने के लिए + बटन दबाएँ.</string>
@@ -210,4 +211,12 @@
     <string name="open_tag_not_closed">\'{{%s}}\' लापता है।</string>
     <string name="wrong_tag_closed">\'{{/%1$s}}\' मिला, लेकिन \'{{/%2$s}}\' अपेक्षित था</string>
     <string name="filter_error">फ़िल्टर %s में त्रुटि</string>
+    <!-- Sync conflict -->
+    <string name="sync_conflict_message_new">The collections can’t be combined.\nWhich collection do you want to keep?</string>
+    <string name="sync_conflict_keep_local_new" comment="Select AnkiDroid files to keep while syncing">AnkiDroid</string>
+    <string name="sync_conflict_keep_remote_new" comment="Select AnkiWeb files to keep while syncing">AnkiWeb</string>
+    <string name="sync_conflict_remote_confirm_new">Replace your collection on AnkiDroid with your collection from AnkiWeb?</string>
+    <string name="sync_conflict_local_confirm_new">Replace your collection on AnkiWeb with your collection from AnkiDroid?</string>
+    <string name="sync_conflict_title_new">Select collection to keep</string>
+    <string name="sync_conflict_replace_title">Replace collection</string>
 </resources>

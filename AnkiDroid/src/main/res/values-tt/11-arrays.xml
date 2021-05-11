@@ -37,7 +37,7 @@
     <string-array name="error_reporting_choice_labels">
         <item>Always report</item>
         <item>Never report</item>
-        <item>Ask me</item>
+        <item>Миннән сорау</item>
     </string-array>
     <string-array name="leech_action_labels">
         <item>Suspend card</item>
@@ -72,12 +72,12 @@
         <item>Always</item>
     </string-array>
     <string-array name="day_theme_labels">
-        <item>Light</item>
+        <item>Ак</item>
         <item>Plain</item>
     </string-array>
     <string-array name="night_theme_labels">
-        <item>Black</item>
-        <item>Dark</item>
+        <item>Кара</item>
+        <item>Караңгы</item>
     </string-array>
     <string-array name="html_size_code_labels">
         <item>xx-small</item>
@@ -92,7 +92,7 @@
     #7794 - it\'s better to use @string references in non-translated arrays as this handles
     changes in the array ordering better
      -->
-    <string name="gesture_no_action">No action</string>
+    <string name="gesture_no_action">Гамәл юк</string>
     <string name="gesture_answer_1">Answer button 1</string>
     <string name="gesture_answer_2">Answer button 2</string>
     <string name="gesture_answer_3">Answer button 3</string>

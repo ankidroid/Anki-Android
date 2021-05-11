@@ -19,13 +19,13 @@
     xmlns:ankidroid="http://schemas.android.com/apk/res-auto">
     <item
         android:id="@+id/action_restore_default"
-        android:icon="@drawable/ic_clear_white_24dp"
+        android:icon="@drawable/ic_clear_white"
         android:title="@string/restore_default"
         ankidroid:showAsAction="ifRoom"
         android:visible="true"/>
     <item
         android:id="@+id/action_confirm"
-        android:icon="@drawable/ic_done_white_24dp"
+        android:icon="@drawable/ic_done_white"
         android:title="@string/save"
         ankidroid:showAsAction="always"
         android:visible="true"/>

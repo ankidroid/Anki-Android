@@ -25,7 +25,6 @@ import android.speech.tts.TextToSpeech;
 import android.speech.tts.UtteranceProgressListener;
 
 import android.view.WindowManager;
-import android.widget.Toast;
 
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.google.android.material.snackbar.Snackbar;
@@ -59,8 +58,8 @@ public class ReadText {
     public static void speak(String text, String loc, int queueMode) {
         int result = mTts.setLanguage(localeFromStringIgnoringScriptAndExtensions(loc));
         if (result == TextToSpeech.LANG_MISSING_DATA || result == TextToSpeech.LANG_NOT_SUPPORTED) {
-            Toast.makeText(mReviewer.get(), mReviewer.get().getString(R.string.no_tts_available_message)
-                    + " (" + loc + ")", Toast.LENGTH_LONG).show();
+            UIUtils.showThemedToast(mReviewer.get(), mReviewer.get().getString(R.string.no_tts_available_message)
+                    + " (" + loc + ")", false);
             Timber.e("Error loading locale %s", loc);
         } else {
             if (mTts.isSpeaking() && queueMode == TextToSpeech.QUEUE_FLUSH) {
@@ -135,7 +134,7 @@ public class ReadText {
             try {
                 builder.build().show();
             } catch (WindowManager.BadTokenException e) {
-                Timber.w("Activity invalidated before TTS language dialog could display");
+                Timber.w(e,"Activity invalidated before TTS language dialog could display");
             }
         }, delay);
     }
@@ -213,8 +212,8 @@ public class ReadText {
         if (!originalLocaleCode.isEmpty()) {
             // (after notifying them first that no TTS voice was found for the locale
             // they originally requested)
-            Toast.makeText(mReviewer.get(), mReviewer.get().getString(R.string.no_tts_available_message)
-                    + " (" + originalLocaleCode + ")", Toast.LENGTH_LONG).show();
+            UIUtils.showThemedToast(mReviewer.get(), mReviewer.get().getString(R.string.no_tts_available_message)
+                    + " (" + originalLocaleCode + ")", false);
         }
         selectTts(mTextToSpeak, mDid, mOrd, mQuestionAnswer);
     }
@@ -277,7 +276,7 @@ public class ReadText {
                     Timber.d("TTS initialized and available languages found");
                     ((AbstractFlashcardViewer) mReviewer.get()).ttsInitialized();
                 } else {
-                    Toast.makeText(mReviewer.get(), mReviewer.get().getString(R.string.no_tts_available_message), Toast.LENGTH_LONG).show();
+                    UIUtils.showThemedToast(mReviewer.get(), mReviewer.get().getString(R.string.no_tts_available_message), false);
                     Timber.w("TTS initialized but no available languages found");
                 }
                 mTts.setOnUtteranceProgressListener(new UtteranceProgressListener() {
@@ -303,12 +302,12 @@ public class ReadText {
                     }
                 });
             } else {
-                Toast.makeText(mReviewer.get(), mReviewer.get().getString(R.string.no_tts_available_message), Toast.LENGTH_LONG).show();
+                UIUtils.showThemedToast(mReviewer.get(), mReviewer.get().getString(R.string.no_tts_available_message), false);
                 Timber.w("TTS not successfully initialized");
             }
         });
         // Show toast that it's getting initialized, as it can take a while before the sound plays the first time
-        Toast.makeText(context, context.getString(R.string.initializing_tts), Toast.LENGTH_LONG).show();
+        UIUtils.showThemedToast(context, context.getString(R.string.initializing_tts), false);
     }
 
 
@@ -331,14 +330,20 @@ public class ReadText {
                     Timber.v("ReadText.buildAvailableLanguages() :: %s  not available (error code %d)", loc.getDisplayName(), retCode);
                 }
             } catch (IllegalArgumentException e) {
-                Timber.e("Error checking if language %s available", loc.getDisplayName());
+                Timber.w(e, "Error checking if language %s available", loc.getDisplayName());
             }
         }
     }
 
 
-    public static void releaseTts() {
-        if (mTts != null) {
+    /**
+     * Request that TextToSpeech is stopped and shutdown after it it no longer being used
+     * by the context that initialized it.
+     * No-op if the current instance of TextToSpeech was initialized by another Context
+     * @param context The context used during {@link #initializeTts(Context, ReadTextListener)}
+     */
+    public static void releaseTts(Context context) {
+        if (mTts != null && mReviewer.get() == context) {
             mTts.stop();
             mTts.shutdown();
         }
@@ -370,5 +375,11 @@ public class ReadText {
     @Nullable
     public static String getTextToSpeak() {
         return mTextToSpeak;
+    }
+
+    @VisibleForTesting(otherwise = VisibleForTesting.NONE)
+    @Nullable
+    public static TextToSpeech getTextToSpeech() {
+        return mTts;
     }
 }

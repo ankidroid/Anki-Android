@@ -320,6 +320,7 @@ public class UsageAnalytics {
                 display.getSize(size);
                 this.screenResolution(size.x + "x" + size.y);
             } catch (RuntimeException e) {
+                Timber.w(e);
                 // nothing much to do here, it means we couldn't get WindowManager
             }
 
@@ -341,6 +342,7 @@ public class UsageAnalytics {
                     this.userAgent(System.getProperty("http.agent"));
                 }
             } catch (RuntimeException e) {
+                Timber.w(e);
                 // Catch RuntimeException as WebView initialization blows up in unpredictable ways
                 // but analytics should never be a show-stopper
                 this.userAgent(System.getProperty("http.agent"));
@@ -359,6 +361,74 @@ public class UsageAnalytics {
 
     public static class Category {
         public static final String SYNC = "Sync";
+        public static final String LINK_CLICKED = "LinkClicked";
+    }
+
+    /**
+     * These Strings must not be changed as they are used for analytic comparisons between AnkiDroid versions.
+     * If a new string is added here then the respective changes must also be made in AnalyticsConstantsTest.java
+     * All the constant strings added here must be annotated with @AnalyticsConstant.
+     */
+    public static class Actions {
+        /* Analytics actions used in Help Dialog*/
+        @AnalyticsConstant
+        public static final String OPENED_HELPDIALOG = "Opened HelpDialogBox";
+        @AnalyticsConstant
+        public static final String OPENED_USING_ANKIDROID = "Opened Using AnkiDroid";
+        @AnalyticsConstant
+        public static final String OPENED_GET_HELP = "Opened Get Help";
+        @AnalyticsConstant
+        public static final String OPENED_SUPPORT_ANKIDROID = "Opened Support AnkiDroid";
+        @AnalyticsConstant
+        public static final String OPENED_COMMUNITY = "Opened Community";
+        @AnalyticsConstant
+        public static final String OPENED_ANKIDROID_MANUAL = "Opened AnkiDroid Manual";
+        @AnalyticsConstant
+        public static final String OPENED_ANKI_MANUAL = "Opened Anki Manual";
+        @AnalyticsConstant
+        public static final String OPENED_ANKIDROID_FAQ = "Opened AnkiDroid FAQ";
+        @AnalyticsConstant
+        public static final String OPENED_MAILING_LIST = "Opened Mailing List";
+        @AnalyticsConstant
+        public static final String OPENED_REPORT_BUG = "Opened Report a Bug";
+        @AnalyticsConstant
+        public static final String OPENED_DONATE = "Opened Donate";
+        @AnalyticsConstant
+        public static final String OPENED_TRANSLATE = "Opened Translate";
+        @AnalyticsConstant
+        public static final String OPENED_DEVELOP = "Opened Develop";
+        @AnalyticsConstant
+        public static final String OPENED_RATE = "Opened Rate";
+        @AnalyticsConstant
+        public static final String OPENED_OTHER = "Opened Other";
+        @AnalyticsConstant
+        public static final String OPENED_SEND_FEEDBACK = "Opened Send Feedback";
+        @AnalyticsConstant
+        public static final String OPENED_ANKI_FORUMS = "Opened Anki Forums";
+        @AnalyticsConstant
+        public static final String OPENED_REDDIT = "Opened Reddit";
+        @AnalyticsConstant
+        public static final String OPENED_DISCORD = "Opened Discord";
+        @AnalyticsConstant
+        public static final String OPENED_FACEBOOK = "Opened Facebook";
+        @AnalyticsConstant
+        public static final String OPENED_TWITTER = "Opened Twitter";
+        @AnalyticsConstant
+        public static final String EXCEPTION_REPORT = "Exception Report";
+
+        /* Analytics actions used in Lookup Dictionary */
+        @AnalyticsConstant
+        public static final String AEDICT = "aedict";
+        @AnalyticsConstant
+        public static final String LEO = "leo";
+        @AnalyticsConstant
+        public static final String COLORDICT = "colordict";
+        @AnalyticsConstant
+        public static final String FORA = "fora";
+        @AnalyticsConstant
+        public static final String NCIKU = "nciku";
+        @AnalyticsConstant
+        public static final String EIJIRO = "eijiro";
     }
 
     @VisibleForTesting(otherwise = VisibleForTesting.NONE) // TOOD: Make this package-protected

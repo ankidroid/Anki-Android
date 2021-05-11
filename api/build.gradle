@@ -1,12 +1,14 @@
-apply plugin: 'com.android.library'
+plugins {
+    id 'maven-publish'
+    id 'com.android.library'
+}
 
-def groupId = "com.ichi2.anki"
-def artifactId = "api"
-def version = "1.1.0"
+group = "com.ichi2.anki"
+version = "1.1.0"
 
 repositories {
     google()
-    jcenter()
+    mavenCentral()
 }
 android {
     compileSdkVersion 30
@@ -49,83 +51,101 @@ android {
 apply from: "../lint.gradle"
 
 dependencies {
-    api fileTree(dir: 'libs', include: ['*.jar'])
-    implementation 'androidx.annotation:annotation:1.1.0'
+    implementation 'androidx.annotation:annotation:1.2.0'
     testImplementation 'org.junit.vintage:junit-vintage-engine:5.7.1'
     testImplementation 'org.robolectric:robolectric:4.5.1'
 
     lintPublish project(":lint-rules")
 }
 
-// Borrowed from here:
-// https://blog.blundellapps.co.uk/locally-release-an-android-library-for-jcenter-or-maven-central-inclusion/
-apply plugin: 'maven'
-
-
-def localReleaseDest = "${buildDir}/release/${version}"
+task androidSourcesJar(type: Jar) {
+    archiveClassifier.set('sources')
+    // For Android libraries
+    from android.sourceSets.main.java.srcDirs
+}
 
 task androidJavadocs(type: Javadoc) {
     source = android.sourceSets.main.java.srcDirs
     classpath += project.files(android.getBootClasspath().join(File.pathSeparator))
-
-    // Java 10 wants you to choose between html4 and html5. We are html5 clean and should use it.
-    // But in JDK < 10 the option isn't there and it breaks the build. This handles both.
-    if(JavaVersion.current() >= JavaVersion.VERSION_1_10){
+    android.libraryVariants.all { variant ->
+        if (variant.name == 'release') {
+            owner.classpath += variant.javaCompileProvider.get().classpath
+        }
+    }
+    exclude '**/R.html', '**/R.*.html', '**/index.html'
+    if (JavaVersion.current().isJava9Compatible()) {
         options.addBooleanOption('html5', true)
     }
 }
 
-afterEvaluate {
-    androidJavadocs.classpath += files(android.libraryVariants.collect { variant ->
-        variant.javaCompileProvider.get().classpath.files
-    })
-}
-
-// Deprecation is an error. Use @SuppressWarnings("deprecation") and justify in the PR if you must
-tasks.withType(JavaCompile) {
-    options.compilerArgs << "-Xlint:deprecation" << "-Xmaxwarns" << "1000" << "-Werror"
-}
-
 task androidJavadocsJar(type: Jar, dependsOn: androidJavadocs) {
-    classifier = 'javadoc'
+    archiveClassifier.set('javadoc')
     from androidJavadocs.destinationDir
 }
 
-task androidSourcesJar(type: Jar) {
-    classifier = 'sources'
-    from android.sourceSets.main.java.srcDirs
-}
+publishing {
+    publications {
+        mavenJava(MavenPublication) {
+            artifactId = "api"
 
-uploadArchives {
-    repositories.mavenDeployer {
-        pom.groupId = groupId
-        pom.artifactId = artifactId
-        pom.version = version
-        // Add other pom properties here if you want (developer details / licenses)
-        repository(url: "file://${localReleaseDest}")
+            artifact("$buildDir/outputs/aar/${project.getName()}-release.aar")
+            artifact androidSourcesJar
+            artifact androidJavadocsJar
+
+            versionMapping {
+                usage('java-api') {
+                    fromResolutionOf('runtimeClasspath')
+                }
+                usage('java-runtime') {
+                    fromResolutionResult()
+                }
+            }
+            pom {
+                name = 'AnkiDroid API'
+                description = 'A programmatic API exported by AnkiDroid'
+                url = 'https://github.com/ankidroid/Anki-Android/tree/master/api'
+                licenses {
+                    license {
+                        name = 'GNU LESSER GENERAL PUBLIC LICENSE, v3'
+                        url = 'https://github.com/ankidroid/Anki-Android/blob/master/api/COPYING.LESSER'
+                    }
+                }
+                scm {
+                    connection = 'scm:git:git://github.com/ankidroid/Anki-Android.git'
+                    url = 'https://github.com/ankidroid/Anki-Android'
+                }
+            }
+        }
+    }
+    repositories {
+        maven {
+            // change URLs to point to your repos, e.g. http://my.org/repo
+            def releasesRepoUrl = layout.buildDirectory.dir('repos/releases')
+            def snapshotsRepoUrl = layout.buildDirectory.dir('repos/snapshots')
+            url = version.endsWith('SNAPSHOT') ? snapshotsRepoUrl : releasesRepoUrl
+        }
     }
 }
 
 task zipRelease(type: Zip) {
-    from localReleaseDest
+    from layout.buildDirectory.dir('repos/releases')
     destinationDir buildDir
-    archiveName "release-${version}.zip"
+    archiveName "${buildDir}/release-${archiveVersion.get()}.zip"
 }
 
+// Use this task to make a release you can send to someone
+// You may like `./gradlew :api:publishToMavenLocal for development
 task generateRelease {
     doLast {
-        println "Release ${version} can be found at ${localReleaseDest}/"
+        println "Release ${version} can be found at ${buildDir}/repos/releases/"
         println "Release ${version} zipped can be found ${buildDir}/release-${version}.zip"
     }
 }
 
-generateRelease.dependsOn(uploadArchives)
+publishMavenJavaPublicationToMavenRepository.dependsOn(assemble)
+publish.dependsOn(assemble)
+generateRelease.dependsOn(publish)
 generateRelease.dependsOn(zipRelease)
-
-artifacts {
-    archives androidSourcesJar
-    archives androidJavadocsJar
-}
 
 // Deprecation is an error. Use @SuppressWarnings("deprecation") and justify in the PR if you must
 tasks.withType(JavaCompile) {

@@ -1,0 +1,222 @@
+<?xml version="1.0" encoding="utf-8"?> 
+ <!-- 
+ ~ Copyright (c) 2009 Andrew <andrewdubya@gmail> 
+ ~ Copyright (c) 2009 Edu Zamora <edu.zasu@gmail.com> 
+ ~ Copyright (c) 2009 Daniel Svaerd <daniel.svard@gmail.com> 
+ ~ Copyright (c) 2009 Nicolas Raoul <nicolas.raoul@gmail.com> 
+ ~ Copyright (c) 2010 Norbert Nagold <norbert.nagold@gmail.com> 
+ ~ This program is free software; you can redistribute it and/or modify it under 
+ ~ the terms of the GNU General Public License as published by the Free Software 
+ ~ Foundation; either version 3 of the License, or (at your option) any later 
+ ~ version. 
+ ~ 
+ ~ This program is distributed in the hope that it will be useful, but WITHOUT ANY 
+ ~ WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A 
+ ~ PARTICULAR PURPOSE. See the GNU General Public License for more details. 
+ ~ 
+ ~ You should have received a copy of the GNU General Public License along with 
+ ~ this program.  If not, see <http://www.gnu.org/licenses/>. 
+ --> 
+ 
+<!--
+~ Copyright (c) 2009 Andrew <andrewdubya@gmail>
+~ Copyright (c) 2009 Edu Zamora <edu.zasu@gmail.com>
+~ Copyright (c) 2009 Daniel Svärd <daniel.svard@gmail.com>
+~ Copyright (c) 2009 Nicolas Raoul <nicolas.raoul@gmail.com>
+~ Copyright (c) 2010 Norbert Nagold <norbert.nagold@gmail.com>
+~
+~ This program is free software; you can redistribute it and/or modify it under
+~ the terms of the GNU General Public License as published by the Free Software
+~ Foundation; either version 3 of the License, or (at your option) any later
+~ version.
+~
+~ This program is distributed in the hope that it will be useful, but WITHOUT ANY
+~ WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A
+~ PARTICULAR PURPOSE. See the GNU General Public License for more details.
+~
+~ You should have received a copy of the GNU General Public License along with
+~ this program.  If not, see <http://www.gnu.org/licenses/>.
+-->
+<resources>
+    <string name="yes">അതെ</string>
+    <!-- Navigation drawer items-->
+    <string name="decks">ഡെക്കുകൾ</string>
+    <string name="card_browser" comment="The usage of card browser inside the app (note the casing)">കാർഡ് ബ്രൗസർ</string>
+    <string name="statistics">സ്ഥിതിവിവരക്കണക്കുകൾ</string>
+    <string name="settings">ക്രമീകരണങ്ങൾ</string>
+    <string name="help">സഹായം</string>
+    <string name="send_feedback">ഫീഡ്‌ബാക്ക് അയയ്‌ക്കുക</string>
+    <string name="studyoptions_due_today">ഇന്ന് അവസാന തീയതി:</string>
+    <string name="studyoptions_new_total">ആകെ പുതിയ കാർഡുകൾ:</string>
+    <string name="studyoptions_total_cards">ആകെ കാർഡുകൾ:</string>
+    <string name="studyoptions_eta">കണക്കാക്കിയ സമയം (മിനിറ്റ്):</string>
+    <string name="studyoptions_start">പഠനം</string>
+    <!-- DeckPicker.java -->
+    <string name="expand">വികസിപ്പിക്കുക</string>
+    <string name="collapse">ചുരുക്കുക</string>
+    <string name="study_more">കൂടുതൽ പഠിക്കുക</string>
+    <plurals name="deckpicker_title">
+        <item quantity="one">%1$d കാർഡ് നൽകേണ്ടതാണ് (%2$s)</item>
+        <item quantity="other">അടയ്‌ക്കേണ്ട %1$d കാർഡുകൾ (%2$s)</item>
+    </plurals>
+    <plurals name="reviewer_window_title">
+        <item quantity="one">%d മിനിറ്റ് ശേഷിക്കുന്നു</item>
+        <item quantity="other">%d മിനിറ്റ് ശേഷിക്കുന്നു</item>
+    </plurals>
+    <plurals name="reviewer_window_title_hours">
+        <item quantity="one">മണിക്കൂർ</item>
+        <item quantity="other">മണിക്കൂറുകൾ</item>
+    </plurals>
+    <plurals name="reviewer_window_title_days">
+        <item quantity="one">ദിവസങ്ങളിൽ</item>
+        <item quantity="other">%d ദിവസം %d ശേഷിക്കുന്നു</item>
+    </plurals>
+    <string name="no_cards_placeholder_title">ശേഖരം ശൂന്യമാണ്</string>
+    <string name="no_cards_placeholder_description">കാർഡുകൾ ചേർക്കാൻ ആരംഭിക്കുക +  ഐക്കൺ ഉപയോഗിച്ച്</string>
+    <!-- The deck picker via AnkiStatsTaskHandler.java -->
+    <plurals name="studied_cards_today">
+        <item quantity="one">ഇന്ന് %2$s ൽ %1$d കാർഡുകൾ പഠിച്ചു</item>
+        <item quantity="other">ഇന്ന് %2$s ൽ %1$d കാർഡുകൾ പഠിച്ചു</item>
+    </plurals>
+    <!-- flashcard_portrait.xml -->
+    <string name="type_answer_hint">ഉത്തരം ടൈപ്പുചെയ്യുക</string>
+    <string name="show_answer">ഉത്തരം കാണിക്കുക</string>
+    <string name="hide_answer">ഉത്തരം മറയ്‌ക്കുക</string>
+    <string name="ease_button_again">വീണ്ടും</string>
+    <string name="ease_button_hard">കഠിനമാണ്</string>
+    <string name="ease_button_good">നല്ലതാണ്</string>
+    <string name="ease_button_easy">എളുപ്പമാണ്</string>
+    <string name="studyoptions_congrats_undo">പഴയപടിയാക്കുക %s</string>
+    <string name="menu_import">ഇറക്കുമതി ചെയ്യുക</string>
+    <string name="undo">പഴയപടിയാക്കുക</string>
+    <string name="undo_action_review">അവസാന അവലോകനം</string>
+    <string name="undo_action_change_deck_multi">ഡെക്കുകൾ മാറ്റുക</string>
+    <string name="move_all_to_deck">എല്ലാം ഡെക്കിലേക്ക് നീക്കുക</string>
+    <string name="unbury"> അൺബറി</string>
+    <string name="rename_deck">ഡെക്കിന്റെ പേരുമാറ്റുക</string>
+    <string name="create_shortcut">കുറുക്കുവഴി സൃഷ്ടിക്കുക</string>
+    <string name="menu_add" comment="A generic add button - Main Deck Picker and card templates. Please inform us if you need more specific strings">ചേർക്കുക</string>
+    <string name="menu_add_note">കുറിപ്പ് ചേർക്കുക</string>
+    <string name="menu_my_account" comment="Label of the window in which the user should enter their account. This text can\'t be found in AnkiDroid directly.">അക്കൗണ്ട് സമന്വയിപ്പിക്കുക</string>
+    <string name="menu_dismiss_note">മറയ്‌ക്കുക / ഇല്ലാതാക്കുക</string>
+    <string name="menu_bury_card">കാർഡ് അടക്കം</string>
+    <string name="menu_bury_note">കുറിപ്പ് അടക്കം ചെയ്യുക</string>
+    <string name="menu_suspend_card">കാർഡ് താൽക്കാലികമായി നിർത്തുക</string>
+    <string name="menu_suspend_note">കുറിപ്പ് താൽക്കാലികമായി നിർത്തുക</string>
+    <string name="menu_bury">അടക്കം ചെയ്യുക</string>
+    <string name="menu_suspend">സസ്പെൻഡ് ചെയ്യുക</string>
+    <string name="menu_delete_note">കുറിപ്പ് മായ്ക്കുക</string>
+    <string name="menu_flag">ഫ്ലാഗ്</string>
+    <string name="menu_flag_card">ഫ്ലാഗ് കാർഡ്</string>
+    <string name="menu_flag_card_zero">ഫ്ലാഗ് ഇല്ല</string>
+    <string name="menu_flag_card_one">ചുവന്ന കൊടി</string>
+    <string name="menu_flag_card_two">ഓറഞ്ച് ഫ്ലാഗ്</string>
+    <string name="menu_flag_card_three">പച്ച ഫ്ലാഗ്</string>
+    <string name="menu_flag_card_four">നീല ഫ്ലാഗ്</string>
+    <string name="menu_edit_tags">ടാഗുകൾ എഡിറ്റുചെയ്യുക</string>
+    <string name="delete_note_message">ഈ കുറിപ്പും അതിന്റെ എല്ലാ കാർഡുകളും ശരിക്കും ഇല്ലാതാക്കുക?\n%s</string>
+    <string name="menu_select">വാചകം തിരഞ്ഞെടുക്കുക</string>
+    <string name="menu_lookup">വാചകം തിരയുക</string>
+    <string name="menu_search">%1$s ൽ തിരയുക</string>
+    <string name="menu_mark_note">കുറിപ്പ് അടയാളപ്പെടുത്തുക</string>
+    <string name="menu_unmark_note">കുറിപ്പ് അടയാളപ്പെടുത്തുക</string>
+    <string name="menu_toggle_mic_tool_bar">ഉച്ചാരണം പരിശോധിക്കുക</string>
+    <string name="new_deck">ഡെക്ക് സൃഷ്ടിക്കുക</string>
+    <string name="new_dynamic_deck">ഫിൽട്ടർ ചെയ്ത ഡെക്ക് സൃഷ്ടിക്കുക</string>
+    <string name="night_mode">നൈറ്റ് മോഡ്</string>
+    <string name="directory_inaccessible">AnkiDroid ഡയറക്‌ടറി ആക്‌സസ്സുചെയ്യാനാകില്ല</string>
+    <!--This is shown when AnkiDroid starts up with no storage permissions.
+    The user is taken to the "App Info" screen, and needs to click "Permissions" and
+    grant AnkiDroid the \'Storage\' permission. This needs to be a fairly generic message as implementations
+    of the permissions/app info screen will differ between devices. -->
+    <string name="startup_no_storage_permission">തുടരാൻ Ankidroid  ‘സംഭരണം’ അനുമതി നൽകുക</string>
+    <!--
+        The time_quantities are units of time. They are used without
+        plurals or dots.
+        s, min, h, d, are standard (ISO 31-1) units and should usually
+        not be translated, at least not for languages using the Latin
+        alphabet.
+    -->
+    <string name="time_quantity_seconds">%d s</string>
+    <string name="time_quantity_minutes">%d മിനുട്ട്</string>
+    <string name="time_quantity_hours_minutes">%1$d m. %2$d s</string>
+    <string name="time_quantity_hours">%d h</string>
+    <string name="time_quantity_days">%d d</string>
+    <string name="time_quantity_days_hours">%1$d d  %2$d h</string>
+    <string name="time_quantity_months">%.1f mo</string>
+    <string name="time_quantity_years">%.1f yr</string>
+    <!-- or "%.1f a" -->
+    <string name="rebuild_filtered_deck">ഫിൽട്ടർ ചെയ്ത ഡെക്ക് പുനർനിർമ്മിക്കുന്നു&#8230;</string>
+    <string name="rebuild_cram_label">പുനർനിർമിക്കുക</string>
+    <string name="empty_cram_label">ശൂന്യമാണ്</string>
+    <string name="create_subdeck">സബ്ഡെക്ക് സൃഷ്ടിക്കുക</string>
+    <string name="empty_filtered_deck">ഫിൽട്ടർ ചെയ്ത ഡെക്ക് ശൂന്യമാക്കുന്നു&#8230;</string>
+    <string name="custom_study_deck_name">ഇഷ്‌ടാനുസൃത പഠന സെഷൻ</string>
+    <string name="custom_study_deck_exists">ആദ്യം നിലവിലുള്ള ഇഷ്‌ടാനുസൃത പഠന ഡെക്കിന്റെ പേരുമാറ്റുക</string>
+    <string name="empty_deck">ഈ ഡെക്ക് ശൂന്യമാണ്</string>
+    <string name="search_deck">ഡെക്ക് തിരയൽ</string>
+    <string name="empty_deck_add_note">കാർഡ് ചേർക്കുക</string>
+    <string name="invalid_deck_name">ഡെക്കിന്റെ പേര് അസാധുവാണ്</string>
+    <string name="studyoptions_empty">ഈ ഡെക്ക് ശൂന്യമാണ്. പുതിയ ഉള്ളടക്കം ചേർക്കാൻ + ബട്ടൺ അമർത്തുക</string>
+    <string name="studyoptions_limit_reached"> ദൈനംദിന പഠന പരിധിയിലെത്തി</string>
+    <string name="studyoptions_empty_schedule">കാർഡുകളൊന്നും പഠിക്കാൻ ഷെഡ്യൂൾ ചെയ്തിട്ടില്ല</string>
+    <string name="studyoptions_congrats_finished">അഭിനന്ദനങ്ങൾ! നിങ്ങൾ ഇപ്പോൾ പൂർത്തിയാക്കി.</string>
+    <string name="studyoptions_congrats_more_rev">ഇന്നത്തെ പരിധിയിലെത്തി, പക്ഷേ അവലോകനം ചെയ്യാൻ കാർഡുകൾ ഇപ്പോഴും ഉണ്ട്. ഓപ്ഷനുകളിൽ നിങ്ങൾക്ക് പരിധി വർദ്ധിപ്പിക്കാൻ കഴിയും.</string>
+    <string name="studyoptions_congrats_more_new">ഇന്നത്തെ പരിധിയിലെത്തി. കൂടുതൽ പുതിയ കാർഡുകൾ ലഭ്യമാണ്; നിങ്ങൾക്ക് ഓപ്ഷനുകളിൽ പരിധി വർദ്ധിപ്പിക്കാൻ കഴിയും, പക്ഷേ ഇത് നിങ്ങളുടെ ഹ്രസ്വകാല അവലോകന ജോലിഭാരം വർദ്ധിപ്പിക്കും.</string>
+    <string name="studyoptions_congrats_custom">സാധാരണ ഷെഡ്യൂളിന് പുറത്ത് പഠിക്കാൻ, “ഇഷ്‌ടാനുസൃത പഠനം” ബട്ടൺ സ്‌പർശിക്കുക</string>
+    <string name="studyoptions_no_cards_due">കാർഡുകളൊന്നും ഇതുവരെ ലഭിച്ചിട്ടില്ല</string>
+    <string name="sd_card_not_mounted">ഉപകരണ സംഭരണം മ .ണ്ട് ചെയ്തിട്ടില്ല</string>
+    <string name="empty_cloze_warning">ഈ കുറിപ്പ് എഡിറ്റുചെയ്‌ത് കുറച്ച് ക്ലോസ് ഇല്ലാതാക്കലുകൾ ചേർക്കുക. (%1$s)</string>
+    <string name="button_sync">സമന്വയിപ്പിക്കുക</string>
+    <string name="cancel_sync_confirm">സമന്വയം റദ്ദാക്കണോ?</string>
+    <string name="continue_sync">സമന്വയം തുടരുക</string>
+    <string name="sync_cancelled">സമന്വയം റദ്ദാക്കി</string>
+    <string name="sync_cancel_message">റദ്ദാക്കുന്നു&#8230; \ n ഇതിന് കുറച്ച് സമയമെടുത്തേക്കാം.</string>
+    <string name="export">കയറ്റുമതി</string>
+    <string name="export_collection">കയറ്റുമതി ശേഖരം</string>
+    <string name="export_deck">കയറ്റുമതി ഡെക്ക്</string>
+    <string name="nothing">ഒന്നുമില്ല</string>
+    <!-- Card template editor -->
+    <string name="title_activity_template_editor">കാർഡ് തരങ്ങൾ</string>
+    <string name="card_template_editor_front">ഫ്രണ്ട് ടെംപ്ലേറ്റ്</string>
+    <string name="card_template_editor_back">തിരികെ ടെംപ്ലേറ്റ്</string>
+    <string name="card_template_editor_styling">സ്റ്റൈലിംഗ്</string>
+    <string name="card_template_editor_menu_card_browser_appearance">കാർഡ്  ബ്രൗസർ  സർ രൂപം</string>
+    <string name="card_template_editor_deck_override">ഡെക്ക് അസാധുവാക്കൽ</string>
+    <string name="card_template_editor_cant_delete">കുറഞ്ഞത് ഒരു കാർഡ് തരമെങ്കിലും ആവശ്യമാണ്</string>
+    <plurals name="card_template_editor_confirm_delete">
+        <item quantity="one">“%2$s” കാർഡ് തരവും അതിന്റെ %1$d കാർഡും ഇല്ലാതാക്കണോ?</item>
+        <item quantity="other">“%2$s” കാർഡ് തരവും അതിന്റെ %1$d കാർഡുകളും ഇല്ലാതാക്കണോ?</item>
+    </plurals>
+    <string name="invalid_template">ഒരു കാർഡ് സൃഷ്ടിക്കാൻ കഴിഞ്ഞില്ല</string>
+    <string name="card_template_editor_would_delete_note">ഈ കാർഡ് തരം നീക്കംചെയ്യുന്നത് ഒന്നോ അതിലധികമോ കുറിപ്പുകൾ ഇല്ലാതാക്കാൻ കാരണമാകും. ആദ്യം ഒരു പുതിയ കാർഡ് തരം സൃഷ്ടിച്ച് സംരക്ഷിക്കുക.</string>
+    <string name="card_template_editor_save_error">കാർഡ് ടെംപ്ലേറ്റ് മാറ്റങ്ങൾ സംരക്ഷിക്കാൻ കഴിയില്ല: %s</string>
+    <string name="template_for_current_card_deleted">നിലവിലെ കാർഡിനായുള്ള കാർഡ് തരം ഇല്ലാതാക്കി.</string>
+    <!-- Card Browser Appearance -->
+    <string name="card_template_browser_appearance_title">ബ്രൗസർ രൂപം</string>
+    <string name="current_and_default_deck">%1$s (%2$s)</string>
+    <!-- card Info -->
+    <string name="card_info_title">കാർഡ് വിവരം</string>
+    <!-- Permissions -->
+    <string name="read_write_permission_label">AnkiDroid ഡാറ്റാബേസ് വായിച്ച് എഴുതുക</string>
+    <string name="read_write_permission_description">നിലവിലുള്ള കുറിപ്പുകൾ, കാർഡുകൾ, കുറിപ്പ് തരങ്ങൾ, ഡെക്കുകൾ എന്നിവ ആക്സസ് ചെയ്യുന്നതിനൊപ്പം പുതിയവ സൃഷ്ടിക്കുക</string>
+    <!-- Context Menu -->
+    <string name="card_browser_context_menu" comment="The value which appears in the system context menu. Note the casing difference">കാർഡ് ബ്രൗസർ</string>
+    <string name="context_menu_anki_card_label">Anki Card</string>
+    <string name="has_a_problem" comment="First field is either front template or back template. Second field is the error message.">%1$sഒരു പ്രശ്നമുണ്ട്:<br/>%2$s</string>
+    <string name="more_information">കൂടുതൽ വിവരങ്ങൾ</string>
+    <string name="no_field">\'{{%1$s}}\' കണ്ടെത്തി, പക്ഷേ \'%1$s\' എന്ന് വിളിക്കുന്ന ഒരു ഫീൽഡും ഇല്ല.</string>
+    <string name="closed_tag_not_open">\'{{/%1$s}}\' കണ്ടെത്തി, പക്ഷേ \'{{#%1$s}}\' അല്ലെങ്കിൽ \'{{^%1$s}}\' കാണുന്നില്ല.</string>
+    <string name="missing_closing_bracket">\'%s\' ൽ \'}}\' കാണുന്നില്ല.</string>
+    <string name="open_tag_not_closed">\'{{%s}}\' കാണുന്നില്ല.</string>
+    <string name="wrong_tag_closed">\'{{/%1$s}}\' കണ്ടെത്തി, പക്ഷേ പ്രതീക്ഷിച്ചത് \'{{/%2$s}}\'</string>
+    <string name="filter_error">%s ഫിൽട്ടറിലെ പിശക്</string>
+    <!-- Sync conflict -->
+    <string name="sync_conflict_message_new">The collections can’t be combined.\nWhich collection do you want to keep?</string>
+    <string name="sync_conflict_keep_local_new" comment="Select AnkiDroid files to keep while syncing">AnkiDroid</string>
+    <string name="sync_conflict_keep_remote_new" comment="Select AnkiWeb files to keep while syncing">AnkiWeb</string>
+    <string name="sync_conflict_remote_confirm_new">Replace your collection on AnkiDroid with your collection from AnkiWeb?</string>
+    <string name="sync_conflict_local_confirm_new">Replace your collection on AnkiWeb with your collection from AnkiDroid?</string>
+    <string name="sync_conflict_title_new">Select collection to keep</string>
+    <string name="sync_conflict_replace_title">Replace collection</string>
+</resources>

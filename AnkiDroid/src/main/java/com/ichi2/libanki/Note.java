@@ -32,6 +32,8 @@ import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.VisibleForTesting;
 import timber.log.Timber;
 
 
@@ -55,35 +57,26 @@ public class Note implements Cloneable {
     private boolean mNewlyAdded;
 
     
-    public Note(Collection col, Long id) {
-        this(col, null, id);
-    }
-
-
-    public Note(Collection col, Model model) {
-        this(col, model, null);
-    }
-
-
-    public Note(Collection col, Model model, Long id) {
-        assert !(model != null && id != null);
+    public Note(@NonNull Collection col, @NonNull Long id) {
         mCol = col;
-        if (id != null) {
-            mId = id;
-            load();
-        } else {
-            mId = mCol.getTime().timestampID(mCol.getDb(), "notes");
-            mGuId = Utils.guid64();
-            mModel = model;
-            mMid = model.getLong("id");
-            mTags = new ArrayList<>();
-            mFields = new String[model.getJSONArray("flds").length()];
-            Arrays.fill(mFields, "");
-            mFlags = 0;
-            mData = "";
-            mFMap = Models.fieldMap(mModel);
-            mScm = mCol.getScm();
-        }
+        mId = id;
+        load();
+    }
+
+
+    public Note(@NonNull Collection col, @NonNull Model model) {
+        mCol = col;
+        mId = mCol.getTime().timestampID(mCol.getDb(), "notes");
+        mGuId = Utils.guid64();
+        mModel = model;
+        mMid = model.getLong("id");
+        mTags = new ArrayList<>();
+        mFields = new String[model.getJSONArray("flds").length()];
+        Arrays.fill(mFields, "");
+        mFlags = 0;
+        mData = "";
+        mFMap = Models.fieldMap(mModel);
+        mScm = mCol.getScm();
     }
 
 
@@ -353,6 +346,12 @@ public class Note implements Cloneable {
     public long getId() {
         // TODO: Conflicting method name and return value. Reconsider.
         return mId;
+    }
+
+
+    @VisibleForTesting
+    public String getGuId() {
+        return mGuId;
     }
 
 

@@ -57,12 +57,12 @@
     <string name="no_tags">अपने अभी तक कोई टैग नहीं जोड़ा है</string>
     <string name="updated_version">%s संस्करण को अद्यतित किया गया</string>
     <!-- Reviewer.java -->
-    <string name="save_whiteboard">स्लेट सुरक्षित करें </string>
-    <string name="enable_whiteboard">स्लेट सक्षम करें</string>
-    <string name="disable_whiteboard">स्लेट अक्षम करें</string>
-    <string name="show_whiteboard">Whiteboard दिखाएँ</string>
-    <string name="hide_whiteboard">Whiteboard छुपाएँ</string>
-    <string name="clear_whiteboard">स्पष्ट Whiteboard</string>
+    <string name="save_whiteboard">श्वेतपट्ट सहेजें</string>
+    <string name="enable_whiteboard">श्वेतपट्ट सक्षम करें</string>
+    <string name="disable_whiteboard">श्वेतपट्ट अक्षम करें</string>
+    <string name="show_whiteboard">श्वेतपट्ट दिखाएँ</string>
+    <string name="hide_whiteboard">श्वेतपट्ट छिपाएं</string>
+    <string name="clear_whiteboard">श्वेतपट्ट साफ करें</string>
     <string name="replay_audio">ध्वनि फिर चलाएँ</string>
     <string name="leech_suspend_notification">जोंक के रूप में के रूप में चिह्नित और निलंबित कार्ड</string>
     <string name="leech_notification">जोंक के रूप में के रूप में चिह्नित कार्ड</string>
@@ -122,6 +122,7 @@
     <string name="reordering_cards">कार्ड reordering...</string>
     <string name="field_remapping">%1$s (\"%2$s\" से)</string>
     <string name="confirm_map_cards_to_nothing">कुछ नहीं के लिए मैप किए गए किसी भी कार्ड को हटा दिया जाएगा । यदि किसी नोट में कोई शेष कार्ड नहीं है, तो वह खो जाएगा । क्या आप निश्चयपूर्वक जारी रखना चाहते हैं?</string>
+    <string name="timebox_reached_title">Timebox reached</string>
     <plurals name="timebox_reached">
         <item quantity="one">%1$d कार्ड में अध्ययन किया %2$s</item>
         <item quantity="other">%1$d कार्ड में अध्ययन किया %2$s</item>
@@ -206,8 +207,8 @@
     <string name="steps_error">कदम नंबर 0 से अधिक होना चाहिए</string>
     <string name="steps_min_error">कम से कम एक कदम की आवश्यकता है</string>
     <string name="sched_end">(अंत)</string>
-    <string name="sched_unbury_action">उन्हें देखने के लिए अब मेनू में \"दफन\" आइटम को छूने</string>
-    <string name="sched_has_buried">कुछ संबंधित या दफन कार्ड एक बाद में सत्र तक देरी हो रहे थे।</string>
+    <string name="sched_unbury_action">उन्हें अभी देखने के लिए मेनू में \"स्थगित से वापस लाएं\" आइटम स्पर्श करें</string>
+    <string name="sched_has_buried">कुछ संबंधित या स्थगित पत्ते को कल तक विलंबित किया गया</string>
     <string name="tag_editor_add_feedback">\"%1$s\" जोड़ने की पुष्टि करने के लिए \"%2$s\" स्पर्श करें</string>
     <string name="tag_editor_add_feedback_existing">मौजूदा टैग \"%1$s\" चयनित</string>
     <string name="lookup_hint">पाठ की प्रतिलिपि बनाने के बाद, खोज चिह्न दिखाने के लिए स्पैनिश पर कहीं भी टैप करें</string>
@@ -275,9 +276,10 @@
     <string name="ankidroid_turn_on_fullscreen_nav_drawer">कृपया जावास्क्रिप्ट का उपयोग करके शो नेविगेशन दराज का उपयोग करने के लिए फुलस्क्रीन चालू करें।</string>
     <string name="ankidroid_turn_on_fullscreen_options_menu">कृपया जावास्क्रिप्ट का उपयोग करके शो विकल्प मेनू का उपयोग करने के लिए फुलस्क्रीन चालू करें।</string>
     <!-- Whiteboard save image message in Reviewer -->
-    <string name="white_board_image_save_failed">व्हाइटबोर्ड छवि को बचाने में विफल। %s</string>
-    <string name="white_board_image_saved">व्हाइटबोर्ड छवि %s में सहेजी गई</string>
-    <string name="title_whiteboard_pen_color">व्हाईट बोर्ड के पेन</string>
+    <string name="white_board_image_save_failed">श्वेतपट्ट छवि को सहेजने में विफल। %s</string>
+    <string name="white_board_image_saved">श्वेतपट्ट छवि %s में सहेजी गई</string>
+    <string name="title_whiteboard_pen_color">श्वेतपट्ट के कलम का रंग</string>
+    <string name="title_whiteboard_editor">श्वेतपट्ट संपादक</string>
     <!-- CSV/Note Import -->
     <string name="note_importer_empty_cards_found"><![CDATA[खाली कार्ड मिले। कृपया उपकरण> खाली कार्ड चलाएं।]]></string>
     <string name="note_importer_error_empty_first_field">खाली पहला क्षेत्र: %s</string>
@@ -313,6 +315,7 @@
     <!-- Card Viewer -->
     <string name="card_viewer_could_not_find_image">कार्ड सामग्री त्रुटि: ‘%s’ लोड करने में विफल</string>
     <string name="card_viewer_media_relative_protocol">कार्ड सामग्री त्रुटि: मीडिया अद्यतन की आवश्यकता है</string>
+    <string name="cannot_load_http_resource">Loading http resources is no longer supported</string>
     <!-- Deck Picker -->
     <string name="deck_picker_failed_deck_load">डेक को लोड करने में विफल  ‘%s’</string>
     <string name="search_decks">खोज डेक</string>
@@ -335,9 +338,16 @@
     <string name="toolbar_item_explain_remove">चयनित पाठ से पहले और बाद में डाले जाने वाले HTML दर्ज करें\n\nकिसी टूलबार आइटम को निकालने के लिए उसे लंबे समय तक दबाएं</string>
     <string name="remove_toolbar_item">Remove Toolbar Item?</string>
     <string name="note_editor_paste_too_large">The image is too large to paste, please insert the image manually</string>
-    <string name="ankidroid_cannot_open_after_backup_try_again" comment="After an Android backup is restored, AnkiDroid opens and shows this message.         Opening AnkiDroid again will work correctly">        Android backup in progress. Please try again</string>
+    <string name="ankidroid_cannot_open_after_backup_try_again" comment="After an Android backup is restored, AnkiDroid opens and shows this message.         Opening AnkiDroid again will work correctly">एन्ड्रॉयड बैकप प्रगति पर है। कृपया पुन: प्रयास करें</string>
     <string name="create_shortcut_error_vivo" comment="iManager is an app on Vivo phones">You may need to use iManager to allow AnkiDroid to add shortcuts</string>
     <string name="create_shortcut_failed" comment="home screen == launcher">Your home screen does not allow AnkiDroid to add shortcuts</string>
-    <string name="create_shortcut_error">Error adding shortcut: %s</string>
+    <string name="create_shortcut_error">शॉर्टकट जोड़ने में त्रुटि: %s</string>
     <string name="note_editor_capitalize" comment="This is for a switch with a checkbox - on: enabled">Capitalize sentences</string>
+    <!-- Symbols used as Button text in IncrementNumberRangePreference -->
+    <string name="plus_sign" comment="Label for increment button in IncrementerNumberRangePreference">+</string>
+    <string name="minus_sign" comment="Label for decrement button in IncrementerNumberRangePreference">-</string>
+    <!-- Used for credential empty warning message -->
+    <string name="email_id_empty">ई-मेल पते की आवश्यकता है</string>
+    <string name="password_empty">पासवर्ड की आवश्यकता है</string>
+    <string name="back_pressed_once">बाहर निकलने के लिए फिर से दबाएं</string>
 </resources>

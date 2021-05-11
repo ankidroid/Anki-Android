@@ -44,8 +44,7 @@ import timber.log.Timber;
 /**
  * Enables TLS v1.2 when creating SSLSockets.
  * <p/>
- * For some reason, android supports TLS v1.2 from API 16, but enables it by
- * default only from API 20. Additionally some Samsung API21 phones also need this.
+ * This hack is currently only maintained with API >= 21 for some Samsung API21 phones
  *
  * @link https://developer.android.com/reference/javax/net/ssl/SSLSocket.html
  * @see SSLSocketFactory
@@ -53,11 +52,11 @@ import timber.log.Timber;
 public class Tls12SocketFactory extends SSLSocketFactory {
     private static final String[] TLS_V12_ONLY =  {"TLSv1.2"};
 
-    private final SSLSocketFactory delegate;
+    private final SSLSocketFactory mDelegate;
 
 
     public static OkHttpClient.Builder enableTls12OnPreLollipop(OkHttpClient.Builder client) {
-        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP_MR1) {
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP_MR1 && "Samsung".equals(Build.MANUFACTURER)) {
             try {
                 Timber.d("Creating unified TrustManager");
                 Certificate cert = getUserTrustRootCertificate();
@@ -102,49 +101,49 @@ public class Tls12SocketFactory extends SSLSocketFactory {
 
 
     private Tls12SocketFactory(SSLSocketFactory base) {
-        this.delegate = base;
+        this.mDelegate = base;
     }
 
 
     @Override
     public String[] getDefaultCipherSuites() {
-        return delegate.getDefaultCipherSuites();
+        return mDelegate.getDefaultCipherSuites();
     }
 
 
     @Override
     public String[] getSupportedCipherSuites() {
-        return delegate.getSupportedCipherSuites();
+        return mDelegate.getSupportedCipherSuites();
     }
 
 
     @Override
     public Socket createSocket(Socket s, String host, int port, boolean autoClose) throws IOException {
-        return patch(delegate.createSocket(s, host, port, autoClose));
+        return patch(mDelegate.createSocket(s, host, port, autoClose));
     }
 
 
     @Override
     public Socket createSocket(String host, int port) throws IOException {
-        return patch(delegate.createSocket(host, port));
+        return patch(mDelegate.createSocket(host, port));
     }
 
 
     @Override
     public Socket createSocket(String host, int port, InetAddress localHost, int localPort) throws IOException {
-        return patch(delegate.createSocket(host, port, localHost, localPort));
+        return patch(mDelegate.createSocket(host, port, localHost, localPort));
     }
 
 
     @Override
     public Socket createSocket(InetAddress host, int port) throws IOException {
-        return patch(delegate.createSocket(host, port));
+        return patch(mDelegate.createSocket(host, port));
     }
 
 
     @Override
     public Socket createSocket(InetAddress address, int port, InetAddress localAddress, int localPort) throws IOException {
-        return patch(delegate.createSocket(address, port, localAddress, localPort));
+        return patch(mDelegate.createSocket(address, port, localAddress, localPort));
     }
 
 

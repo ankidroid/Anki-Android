@@ -114,6 +114,8 @@
     <string name="import_complete_count">Karten importiert: %d</string>
     <string name="sd_card_full_title">SD-Karte voll</string>
     <string name="sd_card_almost_full_title">SD-Karte fast voll</string>
+    <string name="no_space_to_downgrade_title">Kein Speicherplatz</string>
+    <string name="no_space_to_downgrade_content">AnkiDroid benötigt %s freien Speicherplatz um fortzufahren. Bitte leeren Sie etwas Speicherplatz</string>
     <string name="restore_backup_title">Sicherung wiederherstellen?</string>
     <string name="restore_backup">Ihre Sammlung wird durch eine ältere Kopie ersetzt. Nicht gespeicherte Lernfortschritte gehen verloren.</string>
     <string name="dialog_cancel">Abbrechen</string>
@@ -228,9 +230,18 @@
     <string name="help_item_discord">Discord</string>
     <string name="help_item_facebook">Facebook</string>
     <string name="help_item_twitter">Twitter</string>
+    <string name="help_title_send_exception">Fehlerbehebungsbericht senden</string>
+    <string name="help_dialog_exception_report_debounce">Bericht bereits eingereicht</string>
     <!--Sync-->
     <plurals name="sync_automatic_sync_needs_more_time">
         <item quantity="one">Ein automatische Synchronisierung kann in %d Sekunden ausgelöst werden</item>
         <item quantity="other">Ein automatische Synchronisierung kann in %d Sekunden ausgelöst werden</item>
     </plurals>
+    <string name="deck_picker_new">Anzahl der neuen Karten, die heute in diesem Stapel zu sehen sind.</string>
+    <string name="deck_picker_rev">Anzahl der heute fälligen Karten in diesem Stapel.</string>
+    <string name="deck_picker_lrn">Anzahl der Karten beim Lernen in diesem Stapel.</string>
+    <!-- This description is valid fos
+    sched V2. For V1, it was counting the number of repetitions of cards in learning. This approximation is acceptable
+    for the sake of simplicity and because V1 will leave.-->
+    <string name="deck_picker_counts">Öffnen Sie die Stapelübersichtsseite mit der Anzahl der heute zu sehenden Karten.</string>
 </resources>

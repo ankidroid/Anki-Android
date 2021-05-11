@@ -43,250 +43,258 @@
     <string name="enabled">Aktiva</string>
     <!-- preferences.xml categories-->
     <string name="pref_cat_general_summ">Ĝeneralaj agordoj</string>
-    <string name="pref_cat_reviewing">Ripetado</string>
+    <string name="pref_cat_reviewing" maxLength="41">Ripetado</string>
     <string name="pref_cat_reviewing_summ">Komunaj agordoj de ripetado por ĉiuj kartaroj</string>
-    <string name="pref_cat_reviewer_behaviour">Sinteno</string>
-    <string name="pref_cat_flashcard">Montrado</string>
-    <string name="pref_cat_whiteboard">Skribtabulo</string>
-    <string name="pref_cat_appearance">Aspekto</string>
+    <string name="pref_cat_reviewer_behaviour" maxLength="41">Sinteno</string>
+    <string name="pref_cat_flashcard" maxLength="41">Montrado</string>
+    <string name="pref_cat_whiteboard" maxLength="41">Skribtabulo</string>
+    <string name="pref_cat_appearance" maxLength="41">Aspekto</string>
     <string name="pref_cat_appearance_summ">Ŝanĝi etoson kaj implicitan tiparon</string>
-    <string name="pref_cat_themes">Etoso</string>
-    <string name="pref_cat_fonts">Tiparoj</string>
-    <string name="pref_cat_gestures">Gestoj</string>
+    <string name="pref_cat_themes" maxLength="41">Etoso</string>
+    <string name="pref_cat_fonts" maxLength="41">Tiparoj</string>
+    <string name="pref_cat_gestures" maxLength="41">Gestoj</string>
     <string name="pref_cat_gestures_summ">Stiri per frapeti kaj ŝovumi anstataŭ per butonoj</string>
-    <string name="pref_cat_actions">Agoj</string>
-    <string name="pref_cat_advanced">Altnivelaj</string>
+    <string name="pref_cat_actions" maxLength="41">Agoj</string>
+    <string name="pref_cat_advanced" maxLength="41">Altnivelaj</string>
     <string name="pref_cat_advanced_summ">Plejbonigado kaj spertaj eblaĵoj</string>
-    <string name="pref_cat_performance">Rendimento</string>
-    <string name="pref_cat_workarounds">Provizoraĵoj</string>
-    <string name="pref_cat_plugins">Kromaĵoj</string>
-    <string name="about_title">Pri AnkiDroid</string>
+    <string name="pref_cat_performance" maxLength="41">Rendimento</string>
+    <string name="pref_cat_workarounds" maxLength="41">Provizoraĵoj</string>
+    <string name="pref_cat_plugins" maxLength="41">Kromaĵoj</string>
+    <string name="about_title" maxLength="41">Pri AnkiDroid</string>
     <string name="about_version">Versio: </string>
     <!-- preferences.xml entries-->
-    <string name="whiteboard_stroke_width">Larĝo de streko</string>
-    <string name="use_input_tag">Entajpi respondon al karto</string>
-    <string name="use_input_tag_summ">Uzi tekstan enigan kampon en la karto por entajpi respondon</string>
-    <string name="dictionary">Vortaro</string>
-    <string name="reset_languages">Restarigi lingvojn</string>
+    <string name="whiteboard_stroke_width" maxLength="41">Larĝo de streko</string>
+    <string name="use_input_tag" maxLength="41">Enigu respondon al karto</string>
+    <string name="use_input_tag_summ">Uzi tekstan enigan kampon en la karto por enigi respondon</string>
+    <string name="dictionary" maxLength="41">Vortaro</string>
+    <string name="reset_languages" maxLength="41">Restarigi lingvojn</string>
     <string name="reset_languages_summ">Restarigi lingvajn alĝustigojn (por parolsinteziloj kaj vortaroj) por ĉiuj kartaroj</string>
     <string name="reset_languages_question">Ĉu forviŝi ĉiujn lingvajn alĝustigojn?</string>
     <string name="reset_confirmation">Restarigi ĉiujn alĝustigojn</string>
-    <string name="card_zoom">Karta pligrandigo</string>
-    <string name="image_zoom">Bilda pligrandigo</string>
-    <string name="button_size">Grando de responda butono</string>
-    <string name="card_browser_font_size">Skalado de tiparo de kart-foliumilo</string>
-    <string name="card_browser_hide_media">Vidigi dosiernomojn en kart‑foliumilo</string>
+    <string name="card_zoom" maxLength="41">Karta pligrandigo</string>
+    <string name="image_zoom" maxLength="41">Bilda pligrandigo</string>
+    <string name="button_size" maxLength="41">Grando de responda butono</string>
+    <string name="card_browser_font_size" maxLength="41">Skalado de tiparo de kart-foliumilo</string>
+    <string name="card_browser_hide_media" maxLength="41">Vidigi dosiernomojn en kart‑foliumilo</string>
     <string name="card_browser_hide_media_summary">Vidigi dosiernomojn de aŭdvidaĵoj en la kampoj “demando”/“respondo” de la kart‑foliumilo</string>
-    <string name="col_path">Dosierujo de AnkiDroid</string>
-    <string name="fullscreen_review">Plenekrana reĝimo</string>
+    <string name="col_path" maxLength="41">Dosierujo de AnkiDroid</string>
+    <string name="fullscreen_review" maxLength="41">Plenekrana reĝimo</string>
     <string name="full_screen_off">Malaktiva</string>
     <string name="full_screen_system">Kaŝi sistemajn bretojn</string>
     <string name="full_screen_complete">Kaŝi sistemajn bretojn kaj respondajn butonojn</string>
     <string name="full_screen_error_gestures">Enŝaltu gestojn por kaŝi respondajn butonojn</string>
-    <string name="answer_buttons_position">Pozicio de respondaj butonoj</string>
+    <string name="answer_buttons_position" maxLength="41">Pozicio de respondaj butonoj</string>
     <string-array name="answer_buttons_position_labels">
         <item>Supre</item>
         <item>Sube</item>
     </string-array>
-    <string name="gestures">Enŝalti gestojn</string>
+    <string name="gestures" maxLength="41">Enŝalti gestojn</string>
     <string name="gestures_summ">Asigni gestojn al agoj, kiel respondi aŭ redakti karton.</string>
-    <string name="gestures_allow_links">Ignori gestojn sur ligiloj</string>
+    <string name="gestures_allow_links" maxLength="41">Ignori gestojn sur ligiloj</string>
     <string name="gestures_allow_links_summary">Tuŝaj gestoj ne funkcios kiam ligilo ĉeestos.</string>
-    <string name="gestures_corner_touch">9-punkta frapeto</string>
+    <string name="gestures_corner_touch" maxLength="41">9-punkta frapeto</string>
     <string name="gestures_corner_touch_summary">Ebligi gestojn en anguloj de la ekrano</string>
-    <string name="gestures_swipe_up">Ŝovumi supren</string>
-    <string name="gestures_swipe_down">Ŝovumi suben</string>
-    <string name="gestures_swipe_left">Ŝovumi maldekstren</string>
-    <string name="gestures_swipe_right">Ŝovumi dekstren</string>
-    <string name="gestures_double_tap">Duobla frapeto</string>
-    <string name="gestures_tap_top">Frapeti supre</string>
-    <string name="gestures_tap_left">Frapeti maldekstre</string>
-    <string name="gestures_tap_right">Frapeti dekstre</string>
-    <string name="gestures_tap_bottom">Frapeti sube</string>
-    <string name="gestures_corner_tap_top_left">Frapeti supran maldekstron</string>
+    <string name="gestures_swipe_up" maxLength="41">Ŝovumi supren</string>
+    <string name="gestures_swipe_down" maxLength="41">Ŝovumi suben</string>
+    <string name="gestures_swipe_left" maxLength="41">Ŝovumi maldekstren</string>
+    <string name="gestures_swipe_right" maxLength="41">Ŝovumi dekstren</string>
+    <string name="gestures_double_tap" maxLength="41">Duobla frapeto</string>
+    <string name="gestures_tap_top" maxLength="41">Frapeti supre</string>
+    <string name="gestures_tap_left" maxLength="41">Frapeti maldekstre</string>
+    <string name="gestures_tap_right" maxLength="41">Frapeti dekstre</string>
+    <string name="gestures_tap_bottom" maxLength="41">Frapeti sube</string>
+    <string name="gestures_corner_tap_top_left" maxLength="41">Frapeti supran maldekstron</string>
     <string name="gestures_corner_tap_top_center">Frapeti supran mezon</string>
-    <string name="gestures_corner_tap_top_right">Frapeti supran maldekstron</string>
+    <string name="gestures_corner_tap_top_right" maxLength="41">Frapeti supran maldekstron</string>
     <string name="gestures_corner_tap_middle_left">Frapeti mezan maldekstron</string>
-    <string name="gestures_corner_tap_middle_center">Frapeti centron</string>
+    <string name="gestures_corner_tap_middle_center" maxLength="41">Frapeti centron</string>
     <string name="gestures_corner_tap_middle_right">Frapeti mezan maldekstron</string>
-    <string name="gestures_corner_tap_bottom_left">Frapeti suban maldekstron</string>
+    <string name="gestures_corner_tap_bottom_left" maxLength="41">Frapeti suban maldekstron</string>
     <string name="gestures_corner_tap_bottom_center">Frapeti suban mezon</string>
-    <string name="gestures_corner_tap_bottom_right">Frapeti suban dekstron</string>
-    <string name="gestures_volume_up">Pliigi sonfortecon</string>
-    <string name="gestures_volume_down">Malpliigi sonfortecon</string>
-    <string name="more_scrolling_buttons">Elektronika legilo</string>
+    <string name="gestures_corner_tap_bottom_right" maxLength="41">Frapeti suban dekstron</string>
+    <string name="gestures_volume_up" maxLength="41">Pliigi sonfortecon</string>
+    <string name="gestures_volume_down" maxLength="41">Malpliigi sonfortecon</string>
+    <string name="more_scrolling_buttons" maxLength="41">Elektronika legilo</string>
     <string name="more_scrolling_buttons_summ">Ankaŭ uzi butonojn de kanji/katakana aŭ emoĝioj por rulumi</string>
     <string name="card_browser_enable_external_context_menu">Menuo “%s”</string>
     <string name="card_browser_enable_external_context_menu_summary">Aktivigi la kuntekstan menuon “%s” tutaplikaĵe</string>
-    <string name="double_scrolling_gap">Duobla rulumado</string>
+    <string name="double_scrolling_gap" maxLength="41">Duobla rulumado</string>
     <string name="double_scrolling_gap_summ">Duobligi distancon de rulumado kun elektronika legilo</string>
-    <string name="swipe_sensitivity">Ŝovuma sentemo</string>
-    <string name="tts">Parol-sintezilo</string>
+    <string name="swipe_sensitivity" maxLength="41">Ŝovuma sentemo</string>
+    <string name="tts" maxLength="41">Parol-sintezilo</string>
     <string name="tts_summ">Elparoli demandon kaj respondon se neniu sonaĵo estas inkluzivita</string>
-    <string name="sync_fetch_missing_media">Elŝuti aŭdvidaĵojn dum samtempigado</string>
+    <string name="sync_fetch_missing_media" maxLength="41">Elŝuti aŭdvidaĵojn dum samtempigado</string>
     <string name="sync_fetch_missing_media_summ">Aŭtomate elŝuti mankajn aŭdvidaĵojn dum sinkronigado</string>
-    <string name="sync_account">AnkiWeb-konto</string>
+    <string name="sync_account" maxLength="41">AnkiWeb-konto</string>
     <string name="sync_account_summ_logged_out">Ne ensalutinta</string>
     <string name="sync_account_summ_logged_in">%s</string>
-    <string name="automatic_sync_choice">Aŭtomata samtempigado</string>
+    <string name="automatic_sync_choice" maxLength="41">Aŭtomata samtempigado</string>
     <string name="automatic_sync_choice_summ">Aŭtomate sinkronigi je aplikaĵa starto/ĉeso nur se la antaŭa samtempigo okazis antaŭ pli ol 10 minutoj.</string>
-    <string name="sync_status_badge">Montri staton de samtempigo</string>
+    <string name="sync_status_badge" maxLength="41">Montri staton de samtempigo</string>
     <string name="sync_status_badge_summ">Ŝanĝi la emblemon de samtempigo kiam povas alŝuti ŝanĝojn</string>
-    <string name="day_theme">Taga etoso</string>
-    <string name="night_theme">Nokta etoso</string>
-    <string name="default_font">Implicita tiparo</string>
-    <string name="override_font">Uzi implicitan tiparon</string>
-    <string name="language">Lingvo</string>
+    <string name="day_theme" maxLength="41">Taga etoso</string>
+    <string name="night_theme" maxLength="41">Nokta etoso</string>
+    <string name="default_font" maxLength="41">Implicita tiparo</string>
+    <string name="override_font" maxLength="41">Uzi implicitan tiparon</string>
+    <string name="language" maxLength="41">Lingvo</string>
     <string name="language_system">Sistema</string>
-    <string name="notification_pref">Sciigoj</string>
-    <string name="notification_pref_title">Averti nur</string>
+    <string name="notification_pref" maxLength="41">Sciigoj</string>
+    <string name="notification_pref_title" maxLength="41">Averti nur</string>
     <string name="never_notify">Neniam sciigi</string>
     <string name="notify_when_pending">Pri sistemaj agoj</string>
     <string name="notification_minimum_cards_due">Pri pli ol %d kartoj por lerni</string>
-    <string name="notification_minimum_cards_due_vibrate">Vibri</string>
-    <string name="notification_minimum_cards_due_blink">Lumpulsi</string>
-    <string name="timeout_answer_text">Aŭtomate montri respondon</string>
+    <string name="notification_minimum_cards_due_vibrate" maxLength="41">Vibri</string>
+    <string name="notification_minimum_cards_due_blink" maxLength="41">Lumpulsi</string>
+    <string name="timeout_answer_text" maxLength="41">Aŭtomate montri respondon</string>
     <string name="timeout_answer_summ">Aŭtomate montri respondon sen enigo de uzanto. Prokrasto enhavas tempon por aŭtomate ludi sonaĵon.</string>
-    <string name="timeout_answer_seconds">Montri respondon post</string>
+    <string name="timeout_answer_seconds" maxLength="41">Montri respondon post</string>
     <string name="timeout_answer_seconds_summ" comment="The time to wait (in seconds) in the reviewer before automatically showing the next question or answer">XXX s</string>
-    <string name="timeout_question_seconds">Montri sekvan demandon post</string>
+    <string name="timeout_question_seconds" maxLength="41">Montri sekvan demandon post</string>
     <string name="select_locale_title">Elekti lingvon</string>
-    <string name="safe_display">Sekura vidiga reĝimo</string>
+    <string name="software_render" maxLength="41">Malaktivigi aparataran bildigilon de kartoj</string>
+    <string name="software_render_summ">Aparatara bildigilo estas pli rapida, sed povas kaŭzi problemojn, precipe ĉe Android 8/8.1. Se parto de fasado ĉe la ekrano “ripeti karton” ne aperas, provu aktivigi tiun ĉi agordon.</string>
+    <string name="safe_display" maxLength="41">Sekura vidiga reĝimo</string>
     <string name="safe_display_summ">Malaktivigi ĉiujn movbildojn kaj uzi pli sekuran manieron por bildigi kartojn. Elektronik-paperaj aparatoj povas bezoni tion ĉi.</string>
-    <string name="disable_extended_text_ui">Malaktivigi unukampan redakt‑reĝimon</string>
+    <string name="disable_extended_text_ui" maxLength="41">Malaktivigi unukampan redakt‑reĝimon</string>
     <!--See: multimedia_editor_popup_cloze. We can\'t use format strings as this is auto-generated-->
     <string name="disable_extended_text_ui_summ">Montri la kuntekstan menuon “truteksta malpleno” kiam en horizontala orientiĝo.</string>
-    <string name="vertical_centering">Centrigi vertikale</string>
+    <string name="vertical_centering" maxLength="41">Centrigi vertikale</string>
     <string name="vertical_centering_summ">Centrigi enhavon de kartoj vertikale</string>
-    <string name="pref_backup_max">Maksimuma nombro da sekurkopioj</string>
-    <string name="show_estimates">Montri tempon ĉe butono</string>
+    <string name="pref_backup_max" maxLength="41">Maksimuma nombro da sekurkopioj</string>
+    <string name="show_estimates" maxLength="41">Montri tempon ĉe butono</string>
     <string name="show_estimates_summ">Montri tempon de sekva ripeto ĉe butonoj de respondoj</string>
-    <string name="show_top_bar">Montri supran breton</string>
+    <string name="show_top_bar" maxLength="41">Montri supran breton</string>
     <string name="show_top_bar_summ">Montri nombron da kartoj, flagon kaj markon sur la supra breto</string>
-    <string name="show_progress">Montri pliajn kartojn</string>
+    <string name="show_progress" maxLength="41">Montri pliajn kartojn</string>
     <string name="show_progress_summ">Montri nombron da pliaj kartoj</string>
-    <string name="show_eta">Montri tempon</string>
+    <string name="show_eta" maxLength="41">Montri tempon</string>
     <string name="show_eta_summ">Montri plian tempon</string>
-    <string name="use_current">Kartaro por novaj kartoj</string>
-    <string name="new_spread">Pozicio de nova karto</string>
-    <string name="learn_cutoff">Limigo de anticipa lernado</string>
-    <string name="time_limit">Limigo de lernada tempero (timebox)</string>
+    <string name="use_current" maxLength="41">Kartaro por novaj kartoj</string>
+    <string name="new_spread" maxLength="41">Pozicio de nova karto</string>
+    <string name="learn_cutoff" maxLength="41">Limigo de anticipa lernado</string>
+    <string name="time_limit" maxLength="41">Limigo de lernada tempero (timebox)</string>
     <string name="time_limit_summ">XXX min</string>
-    <string name="new_timezone">Pritraktado de nova horzono</string>
-    <string name="day_offset">Komenco de sekva tago</string>
+    <string name="new_timezone" maxLength="41">Pritraktado de nova horzono</string>
+    <string name="day_offset_with_description" maxLength="41">Komenco de tago (0 estas la horo 00:00. 23 estas la horo 23:00)</string>
     <string name="day_offset_summ">XXX horo(j) post noktmezo</string>
-    <string name="sched_ver">Eksperimenta V2 planilo</string>
-    <string name="sched_ver_summ">Aktivigi testan planilon V2. Devigas ŝanĝojn en unu direkto je la sekva samtempigo</string>
+    <string name="xlabel_dayoffset_seekbar" maxLength="41">00:00</string>
+    <string name="ylabel_dayoffset_seekbar" maxLength="41">23:00</string>
+    <string name="sched_v2" maxLength="41">V2 scheduler</string>
+    <string name="sched_v2_summ">Enable the new scheduler. Forces changes in one direction on next sync</string>
     <string name="sched_ver_toggle_title">Konfirmi</string>
     <string name="sched_ver_2to1">Tiu procezo nuligos ĉiujn kartojn en lernado, forigi filtritajn kartarojn kaj ŝanĝi la planiloversion. Daŭrigi?</string>
     <string name="sched_ver_1to2">La eksperimenta planilo povus kaŭzi malĝustan planadon. Bonvolu nepre legi la dokumentaron unue. Daŭrigi?</string>
-    <string name="pref_keep_screen_on">Teni ekranon ŝaltita</string>
+    <string name="pref_keep_screen_on" maxLength="41">Teni ekranon ŝaltita</string>
     <string name="pref_keep_screen_on_summ">Ne malŝalti ekranon</string>
-    <string name="convert_fen_text">Subteno por ŝaka skribsistemo</string>
+    <string name="convert_fen_text" maxLength="41">Subteno por ŝaka skribsistemo</string>
     <string name="convert_fen_text_summ">Bildigi ŝaktabulon laŭ Forsyth-Edwards-skribsistemo. La skribsistemo devas troviĝi ene etikedoj [fen][/fen].</string>
-    <string name="enable_api_title">Aktivigi AnkiDroid-API</string>
+    <string name="enable_api_title" maxLength="41">Aktivigi AnkiDroid-API</string>
     <string name="enable_api_summary">Ebligi al aliaj aplikaĵoj konekti al AnkiDroid kaj legi/skribi datumojn sen via ago</string>
-    <string name="custom_buttons">Butonoj de aplikaĵa breto</string>
+    <string name="custom_buttons" maxLength="41">Butonoj de aplikaĵa breto</string>
     <string name="custom_buttons_summary">Alĝustigi agojn por vidigi en la aplikaĵa breto</string>
     <string name="custom_buttons_setting_always_show">Ĉiam montri</string>
     <string name="custom_buttons_setting_if_room">Nur se spaco disponebla</string>
     <string name="custom_buttons_setting_menu_only">Nur en menuo</string>
-    <string name="reset_custom_buttons">Restarigi normojn</string>
-    <string name="thirdparty_apps_title">Eksteraj aplikaĵoj uzantaj API</string>
+    <string name="reset_custom_buttons" maxLength="41">Restarigi normojn</string>
+    <string name="thirdparty_apps_title" maxLength="41">Eksteraj aplikaĵoj uzantaj API</string>
     <string name="thirdparty_apps_summary">Vidigi listojn de aplikaĵoj, kiuj uzas AnkiDroid API kiel vortaroj kaj iloj.</string>
-    <string name="html_javascript_debugging">Senerarigado de HTML / JavaScript</string>
+    <string name="html_javascript_debugging" maxLength="41">Senerarigado de HTML / JavaScript</string>
     <string name="html_javascript_debugging_summ">Aktivigu forajn konektojn por WebView kaj konservu HTML de kartoj al la dosierujo “AnkiDroid”</string>
     <!-- Advanced statistics settings -->
-    <string name="advanced_statistics_title">Detala statistiko</string>
-    <string name="enable_advanced_statistics_title">Vidigi detalan statistikon</string>
+    <string name="advanced_statistics_title" maxLength="41">Detala statistiko</string>
+    <string name="enable_advanced_statistics_title" maxLength="41">Vidigi detalan statistikon</string>
     <string name="enable_advanced_statistics_summ">Montri prognozatan statistikon surbaze de komputado aŭ simulado de estontaj ripetoj (aktiva) aŭ surbaze de jam planitaj estontaj ripetoj (malaktiva).</string>
-    <string name="advanced_forecast_stats_compute_n_days_title">Komputi por N unuaj tagoj, simili por pliaj</string>
-    <string name="advanced_forecast_stats_compute_precision_title">Precizo de komputado</string>
-    <string name="advanced_forecast_stats_mc_n_iterations_title">Nombro da ripetoj de simulado</string>
+    <string name="advanced_forecast_stats_compute_n_days_title" maxLength="41">Komputi por N unuaj tagoj, simili por pliaj</string>
+    <string name="advanced_forecast_stats_compute_precision_title" maxLength="41">Precizo de komputado</string>
+    <string name="advanced_forecast_stats_mc_n_iterations_title" maxLength="41">Nombro da ripetoj de simulado</string>
     <!-- Custom sync server settings -->
-    <string name="custom_sync_server_title">Propra servilo por samtempigado</string>
-    <string name="custom_sync_server_enable_title">Uzi propran servilon por samtempigado</string>
+    <string name="custom_sync_server_title" maxLength="41">Propra servilo por samtempigado</string>
+    <string name="custom_sync_server_enable_title" maxLength="41">Uzi propran servilon por samtempigado</string>
     <string name="custom_sync_server_enable_summary">Se vi ne volas uzi la neliberan servon de AnkiWeb, vi povas difini alternativan servilon tie ĉi</string>
-    <string name="custom_sync_server_base_url_title">Samtempiga servilo</string>
+    <string name="custom_sync_server_base_url_title" maxLength="41">Samtempiga servilo</string>
     <string name="custom_sync_server_base_url_invalid">Malĝusta ligilo de samtempigo</string>
-    <string name="custom_sync_server_media_url_title">Ligilo de aŭdvidaĵa samtempigado</string>
+    <string name="custom_sync_server_media_url_title" maxLength="41">Ligilo de aŭdvidaĵa samtempigado</string>
     <string name="custom_sync_server_media_url_invalid">Malĝusta ligilo de samtempigo de aŭdvidaĵoj</string>
     <!-- studyoptions -->
     <string name="deck_conf_group_summ">Ŝanĝoj al grupaj agordoj de kartaroj aplikos al pluraj kartaroj. Se vi volas ŝanĝi nur la nunan kartaron, bonvolu unue aldoni novan grupon de agordoj</string>
     <string name="studyoptions_limit_select_tags">Elekti etikedojn</string>
     <!-- Deck configurations -->
-    <string name="deck_conf_deck_description">Priskribo de kartaro (aplikas nur al nuna kartaro)</string>
-    <string name="deck_conf_group">Grupo de agordoj</string>
+    <string name="deck_conf_deck_description" maxLength="41">Priskribo de kartaro (aplikas nur al nuna kartaro)</string>
+    <string name="deck_conf_group" maxLength="41">Grupo de agordoj</string>
     <plurals name="deck_conf_group_summ">
         <item quantity="one">%1$s\n%2$d kartaro uzas tiun ĉi grupon</item>
         <item quantity="other">%1$s\n%2$d kartaroj uzas tiun ĉi grupon</item>
     </plurals>
-    <string name="deck_conf_new_cards">Novaj kartoj</string>
-    <string name="deck_conf_rev_cards" comment="Name of the deck options submenu for configuring reviews of due cards.">Ripetoj</string>
-    <string name="deck_conf_lps_cards" comment="Label of the submenu stating how lapses cards are treated.">Misrespondoj</string>
-    <string name="deck_conf_general">Ĝeneralaj</string>
-    <string name="deck_conf_reminders">Memorigaĵoj</string>
-    <string name="deck_conf_steps">Paŝoj (en minutoj)</string>
-    <string name="deck_conf_order">Ordo</string>
-    <string name="deck_conf_new_cards_day">Novaj kartoj en tago</string>
-    <string name="deck_conf_graduating_ivl">Ripeti memoritan karton post</string>
+    <string name="deck_conf_new_cards" maxLength="41">Novaj kartoj</string>
+    <string name="deck_conf_rev_cards" maxLength="41" comment="Name of the deck options submenu for configuring reviews of due cards.">Ripetoj</string>
+    <string name="deck_conf_lps_cards" maxLength="41" comment="Label of the submenu stating how lapses cards are treated.">Misrespondoj</string>
+    <string name="deck_conf_general" maxLength="41">Ĝeneralaj</string>
+    <string name="deck_conf_reminders" maxLength="41">Memorigaĵoj</string>
+    <string name="deck_conf_steps" maxLength="41">Paŝoj (en minutoj)</string>
+    <string name="deck_conf_order" maxLength="41">Ordo</string>
+    <string name="deck_conf_new_cards_day" maxLength="41">Novaj kartoj en tago</string>
+    <string name="deck_conf_graduating_ivl" maxLength="41">Ripeti memoritan karton post</string>
     <string name="deck_conf_days">XXX tago(j)</string>
-    <string name="deck_conf_easy_ivl">Ripeti facilan karton post</string>
-    <string name="deck_conf_start_ease">Komenca facileco</string>
-    <string name="deck_conf_max_rev">Maksimumo da ripetoj en tago</string>
-    <string name="deck_conf_new_bury">Kaŝi novajn rilatajn kartojn por tago</string>
+    <string name="deck_conf_easy_ivl" maxLength="41">Ripeti facilan karton post</string>
+    <string name="deck_conf_start_ease" maxLength="41">Komenca facileco</string>
+    <string name="deck_conf_max_rev" maxLength="41">Maksimumo da ripetoj en tago</string>
+    <string name="deck_conf_new_bury" maxLength="41">Kaŝi novajn rilatajn kartojn por tago</string>
     <string name="deck_conf_new_bury_summ">Rilataj novaj kartoj estas prokrastataj ĝis la sekva tago</string>
-    <string name="deck_conf_rev_bury">Kaŝi rilatajn ripetitajn kartojn por tago</string>
+    <string name="deck_conf_rev_bury" maxLength="41">Kaŝi rilatajn ripetitajn kartojn por tago</string>
     <string name="deck_conf_rev_bury_summ">Rilataj ripetitaj kartoj estas kaŝitaj ĝis la sekva tago</string>
-    <string name="deck_conf_use_general_timeout_settings">Uzi ĝeneralajn agordojn</string>
+    <string name="deck_conf_use_general_timeout_settings" maxLength="41">Uzi ĝeneralajn agordojn</string>
     <string name="deck_conf_use_general_timeout_settings_summ">Uzi ĝeneralajn agordojn pri “aŭtomate montri respondon” anstataŭ uzi agordojn por tiu ĉi grupo.</string>
-    <string name="deck_conf_easy_bonus">Premio por facileco</string>
-    <string name="deck_conf_hard_factor">Ripeti malfacilan karton post</string>
-    <string name="deck_conf_ivl_fct">Obligi intertempon je</string>
-    <string name="deck_conf_max_ivl">Maksimuma intertempo</string>
-    <string name="deck_conf_new_lps_ivl">Nova intertempo</string>
-    <string name="deck_conf_min_ivl">Minimuma intertempo</string>
-    <string name="deck_conf_leech_thres">Marki karton kiel forgeseman post</string>
+    <string name="deck_conf_easy_bonus" maxLength="41">Premio por facileco</string>
+    <string name="deck_conf_hard_factor" maxLength="41">Ripeti malfacilan karton post</string>
+    <string name="deck_conf_ivl_fct" maxLength="41">Obligi intertempon je</string>
+    <string name="deck_conf_max_ivl" maxLength="41">Maksimuma intertempo</string>
+    <string name="deck_conf_new_lps_ivl" maxLength="41">Nova intertempo</string>
+    <string name="deck_conf_min_ivl" maxLength="41">Minimuma intertempo</string>
+    <string name="deck_conf_leech_thres" maxLength="41">Marki karton kiel forgeseman post</string>
     <string name="deck_conf_fails">XXX misrespondo(j)</string>
-    <string name="deck_conf_leech_action">Ago pri forgesemaj kartoj</string>
-    <string name="deck_conf_max_time">Maksimuma tempo de respondo</string>
+    <string name="deck_conf_leech_action" maxLength="41">Ago pri forgesemaj kartoj</string>
+    <string name="deck_conf_max_time" maxLength="41">Maksimuma tempo de respondo</string>
     <string name="deck_conf_seconds">XXX sekundoj</string>
-    <string name="deck_conf_timer">Montri temp-mezurilon ĉe demando</string>
-    <string name="deck_conf_autoplay">Aŭtomate ludi aŭdvidaĵojn</string>
-    <string name="deck_conf_replayq">Reludi semandon</string>
+    <string name="deck_conf_timer" maxLength="41">Montri temp-mezurilon ĉe demando</string>
+    <string name="deck_conf_autoplay" maxLength="41">Aŭtomate ludi aŭdvidaĵojn</string>
+    <string name="deck_conf_replayq" maxLength="41">Reludi semandon</string>
     <string name="deck_conf_replayq_summ">Kiam montri respondon, reludi kaj demandon kaj respondon</string>
-    <string name="deck_conf_manage">Administri grupojn</string>
+    <string name="deck_conf_manage" maxLength="41">Administri grupojn</string>
     <string name="deck_conf_manage_summ">Aldoni/ŝanĝi grupojn de agordoj</string>
-    <string name="deck_conf_current_group">Nuna grupo</string>
-    <string name="deck_conf_rename" comment="Menu entry to rename a deck">Alinomi</string>
-    <string name="deck_conf_reset">Restarigi normojn</string>
+    <string name="deck_conf_current_group" maxLength="41">Nuna grupo</string>
+    <string name="deck_conf_rename" maxLength="41" comment="Menu entry to rename a deck">Alinomi</string>
+    <string name="deck_conf_reset" maxLength="41">Restarigi normojn</string>
     <string name="deck_conf_reset_message">Ĉu restarigi la nunan grupon de agordoj al implicitaj valoroj?</string>
-    <string name="deck_conf_add" comment="Adding a new deck option group">Aldoni</string>
+    <string name="deck_conf_add" maxLength="41" comment="Adding a new deck option group">Aldoni</string>
     <string name="deck_conf_add_summ">Krei kopion de la nuna grupo de agordoj</string>
     <string name="deck_conf_remove_message">Ĉu forigi la nunan grupon de agordoj?</string>
-    <string name="deck_conf_set_subdecks">Agordi por ĉiuj subkartaroj</string>
+    <string name="deck_conf_set_subdecks" maxLength="41">Agordi por ĉiuj subkartaroj</string>
     <plurals name="deck_conf_set_subdecks_summ">
         <item quantity="one">%s subkartaro uzos tiun ĉi grupon</item>
         <item quantity="other">%s subkartaroj uzos tiun ĉi grupon</item>
     </plurals>
     <string name="deck_conf_set_subdecks_message">Ĉu agordi la nunan grupon de agordoj por ĉiuj subkartaroj de tiu ĉi kartaro?</string>
-    <string name="pref_browser_editor_font">Tiparo de foliumilo kaj redaktilo</string>
-    <string name="deck_conf_cram_filter">Filtri</string>
-    <string name="deck_conf_cram_search">Serĉi</string>
-    <string name="deck_conf_cram_limit">Limigi al</string>
-    <string name="deck_conf_cram_order">kartoj elektitaj laŭ</string>
-    <string name="deck_conf_cram_reschedule" comment="Title of the box labelled by deck_conf_cram_reschedule_summ">Replani</string>
+    <string name="pref_browser_editor_font" maxLength="41">Tiparo de foliumilo kaj redaktilo</string>
+    <string name="deck_conf_cram_filter" maxLength="41">Filtri</string>
+    <string name="deck_conf_cram_search" maxLength="41">Serĉi</string>
+    <string name="deck_conf_cram_limit" maxLength="41">Limigi al</string>
+    <string name="deck_conf_cram_order" maxLength="41">kartoj elektitaj laŭ</string>
+    <string name="deck_conf_cram_reschedule" maxLength="41" comment="Title of the box labelled by deck_conf_cram_reschedule_summ">Replani</string>
     <string name="deck_conf_cram_reschedule_summ">Replani karton surbaze de miaj respondoj en tiu ĉi kartaro</string>
-    <string name="deck_conf_cram_steps">Propraj paŝoj (en minutoj)</string>
-    <string name="deck_conf_cram_steps_summ">Difini proprajn paŝojn</string>
-    <string name="deck_conf_reminders_enabled">Aktivigi memorigajn sciigojn por kartaroj en tiu ĉi grupo de kartaroj</string>
-    <string name="deck_conf_reminders_time">Rememori je</string>
+    <string name="deck_conf_cram_steps" maxLength="41">Propraj paŝoj (en minutoj)</string>
+    <string name="deck_conf_cram_steps_summ" maxLength="41">Difini proprajn paŝojn</string>
+    <string name="deck_conf_reminders_enabled" maxLength="41">Aktivigi memorigajn sciigojn por kartaroj en tiu ĉi grupo de kartaroj</string>
+    <string name="deck_conf_reminders_time" maxLength="41">Rememori je</string>
     <!-- analytics options -->
     <string name="analytics_dialog_title">Helpu, ke AnkiDroid fariĝos pli bona!</string>
-    <string name="analytics_title">Kunhavigi uzadon de funkcioj</string>
+    <string name="analytics_title" maxLength="41">Kunhavigi uzadon de funkcioj</string>
     <string name="analytics_summ">Vi povas kontribui al AnkiDroid per helpi al la disvovla teamo scii kiujn funkciojn homoj uzas</string>
-    <string name="note_editor_replace_newlines">Anstataŭigi novajn liniojn en HTML</string>
+    <string name="note_editor_replace_newlines" maxLength="41">Anstataŭigi novajn liniojn en HTML</string>
     <string name="note_editor_replace_newlines_summ">En la kart‑redaktilo, konverti ĉiujn &lt;br&gt; al novaj linioj dum redakti karton.</string>
-    <string name="no_code_formatting">Simpla aranĝo de enigita respondo</string>
-    <string name="no_code_formatting_summ">Ripari “􏿾” aperantan en entajpita respondo</string>
+    <string name="no_code_formatting" maxLength="41">Simpla aranĝo de enigita respondo</string>
+    <string name="no_code_formatting_summ">Ripari “􏿾” aperantan en enigita respondo</string>
+    <string name="type_in_answer_focus" maxLength="41">Marki kampon “enigi respondon”</string>
+    <string name="type_in_answer_focus_summ">Aŭtomate marki la kampon “enigi respondon” dum ripetado</string>
+    <!-- Open Changelog-->
+    <string name="open_changelog">Montri ŝanĝoprotokolon</string>
 </resources>

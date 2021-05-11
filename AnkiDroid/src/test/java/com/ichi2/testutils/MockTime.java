@@ -18,6 +18,9 @@ package com.ichi2.testutils;
 
 import com.ichi2.libanki.utils.Time;
 
+import java.util.Calendar;
+import java.util.TimeZone;
+
 public class MockTime extends Time {
 
     /** Number of miliseconds between each call. */
@@ -34,6 +37,13 @@ public class MockTime extends Time {
     public MockTime(long time, int step) {
         this.mTime = time;
         this.mStep = step;
+    }
+
+    /** create a mock time whose initial value is this date. Month is 0-based, in order to stay close to calendar. MS are 0.*/
+    public MockTime(int year, int month, int date, int hourOfDay, int minute,
+                    int second, int milliseconds, int step) {
+        mTime = timeStamp(year, month, date, hourOfDay, minute, second, milliseconds);
+        mStep = step;
     }
 
     /** Time in milisecond since epoch. */
@@ -71,5 +81,40 @@ public class MockTime extends Time {
     /** add d days*/
     public void addD(long d) {
         addH(d * 24);
+    }
+
+
+    /**
+     * Allow to get a timestamp which is independant of place where test occurs. MS are set to 0
+     * @param year Year
+     * @param month Month, 0-based
+     * @param date, day of month
+     * @param hourOfDay, hour, from 0 to 23
+     * @param minute, from 0 to 59
+     * @param second, From 0 to 59
+     * @return the time stamp of this instant in GMT calendar
+     */
+    public static long timeStamp(int year, int month, int date, int hourOfDay, int minute, int second) {
+        return timeStamp(year, month, date, hourOfDay, minute, second, 0);
+    }
+
+
+    /**
+     * Allow to get a timestamp which is independant of place where test occurs.
+     * @param year Year
+     * @param month Month, 0-based
+     * @param date, day of month
+     * @param hourOfDay, hour, from 0 to 23
+     * @param minute, from 0 to 59
+     * @param second, From 0 to 59
+     * @param miliseconds, from 0 to 999
+     * @return the time stamp of this instant in GMT calendar
+     */
+    public static long timeStamp(int year, int month, int date, int hourOfDay, int minute, int second, int miliseconds) {
+        return (new Calendar.Builder()).
+                setTimeZone(TimeZone.getTimeZone("GMT")).
+                setCalendarType("gregorian").
+                setDate(year, month, date).
+                setTimeOfDay(hourOfDay, minute, second, miliseconds).build().getTimeInMillis();
     }
 }

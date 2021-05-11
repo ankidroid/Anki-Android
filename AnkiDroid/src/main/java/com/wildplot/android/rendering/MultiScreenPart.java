@@ -15,6 +15,8 @@
  ****************************************************************************************/
 package com.wildplot.android.rendering;
 
+import android.annotation.SuppressLint;
+
 import com.wildplot.android.rendering.interfaces.Drawable;
 
 import java.util.Vector;
@@ -23,6 +25,7 @@ import java.util.Vector;
  * This class is used to store informations for a certain plot in a multi-plot sheet.
  * The informations are the drawables for this plotsheet and the x and y limitations
  */
+@SuppressLint("NonPublicNonStaticFieldName")
 public class MultiScreenPart {
     private final double[] xRange;
     private final double[] yRange;

@@ -15,12 +15,15 @@
  ****************************************************************************************/
 package com.wildplot.android.parsing.AtomTypes;
 
+import android.annotation.SuppressLint;
+
 import com.wildplot.android.parsing.Expression;
 import com.wildplot.android.parsing.ExpressionFormatException;
 import com.wildplot.android.parsing.TopLevelParser;
 import com.wildplot.android.parsing.TreeElement;
 
 
+@SuppressLint("NonPublicNonStaticFieldName")
 public class MathFunctionAtom implements TreeElement {
 
     private final TopLevelParser parser;
