@@ -21,6 +21,7 @@ import com.fasterxml.jackson.core.JsonFactory;
 import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.core.JsonToken;
 import com.ichi2.anki.AnkiDroidApp;
+import com.ichi2.anki.AnkiSerialization;
 import com.ichi2.anki.BackupManager;
 import com.ichi2.anki.CollectionHelper;
 import com.ichi2.anki.R;
@@ -126,7 +127,7 @@ public class AnkiPackageImporter extends Anki2Importer {
             File dir = new File(dirPath);
             // We need the opposite mapping in AnkiDroid since our extraction method requires it.
             Map<String, String> numToName = new HashMap<>(); // Number of file in mediamMMapFile as json. Not knowable
-            try (JsonParser jp = new JsonFactory().createParser(mediaMapFile)) {
+            try (JsonParser jp = AnkiSerialization.getFactory().createParser(mediaMapFile)) {
                 String name; // v in anki
                 String num; // k in anki
                 if (jp.nextToken() != JsonToken.START_OBJECT) {
