@@ -41,6 +41,7 @@ import android.widget.TextView;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.ichi2.anki.AnkiDroidApp;
+import com.ichi2.anki.AnkiSerialization;
 import com.ichi2.anki.R;
 import com.ichi2.anki.UIUtils;
 import com.ichi2.anki.multimediacard.glosbe.json.Meaning;
@@ -285,8 +286,8 @@ public class TranslationActivity extends FragmentActivity implements DialogInter
             return;
         }
 
-        ObjectMapper objectMapper = new ObjectMapper();
-        Response resp = null;
+        ObjectMapper objectMapper = AnkiSerialization.getObjectMapper();
+        Response resp;
         try {
             resp = objectMapper.readValue(mTranslation, Response.class);
         } catch (JsonProcessingException e) {

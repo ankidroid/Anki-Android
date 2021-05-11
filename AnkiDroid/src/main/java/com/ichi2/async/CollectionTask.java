@@ -27,6 +27,7 @@ import com.fasterxml.jackson.core.JsonFactory;
 import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.core.JsonToken;
 import com.ichi2.anki.AnkiDroidApp;
+import com.ichi2.anki.AnkiSerialization;
 import com.ichi2.anki.BackupManager;
 import com.ichi2.anki.CardBrowser;
 import com.ichi2.anki.CardUtils;
@@ -1472,7 +1473,7 @@ public class CollectionTask<ProgressBackground, ResultBackground> extends BaseAs
                 HashMap<String, String> numToName = new HashMap<>();
                 File mediaMapFile = new File(dir.getAbsolutePath(), "media");
                 if (mediaMapFile.exists()) {
-                    JsonParser jp = new JsonFactory().createParser(mediaMapFile);
+                    JsonParser jp = AnkiSerialization.getFactory().createParser(mediaMapFile);
                     String name;
                     String num;
                     if (jp.nextToken() != JsonToken.START_OBJECT) {
