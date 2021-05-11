@@ -80,13 +80,13 @@
         <item>Цёмная</item>
     </string-array>
     <string-array name="html_size_code_labels">
-        <item>найменшы</item>
+        <item>самы маленькі</item>
         <item>вельмі маленькі</item>
         <item>маленькі</item>
         <item>сярэдні</item>
         <item>вялікі</item>
         <item>вельмі вялікі</item>
-        <item>найбольшы</item>
+        <item>самы вялікі</item>
     </string-array>
     <!--
     #7794 - it\'s better to use @string references in non-translated arrays as this handles

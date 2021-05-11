@@ -35,7 +35,7 @@
 <resources>
     <!-- Main editor popup menu items -->
     <string name="multimedia_editor_popup_image">Дадаць выяву</string>
-    <string name="multimedia_editor_popup_audio_clip">Дадаць гуказапіс</string>
+    <string name="multimedia_editor_popup_audio_clip">Дадаць аўдыякліп</string>
     <string name="multimedia_editor_popup_audio">Запісаць аўдыя</string>
     <string name="multimedia_editor_popup_text">Пашыраны рэдактар</string>
     <string name="multimedia_editor_popup_cloze">Заданне з пропускамі</string>
@@ -48,34 +48,34 @@
     <!-- imperative for the button title -->
     <string name="multimedia_editor_trans_translate">Перакласці</string>
     <!-- waiting message -->
-    <string name="multimedia_editor_trans_translating_online">Анлайн-пераклад</string>
+    <string name="multimedia_editor_trans_translating_online">Перакласці праз інтэрнэт</string>
     <!-- pick the right translation imperative -->
     <string name="multimedia_editor_trans_pick_translation">Выберыце пераклад</string>
     <!-- from controller -->
     <!-- dialog title to ask for translation source -->
     <string name="multimedia_editor_trans_pick_translation_source">Выберыце слоўнік</string>
     <!-- dialog asking to install ColorDict -->
-    <string name="multimedia_editor_trans_install_color_dict">Спачатку ўсталюеце ColorDict</string>
+    <string name="multimedia_editor_trans_install_color_dict">Спачатку ўсталюйце ColorDict</string>
     <!-- Pronunciation activity (Beolingus) -->
     <string name="multimedia_editor_pron_load">Загрузіць</string>
     <string name="multimedia_editor_pron_looking_up">Пошук вымаўлення</string>
     <!-- in controller when fails -->
-    <string name="multimedia_editor_pron_pronunciation_failed">Пошук вымаўлення не атрымаўся</string>
-    <string name="multimedia_editor_word_search_try_lower_case">Паспрабуйце скарыстаць толькі ніжні рэгістр знакаў</string>
+    <string name="multimedia_editor_pron_pronunciation_failed">Адбылася памылка вымаўлення</string>
+    <string name="multimedia_editor_word_search_try_lower_case">Паспрабуйце выкарыстоўваць толькі ніжні рэгістр сімвалаў</string>
     <string name="multimedia_editor_poweredbeolingus">Працуе на Beolingus</string>
     <!-- Field editing general -->
     <!-- these are button names to convert field type -->
     <string name="multimedia_editor_field_editing_text" comment="Select the field\'s type to Text.">Тэкст</string>
     <string name="multimedia_editor_field_editing_image">Выява</string>
     <string name="multimedia_editor_field_editing_audio">Запіс гуку</string>
-    <string name="multimedia_editor_field_editing_audio_clip">Гуказапіс</string>
+    <string name="multimedia_editor_field_editing_audio_clip">Аўдыякліп</string>
     <string name="multimedia_editor_field_editing_done" comment="Label of a button to tell the app that the current action is \'Done\'.">Гатова</string>
     <!-- Text field editing -->
     <!-- buttons -->
     <string name="multimedia_editor_text_field_editing_search_label">Пошук:</string>
     <string name="multimedia_editor_text_field_editing_say">Вымаўленне</string>
     <string name="multimedia_editor_text_field_editing_clear">Ачысціць</string>
-    <string name="multimedia_editor_text_field_editing_clone">Капіяваць з</string>
+    <string name="multimedia_editor_text_field_editing_clone">Кланаваць з</string>
     <string name="multimedia_editor_text_field_editing_translate" comment="Label of a button opening the translation activity">Пераклад</string>
     <!-- message to user, when there is no text or many words, but the user tries something -->
     <string name="multimedia_editor_text_field_editing_no_text">Спачатку ўвядзіце тэкст</string>
