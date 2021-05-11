@@ -17,14 +17,19 @@ package com.ichi2.anki.dialogs.tags;
 
 import org.junit.Before;
 import org.junit.Test;
+import org.mockito.MockedStatic;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
 
 import static org.junit.Assert.*;
 import static org.junit.Assert.assertEquals;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.mockStatic;
+import static org.mockito.Mockito.never;
 
 // suppressed to have a symmetry in all tests, Arrays.asList(...) should be all you need.
 @SuppressWarnings("ArraysAsListWithZeroOrOneArgument")
@@ -243,5 +248,19 @@ public class TagsListTest {
         TAGS_LIST.sort();
         assertEquals("Calling #sort on TagsList should result on sorting all tags",
                 SORTED_TAGS, TAGS_LIST.copyOfAllTagList());
+    }
+
+
+    @Test //#8807
+    public void test_sort_will_not_call_collectionsSort() {
+        try (MockedStatic<Collections> MockCollection = mockStatic(Collections.class)) {
+
+            assertEquals(TAGS, TAGS_LIST.copyOfAllTagList());
+            TAGS_LIST.sort();
+            assertEquals("Calling #sort on TagsList should result on sorting all tags",
+                    SORTED_TAGS, TAGS_LIST.copyOfAllTagList());
+
+            MockCollection.verify(() -> Collections.sort(any(), any()), never());
+        }
     }
 }

@@ -41,7 +41,7 @@ public class TagsList implements Iterable<String> {
      * List of all available tags
      */
     private final @NonNull
-    List<String> mAllTags;
+    UniqueArrayList<String> mAllTags;
 
 
     /**
@@ -187,7 +187,7 @@ public class TagsList implements Iterable<String> {
      * Sort the tag list alphabetically ignoring the case, with priority for checked tags
      */
     public void sort() {
-        Collections.sort(mAllTags, (lhs, rhs) -> {
+        mAllTags.sort((lhs, rhs) -> {
             boolean lhsChecked = isChecked(lhs);
             boolean rhsChecked = isChecked(rhs);
 
