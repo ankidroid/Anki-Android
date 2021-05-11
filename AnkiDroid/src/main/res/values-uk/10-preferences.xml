@@ -180,8 +180,8 @@
     <string name="day_offset_summ">XXX год.</string>
     <string name="xlabel_dayoffset_seekbar" maxLength="41">Північ</string>
     <string name="ylabel_dayoffset_seekbar" maxLength="41">23:00</string>
-    <string name="sched_v2" maxLength="41">V2 scheduler</string>
-    <string name="sched_v2_summ">Enable the new scheduler. Forces changes in one direction on next sync</string>
+    <string name="sched_v2" maxLength="41">Планувальник V2</string>
+    <string name="sched_v2_summ">Увімкнути новий планувальник. Примушує зміни в одному напрямку при наступній синхронізації</string>
     <string name="sched_ver_toggle_title">Підтвердити</string>
     <string name="sched_ver_2to1">Це призведе до скидання будь-яких карток у процесі навчання, очищення фільтрів та змінення версії планувальника. Продовжити?</string>
     <string name="sched_ver_1to2">Експериментальний планувальник може спричинити неправильне планування. Переконайтеся, що ви сперше прочитали документацію. Продовжити?</string>
@@ -298,8 +298,8 @@
     <string name="note_editor_replace_newlines_summ">Замінювати у Редакторі нотаток будь-які випадки &lt;br&gt;  на нові рядки під час редагування картки.</string>
     <string name="no_code_formatting" maxLength="41">Просте форматування введених відповідей</string>
     <string name="no_code_formatting_summ">Виправляє «􏿾», що з\'являються у результатах введених відповідей</string>
-    <string name="type_in_answer_focus" maxLength="41">Focus ‘type in answer’</string>
-    <string name="type_in_answer_focus_summ">Automatically focus the ‘type in answer’ field in the reviewer</string>
+    <string name="type_in_answer_focus" maxLength="41">Перемкнути на «Вводити відповідь»</string>
+    <string name="type_in_answer_focus_summ">Автоматично переходити при повторенні до поля «Вводити відповідь»</string>
     <!-- Open Changelog-->
     <string name="open_changelog">Відкрити список змін</string>
 </resources>
