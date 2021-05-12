@@ -83,6 +83,10 @@
             android:key="showEstimates"
             android:summary="@string/show_estimates_summ"
             android:title="@string/show_estimates" />
+        <CheckBoxPreference
+            android:defaultValue="false"
+            android:key="alwaysShowOnlyTwoAnswerButtons"
+            android:title="@string/always_show_only_two_answer_buttons" />
         <com.ichi2.ui.SeekBarPreference
             android:defaultValue="100"
             android:key="cardZoom"
