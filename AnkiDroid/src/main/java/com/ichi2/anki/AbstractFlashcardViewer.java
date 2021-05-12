@@ -4212,5 +4212,49 @@ see card.js for available functions
                 return true;
             }
         }
+
+        //Voice reading
+        JavaScriptTTS mTalker = new JavaScriptTTS (AbstractFlashcardViewer.this);
+
+        @JavascriptInterface
+        public int ankiTtsSpeak(String text, int queueMode) {
+          return  mTalker.speak(text, queueMode);
+        }
+
+        @JavascriptInterface
+        public int ankiTtsSpeak(String text) {
+          return  mTalker.speak(text);
+        }
+
+        @JavascriptInterface
+        public int ankiTtsSetLanguage(String loc) {
+          return  mTalker.setLanguage(loc);
+        }
+
+        @JavascriptInterface
+        public int ankiTtsSetPitch(float pitch) {
+          return  mTalker.setPitch(pitch);
+        }
+
+        @JavascriptInterface
+        public int ankiTtsSetPitch(double pitch) {
+          return  mTalker.setPitch((float)pitch);
+        }
+
+        @JavascriptInterface
+        public int ankiTtsSetSpeechRate(float speechRate) {
+          return mTalker.setSpeechRate(speechRate);
+        }        
+        
+        @JavascriptInterface
+        public int ankiTtsSetSpeechRate(double speechRate) {
+          return mTalker.setSpeechRate((float)speechRate);
+        }
+      
+        @JavascriptInterface
+        public void ankiTtsStop() {
+          mTalker.stop();
+        }
+
     }
 }
