@@ -70,6 +70,7 @@
             android:defaultValue="false"
             android:title="@string/paste_as_png"
             android:summary="@string/paste_as_png_summary"
+            android:maxLength="41"
             android:key="pastePNG"/>
         <ListPreference
             android:defaultValue="2"
