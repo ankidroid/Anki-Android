@@ -2173,8 +2173,8 @@ public class CardBrowser extends NavigationDrawerActivity implements
             int size = cards.size();
             // In all of those cases, there is nothing to do:
             if (size <= 0 ||
-                    firstVisibleItem > size ||
-                    lastVisibleItem - 1 < size) {
+                    firstVisibleItem >= size ||
+                    lastVisibleItem - 1 >= size) {
                 return;
             }
             boolean firstLoaded = cards.get(firstVisibleItem).isLoaded();
