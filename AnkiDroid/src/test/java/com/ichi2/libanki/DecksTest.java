@@ -38,7 +38,7 @@ public class DecksTest extends RobolectricTest {
     @Test
     public void duplicateName() {
         Decks decks = getCol().getDecks();
-        decks.load("{2: {\"name\": \"A\", \"id\":2}, 3: {\"name\": \"A\", \"id\":3}, 4: {\"name\": \"A::B\", \"id\":4}}", "{}");
+        decks.load("{\"2\": {\"name\": \"A\", \"id\":2}, \"3\": {\"name\": \"A\", \"id\":3}, \"4\": {\"name\": \"A::B\", \"id\":4}}", "{}");
         decks.checkIntegrity();
         JSONObject deckA = decks.byName("A");
         Asserts.notNull(deckA, "A deck with name \"A\" should still exists");

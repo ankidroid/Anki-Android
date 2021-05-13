@@ -71,9 +71,9 @@ public class Models {
     private static final Pattern fClozeOrdPattern = Pattern.compile("(?si)\\{\\{c(\\d+)::.*?\\}\\}");
 
     public static final String DEFAULT_MODEL =
-              "{'sortf': 0, "
-            + "'did': 1, "
-            + "'latexPre': \""
+              "{\"sortf\": 0, "
+            + "\"did\": 1, "
+            + "\"latexPre\": \""
             + "\\\\documentclass[12pt]{article}\\n"
             + "\\\\special{papersize=3in,5in}\\n"
             + "\\\\usepackage[utf8]{inputenc}\\n"
@@ -82,14 +82,14 @@ public class Models {
             + "\\\\setlength{\\\\parindent}{0in}\\n"
             + "\\\\begin{document}\\n"
             + "\", "
-            + "'latexPost': \"\\\\end{document}\", "
-            + "'mod': 0, "
-            + "'usn': 0, "
-            + "'vers': [], " // FIXME: remove when other clients have caught up
-            + "'type': "
+            + "\"latexPost\": \"\\\\end{document}\", "
+            + "\"mod\": 0, "
+            + "\"usn\": 0, "
+            + "\"vers\": [], " // FIXME: remove when other clients have caught up
+            + "\"type\": "
             + Consts.MODEL_STD
             + ", "
-            + "'css': \".card {\\n"
+            + "\"css\": \".card {\\n"
             + " font-family: arial;\\n"
             + " font-size: 20px;\\n"
             + " text-align: center;\\n"
@@ -98,15 +98,15 @@ public class Models {
             + "}\""
             + "}";
 
-    private static final String defaultField = "{'name': \"\", " + "'ord': null, " + "'sticky': False, " +
+    private static final String defaultField = "{\"name\": \"\", " + "\"ord\": null, " + "\"sticky\": false, " +
     // the following alter editing, and are used as defaults for the template wizard
-            "'rtl': False, " + "'font': \"Arial\", " + "'size': 20, " +
+            "\"rtl\": false, " + "\"font\": \"Arial\", " + "\"size\": 20, " +
             // reserved for future use
-            "'media': [] }";
+            "\"media\": [] }";
 
-    private static final String defaultTemplate = "{'name': \"\", " + "'ord': null, " + "'qfmt': \"\", "
-            + "'afmt': \"\", " + "'did': null, " + "'bqfmt': \"\"," + "'bafmt': \"\"," + "'bfont': \"Arial\"," +
-            "'bsize': 12 }";
+    private static final String defaultTemplate = "{\"name\": \"\", " + "\"ord\": null, " + "\"qfmt\": \"\", "
+            + "\"afmt\": \"\", " + "\"did\": null, " + "\"bqfmt\": \"\"," + "\"bafmt\": \"\"," + "\"bfont\": \"Arial\"," +
+            "\"bsize\": 12 }";
 
     // /** Regex pattern used in removing tags from text before diff */
     // private static final Pattern sFactPattern = Pattern.compile("%\\([tT]ags\\)s");

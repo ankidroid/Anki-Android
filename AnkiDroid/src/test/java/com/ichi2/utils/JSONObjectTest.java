@@ -34,15 +34,15 @@ import static org.hamcrest.core.IsNull.notNullValue;
 public class JSONObjectTest {
 
     private final String emptyJson = "{}";
-    private final String correctJsonBasic = "{key1:value1}";
-    private final String correctJsonNested = "{key1:{key1a:value1a,key1b:value1b},key2:value2}";
-    private final String correctJsonWithArray = "{key1:value1,key2:[{key2a:value2a},{key2b:value2b}],key3:value3}";
-    private final String correctJsonNestedWithArray = "{key1:{key1a:value1a,key1b:value1b},key2:[{key2a:value2a},{key2b:value2b}],key3:value3}";
-    private final String noOpeningBracket = "key1:value1}";
-    private final String extraOpeningBracket = "{{key1: value1}";
-    private final String noClosingBracket = "{key1:value1";
-    private final String wrongKeyValueSeparator = "{key1:value1,key2 value2}";
-    private final String duplicateKey = "{key1:value1,key1:value2}";
+    private final String correctJsonBasic = "{\"key1\":\"value1\"}";
+    private final String correctJsonNested = "{\"key1\":{\"key1a\":\"value1a\",\"key1b\":\"value1b\"},\"key2\":\"value2\"}";
+    private final String correctJsonWithArray = "{\"key1\":\"value1\",\"key2\":[{\"key2a\":\"value2a\"},{\"key2b\":\"value2b\"}],\"key3\":\"value3\"}";
+    private final String correctJsonNestedWithArray = "{\"key1\":{\"key1a\":\"value1a\",\"key1b\":\"value1b\"},\"key2\":[{\"key2a\":\"value2a\"},{\"key2b\":\"value2b\"}],\"key3\":\"value3\"}";
+    private final String noOpeningBracket = "\"key1\":\"value1\"}";
+    private final String extraOpeningBracket = "{{\"key1\": \"value1\"}";
+    private final String noClosingBracket = "{\"key1\":value1";
+    private final String wrongKeyValueSeparator = "{\"key1\":\"value1\",\"key2\" \"value2\"}";
+    private final String duplicateKey = "{\"key1\":\"value1\",\"key1\":\"value2\"}";
 
     private JSONObject correctJsonObjectBasic;
     private JSONObject correctJsonObjectNested;

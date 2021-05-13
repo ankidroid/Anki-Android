@@ -144,12 +144,12 @@ public class Collection implements CollectionGetter {
     public static final String DEFAULT_CONF = "{"
             +
             // review options
-            "'activeDecks': [1], " + "'curDeck': 1, " + "'newSpread': " + Consts.NEW_CARDS_DISTRIBUTE + ", "
-            + "'collapseTime': 1200, " + "'timeLim': 0, " + "'estTimes': True, " + "'dueCounts': True, "
+            "\"activeDecks\": [1], " + "\"curDeck\": 1, " + "\"newSpread\": " + Consts.NEW_CARDS_DISTRIBUTE + ", "
+            + "\"collapseTime\": 1200, " + "\"timeLim\": 0, " + "\"estTimes\": true, " + "\"dueCounts\": true, "
             +
             // other config
-            "'curModel': null, " + "'nextPos': 1, " + "'sortType': \"noteFld\", "
-            + "'sortBackwards': False, 'addToCur': True }"; // add new to currently selected deck?
+            "\"curModel\": null, " + "\"nextPos\": 1, " + "\"sortType\": \"noteFld\", "
+            + "\"sortBackwards\": false, \"addToCur\": true }"; // add new to currently selected deck?
 
     private static final int UNDO_SIZE_MAX = 20;
 
