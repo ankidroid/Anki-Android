@@ -37,6 +37,7 @@ import com.ichi2.anki.exception.FilteredAncestor;
 import com.ichi2.libanki.Collection;
 import com.ichi2.libanki.Deck;
 import com.ichi2.libanki.stats.Stats;
+import com.ichi2.utils.DeckNameComparator;
 import com.ichi2.utils.FunctionalInterfaces;
 import com.ichi2.utils.FilterResultsUtils;
 
@@ -409,7 +410,7 @@ public class DeckSelectionDialog extends AnalyticsDialogFragment {
             if (o.mDeckId == Stats.ALL_DECKS_ID) {
                 return 1;
             }
-            return this.mName.compareTo(o.mName);
+            return DeckNameComparator.INSTANCE.compare(this.mName, o.mName);
         }
 
 
