@@ -259,5 +259,5 @@
     <!-- This description is valid fos
     sched V2. For V1, it was counting the number of repetitions of cards in learning. This approximation is acceptable
     for the sake of simplicity and because V1 will leave.-->
-    <string name="deck_picker_counts">Open the deck overview page containing the number of cards to see today.</string>
+    <string name="deck_picker_counts">Відкрити сторінку огляду колоди, що містить число карт для перегляду на сьогодні.</string>
 </resources>
