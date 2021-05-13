@@ -397,10 +397,17 @@ public class DeckSelectionDialog extends AnalyticsDialogFragment {
         }
 
 
+        /** All decks comes first. Then alphabetical order. */
         @Override
         public int compareTo(@NonNull SelectableDeck o) {
-            if (o.mDeckId == Stats.ALL_DECKS_ID || this.mDeckId == Stats.ALL_DECKS_ID){
+            if (this.mDeckId == Stats.ALL_DECKS_ID){
+                if (o.mDeckId == Stats.ALL_DECKS_ID) {
+                    return 0;
+                }
                 return -1;
+            }
+            if (o.mDeckId == Stats.ALL_DECKS_ID) {
+                return 1;
             }
             return this.mName.compareTo(o.mName);
         }
