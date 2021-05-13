@@ -179,8 +179,8 @@
     <string name="day_offset_summ">XXX horo(j) post noktmezo</string>
     <string name="xlabel_dayoffset_seekbar" maxLength="41">00:00</string>
     <string name="ylabel_dayoffset_seekbar" maxLength="41">23:00</string>
-    <string name="sched_v2" maxLength="41">V2 scheduler</string>
-    <string name="sched_v2_summ">Enable the new scheduler. Forces changes in one direction on next sync</string>
+    <string name="sched_v2" maxLength="41">Planilo V2</string>
+    <string name="sched_v2_summ">Aktivigi la novan planilon V2. Devigas ŝanĝojn en unu direkto je la sekva samtempigo</string>
     <string name="sched_ver_toggle_title">Konfirmi</string>
     <string name="sched_ver_2to1">Tiu procezo nuligos ĉiujn kartojn en lernado, forigi filtritajn kartarojn kaj ŝanĝi la planiloversion. Daŭrigi?</string>
     <string name="sched_ver_1to2">La eksperimenta planilo povus kaŭzi malĝustan planadon. Bonvolu nepre legi la dokumentaron unue. Daŭrigi?</string>
