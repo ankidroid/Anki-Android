@@ -1,6 +1,7 @@
-/*  
+/*
  *  Copyright (c) 2020 Arthur Milchior <arthur@milchior.fr>
- *  
+ *  Copyright (c) 2021 Tarek Mohamed Abdalla <tarekkma@gmail.com>
+ *
  *  This file is free software: you may copy, redistribute and/or modify it  
  *  under the terms of the GNU General Public License as published by the  
  *  Free Software Foundation, either version 3 of the License, or (at your  
@@ -42,6 +43,15 @@
 
 package com.ichi2.utils;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.JsonMappingException;
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.node.ArrayNode;
+import com.fasterxml.jackson.databind.node.NullNode;
+import com.fasterxml.jackson.databind.node.ObjectNode;
+import com.ichi2.anki.AnkiSerialization;
+
 import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -49,89 +59,94 @@ import java.util.Iterator;
 import java.util.List;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 
-public class JSONArray extends org.json.JSONArray {
-    public JSONArray() {
-        super();
+import static java.lang.System.identityHashCode;
+
+/**
+ * An array of JSON elements that follows the api of {@link org.json.JSONArray}
+ * but backed by {@link ArrayNode} from Jackson serialization library.
+ *
+ * Some differences from {@link org.json.JSONArray}:
+ *   - {@link #getJSONArray(int)} returns this class
+ *   - {@link #getJSONObject(int)} returns instance of {@link JSONObject} not {@link org.json.JSONObject}
+ *   - Null is instance of {@link NullNode}/{@link JSONObject#NULL}
+ *   - Exceptions are of type {@link JSONException} which is unchecked exception
+ *
+ * Internal implementation using {@link ArrayNode} should be invisible to the user as long
+ * as they don't access the underlying node via {@link #getRootJsonNode()}.
+ */
+public class JSONArray {
+
+    @NonNull
+    private final ArrayNode mNode;
+
+    /**
+     * Creates instance from {@link ArrayNode}
+     *
+     * JSONArray is essentially is the same as the {@link ArrayNode} with a
+     * different API, so any changes to this class would result in changes
+     * in the passed node and vice versa.
+     */
+    public JSONArray(@NonNull ArrayNode node) {
+        mNode = node;
     }
 
-    public JSONArray(org.json.JSONArray copyFrom) {
+    /**
+     * @return the backing {@link ArrayNode}
+     *
+     * Changing the content of the returned node will result
+     * in a change in this instance of JSONArray.
+     *
+     *
+     * This method should not be used directly to change the
+     * content of the json array, but can be used for jackson
+     * deserialization and for changing the wrapper class around
+     * the {@link ArrayNode}
+     */
+    public ArrayNode getRootJsonNode() {
+        return mNode;
+    }
+
+    /**
+     * Creates an empty json array using the default {@link ObjectMapper}
+     */
+    public JSONArray() {
+        // ObjectNode/ArrayNode require JsonNodeFactory to be created. So instead of hardcoding the JsonNodeFactory
+        // config about how to handle decimals, I use the globally created ObjectMapper and it will create
+        // object/array with the correct configured factory.
+        this(AnkiSerialization.getObjectMapper().createArrayNode());
+    }
+
+    /**
+     * Creates a deep copy from another {@link JSONArray}
+     * @param copyFrom instance to copy
+     */
+    public JSONArray(@NonNull JSONArray copyFrom) {
+        mNode = copyFrom.mNode.deepCopy();
+    }
+
+    /**
+     * Deserializes a string to to a {@link JSONArray} using the default {@link ObjectMapper}
+     * @param source the json string
+     *
+     * @throws JSONException if the string couldn't be parsed.
+     * the encapsulated exception is either {@link JsonProcessingException} or {@link JsonMappingException}
+     */
+    public JSONArray(@NonNull String source) {
         try {
-            for (int i = 0; i < copyFrom.length(); i++) {
-                put(i, copyFrom.get(i));
-            }
-        } catch (org.json.JSONException e) {
+            mNode = (ArrayNode) AnkiSerialization.getObjectMapper().readTree(source);
+        } catch (Exception e) {
             throw new JSONException(e);
         }
     }
 
 
     /**
-     * This method simply change the type.
-     *
-     * See the comment of objectToObject to read about the problems met here.
-     *
-     * @param ar Actually a JSONArray
-     * @return the same element as input. But considered as a JSONArray.
+     * Construct {@link JSONArray} filed with a given array
+     * @param array object that is an array (ex. int[], double[])
      */
-    public static JSONArray arrayToArray(org.json.JSONArray ar){
-        return (JSONArray) ar;
-    }
-
-    public JSONArray(JSONTokener x) {
-        this();
-        try {
-            if (x.nextClean() != '[') {
-                throw x.syntaxError("A JSONArray text must start with '['");
-            }
-
-            char nextChar = x.nextClean();
-            if (nextChar == 0) {
-                // array is unclosed. No ']' found, instead EOF
-                throw x.syntaxError("Expected a ',' or ']'");
-            }
-            if (nextChar != ']') {
-                x.back();
-                for (; ; ) {
-                    if (x.nextClean() == ',') {
-                        x.back();
-                        put(JSONObject.NULL);
-                    } else {
-                        x.back();
-                        put(x.nextValue());
-                    }
-                    switch (x.nextClean()) {
-                        case 0:
-                            // array is unclosed. No ']' found, instead EOF
-                            throw x.syntaxError("Expected a ',' or ']'");
-                        case ',':
-                            nextChar = x.nextClean();
-                            if (nextChar == 0) {
-                                // array is unclosed. No ']' found, instead EOF
-                                throw x.syntaxError("Expected a ',' or ']'");
-                            }
-                            if (nextChar == ']') {
-                                return;
-                            }
-                            x.back();
-                            break;
-                        case ']':
-                            return;
-                        default:
-                            throw x.syntaxError("Expected a ',' or ']'");
-                    }
-                }
-            }
-        } catch (org.json.JSONException e) {
-            throw new JSONException(e);
-        }
-    }
-
-    public JSONArray(String source) {
-        this(new JSONTokener(source));
-    }
-
-    public JSONArray(Object array) {
+    public JSONArray(@NonNull Object array) {
         this();
         if (array.getClass().isArray()) {
             int length = Array.getLength(array);
@@ -144,168 +159,300 @@ public class JSONArray extends org.json.JSONArray {
         }
     }
 
-    public JSONArray(Collection<?> copyFrom) {
+
+    /**
+     * Construct {@link JSONArray} filed with items in the given iterator
+     */
+    public JSONArray(@Nullable Iterator<?> iterator) {
         this();
-        if (copyFrom != null) {
-            for (Object o : copyFrom) {
-                put(o);
-            }
+        if (iterator == null) {
+            return;
+        }
+        while (iterator.hasNext()) {
+            this.put(iterator.next());
         }
     }
 
+
+    /**
+     * Construct {@link JSONArray} filed with a given iterable
+     */
+    public JSONArray(@Nullable Iterable<?> iterable) {
+        this(iterable == null ? null : iterable.iterator());
+    }
+
+    /**
+     * Appends {@code value} to the end of this array.
+     */
+    @NonNull
+    public JSONArray put(int value) {
+        return put(mNode.numberNode(value));
+    }
+
+    /**
+     * Appends {@code value} to the end of this array.
+     */
+    @NonNull
     public JSONArray put(double value) {
-        try {
-            super.put(value);
-            return this;
-        } catch (org.json.JSONException e) {
-            throw new JSONException(e);
-        }
+        return put(mNode.numberNode(value));
     }
 
+    /**
+     * Appends {@code value} to the end of this array.
+     */
+    @NonNull
+    public JSONArray put(String value) {
+        return put(mNode.textNode(value));
+    }
+
+    /**
+     * Appends {@code value} to the end of this array.
+     */
+    @NonNull
+    public JSONArray put(@Nullable JSONArray value) {
+        return put(value == null ?
+                JSONObject.NULL :
+                value.getRootJsonNode());
+    }
+
+
+    /**
+     * Appends {@code value} to the end of this array.
+     */
+    @NonNull
+    public JSONArray put(@Nullable JSONObject value) {
+        return put(value == null ?
+                JSONObject.NULL :
+                value.getRootJsonNode());
+    }
+
+    /**
+     * Appends {@code value} to the end of this array.
+     *
+     * @see JSONUtils#objectToJsonNode(Object) for supported types
+     */
+    @NonNull
+    public JSONArray put(@Nullable Object value) {
+        return put(JSONUtils.objectToJsonNode(value));
+    }
+
+    /**
+     * Appends {@code node} to the end of this array.
+     */
+    @NonNull
+    public JSONArray put(JsonNode node) {
+        mNode.add(node);
+        return this;
+    }
+
+    /**
+     * Sets the value at {@code index} to {@code value}
+     *
+     * @see #put(int, JsonNode) for details about null padding
+     */
+    @NonNull
     public JSONArray put(int index, boolean value) {
-        try {
-            super.put(index, value);
-            return this;
-        } catch (org.json.JSONException e) {
-            throw new JSONException(e);
-        }
+        return put(index, mNode.booleanNode(value));
     }
 
+    /**
+     * Sets the value at {@code index} to {@code value}
+     *
+     * @see #put(int, JsonNode) for details about null padding
+     */
+    @NonNull
     public JSONArray put(int index, double value) {
-        try {
-            super.put(index, value);
-            return this;
-        } catch (org.json.JSONException e) {
-            throw new JSONException(e);
-        }
+        return put(index, mNode.numberNode(value));
     }
 
+    /**
+     * Sets the value at {@code index} to {@code value}
+     *
+     * @see #put(int, JsonNode) for details about null padding
+     */
+    @NonNull
     public JSONArray put(int index, int value) {
-        try {
-            super.put(index, value);
-            return this;
-        } catch (org.json.JSONException e) {
-            throw new JSONException(e);
-        }
+        return put(index, mNode.numberNode(value));
     }
 
+    /**
+     * Sets the value at {@code index} to {@code value}
+     */
+    @NonNull
     public JSONArray put(int index, long value) {
-        try {
-            super.put(index, value);
-            return this;
-        } catch (org.json.JSONException e) {
-            throw new JSONException(e);
-        }
+        return put(index, mNode.numberNode(value));
     }
 
+    /**
+     * Sets the value at {@code index} to {@code value}
+     *
+     * @see JSONUtils#objectToJsonNode(Object) for supported types
+     * @see #put(int, JsonNode) for details about null padding
+     */
+    @NonNull
     public JSONArray put(int index, Object value) {
-        try {
-            super.put(index, value);
-            return this;
-        } catch (org.json.JSONException e) {
-            throw new JSONException(e);
+        JsonNode node = JSONUtils.objectToJsonNode(value);
+        return put(index, node);
+    }
+
+    /**
+     * Sets the value at {@code index} to {@code node}, null padding this array
+     * to the required length if necessary. If a value already exists at {@code
+     * index}, it will be replaced.
+     *
+     * Null padding is done primarily to be compatible with the previous implementation
+     * which relied on {@link org.json.JSONArray}, there is no actual need for this feature
+     * in AnkiDroid.
+     */
+    @NonNull
+    public JSONArray put(int index, JsonNode node) {
+        while (length() <= index) {
+            put(JSONObject.NULL);
+        }
+        mNode.set(index, node);
+        return this;
+    }
+
+
+    /**
+     * This is used primarily to be compatible with the previous implementation
+     * which did wrap every exception inside {@link JSONException}
+     *
+     * @implNote note that jackson don't throw on out of bound exception
+     * when retrieving a value rather it returns null, so we need to
+     * manually check and throw
+     *
+     * @throws JSONException if index is out out bounds
+     */
+    protected void throwIfInvalidIndex(int index) {
+        if (isInvalidIndex(index)) {
+            throw new JSONException(new IndexOutOfBoundsException("Index: " + index + ", Size: " + length()));
         }
     }
 
-    public Object get(int index) {
-        try {
-            return super.get(index);
-        } catch (org.json.JSONException e) {
-            throw new JSONException(e);
-        }
+
+    /**
+     * @return true if index is out of bounds, false otherwise
+     */
+    protected boolean isInvalidIndex(int index) {
+        return (index < 0) || (index >= length());
     }
 
+
+    /**
+     * @return value at index
+     * @throws JSONException if the index is out of bounds
+     *                       or if the value at index cannot be converted to boolean
+     */
     public boolean getBoolean(int index) {
-        try {
-            return super.getBoolean(index);
-        } catch (org.json.JSONException e) {
-            throw new JSONException(e);
-        }
+        return JSONTypeConverters.convert(index, get(index), Boolean.class);
     }
 
+    /**
+     * @return value at index
+     * @throws JSONException if the index is out of bounds
+     *                       or if the value at index cannot be converted to double
+     */
     public double getDouble(int index) {
-        try {
-            return super.getDouble(index);
-        } catch (org.json.JSONException e) {
-            throw new JSONException(e);
-        }
+        return JSONTypeConverters.convert(index, get(index), Double.class);
     }
 
+    /**
+     * @return value at index
+     * @throws JSONException if the index is out of bounds
+     *                       or if the value at index cannot be converted to int
+     */
     public int getInt(int index) {
-        try {
-            return super.getInt(index);
-        } catch (org.json.JSONException e) {
-            throw new JSONException(e);
-        }
+        return JSONTypeConverters.convert(index, get(index), Integer.class);
     }
 
+    /**
+     * @return value at index
+     * @throws JSONException if the index is out of bounds
+     *                       or if the value at index cannot be converted to long
+     */
     public long getLong(int index) {
-        try {
-            return super.getLong(index);
-        } catch (org.json.JSONException e) {
-            throw new JSONException(e);
-        }
+        return JSONTypeConverters.convert(index, get(index), Long.class);
     }
 
+    /**
+     * @return value at index
+     * @throws JSONException if the index is out of bounds
+     *                       or if the value at index cannot be converted to String
+     */
     public String getString(int index) {
-        try {
-            return super.getString(index);
-        } catch (org.json.JSONException e) {
-            throw new JSONException(e);
-        }
-    }
-
-    public JSONArray getJSONArray(int pos) {
-        try {
-            return arrayToArray(super.getJSONArray(pos));
-        } catch (org.json.JSONException e) {
-            throw new RuntimeException (e);
-        }
-    }
-
-    public JSONObject getJSONObject(int pos) {
-        try {
-            return JSONObject.objectToObject(super.getJSONObject(pos));
-        } catch (org.json.JSONException e) {
-            throw new RuntimeException (e);
-        }
-    }
-
-    public String join(String separator) {
-        try {
-            return super.join(separator);
-        } catch (org.json.JSONException e) {
-            throw new JSONException(e);
-        }
-    }
-
-    public @NonNull String toString(int indentSpaces) {
-        try {
-            return super.toString(indentSpaces);
-        } catch (org.json.JSONException e) {
-            throw new JSONException(e);
-        }
+        return JSONTypeConverters.convert(index, get(index), String.class);
     }
 
 
+    /**
+     * @return JSONArray at index
+     * @throws JSONException if the index is out of bounds
+     *                       or if the value at index isn't an array
+     */
+    public JSONArray getJSONArray(int index) {
+        return JSONTypeConverters.convert(index, get(index), JSONArray.class);
+    }
+
+    /**
+     * @return JSONObject at index
+     * @throws JSONException if the index is out of bounds
+     *                       or if the value at index isn't an object
+     */
+    public JSONObject getJSONObject(int index) {
+        return JSONTypeConverters.convert(index, get(index), JSONObject.class);
+    }
+
+
+    /**
+     * Returns the value at {@code index}.
+     *
+     *
+     * @implNote The value can be directly used, That is Long, Boolean, JSONObject, etc...
+     * and not the actual value of type {@link JsonNode} stored in the underlying {@link #mNode}
+     *
+     * @return value at index
+     * @throws JSONException if the index is out of bounds
+     *                       or the value type isn't supported
+     *
+     * @see JSONUtils#jsonNodeToObject(JsonNode) for list of supported types
+     */
+    public Object get(int index) {
+        JsonNode node = getJsonNode(index);
+        return JSONUtils.jsonNodeToObject(node);
+    }
+
+    /**
+     * @return node at index
+     * @throws JSONException if the index is out of bounds
+     */
+    protected JsonNode getJsonNode(int index) {
+        throwIfInvalidIndex(index);
+        return mNode.get(index);
+    }
+
+    /**
+     * Returns the value at {@code index} if it exists, coercing it if
+     * necessary. Returns the empty string if no such value exists.
+     */
+    public String optString(int index) {
+        if (isInvalidIndex(index)) {
+            return "";
+        }
+        return mNode.get(index).asText("");
+    }
+
+    @NonNull
     public JSONArray deepClone() {
-        JSONArray clone = new JSONArray();
-        for (int i = 0; i < length(); i++) {
-            if (get(i) instanceof JSONObject) {
-                clone.put(getJSONObject(i).deepClone());
-            }
-            else if (get(i) instanceof JSONArray) {
-                clone.put(getJSONArray(i).deepClone());
-            } else {
-                clone.put(get(i));
-            }
-        }
-        return clone;
+        ArrayNode node = mNode.deepCopy();
+        return new JSONArray(node);
     }
 
+    @NonNull
     public Iterable<JSONArray> jsonArrayIterable() {
         return this::jsonArrayIterator;
     }
+    @NonNull
     public Iterator<JSONArray> jsonArrayIterator() {
         return new Iterator<JSONArray>() {
             private int mIndex = 0;
@@ -322,6 +469,10 @@ public class JSONArray extends org.json.JSONArray {
                 return array;
             }
         };
+    }
+
+    public int length() {
+        return mNode.size();
     }
 
     public Iterable<JSONObject> jsonObjectIterable() {
@@ -422,5 +573,39 @@ public class JSONArray extends org.json.JSONArray {
             l.add(object.getString(key));
         }
         return l;
+    }
+
+
+    public boolean isNull(int i) {
+        JsonNode node = mNode.get(i);
+        return node == null || node.isNull();
+    }
+
+    @Override
+    public String toString() {
+        return mNode.toString();
+    }
+
+    public String toPrettyString() {
+        return mNode.toPrettyString();
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
+        JSONArray other = (JSONArray) o;
+        // intentional reference comparison
+        return mNode == other.getRootJsonNode();
+    }
+
+
+    @Override
+    public int hashCode() {
+        return identityHashCode(mNode);
     }
 }
