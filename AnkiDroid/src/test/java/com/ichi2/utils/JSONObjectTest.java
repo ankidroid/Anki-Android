@@ -42,7 +42,6 @@ public class JSONObjectTest {
     private final String extraOpeningBracket = "{{\"key1\": \"value1\"}";
     private final String noClosingBracket = "{\"key1\":value1";
     private final String wrongKeyValueSeparator = "{\"key1\":\"value1\",\"key2\" \"value2\"}";
-    private final String duplicateKey = "{\"key1\":\"value1\",\"key1\":\"value2\"}";
 
     private JSONObject correctJsonObjectBasic;
     private JSONObject correctJsonObjectNested;
@@ -83,7 +82,6 @@ public class JSONObjectTest {
         Assert.assertThrows(JSONException.class, () -> new JSONObject(extraOpeningBracket));
         Assert.assertThrows(JSONException.class, () -> new JSONObject(noClosingBracket));
         Assert.assertThrows(JSONException.class, () -> new JSONObject(wrongKeyValueSeparator));
-        Assert.assertThrows(JSONException.class, () -> new JSONObject(duplicateKey));
     }
 
     @Test
