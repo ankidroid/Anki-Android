@@ -2171,21 +2171,25 @@ public class CardBrowser extends NavigationDrawerActivity implements
             CardCollection<CardCache> cards = getCards();
             // List is never cleared, only reset to a new list. So it's safe here.
             int size = cards.size();
-            if ((size > 0) && (firstVisibleItem < size) && ((lastVisibleItem - 1) < size)) {
-                boolean firstLoaded = cards.get(firstVisibleItem).isLoaded();
-                // Note: max value of lastVisibleItem is totalItemCount, so need to subtract 1
-                boolean lastLoaded = cards.get(lastVisibleItem - 1).isLoaded();
-                if (!firstLoaded || !lastLoaded) {
-                    if (!mPostAutoScroll) {
-                        showProgressBar();
-                    }
-                    // Also start rendering the items on the screen every 300ms while scrolling
-                    long currentTime = SystemClock.elapsedRealtime ();
-                    if ((currentTime - mLastRenderStart > 300 || lastVisibleItem >= totalItemCount)) {
-                        mLastRenderStart = currentTime;
-                        TaskManager.cancelAllTasks(CollectionTask.RenderBrowserQA.class);
-                        TaskManager.launchCollectionTask(renderBrowserQAParams(firstVisibleItem, visibleItemCount, cards), mRenderQAHandler);
-                    }
+            // In all of those cases, there is nothing to do:
+            if (size <= 0 ||
+                    firstVisibleItem > size ||
+                    lastVisibleItem - 1 < size) {
+                return;
+            }
+            boolean firstLoaded = cards.get(firstVisibleItem).isLoaded();
+            // Note: max value of lastVisibleItem is totalItemCount, so need to subtract 1
+            boolean lastLoaded = cards.get(lastVisibleItem - 1).isLoaded();
+            if (!firstLoaded || !lastLoaded) {
+                if (!mPostAutoScroll) {
+                    showProgressBar();
+                }
+                // Also start rendering the items on the screen every 300ms while scrolling
+                long currentTime = SystemClock.elapsedRealtime();
+                if ((currentTime - mLastRenderStart > 300 || lastVisibleItem >= totalItemCount)) {
+                    mLastRenderStart = currentTime;
+                    TaskManager.cancelAllTasks(CollectionTask.RenderBrowserQA.class);
+                    TaskManager.launchCollectionTask(renderBrowserQAParams(firstVisibleItem, visibleItemCount, cards), mRenderQAHandler);
                 }
             }
         }
