@@ -4021,16 +4021,14 @@ see card.js for available functions
 
             try {
                 data = new JSONObject(jsonData);
-                if (!(data == JSONObject.NULL)) {
-                    mCardSuppliedApiVersion = data.optString("version", "");
-                    mCardSuppliedDeveloperContact  = data.optString("developer", "");
+                mCardSuppliedApiVersion = data.optString("version", "");
+                mCardSuppliedDeveloperContact  = data.optString("developer", "");
 
-                    if (requireApiVersion(mCardSuppliedApiVersion, mCardSuppliedDeveloperContact)) {
-                        enableJsApi();
-                    }
-
-                    apiStatusJson = JSONObject.fromMap(mJsApiListMap).toString();
+                if (requireApiVersion(mCardSuppliedApiVersion, mCardSuppliedDeveloperContact)) {
+                    enableJsApi();
                 }
+
+                apiStatusJson = JSONObject.fromMap(mJsApiListMap).toString();
 
             } catch (JSONException j) {
                 Timber.w(j);
