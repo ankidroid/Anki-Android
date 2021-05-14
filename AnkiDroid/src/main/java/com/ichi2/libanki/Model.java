@@ -20,6 +20,7 @@ package com.ichi2.libanki;
 import android.text.TextUtils;
 import android.util.Pair;
 
+import com.fasterxml.jackson.databind.node.ObjectNode;
 import com.ichi2.libanki.template.ParsedNode;
 import com.ichi2.libanki.template.TemplateError;
 import com.ichi2.utils.JSONArray;
@@ -40,14 +41,49 @@ import timber.log.Timber;
  * If a change affect card generation, (i.e. any change on the list of field, or the question side of a card type), `Models.save(this, true)` should be called. However, you should do the change in batch and change only when aall are done, because recomputing the list of card is an expensive operation.
  */
 public class Model extends JSONObject {
+
+    /**
+     * @see  Model#from(JSONObject)
+     */
+    protected Model(ObjectNode node) {
+        super(node);
+    }
+
+
+    /**
+     * Creates a Model object from the underlying
+     * {@link ObjectNode} in the passed {@link JSONObject}
+     *
+     * NOTE: The passed node will be used directly, so
+     * any change in the node will result in a change in
+     * this object
+     */
+    public static Model from(JSONObject json) {
+        return new Model(json.getRootJsonNode());
+    }
+
+    /**
+     * Creates a new empty model object
+     */
     public Model() {
         super();
     }
 
+    /**
+     * Creates a copy from {@link JSONObject} and use it as a string
+     *
+     * This function will perform deepCopy on the passed object
+     *
+     * @see Model#from(JSONObject) if you want to create a
+     *                             Model without deepCopy
+     */
     public Model(JSONObject json) {
         super(json);
     }
 
+    /**
+     * Creates a model object form json string
+     */
     public Model(String json) {
         super(json);
     }
