@@ -417,7 +417,7 @@ public class CardTemplateEditor extends AnkiActivity implements DeckSelectionDia
                 @Override
                 public void afterTextChanged(Editable arg0) {
                     if (mCurrentEditorViewId == R.id.styling_edit) {
-                        mTemplateEditor.getTempModel().updateCss(mEditorEditText.getText().toString());
+                        tempModel.updateCss(mEditorEditText.getText().toString());
                     } else if (mCurrentEditorViewId == R.id.back_edit) {
                         template.put("afmt", mEditorEditText.getText());
                     } else {
@@ -483,9 +483,12 @@ public class CardTemplateEditor extends AnkiActivity implements DeckSelectionDia
                 menu.findItem(R.id.action_add_deck_override).setVisible(false);
             } else {
                 JSONObject template = getCurrentTemplate();
-                @StringRes int overrideStringRes = template.has("did") && !template.isNull("did") ?
-                        R.string.card_template_editor_deck_override_on :
-                        R.string.card_template_editor_deck_override_off;
+                
+                @StringRes int overrideStringRes = R.string.card_template_editor_deck_override_off;
+
+                if (template != null && template.has("did") && !template.isNull("did")) {
+                    overrideStringRes = R.string.card_template_editor_deck_override_on;
+                }
 
                 menu.findItem(R.id.action_add_deck_override).setTitle(overrideStringRes);
             }
@@ -559,8 +562,10 @@ public class CardTemplateEditor extends AnkiActivity implements DeckSelectionDia
                 return true;
             } else if (itemId == R.id.action_card_browser_appearance) {
                 Timber.i("CardTemplateEditor::Card Browser Template button pressed");
-                launchCardBrowserAppearance(getCurrentTemplate());
-
+                JSONObject currentTemplate = getCurrentTemplate();
+                if (currentTemplate != null) {
+                    launchCardBrowserAppearance(currentTemplate);
+                }
                 return super.onOptionsItemSelected(item);
             }
             return super.onOptionsItemSelected(item);
@@ -633,10 +638,15 @@ public class CardTemplateEditor extends AnkiActivity implements DeckSelectionDia
         }
 
 
-        @CheckResult @NonNull
+        @CheckResult
         private JSONObject getCurrentTemplate() {
             int currentCardTemplateIndex = getCurrentCardTemplateIndex();
-            return mTemplateEditor.getTempModel().getModel().getJSONArray("tmpls").getJSONObject(currentCardTemplateIndex);
+            try {
+                return mTemplateEditor.getTempModel().getModel().getJSONArray("tmpls").getJSONObject(currentCardTemplateIndex);
+            } catch (JSONException e) {
+                Timber.w(e, "CardTemplateEditor::getCurrentTemplate - unexpectedly unable to fetch template? %d", currentCardTemplateIndex);
+                return null;
+            }
         }
 
 
@@ -699,7 +709,9 @@ public class CardTemplateEditor extends AnkiActivity implements DeckSelectionDia
             Timber.i("Applying Card Template Browser Appearance result");
 
             JSONObject currentTemplate = getCurrentTemplate();
-            result.applyTo(currentTemplate);
+            if (currentTemplate != null) {
+                result.applyTo(currentTemplate);
+            }
         }
 
         /* Used for updating the collection when a model has been edited */
