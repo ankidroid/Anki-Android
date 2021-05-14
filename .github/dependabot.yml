@@ -1,5 +1,9 @@
 version: 2
 updates:
+- package-ecosystem: "github-actions"
+  directory: "/"
+  schedule:
+    interval: "daily"
 - package-ecosystem: gradle
   directory: "/"
   schedule:
@@ -10,6 +14,11 @@ updates:
   labels:
   - "dependencies"
   ignore:
+  # We cannot update this one until API26. Ignore range should slide with known versions so we stay informed.
+  - dependency-name: org.apache.commons:commons-compress
+    verisons:
+    - ">= 1.12, < 1.21"
+  # We cannot use current versions of material-dialogs with Java. It went Kotlin-only.
   - dependency-name: com.afollestad.material-dialogs:core
     versions:
     - ">= 2.a, < 3"
