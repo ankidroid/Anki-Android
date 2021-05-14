@@ -122,10 +122,10 @@ public class JSONObjectTest {
     }
 
     @Test
-    public void objectToObjectTest() {
-        assertEquals(correctJsonObjectBasic.toString(), JSONObject.objectToObject(correctJsonObjectBasic).toString());
-        assertEquals(correctJsonObjectNested.toString(), JSONObject.objectToObject(correctJsonObjectNested).toString());
-        Assert.assertNotEquals(correctJsonObjectNested.toString(), JSONObject.objectToObject(correctJsonObjectWithArray).toString());
+    public void copyConstructorTest() {
+        assertEquals(correctJsonObjectBasic.toString(), new JSONObject(correctJsonObjectBasic).toString());
+        assertEquals(correctJsonObjectNested.toString(), new JSONObject(correctJsonObjectNested).toString());
+        Assert.assertNotEquals(correctJsonObjectNested.toString(), new JSONObject(correctJsonObjectWithArray).toString());
     }
 
     @Test
