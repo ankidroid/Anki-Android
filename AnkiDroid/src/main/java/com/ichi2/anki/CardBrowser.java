@@ -158,7 +158,8 @@ public class CardBrowser extends NavigationDrawerActivity implements
     @NonNull
     private CardCollection<CardCache> mCards = new CardCollection<>();
     public DeckSpinnerSelection mDeckSpinnerSelection;
-    private ListView mCardsListView;
+    @VisibleForTesting
+    public ListView mCardsListView;
     private SearchView mSearchView;
     private MultiColumnListAdapter mCardsAdapter;
     private String mSearchTerms;
@@ -2163,7 +2164,8 @@ public class CardBrowser extends NavigationDrawerActivity implements
     /**
      * Render the second column whenever the user stops scrolling
      */
-    private final class RenderOnScroll implements AbsListView.OnScrollListener {
+    @VisibleForTesting
+    public final class RenderOnScroll implements AbsListView.OnScrollListener {
         @Override
         public void onScroll(AbsListView view, int firstVisibleItem, int visibleItemCount, int totalItemCount) {
             // Show the progress bar if scrolling to given position requires rendering of the question / answer
@@ -2174,7 +2176,9 @@ public class CardBrowser extends NavigationDrawerActivity implements
             // In all of those cases, there is nothing to do:
             if (size <= 0 ||
                     firstVisibleItem >= size ||
-                    lastVisibleItem - 1 >= size) {
+                    lastVisibleItem - 1 >= size ||
+                    visibleItemCount <= 0
+            ) {
                 return;
             }
             boolean firstLoaded = cards.get(firstVisibleItem).isLoaded();
