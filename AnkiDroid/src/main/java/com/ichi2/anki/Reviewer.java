@@ -115,7 +115,6 @@ public class Reviewer extends AbstractFlashcardViewer {
     private TextView mTextBarReview;
 
     private boolean mPrefHideDueCount;
-    private boolean alwaysShowOnlyTwoAnswerButtons;
 
     // ETA
     private int mEta;
@@ -811,7 +810,6 @@ public class Reviewer extends AbstractFlashcardViewer {
 
     @Override
     protected void displayAnswerBottomBar() {
-        SharedPreferences preferences = AnkiDroidApp.getSharedPrefs(getBaseContext());
         super.displayAnswerBottomBar();
         int buttonCount;
         try {
@@ -849,7 +847,8 @@ public class Reviewer extends AbstractFlashcardViewer {
         mEase1Layout.setBackgroundResource(background[0]);
         mEase4Layout.setBackgroundResource(background[3]);
 
-        alwaysShowOnlyTwoAnswerButtons = preferences.getBoolean("alwaysShowOnlyTwoAnswerButtons", false);
+        boolean alwaysShowOnlyTwoAnswerButtons = AnkiDroidApp.getSharedPrefs(getBaseContext())
+                .getBoolean("alwaysShowOnlyTwoAnswerButtons", false);
 
         switch (buttonCount) {
             case 2:
@@ -878,19 +877,18 @@ public class Reviewer extends AbstractFlashcardViewer {
                         mEase2Layout.requestFocus();
                     }
                     break;
-                default:
-    
-                if (!alwaysShowOnlyTwoAnswerButtons) {
-                    // Ease 2 is "hard"
-                    mEase2Layout.setVisibility(View.VISIBLE);
-                    mEase2Layout.setVisibility(View.VISIBLE);
-                    mEase2Layout.setBackgroundResource(background[1]);
-                    mEase2.setText(R.string.ease_button_hard);
-                    mEase2.setTextColor(textColor[1]);
-                    mNext2.setTextColor(textColor[1]);
-                    mEase2Layout.requestFocus();
-                    mEase4Layout.setVisibility(View.VISIBLE);
-                }
+                default:    
+                    if (!alwaysShowOnlyTwoAnswerButtons) {
+                        // Ease 2 is "hard"
+                        mEase2Layout.setVisibility(View.VISIBLE);
+                        mEase2Layout.setVisibility(View.VISIBLE);
+                        mEase2Layout.setBackgroundResource(background[1]);
+                        mEase2.setText(R.string.ease_button_hard);
+                        mEase2.setTextColor(textColor[1]);
+                        mNext2.setTextColor(textColor[1]);
+                        mEase2Layout.requestFocus();
+                        mEase4Layout.setVisibility(View.VISIBLE);
+                    }
                     // Ease 3 is good
                     mEase3Layout.setVisibility(View.VISIBLE);
                     mEase3Layout.setBackgroundResource(background[2]);
