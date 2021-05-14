@@ -41,7 +41,6 @@ import static org.junit.Assert.assertNotSame;
 import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertThrows;
 
-@RunWith(AndroidJUnit4.class)
 public class JSONObjectTest {
 
     private final String emptyJson = "{}";
