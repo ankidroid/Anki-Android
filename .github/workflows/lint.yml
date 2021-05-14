@@ -17,6 +17,7 @@ on:
     branches:
       - master
       - i18n_sync
+      - dependency-updates
       - 'release**'
     paths:
       - '.github/workflows/**'
