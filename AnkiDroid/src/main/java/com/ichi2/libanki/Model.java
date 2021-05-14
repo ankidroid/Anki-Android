@@ -18,8 +18,8 @@ package com.ichi2.libanki;
 
 
 import android.text.TextUtils;
-import android.util.Pair;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import com.ichi2.libanki.template.ParsedNode;
 import com.ichi2.libanki.template.TemplateError;
@@ -45,6 +45,7 @@ public class Model extends JSONObject {
     /**
      * @see  Model#from(JSONObject)
      */
+    @JsonCreator
     protected Model(ObjectNode node) {
         super(node);
     }
