@@ -7,6 +7,8 @@ updates:
     time: "10:00"
   open-pull-requests-limit: 10
   target-branch: dependency-updates
+  labels:
+  - "dependencies"
   ignore:
   - dependency-name: com.afollestad.material-dialogs:core
     versions:
