@@ -683,4 +683,14 @@ public class CardBrowserTest extends RobolectricTest {
         advanceRobolectricLooperWithSleep();
         return multimediaController.get();
     }
+
+
+    // Regression test for #8821
+    @Test
+    public void emptyScroll() {
+        CardBrowser cardBrowser = getBrowserWithNotes(2);
+
+        CardBrowser.RenderOnScroll renderOnScroll = cardBrowser.new RenderOnScroll();
+        renderOnScroll.onScroll(cardBrowser.mCardsListView, 0, 0, 2);
+    }
 }
