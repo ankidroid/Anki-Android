@@ -11,7 +11,7 @@ repositories {
 }
 
 dependencies {
-    compileOnly "com.android.tools.lint:lint-api:27.2.0"
+    compileOnly "com.android.tools.lint:lint-api:27.2.1"
     compileOnly "com.android.tools.lint:lint:27.2.0"
 
     testImplementation "junit:junit:4.13.2"
