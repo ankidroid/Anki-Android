@@ -2179,6 +2179,7 @@ public class CardBrowser extends NavigationDrawerActivity implements
                     lastVisibleItem - 1 >= size ||
                     visibleItemCount <= 0
             ) {
+                AnkiDroidApp.sendExceptionReport("Useless `onScroll` call, with size " + size +" firstVisibleItem " +firstVisibleItem+ ", lastVisibleItem "+lastVisibleItem+" and visibleItemCount "+visibleItemCount+".", "CardBroser.RenderOnScroll.onScroll");
                 return;
             }
             boolean firstLoaded = cards.get(firstVisibleItem).isLoaded();
