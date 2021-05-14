@@ -256,10 +256,12 @@ public class Decks {
         JSONObject decksarray = new JSONObject(decks);
         JSONArray ids = decksarray.names();
         mDecks = new HashMap<>(decksarray.length());
-        for (String id: ids.stringIterable()) {
-            Deck o = new Deck(decksarray.getJSONObject(id));
-            long longId = Long.parseLong(id);
-            mDecks.put(longId, o);
+        if (ids != null) {
+            for (String id : ids.stringIterable()) {
+                Deck o = new Deck(decksarray.getJSONObject(id));
+                long longId = Long.parseLong(id);
+                mDecks.put(longId, o);
+            }
         }
         mNameMap = NameMap.constructor(mDecks.values());
         JSONObject confarray = new JSONObject(dconf);
@@ -1275,7 +1277,7 @@ public class Decks {
         return current().optString("desc","");
     }
 
-    @Deprecated
+    @VisibleForTesting
     @RustCleanup("This exists in Rust as DecksDictProxy, but its usage is warned against")
     public HashMap<Long, Deck> getDecks() {
         return mDecks;
