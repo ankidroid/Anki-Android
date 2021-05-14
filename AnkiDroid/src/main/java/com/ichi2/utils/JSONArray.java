@@ -45,6 +45,8 @@ package com.ichi2.utils;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonMappingException;
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonValue;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ArrayNode;
@@ -75,6 +77,15 @@ import static java.lang.System.identityHashCode;
  *
  * Internal implementation using {@link ArrayNode} should be invisible to the user as long
  * as they don't access the underlying node via {@link #getRootJsonNode()}.
+ *
+ *
+ * Databinding API:
+ *
+ * JSONArray support jackson databinding API, this is achieved {@link JsonCreator} and
+ * {@link JsonValue} annotations which tell jackson how to de/serialize it from json source.
+ *
+ * If a sub class wishes to enable databinding, it should create a constructor that delegates to
+ * {@link #JSONArray(ArrayNode)} and annotate it with {@link JsonCreator}.
  */
 public class JSONArray {
 
@@ -88,6 +99,7 @@ public class JSONArray {
      * different API, so any changes to this class would result in changes
      * in the passed node and vice versa.
      */
+    @JsonCreator
     public JSONArray(@NonNull ArrayNode node) {
         mNode = node;
     }
@@ -104,6 +116,7 @@ public class JSONArray {
      * deserialization and for changing the wrapper class around
      * the {@link ArrayNode}
      */
+    @JsonValue
     public ArrayNode getRootJsonNode() {
         return mNode;
     }

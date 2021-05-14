@@ -36,6 +36,23 @@ public class JSONArrayTest {
 
 
     @Test
+    public void testDatabindingSerializeDeserialize() throws JsonProcessingException {
+        @Language("JSON") String jsonArrayString = "[\"a\",\"b\",{\"c\":\"d\"},[\"e\",\"f\",[\"g\"]]]";
+        JSONArray arr = new ObjectMapper().readValue(jsonArrayString, JSONArray.class);
+
+        assertEquals(arr.get(0), "a");
+        assertEquals(arr.get(1), "b");
+        assertEquals(arr.getJSONObject(2).get("c"), "d");
+        assertEquals(arr.getJSONArray(3).get(0), "e");
+        assertEquals(arr.getJSONArray(3).get(1), "f");
+        assertEquals(arr.getJSONArray(3).getJSONArray(2).get(0), "g");
+
+        String serializedJsonString = AnkiSerialization.getObjectMapper().writeValueAsString(arr);
+        assertEquals(jsonArrayString, serializedJsonString);
+    }
+
+
+    @Test
     public void emptyJSONArray() {
         JSONArray jsonArray = new JSONArray();
         assertEquals("[]", jsonArray.toString());

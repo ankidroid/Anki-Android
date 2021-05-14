@@ -17,6 +17,11 @@
 
 package com.ichi2.utils;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.ichi2.anki.AnkiSerialization;
+
+import org.intellij.lang.annotations.Language;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 
@@ -30,7 +35,6 @@ import java.util.Iterator;
 import java.util.Map;
 
 import androidx.annotation.NonNull;
-import androidx.test.ext.junit.runners.AndroidJUnit4;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.core.IsNull.notNullValue;
@@ -70,6 +74,22 @@ public class JSONObjectTest {
         for (int i = 0 ; i < 10 ; ++i) {
             booleanMap.put("key" + i, i%2 == 0);
         }
+    }
+
+    @Test
+    public void testDatabindingSerializeDeserialize() throws JsonProcessingException {
+        @Language("JSON") String jsonObjectString = "{\"a\":\"b\",\"c\":false,\"d\":1.01,\"e\":[\"f\",\"g\"],\"h\":{\"i\":\"j\"}}";
+        JSONObject obj = new ObjectMapper().readValue(jsonObjectString, JSONObject.class);
+
+        assertEquals(obj.get("a"), "b");
+        assertEquals(obj.get("c"), false);
+        assertEquals(obj.get("d"), 1.01);
+        assertEquals(obj.getJSONArray("e").get(0), "f");
+        assertEquals(obj.getJSONArray("e").get(1), "g");
+        assertEquals(obj.getJSONObject("h").get("i"), "j");
+
+        String serializedJsonString = AnkiSerialization.getObjectMapper().writeValueAsString(obj);
+        assertEquals(jsonObjectString, serializedJsonString);
     }
 
     @Test

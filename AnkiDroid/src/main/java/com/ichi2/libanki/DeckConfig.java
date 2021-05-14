@@ -16,10 +16,10 @@
  */
 package com.ichi2.libanki;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import com.ichi2.utils.JSONObject;
 
-import androidx.annotation.CheckResult;
 import androidx.annotation.Nullable;
 import timber.log.Timber;
 
@@ -28,6 +28,7 @@ public class DeckConfig extends JSONObject{
     /**
      * @see  DeckConfig#from(JSONObject)
      */
+    @JsonCreator
     protected DeckConfig(ObjectNode node) {
         super(node);
     }

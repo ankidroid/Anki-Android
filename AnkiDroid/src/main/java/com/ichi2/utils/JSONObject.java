@@ -50,6 +50,8 @@ package com.ichi2.utils;
 
  */
 
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonValue;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.JsonNode;
@@ -79,6 +81,15 @@ import static java.lang.System.identityHashCode;
  *
  * Internal implementation using {@link ObjectNode} should be invisible to the user as long
  * as they don't access the underlying node via {@link #getRootJsonNode()}.
+ *
+ *
+ * Databinding API:
+ *
+ * JSONObject support jackson databinding API, this is achieved {@link JsonCreator} and
+ * {@link JsonValue} annotations which tell jackson how to de/serialize it from json source.
+ *
+ * If a sub class wishes to enable databinding, it should create a constructor that delegates to
+ * {@link #JSONObject(ObjectNode)} and annotate it with {@link JsonCreator}.
  */
 public class JSONObject implements Iterable<String> {
 
@@ -94,6 +105,7 @@ public class JSONObject implements Iterable<String> {
      * different API, so any changes to this class would result in changes
      * in the passed node and vice versa.
      */
+    @JsonCreator
     public JSONObject(@NonNull ObjectNode node) {
         mNode = node;
     }
@@ -110,6 +122,7 @@ public class JSONObject implements Iterable<String> {
      * the {@link ObjectNode} like {@link com.ichi2.libanki.Deck#from(JSONObject)}
      */
     @NonNull
+    @JsonValue
     public ObjectNode getRootJsonNode() {
         return mNode;
     }
