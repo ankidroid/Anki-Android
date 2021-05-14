@@ -173,11 +173,6 @@ public class JSONObject implements Iterable<String> {
     }
 
     @NonNull
-    public static JSONObject objectToObject(JSONObject obj) {
-        return obj.deepClone();
-    }
-
-    @NonNull
     public JSONObject put(@NonNull String name, boolean value) {
         return this.put(name, mNode.booleanNode(value));
     }
