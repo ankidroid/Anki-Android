@@ -424,27 +424,6 @@ public class JSONObject implements Iterable<String> {
         return new JSONObject(clone);
     }
 
-    /** deep clone this into clone.
-
-        Given a subtype `T` of JSONObject, and a JSONObject `j`, we could do
-        ```
-        T t = new T();
-        j.deepClonedInto(t);
-        ```
-        in order to obtain a deep clone of `j` of type ```T```. */
-    protected <T extends JSONObject> T deepClonedInto(T clone) {
-        for (String key: this) {
-            if (get(key) instanceof JSONObject) {
-                clone.put(key, getJSONObject(key).deepClone());
-            }
-            else if (get(key) instanceof JSONArray) {
-                clone.put(key, getJSONArray(key).deepClone());
-            } else {
-                clone.put(key, get(key));
-            }
-        }
-        return clone;
-    }
 
     @NonNull
     public static JSONObject fromMap(@NonNull Map<String, Boolean> map) {

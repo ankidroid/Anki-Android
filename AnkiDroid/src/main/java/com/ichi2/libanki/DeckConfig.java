@@ -19,6 +19,7 @@ package com.ichi2.libanki;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import com.ichi2.utils.JSONObject;
 
+import androidx.annotation.CheckResult;
 import androidx.annotation.Nullable;
 import timber.log.Timber;
 
@@ -105,7 +106,6 @@ public class DeckConfig extends JSONObject{
 
     @Override
     public DeckConfig deepClone() {
-        DeckConfig dc = new DeckConfig();
-        return deepClonedInto(dc);
+        return new DeckConfig(this);
     }
 }
