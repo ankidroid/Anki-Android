@@ -90,8 +90,7 @@ public class Model extends JSONObject {
     @Override
     @CheckResult
     public Model deepClone() {
-        Model clone = new Model();
-        return deepClonedInto(clone);
+        return new Model(this);
     }
 
     public List<String> getFieldsNames() {

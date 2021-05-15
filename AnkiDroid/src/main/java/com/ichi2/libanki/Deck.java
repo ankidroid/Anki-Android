@@ -75,8 +75,7 @@ public class Deck extends JSONObject {
     @Override
     @CheckResult
     public Deck deepClone() {
-        Deck clone = new Deck();
-        return deepClonedInto(clone);
+        return new Deck(this);
     }
 
     public boolean isDyn() {

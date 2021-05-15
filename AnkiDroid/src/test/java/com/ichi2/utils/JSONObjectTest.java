@@ -132,37 +132,6 @@ public class JSONObjectTest {
     }
 
     /**
-     * Wraps all the alphanumeric words in a string in quotes
-     */
-    private static String removeQuotes(String string) {
-        return string.replaceAll("\"([a-zA-Z0-9]+)\"", "$1");
-    }
-
-    private static class JSONObjectSubType extends JSONObject {
-        /**
-         * Sample overridden function
-         */
-        @NonNull
-        @Override
-        public String toString() {
-            return removeQuotes(super.toString());
-        }
-    }
-
-    @Test
-    public void deepCloneTest() {
-        JSONObjectSubType jsonObjectSubType = new JSONObjectSubType();
-
-        // Clone base JSONObject Type into JSONObjectSubType
-        correctJsonObjectNestedWithArray.deepClonedInto(jsonObjectSubType);
-
-        // Test by passing result of base JSONObject's toString() to removeQuotes()
-        // This is already done in the JSONObjectSubType object
-        assertEquals(removeQuotes(correctJsonObjectNestedWithArray.toString()), jsonObjectSubType.toString());
-    }
-
-
-    /**
      * Tests that the a new copy is returned instead of a reference to the original.
      */
     @Test
