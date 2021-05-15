@@ -34,7 +34,7 @@ class Utils {
     private static final Pattern stylePattern = Pattern.compile("(?s)<style.*?>.*?</style>");
     private static final Pattern scriptPattern = Pattern.compile("(?s)<script.*?>.*?</script>");
     private static final Pattern tagPattern = Pattern.compile("<.*?>");
-    private static final Pattern imgPattern = Pattern.compile("<img src=[\"']?([^\"'>]+)[\"']? ?/?>");
+    private static final Pattern imgPattern = Pattern.compile("(?i)<img[^>]+src=[\"']?([^\"'>]+)[\"']?[^>]*>");
     private static final Pattern htmlEntitiesPattern = Pattern.compile("&#?\\w+;");
     private static final String FIELD_SEPARATOR = Character.toString('\u001f');
 
@@ -92,7 +92,7 @@ class Utils {
      */
     private static String stripHTMLMedia(String s) {
         Matcher imgMatcher = imgPattern.matcher(s);
-        return stripHTML(imgMatcher.replaceAll(" $1 "));
+        return stripHTML(imgMatcher.replaceAll(" $2 "));
     }
 
     private static String stripHTML(String s) {
