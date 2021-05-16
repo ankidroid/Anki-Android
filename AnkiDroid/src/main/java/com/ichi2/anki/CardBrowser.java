@@ -2186,7 +2186,7 @@ public class CardBrowser extends NavigationDrawerActivity implements
                 // can delete some elements from the cache for example, since nothing is displayed.
 
                 // It would be interesting to know how often it occurs, but it is not a bug.
-                AnkiDroidApp.sendExceptionReport("In a search result of " + size + " cards, with totalItemCount = " + totalItemCount + ", somehow we got " + visibleItemCount + " elements to display.", "CardBroser.RenderOnScroll.onScroll");
+                AnkiDroidApp.sendExceptionReport("CardBrowser Scroll Issue 8821", "CardBrowser.onScroll", "In a search result of " + size + " cards, with totalItemCount = " + totalItemCount + ", somehow we got " + visibleItemCount + " elements to display.", "CardBroser.RenderOnScroll.onScroll");
             }
             // In all of those cases, there is nothing to do:
             if (size <= 0 ||
