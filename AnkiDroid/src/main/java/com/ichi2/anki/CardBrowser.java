@@ -2173,13 +2173,27 @@ public class CardBrowser extends NavigationDrawerActivity implements
             CardCollection<CardCache> cards = getCards();
             // List is never cleared, only reset to a new list. So it's safe here.
             int size = cards.size();
+            if (size > 0 && visibleItemCount <= 0) {
+                // According to Mike, there used to be 5 to 10 report by hour on the beta version. All with
+                // > com.ichi2.anki.exception.ManuallyReportedException: Useless onScroll call, with size 0 firstVisibleItem 0,
+                // > lastVisibleItem 0 and visibleItemCount 0.
+
+                // This change ensure that we log more specifically case where #8821 could have occured. That is, there are cards but we
+                // are asked to display nothing.
+
+                // Note that this is not a bug. The fact that `visibleItemCount` is equal to 0 is actually authorized by the method we
+                // override and mentionned in the javadoc. It perfectly makes sens to get this order, since it can be used to know that we
+                // can delete some elements from the cache for example, since nothing is displayed.
+
+                // It would be interesting to know how often it occurs, but it is not a bug.
+                AnkiDroidApp.sendExceptionReport("In a search result of " + size + " cards, with totalItemCount = " + totalItemCount + ", somehow we got " + visibleItemCount + " elements to display.", "CardBroser.RenderOnScroll.onScroll");
+            }
             // In all of those cases, there is nothing to do:
             if (size <= 0 ||
                     firstVisibleItem >= size ||
                     lastVisibleItem >= size ||
                     visibleItemCount <= 0
             ) {
-                AnkiDroidApp.sendExceptionReport("Useless `onScroll` call, with size " + size +" firstVisibleItem " +firstVisibleItem+ ", lastVisibleItem "+lastVisibleItem+" and visibleItemCount "+visibleItemCount+".", "CardBroser.RenderOnScroll.onScroll");
                 return;
             }
             boolean firstLoaded = cards.get(firstVisibleItem).isLoaded();
