@@ -2169,14 +2169,14 @@ public class CardBrowser extends NavigationDrawerActivity implements
         @Override
         public void onScroll(AbsListView view, int firstVisibleItem, int visibleItemCount, int totalItemCount) {
             // Show the progress bar if scrolling to given position requires rendering of the question / answer
-            int lastVisibleItem = firstVisibleItem + visibleItemCount;
+            int lastVisibleItem = firstVisibleItem + visibleItemCount - 1;
             CardCollection<CardCache> cards = getCards();
             // List is never cleared, only reset to a new list. So it's safe here.
             int size = cards.size();
             // In all of those cases, there is nothing to do:
             if (size <= 0 ||
                     firstVisibleItem >= size ||
-                    lastVisibleItem - 1 >= size ||
+                    lastVisibleItem >= size ||
                     visibleItemCount <= 0
             ) {
                 AnkiDroidApp.sendExceptionReport("Useless `onScroll` call, with size " + size +" firstVisibleItem " +firstVisibleItem+ ", lastVisibleItem "+lastVisibleItem+" and visibleItemCount "+visibleItemCount+".", "CardBroser.RenderOnScroll.onScroll");
@@ -2184,14 +2184,14 @@ public class CardBrowser extends NavigationDrawerActivity implements
             }
             boolean firstLoaded = cards.get(firstVisibleItem).isLoaded();
             // Note: max value of lastVisibleItem is totalItemCount, so need to subtract 1
-            boolean lastLoaded = cards.get(lastVisibleItem - 1).isLoaded();
+            boolean lastLoaded = cards.get(lastVisibleItem).isLoaded();
             if (!firstLoaded || !lastLoaded) {
                 if (!mPostAutoScroll) {
                     showProgressBar();
                 }
                 // Also start rendering the items on the screen every 300ms while scrolling
                 long currentTime = SystemClock.elapsedRealtime();
-                if ((currentTime - mLastRenderStart > 300 || lastVisibleItem >= totalItemCount)) {
+                if ((currentTime - mLastRenderStart > 300 || lastVisibleItem + 1 >= totalItemCount)) {
                     mLastRenderStart = currentTime;
                     TaskManager.cancelAllTasks(CollectionTask.RenderBrowserQA.class);
                     TaskManager.launchCollectionTask(renderBrowserQAParams(firstVisibleItem, visibleItemCount, cards), mRenderQAHandler);
