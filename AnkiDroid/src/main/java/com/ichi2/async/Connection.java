@@ -290,6 +290,8 @@ public class Connection extends BaseAsyncTask<Connection.Payload, Object, Connec
                 msg.contains("Failed to connect") ||
                 msg.contains("InterruptedIOException") ||
                 msg.contains("stream was reset") ||
+                msg.contains("Connection reset") ||
+                msg.contains("Broken pipe") ||
                 msg.contains("ConnectionShutdownException") ||
                 msg.contains("CLEARTEXT communication") ||
                 msg.contains("TimeoutException");
