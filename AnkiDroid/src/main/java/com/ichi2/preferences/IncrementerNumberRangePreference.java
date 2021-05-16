@@ -122,11 +122,11 @@ public class IncrementerNumberRangePreference extends NumberRangePreference {
      * @param isIncrement Indicator for whether to increase or decrease the value.
      */
     private void updateEditText(boolean isIncrement) {
-        int value ;
+        int value;
         try {
-            value=Integer.parseInt(mEditText.getText().toString());
-        } catch (NumberFormatException e){
-            value=0;
+            value = Integer.parseInt(mEditText.getText().toString());
+        } catch (NumberFormatException e) {
+            value = 0;
         }
         value = isIncrement ? value + 1 : value - 1;
         // Make sure value is within range
