@@ -1919,6 +1919,7 @@ public class NoteEditor extends AnkiActivity implements
         }
         // nb: setOnItemSelectedListener and populateEditFields need to occur after this
         setNoteTypePosition();
+        mDeckSpinnerSelection.setDeckId(getCol().getDecks().selected());
         mDeckSpinnerSelection.updateDeckPosition();
         updateTags();
         updateCards(mEditorNote.model());
