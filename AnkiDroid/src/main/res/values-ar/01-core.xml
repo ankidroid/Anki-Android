@@ -240,7 +240,7 @@
     <string name="sync_conflict_keep_local_new" comment="Select AnkiDroid files to keep while syncing">أنكيدرويد</string>
     <string name="sync_conflict_keep_remote_new" comment="Select AnkiWeb files to keep while syncing">أنكي ويب</string>
     <string name="sync_conflict_remote_confirm_new">هل تريد استبدال مجموعتك التي في أنكي ويب بمجموعتك التي في أنكيدرويد؟</string>
-    <string name="sync_conflict_local_confirm_new">Replace your collection on AnkiWeb with your collection from AnkiDroid?</string>
+    <string name="sync_conflict_local_confirm_new">هل تريد استبدال مجموعتك التي في أنكي ويب بمجموعتك التي في أنكيدرويد؟</string>
     <string name="sync_conflict_title_new">حدد مجموعة للإبقاء عليها</string>
     <string name="sync_conflict_replace_title">استبدال المجموعة</string>
 </resources>

@@ -38,7 +38,7 @@
 ~ this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <resources>
-    <string name="yes">yes</string>
+    <string name="yes">Sí</string>
     <!-- Navigation drawer items-->
     <string name="decks">Paquets</string>
     <string name="card_browser" comment="The usage of card browser inside the app (note the casing)">Navegador de cartes</string>
@@ -64,14 +64,14 @@
         <item quantity="other">%d minuts restants</item>
     </plurals>
     <plurals name="reviewer_window_title_hours">
-        <item quantity="one">%d hour %d left</item>
+        <item quantity="one">%d hores %d restants</item>
         <item quantity="other">%d hours %d left</item>
     </plurals>
     <plurals name="reviewer_window_title_days">
         <item quantity="one">%d day %d left</item>
         <item quantity="other">%d days %d left</item>
     </plurals>
-    <string name="no_cards_placeholder_title">Collection is empty</string>
+    <string name="no_cards_placeholder_title">La teva col·lecció és buida</string>
     <string name="no_cards_placeholder_description">Start adding cards\nusing the + icon.</string>
     <!-- The deck picker via AnkiStatsTaskHandler.java -->
     <plurals name="studied_cards_today">
@@ -81,7 +81,7 @@
     <!-- flashcard_portrait.xml -->
     <string name="type_answer_hint">Entrar resposta</string>
     <string name="show_answer">Mostra la resposta</string>
-    <string name="hide_answer">Hide answer</string>
+    <string name="hide_answer">Amaga la resposta</string>
     <string name="ease_button_again">De nou</string>
     <string name="ease_button_hard">Difícil</string>
     <string name="ease_button_good">Correcte</string>

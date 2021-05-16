@@ -20,15 +20,15 @@
  
 <resources>
     <!--Fields-->
-    <string name="front_field_name">Front</string>
-    <string name="back_field_name">Back</string>
-    <string name="text_field_name" comment="Field\'s name in Cloze Note type">Text</string>
-    <string name="extra_field_name">Extra</string>
-    <string name="field_to_ask_front_name">Add Reverse</string>
+    <string name="front_field_name">앞면</string>
+    <string name="back_field_name">뒷면</string>
+    <string name="text_field_name" comment="Field\'s name in Cloze Note type">텍스트</string>
+    <string name="extra_field_name">기타</string>
+    <string name="field_to_ask_front_name">반대 방향 추가</string>
     <!--Card type-->
-    <string name="card_n_name">Card %d</string>
+    <string name="card_n_name">카드 %d</string>
     <!--Note type-->
-    <string name="basic_model_name">Basic</string>
+    <string name="basic_model_name">기본</string>
     <string name="cloze_model_name">Cloze</string>
     <string name="basic_typing_model_name">Basic (type in the answer)</string>
     <string name="forward_reverse_model_name">Basic (and reversed card)</string>
