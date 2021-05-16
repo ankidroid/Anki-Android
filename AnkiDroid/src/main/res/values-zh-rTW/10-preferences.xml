@@ -151,8 +151,8 @@
     <string name="timeout_answer_seconds_summ" comment="The time to wait (in seconds) in the reviewer before automatically showing the next question or answer">XXX 秒</string>
     <string name="timeout_question_seconds" maxLength="41">顯示下一題的時間</string>
     <string name="select_locale_title">選擇語言</string>
-    <string name="software_render" maxLength="41">Disable card hardware render</string>
-    <string name="software_render_summ">Hardware render is faster but may have problems, specifically on Android 8/8.1. If you cannot see parts of the card review user interface, try this setting.</string>
+    <string name="software_render" maxLength="41">禁用卡片硬件渲染</string>
+    <string name="software_render_summ">硬件渲染速度較快，但可能有問題，特別是在Android 8/8.1。如果您看不到部分卡片復習用戶界面，請嘗試此設置。</string>
     <string name="safe_display" maxLength="41">安全顯示模式</string>
     <string name="safe_display_summ">關閉所有動畫且使用較安全的方法來繪製卡片。電子墨水裝置可能會需要這個方法。</string>
     <string name="disable_extended_text_ui" maxLength="41">禁用單域編輯模式</string>
@@ -175,12 +175,12 @@
     <string name="time_limit" maxLength="41">時間盒的時間上限</string>
     <string name="time_limit_summ">XXX分鐘</string>
     <string name="new_timezone" maxLength="41">新的時區處理</string>
-    <string name="day_offset_with_description" maxLength="41">Start of next day</string>
+    <string name="day_offset_with_description" maxLength="41">下一天開始的時間</string>
     <string name="day_offset_summ">午夜過後 XXX 小時</string>
-    <string name="xlabel_dayoffset_seekbar" maxLength="41">Midnight</string>
-    <string name="ylabel_dayoffset_seekbar" maxLength="41">11PM</string>
-    <string name="sched_v2" maxLength="41">V2 scheduler</string>
-    <string name="sched_v2_summ">Enable the new scheduler. Forces changes in one direction on next sync</string>
+    <string name="xlabel_dayoffset_seekbar" maxLength="41">午夜</string>
+    <string name="ylabel_dayoffset_seekbar" maxLength="41">晚上 11 点</string>
+    <string name="sched_v2" maxLength="41">V2調度器</string>
+    <string name="sched_v2_summ">啓用新版調度器。在下次同步時强制單向更變</string>
     <string name="sched_ver_toggle_title">確認</string>
     <string name="sched_ver_2to1">這將重設學習中的所有卡片，清除已過濾牌組，並改變排程器版本。繼續嗎？</string>
     <string name="sched_ver_1to2">實驗性排程器可能造成不正確的排程。請確認您已預先閱讀文檔。繼續嗎？</string>
@@ -288,11 +288,11 @@
     <string name="analytics_title" maxLength="41">分享功能使用方式</string>
     <string name="analytics_summ">你可以通過幫助開發團隊看看人們在用什麼功能，來為 AnkiDroid 做出貢獻</string>
     <string name="note_editor_replace_newlines" maxLength="41">以HTML取代新行</string>
-    <string name="note_editor_replace_newlines_summ">In the Note Editor, convert any instances of &lt;br&gt; to newlines when editing a card.</string>
-    <string name="no_code_formatting" maxLength="41">Simple typed answer formatting</string>
-    <string name="no_code_formatting_summ">Fixes ‘􏿾’ appearing in typed answer results</string>
-    <string name="type_in_answer_focus" maxLength="41">Focus ‘type in answer’</string>
-    <string name="type_in_answer_focus_summ">Automatically focus the ‘type in answer’ field in the reviewer</string>
+    <string name="note_editor_replace_newlines_summ">在筆記編輯器中，編輯卡片時將&lt;br&gt;的任何shi\'lie任何實例轉換爲換行。</string>
+    <string name="no_code_formatting" maxLength="41">簡單輸入的答案模式</string>
+    <string name="no_code_formatting_summ">修復在輸入的答按結果中出現的“􏿾”</string>
+    <string name="type_in_answer_focus" maxLength="41">聚焦“輸入答案”</string>
+    <string name="type_in_answer_focus_summ">自動聚焦在復習者的“輸入答案”字段</string>
     <!-- Open Changelog-->
-    <string name="open_changelog">Open Changelog</string>
+    <string name="open_changelog">打開更新日志</string>
 </resources>

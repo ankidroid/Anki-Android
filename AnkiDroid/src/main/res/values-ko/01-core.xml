@@ -65,7 +65,7 @@
         <item quantity="other">%d 시간 남음</item>
     </plurals>
     <plurals name="reviewer_window_title_days">
-        <item quantity="other">%d일 남음</item>
+        <item quantity="other">%d일 %d시간 남음</item>
     </plurals>
     <string name="no_cards_placeholder_title">이 컬렉션은 비어 있습니다</string>
     <string name="no_cards_placeholder_description">＋아이콘을 눌러 \n카드를 추가해 주십시오</string>
@@ -184,7 +184,7 @@
     </plurals>
     <string name="invalid_template">카드를 생성할 수 없습니다</string>
     <string name="card_template_editor_would_delete_note">이 카드 타이프를 削除하면、하나以上의 노트가 削除됩니다。于先새로운 카드 타이프를 生成해주십시오。</string>
-    <string name="card_template_editor_save_error">카드 템프렛의 變更事項을 保存할수없읍니다: %s</string>
+    <string name="card_template_editor_save_error">카드 템플릿 변경 사항을 저장할 수 없습니다. %s</string>
     <string name="template_for_current_card_deleted">現在카드의 카드타이프가 削除되었읍니다。</string>
     <!-- Card Browser Appearance -->
     <string name="card_template_browser_appearance_title">카드表示設定</string>

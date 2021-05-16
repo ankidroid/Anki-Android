@@ -98,7 +98,7 @@
     </string-array>
     <!-- Custom study options -->
     <string name="custom_study_increase_new_limit">Heutiges Limit für neue Karten ändern</string>
-    <string name="custom_study_increase_review_limit">Heutiges Limit für Wiederholungskarten ändern</string>
+    <string name="custom_study_increase_review_limit">Heutiges Limit für Karten-Wiederholungen ändern</string>
     <string name="custom_study_review_forgotten">Vergessene Karten nochmal lernen</string>
     <string name="custom_study_review_ahead">Im Voraus lernen</string>
     <string name="custom_study_random_selection">Zufällige Kartenauswahl lernen</string>

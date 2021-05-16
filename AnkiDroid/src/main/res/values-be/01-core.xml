@@ -68,14 +68,14 @@
         <item quantity="other">Засталося %d хвіліны</item>
     </plurals>
     <plurals name="reviewer_window_title_hours">
-        <item quantity="one">%d гадзіна %d засталося</item>
+        <item quantity="one">%d гадзіна %d засталася</item>
         <item quantity="few">%d гадзіны %d засталося</item>
         <item quantity="many">%d гадзін %d засталося</item>
         <item quantity="other">%d гадзін %d засталося</item>
     </plurals>
     <plurals name="reviewer_window_title_days">
         <item quantity="one">%d дзень %d засталося</item>
-        <item quantity="few">%d дні %d засталося</item>
+        <item quantity="few">%d дні %d засталіся</item>
         <item quantity="many">%d дзён %d засталося</item>
         <item quantity="other">%d дзён %d засталося</item>
     </plurals>

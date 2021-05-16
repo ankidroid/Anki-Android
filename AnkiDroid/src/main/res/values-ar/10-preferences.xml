@@ -177,10 +177,10 @@
     <string name="new_timezone" maxLength="41">طريقة المعالجة الجديدة للمناطق الزمنية</string>
     <string name="day_offset_with_description" maxLength="41">بداية اليوم التالي (0 يعني منتصف الليل، 23 يعني الساعة 11 مساءً)</string>
     <string name="day_offset_summ">XXX ساعة بعد منتصف الليل</string>
-    <string name="xlabel_dayoffset_seekbar" maxLength="41">Midnight</string>
-    <string name="ylabel_dayoffset_seekbar" maxLength="41">11PM</string>
-    <string name="sched_v2" maxLength="41">V2 scheduler</string>
-    <string name="sched_v2_summ">Enable the new scheduler. Forces changes in one direction on next sync</string>
+    <string name="xlabel_dayoffset_seekbar" maxLength="41">منتصف الليل</string>
+    <string name="ylabel_dayoffset_seekbar" maxLength="41">11م</string>
+    <string name="sched_v2" maxLength="41">جدولة ف2</string>
+    <string name="sched_v2_summ">تمكين الجدولة الجديدة. فرض التغيير في اتجاه واحد على المزامنة التالية</string>
     <string name="sched_ver_toggle_title">تأكيد</string>
     <string name="sched_ver_2to1">سيؤدي هذا إلى إعادة البطاقات في طور التعلم إلى بطاقات جديدة، ومسح الرزم المفلترة، وتغيير إصدار المجدول. هل تريد الاستمرار؟</string>
     <string name="sched_ver_1to2">قد يسبب المجدول التجريبي مزامنة خاطئة. لا تنسَ قراءة الوثائق أولًا. هل تريد الاستمرار؟</string>

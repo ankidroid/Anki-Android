@@ -80,13 +80,13 @@
         <item>暗色</item>
     </string-array>
     <string-array name="html_size_code_labels">
-        <item>xx-small</item>
-        <item>x-small</item>
-        <item>small</item>
-        <item>medium</item>
-        <item>large</item>
-        <item>x-large</item>
-        <item>xx-large</item>
+        <item>極小</item>
+        <item>很小</item>
+        <item>小</item>
+        <item>中</item>
+        <item>大</item>
+        <item>很大</item>
+        <item>極大</item>
     </string-array>
     <!--
     #7794 - it\'s better to use @string references in non-translated arrays as this handles
@@ -111,7 +111,7 @@
     <string name="gesture_page_up">向上翻頁</string>
     <string name="gesture_page_down">向下翻頁</string>
     <string name="gesture_abort_sync">中止學習和同步</string>
-    <string name="gesture_toggle_whiteboard">Toggle Whiteboard</string>
-    <string name="record_voice">Record Voice</string>
-    <string name="replay_voice">Replay Voice</string>
+    <string name="gesture_toggle_whiteboard">切換白板</string>
+    <string name="record_voice">錄製音頻</string>
+    <string name="replay_voice">重播音頻</string>
 </resources>
