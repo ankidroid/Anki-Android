@@ -2169,29 +2169,43 @@ public class CardBrowser extends NavigationDrawerActivity implements
         @Override
         public void onScroll(AbsListView view, int firstVisibleItem, int visibleItemCount, int totalItemCount) {
             // Show the progress bar if scrolling to given position requires rendering of the question / answer
-            int lastVisibleItem = firstVisibleItem + visibleItemCount;
+            int lastVisibleItem = firstVisibleItem + visibleItemCount - 1;
             CardCollection<CardCache> cards = getCards();
             // List is never cleared, only reset to a new list. So it's safe here.
             int size = cards.size();
+            if (size > 0 && visibleItemCount <= 0) {
+                // According to Mike, there used to be 5 to 10 report by hour on the beta version. All with
+                // > com.ichi2.anki.exception.ManuallyReportedException: Useless onScroll call, with size 0 firstVisibleItem 0,
+                // > lastVisibleItem 0 and visibleItemCount 0.
+
+                // This change ensure that we log more specifically case where #8821 could have occured. That is, there are cards but we
+                // are asked to display nothing.
+
+                // Note that this is not a bug. The fact that `visibleItemCount` is equal to 0 is actually authorized by the method we
+                // override and mentionned in the javadoc. It perfectly makes sens to get this order, since it can be used to know that we
+                // can delete some elements from the cache for example, since nothing is displayed.
+
+                // It would be interesting to know how often it occurs, but it is not a bug.
+                AnkiDroidApp.sendExceptionReport("CardBrowser Scroll Issue 8821", "In a search result of " + size + " cards, with totalItemCount = " + totalItemCount + ", somehow we got " + visibleItemCount + " elements to display.");
+            }
             // In all of those cases, there is nothing to do:
             if (size <= 0 ||
                     firstVisibleItem >= size ||
-                    lastVisibleItem - 1 >= size ||
+                    lastVisibleItem >= size ||
                     visibleItemCount <= 0
             ) {
-                AnkiDroidApp.sendExceptionReport("Useless `onScroll` call, with size " + size +" firstVisibleItem " +firstVisibleItem+ ", lastVisibleItem "+lastVisibleItem+" and visibleItemCount "+visibleItemCount+".", "CardBroser.RenderOnScroll.onScroll");
                 return;
             }
             boolean firstLoaded = cards.get(firstVisibleItem).isLoaded();
             // Note: max value of lastVisibleItem is totalItemCount, so need to subtract 1
-            boolean lastLoaded = cards.get(lastVisibleItem - 1).isLoaded();
+            boolean lastLoaded = cards.get(lastVisibleItem).isLoaded();
             if (!firstLoaded || !lastLoaded) {
                 if (!mPostAutoScroll) {
                     showProgressBar();
                 }
                 // Also start rendering the items on the screen every 300ms while scrolling
                 long currentTime = SystemClock.elapsedRealtime();
-                if ((currentTime - mLastRenderStart > 300 || lastVisibleItem >= totalItemCount)) {
+                if ((currentTime - mLastRenderStart > 300 || lastVisibleItem + 1 >= totalItemCount)) {
                     mLastRenderStart = currentTime;
                     TaskManager.cancelAllTasks(CollectionTask.RenderBrowserQA.class);
                     TaskManager.launchCollectionTask(renderBrowserQAParams(firstVisibleItem, visibleItemCount, cards), mRenderQAHandler);
