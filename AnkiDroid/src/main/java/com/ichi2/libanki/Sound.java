@@ -286,6 +286,21 @@ public class Sound {
         playSoundInternal(soundPath, completionListener, videoView, errorListener);
     }
 
+    /**
+     * Play or Pause the running sound. Called on pressing the content inside span tag.
+     */
+    public void playOrPauseSound() {
+        MediaPlayer mediaPlayer = mMediaPlayer;
+        if (mediaPlayer == null) {
+            return;
+        }
+        if (mMediaPlayer.isPlaying()) {
+            mMediaPlayer.pause();
+        } else {
+            mMediaPlayer.start();
+        }
+    }
+
     /** Plays a sound without ensuring that the playAllListener will release the audio */
     @SuppressWarnings({"PMD.EmptyIfStmt","PMD.CollapsibleIfStatements","deprecation"}) // audio API deprecation tracked on github as #5022
     private void playSoundInternal(String soundPath, OnCompletionListener playAllListener, VideoView videoView, OnErrorListener errorListener) {
