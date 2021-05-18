@@ -3516,10 +3516,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
         // We play sounds through these links when a user taps the sound icon.
         private boolean filterUrl(String url) {
             if (url.startsWith("playsound:")) {
-                // Send a message that will be handled on the UI thread.
-                Message msg = Message.obtain();
-                msg.obj = url.replaceFirst("playsound:", "");
-                mHandler.sendMessage(msg);
+                onCurrentAudioChanged(url);
                 return true;
             }
             if (url.startsWith("file") || url.startsWith("data:")) {
@@ -3704,6 +3701,14 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
                 Timber.w(e); // Don't crash if the intent is not handled
             }
             return true;
+        }
+
+
+        private void onCurrentAudioChanged(String url) {
+            // Send a message that will be handled on the UI thread.
+            Message msg = Message.obtain();
+            msg.obj = url.replaceFirst("playsound:", "");
+            mHandler.sendMessage(msg);
         }
 
 
