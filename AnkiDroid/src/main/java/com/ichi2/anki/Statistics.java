@@ -119,6 +119,8 @@ public class Statistics extends NavigationDrawerActivity implements
         mDeckSpinnerSelection.initializeActionBarDeckSpinner();
         mDeckSpinnerSelection.setShowAllDecks(true);
         mDeckSpinnerSelection.selectDeckById(deckId);
+        mTaskHandler.setDeckId(deckId);
+        mViewPager.getAdapter().notifyDataSetChanged();
     }
 
     @Override
