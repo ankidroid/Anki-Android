@@ -366,9 +366,35 @@ public class Note implements Cloneable {
 
 
     public String[] getFields() {
-        return mFields;
+        //return mFields;
+        return Arrays.stream(mFields)
+                .map(i -> i.replaceAll("\"", "&quot;")
+                           .replaceAll("&","&amp;")
+                           .replaceAll("<","&lt;")
+                           .replaceAll(">","gt;")
+                           .replaceAll("€","euro;")
+                           .replaceAll("‚","$sbquo;")
+                           .replaceAll("ƒ","&fnof;")
+                           .replaceAll("„","&bdquo;")
+                           .replaceAll("…","&hellip;")
+                           .replaceAll("ˆ","&circ;")
+                           .replaceAll("‹","&lsaquo;")
+                           .replaceAll("›","&rsaquo;")
+                           .replaceAll("‘","&lsquo;")
+                           .replaceAll("’","&rsquo")
+                           .replaceAll("“","&ldquo;")
+                           .replaceAll("”","&rdquo;")
+                           .replaceAll("–","&ndash;")
+                           .replaceAll("—","&mdash;")
+                           .replaceAll("˜","&tilde;")
+                           .replaceAll("©","&copy;")
+                           .replaceAll("®","&reg;")
+                           .replaceAll("¢","&cent;")
+                           .replaceAll("£","&pound;")
+                           .replaceAll("¿","&iquest;")
+                )
+                .toArray(String[]::new);
     }
-
 
     public void setField(int index, String value) {
         mFields[index] = value;
