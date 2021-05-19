@@ -35,7 +35,6 @@ import androidx.fragment.app.FragmentActivity;
 import androidx.viewpager2.widget.ViewPager2;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.util.Log;
 import android.util.Pair;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
