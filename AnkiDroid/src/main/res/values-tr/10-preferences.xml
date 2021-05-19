@@ -172,7 +172,7 @@
     <string name="use_current" maxLength="41">Yeni kartlar için deste</string>
     <string name="new_spread" maxLength="41">Yeni kart pozisyonu</string>
     <string name="learn_cutoff" maxLength="41">Önceden öğrenme sınırı</string>
-    <string name="time_limit" maxLength="41">Timebox zaman sınırı</string>
+    <string name="time_limit" maxLength="41">Zaman sınırı</string>
     <string name="time_limit_summ">XXX dk</string>
     <string name="new_timezone" maxLength="41">Yeni zaman dilimi idaresi</string>
     <string name="day_offset_with_description" maxLength="41">Sonraki günün başlangıcı (0 geceyarısı, 23 akşam 11)</string>
