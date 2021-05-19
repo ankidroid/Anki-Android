@@ -212,11 +212,11 @@
     <string name="wrong_tag_closed">Bulundu \'{{/%1$s}}\', ama \'{{/%2$s}}\' beklendi.</string>
     <string name="filter_error">%s Filtresinde Hata</string>
     <!-- Sync conflict -->
-    <string name="sync_conflict_message_new">The collections can’t be combined.\nWhich collection do you want to keep?</string>
+    <string name="sync_conflict_message_new">Koleksiyonlar birleştirilemiyor.\nHangi koleksiyonu tutmak istersiniz?</string>
     <string name="sync_conflict_keep_local_new" comment="Select AnkiDroid files to keep while syncing">AnkiDroid</string>
     <string name="sync_conflict_keep_remote_new" comment="Select AnkiWeb files to keep while syncing">AnkiWeb</string>
-    <string name="sync_conflict_remote_confirm_new">Replace your collection on AnkiDroid with your collection from AnkiWeb?</string>
-    <string name="sync_conflict_local_confirm_new">Replace your collection on AnkiWeb with your collection from AnkiDroid?</string>
-    <string name="sync_conflict_title_new">Select collection to keep</string>
-    <string name="sync_conflict_replace_title">Replace collection</string>
+    <string name="sync_conflict_remote_confirm_new">AnkiDroid\'deki koleksiyonunuzun yerini AnkiWeb\'deki koleksiyonunuz alsın mı?</string>
+    <string name="sync_conflict_local_confirm_new">AnkiWeb\'deki koleksiyonunuzun yerini AnkiDroid\'deki koleksiyonunuz alsın mı?</string>
+    <string name="sync_conflict_title_new">Tutulacak koleksiyonu seç</string>
+    <string name="sync_conflict_replace_title">Koleksiyonu değiştir</string>
 </resources>
