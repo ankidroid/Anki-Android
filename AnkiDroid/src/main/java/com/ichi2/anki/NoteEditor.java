@@ -2187,11 +2187,12 @@ public class NoteEditor extends AnkiActivity implements
                 // Update deck
                 if (!getCol().getConf().optBoolean("addToCur", true)) {
                     mCurrentDid = model.getLong("did");
-                    mDeckSpinnerSelection.updateDeckPosition();
                 }
 
                 refreshNoteData(FieldChangeType.changeFieldCount(shouldReplaceNewlines()));
                 setDuplicateFieldStyles();
+                mDeckSpinnerSelection.setDeckId(mCurrentDid);
+                mDeckSpinnerSelection.updateDeckPosition();
             }
         }
 
