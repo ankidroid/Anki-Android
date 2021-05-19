@@ -29,8 +29,8 @@ public class JSONArrayTest {
 
     public JSONArray initializeArray(int ArrayLength) {
         JSONArray array = new JSONArray();
-        for (int i = 0, value = 1; i < ArrayLength; i++) {
-            array.put(i, value);
+        for (int i = 0; i < ArrayLength; i++) {
+            array.put(i, 1);
         }
         return array;
 
@@ -65,18 +65,18 @@ public class JSONArrayTest {
 
 
     /**
-     * Actually the array will not expand as this value is set to the in the index in arraylist not add to .
+     * Actually the array will not expand as the new  value is replaced with the old value , so the size is still the same
      */
-    @Test(expected = AssertionError.class)
+    @Test
     public void testPut_atTheBeginningAndNotExpand() {
         JSONArray array = initializeArray(mInitialArrayLength);
         array.put(0, 200);
-        Assert.assertEquals(mInitialArrayLength + 1, array.length());
+        Assert.assertNotEquals(mInitialArrayLength + 1, array.length());
     }
 
 
     /**
-     * Actually the array will not expand as this value is set to the in the index in arraylist not add to .
+     * Actually the array will not expand as the new  value is replaced with the old value , so the size is still the same
      */
     @Test(expected = AssertionError.class)
     public void testPut_atTheMiddleAndNotExpand() {
@@ -87,8 +87,8 @@ public class JSONArrayTest {
 
 
     /**
-     * Actually the array will  expand as this value is set to the in the index in arraylist,
-     * but he check first if the array.length < index , then fill every empty indexes with null until reach index  .
+     * Actually the array size will expand as this value is added  ,
+     * but he check first if the array.length < index , then fill every empty indexes with null until reach the index  .
      */
     @Test
     public void testPut_atTheEndOAndExpand() {
@@ -99,10 +99,12 @@ public class JSONArrayTest {
     }
 
 
-    @Test(expected = IndexOutOfBoundsException.class)
+    @Test
     public void testPut_indexOutOfBoundary() {
         JSONArray array = initializeArray(mInitialArrayLength);
-        array.put(-1, 100);
+        Assert.assertThrows(ArrayIndexOutOfBoundsException.class, () -> {
+            array.put(-1, 100);
+        });
     }
 
 
