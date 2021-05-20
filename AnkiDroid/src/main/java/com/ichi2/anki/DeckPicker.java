@@ -2422,7 +2422,6 @@ public class DeckPicker extends NavigationDrawerActivity implements
         }
     }
 
-    @VisibleForTesting
     public void __renderPage() {
         if (mDueTree == null) {
             // mDueTree may be set back to null when the activity restart.
