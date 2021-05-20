@@ -2422,6 +2422,7 @@ public class DeckPicker extends NavigationDrawerActivity implements
         }
     }
 
+    @VisibleForTesting
     public void __renderPage() {
         if (mDueTree == null) {
             // mDueTree may be set back to null when the activity restart.
@@ -2499,10 +2500,12 @@ public class DeckPicker extends NavigationDrawerActivity implements
             Timber.e(e, "RuntimeException setting time remaining");
         }
 
-        long current = getCol().getDecks().current().optLong("id");
-        if (mFocusedDeck != current) {
-            scrollDecklistToDeck(current);
-            mFocusedDeck = current;
+        if (getCol().getDecks().current() != null) {
+            long current = getCol().getDecks().current().optLong("id");
+            if (mFocusedDeck != current) {
+                scrollDecklistToDeck(current);
+                mFocusedDeck = current;
+            }
         }
     }
 
@@ -2692,7 +2695,8 @@ public class DeckPicker extends NavigationDrawerActivity implements
         public void actualOnPreExecute(@NonNull DeckPicker deckPicker) {
             deckPicker.mProgressDialog = StyledProgressDialog.show(deckPicker, null,
                     deckPicker.getResources().getString(R.string.delete_deck), false);
-            if (mDid == deckPicker.getCol().getDecks().current().optLong("id")) {
+            if (deckPicker.getCol().getDecks().current() != null
+                    && mDid == deckPicker.getCol().getDecks().current().optLong("id")) {
                 mRemovingCurrent = true;
             }
         }
