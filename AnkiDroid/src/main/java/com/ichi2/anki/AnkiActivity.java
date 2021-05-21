@@ -584,6 +584,10 @@ public class AnkiActivity extends AppCompatActivity implements SimpleMessageDial
         intent.putExtras(new Bundle());
         this.startActivityWithoutAnimation(intent);
         this.finishWithoutAnimation();
+        
+        //kill the process
+        android.os.Process.killProcess(android.os.Process.myPid());
+        System.exit(0);
     }
 
     protected void enableToolbar() {
