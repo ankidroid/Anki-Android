@@ -231,7 +231,7 @@ dependencies {
     // Can possibly remove if upstream PR merges https://github.com/JakeWharton/timber/pull/398
     configurations.all {
         resolutionStrategy {
-            force 'org.jetbrains:annotations:20.1.0'
+            force 'org.jetbrains:annotations:21.0.0'
         }
     }
 
