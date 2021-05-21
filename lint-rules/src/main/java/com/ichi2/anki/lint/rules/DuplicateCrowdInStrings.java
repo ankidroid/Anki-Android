@@ -51,7 +51,7 @@ import com.android.utils.Pair;
 import com.ichi2.anki.lint.utils.Constants;
 import com.ichi2.anki.lint.utils.StringFormatDetector;
 
-import org.jetbrains.annotations.NotNull;
+import com.android.annotations.NonNull;
 import org.jetbrains.annotations.Nullable;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
@@ -111,7 +111,7 @@ public class DuplicateCrowdInStrings extends ResourceXmlDetector {
 
 
     @Override
-    public void visitElement(@NotNull XmlContext context, @NotNull Element element) {
+    public void visitElement(@NonNull XmlContext context, @NonNull Element element) {
         // Only check the golden copy - not the translated sources.
         if (!"values".equals(context.file.getParentFile().getName())) {
             return;
@@ -158,7 +158,7 @@ public class DuplicateCrowdInStrings extends ResourceXmlDetector {
 
 
     @Override
-    public void afterCheckRootProject(@NotNull Context context) {
+    public void afterCheckRootProject(@NonNull Context context) {
         for (List<StringDeclaration> duplicates : allStrings.values()) {
             if (duplicates.size() <= 1) {
                 continue;

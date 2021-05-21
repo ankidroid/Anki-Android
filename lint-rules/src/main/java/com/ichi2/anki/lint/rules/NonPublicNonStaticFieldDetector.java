@@ -23,7 +23,7 @@ import com.android.tools.lint.detector.api.JavaContext;
 import com.android.tools.lint.detector.api.Scope;
 import com.ichi2.anki.lint.utils.Constants;
 
-import org.jetbrains.annotations.NotNull;
+import com.android.annotations.NonNull;
 import org.jetbrains.uast.UElement;
 import org.jetbrains.uast.UVariable;
 import org.jetbrains.uast.UastVisibility;
@@ -68,7 +68,7 @@ public class NonPublicNonStaticFieldDetector extends FieldNamingPatternDetector 
 
 
     @Override
-    protected void reportVariable(@NonNull JavaContext context, @NotNull UVariable node, String variableName) {
+    protected void reportVariable(@NonNull JavaContext context, @NonNull UVariable node, String variableName) {
         if (variableName.length() < 2) {
             // cast the node as it's ambiguous between two interfaces
             UElement uNode = node;

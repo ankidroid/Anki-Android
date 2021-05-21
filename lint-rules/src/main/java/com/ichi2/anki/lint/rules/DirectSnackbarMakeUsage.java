@@ -28,7 +28,7 @@ import com.ichi2.anki.lint.utils.Constants;
 import com.ichi2.anki.lint.utils.LintUtils;
 import com.intellij.psi.PsiMethod;
 
-import org.jetbrains.annotations.NotNull;
+import com.android.annotations.NonNull;
 import org.jetbrains.annotations.Nullable;
 import org.jetbrains.uast.UCallExpression;
 import org.jetbrains.uast.UClass;
@@ -80,7 +80,7 @@ public class DirectSnackbarMakeUsage extends Detector implements SourceCodeScann
 
 
     @Override
-    public void visitMethodCall(@NotNull JavaContext context, @NotNull UCallExpression node, @NotNull PsiMethod method) {
+    public void visitMethodCall(@NonNull JavaContext context, @NonNull UCallExpression node, @NonNull PsiMethod method) {
         super.visitMethodCall(context, node, method);
         JavaEvaluator evaluator = context.getEvaluator();
         List<UClass> foundClasses = context.getUastFile().getClasses();
