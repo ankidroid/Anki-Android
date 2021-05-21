@@ -3,12 +3,12 @@ package com.ichi2.libanki;
 import com.ichi2.anki.RobolectricTest;
 import com.ichi2.testutils.NullApplication;
 
-import org.jetbrains.annotations.NotNull;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.robolectric.annotation.Config;
 
 import androidx.annotation.CheckResult;
+import androidx.annotation.NonNull;
 import androidx.test.ext.junit.runners.AndroidJUnit4;
 
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -63,13 +63,13 @@ public class UtilsIntegrationTest extends RobolectricTest {
     }
 
 
-    @NotNull
+    @NonNull
     private String timeQuantityNextInterval(@SuppressWarnings("SameParameterValue") int time_s) {
         return Utils.timeQuantityNextIvl(getTargetContext(), time_s);
     }
 
 
-    @NotNull
+    @NonNull
     @CheckResult
     private String deckPickerTime(long time) {
         return Utils.timeQuantityTopDeckPicker(this.getTargetContext(), time);

@@ -31,7 +31,7 @@ import com.android.utils.Pair;
 import com.google.common.annotations.VisibleForTesting;
 import com.ichi2.anki.lint.utils.Constants;
 
-import org.jetbrains.annotations.NotNull;
+import com.android.annotations.NonNull;
 import org.jetbrains.annotations.Nullable;
 import org.w3c.dom.Element;
 
@@ -133,7 +133,7 @@ public class FixedPreferencesTitleLength extends ResourceXmlDetector implements 
 
 
     @Override
-    public void afterCheckEachProject(@NotNull Context context) {
+    public void afterCheckEachProject(@NonNull Context context) {
         for (String title : xmlData) {
             if (!valuesData.containsKey(title)) {
                 continue;
