@@ -12,7 +12,7 @@ import com.ichi2.anki.lint.utils.LintUtils;
 import com.intellij.psi.PsiMethod;
 
 import com.android.annotations.NonNull;
-import org.jetbrains.annotations.Nullable;
+import com.android.annotations.Nullable;
 import org.jetbrains.uast.UCallExpression;
 import org.jetbrains.uast.UClass;
 import org.jetbrains.uast.UExpression;

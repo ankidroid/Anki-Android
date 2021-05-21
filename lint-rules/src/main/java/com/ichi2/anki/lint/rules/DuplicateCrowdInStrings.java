@@ -52,7 +52,7 @@ import com.ichi2.anki.lint.utils.Constants;
 import com.ichi2.anki.lint.utils.StringFormatDetector;
 
 import com.android.annotations.NonNull;
-import org.jetbrains.annotations.Nullable;
+import com.android.annotations.Nullable;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;

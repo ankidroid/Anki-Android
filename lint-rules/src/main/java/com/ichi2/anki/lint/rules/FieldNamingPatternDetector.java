@@ -21,7 +21,7 @@ import com.android.tools.lint.client.api.UElementHandler;
 import com.android.tools.lint.detector.api.Detector;
 import com.android.tools.lint.detector.api.JavaContext;
 
-import org.jetbrains.annotations.Nullable;
+import com.android.annotations.Nullable;
 import org.jetbrains.uast.UElement;
 import org.jetbrains.uast.UField;
 import org.jetbrains.uast.UVariable;

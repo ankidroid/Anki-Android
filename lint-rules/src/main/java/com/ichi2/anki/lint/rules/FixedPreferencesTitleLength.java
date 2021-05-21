@@ -16,6 +16,7 @@
 
 package com.ichi2.anki.lint.rules;
 
+import com.android.annotations.Nullable;
 import com.android.resources.ResourceFolderType;
 import com.android.tools.lint.detector.api.Context;
 import com.android.tools.lint.detector.api.Implementation;
@@ -32,7 +33,6 @@ import com.google.common.annotations.VisibleForTesting;
 import com.ichi2.anki.lint.utils.Constants;
 
 import com.android.annotations.NonNull;
-import org.jetbrains.annotations.Nullable;
 import org.w3c.dom.Element;
 
 import java.nio.charset.StandardCharsets;

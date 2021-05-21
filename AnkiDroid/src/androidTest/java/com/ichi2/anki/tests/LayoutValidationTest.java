@@ -10,7 +10,6 @@ import android.widget.LinearLayout;
 import com.ichi2.anki.R;
 import com.ichi2.themes.Themes;
 
-import com.android.annotations.NonNull;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
@@ -23,6 +22,8 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.atomic.AtomicReference;
+
+import androidx.annotation.NonNull;
 
 @RunWith(Parameterized.class)
 public class LayoutValidationTest extends InstrumentedTest {
