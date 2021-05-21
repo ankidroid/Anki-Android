@@ -323,6 +323,12 @@
                 />
         </activity>
         <activity
+            android:name="com.ichi2.anki.AddonsBrowser"
+            android:exported="false"
+            android:configChanges="keyboardHidden|orientation|locale|screenSize"
+            android:parentActivityName=".DeckPicker">
+        </activity>
+        <activity
             android:name="com.ichi2.anki.Previewer"
             android:label="@string/preview_title"
             android:exported="false"

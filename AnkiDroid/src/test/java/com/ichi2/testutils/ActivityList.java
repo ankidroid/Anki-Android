@@ -20,6 +20,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 
+import com.ichi2.anki.AddonsBrowser;
 import com.ichi2.anki.CardBrowser;
 import com.ichi2.anki.CardInfo;
 import com.ichi2.anki.CardTemplateBrowserAppearanceEditor;
@@ -90,7 +91,8 @@ public class ActivityList {
                 get(LoadPronounciationActivity.class),
                 get(CardInfo.class),
                 get(CardTemplateEditor.class, ActivityList::intentForCardTemplateEditor),
-                get(CardTemplateBrowserAppearanceEditor.class, ActivityList::intentForCardTemplateBrowserAppearanceEditor)
+                get(CardTemplateBrowserAppearanceEditor.class, ActivityList::intentForCardTemplateBrowserAppearanceEditor),
+                get(AddonsBrowser.class)
         );
     }
 

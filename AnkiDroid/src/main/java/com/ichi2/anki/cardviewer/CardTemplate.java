@@ -16,6 +16,11 @@
 
 package com.ichi2.anki.cardviewer;
 
+import android.content.Context;
+
+import com.ichi2.anki.AddonsNpmUtility;
+import com.ichi2.anki.AnkiDroidApp;
+
 import androidx.annotation.CheckResult;
 import androidx.annotation.NonNull;
 
@@ -24,23 +29,30 @@ public class CardTemplate {
     private final String mPreClass;
     private final String mPreContent;
     private final String mPostContent;
+    private final String mAddonsContent;
+    private final String mEnabledAddons;
 
-    public CardTemplate(@NonNull String template) {
+    public CardTemplate(@NonNull String template, Context context) {
         // Note: This refactoring means the template must be in the specific order of style, class, content.
         // Since this is a const loaded from an asset file, I'm fine with this.
         String classDelim = "::class::";
         String styleDelim = "::style::";
         String contentDelim = "::content::";
+        String addonContentDelim = "::addons::";
+        // get enabled addons content and set to addons
+        mEnabledAddons = setAddons(context);
 
         int styleIndex = template.indexOf(styleDelim);
         int classIndex = template.indexOf(classDelim);
         int contentIndex = template.indexOf(contentDelim);
+        int addonsIndex = template.indexOf(addonContentDelim);
 
         try {
             this.mPreStyle = template.substring(0, styleIndex);
             this.mPreClass = template.substring(styleIndex + styleDelim.length(), classIndex);
             this.mPreContent = template.substring(classIndex + classDelim.length(), contentIndex);
-            this.mPostContent = template.substring(contentIndex + contentDelim.length());
+            this.mPostContent = template.substring(contentIndex + contentDelim.length(), addonsIndex);
+            this.mAddonsContent = template.substring(addonsIndex + addonContentDelim.length());
         } catch (StringIndexOutOfBoundsException ex) {
             throw new IllegalStateException("The card template had replacement string order, or content changed", ex);
         }
@@ -49,6 +61,13 @@ public class CardTemplate {
     @CheckResult
     @NonNull
     public String render(String content, String style, String cardClass) {
-        return mPreStyle + style + mPreClass + cardClass + mPreContent + content + mPostContent;
+        return mPreStyle + style + mPreClass + cardClass + mPreContent + content + mPostContent + mEnabledAddons + mAddonsContent;
+    }
+
+    public String setAddons(Context context) {
+        if (AnkiDroidApp.getSharedPrefs(context).getBoolean("javascript_addons_support_prefs", false)) {
+            return AddonsNpmUtility.getEnabledAddonsContent(context);
+        }
+        return "";
     }
 }

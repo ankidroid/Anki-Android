@@ -72,6 +72,7 @@ public abstract class NavigationDrawerActivity extends AnkiActivity implements N
     public static final int REQUEST_PREFERENCES_UPDATE = 100;
     public static final int REQUEST_BROWSE_CARDS = 101;
     public static final int REQUEST_STATISTICS = 102;
+    public static final int REQUEST_ADDONS = 103;
     private static final String NIGHT_MODE_PREFERENCE = "invertedColors";
 
     /**
@@ -362,6 +363,10 @@ public abstract class NavigationDrawerActivity extends AnkiActivity implements N
             } else if (itemId == R.id.nav_night_mode) {
                 Timber.i("Toggling Night Mode");
                 mNightModeSwitch.performClick();
+            } else if (itemId == R.id.nav_addons) {
+                Timber.i("Navigating to addons");
+                Intent intent = new Intent(NavigationDrawerActivity.this, AddonsBrowser.class);
+                startActivityForResultWithAnimation(intent, REQUEST_ADDONS, START);
             } else if (itemId == R.id.nav_settings) {
                 Timber.i("Navigating to settings");
                 // Remember the theme we started with so we can restart the Activity if it changes

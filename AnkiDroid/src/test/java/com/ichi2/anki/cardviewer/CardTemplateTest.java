@@ -16,12 +16,73 @@
 
 package com.ichi2.anki.cardviewer;
 
+import android.content.Context;
+import android.content.SharedPreferences;
+
+import com.ichi2.anki.AddonsNpmUtility;
+import com.ichi2.anki.AnkiDroidApp;
+
+import org.junit.After;
+import org.junit.Before;
 import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.mockito.Mock;
+import org.mockito.MockedStatic;
+import org.mockito.Mockito;
+import org.mockito.MockitoAnnotations;
 
-import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.is;
+import androidx.test.ext.junit.runners.AndroidJUnit4;
 
+import static org.junit.Assert.assertEquals;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.anyInt;
+import static org.mockito.Mockito.mockStatic;
+import static org.mockito.Mockito.validateMockitoUsage;
+import static org.mockito.Mockito.when;
+
+@RunWith(AndroidJUnit4.class)
 public class CardTemplateTest {
+    @Mock
+    private Context mMockContext;
+
+    @Mock
+    private SharedPreferences mMockSharedPreferences;
+
+    private MockedStatic<AnkiDroidApp> mMockAnkiDroidApp;
+
+    private MockedStatic<AddonsNpmUtility> mMockAddonsNpmUtility;
+
+    @Before
+    public void setUp() {
+        MockitoAnnotations.openMocks(this);
+
+        when(mMockContext.getSharedPreferences(any(), anyInt()))
+                .thenReturn(mMockSharedPreferences);
+
+        when(mMockSharedPreferences.getBoolean("javascript_addons_support_prefs", false))
+                .thenReturn(true);
+
+        mMockAnkiDroidApp = Mockito.mockStatic(AnkiDroidApp.class);
+        mMockAddonsNpmUtility = Mockito.mockStatic(AddonsNpmUtility.class);
+
+        mMockAnkiDroidApp.when(() -> AnkiDroidApp.getSharedPrefs(mMockContext)).thenReturn(mMockSharedPreferences);
+    }
+
+    @After
+    public void validate() {
+        validateMockitoUsage();
+        mMockAnkiDroidApp.close();
+        mMockAddonsNpmUtility.close();
+    }
+
+    @Test
+    @SuppressWarnings("deprecation") // TODO Tracked in https://github.com/ankidroid/Anki-Android/issues/5019
+    public void testSendException() {
+        try (MockedStatic<android.preference.PreferenceManager> ignored = mockStatic(android.preference.PreferenceManager.class)) {
+            when(android.preference.PreferenceManager.getDefaultSharedPreferences(any()))
+                    .thenReturn(mMockSharedPreferences);
+        }
+    }
 
     private static final String data = "<!doctype html>\n" +
             "<html class=\"mobile android linux js\">\n" +
@@ -42,6 +103,9 @@ public class CardTemplateTest {
             "        <div id=\"content\">\n" +
             "        ::content::\n" +
             "        </div>\n" +
+            "       <script>\n" +
+            "       ::addons::\n" +
+            "       </script>\n" +
             "    </body>\n" +
             "</html>\n";
 
@@ -51,10 +115,43 @@ public class CardTemplateTest {
         String content = "foo";
         String style = "bar";
         String cardClass = "baz";
-        String result = new CardTemplate(data).render(content, style, cardClass);
+        String addons = "addon";
 
-        assertThat(result, is(data.replace("::content::", content).replace("::style::", style).replace("::class::", cardClass)));
+        mMockAddonsNpmUtility.when(() -> AddonsNpmUtility.getEnabledAddonsContent(mMockContext)).thenReturn(addons);
+
+        String result = new CardTemplate(data, mMockContext).render(content, style, cardClass);
+
+        String expected = data
+                .replace("::content::", content)
+                .replace("::style::", style)
+                .replace("::class::", cardClass)
+                .replace("::addons::", addons);
+        assertEquals(result, expected);
     }
+
+    @Test
+    public void JSErrorTest() {
+        // Method is sped up - ensure that it still works.
+        String content = "foo";
+        String style = "bar";
+        String cardClass = "baz";
+
+        // here addon not defined it show error:
+        // Uncaught ReferenceError: addon is not defined
+        String addons = "console.log(addon)";
+
+        mMockAddonsNpmUtility.when(() -> AddonsNpmUtility.getEnabledAddonsContent(mMockContext)).thenReturn(addons);
+
+        String result = new CardTemplate(data, mMockContext).render(content, style, cardClass);
+
+        String expected = data
+                .replace("::content::", content)
+                .replace("::style::", style)
+                .replace("::class::", cardClass)
+                .replace("::addons::", addons);
+        assertEquals(result, expected);
+    }
+
 
     @Test
     public void stressTest() {
@@ -65,7 +162,7 @@ public class CardTemplateTest {
         String content = new String(new char[stringLength]).replace('\0', 'a');
 
 
-        String ret = new CardTemplate(data).render(content, content, content);
+        String ret = new CardTemplate(data, mMockContext).render(content, content, content);
     }
 
 }

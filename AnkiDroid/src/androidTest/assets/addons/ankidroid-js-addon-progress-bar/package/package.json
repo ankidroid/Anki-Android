@@ -1,0 +1,24 @@
+{
+  "name": "ankidroid-js-addon-progress-bar",
+  "version": "1.0.5",
+  "description": "Show progress bar in AnkiDroid, this package may not be used in node_modules. For using this addon view. https://github.com/ankidroid/Anki-Android/pull/7958",
+  "main": "index.js",
+  "ankidroid_js_api": "0.0.1",
+  "addon_type": "reviewer",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/infinyte7/Anki-Custom-Card-Layout.git"
+  },
+  "keywords": [
+    "ankidroid-js-addon"
+  ],
+  "author": "Mani (infinyte7)",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/infinyte7/Anki-Custom-Card-Layout/issues"
+  },
+  "homepage": "https://github.com/infinyte7/Anki-Custom-Card-Layout#readme"
+}
