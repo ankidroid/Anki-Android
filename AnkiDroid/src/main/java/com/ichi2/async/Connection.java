@@ -47,6 +47,7 @@ import com.ichi2.utils.JSONException;
 import com.ichi2.utils.JSONObject;
 
 import java.io.IOException;
+import java.util.Arrays;
 
 import androidx.annotation.NonNull;
 import okhttp3.Response;
@@ -291,6 +292,7 @@ public class Connection extends BaseAsyncTask<Connection.Payload, Object, Connec
                 msg.contains("InterruptedIOException") ||
                 msg.contains("stream was reset") ||
                 msg.contains("Connection reset") ||
+                msg.contains("connection abort") ||
                 msg.contains("Broken pipe") ||
                 msg.contains("ConnectionShutdownException") ||
                 msg.contains("CLEARTEXT communication") ||
@@ -629,6 +631,21 @@ public class Connection extends BaseAsyncTask<Connection.Payload, Object, Connec
         public Payload(@NonNull Object[] data) {
             this.data = data;
             success = true;
+        }
+
+
+        @Override
+        public String toString() {
+            return "Payload{" +
+                    "mTaskType=" + mTaskType +
+                    ", data=" + Arrays.toString(data) +
+                    ", resultType=" + resultType +
+                    ", result=" + Arrays.toString(result) +
+                    ", success=" + success +
+                    ", returnType=" + returnType +
+                    ", exception=" + exception +
+                    ", message='" + message + '\'' +
+                    '}';
         }
     }
 

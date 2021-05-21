@@ -1867,6 +1867,7 @@ public class DeckPicker extends NavigationDrawerActivity implements
                 AnkiDroidApp.sendExceptionReport(e, "DeckPicker.onPostExecute", "Could not dismiss mProgressDialog");
             }
             String syncMessage = data.message;
+            Timber.i("Sync Listener: onPostExecute: Data: %s", data.toString());
             if (!data.success) {
                 Object[] result = data.result;
                 Syncer.ConnectionResultType resultType = data.resultType;
