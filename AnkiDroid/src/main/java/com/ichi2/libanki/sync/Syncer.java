@@ -182,7 +182,7 @@ public class Syncer {
                 long diff = Math.abs(rts - lts);
                 if (diff > 300) {
                     mCol.log("clock off");
-                    return new Pair<> (CLOCK_OFF, new Object[] {diff});
+                    return new Pair<> (CLOCK_OFF, diff);
                 }
                 if (lMod == rMod) {
                     Timber.i("Sync: no changes - returning");
