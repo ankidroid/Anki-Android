@@ -16,6 +16,8 @@
  */
 package com.ichi2.libanki;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.databind.node.ObjectNode;
 import com.ichi2.utils.JSONObject;
 
 import androidx.annotation.Nullable;
@@ -23,14 +25,48 @@ import timber.log.Timber;
 
 public class DeckConfig extends JSONObject{
 
+    /**
+     * @see  DeckConfig#from(JSONObject)
+     */
+    @JsonCreator
+    protected DeckConfig(ObjectNode node) {
+        super(node);
+    }
+
+
+    /**
+     * Creates a DeckConfig object from an {@link ObjectNode}
+     *
+     * NOTE: The passed node will be used directly, so
+     * any change in the node will result in a change in
+     * this object
+     */
+    public static DeckConfig from(JSONObject json) {
+        return new DeckConfig(json.getRootJsonNode());
+    }
+
+    /**
+     * Creates a new empty deck config object
+     */
     private DeckConfig() {
         super();
     }
 
+    /**
+     * Creates a copy from {@link JSONObject} and use it as a string
+     *
+     * This function will perform deepCopy on the passed object
+     *
+     * @see DeckConfig#from(JSONObject) if you want to create a
+     *                                  DeckConfig without deepCopy
+     */
     public DeckConfig(JSONObject json) {
         super(json);
     }
 
+    /**
+     * Creates a deck config object form a json string
+     */
     public DeckConfig(String json) {
         super(json);
     }
@@ -70,7 +106,6 @@ public class DeckConfig extends JSONObject{
 
     @Override
     public DeckConfig deepClone() {
-        DeckConfig dc = new DeckConfig();
-        return deepClonedInto(dc);
+        return new DeckConfig(this);
     }
 }
