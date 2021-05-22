@@ -1913,6 +1913,7 @@ public class NoteEditor extends AnkiActivity implements
         } else {
             mCurrentDid = mCurrentEditedCard.getDid();
         }
+        mDeckSpinnerSelection.selectDeckById(mCurrentDid);
     }
 
 
@@ -1934,8 +1935,7 @@ public class NoteEditor extends AnkiActivity implements
         }
         // nb: setOnItemSelectedListener and populateEditFields need to occur after this
         setNoteTypePosition();
-        mDeckSpinnerSelection.setDeckId(getCol().getDecks().selected());
-        mDeckSpinnerSelection.updateDeckPosition();
+        setDid(note);
         updateTags();
         updateCards(mEditorNote.model());
         updateToolbar();
