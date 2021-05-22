@@ -39,6 +39,7 @@ import com.google.android.material.textfield.TextInputLayout;
 import com.ichi2.anki.web.HostNumFactory;
 import com.ichi2.async.Connection;
 import com.ichi2.async.Connection.Payload;
+import com.ichi2.libanki.sync.CustomSyncServerUrlException;
 import com.ichi2.themes.StyledProgressDialog;
 import com.ichi2.ui.TextInputEditField;
 import com.ichi2.utils.AdaptionUtil;
@@ -309,6 +310,11 @@ public class MyAccount extends AnkiActivity {
     protected String getHumanReadableLoginErrorMessage(Exception exception) {
         if (exception == null) {
             return "";
+        }
+
+        if (exception instanceof CustomSyncServerUrlException) {
+            String url = ((CustomSyncServerUrlException)exception).getUrl();
+            return getResources().getString(R.string.sync_error_invalid_sync_server, url);
         }
 
         if (exception.getCause() != null) {
