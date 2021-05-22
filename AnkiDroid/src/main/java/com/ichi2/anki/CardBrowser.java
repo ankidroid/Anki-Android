@@ -1520,10 +1520,12 @@ public class CardBrowser extends NavigationDrawerActivity implements
 
 
     private void updateList() {
-        mCardsAdapter.notifyDataSetChanged();
-        mDeckSpinnerSelection.notifyDataSetChanged();
-        onSelectionChanged();
-        updatePreviewMenuItem();
+        if (colIsOpen() && mCardsAdapter!= null) {
+            mCardsAdapter.notifyDataSetChanged();
+            mDeckSpinnerSelection.notifyDataSetChanged();
+            onSelectionChanged();
+            updatePreviewMenuItem();
+        }
     }
 
     /**
@@ -2401,7 +2403,9 @@ public class CardBrowser extends NavigationDrawerActivity implements
             updateMultiselectMenu();
             mActionBarTitle.setText(String.format(Locale.ROOT, "%d", checkedCardCount()));
         } finally {
-            mCardsAdapter.notifyDataSetChanged();
+            if (colIsOpen() && mCardsAdapter != null) {
+                mCardsAdapter.notifyDataSetChanged();
+            }
         }
     }
 
