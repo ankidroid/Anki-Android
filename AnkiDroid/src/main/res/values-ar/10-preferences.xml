@@ -179,7 +179,7 @@
     <string name="day_offset_summ">XXX ساعة بعد منتصف الليل</string>
     <string name="xlabel_dayoffset_seekbar" maxLength="41">منتصف الليل</string>
     <string name="ylabel_dayoffset_seekbar" maxLength="41">11م</string>
-    <string name="sched_v2" maxLength="41">جدولة ف2</string>
+    <string name="sched_v2" maxLength="41">المجدول الإصدار 2</string>
     <string name="sched_v2_summ">تمكين الجدولة الجديدة. فرض التغيير في اتجاه واحد على المزامنة التالية</string>
     <string name="sched_ver_toggle_title">تأكيد</string>
     <string name="sched_ver_2to1">سيؤدي هذا إلى إعادة البطاقات في طور التعلم إلى بطاقات جديدة، ومسح الرزم المفلترة، وتغيير إصدار المجدول. هل تريد الاستمرار؟</string>
