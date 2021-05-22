@@ -78,11 +78,11 @@ public class DeckSpinnerSelection {
 
         mSpinner.setAdapter(mDeckDropDownAdapter);
 
-        setSpinnerListner();
+        setSpinnerListener();
 
     }
 
-    public void initializeNoteEditorDeckSpinner(@NonNull Card currentEditedCard, @NonNull boolean addNote) {
+    public void initializeNoteEditorDeckSpinner(@NonNull Card currentEditedCard, boolean addNote) {
         Collection col = mContext.getCol();
         mDropDownDecks = col.getDecks().allSorted();
         final ArrayList<String> deckNames = new ArrayList<>(mDropDownDecks.size());
@@ -91,7 +91,7 @@ public class DeckSpinnerSelection {
             // add current deck and all other non-filtered decks to deck list
             long thisDid = d.getLong("id");
             String currentName = d.getString("name");
-            String lineContent = null;
+            String lineContent;
             if (d.isStd()) {
                 lineContent = currentName;
             } else if (!addNote && currentEditedCard != null && currentEditedCard.getDid() == thisDid) {
@@ -122,10 +122,11 @@ public class DeckSpinnerSelection {
         };
 
         mSpinner.setAdapter(noteDeckAdapter);
-        setSpinnerListner();
+        setSpinnerListener();
+
     }
 
-    public void setSpinnerListner() {
+    public void setSpinnerListener() {
         mSpinner.setOnTouchListener((view, motionEvent) -> {
             if (motionEvent.getAction() == MotionEvent.ACTION_UP) {
                 displayDeckOverrideDialog(mContext.getCol());
