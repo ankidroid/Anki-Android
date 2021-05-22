@@ -1076,6 +1076,9 @@ public class Decks {
 
 
     public Deck current() {
+        if (get(selected()) == null) {
+            select(Consts.DEFAULT_DECK_ID); // Select default deck if the selected deck is null
+        }
         return get(selected());
     }
 
