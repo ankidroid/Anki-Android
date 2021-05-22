@@ -171,7 +171,7 @@ public class CardBrowser extends NavigationDrawerActivity implements
     private static final int EDIT_CARD = 0;
     private static final int ADD_NOTE = 1;
     private static final int PREVIEW_CARDS = 2;
-
+    private static int cnt = 1;
     private static final int DEFAULT_FONT_SIZE_RATIO = 100;
     // Should match order of R.array.card_browser_order_labels
     public static final int CARD_ORDER_NONE = 0;
@@ -1738,7 +1738,7 @@ public class CardBrowser extends NavigationDrawerActivity implements
      */
     @VisibleForTesting
     @CheckResult
-    static String formatQAInternal(String txt, boolean showFileNames) {
+     static String formatQAInternal(String txt, boolean showFileNames) {
         /* Strips all formatting from the string txt for use in displaying question/answer in browser */
         String s = txt;
         s = s.replaceAll("<!--.*?-->", "");
@@ -1746,9 +1746,15 @@ public class CardBrowser extends NavigationDrawerActivity implements
         s = s.replace("<br />", " ");
         s = s.replace("<div>", " ");
         s = s.replace("\n", " ");
-        s = showFileNames ? Utils.stripSoundMedia(s) : Utils.stripSoundMedia(s, " ");
         s = s.replaceAll("\\[\\[type:[^]]+]]", "");
-        s = showFileNames ? Utils.stripHTMLMedia(s) : Utils.stripHTMLMedia(s, " ");
+        if(showFileNames){
+            s=Utils.stripHTMLMedia(s);
+            s=Utils.stripSoundMedia(s);
+        }else{
+            s=Utils.stripHTMLMedia(s, "file"+cnt);
+            s=Utils.stripSoundMedia(s, "file"+cnt);
+            cnt++;
+        }
         s = s.trim();
         return s;
     }
