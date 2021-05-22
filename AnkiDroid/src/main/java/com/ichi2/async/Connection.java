@@ -34,6 +34,7 @@ import com.ichi2.anki.R;
 import com.ichi2.anki.exception.MediaSyncException;
 import com.ichi2.anki.exception.UnknownHttpResponseException;
 import com.ichi2.libanki.Collection;
+import com.ichi2.libanki.sync.CustomSyncServerUrlException;
 import com.ichi2.libanki.sync.FullSyncer;
 import com.ichi2.libanki.sync.HostNum;
 import com.ichi2.libanki.sync.HttpSyncer;
@@ -233,7 +234,13 @@ public class Connection extends BaseAsyncTask<Connection.Payload, Object, Connec
             Timber.w(e);
             data.success = false;
             data.resultType = ERROR;
-            data.result = new Object[]{e.getResponseCode(), e.getMessage() };
+            data.result = new Object[] {e.getResponseCode(), e.getMessage()};
+            return data;
+        } catch (CustomSyncServerUrlException e2) {
+            Timber.w(e2);
+            data.success = false;
+            data.resultType = CUSTOM_SYNC_SERVER_URL;
+            data.result = new Object[] {e2};
             return data;
         } catch (Exception e2) {
             Timber.w(e2);
