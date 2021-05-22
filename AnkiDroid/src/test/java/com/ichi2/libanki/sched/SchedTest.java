@@ -1071,9 +1071,11 @@ public class SchedTest extends RobolectricTest {
         AbstractSched sched = col.getSched();
         Card c = sched.getCard();
         sched.answerCard(c, sched.answerButtons(c) - 1); // not upstream. But we are not expecting multiple getCard without review
+        waitForAsyncTasksToComplete();
         assertEquals(0, c.getOrd());
         c = sched.getCard();
         sched.answerCard(c, sched.answerButtons(c) - 1); // not upstream. But we are not expecting multiple getCard without review
+        waitForAsyncTasksToComplete();
         assertEquals(1, c.getOrd());
         c = sched.getCard();
         sched.answerCard(c, sched.answerButtons(c) - 1); // not upstream. But we are not expecting multiple getCard without review
