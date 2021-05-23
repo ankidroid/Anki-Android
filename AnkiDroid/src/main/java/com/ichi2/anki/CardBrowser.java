@@ -114,6 +114,7 @@ import timber.log.Timber;
 import static com.ichi2.anki.CardBrowser.Column.*;
 import static com.ichi2.libanki.stats.Stats.SECONDS_PER_DAY;
 import static com.ichi2.anim.ActivityTransitionAnimation.Direction.*;
+import static com.ichi2.utils.LanguageUtil.getLocaleCompat;
 
 public class CardBrowser extends NavigationDrawerActivity implements
         DeckDropDownAdapter.SubtitleListener,
@@ -1875,7 +1876,7 @@ public class CardBrowser extends NavigationDrawerActivity implements
         @Override
         protected void actualOnValidPostExecute(CardBrowser browser, BooleanGetter result) {
             browser.hideProgressBar();
-            browser.mActionBarTitle.setText(String.format(Locale.ROOT, "%d", browser.checkedCardCount()));
+            browser.mActionBarTitle.setText(String.format(getLocaleCompat(browser.getResources()), "%d", browser.checkedCardCount()));
             browser.invalidateOptionsMenu();    // maybe the availability of undo changed
             // snackbar to offer undo
             String deletedMessage = browser.getResources().getQuantityString(R.plurals.card_browser_cards_deleted, mCardsDeleted, mCardsDeleted);
@@ -2401,7 +2402,7 @@ public class CardBrowser extends NavigationDrawerActivity implements
             }
 
             updateMultiselectMenu();
-            mActionBarTitle.setText(String.format(Locale.ROOT, "%d", checkedCardCount()));
+            mActionBarTitle.setText(String.format(getLocaleCompat(getResources()), "%d", checkedCardCount()));
         } finally {
             if (colIsOpen() && mCardsAdapter != null) {
                 mCardsAdapter.notifyDataSetChanged();
