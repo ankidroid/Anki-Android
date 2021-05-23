@@ -274,7 +274,7 @@ public class JSONObject implements Iterable<String> {
      */
     @CheckResult
     public boolean getBoolean(String name) {
-        return JSONTypeConverters.convert(name, get(name), Boolean.class);
+        return JSONTypeConverters.sToBoolean.convert(name, get(name));
     }
 
 
@@ -285,7 +285,7 @@ public class JSONObject implements Iterable<String> {
      */
     @CheckResult
     public double getDouble(String name) {
-        return JSONTypeConverters.convert(name, get(name), Double.class);
+        return JSONTypeConverters.sToDouble.convert(name, get(name));
     }
 
 
@@ -296,7 +296,7 @@ public class JSONObject implements Iterable<String> {
      */
     @CheckResult
     public int getInt(String name) {
-        return JSONTypeConverters.convert(name, get(name), Integer.class);
+        return JSONTypeConverters.sToInteger.convert(name, get(name));
     }
 
 
@@ -307,7 +307,7 @@ public class JSONObject implements Iterable<String> {
      */
     @CheckResult
     public long getLong(String name) {
-        return JSONTypeConverters.convert(name, get(name), Long.class);
+        return JSONTypeConverters.sToLong.convert(name, get(name));
     }
 
 
@@ -319,7 +319,7 @@ public class JSONObject implements Iterable<String> {
     @CheckResult
     @NonNull
     public String getString(String name) {
-        return JSONTypeConverters.convert(name, get(name), String.class);
+        return JSONTypeConverters.sToString.convert(name, get(name));
     }
 
 
@@ -331,7 +331,7 @@ public class JSONObject implements Iterable<String> {
     @CheckResult
     @NonNull
     public JSONArray getJSONArray(String name) {
-        return JSONTypeConverters.convert(name, get(name), JSONArray.class);
+        return JSONTypeConverters.sToArray.convert(name, get(name));
     }
 
 
@@ -343,7 +343,7 @@ public class JSONObject implements Iterable<String> {
     @CheckResult
     @NonNull
     public JSONObject getJSONObject(String name) {
-        return JSONTypeConverters.convert(name, get(name), JSONObject.class);
+        return JSONTypeConverters.sToObject.convert(name, get(name));
     }
 
     /**
@@ -403,11 +403,7 @@ public class JSONObject implements Iterable<String> {
     @Nullable
     @CheckResult
     public JSONArray optJSONArray(@Nullable String name) {
-        Object value = opt(name);
-        if (value == null) {
-            return null;
-        }
-        return JSONTypeConverters.convertOr(value, JSONArray.class, null);
+        return JSONTypeConverters.sToArray.convertOr(opt(name));
     }
 
 
@@ -417,11 +413,7 @@ public class JSONObject implements Iterable<String> {
     @Nullable
     @CheckResult
     public JSONObject optJSONObject(@Nullable String name) {
-        Object value = opt(name);
-        if (value == null) {
-            return null;
-        }
-        return JSONTypeConverters.convertOr(value, JSONObject.class, null);
+        return JSONTypeConverters.sToObject.convertOr(opt(name));
     }
 
 
@@ -444,29 +436,17 @@ public class JSONObject implements Iterable<String> {
 
 
     public boolean optBoolean(@Nullable String name, boolean defaultValue) {
-        Object value = opt(name);
-        if (value == null) {
-            return defaultValue;
-        }
-        return JSONTypeConverters.convertOr(value, Boolean.class, defaultValue);
+        return JSONTypeConverters.sToBoolean.convertOr(opt(name), defaultValue);
     }
 
 
     public int optInt(@Nullable String name, int defaultValue) {
-        Object value = opt(name);
-        if (value == null) {
-            return defaultValue;
-        }
-        return JSONTypeConverters.convertOr(value, Integer.class, defaultValue);
+        return JSONTypeConverters.sToInteger.convertOr(opt(name), defaultValue);
     }
 
 
     public long optLong(@Nullable String name, long defaultValue) {
-        Object value = opt(name);
-        if (value == null) {
-            return defaultValue;
-        }
-        return JSONTypeConverters.convertOr(value, Long.class, defaultValue);
+        return JSONTypeConverters.sToLong.convertOr(opt(name), defaultValue);
     }
 
     public long optLong(@Nullable String name) {
@@ -489,11 +469,7 @@ public class JSONObject implements Iterable<String> {
 
 
     public String optString(String name, String defaultValue) {
-        Object value = opt(name);
-        if (value == null) {
-            return defaultValue;
-        }
-        return JSONTypeConverters.convertOr(value, String.class, defaultValue);
+        return JSONTypeConverters.sToString.convertOr(opt(name), defaultValue);
     }
 
 
@@ -513,11 +489,7 @@ public class JSONObject implements Iterable<String> {
 
 
     public double optDouble(String name, double defaultValue) {
-        Object value = opt(name);
-        if (value == null) {
-            return defaultValue;
-        }
-        return JSONTypeConverters.convertOr(value, Double.class, defaultValue);
+        return JSONTypeConverters.sToDouble.convertOr(opt(name), defaultValue);
     }
 
 

@@ -100,7 +100,7 @@ public class JSONTypeConvertersTest {
         public Object object;
 
         @Parameter(1)
-        public Class<?> type;
+        public JSONTypeConverters.ObjectToJsonValue<?> converter;
 
         @Parameter(2)
         public Object expected;
@@ -110,17 +110,17 @@ public class JSONTypeConvertersTest {
         public void test() {
             Object result;
             try {
-                result = JSONTypeConverters.convert(INDEX_OR_NAME, object, type);
+                result = converter.convert(INDEX_OR_NAME, object);
             } catch (JSONException e) {
                 if (expected != null) {
-                    fail("Didn't expect to throw JSONException for trying to convert " + object + " to type " + type.getName());
+                    fail("Didn't expect to throw JSONException for trying to convert " + object + " to type " + converter.getTypeName());
                 }
-                Object opt = JSONTypeConverters.convertOr(object, type, null);
+                Object opt = converter.convertOr(object);
                 assertNull(opt);
                 return;
             }
             if (expected == null) {
-                fail("Expected to throw JSONException for trying to convert " + object + " to type " + type.getName() + ", but got " + result + " as a value");
+                fail("Expected to throw JSONException for trying to convert " + object + " to type " + converter.getTypeName() + ", but got " + result + " as a value");
             }
 
             assertEquals(expected.getClass(), result.getClass());

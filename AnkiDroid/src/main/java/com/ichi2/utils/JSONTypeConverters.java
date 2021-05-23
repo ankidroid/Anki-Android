@@ -35,13 +35,10 @@ package com.ichi2.utils;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.annotation.VisibleForTesting;
 
 /**
  * Same as org.json.JSON but all exceptions are unchecked
- * <p>
- * extra method not found in `org.json.JSON` is:
- * - {@link #convert(Object, Object, Class)}
- * - {@link #convertOr(Object, Class, Object)}
  */
 public class JSONTypeConverters {
     /**
@@ -54,157 +51,157 @@ public class JSONTypeConverters {
         return d;
     }
 
+    protected abstract static class ObjectToJsonValue<T> {
+        /**
+         * This should be T exactly and not a subtype
+         */
+        private final Class<T> mType;
+        private final T mDefaultValue;
 
-    /**
-     * Try to convert <code>value<code/> to type <code>type<code/>
-     *
-     * @param indexOrName used to give the thrown exception more context
-     * @return converted value
-     * @throws JSONException if value couldn't be converted
-     */
-    @NonNull
-    public static <T> T convert(@NonNull Object indexOrName, @NonNull Object value, @NonNull Class<T> type) {
-        T converted = convertOr(value, type, null);
-        if (converted == null) {
-            throw JSONTypeConverters.typeMismatch(indexOrName, value, type.getName());
+        protected ObjectToJsonValue(Class<T> clazz, T defaultValue) {
+            mType = clazz;
+            mDefaultValue = defaultValue;
         }
-        return converted;
+
+        @VisibleForTesting
+        public String getTypeName() {
+            return mType.getName();
+        }
+
+
+        /**
+         * @param value Any value not of type T
+         * @param defaultValue The value to return if transformation is impossible
+         * @return      An equivalent value of type T, or defaultValue if impossible
+         */
+        protected abstract @Nullable T convertFromDistinctType(@NonNull Object value, T defaultValue);
+
+
+        /**
+         * @param value Any value not of type T
+         * @return  An equivalent value of type T, or defaultValue if impossible
+         */
+        protected @Nullable T convertFromDistinctType(@NonNull Object value){
+            return convertFromDistinctType(value, mDefaultValue);
+        }
+
+
+        /**
+         * @param value A value of any type
+         * @param defaultValue The value to return if transformation is impossible
+         * @return      An equivalent value of type T, using transform if necessary
+         */
+        protected @Nullable T convertOr(@NonNull Object value, T defaultValue) {
+            if (value.getClass().equals(mType)) {
+                return (T) value;
+            }
+            return convertFromDistinctType(value, defaultValue);
+        }
+
+
+        /**
+         * @param value A value of any type
+         * @return      An equivalent value of type T, using transform if necessary
+         */
+        protected @Nullable T convertOr(@NonNull Object value) {
+            return convertOr(value, mDefaultValue);
+        }
+
+        /**
+         * Try to convert <code>value<code/> to type <code>type<code/>
+         *
+         * @param indexOrName used to give the thrown exception more context
+         * @param value       A value received from a JsonNode
+         * @return converted value
+         * @throws JSONException if value couldn't be converted
+         */
+        public @NonNull T convert(@NonNull Object indexOrName, @NonNull Object value) {
+            T converted = convertOr(value, null);
+            if (converted == null) {
+                throw JSONTypeConverters.typeMismatch(indexOrName, value, mType.getName());
+            }
+            return converted;
+        }
     }
 
-
-    /**
-     * Try to convert <code>value<code/> to type <code>type<code/>
-     *
-     * @param type class of the type to convert to, don't use primitive classes
-     *             for example instead of <code>int.class<code/> use <code>Integer.class<code/>
-     *
-     * @return converted value, or <code>defaultValue<code/>
-     * if it couldn't be converted
-     */
-    @SuppressWarnings("unchecked")
-    public static <T> T convertOr(@NonNull Object value, @NonNull Class<T> type, T defaultValue) {
-        if (value.getClass().equals(type)) {
-            return (T) value;
-        }
-
-        T converted = null;
-
-        if (type.equals(Boolean.class)) {
-            converted = (T) JSONTypeConverters.toBoolean(value);
-        } else if (type.equals(Double.class)) {
-            converted = (T) JSONTypeConverters.toDouble(value);
-        } else if (type.equals(Integer.class)) {
-            converted = (T) JSONTypeConverters.toInteger(value);
-        } else if (type.equals(Long.class)) {
-            converted = (T) JSONTypeConverters.toLong(value);
-        } else if (type.equals(String.class)) {
-            converted = (T) JSONTypeConverters.toString(value);
-        }
-
-        if (converted == null) {
+    public static ObjectToJsonValue<Boolean> sToBoolean = new ObjectToJsonValue<Boolean>(Boolean.class, false) {
+        @Nullable protected Boolean convertFromDistinctType(Object value, Boolean defaultValue) {
+            if (value instanceof String) {
+                String stringValue = (String) value;
+                if ("true".equalsIgnoreCase(stringValue)) {
+                    return true;
+                } else if ("false".equalsIgnoreCase(stringValue)) {
+                    return false;
+                }
+            }
             return defaultValue;
         }
+    };
 
-        return converted;
-    }
-
-
-
-
-    /**
-     * @return <code>value<code/> converted to {@link Boolean}, or null if
-     * value couldn't be converted
-     */
-    @Nullable
-    public static Boolean toBoolean(Object value) {
-        if (value instanceof Boolean) {
-            return (Boolean) value;
-        } else if (value instanceof String) {
-            String stringValue = (String) value;
-            if ("true".equalsIgnoreCase(stringValue)) {
-                return true;
-            } else if ("false".equalsIgnoreCase(stringValue)) {
-                return false;
+    public static ObjectToJsonValue<Double> sToDouble = new ObjectToJsonValue<Double>(Double.class, 0D) {
+        @Nullable protected Double convertFromDistinctType(Object value, Double defaultValue) {
+            if (value instanceof Number) {
+                return ((Number) value).doubleValue();
+            } else if (value instanceof String) {
+                try {
+                    return Double.valueOf((String) value);
+                } catch (NumberFormatException ignored) {
+                }
             }
+            return defaultValue;
         }
-        return null;
-    }
+    };
 
-
-    /**
-     * @return <code>value<code/> converted to {@link Double}, or null if
-     * value couldn't be converted
-     */
-    @Nullable
-    public static Double toDouble(Object value) {
-        if (value instanceof Double) {
-            return (Double) value;
-        } else if (value instanceof Number) {
-            return ((Number) value).doubleValue();
-        } else if (value instanceof String) {
-            try {
-                return Double.valueOf((String) value);
-            } catch (NumberFormatException ignored) {
+    public static ObjectToJsonValue<Integer> sToInteger = new ObjectToJsonValue<Integer>(Integer.class, 0) {
+        protected @Nullable Integer convertFromDistinctType(Object value, Integer defaultValue) {
+            if (value instanceof Number) {
+                return ((Number) value).intValue();
+            } else if (value instanceof String) {
+                try {
+                    return (int) Double.parseDouble((String) value);
+                } catch (NumberFormatException ignored) {
+                }
             }
+            return defaultValue;
         }
-        return null;
-    }
+    };
 
-
-    /**
-     * @return <code>value<code/> converted to {@link Integer}, or null if
-     * value couldn't be converted
-     */
-    @Nullable
-    public static Integer toInteger(Object value) {
-        if (value instanceof Integer) {
-            return (Integer) value;
-        } else if (value instanceof Number) {
-            return ((Number) value).intValue();
-        } else if (value instanceof String) {
-            try {
-                return (int) Double.parseDouble((String) value);
-            } catch (NumberFormatException ignored) {
+    public static ObjectToJsonValue<Long> sToLong = new ObjectToJsonValue<Long>(Long.class, 0L) {
+        protected @Nullable Long convertFromDistinctType(Object value, Long defaultValue) {
+            if (value instanceof Number) {
+                return ((Number) value).longValue();
+            } else if (value instanceof String) {
+                try {
+                    return (long) Double.parseDouble((String) value);
+                } catch (NumberFormatException ignored) {
+                }
             }
+            return defaultValue;
         }
-        return null;
+    };
+
+    private static class ObjectToJsonValueNoConversion<T> extends ObjectToJsonValue<T> {
+        protected ObjectToJsonValueNoConversion(Class<T> clazz) {
+            super(clazz, null);
+        }
+
+        @Override
+        protected T convertFromDistinctType(@NonNull Object value, T defaultValue) {
+            return defaultValue;
+        }
     }
+    public static ObjectToJsonValue<JSONObject> sToObject = new ObjectToJsonValueNoConversion<>(JSONObject.class);
+    public static ObjectToJsonValue<JSONArray> sToArray = new ObjectToJsonValueNoConversion<>(JSONArray.class);
 
 
-    /**
-     * @return <code>value<code/> converted to {@link Long}, or null if
-     * value couldn't be converted
-     */
-    @Nullable
-    public static Long toLong(Object value) {
-        if (value instanceof Long) {
-            return (Long) value;
-        } else if (value instanceof Number) {
-            return ((Number) value).longValue();
-        } else if (value instanceof String) {
-            try {
-                return (long) Double.parseDouble((String) value);
-            } catch (NumberFormatException ignored) {
+    public static ObjectToJsonValue<String> sToString = new ObjectToJsonValue<String>(String.class, "") {
+        protected @Nullable String convertFromDistinctType(Object value, String defaultValue) {
+            if (value != null) {
+                return String.valueOf(value);
             }
+            return defaultValue;
         }
-        return null;
-    }
-
-
-    /**
-     * @return <code>value<code/> converted to {@link String}, or null if
-     * value couldn't be converted
-     */
-    @Nullable
-    public static String toString(Object value) {
-        if (value instanceof String) {
-            return (String) value;
-        } else if (value != null) {
-            return String.valueOf(value);
-        }
-        return null;
-    }
-
+    };
 
     @NonNull
     public static JSONException typeMismatch(@Nullable Object indexOrName, @Nullable Object actual,

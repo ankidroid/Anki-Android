@@ -51,12 +51,10 @@ import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ArrayNode;
 import com.fasterxml.jackson.databind.node.NullNode;
-import com.fasterxml.jackson.databind.node.ObjectNode;
 import com.ichi2.anki.AnkiSerialization;
 
 import java.lang.reflect.Array;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
 
@@ -351,14 +349,13 @@ public class JSONArray {
         return (index < 0) || (index >= length());
     }
 
-
     /**
      * @return value at index
      * @throws JSONException if the index is out of bounds
      *                       or if the value at index cannot be converted to boolean
      */
     public boolean getBoolean(int index) {
-        return JSONTypeConverters.convert(index, get(index), Boolean.class);
+        return JSONTypeConverters.sToBoolean.convert(index, get(index));
     }
 
     /**
@@ -367,7 +364,7 @@ public class JSONArray {
      *                       or if the value at index cannot be converted to double
      */
     public double getDouble(int index) {
-        return JSONTypeConverters.convert(index, get(index), Double.class);
+        return JSONTypeConverters.sToDouble.convert(index, get(index));
     }
 
     /**
@@ -376,7 +373,7 @@ public class JSONArray {
      *                       or if the value at index cannot be converted to int
      */
     public int getInt(int index) {
-        return JSONTypeConverters.convert(index, get(index), Integer.class);
+        return JSONTypeConverters.sToInteger.convert(index, get(index));
     }
 
     /**
@@ -385,7 +382,7 @@ public class JSONArray {
      *                       or if the value at index cannot be converted to long
      */
     public long getLong(int index) {
-        return JSONTypeConverters.convert(index, get(index), Long.class);
+        return JSONTypeConverters.sToLong.convert(index, get(index));
     }
 
     /**
@@ -394,8 +391,8 @@ public class JSONArray {
      *                       or if the value at index cannot be converted to String
      */
     public String getString(int index) {
-        return JSONTypeConverters.convert(index, get(index), String.class);
-    }
+        return JSONTypeConverters.sToString.convert(index, get(index));
+   }
 
 
     /**
@@ -404,7 +401,7 @@ public class JSONArray {
      *                       or if the value at index isn't an array
      */
     public JSONArray getJSONArray(int index) {
-        return JSONTypeConverters.convert(index, get(index), JSONArray.class);
+        return JSONTypeConverters.sToArray.convert(index, get(index));
     }
 
     /**
@@ -413,7 +410,7 @@ public class JSONArray {
      *                       or if the value at index isn't an object
      */
     public JSONObject getJSONObject(int index) {
-        return JSONTypeConverters.convert(index, get(index), JSONObject.class);
+        return JSONTypeConverters.sToObject.convert(index, get(index));
     }
 
 
