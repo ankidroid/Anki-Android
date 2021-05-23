@@ -221,7 +221,7 @@ public class JSONArrayTest {
 
         boolean content = false;
 
-        jsonArray.put(1, content);
+        jsonArray.put((Integer) 1, content);
 
         assertEquals(JSONObject.NULL, jsonArray.get(0));
         assertEquals(content, jsonArray.get(1));
@@ -235,7 +235,7 @@ public class JSONArrayTest {
 
         double content = 2323.2;
 
-        jsonArray.put(1, content);
+        jsonArray.put((Integer) 1, content);
 
         assertEquals(JSONObject.NULL, jsonArray.get(0));
         assertEquals(content, jsonArray.get(1));
@@ -249,7 +249,7 @@ public class JSONArrayTest {
 
         int content = 12;
 
-        jsonArray.put(1, content);
+        jsonArray.put((Integer) 1, content);
 
         assertEquals(JSONObject.NULL, jsonArray.get(0));
         assertEquals(content, jsonArray.get(1));
@@ -263,7 +263,7 @@ public class JSONArrayTest {
 
         long content = 12L;
 
-        jsonArray.put(1, content);
+        jsonArray.put((Integer) 1, content);
 
         assertEquals(JSONObject.NULL, jsonArray.get(0));
         assertEquals(content, jsonArray.get(1));

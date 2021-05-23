@@ -68,10 +68,6 @@ import static java.lang.System.identityHashCode;
  * but backed by {@link ArrayNode} from Jackson serialization library.
  *
  * Some differences from {@link org.json.JSONArray}:
- *   - {@link #getJSONArray(int)} returns this class
- *   - {@link #getJSONObject(int)} returns instance of {@link JSONObject} not {@link org.json.JSONObject}
- *   - Null is instance of {@link NullNode}/{@link JSONObject#NULL}
- *   - Exceptions are of type {@link JSONException} which is unchecked exception
  *
  * Internal implementation using {@link ArrayNode} should be invisible to the user as long
  * as they don't access the underlying node via {@link #getRootJsonNode()}.
@@ -85,10 +81,7 @@ import static java.lang.System.identityHashCode;
  * If a sub class wishes to enable databinding, it should create a constructor that delegates to
  * {@link #JSONArray(ArrayNode)} and annotate it with {@link JsonCreator}.
  */
-public class JSONArray {
-
-    @NonNull
-    private final ArrayNode mNode;
+public class JSONArray extends JSONContainer<Integer, ArrayNode, JSONArray> {
 
     /**
      * Creates instance from {@link ArrayNode}
@@ -99,24 +92,7 @@ public class JSONArray {
      */
     @JsonCreator
     public JSONArray(@NonNull ArrayNode node) {
-        mNode = node;
-    }
-
-    /**
-     * @return the backing {@link ArrayNode}
-     *
-     * Changing the content of the returned node will result
-     * in a change in this instance of JSONArray.
-     *
-     *
-     * This method should not be used directly to change the
-     * content of the json array, but can be used for jackson
-     * deserialization and for changing the wrapper class around
-     * the {@link ArrayNode}
-     */
-    @JsonValue
-    public ArrayNode getRootJsonNode() {
-        return mNode;
+        super(node);
     }
 
     /**
@@ -134,7 +110,7 @@ public class JSONArray {
      * @param copyFrom instance to copy
      */
     public JSONArray(@NonNull JSONArray copyFrom) {
-        mNode = copyFrom.mNode.deepCopy();
+        this(copyFrom.mNode.deepCopy());
     }
 
     /**
@@ -145,11 +121,7 @@ public class JSONArray {
      * the encapsulated exception is either {@link JsonProcessingException} or {@link JsonMappingException}
      */
     public JSONArray(@NonNull String source) {
-        try {
-            mNode = (ArrayNode) AnkiSerialization.getObjectMapper().readTree(source);
-        } catch (Exception e) {
-            throw new JSONException(e);
-        }
+        super(source);
     }
 
 
@@ -192,6 +164,10 @@ public class JSONArray {
         this(iterable == null ? null : iterable.iterator());
     }
 
+    protected JSONArray thisAsInheritedType() {
+        return this;
+    };
+
     /**
      * Appends {@code value} to the end of this array.
      */
@@ -220,18 +196,7 @@ public class JSONArray {
      * Appends {@code value} to the end of this array.
      */
     @NonNull
-    public JSONArray put(@Nullable JSONArray value) {
-        return put(value == null ?
-                JSONObject.NULL :
-                value.getRootJsonNode());
-    }
-
-
-    /**
-     * Appends {@code value} to the end of this array.
-     */
-    @NonNull
-    public JSONArray put(@Nullable JSONObject value) {
+    public JSONArray put(@Nullable JSONContainer value) {
         return put(value == null ?
                 JSONObject.NULL :
                 value.getRootJsonNode());
@@ -257,56 +222,6 @@ public class JSONArray {
     }
 
     /**
-     * Sets the value at {@code index} to {@code value}
-     *
-     * @see #put(int, JsonNode) for details about null padding
-     */
-    @NonNull
-    public JSONArray put(int index, boolean value) {
-        return put(index, mNode.booleanNode(value));
-    }
-
-    /**
-     * Sets the value at {@code index} to {@code value}
-     *
-     * @see #put(int, JsonNode) for details about null padding
-     */
-    @NonNull
-    public JSONArray put(int index, double value) {
-        return put(index, mNode.numberNode(value));
-    }
-
-    /**
-     * Sets the value at {@code index} to {@code value}
-     *
-     * @see #put(int, JsonNode) for details about null padding
-     */
-    @NonNull
-    public JSONArray put(int index, int value) {
-        return put(index, mNode.numberNode(value));
-    }
-
-    /**
-     * Sets the value at {@code index} to {@code value}
-     */
-    @NonNull
-    public JSONArray put(int index, long value) {
-        return put(index, mNode.numberNode(value));
-    }
-
-    /**
-     * Sets the value at {@code index} to {@code value}
-     *
-     * @see JSONUtils#objectToJsonNode(Object) for supported types
-     * @see #put(int, JsonNode) for details about null padding
-     */
-    @NonNull
-    public JSONArray put(int index, Object value) {
-        JsonNode node = JSONUtils.objectToJsonNode(value);
-        return put(index, node);
-    }
-
-    /**
      * Sets the value at {@code index} to {@code node}, null padding this array
      * to the required length if necessary. If a value already exists at {@code
      * index}, it will be replaced.
@@ -316,7 +231,7 @@ public class JSONArray {
      * in AnkiDroid.
      */
     @NonNull
-    public JSONArray put(int index, JsonNode node) {
+    public JSONArray put(Integer index, JsonNode node) {
         while (length() <= index) {
             put(JSONObject.NULL);
         }
@@ -350,107 +265,24 @@ public class JSONArray {
     }
 
     /**
-     * @return value at index
+     * @return node at index
      * @throws JSONException if the index is out of bounds
-     *                       or if the value at index cannot be converted to boolean
      */
-    public boolean getBoolean(int index) {
-        return JSONTypeConverters.sToBoolean.convert(index, get(index));
+    protected JsonNode getJsonNode(Integer index) {
+        throwIfInvalidIndex(index);
+        return mNode.get(index);
     }
-
-    /**
-     * @return value at index
-     * @throws JSONException if the index is out of bounds
-     *                       or if the value at index cannot be converted to double
-     */
-    public double getDouble(int index) {
-        return JSONTypeConverters.sToDouble.convert(index, get(index));
-    }
-
-    /**
-     * @return value at index
-     * @throws JSONException if the index is out of bounds
-     *                       or if the value at index cannot be converted to int
-     */
-    public int getInt(int index) {
-        return JSONTypeConverters.sToInteger.convert(index, get(index));
-    }
-
-    /**
-     * @return value at index
-     * @throws JSONException if the index is out of bounds
-     *                       or if the value at index cannot be converted to long
-     */
-    public long getLong(int index) {
-        return JSONTypeConverters.sToLong.convert(index, get(index));
-    }
-
-    /**
-     * @return value at index
-     * @throws JSONException if the index is out of bounds
-     *                       or if the value at index cannot be converted to String
-     */
-    public String getString(int index) {
-        return JSONTypeConverters.sToString.convert(index, get(index));
-   }
-
-
-    /**
-     * @return JSONArray at index
-     * @throws JSONException if the index is out of bounds
-     *                       or if the value at index isn't an array
-     */
-    public JSONArray getJSONArray(int index) {
-        return JSONTypeConverters.sToArray.convert(index, get(index));
-    }
-
-    /**
-     * @return JSONObject at index
-     * @throws JSONException if the index is out of bounds
-     *                       or if the value at index isn't an object
-     */
-    public JSONObject getJSONObject(int index) {
-        return JSONTypeConverters.sToObject.convert(index, get(index));
-    }
-
-
-    /**
-     * Returns the value at {@code index}.
-     *
-     *
-     * @implNote The value can be directly used, That is Long, Boolean, JSONObject, etc...
-     * and not the actual value of type {@link JsonNode} stored in the underlying {@link #mNode}
-     *
-     * @return value at index
-     * @throws JSONException if the index is out of bounds
-     *                       or the value type isn't supported
-     *
-     * @see JSONUtils#jsonNodeToObject(JsonNode) for list of supported types
-     */
-    public Object get(int index) {
-        JsonNode node = getJsonNode(index);
-        return JSONUtils.jsonNodeToObject(node);
-    }
-
     /**
      * @return node at index
      * @throws JSONException if the index is out of bounds
      */
-    protected JsonNode getJsonNode(int index) {
-        throwIfInvalidIndex(index);
+    protected JsonNode optNode(Integer index) {
+        if(isInvalidIndex(index)) {
+            return null;
+        }
         return mNode.get(index);
     }
 
-    /**
-     * Returns the value at {@code index} if it exists, coercing it if
-     * necessary. Returns the empty string if no such value exists.
-     */
-    public String optString(int index) {
-        if (isInvalidIndex(index)) {
-            return "";
-        }
-        return mNode.get(index).asText("");
-    }
 
     @NonNull
     public JSONArray deepClone() {
@@ -479,10 +311,6 @@ public class JSONArray {
                 return array;
             }
         };
-    }
-
-    public int length() {
-        return mNode.size();
     }
 
     public Iterable<JSONObject> jsonObjectIterable() {
@@ -583,39 +411,5 @@ public class JSONArray {
             l.add(object.getString(key));
         }
         return l;
-    }
-
-
-    public boolean isNull(int i) {
-        JsonNode node = mNode.get(i);
-        return node == null || node.isNull();
-    }
-
-    @Override
-    public String toString() {
-        return mNode.toString();
-    }
-
-    public String toPrettyString() {
-        return mNode.toPrettyString();
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) {
-            return true;
-        }
-        if (o == null || getClass() != o.getClass()) {
-            return false;
-        }
-        JSONArray other = (JSONArray) o;
-        // intentional reference comparison
-        return mNode == other.getRootJsonNode();
-    }
-
-
-    @Override
-    public int hashCode() {
-        return identityHashCode(mNode);
     }
 }

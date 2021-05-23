@@ -67,8 +67,6 @@ import androidx.annotation.CheckResult;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
-import static java.lang.System.identityHashCode;
-
 /**
  * A JSON object that follows the api of {@link org.json.JSONObject}
  * but backed by {@link ObjectNode} from Jackson serialization library.
@@ -91,12 +89,8 @@ import static java.lang.System.identityHashCode;
  * If a sub class wishes to enable databinding, it should create a constructor that delegates to
  * {@link #JSONObject(ObjectNode)} and annotate it with {@link JsonCreator}.
  */
-public class JSONObject implements Iterable<String> {
+public class JSONObject extends JSONContainer<String, ObjectNode, JSONObject> implements Iterable<String> {
 
-    public static final JsonNode NULL = NullNode.getInstance();
-
-    @NonNull
-    private final ObjectNode mNode;
 
     /**
      * Creates instance from {@link ObjectNode}
@@ -107,26 +101,8 @@ public class JSONObject implements Iterable<String> {
      */
     @JsonCreator
     public JSONObject(@NonNull ObjectNode node) {
-        mNode = node;
+        super(node);
     }
-
-    /**
-     * @return the backing {@link ObjectNode}
-     *
-     * Changing the content of the returned node will result
-     * in a change in this instance of JSONObject.
-     *
-     * This method should not be used directly to change the
-     * content of the json object, but can be used for jackson
-     * deserialization and for changing the wrapper class around
-     * the {@link ObjectNode} like {@link com.ichi2.libanki.Deck#from(JSONObject)}
-     */
-    @NonNull
-    @JsonValue
-    public ObjectNode getRootJsonNode() {
-        return mNode;
-    }
-
 
     /**
      * Creates an empty json object using the default {@link ObjectMapper}
@@ -138,7 +114,6 @@ public class JSONObject implements Iterable<String> {
         this(AnkiSerialization.getObjectMapper().createObjectNode());
     }
 
-
     /**
      * Deserializes a string to to a {@link JSONObject} using the default {@link ObjectMapper}
      * @param source the json string
@@ -147,22 +122,21 @@ public class JSONObject implements Iterable<String> {
      * the encapsulated exception is either {@link JsonProcessingException} or {@link JsonMappingException}
      */
     public JSONObject(@NonNull String source) {
-        try {
-            mNode = (ObjectNode) AnkiSerialization.getObjectMapper().readTree(source);
-        } catch (Exception e) {
-            throw new JSONException(e);
-        }
+        super(source);
     }
-
 
     /**
      * Creates a deep copy from another {@link JSONObject}
      * @param copyFrom instance to copy
      */
     public JSONObject(@NonNull JSONObject copyFrom) {
-        mNode = copyFrom.mNode.deepCopy();
+        this(copyFrom.getRootJsonNode().deepCopy());
     }
 
+    @Override
+    protected JSONObject thisAsInheritedType() {
+        return this;
+    }
 
     /**
      * @return iterator over all filed names (keys) in the object
@@ -172,186 +146,38 @@ public class JSONObject implements Iterable<String> {
         return keys();
     }
 
-    @NonNull
-    public JSONObject put(@NonNull String name, boolean value) {
-        return this.put(name, mNode.booleanNode(value));
-    }
-
-    @NonNull
-    public JSONObject put(@NonNull String name, double value) {
-        return this.put(name, mNode.numberNode(value));
-    }
-
-    @NonNull
-    public JSONObject put(@NonNull String name, int value) {
-        return this.put(name, mNode.numberNode(value));
-    }
-
-    @NonNull
-    public JSONObject put(@NonNull String name, long value) {
-        return this.put(name, mNode.numberNode(value));
-    }
-
 
     /**
-     * Put a key/value pair in the JSONObject. If the value is <code>null</code>, then the
-     * key will be removed from the JSONObject if it is present.
+     * Put a key/value pair in the InheritedType. If the value is <code>null</code>, then the
+     * key will be removed from the InheritedType if it is present.
      *
      * @throws JSONException if passed type is not supported
      * @see JSONUtils#objectToJsonNode(Object) for supported types
      */
     @NonNull
+    @Override
     public JSONObject put(@NonNull String name, @Nullable Object value) {
         if (value == null) {
             mNode.remove(name);
-        } else {
-            put(name, JSONUtils.objectToJsonNode(value));
         }
-        return this;
-    }
-
-
-    /**
-     * Put a key/value pair in the JSONObject, but only if the key and the value
-     * are both non-null.
-     */
-    @NonNull
-    public JSONObject putOpt(@Nullable String name, @Nullable Object value) {
-        if (name == null || value == null) {
-            return this;
-        }
-        return put(name, value);
+        return super.put(name, value);
     }
 
     @NonNull
-    public JSONObject put(@NonNull String name, @NonNull CharSequence value) {
-        return this.put(name, mNode.textNode(value.toString()));
-    }
-
-
-    @NonNull
-    public JSONObject put(@NonNull String name, @NonNull JSONArray value) {
-        return this.put(name, value.getRootJsonNode());
-    }
-
-
-    @NonNull
-    public JSONObject put(@NonNull String name, @NonNull JSONObject value) {
-        return this.put(name, value.getRootJsonNode());
-    }
-
-
-    @NonNull
+    @Override
     public JSONObject put(@NonNull String name, @NonNull JsonNode node) {
         mNode.set(name, node);
         return this;
     }
 
     @NonNull
+    @Override
     protected JsonNode getJsonNode(@NonNull String name) {
         JsonNode jsonNode = mNode.get(name);
         if (jsonNode == null) {
             throw new JSONException("Key:" + name + " does not exist");
         }
         return jsonNode;
-    }
-
-    /**
-     * Get the value object associated with a name.
-     */
-    @CheckResult
-    @NonNull
-    public Object get(@NonNull String name) {
-        JsonNode node = getJsonNode(name);
-        return JSONUtils.jsonNodeToObject(node);
-    }
-
-
-    /**
-     * @return the value at "name" converted to boolean.
-     * @throws JSONException if value didn't exist, or it couldn't be
-     *                       converted to the correct type
-     */
-    @CheckResult
-    public boolean getBoolean(String name) {
-        return JSONTypeConverters.sToBoolean.convert(name, get(name));
-    }
-
-
-    /**
-     * @return the value at "name" converted to double.
-     * @throws JSONException if value didn't exist, or it couldn't be
-     *                       converted to the correct type
-     */
-    @CheckResult
-    public double getDouble(String name) {
-        return JSONTypeConverters.sToDouble.convert(name, get(name));
-    }
-
-
-    /**
-     * @return the value at "name" converted to int.
-     * @throws JSONException if value didn't exist, or it couldn't be
-     *                       converted to the correct type
-     */
-    @CheckResult
-    public int getInt(String name) {
-        return JSONTypeConverters.sToInteger.convert(name, get(name));
-    }
-
-
-    /**
-     * @return the value at "name" converted to long.
-     * @throws JSONException if value didn't exist, or it couldn't be
-     *                       converted to the correct type
-     */
-    @CheckResult
-    public long getLong(String name) {
-        return JSONTypeConverters.sToLong.convert(name, get(name));
-    }
-
-
-    /**
-     * @return the value at "name" converted to string.
-     * @throws JSONException if value didn't exist, or it couldn't be
-     *                       converted to the correct type
-     */
-    @CheckResult
-    @NonNull
-    public String getString(String name) {
-        return JSONTypeConverters.sToString.convert(name, get(name));
-    }
-
-
-    /**
-     * @return array at "name"
-     * @throws JSONException if value didn't exist, or it couldn't be
-     *                       converted to the correct type
-     */
-    @CheckResult
-    @NonNull
-    public JSONArray getJSONArray(String name) {
-        return JSONTypeConverters.sToArray.convert(name, get(name));
-    }
-
-
-    /**
-     * @return object at "name"
-     * @throws JSONException if value didn't exist, or it couldn't be
-     *                       converted to the correct type
-     */
-    @CheckResult
-    @NonNull
-    public JSONObject getJSONObject(String name) {
-        return JSONTypeConverters.sToObject.convert(name, get(name));
-    }
-
-    /**
-     * @return child count
-     */
-    @CheckResult
-    public int length() {
-        return mNode.size();
     }
 
 
@@ -379,43 +205,10 @@ public class JSONObject implements Iterable<String> {
         return mNode.fieldNames();
     }
 
-    @Nullable
-    public Object opt(@Nullable String name) {
-        if (name == null) {
-            return null;
-        }
-        JsonNode node = mNode.get(name);
-        if (node == null) {
-            return null;
-        }
-        return JSONUtils.jsonNodeToObject(node);
-    }
-
-    @Nullable
-    public JsonNode optNode(@Nullable String name) {
+    @Override
+    protected @Nullable JsonNode optNode(@Nullable String name) {
         return mNode.get(name);
     }
-
-
-    /**
-     * @return JSONArray at name if it exists otherwise null
-     */
-    @Nullable
-    @CheckResult
-    public JSONArray optJSONArray(@Nullable String name) {
-        return JSONTypeConverters.sToArray.convertOr(opt(name));
-    }
-
-
-    /**
-     * @return JSONObject at name if it exists otherwise null
-     */
-    @Nullable
-    @CheckResult
-    public JSONObject optJSONObject(@Nullable String name) {
-        return JSONTypeConverters.sToObject.convertOr(opt(name));
-    }
-
 
     @NonNull
     @CheckResult
@@ -434,30 +227,6 @@ public class JSONObject implements Iterable<String> {
         return ret;
     }
 
-
-    public boolean optBoolean(@Nullable String name, boolean defaultValue) {
-        return JSONTypeConverters.sToBoolean.convertOr(opt(name), defaultValue);
-    }
-
-
-    public int optInt(@Nullable String name, int defaultValue) {
-        return JSONTypeConverters.sToInteger.convertOr(opt(name), defaultValue);
-    }
-
-
-    public long optLong(@Nullable String name, long defaultValue) {
-        return JSONTypeConverters.sToLong.convertOr(opt(name), defaultValue);
-    }
-
-    public long optLong(@Nullable String name) {
-        return optLong(name, 0L);
-    }
-
-    public double optDouble(@Nullable String name) {
-        return optDouble(name, 0D);
-    }
-
-
     public boolean has(String name) {
         return mNode.has(name);
     }
@@ -465,64 +234,5 @@ public class JSONObject implements Iterable<String> {
 
     public void remove(@NonNull String name) {
         mNode.remove(name);
-    }
-
-
-    public String optString(String name, String defaultValue) {
-        return JSONTypeConverters.sToString.convertOr(opt(name), defaultValue);
-    }
-
-
-    public String optString(String name) {
-        return optString(name, "");
-    }
-
-
-    public boolean isNull(String name) {
-        return mNode.get(name).isNull();
-    }
-
-
-    public boolean optBoolean(String name) {
-        return optBoolean(name, false);
-    }
-
-
-    public double optDouble(String name, double defaultValue) {
-        return JSONTypeConverters.sToDouble.convertOr(opt(name), defaultValue);
-    }
-
-
-    @Override
-    public String toString() {
-        return mNode.toString();
-    }
-
-    public String toPrettyString() {
-        return mNode.toPrettyString();
-    }
-
-    public String toString(int indentation/*not used*/) {
-        return toPrettyString();
-    }
-
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) {
-            return true;
-        }
-        if (o == null || getClass() != o.getClass()) {
-            return false;
-        }
-        JSONObject other = (JSONObject) o;
-        // intentional reference comparison
-        return mNode == other.getRootJsonNode();
-    }
-
-
-    @Override
-    public int hashCode() {
-        return identityHashCode(mNode);
     }
 }
