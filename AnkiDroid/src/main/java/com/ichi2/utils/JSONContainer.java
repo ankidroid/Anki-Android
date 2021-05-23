@@ -141,6 +141,11 @@ public abstract class JSONContainer<AccessType, UnderlyingType extends Container
     }
 
 
+    @CheckResult
+    public <T> T getConverter(JSONTypeConverters.ObjectToJsonValue<T> converter, AccessType indexOrName) {
+        return converter.convert(indexOrName, get(indexOrName));
+    }
+
     /**
      * @return the value at "indexOrName" converted to boolean.
      * @throws JSONException if value didn't exist, or it couldn't be
@@ -148,7 +153,7 @@ public abstract class JSONContainer<AccessType, UnderlyingType extends Container
      */
     @CheckResult
     public boolean getBoolean(AccessType indexOrName) {
-        return JSONTypeConverters.sToBoolean.convert(indexOrName, get(indexOrName));
+        return getConverter(JSONTypeConverters.sToBoolean, indexOrName);
     }
 
 
@@ -159,7 +164,7 @@ public abstract class JSONContainer<AccessType, UnderlyingType extends Container
      */
     @CheckResult
     public double getDouble(AccessType indexOrName) {
-        return JSONTypeConverters.sToDouble.convert(indexOrName, get(indexOrName));
+        return getConverter(JSONTypeConverters.sToDouble, indexOrName);
     }
 
 
@@ -170,7 +175,7 @@ public abstract class JSONContainer<AccessType, UnderlyingType extends Container
      */
     @CheckResult
     public int getInt(AccessType indexOrName) {
-        return JSONTypeConverters.sToInteger.convert(indexOrName, get(indexOrName));
+        return getConverter(JSONTypeConverters.sToInteger, indexOrName);
     }
 
 
@@ -181,7 +186,7 @@ public abstract class JSONContainer<AccessType, UnderlyingType extends Container
      */
     @CheckResult
     public long getLong(AccessType indexOrName) {
-        return JSONTypeConverters.sToLong.convert(indexOrName, get(indexOrName));
+        return getConverter(JSONTypeConverters.sToLong, indexOrName);
     }
 
 
@@ -193,7 +198,7 @@ public abstract class JSONContainer<AccessType, UnderlyingType extends Container
     @CheckResult
     @NonNull
     public String getString(AccessType indexOrName) {
-        return JSONTypeConverters.sToString.convert(indexOrName, get(indexOrName));
+        return getConverter(JSONTypeConverters.sToString, indexOrName);
     }
 
 
@@ -205,7 +210,7 @@ public abstract class JSONContainer<AccessType, UnderlyingType extends Container
     @CheckResult
     @NonNull
     public JSONArray getJSONArray(AccessType indexOrName) {
-        return JSONTypeConverters.sToArray.convert(indexOrName, get(indexOrName));
+        return getConverter(JSONTypeConverters.sToArray, indexOrName);
     }
 
 
@@ -217,7 +222,7 @@ public abstract class JSONContainer<AccessType, UnderlyingType extends Container
     @CheckResult
     @NonNull
     public JSONObject getJSONObject(AccessType indexOrName) {
-        return JSONTypeConverters.sToObject.convert(indexOrName, get(indexOrName));
+        return getConverter(JSONTypeConverters.sToObject, indexOrName);
     }
 
 
