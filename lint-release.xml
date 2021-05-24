@@ -226,13 +226,11 @@
     <issue id="InvalidPermission" severity="ignore" />
     <issue id="ManifestResource" severity="ignore" />
     <issue id="ManifestTypo" severity="ignore" />
-    <issue id="FloatMath" severity="ignore" />
     <issue id="MergeMarker" severity="ignore" />
     <issue id="MergeRootFrame" severity="ignore" />
     <issue id="IncompatibleMediaBrowserServiceCompatVersion" severity="ignore" />
     <issue id="InnerclassSeparator" severity="ignore" />
     <issue id="Instantiatable" severity="ignore" />
-    <issue id="MissingRegistered" severity="ignore" />
     <issue id="MissingId" severity="ignore" />
     <issue id="LibraryCustomView" severity="ignore" />
     <issue id="ResAuto" severity="ignore" />
