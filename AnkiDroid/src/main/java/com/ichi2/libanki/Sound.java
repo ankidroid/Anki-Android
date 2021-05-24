@@ -68,9 +68,14 @@ public class Sound {
     private static final Pattern sUriPattern = Pattern.compile("^(([^:/?#]+):)?(//([^/?#]*))?([^?#]*)(\\?([^#]*))?(#(.*))?$");
 
     /**
-     * Media player used to play the sounds
+     * Media player used to play the sounds. It's Nullable and that it is set only if a sound is playnig or paused, otherwise it is null.
      */
-    private MediaPlayer mMediaPlayer;
+    private MediaPlayer mMediaPlayer = null;
+
+    /**
+     * It's used to store the Uri of the current Audio in case of running or pausing.
+     */
+    private Uri mCurrentAudioUri = null;
 
     /**
      * AudioManager to request/release audio focus
@@ -301,11 +306,18 @@ public class Sound {
         }
     }
 
+    public boolean isCurrentAudioFinished() {
+        // When an audio finishes and I'm trying to replay it again, this method should check if the mMediaPlayer is null which means
+        // the audio finished to return true, so that I would be able to play the same sound again.
+        return mMediaPlayer == null;
+    }
+
     /** Plays a sound without ensuring that the playAllListener will release the audio */
     @SuppressWarnings({"PMD.EmptyIfStmt","PMD.CollapsibleIfStatements","deprecation"}) // audio API deprecation tracked on github as #5022
     private void playSoundInternal(String soundPath, OnCompletionListener playAllListener, VideoView videoView, OnErrorListener errorListener) {
         Timber.d("Playing %s has listener? %b", soundPath, playAllListener != null);
         Uri soundUri = Uri.parse(soundPath);
+        mCurrentAudioUri = soundUri;
 
         final OnErrorListener errorHandler = errorListener == null ?
                 (mp, what, extra, path) -> {
@@ -376,6 +388,13 @@ public class Sound {
                 releaseSound();
             }
         }
+    }
+
+    public String getCurrentAudioUri() {
+        if (mCurrentAudioUri == null) {
+            return null;
+        }
+        return mCurrentAudioUri.toString();
     }
 
     private static void configureVideo(VideoView videoView, int videoWidth, int videoHeight) {
