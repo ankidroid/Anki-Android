@@ -29,7 +29,7 @@ fi
 # Get on to the tag requested
 #git checkout $TAG
 
-BUILDNAMES='A B C D E'
+BUILDNAMES='A B C D E F G H I J K L M'
 for BUILD in $BUILDNAMES; do
     git reset --hard
     git clean -f
