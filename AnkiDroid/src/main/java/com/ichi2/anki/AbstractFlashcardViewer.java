@@ -396,15 +396,6 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
     // LISTENERS
     // ----------------------------------------------------------------------------
 
-    private final Handler mHandler = new Handler() {
-
-        @Override
-        public void handleMessage(Message msg) {
-            mSoundPlayer.stopSounds();
-            mSoundPlayer.playSound((String) msg.obj, null, null, getSoundErrorListener());
-        }
-    };
-
     private final Handler mLongClickHandler = new Handler();
     private final Runnable mLongClickTestRunnable = new Runnable() {
         @Override
@@ -3519,7 +3510,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
         // We play sounds through these links when a user taps the sound icon.
         private boolean filterUrl(String url) {
             if (url.startsWith("playsound:")) {
-                onCurrentAudioChanged(url);
+                controlSound(url);
                 return true;
             }
             if (url.startsWith("file") || url.startsWith("data:")) {
@@ -3721,10 +3712,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
         }
 
         private void onCurrentAudioChanged(String url) {
-            // Send a message that will be handled on the UI thread.
-            Message msg = Message.obtain();
-            msg.obj = url.replaceFirst("playsound:", "");
-            mHandler.sendMessage(msg);
+            mSoundPlayer.playSound(url, null, null, getSoundErrorListener());
         }
 
 
