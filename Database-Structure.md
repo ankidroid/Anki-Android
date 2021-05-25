@@ -225,7 +225,10 @@ Here is an annotated description of the JSONObjects in the models field of the `
     mod : "modification time in seconds",
     name : "model name",
     req : [
-            "Array of arrays describing, for each template T, which fields are required to generate T.
+            "req is unused in modern clients. May exist for backwards compatibility. 
+             https://forums.ankiweb.net/t/is-req-still-used-or-present/9977
+             AnkiDroid 2.14 uses it, AnkiDroid 2.15 does not use it but still generates it.
+             Array of arrays describing, for each template T, which fields are required to generate T.
              The array is of the form [T,string,list], where:
              -  T is the ordinal of the template. 
              - The string is 'none', 'all' or 'any'. 
