@@ -201,6 +201,13 @@ public class Models {
             m.put("mod", mCol.getTime().intTime());
             m.put("usn", mCol.usn());
             // TODO: fix empty id problem on _updaterequired (needed for model adding)
+            if (!isModelNew(m)) {
+                // this fills in the `req` chunk of the model. Not used on AnkiDroid 2.15+ or AnkiDesktop 2.1.x
+                // Included only for backwards compatibility (to AnkiDroid <2.14 etc)
+                // https://forums.ankiweb.net/t/is-req-still-used-or-present/9977
+                // https://github.com/ankidroid/Anki-Android/issues/8945
+                _updateRequired(m);
+            }
             if (templates) {
                 _syncTemplates(m);
             }
@@ -957,6 +964,25 @@ public class Models {
      * Required field/text cache
      * ***********************************************************************************************
      */
+
+    private void _updateRequired(Model m) {
+        if (m.isCloze()) {
+            // nothing to do
+            return;
+        }
+        JSONArray req = new JSONArray();
+        List<String> flds = m.getFieldsNames();
+        JSONArray templates = m.getJSONArray("tmpls");
+        for (JSONObject t: templates.jsonObjectIterable()) {
+            Object[] ret = _reqForTemplate(m, flds, t);
+            JSONArray r = new JSONArray();
+            r.put(t.getInt("ord"));
+            r.put(ret[0]);
+            r.put(ret[1]);
+            req.put(r);
+        }
+        m.put("req", req);
+    }
 
     @SuppressWarnings("PMD.UnusedLocalVariable") // 'String f' is unused upstream as well
     private Object[] _reqForTemplate(Model m, List<String> flds, JSONObject t) {
