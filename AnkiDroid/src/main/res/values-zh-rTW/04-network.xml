@@ -122,5 +122,5 @@
     <!-- Deck Picker Sync Icon -->
     <string name="sync_menu_title_full_sync">同步(完整)</string>
     <string name="sync_menu_title_no_account">同步(登入)</string>
-    <string name="sync_error_unknown_host_readable">無法連接到AnkiWeb。您的網絡工作正常嗎？\n\n%s</string>
+    <string name="sync_error_unknown_host_readable">無法連結到 AnkiWeb。您的網路是否正常嗎？\n\n%s</string>
 </resources>

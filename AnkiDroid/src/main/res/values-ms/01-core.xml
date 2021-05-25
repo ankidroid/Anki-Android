@@ -38,17 +38,17 @@
 ~ this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <resources>
-    <string name="yes">yes</string>
+    <string name="yes">ya</string>
     <!-- Navigation drawer items-->
-    <string name="decks">Decks</string>
-    <string name="card_browser" comment="The usage of card browser inside the app (note the casing)">Card browser</string>
-    <string name="statistics">Statistics</string>
-    <string name="settings">Settings</string>
-    <string name="help">Help</string>
-    <string name="send_feedback">Send feedback</string>
-    <string name="studyoptions_due_today">Due today:</string>
-    <string name="studyoptions_new_total">Total new cards:</string>
-    <string name="studyoptions_total_cards">Total cards:</string>
+    <string name="decks">Dek</string>
+    <string name="card_browser" comment="The usage of card browser inside the app (note the casing)">Pencari kad</string>
+    <string name="statistics">Statistik</string>
+    <string name="settings">Tetapan</string>
+    <string name="help">Bantuan</string>
+    <string name="send_feedback">Beri maklum balas</string>
+    <string name="studyoptions_due_today">Tamat hari ini:</string>
+    <string name="studyoptions_new_total">Jumlah kad baharu:</string>
+    <string name="studyoptions_total_cards">Jumlah kad:</string>
     <string name="studyoptions_eta">Estimated time (min):</string>
     <string name="studyoptions_start">Study</string>
     <!-- DeckPicker.java -->
