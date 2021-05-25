@@ -466,6 +466,48 @@ public class ModelTest extends RobolectricTest {
     }
 
     @Test
+    public void test_req() {
+
+        Collection col = getCol();
+        Models mm = col.getModels();
+        Model basic = mm.byName("Basic");
+        assertTrue(basic.has("req"));
+        reqSize(basic);
+        JSONArray r = basic.getJSONArray("req").getJSONArray(0);
+        assertEquals(0, r.getInt(0));
+        assertTrue(Arrays.asList(new String[] {REQ_ANY, REQ_ALL}).contains(r.getString(1)));
+        assertEquals(1, r.getJSONArray(2).length());
+        assertEquals(0, r.getJSONArray(2).getInt(0));
+
+        Model opt = mm.byName("Basic (optional reversed card)");
+        reqSize(opt);
+
+        r = opt.getJSONArray("req").getJSONArray(0);
+        assertTrue(Arrays.asList(new String[] {REQ_ANY, REQ_ALL}).contains(r.getString(1)));
+        assertEquals(1, r.getJSONArray(2).length());
+        assertEquals(0, r.getJSONArray(2).getInt(0));
+
+
+        assertEquals(new JSONArray("[1,\"all\",[1,2]]"), opt.getJSONArray("req").getJSONArray(1));
+
+        // testing any
+        opt.getJSONArray("tmpls").getJSONObject(1).put("qfmt", "{{Back}}{{Add Reverse}}");
+        mm.save(opt, true);
+        assertEquals(new JSONArray("[1, \"any\", [1, 2]]"), opt.getJSONArray("req").getJSONArray(1));
+        // testing null
+        opt.getJSONArray("tmpls").getJSONObject(1).put("qfmt", "{{^Add Reverse}}{{/Add Reverse}}");
+        mm.save(opt, true);
+        assertEquals(new JSONArray("[1, \"none\", []]"), opt.getJSONArray("req").getJSONArray(1));
+
+        opt = mm.byName("Basic (type in the answer)");
+        reqSize(opt);
+        r = opt.getJSONArray("req").getJSONArray(0);
+        assertTrue(Arrays.asList(new String[] {REQ_ANY, REQ_ALL}).contains(r.getString(1)));
+        // TODO: Port anki@4e33775ed4346ef136ece6ef5efec5ba46057c6b
+        assertEquals(new JSONArray("[0]"), r.getJSONArray(2));
+    }
+
+    @Test
     @Config(qualifiers = "en")
     public void regression_test_pipe() {
         Collection col = getCol();
