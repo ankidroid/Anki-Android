@@ -152,6 +152,7 @@ for ABI in $ABIS; do
 done
 
 if [ "$PUBLIC" = "public" ]; then
+  ./gradlew assembleAmazonRelease  -Duniversal-apk=true
   ./gradlew publishToAmazonAppStore
   echo "Remember to add release notes and submit on Amazon: https://developer.amazon.com/apps-and-games/console/app/list"
 fi

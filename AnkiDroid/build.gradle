@@ -208,7 +208,7 @@ play {
 amazon {
     securityProfile = file("${homePath}/src/AnkiDroid-Amazon-Publish-Security-Profile.json")
     applicationId = "amzn1.devportal.mobileapp.524a424d314931494c55383833305539"
-    pathToApks = [ file("./build/outputs/apk/release/AnkiDroid-universal-release.apk") ]
+    pathToApks = [ file("./build/outputs/apk/amazon/release/AnkiDroid-amazon-universal-release.apk") ]
     replaceEdit = true
 }
 
