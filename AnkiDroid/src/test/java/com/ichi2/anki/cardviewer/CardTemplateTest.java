@@ -34,6 +34,7 @@ public class CardTemplateTest {
             "        <style>\n" +
             "        ::style::\n" +
             "        </style>\n" +
+            "        ::script::\n" +
             "        <script src=\"file:///android_asset/mathjax/conf.js\"> </script>\n" +
             "        <script src=\"file:///android_asset/mathjax/MathJax.js\"> </script>\n" +
             "        <script src=\"file:///android_asset/scripts/card.js\" type=\"text/javascript\"> </script>\n" +
@@ -51,9 +52,10 @@ public class CardTemplateTest {
         String content = "foo";
         String style = "bar";
         String cardClass = "baz";
-        String result = new CardTemplate(data).render(content, style, cardClass);
+        String script = "script";
+        String result = new CardTemplate(data).render(content, style, script, cardClass);
 
-        assertThat(result, is(data.replace("::content::", content).replace("::style::", style).replace("::class::", cardClass)));
+        assertThat(result, is(data.replace("::content::", content).replace("::style::", style).replace("::class::", cardClass).replace("::script::", script)));
     }
 
     @Test
@@ -65,7 +67,7 @@ public class CardTemplateTest {
         String content = new String(new char[stringLength]).replace('\0', 'a');
 
 
-        String ret = new CardTemplate(data).render(content, content, content);
+        String ret = new CardTemplate(data).render(content, content, "", content);
     }
 
 }
