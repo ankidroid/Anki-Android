@@ -18,6 +18,7 @@ package com.ichi2.utils;
 
 import android.content.ContentResolver;
 import android.database.Cursor;
+import android.database.sqlite.SQLiteException;
 import android.net.Uri;
 import android.provider.MediaStore;
 import android.webkit.MimeTypeMap;
@@ -81,12 +82,15 @@ public class ContentResolverUtil {
     @CheckResult
     @Nullable
     private static String getFilenameViaDisplayName(ContentResolver contentResolver, Uri uri) {
-        String filename;
         // 7748: android.database.sqlite.SQLiteException: no such column: _display_name (code 1 SQLITE_ERROR[1]): ...
         try (Cursor c = contentResolver.query(uri, new String[] { MediaStore.MediaColumns.DISPLAY_NAME }, null, null, null)) {
-            c.moveToNext();
-            filename = c.getString(0);
+            if (c != null) {
+                c.moveToNext();
+                return c.getString(0);
+            }
+        } catch (SQLiteException e) {
+            Timber.w(e, "getFilenameViaDisplayName ContentResolver query failed.");
         }
-        return filename;
+        return null;
     }
 }
