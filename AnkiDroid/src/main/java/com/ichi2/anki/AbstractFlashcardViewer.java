@@ -2206,7 +2206,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
         // If the user wants to show the next question automatically
         if (mUseTimer) {
             long delay = mWaitQuestionSecond * 1000 + mUseTimerDynamicMS;
-            if (mWaitQuestionSecond > 0 && delay > 0) {
+            if (mWaitQuestionSecond > 0) {
                 mTimeoutHandler.removeCallbacks(mShowQuestionTask);
                 if (!mSpeakText) {
                     mTimeoutHandler.postDelayed(mShowQuestionTask, delay);
