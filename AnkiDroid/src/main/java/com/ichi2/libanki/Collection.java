@@ -134,7 +134,13 @@ public class Collection implements CollectionGetter {
     private static final Pattern fClozePatternA = Pattern.compile("\\{\\{(.*?)cloze:");
     private static final Pattern fClozeTagStart = Pattern.compile("<%cloze:");
 
-    private static final int fDefaultSchedulerVersion = 2;
+    /**
+     * This is only used for collections which were created before
+     * the new collections default was v2
+     * In that case, 'schedVer' is not set, so this default is used.
+     * See: #8926
+     * */
+    private static final int fDefaultSchedulerVersion = 1;
     private static final List<Integer> fSupportedSchedulerVersions = Arrays.asList(1, 2);
 
     // Not in libAnki.
@@ -1323,6 +1329,16 @@ public class Collection implements CollectionGetter {
             mUndo.removeFirst();
         }
     }
+
+
+    public void onCreate() {
+        mDroidBackend.useNewTimezoneCode(this);
+        getConf().put("schedVer", 2);
+        setMod();
+        // we need to reload the scheduler: this was previously loaded as V1
+        _loadScheduler();
+    }
+
 
     @VisibleForTesting
     public static class UndoReview extends UndoAction {
