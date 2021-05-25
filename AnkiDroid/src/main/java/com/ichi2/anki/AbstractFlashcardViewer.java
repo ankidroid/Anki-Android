@@ -2314,8 +2314,11 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
         // CSS class for card-specific styling
         String cardClass = mCardAppearance.getCardClass(mCurrentCard.getOrd() + 1, Themes.getCurrentTheme(this));
 
+        String scripts = "";
         if (MathJax.textContainsMathjax(content)) {
             cardClass += " mathjax-needs-to-render";
+            scripts += "        <script src=\"file:///android_asset/mathjax/conf.js\"> </script>\n" +
+                    "        <script src=\"file:///android_asset/mathjax/tex-chtml.js\"> </script>";
         }
 
         if (isInNightMode()) {
@@ -2324,7 +2327,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
             }
         }
 
-        mCardContent = mCardTemplate.render(content, style, cardClass);
+        mCardContent = mCardTemplate.render(content, style, scripts, cardClass);
         Timber.d("base url = %s", mBaseUrl);
 
         if (AnkiDroidApp.getSharedPrefs(this).getBoolean("html_javascript_debugging", false)) {
