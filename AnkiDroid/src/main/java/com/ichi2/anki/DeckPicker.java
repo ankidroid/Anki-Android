@@ -2701,6 +2701,10 @@ public class DeckPicker extends NavigationDrawerActivity implements
 
         @Override
         public void actualOnPostExecute(@NonNull DeckPicker deckPicker, @Nullable int[] v) {
+            // After deleting a deck there is no more undo stack
+            // Rebuild options menu with side effect of resetting undo button state
+            deckPicker.invalidateOptionsMenu();
+
             // In fragmented mode, if the deleted deck was the current deck, we need to reload
             // the study options fragment with a valid deck and re-center the deck list to the
             // new current deck. Otherwise we just update the list normally.
