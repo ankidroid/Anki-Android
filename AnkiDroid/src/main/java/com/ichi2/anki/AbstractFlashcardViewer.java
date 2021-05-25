@@ -2124,7 +2124,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
         // If the user wants to show the answer automatically
         if (mUseTimer) {
             long delay = mWaitAnswerSecond * 1000 + mUseTimerDynamicMS;
-            if (mWaitAnswerSecond > 0 && delay > 0) {
+            if (mWaitAnswerSecond > 0) {  // a wait of zero means auto-advance is disabled
                 mTimeoutHandler.removeCallbacks(mShowAnswerTask);
                 if (!mSpeakText) {
                     mTimeoutHandler.postDelayed(mShowAnswerTask, delay);
