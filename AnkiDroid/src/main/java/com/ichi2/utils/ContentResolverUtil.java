@@ -26,6 +26,7 @@ import java.io.File;
 import java.util.Locale;
 
 import androidx.annotation.CheckResult;
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import timber.log.Timber;
 
@@ -53,9 +54,9 @@ public class ContentResolverUtil {
 
     @CheckResult
     @Nullable
-    private static String getFilenameViaMimeType(ContentResolver contentResolver, Uri uri) {
+    private static String getFilenameViaMimeType(ContentResolver contentResolver, @NonNull Uri uri) {
         // value: "png" when testing
-        String extension;
+        String extension = null;
 
         //Check uri format to avoid null
         if (uri.getScheme() != null && uri.getScheme().equals(ContentResolver.SCHEME_CONTENT)) {
@@ -65,7 +66,9 @@ public class ContentResolverUtil {
         } else {
             // If scheme is a File
             // This will replace white spaces with %20 and also other special characters. This will avoid returning null values on file name with spaces and special characters.
-            extension = MimeTypeMap.getFileExtensionFromUrl(Uri.fromFile(new File(uri.getPath())).toString().toLowerCase(Locale.ROOT));
+            if (uri.getPath() != null) {
+                extension = MimeTypeMap.getFileExtensionFromUrl(Uri.fromFile(new File(uri.getPath())).toString().toLowerCase(Locale.ROOT));
+            }
         }
         if (extension == null) {
             return null;
