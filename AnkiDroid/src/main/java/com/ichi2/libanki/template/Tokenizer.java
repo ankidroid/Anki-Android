@@ -200,11 +200,11 @@ public class Tokenizer implements Iterator<Tokenizer.Token> {
         }
         switch (start.charAt(0)) {
             case '#':
-                return new Token(OPEN_CONDITIONAL, start.substring(1));
+                return new Token(OPEN_CONDITIONAL, start.substring(1).trim());
             case '/':
-                return new Token(CLOSE_CONDITIONAL, start.substring(1));
+                return new Token(CLOSE_CONDITIONAL, start.substring(1).trim());
             case '^':
-                return new Token(OPEN_NEGATED, start.substring(1));
+                return new Token(OPEN_NEGATED, start.substring(1).trim());
             default:
                 return new Token(REPLACEMENT, start);
         }
