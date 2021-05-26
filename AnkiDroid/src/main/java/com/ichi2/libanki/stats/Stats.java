@@ -1197,14 +1197,15 @@ public class Stats {
         mTitle = R.string.title_activity_template_editor;
         mBackwards = false;
         mAxisTitles = new int[] { R.string.stats_answer_type, R.string.stats_answers, R.string.stats_cumulative_correct_percentage };
-        mValueLabels = new int[] {R.string.statistics_mature, R.string.statistics_young,R.string.statistics_learn_and_relearn, R.string.statistics_unlearned, R.string.statistics_suspended, R.string.statistics_buried,};
-        mColors = new int[] { R.attr.stats_mature, R.attr.stats_young, R.attr.stats_learn, R.attr.stats_unseen, R.attr.stats_suspended, R.attr.stats_buried };
+        mValueLabels = new int[] {R.string.statistics_mature, R.string.statistics_young, R.string.statistics_learn, R.string.statistics_relearn, R.string.statistics_unlearned, R.string.statistics_suspended, R.string.statistics_buried,};
+        mColors = new int[] { R.attr.stats_mature, R.attr.stats_young, R.attr.stats_learn, R.attr.stats_relearn, R.attr.stats_unseen, R.attr.stats_suspended, R.attr.stats_buried };
         mType = type;
         double[] pieData;
         String query = "select " +
                 "sum(case when queue=" + Consts.QUEUE_TYPE_REV + " and ivl >= 21 then 1 else 0 end), -- mtr\n" +
                 "sum(case when queue=" + Consts.QUEUE_TYPE_REV + " and ivl < 21 then 1 else 0 end), -- yng\n" +
-                "sum(case when queue in (" + Consts.QUEUE_TYPE_LRN + "," + Consts.QUEUE_TYPE_DAY_LEARN_RELEARN  + ") then 1 else 0 end), -- lrn/relrn\n" +
+                "sum(case when queue=" + Consts.QUEUE_TYPE_DAY_LEARN_RELEARN + " then 1 else 0 end), -- lrn\n" +
+                "sum(case when queue=" + Consts.QUEUE_TYPE_LRN  + " then 1 else 0 end), -- relrn\n" +
                 "sum(case when queue=" + Consts.QUEUE_TYPE_NEW + " then 1 else 0 end), -- new\n" +
                 "sum(case when queue=" + Consts.QUEUE_TYPE_SUSPENDED + " then 1 else 0 end), -- susp\n" +
                 "sum(case when queue in (" + Consts.QUEUE_TYPE_MANUALLY_BURIED + "," + Consts.QUEUE_TYPE_SIBLING_BURIED + ") then 1 else 0 end) -- buried\n" +
@@ -1215,7 +1216,7 @@ public class Stats {
                     .query(query)) {
 
             cur.moveToFirst();
-            pieData = new double[]{ cur.getDouble(0), cur.getDouble(1), cur.getDouble(2), cur.getDouble(3), cur.getDouble(4), cur.getDouble(5)};
+            pieData = new double[]{ cur.getDouble(0), cur.getDouble(1), cur.getDouble(2), cur.getDouble(3), cur.getDouble(4), cur.getDouble(5), cur.getDouble(6)};
         }
 
         //TODO adjust for CardsTypes, for now only copied from intervals
@@ -1232,7 +1233,7 @@ public class Stats {
 //            list.add(new double[] { Math.max(12, list.get(list.size() - 1)[0] + 1), 0, 0 });
 //        }
 
-        mSeriesList = new double[1][6];
+        mSeriesList = new double[1][7];
         mSeriesList[0] = pieData;
         mFirstElement = 0.5;
         mLastElement = 9.5;
