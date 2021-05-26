@@ -174,7 +174,9 @@ public class ChartBuilder {
                               new ColorWrap(Themes.getColorFromAttr(mChartView.getContext(), mColors[1])),
                               new ColorWrap(Themes.getColorFromAttr(mChartView.getContext(), mColors[2])),
                               new ColorWrap(Themes.getColorFromAttr(mChartView.getContext(), mColors[3])),
-                              new ColorWrap(Themes.getColorFromAttr(mChartView.getContext(), mColors[4]))};
+                              new ColorWrap(Themes.getColorFromAttr(mChartView.getContext(), mColors[4])),
+                              new ColorWrap(Themes.getColorFromAttr(mChartView.getContext(), mColors[5]))
+                            };
 
         PieChart pieChart = new PieChart(plotSheet, mSeriesList[0], colors);
         pieChart.setName(mChartView.getResources().getString(mValueLabels[0]) + ": " + (int) mSeriesList[0][0]);
@@ -182,15 +184,18 @@ public class ChartBuilder {
         LegendDrawable legendDrawable2 = new LegendDrawable();
         LegendDrawable legendDrawable3 = new LegendDrawable();
         LegendDrawable legendDrawable4 = new LegendDrawable();
+        LegendDrawable legendDrawable5 = new LegendDrawable();
         legendDrawable1.setColor(new ColorWrap(Themes.getColorFromAttr(mChartView.getContext(), mColors[1])));
         legendDrawable2.setColor(new ColorWrap(Themes.getColorFromAttr(mChartView.getContext(), mColors[2])));
         legendDrawable3.setColor(new ColorWrap(Themes.getColorFromAttr(mChartView.getContext(), mColors[3])));
         legendDrawable4.setColor(new ColorWrap(Themes.getColorFromAttr(mChartView.getContext(), mColors[4])));
+        legendDrawable4.setColor(new ColorWrap(Themes.getColorFromAttr(mChartView.getContext(), mColors[5])));
 
         legendDrawable1.setName(mChartView.getResources().getString(mValueLabels[1]) + ": " + (int) mSeriesList[0][1]);
         legendDrawable2.setName(mChartView.getResources().getString(mValueLabels[2]) + ": " + (int) mSeriesList[0][2]);
         legendDrawable3.setName(mChartView.getResources().getString(mValueLabels[3]) + ": " + (int) mSeriesList[0][3]);
         legendDrawable4.setName(mChartView.getResources().getString(mValueLabels[4]) + ": " + (int) mSeriesList[0][4]);
+        legendDrawable4.setName(mChartView.getResources().getString(mValueLabels[5]) + ": " + (int) mSeriesList[0][5]);
 
         plotSheet.unsetBorder();
         plotSheet.addDrawable(pieChart);
@@ -198,6 +203,7 @@ public class ChartBuilder {
         plotSheet.addDrawable(legendDrawable2);
         plotSheet.addDrawable(legendDrawable3);
         plotSheet.addDrawable(legendDrawable4);
+        plotSheet.addDrawable(legendDrawable5);
 
         return plotSheet;
     }
