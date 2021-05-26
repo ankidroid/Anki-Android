@@ -1,4 +1,5 @@
 apply plugin: "java-library"
+apply plugin: 'kotlin'
 
 java {
     sourceCompatibility = JavaVersion.VERSION_1_8
@@ -13,6 +14,8 @@ repositories {
 dependencies {
     compileOnly "com.android.tools.lint:lint-api:27.2.1"
     compileOnly "com.android.tools.lint:lint:27.2.1"
+
+    implementation 'org.jetbrains.kotlin:kotlin-stdlib:1.5.10'
 
     testImplementation "junit:junit:4.13.2"
     testImplementation "com.android.tools.lint:lint:27.2.1"
