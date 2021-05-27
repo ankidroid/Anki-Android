@@ -24,6 +24,7 @@ import android.content.ContentResolver;
 import android.content.ContentUris;
 import android.content.ContentValues;
 import android.database.Cursor;
+import android.database.CursorWindow;
 import android.net.Uri;
 import androidx.test.rule.GrantPermissionRule;
 import timber.log.Timber;
@@ -35,6 +36,7 @@ import com.ichi2.anki.AnkiDroidApp;
 import com.ichi2.anki.CollectionHelper;
 import com.ichi2.anki.FlashCardsContract;
 import com.ichi2.anki.exception.ConfirmModSchemaException;
+import com.ichi2.anki.testutil.DatabaseUtils;
 import com.ichi2.async.TaskManager;
 import com.ichi2.libanki.Card;
 import com.ichi2.libanki.Collection;
@@ -240,6 +242,27 @@ public class ContentProviderTest extends InstrumentedTest {
         }
     }
 
+    @Test
+    public void testDatabaseUtilsInvocationWorks() {
+        // called by android.database.CursorToBulkCursorAdapter
+        // This is called by API clients implicitly, but isn't done by this test class
+
+        Card firstNote = getFirstCardFromScheduler(getCol());
+
+        String[] NOTE_PROJECTION = new String[] { FlashCardsContract.Note._ID, FlashCardsContract.Note.FLDS, FlashCardsContract.Note.TAGS };
+        final ContentResolver resolver = getContentResolver();
+        Cursor cursor = resolver.query(FlashCardsContract.Note.CONTENT_URI_V2, NOTE_PROJECTION, "id=" + firstNote.getNid(), null, null);
+
+        assertNotNull(cursor);
+        CursorWindow window = new CursorWindow("test");
+
+        // Note: We duplicated the code as it did not appear to be accessible via reflection
+        int initialPosition = cursor.getPosition();
+        DatabaseUtils.cursorFillWindow(cursor, 0, window);
+
+        assertThat("position should not change", cursor.getPosition(), is(initialPosition));
+        assertThat("Count should be copied", window.getNumRows(), is(cursor.getCount()));
+    }
 
     /**
      * Check that inserting and removing a note into default deck works as expected
