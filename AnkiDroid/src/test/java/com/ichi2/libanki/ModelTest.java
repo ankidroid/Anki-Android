@@ -26,6 +26,7 @@ import static com.ichi2.libanki.Utils.stripHTML;
 import static com.ichi2.utils.ListUtil.assertListEquals;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.containsString;
+import static org.hamcrest.Matchers.endsWith;
 import static org.hamcrest.Matchers.not;
 import static org.junit.Assert.assertArrayEquals;
 import static org.junit.Assert.assertEquals;
@@ -35,6 +36,23 @@ import static org.junit.Assert.fail;
 
 @RunWith(AndroidJUnit4.class)
 public class ModelTest extends RobolectricTest {
+
+    @Test
+    public void test_frontSide_field() {
+        // #8951 - Anki Special-cases {{FrontSide}} on the front to return empty string
+        Collection col = getCol();
+        Model m = col.getModels().current();
+        m.getJSONArray("tmpls").getJSONObject(0).put("qfmt", "{{Front}}{{FrontSide}}");
+        col.getModels().save(m);
+        Note note = col.newNote();
+        note.setItem("Front", "helloworld");
+        col.addNote(note);
+        Card card = note.firstCard();
+        String q = card.q();
+        assertThat("field should be at the end of the template - empty string for front", q, endsWith("helloworld"));
+        assertThat("field should not have a problem", q, not(containsString("has a problem")));
+    }
+
     /*****************
      ** Models       *
      *****************/
