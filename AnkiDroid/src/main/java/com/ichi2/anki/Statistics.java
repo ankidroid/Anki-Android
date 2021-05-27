@@ -36,6 +36,7 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.ViewTreeObserver;
 import android.webkit.WebView;
 import android.widget.ProgressBar;
 
@@ -104,6 +105,19 @@ public class Statistics extends NavigationDrawerActivity implements
         mViewPager.setAdapter(new Statistics.StatsPagerAdapter((this)));
         mViewPager.setOffscreenPageLimit(8);
         mSlidingTabLayout = findViewById(R.id.sliding_tabs);
+
+        // Fixes #8984: scroll to position 0 in RTL layouts
+        ViewTreeObserver tabObserver = mSlidingTabLayout.getViewTreeObserver();
+        tabObserver.addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
+            // Note: we can't use a lambda as we use 'this' to refer to the class.
+            @Override
+            public void onGlobalLayout() {
+                // we need this here: If we select tab 0 before in an RTL context the layout has been drawn,
+                // then it doesn't perform a scroll animation and selects the wrong element
+                mSlidingTabLayout.getViewTreeObserver().removeOnGlobalLayoutListener(this);
+                mSlidingTabLayout.selectTab(mSlidingTabLayout.getTabAt(0));
+            }
+        });
 
         // Setup Task Handler
         mTaskHandler = AnkiStatsTaskHandler.getInstance(col);
