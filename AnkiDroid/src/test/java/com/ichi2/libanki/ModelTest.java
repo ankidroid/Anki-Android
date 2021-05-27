@@ -53,6 +53,28 @@ public class ModelTest extends RobolectricTest {
         assertThat("field should not have a problem", q, not(containsString("has a problem")));
     }
 
+    @Test
+    public void test_field_named_frontSide() {
+        // #8951 - A field named "FrontSide" is ignored - this matches Anki 2.1.34 (8af8f565)
+        Collection col = getCol();
+        Model m = col.getModels().current();
+
+        // Add a field called FrontSide and FrontSide2 (to ensure that fields are added correctly)
+        col.getModels().addFieldModChanged(m, col.getModels().newField("FrontSide"));
+        col.getModels().addFieldModChanged(m, col.getModels().newField("FrontSide2"));
+        m.getJSONArray("tmpls").getJSONObject(0).put("qfmt", "{{Front}}{{FrontSide}}{{FrontSide2}}");
+        col.getModels().save(m);
+
+        Note note = col.newNote();
+        note.setItem("Front", "helloworld");
+        note.setItem("FrontSide", "1");
+        note.setItem("FrontSide2", "2");
+        col.addNote(note);
+        Card card = note.firstCard();
+        String q = card.q();
+        assertThat("FrontSide should be an empty string, even though it was set", q, endsWith("helloworld2"));
+    }
+
     /*****************
      ** Models       *
      *****************/
