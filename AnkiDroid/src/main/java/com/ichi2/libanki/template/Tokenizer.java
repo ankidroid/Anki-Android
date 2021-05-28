@@ -289,15 +289,15 @@ public class Tokenizer implements Iterator<Tokenizer.Token> {
 
     /**
      * @param template The remaining of template to lex
+     * @param legacy   Whether to accept <% as handlebar
      * @return The next token, or null at end of string
      */
-    @VisibleForTesting
-    protected static @Nullable IResult next_token(@NonNull String template) {
-        IResult t = new_handlebar_token(template);
+    protected static @Nullable IResult next_token(@NonNull String template, boolean legacy) {
+        IResult t = handlebar_token(template, legacy);
         if (t != null) {
             return t;
         }
-        return text_token(template, false);
+        return text_token(template, legacy);
     }
 
 
@@ -310,7 +310,7 @@ public class Tokenizer implements Iterator<Tokenizer.Token> {
         if (mTemplate.length() == 0) {
             throw new NoSuchElementException();
         }
-        IResult ir = next_token(mTemplate);
+        IResult ir = next_token(mTemplate, false);
         if (ir == null) {
             // Missing closing }}
             mFailed = true;
