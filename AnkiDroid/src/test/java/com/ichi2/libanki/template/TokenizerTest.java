@@ -31,11 +31,21 @@ import static org.junit.Assert.fail;
 @RunWith(AndroidJUnit4.class)
 public class TokenizerTest extends RobolectricTest {
     private void test_text_token_is_null(@NonNull String template) {
-        assertThat(text_token(template), nullValue());
+        assertThat(text_token(template, false), is(nullValue()));
+        assertThat(text_token(template, true), is(nullValue()));
+        String legacy_template = new_to_legacy(template);
+        assertThat(text_token(legacy_template, true), is(nullValue()));
+        // No test for legacy_template without legacy interpretation.
     }
 
+
     private void test_text_token(@NonNull String template, @NonNull IResult expected) {
-        assertThat(text_token(template), is(expected));
+        assertThat(text_token(template, false), is(expected));
+        assertThat(text_token(template, true), is(expected));
+        String legacy_template = new_to_legacy(template);
+        IResult legacy_expected = expected.new_to_legacy();
+        assertThat(text_token(legacy_template, true), is(legacy_expected));
+        // No test for legacy_template without legacy interpretation.
     }
 
     @Test
@@ -49,6 +59,26 @@ public class TokenizerTest extends RobolectricTest {
                 new Tokenizer.IResult(
                         new Tokenizer.Token(Tokenizer.TokenKind.TEXT, "foo{bar}plop"),
                         ""));
+    }
+
+    @Test
+    public void legacy_in_test_new_and_legacytext_token() {
+        assertThat(text_token("foo<%bar%>{{plop}}", true),
+                is(new Tokenizer.IResult(
+                        new Tokenizer.Token(Tokenizer.TokenKind.TEXT, "foo"),
+                        "<%bar%>{{plop}}")));
+        assertThat(text_token("foo{{bar}}<%plop%>", true),
+                is(new Tokenizer.IResult(
+                        new Tokenizer.Token(Tokenizer.TokenKind.TEXT, "foo"),
+                        "{{bar}}<%plop%>")));
+        assertThat(text_token("foo<%bar%>{{plop}}", false),
+                is(new Tokenizer.IResult(
+                        new Tokenizer.Token(Tokenizer.TokenKind.TEXT, "foo<%bar%>"),
+                        "{{plop}}")));
+        assertThat(text_token("foo{{bar}}<%plop%>", false),
+                is(new Tokenizer.IResult(
+                        new Tokenizer.Token(Tokenizer.TokenKind.TEXT, "foo"),
+                        "{{bar}}<%plop%>")));
     }
 
     private void test_classify_handle(@NonNull String template, @NonNull Tokenizer.TokenKind token, @NonNull String remaining) {
