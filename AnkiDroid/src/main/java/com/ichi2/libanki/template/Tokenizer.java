@@ -216,9 +216,10 @@ public class Tokenizer implements Iterator<Tokenizer.Token> {
      * @return The content of handlebar at start of template
      */
     @VisibleForTesting
-    protected static @Nullable IResult handlebar_token(@NonNull String template) {
+    protected static @Nullable IResult new_handlebar_token(@NonNull String template) {
         return handlebar_token(template, "{{", "}}");
     }
+
     protected static @Nullable IResult handlebar_token(@NonNull String template, @NonNull String prefix, @NonNull String suffix) {
         if (!template.startsWith(prefix)) {
             return null;
@@ -239,7 +240,7 @@ public class Tokenizer implements Iterator<Tokenizer.Token> {
      */
     @VisibleForTesting
     protected static @Nullable IResult next_token(@NonNull String template) {
-        IResult t = handlebar_token(template);
+        IResult t = new_handlebar_token(template);
         if (t != null) {
             return t;
         }
