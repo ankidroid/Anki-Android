@@ -56,7 +56,6 @@ public class Info extends AnkiActivity {
 
     WebView mWebView;
 
-
     @SuppressLint("SetJavaScriptEnabled")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
