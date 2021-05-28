@@ -34,6 +34,15 @@ import static com.ichi2.libanki.template.Tokenizer.TokenKind.TEXT;
  * Due to the way iterator work in java, it's easier for the class to keep track of the template
  */
 public class Tokenizer implements Iterator<Tokenizer.Token> {
+    /** 
+     * If this text appears at the top of a template (not considering whitespaces and other \s symbols), then the
+     * template accept legacy handlebars. That is <% foo %> is interpreted similarly as {{ foo }}.
+     * This is used for compatibility with legacy version of anki.
+     *
+     * Same as rslib/src/template's ALT_HANDLEBAR_DIRECTIVE upstream*/
+    @VisibleForTesting
+    public final static String ALT_HANDLEBAR_DIRECTIVE = "{{=<% %>=}}";
+
     /**
      * The remaining of the string to read.
      */
@@ -43,7 +52,21 @@ public class Tokenizer implements Iterator<Tokenizer.Token> {
      */
     private boolean mFailed = false;
 
+    /**
+     * Whether we consider <% and %> as handlebar
+     */
+    private final boolean mLegacy;
+
+
+    /**
+     * @param template A question or answer template.
+     */
     Tokenizer(@NonNull String template) {
+        String trimmed = template.trim();
+        mLegacy = trimmed.startsWith(ALT_HANDLEBAR_DIRECTIVE);
+        if (mLegacy) {
+            template = trimmed.substring(ALT_HANDLEBAR_DIRECTIVE.length());
+        }
         mTemplate = template;
     }
 
@@ -310,7 +333,7 @@ public class Tokenizer implements Iterator<Tokenizer.Token> {
         if (mTemplate.length() == 0) {
             throw new NoSuchElementException();
         }
-        IResult ir = next_token(mTemplate, false);
+        IResult ir = next_token(mTemplate, mLegacy);
         if (ir == null) {
             // Missing closing }}
             mFailed = true;
