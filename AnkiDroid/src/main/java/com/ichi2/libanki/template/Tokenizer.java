@@ -183,15 +183,28 @@ public class Tokenizer implements Iterator<Tokenizer.Token> {
         }
     }
 
-
     /**
      * @param template The part of the template that must still be lexed
-     * @return The longest prefix without {{, or null if it's empty.
+     * @param legacy whether <% is accepted as a handlebar
+     * @return The longest prefix without handlebar, or null if it's empty.
      */
-    @VisibleForTesting
-    protected static @Nullable IResult text_token(@NonNull String template) {
-        int first_handlebar = template.indexOf("{{");
-        int text_size = (first_handlebar == -1) ? template.length() : first_handlebar;
+    protected static @Nullable IResult text_token(@NonNull String template, boolean legacy) {
+        int first_legacy_handlebar = (legacy) ? template.indexOf("<%") : -1;
+        int first_new_handlebar = template.indexOf("{{");
+        int text_size;
+        if (first_new_handlebar == -1) {
+            if (first_legacy_handlebar == -1) {
+                text_size = template.length();
+            } else {
+                text_size = first_legacy_handlebar;
+            }
+        } else {
+            if (first_legacy_handlebar == -1 || first_new_handlebar < first_legacy_handlebar) {
+                text_size = first_new_handlebar;
+            } else {
+                text_size = first_legacy_handlebar;
+            }
+        }
         if (text_size == 0) {
             return null;
         }
@@ -284,7 +297,7 @@ public class Tokenizer implements Iterator<Tokenizer.Token> {
         if (t != null) {
             return t;
         }
-        return text_token(template);
+        return text_token(template, false);
     }
 
 
