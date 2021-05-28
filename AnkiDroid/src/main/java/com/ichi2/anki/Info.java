@@ -54,7 +54,7 @@ public class Info extends AnkiActivity {
     public static final int TYPE_ABOUT = 0;
     public static final int TYPE_NEW_VERSION = 2;
 
-    WebView mWebView;
+    private WebView mWebView;
 
     @SuppressLint("SetJavaScriptEnabled")
     @Override
