@@ -53,6 +53,7 @@ public class TemplateTest extends RobolectricTest {
         assertThat(render("{{!Front}}", context), is("Test"));
     }
     @Test
+    @Config(qualifiers = "en")
     public void missingExclamation() {
         // Ankidroid used not to display fields whose name start with !
         HashMap<String, String> context = new HashMap<>();
