@@ -2,7 +2,6 @@ package com.ichi2.libanki.template;
 
 import com.ichi2.anki.RobolectricTest;
 
-import org.hamcrest.Matchers;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
@@ -22,9 +21,6 @@ import static com.ichi2.libanki.template.Tokenizer.text_token;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
 import static org.hamcrest.Matchers.nullValue;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertThrows;
-import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 
 
@@ -36,11 +32,11 @@ public class TokenizerTest extends RobolectricTest {
         assertThat(text_token("{{neasiet}}"), is(nullValue()));
         assertThat(text_token(""), is(nullValue()));
         assertThat(text_token("foo{{bar}}plop"),
-                Matchers.is(new Tokenizer.IResult(
+                is(new Tokenizer.IResult(
                         new Tokenizer.Token(Tokenizer.TokenKind.TEXT, "foo"),
                         "{{bar}}plop")));
         assertThat(text_token("foo{bar}plop"),
-                Matchers.is(new Tokenizer.IResult(
+                is(new Tokenizer.IResult(
                         new Tokenizer.Token(Tokenizer.TokenKind.TEXT, "foo{bar}plop"),
                         "")));
     }
@@ -48,88 +44,88 @@ public class TokenizerTest extends RobolectricTest {
     @Test
     public void test_classify_handle() {
         assertThat(classify_handle("#foo"),
-                Matchers.is(new Tokenizer.Token(OPEN_CONDITIONAL,
+                is(new Tokenizer.Token(OPEN_CONDITIONAL,
                         "foo")));
         assertThat(classify_handle("/foo"),
-                Matchers.is(new Tokenizer.Token(CLOSE_CONDITIONAL,
+                is(new Tokenizer.Token(CLOSE_CONDITIONAL,
                         "foo")));
         assertThat(classify_handle("^foo"),
-                Matchers.is(new Tokenizer.Token(OPEN_NEGATED,
+                is(new Tokenizer.Token(OPEN_NEGATED,
                         "foo")));
         assertThat(classify_handle("!foo"),
-                Matchers.is(new Tokenizer.Token(REPLACEMENT,
+                is(new Tokenizer.Token(REPLACEMENT,
                         "!foo")));
         assertThat(classify_handle("{#foo}"),
-                Matchers.is(new Tokenizer.Token(OPEN_CONDITIONAL,
+                is(new Tokenizer.Token(OPEN_CONDITIONAL,
                         "foo}")));
         assertThat(classify_handle("{  #foo}"),
-                Matchers.is(new Tokenizer.Token(OPEN_CONDITIONAL,
+                is(new Tokenizer.Token(OPEN_CONDITIONAL,
                         "foo}")));
         assertThat(classify_handle("    #"),
-                Matchers.is(new Tokenizer.Token(REPLACEMENT,
+                is(new Tokenizer.Token(REPLACEMENT,
                         "#")));
         assertThat(classify_handle("    foo   "),
-                Matchers.is(new Tokenizer.Token(REPLACEMENT,
+                is(new Tokenizer.Token(REPLACEMENT,
                         "foo")));
     }
 
     @Test
     public void test_handlebar_token() {
         assertThat(handlebar_token("{{#foo}} bar"),
-                Matchers.is(new Tokenizer.IResult(
+                is(new Tokenizer.IResult(
                         new Tokenizer.Token(OPEN_CONDITIONAL,
                                 "foo"),
                         " bar")));
         assertThat(handlebar_token("{{/foo}} bar"),
-                Matchers.is(new Tokenizer.IResult(
+                is(new Tokenizer.IResult(
                         new Tokenizer.Token(CLOSE_CONDITIONAL,
                                 "foo"),
                         " bar")));
         assertThat(handlebar_token("{{^foo}} bar"),
-                Matchers.is(new Tokenizer.IResult(
+                is(new Tokenizer.IResult(
                         new Tokenizer.Token(OPEN_NEGATED,
                                 "foo"),
                         " bar")));
         assertThat(handlebar_token("{{!foo}} bar"),
-                Matchers.is(new Tokenizer.IResult(
+                is(new Tokenizer.IResult(
                         new Tokenizer.Token(REPLACEMENT,
                                 "!foo"),
                         " bar")));
         assertThat(handlebar_token("{{{#foo}}} bar"),
-                Matchers.is(new Tokenizer.IResult(
+                is(new Tokenizer.IResult(
                         new Tokenizer.Token(OPEN_CONDITIONAL,
                                 "foo"),
                         "} bar")));
         assertThat(handlebar_token("{{{  #foo}}} bar"),
-                Matchers.is(new Tokenizer.IResult(
+                is(new Tokenizer.IResult(
                         new Tokenizer.Token(OPEN_CONDITIONAL,
                                 "foo"),
                         "} bar")));
         assertThat(handlebar_token("{{    #}} bar"),
-                Matchers.is(new Tokenizer.IResult(
+                is(new Tokenizer.IResult(
                         new Tokenizer.Token(REPLACEMENT,
                                 "#"),
                         " bar")));
         assertThat(handlebar_token("{{    foo   }} bar"),
-                Matchers.is(new Tokenizer.IResult(
+                is(new Tokenizer.IResult(
                         new Tokenizer.Token(REPLACEMENT,
                                 "foo"),
                         " bar")));
         assertThat(handlebar_token("{{filter:field}} bar"),
-                Matchers.is(new Tokenizer.IResult(
+                is(new Tokenizer.IResult(
                         new Tokenizer.Token(REPLACEMENT,
                                 "filter:field"),
                         " bar")));
         // The empty field name without filter is not valid in Anki,
         // However, it's not the lexer job to deal with it, and so it should be lexed correctly.
         assertThat(handlebar_token("{{}} bar"),
-                Matchers.is(new Tokenizer.IResult(
+                is(new Tokenizer.IResult(
                         new Tokenizer.Token(REPLACEMENT,
                                 ""),
                         " bar")));
         // Empty field name with filter is valid and has special meaning
         assertThat(handlebar_token("{{filter:}} bar"),
-                Matchers.is(new Tokenizer.IResult(
+                is(new Tokenizer.IResult(
                         new Tokenizer.Token(REPLACEMENT,
                                 "filter:"),
                         " bar")));
@@ -146,29 +142,29 @@ public class TokenizerTest extends RobolectricTest {
     @Test
     public void test_space_in_token() {
         assertThat(next_token("{{ # foo bar }} baz"),
-                Matchers.is(new IResult(
+                is(new IResult(
                         new Tokenizer.Token(OPEN_CONDITIONAL,
                                 "foo bar"),
                         " baz")));
         assertThat(handlebar_token("{{ / foo bar }} baz"),
-                Matchers.is(new Tokenizer.IResult(
+                is(new Tokenizer.IResult(
                         new Tokenizer.Token(CLOSE_CONDITIONAL,
                                 "foo bar"),
                         " baz")));
         assertThat(handlebar_token("{{ ^ foo bar }} baz"),
-                Matchers.is(new Tokenizer.IResult(
+                is(new Tokenizer.IResult(
                         new Tokenizer.Token(OPEN_NEGATED,
                                 "foo bar"),
                         " baz")));
         // REPLACEMENT types will have leading and trailing spaces trimmed, but otherwise no changes
         assertThat(handlebar_token("{{ ! foo}} bar"),
-                Matchers.is(new Tokenizer.IResult(
+                is(new Tokenizer.IResult(
                         new Tokenizer.Token(REPLACEMENT,
                                 "! foo"),
                         " bar")));
         // REPLACEMENT types will have leading and trailing spaces trimmed, but otherwise no changes
         assertThat(handlebar_token("{{ ! foo with spaces before during and after }} bar"),
-                Matchers.is(new Tokenizer.IResult(
+                is(new Tokenizer.IResult(
                         new Tokenizer.Token(REPLACEMENT,
                                 "! foo with spaces before during and after"),
                         " bar")));
@@ -177,53 +173,53 @@ public class TokenizerTest extends RobolectricTest {
     @Test
     public void test_next_token() {
         assertThat(next_token("{{#foo}} bar"),
-                Matchers.is(new IResult(
+                is(new IResult(
                         new Tokenizer.Token(OPEN_CONDITIONAL,
                                 "foo"),
                         " bar")));
         assertThat(next_token("{{/foo}} bar"),
-                Matchers.is(new IResult(
+                is(new IResult(
                         new Token(CLOSE_CONDITIONAL,
                                 "foo"),
                         " bar")));
         assertThat(next_token("{{^foo}} bar"),
-                Matchers.is(new IResult(
+                is(new IResult(
                         new Token(OPEN_NEGATED,
                                 "foo"),
                         " bar")));
         assertThat(next_token("{{!foo}} bar"),
-                Matchers.is(new IResult(
+                is(new IResult(
                         new Token(REPLACEMENT,
                                 "!foo"),
                         " bar")));
         assertThat(next_token("{{{#foo}}} bar"),
-                Matchers.is(new IResult(
+                is(new IResult(
                         new Token(OPEN_CONDITIONAL,
                                 "foo"),
                         "} bar")));
         assertThat(next_token("{{{  #foo}}} bar"),
-                Matchers.is(new IResult(
+                is(new IResult(
                         new Token(OPEN_CONDITIONAL,
                                 "foo"),
                         "} bar")));
         assertThat(next_token("{{    #}} bar"),
-                Matchers.is(new IResult(
+                is(new IResult(
                         new Token(REPLACEMENT,
                                 "#"),
                         " bar")));
         assertThat(next_token("{{    foo   }} bar"),
-                Matchers.is(new IResult(
+                is(new IResult(
                         new Token(REPLACEMENT,
                                 "foo"),
                         " bar")));
 
         assertThat(next_token(""), is(nullValue()));
         assertThat(next_token("foo{{bar}}plop"),
-                Matchers.is(new IResult(
+                is(new IResult(
                         new Token(TEXT, "foo"),
                         "{{bar}}plop")));
         assertThat(next_token("foo{bar}plop"),
-                Matchers.is(new IResult(
+                is(new IResult(
                         new Token(TEXT, "foo{bar}plop"),
                         "")));
     }
