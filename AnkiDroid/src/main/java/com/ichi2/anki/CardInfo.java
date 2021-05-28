@@ -86,6 +86,9 @@ public class CardInfo extends AnkiActivity {
 
         enableToolbar();
 
+        if (checkAndHandleDBCorrupt()) {
+            return;
+        }
         startLoadingCollection();
     }
 

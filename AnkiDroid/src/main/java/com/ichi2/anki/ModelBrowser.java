@@ -186,6 +186,9 @@ public class ModelBrowser extends AnkiActivity {
         mModelListView = findViewById(R.id.note_type_browser_list);
         enableToolbar();
         mActionBar = getSupportActionBar();
+        if (checkAndHandleDBCorrupt()) {
+            return;
+        }
         startLoadingCollection();
     }
 

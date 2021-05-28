@@ -172,6 +172,9 @@ public class Reviewer extends AbstractFlashcardViewer {
 
         mColorPalette = findViewById(R.id.whiteboard_editor);
 
+        if (checkAndHandleDBCorrupt()) {
+            return;
+        }
         startLoadingCollection();
     }
 

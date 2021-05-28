@@ -432,6 +432,9 @@ public class NoteEditor extends AnkiActivity implements
             }
         }
 
+        if (checkAndHandleDBCorrupt()) {
+            return;
+        }
         startLoadingCollection();
     }
 

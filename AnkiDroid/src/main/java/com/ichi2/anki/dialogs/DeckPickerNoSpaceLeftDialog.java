@@ -41,8 +41,18 @@ public class DeckPickerNoSpaceLeftDialog extends AnalyticsDialogFragment {
                 .content(res.getString(R.string.backup_deck_no_space_left))
                 .cancelable(true)
                 .positiveText(R.string.dialog_ok)
-                .onPositive((dialog, which) -> ((DeckPicker) getActivity()).startLoadingCollection())
-                .cancelListener(dialog -> ((DeckPicker) getActivity()).startLoadingCollection())
+                .onPositive((dialog, which) -> {
+                    if (((DeckPicker) getActivity()).checkAndHandleDBCorrupt()) {
+                        return;
+                    }
+                    ((DeckPicker) getActivity()).startLoadingCollection();
+                })
+                .cancelListener(dialog -> {
+                    if (((DeckPicker) getActivity()).checkAndHandleDBCorrupt()) {
+                        return;
+                    }
+                    ((DeckPicker) getActivity()).startLoadingCollection();
+                })
                 .show();
     }
 }

@@ -97,6 +97,9 @@ public class ModelFieldEditor extends AnkiActivity implements LocaleSelectionDia
             getSupportActionBar().setTitle(R.string.model_field_editor_title);
             getSupportActionBar().setSubtitle(getIntent().getStringExtra("title"));
         }
+        if (checkAndHandleDBCorrupt()) {
+            return;
+        }
         startLoadingCollection();
     }
 

@@ -94,6 +94,9 @@ public class CardTemplatePreviewer extends AbstractFlashcardViewer {
         showBackIcon();
         // Ensure navigation drawer can't be opened. Various actions in the drawer cause crashes.
         disableDrawerSwipe();
+        if (checkAndHandleDBCorrupt()) {
+            return;
+        }
         startLoadingCollection();
     }
 

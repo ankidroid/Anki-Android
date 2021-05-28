@@ -155,6 +155,9 @@ public class CardTemplateEditor extends AnkiActivity implements DeckSelectionDia
 
         // Disable the home icon
         enableToolbar();
+        if (checkAndHandleDBCorrupt()) {
+            return;
+        }
         startLoadingCollection();
     }
 

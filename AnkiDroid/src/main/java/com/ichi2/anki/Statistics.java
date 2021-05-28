@@ -89,6 +89,9 @@ public class Statistics extends NavigationDrawerActivity implements
 
         setContentView(R.layout.activity_anki_stats);
         initNavigationDrawer(findViewById(android.R.id.content));
+        if (checkAndHandleDBCorrupt()) {
+            return;
+        }
         startLoadingCollection();
     }
 

@@ -597,6 +597,9 @@ public class CardBrowser extends NavigationDrawerActivity implements
         }
         setContentView(R.layout.card_browser);
         initNavigationDrawer(findViewById(android.R.id.content));
+        if (checkAndHandleDBCorrupt()) {
+            return;
+        }
         startLoadingCollection();
     }
 
