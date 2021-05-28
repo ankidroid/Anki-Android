@@ -3,6 +3,7 @@ package com.ichi2.libanki;
 import android.content.Context;
 
 import com.ichi2.anki.RobolectricTest;
+import com.ichi2.anki.exception.DatabaseCorruptException;
 import com.ichi2.libanki.template.MathJax;
 import com.ichi2.libanki.template.TemplateFilters;
 
@@ -43,7 +44,7 @@ public class MathJaxClozeTest extends RobolectricTest {
     }
 
     @Test
-    public void verifyMathJaxClozeCards() {
+    public void verifyMathJaxClozeCards() throws DatabaseCorruptException {
         final Context context = ApplicationProvider.getApplicationContext();
 
         Collection c = getCol();
@@ -63,7 +64,7 @@ public class MathJaxClozeTest extends RobolectricTest {
     }
 
     @Test
-    public void verifyMathJaxInCloze() {
+    public void verifyMathJaxInCloze() throws DatabaseCorruptException {
         final Context context = ApplicationProvider.getApplicationContext();
 
         Collection c = getCol();
@@ -93,7 +94,7 @@ public class MathJaxClozeTest extends RobolectricTest {
     }
 
     @Test
-    public void verifyComplicatedMathJaxCloze() {
+    public void verifyComplicatedMathJaxCloze() throws DatabaseCorruptException {
         final Context context = ApplicationProvider.getApplicationContext();
 
         Collection c = getCol();

@@ -14,6 +14,7 @@
 package com.ichi2.libanki;
 
 import com.ichi2.anki.RobolectricTest;
+import com.ichi2.anki.exception.DatabaseCorruptException;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -59,7 +60,7 @@ public class TextCardExporterTest extends RobolectricTest {
 
 
     @Test
-    public void testExportTextCardWithHTML() throws IOException {
+    public void testExportTextCardWithHTML() throws IOException, DatabaseCorruptException {
         Path tempExportDir = Files.createTempDirectory("AnkiDroid-test_export_textcard");
         File exportedFile = new File(tempExportDir.toFile(), "export.txt");
 
@@ -77,7 +78,7 @@ public class TextCardExporterTest extends RobolectricTest {
 
 
     @Test
-    public void testExportTextCardWithoutHTML() throws IOException {
+    public void testExportTextCardWithoutHTML() throws IOException, DatabaseCorruptException {
         Path tempExportDir = Files.createTempDirectory("AnkiDroid-test_export_textcard");
         File exportedFile = new File(tempExportDir.toFile(), "export.txt");
 

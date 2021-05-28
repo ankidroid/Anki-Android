@@ -16,6 +16,7 @@
 
 package com.ichi2.anki;
 
+import com.ichi2.anki.exception.DatabaseCorruptException;
 import com.ichi2.libanki.Card;
 
 import org.junit.Before;
@@ -33,7 +34,7 @@ public class CardInfoModelTest extends RobolectricTest {
 
 
     @Before
-    public void setupModel() {
+    public void setupModel() throws DatabaseCorruptException {
         // using a card from my collection
         Card c = addNoteUsingBasicModel("Hello", "World").firstCard();
 

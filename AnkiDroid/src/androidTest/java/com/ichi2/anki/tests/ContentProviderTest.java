@@ -35,6 +35,7 @@ import com.ichi2.anki.AnkiDroidApp;
 import com.ichi2.anki.CollectionHelper;
 import com.ichi2.anki.FlashCardsContract;
 import com.ichi2.anki.exception.ConfirmModSchemaException;
+import com.ichi2.anki.exception.DatabaseCorruptException;
 import com.ichi2.async.TaskManager;
 import com.ichi2.libanki.Card;
 import com.ichi2.libanki.Collection;
@@ -245,7 +246,7 @@ public class ContentProviderTest extends InstrumentedTest {
      * Check that inserting and removing a note into default deck works as expected
      */
     @Test
-    public void testInsertAndRemoveNote() {
+    public void testInsertAndRemoveNote() throws DatabaseCorruptException {
         // Get required objects for test
         final ContentResolver cr = getContentResolver();
         // Add the note
@@ -775,7 +776,7 @@ public class ContentProviderTest extends InstrumentedTest {
      * Test that query for the next card in the schedule returns a valid result without any deck selector
      */
     @Test
-    public void testQueryNextCard() {
+    public void testQueryNextCard() throws DatabaseCorruptException {
         Collection col = getCol();
         AbstractSched sched = col.getSched();
 
@@ -838,7 +839,9 @@ public class ContentProviderTest extends InstrumentedTest {
             assertNotNull("Check that there actually is a next scheduled card", nextCard);
             assertEquals("Check that received card and actual card have same note id", nextCard.note().getId(), noteID);
             assertEquals("Check that received card and actual card have same card ord", nextCard.getOrd(), cardOrd);
-        }finally {
+        } catch (DatabaseCorruptException e) {
+            e.printStackTrace();
+        } finally {
             reviewInfoCursor.close();
         }
 
@@ -870,7 +873,7 @@ public class ContentProviderTest extends InstrumentedTest {
      * Test giving the answer for a reviewed card
      */
     @Test
-    public void testAnswerCard(){
+    public void testAnswerCard() throws DatabaseCorruptException {
         Collection col = getCol();
         Card card = getFirstCardFromScheduler(col);
         long cardId = card.getId();
@@ -912,7 +915,7 @@ public class ContentProviderTest extends InstrumentedTest {
      * Test burying a card through the ReviewInfo endpoint
      */
     @Test
-    public void testBuryCard(){
+    public void testBuryCard() throws DatabaseCorruptException {
         // get the first card due
         // ----------------------
         Collection col = getCol();
@@ -957,7 +960,7 @@ public class ContentProviderTest extends InstrumentedTest {
      * Test suspending a card through the ReviewInfo endpoint
      */
     @Test
-    public void testSuspendCard(){
+    public void testSuspendCard() throws DatabaseCorruptException {
 
         // get the first card due
         // ----------------------
@@ -1004,7 +1007,7 @@ public class ContentProviderTest extends InstrumentedTest {
      * Update tags on a note
      */
     @Test
-    public void testUpdateTags() {
+    public void testUpdateTags() throws DatabaseCorruptException {
         // get the first card due
         // ----------------------
         Collection col = getCol();

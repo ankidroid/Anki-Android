@@ -23,6 +23,7 @@ import android.os.Bundle;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import com.ichi2.anki.exception.DatabaseCorruptException;
 import com.ichi2.anki.multimediacard.activity.MultimediaEditFieldActivity;
 import com.ichi2.anki.multimediacard.fields.IField;
 import com.ichi2.libanki.Consts;
@@ -78,7 +79,7 @@ public class NoteEditorTest extends RobolectricTest {
     }
 
     @Test
-    public void whenEditingMultimediaEditUsesCurrentValueOfFields() {
+    public void whenEditingMultimediaEditUsesCurrentValueOfFields() throws DatabaseCorruptException {
         //Arrange
         int fieldIndex = 0;
         NoteEditor n = getNoteEditorEditingExistingBasicNote("Hello", "World", FromScreen.REVIEWER);
@@ -94,7 +95,7 @@ public class NoteEditorTest extends RobolectricTest {
     }
 
     @Test
-    public void errorSavingNoteWithNoFirstFieldDisplaysNoFirstField() {
+    public void errorSavingNoteWithNoFirstFieldDisplaysNoFirstField() throws DatabaseCorruptException {
         NoteEditor noteEditor = getNoteEditorAdding(NoteType.BASIC)
                 .withNoFirstField()
                 .build();
@@ -105,7 +106,7 @@ public class NoteEditorTest extends RobolectricTest {
     }
 
     @Test
-    public void errorSavingInvalidNoteWithAllFieldsDisplaysInvalidTemplate() {
+    public void errorSavingInvalidNoteWithAllFieldsDisplaysInvalidTemplate() throws DatabaseCorruptException {
         NoteEditor noteEditor = getNoteEditorAdding(NoteType.THREE_FIELD_INVALID_TEMPLATE)
                 .withFirstField("A")
                 .withSecondField("B")
@@ -118,7 +119,7 @@ public class NoteEditorTest extends RobolectricTest {
     }
 
     @Test
-    public void errorSavingInvalidNoteWitSomeFieldsDisplaysEnterMore() {
+    public void errorSavingInvalidNoteWitSomeFieldsDisplaysEnterMore() throws DatabaseCorruptException {
         NoteEditor noteEditor = getNoteEditorAdding(NoteType.THREE_FIELD_INVALID_TEMPLATE)
                 .withFirstField("A")
                 .withThirdField("C")
@@ -130,7 +131,7 @@ public class NoteEditorTest extends RobolectricTest {
     }
 
     @Test
-    public void errorSavingClozeNoteWithNoFirstFieldDisplaysClozeError() {
+    public void errorSavingClozeNoteWithNoFirstFieldDisplaysClozeError() throws DatabaseCorruptException {
         NoteEditor noteEditor = getNoteEditorAdding(NoteType.CLOZE)
                 .withNoFirstField()
                 .build();
@@ -141,7 +142,7 @@ public class NoteEditorTest extends RobolectricTest {
     }
 
     @Test
-    public void errorSavingClozeNoteWithNoClozeDeletionsDisplaysClozeError() {
+    public void errorSavingClozeNoteWithNoClozeDeletionsDisplaysClozeError() throws DatabaseCorruptException {
         NoteEditor noteEditor = getNoteEditorAdding(NoteType.CLOZE)
                 .withFirstField("NoCloze")
                 .build();
@@ -152,7 +153,7 @@ public class NoteEditorTest extends RobolectricTest {
     }
 
     @Test
-    public void errorSavingNoteWithNoTemplatesShowsNoCardsCreated() {
+    public void errorSavingNoteWithNoTemplatesShowsNoCardsCreated() throws DatabaseCorruptException {
         NoteEditor noteEditor = getNoteEditorAdding(NoteType.BACKTOFRONT)
                 .withFirstField("front is not enough")
                 .build();
@@ -163,7 +164,7 @@ public class NoteEditorTest extends RobolectricTest {
     }
 
     @Test
-    public void clozeNoteWithNoClozeDeletionsDoesNotSave() {
+    public void clozeNoteWithNoClozeDeletionsDoesNotSave() throws DatabaseCorruptException {
         int initialCards = getCardCount();
         NoteEditor editor = getNoteEditorAdding(NoteType.CLOZE)
                 .withFirstField("no cloze deletions")
@@ -175,7 +176,7 @@ public class NoteEditorTest extends RobolectricTest {
     }
 
     @Test
-    public void clozeNoteWithClozeDeletionsDoesSave() {
+    public void clozeNoteWithClozeDeletionsDoesSave() throws DatabaseCorruptException {
         int initialCards = getCardCount();
         NoteEditor editor = getNoteEditorAdding(NoteType.CLOZE)
                 .withFirstField("{{c1::AnkiDroid}} is fantastic")
@@ -187,7 +188,7 @@ public class NoteEditorTest extends RobolectricTest {
 
     @Test
     @Ignore("Not yet implemented")
-    public void clozeNoteWithClozeInWrongFieldDoesNotSave() {
+    public void clozeNoteWithClozeInWrongFieldDoesNotSave() throws DatabaseCorruptException {
         //Anki Desktop blocks with "Continue?", we should just block to match the above test
         int initialCards = getCardCount();
         NoteEditor editor = getNoteEditorAdding(NoteType.CLOZE)
@@ -234,7 +235,7 @@ public class NoteEditorTest extends RobolectricTest {
 
 
     @Test
-    public void stickyFieldsAreUnchangedAfterAdd() {
+    public void stickyFieldsAreUnchangedAfterAdd() throws DatabaseCorruptException {
         // #6795 - newlines were converted to <br>
         Model basic = makeNoteForType(NoteType.BASIC);
 
@@ -263,7 +264,7 @@ public class NoteEditorTest extends RobolectricTest {
     }
 
     @Test
-    public void processTextIntentShouldCopyFirstField() {
+    public void processTextIntentShouldCopyFirstField() throws DatabaseCorruptException {
         ensureCollectionLoadIsSynchronous();
         Intent i = new Intent(Intent.ACTION_PROCESS_TEXT);
         i.putExtra(EXTRA_PROCESS_TEXT, "hello\nworld");
@@ -280,7 +281,7 @@ public class NoteEditorTest extends RobolectricTest {
     }
 
     @Test
-    public void clearFieldWorks() {
+    public void clearFieldWorks() throws DatabaseCorruptException {
         // #7522
         NoteEditor editor = getNoteEditorAddingNote(FromScreen.DECK_LIST, NoteEditor.class);
         editor.setFieldValueFromUi(1, "Hello");
@@ -378,7 +379,7 @@ public class NoteEditorTest extends RobolectricTest {
     }
 
 
-    private void openAdvancedTextEditor(NoteEditor n, int fieldIndex) {
+    private void openAdvancedTextEditor(NoteEditor n, int fieldIndex) throws DatabaseCorruptException {
         n.startAdvancedTextEditor(fieldIndex);
     }
 
@@ -428,7 +429,7 @@ public class NoteEditorTest extends RobolectricTest {
     }
 
 
-    private void saveNote(NoteEditor editor) {
+    private void saveNote(NoteEditor editor) throws DatabaseCorruptException {
         editor.saveNote();
         advanceRobolectricLooperWithSleep();
     }

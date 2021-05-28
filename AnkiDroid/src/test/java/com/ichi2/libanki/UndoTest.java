@@ -1,6 +1,7 @@
 package com.ichi2.libanki;
 
 import com.ichi2.anki.RobolectricTest;
+import com.ichi2.anki.exception.DatabaseCorruptException;
 import com.ichi2.libanki.sched.Counts;
 
 import org.junit.Ignore;
@@ -38,7 +39,7 @@ public class UndoTest extends RobolectricTest {
 
     @Test
     @Ignore("We need to figure out how to test save/undo")
-    public void test_op() throws Exception {
+    public void test_op() throws Exception, DatabaseCorruptException {
         Collection col = getColV2();
         // should have no undo by default
         assertNull(col.undoType());
@@ -74,7 +75,7 @@ public class UndoTest extends RobolectricTest {
 
 
     @Test
-    public void test_review() throws Exception {
+    public void test_review() throws Exception, DatabaseCorruptException {
         Collection col = getColV2();
         col.getConf().put("counts", COUNT_REMAINING);
         Note note = col.newNote();

@@ -20,6 +20,7 @@ import android.database.Cursor;
 
 import com.ichi2.anki.RobolectricTest;
 import com.ichi2.anki.exception.ConfirmModSchemaException;
+import com.ichi2.anki.exception.DatabaseCorruptException;
 import com.ichi2.libanki.Card;
 import com.ichi2.libanki.Collection;
 import com.ichi2.libanki.Consts;
@@ -110,7 +111,7 @@ public class SchedV2Test extends RobolectricTest {
      * Reported by /u/CarelessSecretary9 on reddit:
      */
     @Test
-    public void filteredDeckSchedulingOptionsRegressionTest() {
+    public void filteredDeckSchedulingOptionsRegressionTest() throws DatabaseCorruptException {
         Collection col = getCol();
         col.setCrt(1587852900L);
         //30 minutes learn ahead. required as we have 20m delay
@@ -260,7 +261,7 @@ public class SchedV2Test extends RobolectricTest {
     }
 
     @Test
-    public void handlesSmallSteps() throws ConfirmModSchemaException {
+    public void handlesSmallSteps() throws ConfirmModSchemaException, DatabaseCorruptException {
         // a delay of 0 crashed the app (step of 0.01).
         getCol().changeSchedulerVer(2);
 
@@ -329,7 +330,7 @@ public class SchedV2Test extends RobolectricTest {
 
 
     @Test
-    public void test_new_v2() throws Exception {
+    public void test_new_v2() throws Exception, DatabaseCorruptException {
         Collection col = getColV2();
         col.reset();
         assertEquals(0, col.getSched().newCount());
@@ -416,7 +417,7 @@ public class SchedV2Test extends RobolectricTest {
 
 
     @Test
-    public void test_newBoxes_v2() throws Exception {
+    public void test_newBoxes_v2() throws Exception, DatabaseCorruptException {
         Collection col = getColV2();
         Note note = col.newNote();
         note.setItem("Front", "one");
@@ -435,7 +436,7 @@ public class SchedV2Test extends RobolectricTest {
 
 
     @Test
-    public void test_learnV2() throws Exception {
+    public void test_learnV2() throws Exception, DatabaseCorruptException {
         Collection col = getColV2();
         // add a note
         Note note = col.newNote();
@@ -504,7 +505,7 @@ public class SchedV2Test extends RobolectricTest {
 
 
     @Test
-    public void test_relearn() throws Exception {
+    public void test_relearn() throws Exception, DatabaseCorruptException {
         Collection col = getColV2();
         Note note = col.newNote();
         note.setItem("Front", "one");
@@ -534,7 +535,7 @@ public class SchedV2Test extends RobolectricTest {
 
 
     @Test
-    public void test_relearn_no_steps() throws Exception {
+    public void test_relearn_no_steps() throws Exception, DatabaseCorruptException {
         Collection col = getColV2();
         Note note = col.newNote();
         note.setItem("Front", "one");
@@ -560,7 +561,7 @@ public class SchedV2Test extends RobolectricTest {
 
 
     @Test
-    public void test_learn_collapsedV2() throws Exception {
+    public void test_learn_collapsedV2() throws Exception, DatabaseCorruptException {
         Collection col = getColV2();
         // add 2 notes
         Note note = col.newNote();
@@ -589,7 +590,7 @@ public class SchedV2Test extends RobolectricTest {
 
 
     @Test
-    public void test_learn_dayV2() throws Exception {
+    public void test_learn_dayV2() throws Exception, DatabaseCorruptException {
         Collection col = getColV2();
         // add a note
         Note note = col.newNote();
@@ -655,7 +656,7 @@ public class SchedV2Test extends RobolectricTest {
 
 
     @Test
-    public void test_reviewsV2() throws Exception {
+    public void test_reviewsV2() throws Exception, DatabaseCorruptException {
         Collection col = getColV2();
         // add a note
         Note note = col.newNote();
@@ -736,7 +737,7 @@ public class SchedV2Test extends RobolectricTest {
 
 
     @Test
-    public void test_review_limits() throws Exception {
+    public void test_review_limits() throws Exception, DatabaseCorruptException {
         Collection col = getColV2();
 
         Deck parent = col.getDecks().get(addDeck("parent"));
@@ -864,7 +865,7 @@ public class SchedV2Test extends RobolectricTest {
 
 
     @Test
-    public void test_finishedV2() throws Exception {
+    public void test_finishedV2() throws Exception, DatabaseCorruptException {
         Collection col = getColV2();
         // nothing due
         assertThat(col.getSched().finishedMsg(getTargetContext()).toString(), containsString("Congratulations"));
@@ -887,7 +888,7 @@ public class SchedV2Test extends RobolectricTest {
 
 
     @Test
-    public void test_nextIvlV2() throws Exception {
+    public void test_nextIvlV2() throws Exception, DatabaseCorruptException {
         Collection col = getColV2();
         Note note = col.newNote();
         note.setItem("Front", "one");
@@ -994,7 +995,7 @@ public class SchedV2Test extends RobolectricTest {
 
 
     @Test
-    public void test_suspendv2() throws Exception {
+    public void test_suspendv2() throws Exception, DatabaseCorruptException {
         Collection col = getColV2();
         Note note = col.newNote();
         note.setItem("Front", "one");
@@ -1046,7 +1047,7 @@ public class SchedV2Test extends RobolectricTest {
 
 
     @Test
-    public void test_filt_reviewing_early_normal() throws Exception {
+    public void test_filt_reviewing_early_normal() throws Exception, DatabaseCorruptException {
         Collection col = getColV2();
         Note note = col.newNote();
         note.setItem("Front", "one");
@@ -1106,7 +1107,7 @@ public class SchedV2Test extends RobolectricTest {
 
 
     @Test
-    public void test_filt_keep_lrn_state() throws Exception {
+    public void test_filt_keep_lrn_state() throws Exception, DatabaseCorruptException {
         Collection col = getColV2();
 
         Note note = col.newNote();
@@ -1156,7 +1157,7 @@ public class SchedV2Test extends RobolectricTest {
 
 
     @Test
-    public void test_preview() throws Exception {
+    public void test_preview() throws Exception, DatabaseCorruptException {
         // add cards
         Collection col = getColV2();
         Note note = col.newNote();
@@ -1208,7 +1209,7 @@ public class SchedV2Test extends RobolectricTest {
 
 
     @Test
-    public void test_ordcycleV2() throws Exception {
+    public void test_ordcycleV2() throws Exception, DatabaseCorruptException {
         Collection col = getColV2();
         // add two more templates and set second active
         Model m = col.getModels().current();
@@ -1248,7 +1249,7 @@ public class SchedV2Test extends RobolectricTest {
 
 
     @Test
-    public void test_counts_idxV2() throws Exception {
+    public void test_counts_idxV2() throws Exception, DatabaseCorruptException {
         Collection col = getColV2();
         Note note = col.newNote();
         note.setItem("Front", "one");
@@ -1274,7 +1275,7 @@ public class SchedV2Test extends RobolectricTest {
 
 
     @Test
-    public void test_repCountsV2() throws Exception {
+    public void test_repCountsV2() throws Exception, DatabaseCorruptException {
         Collection col = getColV2();
         Note note = col.newNote();
         note.setItem("Front", "one");
@@ -1329,7 +1330,7 @@ public class SchedV2Test extends RobolectricTest {
 
 
     @Test
-    public void test_timingV2() throws Exception {
+    public void test_timingV2() throws Exception, DatabaseCorruptException {
         Collection col = getColV2();
         // add a few review cards, due today
         for (int i = 0; i < 5; i++) {
@@ -1359,7 +1360,7 @@ public class SchedV2Test extends RobolectricTest {
 
 
     @Test
-    public void test_collapseV2() throws Exception {
+    public void test_collapseV2() throws Exception, DatabaseCorruptException {
         Collection col = getColV2();
         // add a note
         Note note = col.newNote();
@@ -1440,7 +1441,7 @@ public class SchedV2Test extends RobolectricTest {
 
 
     @Test
-    public void test_deckFlowV2() throws Exception {
+    public void test_deckFlowV2() throws Exception, DatabaseCorruptException {
         Collection col = getColV2();
         // add a note with default deck
         Note note = col.newNote();
@@ -1554,7 +1555,7 @@ public class SchedV2Test extends RobolectricTest {
 
 
     @Test
-    public void test_norelearnV2() throws Exception {
+    public void test_norelearnV2() throws Exception, DatabaseCorruptException {
         Collection col = getColV2();
         // add a note
         Note note = col.newNote();
@@ -1578,7 +1579,7 @@ public class SchedV2Test extends RobolectricTest {
 
 
     @Test
-    public void test_failmultV2() throws Exception {
+    public void test_failmultV2() throws Exception, DatabaseCorruptException {
         Collection col = getColV2();
         Note note = col.newNote();
         note.setItem("Front", "one");
@@ -1608,7 +1609,7 @@ public class SchedV2Test extends RobolectricTest {
 
 
     @Test
-    public void test_moveVersions() throws Exception {
+    public void test_moveVersions() throws Exception, DatabaseCorruptException {
         Collection col = getColV2();
         col.changeSchedulerVer(1);
 
@@ -1706,7 +1707,7 @@ public class SchedV2Test extends RobolectricTest {
 
     @Test
     @Ignore("Port anki@a9c93d933cadbf5d9c7e3e2b4f7a25d2c59da5d3")
-    public void test_initial_repeat() throws Exception {
+    public void test_initial_repeat() throws Exception, DatabaseCorruptException {
         Collection col = getColV2();
         Note note = col.newNote();
         note.setItem("Front", "one");
@@ -1727,7 +1728,7 @@ public class SchedV2Test extends RobolectricTest {
     }
 
     @Test
-    public void regression_test_preview() throws Exception {
+    public void regression_test_preview() throws Exception, DatabaseCorruptException {
         //"https://github.com/ankidroid/Anki-Android/issues/7285"
         Collection col = getColV2();
         Decks decks = col.getDecks();
@@ -1751,6 +1752,12 @@ public class SchedV2Test extends RobolectricTest {
         assertEquals(1, sched.counts(card).getLrn());
         advanceRobolectricLooperWithSleep();
         sched.answerCard(card, Consts.BUTTON_ONE);
-        assertDoesNotThrow(col::undo);
+        assertDoesNotThrow(() -> {
+            try {
+                col.undo();
+            } catch (DatabaseCorruptException e) {
+                e.printStackTrace();
+            }
+        });
     }
 }

@@ -19,6 +19,7 @@ package com.ichi2.anki;
 import android.app.Activity;
 import android.content.Intent;
 
+import com.ichi2.anki.exception.DatabaseCorruptException;
 import com.ichi2.libanki.Card;
 import com.ichi2.libanki.Note;
 
@@ -55,7 +56,7 @@ public class PreviewerTest extends RobolectricTest {
     }
 
     @Test
-    public void editingNoteChangesContent() {
+    public void editingNoteChangesContent() throws DatabaseCorruptException {
         // #7801
         addNoteUsingBasicModel("Hello", "World");
 

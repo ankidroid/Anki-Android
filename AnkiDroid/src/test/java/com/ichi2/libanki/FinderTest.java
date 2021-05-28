@@ -22,6 +22,7 @@ import android.util.Pair;
 import com.ichi2.anki.CardBrowser;
 import com.ichi2.anki.RobolectricTest;
 import com.ichi2.anki.exception.ConfirmModSchemaException;
+import com.ichi2.anki.exception.DatabaseCorruptException;
 import com.ichi2.libanki.sched.SchedV2;
 import com.ichi2.libanki.utils.Time;
 import com.ichi2.utils.JSONObject;
@@ -58,7 +59,7 @@ public class FinderTest extends RobolectricTest {
 
     @Test
     @Config(qualifiers = "en")
-    public void searchForBuriedReturnsManuallyAndSiblingBuried() throws ConfirmModSchemaException {
+    public void searchForBuriedReturnsManuallyAndSiblingBuried() throws ConfirmModSchemaException, DatabaseCorruptException {
         final String searchQuery = "is:buried";
 
         SchedV2 sched = upgradeToSchedV2();  //needs to be first
@@ -87,7 +88,7 @@ public class FinderTest extends RobolectricTest {
 
 
     @NonNull
-    private Card burySiblings(SchedV2 sched, Card toManuallyBury) {
+    private Card burySiblings(SchedV2 sched, Card toManuallyBury) throws DatabaseCorruptException {
         sched.answerCard(toManuallyBury, 1);
         Card siblingBuried = new Note(getCol(), toManuallyBury.getNid()).cards().get(1);
         assertThat(siblingBuried.getQueue(), is(Consts.QUEUE_TYPE_SIBLING_BURIED));
@@ -115,7 +116,7 @@ public class FinderTest extends RobolectricTest {
 
 
     @Test
-    public void test_findCards() {
+    public void test_findCards() throws DatabaseCorruptException {
         Collection col = getCol();
         Note note = col.newNote();
         note.setItem("Front", "dog");
@@ -358,7 +359,7 @@ public class FinderTest extends RobolectricTest {
     }
 
     @Test
-    public void test_findReplace() {
+    public void test_findReplace() throws DatabaseCorruptException {
         Collection col = getCol();
         Note note = col.newNote();
         note.setItem("Front", "foo");

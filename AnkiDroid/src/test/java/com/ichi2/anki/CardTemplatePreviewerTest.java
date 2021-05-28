@@ -20,6 +20,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 
+import com.ichi2.anki.exception.DatabaseCorruptException;
 import com.ichi2.libanki.Card;
 import com.ichi2.libanki.Model;
 import com.ichi2.libanki.Models;
@@ -42,7 +43,7 @@ import androidx.annotation.NonNull;
 public class CardTemplatePreviewerTest extends RobolectricTest {
 
     @Test
-    public void testPreviewUnsavedTemplate() {
+    public void testPreviewUnsavedTemplate() throws DatabaseCorruptException {
 
         String modelName = "Basic";
         Model collectionBasicModelOriginal = getCurrentDatabaseModelCopy(modelName);

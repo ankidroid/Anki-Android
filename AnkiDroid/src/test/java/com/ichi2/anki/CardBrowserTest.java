@@ -11,6 +11,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
 
+import com.ichi2.anki.exception.DatabaseCorruptException;
 import com.ichi2.libanki.Card;
 import com.ichi2.libanki.Consts;
 import com.ichi2.libanki.Note;
@@ -413,7 +414,7 @@ public class CardBrowserTest extends RobolectricTest {
 
 
     @Test
-    public void repositionDataTest() {
+    public void repositionDataTest() throws DatabaseCorruptException {
         CardBrowser b = getBrowserWithNotes(1);
 
         b.checkCardsAtPositions(0);
@@ -431,7 +432,7 @@ public class CardBrowserTest extends RobolectricTest {
 
     @Test
     @Config(qualifiers = "en")
-    public void resetDataTest() {
+    public void resetDataTest() throws DatabaseCorruptException {
         Card c = addNoteUsingBasicModel("Hello", "World").firstCard();
         c.setDue(5);
         c.setQueue(Consts.QUEUE_TYPE_REV);
@@ -455,7 +456,7 @@ public class CardBrowserTest extends RobolectricTest {
 
     @Test
     @Config(qualifiers = "en")
-    public void rescheduleDataTest() {
+    public void rescheduleDataTest() throws DatabaseCorruptException {
         CardBrowser b = getBrowserWithNotes(1);
 
         b.checkCardsAtPositions(0);
@@ -473,7 +474,7 @@ public class CardBrowserTest extends RobolectricTest {
 
     @Test
     @Ignore("Doesn't work - but should")
-    public void dataUpdatesAfterUndoReposition() {
+    public void dataUpdatesAfterUndoReposition() throws DatabaseCorruptException {
         CardBrowser b = getBrowserWithNotes(1);
 
         b.checkCardsAtPositions(0);

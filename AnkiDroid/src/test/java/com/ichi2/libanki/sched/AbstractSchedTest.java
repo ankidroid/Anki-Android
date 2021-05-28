@@ -18,6 +18,7 @@ package com.ichi2.libanki.sched;
 
 import com.ichi2.anki.RobolectricTest;
 import com.ichi2.anki.exception.ConfirmModSchemaException;
+import com.ichi2.anki.exception.DatabaseCorruptException;
 import com.ichi2.async.CollectionTask;
 import com.ichi2.libanki.Card;
 import com.ichi2.libanki.Collection;
@@ -81,7 +82,7 @@ public class AbstractSchedTest extends RobolectricTest {
     }
 
     @Test
-    public void testUndoResetsCardCountsToCorrectValue() throws InterruptedException {
+    public void testUndoResetsCardCountsToCorrectValue() throws InterruptedException, DatabaseCorruptException {
         // #6587
         addNoteUsingBasicModel("Hello", "World");
 
@@ -97,7 +98,7 @@ public class AbstractSchedTest extends RobolectricTest {
 
         sched.answerCard(cardBeforeUndo, EASE_3);
 
-        waitFortask(new CollectionTask.Undo(), 5000);
+        waitFortask(new CollectionTask.Undo(null), 5000);
 
         Counts countsAfterUndo = sched.counts();
 
@@ -105,7 +106,7 @@ public class AbstractSchedTest extends RobolectricTest {
     }
 
     @Test
-    public void ensureUndoCorrectCounts() {
+    public void ensureUndoCorrectCounts() throws DatabaseCorruptException {
         Collection col = getCol();
         AbstractSched sched = col.getSched();
         Deck deck = col.getDecks().get(1);
@@ -160,7 +161,7 @@ public class AbstractSchedTest extends RobolectricTest {
     }
 
     @Test
-    public void siblingCorrectlyBuried() {
+    public void siblingCorrectlyBuried() throws DatabaseCorruptException {
         // #6903
         Collection col = getCol();
         AbstractSched sched = col.getSched();
@@ -246,7 +247,7 @@ public class AbstractSchedTest extends RobolectricTest {
             sched.extendLimits(1, 0);
         }
 
-        public void test() {
+        public void test() throws DatabaseCorruptException {
             Collection col = getCol();
             Models models = col.getModels();
 
@@ -304,12 +305,12 @@ mw.col.sched.extendLimits(1, 0)
 
     /** Those test may be unintuitive, but they follow upstream as close as possible. */
     @Test
-    public void increaseToday() {
+    public void increaseToday() throws DatabaseCorruptException {
         new IncreaseToday().test();
     }
 
 
-    protected void undoAndRedo(boolean preload) {
+    protected void undoAndRedo(boolean preload) throws DatabaseCorruptException {
         Collection col = getCol();
         DeckConfig conf = col.getDecks().confForDid(1);
         conf.getJSONObject("new").put("delays", new JSONArray(new double[] {1, 3, 5, 10}));
@@ -376,12 +377,12 @@ mw.col.sched.extendLimits(1, 0)
     }
 
     @Test
-    public void undoAndRedoPreload() {
+    public void undoAndRedoPreload() throws DatabaseCorruptException {
         undoAndRedo(true);
     }
 
     @Test
-    public void undoAndRedoNoPreload() {
+    public void undoAndRedoNoPreload() throws DatabaseCorruptException {
         undoAndRedo(false);
     }
 
@@ -400,7 +401,7 @@ mw.col.sched.extendLimits(1, 0)
 
 
     @Test
-    public void regression_7066() {
+    public void regression_7066() throws DatabaseCorruptException {
         Collection col = getCol();
         DeckConfig dconf = col.getDecks().getConf(1);
         dconf.getJSONObject("new").put("bury", true);
@@ -414,11 +415,17 @@ mw.col.sched.extendLimits(1, 0)
         sched.answerCard(card, Consts.BUTTON_THREE);
         card = sched.getCard();
         sched.setCurrentCard(card);
-        AnkiAssert.assertDoesNotThrow(sched::preloadNextCard);
+        AnkiAssert.assertDoesNotThrow(() -> {
+            try {
+                sched.preloadNextCard();
+            } catch (DatabaseCorruptException e) {
+                e.printStackTrace();
+            }
+        });
     }
 
     @Test
-    public void regression_7984() {
+    public void regression_7984() throws DatabaseCorruptException {
         Collection col = getCol();
         SchedV2 sched = (SchedV2) col.getSched();
         Time time = getCol().getTime();

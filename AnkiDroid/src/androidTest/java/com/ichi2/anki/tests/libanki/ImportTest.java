@@ -20,6 +20,7 @@ import android.Manifest;
 import android.os.Build;
 
 import com.ichi2.anki.exception.ConfirmModSchemaException;
+import com.ichi2.anki.exception.DatabaseCorruptException;
 import com.ichi2.anki.exception.ImportExportException;
 import com.ichi2.anki.tests.InstrumentedTest;
 import com.ichi2.anki.tests.Shared;
@@ -94,7 +95,7 @@ public class ImportTest extends InstrumentedTest {
     }
 
     @Test
-    public void testAnki2Mediadupes() throws IOException, JSONException, ImportExportException {
+    public void testAnki2Mediadupes() throws IOException, JSONException, ImportExportException, DatabaseCorruptException {
 
         // add a note that references a sound
         Note n = testCol.newNote();
@@ -186,7 +187,7 @@ public class ImportTest extends InstrumentedTest {
     }
 
     @Test
-    public void testAnki2DiffmodelTemplates() throws IOException, JSONException, ImportExportException {
+    public void testAnki2DiffmodelTemplates() throws IOException, JSONException, ImportExportException, DatabaseCorruptException {
         // different from the above as this one tests only the template text being
         // changed, not the number of cards/fields
         // import the first version of the model
@@ -236,7 +237,7 @@ public class ImportTest extends InstrumentedTest {
 
     @Test
     @SdkSuppress(minSdkVersion = Build.VERSION_CODES.O)
-    public void testCsv() throws IOException {
+    public void testCsv() throws IOException, DatabaseCorruptException {
         String file = Shared.getTestFilePath(getTestContext(), "text-2fields.txt");
         TextImporter i = new TextImporter(testCol, file);
         i.initMapping();
@@ -294,7 +295,7 @@ public class ImportTest extends InstrumentedTest {
 
     @Test
     @SdkSuppress(minSdkVersion = Build.VERSION_CODES.O)
-    public void testCsv2() throws  IOException, ConfirmModSchemaException {
+    public void testCsv2() throws IOException, ConfirmModSchemaException, DatabaseCorruptException {
         Models mm = testCol.getModels();
         Model m = mm.current();
         JSONObject f = mm.newField("Three");
@@ -317,7 +318,7 @@ public class ImportTest extends InstrumentedTest {
 
     @Test
     @SdkSuppress(minSdkVersion = Build.VERSION_CODES.O)
-    public void testCsvWithByteOrderMark() throws IOException {
+    public void testCsvWithByteOrderMark() throws IOException, DatabaseCorruptException {
         String file = Shared.getTestFilePath(getTestContext(), "text-utf8-bom.txt");
         TextImporter i = new TextImporter(testCol, file);
         i.initMapping();
@@ -330,7 +331,7 @@ public class ImportTest extends InstrumentedTest {
     @Test
     @Ignore("Not yet handled")
     @SdkSuppress(minSdkVersion = Build.VERSION_CODES.O)
-    public void testUcs2CsvWithByteOrderMark() throws IOException {
+    public void testUcs2CsvWithByteOrderMark() throws IOException, DatabaseCorruptException {
         String file = Shared.getTestFilePath(getTestContext(), "text-ucs2-be-bom.txt");
         TextImporter i = new TextImporter(testCol, file);
         i.initMapping();
@@ -341,7 +342,7 @@ public class ImportTest extends InstrumentedTest {
 
     @Test
     @SdkSuppress(minSdkVersion = Build.VERSION_CODES.O)
-    public void csvManualBasicExample() throws IOException, ConfirmModSchemaException {
+    public void csvManualBasicExample() throws IOException, ConfirmModSchemaException, DatabaseCorruptException {
         String file = Shared.getTestFilePath(getTestContext(), "text-anki-manual-csv-single-line.txt");
         addFieldToCurrentModel("Third");
         TextImporter i = new TextImporter(testCol, file);
@@ -355,7 +356,7 @@ public class ImportTest extends InstrumentedTest {
 
     @Test
     @SdkSuppress(minSdkVersion = Build.VERSION_CODES.O)
-    public void csvManualLineBreakExample() throws IOException {
+    public void csvManualLineBreakExample() throws IOException, DatabaseCorruptException {
         String file = Shared.getTestFilePath(getTestContext(), "text-anki-manual-csv-multi-line.txt");
         TextImporter i = new TextImporter(testCol, file);
         i.setAllowHtml(true);

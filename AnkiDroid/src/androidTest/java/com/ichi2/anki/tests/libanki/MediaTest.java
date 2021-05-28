@@ -20,6 +20,7 @@ import androidx.test.ext.junit.runners.AndroidJUnit4;
 import androidx.test.rule.GrantPermissionRule;
 
 import com.ichi2.anki.BackupManager;
+import com.ichi2.anki.exception.DatabaseCorruptException;
 import com.ichi2.anki.tests.InstrumentedTest;
 import com.ichi2.libanki.Collection;
 import com.ichi2.libanki.Media;
@@ -165,7 +166,7 @@ public class MediaTest extends InstrumentedTest {
     }
 
     @Test
-    public void testDeckIntegration() throws IOException, EmptyMediaException {
+    public void testDeckIntegration() throws IOException, EmptyMediaException, DatabaseCorruptException {
         // create a media dir
         testCol.getMedia().dir();
         // Put a file into it

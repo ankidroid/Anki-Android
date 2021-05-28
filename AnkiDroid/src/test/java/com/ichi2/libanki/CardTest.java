@@ -3,6 +3,7 @@ package com.ichi2.libanki;
 import com.ichi2.anki.RobolectricTest;
 import com.ichi2.anki.UIUtils;
 import com.ichi2.anki.exception.ConfirmModSchemaException;
+import com.ichi2.anki.exception.DatabaseCorruptException;
 import com.ichi2.anki.exception.FilteredAncestor;
 import com.ichi2.libanki.utils.Time;
 import com.ichi2.testutils.MockTime;
@@ -34,7 +35,7 @@ public class CardTest extends RobolectricTest {
      ******************/
 
     @Test
-    public void test_delete() {
+    public void test_delete() throws DatabaseCorruptException {
         Collection col = getCol();
         Note note = col.newNote();
         note.setItem("Front", "1");
@@ -53,7 +54,7 @@ public class CardTest extends RobolectricTest {
 
 
     @Test
-    public void test_misc_cards() {
+    public void test_misc_cards() throws DatabaseCorruptException {
         Collection col = getCol();
         Note note = col.newNote();
         note.setItem("Front", "1");
@@ -66,7 +67,7 @@ public class CardTest extends RobolectricTest {
 
 
     @Test
-    public void test_genrem() {
+    public void test_genrem() throws DatabaseCorruptException {
         Collection col = getCol();
         Note note = col.newNote();
         note.setItem("Front", "1");

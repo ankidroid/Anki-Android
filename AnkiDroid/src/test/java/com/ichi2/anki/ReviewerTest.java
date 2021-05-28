@@ -8,6 +8,7 @@ import android.view.MenuItem;
 
 import com.ichi2.anki.AbstractFlashcardViewer.JavaScriptFunction;
 import com.ichi2.anki.cardviewer.ViewerCommand;
+import com.ichi2.anki.exception.DatabaseCorruptException;
 import com.ichi2.anki.reviewer.ActionButtonStatus;
 import com.ichi2.anki.exception.ConfirmModSchemaException;
 import com.ichi2.libanki.Card;
@@ -102,7 +103,7 @@ public class ReviewerTest extends RobolectricTest {
     }
 
     @Test
-    public void jsTime4ShouldBeBlankIfButtonUnavailable() {
+    public void jsTime4ShouldBeBlankIfButtonUnavailable() throws DatabaseCorruptException {
         // #6623 - easy should be blank when displaying a card with 3 buttons (after displaying a review)
         Note firstNote = addNoteUsingBasicModel("Hello", "World");
         moveToReviewQueue(firstNote.firstCard());
@@ -189,7 +190,7 @@ public class ReviewerTest extends RobolectricTest {
     }
 
     @Test
-    public void testLrnQueueAfterUndo() {
+    public void testLrnQueueAfterUndo() throws DatabaseCorruptException {
         Collection col = getCol();
         JSONObject nw = col.getDecks().confForDid(1).getJSONObject("new");
         MockTime time = (MockTime) col.getTime();
@@ -368,7 +369,7 @@ public class ReviewerTest extends RobolectricTest {
     }
 
 
-    private void displayAnswer(Reviewer reviewer) {
+    private void displayAnswer(Reviewer reviewer) throws DatabaseCorruptException {
         waitForAsyncTasksToComplete();
         reviewer.displayCardAnswer();
         waitForAsyncTasksToComplete();
