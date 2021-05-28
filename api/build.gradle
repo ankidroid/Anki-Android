@@ -1,6 +1,7 @@
 plugins {
     id 'maven-publish'
     id 'com.android.library'
+    id 'kotlin-android'
 }
 
 group = "com.ichi2.anki"
@@ -52,6 +53,7 @@ apply from: "../lint.gradle"
 
 dependencies {
     implementation 'androidx.annotation:annotation:1.2.0'
+    implementation 'org.jetbrains.kotlin:kotlin-stdlib:1.5.10'
     testImplementation 'org.junit.vintage:junit-vintage-engine:5.7.2'
     testImplementation 'org.robolectric:robolectric:4.5.1'
 

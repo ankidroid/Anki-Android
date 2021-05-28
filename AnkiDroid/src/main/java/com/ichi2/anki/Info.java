@@ -54,6 +54,7 @@ public class Info extends AnkiActivity {
     public static final int TYPE_ABOUT = 0;
     public static final int TYPE_NEW_VERSION = 2;
 
+    private WebView mWebView;
 
     @SuppressLint("SetJavaScriptEnabled")
     @Override
@@ -79,8 +80,8 @@ public class Info extends AnkiActivity {
         findViewById(R.id.info_donate).setOnClickListener((v) -> openUrl(Uri.parse(getString(R.string.link_opencollective_donate))));
 
         setTitle(String.format("%s v%s", VersionUtils.getAppName(), VersionUtils.getPkgVersionName()));
-        WebView webView = findViewById(R.id.info);
-        webView.setWebChromeClient(new WebChromeClient() {
+        mWebView = findViewById(R.id.info);
+        mWebView.setWebChromeClient(new WebChromeClient() {
             public void onProgressChanged(WebView view, int progress) {
                 // Hide the progress indicator when the page has finished loaded
                 if (progress == 100) {
@@ -103,7 +104,7 @@ public class Info extends AnkiActivity {
         TypedArray typedArray = getTheme().obtainStyledAttributes(new int[] {android.R.attr.colorBackground, android.R.attr.textColor});
         int backgroundColor = typedArray.getColor(0, -1);
         String textColor = String.format("#%06X", (0xFFFFFF & typedArray.getColor(1, -1))); // Color to hex string
-        webView.setBackgroundColor(backgroundColor);
+        mWebView.setBackgroundColor(backgroundColor);
 
         ViewGroupUtils.setRenderWorkaround(this);
 
@@ -130,7 +131,7 @@ public class Info extends AnkiActivity {
                         String.format(content[4], res.getString(R.string.licence_wiki),
                                 res.getString(R.string.link_source))).append("<br/><br/>");
                 sb.append("</body></html>");
-                webView.loadDataWithBaseURL("", sb.toString(), "text/html", "utf-8", null);
+                mWebView.loadDataWithBaseURL("", sb.toString(), "text/html", "utf-8", null);
                 Button debugCopy = (findViewById(R.id.right_button));
                 debugCopy.setText(res.getString(R.string.feedback_copy_debug));
                 debugCopy.setOnClickListener(v -> copyDebugInfo());
@@ -141,17 +142,17 @@ public class Info extends AnkiActivity {
                 continueButton.setText(res.getString(R.string.dialog_continue));
                 continueButton.setOnClickListener((arg) -> close());
                 String background = String.format("#%06X", (0xFFFFFF & backgroundColor));
-                webView.loadUrl("file:///android_asset/changelog.html");
-                webView.getSettings().setJavaScriptEnabled(true);
+                mWebView.loadUrl("file:///android_asset/changelog.html");
+                mWebView.getSettings().setJavaScriptEnabled(true);
 
-                webView.setWebViewClient(new WebViewClient() {
+                mWebView.setWebViewClient(new WebViewClient() {
                     @Override
                     public void onPageFinished(WebView view, String url) {
 
                         /* The order of below javascript code must not change (this order works both in debug and release mode)
                          *  or else it will break in any one mode.
                          */
-                        webView.loadUrl(
+                        mWebView.loadUrl(
                                 "javascript:document.body.style.setProperty(\"color\", \"" + textColor + "\");"
                                         + "x=document.getElementsByTagName(\"a\"); for(i=0;i<x.length;i++){x[i].style.color=\"#E37068\";}"
                                         + "document.getElementsByTagName(\"h1\")[0].style.color=\"" + textColor + "\";"
@@ -183,19 +184,6 @@ public class Info extends AnkiActivity {
             return false;
         }
     }
-
-
-    @Override
-    public boolean onKeyDown(int keyCode, KeyEvent event) {
-        if (keyCode == KeyEvent.KEYCODE_BACK && event.getRepeatCount() == 0) {
-            Timber.i("onBackPressed()");
-            setResult(RESULT_CANCELED);
-            finishWithAnimation();
-            return true;
-        }
-        return super.onKeyDown(keyCode, event);
-    }
-
 
     private void finishWithAnimation() {
         finishWithAnimation(START);
@@ -254,5 +242,14 @@ public class Info extends AnkiActivity {
 
     private boolean isSendingCrashReports() {
         return AnkiDroidApp.isAcraEnbled(this, false);
+    }
+
+    @Override
+    public void onBackPressed() {
+        if (mWebView.canGoBack()) {
+            mWebView.goBack();
+        } else {
+            super.onBackPressed();
+        }
     }
 }

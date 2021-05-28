@@ -438,15 +438,6 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
     // LISTENERS
     // ----------------------------------------------------------------------------
 
-    private final Handler mHandler = new Handler() {
-
-        @Override
-        public void handleMessage(Message msg) {
-            mSoundPlayer.stopSounds();
-            mSoundPlayer.playSound((String) msg.obj, null, null, getSoundErrorListener());
-        }
-    };
-
     private final Handler mLongClickHandler = new Handler();
     private final Runnable mLongClickTestRunnable = new Runnable() {
         @Override
@@ -3612,10 +3603,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
         // We play sounds through these links when a user taps the sound icon.
         private boolean filterUrl(String url) throws DatabaseCorruptException {
             if (url.startsWith("playsound:")) {
-                // Send a message that will be handled on the UI thread.
-                Message msg = Message.obtain();
-                msg.obj = url.replaceFirst("playsound:", "");
-                mHandler.sendMessage(msg);
+                controlSound(url);
                 return true;
             }
             if (url.startsWith("file") || url.startsWith("data:")) {
@@ -3800,6 +3788,24 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
                 Timber.w(e); // Don't crash if the intent is not handled
             }
             return true;
+        }
+
+        /**
+         * Check if the user clicked on another audio icon or the audio itself finished
+         * Also, Check if the user clicked on the running audio icon
+         * @param url
+         */
+        private void controlSound(String url) {
+            url = url.replaceFirst("playsound:", "");
+            if (!url.equals(mSoundPlayer.getCurrentAudioUri()) || mSoundPlayer.isCurrentAudioFinished()) {
+                onCurrentAudioChanged(url);
+            } else {
+                mSoundPlayer.playOrPauseSound();
+            }
+        }
+
+        private void onCurrentAudioChanged(String url) {
+            mSoundPlayer.playSound(url, null, null, getSoundErrorListener());
         }
 
 

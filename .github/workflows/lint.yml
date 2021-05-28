@@ -74,3 +74,6 @@ jobs:
 
       - name: Test Lint Rules
         run: ./gradlew lint-rules:test
+
+      - name: Ktlint Check
+        run: ./gradlew ktlintCheck

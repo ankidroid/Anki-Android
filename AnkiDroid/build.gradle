@@ -6,6 +6,7 @@ plugins {
 apply plugin: 'com.android.application'
 apply plugin: 'app.brant.amazonappstorepublisher'
 apply plugin: 'idea'
+apply plugin: 'kotlin-android'
 
 
 repositories {
@@ -260,7 +261,7 @@ dependencies {
     implementation 'com.fasterxml.jackson.core:jackson-databind:2.12.3'
 
     // == Rust conversion (from Anki-Android-Backend on GitHub) ==
-    String backendVersion = "0.1.6" // We want both testing and implementation on the same version
+    String backendVersion = "0.1.8" // We want both testing and implementation on the same version
     // build with ./gradlew rsdroid:assembleRelease
     // In my experience, using `files()` currently requires a reindex operation, which is slow.
     // implementation files("C:\\GitHub\\Rust-Test\\rsdroid\\build\\outputs\\aar\\rsdroid-release.aar")
@@ -292,6 +293,7 @@ dependencies {
     implementation "com.github.zafarkhaja:java-semver:0.9.0" // For AnkiDroid JS API Versioning
     implementation 'com.github.yalantis:ucrop:2.2.6'
     implementation 'com.drakeet.drawer:drawer:1.0.3'
+    implementation 'org.jetbrains.kotlin:kotlin-stdlib:1.5.10'
     api project(":api")
 
     testImplementation 'org.junit.vintage:junit-vintage-engine:5.7.2'

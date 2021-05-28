@@ -8,21 +8,24 @@ buildscript {
         maven {
             url "https://plugins.gradle.org/m2/"
         }
-        // Temporary, needed while investigating https://github.com/ankidroid/Anki-Android/issues/7558
-        maven {
-            url 'https://storage.googleapis.com/r8-releases/raw'
-        }
-        maven {
-            url "https://storage.googleapis.com/r8-releases/raw/master"
-        }
-        // End temporary #7558 work
     }
     dependencies {
         classpath 'com.android.tools.build:gradle:4.2.1'
         // NOTE: Do not place your application dependencies here; they belong
         // in the individual module build.gradle files
         classpath "app.brant:amazonappstorepublisher:0.1.0"
+
+        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:1.5.10"
+        classpath "org.jlleitschuh.gradle:ktlint-gradle:10.0.0"
     }
+}
+
+repositories {
+    mavenCentral()
+}
+
+allprojects {
+    apply plugin: "org.jlleitschuh.gradle.ktlint"
 }
 
 ext {
