@@ -572,6 +572,26 @@ public class CardBrowserTest extends RobolectricTest {
         assertThat(browser.checkedCardCount(), is(18));
     }
 
+    @Test
+    public void checkIfSearchAllDecksWorks() {
+        addNoteUsingBasicModel("Hello", "World");
+        long deck = addDeck("Deck 1");
+        getCol().getDecks().select(deck);
+        Card c2 = addNoteUsingBasicModel("Front", "Back").firstCard();
+        c2.setDid(deck);
+        c2.flush();
+
+        CardBrowser cardBrowser = getBrowserWithNoNewCards();
+        cardBrowser.searchCards("Hello");
+        advanceRobolectricLooperWithSleep();
+        assertThat("Cardbrowser has Deck 1 as selected deck", cardBrowser.getSelectedDeckNameForUi(), is("Deck 1"));
+        assertThat("Result should be empty", cardBrowser.getCardCount(), is(0));
+
+        cardBrowser.searchAllDecks();
+        advanceRobolectricLooperWithSleep();
+        assertThat("Result should contain one card", cardBrowser.getCardCount(), is(1));
+    }
+
     protected void assertUndoDoesNotContain(CardBrowser browser, @StringRes int resId) {
         ShadowActivity shadowActivity = shadowOf(browser);
         MenuItem item = shadowActivity.getOptionsMenu().findItem(R.id.action_undo);
