@@ -8,6 +8,7 @@ import org.junit.runner.RunWith;
 import androidx.annotation.NonNull;
 import androidx.test.ext.junit.runners.AndroidJUnit4;
 
+import static com.ichi2.libanki.template.Tokenizer.ALT_HANDLEBAR_DIRECTIVE;
 import static com.ichi2.libanki.template.Tokenizer.TokenKind.CLOSE_CONDITIONAL;
 import static com.ichi2.libanki.template.Tokenizer.TokenKind.OPEN_CONDITIONAL;
 import static com.ichi2.libanki.template.Tokenizer.TokenKind.OPEN_NEGATED;
@@ -186,22 +187,45 @@ public class TokenizerTest extends RobolectricTest {
         test_next_token("foo{bar}plop", TEXT, "foo{bar}plop","");
     }
 
+
+    protected @NonNull
+    static String new_to_legacy_template(@NonNull String template) {
+        return "   " + ALT_HANDLEBAR_DIRECTIVE + new_to_legacy(template);
+    }
+
     @Test
     public void test_tokens() {
-        Tokenizer tokenizer = new Tokenizer("Foo {{Test}} {{{  #Bar}} {{/Plop }}iee {{!ien nnr");
+        String template = "Foo {{Test}} {{{  #Bar}} {{/Plop }}iee {{!ien nnr";
+        String legacy_template = new_to_legacy_template(template);
+        Tokenizer tokenizer = new Tokenizer(template);
+        Tokenizer legacy_tokenizer = new Tokenizer(legacy_template);
+
 
         assertThat(tokenizer.next(), is(new Token(TEXT, "Foo ")));
+        assertThat(legacy_tokenizer.next(), is(new Token(TEXT, "Foo ")));
         assertThat(tokenizer.next(), is(new Token(REPLACEMENT, "Test")));
+        assertThat(legacy_tokenizer.next(), is(new Token(REPLACEMENT, "Test")));
         assertThat(tokenizer.next(), is(new Token(TEXT, " ")));
+        assertThat(legacy_tokenizer.next(), is(new Token(TEXT, " ")));
         assertThat(tokenizer.next(), is(new Token(OPEN_CONDITIONAL, "Bar")));
+        assertThat(legacy_tokenizer.next(), is(new Token(OPEN_CONDITIONAL, "Bar")));
         assertThat(tokenizer.next(), is(new Token(TEXT, " ")));
+        assertThat(legacy_tokenizer.next(), is(new Token(TEXT, " ")));
         assertThat(tokenizer.next(), is(new Token(CLOSE_CONDITIONAL, "Plop")));
+        assertThat(legacy_tokenizer.next(), is(new Token(CLOSE_CONDITIONAL, "Plop")));
         assertThat(tokenizer.next(), is(new Token(TEXT, "iee ")));
+        assertThat(legacy_tokenizer.next(), is(new Token(TEXT, "iee ")));
         try {
             tokenizer.next();
             fail();
         } catch (TemplateError.NoClosingBrackets exc) {
             assertThat(exc.mRemaining, is("{{!ien nnr"));
+        }
+        try {
+            legacy_tokenizer.next();
+            fail();
+        } catch (TemplateError.NoClosingBrackets exc) {
+            assertThat(exc.mRemaining, is("<%!ien nnr"));
         }
         assertThat(tokenizer.hasNext(), is(false));
     }
