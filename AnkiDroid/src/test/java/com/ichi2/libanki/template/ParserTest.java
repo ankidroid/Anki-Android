@@ -16,6 +16,7 @@ import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 
+import androidx.annotation.NonNull;
 import androidx.test.ext.junit.runners.AndroidJUnit4;
 
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -26,22 +27,26 @@ import static org.junit.Assert.fail;
 
 @RunWith(AndroidJUnit4.class)
 public class ParserTest extends RobolectricTest {
+    public void test_parsing(@NonNull String template, @NonNull ParsedNode node) {
+        assertThat(ParsedNode.parse_inner(template), is(node));
+    }
+
     @Test
-    public void parsing() {
-        assertThat(ParsedNode.parse_inner(""), is(new EmptyNode()));
-        assertThat(ParsedNode.parse_inner("Test"), is(new Text("Test")));
-        assertThat(ParsedNode.parse_inner("{{Test}}"), is(new Replacement("Test")));
-        assertThat(ParsedNode.parse_inner("{{filter:Test}}"), is(new Replacement("Test", "filter")));
-        assertThat(ParsedNode.parse_inner("{{filter:}}"), is(new Replacement("", "filter")));
-        assertThat(ParsedNode.parse_inner("{{}}"), is(new Replacement("")));
-        assertThat(ParsedNode.parse_inner("{{!Test}}"), is(new Replacement("!Test")));
-        assertThat(ParsedNode.parse_inner("{{Filter2:Filter1:Test}}"), is(new Replacement("Test", "Filter1", "Filter2")));
-        assertThat(ParsedNode.parse_inner("Foo{{Test}}"), is(
+    public void test_parsing() {
+        test_parsing("", new EmptyNode());
+        test_parsing("Test", new Text("Test"));
+        test_parsing("{{Test}}", new Replacement("Test"));
+        test_parsing("{{filter:Test}}", new Replacement("Test", "filter"));
+        test_parsing("{{filter:}}", new Replacement("", "filter"));
+        test_parsing("{{}}", new Replacement(""));
+        test_parsing("{{!Test}}", new Replacement("!Test"));
+        test_parsing("{{Filter2:Filter1:Test}}", new Replacement("Test", "Filter1", "Filter2"));
+        test_parsing("Foo{{Test}}",
                 new ParsedNodes(new Text("Foo"),
                         new Replacement("Test")
-                )));
-        assertThat(ParsedNode.parse_inner("{{#Foo}}{{Test}}{{/Foo}}"), is(new Conditional("Foo", new Replacement("Test"))));
-        assertThat(ParsedNode.parse_inner("{{^Foo}}{{Test}}{{/Foo}}"), is(new NegatedConditional("Foo", new Replacement("Test"))));
+                ));
+        test_parsing("{{#Foo}}{{Test}}{{/Foo}}", new Conditional("Foo", new Replacement("Test")));
+        test_parsing("{{^Foo}}{{Test}}{{/Foo}}", new NegatedConditional("Foo", new Replacement("Test")));
         try {
             ParsedNode.parse_inner("{{foo");
             fail();
