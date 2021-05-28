@@ -8,14 +8,6 @@ buildscript {
         maven {
             url "https://plugins.gradle.org/m2/"
         }
-        // Temporary, needed while investigating https://github.com/ankidroid/Anki-Android/issues/7558
-        maven {
-            url 'https://storage.googleapis.com/r8-releases/raw'
-        }
-        maven {
-            url "https://storage.googleapis.com/r8-releases/raw/master"
-        }
-        // End temporary #7558 work
     }
     dependencies {
         classpath 'com.android.tools.build:gradle:4.2.1'
