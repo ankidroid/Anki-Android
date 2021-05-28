@@ -2,12 +2,14 @@
 package com.ichi2.anki;
 
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.ActivityNotFoundException;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.database.Cursor;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.media.AudioManager;
@@ -42,6 +44,8 @@ import com.ichi2.anki.dialogs.AsyncDialogFragment;
 import com.ichi2.anki.dialogs.DialogHandler;
 import com.ichi2.anki.dialogs.SimpleMessageDialog;
 import com.ichi2.async.CollectionLoader;
+import com.ichi2.async.CollectionTask;
+import com.ichi2.async.TaskManager;
 import com.ichi2.compat.customtabs.CustomTabActivityHelper;
 import com.ichi2.compat.customtabs.CustomTabsFallback;
 import com.ichi2.compat.customtabs.CustomTabsHelper;
@@ -536,6 +540,56 @@ public class AnkiActivity extends AppCompatActivity implements SimpleMessageDial
     protected void showSimpleMessageDialog(String title, @Nullable String message, boolean reload) {
         AsyncDialogFragment newFragment = SimpleMessageDialog.newInstance(title, message, reload);
         showAsyncDialogFragment(newFragment);
+    }
+
+
+    public boolean checkAndHandleDBCorrupt() {
+        if (isDatabaseCorrupt(getCol())) {
+            showDbCorruptDialog();
+            return true;
+        }
+        return false;
+    }
+
+
+    public boolean isDatabaseCorrupt(Collection col) {
+        try (Cursor cursor = col.getDb().query("SELECT mid FROM notes")) {
+            cursor.moveToFirst();
+            do {
+                long mMid = cursor.getLong(0);
+                if (col.getModels().get(mMid) == null) {
+                    return true;
+                }
+            } while (cursor.moveToNext());
+        }
+
+        return false;
+    }
+
+
+    public void showDbCorruptDialog() {
+        Timber.d("showDbCorruptDialog()");
+        if (this instanceof DeckPicker) {
+            new AlertDialog.Builder(this)
+                    .setTitle("Corrupt Database")
+                    .setMessage("It looks like your database is corrupt. Do you want to perform a database check?")
+                    .setPositiveButton("Check DB", (dialog, which) -> {
+                        Timber.i("performIntegrityCheck()");
+                        if (checkAndHandleDBCorrupt()) {
+                            return;
+                        }
+                        TaskManager.launchCollectionTask(
+                                new CollectionTask.CheckDatabase(),
+                                ((DeckPicker) this).new CheckDatabaseListener()
+                        );
+                    }).setNegativeButton("Dismiss", (dialog, which) -> dialog.dismiss())
+                    .create()
+                    .show();
+        } else {
+            Intent intent = new Intent(this, DeckPicker.class);
+            intent.putExtra("corruptDB", true);
+            startActivityWithoutAnimation(intent);
+        }
     }
 
 

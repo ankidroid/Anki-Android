@@ -529,6 +529,11 @@ public class DeckPicker extends NavigationDrawerActivity implements
         mReviewSummaryTextView = findViewById(R.id.today_stats_text_view);
 
         mShortAnimDuration = getResources().getInteger(android.R.integer.config_shortAnimTime);
+
+        boolean dbIsCorrupt = getIntent().getBooleanExtra("corruptDB", false);
+        if (dbIsCorrupt) {
+            showDbCorruptDialog();
+        }
     }
 
     /**
@@ -968,6 +973,7 @@ public class DeckPicker extends NavigationDrawerActivity implements
     @Override
     public void onSaveInstanceState(@NonNull Bundle savedInstanceState) {
         super.onSaveInstanceState(savedInstanceState);
+        savedInstanceState.putBoolean("corruptDb", false);
         savedInstanceState.putLong("mContextMenuDid", mContextMenuDid);
         savedInstanceState.putBoolean("mClosedWelcomeMessage", mClosedWelcomeMessage);
         savedInstanceState.putBoolean("mIsFABOpen", mFloatingActionMenu.isFABOpen());
