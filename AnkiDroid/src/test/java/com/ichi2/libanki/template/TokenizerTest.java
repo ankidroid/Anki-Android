@@ -49,32 +49,19 @@ public class TokenizerTest extends RobolectricTest {
                         ""));
     }
 
+    private void test_classify_handle(@NonNull String template, @NonNull Tokenizer.TokenKind token, @NonNull String remaining) {
+        assertThat(classify_handle(template), is (new Tokenizer.Token(token, remaining)));
+    }
     @Test
     public void test_classify_handle() {
-        assertThat(classify_handle("#foo"),
-                is(new Tokenizer.Token(OPEN_CONDITIONAL,
-                        "foo")));
-        assertThat(classify_handle("/foo"),
-                is(new Tokenizer.Token(CLOSE_CONDITIONAL,
-                        "foo")));
-        assertThat(classify_handle("^foo"),
-                is(new Tokenizer.Token(OPEN_NEGATED,
-                        "foo")));
-        assertThat(classify_handle("!foo"),
-                is(new Tokenizer.Token(REPLACEMENT,
-                        "!foo")));
-        assertThat(classify_handle("{#foo}"),
-                is(new Tokenizer.Token(OPEN_CONDITIONAL,
-                        "foo}")));
-        assertThat(classify_handle("{  #foo}"),
-                is(new Tokenizer.Token(OPEN_CONDITIONAL,
-                        "foo}")));
-        assertThat(classify_handle("    #"),
-                is(new Tokenizer.Token(REPLACEMENT,
-                        "#")));
-        assertThat(classify_handle("    foo   "),
-                is(new Tokenizer.Token(REPLACEMENT,
-                        "foo")));
+        test_classify_handle("#foo", OPEN_CONDITIONAL, "foo");
+        test_classify_handle("/foo", CLOSE_CONDITIONAL, "foo");
+        test_classify_handle("^foo", OPEN_NEGATED, "foo");
+        test_classify_handle("!foo", REPLACEMENT, "!foo");
+        test_classify_handle("{#foo}", OPEN_CONDITIONAL, "foo}");
+        test_classify_handle("{  #foo}", OPEN_CONDITIONAL, "foo}");
+        test_classify_handle("    #", REPLACEMENT, "#");
+        test_classify_handle("    foo   ", REPLACEMENT, "foo");
     }
 
     @Test
