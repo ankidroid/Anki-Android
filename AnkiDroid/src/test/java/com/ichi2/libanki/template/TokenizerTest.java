@@ -15,8 +15,10 @@ import static com.ichi2.libanki.template.Tokenizer.TokenKind.REPLACEMENT;
 import static com.ichi2.libanki.template.Tokenizer.TokenKind.TEXT;
 import static com.ichi2.libanki.template.Tokenizer.IResult;
 import static com.ichi2.libanki.template.Tokenizer.classify_handle;
+import static com.ichi2.libanki.template.Tokenizer.legacy_handlebar_token;
 import static com.ichi2.libanki.template.Tokenizer.new_handlebar_token;
 import static com.ichi2.libanki.template.Tokenizer.Token;
+import static com.ichi2.libanki.template.Tokenizer.new_to_legacy;
 import static com.ichi2.libanki.template.Tokenizer.next_token;
 import static com.ichi2.libanki.template.Tokenizer.text_token;
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -27,7 +29,6 @@ import static org.junit.Assert.fail;
 
 @RunWith(AndroidJUnit4.class)
 public class TokenizerTest extends RobolectricTest {
-
     private void test_text_token_is_null(@NonNull String template) {
         assertThat(text_token(template), nullValue());
     }
@@ -69,10 +70,15 @@ public class TokenizerTest extends RobolectricTest {
                         new Tokenizer.Token(token, field_name),
                         remaining);
         assertThat(new_handlebar_token(template), is(expected));
+        String legacy_template = new_to_legacy(template);
+        IResult legacy_expected = expected.new_to_legacy();
+        assertThat(legacy_handlebar_token(legacy_template), is (legacy_expected));
     }
 
     private void test_handlebar_token_is_null(@NonNull String template) {
         assertThat(new_handlebar_token(template), nullValue());
+        String legacy_template = new_to_legacy(template);
+        assertThat(legacy_handlebar_token(legacy_template), nullValue());
     }
 
     @Test
