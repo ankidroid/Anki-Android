@@ -179,8 +179,8 @@
     <string name="day_offset_summ">XXX ч. утра</string>
     <string name="xlabel_dayoffset_seekbar" maxLength="41">Полночь</string>
     <string name="ylabel_dayoffset_seekbar" maxLength="41">23:00</string>
-    <string name="sched_v2" maxLength="41">V2 scheduler</string>
-    <string name="sched_v2_summ">Enable the new scheduler. Forces changes in one direction on next sync</string>
+    <string name="sched_v2" maxLength="41">Планировщик V2</string>
+    <string name="sched_v2_summ">Включает новый планировщик. При синхронизации изменения будут перезаписаны в одну сторону</string>
     <string name="sched_ver_toggle_title">Подтвердить</string>
     <string name="sched_ver_2to1">Это сбросит все изучаемые карточки, очистит фильтрованные колоды и поменяет версию планировщика. Продолжить?</string>
     <string name="sched_ver_1to2">Экспериментальный планировщик может ошибаться. Сначала прочтите документацию. Продолжить?</string>

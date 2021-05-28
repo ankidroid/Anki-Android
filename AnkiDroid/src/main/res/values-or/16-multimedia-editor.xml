@@ -75,7 +75,7 @@
     <string name="multimedia_editor_text_field_editing_search_label">ଖୋଜିବା:</string>
     <string name="multimedia_editor_text_field_editing_say">ଉଚ୍ଚାରଣ</string>
     <string name="multimedia_editor_text_field_editing_clear">ସଫା</string>
-    <string name="multimedia_editor_text_field_editing_clone">ଏହାକୁ କ୍ଲୋନ୍ କରନ୍ତୁ</string>
+    <string name="multimedia_editor_text_field_editing_clone">ଏଥିରୁ ପ୍ରତିଲିପି ତିଆରି କରନ୍ତୁ</string>
     <string name="multimedia_editor_text_field_editing_translate" comment="Label of a button opening the translation activity">ଅନୁବାଦ</string>
     <!-- message to user, when there is no text or many words, but the user tries something -->
     <string name="multimedia_editor_text_field_editing_no_text">ପ୍ରଥମେ କିଛି ଲେଖା ପ୍ରବେଶ କରନ୍ତୁ</string>

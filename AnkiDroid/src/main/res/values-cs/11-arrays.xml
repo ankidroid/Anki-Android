@@ -56,7 +56,7 @@
         <item>V pořadí přidání</item>
         <item>V pořadí ke zkoušení</item>
         <item>Naposledy přidané první</item>
-        <item>Relativní opožděnost</item>
+        <item>Relativní zpožděnost</item>
     </string-array>
     <string-array name="add_to_cur_labels">
         <item>Použít aktuální balíček</item>
