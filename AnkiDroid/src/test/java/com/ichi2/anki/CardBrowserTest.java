@@ -575,7 +575,7 @@ public class CardBrowserTest extends RobolectricTest {
     @Test
     public void checkIfSearchAllDecksWorks() {
         addNoteUsingBasicModel("Hello", "World");
-        long deck = addDeck("Deck 1");
+        long deck = addDeck("Test Deck");
         getCol().getDecks().select(deck);
         Card c2 = addNoteUsingBasicModel("Front", "Back").firstCard();
         c2.setDid(deck);
@@ -584,7 +584,7 @@ public class CardBrowserTest extends RobolectricTest {
         CardBrowser cardBrowser = getBrowserWithNoNewCards();
         cardBrowser.searchCards("Hello");
         advanceRobolectricLooperWithSleep();
-        assertThat("Cardbrowser has Deck 1 as selected deck", cardBrowser.getSelectedDeckNameForUi(), is("Deck 1"));
+        assertThat("Card browser should have Test Deck as the selected deck", cardBrowser.getSelectedDeckNameForUi(), is("Test Deck"));
         assertThat("Result should be empty", cardBrowser.getCardCount(), is(0));
 
         cardBrowser.searchAllDecks();
