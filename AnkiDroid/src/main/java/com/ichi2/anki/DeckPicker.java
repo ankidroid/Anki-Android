@@ -1439,7 +1439,7 @@ public class DeckPicker extends NavigationDrawerActivity implements
         Timber.i("undo()");
         String undoReviewString = getResources().getString(R.string.undo_action_review);
         final boolean isReview = undoReviewString.equals(getCol().undoName(getResources()));
-        TaskManager.launchCollectionTask(new CollectionTask.Undo(), undoTaskListener(isReview));
+        TaskManager.launchCollectionTask(new CollectionTask.Undo(showDbCorruptDialogListener()), undoTaskListener(isReview));
     }
 
 
@@ -1645,7 +1645,7 @@ public class DeckPicker extends NavigationDrawerActivity implements
     }
     @Override
     public void mediaCheck() {
-        TaskManager.launchCollectionTask(new CollectionTask.CheckMedia(), mediaCheckListener());
+        TaskManager.launchCollectionTask(new CollectionTask.CheckMedia(showDbCorruptDialogListener()), mediaCheckListener());
     }
 
     private MediaDeleteListener mediaDeleteListener() {
@@ -2141,9 +2141,6 @@ public class DeckPicker extends NavigationDrawerActivity implements
             File colPath = new File(getCol().getPath());
             String newFileName = colPath.getName().replace(".anki2", timeStampSuffix + ".colpkg");
             exportPath = new File(exportDir, newFileName);
-        }
-        if (checkAndHandleDBCorrupt()) {
-            return;
         }
         TaskManager.launchCollectionTask(new CollectionTask.ExportApkg(exportPath.getPath(), did, includeSched, includeMedia), exportListener());
     }

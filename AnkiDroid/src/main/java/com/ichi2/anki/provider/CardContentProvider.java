@@ -31,9 +31,6 @@ import android.database.Cursor;
 import android.database.MatrixCursor;
 import android.database.sqlite.SQLiteQueryBuilder;
 import android.net.Uri;
-
-import androidx.annotation.NonNull;
-
 import android.text.TextUtils;
 import android.webkit.MimeTypeMap;
 
@@ -44,22 +41,22 @@ import com.ichi2.anki.FlashCardsContract;
 import com.ichi2.anki.FlashCardsContract.CardTemplate;
 import com.ichi2.anki.R;
 import com.ichi2.anki.exception.ConfirmModSchemaException;
+import com.ichi2.anki.exception.DatabaseCorruptException;
 import com.ichi2.anki.exception.FilteredAncestor;
 import com.ichi2.compat.CompatHelper;
-import com.ichi2.libanki.Consts;
-import com.ichi2.libanki.Decks;
-import com.ichi2.libanki.Model;
-import com.ichi2.libanki.Media;
-import com.ichi2.libanki.exception.EmptyMediaException;
-import com.ichi2.libanki.sched.AbstractSched;
 import com.ichi2.libanki.Card;
 import com.ichi2.libanki.Collection;
+import com.ichi2.libanki.Consts;
 import com.ichi2.libanki.DB;
+import com.ichi2.libanki.Deck;
+import com.ichi2.libanki.Decks;
+import com.ichi2.libanki.Media;
+import com.ichi2.libanki.Model;
 import com.ichi2.libanki.Models;
 import com.ichi2.libanki.Note;
 import com.ichi2.libanki.Utils;
-
-import com.ichi2.libanki.Deck;
+import com.ichi2.libanki.exception.EmptyMediaException;
+import com.ichi2.libanki.sched.AbstractSched;
 import com.ichi2.libanki.sched.DeckDueTreeNode;
 import com.ichi2.utils.FileUtil;
 import com.ichi2.utils.JSONArray;
@@ -76,6 +73,7 @@ import java.util.Locale;
 import java.util.Map;
 import java.util.Set;
 
+import androidx.annotation.NonNull;
 import androidx.sqlite.db.SupportSQLiteDatabase;
 import timber.log.Timber;
 
@@ -236,190 +234,194 @@ public class CardContentProvider extends ContentProvider {
         // Find out what data the user is requesting
         int match = sUriMatcher.match(uri);
 
-        switch (match) {
-            case NOTES_V2: {
-                /* Search for notes using direct SQL query */
-                String[] proj = sanitizeNoteProjection(projection);
-                String sql = SQLiteQueryBuilder.buildQueryString(false, "notes", proj, selection, null, null, order, null);
-                //noinspection RedundantCast
-                return col.getDb().query(sql, (Object[]) selectionArgs); // Needed for varargs of query
-            }
-            case NOTES: {
-                /* Search for notes using the libanki browser syntax */
-                String[] proj = sanitizeNoteProjection(projection);
-                String query = (selection != null) ? selection : "";
-                List<Long> noteIds = col.findNotes(query);
-                if ((noteIds != null) && (!noteIds.isEmpty())) {
-                    String sel = String.format("id in (%s)", TextUtils.join(",", noteIds));
-                    String sql = SQLiteQueryBuilder.buildQueryString(false, "notes", proj, sel, null, null, order, null);
-                    return col.getDb().getDatabase().query(sql);
-                } else {
-                    return null;
+        try {
+            switch (match) {
+                case NOTES_V2: {
+                    /* Search for notes using direct SQL query */
+                    String[] proj = sanitizeNoteProjection(projection);
+                    String sql = SQLiteQueryBuilder.buildQueryString(false, "notes", proj, selection, null, null, order, null);
+                    //noinspection RedundantCast
+                    return col.getDb().query(sql, (Object[]) selectionArgs); // Needed for varargs of query
                 }
-            }
-            case NOTES_ID: {
-                /* Direct access note with specific ID*/
-                String noteId = uri.getPathSegments().get(1);
-                String[] proj = sanitizeNoteProjection(projection);
-                String sql = SQLiteQueryBuilder.buildQueryString(false, "notes", proj, "id=?", null, null, order, null);
-                return col.getDb().query(sql, noteId);
-            }
-
-            case NOTES_ID_CARDS: {
-                Note currentNote = getNoteFromUri(uri, col);
-                String[] columns = ((projection != null) ? projection : FlashCardsContract.Card.DEFAULT_PROJECTION);
-                MatrixCursor rv = new MatrixCursor(columns, 1);
-                for (Card currentCard : currentNote.cards()) {
-                    addCardToCursor(currentCard, rv, col, columns);
-                }
-                return rv;
-            }
-            case NOTES_ID_CARDS_ORD: {
-                Card currentCard = getCardFromUri(uri, col);
-                String[] columns = ((projection != null) ? projection : FlashCardsContract.Card.DEFAULT_PROJECTION);
-                MatrixCursor rv = new MatrixCursor(columns, 1);
-                addCardToCursor(currentCard, rv, col, columns);
-                return rv;
-            }
-            case MODELS: {
-                Models models = col.getModels();
-                String[] columns = ((projection != null) ? projection : FlashCardsContract.Model.DEFAULT_PROJECTION);
-                MatrixCursor rv = new MatrixCursor(columns, 1);
-                for (Long modelId : models.getModels().keySet()) {
-                    addModelToCursor(modelId, models, rv, columns);
-                }
-                return rv;
-            }
-            case MODELS_ID: {
-                long modelId = getModelIdFromUri(uri, col);
-                String[] columns = ((projection != null) ? projection : FlashCardsContract.Model.DEFAULT_PROJECTION);
-                MatrixCursor rv = new MatrixCursor(columns, 1);
-                addModelToCursor(modelId, col.getModels(), rv, columns);
-                return rv;
-            }
-            case MODELS_ID_TEMPLATES: {
-                /* Direct access model templates */
-                Models models = col.getModels();
-                Model currentModel = models.get(getModelIdFromUri(uri, col));
-                String[] columns = ((projection != null) ? projection : CardTemplate.DEFAULT_PROJECTION);
-                MatrixCursor rv = new MatrixCursor(columns, 1);
-                try {
-                    JSONArray templates = currentModel.getJSONArray("tmpls");
-                    for (int idx = 0; idx < templates.length(); idx++) {
-                        JSONObject template = templates.getJSONObject(idx);
-                        addTemplateToCursor(template, currentModel, idx+1, models, rv, columns);
+                case NOTES: {
+                    /* Search for notes using the libanki browser syntax */
+                    String[] proj = sanitizeNoteProjection(projection);
+                    String query = (selection != null) ? selection : "";
+                    List<Long> noteIds = col.findNotes(query);
+                    if ((noteIds != null) && (!noteIds.isEmpty())) {
+                        String sel = String.format("id in (%s)", TextUtils.join(",", noteIds));
+                        String sql = SQLiteQueryBuilder.buildQueryString(false, "notes", proj, sel, null, null, order, null);
+                        return col.getDb().getDatabase().query(sql);
+                    } else {
+                        return null;
                     }
-                } catch (JSONException e) {
-                    throw new IllegalArgumentException("Model is malformed", e);
                 }
-                return rv;
-            }
-            case MODELS_ID_TEMPLATES_ID: {
-                /* Direct access model template with specific ID */
-                Models models = col.getModels();
-                int ord = Integer.parseInt(uri.getLastPathSegment());
-                Model currentModel = models.get(getModelIdFromUri(uri, col));
-                String[] columns = ((projection != null) ? projection : CardTemplate.DEFAULT_PROJECTION);
-                MatrixCursor rv = new MatrixCursor(columns, 1);
-                try {
-                    JSONObject template = getTemplateFromUri(uri, col);
-                    addTemplateToCursor(template, currentModel, ord+1, models, rv, columns);
-                } catch (JSONException e) {
-                    throw new IllegalArgumentException("Model is malformed", e);
+                case NOTES_ID: {
+                    /* Direct access note with specific ID*/
+                    String noteId = uri.getPathSegments().get(1);
+                    String[] proj = sanitizeNoteProjection(projection);
+                    String sql = SQLiteQueryBuilder.buildQueryString(false, "notes", proj, "id=?", null, null, order, null);
+                    return col.getDb().query(sql, noteId);
                 }
-                return rv;
-            }
 
-            case SCHEDULE: {
-                String[] columns = ((projection != null) ? projection : FlashCardsContract.ReviewInfo.DEFAULT_PROJECTION);
-                MatrixCursor rv = new MatrixCursor(columns, 1);
-                long selectedDeckBeforeQuery = col.getDecks().selected();
-                long deckIdOfTemporarilySelectedDeck = -1;
-                int limit = 1; //the number of scheduled cards to return
-                int selectionArgIndex = 0;
+                case NOTES_ID_CARDS: {
+                    Note currentNote = getNoteFromUri(uri, col);
+                    String[] columns = ((projection != null) ? projection : FlashCardsContract.Card.DEFAULT_PROJECTION);
+                    MatrixCursor rv = new MatrixCursor(columns, 1);
+                    for (Card currentCard : currentNote.cards()) {
+                        addCardToCursor(currentCard, rv, col, columns);
+                    }
+                    return rv;
+                }
+                case NOTES_ID_CARDS_ORD: {
+                    Card currentCard = getCardFromUri(uri, col);
+                    String[] columns = ((projection != null) ? projection : FlashCardsContract.Card.DEFAULT_PROJECTION);
+                    MatrixCursor rv = new MatrixCursor(columns, 1);
+                    addCardToCursor(currentCard, rv, col, columns);
+                    return rv;
+                }
+                case MODELS: {
+                    Models models = col.getModels();
+                    String[] columns = ((projection != null) ? projection : FlashCardsContract.Model.DEFAULT_PROJECTION);
+                    MatrixCursor rv = new MatrixCursor(columns, 1);
+                    for (Long modelId : models.getModels().keySet()) {
+                        addModelToCursor(modelId, models, rv, columns);
+                    }
+                    return rv;
+                }
+                case MODELS_ID: {
+                    long modelId = getModelIdFromUri(uri, col);
+                    String[] columns = ((projection != null) ? projection : FlashCardsContract.Model.DEFAULT_PROJECTION);
+                    MatrixCursor rv = new MatrixCursor(columns, 1);
+                    addModelToCursor(modelId, col.getModels(), rv, columns);
+                    return rv;
+                }
+                case MODELS_ID_TEMPLATES: {
+                    /* Direct access model templates */
+                    Models models = col.getModels();
+                    Model currentModel = models.get(getModelIdFromUri(uri, col));
+                    String[] columns = ((projection != null) ? projection : CardTemplate.DEFAULT_PROJECTION);
+                    MatrixCursor rv = new MatrixCursor(columns, 1);
+                    try {
+                        JSONArray templates = currentModel.getJSONArray("tmpls");
+                        for (int idx = 0; idx < templates.length(); idx++) {
+                            JSONObject template = templates.getJSONObject(idx);
+                            addTemplateToCursor(template, currentModel, idx+1, models, rv, columns);
+                        }
+                    } catch (JSONException e) {
+                        throw new IllegalArgumentException("Model is malformed", e);
+                    }
+                    return rv;
+                }
+                case MODELS_ID_TEMPLATES_ID: {
+                    /* Direct access model template with specific ID */
+                    Models models = col.getModels();
+                    int ord = Integer.parseInt(uri.getLastPathSegment());
+                    Model currentModel = models.get(getModelIdFromUri(uri, col));
+                    String[] columns = ((projection != null) ? projection : CardTemplate.DEFAULT_PROJECTION);
+                    MatrixCursor rv = new MatrixCursor(columns, 1);
+                    try {
+                        JSONObject template = getTemplateFromUri(uri, col);
+                        addTemplateToCursor(template, currentModel, ord+1, models, rv, columns);
+                    } catch (JSONException e) {
+                        throw new IllegalArgumentException("Model is malformed", e);
+                    }
+                    return rv;
+                }
 
-                //parsing the selection arguments
-                if (selection != null) {
-                    String[] args = selection.split(","); //split selection to get arguments like "limit=?"
-                    for (String arg : args) {
-                        String[] keyAndValue = arg.split("="); //split arguments into key ("limit") and value ("?")
-                        try {
-                            //check if value is a placeholder ("?"), if so replace with the next value of selectionArgs
-                            String value = "?".equals(keyAndValue[1].trim()) ? selectionArgs[selectionArgIndex++] :
-                                    keyAndValue[1];
-                            if ("limit".equals(keyAndValue[0].trim())) {
-                                limit = Integer.parseInt(value);
-                            } else if ("deckID".equals(keyAndValue[0].trim())) {
-                                deckIdOfTemporarilySelectedDeck = Long.parseLong(value);
-                                if(!selectDeckWithCheck(col, deckIdOfTemporarilySelectedDeck)){
-                                    return rv; //if the provided deckID is wrong, return empty cursor.
+                case SCHEDULE: {
+                    String[] columns = ((projection != null) ? projection : FlashCardsContract.ReviewInfo.DEFAULT_PROJECTION);
+                    MatrixCursor rv = new MatrixCursor(columns, 1);
+                    long selectedDeckBeforeQuery = col.getDecks().selected();
+                    long deckIdOfTemporarilySelectedDeck = -1;
+                    int limit = 1; //the number of scheduled cards to return
+                    int selectionArgIndex = 0;
+
+                    //parsing the selection arguments
+                    if (selection != null) {
+                        String[] args = selection.split(","); //split selection to get arguments like "limit=?"
+                        for (String arg : args) {
+                            String[] keyAndValue = arg.split("="); //split arguments into key ("limit") and value ("?")
+                            try {
+                                //check if value is a placeholder ("?"), if so replace with the next value of selectionArgs
+                                String value = "?".equals(keyAndValue[1].trim()) ? selectionArgs[selectionArgIndex++] :
+                                        keyAndValue[1];
+                                if ("limit".equals(keyAndValue[0].trim())) {
+                                    limit = Integer.parseInt(value);
+                                } else if ("deckID".equals(keyAndValue[0].trim())) {
+                                    deckIdOfTemporarilySelectedDeck = Long.parseLong(value);
+                                    if(!selectDeckWithCheck(col, deckIdOfTemporarilySelectedDeck)){
+                                        return rv; //if the provided deckID is wrong, return empty cursor.
+                                    }
                                 }
+                            } catch (NumberFormatException nfe) {
+                                Timber.w(nfe);
                             }
-                        } catch (NumberFormatException nfe) {
-                            Timber.w(nfe);
                         }
                     }
-                }
 
-                //retrieve the number of cards provided by the selection parameter "limit"
-                col.getSched().deferReset();
-                for (int k = 0; k< limit; k++){
-                    Card currentCard = col.getSched().getCard();
+                    //retrieve the number of cards provided by the selection parameter "limit"
+                    col.getSched().deferReset();
+                    for (int k = 0; k< limit; k++){
+                        Card currentCard = col.getSched().getCard();
 
-                    if (currentCard == null) {
-                        break;
+                        if (currentCard == null) {
+                            break;
+                        }
+                        int buttonCount = col.getSched().answerButtons(currentCard);
+                        JSONArray buttonTexts = new JSONArray();
+                        for (int i = 0; i < buttonCount; i++) {
+                            buttonTexts.put(col.getSched().nextIvlStr(mContext, currentCard, i + 1));
+                        }
+                        addReviewInfoToCursor(currentCard, buttonTexts, buttonCount, rv, col, columns);
                     }
-                    int buttonCount = col.getSched().answerButtons(currentCard);
-                    JSONArray buttonTexts = new JSONArray();
-                    for (int i = 0; i < buttonCount; i++) {
-                        buttonTexts.put(col.getSched().nextIvlStr(mContext, currentCard, i + 1));
-                    }
-                    addReviewInfoToCursor(currentCard, buttonTexts, buttonCount, rv, col, columns);
-                }
 
-                if (deckIdOfTemporarilySelectedDeck != -1) {//if the selected deck was changed
-                    //change the selected deck back to the one it was before the query
-                    col.getDecks().select(selectedDeckBeforeQuery);
-                }
-                return rv;
-            }
-            case DECKS: {
-                List<DeckDueTreeNode> allDecks = col.getSched().deckDueList();
-                String[] columns = ((projection != null) ? projection : FlashCardsContract.Deck.DEFAULT_PROJECTION);
-                MatrixCursor rv = new MatrixCursor(columns, allDecks.size());
-                for (DeckDueTreeNode deck : allDecks) {
-                    long id = deck.getDid();
-                    String name = deck.getFullDeckName();
-                    addDeckToCursor(id, name, getDeckCountsFromDueTreeNode(deck), rv, col, columns);
-                }
-                return rv;
-            }
-            case DECKS_ID: {
-                /* Direct access deck */
-                String[] columns = ((projection != null) ? projection : FlashCardsContract.Deck.DEFAULT_PROJECTION);
-                MatrixCursor rv = new MatrixCursor(columns, 1);
-                List<DeckDueTreeNode> allDecks = col.getSched().deckDueList();
-                long deckId = Long.parseLong(uri.getPathSegments().get(1));
-                for (DeckDueTreeNode deck : allDecks) {
-                    if(deck.getDid() == deckId){
-                        addDeckToCursor(deckId, deck.getFullDeckName(), getDeckCountsFromDueTreeNode(deck), rv, col, columns);
-                        return rv;
+                    if (deckIdOfTemporarilySelectedDeck != -1) {//if the selected deck was changed
+                        //change the selected deck back to the one it was before the query
+                        col.getDecks().select(selectedDeckBeforeQuery);
                     }
+                    return rv;
                 }
-                return rv;
+                case DECKS: {
+                    List<DeckDueTreeNode> allDecks = col.getSched().deckDueList();
+                    String[] columns = ((projection != null) ? projection : FlashCardsContract.Deck.DEFAULT_PROJECTION);
+                    MatrixCursor rv = new MatrixCursor(columns, allDecks.size());
+                    for (DeckDueTreeNode deck : allDecks) {
+                        long id = deck.getDid();
+                        String name = deck.getFullDeckName();
+                        addDeckToCursor(id, name, getDeckCountsFromDueTreeNode(deck), rv, col, columns);
+                    }
+                    return rv;
+                }
+                case DECKS_ID: {
+                    /* Direct access deck */
+                    String[] columns = ((projection != null) ? projection : FlashCardsContract.Deck.DEFAULT_PROJECTION);
+                    MatrixCursor rv = new MatrixCursor(columns, 1);
+                    List<DeckDueTreeNode> allDecks = col.getSched().deckDueList();
+                    long deckId = Long.parseLong(uri.getPathSegments().get(1));
+                    for (DeckDueTreeNode deck : allDecks) {
+                        if(deck.getDid() == deckId){
+                            addDeckToCursor(deckId, deck.getFullDeckName(), getDeckCountsFromDueTreeNode(deck), rv, col, columns);
+                            return rv;
+                        }
+                    }
+                    return rv;
+                }
+                case DECK_SELECTED: {
+                    long id = col.getDecks().selected();
+                    String name = col.getDecks().name(id);
+                    String[] columns = ((projection != null) ? projection : FlashCardsContract.Deck.DEFAULT_PROJECTION);
+                    MatrixCursor rv = new MatrixCursor(columns, 1);
+                    JSONArray counts = new JSONArray(Collections.singletonList(col.getSched().counts()));
+                    addDeckToCursor(id, name, counts,rv, col, columns);
+                    return rv;
+                }
+                default:
+                    // Unknown URI type
+                    throw new IllegalArgumentException("uri " + uri + " is not supported");
             }
-            case DECK_SELECTED: {
-                long id = col.getDecks().selected();
-                String name = col.getDecks().name(id);
-                String[] columns = ((projection != null) ? projection : FlashCardsContract.Deck.DEFAULT_PROJECTION);
-                MatrixCursor rv = new MatrixCursor(columns, 1);
-                JSONArray counts = new JSONArray(Collections.singletonList(col.getSched().counts()));
-                addDeckToCursor(id, name, counts,rv, col, columns);
-                return rv;
-            }
-            default:
-                // Unknown URI type
-                throw new IllegalArgumentException("uri " + uri + " is not supported");
+        } catch (DatabaseCorruptException e) {
+            return null;
         }
     }
 
@@ -445,266 +447,270 @@ public class CardContentProvider extends ContentProvider {
         // Find out what data the user is requesting
         int match = sUriMatcher.match(uri);
         int updated = 0; // Number of updated entries (return value)
-        switch (match) {
-            case NOTES_V2:
-            case NOTES:
-                throw new IllegalArgumentException("Not possible to update notes directly (only through data URI)");
-            case NOTES_ID: {
-                /* Direct access note details
-                 */
-                Note currentNote = getNoteFromUri(uri, col);
-                // the key of the ContentValues contains the column name
-                // the value of the ContentValues contains the row value.
-                Set<Map.Entry<String, Object>> valueSet = values.valueSet();
-                for (Map.Entry<String, Object> entry : valueSet) {
-                    String key = entry.getKey();
-                    // when the client does not specify FLDS, then don't update the FLDS
-                    if (key.equals(FlashCardsContract.Note.FLDS)) {
-                        // Update FLDS
-                        Timber.d("CardContentProvider: flds update...");
-                        String newFldsEncoded = (String) entry.getValue();
-                        String[] flds = Utils.splitFields(newFldsEncoded);
-                        // Check that correct number of flds specified
-                        if (flds.length != currentNote.getFields().length) {
-                            throw new IllegalArgumentException("Incorrect flds argument : " + newFldsEncoded);
+        try {
+            switch (match) {
+                case NOTES_V2:
+                case NOTES:
+                    throw new IllegalArgumentException("Not possible to update notes directly (only through data URI)");
+                case NOTES_ID: {
+                    /* Direct access note details
+                     */
+                    Note currentNote = getNoteFromUri(uri, col);
+                    // the key of the ContentValues contains the column name
+                    // the value of the ContentValues contains the row value.
+                    Set<Map.Entry<String, Object>> valueSet = values.valueSet();
+                    for (Map.Entry<String, Object> entry : valueSet) {
+                        String key = entry.getKey();
+                        // when the client does not specify FLDS, then don't update the FLDS
+                        if (key.equals(FlashCardsContract.Note.FLDS)) {
+                            // Update FLDS
+                            Timber.d("CardContentProvider: flds update...");
+                            String newFldsEncoded = (String) entry.getValue();
+                            String[] flds = Utils.splitFields(newFldsEncoded);
+                            // Check that correct number of flds specified
+                            if (flds.length != currentNote.getFields().length) {
+                                throw new IllegalArgumentException("Incorrect flds argument : " + newFldsEncoded);
+                            }
+                            // Update the note
+                            for (int idx=0; idx < flds.length; idx++) {
+                                currentNote.setField(idx, flds[idx]);
+                            }
+                            updated++;
+                        } else if (key.equals(FlashCardsContract.Note.TAGS)) {
+                            // Update tags
+                            Timber.d("CardContentProvider: tags update...");
+                            Object tags = entry.getValue();
+                            if (tags != null) {
+                                currentNote.setTagsFromStr(String.valueOf(tags));
+                            }
+                            updated++;
+                        } else {
+                            // Unsupported column
+                            throw new IllegalArgumentException("Unsupported column: " + key);
                         }
-                        // Update the note
-                        for (int idx=0; idx < flds.length; idx++) {
-                            currentNote.setField(idx, flds[idx]);
-                        }
-                        updated++;
-                    } else if (key.equals(FlashCardsContract.Note.TAGS)) {
-                        // Update tags
-                        Timber.d("CardContentProvider: tags update...");
-                        Object tags = entry.getValue();
-                        if (tags != null) {
-                            currentNote.setTagsFromStr(String.valueOf(tags));
-                        }
+                    }
+                    Timber.d("CardContentProvider: Saving note...");
+                    currentNote.flush();
+                    break;
+                }
+                case NOTES_ID_CARDS:
+                    // TODO: To be implemented
+                    throw new UnsupportedOperationException("Not yet implemented");
+//                break;
+                case NOTES_ID_CARDS_ORD: {
+                    Card currentCard = getCardFromUri(uri, col);
+                    boolean isDeckUpdate = false;
+                    long did = Decks.NOT_FOUND_DECK_ID;
+                    // the key of the ContentValues contains the column name
+                    // the value of the ContentValues contains the row value.
+                    Set<Map.Entry<String, Object>> valueSet = values.valueSet();
+                    for (Map.Entry<String, Object> entry : valueSet) {
+                        // Only updates on deck id is supported
+                        String key = entry.getKey();
+                        isDeckUpdate = key.equals(FlashCardsContract.Card.DECK_ID);
+                        did = values.getAsLong(key);
+                    }
+                    if (col.getDecks().isDyn(did)) {
+                        throw new IllegalArgumentException("Cards cannot be moved to a filtered deck");
+                    }
+                    /* now update the card
+                     */
+                    if ((isDeckUpdate) && (did >= 0)) {
+                        Timber.d("CardContentProvider: Moving card to other deck...");
+                        col.getDecks().flush();
+                        currentCard.setDid(did);
+                        currentCard.flush();
+                        col.save();
                         updated++;
                     } else {
-                        // Unsupported column
-                        throw new IllegalArgumentException("Unsupported column: " + key);
+                        // User tries an operation that is not (yet?) supported.
+                        throw new IllegalArgumentException("Currently only updates of decks are supported");
                     }
+                    break;
                 }
-                Timber.d("CardContentProvider: Saving note...");
-                currentNote.flush();
-                break;
-            }
-            case NOTES_ID_CARDS:
-                // TODO: To be implemented
-                throw new UnsupportedOperationException("Not yet implemented");
-//                break;
-            case NOTES_ID_CARDS_ORD: {
-                Card currentCard = getCardFromUri(uri, col);
-                boolean isDeckUpdate = false;
-                long did = Decks.NOT_FOUND_DECK_ID;
-                // the key of the ContentValues contains the column name
-                // the value of the ContentValues contains the row value.
-                Set<Map.Entry<String, Object>> valueSet = values.valueSet();
-                for (Map.Entry<String, Object> entry : valueSet) {
-                    // Only updates on deck id is supported
-                    String key = entry.getKey();
-                    isDeckUpdate = key.equals(FlashCardsContract.Card.DECK_ID);
-                    did = values.getAsLong(key);
-                }
-                if (col.getDecks().isDyn(did)) {
-                    throw new IllegalArgumentException("Cards cannot be moved to a filtered deck");
-                }
-                /* now update the card
-                 */
-                if ((isDeckUpdate) && (did >= 0)) {
-                    Timber.d("CardContentProvider: Moving card to other deck...");
-                    col.getDecks().flush();
-                    currentCard.setDid(did);
-                    currentCard.flush();
-                    col.save();
-                    updated++;
-                } else {
-                    // User tries an operation that is not (yet?) supported.
-                    throw new IllegalArgumentException("Currently only updates of decks are supported");
-                }
-                break;
-            }
-            case MODELS:
-                throw new IllegalArgumentException("Cannot update models in bulk");
-            case MODELS_ID:
-                // Get the input parameters
-                String newModelName = values.getAsString(FlashCardsContract.Model.NAME);
-                String newCss = values.getAsString(FlashCardsContract.Model.CSS);
-                String newDid = values.getAsString(FlashCardsContract.Model.DECK_ID);
-                String newFieldList = values.getAsString(FlashCardsContract.Model.FIELD_NAMES);
-                if (newFieldList != null) {
-                    // Changing the field names would require a full-sync
-                    throw new IllegalArgumentException("Field names cannot be changed via provider");
-                }
-                Integer newSortf = values.getAsInteger(FlashCardsContract.Model.SORT_FIELD_INDEX);
-                Integer newType = values.getAsInteger(FlashCardsContract.Model.TYPE);
-                String newLatexPost = values.getAsString(FlashCardsContract.Model.LATEX_POST);
-                String newLatexPre = values.getAsString(FlashCardsContract.Model.LATEX_PRE);
-                // Get the original note JSON
-                Model model = col.getModels().get(getModelIdFromUri(uri, col));
-                try {
-                    // Update model name and/or css
-                    if (newModelName != null) {
-                        model.put("name", newModelName);
-                        updated++;
+                case MODELS:
+                    throw new IllegalArgumentException("Cannot update models in bulk");
+                case MODELS_ID:
+                    // Get the input parameters
+                    String newModelName = values.getAsString(FlashCardsContract.Model.NAME);
+                    String newCss = values.getAsString(FlashCardsContract.Model.CSS);
+                    String newDid = values.getAsString(FlashCardsContract.Model.DECK_ID);
+                    String newFieldList = values.getAsString(FlashCardsContract.Model.FIELD_NAMES);
+                    if (newFieldList != null) {
+                        // Changing the field names would require a full-sync
+                        throw new IllegalArgumentException("Field names cannot be changed via provider");
                     }
-                    if (newCss != null) {
-                        model.put("css", newCss);
-                        updated++;
-                    }
-                    if (newDid != null) {
-                        if (col.getDecks().isDyn(Long.parseLong(newDid))) {
-                            throw new IllegalArgumentException("Cannot set a filtered deck as default deck for a model");
+                    Integer newSortf = values.getAsInteger(FlashCardsContract.Model.SORT_FIELD_INDEX);
+                    Integer newType = values.getAsInteger(FlashCardsContract.Model.TYPE);
+                    String newLatexPost = values.getAsString(FlashCardsContract.Model.LATEX_POST);
+                    String newLatexPre = values.getAsString(FlashCardsContract.Model.LATEX_PRE);
+                    // Get the original note JSON
+                    Model model = col.getModels().get(getModelIdFromUri(uri, col));
+                    try {
+                        // Update model name and/or css
+                        if (newModelName != null) {
+                            model.put("name", newModelName);
+                            updated++;
                         }
-                        model.put("did", newDid);
-                        updated++;
+                        if (newCss != null) {
+                            model.put("css", newCss);
+                            updated++;
+                        }
+                        if (newDid != null) {
+                            if (col.getDecks().isDyn(Long.parseLong(newDid))) {
+                                throw new IllegalArgumentException("Cannot set a filtered deck as default deck for a model");
+                            }
+                            model.put("did", newDid);
+                            updated++;
+                        }
+                        if (newSortf != null) {
+                            model.put("sortf", newSortf);
+                            updated++;
+                        }
+                        if (newType != null) {
+                            model.put("type", newType);
+                            updated++;
+                        }
+                        if (newLatexPost != null) {
+                            model.put("latexPost", newLatexPost);
+                            updated++;
+                        }
+                        if (newLatexPre != null) {
+                            model.put("latexPre", newLatexPre);
+                            updated++;
+                        }
+                        col.getModels().save(model);
+                        col.save();
+                    } catch (JSONException e) {
+                        Timber.e(e, "JSONException updating model");
                     }
-                    if (newSortf != null) {
-                        model.put("sortf", newSortf);
-                        updated++;
+                    break;
+                case MODELS_ID_TEMPLATES:
+                    throw new IllegalArgumentException("Cannot update templates in bulk");
+                case MODELS_ID_TEMPLATES_ID:
+                    Long mid = values.getAsLong(CardTemplate.MODEL_ID);
+                    Integer ord = values.getAsInteger(CardTemplate.ORD);
+                    String name = values.getAsString(CardTemplate.NAME);
+                    String qfmt = values.getAsString(CardTemplate.QUESTION_FORMAT);
+                    String afmt = values.getAsString(CardTemplate.ANSWER_FORMAT);
+                    String bqfmt = values.getAsString(CardTemplate.BROWSER_QUESTION_FORMAT);
+                    String bafmt = values.getAsString(CardTemplate.BROWSER_ANSWER_FORMAT);
+                    // Throw exception if read-only fields are included
+                    if (mid != null || ord != null) {
+                        throw new IllegalArgumentException("Updates to mid or ord are not allowed");
                     }
-                    if (newType != null) {
-                        model.put("type", newType);
-                        updated++;
+                    // Update the model
+                    try {
+                        int templateOrd = Integer.parseInt(uri.getLastPathSegment());
+                        Model existingModel = col.getModels().get(getModelIdFromUri(uri, col));
+                        JSONArray templates = existingModel.getJSONArray("tmpls");
+                        JSONObject template = templates.getJSONObject(templateOrd);
+                        if (name != null) {
+                            template.put("name", name);
+                            updated++;
+                        }
+                        if (qfmt != null) {
+                            template.put("qfmt", qfmt);
+                            updated++;
+                        }
+                        if (afmt != null) {
+                            template.put("afmt", afmt);
+                            updated++;
+                        }
+                        if (bqfmt != null) {
+                            template.put("bqfmt", bqfmt);
+                            updated++;
+                        }
+                        if (bafmt != null) {
+                            template.put("bafmt", bafmt);
+                            updated++;
+                        }
+                        // Save the model
+                        templates.put(templateOrd, template);
+                        existingModel.put("tmpls", templates);
+                        col.getModels().save(existingModel, true);
+                        col.save();
+                    } catch (JSONException e) {
+                        throw new IllegalArgumentException("Model is malformed", e);
                     }
-                    if (newLatexPost != null) {
-                        model.put("latexPost", newLatexPost);
-                        updated++;
-                    }
-                    if (newLatexPre != null) {
-                        model.put("latexPre", newLatexPre);
-                        updated++;
-                    }
-                    col.getModels().save(model);
-                    col.save();
-                } catch (JSONException e) {
-                    Timber.e(e, "JSONException updating model");
-                }
-                break;
-            case MODELS_ID_TEMPLATES:
-                throw new IllegalArgumentException("Cannot update templates in bulk");
-            case MODELS_ID_TEMPLATES_ID:
-                Long mid = values.getAsLong(CardTemplate.MODEL_ID);
-                Integer ord = values.getAsInteger(CardTemplate.ORD);
-                String name = values.getAsString(CardTemplate.NAME);
-                String qfmt = values.getAsString(CardTemplate.QUESTION_FORMAT);
-                String afmt = values.getAsString(CardTemplate.ANSWER_FORMAT);
-                String bqfmt = values.getAsString(CardTemplate.BROWSER_QUESTION_FORMAT);
-                String bafmt = values.getAsString(CardTemplate.BROWSER_ANSWER_FORMAT);
-                // Throw exception if read-only fields are included
-                if (mid != null || ord != null) {
-                    throw new IllegalArgumentException("Updates to mid or ord are not allowed");
-                }
-                // Update the model
-                try {
-                    int templateOrd = Integer.parseInt(uri.getLastPathSegment());
-                    Model existingModel = col.getModels().get(getModelIdFromUri(uri, col));
-                    JSONArray templates = existingModel.getJSONArray("tmpls");
-                    JSONObject template = templates.getJSONObject(templateOrd);
-                    if (name != null) {
-                        template.put("name", name);
-                        updated++;
-                    }
-                    if (qfmt != null) {
-                        template.put("qfmt", qfmt);
-                        updated++;
-                    }
-                    if (afmt != null) {
-                        template.put("afmt", afmt);
-                        updated++;
-                    }
-                    if (bqfmt != null) {
-                        template.put("bqfmt", bqfmt);
-                        updated++;
-                    }
-                    if (bafmt != null) {
-                        template.put("bafmt", bafmt);
-                        updated++;
-                    }
-                    // Save the model
-                    templates.put(templateOrd, template);
-                    existingModel.put("tmpls", templates);
-                    col.getModels().save(existingModel, true);
-                    col.save();
-                } catch (JSONException e) {
-                    throw new IllegalArgumentException("Model is malformed", e);
-                }
-                break;
-            case SCHEDULE: {
-                Set<Map.Entry<String, Object>> valueSet = values.valueSet();
-                int cardOrd = -1;
-                long noteID = -1;
-                int ease = -1;
-                long timeTaken = -1;
-                int bury = -1;
-                int suspend = -1;
-                for (Map.Entry<String, Object> entry : valueSet) {
-                    String key = entry.getKey();
+                    break;
+                case SCHEDULE: {
+                    Set<Map.Entry<String, Object>> valueSet = values.valueSet();
+                    int cardOrd = -1;
+                    long noteID = -1;
+                    int ease = -1;
+                    long timeTaken = -1;
+                    int bury = -1;
+                    int suspend = -1;
+                    for (Map.Entry<String, Object> entry : valueSet) {
+                        String key = entry.getKey();
 
-                    switch (key) {
-                        case FlashCardsContract.ReviewInfo.NOTE_ID:
-                            noteID = values.getAsLong(key);
-                            break;
-                        case FlashCardsContract.ReviewInfo.CARD_ORD:
-                            cardOrd = values.getAsInteger(key);
-                            break;
-                        case FlashCardsContract.ReviewInfo.EASE:
-                            ease = values.getAsInteger(key);
-                            break;
-                        case FlashCardsContract.ReviewInfo.TIME_TAKEN:
-                            timeTaken = values.getAsLong(key);
-                            break;
-                        case FlashCardsContract.ReviewInfo.BURY:
-                            bury = values.getAsInteger(key);
-                            break;
-                        case FlashCardsContract.ReviewInfo.SUSPEND:
-                            suspend = values.getAsInteger(key);
-                            break;
-                    }
-                }
-                if (cardOrd != -1 && noteID != -1) {
-                    Card cardToAnswer = getCard(noteID, cardOrd, col);
-                    if(cardToAnswer != null) {
-                        if( bury == 1 ) {
-                            // bury card
-                            buryOrSuspendCard(col, col.getSched(), cardToAnswer, true);
-                        } else if (suspend == 1) {
-                            // suspend card
-                            buryOrSuspendCard(col, col.getSched(), cardToAnswer, false);
-                        } else {
-                            answerCard(col, col.getSched(), cardToAnswer, ease, timeTaken);
-                        }
-                        updated++;
-                    }else{
-                        Timber.e("Requested card with noteId %d and cardOrd %d was not found. Either the provided " +
-                            "noteId/cardOrd were wrong or the card has been deleted in the meantime.", noteID, cardOrd);
-                    }
-                }
-                break;
-            }
-            case DECKS:
-                throw new IllegalArgumentException("Can't update decks in bulk");
-            case DECKS_ID:
-                // TODO: be sure to throw exception if change to the dyn value of a deck is requested
-                throw new UnsupportedOperationException("Not yet implemented");
-            case DECK_SELECTED: {
-                Set<Map.Entry<String, Object>> valueSet = values.valueSet();
-                for (Map.Entry<String, Object> entry : valueSet) {
-                    String key = entry.getKey();
-                    if(key.equals(FlashCardsContract.Deck.DECK_ID)) {
-                        long deckId = values.getAsLong(key);
-                        if(selectDeckWithCheck(col, deckId)){
-                            updated ++;
+                        switch (key) {
+                            case FlashCardsContract.ReviewInfo.NOTE_ID:
+                                noteID = values.getAsLong(key);
+                                break;
+                            case FlashCardsContract.ReviewInfo.CARD_ORD:
+                                cardOrd = values.getAsInteger(key);
+                                break;
+                            case FlashCardsContract.ReviewInfo.EASE:
+                                ease = values.getAsInteger(key);
+                                break;
+                            case FlashCardsContract.ReviewInfo.TIME_TAKEN:
+                                timeTaken = values.getAsLong(key);
+                                break;
+                            case FlashCardsContract.ReviewInfo.BURY:
+                                bury = values.getAsInteger(key);
+                                break;
+                            case FlashCardsContract.ReviewInfo.SUSPEND:
+                                suspend = values.getAsInteger(key);
+                                break;
                         }
                     }
+                    if (cardOrd != -1 && noteID != -1) {
+                        Card cardToAnswer = getCard(noteID, cardOrd, col);
+                        if(cardToAnswer != null) {
+                            if( bury == 1 ) {
+                                // bury card
+                                buryOrSuspendCard(col, col.getSched(), cardToAnswer, true);
+                            } else if (suspend == 1) {
+                                // suspend card
+                                buryOrSuspendCard(col, col.getSched(), cardToAnswer, false);
+                            } else {
+                                answerCard(col, col.getSched(), cardToAnswer, ease, timeTaken);
+                            }
+                            updated++;
+                        }else{
+                            Timber.e("Requested card with noteId %d and cardOrd %d was not found. Either the provided " +
+                                    "noteId/cardOrd were wrong or the card has been deleted in the meantime.", noteID, cardOrd);
+                        }
+                    }
+                    break;
                 }
-                col.save();
-                break;
+                case DECKS:
+                    throw new IllegalArgumentException("Can't update decks in bulk");
+                case DECKS_ID:
+                    // TODO: be sure to throw exception if change to the dyn value of a deck is requested
+                    throw new UnsupportedOperationException("Not yet implemented");
+                case DECK_SELECTED: {
+                    Set<Map.Entry<String, Object>> valueSet = values.valueSet();
+                    for (Map.Entry<String, Object> entry : valueSet) {
+                        String key = entry.getKey();
+                        if(key.equals(FlashCardsContract.Deck.DECK_ID)) {
+                            long deckId = values.getAsLong(key);
+                            if(selectDeckWithCheck(col, deckId)){
+                                updated ++;
+                            }
+                        }
+                    }
+                    col.save();
+                    break;
+                }
+                default:
+                    // Unknown URI type
+                    throw new IllegalArgumentException("uri " + uri + " is not supported");
             }
-            default:
-                // Unknown URI type
-                throw new IllegalArgumentException("uri " + uri + " is not supported");
+        } catch (DatabaseCorruptException e) {
+            return 0;
         }
         return updated;
     }
@@ -1204,7 +1210,7 @@ public class CardContentProvider extends ContentProvider {
         }
     }
 
-    private void addCardToCursor(Card currentCard, MatrixCursor rv, Collection col, String[] columns) {
+    private void addCardToCursor(Card currentCard, MatrixCursor rv, Collection col, String[] columns) throws DatabaseCorruptException {
         String cardName;
         try {
             cardName = currentCard.template().getString("name");
@@ -1250,7 +1256,7 @@ public class CardContentProvider extends ContentProvider {
         }
     }
 
-    private void addReviewInfoToCursor(Card currentCard, JSONArray nextReviewTimesJson, int buttonCount,MatrixCursor rv, Collection col, String[] columns) {
+    private void addReviewInfoToCursor(Card currentCard, JSONArray nextReviewTimesJson, int buttonCount,MatrixCursor rv, Collection col, String[] columns) throws DatabaseCorruptException {
         MatrixCursor.RowBuilder rb = rv.newRow();
         for (String column : columns) {
             switch (column) {
@@ -1275,7 +1281,7 @@ public class CardContentProvider extends ContentProvider {
         }
     }
 
-    private void answerCard(Collection col, AbstractSched sched, Card cardToAnswer, @Consts.BUTTON_TYPE int ease, long timeTaken) {
+    private void answerCard(Collection col, AbstractSched sched, Card cardToAnswer, @Consts.BUTTON_TYPE int ease, long timeTaken) throws DatabaseCorruptException {
         try {
             DB db = col.getDb();
             db.getDatabase().beginTransaction();
@@ -1399,13 +1405,13 @@ public class CardContentProvider extends ContentProvider {
         }
     }
 
-    private Card getCardFromUri(Uri uri, Collection col) {
+    private Card getCardFromUri(Uri uri, Collection col) throws DatabaseCorruptException {
         long noteId = Long.parseLong(uri.getPathSegments().get(1));
         int ord = Integer.parseInt(uri.getPathSegments().get(3));
         return getCard(noteId, ord, col);
     }
 
-    private Card getCard(long noteId, int ord, Collection col){
+    private Card getCard(long noteId, int ord, Collection col) throws DatabaseCorruptException {
         Note currentNote = col.getNote(noteId);
         Card currentCard = null;
         for(Card card : currentNote.cards()){
@@ -1419,7 +1425,7 @@ public class CardContentProvider extends ContentProvider {
         return currentCard;
     }
 
-    private Note getNoteFromUri(Uri uri, Collection col) {
+    private Note getNoteFromUri(Uri uri, Collection col) throws DatabaseCorruptException {
         long noteId = Long.parseLong(uri.getPathSegments().get(1));
         return col.getNote(noteId);
     }

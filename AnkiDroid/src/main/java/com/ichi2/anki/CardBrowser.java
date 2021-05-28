@@ -18,7 +18,6 @@
 
 package com.ichi2.anki;
 
-import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.content.BroadcastReceiver;
 import android.content.Context;
@@ -70,6 +69,7 @@ import com.ichi2.anki.dialogs.SimpleMessageDialog;
 import com.ichi2.anki.dialogs.tags.TagsDialog;
 import com.ichi2.anki.dialogs.tags.TagsDialogFactory;
 import com.ichi2.anki.dialogs.tags.TagsDialogListener;
+import com.ichi2.anki.exception.DatabaseCorruptException;
 import com.ichi2.anki.receiver.SdCardReceiver;
 import com.ichi2.anki.widgets.DeckDropDownAdapter;
 import com.ichi2.async.CollectionTask;
@@ -198,7 +198,7 @@ public class CardBrowser extends NavigationDrawerActivity implements
         }
         if (result.getResultCode() != RESULT_CANCELED) {
             Timber.i("CardBrowser:: CardBrowser: Saving card...");
-            TaskManager.launchCollectionTask(new CollectionTask.UpdateNote(sCardBrowserCard, false, false),
+            TaskManager.launchCollectionTask(new CollectionTask.UpdateNote(sCardBrowserCard, false, false, showDbCorruptDialogListener()),
                     updateCardHandler());
         }
         Intent data = result.getData();
@@ -597,16 +597,17 @@ public class CardBrowser extends NavigationDrawerActivity implements
         }
         setContentView(R.layout.card_browser);
         initNavigationDrawer(findViewById(android.R.id.content));
-        if (checkAndHandleDBCorrupt()) {
-            return;
+        try {
+            startLoadingCollection();
+        } catch (DatabaseCorruptException e) {
+            showDbCorruptDialog();
         }
-        startLoadingCollection();
     }
 
 
     // Finish initializing the activity after the collection has been correctly loaded
     @Override
-    protected void onCollectionLoaded(Collection col) {
+    protected void onCollectionLoaded(Collection col) throws DatabaseCorruptException {
         super.onCollectionLoaded(col);
         Timber.d("onCollectionLoaded()");
         registerExternalStorageListener();
@@ -848,7 +849,7 @@ public class CardBrowser extends NavigationDrawerActivity implements
             return;
         }
 
-        TaskManager.launchCollectionTask(new CollectionTask.MarkNoteMulti(getSelectedCardIds()),
+        TaskManager.launchCollectionTask(new CollectionTask.MarkNoteMulti(getSelectedCardIds(), showDbCorruptDialogListener()),
                 markCardHandler());
     }
 
@@ -1080,7 +1081,7 @@ public class CardBrowser extends NavigationDrawerActivity implements
 
         if (!mCheckedCards.isEmpty()) {
             TaskManager.cancelAllTasks(CollectionTask.CheckCardSelection.class);
-            TaskManager.launchCollectionTask(new CollectionTask.CheckCardSelection(mCheckedCards),
+            TaskManager.launchCollectionTask(new CollectionTask.CheckCardSelection(mCheckedCards, showDbCorruptDialogListener()),
                     mCheckSelectedCardsHandler);
         }
 
@@ -1281,7 +1282,7 @@ public class CardBrowser extends NavigationDrawerActivity implements
         if (!mInMultiSelectMode) {
             return;
         }
-        TaskManager.launchCollectionTask(new CollectionTask.DeleteNoteMulti(getSelectedCardIds()),
+        TaskManager.launchCollectionTask(new CollectionTask.DeleteNoteMulti(getSelectedCardIds(), showDbCorruptDialogListener()),
                                             mDeleteNoteHandler);
 
         mCheckedCards.clear();
@@ -1293,7 +1294,7 @@ public class CardBrowser extends NavigationDrawerActivity implements
     @VisibleForTesting
     void onUndo() {
         if (getCol().undoAvailable()) {
-            TaskManager.launchCollectionTask(new CollectionTask.Undo(), mUndoHandler);
+            TaskManager.launchCollectionTask(new CollectionTask.Undo(showDbCorruptDialogListener()), mUndoHandler);
         }
     }
 
@@ -1516,7 +1517,7 @@ public class CardBrowser extends NavigationDrawerActivity implements
                             (mOrder != CARD_ORDER_NONE),
                             numCardsToRender,
                             mColumn1Index,
-                            mColumn2Index),
+                            mColumn2Index, showDbCorruptDialogListener()),
                     mSearchCardsHandler
             );
         }
@@ -1550,7 +1551,7 @@ public class CardBrowser extends NavigationDrawerActivity implements
     }
 
     // convenience method for updateCardsInList(...)
-    private void updateCardInList(Card card) {
+    private void updateCardInList(Card card) throws DatabaseCorruptException {
         List<Card> cards = new ArrayList<>(1);
         cards.add(card);
         updateCardsInList(cards);
@@ -1664,7 +1665,7 @@ public class CardBrowser extends NavigationDrawerActivity implements
     /**
      * @param cards Cards that were changed
      */
-    private void updateCardsInList(List<Card> cards) {
+    private void updateCardsInList(List<Card> cards) throws DatabaseCorruptException {
         CardCollection<CardCache> cardList = getCards();
         Map<Long, Integer> idToPos = getPositionMap(cardList);
         for (Card c : cards) {
@@ -1691,7 +1692,11 @@ public class CardBrowser extends NavigationDrawerActivity implements
 
         @Override
         public void actualOnProgressUpdate(@NonNull CardBrowser browser, PairWithCard<String> value) {
-            browser.updateCardInList(value.getCard());
+            try {
+                browser.updateCardInList(value.getCard());
+            } catch (DatabaseCorruptException e) {
+                browser.showDbCorruptDialog();
+            }
         }
 
         @Override
@@ -1724,7 +1729,7 @@ public class CardBrowser extends NavigationDrawerActivity implements
             // snackbar to offer undo
             String deckName = browser.getCol().getDecks().name(browser.mNewDid);
             browser.mUndoSnackbar = UIUtils.showSnackbar(browser, String.format(browser.getString(R.string.changed_deck_message), deckName), SNACKBAR_DURATION,
-                                                         R.string.undo, v -> TaskManager.launchCollectionTask(new CollectionTask.Undo(), browser.mUndoHandler), browser.mCardsListView, null);
+                                                         R.string.undo, v -> TaskManager.launchCollectionTask(new CollectionTask.Undo(browser.showDbCorruptDialogListener()), browser.mUndoHandler), browser.mCardsListView, null);
         }
     }
 
@@ -1819,7 +1824,11 @@ public class CardBrowser extends NavigationDrawerActivity implements
 
         @Override
         protected void actualOnValidPostExecute(CardBrowser browser, PairWithBoolean<Card[]> cards) {
-            browser.updateCardsInList(Arrays.asList(cards.other));
+            try {
+                browser.updateCardsInList(Arrays.asList(cards.other));
+            } catch (DatabaseCorruptException e) {
+                browser.showDbCorruptDialog();
+            }
             browser.hideProgressBar();
             browser.invalidateOptionsMenu();    // maybe the availability of undo changed
         }
@@ -1846,7 +1855,11 @@ public class CardBrowser extends NavigationDrawerActivity implements
 
         @Override
         protected void actualOnValidPostExecute(CardBrowser browser, PairWithBoolean<Card[]> cards) {
-            browser.updateCardsInList(CardUtils.getAllCards(CardUtils.getNotes(Arrays.asList(cards.other))));
+            try {
+                browser.updateCardsInList(CardUtils.getAllCards(CardUtils.getNotes(Arrays.asList(cards.other))));
+            } catch (DatabaseCorruptException e) {
+                browser.showDbCorruptDialog();
+            }
             browser.hideProgressBar();
             browser.invalidateOptionsMenu();    // maybe the availability of undo changed
         }
@@ -1884,7 +1897,7 @@ public class CardBrowser extends NavigationDrawerActivity implements
             // snackbar to offer undo
             String deletedMessage = browser.getResources().getQuantityString(R.plurals.card_browser_cards_deleted, mCardsDeleted, mCardsDeleted);
             browser.mUndoSnackbar = UIUtils.showSnackbar(browser, deletedMessage, SNACKBAR_DURATION,
-                    R.string.undo, v -> TaskManager.launchCollectionTask(new CollectionTask.Undo(), browser.mUndoHandler),
+                    R.string.undo, v -> TaskManager.launchCollectionTask(new CollectionTask.Undo(browser.showDbCorruptDialogListener()), browser.mUndoHandler),
                     browser.mCardsListView, null);
             browser.searchCards();
         }
@@ -2236,7 +2249,7 @@ public class CardBrowser extends NavigationDrawerActivity implements
 
     @NonNull
     protected CollectionTask.RenderBrowserQA renderBrowserQAParams(int firstVisibleItem, int visibleItemCount, CardCollection<CardCache> cards) {
-        return new CollectionTask.RenderBrowserQA(cards, firstVisibleItem, visibleItemCount, mColumn1Index, mColumn2Index);
+        return new CollectionTask.RenderBrowserQA(cards, firstVisibleItem, visibleItemCount, mColumn1Index, mColumn2Index, showDbCorruptDialogListener());
     }
 
 
@@ -2276,12 +2289,17 @@ public class CardBrowser extends NavigationDrawerActivity implements
             } else {
                 v = convertView;
             }
-            bindView(position, v);
-            return v;
+            try {
+                bindView(position, v);
+                return v;
+            } catch (DatabaseCorruptException e) {
+                showDbCorruptDialog();
+                return null;
+            }
         }
 
 
-        private void bindView(final int position, final View v) {
+        private void bindView(final int position, final View v) throws DatabaseCorruptException {
             // Draw the content in the columns
             View[] columns = (View[]) v.getTag();
             final CardCache card = getCards().get(position);
@@ -2549,7 +2567,7 @@ public class CardBrowser extends NavigationDrawerActivity implements
          * Get the background color of items in the card list based on the Card
          * @return index into TypedArray specifying the background color
          */
-        private int getColor() {
+        private int getColor() throws DatabaseCorruptException {
             int flag = getCard().userFlag();
             switch (flag) {
                 case 1:
@@ -2573,7 +2591,7 @@ public class CardBrowser extends NavigationDrawerActivity implements
             }
         }
 
-        public String getColumnHeaderText(Column key) {
+        public String getColumnHeaderText(Column key) throws DatabaseCorruptException {
             switch (key) {
             case FLAGS:
                 return (Integer.valueOf(getCard().userFlag())).toString();
@@ -2631,7 +2649,7 @@ public class CardBrowser extends NavigationDrawerActivity implements
 
         /** pre compute the note and question/answer.  It can safely
             be called twice without doing extra work. */
-        public void load(boolean reload, int column1Index, int column2Index) {
+        public void load(boolean reload, int column1Index, int column2Index) throws DatabaseCorruptException {
             if (reload) {
                 reload();
             }
@@ -2657,7 +2675,7 @@ public class CardBrowser extends NavigationDrawerActivity implements
            uses non-browser format. If answer starts by question, remove
            question.
         */
-        public void updateSearchItemQA() {
+        public void updateSearchItemQA() throws DatabaseCorruptException {
             if (mQa != null) {
                 return;
             }
@@ -2870,7 +2888,7 @@ public class CardBrowser extends NavigationDrawerActivity implements
     void executeChangeCollectionTask(List<Long> ids, long newDid) {
         mNewDid = newDid; //line required for unit tests, not necessary, but a noop in regular call.
         TaskManager.launchCollectionTask(
-                new CollectionTask.ChangeDeckMulti(ids, newDid),
+                new CollectionTask.ChangeDeckMulti(ids, newDid, showDbCorruptDialogListener()),
                 new ChangeDeckHandler(this));
     }
 

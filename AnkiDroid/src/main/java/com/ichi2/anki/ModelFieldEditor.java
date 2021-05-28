@@ -31,6 +31,7 @@ import com.ichi2.anki.dialogs.ConfirmationDialog;
 import com.ichi2.anki.dialogs.LocaleSelectionDialog;
 import com.ichi2.anki.dialogs.ModelEditorContextMenu;
 import com.ichi2.anki.exception.ConfirmModSchemaException;
+import com.ichi2.anki.exception.DatabaseCorruptException;
 import com.ichi2.async.CollectionTask;
 import com.ichi2.async.TaskListenerWithContext;
 import com.ichi2.async.TaskManager;
@@ -97,10 +98,11 @@ public class ModelFieldEditor extends AnkiActivity implements LocaleSelectionDia
             getSupportActionBar().setTitle(R.string.model_field_editor_title);
             getSupportActionBar().setSubtitle(getIntent().getStringExtra("title"));
         }
-        if (checkAndHandleDBCorrupt()) {
-            return;
+        try {
+            startLoadingCollection();
+        } catch (DatabaseCorruptException e) {
+            showDbCorruptDialog();
         }
-        startLoadingCollection();
     }
 
 
@@ -128,7 +130,7 @@ public class ModelFieldEditor extends AnkiActivity implements LocaleSelectionDia
 
 
     @Override
-    protected void onCollectionLoaded(Collection col) {
+    protected void onCollectionLoaded(Collection col) throws DatabaseCorruptException {
         super.onCollectionLoaded(col);
         this.mCol = col;
         setupLabels();

@@ -19,6 +19,7 @@ package com.ichi2.anki;
 import android.os.Bundle;
 import android.view.View;
 
+import com.ichi2.anki.exception.DatabaseCorruptException;
 import com.ichi2.libanki.Card;
 import com.ichi2.libanki.Collection;
 import com.ichi2.libanki.Model;
@@ -94,10 +95,11 @@ public class CardTemplatePreviewer extends AbstractFlashcardViewer {
         showBackIcon();
         // Ensure navigation drawer can't be opened. Various actions in the drawer cause crashes.
         disableDrawerSwipe();
-        if (checkAndHandleDBCorrupt()) {
-            return;
+        try {
+            startLoadingCollection();
+        } catch (DatabaseCorruptException e) {
+            showDbCorruptDialog();
         }
-        startLoadingCollection();
     }
 
     @Override
@@ -169,7 +171,7 @@ public class CardTemplatePreviewer extends AbstractFlashcardViewer {
 
 
     @Override
-    protected void displayCardQuestion() {
+    protected void displayCardQuestion() throws DatabaseCorruptException {
         super.displayCardQuestion();
         mShowingAnswer = false;
         updateButtonsState();
@@ -177,7 +179,7 @@ public class CardTemplatePreviewer extends AbstractFlashcardViewer {
 
 
     @Override
-    protected void displayCardAnswer() {
+    protected void displayCardAnswer() throws DatabaseCorruptException {
         super.displayCardAnswer();
         mShowingAnswer = true;
         updateButtonsState();
@@ -199,10 +201,14 @@ public class CardTemplatePreviewer extends AbstractFlashcardViewer {
     private final View.OnClickListener mToggleAnswerHandler = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
-            if (mShowingAnswer) {
-                displayCardQuestion();
-            } else {
-                displayCardAnswer();
+            try {
+                if (mShowingAnswer) {
+                    displayCardQuestion();
+                } else {
+                    displayCardAnswer();
+                }
+            } catch (DatabaseCorruptException e) {
+                showDbCorruptDialog();
             }
         }
     };
@@ -225,7 +231,7 @@ public class CardTemplatePreviewer extends AbstractFlashcardViewer {
 
 
     @Override
-    protected void onCollectionLoaded(Collection col) {
+    protected void onCollectionLoaded(Collection col) throws DatabaseCorruptException {
         super.onCollectionLoaded(col);
         if ((mCurrentCard == null) && (mCardList == null)) {
             Timber.d("onCollectionLoaded - incorrect state to load, closing");
@@ -316,13 +322,18 @@ public class CardTemplatePreviewer extends AbstractFlashcardViewer {
             if (mNote != null) {
                 return mNote;
             }
-            return super.note(reload);
+            try {
+                return super.note(reload);
+            } catch (DatabaseCorruptException e) {
+                showDbCorruptDialog();
+                return null;
+            }
         }
 
 
         /** if we have an unsaved note saved, use it instead of a collection lookup */
         @Override
-        public Note note() {
+        public Note note() throws DatabaseCorruptException {
             if (mNote != null) {
                 return mNote;
             }
@@ -332,7 +343,7 @@ public class CardTemplatePreviewer extends AbstractFlashcardViewer {
 
         /** if we have an unsaved note, never return empty */
         @Override
-        public boolean isEmpty() {
+        public boolean isEmpty() throws DatabaseCorruptException {
             if (mNote != null) {
                 return false;
             }
@@ -342,7 +353,7 @@ public class CardTemplatePreviewer extends AbstractFlashcardViewer {
 
         /** Override the method that fetches the model so we can render unsaved models */
         @Override
-        public Model model() {
+        public Model model() throws DatabaseCorruptException {
             if (mEditedModel != null) {
                 return mEditedModel;
             }

@@ -23,6 +23,7 @@ import android.database.Cursor;
 import android.text.TextUtils;
 
 import com.ichi2.anki.CollectionHelper;
+import com.ichi2.anki.exception.DatabaseCorruptException;
 import com.ichi2.async.CancelListener;
 import com.ichi2.libanki.template.TemplateError;
 import com.ichi2.utils.Assert;
@@ -251,42 +252,42 @@ public class Card implements Cloneable {
     }
 
 
-    public String q() {
+    public String q() throws DatabaseCorruptException {
         return q(false);
     }
 
 
-    public String q(boolean reload) {
+    public String q(boolean reload) throws DatabaseCorruptException {
         return q(reload, false);
     }
 
 
-    public String q(boolean reload, boolean browser) {
+    public String q(boolean reload, boolean browser) throws DatabaseCorruptException {
         return css() + _getQA(reload, browser).get("q");
     }
 
 
-    public String a() {
+    public String a() throws DatabaseCorruptException {
         return css() + _getQA().get("a");
     }
 
 
-    public String css() {
+    public String css() throws DatabaseCorruptException {
         return String.format(Locale.US, "<style>%s</style>", model().getString("css"));
     }
 
 
-    public HashMap<String, String> _getQA() {
+    public HashMap<String, String> _getQA() throws DatabaseCorruptException {
         return _getQA(false);
     }
 
 
-    public HashMap<String, String> _getQA(boolean reload) {
+    public HashMap<String, String> _getQA(boolean reload) throws DatabaseCorruptException {
         return _getQA(reload, false);
     }
 
 
-    public HashMap<String, String> _getQA(boolean reload, boolean browser) {
+    public HashMap<String, String> _getQA(boolean reload, boolean browser) throws DatabaseCorruptException {
         if (mQA == null || reload) {
             Note f = note(reload);
             Model m = model();
@@ -304,12 +305,12 @@ public class Card implements Cloneable {
     }
 
 
-    public Note note() {
+    public Note note() throws DatabaseCorruptException {
         return note(false);
     }
 
 
-    public Note note(boolean reload) {
+    public Note note(boolean reload) throws DatabaseCorruptException {
         if (mNote == null || reload) {
             mNote = mCol.getNote(mNid);
         }
@@ -318,12 +319,12 @@ public class Card implements Cloneable {
 
 
     // not in upstream
-    public Model model() {
+    public Model model() throws DatabaseCorruptException {
         return note().model();
     }
 
 
-    public JSONObject template() {
+    public JSONObject template() throws DatabaseCorruptException {
         Model m = model();
         if (m.isStd()) {
             return m.getJSONArray("tmpls").getJSONObject(mOrd);
@@ -357,7 +358,7 @@ public class Card implements Cloneable {
     }
 
 
-    public boolean isEmpty() {
+    public boolean isEmpty() throws DatabaseCorruptException {
         try {
             return Models.emptyCard(model(), mOrd, note().getFields());
         } catch (TemplateError er) {
@@ -374,7 +375,7 @@ public class Card implements Cloneable {
      */
 
 
-    public String qSimple() {
+    public String qSimple() throws DatabaseCorruptException {
         return _getQA(false).get("q");
     }
 
@@ -382,7 +383,7 @@ public class Card implements Cloneable {
     /*
      * Returns the answer with anything before the <hr id=answer> tag removed
      */
-    public String getPureAnswer() {
+    public String getPureAnswer() throws DatabaseCorruptException {
         String s = _getQA(false).get("a");
         String target = "<hr id=answer>";
         int pos = s.indexOf(target);
@@ -833,7 +834,7 @@ public class Card implements Cloneable {
             return mId == ((Cache) cache).mId;
         }
 
-        public void loadQA(boolean reload, boolean browser) {
+        public void loadQA(boolean reload, boolean browser) throws DatabaseCorruptException {
             getCard()._getQA(reload, browser);
         }
     }

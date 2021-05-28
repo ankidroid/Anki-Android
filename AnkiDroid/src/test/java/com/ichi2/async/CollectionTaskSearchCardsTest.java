@@ -44,7 +44,7 @@ public class CollectionTaskSearchCardsTest extends AbstractCollectionTaskTest {
         int cardsToRender = 1;
         int numberOfCards = 2;
 
-        CollectionTask.SearchCards task = new CollectionTask.SearchCards("", false, cardsToRender, 0, 0);
+        CollectionTask.SearchCards task = new CollectionTask.SearchCards("", false, cardsToRender, 0, 0, showDbCorruptDialogListener());
         TaskListener<List<CardBrowser.CardCache>, List<CardBrowser.CardCache>> listener = mock(TaskListener.class);
 
         waitForTask(task, listener);

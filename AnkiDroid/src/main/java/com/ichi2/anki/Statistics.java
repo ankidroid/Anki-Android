@@ -43,6 +43,7 @@ import com.google.android.material.tabs.TabLayout;
 import com.google.android.material.tabs.TabLayoutMediator;
 import com.ichi2.anim.ActivityTransitionAnimation;
 import com.ichi2.anki.dialogs.DeckSelectionDialog;
+import com.ichi2.anki.exception.DatabaseCorruptException;
 import com.ichi2.anki.runtimetools.TaskOperations;
 import com.ichi2.anki.stats.AnkiStatsTaskHandler;
 import com.ichi2.anki.stats.ChartView;
@@ -89,14 +90,15 @@ public class Statistics extends NavigationDrawerActivity implements
 
         setContentView(R.layout.activity_anki_stats);
         initNavigationDrawer(findViewById(android.R.id.content));
-        if (checkAndHandleDBCorrupt()) {
-            return;
+        try {
+            startLoadingCollection();
+        } catch (DatabaseCorruptException e) {
+            showDbCorruptDialog();
         }
-        startLoadingCollection();
     }
 
     @Override
-    protected void onCollectionLoaded(Collection col) {
+    protected void onCollectionLoaded(Collection col) throws DatabaseCorruptException {
         Timber.d("onCollectionLoaded()");
         super.onCollectionLoaded(col);
 

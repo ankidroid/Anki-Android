@@ -9,7 +9,6 @@ import android.content.ActivityNotFoundException;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.database.Cursor;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.media.AudioManager;
@@ -28,8 +27,10 @@ import com.ichi2.anki.analytics.UsageAnalytics;
 import com.ichi2.anki.dialogs.AsyncDialogFragment;
 import com.ichi2.anki.dialogs.DialogHandler;
 import com.ichi2.anki.dialogs.SimpleMessageDialog;
+import com.ichi2.anki.exception.DatabaseCorruptException;
 import com.ichi2.async.CollectionLoader;
 import com.ichi2.async.CollectionTask;
+import com.ichi2.async.TaskListenerWithContext;
 import com.ichi2.async.TaskManager;
 import com.ichi2.compat.customtabs.CustomTabActivityHelper;
 import com.ichi2.compat.customtabs.CustomTabsFallback;
@@ -40,6 +41,7 @@ import com.ichi2.utils.AdaptionUtil;
 import com.ichi2.utils.AndroidUiUtils;
 
 import androidx.activity.result.ActivityResultLauncher;
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.AppCompatDelegate;
@@ -152,7 +154,7 @@ public class AnkiActivity extends AppCompatActivity implements SimpleMessageDial
 
 
     // called when the CollectionLoader finishes... usually will be over-ridden
-    protected void onCollectionLoaded(Collection col) {
+    protected void onCollectionLoaded(Collection col) throws DatabaseCorruptException {
         hideProgressBar();
     }
 
@@ -352,7 +354,7 @@ public class AnkiActivity extends AppCompatActivity implements SimpleMessageDial
 
 
     // Method for loading the collection which is inherited by all AnkiActivitys
-    public void startLoadingCollection() {
+    public void startLoadingCollection() throws DatabaseCorruptException {
         Timber.d("AnkiActivity.startLoadingCollection()");
         if (colIsOpen()) {
             Timber.d("Synchronously calling onCollectionLoaded");
@@ -371,7 +373,7 @@ public class AnkiActivity extends AppCompatActivity implements SimpleMessageDial
                 deckPicker.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
                 startActivityWithAnimation(deckPicker, START);
             }
-        });
+        }, showDbCorruptDialogListener());
     }
 
     public void showProgressBar() {
@@ -543,29 +545,8 @@ public class AnkiActivity extends AppCompatActivity implements SimpleMessageDial
     }
 
 
-    public boolean checkAndHandleDBCorrupt() {
-        if (getCol() != null && isDatabaseCorrupt(getCol())) {
-            showDbCorruptDialog();
-            return true;
-        }
-        return false;
-    }
-
-
-    public boolean isDatabaseCorrupt(Collection col) {
-        try (Cursor cursor = col.getDb().query("SELECT mid FROM notes")) {
-            boolean moveToFirst = cursor.moveToFirst();
-            if (moveToFirst) {
-                do {
-                    long mMid = cursor.getLong(0);
-                    if (col.getModels().get(mMid) == null) {
-                        return true;
-                    }
-                } while (cursor.moveToNext());
-            }
-        }
-
-        return false;
+    protected ShowDbCorruptDialogListener showDbCorruptDialogListener() {
+        return new ShowDbCorruptDialogListener(this);
     }
 
 
@@ -711,5 +692,23 @@ public class AnkiActivity extends AppCompatActivity implements SimpleMessageDial
         }).start();
 
         return true;
+    }
+
+
+    public static class ShowDbCorruptDialogListener extends TaskListenerWithContext<AnkiActivity, Void, Void> {
+        public ShowDbCorruptDialogListener(AnkiActivity ankiActivity) {
+            super(ankiActivity);
+        }
+
+
+        @Override
+        public void actualOnPreExecute(@NonNull AnkiActivity ankiActivity) {
+        }
+
+
+        @Override
+        public void actualOnPostExecute(@NonNull AnkiActivity ankiActivity, Void unused) {
+            ankiActivity.showDbCorruptDialog();
+        }
     }
 }

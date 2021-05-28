@@ -20,8 +20,11 @@ import androidx.lifecycle.Lifecycle;
 import androidx.lifecycle.LifecycleOwner;
 import android.os.AsyncTask;
 
+import com.ichi2.anki.AnkiActivity;
+import com.ichi2.anki.AnkiActivity.ShowDbCorruptDialogListener;
 import com.ichi2.anki.AnkiDroidApp;
 import com.ichi2.anki.CollectionHelper;
+import com.ichi2.anki.exception.DatabaseCorruptException;
 import com.ichi2.libanki.Collection;
 
 import timber.log.Timber;
@@ -29,19 +32,21 @@ import timber.log.Timber;
 public final class CollectionLoader extends AsyncTask<Void, Void, Collection> {
     private final LifecycleOwner mLifecycleOwner;
     private final Callback mCallback;
+    private final ShowDbCorruptDialogListener mShowDbCorruptDialogListener;
 
     public interface Callback {
-        void execute(Collection col);
+        void execute(Collection col) throws DatabaseCorruptException;
     }
 
-    public static void load(LifecycleOwner lifecycleOwner, Callback callback) {
-        CollectionLoader loader = new CollectionLoader(lifecycleOwner, callback);
+    public static void load(LifecycleOwner lifecycleOwner, Callback callback, ShowDbCorruptDialogListener showDbCorruptDialogListener) {
+        CollectionLoader loader = new CollectionLoader(lifecycleOwner, callback, showDbCorruptDialogListener);
         loader.execute();
     }
 
-    private CollectionLoader(LifecycleOwner lifecycleOwner, Callback callback) {
+    private CollectionLoader(LifecycleOwner lifecycleOwner, Callback callback, ShowDbCorruptDialogListener showDbCorruptDialogListener) {
         mLifecycleOwner = lifecycleOwner;
         mCallback = callback;
+        mShowDbCorruptDialogListener = showDbCorruptDialogListener;
     }
 
     @Override
@@ -68,7 +73,11 @@ public final class CollectionLoader extends AsyncTask<Void, Void, Collection> {
     protected void onPostExecute(Collection col) {
         super.onPostExecute(col);
         if (mLifecycleOwner.getLifecycle().getCurrentState().isAtLeast(Lifecycle.State.CREATED)) {
-            mCallback.execute(col);
+            try {
+                mCallback.execute(col);
+            } catch (DatabaseCorruptException e) {
+                mShowDbCorruptDialogListener.onPostExecute(null);
+            }
         }
     }
 

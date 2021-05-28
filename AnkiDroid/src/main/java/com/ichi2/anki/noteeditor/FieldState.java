@@ -26,6 +26,7 @@ import android.view.View;
 import com.ichi2.anki.FieldEditLine;
 import com.ichi2.anki.NoteEditor;
 import com.ichi2.anki.R;
+import com.ichi2.anki.exception.DatabaseCorruptException;
 import com.ichi2.libanki.Model;
 import com.ichi2.libanki.Models;
 import com.ichi2.utils.JSONArray;
@@ -63,7 +64,7 @@ public class FieldState {
 
 
     @NonNull
-    public List<FieldEditLine> loadFieldEditLines(FieldChangeType type) {
+    public List<FieldEditLine> loadFieldEditLines(FieldChangeType type) throws DatabaseCorruptException {
         List<FieldEditLine> fieldEditLines;
         if (type.mType == Type.INIT && mSavedFieldData != null) {
             fieldEditLines = recreateFieldsFromState();

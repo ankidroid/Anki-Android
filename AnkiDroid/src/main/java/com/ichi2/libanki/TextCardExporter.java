@@ -12,6 +12,8 @@
  */
 package com.ichi2.libanki;
 
+import com.ichi2.anki.exception.DatabaseCorruptException;
+
 import java.io.BufferedWriter;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -44,7 +46,7 @@ public class TextCardExporter extends Exporter {
      * @param path path of the file
      * @throws IOException encountered an error while writing the csv file
      */
-    public void doExport(@NonNull String path) throws IOException {
+    public void doExport(@NonNull String path) throws IOException, DatabaseCorruptException {
         final Long[] ids = cardIds();
         Arrays.sort(ids);
 

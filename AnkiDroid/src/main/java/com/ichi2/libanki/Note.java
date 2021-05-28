@@ -21,6 +21,7 @@ import android.database.Cursor;
 
 import android.util.Pair;
 
+import com.ichi2.anki.exception.DatabaseCorruptException;
 import com.ichi2.utils.JSONObject;
 
 import java.util.AbstractSet;
@@ -57,7 +58,7 @@ public class Note implements Cloneable {
     private boolean mNewlyAdded;
 
     
-    public Note(@NonNull Collection col, @NonNull Long id) {
+    public Note(@NonNull Collection col, @NonNull Long id) throws DatabaseCorruptException {
         mCol = col;
         mId = id;
         load();
@@ -80,7 +81,7 @@ public class Note implements Cloneable {
     }
 
 
-    public void load() {
+    public void load() throws DatabaseCorruptException {
         Timber.d("load()");
         try (Cursor cursor = mCol.getDb()
                 .query("SELECT guid, mid, mod, usn, tags, flds, flags, data FROM notes WHERE id = ?", mId)) {
@@ -96,6 +97,9 @@ public class Note implements Cloneable {
             mFlags = cursor.getInt(6);
             mData = cursor.getString(7);
             mModel = mCol.getModels().get(mMid);
+            if (mModel == null) {
+                throw new DatabaseCorruptException();
+            }
             mFMap = Models.fieldMap(mModel);
             mScm = mCol.getScm();
         }

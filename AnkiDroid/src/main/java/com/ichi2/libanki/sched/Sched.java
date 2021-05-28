@@ -23,6 +23,7 @@ import android.database.Cursor;
 import android.database.SQLException;
 import android.text.TextUtils;
 
+import com.ichi2.anki.exception.DatabaseCorruptException;
 import com.ichi2.async.CancelListener;
 import com.ichi2.libanki.Card;
 import com.ichi2.libanki.Collection;
@@ -84,7 +85,7 @@ public class Sched extends SchedV2 {
     }
 
     @Override
-    public void answerCard(@NonNull Card card, @Consts.BUTTON_TYPE int ease) {
+    public void answerCard(@NonNull Card card, @Consts.BUTTON_TYPE int ease) throws DatabaseCorruptException {
         mCol.log();
         mCol.markReview(card);
         discardCurrentCard();
@@ -746,7 +747,7 @@ public class Sched extends SchedV2 {
      */
 
     @Override
-    protected void _answerRevCard(@NonNull Card card, @Consts.BUTTON_TYPE int ease) {
+    protected void _answerRevCard(@NonNull Card card, @Consts.BUTTON_TYPE int ease) throws DatabaseCorruptException {
         int delay = 0;
         if (ease == Consts.BUTTON_ONE) {
             delay = _rescheduleLapse(card);
@@ -758,7 +759,7 @@ public class Sched extends SchedV2 {
 
 
     @Override
-    protected int _rescheduleLapse(@NonNull Card card) {
+    protected int _rescheduleLapse(@NonNull Card card) throws DatabaseCorruptException {
         JSONObject conf = _lapseConf(card);
         card.setLastIvl(card.getIvl());
         if (_resched(card)) {
@@ -989,7 +990,7 @@ public class Sched extends SchedV2 {
 
     /** Leech handler. True if card was a leech. */
     @Override
-    protected boolean _checkLeech(@NonNull Card card, @NonNull JSONObject conf) {
+    protected boolean _checkLeech(@NonNull Card card, @NonNull JSONObject conf) throws DatabaseCorruptException {
         int lf = conf.getInt("leechFails");
         if (lf == 0) {
             return false;

@@ -1,5 +1,6 @@
 package com.ichi2.anki;
 
+import com.ichi2.anki.exception.DatabaseCorruptException;
 import com.ichi2.libanki.Card;
 import com.ichi2.libanki.Note;
 
@@ -17,7 +18,7 @@ public class CardUtils {
     /**
      * @return List of corresponding notes without duplicates, even if the input list has multiple cards of the same note.
      */
-    public static Set<Note> getNotes(Collection<Card> cards) {
+    public static Set<Note> getNotes(Collection<Card> cards) throws DatabaseCorruptException {
         Set<Note> notes = new HashSet<>(cards.size());
 
         for (Card card : cards) {

@@ -25,6 +25,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 
+import com.ichi2.anki.exception.DatabaseCorruptException;
 import com.ichi2.libanki.Collection;
 import com.ichi2.libanki.Utils;
 import com.ichi2.themes.Themes;
@@ -87,14 +88,15 @@ public class Previewer extends AbstractFlashcardViewer {
         showBackIcon();
         // Ensure navigation drawer can't be opened. Various actions in the drawer cause crashes.
         disableDrawerSwipe();
-        if (checkAndHandleDBCorrupt()) {
-            return;
+        try {
+            startLoadingCollection();
+        } catch (DatabaseCorruptException e) {
+            showDbCorruptDialog();
         }
-        startLoadingCollection();
     }
 
     @Override
-    protected void onCollectionLoaded(Collection col) {
+    protected void onCollectionLoaded(Collection col) throws DatabaseCorruptException {
         super.onCollectionLoaded(col);
         mCurrentCard = col.getCard(mCardList[mIndex]);
 
@@ -198,7 +200,7 @@ public class Previewer extends AbstractFlashcardViewer {
 
 
     @Override
-    protected void displayCardQuestion() {
+    protected void displayCardQuestion() throws DatabaseCorruptException {
         super.displayCardQuestion();
         mShowingAnswer = false;
         updateButtonsState();
@@ -207,7 +209,7 @@ public class Previewer extends AbstractFlashcardViewer {
 
     // Called via mFlipCardListener in parent class when answer button pressed
     @Override
-    protected void displayCardAnswer() {
+    protected void displayCardAnswer() throws DatabaseCorruptException {
         super.displayCardAnswer();
         mShowingAnswer = true;
         updateButtonsState();
@@ -233,7 +235,7 @@ public class Previewer extends AbstractFlashcardViewer {
 
 
     @Override
-    protected void performReload() {
+    protected void performReload() throws DatabaseCorruptException {
         mReloadRequired = true;
         List<Long> newCardList = getCol().filterToValidCards(mCardList);
 
@@ -266,17 +268,25 @@ public class Previewer extends AbstractFlashcardViewer {
             }
 
             mCurrentCard = getCol().getCard(mCardList[mIndex]);
-            displayCardQuestion();
+            try {
+                displayCardQuestion();
+            } catch (DatabaseCorruptException e) {
+                showDbCorruptDialog();
+            }
         }
     };
 
     private final View.OnClickListener mToggleAnswerHandler = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
-            if (mShowingAnswer) {
-                displayCardQuestion();
-            } else {
-                displayCardAnswer();
+            try {
+                if (mShowingAnswer) {
+                    displayCardQuestion();
+                } else {
+                    displayCardAnswer();
+                }
+            } catch (DatabaseCorruptException e) {
+                showDbCorruptDialog();
             }
         }
     };

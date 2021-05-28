@@ -7,6 +7,7 @@ import android.util.Pair;
 
 import com.ichi2.anki.R;
 import com.ichi2.anki.UIUtils;
+import com.ichi2.anki.exception.DatabaseCorruptException;
 import com.ichi2.async.CancelListener;
 import com.ichi2.libanki.Card;
 import com.ichi2.libanki.Consts;
@@ -59,7 +60,7 @@ public abstract class AbstractSched {
     public abstract void _updateCutoff();
 
     /** Ensure that the question on the potential next card can be accessed quickly.*/
-    public abstract void preloadNextCard();
+    public abstract void preloadNextCard() throws DatabaseCorruptException;
 
     /** Recompute the counts of the currently selected deck. */
     public abstract void resetCounts();
@@ -85,7 +86,7 @@ public abstract class AbstractSched {
      *
      * @param card The card answered
      * @param ease The button pressed by the user*/
-    public abstract void answerCard(@NonNull Card card, @Consts.BUTTON_TYPE int ease);
+    public abstract void answerCard(@NonNull Card card, @Consts.BUTTON_TYPE int ease) throws DatabaseCorruptException;
 
     /**
      * @return Number of new, rev and lrn card to review in selected deck. Sum of elements of counts.*/
@@ -454,7 +455,7 @@ public abstract class AbstractSched {
      * @param card The data of the card before the review was made
      * @param wasLeech Whether the card was a leech before the review was made (if false, remove the leech tag)
      * */
-    public abstract void undoReview(@NonNull Card card, boolean wasLeech);
+    public abstract void undoReview(@NonNull Card card, boolean wasLeech) throws DatabaseCorruptException;
 
 
     public interface LimitMethod {

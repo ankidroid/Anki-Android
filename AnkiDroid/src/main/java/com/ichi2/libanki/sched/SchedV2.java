@@ -32,6 +32,7 @@ import android.text.style.StyleSpan;
 import android.util.Pair;
 
 import com.ichi2.anki.R;
+import com.ichi2.anki.exception.DatabaseCorruptException;
 import com.ichi2.async.CancelListener;
 import com.ichi2.async.CollectionTask;
 import com.ichi2.async.TaskManager;
@@ -284,7 +285,7 @@ public class SchedV2 extends AbstractSched {
      * Bury siblings if required by the options
      * Overriden
      *  */
-    public void answerCard(@NonNull Card card, @Consts.BUTTON_TYPE int ease) {
+    public void answerCard(@NonNull Card card, @Consts.BUTTON_TYPE int ease) throws DatabaseCorruptException {
         mCol.log();
         discardCurrentCard();
         mCol.markReview(card);
@@ -299,7 +300,7 @@ public class SchedV2 extends AbstractSched {
     }
 
 
-    public void _answerCard(@NonNull Card card, @Consts.BUTTON_TYPE int ease) {
+    public void _answerCard(@NonNull Card card, @Consts.BUTTON_TYPE int ease) throws DatabaseCorruptException {
         if (_previewingCard(card)) {
             _answerCardPreview(card, ease);
             return;
@@ -759,7 +760,7 @@ public class SchedV2 extends AbstractSched {
 
     /** pre load the potential next card. It may loads many card because, depending on the time taken, the next card may
      * be a card in review or not. */
-    public void preloadNextCard() {
+    public void preloadNextCard() throws DatabaseCorruptException {
         _checkDay();
         if (!mHaveCounts) {
              resetCounts(false);
@@ -1660,7 +1661,7 @@ public class SchedV2 extends AbstractSched {
      */
 
     // Overridden: v1 does not deal with early
-    protected void _answerRevCard(@NonNull Card card, @Consts.BUTTON_TYPE int ease) {
+    protected void _answerRevCard(@NonNull Card card, @Consts.BUTTON_TYPE int ease) throws DatabaseCorruptException {
         int delay = 0;
         boolean early = card.isInDynamicDeck() && (card.getODue() > mToday);
         int type = early ? 3 : 1;
@@ -1674,7 +1675,7 @@ public class SchedV2 extends AbstractSched {
 
 
     // Overriden
-    protected int _rescheduleLapse(@NonNull Card card) {
+    protected int _rescheduleLapse(@NonNull Card card) throws DatabaseCorruptException {
         JSONObject conf = _lapseConf(card);
         card.setLapses(card.getLapses() + 1);
         card.setFactor(Math.max(1300, card.getFactor() - 200));
@@ -2059,7 +2060,7 @@ public class SchedV2 extends AbstractSched {
 
     /** Leech handler. True if card was a leech.
         Overridden: in V1, due and did are changed*/
-    protected boolean _checkLeech(@NonNull Card card, @NonNull JSONObject conf) {
+    protected boolean _checkLeech(@NonNull Card card, @NonNull JSONObject conf) throws DatabaseCorruptException {
         int lf = conf.getInt("leechFails");
         if (lf == 0) {
             return false;
@@ -3143,7 +3144,7 @@ public class SchedV2 extends AbstractSched {
     }
 
     @Override
-    public void undoReview(@NonNull Card oldCardData, boolean wasLeech) {
+    public void undoReview(@NonNull Card oldCardData, boolean wasLeech) throws DatabaseCorruptException {
         // remove leech tag if it didn't have it before
         if (!wasLeech && oldCardData.note().hasTag("leech")) {
             oldCardData.note().delTag("leech");
