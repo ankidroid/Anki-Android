@@ -153,12 +153,21 @@ public class TokenizerTest extends RobolectricTest {
         IResult expected = new IResult(new Tokenizer.Token(token,
                                                            field_name),
                                        remaining);
-        assertThat(next_token(template), is(expected));
-
+        assertThat(next_token(template, true),
+                is(expected));
+        assertThat(next_token(template, false),
+                is(expected));
+        IResult legacy_expected = expected.new_to_legacy();
+        String legacy_template = new_to_legacy(template);
+        assertThat(next_token(legacy_template, true),
+                is(legacy_expected));
     }
 
     private void test_next_token_is_null(@NonNull String template) {
-        assertThat(next_token(template), nullValue());
+        assertThat(next_token(template, false), nullValue());
+        assertThat(next_token(template, true), nullValue());
+        String legacy_template = new_to_legacy(template);
+        assertThat(next_token(legacy_template, true), nullValue());
     }
 
     @Test
