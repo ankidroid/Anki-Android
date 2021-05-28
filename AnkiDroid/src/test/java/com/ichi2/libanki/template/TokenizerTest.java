@@ -64,74 +64,37 @@ public class TokenizerTest extends RobolectricTest {
         test_classify_handle("    foo   ", REPLACEMENT, "foo");
     }
 
+    private void test_handlebar_token(@NonNull String template, @NonNull Tokenizer.TokenKind token, @NonNull String field_name, @NonNull String remaining) {
+        IResult expected = new IResult(
+                        new Tokenizer.Token(token, field_name),
+                        remaining);
+        assertThat(handlebar_token(template), is(expected));
+    }
+
+    private void test_handlebar_token_is_null(@NonNull String template) {
+        assertThat(handlebar_token(template), nullValue());
+    }
+
     @Test
     public void test_handlebar_token() {
-        assertThat(handlebar_token("{{#foo}} bar"),
-                is(new Tokenizer.IResult(
-                        new Tokenizer.Token(OPEN_CONDITIONAL,
-                                "foo"),
-                        " bar")));
-        assertThat(handlebar_token("{{/foo}} bar"),
-                is(new Tokenizer.IResult(
-                        new Tokenizer.Token(CLOSE_CONDITIONAL,
-                                "foo"),
-                        " bar")));
-        assertThat(handlebar_token("{{^foo}} bar"),
-                is(new Tokenizer.IResult(
-                        new Tokenizer.Token(OPEN_NEGATED,
-                                "foo"),
-                        " bar")));
-        assertThat(handlebar_token("{{!foo}} bar"),
-                is(new Tokenizer.IResult(
-                        new Tokenizer.Token(REPLACEMENT,
-                                "!foo"),
-                        " bar")));
-        assertThat(handlebar_token("{{{#foo}}} bar"),
-                is(new Tokenizer.IResult(
-                        new Tokenizer.Token(OPEN_CONDITIONAL,
-                                "foo"),
-                        "} bar")));
-        assertThat(handlebar_token("{{{  #foo}}} bar"),
-                is(new Tokenizer.IResult(
-                        new Tokenizer.Token(OPEN_CONDITIONAL,
-                                "foo"),
-                        "} bar")));
-        assertThat(handlebar_token("{{    #}} bar"),
-                is(new Tokenizer.IResult(
-                        new Tokenizer.Token(REPLACEMENT,
-                                "#"),
-                        " bar")));
-        assertThat(handlebar_token("{{    foo   }} bar"),
-                is(new Tokenizer.IResult(
-                        new Tokenizer.Token(REPLACEMENT,
-                                "foo"),
-                        " bar")));
-        assertThat(handlebar_token("{{filter:field}} bar"),
-                is(new Tokenizer.IResult(
-                        new Tokenizer.Token(REPLACEMENT,
-                                "filter:field"),
-                        " bar")));
+        test_handlebar_token("{{#foo}} bar", OPEN_CONDITIONAL,  "foo", " bar");
+        test_handlebar_token("{{/foo}} bar", CLOSE_CONDITIONAL, "foo", " bar");
+        test_handlebar_token("{{^foo}} bar", OPEN_NEGATED, "foo", " bar");
+        test_handlebar_token("{{!foo}} bar", REPLACEMENT, "!foo", " bar");
+        test_handlebar_token("{{{#foo}}} bar", OPEN_CONDITIONAL, "foo", "} bar");
+        test_handlebar_token("{{{  #foo}}} bar", OPEN_CONDITIONAL, "foo", "} bar");
+        test_handlebar_token("{{    #}} bar", REPLACEMENT, "#", " bar");
+        test_handlebar_token("{{    foo   }} bar", REPLACEMENT, "foo", " bar");
+        test_handlebar_token("{{filter:field}} bar", REPLACEMENT, "filter:field", " bar");
         // The empty field name without filter is not valid in Anki,
         // However, it's not the lexer job to deal with it, and so it should be lexed correctly.
-        assertThat(handlebar_token("{{}} bar"),
-                is(new Tokenizer.IResult(
-                        new Tokenizer.Token(REPLACEMENT,
-                                ""),
-                        " bar")));
+        test_handlebar_token("{{}} bar", REPLACEMENT, "", " bar");
         // Empty field name with filter is valid and has special meaning
-        assertThat(handlebar_token("{{filter:}} bar"),
-                is(new Tokenizer.IResult(
-                        new Tokenizer.Token(REPLACEMENT,
-                                "filter:"),
-                        " bar")));
-        assertThat(handlebar_token(""),
-                is(nullValue()));
-        assertThat(handlebar_token("{"),
-                is(nullValue()));
-        assertThat(handlebar_token("{nisens"),
-                is(nullValue()));
-        assertThat(handlebar_token("inesa{{aieb }}"),
-                is(nullValue()));
+        test_handlebar_token("{{filter:}} bar", REPLACEMENT, "filter:", " bar");
+        test_handlebar_token_is_null("");
+        test_handlebar_token_is_null("{");
+        test_handlebar_token_is_null("{nisens");
+        test_handlebar_token_is_null("inesa{{aieb }}");
     }
 
     @Test
@@ -141,28 +104,12 @@ public class TokenizerTest extends RobolectricTest {
                         new Tokenizer.Token(OPEN_CONDITIONAL,
                                 "foo bar"),
                         " baz")));
-        assertThat(handlebar_token("{{ / foo bar }} baz"),
-                is(new Tokenizer.IResult(
-                        new Tokenizer.Token(CLOSE_CONDITIONAL,
-                                "foo bar"),
-                        " baz")));
-        assertThat(handlebar_token("{{ ^ foo bar }} baz"),
-                is(new Tokenizer.IResult(
-                        new Tokenizer.Token(OPEN_NEGATED,
-                                "foo bar"),
-                        " baz")));
+        test_handlebar_token("{{ / foo bar }} baz", CLOSE_CONDITIONAL, "foo bar", " baz");
+        test_handlebar_token("{{ ^ foo bar }} baz", OPEN_NEGATED, "foo bar", " baz");
         // REPLACEMENT types will have leading and trailing spaces trimmed, but otherwise no changes
-        assertThat(handlebar_token("{{ ! foo}} bar"),
-                is(new Tokenizer.IResult(
-                        new Tokenizer.Token(REPLACEMENT,
-                                "! foo"),
-                        " bar")));
+        test_handlebar_token("{{ ! foo}} bar", REPLACEMENT, "! foo", " bar");
         // REPLACEMENT types will have leading and trailing spaces trimmed, but otherwise no changes
-        assertThat(handlebar_token("{{ ! foo with spaces before during and after }} bar"),
-                is(new Tokenizer.IResult(
-                        new Tokenizer.Token(REPLACEMENT,
-                                "! foo with spaces before during and after"),
-                        " bar")));
+        test_handlebar_token("{{ ! foo with spaces before during and after }} bar", REPLACEMENT, "! foo with spaces before during and after", " bar");
     }
 
     @Test
