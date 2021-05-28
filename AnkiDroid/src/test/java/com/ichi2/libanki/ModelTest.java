@@ -39,7 +39,7 @@ import static org.junit.Assert.fail;
 public class ModelTest extends RobolectricTest {
 
     @Test
-    public void test_frontSide_field() {
+    public void test_frontSide_field() throws DatabaseCorruptException {
         // #8951 - Anki Special-cases {{FrontSide}} on the front to return empty string
         Collection col = getCol();
         Model m = col.getModels().current();
@@ -55,7 +55,7 @@ public class ModelTest extends RobolectricTest {
     }
 
     @Test
-    public void test_field_named_frontSide() {
+    public void test_field_named_frontSide() throws DatabaseCorruptException {
         // #8951 - A field named "FrontSide" is ignored - this matches Anki 2.1.34 (8af8f565)
         Collection col = getCol();
         Model m = col.getModels().current();
