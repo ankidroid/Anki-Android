@@ -19,6 +19,7 @@ package com.ichi2.libanki.template;
 import com.ichi2.anki.R;
 import com.ichi2.anki.RobolectricTest;
 
+import org.hamcrest.Matcher;
 import org.hamcrest.Matchers;
 import org.junit.Ignore;
 import org.junit.Test;
@@ -28,6 +29,7 @@ import org.robolectric.annotation.Config;
 import java.util.HashMap;
 import java.util.Map;
 
+import androidx.annotation.NonNull;
 import androidx.test.ext.junit.runners.AndroidJUnit4;
 
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -111,47 +113,41 @@ public class TemplateTest extends RobolectricTest {
 
         HashMap<String, String> context = new HashMap<>();
         context.put("IllustrationExample", "ilex");
-        assertThat(render(templateWithSpaces, context), is("Illustration Example: ilex"));
+        test_render(templateWithSpaces, context, "Illustration Example: ilex");
     }
 
 
 
+    private void test_render(@NonNull String template, @NonNull Map<String, String> m, @NonNull String expected) {
+        assertThat(render(template, m), is(expected));
+    }
+
+    private void test_render_contains(@NonNull String template, @NonNull Map<String, String> m, @NonNull String contained) {
+        assertThat(render(template, m), containsString(contained));
+    }
+
     @Test
     @Config(qualifiers = "en")
-    public void render() {
-        Map m = new HashMap();
+    public void test_render() {
+        Map<String, String> m = new HashMap<>();
         m.put("Test", "Test");
         m.put("Foo", "Foo");
-        assertThat(render("", m),
-                is(""));
-        assertThat(render("Test", m),
-                is("Test"));
-        assertThat(render("{{Test}}", m),
-                is("Test"));
-        assertThat(render("{{Filter2:Filter1:Test}}", m),
-                is("Test"));
-        assertThat(render("{{type:Test}}", m),
-                is("[[type:Test]]"));
-        assertThat(render("{{Filter2:type:Test}}", m),
-                is("[[Filter2:type:Test]]"));
-        assertThat(render("Foo{{Test}}", m),
-                is("FooTest"));
-        assertThat(render("Foo{{!Test}}", m),
-                containsString("there is no field called '!Test'"));
-        assertThat(render("{{#Foo}}{{Test}}{{/Foo}}", m),
-                is("Test"));
-        assertThat(render("{{^Foo}}{{Test}}{{/Foo}}", m),
-                is(""));
+        test_render("", m, "");
+        test_render("Test", m, "Test");
+        test_render("{{Test}}", m, "Test");
+        test_render("{{Filter2:Filter1:Test}}", m, "Test");
+        test_render("{{type:Test}}", m, "[[type:Test]]");
+        test_render("{{Filter2:type:Test}}", m, "[[Filter2:type:Test]]");
+        test_render("Foo{{Test}}", m, "FooTest");
+        test_render_contains("Foo{{!Test}}", m, "there is no field called '!Test'");
+        test_render("{{#Foo}}{{Test}}{{/Foo}}", m, "Test");
+        test_render("{{^Foo}}{{Test}}{{/Foo}}", m, "");
         m.put("Foo", "");
-        assertThat(render("{{#Foo}}{{Test}}{{/Foo}}", m),
-                is(""));
-        assertThat(render("{{^Foo}}{{Test}}{{/Foo}}", m),
-                is("Test"));
+        test_render("{{#Foo}}{{Test}}{{/Foo}}", m, "");
+        test_render("{{^Foo}}{{Test}}{{/Foo}}", m, "Test");
         m.put("Foo", "   \t");
-        assertThat(render("{{#Foo}}{{Test}}{{/Foo}}", m),
-                is(""));
-        assertThat(render("{{^Foo}}{{Test}}{{/Foo}}", m),
-                is("Test"));
+        test_render("{{#Foo}}{{Test}}{{/Foo}}", m, "");
+        test_render("{{^Foo}}{{Test}}{{/Foo}}", m, "Test");
     }
 
     @Test
@@ -164,13 +160,13 @@ public class TemplateTest extends RobolectricTest {
         // This is especially relevant because filter applied to no field is valid
         m.put("Test", "Test");
         m.put("Foo", "Foo");
-        assertThat(render("{{}}", m), containsString("there is no field called ''"));
-        assertThat(render("{{  }}", m), containsString("there is no field called ''"));
-        assertThat(render("{{filterName:}}", m), is(""));
-        assertThat(render("{{filterName:    }}", m), is(""));
+        test_render_contains("{{}}", m, "there is no field called ''");
+        test_render_contains("{{  }}", m, "there is no field called ''");
+        test_render("{{filterName:}}", m, "");
+        test_render("{{filterName:    }}", m, "");
 
         m.put("", "Test");
-        assertThat(render("{{}}", m), is("Test"));
+        test_render("{{}}", m, "Test");
         m.clear();
     }
 }
