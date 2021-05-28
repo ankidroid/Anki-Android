@@ -303,7 +303,7 @@ dependencies {
     implementation 'com.jakewharton.timber:timber:4.7.1'
     implementation 'org.jsoup:jsoup:1.13.1'
     implementation "com.github.zafarkhaja:java-semver:0.9.0" // For AnkiDroid JS API Versioning
-    implementation 'com.github.yalantis:ucrop:2.2.6'
+    implementation 'com.github.yalantis:ucrop:2.2.7'
     implementation 'com.drakeet.drawer:drawer:1.0.3'
     implementation 'org.jetbrains.kotlin:kotlin-stdlib:1.5.10'
     api project(":api")
