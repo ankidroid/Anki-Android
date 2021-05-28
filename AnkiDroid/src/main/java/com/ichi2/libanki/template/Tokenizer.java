@@ -249,6 +249,16 @@ public class Tokenizer implements Iterator<Tokenizer.Token> {
 
 
     /**
+     * @param template a part of a template to lex
+     * @return The content of handlebar at start of template
+     */
+    @VisibleForTesting
+    protected static @Nullable IResult legacy_handlebar_token(@NonNull String template) {
+        return handlebar_token(template, "<%", "%>");
+    }
+
+
+    /**
      * @param template The remaining of template to lex
      * @return The next token, or null at end of string
      */
