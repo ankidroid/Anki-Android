@@ -19,6 +19,7 @@ import java.util.Set;
 import androidx.annotation.NonNull;
 import androidx.test.ext.junit.runners.AndroidJUnit4;
 
+import static com.ichi2.libanki.template.TokenizerTest.new_to_legacy_template;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.contains;
 import static org.hamcrest.Matchers.containsString;
@@ -29,6 +30,8 @@ import static org.junit.Assert.fail;
 public class ParserTest extends RobolectricTest {
     public void test_parsing(@NonNull String template, @NonNull ParsedNode node) {
         assertThat(ParsedNode.parse_inner(template), is(node));
+        String legacy_template = new_to_legacy_template(template);
+        assertThat(ParsedNode.parse_inner(legacy_template), is(node));
     }
 
     @Test

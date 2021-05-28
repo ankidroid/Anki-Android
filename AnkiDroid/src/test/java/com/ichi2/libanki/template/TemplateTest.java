@@ -32,6 +32,9 @@ import java.util.Map;
 import androidx.annotation.NonNull;
 import androidx.test.ext.junit.runners.AndroidJUnit4;
 
+import static com.ichi2.libanki.template.Tokenizer.ALT_HANDLEBAR_DIRECTIVE;
+import static com.ichi2.libanki.template.Tokenizer.new_to_legacy;
+import static com.ichi2.libanki.template.TokenizerTest.new_to_legacy_template;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.contains;
 import static org.hamcrest.Matchers.containsString;
@@ -120,10 +123,14 @@ public class TemplateTest extends RobolectricTest {
 
     private void test_render(@NonNull String template, @NonNull Map<String, String> m, @NonNull String expected) {
         assertThat(render(template, m), is(expected));
+        String legacy_template = new_to_legacy_template(template);
+        assertThat(render(legacy_template, m), is(expected));
     }
 
     private void test_render_contains(@NonNull String template, @NonNull Map<String, String> m, @NonNull String contained) {
         assertThat(render(template, m), containsString(contained));
+        String legacy_template = new_to_legacy_template(template);
+        assertThat(render(legacy_template, m), containsString(contained));
     }
 
     @Test
