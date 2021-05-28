@@ -532,6 +532,7 @@ public class DeckPicker extends NavigationDrawerActivity implements
 
         boolean dbIsCorrupt = getIntent().getBooleanExtra("corruptDB", false);
         if (dbIsCorrupt) {
+            getIntent().putExtra("corruptDB", false); // to prevent opening dialog multiple times on top of eachother
             showDbCorruptDialog();
         }
     }
@@ -973,7 +974,6 @@ public class DeckPicker extends NavigationDrawerActivity implements
     @Override
     public void onSaveInstanceState(@NonNull Bundle savedInstanceState) {
         super.onSaveInstanceState(savedInstanceState);
-        savedInstanceState.putBoolean("corruptDb", false);
         savedInstanceState.putLong("mContextMenuDid", mContextMenuDid);
         savedInstanceState.putBoolean("mClosedWelcomeMessage", mClosedWelcomeMessage);
         savedInstanceState.putBoolean("mIsFABOpen", mFloatingActionMenu.isFABOpen());
