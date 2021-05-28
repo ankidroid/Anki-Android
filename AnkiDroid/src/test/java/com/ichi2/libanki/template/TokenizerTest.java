@@ -15,6 +15,7 @@ import static com.ichi2.libanki.template.Tokenizer.TokenKind.REPLACEMENT;
 import static com.ichi2.libanki.template.Tokenizer.TokenKind.TEXT;
 import static com.ichi2.libanki.template.Tokenizer.IResult;
 import static com.ichi2.libanki.template.Tokenizer.classify_handle;
+import static com.ichi2.libanki.template.Tokenizer.handlebar_token;
 import static com.ichi2.libanki.template.Tokenizer.legacy_handlebar_token;
 import static com.ichi2.libanki.template.Tokenizer.new_handlebar_token;
 import static com.ichi2.libanki.template.Tokenizer.Token;
@@ -70,9 +71,13 @@ public class TokenizerTest extends RobolectricTest {
                         new Tokenizer.Token(token, field_name),
                         remaining);
         assertThat(new_handlebar_token(template), is(expected));
+        assertThat(handlebar_token(template, true), is(expected));
+        assertThat(handlebar_token(template, false), is(expected));
         String legacy_template = new_to_legacy(template);
         IResult legacy_expected = expected.new_to_legacy();
         assertThat(legacy_handlebar_token(legacy_template), is (legacy_expected));
+        assertThat(handlebar_token(legacy_template, true), is (legacy_expected));
+        assertThat(handlebar_token(legacy_template, false), nullValue());
     }
 
     private void test_handlebar_token_is_null(@NonNull String template) {
