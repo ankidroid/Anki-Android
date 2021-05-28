@@ -15,7 +15,7 @@ import static com.ichi2.libanki.template.Tokenizer.TokenKind.REPLACEMENT;
 import static com.ichi2.libanki.template.Tokenizer.TokenKind.TEXT;
 import static com.ichi2.libanki.template.Tokenizer.IResult;
 import static com.ichi2.libanki.template.Tokenizer.classify_handle;
-import static com.ichi2.libanki.template.Tokenizer.handlebar_token;
+import static com.ichi2.libanki.template.Tokenizer.new_handlebar_token;
 import static com.ichi2.libanki.template.Tokenizer.Token;
 import static com.ichi2.libanki.template.Tokenizer.next_token;
 import static com.ichi2.libanki.template.Tokenizer.text_token;
@@ -68,11 +68,11 @@ public class TokenizerTest extends RobolectricTest {
         IResult expected = new IResult(
                         new Tokenizer.Token(token, field_name),
                         remaining);
-        assertThat(handlebar_token(template), is(expected));
+        assertThat(new_handlebar_token(template), is(expected));
     }
 
     private void test_handlebar_token_is_null(@NonNull String template) {
-        assertThat(handlebar_token(template), nullValue());
+        assertThat(new_handlebar_token(template), nullValue());
     }
 
     @Test
