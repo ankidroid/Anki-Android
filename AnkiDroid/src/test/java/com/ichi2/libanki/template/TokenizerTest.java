@@ -5,6 +5,7 @@ import com.ichi2.anki.RobolectricTest;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
+import androidx.annotation.NonNull;
 import androidx.test.ext.junit.runners.AndroidJUnit4;
 
 import static com.ichi2.libanki.template.Tokenizer.TokenKind.CLOSE_CONDITIONAL;
@@ -27,18 +28,25 @@ import static org.junit.Assert.fail;
 @RunWith(AndroidJUnit4.class)
 public class TokenizerTest extends RobolectricTest {
 
+    private void test_text_token_is_null(@NonNull String template) {
+        assertThat(text_token(template), nullValue());
+    }
+
+    private void test_text_token(@NonNull String template, @NonNull IResult expected) {
+        assertThat(text_token(template), is(expected));
+    }
+
     @Test
     public void test_text_token() {
-        assertThat(text_token("{{neasiet}}"), is(nullValue()));
-        assertThat(text_token(""), is(nullValue()));
-        assertThat(text_token("foo{{bar}}plop"),
-                is(new Tokenizer.IResult(
+        test_text_token_is_null("{{neasiet}}");
+        test_text_token_is_null("");
+        test_text_token("foo{{bar}}plop", new Tokenizer.IResult(
                         new Tokenizer.Token(Tokenizer.TokenKind.TEXT, "foo"),
-                        "{{bar}}plop")));
-        assertThat(text_token("foo{bar}plop"),
-                is(new Tokenizer.IResult(
+                        "{{bar}}plop"));
+        test_text_token("foo{bar}plop",
+                new Tokenizer.IResult(
                         new Tokenizer.Token(Tokenizer.TokenKind.TEXT, "foo{bar}plop"),
-                        "")));
+                        ""));
     }
 
     @Test
