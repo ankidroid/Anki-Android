@@ -99,11 +99,7 @@ public class TokenizerTest extends RobolectricTest {
 
     @Test
     public void test_space_in_token() {
-        assertThat(next_token("{{ # foo bar }} baz"),
-                is(new IResult(
-                        new Tokenizer.Token(OPEN_CONDITIONAL,
-                                "foo bar"),
-                        " baz")));
+        test_next_token("{{ # foo bar }} baz", OPEN_CONDITIONAL, "foo bar", " baz");
         test_handlebar_token("{{ / foo bar }} baz", CLOSE_CONDITIONAL, "foo bar", " baz");
         test_handlebar_token("{{ ^ foo bar }} baz", OPEN_NEGATED, "foo bar", " baz");
         // REPLACEMENT types will have leading and trailing spaces trimmed, but otherwise no changes
@@ -112,58 +108,32 @@ public class TokenizerTest extends RobolectricTest {
         test_handlebar_token("{{ ! foo with spaces before during and after }} bar", REPLACEMENT, "! foo with spaces before during and after", " bar");
     }
 
+    private void test_next_token(@NonNull String template, @NonNull Tokenizer.TokenKind token, @NonNull String field_name, @NonNull String remaining) {
+        IResult expected = new IResult(new Tokenizer.Token(token,
+                                                           field_name),
+                                       remaining);
+        assertThat(next_token(template), is(expected));
+
+    }
+
+    private void test_next_token_is_null(@NonNull String template) {
+        assertThat(next_token(template), nullValue());
+    }
+
     @Test
     public void test_next_token() {
-        assertThat(next_token("{{#foo}} bar"),
-                is(new IResult(
-                        new Tokenizer.Token(OPEN_CONDITIONAL,
-                                "foo"),
-                        " bar")));
-        assertThat(next_token("{{/foo}} bar"),
-                is(new IResult(
-                        new Token(CLOSE_CONDITIONAL,
-                                "foo"),
-                        " bar")));
-        assertThat(next_token("{{^foo}} bar"),
-                is(new IResult(
-                        new Token(OPEN_NEGATED,
-                                "foo"),
-                        " bar")));
-        assertThat(next_token("{{!foo}} bar"),
-                is(new IResult(
-                        new Token(REPLACEMENT,
-                                "!foo"),
-                        " bar")));
-        assertThat(next_token("{{{#foo}}} bar"),
-                is(new IResult(
-                        new Token(OPEN_CONDITIONAL,
-                                "foo"),
-                        "} bar")));
-        assertThat(next_token("{{{  #foo}}} bar"),
-                is(new IResult(
-                        new Token(OPEN_CONDITIONAL,
-                                "foo"),
-                        "} bar")));
-        assertThat(next_token("{{    #}} bar"),
-                is(new IResult(
-                        new Token(REPLACEMENT,
-                                "#"),
-                        " bar")));
-        assertThat(next_token("{{    foo   }} bar"),
-                is(new IResult(
-                        new Token(REPLACEMENT,
-                                "foo"),
-                        " bar")));
+        test_next_token("{{#foo}} bar", OPEN_CONDITIONAL, "foo", " bar");
+        test_next_token("{{/foo}} bar", CLOSE_CONDITIONAL, "foo", " bar");
+        test_next_token("{{^foo}} bar", OPEN_NEGATED, "foo", " bar");
+        test_next_token("{{!foo}} bar", REPLACEMENT, "!foo", " bar");
+        test_next_token("{{{#foo}}} bar", OPEN_CONDITIONAL, "foo", "} bar");
+        test_next_token("{{{  #foo}}} bar", OPEN_CONDITIONAL, "foo", "} bar");
+        test_next_token("{{    #}} bar", REPLACEMENT, "#", " bar");
+        test_next_token("{{    foo   }} bar", REPLACEMENT, "foo", " bar");
 
-        assertThat(next_token(""), is(nullValue()));
-        assertThat(next_token("foo{{bar}}plop"),
-                is(new IResult(
-                        new Token(TEXT, "foo"),
-                        "{{bar}}plop")));
-        assertThat(next_token("foo{bar}plop"),
-                is(new IResult(
-                        new Token(TEXT, "foo{bar}plop"),
-                        "")));
+        test_next_token_is_null("");
+        test_next_token("foo{{bar}}plop", TEXT, "foo", "{{bar}}plop");
+        test_next_token("foo{bar}plop", TEXT, "foo{bar}plop","");
     }
 
     @Test
