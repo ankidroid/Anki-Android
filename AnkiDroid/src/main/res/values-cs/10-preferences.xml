@@ -174,7 +174,7 @@
     <string name="learn_cutoff" maxLength="41">Limit učení se napřed</string>
     <string name="time_limit" maxLength="41">Časové omezení</string>
     <string name="time_limit_summ">XXX min</string>
-    <string name="new_timezone" maxLength="41">New timezone handling</string>
+    <string name="new_timezone" maxLength="41">Nové zpracování časového pásma</string>
     <string name="day_offset_with_description" maxLength="41">Začátek příštího dne (0 je půlnoc, 23 je 11 večer)</string>
     <string name="day_offset_summ">XXX hodin po půlnoci</string>
     <string name="xlabel_dayoffset_seekbar" maxLength="41">Půlnoc</string>
