@@ -159,6 +159,24 @@ To run these manually, open a terminal (either in Android Studio, or in `%AnkiDr
 ./gradlew lintRelease
 ```
 
+### Ktlint
+
+AnkiDroid uses Ktlint for ensuring coding style and standard for Kotlin files. Every pull request runs the Ktlint check.
+
+To run it manually, open a terminal (either in Android Studio, or in `%AnkiDroidRoot%`) and execute:
+
+```
+./gradlew ktlintCheck
+```
+
+To format Kotlin files, run the following command in the terminal:
+
+```
+./gradlew ktlintFormat
+```
+
+Ensure that you run this command for formatting before sending a pull request.
+
 ### Troubleshooting step
 If tests do not behave as expected, you can replace `./gradlew` by `./gradlew clean` to clean the directory before running test.
 
