@@ -142,7 +142,7 @@ public class StepsPreference extends android.preference.EditTextPreference {
                     return null;
                 }
                 // Use whole numbers if we can (but still allow decimals)
-                int i =(int) d;
+                int i = (int) d;
                 if (i == d) {
                     stepsAr.put(i);
                 } else {
