@@ -217,16 +217,19 @@ public class Tokenizer implements Iterator<Tokenizer.Token> {
      */
     @VisibleForTesting
     protected static @Nullable IResult handlebar_token(@NonNull String template) {
-        if (template.length() < 2 || template.charAt(0) != '{' || template.charAt(1) != '{') {
+        return handlebar_token(template, "{{", "}}");
+    }
+    protected static @Nullable IResult handlebar_token(@NonNull String template, @NonNull String prefix, @NonNull String suffix) {
+        if (!template.startsWith(prefix)) {
             return null;
         }
-        int end = template.indexOf("}}");
+        int end = template.indexOf(suffix);
         if (end == -1) {
             return null;
         }
-        String content = template.substring(2, end);
+        String content = template.substring(prefix.length(), end);
         @NonNull Token handlebar = classify_handle(content);
-        return new IResult(handlebar, template.substring(end+2));
+        return new IResult(handlebar, template.substring(end + suffix.length()));
     }
 
 
