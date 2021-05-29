@@ -6,6 +6,11 @@ window.MathJax = {
     packages: {
       "[+]": ["noerrors", "mhchem"],
     },
+    // Use \color from version 2 of MathJax
+    autoload: {
+      color: [],            // Don't autoload the color extension
+      colorv2: ['color']    // Autoload colorv2 on the first use of \color
+    }
   },
   startup: {
     typeset: false,
