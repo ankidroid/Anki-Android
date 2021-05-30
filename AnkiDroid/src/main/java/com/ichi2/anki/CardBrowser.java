@@ -49,6 +49,7 @@ import android.widget.Spinner;
 import android.widget.TextView;
 
 import com.afollestad.materialdialogs.MaterialDialog;
+import com.drakeet.drawer.FullDraggableContainer;
 import com.google.android.material.snackbar.Snackbar;
 import com.ichi2.anki.dialogs.CardBrowserMySearchesDialog;
 import com.ichi2.anki.dialogs.CardBrowserOrderDialog;
@@ -105,6 +106,8 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.annotation.VisibleForTesting;
 import androidx.appcompat.widget.SearchView;
+import androidx.coordinatorlayout.widget.CoordinatorLayout;
+import androidx.drawerlayout.widget.ClosableDrawerLayout;
 import timber.log.Timber;
 
 import static com.ichi2.anim.ActivityTransitionAnimation.Direction.END;
@@ -610,10 +613,15 @@ public class CardBrowser extends NavigationDrawerActivity implements
 
         SharedPreferences preferences = AnkiDroidApp.getSharedPrefs(getBaseContext());
 
+        setContentView(R.layout.navigation_drawer_layout);
+        ClosableDrawerLayout closableDrawerLayout = findViewById(R.id.drawer_layout);
+        CoordinatorLayout coordinatorLayout = (CoordinatorLayout) LayoutInflater.from(this).inflate(R.layout.card_browser, closableDrawerLayout, false);
         if (preferences.getBoolean(FULL_SCREEN_NAVIGATION_DRAWER, false)) {
-            setContentView(R.layout.card_browser_with_fullscreen_drawer);
+            FullDraggableContainer fullDraggableContainer = new FullDraggableContainer(this);
+            fullDraggableContainer.addView(coordinatorLayout);
+            closableDrawerLayout.addView(fullDraggableContainer, 0);
         } else {
-            setContentView(R.layout.card_browser);
+            closableDrawerLayout.addView(coordinatorLayout, 0);
         }
 
         initNavigationDrawer(findViewById(android.R.id.content));

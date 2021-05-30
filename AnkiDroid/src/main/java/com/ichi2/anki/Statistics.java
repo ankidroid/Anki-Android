@@ -21,16 +21,6 @@ import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.AsyncTask;
 import android.os.Bundle;
-
-import androidx.annotation.CheckResult;
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentActivity;
-import androidx.recyclerview.widget.RecyclerView;
-import androidx.viewpager2.adapter.FragmentStateAdapter;
-import androidx.viewpager2.widget.ViewPager2;
-import androidx.appcompat.app.AppCompatActivity;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -41,6 +31,7 @@ import android.view.ViewTreeObserver;
 import android.webkit.WebView;
 import android.widget.ProgressBar;
 
+import com.drakeet.drawer.FullDraggableContainer;
 import com.google.android.material.tabs.TabLayout;
 import com.google.android.material.tabs.TabLayoutMediator;
 import com.ichi2.anim.ActivityTransitionAnimation;
@@ -56,6 +47,17 @@ import com.ichi2.ui.FixedTextView;
 
 import java.util.Locale;
 
+import androidx.annotation.CheckResult;
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.coordinatorlayout.widget.CoordinatorLayout;
+import androidx.drawerlayout.widget.ClosableDrawerLayout;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentActivity;
+import androidx.recyclerview.widget.RecyclerView;
+import androidx.viewpager2.adapter.FragmentStateAdapter;
+import androidx.viewpager2.widget.ViewPager2;
 import timber.log.Timber;
 
 
@@ -91,10 +93,15 @@ public class Statistics extends NavigationDrawerActivity implements
 
         SharedPreferences preferences = AnkiDroidApp.getSharedPrefs(getBaseContext());
 
+        setContentView(R.layout.navigation_drawer_layout);
+        ClosableDrawerLayout closableDrawerLayout = findViewById(R.id.drawer_layout);
+        CoordinatorLayout coordinatorLayout = (CoordinatorLayout) LayoutInflater.from(this).inflate(R.layout.activity_anki_stats, closableDrawerLayout, false);
         if (preferences.getBoolean(FULL_SCREEN_NAVIGATION_DRAWER, false)) {
-            setContentView(R.layout.activity_anki_stats_with_fullscreen_drawer);
+            FullDraggableContainer fullDraggableContainer = new FullDraggableContainer(this);
+            fullDraggableContainer.addView(coordinatorLayout);
+            closableDrawerLayout.addView(fullDraggableContainer, 0);
         } else {
-            setContentView(R.layout.activity_anki_stats);
+            closableDrawerLayout.addView(coordinatorLayout, 0);
         }
 
         initNavigationDrawer(findViewById(android.R.id.content));

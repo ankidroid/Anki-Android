@@ -19,14 +19,18 @@ package com.ichi2.anki;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 
+import com.drakeet.drawer.FullDraggableContainer;
 import com.ichi2.anki.StudyOptionsFragment.StudyOptionsListener;
 import com.ichi2.anki.dialogs.customstudy.CustomStudyDialog;
 import com.ichi2.anki.dialogs.customstudy.CustomStudyDialogFactory;
 import com.ichi2.widget.WidgetStatus;
 
+import androidx.coordinatorlayout.widget.CoordinatorLayout;
+import androidx.drawerlayout.widget.ClosableDrawerLayout;
 import timber.log.Timber;
 
 import static com.ichi2.anim.ActivityTransitionAnimation.Direction.END;
@@ -49,15 +53,16 @@ public class StudyOptionsActivity extends NavigationDrawerActivity implements St
 
         SharedPreferences preferences = AnkiDroidApp.getSharedPrefs(getBaseContext());
 
-        int layout;
-
+        View mainView = getLayoutInflater().inflate(R.layout.navigation_drawer_layout, null);
+        ClosableDrawerLayout closableDrawerLayout = findViewById(R.id.drawer_layout);
+        CoordinatorLayout coordinatorLayout = (CoordinatorLayout) LayoutInflater.from(this).inflate(R.layout.studyoptions, closableDrawerLayout, false);
         if (preferences.getBoolean(FULL_SCREEN_NAVIGATION_DRAWER, false)) {
-            layout = R.layout.studyoptions_with_fullscreen_drawer;
+            FullDraggableContainer fullDraggableContainer = new FullDraggableContainer(this);
+            fullDraggableContainer.addView(coordinatorLayout);
+            closableDrawerLayout.addView(fullDraggableContainer, 0);
         } else {
-            layout = R.layout.studyoptions;
+            closableDrawerLayout.addView(coordinatorLayout, 0);
         }
-
-        View mainView = getLayoutInflater().inflate(layout, null);
         setContentView(mainView);
         // create inherited navigation drawer layout here so that it can be used by parent class
         initNavigationDrawer(mainView);
