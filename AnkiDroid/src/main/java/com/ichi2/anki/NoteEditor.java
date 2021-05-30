@@ -1062,20 +1062,6 @@ public class NoteEditor extends AnkiActivity implements
 
 
     @Override
-    protected void onPause() {
-        dismissAllDialogFragments(); //remove the "field language" as it can't be reshown without a field reference
-        super.onPause();
-    }
-
-
-    @Override
-    protected void onResume() {
-        dismissAllDialogFragments(); // dismiss "tags" as it may have been attached after onPause is called
-        super.onResume();
-    }
-
-
-    @Override
     protected void onDestroy() {
         super.onDestroy();
         if (mUnmountReceiver != null) {
@@ -2313,12 +2299,6 @@ public class NoteEditor extends AnkiActivity implements
                 menu.add(Menu.NONE, mClozeMenuId, 0, R.string.multimedia_editor_popup_cloze);
             }
 
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-                // This should be after "Paste as Plain Text"
-                menu.add(Menu.NONE, mSetLanguageId, 99, R.string.note_editor_set_field_language);
-            }
-
-
             return initialSize != menu.size();
         }
 
@@ -2330,20 +2310,9 @@ public class NoteEditor extends AnkiActivity implements
                 convertSelectedTextToCloze(mTextBox, AddClozeType.INCREMENT_NUMBER);
                 mode.finish();
                 return true;
-            } else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N && itemId == mSetLanguageId) {
-                displaySelectInputLanguage();
-                mode.finish();
-                return true;
             } else {
                 return false;
             }
-        }
-
-
-        @RequiresApi(Build.VERSION_CODES.N)
-        private void displaySelectInputLanguage() {
-            DialogFragment dialogFragment = LocaleSelectionDialog.newInstance(this);
-            showDialogFragment(dialogFragment);
         }
 
 
