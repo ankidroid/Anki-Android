@@ -715,6 +715,10 @@ public class Preferences extends AppCompatPreferenceActivity implements Preferen
                     getCol().getConf().put("dueCounts", ((android.preference.CheckBoxPreference) pref).isChecked());
                     getCol().setMod();
                     break;
+                case "showLargeAnswerButtons":
+                    getCol().getConf().put("largeAnswerButtons", !((android.preference.CheckBoxPreference) pref).isChecked());
+                    getCol().setMod();
+                    break;
                 case "showEstimates":
                     getCol().getConf().put("estTimes", ((android.preference.CheckBoxPreference) pref).isChecked());
                     getCol().setMod();

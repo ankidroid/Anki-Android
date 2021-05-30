@@ -240,6 +240,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
     private boolean mDoubleScrolling;
     private boolean mScrollingButtons;
     private boolean mGesturesEnabled;
+    private boolean mLargeAnswerButtons;
     // Android WebView
     protected boolean mSpeakText;
     protected boolean mDisableClipboard = false;
@@ -1770,6 +1771,23 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
         mFlipCardLayout.setClickable(false);
         mEaseButtonsLayout.setVisibility(View.VISIBLE);
 
+        if(mLargeAnswerButtons) {
+            mEaseButtonsLayout.setOrientation(LinearLayout.VERTICAL);
+            ((ViewGroup)mEase1Layout.getParent()).removeView(mEase1Layout);
+            ((ViewGroup)mEase2Layout.getParent()).removeView(mEase2Layout);
+            ((ViewGroup)mEase3Layout.getParent()).removeView(mEase3Layout);
+            ((ViewGroup)mEase4Layout.getParent()).removeView(mEase4Layout);
+            LinearLayout row1 = new LinearLayout(getBaseContext());
+            row1.setOrientation(LinearLayout.HORIZONTAL);
+            row1.addView(mEase2Layout);
+            row1.addView(mEase4Layout);
+            LinearLayout row2 = new LinearLayout(getBaseContext());
+            row2.setOrientation(LinearLayout.HORIZONTAL);
+            row2.addView(mEase1Layout);
+            row2.addView(mEase3Layout);
+            mEaseButtonsLayout.addView(row1);
+            mEaseButtonsLayout.addView(row2);
+        }
         Runnable after = () -> mFlipCardLayout.setVisibility(View.GONE);
 
         // hide "Show Answer" button
@@ -1878,6 +1896,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
         mDoubleScrolling = preferences.getBoolean("double_scrolling", false);
         mPrefShowTopbar = preferences.getBoolean("showTopbar", true);
         mFocusTypeAnswer = preferences.getBoolean("autoFocusTypeInAnswer", false);
+        mLargeAnswerButtons = preferences.getBoolean("showLargeAnswerButtons", false);
 
         mGesturesEnabled = AnkiDroidApp.initiateGestures(preferences);
         mLinkOverridesTouchGesture = preferences.getBoolean("linkOverridesTouchGesture", false);

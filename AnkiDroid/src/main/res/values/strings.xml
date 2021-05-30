@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="ga_trackingId" translatable="false">UA-125800786-1</string>
+    <string name="show_large_answer_buttons">Show Large Answer Buttons</string>
+    <string name="show_answer_buttons_in_two_rows">Show answer buttons in 2 rows</string>
     <!-- If you go over limits, further hits are dropped, setting a sampling percentage can help -->
     <!-- Current limits: 10MM/month globally, 200K/user && 500/session, 1 ever 2s + 60 in a session -->
     <!-- https://developers.google.com/analytics/devguides/collection/android/v4/limits-quotas -->
