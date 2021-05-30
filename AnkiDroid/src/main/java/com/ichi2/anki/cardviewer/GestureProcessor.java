@@ -96,12 +96,12 @@ public class GestureProcessor {
 
     @ViewerCommand.ViewerCommandDef
     public int getDoubleTap() {
-        return mGestureDoubleTap;
+        return mapGestureToCommand(Gesture.DOUBLE_TAP);
     }
 
 
     public int onLongTap() {
-        return mGestureLongclick;
+        return mapGestureToCommand(Gesture.LONG_TAP);
     }
 
     @ViewerCommand.ViewerCommandDef
@@ -127,6 +127,8 @@ public class GestureProcessor {
             case TAP_BOTTOM: return mGestureTapBottom;
             case TAP_BOTTOM_LEFT: return mGestureTapBottomLeft;
             case TAP_BOTTOM_RIGHT: return mGestureTapBottomRight;
+            case DOUBLE_TAP: return mGestureDoubleTap;
+            case LONG_TAP: return mGestureLongclick;
             default: return COMMAND_NOTHING;
         }
     }
