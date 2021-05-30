@@ -39,6 +39,10 @@ public class GestureProcessor {
     private int mGestureTapBottomLeft;
     @ViewerCommand.ViewerCommandDef
     private int mGestureTapBottomRight;
+    @ViewerCommand.ViewerCommandDef
+    private int mGestureDoubleTap;
+    @ViewerCommand.ViewerCommandDef
+    private int mGestureLongclick;
 
     private boolean mUseCornerTouch;
 
@@ -57,6 +61,8 @@ public class GestureProcessor {
             mGestureTapBottomLeft = Integer.parseInt(preferences.getString("gestureTapBottomLeft", "0"));
             mGestureTapBottomRight = Integer.parseInt(preferences.getString("gestureTapBottomRight", "0"));
         }
+        mGestureDoubleTap = Integer.parseInt(preferences.getString("gestureDoubleTap", "7"));
+        mGestureLongclick = Integer.parseInt(preferences.getString("gestureLongclick", "11"));
     }
 
     @ViewerCommand.ViewerCommandDef
@@ -106,6 +112,17 @@ public class GestureProcessor {
                 return mGestureTapLeft;
             }
         }
+    }
+
+
+    @ViewerCommand.ViewerCommandDef
+    public int getDoubleTap() {
+        return mGestureDoubleTap;
+    }
+
+
+    public int onLongTap() {
+        return mGestureLongclick;
     }
 
 

@@ -348,11 +348,9 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
     private int mGestureSwipeDown;
     private int mGestureSwipeLeft;
     private int mGestureSwipeRight;
-    private int mGestureDoubleTap;
-    private int mGestureLongclick;
     private int mGestureVolumeUp;
     private int mGestureVolumeDown;
-    private GestureProcessor mGestureProcessor = new GestureProcessor();
+    private final GestureProcessor mGestureProcessor = new GestureProcessor();
 
     private String mCardContent;
     private String mBaseUrl;
@@ -413,7 +411,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
     private final Runnable mStartLongClickAction = new Runnable() {
         @Override
         public void run() {
-            executeCommand(mGestureLongclick);
+            executeCommand(mGestureProcessor.onLongTap());
         }
     };
 
@@ -1929,9 +1927,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
             mGestureSwipeDown = Integer.parseInt(preferences.getString("gestureSwipeDown", "0"));
             mGestureSwipeLeft = Integer.parseInt(preferences.getString("gestureSwipeLeft", "8"));
             mGestureSwipeRight = Integer.parseInt(preferences.getString("gestureSwipeRight", "17"));
-            mGestureDoubleTap = Integer.parseInt(preferences.getString("gestureDoubleTap", "7"));
             mGestureProcessor.init(preferences);
-            mGestureLongclick = Integer.parseInt(preferences.getString("gestureLongclick", "11"));
             mGestureVolumeUp = Integer.parseInt(preferences.getString("gestureVolumeUp", "0"));
             mGestureVolumeDown = Integer.parseInt(preferences.getString("gestureVolumeDown", "0"));
         }
@@ -3138,7 +3134,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
         @Override
         public boolean onDoubleTap(MotionEvent e) {
             if (mGesturesEnabled) {
-                executeCommand(mGestureDoubleTap);
+                executeCommand(mGestureProcessor.getDoubleTap());
             }
             return true;
         }
