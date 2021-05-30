@@ -18,18 +18,18 @@ package com.ichi2.anki.cardviewer;
 
 import android.content.SharedPreferences;
 
-import com.ichi2.anki.cardviewer.GestureTapProcessor.GestureSegment;
+import com.ichi2.anki.cardviewer.GestureProcessor.GestureSegment;
 
 import org.junit.Test;
 import org.mockito.ArgumentMatchers;
 import org.mockito.Mockito;
 
-import static com.ichi2.anki.cardviewer.GestureTapProcessor.GestureSegment.BOTTOM_CENTER;
-import static com.ichi2.anki.cardviewer.GestureTapProcessor.GestureSegment.MIDDLE_LEFT;
-import static com.ichi2.anki.cardviewer.GestureTapProcessor.GestureSegment.MIDDLE_RIGHT;
-import static com.ichi2.anki.cardviewer.GestureTapProcessor.GestureSegment.TOP_CENTER;
-import static com.ichi2.anki.cardviewer.GestureTapProcessor.GestureSegment.MIDDLE_CENTER;
-import static com.ichi2.anki.cardviewer.GestureTapProcessor.GestureSegment.fromTap;
+import static com.ichi2.anki.cardviewer.GestureProcessor.GestureSegment.BOTTOM_CENTER;
+import static com.ichi2.anki.cardviewer.GestureProcessor.GestureSegment.MIDDLE_LEFT;
+import static com.ichi2.anki.cardviewer.GestureProcessor.GestureSegment.MIDDLE_RIGHT;
+import static com.ichi2.anki.cardviewer.GestureProcessor.GestureSegment.TOP_CENTER;
+import static com.ichi2.anki.cardviewer.GestureProcessor.GestureSegment.MIDDLE_CENTER;
+import static com.ichi2.anki.cardviewer.GestureProcessor.GestureSegment.fromTap;
 import static com.ichi2.anki.cardviewer.ViewerCommand.COMMAND_NOTHING;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
@@ -37,9 +37,9 @@ import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
-public class GestureTapProcessorTest {
+public class GestureProcessorTest {
 
-    private final GestureTapProcessor mSut = new GestureTapProcessor();
+    private final GestureProcessor mSut = new GestureProcessor();
 
     @Test
     public void zeroWidthReturnsNothing() {

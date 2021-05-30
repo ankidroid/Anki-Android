@@ -20,7 +20,7 @@ import android.content.SharedPreferences;
 
 import static com.ichi2.anki.cardviewer.ViewerCommand.COMMAND_NOTHING;
 
-public class GestureTapProcessor {
+public class GestureProcessor {
     @ViewerCommand.ViewerCommandDef
     private int mGestureTapLeft;
     @ViewerCommand.ViewerCommandDef
