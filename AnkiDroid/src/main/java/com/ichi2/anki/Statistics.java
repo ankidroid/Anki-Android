@@ -17,6 +17,7 @@
 package com.ichi2.anki;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -88,7 +89,14 @@ public class Statistics extends NavigationDrawerActivity implements
         sIsSubtitle = true;
         super.onCreate(savedInstanceState);
 
-        setContentView(R.layout.activity_anki_stats);
+        SharedPreferences preferences = AnkiDroidApp.getSharedPrefs(getBaseContext());
+
+        if (preferences.getBoolean("gestureFullScreenNavigationDrawer", false)) {
+            setContentView(R.layout.activity_anki_stats_with_fullscreen_drawer);
+        } else {
+            setContentView(R.layout.activity_anki_stats);
+        }
+
         initNavigationDrawer(findViewById(android.R.id.content));
         startLoadingCollection();
     }

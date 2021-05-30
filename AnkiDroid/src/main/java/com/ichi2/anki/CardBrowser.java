@@ -18,7 +18,6 @@
 
 package com.ichi2.anki;
 
-import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.content.BroadcastReceiver;
 import android.content.Context;
@@ -595,7 +594,15 @@ public class CardBrowser extends NavigationDrawerActivity implements
             displayDeckPickerForPermissionsDialog();
             return;
         }
-        setContentView(R.layout.card_browser);
+
+        SharedPreferences preferences = AnkiDroidApp.getSharedPrefs(getBaseContext());
+
+        if (preferences.getBoolean("gestureFullScreenNavigationDrawer", false)) {
+            setContentView(R.layout.card_browser_with_fullscreen_drawer);
+        } else {
+            setContentView(R.layout.card_browser);
+        }
+
         initNavigationDrawer(findViewById(android.R.id.content));
         startLoadingCollection();
     }

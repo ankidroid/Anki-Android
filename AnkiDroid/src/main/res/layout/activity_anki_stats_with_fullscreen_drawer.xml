@@ -6,6 +6,9 @@
                                            android:layout_width="match_parent"
                                            android:layout_height="match_parent"
                                            android:fitsSystemWindows="true">
+	<com.drakeet.drawer.FullDraggableContainer
+		android:layout_width="match_parent"
+		android:layout_height="match_parent">
 		<androidx.coordinatorlayout.widget.CoordinatorLayout
 			android:id="@+id/root_layout"
 			android:layout_width="fill_parent"
@@ -32,5 +35,6 @@
 			<include layout="@layout/anki_progress"/>
 		</androidx.coordinatorlayout.widget.CoordinatorLayout>
 
+	</com.drakeet.drawer.FullDraggableContainer>
 	<include layout="@layout/navigation_drawer" />
 </androidx.drawerlayout.widget.ClosableDrawerLayout>

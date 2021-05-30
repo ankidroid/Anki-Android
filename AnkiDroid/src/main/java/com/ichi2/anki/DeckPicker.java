@@ -460,7 +460,15 @@ public class DeckPicker extends NavigationDrawerActivity implements
         // Then set theme and content view
         super.onCreate(savedInstanceState);
         handleStartup();
-        setContentView(R.layout.homescreen);
+
+        SharedPreferences preferences = AnkiDroidApp.getSharedPrefs(getBaseContext());
+
+        if (preferences.getBoolean("gestureFullScreenNavigationDrawer", false)) {
+            setContentView(R.layout.homescreen_with_fullscreen_drawer);
+        } else {
+            setContentView(R.layout.homescreen);
+        }
+
         View mainView = findViewById(android.R.id.content);
 
         // check, if tablet layout

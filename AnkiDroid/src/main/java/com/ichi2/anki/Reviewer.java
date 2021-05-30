@@ -253,12 +253,22 @@ public class Reviewer extends AbstractFlashcardViewer {
 
     @Override
     protected int getContentViewAttr(int fullscreenMode) {
+        SharedPreferences preferences = AnkiDroidApp.getSharedPrefs(getBaseContext());
         switch (fullscreenMode) {
             case 1:
+                if (preferences.getBoolean("gestureFullScreenNavigationDrawer", false)) {
+                    return R.layout.reviewer_fullscreen_with_fullscreen_drawer;
+                }
                 return R.layout.reviewer_fullscreen;
             case 2:
+                if (preferences.getBoolean("gestureFullScreenNavigationDrawer", false)) {
+                    return R.layout.reviewer_fullscreen_noanswers_with_fullscreen_drawer;
+                }
                 return R.layout.reviewer_fullscreen_noanswers;
             default:
+                if (preferences.getBoolean("gestureFullScreenNavigationDrawer", false)) {
+                    return R.layout.reviewer_with_fullscreen_drawer;
+                }
                 return R.layout.reviewer;
         }
     }

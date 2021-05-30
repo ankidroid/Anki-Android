@@ -38,7 +38,6 @@ import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
-import android.os.Message;
 import android.os.SystemClock;
 
 import androidx.annotation.CheckResult;
@@ -953,6 +952,12 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
     }
 
     protected int getContentViewAttr(int fullscreenMode) {
+        SharedPreferences preferences = AnkiDroidApp.getSharedPrefs(getBaseContext());
+
+        if (preferences.getBoolean("gestureFullScreenNavigationDrawer", false)) {
+            return R.layout.reviewer_with_fullscreen_drawer;
+        }
+
         return R.layout.reviewer;
     }
 

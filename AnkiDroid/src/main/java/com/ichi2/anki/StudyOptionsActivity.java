@@ -17,6 +17,7 @@
 package com.ichi2.anki;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
@@ -45,7 +46,18 @@ public class StudyOptionsActivity extends NavigationDrawerActivity implements St
         // The empty frame layout is a workaround for fragments not showing when they are added
         // to android.R.id.content when an action bar is used in Android 2.1 (and potentially
         // higher) with the appcompat package.
-        View mainView = getLayoutInflater().inflate(R.layout.studyoptions, null);
+
+        SharedPreferences preferences = AnkiDroidApp.getSharedPrefs(getBaseContext());
+
+        int layout;
+
+        if (preferences.getBoolean("gestureFullScreenNavigationDrawer", false)) {
+            layout = R.layout.studyoptions_with_fullscreen_drawer;
+        } else {
+            layout = R.layout.studyoptions;
+        }
+
+        View mainView = getLayoutInflater().inflate(layout, null);
         setContentView(mainView);
         // create inherited navigation drawer layout here so that it can be used by parent class
         initNavigationDrawer(mainView);
