@@ -15,6 +15,8 @@ No, AnkiDroid is not restricted in any way, see the [[installation guide|Install
 
 All versions are available as APK files, see the [[installation guide|Installation]]. Don't forget to [let us know](http://ankidroid.org/help.html) what bothers you, and we will try to fix it.
 
+Our current release series is 2.15.x, but you may install a "parallel" version of the previous stable release 2.14.6 if you are experiencing a problem and we are working on a fix for you. Wwe suggest parallel "A") side by side which you will find here: https://github.com/ankidroid/Anki-Android/releases/tag/v2.14.6
+
 ### Is there a version for Android Wear?
 Yes, there is an open source 3rd party app called [AnkiWear for AnkiDroid](https://github.com/wlky/AnkiDroid-Wear) that offers support for Android Wear.
 
