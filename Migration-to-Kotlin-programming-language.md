@@ -7,7 +7,8 @@ After this, Android Studio will handle the conversion of the Java code to Kotlin
 
 The extension of the file would change from `.java` to `.kt` while the filename would remain the same.
 
-After the conversion is complete, multiple changes might be required in the file. Look out for fields that are nullable. Since Kotlin is a null-safe language, function calls or operations on such fields would require a nullability check which can be added by using the `.?` operator. There would also be places which would require code of this sort: `someVariable?.let { it.performTask() }`.
+After the conversion is complete, multiple changes might be required in the file. Look out for fields that are nullable. Since Kotlin is a null-safe language, function calls or operations on such fields would require a nullability check which can be added by using the `.?` operator.
+There would also be places which would require code of this sort: `someVariable?.let { it.performTask() }`.
 
 Apart from this, look out for type casting issues and fix them.
 
