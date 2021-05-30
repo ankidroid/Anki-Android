@@ -38,7 +38,6 @@ import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
-import android.os.Message;
 import android.os.SystemClock;
 
 import androidx.annotation.CheckResult;
@@ -91,7 +90,7 @@ import com.afollestad.materialdialogs.MaterialDialog;
 import com.drakeet.drawer.FullDraggableContainer;
 import com.google.android.material.snackbar.Snackbar;
 import com.ichi2.anim.ViewAnimation;
-import com.ichi2.anki.cardviewer.GestureTapProcessor;
+import com.ichi2.anki.cardviewer.GestureProcessor;
 import com.ichi2.anki.cardviewer.MissingImageHandler;
 import com.ichi2.anki.dialogs.tags.TagsDialog;
 import com.ichi2.anki.dialogs.tags.TagsDialogFactory;
@@ -347,7 +346,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
     private int mGestureLongclick;
     private int mGestureVolumeUp;
     private int mGestureVolumeDown;
-    private GestureTapProcessor mGestureTapProcessor = new GestureTapProcessor();
+    private GestureProcessor mGestureProcessor = new GestureProcessor();
 
     private String mCardContent;
     private String mBaseUrl;
@@ -1887,7 +1886,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
             mGestureSwipeLeft = Integer.parseInt(preferences.getString("gestureSwipeLeft", "8"));
             mGestureSwipeRight = Integer.parseInt(preferences.getString("gestureSwipeRight", "17"));
             mGestureDoubleTap = Integer.parseInt(preferences.getString("gestureDoubleTap", "7"));
-            mGestureTapProcessor.init(preferences);
+            mGestureProcessor.init(preferences);
             mGestureLongclick = Integer.parseInt(preferences.getString("gestureLongclick", "11"));
             mGestureVolumeUp = Integer.parseInt(preferences.getString("gestureVolumeUp", "0"));
             mGestureVolumeDown = Integer.parseInt(preferences.getString("gestureVolumeDown", "0"));
@@ -3129,7 +3128,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
                 float posX = e.getX();
                 float posY = e.getY();
 
-                int gesture = mGestureTapProcessor.getCommandFromTap(height, width, posX, posY);
+                int gesture = mGestureProcessor.getCommandFromTap(height, width, posX, posY);
 
                 executeCommand(gesture);
             }
