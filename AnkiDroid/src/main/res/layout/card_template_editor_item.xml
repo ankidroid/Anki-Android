@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/main_layout"
     android:layout_height="fill_parent"
     android:layout_width="match_parent"
@@ -34,8 +35,9 @@
                 android:layout_margin="5dp"
                 android:layout_gravity="top"
                 android:gravity="top"
-                android:contentDescription="@string/front_field_name"
-                android:inputType="textMultiLine"/>
+                android:inputType="textMultiLine"
+                android:fontFamily="monospace"
+                tools:text="{{Front}}"/>
         </LinearLayout>
     </ScrollView>
 

@@ -108,8 +108,8 @@
     <string name="import_complete_count">卡片已匯入：%d</string>
     <string name="sd_card_full_title">SD 卡空間已滿</string>
     <string name="sd_card_almost_full_title">SD 卡空間快滿</string>
-    <string name="no_space_to_downgrade_title">No space</string>
-    <string name="no_space_to_downgrade_content">AnkiDroid needs %s free storage space to continue. Please clear some space</string>
+    <string name="no_space_to_downgrade_title">沒有空間</string>
+    <string name="no_space_to_downgrade_content">AnkiDroid 需要%s可用儲存空間以繼續。請清除一些空間</string>
     <string name="restore_backup_title">回復備份嗎？</string>
     <string name="restore_backup">你的集合將會被較舊的版本給覆蓋。任何尚未儲存的進度都會遺失。</string>
     <string name="dialog_cancel">取消</string>
@@ -210,30 +210,30 @@
     <string name="help_item_anki_manual">Anki 用戶手冊</string>
     <string name="help_item_ankidroid_faq">AnkiDroid 常見問題集</string>
     <string name="help_title_get_help">取得幫助</string>
-    <string name="help_item_mailing_list">Mailing List</string>
+    <string name="help_item_mailing_list">郵件清單</string>
     <string name="help_item_reddit">Reddit</string>
     <string name="help_item_report_bug">回報錯誤</string>
     <string name="help_title_support_ankidroid">支持 AnkiDroid</string>
     <string name="help_item_support_opencollective_donate">捐贈</string>
     <string name="help_item_support_develop_ankidroid">開發</string>
-    <string name="help_item_support_rate_ankidroid">Rate</string>
+    <string name="help_item_support_rate_ankidroid">評分</string>
     <string name="help_item_support_other_ankidroid">其他</string>
     <string name="help_title_community">社群</string>
     <string name="help_item_anki_forums">Anki 論壇</string>
     <string name="help_item_discord">Discord</string>
     <string name="help_item_facebook">Facebook</string>
     <string name="help_item_twitter">Twitter</string>
-    <string name="help_title_send_exception">Send troubleshooting report</string>
-    <string name="help_dialog_exception_report_debounce">Report already submitted</string>
+    <string name="help_title_send_exception">發送除錯回報</string>
+    <string name="help_dialog_exception_report_debounce">回報已經提交</string>
     <!--Sync-->
     <plurals name="sync_automatic_sync_needs_more_time">
         <item quantity="other">%d秒後可執行自動同步</item>
     </plurals>
-    <string name="deck_picker_new">Number of new cards to see today in this deck.</string>
-    <string name="deck_picker_rev">Number of cards due today in this deck.</string>
-    <string name="deck_picker_lrn">Number of cards in learning in this deck.</string>
+    <string name="deck_picker_new">此牌組中今天要看的新卡片數</string>
+    <string name="deck_picker_rev">詞牌組今天到期的卡片數量</string>
+    <string name="deck_picker_lrn">詞牌組中學習中的卡片數</string>
     <!-- This description is valid fos
     sched V2. For V1, it was counting the number of repetitions of cards in learning. This approximation is acceptable
     for the sake of simplicity and because V1 will leave.-->
-    <string name="deck_picker_counts">Open the deck overview page containing the number of cards to see today.</string>
+    <string name="deck_picker_counts">開啟包含今天要查看的卡片數量的牌組概覽頁。</string>
 </resources>

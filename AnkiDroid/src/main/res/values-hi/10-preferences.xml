@@ -47,7 +47,7 @@
     <string name="pref_cat_reviewing_summ">डेक असंबंधित समीक्षक सेटिंग</string>
     <string name="pref_cat_reviewer_behaviour" maxLength="41">व्यवहार</string>
     <string name="pref_cat_flashcard" maxLength="41">प्रदर्शन</string>
-    <string name="pref_cat_whiteboard" maxLength="41">स्लेट</string>
+    <string name="pref_cat_whiteboard" maxLength="41">श्वेतपट्ट</string>
     <string name="pref_cat_appearance" maxLength="41">दिखावट</string>
     <string name="pref_cat_appearance_summ">थीम और डिफ़ॉल्ट फ़ॉन्ट बदलें</string>
     <string name="pref_cat_themes" maxLength="41">थीम</string>

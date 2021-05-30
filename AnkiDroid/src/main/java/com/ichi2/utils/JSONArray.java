@@ -42,6 +42,7 @@
 
 package com.ichi2.utils;
 
+
 import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -49,6 +50,7 @@ import java.util.Iterator;
 import java.util.List;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 
 public class JSONArray extends org.json.JSONArray {
     public JSONArray() {
@@ -279,9 +281,10 @@ public class JSONArray extends org.json.JSONArray {
         }
     }
 
-    public @NonNull String toString(int indentSpaces) {
+    @Override
+    public String toString(int indentSpace) {
         try {
-            return super.toString(indentSpaces);
+            return super.toString(indentSpace);
         } catch (org.json.JSONException e) {
             throw new JSONException(e);
         }
@@ -422,5 +425,26 @@ public class JSONArray extends org.json.JSONArray {
             l.add(object.getString(key));
         }
         return l;
+    }
+
+    /**
+     * Returns a new object whose values are the values in this array, and whose
+     * names are the values in {@code names}. Names and values are paired up by
+     * index from 0 through to the shorter array's length. Names that are not
+     * strings will be coerced to strings. This method returns null if either
+     * array is empty.
+     */
+    public @Nullable JSONObject toJSONObject(@NonNull JSONArray names) {
+        // copied from upstream
+        JSONObject result = new JSONObject();
+        int length = Math.min(names.length(), length());
+        if (length == 0) {
+            return null;
+        }
+        for (int i = 0; i < length; i++) {
+            String name = JSON.toString(names.opt(i));
+            result.put(name, opt(i));
+        }
+        return result;
     }
 }

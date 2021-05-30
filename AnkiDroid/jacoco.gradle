@@ -3,13 +3,13 @@ import groovy.transform.Memoized
 apply plugin: 'jacoco'
 
 jacoco {
-    toolVersion = "0.8.6"
+    toolVersion = "0.8.7"
 
 }
 
 android {
     jacoco {
-        version = "0.8.6"
+        version = "0.8.7"
     }
 }
 
@@ -73,7 +73,7 @@ task jacocoTestReport(type: JacocoReport, dependsOn: ['testPlayDebugUnitTest', '
     }
 
     def fileFilter = ['**/R.class', '**/R$*.class', '**/BuildConfig.*', '**/Manifest*.*', '**/*Test*.*', 'android/**/*.*']
-    def debugTree = fileTree(dir: "$project.buildDir/intermediates/javac/debug/classes", excludes: fileFilter)
+    def debugTree = fileTree(dir: "$project.buildDir/intermediates/javac/playDebug/classes", excludes: fileFilter)
     def mainSrc = "$project.projectDir/src/main/java"
 
     sourceDirectories.from = files([mainSrc])
@@ -98,7 +98,7 @@ task jacocoUnitTestReport(type: JacocoReport, dependsOn: ['testPlayDebugUnitTest
     }
 
     def fileFilter = ['**/R.class', '**/R$*.class', '**/BuildConfig.*', '**/Manifest*.*', '**/*Test*.*', 'android/**/*.*']
-    def debugTree = fileTree(dir: "$project.buildDir/intermediates/javac/debug/classes", excludes: fileFilter)
+    def debugTree = fileTree(dir: "$project.buildDir/intermediates/javac/playDebug/classes", excludes: fileFilter)
     def mainSrc = "$project.projectDir/src/main/java"
 
     sourceDirectories.from = files([mainSrc])
@@ -123,7 +123,7 @@ task jacocoAndroidTestReport(type: JacocoReport, dependsOn: ['connectedPlayDebug
     }
 
     def fileFilter = ['**/R.class', '**/R$*.class', '**/BuildConfig.*', '**/Manifest*.*', '**/*Test*.*', 'android/**/*.*']
-    def debugTree = fileTree(dir: "$project.buildDir/intermediates/javac/debug/classes", excludes: fileFilter)
+    def debugTree = fileTree(dir: "$project.buildDir/intermediates/javac/playDebug/classes", excludes: fileFilter)
     def mainSrc = "$project.projectDir/src/main/java"
 
     sourceDirectories.from = files([mainSrc])

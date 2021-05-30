@@ -47,7 +47,6 @@ import com.ichi2.libanki.template.ParsedNode;
 import com.ichi2.libanki.template.TemplateError;
 import com.ichi2.libanki.utils.Time;
 import com.ichi2.upgrade.Upgrade;
-import com.ichi2.utils.DatabaseChangeDecorator;
 import com.ichi2.utils.FunctionalInterfaces;
 import com.ichi2.utils.VersionUtils;
 
@@ -55,12 +54,13 @@ import com.ichi2.utils.JSONArray;
 import com.ichi2.utils.JSONException;
 import com.ichi2.utils.JSONObject;
 
+import net.ankiweb.rsdroid.RustCleanup;
+
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Calendar;
@@ -134,7 +134,13 @@ public class Collection implements CollectionGetter {
     private static final Pattern fClozePatternA = Pattern.compile("\\{\\{(.*?)cloze:");
     private static final Pattern fClozeTagStart = Pattern.compile("<%cloze:");
 
-    private static final int fDefaultSchedulerVersion = 2;
+    /**
+     * This is only used for collections which were created before
+     * the new collections default was v2
+     * In that case, 'schedVer' is not set, so this default is used.
+     * See: #8926
+     * */
+    private static final int fDefaultSchedulerVersion = 1;
     private static final List<Integer> fSupportedSchedulerVersions = Arrays.asList(1, 2);
 
     // Not in libAnki.
@@ -144,12 +150,12 @@ public class Collection implements CollectionGetter {
     public static final String DEFAULT_CONF = "{"
             +
             // review options
-            "'activeDecks': [1], " + "'curDeck': 1, " + "'newSpread': " + Consts.NEW_CARDS_DISTRIBUTE + ", "
-            + "'collapseTime': 1200, " + "'timeLim': 0, " + "'estTimes': True, " + "'dueCounts': True, "
+            "\"activeDecks\": [1], " + "\"curDeck\": 1, " + "\"newSpread\": " + Consts.NEW_CARDS_DISTRIBUTE + ", "
+            + "\"collapseTime\": 1200, " + "\"timeLim\": 0, " + "\"estTimes\": true, " + "\"dueCounts\": true, "
             +
             // other config
-            "'curModel': null, " + "'nextPos': 1, " + "'sortType': \"noteFld\", "
-            + "'sortBackwards': False, 'addToCur': True }"; // add new to currently selected deck?
+            "\"curModel\": null, " + "\"nextPos\": 1, " + "\"sortType\": \"noteFld\", "
+            + "\"sortBackwards\": false, \"addToCur\": true }"; // add new to currently selected deck?
 
     private static final int UNDO_SIZE_MAX = 20;
 
@@ -1077,6 +1083,7 @@ public class Collection implements CollectionGetter {
     }
 
 
+    @RustCleanup("#8951 - Remove FrontSide added to the front")
     public HashMap<String, String> _renderQA(long cid, Model model, long did, int ord, String tags, String[] flist, int flags, boolean browser, String qfmt, String afmt) {
         // data is [cid, nid, mid, did, ord, tags, flds, cardFlags]
         // unpack fields and create dict
@@ -1112,6 +1119,7 @@ public class Collection implements CollectionGetter {
             if ("q".equals(type)) {
                 format = fClozePatternQ.matcher(format).replaceAll(String.format(Locale.US, "{{$1cq-%d:", cardNum));
                 format = fClozeTagStart.matcher(format).replaceAll(String.format(Locale.US, "<%%cq:%d:", cardNum));
+                fields.put("FrontSide", "");
             } else {
                 format = fClozePatternA.matcher(format).replaceAll(String.format(Locale.US, "{{$1ca-%d:", cardNum));
                 format = fClozeTagStart.matcher(format).replaceAll(String.format(Locale.US, "<%%ca:%d:", cardNum));
@@ -1323,6 +1331,16 @@ public class Collection implements CollectionGetter {
             mUndo.removeFirst();
         }
     }
+
+
+    public void onCreate() {
+        mDroidBackend.useNewTimezoneCode(this);
+        getConf().put("schedVer", 2);
+        setMod();
+        // we need to reload the scheduler: this was previously loaded as V1
+        _loadScheduler();
+    }
+
 
     @VisibleForTesting
     public static class UndoReview extends UndoAction {

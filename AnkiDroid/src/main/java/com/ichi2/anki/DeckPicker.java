@@ -201,7 +201,7 @@ public class DeckPicker extends NavigationDrawerActivity implements
     private RecyclerView mRecyclerView;
     private LinearLayoutManager mRecyclerViewLayoutManager;
     private DeckAdapter mDeckListAdapter;
-	
+
     private final Snackbar.Callback mSnackbarShowHideCallback = new Snackbar.Callback();
 
     private LinearLayout mNoDecksPlaceholder;
@@ -451,7 +451,7 @@ public class DeckPicker extends NavigationDrawerActivity implements
         if (showedActivityFailedScreen(savedInstanceState)) {
             return;
         }
-        
+
         mCustomStudyDialogFactory = new CustomStudyDialogFactory(this::getCol, this).attachToActivity(this);
 
         //we need to restore here, as we need it before super.onCreate() is called.
@@ -1153,12 +1153,12 @@ public class DeckPicker extends NavigationDrawerActivity implements
         // For Android 8/8.1 we want to use software rendering by default or the Reviewer UI is broken #7369
         if (CompatHelper.getSdkVersion() == Build.VERSION_CODES.O ||
                 CompatHelper.getSdkVersion() == Build.VERSION_CODES.O_MR1) {
-                if (!preferences.contains("softwareRender")) {
-                    Timber.i("Android 8/8.1 detected with no render preference. Turning on software render.");
-                    preferences.edit().putBoolean("softwareRender", true).apply();
-                } else {
-                    Timber.i("Android 8/8.1 detected, software render preference already exists.");
-                }
+            if (!preferences.contains("softwareRender")) {
+                Timber.i("Android 8/8.1 detected with no render preference. Turning on software render.");
+                preferences.edit().putBoolean("softwareRender", true).apply();
+            } else {
+                Timber.i("Android 8/8.1 detected, software render preference already exists.");
+            }
         }
 
         if (!BackupManager.enoughDiscSpace(CollectionHelper.getCurrentAnkiDroidDirectory(this))) {
@@ -1867,6 +1867,7 @@ public class DeckPicker extends NavigationDrawerActivity implements
                 AnkiDroidApp.sendExceptionReport(e, "DeckPicker.onPostExecute", "Could not dismiss mProgressDialog");
             }
             String syncMessage = data.message;
+            Timber.i("Sync Listener: onPostExecute: Data: %s", data.toString());
             if (!data.success) {
                 Object[] result = data.result;
                 Syncer.ConnectionResultType resultType = data.resultType;
@@ -2700,6 +2701,10 @@ public class DeckPicker extends NavigationDrawerActivity implements
 
         @Override
         public void actualOnPostExecute(@NonNull DeckPicker deckPicker, @Nullable int[] v) {
+            // After deleting a deck there is no more undo stack
+            // Rebuild options menu with side effect of resetting undo button state
+            deckPicker.invalidateOptionsMenu();
+
             // In fragmented mode, if the deleted deck was the current deck, we need to reload
             // the study options fragment with a valid deck and re-center the deck list to the
             // new current deck. Otherwise we just update the list normally.
@@ -2816,7 +2821,7 @@ public class DeckPicker extends NavigationDrawerActivity implements
                     .negativeText(deckPicker.getResources().getString(R.string.dialog_no))
                     .onNegative((x, y) -> actualOnPreExecute(deckPicker))
                     .onPositive((x, y) -> task.safeCancel()).show()
-                    ;
+            ;
         }
 
         @Override
@@ -2826,7 +2831,7 @@ public class DeckPicker extends NavigationDrawerActivity implements
                 if (emptyCardTask != null) {
                     confirmCancel(deckPicker, emptyCardTask);
                 }};
-            
+
             deckPicker.mProgressDialog = new MaterialDialog.Builder(deckPicker)
                     .progress(false, mNumberOfCards)
                     .title(R.string.emtpy_cards_finding)

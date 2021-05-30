@@ -38,45 +38,45 @@
 ~ this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <resources>
-    <string name="yes">yes</string>
+    <string name="yes">ya</string>
     <!-- Navigation drawer items-->
-    <string name="decks">Decks</string>
-    <string name="card_browser" comment="The usage of card browser inside the app (note the casing)">Card browser</string>
-    <string name="statistics">Statistics</string>
-    <string name="settings">Settings</string>
-    <string name="help">Help</string>
-    <string name="send_feedback">Send feedback</string>
-    <string name="studyoptions_due_today">Due today:</string>
-    <string name="studyoptions_new_total">Total new cards:</string>
-    <string name="studyoptions_total_cards">Total cards:</string>
-    <string name="studyoptions_eta">Estimated time (min):</string>
-    <string name="studyoptions_start">Study</string>
+    <string name="decks">Dek</string>
+    <string name="card_browser" comment="The usage of card browser inside the app (note the casing)">Pencari kad</string>
+    <string name="statistics">Statistik</string>
+    <string name="settings">Tetapan</string>
+    <string name="help">Bantuan</string>
+    <string name="send_feedback">Beri maklum balas</string>
+    <string name="studyoptions_due_today">Tamat hari ini:</string>
+    <string name="studyoptions_new_total">Jumlah kad baharu:</string>
+    <string name="studyoptions_total_cards">Jumlah kad:</string>
+    <string name="studyoptions_eta">Masa anggaran (min):</string>
+    <string name="studyoptions_start">Ulang kaji</string>
     <!-- DeckPicker.java -->
-    <string name="expand">Expand</string>
-    <string name="collapse">Collapse</string>
-    <string name="study_more">Study more</string>
+    <string name="expand">Kembangkan</string>
+    <string name="collapse">Tutupkan</string>
+    <string name="study_more">Ulangkaji lebih</string>
     <plurals name="deckpicker_title">
-        <item quantity="other">%1$d cards due (%2$s)</item>
+        <item quantity="other">%1$d kad yang tinggal (%2$s)</item>
     </plurals>
     <plurals name="reviewer_window_title">
-        <item quantity="other">%d minutes left</item>
+        <item quantity="other">%d minit tinggal</item>
     </plurals>
     <plurals name="reviewer_window_title_hours">
         <item quantity="other">%d hours %d left</item>
     </plurals>
     <plurals name="reviewer_window_title_days">
-        <item quantity="other">%d days %d left</item>
+        <item quantity="other">%d hari %d jam tinggal</item>
     </plurals>
-    <string name="no_cards_placeholder_title">Collection is empty</string>
-    <string name="no_cards_placeholder_description">Start adding cards\nusing the + icon.</string>
+    <string name="no_cards_placeholder_title">Koleksi kosong</string>
+    <string name="no_cards_placeholder_description">Mula menambah kad\ndengan menggunakan ikon +.</string>
     <!-- The deck picker via AnkiStatsTaskHandler.java -->
     <plurals name="studied_cards_today">
-        <item quantity="other">Studied %1$d cards in %2$s today</item>
+        <item quantity="other">%1$d kad dipelajari dalam %2$s hari ini</item>
     </plurals>
     <!-- flashcard_portrait.xml -->
-    <string name="type_answer_hint">Type answer</string>
-    <string name="show_answer">Show answer</string>
-    <string name="hide_answer">Hide answer</string>
+    <string name="type_answer_hint">Taip jawapan</string>
+    <string name="show_answer">Tunjuk jawapan</string>
+    <string name="hide_answer">Sembunyi jawapan</string>
     <string name="ease_button_again">Again</string>
     <string name="ease_button_hard">Hard</string>
     <string name="ease_button_good">Good</string>
@@ -124,7 +124,7 @@
     The user is taken to the "App Info" screen, and needs to click "Permissions" and
     grant AnkiDroid the \'Storage\' permission. This needs to be a fairly generic message as implementations
     of the permissions/app info screen will differ between devices. -->
-    <string name="startup_no_storage_permission">Please grant AnkiDroid the ‘Storage’ permission to continue</string>
+    <string name="startup_no_storage_permission">Sila berikan AnkiDroid kebenaran \'Storan\' untuk teruskan</string>
     <!--
         The time_quantities are units of time. They are used without
         plurals or dots.

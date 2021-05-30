@@ -21,6 +21,7 @@ import androidx.annotation.NonNull;
 
 public class CardTemplate {
     private final String mPreStyle;
+    private final String mPreScript;
     private final String mPreClass;
     private final String mPreContent;
     private final String mPostContent;
@@ -30,15 +31,18 @@ public class CardTemplate {
         // Since this is a const loaded from an asset file, I'm fine with this.
         String classDelim = "::class::";
         String styleDelim = "::style::";
+        String scriptDelim = "::script::";
         String contentDelim = "::content::";
 
         int styleIndex = template.indexOf(styleDelim);
+        int scriptIndex = template.indexOf(scriptDelim);
         int classIndex = template.indexOf(classDelim);
         int contentIndex = template.indexOf(contentDelim);
 
         try {
             this.mPreStyle = template.substring(0, styleIndex);
-            this.mPreClass = template.substring(styleIndex + styleDelim.length(), classIndex);
+            this.mPreScript = template.substring(styleIndex + styleDelim.length(), scriptIndex);
+            this.mPreClass = template.substring(scriptIndex + scriptDelim.length(), classIndex);
             this.mPreContent = template.substring(classIndex + classDelim.length(), contentIndex);
             this.mPostContent = template.substring(contentIndex + contentDelim.length());
         } catch (StringIndexOutOfBoundsException ex) {
@@ -48,7 +52,7 @@ public class CardTemplate {
 
     @CheckResult
     @NonNull
-    public String render(String content, String style, String cardClass) {
-        return mPreStyle + style + mPreClass + cardClass + mPreContent + content + mPostContent;
+    public String render(String content, String style, String script, String cardClass) {
+        return mPreStyle + style + mPreScript + script + mPreClass + cardClass + mPreContent + content + mPostContent;
     }
 }

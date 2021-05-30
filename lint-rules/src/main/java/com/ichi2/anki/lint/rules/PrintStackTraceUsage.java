@@ -28,8 +28,8 @@ import com.google.common.annotations.VisibleForTesting;
 import com.ichi2.anki.lint.utils.Constants;
 import com.intellij.psi.PsiMethod;
 
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
+import com.android.annotations.NonNull;
+import com.android.annotations.Nullable;
 import org.jetbrains.uast.UCallExpression;
 
 import java.util.ArrayList;
@@ -63,7 +63,7 @@ public class PrintStackTraceUsage extends Detector implements SourceCodeScanner 
 
 
     @Override
-    public void visitMethodCall(@NotNull JavaContext context, @NotNull UCallExpression node, @NotNull PsiMethod method) {
+    public void visitMethodCall(@NonNull JavaContext context, @NonNull UCallExpression node, @NonNull PsiMethod method) {
         super.visitMethodCall(context, node, method);
         JavaEvaluator evaluator = context.getEvaluator();
 

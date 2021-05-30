@@ -98,7 +98,7 @@
     </string-array>
     <!-- Custom study options -->
     <string name="custom_study_increase_new_limit">Heutiges Limit für neue Karten ändern</string>
-    <string name="custom_study_increase_review_limit">Heutiges Limit für Wiederholungskarten ändern</string>
+    <string name="custom_study_increase_review_limit">Heutiges Limit für Karten-Wiederholungen ändern</string>
     <string name="custom_study_review_forgotten">Vergessene Karten nochmal lernen</string>
     <string name="custom_study_review_ahead">Im Voraus lernen</string>
     <string name="custom_study_random_selection">Zufällige Kartenauswahl lernen</string>
@@ -279,7 +279,7 @@
     <string name="white_board_image_save_failed">Whiteboardbild konnte nicht gespeichert werden. %s</string>
     <string name="white_board_image_saved">Whiteboardbild in %s gespeichert</string>
     <string name="title_whiteboard_pen_color">Stiftfarbe des Whiteboards</string>
-    <string name="title_whiteboard_editor">Whiteboard editor</string>
+    <string name="title_whiteboard_editor">Whiteboard-Editor</string>
     <!-- CSV/Note Import -->
     <string name="note_importer_empty_cards_found"><![CDATA[Leere Karten gefunden. Bitte führen Sie Werkzeuge>Leere Karten aus.]]></string>
     <string name="note_importer_error_empty_first_field">Leeres erstes Feld: %s</string>

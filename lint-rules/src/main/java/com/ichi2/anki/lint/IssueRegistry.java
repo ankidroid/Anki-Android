@@ -17,13 +17,13 @@ import com.ichi2.anki.lint.rules.InconsistentAnnotationUsage;
 import com.ichi2.anki.lint.rules.NonPublicNonStaticFieldDetector;
 import com.ichi2.anki.lint.rules.PrintStackTraceUsage;
 
-import org.jetbrains.annotations.NotNull;
+import com.android.annotations.NonNull;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class IssueRegistry extends com.android.tools.lint.client.api.IssueRegistry {
-    @NotNull
+    @NonNull
     @Override
     public List<Issue> getIssues() {
         // Keep this list lexicographically ordered.

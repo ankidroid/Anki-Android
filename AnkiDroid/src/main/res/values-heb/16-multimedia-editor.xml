@@ -104,13 +104,13 @@
     <string name="multimedia_editor_progress_wait_title">המתנה</string>
     <!-- not a good message, when an unexpected error happens -->
     <string name="multimedia_editor_something_wrong">משהו השתבש</string>
-    <string name="multimedia_editor_attach_mm_content" comment="used for screen readers. Not visible to the user">Attach multimedia content to the %1$s field</string>
+    <string name="multimedia_editor_attach_mm_content" comment="used for screen readers. Not visible to the user">צרף קובץ מולטימדיה לשדה %1$s</string>
     <string name="multimedia_editor_attach_media">הוספת מדיה</string>
     <!-- Audio view -->
     <!-- Message when recording fails -->
     <string name="multimedia_editor_audio_view_recording_failed">ההקלטה נכשלה</string>
     <string name="multimedia_editor_audio_view_playing_failed">ההשמעה נכשלה</string>
-    <string name="multimedia_editor_audio_view_create_failed">Unable to create recorder tool bar</string>
+    <string name="multimedia_editor_audio_view_create_failed">לא ניתן ליצור סרגל כלים של הקלטה</string>
     <!-- Activity titles -->
     <string name="title_activity_edit_text" comment="Name of the window allowing to edit field. This text can not be seen in AnkiDroid directly.">עריכת שדה</string>
     <string name="title_activity_translation" comment="Name of the window allowing to translate. This text can not be seen in AnkiDroid directly.">תרגום</string>

@@ -126,8 +126,8 @@
     <string name="import_complete_count">Zaimportowanych kart: %d</string>
     <string name="sd_card_full_title">Karta SD jest pełna</string>
     <string name="sd_card_almost_full_title">Karta SD jest prawie pełna</string>
-    <string name="no_space_to_downgrade_title">No space</string>
-    <string name="no_space_to_downgrade_content">AnkiDroid needs %s free storage space to continue. Please clear some space</string>
+    <string name="no_space_to_downgrade_title">Brak miejsca</string>
+    <string name="no_space_to_downgrade_content">AnkiDroid potrzebuje %s wolnej przestrzeni dyskowej by kontynuować. Proszę zwolnij trochę miejsca</string>
     <string name="restore_backup_title">Odtworzyć kopię zapasową?</string>
     <string name="restore_backup">Kolekcja zostanie zastąpione starszą kopią. Wszelkie niezapisane postępy zostaną utracone.</string>
     <string name="dialog_cancel">Anuluj</string>
@@ -253,11 +253,11 @@
         <item quantity="many">Automatyczna synchronizacja może zostać uruchomiona za %d sekund</item>
         <item quantity="other">Automatyczna synchronizacja może zostać uruchomiona za %d sekund</item>
     </plurals>
-    <string name="deck_picker_new">Number of new cards to see today in this deck.</string>
-    <string name="deck_picker_rev">Number of cards due today in this deck.</string>
-    <string name="deck_picker_lrn">Number of cards in learning in this deck.</string>
+    <string name="deck_picker_new">Liczba nowych kart do zobaczenia dziś w tej talii.</string>
+    <string name="deck_picker_rev">Liczba kart do powtórki na dziś w tej talii.</string>
+    <string name="deck_picker_lrn">Liczba kart w uczeniu się w tej talii.</string>
     <!-- This description is valid fos
     sched V2. For V1, it was counting the number of repetitions of cards in learning. This approximation is acceptable
     for the sake of simplicity and because V1 will leave.-->
-    <string name="deck_picker_counts">Open the deck overview page containing the number of cards to see today.</string>
+    <string name="deck_picker_counts">Otwórz stronę główną talii zawierającą liczbę kart do zobaczenia dzisiaj.</string>
 </resources>

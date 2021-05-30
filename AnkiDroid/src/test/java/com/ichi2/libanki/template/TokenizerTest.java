@@ -144,6 +144,37 @@ public class TokenizerTest extends RobolectricTest {
     }
 
     @Test
+    public void test_space_in_token() {
+        assertThat(next_token("{{ # foo bar }} baz"),
+                Matchers.is(new IResult(
+                        new Tokenizer.Token(OPEN_CONDITIONAL,
+                                "foo bar"),
+                        " baz")));
+        assertThat(handlebar_token("{{ / foo bar }} baz"),
+                Matchers.is(new Tokenizer.IResult(
+                        new Tokenizer.Token(CLOSE_CONDITIONAL,
+                                "foo bar"),
+                        " baz")));
+        assertThat(handlebar_token("{{ ^ foo bar }} baz"),
+                Matchers.is(new Tokenizer.IResult(
+                        new Tokenizer.Token(OPEN_NEGATED,
+                                "foo bar"),
+                        " baz")));
+        // REPLACEMENT types will have leading and trailing spaces trimmed, but otherwise no changes
+        assertThat(handlebar_token("{{ ! foo}} bar"),
+                Matchers.is(new Tokenizer.IResult(
+                        new Tokenizer.Token(REPLACEMENT,
+                                "! foo"),
+                        " bar")));
+        // REPLACEMENT types will have leading and trailing spaces trimmed, but otherwise no changes
+        assertThat(handlebar_token("{{ ! foo with spaces before during and after }} bar"),
+                Matchers.is(new Tokenizer.IResult(
+                        new Tokenizer.Token(REPLACEMENT,
+                                "! foo with spaces before during and after"),
+                        " bar")));
+    }
+
+    @Test
     public void test_next_token() {
         assertThat(next_token("{{#foo}} bar"),
                 Matchers.is(new IResult(

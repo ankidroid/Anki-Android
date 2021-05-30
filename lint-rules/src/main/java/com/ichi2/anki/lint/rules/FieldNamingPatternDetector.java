@@ -21,8 +21,7 @@ import com.android.tools.lint.client.api.UElementHandler;
 import com.android.tools.lint.detector.api.Detector;
 import com.android.tools.lint.detector.api.JavaContext;
 
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
+import com.android.annotations.Nullable;
 import org.jetbrains.uast.UElement;
 import org.jetbrains.uast.UField;
 import org.jetbrains.uast.UVariable;
@@ -34,7 +33,7 @@ public abstract class FieldNamingPatternDetector extends Detector implements Det
 
     @Nullable
     @Override
-    public UElementHandler createUastHandler(@NotNull JavaContext context) {
+    public UElementHandler createUastHandler(@NonNull JavaContext context) {
         return new VariableNamingHandler(context);
     }
 
@@ -56,7 +55,7 @@ public abstract class FieldNamingPatternDetector extends Detector implements Det
 
 
         @Override
-        public void visitVariable(@NotNull UVariable node) {
+        public void visitVariable(@NonNull UVariable node) {
             // HACK: Using visitField didn't return any results
             if (!(node instanceof UField)) {
                 return;
@@ -87,5 +86,5 @@ public abstract class FieldNamingPatternDetector extends Detector implements Det
     protected abstract boolean meetsNamingStandards(@NonNull String variableName);
 
     /** Report the problematic variable to the lint checker */
-    protected abstract void reportVariable(@NonNull JavaContext context, @NotNull UVariable node, String variableName);
+    protected abstract void reportVariable(@NonNull JavaContext context, @NonNull UVariable node, String variableName);
 }

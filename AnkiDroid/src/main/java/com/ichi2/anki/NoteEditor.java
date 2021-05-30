@@ -1576,7 +1576,7 @@ public class NoteEditor extends AnkiActivity implements
             return false;
         } catch (Exception e) {
             // NOTE: This is happy path coding which works on Android 9.
-            AnkiDroidApp.sendExceptionReport(e, "NoteEditor:onImagePaste");
+            AnkiDroidApp.sendExceptionReport("File is invalid issue:8880", "NoteEditor:onImagePaste URI of file:" + uri);
             Timber.w(e, "Failed to paste image");
             UIUtils.showThemedToast(this, getString(R.string.multimedia_editor_something_wrong), false);
             return false;
@@ -1592,13 +1592,20 @@ public class NoteEditor extends AnkiActivity implements
     @Nullable
     private String loadImageIntoCollection(Uri uri) throws IOException {
         //noinspection PointlessArithmeticExpression
+        String fileName;
         final int oneMegabyte = 1 * 1000 * 1000;
         String filename = ContentResolverUtil.getFileName(getContentResolver(), uri);
         InputStream fd = getContentResolver().openInputStream(uri);
 
         Map.Entry<String, String> fileNameAndExtension = FileUtil.getFileNameAndExtension(filename);
 
-        File clipCopy = File.createTempFile(fileNameAndExtension.getKey(), fileNameAndExtension.getValue());
+        if (checkFilename(fileNameAndExtension)) {
+            fileName = String.format("%s-name", fileNameAndExtension.getKey());
+        } else {
+            fileName = fileNameAndExtension.getKey();
+        }
+
+        File clipCopy = File.createTempFile(fileName, fileNameAndExtension.getValue());
         String tempFilePath = clipCopy.getAbsolutePath();
         long bytesWritten = CompatHelper.getCompat().copyFile(fd, tempFilePath);
 
@@ -1622,6 +1629,14 @@ public class NoteEditor extends AnkiActivity implements
         return field.getFormattedValue();
     }
 
+    /**
+     * Checks the Image name length. Implemented this to avoid IllegalArgumentException
+     * @param fileNameAndExtension Map.Entry of file name and extension.
+     * @return true if image name is incorrect and false if image name is correct.
+     */
+    private boolean checkFilename(Map.Entry<String, String> fileNameAndExtension) {
+        return fileNameAndExtension.getKey().length() <= 3;
+    }
 
     private void setMMButtonListener(ImageButton mediaButton, final int index) {
         mediaButton.setOnClickListener(v -> {
@@ -1898,6 +1913,7 @@ public class NoteEditor extends AnkiActivity implements
         } else {
             mCurrentDid = mCurrentEditedCard.getDid();
         }
+        mDeckSpinnerSelection.selectDeckById(mCurrentDid);
     }
 
 
@@ -1919,7 +1935,7 @@ public class NoteEditor extends AnkiActivity implements
         }
         // nb: setOnItemSelectedListener and populateEditFields need to occur after this
         setNoteTypePosition();
-        mDeckSpinnerSelection.updateDeckPosition();
+        setDid(note);
         updateTags();
         updateCards(mEditorNote.model());
         updateToolbar();
@@ -2186,11 +2202,12 @@ public class NoteEditor extends AnkiActivity implements
                 // Update deck
                 if (!getCol().getConf().optBoolean("addToCur", true)) {
                     mCurrentDid = model.getLong("did");
-                    mDeckSpinnerSelection.updateDeckPosition();
                 }
 
                 refreshNoteData(FieldChangeType.changeFieldCount(shouldReplaceNewlines()));
                 setDuplicateFieldStyles();
+                mDeckSpinnerSelection.setDeckId(mCurrentDid);
+                mDeckSpinnerSelection.updateDeckPosition();
             }
         }
 

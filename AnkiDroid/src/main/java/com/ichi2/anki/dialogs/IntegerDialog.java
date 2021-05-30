@@ -59,7 +59,7 @@ public class IntegerDialog extends AnalyticsDialogFragment {
                 .inputRange(1, getArguments().getInt("digits"))
                 .input(getArguments().getString("prompt"), "",
                         (dialog, text) -> mConsumer.consume(Integer.parseInt(text.toString())));
-        //builder.content's argument is marked as @NotNull
+        //builder.content's argument is marked as @NonNull
         //We can't use "" as that creates padding, and want to respect the contract, so only set if not null
         String content = getArguments().getString("content");
         if (content != null) {

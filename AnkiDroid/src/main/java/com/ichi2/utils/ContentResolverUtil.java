@@ -18,6 +18,7 @@ package com.ichi2.utils;
 
 import android.content.ContentResolver;
 import android.database.Cursor;
+import android.database.sqlite.SQLiteException;
 import android.net.Uri;
 import android.provider.MediaStore;
 import android.webkit.MimeTypeMap;
@@ -26,6 +27,7 @@ import java.io.File;
 import java.util.Locale;
 
 import androidx.annotation.CheckResult;
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import timber.log.Timber;
 
@@ -53,9 +55,9 @@ public class ContentResolverUtil {
 
     @CheckResult
     @Nullable
-    private static String getFilenameViaMimeType(ContentResolver contentResolver, Uri uri) {
+    private static String getFilenameViaMimeType(ContentResolver contentResolver, @NonNull Uri uri) {
         // value: "png" when testing
-        String extension;
+        String extension = null;
 
         //Check uri format to avoid null
         if (uri.getScheme() != null && uri.getScheme().equals(ContentResolver.SCHEME_CONTENT)) {
@@ -65,7 +67,9 @@ public class ContentResolverUtil {
         } else {
             // If scheme is a File
             // This will replace white spaces with %20 and also other special characters. This will avoid returning null values on file name with spaces and special characters.
-            extension = MimeTypeMap.getFileExtensionFromUrl(Uri.fromFile(new File(uri.getPath())).toString().toLowerCase(Locale.ROOT));
+            if (uri.getPath() != null) {
+                extension = MimeTypeMap.getFileExtensionFromUrl(Uri.fromFile(new File(uri.getPath())).toString().toLowerCase(Locale.ROOT));
+            }
         }
         if (extension == null) {
             return null;
@@ -78,12 +82,15 @@ public class ContentResolverUtil {
     @CheckResult
     @Nullable
     private static String getFilenameViaDisplayName(ContentResolver contentResolver, Uri uri) {
-        String filename;
         // 7748: android.database.sqlite.SQLiteException: no such column: _display_name (code 1 SQLITE_ERROR[1]): ...
         try (Cursor c = contentResolver.query(uri, new String[] { MediaStore.MediaColumns.DISPLAY_NAME }, null, null, null)) {
-            c.moveToNext();
-            filename = c.getString(0);
+            if (c != null) {
+                c.moveToNext();
+                return c.getString(0);
+            }
+        } catch (SQLiteException e) {
+            Timber.w(e, "getFilenameViaDisplayName ContentResolver query failed.");
         }
-        return filename;
+        return null;
     }
 }

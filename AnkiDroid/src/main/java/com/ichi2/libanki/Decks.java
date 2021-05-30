@@ -76,75 +76,75 @@ public class Decks {
 
     public static final String DEFAULT_DECK = ""
             + "{"
-                + "'newToday': [0, 0]," // currentDay, count
-                + "'revToday': [0, 0],"
-                + "'lrnToday': [0, 0],"
-                + "'timeToday': [0, 0]," // time in ms
-                + "'conf': 1,"
-                + "'usn': 0,"
-                + "'desc': \"\","
-                + "'dyn': 0," // anki uses int/bool interchangably here
-                + "'collapsed': False,"
+                + "\"newToday\": [0, 0]," // currentDay, count
+                + "\"revToday\": [0, 0],"
+                + "\"lrnToday\": [0, 0],"
+                + "\"timeToday\": [0, 0]," // time in ms
+                + "\"conf\": 1,"
+                + "\"usn\": 0,"
+                + "\"desc\": \"\","
+                + "\"dyn\": 0," // anki uses int/bool interchangably here
+                + "\"collapsed\": false,"
                 // added in beta11
-                + "'extendNew': 10,"
-                + "'extendRev': 50"
+                + "\"extendNew\": 10,"
+                + "\"extendRev\": 50"
             + "}";
 
     private static final String defaultDynamicDeck = ""
             + "{"
-                + "'newToday': [0, 0],"
-                + "'revToday': [0, 0],"
-                + "'lrnToday': [0, 0],"
-                + "'timeToday': [0, 0],"
-                + "'collapsed': False,"
-                + "'dyn': 1,"
-                + "'desc': \"\","
-                + "'usn': 0,"
-                + "'delays': null,"
-                + "'separate': True,"
+                + "\"newToday\": [0, 0],"
+                + "\"revToday\": [0, 0],"
+                + "\"lrnToday\": [0, 0],"
+                + "\"timeToday\": [0, 0],"
+                + "\"collapsed\": false,"
+                + "\"dyn\": 1,"
+                + "\"desc\": \"\","
+                + "\"usn\": 0,"
+                + "\"delays\": null,"
+                + "\"separate\": true,"
                 // list of (search, limit, order); we only use first element for now
-                + "'terms': [[\"\", 100, 0]],"
-                + "'resched': True,"
-                + "'return': True" // currently unused
+                + "\"terms\": [[\"\", 100, 0]],"
+                + "\"resched\": true,"
+                + "\"return\": true" // currently unused
             + "}";
 
     public static final String DEFAULT_CONF = ""
             + "{"
-                + "'name': \"Default\","
-                + "'new': {"
-                    + "'delays': [1, 10],"
-                    + "'ints': [1, 4, 7]," // 7 is not currently used
-                    + "'initialFactor': "+Consts.STARTING_FACTOR+","
-                    + "'separate': True,"
-                    + "'order': " + Consts.NEW_CARDS_DUE + ","
-                    + "'perDay': 20,"
+                + "\"name\": \"Default\","
+                + "\"new\": {"
+                    + "\"delays\": [1, 10],"
+                    + "\"ints\": [1, 4, 7]," // 7 is not currently used
+                    + "\"initialFactor\": "+Consts.STARTING_FACTOR+","
+                    + "\"separate\": true,"
+                    + "\"order\": " + Consts.NEW_CARDS_DUE + ","
+                    + "\"perDay\": 20,"
                     // may not be set on old decks
-                    + "'bury': False"
+                    + "\"bury\": false"
                 + "},"
-                + "'lapse': {"
-                    + "'delays': [10],"
-                    + "'mult': 0,"
-                    + "'minInt': 1,"
-                    + "'leechFails': 8,"
+                + "\"lapse\": {"
+                    + "\"delays\": [10],"
+                    + "\"mult\": 0,"
+                    + "\"minInt\": 1,"
+                    + "\"leechFails\": 8,"
                     // type 0=suspend, 1=tagonly
-                    + "'leechAction': " + Consts.LEECH_SUSPEND
+                    + "\"leechAction\": " + Consts.LEECH_SUSPEND
                 + "},"
-                + "'rev': {"
-                    + "'perDay': 100,"
-                    + "'ease4': 1.3,"
-                    + "'fuzz': 0.05,"
-                    + "'minSpace': 1," // not currently used
-                    + "'ivlFct': 1,"
-                    + "'maxIvl': 36500,"
+                + "\"rev\": {"
+                    + "\"perDay\": 100,"
+                    + "\"ease4\": 1.3,"
+                    + "\"fuzz\": 0.05,"
+                    + "\"minSpace\": 1," // not currently used
+                    + "\"ivlFct\": 1,"
+                    + "\"maxIvl\": 36500,"
                     // may not be set on old decks
-                    + "'bury': False"
+                    + "\"bury\": false"
                 + "},"
-                + "'maxTaken': 60,"
-                + "'timer': 0,"
-                + "'autoplay': True,"
-                + "'replayq': True,"
-                + "'mod': 0,"
-                + "'usn': 0"
+                + "\"maxTaken\": 60,"
+                + "\"timer\": 0,"
+                + "\"autoplay\": true,"
+                + "\"replayq\": true,"
+                + "\"mod\": 0,"
+                + "\"usn\": 0"
             +"}";
 
 
@@ -256,10 +256,12 @@ public class Decks {
         JSONObject decksarray = new JSONObject(decks);
         JSONArray ids = decksarray.names();
         mDecks = new HashMap<>(decksarray.length());
-        for (String id: ids.stringIterable()) {
-            Deck o = new Deck(decksarray.getJSONObject(id));
-            long longId = Long.parseLong(id);
-            mDecks.put(longId, o);
+        if (ids != null) {
+            for (String id : ids.stringIterable()) {
+                Deck o = new Deck(decksarray.getJSONObject(id));
+                long longId = Long.parseLong(id);
+                mDecks.put(longId, o);
+            }
         }
         mNameMap = NameMap.constructor(mDecks.values());
         JSONObject confarray = new JSONObject(dconf);
@@ -1074,6 +1076,9 @@ public class Decks {
 
 
     public Deck current() {
+        if (get(selected()) == null || !mDecks.containsKey(selected())) {
+            select(Consts.DEFAULT_DECK_ID); // Select default deck if the selected deck is null
+        }
         return get(selected());
     }
 
@@ -1275,7 +1280,7 @@ public class Decks {
         return current().optString("desc","");
     }
 
-    @Deprecated
+    @VisibleForTesting
     @RustCleanup("This exists in Rust as DecksDictProxy, but its usage is warned against")
     public HashMap<Long, Deck> getDecks() {
         return mDecks;

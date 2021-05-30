@@ -17,6 +17,7 @@ on:
     branches:
       - master
       - i18n_sync
+      - dependency-updates
       - 'release**'
     paths:
       - '.github/workflows/**'
@@ -73,3 +74,6 @@ jobs:
 
       - name: Test Lint Rules
         run: ./gradlew lint-rules:test
+
+      - name: Ktlint Check
+        run: ./gradlew ktlintCheck

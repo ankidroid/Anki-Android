@@ -10,7 +10,6 @@ import android.widget.LinearLayout;
 import com.ichi2.anki.R;
 import com.ichi2.themes.Themes;
 
-import org.jetbrains.annotations.NotNull;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
@@ -23,6 +22,8 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.atomic.AtomicReference;
+
+import androidx.annotation.NonNull;
 
 @RunWith(Parameterized.class)
 public class LayoutValidationTest extends InstrumentedTest {
@@ -94,7 +95,7 @@ public class LayoutValidationTest extends InstrumentedTest {
     }
 
 
-    @NotNull
+    @NonNull
     private static <T> HashSet<String> getFieldNames(Class<T> clazz) {
         Field[] badFields = clazz.getFields();
         HashSet<String> badFieldNames = new HashSet<>();

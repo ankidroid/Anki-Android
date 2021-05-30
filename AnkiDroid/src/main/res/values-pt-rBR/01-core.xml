@@ -116,7 +116,7 @@
     <string name="menu_edit_tags">Editar tags</string>
     <string name="delete_note_message">Deseja realmente excluir esta nota e todos seus cartões?\n%s</string>
     <string name="menu_select">Selecionar texto</string>
-    <string name="menu_lookup">Lookup text</string>
+    <string name="menu_lookup">question</string>
     <string name="menu_search">Pesquisar em %1$s</string>
     <string name="menu_mark_note">Marcar nota</string>
     <string name="menu_unmark_note">Desmarcar nota</string>
@@ -154,7 +154,7 @@
     <string name="custom_study_deck_name">Sessão de estudo personalizado</string>
     <string name="custom_study_deck_exists">Por favor renomeie o baralho de estudo personalizado existente primeiro</string>
     <string name="empty_deck">Este baralho está vazio</string>
-    <string name="search_deck">Deck Search</string>
+    <string name="search_deck">Pesquisa do deck</string>
     <string name="empty_deck_add_note">Adicionar cartão</string>
     <string name="invalid_deck_name">Nome do baralho inválido</string>
     <string name="studyoptions_empty">Este baralho está vazio. Pressione o botão + para adicionar novos conteúdos.</string>

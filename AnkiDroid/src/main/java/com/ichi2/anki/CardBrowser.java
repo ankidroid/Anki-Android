@@ -18,6 +18,7 @@
 
 package com.ichi2.anki;
 
+import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.content.BroadcastReceiver;
 import android.content.Context;
@@ -107,13 +108,13 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Set;
-import java.util.regex.Pattern;
 
 import timber.log.Timber;
 
 import static com.ichi2.anki.CardBrowser.Column.*;
 import static com.ichi2.libanki.stats.Stats.SECONDS_PER_DAY;
 import static com.ichi2.anim.ActivityTransitionAnimation.Direction.*;
+import static com.ichi2.utils.LanguageUtil.getLocaleCompat;
 
 public class CardBrowser extends NavigationDrawerActivity implements
         DeckDropDownAdapter.SubtitleListener,
@@ -156,9 +157,10 @@ public class CardBrowser extends NavigationDrawerActivity implements
     /** List of cards in the browser.
     * When the list is changed, the position member of its elements should get changed.*/
     @NonNull
-    private CardCollection<CardCache> mCards = new CardCollection<>();
+    private final CardCollection<CardCache> mCards = new CardCollection<>();
     public DeckSpinnerSelection mDeckSpinnerSelection;
-    private ListView mCardsListView;
+    @VisibleForTesting
+    public ListView mCardsListView;
     private SearchView mSearchView;
     private MultiColumnListAdapter mCardsAdapter;
     private String mSearchTerms;
@@ -323,12 +325,12 @@ public class CardBrowser extends NavigationDrawerActivity implements
                 getCol().getConf().put("sortType", fSortTypes[1]);
                 AnkiDroidApp.getSharedPrefs(getBaseContext()).edit()
                         .putBoolean("cardBrowserNoSorting", true)
-                        .commit();
+                        .apply();
             } else {
                 getCol().getConf().put("sortType", fSortTypes[mOrder]);
                 AnkiDroidApp.getSharedPrefs(getBaseContext()).edit()
                         .putBoolean("cardBrowserNoSorting", false)
-                        .commit();
+                        .apply();
             }
             getCol().getConf().put("sortBackwards", mOrderAsc);
             searchCards();
@@ -644,7 +646,7 @@ public class CardBrowser extends NavigationDrawerActivity implements
                 if (pos != mColumn1Index) {
                     mColumn1Index = pos;
                     AnkiDroidApp.getSharedPrefs(AnkiDroidApp.getInstance().getBaseContext()).edit()
-                            .putInt("cardBrowserColumn1", mColumn1Index).commit();
+                            .putInt("cardBrowserColumn1", mColumn1Index).apply();
                     Column[] fromMap = mCardsAdapter.getFromMapping();
                     fromMap[0] = COLUMN1_KEYS[mColumn1Index];
                     mCardsAdapter.setFromMapping(fromMap);
@@ -672,7 +674,7 @@ public class CardBrowser extends NavigationDrawerActivity implements
                 if (pos != mColumn2Index) {
                     mColumn2Index = pos;
                     AnkiDroidApp.getSharedPrefs(AnkiDroidApp.getInstance().getBaseContext()).edit()
-                            .putInt("cardBrowserColumn2", mColumn2Index).commit();
+                            .putInt("cardBrowserColumn2", mColumn2Index).apply();
                     Column[] fromMap = mCardsAdapter.getFromMapping();
                     fromMap[1] = COLUMN2_KEYS[mColumn2Index];
                     mCardsAdapter.setFromMapping(fromMap);
@@ -1441,7 +1443,7 @@ public class CardBrowser extends NavigationDrawerActivity implements
     }
 
     @Override
-    public void onSaveInstanceState(Bundle savedInstanceState) {
+    public void onSaveInstanceState(@NonNull Bundle savedInstanceState) {
         // Save current search terms
         savedInstanceState.putString("mSearchTerms", mSearchTerms);
         savedInstanceState.putLong("mOldCardId", mOldCardId);
@@ -1454,7 +1456,7 @@ public class CardBrowser extends NavigationDrawerActivity implements
     }
 
     @Override
-    public void onRestoreInstanceState(Bundle savedInstanceState) {
+    public void onRestoreInstanceState(@NonNull Bundle savedInstanceState) {
         super.onRestoreInstanceState(savedInstanceState);
         mSearchTerms = savedInstanceState.getString("mSearchTerms");
         mOldCardId = savedInstanceState.getLong("mOldCardId");
@@ -1519,10 +1521,12 @@ public class CardBrowser extends NavigationDrawerActivity implements
 
 
     private void updateList() {
-        mCardsAdapter.notifyDataSetChanged();
-        mDeckSpinnerSelection.notifyDataSetChanged();
-        onSelectionChanged();
-        updatePreviewMenuItem();
+        if (colIsOpen() && mCardsAdapter!= null) {
+            mCardsAdapter.notifyDataSetChanged();
+            mDeckSpinnerSelection.notifyDataSetChanged();
+            onSelectionChanged();
+            updatePreviewMenuItem();
+        }
     }
 
     /**
@@ -1694,9 +1698,6 @@ public class CardBrowser extends NavigationDrawerActivity implements
     }
 
 
-    private ChangeDeckHandler changeDeckHandler() {
-        return new ChangeDeckHandler(this);
-    }
     private static class ChangeDeckHandler extends ListenerWithProgressBarCloseOnFalse<Object, PairWithBoolean<Card[]>> {
         public ChangeDeckHandler(CardBrowser browser) {
             super("Card Browser - changeDeckHandler.actualOnPostExecute(CardBrowser browser)", browser);
@@ -1757,6 +1758,7 @@ public class CardBrowser extends NavigationDrawerActivity implements
     /**
      * Removes cards from view. Doesn't delete them in model (database).
      */
+    @SuppressWarnings("SameParameterValue")
     private void removeNotesView(Card[] cards, boolean reorderCards) {
         List<Long> cardIds = new ArrayList<>(cards.length);
         for (Card c : cards) {
@@ -1874,7 +1876,7 @@ public class CardBrowser extends NavigationDrawerActivity implements
         @Override
         protected void actualOnValidPostExecute(CardBrowser browser, BooleanGetter result) {
             browser.hideProgressBar();
-            browser.mActionBarTitle.setText(Integer.toString(browser.checkedCardCount()));
+            browser.mActionBarTitle.setText(String.format(getLocaleCompat(browser.getResources()), "%d", browser.checkedCardCount()));
             browser.invalidateOptionsMenu();    // maybe the availability of undo changed
             // snackbar to offer undo
             String deletedMessage = browser.getResources().getQuantityString(R.plurals.card_browser_cards_deleted, mCardsDeleted, mCardsDeleted);
@@ -2150,6 +2152,7 @@ public class CardBrowser extends NavigationDrawerActivity implements
     }
 
 
+    @SuppressWarnings("SameParameterValue")
     private void closeCardBrowser(int result) {
         closeCardBrowser(result, null);
     }
@@ -2163,29 +2166,51 @@ public class CardBrowser extends NavigationDrawerActivity implements
     /**
      * Render the second column whenever the user stops scrolling
      */
-    private final class RenderOnScroll implements AbsListView.OnScrollListener {
+    @VisibleForTesting
+    public final class RenderOnScroll implements AbsListView.OnScrollListener {
         @Override
         public void onScroll(AbsListView view, int firstVisibleItem, int visibleItemCount, int totalItemCount) {
             // Show the progress bar if scrolling to given position requires rendering of the question / answer
-            int lastVisibleItem = firstVisibleItem + visibleItemCount;
+            int lastVisibleItem = firstVisibleItem + visibleItemCount - 1;
             CardCollection<CardCache> cards = getCards();
             // List is never cleared, only reset to a new list. So it's safe here.
             int size = cards.size();
-            if ((size > 0) && (firstVisibleItem < size) && ((lastVisibleItem - 1) < size)) {
-                boolean firstLoaded = cards.get(firstVisibleItem).isLoaded();
-                // Note: max value of lastVisibleItem is totalItemCount, so need to subtract 1
-                boolean lastLoaded = cards.get(lastVisibleItem - 1).isLoaded();
-                if (!firstLoaded || !lastLoaded) {
-                    if (!mPostAutoScroll) {
-                        showProgressBar();
-                    }
-                    // Also start rendering the items on the screen every 300ms while scrolling
-                    long currentTime = SystemClock.elapsedRealtime ();
-                    if ((currentTime - mLastRenderStart > 300 || lastVisibleItem >= totalItemCount)) {
-                        mLastRenderStart = currentTime;
-                        TaskManager.cancelAllTasks(CollectionTask.RenderBrowserQA.class);
-                        TaskManager.launchCollectionTask(renderBrowserQAParams(firstVisibleItem, visibleItemCount, cards), mRenderQAHandler);
-                    }
+            if (size > 0 && visibleItemCount <= 0) {
+                // According to Mike, there used to be 5 to 10 report by hour on the beta version. All with
+                // > com.ichi2.anki.exception.ManuallyReportedException: Useless onScroll call, with size 0 firstVisibleItem 0,
+                // > lastVisibleItem 0 and visibleItemCount 0.
+
+                // This change ensure that we log more specifically case where #8821 could have occured. That is, there are cards but we
+                // are asked to display nothing.
+
+                // Note that this is not a bug. The fact that `visibleItemCount` is equal to 0 is actually authorized by the method we
+                // override and mentionned in the javadoc. It perfectly makes sens to get this order, since it can be used to know that we
+                // can delete some elements from the cache for example, since nothing is displayed.
+
+                // It would be interesting to know how often it occurs, but it is not a bug.
+                AnkiDroidApp.sendExceptionReport("CardBrowser Scroll Issue 8821", "In a search result of " + size + " cards, with totalItemCount = " + totalItemCount + ", somehow we got " + visibleItemCount + " elements to display.");
+            }
+            // In all of those cases, there is nothing to do:
+            if (size <= 0 ||
+                    firstVisibleItem >= size ||
+                    lastVisibleItem >= size ||
+                    visibleItemCount <= 0
+            ) {
+                return;
+            }
+            boolean firstLoaded = cards.get(firstVisibleItem).isLoaded();
+            // Note: max value of lastVisibleItem is totalItemCount, so need to subtract 1
+            boolean lastLoaded = cards.get(lastVisibleItem).isLoaded();
+            if (!firstLoaded || !lastLoaded) {
+                if (!mPostAutoScroll) {
+                    showProgressBar();
+                }
+                // Also start rendering the items on the screen every 300ms while scrolling
+                long currentTime = SystemClock.elapsedRealtime();
+                if ((currentTime - mLastRenderStart > 300 || lastVisibleItem + 1 >= totalItemCount)) {
+                    mLastRenderStart = currentTime;
+                    TaskManager.cancelAllTasks(CollectionTask.RenderBrowserQA.class);
+                    TaskManager.launchCollectionTask(renderBrowserQAParams(firstVisibleItem, visibleItemCount, cards), mRenderQAHandler);
                 }
             }
         }
@@ -2377,9 +2402,11 @@ public class CardBrowser extends NavigationDrawerActivity implements
             }
 
             updateMultiselectMenu();
-            mActionBarTitle.setText(Integer.toString(checkedCardCount()));
+            mActionBarTitle.setText(String.format(getLocaleCompat(getResources()), "%d", checkedCardCount()));
         } finally {
-            mCardsAdapter.notifyDataSetChanged();
+            if (colIsOpen() && mCardsAdapter != null) {
+                mCardsAdapter.notifyDataSetChanged();
+            }
         }
     }
 
@@ -2863,6 +2890,7 @@ public class CardBrowser extends NavigationDrawerActivity implements
     }
 
     @VisibleForTesting
+    @SuppressWarnings("SameParameterValue")
     void filterByFlag(int flag) {
         mCurrentFlag = flag;
         filterByFlag();
@@ -2875,6 +2903,7 @@ public class CardBrowser extends NavigationDrawerActivity implements
     }
 
     @VisibleForTesting
+    @SuppressWarnings("SameParameterValue")
     void searchCards(String searchQuery) {
         mSearchTerms = searchQuery;
         searchCards();

@@ -111,6 +111,7 @@ public class BasicAudioClipFieldController extends FieldControllerBase implement
 
             cursor.moveToFirst();
             String audioClipFullName = cursor.getString(0);
+            audioClipFullName = checkFileName(audioClipFullName);
             audioClipFullNameParts = audioClipFullName.split("\\.");
             if (audioClipFullNameParts.length < 2) {
                 try {
@@ -161,6 +162,15 @@ public class BasicAudioClipFieldController extends FieldControllerBase implement
         }
     }
 
+    /**
+     * This method replaces any character that isn't a number, letter or underscore with underscore in file name.
+     * This method doesn't check that file name is valid or not it simply operates on all file name.
+     * @param audioClipFullName name of the file.
+     * @return file name which is valid.
+     */
+    private String checkFileName(String audioClipFullName) {
+        return audioClipFullName.replaceAll("\\W+", "_");
+    }
 
     @Override
     public void onDone() { /* nothing */ }

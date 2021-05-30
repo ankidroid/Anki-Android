@@ -65,7 +65,7 @@
         <item quantity="other">%d 시간 남음</item>
     </plurals>
     <plurals name="reviewer_window_title_days">
-        <item quantity="other">%d일 남음</item>
+        <item quantity="other">%d일 %d시간 남음</item>
     </plurals>
     <string name="no_cards_placeholder_title">이 컬렉션은 비어 있습니다</string>
     <string name="no_cards_placeholder_description">＋아이콘을 눌러 \n카드를 추가해 주십시오</string>
@@ -108,14 +108,14 @@
     <string name="menu_flag_card_two">朱黃色플래그</string>
     <string name="menu_flag_card_three">綠色플래그</string>
     <string name="menu_flag_card_four">靑色플래그</string>
-    <string name="menu_edit_tags">태그編輯</string>
+    <string name="menu_edit_tags">태그 수정</string>
     <string name="delete_note_message">다음 노트와 그 노트의 모든 카드를 정말로 삭제하시겠습니까?\n%s</string>
     <string name="menu_select">텍스트 선택</string>
     <string name="menu_lookup">텍스트 검색</string>
     <string name="menu_search">%1$s에서 찾아보기</string>
     <string name="menu_mark_note">노트 표시</string>
     <string name="menu_unmark_note">노트 표시 해제</string>
-    <string name="menu_toggle_mic_tool_bar">發音確認</string>
+    <string name="menu_toggle_mic_tool_bar">발음 확인</string>
     <string name="new_deck">카드 묶음 만들기</string>
     <string name="new_dynamic_deck">필터링된 카드 묶음 만들기</string>
     <string name="night_mode">야간 모드</string>
@@ -134,17 +134,17 @@
     -->
     <string name="time_quantity_seconds">%d 초</string>
     <string name="time_quantity_minutes">%d 분</string>
-    <string name="time_quantity_hours_minutes">%1$d時間%2$d分</string>
+    <string name="time_quantity_hours_minutes">%1$d시간 %2$d분</string>
     <string name="time_quantity_hours">%d 시</string>
     <string name="time_quantity_days">%d 일</string>
-    <string name="time_quantity_days_hours">%1$d日%2$d時間</string>
+    <string name="time_quantity_days_hours">%1$d일 %2$d시간</string>
     <string name="time_quantity_months">%.1f 월</string>
     <string name="time_quantity_years">%.1f 년</string>
     <!-- or "%.1f a" -->
     <string name="rebuild_filtered_deck">필터된 덱을 再構築하고있읍니다</string>
     <string name="rebuild_cram_label">재생성</string>
     <string name="empty_cram_label">비우기</string>
-    <string name="create_subdeck">서브덱生成</string>
+    <string name="create_subdeck">하위 뭉치 만들기</string>
     <string name="empty_filtered_deck">필터덱을 비우고 있습니다</string>
     <string name="custom_study_deck_name">맞춤 학습 세션</string>
     <string name="custom_study_deck_exists">기존의 맞춤 학습 덱의 이름을 먼저 변경하세요.</string>
@@ -183,14 +183,14 @@
         <item quantity="other">\'%2$s\' 카드 형식과 %1$d 카드를 삭제할까요?</item>
     </plurals>
     <string name="invalid_template">카드를 생성할 수 없습니다</string>
-    <string name="card_template_editor_would_delete_note">이 카드 타이프를 削除하면、하나以上의 노트가 削除됩니다。于先새로운 카드 타이프를 生成해주십시오。</string>
-    <string name="card_template_editor_save_error">카드 템프렛의 變更事項을 保存할수없읍니다: %s</string>
-    <string name="template_for_current_card_deleted">現在카드의 카드타이프가 削除되었읍니다。</string>
+    <string name="card_template_editor_would_delete_note">해당 카드 유형을 삭제하면 하나, 또는 여러 개의 노트가 삭제됩니다. 먼저 새로운 카드 유형을 만들어주십시오.</string>
+    <string name="card_template_editor_save_error">카드 템플릿 변경 사항을 저장할 수 없습니다. %s</string>
+    <string name="template_for_current_card_deleted">현재 카드의 카드 유형은 삭제되었습니다.</string>
     <!-- Card Browser Appearance -->
     <string name="card_template_browser_appearance_title">카드表示設定</string>
     <string name="current_and_default_deck">%1$s (%2$s)</string>
     <!-- card Info -->
-    <string name="card_info_title">카드情報</string>
+    <string name="card_info_title">카드 정보</string>
     <!-- Permissions -->
     <string name="read_write_permission_label">AnkiDroid 데이터베이스에 읽고 쓰기</string>
     <string name="read_write_permission_description">기존의 노트, 카드, 노트 유형, 카드 묶음을 접근 및 생성</string>
@@ -206,11 +206,11 @@
     <string name="wrong_tag_closed">{{/%1$s}}\"를 찾았지만, \"{{/%2$s}}\"가 필요합니다.</string>
     <string name="filter_error">필터%s에誤謬가있습니다</string>
     <!-- Sync conflict -->
-    <string name="sync_conflict_message_new">The collections can’t be combined.\nWhich collection do you want to keep?</string>
+    <string name="sync_conflict_message_new">컬렉션을 합칠 수 없습니다.\n어떤 컬렉션을 유지하시겠습니까?</string>
     <string name="sync_conflict_keep_local_new" comment="Select AnkiDroid files to keep while syncing">AnkiDroid</string>
     <string name="sync_conflict_keep_remote_new" comment="Select AnkiWeb files to keep while syncing">AnkiWeb</string>
-    <string name="sync_conflict_remote_confirm_new">Replace your collection on AnkiDroid with your collection from AnkiWeb?</string>
-    <string name="sync_conflict_local_confirm_new">Replace your collection on AnkiWeb with your collection from AnkiDroid?</string>
-    <string name="sync_conflict_title_new">Select collection to keep</string>
-    <string name="sync_conflict_replace_title">Replace collection</string>
+    <string name="sync_conflict_remote_confirm_new">AnkiDroid의 컬렉션을 AnkiWeb의 컬렉션으로 덮어쓰시겠습니까?</string>
+    <string name="sync_conflict_local_confirm_new">AnkiDroid의 컬렉션을 AnkiWeb의 컬렉션으로 덮어쓰시겠습니까?</string>
+    <string name="sync_conflict_title_new">유지할 컬렉션 선택</string>
+    <string name="sync_conflict_replace_title">컬렉션을 덮어쓰는 중...</string>
 </resources>

@@ -88,12 +88,12 @@
         <item>頂部</item>
         <item>底部</item>
     </string-array>
-    <string name="gestures" maxLength="41">開啓手勢</string>
+    <string name="gestures" maxLength="41">開啟手勢</string>
     <string name="gestures_summ">替動作設定手勢，像是回答問題和編輯卡片。</string>
     <string name="gestures_allow_links" maxLength="41">忽略連結上的點擊手勢</string>
     <string name="gestures_allow_links_summary">如果一個連結/提示被點擊，手勢將不被處理</string>
     <string name="gestures_corner_touch" maxLength="41">九點邊角觸控</string>
-    <string name="gestures_corner_touch_summary">容許在屏幕角落觸控</string>
+    <string name="gestures_corner_touch_summary">允許在螢幕角落進行觸控</string>
     <string name="gestures_swipe_up" maxLength="41">向上撥動</string>
     <string name="gestures_swipe_down" maxLength="41">向下撥動</string>
     <string name="gestures_swipe_left" maxLength="41">向左撥動</string>
@@ -129,7 +129,7 @@
     <string name="sync_account_summ_logged_out">未登入</string>
     <string name="sync_account_summ_logged_in">%s</string>
     <string name="automatic_sync_choice" maxLength="41">自動同步</string>
-    <string name="automatic_sync_choice_summ">如果距離上次同步超過 10 分鐘，則在開啓/關閉 app 時自動同步。</string>
+    <string name="automatic_sync_choice_summ">如果距離上次同步超過 10 分鐘，則在開啟/關閉程式時自動同步。</string>
     <string name="sync_status_badge" maxLength="41">顯示同步狀態</string>
     <string name="sync_status_badge_summ">可上傳變更時，變更同步圖標</string>
     <string name="day_theme" maxLength="41">白天主題</string>
@@ -151,8 +151,8 @@
     <string name="timeout_answer_seconds_summ" comment="The time to wait (in seconds) in the reviewer before automatically showing the next question or answer">XXX 秒</string>
     <string name="timeout_question_seconds" maxLength="41">顯示下一題的時間</string>
     <string name="select_locale_title">選擇語言</string>
-    <string name="software_render" maxLength="41">Disable card hardware render</string>
-    <string name="software_render_summ">Hardware render is faster but may have problems, specifically on Android 8/8.1. If you cannot see parts of the card review user interface, try this setting.</string>
+    <string name="software_render" maxLength="41">禁用卡片硬體渲染</string>
+    <string name="software_render_summ">硬體渲染速度較快，但可能存在問題，特別是位於 Android 8/8.1 中。如果您看不到部分卡片復習使用者頁面，請嘗試此設定。</string>
     <string name="safe_display" maxLength="41">安全顯示模式</string>
     <string name="safe_display_summ">關閉所有動畫且使用較安全的方法來繪製卡片。電子墨水裝置可能會需要這個方法。</string>
     <string name="disable_extended_text_ui" maxLength="41">禁用單域編輯模式</string>
@@ -174,21 +174,21 @@
     <string name="learn_cutoff" maxLength="41">提早學習上限</string>
     <string name="time_limit" maxLength="41">時間盒的時間上限</string>
     <string name="time_limit_summ">XXX分鐘</string>
-    <string name="new_timezone" maxLength="41">新的時區處理</string>
-    <string name="day_offset_with_description" maxLength="41">Start of next day</string>
+    <string name="new_timezone" maxLength="41">時區變更處理</string>
+    <string name="day_offset_with_description" maxLength="41">下一天開始的時間</string>
     <string name="day_offset_summ">午夜過後 XXX 小時</string>
-    <string name="xlabel_dayoffset_seekbar" maxLength="41">Midnight</string>
-    <string name="ylabel_dayoffset_seekbar" maxLength="41">11PM</string>
-    <string name="sched_v2" maxLength="41">V2 scheduler</string>
-    <string name="sched_v2_summ">Enable the new scheduler. Forces changes in one direction on next sync</string>
+    <string name="xlabel_dayoffset_seekbar" maxLength="41">午夜</string>
+    <string name="ylabel_dayoffset_seekbar" maxLength="41">晚上 11 点</string>
+    <string name="sched_v2" maxLength="41">V2調度器</string>
+    <string name="sched_v2_summ">啟用新版調度器。在下次同步時强制單向更變</string>
     <string name="sched_ver_toggle_title">確認</string>
     <string name="sched_ver_2to1">這將重設學習中的所有卡片，清除已過濾牌組，並改變排程器版本。繼續嗎？</string>
     <string name="sched_ver_1to2">實驗性排程器可能造成不正確的排程。請確認您已預先閱讀文檔。繼續嗎？</string>
-    <string name="pref_keep_screen_on" maxLength="41">保持螢幕開啓</string>
+    <string name="pref_keep_screen_on" maxLength="41">保持螢幕開啟</string>
     <string name="pref_keep_screen_on_summ">關閉螢幕逾時</string>
     <string name="convert_fen_text" maxLength="41">支援國際象棋記譜法</string>
     <string name="convert_fen_text_summ">使用福斯夫－愛德華茲記號法來畫棋盤。記號必須用[fen][/fen]標籤括起來。</string>
-    <string name="enable_api_title" maxLength="41">開啓 AnkiDroid API</string>
+    <string name="enable_api_title" maxLength="41">開啟 AnkiDroid API</string>
     <string name="enable_api_summary">讓其他應用程式不需經過你同意，即可連結到 AnkiDroid 且讀寫檔案</string>
     <string name="custom_buttons" maxLength="41">頂欄按鈕</string>
     <string name="custom_buttons_summary">自訂頂部列按鈕</string>
@@ -287,12 +287,12 @@
     <string name="analytics_dialog_title">幫助 AnkiDroid 做得更好！</string>
     <string name="analytics_title" maxLength="41">分享功能使用方式</string>
     <string name="analytics_summ">你可以通過幫助開發團隊看看人們在用什麼功能，來為 AnkiDroid 做出貢獻</string>
-    <string name="note_editor_replace_newlines" maxLength="41">以HTML取代新行</string>
-    <string name="note_editor_replace_newlines_summ">In the Note Editor, convert any instances of &lt;br&gt; to newlines when editing a card.</string>
-    <string name="no_code_formatting" maxLength="41">Simple typed answer formatting</string>
-    <string name="no_code_formatting_summ">Fixes ‘􏿾’ appearing in typed answer results</string>
-    <string name="type_in_answer_focus" maxLength="41">Focus ‘type in answer’</string>
-    <string name="type_in_answer_focus_summ">Automatically focus the ‘type in answer’ field in the reviewer</string>
+    <string name="note_editor_replace_newlines" maxLength="41">以HTML取代新列</string>
+    <string name="note_editor_replace_newlines_summ">在筆記編輯器中，編輯卡片時將&lt;br&gt;的任何實例轉換至新一列。</string>
+    <string name="no_code_formatting" maxLength="41">簡單輸入的答案模式</string>
+    <string name="no_code_formatting_summ">修復在輸入的答按結果中出現的“􏿾”</string>
+    <string name="type_in_answer_focus" maxLength="41">聚焦“輸入答案”</string>
+    <string name="type_in_answer_focus_summ">自動聚焦在復習者的“輸入答案”字段</string>
     <!-- Open Changelog-->
-    <string name="open_changelog">Open Changelog</string>
+    <string name="open_changelog">打開更新日志</string>
 </resources>

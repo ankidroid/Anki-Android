@@ -269,7 +269,7 @@
     <string name="white_board_image_save_failed">保存白板图像失败。 %s</string>
     <string name="white_board_image_saved">白板图像已保存到 %s</string>
     <string name="title_whiteboard_pen_color">白板笔颜色</string>
-    <string name="title_whiteboard_editor">Whiteboard editor</string>
+    <string name="title_whiteboard_editor">白板编辑器</string>
     <!-- CSV/Note Import -->
     <string name="note_importer_empty_cards_found"><![CDATA[找到空的卡片。请运行 工具 > 空卡片。]]></string>
     <string name="note_importer_error_empty_first_field">第一个字段为空：%s</string>

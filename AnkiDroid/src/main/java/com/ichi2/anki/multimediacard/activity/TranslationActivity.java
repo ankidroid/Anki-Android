@@ -38,8 +38,10 @@ import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
 
-import com.google.gson.Gson;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.ichi2.anki.AnkiDroidApp;
+import com.ichi2.anki.AnkiSerialization;
 import com.ichi2.anki.R;
 import com.ichi2.anki.UIUtils;
 import com.ichi2.anki.multimediacard.glosbe.json.Meaning;
@@ -284,8 +286,15 @@ public class TranslationActivity extends FragmentActivity implements DialogInter
             return;
         }
 
-        Gson gson = new Gson();
-        Response resp = gson.fromJson(mTranslation, Response.class);
+        ObjectMapper objectMapper = AnkiSerialization.getObjectMapper();
+        Response resp;
+        try {
+            resp = objectMapper.readValue(mTranslation, Response.class);
+        } catch (JsonProcessingException e) {
+            Timber.w(e);
+            returnFailure(getText(R.string.multimedia_editor_trans_getting_failure).toString());
+            return;
+        }
 
         if (resp == null) {
             returnFailure(getText(R.string.multimedia_editor_trans_getting_failure).toString());

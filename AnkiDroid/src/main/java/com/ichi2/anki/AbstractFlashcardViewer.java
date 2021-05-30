@@ -396,15 +396,6 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
     // LISTENERS
     // ----------------------------------------------------------------------------
 
-    private final Handler mHandler = new Handler() {
-
-        @Override
-        public void handleMessage(Message msg) {
-            mSoundPlayer.stopSounds();
-            mSoundPlayer.playSound((String) msg.obj, null, null, getSoundErrorListener());
-        }
-    };
-
     private final Handler mLongClickHandler = new Handler();
     private final Runnable mLongClickTestRunnable = new Runnable() {
         @Override
@@ -2124,7 +2115,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
         // If the user wants to show the answer automatically
         if (mUseTimer) {
             long delay = mWaitAnswerSecond * 1000 + mUseTimerDynamicMS;
-            if (delay > 0) {
+            if (mWaitAnswerSecond > 0) {  // a wait of zero means auto-advance is disabled
                 mTimeoutHandler.removeCallbacks(mShowAnswerTask);
                 if (!mSpeakText) {
                     mTimeoutHandler.postDelayed(mShowAnswerTask, delay);
@@ -2206,7 +2197,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
         // If the user wants to show the next question automatically
         if (mUseTimer) {
             long delay = mWaitQuestionSecond * 1000 + mUseTimerDynamicMS;
-            if (delay > 0) {
+            if (mWaitQuestionSecond > 0) {
                 mTimeoutHandler.removeCallbacks(mShowQuestionTask);
                 if (!mSpeakText) {
                     mTimeoutHandler.postDelayed(mShowQuestionTask, delay);
@@ -2314,8 +2305,11 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
         // CSS class for card-specific styling
         String cardClass = mCardAppearance.getCardClass(mCurrentCard.getOrd() + 1, Themes.getCurrentTheme(this));
 
+        String scripts = "";
         if (MathJax.textContainsMathjax(content)) {
             cardClass += " mathjax-needs-to-render";
+            scripts += "        <script src=\"file:///android_asset/mathjax/conf.js\"> </script>\n" +
+                    "        <script src=\"file:///android_asset/mathjax/tex-chtml.js\"> </script>";
         }
 
         if (isInNightMode()) {
@@ -2324,7 +2318,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
             }
         }
 
-        mCardContent = mCardTemplate.render(content, style, cardClass);
+        mCardContent = mCardTemplate.render(content, style, scripts, cardClass);
         Timber.d("base url = %s", mBaseUrl);
 
         if (AnkiDroidApp.getSharedPrefs(this).getBoolean("html_javascript_debugging", false)) {
@@ -3516,10 +3510,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
         // We play sounds through these links when a user taps the sound icon.
         private boolean filterUrl(String url) {
             if (url.startsWith("playsound:")) {
-                // Send a message that will be handled on the UI thread.
-                Message msg = Message.obtain();
-                msg.obj = url.replaceFirst("playsound:", "");
-                mHandler.sendMessage(msg);
+                controlSound(url);
                 return true;
             }
             if (url.startsWith("file") || url.startsWith("data:")) {
@@ -3704,6 +3695,24 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
                 Timber.w(e); // Don't crash if the intent is not handled
             }
             return true;
+        }
+
+        /**
+         * Check if the user clicked on another audio icon or the audio itself finished
+         * Also, Check if the user clicked on the running audio icon
+         * @param url
+         */
+        private void controlSound(String url) {
+            url = url.replaceFirst("playsound:", "");
+            if (!url.equals(mSoundPlayer.getCurrentAudioUri()) || mSoundPlayer.isCurrentAudioFinished()) {
+                onCurrentAudioChanged(url);
+            } else {
+                mSoundPlayer.playOrPauseSound();
+            }
+        }
+
+        private void onCurrentAudioChanged(String url) {
+            mSoundPlayer.playSound(url, null, null, getSoundErrorListener());
         }
 
 
@@ -4021,16 +4030,14 @@ see card.js for available functions
 
             try {
                 data = new JSONObject(jsonData);
-                if (!(data == JSONObject.NULL)) {
-                    mCardSuppliedApiVersion = data.optString("version", "");
-                    mCardSuppliedDeveloperContact  = data.optString("developer", "");
+                mCardSuppliedApiVersion = data.optString("version", "");
+                mCardSuppliedDeveloperContact  = data.optString("developer", "");
 
-                    if (requireApiVersion(mCardSuppliedApiVersion, mCardSuppliedDeveloperContact)) {
-                        enableJsApi();
-                    }
-
-                    apiStatusJson = JSONObject.fromMap(mJsApiListMap).toString();
+                if (requireApiVersion(mCardSuppliedApiVersion, mCardSuppliedDeveloperContact)) {
+                    enableJsApi();
                 }
+
+                apiStatusJson = JSONObject.fromMap(mJsApiListMap).toString();
 
             } catch (JSONException j) {
                 Timber.w(j);

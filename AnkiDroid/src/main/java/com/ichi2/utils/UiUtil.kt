@@ -13,24 +13,26 @@
  *  You should have received a copy of the GNU General Public License along with
  *  this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+package com.ichi2.utils
 
-package com.ichi2.utils;
+import android.graphics.Typeface
+import android.text.Spannable
+import android.text.SpannableStringBuilder
+import android.text.style.ForegroundColorSpan
+import android.text.style.StyleSpan
 
-import android.text.Spannable;
-import android.text.SpannableStringBuilder;
-import android.text.style.ForegroundColorSpan;
-import android.text.style.StyleSpan;
-
-public class UiUtil {
-    public static Spannable makeBold(String s) {
-        SpannableStringBuilder str = new SpannableStringBuilder(s);
-        str.setSpan(new StyleSpan(android.graphics.Typeface.BOLD), 0, s.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
-        return str;
+object UiUtil {
+    @JvmStatic
+    fun makeBold(s: String): Spannable {
+        val str = SpannableStringBuilder(s)
+        str.setSpan(StyleSpan(Typeface.BOLD), 0, s.length, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE)
+        return str
     }
 
-    public static Spannable makeColored(String s, int color) {
-        SpannableStringBuilder str = new SpannableStringBuilder(s);
-        str.setSpan(new ForegroundColorSpan(color), 0, s.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
-        return str;
+    @JvmStatic
+    fun makeColored(s: String, color: Int): Spannable {
+        val str = SpannableStringBuilder(s)
+        str.setSpan(ForegroundColorSpan(color), 0, s.length, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE)
+        return str
     }
 }

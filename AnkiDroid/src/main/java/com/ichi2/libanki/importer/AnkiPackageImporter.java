@@ -17,8 +17,11 @@
 package com.ichi2.libanki.importer;
 
 
-import com.google.gson.stream.JsonReader;
+import com.fasterxml.jackson.core.JsonFactory;
+import com.fasterxml.jackson.core.JsonParser;
+import com.fasterxml.jackson.core.JsonToken;
 import com.ichi2.anki.AnkiDroidApp;
+import com.ichi2.anki.AnkiSerialization;
 import com.ichi2.anki.BackupManager;
 import com.ichi2.anki.CollectionHelper;
 import com.ichi2.anki.R;
@@ -124,13 +127,15 @@ public class AnkiPackageImporter extends Anki2Importer {
             File dir = new File(dirPath);
             // We need the opposite mapping in AnkiDroid since our extraction method requires it.
             Map<String, String> numToName = new HashMap<>(); // Number of file in mediamMMapFile as json. Not knowable
-            try (JsonReader jr = new JsonReader(new FileReader(mediaMapFile))) {
-                jr.beginObject();
+            try (JsonParser jp = AnkiSerialization.getFactory().createParser(mediaMapFile)) {
                 String name; // v in anki
                 String num; // k in anki
-                while (jr.hasNext()) {
-                    num = jr.nextName();
-                    name = jr.nextString();
+                if (jp.nextToken() != JsonToken.START_OBJECT) {
+                    throw new IllegalStateException("Expected content to be an object");
+                }
+                while (jp.nextToken() != JsonToken.END_OBJECT) {
+                    num = jp.currentName();
+                    name = jp.nextTextValue();
                     File file= new File(dir, name);
                     if (!Utils.isInside(file, dir)) {
                         throw (new RuntimeException("Invalid file"));
@@ -139,7 +144,6 @@ public class AnkiPackageImporter extends Anki2Importer {
                     mNameToNum.put(name, num);
                     numToName.put(num, name);
                 }
-                jr.endObject();
             } catch (FileNotFoundException e) {
                 Timber.e("Apkg did not contain a media dict. No media will be imported.");
             } catch (IOException e) {

@@ -172,8 +172,8 @@
     <string name="import_error_not_apkg_extension">ଫାଇଲ୍ ନାମ “%s” ପାଖରେ .apkg କିମ୍ବା .colpkg extension ନାହିଁ</string>
     <string name="import_error_load_imported_database">Anki ଡାଟାବେସ୍ (.anki2) ପ୍ରତିସ୍ଥାପନ ଗୁଡ଼ିକ ଏପର୍ଯ୍ୟନ୍ତ ସମର୍ଥିତ ନୁହେଁ। ପ୍ରତିସ୍ଥାପନ ନିର୍ଦ୍ଦେଶାବଳୀ ପାଇଁ ଦୟାକରି ମାନୁଆଲ୍ ଦେଖନ୍ତୁ।</string>
     <string name="import_error_content_provider">ମନୋନୀତ ଫାଇଲ୍ AnkiDroid ଦ୍ୱାରା ସ୍ୱୟଂଚାଳିତ ଭାବରେ ଆମଦାନୀ ହୋଇପାରିବ ନାହିଁ। Anki ଫାଇଲଗୁଡ଼ିକୁ କିପରି ମାନୁଆଲ ଆମଦାନୀ କରିବେ ଦୟାକରି ଉପଭୋକ୍ତା ମାନୁଆଲ୍ ଦେଖନ୍ତୁ: \n%s</string>
-    <string name="import_error_copy_file_to_cache">copyFileToCache () ବିଫଳ ହେଲା (ସମ୍ଭବତ ଆଉ ଷ୍ଟୋରେଜ୍ ନାହିଁ)</string>
-    <string name="import_error_unhandled_scheme">\"%s\" ରୁ ଅନିୟନ୍ତ୍ରିତ ଆମଦାନୀ</string>
+    <string name="import_error_copy_file_to_cache">copyFileToCache() ବିଫଳ ହେଲା (ସମ୍ଭବତ ଆଉ ଷ୍ଟୋରେଜ୍ ନାହିଁ)</string>
+    <string name="import_error_unhandled_scheme">“%s” ରୁ ଅନିୟନ୍ତ୍ରିତ ଆମଦାନୀ</string>
     <string name="import_replacing">ସଂଗ୍ରହକୁ ବଦଳାଉଛି&#8230;</string>
     <string name="import_interrupted">ଆମଦାନୀ ବାଧାପ୍ରାପ୍ତ: AnkiDroid ବନ୍ଦ ହୋଇଗଲା |</string>
     <string name="export_include_schedule">କାର୍ଯ୍ୟସୂଚୀ ଅନ୍ତର୍ଭୂକ୍ତ କରନ୍ତୁ</string>
@@ -205,7 +205,7 @@
     <string name="more_options">ଅଧିକ</string>
     <string name="dyn_deck_desc">ସାଧାରଣ କାର୍ଯ୍ୟସୂଚୀ ବାହାରେ ଅଧ୍ୟୟନ ପାଇଁ ଏହା ଏକ ସ୍ୱତନ୍ତ୍ର ତାସଖଣ୍ଡ। ଆପଣ ସମୀକ୍ଷା କରିବା ପରେ ପତ୍ରଗୁଡ଼ିକ ଆପେ ସେମାନଙ୍କର ମୂଳ ତାସଖଣ୍ଡକୁ ଫେରି ଆସିବେ। ତାସଖଣ୍ଡ  ତାଲିକାରୁ ଏହି ତାସଖଣ୍ଡ ବିଲୋପ କରିବା ସମସ୍ତ ଅବଶିଷ୍ଟ ପତ୍ରଗୁଡ଼ିକୁ ସେମାନଙ୍କର ମୂଳ ତାସଖଣ୍ଡକୁ ଫେରାଇବ।</string>
     <string name="steps_error">ପର୍ଯ୍ୟାୟଟି ୦ ଠାରୁ ଅଧିକ ଗୋଟେ ସଂଖ୍ୟା ହବା ଉଚିତ</string>
-    <string name="steps_min_error">ଅତିକାମରେ ୧ଟିଏ ପର୍ଯ୍ୟାୟ ଆବଶ୍ୟକ</string>
+    <string name="steps_min_error">ଅତିକମରେ ଗୋଟିଏ ପଦକ୍ଷେପ ଆବଶ୍ୟକ</string>
     <string name="sched_end">(ସମାପ୍ତି)</string>
     <string name="sched_unbury_action">ତାଙ୍କୁ ଦେଖିବାକୁ ମେନୁରେ “ସ୍ଥଗିତରୁ ଫେରାଇ ଆଣ” ବିକଳ୍ପ ବାଛନ୍ତୁ</string>
     <string name="sched_has_buried">କିଛି ସମ୍ପୃକ୍ତ କିମ୍ବା ସ୍ଥଗିତ ହୋଇଥିବା କାର୍ଡ ଆସନ୍ତାକାଲି ପର୍ଯ୍ୟନ୍ତ ବିଳମ୍ବ କରାଯାଇଥିଲା</string>
@@ -276,10 +276,10 @@
     <string name="ankidroid_turn_on_fullscreen_nav_drawer">ଜାଭାସ୍କ୍ରିପ୍ଟ ବ୍ୟବହାର କରି ଶୋ ନେଭିଗେସନ୍ ଡ୍ରୟର ବ୍ୟବହାର କରିବାକୁ ଦୟାକରି ପୂର୍ଣ ସ୍କ୍ରିନ୍ ଚାଲୁ କରନ୍ତୁ।</string>
     <string name="ankidroid_turn_on_fullscreen_options_menu">JavaScript ବ୍ୟବହାର କରି ବିକଳ୍ପ ମେନୁ ଦେଖାଇବାକୁ ପୂର୍ଣ୍ଣ ସ୍କ୍ରିନ୍ ଚାଲୁ କରନ୍ତୁ।</string>
     <!-- Whiteboard save image message in Reviewer -->
-    <string name="white_board_image_save_failed">ଧଳାପଟା ଛବି ଦେଖିବାରେ ବିଫଳ। %s</string>
+    <string name="white_board_image_save_failed">ଧଳାପଟା ଛବି ସଂରକ୍ଷଣ କରିବାରେ ବିଫଳ। %s</string>
     <string name="white_board_image_saved">ଧଳାପଟା ଛବି %sରେ ସଂରକ୍ଷିତ</string>
     <string name="title_whiteboard_pen_color">ଧଳାପଟା କଲମ ରଙ୍ଗ</string>
-    <string name="title_whiteboard_editor">Whiteboard editor</string>
+    <string name="title_whiteboard_editor">ଧଳାପଟା ସମ୍ପାଦକ</string>
     <!-- CSV/Note Import -->
     <string name="note_importer_empty_cards_found"><![CDATA[ଖାଲି ପତ୍ର ମିଳିଲା। ଦୟାକରି ଉପକରଣଗୁଡିକ> ଖାଲି ପତ୍ରଗୁଡିକ ଚଲାନ୍ତୁ।]]></string>
     <string name="note_importer_error_empty_first_field">ଖାଲି ଥିବା ପ୍ରଥମ କ୍ଷେତ୍ର : %s</string>

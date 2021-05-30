@@ -36,6 +36,7 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.ViewTreeObserver;
 import android.webkit.WebView;
 import android.widget.ProgressBar;
 
@@ -43,6 +44,7 @@ import com.google.android.material.tabs.TabLayout;
 import com.google.android.material.tabs.TabLayoutMediator;
 import com.ichi2.anim.ActivityTransitionAnimation;
 import com.ichi2.anki.dialogs.DeckSelectionDialog;
+import com.ichi2.anki.runtimetools.TaskOperations;
 import com.ichi2.anki.stats.AnkiStatsTaskHandler;
 import com.ichi2.anki.stats.ChartView;
 import com.ichi2.anki.widgets.DeckDropDownAdapter;
@@ -104,6 +106,19 @@ public class Statistics extends NavigationDrawerActivity implements
         mViewPager.setOffscreenPageLimit(8);
         mSlidingTabLayout = findViewById(R.id.sliding_tabs);
 
+        // Fixes #8984: scroll to position 0 in RTL layouts
+        ViewTreeObserver tabObserver = mSlidingTabLayout.getViewTreeObserver();
+        tabObserver.addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
+            // Note: we can't use a lambda as we use 'this' to refer to the class.
+            @Override
+            public void onGlobalLayout() {
+                // we need this here: If we select tab 0 before in an RTL context the layout has been drawn,
+                // then it doesn't perform a scroll animation and selects the wrong element
+                mSlidingTabLayout.getViewTreeObserver().removeOnGlobalLayoutListener(this);
+                mSlidingTabLayout.selectTab(mSlidingTabLayout.getTabAt(0));
+            }
+        });
+
         // Setup Task Handler
         mTaskHandler = AnkiStatsTaskHandler.getInstance(col);
 
@@ -118,6 +133,8 @@ public class Statistics extends NavigationDrawerActivity implements
         mDeckSpinnerSelection.initializeActionBarDeckSpinner();
         mDeckSpinnerSelection.setShowAllDecks(true);
         mDeckSpinnerSelection.selectDeckById(deckId);
+        mTaskHandler.setDeckId(deckId);
+        mViewPager.getAdapter().notifyDataSetChanged();
     }
 
     @Override
@@ -253,6 +270,7 @@ public class Statistics extends NavigationDrawerActivity implements
         //track current settings for each individual fragment
         protected long mDeckId;
         protected AsyncTask mStatisticsTask;
+        protected AsyncTask mStatisticsOverviewTask;
         private ViewPager2 mActivityPager;
         private TabLayout mSlidingTabLayout;
         private TabLayoutMediator mTabLayoutMediator;
@@ -310,14 +328,19 @@ public class Statistics extends NavigationDrawerActivity implements
 
         @Override
         public void onDestroy() {
-            if (mStatisticsTask != null && !mStatisticsTask.isCancelled()) {
-                mStatisticsTask.cancel(true);
-            }
+            cancelTasks();
             if (mActivityPager.getAdapter() != null) {
                 mActivityPager.getAdapter().unregisterAdapterDataObserver(mDataObserver);
             }
             super.onDestroy();
         }
+
+        protected void cancelTasks() {
+            Timber.w("canceling tasks");
+            TaskOperations.stopTaskGracefully(mStatisticsTask);
+            TaskOperations.stopTaskGracefully(mStatisticsOverviewTask);
+        }
+
 
         private String getTabTitle(int position) {
             Locale l = Locale.getDefault();
@@ -506,9 +529,7 @@ public class Statistics extends NavigationDrawerActivity implements
                     mProgressBar.setVisibility(View.VISIBLE);
                     mChart.setVisibility(View.GONE);
                     mDeckId = ((Statistics) requireActivity()).getDeckId();
-                    if (mStatisticsTask != null && !mStatisticsTask.isCancelled()) {
-                        mStatisticsTask.cancel(true);
-                    }
+                    cancelTasks();
                     createChart();
                 }
             }
@@ -585,7 +606,7 @@ public class Statistics extends NavigationDrawerActivity implements
 
         private void createStatisticOverview(){
             AnkiStatsTaskHandler handler = (((Statistics)requireActivity()).getTaskHandler());
-            mStatisticsTask = handler.createStatisticsOverview(mWebView, mProgressBar);
+            mStatisticsOverviewTask = handler.createStatisticsOverview(mWebView, mProgressBar);
         }
 
 
@@ -600,9 +621,7 @@ public class Statistics extends NavigationDrawerActivity implements
                 mProgressBar.setVisibility(View.VISIBLE);
                 mWebView.setVisibility(View.GONE);
                 mDeckId = ((Statistics) requireActivity()).getDeckId();
-                if (mStatisticsTask != null && !mStatisticsTask.isCancelled()) {
-                    mStatisticsTask.cancel(true);
-                }
+                cancelTasks();
                 createStatisticOverview();
             }
         }

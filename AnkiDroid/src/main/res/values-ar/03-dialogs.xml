@@ -138,8 +138,8 @@
     <string name="import_complete_count">البطاقات المستوردة: %d</string>
     <string name="sd_card_full_title">بطاقة الـSD ممتلئة</string>
     <string name="sd_card_almost_full_title">بطاقة الـSD ممتلئة تقريبًا</string>
-    <string name="no_space_to_downgrade_title">No space</string>
-    <string name="no_space_to_downgrade_content">AnkiDroid needs %s free storage space to continue. Please clear some space</string>
+    <string name="no_space_to_downgrade_title">لا توجد مساحة</string>
+    <string name="no_space_to_downgrade_content">يحتاج أنكيدرويد %s من مساحة التخزين الخالية ليُكمل. فضلًا أخلِ بعض المساحة</string>
     <string name="restore_backup_title">هل تريد استرجاع النسخة الاحتياطية؟</string>
     <string name="restore_backup">ستُستبدل مجموعتك بنسخة أقدم. ستفقد أي تغيير غير محفوظ.</string>
     <string name="dialog_cancel">إلغاء</string>
@@ -269,11 +269,11 @@
         <item quantity="many">قد تبدأ المزامنة التلقائية خلال %d ثانية</item>
         <item quantity="other">قد تبدأ المزامنة التلقائية خلال %d ثانية</item>
     </plurals>
-    <string name="deck_picker_new">Number of new cards to see today in this deck.</string>
-    <string name="deck_picker_rev">Number of cards due today in this deck.</string>
-    <string name="deck_picker_lrn">Number of cards in learning in this deck.</string>
+    <string name="deck_picker_new">عدد البطاقات الجديدة لتراها اليوم من هذه الرزمة.</string>
+    <string name="deck_picker_rev">عدد البطاقات التي موعدها اليوم في هذه الرزمة.</string>
+    <string name="deck_picker_lrn">عدد بطاقات التعلّم في هذه الرزمة.</string>
     <!-- This description is valid fos
     sched V2. For V1, it was counting the number of repetitions of cards in learning. This approximation is acceptable
     for the sake of simplicity and because V1 will leave.-->
-    <string name="deck_picker_counts">Open the deck overview page containing the number of cards to see today.</string>
+    <string name="deck_picker_counts">افتح صفحة مراجعة الرزمة،  والتي تحتوي عدد البطاقات التي تراها اليوم.</string>
 </resources>
