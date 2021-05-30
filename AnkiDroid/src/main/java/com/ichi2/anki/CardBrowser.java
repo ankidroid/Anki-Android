@@ -18,7 +18,6 @@
 
 package com.ichi2.anki;
 
-import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.content.BroadcastReceiver;
 import android.content.Context;
@@ -85,6 +84,7 @@ import com.ichi2.libanki.Utils;
 import com.ichi2.libanki.Deck;
 import com.ichi2.libanki.stats.Stats;
 import com.ichi2.themes.Themes;
+import com.ichi2.ui.CardBrowserSearchView;
 import com.ichi2.upgrade.Upgrade;
 import com.ichi2.utils.BooleanGetter;
 import com.ichi2.utils.FunctionalInterfaces;
@@ -161,7 +161,7 @@ public class CardBrowser extends NavigationDrawerActivity implements
     public DeckSpinnerSelection mDeckSpinnerSelection;
     @VisibleForTesting
     public ListView mCardsListView;
-    private SearchView mSearchView;
+    private CardBrowserSearchView mSearchView;
     private MultiColumnListAdapter mCardsAdapter;
     private String mSearchTerms;
     private String mRestrictOnDeck;
@@ -190,6 +190,8 @@ public class CardBrowser extends NavigationDrawerActivity implements
     /** The next deck for the "Change Deck" operation */
     private long mNewDid;
 
+    /** The query which is currently in the search box, potentially null. Only set when search box was open */
+    private String mTempSearchQuery;
 
     ActivityResultLauncher<Intent> mOnEditCardActivityResult = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(), result -> {
         Timber.d("onEditCardActivityResult: resultCode=%d", result.getResultCode());
@@ -925,6 +927,9 @@ public class CardBrowser extends NavigationDrawerActivity implements
     @Override
     protected void onPause() {
         super.onPause();
+        // If the user entered something into the search, but didn't press "search", clear this.
+        // It's confusing if the bar is shown with a query that does not relate to the data on the screen
+        mTempSearchQuery = null;
         if (mPostAutoScroll) {
             mPostAutoScroll = false;
         }
@@ -966,14 +971,19 @@ public class CardBrowser extends NavigationDrawerActivity implements
                     searchCards();
                     // invalidate options menu so that disappeared icons would appear again
                     supportInvalidateOptionsMenu();
+                    mTempSearchQuery = null;
                     return true;
                 }
             });
-            mSearchView = (SearchView) mSearchItem.getActionView();
+            mSearchView = (CardBrowserSearchView) mSearchItem.getActionView();
             mSearchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
                 @Override
                 public boolean onQueryTextChange(String newText) {
+                    if (mSearchView.shouldIgnoreValueChange()) {
+                        return true;
+                    }
                     mSaveSearchItem.setVisible(!TextUtils.isEmpty(newText));
+                    mTempSearchQuery = newText;
                     return true;
                 }
 
@@ -984,10 +994,12 @@ public class CardBrowser extends NavigationDrawerActivity implements
                     return true;
                 }
             });
-            // Fixes #6500 - keep the search consistent
-            if (!TextUtils.isEmpty(mSearchTerms)) {
+            // Fixes #6500 - keep the search consistent if coming back from note editor
+            // Fixes #9010 - consistent search after drawer change calls supportInvalidateOptionsMenu (mTempSearchQuery)
+            if (!TextUtils.isEmpty(mTempSearchQuery) || !TextUtils.isEmpty(mSearchTerms)) {
                 mSearchItem.expandActionView(); // This calls mSearchView.setOnSearchClickListener
-                mSearchView.setQuery(mSearchTerms, false);
+                String toUse = !TextUtils.isEmpty(mTempSearchQuery) ? mTempSearchQuery : mSearchTerms;
+                mSearchView.setQuery(toUse, false);
             }
             mSearchView.setOnSearchClickListener(v -> {
                 // Provide SearchView with the previous search terms
