@@ -51,7 +51,7 @@ public class StudyOptionsActivity extends NavigationDrawerActivity implements St
 
         int layout;
 
-        if (preferences.getBoolean("gestureFullScreenNavigationDrawer", false)) {
+        if (preferences.getBoolean(FULL_SCREEN_NAVIGATION_DRAWER, false)) {
             layout = R.layout.studyoptions_with_fullscreen_drawer;
         } else {
             layout = R.layout.studyoptions;

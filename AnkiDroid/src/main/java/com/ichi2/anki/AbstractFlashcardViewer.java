@@ -954,7 +954,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
     protected int getContentViewAttr(int fullscreenMode) {
         SharedPreferences preferences = AnkiDroidApp.getSharedPrefs(getBaseContext());
 
-        if (preferences.getBoolean("gestureFullScreenNavigationDrawer", false)) {
+        if (preferences.getBoolean(FULL_SCREEN_NAVIGATION_DRAWER, false)) {
             return R.layout.reviewer_with_fullscreen_drawer;
         }
 

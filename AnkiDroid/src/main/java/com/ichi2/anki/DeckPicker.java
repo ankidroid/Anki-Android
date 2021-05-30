@@ -463,7 +463,7 @@ public class DeckPicker extends NavigationDrawerActivity implements
 
         SharedPreferences preferences = AnkiDroidApp.getSharedPrefs(getBaseContext());
 
-        if (preferences.getBoolean("gestureFullScreenNavigationDrawer", false)) {
+        if (preferences.getBoolean(FULL_SCREEN_NAVIGATION_DRAWER, false)) {
             setContentView(R.layout.homescreen_with_fullscreen_drawer);
         } else {
             setContentView(R.layout.homescreen);

@@ -91,7 +91,7 @@ public class Statistics extends NavigationDrawerActivity implements
 
         SharedPreferences preferences = AnkiDroidApp.getSharedPrefs(getBaseContext());
 
-        if (preferences.getBoolean("gestureFullScreenNavigationDrawer", false)) {
+        if (preferences.getBoolean(FULL_SCREEN_NAVIGATION_DRAWER, false)) {
             setContentView(R.layout.activity_anki_stats_with_fullscreen_drawer);
         } else {
             setContentView(R.layout.activity_anki_stats);

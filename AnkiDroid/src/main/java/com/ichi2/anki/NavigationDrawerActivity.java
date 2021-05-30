@@ -26,32 +26,32 @@ import android.graphics.drawable.Icon;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
-import com.google.android.material.navigation.NavigationView;
-
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.core.app.TaskStackBuilder;
-import androidx.core.content.ContextCompat;
-import androidx.core.view.GravityCompat;
-import androidx.appcompat.app.ActionBarDrawerToggle;
-import androidx.appcompat.widget.SwitchCompat;
-import androidx.appcompat.widget.Toolbar;
-
 import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 
+import com.google.android.material.navigation.NavigationView;
 import com.ichi2.anki.dialogs.HelpDialog;
 import com.ichi2.themes.Themes;
 
 import java.util.Arrays;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.ActionBarDrawerToggle;
+import androidx.appcompat.widget.SwitchCompat;
+import androidx.appcompat.widget.Toolbar;
+import androidx.core.app.TaskStackBuilder;
+import androidx.core.content.ContextCompat;
+import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.ClosableDrawerLayout;
-
 import androidx.drawerlayout.widget.DrawerLayout;
 import timber.log.Timber;
-import static com.ichi2.anim.ActivityTransitionAnimation.Direction.*;
+
+import static com.ichi2.anim.ActivityTransitionAnimation.Direction.END;
+import static com.ichi2.anim.ActivityTransitionAnimation.Direction.FADE;
+import static com.ichi2.anim.ActivityTransitionAnimation.Direction.START;
 
 
 public abstract class NavigationDrawerActivity extends AnkiActivity implements NavigationView.OnNavigationItemSelectedListener {
@@ -73,6 +73,7 @@ public abstract class NavigationDrawerActivity extends AnkiActivity implements N
     public static final int REQUEST_BROWSE_CARDS = 101;
     public static final int REQUEST_STATISTICS = 102;
     private static final String NIGHT_MODE_PREFERENCE = "invertedColors";
+    public static final String FULL_SCREEN_NAVIGATION_DRAWER = "gestureFullScreenNavigationDrawer";
 
     /**
      * runnable that will be executed after the drawer has been closed.
