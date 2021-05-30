@@ -119,7 +119,7 @@
         <CheckBoxPreference
             android:key="showLargeAnswerButtons"
             android:defaultValue="false"
-            android:summary="@string/show_answer_buttons_in_two_rows"
+            android:summary="@string/show_large_answer_buttons_summ"
             android:title="@string/show_large_answer_buttons"/>
         <CheckBoxPreference
             android:key="showTopbar"
