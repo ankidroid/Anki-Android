@@ -39,6 +39,7 @@ import com.ichi2.ui.FixedTextView;
 import java.io.File;
 import java.io.InputStream;
 
+import androidx.annotation.VisibleForTesting;
 import timber.log.Timber;
 
 public class BasicAudioClipFieldController extends FieldControllerBase implements IFieldController {
@@ -168,8 +169,9 @@ public class BasicAudioClipFieldController extends FieldControllerBase implement
      * @param audioClipFullName name of the file.
      * @return file name which is valid.
      */
-    private String checkFileName(String audioClipFullName) {
-        return audioClipFullName.replaceAll("\\W+", "_");
+    @VisibleForTesting
+    static String checkFileName(String audioClipFullName) {
+        return audioClipFullName.replaceAll("[^\\w.]+", "_");
     }
 
     @Override
