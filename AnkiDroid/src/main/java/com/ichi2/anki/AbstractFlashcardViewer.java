@@ -346,7 +346,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
      */
     private int mGestureVolumeUp;
     private int mGestureVolumeDown;
-    private final GestureProcessor mGestureProcessor = new GestureProcessor();
+    private final GestureProcessor mGestureProcessor = new GestureProcessor(this);
 
     private String mCardContent;
     private String mBaseUrl;
@@ -407,7 +407,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
     private final Runnable mStartLongClickAction = new Runnable() {
         @Override
         public void run() {
-            executeCommand(mGestureProcessor.onLongTap());
+            mGestureProcessor.onLongTap();
         }
     };
 
@@ -3079,8 +3079,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
                     float dy = e2.getY() - e1.getY();
                     float dx = e2.getX() - e1.getX();
 
-                    int gesture = mGestureProcessor.getCommandFromFling(dx, dy, velocityX, velocityY, mIsSelecting, mIsXScrolling, mIsYScrolling);
-                    executeCommand(gesture);
+                    mGestureProcessor.onFling(dx, dy, velocityX, velocityY, mIsSelecting, mIsXScrolling, mIsYScrolling);
                 } catch (Exception e) {
                     Timber.e(e, "onFling Exception");
                 }
@@ -3101,7 +3100,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
         @Override
         public boolean onDoubleTap(MotionEvent e) {
             if (mGesturesEnabled) {
-                executeCommand(mGestureProcessor.getDoubleTap());
+                mGestureProcessor.onDoubleTap();
             }
             return true;
         }
@@ -3135,9 +3134,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
                 float posX = e.getX();
                 float posY = e.getY();
 
-                int gesture = mGestureProcessor.getCommandFromTap(height, width, posX, posY);
-
-                executeCommand(gesture);
+                mGestureProcessor.onTap(height, width, posX, posY);
             }
             mIsSelecting = false;
             showLookupButtonIfNeeded();
