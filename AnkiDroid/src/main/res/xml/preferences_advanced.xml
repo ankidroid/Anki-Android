@@ -42,7 +42,7 @@
             <com.ichi2.ui.SeekBarPreference
                 android:defaultValue="8"
                 android:key="backupMax"
-                android:max="10"
+                android:max="99"
                 android:summary="@string/preference_summary_literal"
                 android:text=""
                 android:title="@string/pref_backup_max"
