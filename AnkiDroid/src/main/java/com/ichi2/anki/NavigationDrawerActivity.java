@@ -27,10 +27,12 @@ import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.view.KeyEvent;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 
+import com.drakeet.drawer.FullDraggableContainer;
 import com.google.android.material.navigation.NavigationView;
 import com.ichi2.anki.dialogs.HelpDialog;
 import com.ichi2.themes.Themes;
@@ -42,6 +44,7 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.widget.SwitchCompat;
 import androidx.appcompat.widget.Toolbar;
+import androidx.coordinatorlayout.widget.CoordinatorLayout;
 import androidx.core.app.TaskStackBuilder;
 import androidx.core.content.ContextCompat;
 import androidx.core.view.GravityCompat;
@@ -79,6 +82,23 @@ public abstract class NavigationDrawerActivity extends AnkiActivity implements N
      * runnable that will be executed after the drawer has been closed.
      */
     private Runnable mPendingRunnable;
+
+    @Override
+    public void setContentView(int layoutResID) {
+        SharedPreferences preferences = AnkiDroidApp.getSharedPrefs(getBaseContext());
+
+        ClosableDrawerLayout closableDrawerLayout = (ClosableDrawerLayout) LayoutInflater.from(this).inflate(R.layout.navigation_drawer_layout, null, false);
+        CoordinatorLayout coordinatorLayout = (CoordinatorLayout) LayoutInflater.from(this).inflate(layoutResID, closableDrawerLayout, false);
+        if (preferences.getBoolean(FULL_SCREEN_NAVIGATION_DRAWER, false)) {
+            FullDraggableContainer fullDraggableContainer = new FullDraggableContainer(this);
+            fullDraggableContainer.addView(coordinatorLayout);
+            closableDrawerLayout.addView(fullDraggableContainer, 0);
+        } else {
+            closableDrawerLayout.addView(coordinatorLayout, 0);
+        }
+
+        setContentView(closableDrawerLayout);
+    }
 
     // Navigation drawer initialisation
     protected void initNavigationDrawer(View mainView) {

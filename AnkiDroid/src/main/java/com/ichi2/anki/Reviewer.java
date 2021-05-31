@@ -35,27 +35,41 @@ import android.os.Message;
 import android.text.SpannableString;
 import android.text.style.UnderlineSpan;
 import android.view.KeyEvent;
-import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.SubMenu;
 import android.view.View;
 import android.view.ViewGroup;
-import android.webkit.JavascriptInterface;
 import android.webkit.WebView;
+import android.webkit.JavascriptInterface;
 import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.drakeet.drawer.FullDraggableContainer;
+import androidx.annotation.CheckResult;
+import androidx.annotation.DrawableRes;
+import androidx.annotation.IdRes;
+import androidx.annotation.MenuRes;
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.annotation.PluralsRes;
+import androidx.annotation.VisibleForTesting;
+import androidx.appcompat.view.menu.MenuBuilder;
+import androidx.appcompat.app.ActionBar;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
+import androidx.core.view.ActionProvider;
+import androidx.core.view.MenuItemCompat;
+import androidx.vectordrawable.graphics.drawable.VectorDrawableCompat;
+
 import com.ichi2.anki.cardviewer.CardAppearance;
 import com.ichi2.anki.dialogs.ConfirmationDialog;
-import com.ichi2.anki.dialogs.RescheduleDialog;
 import com.ichi2.anki.multimediacard.AudioView;
-import com.ichi2.anki.reviewer.ActionButtons;
+import com.ichi2.anki.dialogs.RescheduleDialog;
 import com.ichi2.anki.reviewer.PeripheralKeymap;
 import com.ichi2.anki.reviewer.ReviewerUi;
 import com.ichi2.anki.workarounds.FirefoxSnackbarWorkaround;
+import com.ichi2.anki.reviewer.ActionButtons;
 import com.ichi2.async.CollectionTask;
 import com.ichi2.async.TaskManager;
 import com.ichi2.libanki.Card;
@@ -75,34 +89,11 @@ import com.ichi2.widget.WidgetStatus;
 import java.lang.ref.WeakReference;
 import java.util.Collections;
 
-import androidx.annotation.CheckResult;
-import androidx.annotation.DrawableRes;
-import androidx.annotation.IdRes;
-import androidx.annotation.MenuRes;
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.annotation.PluralsRes;
-import androidx.annotation.VisibleForTesting;
-import androidx.appcompat.app.ActionBar;
-import androidx.appcompat.view.menu.MenuBuilder;
-import androidx.coordinatorlayout.widget.CoordinatorLayout;
-import androidx.core.app.ActivityCompat;
-import androidx.core.content.ContextCompat;
-import androidx.core.view.ActionProvider;
-import androidx.core.view.MenuItemCompat;
-import androidx.drawerlayout.widget.ClosableDrawerLayout;
-import androidx.vectordrawable.graphics.drawable.VectorDrawableCompat;
 import timber.log.Timber;
 
-import static com.ichi2.anim.ActivityTransitionAnimation.Direction.END;
-import static com.ichi2.anim.ActivityTransitionAnimation.Direction.FADE;
-import static com.ichi2.anim.ActivityTransitionAnimation.Direction.START;
+import static com.ichi2.anki.reviewer.CardMarker.*;
 import static com.ichi2.anki.cardviewer.ViewerCommand.COMMAND_NOTHING;
-import static com.ichi2.anki.reviewer.CardMarker.FLAG_BLUE;
-import static com.ichi2.anki.reviewer.CardMarker.FLAG_GREEN;
-import static com.ichi2.anki.reviewer.CardMarker.FLAG_NONE;
-import static com.ichi2.anki.reviewer.CardMarker.FLAG_ORANGE;
-import static com.ichi2.anki.reviewer.CardMarker.FLAG_RED;
+import static com.ichi2.anim.ActivityTransitionAnimation.Direction.*;
 
 
 public class Reviewer extends AbstractFlashcardViewer {
@@ -262,35 +253,14 @@ public class Reviewer extends AbstractFlashcardViewer {
 
     @Override
     protected int getContentViewAttr(int fullscreenMode) {
-        SharedPreferences preferences = AnkiDroidApp.getSharedPrefs(getBaseContext());
-
-        ClosableDrawerLayout closableDrawerLayout = findViewById(R.id.drawer_layout);
-        CoordinatorLayout coordinatorLayout;
-
-        int layout;
-
         switch (fullscreenMode) {
             case 1:
-                layout = R.layout.reviewer_fullscreen;
-                break;
+                return R.layout.reviewer_fullscreen;
             case 2:
-                layout = R.layout.reviewer_fullscreen_noanswers;
-                break;
+                return R.layout.reviewer_fullscreen_noanswers;
             default:
-                layout = R.layout.reviewer;
-                break;
+                return R.layout.reviewer;
         }
-
-        coordinatorLayout = (CoordinatorLayout) LayoutInflater.from(this).inflate(layout, closableDrawerLayout, false);
-        if (preferences.getBoolean(FULL_SCREEN_NAVIGATION_DRAWER, false)) {
-            FullDraggableContainer fullDraggableContainer = new FullDraggableContainer(this);
-            fullDraggableContainer.addView(coordinatorLayout);
-            closableDrawerLayout.addView(fullDraggableContainer, 0);
-        } else {
-            closableDrawerLayout.addView(coordinatorLayout, 0);
-        }
-
-        return R.layout.navigation_drawer_layout;
     }
 
     @Override
