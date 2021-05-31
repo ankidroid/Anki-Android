@@ -168,8 +168,6 @@ public class AnkiDroidApp extends Application {
     // Constants for gestures
     public static int sSwipeMinDistance = -1;
     public static int sSwipeThresholdVelocity = -1;
-    private static int DEFAULT_SWIPE_MIN_DISTANCE;
-    private static int DEFAULT_SWIPE_THRESHOLD_VELOCITY;
 
     /**
      * The latest package version number that included important changes to the database integrity check routine. All
@@ -328,11 +326,6 @@ public class AnkiDroidApp extends Application {
             Timber.e(e, "setAcceptFileSchemeCookies");
             return;
         }
-
-        // Set good default values for swipe detection
-        final ViewConfiguration vc = ViewConfiguration.get(this);
-        DEFAULT_SWIPE_MIN_DISTANCE = vc.getScaledPagingTouchSlop();
-        DEFAULT_SWIPE_THRESHOLD_VELOCITY = vc.getScaledMinimumFlingVelocity();
 
         // Forget the last deck that was used in the CardBrowser
         CardBrowser.clearLastDeckId();
@@ -500,24 +493,6 @@ public class AnkiDroidApp extends Application {
 
         return newConfig;
     }
-
-
-    public static boolean initiateGestures(SharedPreferences preferences) {
-        boolean enabled = preferences.getBoolean("gestures", false);
-        if (enabled) {
-            int sensitivity = preferences.getInt("swipeSensitivity", 100);
-            if (sensitivity != 100) {
-                float sens = 100.0f/sensitivity;
-                sSwipeMinDistance = (int) (DEFAULT_SWIPE_MIN_DISTANCE * sens + 0.5f);
-                sSwipeThresholdVelocity = (int) (DEFAULT_SWIPE_THRESHOLD_VELOCITY * sens  + 0.5f);
-            } else {
-                sSwipeMinDistance = DEFAULT_SWIPE_MIN_DISTANCE;
-                sSwipeThresholdVelocity = DEFAULT_SWIPE_THRESHOLD_VELOCITY;
-            }
-        }
-        return enabled;
-    }
-
 
     /**
      * Turns ACRA reporting off completely and persists it to shared prefs
