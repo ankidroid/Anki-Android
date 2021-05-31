@@ -56,6 +56,11 @@ public class GestureProcessor {
 
     private final GestureMapper mGestureMapper = new GestureMapper();
 
+    private final ViewerCommand.CommandProcessor mProcessor;
+
+    public GestureProcessor(ViewerCommand.CommandProcessor processor) {
+        mProcessor = processor;
+    }
 
     public void init(SharedPreferences preferences) {
         mGestureDoubleTap = Integer.parseInt(preferences.getString("gestureDoubleTap", "7"));
@@ -83,36 +88,39 @@ public class GestureProcessor {
         }
     }
 
-    @ViewerCommand.ViewerCommandDef
-    public int getCommandFromTap(int height, int width, float posX, float posY) {
+    public boolean onTap(int height, int width, float posX, float posY) {
         Gesture gesture = mGestureMapper.gesture(height, width, posX, posY);
 
         if (gesture == null) {
-            return COMMAND_NOTHING;
+            return false;
         }
 
-        return mapGestureToCommand(gesture);
+        return execute(gesture);
     }
 
-    @ViewerCommand.ViewerCommandDef
-    public int getDoubleTap() {
-        return mapGestureToCommand(Gesture.DOUBLE_TAP);
+    public boolean onDoubleTap() {
+        return execute(Gesture.DOUBLE_TAP);
     }
 
 
-    public int onLongTap() {
-        return mapGestureToCommand(Gesture.LONG_TAP);
+    public boolean onLongTap() {
+        return execute(Gesture.LONG_TAP);
     }
 
-    @ViewerCommand.ViewerCommandDef
-    public int getCommandFromFling(float dx, float dy, float velocityX, float velocityY, boolean isSelecting, boolean isXScrolling, boolean isYScrolling) {
+    public boolean onFling(float dx, float dy, float velocityX, float velocityY, boolean isSelecting, boolean isXScrolling, boolean isYScrolling) {
         Gesture gesture = this.mGestureMapper.gesture(dx, dy, velocityX, velocityY, isSelecting, isXScrolling, isYScrolling);
 
-        return mapGestureToCommand(gesture);
+        return execute(gesture);
     }
 
 
-    protected int mapGestureToCommand(Gesture gesture) {
+    protected boolean execute(Gesture gesture) {
+        int command = mapGestureToCommand(gesture);
+        return mProcessor.executeCommand(command);
+    }
+
+
+    private int mapGestureToCommand(Gesture gesture) {
         switch (gesture) {
             case SWIPE_UP: return mGestureSwipeUp;
             case SWIPE_DOWN: return mGestureSwipeDown;

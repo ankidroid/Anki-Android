@@ -26,16 +26,32 @@ import org.mockito.ArgumentMatchers;
 import org.mockito.MockedStatic;
 import org.mockito.Mockito;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.hasSize;
 import static org.hamcrest.Matchers.is;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
-public class GestureProcessorTest {
+public class GestureProcessorTest implements ViewerCommand.CommandProcessor {
 
-    private final GestureProcessor mSut = new GestureProcessor();
+    private final GestureProcessor mSut = new GestureProcessor(this);
+    private final List<Integer> mExecutedCommands = new ArrayList<>();
+
+    @Override
+    public boolean executeCommand(int which) {
+        this.mExecutedCommands.add(which);
+        return true;
+    }
+
+    int singleResult() {
+        assertThat(mExecutedCommands, hasSize(1));
+        return mExecutedCommands.get(0);
+    }
 
     private static MockedStatic<ViewConfiguration> utilities;
 
@@ -60,7 +76,7 @@ public class GestureProcessorTest {
 
         mSut.init(prefs);
 
-        int command = mSut.getCommandFromTap(100, 100, 50, 50);
-        assertThat(command, is(1));
+        mSut.onTap(100, 100, 50, 50);
+        assertThat(singleResult(), is(1));
     }
 }
