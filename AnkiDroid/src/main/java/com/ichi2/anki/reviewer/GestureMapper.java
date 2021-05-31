@@ -21,11 +21,8 @@ import android.view.ViewConfiguration;
 
 import com.ichi2.anki.AnkiDroidApp;
 import com.ichi2.anki.cardviewer.Gesture;
-import com.ichi2.anki.cardviewer.ViewerCommand;
 
 import timber.log.Timber;
-
-import static com.ichi2.anki.cardviewer.ViewerCommand.COMMAND_NOTHING;
 
 public class GestureMapper {
 
@@ -35,25 +32,6 @@ public class GestureMapper {
 
     private static final int DEFAULT_SWIPE_MIN_DISTANCE;
     private static final int DEFAULT_SWIPE_THRESHOLD_VELOCITY;
-
-    @ViewerCommand.ViewerCommandDef
-    private int mGestureTapLeft;
-    @ViewerCommand.ViewerCommandDef
-    private int mGestureTapRight;
-    @ViewerCommand.ViewerCommandDef
-    private int mGestureTapTop;
-    @ViewerCommand.ViewerCommandDef
-    private int mGestureTapBottom;
-    @ViewerCommand.ViewerCommandDef
-    private int mGestureTapTopLeft;
-    @ViewerCommand.ViewerCommandDef
-    private int mGestureTapTopRight;
-    @ViewerCommand.ViewerCommandDef
-    private int mGestureTapCenter;
-    @ViewerCommand.ViewerCommandDef
-    private int mGestureTapBottomLeft;
-    @ViewerCommand.ViewerCommandDef
-    private int mGestureTapBottomRight;
 
     static {
         // Set good default values for swipe detection
@@ -72,19 +50,6 @@ public class GestureMapper {
         } else {
             mSwipeMinDistance = DEFAULT_SWIPE_MIN_DISTANCE;
             mSwipeThresholdVelocity = DEFAULT_SWIPE_THRESHOLD_VELOCITY;
-        }
-
-        mGestureTapLeft = Integer.parseInt(preferences.getString("gestureTapLeft", "3"));
-        mGestureTapRight = Integer.parseInt(preferences.getString("gestureTapRight", "6"));
-        mGestureTapTop = Integer.parseInt(preferences.getString("gestureTapTop", "12"));
-        mGestureTapBottom = Integer.parseInt(preferences.getString("gestureTapBottom", "2"));
-
-        if (useCornerTouch) {
-            mGestureTapTopLeft = Integer.parseInt(preferences.getString("gestureTapTopLeft", "0"));
-            mGestureTapTopRight = Integer.parseInt(preferences.getString("gestureTapTopRight", "0"));
-            mGestureTapCenter = Integer.parseInt(preferences.getString("gestureTapCenter", "0"));
-            mGestureTapBottomLeft = Integer.parseInt(preferences.getString("gestureTapBottomLeft", "0"));
-            mGestureTapBottomRight = Integer.parseInt(preferences.getString("gestureTapBottomRight", "0"));
         }
 
         mUseCornerTouch = useCornerTouch;
@@ -122,25 +87,6 @@ public class GestureMapper {
         }
 
         return null;
-    }
-
-
-    @ViewerCommand.ViewerCommandDef
-    public int getCommandFromTap(int height, int width, float posX, float posY) {
-        Gesture gesture = gesture(height, width, posX, posY);
-
-        switch (gesture) {
-            case TAP_TOP: return mGestureTapTop;
-            case TAP_TOP_LEFT: return mGestureTapTopLeft;
-            case TAP_TOP_RIGHT: return mGestureTapTopRight;
-            case TAP_LEFT: return mGestureTapLeft;
-            case TAP_CENTER: return mGestureTapCenter;
-            case TAP_RIGHT: return mGestureTapRight;
-            case TAP_BOTTOM: return mGestureTapBottom;
-            case TAP_BOTTOM_LEFT: return mGestureTapBottomLeft;
-            case TAP_BOTTOM_RIGHT: return mGestureTapBottomRight;
-            default: return COMMAND_NOTHING;
-        }
     }
 
 

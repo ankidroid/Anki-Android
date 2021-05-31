@@ -35,6 +35,24 @@ public class GestureProcessor {
     private int mGestureSwipeLeft;
     @ViewerCommand.ViewerCommandDef
     private int mGestureSwipeRight;
+    @ViewerCommand.ViewerCommandDef
+    private int mGestureTapLeft;
+    @ViewerCommand.ViewerCommandDef
+    private int mGestureTapRight;
+    @ViewerCommand.ViewerCommandDef
+    private int mGestureTapTop;
+    @ViewerCommand.ViewerCommandDef
+    private int mGestureTapBottom;
+    @ViewerCommand.ViewerCommandDef
+    private int mGestureTapTopLeft;
+    @ViewerCommand.ViewerCommandDef
+    private int mGestureTapTopRight;
+    @ViewerCommand.ViewerCommandDef
+    private int mGestureTapCenter;
+    @ViewerCommand.ViewerCommandDef
+    private int mGestureTapBottomLeft;
+    @ViewerCommand.ViewerCommandDef
+    private int mGestureTapBottomRight;
 
     private final GestureMapper mGestureMapper = new GestureMapper();
 
@@ -49,11 +67,31 @@ public class GestureProcessor {
         mGestureSwipeRight = Integer.parseInt(preferences.getString("gestureSwipeRight", "17"));
 
         mGestureMapper.init(preferences);
+
+        mGestureTapLeft = Integer.parseInt(preferences.getString("gestureTapLeft", "3"));
+        mGestureTapRight = Integer.parseInt(preferences.getString("gestureTapRight", "6"));
+        mGestureTapTop = Integer.parseInt(preferences.getString("gestureTapTop", "12"));
+        mGestureTapBottom = Integer.parseInt(preferences.getString("gestureTapBottom", "2"));
+
+        boolean useCornerTouch = preferences.getBoolean("gestureCornerTouch", false);
+        if (useCornerTouch) {
+            mGestureTapTopLeft = Integer.parseInt(preferences.getString("gestureTapTopLeft", "0"));
+            mGestureTapTopRight = Integer.parseInt(preferences.getString("gestureTapTopRight", "0"));
+            mGestureTapCenter = Integer.parseInt(preferences.getString("gestureTapCenter", "0"));
+            mGestureTapBottomLeft = Integer.parseInt(preferences.getString("gestureTapBottomLeft", "0"));
+            mGestureTapBottomRight = Integer.parseInt(preferences.getString("gestureTapBottomRight", "0"));
+        }
     }
 
     @ViewerCommand.ViewerCommandDef
     public int getCommandFromTap(int height, int width, float posX, float posY) {
-        return mGestureMapper.getCommandFromTap(height, width, posX, posY);
+        Gesture gesture = mGestureMapper.gesture(height, width, posX, posY);
+
+        if (gesture == null) {
+            return COMMAND_NOTHING;
+        }
+
+        return mapGestureToCommand(gesture);
     }
 
     @ViewerCommand.ViewerCommandDef
@@ -70,11 +108,25 @@ public class GestureProcessor {
     public int getCommandFromFling(float dx, float dy, float velocityX, float velocityY, boolean isSelecting, boolean isXScrolling, boolean isYScrolling) {
         Gesture gesture = this.mGestureMapper.gesture(dx, dy, velocityX, velocityY, isSelecting, isXScrolling, isYScrolling);
 
+        return mapGestureToCommand(gesture);
+    }
+
+
+    protected int mapGestureToCommand(Gesture gesture) {
         switch (gesture) {
             case SWIPE_UP: return mGestureSwipeUp;
             case SWIPE_DOWN: return mGestureSwipeDown;
             case SWIPE_LEFT: return mGestureSwipeLeft;
             case SWIPE_RIGHT: return mGestureSwipeRight;
+            case TAP_TOP: return mGestureTapTop;
+            case TAP_TOP_LEFT: return mGestureTapTopLeft;
+            case TAP_TOP_RIGHT: return mGestureTapTopRight;
+            case TAP_LEFT: return mGestureTapLeft;
+            case TAP_CENTER: return mGestureTapCenter;
+            case TAP_RIGHT: return mGestureTapRight;
+            case TAP_BOTTOM: return mGestureTapBottom;
+            case TAP_BOTTOM_LEFT: return mGestureTapBottomLeft;
+            case TAP_BOTTOM_RIGHT: return mGestureTapBottomRight;
             default: return COMMAND_NOTHING;
         }
     }
