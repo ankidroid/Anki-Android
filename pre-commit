@@ -1,0 +1,22 @@
+#!/bin/sh
+set -e
+
+CHANGED_FILES="$(git --no-pager diff --name-status --no-color --cached | awk '$1 != "D" && $2 ~ /\.kts|\.kt/ { print $2 }')"
+
+if [ -z "$CHANGED_FILES" ]; then
+    echo "No Kotlin staged files. Hence, skipping pre-commit Ktlint run."
+    exit 0
+fi;
+
+echo "Running Ktlint over these files:"
+echo "$CHANGED_FILES"
+
+./gradlew ktlintFormat
+
+echo "Completed ./gradlew ktlintFormat run."
+echo "$CHANGED_FILES" | while read -r file; do
+    if [ -f "$file" ]; then
+        git add "$file"
+    fi
+done
+echo "Completed the pre-commit hook."
