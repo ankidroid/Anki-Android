@@ -19,8 +19,6 @@ package com.ichi2.anki.cardviewer;
 import android.content.SharedPreferences;
 import android.view.ViewConfiguration;
 
-import com.ichi2.anki.cardviewer.GestureProcessor.GestureSegment;
-
 import org.junit.AfterClass;
 import org.junit.BeforeClass;
 import org.junit.Test;
@@ -28,13 +26,6 @@ import org.mockito.ArgumentMatchers;
 import org.mockito.MockedStatic;
 import org.mockito.Mockito;
 
-import static com.ichi2.anki.cardviewer.GestureProcessor.GestureSegment.BOTTOM_CENTER;
-import static com.ichi2.anki.cardviewer.GestureProcessor.GestureSegment.MIDDLE_LEFT;
-import static com.ichi2.anki.cardviewer.GestureProcessor.GestureSegment.MIDDLE_RIGHT;
-import static com.ichi2.anki.cardviewer.GestureProcessor.GestureSegment.TOP_CENTER;
-import static com.ichi2.anki.cardviewer.GestureProcessor.GestureSegment.MIDDLE_CENTER;
-import static com.ichi2.anki.cardviewer.GestureProcessor.GestureSegment.fromTap;
-import static com.ichi2.anki.cardviewer.ViewerCommand.COMMAND_NOTHING;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
 import static org.mockito.ArgumentMatchers.any;
@@ -59,46 +50,6 @@ public class GestureProcessorTest {
         utilities.close();
     }
 
-    @Test
-    public void zeroWidthReturnsNothing() {
-        assertThat(mSut.getCommandFromTap(0, 10, 10, 10), is(COMMAND_NOTHING));
-    }
-
-    @Test
-    public void zeroHeightReturnsNothing() {
-        assertThat(mSut.getCommandFromTap(10, 0, 10, 10), is(COMMAND_NOTHING));
-    }
-
-    @Test
-    public void testOobTop() {
-       GestureSegment res =  fromTap(100, 100, 50, -5);
-       assertThat(res, is(TOP_CENTER));
-    }
-
-    @Test
-    public void testOobLeft() {
-        GestureSegment res =  fromTap(100, 100, -10, 50);
-        assertThat(res, is(MIDDLE_LEFT));
-    }
-
-    @Test
-    public void testOobRight() {
-        GestureSegment res =  fromTap(100, 100, 200, 50);
-        assertThat(res, is(MIDDLE_RIGHT));
-    }
-
-    @Test
-    public void testOobBottom() {
-        GestureSegment res =  fromTap(100, 100, 50, 200);
-        assertThat(res, is(BOTTOM_CENTER));
-    }
-
-    @Test
-    public void testCenter() {
-        GestureSegment res =  fromTap(100, 100, 50, 50);
-        assertThat(res, is(MIDDLE_CENTER));
-    }
-    
     @Test
     public void integrationTest() {
         SharedPreferences prefs = mock(SharedPreferences.class, Mockito.RETURNS_DEEP_STUBS);
