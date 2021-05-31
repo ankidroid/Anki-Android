@@ -22,4 +22,13 @@ enum class Gesture(@get:JvmName("getResourceId") val mResourceId: Int) {
     SWIPE_DOWN(R.string.gestures_swipe_down),
     SWIPE_LEFT(R.string.gestures_swipe_left),
     SWIPE_RIGHT(R.string.gestures_swipe_right),
+    TAP_TOP_LEFT(R.string.gestures_corner_tap_top_left),
+    TAP_TOP(R.string.gestures_tap_top),
+    TAP_TOP_RIGHT(R.string.gestures_corner_tap_top_right),
+    TAP_LEFT(R.string.gestures_tap_left),
+    TAP_CENTER(R.string.gestures_corner_tap_middle_center),
+    TAP_RIGHT(R.string.gestures_tap_right),
+    TAP_BOTTOM_LEFT(R.string.gestures_corner_tap_bottom_left),
+    TAP_BOTTOM(R.string.gestures_tap_bottom),
+    TAP_BOTTOM_RIGHT(R.string.gestures_corner_tap_bottom_right);
 }

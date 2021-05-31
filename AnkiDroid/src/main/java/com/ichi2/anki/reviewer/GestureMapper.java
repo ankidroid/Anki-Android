@@ -127,128 +127,119 @@ public class GestureMapper {
 
     @ViewerCommand.ViewerCommandDef
     public int getCommandFromTap(int height, int width, float posX, float posY) {
+        Gesture gesture = gesture(height, width, posX, posY);
+
+        switch (gesture) {
+            case TAP_TOP: return mGestureTapTop;
+            case TAP_TOP_LEFT: return mGestureTapTopLeft;
+            case TAP_TOP_RIGHT: return mGestureTapTopRight;
+            case TAP_LEFT: return mGestureTapLeft;
+            case TAP_CENTER: return mGestureTapCenter;
+            case TAP_RIGHT: return mGestureTapRight;
+            case TAP_BOTTOM: return mGestureTapBottom;
+            case TAP_BOTTOM_LEFT: return mGestureTapBottomLeft;
+            case TAP_BOTTOM_RIGHT: return mGestureTapBottomRight;
+            default: return COMMAND_NOTHING;
+        }
+    }
+
+
+    public Gesture gesture(int height, int width, float posX, float posY) {
         if (width == 0 || height == 0) {
-            return COMMAND_NOTHING;
+            return null;
         }
 
+        Gesture gesture;
         if (mUseCornerTouch) {
-            return getCornerTouchCommand(height, width, posX, posY);
-        }
-        return getFourCornerTap(height, width, posX, posY);
-    }
-
-
-    public int getCornerTouchCommand(int height, int width, float posX, float posY) {
-        GestureSegment segment = GestureSegment.fromTap(height, width, posX, posY);
-
-        switch (segment) {
-            case TOP_LEFT: return mGestureTapTopLeft;
-            case TOP_CENTER: return mGestureTapTop;
-            case TOP_RIGHT: return mGestureTapTopRight;
-            case MIDDLE_LEFT: return mGestureTapLeft;
-            case MIDDLE_CENTER: return mGestureTapCenter;
-            case MIDDLE_RIGHT: return mGestureTapRight;
-            case BOTTOM_LEFT: return mGestureTapBottomLeft;
-            case BOTTOM_CENTER: return mGestureTapBottom;
-            case BOTTOM_RIGHT: return mGestureTapBottomRight;
-            default: throw new IllegalStateException("invalid switch");
+            gesture = fromTapCorners(height, width, posX, posY);
+        } else {
+            gesture = fromTap(height, width, posX, posY);
         }
 
+        return gesture;
     }
 
-    private int getFourCornerTap(int height, int width, float posX, float posY) {
+    private static Gesture fromTap(int height, int width, float posX, float posY) {
         boolean gestureIsRight = posY > height * (1 - posX / width);
         if (posX > posY / height * width) {
             if (gestureIsRight) {
-                return mGestureTapRight;
+                return Gesture.TAP_RIGHT;
             } else {
-                return mGestureTapTop;
+                return Gesture.TAP_TOP;
             }
         } else {
             if (gestureIsRight) {
-                return mGestureTapBottom;
+                return Gesture.TAP_BOTTOM;
             } else {
-                return mGestureTapLeft;
+                return Gesture.TAP_LEFT;
             }
         }
     }
 
-    public enum GestureSegment {
-        TOP_LEFT,
-        TOP_CENTER,
-        TOP_RIGHT,
-        MIDDLE_LEFT,
-        MIDDLE_CENTER,
-        MIDDLE_RIGHT,
-        BOTTOM_LEFT,
-        BOTTOM_CENTER,
-        BOTTOM_RIGHT;
+    private static Gesture fromTapCorners(int height, int width, float posX, float posY) {
 
-        public static GestureSegment fromTap(int height, int width, float posX, float posY) {
+        double heightSegment = height / 3d;
+        double widthSegment = width / 3d;
 
-            double heightSegment = height / 3d;
-            double widthSegment = width / 3d;
+        TriState wSector = clamp(posX / widthSegment);
+        TriState hSector = clamp(posY / heightSegment);
 
-            TriState wSector = clamp(posX / widthSegment);
-            TriState hSector = clamp(posY / heightSegment);
+        switch (wSector) {
+            case LOW:
+                //left
+                switch (hSector) {
+                    case LOW:
+                        return Gesture.TAP_TOP_LEFT;
+                    case MID:
+                        return Gesture.TAP_LEFT;
+                    case HIGH:
+                        return Gesture.TAP_BOTTOM_LEFT;
+                }
+                break;
+            case MID:
+                //center
+                switch (hSector) {
+                    case LOW:
+                        return Gesture.TAP_TOP;
+                    case MID:
+                        return Gesture.TAP_CENTER;
+                    case HIGH:
+                        return Gesture.TAP_BOTTOM;
+                }
+                break;
+            case HIGH:
+                //Right
+                switch (hSector) {
+                    case LOW:
+                        return Gesture.TAP_TOP_RIGHT;
+                    case MID:
+                        return Gesture.TAP_RIGHT;
+                    case HIGH:
+                        return Gesture.TAP_BOTTOM_RIGHT;
+                }
+                break;
+            default:
+                throw new IllegalArgumentException("illegal switch state");
+        }
+        throw new IllegalArgumentException("illegal switch state");
+    }
 
-            switch (wSector) {
-                case LOW:
-                    //left
-                    switch (hSector) {
-                        case LOW:
-                            return TOP_LEFT;
-                        case MID:
-                            return MIDDLE_LEFT;
-                        case HIGH:
-                            return BOTTOM_LEFT;
-                    }
-                    break;
-                case MID:
-                    //center
-                    switch (hSector) {
-                        case LOW:
-                            return TOP_CENTER;
-                        case MID:
-                            return MIDDLE_CENTER;
-                        case HIGH:
-                            return BOTTOM_CENTER;
-                    }
-                    break;
-                case HIGH:
-                    //Right
-                    switch (hSector) {
-                        case LOW:
-                            return TOP_RIGHT;
-                        case MID:
-                            return MIDDLE_RIGHT;
-                        case HIGH:
-                            return BOTTOM_RIGHT;
-                    }
-                    break;
-                default:
-                    throw new IllegalArgumentException("illegal switch state");
-            }
-            throw new IllegalArgumentException("illegal switch state");
+    // clamps the value from LOW-MID-HIGH
+    private static TriState clamp(double value) {
+        double val = Math.floor(value);
+        if (val >= 2) {
+            return TriState.HIGH;
+        }
+        if (val < 1) {
+            return TriState.LOW;
         }
 
-        // clamps the value from LOW-MID-HIGH
-        private static TriState clamp(double value) {
-            double val = Math.floor(value);
-            if (val >= 2) {
-                return TriState.HIGH;
-            }
-            if (val < 1) {
-                return TriState.LOW;
-            }
+        return TriState.MID;
+    }
 
-            return TriState.MID;
-        }
-
-        private enum TriState {
-            LOW,
-            MID,
-            HIGH
-        }
+    private enum TriState {
+        LOW,
+        MID,
+        HIGH
     }
 }
