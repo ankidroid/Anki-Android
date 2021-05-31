@@ -20,6 +20,7 @@ import android.content.SharedPreferences;
 import android.view.ViewConfiguration;
 
 import com.ichi2.anki.AnkiDroidApp;
+import com.ichi2.anki.cardviewer.Gesture;
 import com.ichi2.anki.cardviewer.ViewerCommand;
 
 import timber.log.Timber;
@@ -35,14 +36,6 @@ public class GestureMapper {
     private static final int DEFAULT_SWIPE_MIN_DISTANCE;
     private static final int DEFAULT_SWIPE_THRESHOLD_VELOCITY;
 
-    @ViewerCommand.ViewerCommandDef
-    private int mGestureSwipeUp;
-    @ViewerCommand.ViewerCommandDef
-    private int mGestureSwipeDown;
-    @ViewerCommand.ViewerCommandDef
-    private int mGestureSwipeLeft;
-    @ViewerCommand.ViewerCommandDef
-    private int mGestureSwipeRight;
     @ViewerCommand.ViewerCommandDef
     private int mGestureTapLeft;
     @ViewerCommand.ViewerCommandDef
@@ -96,15 +89,9 @@ public class GestureMapper {
 
         mUseCornerTouch = useCornerTouch;
 
-
-        mGestureSwipeUp = Integer.parseInt(preferences.getString("gestureSwipeUp", "9"));
-        mGestureSwipeDown = Integer.parseInt(preferences.getString("gestureSwipeDown", "0"));
-        mGestureSwipeLeft = Integer.parseInt(preferences.getString("gestureSwipeLeft", "8"));
-        mGestureSwipeRight = Integer.parseInt(preferences.getString("gestureSwipeRight", "17"));
     }
 
-    @ViewerCommand.ViewerCommandDef
-    public int gesture(float dx, float dy, float velocityX, float velocityY,
+    public Gesture gesture(float dx, float dy, float velocityX, float velocityY,
                            boolean isSelecting, boolean isXScrolling, boolean isYScrolling) {
         try {
             if (Math.abs(dx) > Math.abs(dy)) {
@@ -112,29 +99,29 @@ public class GestureMapper {
                 if (dx > mSwipeMinDistance
                         && Math.abs(velocityX) > mSwipeThresholdVelocity
                         && !isXScrolling && !isSelecting) {
-                    return mGestureSwipeRight;
+                    return Gesture.SWIPE_RIGHT;
                 } else if (dx < -mSwipeMinDistance
                         && Math.abs(velocityX) > mSwipeThresholdVelocity
                         && !isXScrolling && !isSelecting) {
-                    return mGestureSwipeLeft;
+                    return Gesture.SWIPE_LEFT;
                 }
             } else {
                 // otherwise vertical swipe
                 if (dy > mSwipeMinDistance
                         && Math.abs(velocityY) > mSwipeThresholdVelocity
                         && !isYScrolling) {
-                    return mGestureSwipeDown;
+                    return Gesture.SWIPE_DOWN;
                 } else if (dy < -mSwipeMinDistance
                         && Math.abs(velocityY) > mSwipeThresholdVelocity
                         && !isYScrolling) {
-                    return mGestureSwipeUp;
+                    return Gesture.SWIPE_UP;
                 }
             }
         } catch (Exception e) {
             Timber.e(e, "onFling Exception");
         }
 
-        return ViewerCommand.COMMAND_NOTHING;
+        return null;
     }
 
 
