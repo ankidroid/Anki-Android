@@ -224,6 +224,14 @@ tasks.withType(JavaCompile) {
     options.incremental = true
 }
 
+// Install Git pre-commit hook for Ktlint
+task installGitHook(type: Copy) {
+    from new File(rootProject.rootDir, 'pre-commit')
+    into { new File(rootProject.rootDir, '.git/hooks') }
+    fileMode 0755
+}
+tasks.getByPath(':AnkiDroid:preBuild').dependsOn installGitHook
+
 apply from: "./robolectricDownloader.gradle"
 apply from: "./jacoco.gradle"
 apply from: "../lint.gradle"
