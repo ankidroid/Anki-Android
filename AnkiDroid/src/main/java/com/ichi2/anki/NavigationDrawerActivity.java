@@ -26,35 +26,36 @@ import android.graphics.drawable.Icon;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
+
+import com.drakeet.drawer.FullDraggableContainer;
+import com.google.android.material.navigation.NavigationView;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.coordinatorlayout.widget.CoordinatorLayout;
+import androidx.core.app.TaskStackBuilder;
+import androidx.core.content.ContextCompat;
+import androidx.core.view.GravityCompat;
+import androidx.appcompat.app.ActionBarDrawerToggle;
+import androidx.appcompat.widget.SwitchCompat;
+import androidx.appcompat.widget.Toolbar;
+
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 
-import com.drakeet.drawer.FullDraggableContainer;
-import com.google.android.material.navigation.NavigationView;
 import com.ichi2.anki.dialogs.HelpDialog;
 import com.ichi2.themes.Themes;
 
 import java.util.Arrays;
 
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.appcompat.app.ActionBarDrawerToggle;
-import androidx.appcompat.widget.SwitchCompat;
-import androidx.appcompat.widget.Toolbar;
-import androidx.coordinatorlayout.widget.CoordinatorLayout;
-import androidx.core.app.TaskStackBuilder;
-import androidx.core.content.ContextCompat;
-import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.ClosableDrawerLayout;
+
 import androidx.drawerlayout.widget.DrawerLayout;
 import timber.log.Timber;
-
-import static com.ichi2.anim.ActivityTransitionAnimation.Direction.END;
-import static com.ichi2.anim.ActivityTransitionAnimation.Direction.FADE;
-import static com.ichi2.anim.ActivityTransitionAnimation.Direction.START;
+import static com.ichi2.anim.ActivityTransitionAnimation.Direction.*;
 
 
 public abstract class NavigationDrawerActivity extends AnkiActivity implements NavigationView.OnNavigationItemSelectedListener {
