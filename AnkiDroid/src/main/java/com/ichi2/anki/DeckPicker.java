@@ -460,7 +460,7 @@ public class DeckPicker extends NavigationDrawerActivity implements
         // Then set theme and content view
         super.onCreate(savedInstanceState);
         handleStartup();
-        super.setContentView(R.layout.homescreen);
+        setContentView(R.layout.homescreen);
         View mainView = findViewById(android.R.id.content);
 
         // check, if tablet layout

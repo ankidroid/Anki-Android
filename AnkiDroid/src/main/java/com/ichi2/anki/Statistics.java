@@ -88,7 +88,7 @@ public class Statistics extends NavigationDrawerActivity implements
         sIsSubtitle = true;
         super.onCreate(savedInstanceState);
 
-        super.setContentView(R.layout.activity_anki_stats);
+        setContentView(R.layout.activity_anki_stats);
         initNavigationDrawer(findViewById(android.R.id.content));
         startLoadingCollection();
     }

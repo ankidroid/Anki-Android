@@ -941,7 +941,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
         mTagsDialogFactory = new TagsDialogFactory(this).attachToActivity(this);
 
         super.onCreate(savedInstanceState);
-        super.setContentView(getContentViewAttr(mPrefFullscreenReview));
+        setContentView(getContentViewAttr(mPrefFullscreenReview));
 
         // Make ACTION_PROCESS_TEXT for in-app searching possible on > Android 4.0
         getDelegate().setHandleNativeActionModesEnabled(true);

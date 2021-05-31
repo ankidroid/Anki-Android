@@ -595,7 +595,7 @@ public class CardBrowser extends NavigationDrawerActivity implements
             displayDeckPickerForPermissionsDialog();
             return;
         }
-        super.setContentView(R.layout.card_browser);
+        setContentView(R.layout.card_browser);
         initNavigationDrawer(findViewById(android.R.id.content));
         startLoadingCollection();
     }

@@ -88,13 +88,18 @@ public abstract class NavigationDrawerActivity extends AnkiActivity implements N
     public void setContentView(int layoutResID) {
         SharedPreferences preferences = AnkiDroidApp.getSharedPrefs(getBaseContext());
 
+        // Using ClosableDrawerLayout as a parent view.
         ClosableDrawerLayout closableDrawerLayout = (ClosableDrawerLayout) LayoutInflater.from(this).inflate(R.layout.navigation_drawer_layout, null, false);
+        // Get CoordinatorLayout using resource ID
         CoordinatorLayout coordinatorLayout = (CoordinatorLayout) LayoutInflater.from(this).inflate(layoutResID, closableDrawerLayout, false);
         if (preferences.getBoolean(FULL_SCREEN_NAVIGATION_DRAWER, false)) {
+            // If full screen navigation drawer is needed, then add FullDraggableContainer as a child view of closableDrawerLayout.
+            // Then add coordinatorLayout as a child view of fullDraggableContainer.
             FullDraggableContainer fullDraggableContainer = new FullDraggableContainer(this);
             fullDraggableContainer.addView(coordinatorLayout);
             closableDrawerLayout.addView(fullDraggableContainer, 0);
         } else {
+            // If full screen navigation drawer is not needed, then directly add coordinatorLayout as the child view.
             closableDrawerLayout.addView(coordinatorLayout, 0);
         }
 
