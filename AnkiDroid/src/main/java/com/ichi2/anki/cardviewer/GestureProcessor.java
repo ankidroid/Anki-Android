@@ -18,6 +18,8 @@ package com.ichi2.anki.cardviewer;
 
 import android.content.SharedPreferences;
 
+import com.ichi2.anki.reviewer.GestureMapper;
+
 import static com.ichi2.anki.cardviewer.ViewerCommand.COMMAND_NOTHING;
 
 public class GestureProcessor {
@@ -46,6 +48,8 @@ public class GestureProcessor {
 
     private boolean mUseCornerTouch;
 
+    private GestureMapper mGestureMapper = new GestureMapper();
+
 
     public void init(SharedPreferences preferences) {
         mGestureTapLeft = Integer.parseInt(preferences.getString("gestureTapLeft", "3"));
@@ -63,6 +67,7 @@ public class GestureProcessor {
         }
         mGestureDoubleTap = Integer.parseInt(preferences.getString("gestureDoubleTap", "7"));
         mGestureLongclick = Integer.parseInt(preferences.getString("gestureLongclick", "11"));
+        mGestureMapper.init(preferences);
     }
 
     @ViewerCommand.ViewerCommandDef
@@ -123,6 +128,11 @@ public class GestureProcessor {
 
     public int onLongTap() {
         return mGestureLongclick;
+    }
+
+    @ViewerCommand.ViewerCommandDef
+    public int getCommandFromFling(float dx, float dy, float velocityX, float velocityY, boolean isSelecting, boolean isXScrolling, boolean isYScrolling) {
+        return this.mGestureMapper.gesture(dx, dy, velocityX, velocityY, isSelecting, isXScrolling, isYScrolling);
     }
 
 
