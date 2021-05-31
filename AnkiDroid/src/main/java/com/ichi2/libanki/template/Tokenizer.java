@@ -96,8 +96,8 @@ public class Tokenizer implements Iterator<Tokenizer.Token> {
         private final String mText;
 
 
-        public Token(TokenKind king, String text) {
-            mKind = king;
+        public Token(TokenKind kind, String text) {
+            mKind = kind;
             mText = text;
         }
 
