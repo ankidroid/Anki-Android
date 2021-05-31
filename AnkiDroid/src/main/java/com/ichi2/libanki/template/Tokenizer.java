@@ -125,8 +125,17 @@ public class Tokenizer implements Iterator<Tokenizer.Token> {
         public @NonNull String getText() {
             return mText;
         }
+
+        @VisibleForTesting
+        public @NonNull Token new_to_legacy() {
+            return new Token(mKind, Tokenizer.new_to_legacy(mText));
+        }
     }
 
+    @VisibleForTesting
+    public static @NonNull String new_to_legacy(String template_part) {
+        return template_part.replace("{{", "<%").replace("}}", "%>");
+    }
 
 
     /**
@@ -166,6 +175,11 @@ public class Tokenizer implements Iterator<Tokenizer.Token> {
             }
             IResult r = ((IResult) obj);
             return mToken.equals(r.mToken) && mRemaining.equals(r.mRemaining);
+        }
+
+        @VisibleForTesting
+        public @NonNull IResult new_to_legacy() {
+            return new IResult(mToken.new_to_legacy(), Tokenizer.new_to_legacy(mRemaining));
         }
     }
 
