@@ -1771,21 +1771,46 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
         mFlipCardLayout.setClickable(false);
         mEaseButtonsLayout.setVisibility(View.VISIBLE);
 
-        if(mLargeAnswerButtons) {
+        if (mLargeAnswerButtons) {
             mEaseButtonsLayout.setOrientation(LinearLayout.VERTICAL);
-            ((ViewGroup)mEase1Layout.getParent()).removeView(mEase1Layout);
-            ((ViewGroup)mEase2Layout.getParent()).removeView(mEase2Layout);
-            ((ViewGroup)mEase3Layout.getParent()).removeView(mEase3Layout);
-            ((ViewGroup)mEase4Layout.getParent()).removeView(mEase4Layout);
+            mEaseButtonsLayout.removeAllViewsInLayout();
+
+            if (mEase1Layout.getParent() != null) {
+                ((ViewGroup)mEase1Layout.getParent()).removeView(mEase1Layout);
+            }
+            if (mEase2Layout.getParent() != null) {
+                ((ViewGroup)mEase2Layout.getParent()).removeView(mEase2Layout);
+            }
+            if (mEase3Layout.getParent() != null) {
+                ((ViewGroup)mEase3Layout.getParent()).removeView(mEase3Layout);
+            }
+            if (mEase4Layout.getParent() != null) {
+                ((ViewGroup)mEase4Layout.getParent()).removeView(mEase4Layout);
+            }
+
             LinearLayout row1 = new LinearLayout(getBaseContext());
             row1.setOrientation(LinearLayout.HORIZONTAL);
-            row1.addView(mEase2Layout);
-            row1.addView(mEase4Layout);
             LinearLayout row2 = new LinearLayout(getBaseContext());
             row2.setOrientation(LinearLayout.HORIZONTAL);
+
+            switch (getAnswerButtonCount()) {
+                case 2: break;
+                case 3:
+                    row1.addView(mEase4Layout);
+                    LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(Resources.getSystem().getDisplayMetrics().widthPixels/2,mEase4Layout.getLayoutParams().height);
+                    params.setMarginStart(Resources.getSystem().getDisplayMetrics().widthPixels/2);
+                    row1.setLayoutParams(params);
+                    mEaseButtonsLayout.addView(row1);
+                    break;
+                default:
+                    row1.addView(mEase2Layout);
+                    row1.addView(mEase4Layout);
+                    mEaseButtonsLayout.addView(row1);
+                    break;
+            }
+
             row2.addView(mEase1Layout);
             row2.addView(mEase3Layout);
-            mEaseButtonsLayout.addView(row1);
             mEaseButtonsLayout.addView(row2);
         }
         Runnable after = () -> mFlipCardLayout.setVisibility(View.GONE);
