@@ -24,6 +24,7 @@ import android.view.View;
 import android.widget.ImageView;
 
 import com.ichi2.anki.R;
+import com.ichi2.anki.UIUtils;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.VisibleForTesting;
@@ -87,6 +88,10 @@ public class RtlCompliantActionProvider extends ActionProvider {
         final Drawable iconDrawable = forItem.getIcon();
         iconDrawable.setAutoMirrored(true);
         actionView.setImageDrawable(iconDrawable);
+
+        // Add top and bottom padding of 16 dp
+        actionView.setPadding(0, (int) (UIUtils.convertDpToPixel(16f, mContext)),
+                0, (int) (UIUtils.convertDpToPixel(16f, mContext)));
 
         actionView.setOnClickListener(v -> {
             if (!forItem.isEnabled()) {
