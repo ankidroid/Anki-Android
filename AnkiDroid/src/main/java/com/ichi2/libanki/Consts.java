@@ -132,8 +132,6 @@ public class Consts {
     @RustCleanup("Use 10")
     public static int SYNC_VER = 9;
 
-    public static final String HELP_SITE = "http://ankisrs.net/docs/manual.html";
-
     // Leech actions
     public static final int LEECH_SUSPEND = 0;
     public static final int LEECH_TAGONLY = 1;
