@@ -369,7 +369,7 @@ public class ModelFieldEditor extends AnkiActivity implements LocaleSelectionDia
                             // Input is valid, now attempt to modify
                             try {
                                 mCol.modSchema();
-                                TaskManager.launchCollectionTask(new CollectionTask.RepositionField(mMod,mNoteFields.getJSONObject(mCurrentPos), pos - 1));
+                                TaskManager.launchCollectionTask(new CollectionTask.RepositionField(mMod,mNoteFields.getJSONObject(mCurrentPos), pos - 1), listener);
                             } catch (ConfirmModSchemaException e) {
                                 e.log();
 
