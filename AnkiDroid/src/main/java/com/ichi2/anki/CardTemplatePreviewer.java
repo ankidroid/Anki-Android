@@ -268,7 +268,11 @@ public class CardTemplatePreviewer extends AbstractFlashcardViewer {
         return new PreviewerCard(col, cardListIndex);
     }
 
-    /** Get a dummy card */
+
+    /**
+     * This method generates a note from a sample model, or fails if invalid. It does not currently have knowledge of field content
+     * A cloze uses the same model. Its content (not provided in params) determines validity of an ordinal
+     */
     protected @Nullable Card getDummyCard(Model model, int ordinal) {
         Timber.d("getDummyCard() Creating dummy note for ordinal %s", ordinal);
         if (model == null) {
@@ -279,6 +283,11 @@ public class CardTemplatePreviewer extends AbstractFlashcardViewer {
         for (int i = 0; i < fieldNames.size() && i < n.getFields().length; i++) {
             n.setField(i, fieldNames.get(i));
         }
+
+        if (model.isCloze()) {
+            ordinal = 0;
+        }
+
         try {
             JSONObject template = model.getJSONArray("tmpls").getJSONObject(ordinal);
             return getCol().getNewLinkedCard(new PreviewerCard(getCol(), n), n, template, 1, 0L, false);
