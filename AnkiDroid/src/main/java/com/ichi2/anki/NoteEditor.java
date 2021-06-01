@@ -1233,6 +1233,12 @@ public class NoteEditor extends AnkiActivity implements
         Bundle noteEditorBundle = new Bundle();
         addInstanceStateToBundle(noteEditorBundle);
         noteEditorBundle.putBundle("editFields", getFieldsAsBundleForPreview());
+        ArrayList<String> cardsList = new ArrayList<>();
+        JSONArray tmpls = mEditorNote.model().getJSONArray("tmpls");
+        for(String name : tmpls.stringIterable()) {
+            cardsList.add(name);
+        }
+        noteEditorBundle.putInt("cardListSize", cardsList.size());
         previewer.putExtra("noteEditorBundle", noteEditorBundle);
         startActivityForResultWithoutAnimation(previewer, REQUEST_PREVIEW);
     }
