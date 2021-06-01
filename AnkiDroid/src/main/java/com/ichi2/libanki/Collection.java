@@ -1142,7 +1142,8 @@ public class Collection implements CollectionGetter {
             // empty cloze?
             if ("q".equals(type) && model.isCloze()) {
                 if (Models._availClozeOrds(model, flist, false).size() == 0) {
-                    String link = String.format("<a href=%s#cloze>%s</a>", Consts.HELP_SITE, "help");
+                    String link = String.format("<a href=\"%s\">%s</a>", mContext.getResources().getString(R.string.link_ankiweb_docs_cloze_deletion), "help");
+                    System.out.println(link);
                     d.put("q", mContext.getString(R.string.empty_cloze_warning, link));
                 }
             }
