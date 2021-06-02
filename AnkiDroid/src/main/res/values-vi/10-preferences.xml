@@ -94,6 +94,8 @@
     <string name="gestures_allow_links_summary">Các thao tác chạm sẽ không được xử lý nếu nhấn một liên kết / gợi ý.</string>
     <string name="gestures_corner_touch" maxLength="41">Chạm 9 điểm</string>
     <string name="gestures_corner_touch_summary">Cho phép cử chỉ chạm ở các góc màn hình</string>
+    <string name="gestures_full_screen_nav_drawer" maxLength="41">Full screen navigation drawer</string>
+    <string name="gestures_fullscreen_nav_drawer_summary">Open navigation drawer when swiped right from anywhere on the screen</string>
     <string name="gestures_swipe_up" maxLength="41">Kéo lên</string>
     <string name="gestures_swipe_down" maxLength="41">Kéo xuống</string>
     <string name="gestures_swipe_left" maxLength="41">Kéo trái</string>

@@ -110,7 +110,6 @@
     <string name="note_editor_no_cards_created">କୌଣସି କାର୍ଡ ସୃଷ୍ଟି ହୋଇନାହିଁ। ଦୟାକରି ଅଧିକ କ୍ଷେତ୍ର ପୂରଣ କରନ୍ତୁ</string>
     <string name="note_editor_no_first_field">ପ୍ରଥମ କ୍ଷେତ୍ର ଖାଲି ଅଛି</string>
     <string name="note_editor_no_cloze_delations">ଏହି ନୋଟ ପ୍ରକାରରେ କ୍ଲୋଜ ବିଲୋପ ରହିବା ନିହାତି ଆବଶ୍ୟକ</string>
-    <string name="note_editor_set_field_language">ଭାଷା ନିର୍ଧାରଣ</string>
     <string name="note_editor_no_cards_created_all_fields">ଏହି ନୋଟ୍ ପ୍ରକାର କୌଣସି ପତ୍ର ଉତ୍ପାଦନ କରି ନାହିଁ। \nଦୟାକରି ଅନ୍ୟ ଏକ ନୋଟ୍ ପ୍ରକାର ବାଛନ୍ତୁ/‘ପତ୍ର’ କ୍ଲିକ୍ କରନ୍ତୁ ଏବଂ ଏକ କ୍ଷେତ୍ର ପ୍ରତିସ୍ଥାପନ ଯୋଡ଼ନ୍ତୁ।</string>
     <string name="note_editor_insert_cloze_no_cloze_note_type">କ୍ଲୋଜ ବିଲୋପ କେବଳ କ୍ଲୋଜ ନୋଟ ପ୍ରକାରରେ ହିଁ କାମ କରେ</string>
     <string name="saving_facts">ନୋଟ୍ ସଂରକ୍ଷିତ କରାଯାଉଛି </string>

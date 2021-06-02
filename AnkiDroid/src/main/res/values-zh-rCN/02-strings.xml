@@ -110,7 +110,6 @@
     <string name="note_editor_no_cards_created">没有已创建的卡片。请填写更多字段</string>
     <string name="note_editor_no_first_field">第一字段为空</string>
     <string name="note_editor_no_cloze_delations">此笔记类型必须包含创建填空</string>
-    <string name="note_editor_set_field_language">设置字段语言</string>
     <string name="note_editor_no_cards_created_all_fields">当前笔记类型没有生成任何卡片。\n请选择另一个笔记类型，或点击 “卡片” 并添加一个字段替换</string>
     <string name="note_editor_insert_cloze_no_cloze_note_type">创建填空只能在完形填空笔记类型上使用</string>
     <string name="saving_facts">保存笔记</string>

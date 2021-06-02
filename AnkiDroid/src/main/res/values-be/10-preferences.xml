@@ -94,6 +94,8 @@
     <string name="gestures_allow_links_summary">Сэнсарныя жэсты не будуць успрымацца, калі націснута спасылка або падказка.</string>
     <string name="gestures_corner_touch" maxLength="41">9-пунктавы дотык</string>
     <string name="gestures_corner_touch_summary">Дазволіць сэнсарныя жэсты ў вуглах экрана</string>
+    <string name="gestures_full_screen_nav_drawer" maxLength="41">Full screen navigation drawer</string>
+    <string name="gestures_fullscreen_nav_drawer_summary">Open navigation drawer when swiped right from anywhere on the screen</string>
     <string name="gestures_swipe_up" maxLength="41">Чырканне ўверх</string>
     <string name="gestures_swipe_down" maxLength="41">Чырканне ўніз</string>
     <string name="gestures_swipe_left" maxLength="41">Чырканне ўлева</string>

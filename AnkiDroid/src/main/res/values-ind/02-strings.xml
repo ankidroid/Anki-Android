@@ -110,7 +110,6 @@
     <string name="note_editor_no_cards_created">Tidak ada kartu yang dibuat. Harap isi semua bidang teks</string>
     <string name="note_editor_no_first_field">Bidang teks pertama kosong</string>
     <string name="note_editor_no_cloze_delations">Tipe catatan ini harus berisi titik-titik</string>
-    <string name="note_editor_set_field_language">Atur bahasa bidang</string>
     <string name="note_editor_no_cards_created_all_fields">Tipe catatan sekarang tidak menghasilkan kartu apapun.\nHarap memilih jenis catatan lain, atau pilih \'Kartu\' dan tambahkan bidang teks pengganti</string>
     <string name="note_editor_insert_cloze_no_cloze_note_type">Kosongan Kloza hanya bekerja pada tipe catatan Kloza</string>
     <string name="saving_facts">Menyimpan catatan</string>

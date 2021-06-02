@@ -110,7 +110,6 @@
     <string name="note_editor_no_cards_created">Keine Karten erstellt. Bitte füllen Sie weitere Felder aus</string>
     <string name="note_editor_no_first_field">Das erste Feld ist leer</string>
     <string name="note_editor_no_cloze_delations">Dieser Notiztyp muss Auslassungen enthalten</string>
-    <string name="note_editor_set_field_language">Feldsprache festlegen</string>
     <string name="note_editor_no_cards_created_all_fields">Der aktuelle Notiztyp hat keine Karten erzeugt.\nBitte wählen Sie einen anderen Notiztyp oder tippen Sie auf »Karten« und fügen Sie eine Feldersetzung hinzu.</string>
     <string name="note_editor_insert_cloze_no_cloze_note_type">Auslassungen funktionieren nur beim Notiztyp »Lückentext«</string>
     <string name="saving_facts">Notiz speichern</string>
