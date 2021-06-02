@@ -4214,31 +4214,31 @@ see card.js for available functions
         }
 
         //Voice reading
-        JavaScriptTTS mTalker = new JavaScriptTTS (AbstractFlashcardViewer.this);
+        JavaScriptTTS mTalker = new JavaScriptTTS(AbstractFlashcardViewer.this);
 
         @JavascriptInterface
         public int ankiTtsSpeak(String text, int queueMode) {
-          return  mTalker.speak(text, queueMode);
+          return mTalker.speak(text, queueMode);
         }
 
         @JavascriptInterface
         public int ankiTtsSpeak(String text) {
-          return  mTalker.speak(text);
+          return mTalker.speak(text);
         }
 
         @JavascriptInterface
         public int ankiTtsSetLanguage(String loc) {
-          return  mTalker.setLanguage(loc);
+          return mTalker.setLanguage(loc);
         }
 
         @JavascriptInterface
         public int ankiTtsSetPitch(float pitch) {
-          return  mTalker.setPitch(pitch);
+          return mTalker.setPitch(pitch);
         }
 
         @JavascriptInterface
         public int ankiTtsSetPitch(double pitch) {
-          return  mTalker.setPitch((float)pitch);
+          return mTalker.setPitch((float)pitch);
         }
 
         @JavascriptInterface
