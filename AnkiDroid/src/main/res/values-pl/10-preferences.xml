@@ -165,6 +165,8 @@
     <string name="pref_backup_max" maxLength="41">Maksymalna liczba kopii zapasowych</string>
     <string name="show_estimates" maxLength="41">Pokaż czas przy przyciskach</string>
     <string name="show_estimates_summ">Pokazuj czas kolejnej powtórki nad przyciskami odpowiedzi</string>
+    <string name="show_large_answer_buttons" maxLength="41">Show large answer buttons</string>
+    <string name="show_large_answer_buttons_summ">Show answer button in 2 rows</string>
     <string name="show_top_bar" maxLength="41">Pokaż górny pasek</string>
     <string name="show_top_bar_summ">Wyświetl licznik kart, zakreślenie i oznaczenie w górnym pasku</string>
     <string name="show_progress" maxLength="41">Pokaż pozostałe</string>

@@ -166,6 +166,8 @@
     <string name="pref_backup_max" maxLength="41">Didžiausias atsarginių kopijų skaičius</string>
     <string name="show_estimates" maxLength="41">Rodyti laiko mygtuką</string>
     <string name="show_estimates_summ">Ant atsakymo mygtukų rodyti kiek liko laiko iki sekančios peržiūros</string>
+    <string name="show_large_answer_buttons" maxLength="41">Show large answer buttons</string>
+    <string name="show_large_answer_buttons_summ">Show answer button in 2 rows</string>
     <string name="show_top_bar" maxLength="41">Show Top Bar</string>
     <string name="show_top_bar_summ">Show card counts, flag and mark in top bar</string>
     <string name="show_progress" maxLength="41">Likusių kortelių rodymas</string>

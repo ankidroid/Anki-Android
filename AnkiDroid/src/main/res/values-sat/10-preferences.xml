@@ -165,6 +165,8 @@
     <string name="pref_backup_max" maxLength="41">ᱵᱮᱠᱟᱹᱯ ᱨᱮᱭᱟᱜ ᱡᱟᱹᱥᱛᱤ ᱮᱞ</string>
     <string name="show_estimates" maxLength="41">ᱵᱟᱹᱴᱟᱹᱱ ᱥᱚᱢᱚᱭ ᱫᱮᱠᱷᱟᱣ</string>
     <string name="show_estimates_summ">ᱛᱮᱞᱟ ᱵᱟᱹᱴᱚᱱ ᱨᱮ ᱞᱟᱦᱟ ᱫᱩᱦᱲᱟ ᱧᱮᱞ ᱥᱚᱢᱚᱭ ᱫᱮᱠᱷᱟᱣᱢᱮ</string>
+    <string name="show_large_answer_buttons" maxLength="41">Show large answer buttons</string>
+    <string name="show_large_answer_buttons_summ">Show answer button in 2 rows</string>
     <string name="show_top_bar" maxLength="41">ᱪᱮᱛᱟᱱ ᱵᱟᱨ ᱫᱮᱠᱷᱟᱣᱢᱮ</string>
     <string name="show_top_bar_summ">ᱪᱮᱛᱟᱱ ᱵᱟᱨ ᱨᱮ ᱠᱟᱰ ᱦᱤᱥᱟᱹᱵ ᱠᱚ, ᱯᱚᱛᱠᱟ ᱟᱨ ᱪᱤᱱᱦᱟᱹ ᱫᱮᱠᱷᱟᱣᱢᱮ</string>
     <string name="show_progress" maxLength="41">ᱵᱟᱹᱠᱤ ᱠᱚ ᱫᱮᱠᱷᱟᱣᱢᱮ</string>

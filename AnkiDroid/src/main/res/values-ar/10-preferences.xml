@@ -165,6 +165,8 @@
     <string name="pref_backup_max" maxLength="41">عدد النسخ الاحتياطية الأقصى</string>
     <string name="show_estimates" maxLength="41">إظهار وقت الأزرار</string>
     <string name="show_estimates_summ">إظهار وقت المراجعة التالية على أزرار الإجابة</string>
+    <string name="show_large_answer_buttons" maxLength="41">Show large answer buttons</string>
+    <string name="show_large_answer_buttons_summ">Show answer button in 2 rows</string>
     <string name="show_top_bar" maxLength="41">إظهار الشريط العلوي</string>
     <string name="show_top_bar_summ">إظهار عدد البطاقات، والتأشير والتعليم في الشريط العلوي</string>
     <string name="show_progress" maxLength="41">إظهار المتبقي</string>

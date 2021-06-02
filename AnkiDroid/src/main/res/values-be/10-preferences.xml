@@ -166,6 +166,8 @@
     <string name="pref_backup_max" maxLength="41">Колькасць рэзервовых копій</string>
     <string name="show_estimates" maxLength="41">Паказваць кнопку часу</string>
     <string name="show_estimates_summ">Паказваць наступны час паўтарэння над кнопкай адказу</string>
+    <string name="show_large_answer_buttons" maxLength="41">Show large answer buttons</string>
+    <string name="show_large_answer_buttons_summ">Show answer button in 2 rows</string>
     <string name="show_top_bar" maxLength="41">Паказваць верхнюю панэль</string>
     <string name="show_top_bar_summ">Паказваць лічыльнік картак, сцяжок і пазнаку на верхняй панэлі</string>
     <string name="show_progress" maxLength="41">Паказаць тое, што засталося</string>
