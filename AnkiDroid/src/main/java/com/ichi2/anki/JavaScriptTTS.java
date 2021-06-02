@@ -6,6 +6,8 @@ import android.speech.tts.TextToSpeech;
 
 import com.ichi2.anki.LanguageUtils;
 
+import androidx.annotation.NonNull;
+
 /**
  * Since it is assumed that only advanced users will use the JavaScript api, 
  * here, Android's TextToSpeech is converted for JavaScript almost as it is, giving priority to free behavior.
@@ -13,8 +15,9 @@ import com.ichi2.anki.LanguageUtils;
  */
 public class JavaScriptTTS implements TextToSpeech.OnInitListener {
 
-    private TextToSpeech mTts;
-    private boolean mTtsOk;
+    @NonNull
+    private static TextToSpeech mTts;
+    private static boolean mTtsOk;
     private static final Bundle mTtsParams = new Bundle();
 
     JavaScriptTTS(Context context) {
