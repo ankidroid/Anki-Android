@@ -240,6 +240,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
     private boolean mDoubleScrolling;
     private boolean mScrollingButtons;
     private boolean mGesturesEnabled;
+    private boolean mLargeAnswerButtons;
     // Android WebView
     protected boolean mSpeakText;
     protected boolean mDisableClipboard = false;
@@ -315,6 +316,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
     protected Card mCurrentCard;
     private int mCurrentEase;
 
+    private int mInitialFlipCardHeight;
     private boolean mButtonHeightSet = false;
 
     private static final int sShowChosenAnswerLength = 2000;
@@ -1624,6 +1626,12 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
             mButtonHeightSet = true;
         }
 
+        mInitialFlipCardHeight = mFlipCardLayout.getLayoutParams().height;
+        if (mLargeAnswerButtons) {
+            ViewGroup.LayoutParams params = mFlipCardLayout.getLayoutParams();
+            params.height = mInitialFlipCardHeight * 2;
+        }
+
         mPreviewButtonsLayout = findViewById(R.id.preview_buttons_layout);
         mPreviewPrevCard = findViewById(R.id.preview_previous_flashcard);
         mPreviewNextCard = findViewById(R.id.preview_next_flashcard);
@@ -1770,6 +1778,59 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
         mFlipCardLayout.setClickable(false);
         mEaseButtonsLayout.setVisibility(View.VISIBLE);
 
+        if (mLargeAnswerButtons) {
+            mEaseButtonsLayout.setOrientation(LinearLayout.VERTICAL);
+            mEaseButtonsLayout.removeAllViewsInLayout();
+
+            if (mEase1Layout.getParent() != null) {
+                ((ViewGroup)mEase1Layout.getParent()).removeView(mEase1Layout);
+            }
+            if (mEase2Layout.getParent() != null) {
+                ((ViewGroup)mEase2Layout.getParent()).removeView(mEase2Layout);
+            }
+            if (mEase3Layout.getParent() != null) {
+                ((ViewGroup)mEase3Layout.getParent()).removeView(mEase3Layout);
+            }
+            if (mEase4Layout.getParent() != null) {
+                ((ViewGroup)mEase4Layout.getParent()).removeView(mEase4Layout);
+            }
+
+            LinearLayout row1 = new LinearLayout(getBaseContext());
+            row1.setOrientation(LinearLayout.HORIZONTAL);
+            LinearLayout row2 = new LinearLayout(getBaseContext());
+            row2.setOrientation(LinearLayout.HORIZONTAL);
+
+            switch (getAnswerButtonCount()) {
+                case 2:
+                    ViewGroup.LayoutParams params = mEase1Layout.getLayoutParams();
+                    params.height = mInitialFlipCardHeight * 2;
+                    params = mEase2Layout.getLayoutParams();
+                    params.height = mInitialFlipCardHeight * 2;
+                    row2.addView(mEase1Layout);
+                    row2.addView(mEase2Layout);
+                    mEaseButtonsLayout.addView(row2);
+                    break;
+                case 3:
+                    row1.addView(mEase3Layout);
+                    row2.addView(mEase1Layout);
+                    row2.addView(mEase2Layout);
+                    params = new LinearLayout.LayoutParams(Resources.getSystem().getDisplayMetrics().widthPixels / 2, mEase4Layout.getLayoutParams().height);
+                    ((LinearLayout.LayoutParams) params).setMarginStart(Resources.getSystem().getDisplayMetrics().widthPixels / 2);
+                    row1.setLayoutParams(params);
+                    mEaseButtonsLayout.addView(row1);
+                    mEaseButtonsLayout.addView(row2);
+                    break;
+                default:
+                    row1.addView(mEase2Layout);
+                    row1.addView(mEase4Layout);
+                    row2.addView(mEase1Layout);
+                    row2.addView(mEase3Layout);
+                    mEaseButtonsLayout.addView(row1);
+                    mEaseButtonsLayout.addView(row2);
+                    break;
+            }
+        }
+
         Runnable after = () -> mFlipCardLayout.setVisibility(View.GONE);
 
         // hide "Show Answer" button
@@ -1878,6 +1939,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
         mDoubleScrolling = preferences.getBoolean("double_scrolling", false);
         mPrefShowTopbar = preferences.getBoolean("showTopbar", true);
         mFocusTypeAnswer = preferences.getBoolean("autoFocusTypeInAnswer", false);
+        mLargeAnswerButtons = preferences.getBoolean("showLargeAnswerButtons", false);
 
         mGesturesEnabled = AnkiDroidApp.initiateGestures(preferences);
         mLinkOverridesTouchGesture = preferences.getBoolean("linkOverridesTouchGesture", false);

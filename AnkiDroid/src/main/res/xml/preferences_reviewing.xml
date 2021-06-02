@@ -130,6 +130,11 @@
             android:defaultValue="true"
             android:summary="@string/show_eta_summ"
             android:title="@string/show_eta" />
+        <CheckBoxPreference
+            android:key="showLargeAnswerButtons"
+            android:defaultValue="false"
+            android:summary="@string/show_large_answer_buttons_summ"
+            android:title="@string/show_large_answer_buttons"/>
     </PreferenceCategory>
     <PreferenceCategory android:title="@string/pref_cat_whiteboard" >
         <com.ichi2.ui.SeekBarPreference
