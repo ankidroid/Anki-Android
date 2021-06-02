@@ -24,12 +24,7 @@ public class JavaScriptTTS implements TextToSpeech.OnInitListener {
     @Override
     /** OnInitListener method to receive the TTS engine status */
     public void onInit(int status) {
-        if (status == TextToSpeech.SUCCESS) {
-            mTtsOk = true;
-        }
-        else {
-            mTtsOk = false;
-        }
+        mTtsOk = status == TextToSpeech.SUCCESS;
     }
     
     /**
