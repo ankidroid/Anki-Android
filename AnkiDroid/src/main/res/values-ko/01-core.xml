@@ -102,8 +102,8 @@
     <string name="menu_suspend">비활성화</string>
     <string name="menu_delete_note">노트 삭제하기</string>
     <string name="menu_flag">플래그</string>
-    <string name="menu_flag_card">카드 표시</string>
-    <string name="menu_flag_card_zero">표시 없음</string>
+    <string name="menu_flag_card">카드에 플래그 추가</string>
+    <string name="menu_flag_card_zero">플래그 없음</string>
     <string name="menu_flag_card_one">빨간색 표시</string>
     <string name="menu_flag_card_two">주황색 표시</string>
     <string name="menu_flag_card_three">초록색 표시</string>
@@ -124,7 +124,7 @@
     The user is taken to the "App Info" screen, and needs to click "Permissions" and
     grant AnkiDroid the \'Storage\' permission. This needs to be a fairly generic message as implementations
     of the permissions/app info screen will differ between devices. -->
-    <string name="startup_no_storage_permission">계속하기 위해서는 AnkiDroid에 \'storage\'권한이 필요합니다</string>
+    <string name="startup_no_storage_permission">계속하기 위해서는 AnkiDroid에 \'저장소\'권한이 필요합니다.</string>
     <!--
         The time_quantities are units of time. They are used without
         plurals or dots.
@@ -177,7 +177,7 @@
     <string name="card_template_editor_back">후면 템플릿</string>
     <string name="card_template_editor_styling">꾸미기</string>
     <string name="card_template_editor_menu_card_browser_appearance">카드 모양 설정</string>
-    <string name="card_template_editor_deck_override">덱 오버라이드</string>
+    <string name="card_template_editor_deck_override">뭉치 덮어쓰기</string>
     <string name="card_template_editor_cant_delete">적어도 하나의 카드 형식이 필요합니다.</string>
     <plurals name="card_template_editor_confirm_delete">
         <item quantity="other">\'%2$s\' 카드 형식과 %1$d 카드를 삭제할까요?</item>
@@ -195,10 +195,10 @@
     <string name="read_write_permission_label">AnkiDroid 데이터베이스에 읽고 쓰기</string>
     <string name="read_write_permission_description">기존의 노트, 카드, 노트 유형, 카드 묶음을 접근 및 생성</string>
     <!-- Context Menu -->
-    <string name="card_browser_context_menu" comment="The value which appears in the system context menu. Note the casing difference">카드 브라우저</string>
-    <string name="context_menu_anki_card_label">Anki카드</string>
-    <string name="has_a_problem" comment="First field is either front template or back template. Second field is the error message.">%1$s 에問題가있읍니다:<br/>%2$s</string>
-    <string name="more_information">詳細情報</string>
+    <string name="card_browser_context_menu" comment="The value which appears in the system context menu. Note the casing difference">카드 탐색기</string>
+    <string name="context_menu_anki_card_label">Anki 카드</string>
+    <string name="has_a_problem" comment="First field is either front template or back template. Second field is the error message.">%1$s에 문제가 있습니다:<br/>%2$s</string>
+    <string name="more_information">추가 정보</string>
     <string name="no_field">\'{{%1$s}}\'검색 결과 , %1$s라는 필드가 없습니다.</string>
     <string name="closed_tag_not_open">\'{{/%1$s}}\'검색 결과, \'{{#%1$s}}\'나 \'{{^%1$s}}\'이 없습니다.</string>
     <string name="missing_closing_bracket">\"%s\"에 \"}}\"이 없습니다.</string>

@@ -165,6 +165,8 @@
     <string name="pref_backup_max" maxLength="41">En fazla yedek sayısı</string>
     <string name="show_estimates" maxLength="41">Düğmede zaman göster</string>
     <string name="show_estimates_summ">Cevap düğmelerinin üzerinde sonraki çıkma zamanını göster</string>
+    <string name="show_large_answer_buttons" maxLength="41">Show large answer buttons</string>
+    <string name="show_large_answer_buttons_summ">Show answer button in 2 rows</string>
     <string name="show_top_bar" maxLength="41">Üst Çubuğu Göster</string>
     <string name="show_top_bar_summ">Üst çubukta kart sayılarını ve işaretlemeleri göster</string>
     <string name="show_progress" maxLength="41">Kalanı göster</string>
