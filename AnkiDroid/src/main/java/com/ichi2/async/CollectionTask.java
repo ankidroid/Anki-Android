@@ -23,9 +23,9 @@ import android.content.res.Resources;
 import android.os.AsyncTask;
 import android.util.Pair;
 
-import com.fasterxml.jackson.core.JsonFactory;
 import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.core.JsonToken;
+import com.ichi2.anki.AnkiActivity.ShowDbCorruptDialogListener;
 import com.ichi2.anki.AnkiDroidApp;
 import com.ichi2.anki.AnkiSerialization;
 import com.ichi2.anki.BackupManager;
@@ -36,26 +36,26 @@ import com.ichi2.anki.R;
 import com.ichi2.anki.StudyOptionsFragment;
 import com.ichi2.anki.TemporaryModel;
 import com.ichi2.anki.exception.ConfirmModSchemaException;
+import com.ichi2.anki.exception.DatabaseCorruptException;
 import com.ichi2.anki.exception.ImportExportException;
-import com.ichi2.libanki.Media;
-import com.ichi2.libanki.Model;
-import com.ichi2.libanki.Models;
-import com.ichi2.libanki.UndoAction;
-import com.ichi2.libanki.WrongId;
-import com.ichi2.libanki.sched.AbstractSched;
 import com.ichi2.libanki.AnkiPackageExporter;
 import com.ichi2.libanki.Card;
 import com.ichi2.libanki.Collection;
 import com.ichi2.libanki.Consts;
 import com.ichi2.libanki.DB;
+import com.ichi2.libanki.Deck;
+import com.ichi2.libanki.DeckConfig;
 import com.ichi2.libanki.Decks;
+import com.ichi2.libanki.Media;
+import com.ichi2.libanki.Model;
+import com.ichi2.libanki.Models;
 import com.ichi2.libanki.Note;
 import com.ichi2.libanki.Storage;
+import com.ichi2.libanki.UndoAction;
 import com.ichi2.libanki.Utils;
-import com.ichi2.libanki.DeckConfig;
-import com.ichi2.libanki.Deck;
+import com.ichi2.libanki.WrongId;
 import com.ichi2.libanki.importer.AnkiPackageImporter;
-
+import com.ichi2.libanki.sched.AbstractSched;
 import com.ichi2.libanki.sched.Counts;
 import com.ichi2.libanki.sched.DeckDueTreeNode;
 import com.ichi2.libanki.sched.DeckTreeNode;
@@ -69,9 +69,10 @@ import com.ichi2.utils.PairWithCard;
 import com.ichi2.utils.SyncStatus;
 import com.ichi2.utils.Triple;
 
+import org.apache.commons.compress.archivers.zip.ZipFile;
+
 import java.io.File;
 import java.io.FileNotFoundException;
-import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -85,8 +86,6 @@ import java.util.TreeMap;
 import java.util.concurrent.CancellationException;
 import java.util.concurrent.ExecutionException;
 
-import org.apache.commons.compress.archivers.zip.ZipFile;
-
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.annotation.StringRes;
@@ -95,7 +94,8 @@ import timber.log.Timber;
 
 import static com.ichi2.async.TaskManager.setLatestInstance;
 import static com.ichi2.libanki.Card.deepCopyCardArray;
-import static com.ichi2.libanki.UndoAction.*;
+import static com.ichi2.libanki.UndoAction.revertCardToProvidedState;
+import static com.ichi2.libanki.UndoAction.revertNoteToProvidedState;
 import static com.ichi2.utils.BooleanGetter.FALSE;
 import static com.ichi2.utils.BooleanGetter.TRUE;
 
@@ -279,41 +279,51 @@ public class CollectionTask<ProgressBackground, ResultBackground> extends BaseAs
         private final Card mEditCard;
         private final boolean mFromReviewer;
         private final boolean mCanAccessScheduler;
+        private final ShowDbCorruptDialogListener mShowDbCorruptDialogListener;
 
 
-        public UpdateNote(Card editCard, boolean fromReviewer, boolean canAccessScheduler) {
+        public UpdateNote(Card editCard, boolean fromReviewer, boolean canAccessScheduler, ShowDbCorruptDialogListener showDbCorruptDialogListener) {
             this.mEditCard = editCard;
             this.mFromReviewer = fromReviewer;
             this.mCanAccessScheduler = canAccessScheduler;
+            this.mShowDbCorruptDialogListener = showDbCorruptDialogListener;
         }
 
         protected BooleanGetter task(@NonNull Collection col, @NonNull ProgressSenderAndCancelListener<PairWithCard<String>> collectionTask) {
             Timber.d("doInBackgroundUpdateNote");
-            // Save the note
-            AbstractSched sched = col.getSched();
-            Note editNote = mEditCard.note();
 
             try {
+                // Save the note
+                AbstractSched sched = col.getSched();
+                Note editNote = mEditCard.note();
+
                 col.getDb().executeInTransaction(() -> {
-                    // TODO: undo integration
-                    editNote.flush();
-                    // flush card too, in case, did has been changed
-                    mEditCard.flush();
-                    if (mFromReviewer) {
-                        Card newCard;
-                        if (col.getDecks().active().contains(mEditCard.getDid()) || !mCanAccessScheduler) {
-                            newCard = mEditCard;
-                            newCard.load();
-                            // reload qa-cache
-                            newCard.q(true);
+                    try {
+                        // TODO: undo integration
+                        editNote.flush();
+                        // flush card too, in case, did has been changed
+                        mEditCard.flush();
+                        if (mFromReviewer) {
+                            Card newCard;
+                            if (col.getDecks().active().contains(mEditCard.getDid()) || !mCanAccessScheduler) {
+                                newCard = mEditCard;
+                                newCard.load();
+                                // reload qa-cache
+                                newCard.q(true);
+                            } else {
+                                newCard = sched.getCard();
+                            }
+                            collectionTask.doProgress(new PairWithCard<>(newCard, null)); // check: are there deleted too?
                         } else {
-                            newCard = sched.getCard();
+                            collectionTask.doProgress(new PairWithCard<>(mEditCard, editNote.stringTags()));
                         }
-                        collectionTask.doProgress(new PairWithCard<>(newCard, null)); // check: are there deleted too?
-                    } else {
-                        collectionTask.doProgress(new PairWithCard<>(mEditCard, editNote.stringTags()));
+                    } catch (DatabaseCorruptException e) {
+                        mShowDbCorruptDialogListener.onPostExecute(null);
                     }
                 });
+            } catch (DatabaseCorruptException e) {
+                mShowDbCorruptDialogListener.onPostExecute(null);
+                return FALSE;
             } catch (RuntimeException e) {
                 Timber.e(e, "doInBackgroundUpdateNote - RuntimeException on updating note");
                 AnkiDroidApp.sendExceptionReport(e, "doInBackgroundUpdateNote");
@@ -328,13 +338,26 @@ public class CollectionTask<ProgressBackground, ResultBackground> extends BaseAs
     }
 
     public static class GetCard extends Task<Card, BooleanGetter> {
+        protected final ShowDbCorruptDialogListener mShowDbCorruptDialogListener;
+
+
+        public GetCard(ShowDbCorruptDialogListener showDbCorruptDialogListener) {
+            this.mShowDbCorruptDialogListener = showDbCorruptDialogListener;
+        }
+
+
         protected BooleanGetter task(@NonNull Collection col, @NonNull ProgressSenderAndCancelListener<Card> collectionTask) {
             AbstractSched sched = col.getSched();
             Timber.i("Obtaining card");
             Card newCard = sched.getCard();
             if (newCard != null) {
                 // render cards before locking database
-                newCard._getQA(true);
+                try {
+                    newCard._getQA(true);
+                } catch (DatabaseCorruptException e) {
+                    mShowDbCorruptDialogListener.onPostExecute(null);
+                    return FALSE;
+                }
             }
             collectionTask.doProgress(newCard);
             return TRUE;
@@ -344,14 +367,22 @@ public class CollectionTask<ProgressBackground, ResultBackground> extends BaseAs
     public static class AnswerAndGetCard extends GetCard {
         private final @NonNull Card mOldCard;
         private final @Consts.BUTTON_TYPE int mEase;
-        public AnswerAndGetCard(@NonNull Card oldCard, @Consts.BUTTON_TYPE int ease) {
+
+
+        public AnswerAndGetCard(@NonNull Card oldCard, @Consts.BUTTON_TYPE int ease, @NonNull ShowDbCorruptDialogListener showDbCorruptDialogListener) {
+            super(showDbCorruptDialogListener);
             this.mOldCard = oldCard;
             this.mEase = ease;
         }
 
         protected BooleanGetter task(@NonNull Collection col, @NonNull ProgressSenderAndCancelListener<Card> collectionTask) {
             Timber.i("Answering card %d", mOldCard.getId());
-            col.getSched().answerCard(mOldCard, mEase);
+            try {
+                col.getSched().answerCard(mOldCard, mEase);
+            } catch (DatabaseCorruptException e) {
+                mShowDbCorruptDialogListener.onPostExecute(null);
+                return FALSE;
+            }
             return super.task(col, collectionTask);
         }
     }
@@ -503,16 +534,24 @@ public class CollectionTask<ProgressBackground, ResultBackground> extends BaseAs
     }
 
     public static class BuryNote extends DismissNote {
-        public BuryNote(Card card) {
+        private final ShowDbCorruptDialogListener mShowDbCorruptDialogListener;
+
+
+        public BuryNote(Card card, ShowDbCorruptDialogListener showDbCorruptDialogListener) {
             super(card);
+            this.mShowDbCorruptDialogListener = showDbCorruptDialogListener;
         }
 
         @Override
         protected void actualTask(Collection col) {
-            // collect undo information
-            col.markUndo(revertNoteToProvidedState(R.string.menu_bury_note, mCard));
-            // then bury
-            col.getSched().buryNote(mCard.note().getId());
+            try {
+                // collect undo information
+                col.markUndo(revertNoteToProvidedState(R.string.menu_bury_note, mCard));
+                // then bury
+                col.getSched().buryNote(mCard.note().getId());
+            } catch (DatabaseCorruptException e) {
+                mShowDbCorruptDialogListener.onPostExecute(null);
+            }
         }
     }
 
@@ -536,37 +575,53 @@ public class CollectionTask<ProgressBackground, ResultBackground> extends BaseAs
     }
 
     public static class SuspendNote extends DismissNote {
-        public SuspendNote(Card card) {
+        private final ShowDbCorruptDialogListener mShowDbCorruptDialogListener;
+
+
+        public SuspendNote(Card card, ShowDbCorruptDialogListener showDbCorruptDialogListener) {
             super(card);
+            mShowDbCorruptDialogListener = showDbCorruptDialogListener;
         }
 
         @Override
         protected void actualTask(Collection col) {
-            // collect undo information
-            ArrayList<Card> cards = mCard.note().cards();
-            long[] cids = new long[cards.size()];
-            for (int i = 0; i < cards.size(); i++) {
-                cids[i] = cards.get(i).getId();
+            try {
+                // collect undo information
+                ArrayList<Card> cards = mCard.note().cards();
+                long[] cids = new long[cards.size()];
+                for (int i = 0; i < cards.size(); i++) {
+                    cids[i] = cards.get(i).getId();
+                }
+                col.markUndo(revertNoteToProvidedState(R.string.menu_suspend_note, mCard));
+                // suspend note
+                col.getSched().suspendCards(cids);
+            } catch (DatabaseCorruptException e) {
+                mShowDbCorruptDialogListener.onPostExecute(null);
             }
-            col.markUndo(revertNoteToProvidedState(R.string.menu_suspend_note, mCard));
-            // suspend note
-            col.getSched().suspendCards(cids);
         }
     }
 
     public static class DeleteNote extends DismissNote {
-        public DeleteNote(Card card) {
+        private final ShowDbCorruptDialogListener mShowDbCorruptDialogListener;
+
+
+        public DeleteNote(Card card, ShowDbCorruptDialogListener showDbCorruptDialogListener) {
             super(card);
+            mShowDbCorruptDialogListener = showDbCorruptDialogListener;
         }
 
         @Override
         protected void actualTask(Collection col) {
-            Note note = mCard.note();
-            // collect undo information
-            ArrayList<Card> allCs = note.cards();
-            col.markUndo(new UndoDeleteNote(note, allCs, mCard));
-            // delete note
-            col.remNotes(new long[] {note.getId()});
+            try {
+                Note note = mCard.note();
+                // collect undo information
+                ArrayList<Card> allCs = note.cards();
+                col.markUndo(new UndoDeleteNote(note, allCs, mCard));
+                // delete note
+                col.remNotes(new long[] {note.getId()});
+            } catch (DatabaseCorruptException e) {
+                mShowDbCorruptDialogListener.onPostExecute(null);
+            }
         }
     }
 
@@ -661,7 +716,7 @@ public class CollectionTask<ProgressBackground, ResultBackground> extends BaseAs
         }
 
 
-        public @Nullable Card undo(@NonNull Collection col) {
+        public @Nullable Card undo(@NonNull Collection col) throws DatabaseCorruptException {
             Timber.i("Undo: Change Decks");
             // move cards to original deck
             for (int i = 0; i < mCards.length; i++) {
@@ -833,124 +888,150 @@ public class CollectionTask<ProgressBackground, ResultBackground> extends BaseAs
     }
 
     public static class MarkNoteMulti extends DismissNotes<Void> {
-        public MarkNoteMulti(List<Long> cardIds) {
+        private final ShowDbCorruptDialogListener mShowDbCorruptDialogListener;
+
+
+        public MarkNoteMulti(List<Long> cardIds, ShowDbCorruptDialogListener showDbCorruptDialogListener) {
             super(cardIds);
+            mShowDbCorruptDialogListener = showDbCorruptDialogListener;
         }
 
         protected boolean actualTask(Collection col, ProgressSenderAndCancelListener<Void> collectionTask, Card[] cards) {
-            Set<Note> notes = CardUtils.getNotes(Arrays.asList(cards));
-            // collect undo information
-            List<Note> originalMarked = new ArrayList<>();
-            List<Note> originalUnmarked = new ArrayList<>();
+            try {
+                Set<Note> notes = CardUtils.getNotes(Arrays.asList(cards));
+                // collect undo information
+                List<Note> originalMarked = new ArrayList<>();
+                List<Note> originalUnmarked = new ArrayList<>();
 
-            for (Note n : notes) {
-                if (n.hasTag("marked"))
-                    originalMarked.add(n);
-                else
-                    originalUnmarked.add(n);
+                for (Note n : notes) {
+                    if (n.hasTag("marked")) {
+                        originalMarked.add(n);
+                    } else {
+                        originalUnmarked.add(n);
+                    }
+                }
+
+                boolean hasUnmarked = !originalUnmarked.isEmpty();
+                CardUtils.markAll(new ArrayList<>(notes), hasUnmarked);
+
+                // mark undo for all at once
+                col.markUndo(new UndoMarkNoteMulti(originalMarked, originalUnmarked, hasUnmarked));
+
+                // reload cards because they'll be passed back to caller
+                for (Card c : cards) {
+                    c.load();
+                }
+                return true;
+            } catch (DatabaseCorruptException e) {
+                mShowDbCorruptDialogListener.onPostExecute(null);
+                return false;
             }
-
-            boolean hasUnmarked = !originalUnmarked.isEmpty();
-            CardUtils.markAll(new ArrayList<>(notes), hasUnmarked);
-
-            // mark undo for all at once
-            col.markUndo(new UndoMarkNoteMulti(originalMarked, originalUnmarked, hasUnmarked));
-
-            // reload cards because they'll be passed back to caller
-            for (Card c : cards) {
-                c.load();
-            }
-            return true;
         }
     }
 
     public static class DeleteNoteMulti extends DismissNotes<Card[]> {
+        private final ShowDbCorruptDialogListener mShowDbCorruptDialogListener;
 
-        public DeleteNoteMulti(List<Long> cardIds) {
+
+        public DeleteNoteMulti(List<Long> cardIds, ShowDbCorruptDialogListener showDbCorruptDialogListener) {
             super(cardIds);
+            mShowDbCorruptDialogListener = showDbCorruptDialogListener;
         }
 
         protected boolean actualTask(Collection col, ProgressSenderAndCancelListener<Card[]> collectionTask, Card[] cards) {
-            AbstractSched sched = col.getSched();
-            // list of all ids to pass to remNotes method.
-            // Need Set (-> unique) so we don't pass duplicates to col.remNotes()
-            Set<Note> notes = CardUtils.getNotes(Arrays.asList(cards));
-            List<Card> allCards = CardUtils.getAllCards(notes);
-            // delete note
-            long[] uniqueNoteIds = new long[notes.size()];
-            Note[] notesArr = notes.toArray(new Note[notes.size()]);
-            int count = 0;
-            for (Note note : notes) {
-                uniqueNoteIds[count] = note.getId();
-                count++;
+            try {
+                AbstractSched sched = col.getSched();
+                // list of all ids to pass to remNotes method.
+                // Need Set (-> unique) so we don't pass duplicates to col.remNotes()
+                Set<Note> notes = CardUtils.getNotes(Arrays.asList(cards));
+                List<Card> allCards = CardUtils.getAllCards(notes);
+                // delete note
+                long[] uniqueNoteIds = new long[notes.size()];
+                Note[] notesArr = notes.toArray(new Note[notes.size()]);
+                int count = 0;
+                for (Note note : notes) {
+                    uniqueNoteIds[count] = note.getId();
+                    count++;
+                }
+
+
+                col.markUndo(new UndoDeleteNoteMulti(notesArr, allCards));
+
+                col.remNotes(uniqueNoteIds);
+                sched.deferReset();
+                // pass back all cards because they can't be retrieved anymore by the caller (since the note is deleted)
+                collectionTask.doProgress(allCards.toArray(new Card[allCards.size()]));
+                return true;
+            } catch (DatabaseCorruptException e) {
+                mShowDbCorruptDialogListener.onPostExecute(null);
+                return false;
             }
-
-
-
-            col.markUndo(new UndoDeleteNoteMulti(notesArr, allCards));
-
-            col.remNotes(uniqueNoteIds);
-            sched.deferReset();
-            // pass back all cards because they can't be retrieved anymore by the caller (since the note is deleted)
-            collectionTask.doProgress(allCards.toArray(new Card[allCards.size()]));
-            return true;
         }
     }
 
     public static class ChangeDeckMulti extends DismissNotes<Void> {
         private final long mNewDid;
-        public ChangeDeckMulti(List<Long> cardIds, long newDid) {
+        private final ShowDbCorruptDialogListener mShowDbCorruptDialogListener;
+
+
+        public ChangeDeckMulti(List<Long> cardIds, long newDid, ShowDbCorruptDialogListener showDbCorruptDialogListener) {
             super(cardIds);
             mNewDid = newDid;
+            mShowDbCorruptDialogListener = showDbCorruptDialogListener;
         }
 
         protected boolean actualTask(Collection col, ProgressSenderAndCancelListener<Void> collectionTask, Card[] cards) {
-            Timber.i("Changing %d cards to deck: '%d'", cards.length, mNewDid);
-            Deck deckData = col.getDecks().get(mNewDid);
-
-            if (Decks.isDynamic(deckData)) {
-                //#5932 - can't change to a dynamic deck. Use "Rebuild"
-                Timber.w("Attempted to move to dynamic deck. Cancelling task.");
-                return false;
-            }
-
-            //Confirm that the deck exists (and is not the default)
             try {
-                long actualId = deckData.getLong("id");
-                if (actualId != mNewDid) {
-                    Timber.w("Attempted to move to deck %d, but got %d", mNewDid, actualId);
+                Timber.i("Changing %d cards to deck: '%d'", cards.length, mNewDid);
+                Deck deckData = col.getDecks().get(mNewDid);
+
+                if (Decks.isDynamic(deckData)) {
+                    //#5932 - can't change to a dynamic deck. Use "Rebuild"
+                    Timber.w("Attempted to move to dynamic deck. Cancelling task.");
                     return false;
                 }
-            } catch (Exception e) {
-                Timber.e(e, "failed to check deck");
+
+                //Confirm that the deck exists (and is not the default)
+                try {
+                    long actualId = deckData.getLong("id");
+                    if (actualId != mNewDid) {
+                        Timber.w("Attempted to move to deck %d, but got %d", mNewDid, actualId);
+                        return false;
+                    }
+                } catch (Exception e) {
+                    Timber.e(e, "failed to check deck");
+                    return false;
+                }
+
+                long[] changedCardIds = new long[cards.length];
+                for (int i = 0; i < cards.length; i++) {
+                    changedCardIds[i] = cards[i].getId();
+                }
+                col.getSched().remFromDyn(changedCardIds);
+
+                long[] originalDids = new long[cards.length];
+
+                for (int i = 0; i < cards.length; i++) {
+                    Card card = cards[i];
+                    card.load();
+                    // save original did for undo
+                    originalDids[i] = card.getDid();
+                    // then set the card ID to the new deck
+                    card.setDid(mNewDid);
+                    Note note = card.note();
+                    note.flush();
+                    // flush card too, in case, did has been changed
+                    card.flush();
+                }
+
+                UndoAction changeDeckMulti = new UndoChangeDeckMulti(cards, originalDids);
+                // mark undo for all at once
+                col.markUndo(changeDeckMulti);
+                return true;
+            } catch (DatabaseCorruptException e) {
+                mShowDbCorruptDialogListener.onPostExecute(null);
                 return false;
             }
-
-            long[] changedCardIds = new long[cards.length];
-            for (int i = 0; i < cards.length; i++) {
-                changedCardIds[i] = cards[i].getId();
-            }
-            col.getSched().remFromDyn(changedCardIds);
-
-            long[] originalDids = new long[cards.length];
-
-            for (int i = 0; i < cards.length; i++) {
-                Card card = cards[i];
-                card.load();
-                // save original did for undo
-                originalDids[i] = card.getDid();
-                // then set the card ID to the new deck
-                card.setDid(mNewDid);
-                Note note = card.note();
-                note.flush();
-                // flush card too, in case, did has been changed
-                card.flush();
-            }
-
-            UndoAction changeDeckMulti = new UndoChangeDeckMulti(cards, originalDids);
-            // mark undo for all at once
-            col.markUndo(changeDeckMulti);
-            return true;
         }
     }
 
@@ -1020,7 +1101,7 @@ public class CollectionTask<ProgressBackground, ResultBackground> extends BaseAs
     }
 
     @VisibleForTesting
-    public static Card nonTaskUndo(Collection col) {
+    public static Card nonTaskUndo(Collection col) throws DatabaseCorruptException {
         AbstractSched sched = col.getSched();
         Card card = col.undo();
         if (card == null) {
@@ -1039,18 +1120,32 @@ public class CollectionTask<ProgressBackground, ResultBackground> extends BaseAs
     }
 
     public static class Undo extends Task<Card, BooleanGetter> {
+        private final ShowDbCorruptDialogListener mShowDbCorruptDialogListener;
+
+
+        public Undo(ShowDbCorruptDialogListener showDbCorruptDialogListener) {
+            mShowDbCorruptDialogListener = showDbCorruptDialogListener;
+        }
+
+
         protected BooleanGetter task(@NonNull Collection col, @NonNull ProgressSenderAndCancelListener<Card> collectionTask) {
+            final BooleanGetter[] result = {TRUE};
             try {
                 col.getDb().executeInTransaction(() -> {
-                    Card card = nonTaskUndo(col);
-                    collectionTask.doProgress(card);
+                    try {
+                        Card card = nonTaskUndo(col);
+                        collectionTask.doProgress(card);
+                    } catch (DatabaseCorruptException e) {
+                        mShowDbCorruptDialogListener.onPostExecute(null);
+                        result[0] = FALSE;
+                    }
                 });
             } catch (RuntimeException e) {
                 Timber.e(e, "doInBackgroundUndo - RuntimeException on undoing");
                 AnkiDroidApp.sendExceptionReport(e, "doInBackgroundUndo");
                 return FALSE;
             }
-            return TRUE;
+            return result[0];
         }
     }
 
@@ -1100,7 +1195,11 @@ public class CollectionTask<ProgressBackground, ResultBackground> extends BaseAs
                     Timber.d("doInBackgroundSearchCards was cancelled so return");
                     return;
                 }
-                card.load(false, mColumn1Index, mColumn2Index);
+                try {
+                    card.load(false, mColumn1Index, mColumn2Index);
+                } catch (DatabaseCorruptException e) {
+                    Timber.w(e);
+                }
             }
             mCollectionTask.doProgress(mCards);
         }
@@ -1136,14 +1235,16 @@ public class CollectionTask<ProgressBackground, ResultBackground> extends BaseAs
         private final int mNumCardsToRender;
         private final int mColumn1Index;
         private final int mColumn2Index;
+        private final ShowDbCorruptDialogListener mShowDbCorruptDialogListener;
 
 
-        public SearchCards(String query, boolean order, int numCardsToRender, int column1Index, int column2Index) {
+        public SearchCards(String query, boolean order, int numCardsToRender, int column1Index, int column2Index, ShowDbCorruptDialogListener showDbCorruptDialogListener) {
             this.mQuery = query;
             this.mOrder = order;
             this.mNumCardsToRender = numCardsToRender;
             this.mColumn1Index = column1Index;
             this.mColumn2Index = column2Index;
+            mShowDbCorruptDialogListener = showDbCorruptDialogListener;
         }
 
 
@@ -1167,7 +1268,12 @@ public class CollectionTask<ProgressBackground, ResultBackground> extends BaseAs
                     Timber.d("doInBackgroundSearchCards was cancelled so return null");
                     return null;
                 }
-                searchResult.get(i).load(false, mColumn1Index, mColumn2Index);
+                try {
+                    searchResult.get(i).load(false, mColumn1Index, mColumn2Index);
+                } catch (DatabaseCorruptException e) {
+                    mShowDbCorruptDialogListener.onPostExecute(null);
+                    return null;
+                }
             }
             // Finish off the task
             if (collectionTask.isCancelled()) {
@@ -1186,14 +1292,16 @@ public class CollectionTask<ProgressBackground, ResultBackground> extends BaseAs
         private final Integer mN;
         private final int mColumn1Index;
         private final int mColumn2Index;
+        private final ShowDbCorruptDialogListener mShowDbCorruptDialogListener;
 
 
-        public RenderBrowserQA(CardBrowser.CardCollection<CardBrowser.CardCache> cards, Integer mStartPos, Integer n, int column1Index, int column2Index) {
+        public RenderBrowserQA(CardBrowser.CardCollection<CardBrowser.CardCache> cards, Integer mStartPos, Integer n, int column1Index, int column2Index, ShowDbCorruptDialogListener showDbCorruptDialogListener) {
             this.mCards = cards;
             this.mStartPos = mStartPos;
             this.mN = n;
             this.mColumn1Index = column1Index;
             this.mColumn2Index = column2Index;
+            mShowDbCorruptDialogListener = showDbCorruptDialogListener;
         }
 
 
@@ -1239,7 +1347,12 @@ public class CollectionTask<ProgressBackground, ResultBackground> extends BaseAs
                     continue;
                 }
                 // Update item
-                card.load(false, mColumn1Index, mColumn2Index);
+                try {
+                    card.load(false, mColumn1Index, mColumn2Index);
+                } catch (DatabaseCorruptException e) {
+                    mShowDbCorruptDialogListener.onPostExecute(null);
+                    return null;
+                }
                 float progress = (float) i / mN * 100;
                 collectionTask.doProgress((int) progress);
             }
@@ -1708,20 +1821,30 @@ public class CollectionTask<ProgressBackground, ResultBackground> extends BaseAs
      * @return The results list from the check, or false if any errors.
      */
     public static class CheckMedia extends Task<Void, PairWithBoolean<List<List<String>>>> {
+        private final ShowDbCorruptDialogListener mShowDbCorruptDialogListener;
+
+
+        public CheckMedia(ShowDbCorruptDialogListener showDbCorruptDialogListener) {
+            mShowDbCorruptDialogListener = showDbCorruptDialogListener;
+        }
+
+
         @Override
         protected PairWithBoolean<List<List<String>>> task(@NonNull Collection col, @NonNull ProgressSenderAndCancelListener<Void> collectionTask) {
             Timber.d("doInBackgroundCheckMedia");
             // Ensure that the DB is valid - unknown why, but some users were missing the meta table.
             try {
                 col.getMedia().rebuildIfInvalid();
+                // A media check on AnkiDroid will also update the media db
+                col.getMedia().findChanges(true);
+                // Then do the actual check
+                return new PairWithBoolean<>(true, col.getMedia().check());
+            } catch (DatabaseCorruptException e) {
+                mShowDbCorruptDialogListener.onPostExecute(null);
             } catch (IOException e) {
                 Timber.w(e);
-                return new PairWithBoolean<>(false, null);
             }
-            // A media check on AnkiDroid will also update the media db
-            col.getMedia().findChanges(true);
-            // Then do the actual check
-            return new PairWithBoolean<>(true, col.getMedia().check());
+            return new PairWithBoolean<>(false, null);
         }
     }
 
@@ -1993,10 +2116,12 @@ public class CollectionTask<ProgressBackground, ResultBackground> extends BaseAs
      */
     public static class CheckCardSelection extends Task<Void, Pair<Boolean, Boolean>> {
         private final @NonNull Set<CardBrowser.CardCache> mCheckedCards;
+        private final ShowDbCorruptDialogListener mShowDbCorruptDialogListener;
 
 
-        public CheckCardSelection(@NonNull Set<CardBrowser.CardCache> checkedCards) {
+        public CheckCardSelection(@NonNull Set<CardBrowser.CardCache> checkedCards, ShowDbCorruptDialogListener showDbCorruptDialogListener) {
             this.mCheckedCards = checkedCards;
+            mShowDbCorruptDialogListener = showDbCorruptDialogListener;
         }
 
 
@@ -2008,11 +2133,17 @@ public class CollectionTask<ProgressBackground, ResultBackground> extends BaseAs
                     Timber.v("doInBackgroundCheckCardSelection: cancelled.");
                     return null;
                 }
-                Card card = c.getCard();
-                hasUnsuspended = hasUnsuspended || card.getQueue() != Consts.QUEUE_TYPE_SUSPENDED;
-                hasUnmarked = hasUnmarked || !card.note().hasTag("marked");
-                if (hasUnsuspended && hasUnmarked)
-                    break;
+                try {
+                    Card card = c.getCard();
+                    hasUnsuspended = hasUnsuspended || card.getQueue() != Consts.QUEUE_TYPE_SUSPENDED;
+                    hasUnmarked = hasUnmarked || !card.note().hasTag("marked");
+                    if (hasUnsuspended && hasUnmarked) {
+                        break;
+                    }
+                } catch (DatabaseCorruptException e) {
+                    mShowDbCorruptDialogListener.onPostExecute(null);
+                    return null;
+                }
             }
 
             return new Pair<>(hasUnsuspended, hasUnmarked);
@@ -2020,10 +2151,20 @@ public class CollectionTask<ProgressBackground, ResultBackground> extends BaseAs
     }
 
     public static class PreloadNextCard extends Task<Void, Void> {
+        private final ShowDbCorruptDialogListener mShowDbCorruptDialogListener;
+
+
+        public PreloadNextCard(ShowDbCorruptDialogListener showDbCorruptDialogListener) {
+            mShowDbCorruptDialogListener = showDbCorruptDialogListener;
+        }
+
+
         public Void task(@NonNull Collection col, @NonNull ProgressSenderAndCancelListener<Void> collectionTask) {
             try {
                 col.getSched().counts(); // Ensure counts are recomputed if necessary, to know queue to look for
                 col.getSched().preloadNextCard();
+            } catch (DatabaseCorruptException e) {
+                mShowDbCorruptDialogListener.onPostExecute(null);
             } catch (RuntimeException e) {
                 Timber.e(e, "doInBackgroundPreloadNextCard - RuntimeException on preloading card");
             }

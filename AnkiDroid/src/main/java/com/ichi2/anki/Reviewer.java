@@ -64,6 +64,7 @@ import androidx.vectordrawable.graphics.drawable.VectorDrawableCompat;
 
 import com.ichi2.anki.cardviewer.CardAppearance;
 import com.ichi2.anki.dialogs.ConfirmationDialog;
+import com.ichi2.anki.exception.DatabaseCorruptException;
 import com.ichi2.anki.multimediacard.AudioView;
 import com.ichi2.anki.dialogs.RescheduleDialog;
 import com.ichi2.anki.reviewer.PeripheralKeymap;
@@ -172,7 +173,11 @@ public class Reviewer extends AbstractFlashcardViewer {
 
         mColorPalette = findViewById(R.id.whiteboard_editor);
 
-        startLoadingCollection();
+        try {
+            startLoadingCollection();
+        } catch (DatabaseCorruptException e) {
+            showDbCorruptDialog();
+        }
     }
 
 
@@ -206,7 +211,7 @@ public class Reviewer extends AbstractFlashcardViewer {
     }
 
     @Override
-    protected boolean shouldDisplayMark() {
+    protected boolean shouldDisplayMark() throws DatabaseCorruptException {
         boolean markValue = super.shouldDisplayMark();
         if (!markValue) {
             return false;
@@ -264,7 +269,7 @@ public class Reviewer extends AbstractFlashcardViewer {
     }
 
     @Override
-    protected void onCollectionLoaded(Collection col) {
+    protected void onCollectionLoaded(Collection col) throws DatabaseCorruptException {
         super.onCollectionLoaded(col);
         // Load the first card and start reviewing. Uses the answer card
         // task to load a card, but since we send null
@@ -280,7 +285,7 @@ public class Reviewer extends AbstractFlashcardViewer {
 
         col.getSched().deferReset();     // Reset schedule in case card was previously loaded
         getCol().startTimebox();
-        TaskManager.launchCollectionTask(new CollectionTask.GetCard(), new AnswerCardHandler(false));
+        TaskManager.launchCollectionTask(new CollectionTask.GetCard(showDbCorruptDialogListener()), new AnswerCardHandler(false));
 
         disableDrawerSwipeOnConflicts();
         // Add a weak reference to current activity so that scheduler can talk to to Activity
@@ -303,112 +308,116 @@ public class Reviewer extends AbstractFlashcardViewer {
             return true;
         }
         int itemId = item.getItemId();
-        if (itemId == android.R.id.home) {
-            Timber.i("Reviewer:: Home button pressed");
-            closeReviewer(RESULT_OK, true);
-        } else if (itemId == R.id.action_undo) {
-            Timber.i("Reviewer:: Undo button pressed");
-            if (mShowWhiteboard && mWhiteboard != null && !mWhiteboard.undoEmpty()) {
-                mWhiteboard.undo();
-            } else {
-                undo();
-            }
-        } else if (itemId == R.id.action_reset_card_progress) {
-            Timber.i("Reviewer:: Reset progress button pressed");
-            showResetCardDialog();
-        } else if (itemId == R.id.action_mark_card) {
-            Timber.i("Reviewer:: Mark button pressed");
-            onMark(mCurrentCard);
-        } else if (itemId == R.id.action_replay) {
-            Timber.i("Reviewer:: Replay audio button pressed (from menu)");
-            playSounds(true);
-        } else if (itemId == R.id.action_toggle_mic_tool_bar) {
-            Timber.i("Reviewer:: Record mic");
-            // Check permission to record and request if not granted
-            openOrToggleMicToolbar();
-        } else if (itemId == R.id.action_tag) {
-            Timber.i("Reviewer:: Tag button pressed");
-            showTagsDialog();
-        } else if (itemId == R.id.action_edit) {
-            Timber.i("Reviewer:: Edit note button pressed");
-            editCard();
-            return true;
-        } else if (itemId == R.id.action_bury) {
-            Timber.i("Reviewer:: Bury button pressed");
-            if (!MenuItemCompat.getActionProvider(item).hasSubMenu()) {
-                Timber.d("Bury card due to no submenu");
-                buryCard();
-            }
-        } else if (itemId == R.id.action_suspend) {
-            Timber.i("Reviewer:: Suspend button pressed");
-            if (!MenuItemCompat.getActionProvider(item).hasSubMenu()) {
-                Timber.d("Suspend card due to no submenu");
-                suspendCard();
-            }
-        } else if (itemId == R.id.action_delete) {
-            Timber.i("Reviewer:: Delete note button pressed");
-            showDeleteNoteDialog();
-        } else if (itemId == R.id.action_change_whiteboard_pen_color) {
-            Timber.i("Reviewer:: Pen Color button pressed");
-            if (mColorPalette.getVisibility() == View.GONE) {
-                mColorPalette.setVisibility(View.VISIBLE);
-            } else {
-                mColorPalette.setVisibility(View.GONE);
-            }
-        } else if (itemId == R.id.action_save_whiteboard) {
-            Timber.i("Reviewer:: Save whiteboard button pressed");
-            if (mWhiteboard != null) {
-                try {
-                    String savedWhiteboardFileName = mWhiteboard.saveWhiteboard(getCol().getTime());
-                    UIUtils.showThemedToast(Reviewer.this, getString(R.string.white_board_image_saved, savedWhiteboardFileName), true);
-                } catch (Exception e) {
-                    Timber.w(e);
-                    UIUtils.showThemedToast(Reviewer.this, getString(R.string.white_board_image_save_failed, e.getLocalizedMessage()), true);
+        try {
+            if (itemId == android.R.id.home) {
+                Timber.i("Reviewer:: Home button pressed");
+                closeReviewer(RESULT_OK, true);
+            } else if (itemId == R.id.action_undo) {
+                Timber.i("Reviewer:: Undo button pressed");
+                if (mShowWhiteboard && mWhiteboard != null && !mWhiteboard.undoEmpty()) {
+                    mWhiteboard.undo();
+                } else {
+                    undo();
                 }
+            } else if (itemId == R.id.action_reset_card_progress) {
+                Timber.i("Reviewer:: Reset progress button pressed");
+                showResetCardDialog();
+            } else if (itemId == R.id.action_mark_card) {
+                Timber.i("Reviewer:: Mark button pressed");
+                onMark(mCurrentCard);
+            } else if (itemId == R.id.action_replay) {
+                Timber.i("Reviewer:: Replay audio button pressed (from menu)");
+                playSounds(true);
+            } else if (itemId == R.id.action_toggle_mic_tool_bar) {
+                Timber.i("Reviewer:: Record mic");
+                // Check permission to record and request if not granted
+                openOrToggleMicToolbar();
+            } else if (itemId == R.id.action_tag) {
+                Timber.i("Reviewer:: Tag button pressed");
+                showTagsDialog();
+            } else if (itemId == R.id.action_edit) {
+                Timber.i("Reviewer:: Edit note button pressed");
+                editCard();
+                return true;
+            } else if (itemId == R.id.action_bury) {
+                Timber.i("Reviewer:: Bury button pressed");
+                if (!MenuItemCompat.getActionProvider(item).hasSubMenu()) {
+                    Timber.d("Bury card due to no submenu");
+                    buryCard();
+                }
+            } else if (itemId == R.id.action_suspend) {
+                Timber.i("Reviewer:: Suspend button pressed");
+                if (!MenuItemCompat.getActionProvider(item).hasSubMenu()) {
+                    Timber.d("Suspend card due to no submenu");
+                    suspendCard();
+                }
+            } else if (itemId == R.id.action_delete) {
+                Timber.i("Reviewer:: Delete note button pressed");
+                showDeleteNoteDialog();
+            } else if (itemId == R.id.action_change_whiteboard_pen_color) {
+                Timber.i("Reviewer:: Pen Color button pressed");
+                if (mColorPalette.getVisibility() == View.GONE) {
+                    mColorPalette.setVisibility(View.VISIBLE);
+                } else {
+                    mColorPalette.setVisibility(View.GONE);
+                }
+            } else if (itemId == R.id.action_save_whiteboard) {
+                Timber.i("Reviewer:: Save whiteboard button pressed");
+                if (mWhiteboard != null) {
+                    try {
+                        String savedWhiteboardFileName = mWhiteboard.saveWhiteboard(getCol().getTime());
+                        UIUtils.showThemedToast(Reviewer.this, getString(R.string.white_board_image_saved, savedWhiteboardFileName), true);
+                    } catch (Exception e) {
+                        Timber.w(e);
+                        UIUtils.showThemedToast(Reviewer.this, getString(R.string.white_board_image_save_failed, e.getLocalizedMessage()), true);
+                    }
+                }
+            } else if (itemId == R.id.action_clear_whiteboard) {
+                Timber.i("Reviewer:: Clear whiteboard button pressed");
+                if (mWhiteboard != null) {
+                    mWhiteboard.clear();
+                }
+            } else if (itemId == R.id.action_hide_whiteboard) {// toggle whiteboard visibility
+                Timber.i("Reviewer:: Whiteboard visibility set to %b", !mShowWhiteboard);
+                setWhiteboardVisibility(!mShowWhiteboard);
+                refreshActionBar();
+            } else if (itemId == R.id.action_toggle_whiteboard) {
+                toggleWhiteboard();
+            } else if (itemId == R.id.action_search_dictionary) {
+                Timber.i("Reviewer:: Search dictionary button pressed");
+                lookUpOrSelectText();
+            } else if (itemId == R.id.action_open_deck_options) {
+                Intent i = new Intent(this, DeckOptions.class);
+                startActivityForResultWithAnimation(i, DECK_OPTIONS, FADE);
+            } else if (itemId == R.id.action_select_tts) {
+                Timber.i("Reviewer:: Select TTS button pressed");
+                showSelectTtsDialogue();
+            } else if (itemId == R.id.action_add_note_reviewer) {
+                Timber.i("Reviewer:: Add note button pressed");
+                addNote();
+            } else if (itemId == R.id.action_flag_zero) {
+                Timber.i("Reviewer:: No flag");
+                onFlag(mCurrentCard, FLAG_NONE);
+            } else if (itemId == R.id.action_flag_one) {
+                Timber.i("Reviewer:: Flag one");
+                onFlag(mCurrentCard, FLAG_RED);
+            } else if (itemId == R.id.action_flag_two) {
+                Timber.i("Reviewer:: Flag two");
+                onFlag(mCurrentCard, FLAG_ORANGE);
+            } else if (itemId == R.id.action_flag_three) {
+                Timber.i("Reviewer:: Flag three");
+                onFlag(mCurrentCard, FLAG_GREEN);
+            } else if (itemId == R.id.action_flag_four) {
+                Timber.i("Reviewer:: Flag four");
+                onFlag(mCurrentCard, FLAG_BLUE);
+            } else if (itemId == R.id.action_card_info) {
+                Timber.i("Card Viewer:: Card Info");
+                openCardInfo();
+            } else {
+                return super.onOptionsItemSelected(item);
             }
-        } else if (itemId == R.id.action_clear_whiteboard) {
-            Timber.i("Reviewer:: Clear whiteboard button pressed");
-            if (mWhiteboard != null) {
-                mWhiteboard.clear();
-            }
-        } else if (itemId == R.id.action_hide_whiteboard) {// toggle whiteboard visibility
-            Timber.i("Reviewer:: Whiteboard visibility set to %b", !mShowWhiteboard);
-            setWhiteboardVisibility(!mShowWhiteboard);
-            refreshActionBar();
-        } else if (itemId == R.id.action_toggle_whiteboard) {
-            toggleWhiteboard();
-        } else if (itemId == R.id.action_search_dictionary) {
-            Timber.i("Reviewer:: Search dictionary button pressed");
-            lookUpOrSelectText();
-        } else if (itemId == R.id.action_open_deck_options) {
-            Intent i = new Intent(this, DeckOptions.class);
-            startActivityForResultWithAnimation(i, DECK_OPTIONS, FADE);
-        } else if (itemId == R.id.action_select_tts) {
-            Timber.i("Reviewer:: Select TTS button pressed");
-            showSelectTtsDialogue();
-        } else if (itemId == R.id.action_add_note_reviewer) {
-            Timber.i("Reviewer:: Add note button pressed");
-            addNote();
-        } else if (itemId == R.id.action_flag_zero) {
-            Timber.i("Reviewer:: No flag");
-            onFlag(mCurrentCard, FLAG_NONE);
-        } else if (itemId == R.id.action_flag_one) {
-            Timber.i("Reviewer:: Flag one");
-            onFlag(mCurrentCard, FLAG_RED);
-        } else if (itemId == R.id.action_flag_two) {
-            Timber.i("Reviewer:: Flag two");
-            onFlag(mCurrentCard, FLAG_ORANGE);
-        } else if (itemId == R.id.action_flag_three) {
-            Timber.i("Reviewer:: Flag three");
-            onFlag(mCurrentCard, FLAG_GREEN);
-        } else if (itemId == R.id.action_flag_four) {
-            Timber.i("Reviewer:: Flag four");
-            onFlag(mCurrentCard, FLAG_BLUE);
-        } else if (itemId == R.id.action_card_info) {
-            Timber.i("Card Viewer:: Card Info");
-            openCardInfo();
-        } else {
-            return super.onOptionsItemSelected(item);
+        } catch (DatabaseCorruptException e) {
+            showDbCorruptDialog();
         }
         return true;
     }
@@ -556,10 +565,14 @@ public class Reviewer extends AbstractFlashcardViewer {
         mActionButtons.setCustomButtonsStatus(menu);
         int alpha = (getControlBlocked() != ReviewerUi.ControlBlock.SLOW) ? Themes.ALPHA_ICON_ENABLED_LIGHT : Themes.ALPHA_ICON_DISABLED_LIGHT ;
         MenuItem markCardIcon = menu.findItem(R.id.action_mark_card);
-        if (mCurrentCard != null && mCurrentCard.note().hasTag("marked")) {
-            markCardIcon.setTitle(R.string.menu_unmark_note).setIcon(R.drawable.ic_star_white);
-        } else {
-            markCardIcon.setTitle(R.string.menu_mark_note).setIcon(R.drawable.ic_star_border_white);
+        try {
+            if (mCurrentCard != null && mCurrentCard.note().hasTag("marked")) {
+                markCardIcon.setTitle(R.string.menu_unmark_note).setIcon(R.drawable.ic_star_white);
+            } else {
+                markCardIcon.setTitle(R.string.menu_mark_note).setIcon(R.drawable.ic_star_border_white);
+            }
+        } catch (DatabaseCorruptException e) {
+            showDbCorruptDialog();
         }
         markCardIcon.getIcon().mutate().setAlpha(alpha);
 
@@ -804,7 +817,7 @@ public class Reviewer extends AbstractFlashcardViewer {
     @Override
     protected void performReload() {
         getCol().getSched().deferReset();
-        TaskManager.launchCollectionTask(new CollectionTask.GetCard(), new AnswerCardHandler(false));
+        TaskManager.launchCollectionTask(new CollectionTask.GetCard(showDbCorruptDialogListener()), new AnswerCardHandler(false));
     }
 
 
@@ -972,7 +985,7 @@ public class Reviewer extends AbstractFlashcardViewer {
 
 
     @Override
-    public void displayCardQuestion() {
+    public void displayCardQuestion() throws DatabaseCorruptException {
         // show timer, if activated in the deck's preferences
         initTimer();
         delayedHide(100);
@@ -980,7 +993,7 @@ public class Reviewer extends AbstractFlashcardViewer {
     }
 
     @Override
-    protected void displayCardAnswer() {
+    protected void displayCardAnswer() throws DatabaseCorruptException {
         delayedHide(100);
         super.displayCardAnswer();
     }

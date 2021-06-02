@@ -18,6 +18,7 @@ package com.ichi2.libanki;
 
 import android.content.res.Resources;
 
+import com.ichi2.anki.exception.DatabaseCorruptException;
 import com.ichi2.utils.ArrayUtil;
 import com.ichi2.utils.LanguageUtil;
 
@@ -53,7 +54,7 @@ public abstract class UndoAction {
      * Return MULTI_CARD when no other action is needed, e.g. for multi card action
      * Return NO_REVIEW when we just need to reset the collection
      * Returned positive integers are card id. Those ids is the card that was discarded and that may be sent back to the reviewer.*/
-    public abstract @Nullable Card undo(@NonNull Collection col);
+    public abstract @Nullable Card undo(@NonNull Collection col) throws DatabaseCorruptException;
 
     /**
      * Create an UndoAction that set back `card` and its siblings to the current states.
@@ -61,7 +62,7 @@ public abstract class UndoAction {
      * @param card the card currently in the reviewer
      * @return An UndoAction which, if executed, put back the `card` in the state given here
      */
-    public static @NonNull UndoAction revertNoteToProvidedState(@StringRes int undoNameId, Card card){
+    public static @NonNull UndoAction revertNoteToProvidedState(@StringRes int undoNameId, Card card) throws DatabaseCorruptException {
         return revertToProvidedState(undoNameId, card, card.note().cards());
     }
 

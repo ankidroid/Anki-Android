@@ -40,18 +40,6 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.os.SystemClock;
-
-import androidx.annotation.CheckResult;
-import androidx.annotation.IdRes;
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.annotation.StringRes;
-import androidx.annotation.VisibleForTesting;
-import androidx.coordinatorlayout.widget.CoordinatorLayout;
-import androidx.core.content.ContextCompat;
-import androidx.appcompat.app.ActionBar;
-import androidx.webkit.WebViewAssetLoader;
-
 import android.text.TextUtils;
 import android.util.Pair;
 import android.util.TypedValue;
@@ -89,35 +77,37 @@ import android.widget.TextView;
 
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.drakeet.drawer.FullDraggableContainer;
+import com.github.zafarkhaja.semver.Version;
 import com.google.android.material.snackbar.Snackbar;
 import com.ichi2.anim.ViewAnimation;
+import com.ichi2.anki.cardviewer.CardAppearance;
+import com.ichi2.anki.cardviewer.CardTemplate;
 import com.ichi2.anki.cardviewer.GestureTapProcessor;
 import com.ichi2.anki.cardviewer.MissingImageHandler;
+import com.ichi2.anki.cardviewer.TypedAnswer;
 import com.ichi2.anki.dialogs.tags.TagsDialog;
 import com.ichi2.anki.dialogs.tags.TagsDialogFactory;
 import com.ichi2.anki.dialogs.tags.TagsDialogListener;
+import com.ichi2.anki.exception.DatabaseCorruptException;
 import com.ichi2.anki.multimediacard.AudioView;
-import com.ichi2.anki.cardviewer.CardAppearance;
 import com.ichi2.anki.receiver.SdCardReceiver;
 import com.ichi2.anki.reviewer.CardMarker;
-import com.ichi2.anki.cardviewer.CardTemplate;
 import com.ichi2.anki.reviewer.ReviewerCustomFonts;
 import com.ichi2.anki.reviewer.ReviewerUi;
-import com.ichi2.anki.cardviewer.TypedAnswer;
 import com.ichi2.async.CollectionTask;
 import com.ichi2.async.TaskListener;
 import com.ichi2.async.TaskManager;
 import com.ichi2.compat.CompatHelper;
-import com.ichi2.libanki.Decks;
-import com.ichi2.libanki.Model;
-import com.ichi2.libanki.sched.AbstractSched;
 import com.ichi2.libanki.Card;
 import com.ichi2.libanki.Collection;
 import com.ichi2.libanki.Consts;
 import com.ichi2.libanki.DeckConfig;
+import com.ichi2.libanki.Decks;
+import com.ichi2.libanki.Model;
 import com.ichi2.libanki.Note;
 import com.ichi2.libanki.Sound;
 import com.ichi2.libanki.Utils;
+import com.ichi2.libanki.sched.AbstractSched;
 import com.ichi2.libanki.template.MathJax;
 import com.ichi2.libanki.template.TemplateFilters;
 import com.ichi2.themes.HtmlColors;
@@ -126,13 +116,12 @@ import com.ichi2.ui.FixedEditText;
 import com.ichi2.utils.AdaptionUtil;
 import com.ichi2.utils.AndroidUiUtils;
 import com.ichi2.utils.AssetHelper;
-import com.ichi2.utils.ClipboardUtil;
 import com.ichi2.utils.BooleanGetter;
 import com.ichi2.utils.CardGetter;
+import com.ichi2.utils.ClipboardUtil;
 import com.ichi2.utils.DiffEngine;
 import com.ichi2.utils.FunctionalInterfaces.Consumer;
 import com.ichi2.utils.FunctionalInterfaces.Function;
-
 import com.ichi2.utils.JSONArray;
 import com.ichi2.utils.JSONException;
 import com.ichi2.utils.JSONObject;
@@ -158,15 +147,68 @@ import java.util.concurrent.locks.ReentrantReadWriteLock;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import androidx.annotation.CheckResult;
+import androidx.annotation.IdRes;
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.annotation.StringRes;
+import androidx.annotation.VisibleForTesting;
+import androidx.appcompat.app.ActionBar;
+import androidx.coordinatorlayout.widget.CoordinatorLayout;
+import androidx.core.content.ContextCompat;
+import androidx.webkit.WebViewAssetLoader;
 import timber.log.Timber;
 
+import static com.ichi2.anim.ActivityTransitionAnimation.Direction.END;
+import static com.ichi2.anim.ActivityTransitionAnimation.Direction.FADE;
+import static com.ichi2.anim.ActivityTransitionAnimation.Direction.START;
 import static com.ichi2.anki.cardviewer.CardAppearance.calculateDynamicFontSize;
-import static com.ichi2.anki.cardviewer.ViewerCommand.*;
-import static com.ichi2.anki.reviewer.CardMarker.*;
+import static com.ichi2.anki.cardviewer.ViewerCommand.COMMAND_ABORT_AND_SYNC;
+import static com.ichi2.anki.cardviewer.ViewerCommand.COMMAND_ANSWER_FIRST_BUTTON;
+import static com.ichi2.anki.cardviewer.ViewerCommand.COMMAND_ANSWER_FOURTH_BUTTON;
+import static com.ichi2.anki.cardviewer.ViewerCommand.COMMAND_ANSWER_RECOMMENDED;
+import static com.ichi2.anki.cardviewer.ViewerCommand.COMMAND_ANSWER_SECOND_BUTTON;
+import static com.ichi2.anki.cardviewer.ViewerCommand.COMMAND_ANSWER_THIRD_BUTTON;
+import static com.ichi2.anki.cardviewer.ViewerCommand.COMMAND_BURY_CARD;
+import static com.ichi2.anki.cardviewer.ViewerCommand.COMMAND_BURY_NOTE;
+import static com.ichi2.anki.cardviewer.ViewerCommand.COMMAND_CARD_INFO;
+import static com.ichi2.anki.cardviewer.ViewerCommand.COMMAND_DELETE;
+import static com.ichi2.anki.cardviewer.ViewerCommand.COMMAND_EDIT;
+import static com.ichi2.anki.cardviewer.ViewerCommand.COMMAND_EXIT;
+import static com.ichi2.anki.cardviewer.ViewerCommand.COMMAND_FLIP_OR_ANSWER_BETTER_THAN_RECOMMENDED;
+import static com.ichi2.anki.cardviewer.ViewerCommand.COMMAND_FLIP_OR_ANSWER_EASE1;
+import static com.ichi2.anki.cardviewer.ViewerCommand.COMMAND_FLIP_OR_ANSWER_EASE2;
+import static com.ichi2.anki.cardviewer.ViewerCommand.COMMAND_FLIP_OR_ANSWER_EASE3;
+import static com.ichi2.anki.cardviewer.ViewerCommand.COMMAND_FLIP_OR_ANSWER_EASE4;
+import static com.ichi2.anki.cardviewer.ViewerCommand.COMMAND_FLIP_OR_ANSWER_RECOMMENDED;
+import static com.ichi2.anki.cardviewer.ViewerCommand.COMMAND_LOOKUP;
+import static com.ichi2.anki.cardviewer.ViewerCommand.COMMAND_MARK;
+import static com.ichi2.anki.cardviewer.ViewerCommand.COMMAND_NOTHING;
+import static com.ichi2.anki.cardviewer.ViewerCommand.COMMAND_PAGE_DOWN;
+import static com.ichi2.anki.cardviewer.ViewerCommand.COMMAND_PAGE_UP;
+import static com.ichi2.anki.cardviewer.ViewerCommand.COMMAND_PLAY_MEDIA;
+import static com.ichi2.anki.cardviewer.ViewerCommand.COMMAND_RECORD_VOICE;
+import static com.ichi2.anki.cardviewer.ViewerCommand.COMMAND_REPLAY_VOICE;
+import static com.ichi2.anki.cardviewer.ViewerCommand.COMMAND_SHOW_ANSWER;
+import static com.ichi2.anki.cardviewer.ViewerCommand.COMMAND_SUSPEND_CARD;
+import static com.ichi2.anki.cardviewer.ViewerCommand.COMMAND_SUSPEND_NOTE;
+import static com.ichi2.anki.cardviewer.ViewerCommand.COMMAND_TAG;
+import static com.ichi2.anki.cardviewer.ViewerCommand.COMMAND_TOGGLE_FLAG_BLUE;
+import static com.ichi2.anki.cardviewer.ViewerCommand.COMMAND_TOGGLE_FLAG_GREEN;
+import static com.ichi2.anki.cardviewer.ViewerCommand.COMMAND_TOGGLE_FLAG_ORANGE;
+import static com.ichi2.anki.cardviewer.ViewerCommand.COMMAND_TOGGLE_FLAG_RED;
+import static com.ichi2.anki.cardviewer.ViewerCommand.COMMAND_TOGGLE_WHITEBOARD;
+import static com.ichi2.anki.cardviewer.ViewerCommand.COMMAND_UNDO;
+import static com.ichi2.anki.cardviewer.ViewerCommand.COMMAND_UNSET_FLAG;
+import static com.ichi2.anki.cardviewer.ViewerCommand.CommandProcessor;
+import static com.ichi2.anki.cardviewer.ViewerCommand.ViewerCommandDef;
+import static com.ichi2.anki.reviewer.CardMarker.FLAG_BLUE;
+import static com.ichi2.anki.reviewer.CardMarker.FLAG_GREEN;
+import static com.ichi2.anki.reviewer.CardMarker.FLAG_NONE;
+import static com.ichi2.anki.reviewer.CardMarker.FLAG_ORANGE;
+import static com.ichi2.anki.reviewer.CardMarker.FLAG_RED;
+import static com.ichi2.anki.reviewer.CardMarker.FlagDef;
 import static com.ichi2.libanki.Sound.SoundSide;
-
-import com.github.zafarkhaja.semver.Version;
-import static com.ichi2.anim.ActivityTransitionAnimation.Direction.*;
 
 @SuppressWarnings({"PMD.AvoidThrowingRawExceptionTypes","PMD.FieldDeclarationsShouldBeAtStartOfClass"})
 public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity implements ReviewerUi, CommandProcessor, TagsDialogListener {
@@ -429,7 +471,11 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
             }
             mLastClickTime = getElapsedRealTime();
             mTimeoutHandler.removeCallbacks(mShowAnswerTask);
-            displayCardAnswer();
+            try {
+                displayCardAnswer();
+            } catch (DatabaseCorruptException e) {
+                showDbCorruptDialog();
+            }
         }
     };
 
@@ -599,7 +645,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
             }
 
             mCurrentCard = card;
-            TaskManager.launchCollectionTask(new CollectionTask.PreloadNextCard()); // Tasks should always be launched from GUI. So in
+            TaskManager.launchCollectionTask(new CollectionTask.PreloadNextCard(showDbCorruptDialogListener())); // Tasks should always be launched from GUI. So in
                                                                     // listener and not in background
             if (mCurrentCard == null) {
                 // If the card is null means that there are no more cards scheduled for review.
@@ -611,18 +657,22 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
                 mWhiteboard.clear();
             }
 
-            updateTypeAnswerInfo();
-            if (sDisplayAnswer) {
-                mSoundPlayer.resetSounds(); // load sounds from scratch, to expose any edit changes
-                mAnswerSoundsAdded = false; // causes answer sounds to be reloaded
-                generateQuestionSoundList(); // questions must be intentionally regenerated
-                displayCardAnswer();
-            } else {
-                displayCardQuestion();
-                mCurrentCard.startTimer();
-                initTimer();
+            try {
+                updateTypeAnswerInfo();
+                if (sDisplayAnswer) {
+                    mSoundPlayer.resetSounds(); // load sounds from scratch, to expose any edit changes
+                    mAnswerSoundsAdded = false; // causes answer sounds to be reloaded
+                    generateQuestionSoundList(); // questions must be intentionally regenerated
+                    displayCardAnswer();
+                } else {
+                    displayCardQuestion();
+                    mCurrentCard.startTimer();
+                    initTimer();
+                }
+                hideProgressBar();
+            } catch (DatabaseCorruptException e) {
+                showDbCorruptDialog();
             }
-            hideProgressBar();
         }
 
 
@@ -664,10 +714,18 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
             } else {
                 mNoMoreCards = false; // other handlers use this, toggle state every time through
                 // Start reviewing next card
-                updateTypeAnswerInfo();
+                try {
+                    updateTypeAnswerInfo();
+                } catch (DatabaseCorruptException e) {
+                    showDbCorruptDialog();
+                }
                 hideProgressBar();
                 AbstractFlashcardViewer.this.unblockControls();
-                AbstractFlashcardViewer.this.displayCardQuestion();
+                try {
+                    AbstractFlashcardViewer.this.displayCardQuestion();
+                } catch (DatabaseCorruptException e) {
+                    showDbCorruptDialog();
+                }
             }
         }
 
@@ -747,7 +805,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
     /**
      * Extract type answer/cloze text and font/size
      */
-    private void updateTypeAnswerInfo() {
+    private void updateTypeAnswerInfo() throws DatabaseCorruptException {
         mTypeCorrect = null;
         mTypeInput = "";
         String q = mCurrentCard.q(false);
@@ -974,7 +1032,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
 
     // Finish initializing the activity after the collection has been correctly loaded
     @Override
-    protected void onCollectionLoaded(Collection col) {
+    protected void onCollectionLoaded(Collection col) throws DatabaseCorruptException {
         super.onCollectionLoaded(col);
         mSched = col.getSched();
 
@@ -1161,7 +1219,11 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
         }
         if (!sDisplayAnswer) {
             if (keyCode == KeyEvent.KEYCODE_SPACE || keyCode == KeyEvent.KEYCODE_ENTER || keyCode == KeyEvent.KEYCODE_NUMPAD_ENTER) {
-                displayCardAnswer();
+                try {
+                    displayCardAnswer();
+                } catch (DatabaseCorruptException e) {
+                    showDbCorruptDialog();
+                }
                 return true;
             }
         }
@@ -1238,7 +1300,11 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
            The card could have been rescheduled, the deck could have changed, or a change of
            note type could have lead to the card being deleted */
         if (data != null && data.hasExtra("reloadRequired")) {
-            performReload();
+            try {
+                performReload();
+            } catch (DatabaseCorruptException e) {
+                showDbCorruptDialog();
+            }
         }
 
         if (requestCode == EDIT_CURRENT_CARD) {
@@ -1246,7 +1312,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
                 // content of note was changed so update the note and current card
                 Timber.i("AbstractFlashcardViewer:: Saving card...");
                 TaskManager.launchCollectionTask(
-                        new CollectionTask.UpdateNote(sEditorCard, true, canAccessScheduler()),
+                        new CollectionTask.UpdateNote(sEditorCard, true, canAccessScheduler(), showDbCorruptDialogListener()),
                         mUpdateCardHandler);
                 onEditedNoteChanged();
             } else if (resultCode == RESULT_CANCELED && !(data!=null && data.hasExtra("reloadRequired"))) {
@@ -1254,7 +1320,11 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
                 redrawCard();
             }
         } else if (requestCode == DECK_OPTIONS && resultCode == RESULT_OK) {
-            performReload();
+            try {
+                performReload();
+            } catch (DatabaseCorruptException e) {
+                showDbCorruptDialog();
+            }
         }
         if (!mDisableClipboard) {
             clearClipboard();
@@ -1281,7 +1351,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
 
 
     /** An action which may invalidate the current list of cards has been performed */
-    protected abstract void performReload();
+    protected abstract void performReload() throws DatabaseCorruptException;
 
 
     // ----------------------------------------------------------------------------
@@ -1364,7 +1434,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
 
     protected void undo() {
         if (isUndoAvailable()) {
-            TaskManager.launchCollectionTask(new CollectionTask.Undo(), new AnswerCardHandler(false));
+            TaskManager.launchCollectionTask(new CollectionTask.Undo(showDbCorruptDialogListener()), new AnswerCardHandler(false));
         }
     }
 
@@ -1387,7 +1457,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
     }
 
 
-    protected void generateQuestionSoundList() {
+    protected void generateQuestionSoundList() throws DatabaseCorruptException {
         mSoundPlayer.addSounds(mBaseUrl, mCurrentCard.qSimple(), SoundSide.QUESTION);
     }
 
@@ -1433,7 +1503,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
     }
 
 
-    protected void showDeleteNoteDialog() {
+    protected void showDeleteNoteDialog() throws DatabaseCorruptException {
         Resources res = getResources();
         new MaterialDialog.Builder(this)
                 .title(res.getString(R.string.delete_card_title))
@@ -1445,7 +1515,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
                 .onPositive((dialog, which) -> {
                     Timber.i("AbstractFlashcardViewer:: OK button pressed to delete note %d", mCurrentCard.getNid());
                     mSoundPlayer.stopSounds();
-                    dismiss(new CollectionTask.DeleteNote(mCurrentCard));
+                    dismiss(new CollectionTask.DeleteNote(mCurrentCard, showDbCorruptDialogListener()));
                 })
                 .build().show();
     }
@@ -1515,7 +1585,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
         mSoundPlayer.stopSounds();
         mCurrentEase = ease;
 
-        TaskManager.launchCollectionTask(new CollectionTask.AnswerAndGetCard(mCurrentCard, mCurrentEase), new AnswerCardHandler(true));
+        TaskManager.launchCollectionTask(new CollectionTask.AnswerAndGetCard(mCurrentCard, mCurrentEase, showDbCorruptDialogListener()), new AnswerCardHandler(true));
     }
 
 
@@ -1702,7 +1772,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
     }
 
     /** If a card is displaying the question, flip it, otherwise answer it */
-    private void flipOrAnswerCard(int cardOrdinal) {
+    private void flipOrAnswerCard(int cardOrdinal) throws DatabaseCorruptException {
         if (!sDisplayAnswer) {
             displayCardAnswer();
             return;
@@ -1844,7 +1914,11 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
         mAnswerField.setVisibility(typeAnswer() ? View.VISIBLE : View.GONE);
         mAnswerField.setOnEditorActionListener((v, actionId, event) -> {
             if (actionId == EditorInfo.IME_ACTION_DONE) {
-                displayCardAnswer();
+                try {
+                    displayCardAnswer();
+                } catch (DatabaseCorruptException e) {
+                    showDbCorruptDialog();
+                }
                 return true;
             }
             return false;
@@ -1852,7 +1926,11 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
         mAnswerField.setOnKeyListener((v, keyCode, event) -> {
             if (event.getAction() == KeyEvent.ACTION_UP &&
                     (keyCode == KeyEvent.KEYCODE_ENTER || keyCode == KeyEvent.KEYCODE_NUMPAD_ENTER)) {
-                displayCardAnswer();
+                try {
+                    displayCardAnswer();
+                } catch (DatabaseCorruptException e) {
+                    showDbCorruptDialog();
+                }
                 return true;
             }
             return false;
@@ -2056,7 +2134,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
         });
     }
 
-    protected void displayCardQuestion() {
+    protected void displayCardQuestion() throws DatabaseCorruptException {
         displayCardQuestion(false);
 
         // js api initialisation / reset
@@ -2065,7 +2143,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
 
     /** String, as it will be displayed in the web viewer. Sound/video removed, image escaped...
      Or warning if required*/
-    private String displayString(boolean reload) {
+    private String displayString(boolean reload) throws DatabaseCorruptException {
         if (mCurrentCard.isEmpty()) {
             return getResources().getString(R.string.empty_card_warning);
         } else {
@@ -2079,7 +2157,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
         }
     }
 
-    protected void displayCardQuestion(boolean reload) {
+    protected void displayCardQuestion(boolean reload) throws DatabaseCorruptException {
         Timber.d("displayCardQuestion()");
         sDisplayAnswer = false;
 
@@ -2152,7 +2230,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
     }
 
 
-    protected void displayCardAnswer() {
+    protected void displayCardAnswer() throws DatabaseCorruptException {
         // #7294 Required in case the animation end action does not fire:
         actualHideEaseButtons();
         Timber.d("displayCardAnswer()");
@@ -2243,7 +2321,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
     /**
      * getAnswerFormat returns the answer part of this card's template as entered by user, without any parsing
      */
-    public String getAnswerFormat() {
+    public String getAnswerFormat() throws DatabaseCorruptException {
         Model model = mCurrentCard.model();
         JSONObject template;
         if (model.isStd()) {
@@ -2255,7 +2333,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
         return template.getString("afmt");
     }
 
-    private void addAnswerSounds(String answer) {
+    private void addAnswerSounds(String answer) throws DatabaseCorruptException {
         // don't add answer sounds multiple times, such as when reshowing card after exiting editor
         // additionally, this condition reduces computation time
         if (!mAnswerSoundsAdded) {
@@ -2270,7 +2348,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
     }
 
 
-    private void updateCard(final String newContent) {
+    private void updateCard(final String newContent) throws DatabaseCorruptException {
         Timber.d("updateCard()");
 
         mUseTimerDynamicMS = 0;
@@ -2342,7 +2420,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
      * @param doAudioReplay indicates an anki desktop-like replay call is desired, whose behavior is identical to
      *            pressing the keyboard shortcut R on the desktop
      */
-    protected void playSounds(boolean doAudioReplay) {
+    protected void playSounds(boolean doAudioReplay) throws DatabaseCorruptException {
         boolean replayQuestion = getConfigForCurrentCard().optBoolean("replayq", true);
 
         if (getConfigForCurrentCard().optBoolean("autoplay", false) || doAudioReplay) {
@@ -2410,7 +2488,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
      * @param card     The card to play TTS for
      * @param cardSide The side of the current card to play TTS for
      */
-    private void readCardText(final Card card, final SoundSide cardSide) {
+    private void readCardText(final Card card, final SoundSide cardSide) throws DatabaseCorruptException {
         final String cardSideContent;
         if (SoundSide.QUESTION == cardSide) {
             cardSideContent = card.q(true);
@@ -2427,7 +2505,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
     /**
      * Shows the dialogue for selecting TTS for the current card and cardside.
      */
-    protected void showSelectTtsDialogue() {
+    protected void showSelectTtsDialogue() throws DatabaseCorruptException {
         if (mTtsInitialized) {
             if (!sDisplayAnswer) {
                 ReadText.selectTts(getTextForTts(mCurrentCard.q(true)), getDeckIdForCard(mCurrentCard), mCurrentCard.getOrd(),
@@ -2654,128 +2732,133 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
     }
 
     protected boolean suspendNote() {
-        return dismiss(new CollectionTask.SuspendNote(mCurrentCard));
+        return dismiss(new CollectionTask.SuspendNote(mCurrentCard, showDbCorruptDialogListener()));
     }
 
     protected boolean buryNote() {
-        return dismiss(new CollectionTask.BuryNote(mCurrentCard));
+        return dismiss(new CollectionTask.BuryNote(mCurrentCard, showDbCorruptDialogListener()));
     }
 
     public boolean executeCommand(@ViewerCommandDef int which) {
         if (isControlBlocked() && which != COMMAND_EXIT) {
             return false;
         }
-        switch (which) {
-            case COMMAND_NOTHING:
-                return true;
-            case COMMAND_SHOW_ANSWER:
-                if (sDisplayAnswer) {
+        try {
+            switch (which) {
+                case COMMAND_NOTHING:
+                    return true;
+                case COMMAND_SHOW_ANSWER:
+                    if (sDisplayAnswer) {
+                        return false;
+                    }
+                    displayCardAnswer();
+                    return true;
+                case COMMAND_FLIP_OR_ANSWER_EASE1:
+                    flipOrAnswerCard(EASE_1);
+                    return true;
+                case COMMAND_FLIP_OR_ANSWER_EASE2:
+                    flipOrAnswerCard(EASE_2);
+                    return true;
+                case COMMAND_FLIP_OR_ANSWER_EASE3:
+                    flipOrAnswerCard(EASE_3);
+                    return true;
+                case COMMAND_FLIP_OR_ANSWER_EASE4:
+                    flipOrAnswerCard(EASE_4);
+                    return true;
+                case COMMAND_FLIP_OR_ANSWER_RECOMMENDED:
+                    flipOrAnswerCard(getRecommendedEase(false));
+                    return true;
+                case COMMAND_FLIP_OR_ANSWER_BETTER_THAN_RECOMMENDED:
+                    flipOrAnswerCard(getRecommendedEase(true));
+                    return true;
+                case COMMAND_EXIT:
+                    closeReviewer(RESULT_DEFAULT, false);
+                    return true;
+                case COMMAND_UNDO:
+                    if (!isUndoAvailable()) {
+                        return false;
+                    }
+                    undo();
+                    return true;
+                case COMMAND_EDIT:
+                    editCard();
+                    return true;
+                case COMMAND_CARD_INFO:
+                    openCardInfo();
+                    return true;
+                case COMMAND_TAG:
+                    showTagsDialog();
+                    return true;
+                case COMMAND_MARK:
+                    onMark(mCurrentCard);
+                    return true;
+                case COMMAND_LOOKUP:
+                    lookUpOrSelectText();
+                    return true;
+                case COMMAND_BURY_CARD:
+                    return buryCard();
+                case COMMAND_BURY_NOTE:
+                    return buryNote();
+                case COMMAND_SUSPEND_CARD:
+                    return suspendCard();
+                case COMMAND_SUSPEND_NOTE:
+                    return suspendNote();
+                case COMMAND_DELETE:
+                    showDeleteNoteDialog();
+                    return true;
+                case COMMAND_PLAY_MEDIA:
+                    playSounds(true);
+                    return true;
+                case COMMAND_TOGGLE_FLAG_RED:
+                    toggleFlag(FLAG_RED);
+                    return true;
+                case COMMAND_TOGGLE_FLAG_ORANGE:
+                    toggleFlag(FLAG_ORANGE);
+                    return true;
+                case COMMAND_TOGGLE_FLAG_GREEN:
+                    toggleFlag(FLAG_GREEN);
+                    return true;
+                case COMMAND_TOGGLE_FLAG_BLUE:
+                    toggleFlag(FLAG_BLUE);
+                    return true;
+                case COMMAND_UNSET_FLAG:
+                    onFlag(mCurrentCard, FLAG_NONE);
+                    return true;
+                case COMMAND_ANSWER_FIRST_BUTTON:
+                    return answerCardIfVisible(Consts.BUTTON_ONE);
+                case COMMAND_ANSWER_SECOND_BUTTON:
+                    return answerCardIfVisible(Consts.BUTTON_TWO);
+                case COMMAND_ANSWER_THIRD_BUTTON:
+                    return answerCardIfVisible(Consts.BUTTON_THREE);
+                case COMMAND_ANSWER_FOURTH_BUTTON:
+                    return answerCardIfVisible(Consts.BUTTON_FOUR);
+                case COMMAND_ANSWER_RECOMMENDED:
+                    return answerCardIfVisible(getRecommendedEase(false));
+                case COMMAND_PAGE_UP:
+                    onPageUp();
+                    return true;
+                case COMMAND_PAGE_DOWN:
+                    onPageDown();
+                    return true;
+                case COMMAND_ABORT_AND_SYNC:
+                    abortAndSync();
+                    return true;
+                case COMMAND_RECORD_VOICE:
+                    recordVoice();
+                    return true;
+                case COMMAND_REPLAY_VOICE:
+                    replayVoice();
+                    return true;
+                case COMMAND_TOGGLE_WHITEBOARD:
+                    toggleWhiteboard();
+                    return true;
+                default:
+                    Timber.w("Unknown command requested: %s", which);
                     return false;
-                }
-                displayCardAnswer();
-                return true;
-            case COMMAND_FLIP_OR_ANSWER_EASE1:
-                flipOrAnswerCard(EASE_1);
-                return true;
-            case COMMAND_FLIP_OR_ANSWER_EASE2:
-                flipOrAnswerCard(EASE_2);
-                return true;
-            case COMMAND_FLIP_OR_ANSWER_EASE3:
-                flipOrAnswerCard(EASE_3);
-                return true;
-            case COMMAND_FLIP_OR_ANSWER_EASE4:
-                flipOrAnswerCard(EASE_4);
-                return true;
-            case COMMAND_FLIP_OR_ANSWER_RECOMMENDED:
-                flipOrAnswerCard(getRecommendedEase(false));
-                return true;
-            case COMMAND_FLIP_OR_ANSWER_BETTER_THAN_RECOMMENDED:
-                flipOrAnswerCard(getRecommendedEase(true));
-                return true;
-            case COMMAND_EXIT:
-                closeReviewer(RESULT_DEFAULT, false);
-                return true;
-            case COMMAND_UNDO:
-                if (!isUndoAvailable()) {
-                    return false;
-                }
-                undo();
-                return true;
-            case COMMAND_EDIT:
-                editCard();
-                return true;
-            case COMMAND_CARD_INFO:
-                openCardInfo();
-                return true;
-            case COMMAND_TAG:
-                showTagsDialog();
-                return true;
-            case COMMAND_MARK:
-                onMark(mCurrentCard);
-                return true;
-            case COMMAND_LOOKUP:
-                lookUpOrSelectText();
-                return true;
-            case COMMAND_BURY_CARD:
-                return buryCard();
-            case COMMAND_BURY_NOTE:
-                return buryNote();
-            case COMMAND_SUSPEND_CARD:
-                return suspendCard();
-            case COMMAND_SUSPEND_NOTE:
-                return suspendNote();
-            case COMMAND_DELETE:
-                showDeleteNoteDialog();
-                return true;
-            case COMMAND_PLAY_MEDIA:
-                playSounds(true);
-                return true;
-            case COMMAND_TOGGLE_FLAG_RED:
-                toggleFlag(FLAG_RED);
-                return true;
-            case COMMAND_TOGGLE_FLAG_ORANGE:
-                toggleFlag(FLAG_ORANGE);
-                return true;
-            case COMMAND_TOGGLE_FLAG_GREEN:
-                toggleFlag(FLAG_GREEN);
-                return true;
-            case COMMAND_TOGGLE_FLAG_BLUE:
-                toggleFlag(FLAG_BLUE);
-                return true;
-            case COMMAND_UNSET_FLAG:
-                onFlag(mCurrentCard, FLAG_NONE);
-                return true;
-            case COMMAND_ANSWER_FIRST_BUTTON:
-                return answerCardIfVisible(Consts.BUTTON_ONE);
-            case COMMAND_ANSWER_SECOND_BUTTON:
-                return answerCardIfVisible(Consts.BUTTON_TWO);
-            case COMMAND_ANSWER_THIRD_BUTTON:
-                return answerCardIfVisible(Consts.BUTTON_THREE);
-            case COMMAND_ANSWER_FOURTH_BUTTON:
-                return answerCardIfVisible(Consts.BUTTON_FOUR);
-            case COMMAND_ANSWER_RECOMMENDED:
-                return answerCardIfVisible(getRecommendedEase(false));
-            case COMMAND_PAGE_UP:
-                onPageUp();
-                return true;
-            case COMMAND_PAGE_DOWN:
-                onPageDown();
-                return true;
-            case COMMAND_ABORT_AND_SYNC:
-                abortAndSync();
-                return true;
-            case COMMAND_RECORD_VOICE:
-                recordVoice();
-                return true;
-            case COMMAND_REPLAY_VOICE:
-                replayVoice();
-                return true;
-            case COMMAND_TOGGLE_WHITEBOARD:
-                toggleWhiteboard();
-                return true;
-            default:
-                Timber.w("Unknown command requested: %s", which);
-                return false;
+            }
+        } catch (DatabaseCorruptException e) {
+            showDbCorruptDialog();
+            return false;
         }
     }
 
@@ -3258,7 +3341,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
      * @param answerContent     The content from which to remove front side audio.
      * @return                  The content stripped of audio due to {{FrontSide}} inclusion.
      */
-    private String removeFrontSideAudio(String answerContent) {
+    private String removeFrontSideAudio(String answerContent) throws DatabaseCorruptException {
         String answerFormat = getAnswerFormat();
         String newAnswerContent = answerContent;
         if (answerFormat.contains("{{FrontSide}}")) { // possible audio removal necessary
@@ -3283,14 +3366,14 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
     }
 
     /** Callback for when TTS has been initialized. */
-    public void ttsInitialized() {
+    public void ttsInitialized() throws DatabaseCorruptException {
         mTtsInitialized = true;
         if (mReplayOnTtsInit) {
             playSounds(true);
         }
     }
 
-    private void drawMark() {
+    private void drawMark() throws DatabaseCorruptException {
         if (mCurrentCard == null) {
             return;
         }
@@ -3299,12 +3382,12 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
     }
 
 
-    protected boolean shouldDisplayMark() {
+    protected boolean shouldDisplayMark() throws DatabaseCorruptException {
         return mCurrentCard.note().hasTag("marked");
     }
 
 
-    protected void onMark(Card card) {
+    protected void onMark(Card card) throws DatabaseCorruptException {
         if (card == null) {
             return;
         }
@@ -3419,7 +3502,12 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
         public boolean shouldOverrideUrlLoading(WebView view, WebResourceRequest request) {
             String url = request.getUrl().toString();
             Timber.d("Obtained URL from card: '%s'", url);
-            return filterUrl(url);
+            try {
+                return filterUrl(url);
+            } catch (DatabaseCorruptException e) {
+                showDbCorruptDialog();
+            }
+            return false;
         }
 
 
@@ -3502,13 +3590,18 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
         @Override
         @SuppressWarnings("deprecation") // tracked as #5017 in github
         public boolean shouldOverrideUrlLoading(WebView view, String url) {
-            return filterUrl(url);
+            try {
+                return filterUrl(url);
+            } catch (DatabaseCorruptException e) {
+                showDbCorruptDialog();
+            }
+            return false;
         }
 
 
         // Filter any links using the custom "playsound" protocol defined in Sound.java.
         // We play sounds through these links when a user taps the sound icon.
-        private boolean filterUrl(String url) {
+        private boolean filterUrl(String url) throws DatabaseCorruptException {
             if (url.startsWith("playsound:")) {
                 controlSound(url);
                 return true;
@@ -3738,7 +3831,11 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
             if (url.equals(mViewerUrl)) {
                 Timber.d("New URL, drawing flags, marks, and triggering JS onPageFinished: %s", url);
                 drawFlag();
-                drawMark();
+                try {
+                    drawMark();
+                } catch (DatabaseCorruptException e) {
+                    showDbCorruptDialog();
+                }
                 view.loadUrl("javascript:onPageFinished();");
             }
         }
@@ -3812,7 +3909,11 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
                 writeLock.unlock();
                 Timber.d("Relinquished writeLock");
             }
-            displayCardQuestion();
+            try {
+                displayCardQuestion();
+            } catch (DatabaseCorruptException e) {
+                showDbCorruptDialog();
+            }
 
             //We handled the crash and can continue.
             return true;
@@ -3861,7 +3962,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
 
     @SuppressLint("WebViewApiAvailability")
     @VisibleForTesting(otherwise = VisibleForTesting.NONE)
-    void handleUrlFromJavascript(String url) {
+    void handleUrlFromJavascript(String url) throws DatabaseCorruptException {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             //WebViewCompat recommended here, but I'll avoid the dependency as it's test code
             CardViewerWebClient c = ((CardViewerWebClient) this.mCardWebView.getWebViewClient());
@@ -3942,7 +4043,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
 
     @VisibleForTesting
     void loadInitialCard() {
-        TaskManager.launchCollectionTask(new CollectionTask.GetCard(), new AnswerCardHandler(false));
+        TaskManager.launchCollectionTask(new CollectionTask.GetCard(showDbCorruptDialogListener()), new AnswerCardHandler(false));
     }
 
     public ReviewerUi.ControlBlock getControlBlocked() {
@@ -3973,7 +4074,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
         return mCardContent;
     }
 
-    protected void showTagsDialog() {
+    protected void showTagsDialog() throws DatabaseCorruptException {
         ArrayList<String> tags = new ArrayList<>(getCol().getTags().all());
         ArrayList<String> selTags = new ArrayList<>(mCurrentCard.note().getTags());
         TagsDialog dialog = mTagsDialogFactory.newTagsDialog().withArguments(TagsDialog.DialogType.ADD_TAG, selTags, tags);
@@ -3982,13 +4083,17 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
 
     @Override
     public void onSelectedTags(List<String> selectedTags, int option) {
-        if (!mCurrentCard.note().getTags().equals(selectedTags)) {
-            String tagString = TextUtils.join(" ", selectedTags);
-            Note note = mCurrentCard.note();
-            note.setTagsFromStr(tagString);
-            note.flush();
-            // Reload current card to reflect tag changes
-            displayCardQuestion(true);
+        try {
+            if (!mCurrentCard.note().getTags().equals(selectedTags)) {
+                String tagString = TextUtils.join(" ", selectedTags);
+                Note note = mCurrentCard.note();
+                note.setTagsFromStr(tagString);
+                note.flush();
+                // Reload current card to reflect tag changes
+                displayCardQuestion(true);
+            }
+        } catch (DatabaseCorruptException e) {
+            showDbCorruptDialog();
         }
     }
 
@@ -4074,7 +4179,7 @@ see card.js for available functions
         }
 
         @JavascriptInterface
-        public boolean ankiGetCardMark() {
+        public boolean ankiGetCardMark() throws DatabaseCorruptException {
             return shouldDisplayMark();
         }
 

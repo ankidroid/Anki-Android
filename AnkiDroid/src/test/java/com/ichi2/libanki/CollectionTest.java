@@ -1,6 +1,7 @@
 package com.ichi2.libanki;
 
 import com.ichi2.anki.RobolectricTest;
+import com.ichi2.anki.exception.DatabaseCorruptException;
 import com.ichi2.utils.JSONObject;
 
 import org.junit.Ignore;
@@ -87,7 +88,7 @@ public class CollectionTest extends RobolectricTest {
       os.unlink(newPath);
       } */
     @Test
-    public void test_noteAddDelete() {
+    public void test_noteAddDelete() throws DatabaseCorruptException {
         Collection col = getCol();
         // add a note
         Note note = col.newNote();
@@ -144,7 +145,7 @@ public class CollectionTest extends RobolectricTest {
 
 
     @Test
-    public void test_addDelTags() {
+    public void test_addDelTags() throws DatabaseCorruptException {
         Collection col = getCol();
         Note note = col.newNote();
         note.setItem("Front", "1");
@@ -180,7 +181,7 @@ public class CollectionTest extends RobolectricTest {
 
     @Test
     @Ignore("Pending port of media search from Rust code")
-    public void test_furigana() {
+    public void test_furigana() throws DatabaseCorruptException {
         Collection col = getCol();
         Models mm = col.getModels();
         Model m = mm.current();

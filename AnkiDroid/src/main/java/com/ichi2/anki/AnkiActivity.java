@@ -2,6 +2,7 @@
 package com.ichi2.anki;
 
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.ActivityNotFoundException;
@@ -13,21 +14,6 @@ import android.graphics.Color;
 import android.media.AudioManager;
 import android.net.Uri;
 import android.os.Bundle;
-
-import androidx.activity.result.ActivityResultLauncher;
-import androidx.annotation.Nullable;
-import androidx.appcompat.app.AppCompatDelegate;
-import androidx.appcompat.widget.Toolbar;
-import androidx.browser.customtabs.CustomTabColorSchemeParams;
-import androidx.browser.customtabs.CustomTabsIntent;
-import androidx.fragment.app.DialogFragment;
-import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentTransaction;
-import androidx.core.app.NotificationCompat;
-import androidx.core.content.ContextCompat;
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -41,7 +27,11 @@ import com.ichi2.anki.analytics.UsageAnalytics;
 import com.ichi2.anki.dialogs.AsyncDialogFragment;
 import com.ichi2.anki.dialogs.DialogHandler;
 import com.ichi2.anki.dialogs.SimpleMessageDialog;
+import com.ichi2.anki.exception.DatabaseCorruptException;
 import com.ichi2.async.CollectionLoader;
+import com.ichi2.async.CollectionTask;
+import com.ichi2.async.TaskListenerWithContext;
+import com.ichi2.async.TaskManager;
 import com.ichi2.compat.customtabs.CustomTabActivityHelper;
 import com.ichi2.compat.customtabs.CustomTabsFallback;
 import com.ichi2.compat.customtabs.CustomTabsHelper;
@@ -50,13 +40,29 @@ import com.ichi2.themes.Themes;
 import com.ichi2.utils.AdaptionUtil;
 import com.ichi2.utils.AndroidUiUtils;
 
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatDelegate;
+import androidx.appcompat.widget.Toolbar;
+import androidx.browser.customtabs.CustomTabColorSchemeParams;
+import androidx.browser.customtabs.CustomTabsIntent;
+import androidx.core.app.NotificationCompat;
+import androidx.core.content.ContextCompat;
+import androidx.fragment.app.DialogFragment;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 import timber.log.Timber;
 
 import static androidx.browser.customtabs.CustomTabsIntent.COLOR_SCHEME_DARK;
 import static androidx.browser.customtabs.CustomTabsIntent.COLOR_SCHEME_LIGHT;
 import static androidx.browser.customtabs.CustomTabsIntent.COLOR_SCHEME_SYSTEM;
-import static com.ichi2.anim.ActivityTransitionAnimation.Direction.*;
 import static com.ichi2.anim.ActivityTransitionAnimation.Direction;
+import static com.ichi2.anim.ActivityTransitionAnimation.Direction.NONE;
+import static com.ichi2.anim.ActivityTransitionAnimation.Direction.START;
+import static com.ichi2.anim.ActivityTransitionAnimation.Direction.UP;
 
 public class AnkiActivity extends AppCompatActivity implements SimpleMessageDialog.SimpleMessageDialogListener {
 
@@ -148,7 +154,7 @@ public class AnkiActivity extends AppCompatActivity implements SimpleMessageDial
 
 
     // called when the CollectionLoader finishes... usually will be over-ridden
-    protected void onCollectionLoaded(Collection col) {
+    protected void onCollectionLoaded(Collection col) throws DatabaseCorruptException {
         hideProgressBar();
     }
 
@@ -348,7 +354,7 @@ public class AnkiActivity extends AppCompatActivity implements SimpleMessageDial
 
 
     // Method for loading the collection which is inherited by all AnkiActivitys
-    public void startLoadingCollection() {
+    public void startLoadingCollection() throws DatabaseCorruptException {
         Timber.d("AnkiActivity.startLoadingCollection()");
         if (colIsOpen()) {
             Timber.d("Synchronously calling onCollectionLoaded");
@@ -367,7 +373,7 @@ public class AnkiActivity extends AppCompatActivity implements SimpleMessageDial
                 deckPicker.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
                 startActivityWithAnimation(deckPicker, START);
             }
-        });
+        }, showDbCorruptDialogListener());
     }
 
     public void showProgressBar() {
@@ -539,6 +545,34 @@ public class AnkiActivity extends AppCompatActivity implements SimpleMessageDial
     }
 
 
+    protected ShowDbCorruptDialogListener showDbCorruptDialogListener() {
+        return new ShowDbCorruptDialogListener(this);
+    }
+
+
+    public void showDbCorruptDialog() {
+        Timber.d("showDbCorruptDialog()");
+        if (this instanceof DeckPicker) {
+            new AlertDialog.Builder(this)
+                    .setTitle("Corrupt Database")
+                    .setMessage("It looks like your database is corrupt. Do you want to perform a database check?")
+                    .setPositiveButton("Check DB", (dialog, which) -> {
+                        Timber.i("performIntegrityCheck()");
+                        TaskManager.launchCollectionTask(
+                                new CollectionTask.CheckDatabase(),
+                                ((DeckPicker) this).new CheckDatabaseListener()
+                        );
+                    }).setNegativeButton("Dismiss", (dialog, which) -> dialog.dismiss())
+                    .create()
+                    .show();
+        } else {
+            Intent intent = new Intent(this, DeckPicker.class);
+            intent.putExtra("corruptDB", true);
+            startActivityWithoutAnimation(intent);
+        }
+    }
+
+
     public void showSimpleNotification(String title, String message, NotificationChannels.Channel channel) {
         SharedPreferences prefs = AnkiDroidApp.getSharedPrefs(this);
         // Show a notification unless all notifications have been totally disabled
@@ -658,5 +692,23 @@ public class AnkiActivity extends AppCompatActivity implements SimpleMessageDial
         }).start();
 
         return true;
+    }
+
+
+    public static class ShowDbCorruptDialogListener extends TaskListenerWithContext<AnkiActivity, Void, Void> {
+        public ShowDbCorruptDialogListener(AnkiActivity ankiActivity) {
+            super(ankiActivity);
+        }
+
+
+        @Override
+        public void actualOnPreExecute(@NonNull AnkiActivity ankiActivity) {
+        }
+
+
+        @Override
+        public void actualOnPostExecute(@NonNull AnkiActivity ankiActivity, Void unused) {
+            ankiActivity.showDbCorruptDialog();
+        }
     }
 }

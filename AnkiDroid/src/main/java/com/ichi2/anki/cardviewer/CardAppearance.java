@@ -18,6 +18,7 @@ package com.ichi2.anki.cardviewer;
 
 import android.content.SharedPreferences;
 
+import com.ichi2.anki.exception.DatabaseCorruptException;
 import com.ichi2.anki.reviewer.ReviewerCustomFonts;
 import com.ichi2.libanki.Card;
 import com.ichi2.themes.Themes;
@@ -62,7 +63,7 @@ public class CardAppearance {
     /**
      * hasUserDefinedNightMode finds out if the user has included class .night_mode in card's stylesheet
      */
-    public boolean hasUserDefinedNightMode(Card card) {
+    public boolean hasUserDefinedNightMode(Card card) throws DatabaseCorruptException {
         // TODO: find more robust solution that won't match unrelated classes like "night_mode_old"
         return card.css().contains(".night_mode") || card.css().contains(".nightMode");
     }

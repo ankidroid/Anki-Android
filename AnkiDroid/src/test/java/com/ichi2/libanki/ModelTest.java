@@ -2,6 +2,7 @@ package com.ichi2.libanki;
 
 import com.ichi2.anki.RobolectricTest;
 import com.ichi2.anki.exception.ConfirmModSchemaException;
+import com.ichi2.anki.exception.DatabaseCorruptException;
 import com.ichi2.utils.JSONArray;
 import com.ichi2.utils.JSONObject;
 
@@ -38,7 +39,7 @@ import static org.junit.Assert.fail;
 public class ModelTest extends RobolectricTest {
 
     @Test
-    public void test_frontSide_field() {
+    public void test_frontSide_field() throws DatabaseCorruptException {
         // #8951 - Anki Special-cases {{FrontSide}} on the front to return empty string
         Collection col = getCol();
         Model m = col.getModels().current();
@@ -54,7 +55,7 @@ public class ModelTest extends RobolectricTest {
     }
 
     @Test
-    public void test_field_named_frontSide() {
+    public void test_field_named_frontSide() throws DatabaseCorruptException {
         // #8951 - A field named "FrontSide" is ignored - this matches Anki 2.1.34 (8af8f565)
         Collection col = getCol();
         Model m = col.getModels().current();
@@ -109,7 +110,7 @@ public class ModelTest extends RobolectricTest {
 
 
     @Test
-    public void test_fields() throws ConfirmModSchemaException {
+    public void test_fields() throws ConfirmModSchemaException, DatabaseCorruptException {
         Collection col = getCol();
         Note note = col.newNote();
         note.setItem("Front", "1");
@@ -158,7 +159,7 @@ public class ModelTest extends RobolectricTest {
 
 
     @Test
-    public void test_templates() throws ConfirmModSchemaException {
+    public void test_templates() throws ConfirmModSchemaException, DatabaseCorruptException {
         Collection col = getCol();
         Model m = col.getModels().current();
         Models mm = col.getModels();
@@ -241,7 +242,7 @@ public class ModelTest extends RobolectricTest {
 
 
     @Test
-    public void test_text() {
+    public void test_text() throws DatabaseCorruptException {
         Collection col = getCol();
         Model m = col.getModels().current();
         m.getJSONArray("tmpls").getJSONObject(0).put("qfmt", "{{text:Front}}");
@@ -254,7 +255,7 @@ public class ModelTest extends RobolectricTest {
 
 
     @Test
-    public void test_cloze() {
+    public void test_cloze() throws DatabaseCorruptException {
         Collection col = getCol();
         col.getModels().setCurrent(col.getModels().byName("Cloze"));
         Note note = col.newNote();
@@ -336,7 +337,7 @@ public class ModelTest extends RobolectricTest {
 
 
     @Test
-    public void test_cloze_mathjax() {
+    public void test_cloze_mathjax() throws DatabaseCorruptException {
         Collection col = getCol();
         col.getModels().setCurrent(col.getModels().byName("Cloze"));
         Note note = col.newNote();
@@ -359,7 +360,7 @@ public class ModelTest extends RobolectricTest {
 
 
     @Test
-    public void test_typecloze() {
+    public void test_typecloze() throws DatabaseCorruptException {
         Collection col = getCol();
         Model m = col.getModels().byName("Cloze");
         col.getModels().setCurrent(m);
@@ -373,7 +374,7 @@ public class ModelTest extends RobolectricTest {
 
 
     @Test
-    public void test_chained_mods() throws ConfirmModSchemaException {
+    public void test_chained_mods() throws ConfirmModSchemaException, DatabaseCorruptException {
         Collection col = getCol();
         col.getModels().setCurrent(col.getModels().byName("Cloze"));
         Model m = col.getModels().current();
@@ -406,7 +407,7 @@ public class ModelTest extends RobolectricTest {
 
 
     @Test
-    public void test_modelChange() throws ConfirmModSchemaException {
+    public void test_modelChange() throws ConfirmModSchemaException, DatabaseCorruptException {
         Collection col = getCol();
         Model cloze = col.getModels().byName("Cloze");
         // enable second template and add a note

@@ -20,9 +20,11 @@ import android.content.res.Resources;
 import android.os.Bundle;
 
 import com.afollestad.materialdialogs.MaterialDialog;
+import com.ichi2.anki.AnkiActivity;
 import com.ichi2.anki.DeckPicker;
 import com.ichi2.anki.R;
 import com.ichi2.anki.analytics.AnalyticsDialogFragment;
+import com.ichi2.anki.exception.DatabaseCorruptException;
 
 import androidx.annotation.NonNull;
 
@@ -41,8 +43,20 @@ public class DeckPickerNoSpaceLeftDialog extends AnalyticsDialogFragment {
                 .content(res.getString(R.string.backup_deck_no_space_left))
                 .cancelable(true)
                 .positiveText(R.string.dialog_ok)
-                .onPositive((dialog, which) -> ((DeckPicker) getActivity()).startLoadingCollection())
-                .cancelListener(dialog -> ((DeckPicker) getActivity()).startLoadingCollection())
+                .onPositive((dialog, which) -> {
+                    try {
+                        ((DeckPicker) getActivity()).startLoadingCollection();
+                    } catch (DatabaseCorruptException e) {
+                        ((AnkiActivity) DeckPickerNoSpaceLeftDialog.this.getActivity()).showDbCorruptDialog();
+                    }
+                })
+                .cancelListener(dialog -> {
+                    try {
+                        ((DeckPicker) getActivity()).startLoadingCollection();
+                    } catch (DatabaseCorruptException e) {
+                        ((AnkiActivity) DeckPickerNoSpaceLeftDialog.this.getActivity()).showDbCorruptDialog();
+                    }
+                })
                 .show();
     }
 }

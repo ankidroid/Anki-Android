@@ -23,11 +23,11 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.speech.tts.TextToSpeech;
 import android.speech.tts.UtteranceProgressListener;
-
 import android.view.WindowManager;
 
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.google.android.material.snackbar.Snackbar;
+import com.ichi2.anki.exception.DatabaseCorruptException;
 import com.ichi2.libanki.Sound;
 
 import java.lang.ref.WeakReference;
@@ -274,7 +274,11 @@ public class ReadText {
                 if (availableTtsLocales.size() > 0) {
                     // notify the reviewer that TTS has been initialized
                     Timber.d("TTS initialized and available languages found");
-                    ((AbstractFlashcardViewer) mReviewer.get()).ttsInitialized();
+                    try {
+                        ((AbstractFlashcardViewer) mReviewer.get()).ttsInitialized();
+                    } catch (DatabaseCorruptException e) {
+                        ((AbstractFlashcardViewer) mReviewer.get()).showDbCorruptDialog();
+                    }
                 } else {
                     UIUtils.showThemedToast(mReviewer.get(), mReviewer.get().getString(R.string.no_tts_available_message), false);
                     Timber.w("TTS initialized but no available languages found");

@@ -25,6 +25,7 @@ import android.text.TextUtils;
 import android.util.Pair;
 
 import com.ichi2.anki.AnkiDroidApp;
+import com.ichi2.anki.exception.DatabaseCorruptException;
 import com.ichi2.libanki.exception.EmptyMediaException;
 import com.ichi2.libanki.template.TemplateFilters;
 import com.ichi2.utils.Assert;
@@ -429,12 +430,12 @@ public class Media {
      *
      * @return A list containing three lists of files (missingFiles, unusedFiles, invalidFiles)
      */
-    public List<List<String>> check() {
+    public List<List<String>> check() throws DatabaseCorruptException {
         return check(null);
     }
 
 
-    private List<List<String>> check(File[] local) {
+    private List<List<String>> check(File[] local) throws DatabaseCorruptException {
         File mdir = new File(dir());
         // gather all media references in NFC form
         Set<String> allRefs = new HashSet<>();
@@ -525,7 +526,7 @@ public class Media {
     }
 
 
-    private void _normalizeNoteRefs(long nid) {
+    private void _normalizeNoteRefs(long nid) throws DatabaseCorruptException {
         Note note = mCol.getNote(nid);
         String[] flds = note.getFields();
         for (int c = 0; c < flds.length; c++) {

@@ -22,17 +22,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.res.Resources;
 import android.os.Bundle;
-
-import androidx.activity.result.ActivityResultLauncher;
-import androidx.activity.result.contract.ActivityResultContracts;
-import androidx.annotation.CheckResult;
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.annotation.StringRes;
-import androidx.annotation.VisibleForTesting;
-import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentActivity;
-import androidx.viewpager2.widget.ViewPager2;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Pair;
@@ -54,6 +43,7 @@ import com.ichi2.anki.dialogs.DeckSelectionDialog;
 import com.ichi2.anki.dialogs.DeckSelectionDialog.SelectableDeck;
 import com.ichi2.anki.dialogs.DiscardChangesDialog;
 import com.ichi2.anki.exception.ConfirmModSchemaException;
+import com.ichi2.anki.exception.DatabaseCorruptException;
 import com.ichi2.async.TaskListenerWithContext;
 import com.ichi2.libanki.Collection;
 import com.ichi2.libanki.Deck;
@@ -61,7 +51,6 @@ import com.ichi2.libanki.Decks;
 import com.ichi2.libanki.Model;
 import com.ichi2.libanki.Models;
 import com.ichi2.themes.StyledProgressDialog;
-
 import com.ichi2.ui.FixedTextView;
 import com.ichi2.utils.FunctionalInterfaces;
 import com.ichi2.utils.JSONArray;
@@ -73,10 +62,20 @@ import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
+import androidx.annotation.CheckResult;
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.annotation.StringRes;
+import androidx.annotation.VisibleForTesting;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentActivity;
 import androidx.viewpager2.adapter.FragmentStateAdapter;
+import androidx.viewpager2.widget.ViewPager2;
 import timber.log.Timber;
 
-import static com.ichi2.anim.ActivityTransitionAnimation.Direction.*;
+import static com.ichi2.anim.ActivityTransitionAnimation.Direction.END;
 import static com.ichi2.libanki.Models.NOT_FOUND_NOTE_TYPE;
 
 
@@ -155,7 +154,11 @@ public class CardTemplateEditor extends AnkiActivity implements DeckSelectionDia
 
         // Disable the home icon
         enableToolbar();
-        startLoadingCollection();
+        try {
+            startLoadingCollection();
+        } catch (DatabaseCorruptException e) {
+            showDbCorruptDialog();
+        }
     }
 
 
@@ -193,7 +196,7 @@ public class CardTemplateEditor extends AnkiActivity implements DeckSelectionDia
      * @param col Collection which has been loaded
      */
     @Override
-    protected void onCollectionLoaded(Collection col) {
+    protected void onCollectionLoaded(Collection col) throws DatabaseCorruptException {
         super.onCollectionLoaded(col);
         // The first time the activity loads it has a model id but no edits yet, so no edited model
         // take the passed model id load it up for editing
@@ -290,7 +293,11 @@ public class CardTemplateEditor extends AnkiActivity implements DeckSelectionDia
             if (event.isCtrlPressed()) {
                 CardTemplateFragment currentFragment = getCurrentFragment();
                 if (currentFragment != null) {
-                    currentFragment.performPreview();
+                    try {
+                        currentFragment.performPreview();
+                    } catch (DatabaseCorruptException e) {
+                        showDbCorruptDialog();
+                    }
                 }
             }
         }
@@ -575,7 +582,11 @@ public class CardTemplateEditor extends AnkiActivity implements DeckSelectionDia
                 displayDeckOverrideDialog(col, tempModel);
                 return true;
             } else if (itemId == R.id.action_preview) {
-                performPreview();
+                try {
+                    performPreview();
+                } catch (DatabaseCorruptException e) {
+                    mTemplateEditor.showDbCorruptDialog();
+                }
                 return true;
             } else if (itemId == R.id.action_confirm) {
                 Timber.i("CardTemplateEditor:: Save model button pressed");
@@ -607,7 +618,7 @@ public class CardTemplateEditor extends AnkiActivity implements DeckSelectionDia
         }
 
 
-        private void performPreview() {
+        private void performPreview() throws DatabaseCorruptException {
             Collection col = mTemplateEditor.getCol();
             TemporaryModel tempModel = mTemplateEditor.getTempModel();
             Timber.i("CardTemplateEditor:: Preview on tab %s", mTemplateEditor.mViewPager.getCurrentItem());

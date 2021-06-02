@@ -31,6 +31,7 @@ import com.ichi2.anki.R;
 import com.ichi2.anki.UIUtils;
 import com.ichi2.anki.analytics.UsageAnalytics;
 import com.ichi2.anki.exception.ConfirmModSchemaException;
+import com.ichi2.anki.exception.DatabaseCorruptException;
 import com.ichi2.async.CancelListener;
 import com.ichi2.async.CollectionTask;
 import com.ichi2.libanki.backend.DroidBackend;
@@ -515,7 +516,7 @@ public class Collection implements CollectionGetter {
     }
 
 
-    public Note getNote(long id) {
+    public Note getNote(long id) throws DatabaseCorruptException {
         return new Note(this, id);
     }
 
@@ -1319,7 +1320,7 @@ public class Collection implements CollectionGetter {
         return mUndo.size() > 0;
     }
 
-    public @Nullable Card undo() {
+    public @Nullable Card undo() throws DatabaseCorruptException {
         UndoAction lastUndo = mUndo.removeLast();
         Timber.d("undo() of type %s", lastUndo.getClass());
         return lastUndo.undo(this);
@@ -1355,13 +1356,13 @@ public class Collection implements CollectionGetter {
 
         @NonNull
         @Override
-        public Card undo(@NonNull Collection col) {
+        public Card undo(@NonNull Collection col) throws DatabaseCorruptException {
             col.getSched().undoReview(mClonedCard, mWasLeech);
             return mClonedCard;
         }
     }
 
-    public void markReview(Card card) {
+    public void markReview(Card card) throws DatabaseCorruptException {
         boolean wasLeech = card.note().hasTag("leech");
         Card clonedCard = card.clone();
         markUndo(new UndoReview(wasLeech, clonedCard));

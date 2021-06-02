@@ -19,6 +19,7 @@ package com.ichi2.anki;
 import android.graphics.Color;
 
 import com.ichi2.anki.cardviewer.ViewerCommand;
+import com.ichi2.anki.exception.DatabaseCorruptException;
 import com.ichi2.anki.model.WhiteboardPenColor;
 import com.ichi2.libanki.Consts;
 
@@ -120,7 +121,7 @@ public class ReviewerNoParamTest extends RobolectricTest {
 
 
     @Test
-    public void flippingCardHidesFullscreen() {
+    public void flippingCardHidesFullscreen() throws DatabaseCorruptException {
         addNoteUsingBasicModel("Hello", "World");
         ReviewerExt reviewer = startReviewerFullScreen();
 
@@ -133,7 +134,7 @@ public class ReviewerNoParamTest extends RobolectricTest {
 
 
     @Test
-    public void showingCardHidesFullScreen() {
+    public void showingCardHidesFullScreen() throws DatabaseCorruptException {
         addNoteUsingBasicModel("Hello", "World");
         ReviewerExt reviewer = startReviewerFullScreen();
 
@@ -149,7 +150,7 @@ public class ReviewerNoParamTest extends RobolectricTest {
     }
 
     @Test
-    public void undoingCardHidesFullScreen() {
+    public void undoingCardHidesFullScreen() throws DatabaseCorruptException {
         addNoteUsingBasicModel("Hello", "World");
         ReviewerExt reviewer = startReviewerFullScreen();
 

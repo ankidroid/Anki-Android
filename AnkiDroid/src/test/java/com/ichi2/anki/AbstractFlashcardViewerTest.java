@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Intent;
 
 import com.ichi2.anki.cardviewer.ViewerCommand;
+import com.ichi2.anki.exception.DatabaseCorruptException;
 import com.ichi2.libanki.Note;
 import com.ichi2.testutils.AnkiAssert;
 
@@ -318,17 +319,23 @@ public class AbstractFlashcardViewerTest extends RobolectricTest {
     }
 
     @Test
-    public void invalidEncodingDoesNotCrash() {
+    public void invalidEncodingDoesNotCrash() throws DatabaseCorruptException {
         //#5944 - input came in as: 'typeblurtext:%'. We've fixed the encoding, but want to make sure there's no crash
         // as JS can call this function with arbitrary data.
         String url = "typeblurtext:%";
 
         NonAbstractFlashcardViewer nafv = getViewer();
-        AnkiAssert.assertDoesNotThrow(() -> nafv.handleUrlFromJavascript(url));
+        AnkiAssert.assertDoesNotThrow(() -> {
+            try {
+                nafv.handleUrlFromJavascript(url);
+            } catch (DatabaseCorruptException e) {
+                e.printStackTrace();
+            }
+        });
     }
 
     @Test
-    public void validEncodingSetsAnswerCorrectly() {
+    public void validEncodingSetsAnswerCorrectly() throws DatabaseCorruptException {
         //你好%
         String url = "typeblurtext:%E4%BD%A0%E5%A5%BD%25";
         NonAbstractFlashcardViewer nafv = getViewer();
@@ -339,7 +346,7 @@ public class AbstractFlashcardViewerTest extends RobolectricTest {
     }
 
     @Test
-    public void testEditingCardChangesTypedAnswer() {
+    public void testEditingCardChangesTypedAnswer() throws DatabaseCorruptException {
         // 7363
        addNoteUsingBasicTypedModel("Hello", "World");
 
@@ -362,7 +369,7 @@ public class AbstractFlashcardViewerTest extends RobolectricTest {
     }
 
     @Test
-    public void testEditingCardChangesTypedAnswerOnDisplayAnswer() {
+    public void testEditingCardChangesTypedAnswerOnDisplayAnswer() throws DatabaseCorruptException {
         // 7363
         addNoteUsingBasicTypedModel("Hello", "World");
 
@@ -392,7 +399,7 @@ public class AbstractFlashcardViewerTest extends RobolectricTest {
 
 
     @Test
-    public void testClozeWithRepeatedWords() {
+    public void testClozeWithRepeatedWords() throws DatabaseCorruptException {
         // 8229
         NonAbstractFlashcardViewer nafv = getViewer();
 
@@ -404,7 +411,7 @@ public class AbstractFlashcardViewerTest extends RobolectricTest {
     }
 
     @Test
-    public void testCommandPerformsAnswerCard() {
+    public void testCommandPerformsAnswerCard() throws DatabaseCorruptException {
         // Regression for #8527/#8572
         // Note: Couldn't get a spy working, so overriding the method
         NonAbstractFlashcardViewer viewer = getViewer();
@@ -419,7 +426,7 @@ public class AbstractFlashcardViewerTest extends RobolectricTest {
         assertThat(viewer.mAnswered, notNullValue());
     }
 
-    private NonAbstractFlashcardViewer getViewer() {
+    private NonAbstractFlashcardViewer getViewer() throws DatabaseCorruptException {
         @NonNull Note n = getCol().newNote();
         n.setField(0, "a");
         getCol().addNote(n);

@@ -326,7 +326,7 @@ public class StudyOptionsFragment extends Fragment implements Toolbar.OnMenuItem
         int itemId = item.getItemId();
         if (itemId == R.id.action_undo) {
             Timber.i("StudyOptionsFragment:: Undo button pressed");
-            TaskManager.launchCollectionTask(new CollectionTask.Undo(), mUndoListener);
+            TaskManager.launchCollectionTask(new CollectionTask.Undo(((AnkiActivity) getActivity()).showDbCorruptDialogListener()), mUndoListener);
             return true;
         } else if (itemId == R.id.action_deck_or_study_options) {
             Timber.i("StudyOptionsFragment:: Deck or study options button pressed");

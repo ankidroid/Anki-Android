@@ -23,6 +23,7 @@ import android.widget.EditText;
 
 import com.afollestad.materialdialogs.DialogAction;
 import com.ichi2.anki.dialogs.DeckSelectionDialog;
+import com.ichi2.anki.exception.DatabaseCorruptException;
 import com.ichi2.libanki.Model;
 import com.ichi2.libanki.Note;
 import com.ichi2.utils.JSONObject;
@@ -235,7 +236,7 @@ public class CardTemplateEditorTest extends RobolectricTest {
      *
      */
     @Test
-    public void testDeleteTemplateWithSelectivelyGeneratedCards() {
+    public void testDeleteTemplateWithSelectivelyGeneratedCards() throws DatabaseCorruptException {
 
         String modelName = "Basic (optional reversed card)";
         Model collectionBasicModelOriginal = getCurrentDatabaseModelCopy(modelName);
@@ -318,7 +319,7 @@ public class CardTemplateEditorTest extends RobolectricTest {
      */
     @SuppressWarnings("PMD.ExcessiveMethodLength")
     @Test
-    public void testDeleteTemplateWithGeneratedCards() {
+    public void testDeleteTemplateWithGeneratedCards() throws DatabaseCorruptException {
 
         String modelName = "Basic (and reversed card)";
         Model collectionBasicModelOriginal = getCurrentDatabaseModelCopy(modelName);
@@ -443,7 +444,7 @@ public class CardTemplateEditorTest extends RobolectricTest {
      */
     @SuppressWarnings("PMD.ExcessiveMethodLength")
     @Test
-    public void testDeletePendingAddExistingCardCount() {
+    public void testDeletePendingAddExistingCardCount() throws DatabaseCorruptException {
 
         String modelName = "Basic (optional reversed card)";
         Model collectionBasicModelOriginal = getCurrentDatabaseModelCopy(modelName);
@@ -599,7 +600,7 @@ public class CardTemplateEditorTest extends RobolectricTest {
     }
 
 
-    private int getModelCardCount(Model model) {
+    private int getModelCardCount(Model model) throws DatabaseCorruptException {
         int cardCount = 0;
         for (Long noteId : getCol().getModels().nids(model)) {
             cardCount += getCol().getNote(noteId).numberOfCards();

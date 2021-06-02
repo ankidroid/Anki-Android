@@ -30,6 +30,7 @@ import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
 
+import com.ichi2.anki.exception.DatabaseCorruptException;
 import com.ichi2.libanki.Card;
 import com.ichi2.libanki.Collection;
 import com.ichi2.libanki.Consts;
@@ -86,12 +87,16 @@ public class CardInfo extends AnkiActivity {
 
         enableToolbar();
 
-        startLoadingCollection();
+        try {
+            startLoadingCollection();
+        } catch (DatabaseCorruptException e) {
+            showDbCorruptDialog();
+        }
     }
 
 
     @Override
-    protected void onCollectionLoaded(Collection col) {
+    protected void onCollectionLoaded(Collection col) throws DatabaseCorruptException {
         super.onCollectionLoaded(col);
 
         Card c = getCard(col);
@@ -306,7 +311,7 @@ public class CardInfo extends AnkiActivity {
 
 
         @CheckResult
-        public static CardInfoModel create(Card c, Collection collection) {
+        public static CardInfoModel create(Card c, Collection collection) throws DatabaseCorruptException {
             long addedDate = c.getId();
 
             Long firstReview = collection.getDb().queryLongScalar("select min(id) from revlog where cid = ?", c.getId());
@@ -381,7 +386,7 @@ public class CardInfo extends AnkiActivity {
 
 
         @NonNull
-        protected static String getCardType(Card c, Model model) {
+        protected static String getCardType(Card c, Model model) throws DatabaseCorruptException {
             try {
                 int ord = c.getOrd();
                 if (c.model().isCloze()) {

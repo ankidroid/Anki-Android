@@ -20,6 +20,8 @@ import android.app.Activity;
 import android.view.KeyEvent;
 import android.view.inputmethod.BaseInputConnection;
 
+import com.ichi2.anki.exception.DatabaseCorruptException;
+
 import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -66,7 +68,12 @@ public class NoteEditorTabOrderTest extends NoteEditorTest {
         });
 
         onActivity(scenario, editor -> {
-            String[] currentFieldStrings = editor.getCurrentFieldStrings();
+            String[] currentFieldStrings = new String[0];
+            try {
+                currentFieldStrings = editor.getCurrentFieldStrings();
+            } catch (DatabaseCorruptException e) {
+                e.printStackTrace();
+            }
             assertThat(currentFieldStrings[0], is("a"));
             assertThat(currentFieldStrings[1], is("b"));
         });

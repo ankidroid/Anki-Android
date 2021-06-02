@@ -40,6 +40,7 @@ import com.afollestad.materialdialogs.MaterialDialog;
 import com.ichi2.anki.dialogs.ConfirmationDialog;
 import com.ichi2.anki.dialogs.ModelBrowserContextMenu;
 import com.ichi2.anki.exception.ConfirmModSchemaException;
+import com.ichi2.anki.exception.DatabaseCorruptException;
 import com.ichi2.async.CollectionTask;
 import com.ichi2.async.TaskListenerWithContext;
 import com.ichi2.async.TaskManager;
@@ -186,7 +187,11 @@ public class ModelBrowser extends AnkiActivity {
         mModelListView = findViewById(R.id.note_type_browser_list);
         enableToolbar();
         mActionBar = getSupportActionBar();
-        startLoadingCollection();
+        try {
+            startLoadingCollection();
+        } catch (DatabaseCorruptException e) {
+            showDbCorruptDialog();
+        }
     }
 
 
@@ -237,7 +242,7 @@ public class ModelBrowser extends AnkiActivity {
     // ANKI METHODS
     // ----------------------------------------------------------------------------
     @Override
-    public void onCollectionLoaded(Collection col) {
+    public void onCollectionLoaded(Collection col) throws DatabaseCorruptException {
         super.onCollectionLoaded(col);
         this.mCol = col;
         TaskManager.launchCollectionTask(new CollectionTask.CountModels(), loadingModelsHandler());

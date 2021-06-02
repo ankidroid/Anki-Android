@@ -4,6 +4,7 @@ import android.content.Context;
 
 import com.ichi2.anki.RobolectricTest;
 
+import com.ichi2.anki.exception.DatabaseCorruptException;
 import com.ichi2.utils.JSONException;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -26,7 +27,7 @@ import static org.junit.Assert.fail;
 public class ClozeTest extends RobolectricTest {
 
     @Test
-    public void testCloze() {
+    public void testCloze() throws DatabaseCorruptException {
         final Context context = ApplicationProvider.getApplicationContext();
 
         Collection d = getCol();

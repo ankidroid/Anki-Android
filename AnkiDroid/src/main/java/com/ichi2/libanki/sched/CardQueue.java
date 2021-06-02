@@ -16,6 +16,7 @@
 
 package com.ichi2.libanki.sched;
 
+import com.ichi2.anki.exception.DatabaseCorruptException;
 import com.ichi2.libanki.Card;
 import com.ichi2.libanki.Collection;
 
@@ -37,7 +38,7 @@ abstract class CardQueue<T extends Card.Cache> {
     }
 
 
-    public void loadFirstCard() {
+    public void loadFirstCard() throws DatabaseCorruptException {
         if (!mQueue.isEmpty()) {
             // No nead to reload. If the card was changed, reset would have been called and emptied the queue
             mQueue.get(0).loadQA(false, false);

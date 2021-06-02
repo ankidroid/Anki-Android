@@ -23,6 +23,7 @@ import com.ichi2.anki.AbstractFlashcardViewer;
 import com.ichi2.anki.CollectionHelper;
 import com.ichi2.anki.RobolectricTest;
 import com.ichi2.anki.exception.ConfirmModSchemaException;
+import com.ichi2.anki.exception.DatabaseCorruptException;
 import com.ichi2.libanki.Card;
 import com.ichi2.libanki.Collection;
 import com.ichi2.libanki.Consts;
@@ -104,7 +105,7 @@ public class SchedTest extends RobolectricTest {
     }
 
     @Test
-    public void learnCardsAreNotFiltered() {
+    public void learnCardsAreNotFiltered() throws DatabaseCorruptException {
         //Replicates Anki commit: 13c54e02d8fd2b35f6c2f4b796fc44dec65043b8
 
         addNoteUsingBasicModel("Hello", "World");
@@ -127,7 +128,7 @@ public class SchedTest extends RobolectricTest {
     }
 
 
-    private void markNextCardAsGood(Sched sched) {
+    private void markNextCardAsGood(Sched sched) throws DatabaseCorruptException {
         Card toAnswer = sched.getCard();
         assertThat(toAnswer, notNullValue());
 
@@ -185,7 +186,7 @@ public class SchedTest extends RobolectricTest {
     }
 
     @Test
-    public void testRevLogValues() {
+    public void testRevLogValues() throws DatabaseCorruptException {
         MutableTime time = new MutableTime(MockTime.timeStamp(2020, 8, 4, 11, 22, 19, 123), 10);
         Collection col =  CollectionHelper.getInstance().getCol(getTargetContext(), time);
         addNoteUsingBasicModel("Hello", "World");
@@ -216,7 +217,7 @@ public class SchedTest extends RobolectricTest {
     }
 
 
-    public void test_new_v1() throws Exception {
+    public void test_new_v1() throws Exception, DatabaseCorruptException {
         Collection col = getColV1();
         col.reset();
         assertEquals(0, col.getSched().newCount());
@@ -303,7 +304,7 @@ public class SchedTest extends RobolectricTest {
 
 
     @Test
-    public void test_newBoxes_v1() throws Exception {
+    public void test_newBoxes_v1() throws Exception, DatabaseCorruptException {
         Collection col = getColV1();
         Note note = col.newNote();
         note.setItem("Front", "one");
@@ -322,7 +323,7 @@ public class SchedTest extends RobolectricTest {
 
 
     @Test
-    public void test_learnV1() throws Exception {
+    public void test_learnV1() throws Exception, DatabaseCorruptException {
         Collection col = getColV1();
         // add a note
         Note note = col.newNote();
@@ -404,7 +405,7 @@ public class SchedTest extends RobolectricTest {
 
 
     @Test
-    public void test_learn_collapsedV1() throws Exception {
+    public void test_learn_collapsedV1() throws Exception, DatabaseCorruptException {
         Collection col = getColV1();
         // add 2 notes
         Note note = col.newNote();
@@ -433,7 +434,7 @@ public class SchedTest extends RobolectricTest {
 
 
     @Test
-    public void test_learn_dayV1() throws Exception {
+    public void test_learn_dayV1() throws Exception, DatabaseCorruptException {
         Collection col = getColV1();
         // add a note
         Note note = col.newNote();
@@ -499,7 +500,7 @@ public class SchedTest extends RobolectricTest {
 
 
     @Test
-    public void test_reviewsV1() throws Exception {
+    public void test_reviewsV1() throws Exception, DatabaseCorruptException {
         Collection col = getColV1();
         // add a note
         Note note = col.newNote();
@@ -646,7 +647,7 @@ public class SchedTest extends RobolectricTest {
 
 
     @Test
-    public void test_finishedV1() throws Exception {
+    public void test_finishedV1() throws Exception, DatabaseCorruptException {
         Collection col = getColV1();
         // nothing due
         assertThat(col.getSched().finishedMsg(getTargetContext()).toString(), containsString("Congratulations"));
@@ -669,7 +670,7 @@ public class SchedTest extends RobolectricTest {
 
 
     @Test
-    public void test_nextIvlV1() throws Exception {
+    public void test_nextIvlV1() throws Exception, DatabaseCorruptException {
         Collection col = getColV1();
         Note note = col.newNote();
         note.setItem("Front", "one");
@@ -749,7 +750,7 @@ public class SchedTest extends RobolectricTest {
 
 
     @Test
-    public void test_suspendV1() throws Exception {
+    public void test_suspendV1() throws Exception, DatabaseCorruptException {
         Collection col = getColV1();
         Note note = col.newNote();
         note.setItem("Front", "one");
@@ -799,7 +800,7 @@ public class SchedTest extends RobolectricTest {
 
 
     @Test
-    public void test_cram() throws Exception {
+    public void test_cram() throws Exception, DatabaseCorruptException {
         Collection col = getColV1();
         Note note = col.newNote();
         note.setItem("Front", "one");
@@ -910,7 +911,7 @@ public class SchedTest extends RobolectricTest {
 
 
     @Test
-    public void test_cram_rem() throws Exception {
+    public void test_cram_rem() throws Exception, DatabaseCorruptException {
         Collection col = getColV1();
         Note note = col.newNote();
         note.setItem("Front", "one");
@@ -935,7 +936,7 @@ public class SchedTest extends RobolectricTest {
 
 
     @Test
-    public void test_cram_resched() throws Exception {
+    public void test_cram_resched() throws Exception, DatabaseCorruptException {
         // add card
         Collection col = getColV1();
         Note note = col.newNote();
@@ -1046,7 +1047,7 @@ public class SchedTest extends RobolectricTest {
 
 
     @Test
-    public void test_ordcycleV1() throws Exception {
+    public void test_ordcycleV1() throws Exception, DatabaseCorruptException {
         Collection col = getColV1();
         // add two more templates and set second active
         Model m = col.getModels().current();
@@ -1084,7 +1085,7 @@ public class SchedTest extends RobolectricTest {
 
 
     @Test
-    public void test_counts_idxV1() throws Exception {
+    public void test_counts_idxV1() throws Exception, DatabaseCorruptException {
         Collection col = getColV1();
         Note note = col.newNote();
         note.setItem("Front", "one");
@@ -1110,7 +1111,7 @@ public class SchedTest extends RobolectricTest {
 
 
     @Test
-    public void test_repCountsV1() throws Exception {
+    public void test_repCountsV1() throws Exception, DatabaseCorruptException {
         Collection col = getColV1();
         Note note = col.newNote();
         note.setItem("Front", "one");
@@ -1165,7 +1166,7 @@ public class SchedTest extends RobolectricTest {
 
 
     @Test
-    public void test_timingV1() throws Exception {
+    public void test_timingV1() throws Exception, DatabaseCorruptException {
         Collection col = getColV1();
         // add a few review cards, due today
         for (int i = 0; i < 5; i++) {
@@ -1206,7 +1207,7 @@ public class SchedTest extends RobolectricTest {
 
 
     @Test
-    public void test_collapseV1() throws Exception {
+    public void test_collapseV1() throws Exception, DatabaseCorruptException {
         Collection col = getColV1();
         // add a note
         Note note = col.newNote();
@@ -1272,7 +1273,7 @@ public class SchedTest extends RobolectricTest {
 
 
     @Test
-    public void test_deckFlowV1() throws Exception {
+    public void test_deckFlowV1() throws Exception, DatabaseCorruptException {
         Collection col = getColV1();
         // add a note with default deck
         Note note = col.newNote();
@@ -1384,7 +1385,7 @@ public class SchedTest extends RobolectricTest {
 
 
     @Test
-    public void test_norelearnV1() throws Exception {
+    public void test_norelearnV1() throws Exception, DatabaseCorruptException {
         Collection col = getColV1();
         // add a note
         Note note = col.newNote();
@@ -1408,7 +1409,7 @@ public class SchedTest extends RobolectricTest {
 
 
     @Test
-    public void test_failmultV1() throws Exception {
+    public void test_failmultV1() throws Exception, DatabaseCorruptException {
         Collection col = getColV1();
         Note note = col.newNote();
         note.setItem("Front", "one");

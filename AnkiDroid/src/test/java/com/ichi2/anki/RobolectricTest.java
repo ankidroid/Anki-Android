@@ -24,6 +24,7 @@ import com.afollestad.materialdialogs.MaterialDialog;
 import com.ichi2.anki.dialogs.DialogHandler;
 import com.ichi2.anki.dialogs.utils.FragmentTestActivity;
 import com.ichi2.anki.exception.ConfirmModSchemaException;
+import com.ichi2.anki.exception.DatabaseCorruptException;
 import com.ichi2.anki.exception.FilteredAncestor;
 import com.ichi2.async.CollectionTask;
 import com.ichi2.async.ForegroundTaskManager;
@@ -504,7 +505,7 @@ public class RobolectricTest implements CollectionGetter {
         Assume.assumeTrue(message, b);
     }
 
-    public void equalFirstField(Card expected, Card obtained) {
+    public void equalFirstField(Card expected, Card obtained) throws DatabaseCorruptException {
         assertThat(obtained.note().getFields()[0], is(expected.note().getFields()[0]));
     }
 
