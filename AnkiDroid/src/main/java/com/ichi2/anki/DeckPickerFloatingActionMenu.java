@@ -21,6 +21,7 @@ import android.content.SharedPreferences;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.ichi2.anki.dialogs.CreateDeckDialog;
@@ -56,6 +57,10 @@ public class DeckPickerFloatingActionMenu {
         mFabBGLayout = view.findViewById(R.id.fabBGLayout);
         mLinearLayout = view.findViewById(R.id.deckpicker_view);
 
+        TextView addNoteLabel = view.findViewById(R.id.add_note_label);
+        TextView addSharedLabel = view.findViewById(R.id.add_shared_label);
+        TextView addDeckLabel = view.findViewById(R.id.add_deck_label);
+
         mFabMain.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -74,7 +79,7 @@ public class DeckPickerFloatingActionMenu {
             }
         });
 
-        mAddDeckButton.setOnClickListener(addDeckButtonView -> {
+        View.OnClickListener addDeckListener = addDeckButtonView -> {
             if (mIsFABOpen) {
                 closeFloatingActionMenu();
                 CreateDeckDialog createDeckDialog = new CreateDeckDialog(mDeckPicker, R.string.new_deck, CreateDeckDialog.DeckDialogType.DECK, null);
@@ -83,19 +88,25 @@ public class DeckPickerFloatingActionMenu {
                 });
                 createDeckDialog.showDialog();
             }
-        });
+        };
+        mAddDeckButton.setOnClickListener(addDeckListener);
+        addDeckLabel.setOnClickListener(addDeckListener);
 
-        mAddSharedButton.setOnClickListener(addSharedButtonView -> {
+        View.OnClickListener addSharedListener = addSharedButtonView -> {
             Timber.d("configureFloatingActionsMenu::addSharedButton::onClickListener - Adding Shared Deck");
             closeFloatingActionMenu();
             deckPicker.addSharedDeck();
-        });
+        };
+        mAddSharedButton.setOnClickListener(addSharedListener);
+        addSharedLabel.setOnClickListener(addSharedListener);
 
-        mAddNoteButton.setOnClickListener(addNoteButtonView -> {
+        View.OnClickListener addNoteListener = addNoteButtonView -> {
             Timber.d("configureFloatingActionsMenu::addNoteButton::onClickListener - Adding Note");
             closeFloatingActionMenu();
             deckPicker.addNote();
-        });
+        };
+        mAddNoteButton.setOnClickListener(addNoteListener);
+        addNoteLabel.setOnClickListener(addNoteListener);
     }
 
     private boolean animationDisabled() {
