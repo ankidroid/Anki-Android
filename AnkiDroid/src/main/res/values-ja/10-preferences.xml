@@ -165,6 +165,8 @@
     <string name="pref_backup_max" maxLength="41">保管するバックアップの世代数</string>
     <string name="show_estimates" maxLength="41">解答ボタンに復習間隔を表示</string>
     <string name="show_estimates_summ">次の復習までの間隔を解答ボタンの中に表示します</string>
+    <string name="show_large_answer_buttons" maxLength="41">Show large answer buttons</string>
+    <string name="show_large_answer_buttons_summ">Show answer button in 2 rows</string>
     <string name="show_top_bar" maxLength="41">トップバーを表示</string>
     <string name="show_top_bar_summ">アプリバーの下に、カードの残り枚数、フラグ、マークの状態を示すバーを表示します</string>
     <string name="show_progress" maxLength="41">残りのカード枚数を表示</string>

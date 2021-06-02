@@ -165,6 +165,8 @@
     <string name="pref_backup_max" maxLength="41">Nombre de sauvegarde max</string>
     <string name="show_estimates" maxLength="41">Afficher le temps</string>
     <string name="show_estimates_summ">Afficher le temps avant la prochaine révision sur les boutons de réponse</string>
+    <string name="show_large_answer_buttons" maxLength="41">Show large answer buttons</string>
+    <string name="show_large_answer_buttons_summ">Show answer button in 2 rows</string>
     <string name="show_top_bar" maxLength="41">Afficher la barre supérieure</string>
     <string name="show_top_bar_summ">Afficher le nombre de cartes, la balise et la marque dans la barre supérieure</string>
     <string name="show_progress" maxLength="41">Afficher le nombre restant de révision</string>

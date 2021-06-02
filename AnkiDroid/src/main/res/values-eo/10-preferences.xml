@@ -165,6 +165,8 @@
     <string name="pref_backup_max" maxLength="41">Maksimuma nombro da sekurkopioj</string>
     <string name="show_estimates" maxLength="41">Montri tempon ĉe butono</string>
     <string name="show_estimates_summ">Montri tempon de sekva ripeto ĉe butonoj de respondoj</string>
+    <string name="show_large_answer_buttons" maxLength="41">Show large answer buttons</string>
+    <string name="show_large_answer_buttons_summ">Show answer button in 2 rows</string>
     <string name="show_top_bar" maxLength="41">Montri supran breton</string>
     <string name="show_top_bar_summ">Montri nombron da kartoj, flagon kaj markon sur la supra breto</string>
     <string name="show_progress" maxLength="41">Montri pliajn kartojn</string>
