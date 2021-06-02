@@ -46,7 +46,7 @@ public class StudyOptionsActivity extends NavigationDrawerActivity implements St
         // to android.R.id.content when an action bar is used in Android 2.1 (and potentially
         // higher) with the appcompat package.
         View mainView = getLayoutInflater().inflate(R.layout.studyoptions, null);
-        setContentView(mainView);
+        setContentView(R.layout.studyoptions);
         // create inherited navigation drawer layout here so that it can be used by parent class
         initNavigationDrawer(mainView);
         if (savedInstanceState == null) {
