@@ -16,13 +16,16 @@
 package com.ichi2.anki.dialogs;
 
 import android.app.Dialog;
+import android.content.Intent;
 import android.content.res.Resources;
 import android.os.Bundle;
 
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.ichi2.anki.AnkiActivity;
+import com.ichi2.anki.CardBrowser;
 import com.ichi2.anki.CollectionHelper;
 import com.ichi2.anki.DeckPicker;
+import com.ichi2.anki.NavigationDrawerActivity;
 import com.ichi2.anki.R;
 import com.ichi2.anki.StudyOptionsFragment;
 import com.ichi2.anki.analytics.AnalyticsDialogFragment;
@@ -39,6 +42,8 @@ import androidx.annotation.NonNull;
 import androidx.fragment.app.FragmentFactory;
 import timber.log.Timber;
 
+import static com.ichi2.anim.ActivityTransitionAnimation.Direction.START;
+import static com.ichi2.anki.NavigationDrawerActivity.REQUEST_BROWSE_CARDS;
 import static java.lang.annotation.RetentionPolicy.SOURCE;
 
 public class DeckPickerContextMenu extends AnalyticsDialogFragment {
@@ -55,6 +60,7 @@ public class DeckPickerContextMenu extends AnalyticsDialogFragment {
     private static final int CONTEXT_MENU_CUSTOM_STUDY_EMPTY = 7;
     private static final int CONTEXT_MENU_CREATE_SUBDECK = 8;
     private static final int CONTEXT_MENU_CREATE_SHORTCUT = 9;
+    private static final int CONTEXT_MENU_BROWSE_CARDS = 10;
     @Retention(SOURCE)
     @IntDef( {CONTEXT_MENU_RENAME_DECK,
             CONTEXT_MENU_DECK_OPTIONS,
@@ -66,6 +72,7 @@ public class DeckPickerContextMenu extends AnalyticsDialogFragment {
             CONTEXT_MENU_CUSTOM_STUDY_EMPTY,
             CONTEXT_MENU_CREATE_SUBDECK,
             CONTEXT_MENU_CREATE_SHORTCUT,
+            CONTEXT_MENU_BROWSE_CARDS
     })
     public @interface DECK_PICKER_CONTEXT_MENU {}
 
@@ -110,6 +117,7 @@ public class DeckPickerContextMenu extends AnalyticsDialogFragment {
         keyValueMap.put(CONTEXT_MENU_CUSTOM_STUDY_EMPTY, res.getString(R.string.empty_cram_label));
         keyValueMap.put(CONTEXT_MENU_CREATE_SUBDECK, res.getString(R.string.create_subdeck));
         keyValueMap.put(CONTEXT_MENU_CREATE_SHORTCUT, res.getString(R.string.create_shortcut));
+        keyValueMap.put(CONTEXT_MENU_BROWSE_CARDS, res.getString(R.string.browse_cards));
         return keyValueMap;
     }
 
@@ -122,7 +130,8 @@ public class DeckPickerContextMenu extends AnalyticsDialogFragment {
         Collection col = CollectionHelper.getInstance().getCol(getContext());
         long did = getArguments().getLong("did");
         boolean dyn = col.getDecks().isDyn(did);
-        ArrayList<Integer> itemIds = new ArrayList<>(9);
+        ArrayList<Integer> itemIds = new ArrayList<>();
+        itemIds.add(CONTEXT_MENU_BROWSE_CARDS);
         if (dyn) {
             itemIds.add(CONTEXT_MENU_CUSTOM_STUDY_REBUILD);
             itemIds.add(CONTEXT_MENU_CUSTOM_STUDY_EMPTY);
@@ -208,6 +217,12 @@ public class DeckPickerContextMenu extends AnalyticsDialogFragment {
                 Timber.i("Create Subdeck selected");
                 ((DeckPicker) getActivity()).createSubdeckDialog();
                 break;
+            }
+            case CONTEXT_MENU_BROWSE_CARDS: {
+                long did = getArguments().getLong("did");
+                ((DeckPicker) getActivity()).getCol().getDecks().select(did);
+                Intent intent = new Intent(getActivity(), CardBrowser.class);
+                ((DeckPicker) getActivity()).startActivityForResultWithAnimation(intent, REQUEST_BROWSE_CARDS, START);
             }
         }
     };
