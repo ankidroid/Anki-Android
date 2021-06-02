@@ -392,6 +392,9 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
     /** Preference: Whether the user wants to focus "type in answer" */
     private boolean mFocusTypeAnswer;
 
+    /** Text to speech */
+    private JavaScriptTTS mTalker = new JavaScriptTTS(AbstractFlashcardViewer.this);
+
     // ----------------------------------------------------------------------------
     // LISTENERS
     // ----------------------------------------------------------------------------
@@ -4212,9 +4215,6 @@ see card.js for available functions
                 return true;
             }
         }
-
-        //Voice reading
-        JavaScriptTTS mTalker = new JavaScriptTTS(AbstractFlashcardViewer.this);
 
         @JavascriptInterface
         public int ankiTtsSpeak(String text, int queueMode) {
