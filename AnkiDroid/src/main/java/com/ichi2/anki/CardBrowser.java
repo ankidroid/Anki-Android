@@ -1112,7 +1112,8 @@ public class CardBrowser extends NavigationDrawerActivity implements
     }
 
 
-    private void flagTask (int flag) {
+    @VisibleForTesting
+    public void flagTask (int flag) {
         TaskManager.launchCollectionTask(
                 new CollectionTask.Flag(getSelectedCardIds(), flag),
                 flagCardHandler());
@@ -2384,12 +2385,14 @@ public class CardBrowser extends NavigationDrawerActivity implements
        onSelectionChanged();
     }
 
-    private void onSelectAll() {
+    @VisibleForTesting
+    void onSelectAll() {
         mCheckedCards.addAll(mCards.unsafeGetWrapped());
         onSelectionChanged();
     }
 
-    private void onSelectNone() {
+    @VisibleForTesting
+    void onSelectNone() {
         mCheckedCards.clear();
         onSelectionChanged();
     }

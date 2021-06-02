@@ -13,9 +13,8 @@ import android.widget.ListView;
 
 import com.ichi2.libanki.Card;
 import com.ichi2.libanki.Consts;
-import com.ichi2.libanki.Note;
 import com.ichi2.libanki.Deck;
-import com.ichi2.libanki.utils.Time;
+import com.ichi2.libanki.Note;
 import com.ichi2.testutils.AnkiAssert;
 import com.ichi2.testutils.IntentAssert;
 
@@ -34,6 +33,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Locale;
 import java.util.Objects;
+import java.util.Random;
 
 import javax.annotation.CheckReturnValue;
 
@@ -42,6 +42,7 @@ import androidx.test.core.app.ApplicationProvider;
 import androidx.test.ext.junit.runners.AndroidJUnit4;
 import timber.log.Timber;
 
+import static java.util.Arrays.stream;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.containsString;
 import static org.hamcrest.Matchers.equalTo;
@@ -260,6 +261,50 @@ public class CardBrowserTest extends RobolectricTest {
         }
     }
 
+
+    @Test
+    public void flagsAreShownInBigDecksTest() {
+        int numberOfNotes = 75;
+        CardBrowser cardBrowser = getBrowserWithNotes(numberOfNotes);
+
+        // select a random card
+        Random random = new Random(1);
+        int cardPosition = random.nextInt(numberOfNotes);
+        assumeThat("card position to select is 60", cardPosition, is(60));
+        cardBrowser.checkCardsAtPositions(cardPosition);
+        assumeTrue("card at position 60 is selected", cardBrowser.hasCheckedCardAtPosition(cardPosition));
+
+        // flag the selected card with flag = 1
+        final int flag = 1;
+        cardBrowser.flagTask(flag);
+        advanceRobolectricLooperWithSleep();
+        // check if card flag turned to flag = 1
+        assertThat("Card should be flagged", getCheckedCard(cardBrowser).getCard().userFlag(), is(flag));
+
+        // unflag the selected card with flag = 0
+        final int unflagFlag = 0;
+        cardBrowser.flagTask(unflagFlag);
+        advanceRobolectricLooperWithSleep();
+        // check if card flag actually changed from flag = 1
+        assertThat("Card flag should be removed", getCheckedCard(cardBrowser).getCard().userFlag(), not(flag));
+
+        // deselect and select all cards
+        cardBrowser.onSelectNone();
+        cardBrowser.onSelectAll();
+        // flag all the cards with flag = 3
+        final int flagForAll = 3;
+        cardBrowser.flagTask(flagForAll);
+        advanceRobolectricLooperWithSleep();
+        // check if all card flags turned to flag = 3
+        assertThat(
+                "All cards should be flagged",
+                stream(cardBrowser.getCardIds())
+                        .map(cardId -> getCardFlagAfterFlagChangeDone(cardBrowser, cardId))
+                        .noneMatch(flag1 -> flag1 != flagForAll)
+        );
+    }
+
+
     @Test
     public void flagValueIsShownOnCard() {
         Note n = addNoteUsingBasicModel("1", "back");
@@ -268,13 +313,17 @@ public class CardBrowserTest extends RobolectricTest {
         long cardId = n.cids().get(0);
 
         CardBrowser b = getBrowserWithNoNewCards();
-        CardBrowser.CardCache cardProperties = b.getPropertiesForCardId(cardId);
 
-
-        int actualFlag = cardProperties.getCard().userFlag();
+        int actualFlag = getCardFlagAfterFlagChangeDone(b, cardId);
 
         assertThat("The card flag value should be reflected in the UI", actualFlag, is(1));
     }
+
+
+    private int getCardFlagAfterFlagChangeDone(CardBrowser cardBrowser, long cardId) {
+        return cardBrowser.getPropertiesForCardId(cardId).getCard().userFlag();
+    }
+
 
     @Test
     public void startupFromCardBrowserActionItemShouldEndActivityIfNoPermissions() {
