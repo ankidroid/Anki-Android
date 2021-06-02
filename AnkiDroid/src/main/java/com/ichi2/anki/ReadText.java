@@ -29,6 +29,7 @@ import android.view.WindowManager;
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.google.android.material.snackbar.Snackbar;
 import com.ichi2.libanki.Sound;
+import com.ichi2.anki.LanguageUtils;
 
 import java.lang.ref.WeakReference;
 import java.util.ArrayList;
@@ -56,7 +57,7 @@ public class ReadText {
     }
 
     public static void speak(String text, String loc, int queueMode) {
-        int result = mTts.setLanguage(localeFromStringIgnoringScriptAndExtensions(loc));
+        int result = mTts.setLanguage(LanguageUtils.localeFromStringIgnoringScriptAndExtensions(loc));
         if (result == TextToSpeech.LANG_MISSING_DATA || result == TextToSpeech.LANG_NOT_SUPPORTED) {
             UIUtils.showThemedToast(mReviewer.get(), mReviewer.get().getString(R.string.no_tts_available_message)
                     + " (" + loc + ")", false);
@@ -219,47 +220,11 @@ public class ReadText {
     }
 
     /**
-     * Convert a string representation of a locale, in the format returned by Locale.toString(),
-     * into a Locale object, disregarding any script and extensions fields (i.e. using solely the
-     * language, country and variant fields).
-     * <p>
-     * Returns a Locale object constructed from an empty string if the input string is null, empty
-     * or contains more than 3 fields separated by underscores.
-     */
-    private static Locale localeFromStringIgnoringScriptAndExtensions(String localeCode) {
-        if (localeCode == null) {
-            return new Locale("");
-        }
-
-        localeCode = stripScriptAndExtensions(localeCode);
-
-        String[] fields = localeCode.split("_");
-        switch (fields.length) {
-            case 1:
-                return new Locale(fields[0]);
-            case 2:
-                return new Locale(fields[0], fields[1]);
-            case 3:
-                return new Locale(fields[0], fields[1], fields[2]);
-            default:
-                return new Locale("");
-        }
-    }
-
-    private static String stripScriptAndExtensions(String localeCode) {
-        int hashPos = localeCode.indexOf('#');
-        if (hashPos >= 0) {
-            localeCode = localeCode.substring(0, hashPos);
-        }
-        return localeCode;
-    }
-
-    /**
      * Returns true if the TTS engine supports the language of the locale represented by localeCode
      * (which should be in the format returned by Locale.toString()), false otherwise.
      */
     private static boolean isLanguageAvailable(String localeCode) {
-        return mTts.isLanguageAvailable(localeFromStringIgnoringScriptAndExtensions(localeCode)) >=
+        return mTts.isLanguageAvailable(LanguageUtils.localeFromStringIgnoringScriptAndExtensions(localeCode)) >=
                 TextToSpeech.LANG_AVAILABLE;
     }
 

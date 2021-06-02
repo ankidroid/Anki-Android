@@ -3,7 +3,8 @@ package com.ichi2.anki;
 import android.content.Context;
 import android.os.Bundle;
 import android.speech.tts.TextToSpeech;
-import java.util.Locale;
+
+import com.ichi2.anki.LanguageUtils;
 
 /**
  * Since it is assumed that only advanced users will use the JavaScript api, 
@@ -63,7 +64,7 @@ public class JavaScriptTTS implements TextToSpeech.OnInitListener {
     public int setLanguage(String loc) {
         // The Int values will be returned
         // Code indicating the support status for the locale. See LANG_AVAILABLE, LANG_COUNTRY_AVAILABLE, LANG_COUNTRY_VAR_AVAILABLE, LANG_MISSING_DATA and LANG_NOT_SUPPORTED.
-        return mTts.setLanguage(localeFromStringIgnoringScriptAndExtensions(loc));
+        return mTts.setLanguage(LanguageUtils.localeFromStringIgnoringScriptAndExtensions(loc));
     }
 
 
@@ -96,32 +97,6 @@ public class JavaScriptTTS implements TextToSpeech.OnInitListener {
         // The following Int values will be returned
         // ERROR(-1) SUCCESS(0)
         mTts.stop();
-    }
-
-      /**
-     * Convert a string representation of a locale, in the format returned by Locale.toString(),
-     * into a Locale object, disregarding any script and extensions fields (i.e. using solely the
-     * language, country and variant fields).
-     * <p>
-     * Returns a Locale object constructed from an empty string if the input string is null, empty
-     * or contains more than 3 fields separated by underscores.
-     */
-    private static Locale localeFromStringIgnoringScriptAndExtensions(String localeCode) {
-        if (localeCode == null) {
-            return new Locale("");
-        }
-
-        String[] fields = localeCode.split("_");
-        switch (fields.length) {
-            case 1:
-                return new Locale(fields[0]);
-            case 2:
-                return new Locale(fields[0], fields[1]);
-            case 3:
-                return new Locale(fields[0], fields[1], fields[2]);
-            default:
-                return new Locale("");
-        }
     }
 
 }
