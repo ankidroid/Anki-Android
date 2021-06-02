@@ -110,7 +110,6 @@
     <string name="note_editor_no_cards_created">لم تُنشَأ أي بطاقات. الرجاء تعبئة مزيد من الحقول</string>
     <string name="note_editor_no_first_field">الحقل الأول فارغ</string>
     <string name="note_editor_no_cloze_delations">يجب أن يحتوي نوع الملحوظة هذا على عبارات ملء فراغات</string>
-    <string name="note_editor_set_field_language">تعيين لغة الحقل</string>
     <string name="note_editor_no_cards_created_all_fields">لا يولّد نوع الملحوظة الحالي أي بطاقات.\nالرجاء اختيار نوع آخر، أو الضغط على «بطاقات» وإضافة حقل بديل</string>
     <string name="note_editor_insert_cloze_no_cloze_note_type">تعمل عبارات ملء الفراغات في نوع ملحوظة ملء فراغات فقط.</string>
     <string name="saving_facts">حفظ الملحوظة</string>

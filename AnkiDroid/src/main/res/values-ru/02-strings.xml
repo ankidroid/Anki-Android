@@ -110,7 +110,6 @@
     <string name="note_editor_no_cards_created">Карточки не созданы. Заполните больше полей</string>
     <string name="note_editor_no_first_field">Первое поле пусто</string>
     <string name="note_editor_no_cloze_delations">Этот тип записи должен содержать задание с пропусками</string>
-    <string name="note_editor_set_field_language">Задать язык поля</string>
     <string name="note_editor_no_cards_created_all_fields">Текущий тип записи не производит никаких карточек.\nВыберите другой тип записи или нажмите «Карты» и добавьте подстановку поля</string>
     <string name="note_editor_insert_cloze_no_cloze_note_type">Задание с пропусками работают только в типе записи с пропусками</string>
     <string name="saving_facts">Запись сохраняется</string>

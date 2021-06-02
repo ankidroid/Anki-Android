@@ -110,7 +110,6 @@
     <string name="note_editor_no_cards_created">Кәртләр ясалмаган. Кубрәк юлларны тутырыгыз</string>
     <string name="note_editor_no_first_field">Беренче юл буш</string>
     <string name="note_editor_no_cloze_delations">Бу кәрт төре эчендә бушлыклар белән күнегү булырга тиеш</string>
-    <string name="note_editor_set_field_language">Текст телен көйләргә</string>
     <string name="note_editor_no_cards_created_all_fields">Хәзерге язу төре бернинди кәрт тә ясамады.\nЗинhар, башка язу төрен сайлагыз я \"Кәртләр\" төймәсенә басыгыз hәм юл кертегез</string>
     <string name="note_editor_insert_cloze_no_cloze_note_type">Буш юллар белән күнегүләр буш юллар белән язулар төрендә генә эшләячәк</string>
     <string name="saving_facts">Язу саклана</string>

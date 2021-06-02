@@ -110,7 +110,6 @@
     <string name="note_editor_no_cards_created">Aucune carte créée. Veuillez remplir plus de champs</string>
     <string name="note_editor_no_first_field">Le premier champ est vide</string>
     <string name="note_editor_no_cloze_delations">Ce type de note doit contenir des textes à trous</string>
-    <string name="note_editor_set_field_language">Définir la langue du champ</string>
     <string name="note_editor_no_cards_created_all_fields">Le type de note actuel n’a produit aucune carte.\nVeuillez choisir un autre type de carte, ou cliquez sur « Cartes » et ajoutez un champ de substitution</string>
     <string name="note_editor_insert_cloze_no_cloze_note_type">Les textes à trous ne fonctionneront que sur une carte de type Cloze</string>
     <string name="saving_facts">Enregistrer la note</string>

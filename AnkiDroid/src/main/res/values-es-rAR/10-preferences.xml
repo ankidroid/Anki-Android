@@ -94,6 +94,8 @@
     <string name="gestures_allow_links_summary">Los gestos de toque no se procesarán si se presiona un enlace/pista.</string>
     <string name="gestures_corner_touch" maxLength="41">Toque de 9 puntos</string>
     <string name="gestures_corner_touch_summary">Permitir gestos táctiles en las esquinas de pantalla</string>
+    <string name="gestures_full_screen_nav_drawer" maxLength="41">Full screen navigation drawer</string>
+    <string name="gestures_fullscreen_nav_drawer_summary">Open navigation drawer when swiped right from anywhere on the screen</string>
     <string name="gestures_swipe_up" maxLength="41">Deslizar hacia arriba</string>
     <string name="gestures_swipe_down" maxLength="41">Deslizar hacia abajo</string>
     <string name="gestures_swipe_left" maxLength="41">Deslizar hacia la izquierda</string>
@@ -177,10 +179,10 @@
     <string name="new_timezone" maxLength="41">Nuevo manejo de zona horaria</string>
     <string name="day_offset_with_description" maxLength="41">Comienzo del día siguiente (0 es medianoche, 23 es 11PM)</string>
     <string name="day_offset_summ">XXX horas luego pasada la medianoche</string>
-    <string name="xlabel_dayoffset_seekbar" maxLength="41">Midnight</string>
-    <string name="ylabel_dayoffset_seekbar" maxLength="41">11PM</string>
-    <string name="sched_v2" maxLength="41">V2 scheduler</string>
-    <string name="sched_v2_summ">Enable the new scheduler. Forces changes in one direction on next sync</string>
+    <string name="xlabel_dayoffset_seekbar" maxLength="41">Medianoche</string>
+    <string name="ylabel_dayoffset_seekbar" maxLength="41">11 PM</string>
+    <string name="sched_v2" maxLength="41">Planificador V2</string>
+    <string name="sched_v2_summ">Activar el programador experimental. Fuerza los cambios en una dirección en la próxima sincronización</string>
     <string name="sched_ver_toggle_title">Confirmar</string>
     <string name="sched_ver_2to1">Esto restablecerá cualquier carta en el aprendizaje, limpiará mazos filtrados y cambiará la versión del programador. ¿Proceder?</string>
     <string name="sched_ver_1to2">El programador experimental podría causar una programación incorrecta. Por favor, asegúrese de haber leído la documentación primero. ¿Proceder?</string>

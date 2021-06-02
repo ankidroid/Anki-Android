@@ -68,7 +68,7 @@
     <string name="use_input_tag_summ">Utiliser la saisie de la réponse directement dans la carte</string>
     <string name="dictionary" maxLength="41">Dictionnaire de recherche</string>
     <string name="reset_languages" maxLength="41">Réinitialiser les langages</string>
-    <string name="reset_languages_summ">Réinitialiser les paramètres de langue (pour le TTS et les dictionnaires) pour tous les paquets de cartes</string>
+    <string name="reset_languages_summ">Réinitialiser les paramètres de langue (pour le TTS et les dictionnaires) pour tous les paquets</string>
     <string name="reset_languages_question">Réinitialiser toutes les affectations de langues ?</string>
     <string name="reset_confirmation">Réinitialisation de tous les états</string>
     <string name="card_zoom" maxLength="41">Zoom de carte</string>
@@ -94,6 +94,8 @@
     <string name="gestures_allow_links_summary">Les gestes tactiles ne seront pas traités si un lien/indice est pressé.  </string>
     <string name="gestures_corner_touch" maxLength="41">Écran tactile à 9 points</string>
     <string name="gestures_corner_touch_summary">Autoriser les gestes dans les coins de l\'écran</string>
+    <string name="gestures_full_screen_nav_drawer" maxLength="41">Full screen navigation drawer</string>
+    <string name="gestures_fullscreen_nav_drawer_summary">Open navigation drawer when swiped right from anywhere on the screen</string>
     <string name="gestures_swipe_up" maxLength="41">Glissez vers le haut</string>
     <string name="gestures_swipe_down" maxLength="41">Glissez vers le bas</string>
     <string name="gestures_swipe_left" maxLength="41">Faites glisser vers la gauche</string>
@@ -220,7 +222,7 @@
     <string name="studyoptions_limit_select_tags">Sélectionner les étiquettes</string>
     <!-- Deck configurations -->
     <string name="deck_conf_deck_description" maxLength="41">Description du paquet de cartes (affecte uniquement le paquet actuel)</string>
-    <string name="deck_conf_group" maxLength="41">Groupe d\'option</string>
+    <string name="deck_conf_group" maxLength="41">Groupe d\'options</string>
     <plurals name="deck_conf_group_summ">
         <item quantity="one">%1$s\n%2$d paquet utilise ce groupe</item>
         <item quantity="other">%1$s\n%2$d paquets utilisent ce groupe</item>
@@ -273,7 +275,7 @@
         <item quantity="one">%s sous-paquet utilise ce groupe</item>
         <item quantity="other">%s sous-paquets utilisent ce groupe</item>
     </plurals>
-    <string name="deck_conf_set_subdecks_message">Définir ce groupe d’option pour tous les sous-paquets de ce paquet ?</string>
+    <string name="deck_conf_set_subdecks_message">Définir ce groupe d\'options pour tous les sous-paquets de ce paquet ?</string>
     <string name="pref_browser_editor_font" maxLength="41">Police du navigateur et de l’éditeur</string>
     <string name="deck_conf_cram_filter" maxLength="41">Filtre</string>
     <string name="deck_conf_cram_search" maxLength="41">Recherche</string>
