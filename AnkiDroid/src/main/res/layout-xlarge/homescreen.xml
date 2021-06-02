@@ -1,8 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.drawerlayout.widget.ClosableDrawerLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                                           android:id="@+id/drawer_layout"
                                            android:layout_width="match_parent"
                                            android:layout_height="match_parent"
+                                           android:background="?android:attr/colorBackground"
                                            android:fitsSystemWindows="true">
+    <com.drakeet.drawer.FullDraggableContainer
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
         <LinearLayout
             android:id="@+id/deckpicker_view"
             android:layout_width="fill_parent"
@@ -19,5 +24,7 @@
                 android:layout_width="1dip"
                 android:layout_height="fill_parent"/>
         </LinearLayout>
-</androidx.coordinatorlayout.widget.CoordinatorLayout>
+    </com.drakeet.drawer.FullDraggableContainer>
+    <include layout="@layout/navigation_drawer" />
+</androidx.drawerlayout.widget.ClosableDrawerLayout>
 
