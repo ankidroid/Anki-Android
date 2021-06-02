@@ -110,7 +110,6 @@
     <string name="note_editor_no_cards_created">Không có thẻ nào được tạo. Vui lòng điền vào các trường khác</string>
     <string name="note_editor_no_first_field">Trường đầu tiên trống</string>
     <string name="note_editor_no_cloze_delations">Loại ghi chú này phải chứa đánh dấu cloze</string>
-    <string name="note_editor_set_field_language">Thiết lập trường ngôn ngữ</string>
     <string name="note_editor_no_cards_created_all_fields">Loại ghi chú hiện tại không tạo ra bất kỳ thẻ nào. \nVui lòng chọn một loại ghi chú khác, hoặc nhấp vào \"Thẻ\" và thêm một trường thay thế</string>
     <string name="note_editor_insert_cloze_no_cloze_note_type">Đánh dấu Cloze sẽ chỉ hoạt động trên loại ghi chú Cloze</string>
     <string name="saving_facts">Đang lưu ghi chú</string>

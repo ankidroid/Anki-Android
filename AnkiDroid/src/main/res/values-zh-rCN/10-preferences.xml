@@ -94,6 +94,8 @@
     <string name="gestures_allow_links_summary">如果按下链接/提示，触摸手势将不会被处理。</string>
     <string name="gestures_corner_touch" maxLength="41">9 点触摸</string>
     <string name="gestures_corner_touch_summary">允许屏幕边缘的触摸手势</string>
+    <string name="gestures_full_screen_nav_drawer" maxLength="41">Full screen navigation drawer</string>
+    <string name="gestures_fullscreen_nav_drawer_summary">Open navigation drawer when swiped right from anywhere on the screen</string>
     <string name="gestures_swipe_up" maxLength="41">向上滑动</string>
     <string name="gestures_swipe_down" maxLength="41">向下滑动</string>
     <string name="gestures_swipe_left" maxLength="41">向左滑动</string>

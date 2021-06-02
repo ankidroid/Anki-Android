@@ -94,6 +94,8 @@
     <string name="gestures_allow_links_summary">ഒരു ലിങ്ക് / സൂചന അമർത്തിയാൽ ടച്ച് സവിശേഷതകൾ പ്രോസസ്സ് ചെയ്യില്ല.</string>
     <string name="gestures_corner_touch" maxLength="41">9-point touch</string>
     <string name="gestures_corner_touch_summary">സ്‌ക്രീൻ കോണുകളിൽ ടച്ച് സവിശേഷതകൾ അനുവദിക്കുക</string>
+    <string name="gestures_full_screen_nav_drawer" maxLength="41">Full screen navigation drawer</string>
+    <string name="gestures_fullscreen_nav_drawer_summary">Open navigation drawer when swiped right from anywhere on the screen</string>
     <string name="gestures_swipe_up" maxLength="41">മുകളിലേക്ക് നീക്കുക</string>
     <string name="gestures_swipe_down" maxLength="41">താഴോട്ടു സ്വൈപ്പ് ചെയ്യുക</string>
     <string name="gestures_swipe_left" maxLength="41">ഇടത്തേക്ക് സ്വൈപ് ചെയ്യുക</string>

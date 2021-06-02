@@ -44,7 +44,7 @@
     <string name="statistics_unlearned">Non vues</string>
     <string name="statistics_suspended">Suspendues</string>
     <string name="statistics_buried">Enfouies</string>
-    <string name="statistics_relearn" comment="Labbel of the axis in the graph indicating the number of reviews of cards while they are in relearning mode.">Réapprentissage</string>
+    <string name="statistics_relearn" comment="Labbel of the axis in the graph indicating the number of reviews of cards while they are in relearning mode.">En réapprentissage</string>
     <string name="statistics_learn" comment="Label of the number of review of card in learning done in some amount of time">Apprentissage</string>
     <string name="statistics_cram">Bachotage</string>
     <string name="stats_cards">Cartes</string>
@@ -73,7 +73,7 @@
     <string name="stats_today_correct_count">(&lt;b&gt;%.1f%%&lt;/b&gt; correctes)</string>
     <string name="stats_today_type_breakdown">Apprentissage : &lt;b&gt;%1$d&lt;/b&gt;, révision : &lt;b&gt;%2$d&lt;/b&gt;, réapprentissage : &lt;b&gt;%3$d&lt;/b&gt;, filtrées : &lt;b&gt;%4$d&lt;/b&gt;</string>
     <string name="stats_today_mature_cards">Réponses exactes sur les anciennes cartes : %1$d/%2$d (%3$.1f%%)</string>
-    <string name="stats_today_no_mature_cards">Aucune ancienne carte n’a été étudiée aujourd’hui.</string>
+    <string name="stats_today_no_mature_cards">Aucune ancienne carte n\'a été étudiée aujourd\'hui.</string>
     <string name="stats_overview_forecast_total">Total : &lt;b&gt;%1$d&lt;/b&gt; révisions</string>
     <string name="stats_overview_forecast_average">Moyenne : &lt;b&gt;%1$.1f&lt;/b&gt; révisions/jour</string>
     <string name="stats_overview_forecast_due_tomorrow">À faire demain : &lt;b&gt;%1$d&lt;/b&gt;</string>
@@ -100,13 +100,13 @@
     <string name="stats_overview_card_types_lowest_ease">Faible facilité : &lt;b&gt;%.0f%%&lt;/b&gt;</string>
     <string name="stats_overview_card_types_average_ease">Facilité moyenne : &lt;b&gt;%.0f%%&lt;/b&gt;</string>
     <string name="stats_overview_card_types_highest_ease">Plus grande facilité : &lt;b&gt;%.0f%%&lt;/b&gt;</string>
-    <string name="stats_select_time_scale">Choisir l’échelle de temps</string>
+    <string name="stats_select_time_scale">Choisir l\'échelle de temps</string>
     <string-array name="due_x_axis_title">
         <item>Jours</item>
         <item>semaines</item>
         <item>mois</item>
     </string-array>
-    <string name="stats_today">Aujourd’hui</string>
+    <string name="stats_today">Aujourd\'hui</string>
     <string name="stats_overview">Vue d’ensemble</string>
     <string name="stats_forecast">Prévisions</string>
     <string name="stats_review_count">Nombre de révisions</string>

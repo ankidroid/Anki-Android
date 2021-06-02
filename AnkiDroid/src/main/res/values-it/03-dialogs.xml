@@ -115,7 +115,7 @@
     <string name="sd_card_full_title">Scheda SD piena</string>
     <string name="sd_card_almost_full_title">Scheda SD quasi piena</string>
     <string name="no_space_to_downgrade_title">No space</string>
-    <string name="no_space_to_downgrade_content">AnkiDroid needs %s free storage space to continue. Please clear some space</string>
+    <string name="no_space_to_downgrade_content">AnkiDroid ha bisogno di %s di archiviazione, libera dello spazio per continuare</string>
     <string name="restore_backup_title">Ripristinare il backup?</string>
     <string name="restore_backup">La tua collezione verrà sostituita con una copia meno recente. I cambiamenti non salvati verranno persi.</string>
     <string name="dialog_cancel">Annulla</string>
@@ -238,7 +238,7 @@
         <item quantity="other">Una sincronizzazione automatica potrebbe essere attivata in %d secondi</item>
     </plurals>
     <string name="deck_picker_new">Number of new cards to see today in this deck.</string>
-    <string name="deck_picker_rev">Number of cards due today in this deck.</string>
+    <string name="deck_picker_rev">Numero di carte in questo mazzo che scadono oggi.</string>
     <string name="deck_picker_lrn">Number of cards in learning in this deck.</string>
     <!-- This description is valid fos
     sched V2. For V1, it was counting the number of repetitions of cards in learning. This approximation is acceptable

@@ -110,7 +110,6 @@
     <string name="note_editor_no_cards_created">Nessuna carta creata. Si prega di compilare altri campi</string>
     <string name="note_editor_no_first_field">Il primo campo è vuoto</string>
     <string name="note_editor_no_cloze_delations">Questo tipo di nota deve contenere cloze</string>
-    <string name="note_editor_set_field_language">Imposta lingua del campo</string>
     <string name="note_editor_no_cards_created_all_fields">Il tipo di nota attuale non ha prodotto nessuna carta.\nScegli un altro tipo di nota, o fai clic su «Carte» e aggiungi una sostituzione del campo</string>
     <string name="note_editor_insert_cloze_no_cloze_note_type">I cloze deletions funzionano solo sui tipi di nota Cloze</string>
     <string name="saving_facts">Salvataggio nota</string>

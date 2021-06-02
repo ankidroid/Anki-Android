@@ -38,23 +38,23 @@
 ~ this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <resources>
-    <string name="yes">yes</string>
+    <string name="yes">კი</string>
     <!-- Navigation drawer items-->
-    <string name="decks">დასტა</string>
-    <string name="card_browser" comment="The usage of card browser inside the app (note the casing)">Card browser</string>
+    <string name="decks">დასტები</string>
+    <string name="card_browser" comment="The usage of card browser inside the app (note the casing)">ბარათების საძიებო</string>
     <string name="statistics">სტატისტიკა</string>
     <string name="settings">პარამეტრები</string>
     <string name="help">დახმარება</string>
-    <string name="send_feedback">დაგვიკავშირდით</string>
+    <string name="send_feedback">უკუკავშირი</string>
     <string name="studyoptions_due_today">დღეისთვის:</string>
-    <string name="studyoptions_new_total">ყველა ახალი ბარათი:</string>
-    <string name="studyoptions_total_cards">ყველა ბარათი:</string>
-    <string name="studyoptions_eta">დარჩენილი დრო(წუთი):</string>
+    <string name="studyoptions_new_total">ახალი ბარათი ჯამში:</string>
+    <string name="studyoptions_total_cards">ბარათი ჯამში:</string>
+    <string name="studyoptions_eta">განსაზღვრული დრო (წუთი):</string>
     <string name="studyoptions_start">სწავლა</string>
     <!-- DeckPicker.java -->
     <string name="expand">გაშლა</string>
-    <string name="collapse">დაკეტვა</string>
-    <string name="study_more">ისწავლე მეტი</string>
+    <string name="collapse">დაკეცვა</string>
+    <string name="study_more">მეტის სწავლა</string>
     <plurals name="deckpicker_title">
         <item quantity="one">%1$d card due (%2$s)</item>
         <item quantity="other">%1$d cards due (%2$s)</item>
@@ -64,63 +64,63 @@
         <item quantity="other">%d წუთები დარჩა</item>
     </plurals>
     <plurals name="reviewer_window_title_hours">
-        <item quantity="one">%d hour %d left</item>
-        <item quantity="other">%d hours %d left</item>
+        <item quantity="one">დარჩა %d საათი</item>
+        <item quantity="other">დარჩა %d საათი</item>
     </plurals>
     <plurals name="reviewer_window_title_days">
-        <item quantity="one">%d day %d left</item>
-        <item quantity="other">%d days %d left</item>
+        <item quantity="one">დარჩა %d დღე</item>
+        <item quantity="other">დარჩა %d დღე</item>
     </plurals>
-    <string name="no_cards_placeholder_title">Collection is empty</string>
-    <string name="no_cards_placeholder_description">Start adding cards\nusing the + icon.</string>
+    <string name="no_cards_placeholder_title">კოლექცია ცარიელია</string>
+    <string name="no_cards_placeholder_description">დაიწყეთ ბარათების დამატება\n+ნიშნის გამოყენებით</string>
     <!-- The deck picker via AnkiStatsTaskHandler.java -->
     <plurals name="studied_cards_today">
-        <item quantity="one">Studied %1$d card in %2$s today</item>
-        <item quantity="other">Studied %1$d cards in %2$s today</item>
+        <item quantity="one">დღეს ნასწავლია %1$d ბარათი %2$s-ში</item>
+        <item quantity="other">დღეს ნასწავლია %1$d ბარათი %2$s-ში</item>
     </plurals>
     <!-- flashcard_portrait.xml -->
-    <string name="type_answer_hint">დაწერე პასუხი</string>
+    <string name="type_answer_hint">პასუხის დაწერა</string>
     <string name="show_answer">აჩვენე პასუხი</string>
-    <string name="hide_answer">Hide answer</string>
+    <string name="hide_answer">პასუხის დამალვა</string>
     <string name="ease_button_again">თავიდან</string>
     <string name="ease_button_hard">რთული</string>
     <string name="ease_button_good">კარგი</string>
     <string name="ease_button_easy">მარტივი</string>
-    <string name="studyoptions_congrats_undo">Undo %s</string>
+    <string name="studyoptions_congrats_undo">გაუქმება %s</string>
     <string name="menu_import">შემოტანა</string>
     <string name="undo">აღდგენა</string>
     <string name="undo_action_review">ბოლო გადახედვა</string>
-    <string name="undo_action_change_deck_multi">change decks</string>
-    <string name="move_all_to_deck">Move all to deck</string>
-    <string name="unbury">Unbury</string>
-    <string name="rename_deck">Rename deck</string>
+    <string name="undo_action_change_deck_multi">დასტების შეცვლა</string>
+    <string name="move_all_to_deck">ყველას გადატანა დასტაში</string>
+    <string name="unbury">გამოჩენა</string>
+    <string name="rename_deck">დასტის სახელის შეცვლა</string>
     <string name="create_shortcut">Create shortcut</string>
     <string name="menu_add" comment="A generic add button - Main Deck Picker and card templates. Please inform us if you need more specific strings">დამატება</string>
     <string name="menu_add_note">დაამატე შენიშვნა</string>
-    <string name="menu_my_account" comment="Label of the window in which the user should enter their account. This text can\'t be found in AnkiDroid directly.">Sync account</string>
+    <string name="menu_my_account" comment="Label of the window in which the user should enter their account. This text can\'t be found in AnkiDroid directly.">აქაუნთის სინქრონიზაცია</string>
     <string name="menu_dismiss_note">დამალვა / წაშლა</string>
-    <string name="menu_bury_card">Bury card</string>
-    <string name="menu_bury_note">Bury note</string>
-    <string name="menu_suspend_card">Suspend card</string>
-    <string name="menu_suspend_note">Suspend note</string>
-    <string name="menu_bury">Bury</string>
-    <string name="menu_suspend">Suspend</string>
+    <string name="menu_bury_card">ბარათის დამალვა</string>
+    <string name="menu_bury_note">ჩანიშვნის დამალვა</string>
+    <string name="menu_suspend_card">ბარათის შეჩერება</string>
+    <string name="menu_suspend_note">ჩანიშვნის შეჩერება</string>
+    <string name="menu_bury">დამალვა</string>
+    <string name="menu_suspend">შეჩერება</string>
     <string name="menu_delete_note">წაშალე შენიშვნა</string>
-    <string name="menu_flag">Flag</string>
-    <string name="menu_flag_card">Flag card</string>
-    <string name="menu_flag_card_zero">No flag</string>
-    <string name="menu_flag_card_one">Red flag</string>
-    <string name="menu_flag_card_two">Orange flag</string>
-    <string name="menu_flag_card_three">Green flag</string>
-    <string name="menu_flag_card_four">Blue flag</string>
-    <string name="menu_edit_tags">Edit tags</string>
+    <string name="menu_flag">დროშა</string>
+    <string name="menu_flag_card">დროშა</string>
+    <string name="menu_flag_card_zero">დროშის გარეშე</string>
+    <string name="menu_flag_card_one">წითელი დროშა</string>
+    <string name="menu_flag_card_two">სტაფილოსფერი დროშა</string>
+    <string name="menu_flag_card_three">მწვანე დროშა</string>
+    <string name="menu_flag_card_four">ლურჯი დროშა</string>
+    <string name="menu_edit_tags">იარლიყის რედაქტირება</string>
     <string name="delete_note_message">ნამდვილად წავშალო ეს შენიშვნა და ყველა მისი ბარათი?\n%s</string>
     <string name="menu_select">აირჩიე ტექსტი</string>
-    <string name="menu_lookup">Lookup text</string>
-    <string name="menu_search">Lookup in %1$s</string>
+    <string name="menu_lookup">ტექსტის მონახულება</string>
+    <string name="menu_search">მონახულება %1$s-ში</string>
     <string name="menu_mark_note">მონიშნე შენიშვნა</string>
     <string name="menu_unmark_note">გააუქმე შენიშვნა</string>
-    <string name="menu_toggle_mic_tool_bar">Check pronunciation</string>
+    <string name="menu_toggle_mic_tool_bar">გამოთქმის შემოწმება</string>
     <string name="new_deck">შექმენი დასტა</string>
     <string name="new_dynamic_deck">ფილტრირებული დასტის შექმნა</string>
     <string name="night_mode">ღამის რეჟიმი</string>
@@ -129,7 +129,7 @@
     The user is taken to the "App Info" screen, and needs to click "Permissions" and
     grant AnkiDroid the \'Storage\' permission. This needs to be a fairly generic message as implementations
     of the permissions/app info screen will differ between devices. -->
-    <string name="startup_no_storage_permission">Please grant AnkiDroid the ‘Storage’ permission to continue</string>
+    <string name="startup_no_storage_permission">გთხოვთ მისცეთ AnkiDroid-ს მეხსიერებასთან წვდომა, რომ გავაგრძელოთ</string>
     <!--
         The time_quantities are units of time. They are used without
         plurals or dots.
@@ -139,84 +139,84 @@
     -->
     <string name="time_quantity_seconds">%d წამი</string>
     <string name="time_quantity_minutes">%d წუთი</string>
-    <string name="time_quantity_hours_minutes">%1$d h %2$d m</string>
+    <string name="time_quantity_hours_minutes">%1$d სთ %2$d წთ</string>
     <string name="time_quantity_hours">%d საათი</string>
     <string name="time_quantity_days">%d დღე</string>
-    <string name="time_quantity_days_hours">%1$d d %2$d h</string>
+    <string name="time_quantity_days_hours">%1$d დღე %2$d სთ</string>
     <string name="time_quantity_months">%.1f თვე</string>
-    <string name="time_quantity_years">%.1f yr</string>
+    <string name="time_quantity_years">%.1f წელი</string>
     <!-- or "%.1f a" -->
-    <string name="rebuild_filtered_deck">Rebuilding filtered deck&#8230;</string>
-    <string name="rebuild_cram_label">Rebuild</string>
-    <string name="empty_cram_label">Empty</string>
-    <string name="create_subdeck">Create subdeck</string>
-    <string name="empty_filtered_deck">Emptying filtered deck&#8230;</string>
-    <string name="custom_study_deck_name">Custom study session</string>
-    <string name="custom_study_deck_exists">Rename the existing custom study deck first</string>
-    <string name="empty_deck">This deck is empty</string>
-    <string name="search_deck">Deck Search</string>
-    <string name="empty_deck_add_note">Add card</string>
-    <string name="invalid_deck_name">Invalid deck name</string>
-    <string name="studyoptions_empty">This deck is empty. Press the + button to add new content.</string>
-    <string name="studyoptions_limit_reached">Daily study limit reached</string>
-    <string name="studyoptions_empty_schedule">No cards scheduled to study</string>
-    <string name="studyoptions_congrats_finished">Congratulations! You have finished for now.</string>
-    <string name="studyoptions_congrats_more_rev">Today’s limit has been reached, but there are still cards to review. You can increase the limit in the options.</string>
-    <string name="studyoptions_congrats_more_new">Today’s limit has been reached. There are more new cards available; you can increase the limit in the options, but this will increase your short-term review workload.</string>
-    <string name="studyoptions_congrats_custom">To study outside of the normal schedule, touch the “Custom study” button</string>
-    <string name="studyoptions_no_cards_due">No cards are due yet</string>
+    <string name="rebuild_filtered_deck">გაფილტრული დეკის ხელახლა აწყობა</string>
+    <string name="rebuild_cram_label">ხელახლა აწყობა</string>
+    <string name="empty_cram_label">ცარიელია</string>
+    <string name="create_subdeck">ქვედასტის შექმნა</string>
+    <string name="empty_filtered_deck">გაფილტრული დეკის დაცარიელება</string>
+    <string name="custom_study_deck_name">სწავლის ქასთომ სესია</string>
+    <string name="custom_study_deck_exists">ჯერ ქასთომ სასწავლო დასტის სახელი შეცვალეთ</string>
+    <string name="empty_deck">ეს დასტა ცარიელია</string>
+    <string name="search_deck">დასტის ძებნა</string>
+    <string name="empty_deck_add_note">ბარათის დამატება</string>
+    <string name="invalid_deck_name">დასტის სახელი არასწორია</string>
+    <string name="studyoptions_empty">დასტა ცარიელია. დააჭირეთ + ნიშანს, რომ დაამატოთ ახალი კონტენტი.</string>
+    <string name="studyoptions_limit_reached">დღიური სწავლის ლიმიტი მიღწეულია</string>
+    <string name="studyoptions_empty_schedule">ბარათები სასწავლად არაა დაგეგმილი</string>
+    <string name="studyoptions_congrats_finished">გილოცავთ! ამჯერად დაასრულეთ.</string>
+    <string name="studyoptions_congrats_more_rev">დღეის ლიმიტი მიღწეულია, მაგრამ კიდევ არის გადასახედი ბარათები. ლიმიტი შეგიძლიათ პარამეტრებიდან გაზარდოთ.</string>
+    <string name="studyoptions_congrats_more_new">დღეის ლიმიტი მიღწეულია. კიდევ არის ახალი ბარათები; ლიმიტი შეგიძლიათ პარამეტრებიდან გაზარდოთ, მაგრამ ეს გაზრდის თქვენს მოკლევადიანი გადახედვის დატვირთვას.</string>
+    <string name="studyoptions_congrats_custom">ნორმალური გეგმის გარეთ სასწავლად, დააჭირეთ \"ქასთომ სწავლის\" ღილაკს</string>
+    <string name="studyoptions_no_cards_due">ჯერ ბარათები არ არის</string>
     <string name="sd_card_not_mounted">Device storage not mounted</string>
     <string name="empty_cloze_warning">Edit this note and add some cloze deletions. (%1$s)</string>
-    <string name="button_sync">Sync</string>
-    <string name="cancel_sync_confirm">Do you want to cancel the sync?</string>
-    <string name="continue_sync">Continue sync</string>
-    <string name="sync_cancelled">Sync cancelled</string>
-    <string name="sync_cancel_message">Cancelling&#8230;\nThis may take some time.</string>
-    <string name="export">Export</string>
-    <string name="export_collection">Export collection</string>
-    <string name="export_deck">Export deck</string>
-    <string name="nothing">Nothing</string>
+    <string name="button_sync">სინქრონიზაცია</string>
+    <string name="cancel_sync_confirm">გინდათ დაასრულოთ სინქრონიზაცია?</string>
+    <string name="continue_sync">სინქრონიზაციის გაგრძელება</string>
+    <string name="sync_cancelled">სინქრონიზაცია გაუქმებულია</string>
+    <string name="sync_cancel_message">გაუქმება\&#8230;\nამან შეიძლება ცოტა დრო წაიღოს.</string>
+    <string name="export">ექსპორტი</string>
+    <string name="export_collection">კოლექციის ექსპორტი</string>
+    <string name="export_deck">დასტის ექსპორტი</string>
+    <string name="nothing">არაფერი</string>
     <!-- Card template editor -->
-    <string name="title_activity_template_editor">Card types</string>
-    <string name="card_template_editor_front">Front template</string>
-    <string name="card_template_editor_back">Back template</string>
-    <string name="card_template_editor_styling">Styling</string>
-    <string name="card_template_editor_menu_card_browser_appearance">Card Browser Appearance</string>
+    <string name="title_activity_template_editor">ბარათის ტიპები</string>
+    <string name="card_template_editor_front">წინა შაბლონი</string>
+    <string name="card_template_editor_back">უკანა შაბლონი</string>
+    <string name="card_template_editor_styling">სტილი</string>
+    <string name="card_template_editor_menu_card_browser_appearance">ბარათის საძიებელის გარეგნობა</string>
     <string name="card_template_editor_deck_override">Deck Override</string>
-    <string name="card_template_editor_cant_delete">At least one card type is required</string>
+    <string name="card_template_editor_cant_delete">სულ მცირე ერთი ბარათი მაინც არის საჭირო</string>
     <plurals name="card_template_editor_confirm_delete">
         <item quantity="one">Delete the “%2$s” card type, and its %1$d card?</item>
-        <item quantity="other">Delete the “%2$s” card type, and its %1$d cards?</item>
+        <item quantity="other">წავშალოთ \"%2$s\" ბარათის ტიპი და მისი %1$d ბარათები?</item>
     </plurals>
-    <string name="invalid_template">A card could not be generated</string>
+    <string name="invalid_template">ბარათი ვერ გენერირდება</string>
     <string name="card_template_editor_would_delete_note">Removing this card type would cause one or more notes to be deleted. Please create and save a new card type first.</string>
     <string name="card_template_editor_save_error">Unable to save card template changes: %s</string>
     <string name="template_for_current_card_deleted">The card type for the current card was deleted.</string>
     <!-- Card Browser Appearance -->
-    <string name="card_template_browser_appearance_title">Browser appearance</string>
+    <string name="card_template_browser_appearance_title">საძიებლის გარეგნობა</string>
     <string name="current_and_default_deck">%1$s (%2$s)</string>
     <!-- card Info -->
-    <string name="card_info_title">Card info</string>
+    <string name="card_info_title">ბარათის ინფო</string>
     <!-- Permissions -->
     <string name="read_write_permission_label">Read and write to the AnkiDroid database</string>
-    <string name="read_write_permission_description">access existing notes, cards, note types, and decks, as well as create new ones</string>
+    <string name="read_write_permission_description">წვდომა არსებულ ჩანიშვნებთან, ბარათებთან, ჩანიშვნის ტიპებთან და დასტებთან, ასევე ახალი ბარათების შექმნასთან</string>
     <!-- Context Menu -->
-    <string name="card_browser_context_menu" comment="The value which appears in the system context menu. Note the casing difference">Card Browser</string>
+    <string name="card_browser_context_menu" comment="The value which appears in the system context menu. Note the casing difference">ბარათების საძიებო</string>
     <string name="context_menu_anki_card_label">Anki Card</string>
-    <string name="has_a_problem" comment="First field is either front template or back template. Second field is the error message.">%1$s has a problem:<br/>%2$s</string>
-    <string name="more_information">More information</string>
-    <string name="no_field">Found \'{{%1$s}}\', but there is no field called \'%1$s\'.</string>
-    <string name="closed_tag_not_open">Found \'{{/%1$s}}\', but missing \'{{#%1$s}}\' or \'{{^%1$s}}\'.</string>
-    <string name="missing_closing_bracket">Missing \'}}\' in \'%s\'.</string>
+    <string name="has_a_problem" comment="First field is either front template or back template. Second field is the error message.">%1$s აქვს პრობლემა:<br/>%2$s</string>
+    <string name="more_information">მეტი ინფორმაცია</string>
+    <string name="no_field">\"{{%1$s}}\" ნაპოვნია, მაგრამ ველი \"%1$s\" არ არის</string>
+    <string name="closed_tag_not_open">\"{{/%1$s}}\" ნაპოვნია, მაგრამ აკლია \"{{#%1$s}}\" ან \"{{^%1$s}}\".</string>
+    <string name="missing_closing_bracket">გამოტოვებულია \"}}\" \"%s\"-ში.</string>
     <string name="open_tag_not_closed">Missing \'{{%s}}\'.</string>
     <string name="wrong_tag_closed">Found \'{{/%1$s}}\', but expected \'{{/%2$s}}\'</string>
     <string name="filter_error">Error in filter %s</string>
     <!-- Sync conflict -->
     <string name="sync_conflict_message_new">The collections can’t be combined.\nWhich collection do you want to keep?</string>
     <string name="sync_conflict_keep_local_new" comment="Select AnkiDroid files to keep while syncing">AnkiDroid</string>
-    <string name="sync_conflict_keep_remote_new" comment="Select AnkiWeb files to keep while syncing">AnkiWeb</string>
-    <string name="sync_conflict_remote_confirm_new">Replace your collection on AnkiDroid with your collection from AnkiWeb?</string>
+    <string name="sync_conflict_keep_remote_new" comment="Select AnkiWeb files to keep while syncing">Ankiweb</string>
+    <string name="sync_conflict_remote_confirm_new">ჩავანაცვლოთ თქვენი კოლექცია Ankidroid-ზე თქვენი AnkiWeb-ის კოლექციით? </string>
     <string name="sync_conflict_local_confirm_new">Replace your collection on AnkiWeb with your collection from AnkiDroid?</string>
-    <string name="sync_conflict_title_new">Select collection to keep</string>
-    <string name="sync_conflict_replace_title">Replace collection</string>
+    <string name="sync_conflict_title_new">აირჩიეთ კოლექცია რომ დარჩეს</string>
+    <string name="sync_conflict_replace_title">კოლექციის ჩანაცვლება</string>
 </resources>
