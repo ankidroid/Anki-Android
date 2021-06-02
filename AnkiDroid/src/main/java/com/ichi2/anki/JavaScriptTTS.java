@@ -21,12 +21,12 @@ public class JavaScriptTTS implements TextToSpeech.OnInitListener {
         mTts = new TextToSpeech(context, this);
     }
 
-    @Override
     /** OnInitListener method to receive the TTS engine status */
+    @Override
     public void onInit(int status) {
         mTtsOk = status == TextToSpeech.SUCCESS;
     }
-    
+
     /**
      * A method to speak something
      * @param text Content to speak
