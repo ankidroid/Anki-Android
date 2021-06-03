@@ -130,7 +130,7 @@ public class DeckPickerContextMenu extends AnalyticsDialogFragment {
         Collection col = CollectionHelper.getInstance().getCol(getContext());
         long did = getArguments().getLong("did");
         boolean dyn = col.getDecks().isDyn(did);
-        ArrayList<Integer> itemIds = new ArrayList<>();
+        ArrayList<Integer> itemIds = new ArrayList<>(10); // init with our fixed list size for performance
         itemIds.add(CONTEXT_MENU_BROWSE_CARDS);
         if (dyn) {
             itemIds.add(CONTEXT_MENU_CUSTOM_STUDY_REBUILD);
