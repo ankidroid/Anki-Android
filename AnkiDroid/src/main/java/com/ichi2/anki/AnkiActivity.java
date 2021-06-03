@@ -15,6 +15,7 @@ import android.net.Uri;
 import android.os.Bundle;
 
 import androidx.activity.result.ActivityResultLauncher;
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatDelegate;
 import androidx.appcompat.widget.Toolbar;
@@ -153,6 +154,7 @@ public class AnkiActivity extends AppCompatActivity implements SimpleMessageDial
     }
 
 
+    @NonNull
     public Collection getCol() {
         return CollectionHelper.getInstance().getCol(this);
     }
