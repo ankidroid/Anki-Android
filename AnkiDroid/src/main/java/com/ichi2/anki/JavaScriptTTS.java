@@ -6,6 +6,7 @@ import android.speech.tts.TextToSpeech;
 
 import com.ichi2.anki.LanguageUtils;
 
+import androidx.annotation.IntDef;
 import androidx.annotation.NonNull;
 
 /**
@@ -14,6 +15,25 @@ import androidx.annotation.NonNull;
  * https://developer.android.com/reference/android/speech/tts/TextToSpeech
  */
 public class JavaScriptTTS implements TextToSpeech.OnInitListener {
+
+    private static final int TTS_SUCCESS = TextToSpeech.SUCCESS;
+    private static final int TTS_ERROR = TextToSpeech.ERROR;
+    private static final int TTS_QUEUE_ADD = TextToSpeech.QUEUE_ADD;
+    private static final int TTS_QUEUE_FLUSH = TextToSpeech.QUEUE_FLUSH;
+    private static final int TTS_LANG_AVAILABLE = TextToSpeech.LANG_AVAILABLE;
+    private static final int TTS_LANG_COUNTRY_AVAILABLE = TextToSpeech.LANG_COUNTRY_AVAILABLE;
+    private static final int TTS_LANG_COUNTRY_VAR_AVAILABLE = TextToSpeech.LANG_COUNTRY_VAR_AVAILABLE;
+    private static final int TTS_LANG_MISSING_DATA = TextToSpeech.LANG_MISSING_DATA;
+    private static final int TTS_LANG_NOT_SUPPORTED = TextToSpeech.LANG_NOT_SUPPORTED;
+
+    @IntDef({TTS_SUCCESS, TTS_ERROR})
+    public @interface ErrorOrSuccess {}
+
+    @IntDef({TTS_QUEUE_ADD, TTS_QUEUE_FLUSH})
+    public @interface QueueMode {}
+
+    @IntDef({TTS_LANG_AVAILABLE, TTS_LANG_COUNTRY_AVAILABLE, TTS_LANG_COUNTRY_VAR_AVAILABLE, TTS_LANG_MISSING_DATA, TTS_LANG_NOT_SUPPORTED})
+    public @interface TTSLangResult {}
 
     @NonNull
     private static TextToSpeech mTts;
@@ -26,7 +46,7 @@ public class JavaScriptTTS implements TextToSpeech.OnInitListener {
 
     /** OnInitListener method to receive the TTS engine status */
     @Override
-    public void onInit(int status) {
+    public void onInit(@ErrorOrSuccess int status) {
         mTtsOk = status == TextToSpeech.SUCCESS;
     }
 
@@ -36,7 +56,8 @@ public class JavaScriptTTS implements TextToSpeech.OnInitListener {
      * @param queueMode 1 for QUEUE_ADD and 0 for QUEUE_FLUSH.
      * @return ERROR(-1) SUCCESS(0)
      */
-    public int speak(String text, int queueMode) {
+    @ErrorOrSuccess
+    public int speak(String text, @QueueMode int queueMode) {
         return mTts.speak(text, queueMode, mTtsParams, "stringId");
     }
 
@@ -45,6 +66,7 @@ public class JavaScriptTTS implements TextToSpeech.OnInitListener {
      * @param text Content to speak
      * @return ERROR(-1) SUCCESS(0)
      */
+    @ErrorOrSuccess
     public int speak(String text) {
         return mTts.speak(text, TextToSpeech.QUEUE_FLUSH, mTtsParams, "stringId");
     }
@@ -59,6 +81,7 @@ public class JavaScriptTTS implements TextToSpeech.OnInitListener {
      *     <li> -1 Denotes the language data is missing.
      *     <li> -2 Denotes the language is not supported.
      */
+    @TTSLangResult
     public int setLanguage(String loc) {
         // The Int values will be returned
         // Code indicating the support status for the locale. See LANG_AVAILABLE, LANG_COUNTRY_AVAILABLE, LANG_COUNTRY_VAR_AVAILABLE, LANG_MISSING_DATA and LANG_NOT_SUPPORTED.
@@ -71,6 +94,7 @@ public class JavaScriptTTS implements TextToSpeech.OnInitListener {
      * @param pitch float: Speech pitch. 1.0 is the normal pitch, lower values lower the tone of the synthesized voice, greater values increase it.
      * @return ERROR(-1) SUCCESS(0)
      */
+    @ErrorOrSuccess
     public int setPitch(float pitch) {
         // The following Int values will be returned
         // ERROR(-1) SUCCESS(0)
@@ -82,6 +106,7 @@ public class JavaScriptTTS implements TextToSpeech.OnInitListener {
      * @param speechRate Sets the speech rate. 1.0 is the normal speech rate. This has no effect on any pre-recorded speech.
      * @return ERROR(-1) SUCCESS(0)
      */
+    @ErrorOrSuccess
     public int setSpeechRate(float speechRate) {
         // The following Int values will be returned
         // ERROR(-1) SUCCESS(0)
