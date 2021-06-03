@@ -29,7 +29,6 @@ import android.view.WindowManager;
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.google.android.material.snackbar.Snackbar;
 import com.ichi2.libanki.Sound;
-import com.ichi2.anki.LanguageUtils;
 
 import java.lang.ref.WeakReference;
 import java.util.ArrayList;

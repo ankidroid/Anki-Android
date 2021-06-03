@@ -4,13 +4,11 @@ import android.content.Context;
 import android.os.Bundle;
 import android.speech.tts.TextToSpeech;
 
-import com.ichi2.anki.LanguageUtils;
-
 import androidx.annotation.IntDef;
 import androidx.annotation.NonNull;
 
 /**
- * Since it is assumed that only advanced users will use the JavaScript api, 
+ * Since it is assumed that only advanced users will use the JavaScript api,
  * here, Android's TextToSpeech is converted for JavaScript almost as it is, giving priority to free behavior.
  * https://developer.android.com/reference/android/speech/tts/TextToSpeech
  */
@@ -72,8 +70,8 @@ public class JavaScriptTTS implements TextToSpeech.OnInitListener {
     }
 
     /**
-     * Sets the text-to-speech language. 
-     * The TTS engine will try to use the closest match to the specified language as represented by the Locale, but there is no guarantee that the exact same Locale will be used. 
+     * Sets the text-to-speech language.
+     * The TTS engine will try to use the closest match to the specified language as represented by the Locale, but there is no guarantee that the exact same Locale will be used.
      * @param loc Specifying the language to speak
      * @return  0 Denotes the language is available for the language by the locale, but not the country and variant.
      *     <li> 1 Denotes the language is available for the language and country specified by the locale, but not the variant.
@@ -102,7 +100,7 @@ public class JavaScriptTTS implements TextToSpeech.OnInitListener {
     }
 
     /**
-     * 
+     *
      * @param speechRate Sets the speech rate. 1.0 is the normal speech rate. This has no effect on any pre-recorded speech.
      * @return ERROR(-1) SUCCESS(0)
      */
