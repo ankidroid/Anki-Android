@@ -45,7 +45,6 @@ import static com.ichi2.libanki.Consts.DECK_STD;
         "PMD.SwitchStmtsShouldHaveDefault","PMD.EmptyIfStmt","PMD.SimplifyBooleanReturns","PMD.CollapsibleIfStatements"})
 public class Storage {
 
-    private static boolean sUseBackend = true;
     private static boolean sUseInMemory = false;
 
 
@@ -74,7 +73,7 @@ public class Storage {
         assert path.endsWith(".anki2");
         File dbFile = new File(path);
         boolean create = !dbFile.exists();
-        DroidBackend backend = DroidBackendFactory.getInstance(useBackend());
+        DroidBackend backend = DroidBackendFactory.getInstance();
         DB db = backend.openCollectionDatabase(sUseInMemory ? ":memory:" : path);
 
         try {
@@ -106,14 +105,6 @@ public class Storage {
             db.close();
             throw e;
         }
-    }
-
-    /**
-     * Whether the collection should try to be opened with a Rust-based DB Backend
-     * Falls back to Java if init fails.
-     * */
-    protected static boolean useBackend() {
-        return sUseBackend;
     }
 
 
@@ -390,11 +381,6 @@ public class Storage {
 
     public static void addIndices(DB db) {
         _updateIndices(db);
-    }
-
-
-    public static void setUseBackend(boolean useBackend) {
-        sUseBackend = useBackend;
     }
 
 

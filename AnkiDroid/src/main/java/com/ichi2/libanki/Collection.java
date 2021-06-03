@@ -36,7 +36,6 @@ import com.ichi2.async.CollectionTask;
 import com.ichi2.libanki.backend.DroidBackend;
 import com.ichi2.async.ProgressSender;
 import com.ichi2.async.TaskManager;
-import com.ichi2.libanki.backend.exception.BackendNotSupportedException;
 import com.ichi2.libanki.exception.NoSuchDeckException;
 import com.ichi2.libanki.exception.UnknownDatabaseVersionException;
 import com.ichi2.libanki.hooks.ChessFilter;
@@ -218,11 +217,7 @@ public class Collection implements CollectionGetter {
         } else if (ver == 2) {
             mSched = new SchedV2(this);
             if (!getServer() && isUsingRustBackend()) {
-                try {
-                    getConf().put("localOffset", getSched()._current_timezone_offset());
-                } catch (BackendNotSupportedException e) {
-                    throw e.alreadyUsingRustBackend();
-                }
+                getConf().put("localOffset", getSched()._current_timezone_offset());
             }
         }
     }

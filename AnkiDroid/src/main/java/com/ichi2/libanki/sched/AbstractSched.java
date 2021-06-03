@@ -13,7 +13,6 @@ import com.ichi2.libanki.Consts;
 import com.ichi2.libanki.Deck;
 import com.ichi2.libanki.DeckConfig;
 import com.ichi2.libanki.Collection;
-import com.ichi2.libanki.backend.exception.BackendNotSupportedException;
 
 import java.lang.ref.WeakReference;
 import java.util.List;
@@ -517,14 +516,14 @@ public abstract class AbstractSched {
      */
     public abstract int logCount();
 
-    public abstract int _current_timezone_offset() throws BackendNotSupportedException;
+    public abstract int _current_timezone_offset();
 
     public abstract boolean _new_timezone_enabled();
     /**
      * Save the UTC west offset at the time of creation into the DB.
      * Once stored, this activates the new timezone handling code.
      */
-    public abstract void set_creation_offset() throws BackendNotSupportedException;
+    public abstract void set_creation_offset();
 
     public abstract void clear_creation_offset();
 }

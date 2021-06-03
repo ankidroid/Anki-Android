@@ -52,7 +52,6 @@ import com.ichi2.anki.web.CustomSyncServer;
 import com.ichi2.compat.CompatHelper;
 import com.ichi2.libanki.Collection;
 import com.ichi2.libanki.Utils;
-import com.ichi2.libanki.backend.exception.BackendNotSupportedException;
 import com.ichi2.libanki.sched.AbstractSched;
 import com.ichi2.preferences.NumberRangePreference;
 import com.ichi2.themes.Themes;
@@ -797,11 +796,7 @@ public class Preferences extends AppCompatPreferenceActivity implements Preferen
                         boolean is_enabled = ((android.preference.CheckBoxPreference) pref).isChecked();
                         if (was_enabled != is_enabled) {
                             if (is_enabled) {
-                                try {
-                                    sched.set_creation_offset();
-                                } catch (BackendNotSupportedException e) {
-                                    throw e.alreadyUsingRustBackend();
-                                }
+                               sched.set_creation_offset();
                             } else {
                                 sched.clear_creation_offset();
                             }

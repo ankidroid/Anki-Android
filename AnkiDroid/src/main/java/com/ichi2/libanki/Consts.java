@@ -128,9 +128,7 @@ public class Consts {
     public static final int SYNC_ZIP_COUNT = 25;
     public static final String SYNC_BASE = "https://sync%s.ankiweb.net/";
     public static final Integer DEFAULT_HOST_NUM = null;
-    /* Note: 10 if using Rust backend, 9 if using Java. Set in BackendFactory.getInstance */
-    @RustCleanup("Use 10")
-    public static int SYNC_VER = 9;
+    public static final int SYNC_VER = 10;
 
     // Leech actions
     public static final int LEECH_SUSPEND = 0;

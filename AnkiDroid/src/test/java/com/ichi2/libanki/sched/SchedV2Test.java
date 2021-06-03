@@ -29,7 +29,6 @@ import com.ichi2.libanki.Decks;
 import com.ichi2.libanki.Model;
 import com.ichi2.libanki.Models;
 import com.ichi2.libanki.Note;
-import com.ichi2.libanki.backend.exception.BackendNotSupportedException;
 import com.ichi2.testutils.MockTime;
 import com.ichi2.testutils.libanki.FilteredDeckUtil;
 import com.ichi2.utils.JSONArray;
@@ -276,7 +275,7 @@ public class SchedV2Test extends RobolectricTest {
     }
 
     @Test
-    public void newTimezoneHandling() throws BackendNotSupportedException {
+    public void newTimezoneHandling() {
         // #5805
         assertThat("Sync ver should be updated if we have a valid Rust collection", Consts.SYNC_VER, is(10));
 

@@ -44,7 +44,6 @@ import com.ichi2.libanki.Utils;
 import com.ichi2.libanki.Deck;
 import com.ichi2.libanki.DeckConfig;
 
-import com.ichi2.libanki.backend.exception.BackendNotSupportedException;
 import com.ichi2.libanki.backend.model.SchedTimingToday;
 import com.ichi2.libanki.utils.Time;
 import com.ichi2.utils.Assert;
@@ -2247,21 +2246,16 @@ public class SchedV2 extends AbstractSched {
 
     @Nullable
     private SchedTimingToday _timingToday() {
-        try {
-            return getCol().getBackend().sched_timing_today(
+        return getCol().getBackend().sched_timing_today(
                     getCol().getCrt(),
                     _creation_timezone_offset(),
                     getTime().intTime(),
                     _current_timezone_offset(),
                     _rolloverHour());
-        } catch (BackendNotSupportedException e) {
-            Timber.w(e);
-            return null;
-        }
     }
 
     @Override
-    public int _current_timezone_offset() throws BackendNotSupportedException {
+    public int _current_timezone_offset() {
         if (getCol().getServer()) {
             return getCol().getConf().optInt("localOffset", 0);
         } else {
@@ -2274,7 +2268,7 @@ public class SchedV2 extends AbstractSched {
     }
 
     @Override
-    public void set_creation_offset() throws BackendNotSupportedException {
+    public void set_creation_offset() {
         int mins_west = getCol().getBackend().local_minutes_west(getCol().getCrt());
         getCol().getConf().put("creationOffset", mins_west);
         getCol().setMod();
