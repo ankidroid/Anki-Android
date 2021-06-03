@@ -1827,13 +1827,7 @@ public class DeckPicker extends NavigationDrawerActivity implements
         @Override
         public void onProgressUpdate(Object... values) {
             Resources res = getResources();
-            if (values[0] instanceof Boolean) {
-                // This is the part Download missing media of syncing
-                int total = (Integer) values[1];
-                int done = (Integer) values[2];
-                values[0] = (values[3]);
-                values[1] = res.getString(R.string.sync_downloading_media, done, total);
-            } else if (values[0] instanceof Integer) {
+            if (values[0] instanceof Integer) {
                 int id = (Integer) values[0];
                 if (id != 0) {
                     mCurrentMessage = res.getString(id);
@@ -1850,7 +1844,6 @@ public class DeckPicker extends NavigationDrawerActivity implements
                 }
             }
             if (mProgressDialog != null && mProgressDialog.isShowing()) {
-                // mProgressDialog.setTitle((String) values[0]);
                 mProgressDialog.setContent(mCurrentMessage + "\n"
                         + res
                         .getString(R.string.sync_up_down_size, mCountUp / 1024, mCountDown / 1024));
