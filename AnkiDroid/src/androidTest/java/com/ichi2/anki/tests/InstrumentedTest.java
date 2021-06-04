@@ -34,7 +34,7 @@ public abstract class InstrumentedTest {
      * https://github.com/react-native-community/react-native-device-info/blob/bb505716ff50e5900214fcbcc6e6434198010d95/android/src/main/java/com/learnium/RNDeviceInfo/RNDeviceModule.java#L185
      * @return boolean true if the execution environment is most likely an emulator
      */
-    protected static boolean isEmulator() {
+    public static boolean isEmulator() {
         return (Build.BRAND.startsWith("generic") && Build.DEVICE.startsWith("generic"))
                 || Build.FINGERPRINT.startsWith("generic")
                 || Build.FINGERPRINT.startsWith("unknown")
