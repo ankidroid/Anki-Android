@@ -245,6 +245,7 @@ dependencies {
     configurations.all {
         resolutionStrategy {
             force 'org.jetbrains:annotations:21.0.1'
+            force 'androidx.test:core:1.4.0' // Pending fix here: https://issuetracker.google.com/issues/189353863
         }
     }
 
