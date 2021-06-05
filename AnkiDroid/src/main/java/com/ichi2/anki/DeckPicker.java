@@ -1427,10 +1427,10 @@ public class DeckPicker extends NavigationDrawerActivity implements
 
 
         @Override
-        public void actualOnPostExecute(@NonNull DeckPicker deckPicker, BooleanGetter voi) {
+        public void actualOnPostExecute(@NonNull DeckPicker deckPicker, BooleanGetter success) {
             deckPicker.hideProgressBar();
             Timber.i("Undo completed");
-            if ((voi.getBoolean()) && (mUndoneCard != null)) {
+            if ((success.getBoolean()) && (mUndoneCard != null)) {
                 Timber.i("Review undone - opening reviewer.");
                 deckPicker.openReviewer();
             }
