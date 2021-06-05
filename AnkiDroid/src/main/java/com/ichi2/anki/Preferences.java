@@ -147,6 +147,12 @@ public class Preferences extends AppCompatPreferenceActivity implements Preferen
      */
     private static final String DAY_OFFSET = "dayOffset";
     /**
+     * Represents in Android preference the collection's configuration "pastePNG" , i.e.
+     * whether to convert clipboard uri to png format or not.
+     * TODO: convert to png if a image file has transparency, or at least if it supports it.
+     */
+    private static final String PASTE_PNG = "pastePNG";
+    /**
      * Represents in Android preferences whether the scheduler should use version 1 or 2.
      */
     private static final String SCHED_VER = "schedVer";
@@ -655,6 +661,9 @@ public class Preferences extends AppCompatPreferenceActivity implements Preferen
                         case DAY_OFFSET:
                             ((SeekBarPreference)pref).setValue(getDayOffset(col));
                             break;
+                        case PASTE_PNG:
+                            ((android.preference.CheckBoxPreference)pref).setChecked(conf.optBoolean("pastePNG"));
+                            break;
                         case NEW_TIMEZONE_HANDLING:
                             android.preference.CheckBoxPreference checkBox = (android.preference.CheckBoxPreference) pref;
                             checkBox.setChecked(col.getSched()._new_timezone_enabled());
@@ -783,6 +792,10 @@ public class Preferences extends AppCompatPreferenceActivity implements Preferen
                     setDayOffset(((SeekBarPreference) pref).getValue());
                     break;
                 }
+                case PASTE_PNG:
+                    getCol().getConf().put("pastePNG", ((android.preference.CheckBoxPreference) pref).isChecked());
+                    getCol().setMod();
+                    break;
                 case "minimumCardsDueForNotification": {
                     android.preference.ListPreference listpref = (android.preference.ListPreference) screen.findPreference("minimumCardsDueForNotification");
                     if (listpref != null) {
