@@ -1900,7 +1900,7 @@ public class NoteEditor extends AnkiActivity implements
 
             // 0th button shows as '1' and is Ctrl + 1
             int visualIndex = b.getIndex() + 1;
-            String text = Integer.toString(visualIndex);
+            String text = b.getText().isEmpty() ? Integer.toString(visualIndex) : b.getText();
             Drawable bmp = mToolbar.createDrawableForString(text);
 
             View v = mToolbar.insertItem(0, bmp, b.toFormatter());
@@ -1933,14 +1933,14 @@ public class NoteEditor extends AnkiActivity implements
                 .apply();
     }
 
-    private void addToolbarButton(String prefix, String suffix) {
+    private void addToolbarButton(String prefix, String suffix, String text) {
         if (TextUtils.isEmpty(prefix) && TextUtils.isEmpty(suffix)) {
             return;
         }
 
         ArrayList<CustomToolbarButton> toolbarButtons = getToolbarButtons();
 
-        toolbarButtons.add(new CustomToolbarButton(toolbarButtons.size(), prefix, suffix));
+        toolbarButtons.add(new CustomToolbarButton(toolbarButtons.size(), prefix, suffix, text));
         saveToolbarButtons(toolbarButtons);
 
         updateToolbar();
@@ -1977,8 +1977,9 @@ public class NoteEditor extends AnkiActivity implements
                     View view = m.getView();
                     EditText et =  view.findViewById(R.id.note_editor_toolbar_before);
                     EditText et2 = view.findViewById(R.id.note_editor_toolbar_after);
+                    EditText et3 = view.findViewById(R.id.note_editor_toolbar_button_text);
 
-                    addToolbarButton(et.getText().toString(), et2.getText().toString());
+                    addToolbarButton(et.getText().toString(), et2.getText().toString(), et3.getText().toString());
                 })
                 .show();
     }

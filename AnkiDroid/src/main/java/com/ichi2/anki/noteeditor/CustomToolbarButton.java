@@ -36,12 +36,14 @@ public class CustomToolbarButton {
     private int mIndex;
     private final String mPrefix;
     private final String mSuffix;
+    private final String mText;
 
 
-    public CustomToolbarButton(int index, String prefix, String suffix) {
+    public CustomToolbarButton(int index, String prefix, String suffix, String text) {
         mIndex = index;
         mPrefix = prefix;
         mSuffix = suffix;
+        mText = text;
     }
 
     @Nullable
@@ -52,7 +54,7 @@ public class CustomToolbarButton {
 
         String[] fields = s.split(FIELD_SEPARATOR, KEEP_EMPTY_ENTRIES);
 
-        if (fields.length != 3) {
+        if (fields.length != 4) {
             return null;
         }
 
@@ -64,7 +66,7 @@ public class CustomToolbarButton {
             return null;
         }
 
-        return new CustomToolbarButton(index, fields[1], fields[2]);
+        return new CustomToolbarButton(index, fields[1], fields[2], fields[3]);
     }
 
 
@@ -91,7 +93,7 @@ public class CustomToolbarButton {
     public static Set<String> toStringSet(ArrayList<CustomToolbarButton> buttons) {
         HashSet<String> ret = new HashSet<>(buttons.size());
         for (CustomToolbarButton b : buttons) {
-            String[] values = new String[] { Integer.toString(b.mIndex), b.mPrefix, b.mSuffix };
+            String[] values = new String[] { Integer.toString(b.mIndex), b.mPrefix, b.mSuffix, b.mText };
 
             for (int i = 0; i < values.length; i++) {
                 values[i] = values[i].replace(FIELD_SEPARATOR, "");
@@ -111,4 +113,8 @@ public class CustomToolbarButton {
     public int getIndex() {
         return mIndex;
     }
+    public String getText() {
+        return mText;
+    }
+
 }
