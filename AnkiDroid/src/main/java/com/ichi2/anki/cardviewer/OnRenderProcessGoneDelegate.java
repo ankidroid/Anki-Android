@@ -32,11 +32,20 @@ import java.util.concurrent.locks.Lock;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
+import androidx.lifecycle.Lifecycle;
 import timber.log.Timber;
 
+import static androidx.lifecycle.Lifecycle.State.STARTED;
+
+/**
+ * Fix for:
+ * #5780 - WebView Renderer OOM crashes reviewer
+ * #8459 - WebView Renderer crash dialog displays when app is minimised (Android 11 - Google Pixel 3A)
+ */
 public class OnRenderProcessGoneDelegate {
 
     private final AbstractFlashcardViewer mTarget;
+    private final Lifecycle mLifecycle;
 
     /**
      * Last card that the WebView Renderer crashed on.
@@ -47,6 +56,7 @@ public class OnRenderProcessGoneDelegate {
 
     public OnRenderProcessGoneDelegate(AbstractFlashcardViewer target) {
         this.mTarget = target;
+        this.mLifecycle = target.getLifecycle();
     }
 
     /** Fix: #5780 - WebView Renderer OOM crashes reviewer */
@@ -73,25 +83,34 @@ public class OnRenderProcessGoneDelegate {
 
             if (!canRecoverFromWebViewRendererCrash()) {
                 Timber.e("Unrecoverable WebView Render crash");
-                displayFatalError(detail);
+                if (!activityIsMinimised()) {
+                    displayFatalError(detail);
+                }
                 mTarget.finishWithoutAnimation();
                 return true;
             }
 
-            long currentCardId = mTarget.getCurrentCard().getId();
+            if (!activityIsMinimised()) {
+                // #8459 - if the activity is minimised, this is much more likely to happen multiple times and it is
+                // likely not a permanent error due to a bad card, so don't increment mLastCrashingCardId
+                long currentCardId = mTarget.getCurrentCard().getId();
 
-            if (webViewRendererLastCrashedOnCard(currentCardId)) {
-                Timber.e("Web Renderer crash loop on card: %d", currentCardId);
-                displayRenderLoopDialog(currentCardId, detail);
-                return true;
+                if (webViewRendererLastCrashedOnCard(currentCardId)) {
+                    Timber.e("Web Renderer crash loop on card: %d", currentCardId);
+                    displayRenderLoopDialog(currentCardId, detail);
+                    return true;
+                }
+
+                // This logic may need to be better defined. The card could have changed by the time we get here.
+                mLastCrashingCardId = currentCardId;
+
+                displayNonFatalError(detail);
+            } else {
+                Timber.d("WebView crashed while app was minimised - OOM was safe to handle silently");
             }
 
             // If we get here, the error is non-fatal and we should re-render the WebView
-            // This logic may need to be better defined. The card could have changed by the time we get here.
-            mLastCrashingCardId = currentCardId;
 
-
-            displayNonFatalError(detail);
 
             mTarget.recreateWebViewFrame();
         } finally {
@@ -107,6 +126,10 @@ public class OnRenderProcessGoneDelegate {
 
     @RequiresApi(Build.VERSION_CODES.O)
     protected void displayFatalError(RenderProcessGoneDetail detail) {
+        if (activityIsMinimised()) {
+            Timber.d("Not showing toast - screen isn't visible");
+            return;
+        }
         String errorMessage = mTarget.getResources().getString(R.string.webview_crash_fatal, getErrorCause(detail));
         UIUtils.showThemedToast(mTarget, errorMessage, false);
     }
@@ -114,6 +137,10 @@ public class OnRenderProcessGoneDelegate {
 
     @RequiresApi(Build.VERSION_CODES.O)
     protected void displayNonFatalError(RenderProcessGoneDetail detail) {
+        if (activityIsMinimised()) {
+            Timber.d("Not showing toast - screen isn't visible");
+            return;
+        }
         String nonFatalError = mTarget.getResources().getString(R.string.webview_crash_nonfatal, getErrorCause(detail));
         UIUtils.showThemedToast(mTarget, nonFatalError, false);
     }
@@ -146,6 +173,19 @@ public class OnRenderProcessGoneDelegate {
                 .show();
     }
 
+
+    /**
+     * Issue 8459
+     * On Android 11, the WebView regularly OOMs even after .onStop() has been called,
+     * but this does not cause .onDestroy() to be called
+     *
+     * We do not want to show toasts or increment the "crash" counter if this occurs. Just handle the issue
+     * */
+    private boolean activityIsMinimised() {
+        // See diagram on https://developer.android.com/topic/libraries/architecture/lifecycle#lc
+        // STARTED is after .start(), the activity goes to CREATED after .onStop()
+        return !mLifecycle.getCurrentState().isAtLeast(STARTED);
+    }
 
 
     private boolean webViewRendererLastCrashedOnCard(long cardId) {

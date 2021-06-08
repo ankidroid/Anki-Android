@@ -29,6 +29,7 @@ import org.junit.Test;
 import java.util.concurrent.locks.Lock;
 
 import androidx.annotation.NonNull;
+import androidx.lifecycle.Lifecycle;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
@@ -74,6 +75,24 @@ public class OnRenderProcessGoneDelegateTest {
     }
 
     @Test
+    public void secondCallDoesNothingIfMinimised() {
+        AbstractFlashcardViewer mock = getMinimisedViewer();
+        OnRenderProcessGoneDelegateImpl delegate = getInstance(mock);
+
+        callOnRenderProcessGone(delegate);
+
+        verify(mock, times(1)).displayCardQuestion();
+
+        callOnRenderProcessGone(delegate);
+
+        verify(mock, times(2)
+                .description("displayCardQuestion should be called again as the app was minimised"))
+                .displayCardQuestion();
+        assertThat(delegate.mDisplayedDialog, is(false));
+    }
+
+
+    @Test
     public void nothingHappensIfWebViewIsNotTheSame() {
         AbstractFlashcardViewer mock = getViewer();
         OnRenderProcessGoneDelegateImpl delegate = getInstance(mock);
@@ -99,6 +118,22 @@ public class OnRenderProcessGoneDelegateTest {
         verify(mock, times(1).description("screen should be closed")).finishWithoutAnimation();
     }
 
+    @SuppressWarnings("ResultOfMethodCallIgnored")
+    @Test
+    public void unrecoverableCrashCloses() {
+        AbstractFlashcardViewer mock = getMinimisedViewer();
+        OnRenderProcessGoneDelegateImpl delegate = getInstance(mock);
+
+        doReturn(null).when(mock).getCurrentCard();
+        callOnRenderProcessGone(delegate);
+
+        verify(mock, times(1)).destroyWebViewFrame();
+        verify(mock, never()).recreateWebViewFrame();
+
+        assertThat("A toast should not be displayed as the screen is minimised", delegate.mDisplayedToast, is(false));
+        verify(mock, times(1).description("screen should be closed")).finishWithoutAnimation();
+    }
+
 
     protected void callOnRenderProcessGone(OnRenderProcessGoneDelegateImpl delegate) {
         callOnRenderProcessGone(delegate, delegate.getTarget().getWebView());
@@ -111,21 +146,38 @@ public class OnRenderProcessGoneDelegateTest {
     }
 
 
-    @SuppressWarnings("ResultOfMethodCallIgnored")
+    protected AbstractFlashcardViewer getMinimisedViewer() {
+        return getViewer(Lifecycle.State.CREATED);
+    }
+
     @NonNull
     protected AbstractFlashcardViewer getViewer() {
+        return getViewer(Lifecycle.State.STARTED);
+    }
+
+    @SuppressWarnings("ResultOfMethodCallIgnored")
+    private AbstractFlashcardViewer getViewer(Lifecycle.State state) {
         WebView mockWebView = mock(WebView.class);
         AbstractFlashcardViewer mock = mock(AbstractFlashcardViewer.class, new ThrowingAnswer());
         doReturn(mock(Lock.class)).when(mock).getWriteLock();
         doReturn(mock(Resources.class)).when(mock).getResources();
         doReturn(mockWebView).when(mock).getWebView();
         doReturn(mock(Card.class)).when(mock).getCurrentCard();
+        doReturn(lifecycleOf(state)).when(mock).getLifecycle();
         doNothing().when(mock).destroyWebViewFrame();
         doNothing().when(mock).recreateWebViewFrame();
         doNothing().when(mock).displayCardQuestion();
         doNothing().when(mock).finishWithoutAnimation();
         return mock;
     }
+
+
+    private Lifecycle lifecycleOf(Lifecycle.State state) {
+        Lifecycle ret = mock(Lifecycle.class);
+        when(ret.getCurrentState()).thenReturn(state);
+        return ret;
+    }
+
 
     @NonNull
     protected OnRenderProcessGoneDelegateImpl getInstance(AbstractFlashcardViewer mock) {
