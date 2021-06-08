@@ -195,7 +195,7 @@ public class Previewer extends AbstractFlashcardViewer {
 
 
     @Override
-    protected void displayCardQuestion() {
+    public void displayCardQuestion() {
         super.displayCardQuestion();
         mShowingAnswer = false;
         updateButtonsState();
