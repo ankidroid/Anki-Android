@@ -348,6 +348,7 @@
     <string name="insert_mathjax">Insert MathJax Equation</string>
     <string name="insert_cloze">Insert Cloze Deletion</string>
 
+    <string name="button_text">Text displayed on button</string>
     <string name="before_text">HTML Before Selection</string>
     <string name="after_text">HTML After Selection</string>
     <string name="add_toolbar_item">Create Toolbar Item</string>

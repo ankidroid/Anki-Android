@@ -30,7 +30,7 @@
 
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="Text displayed on button">
+        android:hint="@string/button_text">
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/note_editor_toolbar_button_text"

@@ -59,7 +59,7 @@ public class Toolbar extends FrameLayout {
 
     private TextFormatListener mFormatCallback;
     private LinearLayout mToolbar;
-    private LinearLayout mScroll;
+    private LinearLayout mToolbarLayout;
     private List<View> mCustomButtons = new ArrayList<>();
     private List<LinearLayout> mRows = new ArrayList<>();
     private View mClozeIcon;
@@ -101,7 +101,7 @@ public class Toolbar extends FrameLayout {
         mStringPaint.setTextAlign(Paint.Align.CENTER);
 
         this.mToolbar = findViewById(R.id.editor_toolbar_internal);
-        this.mScroll = findViewById(R.id.toolbar_scrollview);
+        this.mToolbarLayout = findViewById(R.id.toolbar_layout);
         setClick(R.id.note_editor_toolbar_button_bold, "<b>", "</b>");
         setClick(R.id.note_editor_toolbar_button_italic, "<em>", "</em>");
         setClick(R.id.note_editor_toolbar_button_underline, "<u>", "</u>");
@@ -194,7 +194,8 @@ public class Toolbar extends FrameLayout {
         int marginEnd = (int) Math.ceil(8 / context.getResources().getDisplayMetrics().density);
         LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
         params.gravity = Gravity.CENTER;
-        params.setMarginEnd(marginEnd);
+        params.setMarginStart(24);
+        params.setMarginEnd(24);
         button.setLayoutParams(params);
 
 
@@ -219,7 +220,7 @@ public class Toolbar extends FrameLayout {
         else {
             boolean spaceLeft = false;
             for (int i=0; i < mRows.size(); i++) {
-                int expectedRowWidth = getVisibleItemCount(i) * dpToPixels(30 + 2 * 4);
+                int expectedRowWidth = getVisibleItemCount(i) * dpToPixels(48 + 2 * 4);
                 if (expectedRowWidth <= width) {
                     mRows.get(i).addView(button, mRows.get(i).getChildCount());
                     spaceLeft = true;
@@ -230,11 +231,11 @@ public class Toolbar extends FrameLayout {
                 LinearLayout row = new LinearLayout(getContext());
                 params = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
                 row.setLayoutParams(params);
-                row.setPadding(20,10,20,10);
+                row.setPadding(10,10,10,10);
                 row.setOrientation(LinearLayout.HORIZONTAL);
                 row.addView(button);
                 mRows.add(row);
-                mScroll.addView(mRows.get(mRows.size()-1));
+                mToolbarLayout.addView(mRows.get(mRows.size() - 1));
             }
         }
 
