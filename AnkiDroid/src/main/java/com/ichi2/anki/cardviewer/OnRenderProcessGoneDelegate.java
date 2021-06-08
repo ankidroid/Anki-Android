@@ -26,10 +26,10 @@ import com.afollestad.materialdialogs.MaterialDialog;
 import com.ichi2.anki.AbstractFlashcardViewer;
 import com.ichi2.anki.R;
 import com.ichi2.anki.UIUtils;
-import com.ichi2.libanki.Card;
 
 import java.util.concurrent.locks.Lock;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
 import timber.log.Timber;
@@ -55,7 +55,6 @@ public class OnRenderProcessGoneDelegate {
         Timber.i("Obtaining write lock for card");
         Lock writeLock = mTarget.getWriteLock();
         WebView mCardWebView = mTarget.getWebView();
-        Card mCurrentCard = mTarget.getCurrentCard();
         Timber.i("Obtained write lock for card");
         try {
             writeLock.lock();
@@ -70,33 +69,29 @@ public class OnRenderProcessGoneDelegate {
 
             mTarget.destroyWebViewFrame();
 
-            //We only want to show one message per branch.
-
-            //It's not necessarily an OOM crash, false implies a general code which is for "system terminated".
-            int errorCauseId = detail.didCrash() ? R.string.webview_crash_unknown : R.string.webview_crash_oom;
-            String errorCauseString = mTarget.getResources().getString(errorCauseId);
+            // Only show one message per branch
 
             if (!canRecoverFromWebViewRendererCrash()) {
                 Timber.e("Unrecoverable WebView Render crash");
-                String errorMessage = mTarget.getResources().getString(R.string.webview_crash_fatal, errorCauseString);
-                UIUtils.showThemedToast(mTarget, errorMessage, false);
+                displayFatalError(detail);
                 mTarget.finishWithoutAnimation();
                 return true;
             }
 
-            if (webViewRendererLastCrashedOnCard(mCurrentCard.getId())) {
-                Timber.e("Web Renderer crash loop on card: %d", mCurrentCard.getId());
-                displayRenderLoopDialog(mCurrentCard, detail);
+            long currentCardId = mTarget.getCurrentCard().getId();
+
+            if (webViewRendererLastCrashedOnCard(currentCardId)) {
+                Timber.e("Web Renderer crash loop on card: %d", currentCardId);
+                displayRenderLoopDialog(currentCardId, detail);
                 return true;
             }
 
             // If we get here, the error is non-fatal and we should re-render the WebView
             // This logic may need to be better defined. The card could have changed by the time we get here.
-            mLastCrashingCardId = mCurrentCard.getId();
+            mLastCrashingCardId = currentCardId;
 
 
-            String nonFatalError = mTarget.getResources().getString(R.string.webview_crash_nonfatal, errorCauseString);
-            UIUtils.showThemedToast(mTarget, nonFatalError, false);
+            displayNonFatalError(detail);
 
             mTarget.recreateWebViewFrame();
         } finally {
@@ -109,9 +104,33 @@ public class OnRenderProcessGoneDelegate {
         return true;
     }
 
+
+    @RequiresApi(Build.VERSION_CODES.O)
+    protected void displayFatalError(RenderProcessGoneDetail detail) {
+        String errorMessage = mTarget.getResources().getString(R.string.webview_crash_fatal, getErrorCause(detail));
+        UIUtils.showThemedToast(mTarget, errorMessage, false);
+    }
+
+
+    @RequiresApi(Build.VERSION_CODES.O)
+    protected void displayNonFatalError(RenderProcessGoneDetail detail) {
+        String nonFatalError = mTarget.getResources().getString(R.string.webview_crash_nonfatal, getErrorCause(detail));
+        UIUtils.showThemedToast(mTarget, nonFatalError, false);
+    }
+
+
+    @RequiresApi(Build.VERSION_CODES.O)
+    @NonNull
+    protected String getErrorCause(RenderProcessGoneDetail detail) {
+        //It's not necessarily an OOM crash, false implies a general code which is for "system terminated".
+        int errorCauseId = detail.didCrash() ? R.string.webview_crash_unknown : R.string.webview_crash_oom;
+        return mTarget.getResources().getString(errorCauseId);
+    }
+
+
     @TargetApi(Build.VERSION_CODES.O)
-    private void displayRenderLoopDialog(Card currentCard, RenderProcessGoneDetail detail) {
-        String cardInformation = Long.toString(currentCard.getId());
+    protected void displayRenderLoopDialog(long currentCardId, RenderProcessGoneDetail detail) {
+        String cardInformation = Long.toString(currentCardId);
         Resources res = mTarget.getResources();
 
         String errorDetails = detail.didCrash()
@@ -123,7 +142,7 @@ public class OnRenderProcessGoneDelegate {
                 .positiveText(R.string.dialog_ok)
                 .cancelable(false)
                 .canceledOnTouchOutside(false)
-                .onPositive((materialDialog, dialogAction) -> mTarget.finishWithoutAnimation())
+                .onPositive((materialDialog, dialogAction) -> onCloseRenderLoopDialog())
                 .show();
     }
 
@@ -143,5 +162,15 @@ public class OnRenderProcessGoneDelegate {
 
         // Revisit webViewCrashedOnCard() if changing this. Logic currently assumes we have a card.
         return mTarget.getCurrentCard() != null;
+    }
+
+
+    protected void onCloseRenderLoopDialog() {
+        mTarget.finishWithoutAnimation();
+    }
+
+
+    public AbstractFlashcardViewer getTarget() {
+        return mTarget;
     }
 }
