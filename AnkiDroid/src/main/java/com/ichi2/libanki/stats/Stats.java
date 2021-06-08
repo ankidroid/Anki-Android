@@ -994,9 +994,9 @@ public class Stats {
         }
 
         long cutoff = mCol.getSched().getDayCutoff();
-        ArrayList<double[]> list = new ArrayList<>(Collections.nCopies(7, new double[]{0,0,0})); // one by day of the week
-        String query = "SELECT cast(strftime('%w',datetime( cast(id/ 1000  -" + sd.get(Calendar.HOUR_OF_DAY) * 3600 +
-                " as int), 'unixepoch'))as int) as wd, " +
+        ArrayList<double[]> list = new ArrayList<>(7); // one by day of the week
+        String query = "SELECT strftime('%w',datetime( cast(id/ 1000  -" + sd.get(Calendar.HOUR_OF_DAY) * 3600 +
+                " as int), 'unixepoch')) as wd, " +
                 "sum(case when ease = 1 then 0 else 1 end) / " +
                 "cast(count() as float) * 100, " +
                 "count() " +
@@ -1008,15 +1008,13 @@ public class Stats {
         try (Cursor cur = mCol.getDb()
                     .query(query)) {
             while (cur.moveToNext()) {
-                int weekday = cur.getInt(0);
-                list.add(weekday, new double[] {weekday, cur.getDouble(1), cur.getDouble(2) });
+                list.add(new double[] { cur.getDouble(0), cur.getDouble(1), cur.getDouble(2) });
             }
         }
 
         //TODO adjust for breakdown, for now only copied from intervals
         // small adjustment for a proper chartbuilding with achartengine
-
-        if (list.size() == 0 ) { // todo do I remove this because of Collections.nCopies()?
+        if (list.size() == 0 ) {
             list.add(0, new double[] { 0, 0, 0 });
         }
 
