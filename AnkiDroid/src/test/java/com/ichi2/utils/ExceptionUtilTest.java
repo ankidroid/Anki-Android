@@ -48,4 +48,28 @@ public class ExceptionUtilTest {
 
         assertThat(message, is(""));
     }
+
+    @Test
+    public void containsCauseExact() {
+        Exception ex = new IllegalStateException();
+        assertThat(ExceptionUtil.containsCause(ex, IllegalStateException.class), is(true));
+    }
+
+    @Test
+    public void containsCauseNested() {
+        Exception ex = new Exception(new IllegalStateException());
+        assertThat(ExceptionUtil.containsCause(ex, IllegalStateException.class), is(true));
+    }
+
+    @Test
+    public void containsCauseMissing() {
+        Exception ex = new Exception();
+        assertThat(ExceptionUtil.containsCause(ex, IllegalStateException.class), is(false));
+    }
+
+    @Test
+    public void containsCauseMissingNested() {
+        Exception ex = new Exception(new Exception());
+        assertThat(ExceptionUtil.containsCause(ex, IllegalStateException.class), is(false));
+    }
 }

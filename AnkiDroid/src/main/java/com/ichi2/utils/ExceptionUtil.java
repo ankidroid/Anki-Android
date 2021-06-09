@@ -48,4 +48,18 @@ public class ExceptionUtil {
 
         return ret.toString();
     }
+
+    /** Whether the exception is, or contains a cause of a given type */
+    public static <T> boolean containsCause(@NonNull Throwable ex, @NonNull Class<T> clazz) {
+        if (clazz.isInstance(ex)) {
+            return true;
+        }
+
+        Throwable cause = ex.getCause();
+        if (cause == null) {
+            return false;
+        }
+
+        return containsCause(cause, clazz);
+    }
 }
