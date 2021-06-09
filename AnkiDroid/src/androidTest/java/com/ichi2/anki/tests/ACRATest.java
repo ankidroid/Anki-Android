@@ -11,6 +11,7 @@ import com.ichi2.anki.AnkiDroidApp;
 import com.ichi2.anki.R;
 
 import org.acra.ACRA;
+import org.acra.annotation.AcraLimiter;
 import org.acra.builder.ReportBuilder;
 import org.acra.collections.ImmutableList;
 import org.acra.config.ACRAConfigurationException;
@@ -36,6 +37,7 @@ import static org.hamcrest.Matchers.is;
 import static org.junit.Assert.assertArrayEquals;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 
 @RunWith(androidx.test.ext.junit.runners.AndroidJUnit4.class)
@@ -69,6 +71,14 @@ public class ACRATest extends InstrumentedTest {
         Method method = mApp.getClass().getDeclaredMethod("set" + mode + "ACRAConfig", SharedPreferences.class);
         method.setAccessible(true);
         method.invoke(mApp, prefs);
+    }
+
+    @Test
+    public void stackTraceLimitIsThree() {
+        // Discussed in #9075 - we can up the limit now we have less crashes
+        AcraLimiter annotation = AnkiDroidApp.class.getAnnotation(AcraLimiter.class);
+        assertNotNull(annotation);
+        assertThat(annotation.stacktraceLimit(), is(3));
     }
 
     @Test

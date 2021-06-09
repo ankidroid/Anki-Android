@@ -146,8 +146,7 @@ import static timber.log.Timber.DebugTree;
         resText = R.string.feedback_auto_toast_text
 )
 @AcraLimiter(
-        exceptionClassLimit = 1000,
-        stacktraceLimit = 1
+        exceptionClassLimit = 1000
 )
 public class AnkiDroidApp extends Application {
 
