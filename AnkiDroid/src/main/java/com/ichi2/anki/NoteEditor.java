@@ -1758,11 +1758,11 @@ public class NoteEditor extends AnkiActivity implements
                 try {
                     if (hasFocus) {
                         // we only want to decorate when we lose focus
-                        InputMethodManager imm = (InputMethodManager)getSystemService(
+                        InputMethodManager inputMethodManager = (InputMethodManager)getSystemService(
                                 Context.INPUT_METHOD_SERVICE);
-                        imm.hideSoftInputFromWindow(editText.getWindowToken(), 0);
+                        inputMethodManager.hideSoftInputFromWindow(editText.getWindowToken(), 0);
                         editText.postDelayed(() -> {
-                            imm.showSoftInput(editText, 0);
+                            inputMethodManager.showSoftInput(editText, 0);
                         }, 100);
                         return;
                     }
