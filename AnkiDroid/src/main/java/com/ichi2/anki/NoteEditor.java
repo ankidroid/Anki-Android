@@ -46,7 +46,6 @@ import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
 
-import android.util.Log;
 import android.util.Pair;
 import android.view.ActionMode;
 import android.view.KeyEvent;
@@ -1762,16 +1761,9 @@ public class NoteEditor extends AnkiActivity implements
                         InputMethodManager imm = (InputMethodManager)getSystemService(
                                 Context.INPUT_METHOD_SERVICE);
                         imm.hideSoftInputFromWindow(editText.getWindowToken(), 0);
-                        editText.postDelayed(new Runnable()
-                        {
-                            @Override
-                            public void run()
-                            {
-                                imm.showSoftInput(editText, 0);
-                            }
+                        editText.postDelayed(() -> {
+                            imm.showSoftInput(editText, 0);
                         }, 100);
-
-
                         return;
                     }
                     String[] currentFieldStrings = getCurrentFieldStrings();
