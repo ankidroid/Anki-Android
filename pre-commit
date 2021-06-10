@@ -11,7 +11,10 @@ fi;
 echo "Running Ktlint over these files:"
 echo "$CHANGED_FILES"
 
-./gradlew ktlintFormat
+# -q removes noise from the output if it fails.
+# TODO: -w is better, but https://github.com/JLLeitschuh/ktlint-gradle/issues/457 adds noise
+# -w should display: "CriticalExceptionTest.kt:19:1 Wildcard import (cannot be auto-corrected)"
+./gradlew -q ktlintFormat
 
 echo "Completed ./gradlew ktlintFormat run."
 echo "$CHANGED_FILES" | while read -r file; do
