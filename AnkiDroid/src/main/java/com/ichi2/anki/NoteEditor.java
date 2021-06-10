@@ -1758,6 +1758,7 @@ public class NoteEditor extends AnkiActivity implements
             editText.setOnFocusChangeListener((v, hasFocus) -> {
                 try {
                     if (hasFocus) {
+                        // we only want to decorate when we lose focus
                         InputMethodManager imm = (InputMethodManager)getSystemService(
                                 Context.INPUT_METHOD_SERVICE);
                         imm.hideSoftInputFromWindow(editText.getWindowToken(), 0);
@@ -1789,6 +1790,7 @@ public class NoteEditor extends AnkiActivity implements
                 }
             });
         }
+
         // Sets the background color of disabled EditText.
         if (!enabled) {
             editText.setBackgroundColor(Themes.getColorFromAttr(NoteEditor.this, R.attr.editTextBackgroundColor));
