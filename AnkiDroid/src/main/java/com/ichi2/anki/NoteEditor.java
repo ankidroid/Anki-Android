@@ -46,6 +46,7 @@ import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
 
+import android.util.Log;
 import android.util.Pair;
 import android.view.ActionMode;
 import android.view.KeyEvent;
@@ -56,6 +57,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewGroup.MarginLayoutParams;
 import android.view.WindowManager;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemSelectedListener;
 import android.widget.ArrayAdapter;
@@ -1756,7 +1758,19 @@ public class NoteEditor extends AnkiActivity implements
             editText.setOnFocusChangeListener((v, hasFocus) -> {
                 try {
                     if (hasFocus) {
-                        // we only want to decorate when we lose focus
+                        InputMethodManager imm = (InputMethodManager)getSystemService(
+                                Context.INPUT_METHOD_SERVICE);
+                        imm.hideSoftInputFromWindow(editText.getWindowToken(), 0);
+                        editText.postDelayed(new Runnable()
+                        {
+                            @Override
+                            public void run()
+                            {
+                                imm.showSoftInput(editText, 0);
+                            }
+                        }, 100);
+
+
                         return;
                     }
                     String[] currentFieldStrings = getCurrentFieldStrings();
@@ -1775,7 +1789,6 @@ public class NoteEditor extends AnkiActivity implements
                 }
             });
         }
-
         // Sets the background color of disabled EditText.
         if (!enabled) {
             editText.setBackgroundColor(Themes.getColorFromAttr(NoteEditor.this, R.attr.editTextBackgroundColor));
