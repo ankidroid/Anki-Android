@@ -45,6 +45,8 @@ public class UsageAnalytics {
 
     public static final String ANALYTICS_OPTIN_KEY = "analyticsOptIn";
     private static GoogleAnalytics sAnalytics;
+    /** Analytics which ignore the percentage threshold if consent is provided */
+    private static GoogleAnalytics sCriticalAnalytics;
     private static Thread.UncaughtExceptionHandler sOriginalUncaughtExceptionHandler;
     private static boolean sOptIn = false;
     private static String sAnalyticsTrackingId;
@@ -62,24 +64,8 @@ public class UsageAnalytics {
         Timber.i("initialize()");
         if (sAnalytics == null) {
             Timber.d("App tracking id 'tid' = %s", getAnalyticsTag(context));
-            GoogleAnalyticsConfig gaConfig = new GoogleAnalyticsConfig()
-                    .setBatchingEnabled(true)
-                    .setSamplePercentage(getAnalyticsSamplePercentage(context))
-                    .setBatchSize(1); // until this handles application termination we will lose hits if batch>1
-            sAnalytics = GoogleAnalytics.builder()
-                    .withTrackingId(getAnalyticsTag(context))
-                    .withConfig(gaConfig)
-                    .withDefaultRequest(new AndroidDefaultRequest()
-                            .setAndroidRequestParameters(context)
-                            .applicationName(context.getString(R.string.app_name))
-                            .applicationVersion(Integer.toString(BuildConfig.VERSION_CODE))
-                            .applicationId(BuildConfig.APPLICATION_ID)
-                            .trackingId(getAnalyticsTag(context))
-                            .clientId(Installation.id(context))
-                            .anonymizeIp(context.getResources().getBoolean(R.bool.ga_anonymizeIp))
-                    )
-                    .withHttpClient(new OkHttpClientImpl(gaConfig))
-                    .build();
+            sAnalytics = buildAnalytics(context, getAnalyticsSamplePercentage(context));
+            sCriticalAnalytics = buildAnalytics(context, 100);
         }
 
         installDefaultExceptionHandler();
@@ -93,6 +79,28 @@ public class UsageAnalytics {
         });
 
         return sAnalytics;
+    }
+
+
+    protected static GoogleAnalytics buildAnalytics(Context context, int analyticsSamplePercentage) {
+        GoogleAnalyticsConfig gaConfig = new GoogleAnalyticsConfig()
+                .setBatchingEnabled(true)
+                .setSamplePercentage(analyticsSamplePercentage)
+                .setBatchSize(1); // until this handles application termination we will lose hits if batch>1
+        return GoogleAnalytics.builder()
+                .withTrackingId(getAnalyticsTag(context))
+                .withConfig(gaConfig)
+                .withDefaultRequest(new AndroidDefaultRequest()
+                        .setAndroidRequestParameters(context)
+                        .applicationName(context.getString(R.string.app_name))
+                        .applicationVersion(Integer.toString(BuildConfig.VERSION_CODE))
+                        .applicationId(BuildConfig.APPLICATION_ID)
+                        .trackingId(getAnalyticsTag(context))
+                        .clientId(Installation.id(context))
+                        .anonymizeIp(context.getResources().getBoolean(R.bool.ga_anonymizeIp))
+                )
+                .withHttpClient(new OkHttpClientImpl(gaConfig))
+                .build();
     }
 
 
@@ -149,10 +157,16 @@ public class UsageAnalytics {
     synchronized private static void setOptIn(boolean optIn) {
         Timber.i("setOptIn(): from %s to %s", sOptIn, optIn);
         sOptIn = optIn;
-        sAnalytics.flush();
-        sAnalytics.getConfig().setEnabled(optIn);
-        sAnalytics.performSamplingElection();
-        Timber.d("setOptIn() optIn / sAnalytics.config().enabled(): %s/%s", sOptIn, sAnalytics.getConfig().isEnabled());
+        setOptIn(UsageAnalytics.sAnalytics, optIn);
+        setOptIn(UsageAnalytics.sCriticalAnalytics, optIn);
+        Timber.d("setOptIn() optIn / sAnalytics.config().enabled(): %s/%s", sOptIn, UsageAnalytics.sAnalytics.getConfig().isEnabled());
+    }
+
+
+    private static void setOptIn(@NonNull GoogleAnalytics analytics, boolean optIn) {
+        analytics.flush();
+        analytics.getConfig().setEnabled(optIn);
+        analytics.performSamplingElection();
     }
 
 
@@ -180,11 +194,12 @@ public class UsageAnalytics {
      * Re-Initialize the analytics provider
      */
     synchronized public static void reInitialize() {
-
         // send any pending async hits, re-chain default exception handlers and re-init
         Timber.i("reInitialize()");
         sAnalytics.flush();
         sAnalytics = null;
+        sCriticalAnalytics.flush();
+        sCriticalAnalytics = null;
         unInstallDefaultExceptionHandler();
         initialize(AnkiDroidApp.getInstance().getApplicationContext());
     }
@@ -301,6 +316,21 @@ public class UsageAnalytics {
 
         // If we have a custom data directory, then the crash will not occur.
         return WebViewDebugging.hasSetDataDirectory();
+    }
+
+    /**
+     * Send an exception event out for aggregation/analysis
+     * This method will ignore the sample percentage
+     *
+     * @param exception The exception to send. API limited to 100 characters of the exception (as a string)
+     */
+    public static void sendAnalyticsCriticalException(@NonNull CriticalException exception) {
+        Timber.d("sendAnalyticsCriticalException() description: %s", exception);
+        if (!sOptIn) {
+            return;
+        }
+        // TODO: How do we include an integer ID/string for the "KnownIssue" here?
+        sCriticalAnalytics.exception().exceptionDescription(getCause(exception.getException()).toString()).exceptionFatal(false).sendAsync();
     }
 
 
@@ -442,5 +472,6 @@ public class UsageAnalytics {
     @VisibleForTesting(otherwise = VisibleForTesting.NONE) // TOOD: Make this package-protected
     public static void resetForTests() {
         sAnalytics = null;
+        sCriticalAnalytics = null;
     }
 }
