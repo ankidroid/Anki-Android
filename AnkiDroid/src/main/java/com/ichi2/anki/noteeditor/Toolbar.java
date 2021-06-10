@@ -93,7 +93,7 @@ public class Toolbar extends FrameLayout {
     private void init() {
         LayoutInflater.from(getContext()).inflate(R.layout.note_editor_toolbar, this, true);
 
-        int paintSize = dpToPixels(28);
+        int paintSize = dpToPixels(24);
 
         mStringPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
         mStringPaint.setTextSize(paintSize);
@@ -191,11 +191,10 @@ public class Toolbar extends FrameLayout {
         */
 
         // apply style
-        int marginEnd = (int) Math.ceil(8 / context.getResources().getDisplayMetrics().density);
+        int margin = dpToPixels(8);
         LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
         params.gravity = Gravity.CENTER;
-        params.setMarginStart(24);
-        params.setMarginEnd(24);
+        params.setMargins(margin, margin/2, margin, margin/2);
         button.setLayoutParams(params);
 
 
@@ -204,41 +203,7 @@ public class Toolbar extends FrameLayout {
         button.setPadding(fourDp, fourDp, fourDp, fourDp);
         // end apply style
 
-
-        // Hack - items are truncated from the scrollview
-        View v = findViewById(R.id.editor_toolbar_internal);
-
-        int expectedWidth = getVisibleItemCount(-1) * dpToPixels(48 + 2 * 4); //width + 4dp padding on both sides
-        int width = getScreenWidth();
-        LinearLayout.LayoutParams p = new LinearLayout.LayoutParams(v.getLayoutParams());
-        p.gravity = Gravity.CENTER_VERTICAL | ((expectedWidth > width) ? Gravity.START : Gravity.CENTER_HORIZONTAL);
-        v.setLayoutParams(p);
-
-        if (expectedWidth <= width) {
-            this.mToolbar.addView(button, mToolbar.getChildCount());
-        }
-        else {
-            boolean spaceLeft = false;
-            for (int i=0; i < mRows.size(); i++) {
-                int expectedRowWidth = getVisibleItemCount(i) * dpToPixels(48 + 2 * 4);
-                if (expectedRowWidth <= width) {
-                    mRows.get(i).addView(button, mRows.get(i).getChildCount());
-                    spaceLeft = true;
-                    break;
-                }
-            }
-            if (!spaceLeft) {
-                LinearLayout row = new LinearLayout(getContext());
-                params = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-                row.setLayoutParams(params);
-                row.setPadding(10,10,10,10);
-                row.setOrientation(LinearLayout.HORIZONTAL);
-                row.addView(button);
-                mRows.add(row);
-                mToolbarLayout.addView(mRows.get(mRows.size() - 1));
-            }
-        }
-
+        addViewToToolbar(button);
         mCustomButtons.add(button);
         button.setOnClickListener(l -> runnable.run());
 
@@ -310,15 +275,44 @@ public class Toolbar extends FrameLayout {
     }
 
 
-    private int getVisibleItemCount(int rowNo) {
+    private int getVisibleItemCount(LinearLayout layout) {
         int count = 0;
-        LinearLayout layout = rowNo >= 0 ? mRows.get(rowNo) : mToolbar;
         for (int i = 0; i < layout.getChildCount(); i++) {
             if (layout.getChildAt(i).getVisibility() == View.VISIBLE) {
                 count++;
             }
         }
         return count;
+    }
+
+
+    private void addViewToToolbar(AppCompatImageButton button){
+        int expectedWidth = getVisibleItemCount(mToolbar) * dpToPixels(48); //width
+        int width = getScreenWidth();
+        if (expectedWidth <= width) {
+            mToolbar.setGravity(Gravity.CENTER_HORIZONTAL);
+            this.mToolbar.addView(button, mToolbar.getChildCount());
+        } else {
+            mToolbar.setGravity(Gravity.START);
+            boolean spaceLeft = false;
+            if (!mRows.isEmpty()) {
+                LinearLayout row = mRows.get(mRows.size() - 1);
+                int expectedRowWidth = getVisibleItemCount(row) * dpToPixels(48);
+                if (expectedRowWidth <= width) {
+                    row.addView(button, row.getChildCount());
+                    spaceLeft = true;
+                }
+            }
+            if (!spaceLeft) {
+                LinearLayout row = new LinearLayout(getContext());
+                LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
+                row.setLayoutParams(params);
+                row.setOrientation(LinearLayout.HORIZONTAL);
+                row.addView(button);
+                mRows.add(row);
+                mToolbarLayout.addView(mRows.get(mRows.size() - 1));
+            }
+        }
     }
 
     private void setClick(@IdRes int id, String prefix, String suffix) {

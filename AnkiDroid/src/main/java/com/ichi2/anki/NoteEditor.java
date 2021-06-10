@@ -1908,7 +1908,7 @@ public class NoteEditor extends AnkiActivity implements
 
             // 0th button shows as '1' and is Ctrl + 1
             int visualIndex = b.getIndex() + 1;
-            String text = b.getText().isEmpty() ? Integer.toString(visualIndex) : b.getText();
+            String text = b.getTitle().isEmpty() ? Integer.toString(visualIndex) : b.getTitle().substring(0, 1);
             Drawable bmp = mToolbar.createDrawableForString(text);
 
             View v = mToolbar.insertItem(0, bmp, b.toFormatter());
