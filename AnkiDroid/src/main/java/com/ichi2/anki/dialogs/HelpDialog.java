@@ -82,7 +82,13 @@ public class HelpDialog {
                         new LinkItem(R.string.help_item_mailing_list, R.drawable.ic_email_black_24dp, UsageAnalytics.Actions.OPENED_MAILING_LIST, R.string.link_forum),
                         new LinkItem(R.string.help_item_discord, R.drawable.discord, UsageAnalytics.Actions.OPENED_DISCORD, R.string.link_discord),
                         new LinkItem(R.string.help_item_facebook, R.drawable.facebook, UsageAnalytics.Actions.OPENED_FACEBOOK, R.string.link_facebook),
-                        new LinkItem(R.string.help_item_twitter, R.drawable.twitter, UsageAnalytics.Actions.OPENED_TWITTER, R.string.link_twitter)
+                        new LinkItem(R.string.help_item_twitter, R.drawable.discord, UsageAnalytics.Actions.OPENED_TWITTER, R.string.link_twitter)
+                ),
+                new ItemHeader(R.string.help_title_privacy, R.drawable.ic_baseline_privacy_tip_24, UsageAnalytics.Actions.OPENED_PRIVACY,
+                        new LinkItem(R.string.help_item_terms_and_conditions, R.drawable.ic_baseline_description_24, UsageAnalytics.Actions.OPENED_TERMS_AND_CONDITIONS, R.string.link_terms_and_conditions),
+                        new LinkItem(R.string.help_item_ankidroid_privacy_policy, R.drawable.ic_baseline_policy_24, UsageAnalytics.Actions.OPENED_ANKIDROID_PRIVACY_POLICY, R.string.link_ankidroid_privacy_policy),
+                        new LinkItem(R.string.help_item_ankiweb_privacy_policy, R.drawable.ic_baseline_policy_24, UsageAnalytics.Actions.OPENED_ANKIWEB_PRIVACY_POLICY, R.string.link_ankiweb_privacy_policy),
+                        new LinkItem(R.string.help_item_crash_reports, R.drawable.ic_baseline_report_problem_24, UsageAnalytics.Actions.OPENED_CRASH_REPORTS, R.string.link_crash_reports)
                 )
         };
 
