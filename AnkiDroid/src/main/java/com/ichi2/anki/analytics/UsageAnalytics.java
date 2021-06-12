@@ -384,13 +384,11 @@ public class UsageAnalytics {
         @AnalyticsConstant
         public static final String OPENED_PRIVACY = "Opened Privacy";
         @AnalyticsConstant
-        public static final String OPENED_TERMS_AND_CONDITIONS = "Opened Terms and Conditions";
+        public static final String OPENED_ANKIWEB_TERMS_AND_CONDITIONS = "Opened AnkiWeb Terms and Conditions";
         @AnalyticsConstant
         public static final String OPENED_ANKIDROID_PRIVACY_POLICY = "Opened AnkiDroid Privacy Policy";
         @AnalyticsConstant
         public static final String OPENED_ANKIWEB_PRIVACY_POLICY = "Opened AnkiWeb Privacy Policy";
-        @AnalyticsConstant
-        public static final String OPENED_CRASH_REPORTS = "Opened Crash Reports";
         @AnalyticsConstant
         public static final String OPENED_ANKIDROID_MANUAL = "Opened AnkiDroid Manual";
         @AnalyticsConstant
