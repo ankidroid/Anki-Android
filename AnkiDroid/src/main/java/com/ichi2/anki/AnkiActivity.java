@@ -15,6 +15,7 @@ import android.net.Uri;
 import android.os.Bundle;
 
 import androidx.activity.result.ActivityResultLauncher;
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatDelegate;
 import androidx.appcompat.widget.Toolbar;
@@ -398,7 +399,7 @@ public class AnkiActivity extends AppCompatActivity implements SimpleMessageDial
         }
     }
 
-    public void openUrl(Uri url) {
+    public void openUrl(@NonNull Uri url) {
         //DEFECT: We might want a custom view for the toast, given i8n may make the text too long for some OSes to
         //display the toast
         if (!AdaptionUtil.hasWebBrowser(this)) {
