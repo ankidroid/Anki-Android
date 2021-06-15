@@ -117,7 +117,7 @@ CREATE TABLE col (
     decks           text not null,
       -- json object of json object(s) representing the deck(s)
       -- keys of this object are strings containing integers: "epoch milliseconds creation time" for most decks, "1" for the default deck
-      -- values of this object are of the format described below in "Decks JSONObjects"
+      -- values of this object are other json obects of the form described below in "Decks JSONObjects"
     dconf           text not null,
       -- json array of json objects containing the deck options
     tags            text not null
