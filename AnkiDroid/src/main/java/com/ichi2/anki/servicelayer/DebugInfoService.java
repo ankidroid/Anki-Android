@@ -71,7 +71,7 @@ public class DebugInfoService {
     }
 
     private static boolean isSendingCrashReports(Context context) {
-        return AnkiDroidApp.isAcraEnbled(context, false);
+        return AnkiDroidApp.isAcraEnabled(context, false);
     }
 
 }
