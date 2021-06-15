@@ -94,6 +94,8 @@
     <string name="gestures_allow_links_summary">Dotyková gesta nebudou provedena, jestliže se stiskne odkaz/nápověda.</string>
     <string name="gestures_corner_touch" maxLength="41">Devítibodový dotyk</string>
     <string name="gestures_corner_touch_summary">Povolí dotyková gesta v rozích obrazovky</string>
+    <string name="gestures_full_screen_nav_drawer" maxLength="41">Full screen navigation drawer</string>
+    <string name="gestures_fullscreen_nav_drawer_summary">Open navigation drawer when swiped right from anywhere on the screen</string>
     <string name="gestures_swipe_up" maxLength="41">Tažení nahoru</string>
     <string name="gestures_swipe_down" maxLength="41">Tažení dolů</string>
     <string name="gestures_swipe_left" maxLength="41">Tažení doleva</string>
@@ -163,6 +165,8 @@
     <string name="pref_backup_max" maxLength="41">Maximální počet záloh</string>
     <string name="show_estimates" maxLength="41">Zobrazit tlačítko času</string>
     <string name="show_estimates_summ">Zobrazit čas příštího opakování na tlačítkách odpovědí</string>
+    <string name="show_large_answer_buttons" maxLength="41">Show large answer buttons</string>
+    <string name="show_large_answer_buttons_summ">Show answer button in 2 rows</string>
     <string name="show_top_bar" maxLength="41">Zobrazit horní lištu</string>
     <string name="show_top_bar_summ">Zobrazit počty karet, příznak a označení v horní liště</string>
     <string name="show_progress" maxLength="41">Zobrazit zbývající</string>

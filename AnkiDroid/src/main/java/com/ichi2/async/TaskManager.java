@@ -22,6 +22,17 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.annotation.VisibleForTesting;
 
+/**
+ * The TaskManager has two related purposes.
+ *
+ * A concrete TaskManager's mission is to take a TaskDelegate, potentially a CollectionListener, and execute them.
+ * Currently, the default TaskManager is SingleTaskManager, which executes the tasks in order in which they are generated. It essentially consists in using basic AsyntTask properties with CollectionTask.
+ * It should eventually be replaced by non deprecated system.
+ *
+ * The only other TaskManager currently is ForegroundTaskManager, which runs everything foreground and is used for unit testings.
+ *
+ * The class itself contains a static element which is the currently used TaskManager. Tasks can be executed on the current TaskManager with the static method launchTaskManager.
+ */
 public abstract class TaskManager {
     @NonNull private static TaskManager sTaskManager = new SingleTaskManager();
 
@@ -56,11 +67,11 @@ public abstract class TaskManager {
         sTaskManager.setLatestInstanceConcrete(task);
     }
 
-    public static <ProgressBackground, ResultBackground> CollectionTask<ProgressBackground, ResultBackground> launchCollectionTask(CollectionTask.Task<ProgressBackground, ResultBackground> task) {
+    public static <Progress, Result> CollectionTask<Progress, Result> launchCollectionTask(CollectionTask.Task<Progress, Result> task) {
         return sTaskManager.launchCollectionTaskConcrete(task);
     }
 
-    public abstract <ProgressBackground, ResultBackground> CollectionTask<ProgressBackground, ResultBackground> launchCollectionTaskConcrete(CollectionTask.Task<ProgressBackground, ResultBackground> task);
+    public abstract <Progress, Result> CollectionTask<Progress, Result> launchCollectionTaskConcrete(CollectionTask.Task<Progress, Result> task);
 
 
     protected abstract void setLatestInstanceConcrete(CollectionTask task);
@@ -76,15 +87,15 @@ public abstract class TaskManager {
      * @param listener to the status and result of the task, may be null
      * @return the newly created task
      */
-    public static <ProgressBackground, ResultBackground> CollectionTask<ProgressBackground, ResultBackground>
-    launchCollectionTask(@NonNull CollectionTask.Task<ProgressBackground, ResultBackground> task,
-                         @Nullable TaskListener<? super ProgressBackground, ? super ResultBackground> listener) {
+    public static <Progress, Result> CollectionTask<Progress, Result>
+    launchCollectionTask(@NonNull CollectionTask.Task<Progress, Result> task,
+                         @Nullable TaskListener<? super Progress, ? super Result> listener) {
         return sTaskManager.launchCollectionTaskConcrete(task, listener);
     }
 
-    public abstract <ProgressBackground, ResultBackground> CollectionTask<ProgressBackground, ResultBackground>
-    launchCollectionTaskConcrete(@NonNull CollectionTask.Task<ProgressBackground, ResultBackground> task,
-                         @Nullable TaskListener<? super ProgressBackground, ? super ResultBackground> listener);
+    public abstract <Progress, Result> CollectionTask<Progress, Result>
+    launchCollectionTaskConcrete(@NonNull CollectionTask.Task<Progress, Result> task,
+                         @Nullable TaskListener<? super Progress, ? super Result> listener);
 
     /**
      * Block the current thread until the currently running CollectionTask instance (if any) has finished.

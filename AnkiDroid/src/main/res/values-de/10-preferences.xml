@@ -94,6 +94,8 @@
     <string name="gestures_allow_links_summary">Berührungsgesten werden nicht verarbeitet, falls ein Weblink/Hinweis angetippt wird.</string>
     <string name="gestures_corner_touch" maxLength="41">9-Punkt-Berührung</string>
     <string name="gestures_corner_touch_summary">Berührungsgesten in Bildschirmecken erlauben</string>
+    <string name="gestures_full_screen_nav_drawer" maxLength="41">Full screen navigation drawer</string>
+    <string name="gestures_fullscreen_nav_drawer_summary">Open navigation drawer when swiped right from anywhere on the screen</string>
     <string name="gestures_swipe_up" maxLength="41">Nach oben wischen</string>
     <string name="gestures_swipe_down" maxLength="41">Nach unten wischen</string>
     <string name="gestures_swipe_left" maxLength="41">Nach links wischen</string>
@@ -163,6 +165,8 @@
     <string name="pref_backup_max" maxLength="41">Maximale Anzahl an Sicherungen</string>
     <string name="show_estimates" maxLength="41">Wiederholungszeiten anzeigen</string>
     <string name="show_estimates_summ">Zeigt Zeiten bis zur nächsten Wiederholung auf den Antwortschaltflächen</string>
+    <string name="show_large_answer_buttons" maxLength="41">Show large answer buttons</string>
+    <string name="show_large_answer_buttons_summ">Show answer button in 2 rows</string>
     <string name="show_top_bar" maxLength="41">Obere Leiste anzeigen</string>
     <string name="show_top_bar_summ">Kartenanzahl, Flagge und Markierung in oberer Leiste anzeigen</string>
     <string name="show_progress" maxLength="41">Fällige anzeigen</string>

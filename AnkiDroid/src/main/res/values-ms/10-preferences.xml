@@ -94,6 +94,8 @@
     <string name="gestures_allow_links_summary">Touch gestures will not be processed if a link/hint is pressed.</string>
     <string name="gestures_corner_touch" maxLength="41">9-point touch</string>
     <string name="gestures_corner_touch_summary">Allow touch gestures in screen corners</string>
+    <string name="gestures_full_screen_nav_drawer" maxLength="41">Full screen navigation drawer</string>
+    <string name="gestures_fullscreen_nav_drawer_summary">Open navigation drawer when swiped right from anywhere on the screen</string>
     <string name="gestures_swipe_up" maxLength="41">Sapu ke atas</string>
     <string name="gestures_swipe_down" maxLength="41">Swipe down</string>
     <string name="gestures_swipe_left" maxLength="41">Leret ke kiri</string>
@@ -164,6 +166,8 @@ minit yang lalu.</string>
     <string name="pref_backup_max" maxLength="41">Max number of backups</string>
     <string name="show_estimates" maxLength="41">Show button time</string>
     <string name="show_estimates_summ">Show next review time on answer buttons</string>
+    <string name="show_large_answer_buttons" maxLength="41">Show large answer buttons</string>
+    <string name="show_large_answer_buttons_summ">Show answer button in 2 rows</string>
     <string name="show_top_bar" maxLength="41">Show Top Bar</string>
     <string name="show_top_bar_summ">Show card counts, flag and mark in top bar</string>
     <string name="show_progress" maxLength="41">Show remaining</string>

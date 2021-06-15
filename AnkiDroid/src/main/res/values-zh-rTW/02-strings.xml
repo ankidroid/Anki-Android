@@ -110,7 +110,6 @@
     <string name="note_editor_no_cards_created">未建立卡片。請輸入更多欄位</string>
     <string name="note_editor_no_first_field">第一欄位為空</string>
     <string name="note_editor_no_cloze_delations">此筆記類型必須包含克漏字測驗</string>
-    <string name="note_editor_set_field_language">選擇欄位語言</string>
     <string name="note_editor_no_cards_created_all_fields">目前的筆記類型不會產生任何卡片。請選擇其他的筆記類型，或點擊「卡片」並新增取代欄位</string>
     <string name="note_editor_insert_cloze_no_cloze_note_type">克漏字測驗僅工作於克漏字筆記類型</string>
     <string name="saving_facts">儲存筆記中</string>

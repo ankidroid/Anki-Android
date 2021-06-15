@@ -94,6 +94,8 @@
     <string name="gestures_allow_links_summary">Сэнсарныя жэсты не будуць успрымацца, калі націснута спасылка або падказка.</string>
     <string name="gestures_corner_touch" maxLength="41">9-пунктавы дотык</string>
     <string name="gestures_corner_touch_summary">Дазволіць сэнсарныя жэсты ў вуглах экрана</string>
+    <string name="gestures_full_screen_nav_drawer" maxLength="41">Full screen navigation drawer</string>
+    <string name="gestures_fullscreen_nav_drawer_summary">Open navigation drawer when swiped right from anywhere on the screen</string>
     <string name="gestures_swipe_up" maxLength="41">Чырканне ўверх</string>
     <string name="gestures_swipe_down" maxLength="41">Чырканне ўніз</string>
     <string name="gestures_swipe_left" maxLength="41">Чырканне ўлева</string>
@@ -164,6 +166,8 @@
     <string name="pref_backup_max" maxLength="41">Колькасць рэзервовых копій</string>
     <string name="show_estimates" maxLength="41">Паказваць кнопку часу</string>
     <string name="show_estimates_summ">Паказваць наступны час паўтарэння над кнопкай адказу</string>
+    <string name="show_large_answer_buttons" maxLength="41">Show large answer buttons</string>
+    <string name="show_large_answer_buttons_summ">Show answer button in 2 rows</string>
     <string name="show_top_bar" maxLength="41">Паказваць верхнюю панэль</string>
     <string name="show_top_bar_summ">Паказваць лічыльнік картак, сцяжок і пазнаку на верхняй панэлі</string>
     <string name="show_progress" maxLength="41">Паказаць тое, што засталося</string>

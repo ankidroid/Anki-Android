@@ -39,6 +39,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:background="@color/material_grey_600"
+                android:id="@+id/add_deck_label"
                 android:paddingBottom="5dp"
                 android:paddingTop="5dp"
                 android:paddingEnd="10dp"
@@ -73,6 +74,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:background="@color/material_grey_600"
+                android:id="@+id/add_shared_label"
                 android:paddingBottom="5dp"
                 android:paddingTop="5dp"
                 android:paddingEnd="10dp"
@@ -107,6 +109,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:background="@color/material_grey_600"
+                android:id="@+id/add_note_label"
                 android:paddingBottom="5dp"
                 android:paddingTop="5dp"
                 android:paddingEnd="10dp"

@@ -100,8 +100,8 @@
     <string name="menu_import">Import</string>
     <string name="undo">Vrátit zpět</string>
     <string name="undo_action_review">poslední opakování</string>
-    <string name="undo_action_change_deck_multi">změnit balíky</string>
-    <string name="move_all_to_deck">Přemístit vše do balíku</string>
+    <string name="undo_action_change_deck_multi">změnit balíčky</string>
+    <string name="move_all_to_deck">Přesunout vše do balíčku</string>
     <string name="unbury">Zrušit přeskočení</string>
     <string name="rename_deck">Přejmenovat balíček</string>
     <string name="create_shortcut">Vytvořit zástupce</string>
@@ -164,7 +164,7 @@
     <string name="custom_study_deck_name">Dodatečné procvičování</string>
     <string name="custom_study_deck_exists">Nejdříve přejmenujte stávající balíček vlastního učení</string>
     <string name="empty_deck">Tento balíček je prázdný</string>
-    <string name="search_deck">Deck Search</string>
+    <string name="search_deck">Hledat balíček</string>
     <string name="empty_deck_add_note">Přidat kartu</string>
     <string name="invalid_deck_name">Neplatný název balíčku</string>
     <string name="studyoptions_empty">Tento balíček je prázdný. Stiskněte tlačítko +, abyste přidali nový obsah.</string>

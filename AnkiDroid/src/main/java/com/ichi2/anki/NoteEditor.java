@@ -39,6 +39,7 @@ import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
 import androidx.annotation.StringRes;
 import androidx.annotation.VisibleForTesting;
+import androidx.appcompat.widget.AppCompatButton;
 import androidx.appcompat.widget.PopupMenu;
 
 import android.text.Editable;
@@ -220,8 +221,8 @@ public class NoteEditor extends AnkiActivity implements
 
     private TagsDialogFactory mTagsDialogFactory;
 
-    private TextView mTagsButton;
-    private TextView mCardsButton;
+    private AppCompatButton mTagsButton;
+    private AppCompatButton mCardsButton;
     private Spinner mNoteTypeSpinner;
     private DeckSpinnerSelection mDeckSpinnerSelection;
 
@@ -510,8 +511,8 @@ public class NoteEditor extends AnkiActivity implements
 
         mFieldsLayoutContainer = findViewById(R.id.CardEditorEditFieldsLayout);
 
-        mTagsButton = findViewById(R.id.CardEditorTagText);
-        mCardsButton = findViewById(R.id.CardEditorCardsText);
+        mTagsButton = findViewById(R.id.CardEditorTagButton);
+        mCardsButton = findViewById(R.id.CardEditorCardsButton);
         mCardsButton.setOnClickListener(v -> {
             Timber.i("NoteEditor:: Cards button pressed. Opening template editor");
             showCardTemplateEditor();

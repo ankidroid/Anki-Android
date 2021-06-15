@@ -1112,7 +1112,8 @@ public class CardBrowser extends NavigationDrawerActivity implements
     }
 
 
-    private void flagTask (int flag) {
+    @VisibleForTesting
+    public void flagTask (int flag) {
         TaskManager.launchCollectionTask(
                 new CollectionTask.Flag(getSelectedCardIds(), flag),
                 flagCardHandler());
@@ -1520,12 +1521,10 @@ public class CardBrowser extends NavigationDrawerActivity implements
             mCards.reset();
             mCardsAdapter.notifyDataSetChanged();
             //  estimate maximum number of cards that could be visible (assuming worst-case minimum row height of 20dp)
-            int numCardsToRender = (int) Math.ceil(mCardsListView.getHeight() /
-                    TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 20, getResources().getDisplayMetrics())) + 5;
             // Perform database query to get all card ids
             TaskManager.launchCollectionTask(new CollectionTask.SearchCards(searchText,
                             (mOrder != CARD_ORDER_NONE),
-                            numCardsToRender,
+                            numCardsToRender(),
                             mColumn1Index,
                             mColumn2Index),
                     mSearchCardsHandler
@@ -1533,6 +1532,11 @@ public class CardBrowser extends NavigationDrawerActivity implements
         }
     }
 
+    @VisibleForTesting
+    protected int numCardsToRender() {
+        return (int) Math.ceil(mCardsListView.getHeight() /
+                TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 20, getResources().getDisplayMetrics())) + 5;
+    }
 
     private void updateList() {
         if (colIsOpen() && mCardsAdapter!= null) {
@@ -1925,7 +1929,8 @@ public class CardBrowser extends NavigationDrawerActivity implements
 
 
     private final SearchCardsHandler mSearchCardsHandler = new SearchCardsHandler(this);
-    private class SearchCardsHandler extends ListenerWithProgressBar<List<CardCache>, List<CardCache>> {
+    @VisibleForTesting
+    class SearchCardsHandler extends ListenerWithProgressBar<List<CardCache>, List<CardCache>> {
         public SearchCardsHandler(CardBrowser browser) {
             super(browser);
         }
@@ -2384,12 +2389,14 @@ public class CardBrowser extends NavigationDrawerActivity implements
        onSelectionChanged();
     }
 
-    private void onSelectAll() {
+    @VisibleForTesting
+    void onSelectAll() {
         mCheckedCards.addAll(mCards.unsafeGetWrapped());
         onSelectionChanged();
     }
 
-    private void onSelectNone() {
+    @VisibleForTesting
+    void onSelectNone() {
         mCheckedCards.clear();
         onSelectionChanged();
     }
@@ -2446,7 +2453,8 @@ public class CardBrowser extends NavigationDrawerActivity implements
         mCardsAdapter.notifyDataSetChanged();
     }
 
-    private CardCollection<CardCache> getCards() {
+    @VisibleForTesting
+    CardCollection<CardCache> getCards() {
         mCards.ensureValidValue();
         return mCards;
     }

@@ -110,7 +110,6 @@
     <string name="note_editor_no_cards_created">Карткі не створаныя. Калі ласка, запоўніце больш палёў.</string>
     <string name="note_editor_no_first_field">Першае поле пустое</string>
     <string name="note_editor_no_cloze_delations">Гэты тып запісу павінен змяшчаць пропускі ў тэксце</string>
-    <string name="note_editor_set_field_language">Прызначыць мову поля</string>
     <string name="note_editor_no_cards_created_all_fields">Бягучы тып запісу не мае ніводнай карткі.\nКалі ласка выберыце іншы тып запісу або націсніце \"Карткі\" і дадайце поле падстаноўкі.</string>
     <string name="note_editor_insert_cloze_no_cloze_note_type">Заданні з пропускамі будуць працаваць толькі ў тыпе запісу з пропускамі</string>
     <string name="saving_facts">Захаванне запісу</string>
