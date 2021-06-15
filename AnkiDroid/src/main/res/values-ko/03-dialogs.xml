@@ -225,10 +225,6 @@
     <string name="help_item_twitter">Twitter</string>
     <string name="help_title_send_exception">문제 해결 보고서 보내기</string>
     <string name="help_dialog_exception_report_debounce">이미 제출한 보고서입니다.</string>
-    <string name="help_title_privacy">은둔</string>
-    <string name="help_item_ankidroid_privacy_policy">AnkiDroid 개인 정보 보호 정책</string>
-    <string name="help_item_ankiweb_privacy_policy">AnkiWeb 개인 정보 보호 정책</string>
-    <string name="help_item_ankiweb_terms_and_conditions">AnkiWeb 이용 약관</string>
     <!--Sync-->
     <plurals name="sync_automatic_sync_needs_more_time">
         <item quantity="other">%d초 안에 자동으로 동기화될 수 있습니다.</item>

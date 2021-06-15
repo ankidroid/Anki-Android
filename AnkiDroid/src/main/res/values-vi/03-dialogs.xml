@@ -225,10 +225,6 @@
     <string name="help_item_twitter">Twitter</string>
     <string name="help_title_send_exception">Gửi báo cáo khắc phục sự cố</string>
     <string name="help_dialog_exception_report_debounce">Báo cáo đã được gửi</string>
-    <string name="help_title_privacy">Riêng tư</string>
-    <string name="help_item_ankidroid_privacy_policy">Chính sách quyền riêng tư của AnkiDroid</string>
-    <string name="help_item_ankiweb_privacy_policy">Chính sách quyền riêng tư của AnkiWeb</string>
-    <string name="help_item_ankiweb_terms_and_conditions">Điều khoản và điều kiện của AnkiWeb</string>
     <!--Sync-->
     <plurals name="sync_automatic_sync_needs_more_time">
         <item quantity="other">Đồng bộ hóa tự động có thể được kích hoạt sau %d giây</item>
