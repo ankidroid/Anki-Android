@@ -41,6 +41,7 @@ import android.webkit.URLUtil;
 
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.ichi2.anim.ActivityTransitionAnimation;
+import com.ichi2.anki.analytics.Acra;
 import com.ichi2.anki.contextmenu.AnkiCardContextMenu;
 import com.ichi2.anki.contextmenu.CardBrowserContextMenu;
 import com.ichi2.anki.debug.DatabaseLock;
@@ -844,11 +845,7 @@ public class Preferences extends AppCompatPreferenceActivity implements Preferen
                 }
                 case AnkiDroidApp.FEEDBACK_REPORT_KEY: {
                     String value = prefs.getString(AnkiDroidApp.FEEDBACK_REPORT_KEY, "");
-                    AnkiDroidApp.getInstance().setAcraReportingMode(value);
-                    // If the user changed error reporting, make sure future reports have a chance to post
-                    AnkiDroidApp.deleteACRALimiterData(this);
-                    // We also need to re-chain our UncaughtExceptionHandlers
-                    UsageAnalytics.reInitialize();
+                    Acra.onPreferenceChanged(this, value);
                     break;
                 }
                 case "syncAccount": {
