@@ -189,10 +189,6 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
     public static final int EASE_3 = 3;
     public static final int EASE_4 = 4;
 
-    /** Maximum time in milliseconds to wait before accepting answer button presses. */
-    @VisibleForTesting
-    protected static final int DOUBLE_TAP_IGNORE_THRESHOLD = 200;
-
     /** Time to wait in milliseconds before resuming fullscreen mode **/
     protected static final int INITIAL_HIDE_DELAY = 200;
 
@@ -244,6 +240,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
     private boolean mScrollingButtons;
     private boolean mGesturesEnabled;
     private boolean mLargeAnswerButtons;
+    private int mDoubleTapTimeInterval = DEFAULT_DOUBLE_TAP_TIME_INTERVAL;
     // Android WebView
     protected boolean mSpeakText;
     protected boolean mDisableClipboard = false;
@@ -323,6 +320,9 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
     private boolean mButtonHeightSet = false;
 
     private static final int sShowChosenAnswerLength = 2000;
+
+    public static final String DOUBLE_TAP_TIME_INTERVAL = "doubleTapTimeInterval";
+    public static final int DEFAULT_DOUBLE_TAP_TIME_INTERVAL = 200;
 
     /**
      * A record of the last time the "show answer" or ease buttons were pressed. We keep track
@@ -424,7 +424,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
         public void onClick(View view) {
             Timber.i("AbstractFlashcardViewer:: Show answer button pressed");
             // Ignore what is most likely an accidental double-tap.
-            if (getElapsedRealTime() - mLastClickTime < DOUBLE_TAP_IGNORE_THRESHOLD) {
+            if (getElapsedRealTime() - mLastClickTime < mDoubleTapTimeInterval) {
                 return;
             }
             mLastClickTime = getElapsedRealTime();
@@ -475,7 +475,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
             // or if the button was not touched,
             if (mPrevCard == mCurrentCard || !mHasBeenTouched)  {
                 // Only perform if the click was not an accidental double-tap
-                if (getElapsedRealTime() - mLastClickTime >= DOUBLE_TAP_IGNORE_THRESHOLD) {
+                if (getElapsedRealTime() - mLastClickTime >= mDoubleTapTimeInterval) {
                     // For whatever reason, performClick does not return a visual feedback anymore
                     if (!mHasBeenTouched) {
                         view.setPressed(true);
@@ -1921,6 +1921,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
         mPrefShowTopbar = preferences.getBoolean("showTopbar", true);
         mFocusTypeAnswer = preferences.getBoolean("autoFocusTypeInAnswer", false);
         mLargeAnswerButtons = preferences.getBoolean("showLargeAnswerButtons", false);
+        mDoubleTapTimeInterval = preferences.getInt(DOUBLE_TAP_TIME_INTERVAL, DEFAULT_DOUBLE_TAP_TIME_INTERVAL);
 
         mGesturesEnabled = AnkiDroidApp.initiateGestures(preferences);
         mLinkOverridesTouchGesture = preferences.getBoolean("linkOverridesTouchGesture", false);
