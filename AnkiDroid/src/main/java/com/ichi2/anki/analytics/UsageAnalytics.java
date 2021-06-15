@@ -88,7 +88,9 @@ public class UsageAnalytics {
         setOptIn(userPrefs.getBoolean(ANALYTICS_OPTIN_KEY, false));
         userPrefs.registerOnSharedPreferenceChangeListener((sharedPreferences, key) -> {
             if (key.equals(ANALYTICS_OPTIN_KEY)) {
-                setOptIn(sharedPreferences.getBoolean(key, false));
+                boolean newValue = sharedPreferences.getBoolean(key, false);
+                Timber.i("Setting analytics opt-in to: %b", newValue);
+                setOptIn(newValue);
             }
         });
 
@@ -355,6 +357,13 @@ public class UsageAnalytics {
     public static boolean isEnabled() {
         SharedPreferences userPrefs = AnkiDroidApp.getSharedPrefs(AnkiDroidApp.getInstance());
         return userPrefs.getBoolean(ANALYTICS_OPTIN_KEY, false);
+    }
+
+    public static void setEnabled(boolean value) {
+        // A listener on this preference handles the rest
+        AnkiDroidApp.getSharedPrefs(AnkiDroidApp.getInstance()).edit()
+                .putBoolean(UsageAnalytics.ANALYTICS_OPTIN_KEY, value)
+                .apply();
     }
 
 
