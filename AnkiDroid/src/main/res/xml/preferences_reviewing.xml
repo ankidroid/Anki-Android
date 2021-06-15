@@ -56,6 +56,13 @@
             android:key="newTimezoneHandling"
             android:title="@string/new_timezone"
             android:defaultValue="false" />
+        <com.ichi2.preferences.NumberRangePreference
+            android:defaultValue="200"
+            android:key="doubleTapTimeInterval"
+            android:summary="@string/pref_double_tap_time_interval_summary"
+            android:title="@string/pref_double_tap_time_interval"
+            app:min="0"
+            app:max="2000" />
 
     </PreferenceCategory>
     <PreferenceCategory android:title="@string/pref_cat_flashcard" >
