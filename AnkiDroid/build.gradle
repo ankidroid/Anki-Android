@@ -306,6 +306,7 @@ dependencies {
     implementation 'com.github.yalantis:ucrop:2.2.6'
     implementation 'com.drakeet.drawer:drawer:1.0.3'
     implementation 'org.jetbrains.kotlin:kotlin-stdlib:1.5.10'
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:1.5.10"
     api project(":api")
 
     testImplementation 'org.junit.vintage:junit-vintage-engine:5.7.2'
