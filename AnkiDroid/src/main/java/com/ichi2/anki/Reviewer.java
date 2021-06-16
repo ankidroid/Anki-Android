@@ -27,6 +27,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.content.res.ColorStateList;
+import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.os.Bundle;
@@ -58,6 +59,7 @@ import androidx.appcompat.view.menu.MenuBuilder;
 import androidx.appcompat.app.ActionBar;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
+import androidx.core.content.res.ResourcesCompat;
 import androidx.core.view.ActionProvider;
 import androidx.core.view.MenuItemCompat;
 import androidx.vectordrawable.graphics.drawable.VectorDrawableCompat;
@@ -545,6 +547,34 @@ public class Reviewer extends AbstractFlashcardViewer {
         startActivityForResultWithAnimation(intent, ADD_NOTE, START);
     }
 
+    @Override
+    public boolean onMenuOpened(int featureId, Menu menu) {
+        new Handler().post(() -> {
+            for (int i = 0; i < menu.size(); i++) {
+                MenuItem menuItem = menu.getItem(i);
+                shouldUseDefaultColor(menuItem);
+            }
+        });
+        return super.onMenuOpened(featureId, menu);
+    }
+
+    /**
+     * This Method changes the color of icon if user taps in overflow button.
+     */
+    private void shouldUseDefaultColor(MenuItem menuItem) {
+        Drawable drawable = menuItem.getIcon();
+
+        if (drawable != null && !menuItem.hasSubMenu() && !isFlagResource(menuItem.getItemId())) {
+            drawable.mutate();
+            drawable.setTint(ResourcesCompat.getColor(getResources(), R.color.material_blue_600, null));
+        }
+    }
+
+
+    @Override
+    public void onPanelClosed(int featureId, @NonNull Menu menu) {
+        new Handler().postDelayed(this::refreshActionBar, 100);
+    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -552,6 +582,7 @@ public class Reviewer extends AbstractFlashcardViewer {
         getMenuInflater().inflate(R.menu.reviewer, menu);
 
         displayIconsOnTv(menu);
+        displayIcons(menu);
 
         mActionButtons.setCustomButtonsStatus(menu);
         int alpha = (getControlBlocked() != ReviewerUi.ControlBlock.SLOW) ? Themes.ALPHA_ICON_ENABLED_LIGHT : Themes.ALPHA_ICON_DISABLED_LIGHT ;
@@ -688,6 +719,19 @@ public class Reviewer extends AbstractFlashcardViewer {
 
         setupSubMenu(menu, R.id.action_schedule, new ScheduleProvider(this));
         return super.onCreateOptionsMenu(menu);
+    }
+
+
+    @SuppressLint("RestrictedApi")
+    private void displayIcons(Menu menu) {
+        try {
+            if (menu instanceof MenuBuilder) {
+                MenuBuilder m = (MenuBuilder) menu;
+                m.setOptionalIconsVisible(true);
+            }
+        }catch (Exception | Error e) {
+            Timber.w(e, "Failed to display icons in Over flow menu");
+        }
     }
 
 
