@@ -47,6 +47,7 @@ import com.ichi2.libanki.sched.SchedV2;
 import com.ichi2.testutils.MockTime;
 import com.ichi2.utils.BooleanGetter;
 import com.ichi2.utils.JSONException;
+import com.ichi2.utils.JSONObject;
 
 import net.ankiweb.rsdroid.BackendException;
 import net.ankiweb.rsdroid.testing.RustBackendLoader;
@@ -363,8 +364,10 @@ public class RobolectricTest implements CollectionGetter {
         for (String field : fields) {
             addField(model, field);
         }
-        model.put(FlashCardsContract.CardTemplate.QUESTION_FORMAT, qfmt);
-        model.put(FlashCardsContract.CardTemplate.ANSWER_FORMAT, afmt);
+        JSONObject template = new JSONObject();
+        template.put("qfmt", qfmt);
+        template.put("afmt", afmt);
+        getCol().getModels().addTemplateInNewModel(model, template);
         getCol().getModels().add(model);
         getCol().getModels().flush();
         return name;
