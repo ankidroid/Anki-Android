@@ -1510,8 +1510,8 @@ public class NoteEditor extends AnkiActivity implements
 
             edit_line_view.setTypeface(mCustomTypeface);
             edit_line_view.setHintLocale(getHintLocaleForField(edit_line_view.getName()));
-            initFieldEditText(newTextbox, i, !editModelMode);
             mEditFields.add(newTextbox);
+            initFieldEditText(newTextbox, i, !editModelMode);
             SharedPreferences prefs = AnkiDroidApp.getSharedPrefs(this);
             if (prefs.getInt("note_editor_font_size", -1) > 0) {
                 newTextbox.setTextSize(prefs.getInt("note_editor_font_size", -1));
@@ -1754,16 +1754,18 @@ public class NoteEditor extends AnkiActivity implements
         // Listen for changes in the first field so we can re-check duplicate status.
         editText.addTextChangedListener(new EditFieldTextWatcher(index));
         if (index == 0) {
+            editText.requestFocus();
+            InputMethodManager inputMethodManager = (InputMethodManager)getSystemService(
+                    Context.INPUT_METHOD_SERVICE);
+            editText.postDelayed(() -> {
+                inputMethodManager.showSoftInput(mEditFields.getFirst(), InputMethodManager.SHOW_FORCED);
+            }, 100);
+
+
             editText.setOnFocusChangeListener((v, hasFocus) -> {
                 try {
                     if (hasFocus) {
                         // we only want to decorate when we lose focus
-                        InputMethodManager inputMethodManager = (InputMethodManager)getSystemService(
-                                Context.INPUT_METHOD_SERVICE);
-                        inputMethodManager.hideSoftInputFromWindow(editText.getWindowToken(), 0);
-                        editText.postDelayed(() -> {
-                            inputMethodManager.showSoftInput(editText, 0);
-                        }, 100);
                         return;
                     }
                     String[] currentFieldStrings = getCurrentFieldStrings();
