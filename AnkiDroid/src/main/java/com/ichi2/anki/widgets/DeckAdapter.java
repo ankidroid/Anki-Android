@@ -39,7 +39,6 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.ichi2.anki.R;
-import com.ichi2.compat.CompatHelper;
 import com.ichi2.libanki.Collection;
 
 import com.ichi2.libanki.Deck;
@@ -173,7 +172,7 @@ public class DeckAdapter<T extends AbstractDeckTreeNode<T>> extends RecyclerView
      * Consume a list of {@link AbstractDeckTreeNode}s to render a new deck list.
      * @param filter The string to filter the deck by
      */
-    public void buildDeckList(List<T> nodes, Collection col, @Nullable CharSequence filter) {
+    public void buildDeckList(List<AbstractDeckTreeNode<T>> nodes, Collection col, @Nullable CharSequence filter) {
         mCol = col;
         mDeckList.clear();
         mCurrentDeckList.clear();
@@ -307,8 +306,8 @@ public class DeckAdapter<T extends AbstractDeckTreeNode<T>> extends RecyclerView
     }
 
 
-    private void processNodes(List<T> nodes) {
-        for (T node : nodes) {
+    private void processNodes(List<AbstractDeckTreeNode<T>> nodes) {
+        for (AbstractDeckTreeNode<T> node : nodes) {
             // If the default deck is empty, hide it by not adding it to the deck list.
             // We don't hide it if it's the only deck or if it has sub-decks.
             if (node.getDid() == 1 && nodes.size() > 1 && !node.hasChildren()) {
@@ -323,7 +322,7 @@ public class DeckAdapter<T extends AbstractDeckTreeNode<T>> extends RecyclerView
                     return;
                 }
             }
-            mDeckList.add(node);
+            mDeckList.add((T) node);
             mCurrentDeckList.add(node);
 
             // Add this node's counts to the totals if it's a parent deck
@@ -335,7 +334,7 @@ public class DeckAdapter<T extends AbstractDeckTreeNode<T>> extends RecyclerView
                 }
             }
             // Process sub-decks
-            processNodes(node.getChildren());
+            processNodes((List<AbstractDeckTreeNode<T>>) node.getChildren());
         }
     }
 
@@ -458,7 +457,7 @@ public class DeckAdapter<T extends AbstractDeckTreeNode<T>> extends RecyclerView
         }
 
 
-        private boolean containsFilterString(String filterPattern, T root) {
+        private boolean containsFilterString(String filterPattern, AbstractDeckTreeNode<T> root) {
             String deckName = root.getFullDeckName();
             return deckName.toLowerCase(Locale.getDefault()).contains(filterPattern) || deckName.toLowerCase(Locale.ROOT).contains(filterPattern);
         }
