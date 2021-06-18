@@ -227,7 +227,7 @@ public class NoteEditor extends AnkiActivity implements
     private Spinner mNoteTypeSpinner;
     private DeckSpinnerSelection mDeckSpinnerSelection;
 
-    // Non Null after onCollectionLoaded, but still null after construction. So essentially @NonNull but it would fail.
+    // Non Null after onCollectionLoaded, but still null after construction. So essentially @NonNull but it would fail.
     private Note mEditorNote;
     @Nullable
     /* Null if adding a new card. Presently NonNull if editing an existing note - but this is subject to change */
@@ -755,7 +755,7 @@ public class NoteEditor extends AnkiActivity implements
 
             case KeyEvent.KEYCODE_N:
                 if (event.isCtrlPressed() && (mNoteTypeSpinner != null)) {
-                        mNoteTypeSpinner.performClick();
+                    mNoteTypeSpinner.performClick();
                 }
                 break;
 
@@ -1254,7 +1254,7 @@ public class NoteEditor extends AnkiActivity implements
 
     private void closeCardEditorWithCheck() {
         if (hasUnsavedChanges()) {
-           showDiscardChangesDialog();
+            showDiscardChangesDialog();
         } else {
             closeNoteEditor();
         }
@@ -1394,27 +1394,27 @@ public class NoteEditor extends AnkiActivity implements
                 break;
             }
             case REQUEST_TEMPLATE_EDIT: {
-                    // Model can change regardless of exit type - update ourselves and CardBrowser
-                    mReloadRequired = true;
-                    mEditorNote.reloadModel();
-                    if (mCurrentEditedCard == null || !mEditorNote.cids().contains(mCurrentEditedCard.getId())) {
-                        if (!mAddNote) {
-                            /* This can occur, for example, if the
-                             * card type was deleted or if the note
-                             * type was changed without moving this
-                             * card to another type. */
-                            Timber.d("onActivityResult() template edit return - current card is gone, close note editor");
-                            UIUtils.showThemedToast(this, getString(R.string.template_for_current_card_deleted), false);
-                            closeNoteEditor();
-                        } else {
-                            Timber.d("onActivityResult() template edit return, in add mode, just re-display");
-                        }
+                // Model can change regardless of exit type - update ourselves and CardBrowser
+                mReloadRequired = true;
+                mEditorNote.reloadModel();
+                if (mCurrentEditedCard == null || !mEditorNote.cids().contains(mCurrentEditedCard.getId())) {
+                    if (!mAddNote) {
+                        /* This can occur, for example, if the
+                         * card type was deleted or if the note
+                         * type was changed without moving this
+                         * card to another type. */
+                        Timber.d("onActivityResult() template edit return - current card is gone, close note editor");
+                        UIUtils.showThemedToast(this, getString(R.string.template_for_current_card_deleted), false);
+                        closeNoteEditor();
                     } else {
-                        Timber.d("onActivityResult() template edit return - current card exists");
-                        // reload current card - the template ordinals are possibly different post-edit
-                        mCurrentEditedCard = getCol().getCard(mCurrentEditedCard.getId());
-                        updateCards(mEditorNote.model());
+                        Timber.d("onActivityResult() template edit return, in add mode, just re-display");
                     }
+                } else {
+                    Timber.d("onActivityResult() template edit return - current card exists");
+                    // reload current card - the template ordinals are possibly different post-edit
+                    mCurrentEditedCard = getCol().getCard(mCurrentEditedCard.getId());
+                    updateCards(mEditorNote.model());
+                }
                 break;
             }
         }
@@ -1510,8 +1510,8 @@ public class NoteEditor extends AnkiActivity implements
 
             edit_line_view.setTypeface(mCustomTypeface);
             edit_line_view.setHintLocale(getHintLocaleForField(edit_line_view.getName()));
-            mEditFields.add(newTextbox);
             initFieldEditText(newTextbox, i, !editModelMode);
+            mEditFields.add(newTextbox);
             SharedPreferences prefs = AnkiDroidApp.getSharedPrefs(this);
             if (prefs.getInt("note_editor_font_size", -1) > 0) {
                 newTextbox.setTextSize(prefs.getInt("note_editor_font_size", -1));
@@ -1755,13 +1755,11 @@ public class NoteEditor extends AnkiActivity implements
         editText.addTextChangedListener(new EditFieldTextWatcher(index));
         if (index == 0) {
             editText.requestFocus();
-            InputMethodManager inputMethodManager = (InputMethodManager)getSystemService(
+            InputMethodManager inputMethodManager = (InputMethodManager) getSystemService(
                     Context.INPUT_METHOD_SERVICE);
             editText.postDelayed(() -> {
-                inputMethodManager.showSoftInput(mEditFields.getFirst(), InputMethodManager.SHOW_FORCED);
+                inputMethodManager.showSoftInput(editText, InputMethodManager.SHOW_FORCED);
             }, 100);
-
-
             editText.setOnFocusChangeListener((v, hasFocus) -> {
                 try {
                     if (hasFocus) {
