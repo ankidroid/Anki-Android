@@ -1,4 +1,4 @@
-This document contains a brief description of the Anki2 database structure. 
+This document contains a brief description of the Anki2 database structure as of version 11 (see `ver` field of the `col` table). There are planned upgrades to Anki's db structure as explained in [the planned changes document.](Database-Structure-Planned-Changes.md)
 
 Thanks to @sartak and @fasiha for [starting to make this](https://gist.github.com/sartak/3921255).
 Additional thanks to @bibstha for [more documentation](https://github.com/bibstha/Anki-Android/wiki/Anki2-database-documentation)
@@ -15,7 +15,7 @@ Extracting example.apkg we have the following structure.
 	│   └── media
 	└── example.apkg
 
-In linux *sqliteman* can be used to read and modify the .anki2 files.
+In linux *sqliteman* or *sqlite3* can be used to read and modify the .anki2 files.
 
 # Terminology
 
@@ -28,6 +28,8 @@ Anki contains bascially the following types:
 5. Collection
 
 More information on what these represent are clearly explained in http://ankisrs.net/docs/manual.html#basics.
+
+This document often refers to "epoch seconds/milliseconds". This is the amount of time that has passed since the [Unix Epoch](https://en.wikipedia.org/wiki/Epoch_(computing)) (1 January 1970 00:00:00 UT).
 
 # Database schema
 ```sql
@@ -111,15 +113,19 @@ CREATE TABLE col (
     ls              integer not null,
       -- "last sync time"
     conf            text not null,
-      -- json object containing configuration options that are synced
+      -- json object containing configuration options that are synced. Described below in "configuration JSONObjects"
     models          text not null,
-      -- json array of json objects containing the models (aka Note types)
+      -- json object of json object(s) representing the models (aka Note types) 
+      -- keys of this object are strings containing integers: "creation time in epoch milliseconds" of the models
+      -- values of this object are other json objects of the form described below in "Models JSONObjects"
     decks           text not null,
       -- json object of json object(s) representing the deck(s)
-      -- keys of this object are strings containing integers: "epoch milliseconds creation time" for most decks, "1" for the default deck
-      -- values of this object are other json obects of the form described below in "Decks JSONObjects"
+      -- keys of this object are strings containing integers: "deck creation time in epoch milliseconds" for most decks, "1" for the default deck
+      -- values of this object are other json objects of the form described below in "Decks JSONObjects"
     dconf           text not null,
-      -- json array of json objects containing the deck options
+      -- json object of json object(s) representing the options group(s) for decks
+      -- keys of this object are strings containing integers: "options group creation time in epoch milliseconds" for most groups, "1" for the default option group
+      -- values of this object are other json objects of the form described below in "DConf JSONObjects"
     tags            text not null
       -- a cache of tags used in the collection (This list is displayed in the browser. Potentially at other place)
 );
@@ -271,6 +277,8 @@ Here is an annotated description of the JSONObjects in the decks field of the `c
 
 ```java
 {
+"deck id (creation time in epoch milliseconds for most decks, '1' for the default deck)"
+  {
     name: "name of deck", 
     extendRev: "extended review card limit (for custom study)
                 Potentially absent, in this case it's considered to be 10 by aqt.customstudy", 
@@ -286,10 +294,11 @@ Here is an annotated description of the JSONObjects in the decks field of the `c
     extendNew: "extended new card limit (for custom study). 
                 Potentially absent, in this case it's considered to be 10 by aqt.customstudy", 
     conf: "id of option group from dconf in `col` table. Or absent if the deck is dynamic. 
-          Its absent in filtere deck", 
+          Its absent in filtered deck", 
     id: "deck ID (automatically generated long)", 
     mod: "last modification time", 
     desc: "deck description"
+  }
 }
 ```
 
@@ -298,8 +307,8 @@ Here is an annotated description of the JSONObjects in the dconf field of the `c
 
 ```java
 {
-"model id (epoch time in milliseconds)" :
-    {
+"deck config id (creation time in epoch milliseconds for most option groups, '1' for the default option group)" :
+  {
         autoplay : "whether the audio associated to a question should be
 played when the question is shown"
         dyn : "Whether this deck is dynamic. Not present by default in decks.py"
@@ -339,15 +348,15 @@ played when the question is shown"
         }
         timer : "whether timer should be shown (1) or not (0)"
         usn : "See usn in cards table for details."
-    }
+  }
 }
 ```
 
-# configuration JSONObjects
-Here is an annotated description of the JSONObjects in the decks field of the `col` table when the collection is started. More values may be added to it by any add-on.
+# configuration JSONObject
+Here is an annotated description of the JSONObject in the conf field of the `col` table when the collection is started. More values may be added to it by any add-on. Unlike the `models`, `decks`, and `dconf` JSONObjects, there should be only one `conf` JSONObject per collection.
 ```java
 {
-    "curDeck": "The id (as int) of the last deck selectionned (review, adding card, changing the deck of a card)",
+    "curDeck": "The id (as int) of the last deck selected (during review, adding card, changing the deck of a card)",
     "activeDecks": "The list containing the current deck id and its descendent (as ints)",
     "newSpread": "In which order to view to review the cards. This can be selected in Preferences>Basic. Possible values are:
       0 -- NEW_CARDS_DISTRIBUTE (Mix new cards and reviews)
