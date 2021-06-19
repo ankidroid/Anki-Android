@@ -128,7 +128,6 @@ import com.ichi2.utils.AndroidUiUtils;
 import com.ichi2.utils.AssetHelper;
 import com.ichi2.utils.ClipboardUtil;
 import com.ichi2.utils.BooleanGetter;
-import com.ichi2.utils.CardGetter;
 import com.ichi2.utils.DiffEngine;
 import com.ichi2.utils.FunctionalInterfaces.Consumer;
 import com.ichi2.utils.FunctionalInterfaces.Function;

@@ -82,7 +82,6 @@ import com.ichi2.libanki.Consts;
 import com.ichi2.libanki.Decks;
 import com.ichi2.libanki.Utils;
 import com.ichi2.libanki.Deck;
-import com.ichi2.libanki.stats.Stats;
 import com.ichi2.themes.Themes;
 import com.ichi2.ui.CardBrowserSearchView;
 import com.ichi2.upgrade.Upgrade;
@@ -90,7 +89,6 @@ import com.ichi2.utils.BooleanGetter;
 import com.ichi2.utils.FunctionalInterfaces;
 import com.ichi2.utils.LanguageUtil;
 import com.ichi2.utils.PairWithBoolean;
-import com.ichi2.utils.PairWithCard;
 import com.ichi2.utils.Permissions;
 import com.ichi2.widget.WidgetStatus;
 
