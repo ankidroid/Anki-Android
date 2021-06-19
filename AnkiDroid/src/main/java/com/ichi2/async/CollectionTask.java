@@ -65,13 +65,11 @@ import com.ichi2.utils.JSONArray;
 import com.ichi2.utils.JSONException;
 import com.ichi2.utils.JSONObject;
 import com.ichi2.utils.PairWithBoolean;
-import com.ichi2.utils.PairWithCard;
 import com.ichi2.utils.SyncStatus;
 import com.ichi2.utils.Triple;
 
 import java.io.File;
 import java.io.FileNotFoundException;
-import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
