@@ -24,7 +24,4 @@ public interface BooleanGetter {
 
     BooleanGetter TRUE = () -> true;
     BooleanGetter FALSE = () -> false;
-    static BooleanGetter fromBoolean(boolean b) {
-        return (() -> b);
-    }
 }
