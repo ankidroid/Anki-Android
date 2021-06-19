@@ -30,6 +30,7 @@ import com.ichi2.anki.DeckPicker;
 import com.ichi2.anki.FilteredDeckOptions;
 import com.ichi2.anki.Info;
 import com.ichi2.anki.IntentHandler;
+import com.ichi2.anki.IntroductionActivity;
 import com.ichi2.anki.ModelBrowser;
 import com.ichi2.anki.ModelFieldEditor;
 import com.ichi2.anki.MyAccount;
@@ -90,7 +91,8 @@ public class ActivityList {
                 get(LoadPronounciationActivity.class),
                 get(CardInfo.class),
                 get(CardTemplateEditor.class, ActivityList::intentForCardTemplateEditor),
-                get(CardTemplateBrowserAppearanceEditor.class, ActivityList::intentForCardTemplateBrowserAppearanceEditor)
+                get(CardTemplateBrowserAppearanceEditor.class, ActivityList::intentForCardTemplateBrowserAppearanceEditor),
+                get(IntroductionActivity.class)
         );
     }
 

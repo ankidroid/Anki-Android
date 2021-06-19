@@ -455,6 +455,12 @@ public class DeckPicker extends NavigationDrawerActivity implements
             return;
         }
 
+        if (OnboardingUtils.INSTANCE.checkIfNotAlreadyVisited(DeckPickerOnboardingEnum.INTRODUCTION_SLIDES, this)) {
+            OnboardingUtils.INSTANCE.setAsVisited(DeckPickerOnboardingEnum.INTRODUCTION_SLIDES, this);
+            Intent introductionIntent = new Intent(this, IntroductionActivity.class);
+            startActivityWithoutAnimation(introductionIntent);
+        }
+
         mCustomStudyDialogFactory = new CustomStudyDialogFactory(this::getCol, this).attachToActivity(this);
 
         //we need to restore here, as we need it before super.onCreate() is called.
@@ -2990,5 +2996,9 @@ public class DeckPicker extends NavigationDrawerActivity implements
         SHOW_STUDY_OPTIONS,
         /** Always open reviewer (keyboard shortcut) */
         SKIP_STUDY_OPTIONS
+    }
+
+    private enum DeckPickerOnboardingEnum {
+        INTRODUCTION_SLIDES
     }
 }

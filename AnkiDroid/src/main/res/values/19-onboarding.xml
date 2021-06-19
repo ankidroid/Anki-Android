@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="introduction_activity">Introduction Activity</string>
+    <string name="introduction_desc">AnkiDroid is a spaced repetition flashcard app. Memorize anything with AnkiDroid!</string>
+    <string name="decks_intro">Create powerful decks with customised cards</string>
+    <string name="decks_intro_desc">Choose from multiple card types</string>
+    <string name="create_cards_intro">Create cards which support multiple content formats</string>
+    <string name="create_cards_intro_desc">Text - Images - Sounds - MathJax - LaTeX</string>
+    <string name="pre_made_decks">Choose from 6000+ pre-made decks</string>
+    <string name="pre_made_decks_desc">You can browse and import decks made by others.</string>
+    <string name="study_time">Study time</string>
+    <string name="study_desc">Review cards and select their difficulty according to which the time interval for their next appearance will be decided</string>
+    <string name="detailed_statistics">Detailed Statistics</string>
+    <string name="detailed_statistics_desc">Helps you track your study progress</string>
+    <string name="night_mode_desc">Put less strain on your eyes</string>
+</resources>
