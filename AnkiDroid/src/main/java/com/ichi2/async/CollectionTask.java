@@ -303,7 +303,7 @@ public class CollectionTask<Progress, Result> extends BaseAsyncTask<Void, Progre
     }
 
 
-    public static class UpdateNote extends Task<PairWithCard<String>, BooleanGetter> {
+    public static class UpdateNote extends Task<Card, BooleanGetter> {
         private final Card mEditCard;
         private final boolean mFromReviewer;
         private final boolean mCanAccessScheduler;
@@ -315,7 +315,7 @@ public class CollectionTask<Progress, Result> extends BaseAsyncTask<Void, Progre
             this.mCanAccessScheduler = canAccessScheduler;
         }
 
-        protected BooleanGetter task(@NonNull Collection col, @NonNull ProgressSenderAndCancelListener<PairWithCard<String>> collectionTask) {
+        protected BooleanGetter task(@NonNull Collection col, @NonNull ProgressSenderAndCancelListener<Card> collectionTask) {
             Timber.d("doInBackgroundUpdateNote");
             // Save the note
             AbstractSched sched = col.getSched();
@@ -337,9 +337,9 @@ public class CollectionTask<Progress, Result> extends BaseAsyncTask<Void, Progre
                         } else {
                             newCard = sched.getCard();
                         }
-                        collectionTask.doProgress(new PairWithCard<>(newCard, null)); // check: are there deleted too?
+                        collectionTask.doProgress(newCard); // check: are there deleted too?
                     } else {
-                        collectionTask.doProgress(new PairWithCard<>(mEditCard, editNote.stringTags()));
+                        collectionTask.doProgress(mEditCard);
                     }
                 });
             } catch (RuntimeException e) {

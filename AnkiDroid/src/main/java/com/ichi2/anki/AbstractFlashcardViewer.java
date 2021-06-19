@@ -571,7 +571,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
     }
 
 
-    private final TaskListener<CardGetter, BooleanGetter> mUpdateCardHandler = new TaskListener<CardGetter, BooleanGetter>() {
+    private final TaskListener<Card, BooleanGetter> mUpdateCardHandler = new TaskListener<Card, BooleanGetter>() {
         private boolean mNoMoreCards;
 
 
@@ -582,8 +582,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
 
 
         @Override
-        public void onProgressUpdate(CardGetter cardGetter) {
-            Card card = cardGetter.getCard();
+        public void onProgressUpdate(Card card) {
             if (mCurrentCard != card) {
                 /*
                  * Before updating mCurrentCard, we check whether it is changing or not. If the current card changes,
