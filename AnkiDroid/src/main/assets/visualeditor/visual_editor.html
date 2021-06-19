@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+
+<!--
+MIT License
+
+Copyright (c) 2017 Jhon Kenneth Cariño
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
+-->
+
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="user-scalable=no">
+    <title>AnkiDroid Visual Editor</title>
+
+    <!-- include libraries(jQuery, bootstrap) -->
+    <link href="file:///android_asset/summernote/bootstrap.min.css" rel="stylesheet">
+    <script src="file:///android_asset/summernote/jquery-3.2.1.min.js"></script>
+    <script src="file:///android_asset/summernote/bootstrap.min.js"></script>
+
+    <!-- include summernote css/js-->
+    <link href="file:///android_asset/summernote/summernote.css" rel="stylesheet">
+    <script src="file:///android_asset/summernote/summernote.js"></script>
+
+    <!-- Style the page like an Anki Card-->
+    <link href="file:///android_asset/flashcard.css" rel="stylesheet">
+    <link href="file:///android_asset/visualeditor/visualeditor.css" rel="stylesheet">
+</head>
+<body style="card">
+<div id="summernote"></div>
+<script type="text/javascript">
+        $(document).ready(function() {
+          $('#summernote').summernote({
+            focus: true,
+            shortcuts: false,
+            toolbar: [],
+            popover: {
+              image: [
+                ['imagesize', ['imageSize100', 'imageSize50', 'imageSize25']],
+                ['float', ['floatLeft', 'floatRight', 'floatNone']],
+                ['remove', ['removeMedia']]
+              ],
+              link: [],
+              table: [
+                ['add', ['addRowDown', 'addRowUp', 'addColLeft', 'addColRight']],
+                ['delete', ['deleteRow', 'deleteCol', 'deleteTable']]
+              ],
+            },
+            callbacks: {
+              onInit: function(e) {
+                $('#summernote').summernote("fullscreen.toggle");
+
+                // Set initial content
+                var code = $('#summernote').summernote('code');
+                RTextEditorView.onEditorContentChanged(code);
+              },
+              onMousedown: function(e) {
+                  sendMouseDownToClient(e);
+              },
+              onChange: function(contents, $editable) {
+                RTextEditorView.onEditorContentChanged(contents);
+              }
+            }
+        });
+      });
+    </script>
+<script src="file:///android_asset/summernote/editor.js"></script>
+<script src="file:///android_asset/visualeditor/visual_editor_functions.js"></script>
+<script src="file:///android_asset/visualeditor/visual_editor_image.js"></script>
+</body>
+</html>
