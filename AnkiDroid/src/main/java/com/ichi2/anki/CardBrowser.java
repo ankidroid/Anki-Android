@@ -364,10 +364,10 @@ public class CardBrowser extends NavigationDrawerActivity implements
         public void actualOnPostExecute(@NonNull CardBrowser browser, PairWithBoolean<Card[]> cards) {
             Timber.d("CardBrowser::RepositionCardHandler() onPostExecute");
             browser.mReloadRequired = true;
-            int cardCount = cards.other.length;
+            int cardCount = cards.value.length;
             UIUtils.showThemedToast(browser,
                     browser.getResources().getQuantityString(R.plurals.reposition_card_dialog_acknowledge, cardCount, cardCount), true);
-            browser.reloadCards(cards.other);
+            browser.reloadCards(cards.value);
             browser.supportInvalidateOptionsMenu();
         }
     }
@@ -390,10 +390,10 @@ public class CardBrowser extends NavigationDrawerActivity implements
         public void actualOnPostExecute(@NonNull CardBrowser browser, PairWithBoolean<Card[]> cards) {
             Timber.d("CardBrowser::ResetProgressCardHandler() onPostExecute");
             browser.mReloadRequired = true;
-            int cardCount = cards.other.length;
+            int cardCount = cards.value.length;
             UIUtils.showThemedToast(browser,
                     browser.getResources().getQuantityString(R.plurals.reset_cards_dialog_acknowledge, cardCount, cardCount), true);
-            browser.reloadCards(cards.other);
+            browser.reloadCards(cards.value);
             browser.supportInvalidateOptionsMenu();
         }
     }
@@ -416,10 +416,10 @@ public class CardBrowser extends NavigationDrawerActivity implements
         public void actualOnPostExecute(@NonNull CardBrowser browser, PairWithBoolean<Card[]> cards) {
             Timber.d("CardBrowser::RescheduleCardHandler() onPostExecute");
             browser.mReloadRequired = true;
-            int cardCount = cards.other.length;
+            int cardCount = cards.value.length;
             UIUtils.showThemedToast(browser,
                     browser.getResources().getQuantityString(R.plurals.reschedule_cards_dialog_acknowledge, cardCount, cardCount), true);
-            browser.reloadCards(cards.other);
+            browser.reloadCards(cards.value);
             browser.supportInvalidateOptionsMenu();
         }
     }
@@ -1831,7 +1831,7 @@ public class CardBrowser extends NavigationDrawerActivity implements
 
         @Override
         protected void actualOnValidPostExecute(CardBrowser browser, PairWithBoolean<Card[]> cards) {
-            browser.updateCardsInList(Arrays.asList(cards.other));
+            browser.updateCardsInList(Arrays.asList(cards.value));
             browser.hideProgressBar();
             browser.invalidateOptionsMenu();    // maybe the availability of undo changed
         }
@@ -1858,7 +1858,7 @@ public class CardBrowser extends NavigationDrawerActivity implements
 
         @Override
         protected void actualOnValidPostExecute(CardBrowser browser, PairWithBoolean<Card[]> cards) {
-            browser.updateCardsInList(CardUtils.getAllCards(CardUtils.getNotes(Arrays.asList(cards.other))));
+            browser.updateCardsInList(CardUtils.getAllCards(CardUtils.getNotes(Arrays.asList(cards.value))));
             browser.hideProgressBar();
             browser.invalidateOptionsMenu();    // maybe the availability of undo changed
         }
