@@ -19,22 +19,29 @@ package com.ichi2.utils;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
-public class PairWithBoolean<U> {
+/**
+ * Represents a computed value or a failure. Similar to c++ absl::StatusOr<U>, Rust Result<U>,
+ * and almost similar to Future<U>, except that `get` don't throws.
+ * @param <ComputedType> The value of a succesful computation
+ */
+// "Result" is used as a type parameter in AsyncTask, where this class is used a lot. Hence,
+// `Result` would not be an acceptable type name.
+public class Computation<ComputedType> {
     /**
      * The computed value in case of success. Null in case of failure
      */
-    public final @Nullable U value;
+    public final @Nullable ComputedType mValue;
 
     public boolean succeeded() {
-        return value != null;
+        return mValue != null;
     }
-    public static final PairWithBoolean ERR = new PairWithBoolean();
-    public static final PairWithBoolean OK = new PairWithBoolean<>(new Object());
+    public static final Computation ERR = new Computation();
+    public static final Computation OK = new Computation<>(new Object());
 
-    private PairWithBoolean() {
-        value = null;
+    private Computation() {
+        mValue = null;
     }
-    public PairWithBoolean(@NonNull U value) {
-        this.value = value;
+    public Computation(@NonNull ComputedType value) {
+        mValue = value;
     }
 }

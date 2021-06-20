@@ -45,7 +45,7 @@ import com.ichi2.libanki.sched.AbstractSched;
 import com.ichi2.libanki.sched.Sched;
 import com.ichi2.libanki.sched.SchedV2;
 import com.ichi2.testutils.MockTime;
-import com.ichi2.utils.PairWithBoolean;
+import com.ichi2.utils.Computation;
 import com.ichi2.utils.JSONException;
 
 import net.ankiweb.rsdroid.BackendException;
@@ -66,7 +66,6 @@ import java.util.ArrayList;
 
 import androidx.annotation.CheckResult;
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 
 import com.ichi2.utils.InMemorySQLiteOpenHelperFactory;
 
@@ -415,7 +414,7 @@ public class RobolectricTest implements CollectionGetter {
     }
 
 
-    protected synchronized <Progress, Result extends PairWithBoolean<?>> void waitFortask(CollectionTask.Task<Progress, Result> task, int timeoutMs) throws InterruptedException {
+    protected synchronized <Progress, Result extends Computation<?>> void waitFortask(CollectionTask.Task<Progress, Result> task, int timeoutMs) throws InterruptedException {
         boolean[] completed = new boolean[] { false };
         TaskListener<Progress, Result> listener = new TaskListener<Progress, Result>() {
             @Override

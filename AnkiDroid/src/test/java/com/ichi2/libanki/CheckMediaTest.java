@@ -19,7 +19,7 @@ package com.ichi2.libanki;
 import com.ichi2.anki.RobolectricTest;
 import com.ichi2.async.CollectionTask;
 import com.ichi2.async.TaskManager;
-import com.ichi2.utils.PairWithBoolean;
+import com.ichi2.utils.Computation;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -48,7 +48,7 @@ public class CheckMediaTest extends RobolectricTest {
 
         assertThat(getCol().getMedia().getDb().queryScalar("SELECT count(*) FROM sqlite_master WHERE type='table' AND name='meta';"), is(0));
 
-        CollectionTask<Void, PairWithBoolean<List<List<String>>>> task = TaskManager.launchCollectionTask(new CollectionTask.CheckMedia());
+        CollectionTask<Void, Computation<List<List<String>>>> task = TaskManager.launchCollectionTask(new CollectionTask.CheckMedia());
 
         task.get();
 
