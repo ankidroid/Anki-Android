@@ -59,7 +59,7 @@ import com.ichi2.libanki.sched.Counts;
 import com.ichi2.libanki.sched.DeckDueTreeNode;
 import com.ichi2.libanki.sched.DeckTreeNode;
 import com.ichi2.libanki.utils.Time;
-import com.ichi2.utils.PairWithBoolean;
+import com.ichi2.utils.Computation;
 import com.ichi2.utils.JSONArray;
 import com.ichi2.utils.JSONException;
 import com.ichi2.utils.JSONObject;
@@ -92,8 +92,8 @@ import timber.log.Timber;
 import static com.ichi2.async.TaskManager.setLatestInstance;
 import static com.ichi2.libanki.Card.deepCopyCardArray;
 import static com.ichi2.libanki.UndoAction.*;
-import static com.ichi2.utils.Status.OK;
-import static com.ichi2.utils.PairWithBoolean.ERR;
+import static com.ichi2.utils.Computation.OK;
+import static com.ichi2.utils.Computation.ERR;
 
 /**
  * This is essentially an AsyncTask with some more logging. It delegates to TaskDelegate the actual business logic.
@@ -299,7 +299,7 @@ public class CollectionTask<Progress, Result> extends BaseAsyncTask<Void, Progre
     }
 
 
-    public static class UpdateNote extends Task<Card, PairWithBoolean<?>> {
+    public static class UpdateNote extends Task<Card, Computation<?>> {
         private final Card mEditCard;
         private final boolean mFromReviewer;
         private final boolean mCanAccessScheduler;
@@ -311,7 +311,7 @@ public class CollectionTask<Progress, Result> extends BaseAsyncTask<Void, Progre
             this.mCanAccessScheduler = canAccessScheduler;
         }
 
-        protected PairWithBoolean<?> task(@NonNull Collection col, @NonNull ProgressSenderAndCancelListener<Card> collectionTask) {
+        protected Computation<?> task(@NonNull Collection col, @NonNull ProgressSenderAndCancelListener<Card> collectionTask) {
             Timber.d("doInBackgroundUpdateNote");
             // Save the note
             AbstractSched sched = col.getSched();
@@ -351,8 +351,8 @@ public class CollectionTask<Progress, Result> extends BaseAsyncTask<Void, Progre
         }
     }
 
-    public static class GetCard extends Task<Card, PairWithBoolean<?>> {
-        protected PairWithBoolean<?> task(@NonNull Collection col, @NonNull ProgressSenderAndCancelListener<Card> collectionTask) {
+    public static class GetCard extends Task<Card, Computation<?>> {
+        protected Computation<?> task(@NonNull Collection col, @NonNull ProgressSenderAndCancelListener<Card> collectionTask) {
             AbstractSched sched = col.getSched();
             Timber.i("Obtaining card");
             Card newCard = sched.getCard();
@@ -373,7 +373,7 @@ public class CollectionTask<Progress, Result> extends BaseAsyncTask<Void, Progre
             this.mEase = ease;
         }
 
-        protected PairWithBoolean<?> task(@NonNull Collection col, @NonNull ProgressSenderAndCancelListener<Card> collectionTask) {
+        protected Computation<?> task(@NonNull Collection col, @NonNull ProgressSenderAndCancelListener<Card> collectionTask) {
             Timber.i("Answering card %d", mOldCard.getId());
             col.getSched().answerCard(mOldCard, mEase);
             return super.task(col, collectionTask);
@@ -468,7 +468,7 @@ public class CollectionTask<Progress, Result> extends BaseAsyncTask<Void, Progre
     /**
      * Represents an action that remove a card from the Reviewer without reviewing it.
      */
-    public static abstract class DismissNote extends Task<Card, PairWithBoolean<?>> {
+    public static abstract class DismissNote extends Task<Card, Computation<?>> {
         protected final Card mCard;
 
 
@@ -495,7 +495,7 @@ public class CollectionTask<Progress, Result> extends BaseAsyncTask<Void, Progre
                                  Indeed, if you clicked on suspend and leave the reviewer, the card should still be reviewed and there is no need for a next card.
          * @return whether the action ended succesfully
          */
-        protected PairWithBoolean<?> task(@NonNull Collection col, @NonNull ProgressSenderAndCancelListener<Card> collectionTask) {
+        protected Computation<?> task(@NonNull Collection col, @NonNull ProgressSenderAndCancelListener<Card> collectionTask) {
             try {
                 col.getDb().executeInTransaction(() -> {
                     col.getSched().deferReset();
@@ -746,7 +746,7 @@ public class CollectionTask<Progress, Result> extends BaseAsyncTask<Void, Progre
         }
     }
 
-    private static abstract class DismissNotes<Progress> extends Task<Progress, PairWithBoolean<Card[]>> {
+    private static abstract class DismissNotes<Progress> extends Task<Progress, Computation<Card[]>> {
         protected final List<Long> mCardIds;
 
         public DismissNotes(List<Long> cardIds) {
@@ -759,7 +759,7 @@ public class CollectionTask<Progress, Result> extends BaseAsyncTask<Void, Progre
          * @param collectionTask Represents the background tasks.
          * @return whether the task succeeded, and the array of cards affected.
          */
-        protected PairWithBoolean<Card[]> task(@NonNull Collection col, @NonNull ProgressSenderAndCancelListener<Progress> collectionTask) {
+        protected Computation<Card[]> task(@NonNull Collection col, @NonNull ProgressSenderAndCancelListener<Progress> collectionTask) {
             // query cards
             Card[] cards = new Card[mCardIds.size()];
             for (int i = 0; i < mCardIds.size(); i++) {
@@ -784,7 +784,7 @@ public class CollectionTask<Progress, Result> extends BaseAsyncTask<Void, Progre
             }
             // pass cards back so more actions can be performed by the caller
             // (querying the cards again is unnecessarily expensive)
-            return new PairWithBoolean<>(cards);
+            return new Computation<>(cards);
         }
 
         /**
@@ -1062,8 +1062,8 @@ public class CollectionTask<Progress, Result> extends BaseAsyncTask<Void, Progre
         return card;
     }
 
-    public static class Undo extends Task<Card, PairWithBoolean<?>> {
-        protected PairWithBoolean<?> task(@NonNull Collection col, @NonNull ProgressSenderAndCancelListener<Card> collectionTask) {
+    public static class Undo extends Task<Card, Computation<?>> {
+        protected Computation<?> task(@NonNull Collection col, @NonNull ProgressSenderAndCancelListener<Card> collectionTask) {
             try {
                 col.getDb().executeInTransaction(() -> {
                     Card card = nonTaskUndo(col);
@@ -1394,7 +1394,7 @@ public class CollectionTask<Progress, Result> extends BaseAsyncTask<Void, Progre
     }
 
 
-    public static class ImportReplace extends Task<String, PairWithBoolean<?>> {
+    public static class ImportReplace extends Task<String, Computation<?>> {
         private final String mPath;
 
 
@@ -1403,7 +1403,7 @@ public class CollectionTask<Progress, Result> extends BaseAsyncTask<Void, Progre
         }
 
 
-        protected PairWithBoolean<?> task(@NonNull Collection col, @NonNull ProgressSenderAndCancelListener<String> collectionTask) {
+        protected Computation<?> task(@NonNull Collection col, @NonNull ProgressSenderAndCancelListener<String> collectionTask) {
             Timber.d("doInBackgroundImportReplace");
             Resources res = AnkiDroidApp.getInstance().getBaseContext().getResources();
             Context context = col.getContext();
@@ -1727,9 +1727,9 @@ public class CollectionTask<Progress, Result> extends BaseAsyncTask<Void, Progre
     /**
      * @return The results list from the check, or false if any errors.
      */
-    public static class CheckMedia extends Task<Void, PairWithBoolean<List<List<String>>>> {
+    public static class CheckMedia extends Task<Void, Computation<List<List<String>>>> {
         @Override
-        protected PairWithBoolean<List<List<String>>> task(@NonNull Collection col, @NonNull ProgressSenderAndCancelListener<Void> collectionTask) {
+        protected Computation<List<List<String>>> task(@NonNull Collection col, @NonNull ProgressSenderAndCancelListener<Void> collectionTask) {
             Timber.d("doInBackgroundCheckMedia");
             // Ensure that the DB is valid - unknown why, but some users were missing the meta table.
             try {
@@ -1741,7 +1741,7 @@ public class CollectionTask<Progress, Result> extends BaseAsyncTask<Void, Progre
             // A media check on AnkiDroid will also update the media db
             col.getMedia().findChanges(true);
             // Then do the actual check
-            return new PairWithBoolean<>(col.getMedia().check());
+            return new Computation<>(col.getMedia().check());
         }
     }
 

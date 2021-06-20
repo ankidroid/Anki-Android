@@ -87,7 +87,7 @@ import com.ichi2.ui.CardBrowserSearchView;
 import com.ichi2.upgrade.Upgrade;
 import com.ichi2.utils.FunctionalInterfaces;
 import com.ichi2.utils.LanguageUtil;
-import com.ichi2.utils.PairWithBoolean;
+import com.ichi2.utils.Computation;
 import com.ichi2.utils.Permissions;
 import com.ichi2.widget.WidgetStatus;
 
@@ -349,7 +349,7 @@ public class CardBrowser extends NavigationDrawerActivity implements
         return new RepositionCardHandler(this);
     }
 
-    private static class RepositionCardHandler extends TaskListenerWithContext<CardBrowser, Object, PairWithBoolean<Card[]>> {
+    private static class RepositionCardHandler extends TaskListenerWithContext<CardBrowser, Object, Computation<Card[]>> {
         public RepositionCardHandler(CardBrowser browser) {
             super(browser);
         }
@@ -361,13 +361,13 @@ public class CardBrowser extends NavigationDrawerActivity implements
 
 
         @Override
-        public void actualOnPostExecute(@NonNull CardBrowser browser, PairWithBoolean<Card[]> cards) {
+        public void actualOnPostExecute(@NonNull CardBrowser browser, Computation<Card[]> cards) {
             Timber.d("CardBrowser::RepositionCardHandler() onPostExecute");
             browser.mReloadRequired = true;
-            int cardCount = cards.value.length;
+            int cardCount = cards.mValue.length;
             UIUtils.showThemedToast(browser,
                     browser.getResources().getQuantityString(R.plurals.reposition_card_dialog_acknowledge, cardCount, cardCount), true);
-            browser.reloadCards(cards.value);
+            browser.reloadCards(cards.mValue);
             browser.supportInvalidateOptionsMenu();
         }
     }
@@ -375,7 +375,7 @@ public class CardBrowser extends NavigationDrawerActivity implements
     private ResetProgressCardHandler resetProgressCardHandler() {
         return new ResetProgressCardHandler(this);
     }
-    private static class ResetProgressCardHandler extends TaskListenerWithContext<CardBrowser, Object, PairWithBoolean<Card[]>>{
+    private static class ResetProgressCardHandler extends TaskListenerWithContext<CardBrowser, Object, Computation<Card[]>>{
         public ResetProgressCardHandler(CardBrowser browser) {
             super(browser);
         }
@@ -387,13 +387,13 @@ public class CardBrowser extends NavigationDrawerActivity implements
 
 
         @Override
-        public void actualOnPostExecute(@NonNull CardBrowser browser, PairWithBoolean<Card[]> cards) {
+        public void actualOnPostExecute(@NonNull CardBrowser browser, Computation<Card[]> cards) {
             Timber.d("CardBrowser::ResetProgressCardHandler() onPostExecute");
             browser.mReloadRequired = true;
-            int cardCount = cards.value.length;
+            int cardCount = cards.mValue.length;
             UIUtils.showThemedToast(browser,
                     browser.getResources().getQuantityString(R.plurals.reset_cards_dialog_acknowledge, cardCount, cardCount), true);
-            browser.reloadCards(cards.value);
+            browser.reloadCards(cards.mValue);
             browser.supportInvalidateOptionsMenu();
         }
     }
@@ -401,7 +401,7 @@ public class CardBrowser extends NavigationDrawerActivity implements
     private RescheduleCardHandler rescheduleCardHandler() {
         return new RescheduleCardHandler(this);
     }
-    private static class RescheduleCardHandler extends TaskListenerWithContext<CardBrowser, Card, PairWithBoolean<Card[]>>{
+    private static class RescheduleCardHandler extends TaskListenerWithContext<CardBrowser, Card, Computation<Card[]>>{
         public RescheduleCardHandler (CardBrowser browser) {
             super(browser);
         }
@@ -413,13 +413,13 @@ public class CardBrowser extends NavigationDrawerActivity implements
 
 
         @Override
-        public void actualOnPostExecute(@NonNull CardBrowser browser, PairWithBoolean<Card[]> cards) {
+        public void actualOnPostExecute(@NonNull CardBrowser browser, Computation<Card[]> cards) {
             Timber.d("CardBrowser::RescheduleCardHandler() onPostExecute");
             browser.mReloadRequired = true;
-            int cardCount = cards.value.length;
+            int cardCount = cards.mValue.length;
             UIUtils.showThemedToast(browser,
                     browser.getResources().getQuantityString(R.plurals.reschedule_cards_dialog_acknowledge, cardCount, cardCount), true);
-            browser.reloadCards(cards.value);
+            browser.reloadCards(cards.mValue);
             browser.supportInvalidateOptionsMenu();
         }
     }
@@ -1648,7 +1648,7 @@ public class CardBrowser extends NavigationDrawerActivity implements
     }
 
     /** Does not leak Card Browser. */
-    private static abstract class ListenerWithProgressBarCloseOnFalse<Progress, Result extends PairWithBoolean<?>> extends ListenerWithProgressBar<Progress, Result> {
+    private static abstract class ListenerWithProgressBarCloseOnFalse<Progress, Result extends Computation<?>> extends ListenerWithProgressBar<Progress, Result> {
         private final String mTimber;
         public ListenerWithProgressBarCloseOnFalse(String timber, CardBrowser browser) {
             super(browser);
@@ -1696,7 +1696,7 @@ public class CardBrowser extends NavigationDrawerActivity implements
         return new UpdateCardHandler(this);
     }
 
-    private static class UpdateCardHandler extends ListenerWithProgressBarCloseOnFalse<Card, PairWithBoolean<?>> {
+    private static class UpdateCardHandler extends ListenerWithProgressBarCloseOnFalse<Card, Computation<?>> {
         public UpdateCardHandler(CardBrowser browser) {
             super("Card Browser - UpdateCardHandler.actualOnPostExecute(CardBrowser browser)", browser);
         }
@@ -1707,20 +1707,20 @@ public class CardBrowser extends NavigationDrawerActivity implements
         }
 
         @Override
-        protected void actualOnValidPostExecute(CardBrowser browser, PairWithBoolean<?> result) {
+        protected void actualOnValidPostExecute(CardBrowser browser, Computation<?> result) {
             browser.hideProgressBar();
         }
     }
 
 
-    private static class ChangeDeckHandler extends ListenerWithProgressBarCloseOnFalse<Object, PairWithBoolean<Card[]>> {
+    private static class ChangeDeckHandler extends ListenerWithProgressBarCloseOnFalse<Object, Computation<Card[]>> {
         public ChangeDeckHandler(CardBrowser browser) {
             super("Card Browser - changeDeckHandler.actualOnPostExecute(CardBrowser browser)", browser);
         }
 
 
         @Override
-        protected void actualOnValidPostExecute(CardBrowser browser, PairWithBoolean<Card[]> result) {
+        protected void actualOnValidPostExecute(CardBrowser browser, Computation<Card[]> result) {
             browser.hideProgressBar();
 
             browser.searchCards();
@@ -1824,14 +1824,14 @@ public class CardBrowser extends NavigationDrawerActivity implements
         return new SuspendCardHandler(this);
     }
 
-    private static class SuspendCardHandler extends ListenerWithProgressBarCloseOnFalse<Void, PairWithBoolean<Card[]>> {
+    private static class SuspendCardHandler extends ListenerWithProgressBarCloseOnFalse<Void, Computation<Card[]>> {
         public SuspendCardHandler(CardBrowser browser) {
             super(browser);
         }
 
         @Override
-        protected void actualOnValidPostExecute(CardBrowser browser, PairWithBoolean<Card[]> cards) {
-            browser.updateCardsInList(Arrays.asList(cards.value));
+        protected void actualOnValidPostExecute(CardBrowser browser, Computation<Card[]> cards) {
+            browser.updateCardsInList(Arrays.asList(cards.mValue));
             browser.hideProgressBar();
             browser.invalidateOptionsMenu();    // maybe the availability of undo changed
         }
@@ -1851,14 +1851,14 @@ public class CardBrowser extends NavigationDrawerActivity implements
     private MarkCardHandler markCardHandler() {
         return new MarkCardHandler(this);
     }
-    private static class MarkCardHandler extends ListenerWithProgressBarCloseOnFalse<Void, PairWithBoolean<Card[]>> {
+    private static class MarkCardHandler extends ListenerWithProgressBarCloseOnFalse<Void, Computation<Card[]>> {
         public MarkCardHandler(CardBrowser browser) {
             super(browser);
         }
 
         @Override
-        protected void actualOnValidPostExecute(CardBrowser browser, PairWithBoolean<Card[]> cards) {
-            browser.updateCardsInList(CardUtils.getAllCards(CardUtils.getNotes(Arrays.asList(cards.value))));
+        protected void actualOnValidPostExecute(CardBrowser browser, Computation<Card[]> cards) {
+            browser.updateCardsInList(CardUtils.getAllCards(CardUtils.getNotes(Arrays.asList(cards.mValue))));
             browser.hideProgressBar();
             browser.invalidateOptionsMenu();    // maybe the availability of undo changed
         }
@@ -1867,7 +1867,7 @@ public class CardBrowser extends NavigationDrawerActivity implements
 
 
     private final DeleteNoteHandler mDeleteNoteHandler = new DeleteNoteHandler(this);
-    private static class DeleteNoteHandler extends ListenerWithProgressBarCloseOnFalse<Card[], PairWithBoolean<?>> {
+    private static class DeleteNoteHandler extends ListenerWithProgressBarCloseOnFalse<Card[], Computation<?>> {
         public DeleteNoteHandler(CardBrowser browser) {
             super(browser);
         }
@@ -1889,7 +1889,7 @@ public class CardBrowser extends NavigationDrawerActivity implements
 
 
         @Override
-        protected void actualOnValidPostExecute(CardBrowser browser, PairWithBoolean<?> result) {
+        protected void actualOnValidPostExecute(CardBrowser browser, Computation<?> result) {
             browser.hideProgressBar();
             browser.mActionBarTitle.setText(String.format(getLocaleCompat(browser.getResources()), "%d", browser.checkedCardCount()));
             browser.invalidateOptionsMenu();    // maybe the availability of undo changed
@@ -1905,13 +1905,13 @@ public class CardBrowser extends NavigationDrawerActivity implements
 
 
     private final UndoHandler mUndoHandler = new UndoHandler(this);
-    private static class UndoHandler extends ListenerWithProgressBarCloseOnFalse<Card, PairWithBoolean<?>> {
+    private static class UndoHandler extends ListenerWithProgressBarCloseOnFalse<Card, Computation<?>> {
         public UndoHandler(CardBrowser browser) {
             super(browser);
         }
 
         @Override
-        public void actualOnValidPostExecute(CardBrowser browser, PairWithBoolean<?> result) {
+        public void actualOnValidPostExecute(CardBrowser browser, Computation<?> result) {
             Timber.d("Card Browser - mUndoHandler.actualOnPostExecute(CardBrowser browser)");
             browser.hideProgressBar();
             // reload whole view
