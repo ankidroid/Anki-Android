@@ -80,17 +80,6 @@
                 />
 
             <androidx.appcompat.widget.AppCompatImageButton
-                android:id="@+id/editor_button_list_bullet"
-                style="@style/visual_editor_toolbar_button"
-                app:srcCompat="@drawable/ic_format_list_bulleted_black_24dp"
-                />
-            <androidx.appcompat.widget.AppCompatImageButton
-                android:id="@+id/editor_button_list_numbered"
-                style="@style/visual_editor_toolbar_button"
-                app:srcCompat="@drawable/ic_format_list_numbered_black_24dp"
-                />
-
-            <androidx.appcompat.widget.AppCompatImageButton
                 android:id="@+id/editor_button_text_color"
                 style="@style/visual_editor_toolbar_button"
                 app:srcCompat="@drawable/ic_format_color_text_black_24dp"
