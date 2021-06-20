@@ -23,5 +23,4 @@ public interface BooleanGetter {
     boolean getBoolean();
 
     BooleanGetter TRUE = () -> true;
-    BooleanGetter FALSE = () -> false;
 }

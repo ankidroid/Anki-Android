@@ -94,8 +94,8 @@ import timber.log.Timber;
 import static com.ichi2.async.TaskManager.setLatestInstance;
 import static com.ichi2.libanki.Card.deepCopyCardArray;
 import static com.ichi2.libanki.UndoAction.*;
-import static com.ichi2.utils.BooleanGetter.FALSE;
 import static com.ichi2.utils.BooleanGetter.TRUE;
+import static com.ichi2.utils.PairWithBoolean.FALSE;
 
 /**
  * This is essentially an AsyncTask with some more logging. It delegates to TaskDelegate the actual business logic.
@@ -773,7 +773,7 @@ public class CollectionTask<Progress, Result> extends BaseAsyncTask<Void, Progre
                 try {
                     boolean succeeded = actualTask(col, collectionTask, cards);
                     if (!succeeded) {
-                        return PairWithBoolean.FALSE;
+                        return FALSE;
                     }
                     col.getDb().getDatabase().setTransactionSuccessful();
                 } finally {
@@ -782,7 +782,7 @@ public class CollectionTask<Progress, Result> extends BaseAsyncTask<Void, Progre
             } catch (RuntimeException e) {
                 Timber.e(e, "doInBackgroundSuspendCard - RuntimeException on suspending card");
                 AnkiDroidApp.sendExceptionReport(e, "doInBackgroundSuspendCard");
-                return PairWithBoolean.FALSE;
+                return FALSE;
             }
             // pass cards back so more actions can be performed by the caller
             // (querying the cards again is unnecessarily expensive)
@@ -1738,7 +1738,7 @@ public class CollectionTask<Progress, Result> extends BaseAsyncTask<Void, Progre
                 col.getMedia().rebuildIfInvalid();
             } catch (IOException e) {
                 Timber.w(e);
-                return PairWithBoolean.FALSE;
+                return FALSE;
             }
             // A media check on AnkiDroid will also update the media db
             col.getMedia().findChanges(true);
