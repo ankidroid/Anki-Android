@@ -1,4 +1,4 @@
-/* global getTargetByGuid, RTextEditorView */
+/* global getTargetByGuid, VisualEditor */
 
 var deleteImage = function(guid) {
     var target = getTargetByGuid(guid);
@@ -17,7 +17,7 @@ var cut = function() {
         jq.append(fragment);
     }
 
-    RTextEditorView.setClipboard(jq.html());
+    VisualEditor.setClipboard(jq.html());
 
     //we're left with a single selection with no content if we have an image selected. Remove it.
     window.getSelection().removeAllRanges();
