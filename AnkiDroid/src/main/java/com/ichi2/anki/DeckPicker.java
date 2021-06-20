@@ -132,7 +132,7 @@ import com.ichi2.libanki.utils.TimeUtils;
 import com.ichi2.themes.StyledProgressDialog;
 import com.ichi2.ui.BadgeDrawableBuilder;
 import com.ichi2.utils.AdaptionUtil;
-import com.ichi2.utils.BooleanGetter;
+import com.ichi2.utils.PairWithBoolean;
 import com.ichi2.utils.ImportUtils;
 import com.ichi2.utils.PairWithBoolean;
 import com.ichi2.utils.Permissions;
@@ -366,14 +366,14 @@ public class DeckPicker extends NavigationDrawerActivity implements
     private ImportReplaceListener importReplaceListener() {
         return new ImportReplaceListener(this);
     }
-    private static class ImportReplaceListener extends TaskListenerWithContext<DeckPicker, String, BooleanGetter>{
+    private static class ImportReplaceListener extends TaskListenerWithContext<DeckPicker, String, PairWithBoolean<?>>{
         public ImportReplaceListener(DeckPicker deckPicker) {
             super(deckPicker);
         }
 
         @SuppressWarnings("unchecked")
         @Override
-        public void actualOnPostExecute(@NonNull DeckPicker deckPicker, BooleanGetter result) {
+        public void actualOnPostExecute(@NonNull DeckPicker deckPicker, PairWithBoolean<?> result) {
             Timber.i("Import: Replace Task Completed");
             if (deckPicker.mProgressDialog != null && deckPicker.mProgressDialog.isShowing()) {
                 deckPicker.mProgressDialog.dismiss();
@@ -1405,7 +1405,7 @@ public class DeckPicker extends NavigationDrawerActivity implements
     private UndoTaskListener undoTaskListener(boolean isReview) {
         return new UndoTaskListener(isReview, this);
     }
-    private static class UndoTaskListener extends TaskListenerWithContext<DeckPicker, Card, BooleanGetter> {
+    private static class UndoTaskListener extends TaskListenerWithContext<DeckPicker, Card, PairWithBoolean<?>> {
         private final boolean mIsreview;
 
         public UndoTaskListener(boolean isReview, DeckPicker deckPicker) {
@@ -1427,7 +1427,7 @@ public class DeckPicker extends NavigationDrawerActivity implements
 
 
         @Override
-        public void actualOnPostExecute(@NonNull DeckPicker deckPicker, BooleanGetter voi) {
+        public void actualOnPostExecute(@NonNull DeckPicker deckPicker, PairWithBoolean<?> voi) {
             deckPicker.hideProgressBar();
             Timber.i("Undo completed");
             if (mIsreview) {

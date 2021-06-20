@@ -59,7 +59,7 @@ import com.ichi2.libanki.sched.Counts;
 import com.ichi2.libanki.sched.DeckDueTreeNode;
 import com.ichi2.libanki.sched.DeckTreeNode;
 import com.ichi2.libanki.utils.Time;
-import com.ichi2.utils.BooleanGetter;
+import com.ichi2.utils.PairWithBoolean;
 import com.ichi2.utils.JSONArray;
 import com.ichi2.utils.JSONException;
 import com.ichi2.utils.JSONObject;
@@ -300,7 +300,7 @@ public class CollectionTask<Progress, Result> extends BaseAsyncTask<Void, Progre
     }
 
 
-    public static class UpdateNote extends Task<Card, BooleanGetter> {
+    public static class UpdateNote extends Task<Card, PairWithBoolean<?>> {
         private final Card mEditCard;
         private final boolean mFromReviewer;
         private final boolean mCanAccessScheduler;
@@ -312,7 +312,7 @@ public class CollectionTask<Progress, Result> extends BaseAsyncTask<Void, Progre
             this.mCanAccessScheduler = canAccessScheduler;
         }
 
-        protected BooleanGetter task(@NonNull Collection col, @NonNull ProgressSenderAndCancelListener<Card> collectionTask) {
+        protected PairWithBoolean<?> task(@NonNull Collection col, @NonNull ProgressSenderAndCancelListener<Card> collectionTask) {
             Timber.d("doInBackgroundUpdateNote");
             // Save the note
             AbstractSched sched = col.getSched();
@@ -352,8 +352,8 @@ public class CollectionTask<Progress, Result> extends BaseAsyncTask<Void, Progre
         }
     }
 
-    public static class GetCard extends Task<Card, BooleanGetter> {
-        protected BooleanGetter task(@NonNull Collection col, @NonNull ProgressSenderAndCancelListener<Card> collectionTask) {
+    public static class GetCard extends Task<Card, PairWithBoolean<?>> {
+        protected PairWithBoolean<?> task(@NonNull Collection col, @NonNull ProgressSenderAndCancelListener<Card> collectionTask) {
             AbstractSched sched = col.getSched();
             Timber.i("Obtaining card");
             Card newCard = sched.getCard();
@@ -374,7 +374,7 @@ public class CollectionTask<Progress, Result> extends BaseAsyncTask<Void, Progre
             this.mEase = ease;
         }
 
-        protected BooleanGetter task(@NonNull Collection col, @NonNull ProgressSenderAndCancelListener<Card> collectionTask) {
+        protected PairWithBoolean<?> task(@NonNull Collection col, @NonNull ProgressSenderAndCancelListener<Card> collectionTask) {
             Timber.i("Answering card %d", mOldCard.getId());
             col.getSched().answerCard(mOldCard, mEase);
             return super.task(col, collectionTask);
@@ -469,7 +469,7 @@ public class CollectionTask<Progress, Result> extends BaseAsyncTask<Void, Progre
     /**
      * Represents an action that remove a card from the Reviewer without reviewing it.
      */
-    public static abstract class DismissNote extends Task<Card, BooleanGetter> {
+    public static abstract class DismissNote extends Task<Card, PairWithBoolean<?>> {
         protected final Card mCard;
 
 
@@ -496,7 +496,7 @@ public class CollectionTask<Progress, Result> extends BaseAsyncTask<Void, Progre
                                  Indeed, if you clicked on suspend and leave the reviewer, the card should still be reviewed and there is no need for a next card.
          * @return whether the action ended succesfully
          */
-        protected BooleanGetter task(@NonNull Collection col, @NonNull ProgressSenderAndCancelListener<Card> collectionTask) {
+        protected PairWithBoolean<?> task(@NonNull Collection col, @NonNull ProgressSenderAndCancelListener<Card> collectionTask) {
             try {
                 col.getDb().executeInTransaction(() -> {
                     col.getSched().deferReset();
@@ -1063,8 +1063,8 @@ public class CollectionTask<Progress, Result> extends BaseAsyncTask<Void, Progre
         return card;
     }
 
-    public static class Undo extends Task<Card, BooleanGetter> {
-        protected BooleanGetter task(@NonNull Collection col, @NonNull ProgressSenderAndCancelListener<Card> collectionTask) {
+    public static class Undo extends Task<Card, PairWithBoolean<?>> {
+        protected PairWithBoolean<?> task(@NonNull Collection col, @NonNull ProgressSenderAndCancelListener<Card> collectionTask) {
             try {
                 col.getDb().executeInTransaction(() -> {
                     Card card = nonTaskUndo(col);
@@ -1395,7 +1395,7 @@ public class CollectionTask<Progress, Result> extends BaseAsyncTask<Void, Progre
     }
 
 
-    public static class ImportReplace extends Task<String, BooleanGetter> {
+    public static class ImportReplace extends Task<String, PairWithBoolean<?>> {
         private final String mPath;
 
 
@@ -1404,7 +1404,7 @@ public class CollectionTask<Progress, Result> extends BaseAsyncTask<Void, Progre
         }
 
 
-        protected BooleanGetter task(@NonNull Collection col, @NonNull ProgressSenderAndCancelListener<String> collectionTask) {
+        protected PairWithBoolean<?> task(@NonNull Collection col, @NonNull ProgressSenderAndCancelListener<String> collectionTask) {
             Timber.d("doInBackgroundImportReplace");
             Resources res = AnkiDroidApp.getInstance().getBaseContext().getResources();
             Context context = col.getContext();
