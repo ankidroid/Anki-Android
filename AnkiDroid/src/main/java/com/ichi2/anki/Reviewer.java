@@ -1203,12 +1203,7 @@ public class Reviewer extends AbstractFlashcardViewer {
 
     private void createWhiteboard() {
         SharedPreferences sharedPrefs = AnkiDroidApp.getSharedPrefs(this);
-        mWhiteboard = new Whiteboard(this, isInNightMode());
-        FrameLayout.LayoutParams lp2 = new FrameLayout.LayoutParams(
-                ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
-        mWhiteboard.setLayoutParams(lp2);
-        FrameLayout fl = findViewById(R.id.whiteboard);
-        fl.addView(mWhiteboard);
+        mWhiteboard = Whiteboard.instance(this, false);
 
         // We use the pen color of the selected deck at the time the whiteboard is enabled.
         // This is how all other whiteboard settings are
@@ -1229,7 +1224,6 @@ public class Reviewer extends AbstractFlashcardViewer {
             }
             return mWhiteboard.handleTouchEvent(event);
         });
-        mWhiteboard.setEnabled(true);
     }
 
     // Show or hide the whiteboard

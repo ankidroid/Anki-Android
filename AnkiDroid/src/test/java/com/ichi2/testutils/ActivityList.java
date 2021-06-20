@@ -28,6 +28,7 @@ import com.ichi2.anki.CardTemplateEditor;
 import com.ichi2.anki.CardTemplatePreviewer;
 import com.ichi2.anki.DeckOptions;
 import com.ichi2.anki.DeckPicker;
+import com.ichi2.anki.DrawingActivity;
 import com.ichi2.anki.FilteredDeckOptions;
 import com.ichi2.anki.Info;
 import com.ichi2.anki.IntentHandler;
@@ -92,6 +93,7 @@ public class ActivityList {
                 get(TranslationActivity.class),
                 get(LoadPronounciationActivity.class),
                 get(VisualEditorActivity.class),
+                get(DrawingActivity.class),
                 get(CardInfo.class),
                 get(CardTemplateEditor.class, ActivityList::intentForCardTemplateEditor),
                 get(CardTemplateBrowserAppearanceEditor.class, ActivityList::intentForCardTemplateBrowserAppearanceEditor)

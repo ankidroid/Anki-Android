@@ -52,6 +52,6 @@ public class WhiteboardDefaultForegroundColorTest extends RobolectricTest {
 
     protected int getForegroundColor() {
         AbstractFlashcardViewer mock = super.startActivityNormallyOpenCollectionWithIntent(Reviewer.class, new Intent());
-        return new Whiteboard(mock, mIsInverted).getForegroundColor();
+        return new Whiteboard(mock, true, mIsInverted).getForegroundColor();
     }
 }

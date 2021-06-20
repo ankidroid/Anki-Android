@@ -69,6 +69,11 @@
         android:resizeableActivity="true"
         android:supportsRtl="true"
         >
+        <activity android:name=".DrawingActivity"
+            android:label="@string/drawing"
+            android:exported="false"
+            android:configChanges="keyboardHidden|locale|orientation|screenSize"
+            />
         <activity
             android:name="com.ichi2.anki.IntentHandler"
             android:label="@string/app_name"

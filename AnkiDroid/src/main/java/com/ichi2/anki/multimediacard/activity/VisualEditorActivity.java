@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.content.res.Resources;
 import android.graphics.Color;
 import android.content.SharedPreferences;
+import android.net.Uri;
 import android.os.Bundle;
 import android.util.TypedValue;
 import android.view.Menu;
@@ -13,7 +14,9 @@ import android.view.View;
 
 import com.ichi2.anki.AnkiActivity;
 import com.ichi2.anki.AnkiDroidApp;
+import com.ichi2.anki.DrawingActivity;
 import com.ichi2.anki.R;
+import com.ichi2.anki.RegisterMediaForWebView;
 import com.ichi2.anki.cardviewer.CardAppearance;
 import com.ichi2.anki.UIUtils;
 import com.ichi2.anki.dialogs.DiscardChangesDialog;
@@ -70,6 +73,7 @@ public class VisualEditorActivity extends AnkiActivity {
 
     private static final int COLOR_PICKER_FOREGROUND = 1;
     private static final int COLOR_PICKER_BACKGROUND = 2;
+    private static final int REQUEST_WHITE_BOARD_EDIT = 3;
 
     public static final String EXTRA_FIELD = "visual.card.ed.extra.current.field";
     public static final String EXTRA_FIELD_INDEX = "visual.card.ed.extra.current.field.index";
@@ -100,6 +104,7 @@ public class VisualEditorActivity extends AnkiActivity {
     //Unsure if this is needed, or whether getCol will block until onCollectionLoaded completes.
     private boolean mHasLoadedCol;
     private LargeObjectStorage mLargeObjectStorage = new LargeObjectStorage(this);
+    private RegisterMediaForWebView mRegisterMediaForWebView;
 
 
     @Override
@@ -121,6 +126,7 @@ public class VisualEditorActivity extends AnkiActivity {
             setSupportActionBar(toolbar);
         }
 
+        mRegisterMediaForWebView = new RegisterMediaForWebView(this);
         startLoadingCollection();
     }
 
@@ -189,12 +195,17 @@ public class VisualEditorActivity extends AnkiActivity {
             view.setOnClickListener(v -> function.run());
             setTooltip(view, resources.getString(tooltipId));
         };
+        setupAndroidListener.apply(R.id.editor_button_white_board, this::openWhiteBoard, R.string.visual_editor_white_board); // opens drawingActivity
         setupAndroidListener.apply(R.id.editor_button_cloze, this::performCloze, R.string.visual_editor_tooltip_cloze);
         setupAndroidListener.apply(R.id.editor_button_insert_mathjax, this::insertMathJax, R.string.visual_editor_tooltip_mathjax);
         setupAndroidListener.apply(R.id.editor_button_add_image, this::openAdvancedViewerForAddImage, R.string.visual_editor_tooltip_add_image);
         setupAndroidListener.apply(R.id.editor_button_record_audio, this::openAdvancedViewerForRecordAudio, R.string.visual_editor_tooltip_record_audio);
         setupAndroidListener.apply(R.id.editor_button_text_color, () -> this.openColorPicker(COLOR_PICKER_FOREGROUND, Color.BLACK), R.string.visual_editor_tooltip_text_color);
         setupAndroidListener.apply(R.id.editor_button_background_color, () -> this.openColorPicker(COLOR_PICKER_BACKGROUND, Color.YELLOW), R.string.visual_editor_tooltip_background_color);
+    }
+
+    private void openWhiteBoard() {
+        startActivityForResultWithoutAnimation(new Intent(this, DrawingActivity.class), REQUEST_WHITE_BOARD_EDIT);
     }
 
     private void insertMathJax() {
@@ -290,53 +301,47 @@ public class VisualEditorActivity extends AnkiActivity {
             Timber.d("data was null");
             return;
         }
-        if (requestCode == REQUEST_MULTIMEDIA_EDIT) {
-
-            if (resultCode != RESULT_OK) {
-                return;
-            }
-            if (data.getExtras() == null) {
-                return;
-            }
-            IField field = (IField) data.getExtras().get(MultimediaEditFieldActivity.EXTRA_RESULT_FIELD);
-
-            if (field == null) {
-                return;
-            }
-
-            if (!registerMediaForWebView(field.getImagePath())) {
-                return;
-            }
-            if (!registerMediaForWebView(field.getAudioPath())) {
-                return;
-            }
-
-            this.mWebView.pasteHtml(field.getFormattedValue());
+        if (resultCode != RESULT_OK) {
             return;
+        }
+        if (data.getExtras() == null) {
+            return;
+        }
+        switch (requestCode) {
+            case REQUEST_MULTIMEDIA_EDIT:
+                IField field = (IField) data.getExtras().get(MultimediaEditFieldActivity.EXTRA_RESULT_FIELD);
+
+                if (field == null) {
+                    return;
+                }
+
+                if (!mRegisterMediaForWebView.registerMediaForWebView(field.getImagePath())) {
+                    return;
+                }
+                if (!mRegisterMediaForWebView.registerMediaForWebView(field.getAudioPath())) {
+                    return;
+                }
+
+                this.mWebView.pasteHtml(field.getFormattedValue());
+                break;
+            case REQUEST_WHITE_BOARD_EDIT:
+                // receive image from drawing activity
+                String savedWhiteBoardPath = (String) data.getExtras().get(DrawingActivity.EXTRA_RESULT_WHITEBOARD);
+
+                if (savedWhiteBoardPath == null) {
+                    return;
+                }
+
+                Uri uri = Uri.fromFile(new File(savedWhiteBoardPath));
+                try {
+                    this.mWebView.pasteHtml(mRegisterMediaForWebView.onImagePaste(uri));
+                } catch (NullPointerException e) {
+                    Timber.w(e);
+                }
+                break;
         }
         super.onActivityResult(requestCode, resultCode, data);
     }
-
-    @SuppressWarnings( {"BooleanMethodIsAlwaysInverted", "RedundantSuppression"})
-    @CheckResult
-    private boolean registerMediaForWebView(String imagePath) {
-        if (imagePath == null) {
-            //Nothing to register - continue with execution.
-            return true;
-        }
-
-        //TODO: this is a little too early, ideally should be in a temp file which can't be cleared until we exit.
-        Timber.i("Adding media to collection: %s", imagePath);
-        File f = new File(imagePath);
-        try {
-            getCol().getMedia().addFile(f);
-            return true;
-        } catch (IOException | EmptyMediaException e) {
-            Timber.e(e, "Failed to add file");
-            return false;
-        }
-    }
-
 
     private void setupWebView(VisualEditorWebView webView) {
         WebViewDebugging.initializeDebugging(AnkiDroidApp.getSharedPrefs(this));
