@@ -27,6 +27,16 @@ class CustomToolbarButton(var index: Int, private val prefix: String, private va
         return TextWrapper(prefix, suffix)
     }
 
+    // In Visual Editor we just need pre and suf fix string
+    // and createRange() javascript function will return selected Text and we will append prefix and suffix to it.
+    fun getPrefix(): String {
+        return prefix
+    }
+
+    fun getSuffix(): String {
+        return suffix
+    }
+
     companion object {
         private const val KEEP_EMPTY_ENTRIES = -1
         fun fromString(s: String?): CustomToolbarButton? {
