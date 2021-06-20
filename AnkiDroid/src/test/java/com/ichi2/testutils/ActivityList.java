@@ -95,6 +95,7 @@ public class ActivityList {
                 get(TranslationActivity.class),
                 get(LoadPronounciationActivity.class),
                 get(VisualEditorActivity.class),
+                get(DrawingActivity.class),
                 get(CardInfo.class),
                 get(CardTemplateEditor.class, ActivityList::intentForCardTemplateEditor),
                 get(CardTemplateBrowserAppearanceEditor.class, ActivityList::intentForCardTemplateBrowserAppearanceEditor),

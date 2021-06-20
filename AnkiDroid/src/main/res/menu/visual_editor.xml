@@ -2,6 +2,20 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
       xmlns:ankidroid="http://schemas.android.com/apk/res-auto">
     <item
+        android:id="@+id/action_undo"
+        android:enabled="true"
+        android:visible="false"
+        android:icon="@drawable/ic_undo"
+        android:title="@string/visual_editor_tooltip_cut_image"
+        ankidroid:showAsAction="always"/>
+    <item
+        android:id="@+id/action_redo"
+        android:enabled="true"
+        android:visible="false"
+        android:icon="@drawable/ic_redo"
+        android:title="@string/visual_editor_tooltip_cut_image"
+        ankidroid:showAsAction="always"/>
+    <item
         android:id="@+id/action_cut"
         android:enabled="true"
         android:icon="@drawable/ic_content_cut_white_24dp"

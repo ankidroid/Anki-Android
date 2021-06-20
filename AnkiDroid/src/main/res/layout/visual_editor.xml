@@ -49,164 +49,115 @@
 
             <androidx.appcompat.widget.AppCompatImageButton
                 android:id="@+id/editor_button_bold"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:background="?android:attr/selectableItemBackground"
-                android:padding="@dimen/toolbar_item_padding"
+                style="@style/visual_editor_toolbar_button"
                 app:srcCompat="@drawable/ic_format_bold_black_24dp"
                 />
 
             <androidx.appcompat.widget.AppCompatImageButton
                 android:id="@+id/editor_button_italic"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:background="?android:attr/selectableItemBackground"
-                android:padding="@dimen/toolbar_item_padding"
+                style="@style/visual_editor_toolbar_button"
                 app:srcCompat="@drawable/ic_format_italic_black_24dp"
                 />
 
             <androidx.appcompat.widget.AppCompatImageButton
                 android:id="@+id/editor_button_underline"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:background="?android:attr/selectableItemBackground"
-                android:padding="@dimen/toolbar_item_padding"
+                style="@style/visual_editor_toolbar_button"
                 app:srcCompat="@drawable/ic_format_underlined_black_24dp"
                 />
 
             <!-- we make this gone initially as it's optional -->
             <androidx.appcompat.widget.AppCompatImageButton
                 android:id="@+id/editor_button_cloze"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
                 android:visibility="gone"
-                android:background="?android:attr/selectableItemBackground"
-                android:padding="@dimen/toolbar_item_padding"
+                style="@style/visual_editor_toolbar_button"
                 app:srcCompat="@drawable/ic_cloze_black_24dp"
                 />
             <!-- Format Clear -->
             <androidx.appcompat.widget.AppCompatImageButton
                 android:id="@+id/editor_button_clear_formatting"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:background="?android:attr/selectableItemBackground"
-                android:padding="@dimen/toolbar_item_padding"
+                style="@style/visual_editor_toolbar_button"
                 app:srcCompat="@drawable/ic_format_clear_black_24dp"
                 />
 
             <androidx.appcompat.widget.AppCompatImageButton
                 android:id="@+id/editor_button_list_bullet"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:background="?android:attr/selectableItemBackground"
-                android:padding="@dimen/toolbar_item_padding"
+                style="@style/visual_editor_toolbar_button"
                 app:srcCompat="@drawable/ic_format_list_bulleted_black_24dp"
                 />
             <androidx.appcompat.widget.AppCompatImageButton
                 android:id="@+id/editor_button_list_numbered"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:background="?android:attr/selectableItemBackground"
-                android:padding="@dimen/toolbar_item_padding"
+                style="@style/visual_editor_toolbar_button"
                 app:srcCompat="@drawable/ic_format_list_numbered_black_24dp"
                 />
 
             <androidx.appcompat.widget.AppCompatImageButton
                 android:id="@+id/editor_button_text_color"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:background="?android:attr/selectableItemBackground"
-                android:padding="@dimen/toolbar_item_padding"
+                style="@style/visual_editor_toolbar_button"
                 app:srcCompat="@drawable/ic_format_color_text_black_24dp"
                 />
 
             <androidx.appcompat.widget.AppCompatImageButton
                 android:id="@+id/editor_button_background_color"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:background="?android:attr/selectableItemBackground"
-                android:padding="@dimen/toolbar_item_padding"
+                style="@style/visual_editor_toolbar_button"
                 app:srcCompat="@drawable/ic_format_color_background_black_24dp"
                 />
 
             <androidx.appcompat.widget.AppCompatImageButton
                 android:id="@+id/editor_button_horizontal_rule"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:background="?android:attr/selectableItemBackground"
-                android:padding="@dimen/toolbar_item_padding"
+                style="@style/visual_editor_toolbar_button"
                 app:srcCompat="@drawable/ic_horizontal_rule_black_24dp"
                 />
 
             <androidx.appcompat.widget.AppCompatImageButton
                 android:id="@+id/editor_button_align_left"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:background="?android:attr/selectableItemBackground"
-                android:padding="@dimen/toolbar_item_padding"
+                style="@style/visual_editor_toolbar_button"
                 app:srcCompat="@drawable/ic_format_align_left_black_24dp"
                 />
 
             <androidx.appcompat.widget.AppCompatImageButton
                 android:id="@+id/editor_button_align_center"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:background="?android:attr/selectableItemBackground"
-                android:padding="@dimen/toolbar_item_padding"
+                style="@style/visual_editor_toolbar_button"
                 app:srcCompat="@drawable/ic_format_align_center_black_24dp"
                 />
 
             <androidx.appcompat.widget.AppCompatImageButton
                 android:id="@+id/editor_button_align_right"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:background="?android:attr/selectableItemBackground"
-                android:padding="@dimen/toolbar_item_padding"
+                style="@style/visual_editor_toolbar_button"
                 app:srcCompat="@drawable/ic_format_align_right_black_24dp"
                 />
 
             <androidx.appcompat.widget.AppCompatImageButton
                 android:id="@+id/editor_button_align_justify"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:background="?android:attr/selectableItemBackground"
-                android:padding="@dimen/toolbar_item_padding"
+                style="@style/visual_editor_toolbar_button"
                 app:srcCompat="@drawable/ic_format_align_justify_black_24dp"
                 />
 
             <androidx.appcompat.widget.AppCompatImageButton
                 android:id="@+id/editor_button_insert_mathjax"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:background="?android:attr/selectableItemBackground"
-                android:padding="@dimen/toolbar_item_padding"
+                style="@style/visual_editor_toolbar_button"
                 app:srcCompat="@drawable/ic_add_equation_black_24dp"
                 />
 
             <androidx.appcompat.widget.AppCompatImageButton
                 android:id="@+id/editor_button_add_image"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:background="?android:attr/selectableItemBackground"
-                android:padding="@dimen/toolbar_item_padding"
+                style="@style/visual_editor_toolbar_button"
                 app:srcCompat="@drawable/ic_image_black_24dp"
                 />
 
             <androidx.appcompat.widget.AppCompatImageButton
                 android:id="@+id/editor_button_record_audio"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:background="?android:attr/selectableItemBackground"
-                android:padding="@dimen/toolbar_item_padding"
+                style="@style/visual_editor_toolbar_button"
                 app:srcCompat="@drawable/ic_mic_black_24dp"
                 />
 
             <androidx.appcompat.widget.AppCompatImageButton
+                android:id="@+id/editor_button_white_board"
+                style="@style/visual_editor_toolbar_button"
+                app:srcCompat="@drawable/ic_mode_edit_white" />
+
+            <androidx.appcompat.widget.AppCompatImageButton
                 android:id="@+id/editor_button_view_html"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:background="?android:attr/selectableItemBackground"
-                android:padding="@dimen/toolbar_item_padding"
+                style="@style/visual_editor_toolbar_button"
                 app:srcCompat="@drawable/ic_code_black_24dp"
                 />
 

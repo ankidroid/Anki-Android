@@ -146,6 +146,13 @@
         <item name="android:layout_height">48dp</item>
     </style>
 
+    <style name="visual_editor_toolbar_button">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:padding">8dp</item>
+        <item name="android:background">?android:attr/selectableItemBackground</item>
+        <item name="android:tint">@color/black</item>
+    </style>
 
     <style name="reviewer_whiteboard_editor_button_style">
         <item name="android:layout_height">40dp</item>
