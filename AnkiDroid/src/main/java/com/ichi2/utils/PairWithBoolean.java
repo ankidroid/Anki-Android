@@ -29,6 +29,7 @@ public class PairWithBoolean<U> implements BooleanGetter {
         return other != null;
     }
     public static final PairWithBoolean FALSE = new PairWithBoolean();
+    public static final BooleanGetter TRUE = new PairWithBoolean<>(new Object());
 
     private PairWithBoolean() {
         other = null;
