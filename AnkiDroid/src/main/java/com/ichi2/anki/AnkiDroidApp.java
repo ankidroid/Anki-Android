@@ -151,6 +151,17 @@ import static timber.log.Timber.DebugTree;
 )
 public class AnkiDroidApp extends Application {
 
+    /**
+     * Toggles Scoped Storage functionality introduced in later commits <p>
+     * Can be set to true or false only by altering the declaration itself.
+     * This restriction ensures that this flag will only be used by developers for testing <p>
+     * Set to false by default, so won't migrate data or use new scoped dirs <p>
+     * If true, enables data migration & use of scoped dirs in later commits <p>
+     * Should be set to true for testing Scoped Storage <p>
+     * TODO: Should be removed once app is fully functional under Scoped Storage
+     */
+    public static final boolean TESTING_SCOPED_STORAGE = false;
+
     private static final String WEBVIEW_VER_NAME = "WEBVIEW_VER_NAME";
 
     public static final String XML_CUSTOM_NAMESPACE = "http://arbitrary.app.namespace/com.ichi2.anki";
