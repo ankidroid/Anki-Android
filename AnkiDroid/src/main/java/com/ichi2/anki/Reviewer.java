@@ -147,7 +147,7 @@ public class Reviewer extends AbstractFlashcardViewer {
         public void onPostExecute(PairWithBoolean<Card[]> result) {
             super.onPostExecute(result);
             invalidateOptionsMenu();
-            int cardCount = result.other.length;
+            int cardCount = result.value.length;
             UIUtils.showThemedToast(Reviewer.this,
                     getResources().getQuantityString(mToastResourceId, cardCount, cardCount), true);
         }

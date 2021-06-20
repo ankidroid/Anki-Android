@@ -1637,7 +1637,7 @@ public class DeckPicker extends NavigationDrawerActivity implements
             }
             if (result.getBoolean()) {
                 @SuppressWarnings("unchecked")
-                List<List<String>> checkList = result.other;
+                List<List<String>> checkList = result.value;
                 deckPicker.showMediaCheckDialog(MediaCheckDialog.DIALOG_MEDIA_CHECK_RESULTS, checkList);
             } else {
                 deckPicker.showSimpleMessageDialog(deckPicker.getResources().getString(R.string.check_media_failed));
