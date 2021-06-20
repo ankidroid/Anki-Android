@@ -243,7 +243,7 @@ public class CollectionHelper {
      */
     @SuppressWarnings("deprecation") // TODO Tracked in https://github.com/ankidroid/Anki-Android/issues/5304
     @CheckResult
-    public static String getDefaultAnkiDroidDirectory() {
+    public static String getDefaultAnkiDroidDirectory(@NonNull Context context) {
         return new File(Environment.getExternalStorageDirectory(), "AnkiDroid").getAbsolutePath();
     }
 
@@ -264,7 +264,7 @@ public class CollectionHelper {
         return PreferenceExtensions.getOrSetString(
                 preferences,
                 "deckPath",
-                CollectionHelper::getDefaultAnkiDroidDirectory);
+                () -> getDefaultAnkiDroidDirectory(context));
     }
 
     /**
