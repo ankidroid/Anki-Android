@@ -21,8 +21,6 @@ public enum VisualEditorFunctionality {
     ITALIC,
     UNDERLINE,
     CLEAR_FORMATTING,
-    UNORDERED_LIST,
-    ORDERED_LIST,
     HORIZONTAL_RULE,
     ALIGN_LEFT,
     ALIGN_CENTER,

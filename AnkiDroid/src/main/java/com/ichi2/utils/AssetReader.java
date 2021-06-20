@@ -1,3 +1,4 @@
+//noinspection MissingCopyrightHeader #9048
 package com.ichi2.utils;
 
 import android.content.Context;

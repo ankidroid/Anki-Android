@@ -135,10 +135,10 @@ public class LargeObjectStorage {
         private final String mExtension;
 
 
-        public StorageKey(String mBundleKey, String mFileName, String mExtension) {
-            this.mBundleKey = mBundleKey;
-            this.mFileName = mFileName;
-            this.mExtension = mExtension;
+        public StorageKey(String bundleKey, String fileName, String extension) {
+            this.mBundleKey = bundleKey;
+            this.mFileName = fileName;
+            this.mExtension = extension;
         }
 
 

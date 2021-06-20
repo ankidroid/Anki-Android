@@ -1,3 +1,4 @@
+//noinspection MissingCopyrightHeader #5288
 /*
 MIT License
 
@@ -43,10 +44,10 @@ import android.webkit.WebView;
 import android.webkit.WebViewClient;
 
 import com.ichi2.themes.Themes;
-import com.ichi2.utils.FunctionalInterfaces.Consumer;
 
 import java.nio.charset.StandardCharsets;
 import java.util.Locale;
+import java.util.function.Consumer;
 
 import androidx.annotation.CheckResult;
 import androidx.annotation.NonNull;
@@ -165,7 +166,7 @@ public abstract class VisualEditorWebView extends WebView {
                         consoleMessage.lineNumber());
 
 
-                getLevel(consoleMessage).consume(message);
+                getLevel(consoleMessage).accept(message);
                 return super.onConsoleMessage(consoleMessage);
             }
 

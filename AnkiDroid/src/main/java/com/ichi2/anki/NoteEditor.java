@@ -1410,9 +1410,9 @@ public class NoteEditor extends AnkiActivity implements
                 NoteService.saveMedia(col, note);
                 mChanged = true;
             } else if (requestCode == REQUEST_VISUAL_EDIT) {
-                IMultimediaEditableNote mNote = NoteService.createEmptyNote(mEditorNote.model());
-                NoteService.updateMultimediaNoteFromJsonNote(col, mEditorNote, mNote);
-                mNote.setField(index, field);
+                IMultimediaEditableNote note = NoteService.createEmptyNote(mEditorNote.model());
+                NoteService.updateMultimediaNoteFromJsonNote(col, mEditorNote, note);
+                note.setField(index, field);
                 mEditFields.get(index).setText(field.getFormattedValue());
             }
         }
