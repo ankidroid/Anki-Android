@@ -161,6 +161,11 @@
                 app:srcCompat="@drawable/ic_code_black_24dp"
                 />
 
+            <androidx.appcompat.widget.AppCompatImageButton
+                android:id="@+id/editor_button_customs"
+                style="@style/visual_editor_toolbar_button"
+                app:srcCompat="@drawable/ic_add_toolbar_icon" />
+
         </com.ichi2.anki.multimediacard.visualeditor.VisualEditorToolbar>
         </HorizontalScrollView>
     </RelativeLayout>

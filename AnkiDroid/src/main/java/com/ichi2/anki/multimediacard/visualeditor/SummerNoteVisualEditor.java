@@ -138,6 +138,11 @@ public class SummerNoteVisualEditor extends VisualEditorWebView {
         execUnsafe("pasteHTML(`" + safeString.getEscapedValue() + "`);");
     }
 
+    @Override
+    public void insertCloze(int clozeId) {
+        ExecEscaped e = ExecEscaped.fromString(String.format(Locale.US, "cloze(%d)", clozeId));
+        exec(e);
+    }
 
     @Override
     public void insertCustomTag(String customPrefix, String customSuffix) {

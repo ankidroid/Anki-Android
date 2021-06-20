@@ -36,6 +36,12 @@ var cloze = function(clozeId) {
     insertAtPoint(endPoint, clozeSuffix, clozePrefix.length);
 };
 
+var insertCustomTag = function(customPrefix, customSuffix) {
+    var selected = $("#summernote").summernote("createRange");
+    // duplicate tag may inserted in html, this is internal error of summernote.
+    document.execCommand("insertHTML", null, customPrefix + selected.toString() + customSuffix);
+}
+
 var pasteHTML = function(data) {
     $("#summernote").summernote("pasteHTML", data);
 };

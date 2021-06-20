@@ -108,6 +108,18 @@ public class CustomToolbarButton {
     }
 
 
+    // In Visual Editor we just need pre and suf fix string
+    // and createRange() javascript function will return selected Text and we will append prefix and suffix to it.
+    public String getPrefix() {
+        return mPrefix;
+    }
+
+
+    public String getSuffix() {
+        return mSuffix;
+    }
+
+
     public int getIndex() {
         return mIndex;
     }

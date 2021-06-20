@@ -294,6 +294,8 @@ public abstract class VisualEditorWebView extends WebView {
 
     public abstract void insertCloze(int clozeId);
 
+    public abstract void insertCustomTag(String customPrefix, String customSuffix);
+
 
     public static class ExecEscaped {
         private final String mEscapedValue;
