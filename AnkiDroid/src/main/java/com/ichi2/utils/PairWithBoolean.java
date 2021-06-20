@@ -28,8 +28,8 @@ public class PairWithBoolean<U> {
     public boolean succeeded() {
         return value != null;
     }
-    public static final PairWithBoolean FALSE = new PairWithBoolean();
-    public static final PairWithBoolean TRUE = new PairWithBoolean<>(new Object());
+    public static final PairWithBoolean ERR = new PairWithBoolean();
+    public static final PairWithBoolean OK = new PairWithBoolean<>(new Object());
 
     private PairWithBoolean() {
         value = null;
