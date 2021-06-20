@@ -63,7 +63,6 @@ import com.ichi2.utils.PairWithBoolean;
 import com.ichi2.utils.JSONArray;
 import com.ichi2.utils.JSONException;
 import com.ichi2.utils.JSONObject;
-import com.ichi2.utils.PairWithBoolean;
 import com.ichi2.utils.SyncStatus;
 import com.ichi2.utils.Triple;
 
@@ -93,8 +92,8 @@ import timber.log.Timber;
 import static com.ichi2.async.TaskManager.setLatestInstance;
 import static com.ichi2.libanki.Card.deepCopyCardArray;
 import static com.ichi2.libanki.UndoAction.*;
-import static com.ichi2.utils.PairWithBoolean.TRUE;
-import static com.ichi2.utils.PairWithBoolean.FALSE;
+import static com.ichi2.utils.Status.OK;
+import static com.ichi2.utils.PairWithBoolean.ERR;
 
 /**
  * This is essentially an AsyncTask with some more logging. It delegates to TaskDelegate the actual business logic.
@@ -342,9 +341,9 @@ public class CollectionTask<Progress, Result> extends BaseAsyncTask<Void, Progre
             } catch (RuntimeException e) {
                 Timber.e(e, "doInBackgroundUpdateNote - RuntimeException on updating note");
                 AnkiDroidApp.sendExceptionReport(e, "doInBackgroundUpdateNote");
-                return FALSE;
+                return ERR;
             }
-            return TRUE;
+            return OK;
         }
 
         public boolean isFromReviewer() {
@@ -362,7 +361,7 @@ public class CollectionTask<Progress, Result> extends BaseAsyncTask<Void, Progre
                 newCard._getQA(true);
             }
             collectionTask.doProgress(newCard);
-            return TRUE;
+            return OK;
         }
     }
 
@@ -507,9 +506,9 @@ public class CollectionTask<Progress, Result> extends BaseAsyncTask<Void, Progre
             } catch (RuntimeException e) {
                 Timber.e(e, "doInBackgroundDismissNote - RuntimeException on dismissing note, dismiss type %s", this.getClass());
                 AnkiDroidApp.sendExceptionReport(e, "doInBackgroundDismissNote");
-                return FALSE;
+                return ERR;
             }
-            return TRUE;
+            return OK;
         }
     }
 
@@ -772,7 +771,7 @@ public class CollectionTask<Progress, Result> extends BaseAsyncTask<Void, Progre
                 try {
                     boolean succeeded = actualTask(col, collectionTask, cards);
                     if (!succeeded) {
-                        return FALSE;
+                        return ERR;
                     }
                     col.getDb().getDatabase().setTransactionSuccessful();
                 } finally {
@@ -781,7 +780,7 @@ public class CollectionTask<Progress, Result> extends BaseAsyncTask<Void, Progre
             } catch (RuntimeException e) {
                 Timber.e(e, "doInBackgroundSuspendCard - RuntimeException on suspending card");
                 AnkiDroidApp.sendExceptionReport(e, "doInBackgroundSuspendCard");
-                return FALSE;
+                return ERR;
             }
             // pass cards back so more actions can be performed by the caller
             // (querying the cards again is unnecessarily expensive)
@@ -1073,9 +1072,9 @@ public class CollectionTask<Progress, Result> extends BaseAsyncTask<Void, Progre
             } catch (RuntimeException e) {
                 Timber.e(e, "doInBackgroundUndo - RuntimeException on undoing");
                 AnkiDroidApp.sendExceptionReport(e, "doInBackgroundUndo");
-                return FALSE;
+                return ERR;
             }
-            return TRUE;
+            return OK;
         }
     }
 
@@ -1424,7 +1423,7 @@ public class CollectionTask<Progress, Result> extends BaseAsyncTask<Void, Progre
             } catch (IOException e) {
                 Timber.e(e, "doInBackgroundImportReplace - Error while unzipping");
                 AnkiDroidApp.sendExceptionReport(e, "doInBackgroundImportReplace0");
-                return FALSE;
+                return ERR;
             }
             try {
                 // v2 scheduler?
@@ -1434,11 +1433,11 @@ public class CollectionTask<Progress, Result> extends BaseAsyncTask<Void, Progre
                 Utils.unzipFiles(zip, dir.getAbsolutePath(), new String[] {colname, "media"}, null);
             } catch (IOException e) {
                 AnkiDroidApp.sendExceptionReport(e, "doInBackgroundImportReplace - unzip");
-                return FALSE;
+                return ERR;
             }
             String colFile = new File(dir, colname).getAbsolutePath();
             if (!(new File(colFile)).exists()) {
-                return FALSE;
+                return ERR;
             }
 
             Collection tmpCol = null;
@@ -1446,7 +1445,7 @@ public class CollectionTask<Progress, Result> extends BaseAsyncTask<Void, Progre
                 tmpCol = Storage.Collection(context, colFile);
                 if (!tmpCol.validCollection()) {
                     tmpCol.close();
-                    return FALSE;
+                    return ERR;
                 }
             } catch (Exception e) {
                 Timber.e("Error opening new collection file... probably it's invalid");
@@ -1457,7 +1456,7 @@ public class CollectionTask<Progress, Result> extends BaseAsyncTask<Void, Progre
                     // do nothing
                 }
                 AnkiDroidApp.sendExceptionReport(e, "doInBackgroundImportReplace - open col");
-                return FALSE;
+                return ERR;
             } finally {
                 if (tmpCol != null) {
                     tmpCol.close();
@@ -1480,7 +1479,7 @@ public class CollectionTask<Progress, Result> extends BaseAsyncTask<Void, Progre
             File f = new File(colFile);
             if (!f.renameTo(new File(colPath))) {
                 // Exit early if this didn't work
-                return FALSE;
+                return ERR;
             }
             int addedCount = -1;
             try {
@@ -1524,19 +1523,19 @@ public class CollectionTask<Progress, Result> extends BaseAsyncTask<Void, Progre
                 zip.close();
                 // delete tmp dir
                 BackupManager.removeDir(dir);
-                return TRUE;
+                return OK;
             } catch (RuntimeException e) {
                 Timber.e(e, "doInBackgroundImportReplace - RuntimeException");
                 AnkiDroidApp.sendExceptionReport(e, "doInBackgroundImportReplace1");
-                return FALSE;
+                return ERR;
             } catch (FileNotFoundException e) {
                 Timber.e(e, "doInBackgroundImportReplace - FileNotFoundException");
                 AnkiDroidApp.sendExceptionReport(e, "doInBackgroundImportReplace2");
-                return FALSE;
+                return ERR;
             } catch (IOException e) {
                 Timber.e(e, "doInBackgroundImportReplace - IOException");
                 AnkiDroidApp.sendExceptionReport(e, "doInBackgroundImportReplace3");
-                return FALSE;
+                return ERR;
             }
         }
 
@@ -1737,7 +1736,7 @@ public class CollectionTask<Progress, Result> extends BaseAsyncTask<Void, Progre
                 col.getMedia().rebuildIfInvalid();
             } catch (IOException e) {
                 Timber.w(e);
-                return FALSE;
+                return ERR;
             }
             // A media check on AnkiDroid will also update the media db
             col.getMedia().findChanges(true);
