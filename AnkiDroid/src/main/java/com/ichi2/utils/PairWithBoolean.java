@@ -17,15 +17,15 @@
 package com.ichi2.utils;
 
 public class PairWithBoolean<U> implements BooleanGetter {
-    public final boolean bool;
+    private final boolean mBool;
     public final U other;
 
     public boolean getBoolean() {
-        return bool;
+        return mBool;
     }
 
     public PairWithBoolean(boolean bool, U other) {
-        this.bool = bool;
+        mBool = bool;
         this.other = other;
     }
 }
