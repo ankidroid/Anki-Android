@@ -237,14 +237,115 @@ public class CollectionHelper {
 
     /**
      * Get the absolute path to a directory that is suitable to be the default starting location
-     * for the AnkiDroid folder. This is a folder named "AnkiDroid" at the top level of the
-     * external storage directory.
-     * @return the folder path
+     * for the AnkiDroid folder.
+     * <p>
+     * Currently, this is a folder named "AnkiDroid" at the top level of the non-app-specific external storage directory.
+     * <p><br>
+     * When targeting API > 29, AnkiDroid will have to use Scoped Storage on any device of any API level.
+     * Scoped Storage only allows access to App-Specific directories (without permissions).
+     * Hence, AnkiDroid won't be able to access the directory used currently on all devices,
+     * regardless of their API level, once AnkiDroid targets API > 29.
+     * Instead, AnkiDroid will have to use an App-Specific directory to store the AnkiDroid folder.
+     * This applies to the entire AnkiDroid userbase.
+     * <p><br>
+     * Currently, if <code>TESTING_SCOPED_STORAGE</code> is set to <code>true</code>, AnkiDroid uses its External
+     * App-Specific directory.<p>
+     * External App-Specific Storage is used since the only advantage Internal App-Specific Storage has over External
+     * App-Specific storage is additional security, but AnkiDroid does not store sensitive data. Defaulting to
+     * External Storage preserves the current behavior of the App
+     * (AnkiDroid defaults to External before the Migration To Scoped Storage).
+     * <p>
+     * TODO: If External Storage isn't emulated, allow users to choose between External & Internal App-Specific Storage
+     *  instead of defaulting to External App-Specific Storage. This should be done since using either one may be more
+     *  useful for them. If External Storage is emulated, there is no use in providing the option since Internal
+     *  Storage can not provide more storage space than External Storage if External Storage is emulated.
+     * <p><br>
+     * See the detailed explanation on storage locations & their classification below for more details.
+     * <p><br>
+     * App-Specific storage refers to directories which are meant to store files that are meant to be used by a
+     * particular app. Each app has its own Internal & External App-Specific directory. Under Scoped Storage,
+     * an app can only access its own Internal & External App-Specific directory without needing permissions.
+     * <p><br>
+     * Storage can be classified as Internal or External Storage. <p><br>
+     * Internal Storage: This storage is characterized by the fact that it is always available since it always resides
+     * on the device's own non-removable storage.<p>
+     * App-Specific Internal Storage can be accessed by ONLY the app which owns that directory (without any permissions).
+     * It cannot be accessed by any other apps.
+     * It cannot be accessed using the Files app on Android or by connecting a device to a pc via USB.
+     * <p><br>
+     * External Storage: <p>
+     * This storage is characterized only by the fact that it is not guaranteed to be available.<p>
+     * It may be built-in, non-removable storage on the device which is being emulated to function like external storage.
+     * In this case, it doesn't offer more space than Internal Storage.<p>
+     * Or, it may be removable storage like an SD Card.<p>
+     * App-Specific External Storage can be accessed by the app it is owned by without any permissions.
+     * It can be accessed by any apps with the WRITE_EXTERNAL_STORAGE permission.
+     * It can also be accessed via the Android Files app or by connecting the device to a PC via USB.
+     * <p><br>
+     * Note: The Files app can be misleading. On Samsung devices, clicking on Internal Storage it actually shows the
+     * emulated external storage (/storage/emulated/0/ in my case) - this is because from the point of view of the user,
+     * emulated external storage is just more internal storage since it is built into the phone. This is why vendors
+     * like Samsung may refer to external emulated storage as internal storage, even though for developers, they mean
+     * very different things as explained above.
+     * <p><br>
+     *
+     * @return Absolute Path to the default location starting location for the AnkiDroid folder
      */
     @SuppressWarnings("deprecation") // TODO Tracked in https://github.com/ankidroid/Anki-Android/issues/5304
     @CheckResult
     public static String getDefaultAnkiDroidDirectory(@NonNull Context context) {
+        if (AnkiDroidApp.TESTING_SCOPED_STORAGE) {
+            return getAppSpecificExternalAnkiDroidDirectory(context);
+        }
+        return getLegacyAnkiDroidDirectory();
+    }
+
+
+    /**
+     * Returns the absolute path to the AnkiDroid directory under the primary/shared external storage directory.
+     * This directory may be in emulated external storage, or can be an SD Card directory.
+     * <p>
+     * The path returned will no longer be accessible to AnkiDroid once targetSdk > 29
+     *
+     * @return Absolute path to the AnkiDroid directory in primary shared/external storage
+     */
+    @SuppressWarnings("deprecation")
+    public static String getLegacyAnkiDroidDirectory() {
         return new File(Environment.getExternalStorageDirectory(), "AnkiDroid").getAbsolutePath();
+    }
+
+
+    /**
+     * Returns the absolute path to the AnkiDroid directory under the app-specific, primary/shared external storage
+     * directory.
+     * <p>
+     * This directory may be in emulated external storage, or can be an SD Card directory.
+     * If it is actually external storage, i.e., removable storage like an SD Card, instead of storage
+     * built into the device itself, using this directory over internal storage can be beneficial since
+     * it may be able to store more data.
+     * <p>
+     * AnkiDroid can access this directory without permissions, even under Scoped Storage
+     * Other apps can access this directory if they have the WRITE_EXTERNAL_STORAGE permission
+     *
+     * @param context Used to get the External App-Specific directory for AnkiDroid
+     * @return Returns the absolute path to the App-Specific External AnkiDroid directory
+     */
+    public static String getAppSpecificExternalAnkiDroidDirectory(@NonNull Context context) {
+        return context.getExternalFilesDir(null).getAbsolutePath();
+    }
+
+
+    /**
+     * Returns the absolute path to the private AnkiDroid directory under the app-specific, internal storage directory.
+     * <p>
+     * AnkiDroid can access this directory without permissions, even under Scoped Storage
+     * Other apps cannot access this directory, regardless of what permissions they have
+     *
+     * @param context Used to get the Internal App-Specific directory for AnkiDroid
+     * @return Returns the absolute path to the App-Specific Internal AnkiDroid Directory
+     */
+    public static String getAppSpecificInternalAnkiDroidDirectory(@NonNull Context context) {
+        return context.getFilesDir().getAbsolutePath();
     }
 
     /**
