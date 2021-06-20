@@ -85,7 +85,6 @@ import com.ichi2.libanki.Deck;
 import com.ichi2.themes.Themes;
 import com.ichi2.ui.CardBrowserSearchView;
 import com.ichi2.upgrade.Upgrade;
-import com.ichi2.utils.BooleanGetter;
 import com.ichi2.utils.FunctionalInterfaces;
 import com.ichi2.utils.LanguageUtil;
 import com.ichi2.utils.PairWithBoolean;
@@ -1649,7 +1648,7 @@ public class CardBrowser extends NavigationDrawerActivity implements
     }
 
     /** Does not leak Card Browser. */
-    private static abstract class ListenerWithProgressBarCloseOnFalse<Progress, Result extends BooleanGetter> extends ListenerWithProgressBar<Progress, Result> {
+    private static abstract class ListenerWithProgressBarCloseOnFalse<Progress, Result extends PairWithBoolean<?>> extends ListenerWithProgressBar<Progress, Result> {
         private final String mTimber;
         public ListenerWithProgressBarCloseOnFalse(String timber, CardBrowser browser) {
             super(browser);
@@ -1697,7 +1696,7 @@ public class CardBrowser extends NavigationDrawerActivity implements
         return new UpdateCardHandler(this);
     }
 
-    private static class UpdateCardHandler extends ListenerWithProgressBarCloseOnFalse<Card, BooleanGetter> {
+    private static class UpdateCardHandler extends ListenerWithProgressBarCloseOnFalse<Card, PairWithBoolean<?>> {
         public UpdateCardHandler(CardBrowser browser) {
             super("Card Browser - UpdateCardHandler.actualOnPostExecute(CardBrowser browser)", browser);
         }
@@ -1708,7 +1707,7 @@ public class CardBrowser extends NavigationDrawerActivity implements
         }
 
         @Override
-        protected void actualOnValidPostExecute(CardBrowser browser, BooleanGetter result) {
+        protected void actualOnValidPostExecute(CardBrowser browser, PairWithBoolean<?> result) {
             browser.hideProgressBar();
         }
     }
@@ -1868,7 +1867,7 @@ public class CardBrowser extends NavigationDrawerActivity implements
 
 
     private final DeleteNoteHandler mDeleteNoteHandler = new DeleteNoteHandler(this);
-    private static class DeleteNoteHandler extends ListenerWithProgressBarCloseOnFalse<Card[], BooleanGetter> {
+    private static class DeleteNoteHandler extends ListenerWithProgressBarCloseOnFalse<Card[], PairWithBoolean<?>> {
         public DeleteNoteHandler(CardBrowser browser) {
             super(browser);
         }
@@ -1890,7 +1889,7 @@ public class CardBrowser extends NavigationDrawerActivity implements
 
 
         @Override
-        protected void actualOnValidPostExecute(CardBrowser browser, BooleanGetter result) {
+        protected void actualOnValidPostExecute(CardBrowser browser, PairWithBoolean<?> result) {
             browser.hideProgressBar();
             browser.mActionBarTitle.setText(String.format(getLocaleCompat(browser.getResources()), "%d", browser.checkedCardCount()));
             browser.invalidateOptionsMenu();    // maybe the availability of undo changed
@@ -1906,13 +1905,13 @@ public class CardBrowser extends NavigationDrawerActivity implements
 
 
     private final UndoHandler mUndoHandler = new UndoHandler(this);
-    private static class UndoHandler extends ListenerWithProgressBarCloseOnFalse<Card, BooleanGetter> {
+    private static class UndoHandler extends ListenerWithProgressBarCloseOnFalse<Card, PairWithBoolean<?>> {
         public UndoHandler(CardBrowser browser) {
             super(browser);
         }
 
         @Override
-        public void actualOnValidPostExecute(CardBrowser browser, BooleanGetter result) {
+        public void actualOnValidPostExecute(CardBrowser browser, PairWithBoolean<?> result) {
             Timber.d("Card Browser - mUndoHandler.actualOnPostExecute(CardBrowser browser)");
             browser.hideProgressBar();
             // reload whole view
