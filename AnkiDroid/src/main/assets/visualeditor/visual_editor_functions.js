@@ -1,4 +1,4 @@
-/* global RTextEditorView */
+/* global VisualEditor */
 
 /**
 To understand summernote, look at the API surface of document.execCommand:
@@ -71,10 +71,10 @@ function getTargetByGuid(guid) {
 
 function sendMouseDownToClient(e) {
     if (e.target.nodeName.toUpperCase() === "IMG") {
-        RTextEditorView.onImageSelection(getGuid(e.target), e.target.src);
+        VisualEditor.onImageSelection(getGuid(e.target), e.target.src);
         return;
     }
-    RTextEditorView.onRegularSelection();
+    VisualEditor.onRegularSelection();
 }
 
 /** Taken from card.js */

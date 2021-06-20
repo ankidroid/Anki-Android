@@ -36,7 +36,6 @@ import com.ichi2.libanki.Collection;
 import com.ichi2.libanki.Models;
 import com.ichi2.libanki.Note;
 import com.ichi2.libanki.Utils;
-import com.ichi2.libanki.exception.EmptyMediaException;
 import com.ichi2.themes.Themes;
 import com.ichi2.utils.AssetReader;
 import com.ichi2.utils.JSONObject;
@@ -52,7 +51,6 @@ import java.io.File;
 import java.io.IOException;
 import java.io.Serializable;
 import java.util.Arrays;
-import java.util.Locale;
 import java.util.List;
 
 import androidx.annotation.CheckResult;

@@ -69,13 +69,21 @@ SOFTWARE.
 
                 // Set initial content
                 var code = $('#summernote').summernote('code');
-                RTextEditorView.onEditorContentChanged(code);
+                VisualEditor.onEditorContentChanged(code);
               },
               onMousedown: function(e) {
                   sendMouseDownToClient(e);
               },
+              onImageUpload: function(data) {
+                 // we disable image upload in summernote
+                 // reason 1 : in summernote it include image as big blob, might lead problem while storing image
+                 // reason 2 : we have to register image in media.Collection
+                 data.pop();
+                 // we handle paste event through javascript interface
+                 VisualEditor.pasteImage();
+              },
               onChange: function(contents, $editable) {
-                RTextEditorView.onEditorContentChanged(contents);
+                VisualEditor.onEditorContentChanged(contents);
               }
             }
         });

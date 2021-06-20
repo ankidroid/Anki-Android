@@ -86,7 +86,7 @@ public class RegisterMediaForWebView {
         return fileNameAndExtension.getKey().length() <= 3;
     }
 
-    public String onImagePaste(Uri uri) {
+    public String registerMediaWithUri(Uri uri) {
         try {
             // check if cache already holds registered file or not
             if (!mPastedImageCache.containsKey(uri.toString())) {
