@@ -45,6 +45,7 @@ import android.webkit.WebViewClient;
 import com.ichi2.themes.Themes;
 import com.ichi2.utils.FunctionalInterfaces.Consumer;
 
+import java.nio.charset.StandardCharsets;
 import java.util.Locale;
 
 import androidx.annotation.CheckResult;
@@ -244,7 +245,7 @@ public abstract class VisualEditorWebView extends WebView {
         Timber.v("Applying CSS: %s", css);
         //Snippet from https://stackoverflow.com/a/30018910
         try {
-            byte[] data = css.getBytes("UTF-8");
+            byte[] data = css.getBytes(StandardCharsets.UTF_8);
             String encoded = Base64.encodeToString(data, Base64.NO_WRAP);
             // Base-64 decode in the browser.
             this.execInternal("javascript:(function() {" +

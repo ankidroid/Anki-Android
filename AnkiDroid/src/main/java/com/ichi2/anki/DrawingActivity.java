@@ -55,19 +55,16 @@ public class DrawingActivity extends AnkiActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
 
         int itemId = item.getItemId();
-        switch (itemId) {
-            case R.id.action_save:
-                Timber.i("Drawing:: Save button pressed");
-                finishWithSuccess();
-                break;
-            case R.id.action_whiteboard_edit:
-                Timber.i("Drawing:: Pen Color button pressed");
-                if (mColorPalette.getVisibility() == View.GONE) {
-                    mColorPalette.setVisibility(View.VISIBLE);
-                } else {
-                    mColorPalette.setVisibility(View.GONE);
-                }
-                break;
+        if (itemId == R.id.action_save) {
+            Timber.i("Drawing:: Save button pressed");
+            finishWithSuccess();
+        } else if (itemId == R.id.action_whiteboard_edit) {
+            Timber.i("Drawing:: Pen Color button pressed");
+            if (mColorPalette.getVisibility() == View.GONE) {
+                mColorPalette.setVisibility(View.VISIBLE);
+            } else {
+                mColorPalette.setVisibility(View.GONE);
+            }
         }
         return super.onOptionsItemSelected(item);
     }

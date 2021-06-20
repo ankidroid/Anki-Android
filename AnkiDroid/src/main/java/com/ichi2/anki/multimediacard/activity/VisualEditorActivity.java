@@ -27,6 +27,7 @@ import com.ichi2.anki.multimediacard.fields.ImageField;
 import com.ichi2.anki.multimediacard.fields.TextField;
 import com.ichi2.anki.multimediacard.visualeditor.VisualEditorFunctionality;
 import com.ichi2.anki.multimediacard.visualeditor.VisualEditorWebView;
+import com.ichi2.anki.multimediacard.visualeditor.WebViewUndoRedo;
 import com.ichi2.anki.reviewer.ReviewerCustomFonts;
 import com.ichi2.anki.multimediacard.visualeditor.VisualEditorWebView.SelectionType;
 import com.ichi2.anki.servicelayer.NoteService;
@@ -106,6 +107,8 @@ public class VisualEditorActivity extends AnkiActivity {
     private LargeObjectStorage mLargeObjectStorage = new LargeObjectStorage(this);
     private RegisterMediaForWebView mRegisterMediaForWebView;
 
+    private WebViewUndoRedo mWebViewUndoRedo;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -139,6 +142,15 @@ public class VisualEditorActivity extends AnkiActivity {
             this.finishCancel();
         }
     }
+
+    public void setCurrentText(String currentText) {
+        mCurrentText = currentText;
+    }
+
+    public String getCurrentText() {
+        return mCurrentText;
+    }
+
 
 
     private boolean hasChanges() {
@@ -351,12 +363,10 @@ public class VisualEditorActivity extends AnkiActivity {
         CardAppearance cardAppearance = CardAppearance.create(new ReviewerCustomFonts(this), preferences);
         String css = cardAppearance.getStyle();
         webView.injectCss(css);
-        webView.setOnTextChangeListener(s -> this.mCurrentText = s);
         webView.setSelectionChangedListener(this::handleSelectionChanged);
 
-        webView.setHtml(mCurrentText);
-
-        webView.load();
+        mWebViewUndoRedo = new WebViewUndoRedo(this, webView);
+        mWebViewUndoRedo.setContent(mCurrentText);
 
         //Could be better, this is done per card in AbstractFlashCardViewer
         webView.getSettings().setDefaultFontSize(CardAppearance.calculateDynamicFontSize(mCurrentText));
@@ -540,6 +550,12 @@ public class VisualEditorActivity extends AnkiActivity {
             // DEFECT: I was unable to disable the onClick menu for images provided by summernote, this makes it
             // annoying for the user as the custom image UI get in the way. This is because I'm unfamiliar with JS
             cut();
+            return true;
+        } else if (itemId == R.id.action_redo) {
+            mWebViewUndoRedo.redo();
+            return true;
+        } else if  (itemId == R.id.action_undo) {
+            mWebViewUndoRedo.undo();
             return true;
         }
         return onSpecificOptionsItemSelected(item, selectionType);
