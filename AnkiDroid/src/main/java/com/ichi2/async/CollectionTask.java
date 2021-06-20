@@ -773,7 +773,7 @@ public class CollectionTask<Progress, Result> extends BaseAsyncTask<Void, Progre
                 try {
                     boolean succeeded = actualTask(col, collectionTask, cards);
                     if (!succeeded) {
-                        return new PairWithBoolean<>(false, null);
+                        return PairWithBoolean.FALSE;
                     }
                     col.getDb().getDatabase().setTransactionSuccessful();
                 } finally {
@@ -782,11 +782,11 @@ public class CollectionTask<Progress, Result> extends BaseAsyncTask<Void, Progre
             } catch (RuntimeException e) {
                 Timber.e(e, "doInBackgroundSuspendCard - RuntimeException on suspending card");
                 AnkiDroidApp.sendExceptionReport(e, "doInBackgroundSuspendCard");
-                return new PairWithBoolean<>(false, null);
+                return PairWithBoolean.FALSE;
             }
             // pass cards back so more actions can be performed by the caller
             // (querying the cards again is unnecessarily expensive)
-            return new PairWithBoolean<>(true, cards);
+            return new PairWithBoolean<>(cards);
         }
 
         /**
@@ -1738,12 +1738,12 @@ public class CollectionTask<Progress, Result> extends BaseAsyncTask<Void, Progre
                 col.getMedia().rebuildIfInvalid();
             } catch (IOException e) {
                 Timber.w(e);
-                return new PairWithBoolean<>(false, null);
+                return PairWithBoolean.FALSE;
             }
             // A media check on AnkiDroid will also update the media db
             col.getMedia().findChanges(true);
             // Then do the actual check
-            return new PairWithBoolean<>(true, col.getMedia().check());
+            return new PairWithBoolean<>(col.getMedia().check());
         }
     }
 
