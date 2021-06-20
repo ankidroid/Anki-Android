@@ -1663,7 +1663,7 @@ public class CardBrowser extends NavigationDrawerActivity implements
             if (mTimber != null) {
                 Timber.d(mTimber);
             }
-            if (result.getBoolean()) {
+            if (result.succeeded()) {
                 actualOnValidPostExecute(browser, result);
             } else {
                 browser.closeCardBrowser(DeckPicker.RESULT_DB_ERROR);
@@ -1728,7 +1728,7 @@ public class CardBrowser extends NavigationDrawerActivity implements
             browser.mCardsAdapter.notifyDataSetChanged();
             browser.invalidateOptionsMenu();    // maybe the availability of undo changed
 
-            if (!result.getBoolean()) {
+            if (!result.succeeded()) {
                 Timber.i("changeDeckHandler failed, not offering undo");
                 browser.displayCouldNotChangeDeck();
                 return;

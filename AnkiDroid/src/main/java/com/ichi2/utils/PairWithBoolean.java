@@ -25,7 +25,7 @@ public class PairWithBoolean<U> {
      */
     public final @Nullable U value;
 
-    public boolean getBoolean() {
+    public boolean succeeded() {
         return value != null;
     }
     public static final PairWithBoolean FALSE = new PairWithBoolean();

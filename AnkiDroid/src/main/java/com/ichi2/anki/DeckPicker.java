@@ -134,7 +134,6 @@ import com.ichi2.ui.BadgeDrawableBuilder;
 import com.ichi2.utils.AdaptionUtil;
 import com.ichi2.utils.PairWithBoolean;
 import com.ichi2.utils.ImportUtils;
-import com.ichi2.utils.PairWithBoolean;
 import com.ichi2.utils.Permissions;
 import com.ichi2.utils.SyncStatus;
 import com.ichi2.utils.Triple;
@@ -379,7 +378,7 @@ public class DeckPicker extends NavigationDrawerActivity implements
                 deckPicker.mProgressDialog.dismiss();
             }
             Resources res = deckPicker.getResources();
-            if (result.getBoolean()) {
+            if (result.succeeded()) {
                 deckPicker.updateDeckList();
             } else {
                 deckPicker.showSimpleMessageDialog(res.getString(R.string.import_log_no_apkg), true);
@@ -1635,7 +1634,7 @@ public class DeckPicker extends NavigationDrawerActivity implements
             if (deckPicker.mProgressDialog != null && deckPicker.mProgressDialog.isShowing()) {
                 deckPicker.mProgressDialog.dismiss();
             }
-            if (result.getBoolean()) {
+            if (result.succeeded()) {
                 @SuppressWarnings("unchecked")
                 List<List<String>> checkList = result.value;
                 deckPicker.showMediaCheckDialog(MediaCheckDialog.DIALOG_MEDIA_CHECK_RESULTS, checkList);
