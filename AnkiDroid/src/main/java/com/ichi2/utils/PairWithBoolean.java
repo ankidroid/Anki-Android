@@ -16,16 +16,24 @@
 
 package com.ichi2.utils;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+
 public class PairWithBoolean<U> implements BooleanGetter {
-    private final boolean mBool;
-    public final U other;
+    /**
+     * The computed value in case of success. Null in case of failure
+     */
+    public final @Nullable U other;
 
     public boolean getBoolean() {
-        return mBool;
+        return other != null;
     }
+    public static final PairWithBoolean FALSE = new PairWithBoolean();
 
-    public PairWithBoolean(boolean bool, U other) {
-        mBool = bool;
+    private PairWithBoolean() {
+        other = null;
+    }
+    public PairWithBoolean(@NonNull U other) {
         this.other = other;
     }
 }
