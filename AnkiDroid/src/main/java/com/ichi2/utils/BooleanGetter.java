@@ -22,5 +22,4 @@ package com.ichi2.utils;
 public interface BooleanGetter {
     boolean getBoolean();
 
-    BooleanGetter TRUE = () -> true;
 }

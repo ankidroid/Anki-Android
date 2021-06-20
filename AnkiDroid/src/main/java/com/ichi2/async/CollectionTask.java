@@ -23,7 +23,6 @@ import android.content.res.Resources;
 import android.os.AsyncTask;
 import android.util.Pair;
 
-import com.fasterxml.jackson.core.JsonFactory;
 import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.core.JsonToken;
 import com.ichi2.anki.AnkiDroidApp;
@@ -94,7 +93,7 @@ import timber.log.Timber;
 import static com.ichi2.async.TaskManager.setLatestInstance;
 import static com.ichi2.libanki.Card.deepCopyCardArray;
 import static com.ichi2.libanki.UndoAction.*;
-import static com.ichi2.utils.BooleanGetter.TRUE;
+import static com.ichi2.utils.PairWithBoolean.TRUE;
 import static com.ichi2.utils.PairWithBoolean.FALSE;
 
 /**
