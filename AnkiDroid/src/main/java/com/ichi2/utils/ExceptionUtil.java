@@ -36,13 +36,22 @@ public class ExceptionUtil {
     @NonNull
     @CheckResult
     public static String getExceptionMessage(Throwable e) {
+        return getExceptionMessage(e, "\n");
+    }
+
+    @NonNull
+    @CheckResult
+    public static String getExceptionMessage(Throwable e, String separator) {
         StringBuilder ret = new StringBuilder();
         Throwable cause = e;
         while (cause != null) {
-            if (cause != e) {
-                ret.append("\n");
+
+            if (cause.getLocalizedMessage() != null || cause == e) {
+                if (cause != e) {
+                    ret.append(separator);
+                }
+                ret.append(cause.getLocalizedMessage());
             }
-            ret.append(cause.getLocalizedMessage());
             cause = cause.getCause();
         }
 
