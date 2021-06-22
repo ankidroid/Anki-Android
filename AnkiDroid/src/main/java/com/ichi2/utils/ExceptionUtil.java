@@ -16,6 +16,9 @@
 
 package com.ichi2.utils;
 
+import java.io.PrintWriter;
+import java.io.StringWriter;
+
 import androidx.annotation.CheckResult;
 import androidx.annotation.NonNull;
 
@@ -70,5 +73,13 @@ public class ExceptionUtil {
         }
 
         return containsCause(cause, clazz);
+    }
+
+
+    @NonNull
+    public static String getFullStackTrace(@NonNull Throwable ex) {
+        StringWriter sw = new StringWriter();
+        ex.printStackTrace(new PrintWriter(sw));
+        return sw.toString();
     }
 }
