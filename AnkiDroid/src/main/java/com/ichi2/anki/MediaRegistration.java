@@ -45,6 +45,8 @@ import timber.log.Timber;
  */
 public class MediaRegistration {
 
+    private static final int MEDIA_MAX_SIZE = 5 * 1000 * 1000;
+
     // Use the same HTML if the same image is pasted multiple times.
     private final HashMap<String, String> mPastedImageCache = new HashMap<>();
     private final Context mContext;
@@ -62,7 +64,6 @@ public class MediaRegistration {
     @Nullable
     public String loadImageIntoCollection(Uri uri) throws IOException {
         String fileName;
-        final int megabyte = 10 * 1000 * 1000;
 
         String filename = ContentResolverUtil.getFileName(mContext.getContentResolver(), uri);
         InputStream fd = mContext.getContentResolver().openInputStream(uri);
@@ -85,7 +86,7 @@ public class MediaRegistration {
         }
 
         Timber.d("File was %d bytes", bytesWritten);
-        if (bytesWritten > megabyte) {
+        if (bytesWritten > MEDIA_MAX_SIZE) {
             Timber.w("File was too large: %d bytes", bytesWritten);
             UIUtils.showThemedToast(mContext, mContext.getString(R.string.note_editor_paste_too_large), false);
             //noinspection ResultOfMethodCallIgnored
