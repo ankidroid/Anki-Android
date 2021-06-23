@@ -68,7 +68,6 @@
     <string name="sync_uploading_message">A carregar&#8230;</string>
     <string name="sync_downloading_message">A descarregar&#8230;</string>
     <string name="sync_title">Sincronização</string>
-    <string name="sync_downloading_media">A descarregar ficheiro %1$d/%2$d&#8230;</string>
     <string name="sync_log_uploading_message">Sincronização completa a partir dos dados locais</string>
     <string name="sync_log_clocks_unsynchronized">O seu relógio está incorreto por %1$d segundos%2$s. Por favor, certifique-se de que a data, a hora e o fuso horário do seu dispositivo estão definidos corretamente e volte a sincronizar.</string>
     <string name="sync_log_clocks_unsynchronized_tz">, o fuso horário pode estar errado</string>

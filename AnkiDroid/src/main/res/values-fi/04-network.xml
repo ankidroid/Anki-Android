@@ -68,7 +68,6 @@
     <string name="sync_uploading_message">Lähetetään...</string>
     <string name="sync_downloading_message">Ladataan...</string>
     <string name="sync_title">Synkronointi</string>
-    <string name="sync_downloading_media">Ladataan mediaa %1$d/%2$d...</string>
     <string name="sync_log_uploading_message">Täysi synkronointi sijainnista</string>
     <string name="sync_log_clocks_unsynchronized">Laitteesi kello on %1$d sekuntia%2$s väärässä. Varmista, että laitteesi päivämäärä, aika ja aikavyöhyke ovat oikeat, ja synkronoi sitten uudelleen.</string>
     <string name="sync_log_clocks_unsynchronized_tz">, laitteen aikavyöhyke on ehkä väärä</string>

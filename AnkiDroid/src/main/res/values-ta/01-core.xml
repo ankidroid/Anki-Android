@@ -38,7 +38,7 @@
 ~ this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <resources>
-    <string name="yes">yes</string>
+    <string name="yes">ஆம்</string>
     <!-- Navigation drawer items-->
     <string name="decks">அடுக்குகள்</string>
     <string name="card_browser" comment="The usage of card browser inside the app (note the casing)">அட்டை உலாவி</string>
@@ -65,14 +65,14 @@
     </plurals>
     <plurals name="reviewer_window_title_hours">
         <item quantity="one">%d hour %d left</item>
-        <item quantity="other">%d hours %d left</item>
+        <item quantity="other">%d மணி %d மீதம்</item>
     </plurals>
     <plurals name="reviewer_window_title_days">
         <item quantity="one">%d day %d left</item>
-        <item quantity="other">%d days %d left</item>
+        <item quantity="other">%d நாட்கள் %d மீதம்</item>
     </plurals>
-    <string name="no_cards_placeholder_title">Collection is empty</string>
-    <string name="no_cards_placeholder_description">Start adding cards\nusing the + icon.</string>
+    <string name="no_cards_placeholder_title">தொகுப்பு காலியாக  உள்ளது</string>
+    <string name="no_cards_placeholder_description">+ பொத்தானை அழுத்தி /n சேர்க்கவும்</string>
     <!-- The deck picker via AnkiStatsTaskHandler.java -->
     <plurals name="studied_cards_today">
         <item quantity="one">இன்று %2$s அட்டை படித்தது %1$d</item>
@@ -81,20 +81,21 @@
     <!-- flashcard_portrait.xml -->
     <string name="type_answer_hint">பதில் தட்டச்சு செய்யவும்</string>
     <string name="show_answer">பதில் காட்டவும்</string>
-    <string name="hide_answer">Hide answer</string>
+    <string name="hide_answer">பதிலை மறை</string>
     <string name="ease_button_again">மீண்டும்</string>
     <string name="ease_button_hard">கடின</string>
     <string name="ease_button_good">நல்ல</string>
     <string name="ease_button_easy">எளிதாக</string>
-    <string name="studyoptions_congrats_undo">செயல்தவிர்ப்பது %s</string>
+    <string name="studyoptions_congrats_undo">மீண்டும் %s</string>
     <string name="menu_import">இறக்குமதி</string>
     <string name="undo">செயல்தவிர்ப்பது </string>
     <string name="undo_action_review">கடைசி மதிப்பாய்வு</string>
-    <string name="undo_action_change_deck_multi">change decks</string>
-    <string name="move_all_to_deck">Move all to deck</string>
+    <string name="undo_action_change_deck_multi">தளத்தை மாற்று</string>
+    <string name="move_all_to_deck">அனைத்தையும் தளத்திற்கு நகர்த்து</string>
     <string name="unbury">புதைத்து வைக்காதே</string>
     <string name="rename_deck">மறுபெயரிடு</string>
-    <string name="create_shortcut">Create shortcut</string>
+    <string name="create_shortcut">குறுக்குவழி சேர்</string>
+    <string name="browse_cards">Browse cards</string>
     <string name="menu_add" comment="A generic add button - Main Deck Picker and card templates. Please inform us if you need more specific strings">கூட்டு</string>
     <string name="menu_add_note">குறிப்பு சேர்க்க</string>
     <string name="menu_my_account" comment="Label of the window in which the user should enter their account. This text can\'t be found in AnkiDroid directly.">ஒத்திசைக்க</string>
@@ -106,7 +107,7 @@
     <string name="menu_bury">புதைத்து</string>
     <string name="menu_suspend">இடைநிறுத்த</string>
     <string name="menu_delete_note">குறிப்பு நீக்கவும்</string>
-    <string name="menu_flag">Flag</string>
+    <string name="menu_flag">கொடிகள்</string>
     <string name="menu_flag_card">Flag card</string>
     <string name="menu_flag_card_zero">No flag</string>
     <string name="menu_flag_card_one">Red flag</string>

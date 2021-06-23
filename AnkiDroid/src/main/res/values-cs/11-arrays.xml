@@ -41,11 +41,11 @@
     </string-array>
     <string-array name="leech_action_labels">
         <item>Vyřadit kartu</item>
-        <item>Pouze štítek</item>
+        <item>Pouze označit štítkem</item>
     </string-array>
     <string-array name="new_order_labels">
         <item>Nové karty v náhodném pořadí</item>
-        <item>Nové karty v pořadí přidání</item>
+        <item>Nové karty v pořadí, v jakém byly přidány</item>
     </string-array>
     <string-array name="cram_deck_conf_order_labels">
         <item>Nejstarší nejdříve</item>

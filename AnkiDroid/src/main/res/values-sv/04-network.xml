@@ -68,7 +68,6 @@
     <string name="sync_uploading_message">Laddar upp...</string>
     <string name="sync_downloading_message">Hämtar...</string>
     <string name="sync_title">Synkronisering</string>
-    <string name="sync_downloading_media">Hämtar media %1$d/%2$d...</string>
     <string name="sync_log_uploading_message">Fullständig synkronisering från lokal sida</string>
     <string name="sync_log_clocks_unsynchronized">Klockan på din enhet gick fel med %1$d sekunder%2$s; Synkronisering kräver att både din klocka och tidszon är korrekt inställda för att undvika fel. Vänligen kontrollera att datum, tid och tidszon på din telefon är korrekt inställda och synkronisera igen.</string>
     <string name="sync_log_clocks_unsynchronized_tz">, enhetens tidszon kan vara felaktig</string>

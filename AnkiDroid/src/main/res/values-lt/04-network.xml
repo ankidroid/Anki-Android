@@ -68,7 +68,6 @@
     <string name="sync_uploading_message">Išsiunčiama&#8230;</string>
     <string name="sync_downloading_message">Siunčiama&#8230;</string>
     <string name="sync_title">Sinchronizavimas</string>
-    <string name="sync_downloading_media">Laikmenos parsiunčiamos %1$d/%2$d&#8230;</string>
     <string name="sync_log_uploading_message">Išsamus sinchronizavimas iš įrenginio</string>
     <string name="sync_log_clocks_unsynchronized">Jūsų laikrodis atsilieka %1$d sek.%2$s. Prašome įsitikinti, kad telefone laikas ir laiko juosta yra nustatyti teisingai ir bandyti sinchronizuoti iš naujo.</string>
     <string name="sync_log_clocks_unsynchronized_tz">, gali būti, kad blogai nustatyta laiko juosta</string>

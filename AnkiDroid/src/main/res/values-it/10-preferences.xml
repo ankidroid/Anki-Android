@@ -94,13 +94,14 @@
     <string name="gestures_allow_links_summary">I gesti non verranno elaborati se viene premuto un collegamento/suggerimento.</string>
     <string name="gestures_corner_touch" maxLength="41">tocco a 9 punti</string>
     <string name="gestures_corner_touch_summary">Consenti i gesti touch negli angoli dello schermo</string>
-    <string name="gestures_full_screen_nav_drawer" maxLength="41">Full screen navigation drawer</string>
-    <string name="gestures_fullscreen_nav_drawer_summary">Open navigation drawer when swiped right from anywhere on the screen</string>
+    <string name="gestures_full_screen_nav_drawer" maxLength="41">Pannello di navigazione a schermo intero</string>
+    <string name="gestures_fullscreen_nav_drawer_summary">Apri il pannello di navigazione quando scorri a destra da qualsiasi punto dello schermo</string>
     <string name="gestures_swipe_up" maxLength="41">Scorri su</string>
     <string name="gestures_swipe_down" maxLength="41">Scorri giù</string>
     <string name="gestures_swipe_left" maxLength="41">Scorri a sinistra</string>
     <string name="gestures_swipe_right" maxLength="41">Scorri a destra</string>
     <string name="gestures_double_tap" maxLength="41">Premi due volte</string>
+    <string name="gestures_long_tap" maxLength="41">Long tap</string>
     <string name="gestures_tap_top" maxLength="41">Premi su</string>
     <string name="gestures_tap_left" maxLength="41">Premi a sinistra</string>
     <string name="gestures_tap_right" maxLength="41">Premi a destra</string>
@@ -153,8 +154,8 @@
     <string name="timeout_answer_seconds_summ" comment="The time to wait (in seconds) in the reviewer before automatically showing the next question or answer">XXX s</string>
     <string name="timeout_question_seconds" maxLength="41">Tempo prima di mostrare la prossima domanda</string>
     <string name="select_locale_title">Scegli la lingua</string>
-    <string name="software_render" maxLength="41">Disable card hardware render</string>
-    <string name="software_render_summ">Hardware render is faster but may have problems, specifically on Android 8/8.1. If you cannot see parts of the card review user interface, try this setting.</string>
+    <string name="software_render" maxLength="41">Disabilita il rendering hardware scheda</string>
+    <string name="software_render_summ">Il rendering hardware è più veloce, ma può avere problemi, in particolare su Android 8/8.1. Se non riesci a vedere parti dell\'interfaccia utente di revisione della carta, prova questa impostazione.</string>
     <string name="safe_display" maxLength="41">Modalità visualizzazione sicura</string>
     <string name="safe_display_summ">Disattiva tutte le animazioni e utilizza il metodo più sicuro per disegnare le carte. Dispositivi e-ink possono richiedere questo.</string>
     <string name="disable_extended_text_ui" maxLength="41">Disabilita la modalità Modifica singolo campo</string>
@@ -165,8 +166,8 @@
     <string name="pref_backup_max" maxLength="41">Numero massimo di backup</string>
     <string name="show_estimates" maxLength="41">Mostra scadenza pulsanti</string>
     <string name="show_estimates_summ">Mostra la prossima scadenza sopra i pulsanti di risposta</string>
-    <string name="show_large_answer_buttons" maxLength="41">Show large answer buttons</string>
-    <string name="show_large_answer_buttons_summ">Show answer button in 2 rows</string>
+    <string name="show_large_answer_buttons" maxLength="41">Mostra pulsanti risposta grandi</string>
+    <string name="show_large_answer_buttons_summ">Mostra il pulsante risposta in 2 righe</string>
     <string name="show_top_bar" maxLength="41">Mostra barra superiore</string>
     <string name="show_top_bar_summ">Mostra il conteggio delle carte, il contrassegno e la marca nella barra superiore</string>
     <string name="show_progress" maxLength="41">Mostra rimanenti</string>
@@ -183,8 +184,8 @@
     <string name="day_offset_summ">XXX ore dopo mezzanotte</string>
     <string name="xlabel_dayoffset_seekbar" maxLength="41">Mezzanotte</string>
     <string name="ylabel_dayoffset_seekbar" maxLength="41">Ore 23:00</string>
-    <string name="sched_v2" maxLength="41">V2 scheduler</string>
-    <string name="sched_v2_summ">Enable the new scheduler. Forces changes in one direction on next sync</string>
+    <string name="sched_v2" maxLength="41">Pianificatore V2</string>
+    <string name="sched_v2_summ">Abilita il nuovo pianificatore. Forza i cambiamenti in una direzione alla prossima sincronizzazione</string>
     <string name="sched_ver_toggle_title">Conferma</string>
     <string name="sched_ver_2to1">Questo resetta tutte le carte in apprendimento, cancella i mazzi filtrati e cambia la versione di pianificatore. Procedere?</string>
     <string name="sched_ver_1to2">Il pianificatore sperimentale potrebbe causare una pianificazione non corretta. Assicurati di aver prima letto la documentazione. Procedere?</string>
@@ -297,8 +298,8 @@
     <string name="note_editor_replace_newlines_summ">Nell\'Editor delle Note, converti ogni istanza di &lt;br&gt; in newline quando modifichi una carta.</string>
     <string name="no_code_formatting" maxLength="41">Formattazione semplice della risposta</string>
     <string name="no_code_formatting_summ">Correzioni ‘􏿾’ che appaiono nei risultati delle risposte digitate</string>
-    <string name="type_in_answer_focus" maxLength="41">Focus ‘type in answer’</string>
-    <string name="type_in_answer_focus_summ">Automatically focus the ‘type in answer’ field in the reviewer</string>
+    <string name="type_in_answer_focus" maxLength="41">Focalizza «digita la risposta»</string>
+    <string name="type_in_answer_focus_summ">Focalizza automaticamente il campo «digita la risposta» nel revisore</string>
     <!-- Open Changelog-->
     <string name="open_changelog">Apri il registro dei cambiamenti</string>
 </resources>
