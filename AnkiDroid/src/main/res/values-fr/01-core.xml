@@ -95,6 +95,7 @@
     <string name="unbury">Déterrer</string>
     <string name="rename_deck">Renommer le paquet</string>
     <string name="create_shortcut">Créer un raccourci</string>
+    <string name="browse_cards">Browse cards</string>
     <string name="menu_add" comment="A generic add button - Main Deck Picker and card templates. Please inform us if you need more specific strings">Ajouter</string>
     <string name="menu_add_note">Ajouter une note</string>
     <string name="menu_my_account" comment="Label of the window in which the user should enter their account. This text can\'t be found in AnkiDroid directly.">Compte de synchronisation</string>

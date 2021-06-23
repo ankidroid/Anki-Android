@@ -42,8 +42,8 @@
     <string name="preference_summary_percentage">XXX%</string>
     <!-- #7570: We should use these strings again -->
     <!-- Navigation drawer strings -->
-    <string tools:ignore="UnusedResources" name="drawer_open">Otevřít zásuvku</string>
-    <string tools:ignore="UnusedResources" name="drawer_close">Zavřít zásuvku</string>
+    <string tools:ignore="UnusedResources" name="drawer_open">Otevřít menu</string>
+    <string tools:ignore="UnusedResources" name="drawer_close">Zavřít menu</string>
     <string name="CardEditorCardDeck">Balíček karet:</string>
     <string name="CardEditorNoteDeck">Balíček:</string>
     <string name="CardEditorModel">Typ poznámky:</string>
@@ -292,7 +292,7 @@
     <string name="restore_default">Obnovit výchozí</string>
     <string name="reviewer_tts_cloze_spoken_replacement">Prázdné</string>
     <!-- in options menu & Navigation Drawer -->
-    <string name="ankidroid_turn_on_fullscreen_nav_drawer">Prosím zapněte režim celé obrazovky, abyste mohli použít Zobrazit navigační zásuvku pomocí JavaScriptu.</string>
+    <string name="ankidroid_turn_on_fullscreen_nav_drawer">Prosím zapněte režim celé obrazovky, abyste mohli použít Zobrazit navigační menu pomocí JavaScriptu.</string>
     <string name="ankidroid_turn_on_fullscreen_options_menu">Prosím zapněte režim celé obrazovky, abyste mohli použít Zobrazit menu možnosti pomocí JavaScriptu.</string>
     <!-- Whiteboard save image message in Reviewer -->
     <string name="white_board_image_save_failed">Nepodařilo se uložit obrázek tabule. %s</string>

@@ -68,7 +68,6 @@
     <string name="sync_uploading_message">上傳中...</string>
     <string name="sync_downloading_message">下載中...</string>
     <string name="sync_title">同步</string>
-    <string name="sync_downloading_media">正在下載媒體檔 %1$d/%2$d...</string>
     <string name="sync_log_uploading_message">由本地端完整同步</string>
     <string name="sync_log_clocks_unsynchronized">你裝置上的時鐘是不正確的，誤差%2$s %1$d 秒；要同步的話，需要兩邊的時鐘和時區都是正確的，不然可能會有問題。請確定手機上的日期、時間、時區都是正確的，然後再同步一次。</string>
     <string name="sync_log_clocks_unsynchronized_tz">，裝置的時區可能是錯誤的</string>

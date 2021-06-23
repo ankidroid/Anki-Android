@@ -68,7 +68,6 @@
     <string name="sync_uploading_message">رفع...</string>
     <string name="sync_downloading_message">تنزيل...</string>
     <string name="sync_title">المزامنة</string>
-    <string name="sync_downloading_media">تحميل الوسائط %1$d/%2$d...</string>
     <string name="sync_log_uploading_message">مزامنة كاملة من القرص المحلي</string>
     <string name="sync_log_clocks_unsynchronized">ساعتك مخطئة بمقدار %1$d ثانية%2$s. تأكد من ضبط التاريخ، والوقت، والمنطقة الزمنية في هاتفك بشكل صحيح، ثم زامن مجددًا.</string>
     <string name="sync_log_clocks_unsynchronized_tz">، من المحتمل أن المنطقة الزمنية للجهاز غير صحيحة</string>

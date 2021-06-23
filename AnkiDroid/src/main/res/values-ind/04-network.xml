@@ -68,7 +68,6 @@
     <string name="sync_uploading_message">Mengunggah&#8230;</string>
     <string name="sync_downloading_message">Mengunduh&#8230;</string>
     <string name="sync_title">Sinkronisasi</string>
-    <string name="sync_downloading_media">Mengunduh media %1$d/%2$d&#8230;</string>
     <string name="sync_log_uploading_message">Sinkronisasi penuh dari lokal</string>
     <string name="sync_log_clocks_unsynchronized">Jam perangkatmu meleset sebesar %1$d detik %2$s. Pastikan tanggal, waktu, dan zona waktu pada teleponmu sudah benar, lalu sinkronkan lagi.</string>
     <string name="sync_log_clocks_unsynchronized_tz">, zona waktunya mungkin salah</string>
