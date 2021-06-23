@@ -68,15 +68,15 @@
     <string name="use_input_tag_summ">להשתמש בתיבת הטקסט שבתוך הקלף כדי להקליד בה את התשובה</string>
     <string name="dictionary" maxLength="41">מילון</string>
     <string name="reset_languages" maxLength="41">איפוס שפות</string>
-    <string name="reset_languages_summ">Reset language assignments (for text to speech and dictionaries) for all decks</string>
-    <string name="reset_languages_question">Reset all language assignments?</string>
+    <string name="reset_languages_summ">אפס משימות השפה (לטקסט לדיבור ולמילונים) לכל החפיסות</string>
+    <string name="reset_languages_question">לאפס את כל מטלות השפה?</string>
     <string name="reset_confirmation">All states reset</string>
     <string name="card_zoom" maxLength="41">התמקדות על קלף</string>
     <string name="image_zoom" maxLength="41">הגדלת תצוגת התמונות</string>
     <string name="button_size" maxLength="41">גודל כפתורי התשובה</string>
     <string name="card_browser_font_size" maxLength="41">קנה מידה להגדלת גופן הקלפים</string>
     <string name="card_browser_hide_media" maxLength="41">הצגת שמות הקבצים בדפדפן הקלפים</string>
-    <string name="card_browser_hide_media_summary">Display media filenames in the card browser question/answer fields</string>
+    <string name="card_browser_hide_media_summary">הצג שמות קבצים של מדיה בשדות השאלה / תשובה של דפדפן הכרטיס</string>
     <string name="col_path" maxLength="41">ספריית AnkiDroid</string>
     <string name="fullscreen_review" maxLength="41">מצב מסך מלא</string>
     <string name="full_screen_off">כבוי</string>
@@ -90,10 +90,10 @@
     </string-array>
     <string name="gestures" maxLength="41">הפעלת מחוות</string>
     <string name="gestures_summ">שיוך מחוות לפעולות כגון מענה ועריכת קלפים.</string>
-    <string name="gestures_allow_links" maxLength="41">Ignore touch gestures on links</string>
-    <string name="gestures_allow_links_summary">Touch gestures will not be processed if a link/hint is pressed.</string>
+    <string name="gestures_allow_links" maxLength="41">התעלם ממחוות מגע בקישורים</string>
+    <string name="gestures_allow_links_summary">מחוות מגע לא יעובדו אם לוחצים על קישור / רמז.</string>
     <string name="gestures_corner_touch" maxLength="41">9-point touch</string>
-    <string name="gestures_corner_touch_summary">Allow touch gestures in screen corners</string>
+    <string name="gestures_corner_touch_summary">אפשר מחוות מגע בפינות המסך</string>
     <string name="gestures_full_screen_nav_drawer" maxLength="41">Full screen navigation drawer</string>
     <string name="gestures_fullscreen_nav_drawer_summary">Open navigation drawer when swiped right from anywhere on the screen</string>
     <string name="gestures_swipe_up" maxLength="41">החלקת אצבע כלפי מעלה</string>
@@ -101,6 +101,7 @@
     <string name="gestures_swipe_left" maxLength="41">החלקת אצבע שמאלה</string>
     <string name="gestures_swipe_right" maxLength="41">החלקת אצבע ימינה</string>
     <string name="gestures_double_tap" maxLength="41">נגיעה כפולה</string>
+    <string name="gestures_long_tap" maxLength="41">Long tap</string>
     <string name="gestures_tap_top" maxLength="41">נגיעה בחלק העליון</string>
     <string name="gestures_tap_left" maxLength="41">נגיעה בצד שמאל</string>
     <string name="gestures_tap_right" maxLength="41">נגיעה בצד ימין</string>
@@ -114,11 +115,11 @@
     <string name="gestures_corner_tap_bottom_left" maxLength="41">Touch bottom left</string>
     <string name="gestures_corner_tap_bottom_center">Touch bottom center</string>
     <string name="gestures_corner_tap_bottom_right" maxLength="41">Touch bottom right</string>
-    <string name="gestures_volume_up" maxLength="41">Volume up</string>
-    <string name="gestures_volume_down" maxLength="41">Volume down</string>
+    <string name="gestures_volume_up" maxLength="41">כפתור הגברת שמע</string>
+    <string name="gestures_volume_down" maxLength="41">כפתור הנמכת שמע</string>
     <string name="more_scrolling_buttons" maxLength="41">קורא ספרים אלקטרוני</string>
     <string name="more_scrolling_buttons_summ">Also use kanji/katakana, emoji/kao-moji buttons for scrolling</string>
-    <string name="card_browser_enable_external_context_menu">‘%s’ Menu</string>
+    <string name="card_browser_enable_external_context_menu">תפריט %s</string>
     <string name="card_browser_enable_external_context_menu_summary">Enables the ‘%s’ context menu globally</string>
     <string name="double_scrolling_gap" maxLength="41">גלילה כפולה</string>
     <string name="double_scrolling_gap_summ">Double the scroll gap with eReader</string>
@@ -128,7 +129,7 @@
     <string name="sync_fetch_missing_media" maxLength="41">הורדת קבצי מדיה בסנכרון</string>
     <string name="sync_fetch_missing_media_summ">הורדה אוטומטית של קבצי מדיה בזמן הסנכרון</string>
     <string name="sync_account" maxLength="41">חשבון AnkiWeb</string>
-    <string name="sync_account_summ_logged_out">Not logged in</string>
+    <string name="sync_account_summ_logged_out">לא התחברת לחשבון</string>
     <string name="sync_account_summ_logged_in">%s</string>
     <string name="automatic_sync_choice" maxLength="41">סנכרון אוטומטי</string>
     <string name="automatic_sync_choice_summ">Sync automatically on app start/exit if the last sync was more than 10
@@ -148,46 +149,46 @@
     <string name="notification_minimum_cards_due">More than %d cards due</string>
     <string name="notification_minimum_cards_due_vibrate" maxLength="41">רטט</string>
     <string name="notification_minimum_cards_due_blink" maxLength="41">Blink light</string>
-    <string name="timeout_answer_text" maxLength="41">Automatic display answer</string>
+    <string name="timeout_answer_text" maxLength="41">הצגת התשובה באופן אוטומטי</string>
     <string name="timeout_answer_summ">Show answer automatically without user input. Delay includes time for automatically played audio files.</string>
-    <string name="timeout_answer_seconds" maxLength="41">Time to show answer</string>
+    <string name="timeout_answer_seconds" maxLength="41">זמן להצגת התשובה</string>
     <string name="timeout_answer_seconds_summ" comment="The time to wait (in seconds) in the reviewer before automatically showing the next question or answer">XXX שנ׳</string>
     <string name="timeout_question_seconds" maxLength="41">Time to show next question</string>
-    <string name="select_locale_title">Select language</string>
+    <string name="select_locale_title">בחר שפה</string>
     <string name="software_render" maxLength="41">Disable card hardware render</string>
     <string name="software_render_summ">Hardware render is faster but may have problems, specifically on Android 8/8.1. If you cannot see parts of the card review user interface, try this setting.</string>
     <string name="safe_display" maxLength="41">Safe display mode</string>
-    <string name="safe_display_summ">Disable all animations and use safer method for drawing cards. E-ink devices may require this.</string>
+    <string name="safe_display_summ">השבת את כל האנימציות והשתמש בשיטה בטוחה יותר לציור קלפים. התקני דיו אלקטרוני עשויים לדרוש זאת.</string>
     <string name="disable_extended_text_ui" maxLength="41">Disable Single-Field Edit Mode</string>
     <!--See: multimedia_editor_popup_cloze. We can\'t use format strings as this is auto-generated-->
     <string name="disable_extended_text_ui_summ">Allows \'Cloze Deletion\' context menu when in landscape mode.</string>
-    <string name="vertical_centering" maxLength="41">Center align</string>
+    <string name="vertical_centering" maxLength="41">מירכוז</string>
     <string name="vertical_centering_summ">Center the content of cards vertically</string>
-    <string name="pref_backup_max" maxLength="41">Max number of backups</string>
-    <string name="show_estimates" maxLength="41">Show button time</string>
-    <string name="show_estimates_summ">Show next review time on answer buttons</string>
-    <string name="show_large_answer_buttons" maxLength="41">Show large answer buttons</string>
-    <string name="show_large_answer_buttons_summ">Show answer button in 2 rows</string>
-    <string name="show_top_bar" maxLength="41">Show Top Bar</string>
-    <string name="show_top_bar_summ">Show card counts, flag and mark in top bar</string>
-    <string name="show_progress" maxLength="41">Show remaining</string>
-    <string name="show_progress_summ">Show remaining card count</string>
+    <string name="pref_backup_max" maxLength="41">מספר גיבויים מרבי</string>
+    <string name="show_estimates" maxLength="41">הצג כפתורי זמן</string>
+    <string name="show_estimates_summ">הצג את זמן הסקירה הבאה על כפתורי התשובה</string>
+    <string name="show_large_answer_buttons" maxLength="41">לחצני תשובה גדולים</string>
+    <string name="show_large_answer_buttons_summ">הצג כפתורי תשובה בשתי שורות</string>
+    <string name="show_top_bar" maxLength="41">הצג סרגל עליון</string>
+    <string name="show_top_bar_summ">הצג ספירת קלפים, דגל וסמן בסרגל העליון</string>
+    <string name="show_progress" maxLength="41">הצג נותרים</string>
+    <string name="show_progress_summ">הצג את מספר הקלפים שנותרו</string>
     <string name="show_eta" maxLength="41">Show ETA</string>
-    <string name="show_eta_summ">Show remaining time</string>
-    <string name="use_current" maxLength="41">Deck for new cards</string>
-    <string name="new_spread" maxLength="41">New card position</string>
-    <string name="learn_cutoff" maxLength="41">Learn ahead limit</string>
-    <string name="time_limit" maxLength="41">Timebox time limit</string>
-    <string name="time_limit_summ">XXX min</string>
+    <string name="show_eta_summ">הצג זמן שנותר</string>
+    <string name="use_current" maxLength="41">חפיסה לקלפים חדשים</string>
+    <string name="new_spread" maxLength="41">מיקום קלפים חדשים</string>
+    <string name="learn_cutoff" maxLength="41">לימוד מעבר למכסה</string>
+    <string name="time_limit" maxLength="41">מגבלת זמן בתיבת-זמן</string>
+    <string name="time_limit_summ">XXX דקות</string>
     <string name="new_timezone" maxLength="41">New timezone handling</string>
-    <string name="day_offset_with_description" maxLength="41">Start of next day</string>
-    <string name="day_offset_summ">XXX hours past midnight</string>
-    <string name="xlabel_dayoffset_seekbar" maxLength="41">Midnight</string>
+    <string name="day_offset_with_description" maxLength="41">התחל את היום הבא</string>
+    <string name="day_offset_summ">XXX שעות אחרי חצות</string>
+    <string name="xlabel_dayoffset_seekbar" maxLength="41">חצות</string>
     <string name="ylabel_dayoffset_seekbar" maxLength="41">11PM</string>
-    <string name="sched_v2" maxLength="41">V2 scheduler</string>
+    <string name="sched_v2" maxLength="41">מתזמן. גירסא 2</string>
     <string name="sched_v2_summ">Enable the new scheduler. Forces changes in one direction on next sync</string>
-    <string name="sched_ver_toggle_title">Confirm</string>
-    <string name="sched_ver_2to1">This will reset any cards in learning, clear filtered decks, and change the scheduler version. Proceed?</string>
+    <string name="sched_ver_toggle_title">אשר</string>
+    <string name="sched_ver_2to1">זה יאפס את כל הכרטיסים שבלמידה, ינקה חפיסות מסוננות וישנה את גרסת המתזמן. להמשיך?</string>
     <string name="sched_ver_1to2">The experimental scheduler could cause incorrect scheduling. Please ensure you have read the documentation first. Proceed?</string>
     <string name="pref_keep_screen_on" maxLength="41">להשאיר את המסך דולק</string>
     <string name="pref_keep_screen_on_summ">Disable screen timeout</string>
@@ -196,18 +197,18 @@
     <string name="enable_api_title" maxLength="41">הפעלת ה־API של AnkiDroid</string>
     <string name="enable_api_summary">Let other apps connect to AnkiDroid and read / write data without your intervention</string>
     <string name="custom_buttons" maxLength="41">App bar buttons</string>
-    <string name="custom_buttons_summary">Customize which actions appear in the app bar</string>
+    <string name="custom_buttons_summary">התאם אישית אילו פעולות יופיעו בסרגל האפליקציות</string>
     <string name="custom_buttons_setting_always_show">תמיד להציג</string>
     <string name="custom_buttons_setting_if_room">Show if room</string>
     <string name="custom_buttons_setting_menu_only">תפריט בלבד</string>
     <string name="reset_custom_buttons" maxLength="41">איפוס לבררת מחדל</string>
     <string name="thirdparty_apps_title" maxLength="41">Third-party API apps</string>
-    <string name="thirdparty_apps_summary">See a list of applications which make use of the AnkiDroid API such as dictionaries, utilities.</string>
-    <string name="html_javascript_debugging" maxLength="41">HTML / Javascript Debugging</string>
-    <string name="html_javascript_debugging_summ">Enable remote WebView connections, and save card HTML to AnkiDroid directory</string>
+    <string name="thirdparty_apps_summary">ראה רשימת יישומים המשתמשים ב- API של AnkiDroid כגון מילונים, כלי עזר.</string>
+    <string name="html_javascript_debugging" maxLength="41">איתור באגים ב- HTML / Javascript</string>
+    <string name="html_javascript_debugging_summ">אפשר חיבורי WebView מרוחקים ושמור HTML של כרטיס בספריית AnkiDroid</string>
     <!-- Advanced statistics settings -->
-    <string name="advanced_statistics_title" maxLength="41">Advanced statistics</string>
-    <string name="enable_advanced_statistics_title" maxLength="41">Enable advanced statistics</string>
+    <string name="advanced_statistics_title" maxLength="41">סטטיסטיקות מתקדמות</string>
+    <string name="enable_advanced_statistics_title" maxLength="41">אפשר סטטיסטיקות מתקדמות</string>
     <string name="enable_advanced_statistics_summ">Display forecast statistics based on a computation or simulation of future reviews (enabled) or on the future reviews already scheduled (disabled).</string>
     <string name="advanced_forecast_stats_compute_n_days_title" maxLength="41">Compute first n days, simulate remainder</string>
     <string name="advanced_forecast_stats_compute_precision_title" maxLength="41">דיוק החישוב</string>
@@ -221,49 +222,49 @@
     <string name="custom_sync_server_media_url_title" maxLength="41">Media sync url</string>
     <string name="custom_sync_server_media_url_invalid">Media sync url invalid</string>
     <!-- studyoptions -->
-    <string name="deck_conf_group_summ">Changes to deck group options will affect multiple decks. If you wish to change only the current deck, please add a new options group first</string>
-    <string name="studyoptions_limit_select_tags">Select tags</string>
+    <string name="deck_conf_group_summ">שינויים ב\'קבוצת אפשרויות\' ישפיעו על מספר חפיסות. אם ברצונך לשנות רק את החפיסה הנוכחית, אנא הוסף תחילה \'קבוצת אפשרויות\' חדשה</string>
+    <string name="studyoptions_limit_select_tags">בחר תגיות</string>
     <!-- Deck configurations -->
-    <string name="deck_conf_deck_description" maxLength="41">Deck description (current deck only)</string>
-    <string name="deck_conf_group" maxLength="41">Options group</string>
+    <string name="deck_conf_deck_description" maxLength="41">תיאור החפיסה (חפיסה נוכחית בלבד)</string>
+    <string name="deck_conf_group" maxLength="41">קבוצת אפשרויות</string>
     <plurals name="deck_conf_group_summ">
         <item quantity="one">%1$s\n%2$d deck uses this group</item>
         <item quantity="two">%1$s\n%2$d decks use this group</item>
         <item quantity="many">%1$s\n%2$d decks use this group</item>
         <item quantity="other">%1$s\n%2$d decks use this group</item>
     </plurals>
-    <string name="deck_conf_new_cards" maxLength="41">New cards</string>
-    <string name="deck_conf_rev_cards" maxLength="41" comment="Name of the deck options submenu for configuring reviews of due cards.">Reviews</string>
-    <string name="deck_conf_lps_cards" maxLength="41" comment="Label of the submenu stating how lapses cards are treated.">Lapses</string>
+    <string name="deck_conf_new_cards" maxLength="41">קלפים חדשים</string>
+    <string name="deck_conf_rev_cards" maxLength="41" comment="Name of the deck options submenu for configuring reviews of due cards.">סקירות</string>
+    <string name="deck_conf_lps_cards" maxLength="41" comment="Label of the submenu stating how lapses cards are treated.">שגיאות</string>
     <string name="deck_conf_general" maxLength="41">כללי</string>
     <string name="deck_conf_reminders" maxLength="41">תזכורות</string>
-    <string name="deck_conf_steps" maxLength="41">Steps (in minutes)</string>
-    <string name="deck_conf_order" maxLength="41">Order</string>
+    <string name="deck_conf_steps" maxLength="41">צעדים (דקות)</string>
+    <string name="deck_conf_order" maxLength="41">סדר</string>
     <string name="deck_conf_new_cards_day" maxLength="41">קלפים חדשים/יום</string>
     <string name="deck_conf_graduating_ivl" maxLength="41">Graduating interval</string>
     <string name="deck_conf_days">XXX day(s)</string>
-    <string name="deck_conf_easy_ivl" maxLength="41">Easy interval</string>
-    <string name="deck_conf_start_ease" maxLength="41">Starting ease</string>
-    <string name="deck_conf_max_rev" maxLength="41">Maximum reviews/day</string>
-    <string name="deck_conf_new_bury" maxLength="41">Bury related new cards</string>
-    <string name="deck_conf_new_bury_summ">Related new cards are buried until the next day</string>
-    <string name="deck_conf_rev_bury" maxLength="41">Bury related reviews</string>
+    <string name="deck_conf_easy_ivl" maxLength="41">מרווח זמן של \'קל\'</string>
+    <string name="deck_conf_start_ease" maxLength="41">קלות התחלתית</string>
+    <string name="deck_conf_max_rev" maxLength="41">מקסימום חזרות/ליום</string>
+    <string name="deck_conf_new_bury" maxLength="41">הטמן קלפים חדשים קשורים</string>
+    <string name="deck_conf_new_bury_summ">הטמן כרטיסים חדשים קשורים עד יום למחרת</string>
+    <string name="deck_conf_rev_bury" maxLength="41">הטמנת חזרות קשורות</string>
     <string name="deck_conf_rev_bury_summ">Related reviews are buried until the next day</string>
-    <string name="deck_conf_use_general_timeout_settings" maxLength="41">Use general settings</string>
+    <string name="deck_conf_use_general_timeout_settings" maxLength="41">השתמש בהגדרות כלליות</string>
     <string name="deck_conf_use_general_timeout_settings_summ">Use general \'Automatic display answer\' settings instead of using the settings for this group.</string>
     <string name="deck_conf_easy_bonus" maxLength="41">בונוס קל</string>
-    <string name="deck_conf_hard_factor" maxLength="41">Hard interval</string>
-    <string name="deck_conf_ivl_fct" maxLength="41">Interval modifier</string>
+    <string name="deck_conf_hard_factor" maxLength="41">מרווח זמן של \'קשה\'</string>
+    <string name="deck_conf_ivl_fct" maxLength="41">שינוי מרווח זמן</string>
     <string name="deck_conf_max_ivl" maxLength="41">Maximum interval</string>
-    <string name="deck_conf_new_lps_ivl" maxLength="41">New interval</string>
-    <string name="deck_conf_min_ivl" maxLength="41">Minimum interval</string>
-    <string name="deck_conf_leech_thres" maxLength="41">Leech threshold</string>
-    <string name="deck_conf_fails">XXX lapse(s)</string>
-    <string name="deck_conf_leech_action" maxLength="41">Leech action</string>
-    <string name="deck_conf_max_time" maxLength="41">Maximal answer time</string>
+    <string name="deck_conf_new_lps_ivl" maxLength="41">מרווח זמן חדש</string>
+    <string name="deck_conf_min_ivl" maxLength="41">מרווח זמן מינימלי</string>
+    <string name="deck_conf_leech_thres" maxLength="41">סף \'קלף עלוקה\'</string>
+    <string name="deck_conf_fails">XXX שגיאות</string>
+    <string name="deck_conf_leech_action" maxLength="41">התנהגות קלף \'עלוקה\'</string>
+    <string name="deck_conf_max_time" maxLength="41">זמן תשובה מרבי</string>
     <string name="deck_conf_seconds">XXX שניות</string>
     <string name="deck_conf_timer" maxLength="41">הצגת מתזמן תשובה</string>
-    <string name="deck_conf_autoplay" maxLength="41">Automatically play audio</string>
+    <string name="deck_conf_autoplay" maxLength="41">הפעל אודיו באופן אוטומטי</string>
     <string name="deck_conf_replayq" maxLength="41">Replay question</string>
     <string name="deck_conf_replayq_summ">When answer shown, replay both question and answer audio</string>
     <string name="deck_conf_manage" maxLength="41">ניהול קבוצה</string>
@@ -305,5 +306,5 @@
     <string name="type_in_answer_focus" maxLength="41">Focus ‘type in answer’</string>
     <string name="type_in_answer_focus_summ">Automatically focus the ‘type in answer’ field in the reviewer</string>
     <!-- Open Changelog-->
-    <string name="open_changelog">Open Changelog</string>
+    <string name="open_changelog">פתח את יומן רישום השינויים</string>
 </resources>

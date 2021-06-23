@@ -94,13 +94,14 @@
     <string name="gestures_allow_links_summary">Сэнсарныя жэсты не будуць успрымацца, калі націснута спасылка або падказка.</string>
     <string name="gestures_corner_touch" maxLength="41">9-пунктавы дотык</string>
     <string name="gestures_corner_touch_summary">Дазволіць сэнсарныя жэсты ў вуглах экрана</string>
-    <string name="gestures_full_screen_nav_drawer" maxLength="41">Full screen navigation drawer</string>
-    <string name="gestures_fullscreen_nav_drawer_summary">Open navigation drawer when swiped right from anywhere on the screen</string>
+    <string name="gestures_full_screen_nav_drawer" maxLength="41">Поўнаэкранная панэль навігацыі</string>
+    <string name="gestures_fullscreen_nav_drawer_summary">Адкрываць навігацыйную панэль, калі чыркаеце ўправа ў любым месцы экрана.</string>
     <string name="gestures_swipe_up" maxLength="41">Чырканне ўверх</string>
     <string name="gestures_swipe_down" maxLength="41">Чырканне ўніз</string>
     <string name="gestures_swipe_left" maxLength="41">Чырканне ўлева</string>
     <string name="gestures_swipe_right" maxLength="41">Чырканне ўправа</string>
     <string name="gestures_double_tap" maxLength="41">Двайны дотык</string>
+    <string name="gestures_long_tap" maxLength="41">Long tap</string>
     <string name="gestures_tap_top" maxLength="41">Дотык зверху</string>
     <string name="gestures_tap_left" maxLength="41">Дотык злева</string>
     <string name="gestures_tap_right" maxLength="41">Дотык справа</string>
@@ -166,8 +167,8 @@
     <string name="pref_backup_max" maxLength="41">Колькасць рэзервовых копій</string>
     <string name="show_estimates" maxLength="41">Паказваць кнопку часу</string>
     <string name="show_estimates_summ">Паказваць наступны час паўтарэння над кнопкай адказу</string>
-    <string name="show_large_answer_buttons" maxLength="41">Show large answer buttons</string>
-    <string name="show_large_answer_buttons_summ">Show answer button in 2 rows</string>
+    <string name="show_large_answer_buttons" maxLength="41">Паказваць вялікія кнопкі адказу</string>
+    <string name="show_large_answer_buttons_summ">Паказваць кнопкі адказу ў 2 радкі</string>
     <string name="show_top_bar" maxLength="41">Паказваць верхнюю панэль</string>
     <string name="show_top_bar_summ">Паказваць лічыльнік картак, сцяжок і пазнаку на верхняй панэлі</string>
     <string name="show_progress" maxLength="41">Паказаць тое, што засталося</string>

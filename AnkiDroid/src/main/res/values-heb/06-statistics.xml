@@ -41,7 +41,7 @@
     <string name="statistics_young">צעיר</string>
     <string name="statistics_mature">בוגר</string>
     <string name="statistics_young_and_learn">צעיר + ללמוד</string>
-    <string name="statistics_unlearned">תרם נראה</string>
+    <string name="statistics_unlearned">טרם נראה</string>
     <string name="statistics_suspended">מושהה</string>
     <string name="statistics_buried">קבור</string>
     <string name="statistics_relearn" comment="Labbel of the axis in the graph indicating the number of reviews of cards while they are in relearning mode.">ללמוד מחדש</string>
@@ -100,7 +100,7 @@
     <string name="stats_overview_card_types_lowest_ease">Lowest ease: &lt;b&gt;%.0f%%&lt;/b&gt;</string>
     <string name="stats_overview_card_types_average_ease">Average ease: &lt;b&gt;%.0f%%&lt;/b&gt;</string>
     <string name="stats_overview_card_types_highest_ease">Highest ease: &lt;b&gt;%.0f%%&lt;/b&gt;</string>
-    <string name="stats_select_time_scale">Select timescale</string>
+    <string name="stats_select_time_scale">בחר טווח זמן</string>
     <string-array name="due_x_axis_title">
         <item>ימים</item>
         <item>שבועות</item>
@@ -111,7 +111,7 @@
     <string name="stats_forecast">תחזית</string>
     <string name="stats_review_count">ספירת סקירה</string>
     <string name="stats_review_time">זמן סקירה</string>
-    <string name="stats_added" comment="Label of the number of added card">Added</string>
+    <string name="stats_added" comment="Label of the number of added card">התווסף</string>
     <string name="stats_review_intervals">מרווחי זמן</string>
     <string name="stats_breakdown">פילוח שעתי</string>
     <string name="stats_weekly_breakdown">פילוח שבועי</string>

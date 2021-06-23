@@ -68,7 +68,6 @@
     <string name="sync_uploading_message">ଅପଲୋଡ୍ କରୁଛି&#8230;</string>
     <string name="sync_downloading_message">ଡାଉନଲୋଡ୍ କରୁଛି&#8230;</string>
     <string name="sync_title">ସମକାଳୀନତା </string>
-    <string name="sync_downloading_media">ମିଡ଼ିଆ ଡାଉନଲୋଡ୍ ହେଉଛି %1$d%2$d&#8230;</string>
     <string name="sync_log_uploading_message">ସ୍ଥାନୀୟ ଠାରୁ ସମ୍ପୂର୍ଣ୍ଣ ସିଙ୍କ୍</string>
     <string name="sync_log_clocks_unsynchronized">ଆପଣଙ୍କର ଘଣ୍ଟା %1$d ସେକେଣ୍ଡ୍ %2$s ଆଗପଛ ଅଛି | ନିଶ୍ଚିତ କରନ୍ତୁ ଯେ ଆପଣଙ୍କ ଫୋନରେ ତାରିଖ, ସମୟ, ଏବଂ ସମୟ ମଣ୍ଡଳ ସଠିକ୍ ଭାବରେ ସେଟ୍ ହୋଇଛି, ତାପରେ ପୁନର୍ବାର ସିଙ୍କ କରନ୍ତୁ |</string>
     <string name="sync_log_clocks_unsynchronized_tz">, ସମୟ କ୍ଷେତ୍ର ସମ୍ଭବତ ଭୁଲ୍ ଅଟେ</string>

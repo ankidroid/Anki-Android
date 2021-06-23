@@ -68,7 +68,6 @@
     <string name="sync_uploading_message">Качване на...</string>
     <string name="sync_downloading_message">Изтегляне...</string>
     <string name="sync_title">Синхронизация</string>
-    <string name="sync_downloading_media">Изтегляне на мултимедийни %1$d/%2$d...</string>
     <string name="sync_log_uploading_message">Пълно синхронизиране от местни</string>
     <string name="sync_log_clocks_unsynchronized">Вашият часовник е неправилен с %1$d секунди%2$s. Уверете се, че датата, часа и часовата зона на телефона са зададени правилно и тогава синхронизирайте отново.</string>
     <string name="sync_log_clocks_unsynchronized_tz">, часовата зона на устройството е вероятно грешна</string>

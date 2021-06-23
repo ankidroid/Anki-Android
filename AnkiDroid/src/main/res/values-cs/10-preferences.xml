@@ -94,13 +94,14 @@
     <string name="gestures_allow_links_summary">Dotyková gesta nebudou provedena, jestliže se stiskne odkaz/nápověda.</string>
     <string name="gestures_corner_touch" maxLength="41">Devítibodový dotyk</string>
     <string name="gestures_corner_touch_summary">Povolí dotyková gesta v rozích obrazovky</string>
-    <string name="gestures_full_screen_nav_drawer" maxLength="41">Full screen navigation drawer</string>
-    <string name="gestures_fullscreen_nav_drawer_summary">Open navigation drawer when swiped right from anywhere on the screen</string>
+    <string name="gestures_full_screen_nav_drawer" maxLength="41">Navigační menu v režimu celé obrazovky</string>
+    <string name="gestures_fullscreen_nav_drawer_summary">Otevřít navigační menu, když se táhne doprava kdekoliv na obrazovce</string>
     <string name="gestures_swipe_up" maxLength="41">Tažení nahoru</string>
     <string name="gestures_swipe_down" maxLength="41">Tažení dolů</string>
     <string name="gestures_swipe_left" maxLength="41">Tažení doleva</string>
     <string name="gestures_swipe_right" maxLength="41">Tažení doprava</string>
     <string name="gestures_double_tap" maxLength="41">Dvojklepnutí</string>
+    <string name="gestures_long_tap" maxLength="41">Long tap</string>
     <string name="gestures_tap_top" maxLength="41">Klepnutí nahoru</string>
     <string name="gestures_tap_left" maxLength="41">Klepnutí vlevo</string>
     <string name="gestures_tap_right" maxLength="41">Klepnutí vpravo</string>
@@ -165,8 +166,8 @@
     <string name="pref_backup_max" maxLength="41">Maximální počet záloh</string>
     <string name="show_estimates" maxLength="41">Zobrazit tlačítko času</string>
     <string name="show_estimates_summ">Zobrazit čas příštího opakování na tlačítkách odpovědí</string>
-    <string name="show_large_answer_buttons" maxLength="41">Show large answer buttons</string>
-    <string name="show_large_answer_buttons_summ">Show answer button in 2 rows</string>
+    <string name="show_large_answer_buttons" maxLength="41">Zobrazit velká tlačítka odpovědí</string>
+    <string name="show_large_answer_buttons_summ">Zobrazit tlačítka odpovědí ve dvou řadách</string>
     <string name="show_top_bar" maxLength="41">Zobrazit horní lištu</string>
     <string name="show_top_bar_summ">Zobrazit počty karet, příznak a označení v horní liště</string>
     <string name="show_progress" maxLength="41">Zobrazit zbývající</string>
@@ -238,10 +239,10 @@
     <string name="deck_conf_reminders" maxLength="41">Upomínky</string>
     <string name="deck_conf_steps" maxLength="41">Kroky (v minutách)</string>
     <string name="deck_conf_order" maxLength="41">Pořadí</string>
-    <string name="deck_conf_new_cards_day" maxLength="41">Nové karty / den</string>
+    <string name="deck_conf_new_cards_day" maxLength="41">Nové karty za den</string>
     <string name="deck_conf_graduating_ivl" maxLength="41">Interval absolvování</string>
     <string name="deck_conf_days">XXX dní</string>
-    <string name="deck_conf_easy_ivl" maxLength="41">Snadný interval</string>
+    <string name="deck_conf_easy_ivl" maxLength="41">Interval pro snadné</string>
     <string name="deck_conf_start_ease" maxLength="41">Počáteční \'snadnost\'</string>
     <string name="deck_conf_max_rev" maxLength="41">Maximum opakovaných za den</string>
     <string name="deck_conf_new_bury" maxLength="41">Přeskočit související nové karty</string>
@@ -251,13 +252,13 @@
     <string name="deck_conf_use_general_timeout_settings" maxLength="41">Použít obecné nastavení</string>
     <string name="deck_conf_use_general_timeout_settings_summ">Použít obecné nastavení „automaticky zobrazovat odpověď“ místo nastavení pro tuto skupinu.</string>
     <string name="deck_conf_easy_bonus" maxLength="41">Bonus pro snadné</string>
-    <string name="deck_conf_hard_factor" maxLength="41">Těžký interval</string>
+    <string name="deck_conf_hard_factor" maxLength="41">Interval pro těžké</string>
     <string name="deck_conf_ivl_fct" maxLength="41">Modifikátor intervalu</string>
     <string name="deck_conf_max_ivl" maxLength="41">Maximální interval</string>
     <string name="deck_conf_new_lps_ivl" maxLength="41">Nový interval</string>
     <string name="deck_conf_min_ivl" maxLength="41">Minimální interval</string>
     <string name="deck_conf_leech_thres" maxLength="41">Práh pro pijavice</string>
-    <string name="deck_conf_fails">XXX chybných</string>
+    <string name="deck_conf_fails">XXX chyb</string>
     <string name="deck_conf_leech_action" maxLength="41">Akce pro pijavice</string>
     <string name="deck_conf_max_time" maxLength="41">Maximální čas pro odpověď</string>
     <string name="deck_conf_seconds">XXX sekund</string>

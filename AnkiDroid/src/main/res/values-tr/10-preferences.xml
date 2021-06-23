@@ -101,6 +101,7 @@
     <string name="gestures_swipe_left" maxLength="41">Sola sürükleme</string>
     <string name="gestures_swipe_right" maxLength="41">Sağa sürükleme</string>
     <string name="gestures_double_tap" maxLength="41">Çift dokunma</string>
+    <string name="gestures_long_tap" maxLength="41">Long tap</string>
     <string name="gestures_tap_top" maxLength="41">Yukarıya dokunma</string>
     <string name="gestures_tap_left" maxLength="41">Sola dokunma</string>
     <string name="gestures_tap_right" maxLength="41">Sağa dokunma</string>
