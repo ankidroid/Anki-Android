@@ -68,7 +68,6 @@
     <string name="sync_uploading_message">అప్లోడ్ అవుతోంది&#8230;</string>
     <string name="sync_downloading_message">డౌన్లోడ్ అవుతోంది&#8230;</string>
     <string name="sync_title">సమకాలీకరణ</string>
-    <string name="sync_downloading_media">మీడియాను డౌన్లోడ్ చేస్తోంది %1$d%2$d&#8230;</string>
     <string name="sync_log_uploading_message">స్థానికం నుండి పూర్తి సమకాలీకరణ</string>
     <string name="sync_log_clocks_unsynchronized">మీ గడియారం%1$d సెకన్లు%2$s ఆఫ్లో ఉంది. తేదీ, సమయం మరియు సమయ మండలి మీ ఫోన్లో సరిగ్గా సెట్ చేయబడి, మళ్లీ సమకాలీకరించినట్లు నిర్ధారించుకోండి.</string>
     <string name="sync_log_clocks_unsynchronized_tz">టైమ్ జోన్ బహుశా తప్పు</string>

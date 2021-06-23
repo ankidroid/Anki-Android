@@ -68,7 +68,6 @@
     <string name="sync_uploading_message">Pošiljanje &#8230;</string>
     <string name="sync_downloading_message">Prejemanje &#8230;</string>
     <string name="sync_title">Sinhronizacija</string>
-    <string name="sync_downloading_media">Prejemanje predstavnosti %1$d/%2$d &#8230;</string>
     <string name="sync_log_uploading_message">Polna sin. iz lokalne pom. naprave</string>
     <string name="sync_log_clocks_unsynchronized">Vaša ura je zamaknjena za %1$d s%2$s. Prepričajte se, da so datum, čas in časovni pas na vašem telefonu pravilno nastavljeni in potem sinhronizirajte znova.</string>
     <string name="sync_log_clocks_unsynchronized_tz">, časovni pas je verjetno napačen</string>

@@ -105,6 +105,7 @@
     <string name="unbury">Zrušit přeskočení</string>
     <string name="rename_deck">Přejmenovat balíček</string>
     <string name="create_shortcut">Vytvořit zástupce</string>
+    <string name="browse_cards">Browse cards</string>
     <string name="menu_add" comment="A generic add button - Main Deck Picker and card templates. Please inform us if you need more specific strings">Přidat</string>
     <string name="menu_add_note">Přidat poznámku</string>
     <string name="menu_my_account" comment="Label of the window in which the user should enter their account. This text can\'t be found in AnkiDroid directly.">Synchronizovat účet</string>
@@ -126,7 +127,7 @@
     <string name="menu_edit_tags">Upravit štítky</string>
     <string name="delete_note_message">Opravdu smazat poznámku a všechny její karty?\n%s</string>
     <string name="menu_select">Vybrat text</string>
-    <string name="menu_lookup">Lookup text</string>
+    <string name="menu_lookup">Vyhledat text</string>
     <string name="menu_search">Vyhledat v %1$s</string>
     <string name="menu_mark_note">Označit poznámku</string>
     <string name="menu_unmark_note">Odznačit poznámku</string>

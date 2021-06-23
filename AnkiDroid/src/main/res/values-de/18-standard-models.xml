@@ -30,7 +30,7 @@
     <!--Note type-->
     <string name="basic_model_name">Standard</string>
     <string name="cloze_model_name">Lückentext</string>
-    <string name="basic_typing_model_name">Standard (Eintippen der Antwort)</string>
+    <string name="basic_typing_model_name">Einfach (Eintippen der Antwort)</string>
     <string name="forward_reverse_model_name">Standard (und umgekehrte Karte)</string>
     <string name="forward_optional_reverse_model_name">Standard (optionale umgekehrte Karte)</string>
 </resources>
