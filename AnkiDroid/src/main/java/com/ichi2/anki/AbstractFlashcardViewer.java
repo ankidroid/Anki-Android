@@ -90,9 +90,11 @@ import com.afollestad.materialdialogs.MaterialDialog;
 import com.drakeet.drawer.FullDraggableContainer;
 import com.google.android.material.snackbar.Snackbar;
 import com.ichi2.anim.ViewAnimation;
+import com.ichi2.anki.cardviewer.Gesture;
 import com.ichi2.anki.cardviewer.GestureProcessor;
 import com.ichi2.anki.cardviewer.MissingImageHandler;
 import com.ichi2.anki.cardviewer.OnRenderProcessGoneDelegate;
+import com.ichi2.anki.cardviewer.ViewerCommand;
 import com.ichi2.anki.dialogs.tags.TagsDialog;
 import com.ichi2.anki.dialogs.tags.TagsDialogFactory;
 import com.ichi2.anki.dialogs.tags.TagsDialogListener;
@@ -343,8 +345,8 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
     /**
      * Gesture Allocation
      */
-    private int mGestureVolumeUp;
-    private int mGestureVolumeDown;
+    private ViewerCommand mGestureVolumeUp;
+    private ViewerCommand mGestureVolumeDown;
     protected final GestureProcessor mGestureProcessor = new GestureProcessor(this);
 
     private String mCardContent;
@@ -1515,7 +1517,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
     public boolean dispatchKeyEvent(KeyEvent event) {
         if (event.getAction() == KeyEvent.ACTION_DOWN) {
             // assign correct gesture code
-            int gesture = COMMAND_NOTHING;
+            ViewerCommand gesture = COMMAND_NOTHING;
 
             switch (event.getKeyCode()) {
                 case KeyEvent.KEYCODE_VOLUME_UP:
@@ -1918,8 +1920,8 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
         mLinkOverridesTouchGesture = preferences.getBoolean("linkOverridesTouchGesture", false);
         if (mGesturesEnabled) {
             mGestureProcessor.init(preferences);
-            mGestureVolumeUp = Integer.parseInt(preferences.getString("gestureVolumeUp", "0"));
-            mGestureVolumeDown = Integer.parseInt(preferences.getString("gestureVolumeDown", "0"));
+            mGestureVolumeUp = ViewerCommand.fromString(preferences.getString("gestureVolumeUp", "0"));
+            mGestureVolumeDown = ViewerCommand.fromString(preferences.getString("gestureVolumeDown", "0"));
         }
 
         if (preferences.getBoolean("keepScreenOn", false)) {
@@ -2690,7 +2692,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
         return dismiss(new CollectionTask.BuryNote(mCurrentCard));
     }
 
-    public boolean executeCommand(@ViewerCommandDef int which) {
+    public boolean executeCommand(ViewerCommand which) {
         if (isControlBlocked() && which != COMMAND_EXIT) {
             return false;
         }

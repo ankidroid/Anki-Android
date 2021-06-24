@@ -23,36 +23,21 @@ import com.ichi2.anki.reviewer.GestureMapper;
 import static com.ichi2.anki.cardviewer.ViewerCommand.COMMAND_NOTHING;
 
 public class GestureProcessor {
-    @ViewerCommand.ViewerCommandDef
-    private int mGestureDoubleTap;
-    @ViewerCommand.ViewerCommandDef
-    private int mGestureLongclick;
-    @ViewerCommand.ViewerCommandDef
-    private int mGestureSwipeUp;
-    @ViewerCommand.ViewerCommandDef
-    private int mGestureSwipeDown;
-    @ViewerCommand.ViewerCommandDef
-    private int mGestureSwipeLeft;
-    @ViewerCommand.ViewerCommandDef
-    private int mGestureSwipeRight;
-    @ViewerCommand.ViewerCommandDef
-    private int mGestureTapLeft;
-    @ViewerCommand.ViewerCommandDef
-    private int mGestureTapRight;
-    @ViewerCommand.ViewerCommandDef
-    private int mGestureTapTop;
-    @ViewerCommand.ViewerCommandDef
-    private int mGestureTapBottom;
-    @ViewerCommand.ViewerCommandDef
-    private int mGestureTapTopLeft;
-    @ViewerCommand.ViewerCommandDef
-    private int mGestureTapTopRight;
-    @ViewerCommand.ViewerCommandDef
-    private int mGestureTapCenter;
-    @ViewerCommand.ViewerCommandDef
-    private int mGestureTapBottomLeft;
-    @ViewerCommand.ViewerCommandDef
-    private int mGestureTapBottomRight;
+    private ViewerCommand mGestureDoubleTap;
+    private ViewerCommand mGestureLongclick;
+    private ViewerCommand mGestureSwipeUp;
+    private ViewerCommand mGestureSwipeDown;
+    private ViewerCommand mGestureSwipeLeft;
+    private ViewerCommand mGestureSwipeRight;
+    private ViewerCommand mGestureTapLeft;
+    private ViewerCommand mGestureTapRight;
+    private ViewerCommand mGestureTapTop;
+    private ViewerCommand mGestureTapBottom;
+    private ViewerCommand mGestureTapTopLeft;
+    private ViewerCommand mGestureTapTopRight;
+    private ViewerCommand mGestureTapCenter;
+    private ViewerCommand mGestureTapBottomLeft;
+    private ViewerCommand mGestureTapBottomRight;
 
     private final GestureMapper mGestureMapper = new GestureMapper();
 
@@ -66,28 +51,28 @@ public class GestureProcessor {
 
     public void init(SharedPreferences preferences) {
         mEnabled = preferences.getBoolean("gestures", false);
-        mGestureDoubleTap = Integer.parseInt(preferences.getString("gestureDoubleTap", "7"));
-        mGestureLongclick = Integer.parseInt(preferences.getString("gestureLongclick", "11"));
+        mGestureDoubleTap = ViewerCommand.fromString(preferences.getString("gestureDoubleTap", "7"));
+        mGestureLongclick = ViewerCommand.fromString(preferences.getString("gestureLongclick", "11"));
 
-        mGestureSwipeUp = Integer.parseInt(preferences.getString("gestureSwipeUp", "9"));
-        mGestureSwipeDown = Integer.parseInt(preferences.getString("gestureSwipeDown", "0"));
-        mGestureSwipeLeft = Integer.parseInt(preferences.getString("gestureSwipeLeft", "8"));
-        mGestureSwipeRight = Integer.parseInt(preferences.getString("gestureSwipeRight", "17"));
+        mGestureSwipeUp = ViewerCommand.fromString(preferences.getString("gestureSwipeUp", "9"));
+        mGestureSwipeDown = ViewerCommand.fromString(preferences.getString("gestureSwipeDown", "0"));
+        mGestureSwipeLeft = ViewerCommand.fromString(preferences.getString("gestureSwipeLeft", "8"));
+        mGestureSwipeRight = ViewerCommand.fromString(preferences.getString("gestureSwipeRight", "17"));
 
         mGestureMapper.init(preferences);
 
-        mGestureTapLeft = Integer.parseInt(preferences.getString("gestureTapLeft", "3"));
-        mGestureTapRight = Integer.parseInt(preferences.getString("gestureTapRight", "6"));
-        mGestureTapTop = Integer.parseInt(preferences.getString("gestureTapTop", "12"));
-        mGestureTapBottom = Integer.parseInt(preferences.getString("gestureTapBottom", "2"));
+        mGestureTapLeft = ViewerCommand.fromString(preferences.getString("gestureTapLeft", "3"));
+        mGestureTapRight = ViewerCommand.fromString(preferences.getString("gestureTapRight", "6"));
+        mGestureTapTop = ViewerCommand.fromString(preferences.getString("gestureTapTop", "12"));
+        mGestureTapBottom = ViewerCommand.fromString(preferences.getString("gestureTapBottom", "2"));
 
         boolean useCornerTouch = preferences.getBoolean("gestureCornerTouch", false);
         if (useCornerTouch) {
-            mGestureTapTopLeft = Integer.parseInt(preferences.getString("gestureTapTopLeft", "0"));
-            mGestureTapTopRight = Integer.parseInt(preferences.getString("gestureTapTopRight", "0"));
-            mGestureTapCenter = Integer.parseInt(preferences.getString("gestureTapCenter", "0"));
-            mGestureTapBottomLeft = Integer.parseInt(preferences.getString("gestureTapBottomLeft", "0"));
-            mGestureTapBottomRight = Integer.parseInt(preferences.getString("gestureTapBottomRight", "0"));
+            mGestureTapTopLeft = ViewerCommand.fromString(preferences.getString("gestureTapTopLeft", "0"));
+            mGestureTapTopRight = ViewerCommand.fromString(preferences.getString("gestureTapTopRight", "0"));
+            mGestureTapCenter = ViewerCommand.fromString(preferences.getString("gestureTapCenter", "0"));
+            mGestureTapBottomLeft = ViewerCommand.fromString(preferences.getString("gestureTapBottomLeft", "0"));
+            mGestureTapBottomRight = ViewerCommand.fromString(preferences.getString("gestureTapBottomRight", "0"));
         }
     }
 
@@ -118,12 +103,12 @@ public class GestureProcessor {
 
 
     protected boolean execute(Gesture gesture) {
-        int command = mapGestureToCommand(gesture);
+        ViewerCommand command = mapGestureToCommand(gesture);
         return mProcessor.executeCommand(command);
     }
 
 
-    private int mapGestureToCommand(Gesture gesture) {
+    private ViewerCommand mapGestureToCommand(Gesture gesture) {
         switch (gesture) {
             case SWIPE_UP: return mGestureSwipeUp;
             case SWIPE_DOWN: return mGestureSwipeDown;

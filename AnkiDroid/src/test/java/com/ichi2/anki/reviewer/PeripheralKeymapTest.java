@@ -34,7 +34,7 @@ import static org.mockito.Mockito.when;
 public class PeripheralKeymapTest {
     @Test
     public void flagAndAnswerDoNotConflict() {
-        List<Integer> processed = new ArrayList<>();
+        List<ViewerCommand> processed = new ArrayList<>();
 
         PeripheralKeymap peripheralKeymap = new PeripheralKeymap(new MockReviewerUi(), processed::add);
         peripheralKeymap.setup();
