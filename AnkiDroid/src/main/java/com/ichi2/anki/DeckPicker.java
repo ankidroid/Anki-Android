@@ -2500,7 +2500,13 @@ public class DeckPicker extends NavigationDrawerActivity implements
                     time = Utils.timeQuantityTopDeckPicker(AnkiDroidApp.getInstance(), eta*60);
                 }
                 if (due != null && getSupportActionBar() != null) {
-                    getSupportActionBar().setSubtitle(res.getQuantityString(R.plurals.deckpicker_title, due, due, time));
+                    String subTitle;
+                    if (due == 0) {
+                        subTitle = res.getQuantityString(R.plurals.deckpicker_title_zero_due, getCol().cardCount(), getCol().cardCount());
+                    } else {
+                        subTitle = res.getQuantityString(R.plurals.deckpicker_title, due, due, time);
+                    }
+                    getSupportActionBar().setSubtitle(subTitle);
                 }
             }
         } catch (RuntimeException e) {
