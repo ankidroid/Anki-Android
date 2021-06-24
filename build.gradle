@@ -4,7 +4,7 @@ import org.gradle.internal.jvm.Jvm
 
 buildscript {
     // The version for the Kotlin plugin and dependencies
-    ext.kotlin_version = '1.5.10'
+    ext.kotlin_version = '1.5.20'
 
     repositories {
         google()
