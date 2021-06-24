@@ -27,6 +27,7 @@ There are a few tasks that will surely lead to accepted PR, assuming they are do
   - [Code Coverage](#code-coverage)
 * [Other development tools](#other-development-tools)
   - [SQLite browser](#sqlite-browser)
+  - [Dependabot](#dependabot)
   - [HTML javascript inspection](#html-javascript-inspection)
   - [Custom Search Engines](#custom-search-engines)
 * [Checking database modifications](#checking-database-modifications)
