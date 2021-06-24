@@ -107,7 +107,6 @@
         <item name="md_dark_theme">true</item>
         <item name="md_background_color">@color/theme_black_primary_light</item>
         <!--Custom Tabs colors-->
-        <item name="customTabToolbarColor">#000000</item>
         <item name="customTabNavBarColor">#070707</item>
     </style>
 
