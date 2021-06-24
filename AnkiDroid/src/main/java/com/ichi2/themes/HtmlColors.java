@@ -1,3 +1,4 @@
+//noinspection MissingCopyrightHeader #8659
 package com.ichi2.themes;
 
 import java.util.HashMap;
