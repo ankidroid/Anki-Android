@@ -51,28 +51,28 @@ public class GestureProcessor {
 
     public void init(SharedPreferences preferences) {
         mEnabled = preferences.getBoolean("gestures", false);
-        mGestureDoubleTap = ViewerCommand.fromString(preferences.getString("gestureDoubleTap", "7"));
-        mGestureLongclick = ViewerCommand.fromString(preferences.getString("gestureLongclick", "11"));
+        mGestureDoubleTap = Gesture.DOUBLE_TAP.fromPreference(preferences);
+        mGestureLongclick = Gesture.LONG_TAP.fromPreference(preferences);
 
-        mGestureSwipeUp = ViewerCommand.fromString(preferences.getString("gestureSwipeUp", "9"));
-        mGestureSwipeDown = ViewerCommand.fromString(preferences.getString("gestureSwipeDown", "0"));
-        mGestureSwipeLeft = ViewerCommand.fromString(preferences.getString("gestureSwipeLeft", "8"));
-        mGestureSwipeRight = ViewerCommand.fromString(preferences.getString("gestureSwipeRight", "17"));
+        mGestureSwipeUp = Gesture.SWIPE_UP.fromPreference(preferences);
+        mGestureSwipeDown = Gesture.SWIPE_DOWN.fromPreference(preferences);
+        mGestureSwipeLeft = Gesture.SWIPE_LEFT.fromPreference(preferences);
+        mGestureSwipeRight = Gesture.SWIPE_RIGHT.fromPreference(preferences);
 
         mGestureMapper.init(preferences);
 
-        mGestureTapLeft = ViewerCommand.fromString(preferences.getString("gestureTapLeft", "3"));
-        mGestureTapRight = ViewerCommand.fromString(preferences.getString("gestureTapRight", "6"));
-        mGestureTapTop = ViewerCommand.fromString(preferences.getString("gestureTapTop", "12"));
-        mGestureTapBottom = ViewerCommand.fromString(preferences.getString("gestureTapBottom", "2"));
+        mGestureTapLeft = Gesture.TAP_LEFT.fromPreference(preferences);
+        mGestureTapRight = Gesture.TAP_RIGHT.fromPreference(preferences);
+        mGestureTapTop = Gesture.TAP_TOP.fromPreference(preferences);
+        mGestureTapBottom = Gesture.TAP_BOTTOM.fromPreference(preferences);
 
         boolean useCornerTouch = preferences.getBoolean("gestureCornerTouch", false);
         if (useCornerTouch) {
-            mGestureTapTopLeft = ViewerCommand.fromString(preferences.getString("gestureTapTopLeft", "0"));
-            mGestureTapTopRight = ViewerCommand.fromString(preferences.getString("gestureTapTopRight", "0"));
-            mGestureTapCenter = ViewerCommand.fromString(preferences.getString("gestureTapCenter", "0"));
-            mGestureTapBottomLeft = ViewerCommand.fromString(preferences.getString("gestureTapBottomLeft", "0"));
-            mGestureTapBottomRight = ViewerCommand.fromString(preferences.getString("gestureTapBottomRight", "0"));
+            mGestureTapTopLeft = Gesture.TAP_TOP_LEFT.fromPreference(preferences);
+            mGestureTapTopRight = Gesture.TAP_TOP_RIGHT.fromPreference(preferences);
+            mGestureTapCenter = Gesture.TAP_CENTER.fromPreference(preferences);
+            mGestureTapBottomLeft = Gesture.TAP_BOTTOM_LEFT.fromPreference(preferences);
+            mGestureTapBottomRight = Gesture.TAP_BOTTOM_RIGHT.fromPreference(preferences);
         }
     }
 

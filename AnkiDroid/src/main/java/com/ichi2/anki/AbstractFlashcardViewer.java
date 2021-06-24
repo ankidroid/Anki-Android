@@ -1920,8 +1920,8 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
         mLinkOverridesTouchGesture = preferences.getBoolean("linkOverridesTouchGesture", false);
         if (mGesturesEnabled) {
             mGestureProcessor.init(preferences);
-            mGestureVolumeUp = ViewerCommand.fromString(preferences.getString("gestureVolumeUp", "0"));
-            mGestureVolumeDown = ViewerCommand.fromString(preferences.getString("gestureVolumeDown", "0"));
+            mGestureVolumeUp = Gesture.VOLUME_UP.fromPreference(preferences);
+            mGestureVolumeDown = Gesture.VOLUME_DOWN.fromPreference(preferences);
         }
 
         if (preferences.getBoolean("keepScreenOn", false)) {
