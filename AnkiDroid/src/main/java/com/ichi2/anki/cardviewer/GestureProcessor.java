@@ -58,11 +58,14 @@ public class GestureProcessor {
 
     private final ViewerCommand.CommandProcessor mProcessor;
 
+    private boolean mEnabled = false;
+
     public GestureProcessor(ViewerCommand.CommandProcessor processor) {
         mProcessor = processor;
     }
 
     public void init(SharedPreferences preferences) {
+        mEnabled = preferences.getBoolean("gestures", false);
         mGestureDoubleTap = Integer.parseInt(preferences.getString("gestureDoubleTap", "7"));
         mGestureLongclick = Integer.parseInt(preferences.getString("gestureLongclick", "11"));
 
@@ -139,5 +142,35 @@ public class GestureProcessor {
             case LONG_TAP: return mGestureLongclick;
             default: return COMMAND_NOTHING;
         }
+    }
+
+
+    /**
+     * Whether the class has been enabled.
+     * This requires the "gestures" preference is enabled,
+     * and {@link GestureProcessor#init(SharedPreferences)} has been called
+     */
+    public boolean isEnabled() {
+        return mEnabled;
+    }
+
+
+    /**
+     * Whether one of the provided gestures is bound
+     * @param gestures the gestures to check
+     * @return <code>false</code> if none of the gestures are bound. <code>true</code> otherwise
+     */
+    public boolean isBound(Gesture... gestures) {
+        if (!isEnabled()) {
+            return false;
+        }
+
+        for (Gesture gesture : gestures) {
+            if (mapGestureToCommand(gesture) != COMMAND_NOTHING) {
+                return true;
+            }
+        }
+
+        return false;
     }
 }

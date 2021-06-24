@@ -63,6 +63,7 @@ import androidx.core.view.MenuItemCompat;
 import androidx.vectordrawable.graphics.drawable.VectorDrawableCompat;
 
 import com.ichi2.anki.cardviewer.CardAppearance;
+import com.ichi2.anki.cardviewer.Gesture;
 import com.ichi2.anki.dialogs.ConfirmationDialog;
 import com.ichi2.anki.multimediacard.AudioView;
 import com.ichi2.anki.dialogs.RescheduleDialog;
@@ -92,7 +93,6 @@ import java.util.Collections;
 import timber.log.Timber;
 
 import static com.ichi2.anki.reviewer.CardMarker.*;
-import static com.ichi2.anki.cardviewer.ViewerCommand.COMMAND_NOTHING;
 import static com.ichi2.anim.ActivityTransitionAnimation.Direction.*;
 
 
@@ -1201,18 +1201,9 @@ public class Reviewer extends AbstractFlashcardViewer {
 
 
     private void disableDrawerSwipeOnConflicts() {
-        SharedPreferences preferences = AnkiDroidApp.getSharedPrefs(getBaseContext());
-        boolean gesturesEnabled = preferences.getBoolean("gestures", false);
-        if (gesturesEnabled) {
-            int gestureSwipeUp = Integer.parseInt(preferences.getString("gestureSwipeUp", "9"));
-            int gestureSwipeDown = Integer.parseInt(preferences.getString("gestureSwipeDown", "0"));
-            int gestureSwipeRight = Integer.parseInt(preferences.getString("gestureSwipeRight", "17"));
-            if (gestureSwipeUp != COMMAND_NOTHING ||
-                    gestureSwipeDown != COMMAND_NOTHING ||
-                    gestureSwipeRight != COMMAND_NOTHING) {
-                mHasDrawerSwipeConflicts = true;
-                super.disableDrawerSwipe();
-            }
+        if (mGestureProcessor.isBound(Gesture.SWIPE_UP, Gesture.SWIPE_DOWN, Gesture.SWIPE_RIGHT)) {
+            mHasDrawerSwipeConflicts = true;
+            super.disableDrawerSwipe();
         }
     }
 
@@ -1267,6 +1258,11 @@ public class Reviewer extends AbstractFlashcardViewer {
     @VisibleForTesting(otherwise = VisibleForTesting.NONE)
     public AudioView getAudioView() {
         return mMicToolBar;
+    }
+
+    @VisibleForTesting(otherwise = VisibleForTesting.NONE)
+    public boolean hasDrawerSwipeConflicts() {
+        return mHasDrawerSwipeConflicts;
     }
 
     /**
