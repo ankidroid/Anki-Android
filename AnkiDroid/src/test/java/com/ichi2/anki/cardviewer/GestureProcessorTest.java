@@ -34,21 +34,22 @@ import static org.hamcrest.Matchers.hasSize;
 import static org.hamcrest.Matchers.is;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.eq;
+import static org.mockito.ArgumentMatchers.nullable;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
 public class GestureProcessorTest implements ViewerCommand.CommandProcessor {
 
     private final GestureProcessor mSut = new GestureProcessor(this);
-    private final List<Integer> mExecutedCommands = new ArrayList<>();
+    private final List<ViewerCommand> mExecutedCommands = new ArrayList<>();
 
     @Override
-    public boolean executeCommand(int which) {
+    public boolean executeCommand(ViewerCommand which) {
         this.mExecutedCommands.add(which);
         return true;
     }
 
-    int singleResult() {
+    ViewerCommand singleResult() {
         assertThat(mExecutedCommands, hasSize(1));
         return mExecutedCommands.get(0);
     }
@@ -70,13 +71,13 @@ public class GestureProcessorTest implements ViewerCommand.CommandProcessor {
     public void integrationTest() {
         SharedPreferences prefs = mock(SharedPreferences.class, Mockito.RETURNS_DEEP_STUBS);
 
-        when(prefs.getString(ArgumentMatchers.anyString(), ArgumentMatchers.anyString())).thenReturn("0");
-        when(prefs.getString(eq("gestureTapCenter"), ArgumentMatchers.anyString())).thenReturn("1");
+        when(prefs.getString(nullable(String.class), nullable(String.class))).thenReturn("0");
+        when(prefs.getString(eq("gestureTapCenter"), nullable(String.class))).thenReturn("1");
         when(prefs.getBoolean(eq("gestureCornerTouch"), ArgumentMatchers.anyBoolean())).thenReturn(true);
 
         mSut.init(prefs);
 
         mSut.onTap(100, 100, 50, 50);
-        assertThat(singleResult(), is(1));
+        assertThat(singleResult(), is(ViewerCommand.COMMAND_SHOW_ANSWER));
     }
 }

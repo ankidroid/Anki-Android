@@ -278,7 +278,7 @@ public class ReviewerNoParamTest extends RobolectricTest {
         Editor settings = AnkiDroidApp.getSharedPrefs(getTargetContext()).edit();
         for (Gesture g: gestures) {
             String k = getKey(g);
-            settings.putString(k, Integer.toString(ViewerCommand.COMMAND_NOTHING));
+            settings.putString(k, ViewerCommand.COMMAND_NOTHING.toPreferenceString());
         }
         settings.apply();
     }
@@ -287,7 +287,7 @@ public class ReviewerNoParamTest extends RobolectricTest {
     private void enableGesture(Gesture gesture) {
         Editor settings = AnkiDroidApp.getSharedPrefs(getTargetContext()).edit();
         String k = getKey(gesture);
-        settings.putString(k, Integer.toString(ViewerCommand.COMMAND_ANSWER_FIRST_BUTTON));
+        settings.putString(k, ViewerCommand.COMMAND_ANSWER_FIRST_BUTTON.toPreferenceString());
         settings.apply();
     }
 
