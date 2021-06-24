@@ -118,6 +118,5 @@
     <attr name="fab_labelsTextColor" format="color">#fff</attr>
     <attr name="fab_item_background" format="reference"/>
     <!--Custom Tabs colors-->
-    <attr name="customTabToolbarColor" format="color"/>
     <attr name="customTabNavBarColor" format="color"/>
 </resources>
