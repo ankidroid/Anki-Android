@@ -15,22 +15,38 @@
  */
 package com.ichi2.anki.cardviewer
 
+import android.content.SharedPreferences
 import com.ichi2.anki.R
 
-enum class Gesture(@get:JvmName("getResourceId") val mResourceId: Int) {
-    SWIPE_UP(R.string.gestures_swipe_up),
-    SWIPE_DOWN(R.string.gestures_swipe_down),
-    SWIPE_LEFT(R.string.gestures_swipe_left),
-    SWIPE_RIGHT(R.string.gestures_swipe_right),
-    LONG_TAP(R.string.gestures_long_tap),
-    DOUBLE_TAP(R.string.gestures_double_tap),
-    TAP_TOP_LEFT(R.string.gestures_corner_tap_top_left),
-    TAP_TOP(R.string.gestures_tap_top),
-    TAP_TOP_RIGHT(R.string.gestures_corner_tap_top_right),
-    TAP_LEFT(R.string.gestures_tap_left),
-    TAP_CENTER(R.string.gestures_corner_tap_middle_center),
-    TAP_RIGHT(R.string.gestures_tap_right),
-    TAP_BOTTOM_LEFT(R.string.gestures_corner_tap_bottom_left),
-    TAP_BOTTOM(R.string.gestures_tap_bottom),
-    TAP_BOTTOM_RIGHT(R.string.gestures_corner_tap_bottom_right);
+// TODO: Code and preference defaults are inconsistent: #8066
+enum class Gesture(
+    @get:JvmName("getResourceId") val mResourceId: Int,
+    private val mPreferenceKey: String,
+    private val mPreferenceDefault: ViewerCommand
+) {
+    SWIPE_UP(R.string.gestures_swipe_up, "gestureSwipeUp", ViewerCommand.COMMAND_EDIT),
+    SWIPE_DOWN(R.string.gestures_swipe_down, "gestureSwipeDown", ViewerCommand.COMMAND_NOTHING),
+    SWIPE_LEFT(R.string.gestures_swipe_left, "gestureSwipeLeft", ViewerCommand.COMMAND_UNDO),
+    SWIPE_RIGHT(R.string.gestures_swipe_right, "gestureSwipeRight", ViewerCommand.COMMAND_EXIT),
+    LONG_TAP(R.string.gestures_long_tap, "gestureLongclick", ViewerCommand.COMMAND_LOOKUP),
+    DOUBLE_TAP(R.string.gestures_double_tap, "gestureDoubleTap", ViewerCommand.COMMAND_FLIP_OR_ANSWER_BETTER_THAN_RECOMMENDED),
+    TAP_TOP_LEFT(R.string.gestures_corner_tap_top_left, "gestureTapTopLeft", ViewerCommand.COMMAND_NOTHING),
+    TAP_TOP(R.string.gestures_tap_top, "gestureTapTop", ViewerCommand.COMMAND_BURY_CARD),
+    TAP_TOP_RIGHT(R.string.gestures_corner_tap_top_right, "gestureTapTopRight", ViewerCommand.COMMAND_NOTHING),
+    TAP_LEFT(R.string.gestures_tap_left, "gestureTapLeft", ViewerCommand.COMMAND_FLIP_OR_ANSWER_EASE2),
+    TAP_CENTER(R.string.gestures_corner_tap_middle_center, "gestureTapCenter", ViewerCommand.COMMAND_NOTHING),
+    TAP_RIGHT(R.string.gestures_tap_right, "gestureTapRight", ViewerCommand.COMMAND_FLIP_OR_ANSWER_RECOMMENDED),
+    TAP_BOTTOM_LEFT(R.string.gestures_corner_tap_bottom_left, "gestureTapBottomLeft", ViewerCommand.COMMAND_NOTHING),
+    TAP_BOTTOM(R.string.gestures_tap_bottom, "gestureTapBottom", ViewerCommand.COMMAND_FLIP_OR_ANSWER_EASE1),
+    TAP_BOTTOM_RIGHT(R.string.gestures_corner_tap_bottom_right, "gestureTapBottomRight", ViewerCommand.COMMAND_NOTHING),
+    VOLUME_UP(R.string.gestures_volume_up, "gestureVolumeUp", ViewerCommand.COMMAND_NOTHING),
+    VOLUME_DOWN(R.string.gestures_volume_down, "gestureVolumeDown", ViewerCommand.COMMAND_NOTHING);
+
+    fun fromPreference(prefs: SharedPreferences): ViewerCommand {
+        val value = prefs.getString(mPreferenceKey, null) ?: return mPreferenceDefault
+
+        val valueAsInt = Integer.parseInt(value)
+
+        return ViewerCommand.fromInt(valueAsInt) ?: mPreferenceDefault
+    }
 }
