@@ -165,6 +165,8 @@ minit yang lalu.</string>
     <string name="vertical_centering" maxLength="41">Center align</string>
     <string name="vertical_centering_summ">Center the content of cards vertically</string>
     <string name="pref_backup_max" maxLength="41">Max number of backups</string>
+    <string name="pref_double_tap_time_interval" maxLength="41">Double tap time interval (milliseconds)</string>
+    <string name="pref_double_tap_time_interval_summary">A second tap of the answer buttons will be ignored if this time has not elapsed. This prevents accidental double taps</string>
     <string name="show_estimates" maxLength="41">Show button time</string>
     <string name="show_estimates_summ">Show next review time on answer buttons</string>
     <string name="show_large_answer_buttons" maxLength="41">Show large answer buttons</string>

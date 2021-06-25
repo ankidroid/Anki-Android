@@ -165,6 +165,8 @@
     <string name="vertical_centering" maxLength="41">मध्यभागी संरेखित करा</string>
     <string name="vertical_centering_summ">कार्डेची सामग्री अनुलंब मध्यभागी ठेवा</string>
     <string name="pref_backup_max" maxLength="41">बॅकअपची कमाल संख्या</string>
+    <string name="pref_double_tap_time_interval" maxLength="41">Double tap time interval (milliseconds)</string>
+    <string name="pref_double_tap_time_interval_summary">A second tap of the answer buttons will be ignored if this time has not elapsed. This prevents accidental double taps</string>
     <string name="show_estimates" maxLength="41">बटण वेळ दर्शवा</string>
     <string name="show_estimates_summ">उत्तर बटणावर पुढील पुनरावलोकन वेळ दर्शवा</string>
     <string name="show_large_answer_buttons" maxLength="41">Show large answer buttons</string>

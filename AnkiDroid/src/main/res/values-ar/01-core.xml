@@ -115,7 +115,7 @@
     <string name="unbury">نكش</string>
     <string name="rename_deck">إعادة تسمية شَدّة الأوراق</string>
     <string name="create_shortcut">إنشاء اختصار</string>
-    <string name="browse_cards">Browse cards</string>
+    <string name="browse_cards">تصفح البطاقات</string>
     <string name="menu_add" comment="A generic add button - Main Deck Picker and card templates. Please inform us if you need more specific strings">إضافة</string>
     <string name="menu_add_note">إضافة ملحوظة</string>
     <string name="menu_my_account" comment="Label of the window in which the user should enter their account. This text can\'t be found in AnkiDroid directly.">حساب المزامنة</string>
@@ -244,4 +244,12 @@
     <string name="sync_conflict_local_confirm_new">هل تريد استبدال مجموعتك التي في أنكي ويب بمجموعتك التي في أنكيدرويد؟</string>
     <string name="sync_conflict_title_new">حدد مجموعة للإبقاء عليها</string>
     <string name="sync_conflict_replace_title">استبدال المجموعة</string>
+    <plurals name="deckpicker_title_zero_due">
+        <item quantity="zero">%1$d cards (0 due)</item>
+        <item quantity="one">%1$d card (0 due)</item>
+        <item quantity="two">%1$d cards (0 due)</item>
+        <item quantity="few">%1$d cards (0 due)</item>
+        <item quantity="many">%1$d cards (0 due)</item>
+        <item quantity="other">%1$d cards (0 due)</item>
+    </plurals>
 </resources>

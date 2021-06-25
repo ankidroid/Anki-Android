@@ -164,6 +164,8 @@
     <string name="vertical_centering" maxLength="41">Alinhar no centro</string>
     <string name="vertical_centering_summ">Centralizar o conteúdo dos cards verticalmente</string>
     <string name="pref_backup_max" maxLength="41">Número máximo de backups</string>
+    <string name="pref_double_tap_time_interval" maxLength="41">Double tap time interval (milliseconds)</string>
+    <string name="pref_double_tap_time_interval_summary">A second tap of the answer buttons will be ignored if this time has not elapsed. This prevents accidental double taps</string>
     <string name="show_estimates" maxLength="41">Mostrar o tempo no botão</string>
     <string name="show_estimates_summ">Mostrar a próxima revisão acima dos botões de resposta</string>
     <string name="show_large_answer_buttons" maxLength="41">Mostrar botões de resposta grandes</string>
