@@ -164,6 +164,8 @@
     <string name="vertical_centering" maxLength="41">Uitlijnen in het midden</string>
     <string name="vertical_centering_summ">De inhoud van kaarten verticaal centreren</string>
     <string name="pref_backup_max" maxLength="41">Maximum aantal back-ups</string>
+    <string name="pref_double_tap_time_interval" maxLength="41">Double tap time interval (milliseconds)</string>
+    <string name="pref_double_tap_time_interval_summary">A second tap of the answer buttons will be ignored if this time has not elapsed. This prevents accidental double taps</string>
     <string name="show_estimates" maxLength="41">Herhaaltijd in knoppen</string>
     <string name="show_estimates_summ">In de antwoordknoppen weergeven wanneer de volgende overhoring is</string>
     <string name="show_large_answer_buttons" maxLength="41">Show large answer buttons</string>

@@ -220,4 +220,8 @@
     <string name="sync_conflict_local_confirm_new">ಆಂಕಿಡ್ರಾಯ್ಡ್‌ನಿಂದ ನಿಮ್ಮ ಸಂಗ್ರಹದೊಂದಿಗೆ ಅಂಕಿವೆಬ್‌ನಲ್ಲಿ ನಿಮ್ಮ ಸಂಗ್ರಹವನ್ನು ಬದಲಾಯಿಸಬೇಕೆ?</string>
     <string name="sync_conflict_title_new">ಇರಿಸಿಕೊಳ್ಳಲು ಸಂಗ್ರಹವನ್ನು ಆಯ್ಕೆಮಾಡಿ</string>
     <string name="sync_conflict_replace_title">ಸಂಗ್ರಹಣೆಯನ್ನು ಬದಲಾಯಿಸಿ</string>
+    <plurals name="deckpicker_title_zero_due">
+        <item quantity="one">%1$d card (0 due)</item>
+        <item quantity="other">%1$d cards (0 due)</item>
+    </plurals>
 </resources>

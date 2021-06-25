@@ -214,4 +214,7 @@
     <string name="sync_conflict_local_confirm_new">AnkiDroid의 컬렉션을 AnkiWeb의 컬렉션으로 덮어쓰시겠습니까?</string>
     <string name="sync_conflict_title_new">유지할 컬렉션 선택</string>
     <string name="sync_conflict_replace_title">컬렉션을 덮어쓰는 중...</string>
+    <plurals name="deckpicker_title_zero_due">
+        <item quantity="other">%1$d cards (0 due)</item>
+    </plurals>
 </resources>

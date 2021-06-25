@@ -101,7 +101,7 @@
     <string name="gestures_swipe_left" maxLength="41">向左滑动</string>
     <string name="gestures_swipe_right" maxLength="41">向右滑动</string>
     <string name="gestures_double_tap" maxLength="41">双击</string>
-    <string name="gestures_long_tap" maxLength="41">Long tap</string>
+    <string name="gestures_long_tap" maxLength="41">长按</string>
     <string name="gestures_tap_top" maxLength="41">点击顶部</string>
     <string name="gestures_tap_left" maxLength="41">点击左侧</string>
     <string name="gestures_tap_right" maxLength="41">点击右侧</string>
@@ -164,6 +164,8 @@
     <string name="vertical_centering" maxLength="41">居中对齐</string>
     <string name="vertical_centering_summ">垂直居中卡片内容</string>
     <string name="pref_backup_max" maxLength="41">最大备份数量</string>
+    <string name="pref_double_tap_time_interval" maxLength="41">Double tap time interval (milliseconds)</string>
+    <string name="pref_double_tap_time_interval_summary">A second tap of the answer buttons will be ignored if this time has not elapsed. This prevents accidental double taps</string>
     <string name="show_estimates" maxLength="41">显示回答按钮的时间</string>
     <string name="show_estimates_summ">在答案按钮上方显示下次复习的时间</string>
     <string name="show_large_answer_buttons" maxLength="41">显示大的回答按钮</string>

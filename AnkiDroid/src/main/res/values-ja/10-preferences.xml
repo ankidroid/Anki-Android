@@ -164,6 +164,8 @@
     <string name="vertical_centering" maxLength="41">上下中央揃え</string>
     <string name="vertical_centering_summ">コンテンツを上下方向に中央揃えします</string>
     <string name="pref_backup_max" maxLength="41">保管するバックアップの世代数</string>
+    <string name="pref_double_tap_time_interval" maxLength="41">Double tap time interval (milliseconds)</string>
+    <string name="pref_double_tap_time_interval_summary">A second tap of the answer buttons will be ignored if this time has not elapsed. This prevents accidental double taps</string>
     <string name="show_estimates" maxLength="41">解答ボタンに復習間隔を表示</string>
     <string name="show_estimates_summ">次の復習までの間隔を解答ボタンの中に表示します</string>
     <string name="show_large_answer_buttons" maxLength="41">Show large answer buttons</string>
