@@ -165,6 +165,8 @@
     <string name="vertical_centering" maxLength="41">Вирівнювання по центру</string>
     <string name="vertical_centering_summ">Центрувати вміст карт вертикально</string>
     <string name="pref_backup_max" maxLength="41">Кількість резервних копій</string>
+    <string name="pref_double_tap_time_interval" maxLength="41">Double tap time interval (milliseconds)</string>
+    <string name="pref_double_tap_time_interval_summary">A second tap of the answer buttons will be ignored if this time has not elapsed. This prevents accidental double taps</string>
     <string name="show_estimates" maxLength="41">Показувати час кнопки</string>
     <string name="show_estimates_summ">Показати час наступного повторення вище кнопок відповіді</string>
     <string name="show_large_answer_buttons" maxLength="41">Показати великі кнопки відповіді</string>

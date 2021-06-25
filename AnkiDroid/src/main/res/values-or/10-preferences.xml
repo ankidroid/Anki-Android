@@ -164,6 +164,8 @@
     <string name="vertical_centering" maxLength="41">କେନ୍ଦ୍ର ଶ୍ରେଣୀବଦ୍ଧତା</string>
     <string name="vertical_centering_summ">ପତ୍ରଗୁଡ଼ିକର ବିଷୟବସ୍ତୁକୁ ଭୂଲମ୍ବ ଭାବରେ କେନ୍ଦ୍ରିତ କରନ୍ତୁ</string>
     <string name="pref_backup_max" maxLength="41">ବ୍ୟାକଅପ୍ ର ସର୍ବାଧିକ ସଂଖ୍ୟା </string>
+    <string name="pref_double_tap_time_interval" maxLength="41">Double tap time interval (milliseconds)</string>
+    <string name="pref_double_tap_time_interval_summary">A second tap of the answer buttons will be ignored if this time has not elapsed. This prevents accidental double taps</string>
     <string name="show_estimates" maxLength="41">ବଟନ୍ ସମୟ ଦେଖାନ୍ତୁ</string>
     <string name="show_estimates_summ">ଉତ୍ତର ବଟନ୍ ଗୁଡିକରେ ପରବର୍ତ୍ତୀ ସମୀକ୍ଷା ସମୟ ଦେଖାନ୍ତୁ</string>
     <string name="show_large_answer_buttons" maxLength="41">ବଡ଼ ଉତ୍ତର ବଟନ୍ ଦେଖାନ୍ତୁ</string>

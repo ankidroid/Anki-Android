@@ -164,6 +164,8 @@
     <string name="vertical_centering" maxLength="41">가운데 정렬</string>
     <string name="vertical_centering_summ">카드의 내용을 세로로 중앙에 배치</string>
     <string name="pref_backup_max" maxLength="41">최대 백업 개수</string>
+    <string name="pref_double_tap_time_interval" maxLength="41">Double tap time interval (milliseconds)</string>
+    <string name="pref_double_tap_time_interval_summary">A second tap of the answer buttons will be ignored if this time has not elapsed. This prevents accidental double taps</string>
     <string name="show_estimates" maxLength="41">버튼에 시간 표시</string>
     <string name="show_estimates_summ">답변 버튼에 다음 복습 시간 표시</string>
     <string name="show_large_answer_buttons" maxLength="41">Show large answer buttons</string>

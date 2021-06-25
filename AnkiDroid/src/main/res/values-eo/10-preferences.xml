@@ -164,6 +164,8 @@
     <string name="vertical_centering" maxLength="41">Centrigi vertikale</string>
     <string name="vertical_centering_summ">Centrigi enhavon de kartoj vertikale</string>
     <string name="pref_backup_max" maxLength="41">Maksimuma nombro da sekurkopioj</string>
+    <string name="pref_double_tap_time_interval" maxLength="41">Double tap time interval (milliseconds)</string>
+    <string name="pref_double_tap_time_interval_summary">A second tap of the answer buttons will be ignored if this time has not elapsed. This prevents accidental double taps</string>
     <string name="show_estimates" maxLength="41">Montri tempon ĉe butono</string>
     <string name="show_estimates_summ">Montri tempon de sekva ripeto ĉe butonoj de respondoj</string>
     <string name="show_large_answer_buttons" maxLength="41">Grandaj butonoj de respondo</string>

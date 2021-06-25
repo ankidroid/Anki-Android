@@ -164,6 +164,8 @@
     <string name="vertical_centering" maxLength="41">Allinea al centro</string>
     <string name="vertical_centering_summ">Centra verticalmente il contenuto delle carte</string>
     <string name="pref_backup_max" maxLength="41">Numero massimo di backup</string>
+    <string name="pref_double_tap_time_interval" maxLength="41">Double tap time interval (milliseconds)</string>
+    <string name="pref_double_tap_time_interval_summary">A second tap of the answer buttons will be ignored if this time has not elapsed. This prevents accidental double taps</string>
     <string name="show_estimates" maxLength="41">Mostra scadenza pulsanti</string>
     <string name="show_estimates_summ">Mostra la prossima scadenza sopra i pulsanti di risposta</string>
     <string name="show_large_answer_buttons" maxLength="41">Mostra pulsanti risposta grandi</string>

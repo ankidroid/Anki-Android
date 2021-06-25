@@ -220,4 +220,8 @@
     <string name="sync_conflict_local_confirm_new">Replace your collection on AnkiWeb with your collection from AnkiDroid?</string>
     <string name="sync_conflict_title_new">აირჩიეთ კოლექცია რომ დარჩეს</string>
     <string name="sync_conflict_replace_title">კოლექციის ჩანაცვლება</string>
+    <plurals name="deckpicker_title_zero_due">
+        <item quantity="one">%1$d card (0 due)</item>
+        <item quantity="other">%1$d cards (0 due)</item>
+    </plurals>
 </resources>
