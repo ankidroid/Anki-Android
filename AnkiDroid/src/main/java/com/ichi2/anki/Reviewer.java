@@ -27,7 +27,6 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.content.res.ColorStateList;
-import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.os.Bundle;
@@ -147,7 +146,7 @@ public class Reviewer extends AbstractFlashcardViewer {
         public void onPostExecute(Computation<Card[]> result) {
             super.onPostExecute(result);
             invalidateOptionsMenu();
-            int cardCount = result.mValue.length;
+            int cardCount = result.getValue().length;
             UIUtils.showThemedToast(Reviewer.this,
                     getResources().getQuantityString(mToastResourceId, cardCount, cardCount), true);
         }
