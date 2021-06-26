@@ -30,13 +30,17 @@ public class Computation<ComputedType> {
     /**
      * The computed value in case of success. Null in case of failure
      */
-    public final @Nullable ComputedType mValue;
+    private final @Nullable ComputedType mValue;
 
     public boolean succeeded() {
         return mValue != null;
     }
     public static final Computation ERR = new Computation();
     public static final Computation OK = new Computation<>(new Object());
+
+    public ComputedType getValue() {
+        return mValue;
+    }
 
     private Computation() {
         mValue = null;
