@@ -128,8 +128,14 @@ public class Preferences extends AppCompatPreferenceActivity implements Preferen
      * Note that "timeLim" is in second while TIME_LIMIT is in minute.
      */
     private static final String TIME_LIMIT = "timeLimit";
+    /**
+     * Represents in Android preferences the collections configuration "addToCur": i.e.
+     * if true, then add note to current decks, otherwise let the note type's configuration decide
+     * Note that "addToCur" is a boolean while USE_CURRENT is "0" or "1"
+     */
+    private static final String USE_CURRENT = "useCurrent";
     private static final String [] sCollectionPreferences = {SHOW_ESTIMATE, SHOW_PROGRESS,
-            LEARN_CUTOFF, TIME_LIMIT, "useCurrent", "newSpread", "dayOffset", "schedVer", "newTimezoneHandling"};
+            LEARN_CUTOFF, TIME_LIMIT, USE_CURRENT, "newSpread", "dayOffset", "schedVer", "newTimezoneHandling"};
 
     private static final int RESULT_LOAD_IMG = 111;
     private android.preference.CheckBoxPreference mBackgroundImage;
@@ -623,7 +629,7 @@ public class Preferences extends AppCompatPreferenceActivity implements Preferen
                         case TIME_LIMIT:
                             ((NumberRangePreference)pref).setValue(conf.getInt("timeLim") / 60);
                             break;
-                        case "useCurrent":
+                        case USE_CURRENT:
                             ((android.preference.ListPreference)pref).setValueIndex(conf.optBoolean("addToCur", true) ? 0 : 1);
                             break;
                         case "newSpread":
@@ -752,7 +758,7 @@ public class Preferences extends AppCompatPreferenceActivity implements Preferen
                     getCol().getConf().put("collapseTime", ((NumberRangePreference) pref).getValue() * 60);
                     getCol().setMod();
                     break;
-                case "useCurrent":
+                case USE_CURRENT:
                     getCol().getConf().put("addToCur", "0".equals(((android.preference.ListPreference) pref).getValue()));
                     getCol().setMod();
                     break;
