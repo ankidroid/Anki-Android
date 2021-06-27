@@ -38,8 +38,13 @@ import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 
 import com.afollestad.materialdialogs.MaterialDialog;
+import com.ichi2.anki.CardTemplateEditor;
 import com.ichi2.anki.R;
+import com.ichi2.anki.TemporaryModel;
+import com.ichi2.libanki.Card;
 import com.ichi2.libanki.Utils;
+import com.ichi2.utils.JSONException;
+import com.ichi2.utils.JSONObject;
 import com.ichi2.utils.ViewGroupUtils;
 
 import java.util.ArrayList;
@@ -107,6 +112,20 @@ public class Toolbar extends FrameLayout {
         setClick(R.id.note_editor_toolbar_button_horizontal_rule, "<hr>", "");
         findViewById(R.id.note_editor_toolbar_button_font_size).setOnClickListener(l -> displayFontSizeDialog());
         findViewById(R.id.note_editor_toolbar_button_title).setOnClickListener(l -> displayInsertHeadingDialog());
+        findViewById(R.id.note_editor_toolbar_button_color_picker).setOnClickListener(v -> {
+            LinearLayout noteEditorColorPicker = findViewById(R.id.note_editor_toolbar_color_picker);
+            if ((noteEditorColorPicker.getVisibility() == VISIBLE)) {
+                noteEditorColorPicker.setVisibility(GONE);
+            } else {
+                noteEditorColorPicker.setVisibility(VISIBLE);
+            }
+        });
+        setClick(R.id.note_editor_toolbar_color_red, "<span style=\"color:red;\">", "</span>");
+        setClick(R.id.note_editor_toolbar_color_blue, "<span style=\"color:blue;\">", "</span>");
+        setClick(R.id.note_editor_toolbar_color_green, "<span style=\"color:green;\">", "</span>");
+        setClick(R.id.note_editor_toolbar_color_yellow, "<span style=\"color:yellow;\">", "</span>");
+        setClick(R.id.note_editor_toolbar_color_white, "<span style=\"color:white;\">", "</span>");
+        setClick(R.id.note_editor_toolbar_color_black, "<span style=\"color:black;\">", "</span>");
         this.mClozeIcon = findViewById(R.id.note_editor_toolbar_button_cloze);
     }
 
@@ -310,15 +329,17 @@ public class Toolbar extends FrameLayout {
         mFormatCallback.performFormat(formatter);
     }
 
+    // updating toolbar button colors w.r.t. the theme
     public void setIconColor(@ColorInt int color) {
-        for (int i = 0; i < this.mToolbar.getChildCount(); i++) {
-            AppCompatImageButton button = (AppCompatImageButton) this.mToolbar.getChildAt(i);
+        LinearLayout note_toolbar_internal_layout = (LinearLayout) this.mToolbar.getChildAt(1);
+        for (int i = 0; i < note_toolbar_internal_layout.getChildCount(); i++) {
+            AppCompatImageButton button = (AppCompatImageButton) note_toolbar_internal_layout.getChildAt(i);
             button.setColorFilter(color);
         }
         mStringPaint.setColor(color);
     }
 
-
+    
     public interface TextFormatListener {
         void performFormat(TextFormatter formatter);
     }
