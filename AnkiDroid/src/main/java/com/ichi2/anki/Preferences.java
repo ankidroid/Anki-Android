@@ -111,7 +111,12 @@ public class Preferences extends AppCompatPreferenceActivity implements Preferen
      * Represents in Android preferences the collections configuration "estTime": i.e. whether the buttons should indicate the duration of the interval if we click on them.
      */
     private static final String SHOW_ESTIMATE = "showEstimates";
-    private static final String [] sCollectionPreferences = {SHOW_ESTIMATE, "showProgress",
+    /**
+     * Represents in Android preferences the collections configuration "dueCounts": i.e.
+     * whether the remaining number of cards should be shown.
+     */
+    private static final String SHOW_PROGRESS = "showProgress";
+    private static final String [] sCollectionPreferences = {SHOW_ESTIMATE, SHOW_PROGRESS,
             "learnCutoff", "timeLimit", "useCurrent", "newSpread", "dayOffset", "schedVer", "newTimezoneHandling"};
 
     private static final int RESULT_LOAD_IMG = 111;
@@ -597,7 +602,7 @@ public class Preferences extends AppCompatPreferenceActivity implements Preferen
                         case SHOW_ESTIMATE:
                             ((android.preference.CheckBoxPreference)pref).setChecked(conf.getBoolean("estTimes"));
                             break;
-                        case "showProgress":
+                        case SHOW_PROGRESS:
                             ((android.preference.CheckBoxPreference)pref).setChecked(conf.getBoolean("dueCounts"));
                             break;
                         case "learnCutoff":
@@ -715,7 +720,7 @@ public class Preferences extends AppCompatPreferenceActivity implements Preferen
                 case LANGUAGE:
                     closePreferences();
                     break;
-                case "showProgress":
+                case SHOW_PROGRESS:
                     getCol().getConf().put("dueCounts", ((android.preference.CheckBoxPreference) pref).isChecked());
                     getCol().setMod();
                     break;
