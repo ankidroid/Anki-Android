@@ -20,6 +20,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 
+import com.canhub.cropper.CropImageActivity;
 import com.ichi2.anki.CardBrowser;
 import com.ichi2.anki.CardInfo;
 import com.ichi2.anki.CardTemplateBrowserAppearanceEditor;
@@ -77,6 +78,7 @@ public class ActivityList {
                 get(MyAccount.class),
                 get(Preferences.class),
                 get(DeckOptions.class),
+                get(CropImageActivity.class),
                 get(FilteredDeckOptions.class),
                 // Info has unhandled intents
                 get(Info.class),

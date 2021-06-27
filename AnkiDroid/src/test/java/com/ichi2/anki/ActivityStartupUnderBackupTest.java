@@ -19,6 +19,7 @@ package com.ichi2.anki;
 import android.app.Activity;
 import android.os.Bundle;
 
+import com.canhub.cropper.CropImageActivity;
 import com.ichi2.anki.multimediacard.activity.LoadPronounciationActivity;
 import com.ichi2.anki.multimediacard.activity.TranslationActivity;
 import com.ichi2.testutils.ActivityList;
@@ -58,6 +59,7 @@ public class ActivityStartupUnderBackupTest extends RobolectricTest {
 
     @Before
     public void before() {
+        notYetHandled(CropImageActivity.class.getSimpleName(), "cannot implemented - activity from canhub.cropper");
         notYetHandled(IntentHandler.class.getSimpleName(), "Not working (or implemented) - inherits from Activity");
         notYetHandled(VideoPlayer.class.getSimpleName(), "Not working (or implemented) - inherits from Activity");
         notYetHandled(LoadPronounciationActivity.class.getSimpleName(), "Not working (or implemented) - inherits from Activity");

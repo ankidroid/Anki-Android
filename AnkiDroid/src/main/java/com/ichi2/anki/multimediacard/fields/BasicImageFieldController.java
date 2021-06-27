@@ -41,7 +41,6 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.annotation.VisibleForTesting;
 import androidx.core.content.ContentResolverCompat;
-import androidx.core.content.ContextCompat;
 import androidx.core.content.FileProvider;
 
 import android.text.TextUtils;
@@ -52,17 +51,16 @@ import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.LinearLayout.LayoutParams;
 import android.widget.TextView;
 
+import com.canhub.cropper.CropImage;
 import com.ichi2.anki.AnkiDroidApp;
 import com.ichi2.anki.R;
 import com.ichi2.anki.UIUtils;
 import com.ichi2.compat.CompatHelper;
-import com.ichi2.themes.Themes;
 import com.ichi2.ui.FixedEditText;
 import com.ichi2.utils.BitmapUtil;
 import com.ichi2.utils.ExifUtil;
@@ -70,12 +68,12 @@ import com.ichi2.utils.FileUtil;
 import com.ichi2.utils.Permissions;
 
 import com.afollestad.materialdialogs.MaterialDialog;
-import com.yalantis.ucrop.UCrop;
 
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.util.Objects;
 
 import androidx.core.util.Pair;
 import timber.log.Timber;
@@ -343,7 +341,7 @@ public class BasicImageFieldController extends FieldControllerBase implements IF
             switch (requestCode) {
                 case ACTIVITY_TAKE_PICTURE:
                 case ACTIVITY_CROP_PICTURE:
-                case UCrop.REQUEST_CROP:
+                case CropImage.CROP_IMAGE_ACTIVITY_REQUEST_CODE:
                     if (!TextUtils.isEmpty(mPreviousImagePath)) {
                         revertToPreviousImage();
                     }
@@ -357,10 +355,14 @@ public class BasicImageFieldController extends FieldControllerBase implements IF
                 UIUtils.showThemedToast(mActivity, mActivity.getString(R.string.activity_result_unexpected), true);
             }
 
-            // uCrop can give us more information. Not sure it is actionable so for now just log it.
-            if ((requestCode == UCrop.REQUEST_CROP) && (resultCode == UCrop.RESULT_ERROR)) {
-                Timber.w(UCrop.getError((data)), "uCrop threw an error");
-                AnkiDroidApp.sendExceptionReport(UCrop.getError(data), "uCrop threw an error");
+            // cropImage can give us more information. Not sure it is actionable so for now just log it.
+            if ((requestCode == CropImage.CROP_IMAGE_ACTIVITY_REQUEST_CODE) && (resultCode == CropImage.CROP_IMAGE_ACTIVITY_RESULT_ERROR_CODE)) {
+                CropImage.ActivityResult result = CropImage.getActivityResult(data);
+                if (result != null) {
+                    String error = String.valueOf(result.getError());
+                    Timber.w(error, "cropImage threw an error");
+                    AnkiDroidApp.sendExceptionReport(error, "cropImage threw an error");;
+                }
             }
             return;
         }
@@ -378,8 +380,11 @@ public class BasicImageFieldController extends FieldControllerBase implements IF
             }
         } else if (requestCode == ACTIVITY_TAKE_PICTURE) {
             handleTakePictureResult();
-        } else if ((requestCode == ACTIVITY_CROP_PICTURE) || (requestCode == UCrop.REQUEST_CROP)) {
-            handleCropResult();
+        } else if ((requestCode == ACTIVITY_CROP_PICTURE) || (requestCode == CropImage.CROP_IMAGE_ACTIVITY_REQUEST_CODE)) {
+            CropImage.ActivityResult result = CropImage.getActivityResult(data);
+            if (result != null) {
+                handleCropResult(result);
+            }
         } else {
             Timber.w("Unhandled request code: %d", requestCode);
             return;
@@ -606,23 +611,10 @@ public class BasicImageFieldController extends FieldControllerBase implements IF
         setTemporaryMedia(imagePath);
         Timber.d("requestCrop()  destination image has path/uri %s/%s", ret.mImagePath, ret.mImageUri);
 
-        // Crop on Android 11 broke completely. We will transition to uCrop in general for everyone but first
-        // for Android 11 only we try uCrop. Worst case, it was already broken for them
+        // Crop on Android 11 broke completely. We will transition to CropImage in general for everyone but first
+        // for Android 11 only we try CropImage. Worst case, it was already broken for them
         if (CompatHelper.getSdkVersion() > Build.VERSION_CODES.Q) { // We don't compile against 30 yet, so R symbol does not exist
-            UCrop.Options options = new UCrop.Options();
-            options.setFreeStyleCropEnabled(true);
-
-
-            // Color palette
-            options.setActiveControlsWidgetColor(ContextCompat.getColor(mActivity, R.color.theme_light_primary));
-            options.setStatusBarColor(Themes.getColorFromAttr(mActivity, R.attr.colorPrimaryDark));
-            options.setToolbarColor(Themes.getColorFromAttr(mActivity, R.attr.colorPrimary));
-            options.setToolbarWidgetColor(Themes.getColorFromAttr(mActivity, R.attr.actionBarTextColor));
-            UCrop.of(mPreviousImageUri, ret.mImageUri)
-                    .withOptions(options)
-                    .useSourceImageAspectRatio()
-                    //.withMaxResultSize(maxWidth, maxHeight)
-                    .start(mActivity);
+            CropImage.activity(viewModel.mImageUri).start(mActivity);
         } else {
             // This is basically a "magic" recipe to get the system to crop, gleaned from StackOverflow etc
             // Intent intent = new Intent(Intent.ACTION_EDIT);  // edit (vs crop) would be even better, but it fails differently and needs lots of testing
@@ -671,8 +663,10 @@ public class BasicImageFieldController extends FieldControllerBase implements IF
     }
 
 
-    private void handleCropResult() {
+    private void handleCropResult(CropImage.ActivityResult result) {
         Timber.d("handleCropResult");
+        mViewModel.deleteImagePath();
+        mViewModel = new ImageViewModel(result.getUriFilePath(mActivity, true), result.getUriContent());
         if (!rotateAndCompress()) {
             Timber.i("handleCropResult() appears to have an invalid file, reverting");
             return;
