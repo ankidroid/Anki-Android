@@ -116,8 +116,14 @@ public class Preferences extends AppCompatPreferenceActivity implements Preferen
      * whether the remaining number of cards should be shown.
      */
     private static final String SHOW_PROGRESS = "showProgress";
+    /**
+     * Represents in Android preferences the collections configuration "collapseTime": i.e.
+     * if there are no card to review now, but there are learning cards remaining for today, we show those learning cards if they are due before LEARN_CUTOFF minutes
+     * Note that "collapseTime" is in second while LEARN_CUTOFF is in minute.
+     */
+    private static final String LEARN_CUTOFF = "learnCutoff";
     private static final String [] sCollectionPreferences = {SHOW_ESTIMATE, SHOW_PROGRESS,
-            "learnCutoff", "timeLimit", "useCurrent", "newSpread", "dayOffset", "schedVer", "newTimezoneHandling"};
+            LEARN_CUTOFF, "timeLimit", "useCurrent", "newSpread", "dayOffset", "schedVer", "newTimezoneHandling"};
 
     private static final int RESULT_LOAD_IMG = 111;
     private android.preference.CheckBoxPreference mBackgroundImage;
@@ -605,7 +611,7 @@ public class Preferences extends AppCompatPreferenceActivity implements Preferen
                         case SHOW_PROGRESS:
                             ((android.preference.CheckBoxPreference)pref).setChecked(conf.getBoolean("dueCounts"));
                             break;
-                        case "learnCutoff":
+                        case LEARN_CUTOFF:
                             ((NumberRangePreference)pref).setValue(conf.getInt("collapseTime") / 60);
                             break;
                         case "timeLimit":
@@ -736,7 +742,7 @@ public class Preferences extends AppCompatPreferenceActivity implements Preferen
                     getCol().getConf().put("timeLim", ((NumberRangePreference) pref).getValue() * 60);
                     getCol().setMod();
                     break;
-                case "learnCutoff":
+                case LEARN_CUTOFF:
                     getCol().getConf().put("collapseTime", ((NumberRangePreference) pref).getValue() * 60);
                     getCol().setMod();
                     break;
