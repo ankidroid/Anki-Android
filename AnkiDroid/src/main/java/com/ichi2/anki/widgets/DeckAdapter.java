@@ -38,6 +38,7 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.ichi2.anki.AbstractDeckTreeComparator;
 import com.ichi2.anki.R;
 import com.ichi2.compat.CompatHelper;
 import com.ichi2.libanki.Collection;
@@ -48,6 +49,7 @@ import com.ichi2.utils.FilterResultsUtils;
 import com.ichi2.libanki.sched.Counts;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Locale;
 
@@ -281,6 +283,7 @@ public class DeckAdapter<T extends AbstractDeckTreeNode<T>> extends RecyclerView
 
     @Override
     public int getItemCount() {
+        Collections.sort(mCurrentDeckList, new AbstractDeckTreeComparator());
         return mCurrentDeckList.size();
     }
 
