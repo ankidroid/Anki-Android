@@ -146,8 +146,12 @@ public class Preferences extends AppCompatPreferenceActivity implements Preferen
      * in sched v2, and crt in sched v1. I.e. at which time of the day does the scheduler reset
      */
     private static final String DAY_OFFSET = "dayOffset";
+    /**
+     * Represents in Android preferences whether the scheduler should use version 1 or 2.
+     */
+    private static final String SCHED_VER = "schedVer";
     private static final String [] sCollectionPreferences = {SHOW_ESTIMATE, SHOW_PROGRESS,
-            LEARN_CUTOFF, TIME_LIMIT, USE_CURRENT, NEW_SPREAD, DAY_OFFSET, "schedVer", "newTimezoneHandling"};
+            LEARN_CUTOFF, TIME_LIMIT, USE_CURRENT, NEW_SPREAD, DAY_OFFSET, SCHED_VER, "newTimezoneHandling"};
 
     private static final int RESULT_LOAD_IMG = 111;
     private android.preference.CheckBoxPreference mBackgroundImage;
@@ -658,7 +662,7 @@ public class Preferences extends AppCompatPreferenceActivity implements Preferen
                                 checkBox.setEnabled(false);
                             }
                             break;
-                        case "schedVer":
+                        case SCHED_VER:
                             ((android.preference.CheckBoxPreference)pref).setChecked(col.schedVer() == 2);
                     }
                 } catch (NumberFormatException e) {
@@ -848,7 +852,7 @@ public class Preferences extends AppCompatPreferenceActivity implements Preferen
                     }
                     break;
                 }
-                case "schedVer": {
+                case SCHED_VER: {
                     boolean wantNew = ((android.preference.CheckBoxPreference) pref).isChecked();
                     boolean haveNew = getCol().schedVer() == 2;
                     // northing to do?
