@@ -150,8 +150,9 @@ public class Preferences extends AppCompatPreferenceActivity implements Preferen
      * Represents in Android preferences whether the scheduler should use version 1 or 2.
      */
     private static final String SCHED_VER = "schedVer";
+    private static final String NEW_TIMEZONE_HANDLING = "newTimezoneHandling";
     private static final String [] sCollectionPreferences = {SHOW_ESTIMATE, SHOW_PROGRESS,
-            LEARN_CUTOFF, TIME_LIMIT, USE_CURRENT, NEW_SPREAD, DAY_OFFSET, SCHED_VER, "newTimezoneHandling"};
+            LEARN_CUTOFF, TIME_LIMIT, USE_CURRENT, NEW_SPREAD, DAY_OFFSET, SCHED_VER, NEW_TIMEZONE_HANDLING};
 
     private static final int RESULT_LOAD_IMG = 111;
     private android.preference.CheckBoxPreference mBackgroundImage;
@@ -654,7 +655,7 @@ public class Preferences extends AppCompatPreferenceActivity implements Preferen
                         case DAY_OFFSET:
                             ((SeekBarPreference)pref).setValue(getDayOffset(col));
                             break;
-                        case "newTimezoneHandling":
+                        case NEW_TIMEZONE_HANDLING:
                             android.preference.CheckBoxPreference checkBox = (android.preference.CheckBoxPreference) pref;
                             checkBox.setChecked(col.getSched()._new_timezone_enabled());
                             if (col.schedVer() <= 1 || !col.isUsingRustBackend()) {
@@ -833,7 +834,7 @@ public class Preferences extends AppCompatPreferenceActivity implements Preferen
                     pm.setComponentEnabledSetting(providerName, state, PackageManager.DONT_KILL_APP);
                     break;
                 }
-                case "newTimezoneHandling" : {
+                case NEW_TIMEZONE_HANDLING : {
                     if (getCol().schedVer() != 1 && getCol().isUsingRustBackend()) {
                         AbstractSched sched = getCol().getSched();
                         boolean was_enabled = sched._new_timezone_enabled();
