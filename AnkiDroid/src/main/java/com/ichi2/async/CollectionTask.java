@@ -238,11 +238,9 @@ public class CollectionTask<Progress, Result> extends BaseAsyncTask<Void, Progre
 
     public static class AddNote extends TaskDelegate<Integer, Boolean> {
         private final Note mNote;
-        private final Models.AllowEmpty mAllowEmpty;
 
         public AddNote(Note note) {
             this.mNote = note;
-            this.mAllowEmpty = Models.AllowEmpty.ONLY_CLOZE;
         }
 
 
@@ -252,7 +250,7 @@ public class CollectionTask<Progress, Result> extends BaseAsyncTask<Void, Progre
             try {
                 DB db = col.getDb();
                 db.executeInTransaction(() -> {
-                        int value = col.addNote(mNote, mAllowEmpty);
+                        int value = col.addNote(mNote, Models.AllowEmpty.ONLY_CLOZE);
                         collectionTask.doProgress(value);
                     });
             } catch (RuntimeException e) {
