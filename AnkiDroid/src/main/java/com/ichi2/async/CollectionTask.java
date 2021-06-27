@@ -499,27 +499,6 @@ public class CollectionTask<Progress, Result> extends BaseAsyncTask<Void, Progre
         }
     }
 
-    public static class UndoMarkNoteMulti extends UndoAction {
-        private final List<Note> mOriginalMarked;
-        private final List<Note> mOriginalUnmarked;
-
-        /** @param hasUnmarked whether there were any unmarked card (in which card the action was "mark",
-         *                      otherwise the action was "Unmark")  */
-        public UndoMarkNoteMulti(List<Note> originalMarked, List<Note> originalUnmarked, boolean hasUnmarked) {
-            super((hasUnmarked) ? R.string.card_browser_mark_card : R.string.card_browser_unmark_card);
-            this.mOriginalMarked = originalMarked;
-            this.mOriginalUnmarked = originalUnmarked;
-        }
-
-
-        public @Nullable Card undo(@NonNull Collection col) {
-            Timber.i("Undo: Mark notes");
-            CardUtils.markAll(mOriginalMarked, true);
-            CardUtils.markAll(mOriginalUnmarked, false);
-            return null;  // don't fetch new card
-        }
-    }
-
 
     private static class UndoRepositionRescheduleResetCards extends UndoAction {
         private final Card[] mCardsCopied;

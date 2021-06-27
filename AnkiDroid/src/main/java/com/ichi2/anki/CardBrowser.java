@@ -869,7 +869,16 @@ public class CardBrowser extends NavigationDrawerActivity implements
                                                  CardUtils.markAll(new ArrayList<>(notes), hasUnmarked);
 
                                                  // mark undo for all at once
-                                                 col.markUndo(new CollectionTask.UndoMarkNoteMulti(originalMarked, originalUnmarked, hasUnmarked));
+                                                 col.markUndo(new UndoAction((hasUnmarked) ? R.string.card_browser_mark_card : R.string.card_browser_unmark_card) {
+                                                     @Nullable
+                                                     @Override
+                                                     public Card undo(@NonNull Collection col) {
+                                                         Timber.i("Undo: Mark notes");
+                                                         CardUtils.markAll(originalMarked, true);
+                                                         CardUtils.markAll(originalUnmarked, false);
+                                                         return null;  // don't fetch new card
+                                                     }
+                                                 });
 
                                                  // reload cards because they'll be passed back to caller
                                                  for (Card c : cards) {
