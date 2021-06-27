@@ -1454,7 +1454,21 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
                 .onPositive((dialog, which) -> {
                     Timber.i("AbstractFlashcardViewer:: OK button pressed to delete note %d", mCurrentCard.getNid());
                     mSoundPlayer.stopSounds();
-                    dismiss(new CollectionTask.DeleteNote(mCurrentCard));
+                    final Card currentCard = mCurrentCard;
+                    dismiss(new CollectionTask.DismissNote(currentCard) {
+
+                        @Override
+                        protected void actualTask(Collection col) {
+                            final Card card = mCard;
+                            Note note = mCard.note();
+                            // collect undo information
+                            ArrayList<Card> allCs = note.cards();
+                            col.markUndo(new CollectionTask.UndoDeleteNote(note, allCs, mCard));
+                            // delete note
+                            col.remNotes(new long[] {note.getId()});
+                        }
+
+                    });
                 })
                 .build().show();
     }

@@ -293,7 +293,7 @@ public class CollectionTask<Progress, Result> extends BaseAsyncTask<Void, Progre
     }
 
 
-    private static class UndoDeleteNote extends UndoAction {
+    public static class UndoDeleteNote extends UndoAction {
         private final Note mNote;
         private final ArrayList<Card> mAllCs;
         private final @NonNull Card mCard;
@@ -433,22 +433,6 @@ public class CollectionTask<Progress, Result> extends BaseAsyncTask<Void, Progre
             col.markUndo(revertNoteToProvidedState(R.string.menu_suspend_note, mCard));
             // suspend note
             col.getSched().suspendCards(cids);
-        }
-    }
-
-    public static class DeleteNote extends DismissNote {
-        public DeleteNote(Card card) {
-            super(card);
-        }
-
-        @Override
-        protected void actualTask(Collection col) {
-            Note note = mCard.note();
-            // collect undo information
-            ArrayList<Card> allCs = note.cards();
-            col.markUndo(new UndoDeleteNote(note, allCs, mCard));
-            // delete note
-            col.remNotes(new long[] {note.getId()});
         }
     }
 
