@@ -107,7 +107,11 @@ public class Preferences extends AppCompatPreferenceActivity implements Preferen
 
     // Other variables
     private final HashMap<String, String> mOriginalSumarries = new HashMap<>();
-    private static final String [] sCollectionPreferences = {"showEstimates", "showProgress",
+    /**
+     * Represents in Android preferences the collections configuration "estTime": i.e. whether the buttons should indicate the duration of the interval if we click on them.
+     */
+    private static final String SHOW_ESTIMATE = "showEstimates";
+    private static final String [] sCollectionPreferences = {SHOW_ESTIMATE, "showProgress",
             "learnCutoff", "timeLimit", "useCurrent", "newSpread", "dayOffset", "schedVer", "newTimezoneHandling"};
 
     private static final int RESULT_LOAD_IMG = 111;
@@ -590,7 +594,7 @@ public class Preferences extends AppCompatPreferenceActivity implements Preferen
                 try {
                     JSONObject conf = col.getConf();
                     switch (pref.getKey()) {
-                        case "showEstimates":
+                        case SHOW_ESTIMATE:
                             ((android.preference.CheckBoxPreference)pref).setChecked(conf.getBoolean("estTimes"));
                             break;
                         case "showProgress":
@@ -715,7 +719,7 @@ public class Preferences extends AppCompatPreferenceActivity implements Preferen
                     getCol().getConf().put("dueCounts", ((android.preference.CheckBoxPreference) pref).isChecked());
                     getCol().setMod();
                     break;
-                case "showEstimates":
+                case SHOW_ESTIMATE:
                     getCol().getConf().put("estTimes", ((android.preference.CheckBoxPreference) pref).isChecked());
                     getCol().setMod();
                     break;
