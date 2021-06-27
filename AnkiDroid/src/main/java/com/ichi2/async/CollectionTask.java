@@ -293,36 +293,6 @@ public class CollectionTask<Progress, Result> extends BaseAsyncTask<Void, Progre
     }
 
 
-    public static class UndoDeleteNote extends UndoAction {
-        private final Note mNote;
-        private final ArrayList<Card> mAllCs;
-        private final @NonNull Card mCard;
-
-
-        public UndoDeleteNote(Note note, ArrayList<Card> allCs, @NonNull Card card) {
-            super(R.string.menu_delete_note);
-            this.mNote = note;
-            this.mAllCs = allCs;
-            this.mCard = card;
-        }
-
-
-        public @Nullable Card undo(@NonNull Collection col) {
-            Timber.i("Undo: Delete note");
-            ArrayList<Long> ids = new ArrayList<>(mAllCs.size() + 1 );
-            mNote.flush(mNote.getMod(), false);
-            ids.add(mNote.getId());
-            for (Card c : mAllCs) {
-                c.flush(false);
-                ids.add(c.getId());
-            }
-            col.getDb().execute("DELETE FROM graves WHERE oid IN " + Utils.ids2str(ids));
-            return mCard;
-        }
-    }
-
-
-
     /**
      * Represents an action that remove a card from the Reviewer without reviewing it.
      */

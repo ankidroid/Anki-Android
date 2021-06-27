@@ -1463,7 +1463,22 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
                             Note note = mCard.note();
                             // collect undo information
                             ArrayList<Card> allCs = note.cards();
-                            col.markUndo(new CollectionTask.UndoDeleteNote(note, allCs, mCard));
+                            col.markUndo(new UndoAction(R.string.menu_delete_note) {
+                                @Nullable
+                                @Override
+                                public Card undo(@NonNull Collection col) {
+                                    Timber.i("Undo: Delete note");
+                                    ArrayList<Long> ids = new ArrayList<>(allCs.size() + 1);
+                                    note.flush(note.getMod(), false);
+                                    ids.add(note.getId());
+                                    for (Card c : allCs) {
+                                        c.flush(false);
+                                        ids.add(c.getId());
+                                    }
+                                    col.getDb().execute("DELETE FROM graves WHERE oid IN " + Utils.ids2str(ids));
+                                    return card;
+                                }
+                            });
                             // delete note
                             col.remNotes(new long[] {note.getId()});
                         }
