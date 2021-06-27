@@ -240,14 +240,9 @@ public class CollectionTask<Progress, Result> extends BaseAsyncTask<Void, Progre
         private final Note mNote;
         private final Models.AllowEmpty mAllowEmpty;
 
-
-        public AddNote(Note note, Models.AllowEmpty allowEmpty) {
-            this.mNote = note;
-            this.mAllowEmpty = allowEmpty;
-        }
-
         public AddNote(Note note) {
-            this(note, Models.AllowEmpty.ONLY_CLOZE);
+            this.mNote = note;
+            this.mAllowEmpty = Models.AllowEmpty.ONLY_CLOZE;
         }
 
 
