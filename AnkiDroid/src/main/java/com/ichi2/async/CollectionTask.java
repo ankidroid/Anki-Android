@@ -499,7 +499,7 @@ public class CollectionTask<Progress, Result> extends BaseAsyncTask<Void, Progre
         }
     }
 
-    private static class UndoMarkNoteMulti extends UndoAction {
+    public static class UndoMarkNoteMulti extends UndoAction {
         private final List<Note> mOriginalMarked;
         private final List<Note> mOriginalUnmarked;
 
@@ -647,38 +647,6 @@ public class CollectionTask<Progress, Result> extends BaseAsyncTask<Void, Progre
 
         protected boolean actualTask(Collection col, ProgressSenderAndCancelListener<Void> collectionTask, Card[] cards) {
             col.setUserFlag(mFlag, mCardIds);
-            for (Card c : cards) {
-                c.load();
-            }
-            return true;
-        }
-    }
-
-    public static class MarkNoteMulti extends DismissNotes<Void> {
-        public MarkNoteMulti(List<Long> cardIds) {
-            super(cardIds);
-        }
-
-        protected boolean actualTask(Collection col, ProgressSenderAndCancelListener<Void> collectionTask, Card[] cards) {
-            Set<Note> notes = CardUtils.getNotes(Arrays.asList(cards));
-            // collect undo information
-            List<Note> originalMarked = new ArrayList<>();
-            List<Note> originalUnmarked = new ArrayList<>();
-
-            for (Note n : notes) {
-                if (n.hasTag("marked"))
-                    originalMarked.add(n);
-                else
-                    originalUnmarked.add(n);
-            }
-
-            boolean hasUnmarked = !originalUnmarked.isEmpty();
-            CardUtils.markAll(new ArrayList<>(notes), hasUnmarked);
-
-            // mark undo for all at once
-            col.markUndo(new UndoMarkNoteMulti(originalMarked, originalUnmarked, hasUnmarked));
-
-            // reload cards because they'll be passed back to caller
             for (Card c : cards) {
                 c.load();
             }

@@ -851,7 +851,33 @@ public class CardBrowser extends NavigationDrawerActivity implements
             return;
         }
 
-        TaskManager.launchCollectionTask(new CollectionTask.MarkNoteMulti(getSelectedCardIds()),
+        TaskManager.launchCollectionTask(new CollectionTask.DismissNotes<Void>(getSelectedCardIds()) {
+                                             protected boolean actualTask(Collection col, ProgressSenderAndCancelListener<Void> collectionTask, Card[] cards) {
+                                                 Set<Note> notes = CardUtils.getNotes(Arrays.asList(cards));
+                                                 // collect undo information
+                                                 List<Note> originalMarked = new ArrayList<>();
+                                                 List<Note> originalUnmarked = new ArrayList<>();
+
+                                                 for (Note n : notes) {
+                                                     if (n.hasTag("marked"))
+                                                         originalMarked.add(n);
+                                                     else
+                                                         originalUnmarked.add(n);
+                                                 }
+
+                                                 boolean hasUnmarked = !originalUnmarked.isEmpty();
+                                                 CardUtils.markAll(new ArrayList<>(notes), hasUnmarked);
+
+                                                 // mark undo for all at once
+                                                 col.markUndo(new CollectionTask.UndoMarkNoteMulti(originalMarked, originalUnmarked, hasUnmarked));
+
+                                                 // reload cards because they'll be passed back to caller
+                                                 for (Card c : cards) {
+                                                     c.load();
+                                                 }
+                                                 return true;
+                                             }
+                                         },
                 markCardHandler());
     }
 
