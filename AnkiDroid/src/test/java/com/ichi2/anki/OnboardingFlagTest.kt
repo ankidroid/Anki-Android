@@ -1,5 +1,6 @@
 /****************************************************************************************
  *                                                                                      *
+ * Copyright (c) 2021 Arthur Milchior <arthur@milchior.fr>                              *
  * Copyright (c) 2021 Shridhar Goel <shridhar.goel@gmail.com>                           *
  *                                                                                      *
  * This program is free software; you can redistribute it and/or modify it under        *
