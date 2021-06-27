@@ -141,8 +141,13 @@ public class Preferences extends AppCompatPreferenceActivity implements Preferen
      * TODO: port sched v2 from upstream
      */
     private static final String NEW_SPREAD = "newSpread";
+    /**
+     * Represents in Android preference the collection's configuration "rollover"
+     * in sched v2, and crt in sched v1. I.e. at which time of the day does the scheduler reset
+     */
+    private static final String DAY_OFFSET = "dayOffset";
     private static final String [] sCollectionPreferences = {SHOW_ESTIMATE, SHOW_PROGRESS,
-            LEARN_CUTOFF, TIME_LIMIT, USE_CURRENT, NEW_SPREAD, "dayOffset", "schedVer", "newTimezoneHandling"};
+            LEARN_CUTOFF, TIME_LIMIT, USE_CURRENT, NEW_SPREAD, DAY_OFFSET, "schedVer", "newTimezoneHandling"};
 
     private static final int RESULT_LOAD_IMG = 111;
     private android.preference.CheckBoxPreference mBackgroundImage;
@@ -642,7 +647,7 @@ public class Preferences extends AppCompatPreferenceActivity implements Preferen
                         case NEW_SPREAD:
                             ((android.preference.ListPreference)pref).setValueIndex(conf.getInt("newSpread"));
                             break;
-                        case "dayOffset":
+                        case DAY_OFFSET:
                             ((SeekBarPreference)pref).setValue(getDayOffset(col));
                             break;
                         case "newTimezoneHandling":
@@ -769,7 +774,7 @@ public class Preferences extends AppCompatPreferenceActivity implements Preferen
                     getCol().getConf().put("addToCur", "0".equals(((android.preference.ListPreference) pref).getValue()));
                     getCol().setMod();
                     break;
-                case "dayOffset": {
+                case DAY_OFFSET: {
                     setDayOffset(((SeekBarPreference) pref).getValue());
                     break;
                 }
