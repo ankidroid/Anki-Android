@@ -134,8 +134,15 @@ public class Preferences extends AppCompatPreferenceActivity implements Preferen
      * Note that "addToCur" is a boolean while USE_CURRENT is "0" or "1"
      */
     private static final String USE_CURRENT = "useCurrent";
+    /**
+     * Represents in Android preferences the collections configuration "newSpread": i.e.
+     * whether the new cards are added at the end of the queue or randomly in it.
+     * It seems not to be implemented in Ankidroid and only used in anki.
+     * TODO: port sched v2 from upstream
+     */
+    private static final String NEW_SPREAD = "newSpread";
     private static final String [] sCollectionPreferences = {SHOW_ESTIMATE, SHOW_PROGRESS,
-            LEARN_CUTOFF, TIME_LIMIT, USE_CURRENT, "newSpread", "dayOffset", "schedVer", "newTimezoneHandling"};
+            LEARN_CUTOFF, TIME_LIMIT, USE_CURRENT, NEW_SPREAD, "dayOffset", "schedVer", "newTimezoneHandling"};
 
     private static final int RESULT_LOAD_IMG = 111;
     private android.preference.CheckBoxPreference mBackgroundImage;
@@ -632,7 +639,7 @@ public class Preferences extends AppCompatPreferenceActivity implements Preferen
                         case USE_CURRENT:
                             ((android.preference.ListPreference)pref).setValueIndex(conf.optBoolean("addToCur", true) ? 0 : 1);
                             break;
-                        case "newSpread":
+                        case NEW_SPREAD:
                             ((android.preference.ListPreference)pref).setValueIndex(conf.getInt("newSpread"));
                             break;
                         case "dayOffset":
@@ -746,7 +753,7 @@ public class Preferences extends AppCompatPreferenceActivity implements Preferen
                     getCol().getConf().put("estTimes", ((android.preference.CheckBoxPreference) pref).isChecked());
                     getCol().setMod();
                     break;
-                case "newSpread":
+                case NEW_SPREAD:
                     getCol().getConf().put("newSpread", Integer.parseInt(((android.preference.ListPreference) pref).getValue()));
                     getCol().setMod();
                     break;
