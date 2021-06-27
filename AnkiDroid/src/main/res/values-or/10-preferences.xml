@@ -101,7 +101,7 @@
     <string name="gestures_swipe_left" maxLength="41">ବାମକୁ ସ୍ୱାଇପ୍</string>
     <string name="gestures_swipe_right" maxLength="41">ଡାହାଣକୁ ସ୍ୱାଇପ୍</string>
     <string name="gestures_double_tap" maxLength="41">ଦୁଇଥର ସ୍ପର୍ଶ</string>
-    <string name="gestures_long_tap" maxLength="41">Long tap</string>
+    <string name="gestures_long_tap" maxLength="41">ଲମ୍ବା ଟ୍ୟାପ୍</string>
     <string name="gestures_tap_top" maxLength="41">ଶୀର୍ଷକୁ ସ୍ପର୍ଶ</string>
     <string name="gestures_tap_left" maxLength="41">ବାମକୁ ସ୍ପର୍ଶ</string>
     <string name="gestures_tap_right" maxLength="41">ଡାହାଣକୁ ସ୍ପର୍ଶ</string>
@@ -164,8 +164,8 @@
     <string name="vertical_centering" maxLength="41">କେନ୍ଦ୍ର ଶ୍ରେଣୀବଦ୍ଧତା</string>
     <string name="vertical_centering_summ">ପତ୍ରଗୁଡ଼ିକର ବିଷୟବସ୍ତୁକୁ ଭୂଲମ୍ବ ଭାବରେ କେନ୍ଦ୍ରିତ କରନ୍ତୁ</string>
     <string name="pref_backup_max" maxLength="41">ବ୍ୟାକଅପ୍ ର ସର୍ବାଧିକ ସଂଖ୍ୟା </string>
-    <string name="pref_double_tap_time_interval" maxLength="41">Double tap time interval (milliseconds)</string>
-    <string name="pref_double_tap_time_interval_summary">A second tap of the answer buttons will be ignored if this time has not elapsed. This prevents accidental double taps</string>
+    <string name="pref_double_tap_time_interval" maxLength="41">ଡବଲ୍ ଟ୍ୟାପ୍ ସମୟ ବ୍ୟବଧାନ (ମିଲିସେକେଣ୍ଡ୍)</string>
+    <string name="pref_double_tap_time_interval_summary">ଯଦି ଏହି ସମୟ ଅତିବାହିତ ହୋଇନାହିଁ ତେବେ ଉତ୍ତର ବଟନର ଦ୍ୱିତୀୟ ଟ୍ୟାପ୍ ଅଣଦେଖା କରାଯିବ। ଏହା ଆକସ୍ମିକ ଡବଲ୍ ଟ୍ୟାପ୍ ପ୍ରତିରୋଧ କରେ</string>
     <string name="show_estimates" maxLength="41">ବଟନ୍ ସମୟ ଦେଖାନ୍ତୁ</string>
     <string name="show_estimates_summ">ଉତ୍ତର ବଟନ୍ ଗୁଡିକରେ ପରବର୍ତ୍ତୀ ସମୀକ୍ଷା ସମୟ ଦେଖାନ୍ତୁ</string>
     <string name="show_large_answer_buttons" maxLength="41">ବଡ଼ ଉତ୍ତର ବଟନ୍ ଦେଖାନ୍ତୁ</string>

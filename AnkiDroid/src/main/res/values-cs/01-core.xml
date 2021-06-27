@@ -105,7 +105,7 @@
     <string name="unbury">Zrušit přeskočení</string>
     <string name="rename_deck">Přejmenovat balíček</string>
     <string name="create_shortcut">Vytvořit zástupce</string>
-    <string name="browse_cards">Browse cards</string>
+    <string name="browse_cards">Procházet karty</string>
     <string name="menu_add" comment="A generic add button - Main Deck Picker and card templates. Please inform us if you need more specific strings">Přidat</string>
     <string name="menu_add_note">Přidat poznámku</string>
     <string name="menu_my_account" comment="Label of the window in which the user should enter their account. This text can\'t be found in AnkiDroid directly.">Synchronizovat účet</string>
@@ -233,9 +233,9 @@
     <string name="sync_conflict_title_new">Výběr zachované kolekce</string>
     <string name="sync_conflict_replace_title">Nahradit kolekci</string>
     <plurals name="deckpicker_title_zero_due">
-        <item quantity="one">%1$d card (0 due)</item>
-        <item quantity="few">%1$d cards (0 due)</item>
-        <item quantity="many">%1$d cards (0 due)</item>
-        <item quantity="other">%1$d cards (0 due)</item>
+        <item quantity="one">%1$d karta (0 ke zkoušení)</item>
+        <item quantity="few">%1$d karty (0 ke zkoušení)</item>
+        <item quantity="many">%1$d karty (0 ke zkoušení)</item>
+        <item quantity="other">%1$d karet (0 ke zkoušení)</item>
     </plurals>
 </resources>

@@ -24,7 +24,7 @@
     <string name="model_editor_label" comment="Label of the window to edit the fields of a note type. This text can\'t be found in Ankidroid directly">ניהול שדות</string>
     <!--Toasts-->
     <string name="toast_last_model">אין לך אפשרות למחוק את סוג ההערה האחרון שלך</string>
-    <string name="toast_last_field">Note types must have at least one field</string>
+    <string name="toast_last_field">סוגי הערה צריכים לפחות תחום אחד</string>
     <string name="toast_empty_name">עליך להזין שם</string>
     <string name="toast_duplicate_field">שם זה כבר נמצא בשימוש על ידי שדה אחר</string>
     <string name="toast_out_of_range">עליך להקליד ערך תקף</string>

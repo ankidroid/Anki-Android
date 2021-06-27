@@ -215,6 +215,6 @@
     <string name="sync_conflict_title_new">选择要保留的卡片组</string>
     <string name="sync_conflict_replace_title">替换卡组集合</string>
     <plurals name="deckpicker_title_zero_due">
-        <item quantity="other">%1$d cards (0 due)</item>
+        <item quantity="other">%1$d 张卡片 (0到期)</item>
     </plurals>
 </resources>
