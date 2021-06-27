@@ -108,35 +108,6 @@ import static com.ichi2.utils.Computation.ERR;
 public class CollectionTask<Progress, Result> extends BaseAsyncTask<Void, Progress, Result> {
 
     /**
-     * Task contains the business logic of background tasks.
-     * While CollectionTask deals with all general task features, such as ensuring that no two tasks runs simultaneously
-     * and Timberings, the Task contains the code that we actually want to execute.
-     *
-     * TaskManager.launchCollectionTask takes a Task, and potentially a TaskListener. It is in charge of running
-     * ensuring that the task is executed, by embedding this Task in an object that can actually be executed.
-     *
-     *
-     * Currently, background processes uses CollectionTask, which inherits from AsyncTask, which is deprecated. Using this
-     * delegation, we should hopefully eventually be able to stop using AsyncTask without making any change to the Task.
-     *
-     * Tests can runs tasks in Foreground by changing the task manager. Those tasks can then be directly executed by
-     * ForegroundTaskManager without needing an executor.
-     *
-     * The Task type is used to cancel planified tasks. In particular it means that no Task should
-     * be an anonymous class if we want to be able to cancel the task running it.
-     *
-     * @param <Progress> The type of values that the task can send to indicates its progress. E.g. a card to dislay while remaining work is done; the progression of a counter.
-     * @param <Result> The type of result returned by the task at the end. E.g. the tree of decks, counts for a particular deck
-     */
-    public abstract static class Task<Progress, Result> {
-        protected abstract Result task(@NonNull Collection col, @NonNull ProgressSenderAndCancelListener<Progress> collectionTask);
-
-        protected boolean requiresOpenCollection() {
-            return true;
-        }
-    }
-
-    /**
      * A reference to the application context to use to fetch the current Collection object.
      */
     private Context mContext;
@@ -168,15 +139,15 @@ public class CollectionTask<Progress, Result> extends BaseAsyncTask<Void, Progre
         return mContext;
     }
 
-    private final Task<Progress, Result> mTask;
-    public Task<Progress, Result> getTask() {
+    private final TaskDelegate<Progress, Result> mTask;
+    public TaskDelegate<Progress, Result> getTask() {
         return mTask;
     }
     private final TaskListener<? super Progress, ? super Result> mListener;
     private CollectionTask mPreviousTask;
 
 
-    protected CollectionTask(Task<Progress, Result> task, TaskListener<? super Progress, ? super Result> listener, CollectionTask previousTask) {
+    protected CollectionTask(TaskDelegate<Progress, Result> task, TaskListener<? super Progress, ? super Result> listener, CollectionTask previousTask) {
         mTask = task;
         mListener = listener;
         mPreviousTask = previousTask;
@@ -265,7 +236,7 @@ public class CollectionTask<Progress, Result> extends BaseAsyncTask<Void, Progre
         }
     }
 
-    public static class AddNote extends Task<Integer, Boolean> {
+    public static class AddNote extends TaskDelegate<Integer, Boolean> {
         private final Note mNote;
         private final Models.AllowEmpty mAllowEmpty;
 
@@ -299,7 +270,7 @@ public class CollectionTask<Progress, Result> extends BaseAsyncTask<Void, Progre
     }
 
 
-    public static class UpdateNote extends Task<Card, Computation<?>> {
+    public static class UpdateNote extends TaskDelegate<Card, Computation<?>> {
         private final Card mEditCard;
         private final boolean mFromReviewer;
         private final boolean mCanAccessScheduler;
@@ -351,7 +322,7 @@ public class CollectionTask<Progress, Result> extends BaseAsyncTask<Void, Progre
         }
     }
 
-    public static class GetCard extends Task<Card, Computation<?>> {
+    public static class GetCard extends TaskDelegate<Card, Computation<?>> {
         protected Computation<?> task(@NonNull Collection col, @NonNull ProgressSenderAndCancelListener<Card> collectionTask) {
             AbstractSched sched = col.getSched();
             Timber.i("Obtaining card");
@@ -381,7 +352,7 @@ public class CollectionTask<Progress, Result> extends BaseAsyncTask<Void, Progre
     }
 
 
-    public static class LoadDeck extends Task<Void, List<DeckTreeNode>> {
+    public static class LoadDeck extends TaskDelegate<Void, List<DeckTreeNode>> {
         protected List<DeckTreeNode> task(@NonNull Collection col, @NonNull ProgressSenderAndCancelListener<Void> collectionTask) {
             Timber.d("doInBackgroundLoadDeckCounts");
             try {
@@ -395,7 +366,7 @@ public class CollectionTask<Progress, Result> extends BaseAsyncTask<Void, Progre
     }
 
 
-    public static class LoadDeckCounts extends Task<Void, List<DeckDueTreeNode>> {
+    public static class LoadDeckCounts extends TaskDelegate<Void, List<DeckDueTreeNode>> {
         protected List<DeckDueTreeNode> task(@NonNull Collection col, @NonNull ProgressSenderAndCancelListener<Void> collectionTask) {
             Timber.d("doInBackgroundLoadDeckCounts");
             try {
@@ -408,7 +379,7 @@ public class CollectionTask<Progress, Result> extends BaseAsyncTask<Void, Progre
         }
     }
 
-    public static class SaveCollection extends Task<Void, Void> {
+    public static class SaveCollection extends TaskDelegate<Void, Void> {
         private final boolean mSyncIgnoresDatabaseModification;
 
 
@@ -468,7 +439,7 @@ public class CollectionTask<Progress, Result> extends BaseAsyncTask<Void, Progre
     /**
      * Represents an action that remove a card from the Reviewer without reviewing it.
      */
-    public static abstract class DismissNote extends Task<Card, Computation<?>> {
+    public static abstract class DismissNote extends TaskDelegate<Card, Computation<?>> {
         protected final Card mCard;
 
 
@@ -746,7 +717,7 @@ public class CollectionTask<Progress, Result> extends BaseAsyncTask<Void, Progre
         }
     }
 
-    private static abstract class DismissNotes<Progress> extends Task<Progress, Computation<Card[]>> {
+    private static abstract class DismissNotes<Progress> extends TaskDelegate<Progress, Computation<Card[]>> {
         protected final List<Long> mCardIds;
 
         public DismissNotes(List<Long> cardIds) {
@@ -1062,7 +1033,7 @@ public class CollectionTask<Progress, Result> extends BaseAsyncTask<Void, Progre
         return card;
     }
 
-    public static class Undo extends Task<Card, Computation<?>> {
+    public static class Undo extends TaskDelegate<Card, Computation<?>> {
         protected Computation<?> task(@NonNull Collection col, @NonNull ProgressSenderAndCancelListener<Card> collectionTask) {
             try {
                 col.getDb().executeInTransaction(() -> {
@@ -1150,7 +1121,7 @@ public class CollectionTask<Progress, Result> extends BaseAsyncTask<Void, Progre
     }
 
 
-    public static class SearchCards extends Task<List<CardBrowser.CardCache>, List<CardBrowser.CardCache>> {
+    public static class SearchCards extends TaskDelegate<List<CardBrowser.CardCache>, List<CardBrowser.CardCache>> {
         private final String mQuery;
         private final boolean mOrder;
         private final int mNumCardsToRender;
@@ -1200,7 +1171,7 @@ public class CollectionTask<Progress, Result> extends BaseAsyncTask<Void, Progre
     }
 
 
-    public static class RenderBrowserQA extends Task<Integer, Pair<CardBrowser.CardCollection<CardBrowser.CardCache>, List<Long>>> {
+    public static class RenderBrowserQA extends TaskDelegate<Integer, Pair<CardBrowser.CardCollection<CardBrowser.CardCache>, List<Long>>> {
         private final CardBrowser.CardCollection<CardBrowser.CardCache> mCards;
         private final Integer mStartPos;
         private final Integer mN;
@@ -1267,7 +1238,7 @@ public class CollectionTask<Progress, Result> extends BaseAsyncTask<Void, Progre
         }
     }
 
-    public static class CheckDatabase extends Task<String, Pair<Boolean, Collection.CheckDatabaseResult>> {
+    public static class CheckDatabase extends TaskDelegate<String, Pair<Boolean, Collection.CheckDatabaseResult>> {
     protected Pair<Boolean, Collection.CheckDatabaseResult> task(@NonNull Collection col, @NonNull ProgressSenderAndCancelListener<String> collectionTask) {
         Timber.d("doInBackgroundCheckDatabase");
         // Don't proceed if collection closed
@@ -1289,7 +1260,7 @@ public class CollectionTask<Progress, Result> extends BaseAsyncTask<Void, Progre
     }
 
 
-    public static class RepairCollection extends Task<Void, Boolean> {
+    public static class RepairCollection extends TaskDelegate<Void, Boolean> {
         protected Boolean task(@NonNull Collection col, @NonNull ProgressSenderAndCancelListener<Void> collectionTask) {
             Timber.d("doInBackgroundRepairCollection");
             if (col != null) {
@@ -1306,7 +1277,7 @@ public class CollectionTask<Progress, Result> extends BaseAsyncTask<Void, Progre
     }
 
 
-    public static class UpdateValuesFromDeck extends Task<Void, StudyOptionsFragment.DeckStudyData> {
+    public static class UpdateValuesFromDeck extends TaskDelegate<Void, StudyOptionsFragment.DeckStudyData> {
         private final boolean mReset;
 
 
@@ -1336,7 +1307,7 @@ public class CollectionTask<Progress, Result> extends BaseAsyncTask<Void, Progre
     }
 
 
-    public static class DeleteDeck extends Task<Void, int[]> {
+    public static class DeleteDeck extends TaskDelegate<Void, int[]> {
         private final long mDid;
 
         public DeleteDeck(long did) {
@@ -1353,7 +1324,7 @@ public class CollectionTask<Progress, Result> extends BaseAsyncTask<Void, Progre
     }
 
 
-    public static class RebuildCram extends Task<Void, StudyOptionsFragment.DeckStudyData> {
+    public static class RebuildCram extends TaskDelegate<Void, StudyOptionsFragment.DeckStudyData> {
         protected StudyOptionsFragment.DeckStudyData task(@NonNull Collection col, @NonNull ProgressSenderAndCancelListener<Void> collectionTask) {
             Timber.d("doInBackgroundRebuildCram");
             col.getSched().rebuildDyn(col.getDecks().selected());
@@ -1361,7 +1332,7 @@ public class CollectionTask<Progress, Result> extends BaseAsyncTask<Void, Progre
         }
     }
 
-    public static class EmptyCram extends Task<Void, StudyOptionsFragment.DeckStudyData> {
+    public static class EmptyCram extends TaskDelegate<Void, StudyOptionsFragment.DeckStudyData> {
         protected StudyOptionsFragment.DeckStudyData task(@NonNull Collection col, @NonNull ProgressSenderAndCancelListener<Void> collectionTask) {
             Timber.d("doInBackgroundEmptyCram");
             col.getSched().emptyDyn(col.getDecks().selected());
@@ -1369,7 +1340,7 @@ public class CollectionTask<Progress, Result> extends BaseAsyncTask<Void, Progre
         }
     }
 
-    public static class ImportAdd extends Task<String, Triple<AnkiPackageImporter, Boolean, String>> {
+    public static class ImportAdd extends TaskDelegate<String, Triple<AnkiPackageImporter, Boolean, String>> {
         private final String mPath;
 
 
@@ -1394,7 +1365,7 @@ public class CollectionTask<Progress, Result> extends BaseAsyncTask<Void, Progre
     }
 
 
-    public static class ImportReplace extends Task<String, Computation<?>> {
+    public static class ImportReplace extends TaskDelegate<String, Computation<?>> {
         private final String mPath;
 
 
@@ -1546,7 +1517,7 @@ public class CollectionTask<Progress, Result> extends BaseAsyncTask<Void, Progre
     }
 
 
-    public static class ExportApkg extends Task<Void, Pair<Boolean, String>> {
+    public static class ExportApkg extends TaskDelegate<Void, Pair<Boolean, String>> {
         private final String mApkgPath;
         private final Long mDid;
         private final Boolean mIncludeSched;
@@ -1585,7 +1556,7 @@ public class CollectionTask<Progress, Result> extends BaseAsyncTask<Void, Progre
     }
 
 
-    public static class Reorder extends Task<Void, Boolean> {
+    public static class Reorder extends TaskDelegate<Void, Boolean> {
         private final DeckConfig mConf;
 
 
@@ -1602,7 +1573,7 @@ public class CollectionTask<Progress, Result> extends BaseAsyncTask<Void, Progre
     }
 
 
-    public static class ConfChange extends Task<Void, Boolean> {
+    public static class ConfChange extends TaskDelegate<Void, Boolean> {
         private final Deck mDeck;
         private final DeckConfig mConf;
 
@@ -1640,7 +1611,7 @@ public class CollectionTask<Progress, Result> extends BaseAsyncTask<Void, Progre
         }
     }
 
-    public static class ConfReset extends Task<Void, Boolean> {
+    public static class ConfReset extends TaskDelegate<Void, Boolean> {
         private final DeckConfig mConf;
 
 
@@ -1658,7 +1629,7 @@ public class CollectionTask<Progress, Result> extends BaseAsyncTask<Void, Progre
     }
 
 
-    public static class ConfRemove extends Task<Void, Boolean> {
+    public static class ConfRemove extends TaskDelegate<Void, Boolean> {
         private final DeckConfig mConf;
 
 
@@ -1690,7 +1661,7 @@ public class CollectionTask<Progress, Result> extends BaseAsyncTask<Void, Progre
         }
     }
 
-    public static class ConfSetSubdecks extends Task<Void, Boolean> {
+    public static class ConfSetSubdecks extends TaskDelegate<Void, Boolean> {
         private final Deck mDeck;
         private final DeckConfig mConf;
 
@@ -1727,7 +1698,7 @@ public class CollectionTask<Progress, Result> extends BaseAsyncTask<Void, Progre
     /**
      * @return The results list from the check, or false if any errors.
      */
-    public static class CheckMedia extends Task<Void, Computation<List<List<String>>>> {
+    public static class CheckMedia extends TaskDelegate<Void, Computation<List<List<String>>>> {
         @Override
         protected Computation<List<List<String>>> task(@NonNull Collection col, @NonNull ProgressSenderAndCancelListener<Void> collectionTask) {
             Timber.d("doInBackgroundCheckMedia");
@@ -1746,7 +1717,7 @@ public class CollectionTask<Progress, Result> extends BaseAsyncTask<Void, Progre
     }
 
 
-    public static class DeleteMedia extends Task<Void, Integer> {
+    public static class DeleteMedia extends TaskDelegate<Void, Integer> {
         private final List<String> mUnused;
 
 
@@ -1768,7 +1739,7 @@ public class CollectionTask<Progress, Result> extends BaseAsyncTask<Void, Progre
     /**
      * Handles everything for a model change at once - template add / deletes as well as content updates
      */
-    public static class SaveModel extends Task<Void, Pair<Boolean, String>> {
+    public static class SaveModel extends TaskDelegate<Void, Pair<Boolean, String>> {
         private final Model mModel;
         private final ArrayList<Object[]> mTemplateChanges;
 
@@ -1842,7 +1813,7 @@ public class CollectionTask<Progress, Result> extends BaseAsyncTask<Void, Progre
      *
      * @return {ArrayList<JSONObject> models, ArrayList<Integer> cardCount}
      */
-    public static class CountModels extends Task<Void, Pair<ArrayList<Model>, ArrayList<Integer>>> {
+    public static class CountModels extends TaskDelegate<Void, Pair<ArrayList<Model>, ArrayList<Integer>>> {
         protected Pair<ArrayList<Model>, ArrayList<Integer>> task(@NonNull Collection col, @NonNull ProgressSenderAndCancelListener<Void> collectionTask) {
             Timber.d("doInBackgroundLoadModels");
 
@@ -1868,7 +1839,7 @@ public class CollectionTask<Progress, Result> extends BaseAsyncTask<Void, Progre
      * Deletes the given model
      * and all notes associated with it
      */
-    public static class DeleteModel extends Task<Void, Boolean> {
+    public static class DeleteModel extends TaskDelegate<Void, Boolean> {
         private final long mModID;
 
 
@@ -1894,7 +1865,7 @@ public class CollectionTask<Progress, Result> extends BaseAsyncTask<Void, Progre
     /**
      * Deletes the given field in the given model
      */
-    public static class DeleteField extends Task<Void, Boolean> {
+    public static class DeleteField extends TaskDelegate<Void, Boolean> {
         private final Model mModel;
         private final JSONObject mField;
 
@@ -1924,7 +1895,7 @@ public class CollectionTask<Progress, Result> extends BaseAsyncTask<Void, Progre
     /**
      * Repositions the given field in the given model
      */
-    public static class RepositionField extends Task<Void, Boolean> {
+    public static class RepositionField extends TaskDelegate<Void, Boolean> {
         private final Model mModel;
         private final JSONObject mField;
         private final int mIndex;
@@ -1955,7 +1926,7 @@ public class CollectionTask<Progress, Result> extends BaseAsyncTask<Void, Progre
     /**
      * Adds a field with name in given model
      */
-    public static class AddField extends Task<Void, Boolean> {
+    public static class AddField extends TaskDelegate<Void, Boolean> {
         private final Model mModel;
         private final String mFieldName;
 
@@ -1977,7 +1948,7 @@ public class CollectionTask<Progress, Result> extends BaseAsyncTask<Void, Progre
     /**
      * Adds a field of with name in given model
      */
-    public static class ChangeSortField extends Task<Void, Boolean> {
+    public static class ChangeSortField extends TaskDelegate<Void, Boolean> {
         private final Model mModel;
         private final int mIdx;
 
@@ -2001,7 +1972,7 @@ public class CollectionTask<Progress, Result> extends BaseAsyncTask<Void, Progre
         }
     }
     
-    public static class FindEmptyCards extends Task<Integer, List<Long>> {
+    public static class FindEmptyCards extends TaskDelegate<Integer, List<Long>> {
         protected List<Long> task(@NonNull Collection col, @NonNull ProgressSenderAndCancelListener<Integer> collectionTask) {
             return col.emptyCids(collectionTask);
         }
@@ -2011,7 +1982,7 @@ public class CollectionTask<Progress, Result> extends BaseAsyncTask<Void, Progre
      * Goes through selected cards and checks selected and marked attribute
      * @return If there are unselected cards, if there are unmarked cards
      */
-    public static class CheckCardSelection extends Task<Void, Pair<Boolean, Boolean>> {
+    public static class CheckCardSelection extends TaskDelegate<Void, Pair<Boolean, Boolean>> {
         private final @NonNull Set<CardBrowser.CardCache> mCheckedCards;
 
 
@@ -2039,7 +2010,7 @@ public class CollectionTask<Progress, Result> extends BaseAsyncTask<Void, Progre
         }
     }
 
-    public static class PreloadNextCard extends Task<Void, Void> {
+    public static class PreloadNextCard extends TaskDelegate<Void, Void> {
         public Void task(@NonNull Collection col, @NonNull ProgressSenderAndCancelListener<Void> collectionTask) {
             try {
                 col.getSched().counts(); // Ensure counts are recomputed if necessary, to know queue to look for
@@ -2051,7 +2022,7 @@ public class CollectionTask<Progress, Result> extends BaseAsyncTask<Void, Progre
         }
     }
 
-    public static class LoadCollectionComplete extends Task<Void, Void> {
+    public static class LoadCollectionComplete extends TaskDelegate<Void, Void> {
         protected Void task(@NonNull Collection col, @NonNull ProgressSenderAndCancelListener<Void> collectionTask) {
             if (col != null) {
                 CollectionHelper.loadCollectionComplete(col);
@@ -2060,7 +2031,7 @@ public class CollectionTask<Progress, Result> extends BaseAsyncTask<Void, Progre
         }
     }
 
-    public static class Reset extends Task<Void, Void> {
+    public static class Reset extends TaskDelegate<Void, Void> {
         public Void task(@NonNull Collection col, @NonNull ProgressSenderAndCancelListener<Void> collectionTask) {
             col.getSched().reset();
             return null;

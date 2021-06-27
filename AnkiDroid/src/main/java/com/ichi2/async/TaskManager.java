@@ -67,11 +67,11 @@ public abstract class TaskManager {
         sTaskManager.setLatestInstanceConcrete(task);
     }
 
-    public static <Progress, Result> CollectionTask<Progress, Result> launchCollectionTask(CollectionTask.Task<Progress, Result> task) {
+    public static <Progress, Result> CollectionTask<Progress, Result> launchCollectionTask(TaskDelegate<Progress, Result> task) {
         return sTaskManager.launchCollectionTaskConcrete(task);
     }
 
-    public abstract <Progress, Result> CollectionTask<Progress, Result> launchCollectionTaskConcrete(CollectionTask.Task<Progress, Result> task);
+    public abstract <Progress, Result> CollectionTask<Progress, Result> launchCollectionTaskConcrete(TaskDelegate<Progress, Result> task);
 
 
     protected abstract void setLatestInstanceConcrete(CollectionTask task);
@@ -88,13 +88,13 @@ public abstract class TaskManager {
      * @return the newly created task
      */
     public static <Progress, Result> CollectionTask<Progress, Result>
-    launchCollectionTask(@NonNull CollectionTask.Task<Progress, Result> task,
+    launchCollectionTask(@NonNull TaskDelegate<Progress, Result> task,
                          @Nullable TaskListener<? super Progress, ? super Result> listener) {
         return sTaskManager.launchCollectionTaskConcrete(task, listener);
     }
 
     public abstract <Progress, Result> CollectionTask<Progress, Result>
-    launchCollectionTaskConcrete(@NonNull CollectionTask.Task<Progress, Result> task,
+    launchCollectionTaskConcrete(@NonNull TaskDelegate<Progress, Result> task,
                          @Nullable TaskListener<? super Progress, ? super Result> listener);
 
     /**

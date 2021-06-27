@@ -1,7 +1,6 @@
 package com.ichi2.async;
 
 import com.ichi2.libanki.CollectionGetter;
-import com.ichi2.libanki.Collection;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -22,7 +21,7 @@ public class ForegroundTaskManager extends TaskManager {
 
 
     @Override
-    public <Progress, Result> CollectionTask<Progress, Result> launchCollectionTaskConcrete(CollectionTask.Task<Progress, Result> task) {
+    public <Progress, Result> CollectionTask<Progress, Result> launchCollectionTaskConcrete(TaskDelegate<Progress, Result> task) {
         return launchCollectionTaskConcrete(task, null);
     }
 
@@ -34,13 +33,13 @@ public class ForegroundTaskManager extends TaskManager {
 
     @Override
     public <Progress, Result> CollectionTask<Progress, Result> launchCollectionTaskConcrete(
-            @NonNull CollectionTask.Task<Progress, Result> task,
+            @NonNull TaskDelegate<Progress, Result> task,
             @Nullable TaskListener<? super Progress, ? super Result> listener) {
         return executeTaskWithListener(task, listener, mColGetter);
     }
 
     public static <Progress, Result> CollectionTask<Progress, Result> executeTaskWithListener(
-            @NonNull CollectionTask.Task<Progress, Result> task,
+            @NonNull TaskDelegate<Progress, Result> task,
             @Nullable TaskListener<? super Progress, ? super Result> listener, CollectionGetter colGetter) {
         if (listener != null) {
             listener.onPreExecute();
@@ -110,7 +109,7 @@ public class ForegroundTaskManager extends TaskManager {
     public static class EmptyTask<Progress, Result> extends
             CollectionTask<Progress, Result> {
 
-        protected EmptyTask(Task<Progress, Result> task, TaskListener<? super Progress, ? super Result> listener) {
+        protected EmptyTask(TaskDelegate<Progress, Result> task, TaskListener<? super Progress, ? super Result> listener) {
             super(task, listener, null);
         }
     }
