@@ -25,9 +25,9 @@ import com.ichi2.anki.dialogs.DialogHandler;
 import com.ichi2.anki.dialogs.utils.FragmentTestActivity;
 import com.ichi2.anki.exception.ConfirmModSchemaException;
 import com.ichi2.anki.exception.FilteredAncestor;
-import com.ichi2.async.CollectionTask;
 import com.ichi2.async.ForegroundTaskManager;
 import com.ichi2.async.SingleTaskManager;
+import com.ichi2.async.TaskDelegate;
 import com.ichi2.async.TaskListener;
 import com.ichi2.async.TaskManager;
 import com.ichi2.compat.customtabs.CustomTabActivityHelper;
@@ -414,7 +414,7 @@ public class RobolectricTest implements CollectionGetter {
     }
 
 
-    protected synchronized <Progress, Result extends Computation<?>> void waitFortask(CollectionTask.Task<Progress, Result> task, int timeoutMs) throws InterruptedException {
+    protected synchronized <Progress, Result extends Computation<?>> void waitFortask(TaskDelegate<Progress, Result> task, int timeoutMs) throws InterruptedException {
         boolean[] completed = new boolean[] { false };
         TaskListener<Progress, Result> listener = new TaskListener<Progress, Result>() {
             @Override
