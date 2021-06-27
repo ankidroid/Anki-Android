@@ -95,7 +95,7 @@
     <string name="unbury">ସ୍ଥଗିତରୁ ଫେରାଇ ଆଣ</string>
     <string name="rename_deck">ଡେକ୍ କୁ ପୁନଃ ନାମକରଣ କରନ୍ତୁ</string>
     <string name="create_shortcut">ସର୍ଟକଟ୍‌ ସୃଷ୍ଟି କରନ୍ତୁ</string>
-    <string name="browse_cards">Browse cards</string>
+    <string name="browse_cards">ପତ୍ରଗୁଡ଼ିକ ବ୍ରାଉଜ୍ କରନ୍ତୁ</string>
     <string name="menu_add" comment="A generic add button - Main Deck Picker and card templates. Please inform us if you need more specific strings">ଯୋଡ଼ନ୍ତୁ</string>
     <string name="menu_add_note">ନୋଟ୍ ଯୋଡ଼ନ୍ତୁ</string>
     <string name="menu_my_account" comment="Label of the window in which the user should enter their account. This text can\'t be found in AnkiDroid directly.">ସିଙ୍କ୍ ଖାତା</string>
@@ -221,7 +221,7 @@
     <string name="sync_conflict_title_new">ରଖିବାକୁ ସଂଗ୍ରହ ଚୟନ କରନ୍ତୁ</string>
     <string name="sync_conflict_replace_title">ସଂଗ୍ରହକୁ ବଦଳାନ୍ତୁ</string>
     <plurals name="deckpicker_title_zero_due">
-        <item quantity="one">%1$d card (0 due)</item>
-        <item quantity="other">%1$d cards (0 due)</item>
+        <item quantity="one">%1$dଟିଏ ପତ୍ର (0 ବାକି)</item>
+        <item quantity="other">%1$dଟି ପତ୍ର (0 ବାକି)</item>
     </plurals>
 </resources>

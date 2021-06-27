@@ -46,7 +46,7 @@
     <string name="multimedia_editor_trans_from">El</string>
     <string name="multimedia_editor_trans_to">En</string>
     <!-- imperative for the button title -->
-    <string name="multimedia_editor_trans_translate">Traduku</string>
+    <string name="multimedia_editor_trans_translate">Traduki</string>
     <!-- waiting message -->
     <string name="multimedia_editor_trans_translating_online">Traduki enrete</string>
     <!-- pick the right translation imperative -->
