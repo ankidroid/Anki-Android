@@ -122,8 +122,14 @@ public class Preferences extends AppCompatPreferenceActivity implements Preferen
      * Note that "collapseTime" is in second while LEARN_CUTOFF is in minute.
      */
     private static final String LEARN_CUTOFF = "learnCutoff";
+    /**
+     * Represents in Android preferences the collections configuration "timeLim": i.e.
+     * the duration of a review timebox in minute. Each TIME_LIMIT minutes, a message appear suggesting to halt and giving the number of card reviewed
+     * Note that "timeLim" is in second while TIME_LIMIT is in minute.
+     */
+    private static final String TIME_LIMIT = "timeLimit";
     private static final String [] sCollectionPreferences = {SHOW_ESTIMATE, SHOW_PROGRESS,
-            LEARN_CUTOFF, "timeLimit", "useCurrent", "newSpread", "dayOffset", "schedVer", "newTimezoneHandling"};
+            LEARN_CUTOFF, TIME_LIMIT, "useCurrent", "newSpread", "dayOffset", "schedVer", "newTimezoneHandling"};
 
     private static final int RESULT_LOAD_IMG = 111;
     private android.preference.CheckBoxPreference mBackgroundImage;
@@ -614,7 +620,7 @@ public class Preferences extends AppCompatPreferenceActivity implements Preferen
                         case LEARN_CUTOFF:
                             ((NumberRangePreference)pref).setValue(conf.getInt("collapseTime") / 60);
                             break;
-                        case "timeLimit":
+                        case TIME_LIMIT:
                             ((NumberRangePreference)pref).setValue(conf.getInt("timeLim") / 60);
                             break;
                         case "useCurrent":
@@ -738,7 +744,7 @@ public class Preferences extends AppCompatPreferenceActivity implements Preferen
                     getCol().getConf().put("newSpread", Integer.parseInt(((android.preference.ListPreference) pref).getValue()));
                     getCol().setMod();
                     break;
-                case "timeLimit":
+                case TIME_LIMIT:
                     getCol().getConf().put("timeLim", ((NumberRangePreference) pref).getValue() * 60);
                     getCol().setMod();
                     break;
